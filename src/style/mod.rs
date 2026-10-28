@@ -29,6 +29,7 @@ mod inert;
 mod layers;
 mod list_values;
 mod loader;
+mod logical;
 mod matcher;
 mod media;
 mod multicol_values;

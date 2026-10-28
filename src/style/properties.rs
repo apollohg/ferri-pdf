@@ -48,8 +48,14 @@ struct Handler {
     check: Option<Check>,
 }
 
+/// Flow-relative properties share their physical counterparts' grammar and computation.
+fn computing(property: Property) -> Property {
+    crate::style::logical::physical(property, crate::style::logical::Flow::default())
+}
+
 pub(super) fn supports_property(property: Property) -> bool {
-    inert::defined(property) || handler(property).is_some_and(|handler| handler.check.is_some())
+    inert::defined(property)
+        || handler(computing(property)).is_some_and(|handler| handler.check.is_some())
 }
 
 pub(super) fn supports_value(
@@ -60,7 +66,7 @@ pub(super) fn supports_value(
     if inert::defined(property) {
         return inert::compute(property, value, relative).is_ok();
     }
-    handler(property)
+    handler(computing(property))
         .and_then(|handler| handler.check)
         .is_some_and(|check| check(value, relative))
 }
@@ -93,6 +99,10 @@ fn apply_value(
     relative: &Relative<'_>,
     choices: &mut ToggleChoices,
 ) -> Result<(), StyleError> {
+    if let Specified::FlowRelative(flow, value) = specified {
+        let parent = crate::style::logical::reflowed(parent, *flow);
+        return apply_value(property, value, style, &parent, relative, choices);
+    }
     if let Specified::Toggle(values) = specified {
         let _work = relative.work.enter(relative.grammar_only);
         relative.work.charge(1)?;
@@ -133,7 +143,9 @@ fn apply_value(
     let user_agent;
     let input = match specified {
         Specified::Value(value) => Input::Value(value),
-        Specified::Toggle(_) => unreachable!("toggle values were computed above"),
+        Specified::Toggle(_) | Specified::FlowRelative(..) => {
+            unreachable!("toggle and flow-relative values were computed above")
+        }
         Specified::Unexpanded(shorthand, value) => {
             return Err(StyleError::Unsupported(format!(
                 "{}{DECLARATION_SEPARATOR}{value}",
@@ -295,7 +307,7 @@ pub(crate) fn inherit(style: &mut Style, parent: &Style) {
 /// Computed-field coverage is separate from usable value support.
 #[cfg(test)]
 pub(crate) fn computed(property: Property) -> bool {
-    inert::defined(property) || handler(property).is_some()
+    inert::defined(property) || handler(computing(property)).is_some()
 }
 
 fn handler(property: Property) -> Option<Handler> {

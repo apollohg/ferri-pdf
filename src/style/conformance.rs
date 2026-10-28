@@ -868,7 +868,13 @@ fn styles(css: &str) -> Result<(Style, Style), StyleError> {
 }
 
 fn styles_in_context(property: Property, css: &str) -> Result<(Style, Style), StyleError> {
-    if Property::BorderWidth.longhands().contains(&property) {
+    if Property::BorderWidth
+        .longhands()
+        .contains(&crate::style::logical::physical(
+            property,
+            Default::default(),
+        ))
+    {
         styles(&format!(
             "{PARENT_ELEMENT},{CHILD_ELEMENT}{{border-style:solid}}{css}"
         ))

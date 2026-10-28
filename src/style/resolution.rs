@@ -9,6 +9,7 @@ use crate::style::{
     conditional::{self, QueryValues},
     declaration::Specified,
     grammar::{Descriptor, Keyword, Property},
+    logical::{self, Flow, Flows},
     properties,
     stylesheet::PAGE_MARGINS,
     units::{Axis, FontBasis, FontUnit, FontUnits, Relative, Tree, Viewport, ViewportUnits},
@@ -365,6 +366,9 @@ impl<'a> Geometry<'a> {
                 Ok(common)
             }
             Specified::Unexpanded(_, _) => Ok(None),
+            Specified::FlowRelative(..) => {
+                unreachable!("counter properties belong to no logical property group")
+            }
         }
     }
 
@@ -556,6 +560,7 @@ impl<'a> Geometry<'a> {
                 }
                 Ok(self.parent_style(context).align)
             },
+            &mut || self.flows(context),
             &mut |pending, namespace| {
                 computed
                     .sources
@@ -596,6 +601,20 @@ impl<'a> Geometry<'a> {
         Ok(value)
     }
 
+    /// The context's flow and its parent's, after their `direction` computes.
+    fn flows(&self, context: Context) -> Result<Flows, StyleError> {
+        self.property(context, Property::Direction)?;
+        let element = Flow::of(&self.context(context).style.borrow());
+        let parent = match self.parent_context(context) {
+            Some(parent) => {
+                self.property(parent, Property::Direction)?;
+                Flow::of(&self.context(parent).style.borrow())
+            }
+            None => Flow::of(&self.parent_style(context)),
+        };
+        Ok(Flows { element, parent })
+    }
+
     fn parent_style(&self, context: Context) -> Style {
         match context {
             Context::Root => Style::default(),
@@ -625,7 +644,15 @@ impl<'a> Geometry<'a> {
         if let Some(parent) = self.parent_context(context)
             && needs_parent(property, value)
         {
-            self.property(parent, property)?;
+            let source = match value {
+                Specified::FlowRelative(flow, _) => logical::corresponding(
+                    property,
+                    *flow,
+                    Flow::of(&self.context(parent).style.borrow()),
+                ),
+                _ => property,
+            };
+            self.property(parent, source)?;
         }
         if current_color(property, value) {
             if property != Property::Color {
@@ -1712,7 +1739,10 @@ fn inherits(value: &Specified, property: Property) -> bool {
     }
 }
 
-fn needs_parent(property: Property, value: &Specified) -> bool {
+pub(super) fn needs_parent(property: Property, value: &Specified) -> bool {
+    if let Specified::FlowRelative(_, value) = value {
+        return needs_parent(property, value);
+    }
     inherits(value, property)
         || matches!(value, Specified::Toggle(_))
         || (property == Property::FontWeight
@@ -1767,6 +1797,7 @@ fn current_color(property: Property, value: &Specified) -> bool {
         Specified::Toggle(values) => values
             .iter()
             .any(|value| current_color(property, &value.value)),
+        Specified::FlowRelative(_, value) => current_color(property, value),
         _ => false,
     }
 }
@@ -1786,7 +1817,7 @@ pub(super) fn resolve_values(
     context: &ValueContext<'_>,
 ) -> Result<(Style, Winners), StyleError> {
     if !values.contextual() {
-        let winners = crate::style::cascade::resolve(values, &mut style)?;
+        let winners = crate::style::cascade::resolve(values, &mut style, parent)?;
         return Ok((style, winners));
     }
     let graph = Geometry {

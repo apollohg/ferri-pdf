@@ -77,6 +77,7 @@ fn supported(expanded: &[(Property, Specified)]) -> bool {
                 .iter()
                 .all(|value| supported(&[(*longhand, value.value.clone())])),
             Specified::Unexpanded(..) => false,
+            Specified::FlowRelative(_, value) => supported(&[(*longhand, value.as_ref().clone())]),
         })
 }
 
@@ -89,6 +90,10 @@ pub(crate) enum Specified {
     Toggle(Arc<[ToggleArgument]>),
     /// A valid value of this shorthand that the engine cannot split into longhands.
     Unexpanded(Property, Arc<Component>),
+    /// A flow-relative declaration that won a physical property whose counterpart on the
+    /// parent is another physical property: its parent-dependent value reads the parent with
+    /// its box properties arranged for this element's flow (CSS Logical 1 §4).
+    FlowRelative(crate::style::logical::Flow, Arc<Specified>),
 }
 
 #[derive(Clone, Debug)]
@@ -517,7 +522,7 @@ pub(crate) fn descriptor(
 /// The final longhands of a property; a longhand is its own.
 pub(crate) fn longhands(property: Property) -> impl Iterator<Item = Property> {
     let mut stack = if property == Property::All {
-        Property::ALL
+        let mut properties = Property::ALL
             .iter()
             .copied()
             .rev()
@@ -527,7 +532,10 @@ pub(crate) fn longhands(property: Property) -> impl Iterator<Item = Property> {
                     Property::All | Property::Direction | Property::UnicodeBidi
                 ) && property.longhands().is_empty()
             })
-            .collect()
+            .collect::<Vec<_>>();
+        // CSS Logical 1 §4: shorthands covering both mappings set physical longhands last.
+        properties.sort_by_key(|property| crate::style::logical::is_flow_relative(*property));
+        properties
     } else {
         vec![property]
     };

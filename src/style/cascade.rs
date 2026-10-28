@@ -3,6 +3,7 @@ use crate::style::{
     declaration::{self, Declared, Pending, PropertyDeclaration, Specified},
     grammar::Property,
     layers::{LayerId, LayerPriority},
+    logical::{self, Flow, Flows},
     wide_keywords::WideKeyword,
 };
 use std::{
@@ -450,27 +451,41 @@ fn custom_properties(
 }
 
 /// Invalid computed values become unset; only valid rollback keywords revisit candidates.
-pub(super) fn resolve(values: Cascaded, style: &mut Style) -> Result<Winners, StyleError> {
-    resolve_located(values, style, |_, _| {})
+pub(super) fn resolve(
+    values: Cascaded,
+    style: &mut Style,
+    parent: &Style,
+) -> Result<Winners, StyleError> {
+    resolve_located(values, style, parent, |_, _| {})
 }
 
 pub(super) fn resolve_located(
     values: Cascaded,
     style: &mut Style,
+    parent: &Style,
     mut selected: impl FnMut(Property, Option<&crate::style::SourceLocation>),
 ) -> Result<Winners, StyleError> {
     let (declarations, custom) = values.into_parts();
     style.custom_properties = custom_properties(&style.custom_properties, custom)?;
+    let flows = if declarations.flow_relative() {
+        Some(element_flows(&declarations, style, parent)?)
+    } else {
+        None
+    };
     let mut winners = Winners::new();
     for property in declarations.properties() {
-        let winner =
-            declarations.resolve_with(property, &mut || Ok(style.align), &mut |pending, _| {
+        let winner = declarations.resolve_with(
+            property,
+            &mut || Ok(style.align),
+            &mut || Ok(flows.expect("flow-relative candidates computed the element's flows")),
+            &mut |pending, _| {
                 declaration::substitute(
                     pending,
                     &style.custom_properties,
                     &style.inherited_custom_properties,
                 )
-            })?;
+            },
+        )?;
         if let Some(winner) = winner {
             selected(property, winner.location.as_deref());
             if property == Property::FontFamily
@@ -484,6 +499,41 @@ pub(super) fn resolve_located(
     Ok(winners)
 }
 
+/// CSS Logical 1 §4: the element's own direction computes before its flow-relative
+/// declarations cascade with the physical ones.
+fn element_flows(
+    declarations: &Properties,
+    style: &Style,
+    parent: &Style,
+) -> Result<Flows, StyleError> {
+    let direction = declarations.resolve_with(
+        Property::Direction,
+        &mut || Ok(style.align),
+        &mut || unreachable!("direction belongs to no logical property group"),
+        &mut |pending, _| {
+            declaration::substitute(
+                pending,
+                &style.custom_properties,
+                &style.inherited_custom_properties,
+            )
+        },
+    )?;
+    let mut element = parent.clone();
+    if let Some(direction) = direction {
+        crate::style::properties::apply(
+            Property::Direction,
+            &direction.value,
+            &mut element,
+            parent,
+            &crate::style::units::Relative::initial(),
+        )?;
+    }
+    Ok(Flows {
+        element: Flow::of(&element),
+        parent: Flow::of(parent),
+    })
+}
+
 type PropertyCandidate = Candidate<(Value, crate::fonts::FontNamespace)>;
 type Expanded = Arc<[(Property, Specified)]>;
 type Substituted = HashMap<*const Pending, Expanded>;
@@ -493,6 +543,7 @@ type Substitute<'a> = dyn FnMut(
     ) -> Result<Option<Vec<(Property, Specified)>>, StyleError>
     + 'a;
 type ParentAlignment<'a> = dyn FnMut() -> Result<crate::style::TextAlign, StyleError> + 'a;
+type ElementFlows<'a> = dyn FnMut() -> Result<Flows, StyleError> + 'a;
 
 pub(super) struct Winner {
     pub value: Specified,
@@ -516,22 +567,89 @@ impl Properties {
         }
     }
 
-    pub(super) fn properties(&self) -> impl Iterator<Item = Property> + '_ {
-        self.candidates.keys().copied()
+    /// Every property with candidates; flow-relative ones compute into the physical members
+    /// of their group.
+    pub(super) fn properties(&self) -> impl Iterator<Item = Property> {
+        let mut properties = BTreeSet::new();
+        for property in self.candidates.keys() {
+            match logical::physical_properties(*property) {
+                Some(physical) => properties.extend(physical),
+                None => {
+                    properties.insert(*property);
+                }
+            }
+        }
+        properties.into_iter()
+    }
+
+    fn flow_relative(&self) -> bool {
+        self.candidates
+            .keys()
+            .any(|property| logical::is_flow_relative(*property))
+    }
+
+    /// CSS Logical 1 §4: a physical property's candidates cascade together with those of the
+    /// flow-relative property sharing its computed value. Among equal priorities the physical
+    /// candidates come last, as shorthands covering both set physical longhands last.
+    fn paired(
+        &self,
+        property: Property,
+        flows: &mut ElementFlows<'_>,
+    ) -> Result<Option<Paired>, StyleError> {
+        if !logical::flow_relative_properties(property)
+            .iter()
+            .any(|logical| self.candidates.contains_key(logical))
+        {
+            return Ok(None);
+        }
+        let flows = flows()?;
+        let Some((logical, flow_relative)) = logical::counterpart(property, flows.element)
+            .and_then(|logical| Some((logical, self.candidates.get(&logical)?)))
+        else {
+            return Ok(None);
+        };
+        let mut candidates: Vec<(Property, PropertyCandidate)> = flow_relative
+            .iter()
+            .map(|candidate| (logical, candidate.clone()))
+            .chain(
+                self.candidates
+                    .get(&property)
+                    .into_iter()
+                    .flatten()
+                    .map(|candidate| (property, candidate.clone())),
+            )
+            .collect();
+        candidates.sort_by_key(|(_, candidate)| candidate.priority());
+        let (declared, candidates) = candidates.into_iter().unzip();
+        Ok(Some(Paired {
+            candidates,
+            declared,
+            flows,
+        }))
     }
 
     pub(super) fn resolve_with(
         &self,
         property: Property,
         parent_alignment: &mut ParentAlignment<'_>,
+        flows: &mut ElementFlows<'_>,
         substitute: &mut Substitute<'_>,
     ) -> Result<Option<Winner>, StyleError> {
-        let Some(candidates) = self.candidates.get(&property) else {
+        if logical::is_flow_relative(property) {
             return Ok(None);
+        }
+        let paired = self.paired(property, flows)?;
+        let (candidates, declared) = match &paired {
+            Some(paired) => (&paired.candidates[..], Some(&paired.declared[..])),
+            None => match self.candidates.get(&property) {
+                Some(candidates) => (&candidates[..], None),
+                None => return Ok(None),
+            },
         };
         let mut resolver = PropertyResolver {
             property,
             candidates,
+            declared,
             substituted: &self.substituted,
             substitute,
             parent_alignment,
@@ -539,13 +657,27 @@ impl Properties {
             depth: 0,
             work: 0,
         };
-        Ok(choose_from(
+        let Some((index, (value, namespace))) = choose_from(
             candidates,
             Rollback::default(),
             |index, _, rollback| resolver.value(index, rollback),
             |(value, _)| specified_keyword(value),
         )?
-        .map(|(index, (value, namespace))| Winner {
+        else {
+            return Ok(None);
+        };
+        let value = match &paired {
+            Some(paired)
+                if paired.declared[index] != property
+                    && crate::style::resolution::needs_parent(property, &value)
+                    && logical::physical(paired.declared[index], paired.flows.parent)
+                        != property =>
+            {
+                Specified::FlowRelative(paired.flows.element, Arc::new(value))
+            }
+            _ => value,
+        };
+        Ok(Some(Winner {
             value,
             namespace,
             location: candidates[index].location.clone(),
@@ -553,9 +685,19 @@ impl Properties {
     }
 }
 
+/// A physical property's candidates merged with its flow-relative counterpart's, with the
+/// property each was declared for.
+struct Paired {
+    candidates: Vec<PropertyCandidate>,
+    declared: Vec<Property>,
+    flows: Flows,
+}
+
 struct PropertyResolver<'a, 's> {
     property: Property,
     candidates: &'a [PropertyCandidate],
+    /// The property each candidate was declared for, when not all were declared for `property`.
+    declared: Option<&'a [Property]>,
     substituted: &'a RefCell<Substituted>,
     substitute: &'a mut Substitute<'s>,
     parent_alignment: &'a mut ParentAlignment<'s>,
@@ -606,9 +748,12 @@ impl PropertyResolver<'_, '_> {
                     self.substituted.borrow_mut().insert(key, expanded.clone());
                     expanded
                 };
+                let declared = self
+                    .declared
+                    .map_or(self.property, |declared| declared[index]);
                 expanded
                     .iter()
-                    .find(|(property, _)| *property == self.property)
+                    .find(|(property, _)| *property == declared)
                     .map_or(Specified::Wide(WideKeyword::Unset), |(_, value)| {
                         value.clone()
                     })

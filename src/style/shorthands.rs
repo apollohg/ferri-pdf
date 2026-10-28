@@ -5,18 +5,55 @@ use crate::style::{
     component::Component,
     declaration::{self, Specified},
     grammar::{Keyword, Label, NODES, Node, Production, Property},
+    logical::{BOTTOM, LEFT},
     wide_keywords::WideKeyword,
 };
 use std::sync::Arc;
 
 type Longhands = Vec<(Property, Specified)>;
 
-const TOP: usize = 0;
-const RIGHT: usize = 1;
-const BOTTOM: usize = 2;
-const LEFT: usize = 3;
-/// `<line-width> || <line-style> || <color>` slots.
-const BORDER_PARTS: usize = 3;
+/// `<line-width> || <line-style> || <color>` longhands of one border side.
+type BorderSide = [Property; 3];
+const BORDER_TOP: BorderSide = [
+    Property::BorderTopWidth,
+    Property::BorderTopStyle,
+    Property::BorderTopColor,
+];
+const BORDER_RIGHT: BorderSide = [
+    Property::BorderRightWidth,
+    Property::BorderRightStyle,
+    Property::BorderRightColor,
+];
+const BORDER_BOTTOM: BorderSide = [
+    Property::BorderBottomWidth,
+    Property::BorderBottomStyle,
+    Property::BorderBottomColor,
+];
+const BORDER_LEFT: BorderSide = [
+    Property::BorderLeftWidth,
+    Property::BorderLeftStyle,
+    Property::BorderLeftColor,
+];
+const BORDER_BLOCK_START: BorderSide = [
+    Property::BorderBlockStartWidth,
+    Property::BorderBlockStartStyle,
+    Property::BorderBlockStartColor,
+];
+const BORDER_BLOCK_END: BorderSide = [
+    Property::BorderBlockEndWidth,
+    Property::BorderBlockEndStyle,
+    Property::BorderBlockEndColor,
+];
+const BORDER_INLINE_START: BorderSide = [
+    Property::BorderInlineStartWidth,
+    Property::BorderInlineStartStyle,
+    Property::BorderInlineStartColor,
+];
+const BORDER_INLINE_END: BorderSide = [
+    Property::BorderInlineEndWidth,
+    Property::BorderInlineEndStyle,
+    Property::BorderInlineEndColor,
+];
 const BORDER_IMAGE: [Property; 5] = [
     Property::BorderImageSource,
     Property::BorderImageSlice,
@@ -115,16 +152,38 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         ),
         P::BorderRadius => radius(&value),
         // CSS Backgrounds 3 §4.4: `border` also resets `border-image`.
-        P::Border => border(&value, &[TOP, RIGHT, BOTTOM, LEFT])
-            .into_iter()
-            .chain(BORDER_IMAGE.map(|property| (property, initial())))
-            .collect(),
+        P::Border => border(
+            &value,
+            &[BORDER_TOP, BORDER_RIGHT, BORDER_BOTTOM, BORDER_LEFT],
+        )
+        .into_iter()
+        .chain(BORDER_IMAGE.map(|property| (property, initial())))
+        .collect(),
         P::BorderImage => border_image(&value),
         P::Columns => columns(&value),
-        P::BorderTop => border(&value, &[TOP]),
-        P::BorderRight => border(&value, &[RIGHT]),
-        P::BorderBottom => border(&value, &[BOTTOM]),
-        P::BorderLeft => border(&value, &[LEFT]),
+        P::BorderTop => border(&value, &[BORDER_TOP]),
+        P::BorderRight => border(&value, &[BORDER_RIGHT]),
+        P::BorderBottom => border(&value, &[BORDER_BOTTOM]),
+        P::BorderLeft => border(&value, &[BORDER_LEFT]),
+        P::MarginBlock => pair(&value, [P::MarginBlockStart, P::MarginBlockEnd]),
+        P::MarginInline => pair(&value, [P::MarginInlineStart, P::MarginInlineEnd]),
+        P::PaddingBlock => pair(&value, [P::PaddingBlockStart, P::PaddingBlockEnd]),
+        P::PaddingInline => pair(&value, [P::PaddingInlineStart, P::PaddingInlineEnd]),
+        P::InsetBlock => pair(&value, [P::InsetBlockStart, P::InsetBlockEnd]),
+        P::InsetInline => pair(&value, [P::InsetInlineStart, P::InsetInlineEnd]),
+        P::BorderBlockWidth => pair(&value, [P::BorderBlockStartWidth, P::BorderBlockEndWidth]),
+        P::BorderInlineWidth => pair(&value, [P::BorderInlineStartWidth, P::BorderInlineEndWidth]),
+        P::BorderBlockStyle => pair(&value, [P::BorderBlockStartStyle, P::BorderBlockEndStyle]),
+        P::BorderInlineStyle => pair(&value, [P::BorderInlineStartStyle, P::BorderInlineEndStyle]),
+        P::BorderBlockColor => pair(&value, [P::BorderBlockStartColor, P::BorderBlockEndColor]),
+        P::BorderInlineColor => pair(&value, [P::BorderInlineStartColor, P::BorderInlineEndColor]),
+        P::BorderBlockStart => border(&value, &[BORDER_BLOCK_START]),
+        P::BorderBlockEnd => border(&value, &[BORDER_BLOCK_END]),
+        P::BorderInlineStart => border(&value, &[BORDER_INLINE_START]),
+        P::BorderInlineEnd => border(&value, &[BORDER_INLINE_END]),
+        // CSS Logical 1 §4.5.4: both sides take the same value.
+        P::BorderBlock => border(&value, &[BORDER_BLOCK_START, BORDER_BLOCK_END]),
+        P::BorderInline => border(&value, &[BORDER_INLINE_START, BORDER_INLINE_END]),
         P::Overflow => pair(&value, [P::OverflowX, P::OverflowY]),
         P::Gap | P::GridGap => pair(&value, [P::RowGap, P::ColumnGap]),
         P::GridRowGap => alias(&value, P::RowGap),
@@ -297,33 +356,11 @@ fn radius(value: &Component) -> Longhands {
 }
 
 /// `<line-width> || <line-style> || <color>` for each side.
-fn border(value: &Component, sides: &[usize]) -> Longhands {
-    const PARTS: [[Property; BORDER_PARTS]; 4] = [
-        [
-            Property::BorderTopWidth,
-            Property::BorderTopStyle,
-            Property::BorderTopColor,
-        ],
-        [
-            Property::BorderRightWidth,
-            Property::BorderRightStyle,
-            Property::BorderRightColor,
-        ],
-        [
-            Property::BorderBottomWidth,
-            Property::BorderBottomStyle,
-            Property::BorderBottomColor,
-        ],
-        [
-            Property::BorderLeftWidth,
-            Property::BorderLeftStyle,
-            Property::BorderLeftColor,
-        ],
-    ];
+fn border(value: &Component, sides: &[BorderSide]) -> Longhands {
     sides
         .iter()
         .flat_map(|side| {
-            PARTS[*side].iter().enumerate().map(|(part, property)| {
+            side.iter().enumerate().map(|(part, property)| {
                 let specified = value
                     .slot(part)
                     .map_or_else(initial, |slot| longhand(*property, slot));
