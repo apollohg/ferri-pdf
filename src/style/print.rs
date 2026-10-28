@@ -70,7 +70,10 @@ pub(crate) enum Presentation {
     Paged,
     /// Continuous media the size of the navigable's viewport; print cannot scroll it, so
     /// overflowing content is not displayed (Media Queries 4 §7.1 `overflow-block: none`).
-    Viewport,
+    Viewport {
+        /// The embedding element's used colour scheme.
+        color_scheme: ColorScheme,
+    },
 }
 
 #[derive(Clone)]

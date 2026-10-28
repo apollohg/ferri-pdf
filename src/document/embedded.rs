@@ -21,20 +21,29 @@ const NO_PLUGIN_INDICATION: &str = concat!(
 /// Elements whose descendants are not rendered, so their embedded content never loads.
 const REPLACED_ANCESTORS: &[&str] = &["iframe", "embed", "video", "audio", "img"];
 
+/// What an `iframe`, `embed` or `object` element represents.
+pub(crate) enum Embedded {
+    Image(Arc<Image>),
+    Navigable(Arc<Frame>),
+}
+
 /// Content of the `iframe`, `embed` and `object` elements a document renders.
 #[derive(Default)]
 pub(crate) struct EmbeddedContent {
-    replaced: HashMap<ElementId, Arc<Image>>,
-    frames: Vec<Arc<Frame>>,
+    replaced: HashMap<ElementId, Embedded>,
 }
 impl EmbeddedContent {
-    pub(crate) fn content(&self, element: ElementId) -> Option<&Arc<Image>> {
+    pub(crate) fn content(&self, element: ElementId) -> Option<&Embedded> {
         self.replaced.get(&element)
     }
     pub(crate) fn take_diagnostics(&self) -> Vec<DocumentDiagnostic> {
-        self.frames
-            .iter()
-            .flat_map(|frame| frame.take_diagnostics())
+        self.replaced
+            .values()
+            .filter_map(|embedded| match embedded {
+                Embedded::Navigable(frame) => Some(frame.take_diagnostics()),
+                Embedded::Image(_) => None,
+            })
+            .flatten()
             .collect()
     }
 }
@@ -78,19 +87,12 @@ pub(crate) fn resolve(
             continue;
         }
         let replaced = match element.name() {
-            "iframe" => {
-                let frame = resolution.iframe(element)?;
-                content.frames.push(frame.clone());
-                Some(Arc::new(Image::Frame(frame)))
-            }
-            "embed" => Some(resolution.embed(element)?),
+            "iframe" => Some(Embedded::Navigable(resolution.iframe(element)?)),
+            "embed" => Some(Embedded::Image(resolution.embed(element)?)),
             _ => {
                 let represented = resolution.object(element)?;
                 if represented.is_some() {
                     objects.insert(element.id());
-                }
-                if let Some(Image::Frame(frame)) = represented.as_deref() {
-                    content.frames.push(frame.clone());
                 }
                 represented
             }
@@ -215,7 +217,7 @@ impl Resolution<'_, '_> {
 
     /// HTML §4.8.7: the image or content navigable an `object` represents, or `None` for its
     /// fallback content.
-    fn object(&mut self, element: Element<'_>) -> Result<Option<Arc<Image>>, DocumentError> {
+    fn object(&mut self, element: Element<'_>) -> Result<Option<Embedded>, DocumentError> {
         let Some(reference) = element.attr("data").filter(|data| !data.is_empty()) else {
             return Ok(None);
         };
@@ -254,15 +256,18 @@ impl Resolution<'_, '_> {
                 self.cache,
                 self.embedder.resolver,
             )
-            .map(|frame| Some(Arc::new(Image::Frame(frame))));
+            .map(|frame| Some(Embedded::Navigable(frame)));
         }
-        Ok(self.cache.decode_optional(
-            reference,
-            self.embedder.base,
-            resolved.resource,
-            self.embedder.resolver,
-            FontNamespace::ROOT,
-        ))
+        Ok(self
+            .cache
+            .decode_optional(
+                reference,
+                self.embedder.base,
+                resolved.resource,
+                self.embedder.resolver,
+                FontNamespace::ROOT,
+            )
+            .map(Embedded::Image))
     }
 }
 

@@ -114,10 +114,11 @@ impl Frame {
     }
 
     /// The document `size` points of viewport show, with media queries and viewport units
-    /// evaluated against that size.
+    /// evaluated against that size, embedded by an element of `color_scheme`.
     pub(crate) fn document(
         &self,
         size: [f32; 2],
+        color_scheme: crate::style::ColorScheme,
         resolver: &dyn ResourceResolver,
     ) -> Result<FrameDocument, DocumentError> {
         let (text, encoding, base) = match &self.source {
@@ -141,6 +142,7 @@ impl Frame {
                 user: &self.navigable.user,
                 settings: &settings,
                 capture_fragment_targets: false,
+                presentation: crate::style::Presentation::Viewport { color_scheme },
                 ancestors: &self.navigable.ancestors,
             },
             resolver,

@@ -331,6 +331,7 @@ fn multipart_capture_keeps_unreferenced_targets_and_html_fragment_precedence() {
         user: &[],
         settings: &settings,
         capture_fragment_targets: true,
+        presentation: crate::style::Presentation::Paged,
         ancestors: &[],
     };
     let document = StyledDocument::parse_with_options(html, &options, &FileResolver::default())

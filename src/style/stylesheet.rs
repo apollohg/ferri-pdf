@@ -549,7 +549,7 @@ impl Stylesheet {
                 }
                 // CSS Paged Media 3 §3: page rules style page boxes, which continuous media lacks.
                 ContentRule::Page { .. }
-                    if sheet.environment.presentation == crate::style::Presentation::Viewport => {}
+                    if sheet.environment.presentation != crate::style::Presentation::Paged => {}
                 ContentRule::Page { selectors, items } => {
                     sheet
                         .page_rules

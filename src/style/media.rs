@@ -180,7 +180,7 @@ fn spec(
             &["none", "scroll", "paged"],
             Some(match presentation {
                 Presentation::Paged => "paged",
-                Presentation::Viewport => "none",
+                Presentation::Viewport { .. } => "none",
             }),
             false,
         ),

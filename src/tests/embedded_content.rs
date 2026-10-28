@@ -404,3 +404,45 @@ fn canvases_render_their_fallback_content_with_scripting_disabled() {
         "a fallback canvas is not replaced"
     );
 }
+
+#[test]
+fn embedded_canvases_are_transparent_unless_the_colour_schemes_differ() {
+    let surface = |iframe_scheme: &str, document_scheme: &str| {
+        let trace = trace(&format!(
+            "<iframe style='color-scheme:{iframe_scheme}' srcdoc=\"<style>:root{{color-scheme:{document_scheme}}}</style>\"></iframe>"
+        ));
+        let [(_, view)] = viewports(&trace)[..] else {
+            panic!("one viewport");
+        };
+        view.items
+            .iter()
+            .filter_map(|item| match item {
+                DisplayItem::Box(paint)
+                    if paint.rect == view.area && paint.decoration.background.alpha == 1.0 =>
+                {
+                    Some(paint.decoration.background.rgb)
+                }
+                _ => None,
+            })
+            .collect::<Vec<_>>()
+    };
+    assert_eq!(
+        surface("light", "light"),
+        Vec::<[u8; 3]>::new(),
+        "matching schemes stay transparent"
+    );
+    assert_eq!(
+        surface("dark", "dark"),
+        Vec::<[u8; 3]>::new(),
+        "matching schemes stay transparent"
+    );
+    assert_eq!(
+        surface("dark", "light"),
+        [[255, 255, 255]],
+        "a light document in a dark iframe gets an opaque light Canvas"
+    );
+    let [dark] = surface("light", "dark")[..] else {
+        panic!("a dark document in a light iframe gets an opaque Canvas");
+    };
+    assert_ne!(dark, [255, 255, 255], "the dark Canvas colour");
+}

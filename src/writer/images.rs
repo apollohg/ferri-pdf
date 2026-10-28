@@ -51,7 +51,7 @@ impl ImageWriter {
             }
             Asset::Transparent => Ok(()),
             Asset::Viewport(view) => self.draw_viewport(paint, view, viewport, surface),
-            Asset::Frame(_) => unreachable!("layout replaces frames with their viewports"),
+            Asset::Frame(..) => unreachable!("layout replaces frames with their viewports"),
         }
     }
 
@@ -122,7 +122,7 @@ impl ImageWriter {
                     Image::from_custom(crate::writer::pixels::Pixels(pixels.clone()), false)
                         .map(Image::with_jpeg_compression),
                 ),
-                Asset::Svg(_) | Asset::Transparent | Asset::Frame(_) | Asset::Viewport(_) => None,
+                Asset::Svg(_) | Asset::Transparent | Asset::Frame(..) | Asset::Viewport(_) => None,
             };
             if let Some(loaded) = loaded {
                 match loaded.and_then(|image| {
@@ -142,7 +142,7 @@ impl ImageWriter {
         }
         let orientation = match paint.image.as_ref() {
             Asset::Raster(raster) => raster.orientation,
-            Asset::Pixels(_) | Asset::Transparent | Asset::Frame(_) | Asset::Viewport(_) => {
+            Asset::Pixels(_) | Asset::Transparent | Asset::Frame(..) | Asset::Viewport(_) => {
                 NoTransforms
             }
             Asset::Svg(svg) => {
@@ -198,7 +198,7 @@ impl ImageWriter {
             Asset::Raster(_) | Asset::Pixels(_) => {
                 surface.draw_image(self.images[&key].clone(), unit_size);
             }
-            Asset::Transparent | Asset::Frame(_) | Asset::Viewport(_) => {
+            Asset::Transparent | Asset::Frame(..) | Asset::Viewport(_) => {
                 unreachable!("draw dispatches only decoded images here")
             }
             Asset::Svg(svg) => {

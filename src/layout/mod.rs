@@ -174,7 +174,7 @@ fn layout_pass(
     let [page_width, page_height] = page.geometry.paper;
     let canvas_rect = page.geometry.content_box();
     let content_height = canvas_rect.height;
-    let continuous = sheet.presentation() == crate::style::Presentation::Viewport;
+    let continuous = sheet.presentation() != crate::style::Presentation::Paged;
     let first_record = PageRecord::new(page)?;
     let page_output = first_record.output.clone();
     let painting =

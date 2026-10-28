@@ -145,6 +145,7 @@ pub(crate) struct ParseOptions<'a> {
     pub settings: &'a PrintSettings,
     /// Retain targets and unresolved fragment intents for a multipart rendering job.
     pub capture_fragment_targets: bool,
+    pub presentation: crate::style::Presentation,
     /// Document URLs of the navigables containing this document's, outermost first; empty for
     /// the printed document.
     pub ancestors: &'a [Option<crate::resources::Url>],
@@ -201,6 +202,7 @@ impl StyledDocument {
                 user,
                 settings,
                 capture_fragment_targets: false,
+                presentation: crate::style::Presentation::Paged,
                 ancestors: &[],
             },
             resolver,
@@ -259,6 +261,7 @@ impl StyledDocument {
                 user,
                 settings,
                 capture_fragment_targets: false,
+                presentation: crate::style::Presentation::Paged,
                 ancestors: &[],
             },
             resolver,
@@ -302,13 +305,9 @@ impl StyledDocument {
             user,
             settings,
             capture_fragment_targets,
+            presentation,
             ancestors,
         } = *options;
-        let presentation = if ancestors.is_empty() {
-            crate::style::Presentation::Paged
-        } else {
-            crate::style::Presentation::Viewport
-        };
         let HtmlInput {
             tree: mut html,
             encoding: document_encoding,

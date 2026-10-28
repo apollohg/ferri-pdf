@@ -203,9 +203,10 @@ pub(super) fn measure<'a>(
         height,
     };
     let image = match block.image().unwrap().as_ref() {
-        crate::images::Image::Frame(frame) => crate::layout::viewport::view(
+        crate::images::Image::Frame(frame, color_scheme) => crate::layout::viewport::view(
             frame,
             [width, height],
+            *color_scheme,
             measurer.text.resolver(),
             &measurer.work,
         )?,

@@ -93,6 +93,7 @@ pub fn render_parts_with_resolver(
             user: &options.user_stylesheets,
             settings: &options.print,
             capture_fragment_targets: true,
+            presentation: crate::style::Presentation::Paged,
             ancestors: &[],
         };
         let document = match part.source {

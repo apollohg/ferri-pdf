@@ -30,6 +30,7 @@ impl std::fmt::Debug for ViewportPaint {
 pub(super) fn view(
     frame: &Frame,
     size: [f32; 2],
+    color_scheme: crate::style::ColorScheme,
     resolver: &dyn ResourceResolver,
     budget: &Budget,
 ) -> Result<Arc<Image>, LayoutError> {
@@ -45,7 +46,7 @@ pub(super) fn view(
         width: size[0],
         height: size[1],
     };
-    let paint = match frame.document(size, resolver)? {
+    let paint = match frame.document(size, color_scheme, resolver)? {
         FrameDocument::Html(document) => {
             let (document, trace) =
                 crate::layout::stabilize(*document, resolver, budget, Vec::new())?;

@@ -135,8 +135,9 @@ pub enum Image {
     /// Transparent black with no natural dimensions, as a `video` with no poster frame
     /// represents (HTML §4.8.11).
     Transparent,
-    /// The document of a nested navigable, laid out once its viewport size is known.
-    Frame(Arc<crate::document::Frame>),
+    /// The document of a nested navigable, laid out once its viewport size is known, and its
+    /// embedding element's used colour scheme.
+    Frame(Arc<crate::document::Frame>, crate::style::ColorScheme),
     /// A nested navigable's document laid out in its viewport.
     Viewport(Arc<crate::layout::ViewportPaint>),
 }
@@ -152,7 +153,7 @@ impl Image {
                     ratio: Some(width / height),
                 }
             }
-            Self::Transparent | Self::Frame(_) | Self::Viewport(_) => NaturalDimensions::default(),
+            Self::Transparent | Self::Frame(..) | Self::Viewport(_) => NaturalDimensions::default(),
         }
     }
     pub fn pixel_size(&self, available_width: f32) -> [f32; 2] {
@@ -160,7 +161,7 @@ impl Image {
             Self::Raster(image) => image.pixel_size(),
             Self::Svg(image) => image.pixel_size(available_width),
             Self::Pixels(image) => [image.width as f32, image.height as f32],
-            Self::Transparent | Self::Frame(_) | Self::Viewport(_) => DEFAULT_OBJECT_SIZE,
+            Self::Transparent | Self::Frame(..) | Self::Viewport(_) => DEFAULT_OBJECT_SIZE,
         }
     }
     fn parse(
@@ -438,7 +439,7 @@ impl ImageCache {
                 namespace
             }
             Image::Raster(_) | Image::Pixels(_) => FontNamespace::ROOT,
-            Image::Transparent | Image::Frame(_) | Image::Viewport(_) => {
+            Image::Transparent | Image::Frame(..) | Image::Viewport(_) => {
                 unreachable!("image resources parse to decoded images")
             }
         };

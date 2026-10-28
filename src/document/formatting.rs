@@ -23,11 +23,14 @@ const PAPER: crate::graphics::Color = crate::graphics::Color {
 };
 
 /// The canvas surface colour lies beneath the propagated background colour and images
-/// (CSS Color Adjustment 1 §2.2).
-fn canvas_surface(mut canvas: BoxDecoration, surface: crate::graphics::Color) -> BoxDecoration {
-    if surface == PAPER {
+/// (CSS Color Adjustment 1 §2.2); `None` leaves what lies beneath visible.
+fn canvas_surface(
+    mut canvas: BoxDecoration,
+    surface: Option<crate::graphics::Color>,
+) -> BoxDecoration {
+    let Some(surface) = surface else {
         return canvas;
-    }
+    };
     let background = canvas.background;
     let channel = |index: usize| {
         (f32::from(background.rgb[index]) * background.alpha
@@ -39,6 +42,19 @@ fn canvas_surface(mut canvas: BoxDecoration, surface: crate::graphics::Color) ->
         alpha: surface.alpha,
     };
     canvas
+}
+
+/// The opaque canvas surface a document needs. Pages are white paper; an embedded document's
+/// canvas is transparent unless its colour scheme differs from its embedding element's (CSS
+/// Color Adjustment 1 §2.2).
+fn surface_beneath(sheet: &Stylesheet, root: &Style) -> Option<crate::graphics::Color> {
+    let surface = sheet.canvas_surface(root);
+    match sheet.presentation() {
+        crate::style::Presentation::Paged => (surface != PAPER).then_some(surface),
+        crate::style::Presentation::Viewport { color_scheme } => {
+            (sheet.used_color_scheme(&root.color_scheme) != color_scheme).then_some(surface)
+        }
+    }
 }
 
 pub(crate) struct PageBox {
@@ -896,42 +912,53 @@ fn block<'a>(
                 if index == 0 {
                     traversal.canvas = canvas_background(&block.decoration);
                 }
-                block.image = match element.name() {
-                    "img" => {
-                        let image = sheet.image_source(element).and_then(|source| {
-                            block.density = source.density;
-                            resources.cache.load_optional(
-                                &source.url,
-                                resources.base,
-                                resources.resolver,
-                                frame.style.element_font_namespace(),
-                            )
-                        });
-                        if image.is_none()
-                            && !skips
-                            && let Some(alt) = element.attr("alt")
-                        {
-                            block.inline.append(alt, &frame.style)?;
+                block.image =
+                    match element.name() {
+                        "img" => {
+                            let image = sheet.image_source(element).and_then(|source| {
+                                block.density = source.density;
+                                resources.cache.load_optional(
+                                    &source.url,
+                                    resources.base,
+                                    resources.resolver,
+                                    frame.style.element_font_namespace(),
+                                )
+                            });
+                            if image.is_none()
+                                && !skips
+                                && let Some(alt) = element.attr("alt")
+                            {
+                                block.inline.append(alt, &frame.style)?;
+                            }
+                            image
                         }
-                        image
-                    }
-                    "svg" => Some(resources.cache.inline_svg_in_namespace(
-                        crate::document::svg::serialize(element),
-                        resources.base,
-                        resources.resolver,
-                        frame.style.element_font_namespace(),
-                    )?),
-                    "video" if is_replaced(element) => Some(crate::document::media::poster(
-                        element,
-                        &frame.style,
-                        resources,
-                    )),
-                    "audio" if is_replaced(element) => Some(
-                        crate::document::media::audio_controls(&frame.style, resources)?,
-                    ),
-                    _ if is_replaced(element) => traversal.embedded.content(element.id()).cloned(),
-                    _ => None,
-                };
+                        "svg" => Some(resources.cache.inline_svg_in_namespace(
+                            crate::document::svg::serialize(element),
+                            resources.base,
+                            resources.resolver,
+                            frame.style.element_font_namespace(),
+                        )?),
+                        "video" if is_replaced(element) => Some(crate::document::media::poster(
+                            element,
+                            &frame.style,
+                            resources,
+                        )),
+                        "audio" if is_replaced(element) => Some(
+                            crate::document::media::audio_controls(&frame.style, resources)?,
+                        ),
+                        _ if is_replaced(element) => traversal.embedded.content(element.id()).map(
+                            |embedded| match embedded {
+                                crate::document::embedded::Embedded::Image(image) => image.clone(),
+                                crate::document::embedded::Embedded::Navigable(navigable) => {
+                                    std::sync::Arc::new(crate::images::Image::Frame(
+                                        navigable.clone(),
+                                        sheet.used_color_scheme(&frame.style.color_scheme),
+                                    ))
+                                }
+                            },
+                        ),
+                        _ => None,
+                    };
                 block.marker = (frame.style.display.is_list_item() && !skips)
                     .then(|| crate::document::lists::marker(&frame.style, frame.ordinal, resources))
                     .transpose()?
@@ -1431,7 +1458,7 @@ pub(crate) fn build(
                 Ok(())
             })
         })?;
-        let canvas = canvas_surface(BoxDecoration::default(), sheet.canvas_surface(&style));
+        let canvas = canvas_surface(BoxDecoration::default(), surface_beneath(sheet, &style));
         return Ok(Formatted {
             root: BlockBox::anonymous(style, vec![BlockContent::Events(events)], None),
             navigation,
@@ -1479,7 +1506,7 @@ pub(crate) fn build(
     } else {
         0
     };
-    let surface = sheet.canvas_surface(&style);
+    let surface = surface_beneath(sheet, &style);
     let mut root = block(
         element,
         Box::new(style),
