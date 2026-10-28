@@ -174,6 +174,22 @@ fn embedded_hints(
         };
         dimension_hint(output, dimensions, "width", Property::Width, false)?;
         dimension_hint(output, dimensions, "height", Property::Height, false)?;
+        // HTML §15.4.3: images, videos and image buttons map the pair to `aspect-ratio`
+        // using dimension rules.
+        if matches!(tag, "img" | "video") || image_button {
+            let length = |name| {
+                dimensions
+                    .attr(name)
+                    .and_then(dimension)
+                    .and_then(|(value, percentage)| (!percentage).then_some(value))
+            };
+            aspect_ratio_hint(output, length("width"), length("height"))?;
+        }
+    }
+    // HTML §15.4.3: canvas maps the pair to `aspect-ratio` using non-negative integers.
+    if tag == "canvas" {
+        let integer = |name| element.attr(name).and_then(non_negative);
+        aspect_ratio_hint(output, integer("width"), integer("height"))?;
     }
     if (matches!(tag, "embed" | "iframe" | "img" | "object") || image_button)
         && let Some(align) = element.attr("align")
@@ -221,6 +237,22 @@ fn embedded_hints(
         if !nonzero {
             pixel_hint(output, Property::BorderWidth, Some(0.0))?;
         }
+    }
+    Ok(())
+}
+
+/// `aspect-ratio: auto w / h` when both attributes parse (HTML §15.1).
+fn aspect_ratio_hint(
+    output: &mut Vec<PropertyDeclaration>,
+    width: Option<f64>,
+    height: Option<f64>,
+) -> Result<(), StyleError> {
+    if let (Some(width), Some(height)) = (width, height) {
+        hint(
+            output,
+            Property::AspectRatio,
+            &format!("auto {width} / {height}"),
+        )?;
     }
     Ok(())
 }

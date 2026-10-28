@@ -75,3 +75,7 @@ thead, tbody, tfoot, tr { border-color: inherit; }
 /* Embedded content (HTML Standard §15.4.1). */
 iframe { border: 2px inset; }
 video { object-fit: contain; }
+img:is([sizes="auto" i], [sizes^="auto," i]) {
+    contain: size !important;
+    contain-intrinsic-size: 300px 150px;
+}

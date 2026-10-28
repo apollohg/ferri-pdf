@@ -446,3 +446,50 @@ fn embedded_canvases_are_transparent_unless_the_colour_schemes_differ() {
     };
     assert_ne!(dark, [255, 255, 255], "the dark Canvas colour");
 }
+
+#[test]
+fn width_and_height_attributes_map_to_aspect_ratio_hints() {
+    let trace = trace(&format!(
+        "<video width=400 height=100 style='width:120pt;height:auto'></video>\
+         <img src='{IMAGE}' width=40 height=40 style='width:60pt;height:auto'>\
+         <img src='{IMAGE}' sizes=auto srcset='{IMAGE} 80w' loading=lazy>\
+         <canvas width=200 height=50 style='display:block;width:100pt;background:blue'></canvas>"
+    ));
+    let paints = images(&trace);
+    let [video, square, auto] = paints[..] else {
+        panic!("a video and two images: {paints:?}");
+    };
+    assert_eq!(
+        [video.rect.width, video.rect.height],
+        [120.0, 30.0],
+        "a video without a poster takes its attributes' 4:1 ratio"
+    );
+    assert_eq!(
+        [
+            square.clip.unwrap().rect.width,
+            square.clip.unwrap().rect.height
+        ],
+        [60.0, 30.0],
+        "an image's natural ratio overrides the `auto` hint ratio"
+    );
+    assert_eq!(
+        [
+            auto.clip.unwrap().rect.width,
+            auto.clip.unwrap().rect.height
+        ],
+        [300.0 * PIXEL, 150.0 * PIXEL],
+        "sizes=auto images are size-contained at 300 by 150 pixels"
+    );
+    let canvas = trace.display_lists[0]
+        .iter()
+        .filter_map(|item| match item {
+            DisplayItem::Box(paint) if paint.rect.width == 100.0 => Some(paint.rect.height),
+            _ => None,
+        })
+        .collect::<Vec<_>>();
+    assert_eq!(
+        canvas,
+        [25.0],
+        "a block fallback canvas takes its attributes' 4:1 ratio"
+    );
+}

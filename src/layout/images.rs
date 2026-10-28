@@ -22,7 +22,8 @@ fn density_corrected(block: &BlockBox, available_width: f32) -> [f32; 2] {
 }
 
 /// A replaced element's natural size in points and its preferred aspect ratio (CSS Sizing 4
-/// §4.1). Size containment treats the natural size as zero and drops the natural ratio
+/// §4.1). Size containment treats the natural size as zero, or as `contain-intrinsic-size`,
+/// and drops the natural ratio
 /// (CSS Containment 2 §3.1); only an `aspect-ratio` `<ratio>` then relates the axes.
 struct Natural {
     size: [f32; 2],
@@ -36,7 +37,8 @@ impl Natural {
         let mut size = density_corrected(block, available_width);
         for (axis, contained) in contained.into_iter().enumerate() {
             if contained {
-                size[axis] = 0.0;
+                // CSS Sizing 4 §5.2: the explicit intrinsic inner size, if any.
+                size[axis] = style.containment.intrinsic[axis].explicit().unwrap_or(0.0);
             }
         }
         let natural = (!contained.contains(&true))

@@ -47,6 +47,23 @@ class EmbeddedContentPdf(unittest.TestCase):
                 'nested content must start at the content edge and be clipped to the viewport, '
                 'which is the content box, leaving the padding unpainted by it')
 
+    def test_nested_layers_paint_text_shadows_and_blend_groups(self):
+        font = table_positioning_pdf.ROOT / 'tests/oracle/assets/DejaVuSans.ttf'
+        content = ('p{margin:0;font:20pt Probe;color:rgb(0,0,255);text-shadow:3pt 3pt rgb(0,128,0)}'
+                   '.m{width:40pt;height:20pt;background:rgb(255,0,0);mix-blend-mode:multiply}')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-iframe-effects-') as directory:
+            root = Path(directory)
+            nested = (f"<style>@font-face{{font-family:Probe;src:url('{font.as_uri()}')}}"
+                      f'body{{margin:0}}{content}</style><p>Ab</p><div class=m></div>')
+            expected = self.ink(root, '.viewport{width:200pt;height:80pt;overflow:hidden;'
+                                'isolation:isolate}' + content,
+                                '<div class=viewport><p>Ab</p><div class=m></div></div>')
+            self.assertEqual(
+                self.ink(root, 'iframe{display:block;border:0;width:200pt;height:80pt}',
+                         f'<iframe srcdoc="{escape(nested)}"></iframe>'),
+                expected,
+                'text shadows and blend groups inside the viewport paint as they do on the page')
+
     def test_nested_media_queries_use_the_iframe_viewport_not_the_page(self):
         nested = ('<style>body{margin:0}div{height:20pt;background:rgb(255,0,0)}'
                   '@media (max-width:130pt) and (min-width:130pt){div{background:rgb(0,128,0)}}'
