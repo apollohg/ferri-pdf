@@ -37,7 +37,8 @@ pub(crate) enum Component {
     Flex(f32),
     /// A `<dimension>` of any unit.
     Dimension(f32, Box<str>),
-    Color(cssparser_color::Color),
+    Color(crate::paint::AbsoluteColor),
+    /// A colour that depends on the element: `currentcolor`, the colour scheme, or math.
     MathColor(Box<str>),
     String(Box<str>),
     Url(Box<str>),

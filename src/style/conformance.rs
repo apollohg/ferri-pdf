@@ -220,7 +220,6 @@ fn base_samples(base: Base, range: Range) -> Vec<String> {
         Base::Dimension => vec!["3px".into()],
         Base::Flex => vec!["1fr".into()],
         Base::HashToken => vec!["#sample".into()],
-        Base::HexColor => vec!["#abc".into()],
         Base::Ident => vec!["sample".into()],
         Base::Integer => {
             let mut samples = vec![format!("{}", number(2.0) as i32)];
@@ -645,7 +644,7 @@ fn matching_follows_value_definition_semantics() {
             P::Color,
             "color-mix(in srgb, red, blue)",
             true,
-            "functions cssparser-color lacks",
+            "CSS Color 5 mixing",
         ),
         (P::Color, "notacolor", false, "unknown colour keywords"),
         (P::AspectRatio, "16 / 9", true, "literal slash"),

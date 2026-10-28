@@ -492,7 +492,8 @@ fn inline_image_backgrounds_are_loaded_and_shared_across_block_splits() {
     let images: Vec<_> = fragments
         .iter()
         .map(|paint| {
-            let [BackgroundImage::Image { image }] = paint.decoration.backgrounds.images.as_slice()
+            let [BackgroundImage::Image { image, .. }] =
+                paint.decoration.backgrounds.images.as_slice()
             else {
                 panic!("each inline continuation must retain its loaded raster background")
             };

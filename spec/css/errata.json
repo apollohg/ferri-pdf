@@ -136,6 +136,10 @@
     "content()": {
       "syntax": "content( [ text | before | after | first-letter | marker ]? )",
       "source": "https://drafts.csswg.org/css-gcpm-3/#content-function-header"
+    },
+    "image-set-option": {
+      "syntax": "[ <image> | <string> ] [ <resolution> || type(<string>) ]?",
+      "source": "https://www.w3.org/TR/2025/WD-css-images-4-20250930/#image-set-notation"
     }
   },
   "properties": {

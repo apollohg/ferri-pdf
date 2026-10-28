@@ -19,7 +19,6 @@ pub(crate) const BASE_TYPES: &[&str] = &[
     "dimension",
     "flex",
     "hash-token",
-    "hex-color",
     "ident",
     "integer",
     "length",
@@ -48,8 +47,6 @@ const NUMERIC_TYPES: &[&str] = &[
 ];
 /// Unitless numeric types, whose range bounds may be any number.
 const UNITLESS_TYPES: &[&str] = &["integer", "number", "percentage"];
-/// `<color>` is parsed by cssparser-color first; this production validates the rest.
-pub(crate) const COLOR_PRODUCTION: &str = "color";
 pub(crate) const UNBOUNDED: u32 = u16::MAX as u32;
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
@@ -116,7 +113,6 @@ pub(crate) struct Grammar {
     pub(crate) descriptors: Vec<CompiledDescriptor>,
     /// Production name to its reference node.
     pub(crate) productions: BTreeMap<String, usize>,
-    pub(crate) color: usize,
     pub(crate) keywords: BTreeSet<String>,
     pub(crate) units: Vec<String>,
 }
@@ -174,7 +170,6 @@ pub(crate) fn compile(spec: &Spec) -> Result<Grammar, BuildError> {
             initial: descriptor.initial.clone(),
         });
     }
-    let color = compiler.production(COLOR_PRODUCTION, COLOR_PRODUCTION)?;
     let nodes = compiler.nodes;
     for property in &mut properties {
         if let Initial::Value(value) = &property.initial
@@ -196,7 +191,6 @@ pub(crate) fn compile(spec: &Spec) -> Result<Grammar, BuildError> {
         properties,
         descriptors,
         productions,
-        color,
         keywords,
         units: spec.units.clone(),
     })

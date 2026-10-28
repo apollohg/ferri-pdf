@@ -1,5 +1,5 @@
 //! Background image layers: single tiles are drawn in place and repeated tiles become
-//! tiling patterns; gradients are vector axial or radial shadings.
+//! tiling patterns; gradients are vector axial, radial or function-based sweep shadings.
 use crate::graphics::{
     BorderImagePaint, BoxPaint, ImagePaint, LayerPaint, Rect, ResolvedGradient, Shading, TileImage,
 };
@@ -12,7 +12,9 @@ use krilla::{
     color::rgb,
     geom::Transform,
     num::NormalizedF32,
-    paint::{Fill, FillRule, LinearGradient, Pattern, RadialGradient, SpreadMethod, Stop},
+    paint::{
+        Fill, FillRule, LinearGradient, Pattern, RadialGradient, SpreadMethod, Stop, SweepGradient,
+    },
     surface::Surface,
 };
 
@@ -198,6 +200,11 @@ fn draw_tile(
     }
 }
 
+const FULL_TURN_DEG: f32 = 360.0;
+/// A sweep shading's angles start along +x and turn towards +y, which is down in page space;
+/// CSS conic angles start at the top (CSS Images 4 §3.3.2).
+const SWEEP_TO_CONIC_DEG: f32 = 90.0;
+
 fn normalized(value: f32) -> Result<NormalizedF32, PdfError> {
     NormalizedF32::new(value.clamp(0.0, 1.0)).ok_or(PdfError::InvalidGeometry)
 }
@@ -252,6 +259,20 @@ fn gradient_fill(gradient: &ResolvedGradient, [x, y]: [f32; 2]) -> Result<Fill, 
                     0.0,
                     center[1] * (1.0 - scale_y),
                 ),
+                spread_method: SpreadMethod::Pad,
+                stops,
+                anti_alias: false,
+            }
+            .into()
+        }
+        Shading::Conic { center, angle } => {
+            let [cx, cy] = [x + center[0], y + center[1]];
+            SweepGradient {
+                cx,
+                cy,
+                start_angle: 0.0,
+                end_angle: FULL_TURN_DEG,
+                transform: Transform::from_rotate_at(angle - SWEEP_TO_CONIC_DEG, cx, cy),
                 spread_method: SpreadMethod::Pad,
                 stops,
                 anti_alias: false,

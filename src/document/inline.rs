@@ -122,15 +122,10 @@ impl Paragraph {
     }
     /// CSS list marker default object size is one em square.
     pub(crate) fn marker_image_size(&self) -> Option<[f32; 2]> {
-        use crate::graphics::{BackgroundImage, NaturalDimensions, POINTS_PER_PIXEL};
+        use crate::graphics::{BackgroundImage, NaturalDimensions};
         let natural = match self.marker_image.as_ref()? {
-            BackgroundImage::Image { image } => {
-                let size = image.natural_size();
-                NaturalDimensions {
-                    width: size.width.map(|v| v * POINTS_PER_PIXEL),
-                    height: size.height.map(|v| v * POINTS_PER_PIXEL),
-                    ratio: size.ratio,
-                }
+            BackgroundImage::Image { image, resolution } => {
+                crate::paint::natural_points(image, *resolution)
             }
             _ => NaturalDimensions::default(),
         };

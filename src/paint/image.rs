@@ -16,14 +16,22 @@ impl NaturalDimensions {
 /// Intrinsic metadata used by image-independent sizing and paint algorithms.
 pub trait ImageInfo {
     fn natural_size(&self) -> NaturalDimensions;
+    /// Whether the image has pixels, whose size a natural resolution scales.
+    fn is_raster(&self) -> bool;
 }
 impl<T: ImageInfo> ImageInfo for Arc<T> {
     fn natural_size(&self) -> NaturalDimensions {
         (**self).natural_size()
     }
+    fn is_raster(&self) -> bool {
+        (**self).is_raster()
+    }
 }
 impl ImageInfo for Infallible {
     fn natural_size(&self) -> NaturalDimensions {
+        match *self {}
+    }
+    fn is_raster(&self) -> bool {
         match *self {}
     }
 }

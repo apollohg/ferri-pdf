@@ -176,6 +176,8 @@ pub(super) struct Context<'r> {
     pub(super) relative: &'r Relative<'r>,
     /// Percentage hint; `None` preserves the independent percentage type.
     pub(super) percentage: Option<Kind>,
+    /// Relative colour channel keywords and their `<number>` values (CSS Color 5 §4.2).
+    pub(super) channels: &'r [(&'r str, f32)],
 }
 
 #[derive(Debug, thiserror::Error)]
@@ -472,6 +474,7 @@ impl MathParser<'_> {
             context: Context {
                 relative: &relative,
                 percentage: None,
+                channels: &[],
             },
             depth: self.depth,
         };
@@ -756,9 +759,9 @@ impl MathParser<'_> {
                 Ok((Calculation::Value(unsigned_zero(value)), CalcType::NUMBER))
             }
             Token::Percentage { unit_value, .. } => match self.context.percentage {
-                Some(Kind::Length) => Ok((
+                Some(kind @ (Kind::Length | Kind::Angle)) => Ok((
                     Calculation::percentage(unsigned_zero(unit_value)),
-                    CalcType::of(Kind::Length),
+                    CalcType::of(kind),
                 )),
                 Some(kind) => Ok((
                     Calculation::Value(unsigned_zero(unit_value)),
@@ -791,6 +794,14 @@ impl MathParser<'_> {
                 Ok((Calculation::Value(canonical), CalcType::base(base)))
             }
             Token::Ident(name) => {
+                if let Some((_, value)) = self
+                    .context
+                    .channels
+                    .iter()
+                    .find(|(channel, _)| name.eq_ignore_ascii_case(channel))
+                {
+                    return Ok((Calculation::Value(*value), CalcType::NUMBER));
+                }
                 let value = match &*name.to_ascii_lowercase() {
                     "e" => std::f32::consts::E,
                     "pi" => std::f32::consts::PI,

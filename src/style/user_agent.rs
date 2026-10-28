@@ -328,15 +328,8 @@ fn color(value: &str) -> Option<String> {
     if value.eq_ignore_ascii_case("transparent") {
         return None;
     }
-    if value.chars().all(|ch| ch.is_ascii_alphabetic())
-        && let Ok(parsed) =
-            crate::style::colors::parse(value, &crate::style::units::Relative::initial())
-        && let cssparser_color::Color::Rgba(color) = parsed.color
-    {
-        return Some(format!(
-            "#{:02x}{:02x}{:02x}",
-            color.red, color.green, color.blue
-        ));
+    if let Ok((red, green, blue)) = cssparser::color::parse_named_color(value) {
+        return Some(format!("#{red:02x}{green:02x}{blue:02x}"));
     }
     if let Some(short) = value.strip_prefix('#').filter(|value| {
         value.len() == SHORT_COLOR_DIGITS && value.bytes().all(|byte| byte.is_ascii_hexdigit())

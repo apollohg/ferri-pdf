@@ -30,6 +30,7 @@ pub(super) fn math(
     let context = Context {
         relative,
         percentage,
+        channels: &[],
     };
     match math_function(&mut Parser::new(&mut input), context)
         .map(|math| math.and_then(|math| math.expect(&[kind])))
@@ -69,6 +70,16 @@ pub(super) fn angle(value: &Component, relative: &Relative<'_>) -> Result<f32, S
         Component::Number(zero) => Ok(*zero),
         Component::Math(source, Kind::Angle, range) => {
             Ok(math(source, relative, Kind::Angle, None)?.resolve(0.0, *range))
+        }
+        other => Err(unsupported(other)),
+    }
+}
+/// `<resolution>` in dots per CSS pixel.
+pub(super) fn resolution(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
+    match value.unwrap() {
+        Component::Resolution(dppx) => Ok(*dppx),
+        Component::Math(source, Kind::Resolution, range) => {
+            Ok(math(source, relative, Kind::Resolution, None)?.resolve(0.0, *range))
         }
         other => Err(unsupported(other)),
     }

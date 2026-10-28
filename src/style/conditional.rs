@@ -445,6 +445,7 @@ impl Scalar {
             calc::Context {
                 relative,
                 percentage: None,
+                channels: &[],
             },
         ) {
             let math = match math {

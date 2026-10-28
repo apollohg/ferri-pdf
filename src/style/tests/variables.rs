@@ -321,7 +321,7 @@ fn generated_function_argument_types_are_checked_after_substitution() {
 }
 
 #[test]
-fn unsupported_color_functions_remain_explicit_after_substitution() {
+fn color_functions_compute_after_substitution() {
     let sheet = Stylesheet::parse(&[StylesheetSource {
         text: "#root{--ink:color-mix(in srgb, red, blue);color:var(--ink)}".into(),
         base: Default::default(),
@@ -329,14 +329,16 @@ fn unsupported_color_functions_remain_explicit_after_substitution() {
     .unwrap();
     let html = DocumentTree::parse("<p id=root>Body</p>").expect("parse test HTML");
     let selector = Selector::parse("#root").unwrap();
-    assert!(
-        sheet
-            .computed_with_resolver(
-                html.select(&selector).next().unwrap(),
-                &Style::default(),
-                &FileResolver::default()
-            )
-            .is_err(),
-        "a valid unsupported color function must not silently reset"
+    let style = sheet
+        .computed_with_resolver(
+            html.select(&selector).next().unwrap(),
+            &Style::default(),
+            &FileResolver::default(),
+        )
+        .expect("a substituted color-mix() computes");
+    assert_eq!(
+        style.color.rgb,
+        [128, 0, 128],
+        "an even sRGB mix of red and blue is rgb(127.5 0 127.5), rounded up"
     );
 }

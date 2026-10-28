@@ -5,6 +5,7 @@ mod border_image;
 mod boxes;
 mod calculation;
 mod clip;
+mod color_space;
 mod decoration;
 mod easing;
 mod gradient;
@@ -16,6 +17,7 @@ pub(crate) use background::rounded_size;
 pub(crate) use background::{
     Attachment, BackgroundImage, BackgroundSize, Backgrounds, BoxArea, LayerPaint, Position,
     PositionComponent, Repeat, SizeComponent, TileImage, UnresolvedImage, image_size,
+    natural_points,
 };
 pub(crate) use border_image::{
     BorderImage, BorderImageOutset, BorderImagePaint, BorderImageRepeat, BorderImageWidth,
@@ -29,6 +31,9 @@ pub use boxes::{Border, BorderStyle, INLINE_EDGES};
 pub(crate) use calculation::MAX_CALC_MAGNITUDE;
 pub(crate) use calculation::{BinaryFunction, Calculation, RoundingStrategy, UnaryFunction};
 pub use clip::{Clip, ClipBounds};
+pub(crate) use color_space::{
+    AbsoluteColor, ColorSpace, HueInterpolation, Interpolation, normalize_hue, quantize,
+};
 pub use decoration::{DecorationLine, DecorationPaint, DecorationStyle};
 pub(crate) use easing::{Easing, LinearPoint, StepPosition};
 #[cfg(test)]

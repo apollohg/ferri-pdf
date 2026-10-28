@@ -191,12 +191,6 @@ pub(crate) fn emit(grammar: &Grammar) -> Result<String, BuildError> {
 
     writeln!(
         out,
-        "pub(crate) const COLOR_SYNTAX: NodeId = {};",
-        grammar.color
-    )
-    .unwrap();
-    writeln!(
-        out,
         "{TEST_ONLY}\npub(crate) static SPEC_UNITS: [&str; {}] = {:?};",
         grammar.units.len(),
         grammar.units

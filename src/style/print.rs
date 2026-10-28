@@ -1,6 +1,6 @@
 use crate::style::{DEFAULT_PAGE, StyleError, units::Relative};
 
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, serde::Serialize)]
 pub enum ColorScheme {
     #[default]
     Light,
@@ -66,6 +66,8 @@ impl PrintSettings {
 pub(super) struct PrintEnvironment {
     pub paper: [f32; 2],
     pub preferences: PrintPreferences,
+    /// The page's supported colour schemes, which `color-scheme: normal` takes.
+    pub page_color_schemes: crate::style::color_scheme::ColorSchemes,
     pub relative: Relative<'static>,
     pub supports: crate::style::supports::SupportNames,
     pub custom_media: std::collections::BTreeMap<String, crate::style::conditions::NamedValue>,
@@ -81,6 +83,7 @@ impl PrintEnvironment {
         Ok(Self {
             paper: settings.paper,
             preferences: settings.preferences.clone(),
+            page_color_schemes: Default::default(),
             relative,
             custom_media: Default::default(),
             supports: Default::default(),

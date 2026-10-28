@@ -33,7 +33,7 @@ fn formatting_preserves_computed_background_and_border_image_urls() {
         &FileResolver::default(),
     ).unwrap();
     let root = document.root();
-    let expected = serde_json::json!({"Url": reference});
+    let expected = serde_json::json!({"Url": {"url": reference, "resolution": 1.0}});
     assert_eq!(
         serde_json::to_value(&root.style().decoration.backgrounds.images).unwrap(),
         serde_json::json!([expected]),
@@ -598,10 +598,10 @@ fn page_document_and_margin_backgrounds_share_images_without_mutating_computed_u
     for (computed, materialized) in decorations {
         assert_eq!(
             serde_json::to_value(&computed.backgrounds.images).unwrap(),
-            serde_json::json!([{"Url": IMAGE}]),
+            serde_json::json!([{"Url": {"url": IMAGE, "resolution": 1.0}}]),
             "computed image must retain the absolute source URL"
         );
-        let BackgroundImage::Image { image } = &materialized.backgrounds.images[0] else {
+        let BackgroundImage::Image { image, .. } = &materialized.backgrounds.images[0] else {
             panic!("drawable decoration must contain the decoded image")
         };
         images.push(image);
@@ -818,5 +818,257 @@ fn math_functions_position_and_size_layers_against_each_positioning_area() {
     assert!(
         negative.background_layers(PAGE_AREA).unwrap().is_empty(),
         "a zero-width tile paints nothing"
+    );
+}
+
+/// The non-premultiplied colour the PDF shading interpolates linearly between stops.
+fn shaded(stops: &[GradientStop], offset: f32) -> [f32; 4] {
+    let after = stops
+        .partition_point(|stop| stop.offset < offset)
+        .min(stops.len() - 1);
+    let before = after.saturating_sub(1);
+    let (a, b) = (stops[before], stops[after]);
+    let t = if b.offset > a.offset {
+        ((offset - a.offset) / (b.offset - a.offset)).clamp(0.0, 1.0)
+    } else {
+        1.0
+    };
+    let channel = |index: usize| {
+        f32::from(a.color.rgb[index])
+            + (f32::from(b.color.rgb[index]) - f32::from(a.color.rgb[index])) * t
+    };
+    [
+        channel(0),
+        channel(1),
+        channel(2),
+        a.color.alpha + (b.color.alpha - a.color.alpha) * t,
+    ]
+}
+
+/// Compares the shaded line with `expected(offset)` at every hundredth of the line.
+fn assert_shading(label: &str, stops: &[GradientStop], expected: impl Fn(f32) -> Color) {
+    for step in 0..=100 {
+        let offset = step as f32 / 100.0;
+        let actual = shaded(stops, offset);
+        let expected = expected(offset);
+        for channel in 0..3 {
+            assert!(
+                (actual[channel] - f32::from(expected.rgb[channel])).abs() <= COLOR_TOLERANCE,
+                "{label}: at {offset} the shading is {actual:?}, the CSS colour {expected:?}\n\
+                 stops {stops:?}"
+            );
+        }
+        close(
+            &format!("{label}: alpha at {offset}"),
+            actual[3],
+            expected.alpha,
+        );
+    }
+}
+
+#[test]
+fn gradients_interpolate_in_their_colour_space_within_output_precision() {
+    use crate::paint::{AbsoluteColor, ColorSpace, HueInterpolation, Interpolation};
+    let red = AbsoluteColor::srgb([1.0, 0.0, 0.0], 1.0);
+    let blue = AbsoluteColor::srgb([0.0, 0.0, 1.0], 1.0);
+    let legacy = gradient("linear-gradient(to right,red,blue)");
+    assert_eq!(
+        legacy.stops.len(),
+        2,
+        "legacy colours interpolate in gamma-encoded sRGB, which PDF shading reproduces exactly \
+         (CSS Color 4 §13.2): {:?}",
+        legacy.stops
+    );
+    let oklab = Interpolation {
+        space: ColorSpace::Oklab,
+        hue: HueInterpolation::Shorter,
+    };
+    for image in [
+        "linear-gradient(to right,color(srgb 1 0 0),color(srgb 0 0 1))",
+        "linear-gradient(in oklab to right,red,blue)",
+    ] {
+        let resolved = gradient(image);
+        assert!(
+            resolved.stops.len() > 2,
+            "{image}: Oklab is not linear in sRGB, so the line is sampled: {:?}",
+            resolved.stops
+        );
+        assert_shading(image, &resolved.stops, |offset| {
+            oklab.interpolate(&red, &blue, offset).used()
+        });
+    }
+    let longer = Interpolation {
+        space: ColorSpace::Oklch,
+        hue: HueInterpolation::Longer,
+    };
+    let rainbow = gradient("linear-gradient(in oklch longer hue to right,red,blue)");
+    assert_shading("the longer oklch arc", &rainbow.stops, |offset| {
+        longer.interpolate(&red, &blue, offset).used()
+    });
+    let middle = shaded(&rainbow.stops, 0.5);
+    assert!(
+        middle[1] > middle[0] && middle[1] > middle[2],
+        "the longer arc from red to blue passes through green: {middle:?}"
+    );
+    let fade = gradient("linear-gradient(in oklab to right,red,transparent)");
+    assert!(
+        fade.stops.iter().all(|stop| stop.color.rgb == [255, 0, 0]),
+        "premultiplied interpolation fades red without darkening (§13.4): {:?}",
+        fade.stops
+    );
+    let neutral = gradient("linear-gradient(in oklch to right,red,#888,green)");
+    let shorter = Interpolation {
+        space: ColorSpace::Oklch,
+        hue: HueInterpolation::Shorter,
+    };
+    let grey = AbsoluteColor::from_rgb8([0x88; 3], 1.0);
+    let green = AbsoluteColor::from_rgb8([0, 128, 0], 1.0);
+    assert_shading(
+        "grey's missing hue takes each neighbour's (CSS Images 4 §3.5.2)",
+        &neutral.stops,
+        |offset| {
+            if offset <= 0.5 {
+                shorter.interpolate(&red, &grey, offset * 2.0).used()
+            } else {
+                shorter
+                    .interpolate(&grey, &green, offset * 2.0 - 1.0)
+                    .used()
+            }
+        },
+    );
+}
+
+#[test]
+fn conic_gradients_place_angular_stops_around_their_rotated_centre() {
+    let resolved =
+        gradient("conic-gradient(from 90deg at 25% 30%,red,lime 25%,blue calc(45deg + 25%),red)");
+    let Shading::Conic { center, angle } = resolved.shading else {
+        panic!("conic gradients are sweep shadings: {:?}", resolved.shading)
+    };
+    close("centre x is 25% of 200pt", center[0], 50.0);
+    close("centre y is 30% of 100pt", center[1], 30.0);
+    close("from rotates the whole gradient", angle, 90.0);
+    assert_stops(
+        "angles and percentages are fractions of a turn (CSS Images 4 §3.3.2)",
+        &resolved.stops,
+        &[
+            (0.0, [255, 0, 0], 1.0),
+            (0.25, [0, 255, 0], 1.0),
+            (0.375, [0, 0, 255], 1.0),
+            (1.0, [255, 0, 0], 1.0),
+        ],
+    );
+    let centred = gradient("conic-gradient(red,blue)");
+    assert!(
+        matches!(centred.shading, Shading::Conic { center: [100.0, 50.0], angle } if angle == 0.0),
+        "the default centre is the box centre and the default angle 0deg: {:?}",
+        centred.shading
+    );
+    let repeating = gradient("repeating-conic-gradient(red 0deg 10%,blue 10% 20%)");
+    let restarts: Vec<f32> = repeating
+        .stops
+        .windows(2)
+        .filter(|pair| pair[0].offset == pair[1].offset && pair[0].color != pair[1].color)
+        .map(|pair| pair[0].offset)
+        .collect();
+    assert_eq!(
+        restarts.len(),
+        9,
+        "a 20% period has hard edges at every tenth of the turn: {restarts:?}"
+    );
+    for (index, offset) in restarts.iter().enumerate() {
+        close(&format!("edge {index}"), *offset, 0.1 * (index + 1) as f32);
+    }
+}
+
+#[test]
+fn image_set_chooses_the_highest_supported_resolution_as_natural_resolution() {
+    let tile = |image: &str| {
+        let paint = first(
+            "div{width:200pt;height:100pt;background-repeat:no-repeat;border:1pt solid}",
+            &format!("<div style=\"background-image:{image}\">A</div>"),
+        );
+        paint
+            .background_layers(PAGE_AREA)
+            .unwrap()
+            .first()
+            .map(|layer| [layer.tile.width, layer.tile.height])
+    };
+    assert_eq!(
+        tile(
+            "image-set(url(../assets/missing.png) 1x,url(../assets/image-pattern.png) 2x,\
+             url(../assets/missing.png) 2x,url(../assets/missing.png) 4x type('image/x-unknown'))"
+        ),
+        Some([30.0, 15.0]),
+        "the 80x40px image at 2x is 40x20px: later duplicates of a resolution and unsupported \
+         types drop out (CSS Images 4 §2.4)"
+    );
+    assert_eq!(
+        tile("image-set('../assets/image-pattern.png' 192dpi type('image/png; q=1'))"),
+        Some([30.0, 15.0]),
+        "strings are URLs and 192dpi is 2dppx"
+    );
+    assert_eq!(
+        tile("image-set(url(../assets/image-pattern.png))"),
+        Some([60.0, 30.0]),
+        "an option without a resolution is 1x"
+    );
+    assert_eq!(
+        tile("image-set(url(../assets/image-pattern.svg) 2x)"),
+        tile("url(../assets/image-pattern.svg)"),
+        "a resolution only scales raster images"
+    );
+    assert_eq!(
+        tile("image-set(url(../assets/missing.png) type('text/plain'))"),
+        None,
+        "without a valid option image-set() is an invalid image, which paints nothing"
+    );
+    assert!(
+        tile("image-set(linear-gradient(red,blue) 1x,url(../assets/missing.png) 0.5x)").is_some(),
+        "generated images are options too"
+    );
+}
+
+#[test]
+fn a_dark_root_scheme_paints_the_canvas_surface_beneath_the_root_background() {
+    let canvas_in = |css: &str, body: &str| {
+        paints(css, body)
+            .remove(0)
+            .into_iter()
+            .map(|paint| paint.decoration.background)
+            .find(|background| background.alpha > 0.0)
+    };
+    let canvas = |css: &str| canvas_in(css, "<p>A</p>");
+    let dark_canvas = Some(Color {
+        rgb: [0x12; 3],
+        alpha: 1.0,
+    });
+    assert_eq!(
+        canvas_in(
+            "",
+            "<meta name=color-scheme content='not valid!'><meta name=COLOR-SCHEME content=dark><p>A</p>"
+        ),
+        dark_canvas,
+        "color-scheme: normal takes the first valid meta value as the page's schemes \
+         (HTML §4.2.5.1)"
+    );
+    assert_eq!(
+        canvas(""),
+        None,
+        "a light canvas is the white paper, so nothing is painted"
+    );
+    assert_eq!(
+        canvas(":root{color-scheme:dark}"),
+        dark_canvas,
+        "the root's used dark scheme makes the canvas surface its dark Canvas colour \
+         (CSS Color Adjustment 1 §2.2)"
+    );
+    assert_eq!(
+        canvas(":root{color-scheme:dark}body{background:rgb(255 0 0 / 50%)}"),
+        Some(Color {
+            rgb: [137, 9, 9],
+            alpha: 1.0
+        }),
+        "the propagated half-opaque background composites over the surface"
     );
 }

@@ -6,6 +6,7 @@ mod border_image_values;
 mod box_values;
 mod calc;
 mod cascade;
+mod color_scheme;
 mod colors;
 mod component;
 mod computed;

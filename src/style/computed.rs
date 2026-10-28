@@ -143,7 +143,10 @@ pub(crate) struct Style {
     pub keep: BreakInside,
     pub widows: usize,
     pub orphans: usize,
+    /// The used `color`; `computed_color` keeps its colour space for `currentcolor`.
     pub color: Color,
+    pub computed_color: crate::paint::AbsoluteColor,
+    pub color_scheme: crate::style::color_scheme::ColorSchemes,
     pub decoration: BoxDecoration,
     pub clone_decoration: bool,
     pub text_decorations: crate::style::TextDecorations,
@@ -230,6 +233,8 @@ impl Default for Style {
             widows: crate::style::DEFAULT_MIN_FRAGMENT_LINES,
             orphans: crate::style::DEFAULT_MIN_FRAGMENT_LINES,
             color: Color::BLACK,
+            computed_color: crate::paint::AbsoluteColor::BLACK,
+            color_scheme: Default::default(),
             decoration: initial_decoration(),
             clone_decoration: false,
             text_decorations: crate::style::TextDecorations::default(),
@@ -771,6 +776,24 @@ impl Stylesheet {
         Relative::with_initial_font(self.environment.relative.initial_font.clone())
     }
 
+    /// `Canvas` in the root's used colour scheme, the canvas surface colour (CSS Color
+    /// Adjustment 1 §2.2).
+    pub(crate) fn canvas_surface(&self, root: &Style) -> Color {
+        crate::style::colors::canvas(self.used_color_scheme(&root.color_scheme))
+    }
+
+    /// The used colour scheme of computed `color-scheme` `schemes` (CSS Color Adjustment 1
+    /// §2.1); print preferences never override it.
+    pub(crate) fn used_color_scheme(
+        &self,
+        schemes: &crate::style::color_scheme::ColorSchemes,
+    ) -> crate::style::ColorScheme {
+        schemes.used(
+            self.environment.preferences.color_scheme,
+            &self.environment.page_color_schemes,
+        )
+    }
+
     /// What a child of `parent` inherits: the parent's font and the root's, or initial values
     /// for the root element, which has no parent style.
     pub(super) fn inherited<'a>(
@@ -808,13 +831,15 @@ impl Stylesheet {
                 work: Default::default(),
                 initial_page_font_size: false,
                 initial_font: self.environment.relative.initial_font.clone(),
+                color_scheme: self.used_color_scheme(&parent.color_scheme),
             },
         }
     }
 
     /// Computes the font properties and returns what the element's other relative lengths
     /// resolve against: its own font, with `lh` measuring the parent's line height until
-    /// `line-height` computes (CSS Values 4 §6.1.1), and colour first for `currentcolor`.
+    /// `line-height` computes (CSS Values 4 §6.1.1), and `color-scheme` then colour first for
+    /// `light-dark()`, system colours and `currentcolor`.
     pub(super) fn text_basis<'a>(
         &'a self,
         style: &mut Style,
@@ -824,6 +849,10 @@ impl Stylesheet {
         resolver: &'a dyn ResourceResolver,
     ) -> Result<Relative<'a>, StyleError> {
         let root = parent.root_font.is_none();
+        if let Some(value) = winners.remove(&Property::ColorScheme) {
+            properties::apply(Property::ColorScheme, &value, style, parent, &inherited)?;
+        }
+        let color_scheme = self.used_color_scheme(&style.color_scheme);
         for property in [Property::FontSize].iter().chain(&FONT_SELECTION) {
             if let Some(value) = winners.remove(property) {
                 properties::apply(*property, &value, style, parent, &inherited)?;
@@ -870,6 +899,7 @@ impl Stylesheet {
             work: work.clone(),
             initial_page_font_size: false,
             initial_font: self.environment.relative.initial_font.clone(),
+            color_scheme,
         };
         if let Some(value) = winners.remove(&Property::LineHeight) {
             properties::apply(Property::LineHeight, &value, style, parent, &line_basis)?;
@@ -903,8 +933,14 @@ impl Stylesheet {
             work: work.clone(),
             initial_page_font_size: false,
             initial_font: self.environment.relative.initial_font.clone(),
+            color_scheme,
         };
-        if let Some(value) = winners.remove(&Property::Color) {
+        // The root's initial `canvastext` follows its own colour scheme.
+        let initial = Specified::Wide(crate::style::wide_keywords::WideKeyword::Initial);
+        if let Some(value) = winners
+            .remove(&Property::Color)
+            .or_else(|| root.then_some(initial))
+        {
             properties::apply(Property::Color, &value, style, parent, &relative)?;
         }
         style.decoration = initial_decoration();

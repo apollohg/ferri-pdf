@@ -110,11 +110,16 @@ pub(crate) type Position = [PositionComponent; 2];
 #[serde(bound(serialize = ""))]
 pub enum BackgroundImage<I = Infallible> {
     None,
-    /// Absolute reference that the document builder loads into `Image`.
-    Url(String),
+    /// Absolute reference that the document builder loads into `Image`; `resolution` is a
+    /// raster image's natural resolution in dots per CSS pixel (CSS Images 4 §2.4).
+    Url {
+        url: String,
+        resolution: f32,
+    },
     Image {
         #[serde(skip)]
         image: I,
+        resolution: f32,
     },
     Gradient(Gradient),
 }
@@ -183,7 +188,7 @@ impl<I> Backgrounds<I> {
         if !backgrounds
             .images
             .iter()
-            .any(|image| matches!(image, BackgroundImage::Url(_)))
+            .any(|image| matches!(image, BackgroundImage::Url { .. }))
         {
             return Ok(());
         }
@@ -196,9 +201,10 @@ impl<I> Backgrounds<I> {
 impl<I> BackgroundImage<I> {
     /// Replaces a `Url` with the image `load` returns for it.
     pub fn load<E>(&mut self, load: &mut impl FnMut(&str) -> Result<I, E>) -> Result<(), E> {
-        if let Self::Url(reference) = self {
+        if let Self::Url { url, resolution } = self {
             *self = Self::Image {
-                image: load(reference)?,
+                image: load(url)?,
+                resolution: *resolution,
             };
         }
         Ok(())
@@ -209,9 +215,12 @@ impl BackgroundImage<Infallible> {
     pub fn with_image_type<I>(&self) -> BackgroundImage<I> {
         match self {
             Self::None => BackgroundImage::None,
-            Self::Url(reference) => BackgroundImage::Url(reference.clone()),
+            Self::Url { url, resolution } => BackgroundImage::Url {
+                url: url.clone(),
+                resolution: *resolution,
+            },
             Self::Gradient(gradient) => BackgroundImage::Gradient(gradient.clone()),
-            Self::Image { image } => match *image {},
+            Self::Image { image, .. } => match *image {},
         }
     }
 }
@@ -227,7 +236,8 @@ impl std::fmt::Display for UnresolvedImage {
 impl std::error::Error for UnresolvedImage {}
 
 pub(crate) enum Source<'a, I> {
-    Image(&'a I),
+    /// A loaded image and its natural resolution in dots per CSS pixel.
+    Image(&'a I, f32),
     Gradient(&'a Gradient),
 }
 
@@ -258,11 +268,17 @@ pub struct LayerPaint<'a, I = Infallible> {
 }
 
 /// Natural dimensions converted to points.
-pub(crate) fn natural_points<I: ImageInfo>(image: &I) -> NaturalDimensions {
+/// Natural dimensions in points; a raster image's pixels span `1 / resolution` CSS pixels.
+pub(crate) fn natural_points<I: ImageInfo>(image: &I, resolution: f32) -> NaturalDimensions {
     let natural = image.natural_size();
+    let scale = if image.is_raster() {
+        POINTS_PER_PIXEL / resolution
+    } else {
+        POINTS_PER_PIXEL
+    };
     NaturalDimensions {
-        width: natural.width.map(|width| width * POINTS_PER_PIXEL),
-        height: natural.height.map(|height| height * POINTS_PER_PIXEL),
+        width: natural.width.map(|width| width * scale),
+        height: natural.height.map(|height| height * scale),
         ratio: natural.ratio,
     }
 }
@@ -454,14 +470,14 @@ impl<I: ImageInfo> BoxPaint<I> {
         for (index, image) in backgrounds.images.iter().enumerate().rev() {
             let source = match image {
                 BackgroundImage::None => continue,
-                BackgroundImage::Url(reference) => {
-                    return Err(UnresolvedImage(reference.clone()));
+                BackgroundImage::Url { url, .. } => {
+                    return Err(UnresolvedImage(url.clone()));
                 }
-                BackgroundImage::Image { image } => Source::Image(image),
+                BackgroundImage::Image { image, resolution } => Source::Image(image, *resolution),
                 BackgroundImage::Gradient(gradient) => Source::Gradient(gradient),
             };
             let natural = match source {
-                Source::Image(image) => natural_points(image),
+                Source::Image(image, resolution) => natural_points(image, resolution),
                 Source::Gradient(_) => NaturalDimensions::default(),
             };
             let area = if *cycle(&backgrounds.attachments, index) == Attachment::Fixed {
@@ -480,7 +496,7 @@ impl<I: ImageInfo> BoxPaint<I> {
             let (x, step_x, repeat_x) = place(repeat[0], &position[0], area.x, extent[0], tile[0]);
             let (y, step_y, repeat_y) = place(repeat[1], &position[1], area.y, extent[1], tile[1]);
             let image = match source {
-                Source::Image(image) => TileImage::Image(image),
+                Source::Image(image, _) => TileImage::Image(image),
                 Source::Gradient(gradient) => match gradient.resolve(tile) {
                     Some(resolved) => TileImage::Gradient(resolved),
                     None => continue,

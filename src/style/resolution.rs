@@ -749,6 +749,9 @@ impl<'a> Geometry<'a> {
             },
             parent_line: false,
         };
+        let color_scheme = self
+            .sheet
+            .used_color_scheme(&self.context(context).style.borrow().color_scheme);
         let parent_context = self.parent_context(context).unwrap_or(Context::Root);
         let parent_font = FontContext {
             geometry: self,
@@ -779,6 +782,7 @@ impl<'a> Geometry<'a> {
                 work: self.work.clone(),
                 initial_page_font_size: self.page_font && property == Property::FontSize,
                 initial_font: self.sheet.environment.relative.initial_font.clone(),
+                color_scheme,
             });
         }
         compute(&Relative {
@@ -803,6 +807,7 @@ impl<'a> Geometry<'a> {
             work: self.work.clone(),
             initial_page_font_size: context == Context::Page && property == Property::FontSize,
             initial_font: self.sheet.environment.relative.initial_font.clone(),
+            color_scheme,
         })
     }
 
@@ -1123,6 +1128,9 @@ impl<'a> Geometry<'a> {
                         work: Default::default(),
                         initial_page_font_size: false,
                         initial_font: self.sheet.environment.relative.initial_font.clone(),
+                        color_scheme: self.sheet.used_color_scheme(
+                            &self.context(Context::Page).style.borrow().color_scheme,
+                        ),
                     };
                     crate::style::page_values::page_dimension(
                         &value,
@@ -1753,7 +1761,6 @@ pub(super) fn needs_parent(property: Property, value: &Specified) -> bool {
 fn current_color(property: Property, value: &Specified) -> bool {
     fn component(value: &Component) -> bool {
         match value.unwrap() {
-            Component::Color(cssparser_color::Color::CurrentColor) => true,
             Component::Keyword(keyword) => keyword.name().eq_ignore_ascii_case(CURRENT_COLOR),
             Component::MathColor(source) => {
                 let mut pending = vec![source.as_ref()];

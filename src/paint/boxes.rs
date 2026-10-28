@@ -261,7 +261,7 @@ impl<I> BoxDecoration<I> {
         Backgrounds::resolve_images(&mut self.backgrounds, &mut load)?;
         if matches!(
             self.border_image.source,
-            crate::paint::BackgroundImage::Url(_)
+            crate::paint::BackgroundImage::Url { .. }
         ) {
             Arc::make_mut(&mut self.border_image)
                 .source

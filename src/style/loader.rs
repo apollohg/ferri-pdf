@@ -244,6 +244,8 @@ impl<'a> Loader<'a> {
         decode: Option<CssDecoder>,
         limits: Limits,
     ) -> Result<Self, StyleError> {
+        let mut environment = PrintEnvironment::new(settings)?;
+        environment.page_color_schemes = crate::style::color_scheme::page_color_schemes(tree);
         Ok(Self {
             tree,
             document_url: sources
@@ -258,7 +260,7 @@ impl<'a> Loader<'a> {
                 scopes: Vec::new(),
                 style_scopes: Vec::new(),
                 conditions: Vec::new(),
-                environment: PrintEnvironment::new(settings)?,
+                environment,
                 diagnostics: RefCell::new(Vec::new()),
                 source_diagnostics: Vec::new(),
                 document_base: sources.base.clone(),

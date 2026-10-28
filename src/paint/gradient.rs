@@ -1,10 +1,18 @@
-//! CSS Images 3 gradients: computed values and their resolution into PDF shading
+//! CSS Images 4 gradients: computed values and their resolution into PDF shading
 //! geometry with stops normalised to the shading's own `0..=1` domain.
-use crate::paint::{Color, LengthPercentage, Point, background::Position};
+use crate::paint::{
+    AbsoluteColor, Color, Interpolation, LengthPercentage, Point, background::Position, quantize,
+};
 use serde::Serialize;
 
-/// Interior samples per stop pair whose premultiplied or hinted interpolation is not linear.
-const SEGMENT_SAMPLES: usize = 16;
+/// Largest deviation of the PDF's linear interpolation between samples from the CSS colour,
+/// in sRGB and alpha units: half of the 8-bit output step.
+const SAMPLE_TOLERANCE: f64 = 0.5 / 255.0;
+/// Halvings of a stop pair while samples still deviate; gamut mapping makes the line's
+/// colour bend sharply where it meets the sRGB boundary.
+const MAX_SAMPLE_DEPTH: u32 = 12;
+/// Progress fractions within a candidate span compared against linear interpolation.
+const SAMPLE_PROBES: [f32; 3] = [0.25, 0.5, 0.75];
 /// Repeated stops beyond this count render as the average colour (CSS Images 3 §3.4.3).
 const MAX_REPEATED_STOPS: usize = 4096;
 /// Substitute extent for a zero radius (CSS Images 3 §3.2.2 degenerate shapes).
@@ -22,12 +30,18 @@ pub struct Gradient {
     pub shape: GradientShape,
     pub items: Vec<GradientItem>,
     pub repeating: bool,
+    pub interpolation: Interpolation,
 }
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum GradientShape {
     Linear(LineDirection),
     Radial {
         ending: RadialEnding,
+        center: Position,
+    },
+    /// Stop positions are fractions of a full turn clockwise from `from` degrees.
+    Conic {
+        from: f32,
         center: Position,
     },
 }
@@ -62,7 +76,7 @@ pub enum EllipseSize {
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum GradientItem {
     Stop {
-        color: Color,
+        color: AbsoluteColor,
         position: Option<LengthPercentage>,
     },
     Hint(LengthPercentage),
@@ -85,6 +99,12 @@ pub enum Shading {
         center: Point,
         radii: [f32; 2],
         scale_y: f32,
+    },
+    /// Rays about `center`; offset 0 points `angle` degrees clockwise from up and offsets
+    /// increase clockwise over one turn.
+    Conic {
+        center: Point,
+        angle: f32,
     },
 }
 /// Shading whose stops are sorted, padded beyond `0..=1`, and linear in non-premultiplied
@@ -130,10 +150,17 @@ impl Gradient {
                     },
                 )
             }
+            GradientShape::Conic { from, center } => (
+                1.0,
+                Axis::Turn {
+                    center: [center[0].resolve(width), center[1].resolve(height)],
+                    angle: *from,
+                },
+            ),
         };
-        let placed = dense(&fixup(&self.items, ray));
+        let placed = dense(&fixup(&self.items, ray), self.interpolation);
         let (low, high) = match axis {
-            Axis::Line { .. } => (0.0, ray),
+            Axis::Line { .. } | Axis::Turn { .. } => (0.0, ray),
             Axis::Ray { center, radii } if self.repeating => (0.0, farthest(center, radii, size)),
             Axis::Ray { .. } => {
                 let first = placed[0].position.max(0.0);
@@ -247,6 +274,7 @@ fn degenerate([rx, ry]: [f32; 2]) -> [f32; 2] {
 enum Axis {
     Line { start: Point, direction: Point },
     Ray { center: Point, radii: [f32; 2] },
+    Turn { center: Point, angle: f32 },
 }
 impl Axis {
     fn shading(self, low: f32, high: f32) -> Shading {
@@ -263,6 +291,7 @@ impl Axis {
                 radii: [low, high],
                 scale_y: radii[1] / radii[0],
             },
+            Self::Turn { center, angle } => Shading::Conic { center, angle },
         }
     }
     fn solid(self, color: Color) -> ResolvedGradient {
@@ -282,7 +311,7 @@ fn farthest(center: Point, [rx, ry]: [f32; 2], [width, height]: [f32; 2]) -> f32
 }
 
 enum Fixed {
-    Stop(Placed),
+    Stop(f32, AbsoluteColor),
     Hint(f32),
 }
 
@@ -344,35 +373,11 @@ fn fixup(items: &[GradientItem], ray: f32) -> Vec<Fixed> {
         .map(|(item, position)| {
             let position = position.expect("fixup positions every item");
             match item {
-                GradientItem::Stop { color, .. } => Fixed::Stop(Placed {
-                    position,
-                    color: *color,
-                }),
+                GradientItem::Stop { color, .. } => Fixed::Stop(position, *color),
                 GradientItem::Hint(_) => Fixed::Hint(position),
             }
         })
         .collect()
-}
-
-/// Premultiplied sRGB interpolation (CSS Images 3 §3.4.4) at `weight` from `a` to `b`.
-fn mix(a: Color, b: Color, weight: f32) -> Color {
-    let alpha = a.alpha + (b.alpha - a.alpha) * weight;
-    if alpha <= 0.0 {
-        return Color {
-            rgb: a.rgb,
-            alpha: 0.0,
-        };
-    }
-    let channel = |index: usize| {
-        let value = (f32::from(a.rgb[index]) * a.alpha * (1.0 - weight)
-            + f32::from(b.rgb[index]) * b.alpha * weight)
-            / alpha;
-        value.round().clamp(0.0, f32::from(u8::MAX)) as u8
-    };
-    Color {
-        rgb: [channel(0), channel(1), channel(2)],
-        alpha,
-    }
 }
 
 /// Interpolation weight at `t` for a hint at fraction `hint` of the segment.
@@ -386,8 +391,53 @@ fn hinted(t: f32, hint: f32) -> f32 {
     }
 }
 
-/// Stops between which non-premultiplied linear interpolation reproduces the CSS colours.
-fn dense(fixed: &[Fixed]) -> Vec<Placed> {
+/// Non-premultiplied gamut-mapped sRGB and alpha.
+type Sample = [f64; 4];
+
+fn sample(color: &AbsoluteColor) -> Sample {
+    let [red, green, blue] = color.mapped_srgb();
+    [red, green, blue, f64::from(color.used_alpha())]
+}
+fn used([red, green, blue, alpha]: Sample) -> Color {
+    Color {
+        rgb: quantize([red, green, blue]),
+        alpha: alpha as f32,
+    }
+}
+
+/// Appends the interior samples between `start` and `end` at which linear interpolation of
+/// neighbours stays within `SAMPLE_TOLERANCE` of `color(t)`.
+fn subdivide(
+    color: &impl Fn(f32) -> Sample,
+    start: (f32, Sample),
+    end: (f32, Sample),
+    depth: u32,
+    output: &mut Vec<(f32, Sample)>,
+) {
+    if depth == MAX_SAMPLE_DEPTH {
+        return;
+    }
+    let deviates = SAMPLE_PROBES.iter().any(|&fraction| {
+        let actual = color(start.0 + (end.0 - start.0) * fraction);
+        (0..actual.len()).any(|channel| {
+            let linear =
+                start.1[channel] + (end.1[channel] - start.1[channel]) * f64::from(fraction);
+            (actual[channel] - linear).abs() > SAMPLE_TOLERANCE
+        })
+    });
+    if !deviates {
+        return;
+    }
+    let middle_t = f32::midpoint(start.0, end.0);
+    let middle = (middle_t, color(middle_t));
+    subdivide(color, start, middle, depth + 1, output);
+    output.push(middle);
+    subdivide(color, middle, end, depth + 1, output);
+}
+
+/// Stops between which non-premultiplied linear sRGB interpolation reproduces the gradient
+/// line coloured in `interpolation` (CSS Images 4 §3.5.2).
+fn dense(fixed: &[Fixed], interpolation: Interpolation) -> Vec<Placed> {
     fn push(stop: Placed, output: &mut Vec<Placed>) {
         if output
             .last()
@@ -397,58 +447,76 @@ fn dense(fixed: &[Fixed]) -> Vec<Placed> {
         }
     }
     let mut output: Vec<Placed> = Vec::new();
-    let mut previous: Option<Placed> = None;
+    let mut previous: Option<(f32, AbsoluteColor)> = None;
     let mut hint = None;
     for item in fixed {
-        let stop = match item {
+        let (position, color) = match item {
             Fixed::Hint(position) => {
                 hint = Some(*position);
                 continue;
             }
-            Fixed::Stop(stop) => *stop,
+            Fixed::Stop(position, color) => (*position, *color),
         };
-        let Some(start) = previous.replace(stop) else {
-            push(stop, &mut output);
+        let Some((start, from)) = previous.replace((position, color)) else {
+            push(
+                Placed {
+                    position,
+                    color: color.used(),
+                },
+                &mut output,
+            );
             continue;
         };
         let hint = hint.take();
-        let length = stop.position - start.position;
-        // A transparent end takes its neighbour's colour, so only its alpha changes.
-        let mut from = start;
-        let mut to = stop;
-        if from.color.alpha <= 0.0 {
-            from.color.rgb = to.color.rgb;
-        }
-        if to.color.alpha <= 0.0 {
-            to.color.rgb = from.color.rgb;
-        }
-        let fraction = hint.map(|position| {
+        let length = position - start;
+        let fraction = hint.map(|hint| {
             if length > 0.0 {
-                (position - start.position) / length
+                (hint - start) / length
             } else {
                 HALF_WEIGHT
             }
         });
-        let constant = from.color == to.color;
-        let unhinted = fraction.is_none_or(|fraction| fraction == HALF_WEIGHT);
-        // Equal alpha or equal colour keeps premultiplied interpolation linear.
-        let linear = constant
-            || (unhinted && (from.color.alpha == to.color.alpha || from.color.rgb == to.color.rgb));
-        push(from, &mut output);
-        if length > 0.0 && !linear {
-            for sample in 1..SEGMENT_SAMPLES {
-                let t = sample as f32 / SEGMENT_SAMPLES as f32;
-                let weight = fraction.map_or(t, |fraction| hinted(t, fraction));
+        let at = |t: f32| {
+            let weight = fraction.map_or(t, |fraction| hinted(t, fraction));
+            sample(&interpolation.interpolate(&from, &color, weight))
+        };
+        // Premultiplied interpolation leaves a transparent end's colour unused: towards it the
+        // line keeps the other end's colour and only its alpha changes.
+        let mut first = sample(&from);
+        let mut last = sample(&color);
+        if first[3] == 0.0 {
+            first[..3].copy_from_slice(&last[..3]);
+        }
+        if last[3] == 0.0 {
+            last[..3].copy_from_slice(&first[..3]);
+        }
+        push(
+            Placed {
+                position: start,
+                color: used(first),
+            },
+            &mut output,
+        );
+        if length > 0.0 {
+            let mut interior = Vec::new();
+            subdivide(&at, (0.0, first), (1.0, last), 0, &mut interior);
+            for (t, sample) in interior {
                 push(
                     Placed {
-                        position: start.position + length * t,
-                        color: mix(from.color, to.color, weight),
+                        position: start + length * t,
+                        color: used(sample),
                     },
                     &mut output,
                 );
             }
         }
-        push(to, &mut output);
+        push(
+            Placed {
+                position,
+                color: used(last),
+            },
+            &mut output,
+        );
     }
     output
 }

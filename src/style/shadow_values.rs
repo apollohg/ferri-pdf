@@ -1,5 +1,5 @@
 //! CSS Backgrounds 3 `box-shadow`: `none | <shadow>#` from its match tree.
-use crate::paint::{BoxShadow, Color};
+use crate::paint::{AbsoluteColor, BoxShadow};
 use crate::style::{
     StyleError, box_values::unsupported, component::Component, grammar::Keyword, units::Relative,
     values::length,
@@ -15,7 +15,7 @@ const SPREAD_INDEX: usize = 3;
 pub(super) fn shadows(
     value: &Component,
     relative: &Relative<'_>,
-    current: Color,
+    current: &AbsoluteColor,
 ) -> Result<Vec<BoxShadow>, StyleError> {
     if value.keyword() == Some(Keyword::None) {
         return Ok(Vec::new());
@@ -30,7 +30,7 @@ pub(super) fn shadows(
 fn shadow(
     value: &Component,
     relative: &Relative<'_>,
-    current: Color,
+    current: &AbsoluteColor,
 ) -> Result<BoxShadow, StyleError> {
     let lengths = value
         .slot(LENGTHS_SLOT)
@@ -57,7 +57,7 @@ fn shadow(
             .and_then(|color| color.items().first())
             .map(|color| crate::style::colors::color(color, relative, current))
             .transpose()?
-            .unwrap_or(current),
+            .unwrap_or_else(|| current.used()),
         inset: keywords.contains(&Keyword::Inset),
     })
 }

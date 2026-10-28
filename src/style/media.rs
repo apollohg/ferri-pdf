@@ -409,6 +409,7 @@ impl Value {
             calc::Context {
                 relative: &environment.relative,
                 percentage: None,
+                channels: &[],
             },
         )?
         .ok()?;

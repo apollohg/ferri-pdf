@@ -652,6 +652,11 @@ mod tests {
             (
                 "background-image",
                 "linear-gradient(red,blue),conic-gradient(red,blue)",
+                true,
+            ),
+            (
+                "background-image",
+                "linear-gradient(red,blue),element(#source)",
                 false,
             ),
             ("text-transform", "uppercase full-width", true),

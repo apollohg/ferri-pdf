@@ -157,8 +157,8 @@ impl<I: ImageInfo> BoxPaint<I> {
         let border_image = &self.decoration.border_image;
         let source = match &border_image.source {
             BackgroundImage::None => return Ok(None),
-            BackgroundImage::Url(reference) => return Err(UnresolvedImage(reference.clone())),
-            BackgroundImage::Image { image } => Source::Image(image),
+            BackgroundImage::Url { url, .. } => return Err(UnresolvedImage(url.clone())),
+            BackgroundImage::Image { image, resolution } => Source::Image(image, *resolution),
             BackgroundImage::Gradient(gradient) => Source::Gradient(gradient),
         };
         // A sliced fragment draws its share of the unbroken box's image.
@@ -178,7 +178,7 @@ impl<I: ImageInfo> BoxPaint<I> {
             return Ok(None);
         }
         let natural = match source {
-            Source::Image(image) => natural_points(image),
+            Source::Image(image, resolution) => natural_points(image, resolution),
             Source::Gradient(_) => NaturalDimensions::default(),
         };
         let size = image_size(
@@ -190,7 +190,7 @@ impl<I: ImageInfo> BoxPaint<I> {
             return Ok(None);
         }
         let image = match source {
-            Source::Image(image) => TileImage::Image(image),
+            Source::Image(image, _) => TileImage::Image(image),
             Source::Gradient(gradient) => match gradient.resolve(size) {
                 Some(resolved) => TileImage::Gradient(resolved),
                 None => return Ok(None),

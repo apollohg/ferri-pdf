@@ -49,6 +49,10 @@ fn supports_requires_usable_behavior_not_only_known_grammar() {
         ("background-image:linear-gradient(red,blue)", true),
         (
             "background-image:linear-gradient(red,blue),conic-gradient(red,blue)",
+            true,
+        ),
+        (
+            "background-image:linear-gradient(red,blue),element(#source)",
             false,
         ),
         ("color:var(--ink)", true),

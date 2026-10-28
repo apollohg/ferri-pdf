@@ -20,6 +20,9 @@ impl crate::paint::ImageInfo for Image {
     fn natural_size(&self) -> NaturalDimensions {
         Image::natural_size(self)
     }
+    fn is_raster(&self) -> bool {
+        !matches!(self, Self::Svg(_))
+    }
 }
 
 const MAX_DECODED_BYTES: u64 = 2 * 1024 * 1024 * 1024;

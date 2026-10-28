@@ -7,10 +7,7 @@ use crate::style::{
     StyleError,
     calc::{self, Context, Kind},
     component::Component,
-    grammar::{
-        Base, BlockKind, COLOR_SYNTAX, Keyword, Label, NODES, Node, NodeId, Production, Range,
-        UNBOUNDED,
-    },
+    grammar::{Base, BlockKind, Keyword, Label, NODES, Node, NodeId, Production, Range, UNBOUNDED},
     parser::MAX_COMPONENT_DEPTH,
     units::{self, Dimension, Length, Relative},
     wide_keywords::WideKeyword,
@@ -29,7 +26,6 @@ const STEPS: &str = "matching steps";
 const RESERVED_IDENT: &str = "default";
 const PERCENT: char = '%';
 const PERCENT_RANGE_SCALE: f32 = 100.0;
-const HEX_COLOR_DIGITS: [usize; 4] = [3, 4, 6, 8];
 const URL_FUNCTION: &str = "url";
 const DASHED_PREFIX: &str = "--";
 
@@ -987,6 +983,7 @@ impl Matcher<'_> {
         let context = Context {
             relative: &relative,
             percentage,
+            channels: &[],
         };
         match calc::math_function(&mut Parser::new(&mut input), context)?
             .and_then(|math| math.expect(&[kind]))
@@ -1077,12 +1074,6 @@ impl Matcher<'_> {
                 Component::Ident(name.clone())
             }
             (Base::HashToken, ItemKind::Hash(hash)) => Component::Hash(hash.clone()),
-            (Base::HexColor, ItemKind::Hash(hash))
-                if HEX_COLOR_DIGITS.contains(&hash.len())
-                    && hash.bytes().all(|b| b.is_ascii_hexdigit()) =>
-            {
-                Component::Hash(hash.clone())
-            }
             (Base::AttrUnit, ItemKind::Ident { name, .. }) if units::dimension(name).is_some() => {
                 Component::Unit(name.to_ascii_lowercase().into())
             }
@@ -1093,23 +1084,20 @@ impl Matcher<'_> {
         })
     }
 
-    /// cssparser-color computes most colours; the CSS Color grammar validates the rest, such
-    /// as system colours and `color-mix()`.
+    /// Colours that depend on the element are kept as source for computed-value time.
     fn color(&mut self, item: &Item) -> Option<Component> {
         let source = &self.source[item.start..item.end];
-        if let Ok(parsed) = crate::style::colors::parse(source, &self.context.relative()) {
-            return Some(if parsed.has_math {
-                Component::MathColor(source.into())
-            } else {
-                Component::Color(parsed.color)
-            });
-        }
-        let single = std::slice::from_ref(item);
-        if self.ends(COLOR_SYNTAX, single, 0).contains(&1) {
-            self.build(COLOR_SYNTAX, single, 0, 1)
+        let parsed = crate::style::colors::parse(
+            source,
+            &self.context.relative(),
+            &crate::paint::AbsoluteColor::BLACK,
+        )
+        .ok()?;
+        Some(if parsed.dependent {
+            Component::MathColor(source.into())
         } else {
-            None
-        }
+            Component::Color(parsed.color)
+        })
     }
 
     /// `U+…` ranges span several tokens, so cssparser re-reads them from the source.

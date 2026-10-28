@@ -407,16 +407,19 @@ fn handler(property: Property) -> Option<Handler> {
             hyphens,
             Some(|v, _| crate::style::Hyphens::from_component(v).is_ok()),
         ),
+        P::ColorScheme => (color_scheme, Some(|_, _| true)),
         P::Color => (
             color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::ListStyleImage => (
             list_style_image,
             Some(|v, r| {
-                crate::style::background_values::image(v, r, crate::paint::Color::BLACK).is_ok()
+                crate::style::background_values::image(v, r, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::ListStyleType => (
@@ -518,7 +521,8 @@ fn handler(property: Property) -> Option<Handler> {
         P::BoxShadow => (
             box_shadow,
             Some(|v, r| {
-                crate::style::shadow_values::shadows(v, r, crate::paint::Color::BLACK).is_ok()
+                crate::style::shadow_values::shadows(v, r, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::Visibility => (
@@ -529,7 +533,8 @@ fn handler(property: Property) -> Option<Handler> {
         P::BorderImageSource => (
             border_image_source,
             Some(|v, r| {
-                crate::style::background_values::image(v, r, crate::paint::Color::BLACK).is_ok()
+                crate::style::background_values::image(v, r, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::BorderImageSlice => (
@@ -559,7 +564,8 @@ fn handler(property: Property) -> Option<Handler> {
         P::TextDecorationColor => (
             text_decoration_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::TextDecorationThickness => (
@@ -582,13 +588,15 @@ fn handler(property: Property) -> Option<Handler> {
         P::BackgroundColor => (
             background_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::BackgroundImage => (
             background_image,
             Some(|v, r| {
-                crate::style::background_values::images(v, r, crate::paint::Color::BLACK).is_ok()
+                crate::style::background_values::images(v, r, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::BackgroundPosition => (
@@ -626,25 +634,29 @@ fn handler(property: Property) -> Option<Handler> {
         P::BorderTopColor => (
             border_top_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::BorderRightColor => (
             border_right_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::BorderBottomColor => (
             border_bottom_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::BorderLeftColor => (
             border_left_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::BorderTopLeftRadius => (
@@ -764,7 +776,8 @@ fn handler(property: Property) -> Option<Handler> {
         P::ColumnRuleColor => (
             column_rule_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
             }),
         ),
         P::TableLayout => (
@@ -1063,23 +1076,33 @@ computed!(hyphens, [hyphens], |value, style, _parent, _relative| {
     crate::style::Hyphens::from_component(value)?
 });
 
+computed!(
+    color_scheme,
+    [color_scheme],
+    |value, style, _parent, _relative| {
+        crate::style::color_scheme::ColorSchemes::from_component(value)
+    }
+);
 fn color(
     style: &mut Style,
     parent: &Style,
     input: Input<'_>,
     relative: &Relative<'_>,
 ) -> Result<(), StyleError> {
-    style.color = match input {
-        Input::Value(value) => crate::style::colors::color(value, relative, parent.color)?,
-        Input::Copy(source) => source.color,
+    style.computed_color = match input {
+        Input::Value(value) => {
+            crate::style::colors::absolute(value, relative, &parent.computed_color)?
+        }
+        Input::Copy(source) => source.computed_color,
     };
+    style.color = style.computed_color.used();
     Ok(())
 }
 computed!(
     list_style_image,
     [list_style_image],
     |value, style, _parent, relative| {
-        crate::style::background_values::image(value, relative, style.color)?
+        crate::style::background_values::image(value, relative, &style.computed_color)?
     }
 );
 computed!(
@@ -1288,7 +1311,7 @@ computed!(
         std::sync::Arc::new(crate::style::shadow_values::shadows(
             value,
             relative,
-            style.color,
+            &style.computed_color,
         )?)
     }
 );
@@ -1305,7 +1328,11 @@ computed!(
 computed!(
     text_decoration_color,
     [text_decorations.declared.color],
-    |value, style, _parent, relative| crate::style::colors::color(value, relative, style.color)?
+    |value, style, _parent, relative| crate::style::colors::color(
+        value,
+        relative,
+        &style.computed_color
+    )?
 );
 computed!(
     text_decoration_thickness,
@@ -1345,7 +1372,7 @@ computed!(
     background_color,
     [decoration.background],
     |value, style, _parent, relative| {
-        crate::style::colors::color(value, relative, style.color)?
+        crate::style::colors::color(value, relative, &style.computed_color)?
     }
 );
 
@@ -1368,7 +1395,7 @@ macro_rules! background {
     };
 }
 background!(background_image, images, |value, style, relative| {
-    crate::style::background_values::images(value, relative, style.color)?
+    crate::style::background_values::images(value, relative, &style.computed_color)?
 });
 background!(background_position, positions, |value, style, relative| {
     crate::style::background_values::positions(value, relative)?
@@ -1414,7 +1441,7 @@ macro_rules! border_image {
     };
 }
 border_image!(border_image_source, [source], |value, style, relative| {
-    crate::style::background_values::image(value, relative, style.color)?
+    crate::style::background_values::image(value, relative, &style.computed_color)?
 });
 border_image!(
     border_image_slice,
@@ -1487,7 +1514,7 @@ macro_rules! border_side {
             $color,
             [decoration.borders[$side].color],
             |value, style, _parent, relative| {
-                crate::style::colors::color(value, relative, style.color)?
+                crate::style::colors::color(value, relative, &style.computed_color)?
             }
         );
     };
@@ -1737,7 +1764,7 @@ computed!(
     column_rule_color,
     [multicol.rule.color],
     |value, style, _parent, relative| {
-        crate::style::colors::color(value, relative, style.color)?
+        crate::style::colors::color(value, relative, &style.computed_color)?
     }
 );
 

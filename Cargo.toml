@@ -87,7 +87,6 @@ tiny-skia = "0.12"
 image = { version = "=0.25.10", default-features = false, features = ["png", "jpeg", "gif", "webp"] }
 cssparser = "0.37"
 roxmltree = "0.21.2"
-cssparser-color = { version = "0.5", default-features = false }
 icu_properties = { version = "~2.3.0", default-features = false, features = ["compiled_data"] }
 selectors = { package = "ferri-pdf-selectors", path = "vendor/selectors", version = "0.38" }
 krilla = { package = "ferri-pdf-krilla", path = "vendor/krilla", version = "=0.8.2", default-features = false, features = ["raster-images"] }
@@ -145,7 +144,6 @@ thiserror.workspace = true
 [dependencies]
 avif-decode.workspace = true
 base64.workspace = true
-cssparser-color.workspace = true
 cssparser.workspace = true
 data-url.workspace = true
 ego-tree.workspace = true

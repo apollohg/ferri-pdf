@@ -397,7 +397,7 @@ fn attribute_url_taint_and_quoted_url_templates_keep_computed_invalidity() {
     let expected = font_base().resolve("safe.png").unwrap().to_string();
     assert_eq!(
         serde_json::to_value(&untainted.decoration.backgrounds.images).unwrap(),
-        serde_json::json!([{"Url":expected}]),
+        serde_json::json!([{"Url": {"url": expected, "resolution": 1.0}}]),
         "an untainted empty substitution yields a valid URL bound at the declaration"
     );
 }

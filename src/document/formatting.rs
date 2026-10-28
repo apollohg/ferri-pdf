@@ -15,6 +15,31 @@ fn canvas_background(decoration: &BoxDecoration) -> BoxDecoration {
     }
 }
 
+/// PDF pages are white paper, which an opaque white canvas surface leaves unchanged.
+const PAPER: crate::graphics::Color = crate::graphics::Color {
+    rgb: [u8::MAX; 3],
+    alpha: 1.0,
+};
+
+/// The canvas surface colour lies beneath the propagated background colour and images
+/// (CSS Color Adjustment 1 §2.2).
+fn canvas_surface(mut canvas: BoxDecoration, surface: crate::graphics::Color) -> BoxDecoration {
+    if surface == PAPER {
+        return canvas;
+    }
+    let background = canvas.background;
+    let channel = |index: usize| {
+        (f32::from(background.rgb[index]) * background.alpha
+            + f32::from(surface.rgb[index]) * (1.0 - background.alpha))
+            .round() as u8
+    };
+    canvas.background = crate::graphics::Color {
+        rgb: [channel(0), channel(1), channel(2)],
+        alpha: surface.alpha,
+    };
+    canvas
+}
+
 pub(crate) struct PageBox {
     pub request: crate::style::PageRequest,
     pub geometry: crate::style::PageGeometry,
@@ -1054,12 +1079,13 @@ pub(crate) fn build(
                 Ok(())
             })
         })?;
+        let canvas = canvas_surface(BoxDecoration::default(), sheet.canvas_surface(&style));
         return Ok(Formatted {
             root: BlockBox::anonymous(style, vec![BlockContent::Events(events)], None),
             navigation,
             strings,
             generated: generated.finish(),
-            canvas: BoxDecoration::default(),
+            canvas,
             pages: crate::document::page::PageProvider::new(
                 page,
                 images.clone(),
@@ -1099,6 +1125,7 @@ pub(crate) fn build(
     } else {
         0
     };
+    let surface = sheet.canvas_surface(&style);
     let root = block(
         element,
         Box::new(style),
@@ -1113,7 +1140,7 @@ pub(crate) fn build(
         navigation: traversal.navigation,
         strings: traversal.strings,
         generated: traversal.generated.finish(),
-        canvas: traversal.canvas,
+        canvas: canvas_surface(traversal.canvas, surface),
         pages: crate::document::page::PageProvider::new(
             page,
             images.clone(),

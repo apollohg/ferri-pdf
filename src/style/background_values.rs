@@ -1,12 +1,13 @@
-//! CSS Backgrounds 3 longhands and CSS Images 3 gradients from match trees.
+//! CSS Backgrounds 3 longhands and CSS Images 4 images and gradients from match trees.
 use crate::paint::{
-    Attachment, BackgroundImage, BackgroundSize, BoxArea, CircleSize, Color, EllipseSize, Gradient,
-    GradientItem, GradientShape, LengthPercentage, LineDirection, Position, PositionComponent,
-    RadialEnding, RadialExtent, Repeat, SizeComponent,
+    AbsoluteColor, Attachment, BackgroundImage, BackgroundSize, BoxArea, CircleSize, EllipseSize,
+    Gradient, GradientItem, GradientShape, Interpolation, LengthPercentage, LineDirection,
+    Position, PositionComponent, RadialEnding, RadialExtent, Repeat, SizeComponent,
 };
 use crate::style::{
     StyleError,
     box_values::{length_percentage, unsupported},
+    calc::Kind,
     component::Component,
     grammar::{Keyword, Label, Production},
     units::Relative,
@@ -30,6 +31,29 @@ const STOP_LABELS: [Label; 2] = [
     Label::Production(Production::LinearColorStop),
     Label::Production(Production::LinearColorHint),
 ];
+const ANGULAR_STOP_LABELS: [Label; 2] = [
+    Label::Production(Production::AngularColorStop),
+    Label::Production(Production::AngularColorHint),
+];
+const FULL_TURN_DEG: f32 = 360.0;
+/// `<resolution> || type(<string>)` slots of an `<image-set-option>`.
+const RESOLUTION_SLOT: usize = 0;
+const TYPE_SLOT: usize = 1;
+/// An `<image-set-option>` without a `<resolution>` selects as `1x` (CSS Images 4 §2.4).
+const DEFAULT_RESOLUTION_DPPX: f32 = 1.0;
+/// `type()` MIME type essences of the image formats the engine decodes.
+const SUPPORTED_IMAGE_TYPES: [&str; 8] = [
+    "image/png",
+    "image/jpeg",
+    "image/gif",
+    "image/webp",
+    "image/avif",
+    "image/heic",
+    "image/heif",
+    "image/svg+xml",
+];
+const MIME_PARAMETER_SEPARATOR: char = ';';
+const MIME_SUBTYPE_SEPARATOR: char = '/';
 
 /// One item per comma-separated layer.
 fn list<T>(
@@ -42,7 +66,7 @@ fn list<T>(
 pub(super) fn images(
     value: &Component,
     relative: &Relative<'_>,
-    color: Color,
+    color: &AbsoluteColor,
 ) -> Result<Vec<BackgroundImage>, StyleError> {
     list(value, |item| image(item, relative, color))
 }
@@ -68,19 +92,43 @@ pub(super) fn attachments(value: &Component) -> Result<Vec<Attachment>, StyleErr
     list(value, attachment)
 }
 
-/// `<bg-image>`: `none`, a URL, or a linear or radial gradient.
+/// `<bg-image>`: `none`, a URL, `image-set()`, or a gradient.
 pub(super) fn image(
     value: &Component,
     relative: &Relative<'_>,
-    color: Color,
+    color: &AbsoluteColor,
+) -> Result<BackgroundImage, StyleError> {
+    match value.unwrap() {
+        Component::Function(Keyword::ImageSet, Some(options)) => {
+            image_set(options, relative, color)
+        }
+        _ => set_option_image(value, relative, color),
+    }
+}
+
+/// An `<image>` other than `image-set()`, which cannot nest inside itself.
+fn set_option_image(
+    value: &Component,
+    relative: &Relative<'_>,
+    color: &AbsoluteColor,
 ) -> Result<BackgroundImage, StyleError> {
     Ok(match value.unwrap() {
         Component::Keyword(Keyword::None) => BackgroundImage::None,
-        Component::Url(url) => BackgroundImage::Url(url.to_string()),
+        Component::Url(url) | Component::String(url) => BackgroundImage::Url {
+            url: url.to_string(),
+            resolution: DEFAULT_RESOLUTION_DPPX,
+        },
+        Component::Function(Keyword::ImageSet, _) => {
+            return Err(StyleError::Invalid(format!(
+                "image-set() nested in image-set(): {value}"
+            )));
+        }
         Component::Function(name, Some(arguments)) => {
             let repeating = matches!(
                 name,
-                Keyword::RepeatingLinearGradient | Keyword::RepeatingRadialGradient
+                Keyword::RepeatingLinearGradient
+                    | Keyword::RepeatingRadialGradient
+                    | Keyword::RepeatingConicGradient
             );
             BackgroundImage::Gradient(match name {
                 Keyword::LinearGradient | Keyword::RepeatingLinearGradient => {
@@ -89,6 +137,9 @@ pub(super) fn image(
                 Keyword::RadialGradient | Keyword::RepeatingRadialGradient => {
                     radial(arguments, relative, color, repeating)?
                 }
+                Keyword::ConicGradient | Keyword::RepeatingConicGradient => {
+                    conic(arguments, relative, color, repeating)?
+                }
                 _ => return Err(unsupported(value)),
             })
         }
@@ -96,21 +147,95 @@ pub(super) fn image(
     })
 }
 
-/// Interpolation in other colour spaces is not modelled.
-fn srgb_only(arguments: &Component) -> Result<(), StyleError> {
-    match arguments.find(Label::Production(Production::ColorInterpolationMethod)) {
-        Some(method) => Err(unsupported(method)),
-        None => Ok(()),
+/// CSS Images 4 §2.4: options with an unsupported `type()` or an already listed resolution
+/// drop out; for resolution-independent PDF output the highest resolution is chosen, and it
+/// becomes a raster image's natural resolution. No remaining option is an invalid image,
+/// which paints nothing, as `none` does.
+fn image_set(
+    options: &Component,
+    relative: &Relative<'_>,
+    color: &AbsoluteColor,
+) -> Result<BackgroundImage, StyleError> {
+    let mut candidates: Vec<(&Component, f32)> = Vec::new();
+    for option in options.items() {
+        let parts = option.items();
+        let image = parts.first().ok_or_else(|| unsupported(option))?;
+        // `[ <resolution> || type(<string>) ]?` matches as a group of at most one.
+        let modifiers = parts.get(1).and_then(|optional| optional.items().first());
+        if let Some(mime) = modifiers.and_then(|modifiers| modifiers.slot(TYPE_SLOT))
+            && !mime.arguments().first().is_some_and(supported_image_type)
+        {
+            continue;
+        }
+        let resolution = match modifiers.and_then(|modifiers| modifiers.slot(RESOLUTION_SLOT)) {
+            Some(resolution) => crate::style::values::resolution(resolution, relative)?,
+            None => DEFAULT_RESOLUTION_DPPX,
+        };
+        if resolution <= 0.0 {
+            return Err(StyleError::Invalid(format!(
+                "non-positive image-set() resolution: {option}"
+            )));
+        }
+        if candidates.iter().all(|(_, listed)| *listed != resolution) {
+            candidates.push((image, resolution));
+        }
     }
+    let Some((image, resolution)) = candidates.into_iter().max_by(|a, b| a.1.total_cmp(&b.1))
+    else {
+        return Ok(BackgroundImage::None);
+    };
+    Ok(match set_option_image(image, relative, color)? {
+        BackgroundImage::Url { url, .. } => BackgroundImage::Url { url, resolution },
+        other => other,
+    })
+}
+
+/// Whether a `type()` string is a valid MIME type whose essence names a decoded format.
+fn supported_image_type(mime: &Component) -> bool {
+    let Component::String(mime) = mime.unwrap() else {
+        return false;
+    };
+    let essence = mime
+        .split(MIME_PARAMETER_SEPARATOR)
+        .next()
+        .unwrap_or_default()
+        .trim();
+    essence.split_once(MIME_SUBTYPE_SEPARATOR).is_some()
+        && SUPPORTED_IMAGE_TYPES
+            .iter()
+            .any(|supported| essence.eq_ignore_ascii_case(supported))
+}
+
+/// The `<color-interpolation-method>` of a gradient, or the default for its stops.
+fn interpolation(
+    arguments: &Component,
+    items: &[GradientItem],
+) -> Result<Interpolation, StyleError> {
+    let Some(method) = arguments.find(Label::Production(Production::ColorInterpolationMethod))
+    else {
+        return Ok(Interpolation::default_for(items.iter().filter_map(
+            |item| match item {
+                GradientItem::Stop { color, .. } => Some(color),
+                GradientItem::Hint(_) => None,
+            },
+        )));
+    };
+    let mut keywords = Vec::new();
+    method.keywords(&mut keywords);
+    let words: Vec<&str> = keywords
+        .iter()
+        .filter(|keyword| **keyword != Keyword::In)
+        .map(|keyword| keyword.name())
+        .collect();
+    crate::style::colors::interpolation_method(&words).ok_or_else(|| unsupported(method))
 }
 
 fn linear(
     arguments: &Component,
     relative: &Relative<'_>,
-    color: Color,
+    color: &AbsoluteColor,
     repeating: bool,
 ) -> Result<Gradient, StyleError> {
-    srgb_only(arguments)?;
     let syntax = arguments
         .find(Label::Production(Production::LinearGradientSyntax))
         .ok_or_else(|| unsupported(arguments))?;
@@ -139,9 +264,11 @@ fn linear(
             None => LineDirection::Angle(crate::style::values::angle(direction, relative)?),
         },
     };
+    let items = stop_list(syntax, relative, color, StopList::Linear)?;
     Ok(Gradient {
         shape: GradientShape::Linear(direction),
-        items: stop_list(syntax, relative, color)?,
+        interpolation: interpolation(arguments, &items)?,
+        items,
         repeating,
     })
 }
@@ -149,10 +276,9 @@ fn linear(
 fn radial(
     arguments: &Component,
     relative: &Relative<'_>,
-    color: Color,
+    color: &AbsoluteColor,
     repeating: bool,
 ) -> Result<Gradient, StyleError> {
-    srgb_only(arguments)?;
     let circle = arguments
         .find(Label::Production(Production::RadialShape))
         .and_then(Component::keyword)
@@ -195,37 +321,122 @@ fn radial(
         Some(center) => position(center, relative)?,
         None => [PositionComponent::CENTER; 2],
     };
+    let items = stop_list(arguments, relative, color, StopList::Linear)?;
     Ok(Gradient {
         shape: GradientShape::Radial { ending, center },
-        items: stop_list(arguments, relative, color)?,
+        interpolation: interpolation(arguments, &items)?,
+        items,
         repeating,
     })
 }
 
-/// `<color-stop-list>`: stops with up to two positions and the hints between them.
+/// CSS Images 4 §3.3: `from` rotates the gradient and `at` places its centre.
+fn conic(
+    arguments: &Component,
+    relative: &Relative<'_>,
+    color: &AbsoluteColor,
+    repeating: bool,
+) -> Result<Gradient, StyleError> {
+    let syntax = arguments
+        .find(Label::Production(Production::ConicGradientSyntax))
+        .ok_or_else(|| unsupported(arguments))?;
+    let from = match after_keyword(syntax, Keyword::From) {
+        Some(angle) => crate::style::values::angle(angle, relative)?,
+        None => 0.0,
+    };
+    let center = match syntax.find(Label::Production(Production::Position)) {
+        Some(center) => position(center, relative)?,
+        None => [PositionComponent::CENTER; 2],
+    };
+    let items = stop_list(syntax, relative, color, StopList::Angular)?;
+    Ok(Gradient {
+        shape: GradientShape::Conic { from, center },
+        interpolation: interpolation(arguments, &items)?,
+        items,
+        repeating,
+    })
+}
+
+/// The term after `keyword` in a juxtaposed group, outside function arguments.
+fn after_keyword(component: &Component, keyword: Keyword) -> Option<&Component> {
+    match component.unwrap() {
+        Component::Group(items) => items
+            .windows(2)
+            .find(|pair| pair[0].keyword() == Some(keyword))
+            .map(|pair| &pair[1])
+            .or_else(|| items.iter().find_map(|item| after_keyword(item, keyword))),
+        Component::Slots(slots) => slots
+            .iter()
+            .flatten()
+            .find_map(|slot| after_keyword(slot, keyword)),
+        _ => None,
+    }
+}
+
+#[derive(Clone, Copy, PartialEq)]
+enum StopList {
+    /// `<color-stop-list>`: lengths and percentages along the gradient line.
+    Linear,
+    /// `<angular-color-stop-list>`: angles and percentages of a turn, kept as fractions.
+    Angular,
+}
+
+/// An `<angle-percentage>` or `<zero>` as a fraction of a full turn.
+fn turn_fraction(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
+    match value.unwrap() {
+        Component::Percentage(fraction) => Ok(*fraction),
+        Component::Math(source, Kind::Angle, range) => {
+            Ok(
+                crate::style::values::math(source, relative, Kind::Angle, Some(Kind::Angle))?
+                    .resolve(FULL_TURN_DEG, *range)
+                    / FULL_TURN_DEG,
+            )
+        }
+        _ => Ok(crate::style::values::angle(value, relative)? / FULL_TURN_DEG),
+    }
+}
+
+/// A colour stop list: stops with up to two positions and the hints between them.
 fn stop_list(
     syntax: &Component,
     relative: &Relative<'_>,
-    current: Color,
+    current: &AbsoluteColor,
+    kind: StopList,
 ) -> Result<Vec<GradientItem>, StyleError> {
+    let (list_label, labels, positions_label) = match kind {
+        StopList::Linear => (
+            Production::ColorStopList,
+            STOP_LABELS,
+            Production::ColorStopLength,
+        ),
+        StopList::Angular => (
+            Production::AngularColorStopList,
+            ANGULAR_STOP_LABELS,
+            Production::ColorStopAngle,
+        ),
+    };
     let list = syntax
-        .find(Label::Production(Production::ColorStopList))
+        .find(Label::Production(list_label))
         .ok_or_else(|| unsupported(syntax))?;
+    let position = |value: &Component| match kind {
+        StopList::Linear => length_percentage(value, relative),
+        StopList::Angular => turn_fraction(value, relative).map(LengthPercentage::Percentage),
+    };
     let mut found = Vec::new();
-    list.references(&STOP_LABELS, &mut found);
+    list.references(&labels, &mut found);
     let mut items = Vec::new();
     for (label, item) in found {
-        if label == STOP_LABELS[1] {
-            items.push(GradientItem::Hint(length_percentage(item, relative)?));
+        if label == labels[1] {
+            items.push(GradientItem::Hint(position(item)?));
             continue;
         }
         let parts = item.items();
-        let color = crate::style::colors::color(&parts[0], relative, current)?;
-        let positions = match item.find(Label::Production(Production::ColorStopLength)) {
+        let color = crate::style::colors::absolute(&parts[0], relative, current)?;
+        let positions = match item.find(Label::Production(positions_label)) {
             Some(lengths) => lengths
                 .items()
                 .iter()
-                .map(|position| length_percentage(position, relative).map(Some))
+                .map(|value| position(value).map(Some))
                 .collect::<Result<Vec<_>, _>>()?,
             None => vec![None],
         };

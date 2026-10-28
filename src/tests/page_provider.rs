@@ -39,8 +39,12 @@ fn owned_page_records_freeze_viewport_and_share_loaded_images() {
         "identical semantic requests reuse the owned record"
     );
     let (
-        BackgroundImage::Image { image: first_image },
-        BackgroundImage::Image { image: later_image },
+        BackgroundImage::Image {
+            image: first_image, ..
+        },
+        BackgroundImage::Image {
+            image: later_image, ..
+        },
     ) = (
         &first.decoration.backgrounds.images[0],
         &later.decoration.backgrounds.images[0],
@@ -54,6 +58,7 @@ fn owned_page_records_freeze_viewport_and_share_loaded_images() {
     );
     let BackgroundImage::Image {
         image: canvas_image,
+        ..
     } = &document.canvas_background().backgrounds.images[0]
     else {
         panic!("body image must propagate to the canvas");
