@@ -9,6 +9,10 @@
       "syntax": "normal | <length-percentage> | <timeline-range-name> <length-percentage>?",
       "source": "https://drafts.csswg.org/scroll-animations-1/#animation-range-start: one item of the list, which the animation-range shorthand takes per entry"
     },
+    "feature-tag-value": {
+      "syntax": "<string> [ <integer [0,∞]> | on | off ]?",
+      "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#feature-tag-value"
+    },
     "content-list": {
       "syntax": "[ <string> | <image> | <attr()> | contents | <quote> | <leader()> | <target> | <string()> | <content()> | <counter> ]+",
       "source": "https://www.w3.org/TR/2025/WD-css-content-3-20251204/#content-values"
@@ -212,6 +216,7 @@
       "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-prop"
     },
     "font-variant": {
+      "syntax": "normal | none | [ <common-lig-values> || <discretionary-lig-values> || <historical-lig-values> || <contextual-alt-values> || stylistic( <feature-value-name> ) || historical-forms || styleset( <feature-value-name># ) || character-variant( <feature-value-name># ) || swash( <feature-value-name> ) || ornaments( <feature-value-name> ) || annotation( <feature-value-name> ) || [ small-caps | all-small-caps | petite-caps | all-petite-caps | unicase | titling-caps ] || <numeric-figure-values> || <numeric-spacing-values> || <numeric-fraction-values> || ordinal || slashed-zero || <east-asian-variant-values> || <east-asian-width-values> || ruby || [ sub | super ] || [ text | emoji | unicode ] ]",
       "initial": [
         "font-variant-alternates",
         "font-variant-caps",
@@ -238,6 +243,10 @@
     "font-synthesis": {
       "initial": ["font-synthesis-weight", "font-synthesis-style", "font-synthesis-small-caps", "font-synthesis-position"],
       "source": "https://drafts.csswg.org/css-fonts-4/#font-synthesis"
+    },
+    "font-synthesis-position": {
+      "initial": "auto",
+      "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-synthesis-position"
     },
     "column-count": {
       "syntax": "auto | <integer [1,∞]>",

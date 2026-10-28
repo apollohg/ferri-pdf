@@ -141,6 +141,7 @@ const FONT_TECHNOLOGIES: &[&str] = &[
     "color-sbix",
     "color-CBDT",
     VARIATIONS_TECHNOLOGY,
+    "palettes",
 ];
 pub(super) fn supports_font_technology(name: &str) -> bool {
     FONT_TECHNOLOGIES

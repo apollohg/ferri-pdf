@@ -2835,7 +2835,7 @@ fn zero_font_and_line_metrics_remain_valid_css_values() {
     assert!(line.width.is_finite());
 }
 
-const TWO_FONTS: &str = "@font-face{font-family:Root;src:url(SourceSerif4-Regular.ttf)}@font-face{font-family:Body;src:url(RobotoFlex.ttf)}html{font-family:Root;font-size:40pt;line-height:60pt}body{font-family:Body;font-size:10pt;line-height:15pt}";
+const TWO_FONTS: &str = "@font-face{font-family:Root;src:url(SourceSerif4-Regular.ttf)}@font-face{font-family:Body;src:url(RobotoFlex.ttf)}html{font-family:Root;font-size:40pt;line-height:60pt;font-optical-sizing:none}body{font-family:Body;font-size:10pt;line-height:15pt}";
 
 #[test]
 fn font_root_and_line_height_units_use_the_correct_metrics() {

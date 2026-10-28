@@ -32,9 +32,10 @@ impl DecoratingFont {
             .face(context.primary(style)?, style)?
             .ok_or(TextError::NoFontCandidates)?;
         let face = &instance.face;
-        let em = style.size / face.units_per_em() as f32;
+        let size = instance.used_size(style);
+        let em = size / face.units_per_em() as f32;
         let metrics = BoxMetrics::of(context, style)?;
-        let fallback = style.size * FALLBACK_THICKNESS_EM;
+        let fallback = size * FALLBACK_THICKNESS_EM;
         let line = |metrics: Option<ttf_parser::LineMetrics>, top: f32| {
             metrics
                 .filter(|metrics| metrics.thickness > 0)
@@ -46,7 +47,7 @@ impl DecoratingFont {
                 })
         };
         Ok(Self {
-            underline: line(face.underline_metrics(), style.size * FALLBACK_UNDERLINE_EM),
+            underline: line(face.underline_metrics(), size * FALLBACK_UNDERLINE_EM),
             strikeout: line(
                 face.strikeout_metrics(),
                 -(metrics.x_height + fallback) / 2.0,

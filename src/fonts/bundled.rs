@@ -22,6 +22,7 @@ pub(super) fn faces() -> Vec<FontFace> {
                     width: FontRange::single(FontWidth::NORMAL),
                     style: FontFaceStyle::from($style),
                 },
+                settings: crate::fonts::FaceSettings::default(),
                 data: FontData::Bundled(include_bytes!(concat!(
                     "../../assets/fonts/",
                     $file,

@@ -3,12 +3,15 @@ mod bidi;
 mod breaking;
 mod decoration;
 mod ellipsis;
+mod features;
 mod hyphenation;
 mod leaders;
 mod line_boxes;
 mod paragraph;
 mod shaping;
 mod spacing;
+#[cfg(test)]
+mod tests;
 mod whitespace;
 use crate::document::Paragraph;
 use crate::fonts::{
@@ -63,6 +66,9 @@ pub struct GlyphRun {
     pub synthesis: FontSynthesis,
     pub oblique_skew: f32,
     pub variations: Vec<FontVariation>,
+    /// The colours of a COLR face's palette, where `font-palette` replaces its default.
+    #[serde(skip)]
+    pub palette: Option<Arc<[crate::graphics::Color]>>,
     pub color: crate::graphics::Color,
     #[serde(skip)]
     pub white_space: WhiteSpace,
@@ -316,20 +322,83 @@ pub(crate) enum TextError {
     ParagraphMismatch,
 }
 
+/// The content language, or the OpenType language system `font-language-override` names
+/// where the face defines it; other tags do not affect glyph selection (CSS Fonts 4 §6.13).
+/// The shaper takes an explicit system as a `-x-hbot` private-use subtag, which has
+/// uppercase letters and digits followed by padding.
+fn shaping_language(face: &Face<'_>, style: &Style) -> Option<rustybuzz::Language> {
+    const PRIVATE_SYSTEM_SUBTAG: &str = "x-hbot";
+    const PADDING: char = ' ';
+    let content = || style.language.parse().ok();
+    let Some(tag) = style
+        .font_features
+        .language_override
+        .as_deref()
+        .and_then(crate::style::language_system_tag)
+    else {
+        return content();
+    };
+    let name = std::str::from_utf8(&tag)
+        .expect("language system tags are ASCII")
+        .trim_end_matches(PADDING);
+    if !shaping::has_language_system(face, tag)
+        || !name
+            .bytes()
+            .all(|byte| byte.is_ascii_uppercase() || byte.is_ascii_digit())
+    {
+        return content();
+    }
+    let source = if style.language.is_empty() {
+        format!("{PRIVATE_SYSTEM_SUBTAG}{name}")
+    } else {
+        format!("{}-{PRIVATE_SYSTEM_SUBTAG}{name}", style.language)
+    };
+    source.parse().ok()
+}
+
+/// Whether `font-variant-emoji` appends a presentation selector anywhere in `text`.
+fn implies_presentation(style: &Style, text: &str) -> bool {
+    let mut chars = text.chars().peekable();
+    while let Some(ch) = chars.next() {
+        if shaping::implied_presentation(style.font_features.emoji, ch, chars.peek().copied())
+            .is_some()
+        {
+            return true;
+        }
+    }
+    false
+}
+
 /// Borrows font data and lazily parses only the faces used by a rendering job.
 struct ShapingInstance<'a> {
     face: Face<'a>,
     variations: Arc<[FontVariation]>,
     synthesis: FontSynthesis,
     oblique_skew: f32,
+    /// Used font size per computed size, from `font-size-adjust`.
+    scale: f32,
+}
+impl ShapingInstance<'_> {
+    fn used_size(&self, style: &Style) -> f32 {
+        style.size * self.scale
+    }
 }
 
-type FaceCache<'a> = HashMap<(FontId, FontSelection), Option<Arc<ShapingInstance<'a>>>>;
+/// A face as matching selects it and the adjustments apply, with the computed size where it
+/// selects an optical size or an adjusted size.
+type FaceKey = (
+    FontId,
+    FontSelection,
+    crate::fonts::FontAdjustments,
+    Option<u32>,
+);
+type FaceCache<'a> = HashMap<FaceKey, Option<Arc<ShapingInstance<'a>>>>;
 
 pub(crate) struct TextContext<'a> {
     fonts: &'a FontBook,
     resolver: &'a dyn ResourceResolver,
     faces: RefCell<FaceCache<'a>>,
+    optical_axes: RefCell<HashMap<FontId, bool>>,
     matching_work: Cell<Option<usize>>,
     bidi_work: Cell<Option<usize>>,
 }
@@ -413,6 +482,7 @@ impl<'a> TextContext<'a> {
             fonts,
             resolver,
             faces: RefCell::new(HashMap::new()),
+            optical_axes: RefCell::new(HashMap::new()),
             matching_work: Cell::new(Some(MAX_GLYPH_MATCH_WORK)),
             bidi_work: Cell::new(Some(crate::document::MAX_INLINE_TEXT_BYTES)),
         }
@@ -423,24 +493,45 @@ impl<'a> TextContext<'a> {
         style: &Style,
     ) -> Result<Option<Arc<ShapingInstance<'a>>>, TextError> {
         let selection = style.font_selection();
-        let key = (id, selection);
+        let adjustments = &style.font_adjustments;
+        let sized = adjustments.size_adjust.is_some()
+            || (adjustments.optical_sizing && self.has_optical_axis(id)?);
+        let key = (
+            id,
+            selection,
+            adjustments.clone(),
+            sized.then(|| style.size.to_bits()),
+        );
         if let Some(face) = self.faces.borrow().get(&key) {
             return Ok(face.clone());
         }
         let face = self
             .fonts
-            .instance(id, selection, self.resolver)?
-            .map(|instance| {
+            .sized_instance(id, selection, adjustments, style.size, self.resolver)?
+            .map(|(instance, used)| {
                 let (synthesis, oblique_skew) = instance.synthesis(selection);
                 Arc::new(ShapingInstance {
                     face: Face::from_face(instance.face),
                     variations: instance.variations,
                     synthesis,
                     oblique_skew,
+                    scale: if style.size == 0.0 {
+                        1.0
+                    } else {
+                        used / style.size
+                    },
                 })
             });
         self.faces.borrow_mut().insert(key, face.clone());
         Ok(face)
+    }
+    fn has_optical_axis(&self, id: FontId) -> Result<bool, TextError> {
+        if let Some(optical) = self.optical_axes.borrow().get(&id) {
+            return Ok(*optical);
+        }
+        let optical = self.fonts.has_optical_axis(id, self.resolver)?;
+        self.optical_axes.borrow_mut().insert(id, optical);
+        Ok(optical)
     }
     fn primary(&self, style: &Style) -> Result<FontId, TextError> {
         for &id in style.font_candidates() {
@@ -469,13 +560,30 @@ impl<'a> TextContext<'a> {
                 None => self
                     .shape(" ", 0..1, false, style, MissingGlyphs::Substitute)?
                     .iter()
-                    .map(|run| run.width / style.size)
+                    .filter(|run| run.font_size > 0.0)
+                    .map(|run| run.width / run.font_size)
                     .sum(),
             };
             Some(normal_space * shaping::NARROW_SPACE_FACTOR)
         } else {
             None
         };
+        let entry = self.fonts.face(id).ok_or(FontError::UnknownFont(id))?;
+        let family = &entry.descriptor().family;
+        let alternates =
+            features::alternate_features(&style.font_features.alternates, |kind, name| {
+                self.fonts
+                    .feature_value(style.font_namespace(), family, kind, name)
+            });
+        let palette = entry.data().and_then(|data| {
+            self.fonts.palette(
+                style.font_namespace(),
+                &style.font_features.palette,
+                family,
+                data,
+            )
+        });
+        let language = shaping_language(face, style);
         shaping::shape_runs(
             shaping::ShapingFont {
                 face,
@@ -485,6 +593,14 @@ impl<'a> TextContext<'a> {
                 variations: &instance.variations,
                 narrow_space_advance,
                 missing,
+                size: instance.used_size(style),
+                features: features::FaceFeatures {
+                    descriptor: &entry.settings().features,
+                    alternates: &alternates,
+                    ..Default::default()
+                },
+                language: language.as_ref(),
+                palette: palette.as_ref(),
             },
             paragraph,
             range,
@@ -513,6 +629,7 @@ impl<'a> TextContext<'a> {
         rtl: bool,
         style: &Style,
         named: Option<&[FontId]>,
+        presentation: bool,
     ) -> Result<Option<FontId>, TextError> {
         let candidates = if paragraph[range.clone()].chars().any(shaping::private_use) {
             named.expect("private-use candidates were resolved for the run")
@@ -528,7 +645,11 @@ impl<'a> TextContext<'a> {
             let Some(instance) = self.face(id, style)? else {
                 return Ok(GlyphMatch::Unavailable);
             };
-            if !shaping::supports_variations(&instance.face, &paragraph[range.clone()]) {
+            if !shaping::supports_variations(
+                &instance.face,
+                &paragraph[range.clone()],
+                presentation.then_some(style.font_features.emoji),
+            ) {
                 return Ok(GlyphMatch::Missing);
             }
             match self.shape_run(
@@ -545,6 +666,23 @@ impl<'a> TextContext<'a> {
             }
         })?;
         Ok(matched.map(|(id, ())| id))
+    }
+
+    /// A face with the presentation `font-variant-emoji` implies, else one without it: an
+    /// unsupported presentation selector is ignored (CSS Fonts 4 §9.3).
+    fn presented_font(
+        &self,
+        paragraph: &str,
+        range: Range<usize>,
+        rtl: bool,
+        style: &Style,
+        named: Option<&[FontId]>,
+    ) -> Result<Option<FontId>, TextError> {
+        let presented = self.matching_font(paragraph, range.clone(), rtl, style, named, true)?;
+        if presented.is_some() || !implies_presentation(style, &paragraph[range.clone()]) {
+            return Ok(presented);
+        }
+        self.matching_font(paragraph, range, rtl, style, named, false)
     }
 
     fn shape(
@@ -576,6 +714,7 @@ impl<'a> TextContext<'a> {
                 }
             }
         }
+        has_variation |= implies_presentation(style, text);
         let primary = self.primary(style)?;
         let named = has_private.then(|| style.named_font_candidates(self.fonts));
         if named.is_none() && !has_variation {
@@ -607,7 +746,7 @@ impl<'a> TextContext<'a> {
         for (offset, grapheme) in paragraph[range.clone()].grapheme_indices(true) {
             let cluster = range.start + offset..range.start + offset + grapheme.len();
             if let Some(id) =
-                self.matching_font(paragraph, cluster.clone(), rtl, style, named.as_deref())?
+                self.presented_font(paragraph, cluster.clone(), rtl, style, named.as_deref())?
             {
                 append(cluster, id, MissingGlyphs::Reject);
                 continue;
@@ -634,7 +773,7 @@ impl<'a> TextContext<'a> {
             {
                 let prefix = cluster.start..cluster.start + offset;
                 if let Some(id) =
-                    self.matching_font(paragraph, prefix.clone(), rtl, style, named.as_deref())?
+                    self.presented_font(paragraph, prefix.clone(), rtl, style, named.as_deref())?
                 {
                     remainder = prefix.end;
                     append(prefix, id, MissingGlyphs::Reject);
@@ -644,7 +783,7 @@ impl<'a> TextContext<'a> {
             for (offset, ch) in paragraph[remainder..cluster.end].char_indices() {
                 let part = remainder + offset..remainder + offset + ch.len_utf8();
                 if let Some(id) =
-                    self.matching_font(paragraph, part.clone(), rtl, style, named.as_deref())?
+                    self.presented_font(paragraph, part.clone(), rtl, style, named.as_deref())?
                 {
                     append(part, id, MissingGlyphs::Reject);
                 } else {

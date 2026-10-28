@@ -499,6 +499,7 @@ fn value_with_context(
         match_value(property.data().root, source, steps, context)?.filter(|value| {
             crate::style::grid_values::valid(property, value)
                 && crate::style::inert::valid(property, value)
+                && crate::style::font_values::valid(property, value)
         }),
     )
 }
@@ -510,12 +511,13 @@ pub(crate) fn descriptor(
     if descriptor == Descriptor::FontFaceSrc {
         crate::style::matcher::match_comma_list(descriptor.data().root, source)
     } else {
-        match_value(
+        Ok(match_value(
             descriptor.data().root,
             source,
             &mut 0,
             ValueContext::Independent,
-        )
+        )?
+        .filter(|value| crate::style::font_values::valid_descriptor(descriptor, value)))
     }
 }
 

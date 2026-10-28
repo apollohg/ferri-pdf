@@ -1,6 +1,8 @@
 //! CSS Values 4 §6–§7 dimension units and what relative lengths resolve against.
 use crate::fonts::{
-    FaceMetrics, FontBook, FontError, FontId, FontSelection, InitialFont, initial_font,
+    FALLBACK_IDEOGRAPH_ADVANCE_EM, FALLBACK_ZERO_ADVANCE_EM, FaceMetrics, FontAdjustments,
+    FontBook, FontError, FontId, FontSelection, InitialFont, SizeMetric, WATER_IDEOGRAPH, ZERO,
+    initial_font,
 };
 use crate::resources::ResourceResolver;
 use crate::style::{
@@ -18,12 +20,6 @@ const CSS_PIXELS_PER_INCH: f32 = 96.0;
 const CENTIMETRES_PER_INCH: f32 = 2.54;
 /// Viewport-percentage units are hundredths of the viewport.
 const PERCENT: f32 = 100.0;
-/// `ch` measures the advance of "0" and `ic` that of "水" (CSS Values 4 §6.1.1).
-const ZERO: char = '0';
-const WATER_IDEOGRAPH: char = '\u{6c34}';
-/// CSS Values 4 §6.1.1 sizes where the font has no such glyph.
-const FALLBACK_ZERO_ADVANCE_EM: f32 = 0.5;
-const FALLBACK_IDEOGRAPH_ADVANCE_EM: f32 = 1.0;
 
 /// A font-relative unit (CSS Values 4 §6.1.1).
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -94,16 +90,22 @@ enum Source<'a> {
         resolver: &'a dyn ResourceResolver,
         candidates: Arc<[FontId]>,
         selection: FontSelection,
+        adjustments: FontAdjustments,
+        /// The computed font size, which selects optical sizes and adjusted sizes.
+        size: f32,
     },
 }
+
+/// Em measures and the used size per computed size of the face that has them.
+type Scaled<T> = (T, f32);
 
 /// A font list measured on first use, so fonts no unit needs are never loaded.
 #[derive(Clone)]
 pub(crate) struct Faces<'a> {
     source: Source<'a>,
-    first: OnceCell<FaceMetrics>,
-    zero: OnceCell<Option<f32>>,
-    water: OnceCell<Option<f32>>,
+    first: OnceCell<Scaled<FaceMetrics>>,
+    zero: OnceCell<Option<Scaled<f32>>>,
+    water: OnceCell<Option<Scaled<f32>>>,
 }
 impl<'a> Faces<'a> {
     pub(crate) fn initial(font: Option<Arc<InitialFont>>) -> Self {
@@ -114,12 +116,16 @@ impl<'a> Faces<'a> {
         resolver: &'a dyn ResourceResolver,
         candidates: Arc<[FontId]>,
         selection: FontSelection,
+        adjustments: FontAdjustments,
+        size: f32,
     ) -> Self {
         Self::new(Source::Book {
             book,
             resolver,
             candidates,
             selection,
+            adjustments,
+            size,
         })
     }
     fn new(source: Source<'a>) -> Self {
@@ -131,23 +137,34 @@ impl<'a> Faces<'a> {
         }
     }
     /// The first available font's metrics, in em.
-    fn first(&self) -> Result<FaceMetrics, FontError> {
+    fn first(&self) -> Result<Scaled<FaceMetrics>, FontError> {
         if let Some(metrics) = self.first.get() {
             return Ok(*metrics);
         }
         let metrics = match &self.source {
-            Source::Initial(font) => font.as_deref().unwrap_or_else(|| initial_font()).metrics(),
+            Source::Initial(font) => (
+                font.as_deref().unwrap_or_else(|| initial_font()).metrics(),
+                1.0,
+            ),
             Source::Book {
                 book,
                 resolver,
                 candidates,
                 selection,
-            } => book.first_available_metrics(candidates, *selection, *resolver)?,
+                adjustments,
+                size,
+            } => {
+                book.first_available_metrics(candidates, *selection, adjustments, *size, *resolver)?
+            }
         };
         Ok(*self.first.get_or_init(|| metrics))
     }
     /// The advance of `ch`, in em, in the font that renders it.
-    fn advance(&self, ch: char, cell: &OnceCell<Option<f32>>) -> Result<Option<f32>, FontError> {
+    fn advance(
+        &self,
+        ch: char,
+        cell: &OnceCell<Option<Scaled<f32>>>,
+    ) -> Result<Option<Scaled<f32>>, FontError> {
         if let Some(advance) = cell.get() {
             return Ok(*advance);
         }
@@ -155,13 +172,16 @@ impl<'a> Faces<'a> {
             Source::Initial(font) => font
                 .as_deref()
                 .unwrap_or_else(|| initial_font())
-                .advance(ch),
+                .advance(ch)
+                .map(|advance| (advance, 1.0)),
             Source::Book {
                 book,
                 resolver,
                 candidates,
                 selection,
-            } => book.advance(candidates, *selection, ch, *resolver)?,
+                adjustments,
+                size,
+            } => book.advance(candidates, *selection, adjustments, *size, ch, *resolver)?,
         };
         Ok(*cell.get_or_init(|| advance))
     }
@@ -169,6 +189,8 @@ impl<'a> Faces<'a> {
 
 pub(crate) trait FontUnits {
     fn per_unit(&self, unit: FontUnit) -> Result<f32, StyleError>;
+    /// The `font-size-adjust` metric of the first available font, in em.
+    fn size_metric(&self, metric: SizeMetric) -> Result<f32, StyleError>;
 }
 
 pub(crate) trait ViewportUnits {
@@ -219,16 +241,23 @@ impl Line<'_> {
                 height,
                 size,
                 faces,
-            } => match height.resolve(*size) {
-                Some(height) => Ok(height),
-                None => Ok(faces.first()?.normal_line_height() * size),
-            },
+            } => {
+                if let Some(height) = height.resolve(*size) {
+                    return Ok(height);
+                }
+                let (metrics, scale) = faces.first()?;
+                Ok(metrics.normal_line_height() * scale * size)
+            }
         }
     }
 }
 
 /// Font metrics can be concrete or resolved on demand while constructing the first page.
 #[derive(Clone)]
+#[expect(
+    clippy::large_enum_variant,
+    reason = "bases are built on the stack for every element; boxing would allocate for each"
+)]
 pub(crate) enum FontBasis<'a> {
     Known {
         size: f32,
@@ -262,19 +291,34 @@ impl<'a> FontBasis<'a> {
             Self::Known { size, faces, line } => (size, faces, line),
             Self::Deferred(source) => return source.per_unit(unit),
         };
+        // `font-size-adjust` scales metric-based units but not `em` (CSS Fonts 5 §3.4).
+        let scaled = |(em, scale): Scaled<f32>| em * scale;
         let em = match unit {
             FontUnit::Em => 1.0,
-            FontUnit::Ex => faces.first()?.x_height,
-            FontUnit::Cap => faces.first()?.cap_height,
+            FontUnit::Ex => {
+                let (metrics, scale) = faces.first()?;
+                metrics.x_height * scale
+            }
+            FontUnit::Cap => {
+                let (metrics, scale) = faces.first()?;
+                metrics.cap_height * scale
+            }
             FontUnit::Ch => faces
                 .advance(ZERO, &faces.zero)?
-                .unwrap_or(FALLBACK_ZERO_ADVANCE_EM),
+                .map_or(FALLBACK_ZERO_ADVANCE_EM, scaled),
             FontUnit::Ic => faces
                 .advance(WATER_IDEOGRAPH, &faces.water)?
-                .unwrap_or(FALLBACK_IDEOGRAPH_ADVANCE_EM),
+                .map_or(FALLBACK_IDEOGRAPH_ADVANCE_EM, scaled),
             FontUnit::Lh => return line.points(),
         };
         Ok(em * size)
+    }
+    /// The `font-size-adjust` metric of the first available font, in em.
+    pub(crate) fn size_metric(&self, metric: SizeMetric) -> Result<f32, StyleError> {
+        match self {
+            Self::Known { faces, .. } => Ok(faces.first()?.0.size_metric(metric)),
+            Self::Deferred(source) => source.size_metric(metric),
+        }
     }
 }
 

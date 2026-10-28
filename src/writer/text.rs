@@ -5,7 +5,7 @@ use crate::writer::PdfError;
 use krilla::{
     geom::{Point, Transform},
     surface::Surface,
-    text::{Font, Glyph, GlyphId, Tag},
+    text::{Font, Glyph, GlyphId, PaletteColor, Tag},
 };
 use std::collections::HashMap;
 use std::ops::Range;
@@ -43,7 +43,20 @@ impl Glyph for PdfGlyph<'_> {
     }
 }
 
-type InstanceKey = (FontId, Vec<([u8; 4], u32)>);
+/// A face's variation coordinates and palette entries, which select distinct PDF fonts.
+type InstanceKey = (FontId, Vec<([u8; 4], u32)>, Option<Vec<PaletteColor>>);
+
+const CHANNEL_MAX: f32 = 255.0;
+
+/// A `font-palette` colour as a krilla palette entry; colours are already sRGB.
+fn palette_color(color: crate::graphics::Color) -> Result<PaletteColor, PdfError> {
+    let alpha = (color.alpha * CHANNEL_MAX).round();
+    if !(0.0..=CHANNEL_MAX).contains(&alpha) {
+        return Err(PdfError::InvalidAlpha(color.alpha));
+    }
+    let [red, green, blue] = color.rgb;
+    Ok([red, green, blue, alpha as u8])
+}
 
 pub(super) struct TextWriter<'a> {
     fonts: &'a FontBook,
@@ -77,12 +90,18 @@ impl<'a> TextWriter<'a> {
                 continue;
             }
             let x = line.x + run.x;
+            let palette = run
+                .palette
+                .as_deref()
+                .map(|colors| colors.iter().copied().map(palette_color).collect())
+                .transpose()?;
             let key = (
                 run.font_id,
                 run.variations
                     .iter()
                     .map(|variation| (variation.tag, variation.value.to_bits()))
                     .collect(),
+                palette,
             );
             let font = if let Some(font) = self.embedded.get(&key) {
                 font.clone()
@@ -103,8 +122,13 @@ impl<'a> TextWriter<'a> {
                     .iter()
                     .map(|variation| (Tag::new(&variation.tag), variation.value))
                     .collect();
-                let font = Font::new_variable(data.as_ref().unwrap().clone(), 0, &coordinates)
-                    .ok_or(PdfError::InvalidFont)?;
+                let font = Font::new_variable_with_palette(
+                    data.as_ref().unwrap().clone(),
+                    0,
+                    &coordinates,
+                    key.2.clone(),
+                )
+                .ok_or(PdfError::InvalidFont)?;
                 self.embedded.insert(key, font.clone());
                 font
             };

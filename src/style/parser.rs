@@ -90,6 +90,11 @@ pub(super) enum ContentRule {
         items: Vec<crate::style::page_parser::PageItem>,
     },
     Font(Vec<Declaration>, SourceLocation),
+    FeatureValues {
+        families: Vec<String>,
+        definitions: Vec<crate::style::feature_values::FeatureValueDefinition>,
+    },
+    Palette(String, Vec<Declaration>, SourceLocation),
 }
 
 #[derive(Clone)]
@@ -155,7 +160,10 @@ impl RuleSource {
                             }
                         }
                         Rule::Style(rule) => relocate(&mut rule.source.location, &self.location),
-                        Rule::Content(ContentRule::Font(declarations, location)) => {
+                        Rule::Content(
+                            ContentRule::Font(declarations, location)
+                            | ContentRule::Palette(_, declarations, location),
+                        ) => {
                             relocate(location, &self.location);
                             for declaration in declarations {
                                 relocate(&mut declaration.location, &self.location);
@@ -191,6 +199,7 @@ impl RuleSource {
                         }
                         Rule::Import(_, location) => relocate(location, &self.location),
                         Rule::Namespace | Rule::LayerStatement(_) | Rule::CustomMedia(..) => {}
+                        Rule::Content(ContentRule::FeatureValues { .. }) => {}
                     }
                 }
                 Ok(rules)
@@ -222,6 +231,8 @@ struct CssParser<'a> {
 pub(super) enum AtRuleName {
     Page,
     Font,
+    FeatureValues,
+    Palette,
     Layer,
     Scope,
     Media,
@@ -250,6 +261,8 @@ impl AtRuleName {
         match name.to_ascii_lowercase().as_str() {
             "page" => Some(Self::Page),
             "font-face" => Some(Self::Font),
+            "font-feature-values" => Some(Self::FeatureValues),
+            "font-palette-values" => Some(Self::Palette),
             "layer" => Some(Self::Layer),
             "scope" => Some(Self::Scope),
             "media" => Some(Self::Media),
@@ -268,6 +281,8 @@ impl AtRuleName {
 enum AtPrelude {
     Page(crate::style::page_rules::PageSelectors),
     Font,
+    FeatureValues(Vec<String>),
+    Palette(String),
     Layer(Vec<crate::style::layers::LayerName>),
     Scope(crate::style::scope::ScopePrelude),
     Conditional(crate::style::conditions::RuleQuery, bool),
@@ -946,8 +961,53 @@ fn at_prelude<'i>(
     if matches!(kind, AtRuleName::Page) {
         return crate::style::page_parser::page_selectors(input).map(AtPrelude::Page);
     }
+    if matches!(kind, AtRuleName::FeatureValues) {
+        return feature_value_families(input).map(AtPrelude::FeatureValues);
+    }
+    if matches!(kind, AtRuleName::Palette) {
+        let name = input.expect_ident_cloned()?;
+        if !name.starts_with(CUSTOM_PROPERTY_PREFIX) {
+            return Err(input.new_custom_error(StyleError::Invalid(
+                "font palette names are dashed identifiers".into(),
+            )));
+        }
+        input.expect_exhausted()?;
+        return Ok(AtPrelude::Palette(name.to_string()));
+    }
     input.expect_exhausted()?;
     Ok(AtPrelude::Font)
+}
+
+/// The named families of an `@font-feature-values` prelude; a generic family invalidates the
+/// rule (CSS Fonts 4 §6.9.1).
+fn feature_value_families<'i>(
+    input: &mut Parser<'i, '_>,
+) -> Result<Vec<String>, ParseError<'i, StyleError>> {
+    let source = block_source(input);
+    let invalid = || StyleError::Invalid(format!("@font-feature-values families {source}"));
+    let families = crate::style::declaration::value(
+        crate::style::grammar::Property::FontFamily,
+        source,
+        &mut 0,
+    )
+    .map_err(|error| input.new_custom_error(error))?
+    .ok_or_else(|| input.new_custom_error(invalid()))?;
+    families
+        .items()
+        .iter()
+        .map(|family| {
+            if family
+                .find(crate::style::grammar::Label::Production(
+                    crate::style::grammar::Production::GenericFamily,
+                ))
+                .is_some()
+            {
+                Err(input.new_custom_error(invalid()))
+            } else {
+                Ok(crate::style::values::family_name(family))
+            }
+        })
+        .collect()
 }
 
 fn import_prelude<'i>(
@@ -1092,6 +1152,19 @@ impl<'i> AtRuleParser<'i> for CssParser<'_> {
                 )?,
             }),
             AtPrelude::Font => Rule::Content(ContentRule::Font(
+                declarations(input, self.base, self.diagnostics)?,
+                SourceLocation::new(self.base, state.source_location()),
+            )),
+            AtPrelude::FeatureValues(families) => Rule::Content(ContentRule::FeatureValues {
+                families,
+                definitions: crate::style::feature_values::feature_values(
+                    input,
+                    self.base,
+                    self.diagnostics,
+                )?,
+            }),
+            AtPrelude::Palette(name) => Rule::Content(ContentRule::Palette(
+                name,
                 declarations(input, self.base, self.diagnostics)?,
                 SourceLocation::new(self.base, state.source_location()),
             )),
@@ -1545,6 +1618,11 @@ impl<'i> AtRuleParser<'i> for SupportProbe<'_> {
         ) || matches!(&prelude,AtPrelude::Layer(names) if names.len()>1)
         {
             return Ok(ProbeItem::Checked(false));
+        }
+        // Font feature value and palette bodies ignore what they do not define (CSS Fonts 4 §6.9.1,
+        // §9.2), so a well-formed block is supported.
+        if matches!(prelude, AtPrelude::FeatureValues(_) | AtPrelude::Palette(_)) {
+            return Ok(ProbeItem::Checked(true));
         }
         let location = Self::location(self.start, input);
         let source = block_source(input);

@@ -210,7 +210,7 @@ fn extended_font_and_at_rule_queries_reflect_the_rendering_pipeline() {
         ("font-tech(color-sbix)", true),
         ("font-tech(color-CBDT)", true),
         ("font-tech(color-SVG)", false),
-        ("font-tech(palettes)", false),
+        ("font-tech(palettes)", true),
         ("font-tech(features-graphite)", false),
         ("font-tech(variations)", true),
         ("font-tech(incremental)", false),

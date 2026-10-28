@@ -199,18 +199,7 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::Flex => flex(&value)?,
         P::Font => crate::style::font_values::expand_font(&value)?,
         P::FontStretch => alias(value.unwrap(), P::FontWidth),
-        P::FontVariant if value.keyword() == Some(Keyword::Normal) => {
-            declaration::wide(P::FontVariant, WideKeyword::Initial)
-        }
-        P::FontVariant if crate::style::font_values::is_small_caps(&value) => {
-            let mut values = declaration::wide(P::FontVariant, WideKeyword::Initial);
-            values
-                .iter_mut()
-                .find(|(property, _)| *property == P::FontVariantCaps)
-                .expect("font-variant metadata contains caps")
-                .1 = longhand(P::FontVariantCaps, &Component::Keyword(Keyword::SmallCaps));
-            values
-        }
+        P::FontVariant => crate::style::font_values::expand_variant(&value)?,
         P::FontSynthesis => font_synthesis(&value)?,
         P::Background => background(&value),
         P::PageBreakBefore => legacy_break(&value, P::BreakBefore)?,

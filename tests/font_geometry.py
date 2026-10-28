@@ -673,7 +673,7 @@ class FontGeometry(unittest.TestCase):
         face = (FIXTURES / "RobotoFlex.ttf").as_uri()
         css = f"""@page{{size:300pt 600pt;margin:20pt}}
         @font-face{{font-family:Variable;src:url('{face}')}}
-        p{{margin:0;font-family:Variable;font-size:20pt;line-height:30pt}}"""
+        p{{margin:0;font-family:Variable;font-size:20pt;line-height:30pt;font-optical-sizing:none}}"""
         body = ""
         for sample in reference["samples"]:
             axes = sample["location"]

@@ -1,9 +1,11 @@
-//! Face measurements that font-relative lengths (CSS Values 4 §6.1.1) and line boxes use.
+//! Face measurements that font-relative lengths (CSS Values 4 §6.1.1), line boxes and
+//! `font-size-adjust` (CSS Fonts 5 §3.4) use.
 use crate::fonts::{
-    DEFAULT_FAMILY, FontBook, FontData, FontError, FontFamily, FontId, FontPreferences,
-    FontSelection, GlyphMatch,
+    DEFAULT_FAMILY, FontAdjustments, FontBook, FontData, FontError, FontFamily, FontId,
+    FontInstance, FontPreferences, FontSelection, GlyphMatch,
 };
 use crate::resources::ResourceResolver;
+use serde::Serialize;
 use std::sync::OnceLock;
 use ttf_parser::Face;
 
@@ -11,6 +13,12 @@ use ttf_parser::Face;
 const FALLBACK_X_HEIGHT_EM: f32 = 0.5;
 const LOWERCASE_X: char = 'x';
 const CAPITAL_H: char = 'H';
+/// `ch` measures the advance of "0" and `ic` that of "水" (CSS Values 4 §6.1.1).
+pub(crate) const ZERO: char = '0';
+pub(crate) const WATER_IDEOGRAPH: char = '\u{6c34}';
+/// CSS Values 4 §6.1.1 sizes where the font has no such glyph.
+pub(crate) const FALLBACK_ZERO_ADVANCE_EM: f32 = 0.5;
+pub(crate) const FALLBACK_IDEOGRAPH_ADVANCE_EM: f32 = 1.0;
 
 /// Vertical metrics of one face, in em.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -22,6 +30,10 @@ pub(crate) struct FaceMetrics {
     pub x_height: f32,
     /// OS/2 `sCapHeight`, else the top of `H`, else the ascent.
     pub cap_height: f32,
+    /// Advances of "0" and "水", and the vertical advance of "水", where the face has them.
+    pub zero_advance: Option<f32>,
+    pub ideograph_advance: Option<f32>,
+    pub ideograph_height: Option<f32>,
 }
 impl FaceMetrics {
     pub(crate) fn of(face: &Face<'_>) -> Self {
@@ -48,11 +60,60 @@ impl FaceMetrics {
                 .filter(|height| *height > 0)
                 .or_else(|| glyph_top(CAPITAL_H))
                 .map_or(ascent, |height| f32::from(height) / units_per_em),
+            zero_advance: advance(face, ZERO),
+            ideograph_advance: advance(face, WATER_IDEOGRAPH),
+            ideograph_height: face
+                .glyph_index(WATER_IDEOGRAPH)
+                .filter(|glyph| glyph.0 != 0)
+                .and_then(|glyph| face.glyph_ver_advance(glyph))
+                .map(|height| f32::from(height) / units_per_em),
         }
     }
     /// `line-height: normal`.
     pub(crate) fn normal_line_height(&self) -> f32 {
         self.ascent + self.descent + self.line_gap
+    }
+    /// The metric `font-size-adjust` normalizes, in em. Missing or zero glyph measures use
+    /// the CSS Values 4 §6.1.1 fallbacks of the corresponding units.
+    pub(crate) fn size_metric(&self, metric: SizeMetric) -> f32 {
+        let measured =
+            |value: Option<f32>, fallback| value.filter(|v| *v > 0.0).unwrap_or(fallback);
+        match metric {
+            SizeMetric::ExHeight => self.x_height,
+            SizeMetric::CapHeight => self.cap_height,
+            SizeMetric::ChWidth => measured(self.zero_advance, FALLBACK_ZERO_ADVANCE_EM),
+            SizeMetric::IcWidth => measured(self.ideograph_advance, FALLBACK_IDEOGRAPH_ADVANCE_EM),
+            SizeMetric::IcHeight => measured(self.ideograph_height, FALLBACK_IDEOGRAPH_ADVANCE_EM),
+        }
+    }
+}
+
+/// The font metric `font-size-adjust` normalizes (CSS Fonts 5 §3.4).
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub(crate) enum SizeMetric {
+    ExHeight,
+    CapHeight,
+    ChWidth,
+    IcWidth,
+    IcHeight,
+}
+
+/// A computed `font-size-adjust`: the metric, as a proportion of the computed font size.
+#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
+pub(crate) struct SizeAdjust {
+    pub metric: SizeMetric,
+    pub value: f32,
+}
+impl SizeAdjust {
+    /// `u / s = m / m′` for a face with metrics `metrics`.
+    pub(crate) fn scale(self, metrics: &FaceMetrics) -> f32 {
+        let actual = metrics.size_metric(self.metric);
+        if actual > 0.0 {
+            self.value / actual
+        } else {
+            1.0
+        }
     }
 }
 
@@ -63,37 +124,89 @@ pub(crate) fn advance(face: &Face<'_>, ch: char) -> Option<f32> {
 }
 
 impl FontBook {
-    /// Metrics of the first face in `candidates` whose data is available.
+    /// The face that renders text at computed `size`, and its used size: `font-size-adjust`
+    /// scales the size and optical sizing follows the adjusted size (CSS Fonts 4 §8.1).
+    pub(crate) fn sized_instance(
+        &self,
+        id: FontId,
+        selection: FontSelection,
+        adjustments: &FontAdjustments,
+        size: f32,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Option<(FontInstance<'_>, f32)>, FontError> {
+        let Some(instance) = self.instance(id, selection, adjustments, size, resolver)? else {
+            return Ok(None);
+        };
+        let Some(adjust) = adjustments.size_adjust else {
+            return Ok(Some((instance, size)));
+        };
+        let used = size * adjust.scale(&FaceMetrics::of(&instance.face));
+        if !used.is_finite() {
+            return Err(FontError::InvalidSize(used));
+        }
+        let optical = adjustments.optical_sizing
+            && instance
+                .face
+                .variation_axes()
+                .into_iter()
+                .any(|axis| axis.tag == super::loading::OPTICAL_SIZE_AXIS);
+        if optical && used != size {
+            return Ok(self
+                .instance(id, selection, adjustments, used, resolver)?
+                .map(|instance| (instance, used)));
+        }
+        Ok(Some((instance, used)))
+    }
+
+    /// Metrics, in em, of the first face in `candidates` whose data is available, and its used
+    /// size per computed size.
     pub(crate) fn first_available_metrics(
         &self,
         candidates: &[FontId],
         selection: FontSelection,
+        adjustments: &FontAdjustments,
+        size: f32,
         resolver: &dyn ResourceResolver,
-    ) -> Result<FaceMetrics, FontError> {
+    ) -> Result<(FaceMetrics, f32), FontError> {
         for &id in candidates {
-            if let Some(instance) = self.instance(id, selection, resolver)? {
-                return Ok(FaceMetrics::of(&instance.face));
+            if let Some((instance, used)) =
+                self.sized_instance(id, selection, adjustments, size, resolver)?
+            {
+                return Ok((FaceMetrics::of(&instance.face), scale(used, size)));
             }
         }
         Err(FontError::NoAvailableFace)
     }
     /// The advance of `ch` in em in the first face of `candidates` that has it, as rendering
-    /// would select it.
+    /// would select it, and that face's used size per computed size.
     pub(crate) fn advance(
         &self,
         candidates: &[FontId],
         selection: FontSelection,
+        adjustments: &FontAdjustments,
+        size: f32,
         ch: char,
         resolver: &dyn ResourceResolver,
-    ) -> Result<Option<f32>, FontError> {
+    ) -> Result<Option<(f32, f32)>, FontError> {
         self.find_glyph(candidates, |id| -> Result<_, FontError> {
-            let Some(instance) = self.instance(id, selection, resolver)? else {
+            let Some((instance, used)) =
+                self.sized_instance(id, selection, adjustments, size, resolver)?
+            else {
                 return Ok(GlyphMatch::Unavailable);
             };
-            Ok(advance(&instance.face, ch).map_or(GlyphMatch::Missing, GlyphMatch::Found))
+            Ok(
+                advance(&instance.face, ch).map_or(GlyphMatch::Missing, |advance| {
+                    GlyphMatch::Found((advance, scale(used, size)))
+                }),
+            )
         })
         .map(|found| found.map(|(_, advance)| advance))
     }
+}
+
+/// Used size per computed size; a zero computed size has no adjustment to apply.
+fn scale(used: f32, size: f32) -> f32 {
+    if size == 0.0 { 1.0 } else { used / size }
 }
 
 /// The bundled faces the initial family resolves to. Where no element supplies a font,

@@ -120,6 +120,7 @@ include = [
     "/spec/css/**",
     "/spec/languages/**",
     "/spec/cldr/**",
+    "/spec/emoji/**",
     "/assets/**",
     "/LICENSE",
     "/README.md",

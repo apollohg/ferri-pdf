@@ -84,6 +84,14 @@ fn font_shorthand_forms_and_var_expansion() {
 
 #[test]
 fn font_shorthand_resets_only_its_defined_properties() {
+    let features = |style: &Style| {
+        (
+            style.font_features.clone(),
+            style.font_adjustments.clone(),
+            style.font_variant_caps,
+        )
+    };
+    let initial = features(&Style::default());
     for (property, value) in [
         ("font-feature-settings", "'kern' 0"),
         ("font-kerning", "none"),
@@ -91,6 +99,7 @@ fn font_shorthand_resets_only_its_defined_properties() {
         ("font-optical-sizing", "none"),
         ("font-size-adjust", "0.6"),
         ("font-variant-alternates", "historical-forms"),
+        ("font-variant-caps", "small-caps"),
         ("font-variant-east-asian", "ruby"),
         ("font-variant-emoji", "emoji"),
         ("font-variant-ligatures", "none"),
@@ -98,30 +107,36 @@ fn font_shorthand_resets_only_its_defined_properties() {
         ("font-variant-position", "super"),
         ("font-variation-settings", "'wght' 750"),
     ] {
-        let before = computed(&format!("#target{{{property}:{value}}}"));
-        assert!(
-            matches!(before, Err(StyleError::Unsupported(_))),
-            "the control must contain a real unrendered value for {property}:{value}, got {before:?}"
+        let before = computed(&format!("#target{{{property}:{value}}}"))
+            .unwrap_or_else(|error| panic!("{property}:{value} must compute: {error}"));
+        assert_ne!(
+            features(&before),
+            initial,
+            "the control must set a non-initial value for {property}:{value}"
         );
-        computed(&format!("#target{{{property}:{value};font:12pt serif}}"))
-            .unwrap_or_else(|error| panic!("font must actually reset {property}:{value}: {error}"));
+        let after = computed(&format!("#target{{{property}:{value};font:12pt serif}}"))
+            .unwrap_or_else(|error| panic!("{property}:{value} then font must compute: {error}"));
+        assert_eq!(
+            features(&after),
+            initial,
+            "font must reset {property}:{value} to its initial value"
+        );
     }
-    let reset = "font-feature-settings:'kern' 0;font-kerning:none;font-language-override:'TRK';font-optical-sizing:none;font-size-adjust:0.6;font-variant-alternates:historical-forms;font-variant-caps:small-caps;font-variant-east-asian:ruby;font-variant-emoji:emoji;font-variant-ligatures:none;font-variant-numeric:oldstyle-nums;font-variant-position:super;font-variation-settings:'wght' 750;font-width:condensed";
-    let actual = computed(&format!(
-        "#target{{{reset};font-synthesis:none;font:12pt serif}}"
-    ))
-    .expect("font resets every advanced setting before it reaches unsupported rendering");
-    assert_eq!(actual.size, 12.0);
-    assert_eq!(actual.font_width, crate::fonts::FontWidth::NORMAL);
+    let kept = computed(
+        "#target{font-palette:light;font-synthesis:none;font-width:condensed;font:12pt serif}",
+    )
+    .unwrap();
+    assert_eq!(kept.size, 12.0);
+    assert_eq!(kept.font_width, crate::fonts::FontWidth::NORMAL);
     assert_eq!(
-        actual.font_synthesis,
+        kept.font_synthesis,
         crate::fonts::FontSynthesis::default(),
         "font must leave synthesis independently cascaded"
     );
-    let palette = computed("#target{font-palette:light;font:12pt serif}");
-    assert!(
-        matches!(palette, Err(StyleError::Unsupported(ref value)) if value.starts_with("font-palette")),
-        "font must preserve an independently cascaded, still-unrendered palette: {palette:?}"
+    assert_eq!(
+        kept.font_features.palette,
+        crate::fonts::FontPalette::Light,
+        "font must leave font-palette independently cascaded"
     );
 }
 
@@ -287,7 +302,7 @@ fn variable_options() -> crate::RenderOptions {
 
 fn variable_font(descriptors: &str, declarations: &str) -> crate::RenderOutput {
     let html = format!(
-        "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:url(RobotoFlex.ttf) format('truetype');{descriptors}}}@page{{size:300pt 200pt;margin:20pt}}p{{margin:0;font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt;{declarations}}}</style><p>H</p>"
+        "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:url(RobotoFlex.ttf) format('truetype');{descriptors}}}@page{{size:300pt 200pt;margin:20pt}}p{{margin:0;font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt;font-optical-sizing:none;{declarations}}}</style><p>H</p>"
     );
     crate::render_html(&html, &variable_options()).unwrap_or_else(|error| {
         panic!("variable face {descriptors:?}, request {declarations:?}: {error}")
@@ -375,7 +390,7 @@ fn face_matching_narrows_width_before_style_and_weight() {
         ("font-width:110%;font-style:normal;font-weight:400", 1536.0),
     ] {
         let html = format!(
-            "<style>{faces}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt;{request}}}</style><p>H</p>"
+            "<style>{faces}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt;font-optical-sizing:none;{request}}}</style><p>H</p>"
         );
         let output = crate::render_html(&html, &variable_options())
             .unwrap_or_else(|error| panic!("face matching for {request}: {error}"));
@@ -390,7 +405,7 @@ fn face_matching_narrows_width_before_style_and_weight() {
 fn modern_font_source_hints_skip_unsupported_technology_and_keep_policy_errors() {
     const FONT_BYTE_LIMIT: usize = 4;
     let html = format!(
-        "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:url('../../../assets/fonts/DejaVuSans.ttf') format(truetype) tech(features-graphite),url(RobotoFlex.ttf) format(truetype) tech(variations)}}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt}}</style><p>H</p>"
+        "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:url('../../../assets/fonts/DejaVuSans.ttf') format(truetype) tech(features-graphite),url(RobotoFlex.ttf) format(truetype) tech(variations)}}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt;font-optical-sizing:none}}</style><p>H</p>"
     );
     let options = variable_options();
     let output = crate::render_html(&html, &options)
@@ -455,7 +470,7 @@ fn font_source_lists_recover_invalid_items_without_losing_valid_ones() {
         "url(RobotoFlex.ttf) format(unknown),url(RobotoFlex.ttf) format('truetype-variations')",
     ] {
         let html = format!(
-            "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:{sources}}}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt}}</style><p>H</p>"
+            "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:{sources}}}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt;font-optical-sizing:none}}</style><p>H</p>"
         );
         let output = crate::render_html(&html, &variable_options())
             .unwrap_or_else(|error| panic!("source list {sources}: {error}"));
@@ -514,7 +529,7 @@ fn font_relative_units_measure_the_same_variable_instance_as_shaping() {
         "the fixture must distinguish the parent and child width instances"
     );
     let actual = computed_at(
-        &format!("@font-face{{font-family:'{VARIABLE_FAMILY}';src:url(RobotoFlex.ttf)}}#parent{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;font-width:75%}}#target{{font-size:1ch;font-width:100%;width:1ch}}"),
+        &format!("@font-face{{font-family:'{VARIABLE_FAMILY}';src:url(RobotoFlex.ttf)}}#parent{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;font-width:75%;font-optical-sizing:none}}#target{{font-size:1ch;font-width:100%;width:1ch}}"),
         variable_options().base,
     ).unwrap();
     common::assert_pt(actual.size, parent_ch * VARIABLE_SIZE_PT);
@@ -764,17 +779,39 @@ fn small_caps_cascade_resets_and_synthesis_permissions_reach_shaping() {
         crate::style::FontVariantCaps::Normal
     );
     assert_eq!(reset.font_synthesis, Default::default());
-    for unrendered in [
-        "all-small-caps",
-        "small-caps historical-forms",
-        "small-caps styleset(foo)",
+    for (variant, caps, historical, styleset) in [
+        (
+            "all-small-caps",
+            crate::style::FontVariantCaps::AllSmallCaps,
+            false,
+            &[][..],
+        ),
+        (
+            "small-caps historical-forms",
+            crate::style::FontVariantCaps::SmallCaps,
+            true,
+            &[],
+        ),
+        (
+            "small-caps styleset(foo)",
+            crate::style::FontVariantCaps::SmallCaps,
+            false,
+            &["foo"],
+        ),
     ] {
-        assert!(
-            matches!(
-                computed(&format!("#target{{font-variant:{unrendered}}}")),
-                Err(StyleError::Unsupported(_))
-            ),
-            "unrendered variant must not be discarded: {unrendered}"
+        let style = computed(&format!("#target{{font-variant:{variant}}}"))
+            .unwrap_or_else(|error| panic!("font-variant:{variant}: {error}"));
+        assert_eq!(style.font_variant_caps, caps, "{variant}");
+        let alternates = &style.font_features.alternates;
+        assert_eq!(alternates.historical_forms, historical, "{variant}");
+        assert_eq!(
+            alternates
+                .styleset
+                .iter()
+                .map(AsRef::as_ref)
+                .collect::<Vec<&str>>(),
+            styleset,
+            "{variant}"
         );
     }
     for (text, language, upper) in [("i\u{307}", "lt", "I"), ("άι", "el", "ΑΪ")] {
@@ -1146,4 +1183,48 @@ fn local_font_full_and_postscript_names_use_the_same_unicode_fold() {
             "{local:?}: a Unicode-folded local name must resolve bundled data"
         );
     }
+}
+
+#[test]
+fn font_size_adjust_scales_metric_units_but_not_em_or_numeric_line_heights() {
+    let metrics: serde_json::Value = serde_json::from_str(include_str!(
+        "../../tests/fixtures/fonts/FontUnit-metrics.json"
+    ))
+    .unwrap();
+    let serif = &metrics["faces"]["InitialSerif"];
+    let em = |name: &str| {
+        serif[name].as_f64().unwrap() as f32 / serif["units_per_em"].as_f64().unwrap() as f32
+    };
+    let size = 20.0;
+    let used = size * 0.5 / em("x_height");
+    let style = computed(
+        "#target{font-size:20pt;font-size-adjust:0.5;line-height:normal;margin:1ex 1em 1ch 1cap;width:1lh}",
+    )
+    .unwrap();
+    let length = |value: &crate::style::Size| value.resolve_definite(None).unwrap();
+    common::assert_labelled_pt(
+        "1ex keeps the specified aspect",
+        length(&style.margin[0]),
+        size * 0.5,
+    );
+    common::assert_labelled_pt("1em is the computed size", length(&style.margin[1]), size);
+    common::assert_labelled_pt("1ch", length(&style.margin[2]), em("zero_advance") * used);
+    common::assert_labelled_pt("1cap", length(&style.margin[3]), em("cap_height") * used);
+    common::assert_labelled_pt(
+        "normal line height uses the used size",
+        length(&style.width),
+        (em("ascender") - em("descender") + em("line_gap")) * used,
+    );
+    let numeric =
+        computed("#target{font-size:20pt;font-size-adjust:0.5;line-height:1.5;width:1lh}").unwrap();
+    common::assert_labelled_pt("numeric lh", length(&numeric.width), size * 1.5);
+    let from_font = computed("#parent{font-size-adjust:ch-width from-font}").unwrap();
+    assert_eq!(
+        from_font.font_adjustments.size_adjust,
+        Some(crate::fonts::SizeAdjust {
+            metric: crate::fonts::SizeMetric::ChWidth,
+            value: em("zero_advance"),
+        }),
+        "from-font computes to the first available font's metric, which the child inherits"
+    );
 }

@@ -1,6 +1,7 @@
 use crate::fonts::{
-    FontBook, FontData, FontError, FontFaceStyle, FontId, FontInstance, FontRange, FontSelection,
-    FontSlant, FontSource, FontSources, FontStyle, FontVariation, FontWeight, matching, validate,
+    FontAdjustments, FontBook, FontData, FontError, FontFaceStyle, FontId, FontInstance, FontRange,
+    FontSelection, FontSlant, FontSource, FontSources, FontStyle, FontVariation, FontWeight,
+    matching, validate,
 };
 use crate::resources::ResourceResolver;
 
@@ -8,36 +9,57 @@ const WEIGHT_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wght");
 const WIDTH_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wdth");
 const SLANT_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"slnt");
 const ITALIC_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"ital");
+pub(super) const OPTICAL_SIZE_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"opsz");
 
 impl FontBook {
+    /// The face at `size` with the axis values of CSS Fonts 4 §7.2: matching, then the
+    /// `@font-face` descriptor, optical sizing and `font-variation-settings`.
     pub(crate) fn instance(
         &self,
         id: FontId,
         requested: FontSelection,
+        adjustments: &FontAdjustments,
+        size: f32,
         resolver: &dyn ResourceResolver,
     ) -> Result<Option<FontInstance<'_>>, FontError> {
-        self.instance_data(id, requested, self.resolve(id, resolver)?)
+        self.instance_data(
+            id,
+            requested,
+            adjustments,
+            size,
+            self.resolve(id, resolver)?,
+        )
     }
 
-    /// Measures a face whose source list has already been attempted in this job.
+    /// Measures a face whose source list has already been attempted in this job, as font
+    /// matching and its `@font-face` rule select it.
     pub(crate) fn cached_instance(
         &self,
         id: FontId,
         requested: FontSelection,
     ) -> Result<Option<FontInstance<'_>>, FontError> {
-        self.instance_data(id, requested, self.resolve_cached(id)?)
+        self.instance_data(
+            id,
+            requested,
+            &FontAdjustments::none(),
+            0.0,
+            self.resolve_cached(id)?,
+        )
     }
 
     fn instance_data<'a>(
         &'a self,
         id: FontId,
         requested: FontSelection,
+        adjustments: &FontAdjustments,
+        size: f32,
         data: Option<&'a [u8]>,
     ) -> Result<Option<FontInstance<'a>>, FontError> {
         let Some(data) = data else {
             return Ok(None);
         };
-        let descriptor = &self.face(id).ok_or(FontError::UnknownFont(id))?.descriptor;
+        let face_entry = self.face(id).ok_or(FontError::UnknownFont(id))?;
+        let descriptor = &face_entry.descriptor;
         let mut face = ttf_parser::Face::parse(data, 0).map_err(FontError::InvalidFont)?;
         let italic_axis = face
             .variation_axes()
@@ -88,6 +110,34 @@ impl FontBook {
                 value,
             });
         }
+        let optical = adjustments.optical_sizing.then_some(FontVariation {
+            tag: OPTICAL_SIZE_AXIS.to_bytes(),
+            value: size,
+        });
+        // Later settings replace earlier ones; axes the font lacks are ignored (CSS Fonts 4 §8.2).
+        for setting in face_entry
+            .settings
+            .variations
+            .iter()
+            .chain(&optical)
+            .chain(adjustments.variations.iter())
+        {
+            let Some(axis) = face
+                .variation_axes()
+                .into_iter()
+                .find(|axis| axis.tag.to_bytes() == setting.tag)
+            else {
+                continue;
+            };
+            let value = setting.value.clamp(axis.min_value, axis.max_value);
+            match variations.iter_mut().find(|v| v.tag == setting.tag) {
+                Some(existing) => existing.value = value,
+                None => variations.push(FontVariation {
+                    tag: setting.tag,
+                    value,
+                }),
+            }
+        }
         for variation in &variations {
             face.set_variation(ttf_parser::Tag::from_bytes(&variation.tag), variation.value)
                 .ok_or(FontError::VariationAxis(variation.tag))?;
@@ -98,6 +148,22 @@ impl FontBook {
             weight,
             style,
         }))
+    }
+
+    /// Whether the face has the `opsz` axis that `font-optical-sizing` sets.
+    pub(crate) fn has_optical_axis(
+        &self,
+        id: FontId,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<bool, FontError> {
+        let Some(data) = self.resolve(id, resolver)? else {
+            return Ok(false);
+        };
+        Ok(ttf_parser::Face::parse(data, 0)
+            .map_err(FontError::InvalidFont)?
+            .variation_axes()
+            .into_iter()
+            .any(|axis| axis.tag == OPTICAL_SIZE_AXIS))
     }
 
     pub(crate) fn resolve(

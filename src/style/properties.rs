@@ -354,10 +354,32 @@ fn handler(property: Property) -> Option<Handler> {
         P::FontSynthesisWeight => (font_synthesis_weight, Some(|_, _| true)),
         P::FontSynthesisStyle => (font_synthesis_style, Some(|_, _| true)),
         P::FontSynthesisSmallCaps => (font_synthesis_small_caps, Some(|_, _| true)),
-        P::FontSynthesisPosition => (without_variants, None),
+        P::FontSynthesisPosition => (font_synthesis_position, Some(|_, _| true)),
         P::FontVariantCaps => (
             font_variant_caps,
             Some(|v, _| crate::style::FontVariantCaps::from_component(v).is_ok()),
+        ),
+        P::FontKerning => (font_kerning, Some(|_, _| true)),
+        P::FontVariantLigatures => (font_variant_ligatures, Some(|_, _| true)),
+        P::FontVariantPosition => (font_variant_position, Some(|_, _| true)),
+        P::FontVariantNumeric => (font_variant_numeric, Some(|_, _| true)),
+        P::FontVariantAlternates => (font_variant_alternates, Some(|_, _| true)),
+        P::FontVariantEastAsian => (font_variant_east_asian, Some(|_, _| true)),
+        P::FontVariantEmoji => (font_variant_emoji, Some(|_, _| true)),
+        P::FontFeatureSettings => (font_feature_settings, Some(|_, _| true)),
+        P::FontLanguageOverride => (font_language_override, Some(|_, _| true)),
+        P::FontPalette => (
+            font_palette,
+            Some(|v, _| crate::style::font_values::palette(v).is_ok()),
+        ),
+        P::FontOpticalSizing => (font_optical_sizing, Some(|_, _| true)),
+        P::FontVariationSettings => (
+            font_variation_settings,
+            Some(|v, r| crate::style::font_values::variation_settings(v, r).is_ok()),
+        ),
+        P::FontSizeAdjust => (
+            font_size_adjust,
+            Some(|v, r| crate::style::font_values::size_adjust(v, r).is_ok()),
         ),
         P::LineHeight => (
             line_height,
@@ -959,24 +981,90 @@ computed!(
     )?
 );
 computed!(
+    font_synthesis_position,
+    [font_synthesis.position],
+    |value, style, _parent, _relative| flag(
+        value,
+        &[(Keyword::Auto, true), (Keyword::None, false)]
+    )?
+);
+computed!(
     font_variant_caps,
     [font_variant_caps],
     |value, style, _parent, _relative| crate::style::FontVariantCaps::from_component(value)?
 );
-/// Position synthesis has no effect until noninitial font-variant-position is supported.
-fn without_variants(
-    _: &mut Style,
-    _: &Style,
-    input: Input<'_>,
-    _: &Relative<'_>,
-) -> Result<(), StyleError> {
-    match input {
-        Input::Value(value) => {
-            flag(value, &[(Keyword::Auto, true), (Keyword::None, false)]).map(|_| ())
-        }
-        Input::Copy(_) => Ok(()),
-    }
-}
+computed!(
+    font_kerning,
+    [font_features.kerning],
+    |value, style, _parent, _relative| crate::style::FontKerning::from_component(value)?
+);
+computed!(
+    font_variant_ligatures,
+    [font_features.ligatures],
+    |value, style, _parent, _relative| crate::style::font_values::variant_features(value)?
+);
+computed!(
+    font_variant_position,
+    [font_features.position],
+    |value, style, _parent, _relative| crate::style::FontVariantPosition::from_component(value)?
+);
+computed!(
+    font_variant_numeric,
+    [font_features.numeric],
+    |value, style, _parent, _relative| crate::style::font_values::variant_features(value)?
+);
+computed!(
+    font_variant_alternates,
+    [font_features.alternates],
+    |value, style, _parent, _relative| std::sync::Arc::new(
+        crate::style::FontVariantAlternates::from_component(value)?
+    )
+);
+computed!(
+    font_variant_east_asian,
+    [font_features.east_asian],
+    |value, style, _parent, _relative| crate::style::font_values::variant_features(value)?
+);
+computed!(
+    font_variant_emoji,
+    [font_features.emoji],
+    |value, style, _parent, _relative| crate::style::FontVariantEmoji::from_component(value)?
+);
+computed!(
+    font_feature_settings,
+    [font_features.settings],
+    |value, style, _parent, _relative| crate::style::font_values::feature_settings(value)?
+);
+computed!(
+    font_language_override,
+    [font_features.language_override],
+    |value, style, _parent, _relative| crate::style::font_values::language_override(value)?
+);
+computed!(
+    font_palette,
+    [font_features.palette],
+    |value, style, _parent, _relative| crate::style::font_values::palette(value)?
+);
+computed!(
+    font_optical_sizing,
+    [font_adjustments.optical_sizing],
+    |value, style, _parent, _relative| flag(
+        value,
+        &[(Keyword::Auto, true), (Keyword::None, false)]
+    )?
+);
+computed!(
+    font_variation_settings,
+    [font_adjustments.variations],
+    |value, style, _parent, relative| crate::style::font_values::variation_settings(
+        value, relative
+    )?
+);
+computed!(
+    font_size_adjust,
+    [font_adjustments.size_adjust],
+    |value, style, _parent, relative| crate::style::font_values::size_adjust(value, relative)?
+);
 computed!(
     line_height,
     [line_height],

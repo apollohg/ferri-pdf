@@ -20,6 +20,7 @@ mod declaration;
 mod decoration_values;
 mod diagnostics;
 mod easing;
+mod feature_values;
 mod flex_values;
 mod float_values;
 mod font_values;
@@ -89,7 +90,10 @@ pub(crate) use decoration_values::{
 pub(crate) use diagnostics::{SourceLocation, StyleDiagnostic, StyleDiagnosticKind};
 pub(crate) use flex_values::{Alignment, FlexBasis, FlexStyle, FlexWrap, Gap};
 pub(crate) use float_values::{Clear, Float, FloatSide};
-pub(crate) use font_values::FontVariantCaps;
+pub(crate) use font_values::{
+    FontFeatures, FontKerning, FontVariantAlternates, FontVariantCaps, FontVariantEmoji,
+    FontVariantPosition, language_system_tag,
+};
 pub(crate) use generated::{
     CounterRequest, ElementContent, GeneratedContent, GeneratedOutput, NamedStringMode,
     NamedStringRequest, TargetReferenceError, TargetRequest, TargetValue,

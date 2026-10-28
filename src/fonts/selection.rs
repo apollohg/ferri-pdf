@@ -1,6 +1,7 @@
 use crate::fonts::{FontError, FontStyle, FontSynthesis, FontWeight};
 use serde::{Serialize, Serializer};
 use std::hash::{Hash, Hasher};
+use std::sync::Arc;
 
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Serialize)]
 pub struct FontWidth(f32);
@@ -159,9 +160,83 @@ pub struct FontVariation {
     pub value: f32,
 }
 
+/// An OpenType feature tag and its selector value; zero disables the feature.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize)]
+pub(crate) struct FontFeature {
+    pub tag: [u8; 4],
+    pub value: u32,
+}
+impl FontFeature {
+    pub(crate) const ON: u32 = 1;
+    pub(crate) const OFF: u32 = 0;
+    pub(crate) const fn on(tag: [u8; 4]) -> Self {
+        Self {
+            tag,
+            value: Self::ON,
+        }
+    }
+    pub(crate) const fn off(tag: [u8; 4]) -> Self {
+        Self {
+            tag,
+            value: Self::OFF,
+        }
+    }
+}
+
+/// The `font-feature-settings` and `font-variation-settings` descriptors of a face's
+/// `@font-face` rule (CSS Fonts 4 §4.6).
+#[derive(Clone, Debug, Default, PartialEq)]
+pub(crate) struct FaceSettings {
+    pub features: Arc<[FontFeature]>,
+    pub variations: Arc<[FontVariation]>,
+}
+
+/// What properties apply to a matched face (CSS Fonts 4 §7.2): `font-optical-sizing`, then
+/// `font-variation-settings`; and the used size from `font-size-adjust` (CSS Fonts 5 §3.4).
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub(crate) struct FontAdjustments {
+    pub optical_sizing: bool,
+    /// Deduplicated and sorted by tag.
+    pub variations: Arc<[FontVariation]>,
+    pub size_adjust: Option<crate::fonts::SizeAdjust>,
+}
+impl FontAdjustments {
+    /// Faces as matching selects them, without property adjustments.
+    pub(crate) fn none() -> Self {
+        Self {
+            optical_sizing: false,
+            variations: Arc::from([]),
+            size_adjust: None,
+        }
+    }
+}
+impl Default for FontAdjustments {
+    /// The initial values: automatic optical sizing only.
+    fn default() -> Self {
+        Self {
+            optical_sizing: true,
+            ..Self::none()
+        }
+    }
+}
+impl Eq for FontAdjustments {}
+impl Hash for FontAdjustments {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.optical_sizing.hash(state);
+        for variation in self.variations.iter() {
+            variation.tag.hash(state);
+            variation.value.to_bits().hash(state);
+        }
+        if let Some(adjust) = self.size_adjust {
+            adjust.metric.hash(state);
+            adjust.value.to_bits().hash(state);
+        }
+    }
+}
+
 pub(crate) struct FontInstance<'a> {
     pub face: ttf_parser::Face<'a>,
-    pub variations: std::sync::Arc<[FontVariation]>,
+    pub variations: Arc<[FontVariation]>,
     pub(super) weight: f32,
     pub(super) style: FontStyle,
 }
@@ -174,6 +249,7 @@ impl FontInstance<'_> {
         };
         let synthesis = FontSynthesis {
             small_caps: false,
+            position: false,
             bold: requested.synthesis.bold
                 && requested.weight >= FontWeight::SEMIBOLD
                 && self.weight < FontWeight::SEMIBOLD.value(),

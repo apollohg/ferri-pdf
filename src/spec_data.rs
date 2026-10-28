@@ -1,4 +1,4 @@
-//! Pinned language and quotation tables generated from the data in `spec/`.
+//! Pinned language, quotation and emoji tables generated from the data in `spec/`.
 
 pub(crate) mod languages {
     mod generated {
@@ -18,4 +18,12 @@ pub(crate) mod quotes {
     }
     pub(crate) const SYSTEMS: &[[[&str; 2]; 2]] = generated::SYSTEMS;
     pub(crate) const LOCALES: &[(&str, usize)] = generated::LOCALES;
+}
+
+pub(crate) mod emoji {
+    mod generated {
+        include!("../spec/emoji/variation_bases.rs");
+    }
+    /// Emoji Presentation Participating Code Points, ascending.
+    pub(crate) const VARIATION_BASES: &[u32] = generated::VARIATION_BASES;
 }

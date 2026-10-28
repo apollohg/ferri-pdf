@@ -1,12 +1,19 @@
 //! Font data ownership and CSS face matching, independent of shaping and PDF output.
 mod bundled;
+mod feature_values;
 mod loading;
 mod matching;
 mod metrics;
+mod palettes;
 mod selection;
 
-pub(crate) use metrics::{FaceMetrics, InitialFont, advance, initial_font};
-pub(crate) use selection::FontInstance;
+pub(crate) use feature_values::FeatureValueType;
+pub(crate) use metrics::{
+    FALLBACK_IDEOGRAPH_ADVANCE_EM, FALLBACK_ZERO_ADVANCE_EM, FaceMetrics, InitialFont, SizeAdjust,
+    SizeMetric, WATER_IDEOGRAPH, ZERO, advance, initial_font,
+};
+pub(crate) use palettes::{BasePalette, FontPalette};
+pub(crate) use selection::{FaceSettings, FontAdjustments, FontFeature, FontInstance};
 pub use selection::{FontFaceStyle, FontRange, FontSelection, FontSlant, FontVariation, FontWidth};
 
 use serde::Serialize;
@@ -44,12 +51,15 @@ pub struct FontSynthesis {
     pub bold: bool,
     pub oblique: bool,
     pub small_caps: bool,
+    /// Superscript and subscript forms for `font-variant-position`.
+    pub position: bool,
 }
 impl FontSynthesis {
     pub const ALL: Self = Self {
         bold: true,
         oblique: true,
         small_caps: true,
+        position: true,
     };
 }
 
@@ -205,12 +215,16 @@ pub(crate) struct FontSources {
 #[derive(Clone)]
 pub(crate) struct FontFace {
     descriptor: FontDescriptor,
+    settings: FaceSettings,
     data: FontData,
     namespace: FontNamespace,
 }
 impl FontFace {
     pub(crate) fn descriptor(&self) -> &FontDescriptor {
         &self.descriptor
+    }
+    pub(crate) fn settings(&self) -> &FaceSettings {
+        &self.settings
     }
     pub(crate) fn data(&self) -> Option<&[u8]> {
         match &self.data {
@@ -227,6 +241,8 @@ pub(crate) struct FontBook {
     faces: Vec<FontFace>,
     namespaces: Vec<Option<FontNamespace>>,
     preferences: FontPreferences,
+    feature_values: Vec<feature_values::FeatureValue>,
+    palettes: Vec<palettes::PaletteValues>,
 }
 impl Default for FontBook {
     fn default() -> Self {
@@ -239,6 +255,8 @@ impl FontBook {
             faces: bundled::faces(),
             namespaces: vec![None],
             preferences,
+            feature_values: Vec::new(),
+            palettes: Vec::new(),
         }
     }
     fn generic_names(&self, generic: GenericFamily) -> impl Iterator<Item = &str> {
@@ -298,6 +316,7 @@ impl FontBook {
         let id = FontId(self.faces.len());
         self.faces.push(FontFace {
             descriptor,
+            settings: FaceSettings::default(),
             data: FontData::Loaded(Arc::new(data)),
             namespace: FontNamespace::ROOT,
         });
@@ -305,17 +324,24 @@ impl FontBook {
     }
     #[cfg(test)]
     pub(crate) fn declare(&mut self, descriptor: FontDescriptor, sources: FontSources) -> FontId {
-        self.declare_in_namespace(FontNamespace::ROOT, descriptor, sources)
+        self.declare_in_namespace(
+            FontNamespace::ROOT,
+            descriptor,
+            FaceSettings::default(),
+            sources,
+        )
     }
     pub(crate) fn declare_in_namespace(
         &mut self,
         namespace: FontNamespace,
         descriptor: FontDescriptor,
+        settings: FaceSettings,
         sources: FontSources,
     ) -> FontId {
         let id = FontId(self.faces.len());
         self.faces.push(FontFace {
             descriptor,
+            settings,
             namespace,
             data: FontData::Lazy {
                 sources: Arc::new(sources),
@@ -475,6 +501,8 @@ pub enum FontError {
     InvalidSlant(f32),
     #[error("cannot apply font variation axis {0:?}")]
     VariationAxis([u8; 4]),
+    #[error("adjusted font size is not finite: {0}")]
+    InvalidSize(f32),
     #[error("no font face in the family list is available")]
     NoAvailableFace,
 }

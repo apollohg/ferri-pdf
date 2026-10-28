@@ -1,6 +1,6 @@
 use crate::fonts::{
-    FontBook, FontDescriptor, FontFaceStyle, FontNamespace, FontRange, FontSources, FontWeight,
-    FontWidth,
+    BasePalette, FaceSettings, FontBook, FontDescriptor, FontFaceStyle, FontNamespace, FontRange,
+    FontSources, FontWeight, FontWidth,
 };
 use crate::resources::{ResourceBase, ResourceResolver};
 use crate::style::{
@@ -9,7 +9,7 @@ use crate::style::{
     component::Component,
     conditions,
     declaration::{self, CUSTOM_PROPERTY_PREFIX, PropertyDeclaration, Specified},
-    grammar::{Descriptor, Property},
+    grammar::{Descriptor, Keyword, Property},
     layers::LayerTree,
     loader::{self, PendingKind, PreparedStylesheets, SourceDiagnostic},
     page_values::page_size,
@@ -24,6 +24,7 @@ use std::{cell::RefCell, collections::HashMap};
 
 pub(super) const PAGE_AT_RULE: &str = "@page";
 const FONT_FACE_AT_RULE: &str = "@font-face";
+const PALETTE_AT_RULE: &str = "@font-palette-values";
 pub(super) const PAGE_MARGINS: [Property; 4] = [
     Property::MarginTop,
     Property::MarginRight,
@@ -121,12 +122,42 @@ pub(super) fn unimplemented_descriptor(
     )))
 }
 
+/// `override-colors` entries; `None` makes the descriptor invalid, as a colour that is not
+/// absolute does (CSS Fonts 4 §9.2.3).
+fn override_colors(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<Option<Vec<(u32, crate::paint::Color)>>, StyleError> {
+    let mut colors = Vec::new();
+    for entry in value.items() {
+        let [index, color] = entry.items() else {
+            return Ok(None);
+        };
+        let Ok(index) = u32::try_from(crate::style::values::integer(index, relative)?) else {
+            return Ok(None);
+        };
+        if matches!(
+            color.unwrap(),
+            Component::Color(cssparser_color::Color::CurrentColor)
+        ) {
+            return Ok(None);
+        }
+        colors.push((
+            index,
+            crate::style::colors::color(color, relative, crate::paint::Color::BLACK)?,
+        ));
+    }
+    Ok(Some(colors))
+}
+
 enum FaceValue {
     Family(String),
     Weight(FontRange<FontWeight>),
     Width(FontRange<FontWidth>),
     Style(FontFaceStyle),
     Sources(Vec<crate::fonts::FontSource>),
+    Features(std::sync::Arc<[crate::fonts::FontFeature]>),
+    Variations(std::sync::Arc<[crate::fonts::FontVariation]>),
     Initial,
 }
 fn face_value(
@@ -142,6 +173,12 @@ fn face_value(
             FaceValue::Width(face_width(value, relative)?)
         }
         Descriptor::FontFaceSrc => FaceValue::Sources(font_sources(value)?),
+        Descriptor::FontFaceFontFeatureSettings => {
+            FaceValue::Features(crate::style::font_values::feature_settings(value)?)
+        }
+        Descriptor::FontFaceFontVariationSettings => FaceValue::Variations(
+            crate::style::font_values::variation_settings(value, relative)?,
+        ),
         _ => {
             unimplemented_descriptor(descriptor, value, FONT_FACE_AT_RULE)?;
             FaceValue::Initial
@@ -189,7 +226,7 @@ pub(super) fn supports_page_value(descriptor: Descriptor, value: &Component) -> 
             page_size(value, &Relative::validation(), crate::style::DEFAULT_PAGE).is_ok()
         }
         Descriptor::PageBleed => {
-            value.keyword() == Some(crate::style::grammar::Keyword::Auto)
+            value.keyword() == Some(Keyword::Auto)
                 || crate::style::values::length(value, &Relative::validation()).is_ok()
         }
         Descriptor::PageMarks => crate::style::PageMarks::from_component(value).is_ok(),
@@ -400,6 +437,8 @@ impl Stylesheet {
             font_namespaces,
         };
         let mut fonts = Vec::new();
+        let mut feature_values = Vec::new();
+        let mut palettes = Vec::new();
         let mut page_order = 0;
         for (
             order,
@@ -476,11 +515,54 @@ impl Stylesheet {
                         namespace,
                     ));
                 }
+                ContentRule::FeatureValues {
+                    families,
+                    definitions,
+                } => {
+                    feature_values.push(((origin, layer, order), families, definitions, namespace));
+                }
+                ContentRule::Palette(name, declarations, location) => {
+                    palettes.push((
+                        (origin, layer, order),
+                        name,
+                        declarations,
+                        location,
+                        namespace,
+                    ));
+                }
             }
         }
         fonts.sort_by_key(|(priority, ..)| *priority);
         for (_, declarations, location, source_base, namespace) in fonts {
             match sheet.font_face(&declarations, source_base, namespace) {
+                Ok(()) => {}
+                Err(StyleError::Invalid(context)) => {
+                    sheet.diagnostics.borrow_mut().push(StyleDiagnostic {
+                        location,
+                        kind: StyleDiagnosticKind::InvalidRule,
+                        context,
+                    });
+                }
+                Err(error) => return Err(error),
+            }
+        }
+        feature_values.sort_by_key(|(priority, ..)| *priority);
+        for (_, families, definitions, namespace) in feature_values {
+            for family in &families {
+                for definition in &definitions {
+                    sheet.fonts.define_feature_value(
+                        namespace,
+                        family,
+                        definition.kind,
+                        &definition.name,
+                        definition.values.clone(),
+                    );
+                }
+            }
+        }
+        palettes.sort_by_key(|(priority, ..)| *priority);
+        for (_, name, declarations, location, namespace) in palettes {
+            match sheet.palette_values(&name, &declarations, namespace) {
                 Ok(()) => {}
                 Err(StyleError::Invalid(context)) => {
                     sheet.diagnostics.borrow_mut().push(StyleDiagnostic {
@@ -506,6 +588,74 @@ impl Stylesheet {
             .unwrap_or(FontNamespace::ROOT)
     }
 
+    /// An `@font-palette-values` rule (CSS Fonts 4 §9.2). Invalid descriptors are ignored; a
+    /// rule without `font-family` is invalid, and generic families match no face.
+    fn palette_values(
+        &mut self,
+        name: &str,
+        declarations: &[Declaration],
+        namespace: FontNamespace,
+    ) -> Result<(), StyleError> {
+        let mut families = None;
+        let mut base = BasePalette::Index(0);
+        let mut overrides = Vec::new();
+        let relative = Relative {
+            paper: self.paper,
+            ..self.initial_relative()
+        };
+        for d in declarations {
+            let Some(descriptor) = Descriptor::find(PALETTE_AT_RULE, &d.name) else {
+                continue;
+            };
+            if variables::Value::with_substitutions(&d.value)?.is_some() {
+                return Err(StyleError::Unsupported(format!(
+                    "{PALETTE_AT_RULE} descriptor: {}: {} (root-element substitution)",
+                    d.name, d.value
+                )));
+            }
+            let Some(value) = declaration::descriptor(descriptor, &d.value)? else {
+                continue;
+            };
+            match descriptor {
+                Descriptor::FontPaletteValuesFontFamily => {
+                    families = Some(
+                        declaration::value(Property::FontFamily, &d.value, &mut 0)?
+                            .map(|list| crate::style::values::families(&list))
+                            .unwrap_or_default(),
+                    );
+                }
+                Descriptor::FontPaletteValuesBasePalette => {
+                    base = match value.unwrap() {
+                        Component::Keyword(Keyword::Light) => BasePalette::Light,
+                        Component::Keyword(Keyword::Dark) => BasePalette::Dark,
+                        _ => BasePalette::Index(
+                            u32::try_from(crate::style::values::integer(&value, &relative)?)
+                                .map_err(|_| StyleError::Invalid(d.value.clone()))?,
+                        ),
+                    };
+                }
+                Descriptor::FontPaletteValuesOverrideColors => {
+                    if let Some(colors) = override_colors(&value, &relative)? {
+                        overrides = colors;
+                    }
+                }
+                _ => {}
+            }
+        }
+        let families = families.ok_or("font-palette-values missing font-family")?;
+        let named = families
+            .into_iter()
+            .map(|family| match family {
+                crate::fonts::FontFamily::Named(name) => Some(name),
+                crate::fonts::FontFamily::Generic(_) => None,
+            })
+            .collect::<Option<Vec<_>>>()
+            .unwrap_or_default();
+        self.fonts
+            .define_palette(namespace, name, named, base, overrides);
+        Ok(())
+    }
+
     fn font_face(
         &mut self,
         declarations: &[Declaration],
@@ -517,6 +667,7 @@ impl Stylesheet {
         let mut weight = FontRange::Auto;
         let mut width = FontRange::Auto;
         let mut style = FontFaceStyle::Auto;
+        let mut settings = FaceSettings::default();
         let relative = Relative {
             paper: self.paper,
             ..self.initial_relative()
@@ -534,8 +685,9 @@ impl Stylesheet {
                 FaceValue::Width(value) => width = value,
                 FaceValue::Style(value) => style = value,
                 FaceValue::Sources(value) if !value.is_empty() => src = Some(value),
-                FaceValue::Sources(_) => {}
-                FaceValue::Initial => {}
+                FaceValue::Sources(_) | FaceValue::Initial => {}
+                FaceValue::Features(value) => settings.features = value,
+                FaceValue::Variations(value) => settings.variations = value,
             }
         }
         let family = family.ok_or("font-face missing family")?;
@@ -548,6 +700,7 @@ impl Stylesheet {
                 width,
                 style,
             },
+            settings,
             FontSources { sources: src, base },
         );
         Ok(())

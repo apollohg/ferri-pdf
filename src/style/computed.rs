@@ -1,7 +1,7 @@
 use crate::dom::Element;
 use crate::fonts::{
-    DEFAULT_FAMILY, FontFamily, FontId, FontSelection, FontSlant, FontStyle, FontSynthesis,
-    FontWeight, FontWidth,
+    DEFAULT_FAMILY, FontAdjustments, FontFamily, FontId, FontSelection, FontSlant, FontStyle,
+    FontSynthesis, FontWeight, FontWidth,
 };
 use crate::paint::{BoxDecoration, Color};
 use crate::resources::ResourceResolver;
@@ -99,6 +99,8 @@ pub(crate) struct Style {
     pub font_width: FontWidth,
     pub font_slant: FontSlant,
     pub font_synthesis: FontSynthesis,
+    pub font_features: crate::style::FontFeatures,
+    pub font_adjustments: FontAdjustments,
     #[serde(skip)]
     font_candidates: Arc<[FontId]>,
     /// The root element's font, which root-relative units measure; `None` before the root.
@@ -196,6 +198,8 @@ impl Default for Style {
             font_width: FontWidth::NORMAL,
             font_slant: FontSlant::NORMAL,
             font_synthesis: FontSynthesis::ALL,
+            font_features: crate::style::FontFeatures::default(),
+            font_adjustments: FontAdjustments::default(),
             font_candidates: Arc::from([]),
             root_font: None,
             margin: [Size::ZERO; 4],
@@ -252,6 +256,10 @@ impl Style {
     /// Font-name environment owned by the element's tree scope.
     pub(crate) fn element_font_namespace(&self) -> crate::fonts::FontNamespace {
         self.element_font_namespace
+    }
+    /// Font-name environment of the declared `font-family`, where font-specific names resolve.
+    pub(crate) fn font_namespace(&self) -> crate::fonts::FontNamespace {
+        self.font_namespace
     }
 
     pub(crate) fn has_inside_marker(&self) -> bool {
@@ -352,6 +360,8 @@ impl Style {
             && self.font_width == other.font_width
             && self.font_slant == other.font_slant
             && self.font_synthesis == other.font_synthesis
+            && self.font_features == other.font_features
+            && self.font_adjustments == other.font_adjustments
             && self.rtl == other.rtl
             && self.color == other.color
             && self.visibility == other.visibility
@@ -398,11 +408,12 @@ pub(super) struct RootFont {
     line_height: crate::style::LineHeight,
     candidates: Arc<[FontId]>,
     selection: FontSelection,
+    adjustments: FontAdjustments,
 }
 
 /// Properties applied before the rest: `font-size` resolves relative units against the parent's
 /// font, the others select the element's own font, and `line-height` resolves against it.
-pub(super) const FONT_SELECTION: [Property; 7] = [
+pub(super) const FONT_SELECTION: [Property; 8] = [
     Property::FontFamily,
     Property::FontStyle,
     Property::FontWidth,
@@ -410,6 +421,15 @@ pub(super) const FONT_SELECTION: [Property; 7] = [
     Property::FontSynthesisWeight,
     Property::FontSynthesisStyle,
     Property::FontSynthesisSmallCaps,
+    Property::FontSynthesisPosition,
+];
+
+/// Properties applied after font matching that change the selected faces' metrics, which
+/// font-relative units measure.
+pub(super) const FONT_ADJUSTMENT: [Property; 3] = [
+    Property::FontOpticalSizing,
+    Property::FontVariationSettings,
+    Property::FontSizeAdjust,
 ];
 
 pub(super) use crate::style::cascade::cascade;
@@ -758,9 +778,19 @@ impl Stylesheet {
         line_height: crate::style::LineHeight,
         candidates: &Arc<[FontId]>,
         selection: FontSelection,
+        adjustments: &FontAdjustments,
         resolver: &'a dyn ResourceResolver,
     ) -> FontBasis<'a> {
-        let faces = || Faces::book(&self.fonts, resolver, candidates.clone(), selection);
+        let faces = || {
+            Faces::book(
+                &self.fonts,
+                resolver,
+                candidates.clone(),
+                selection,
+                adjustments.clone(),
+                size,
+            )
+        };
         FontBasis::Known {
             size,
             faces: faces(),
@@ -815,6 +845,7 @@ impl Stylesheet {
                     parent.line_height,
                     &parent.font_candidates,
                     parent.font_selection(),
+                    &parent.font_adjustments,
                     resolver,
                 ),
                 root: self.basis(
@@ -822,6 +853,7 @@ impl Stylesheet {
                     root.line_height,
                     &root.candidates,
                     root.selection,
+                    &root.adjustments,
                     resolver,
                 ),
                 viewport: Viewport::Known(viewport),
@@ -864,6 +896,27 @@ impl Stylesheet {
             &style.families,
             style.font_selection(),
         );
+        for property in &FONT_ADJUSTMENT {
+            let Some(value) = winners.remove(property) else {
+                continue;
+            };
+            // `from-font` measures the first available face as the other adjustments select it.
+            let measured = Relative {
+                font: self.basis(
+                    style.size,
+                    crate::style::LineHeight::Normal,
+                    &style.font_candidates,
+                    style.font_selection(),
+                    &FontAdjustments {
+                        size_adjust: None,
+                        ..style.font_adjustments.clone()
+                    },
+                    resolver,
+                ),
+                ..inherited.clone()
+            };
+            properties::apply(*property, &value, style, parent, &measured)?;
+        }
         let Relative {
             font: inherited_font,
             root: inherited_root,
@@ -880,6 +933,8 @@ impl Stylesheet {
                 resolver,
                 style.font_candidates.clone(),
                 style.font_selection(),
+                style.font_adjustments.clone(),
+                style.size,
             ),
             line,
         };
@@ -913,6 +968,7 @@ impl Stylesheet {
                 style.line_height,
                 &style.font_candidates,
                 style.font_selection(),
+                &style.font_adjustments,
                 resolver,
             ),
             root: if root {
@@ -921,6 +977,7 @@ impl Stylesheet {
                     style.line_height,
                     &style.font_candidates,
                     style.font_selection(),
+                    &style.font_adjustments,
                     resolver,
                 )
             } else {
@@ -962,6 +1019,7 @@ impl Stylesheet {
             line_height: style.line_height,
             candidates: style.font_candidates.clone(),
             selection: style.font_selection(),
+            adjustments: style.font_adjustments.clone(),
         });
     }
 

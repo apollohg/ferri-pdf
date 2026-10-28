@@ -1,11 +1,12 @@
 //! First-page dependencies are evaluated on demand, independently for each physical axis.
 use crate::dom::{DocumentTree, Element, TreeRelation};
+use crate::fonts::SizeMetric;
 use crate::resources::ResourceResolver;
 use crate::style::{
     Display, LineHeight, Size, SourceLocation, Style, StyleError, Stylesheet,
     cascade::{Cascaded, Customs, Properties, Winners},
     component::Component,
-    computed::FONT_SELECTION,
+    computed::{FONT_ADJUSTMENT, FONT_SELECTION},
     conditional::{self, QueryValues},
     declaration::Specified,
     grammar::{Descriptor, Keyword, Property},
@@ -992,7 +993,7 @@ impl<'a> Geometry<'a> {
             if let Some(height) = height.resolve(size) {
                 return Ok(height);
             }
-            let basis = self.font_basis(context, size, height)?;
+            let basis = self.font_basis(context, size, height, true)?;
             return basis.per_unit(unit);
         }
         self.property(context, Property::FontSize)?;
@@ -1000,18 +1001,30 @@ impl<'a> Geometry<'a> {
         if unit == FontUnit::Em {
             return Ok(size);
         }
-        self.font_basis(context, size, LineHeight::Normal)?
+        self.font_basis(context, size, LineHeight::Normal, true)?
             .per_unit(unit)
     }
 
+    fn size_metric(&self, context: Context, metric: SizeMetric) -> Result<f32, StyleError> {
+        self.property(context, Property::FontSize)?;
+        let size = self.context(context).style.borrow().size;
+        self.font_basis(context, size, LineHeight::Normal, false)?
+            .size_metric(metric)
+    }
+
+    /// The context's font; without `font-size-adjust` where `size_adjusted` is false, as
+    /// `from-font` measures it.
     fn font_basis(
         &self,
         context: Context,
         size: f32,
         height: LineHeight,
+        size_adjusted: bool,
     ) -> Result<FontBasis<'a>, StyleError> {
-        for property in FONT_SELECTION {
-            self.property(context, property)?;
+        for property in FONT_SELECTION.iter().chain(&FONT_ADJUSTMENT) {
+            if size_adjusted || *property != Property::FontSizeAdjust {
+                self.property(context, *property)?;
+            }
         }
         let computed = self.context(context);
         let style = computed.style.borrow();
@@ -1021,9 +1034,18 @@ impl<'a> Geometry<'a> {
             &style.families,
             selection,
         );
-        Ok(self
-            .sheet
-            .basis(size, height, &candidates, selection, self.resolver))
+        let mut adjustments = style.font_adjustments.clone();
+        if !size_adjusted {
+            adjustments.size_adjust = None;
+        }
+        Ok(self.sheet.basis(
+            size,
+            height,
+            &candidates,
+            selection,
+            &adjustments,
+            self.resolver,
+        ))
     }
 
     fn dimension(&self, node: Node) -> Result<f32, StyleError> {
@@ -1418,6 +1440,9 @@ impl FontUnits for FontContext<'_, '_> {
         } else {
             self.geometry.font_unit(self.context, unit)
         }
+    }
+    fn size_metric(&self, metric: SizeMetric) -> Result<f32, StyleError> {
+        self.geometry.size_metric(self.context, metric)
     }
 }
 

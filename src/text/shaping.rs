@@ -1,13 +1,18 @@
-use crate::fonts::{FontId, FontSynthesis, FontVariation};
-use crate::style::{FontVariantCaps, Style};
+use crate::fonts::{FontFeature, FontId, FontSynthesis, FontVariation};
+use crate::style::{FontVariantEmoji, FontVariantPosition, POINTS_PER_PIXEL, Style};
+use crate::text::features::{self, CapsPlan, FaceFeatures};
 use crate::text::{GlyphRun, PositionedGlyph, TextError};
 use icu_casemap::{CaseMapper, ContextCase};
 use icu_properties::{
     CodePointMapData, CodePointSetData,
-    props::{DefaultIgnorableCodePoint, GeneralCategory, VariationSelector},
+    props::{
+        Cased, DefaultIgnorableCodePoint, EmojiPresentation, GeneralCategory, VariationSelector,
+    },
 };
-use rustybuzz::{BufferFlags, Direction, Face, Feature, UnicodeBuffer, ttf_parser::Tag};
+use rustybuzz::{BufferFlags, Direction, Face, Feature, Language, UnicodeBuffer, ttf_parser::Tag};
+use std::collections::BTreeMap;
 use std::ops::Range;
+use std::sync::Arc;
 use unicode_script::{Script, UnicodeScript};
 use unicode_segmentation::UnicodeSegmentation;
 
@@ -15,12 +20,21 @@ pub(super) const NARROW_NO_BREAK_SPACE: char = '\u{202f}';
 pub(super) const NARROW_SPACE_FACTOR: f32 = 0.5;
 const MAX_LIGATURE_TRACKING_EM: f32 = 0.025;
 const WORD_SPACE: char = ' ';
-const KERNING: Tag = Tag::from_bytes(b"kern");
-const LIGATURES: Tag = Tag::from_bytes(b"liga");
-const CONTEXTUAL_LIGATURES: Tag = Tag::from_bytes(b"clig");
-const SMALL_CAPITALS: Tag = Tag::from_bytes(b"smcp");
 /// UA synthesis policy; CSS Fonts leaves the reduction factor to implementations.
 const SMALL_CAPS_SCALE: f32 = 0.8;
+/// UA synthesis policy for `font-variant-position` (§6.5): sizes up to the small size keep
+/// more of their size than sizes from the large size, with linear interpolation between.
+const POSITION_SMALL_SIZE: f32 = 20.0 * POINTS_PER_PIXEL;
+const POSITION_LARGE_SIZE: f32 = 45.0 * POINTS_PER_PIXEL;
+const POSITION_SMALL_SCALE: f32 = 0.82;
+const POSITION_LARGE_SCALE: f32 = 2.0 / 3.0;
+/// Synthesized superscripts rise and subscripts drop by these fractions of the unreduced em.
+const SUPERSCRIPT_RISE_EM: f32 = 0.34;
+const SUBSCRIPT_DROP_EM: f32 = 0.2;
+/// Text and emoji presentation selectors (UTS #51 §1.4.3).
+const TEXT_PRESENTATION: char = '\u{fe0e}';
+const EMOJI_PRESENTATION: char = '\u{fe0f}';
+
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub(super) enum MissingGlyphs {
     Reject,
@@ -36,9 +50,41 @@ pub(super) fn variation_selector(ch: char) -> bool {
     !ch.is_ascii() && CodePointSetData::new::<VariationSelector>().contains(ch)
 }
 
-pub(super) fn supports_variations(face: &Face<'_>, text: &str) -> bool {
+/// The presentation selector `font-variant-emoji` appends after `ch`, which text supplies
+/// itself when a presentation selector follows (§9.3).
+pub(super) fn implied_presentation(
+    emoji: FontVariantEmoji,
+    ch: char,
+    next: Option<char>,
+) -> Option<char> {
+    if emoji == FontVariantEmoji::Normal
+        || matches!(next, Some(TEXT_PRESENTATION | EMOJI_PRESENTATION))
+        || crate::spec_data::emoji::VARIATION_BASES
+            .binary_search(&u32::from(ch))
+            .is_err()
+    {
+        return None;
+    }
+    let emoji_default = || CodePointSetData::new::<EmojiPresentation>().contains(ch);
+    Some(match emoji {
+        FontVariantEmoji::Emoji => EMOJI_PRESENTATION,
+        FontVariantEmoji::Unicode if emoji_default() => EMOJI_PRESENTATION,
+        FontVariantEmoji::Normal | FontVariantEmoji::Text | FontVariantEmoji::Unicode => {
+            TEXT_PRESENTATION
+        }
+    })
+}
+
+/// Whether the face has every variation sequence in `text`, including the presentation
+/// selectors `emoji` implies.
+pub(super) fn supports_variations(
+    face: &Face<'_>,
+    text: &str,
+    emoji: Option<FontVariantEmoji>,
+) -> bool {
     let mut previous = None;
-    for ch in text.chars() {
+    let mut chars = text.chars().peekable();
+    while let Some(ch) = chars.next() {
         if variation_selector(ch)
             // Mongolian free selectors are handled by the script shaper through GSUB.
             && ch.script() != Script::Mongolian
@@ -48,9 +94,38 @@ pub(super) fn supports_variations(face: &Face<'_>, text: &str) -> bool {
         {
             return false;
         }
+        if let Some(selector) =
+            emoji.and_then(|emoji| implied_presentation(emoji, ch, chars.peek().copied()))
+            && face.glyph_variation_index(ch, selector).is_none()
+        {
+            return false;
+        }
         previous = Some(ch);
     }
     true
+}
+
+/// Whether the face's substitution or positioning features include `tag`.
+pub(super) fn has_feature(face: &Face<'_>, tag: [u8; 4]) -> bool {
+    let tag = Tag::from_bytes(&tag);
+    [face.tables().gsub, face.tables().gpos]
+        .into_iter()
+        .flatten()
+        .any(|table| table.features.find(tag).is_some())
+}
+
+/// Whether the face defines `tag` as a language system of any script.
+pub(super) fn has_language_system(face: &Face<'_>, tag: [u8; 4]) -> bool {
+    let tag = Tag::from_bytes(&tag);
+    [face.tables().gsub, face.tables().gpos]
+        .into_iter()
+        .flatten()
+        .any(|table| {
+            table
+                .scripts
+                .into_iter()
+                .any(|script| script.languages.into_iter().any(|system| system.tag == tag))
+        })
 }
 
 #[derive(Clone, Copy)]
@@ -62,6 +137,126 @@ pub(super) struct ShapingFont<'f, 'data> {
     pub variations: &'f [FontVariation],
     pub narrow_space_advance: Option<f32>,
     pub missing: MissingGlyphs,
+    /// The used font size, after `font-size-adjust`.
+    pub size: f32,
+    pub features: FaceFeatures<'f>,
+    pub language: Option<&'f Language>,
+    pub palette: Option<&'f Arc<[crate::graphics::Color]>>,
+}
+
+/// How a run renders `font-variant-position` (§6.5).
+#[derive(Clone, Copy, Debug, PartialEq)]
+enum Position {
+    Normal,
+    Native(FontFeature),
+    /// Reduced glyphs shifted by the offset below the baseline, in points.
+    Synthetic {
+        scale: f32,
+        offset: f32,
+    },
+}
+
+/// The reduction of synthesized superscripts and subscripts at `size`.
+fn position_scale(size: f32) -> f32 {
+    let progress = ((size - POSITION_SMALL_SIZE) / (POSITION_LARGE_SIZE - POSITION_SMALL_SIZE))
+        .clamp(0.0, 1.0);
+    POSITION_SMALL_SCALE + (POSITION_LARGE_SCALE - POSITION_SMALL_SCALE) * progress
+}
+
+/// The glyphs of each cluster of `text`.
+fn clusters(
+    face: &Face<'_>,
+    text: &str,
+    rtl: bool,
+    features: &[Feature],
+) -> BTreeMap<u32, Vec<u32>> {
+    let mut buffer = UnicodeBuffer::new();
+    buffer.push_str(text);
+    buffer.set_direction(if rtl {
+        Direction::RightToLeft
+    } else {
+        Direction::LeftToRight
+    });
+    buffer.guess_segment_properties();
+    let shaped = rustybuzz::shape(face, features, buffer);
+    let mut clusters = BTreeMap::<u32, Vec<u32>>::new();
+    for info in shaped.glyph_infos() {
+        clusters
+            .entry(info.cluster)
+            .or_default()
+            .push(info.glyph_id);
+    }
+    clusters
+}
+
+fn shaper_features(features: &[FontFeature]) -> Vec<Feature> {
+    features
+        .iter()
+        .map(|feature| Feature::new(Tag::from_bytes(&feature.tag), feature.value, ..))
+        .collect()
+}
+
+/// Native variants apply only where the face has them for every character of the run other
+/// than spaces; otherwise the whole run is synthesized, if synthesis is allowed (§6.5, §2.8.4).
+fn position_form(
+    font: ShapingFont<'_, '_>,
+    text: &str,
+    rtl: bool,
+    style: &Style,
+    caps: CapsPlan,
+) -> Position {
+    let position = style.font_features.position;
+    let Some(feature) = features::position_feature(position) else {
+        return Position::Normal;
+    };
+    if !style.font_synthesis.position {
+        return Position::Native(feature);
+    }
+    let face_features = FaceFeatures {
+        caps: caps.features,
+        ..font.features
+    };
+    let plain = clusters(
+        font.face,
+        text,
+        rtl,
+        &shaper_features(&features::run_features(style, face_features, false)),
+    );
+    let variant = clusters(
+        font.face,
+        text,
+        rtl,
+        &shaper_features(&features::run_features(
+            style,
+            FaceFeatures {
+                position: Some(feature),
+                ..face_features
+            },
+            false,
+        )),
+    );
+    let ignorables = CodePointSetData::new::<DefaultIgnorableCodePoint>();
+    let boundaries =
+        crate::fonts::cluster_boundaries(plain.keys().map(|cluster| *cluster as usize), text.len());
+    let complete = boundaries.windows(2).all(|bounds| {
+        let source = &text[bounds[0]..bounds[1]];
+        let cluster = u32::try_from(bounds[0]).expect("text offsets fit the shaper's clusters");
+        source
+            .chars()
+            .all(|ch| ch.is_whitespace() || ignorables.contains(ch))
+            || plain.get(&cluster) != variant.get(&cluster)
+    });
+    if complete {
+        return Position::Native(feature);
+    }
+    let em = font.size;
+    Position::Synthetic {
+        scale: position_scale(em),
+        offset: match position {
+            FontVariantPosition::Super => -SUPERSCRIPT_RISE_EM * em,
+            FontVariantPosition::Sub | FontVariantPosition::Normal => SUBSCRIPT_DROP_EM * em,
+        },
+    }
 }
 
 pub(super) fn shape_runs(
@@ -71,20 +266,27 @@ pub(super) fn shape_runs(
     rtl: bool,
     style: &Style,
 ) -> Result<Vec<GlyphRun>, TextError> {
-    if style.font_variant_caps != FontVariantCaps::SmallCaps
-        || !style.font_synthesis.small_caps
-        || font
-            .face
-            .tables()
-            .gsub
-            .is_some_and(|table| table.features.find(SMALL_CAPITALS).is_some())
-    {
-        return shape_run(font, paragraph, range, rtl, style, false).map(|run| vec![run]);
+    let caps = features::caps_plan(
+        style.font_variant_caps,
+        |tag| has_feature(font.face, tag),
+        style.font_synthesis.small_caps,
+    );
+    let position = position_form(font, &paragraph[range.clone()], rtl, style, caps);
+    if !caps.synthetic() {
+        return shape_run(font, paragraph, range, rtl, style, caps, position, false)
+            .map(|run| vec![run]);
     }
+    let cased = CodePointSetData::new::<Cased>();
     let mut pieces: Vec<(Range<usize>, bool)> = Vec::new();
     for (offset, cluster) in paragraph[range.clone()].grapheme_indices(true) {
         let start = range.start + offset;
-        let small = cluster.chars().any(char::is_lowercase);
+        let small = cluster.chars().any(|ch| {
+            if ch.is_lowercase() {
+                caps.synthetic_lower
+            } else {
+                caps.synthetic_upper && cased.contains(ch)
+            }
+        });
         if let Some((previous, same)) = pieces.last_mut()
             && *same == small
         {
@@ -98,16 +300,22 @@ pub(super) fn shape_runs(
     }
     pieces
         .into_iter()
-        .map(|(range, small)| shape_run(font, paragraph, range, rtl, style, small))
+        .map(|(range, small)| shape_run(font, paragraph, range, rtl, style, caps, position, small))
         .collect()
 }
 
+#[expect(
+    clippy::too_many_arguments,
+    reason = "a run's text, direction, style and its caps and position forms"
+)]
 fn shape_run(
     font: ShapingFont<'_, '_>,
     paragraph: &str,
     range: Range<usize>,
     rtl: bool,
     style: &Style,
+    caps: CapsPlan,
+    position: Position,
     synthetic_caps: bool,
 ) -> Result<GlyphRun, TextError> {
     let ShapingFont {
@@ -118,15 +326,27 @@ fn shape_run(
         variations,
         narrow_space_advance,
         missing,
+        size: used_size,
+        features: face_features,
+        language,
+        palette,
     } = font;
     let text = &paragraph[range.clone()];
-    let size = style.size
+    let (position_feature, synthetic_position) = match position {
+        Position::Normal => (None, None),
+        Position::Native(feature) => (Some(feature), None),
+        Position::Synthetic { scale, offset } => (None, Some((scale, offset))),
+    };
+    let (position_scale, baseline_offset) = synthetic_position.unwrap_or((1.0, 0.0));
+    let size = used_size
+        * position_scale
         * if synthetic_caps {
             SMALL_CAPS_SCALE
         } else {
             1.0
         };
     synthesis.small_caps = synthetic_caps;
+    synthesis.position = synthetic_position.is_some();
     let mut buffer = UnicodeBuffer::new();
     let ignorables = CodePointSetData::new::<DefaultIgnorableCodePoint>();
     let display_character = |ch| {
@@ -137,6 +357,13 @@ fn shape_run(
             char::REPLACEMENT_CHARACTER
         } else {
             ch
+        }
+    };
+    let emoji = style.font_features.emoji;
+    let add = |buffer: &mut UnicodeBuffer, ch, next, cluster| {
+        buffer.add(display_character(ch), cluster);
+        if let Some(selector) = implied_presentation(emoji, ch, next) {
+            buffer.add(selector, cluster);
         }
     };
     if synthetic_caps {
@@ -169,13 +396,20 @@ fn shape_run(
             if bytes > crate::document::MAX_INLINE_TEXT_BYTES {
                 return Err(TextError::CaseExpansionLimit);
             }
-            for ch in mapped.chars() {
-                buffer.add(display_character(ch), start as u32);
+            let mut chars = mapped.chars().peekable();
+            while let Some(ch) = chars.next() {
+                add(&mut buffer, ch, chars.peek().copied(), start as u32);
             }
         }
-    } else if missing == MissingGlyphs::Substitute {
-        for (start, ch) in text.char_indices() {
-            buffer.add(display_character(ch), start as u32);
+    } else if missing == MissingGlyphs::Substitute || emoji != FontVariantEmoji::Normal {
+        let mut chars = text.char_indices().peekable();
+        while let Some((start, ch)) = chars.next() {
+            add(
+                &mut buffer,
+                ch,
+                chars.peek().map(|(_, next)| *next),
+                start as u32,
+            );
         }
     } else {
         buffer.push_str(text);
@@ -188,28 +422,31 @@ fn shape_run(
     } else {
         Direction::LeftToRight
     });
-    if let Ok(language) = style.language.parse() {
-        buffer.set_language(language);
+    if let Some(language) = language {
+        buffer.set_language(language.clone());
     }
     buffer.guess_segment_properties();
     // Words shape independently, so no glyph kerns against a word space. Fields are set directly
     // because `Feature::new` stores an inclusive end that its cluster masking treats as exclusive.
-    let mut features: Vec<Feature> = text
+    let mut shaper: Vec<Feature> = text
         .match_indices(WORD_SPACE)
         .map(|(start, _)| Feature {
-            tag: KERNING,
+            tag: Tag::from_bytes(&features::KERNING),
             value: 0,
             start: start as u32,
             end: (start + WORD_SPACE.len_utf8()) as u32,
         })
         .collect();
-    if style.font_variant_caps == FontVariantCaps::SmallCaps && !synthetic_caps {
-        features.push(Feature::new(SMALL_CAPITALS, 1, ..));
-    }
-    if style.letter_spacing.abs() > size * MAX_LIGATURE_TRACKING_EM {
-        features.extend([LIGATURES, CONTEXTUAL_LIGATURES].map(|tag| Feature::new(tag, 0, ..)));
-    }
-    let shaped = rustybuzz::shape(face, &features, buffer);
+    shaper.extend(shaper_features(&features::run_features(
+        style,
+        FaceFeatures {
+            caps: caps.features,
+            position: position_feature,
+            ..face_features
+        },
+        style.letter_spacing.abs() > size * MAX_LIGATURE_TRACKING_EM,
+    )));
+    let shaped = rustybuzz::shape(face, &shaper, buffer);
     let boundaries = crate::fonts::cluster_boundaries(
         shaped
             .glyph_infos()
@@ -222,9 +459,14 @@ fn shape_run(
     let mut glyphs = Vec::new();
     let bounds = face.global_bounding_box();
     let mut ink_bounds: Option<[f32; 2]> = None;
-    let mut pen_y = 0.0;
+    let mut pen_y = baseline_offset;
     let mut cluster_advance = 0.0;
     let word_spacing = style.word_spacing.resolve(size);
+    let em_offset = if size == 0.0 {
+        0.0
+    } else {
+        baseline_offset / size
+    };
     for (index, (info, pos)) in shaped
         .glyph_infos()
         .iter()
@@ -290,7 +532,7 @@ fn shape_run(
             x_advance: advance,
             x_spacing,
             x_offset: pos.x_offset as f32 / upem,
-            y_offset: -(pos.y_offset as f32) / upem,
+            y_offset: em_offset - (pos.y_offset as f32) / upem,
             y_advance: -(pos.y_advance as f32) / upem,
             text_range,
         };
@@ -310,11 +552,12 @@ fn shape_run(
         width,
         baseline_shift: 0.0,
         font_size: size,
-        metric_size: style.size,
+        metric_size: used_size,
         font_id,
         synthesis,
         oblique_skew,
         variations: variations.to_vec(),
+        palette: palette.cloned(),
         color: style.color,
         leading: style.line_height.resolve(style.size),
         white_space: style.white_space,

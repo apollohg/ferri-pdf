@@ -442,9 +442,10 @@ impl BoxMetrics {
             .face(font, style)?
             .ok_or(TextError::NoFontCandidates)?;
         let metrics = FaceMetrics::of(&instance.face);
+        let size = instance.used_size(style);
         let [ascent, descent, gap] =
-            [metrics.ascent, metrics.descent, metrics.line_gap].map(|metric| metric * style.size);
-        let x_height = metrics.x_height * style.size;
+            [metrics.ascent, metrics.descent, metrics.line_gap].map(|metric| metric * size);
+        let x_height = metrics.x_height * size;
         Ok(Self {
             ascent,
             descent,
