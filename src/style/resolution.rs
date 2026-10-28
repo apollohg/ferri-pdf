@@ -1783,48 +1783,53 @@ pub(super) fn needs_parent(property: Property, value: &Specified) -> bool {
         || (property == Property::Color && current_color(property, value))
 }
 
-fn current_color(property: Property, value: &Specified) -> bool {
-    fn component(value: &Component) -> bool {
-        match value.unwrap() {
-            Component::Keyword(keyword) => keyword.name().eq_ignore_ascii_case(CURRENT_COLOR),
-            Component::MathColor(source) => {
-                let mut pending = vec![source.as_ref()];
-                while let Some(source) = pending.pop() {
-                    let mut raw = cssparser::ParserInput::new(source);
-                    let input = &mut cssparser::Parser::new(&mut raw);
-                    while let Ok(token) = input.next().cloned() {
-                        match token {
-                            cssparser::Token::Ident(name)
-                                if name.eq_ignore_ascii_case(CURRENT_COLOR) =>
-                            {
-                                return true;
-                            }
-                            cssparser::Token::Function(_) | cssparser::Token::ParenthesisBlock => {
-                                if let Ok(source) = input.parse_nested_block(|nested| {
-                                    Ok::<_, cssparser::ParseError<'_, ()>>(
-                                        crate::style::conditions::block_source(nested),
-                                    )
-                                }) {
-                                    pending.push(source);
-                                }
-                            }
-                            _ => {}
+/// Whether a `<color>` depends on `currentcolor`, directly or inside a colour function.
+pub(super) fn contains_current_color(value: &Component) -> bool {
+    match value.unwrap() {
+        Component::Keyword(keyword) => keyword
+            .name()
+            .eq_ignore_ascii_case(crate::style::colors::CURRENT_COLOR),
+        Component::MathColor(source) => {
+            let mut pending = vec![source.as_ref()];
+            while let Some(source) = pending.pop() {
+                let mut raw = cssparser::ParserInput::new(source);
+                let input = &mut cssparser::Parser::new(&mut raw);
+                while let Ok(token) = input.next().cloned() {
+                    match token {
+                        cssparser::Token::Ident(name)
+                            if name.eq_ignore_ascii_case(crate::style::colors::CURRENT_COLOR) =>
+                        {
+                            return true;
                         }
+                        cssparser::Token::Function(_) | cssparser::Token::ParenthesisBlock => {
+                            if let Ok(source) = input.parse_nested_block(|nested| {
+                                Ok::<_, cssparser::ParseError<'_, ()>>(
+                                    crate::style::conditions::block_source(nested),
+                                )
+                            }) {
+                                pending.push(source);
+                            }
+                        }
+                        _ => {}
                     }
                 }
-                false
             }
-            Component::Group(values) => values.iter().any(component),
-            Component::Slots(values) => values.iter().flatten().any(component),
-            Component::Function(_, Some(value)) | Component::Block(_, value) => component(value),
-            _ => false,
+            false
         }
+        Component::Group(values) => values.iter().any(contains_current_color),
+        Component::Slots(values) => values.iter().flatten().any(contains_current_color),
+        Component::Function(_, Some(value)) | Component::Block(_, value) => {
+            contains_current_color(value)
+        }
+        _ => false,
     }
-    const CURRENT_COLOR: &str = "currentcolor";
+}
+
+fn current_color(property: Property, value: &Specified) -> bool {
     match value {
-        Specified::Value(value) => component(value),
+        Specified::Value(value) => contains_current_color(value),
         Specified::Wide(keyword) if keyword.resolve(property.inherited()) == Resolved::Initial => {
-            crate::style::declaration::initial(property).is_some_and(component)
+            crate::style::declaration::initial(property).is_some_and(contains_current_color)
         }
         Specified::Toggle(values) => values
             .iter()

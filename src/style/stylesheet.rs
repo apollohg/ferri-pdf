@@ -136,15 +136,12 @@ fn override_colors(
         let Ok(index) = u32::try_from(crate::style::values::integer(index, relative)?) else {
             return Ok(None);
         };
-        if matches!(
-            color.unwrap(),
-            Component::Color(cssparser_color::Color::CurrentColor)
-        ) {
+        if crate::style::resolution::contains_current_color(color) {
             return Ok(None);
         }
         colors.push((
             index,
-            crate::style::colors::color(color, relative, crate::paint::Color::BLACK)?,
+            crate::style::colors::color(color, relative, &crate::paint::AbsoluteColor::BLACK)?,
         ));
     }
     Ok(Some(colors))
