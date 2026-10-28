@@ -509,6 +509,7 @@ impl BlockBuilder<'_, '_, '_> {
             },
             &style.counters,
             &style.display,
+            style.containment().style,
         )?;
         let context = crate::style::PageStyleTarget {
             element: element.id(),
@@ -776,6 +777,8 @@ struct Frame<'d> {
     nodes: Option<ChildNodes<'d>>,
     block: Option<OpenBlock>,
     started: bool,
+    /// The quote depth before a style-contained element's subtree, restored after it.
+    quotes: Option<crate::style::QuoteDepth>,
     generated: bool,
     ordinal: i128,
 }
@@ -808,6 +811,7 @@ impl<'d> Frame<'d> {
                 pending_run_in: None,
             }),
             started: false,
+            quotes: None,
             generated: false,
             ordinal,
         }
@@ -868,8 +872,13 @@ fn block<'a>(
         if !frames[index].started {
             let frame = &mut frames[index];
             let element = frame.element;
+            // CSS Containment 2 §3.3: quote depth changes are scoped to the subtree.
+            frame.quotes = frame.style.containment().style.then_some(traversal.quotes);
             traversal.generated.capture(element, &traversal.counters);
             if let Some(block) = &mut frame.block {
+                // CSS Containment 2 §4: an element skipping its contents generates no boxes,
+                // pseudo-elements or replaced fallback for them.
+                let skips = frame.style.skips_contents() && frame.style.containment().layout;
                 block.decoration = resources.backgrounds(&frame.style)?;
                 if index == 0 {
                     traversal.canvas = canvas_background(&block.decoration);
@@ -885,6 +894,7 @@ fn block<'a>(
                             )
                         });
                         if image.is_none()
+                            && !skips
                             && let Some(alt) = element.attr("alt")
                         {
                             block.inline.append(alt, &frame.style)?;
@@ -899,10 +909,7 @@ fn block<'a>(
                     )?),
                     _ => None,
                 };
-                block.marker = frame
-                    .style
-                    .display
-                    .is_list_item()
+                block.marker = (frame.style.display.is_list_item() && !skips)
                     .then(|| crate::document::lists::marker(&frame.style, frame.ordinal, resources))
                     .transpose()?
                     .flatten();
@@ -946,7 +953,7 @@ fn block<'a>(
                     });
                 }
                 frame.generated =
-                    block.image.is_none() && frame.style.display != Display::TableColumn;
+                    !skips && block.image.is_none() && frame.style.display != Display::TableColumn;
             } else {
                 // CSS Lists 3 §3.5: an inline list item's marker is always inside.
                 let marker = frame
@@ -1119,6 +1126,7 @@ fn block<'a>(
                 },
                 &child_style.counters,
                 &child_style.display,
+                child_style.containment().style,
             )?;
             let child_depth = frames[index].depth + 1;
             let ancestor_page = frames[index].page_scope.clone();
@@ -1251,10 +1259,14 @@ fn block<'a>(
         let element = frames[index].element;
         let generated = frames[index].generated;
         let contents = frames[index].style.display == Display::Contents;
+        let quotes = frames[index].quotes;
         let (mut builder, style) =
             active_builder(&mut frames, block_index, sheet, traversal, resources);
         if generated {
             builder.generated(element, style, PseudoElement::After)?;
+        }
+        if let Some(depth) = quotes {
+            builder.traversal.quotes = depth;
         }
         if index != block_index {
             if contents {
@@ -1424,6 +1436,7 @@ pub(crate) fn build(
         },
         &style.counters,
         &style.display,
+        style.containment().style,
     )?;
     let ordinal = if style.display.is_list_item() {
         traversal.counters.ordinal()?

@@ -20,11 +20,18 @@ struct Counter {
     value: Rc<Cell<i128>>,
     reversed: bool,
     automatic: Option<Rc<RefCell<AutomaticInitial>>>,
+    /// The style containment scopes enclosing the counter's creator.
+    scope: usize,
 }
 struct Frame {
     target: PageStyleTarget,
     counters: Vec<Counter>,
     sibling: Option<Vec<Counter>>,
+    /// Style containment scopes enclosing the element: increments and sets inside one only
+    /// update counters created inside it (CSS Containment 2 §3.3).
+    scope: usize,
+    /// The element's style containment scopes its descendants.
+    scoping: bool,
 }
 
 type CounterKey = (PageStyleTarget, Arc<str>);
@@ -82,8 +89,9 @@ impl Counters {
         target: PageStyleTarget,
         properties: &CounterProperties,
         display: &Display,
+        scoping: bool,
     ) -> Result<(), StyleError> {
-        self.inherit(target)?;
+        self.inherit(target, scoping)?;
         if !matches!(display, Display::None | Display::Contents) {
             for change in properties.reset.iter() {
                 let key = (target, change.name.clone());
@@ -136,21 +144,21 @@ impl Counters {
                 self.track_updates(properties, implicit)?;
             }
             for change in properties.increment.iter() {
-                let value = self.value(change.name.clone())?;
+                let value = self.updated(change.name.clone())?;
                 value.set(value.get().saturating_add(change.value));
             }
             if let Some(increment) = implicit {
-                let value = self.value(Arc::from(LIST_ITEM_COUNTER))?;
+                let value = self.updated(Arc::from(LIST_ITEM_COUNTER))?;
                 value.set(value.get().saturating_add(increment));
             }
             for change in properties.set.iter() {
-                self.value(change.name.clone())?.set(change.value);
+                self.updated(change.name.clone())?.set(change.value);
             }
         }
         self.update_previous()?;
         Ok(())
     }
-    fn inherit(&mut self, target: PageStyleTarget) -> Result<(), StyleError> {
+    fn inherit(&mut self, target: PageStyleTarget, scoping: bool) -> Result<(), StyleError> {
         let count = self.frames.last().map_or(0, |parent| {
             parent.sibling.as_ref().unwrap_or(&parent.counters).len()
         });
@@ -167,10 +175,16 @@ impl Counters {
                 .cloned()
                 .collect()
         });
+        let scope = self
+            .frames
+            .last()
+            .map_or(0, |parent| parent.scope + usize::from(parent.scoping));
         self.frames.push(Frame {
             target,
             counters,
             sibling: None,
+            scope,
+            scoping,
         });
         Ok(())
     }
@@ -179,17 +193,18 @@ impl Counters {
         target: PageStyleTarget,
         scopes: &crate::style::CounterScopes,
         display: &Display,
+        scoping: bool,
     ) -> Result<(), StyleError> {
-        self.inherit(target)?;
+        self.inherit(target, scoping)?;
         if !matches!(display, Display::None | Display::Contents) {
             for name in &scopes.reset {
                 self.instantiate(name.clone(), INITIAL_COUNTER_VALUE, false, None)?;
             }
             for name in &scopes.updates {
-                self.value(name.clone())?;
+                self.updated(name.clone())?;
             }
             if display.is_list_item() {
-                self.value(Arc::from(LIST_ITEM_COUNTER))?;
+                self.updated(Arc::from(LIST_ITEM_COUNTER))?;
             }
         }
         self.update_previous()
@@ -201,13 +216,14 @@ impl Counters {
         display: &Display,
         scopes_only: bool,
     ) -> Result<(), StyleError> {
+        let scoping = styles.style_containment(target)?;
         if *display == Display::Contents {
-            return self.enter(target, &CounterProperties::default(), display);
+            return self.enter(target, &CounterProperties::default(), display, scoping);
         }
         if scopes_only {
-            self.enter_scopes(target, &styles.counter_scopes(target)?, display)
+            self.enter_scopes(target, &styles.counter_scopes(target)?, display, scoping)
         } else {
-            self.enter(target, &styles.counters(target)?, display)
+            self.enter(target, &styles.counters(target)?, display, scoping)
         }
     }
     fn track_updates(
@@ -310,8 +326,26 @@ impl Counters {
             value: value.clone(),
             reversed,
             automatic,
+            scope: frame.scope,
         });
         Ok(value)
+    }
+    /// The counter an increment or set updates: the innermost of its name created inside the
+    /// element's innermost style containment scope, or else a new one (CSS Containment 2
+    /// §3.3). Reading counter values is not scoped.
+    fn updated(&mut self, name: Arc<str>) -> Result<Rc<Cell<i128>>, StyleError> {
+        self.charge(self.frames.last().unwrap().counters.len())?;
+        let frame = self.frames.last().unwrap();
+        if let Some(counter) = frame
+            .counters
+            .iter()
+            .rev()
+            .find(|counter| counter.name == name)
+            .filter(|counter| counter.scope == frame.scope)
+        {
+            return Ok(counter.value.clone());
+        }
+        self.instantiate(name, INITIAL_COUNTER_VALUE, false, None)
     }
     fn value(&mut self, name: Arc<str>) -> Result<Rc<Cell<i128>>, StyleError> {
         self.charge(self.frames.last().unwrap().counters.len())?;
@@ -422,7 +456,7 @@ impl Counters {
                 element: element.id(),
                 pseudo: None,
             };
-            self.enter(target, &CounterProperties::default(), &Display::None)?;
+            self.enter(target, &CounterProperties::default(), &Display::None, false)?;
             let assignments = styles.string_set(target)?;
             visit(element, &assignments, self)?;
             events.push(None);
@@ -648,7 +682,7 @@ mod tests {
             ..Default::default()
         };
         first
-            .enter(target, &properties, &Display::Block)
+            .enter(target, &properties, &Display::Block, false)
             .expect("the first scan fits the remaining work budget");
         first.leave();
         drop(first);
@@ -658,7 +692,7 @@ mod tests {
         };
         assert!(
             matches!(
-                second.enter(target, &properties, &Display::Block),
+                second.enter(target, &properties, &Display::Block, false),
                 Err(StyleError::GrammarLimit {
                     resource: COUNTER_WORK_RESOURCE,
                     limit: MAX_COUNTER_WORK

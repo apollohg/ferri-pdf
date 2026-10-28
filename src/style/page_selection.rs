@@ -44,6 +44,8 @@ pub(crate) trait PageSelection {
         target: PageStyleTarget,
     ) -> Result<crate::style::CounterProperties, StyleError>;
     fn quotes(&self, target: PageStyleTarget) -> Result<Quotes, StyleError>;
+    /// Whether the target's style containment scopes its descendants' counters.
+    fn style_containment(&self, target: PageStyleTarget) -> Result<bool, StyleError>;
     fn inline_edges(
         &self,
         target: PageStyleTarget,

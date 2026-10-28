@@ -15,18 +15,36 @@ pub(super) fn content(
     if block.image().is_some() {
         return Ok(crate::layout::images::intrinsic(block, available));
     }
-    if block.style().display.is_table() {
+    let style = block.style();
+    if style.display.is_table() {
         return crate::layout::tables::intrinsic_content(block, measurer, available);
     }
-    if block.style().display.is_flex() {
+    // CSS Containment 2 §3.1 and CSS Containment 3 §3.1: inline-size containment sizes the
+    // box as if it had no content, or as if its content were the explicit intrinsic inner
+    // width (CSS Sizing 4 §5.2).
+    let contained = style.containment().size[0];
+    let explicit = style.containment.intrinsic[0]
+        .explicit()
+        .filter(|_| contained);
+    let sizes = if let Some(width) = explicit {
+        IntrinsicWidths {
+            min: width,
+            max: width,
+        }
+    } else if style.display.is_flex() {
+        if contained {
+            return Ok(IntrinsicWidths::default());
+        }
         return crate::layout::flex::intrinsic::measure(block, measurer, available);
-    }
-    if block.style().display.is_grid() {
-        return crate::layout::grid::intrinsic(block, measurer, available);
-    }
-    let sizes = flow(block, measurer, available)?;
-    Ok(if block.style().multicol.is_multicol() {
-        crate::layout::multicol::intrinsic(block.style(), sizes)
+    } else if style.display.is_grid() {
+        return crate::layout::grid::intrinsic(block, measurer, available, contained);
+    } else if contained {
+        IntrinsicWidths::default()
+    } else {
+        flow(block, measurer, available)?
+    };
+    Ok(if style.multicol.is_multicol() {
+        crate::layout::multicol::intrinsic(style, sizes)
     } else {
         sizes
     })
@@ -76,10 +94,8 @@ pub(super) fn outer_widths(
     style: &crate::style::Style,
     mut sizes: IntrinsicWidths,
 ) -> IntrinsicWidths {
-    let edges = style.padding[1].resolve(0.0)
-        + style.padding[3].resolve(0.0)
-        + style.decoration.borders[1].used_width()
-        + style.decoration.borders[3].used_width();
+    let box_edges = crate::layout::geometry::Edges::of(style, 0.0);
+    let edges = box_edges.horizontal();
     if let Size::Value(LengthPercentage::Length(width)) = style.width {
         let content = if style.box_sizing == BoxSizing::BorderBox {
             (width - edges).max(0.0)
@@ -95,7 +111,7 @@ pub(super) fn outer_widths(
         Size::Intrinsic(crate::style::IntrinsicSizing::MaxContent) => sizes.min = sizes.max,
         _ => {}
     }
-    let constraints = crate::layout::geometry::SizeConstraints::new(
+    let mut constraints = crate::layout::geometry::SizeConstraints::new(
         [&Size::Auto, &style.min_width, &style.max_width],
         None,
         style.box_sizing,
@@ -106,6 +122,33 @@ pub(super) fn outer_widths(
         natural,
         None,
     );
+    // CSS Sizing 4 §4.2–4.4: an automatic width contributes a definite height through the
+    // preferred aspect ratio, and otherwise the height's limits transfer into the width's.
+    if style.width == Size::Auto
+        && let Some(ratio) = crate::layout::ratio::PreferredRatio::of_box(style, &box_edges)
+    {
+        let [_, vertical] = crate::layout::ratio::axis_edges(&box_edges);
+        let heights = crate::layout::geometry::SizeConstraints::new(
+            [&style.height, &style.min_height, &style.max_height],
+            None,
+            style.box_sizing,
+            vertical,
+        );
+        if let Some(height) = heights.specified {
+            let mut width = ratio.width(heights.constrain(height));
+            if crate::layout::ratio::content_minimum(style, &style.min_width) {
+                width = width.max(
+                    constraints
+                        .maximum
+                        .map_or(natural.min, |maximum| natural.min.min(maximum)),
+                );
+            }
+            sizes.min = width;
+            sizes.max = width;
+        } else {
+            crate::layout::ratio::transfer_to_width(style, &mut constraints, None, &box_edges);
+        }
+    }
     sizes.min = constraints.constrain(sizes.min);
     sizes.max = constraints.constrain(sizes.max);
     let margins =

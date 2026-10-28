@@ -78,7 +78,7 @@ struct Group {
     positions: &'static [Position],
 }
 
-const GROUPS: [Group; 14] = {
+const GROUPS: [Group; 15] = {
     use Property as P;
     [
         Group {
@@ -197,6 +197,11 @@ const GROUPS: [Group; 14] = {
             positions: &DIMENSIONS,
         },
         Group {
+            physical: &[P::ContainIntrinsicWidth, P::ContainIntrinsicHeight],
+            flow_relative: &[P::ContainIntrinsicBlockSize, P::ContainIntrinsicInlineSize],
+            positions: &DIMENSIONS,
+        },
+        Group {
             physical: &[
                 P::ScrollMarginTop,
                 P::ScrollMarginRight,
@@ -234,7 +239,7 @@ const GROUPS: [Group; 14] = {
     ]
 };
 /// The groups of properties without print effect, whose values live in `Style::inert`.
-const INERT_GROUPS: std::ops::Range<usize> = 11..14;
+const INERT_GROUPS: std::ops::Range<usize> = 12..15;
 
 impl Flow {
     pub(crate) fn of(style: &Style) -> Self {

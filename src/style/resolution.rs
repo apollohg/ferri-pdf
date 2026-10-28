@@ -1367,6 +1367,17 @@ impl crate::style::PageSelection for Geometry<'_> {
     ) -> Result<crate::style::Quotes, StyleError> {
         self.selected_value(target, Property::Quotes, |style| style.quotes.clone())
     }
+    fn style_containment(&self, target: crate::style::PageStyleTarget) -> Result<bool, StyleError> {
+        let contain =
+            self.selected_value(target, Property::Contain, |style| style.containment().style)?;
+        let container = self.selected_value(target, Property::ContainerType, |style| {
+            style.containment().style
+        })?;
+        let visibility = self.selected_value(target, Property::ContentVisibility, |style| {
+            style.containment().style
+        })?;
+        Ok(contain || container || visibility)
+    }
     fn inline_edges(
         &self,
         target: crate::style::PageStyleTarget,

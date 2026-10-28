@@ -151,6 +151,14 @@ pub(super) struct VerticalBox {
     constraints: SizeConstraints,
     edges: f32,
     table_cell: bool,
+    /// The height a preferred aspect ratio gives an automatic height (CSS Sizing 4 §4.2),
+    /// and whether its automatic minimum is the content height (§4.3).
+    ratio_height: Option<(f32, bool)>,
+    /// The ratio-derived height grows to the content height.
+    content_minimum: bool,
+    /// Size containment lays the height out as if the content were this tall (CSS
+    /// Containment 2 §3.1, CSS Sizing 4 §5.2).
+    contained: Option<f32>,
 }
 impl VerticalBox {
     pub(crate) fn new(
@@ -162,31 +170,65 @@ impl VerticalBox {
             + horizontal.padding[2]
             + horizontal.border[0]
             + horizontal.border[2];
+        let table_cell = style.display == crate::style::Display::TableCell;
+        let constraints = if table_cell {
+            SizeConstraints {
+                specified: None,
+                minimum: 0.0,
+                maximum: None,
+            }
+        } else {
+            SizeConstraints::new(
+                [&style.height, &style.min_height, &style.max_height],
+                containing_height,
+                style.box_sizing,
+                edges,
+            )
+        };
+        let horizontal_edges = horizontal.padding[1]
+            + horizontal.padding[3]
+            + horizontal.border[1]
+            + horizontal.border[3];
+        let ratio_height =
+            crate::layout::ratio::PreferredRatio::of(style, None, [horizontal_edges, edges]).map(
+                |ratio| {
+                    (
+                        ratio.height(horizontal.width),
+                        crate::layout::ratio::content_minimum(style, &style.min_height),
+                    )
+                },
+            );
         Self {
-            constraints: if style.display == crate::style::Display::TableCell {
-                SizeConstraints {
-                    specified: None,
-                    minimum: 0.0,
-                    maximum: None,
-                }
-            } else {
-                SizeConstraints::new(
-                    [&style.height, &style.min_height, &style.max_height],
-                    containing_height,
-                    style.box_sizing,
-                    edges,
-                )
-            },
             edges,
-            table_cell: style.display == crate::style::Display::TableCell,
+            table_cell,
+            ratio_height,
+            content_minimum: false,
+            contained: style.containment().size[1]
+                .then(|| style.containment.intrinsic[1].explicit().unwrap_or(0.0)),
+            constraints: SizeConstraints {
+                specified: None,
+                minimum: 0.0,
+                maximum: None,
+            },
         }
+        .with_constraints(constraints)
     }
-    pub(crate) fn with_constraints(mut self, constraints: SizeConstraints) -> Self {
+    /// Replaces the height constraints; an automatic height keeps the ratio-derived one.
+    pub(crate) fn with_constraints(mut self, mut constraints: SizeConstraints) -> Self {
+        self.content_minimum = false;
+        if constraints.specified.is_none()
+            && !self.table_cell
+            && let Some((height, content_minimum)) = self.ratio_height
+        {
+            constraints.specified = Some(height);
+            self.content_minimum = content_minimum;
+        }
         self.constraints = constraints;
         self
     }
     pub(crate) fn with_used_height(mut self, height: Option<f32>) -> Self {
         if let Some(height) = height {
+            self.content_minimum = false;
             self.constraints = SizeConstraints {
                 specified: Some(height),
                 minimum: 0.0,
@@ -214,10 +256,15 @@ impl VerticalBox {
                 .specified
                 .map_or(natural, |height| natural.min(height + self.edges));
         }
-        self.constraints.constrain(
-            self.constraints
-                .specified
-                .unwrap_or((natural - self.edges).max(0.0)),
-        ) + self.edges
+        let content = self
+            .contained
+            .unwrap_or_else(|| (natural - self.edges).max(0.0));
+        self.constraints
+            .constrain(match self.constraints.specified {
+                Some(height) if self.content_minimum => height.max(content),
+                Some(height) => height,
+                None => content,
+            })
+            + self.edges
     }
 }

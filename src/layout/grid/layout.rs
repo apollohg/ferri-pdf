@@ -454,7 +454,7 @@ pub(crate) fn measure<'a>(
         first_fragment
     };
     let edges = measurer.fragmentainer.edges(style);
-    let (break_before, break_after) = crate::layout::breaks::boundaries(&items, edges);
+    let (break_before, break_after) = crate::layout::breaks::boundaries(style, &items, edges);
     let item_indices = plan
         .children
         .iter()

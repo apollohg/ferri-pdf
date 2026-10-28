@@ -338,10 +338,14 @@ impl Style {
     }
     /// Horizontal and vertical clipping at the padding edge. Auto and scroll print their
     /// overflow, except that a scrollable vertical axis beside a clipped horizontal one is
-    /// also clipped.
+    /// also clipped. Paint containment clips both (CSS Containment 2 §3.4).
     pub(crate) fn clipped_axes(&self) -> [bool; 2] {
         let [x, y] = self.overflow;
-        [x.clips(), y.clips() || (x.clips() && y.scroll_container())]
+        let paint = self.containment().paint;
+        [
+            x.clips() || paint,
+            y.clips() || (x.clips() && y.scroll_container()) || paint,
+        ]
     }
     /// Overflow other than `visible` and `clip`, after axis pairing.
     pub(crate) fn is_scroll_container(&self) -> bool {
@@ -355,9 +359,15 @@ impl Style {
             && self.overflow[0] != Overflow::Visible
     }
     /// Formatting roots include table cells/captions (CSS Display 3 §2.4), scroll containers,
-    /// positioned boxes, atomic inlines and multicol containers; `overflow: clip` does not.
+    /// positioned boxes, atomic inlines, multicol containers, layout and paint containment
+    /// boxes (CSS Containment 2 §3.2, §3.4) and size query containers (CSS Conditional 5
+    /// §5.1); `overflow: clip` does not.
     pub(crate) fn establishes_formatting_context(&self) -> bool {
-        self.independent_box()
+        let containment = self.containment();
+        containment.layout
+            || containment.paint
+            || containment.query_container
+            || self.independent_box()
             || matches!(self.display, Display::TableCell | Display::TableCaption)
             || matches!(self.display, Display::FlowRoot | Display::FlowRootListItem)
             || self.is_scroll_container()

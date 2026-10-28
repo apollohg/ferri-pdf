@@ -15,7 +15,10 @@ impl ItemMetrics {
     pub(crate) fn of(block: &MeasuredBlock<'_>) -> Self {
         Self {
             height: block.height,
-            baseline: block.first_baseline(),
+            // CSS Containment 2 §3.2: a layout containment box has no baseline.
+            baseline: block
+                .first_baseline()
+                .filter(|_| !block.style.containment().layout),
             grid_baselines: block
                 .grid
                 .as_ref()

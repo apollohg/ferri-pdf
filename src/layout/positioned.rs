@@ -203,6 +203,22 @@ fn solve<'a>(
         style.box_sizing,
         horizontal_edges,
     );
+    // CSS Sizing 4 §4.2 and §4.4: a definite height gives an automatic width through the
+    // preferred aspect ratio; otherwise the height's limits transfer into the width's.
+    if table.is_none() {
+        if let Some(used) =
+            crate::layout::ratio::width_from_height(measurer, block, width, Some(height), &edges)?
+        {
+            width_constraints.specified = Some(used);
+        } else {
+            crate::layout::ratio::transfer_to_width(
+                style,
+                &mut width_constraints,
+                Some(height),
+                &edges,
+            );
+        }
+    }
     let static_left = position.left - cb.x;
     let static_right = cb.x + width - position.right;
     let (insets, margins, static_start) = if rtl {
@@ -317,12 +333,27 @@ fn solve<'a>(
         None
     };
     let is_table = table.is_some();
-    let height_constraints = SizeConstraints::new(
+    let mut height_constraints = SizeConstraints::new(
         [&style.height, &style.min_height, &style.max_height],
         Some(height),
         style.box_sizing,
         vertical_edges,
     );
+    // An automatic height takes the ratio-derived height, grown to the content (CSS Sizing 4
+    // §4.2–4.3), over the inset-modified containing block's.
+    let ratio = !is_table
+        && height_constraints.specified.is_none()
+        && crate::layout::ratio::PreferredRatio::of_box(style, &edges).is_some();
+    let ratio_measured = if ratio {
+        Some(measurer.format_block(block, geometry.clone(), false, Some(height), None)?)
+    } else {
+        None
+    };
+    if let Some(measured) = &ratio_measured {
+        height_constraints.specified = Some((measured.height - vertical_edges).max(0.0));
+        height_constraints.minimum = 0.0;
+        height_constraints.maximum = None;
+    }
     let mut vertical = Axis {
         length: height,
         insets: [top.resolve(height), bottom.resolve(height)],
@@ -333,6 +364,8 @@ fn solve<'a>(
     };
     let natural = if table.is_some() {
         table
+    } else if ratio_measured.is_some() {
+        ratio_measured
     } else if height_constraints.specified.is_none() && vertical.insets.iter().any(Option::is_none)
     {
         Some(measurer.format_block(block, geometry.clone(), false, Some(height), None)?)

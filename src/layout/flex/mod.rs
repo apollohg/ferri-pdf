@@ -223,6 +223,40 @@ pub(super) fn measure<'a>(
             natural_cross: preliminary_width,
             natural_main: 0.0,
         };
+        // CSS Flexbox 1 §9.8: a stretched item of a single-line container with a definite
+        // cross size has a definite cross size.
+        let ratio = source
+            .image()
+            .is_none()
+            .then(|| {
+                crate::layout::ratio::PreferredRatio::of_box(
+                    child,
+                    &crate::layout::geometry::Edges { padding, border },
+                )
+            })
+            .flatten();
+        let definite_cross = (!column).then_some(()).and_then(|()| {
+            item.cross
+                .specified
+                .map(|height| item.cross.constrain(height))
+                .or_else(|| {
+                    (flex.wrap == FlexWrap::NoWrap
+                        && matches!(align, Alignment::Normal | Alignment::Stretch)
+                        && margins[0].is_some()
+                        && margins[2].is_some())
+                    .then_some(content_height)
+                    .flatten()
+                    .map(|height| {
+                        item.cross.constrain(
+                            (height
+                                - height_edges
+                                - margins[0].unwrap_or(0.0)
+                                - margins[2].unwrap_or(0.0))
+                            .max(0.0),
+                        )
+                    })
+                })
+        });
         let natural_main = if column {
             let measured = item_metrics(
                 measurer,
@@ -233,6 +267,9 @@ pub(super) fn measure<'a>(
                 content_height,
             )?;
             (measured.height - height_edges).max(0.0)
+        } else if let (Some(ratio), Some(cross)) = (ratio, definite_cross) {
+            // §9.2.3 B: the flex base size from the definite cross size and the ratio.
+            ratio.width(cross)
         } else {
             natural.max
         };
@@ -268,7 +305,26 @@ pub(super) fn measure<'a>(
                 .max(0.0)
             }),
         );
-        let auto_min = if column { natural_main } else { natural.min };
+        // §4.5: a non-replaced item's content size suggestion is clamped by the cross limits
+        // through its ratio, and its transferred size suggestion converts a definite cross size.
+        let auto_min = match ratio {
+            Some(ratio) if !column => {
+                let content = item
+                    .cross
+                    .maximum
+                    .map_or(natural.min, |maximum| natural.min.min(ratio.width(maximum)));
+                let content = if child.min_height == Size::Auto {
+                    content
+                } else {
+                    content.max(ratio.width(item.cross.minimum))
+                };
+                item.cross.specified.map_or(content, |height| {
+                    content.max(ratio.width(item.cross.constrain(height)))
+                })
+            }
+            _ if column => natural_main,
+            _ => natural.min,
+        };
         let minimum = if matches!(
             if column {
                 &child.min_height

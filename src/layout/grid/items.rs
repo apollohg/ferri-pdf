@@ -191,15 +191,28 @@ impl<'a> Item<'a> {
         let constraints = if shared[COLUMNS] {
             constraints
         } else {
-            crate::layout::intrinsic::width_constraints(
+            let mut constraints = crate::layout::intrinsic::width_constraints(
                 source,
                 measurer,
                 Some(available),
                 edges.horizontal(),
                 Some(space),
-            )?
+            )?;
+            crate::layout::ratio::transfer_to_width(style, &mut constraints, height, &edges);
+            constraints
+        };
+        // CSS Grid 2 §6.2: with a preferred aspect ratio, `normal` sizes the item as a
+        // block-level box, which takes its automatic width from a definite height.
+        let ratio_width = if shared[COLUMNS]
+            || !matches!(justify, Alignment::Normal | Alignment::Auto)
+        {
+            None
+        } else {
+            crate::layout::ratio::width_from_height(measurer, source, available, height, &edges)?
         };
         let width = constraints.constrain(if let Some(width) = constraints.specified {
+            width
+        } else if let Some(width) = ratio_width {
             width
         } else if auto == 0
             && (justify == Alignment::Stretch
@@ -390,7 +403,15 @@ impl<'a> Item<'a> {
             && self.margins[2].is_some()
             && (self.align == Alignment::Stretch
                 || (matches!(self.align, Alignment::Normal | Alignment::Auto)
-                    && self.source.image().is_none()))
+                    && self.source.image().is_none()
+                    && crate::layout::ratio::PreferredRatio::of_box(
+                        self.source.style(),
+                        &Edges {
+                            padding: self.geometry.padding,
+                            border: self.geometry.border,
+                        },
+                    )
+                    .is_none()))
     }
 
     pub(crate) fn top(&self, available: f32, height: f32) -> f32 {

@@ -8,6 +8,7 @@ pub(crate) enum Position {
     #[default]
     Static,
     Relative,
+    Sticky,
     Absolute,
     Fixed,
 }

@@ -195,6 +195,8 @@ pub(crate) struct Style {
     pub will_change: crate::style::will_change::WillChange,
     /// `view-transition-name` other than `none`.
     pub view_transition_named: bool,
+    pub aspect_ratio: crate::style::AspectRatio,
+    pub containment: crate::style::ContainmentStyle,
     #[serde(skip)]
     pub(super) inert: crate::style::inert::InertValues,
 }
@@ -305,6 +307,8 @@ impl Default for Style {
             multicol: crate::style::MulticolStyle::default(),
             will_change: Default::default(),
             view_transition_named: false,
+            aspect_ratio: crate::style::AspectRatio::default(),
+            containment: crate::style::ContainmentStyle::default(),
             inert: crate::style::inert::InertValues::default(),
         }
     }
@@ -461,10 +465,15 @@ impl Style {
             || self.mix_blend_mode != crate::paint::BlendMode::Normal
             || self.isolate
     }
-    /// A stacking context from a `will-change` hint (CSS Will Change 1 §3.1) or a view
-    /// transition name, which also makes the box a backdrop root (CSS View Transitions 1 §3).
+    /// A stacking context from a `will-change` hint (CSS Will Change 1 §3.1), a view
+    /// transition name, which also makes the box a backdrop root (CSS View Transitions 1 §3),
+    /// sticky positioning (CSS Position 3 §2.2) or layout and paint containment (CSS
+    /// Containment 2 §3.2, §3.4).
     pub(crate) fn forced_stacking_context(&self) -> bool {
-        self.will_change.stacking_context || self.view_transition_named
+        self.will_change.stacking_context
+            || self.view_transition_named
+            || self.position == crate::style::Position::Sticky
+            || self.contains_positioned()
     }
     /// `z-index` where it applies; `will-change: z-index` makes `auto` a stacking context.
     pub(crate) fn stacking_z_index(&self) -> Option<i32> {
@@ -478,9 +487,11 @@ impl Style {
             || self.will_change.absolute_containing_block
     }
     /// Generates the containing block of fixed positioned descendants (CSS Transforms 1 §3,
-    /// CSS Transforms 2 §5).
+    /// CSS Transforms 2 §5, CSS Containment 2 §3.2 and §3.4).
     pub(crate) fn contains_fixed(&self) -> bool {
-        self.has_transform_effects() || self.will_change.fixed_containing_block
+        self.has_transform_effects()
+            || self.will_change.fixed_containing_block
+            || self.contains_positioned()
     }
     pub(crate) fn font_selection(&self) -> FontSelection {
         FontSelection {

@@ -44,7 +44,7 @@ impl<'a> Plan<'a> {
             .as_ref()
             .filter(|parent| parent.matches(block))
             .cloned();
-        Self::with_parent(block, measurer, sizes, bounds, parent)
+        Self::with_parent(block, measurer, sizes, bounds, parent, false)
     }
 
     fn with_parent(
@@ -53,10 +53,11 @@ impl<'a> Plan<'a> {
         sizes: [Option<f32>; 2],
         bounds: [SizeBounds; 2],
         inherited: Option<ParentContext>,
+        empty: bool,
     ) -> Result<Self, LayoutError> {
         let style = block.style();
         let mut children = Vec::new();
-        for child in block.children() {
+        for child in block.children().iter().filter(|_| !empty) {
             match child {
                 BlockContent::Block(child) => children.push((children.len(), child)),
                 BlockContent::Inline(_) => return Err(LayoutError::InvalidGridStructure),
@@ -211,6 +212,7 @@ impl<'a> Plan<'a> {
                     [None; 2],
                     [SizeBounds::default(); 2],
                     self.child_context(index),
+                    false,
                 )?;
                 let child_gap = style.flex.gap[COLUMNS].resolve_normal(0.0, parent_gap);
                 let contributions = plan.column_contributions(measurer, available, child_gap)?;
@@ -282,13 +284,20 @@ impl<'a> Plan<'a> {
     }
 }
 
+/// Min- and max-content widths; a size-contained grid is sized as if it had no items.
 pub(super) fn intrinsic(
     block: &BlockBox,
     measurer: &Measurer<'_>,
     available: f32,
+    contained: bool,
 ) -> Result<IntrinsicWidths, LayoutError> {
     let bounds = [SizeBounds::default(); 2];
-    let plan = Plan::new(block, measurer, [None; 2], bounds)?;
+    let parent = measurer
+        .grid_parent
+        .as_ref()
+        .filter(|parent| parent.matches(block))
+        .cloned();
+    let plan = Plan::with_parent(block, measurer, [None; 2], bounds, parent, contained)?;
     let contributions = plan.column_contributions(measurer, available, plan.gap(COLUMNS, None))?;
     let sizes = [AvailableSpace::MinContent, AvailableSpace::MaxContent].map(|space| {
         plan.sizes(COLUMNS, None, &contributions, space, false, measurer)
@@ -821,7 +830,7 @@ mod tests {
                 "<style>.probe{{grid-template-columns:auto auto;column-gap:10pt}}.probe>div{{height:10pt;overflow:{overflow}}}</style><section class=probe>{first}<div style='width:80pt'></div><div style='position:absolute;width:400pt'></div></section>"
             );
             with_probe(&html, |block, measurer| {
-                let widths = intrinsic(block, measurer, 300.0).unwrap();
+                let widths = intrinsic(block, measurer, 300.0, false).unwrap();
                 assert_eq!(
                     [widths.min, widths.max],
                     [130.0, 130.0],

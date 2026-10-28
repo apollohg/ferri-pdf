@@ -1097,32 +1097,45 @@ pub(super) fn block_geometry(
     rtl: bool,
     containing_height: Option<f32>,
 ) -> Result<crate::layout::geometry::HorizontalBox, LayoutError> {
-    let used_width = block.image().map(|_| {
-        crate::layout::images::size(block, width, width, containing_height, None, None)[0]
-    });
     let style = block.style();
+    let edges = crate::layout::geometry::Edges::of(style, width);
+    let used_width = match block.image() {
+        Some(_) => {
+            Some(crate::layout::images::size(block, width, width, containing_height, None, None)[0])
+        }
+        None => crate::layout::ratio::width_from_height(
+            measurer,
+            block,
+            width,
+            containing_height,
+            &edges,
+        )?,
+    };
     let geometry = horizontal(style, x, width, rtl, used_width);
+    let transfers = crate::layout::ratio::PreferredRatio::of_box(style, &edges).is_some();
     if used_width.is_some()
-        || ![&style.width, &style.min_width, &style.max_width]
-            .iter()
-            .any(|size| matches!(size, crate::style::Size::Intrinsic(_)))
+        || (!transfers
+            && ![&style.width, &style.min_width, &style.max_width]
+                .iter()
+                .any(|size| matches!(size, crate::style::Size::Intrinsic(_))))
     {
         return Ok(geometry);
     }
-    let edges = crate::layout::geometry::Edges::of(style, width).horizontal();
     let margins = [geometry.margin[3], geometry.margin[1]];
     let available =
-        (width - edges - margins[0].unwrap_or(0.0) - margins[1].unwrap_or(0.0)).max(0.0);
-    let constraints = crate::layout::intrinsic::width_constraints(
+        (width - edges.horizontal() - margins[0].unwrap_or(0.0) - margins[1].unwrap_or(0.0))
+            .max(0.0);
+    let mut constraints = crate::layout::intrinsic::width_constraints(
         block,
         measurer,
         Some(width),
-        edges,
+        edges.horizontal(),
         Some(available),
     )?;
+    crate::layout::ratio::transfer_to_width(style, &mut constraints, containing_height, &edges);
     let used = constraints.normal_flow(
         width,
-        edges,
+        edges.horizontal(),
         margins,
         None,
         rtl,
@@ -1318,7 +1331,7 @@ impl<'a> FlowFrame<'a> {
                 })
             .min(overflow_height)
         };
-        let (break_before, break_after) = crate::layout::breaks::boundaries(&items, edges);
+        let (break_before, break_after) = crate::layout::breaks::boundaries(style, &items, edges);
         let paint = measurer.box_paint(block, &geometry);
         Ok(MeasuredBlock {
             grid: None,

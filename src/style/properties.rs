@@ -1041,6 +1041,34 @@ fn handler(property: Property) -> Option<Handler> {
             Some(|v, _| crate::style::will_change::WillChange::from_component(v).is_ok()),
         ),
         P::ViewTransitionName => (view_transition_name, Some(|_, _| true)),
+        P::AspectRatio => (
+            aspect_ratio,
+            Some(|v, r| crate::style::AspectRatio::from_component(v, r).is_ok()),
+        ),
+        P::Contain => (
+            contain,
+            Some(|v, _| crate::style::Contain::from_component(v).is_ok()),
+        ),
+        P::ContainerType => (
+            container_type,
+            Some(|v, _| crate::style::ContainerType::from_component(v).is_ok()),
+        ),
+        P::ContainerName => (
+            container_name,
+            Some(|v, _| crate::style::containment::container_names(v).is_ok()),
+        ),
+        P::ContentVisibility => (
+            content_visibility,
+            Some(|v, _| crate::style::ContentVisibility::from_component(v).is_ok()),
+        ),
+        P::ContainIntrinsicWidth => (
+            contain_intrinsic_width,
+            Some(|v, r| crate::style::ContainIntrinsicSize::from_component(v, r).is_ok()),
+        ),
+        P::ContainIntrinsicHeight => (
+            contain_intrinsic_height,
+            Some(|v, r| crate::style::ContainIntrinsicSize::from_component(v, r).is_ok()),
+        ),
         _ => return None,
     };
     Some(Handler { apply, check })
@@ -1607,6 +1635,47 @@ fn display(
 computed!(position, [position], |value, style, _parent, _relative| {
     crate::style::Position::from_component(value)?
 });
+computed!(
+    aspect_ratio,
+    [aspect_ratio],
+    |value, style, _parent, relative| {
+        crate::style::AspectRatio::from_component(value, relative)?
+    }
+);
+computed!(
+    contain,
+    [containment.contain],
+    |value, style, _parent, _relative| { crate::style::Contain::from_component(value)? }
+);
+computed!(
+    container_type,
+    [containment.container_type],
+    |value, style, _parent, _relative| { crate::style::ContainerType::from_component(value)? }
+);
+computed!(
+    container_name,
+    [containment.container_names],
+    |value, style, _parent, _relative| { crate::style::containment::container_names(value)? }
+);
+computed!(
+    content_visibility,
+    [containment.content_visibility],
+    |value, style, _parent, _relative| { crate::style::ContentVisibility::from_component(value)? }
+);
+computed!(
+    contain_intrinsic_width,
+    [containment.intrinsic[0]],
+    |value, style, _parent, relative| {
+        crate::style::ContainIntrinsicSize::from_component(value, relative)?
+    }
+);
+computed!(
+    contain_intrinsic_height,
+    [containment.intrinsic[1]],
+    |value, style, _parent, relative| {
+        crate::style::ContainIntrinsicSize::from_component(value, relative)?
+    }
+);
 computed!(z_index, [z_index], |value, style, _parent, relative| {
     crate::style::position::z_index(value, relative)?
 });

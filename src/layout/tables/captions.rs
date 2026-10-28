@@ -82,7 +82,7 @@ pub(super) fn wrap<'a>(
     } else {
         breaks::first_fragment(&items).min(height)
     };
-    let (break_before, break_after) = breaks::boundaries(&items, edges);
+    let (break_before, break_after) = breaks::boundaries(style, &items, edges);
     Ok(MeasuredBlock {
         grid: None,
         clearance_before: None,

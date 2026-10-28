@@ -16,6 +16,7 @@ mod conditional;
 mod conditions;
 #[cfg(test)]
 mod conformance;
+mod containment;
 pub(crate) mod counter_style;
 mod counter_values;
 mod declaration;
@@ -87,6 +88,9 @@ pub(crate) use box_values::{
     BoxSizing, BreakBetween, BreakInside, Display, LengthPercentage, Size, Visibility,
 };
 pub(crate) use computed::Style;
+pub(crate) use containment::{
+    Contain, ContainIntrinsicSize, ContainerType, ContainmentStyle, ContentVisibility,
+};
 pub(crate) use counter_values::{
     CounterProperties, CounterScopes, DEFAULT_COUNTER_INCREMENT, INITIAL_COUNTER_VALUE,
     LIST_ITEM_COUNTER,
@@ -127,7 +131,7 @@ pub(crate) use quotes::{QuoteDepth, Quotes};
 pub(crate) use resolution::PageGeometry;
 pub(crate) use selector::PseudoElement;
 pub(crate) use sizing::{
-    IntrinsicSizing, IntrinsicWidths, Overconstraint, SizeConstraints, UsedAxis,
+    AspectRatio, IntrinsicSizing, IntrinsicWidths, Overconstraint, SizeConstraints, UsedAxis,
 };
 pub(crate) use string_values::StringAssignment;
 pub(crate) use stylesheet::Stylesheet;

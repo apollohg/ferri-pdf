@@ -272,6 +272,21 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
             [P::ScrollPaddingInlineStart, P::ScrollPaddingInlineEnd],
         ),
         P::InterestDelay => pair(&value, [P::InterestDelayStart, P::InterestDelayEnd]),
+        // CSS Sizing 4 §5.2: one value applies to both axes.
+        P::ContainIntrinsicSize => {
+            let items = value.items();
+            let height = items.get(1).unwrap_or(&items[0]);
+            vec![
+                (
+                    P::ContainIntrinsicWidth,
+                    longhand(P::ContainIntrinsicWidth, &items[0]),
+                ),
+                (
+                    P::ContainIntrinsicHeight,
+                    longhand(P::ContainIntrinsicHeight, height),
+                ),
+            ]
+        }
         _ => {
             if let Some(longhands) = unordered_references(shorthand, &value)? {
                 longhands

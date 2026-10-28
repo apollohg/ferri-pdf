@@ -1566,7 +1566,7 @@ fn measure_plan<'a>(
     }));
     let overflow_height = crate::layout::measure::overflow_height(&items).max(height);
     let edges = measurer.fragmentainer.edges(style);
-    let (break_before, break_after) = crate::layout::breaks::boundaries(&items, edges);
+    let (break_before, break_after) = crate::layout::breaks::boundaries(style, &items, edges);
     let first_fragment = if !has_forced
         && measurer.fragmentainer.keeps(style)
         && overflow_height <= measurer.page_height

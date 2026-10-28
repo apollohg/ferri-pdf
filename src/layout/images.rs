@@ -5,9 +5,51 @@ use crate::layout::{
     geometry::{HorizontalBox, SizeConstraints},
     margin::MarginStrut,
     measure::{FlowItem, MeasuredBlock, Measurer},
+    ratio::PreferredRatio,
 };
 use crate::style::POINTS_PER_PIXEL;
 use crate::text::IntrinsicWidths;
+
+/// A replaced element's natural size in points and its preferred aspect ratio (CSS Sizing 4
+/// §4.1). Size containment treats the natural size as zero and drops the natural ratio
+/// (CSS Containment 2 §3.1); only an `aspect-ratio` `<ratio>` then relates the axes.
+struct Natural {
+    size: [f32; 2],
+    ratio: Option<PreferredRatio>,
+}
+impl Natural {
+    fn of(block: &BlockBox, available_width: f32, edges: [f32; 2]) -> Self {
+        let image = block.image().unwrap();
+        let style = block.style();
+        let contained = style.containment().size;
+        let mut size = image
+            .pixel_size(available_width / POINTS_PER_PIXEL)
+            .map(|value| value * POINTS_PER_PIXEL);
+        for (axis, contained) in contained.into_iter().enumerate() {
+            if contained {
+                size[axis] = 0.0;
+            }
+        }
+        let natural = (!contained.contains(&true))
+            .then(|| image.natural_size().ratio)
+            .flatten()
+            .filter(|ratio| ratio.is_finite() && *ratio > 0.0);
+        Self {
+            size,
+            ratio: PreferredRatio::of(style, natural, edges),
+        }
+    }
+    fn height(&self, width: f32) -> f32 {
+        self.ratio.map_or(self.size[1], |ratio| ratio.height(width))
+    }
+    fn width(&self, height: f32) -> f32 {
+        self.ratio.map_or(self.size[0], |ratio| ratio.width(height))
+    }
+}
+
+fn edges(block: &BlockBox, containing_width: f32) -> crate::layout::geometry::Edges {
+    crate::layout::geometry::Edges::of(block.style(), containing_width)
+}
 
 /// Content-box width and height constraints, percentages resolved against the containing block.
 pub(super) fn constraints(
@@ -16,41 +58,31 @@ pub(super) fn constraints(
     containing_height: Option<f32>,
 ) -> [SizeConstraints; 2] {
     let style = block.style();
-    let padding = style
-        .padding
-        .each_ref()
-        .map(|p| p.resolve(containing_width));
-    let border = style
-        .decoration
-        .borders
-        .map(crate::graphics::Border::used_width);
-    let mut constraints = [
+    let edges = edges(block, containing_width);
+    let [horizontal, vertical] = crate::layout::ratio::axis_edges(&edges);
+    let [widths, heights] = [
         SizeConstraints::new(
             [&style.width, &style.min_width, &style.max_width],
             Some(containing_width),
             style.box_sizing,
-            padding[1] + padding[3] + border[1] + border[3],
+            horizontal,
         ),
         SizeConstraints::new(
             [&style.height, &style.min_height, &style.max_height],
             containing_height,
             style.box_sizing,
-            padding[0] + padding[2] + border[0] + border[2],
+            vertical,
         ),
     ];
-    let natural = block
-        .image()
-        .unwrap()
-        .pixel_size(containing_width / POINTS_PER_PIXEL)
-        .map(|value| value * POINTS_PER_PIXEL);
-    let width = constraints[1]
+    let natural = Natural::of(block, containing_width, [horizontal, vertical]);
+    let width = heights
         .specified
-        .map_or(natural[0], |height| height * natural[0] / natural[1]);
-    let height = constraints[0]
-        .specified
-        .map_or(natural[1], |width| width * natural[1] / natural[0]);
-    let [widths, heights] = constraints;
-    constraints = [
+        .map_or(natural.size[0], |height| natural.width(height));
+    let height = widths.specified.map_or_else(
+        || natural.height(natural.size[0]),
+        |width| natural.height(width),
+    );
+    [
         widths.with_intrinsic(
             [&style.width, &style.min_width, &style.max_width],
             IntrinsicWidths {
@@ -67,11 +99,13 @@ pub(super) fn constraints(
             },
             containing_height,
         ),
-    ];
-    constraints
+    ]
 }
 
 /// Used content size; an image with only an aspect ratio stretches into `stretch_width`.
+/// With both sizes automatic, the natural width and the height it gives through the ratio
+/// meet the minimum and maximum of each axis in turn, each limit transferring through the
+/// ratio (CSS 2 §10.4, CSS Sizing 4 §4.4); a size the other axis then violates is clamped.
 pub(super) fn size(
     block: &BlockBox,
     containing_width: f32,
@@ -80,11 +114,12 @@ pub(super) fn size(
     used_width: Option<f32>,
     used_height: Option<f32>,
 ) -> [f32; 2] {
-    let intrinsic = block
-        .image()
-        .unwrap()
-        .pixel_size(stretch_width / POINTS_PER_PIXEL)
-        .map(|v| v * POINTS_PER_PIXEL);
+    let edges = edges(block, containing_width);
+    let natural = Natural::of(
+        block,
+        stretch_width,
+        crate::layout::ratio::axis_edges(&edges),
+    );
     let [width, height] = constraints(block, containing_width, containing_height);
     let specified_width = used_width.or(width.specified);
     let specified_height = used_height.or(height.specified);
@@ -94,26 +129,28 @@ pub(super) fn size(
         (Some(w), Some(h)) => [constrain_width(w), constrain_height(h)],
         (Some(w), None) => {
             let w = constrain_width(w);
-            [w, constrain_height(w * intrinsic[1] / intrinsic[0])]
+            [w, constrain_height(natural.height(w))]
         }
         (None, Some(h)) => {
             let h = constrain_height(h);
-            [constrain_width(h * intrinsic[0] / intrinsic[1]), h]
+            [constrain_width(natural.width(h)), h]
         }
         (None, None) => {
-            let minimum = (width.minimum / intrinsic[0]).max(height.minimum / intrinsic[1]);
-            let maximum = (width.maximum.unwrap_or(f32::INFINITY).max(width.minimum)
-                / intrinsic[0])
-                .min(height.maximum.unwrap_or(f32::INFINITY).max(height.minimum) / intrinsic[1]);
-            let scale = if minimum <= maximum {
-                1.0f32.clamp(minimum, maximum)
-            } else {
-                1.0
-            };
-            [
-                width.constrain(intrinsic[0] * scale),
-                height.constrain(intrinsic[1] * scale),
-            ]
+            let mut w = natural.size[0];
+            let mut h = natural.height(w);
+            if natural.ratio.is_some() {
+                let limited = width.constrain(w);
+                if limited != w {
+                    w = limited;
+                    h = natural.height(w);
+                }
+                let limited = height.constrain(h);
+                if limited != h {
+                    h = limited;
+                    w = natural.width(h);
+                }
+            }
+            [width.constrain(w), height.constrain(h)]
         }
     }
 }
@@ -122,7 +159,9 @@ pub(super) fn size(
 /// zero and the maximum stretches into `available`, the containing block width.
 pub(super) fn intrinsic(block: &BlockBox, available: f32) -> IntrinsicWidths {
     let max = size(block, 0.0, available, None, None, None)[0];
-    let min = if block.image().unwrap().natural_size().ratio_only() {
+    let min = if block.image().unwrap().natural_size().ratio_only()
+        && !block.style().containment().size[0]
+    {
         constraints(block, 0.0, None)[0].constrain(0.0)
     } else {
         max
@@ -224,10 +263,11 @@ pub(super) fn measure<'a>(
         has_forced: edges.iter().any(|edge| edge.is_forced()),
         break_before: edges[0],
         break_after: edges[1],
+        // CSS Containment 2 §4: skipped contents include a replaced element's content.
         items: vec![FlowItem::Image {
             paint,
             height,
-            visible: style.visibility.is_visible(),
+            visible: style.visibility.is_visible() && !style.skips_contents(),
         }],
         paint: measurer.box_paint(block, geometry),
         navigation: block.navigation(),

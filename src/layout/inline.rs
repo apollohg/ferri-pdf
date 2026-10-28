@@ -126,7 +126,7 @@ pub(super) fn shrink_to_fit_geometry(
             None,
         )[0]
     } else {
-        shrink_to_fit(measurer, block, containing_width)?
+        shrink_to_fit(measurer, block, containing_width, containing_height)?
     };
     let geometry = inline_horizontal(
         style,
@@ -139,14 +139,26 @@ pub(super) fn shrink_to_fit_geometry(
     Ok(geometry)
 }
 
-/// `width: auto` resolves to min(max(min-content, available), max-content).
+/// `width: auto` resolves to min(max(min-content, available), max-content), or through a
+/// preferred aspect ratio from a definite height (CSS Sizing 4 §4.2).
 fn shrink_to_fit(
     measurer: &Measurer<'_>,
     block: &BlockBox,
     containing_width: f32,
+    containing_height: Option<f32>,
 ) -> Result<f32, LayoutError> {
     let style = block.style();
     let edges = Edges::of(style, containing_width);
+    if let Some(width) = crate::layout::ratio::width_from_height(
+        measurer,
+        block,
+        containing_width,
+        containing_height,
+        &edges,
+    )? {
+        return Ok(width);
+    }
+    let box_edges = edges;
     let provisional = inline_horizontal(style, 0.0, containing_width, false, None, edges);
     let edges = edges.horizontal();
     let available = (containing_width
@@ -154,13 +166,14 @@ fn shrink_to_fit(
         - provisional.margin[1].unwrap_or(0.0)
         - provisional.margin[3].unwrap_or(0.0))
     .max(0.0);
-    let constraints = crate::layout::intrinsic::width_constraints(
+    let mut constraints = crate::layout::intrinsic::width_constraints(
         block,
         measurer,
         Some(containing_width),
         edges,
         Some(available),
     )?;
+    crate::layout::ratio::transfer_to_width(style, &mut constraints, containing_height, &box_edges);
     let width = if let Some(width) = constraints.specified {
         width
     } else {
@@ -172,11 +185,12 @@ fn shrink_to_fit(
 
 /// Baseline below the border-box top; `None` uses the bottom margin edge. `baseline-source`
 /// chooses the first or last baseline set; `auto` is the last line box for inline blocks and
-/// the first baseline for other atomic containers (CSS Inline 3 §4.2.1); replaced elements
-/// and scroll containers have none (CSS Align 3 §9.1).
+/// the first baseline for other atomic containers (CSS Inline 3 §4.2.1); replaced elements,
+/// scroll containers (CSS Align 3 §9.1) and layout containment boxes (CSS Containment 2
+/// §3.2) have none.
 fn baseline(block: &BlockBox, measured: &MeasuredBlock<'_>) -> Option<f32> {
     let style = block.style();
-    if block.image().is_some() || style.is_scroll_container() {
+    if block.image().is_some() || style.is_scroll_container() || style.containment().layout {
         return None;
     }
     match style.baseline.source {

@@ -93,7 +93,12 @@ impl Fragmentainer {
         [style.break_before, style.break_after].map(|value| self.between(value))
     }
     /// Whether `break-inside` avoids breaks into this fragmentainer.
+    /// Whether the box avoids breaks inside; size containment boxes are monolithic (CSS
+    /// Containment 2 §3.1).
     pub(crate) fn keeps(self, style: &Style) -> bool {
+        if style.containment().size[1] {
+            return true;
+        }
         match style.keep {
             BreakInside::Auto => false,
             BreakInside::Avoid => true,
@@ -234,10 +239,16 @@ impl FlowItem<'_> {
 }
 
 /// Break values propagated from the first and last child to the box's own resolved `edges`.
+/// The breaks before and after a box: its own, combined with those its first and last
+/// children propagate, which layout containment stops (CSS Containment 2 §3.2).
 pub(super) fn boundaries(
+    style: &Style,
     items: &[FlowItem<'_>],
     edges: [BreakBetween; 2],
 ) -> (BreakBetween, BreakBetween) {
+    if style.containment().layout {
+        return (edges[0], edges[1]);
+    }
     let before = items
         .iter()
         .find_map(FlowItem::break_info)

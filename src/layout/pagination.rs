@@ -1426,8 +1426,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         if let Some(request) = request {
             self.new_page(request.forced, request.preserve_empty)?;
         }
+        // CSS Containment 2 §3.1: a size containment box is monolithic.
+        let monolithic = usize::from(block.style.containment().size[1]);
         let mut frame = self.start_block(block)?;
-        self.flow(std::mem::take(&mut frame.items), tail)?;
+        self.unbroken += monolithic;
+        let flowed = self.flow(std::mem::take(&mut frame.items), tail);
+        self.unbroken -= monolithic;
+        flowed?;
         while let Some(request) = self.resume_block_end(&mut frame)? {
             self.new_page(request.forced, request.preserve_empty)?;
         }

@@ -1,5 +1,77 @@
 //! Shared used-size constraints and CSS normal-flow axis equations.
-use crate::style::{BoxSizing, Size};
+use crate::style::{
+    BoxSizing, Size, StyleError, box_values::unsupported, component::Component, grammar::Keyword,
+    units::Relative,
+};
+
+/// `aspect-ratio` (CSS Sizing 4 §4.1).
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize)]
+pub(crate) struct AspectRatio {
+    pub auto: bool,
+    /// Width over height; `None` without a `<ratio>` or for a degenerate one, which behaves
+    /// as `auto`.
+    pub ratio: Option<f32>,
+}
+impl Default for AspectRatio {
+    fn default() -> Self {
+        Self {
+            auto: true,
+            ratio: None,
+        }
+    }
+}
+impl AspectRatio {
+    pub(super) fn from_component(
+        value: &Component,
+        relative: &Relative<'_>,
+    ) -> Result<Self, StyleError> {
+        if value.keyword() == Some(Keyword::Auto) {
+            return Ok(Self::default());
+        }
+        let ratio = value
+            .slot(1)
+            .map(|ratio| {
+                let mut numbers = Vec::new();
+                ratio_numbers(ratio, &mut numbers);
+                let [width, height] = match numbers.as_slice() {
+                    [width] => [*width, &Component::Number(1.0)],
+                    [width, height] => [*width, *height],
+                    _ => return Err(unsupported(ratio)),
+                };
+                Ok([
+                    crate::style::values::number(width, relative)?,
+                    crate::style::values::number(height, relative)?,
+                ])
+            })
+            .transpose()?;
+        // CSS Values 4 §7.4: a ratio with a zero or infinite number is degenerate.
+        let ratio = ratio
+            .filter(|numbers| numbers.iter().all(|n| n.is_finite() && *n > 0.0))
+            .map(|[width, height]| width / height);
+        Ok(Self {
+            auto: value.slot(0).is_some(),
+            ratio,
+        })
+    }
+    /// The preferred aspect ratio of a box with natural aspect ratio `natural`, and whether
+    /// it relates the boxes `box-sizing` names rather than the content boxes.
+    pub(crate) fn preferred(self, natural: Option<f32>) -> Option<(f32, bool)> {
+        match (self.auto, self.ratio) {
+            (_, None) => natural.map(|ratio| (ratio, false)),
+            (false, Some(ratio)) => Some((ratio, true)),
+            (true, Some(ratio)) => Some((natural.unwrap_or(ratio), false)),
+        }
+    }
+}
+
+/// The numbers of a `<ratio>`, in order, without its `/` delimiter.
+fn ratio_numbers<'a>(value: &'a Component, output: &mut Vec<&'a Component>) {
+    match value.unwrap() {
+        Component::Group(items) => items.iter().for_each(|item| ratio_numbers(item, output)),
+        Component::Delim(_) => {}
+        number => output.push(number),
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default)]
 pub(crate) struct IntrinsicWidths {
