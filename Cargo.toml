@@ -1,7 +1,7 @@
 [workspace]
 members = ["crates/*", "spec"]
 default-members = [".", "crates/*"]
-exclude = ["vendor/resvg", "vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/usvg", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors", "vendor/krilla-svg"]
+exclude = ["vendor/resvg", "vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/usvg", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors"]
 resolver = "3"
 
 [workspace.package]
@@ -73,7 +73,11 @@ moxcms = "=0.8.1"
 png = "0.18"
 usvg = { package = "ferri-pdf-usvg", path = "vendor/usvg", version = "=0.47.0", default-features = false, features = ["text"] }
 svgtypes = "0.16"
-krilla-svg = { package = "ferri-pdf-krilla-svg", path = "vendor/krilla-svg", version = "=0.8.1" }
+resvg = { package = "ferri-pdf-resvg", path = "vendor/resvg", version = "=0.47.0", default-features = false, features = ["text", "raster-images"] }
+fontdb = { version = "0.23", default-features = false, features = ["std"] }
+skrifa = "0.42"
+smallvec = { version = "1.15.1", features = ["union", "const_new", "write"] }
+tiny-skia = "0.12"
 image = { version = "=0.25.10", default-features = false, features = ["png", "jpeg", "gif", "webp"] }
 ferri-pdf-images = { path = "crates/images", version = "0.1.0" }
 cssparser = "0.37"
@@ -138,9 +142,13 @@ ferri-pdf-graphics.workspace = true
 thiserror.workspace = true
 serde_json.workspace = true
 same-file.workspace = true
-krilla-svg.workspace = true
 usvg.workspace = true
 krilla.workspace = true
+resvg.workspace = true
+fontdb.workspace = true
+skrifa.workspace = true
+smallvec.workspace = true
+tiny-skia.workspace = true
 
 [dev-dependencies]
 roxmltree.workspace = true

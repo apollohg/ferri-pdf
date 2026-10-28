@@ -2,8 +2,8 @@ use krilla::num::NormalizedF32;
 use krilla::surface::Surface;
 use usvg::{BlendMode, Node, Opacity};
 
-use crate::util::{UsvgTransformExt, convert_blend_mode};
-use crate::{ProcessContext, clip_path, filter, image, mask, path, text};
+use crate::svg::krilla_svg::util::{UsvgTransformExt, convert_blend_mode};
+use crate::svg::krilla_svg::{ProcessContext, clip_path, filter, image, mask, path, text};
 
 pub(crate) fn render(
     group: &usvg::Group,

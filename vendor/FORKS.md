@@ -20,11 +20,21 @@ The root package remains an implicit member.
 | heic-decoder | ferri-pdf-heic-decoder | 0.1.1 | MIT OR Apache-2.0 |
 | icu_casemap | ferri-pdf-icu-casemap | 2.3.0 | Unicode-3.0 |
 | krilla | ferri-pdf-krilla | 0.8.2 | MIT OR Apache-2.0 |
-| krilla-svg | ferri-pdf-krilla-svg | 0.8.1 | MIT OR Apache-2.0 |
 | resvg | ferri-pdf-resvg | 0.47.0 | Apache-2.0 OR MIT |
 | selectors | ferri-pdf-selectors | 0.38.0 | MPL-2.0 |
 | usvg | ferri-pdf-usvg | 0.47.0 | Apache-2.0 OR MIT |
 | zenavif-parse | ferri-pdf-zenavif-parse | 0.6.2 | MPL-2.0 |
+
+## Inlined modules
+
+These upstream libraries are compiled as private modules of `ferri-pdf` rather than
+as separate packages, because they share its DOM and font types. Each module directory
+keeps the upstream licences and provenance files. Only the code `ferri-pdf` builds is
+retained: binaries, examples, benches, unused features and unreachable API are removed.
+
+| Module | Upstream crate | Base version | Licence |
+|---|---|---|---|
+| src/svg/krilla_svg | krilla-svg | 0.8.1 | MIT OR Apache-2.0 |
 
 Resvg is copied from its published crate archive solely to route shared SVG types
 through the maintained usvg fork. Its implementation files are unchanged. Original

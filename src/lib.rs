@@ -16,6 +16,7 @@
 extern crate self as ferri_pdf;
 
 mod multipart;
+mod svg;
 #[cfg(test)]
 mod tests;
 mod writer;

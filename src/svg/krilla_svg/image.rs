@@ -4,8 +4,8 @@ use krilla::paint::FillRule;
 use krilla::surface::Surface;
 use usvg::ImageKind;
 
-use crate::util::RectExt;
-use crate::{ProcessContext, group};
+use crate::svg::krilla_svg::util::RectExt;
+use crate::svg::krilla_svg::{ProcessContext, group};
 
 /// Render an image into a surface.
 ///

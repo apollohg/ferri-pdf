@@ -4,8 +4,8 @@ use krilla::paint::FillRule;
 use krilla::surface::Surface;
 use usvg::tiny_skia_path::{PathSegment, Transform};
 
-use crate::util::{UsvgTransformExt, convert_fill_rule};
-use crate::{ProcessContext, group};
+use crate::svg::krilla_svg::util::{UsvgTransformExt, convert_fill_rule};
+use crate::svg::krilla_svg::{ProcessContext, group};
 
 /// Render a clip path into a surface.
 pub(crate) fn render(

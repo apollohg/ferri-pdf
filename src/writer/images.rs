@@ -1,3 +1,4 @@
+use crate::svg::krilla_svg::SurfaceExt;
 use crate::writer::PdfError;
 use ferri_pdf_graphics::ImagePaint;
 use ferri_pdf_images::{Image as Asset, Orientation, RasterFormat};
@@ -6,7 +7,6 @@ use krilla::{
     image::Image,
     surface::Surface,
 };
-use krilla_svg::SurfaceExt;
 use std::{
     collections::{HashMap, HashSet},
     sync::Arc,
@@ -145,7 +145,7 @@ impl ImageWriter {
                 surface.draw_svg(
                     &self.vectors[&vector_key],
                     unit_size,
-                    krilla_svg::SvgSettings {
+                    crate::svg::krilla_svg::SvgSettings {
                         jpeg_images: Some(svg.jpeg_images()),
                         image_errors: Some(&errors),
                         ..Default::default()

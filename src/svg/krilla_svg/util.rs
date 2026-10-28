@@ -11,7 +11,7 @@ use krilla::stream::StreamBuilder;
 use tiny_skia::PathSegment;
 use usvg::tiny_skia_path::Transform;
 
-use crate::{ProcessContext, group};
+use crate::svg::krilla_svg::{ProcessContext, group};
 
 /// Convert a usvg `SpreadMethod` into a krilla `SpreadMethod`.
 pub(crate) fn convert_spread_method(spread_method: &usvg::SpreadMethod) -> SpreadMethod {

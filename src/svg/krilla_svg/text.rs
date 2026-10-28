@@ -13,8 +13,8 @@ use smallvec::SmallVec;
 use usvg::tiny_skia_path::Transform;
 use usvg::{FontOpticalSizing, FontVariation, PaintOrder};
 
-use crate::util::{UsvgTransformExt, convert_fill, convert_stroke};
-use crate::{ProcessContext, path};
+use crate::svg::krilla_svg::util::{UsvgTransformExt, convert_fill, convert_stroke};
+use crate::svg::krilla_svg::{ProcessContext, path};
 
 /// Render a text into a surface.
 pub(crate) fn render(
@@ -283,7 +283,7 @@ fn render_cluster_batch(
 
 /// Manages the krilla fonts used by an SVG.
 pub(crate) struct Fonts<'a> {
-    db: &'a mut Database,
+    db: &'a Database,
     fonts: HashMap<FontInstance, Option<Font>>,
     supported_axes: HashMap<fontdb::ID, SmallVec<[[u8; 4]; 2]>>,
 }
@@ -293,7 +293,7 @@ type FontInstance = (fontdb::ID, FontVariations);
 type FontVariations = SmallVec<[FontVariation; 2]>;
 
 impl<'a> Fonts<'a> {
-    pub(crate) fn new(db: &'a mut Database) -> Self {
+    pub(crate) fn new(db: &'a Database) -> Self {
         Self {
             db,
             fonts: HashMap::new(),
@@ -307,18 +307,16 @@ impl<'a> Fonts<'a> {
         match self.fonts.entry((id, variations)) {
             Entry::Occupied(entry) => entry.get().clone(),
             Entry::Vacant(entry) => {
-                let font = if let Some((font_data, index)) =
-                    unsafe { self.db.make_shared_face_data(id) }
-                {
+                // Every face is registered from memory, so its shared bytes are borrowed directly.
+                let font = self.db.face(id).and_then(|face| {
+                    let fontdb::Source::Binary(font_data) = &face.source;
                     let variations = &entry.key().1;
                     let coords: SmallVec<[_; 2]> = variations
                         .iter()
                         .map(|var| (krilla::text::Tag::new(&var.tag), var.value))
                         .collect();
-                    Font::new_variable(font_data.into(), index, &coords)
-                } else {
-                    None
-                };
+                    Font::new_variable(font_data.clone().into(), face.index, &coords)
+                });
 
                 entry.insert(font.clone());
                 font

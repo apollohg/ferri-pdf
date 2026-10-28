@@ -1,8 +1,8 @@
 use krilla::surface::Surface;
 use usvg::{Fill, PaintOrder, Stroke};
 
-use crate::ProcessContext;
-use crate::util::{PathExt, convert_fill, convert_stroke};
+use crate::svg::krilla_svg::ProcessContext;
+use crate::svg::krilla_svg::util::{PathExt, convert_fill, convert_stroke};
 
 /// Render a path into a surface.
 pub(crate) fn render(

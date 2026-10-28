@@ -20,3 +20,8 @@ Glyph painting keeps positioned origins in the enclosing SVG coordinate system.
 The equivalent affine transform and inverse paint transform preserve visible
 geometry while allowing enclosing replacement-text spans to retain their
 selection coordinates across separate glyph operations.
+
+The module is compiled inside `ferri-pdf`. Font bytes come from the in-memory face
+source that `ferri-pdf` registers, so the unsafe memory-mapping accessor and the
+copy-on-write font database clone are not used. The unused SVG glyph renderer is
+removed.
