@@ -7,7 +7,7 @@ It covers the CSS print stack: paged media, page-margin boxes and named pages, f
 ## Command line
 
 ```sh
-cargo build --release -p ferri-pdf-cli
+cargo build --release
 target/release/ferri-pdf input.html output.pdf
 ```
 
@@ -57,4 +57,4 @@ The PDF checks in `tests/*.py` and the standards oracle in `tests/oracle` also n
 
 ## Licence
 
-MIT. Forked dependencies in `vendor/` keep their original licences; see [vendor/FORKS.md](vendor/FORKS.md).
+MIT. Forked dependencies in `vendor/` and the SVG libraries inlined under `src/svg/` keep their original licences, as do the bundled fonts in `assets/fonts/` and the specification data in `spec/`; see [vendor/FORKS.md](vendor/FORKS.md).

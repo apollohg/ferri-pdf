@@ -12,7 +12,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 OUTPUT = HERE / 'output'
 BINARY = ROOT / 'target/release/ferri-pdf'
-SOURCE_PATHS = [ROOT/'Cargo.toml',ROOT/'Cargo.lock',ROOT/'src',ROOT/'crates',ROOT/'vendor',HERE]
+SOURCE_PATHS = [ROOT/'Cargo.toml',ROOT/'Cargo.lock',ROOT/'build.rs',ROOT/'build',ROOT/'src',ROOT/'spec',ROOT/'assets',ROOT/'vendor',HERE]
 
 
 def run_provenance(args):
