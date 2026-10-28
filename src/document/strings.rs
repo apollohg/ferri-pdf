@@ -4,7 +4,7 @@ use crate::document::{
     counters::{CounterSnapshot, Counters},
 };
 use crate::dom::{DocumentTree, Element, ElementId};
-use crate::style::{GeneratedContent, PseudoElement, StringAssignment, StyleError};
+use crate::style::{GeneratedContent, GeneratedPseudoElement, StringAssignment, StyleError};
 use std::{collections::HashMap, sync::Arc};
 
 /// Assignments at one element's semantic position, before their page is known.
@@ -49,10 +49,10 @@ impl StringAssignments {
     pub(crate) fn generated_event(
         &self,
         element: Element<'_>,
-        pseudo: PseudoElement,
+        pseudo: GeneratedPseudoElement,
     ) -> crate::document::SemanticEvent {
         let mut event = self.tree.event(element, None, false);
-        event.context.pseudo = Some(pseudo);
+        event.context.pseudo = Some(pseudo.into());
         event
     }
 
@@ -90,7 +90,7 @@ impl StringAssignments {
     pub(crate) fn generated(
         &mut self,
         element: Element<'_>,
-        pseudo: PseudoElement,
+        pseudo: GeneratedPseudoElement,
         text: &str,
         style: &crate::style::Style,
     ) {
@@ -99,10 +99,10 @@ impl StringAssignments {
         };
         let owner = &mut self.owners[*index];
         match pseudo {
-            PseudoElement::Before => {
+            GeneratedPseudoElement::Before => {
                 owner.before = crate::document::content::GeneratedText::capture(text, style);
             }
-            PseudoElement::After => {
+            GeneratedPseudoElement::After => {
                 owner.after = crate::document::content::GeneratedText::capture(text, style);
             }
         }

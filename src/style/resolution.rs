@@ -1418,13 +1418,28 @@ impl crate::style::PageSelection for Geometry<'_> {
         {
             return Ok(false);
         }
-        Ok(
-            !self.selected_value(target, Property::ListStyleType, |style| {
-                style.list_style_type.is_none()
-            })? || self.selected_value(target, Property::ListStyleImage, |style| {
-                !matches!(style.list_style_image, crate::paint::BackgroundImage::None)
-            })?,
-        )
+        let marker = crate::style::PageStyleTarget {
+            pseudo: Some(crate::style::PseudoElement::Marker),
+            ..target
+        };
+        match self
+            .selected_value(marker, Property::Content, |style| {
+                style.computed_content.clone()
+            })?
+            .as_ref()
+        {
+            crate::style::generated::ComputedContent::None => Ok(false),
+            crate::style::generated::ComputedContent::Items { .. } => Ok(true),
+            crate::style::generated::ComputedContent::Contents => {
+                Ok(
+                    !self.selected_value(target, Property::ListStyleType, |style| {
+                        style.list_style_type.is_none()
+                    })? || self.selected_value(target, Property::ListStyleImage, |style| {
+                        !matches!(style.list_style_image, crate::paint::BackgroundImage::None)
+                    })?,
+                )
+            }
+        }
     }
 }
 

@@ -31,6 +31,7 @@ mod page_boundaries;
 mod page_provider;
 mod painting;
 mod pdf_validation;
+mod pseudo_elements;
 mod rendering;
 mod running_strings;
 mod svg_fonts;

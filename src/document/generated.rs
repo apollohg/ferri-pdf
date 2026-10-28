@@ -6,8 +6,8 @@ use crate::document::{
 };
 use crate::dom::{DocumentTree, Element, ElementId};
 use crate::style::{
-    GeneratedContent, NamedStringRequest, PageStyleTarget, PseudoElement, Style, StyleError,
-    TargetRequest, TargetValue,
+    GeneratedContent, GeneratedPseudoElement, NamedStringRequest, PageStyleTarget, Style,
+    StyleError, TargetRequest, TargetValue,
 };
 use std::{
     cell::RefCell,
@@ -107,7 +107,7 @@ impl GeneratedPass {
     pub(crate) fn generated(
         &mut self,
         element: Element<'_>,
-        pseudo: PseudoElement,
+        pseudo: GeneratedPseudoElement,
         text: &str,
         style: &Style,
     ) {
@@ -116,8 +116,8 @@ impl GeneratedPass {
         };
         let generated = GeneratedText::capture(text, style);
         match pseudo {
-            PseudoElement::Before => target.before = generated,
-            PseudoElement::After => target.after = generated,
+            GeneratedPseudoElement::Before => target.before = generated,
+            GeneratedPseudoElement::After => target.after = generated,
         }
     }
     pub(crate) fn finish(self) -> GeneratedReferences {

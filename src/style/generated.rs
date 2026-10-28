@@ -63,6 +63,8 @@ pub(super) enum ContentContext {
     #[default]
     Element,
     BeforeAfter,
+    /// `::marker`, whose `normal` content is the list item's marker image or string.
+    Marker,
     Margin,
 }
 #[derive(Clone, Debug, PartialEq)]

@@ -22,6 +22,9 @@ menu dir, menu dl, menu menu, menu ol, menu ul,
 ol dir, ol dl, ol menu, ol ol, ol ul,
 ul dir, ul dl, ul menu, ul ol, ul ul { margin-block: 0; }
 li { display: list-item; text-align: match-parent; }
+/* CSS Lists 3 §3.1.1 */
+::marker { unicode-bidi: isolate; font-variant-numeric: tabular-nums; white-space: pre;
+    text-transform: none; }
 ol { list-style-type: decimal; }
 ol, ul, menu { counter-reset: list-item; }
 ol, ul { break-before: avoid; }

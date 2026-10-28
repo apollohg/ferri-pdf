@@ -3,7 +3,7 @@
 use crate::document::{DocumentError, MAX_INLINE_TEXT_BYTES, content::element_text};
 use crate::dom::{DocumentTree, Element, ElementId};
 use crate::resources::{ResourceBase, Url};
-use crate::style::{GeneratedContent, PseudoElement, QuoteDepth, Quotes, Style};
+use crate::style::{GeneratedContent, GeneratedPseudoElement, QuoteDepth, Quotes, Style};
 
 use std::collections::{BTreeMap, HashMap};
 
@@ -346,16 +346,16 @@ impl NavigationBuilder {
     pub(crate) fn generated(
         &mut self,
         element: Element<'_>,
-        pseudo: PseudoElement,
+        pseudo: GeneratedPseudoElement,
         text: &str,
         style: &Style,
     ) {
         if let Some(label) = self.labels.get_mut(&element.id()) {
             match pseudo {
-                PseudoElement::Before => {
+                GeneratedPseudoElement::Before => {
                     label.before = crate::document::content::GeneratedText::capture(text, style);
                 }
-                PseudoElement::After => {
+                GeneratedPseudoElement::After => {
                     label.after = crate::document::content::GeneratedText::capture(text, style);
                 }
             }

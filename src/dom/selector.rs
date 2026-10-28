@@ -295,16 +295,13 @@ impl Selector {
         }
     }
 
-    #[must_use]
-    pub(crate) fn with_pseudo_element(&self, pseudo: GeneratedPseudoElement) -> Self {
-        let source = match pseudo {
-            GeneratedPseudoElement::Before => "&::before",
-            GeneratedPseudoElement::After => "&::after",
-        };
-        let selector =
-            Self::parse_unresolved(source, &NamespaceMap::new(), true, ParseRelative::No, true)
-                .expect("registered generated pseudo-element template");
-        selector.resolve_parent(self)
+    /// `pseudo` of the elements this selector matches, as a nested rule's `&` represents it;
+    /// `None` for the sub-pseudo-elements, which no single compound selector can follow.
+    pub(crate) fn with_pseudo_element(&self, pseudo: PseudoElement) -> Option<Self> {
+        let source = format!("&{}", pseudo.source());
+        Self::parse_unresolved(&source, &NamespaceMap::new(), true, ParseRelative::No, true)
+            .ok()
+            .map(|selector| selector.resolve_parent(self))
     }
 
     pub(crate) fn single_specificity(&self) -> Option<u32> {
@@ -463,8 +460,8 @@ impl<'i> parser::Parser<'i> for StaticParser<'_> {
         &self,
         location: SourceLocation,
         name: CowRcStr<'i>,
-    ) -> Result<GeneratedPseudoElement, SelectorError<'i>> {
-        GeneratedPseudoElement::parse(&name).ok_or_else(|| {
+    ) -> Result<PseudoElement, SelectorError<'i>> {
+        PseudoElement::parse(&name, true).ok_or_else(|| {
             location.new_custom_error(SelectorParseErrorKind::UnsupportedPseudoClassOrElement(
                 name,
             ))
@@ -587,7 +584,7 @@ impl parser::SelectorImpl for StaticSelector {
     type BorrowedNamespaceUrl = Namespace;
     type BorrowedLocalName = CssLocalName;
     type NonTSPseudoClass = StaticState;
-    type PseudoElement = GeneratedPseudoElement;
+    type PseudoElement = PseudoElement;
     type ExtraMatchingData<'a> = ();
 }
 
@@ -744,23 +741,89 @@ impl ToCss for StaticState {
     }
 }
 
+/// The `::before` and `::after` pseudo-elements, which generate content boxes.
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub(crate) enum GeneratedPseudoElement {
     Before,
     After,
 }
-impl GeneratedPseudoElement {
-    pub(crate) fn parse(name: &str) -> Option<Self> {
-        if name.eq_ignore_ascii_case("before") {
-            Some(Self::Before)
-        } else if name.eq_ignore_ascii_case("after") {
-            Some(Self::After)
-        } else {
-            None
+
+/// Tree-abiding and typographic pseudo-elements (CSS Pseudo-Elements 4 §§2, 4).
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+pub(crate) enum PseudoElement {
+    Before,
+    After,
+    Marker,
+    FirstLine,
+    FirstLetter,
+    /// `::first-letter::prefix`, the punctuation preceding the first letter.
+    FirstLetterPrefix,
+    /// `::first-letter::suffix`, the punctuation following the first letter.
+    FirstLetterSuffix,
+}
+impl From<GeneratedPseudoElement> for PseudoElement {
+    fn from(pseudo: GeneratedPseudoElement) -> Self {
+        match pseudo {
+            GeneratedPseudoElement::Before => Self::Before,
+            GeneratedPseudoElement::After => Self::After,
         }
     }
 }
-impl parser::PseudoElement for GeneratedPseudoElement {
+/// The CSS 2 pseudo-elements, which also take the single-colon syntax (Selectors 4 §16).
+const LEGACY_PSEUDO_ELEMENTS: [&str; 4] = ["before", "after", "first-line", "first-letter"];
+impl PseudoElement {
+    /// The pseudo-element `name` after `::`, or after `:` for the CSS 2 pseudo-elements.
+    pub(crate) fn parse(name: &str, double_colon: bool) -> Option<Self> {
+        if !double_colon
+            && !LEGACY_PSEUDO_ELEMENTS
+                .iter()
+                .any(|legacy| name.eq_ignore_ascii_case(legacy))
+        {
+            return None;
+        }
+        [
+            ("before", Self::Before),
+            ("after", Self::After),
+            ("marker", Self::Marker),
+            ("first-line", Self::FirstLine),
+            ("first-letter", Self::FirstLetter),
+        ]
+        .into_iter()
+        .find_map(|(known, pseudo)| name.eq_ignore_ascii_case(known).then_some(pseudo))
+    }
+    /// The sub-pseudo-element `::name` of this one, which only `::first-letter` has (CSS
+    /// Pseudo-Elements 4 §2.2).
+    pub(crate) fn sub(self, name: &str) -> Option<Self> {
+        match self {
+            Self::FirstLetter if name.eq_ignore_ascii_case("prefix") => {
+                Some(Self::FirstLetterPrefix)
+            }
+            Self::FirstLetter if name.eq_ignore_ascii_case("suffix") => {
+                Some(Self::FirstLetterSuffix)
+            }
+            _ => None,
+        }
+    }
+    /// The pseudo-element selectors the compound holds, each adding to its specificity.
+    pub(crate) fn compounds(self) -> u32 {
+        match self {
+            Self::FirstLetterPrefix | Self::FirstLetterSuffix => 2,
+            _ => 1,
+        }
+    }
+    fn source(self) -> &'static str {
+        match self {
+            Self::Before => "::before",
+            Self::After => "::after",
+            Self::Marker => "::marker",
+            Self::FirstLine => "::first-line",
+            Self::FirstLetter => "::first-letter",
+            Self::FirstLetterPrefix => "::first-letter::prefix",
+            Self::FirstLetterSuffix => "::first-letter::suffix",
+        }
+    }
+}
+impl parser::PseudoElement for PseudoElement {
     type Impl = StaticSelector;
     fn valid_after_slotted(&self) -> bool {
         true
@@ -769,12 +832,9 @@ impl parser::PseudoElement for GeneratedPseudoElement {
         true
     }
 }
-impl ToCss for GeneratedPseudoElement {
+impl ToCss for PseudoElement {
     fn to_css<W: fmt::Write>(&self, dest: &mut W) -> fmt::Result {
-        dest.write_str(match self {
-            Self::Before => "::before",
-            Self::After => "::after",
-        })
+        dest.write_str(self.source())
     }
 }
 
@@ -960,7 +1020,7 @@ impl SelectorElement for MatchingElement<'_> {
     }
     fn match_pseudo_element(
         &self,
-        _: &GeneratedPseudoElement,
+        _: &PseudoElement,
         _: &mut MatchingContext<'_, StaticSelector>,
     ) -> bool {
         false

@@ -1,7 +1,7 @@
 mod transform;
 mod transform_maps;
 use crate::document::DocumentError;
-use crate::style::{Clear, Style, TextAlign, WhiteSpace, WhiteSpaceCollapse};
+use crate::style::{Clear, Style, TextAlign, WhiteSpaceCollapse};
 use std::ops::Range;
 use std::sync::Arc;
 
@@ -54,7 +54,7 @@ pub(crate) struct InlineLink {
 }
 pub(crate) struct Paragraph {
     expanded_tabs: Vec<Range<usize>>,
-    pub(crate) marker_image: Option<crate::graphics::BackgroundImage>,
+    marker_image: Option<crate::graphics::BackgroundImage>,
     pub(crate) first_formatted_line: bool,
     /// Holds the last line box of its block container.
     pub(crate) last_formatted_line: bool,
@@ -89,12 +89,40 @@ impl Paragraph {
         Ok(collector.finish(style)?.ok())
     }
 
-    pub(crate) fn marker(text: String, style: &Style) -> Result<Self, DocumentError> {
-        let mut style = style.clone();
-        style.white_space = WhiteSpace::PRE;
-        style.align = TextAlign::Start;
-        style.align_last = None;
-        style.text_indent = Default::default();
+    /// The marker box holding the marker string `text` (CSS Lists 3 §3.2), after its white
+    /// space is processed; `None` where none remains.
+    pub(crate) fn marker(text: &str, style: &Style) -> Result<Option<Self>, DocumentError> {
+        Self::marker_with(style, |collector, style| collector.append(text, style))
+    }
+    /// The marker box holding the `content` of its `::marker`.
+    pub(crate) fn generated_marker(
+        output: &crate::style::GeneratedOutput,
+        style: &Style,
+    ) -> Result<Option<Self>, DocumentError> {
+        Self::marker_with(style, |collector, style| {
+            collector.append_generated(output, style)
+        })
+    }
+    fn marker_with(
+        style: &Style,
+        fill: impl FnOnce(&mut InlineCollector, &Style) -> Result<(), DocumentError>,
+    ) -> Result<Option<Self>, DocumentError> {
+        let style = Self::marker_style(style);
+        let mut collector = InlineCollector::default();
+        fill(&mut collector, &style)?;
+        Ok(collector.finish(&style)?.ok().map(|mut paragraph| {
+            paragraph.first_formatted_line = false;
+            paragraph.last_formatted_line = false;
+            paragraph
+        }))
+    }
+    /// An image marker: the image followed by a space, which never starts its line.
+    pub(crate) fn image_marker(
+        image: crate::graphics::BackgroundImage,
+        style: &Style,
+    ) -> Result<Self, DocumentError> {
+        let style = Self::marker_style(style);
+        let text = String::from(' ');
         let span = TextSpan {
             range: 0..text.len(),
             style: style.clone(),
@@ -105,7 +133,7 @@ impl Paragraph {
         };
         let mut paragraph = Self {
             expanded_tabs: Vec::new(),
-            marker_image: None,
+            marker_image: Some(image),
             first_formatted_line: false,
             last_formatted_line: false,
             text_box_trim: [false; 2],
@@ -122,6 +150,14 @@ impl Paragraph {
         };
         transform::apply(&mut paragraph)?;
         Ok(paragraph)
+    }
+    /// The marker box is a block container whose lone line starts at its start edge.
+    fn marker_style(style: &Style) -> Style {
+        let mut style = style.clone();
+        style.align = TextAlign::Start;
+        style.align_last = None;
+        style.text_indent = Default::default();
+        style
     }
     pub(crate) fn marker_image(&self) -> Option<&crate::graphics::BackgroundImage> {
         self.marker_image.as_ref()
@@ -265,8 +301,28 @@ pub(crate) struct InlineCollector {
     links: Vec<InlineLink>,
     events: Vec<crate::document::InlineEvent>,
     open_links: Vec<Option<usize>>,
+    /// Where an inside marker box ends, which content selecting a first letter ignores
+    /// (CSS Pseudo-Elements 4 §2.2.2).
+    marker_end: usize,
 }
 impl InlineCollector {
+    /// Opens the inline marker box of a list item (CSS Lists 3 §3.5).
+    pub(crate) fn open_marker(
+        &mut self,
+        style: &Style,
+        navigation: crate::document::BoxNavigation,
+    ) {
+        self.open_box(
+            style,
+            crate::graphics::BoxDecoration::default(),
+            navigation,
+            false,
+        );
+    }
+    pub(crate) fn close_marker(&mut self) {
+        self.close_box();
+        self.marker_end = self.text.len();
+    }
     pub(crate) fn semantic_event(&mut self, event: crate::document::SemanticEvent) {
         let index = self.events.len();
         self.events.push(crate::document::InlineEvent {
@@ -327,8 +383,11 @@ impl InlineCollector {
                 self.drop_pending_space();
                 self.push('\n', index, source, 1, inline_box)?;
             } else if collapses_character(ch, style.white_space.collapse) {
+                // Collapsible white space after an inside marker is discarded, as its `pre`
+                // white space intends (CSS Lists 3 §3.1.1, issues 4448 and 4891).
                 if self.pending_space.is_none()
-                    && (leader || (!self.text.is_empty() && !self.text.ends_with('\n')))
+                    && (leader
+                        || (self.text.len() != self.marker_end && !self.text.ends_with('\n')))
                 {
                     self.pending_space = Some(PendingSpace {
                         style: index,

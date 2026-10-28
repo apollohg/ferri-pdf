@@ -262,6 +262,11 @@ pub(super) fn pseudo_declarations(
     pseudo: crate::style::PseudoElement,
 ) -> Result<Vec<PropertyDeclaration>, StyleError> {
     let mut output = Vec::new();
+    let parenthesis = match pseudo {
+        crate::style::PseudoElement::Before => "'('",
+        crate::style::PseudoElement::After => "')'",
+        _ => return Ok(output),
+    };
     if element.namespace() == HTML_NAMESPACE
         && element.name() == "rt"
         && let Some(ruby) = element.parent(TreeRelation::Formatting)
@@ -275,10 +280,7 @@ pub(super) fn pseudo_declarations(
             &mut output,
             Origin::UserAgent,
             Property::Content,
-            match pseudo {
-                crate::style::PseudoElement::Before => "'('",
-                crate::style::PseudoElement::After => "')'",
-            },
+            parenthesis,
         )?;
     }
     Ok(output)

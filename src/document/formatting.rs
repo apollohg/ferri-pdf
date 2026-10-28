@@ -2,7 +2,7 @@ use crate::document::navigation::{BoxNavigation, NavigationBuilder};
 use crate::document::{DocumentError, Paragraph, inline::InlineCollector};
 use crate::dom::{ChildNodes, DocumentTree, Element, ElementId, TreeRelation};
 use crate::graphics::BoxDecoration;
-use crate::style::{Display, PseudoElement, Style, StyleError, Stylesheet};
+use crate::style::{Display, GeneratedPseudoElement, Style, StyleError, Stylesheet};
 
 pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
 const DEFAULT_DENSITY: f32 = 1.0;
@@ -504,11 +504,14 @@ impl BlockBuilder<'_, '_, '_> {
         &mut self,
         element: Element<'_>,
         parent: &Style,
-        pseudo: PseudoElement,
+        pseudo: GeneratedPseudoElement,
     ) -> Result<(), DocumentError> {
-        let Some((mut style, content)) =
-            self.sheet
-                .pseudo_with_resolver(element, parent, pseudo, self.resources.resolver)?
+        let Some((mut style, content)) = self.sheet.pseudo_with_resolver(
+            element,
+            parent,
+            pseudo.into(),
+            self.resources.resolver,
+        )?
         else {
             return Ok(());
         };
@@ -548,7 +551,7 @@ impl BlockBuilder<'_, '_, '_> {
         self.traversal.counters.enter(
             crate::style::PageStyleTarget {
                 element: element.id(),
-                pseudo: Some(pseudo),
+                pseudo: Some(pseudo.into()),
             },
             &style.counters,
             &style.display,
@@ -556,7 +559,7 @@ impl BlockBuilder<'_, '_, '_> {
         )?;
         let context = crate::style::PageStyleTarget {
             element: element.id(),
-            pseudo: Some(pseudo),
+            pseudo: Some(pseudo.into()),
         };
         let event = content
             .named_string_requests()
@@ -709,26 +712,68 @@ pub(super) fn is_replaced(element: Element<'_>) -> bool {
     }
 }
 
-/// An inside marker opens the list item's inline content (CSS Lists 3 §3.5): an image marker
-/// is an inline replaced box followed by a space.
+/// An inside marker is an inline box opening the list item's inline content (CSS Lists 3
+/// §3.5): an image marker holds an inline replaced box followed by a space.
 fn place_inside_marker(
     inline: &mut InlineCollector,
     marker: &Paragraph,
-    style: &Style,
+    navigation: BoxNavigation,
     page_scope: Option<&std::sync::Arc<str>>,
 ) -> Result<(), DocumentError> {
-    let Some(image) = marker.marker_image() else {
-        return inline.append(marker.text(), style);
+    let style = marker.style();
+    inline.open_marker(style, navigation);
+    if let Some(image) = marker.marker_image() {
+        let [width, height] = marker.marker_image_size().expect("image marker has size");
+        let mut box_style = style.anonymous(Display::InlineBlock);
+        box_style.width = crate::style::Size::Value(crate::style::LengthPercentage::Length(width));
+        box_style.height =
+            crate::style::Size::Value(crate::style::LengthPercentage::Length(height));
+        let mut decoration = BoxDecoration::default();
+        std::sync::Arc::make_mut(&mut decoration.backgrounds).images = vec![image.clone()];
+        let atomic =
+            BlockBox::with_decoration(box_style, Vec::new(), decoration, page_scope.cloned());
+        inline.atomic(atomic, style)?;
+    }
+    inline.append(marker.text(), style)?;
+    inline.close_marker();
+    Ok(())
+}
+
+/// The marker box of list item `element` (CSS Lists 3 §3), filled and styled by its
+/// `::marker`.
+fn list_marker(
+    sheet: &Stylesheet,
+    element: Element<'_>,
+    style: &Style,
+    ordinal: i128,
+    traversal: &mut Traversal<'_>,
+    resources: &mut ImageResources<'_>,
+) -> Result<Option<Paragraph>, DocumentError> {
+    if !style.display.is_list_item() {
+        return Ok(None);
+    }
+    let Some((marker, content)) = sheet.marker_with_resolver(element, style, resources.resolver)?
+    else {
+        return Ok(None);
     };
-    let [width, height] = marker.marker_image_size().expect("image marker has size");
-    let mut box_style = style.anonymous(Display::InlineBlock);
-    box_style.width = crate::style::Size::Value(crate::style::LengthPercentage::Length(width));
-    box_style.height = crate::style::Size::Value(crate::style::LengthPercentage::Length(height));
-    let mut decoration = BoxDecoration::default();
-    std::sync::Arc::make_mut(&mut decoration.backgrounds).images = vec![image.clone()];
-    let atomic = BlockBox::with_decoration(box_style, Vec::new(), decoration, page_scope.cloned());
-    inline.atomic(atomic, marker.style())?;
-    inline.append(marker.text(), marker.style())
+    let used = crate::document::lists::used_style(&marker);
+    let Some(content) = content else {
+        return crate::document::lists::marker(style, &used, ordinal, resources);
+    };
+    let bound = traversal.generated.bind(
+        &content,
+        crate::style::PageStyleTarget {
+            element: element.id(),
+            pseudo: Some(crate::style::PseudoElement::Marker),
+        },
+    )?;
+    let output = bound.element_output_with_counters(
+        crate::document::MAX_INLINE_TEXT_BYTES,
+        &mut |request| traversal.counters.text(request),
+        &marker.quotes,
+        &mut traversal.quotes,
+    )?;
+    Paragraph::generated_marker(&output, &used)
 }
 
 pub(super) fn normalize_child_display(display: &mut Display, replaced: bool, parent: &Display) {
@@ -960,10 +1005,18 @@ fn block<'a>(
                         ),
                         _ => None,
                     };
-                block.marker = (frame.style.display.is_list_item() && !skips)
-                    .then(|| crate::document::lists::marker(&frame.style, frame.ordinal, resources))
-                    .transpose()?
-                    .flatten();
+                block.marker = if skips {
+                    None
+                } else {
+                    list_marker(
+                        sheet,
+                        element,
+                        &frame.style,
+                        frame.ordinal,
+                        traversal,
+                        resources,
+                    )?
+                };
                 let assignment = traversal.strings.record(
                     element,
                     &frame.style.string_set,
@@ -990,7 +1043,7 @@ fn block<'a>(
                     place_inside_marker(
                         &mut block.inline,
                         &marker,
-                        &frame.style,
+                        traversal.navigation.descendant(),
                         frame.page_scope.as_ref(),
                     )?;
                 }
@@ -1007,13 +1060,14 @@ fn block<'a>(
                     !skips && block.image.is_none() && frame.style.display != Display::TableColumn;
             } else {
                 // CSS Lists 3 §3.5: an inline list item's marker is always inside.
-                let marker = frame
-                    .style
-                    .display
-                    .is_list_item()
-                    .then(|| crate::document::lists::marker(&frame.style, frame.ordinal, resources))
-                    .transpose()?
-                    .flatten();
+                let marker = list_marker(
+                    sheet,
+                    element,
+                    &frame.style,
+                    frame.ordinal,
+                    traversal,
+                    resources,
+                )?;
                 let assignment = traversal.strings.record(
                     element,
                     &frame.style.string_set,
@@ -1047,7 +1101,12 @@ fn block<'a>(
                         .inline
                         .open_box(style, decoration, navigation, canvas_source);
                     if let Some(marker) = marker {
-                        place_inside_marker(builder.inline, &marker, style, page_scope.as_ref())?;
+                        place_inside_marker(
+                            builder.inline,
+                            &marker,
+                            builder.traversal.navigation.descendant(),
+                            page_scope.as_ref(),
+                        )?;
                     }
                 }
                 frames[index].generated = true;
@@ -1060,10 +1119,10 @@ fn block<'a>(
                 }
                 let (mut builder, style) =
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
-                builder.generated(element, style, PseudoElement::Before)?;
+                builder.generated(element, style, GeneratedPseudoElement::Before)?;
                 if element.name() == "br" {
                     builder.inline.line_break(style)?;
-                    builder.generated(element, style, PseudoElement::After)?;
+                    builder.generated(element, style, GeneratedPseudoElement::After)?;
                     frames[index].generated = false;
                 } else {
                     if element.namespace() == crate::dom::HTML_NAMESPACE && element.name() == "wbr"
@@ -1259,9 +1318,17 @@ fn block<'a>(
                             builder.inline.semantic_event(
                                 builder.traversal.strings.event(child, assignment, true),
                             );
-                            builder.generated(child, &child_style, PseudoElement::Before)?;
+                            builder.generated(
+                                child,
+                                &child_style,
+                                GeneratedPseudoElement::Before,
+                            )?;
                             builder.inline.line_break(&child_style)?;
-                            builder.generated(child, &child_style, PseudoElement::After)?;
+                            builder.generated(
+                                child,
+                                &child_style,
+                                GeneratedPseudoElement::After,
+                            )?;
                             builder.traversal.counters.leave();
                             continue;
                         }
@@ -1308,7 +1375,7 @@ fn block<'a>(
         let (mut builder, style) =
             active_builder(&mut frames, block_index, sheet, traversal, resources);
         if generated {
-            builder.generated(element, style, PseudoElement::After)?;
+            builder.generated(element, style, GeneratedPseudoElement::After)?;
         }
         if let Some(depth) = quotes {
             builder.traversal.quotes = depth;

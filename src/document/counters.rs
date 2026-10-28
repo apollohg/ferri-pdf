@@ -487,10 +487,10 @@ impl Counters {
         wanted: Option<PageStyleTarget>,
     ) -> Result<Self, StyleError> {
         use crate::dom::{Element, TreeRelation};
-        use crate::style::{Display, PseudoElement};
+        use crate::style::{Display, GeneratedPseudoElement};
         enum Event<'a> {
             Element(Element<'a>, Option<Display>),
-            Pseudo(Element<'a>, PseudoElement, Display),
+            Pseudo(Element<'a>, GeneratedPseudoElement, Display),
             Leave,
         }
         let mut state = self;
@@ -551,7 +551,7 @@ impl Counters {
                             };
                         events.push(Event::Pseudo(
                             element,
-                            PseudoElement::After,
+                            GeneratedPseudoElement::After,
                             block_display.clone(),
                         ));
                         if element.name() != "br" {
@@ -560,13 +560,17 @@ impl Counters {
                                 events.push(Event::Element(child, Some(block_display.clone())));
                             }
                         }
-                        events.push(Event::Pseudo(element, PseudoElement::Before, block_display));
+                        events.push(Event::Pseudo(
+                            element,
+                            GeneratedPseudoElement::Before,
+                            block_display,
+                        ));
                     }
                 }
                 Event::Pseudo(element, pseudo, parent_display) => {
                     let target = PageStyleTarget {
                         element: element.id(),
-                        pseudo: Some(pseudo),
+                        pseudo: Some(pseudo.into()),
                     };
                     let Some(content) = styles.content(target)? else {
                         continue;

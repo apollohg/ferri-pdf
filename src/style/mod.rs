@@ -135,7 +135,7 @@ pub use print::{
 };
 pub(crate) use quotes::{QuoteDepth, Quotes};
 pub(crate) use resolution::PageGeometry;
-pub(crate) use selector::PseudoElement;
+pub(crate) use selector::{GeneratedPseudoElement, PseudoElement};
 pub(crate) use sizing::{
     AspectRatio, IntrinsicSizing, IntrinsicWidths, Overconstraint, SizeConstraints, UsedAxis,
 };

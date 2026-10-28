@@ -1,5 +1,5 @@
-pub(crate) use crate::dom::GeneratedPseudoElement as PseudoElement;
 use crate::dom::{Element, Selector, TreeContext, TreeScopeId};
+pub(crate) use crate::dom::{GeneratedPseudoElement, PseudoElement};
 pub(super) use crate::dom::{NamespaceMap, SelectorMode};
 use crate::style::{
     StyleError,
@@ -19,12 +19,17 @@ pub(super) fn tree_context(
     }
 }
 
-pub(super) const SELECTOR_TARGET_COUNT: usize = 3;
+pub(super) const SELECTOR_TARGET_COUNT: usize = 8;
 pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
     match pseudo {
         None => 0,
         Some(PseudoElement::Before) => 1,
         Some(PseudoElement::After) => 2,
+        Some(PseudoElement::Marker) => 3,
+        Some(PseudoElement::FirstLine) => 4,
+        Some(PseudoElement::FirstLetter) => 5,
+        Some(PseudoElement::FirstLetterPrefix) => 6,
+        Some(PseudoElement::FirstLetterSuffix) => 7,
     }
 }
 
@@ -67,9 +72,10 @@ impl RuleSelector {
         let mut specificity = selector
             .single_specificity()
             .ok_or_else(|| StyleError::Invalid("expected one selector".into()))?;
-        if pseudo.is_some() {
+        if let Some(pseudo) = pseudo {
             specificity = (specificity & !TYPE_SPECIFICITY_MASK)
-                | ((specificity & TYPE_SPECIFICITY_MASK) + 1).min(TYPE_SPECIFICITY_MASK);
+                | ((specificity & TYPE_SPECIFICITY_MASK) + pseudo.compounds())
+                    .min(TYPE_SPECIFICITY_MASK);
         }
         Ok(Self {
             selector,
@@ -82,10 +88,17 @@ impl RuleSelector {
             &selectors
                 .iter()
                 .map(|selector| match selector.pseudo {
-                    Some(pseudo) => selector.selector.with_pseudo_element(pseudo),
-                    None => selector.selector.clone(),
+                    Some(pseudo) => {
+                        selector
+                            .selector
+                            .with_pseudo_element(pseudo)
+                            .ok_or_else(|| {
+                                StyleError::Invalid(format!("nesting selector for {pseudo:?}"))
+                            })
+                    }
+                    None => Ok(selector.selector.clone()),
                 })
-                .collect::<Vec<_>>(),
+                .collect::<Result<Vec<_>, _>>()?,
         )
         .ok_or_else(|| StyleError::Invalid("empty nesting parent selector list".into()))
     }
@@ -169,6 +182,22 @@ pub(super) fn scope_boundary<'i>(
     })
 }
 
+/// A pseudo-element after its first colon; the CSS 2 ones also take a single colon.
+fn pseudo_element<'i>(
+    input: &mut Parser<'i, '_>,
+) -> Result<PseudoElement, ParseError<'i, StyleError>> {
+    let (name, double_colon) = match input.next_including_whitespace()?.clone() {
+        Token::Colon => (input.next_including_whitespace()?.clone(), true),
+        token => (token, false),
+    };
+    match name {
+        Token::Ident(name) => PseudoElement::parse(&name, double_colon).ok_or_else(|| {
+            input.new_custom_error(StyleError::Invalid("not a pseudo-element".into()))
+        }),
+        token => Err(input.new_unexpected_token_error(token)),
+    }
+}
+
 fn originating_selector<'i>(
     input: &mut Parser<'i, '_>,
 ) -> Result<(String, Option<PseudoElement>), ParseError<'i, StyleError>> {
@@ -178,22 +207,18 @@ fn originating_selector<'i>(
         let state = input.state();
         match input.next_including_whitespace()?.clone() {
             Token::Colon => {
-                let parsed = input.try_parse(|p| {
-                    let token = p.next_including_whitespace()?.clone();
-                    let name = match token {
-                        Token::Colon => p.next_including_whitespace()?.clone(),
-                        token => token,
-                    };
-                    match name {
-                        Token::Ident(name) => PseudoElement::parse(&name).ok_or_else(|| {
-                            p.new_custom_error::<_, StyleError>(StyleError::Invalid(
-                                "not a generated pseudo-element".into(),
-                            ))
-                        }),
-                        token => Err(p.new_unexpected_token_error(token)),
+                if let Ok(mut pseudo) = input.try_parse(pseudo_element) {
+                    if let Ok(name) = input.try_parse(|p| {
+                        p.expect_colon()?;
+                        p.expect_colon()?;
+                        p.expect_ident_cloned()
+                    }) {
+                        pseudo = pseudo.sub(&name).ok_or_else(|| {
+                            input.new_custom_error::<_, StyleError>(StyleError::Invalid(format!(
+                                "{pseudo:?} has no ::{name} sub-pseudo-element"
+                            )))
+                        })?;
                     }
-                });
-                if let Ok(pseudo) = parsed {
                     let mut source = input.slice(start..state.position()).to_owned();
                     if universal {
                         source.push('*');

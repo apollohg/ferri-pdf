@@ -4,8 +4,8 @@ use crate::document::{
 };
 use crate::dom::{DocumentTree, Element, TreeRelation};
 use crate::style::{
-    BreakBetween, CaptionSide, Display, Page, PageSelection, PageSide, PageStyleTarget,
-    PseudoElement, QuoteDepth, StyleError,
+    BreakBetween, CaptionSide, Display, GeneratedPseudoElement, Page, PageSelection, PageSide,
+    PageStyleTarget, QuoteDepth, StyleError,
 };
 use std::{
     cell::{Cell, OnceCell},
@@ -60,10 +60,10 @@ fn anonymous(origin: PageStyleTarget, display: Display, children: Vec<Child>) ->
     }
 }
 
-fn target(element: Element<'_>, pseudo: Option<PseudoElement>) -> PageStyleTarget {
+fn target(element: Element<'_>, pseudo: Option<GeneratedPseudoElement>) -> PageStyleTarget {
     PageStyleTarget {
         element: element.id(),
-        pseudo,
+        pseudo: pseudo.map(Into::into),
     }
 }
 
@@ -368,13 +368,23 @@ impl Collector {
                     if formatting::is_replaced(element) || self.display == Display::TableColumn {
                         continue;
                     }
-                    self.generated(selection, element, PseudoElement::Before, depth + 1)?;
+                    self.generated(
+                        selection,
+                        element,
+                        GeneratedPseudoElement::Before,
+                        depth + 1,
+                    )?;
                     if self.ready() {
                         continue;
                     }
                     if element.name() == "br" {
                         self.text = true;
-                        self.generated(selection, element, PseudoElement::After, depth + 1)?;
+                        self.generated(
+                            selection,
+                            element,
+                            GeneratedPseudoElement::After,
+                            depth + 1,
+                        )?;
                     } else {
                         pending.push(CollectStep::After(element, depth + 1));
                         pending.push(CollectStep::Children(
@@ -435,7 +445,7 @@ impl Collector {
                     }
                 }
                 CollectStep::After(element, depth) => {
-                    self.generated(selection, element, PseudoElement::After, depth)?;
+                    self.generated(selection, element, GeneratedPseudoElement::After, depth)?;
                 }
                 CollectStep::CloseInline(source) => {
                     let inline = self
@@ -459,7 +469,7 @@ impl Collector {
         &mut self,
         selection: &mut Selection<'_>,
         element: Element<'_>,
-        pseudo: PseudoElement,
+        pseudo: GeneratedPseudoElement,
         depth: usize,
     ) -> Result<(), StyleError> {
         let source = target(element, Some(pseudo));

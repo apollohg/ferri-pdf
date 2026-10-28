@@ -875,6 +875,63 @@ impl Stylesheet {
         )))
     }
 
+    /// The `::marker` of list item `element` (CSS Lists 3 §3.1): its computed style and the
+    /// `content` replacing the list item's marker image or string; `None` where `content:
+    /// none` suppresses the marker box.
+    pub(crate) fn marker_with_resolver(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Option<(Style, Option<crate::style::GeneratedContent>)>, StyleError> {
+        let style = self.typographic_pseudo_with_resolver(
+            element,
+            parent,
+            crate::style::PseudoElement::Marker,
+            resolver,
+        )?;
+        Ok(match style.computed_content.as_ref() {
+            crate::style::generated::ComputedContent::Contents => Some((style, None)),
+            crate::style::generated::ComputedContent::None => None,
+            crate::style::generated::ComputedContent::Items { content, .. } => {
+                let content = content.clone();
+                Some((style, Some(content)))
+            }
+        })
+    }
+
+    /// The computed style of a pseudo-element that holds its originating element's content or
+    /// marker rather than `content` it generates: `::marker`, `::first-line`, `::first-letter`
+    /// and its sub-pseudo-elements. Every property has a computed value; the formatting
+    /// structure applies only those its pseudo-element takes.
+    pub(crate) fn typographic_pseudo_with_resolver(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
+        pseudo: crate::style::PseudoElement,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Style, StyleError> {
+        let (style, winners) = self.prepare_pseudo(element, parent, pseudo, resolver)?;
+        let (mut style, mut winners) = crate::style::resolution::resolve_values(
+            self,
+            style,
+            parent,
+            winners,
+            resolver,
+            &crate::style::resolution::ValueContext {
+                tree: Tree::Element(element),
+                viewport: self.page_area(),
+                page_font: false,
+            },
+        )?;
+        let mut inherited = self.inherited(parent, self.page_area(), resolver);
+        inherited.tree = Tree::Element(element);
+        Self::generated(&mut winners, &mut style, parent, &inherited)?;
+        Self::display(&mut style, parent, &mut winners, &inherited)?;
+        let relative = self.text_basis(&mut style, parent, &mut winners, inherited, resolver)?;
+        Self::apply_properties(style, parent, winners, &relative)
+    }
+
     pub(super) fn prepare_pseudo(
         &self,
         element: Element<'_>,
@@ -901,7 +958,11 @@ impl Stylesheet {
         }
         let mut style = parent.anonymous(Display::Inline);
         style.element_font_namespace = self.font_namespace(Some(element.tree_scope()));
-        style.content_context = crate::style::generated::ContentContext::BeforeAfter;
+        style.content_context = if pseudo == crate::style::PseudoElement::Marker {
+            crate::style::generated::ContentContext::Marker
+        } else {
+            crate::style::generated::ContentContext::BeforeAfter
+        };
         style.item_parent = parent.display.is_item_container()
             || (parent.display == Display::Contents && parent.item_parent);
         style.inlinifying_parent = parent.inlinifies_children();

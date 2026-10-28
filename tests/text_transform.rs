@@ -54,7 +54,7 @@ fn inherited_language_controls_contextual_case_mapping_across_spans() {
 #[test]
 fn casing_applies_to_markers_and_css_wide_keywords_before_wrapping() {
     let html = format!(
-        r#"<style>{PROFILE}section {{text-transform:uppercase}} ol {{margin:0;list-style-type:lower-alpha}}</style>
+        r#"<style>{PROFILE}section {{text-transform:uppercase}} ol {{margin:0;list-style-type:lower-alpha}} li + li::marker {{text-transform:inherit}}</style>
 <section><p>one <span style="text-transform:initial">Two</span> <span style="text-transform:unset">three</span></p>
 <ol><li>word</li><li style="list-style-position:inside">word</li></ol></section>"#
     );
@@ -66,7 +66,11 @@ fn casing_applies_to_markers_and_css_wide_keywords_before_wrapping() {
         .iter()
         .map(|line| line.text.as_str())
         .collect();
-    assert_eq!(text, ["ONE Two THREE", "A. ", "WORD", "B. WORD"]);
+    assert_eq!(
+        text,
+        ["ONE Two THREE", "a. ", "WORD", "B. WORD"],
+        "the UA `::marker {{ text-transform: none }}` (CSS Lists 3 §3.1.1) yields to author rules"
+    );
     let source = format!(
         "<style>{PROFILE}p{{width:80pt;text-transform:uppercase}}</style><p>straße fiancée straße fiancée</p>"
     );

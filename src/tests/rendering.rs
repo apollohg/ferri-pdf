@@ -758,7 +758,8 @@ fn inside_list_markers_share_the_first_line_and_wrapping_width() {
             "three four five",
             "six seven",
             "eight",
-            "•",
+            // The UA `::marker { white-space: pre }` keeps the suffix space (CSS Lists 3 §3.1.1).
+            "• ",
             "Block"
         ]
     );
