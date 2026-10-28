@@ -7,7 +7,7 @@ use crate::graphics::{
 use crate::layout::LayoutError;
 use crate::layout::geometry::{Edges, inline_horizontal};
 use crate::layout::measure::{MeasuredBlock, Measurer};
-use crate::style::{BaselineSource, Display};
+use crate::style::BaselineSource;
 use crate::text::{AtomicMetrics, BoxFragment, GlyphRun};
 
 /// An atomic inline measured in its containing block, waiting for its line position.

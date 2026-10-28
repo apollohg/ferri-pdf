@@ -203,9 +203,15 @@ impl<'p> ParagraphLines<'_, 'p, '_, '_> {
             None
         };
         if paragraph.style().rtl {
-            pieces.splice(0..0, trailing.into_iter().rev().map(Piece::Text));
+            pieces.splice(
+                0..0,
+                trailing
+                    .into_iter()
+                    .rev()
+                    .map(|run| Piece::Text(Box::new(run))),
+            );
         } else {
-            pieces.extend(trailing.into_iter().map(Piece::Text));
+            pieces.extend(trailing.into_iter().map(|run| Piece::Text(Box::new(run))));
         }
         let arranged =
             line_boxes::arrange(paragraph, pieces, from..to, &self.atomic_widths, available);
