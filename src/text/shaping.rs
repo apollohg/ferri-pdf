@@ -1,4 +1,4 @@
-use crate::{GlyphRun, PositionedGlyph, TextError};
+use crate::text::{GlyphRun, PositionedGlyph, TextError};
 use ferri_pdf_fonts::{FontId, FontSynthesis, FontVariation};
 use ferri_pdf_style::{FontVariantCaps, Style};
 use icu_casemap::{CaseMapper, ContextCase};
@@ -273,7 +273,7 @@ fn shape_run(
         };
         let x_spacing = if last_in_cluster {
             style.letter_spacing
-                + if crate::spacing::word_space_text(source) {
+                + if crate::text::spacing::word_space_text(source) {
                     word_spacing
                 } else {
                     0.0

@@ -1,4 +1,4 @@
-use crate::{
+use crate::text::{
     AtomicMetrics, Line, TextContext, TextError, breaking, decoration, ellipsis, hyphenation,
     line_boxes, paragraph_bidi, shape_line, spacing, whitespace,
 };
@@ -7,7 +7,7 @@ use unicode_linebreak::BreakOpportunity;
 
 /// Source progress after a successfully emitted line of its originating paragraph.
 #[derive(Clone, Copy)]
-pub struct TextPosition<'p> {
+pub(crate) struct TextPosition<'p> {
     paragraph: &'p Paragraph,
     offset: usize,
     empty_consumed: bool,
@@ -15,16 +15,16 @@ pub struct TextPosition<'p> {
 
 impl TextPosition<'_> {
     /// Byte offset of the next source content in the originating paragraph.
-    pub fn offset(self) -> usize {
+    pub(crate) fn offset(self) -> usize {
         self.offset
     }
 }
 
 /// Paragraph-wide bidi and break context, shared across fragmentainer widths.
-pub struct PreparedParagraph<'p, 'context, 'font> {
+pub(crate) struct PreparedParagraph<'p, 'context, 'font> {
     context: &'context TextContext<'font>,
     paragraph: &'p Paragraph,
-    bidi: Result<crate::bidi::ResolvedParagraph<'p>, crate::bidi::ExpansionLimit>,
+    bidi: Result<crate::text::bidi::ResolvedParagraph<'p>, crate::text::bidi::ExpansionLimit>,
     has_rtl: bool,
     has_leaders: bool,
     opportunities: Vec<(usize, BreakOpportunity)>,
@@ -34,7 +34,7 @@ pub struct PreparedParagraph<'p, 'context, 'font> {
 }
 
 /// Lines at one fragmentainer width, retaining absolute paragraph source coordinates.
-pub struct ParagraphLines<'s, 'p, 'context, 'font> {
+pub(crate) struct ParagraphLines<'s, 'p, 'context, 'font> {
     prepared: &'s PreparedParagraph<'p, 'context, 'font>,
     position: TextPosition<'p>,
     width: f32,
@@ -73,7 +73,7 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
         }
     }
 
-    pub fn start(&self) -> TextPosition<'p> {
+    pub(crate) fn start(&self) -> TextPosition<'p> {
         TextPosition {
             paragraph: self.paragraph,
             offset: 0,
@@ -81,14 +81,14 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
         }
     }
 
-    fn bidi(&self) -> Result<&crate::bidi::ResolvedParagraph<'p>, TextError> {
+    fn bidi(&self) -> Result<&crate::text::bidi::ResolvedParagraph<'p>, TextError> {
         if self.context.bidi_work.get().is_none() {
-            return Err(crate::bidi::ExpansionLimit.into());
+            return Err(crate::text::bidi::ExpansionLimit.into());
         }
         self.bidi.as_ref().map_err(|&error| error.into())
     }
 
-    pub fn lines<'s>(
+    pub(crate) fn lines<'s>(
         &'s self,
         position: TextPosition<'p>,
         width: f32,
@@ -98,7 +98,7 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
     }
 
     /// Line fitting width can be narrowed by floats; percentages use the full block.
-    pub fn lines_in_block<'s>(
+    pub(crate) fn lines_in_block<'s>(
         &'s self,
         position: TextPosition<'p>,
         width: f32,
@@ -130,7 +130,7 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
 
 impl<'p> ParagraphLines<'_, 'p, '_, '_> {
     /// Resume at the last successfully emitted line, including empty inline-edge progress.
-    pub fn checkpoint(&self) -> TextPosition<'p> {
+    pub(crate) fn checkpoint(&self) -> TextPosition<'p> {
         self.position
     }
 
@@ -167,7 +167,7 @@ impl<'p> ParagraphLines<'_, 'p, '_, '_> {
         );
         let measured_width = arranged.width;
         let leader_width = if prepared.has_leaders {
-            crate::leaders::wrapping_width(paragraph, &arranged, self.available(), from)
+            crate::text::leaders::wrapping_width(paragraph, &arranged, self.available(), from)
         } else {
             None
         };
@@ -205,7 +205,7 @@ impl<'p> ParagraphLines<'_, 'p, '_, '_> {
         let prepared = self.prepared;
         let paragraph = prepared.paragraph;
         if prepared.has_leaders {
-            crate::leaders::expand(prepared.context, paragraph, &mut line, self.available())?;
+            crate::text::leaders::expand(prepared.context, paragraph, &mut line, self.available())?;
         }
         let newline = paragraph.text()[line.range.clone()]
             .char_indices()
@@ -260,7 +260,7 @@ impl<'p> ParagraphLines<'_, 'p, '_, '_> {
             let mut candidate = self.emit(start, end)?;
             if opportunity == BreakOpportunity::Allowed
                 && prepared.has_leaders
-                && crate::leaders::alone(&candidate)
+                && crate::text::leaders::alone(&candidate)
             {
                 continue;
             }
@@ -280,7 +280,7 @@ impl<'p> ParagraphLines<'_, 'p, '_, '_> {
             }
             if candidate.wrap_width > self.available() {
                 let content_end = if prepared.has_leaders {
-                    crate::leaders::first_content_end(paragraph, start).unwrap_or(text.len())
+                    crate::text::leaders::first_content_end(paragraph, start).unwrap_or(text.len())
                 } else {
                     start
                 };

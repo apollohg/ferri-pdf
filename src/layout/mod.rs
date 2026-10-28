@@ -22,11 +22,11 @@ mod source;
 mod strings;
 mod tables;
 mod work;
+use crate::text::{GlyphRun, TextContext, TextError};
 use ferri_pdf_document::StyledDocument;
 use ferri_pdf_fonts::FontDescriptor;
 use ferri_pdf_graphics::{Color, DisplayItem, Rect};
 use ferri_pdf_resources::ResourceResolver;
-use ferri_pdf_text::{GlyphRun, TextContext, TextError};
 use serde::Serialize;
 
 pub use navigation::{Destination, HeadingLocation, LinkArea, LinkShape};

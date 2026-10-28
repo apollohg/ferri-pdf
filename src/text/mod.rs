@@ -31,12 +31,12 @@ use unicode_linebreak::BreakOpportunity;
 use unicode_script::{Script, UnicodeScript};
 use unicode_segmentation::UnicodeSegmentation;
 
-pub use line_boxes::{AtomicFragment, AtomicMetrics, BoxFragment, LinkFragment};
+pub(crate) use line_boxes::{AtomicFragment, AtomicMetrics, BoxFragment, LinkFragment};
 
 /// Maximum conservative cluster-shaping and fallback-probe work in one text context.
-pub const MAX_GLYPH_MATCH_WORK: usize = 100_000_000;
+pub(crate) const MAX_GLYPH_MATCH_WORK: usize = 100_000_000;
 use line_boxes::{Piece, Slot};
-pub use paragraph::{ParagraphLines, PreparedParagraph, TextPosition};
+pub(crate) use paragraph::{PreparedParagraph, TextPosition};
 
 #[derive(Clone, Serialize)]
 pub struct GlyphRun {
@@ -182,7 +182,7 @@ fn shape_line(
 }
 
 #[derive(Clone)]
-pub struct Line {
+pub(crate) struct Line {
     /// Logical start-edge margin, excluded from shaped content width.
     pub indent: f32,
     pub text: String,
@@ -207,7 +207,7 @@ pub struct Line {
     ellipsis: Option<usize>,
 }
 
-pub use ferri_pdf_style::IntrinsicWidths;
+pub(crate) use ferri_pdf_style::IntrinsicWidths;
 
 /// Font advances and offsets use em units; additional CSS spacing uses points. Y is downwards.
 /// Cluster byte ranges index the glyph run's UTF-8 text.
@@ -260,13 +260,13 @@ impl GlyphRun {
     }
 }
 impl Line {
-    pub fn alignment_offset(&self, available: f32, rtl: bool) -> f32 {
+    pub(crate) fn alignment_offset(&self, available: f32, rtl: bool) -> f32 {
         let start = if rtl { 0.0 } else { self.indent };
         start + self.align.offset(available - self.indent, self.width, rtl)
     }
     /// Distance from the line's left edge to paragraph `offset`. Offsets outside the
     /// line's runs resolve to its logical start or end in the paragraph direction.
-    pub fn x_at(&self, offset: usize, rtl: bool) -> f32 {
+    pub(crate) fn x_at(&self, offset: usize, rtl: bool) -> f32 {
         if let Some(run) = self
             .runs
             .iter()
@@ -293,7 +293,7 @@ impl Line {
 }
 
 #[derive(Debug, thiserror::Error)]
-pub enum TextError {
+pub(crate) enum TextError {
     #[error("{0}")]
     Font(#[from] FontError),
     #[error("computed text style has no font candidates")]
@@ -326,7 +326,7 @@ struct ShapingInstance<'a> {
 
 type FaceCache<'a> = HashMap<(FontId, FontSelection), Option<Arc<ShapingInstance<'a>>>>;
 
-pub struct TextContext<'a> {
+pub(crate) struct TextContext<'a> {
     fonts: &'a FontBook,
     resolver: &'a dyn ResourceResolver,
     faces: RefCell<FaceCache<'a>>,
@@ -335,7 +335,7 @@ pub struct TextContext<'a> {
 }
 impl<'a> TextContext<'a> {
     /// `atomics` holds the min- and max-content margin-box widths of the paragraph's atomic inlines.
-    pub fn intrinsic_widths(
+    pub(crate) fn intrinsic_widths(
         &self,
         paragraph: &Paragraph,
         atomics: &[IntrinsicWidths],
@@ -408,7 +408,7 @@ impl<'a> TextContext<'a> {
         widths.max = widths.max.max(widths.min);
         Ok(widths)
     }
-    pub fn new(fonts: &'a FontBook, resolver: &'a dyn ResourceResolver) -> Self {
+    pub(crate) fn new(fonts: &'a FontBook, resolver: &'a dyn ResourceResolver) -> Self {
         Self {
             fonts,
             resolver,
@@ -665,7 +665,7 @@ impl<'a> TextContext<'a> {
         }
         Ok(runs)
     }
-    pub fn layout_paragraph(
+    pub(crate) fn layout_paragraph(
         &self,
         paragraph: &Paragraph,
         width: f32,
@@ -674,7 +674,7 @@ impl<'a> TextContext<'a> {
         let prepared = self.prepare_paragraph(paragraph);
         prepared.lines(prepared.start(), width, atomics)?.collect()
     }
-    pub fn prepare_paragraph<'p, 'context>(
+    pub(crate) fn prepare_paragraph<'p, 'context>(
         &'context self,
         paragraph: &'p Paragraph,
     ) -> PreparedParagraph<'p, 'context, 'a> {

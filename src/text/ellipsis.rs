@@ -1,8 +1,8 @@
 //! CSS Overflow 3 `text-overflow: ellipsis` (§3.1): hides whole grapheme clusters and
 //! atomic inlines at a line's inline end so an ellipsis styled by the block fits.
-use crate::line_boxes::{Slot, slot_width};
-use crate::shaping::MissingGlyphs;
-use crate::{GlyphRun, Line, TextContext, TextError};
+use crate::text::line_boxes::{Slot, slot_width};
+use crate::text::shaping::MissingGlyphs;
+use crate::text::{GlyphRun, Line, TextContext, TextError};
 use ferri_pdf_document::Paragraph;
 use std::ops::Range;
 use unicode_segmentation::UnicodeSegmentation;

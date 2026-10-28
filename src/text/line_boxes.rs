@@ -1,5 +1,5 @@
 //! Line box assembly and vertical alignment (CSS 2.1 §10.8, CSS Inline 3 §5.3).
-use crate::{GlyphRun, Line, TextContext, TextError};
+use crate::text::{GlyphRun, Line, TextContext, TextError};
 use ferri_pdf_document::Paragraph;
 use ferri_pdf_fonts::FaceMetrics;
 use ferri_pdf_style::{Style, VerticalAlign};
@@ -14,7 +14,7 @@ const SIDE_LEFT: usize = 3;
 
 /// Margin-box metrics of an atomic inline, measured by layout.
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
-pub struct AtomicMetrics {
+pub(crate) struct AtomicMetrics {
     pub width: f32,
     pub height: f32,
     /// Distance from the margin-box top to the box's baseline.
@@ -23,7 +23,7 @@ pub struct AtomicMetrics {
 
 /// One visually contiguous piece of an inline box on a line.
 #[derive(Clone, Debug, Serialize)]
-pub struct BoxFragment {
+pub(crate) struct BoxFragment {
     /// Index into the paragraph's inline boxes.
     pub index: usize,
     /// Border-box left edge and width, from the line's left edge.
@@ -41,7 +41,7 @@ pub struct BoxFragment {
 }
 
 #[derive(Clone)]
-pub struct LinkFragment {
+pub(crate) struct LinkFragment {
     pub link: usize,
     pub rect: ferri_pdf_graphics::Rect,
     pub inline_box: Option<usize>,
@@ -89,7 +89,7 @@ pub(crate) fn links(paragraph: &Paragraph, line: &Line) -> Vec<LinkFragment> {
 
 /// An atomic inline placed on a line.
 #[derive(Clone, Debug, Serialize)]
-pub struct AtomicFragment {
+pub(crate) struct AtomicFragment {
     /// Index into the paragraph's atomic inlines.
     pub index: usize,
     /// Margin-box left edge from the line's left edge.

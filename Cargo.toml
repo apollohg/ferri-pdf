@@ -101,7 +101,6 @@ ferri-pdf-fonts = { path = "crates/fonts", version = "0.1.0" }
 ferri-pdf-resources = { path = "crates/resources", version = "0.1.0", default-features = false }
 ferri-pdf-style = { path = "crates/style", version = "0.1.0" }
 ferri-pdf-document = { path = "crates/document", version = "0.1.0" }
-ferri-pdf-text = { path = "crates/text", version = "0.1.0" }
 ferri-pdf-flex = { path = "crates/flex", version = "0.1.0" }
 ferri-pdf-grid = { path = "crates/grid", version = "0.1.0" }
 ferri-pdf-table = { path = "crates/table", version = "0.1.0" }
@@ -135,7 +134,6 @@ ferri-pdf-fonts.workspace = true
 ferri-pdf-resources.workspace = true
 ferri-pdf-style.workspace = true
 ferri-pdf-document.workspace = true
-ferri-pdf-text.workspace = true
 ferri-pdf-graphics.workspace = true
 thiserror.workspace = true
 serde_json.workspace = true
@@ -151,6 +149,14 @@ ferri-pdf-table.workspace = true
 ferri-pdf-flex.workspace = true
 ferri-pdf-grid.workspace = true
 serde.workspace = true
+rustybuzz.workspace = true
+icu_properties.workspace = true
+icu_casemap.workspace = true
+icu_locale_core.workspace = true
+unicode-bidi.workspace = true
+unicode-linebreak.workspace = true
+unicode-script.workspace = true
+unicode-segmentation.workspace = true
 
 [dev-dependencies]
 roxmltree.workspace = true

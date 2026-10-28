@@ -1,11 +1,11 @@
 mod dimensions;
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, TextLine};
+use crate::text::Line;
 use dimensions::{Variable, variable};
 use ferri_pdf_document::{PageBox, Paragraph};
 use ferri_pdf_graphics::{BoxDecoration, BoxPaint, DisplayItem, Rect};
 use ferri_pdf_style::{BoxSizing, MarginLocation, PageMargin, Size, VerticalAlign};
-use ferri_pdf_text::Line;
 
 const HORIZONTAL: usize = 0;
 const VERTICAL: usize = 1;

@@ -39,7 +39,7 @@ type Layer = (PaintKey, Option<usize>);
 /// Glyph runs and decorations of one line that paint in one layer.
 struct LinePart {
     layer: Option<Layer>,
-    runs: Vec<ferri_pdf_text::GlyphRun>,
+    runs: Vec<crate::text::GlyphRun>,
     decorations: Vec<DecorationPaint>,
 }
 /// Layers of a paragraph's translucent inline boxes by box index, created when first painted.
@@ -3846,7 +3846,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     fn split_line(
         &mut self,
         layers: &mut InlineLayers<'_>,
-        runs: Vec<ferri_pdf_text::GlyphRun>,
+        runs: Vec<crate::text::GlyphRun>,
         decorations: &[DecorationPaint],
     ) -> Vec<LinePart> {
         fn part(parts: &mut Vec<LinePart>, layer: Option<Layer>) -> &mut LinePart {
@@ -4039,7 +4039,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     /// The line's top is the current flow position and `left` its left edge.
     fn inline_content(
         &mut self,
-        line: &ferri_pdf_text::Line,
+        line: &crate::text::Line,
         width: f32,
         left: f32,
         atomics: &mut [Option<crate::layout::inline::MeasuredAtomic<'a>>],

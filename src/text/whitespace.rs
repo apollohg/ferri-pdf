@@ -1,4 +1,4 @@
-use crate::GlyphRun;
+use crate::text::GlyphRun;
 use ferri_pdf_document::{OBJECT_REPLACEMENT_CHARACTER, Paragraph};
 use ferri_pdf_style::{TextAlign, WhiteSpace};
 use icu_properties::{CodePointMapData, props::GeneralCategory};
@@ -11,7 +11,7 @@ pub(super) fn opportunities(paragraph: &Paragraph) -> Vec<(usize, BreakOpportuni
     let mut breaks: Vec<_> = unicode_linebreak::linebreaks(paragraph.text())
         .filter(|&(end, opportunity)| {
             opportunity == BreakOpportunity::Mandatory
-                || (wraps(paragraph, end) && crate::hyphenation::allowed(paragraph, end))
+                || (wraps(paragraph, end) && crate::text::hyphenation::allowed(paragraph, end))
         })
         .collect();
     breaks.extend(
@@ -38,9 +38,9 @@ pub(super) fn opportunities(paragraph: &Paragraph) -> Vec<(usize, BreakOpportuni
             breaks.push((end, BreakOpportunity::Allowed));
         }
         // Explicit hyphens also apply where UAX #14's Hebrew rule suppresses BA.
-        if ch == crate::hyphenation::SOFT_HYPHEN
+        if ch == crate::text::hyphenation::SOFT_HYPHEN
             && wraps(paragraph, end)
-            && crate::hyphenation::allowed(paragraph, end)
+            && crate::text::hyphenation::allowed(paragraph, end)
         {
             breaks.push((end, BreakOpportunity::Allowed));
         }

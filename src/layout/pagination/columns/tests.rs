@@ -1,7 +1,7 @@
 use super::*;
+use crate::text::TextContext;
 use ferri_pdf_document::StyledDocument;
 use ferri_pdf_resources::FileResolver;
-use ferri_pdf_text::TextContext;
 
 impl<'a, 't> ColumnLayout<'a, 't> {
     fn complete(mut self, measurer: &mut Measurer<'t>) -> Result<ColumnOutput<'a>, LayoutError> {

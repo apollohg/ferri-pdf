@@ -2458,7 +2458,7 @@
       ],
       "implementation_files": [
         "crates/fonts/src/lib.rs",
-        "crates/text/src/lib.rs"
+        "src/text/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3405,7 +3405,7 @@
       ],
       "implementation_files": [
         "crates/document/src/lib.rs",
-        "crates/text/src/lib.rs"
+        "src/text/mod.rs"
       ],
       "case_ids": [],
       "handoff": null

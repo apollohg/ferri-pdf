@@ -1,8 +1,8 @@
 use crate::layout::LayoutError;
 use crate::layout::measure::Measurer;
+use crate::text::IntrinsicWidths;
 use ferri_pdf_document::{BlockBox, BlockContent};
 use ferri_pdf_style::{BoxSizing, LengthPercentage, Size};
-use ferri_pdf_text::IntrinsicWidths;
 
 /// Content-box min- and max-content widths; replaced elements with only an aspect ratio
 /// stretch into `available`, the width of the containing block being sized into.

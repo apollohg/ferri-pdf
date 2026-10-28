@@ -1,4 +1,4 @@
-use crate::{Line, TextError};
+use crate::text::{Line, TextError};
 
 pub(super) fn fit(
     boundaries: &[usize],

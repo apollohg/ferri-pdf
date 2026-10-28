@@ -5,10 +5,10 @@ use crate::layout::{
     margin::MarginStrut,
     multicol::{ColumnFlow, ColumnGeometry, MeasuredColumns, SpannerFragment},
 };
+use crate::text::{Line, TextContext};
 use ferri_pdf_document::{BlockBox, BlockContent, BoxNavigation};
 use ferri_pdf_graphics::{BoxDecoration, BoxPaint, Rect};
 use ferri_pdf_style::{BreakBetween, Display, Style};
-use ferri_pdf_text::{Line, TextContext};
 
 mod metrics;
 pub(super) use metrics::{ItemMetrics, MetricsKey};
@@ -254,7 +254,7 @@ pub(super) struct MeasuredParagraph<'a> {
     pub containing_height: Option<f32>,
     pub height: f32,
     pub lines: Vec<Line>,
-    pub positions: Vec<ferri_pdf_text::TextPosition<'a>>,
+    pub positions: Vec<crate::text::TextPosition<'a>>,
     pub anchors: Vec<LineAnchor<'a>>,
     /// Atomic inlines in paragraph order, taken when their line is placed.
     pub atomics: Vec<Option<crate::layout::inline::MeasuredAtomic<'a>>>,
@@ -431,8 +431,8 @@ impl Measurer<'_> {
     pub(crate) fn intrinsic_widths(
         &self,
         paragraph: &ferri_pdf_document::Paragraph,
-        atomics: &[ferri_pdf_text::IntrinsicWidths],
-    ) -> Result<ferri_pdf_text::IntrinsicWidths, LayoutError> {
+        atomics: &[crate::text::IntrinsicWidths],
+    ) -> Result<crate::text::IntrinsicWidths, LayoutError> {
         self.work.spend(paragraph.text().len().max(1))?;
         Ok(self.text.intrinsic_widths(paragraph, atomics)?)
     }
@@ -441,7 +441,7 @@ impl Measurer<'_> {
         &self,
         paragraph: &ferri_pdf_document::Paragraph,
         width: f32,
-        atomics: &[ferri_pdf_text::AtomicMetrics],
+        atomics: &[crate::text::AtomicMetrics],
     ) -> Result<Vec<Line>, LayoutError> {
         self.work.spend(paragraph.text().len().max(1))?;
         Ok(self.text.layout_paragraph(paragraph, width, atomics)?)

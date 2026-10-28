@@ -20,6 +20,7 @@ mod multipart;
 mod svg;
 #[cfg(test)]
 mod tests;
+mod text;
 mod writer;
 
 pub use multipart::{
@@ -27,10 +28,11 @@ pub use multipart::{
 };
 
 use crate::layout::LayoutError;
+use crate::text::TextError;
 use ferri_pdf_document::{DocumentError, StyledDocument};
-use ferri_pdf_text::TextError;
 
 pub use crate::layout::{Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine};
+pub use crate::text::{GlyphRun, PositionedGlyph};
 pub use crate::writer::{
     ImageDpi, ImageOptions, InvalidImageDpi, InvalidJpegQuality, JpegQuality, PdfError,
 };
@@ -55,7 +57,6 @@ pub use ferri_pdf_resources::{LoaderOptions, UrlResolver};
 pub use ferri_pdf_style::{
     ColorScheme, ContrastPreference, MotionPreference, PrintPreferences, PrintSettings, StyleError,
 };
-pub use ferri_pdf_text::{GlyphRun, PositionedGlyph};
 
 /// Settings for a rendering job. CSS controls page size and formatting.
 #[derive(Clone, Debug, Default)]

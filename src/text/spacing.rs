@@ -1,4 +1,4 @@
-use crate::{GlyphRun, Line, TextError};
+use crate::text::{GlyphRun, Line, TextError};
 use ferri_pdf_style::{Style, TextAlign};
 use icu_properties::{CodePointSetData, props::DefaultIgnorableCodePoint};
 

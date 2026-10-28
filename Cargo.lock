@@ -601,16 +601,19 @@ dependencies = [
  "ferri-pdf-fonts",
  "ferri-pdf-graphics",
  "ferri-pdf-grid",
+ "ferri-pdf-icu-casemap",
  "ferri-pdf-images",
  "ferri-pdf-krilla",
  "ferri-pdf-resources",
  "ferri-pdf-resvg",
  "ferri-pdf-style",
  "ferri-pdf-table",
- "ferri-pdf-text",
  "ferri-pdf-usvg",
  "fontdb",
+ "icu_locale_core",
+ "icu_properties",
  "roxmltree",
+ "rustybuzz",
  "same-file",
  "serde",
  "serde_json",
@@ -618,6 +621,10 @@ dependencies = [
  "smallvec",
  "thiserror",
  "tiny-skia",
+ "unicode-bidi",
+ "unicode-linebreak",
+ "unicode-script",
+ "unicode-segmentation",
 ]
 
 [[package]]
@@ -849,27 +856,6 @@ dependencies = [
  "ferri-pdf-graphics",
  "ferri-pdf-style",
  "thiserror",
-]
-
-[[package]]
-name = "ferri-pdf-text"
-version = "0.1.0"
-dependencies = [
- "ferri-pdf-document",
- "ferri-pdf-fonts",
- "ferri-pdf-graphics",
- "ferri-pdf-icu-casemap",
- "ferri-pdf-resources",
- "ferri-pdf-style",
- "icu_locale_core",
- "icu_properties",
- "rustybuzz",
- "serde",
- "thiserror",
- "unicode-bidi",
- "unicode-linebreak",
- "unicode-script",
- "unicode-segmentation",
 ]
 
 [[package]]

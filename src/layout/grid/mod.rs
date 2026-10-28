@@ -11,10 +11,10 @@ mod tracks;
 pub(super) use layout::measure;
 
 use crate::layout::{LayoutError, measure::Measurer};
+use crate::text::IntrinsicWidths;
 use ferri_pdf_document::{BlockBox, BlockContent};
 use ferri_pdf_grid::{AvailableSpace, SizeBounds, SizingItem, size_tracks};
 use ferri_pdf_style::{COLUMNS, ROWS};
-use ferri_pdf_text::IntrinsicWidths;
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 use tracks::TrackGeometry;
 
@@ -482,9 +482,9 @@ impl<'a> Geometry<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::text::TextContext;
     use ferri_pdf_document::StyledDocument;
     use ferri_pdf_resources::{FileResolver, ResourceBase};
-    use ferri_pdf_text::TextContext;
 
     #[test]
     fn item_metrics_distinguish_parent_plans_and_restore_context_after_errors() {

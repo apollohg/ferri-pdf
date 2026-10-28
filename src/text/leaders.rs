@@ -1,4 +1,4 @@
-use crate::{
+use crate::text::{
     GlyphRun, Line, TextContext, TextError,
     line_boxes::{Slot, slot_width},
 };
@@ -71,7 +71,7 @@ fn phase(left: f32, right: f32, width: f32, available: f32, rtl: bool) -> (f32, 
 
 pub(super) fn wrapping_width(
     paragraph: &Paragraph,
-    arranged: &crate::line_boxes::Arranged,
+    arranged: &crate::text::line_boxes::Arranged,
     available: f32,
     from: usize,
 ) -> Option<f32> {
@@ -278,7 +278,7 @@ pub(super) fn expand(
         return Err(TextError::NonFiniteGeometry);
     }
     line.width = position;
-    let visible = crate::whitespace::visible(paragraph, line.range.clone());
+    let visible = crate::text::whitespace::visible(paragraph, line.range.clone());
     let mut leaders = std::collections::BTreeMap::<usize, Vec<&GlyphRun>>::new();
     for run in &line.runs {
         if run.leader {
@@ -291,10 +291,10 @@ pub(super) fn expand(
     for (index, mut runs) in leaders {
         let span = &paragraph.spans()[index];
         let before =
-            crate::hyphenation::text(&paragraph.text()[source..span.range.start], None).len();
+            crate::text::hyphenation::text(&paragraph.text()[source..span.range.start], None).len();
         text.push_str(&line.text[original..original + before]);
-        original +=
-            before + crate::hyphenation::text(&paragraph.text()[span.range.clone()], None).len();
+        original += before
+            + crate::text::hyphenation::text(&paragraph.text()[span.range.clone()], None).len();
         if span.style.rtl {
             runs.reverse();
         }

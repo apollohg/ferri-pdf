@@ -214,7 +214,7 @@ fn huge_leader_expansion_fails_before_allocating_repetitions() {
     assert!(
         matches!(
             error,
-            crate::Error::Layout(ref message) if *message == ferri_pdf_text::TextError::LeaderExpansionLimit { limit: ferri_pdf_document::MAX_INLINE_TEXT_BYTES }.to_string()
+            crate::Error::Layout(ref message) if *message == crate::text::TextError::LeaderExpansionLimit { limit: ferri_pdf_document::MAX_INLINE_TEXT_BYTES }.to_string()
         ),
         "{error:?}"
     );

@@ -3,10 +3,10 @@
 use crate::layout::LayoutError;
 use crate::layout::geometry::{Edges, inline_horizontal};
 use crate::layout::measure::{MeasuredBlock, Measurer};
+use crate::text::{AtomicMetrics, BoxFragment};
 use ferri_pdf_document::{BlockBox, InlineBox};
 use ferri_pdf_graphics::{BoxPaint, DecorationLine, DecorationPaint, DisplayItem, Rect};
 use ferri_pdf_style::Display;
-use ferri_pdf_text::{AtomicMetrics, BoxFragment};
 
 /// An atomic inline measured in its containing block, waiting for its line position.
 #[derive(Clone)]

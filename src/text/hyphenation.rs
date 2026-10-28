@@ -1,5 +1,5 @@
-use crate::shaping::MissingGlyphs;
-use crate::{GlyphRun, Piece, TextContext, TextError, line_boxes};
+use crate::text::shaping::MissingGlyphs;
+use crate::text::{GlyphRun, Piece, TextContext, TextError, line_boxes};
 use ferri_pdf_document::Paragraph;
 use ferri_pdf_style::Hyphens;
 
@@ -28,7 +28,7 @@ pub(super) fn allowed(paragraph: &Paragraph, end: usize) -> bool {
 pub(super) fn decorate(
     context: &TextContext<'_>,
     paragraph: &Paragraph,
-    bidi: &crate::bidi::ResolvedParagraph<'_>,
+    bidi: &crate::text::bidi::ResolvedParagraph<'_>,
     end: usize,
     pieces: &mut Vec<Piece>,
 ) -> Result<Option<&'static str>, TextError> {

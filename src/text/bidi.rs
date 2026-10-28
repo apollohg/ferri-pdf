@@ -1,4 +1,4 @@
-use crate::TextError;
+use crate::text::TextError;
 use ferri_pdf_document::{MAX_INLINE_TEXT_BYTES, Paragraph};
 use ferri_pdf_style::{Style, UnicodeBidi};
 use std::{cell::Cell, ops::Range};

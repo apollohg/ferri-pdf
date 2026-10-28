@@ -4,10 +4,10 @@ use crate::layout::{
     margin::MarginStrut,
     measure::{FlowItem, MeasuredBlock, Measurer},
 };
+use crate::text::IntrinsicWidths;
 use ferri_pdf_document::BlockBox;
 use ferri_pdf_graphics::{BoxPaint, ImagePaint, Rect};
 use ferri_pdf_style::POINTS_PER_PIXEL;
-use ferri_pdf_text::IntrinsicWidths;
 
 /// Content-box width and height constraints, percentages resolved against the containing block.
 pub(super) fn constraints(

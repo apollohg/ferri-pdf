@@ -1,10 +1,10 @@
 use super::common;
 
+use crate::text::{AtomicMetrics, Line, TextContext, TextError};
 use common::{assert_pt, local_options};
 use ferri_pdf_document::{BlockContent, Paragraph, StyledDocument};
 use ferri_pdf_resources::FileResolver;
 use ferri_pdf_style::TextAlign;
-use ferri_pdf_text::{AtomicMetrics, Line, TextContext, TextError};
 
 const PROFILE: &str = "@font-face{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}html,body,p{margin:0;padding:0;font:10pt/10pt Fixed}";
 
@@ -405,7 +405,7 @@ fn pathological_missing_combining_sequences_cannot_trigger_unbounded_matching() 
         matches!(
             result,
             Err(TextError::GlyphMatchingLimit {
-                limit: ferri_pdf_text::MAX_GLYPH_MATCH_WORK
+                limit: crate::text::MAX_GLYPH_MATCH_WORK
             })
         ),
         "a pathological unsupported combining tail must hit the typed matching work bound"
