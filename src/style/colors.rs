@@ -21,6 +21,10 @@ const ALPHA: &str = "alpha";
 pub(super) const CURRENT_COLOR: &str = "currentcolor";
 const ACCENT_COLOR: &str = "accentcolor";
 const CANVAS: &str = "canvas";
+const ACCENT_COLOR: &str = "accentcolor";
+const ACCENT_COLOR_TEXT: &str = "accentcolortext";
+/// The ambient flare WCAG 2 adds to relative luminances in contrast ratios.
+const LUMINANCE_FLARE: f32 = 0.05;
 const TRANSPARENT: &str = "transparent";
 const ALPHA_SEPARATOR: char = '/';
 const CUSTOM_SPACE_PREFIX: &str = "--";
@@ -433,6 +437,37 @@ fn system_color(name: &str, scheme: ColorScheme) -> Option<AbsoluteColor> {
     Some(AbsoluteColor::from_rgb8(rgb, 1.0))
 }
 
+/// `AccentColor` takes an author `accent-color`, pre-composed over `Canvas` (CSS Color 4
+/// §6.2, CSS UI 4 §7.1), and `AccentColorText` the more contrasting of black and white on it.
+fn author_accent(name: &str, accent: AbsoluteColor, scheme: ColorScheme) -> Option<AbsoluteColor> {
+    let text = name.eq_ignore_ascii_case(ACCENT_COLOR_TEXT);
+    if !text && !name.eq_ignore_ascii_case(ACCENT_COLOR) {
+        return None;
+    }
+    let (accent, canvas) = (accent.used(), canvas(scheme));
+    let rgb = std::array::from_fn(|index| {
+        (f32::from(accent.rgb[index]) * accent.alpha
+            + f32::from(canvas.rgb[index]) * (OPAQUE - accent.alpha))
+            .round() as u8
+    });
+    let composed = AbsoluteColor::from_rgb8(rgb, OPAQUE);
+    if !text {
+        return Some(composed);
+    }
+    // WCAG 2 contrast ratios against white and black, whose luminances are 1 and 0.
+    let luminance = composed.convert(ColorSpace::XyzD65).components[1].unwrap_or_default();
+    let against_white = (OPAQUE + LUMINANCE_FLARE) / (luminance + LUMINANCE_FLARE);
+    let against_black = (luminance + LUMINANCE_FLARE) / LUMINANCE_FLARE;
+    Some(AbsoluteColor::from_rgb8(
+        if against_white >= against_black {
+            [u8::MAX; 3]
+        } else {
+            [0; 3]
+        },
+        OPAQUE,
+    ))
+}
+
 fn lookup<T: Copy>(table: &[(&str, T)], name: &str) -> Option<T> {
     table
         .iter()
@@ -502,7 +537,11 @@ impl ColorParser<'_> {
                 if let Ok(rgb) = cssparser::color::parse_named_color(name) {
                     return Ok(AbsoluteColor::from_rgb8(rgb.into(), 1.0));
                 }
-                let color = system_color(name, self.relative.color_scheme)
+                let color = self
+                    .relative
+                    .accent_color
+                    .and_then(|accent| author_accent(name, accent, self.relative.color_scheme))
+                    .or_else(|| system_color(name, self.relative.color_scheme))
                     .ok_or_else(|| location.new_unexpected_token_error(token.clone()))?;
                 self.dependent.set(true);
                 Ok(color)

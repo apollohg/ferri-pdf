@@ -173,6 +173,8 @@ pub(crate) struct Style {
     /// The used `color`; `computed_color` keeps its colour space for `currentcolor`.
     pub color: Color,
     pub computed_color: crate::paint::AbsoluteColor,
+    /// `accent-color`; `None` is `auto`.
+    pub accent_color: Option<crate::paint::AbsoluteColor>,
     pub color_scheme: crate::style::color_scheme::ColorSchemes,
     pub decoration: BoxDecoration,
     pub clone_decoration: bool,
@@ -280,6 +282,7 @@ impl Default for Style {
             orphans: crate::style::DEFAULT_MIN_FRAGMENT_LINES,
             color: Color::BLACK,
             computed_color: crate::paint::AbsoluteColor::BLACK,
+            accent_color: None,
             color_scheme: Default::default(),
             decoration: initial_decoration(),
             clone_decoration: false,
@@ -959,6 +962,7 @@ impl Stylesheet {
                 initial_font: self.environment.relative.initial_font.clone(),
                 color_scheme: self.used_color_scheme(&parent.color_scheme),
                 counter_styles: Some(self.counter_styles.clone()),
+                accent_color: parent.accent_color,
             },
         }
     }
@@ -980,6 +984,12 @@ impl Stylesheet {
             properties::apply(Property::ColorScheme, &value, style, parent, &inherited)?;
         }
         let color_scheme = self.used_color_scheme(&style.color_scheme);
+        // `AccentColor` in `color` takes the element's accent colour, whose `currentcolor`
+        // is then recomputed against the element's own colour.
+        let accent = winners.remove(&Property::AccentColor);
+        if let Some(value) = &accent {
+            properties::apply(Property::AccentColor, value, style, parent, &inherited)?;
+        }
         for property in [Property::FontSize].iter().chain(&FONT_SELECTION) {
             if let Some(value) = winners.remove(property) {
                 properties::apply(*property, &value, style, parent, &inherited)?;
@@ -1051,6 +1061,7 @@ impl Stylesheet {
             initial_font: self.environment.relative.initial_font.clone(),
             color_scheme,
             counter_styles: Some(self.counter_styles.clone()),
+            accent_color: style.accent_color,
         };
         if let Some(value) = winners.remove(&Property::LineHeight) {
             properties::apply(Property::LineHeight, &value, style, parent, &line_basis)?;
@@ -1058,7 +1069,7 @@ impl Stylesheet {
         if root {
             self.capture_root_font(style);
         }
-        let relative = Relative {
+        let mut relative = Relative {
             font: self.basis(
                 style.size,
                 style.line_height,
@@ -1088,6 +1099,7 @@ impl Stylesheet {
             initial_font: self.environment.relative.initial_font.clone(),
             color_scheme,
             counter_styles: Some(self.counter_styles.clone()),
+            accent_color: style.accent_color,
         };
         // The root's initial `canvastext` follows its own colour scheme.
         let initial = Specified::Wide(crate::style::wide_keywords::WideKeyword::Initial);
@@ -1096,6 +1108,10 @@ impl Stylesheet {
             .or_else(|| root.then_some(initial))
         {
             properties::apply(Property::Color, &value, style, parent, &relative)?;
+        }
+        if let Some(value) = &accent {
+            properties::apply(Property::AccentColor, value, style, parent, &relative)?;
+            relative.accent_color = style.accent_color;
         }
         style.decoration = initial_decoration();
         style.reset_current_colors();

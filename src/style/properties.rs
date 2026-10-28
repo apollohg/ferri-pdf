@@ -494,6 +494,14 @@ fn handler(property: Property) -> Option<Handler> {
             Some(|v, _| crate::style::Hyphens::from_component(v).is_ok()),
         ),
         P::ColorScheme => (color_scheme, Some(|_, _| true)),
+        P::AccentColor => (
+            accent_color,
+            Some(|v, relative| {
+                v.keyword() == Some(Keyword::Auto)
+                    || crate::style::colors::color(v, relative, &crate::paint::AbsoluteColor::BLACK)
+                        .is_ok()
+            }),
+        ),
         P::Color => (
             color,
             Some(|v, relative| {
@@ -1390,6 +1398,18 @@ fn color(
     style.color = style.computed_color.used();
     Ok(())
 }
+computed!(
+    accent_color,
+    [accent_color],
+    |value, style, _parent, relative| match value.keyword() {
+        Some(Keyword::Auto) => None,
+        _ => Some(crate::style::colors::absolute(
+            value,
+            relative,
+            &style.computed_color
+        )?),
+    }
+);
 computed!(
     list_style_image,
     [list_style_image],

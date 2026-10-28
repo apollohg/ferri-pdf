@@ -1,3 +1,4 @@
+mod accent;
 mod calc;
 mod colors;
 mod counter_styles;

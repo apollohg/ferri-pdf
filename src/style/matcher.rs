@@ -114,6 +114,7 @@ impl<'a> ValueContext<'a> {
                 work: source.work.clone(),
                 initial_font: source.initial_font.clone(),
                 counter_styles: source.counter_styles.clone(),
+                accent_color: source.accent_color,
                 ..Relative::validation()
             },
         };

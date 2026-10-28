@@ -360,6 +360,9 @@ pub(crate) struct Relative<'a> {
     /// The document's counter styles, which `<counter-style>` values name; `None` before
     /// any document, which leaves the predefined ones.
     pub(crate) counter_styles: Option<Arc<crate::style::counter_style::CounterStyles>>,
+    /// The element's computed `accent-color`, which `AccentColor` takes (CSS Color 4 §6.2);
+    /// `None` is `auto`.
+    pub(crate) accent_color: Option<crate::paint::AbsoluteColor>,
 }
 impl Relative<'_> {
     /// Initial values and the default page area, for values computed without an element
@@ -380,6 +383,7 @@ impl Relative<'_> {
             initial_font,
             color_scheme: crate::style::ColorScheme::Light,
             counter_styles: None,
+            accent_color: None,
         }
     }
     pub(crate) fn media(paper: [f32; 2], font: Option<Arc<InitialFont>>) -> Self {

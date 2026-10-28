@@ -796,6 +796,7 @@ impl<'a> Geometry<'a> {
                 initial_font: self.sheet.environment.relative.initial_font.clone(),
                 color_scheme,
                 counter_styles: Some(self.sheet.counter_styles.clone()),
+                accent_color: inherited.accent_color,
             });
         }
         compute(&Relative {
@@ -822,6 +823,7 @@ impl<'a> Geometry<'a> {
             initial_font: self.sheet.environment.relative.initial_font.clone(),
             color_scheme,
             counter_styles: Some(self.sheet.counter_styles.clone()),
+            accent_color: None,
         })
     }
 
@@ -1167,6 +1169,7 @@ impl<'a> Geometry<'a> {
                             &self.context(Context::Page).style.borrow().color_scheme,
                         ),
                         counter_styles: Some(self.sheet.counter_styles.clone()),
+                        accent_color: None,
                     };
                     crate::style::page_values::page_dimension(
                         &value,
