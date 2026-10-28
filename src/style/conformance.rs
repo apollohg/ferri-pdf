@@ -512,7 +512,20 @@ fn property_grammars_accept_generated_values_and_reject_mutations() {
             property.name(),
             data.syntax,
             data.root,
-            |value| Ok(declaration::value(property, value, &mut 0)?.is_some()),
+            // A value the grammar matches but specification prose excludes still matched.
+            |value| {
+                Ok(declaration::value(property, value, &mut 0)?.is_some()
+                    || crate::style::matcher::match_value(
+                        data.root,
+                        value,
+                        &mut 0,
+                        crate::style::matcher::ValueContext::Element,
+                    )?
+                    .is_some_and(|matched| {
+                        !crate::style::grid_values::valid(property, &matched)
+                            || !crate::style::inert::valid(property, &matched)
+                    }))
+            },
             &mut failures,
         );
     }

@@ -33,6 +33,15 @@ pub(super) fn parse(source: &str, relative: &Relative<'_>) -> Result<Option<Easi
     let [value] = value.items() else {
         return Ok(None);
     };
+    function(value, relative)
+}
+
+/// One matched `<easing-function>`; `None` when its arguments fall outside the function's
+/// constraints.
+pub(super) fn function(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<Option<Easing>, StyleError> {
     Ok(match value.unwrap() {
         Component::Keyword(keyword) => Some(match keyword {
             Keyword::Linear => Easing::Linear,

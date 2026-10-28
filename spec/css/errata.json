@@ -1,6 +1,14 @@
 {
   "description": "Corrections to mdn-data from the cited specifications: productions the data references but does not define, and entries that predate the current specification. Each entry replaces only the fields it names. Additions are specification properties the data omits, defined in full.",
   "syntaxes": {
+    "single-animation": {
+      "syntax": "[ auto | <time [0s,∞]> ] || <easing-function> || <time> || <single-animation-iteration-count> || <single-animation-direction> || <single-animation-fill-mode> || <single-animation-play-state> || [ none | <keyframes-name> ] || <single-animation-timeline>",
+      "source": "https://www.w3.org/TR/2023/WD-css-animations-2-20230602/#animation-shorthand with one value per list item: the first <time> is the duration and the second the delay (https://www.w3.org/TR/2023/WD-css-animations-1-20230302/#animation)"
+    },
+    "single-animation-range": {
+      "syntax": "normal | <length-percentage> | <timeline-range-name> <length-percentage>?",
+      "source": "https://drafts.csswg.org/scroll-animations-1/#animation-range-start: one item of the list, which the animation-range shorthand takes per entry"
+    },
     "content-list": {
       "syntax": "[ <string> | <image> | <attr()> | contents | <quote> | <leader()> | <target> | <string()> | <content()> | <counter> ]+",
       "source": "https://www.w3.org/TR/2025/WD-css-content-3-20251204/#content-values"
@@ -131,6 +139,48 @@
     }
   },
   "properties": {
+    "animation": {
+      "initial": [
+        "animation-name",
+        "animation-duration",
+        "animation-timing-function",
+        "animation-delay",
+        "animation-iteration-count",
+        "animation-direction",
+        "animation-fill-mode",
+        "animation-play-state",
+        "animation-timeline",
+        "animation-range-start",
+        "animation-range-end"
+      ],
+      "source": "https://drafts.csswg.org/scroll-animations-1/#animation-range: the animation-range properties are reset-only sub-properties of the animation shorthand"
+    },
+    "animation-range": {
+      "syntax": "[ <single-animation-range> <single-animation-range>? ]#",
+      "source": "https://drafts.csswg.org/scroll-animations-1/#animation-range with one start and end per list item"
+    },
+    "overscroll-behavior": {
+      "initial": ["overscroll-behavior-x", "overscroll-behavior-y"],
+      "source": "https://drafts.csswg.org/css-overscroll-1/#overscroll-behavior-properties: a shorthand for overscroll-behavior-x and overscroll-behavior-y"
+    },
+    "scroll-timeline": {
+      "syntax": "[ [ none | <dashed-ident> ] [ block | inline | x | y ]? ]#",
+      "source": "https://drafts.csswg.org/scroll-animations-1/#scroll-timeline-shorthand with one name and axis per list item"
+    },
+    "speak-as": {
+      "initial": "normal",
+      "source": "https://www.w3.org/TR/2023/CRD-css-speech-1-20230214/#speaking-props-speak-as"
+    },
+    "text-size-adjust": {
+      "syntax": "auto | none | <percentage [0,∞]>",
+      "initial": "auto",
+      "source": "https://drafts.csswg.org/css-size-adjust-1/#adjustment-control"
+    },
+    "view-timeline": {
+      "syntax": "[ [ none | <dashed-ident> ] [ [ block | inline | x | y ] || [ auto | <length-percentage> ]{1,2} ]? ]#",
+      "initial": ["view-timeline-name", "view-timeline-axis", "view-timeline-inset"],
+      "source": "https://drafts.csswg.org/scroll-animations-1/#view-timeline-shorthand: sets view-timeline-name, view-timeline-axis and view-timeline-inset, one of each per list item"
+    },
     "object-position": {
       "inherited": false,
       "source": "https://www.w3.org/TR/2023/CRD-css-images-3-20231218/#the-object-position"

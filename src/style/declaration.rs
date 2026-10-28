@@ -490,8 +490,12 @@ fn value_with_context(
     steps: &mut usize,
     context: ValueContext<'_>,
 ) -> Result<Option<Component>, StyleError> {
-    Ok(match_value(property.data().root, source, steps, context)?
-        .filter(|value| crate::style::grid_values::valid(property, value)))
+    Ok(
+        match_value(property.data().root, source, steps, context)?.filter(|value| {
+            crate::style::grid_values::valid(property, value)
+                && crate::style::inert::valid(property, value)
+        }),
+    )
 }
 
 pub(crate) fn descriptor(

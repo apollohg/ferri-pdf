@@ -154,6 +154,8 @@ pub(crate) struct Style {
     pub bookmark: crate::style::BookmarkStyle,
     pub grid: crate::style::GridStyle,
     pub multicol: crate::style::MulticolStyle,
+    #[serde(skip)]
+    pub(super) inert: crate::style::inert::InertValues,
 }
 impl Default for Style {
     fn default() -> Self {
@@ -237,6 +239,7 @@ impl Default for Style {
             bookmark: crate::style::BookmarkStyle::default(),
             grid: crate::style::GridStyle::default(),
             multicol: crate::style::MulticolStyle::default(),
+            inert: crate::style::inert::InertValues::default(),
         }
     }
 }

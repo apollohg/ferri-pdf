@@ -42,6 +42,30 @@ const FLEX_NONE: [&str; 3] = ["0", "0", "auto"];
 const ROW_FLOW: &str = "row";
 const COLUMN_FLOW: &str = "column";
 const DENSE: &str = "dense";
+/// `<single-transition>` slots in grammar order; the first `<time>` is the duration.
+const TRANSITION: [Property; 5] = [
+    Property::TransitionProperty,
+    Property::TransitionDuration,
+    Property::TransitionTimingFunction,
+    Property::TransitionDelay,
+    Property::TransitionBehavior,
+];
+/// `<single-animation>` slots in grammar order.
+const ANIMATION: [Property; 9] = [
+    Property::AnimationDuration,
+    Property::AnimationTimingFunction,
+    Property::AnimationDelay,
+    Property::AnimationIterationCount,
+    Property::AnimationDirection,
+    Property::AnimationFillMode,
+    Property::AnimationPlayState,
+    Property::AnimationName,
+    Property::AnimationTimeline,
+];
+/// Scroll-driven Animations 1 §A: reset-only sub-properties of `animation`.
+const ANIMATION_RESET: [Property; 2] = [Property::AnimationRangeStart, Property::AnimationRangeEnd];
+/// Scroll-driven Animations 1 §A: an omitted range end with a named start ends that range.
+const NAMED_RANGE_END: f32 = 1.0;
 const SYNTHESIS_ON: &str = "auto";
 const SYNTHESIS_OFF: &str = "none";
 
@@ -134,6 +158,34 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::PageBreakAfter => legacy_break(&value, P::BreakAfter)?,
         P::PageBreakInside => legacy_break(&value, P::BreakInside)?,
         P::WordWrap => alias(&value, P::OverflowWrap),
+        P::Transition => slotted_list(&value, &TRANSITION),
+        P::Animation => slotted_list(&value, &ANIMATION)
+            .into_iter()
+            .chain(ANIMATION_RESET.map(|property| (property, initial())))
+            .collect(),
+        P::ScrollTimeline => scroll_timeline(&value),
+        P::ViewTimeline => view_timeline(&value),
+        P::AnimationRange => animation_range(&value),
+        P::ScrollMargin => edges(
+            &value,
+            [
+                P::ScrollMarginTop,
+                P::ScrollMarginRight,
+                P::ScrollMarginBottom,
+                P::ScrollMarginLeft,
+            ],
+        ),
+        P::ScrollPadding => edges(
+            &value,
+            [
+                P::ScrollPaddingTop,
+                P::ScrollPaddingRight,
+                P::ScrollPaddingBottom,
+                P::ScrollPaddingLeft,
+            ],
+        ),
+        P::OverscrollBehavior => pair(&value, [P::OverscrollBehaviorX, P::OverscrollBehaviorY]),
+        P::InterestDelay => pair(&value, [P::InterestDelayStart, P::InterestDelayEnd]),
         _ => {
             if let Some(longhands) = unordered_references(shorthand, &value)? {
                 longhands
@@ -379,7 +431,7 @@ fn font_synthesis(value: &Component) -> Result<Longhands, StyleError> {
     .collect()
 }
 
-/// CSS Fragmentation 3 §3.1: legacy `page-break-*` map `always` to `page`.
+/// CSS Fragmentation 3 §3.4: legacy `page-break-*` map `always` to `page`.
 fn legacy_break(value: &Component, property: Property) -> Result<Longhands, StyleError> {
     let keyword = match value.keyword() {
         Some(Keyword::Always) => Keyword::Page,
@@ -392,6 +444,74 @@ fn legacy_break(value: &Component, property: Property) -> Result<Longhands, Styl
 /// A legacy name alias sharing the value of the property it names.
 fn alias(value: &Component, property: Property) -> Longhands {
     vec![(property, longhand(property, value))]
+}
+
+/// Comma-separated `||` items, each slot setting one item of the longhand at its index.
+fn slotted_list(value: &Component, properties: &[Property]) -> Longhands {
+    let items: Vec<&Component> = value.items().iter().collect();
+    properties
+        .iter()
+        .enumerate()
+        .map(|(index, property)| coordinated(*property, &items, &|item| item.slot(index).cloned()))
+        .collect()
+}
+
+/// The optional part after an item's first component, which the grammar groups.
+fn optional(item: &Component) -> Option<&Component> {
+    item.items().get(1).and_then(|part| part.items().first())
+}
+
+/// `[ <name> <axis>? ]#`.
+fn scroll_timeline(value: &Component) -> Longhands {
+    let items: Vec<&Component> = value.items().iter().collect();
+    vec![
+        coordinated(Property::ScrollTimelineName, &items, &|item| {
+            item.items().first().cloned()
+        }),
+        coordinated(Property::ScrollTimelineAxis, &items, &|item| {
+            optional(item).cloned()
+        }),
+    ]
+}
+
+/// `[ <name> [ <axis> || <inset> ]? ]#`.
+fn view_timeline(value: &Component) -> Longhands {
+    let items: Vec<&Component> = value.items().iter().collect();
+    let part = |index: usize| move |item: &Component| optional(item)?.slot(index).cloned();
+    vec![
+        coordinated(Property::ViewTimelineName, &items, &|item| {
+            item.items().first().cloned()
+        }),
+        coordinated(Property::ViewTimelineAxis, &items, &part(0)),
+        coordinated(Property::ViewTimelineInset, &items, &part(1)),
+    ]
+}
+
+/// `[ <start> <end>? ]#`; an omitted end after a named start is that name at 100%, and is
+/// otherwise initial (Scroll-driven Animations 1 §A).
+fn animation_range(value: &Component) -> Longhands {
+    let items: Vec<&Component> = value.items().iter().collect();
+    let end = |item: &Component| {
+        optional(item).cloned().or_else(|| {
+            let name = item
+                .items()
+                .first()?
+                .find(Label::Production(Production::TimelineRangeName))?;
+            Some(Component::Group(vec![
+                Component::Reference(
+                    Label::Production(Production::TimelineRangeName),
+                    Box::new(name.clone()),
+                ),
+                Component::Group(vec![Component::Percentage(NAMED_RANGE_END)]),
+            ]))
+        })
+    };
+    vec![
+        coordinated(Property::AnimationRangeStart, &items, &|item| {
+            item.items().first().cloned()
+        }),
+        coordinated(Property::AnimationRangeEnd, &items, &end),
+    ]
 }
 
 /// Per-layer longhand lists from `[ <bg-layer> , ]* <final-bg-layer>`.
@@ -466,16 +586,25 @@ fn layered(
     layers: &[&Component],
     item: &dyn Fn(&Component) -> Option<Component>,
 ) -> (Property, Specified) {
-    let items: Vec<Option<Component>> = layers.iter().map(|layer| item(layer)).collect();
-    if items.iter().all(Option::is_none) {
+    if layers.iter().all(|layer| item(layer).is_none()) {
         return (property, initial());
     }
+    coordinated(property, layers, item)
+}
+
+/// One item per entry, so coordinated lists keep the shorthand's length; entries that omit
+/// it take the longhand's initial item.
+fn coordinated(
+    property: Property,
+    entries: &[&Component],
+    item: &dyn Fn(&Component) -> Option<Component>,
+) -> (Property, Specified) {
     let fallback = declaration::initial(property)
         .and_then(|initial| initial.items().first())
         .cloned();
-    let items = items
-        .into_iter()
-        .map(|item| item.or_else(|| fallback.clone()))
+    let items = entries
+        .iter()
+        .map(|entry| item(entry).or_else(|| fallback.clone()))
         .collect::<Option<Vec<_>>>();
     match items {
         Some(items) => (property, longhand(property, &Component::Group(items))),

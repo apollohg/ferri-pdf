@@ -280,7 +280,7 @@ impl fmt::Display for Serialized<'_> {
 }
 
 /// The grammar a reference's label names.
-fn target(label: Label) -> NodeId {
+pub(super) fn target(label: Label) -> NodeId {
     let root = match label {
         Label::Property(property) => property.data().root,
         Label::Production(production) => production.root(),

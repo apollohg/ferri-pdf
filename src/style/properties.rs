@@ -10,7 +10,7 @@ use crate::style::{
     declaration::{self, Specified},
     flex_values::{Alignment, FlexBasis, FlexDirection, FlexWrap, factor, gap},
     grammar::{Keyword, Property},
-    grid_values,
+    grid_values, inert,
     text_values::{LineHeight, OverflowWrap, TextTransform},
     units::Relative,
     wide_keywords::Resolved,
@@ -49,7 +49,7 @@ struct Handler {
 }
 
 pub(super) fn supports_property(property: Property) -> bool {
-    handler(property).is_some_and(|handler| handler.check.is_some())
+    inert::defined(property) || handler(property).is_some_and(|handler| handler.check.is_some())
 }
 
 pub(super) fn supports_value(
@@ -57,6 +57,9 @@ pub(super) fn supports_value(
     value: &Component,
     relative: &Relative<'_>,
 ) -> bool {
+    if inert::defined(property) {
+        return inert::compute(property, value, relative).is_ok();
+    }
     handler(property)
         .and_then(|handler| handler.check)
         .is_some_and(|check| check(value, relative))
@@ -150,6 +153,7 @@ fn apply_value(
         },
     };
     let result = match handler(property) {
+        _ if inert::defined(property) => inert::apply(property, style, input, relative),
         Some(handler) => (handler.apply)(style, parent, input, relative),
         None => match input {
             Input::Copy(_) => Ok(()),
@@ -272,7 +276,9 @@ fn quotes(
 }
 
 pub(super) fn copy(property: Property, target: &mut Style, source: &Style) {
-    if let Some(handler) = handler(property) {
+    if inert::defined(property) {
+        inert::copy(property, target, source);
+    } else if let Some(handler) = handler(property) {
         (handler.apply)(target, source, Input::Copy(source), &Relative::initial())
             .expect("copying a computed property cannot fail");
     }
@@ -289,7 +295,7 @@ pub(crate) fn inherit(style: &mut Style, parent: &Style) {
 /// Computed-field coverage is separate from usable value support.
 #[cfg(test)]
 pub(crate) fn computed(property: Property) -> bool {
-    handler(property).is_some()
+    inert::defined(property) || handler(property).is_some()
 }
 
 fn handler(property: Property) -> Option<Handler> {
