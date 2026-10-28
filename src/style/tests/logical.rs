@@ -15,8 +15,8 @@ const RED: [u8; 3] = [255, 0, 0];
 const BLUE: [u8; 3] = [0, 0, 255];
 const DOCUMENT: &str = "<section id=parent><div id=child>X</div></section>";
 const BLOCKQUOTE: &str = "<section id=parent><blockquote id=child>X</blockquote></section>";
-/// The user-agent `blockquote` inline margin, 40px in points.
-const BLOCKQUOTE_MARGIN: f32 = 30.0;
+/// The user-agent 40px inline indent of `blockquote`, `dd` and lists, in points.
+const INDENT: f32 = 30.0;
 
 fn styles(css: &str, html: &str) -> (Style, Style) {
     let sheet = Stylesheet::parse(&[StylesheetSource {
@@ -137,7 +137,7 @@ fn revert_rolls_back_the_paired_cascade_as_one() {
     );
     assert_eq!(
         style.margin[LEFT],
-        points(BLOCKQUOTE_MARGIN),
+        points(INDENT),
         "revert on inline-start must drop the author margin-left too and reach the user-agent \
          blockquote margin; got {:?}",
         margins(&style)
@@ -384,4 +384,33 @@ fn supports_queries_accept_flow_relative_properties() {
         "@supports must report flow-relative properties as supported; got {:?}",
         margins(&style)
     );
+}
+
+#[test]
+fn user_agent_indents_sit_on_the_inline_start_side() {
+    for (direction, start, end) in [("ltr", LEFT, RIGHT), ("rtl", RIGHT, LEFT)] {
+        let (_, list) = styles(
+            "",
+            &format!("<section id=parent dir={direction}><ul id=child><li>X</ul></section>"),
+        );
+        assert_eq!(
+            [list.padding[start].clone(), list.padding[end].clone()],
+            [LengthPercentage::Length(INDENT), LengthPercentage::ZERO],
+            "{direction}: a list indents its inline-start side; got {:?}",
+            list.padding
+        );
+        let (_, definition) = styles(
+            "",
+            &format!("<dl id=parent dir={direction}><dd id=child>X</dd></dl>"),
+        );
+        assert_eq!(
+            [
+                definition.margin[start].clone(),
+                definition.margin[end].clone()
+            ],
+            [points(INDENT), points(0.0)],
+            "{direction}: dd indents its inline-start side; got {:?}",
+            margins(&definition)
+        );
+    }
 }

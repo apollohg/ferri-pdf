@@ -1,27 +1,26 @@
-/* HTML rendering defaults, expressed for the supported horizontal writing mode. */
+/* HTML rendering defaults (HTML Standard §15.3). */
 @namespace url("http://www.w3.org/1999/xhtml");
 @page { size: auto; margin: 72pt; }
 html, body, address, article, aside, blockquote, center, div, dl, dt, dd, dir,
 figure, figcaption, footer, form, header, hgroup, main, menu, nav, ol, p, pre,
 search, section, ul, listing, plaintext, xmp { display: block; }
 hr { display: block; color: gray; border-style: inset; border-width: 1px;
-    margin-top: .5em; margin-bottom: .5em; margin-left: auto; margin-right: auto;
-    overflow: hidden; }
+    margin-block: .5em; margin-inline: auto; overflow: hidden; }
 area, base, basefont, datalist, head, link, meta, noembed, noframes, param,
 script, style, template, title { display: none; }
 slot { display: contents; }
 body { margin: 8px; }
 p, blockquote, figure, pre, listing, plaintext, xmp, dl, dir, menu, ol, ul {
-    margin-top: 1em; margin-bottom: 1em;
+    margin-block: 1em;
 }
-blockquote, figure { margin-left: 40px; margin-right: 40px; }
-dd { margin-left: 40px; }
-dir, menu, ol, ul { padding-left: 40px; }
+blockquote, figure { margin-inline: 40px; }
+dd { margin-inline-start: 40px; }
+dir, menu, ol, ul { padding-inline-start: 40px; }
 dir dir, dir dl, dir menu, dir ol, dir ul,
 dl dir, dl dl, dl menu, dl ol, dl ul,
 menu dir, menu dl, menu menu, menu ol, menu ul,
 ol dir, ol dl, ol menu, ol ol, ol ul,
-ul dir, ul dl, ul menu, ul ol, ul ul { margin-top: 0; margin-bottom: 0; }
+ul dir, ul dl, ul menu, ul ol, ul ul { margin-block: 0; }
 li { display: list-item; text-align: match-parent; }
 ol { list-style-type: decimal; }
 ol, ul, menu { counter-reset: list-item; }
