@@ -1,6 +1,6 @@
+use crate::layout::TextLine;
 use crate::writer::PdfError;
 use ferri_pdf_fonts::{FontBook, FontId};
-use ferri_pdf_layout::TextLine;
 use ferri_pdf_text::PositionedGlyph;
 use krilla::{
     geom::{Point, Transform},

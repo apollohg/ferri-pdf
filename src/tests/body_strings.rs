@@ -118,7 +118,7 @@ fn named_string_bookmark_labels_resolve_on_the_heading_page() {
     let document =
         ferri_pdf_document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .unwrap();
-    let (document, trace) = ferri_pdf_layout::layout_document(document, &resolver).unwrap();
+    let (document, trace) = crate::layout::layout_document(document, &resolver).unwrap();
     assert_eq!(trace.pages.len(), 2);
     let labels: Vec<_> = document
         .navigation()
@@ -172,8 +172,8 @@ fn body_string_reflow_cycles_fail_without_publishing_a_provisional_pdf() {
             .unwrap();
     assert!(
         matches!(
-            ferri_pdf_layout::layout(&document, &resolver),
-            Err(ferri_pdf_layout::LayoutError::GeneratedContentCycle)
+            crate::layout::layout(&document, &resolver),
+            Err(crate::layout::LayoutError::GeneratedContentCycle)
         ),
         "moving the only assignment off the reference page must not freeze a guessed value"
     );
@@ -189,7 +189,7 @@ fn borrowed_layout_repeats_body_string_resolution_without_mutating_the_source() 
         ferri_pdf_document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .unwrap();
     for iteration in 0..2 {
-        let trace = ferri_pdf_layout::layout(&document, &resolver).unwrap();
+        let trace = crate::layout::layout(&document, &resolver).unwrap();
         assert!(
             trace.pages[0].iter().any(|line| line.text == "See Title"),
             "borrowed pass {iteration}"

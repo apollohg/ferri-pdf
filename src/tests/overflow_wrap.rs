@@ -112,7 +112,7 @@ fn emergency_breaks_preserve_arabic_joining_forms() {
         .layout
         .unwrap();
     assert_eq!(wrapped.pages[0].len(), 4);
-    let ids = |lines: &[ferri_pdf_layout::TextLine]| {
+    let ids = |lines: &[crate::layout::TextLine]| {
         lines
             .iter()
             .flat_map(|line| &line.runs)

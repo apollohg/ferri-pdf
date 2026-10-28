@@ -15,6 +15,7 @@
 #[cfg(test)]
 extern crate self as ferri_pdf;
 
+mod layout;
 mod multipart;
 mod svg;
 #[cfg(test)]
@@ -25,10 +26,11 @@ pub use multipart::{
     HtmlPart, MultipartOutput, PartOutput, render_parts, render_parts_with_resolver,
 };
 
+use crate::layout::LayoutError;
 use ferri_pdf_document::{DocumentError, StyledDocument};
-use ferri_pdf_layout::LayoutError;
 use ferri_pdf_text::TextError;
 
+pub use crate::layout::{Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine};
 pub use crate::writer::{
     ImageDpi, ImageOptions, InvalidImageDpi, InvalidJpegQuality, JpegQuality, PdfError,
 };
@@ -43,9 +45,6 @@ pub use ferri_pdf_graphics::{
     Radii, Rect, Segment, ShadowPaint, ShadowShape, Shape,
 };
 pub use ferri_pdf_images::ImageError;
-pub use ferri_pdf_layout::{
-    Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine,
-};
 pub use ferri_pdf_resources as resources;
 pub use ferri_pdf_resources::{
     FileResolver, ResolvedResource, Resource, ResourceBase, ResourceError, ResourceMetadata,
@@ -222,7 +221,7 @@ fn prepare_document(
         error @ DocumentError::TextExpansionLimit { .. } => Error::Document(error.to_string()),
     })?;
     let (document, trace) =
-        ferri_pdf_layout::layout_document(document, resolver).map_err(|error| match error {
+        layout::layout_document(document, resolver).map_err(|error| match error {
             LayoutError::Text(TextError::Font(ferri_pdf_fonts::FontError::InvalidFont(_))) => {
                 Error::InvalidFont
             }

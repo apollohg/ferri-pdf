@@ -597,19 +597,22 @@ version = "0.1.0"
 dependencies = [
  "ferri-pdf-document",
  "ferri-pdf-dom",
+ "ferri-pdf-flex",
  "ferri-pdf-fonts",
  "ferri-pdf-graphics",
+ "ferri-pdf-grid",
  "ferri-pdf-images",
  "ferri-pdf-krilla",
- "ferri-pdf-layout",
  "ferri-pdf-resources",
  "ferri-pdf-resvg",
  "ferri-pdf-style",
+ "ferri-pdf-table",
  "ferri-pdf-text",
  "ferri-pdf-usvg",
  "fontdb",
  "roxmltree",
  "same-file",
+ "serde",
  "serde_json",
  "skrifa",
  "smallvec",
@@ -766,24 +769,6 @@ dependencies = [
  "xmp-writer",
  "yoke",
  "zune-jpeg",
-]
-
-[[package]]
-name = "ferri-pdf-layout"
-version = "0.1.0"
-dependencies = [
- "ferri-pdf-document",
- "ferri-pdf-flex",
- "ferri-pdf-fonts",
- "ferri-pdf-graphics",
- "ferri-pdf-grid",
- "ferri-pdf-images",
- "ferri-pdf-resources",
- "ferri-pdf-style",
- "ferri-pdf-table",
- "ferri-pdf-text",
- "serde",
- "thiserror",
 ]
 
 [[package]]

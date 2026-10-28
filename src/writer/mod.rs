@@ -6,10 +6,10 @@ mod painting;
 mod pixels;
 mod shadows;
 mod text;
+use crate::layout::LayoutTrace;
 use ferri_pdf_document::{DocumentMetadata, Navigation};
 use ferri_pdf_fonts::{FontBook, FontId};
 use ferri_pdf_graphics::DisplayItem;
-use ferri_pdf_layout::LayoutTrace;
 use krilla::{Document, geom::Transform, page::PageSettings};
 
 pub use krilla::image::{ImageDpi, InvalidImageDpi, InvalidJpegQuality, JpegQuality};

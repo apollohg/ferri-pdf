@@ -90,7 +90,7 @@ fn borrowed_layout_resolves_literal_targets_without_mutating_the_source_document
     let document =
         ferri_pdf_document::StyledDocument::parse(&html, &options.base, &[], &resolver).unwrap();
     for iteration in 0..2 {
-        let trace = ferri_pdf_layout::layout(&document, &resolver).unwrap();
+        let trace = crate::layout::layout(&document, &resolver).unwrap();
         assert_eq!(trace.pages.len(), 2, "borrowed layout pass {iteration}");
         assert_eq!(
             trace.pages[0][0].text, "Page 2",
@@ -200,7 +200,7 @@ fn borrowed_layout_resolves_late_margin_targets_on_repeated_calls() {
         ferri_pdf_document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .unwrap();
     for iteration in 0..2 {
-        let trace = ferri_pdf_layout::layout(&document, &resolver).unwrap();
+        let trace = crate::layout::layout(&document, &resolver).unwrap();
         assert_eq!(trace.pages.len(), 2);
         assert!(
             trace.pages[1]
@@ -222,8 +222,8 @@ fn cyclic_target_text_fails_without_publishing_a_provisional_layout() {
             .unwrap();
     assert!(
         matches!(
-            ferri_pdf_layout::layout(&document, &resolver),
-            Err(ferri_pdf_layout::LayoutError::GeneratedContentCycle)
+            crate::layout::layout(&document, &resolver),
+            Err(crate::layout::LayoutError::GeneratedContentCycle)
         ),
         "mutually swapping first letters must fail instead of returning an arbitrary pass"
     );
@@ -263,7 +263,7 @@ fn target_reference_in_an_explicit_bookmark_label_resolves() {
     let document =
         ferri_pdf_document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .unwrap();
-    let (document, trace) = ferri_pdf_layout::layout_document(document, &resolver).unwrap();
+    let (document, trace) = crate::layout::layout_document(document, &resolver).unwrap();
     assert_eq!(trace.pages.len(), 2);
     assert_eq!(
         document.navigation().bookmarks[0].label,

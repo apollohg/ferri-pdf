@@ -3218,8 +3218,8 @@
       ],
       "implementation_files": [
         "crates/style/src/box_values.rs",
-        "crates/layout/src/geometry.rs",
-        "crates/layout/src/intrinsic.rs"
+        "src/layout/geometry.rs",
+        "src/layout/intrinsic.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3251,8 +3251,8 @@
       ],
       "implementation_files": [
         "crates/style/src/box_values.rs",
-        "crates/layout/src/geometry.rs",
-        "crates/layout/src/intrinsic.rs"
+        "src/layout/geometry.rs",
+        "src/layout/intrinsic.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3283,8 +3283,8 @@
       ],
       "implementation_files": [
         "crates/style/src/box_values.rs",
-        "crates/layout/src/geometry.rs",
-        "crates/layout/src/intrinsic.rs"
+        "src/layout/geometry.rs",
+        "src/layout/intrinsic.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3312,9 +3312,9 @@
         "css-sizing-3.foundation-existing-mode-sizing"
       ],
       "implementation_files": [
-        "crates/layout/src/flex/mod.rs",
-        "crates/layout/src/tables/mod.rs",
-        "crates/layout/src/inline.rs"
+        "src/layout/flex/mod.rs",
+        "src/layout/tables/mod.rs",
+        "src/layout/inline.rs"
       ],
       "case_ids": [],
       "handoff": null

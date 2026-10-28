@@ -32,7 +32,7 @@ class FoundationsTests(unittest.TestCase):
                 "source_id": TEST_SOURCE_ID,
                 "section_ids": ["width"],
                 "owner_task": 21,
-                "implementation_files": ["crates/layout/src/geometry.rs"],
+                "implementation_files": ["src/layout/geometry.rs"],
                 "default_obligations": ["Auto widths use their containing block."],
                 "invalid_obligations": ["Negative specified widths are discarded."],
                 "interaction_obligations": ["Border-box changes the content width."],
