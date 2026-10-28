@@ -19,6 +19,7 @@ mod document;
 mod flex;
 mod graphics;
 mod grid;
+mod images;
 mod layout;
 mod multipart;
 mod svg;
@@ -42,6 +43,7 @@ pub use crate::graphics::{
     DecorationPaint, DecorationStyle, DisplayItem, Fill, INLINE_EDGES, LengthPercentage, Point,
     Radii, Rect, Segment, ShadowPaint, ShadowShape, Shape,
 };
+pub use crate::images::ImageError;
 pub use crate::layout::{Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine};
 pub use crate::text::{GlyphRun, PositionedGlyph};
 pub use crate::writer::{
@@ -51,7 +53,6 @@ pub use ferri_pdf_fonts::{
     FontDescriptor, FontFaceStyle, FontFamily, FontId, FontPreferences, FontRange, FontSelection,
     FontSlant, FontStyle, FontSynthesis, FontVariation, FontWeight, FontWidth, GenericFamily,
 };
-pub use ferri_pdf_images::ImageError;
 pub use ferri_pdf_resources as resources;
 pub use ferri_pdf_resources::{
     FileResolver, ResolvedResource, Resource, ResourceBase, ResourceError, ResourceMetadata,

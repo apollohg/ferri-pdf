@@ -1,5 +1,5 @@
-use crate::svg_fonts::SvgFonts;
-use crate::{Image, ImageCache, ImageError, RasterFormat};
+use crate::images::svg_fonts::SvgFonts;
+use crate::images::{Image, ImageCache, ImageError, RasterFormat};
 use ferri_pdf_fonts::{DEFAULT_FAMILY, FontNamespace};
 use ferri_pdf_resources::{Resource, ResourceBase, ResourceResolver};
 use std::{
@@ -100,7 +100,7 @@ impl SvgImage {
             }
         }
         let initial_size = pixel_size(
-            crate::NaturalDimensions {
+            crate::images::NaturalDimensions {
                 width,
                 height,
                 ratio,
@@ -172,8 +172,8 @@ impl SvgImage {
         &self.jpeg_images
     }
 
-    pub fn natural_size(&self) -> crate::NaturalDimensions {
-        crate::NaturalDimensions {
+    pub fn natural_size(&self) -> crate::images::NaturalDimensions {
+        crate::images::NaturalDimensions {
             width: self.width,
             height: self.height,
             ratio: self.ratio,
@@ -209,7 +209,7 @@ fn validate_depth(depth: usize) -> Result<(), ImageError> {
     Ok(())
 }
 
-fn pixel_size(dimensions: crate::NaturalDimensions, available_width: f32) -> [f32; 2] {
+fn pixel_size(dimensions: crate::images::NaturalDimensions, available_width: f32) -> [f32; 2] {
     match (dimensions.width, dimensions.height, dimensions.ratio) {
         (Some(w), Some(h), _) => [w, h],
         (Some(w), None, Some(r)) => [w, w / r],

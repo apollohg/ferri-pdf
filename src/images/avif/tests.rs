@@ -1,8 +1,8 @@
 use super::*;
 use zenavif_parse::AV1Metadata;
 
-const PATTERN: &[u8] = include_bytes!("../../../../tests/oracle/assets/image-pattern.avif");
-const ALPHA_GRID: &[u8] = include_bytes!("../../../../tests/oracle/assets/image-alpha-grid.avif");
+const PATTERN: &[u8] = include_bytes!("../../../tests/oracle/assets/image-pattern.avif");
+const ALPHA_GRID: &[u8] = include_bytes!("../../../tests/oracle/assets/image-alpha-grid.avif");
 
 #[test]
 fn decoder_enforces_coded_frame_limit_before_allocating_pixels() {

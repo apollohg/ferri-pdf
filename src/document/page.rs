@@ -38,14 +38,14 @@ impl PageBox {
 pub(crate) struct PageProvider {
     first: Arc<PageBox>,
     records: RefCell<HashMap<PageRequest, Arc<PageBox>>>,
-    images: std::rc::Rc<RefCell<ferri_pdf_images::ImageCache>>,
+    images: std::rc::Rc<RefCell<crate::images::ImageCache>>,
     base: ResourceBase,
     generated: crate::document::generated::GeneratedBindings,
 }
 impl PageProvider {
     pub(crate) fn new(
         first: PageBox,
-        images: std::rc::Rc<RefCell<ferri_pdf_images::ImageCache>>,
+        images: std::rc::Rc<RefCell<crate::images::ImageCache>>,
         base: ResourceBase,
         generated: crate::document::generated::GeneratedBindings,
     ) -> Self {
@@ -58,7 +58,7 @@ impl PageProvider {
             generated,
         }
     }
-    pub(crate) fn images(&self) -> std::rc::Rc<RefCell<ferri_pdf_images::ImageCache>> {
+    pub(crate) fn images(&self) -> std::rc::Rc<RefCell<crate::images::ImageCache>> {
         self.images.clone()
     }
     pub(crate) fn first(&self) -> &PageBox {

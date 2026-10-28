@@ -1,5 +1,5 @@
 use crate::graphics::ShadowMask;
-use ferri_pdf_images::{PixelDepth, PixelImage};
+use crate::images::{PixelDepth, PixelImage};
 use krilla::image::{BitsPerComponent, CustomImage, ImageColorspace};
 use std::{
     hash::{Hash, Hasher},

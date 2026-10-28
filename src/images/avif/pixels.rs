@@ -1,5 +1,5 @@
 use super::check_dimensions;
-use crate::{ImageError, PixelDepth, PixelImage, pixels::RGB_CHANNELS};
+use crate::images::{ImageError, PixelDepth, PixelImage, pixels::RGB_CHANNELS};
 
 pub(super) fn from_pixels(
     width: u32,
@@ -105,7 +105,7 @@ pub(super) fn attach_alpha(
         {
             let a = sample(a);
             for channel in pixel.chunks_exact_mut(bytes) {
-                let straight = crate::pixels::unpremultiply(sample(channel), a, maximum);
+                let straight = crate::images::pixels::unpremultiply(sample(channel), a, maximum);
                 if bytes == 1 {
                     channel[0] = straight as u8;
                 } else {

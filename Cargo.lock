@@ -596,22 +596,27 @@ name = "ferri-pdf"
 version = "0.1.0"
 dependencies = [
  "encoding_rs",
+ "ferri-pdf-avif-decode",
  "ferri-pdf-dom",
  "ferri-pdf-fonts",
+ "ferri-pdf-heic-decoder",
  "ferri-pdf-icu-casemap",
- "ferri-pdf-images",
  "ferri-pdf-krilla",
  "ferri-pdf-paint",
  "ferri-pdf-resources",
  "ferri-pdf-style",
  "ferri-pdf-usvg",
+ "ferri-pdf-zenavif-parse",
  "fontdb",
  "gif",
  "icu_locale_core",
  "icu_properties",
+ "image",
  "image-webp",
  "log",
+ "moxcms",
  "percent-encoding",
+ "png",
  "rgb",
  "roxmltree",
  "rustybuzz",
@@ -691,24 +696,6 @@ dependencies = [
  "potential_utf",
  "writeable",
  "zerovec",
-]
-
-[[package]]
-name = "ferri-pdf-images"
-version = "0.1.0"
-dependencies = [
- "ferri-pdf-avif-decode",
- "ferri-pdf-fonts",
- "ferri-pdf-heic-decoder",
- "ferri-pdf-paint",
- "ferri-pdf-resources",
- "ferri-pdf-usvg",
- "ferri-pdf-zenavif-parse",
- "image",
- "moxcms",
- "png",
- "svgtypes",
- "thiserror",
 ]
 
 [[package]]

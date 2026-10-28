@@ -1,4 +1,4 @@
-use crate::{
+use crate::images::{
     ImageError, MAX_BYTES_PER_PIXEL, MAX_DECODED_BYTES, PixelDepth, PixelImage,
     pixels::RGB_CHANNELS,
 };
@@ -61,7 +61,7 @@ pub(crate) fn decode(bytes: &[u8]) -> Result<PixelImage, ImageError> {
     check_budget(&parsed)?;
     let decoded = heic_decoder::decode_parsed(parsed, &Default::default())?;
     let nclx = decoded.color_info.unwrap_or_default();
-    let icc = Some(crate::pixels::color_profile(
+    let icc = Some(crate::images::pixels::color_profile(
         decoded.metadata.icc_profile.as_deref(),
         nclx.color_primaries,
         nclx.transfer_characteristics,
@@ -116,7 +116,7 @@ fn split_pixels(image: &mut PixelImage, mut rgba: impl Iterator<Item = u16>, pre
     {
         for sample in [r, g, b] {
             let value = if premultiplied {
-                crate::pixels::unpremultiply(u32::from(sample), u32::from(a), max) as u16
+                crate::images::pixels::unpremultiply(u32::from(sample), u32::from(a), max) as u16
             } else {
                 sample
             };
@@ -140,7 +140,7 @@ mod tests {
 
     #[test]
     fn budget_uses_actual_sps_nal_type_not_just_the_container_array_type() {
-        let bytes = include_bytes!("../../../tests/oracle/assets/image-pattern.heic");
+        let bytes = include_bytes!("../../tests/oracle/assets/image-pattern.heic");
         let mut parsed = heic_decoder::isobmff::parse(bytes).unwrap();
         let image = &mut parsed.images[0];
         let array = image
@@ -160,7 +160,7 @@ mod tests {
 
     #[test]
     fn oversized_grid_is_rejected_before_decoding_tiles() {
-        let mut bytes = include_bytes!("../../../tests/oracle/assets/image-grid.heic").to_vec();
+        let mut bytes = include_bytes!("../../tests/oracle/assets/image-grid.heic").to_vec();
         let descriptor = [0, 0, 0, 1, 0, 80, 0, 40];
         let positions: Vec<_> = bytes
             .windows(descriptor.len())
@@ -189,7 +189,7 @@ mod tests {
 
     #[test]
     fn truncated_heif_returns_a_decode_error() {
-        let bytes = include_bytes!("../../../tests/oracle/assets/image-pattern.heic");
+        let bytes = include_bytes!("../../tests/oracle/assets/image-pattern.heic");
         for end in [BOX_HEADER_BYTES, bytes.len() / 2, bytes.len() - 1] {
             assert!(
                 decode(&bytes[..end]).is_err(),

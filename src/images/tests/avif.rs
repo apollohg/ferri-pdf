@@ -1,10 +1,10 @@
-use ferri_pdf_images::{Image, ImageCache};
+use crate::images::{Image, ImageCache};
 use ferri_pdf_resources::FileResolver;
 use std::{path::PathBuf, sync::Arc};
 
 #[test]
 fn lossless_avif_preserves_rgb_alpha_rotation_and_grid() {
-    let base = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../tests/oracle/assets");
+    let base = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/oracle/assets");
     let mut cache = ImageCache::default();
     for variant in [
         "pattern",
@@ -58,7 +58,7 @@ fn lossless_avif_preserves_rgb_alpha_rotation_and_grid() {
 fn ten_bit_avif_matches_independent_samples_without_eight_bit_quantization() {
     const TEN_BIT_MAX: u32 = (1 << 10) - 1;
     const ALIGNMENT_SHIFT: u32 = u16::BITS - 10;
-    let base = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../tests/oracle/assets");
+    let base = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/oracle/assets");
     let expected = image::open(base.join("image-avif-high-depth-reference.png"))
         .unwrap()
         .to_rgba16();
@@ -74,7 +74,7 @@ fn ten_bit_avif_matches_independent_samples_without_eight_bit_quantization() {
     };
     assert!(matches!(
         decoded.depth(),
-        ferri_pdf_images::PixelDepth::Sixteen
+        crate::images::PixelDepth::Sixteen
     ));
     let color: Vec<u16> = decoded
         .color()
@@ -122,7 +122,7 @@ fn ten_bit_avif_matches_independent_samples_without_eight_bit_quantization() {
 #[test]
 fn embedded_icc_takes_precedence_over_an_earlier_nclx_property() {
     use image::ImageDecoder;
-    let base = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../tests/oracle/assets");
+    let base = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/oracle/assets");
     let mut source = image::ImageReader::open(base.join("image-avif-icc-source.png"))
         .unwrap()
         .into_decoder()

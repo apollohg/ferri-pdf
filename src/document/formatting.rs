@@ -42,7 +42,7 @@ pub(crate) struct BlockBox {
     decoration: BoxDecoration,
     children: Vec<BlockContent>,
     marker: Option<Box<Paragraph>>,
-    image: Option<std::sync::Arc<ferri_pdf_images::Image>>,
+    image: Option<std::sync::Arc<crate::images::Image>>,
     navigation: BoxNavigation,
     canvas_source: bool,
     event: Option<crate::document::SemanticEvent>,
@@ -144,7 +144,7 @@ impl BlockBox {
     pub(crate) fn semantic_event(&self) -> Option<&crate::document::SemanticEvent> {
         self.event.as_ref()
     }
-    pub(crate) fn image(&self) -> Option<&std::sync::Arc<ferri_pdf_images::Image>> {
+    pub(crate) fn image(&self) -> Option<&std::sync::Arc<crate::images::Image>> {
         self.image.as_ref()
     }
     pub(crate) fn style(&self) -> &Style {
@@ -199,14 +199,14 @@ struct BlockBuilder<'a, 's, 'c> {
 pub(crate) struct ImageResources<'a> {
     pub base: &'a ferri_pdf_resources::ResourceBase,
     pub resolver: &'a dyn ferri_pdf_resources::ResourceResolver,
-    pub cache: &'a mut ferri_pdf_images::ImageCache,
+    pub cache: &'a mut crate::images::ImageCache,
 }
 impl ImageResources<'_> {
     fn load(
         &mut self,
         reference: &str,
         style: &Style,
-    ) -> Result<std::sync::Arc<ferri_pdf_images::Image>, ferri_pdf_images::ImageError> {
+    ) -> Result<std::sync::Arc<crate::images::Image>, crate::images::ImageError> {
         self.cache.load_in_namespace(
             reference,
             self.base,
@@ -502,7 +502,7 @@ struct OpenBlock {
     children: Vec<BlockContent>,
     inline: InlineCollector,
     marker: Option<Paragraph>,
-    image: Option<std::sync::Arc<ferri_pdf_images::Image>>,
+    image: Option<std::sync::Arc<crate::images::Image>>,
     navigation: BoxNavigation,
     placement: Placement,
     event: Option<crate::document::SemanticEvent>,
@@ -998,7 +998,7 @@ pub(crate) fn build(
     resolver: &dyn ferri_pdf_resources::ResourceResolver,
     navigation: NavigationBuilder,
     values: crate::document::generated::GeneratedValues,
-    images: Option<std::rc::Rc<std::cell::RefCell<ferri_pdf_images::ImageCache>>>,
+    images: Option<std::rc::Rc<std::cell::RefCell<crate::images::ImageCache>>>,
 ) -> Result<Formatted, DocumentError> {
     let mut generated =
         crate::document::generated::GeneratedPass::new(navigation.targets.clone(), values);
@@ -1022,7 +1022,7 @@ pub(crate) fn build(
     let sheet = &*sheet;
     let images = images.unwrap_or_else(|| {
         std::rc::Rc::new(std::cell::RefCell::new(
-            ferri_pdf_images::ImageCache::with_fonts(sheet.fonts.clone()),
+            crate::images::ImageCache::with_fonts(sheet.fonts.clone()),
         ))
     });
     let mut cache = images.borrow_mut();

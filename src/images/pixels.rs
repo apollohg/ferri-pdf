@@ -1,4 +1,4 @@
-use crate::ImageError;
+use crate::images::ImageError;
 use std::borrow::Cow;
 
 pub(crate) const RGB_CHANNELS: usize = 3;

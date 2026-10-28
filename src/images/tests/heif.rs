@@ -1,10 +1,10 @@
-use ferri_pdf_images::{Image, ImageCache};
+use crate::images::{Image, ImageCache};
 use ferri_pdf_resources::FileResolver;
 use std::{path::PathBuf, sync::Arc};
 
 #[test]
 fn lossless_heif_preserves_pixels_alpha_rotation_and_tiled_crop() {
-    let base = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../tests/oracle/assets");
+    let base = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/oracle/assets");
     let source = image::open(base.join("image-pattern.png"))
         .unwrap()
         .to_rgba8();
@@ -64,7 +64,7 @@ fn lossless_heif_preserves_pixels_alpha_rotation_and_tiled_crop() {
 
 #[test]
 fn ten_bit_heif_preserves_precision_against_libheif_reference() {
-    let base = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../tests/oracle/assets");
+    let base = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/oracle/assets");
     let reference = image::open(base.join("image-high-depth-reference.png"))
         .unwrap()
         .to_rgba16();
@@ -80,7 +80,7 @@ fn ten_bit_heif_preserves_precision_against_libheif_reference() {
     };
     assert!(matches!(
         decoded.depth(),
-        ferri_pdf_images::PixelDepth::Sixteen
+        crate::images::PixelDepth::Sixteen
     ));
     let color: Vec<u16> = decoded
         .color()

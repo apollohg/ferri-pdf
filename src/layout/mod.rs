@@ -253,7 +253,7 @@ pub(crate) enum LayoutError {
     #[error("{0}")]
     Document(#[from] crate::document::DocumentError),
     #[error("{0}")]
-    Image(#[from] ferri_pdf_images::ImageError),
+    Image(#[from] crate::images::ImageError),
     #[error("layout exceeds {limit} pages")]
     PageLimit { limit: usize },
     #[error("layout exceeds {limit} work units")]

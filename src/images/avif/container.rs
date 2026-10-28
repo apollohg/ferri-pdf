@@ -1,4 +1,4 @@
-use crate::ImageError;
+use crate::images::ImageError;
 const BRAND_LENGTH: usize = 4;
 const AVIF_BRANDS: [&[u8; BRAND_LENGTH]; 2] = [b"avif", b"avis"];
 

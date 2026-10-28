@@ -1,5 +1,5 @@
 //! Materialized image paint values and ordered display lists.
-use ferri_pdf_images::Image;
+use crate::images::Image;
 pub(crate) use ferri_pdf_paint::{
     BackgroundGeometry, BoxArea, BoxAreas, NaturalDimensions, POINTS_PER_PIXEL, ResolvedGradient,
     Shading, ShadowMask, UnresolvedImage, image_size,

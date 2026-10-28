@@ -2,7 +2,7 @@ mod codec;
 mod container;
 mod pixels;
 
-use crate::{
+use crate::images::{
     ImageError, MAX_BYTES_PER_PIXEL, MAX_DECODED_BYTES, PixelImage,
     pixels::{RGB_CHANNELS, color_profile},
 };

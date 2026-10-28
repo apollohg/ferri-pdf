@@ -37,7 +37,7 @@ pub enum DocumentError {
     #[error("{0}")]
     Tree(#[from] ferri_pdf_dom::DomError),
     #[error("{0}")]
-    Image(#[from] ferri_pdf_images::ImageError),
+    Image(#[from] crate::images::ImageError),
     #[error("{0}")]
     Style(#[from] StyleError),
     #[error("{0}")]
@@ -52,7 +52,7 @@ pub enum DocumentError {
 #[derive(Debug, thiserror::Error)]
 pub enum DocumentDiagnostic {
     #[error("{0}")]
-    UnavailableImage(#[from] ferri_pdf_images::ImageFailure),
+    UnavailableImage(#[from] crate::images::ImageFailure),
     #[error("image omitted during PDF encoding: {error}")]
     ImageDecode { error: String },
     #[error("{0}")]
@@ -99,7 +99,7 @@ impl FormattingSource {
         &self,
         styles: &mut Stylesheet,
         values: GeneratedValues,
-        images: std::rc::Rc<std::cell::RefCell<ferri_pdf_images::ImageCache>>,
+        images: std::rc::Rc<std::cell::RefCell<crate::images::ImageCache>>,
         resolver: &dyn ResourceResolver,
     ) -> Result<formatting::Formatted, DocumentError> {
         let navigation = navigation::NavigationBuilder::new(

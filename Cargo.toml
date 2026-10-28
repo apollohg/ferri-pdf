@@ -83,7 +83,6 @@ skrifa = "0.42"
 smallvec = { version = "1.15.1", features = ["union", "const_new", "write"] }
 tiny-skia = "0.12"
 image = { version = "=0.25.10", default-features = false, features = ["png", "jpeg", "gif", "webp"] }
-ferri-pdf-images = { path = "crates/images", version = "0.1.0" }
 cssparser = "0.37"
 roxmltree = "0.21.2"
 cssparser-color = { version = "0.5", default-features = false }
@@ -128,7 +127,6 @@ name = "remote"
 required-features = ["http"]
 
 [dependencies]
-ferri-pdf-images.workspace = true
 ferri-pdf-fonts.workspace = true
 ferri-pdf-resources.workspace = true
 ferri-pdf-style.workspace = true
@@ -160,7 +158,13 @@ gif.workspace = true
 image-webp.workspace = true
 zune-jpeg.workspace = true
 ferri-pdf-paint.workspace = true
+avif-decode.workspace = true
+zenavif-parse.workspace = true
+heic-decoder.workspace = true
+moxcms.workspace = true
+png.workspace = true
+image.workspace = true
+roxmltree.workspace = true
 
 [dev-dependencies]
-roxmltree.workspace = true
 ferri-pdf-dom.workspace = true

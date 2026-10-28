@@ -5,17 +5,17 @@ mod pixels;
 mod svg;
 mod svg_fonts;
 use ferri_pdf_fonts::{FontBook, FontNamespace};
-pub use ferri_pdf_paint::NaturalDimensions;
+pub(crate) use ferri_pdf_paint::NaturalDimensions;
 use ferri_pdf_resources::{ResourceError, ResourceResolver};
-pub use image::metadata::Orientation;
+pub(crate) use image::metadata::Orientation;
 use image::{ImageDecoder, ImageFormat, ImageReader};
-pub use pixels::{PixelDepth, PixelImage};
+pub(crate) use pixels::{PixelDepth, PixelImage};
 use std::{
     collections::{HashMap, HashSet},
     io::Cursor,
     sync::Arc,
 };
-pub use svg::SvgImage;
+pub(crate) use svg::SvgImage;
 impl ferri_pdf_paint::ImageInfo for Image {
     fn natural_size(&self) -> NaturalDimensions {
         Image::natural_size(self)
@@ -182,7 +182,7 @@ pub enum ImageError {
     #[error("SVG is not UTF-8: {0}")]
     SvgEncoding(#[source] std::string::FromUtf8Error),
     #[error("invalid SVG XML: {0}")]
-    SvgXml(#[source] usvg::roxmltree::Error),
+    SvgXml(#[source] roxmltree::Error),
     #[error("image XML root is not an SVG element")]
     SvgRoot,
     #[error("invalid SVG: {0}")]
@@ -211,7 +211,7 @@ pub struct ImageFailure {
 }
 
 #[derive(Default)]
-pub struct ImageCache {
+pub(crate) struct ImageCache {
     validated_markers: HashSet<usize>,
     failed: HashSet<(FontNamespace, ferri_pdf_resources::ResourceBase, String)>,
     failures: Vec<ImageFailure>,
@@ -223,7 +223,7 @@ pub struct ImageCache {
     >,
 }
 impl ImageCache {
-    pub fn with_fonts(fonts: FontBook) -> Self {
+    pub(crate) fn with_fonts(fonts: FontBook) -> Self {
         Self {
             fonts: svg_fonts::SvgFonts::new(Arc::new(fonts)),
             validated_markers: HashSet::new(),
@@ -233,7 +233,8 @@ impl ImageCache {
             images: HashMap::new(),
         }
     }
-    pub fn load(
+    #[cfg(test)]
+    pub(crate) fn load(
         &mut self,
         reference: &str,
         base: &ferri_pdf_resources::ResourceBase,
@@ -241,7 +242,7 @@ impl ImageCache {
     ) -> Result<Arc<Image>, ImageError> {
         self.load_in_namespace(reference, base, resolver, FontNamespace::ROOT)
     }
-    pub fn load_in_namespace(
+    pub(crate) fn load_in_namespace(
         &mut self,
         reference: &str,
         base: &ferri_pdf_resources::ResourceBase,
@@ -251,7 +252,7 @@ impl ImageCache {
         self.load_nested(reference, base, resolver, 0, namespace)
     }
     /// Load an HTML image, retaining a diagnostic instead of aborting on resource failure.
-    pub fn load_optional(
+    pub(crate) fn load_optional(
         &mut self,
         reference: &str,
         base: &ferri_pdf_resources::ResourceBase,
@@ -276,7 +277,7 @@ impl ImageCache {
         }
     }
     /// Marker fallback must be selected before line fitting, including pixel errors.
-    pub fn load_marker(
+    pub(crate) fn load_marker(
         &mut self,
         reference: &str,
         base: &ferri_pdf_resources::ResourceBase,
@@ -302,11 +303,12 @@ impl ImageCache {
         }
         Some(image)
     }
-    pub fn take_failures(&mut self) -> Vec<ImageFailure> {
+    pub(crate) fn take_failures(&mut self) -> Vec<ImageFailure> {
         std::mem::take(&mut self.failures)
     }
     /// Parses an inline `<svg>` element serialized as XML; its references resolve against `base`.
-    pub fn inline_svg(
+    #[cfg(test)]
+    pub(crate) fn inline_svg(
         &mut self,
         xml: String,
         base: &ferri_pdf_resources::ResourceBase,
@@ -314,7 +316,7 @@ impl ImageCache {
     ) -> Result<Arc<Image>, ImageError> {
         self.inline_svg_in_namespace(xml, base, resolver, FontNamespace::ROOT)
     }
-    pub fn inline_svg_in_namespace(
+    pub(crate) fn inline_svg_in_namespace(
         &mut self,
         xml: String,
         base: &ferri_pdf_resources::ResourceBase,
@@ -387,3 +389,6 @@ impl ImageCache {
         Ok(image)
     }
 }
+
+#[cfg(test)]
+mod tests;

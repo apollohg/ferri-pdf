@@ -1,7 +1,7 @@
 use crate::graphics::ImagePaint;
+use crate::images::{Image as Asset, Orientation, RasterFormat};
 use crate::svg::krilla_svg::SurfaceExt;
 use crate::writer::PdfError;
-use ferri_pdf_images::{Image as Asset, Orientation, RasterFormat};
 use krilla::{
     geom::{Size, Transform},
     image::Image,

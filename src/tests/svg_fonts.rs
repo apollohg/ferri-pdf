@@ -68,7 +68,7 @@ fn svg_only_font_sources_share_lazy_acquisition_and_survive_viewport_reparse() {
             _ => None,
         })
         .unwrap();
-    let ferri_pdf_images::Image::Svg(svg) = image.as_ref() else {
+    let crate::images::Image::Svg(svg) = image.as_ref() else {
         panic!("expected vector chart")
     };
     for size in [[100.0, 40.0], [400.0, 160.0]] {
@@ -198,7 +198,7 @@ fn font_scopes_share_svg_source_bytes_and_decoded_raster_assets() {
         .flatten()
         .filter_map(|item| match item {
             DisplayItem::Image(paint)
-                if matches!(paint.image.as_ref(), ferri_pdf_images::Image::Raster(_)) =>
+                if matches!(paint.image.as_ref(), crate::images::Image::Raster(_)) =>
             {
                 Some(&paint.image)
             }

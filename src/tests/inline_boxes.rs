@@ -415,7 +415,7 @@ fn inline_svg_elements_are_vector_images_on_the_baseline() {
         })
         .expect("inline svg must paint as an image");
     assert!(
-        matches!(paint.image.as_ref(), ferri_pdf_images::Image::Svg(_)),
+        matches!(paint.image.as_ref(), crate::images::Image::Svg(_)),
         "inline svg keeps its vector form"
     );
     let baseline = line(&trace, "Vector").baseline;

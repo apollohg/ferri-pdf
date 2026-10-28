@@ -1,5 +1,5 @@
 use super::{check_dimensions, pixels::from_pixels};
-use crate::{
+use crate::images::{
     ImageError, PixelDepth, PixelImage,
     pixels::{RGB_CHANNELS, color_profile},
 };
