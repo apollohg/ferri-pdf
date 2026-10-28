@@ -755,7 +755,8 @@ fn handler(property: Property) -> Option<Handler> {
             outline_color,
             Some(|v, relative| {
                 v.keyword() == Some(Keyword::Auto)
-                    || crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
+                    || crate::style::colors::color(v, relative, &crate::paint::AbsoluteColor::BLACK)
+                        .is_ok()
             }),
         ),
         P::OutlineOffset => (
@@ -1891,18 +1892,16 @@ computed!(
     [decoration.outline.style],
     |value, style, _parent, _relative| outline_style_value(value)?
 );
-/// CSS UI 4 §3.4: `auto` is the accent colour with `auto` style and otherwise `currentcolor`.
-/// Without a platform accent, this engine's accent colour is `CanvasText`.
-const AUTO_OUTLINE_ACCENT: crate::paint::Color = crate::paint::Color::BLACK;
+// CSS UI 4 §3.4: `auto` is the accent colour with `auto` style and otherwise `currentcolor`.
 computed!(
     outline_color,
     [decoration.outline.color],
     |value, style, _parent, relative| match value.keyword() {
         Some(Keyword::Auto) if style.decoration.outline.style == OutlineStyle::Auto => {
-            AUTO_OUTLINE_ACCENT
+            crate::style::colors::accent(relative.color_scheme)
         }
         Some(Keyword::Auto) => style.color,
-        _ => crate::style::colors::color(value, relative, style.color)?,
+        _ => crate::style::colors::color(value, relative, &style.computed_color)?,
     }
 );
 computed!(

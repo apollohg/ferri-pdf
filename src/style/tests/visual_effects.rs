@@ -183,7 +183,10 @@ fn outline_longhands_compute_per_css_ui_4() {
     let auto = outline("outline:auto");
     assert_eq!(
         (auto.style, auto.color.rgb),
-        (OutlineStyle::Auto, [0; 3]),
+        (
+            OutlineStyle::Auto,
+            crate::style::colors::accent(crate::style::ColorScheme::Light).rgb
+        ),
         "a lone auto sets both style and colour to auto; auto colour with auto style is the \
          accent colour"
     );

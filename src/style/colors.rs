@@ -19,6 +19,7 @@ const IN: &str = "in";
 const HUE: &str = "hue";
 const ALPHA: &str = "alpha";
 pub(super) const CURRENT_COLOR: &str = "currentcolor";
+const ACCENT_COLOR: &str = "accentcolor";
 const CANVAS: &str = "canvas";
 const TRANSPARENT: &str = "transparent";
 const ALPHA_SEPARATOR: char = '/';
@@ -42,7 +43,7 @@ const DEFAULT_MIX: Interpolation = Interpolation {
 /// UA system colours (CSS Color 4 §6.2) as 8-bit sRGB for the light and dark schemes; the
 /// spec's legible foreground and background pairs meet WCAG AA contrast.
 const SYSTEM_COLORS: [(&str, [u8; 3], [u8; 3]); 19] = [
-    ("accentcolor", [0x00, 0x60, 0xdf], [0x99, 0xc8, 0xff]),
+    (ACCENT_COLOR, [0x00, 0x60, 0xdf], [0x99, 0xc8, 0xff]),
     ("accentcolortext", [0xff, 0xff, 0xff], [0x00, 0x00, 0x00]),
     ("activetext", [0xee, 0x00, 0x00], [0xff, 0x9e, 0x9e]),
     ("buttonborder", [0x76, 0x76, 0x76], [0x8e, 0x8e, 0x8e]),
@@ -409,6 +410,13 @@ pub(super) fn interpolation_method(words: &[&str]) -> Option<Interpolation> {
 pub(super) fn canvas(scheme: ColorScheme) -> Color {
     system_color(CANVAS, scheme)
         .expect("Canvas is a system colour")
+        .used()
+}
+
+/// The `AccentColor` system colour in `scheme`.
+pub(super) fn accent(scheme: ColorScheme) -> Color {
+    system_color(ACCENT_COLOR, scheme)
+        .expect("AccentColor is a system colour")
         .used()
 }
 
