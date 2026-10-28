@@ -451,11 +451,12 @@ pub fn split_length_prefixed_nalus(data: &[u8], length_size: usize) -> Result<Ve
 /// configuration and coded sample bytes.
 pub fn parse(file: &[u8]) -> Result<ParsedHeif> {
     let _timer = crate::timing::start(crate::timing::Stage::Container);
-    parse_selected(file, None, true, &AllocationBudget::default())
+    let budget = AllocationBudget::default();
+    budget.reserve(file.len())?;
+    parse_selected(file, None, true, &budget)
 }
 
 fn parse_selected(file: &[u8], selected: Option<u32>, include_alpha: bool, budget: &AllocationBudget) -> Result<ParsedHeif> {
-    budget.reserve(file.len())?;
     let mut saw_ftyp = false;
     let mut meta_body_range: Option<(usize, usize)> = None;
     let mut moov_body_range = None;
@@ -1167,6 +1168,28 @@ mod tests {
         let mdat = box_(b"mdat", coded);
         file.extend_from_slice(&mdat);
         file
+    }
+
+    #[test]
+    fn input_file_is_charged_once_at_the_entry_point() {
+        let file = vec![0; MAX_CONTAINER_BYTES + 1];
+        assert!(matches!(parse(&file), Err(HeifError::LimitExceeded(_))), "an input above the budget must be rejected before parsing");
+    }
+
+    #[test]
+    fn auxiliary_reparse_does_not_charge_the_input_file_again() {
+        // Metadata allocations of the minimal file stay far below this headroom.
+        const METADATA_HEADROOM: usize = 4096;
+        let mut file = build_minimal_heic(&[0; 4]);
+        file.extend_from_slice(&box_(b"free", &vec![0; 16 * METADATA_HEADROOM]));
+        let budget = AllocationBudget::default();
+        budget.reserve(MAX_CONTAINER_BYTES - METADATA_HEADROOM).unwrap();
+        let reparsed = parse_selected(&file, Some(1), false, &budget);
+        assert!(
+            !matches!(reparsed, Err(HeifError::LimitExceeded(_))),
+            "re-parsing a {} byte file for its alpha item must only charge new metadata, got {reparsed:?}",
+            file.len(),
+        );
     }
 
     fn identity_references(edges: &[(u16, &[u16])]) -> Vec<u8> {
