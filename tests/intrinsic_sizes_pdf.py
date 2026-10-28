@@ -8,7 +8,7 @@ import table_positioning_pdf
 from oracle import pdf_content
 
 ROOT = Path(__file__).resolve().parents[1]
-MONO = ROOT / 'crates/fonts/assets/fonts/DejaVuSansMono.ttf'
+MONO = ROOT / 'assets/fonts/DejaVuSansMono.ttf'
 FONT_SIZE = 10
 LONGEST_WORD = 'AAAA'
 TEXT = 'AAAA BB'

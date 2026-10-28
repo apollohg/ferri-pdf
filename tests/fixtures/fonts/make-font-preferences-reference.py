@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[3]
 FAMILIES = {"Liberation Sans": "LiberationSans-Regular", "DejaVu Sans": "DejaVuSans", "DejaVu Serif": "DejaVuSerif", "DejaVu Sans Mono": "DejaVuSansMono"}
 result = {"tool": "fontTools " + fontTools.__version__, "faces": {}}
 for family, filename in FAMILIES.items():
-    source = Path("crates/fonts/assets/fonts") / (filename + ".ttf")
+    source = Path("assets/fonts") / (filename + ".ttf")
     with TTFont(ROOT / source) as font:
         glyphs, cmap = font.getGlyphSet(), font.getBestCmap()
         def top(character):

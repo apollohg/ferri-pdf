@@ -166,7 +166,7 @@ class FontGeometry(unittest.TestCase):
                             f"{character!r} must paint a visible symbol or its explicitly named private glyph")
 
     def assert_bundled_glyph(self, interpreted, glyph, filename, character="H", size=FONT_SIZE_PT):
-        sources = ROOT / "crates/fonts/assets/fonts"
+        sources = ROOT / "assets/fonts"
         hashes = {row.split()[1]: row.split()[0] for row in (sources / "SHA256SUMS").read_text().splitlines()}
         path = sources / filename
         self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), hashes[filename])
@@ -187,7 +187,7 @@ class FontGeometry(unittest.TestCase):
         self.assertAlmostEqual(glyph.matrix[3], size, delta=MATRIX_TOLERANCE)
 
     def test_svg_text_uses_document_font_faces_without_prior_html_text(self):
-        sources = ROOT / "crates/fonts/assets/fonts"
+        sources = ROOT / "assets/fonts"
         for style, files in [("normal", ["DejaVuSansMono.ttf"]),
                              ("italic bold", ["DejaVuSansMono-BoldOblique.ttf"])]:
             filename = files[0]
@@ -225,7 +225,7 @@ class FontGeometry(unittest.TestCase):
                 self.assertNotEqual(interpreted.glyphs[0].font, interpreted.glyphs[1].font)
 
     def test_svg_font_environment_survives_inline_background_nested_and_shadow_images(self):
-        sources = ROOT / "crates/fonts/assets/fonts"
+        sources = ROOT / "assets/fonts"
         css = ("@page{size:240pt 200pt;margin:20pt}html,body{margin:0;padding:0}img{display:block}"
                f"@font-face{{font-family:ChartFace;src:url('{(sources / 'DejaVuSansMono.ttf').as_uri()}')}}")
         svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40">'
@@ -291,7 +291,7 @@ class FontGeometry(unittest.TestCase):
                 self.assertEqual(interpreted.glyphs[1].text, "fi")
                 self.assert_font_glyph(interpreted, interpreted.glyphs[0], primary, "A")
                 self.assert_font_glyph(interpreted, interpreted.glyphs[-1], primary, "A")
-                with TTFont(ROOT / "crates/fonts/assets/fonts/DejaVuSerif.ttf") as original:
+                with TTFont(ROOT / "assets/fonts/DejaVuSerif.ttf") as original:
                     glyphs = original.getGlyphSet()
                     expected = glyphs[original.getBestCmap()[ord("ﬁ")]]
                     pen = DecomposingRecordingPen(glyphs)
@@ -371,7 +371,7 @@ class FontGeometry(unittest.TestCase):
         self.assert_extracted_text("\uef00")
 
     def test_generic_preferences_do_not_rebind_authored_webfont_aliases(self):
-        other = (ROOT / "crates/fonts/assets/fonts/LiberationSerif-Regular.ttf").as_uri()
+        other = (ROOT / "assets/fonts/LiberationSerif-Regular.ttf").as_uri()
         css = ("@page{size:240pt 160pt;margin:20pt}html,body,p{margin:0;padding:0;font:20pt/24pt sans-serif}"
                f"@font-face{{font-family:'DejaVu Sans';src:url('{other}')}}")
         flags = ["--font-sans-serif", "DejaVu Sans"]
@@ -382,7 +382,7 @@ class FontGeometry(unittest.TestCase):
 
     def test_unicode_family_names_choose_the_correct_embedded_face(self):
         reference = json.loads((FIXTURES / "font-name-matching.json").read_text())
-        mono = (ROOT / "crates/fonts/assets/fonts/LiberationMono-Regular.ttf").as_uri()
+        mono = (ROOT / "assets/fonts/LiberationMono-Regular.ttf").as_uri()
         for case in reference["cases"]:
             declared, requested = case["declared"], case["requested"]
             with self.subTest(declared=declared, requested=requested):
@@ -396,7 +396,7 @@ class FontGeometry(unittest.TestCase):
                 self.assert_extracted_text("H")
 
     def test_unicode_names_keep_shadow_and_local_resolution_in_pdf(self):
-        sources = ROOT / "crates/fonts/assets/fonts"
+        sources = ROOT / "assets/fonts"
         serif, mono = [(sources / filename).as_uri() for filename in
                        ["LiberationSerif-Regular.ttf", "LiberationMono-Regular.ttf"]]
         css = ("@page{size:240pt 160pt;margin:20pt}"
@@ -488,7 +488,7 @@ class FontGeometry(unittest.TestCase):
                 interpreted = self.render(css, "<p>\uef00</p>")
                 self.assert_character_policy_geometry(interpreted, [("\uef00", expected)])
                 self.assert_extracted_text("\uef00")
-        shadow = (ROOT / "crates/fonts/assets/fonts/LiberationSerif-Regular.ttf").as_uri()
+        shadow = (ROOT / "assets/fonts/LiberationSerif-Regular.ttf").as_uri()
         css = "@page{size:240pt 160pt;margin:20pt}html,body,p{margin:0;padding:0;font:20pt/24pt serif}"
         body = ("<div><template shadowrootmode=open><style>"
                 f"@font-face{{font-family:'DejaVu Sans';src:url('{shadow}')}}"
@@ -499,7 +499,7 @@ class FontGeometry(unittest.TestCase):
 
     def test_font_shorthand_small_caps_is_visible_in_pdf(self):
         native = (FIXTURES / "SourceSerif4-Regular.ttf").as_uri()
-        synthetic = (ROOT / "crates/fonts/assets/fonts/LiberationSerif-Regular.ttf").as_uri()
+        synthetic = (ROOT / "assets/fonts/LiberationSerif-Regular.ttf").as_uri()
         css = f"""@page{{size:300pt 300pt;margin:20pt}}
         @font-face{{font-family:NativeCaps;src:url('{native}')}}
         @font-face{{font-family:SyntheticCaps;src:url('{synthetic}')}}
@@ -512,7 +512,7 @@ class FontGeometry(unittest.TestCase):
         # These GIDs come from independent HarfBuzz, not the rendering trace.
         for glyph, path, original_gid, size in [
             (glyphs[0], FIXTURES / "SourceSerif4-Regular.ttf", 1113, 20.0),
-            (glyphs[1], ROOT / "crates/fonts/assets/fonts/LiberationSerif-Regular.ttf", 36, 16.0),
+            (glyphs[1], ROOT / "assets/fonts/LiberationSerif-Regular.ttf", 36, 16.0),
         ]:
             upem, advance, bounds = interpreted.embedded_glyph(glyph.font, "a")
             with TTFont(path) as original:
@@ -648,7 +648,7 @@ class FontGeometry(unittest.TestCase):
                 self.assertAlmostEqual(body[0].origin[0], 20.0, delta=MATRIX_TOLERANCE)
 
     def test_signed_oblique_angles_and_synthesis_permissions_reach_pdf_matrices(self):
-        face = (ROOT / "crates/fonts/assets/fonts/LiberationSerif-Regular.ttf").as_uri()
+        face = (ROOT / "assets/fonts/LiberationSerif-Regular.ttf").as_uri()
         css = f"""@page{{size:300pt 400pt;margin:20pt}}
         @font-face{{font-family:Slant;src:url('{face}');font-style:normal}}
         p{{margin:0;font-family:Slant;font-size:40pt;line-height:60pt}}"""

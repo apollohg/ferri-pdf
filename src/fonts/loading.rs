@@ -1,4 +1,4 @@
-use crate::{
+use crate::fonts::{
     FontBook, FontData, FontError, FontFaceStyle, FontId, FontInstance, FontRange, FontSelection,
     FontSlant, FontSource, FontSources, FontStyle, FontVariation, FontWeight, matching, validate,
 };
@@ -10,7 +10,7 @@ const SLANT_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"slnt");
 const ITALIC_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"ital");
 
 impl FontBook {
-    pub fn instance(
+    pub(crate) fn instance(
         &self,
         id: FontId,
         requested: FontSelection,
@@ -20,7 +20,7 @@ impl FontBook {
     }
 
     /// Measures a face whose source list has already been attempted in this job.
-    pub fn cached_instance(
+    pub(crate) fn cached_instance(
         &self,
         id: FontId,
         requested: FontSelection,
@@ -100,7 +100,7 @@ impl FontBook {
         }))
     }
 
-    pub fn resolve(
+    pub(crate) fn resolve(
         &self,
         id: FontId,
         resolver: &dyn ResourceResolver,
@@ -116,7 +116,7 @@ impl FontBook {
     }
 
     /// Reads an already attempted face without acquiring additional resources.
-    pub fn resolve_cached(&self, id: FontId) -> Result<Option<&[u8]>, FontError> {
+    pub(crate) fn resolve_cached(&self, id: FontId) -> Result<Option<&[u8]>, FontError> {
         let face = self.face(id).ok_or(FontError::UnknownFont(id))?;
         if let FontData::Lazy { data, .. } = &face.data
             && data.get().is_none()

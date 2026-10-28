@@ -1,3 +1,7 @@
+use crate::fonts::{
+    DEFAULT_FAMILY, FontFamily, FontId, FontSelection, FontSlant, FontStyle, FontSynthesis,
+    FontWeight, FontWidth,
+};
 use crate::style::{
     BoxSizing, BreakBetween, BreakInside, DEFAULT_FONT_SIZE, DEFAULT_TAB_SIZE, Display,
     LengthPercentage, ListStylePosition, ListStyleType, Size, StyleError, Stylesheet, TextAlign,
@@ -10,10 +14,6 @@ use crate::style::{
 };
 use cssparser::{Parser, ParserInput};
 use ferri_pdf_dom::Element;
-use ferri_pdf_fonts::{
-    DEFAULT_FAMILY, FontFamily, FontId, FontSelection, FontSlant, FontStyle, FontSynthesis,
-    FontWeight, FontWidth,
-};
 use ferri_pdf_paint::{BoxDecoration, Color};
 use ferri_pdf_resources::ResourceResolver;
 use std::sync::Arc;
@@ -86,9 +86,9 @@ pub(crate) struct Style {
     pub list_style_position: ListStylePosition,
     pub families: Vec<FontFamily>,
     #[serde(skip)]
-    pub(super) font_namespace: ferri_pdf_fonts::FontNamespace,
+    pub(super) font_namespace: crate::fonts::FontNamespace,
     #[serde(skip)]
-    element_font_namespace: ferri_pdf_fonts::FontNamespace,
+    element_font_namespace: crate::fonts::FontNamespace,
     pub font_weight: FontWeight,
     #[expect(
         clippy::struct_field_names,
@@ -183,8 +183,8 @@ impl Default for Style {
             list_style_type: ListStyleType::default(),
             list_style_position: ListStylePosition::default(),
             families: vec![FontFamily::Generic(DEFAULT_FAMILY)],
-            font_namespace: ferri_pdf_fonts::FontNamespace::ROOT,
-            element_font_namespace: ferri_pdf_fonts::FontNamespace::ROOT,
+            font_namespace: crate::fonts::FontNamespace::ROOT,
+            element_font_namespace: crate::fonts::FontNamespace::ROOT,
             font_weight: FontWeight::NORMAL,
             font_style: FontStyle::Normal,
             font_variant_caps: crate::style::FontVariantCaps::Normal,
@@ -242,7 +242,7 @@ impl Default for Style {
 }
 impl Style {
     /// Font-name environment owned by the element's tree scope.
-    pub(crate) fn element_font_namespace(&self) -> ferri_pdf_fonts::FontNamespace {
+    pub(crate) fn element_font_namespace(&self) -> crate::fonts::FontNamespace {
         self.element_font_namespace
     }
 
@@ -377,7 +377,7 @@ impl Style {
     pub(crate) fn font_candidates(&self) -> &[FontId] {
         &self.font_candidates
     }
-    pub(crate) fn named_font_candidates(&self, fonts: &ferri_pdf_fonts::FontBook) -> Arc<[FontId]> {
+    pub(crate) fn named_font_candidates(&self, fonts: &crate::fonts::FontBook) -> Arc<[FontId]> {
         fonts.named_candidates_in_namespace(
             self.font_namespace,
             &self.families,

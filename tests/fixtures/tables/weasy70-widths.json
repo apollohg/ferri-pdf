@@ -155,7 +155,7 @@
       "table_width": 199.99999999999997
     }
   ],
-  "font_path": "crates/fonts/assets/fonts/DejaVuSans.ttf",
+  "font_path": "assets/fonts/DejaVuSans.ttf",
   "sources": {
     "preferred.py": "a7973703cd8ac5fada246b35e7fea6e728a364002adc5dbb248ee08f084c0a6e",
     "table.py": "3a5b6442410f18e6c59c1be299c9de916c2b09334aa65c5001594b344d6f7961"

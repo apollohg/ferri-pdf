@@ -1,7 +1,7 @@
 use super::common;
+use crate::fonts::{FontFamily, FontStyle, FontWeight, GenericFamily};
 use crate::style::{LineHeight, Style, StyleError, Stylesheet, StylesheetSource};
 use ferri_pdf_dom::{DocumentTree, Selector};
-use ferri_pdf_fonts::{FontFamily, FontStyle, FontWeight, GenericFamily};
 
 fn computed(css: &str) -> Result<Style, StyleError> {
     computed_at(css, Default::default())
@@ -112,10 +112,10 @@ fn font_shorthand_resets_only_its_defined_properties() {
     ))
     .expect("font resets every advanced setting before it reaches unsupported rendering");
     assert_eq!(actual.size, 12.0);
-    assert_eq!(actual.font_width, ferri_pdf_fonts::FontWidth::NORMAL);
+    assert_eq!(actual.font_width, crate::fonts::FontWidth::NORMAL);
     assert_eq!(
         actual.font_synthesis,
-        ferri_pdf_fonts::FontSynthesis::default(),
+        crate::fonts::FontSynthesis::default(),
         "font must leave synthesis independently cascaded"
     );
     let palette = computed("#target{font-palette:light;font:12pt serif}");
@@ -174,12 +174,12 @@ fn font_width_stretch_aliases_share_cascade_and_variables() {
         });
         assert_eq!(
             actual.font_width,
-            ferri_pdf_fonts::FontWidth::NORMAL,
+            crate::fonts::FontWidth::NORMAL,
             "{declarations}"
         );
     }
     let actual = computed("#target{font-width:condensed!important;font-stretch:normal}").unwrap();
-    assert_eq!(actual.font_width, ferri_pdf_fonts::FontWidth::CONDENSED);
+    assert_eq!(actual.font_width, crate::fonts::FontWidth::CONDENSED);
 }
 
 #[test]
@@ -390,7 +390,7 @@ fn face_matching_narrows_width_before_style_and_weight() {
 fn modern_font_source_hints_skip_unsupported_technology_and_keep_policy_errors() {
     const FONT_BYTE_LIMIT: usize = 4;
     let html = format!(
-        "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:url('../../../crates/fonts/assets/fonts/DejaVuSans.ttf') format(truetype) tech(features-graphite),url(RobotoFlex.ttf) format(truetype) tech(variations)}}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt}}</style><p>H</p>"
+        "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:url('../../../assets/fonts/DejaVuSans.ttf') format(truetype) tech(features-graphite),url(RobotoFlex.ttf) format(truetype) tech(variations)}}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt}}</style><p>H</p>"
     );
     let options = variable_options();
     let output = crate::render_html(&html, &options)
@@ -901,7 +901,7 @@ fn private_use_named_matching_keeps_its_font_namespace() {
         .as_u64()
         .unwrap() as u32;
     let font = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("crates/fonts/assets/fonts/LiberationSerif-Regular.ttf");
+        .join("assets/fonts/LiberationSerif-Regular.ttf");
     let trace=crate::render_html(
         &format!("<!doctype html><style>html,body,p{{margin:0;padding:0;font:20pt/24pt serif}}</style><div><template shadowrootmode=open><style>@font-face{{font-family:'DejaVu Sans';src:url('{}')}}p{{font-family:'DejaVu Sans',sans-serif}}</style><p>\u{ef00}</p></template></div>",font.display()),
         &common::local_options(),
@@ -1080,7 +1080,7 @@ fn font_names_use_full_default_unicode_folding_without_normalization() {
     ))
     .unwrap();
     let fixture = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("crates/fonts/assets/fonts/LiberationMono-Regular.ttf");
+        .join("assets/fonts/LiberationMono-Regular.ttf");
     for case in reference["cases"].as_array().unwrap() {
         let declared = case["declared"].as_str().unwrap();
         let requested = case["requested"].as_str().unwrap();
@@ -1108,7 +1108,7 @@ fn font_names_use_full_default_unicode_folding_without_normalization() {
 
 #[test]
 fn shadow_font_names_fold_before_selecting_their_namespace() {
-    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("crates/fonts/assets/fonts");
+    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("assets/fonts");
     let html = format!(
         "<!doctype html><style>@font-face{{font-family:STRASSE;src:url('{}')}}p{{font:20pt/24pt STRASSE}}</style><div><template shadowrootmode=open><style>@font-face{{font-family:'Straße';src:url('{}')}}p{{font:20pt/24pt STRASSE}}</style><p>H</p></template></div><p>H</p>",
         root.join("LiberationSerif-Regular.ttf").display(),

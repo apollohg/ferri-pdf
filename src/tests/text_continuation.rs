@@ -368,7 +368,7 @@ fn producing_one_line_does_not_shape_an_unrequested_suffix_or_repeat_a_terminal_
     for line in lines.by_ref() {
         match line {
             Ok(_) => {}
-            Err(TextError::Font(ferri_pdf_fonts::FontError::Resource(
+            Err(TextError::Font(crate::fonts::FontError::Resource(
                 ferri_pdf_resources::ResourceError::Denied(_),
             ))) => {
                 denied = true;

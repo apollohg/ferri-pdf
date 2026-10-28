@@ -5,16 +5,15 @@ mod matching;
 mod metrics;
 mod selection;
 
-pub use metrics::{FaceMetrics, InitialFont, advance, initial_font};
-pub use selection::{
-    FontFaceStyle, FontInstance, FontRange, FontSelection, FontSlant, FontVariation, FontWidth,
-};
+pub(crate) use metrics::{FaceMetrics, InitialFont, advance, initial_font};
+pub(crate) use selection::FontInstance;
+pub use selection::{FontFaceStyle, FontRange, FontSelection, FontSlant, FontVariation, FontWidth};
 
 use serde::Serialize;
 use std::sync::{Arc, OnceLock};
 
 /// The initial `font-family`, resolved to `serif`.
-pub const DEFAULT_FAMILY: GenericFamily = GenericFamily::Serif;
+pub(crate) const DEFAULT_FAMILY: GenericFamily = GenericFamily::Serif;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize)]
 pub struct FontId(usize);
@@ -26,9 +25,9 @@ impl FontId {
 
 /// A font-name namespace within one book; independent of DOM and selector identities.
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Hash)]
-pub struct FontNamespace(usize);
+pub(crate) struct FontNamespace(usize);
 impl FontNamespace {
-    pub const ROOT: Self = Self(0);
+    pub(crate) const ROOT: Self = Self(0);
 }
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
@@ -167,14 +166,14 @@ pub struct FontDescriptor {
 }
 
 /// Availability of a face when looking for a glyph or a complete shaping cluster.
-pub enum GlyphMatch<T> {
+pub(crate) enum GlyphMatch<T> {
     Unavailable,
     Missing,
     Found(T),
 }
 
 /// Sorted source offsets, including the end, shared by a run's shaped glyphs.
-pub fn cluster_boundaries(clusters: impl Iterator<Item = usize>, end: usize) -> Vec<usize> {
+pub(crate) fn cluster_boundaries(clusters: impl Iterator<Item = usize>, end: usize) -> Vec<usize> {
     let mut boundaries: Vec<_> = clusters.collect();
     boundaries.push(end);
     boundaries.sort_unstable();
@@ -185,6 +184,7 @@ pub fn cluster_boundaries(clusters: impl Iterator<Item = usize>, end: usize) -> 
 #[derive(Clone)]
 enum FontData {
     Bundled(&'static [u8]),
+    #[cfg(test)]
     Loaded(Arc<Vec<u8>>),
     Lazy {
         sources: Arc<FontSources>,
@@ -192,29 +192,30 @@ enum FontData {
     },
 }
 
-pub enum FontSource {
+pub(crate) enum FontSource {
     Url(String),
     Local(String),
 }
 
-pub struct FontSources {
+pub(crate) struct FontSources {
     pub sources: Vec<FontSource>,
     pub base: ferri_pdf_resources::ResourceBase,
 }
 
 #[derive(Clone)]
-pub struct FontFace {
+pub(crate) struct FontFace {
     descriptor: FontDescriptor,
     data: FontData,
     namespace: FontNamespace,
 }
 impl FontFace {
-    pub fn descriptor(&self) -> &FontDescriptor {
+    pub(crate) fn descriptor(&self) -> &FontDescriptor {
         &self.descriptor
     }
-    pub fn data(&self) -> Option<&[u8]> {
+    pub(crate) fn data(&self) -> Option<&[u8]> {
         match &self.data {
             FontData::Bundled(bytes) => Some(bytes),
+            #[cfg(test)]
             FontData::Loaded(bytes) => Some(bytes),
             FontData::Lazy { data, .. } => data.get().and_then(Option::as_deref),
         }
@@ -222,7 +223,7 @@ impl FontFace {
 }
 
 #[derive(Clone)]
-pub struct FontBook {
+pub(crate) struct FontBook {
     faces: Vec<FontFace>,
     namespaces: Vec<Option<FontNamespace>>,
     preferences: FontPreferences,
@@ -233,7 +234,7 @@ impl Default for FontBook {
     }
 }
 impl FontBook {
-    pub fn with_preferences(preferences: FontPreferences) -> Self {
+    pub(crate) fn with_preferences(preferences: FontPreferences) -> Self {
         Self {
             faces: bundled::faces(),
             namespaces: vec![None],
@@ -248,7 +249,7 @@ impl FontBook {
             .chain(generic.bundled_names().iter().copied())
     }
     /// A family's first available face fixes its descriptor before glyph fallback proceeds.
-    pub fn find_glyph<T, E: From<FontError>>(
+    pub(crate) fn find_glyph<T, E: From<FontError>>(
         &self,
         candidates: &[FontId],
         mut probe: impl FnMut(FontId) -> Result<GlyphMatch<T>, E>,
@@ -278,7 +279,7 @@ impl FontBook {
         }
         Ok(None)
     }
-    pub fn child_namespace(&mut self, parent: FontNamespace) -> FontNamespace {
+    pub(crate) fn child_namespace(&mut self, parent: FontNamespace) -> FontNamespace {
         assert!(
             parent.0 < self.namespaces.len(),
             "parent namespace belongs to this book"
@@ -287,7 +288,8 @@ impl FontBook {
         self.namespaces.push(Some(parent));
         namespace
     }
-    pub fn register(
+    #[cfg(test)]
+    pub(crate) fn register(
         &mut self,
         descriptor: FontDescriptor,
         data: Vec<u8>,
@@ -301,10 +303,11 @@ impl FontBook {
         });
         Ok(id)
     }
-    pub fn declare(&mut self, descriptor: FontDescriptor, sources: FontSources) -> FontId {
+    #[cfg(test)]
+    pub(crate) fn declare(&mut self, descriptor: FontDescriptor, sources: FontSources) -> FontId {
         self.declare_in_namespace(FontNamespace::ROOT, descriptor, sources)
     }
-    pub fn declare_in_namespace(
+    pub(crate) fn declare_in_namespace(
         &mut self,
         namespace: FontNamespace,
         descriptor: FontDescriptor,
@@ -321,22 +324,26 @@ impl FontBook {
         });
         id
     }
-    pub fn face(&self, id: FontId) -> Option<&FontFace> {
+    pub(crate) fn face(&self, id: FontId) -> Option<&FontFace> {
         self.faces.get(id.0)
     }
-    pub fn faces(&self) -> &[FontFace] {
+    pub(crate) fn faces(&self) -> &[FontFace] {
         &self.faces
     }
-    pub fn faces_with_ids(&self) -> impl Iterator<Item = (FontId, &FontFace)> {
+    pub(crate) fn faces_with_ids(&self) -> impl Iterator<Item = (FontId, &FontFace)> {
         self.faces
             .iter()
             .enumerate()
             .map(|(index, face)| (FontId(index), face))
     }
-    pub fn candidates(&self, families: &[FontFamily], selection: FontSelection) -> Arc<[FontId]> {
+    pub(crate) fn candidates(
+        &self,
+        families: &[FontFamily],
+        selection: FontSelection,
+    ) -> Arc<[FontId]> {
         self.candidates_in_namespace(FontNamespace::ROOT, families, selection)
     }
-    pub fn candidates_in_namespace(
+    pub(crate) fn candidates_in_namespace(
         &self,
         namespace: FontNamespace,
         families: &[FontFamily],
@@ -346,7 +353,7 @@ impl FontBook {
     }
 
     /// Private-use characters can match only explicitly named families.
-    pub fn named_candidates_in_namespace(
+    pub(crate) fn named_candidates_in_namespace(
         &self,
         namespace: FontNamespace,
         families: &[FontFamily],
@@ -356,7 +363,7 @@ impl FontBook {
     }
 
     /// The bundled face has a visible replacement symbol, independent of author overrides.
-    pub fn missing_glyph_font(&self) -> Option<FontId> {
+    pub(crate) fn missing_glyph_font(&self) -> Option<FontId> {
         self.faces.iter().enumerate().find_map(|(index, face)| {
             (matches!(face.data, FontData::Bundled(_))
                 && face.descriptor.family == bundled::DEJAVU_SANS
@@ -471,3 +478,6 @@ pub enum FontError {
     #[error("no font face in the family list is available")]
     NoAvailableFace,
 }
+
+#[cfg(test)]
+mod tests;

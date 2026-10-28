@@ -642,7 +642,7 @@ impl<'a> Geometry<'a> {
         context: Context,
         property: Property,
         value: &Specified,
-        namespace: Option<ferri_pdf_fonts::FontNamespace>,
+        namespace: Option<crate::fonts::FontNamespace>,
     ) -> Result<Style, StyleError> {
         self.prerequisites(context, property, value)?;
         let mut target = self.context(context).style.borrow().clone();
@@ -1542,7 +1542,7 @@ impl Stylesheet {
 struct Query<'g, 'a> {
     geometry: &'g Geometry<'a>,
     context: Context,
-    namespace: ferri_pdf_fonts::FontNamespace,
+    namespace: crate::fonts::FontNamespace,
     namespaces: Option<crate::style::selector::Namespaces>,
 }
 impl crate::style::attribute::Context for Query<'_, '_> {
@@ -1827,7 +1827,7 @@ pub(super) fn substitute_known(
     sheet: &Stylesheet,
     style: &Style,
     value: &variables::Value,
-    namespace: ferri_pdf_fonts::FontNamespace,
+    namespace: crate::fonts::FontNamespace,
     namespaces: Option<&crate::style::selector::Namespaces>,
     viewport: [f32; 2],
     resolver: &dyn ResourceResolver,

@@ -1,3 +1,7 @@
+use crate::fonts::{
+    FontFaceStyle, FontFamily, FontRange, FontSlant, FontSource, FontStyle, FontWeight, FontWidth,
+    GenericFamily,
+};
 use crate::style::{
     StyleError,
     box_values::unsupported,
@@ -7,10 +11,6 @@ use crate::style::{
     units::Relative,
 };
 use cssparser::{Parser, ParserInput};
-use ferri_pdf_fonts::{
-    FontFaceStyle, FontFamily, FontRange, FontSlant, FontSource, FontStyle, FontWeight, FontWidth,
-    GenericFamily,
-};
 
 const SUPPORTED_FONT_FORMATS: [&str; 2] = ["truetype", "opentype"];
 pub(super) fn supports_font_format(name: &str) -> bool {

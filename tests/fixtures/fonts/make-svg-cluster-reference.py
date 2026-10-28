@@ -8,7 +8,7 @@ import fontTools
 from fontTools.ttLib import TTFont
 
 ROOT = Path(__file__).resolve().parents[3]
-SOURCE = Path("crates/fonts/assets/fonts/DejaVuSans.ttf")
+SOURCE = Path("assets/fonts/DejaVuSans.ttf")
 TEXT = "a\u0346"
 command = ["hb-shape", str(ROOT / SOURCE), TEXT, "--output-format=json",
            "--no-glyph-names", "--direction=ltr", "--language=en"]

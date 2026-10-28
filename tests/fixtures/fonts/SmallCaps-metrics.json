@@ -103,7 +103,7 @@
     },
     {
       "name": "synthetic_expansion",
-      "font": "../../../crates/fonts/assets/fonts/LiberationSerif-Regular.ttf",
+      "font": "../../../assets/fonts/LiberationSerif-Regular.ttf",
       "text": "ASS",
       "features": "",
       "language": "und",
@@ -137,7 +137,7 @@
     },
     {
       "name": "synthetic_turkish",
-      "font": "../../../crates/fonts/assets/fonts/LiberationSerif-Regular.ttf",
+      "font": "../../../assets/fonts/LiberationSerif-Regular.ttf",
       "text": "\u0130I",
       "features": "",
       "language": "tr",

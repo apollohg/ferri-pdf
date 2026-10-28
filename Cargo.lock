@@ -602,7 +602,6 @@ dependencies = [
  "encoding_rs",
  "ferri-pdf-avif-decode",
  "ferri-pdf-dom",
- "ferri-pdf-fonts",
  "ferri-pdf-heic-decoder",
  "ferri-pdf-icu-casemap",
  "ferri-pdf-krilla",
@@ -675,17 +674,6 @@ dependencies = [
  "scraper",
  "thiserror",
  "url",
-]
-
-[[package]]
-name = "ferri-pdf-fonts"
-version = "0.1.0"
-dependencies = [
- "ferri-pdf-icu-casemap",
- "ferri-pdf-resources",
- "serde",
- "thiserror",
- "ttf-parser",
 ]
 
 [[package]]

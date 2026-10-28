@@ -1,9 +1,9 @@
-use ferri_pdf_fonts::{
+use crate::fonts::{
     FontBook, FontDescriptor, FontFaceStyle, FontFamily, FontRange, FontSelection, FontSlant,
     FontStyle, FontWeight, FontWidth, GenericFamily,
 };
 
-const FONT: &[u8] = include_bytes!("../assets/fonts/DejaVuSans.ttf");
+const FONT: &[u8] = include_bytes!("../../../assets/fonts/DejaVuSans.ttf");
 const VARIABLE_FONT: &[u8] = include_bytes!("../../../tests/fixtures/fonts/RobotoFlex.ttf");
 
 #[test]
@@ -244,7 +244,7 @@ fn signed_oblique_ranges_respect_the_eleven_degree_preference_boundary() {
 
 #[test]
 fn caseless_family_aliases_do_not_switch_descriptors_after_missing_glyphs() {
-    use ferri_pdf_fonts::{FontError, GlyphMatch};
+    use crate::fonts::{FontError, GlyphMatch};
     const LIMITED: &[u8] = include_bytes!("../../../tests/fixtures/fonts/MetricGlyphTest.ttf");
     let mut book = FontBook::default();
     let descriptor = FontDescriptor {
@@ -297,7 +297,7 @@ fn caseless_family_aliases_do_not_switch_descriptors_after_missing_glyphs() {
 
 #[test]
 fn generic_preferences_select_installed_faces_with_the_requested_style() {
-    let book = FontBook::with_preferences(ferri_pdf_fonts::FontPreferences {
+    let book = FontBook::with_preferences(crate::fonts::FontPreferences {
         sans_serif: vec!["DejaVu Sans".into()],
         serif: vec!["DejaVu Serif".into()],
         monospace: vec!["DejaVu Sans Mono".into()],
@@ -307,17 +307,17 @@ fn generic_preferences_select_installed_faces_with_the_requested_style() {
         (
             GenericFamily::SansSerif,
             "DejaVu Sans",
-            include_bytes!("../assets/fonts/DejaVuSans-BoldOblique.ttf").as_slice(),
+            include_bytes!("../../../assets/fonts/DejaVuSans-BoldOblique.ttf").as_slice(),
         ),
         (
             GenericFamily::Serif,
             "DejaVu Serif",
-            include_bytes!("../assets/fonts/DejaVuSerif-BoldItalic.ttf").as_slice(),
+            include_bytes!("../../../assets/fonts/DejaVuSerif-BoldItalic.ttf").as_slice(),
         ),
         (
             GenericFamily::Monospace,
             "DejaVu Sans Mono",
-            include_bytes!("../assets/fonts/DejaVuSansMono-BoldOblique.ttf").as_slice(),
+            include_bytes!("../../../assets/fonts/DejaVuSansMono-BoldOblique.ttf").as_slice(),
         ),
     ] {
         let candidates = book.candidates(
@@ -340,7 +340,7 @@ fn generic_preferences_select_installed_faces_with_the_requested_style() {
 
 #[test]
 fn preferred_fallback_follows_the_css_family_list_and_deduplicates_faces() {
-    let book = FontBook::with_preferences(ferri_pdf_fonts::FontPreferences {
+    let book = FontBook::with_preferences(crate::fonts::FontPreferences {
         sans_serif: vec![
             "Unavailable Family".into(),
             "DejaVu ſans".into(),
@@ -377,7 +377,7 @@ fn preferred_fallback_follows_the_css_family_list_and_deduplicates_faces() {
 
 #[test]
 fn generic_preferences_cannot_turn_an_authored_face_into_installed_fallback() {
-    let mut book = FontBook::with_preferences(ferri_pdf_fonts::FontPreferences {
+    let mut book = FontBook::with_preferences(crate::fonts::FontPreferences {
         sans_serif: vec!["DejaVu Sans".into()],
         fallback: vec!["Declared Only".into()],
         ..Default::default()
@@ -388,8 +388,8 @@ fn generic_preferences_cannot_turn_an_authored_face_into_installed_fallback() {
         width: FontRange::single(FontWidth::NORMAL),
         style: FontFaceStyle::Normal,
     };
-    let sources = || ferri_pdf_fonts::FontSources {
-        sources: vec![ferri_pdf_fonts::FontSource::Url("denied-font.ttf".into())],
+    let sources = || crate::fonts::FontSources {
+        sources: vec![crate::fonts::FontSource::Url("denied-font.ttf".into())],
         base: Default::default(),
     };
     let shadow = book.declare(descriptor("DejaVu Sans"), sources());
@@ -412,7 +412,7 @@ fn generic_preferences_cannot_turn_an_authored_face_into_installed_fallback() {
     );
     assert!(
         book.named_candidates_in_namespace(
-            ferri_pdf_fonts::FontNamespace::ROOT,
+            crate::fonts::FontNamespace::ROOT,
             &generic,
             FontSelection::default()
         )
@@ -423,7 +423,7 @@ fn generic_preferences_cannot_turn_an_authored_face_into_installed_fallback() {
 
 #[test]
 fn cloned_books_share_lazy_results_and_original_bytes_without_acquiring_cached_faces() {
-    use ferri_pdf_fonts::{FontError, FontSource, FontSources};
+    use crate::fonts::{FontError, FontSource, FontSources};
     use ferri_pdf_resources::{Resource, ResourceBase, ResourceError, ResourceResolver};
     use std::cell::Cell;
     struct Assets {

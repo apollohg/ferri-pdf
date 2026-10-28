@@ -36,7 +36,7 @@ pub struct PrintSettings {
     pub paper: [f32; 2],
     pub preferences: PrintPreferences,
     /// Installed generic and glyph-fallback family preferences.
-    pub fonts: ferri_pdf_fonts::FontPreferences,
+    pub fonts: crate::fonts::FontPreferences,
 }
 
 impl Default for PrintSettings {
@@ -75,9 +75,7 @@ impl PrintEnvironment {
     pub(crate) fn new(settings: &PrintSettings) -> Result<Self, StyleError> {
         settings.validate()?;
         let initial_font = (!settings.fonts.is_empty()).then(|| {
-            std::sync::Arc::new(ferri_pdf_fonts::InitialFont::from_preferences(
-                &settings.fonts,
-            ))
+            std::sync::Arc::new(crate::fonts::InitialFont::from_preferences(&settings.fonts))
         });
         let relative = Relative::media(settings.paper, initial_font);
         Ok(Self {

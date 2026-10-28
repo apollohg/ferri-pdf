@@ -1,11 +1,10 @@
 use crate::document::{BlockContent, StyledDocument};
 use ferri_pdf_resources::{FileResolver, ResourceBase};
 
-const SERIF: &[u8] = include_bytes!("../../../crates/fonts/assets/fonts/DejaVuSerif.ttf");
-const SANS: &[u8] = include_bytes!("../../../crates/fonts/assets/fonts/DejaVuSans.ttf");
-const MONO: &[u8] = include_bytes!("../../../crates/fonts/assets/fonts/DejaVuSansMono.ttf");
-const INITIAL: &[u8] =
-    include_bytes!("../../../crates/fonts/assets/fonts/LiberationSerif-Regular.ttf");
+const SERIF: &[u8] = include_bytes!("../../../assets/fonts/DejaVuSerif.ttf");
+const SANS: &[u8] = include_bytes!("../../../assets/fonts/DejaVuSans.ttf");
+const MONO: &[u8] = include_bytes!("../../../assets/fonts/DejaVuSansMono.ttf");
+const INITIAL: &[u8] = include_bytes!("../../../assets/fonts/LiberationSerif-Regular.ttf");
 const OUTER: &str = "@font-face{font-family:Shared;src:local('DejaVu Serif')}body{font-family:Shared;--family:Shared}";
 const INNER: &str = "@font-face{font-family:Shared;src:local('DejaVu Sans')}";
 
@@ -106,7 +105,7 @@ fn rollback_restores_the_selected_font_reference_context() {
 
 #[test]
 fn nearest_family_masks_an_ancestor_with_a_better_matching_weight() {
-    const BOLD: &[u8] = include_bytes!("../../../crates/fonts/assets/fonts/DejaVuSans-Bold.ttf");
+    const BOLD: &[u8] = include_bytes!("../../../assets/fonts/DejaVuSans-Bold.ttf");
     assert_faces(
         &format!(
             "<style>{OUTER}</style><div><template shadowrootmode=closed><style>@font-face{{font-family:Shared;src:local('DejaVu Sans Bold');font-weight:700}}p{{font-family:Shared;font-weight:400}}</style><p>Nearest family</p></template></div>"

@@ -158,7 +158,7 @@ fn origin_importance_inline_and_hints_share_cascade() {
         "",
         "<table><tr><th id=target>Header</table>",
     );
-    assert_eq!(th.font_weight, ferri_pdf_fonts::FontWeight::NORMAL);
+    assert_eq!(th.font_weight, crate::fonts::FontWeight::NORMAL);
     assert_eq!(th.align, crate::style::TextAlign::Left);
     let mut options = local_options();
     options
@@ -977,13 +977,13 @@ fn layer_names_compare_decoded_identifiers_without_reparsing_them() {
 
 #[test]
 fn font_face_collisions_follow_layer_precedence_before_source_order() {
-    use ferri_pdf_fonts::{FontBook, FontFamily, FontStyle, FontWeight};
+    use crate::fonts::{FontBook, FontFamily, FontStyle, FontWeight};
     use ferri_pdf_resources::FileResolver;
     let css = "@layer low,high;@layer high{@font-face{font-family:Layered;src:local('DejaVu Serif')}}@layer low{@font-face{font-family:Layered;src:local('DejaVu Sans')}}";
     let styles = sheet(css, "");
     let candidates = styles.fonts.candidates(
         &[FontFamily::Named("Layered".into())],
-        ferri_pdf_fonts::FontSelection::new(FontWeight::NORMAL, FontStyle::Normal),
+        crate::fonts::FontSelection::new(FontWeight::NORMAL, FontStyle::Normal),
     );
     let selected = styles
         .fonts
@@ -993,7 +993,7 @@ fn font_face_collisions_follow_layer_precedence_before_source_order() {
     let bundled = FontBook::default();
     let serif = bundled.candidates(
         &[FontFamily::Named("DejaVu Serif".into())],
-        ferri_pdf_fonts::FontSelection::new(FontWeight::NORMAL, FontStyle::Normal),
+        crate::fonts::FontSelection::new(FontWeight::NORMAL, FontStyle::Normal),
     );
     assert!(
         selected == bundled.face(serif[0]).unwrap().data().unwrap(),

@@ -4,7 +4,7 @@ mod heif;
 mod pixels;
 mod svg;
 mod svg_fonts;
-use ferri_pdf_fonts::{FontBook, FontNamespace};
+use crate::fonts::{FontBook, FontNamespace};
 pub(crate) use ferri_pdf_paint::NaturalDimensions;
 use ferri_pdf_resources::{ResourceError, ResourceResolver};
 pub(crate) use image::metadata::Orientation;
@@ -160,7 +160,7 @@ impl Image {
 #[derive(Debug, thiserror::Error)]
 pub enum ImageError {
     #[error("SVG font: {0}")]
-    Font(#[from] ferri_pdf_fonts::FontError),
+    Font(#[from] crate::fonts::FontError),
     #[error("invalid AVIF container: {0}")]
     AvifContainer(#[from] zenavif_parse::Error),
     #[error("invalid AV1 image: {0}")]

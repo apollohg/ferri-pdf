@@ -1,8 +1,8 @@
-use crate::svg::usvg::{Font, FontProvider};
-use ferri_pdf_fonts::{
+use crate::fonts::{
     DEFAULT_FAMILY, FontBook, FontError, FontFaceStyle, FontFamily, FontId, FontNamespace,
     FontSelection, FontStyle, FontWeight, FontWidth, GenericFamily, GlyphMatch,
 };
+use crate::svg::usvg::{Font, FontProvider};
 use ferri_pdf_resources::ResourceResolver;
 use std::{
     cell::RefCell,

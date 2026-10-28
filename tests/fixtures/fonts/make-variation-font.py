@@ -13,7 +13,7 @@ from fontTools.ttLib.tables._c_m_a_p import CmapSubtable
 
 ROOT = Path(__file__).resolve().parents[3]
 FIXTURES = Path(__file__).resolve().parent
-SOURCE = ROOT / "crates/fonts/assets/fonts/LiberationSerif-Regular.ttf"
+SOURCE = ROOT / "assets/fonts/LiberationSerif-Regular.ttf"
 TARGET = FIXTURES / "VariationSequenceTest.ttf"
 FAMILY = "Variation Sequence Test"
 SHAPER_OPTIONS = ["--output-format=json", "--no-glyph-names", "--remove-default-ignorables"]
@@ -63,7 +63,7 @@ for text in ["A\ufe00", "A\U000e0100", "H\ufe00", "A\ufe01", "A\ufe00\ufe01", "\
 record = {
     "derived_from": str(SOURCE.relative_to(ROOT)),
     "source_sha256": hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
-    "license": "../../../crates/fonts/assets/fonts/LIBERATION-LICENSE.txt",
+    "license": "../../../assets/fonts/LIBERATION-LICENSE.txt",
     "generator": Path(__file__).name,
     "tool": "FontTools " + fontTools.__version__,
     "shaper": subprocess.run(["hb-shape", "--version"], check=True, capture_output=True, text=True).stdout.splitlines()[0],

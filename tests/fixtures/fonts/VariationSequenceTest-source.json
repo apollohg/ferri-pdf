@@ -1,7 +1,7 @@
 {
-  "derived_from": "crates/fonts/assets/fonts/LiberationSerif-Regular.ttf",
+  "derived_from": "assets/fonts/LiberationSerif-Regular.ttf",
   "source_sha256": "058ea80864aef09a23f45cbec2bb5400bc3dfbdea01c3f10538a21fcb497fb74",
-  "license": "../../../crates/fonts/assets/fonts/LIBERATION-LICENSE.txt",
+  "license": "../../../assets/fonts/LIBERATION-LICENSE.txt",
   "generator": "make-variation-font.py",
   "tool": "FontTools 4.63.0",
   "shaper": "hb-shape (HarfBuzz) 14.4.0",

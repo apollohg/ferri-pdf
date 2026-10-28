@@ -1,4 +1,4 @@
-use crate::{
+use crate::fonts::{
     FontData, FontDescriptor, FontFace, FontFaceStyle, FontRange, FontStyle, FontWeight, FontWidth,
 };
 
@@ -22,8 +22,12 @@ pub(super) fn faces() -> Vec<FontFace> {
                     width: FontRange::single(FontWidth::NORMAL),
                     style: FontFaceStyle::from($style),
                 },
-                data: FontData::Bundled(include_bytes!(concat!("../assets/fonts/", $file, ".ttf"))),
-                namespace: crate::FontNamespace::ROOT,
+                data: FontData::Bundled(include_bytes!(concat!(
+                    "../../assets/fonts/",
+                    $file,
+                    ".ttf"
+                ))),
+                namespace: crate::fonts::FontNamespace::ROOT,
             }
         };
     }

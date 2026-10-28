@@ -17,6 +17,7 @@ extern crate self as ferri_pdf;
 
 mod document;
 mod flex;
+mod fonts;
 mod graphics;
 mod grid;
 mod images;
@@ -39,6 +40,10 @@ use crate::layout::LayoutError;
 use crate::text::TextError;
 
 pub use crate::document::DocumentDiagnostic as RenderDiagnostic;
+pub use crate::fonts::{
+    FontDescriptor, FontFaceStyle, FontFamily, FontId, FontPreferences, FontRange, FontSelection,
+    FontSlant, FontStyle, FontSynthesis, FontVariation, FontWeight, FontWidth, GenericFamily,
+};
 pub use crate::graphics::{
     Border, BorderStyle, BoxDecoration, BoxPaint, Clip, ClipBounds, Color, Contour, DecorationLine,
     DecorationPaint, DecorationStyle, DisplayItem, Fill, INLINE_EDGES, LengthPercentage, Point,
@@ -52,10 +57,6 @@ pub use crate::style::{
 pub use crate::text::{GlyphRun, PositionedGlyph};
 pub use crate::writer::{
     ImageDpi, ImageOptions, InvalidImageDpi, InvalidJpegQuality, JpegQuality, PdfError,
-};
-pub use ferri_pdf_fonts::{
-    FontDescriptor, FontFaceStyle, FontFamily, FontId, FontPreferences, FontRange, FontSelection,
-    FontSlant, FontStyle, FontSynthesis, FontVariation, FontWeight, FontWidth, GenericFamily,
 };
 pub use ferri_pdf_resources as resources;
 pub use ferri_pdf_resources::{
@@ -230,10 +231,10 @@ fn prepare_document(
     })?;
     let (document, trace) =
         layout::layout_document(document, resolver).map_err(|error| match error {
-            LayoutError::Text(TextError::Font(ferri_pdf_fonts::FontError::InvalidFont(_))) => {
+            LayoutError::Text(TextError::Font(fonts::FontError::InvalidFont(_))) => {
                 Error::InvalidFont
             }
-            LayoutError::Text(TextError::Font(ferri_pdf_fonts::FontError::Resource(error))) => {
+            LayoutError::Text(TextError::Font(fonts::FontError::Resource(error))) => {
                 Error::Css(StyleError::Resource(error))
             }
             LayoutError::Text(TextError::Font(error)) => Error::Css(StyleError::Font(error)),

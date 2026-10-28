@@ -3,7 +3,7 @@
     "hb-shape (HarfBuzz) 15.0.0",
     "fontTools 4.63.0"
   ],
-  "source": "crates/fonts/assets/fonts/DejaVuSans.ttf",
+  "source": "assets/fonts/DejaVuSans.ttf",
   "sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
   "units_per_em": 2048,
   "text": "a\u0346",

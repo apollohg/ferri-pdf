@@ -1,4 +1,4 @@
-use crate::{
+use crate::fonts::{
     FontData, FontFace, FontFaceStyle, FontId, FontNamespace, FontSelection, FontSlant, FontStyle,
     FontWeight, FontWidth,
 };

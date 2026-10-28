@@ -1,4 +1,4 @@
-use crate::{FontError, FontStyle, FontSynthesis, FontWeight};
+use crate::fonts::{FontError, FontStyle, FontSynthesis, FontWeight};
 use serde::{Serialize, Serializer};
 use std::hash::{Hash, Hasher};
 
@@ -159,14 +159,14 @@ pub struct FontVariation {
     pub value: f32,
 }
 
-pub struct FontInstance<'a> {
+pub(crate) struct FontInstance<'a> {
     pub face: ttf_parser::Face<'a>,
     pub variations: std::sync::Arc<[FontVariation]>,
     pub(super) weight: f32,
     pub(super) style: FontStyle,
 }
 impl FontInstance<'_> {
-    pub fn synthesis(&self, requested: FontSelection) -> (FontSynthesis, f32) {
+    pub(crate) fn synthesis(&self, requested: FontSelection) -> (FontSynthesis, f32) {
         let angle = match requested.style {
             FontStyle::Normal => FontSlant::NORMAL,
             FontStyle::Italic => FontSlant::DEFAULT,

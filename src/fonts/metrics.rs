@@ -1,5 +1,5 @@
 //! Face measurements that font-relative lengths (CSS Values 4 §6.1.1) and line boxes use.
-use crate::{
+use crate::fonts::{
     DEFAULT_FAMILY, FontBook, FontData, FontError, FontFamily, FontId, FontPreferences,
     FontSelection, GlyphMatch,
 };
@@ -14,7 +14,7 @@ const CAPITAL_H: char = 'H';
 
 /// Vertical metrics of one face, in em.
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct FaceMetrics {
+pub(crate) struct FaceMetrics {
     pub ascent: f32,
     pub descent: f32,
     pub line_gap: f32,
@@ -24,7 +24,7 @@ pub struct FaceMetrics {
     pub cap_height: f32,
 }
 impl FaceMetrics {
-    pub fn of(face: &Face<'_>) -> Self {
+    pub(crate) fn of(face: &Face<'_>) -> Self {
         let units_per_em = f32::from(face.units_per_em());
         let glyph_top = |ch| {
             face.glyph_index(ch)
@@ -51,20 +51,20 @@ impl FaceMetrics {
         }
     }
     /// `line-height: normal`.
-    pub fn normal_line_height(&self) -> f32 {
+    pub(crate) fn normal_line_height(&self) -> f32 {
         self.ascent + self.descent + self.line_gap
     }
 }
 
 /// The horizontal advance of `ch` in em, when the face has a glyph for it.
-pub fn advance(face: &Face<'_>, ch: char) -> Option<f32> {
+pub(crate) fn advance(face: &Face<'_>, ch: char) -> Option<f32> {
     let glyph = face.glyph_index(ch).filter(|glyph| glyph.0 != 0)?;
     Some(f32::from(face.glyph_hor_advance(glyph)?) / f32::from(face.units_per_em()))
 }
 
 impl FontBook {
     /// Metrics of the first face in `candidates` whose data is available.
-    pub fn first_available_metrics(
+    pub(crate) fn first_available_metrics(
         &self,
         candidates: &[FontId],
         selection: FontSelection,
@@ -79,7 +79,7 @@ impl FontBook {
     }
     /// The advance of `ch` in em in the first face of `candidates` that has it, as rendering
     /// would select it.
-    pub fn advance(
+    pub(crate) fn advance(
         &self,
         candidates: &[FontId],
         selection: FontSelection,
@@ -98,12 +98,12 @@ impl FontBook {
 
 /// The bundled faces the initial family resolves to. Where no element supplies a font,
 /// relative lengths use initial values (Media Queries 4 §1.3).
-pub struct InitialFont {
+pub(crate) struct InitialFont {
     faces: Vec<Face<'static>>,
 }
 impl InitialFont {
     /// Initial metrics use installed bundled faces, independent of document webfonts.
-    pub fn from_preferences(preferences: &FontPreferences) -> Self {
+    pub(crate) fn from_preferences(preferences: &FontPreferences) -> Self {
         let book = FontBook::with_preferences(preferences.clone());
         let candidates = book.candidates(
             &[FontFamily::Generic(DEFAULT_FAMILY)],
@@ -114,22 +114,24 @@ impl InitialFont {
                 .iter()
                 .filter_map(|id| match book.face(*id)?.data {
                     FontData::Bundled(data) => Some(data),
-                    FontData::Loaded(_) | FontData::Lazy { .. } => None,
+                    #[cfg(test)]
+                    FontData::Loaded(_) => None,
+                    FontData::Lazy { .. } => None,
                 })
                 .map(|data| parse(data).expect("bundled fonts are valid"))
                 .collect(),
         }
     }
-    pub fn metrics(&self) -> FaceMetrics {
+    pub(crate) fn metrics(&self) -> FaceMetrics {
         FaceMetrics::of(&self.faces[0])
     }
     /// The advance of `ch` in em in the first initial face that has it.
-    pub fn advance(&self, ch: char) -> Option<f32> {
+    pub(crate) fn advance(&self, ch: char) -> Option<f32> {
         self.faces.iter().find_map(|face| advance(face, ch))
     }
 }
 
-pub fn initial_font() -> &'static InitialFont {
+pub(crate) fn initial_font() -> &'static InitialFont {
     static INITIAL: OnceLock<InitialFont> = OnceLock::new();
     INITIAL.get_or_init(|| InitialFont::from_preferences(&FontPreferences::default()))
 }

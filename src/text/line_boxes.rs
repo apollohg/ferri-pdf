@@ -1,8 +1,8 @@
 //! Line box assembly and vertical alignment (CSS 2.1 §10.8, CSS Inline 3 §5.3).
 use crate::document::Paragraph;
+use crate::fonts::FaceMetrics;
 use crate::style::{Style, VerticalAlign};
 use crate::text::{GlyphRun, Line, TextContext, TextError};
-use ferri_pdf_fonts::FaceMetrics;
 use serde::Serialize;
 use std::ops::Range;
 

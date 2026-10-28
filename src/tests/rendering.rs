@@ -49,7 +49,7 @@ fn file_resource_limit_and_root_apply_before_font_parsing() {
     };
     assert!(
         matches!(
-            resolver.resolve("crates/fonts/assets/fonts/DejaVuSans.ttf", &root.into()),
+            resolver.resolve("assets/fonts/DejaVuSans.ttf", &root.into()),
             Err(ResourceError::TooLarge { limit: 4, .. })
         ),
         "oversized resources must be rejected rather than read without a limit"
@@ -60,7 +60,7 @@ fn file_resource_limit_and_root_apply_before_font_parsing() {
     };
     assert!(
         matches!(
-            resolver.resolve("crates/fonts/assets/fonts/DejaVuSans.ttf", &root.into()),
+            resolver.resolve("assets/fonts/DejaVuSans.ttf", &root.into()),
             Err(ResourceError::OutsideRoot(_))
         ),
         "root restrictions must apply to canonical resources, not just URL strings"
@@ -1748,7 +1748,7 @@ fn family_lists_skip_missing_families_and_keep_graphemes_during_fallback() {
 fn glyphs_missing_from_an_author_family_use_the_next_listed_family_or_the_initial_serif_face() {
     let assets = Assets(HashMap::from([(
         PathBuf::from("/document/serif.ttf"),
-        include_bytes!("../../crates/fonts/assets/fonts/DejaVuSerif.ttf").to_vec(),
+        include_bytes!("../../assets/fonts/DejaVuSerif.ttf").to_vec(),
     )]));
     // DejaVu Serif lacks U+0460, which Arial, Times New Roman and both Liberation faces cover.
     for (families, expected) in [
@@ -1795,7 +1795,7 @@ fn multiple_author_faces_resolve_weight_and_style_against_each_stylesheet() {
         (PathBuf::from("/document/fonts/regular.ttf"), FONT.to_vec()),
         (
             PathBuf::from("/document/fonts/bold.ttf"),
-            include_bytes!("../../crates/fonts/assets/fonts/DejaVuSans-Bold.ttf").to_vec(),
+            include_bytes!("../../assets/fonts/DejaVuSans-Bold.ttf").to_vec(),
         ),
     ]));
     let output = render_with_resolver(
@@ -1900,7 +1900,7 @@ fn unused_fallback_sources_do_not_trigger_resource_policy_failures() {
 fn unavailable_composite_faces_retry_earlier_rules_before_the_next_family() {
     let assets = Assets(HashMap::from([(
         PathBuf::from("/document/serif.ttf"),
-        include_bytes!("../../crates/fonts/assets/fonts/DejaVuSerif.ttf").to_vec(),
+        include_bytes!("../../assets/fonts/DejaVuSerif.ttf").to_vec(),
     )]));
     let output = render_with_resolver(
         "<style>@font-face{font-family:Custom;src:url(serif.ttf)}@font-face{font-family:Custom;src:url(missing.ttf)}body{font-family:Custom,sans-serif}</style><p>Wide words</p>",
@@ -1926,7 +1926,7 @@ fn unavailable_composite_faces_retry_earlier_rules_before_the_next_family() {
 fn unavailable_italic_faces_rematch_regular_faces_with_or_without_synthesis() {
     let assets = Assets(HashMap::from([(
         PathBuf::from("/document/serif.ttf"),
-        include_bytes!("../../crates/fonts/assets/fonts/DejaVuSerif.ttf").to_vec(),
+        include_bytes!("../../assets/fonts/DejaVuSerif.ttf").to_vec(),
     )]));
     for (synthesis, enabled) in [("weight style", true), ("none", false)] {
         let html = format!(
@@ -1982,7 +1982,7 @@ fn synthesis_shorthand_participates_in_the_cascade_and_leaves_real_faces_enabled
     let run = &trace.pages[0][0].runs[0];
     assert_eq!(
         trace.fonts[run.font_id.index()].weight,
-        ferri_pdf_fonts::FontRange::single(crate::FontWeight::BOLD),
+        crate::fonts::FontRange::single(crate::FontWeight::BOLD),
         "disabling synthesis must still select a real bold face"
     );
 }
@@ -2012,7 +2012,7 @@ fn source_lists_try_supported_fonts_in_order_and_preserve_policy_errors() {
         "a working later URL must be selected before moving to the next family"
     );
     let result = render_with_resolver(
-        "<style>@font-face{font-family:Custom;src:url(crates/fonts/assets/fonts/DejaVuSans.ttf)}body{font-family:Custom}</style><p>Blocked font</p>",
+        "<style>@font-face{font-family:Custom;src:url(assets/fonts/DejaVuSans.ttf)}body{font-family:Custom}</style><p>Blocked font</p>",
         &RenderOptions {
             base: env!("CARGO_MANIFEST_DIR").into(),
             ..Default::default()

@@ -1,5 +1,5 @@
 {
-  "source": "crates/fonts/assets/fonts/DejaVuSans.ttf",
+  "source": "assets/fonts/DejaVuSans.ttf",
   "sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
   "units_per_em": 2048,
   "characters": {
@@ -379,7 +379,7 @@
       ]
     },
     "greek_prefix": {
-      "source": "crates/fonts/assets/fonts/LiberationSerif-Regular.ttf",
+      "source": "assets/fonts/LiberationSerif-Regular.ttf",
       "sha256": "058ea80864aef09a23f45cbec2bb5400bc3dfbdea01c3f10538a21fcb497fb74",
       "units_per_em": 2048,
       "codepoint": 937,

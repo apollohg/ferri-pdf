@@ -1,7 +1,7 @@
 {
   "engine": "WeasyPrint",
   "version": "70.0",
-  "font_path": "crates/fonts/assets/fonts/DejaVuSans.ttf",
+  "font_path": "assets/fonts/DejaVuSans.ttf",
   "font_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
   "sources": {
     "preferred.py": "a7973703cd8ac5fada246b35e7fea6e728a364002adc5dbb248ee08f084c0a6e",

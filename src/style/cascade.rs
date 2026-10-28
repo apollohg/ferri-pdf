@@ -224,7 +224,7 @@ enum Value {
 
 #[derive(Clone, Default)]
 pub(super) struct Cascaded {
-    properties: BTreeMap<Property, Vec<Candidate<(Value, ferri_pdf_fonts::FontNamespace)>>>,
+    properties: BTreeMap<Property, Vec<Candidate<(Value, crate::fonts::FontNamespace)>>>,
     custom: CustomProperties,
 }
 
@@ -232,13 +232,13 @@ pub(super) type CustomProperties = HashMap<Arc<str>, Vec<Candidate<CustomValue>>
 #[derive(Clone)]
 pub(super) struct CustomValue {
     pub source: Arc<str>,
-    pub namespace: ferri_pdf_fonts::FontNamespace,
+    pub namespace: crate::fonts::FontNamespace,
     pub namespaces: Option<crate::style::selector::Namespaces>,
     contextual: bool,
 }
 
 impl Cascaded {
-    pub(super) fn header_alignment(&mut self, namespace: ferri_pdf_fonts::FontNamespace) {
+    pub(super) fn header_alignment(&mut self, namespace: crate::fonts::FontNamespace) {
         let value = Specified::Value(Arc::new(crate::style::component::Component::Keyword(
             crate::style::grammar::Keyword::Center,
         )));
@@ -484,19 +484,19 @@ pub(super) fn resolve_located(
     Ok(winners)
 }
 
-type PropertyCandidate = Candidate<(Value, ferri_pdf_fonts::FontNamespace)>;
+type PropertyCandidate = Candidate<(Value, crate::fonts::FontNamespace)>;
 type Expanded = Arc<[(Property, Specified)]>;
 type Substituted = HashMap<*const Pending, Expanded>;
 type Substitute<'a> = dyn FnMut(
         &Pending,
-        ferri_pdf_fonts::FontNamespace,
+        crate::fonts::FontNamespace,
     ) -> Result<Option<Vec<(Property, Specified)>>, StyleError>
     + 'a;
 type ParentAlignment<'a> = dyn FnMut() -> Result<crate::style::TextAlign, StyleError> + 'a;
 
 pub(super) struct Winner {
     pub value: Specified,
-    pub namespace: ferri_pdf_fonts::FontNamespace,
+    pub namespace: crate::fonts::FontNamespace,
     pub location: Option<Arc<crate::style::SourceLocation>>,
 }
 
@@ -559,7 +559,7 @@ struct PropertyResolver<'a, 's> {
     substituted: &'a RefCell<Substituted>,
     substitute: &'a mut Substitute<'s>,
     parent_alignment: &'a mut ParentAlignment<'s>,
-    memo: BTreeMap<(usize, Rollback), (Specified, ferri_pdf_fonts::FontNamespace)>,
+    memo: BTreeMap<(usize, Rollback), (Specified, crate::fonts::FontNamespace)>,
     depth: usize,
     work: usize,
 }
@@ -578,7 +578,7 @@ impl PropertyResolver<'_, '_> {
         &mut self,
         index: usize,
         rollback: &Rollback,
-    ) -> Result<Option<(Specified, ferri_pdf_fonts::FontNamespace)>, StyleError> {
+    ) -> Result<Option<(Specified, crate::fonts::FontNamespace)>, StyleError> {
         self.charge()?;
         let key = (index, rollback.clone());
         if let Some(value) = self.memo.get(&key) {
@@ -653,7 +653,7 @@ impl PropertyResolver<'_, '_> {
         index: usize,
         keyword: WideKeyword,
         inherited: &Rollback,
-    ) -> Result<(Specified, ferri_pdf_fonts::FontNamespace), StyleError> {
+    ) -> Result<(Specified, crate::fonts::FontNamespace), StyleError> {
         let candidates = self.candidates;
         let namespace = candidates[index].value.1;
         let mut rollback = inherited.clone();

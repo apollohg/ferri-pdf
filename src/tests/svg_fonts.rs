@@ -4,7 +4,7 @@ use crate::{
 };
 use std::{cell::RefCell, path::PathBuf};
 
-const FONT: &[u8] = include_bytes!("../../crates/fonts/assets/fonts/DejaVuSansMono.ttf");
+const FONT: &[u8] = include_bytes!("../../assets/fonts/DejaVuSansMono.ttf");
 const CHART: &str = "<svg xmlns='http://www.w3.org/2000/svg' width='100' height='40'><text x='0' y='30' font-family='ChartFace' font-size='20'>H</text></svg>";
 
 #[derive(Default)]
@@ -131,7 +131,7 @@ fn svg_font_denials_remain_typed_and_hidden_text_does_not_acquire_fonts() {
             let output = result.unwrap();
             assert!(
                 matches!(output.diagnostics.as_slice(), [crate::RenderDiagnostic::UnavailableImage(failure)]
-                if matches!(&failure.error, ImageError::Font(ferri_pdf_fonts::FontError::Resource(ResourceError::Denied(_))))),
+                if matches!(&failure.error, ImageError::Font(crate::fonts::FontError::Resource(ResourceError::Denied(_))))),
                 "SVG-only font denial must omit the image with its typed diagnostic"
             );
             assert_eq!(assets.calls.borrow().len(), 3);
@@ -256,7 +256,7 @@ fn svg_initial_and_unavailable_generic_classes_cannot_activate_css_aliases() {
         matches!(
             result,
             Err(crate::Error::Image(ImageError::Font(
-                ferri_pdf_fonts::FontError::Resource(ResourceError::Denied(_))
+                crate::fonts::FontError::Resource(ResourceError::Denied(_))
             )))
         ),
         "an explicitly quoted family still acquires its requested source: {:?}",

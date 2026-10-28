@@ -1,6 +1,6 @@
+use crate::fonts::{FontId, FontSynthesis, FontVariation};
 use crate::style::{FontVariantCaps, Style};
 use crate::text::{GlyphRun, PositionedGlyph, TextError};
-use ferri_pdf_fonts::{FontId, FontSynthesis, FontVariation};
 use icu_casemap::{CaseMapper, ContextCase};
 use icu_properties::{
     CodePointMapData, CodePointSetData,
@@ -210,7 +210,7 @@ fn shape_run(
         features.extend([LIGATURES, CONTEXTUAL_LIGATURES].map(|tag| Feature::new(tag, 0, ..)));
     }
     let shaped = rustybuzz::shape(face, &features, buffer);
-    let boundaries = ferri_pdf_fonts::cluster_boundaries(
+    let boundaries = crate::fonts::cluster_boundaries(
         shaped
             .glyph_infos()
             .iter()
@@ -319,7 +319,7 @@ fn shape_run(
         leading: style.line_height.resolve(style.size),
         white_space: style.white_space,
         ink_bounds,
-        metrics: ferri_pdf_fonts::FaceMetrics::of(face),
+        metrics: crate::fonts::FaceMetrics::of(face),
         glyphs,
     })
 }

@@ -7,9 +7,9 @@ mod pixels;
 mod shadows;
 mod text;
 use crate::document::{DocumentMetadata, Navigation};
+use crate::fonts::{FontBook, FontId};
 use crate::graphics::DisplayItem;
 use crate::layout::LayoutTrace;
-use ferri_pdf_fonts::{FontBook, FontId};
 use krilla::{Document, geom::Transform, page::PageSettings};
 
 pub use krilla::image::{ImageDpi, InvalidImageDpi, InvalidJpegQuality, JpegQuality};

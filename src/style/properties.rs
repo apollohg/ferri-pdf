@@ -206,7 +206,7 @@ pub(super) fn projection(property: Property, source: &Style) -> Style {
         && !source
             .families
             .iter()
-            .any(|family| matches!(family, ferri_pdf_fonts::FontFamily::Named(_)))
+            .any(|family| matches!(family, crate::fonts::FontFamily::Named(_)))
     {
         value.font_namespace = Default::default();
     }
@@ -295,7 +295,7 @@ fn handler(property: Property) -> Option<Handler> {
         P::FontWeight => (
             font_weight,
             Some(|v, r| {
-                crate::style::values::font_weight(v, ferri_pdf_fonts::FontWeight::NORMAL, r).is_ok()
+                crate::style::values::font_weight(v, crate::fonts::FontWeight::NORMAL, r).is_ok()
             }),
         ),
         P::FontWidth => (

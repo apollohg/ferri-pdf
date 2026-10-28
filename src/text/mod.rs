@@ -11,11 +11,11 @@ mod shaping;
 mod spacing;
 mod whitespace;
 use crate::document::Paragraph;
-use crate::style::{Style, TextAlign, WhiteSpace};
-use bidi::resolve as paragraph_bidi;
-use ferri_pdf_fonts::{
+use crate::fonts::{
     FontBook, FontError, FontId, FontSelection, FontSynthesis, FontVariation, GlyphMatch,
 };
+use crate::style::{Style, TextAlign, WhiteSpace};
+use bidi::resolve as paragraph_bidi;
 use ferri_pdf_resources::ResourceResolver;
 use rustybuzz::Face;
 use serde::Serialize;
@@ -71,7 +71,7 @@ pub struct GlyphRun {
     #[serde(skip)]
     ink_bounds: Option<[f32; 2]>,
     #[serde(skip)]
-    metrics: ferri_pdf_fonts::FaceMetrics,
+    metrics: crate::fonts::FaceMetrics,
     #[serde(skip)]
     glyphs: Vec<PositionedGlyph>,
 }
@@ -464,7 +464,7 @@ impl<'a> TextContext<'a> {
         let narrow_space_advance = if style.size > 0.0
             && paragraph[range.clone()].contains(shaping::NARROW_NO_BREAK_SPACE)
         {
-            let normal_space = match ferri_pdf_fonts::advance(face, ' ') {
+            let normal_space = match crate::fonts::advance(face, ' ') {
                 Some(width) => width,
                 None => self
                     .shape(" ", 0..1, false, style, MissingGlyphs::Substitute)?

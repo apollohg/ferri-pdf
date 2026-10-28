@@ -175,7 +175,7 @@ pub enum StyleError {
     #[error("{0}")]
     Resource(#[from] ResourceError),
     #[error("{0}")]
-    Font(#[from] ferri_pdf_fonts::FontError),
+    Font(#[from] crate::fonts::FontError),
 }
 impl From<String> for StyleError {
     fn from(message: String) -> Self {

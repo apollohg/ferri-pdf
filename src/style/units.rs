@@ -1,10 +1,10 @@
 //! CSS Values 4 §6–§7 dimension units and what relative lengths resolve against.
+use crate::fonts::{
+    FaceMetrics, FontBook, FontError, FontId, FontSelection, InitialFont, initial_font,
+};
 use crate::style::{
     DEFAULT_FONT_SIZE, DEFAULT_PAGE, DEFAULT_PAGE_AREA, MILLIMETRES_PER_CENTIMETRE,
     MILLIMETRES_PER_INCH, POINTS_PER_INCH, POINTS_PER_PIXEL, StyleError, text_values::LineHeight,
-};
-use ferri_pdf_fonts::{
-    FaceMetrics, FontBook, FontError, FontId, FontSelection, InitialFont, initial_font,
 };
 use ferri_pdf_resources::ResourceResolver;
 use std::{cell::OnceCell, rc::Rc, sync::Arc};

@@ -2395,7 +2395,7 @@
         "css-fonts-4.foundation-font-face-matching"
       ],
       "implementation_files": [
-        "crates/fonts/src/lib.rs",
+        "src/fonts/mod.rs",
         "src/style/text_values.rs"
       ],
       "case_ids": [],
@@ -2428,7 +2428,7 @@
         "css-fonts-4.foundation-font-resource-fallback"
       ],
       "implementation_files": [
-        "crates/fonts/src/lib.rs",
+        "src/fonts/mod.rs",
         "src/style/text_values.rs"
       ],
       "case_ids": [],
@@ -2457,7 +2457,7 @@
         "css-fonts-4.foundation-css2-small-caps"
       ],
       "implementation_files": [
-        "crates/fonts/src/lib.rs",
+        "src/fonts/mod.rs",
         "src/text/mod.rs"
       ],
       "case_ids": [],
@@ -2488,7 +2488,7 @@
       "implementation_files": [
         "src/style/units.rs",
         "src/style/computed.rs",
-        "crates/fonts/src/lib.rs"
+        "src/fonts/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2516,7 +2516,7 @@
       "implementation_files": [
         "src/style/units.rs",
         "src/style/computed.rs",
-        "crates/fonts/src/lib.rs"
+        "src/fonts/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4386,7 +4386,7 @@
       ],
       "implementation_files": [
         "src/document/mod.rs",
-        "crates/fonts/src/lib.rs",
+        "src/fonts/mod.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -4416,7 +4416,7 @@
       ],
       "implementation_files": [
         "src/document/mod.rs",
-        "crates/fonts/src/lib.rs",
+        "src/fonts/mod.rs",
         "src/lib.rs"
       ],
       "case_ids": [],

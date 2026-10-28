@@ -94,7 +94,7 @@ pub(crate) enum Specified {
 #[derive(Clone, Debug)]
 pub(crate) struct ToggleArgument {
     pub(crate) value: Specified,
-    pub(crate) font_namespace: Option<ferri_pdf_fonts::FontNamespace>,
+    pub(crate) font_namespace: Option<crate::fonts::FontNamespace>,
     pub(crate) location: Option<Arc<crate::style::SourceLocation>>,
 }
 
@@ -121,7 +121,7 @@ pub(crate) struct PropertyDeclaration {
     pub(crate) important: bool,
     pub(crate) origin: Origin,
     pub(crate) layer: crate::style::layers::LayerId,
-    pub(crate) font_namespace: ferri_pdf_fonts::FontNamespace,
+    pub(crate) font_namespace: crate::fonts::FontNamespace,
     pub(crate) namespaces: Option<crate::style::selector::Namespaces>,
 }
 
@@ -148,7 +148,7 @@ pub(crate) fn parse_at_origin(
             important,
             origin,
             layer: Default::default(),
-            font_namespace: ferri_pdf_fonts::FontNamespace::ROOT,
+            font_namespace: crate::fonts::FontNamespace::ROOT,
             namespaces: declaration.namespaces.clone(),
         });
     };
@@ -471,7 +471,7 @@ pub(crate) fn append_longhand(
         important: false,
         origin,
         layer: Default::default(),
-        font_namespace: ferri_pdf_fonts::FontNamespace::ROOT,
+        font_namespace: crate::fonts::FontNamespace::ROOT,
         namespaces: None,
     });
 }

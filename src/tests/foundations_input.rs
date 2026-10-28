@@ -316,7 +316,7 @@ fn imports_preserve_order_layers_and_redirect_bases() {
         sheets:std::collections::BTreeMap::from([
             (START,GraphSheet::css("https://cdn.test/files/sheet.css",b"@import 'deep/inner.css';p{font-size:19pt}")),
             (NESTED,GraphSheet::css("https://cdn.test/v2/nested/sheet.css",b"@font-face{font-family:Imported;src:url('../fonts/test.ttf')}p{font-family:Imported;color:red}")),
-            (FONT,GraphSheet::css(FONT,include_bytes!("../../crates/fonts/assets/fonts/DejaVuSans.ttf"))),
+            (FONT,GraphSheet::css(FONT,include_bytes!("../../assets/fonts/DejaVuSans.ttf"))),
         ]),..Default::default()
     };
     let html = "<!doctype html><style>@import 'start.css' layer(outer) supports(width:12pt) print;@layer final,outer;@layer final{p{color:#123456}}</style><p>Import</p>";

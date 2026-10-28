@@ -1,7 +1,7 @@
+use crate::fonts::{FontBook, FontId};
 use crate::layout::TextLine;
 use crate::text::PositionedGlyph;
 use crate::writer::PdfError;
-use ferri_pdf_fonts::{FontBook, FontId};
 use krilla::{
     geom::{Point, Transform},
     surface::Surface,

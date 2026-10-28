@@ -193,8 +193,8 @@ fn attribute_values_share_shorthand_math_and_syntax_alternatives() {
     assert_eq!(
         style.families,
         vec![
-            ferri_pdf_fonts::FontFamily::Named("One".into()),
-            ferri_pdf_fonts::FontFamily::Named("Two".into())
+            crate::fonts::FontFamily::Named("One".into()),
+            crate::fonts::FontFamily::Named("Two".into())
         ]
     );
     assert_eq!(style.color.rgb, [255, 0, 0]);
@@ -925,7 +925,7 @@ fn toggle_selects_after_the_first_matching_computed_value() {
     let style = computed(
         "#parent{font-style:italic;list-style-type:circle}#target{font-style:toggle(italic,normal);list-style-type:toggle(disc,circle,square)}",
     );
-    assert_eq!(style.font_style, ferri_pdf_fonts::FontStyle::Normal);
+    assert_eq!(style.font_style, crate::fonts::FontStyle::Normal);
     assert_eq!(style.list_style_type, crate::style::ListStyleType::Square);
 }
 
@@ -1384,8 +1384,8 @@ fn inherited_value_fallbacks_follow_strict_comma_argument_rules() {
         assert_eq!(
             computed(css).families,
             [
-                ferri_pdf_fonts::FontFamily::Named("Named".into()),
-                ferri_pdf_fonts::FontFamily::Generic(ferri_pdf_fonts::GenericFamily::Serif)
+                crate::fonts::FontFamily::Named("Named".into()),
+                crate::fonts::FontFamily::Generic(crate::fonts::GenericFamily::Serif)
             ],
             "comma lists arrive through one wrapped fallback or already-computed parent tokens: {css}"
         );
@@ -1948,8 +1948,8 @@ fn comma_containing_arguments_unwrap_one_syntactic_brace_group() {
         assert_eq!(
             style.families,
             [
-                ferri_pdf_fonts::FontFamily::Named("Named".into()),
-                ferri_pdf_fonts::FontFamily::Generic(ferri_pdf_fonts::GenericFamily::Serif)
+                crate::fonts::FontFamily::Named("Named".into()),
+                crate::fonts::FontFamily::Generic(crate::fonts::GenericFamily::Serif)
             ],
             "a wrapped comma list remains one argument: {source}"
         );
@@ -1992,8 +1992,8 @@ fn argument_wrappers_follow_variable_substitution_and_keep_nested_block_data() {
     assert_eq!(
         style.families,
         [
-            ferri_pdf_fonts::FontFamily::Named("Named".into()),
-            ferri_pdf_fonts::FontFamily::Generic(ferri_pdf_fonts::GenericFamily::Serif)
+            crate::fonts::FontFamily::Named("Named".into()),
+            crate::fonts::FontFamily::Generic(crate::fonts::GenericFamily::Serif)
         ]
     );
     assert_eq!(points(&style.margin[3]), 12.0);
@@ -2036,7 +2036,7 @@ fn first_valid_selects_the_first_usable_whole_property_value() {
         computed("#target{font:first-valid(invalid-font,italic 12pt/18pt serif);font-size:16pt}");
     assert_eq!(font.size, 16.0);
     assert_eq!(font.line_height.resolve(font.size), Some(18.0));
-    assert_eq!(font.font_style, ferri_pdf_fonts::FontStyle::Italic);
+    assert_eq!(font.font_style, crate::fonts::FontStyle::Italic);
 }
 
 #[test]
@@ -2610,7 +2610,7 @@ fn unhinted_percentage_ratios_keep_number_and_percentage_types_distinct() {
     let width = computed("#target{font-width:calc(25% + 50%)}");
     assert_eq!(
         width.font_width,
-        ferri_pdf_fonts::FontWidth::CONDENSED,
+        crate::fonts::FontWidth::CONDENSED,
         "a percentage function must retain percentage-point units at the font interface"
     );
 }
@@ -2690,7 +2690,7 @@ fn static_progress_uses_the_pinned_grammar_and_numeric_types() {
         "html{font-size:12pt}#target{font-size:20pt;margin-left:calc(progress(2em, 1rem, 4rem) * 36pt);font-width:calc(progress(75%, 0%, 100%) * 100%);color:rgb(calc(progress(3, 0, 4) * 255) 0 0)}",
     );
     common::assert_pt(points(&style.margin[3]), 28.0);
-    assert_eq!(style.font_width, ferri_pdf_fonts::FontWidth::CONDENSED);
+    assert_eq!(style.font_width, crate::fonts::FontWidth::CONDENSED);
     assert_eq!(style.color.rgb, [191, 0, 0]);
 }
 
@@ -2980,7 +2980,7 @@ fn active_metric_policy_failures_are_not_font_availability_fallbacks() {
         assert!(
             matches!(
                 error,
-                StyleError::Font(ferri_pdf_fonts::FontError::Resource(
+                StyleError::Font(crate::fonts::FontError::Resource(
                     ferri_pdf_resources::ResourceError::TooLarge {
                         limit: RESOURCE_LIMIT_BYTES,
                         ..

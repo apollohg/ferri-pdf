@@ -18,7 +18,7 @@ from oracle import pdf_content
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "target/debug/ferri-pdf"
 REFERENCE = ROOT / "tests/fixtures/bidi/character-reference.json"
-FONT = ROOT / "crates/fonts/assets/fonts/DejaVuSans.ttf"
+FONT = ROOT / "assets/fonts/DejaVuSans.ttf"
 FONT_SHA256 = "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22"
 FONT_SIZE_PT = 20
 BIDI_FORMATTING = set(map(chr, [0x200E, 0x200F, *range(0x202A, 0x202F), *range(0x2066, 0x206A)]))

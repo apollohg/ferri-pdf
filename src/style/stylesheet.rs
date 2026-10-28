@@ -1,3 +1,7 @@
+use crate::fonts::{
+    FontBook, FontDescriptor, FontFaceStyle, FontNamespace, FontRange, FontSources, FontWeight,
+    FontWidth,
+};
 use crate::style::{
     DEFAULT_PAGE_MARGIN, PrintSettings, StyleDiagnostic, StyleDiagnosticKind, StyleError,
     cascade::DeclarationContext,
@@ -14,10 +18,6 @@ use crate::style::{
     values::{face_style, face_weight, face_width, family_name, font_sources},
     variables,
     wide_keywords::WideKeyword,
-};
-use ferri_pdf_fonts::{
-    FontBook, FontDescriptor, FontFaceStyle, FontNamespace, FontRange, FontSources, FontWeight,
-    FontWidth,
 };
 use ferri_pdf_resources::{ResourceBase, ResourceResolver};
 use std::{cell::RefCell, collections::HashMap};
@@ -126,7 +126,7 @@ enum FaceValue {
     Weight(FontRange<FontWeight>),
     Width(FontRange<FontWidth>),
     Style(FontFaceStyle),
-    Sources(Vec<ferri_pdf_fonts::FontSource>),
+    Sources(Vec<crate::fonts::FontSource>),
     Initial,
 }
 fn face_value(

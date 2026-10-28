@@ -186,8 +186,8 @@ mod tests {
         assert_eq!(
             crate::style::values::families(family),
             vec![
-                ferri_pdf_fonts::FontFamily::Named("Named Family".into()),
-                ferri_pdf_fonts::FontFamily::Generic(ferri_pdf_fonts::GenericFamily::Serif)
+                crate::fonts::FontFamily::Named("Named Family".into()),
+                crate::fonts::FontFamily::Generic(crate::fonts::GenericFamily::Serif)
             ]
         );
     }

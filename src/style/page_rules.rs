@@ -1,3 +1,4 @@
+use crate::fonts::FontNamespace;
 use crate::style::{
     MarginLocation, SourceLocation, StyleDiagnostic, StyleError, Stylesheet,
     cascade::{self, Candidate, Cascaded, DeclarationContext, choose, sort},
@@ -10,7 +11,6 @@ use crate::style::{
     variables,
     wide_keywords::WideKeyword,
 };
-use ferri_pdf_fonts::FontNamespace;
 use std::{cell::RefCell, collections::HashMap, sync::Arc};
 
 const SPECIFICITY_COMPONENT_BITS: u32 = 10;

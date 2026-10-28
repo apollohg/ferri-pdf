@@ -1617,7 +1617,7 @@ fn shape_text_with_font(
 
             let positions = output.glyph_positions();
             let infos = output.glyph_infos();
-            let boundaries = ferri_pdf_fonts::cluster_boundaries(
+            let boundaries = crate::fonts::cluster_boundaries(
                 infos.iter().map(|glyph| glyph.cluster as usize),
                 sub_text.len(),
             );

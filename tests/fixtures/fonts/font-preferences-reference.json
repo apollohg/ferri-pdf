@@ -2,7 +2,7 @@
   "tool": "fontTools 4.63.0",
   "faces": {
     "Liberation Sans": {
-      "file": "crates/fonts/assets/fonts/LiberationSans-Regular.ttf",
+      "file": "assets/fonts/LiberationSans-Regular.ttf",
       "sha256": "76d04c18ea243f426b7de1f3ad208e927008f961dc5945e5aad352d0dfde8ee8",
       "units_per_em": 2048,
       "x_height": 1082,
@@ -13,7 +13,7 @@
       "line_gap": 67
     },
     "DejaVu Sans": {
-      "file": "crates/fonts/assets/fonts/DejaVuSans.ttf",
+      "file": "assets/fonts/DejaVuSans.ttf",
       "sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
       "units_per_em": 2048,
       "x_height": 1120,
@@ -24,7 +24,7 @@
       "line_gap": 0
     },
     "DejaVu Serif": {
-      "file": "crates/fonts/assets/fonts/DejaVuSerif.ttf",
+      "file": "assets/fonts/DejaVuSerif.ttf",
       "sha256": "107244956e9962b9e96faccdc551825e0ae0898ae13737133e1b921a2fd35ffa",
       "units_per_em": 2048,
       "x_height": 1063,
@@ -35,7 +35,7 @@
       "line_gap": 0
     },
     "DejaVu Sans Mono": {
-      "file": "crates/fonts/assets/fonts/DejaVuSansMono.ttf",
+      "file": "assets/fonts/DejaVuSansMono.ttf",
       "sha256": "602ec86b8948cfcd956482fe64f94c36c867770149ef2f791d4613f443bcecb3",
       "units_per_em": 2048,
       "x_height": 1120,
