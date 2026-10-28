@@ -5,7 +5,6 @@ use crate::graphics::{BoxPaint, DecorationLine, DecorationPaint, DisplayItem, Re
 use crate::layout::LayoutError;
 use crate::layout::geometry::{Edges, inline_horizontal};
 use crate::layout::measure::{MeasuredBlock, Measurer};
-use crate::style::Display;
 use crate::text::{AtomicMetrics, BoxFragment};
 
 /// An atomic inline measured in its containing block, waiting for its line position.
@@ -174,7 +173,7 @@ fn baseline(block: &BlockBox, measured: &MeasuredBlock<'_>) -> Option<f32> {
     let style = block.style();
     if block.image().is_some() || style.is_scroll_container() {
         None
-    } else if style.display == Display::InlineBlock {
+    } else if style.display.is_inline_block() {
         measured.last_baseline()
     } else {
         measured.first_baseline()

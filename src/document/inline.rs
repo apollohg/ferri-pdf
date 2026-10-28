@@ -355,6 +355,120 @@ impl InlineCollector {
         self.pending_space = None;
         self.after_space.clear();
     }
+    pub(crate) fn anchor_count(&self) -> usize {
+        self.anchors.len()
+    }
+    /// Removes the out-of-flow boxes anchored after the first `count`, which lie at the end.
+    pub(crate) fn take_anchors_after(&mut self, count: usize) -> Vec<crate::document::BlockBox> {
+        self.after_space
+            .retain(|mark| !matches!(mark, Mark::Anchor(index) if *index >= count));
+        self.anchors
+            .split_off(count)
+            .into_iter()
+            .map(|anchor| anchor.block)
+            .collect()
+    }
+    /// Appends `other`, collected apart with every box and link closed, as if its content had
+    /// been appended here (CSS Display 3 §5 run-in boxes).
+    pub(crate) fn extend(&mut self, other: Self) -> Result<(), DocumentError> {
+        debug_assert!(
+            other.open_box.is_none() && other.open_links.is_empty(),
+            "a collector is appended after its boxes close"
+        );
+        if other.text.is_empty()
+            && other.boxes.is_empty()
+            && other.anchors.is_empty()
+            && other.events.is_empty()
+        {
+            return Ok(());
+        }
+        self.emit_pending_space()?;
+        let offset = self.text.len();
+        if offset
+            .checked_add(other.text.len())
+            .is_none_or(|length| length > MAX_INLINE_TEXT_BYTES)
+        {
+            return Err(DocumentError::TextExpansionLimit {
+                limit: MAX_INLINE_TEXT_BYTES,
+            });
+        }
+        let parent = self.open_box;
+        let boxes = self.boxes.len();
+        let anchors = self.anchors.len();
+        let atomics = self.atomics.len();
+        let breaks = self.optional_breaks.len();
+        let links = self.links.len();
+        let events = self.events.len();
+        let styles = self.styles.len();
+        let sources = self.next_source;
+        let inline_box = |inner: Option<usize>| inner.map_or(parent, |inner| Some(inner + boxes));
+        let shift = |range: Range<usize>| range.start + offset..range.end + offset;
+        self.text.push_str(&other.text);
+        self.expanded_tabs
+            .extend(other.expanded_tabs.into_iter().map(shift));
+        self.spans
+            .extend(other.spans.into_iter().map(|span| TextSpan {
+                range: shift(span.range),
+                inline_box: inline_box(span.inline_box),
+                atomic: span.atomic.map(|atomic| atomic + atomics),
+                source: span.source + sources,
+                ..span
+            }));
+        self.styles.extend(other.styles);
+        self.pending_space = other.pending_space.map(|space| PendingSpace {
+            style: space.style + styles,
+            source: space.source + sources,
+            inline_box: inline_box(space.inline_box),
+        });
+        self.after_space
+            .extend(other.after_space.into_iter().map(|mark| match mark {
+                Mark::Anchor(index) => Mark::Anchor(index + anchors),
+                Mark::BoxStart(index) => Mark::BoxStart(index + boxes),
+                Mark::BoxEnd(index) => Mark::BoxEnd(index + boxes),
+                Mark::OptionalBreak(index) => Mark::OptionalBreak(index + breaks),
+                Mark::LinkStart(index) => Mark::LinkStart(index + links),
+                Mark::LinkEnd(index) => Mark::LinkEnd(index + links),
+                Mark::Event(index) => Mark::Event(index + events),
+            }));
+        self.next_source += other.next_source;
+        let anchor = |anchor: Anchor| Anchor {
+            offset: anchor.offset + offset,
+            inline_box: inline_box(anchor.inline_box),
+            block: anchor.block,
+        };
+        self.anchors.extend(other.anchors.into_iter().map(anchor));
+        self.atomics.extend(other.atomics.into_iter().map(anchor));
+        self.boxes
+            .extend(other.boxes.into_iter().map(|inner| InlineBox {
+                range: shift(inner.range),
+                parent: inline_box(inner.parent),
+                ..inner
+            }));
+        self.optional_breaks
+            .extend(other.optional_breaks.into_iter().map(|at| at + offset));
+        self.clearances.extend(
+            other
+                .clearances
+                .into_iter()
+                .map(|(at, clear, rtl)| (at + offset, clear, rtl)),
+        );
+        self.links
+            .extend(other.links.into_iter().map(|link| InlineLink {
+                range: shift(link.range),
+                link: link.link,
+            }));
+        self.events.extend(
+            other
+                .events
+                .into_iter()
+                .map(|event| crate::document::InlineEvent {
+                    offset: event.offset + offset,
+                    anchors_before: event.anchors_before + anchors,
+                    event: event.event,
+                }),
+        );
+        Ok(())
+    }
     fn mark(&mut self, mark: Mark) {
         if self.pending_space.is_some() {
             self.after_space.push(mark);

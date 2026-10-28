@@ -255,16 +255,22 @@ fn substitution_preserves_display_values_and_white_space_longhands() {
     use crate::style::Display;
     // CSS Display 3 §2: `flow` alone is `block flow`, and `inline flex` is `inline-flex`.
     for (display, expected) in [
-        ("run-in", Display::Unsupported("run-in".into())),
+        ("run-in", Display::RunIn(Box::new(Display::Inline))),
         ("flow", Display::Block),
         ("inline flex", Display::InlineFlex),
         ("flow-root", Display::FlowRoot),
         ("block flow-root list-item", Display::FlowRootListItem),
         ("inline flow-root", Display::InlineBlock),
+        ("list-item inline", Display::InlineListItem),
         (
-            "inline list-item",
-            Display::Unsupported("inline list-item".into()),
+            "inline flow-root list-item",
+            Display::InlineFlowRootListItem,
         ),
+        (
+            "run-in flow-root list-item",
+            Display::RunIn(Box::new(Display::InlineFlowRootListItem)),
+        ),
+        ("run-in ruby", Display::Unsupported("run-in ruby".into())),
     ] {
         let styles = computed(
             &format!("#root{{--display:{display};display:var(--display)}}"),

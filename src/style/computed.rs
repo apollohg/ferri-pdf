@@ -69,6 +69,9 @@ pub(crate) struct Style {
     document_root: bool,
     #[serde(skip)]
     item_parent: bool,
+    /// The parent inlinifies its in-flow children (CSS Display 3 §2.7, §5).
+    #[serde(skip)]
+    inlinifying_parent: bool,
     pub size: f32,
     pub line_height: crate::style::LineHeight,
     pub letter_spacing: f32,
@@ -196,6 +199,7 @@ impl Default for Style {
             page_parent: None,
             document_root: false,
             item_parent: false,
+            inlinifying_parent: false,
             size: DEFAULT_FONT_SIZE,
             line_height: crate::style::LineHeight::Normal,
             letter_spacing: 0.0,
@@ -363,6 +367,20 @@ impl Style {
             || self.floating().is_some()
         {
             self.display = self.display.blockified();
+        } else if self.inlinifying_parent {
+            self.display = self.display.inlinified();
+        }
+    }
+
+    /// A run-in flow box inlinifies its contents, and an inlinified inline box its own
+    /// in-flow children; `display: contents` passes its parent's on.
+    fn inlinifies_children(&self) -> bool {
+        match &self.display {
+            Display::RunIn(inner) => inner.is_inline_box(),
+            display => {
+                (display.is_inline_box() || *display == Display::Contents)
+                    && self.inlinifying_parent
+            }
         }
     }
 
@@ -564,6 +582,7 @@ impl Stylesheet {
                 .is_none();
         style.item_parent = parent.display.is_item_container()
             || (parent.display == Display::Contents && parent.item_parent);
+        style.inlinifying_parent = parent.inlinifies_children();
         crate::style::table_values::structure(&mut style, element);
         element.language().clone_into(&mut style.language);
         if parent.root_font.is_none() {
@@ -773,6 +792,7 @@ impl Stylesheet {
         style.content_context = crate::style::generated::ContentContext::BeforeAfter;
         style.item_parent = parent.display.is_item_container()
             || (parent.display == Display::Contents && parent.item_parent);
+        style.inlinifying_parent = parent.inlinifies_children();
         Ok((style, winners))
     }
 

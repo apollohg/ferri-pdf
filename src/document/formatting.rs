@@ -248,8 +248,35 @@ struct BlockBuilder<'a, 's, 'c> {
     element_page_scope: &'s Option<std::sync::Arc<str>>,
     children: &'s mut Vec<BlockContent>,
     inline: &'s mut InlineCollector,
+    run_in: &'s mut Option<RunInSequence>,
     traversal: &'c mut Traversal<'a>,
     resources: &'c mut ImageResources<'a>,
+}
+
+/// A run-in sequence of a block's children (CSS Display 3 §5), collected apart from the
+/// inline content before it until the content after it decides where it goes.
+struct RunInSequence {
+    preceding: InlineCollector,
+    /// The sequence ran into this block and follows its marker.
+    reparented: bool,
+    /// Out-of-flow boxes anchored before the last run-in box ended, which belong to the
+    /// sequence; later ones only follow it.
+    anchors: usize,
+    /// A run-in box was laid out last and `anchors` has yet to record its end.
+    open: bool,
+    /// Collapsible white space after the last run-in box: between run-ins it separates
+    /// them, and before a block it stays behind.
+    whitespace: Vec<(String, Style)>,
+}
+
+/// What a block's next child is to a run-in sequence before it.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum RunInFollower {
+    /// Collapsible white space, an out-of-flow box or another run-in: part of the sequence.
+    Member,
+    /// A block box that establishes no formatting context, which the sequence runs into.
+    Block,
+    Other,
 }
 pub(crate) struct ImageResources<'a> {
     pub base: &'a crate::resources::ResourceBase,
@@ -293,6 +320,70 @@ impl BlockBuilder<'_, '_, '_> {
         }
         Ok(())
     }
+    /// Starts, or continues, a run-in sequence with the run-in box laid out next.
+    fn begin_run_in(&mut self) -> Result<(), DocumentError> {
+        self.close_run_in();
+        let sequence = self.run_in.get_or_insert_with(|| RunInSequence {
+            preceding: std::mem::take(self.inline),
+            reparented: false,
+            anchors: 0,
+            open: false,
+            whitespace: Vec::new(),
+        });
+        sequence.open = true;
+        for (text, style) in std::mem::take(&mut sequence.whitespace) {
+            self.inline.append(&text, &style)?;
+        }
+        Ok(())
+    }
+    /// Holds collapsible white space after a run-in box until the sequence's end is known.
+    fn defer_run_in_whitespace(&mut self, text: &str, style: &Style) -> bool {
+        self.close_run_in();
+        let Some(sequence) = self.run_in.as_mut() else {
+            return false;
+        };
+        sequence.whitespace.push((text.to_owned(), style.clone()));
+        true
+    }
+    fn close_run_in(&mut self) {
+        if let Some(sequence) = self.run_in.as_mut().filter(|sequence| sequence.open) {
+            sequence.anchors = self.inline.anchor_count();
+            sequence.open = false;
+        }
+    }
+    /// Ends an open run-in sequence before `follower`. A block box takes the sequence, which
+    /// returns for its start; other content follows it in an anonymous block, or after the
+    /// marker of the block it ran into.
+    fn resolve_run_in(
+        &mut self,
+        follower: RunInFollower,
+    ) -> Result<Option<InlineCollector>, DocumentError> {
+        if follower == RunInFollower::Member {
+            return Ok(None);
+        }
+        self.close_run_in();
+        let Some(sequence) = self.run_in.take() else {
+            return Ok(None);
+        };
+        let mut collected = std::mem::replace(self.inline, sequence.preceding);
+        if follower == RunInFollower::Block {
+            let following = collected.take_anchors_after(sequence.anchors);
+            for block in following {
+                self.out_of_flow(block);
+            }
+            return Ok(Some(collected));
+        }
+        if sequence.reparented {
+            self.inline.extend(collected)?;
+        } else {
+            self.flush()?;
+            *self.inline = collected;
+        }
+        for (text, style) in sequence.whitespace {
+            self.inline.append(&text, &style)?;
+        }
+        Ok(None)
+    }
     /// Item containers and positions outside inline boxes anchor between blocks.
     fn out_of_flow(&mut self, mut block: BlockBox) {
         if self.style.display.is_item_container() || self.inline.is_between_blocks() {
@@ -318,6 +409,23 @@ impl BlockBuilder<'_, '_, '_> {
             crate::document::page::used_name(&parent.page, self.element_page_scope.as_ref());
         validate_display(&style.display)?;
         normalize_child_display(&mut style.display, false, &self.style.display);
+        // The block's own pseudo-elements are its first and last children; those of inline
+        // descendants lie inside the content around them.
+        let block_child = std::ptr::eq(parent, self.style);
+        if let Some(inner) = style.display.run_in().cloned() {
+            if block_child {
+                self.begin_run_in()?;
+            }
+            style.display = inner;
+        } else if block_child {
+            self.resolve_run_in(
+                if style.position.is_out_of_flow() || style.floating().is_some() {
+                    RunInFollower::Member
+                } else {
+                    RunInFollower::Other
+                },
+            )?;
+        }
         let decoration = if style.display == Display::Contents {
             BoxDecoration::default()
         } else {
@@ -422,7 +530,10 @@ impl BlockBuilder<'_, '_, '_> {
             Display::Unsupported(value) => {
                 return Err(StyleError::Unsupported(format!("generated display: {value}")).into());
             }
-            Display::ListItem | Display::FlowRootListItem => {
+            Display::ListItem
+            | Display::FlowRootListItem
+            | Display::InlineListItem
+            | Display::InlineFlowRootListItem => {
                 return Err(DocumentError::Formatting(
                     "generated list-item counters are not supported".into(),
                 ));
@@ -505,8 +616,32 @@ pub(super) fn is_replaced(tag: &str) -> bool {
     matches!(tag, "img" | "svg")
 }
 
+/// An inside marker opens the list item's inline content (CSS Lists 3 §3.5): an image marker
+/// is an inline replaced box followed by a space.
+fn place_inside_marker(
+    inline: &mut InlineCollector,
+    marker: &Paragraph,
+    style: &Style,
+    page_scope: Option<&std::sync::Arc<str>>,
+) -> Result<(), DocumentError> {
+    let Some(image) = marker.marker_image() else {
+        return inline.append(marker.text(), style);
+    };
+    let [width, height] = marker.marker_image_size().expect("image marker has size");
+    let mut box_style = style.anonymous(Display::InlineBlock);
+    box_style.width = crate::style::Size::Value(crate::style::LengthPercentage::Length(width));
+    box_style.height = crate::style::Size::Value(crate::style::LengthPercentage::Length(height));
+    let mut decoration = BoxDecoration::default();
+    std::sync::Arc::make_mut(&mut decoration.backgrounds).images = vec![image.clone()];
+    let atomic = BlockBox::with_decoration(box_style, Vec::new(), decoration, page_scope.cloned());
+    inline.atomic(atomic, marker.style())?;
+    inline.append(marker.text(), marker.style())
+}
+
 pub(super) fn normalize_child_display(display: &mut Display, replaced: bool, parent: &Display) {
-    if replaced
+    if replaced && let Display::RunIn(inner) = display {
+        normalize_child_display(inner, true, &Display::Block);
+    } else if replaced
         && (display.is_table_internal()
             || display.is_atomic_inline()
             || matches!(
@@ -517,6 +652,7 @@ pub(super) fn normalize_child_display(display: &mut Display, replaced: bool, par
                     | Display::Grid
                     | Display::ListItem
                     | Display::FlowRootListItem
+                    | Display::InlineListItem
             ))
     {
         *display = Display::Inline;
@@ -563,6 +699,9 @@ struct OpenBlock {
     navigation: BoxNavigation,
     placement: Placement,
     event: Option<crate::document::SemanticEvent>,
+    run_in: Option<RunInSequence>,
+    /// A run-in sequence that runs into this block, after its marker.
+    pending_run_in: Option<InlineCollector>,
 }
 
 struct Frame<'d> {
@@ -601,6 +740,8 @@ impl<'d> Frame<'d> {
                 navigation: BoxNavigation::default(),
                 placement,
                 event: None,
+                run_in: None,
+                pending_run_in: None,
             }),
             started: false,
             generated: false,
@@ -631,6 +772,7 @@ fn active_builder<'a, 's, 'c>(
             element_page_scope,
             children: &mut block.children,
             inline: &mut block.inline,
+            run_in: &mut block.run_in,
             traversal,
             resources,
         },
@@ -723,46 +865,45 @@ fn block<'a>(
                 if frame.style.has_inside_marker()
                     && let Some(marker) = block.marker.take()
                 {
-                    if let Some(image) = marker.marker_image() {
-                        let [width, height] =
-                            marker.marker_image_size().expect("image marker has size");
-                        let mut style = frame.style.anonymous(Display::InlineBlock);
-                        style.width = crate::style::Size::Value(
-                            crate::style::LengthPercentage::Length(width),
-                        );
-                        style.height = crate::style::Size::Value(
-                            crate::style::LengthPercentage::Length(height),
-                        );
-                        let mut decoration = BoxDecoration::default();
-                        std::sync::Arc::make_mut(&mut decoration.backgrounds).images =
-                            vec![image.clone()];
-                        let atomic = BlockBox::with_decoration(
-                            style,
-                            Vec::new(),
-                            decoration,
-                            frame.page_scope.clone(),
-                        );
-                        block.inline.atomic(atomic, marker.style())?;
-                        block.inline.append(marker.text(), marker.style())?;
-                    } else {
-                        block.inline.append(marker.text(), &frame.style)?;
-                    }
+                    place_inside_marker(
+                        &mut block.inline,
+                        &marker,
+                        &frame.style,
+                        frame.page_scope.as_ref(),
+                    )?;
+                }
+                if let Some(run_in) = block.pending_run_in.take() {
+                    block.run_in = Some(RunInSequence {
+                        preceding: std::mem::replace(&mut block.inline, run_in),
+                        reparented: true,
+                        anchors: block.inline.anchor_count(),
+                        open: false,
+                        whitespace: Vec::new(),
+                    });
                 }
                 frame.generated =
                     block.image.is_none() && frame.style.display != Display::TableColumn;
             } else {
+                // CSS Lists 3 §3.5: an inline list item's marker is always inside.
+                let marker = frame
+                    .style
+                    .display
+                    .is_list_item()
+                    .then(|| crate::document::lists::marker(&frame.style, frame.ordinal, resources))
+                    .transpose()?
+                    .flatten();
                 let assignment = traversal.strings.record(
                     element,
                     &frame.style.string_set,
                     &mut traversal.counters,
-                    None,
+                    marker.as_ref().map(Paragraph::text),
                 )?;
                 let event = traversal.strings.event(element, assignment, true);
                 let mut navigation = traversal.navigation.enter(element);
                 traversal.navigation.record(
                     element,
                     &frame.style,
-                    None,
+                    marker.as_ref().map(Paragraph::text),
                     traversal.quotes,
                     if frame.style.bookmark.level.is_some() {
                         traversal.counters.snapshot(&frame.style.bookmark.label)?
@@ -772,6 +913,7 @@ fn block<'a>(
                     &mut navigation,
                 );
                 let canvas_source = index == 0 || traversal.canvas_body == Some(element.id());
+                let page_scope = frames[index].page_scope.clone();
                 let (builder, style) =
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
                 builder.inline.semantic_event(event);
@@ -782,6 +924,9 @@ fn block<'a>(
                     builder
                         .inline
                         .open_box(style, decoration, navigation, canvas_source);
+                    if let Some(marker) = marker {
+                        place_inside_marker(builder.inline, &marker, style, page_scope.as_ref())?;
+                    }
                 }
                 frames[index].generated = true;
             }
@@ -810,9 +955,24 @@ fn block<'a>(
             continue;
         }
         if let Some(node) = frames[index].nodes.as_mut().and_then(Iterator::next) {
+            // Children of the block and of its boxless descendants are the block's children.
+            let block_child = frames[block_index + 1..=index]
+                .iter()
+                .all(|frame| frame.style.display == Display::Contents);
             if let Some(text) = node.value().as_text() {
-                let (builder, style) =
+                let (mut builder, style) =
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
+                if block_child {
+                    if text.chars().all(|ch| {
+                        crate::document::inline::collapses_character(ch, style.white_space)
+                    }) {
+                        if builder.defer_run_in_whitespace(text, style) {
+                            continue;
+                        }
+                    } else {
+                        builder.resolve_run_in(RunInFollower::Other)?;
+                    }
+                }
                 builder.inline.append(text, style)?;
                 continue;
             }
@@ -900,6 +1060,33 @@ fn block<'a>(
             let ancestor_page = frames[index].page_scope.clone();
             let (mut builder, _) =
                 active_builder(&mut frames, block_index, sheet, traversal, resources);
+            let run_in = child_style.display.run_in().cloned();
+            let merged = if !block_child {
+                None
+            } else if run_in.is_some() {
+                builder.begin_run_in()?;
+                None
+            } else {
+                builder.resolve_run_in(
+                    if child_style.display == Display::Contents
+                        || child_style.position.is_out_of_flow()
+                        || child_style.floating().is_some()
+                    {
+                        RunInFollower::Member
+                    } else if matches!(child_style.display, Display::Block | Display::ListItem)
+                        && !replaced
+                        && !child_style.establishes_formatting_context()
+                    {
+                        RunInFollower::Block
+                    } else {
+                        RunInFollower::Other
+                    },
+                )?
+            };
+            // A run-in box is the inline-level box it holds, wherever it runs.
+            if let Some(inner) = run_in {
+                child_style.display = inner;
+            }
             let placement = if child_style.display == Display::Contents {
                 None
             } else if child_style.position.is_out_of_flow() || child_style.floating().is_some() {
@@ -931,8 +1118,14 @@ fn block<'a>(
                     Display::InlineBlock
                     | Display::InlineFlex
                     | Display::InlineGrid
-                    | Display::InlineTable => Some(Placement::Atomic),
+                    | Display::InlineTable
+                    | Display::InlineFlowRootListItem => Some(Placement::Atomic),
+                    Display::RunIn(_) => unreachable!("run-in boxes take their inner display"),
                     Display::Inline if replaced => Some(Placement::Atomic),
+                    Display::InlineListItem => {
+                        validate_inline(&child_style)?;
+                        None
+                    }
                     Display::Inline => {
                         validate_inline(&child_style)?;
                         if child.name() == "br" {
@@ -982,6 +1175,13 @@ fn block<'a>(
                 placement,
                 ancestor_page.as_ref(),
             ));
+            if let Some(run_in) = merged {
+                frames
+                    .last_mut()
+                    .and_then(|frame| frame.block.as_mut())
+                    .expect("a block box takes the run-in sequence")
+                    .pending_run_in = Some(run_in);
+            }
             continue;
         }
         let element = frames[index].element;
@@ -1003,6 +1203,7 @@ fn block<'a>(
             traversal.counters.leave();
             continue;
         }
+        builder.resolve_run_in(RunInFollower::Other)?;
         builder.flush()?;
         let frame = &mut frames[index];
         let block = frame.block.as_mut().unwrap();

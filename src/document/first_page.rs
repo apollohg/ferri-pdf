@@ -414,7 +414,7 @@ impl Collector {
                     if display == Display::Contents {
                         pending.push(CollectStep::Contents(source, depth + 1));
                     } else if self.quotes_only {
-                        if display != Display::Inline || replaced {
+                        if !display.is_inline_box() || replaced {
                             let previous = std::mem::replace(&mut self.display, display);
                             pending.push(CollectStep::RestoreDisplay(previous));
                         }
@@ -425,7 +425,7 @@ impl Collector {
                             display,
                             depth: depth + 1,
                         });
-                    } else if display == Display::Inline && !replaced {
+                    } else if display.is_inline_box() && !replaced {
                         self.inline.push(OpenInline {
                             target: source,
                             continued: false,
@@ -484,7 +484,7 @@ impl Collector {
             return Ok(());
         }
         let bound = selection.generated.bind(&content, source)?;
-        let inline = matches!(display, Display::Contents | Display::Inline);
+        let inline = display == Display::Contents || display.is_inline_box();
         let text = if inline {
             let (quotes, mut depth) = if content.has_quote_actions() {
                 (selection.styles.quotes(source)?, selection.quote_depth()?)
@@ -529,9 +529,9 @@ impl Collector {
         if display != Display::Contents && selection.styles.position(source)?.is_out_of_flow() {
             return Ok(());
         }
-        if matches!(display, Display::Contents | Display::Inline) {
+        if display == Display::Contents || display.is_inline_box() {
             self.append(selection, source, &text)?;
-            if display == Display::Inline {
+            if display.is_inline_box() {
                 self.text |= selection.styles.inline_edges(source, [false; 2])?;
             }
             return Ok(());

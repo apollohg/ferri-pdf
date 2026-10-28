@@ -510,7 +510,7 @@ impl Counters {
                         && display != Display::TableColumn
                     {
                         let block_display =
-                            if matches!(display, Display::Contents | Display::Inline) {
+                            if display == Display::Contents || display.is_inline_box() {
                                 parent_display.unwrap_or(Display::Block)
                             } else {
                                 display
