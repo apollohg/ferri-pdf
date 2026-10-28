@@ -1,9 +1,9 @@
-mod common;
+use super::common;
 
-use common::{assert_pt, local_options};
-use ferri_pdf::{
+use crate::{
     Resource, ResourceBase, ResourceError, ResourceResolver, render_html, render_with_resolver,
 };
+use common::{assert_pt, local_options};
 use ferri_pdf_dom::{
     DocumentTree, HTML_NAMESPACE, MATHML_NAMESPACE, NodeData, QuirksMode, SVG_NAMESPACE, Selector,
     TreeRelation,
@@ -262,7 +262,7 @@ fn formatting_depth_limit_covers_block_inline_atomic_and_positioned_trees() {
                 &html,
                 &ResourceBase::default(),
                 &[],
-                &ferri_pdf::FileResolver::default(),
+                &crate::FileResolver::default(),
             );
             if allowed {
                 let document = result.expect("the inclusive formatting limit remains usable");
@@ -314,17 +314,17 @@ fn excessive_shadow_nesting_returns_an_html_tree_error() {
     );
     for error in [
         render_html(&html, &local_options()).err(),
-        ferri_pdf::render_bytes(html.as_bytes(), &local_options()).err(),
+        crate::render_bytes(html.as_bytes(), &local_options()).err(),
     ] {
         assert!(
             matches!(
                 error,
-                Some(ferri_pdf::Error::Html(
-                    ferri_pdf_document::DocumentError::Tree(ferri_pdf_dom::DomError::TreeLimit {
+                Some(crate::Error::Html(ferri_pdf_document::DocumentError::Tree(
+                    ferri_pdf_dom::DomError::TreeLimit {
                         resource: "shadow tree nesting",
                         limit: 64
-                    })
-                ))
+                    }
+                )))
             ),
             "both HTML input paths must preserve the typed shadow-depth failure"
         );

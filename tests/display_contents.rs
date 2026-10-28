@@ -236,9 +236,7 @@ fn boxless_link_geometry_follows_transformed_text_and_bidi_runs() {
 
 #[test]
 fn boxless_backgrounds_and_border_images_are_not_acquired() {
-    use ferri_pdf_resources::{
-        FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver,
-    };
+    use ferri_pdf::{FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver};
     use std::cell::RefCell;
     const UNUSED_IMAGE: &str = "unboxed-never-load.png";
     #[derive(Default)]

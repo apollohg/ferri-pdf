@@ -133,7 +133,7 @@ fn fixed_margin_dimensions_fill_the_margin_and_middle_boxes_force_symmetric_side
     let rectangles: Vec<_> = trace.display_lists[0]
         .iter()
         .filter_map(|item| match item {
-            ferri_pdf_graphics::DisplayItem::Box(paint) => Some(paint.rect),
+            ferri_pdf::DisplayItem::Box(paint) => Some(paint.rect),
             _ => None,
         })
         .collect();

@@ -1,6 +1,6 @@
 # Float geometry reference
 
-`weasy70-floats.json` contains independently authored public HTML/CSS and measurements from WeasyPrint 70.0. It pins the font and relevant engine source hashes. It supplies independent geometry acceptance for ordinary floats. `tests/floats.rs` also checks source-required behaviour where the reference engine differs, fragmentation across changing page widths, clearance and source preservation. Native `page_paint.py` and `navigation_pdf.py` checks cover actual PDF paint, annotations and outlines.
+`weasy70-floats.json` contains independently authored public HTML/CSS and measurements from WeasyPrint 70.0. It pins the font and relevant engine source hashes. It supplies independent geometry acceptance for ordinary floats. `src/tests/floats.rs` also checks source-required behaviour where the reference engine differs, fragmentation across changing page widths, clearance and source preservation. Native `page_paint.py` and `navigation_pdf.py` checks cover actual PDF paint, annotations and outlines.
 
 Regenerate using the existing reference tool in an environment with the pinned engine and native libraries:
 

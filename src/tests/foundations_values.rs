@@ -1,4 +1,4 @@
-mod common;
+use super::common;
 use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_resources::{FileResolver, ResourceResolver};
 use ferri_pdf_style::{LengthPercentage, Size, Style, StyleError, Stylesheet, StylesheetSource};
@@ -9,7 +9,7 @@ const SERIF_ZERO_PT: f32 = 10.0;
 const FIXTURE_ZERO_PT: f32 = 12.0;
 const MEDIA_PAPER_PT: [f32; 2] = [600.0, 800.0];
 
-fn font_base() -> ferri_pdf::ResourceBase {
+fn font_base() -> crate::ResourceBase {
     std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("tests/fixtures/fonts")
         .into()
@@ -729,10 +729,7 @@ fn conditional_font_family_queries_keep_the_querying_declarations_tree_scope() {
         );
         let mut options = common::local_options();
         options.base = font_base();
-        let trace = ferri_pdf::render_html(&html, &options)
-            .unwrap()
-            .layout
-            .unwrap();
+        let trace = crate::render_html(&html, &options).unwrap().layout.unwrap();
         let line = trace
             .pages
             .iter()
@@ -1065,10 +1062,7 @@ fn toggle_font_family_comparison_and_rollback_keep_tree_scopes() {
         );
         let mut options = common::local_options();
         options.base = font_base();
-        let trace = ferri_pdf::render_html(&html, &options)
-            .unwrap()
-            .layout
-            .unwrap();
+        let trace = crate::render_html(&html, &options).unwrap().layout.unwrap();
         let line = trace
             .pages
             .iter()
@@ -1815,7 +1809,7 @@ fn media_progress_in_font_face_descriptors_uses_the_configured_paper() {
 fn media_progress_keeps_indirect_paper_dependencies_in_page_size_conditions() {
     let mut options = common::local_options();
     options.print.paper = MEDIA_PAPER_PT;
-    let trace=ferri_pdf::render_html("<style>@page{size:200pt 300pt;margin:0}body,p{margin:0;font:8pt serif}@media(color > calc(media-progress(width,0pt,1000pt) * 10)){p{font-size:21pt}@page{size:400pt 500pt}}</style><p>Media</p>",&options).unwrap().layout.unwrap();
+    let trace=crate::render_html("<style>@page{size:200pt 300pt;margin:0}body,p{margin:0;font:8pt serif}@media(color > calc(media-progress(width,0pt,1000pt) * 10)){p{font-size:21pt}@page{size:400pt 500pt}}</style><p>Media</p>",&options).unwrap().layout.unwrap();
     common::assert_pt(trace.pages[0][0].font_size, 21.0);
     common::assert_pt(trace.page_width, 200.0);
     common::assert_pt(trace.page_height, 300.0);
@@ -2789,7 +2783,7 @@ fn metric_fallback_matches_the_rendering_face() {
         );
         let mut options = common::local_options();
         options.base = font_base();
-        let trace = ferri_pdf::render_html(&format!("<style>{css}</style><p>0</p>"), &options)
+        let trace = crate::render_html(&format!("<style>{css}</style><p>0</p>"), &options)
             .unwrap()
             .layout
             .unwrap();
@@ -2830,7 +2824,7 @@ fn zero_font_and_line_metrics_remain_valid_css_values() {
         "<style>{}@page{{size:300pt 200pt;margin:20pt}}p{{margin:0;font:20pt/24pt serif}}span{{font-size:0;letter-spacing:3pt;word-spacing:2pt;line-height:0}}</style><p>A<span>a b</span>B</p>",
         common::PROFILE
     );
-    let output = ferri_pdf::render_html(&html, &common::local_options())
+    let output = crate::render_html(&html, &common::local_options())
         .expect("zero-size text must retain finite layout and explicit spacing");
     let trace = output.layout.unwrap();
     let line = &trace.pages[0][0];
@@ -2905,7 +2899,7 @@ impl ResourceResolver for RecordingResolver {
     fn resolve(
         &self,
         reference: &str,
-        base: &ferri_pdf::ResourceBase,
+        base: &crate::ResourceBase,
     ) -> Result<ferri_pdf_resources::Resource, ferri_pdf_resources::ResourceError> {
         self.requests.borrow_mut().push(reference.into());
         self.inner.resolve(reference, base)
@@ -3010,7 +3004,7 @@ fn ideographic_units_measure_real_fallback_glyphs_including_zero_advance() {
         common::assert_pt(points(&computed(&css).width), expected);
         let mut options = common::local_options();
         options.base = font_base();
-        let trace = ferri_pdf::render_html(
+        let trace = crate::render_html(
             &format!("<style>{css}</style><p id=target>水</p>"),
             &options,
         )
@@ -3047,7 +3041,7 @@ fn page_font_size_em_ex_uses_initial_metrics_without_resetting_other_bases() {
             "<style>{}@page{{size:400pt 600pt;margin:0;{declarations}}}html{{font-family:'DejaVu Sans';font-size:25pt}}</style><p>Page font context</p>",
             common::PROFILE
         );
-        let trace = ferri_pdf::render_html(&html, &common::local_options())
+        let trace = crate::render_html(&html, &common::local_options())
             .unwrap_or_else(|error| panic!("page font {declarations}: {error}"))
             .layout
             .unwrap();
@@ -3107,7 +3101,7 @@ fn undefined_geometry_cycles_are_reported_instead_of_using_provisional_values() 
         "@page{size:400pt 600pt;margin:20pt;padding-left:1vw}",
         "@page{size:400pt 600pt;margin:20pt;border:1vw solid}",
     ] {
-        let result = ferri_pdf::render_html(
+        let result = crate::render_html(
             &format!("<style>{css}</style><p>Cycle</p>"),
             &common::local_options(),
         );
@@ -3115,7 +3109,7 @@ fn undefined_geometry_cycles_are_reported_instead_of_using_provisional_values() 
             panic!("geometry cycle was silently accepted: {css}")
         };
         assert!(
-            matches!(error, ferri_pdf::Error::Css(_)),
+            matches!(error, crate::Error::Css(_)),
             "cycle must be a style dependency error: {error}"
         );
         assert!(
@@ -3170,7 +3164,7 @@ fn viewport_units_use_the_first_page_area_in_root_page_and_margin_contexts() {
         let paint = trace.display_lists[0]
             .iter()
             .find_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0x12, 0x34, 0x56] =>
                 {
                     Some(paint)
@@ -3361,7 +3355,7 @@ fn page_box_edges_auto_margins_and_constraints_define_the_initial_containing_blo
         let html = format!(
             "<style>@page{{size:400pt 600pt;{declarations}}}body,p{{margin:0;font:8pt/12pt serif}}p{{width:100vw;height:12pt;background:#123456}}</style><p>Page box</p>"
         );
-        let trace = ferri_pdf::render_html(&html, &common::local_options())
+        let trace = crate::render_html(&html, &common::local_options())
             .unwrap_or_else(|error| panic!("page box {declarations}: {error}"))
             .layout
             .unwrap();
@@ -3378,7 +3372,7 @@ fn page_box_edges_auto_margins_and_constraints_define_the_initial_containing_blo
         let paint = trace.display_lists[0]
             .iter()
             .find_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0x12, 0x34, 0x56] =>
                 {
                     Some(paint)
@@ -3468,7 +3462,7 @@ fn suppressed_borders_do_not_resolve_font_metric_lengths() {
     };
     let mut options = common::local_options();
     options.base = font_base();
-    ferri_pdf::render_with_resolver("<style>@font-face{font-family:Metric;src:url(MetricGlyphTest.ttf)}@page{size:400pt 600pt;margin:20pt;font-family:Metric;border:1ch none}body,p{font:8pt serif}</style><p>Body</p>",&options,&resolver).unwrap();
+    crate::render_with_resolver("<style>@font-face{font-family:Metric;src:url(MetricGlyphTest.ttf)}@page{size:400pt 600pt;margin:20pt;font-family:Metric;border:1ch none}body,p{font:8pt serif}</style><p>Body</p>",&options,&resolver).unwrap();
     assert!(
         resolver.requests.borrow().is_empty(),
         "page border must not fetch its unpainted metric font"
@@ -3550,7 +3544,7 @@ fn inverted_page_margin_extents_preserve_layout_on_an_empty_output_axis() {
         let html = format!(
             "<style>@page{{size:400pt 600pt;margin:0;padding:0;border:0;{declarations};background:navy;@top-left{{content:'H';font:8pt/10pt serif}}}}body,p{{margin:0;font:12pt/14pt serif}}p{{position:relative;{placement}}}</style><p>A</p><p style='break-before:page'>B</p>"
         );
-        let output = ferri_pdf::render_html(&html, &common::local_options())
+        let output = crate::render_html(&html, &common::local_options())
             .unwrap_or_else(|error| panic!("inverted page-margin extent {declarations}: {error}"));
         let trace = output.layout.unwrap();
         assert_eq!([trace.page_width, trace.page_height], [400.0, 600.0]);
@@ -3608,9 +3602,8 @@ fn zero_authored_page_sizes_keep_css_geometry_on_a_positive_output_sheet() {
         );
         let mut options = common::local_options();
         options.print.paper = CONFIGURED_PAPER;
-        let output =
-            ferri_pdf::render_html(&format!("<style>{css}</style><p>A<br>B</p>"), &options)
-                .unwrap_or_else(|error| panic!("zero authored page size {size}: {error}"));
+        let output = crate::render_html(&format!("<style>{css}</style><p>A<br>B</p>"), &options)
+            .unwrap_or_else(|error| panic!("zero authored page size {size}: {error}"));
         let trace = output.layout.unwrap();
         assert_eq!([trace.page_width, trace.page_height], paper, "{size}");
         assert_eq!(
@@ -3674,7 +3667,7 @@ fn zero_page_area_is_a_valid_first_page_viewport() {
     assert_eq!(sheet.page, [400.0, 600.0]);
     assert_eq!(
         sheet.page_content_box(),
-        ferri_pdf::Rect {
+        crate::Rect {
             x: 20.0,
             y: 20.0,
             width: 0.0,
@@ -3793,7 +3786,7 @@ fn subpixel_page_areas_keep_their_viewport_while_fragmentation_progresses_by_one
             let spacer = page
                 .iter()
                 .find_map(|item| match item {
-                    ferri_pdf::DisplayItem::Box(paint)
+                    crate::DisplayItem::Box(paint)
                         if paint.decoration.background.rgb == [0, 0, 128] =>
                     {
                         Some(paint)

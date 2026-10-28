@@ -11,7 +11,13 @@
 //! ```
 #![forbid(unsafe_code)]
 
+// The shared integration-test helpers name the public API as `ferri_pdf`.
+#[cfg(test)]
+extern crate self as ferri_pdf;
+
 mod multipart;
+#[cfg(test)]
+mod tests;
 
 pub use multipart::{
     HtmlPart, MultipartOutput, PartOutput, render_parts, render_parts_with_resolver,

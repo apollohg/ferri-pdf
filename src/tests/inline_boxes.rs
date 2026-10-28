@@ -1,7 +1,7 @@
 //! Inline-level boxes: edges, fragments, vertical alignment and atomic inlines.
-mod common;
+use super::common;
+use crate::{BoxPaint, DisplayItem, LayoutTrace, Rect, TextLine, render_html};
 use common::{PROFILE, local_options};
-use ferri_pdf::{BoxPaint, DisplayItem, LayoutTrace, Rect, TextLine, render_html};
 
 const TOLERANCE_PT: f32 = 0.01;
 /// x-height comes from the `x` glyph bounds.

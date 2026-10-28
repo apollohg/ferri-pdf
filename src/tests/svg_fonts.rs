@@ -1,10 +1,10 @@
-use ferri_pdf::{
+use crate::{
     DisplayItem, ImageError, RenderOptions, Resource, ResourceBase, ResourceError,
     ResourceResolver, render_with_resolver,
 };
 use std::{cell::RefCell, path::PathBuf};
 
-const FONT: &[u8] = include_bytes!("../crates/fonts/assets/fonts/DejaVuSansMono.ttf");
+const FONT: &[u8] = include_bytes!("../../crates/fonts/assets/fonts/DejaVuSansMono.ttf");
 const CHART: &str = "<svg xmlns='http://www.w3.org/2000/svg' width='100' height='40'><text x='0' y='30' font-family='ChartFace' font-size='20'>H</text></svg>";
 
 #[derive(Default)]
@@ -26,7 +26,7 @@ impl ResourceResolver for Assets {
                 if self.denied { return Err(ResourceError::Denied(base.resolve(reference)?)); }
                 (FONT.to_vec(), "/virtual/fonts")
             }
-            "pattern.png" => (include_bytes!("oracle/assets/image-pattern.png").to_vec(), "/virtual/charts"),
+            "pattern.png" => (include_bytes!("../../tests/oracle/assets/image-pattern.png").to_vec(), "/virtual/charts"),
             "unused.ttf" => panic!("an unrequested font must remain lazy"),
             other => panic!("unexpected resource {other:?} at {base:?}"),
         };
@@ -130,7 +130,7 @@ fn svg_font_denials_remain_typed_and_hidden_text_does_not_acquire_fonts() {
         } else {
             let output = result.unwrap();
             assert!(
-                matches!(output.diagnostics.as_slice(), [ferri_pdf::RenderDiagnostic::UnavailableImage(failure)]
+                matches!(output.diagnostics.as_slice(), [crate::RenderDiagnostic::UnavailableImage(failure)]
                 if matches!(&failure.error, ImageError::Font(ferri_pdf_fonts::FontError::Resource(ResourceError::Denied(_))))),
                 "SVG-only font denial must omit the image with its typed diagnostic"
             );
@@ -147,7 +147,7 @@ fn fallback_does_not_acquire_fonts_for_text_owned_by_a_different_svg_span() {
     impl ResourceResolver for Spans {
         fn resolve(&self, reference: &str, base: &ResourceBase) -> Result<Resource, ResourceError> {
             let bytes = match reference {
-                "primary.ttf" => include_bytes!("fixtures/fonts/VariationSequenceTest.ttf").to_vec(),
+                "primary.ttf" => include_bytes!("../../tests/fixtures/fonts/VariationSequenceTest.ttf").to_vec(),
                 "denied.ttf" => { self.denied.set(self.denied.get() + 1); return Err(ResourceError::Denied(base.resolve(reference)?)); },
                 "chart.svg" => b"<svg xmlns='http://www.w3.org/2000/svg' width='100' height='40'><text x='0' y='30' font-family='Primary,Denied'>A<tspan font-family='DejaVu Sans Mono'>\xE2\x86\x92</tspan>A</text></svg>".to_vec(),
                 other => panic!("unexpected request {other}"),
@@ -255,7 +255,7 @@ fn svg_initial_and_unavailable_generic_classes_cannot_activate_css_aliases() {
     assert!(
         matches!(
             result,
-            Err(ferri_pdf::Error::Image(ImageError::Font(
+            Err(crate::Error::Image(ImageError::Font(
                 ferri_pdf_fonts::FontError::Resource(ResourceError::Denied(_))
             )))
         ),

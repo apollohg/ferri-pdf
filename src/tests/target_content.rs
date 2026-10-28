@@ -1,8 +1,8 @@
-mod common;
+use super::common;
+use crate::render_html;
 use common::{PROFILE, local_options};
-use ferri_pdf::render_html;
 
-fn render(css: &str, body: &str) -> ferri_pdf::RenderOutput {
+fn render(css: &str, body: &str) -> crate::RenderOutput {
     render_html(
         &format!(
             "<style>{PROFILE}@page{{size:360pt 240pt;margin:24pt}}p,h2{{margin:0;font:12pt/18pt Spike}}h2{{break-after:auto}}.next{{break-before:page}}{css}</style>{body}"
@@ -135,7 +135,7 @@ fn forward_reference_reflows_before_resolving_its_final_target_page() {
 
 #[test]
 fn repeated_target_layout_reuses_loaded_images() {
-    use ferri_pdf::{FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver};
+    use crate::{FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver};
     use std::cell::Cell;
     struct CountingResolver {
         images: Cell<usize>,
@@ -156,7 +156,7 @@ fn repeated_target_layout_reuses_loaded_images() {
     let html = format!(
         "<style>{PROFILE}img{{width:20pt;height:20pt}}h2{{break-before:page}}p::after{{content:target-counter('#target',page)}}</style><img src='../assets/image-pattern.png'><p>Page </p><h2 id=target>Destination</h2>"
     );
-    let output = ferri_pdf::render_with_resolver(&html, &local_options(), &resolver).unwrap();
+    let output = crate::render_with_resolver(&html, &local_options(), &resolver).unwrap();
     assert!(
         output.layout.unwrap().pages[0]
             .iter()
@@ -286,7 +286,7 @@ fn target_reference_errors_retain_the_reason_without_loading_external_documents(
             "<style>p::after{{content:target-text('{reference}')}}</style><p>Reference</p>"
         );
         match render_html(&html, &local_options()) {
-            Err(ferri_pdf::Error::Css(StyleError::TargetReference { reason, .. })) => assert_eq!(
+            Err(crate::Error::Css(StyleError::TargetReference { reason, .. })) => assert_eq!(
                 reason, expected,
                 "wrong failure classification for {reference}"
             ),

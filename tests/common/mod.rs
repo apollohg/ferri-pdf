@@ -52,10 +52,7 @@ pub(crate) fn assert_labelled_pt(label: &str, actual: f32, expected: f32) {
     dead_code,
     reason = "each test binary uses a subset of the shared helpers"
 )]
-pub(crate) fn painted_box(
-    trace: &ferri_pdf::LayoutTrace,
-    color: [u8; 3],
-) -> ferri_pdf_graphics::Rect {
+pub(crate) fn painted_box(trace: &ferri_pdf::LayoutTrace, color: [u8; 3]) -> ferri_pdf::Rect {
     let boxes: Vec<_> = trace
         .display_lists
         .iter()

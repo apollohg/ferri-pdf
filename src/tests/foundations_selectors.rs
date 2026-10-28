@@ -1,4 +1,4 @@
-mod common;
+use super::common;
 
 use common::{assert_pt, local_options};
 use ferri_pdf_dom::DocumentTree;
@@ -17,7 +17,7 @@ fn initial_disabled_state_reaches_support_queries_and_real_style_consumers() {
             "<!doctype html><style>{}fieldset{{display:none}}p{{margin:0;font-size:11pt}}@supports selector(:enabled) and selector(:disabled){{p{{font-size:13pt}}}}body:has(#first:enabled) p{{color:#123456}}{extra}</style><fieldset disabled><legend><input id=first></legend><input id=ordinary></fieldset><p>State consumer</p>",
             common::PROFILE
         );
-        let output = ferri_pdf::render_html(&html, &local_options()).unwrap();
+        let output = crate::render_html(&html, &local_options()).unwrap();
         assert!(
             output.diagnostics.is_empty(),
             "valid initial-state selectors must not produce CSS diagnostics: {:?}",
@@ -65,7 +65,7 @@ fn host_selector_arguments_respect_component_limits_on_the_normal_thread() {
                 "<!doctype html><style>{}</style><div class=themed><template shadowrootmode=open><style>{selector}{{font-size:19pt}}</style><p>Boundary</p></template></div>",
                 common::PROFILE
             );
-            let result = ferri_pdf::render_html(&html, &local_options());
+            let result = crate::render_html(&html, &local_options());
             if allowed {
                 let trace = result
                     .expect("a host argument at the inclusive component limit parses and matches")
@@ -76,7 +76,7 @@ fn host_selector_arguments_respect_component_limits_on_the_normal_thread() {
                 assert!(
                     matches!(
                         result,
-                        Err(ferri_pdf::Error::Css(
+                        Err(crate::Error::Css(
                             ferri_pdf_style::StyleError::GrammarLimit {
                                 limit: COMPONENT_LIMIT,
                                 ..
@@ -119,7 +119,7 @@ fn shadow_hosts_are_featureless_and_arguments_use_the_normal_tree() {
             "<!doctype html><style>{}</style><div class=themed><template shadowrootmode=open><style>{css}</style><p>Shadow host</p></template></div><p>Outside</p>",
             common::PROFILE
         );
-        let trace = ferri_pdf::render_html(&html, &local_options())
+        let trace = crate::render_html(&html, &local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -152,7 +152,7 @@ fn shadow_scopes_anchor_at_the_host_without_exposing_light_ancestors() {
             "<!doctype html><style>{}#host::before{{content:'Host';display:block}}</style><section><div id=host><template shadowrootmode=open><style>{css}</style><p>Shadow child</p></template></div></section><p>Outside</p>",
             common::PROFILE
         );
-        let trace = ferri_pdf::render_html(&html, &local_options())
+        let trace = crate::render_html(&html, &local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -176,7 +176,7 @@ fn host_context_walks_shadow_including_ancestors_in_their_own_context() {
         "<!doctype html><style>{}</style><section class=theme><div><template shadowrootmode=open><div><template shadowrootmode=closed><style>:host-context(.theme){{font-size:29pt}}:host-context(:host){{font-size:37pt}}</style><p>Nested</p></template></div></template></div></section>",
         common::PROFILE
     );
-    let trace = ferri_pdf::render_html(&html, &local_options())
+    let trace = crate::render_html(&html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -195,7 +195,7 @@ fn host_context_nesting_retains_parent_list_specificity() {
         "<!doctype html><style>{}</style><section class=theme><div><template shadowrootmode=open><style>#missing,.theme{{:host-context(&){{font-size:23pt}}}}:host-context(.theme){{font-size:19pt}}</style><p>Nested argument</p></template></div></section>",
         common::PROFILE
     );
-    let trace = ferri_pdf::render_html(&html, &local_options())
+    let trace = crate::render_html(&html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -210,7 +210,7 @@ fn shadow_host_slotted_and_part_selectors_respect_tree_contexts() {
         "<!doctype html><style>{}x-panel{{display:block}}x-panel::part(label){{font-size:23pt}}p{{color:red}}</style><x-panel class=themed><template shadowrootmode=open><style>:host(.themed){{color:#123456}}:host-context(body) .label{{font-size:19pt}}::slotted(.picked){{font-size:29pt}}slot:has-slotted{{color:green}}</style><p class=label part=label>Part</p><slot name=n></slot></template><p class=picked slot=n>Slotted</p></x-panel><p>Outside</p>",
         common::PROFILE
     );
-    let trace = ferri_pdf::render_html(&html, &local_options())
+    let trace = crate::render_html(&html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -242,7 +242,7 @@ fn slot_aliases_use_the_source_tree_and_keep_ordinary_selectors_inside_it() {
         "<!doctype html><style>{}</style><div><template shadowrootmode=open><style>::slotted(.picked){{font-size:29pt;color:#123456}}.picked,::slotted(.absent){{font-size:41pt}}slot::slotted(:host){{font-size:47pt}}</style><slot></slot></template><p class=picked>Slotted</p></div><p class=picked>Outside</p>",
         common::PROFILE
     );
-    let trace = ferri_pdf::render_html(&html, &local_options())
+    let trace = crate::render_html(&html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -271,7 +271,7 @@ fn compound_alias_arguments_allow_complex_selectors_in_nested_functions() {
             "<!doctype html><style>{}</style><div><template shadowrootmode=open><style>::slotted({argument}){{font-size:29pt}}</style><slot></slot></template><p class=picked><span class=a><span class=b>Nested argument</span></span></p></div><p class=picked>Outside</p>",
             common::PROFILE
         );
-        let trace = ferri_pdf::render_html(&html, &local_options())
+        let trace = crate::render_html(&html, &local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -290,7 +290,7 @@ fn part_aliases_keep_the_originating_host_featureless_in_its_own_root() {
         "<!doctype html><style>{}</style><div class=themed><template shadowrootmode=open><style>:host::part(label){{font-size:23pt}}.themed::part(label){{font-size:31pt}}</style><p part=label>Part</p></template></div>",
         common::PROFILE
     );
-    let trace = ferri_pdf::render_html(&html, &local_options())
+    let trace = crate::render_html(&html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -303,7 +303,7 @@ fn scoped_aliases_use_the_originating_host_or_slot_for_roots_and_proximity() {
         "<!doctype html><style>{}@scope(.near){{x-host::part(label){{font-size:29pt}}}}@scope(.outer){{x-host::part(label){{font-size:23pt}}}}</style><section class=outer><div class=near><x-host><template shadowrootmode=open><style>@scope(.inner){{slot::slotted(.picked){{font-size:31pt}}.picked{{font-size:41pt}}}}</style><div class=inner><p part=label>Part</p><slot></slot></div></template><p class=picked>Slotted</p></x-host></div></section><p>Outside</p>",
         common::PROFILE
     );
-    let trace = ferri_pdf::render_html(&html, &local_options())
+    let trace = crate::render_html(&html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -326,7 +326,7 @@ fn alias_rules_generate_tree_abiding_pseudo_elements_on_the_selected_node() {
         "<!doctype html><style>{}x-host::part(label)::before{{content:'Part before';display:block;font-size:23pt}}</style><x-host><template shadowrootmode=open><style>::slotted(.picked)::after{{content:'Slotted after';display:block;font-size:29pt}}</style><p part=label>Part</p><slot></slot></template><p class=picked>Slotted</p></x-host>",
         common::PROFILE
     );
-    let trace = ferri_pdf::render_html(&html, &local_options())
+    let trace = crate::render_html(&html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -355,7 +355,7 @@ fn slot_presence_uses_flattened_nodes_including_text_and_hidden_elements() {
             "<!doctype html><style>{}</style><div><template shadowrootmode=open><style>slot:has-slotted+p{{font-size:19pt}}</style><slot id=probe>{fallback}</slot><p>Presence</p></template>{light}</div>",
             common::PROFILE
         );
-        let trace = ferri_pdf::render_html(&html, &local_options())
+        let trace = crate::render_html(&html, &local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -372,7 +372,7 @@ fn slot_presence_uses_flattened_nodes_including_text_and_hidden_elements() {
             "<!doctype html><style>{}</style><div><template shadowrootmode=open><div><template shadowrootmode=open><style>slot:has-slotted+p{{font-size:19pt}}</style><slot></slot><p>Presence</p></template><slot>{fallback}</slot></div></template></div>",
             common::PROFILE
         );
-        let trace = ferri_pdf::render_html(&html, &local_options())
+        let trace = crate::render_html(&html, &local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -394,7 +394,7 @@ fn slotted_aliases_flatten_fallback_and_reprojected_slots() {
         "<div><template shadowrootmode=open><style>::slotted(slot){font-size:29pt}</style><slot></slot></template><slot>Fallback</slot></div>",
     ] {
         let html = format!("<!doctype html><style>{}</style>{html}", common::PROFILE);
-        let trace = ferri_pdf::render_html(&html, &local_options())
+        let trace = crate::render_html(&html, &local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -436,7 +436,7 @@ fn nested_fallback_slots_match_each_origin_with_its_own_scope() {
             "<!doctype html><style>{}</style><div><template shadowrootmode=open><style>{css}</style><slot id=outer><slot id=inner><p>Nested fallback</p></slot></slot></template></div>",
             common::PROFILE
         );
-        let trace = ferri_pdf::render_html(&html, &local_options())
+        let trace = crate::render_html(&html, &local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -463,7 +463,7 @@ fn host_part_aliases_include_forwarded_parts_of_their_own_root() {
             "<!doctype html><style>{}</style><div><template shadowrootmode=open><style>{css}</style><x-inner exportparts='label:exposed'><template shadowrootmode=open><p part=label>Forwarded</p></template></x-inner></template></div>",
             common::PROFILE
         );
-        let trace = ferri_pdf::render_html(&html, &local_options())
+        let trace = crate::render_html(&html, &local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -494,7 +494,7 @@ fn slotted_arguments_respect_component_limits_on_the_normal_thread() {
             "<!doctype html><style>{}</style><div><template shadowrootmode=open><style>{selector}{{font-size:29pt}}</style><slot></slot></template><p class=picked>Boundary</p></div>",
             common::PROFILE
         );
-        let result = ferri_pdf::render_html(&html, &local_options());
+        let result = crate::render_html(&html, &local_options());
         if allowed {
             let trace = result
                 .expect("the existing inclusive slotted component limit parses and matches")
@@ -505,7 +505,7 @@ fn slotted_arguments_respect_component_limits_on_the_normal_thread() {
             assert!(
                 matches!(
                     result,
-                    Err(ferri_pdf::Error::Css(
+                    Err(crate::Error::Css(
                         ferri_pdf_style::StyleError::GrammarLimit {
                             limit: COMPONENT_LIMIT,
                             ..
@@ -524,7 +524,7 @@ fn exported_parts_keep_many_aliases_across_nested_roots() {
         "<!doctype html><style>{}x-outer::part(exposed){{font-size:23pt}}x-outer::part(exposed active){{color:#123456}}.leak,x-outer::part(missing){{font-size:41pt}}</style><x-outer><template shadowrootmode=open><x-middle exportparts='intermediate:exposed, state:active'><template shadowrootmode=closed><x-inner exportparts='alpha:intermediate, beta:intermediate, selected:state'><template shadowrootmode=open><p class=leak part='alpha selected'>First</p><p class=leak part=beta>Second</p><p class=leak part=private>Private</p></template></x-inner></template></x-middle></template></x-outer><p>Outside</p>",
         common::PROFILE
     );
-    let trace = ferri_pdf::render_html(&html, &local_options())
+    let trace = crate::render_html(&html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -701,7 +701,7 @@ fn implicit_scope_uses_stylesheet_owner_and_keeps_generated_targets() {
         "<!doctype html><style>{}p{{margin:0;font-size:12pt;color:black}}</style><div><style>@scope{{>p{{font-size:19pt;color:#123456}}&>p::before{{content:'Scoped ';}}}}</style><p>Inside</p></div><p>Outside</p>",
         common::PROFILE
     );
-    let trace = ferri_pdf::render_html(&html, &local_options())
+    let trace = crate::render_html(&html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -731,7 +731,7 @@ fn imported_and_linked_implicit_scopes_follow_the_source_owner() {
             "<!doctype html><style>{}p{{margin:0;font-size:12pt}}</style><div>{source}<p>Inside</p></div><p>Outside</p>",
             common::PROFILE
         );
-        let trace = ferri_pdf::render_html(&html, &local_options())
+        let trace = crate::render_html(&html, &local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -755,7 +755,7 @@ fn scope_keeps_named_fonts_and_layer_registration_global() {
         "<!doctype html><style>{}@scope (#absent){{@font-face{{font-family:{FAMILY};src:url('../assets/DejaVuSans.ttf')}}@layer early;}}@layer late,early;@layer early{{p{{font-size:19pt}}}}@layer late{{p{{font-size:23pt}}}}p{{font-family:{FAMILY}}}</style><p>Global definitions</p>",
         common::PROFILE
     );
-    let trace = ferri_pdf::render_html(&html, &local_options())
+    let trace = crate::render_html(&html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -796,7 +796,7 @@ fn invalid_scope_boundaries_recover_and_support_probes_are_honest() {
             "<!doctype html><style>{}p{{font-size:12pt}}@supports-condition --scoped{{{probe}}}@supports (--scoped){{p{{font-size:19pt}}}}</style><p>Probe</p>",
             common::PROFILE
         );
-        let trace = ferri_pdf::render_html(&html, &local_options())
+        let trace = crate::render_html(&html, &local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -882,7 +882,7 @@ fn nested_declarations_preserve_interleaved_source_order() {
         "<!doctype html><style>{}p{{&::before{{content:'Before '}}}}p,p::before{{color:red;@media print{{color:#123456}}}}p::after{{content:' After';color:red;&{{color:#123456}}}}</style><p>Body</p>",
         common::PROFILE
     );
-    let trace = ferri_pdf::render_html(&html, &local_options())
+    let trace = crate::render_html(&html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -950,7 +950,7 @@ fn named_support_blocks_validate_the_actual_nested_rule_context() {
             "<!doctype html><style>{}@supports-condition --nested{{{probe}}}p{{font-size:12pt}}@supports (--nested){{p{{font-size:19pt}}}}</style><p>Probe</p>",
             common::PROFILE
         );
-        let trace = ferri_pdf::render_html(&html, &local_options())
+        let trace = crate::render_html(&html, &local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -1030,7 +1030,7 @@ fn namespace_placement_and_imports_preserve_sheet_boundaries() {
         );
     }
     let html = "<!doctype html><style>@import 'data:text/css,p%7Bfont-size:19pt%7Dh%7Cp%7Bfont-size:23pt%7D';@namespace h 'http://www.w3.org/1999/xhtml';</style><p>Separate</p>";
-    let trace = ferri_pdf::render_html(html, &local_options())
+    let trace = crate::render_html(html, &local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -1189,8 +1189,8 @@ fn target_resolution_checks_literal_fragments_before_decoding() {
         let mut tree =
             DocumentTree::parse(&format!("<!doctype html>{html}")).expect("parse test HTML");
         tree.set_document_urls(
-            Some(ferri_pdf::Url::parse(&format!("https://example.test/page#{fragment}")).unwrap()),
-            ferri_pdf::Url::parse("https://base.test/elsewhere/").unwrap(),
+            Some(crate::Url::parse(&format!("https://example.test/page#{fragment}")).unwrap()),
+            crate::Url::parse("https://base.test/elsewhere/").unwrap(),
         );
         let selector = ferri_pdf_dom::Selector::parse(":target").unwrap();
         let selected: Vec<_> = tree
@@ -1455,7 +1455,7 @@ fn selector_support_queries_use_the_actual_selector_implementation() {
             "<!doctype html><style>{}p{{font-size:12pt}}@supports selector({selector}){{p{{font-size:19pt}}}}</style><p>Support</p>",
             common::PROFILE
         );
-        let output = ferri_pdf::render_html(&html, &local_options()).unwrap();
+        let output = crate::render_html(&html, &local_options()).unwrap();
         assert_pt(
             output.layout.unwrap().pages[0][0].font_size,
             if expected { 19.0 } else { 12.0 },
@@ -1466,14 +1466,11 @@ fn selector_support_queries_use_the_actual_selector_implementation() {
 #[test]
 fn static_link_and_target_selectors_use_the_original_document_url() {
     let mut options = local_options();
-    options.base = ferri_pdf::Url::parse("https://example.test/docs/page.html#target")
+    options.base = crate::Url::parse("https://example.test/docs/page.html#target")
         .unwrap()
         .into();
     let html = "<!doctype html><style>p,a{color:black}#target:target,#same:local-link,#near:local-link(1){color:#123456}a:visited{color:red}</style><p id=target>Target</p><p><a id=same href='page.html#other'>Same</a></p><p><a id=near href='other.html'>Near</a></p><p><a href='https://other.test/docs/page.html'>Other</a></p>";
-    let trace = ferri_pdf::render_html(html, &options)
-        .unwrap()
-        .layout
-        .unwrap();
+    let trace = crate::render_html(html, &options).unwrap().layout.unwrap();
     let colors: Vec<_> = trace
         .pages
         .iter()

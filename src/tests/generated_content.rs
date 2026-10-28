@@ -1,6 +1,6 @@
-mod common;
+use super::common;
+use crate::render_html;
 use common::{PROFILE, local_options};
-use ferri_pdf::render_html;
 
 #[test]
 fn pseudo_elements_inherit_from_origin_and_keep_independent_cascade() {
@@ -101,7 +101,7 @@ fn selector_lists_and_descendant_universals_target_generated_boxes_only() {
             "BY",
             "invalid selector must be discarded without retargeting or removing its valid sibling: {selector}"
         );
-        assert!(output.diagnostics.iter().any(|diagnostic| matches!(diagnostic, ferri_pdf::RenderDiagnostic::Css(diagnostic) if diagnostic.kind == ferri_pdf_style::StyleDiagnosticKind::InvalidRule)), "invalid selector needs a source diagnostic: {selector}");
+        assert!(output.diagnostics.iter().any(|diagnostic| matches!(diagnostic, crate::RenderDiagnostic::Css(diagnostic) if diagnostic.kind == ferri_pdf_style::StyleDiagnosticKind::InvalidRule)), "invalid selector needs a source diagnostic: {selector}");
     }
 }
 
@@ -151,7 +151,7 @@ fn repeated_attribute_expansion_is_bounded_before_inline_collection() {
         .expect("repeated attribute expansion must be bounded");
     const SUBSTITUTION_LIMIT_BYTES: usize = 1024 * 1024;
     assert!(
-        matches!(&error,ferri_pdf::Error::Css(ferri_pdf_style::StyleError::VariableLimit{resource:"expanded value bytes",limit}) if *limit==SUBSTITUTION_LIMIT_BYTES),
+        matches!(&error,crate::Error::Css(ferri_pdf_style::StyleError::VariableLimit{resource:"expanded value bytes",limit}) if *limit==SUBSTITUTION_LIMIT_BYTES),
         "shared computed substitution must bound expansion before inline collection: {error}"
     );
 }

@@ -1,4 +1,4 @@
-mod common;
+use super::common;
 
 use ferri_pdf_document::{DocumentMetadata, Navigation};
 use ferri_pdf_fonts::FontBook;

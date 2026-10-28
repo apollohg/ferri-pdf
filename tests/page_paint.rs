@@ -95,7 +95,7 @@ fn page_background_canvas_border_and_content_follow_the_page_painting_order() {
     let fill = paints[background]
         .background_fill()
         .expect("page background fill");
-    let ferri_pdf_graphics::Shape::Rect(area) = fill.shape else {
+    let ferri_pdf::Shape::Rect(area) = fill.shape else {
         panic!("unrounded page background rectangle")
     };
     rect(area, [0.0, 0.0, 400.0, 600.0]);

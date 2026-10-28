@@ -1,6 +1,6 @@
-mod common;
+use super::common;
+use crate::render_html;
 use common::{PROFILE, local_options};
-use ferri_pdf::render_html;
 
 const HEADER_PREFIX: &str = "F[";
 const STRING_PAGE_CSS: &str = "@page{size:1000pt 400pt;margin:40pt;@top-left{content:'F[' string(heading,first) ']S[' string(heading,start) ']L[' string(heading,last) ']X[' string(heading,first-except) ']'}}h2{font:12pt Spike;margin:0;break-after:auto}p{margin:0}.next{break-before:page}";

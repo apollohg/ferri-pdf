@@ -1,8 +1,8 @@
-mod common;
+use super::common;
+use crate::render_html;
 use common::{PROFILE, local_options};
-use ferri_pdf::render_html;
 
-fn render(css: &str, body: &str) -> ferri_pdf::RenderOutput {
+fn render(css: &str, body: &str) -> crate::RenderOutput {
     render_html(&format!("<style>{PROFILE}@page{{size:500pt 300pt;margin:36pt}}p,h2{{margin:0;font:12pt/18pt Spike}}h2{{string-set:heading content();break-after:auto}}.next{{break-before:page}}{css}</style>{body}"), &local_options())
         .expect("body string references must resolve before final shaping")
 }

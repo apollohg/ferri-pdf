@@ -1,8 +1,8 @@
-mod common;
+use super::common;
+use crate::{DisplayItem, render_html};
 use common::{PROFILE, assert_pt, local_options};
-use ferri_pdf::{DisplayItem, render_html};
 
-fn render(css: &str, body: &str) -> ferri_pdf::RenderOutput {
+fn render(css: &str, body: &str) -> crate::RenderOutput {
     render_html(&format!("<style>{PROFILE}ul{{margin:0;padding-left:40pt}}li{{font:12pt/18pt Spike}}{css}</style>{body}"), &local_options())
         .unwrap_or_else(|error| panic!("image marker render failed: {error}; {css}; {body}"))
 }
@@ -64,7 +64,7 @@ fn unavailable_marker_images_fall_back_without_aborting_the_pdf() {
     }
 }
 
-fn markers(trace: &ferri_pdf::LayoutTrace) -> Vec<(usize, &ferri_pdf_graphics::BoxPaint)> {
+fn markers(trace: &crate::LayoutTrace) -> Vec<(usize, &ferri_pdf_graphics::BoxPaint)> {
     trace
         .display_lists
         .iter()

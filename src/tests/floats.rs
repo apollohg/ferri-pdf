@@ -1,9 +1,8 @@
-mod common;
-#[path = "common/weasy_reference.rs"]
-mod weasy_reference;
+use super::common;
+use super::weasy_reference;
 
+use crate::{DisplayItem, LayoutTrace, render_html};
 use common::{PROFILE, assert_pt, local_options};
-use ferri_pdf::{DisplayItem, LayoutTrace, render_html};
 
 const PAGE_LEFT: f32 = 36.0;
 const PAGE_RIGHT: f32 = 324.0;
@@ -13,8 +12,10 @@ const LINE_HEIGHT: f32 = 18.0;
 
 #[test]
 fn float_layout_matches_independently_recorded_geometry() {
-    let reference = serde_json::from_str(include_str!("fixtures/flow/weasy70-floats.json"))
-        .expect("valid public synthetic float reference");
+    let reference = serde_json::from_str(include_str!(
+        "../../tests/fixtures/flow/weasy70-floats.json"
+    ))
+    .expect("valid public synthetic float reference");
     weasy_reference::assert_weasy_lines(&reference);
 }
 

@@ -1,4 +1,4 @@
-mod common;
+use super::common;
 
 use common::{assert_pt, local_options};
 use ferri_pdf_document::{BlockContent, Paragraph, StyledDocument};

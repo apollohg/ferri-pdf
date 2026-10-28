@@ -1,6 +1,6 @@
-mod common;
+use super::common;
+use crate::{BoxPaint, DisplayItem, Rect, render_html};
 use common::{PROFILE, local_options as options};
-use ferri_pdf::{BoxPaint, DisplayItem, Rect, render_html};
 use ferri_pdf_graphics::{
     BackgroundImage, BackgroundSize, Color, GradientStop, NaturalDimensions, Repeat,
     ResolvedGradient, Shading, SizeComponent, TileImage, image_size, rounded_size,
@@ -328,7 +328,7 @@ fn background_size_keywords_and_auto_follow_the_natural_ratio() {
         (
             "one length derives the other from the ratio",
             BackgroundSize::Explicit([
-                SizeComponent::Value(ferri_pdf::LengthPercentage::Length(40.0)),
+                SizeComponent::Value(crate::LengthPercentage::Length(40.0)),
                 SizeComponent::Auto,
             ]),
             raster,
@@ -415,7 +415,7 @@ fn layers_paint_bottom_first_with_their_own_clip_and_the_colour_follows_the_bott
     let fill = paint
         .background_fill()
         .expect("yellow is the bottom layer colour");
-    let ferri_pdf::Shape::Path { contours, .. } = &fill.shape else {
+    let crate::Shape::Path { contours, .. } = &fill.shape else {
         panic!("a rounded colour area is a curved path: {:?}", fill.shape)
     };
     assert_eq!(
@@ -440,7 +440,7 @@ fn shorthand_layers_reset_omitted_longhands_and_split_position_size_and_boxes() 
         backgrounds.sizes,
         vec![
             BackgroundSize::Explicit([
-                SizeComponent::Value(ferri_pdf::LengthPercentage::Length(20.0)),
+                SizeComponent::Value(crate::LengthPercentage::Length(20.0)),
                 SizeComponent::Auto
             ]),
             BackgroundSize::default()
@@ -512,12 +512,12 @@ fn sliced_fragments_position_backgrounds_in_the_unbroken_box() {
 struct RecordingResolver {
     requests: Mutex<Vec<String>>,
 }
-impl ferri_pdf::ResourceResolver for RecordingResolver {
+impl crate::ResourceResolver for RecordingResolver {
     fn resolve(
         &self,
         reference: &str,
-        base: &ferri_pdf::ResourceBase,
-    ) -> Result<ferri_pdf::Resource, ferri_pdf::ResourceError> {
+        base: &crate::ResourceBase,
+    ) -> Result<crate::Resource, crate::ResourceError> {
         let url = base.resolve(reference)?;
         self.requests.lock().unwrap().push(url.to_string());
         let bytes = if std::path::Path::new(url.path())
@@ -532,9 +532,9 @@ impl ferri_pdf::ResourceResolver for RecordingResolver {
             ))
             .unwrap()
         };
-        Ok(ferri_pdf::Resource {
+        Ok(crate::Resource {
             bytes,
-            base: ferri_pdf::ResourceBase::Url(url),
+            base: crate::ResourceBase::Url(url),
         })
     }
 }
@@ -544,11 +544,11 @@ fn stylesheet_urls_resolve_against_the_stylesheet_and_inline_urls_against_the_do
     let resolver = Arc::new(RecordingResolver {
         requests: Mutex::new(Vec::new()),
     });
-    let options = ferri_pdf::RenderOptions {
-        base: ferri_pdf::ResourceBase::Url("https://example.test/doc/page.html".parse().unwrap()),
+    let options = crate::RenderOptions {
+        base: crate::ResourceBase::Url("https://example.test/doc/page.html".parse().unwrap()),
         ..Default::default()
     };
-    ferri_pdf::render_with_resolver(
+    crate::render_with_resolver(
         "<link rel=stylesheet href=\"../styles/sheet.css\"><div>A</div><p style=\"background:url(local.png)\">B</p>",
         &options,
         resolver.as_ref(),
@@ -572,8 +572,8 @@ fn page_document_and_margin_backgrounds_share_images_without_mutating_computed_u
     let resolver = RecordingResolver {
         requests: Mutex::default(),
     };
-    let options = ferri_pdf::RenderOptions {
-        base: ferri_pdf::ResourceBase::Url("https://example.test/doc/page.html".parse().unwrap()),
+    let options = crate::RenderOptions {
+        base: crate::ResourceBase::Url("https://example.test/doc/page.html".parse().unwrap()),
         ..Default::default()
     };
     let document = StyledDocument::parse(
@@ -624,14 +624,12 @@ fn hidden_canvas_sources_do_not_load_images_or_suppress_page_paint() {
         let resolver = RecordingResolver {
             requests: Mutex::default(),
         };
-        let options = ferri_pdf::RenderOptions {
-            base: ferri_pdf::ResourceBase::Url(
-                "https://example.test/doc/page.html".parse().unwrap(),
-            ),
+        let options = crate::RenderOptions {
+            base: crate::ResourceBase::Url("https://example.test/doc/page.html".parse().unwrap()),
             include_layout: true,
             ..Default::default()
         };
-        let output = ferri_pdf::render_with_resolver(
+        let output = crate::render_with_resolver(
             &format!("<!doctype html><style>@page{{background:#102030;border:2pt solid red}}{source}{{display:none;background:url(hidden.png)}}</style><body>Hidden</body>"),
             &options,
             &resolver,
@@ -673,7 +671,7 @@ fn hidden_canvas_sources_do_not_load_images_or_suppress_page_paint() {
 #[test]
 fn active_page_and_margin_images_preserve_resource_policy_errors() {
     const RESOURCE_LIMIT_BYTES: usize = 1;
-    let resolver = ferri_pdf::FileResolver {
+    let resolver = crate::FileResolver {
         max_resource_bytes: RESOURCE_LIMIT_BYTES,
         ..Default::default()
     };
@@ -681,7 +679,7 @@ fn active_page_and_margin_images_preserve_resource_policy_errors() {
         "@page{background-image:url(../assets/image-pattern.png)}",
         "@page{@top-left{content:'';background-image:url(../assets/image-pattern.png)}}",
     ] {
-        let output = ferri_pdf::render_with_resolver(
+        let output = crate::render_with_resolver(
             &format!("<!doctype html><style>{css}</style>"),
             &options(),
             &resolver,
@@ -689,8 +687,8 @@ fn active_page_and_margin_images_preserve_resource_policy_errors() {
         assert!(
             matches!(
                 output,
-                Err(ferri_pdf::Error::Image(ferri_pdf::ImageError::Resource(
-                    ferri_pdf::ResourceError::TooLarge {
+                Err(crate::Error::Image(crate::ImageError::Resource(
+                    crate::ResourceError::TooLarge {
                         limit: RESOURCE_LIMIT_BYTES,
                         ..
                     }
@@ -818,8 +816,8 @@ fn math_functions_position_and_size_layers_against_each_positioning_area() {
     assert_eq!(
         negative.decoration.backgrounds.sizes[0],
         BackgroundSize::Explicit([
-            SizeComponent::Value(ferri_pdf::LengthPercentage::Length(0.0)),
-            SizeComponent::Value(ferri_pdf::LengthPercentage::Length(10.0)),
+            SizeComponent::Value(crate::LengthPercentage::Length(0.0)),
+            SizeComponent::Value(crate::LengthPercentage::Length(10.0)),
         ]),
         "a negative calc() size clamps to zero instead of invalidating the declaration"
     );

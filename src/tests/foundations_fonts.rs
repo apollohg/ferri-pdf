@@ -1,4 +1,4 @@
-mod common;
+use super::common;
 use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_fonts::{FontFamily, FontStyle, FontWeight, GenericFamily};
 use ferri_pdf_style::{LineHeight, Style, StyleError, Stylesheet, StylesheetSource};
@@ -7,7 +7,7 @@ fn computed(css: &str) -> Result<Style, StyleError> {
     computed_at(css, Default::default())
 }
 
-fn computed_at(css: &str, base: ferri_pdf::ResourceBase) -> Result<Style, StyleError> {
+fn computed_at(css: &str, base: crate::ResourceBase) -> Result<Style, StyleError> {
     let sheet = Stylesheet::parse(&[StylesheetSource {
         text: css.into(),
         base,
@@ -265,7 +265,7 @@ fn default_font_shorthand_reaches_shaping_and_pdf_serialization() {
         "<style>{}p{{font:italic bold 18pt/1.5 serif}}</style><p>Shared font shorthand</p>",
         common::PROFILE
     );
-    let output = ferri_pdf::render_html(&html, &common::local_options()).unwrap();
+    let output = crate::render_html(&html, &common::local_options()).unwrap();
     let trace = output.layout.unwrap();
     assert_eq!(trace.pages.len(), 1);
     let line = &trace.pages[0][0];
@@ -277,7 +277,7 @@ fn default_font_shorthand_reaches_shaping_and_pdf_serialization() {
 const VARIABLE_FAMILY: &str = "Variable Fixture";
 const VARIABLE_SIZE_PT: f32 = 20.0;
 
-fn variable_options() -> ferri_pdf::RenderOptions {
+fn variable_options() -> crate::RenderOptions {
     let mut options = common::local_options();
     options.base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("tests/fixtures/fonts")
@@ -285,18 +285,20 @@ fn variable_options() -> ferri_pdf::RenderOptions {
     options
 }
 
-fn variable_font(descriptors: &str, declarations: &str) -> ferri_pdf::RenderOutput {
+fn variable_font(descriptors: &str, declarations: &str) -> crate::RenderOutput {
     let html = format!(
         "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:url(RobotoFlex.ttf) format('truetype');{descriptors}}}@page{{size:300pt 200pt;margin:20pt}}p{{margin:0;font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt;{declarations}}}</style><p>H</p>"
     );
-    ferri_pdf::render_html(&html, &variable_options()).unwrap_or_else(|error| {
+    crate::render_html(&html, &variable_options()).unwrap_or_else(|error| {
         panic!("variable face {descriptors:?}, request {declarations:?}: {error}")
     })
 }
 
 fn independent_variable_advance(sample: usize) -> f32 {
-    let metrics: serde_json::Value =
-        serde_json::from_str(include_str!("fixtures/fonts/RobotoFlex-metrics.json")).unwrap();
+    let metrics: serde_json::Value = serde_json::from_str(include_str!(
+        "../../tests/fixtures/fonts/RobotoFlex-metrics.json"
+    ))
+    .unwrap();
     let units = metrics["samples"][sample]["advance"].as_f64().unwrap();
     let upem = metrics["units_per_em"].as_f64().unwrap();
     // The shaper reports nearest whole font units; FontTools retains fractional advances.
@@ -305,8 +307,10 @@ fn independent_variable_advance(sample: usize) -> f32 {
 
 #[test]
 fn variable_weight_width_and_slant_use_independently_measured_instances() {
-    let metrics: serde_json::Value =
-        serde_json::from_str(include_str!("fixtures/fonts/RobotoFlex-metrics.json")).unwrap();
+    let metrics: serde_json::Value = serde_json::from_str(include_str!(
+        "../../tests/fixtures/fonts/RobotoFlex-metrics.json"
+    ))
+    .unwrap();
     for (sample, measured) in metrics["samples"].as_array().unwrap().iter().enumerate() {
         let location = &measured["location"];
         let weight = location["wght"].as_f64().unwrap();
@@ -373,7 +377,7 @@ fn face_matching_narrows_width_before_style_and_weight() {
         let html = format!(
             "<style>{faces}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt;{request}}}</style><p>H</p>"
         );
-        let output = ferri_pdf::render_html(&html, &variable_options())
+        let output = crate::render_html(&html, &variable_options())
             .unwrap_or_else(|error| panic!("face matching for {request}: {error}"));
         common::assert_pt(
             output.layout.unwrap().pages[0][0].width,
@@ -389,7 +393,7 @@ fn modern_font_source_hints_skip_unsupported_technology_and_keep_policy_errors()
         "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:url('../../../crates/fonts/assets/fonts/DejaVuSans.ttf') format(truetype) tech(features-graphite),url(RobotoFlex.ttf) format(truetype) tech(variations)}}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt}}</style><p>H</p>"
     );
     let options = variable_options();
-    let output = ferri_pdf::render_html(&html, &options)
+    let output = crate::render_html(&html, &options)
         .expect("a supported modern format/technology entry must survive an unsupported one");
     let trace = output.layout.unwrap();
     assert_eq!(
@@ -405,24 +409,22 @@ fn modern_font_source_hints_skip_unsupported_technology_and_keep_policy_errors()
         VARIABLE_SIZE_PT,
         "variation support queries must agree with the real source and rendering path"
     );
-    let resolver = ferri_pdf::FileResolver {
+    let resolver = crate::FileResolver {
         max_resource_bytes: FONT_BYTE_LIMIT,
         ..Default::default()
     };
-    let error = ferri_pdf::render_with_resolver(&html, &options, &resolver).err();
+    let error = crate::render_with_resolver(&html, &options, &resolver).err();
     assert!(
         matches!(
             error,
             Some(
-                ferri_pdf::Error::Resource(ferri_pdf::ResourceError::TooLarge {
+                crate::Error::Resource(crate::ResourceError::TooLarge {
                     limit: FONT_BYTE_LIMIT,
                     ..
-                }) | ferri_pdf::Error::Css(StyleError::Resource(
-                    ferri_pdf::ResourceError::TooLarge {
-                        limit: FONT_BYTE_LIMIT,
-                        ..
-                    }
-                ))
+                }) | crate::Error::Css(StyleError::Resource(crate::ResourceError::TooLarge {
+                    limit: FONT_BYTE_LIMIT,
+                    ..
+                }))
             )
         ),
         "font technology fallback must not hide resource policy failures: {error:?}"
@@ -437,7 +439,7 @@ fn invalid_font_faces_do_not_abort_document_rendering() {
         "@font-face{font-family:Missing;src:url(missing.ttf) format('unknown-format')}",
     ] {
         let html = format!("<style>{face}p{{font-family:Missing,serif}}</style><p>Fallback</p>");
-        let output = ferri_pdf::render_html(&html, &variable_options())
+        let output = crate::render_html(&html, &variable_options())
             .unwrap_or_else(|error| panic!("invalid face must be ignored: {face}: {error}"));
         assert_eq!(output.layout.unwrap().pages[0][0].text, "Fallback");
     }
@@ -455,7 +457,7 @@ fn font_source_lists_recover_invalid_items_without_losing_valid_ones() {
         let html = format!(
             "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:{sources}}}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt}}</style><p>H</p>"
         );
-        let output = ferri_pdf::render_html(&html, &variable_options())
+        let output = crate::render_html(&html, &variable_options())
             .unwrap_or_else(|error| panic!("source list {sources}: {error}"));
         let trace = output.layout.unwrap();
         let run = &trace.pages[0][0].runs[0];
@@ -498,8 +500,10 @@ fn oblique_angle_bounds_compare_canonical_degrees_before_cascade() {
 
 #[test]
 fn font_relative_units_measure_the_same_variable_instance_as_shaping() {
-    let metrics: serde_json::Value =
-        serde_json::from_str(include_str!("fixtures/fonts/RobotoFlex-metrics.json")).unwrap();
+    let metrics: serde_json::Value = serde_json::from_str(include_str!(
+        "../../tests/fixtures/fonts/RobotoFlex-metrics.json"
+    ))
+    .unwrap();
     let parent = metrics["samples"][5]["zero_advance"].as_f64().unwrap();
     let child = metrics["samples"][1]["zero_advance"].as_f64().unwrap();
     let upem = metrics["units_per_em"].as_f64().unwrap();
@@ -520,19 +524,21 @@ fn font_relative_units_measure_the_same_variable_instance_as_shaping() {
     );
 }
 
-fn caps_render(text: &str, declarations: &str, language: &str) -> ferri_pdf::RenderOutput {
+fn caps_render(text: &str, declarations: &str, language: &str) -> crate::RenderOutput {
     let html = format!(
         "<style>@font-face{{font-family:CapsFixture;src:url(SourceSerif4-Regular.ttf)}}@font-face{{font-family:Limited;src:url(FontStyleTest-Ital.ttf)}}@page{{size:300pt 200pt;margin:20pt}}p{{margin:0;font:20pt/28pt serif;{declarations}}}</style><p lang='{language}'>{text}</p>"
     );
-    ferri_pdf::render_html(&html, &variable_options()).unwrap_or_else(|error| {
+    crate::render_html(&html, &variable_options()).unwrap_or_else(|error| {
         panic!("caps {text:?}, {declarations:?}, language {language:?}: {error}")
     })
 }
 
 #[test]
 fn small_caps_uses_available_features_or_defined_synthesis() {
-    let measured: serde_json::Value =
-        serde_json::from_str(include_str!("fixtures/fonts/SmallCaps-metrics.json")).unwrap();
+    let measured: serde_json::Value = serde_json::from_str(include_str!(
+        "../../tests/fixtures/fonts/SmallCaps-metrics.json"
+    ))
+    .unwrap();
     for (sample, text, language) in [(0, "Aaß fi", "und"), (1, "iıIİ", "tr")] {
         let output = caps_render(
             text,
@@ -707,7 +713,7 @@ fn small_caps_keep_nominal_line_and_link_metrics() {
     common::assert_pt(caps.pages[0][0].height, normal.pages[0][0].height);
     common::assert_pt(caps.pages[0][0].baseline, normal.pages[0][0].baseline);
     assert_eq!(caps.links.len(), normal.links.len());
-    let (ferri_pdf::LinkShape::Rect(normal), ferri_pdf::LinkShape::Rect(caps)) =
+    let (crate::LinkShape::Rect(normal), crate::LinkShape::Rect(caps)) =
         (&normal.links[0][0].shape, &caps.links[0][0].shape)
     else {
         panic!("untransformed text links must have rectangular activation areas");
@@ -805,12 +811,8 @@ fn small_caps_cascade_resets_and_synthesis_permissions_reach_shaping() {
     }
 }
 
-fn character_policy_trace(
-    families: &str,
-    text: &str,
-    declarations: &str,
-) -> ferri_pdf::LayoutTrace {
-    ferri_pdf::render_html(
+fn character_policy_trace(families: &str, text: &str, declarations: &str) -> crate::LayoutTrace {
+    crate::render_html(
         &format!("<!doctype html><style>html,body,p{{margin:0;padding:0;font:20pt/24pt {families}}}p{{{declarations}}}</style><p>{text}</p>"),
         &common::local_options(),
     ).unwrap_or_else(|error|panic!("character policy {families}/{text:?}: {error}")).layout.unwrap()
@@ -819,7 +821,7 @@ fn character_policy_trace(
 #[test]
 fn exhausted_glyph_fallback_renders_visible_symbols_and_retains_source() {
     let reference: serde_json::Value = serde_json::from_str(include_str!(
-        "fixtures/fonts/character-policy-reference.json"
+        "../../tests/fixtures/fonts/character-policy-reference.json"
     ))
     .unwrap();
     let id = reference["characters"]["replacement"]["glyph_id"]
@@ -837,7 +839,7 @@ fn exhausted_glyph_fallback_renders_visible_symbols_and_retains_source() {
     let glyphs = line
         .runs
         .iter()
-        .flat_map(ferri_pdf::GlyphRun::glyphs)
+        .flat_map(crate::GlyphRun::glyphs)
         .collect::<Vec<_>>();
     assert_eq!(
         glyphs.len(),
@@ -858,7 +860,7 @@ fn exhausted_glyph_fallback_renders_visible_symbols_and_retains_source() {
 #[test]
 fn private_use_characters_require_an_explicit_non_generic_family() {
     let reference: serde_json::Value = serde_json::from_str(include_str!(
-        "fixtures/fonts/character-policy-reference.json"
+        "../../tests/fixtures/fonts/character-policy-reference.json"
     ))
     .unwrap();
     let replacement = reference["characters"]["replacement"]["glyph_id"]
@@ -892,7 +894,7 @@ fn private_use_characters_require_an_explicit_non_generic_family() {
 #[test]
 fn private_use_named_matching_keeps_its_font_namespace() {
     let reference: serde_json::Value = serde_json::from_str(include_str!(
-        "fixtures/fonts/character-policy-reference.json"
+        "../../tests/fixtures/fonts/character-policy-reference.json"
     ))
     .unwrap();
     let replacement = reference["characters"]["replacement"]["glyph_id"]
@@ -900,7 +902,7 @@ fn private_use_named_matching_keeps_its_font_namespace() {
         .unwrap() as u32;
     let font = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("crates/fonts/assets/fonts/LiberationSerif-Regular.ttf");
-    let trace=ferri_pdf::render_html(
+    let trace=crate::render_html(
         &format!("<!doctype html><style>html,body,p{{margin:0;padding:0;font:20pt/24pt serif}}</style><div><template shadowrootmode=open><style>@font-face{{font-family:'DejaVu Sans';src:url('{}')}}p{{font-family:'DejaVu Sans',sans-serif}}</style><p>\u{ef00}</p></template></div>",font.display()),
         &common::local_options(),
     ).unwrap().layout.unwrap();
@@ -919,7 +921,7 @@ fn private_use_named_matching_keeps_its_font_namespace() {
 #[test]
 fn missing_symbols_keep_source_clusters_and_default_ignorables() {
     let reference: serde_json::Value = serde_json::from_str(include_str!(
-        "fixtures/fonts/character-policy-reference.json"
+        "../../tests/fixtures/fonts/character-policy-reference.json"
     ))
     .unwrap();
     let replacement = reference["characters"]["replacement"]["glyph_id"]
@@ -937,7 +939,7 @@ fn missing_symbols_keep_source_clusters_and_default_ignorables() {
                 .runs
                 .iter()
                 .filter(|run| trace.fonts[run.font_id.index()].family == "DejaVu Sans")
-                .flat_map(ferri_pdf::GlyphRun::glyphs)
+                .flat_map(crate::GlyphRun::glyphs)
                 .filter(|glyph| glyph.id == replacement)
                 .count();
             assert_eq!(
@@ -963,7 +965,7 @@ fn missing_symbols_keep_source_clusters_and_default_ignorables() {
 #[test]
 fn incomplete_combining_clusters_keep_the_longest_supported_prefix() {
     let reference: serde_json::Value = serde_json::from_str(include_str!(
-        "fixtures/fonts/character-policy-reference.json"
+        "../../tests/fixtures/fonts/character-policy-reference.json"
     ))
     .unwrap();
     let replacement = reference["characters"]["replacement"]["glyph_id"]
@@ -997,7 +999,7 @@ fn incomplete_combining_clusters_keep_the_longest_supported_prefix() {
 #[test]
 fn variation_sequences_search_later_faces_before_discarding_the_selector() {
     let reference: serde_json::Value = serde_json::from_str(include_str!(
-        "fixtures/fonts/VariationSequenceTest-source.json"
+        "../../tests/fixtures/fonts/VariationSequenceTest-source.json"
     ))
     .unwrap();
     let fixture = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -1008,7 +1010,7 @@ fn variation_sequences_search_later_faces_before_discarding_the_selector() {
             "<!doctype html><style>@font-face{{font-family:'Variation Fixture';src:url('{}')}}html,body,p{{margin:0;padding:0;font:20pt/24pt 'Liberation Serif','Variation Fixture'}}</style><p>{text}</p>",
             fixture.display()
         );
-        let trace = ferri_pdf::render_html(&html, &common::local_options())
+        let trace = crate::render_html(&html, &common::local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -1073,8 +1075,10 @@ fn ignored_variation_selectors_do_not_remove_word_spacing() {
 
 #[test]
 fn font_names_use_full_default_unicode_folding_without_normalization() {
-    let reference: serde_json::Value =
-        serde_json::from_str(include_str!("fixtures/fonts/font-name-matching.json")).unwrap();
+    let reference: serde_json::Value = serde_json::from_str(include_str!(
+        "../../tests/fixtures/fonts/font-name-matching.json"
+    ))
+    .unwrap();
     let fixture = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("crates/fonts/assets/fonts/LiberationMono-Regular.ttf");
     for case in reference["cases"].as_array().unwrap() {
@@ -1084,7 +1088,7 @@ fn font_names_use_full_default_unicode_folding_without_normalization() {
             "<!doctype html><html lang=tr><style>@font-face{{font-family:'{declared}';src:url('{}')}}p{{font:20pt/24pt '{requested}',serif}}</style><p>H</p></html>",
             fixture.display()
         );
-        let trace = ferri_pdf::render_html(&html, &common::local_options())
+        let trace = crate::render_html(&html, &common::local_options())
             .unwrap()
             .layout
             .unwrap();
@@ -1110,7 +1114,7 @@ fn shadow_font_names_fold_before_selecting_their_namespace() {
         root.join("LiberationSerif-Regular.ttf").display(),
         root.join("LiberationMono-Regular.ttf").display()
     );
-    let trace = ferri_pdf::render_html(&html, &common::local_options())
+    let trace = crate::render_html(&html, &common::local_options())
         .unwrap()
         .layout
         .unwrap();
@@ -1132,7 +1136,7 @@ fn local_font_full_and_postscript_names_use_the_same_unicode_fold() {
         let html = format!(
             "<!doctype html><style>@font-face{{font-family:LocalAlias;src:local('{local}')}}p{{font:20pt/24pt LocalAlias}}</style><p>H</p>"
         );
-        let trace = ferri_pdf::render_html(&html, &common::local_options())
+        let trace = crate::render_html(&html, &common::local_options())
             .unwrap()
             .layout
             .unwrap();

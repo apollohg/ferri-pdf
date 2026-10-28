@@ -1,8 +1,8 @@
-mod common;
+use super::common;
 use common::{PROFILE, local_options};
 
-fn render(css: &str, body: &str) -> ferri_pdf::LayoutTrace {
-    ferri_pdf::render_html(
+fn render(css: &str, body: &str) -> crate::LayoutTrace {
+    crate::render_html(
         &format!("<style>{PROFILE}@page{{size:300pt 300pt;margin:36pt}}p{{margin:0;width:200pt;font:10pt/15pt Spike}}{css}</style>{body}"),
         &local_options(),
     )
@@ -188,7 +188,7 @@ fn expanded_leader_links_cover_the_complete_inline_box() {
     );
     assert_eq!(trace.links[0].len(), 1);
     assert!(
-        matches!(&trace.links[0][0].shape, ferri_pdf::LinkShape::Rect(rect) if rect.width > 190.0),
+        matches!(&trace.links[0][0].shape, crate::LinkShape::Rect(rect) if rect.width > 190.0),
         "leader must remain within the hyperlink's expanded box"
     );
 }
@@ -208,13 +208,13 @@ fn huge_leader_expansion_fails_before_allocating_repetitions() {
     let html = format!(
         "<style>{PROFILE}p{{width:200pt;font:10pt Spike}}p::after{{font-size:0.000001pt;content:leader('.') 'Z'}}</style><p>A</p>"
     );
-    let error = ferri_pdf::render_html(&html, &local_options())
+    let error = crate::render_html(&html, &local_options())
         .err()
         .expect("the expansion must exceed its text bound");
     assert!(
         matches!(
             error,
-            ferri_pdf::Error::Layout(ref message) if *message == ferri_pdf_text::TextError::LeaderExpansionLimit { limit: ferri_pdf_document::MAX_INLINE_TEXT_BYTES }.to_string()
+            crate::Error::Layout(ref message) if *message == ferri_pdf_text::TextError::LeaderExpansionLimit { limit: ferri_pdf_document::MAX_INLINE_TEXT_BYTES }.to_string()
         ),
         "{error:?}"
     );

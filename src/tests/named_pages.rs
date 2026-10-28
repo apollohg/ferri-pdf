@@ -1,7 +1,7 @@
-mod common;
+use super::common;
 
+use crate::{RenderOutput, render_html};
 use common::{assert_pt, local_options};
-use ferri_pdf::{RenderOutput, render_html};
 
 const PROFILE: &str = "@font-face{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}@page{size:240pt 200pt;margin:20pt}html,body,section,div,p,h1{margin:0;padding:0;font:10pt/10pt Fixed;widows:1;orphans:1}h1{break-after:auto}";
 
@@ -321,7 +321,7 @@ fn leading_group_break_moves_the_table_border_with_its_content() {
     assert_eq!(trace.pages.len(), 3);
     let red_border_count = |page: usize| {
         trace.display_lists[page].iter().filter(|item| {
-        matches!(item, ferri_pdf::DisplayItem::Box(paint) if paint.decoration.borders.iter().any(|border| border.color.rgb == [255, 0, 0] && border.width > 0.0))
+        matches!(item, crate::DisplayItem::Box(paint) if paint.decoration.borders.iter().any(|border| border.color.rgb == [255, 0, 0] && border.width > 0.0))
     }).count()
     };
     assert_eq!(
@@ -464,7 +464,7 @@ fn parallel_content_replaces_blank_page_geometry_and_canvas_independently_of_cel
         let canvas = trace.display_lists[1]
             .iter()
             .find_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 0, 255]
                         && paint.decoration.background.alpha > 0.0 =>
                 {
@@ -812,7 +812,7 @@ fn continued_inline_objects_resolve_percent_height_on_their_physical_page() {
         .enumerate()
         .flat_map(|(page, items)| {
             items.iter().filter_map(move |item| match item {
-                ferri_pdf::DisplayItem::Box(paint) if paint.rect.width == 20.0 => {
+                crate::DisplayItem::Box(paint) if paint.rect.width == 20.0 => {
                     Some((page, paint.rect.height))
                 }
                 _ => None,
@@ -1104,7 +1104,7 @@ fn fragmented_cell_backgrounds_follow_actual_text_fragments() {
         let paints = trace.display_lists[page]
             .iter()
             .filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [255, 0, 0]
                         && paint.decoration.background.alpha > 0.0 =>
                 {
@@ -1184,7 +1184,7 @@ fn short_table_cell_stretch_uses_each_pages_column_geometry() {
         let paints = trace.display_lists[page]
             .iter()
             .filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 0, 255]
                         && paint.decoration.background.alpha > 0.0 =>
                 {
@@ -1201,7 +1201,7 @@ fn short_table_cell_stretch_uses_each_pages_column_geometry() {
             trace.display_lists[page]
                 .iter()
                 .filter_map(|item| match item {
-                    ferri_pdf::DisplayItem::Box(paint) =>
+                    crate::DisplayItem::Box(paint) =>
                         Some((paint.decoration.background.rgb, paint.rect)),
                     _ => None,
                 })
@@ -1449,7 +1449,7 @@ fn aligned_fragmented_cell_background_starts_at_the_row_not_its_text() {
             let paints = items
                 .iter()
                 .filter_map(|item| match item {
-                    ferri_pdf::DisplayItem::Box(paint)
+                    crate::DisplayItem::Box(paint)
                         if paint.decoration.background.rgb == [0, 0, 255]
                             && paint.decoration.background.alpha > 0.0 =>
                     {
@@ -1522,7 +1522,7 @@ fn forced_break_inside_a_cell_preserves_parallel_content_and_backgrounds() {
             let paints = trace.display_lists[page]
                 .iter()
                 .filter_map(|item| match item {
-                    ferri_pdf::DisplayItem::Box(paint)
+                    crate::DisplayItem::Box(paint)
                         if paint.decoration.background.rgb == rgb
                             && paint.decoration.background.alpha > 0.0 =>
                     {
@@ -1592,7 +1592,7 @@ fn table_layer_backgrounds_cover_every_fragment_of_a_long_cell() {
             let paints = trace.display_lists[page]
                 .iter()
                 .filter_map(|item| match item {
-                    ferri_pdf::DisplayItem::Box(paint)
+                    crate::DisplayItem::Box(paint)
                         if paint.decoration.background.rgb == [255, 0, 0]
                             && paint.decoration.background.alpha > 0.0 =>
                     {
@@ -1642,9 +1642,7 @@ fn fragmented_table_layer_images_keep_their_origin_and_precede_cell_paint() {
                 .iter()
                 .enumerate()
                 .find_map(|(index, item)| match item {
-                    ferri_pdf::DisplayItem::Box(paint)
-                        if paint.decoration.backgrounds.has_images() =>
-                    {
+                    crate::DisplayItem::Box(paint) if paint.decoration.backgrounds.has_images() => {
                         Some((index, paint))
                     }
                     _ => None,
@@ -1660,7 +1658,7 @@ fn fragmented_table_layer_images_keep_their_origin_and_precede_cell_paint() {
                 .iter()
                 .position(|item| {
                     matches!(item,
-                ferri_pdf::DisplayItem::Box(paint) if paint.decoration.background.rgb == [0, 255, 0]
+                crate::DisplayItem::Box(paint) if paint.decoration.background.rgb == [0, 255, 0]
                     && paint.decoration.background.alpha > 0.0)
                 })
                 .expect("cell background");
@@ -1689,7 +1687,7 @@ fn table_group_image_positioning_area_includes_resumed_and_following_bands() {
         let mut count = 0;
         for (page, items) in trace.display_lists.iter().enumerate() {
             for image in items.iter().filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint) if paint.decoration.backgrounds.has_images() => {
+                crate::DisplayItem::Box(paint) if paint.decoration.backgrounds.has_images() => {
                     Some(paint)
                 }
                 _ => None,
@@ -1734,7 +1732,7 @@ fn table_column_images_include_multiple_split_rows_and_keep_group_boundaries() {
         let images = items
             .iter()
             .filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint) if paint.decoration.backgrounds.has_images() => {
+                crate::DisplayItem::Box(paint) if paint.decoration.backgrounds.has_images() => {
                     Some(paint)
                 }
                 _ => None,
@@ -1773,7 +1771,7 @@ fn repeated_header_image_keeps_each_instances_used_height() {
         let images = items
             .iter()
             .filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint) if paint.decoration.backgrounds.has_images() => {
+                crate::DisplayItem::Box(paint) if paint.decoration.backgrounds.has_images() => {
                     Some(paint)
                 }
                 _ => None,
@@ -1803,7 +1801,7 @@ fn collapsed_cell_sides_follow_every_fragment_and_destination_width() {
         let mut sides = trace.display_lists[page]
             .iter()
             .filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.borders.iter().any(|border| {
                         border.width == 2.0
                             && border.color.rgb == [255, 0, 0]
@@ -1841,7 +1839,7 @@ fn collapsed_row_page_cuts_do_not_create_horizontal_grid_borders() {
         let borders = items
             .iter()
             .filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.borders.iter().any(|border| {
                         border.width == 2.0
                             && border.color.rgb == [255, 0, 0]
@@ -1963,7 +1961,7 @@ fn unequal_active_cells_share_repeated_groups_and_reserved_paint_areas() {
         let backgrounds = trace.display_lists[page]
             .iter()
             .filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 0, 255]
                         && paint.decoration.background.alpha > 0.0 =>
                 {
@@ -2076,7 +2074,7 @@ fn aligned_short_cell_counts_only_body_space_between_repeated_groups() {
             let blue = items
                 .iter()
                 .filter_map(|item| match item {
-                    ferri_pdf::DisplayItem::Box(paint)
+                    crate::DisplayItem::Box(paint)
                         if paint.decoration.background.rgb == [0, 0, 255]
                             && paint.decoration.background.alpha > 0.0 =>
                     {
@@ -2195,7 +2193,7 @@ fn nested_table_final_footer_uses_the_destination_width() {
         let blue = items
             .iter()
             .filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 0, 255]
                         && paint.decoration.background.alpha > 0.0 =>
                 {
@@ -2320,7 +2318,7 @@ fn nonspanning_cell_background_stops_at_its_own_row_inside_a_split_band() {
         let blue = items
             .iter()
             .filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 0, 255]
                         && paint.decoration.background.alpha > 0.0 =>
                 {
@@ -2380,7 +2378,7 @@ fn later_row_in_a_split_span_starts_after_actual_preceding_row_progress() {
         let green = items
             .iter()
             .filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 255, 0]
                         && paint.decoration.background.alpha > 0.0 =>
                 {
@@ -2454,7 +2452,7 @@ fn internal_row_constraints_apply_while_a_spanning_cell_continues() {
                 if next_page == 2 {
                     assert!(trace.page_records[1].request.blank);
                     assert!(trace.pages[1].is_empty());
-                    assert!(!trace.display_lists[1].iter().any(|item| matches!(item, ferri_pdf::DisplayItem::Box(paint) if paint.decoration.background.rgb == [221, 221, 221])), "{constraint}/{count}/{reversed}: the spanning cell must not paint the side-inserted blank page");
+                    assert!(!trace.display_lists[1].iter().any(|item| matches!(item, crate::DisplayItem::Box(paint) if paint.decoration.background.rgb == [221, 221, 221])), "{constraint}/{count}/{reversed}: the spanning cell must not paint the side-inserted blank page");
                 }
                 let second = trace.pages[next_page]
                     .iter()
@@ -2504,7 +2502,7 @@ fn internal_row_breaks_visit_empty_rows_and_keep_crossing_spans_alive() {
         assert_eq!(actual, words);
         for (page, lines) in trace.pages.iter().enumerate() {
             if lines.iter().any(|line| line.text.starts_with('S')) {
-                assert!(trace.display_lists[page].iter().any(|item| matches!(item, ferri_pdf::DisplayItem::Box(paint) if paint.decoration.background.rgb == [221, 221, 221])), "{count}: spanning content on page {page} must retain its background");
+                assert!(trace.display_lists[page].iter().any(|item| matches!(item, crate::DisplayItem::Box(paint) if paint.decoration.background.rgb == [221, 221, 221])), "{count}: spanning content on page {page} must retain its background");
             }
         }
     }
@@ -2934,7 +2932,7 @@ fn short_cells_inside_columns_stretch_at_each_destination_width() {
                     let mut wide_cells = trace.display_lists[1]
                         .iter()
                         .filter_map(|item| match item {
-                            ferri_pdf::DisplayItem::Box(paint)
+                            crate::DisplayItem::Box(paint)
                                 if paint.decoration.background.rgb == [0, 0, 255]
                                     && paint.decoration.background.alpha > 0.0 =>
                             {
@@ -3097,7 +3095,7 @@ fn long_runs_of_collapsed_percentage_margins_preserve_flow_and_release_sources()
     );
 }
 
-fn spanner_height_trace(constraints: &str, decoration: &str) -> ferri_pdf::LayoutTrace {
+fn spanner_height_trace(constraints: &str, decoration: &str) -> crate::LayoutTrace {
     let trace = render(
         &format!("@page{{size:240pt 120pt;margin:10pt}}@page wide{{size:400pt 120pt}}table{{width:100%;table-layout:fixed;border-spacing:0}}td{{padding:0;font:10pt/10pt Fixed;vertical-align:top}}.second{{page:wide}}.columns{{column-count:2;column-gap:10pt;column-fill:auto}}.lead{{line-height:80pt}}.spanner{{column-span:all;line-height:20pt}}section{{{constraints};padding:20% 0;background:blue;box-decoration-break:{decoration}}}"),
         "<table><tr><td rowspan=2><div class=columns><p class=lead>Lead</p><section><p class=spanner>Heading</p><p>Tail</p></section><p>Following</p></div></td><td>First</td></tr><tr class=second><td>Second</td></tr></table>",
@@ -3198,7 +3196,7 @@ fn cloned_spanner_ancestor_edges_are_additional_to_its_declared_extent() {
                         .iter()
                         .flatten()
                         .filter_map(|item| match item {
-                            ferri_pdf::DisplayItem::Box(paint)
+                            crate::DisplayItem::Box(paint)
                                 if paint.decoration.background.rgb == [0, 0, 255]
                                     && paint.decoration.background.alpha > 0.0 =>
                             {
@@ -3245,7 +3243,7 @@ fn cloned_spanner_ancestor_edges_are_additional_to_its_declared_extent() {
                             .iter()
                             .flatten()
                             .find_map(|item| match item {
-                                ferri_pdf::DisplayItem::Box(paint)
+                                crate::DisplayItem::Box(paint)
                                     if paint.decoration.background.rgb == [0, 255, 0]
                                         && paint.decoration.background.alpha > 0.0 =>
                                 {
@@ -3364,7 +3362,7 @@ fn active_cloned_edges_use_each_pages_width_while_height_progress_is_retained() 
             let paints = trace.display_lists[page]
                 .iter()
                 .filter_map(|item| match item {
-                    ferri_pdf::DisplayItem::Box(paint)
+                    crate::DisplayItem::Box(paint)
                         if paint.decoration.background.rgb == [0, 0, 255]
                             && paint.decoration.background.alpha > 0.0 =>
                     {
@@ -3462,7 +3460,7 @@ fn active_height_constraints_recalculate_without_losing_consumed_progress() {
         let paint = trace.display_lists[pages - 1]
             .iter()
             .find_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 0, 255] =>
                 {
                     Some(paint)
@@ -3523,7 +3521,7 @@ fn active_percentage_heights_follow_the_destination_containing_block() {
             let paint = trace.display_lists[2]
                 .iter()
                 .find_map(|item| match item {
-                    ferri_pdf::DisplayItem::Box(paint)
+                    crate::DisplayItem::Box(paint)
                         if paint.decoration.background.rgb == [0, 0, 255] =>
                     {
                         Some(paint)
@@ -3575,7 +3573,7 @@ fn initially_inactive_height_constraints_can_bind_after_a_page_change() {
         let paint = trace.display_lists[pages - 1]
             .iter()
             .find_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 0, 255] =>
                 {
                     Some(paint)
@@ -3636,7 +3634,7 @@ fn active_percentage_padding_uses_its_destination_containing_width() {
         let paint = trace.display_lists[1]
             .iter()
             .find_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 0, 255] =>
                 {
                     Some(paint)
@@ -3727,7 +3725,7 @@ fn caption_entry_trace(
     half: bool,
     boundary: &str,
     inner: bool,
-) -> ferri_pdf::LayoutTrace {
+) -> crate::LayoutTrace {
     let width = if half { "width:50%;" } else { "" };
     let forced = if boundary == "before" {
         ".changed{break-before:page}"
@@ -3788,7 +3786,7 @@ fn caption_entries_resolve_margins_and_width_outside_the_active_grid() {
                     let paint = trace.display_lists[1]
                         .iter()
                         .find_map(|item| match item {
-                            ferri_pdf::DisplayItem::Box(paint)
+                            crate::DisplayItem::Box(paint)
                                 if paint.decoration.background.rgb == [0, 0, 255] =>
                             {
                                 Some(paint)
@@ -3881,7 +3879,7 @@ fn active_captions_reflow_while_their_table_grid_is_inactive() {
         let paint = trace.display_lists[1]
             .iter()
             .find_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 0, 255] =>
                 {
                     Some(paint)
@@ -3895,7 +3893,7 @@ fn active_captions_reflow_while_their_table_grid_is_inactive() {
         let grid = trace.display_lists[grid_page]
             .iter()
             .find_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 255, 0] =>
                 {
                     Some(paint)
@@ -3934,7 +3932,7 @@ fn remeasured_captions_keep_their_formatting_context_at_destination_entry() {
         let paint = trace.display_lists[1]
             .iter()
             .find_map(|item| match item {
-                ferri_pdf::DisplayItem::Box(paint)
+                crate::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 0, 255] =>
                 {
                     Some(paint)

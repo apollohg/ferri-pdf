@@ -1,7 +1,7 @@
 mod common;
 use common::{assert_labelled_pt, local_options, painted_box};
+use ferri_pdf::Rect;
 use ferri_pdf::render_html;
-use ferri_pdf_graphics::Rect;
 
 const CELL: f32 = 1229.0 / 2048.0 * 10.0;
 fn probe(css: &str, body: &str) -> Rect {

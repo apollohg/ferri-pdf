@@ -1,7 +1,7 @@
-mod common;
+use super::common;
 
+use crate::{LayoutTrace, render_html};
 use common::{PROFILE, local_options};
-use ferri_pdf::{LayoutTrace, render_html};
 
 fn trace(css: &str, markup: &str) -> LayoutTrace {
     render_html(

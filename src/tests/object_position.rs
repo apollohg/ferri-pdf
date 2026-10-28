@@ -1,7 +1,7 @@
-mod common;
+use super::common;
 
+use crate::{DisplayItem, LayoutTrace, render_html};
 use common::{assert_pt, local_options};
-use ferri_pdf::{DisplayItem, LayoutTrace, render_html};
 use ferri_pdf_graphics::ImagePaint;
 
 const PROFILE: &str = "@page{size:400pt 600pt;margin:20pt}html,body,p{margin:0;padding:0;font:10pt/12pt serif}img{display:block;width:100pt;height:80pt;padding:10pt;border:2pt solid blue;object-fit:none}";

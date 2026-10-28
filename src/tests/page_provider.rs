@@ -1,4 +1,4 @@
-mod common;
+use super::common;
 
 use common::{PROFILE, local_options};
 use ferri_pdf_document::StyledDocument;

@@ -1,7 +1,7 @@
-mod common;
+use super::common;
+use crate::render_html;
+use crate::{BoxPaint, DisplayItem, Rect};
 use common::{PROFILE, local_options as options};
-use ferri_pdf::render_html;
-use ferri_pdf::{BoxPaint, DisplayItem, Rect};
 fn boxes(items: &[DisplayItem]) -> Vec<&BoxPaint> {
     items
         .iter()
@@ -183,7 +183,7 @@ fn three_dimensional_styles_shade_top_left_and_bottom_right() {
         "div{width:100pt;height:50pt;border:6pt groove navy}",
         "<div></div>",
     );
-    let ferri_pdf::Shape::Path { contours, .. } = &paint.border_fills()[0].shape else {
+    let crate::Shape::Path { contours, .. } = &paint.border_fills()[0].shape else {
         panic!("groove bands are filled polygons")
     };
     assert_points(
@@ -220,7 +220,7 @@ fn double_borders_split_each_side_into_thirds() {
         1,
         "one colour and style: a single even-odd ring"
     );
-    let ferri_pdf::Shape::Path {
+    let crate::Shape::Path {
         contours, even_odd, ..
     } = &fills[0].shape
     else {
@@ -262,7 +262,7 @@ fn double_borders_split_each_side_into_thirds() {
         ],
         "per side: outer line then inner line, left, top, right, bottom"
     );
-    let ferri_pdf::Shape::Path { contours, .. } = &fills[1].shape else {
+    let crate::Shape::Path { contours, .. } = &fills[1].shape else {
         panic!("double lines are polygons")
     };
     let rect = mixed.rect;
@@ -286,7 +286,7 @@ fn rounded_three_dimensional_bands_follow_inset_rings() {
     );
     let fills = paint.border_fills();
     assert_eq!(fills.len(), 8, "two bands for each clipped side");
-    let ferri_pdf::Shape::Path { contours, clip, .. } = &fills[1].shape else {
+    let crate::Shape::Path { contours, clip, .. } = &fills[1].shape else {
         panic!("rounded bands are paths")
     };
     assert!(
@@ -399,7 +399,7 @@ fn html_table_border_attribute_maps_to_outset_table_and_inset_cells() {
             )
         })
         .collect();
-    use ferri_pdf::BorderStyle::{Inset, Outset};
+    use crate::BorderStyle::{Inset, Outset};
     assert_eq!(
         painted,
         vec![(Outset, 2.25), (Inset, 0.75), (Outset, 0.75), (Inset, 0.75)],
@@ -539,7 +539,7 @@ fn narrow_page_margin_dots_stay_inside_the_border_box() {
         {
             assert!(round);
             for contour in contours {
-                let [ferri_pdf::Segment::Line(end)] = contour.segments[..] else {
+                let [crate::Segment::Line(end)] = contour.segments[..] else {
                     panic!("square dotted sides are single straight strokes: {contour:?}")
                 };
                 let points = [contour.start, end];
@@ -612,12 +612,12 @@ fn first_paint(css: &str, body: &str) -> BoxPaint {
     let trace = render_html(&html, &options()).unwrap().layout.unwrap();
     boxes(&trace.display_lists[0])[0].clone()
 }
-fn contour_points(contour: &ferri_pdf::Contour) -> Vec<[f32; 2]> {
+fn contour_points(contour: &crate::Contour) -> Vec<[f32; 2]> {
     let mut points = vec![contour.start];
     for segment in &contour.segments {
         match segment {
-            ferri_pdf::Segment::Line(point) => points.push(*point),
-            ferri_pdf::Segment::Cubic(controls) => points.extend(controls),
+            crate::Segment::Line(point) => points.push(*point),
+            crate::Segment::Cubic(controls) => points.extend(controls),
         }
     }
     points
@@ -645,7 +645,7 @@ fn patterns(paint: &BoxPaint) -> Vec<StrokeSide> {
         .border_fills()
         .into_iter()
         .filter_map(|fill| match fill.shape {
-            ferri_pdf::Shape::Pattern {
+            crate::Shape::Pattern {
                 contours,
                 dash,
                 clip,
@@ -688,7 +688,7 @@ fn elliptical_percentage_radii_build_corner_curves() {
     let background = paint
         .background_fill()
         .expect("the box has a background colour");
-    let ferri_pdf::Shape::Path { contours, .. } = &background.shape else {
+    let crate::Shape::Path { contours, .. } = &background.shape else {
         panic!(
             "rounded background must be a curved path: {:?}",
             background.shape
@@ -698,7 +698,7 @@ fn elliptical_percentage_radii_build_corner_curves() {
     points.push(*points.last().unwrap());
     assert_points("elliptical background", &points, &EXPECTED_BACKGROUND);
     let borders = paint.border_fills();
-    let ferri_pdf::Shape::Path {
+    let crate::Shape::Path {
         contours, even_odd, ..
     } = &borders[0].shape
     else {
@@ -737,7 +737,7 @@ fn overlapping_radii_share_one_reduction_factor() {
         "div{width:120pt;height:40pt;border:8pt solid navy;border-radius:100pt 80pt 60pt 40pt;background:#ffeeaa;padding:6pt}",
         "<div>Overlap</div>",
     );
-    let ferri_pdf::Shape::Path { contours, .. } = &paint
+    let crate::Shape::Path { contours, .. } = &paint
         .background_fill()
         .expect("the box has a background colour")
         .shape
@@ -884,7 +884,7 @@ fn sliced_fragments_retain_the_unbroken_corners_across_the_break() {
 
 #[test]
 fn border_radius_shorthands_longhands_and_variables_share_the_cascade() {
-    use ferri_pdf::LengthPercentage::{Length, Percentage};
+    use crate::LengthPercentage::{Length, Percentage};
     let paint = first_paint(
         "div{--r:20pt;border-radius:10pt var(--r) / 5pt;border-top-right-radius:30% 1em;background:navy;height:20pt}",
         "<div>A</div>",
@@ -917,10 +917,10 @@ fn border_radius_shorthands_longhands_and_variables_share_the_cascade() {
     }
 }
 
-fn sharp_contours(paint: &ferri_pdf::ShadowPaint) -> &[ferri_pdf::Contour] {
+fn sharp_contours(paint: &crate::ShadowPaint) -> &[crate::Contour] {
     match &paint.shape {
-        ferri_pdf::ShadowShape::Sharp(contours) => contours,
-        ferri_pdf::ShadowShape::Blurred(mask) => {
+        crate::ShadowShape::Sharp(contours) => contours,
+        crate::ShadowShape::Blurred(mask) => {
             panic!("unblurred shadow became a mask over {:?}", mask.rect)
         }
     }
@@ -989,7 +989,7 @@ fn sliced_shadows_stop_at_the_fragment_edge_and_blur_into_a_mask() {
     let trace = render_html(&html, &options()).unwrap().layout.unwrap();
     let first = boxes(&trace.display_lists[0])[0];
     let shadow = &first.shadows(false)[0];
-    let ferri_pdf::ShadowShape::Blurred(mask) = &shadow.shape else {
+    let crate::ShadowShape::Blurred(mask) = &shadow.shape else {
         panic!("a blurred shadow is a soft mask")
     };
     let bottom = first.rect.y + first.rect.height;

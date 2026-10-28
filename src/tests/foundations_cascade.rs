@@ -1,7 +1,7 @@
-mod common;
+use super::common;
 
+use crate::{render_bytes, render_html};
 use common::{PROFILE, assert_pt, local_options};
-use ferri_pdf::{render_bytes, render_html};
 use ferri_pdf_dom::{DocumentTree, Element, Selector, TreeRelation};
 use ferri_pdf_style::{Display, LengthPercentage, Size, Style, Stylesheet, StylesheetSource};
 
@@ -528,7 +528,7 @@ fn page_inherits_computed_values_from_a_hidden_root() {
 
 #[test]
 fn unregistered_url_tokens_resolve_in_the_consuming_stylesheet() {
-    use ferri_pdf::{
+    use crate::{
         Resource, ResourceBase, ResourceError, ResourceResolver, Url, render_with_resolver,
     };
     use std::cell::RefCell;
@@ -562,7 +562,7 @@ fn unregistered_url_tokens_resolve_in_the_consuming_stylesheet() {
                         .into(),
                 }),
                 "https://example.org/consumer/tile.png" => Ok(Resource {
-                    bytes: include_bytes!("oracle/assets/image-pattern.png").to_vec(),
+                    bytes: include_bytes!("../../tests/oracle/assets/image-pattern.png").to_vec(),
                     base: Url::parse(reference).unwrap().into(),
                 }),
                 _ => Err(ResourceError::Denied(base.resolve(reference)?)),
@@ -575,7 +575,7 @@ fn unregistered_url_tokens_resolve_in_the_consuming_stylesheet() {
             function,
             variable,
         };
-        let options = ferri_pdf::RenderOptions {
+        let options = crate::RenderOptions {
             base: Url::parse("https://example.org/document.html")
                 .unwrap()
                 .into(),

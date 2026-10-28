@@ -1,6 +1,6 @@
-mod common;
+use super::common;
+use crate::render_html;
 use common::{PROFILE, local_options};
-use ferri_pdf::render_html;
 
 #[test]
 fn emergency_wrap_preserves_words_when_they_fit_and_never_splits_combining_sequences() {

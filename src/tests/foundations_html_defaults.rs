@@ -1,7 +1,7 @@
-mod common;
+use super::common;
 
+use crate::render_html;
 use common::{PROFILE, local_options};
-use ferri_pdf::render_html;
 
 fn text(css: &str, markup: &str) -> Vec<String> {
     render_html(
@@ -143,7 +143,7 @@ fn horizontal_rules_use_html_borders_and_attribute_hints() {
         .iter()
         .flatten()
         .filter_map(|item| match item {
-            ferri_pdf::DisplayItem::Box(paint)
+            crate::DisplayItem::Box(paint)
                 if paint
                     .decoration
                     .borders
@@ -500,7 +500,7 @@ fn legacy_image_alignment_centers_the_painted_box_on_the_correct_font_line() {
     let images: Vec<_> = output.display_lists[0]
         .iter()
         .filter_map(|item| match item {
-            ferri_pdf::DisplayItem::Image(paint) => Some(paint),
+            crate::DisplayItem::Image(paint) => Some(paint),
             _ => None,
         })
         .collect();
@@ -529,7 +529,7 @@ fn legacy_image_alignment_centers_the_painted_box_on_the_correct_font_line() {
         let images: Vec<_> = trace.display_lists[0]
             .iter()
             .filter_map(|item| match item {
-                ferri_pdf::DisplayItem::Image(paint) => Some(paint),
+                crate::DisplayItem::Image(paint) => Some(paint),
                 _ => None,
             })
             .collect();

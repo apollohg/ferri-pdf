@@ -1,13 +1,13 @@
-mod common;
+use super::common;
 
-use common::{assert_pt, local_options};
-use ferri_pdf::{
+use crate::{
     RenderDiagnostic, Resource, ResourceBase, ResourceError, ResourceResolver, StyleError, Url,
     render_html, render_with_resolver,
 };
+use common::{assert_pt, local_options};
 use ferri_pdf_style::StyleDiagnosticKind;
 
-fn render_css(css: &str) -> ferri_pdf::RenderOutput {
+fn render_css(css: &str) -> crate::RenderOutput {
     render_html(
         &format!("<style>{css}</style><p>survives</p>"),
         &local_options(),
@@ -111,7 +111,7 @@ fn unsupported_active_winner_is_still_an_error() {
     .err()
     .expect("active ruby must fail");
     assert!(
-        matches!(error, ferri_pdf::Error::Css(StyleError::Unsupported(_))),
+        matches!(error, crate::Error::Css(StyleError::Unsupported(_))),
         "active unsupported capability must retain CSS classification: {error:?}"
     );
     let output = render_css("p{display:ruby;display:block;font-size:18pt}");
@@ -177,7 +177,7 @@ fn syntax_recovery_does_not_swallow_parse_limits() {
     assert!(
         matches!(
             error,
-            ferri_pdf::Error::Css(StyleError::GrammarLimit {
+            crate::Error::Css(StyleError::GrammarLimit {
                 resource: "component nesting",
                 ..
             })
@@ -202,7 +202,7 @@ fn syntax_recovery_does_not_swallow_resource_denial() {
     );
     assert!(matches!(
         result,
-        Err(ferri_pdf::Error::Css(StyleError::Resource(
+        Err(crate::Error::Css(StyleError::Resource(
             ResourceError::Denied(_)
         )))
     ));
@@ -244,7 +244,7 @@ fn unsupported_generated_winner_keeps_css_error_classification() {
     .err()
     .expect("active generated ruby must fail");
     assert!(
-        matches!(error, ferri_pdf::Error::Css(StyleError::Unsupported(_))),
+        matches!(error, crate::Error::Css(StyleError::Unsupported(_))),
         "generated capability classification: {error:?}"
     );
 }

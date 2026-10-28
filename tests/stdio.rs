@@ -165,8 +165,7 @@ fn stdin_to_stdout_writes_only_pdf_bytes_and_reports_diagnostics_on_stderr() {
 #[test]
 fn relative_input_in_the_current_directory_resolves_images_beside_it() {
     const INPUT: &str = "image-block.html";
-    let fixtures =
-        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/oracle/fixtures");
+    let fixtures = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/oracle/fixtures");
     let output =
         std::env::temp_dir().join(format!("ferri-pdf-cli-relative-{}.pdf", std::process::id()));
     let result = Command::new(env!("CARGO_BIN_EXE_ferri-pdf"))

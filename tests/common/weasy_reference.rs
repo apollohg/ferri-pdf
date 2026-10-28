@@ -1,4 +1,4 @@
-use crate::common::local_options;
+use super::common::local_options;
 use ferri_pdf::render_html;
 
 pub(crate) fn assert_weasy_lines(reference: &serde_json::Value) {

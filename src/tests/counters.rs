@@ -1,6 +1,6 @@
-mod common;
+use super::common;
+use crate::render_html;
 use common::{PROFILE, local_options};
-use ferri_pdf::render_html;
 
 fn lines(css: &str, body: &str) -> Vec<String> {
     render_html(

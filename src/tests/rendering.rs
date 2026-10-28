@@ -1,4 +1,4 @@
-use ferri_pdf::{
+use crate::{
     RenderOptions, Resource, ResourceBase, ResourceError, ResourceResolver, render_html,
     render_with_resolver,
 };
@@ -7,7 +7,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-const FONT: &[u8] = include_bytes!("oracle/assets/DejaVuSans.ttf");
+const FONT: &[u8] = include_bytes!("../../tests/oracle/assets/DejaVuSans.ttf");
 
 fn asset_path(base: &ResourceBase, reference: &str) -> PathBuf {
     match base {
@@ -43,7 +43,7 @@ const BULLET_AND_SPACE_ADVANCE_PT: f32 = (1208.0 + 651.0) / 2048.0 * 12.0;
 #[test]
 fn file_resource_limit_and_root_apply_before_font_parsing() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
-    let resolver = ferri_pdf::FileResolver {
+    let resolver = crate::FileResolver {
         max_resource_bytes: 4,
         ..Default::default()
     };
@@ -54,7 +54,7 @@ fn file_resource_limit_and_root_apply_before_font_parsing() {
         ),
         "oversized resources must be rejected rather than read without a limit"
     );
-    let resolver = ferri_pdf::FileResolver {
+    let resolver = crate::FileResolver {
         root: Some(root.join("tests/oracle/fixtures")),
         ..Default::default()
     };
@@ -125,7 +125,7 @@ fn nested_parent_child_margins_collapse_as_one_strut() {
 #[test]
 fn margins_inside_formatting_context_roots_survive_page_breaks() {
     let trace = render_html(
-        include_str!("oracle/fixtures/margin-formatting-context.html"),
+        include_str!("../../tests/oracle/fixtures/margin-formatting-context.html"),
         &local_options(),
     )
     .expect("margin fixture must render")
@@ -641,7 +641,7 @@ fn overflowing_text_spacing_returns_a_layout_error_before_pdf_painting() {
             panic!("{property} accumulated beyond finite text geometry")
         };
         assert!(
-            matches!(error, ferri_pdf::Error::Layout(ref message) if message.contains("non-finite text geometry")),
+            matches!(error, crate::Error::Layout(ref message) if message.contains("non-finite text geometry")),
             "{property} must report the text measurement failure: {error}"
         );
     }
@@ -650,7 +650,7 @@ fn overflowing_text_spacing_returns_a_layout_error_before_pdf_painting() {
     );
     let result = render_html(&html, &local_options());
     assert!(
-        matches!(result, Err(ferri_pdf::Error::Layout(ref message)) if message.contains("non-finite text geometry")),
+        matches!(result, Err(crate::Error::Layout(ref message)) if message.contains("non-finite text geometry")),
         "justification must reject spacing that cannot be represented in glyph em units"
     );
 }
@@ -1068,7 +1068,7 @@ fn excessive_preserved_tab_expansion_is_rejected_before_allocating_the_text() {
         format!("<style>{PROFILE}p{{white-space:pre;tab-size:1000000000}}</style><p>A\tB</p>");
     let result = render_html(&html, &local_options());
     assert!(
-        matches!(result, Err(ferri_pdf::Error::Document(ref message)) if message.contains("formatted inline text exceeds")),
+        matches!(result, Err(crate::Error::Document(ref message)) if message.contains("formatted inline text exceeds")),
         "a small input must not allocate a billion glyph spaces before reporting the expansion limit"
     );
 }
@@ -1433,7 +1433,7 @@ fn overflowing_percentage_margins_fail_before_pdf_serialization() {
     );
     let result = render_html(&html, &local_options());
     assert!(
-        matches!(&result, Err(ferri_pdf::Error::Layout(message)) if message.contains("non-finite")),
+        matches!(&result, Err(crate::Error::Layout(message)) if message.contains("non-finite")),
         "percentage resolution must reject overflow as a layout error, before coordinates reach the writer: {:?}",
         result.err()
     );
@@ -1463,8 +1463,8 @@ fn missing_image_resources_cannot_vanish_when_display_is_block() {
     );
     let output = result.unwrap();
     assert!(
-        matches!(output.diagnostics.as_slice(), [ferri_pdf::RenderDiagnostic::UnavailableImage(failure)]
-        if matches!(&failure.error, ferri_pdf::ImageError::Resource(ResourceError::Read { path, .. }) if path.ends_with("image.png"))),
+        matches!(output.diagnostics.as_slice(), [crate::RenderDiagnostic::UnavailableImage(failure)]
+        if matches!(&failure.error, crate::ImageError::Resource(ResourceError::Read { path, .. }) if path.ends_with("image.png"))),
         "missing images must retain the resource failure in diagnostics"
     );
 }
@@ -1478,8 +1478,8 @@ fn without_the_http_feature_remote_images_are_an_unsupported_scheme() {
     );
     let output = result.unwrap();
     assert!(
-        matches!(output.diagnostics.as_slice(), [ferri_pdf::RenderDiagnostic::UnavailableImage(failure)]
-        if matches!(&failure.error, ferri_pdf::ImageError::Resource(ferri_pdf::ResourceError::UnsupportedScheme(scheme)) if scheme == "https")),
+        matches!(output.diagnostics.as_slice(), [crate::RenderDiagnostic::UnavailableImage(failure)]
+        if matches!(&failure.error, crate::ImageError::Resource(crate::ResourceError::UnsupportedScheme(scheme)) if scheme == "https")),
         "remote images must retain the unsupported-scheme diagnostic without network access"
     );
 }
@@ -1669,7 +1669,7 @@ fn monospace_uses_courier_new_compatible_advances_then_dejavu_sans_mono_coverage
         .iter()
         .map(|run| {
             let face = &trace.fonts[run.font_id.index()];
-            let (min, max) = face.weight.bounds(ferri_pdf::FontWeight::NORMAL);
+            let (min, max) = face.weight.bounds(crate::FontWeight::NORMAL);
             assert_eq!(min, max, "the bundled monospace faces have fixed weights");
             (run.text.as_str(), face.family.as_str(), min.value())
         })
@@ -1748,7 +1748,7 @@ fn family_lists_skip_missing_families_and_keep_graphemes_during_fallback() {
 fn glyphs_missing_from_an_author_family_use_the_next_listed_family_or_the_initial_serif_face() {
     let assets = Assets(HashMap::from([(
         PathBuf::from("/document/serif.ttf"),
-        include_bytes!("../crates/fonts/assets/fonts/DejaVuSerif.ttf").to_vec(),
+        include_bytes!("../../crates/fonts/assets/fonts/DejaVuSerif.ttf").to_vec(),
     )]));
     // DejaVu Serif lacks U+0460, which Arial, Times New Roman and both Liberation faces cover.
     for (families, expected) in [
@@ -1795,7 +1795,7 @@ fn multiple_author_faces_resolve_weight_and_style_against_each_stylesheet() {
         (PathBuf::from("/document/fonts/regular.ttf"), FONT.to_vec()),
         (
             PathBuf::from("/document/fonts/bold.ttf"),
-            include_bytes!("../crates/fonts/assets/fonts/DejaVuSans-Bold.ttf").to_vec(),
+            include_bytes!("../../crates/fonts/assets/fonts/DejaVuSans-Bold.ttf").to_vec(),
         ),
     ]));
     let output = render_with_resolver(
@@ -1900,7 +1900,7 @@ fn unused_fallback_sources_do_not_trigger_resource_policy_failures() {
 fn unavailable_composite_faces_retry_earlier_rules_before_the_next_family() {
     let assets = Assets(HashMap::from([(
         PathBuf::from("/document/serif.ttf"),
-        include_bytes!("../crates/fonts/assets/fonts/DejaVuSerif.ttf").to_vec(),
+        include_bytes!("../../crates/fonts/assets/fonts/DejaVuSerif.ttf").to_vec(),
     )]));
     let output = render_with_resolver(
         "<style>@font-face{font-family:Custom;src:url(serif.ttf)}@font-face{font-family:Custom;src:url(missing.ttf)}body{font-family:Custom,sans-serif}</style><p>Wide words</p>",
@@ -1926,7 +1926,7 @@ fn unavailable_composite_faces_retry_earlier_rules_before_the_next_family() {
 fn unavailable_italic_faces_rematch_regular_faces_with_or_without_synthesis() {
     let assets = Assets(HashMap::from([(
         PathBuf::from("/document/serif.ttf"),
-        include_bytes!("../crates/fonts/assets/fonts/DejaVuSerif.ttf").to_vec(),
+        include_bytes!("../../crates/fonts/assets/fonts/DejaVuSerif.ttf").to_vec(),
     )]));
     for (synthesis, enabled) in [("weight style", true), ("none", false)] {
         let html = format!(
@@ -1982,7 +1982,7 @@ fn synthesis_shorthand_participates_in_the_cascade_and_leaves_real_faces_enabled
     let run = &trace.pages[0][0].runs[0];
     assert_eq!(
         trace.fonts[run.font_id.index()].weight,
-        ferri_pdf_fonts::FontRange::single(ferri_pdf::FontWeight::BOLD),
+        ferri_pdf_fonts::FontRange::single(crate::FontWeight::BOLD),
         "disabling synthesis must still select a real bold face"
     );
 }
@@ -2017,7 +2017,7 @@ fn source_lists_try_supported_fonts_in_order_and_preserve_policy_errors() {
             base: env!("CARGO_MANIFEST_DIR").into(),
             ..Default::default()
         },
-        &ferri_pdf::FileResolver {
+        &crate::FileResolver {
             max_resource_bytes: 4,
             ..Default::default()
         },
@@ -2025,12 +2025,12 @@ fn source_lists_try_supported_fonts_in_order_and_preserve_policy_errors() {
     assert!(
         matches!(
             result,
-            Err(ferri_pdf::Error::Css(ferri_pdf::StyleError::Resource(
+            Err(crate::Error::Css(crate::StyleError::Resource(
                 ResourceError::TooLarge { limit: 4, .. }
             )))
         ),
         "resource policy errors must not be downgraded into font availability failures"
     );
 }
-mod common;
+use super::common;
 use common::{PROFILE, local_options};
