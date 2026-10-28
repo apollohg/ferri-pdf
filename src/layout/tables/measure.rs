@@ -487,7 +487,7 @@ impl<'a> TablePlan<'a> {
                     style.position != crate::style::Position::Static
                         || !style.visibility.is_visible()
                         || !style.decoration.shadows.is_empty()
-                        || style.is_translucent()
+                        || style.is_grouped()
                         || style.has_transform_effects()
                 });
         let border_owners = if has_scoped_internals && data.collapsed.is_some() {
@@ -610,7 +610,7 @@ impl<'a> TablePlan<'a> {
             && (style.position != crate::style::Position::Static
                 || style.has_transform_effects()
                 || !style.visibility.is_visible()
-                || style.is_translucent()
+                || style.is_grouped()
                 || style.clipped_axes().contains(&true))
         {
             table.retain_fragment();

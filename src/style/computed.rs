@@ -119,6 +119,9 @@ pub(crate) struct Style {
     pub transform: Vec<crate::style::TransformFunction>,
     /// Group opacity; below one the box is a stacking context composited as one layer.
     pub opacity: f32,
+    pub mix_blend_mode: crate::paint::BlendMode,
+    /// `isolation: isolate`.
+    pub isolate: bool,
     pub visibility: crate::style::Visibility,
     pub transform_origin: [LengthPercentage; 3],
     /// `translate`, `rotate` and `scale`; `None` is `none`.
@@ -229,6 +232,8 @@ impl Default for Style {
             inline_level_origin: false,
             transform: Vec::new(),
             opacity: OPAQUE,
+            mix_blend_mode: crate::paint::BlendMode::Normal,
+            isolate: false,
             visibility: crate::style::Visibility::Visible,
             transform_origin: crate::style::transform::INITIAL_ORIGIN,
             translate: None,
@@ -407,6 +412,13 @@ impl Style {
     /// Opacity below one makes the box a stacking context painted as one group (CSS Color 4 §15).
     pub(crate) fn is_translucent(&self) -> bool {
         self.opacity < OPAQUE
+    }
+    /// Opacity, blending and `isolation: isolate` make the box a stacking context composited
+    /// as one group (Compositing 1 §3.4).
+    pub(crate) fn is_grouped(&self) -> bool {
+        self.is_translucent()
+            || self.mix_blend_mode != crate::paint::BlendMode::Normal
+            || self.isolate
     }
     pub(crate) fn font_selection(&self) -> FontSelection {
         FontSelection {

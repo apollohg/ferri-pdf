@@ -29,7 +29,15 @@ pub(super) fn draw(
         .background_layers(page_area)
         .map_err(PdfError::UnresolvedImage)?;
     for layer in &layers {
-        draw_layer(layer, viewport, surface, images)?;
+        let blended = layer.blend != crate::graphics::BlendMode::Normal;
+        if blended {
+            surface.push_blend_mode(painting::pdf_blend_mode(layer.blend));
+        }
+        let drawn = draw_layer(layer, viewport, surface, images);
+        if blended {
+            surface.pop();
+        }
+        drawn?;
     }
     Ok(())
 }

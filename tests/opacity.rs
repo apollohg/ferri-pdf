@@ -10,14 +10,15 @@ fn trace(css: &str, body: &str) -> LayoutTrace {
         .unwrap()
 }
 
-/// Each painted item with the effects enclosing it, outermost first: `O<alpha>` groups,
-/// `C` clips and `T` transforms. Boxes are named by their background, text by its line text.
+/// Each painted item with the effects enclosing it, outermost first: `O<alpha>` opacity and
+/// `B<mode>` blend groups, `C` clips and `T` transforms. Boxes are named by their background, text by its line text.
 fn effect_stacks(trace: &LayoutTrace, page: usize) -> Vec<(String, Vec<String>)> {
     let mut stack: Vec<String> = Vec::new();
     let mut painted = Vec::new();
     for item in &trace.display_lists[page] {
         match item {
             DisplayItem::PushOpacity(alpha) => stack.push(format!("O{alpha}")),
+            DisplayItem::PushBlend(mode) => stack.push(format!("B{mode:?}")),
             DisplayItem::PushClip(_) => stack.push("C".into()),
             DisplayItem::PushTransform(_) => stack.push("T".into()),
             DisplayItem::Pop => {
@@ -39,6 +40,48 @@ fn effect_stacks(trace: &LayoutTrace, page: usize) -> Vec<(String, Vec<String>)>
     }
     assert!(stack.is_empty(), "unbalanced effects: {stack:?} left open");
     painted
+}
+
+#[test]
+fn blending_boxes_isolate_their_stacking_context_and_nest_inside_its_group() {
+    let trace = trace(
+        ".ctx{transform:translateX(1pt);background:#ff0000}.b{mix-blend-mode:screen;opacity:.5;background:#00ff00}\
+         span{mix-blend-mode:multiply;background:#0000ff}.free{mix-blend-mode:darken;background:#ffff00}",
+        "<div class='ctx'><div class='b'>Both</div><p>In <span>Span</span></p></div><div class='free'>Free</div>",
+    );
+    let painted = effect_stacks(&trace, 0);
+    let expect = |name: &str, effects: &[&str]| {
+        assert_eq!(
+            stack_of(&painted, name),
+            effects,
+            "{name} effects in: {painted:#?}"
+        );
+    };
+    expect("box #ff0000", &["BNormal", "T"]);
+    expect("box #00ff00", &["BNormal", "BScreen", "O0.5", "T"]);
+    expect("text Both", &["BNormal", "BScreen", "O0.5", "T"]);
+    expect("box #0000ff", &["BNormal", "BMultiply", "T"]);
+    for effects in [&["BNormal", "BMultiply", "T"][..], &["BNormal", "T"]] {
+        assert!(
+            painted
+                .iter()
+                .any(|(name, stack)| name == "text In Span" && stack == effects),
+            "the line's runs split by the blending span: {effects:?} in {painted:#?}"
+        );
+    }
+    expect("box #ffff00", &["BDarken"]);
+    let split = render_html(
+        &format!(
+            "<style>{PROFILE}span{{mix-blend-mode:multiply}}</style><div><span>A<div>Block</div>B</span></div>"
+        ),
+        &local_options(),
+    );
+    assert!(
+        matches!(&split, Err(ferri_pdf::Error::Document(message) | ferri_pdf::Error::Css(ferri_pdf::StyleError::Unsupported(message)))
+            if message.contains("mix-blend-mode or isolation on an inline box split by block-level content")),
+        "block-level content cannot take an inline box's blending as its opacity: {:?}",
+        split.err()
+    );
 }
 
 fn stack_of<'a>(painted: &'a [(String, Vec<String>)], name: &str) -> &'a [String] {

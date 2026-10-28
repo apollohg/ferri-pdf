@@ -9,6 +9,7 @@ mod cascade;
 mod color_scheme;
 mod colors;
 mod component;
+mod compositing_values;
 mod computed;
 mod conditional;
 mod conditions;

@@ -295,6 +295,7 @@ impl BoxDecoration<Infallible> {
                 origins: backgrounds.origins.clone(),
                 clips: backgrounds.clips.clone(),
                 attachments: backgrounds.attachments.clone(),
+                blend_modes: backgrounds.blend_modes.clone(),
             }),
             borders: self.borders,
             radii: self.radii.clone(),

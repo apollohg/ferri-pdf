@@ -524,7 +524,7 @@ impl Style {
     pub(crate) fn preserves_3d(&self) -> bool {
         self.transform_style == TransformStyle::Preserve3d
             && !self.is_scroll_container()
-            && !self.is_translucent()
+            && !self.is_grouped()
     }
     /// The parent placement this box gives its transformed children.
     pub(crate) fn parent_3d(&self, boxes: &BoxAreas<Rect>) -> Option<Parent3d> {

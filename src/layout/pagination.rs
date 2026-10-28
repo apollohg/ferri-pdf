@@ -194,9 +194,42 @@ enum Effect<'a> {
     /// The perspective and 3D rendering context a box gives its transformed children, resolved
     /// from its fragment on each page; never an enclosing effect.
     Parent3d(&'a crate::style::Style),
-    /// Group opacity of a stacking context. Groups nest by stacking context, independently
-    /// of clips and transforms, which follow containing blocks.
-    Opacity(f32),
+    /// Compositing of a stacking context. Groups nest by stacking context, independently of
+    /// clips and transforms, which follow containing blocks.
+    Group(Group),
+}
+/// How a stacking context composites; every stacking context is an isolated group, which
+/// paints as its content does unless something inside it blends (Compositing 1 §3.2).
+#[derive(Clone, Copy)]
+struct Group {
+    opacity: f32,
+    blend: crate::graphics::BlendMode,
+    isolated: bool,
+}
+impl Group {
+    const IDENTITY: Self = Self {
+        opacity: 1.0,
+        blend: crate::graphics::BlendMode::Normal,
+        isolated: false,
+    };
+    fn of(style: &crate::style::Style) -> Self {
+        Self {
+            opacity: style.opacity,
+            blend: style.mix_blend_mode,
+            isolated: style.isolate,
+        }
+    }
+    /// The display items opening this group: an isolated blend group, then an opacity group,
+    /// which is isolated itself.
+    fn pushes(self) -> impl Iterator<Item = DisplayItem> {
+        let translucent = self.opacity < 1.0;
+        let blend =
+            self.blend != crate::graphics::BlendMode::Normal || (self.isolated && !translucent);
+        blend
+            .then_some(DisplayItem::PushBlend(self.blend))
+            .into_iter()
+            .chain(translucent.then_some(DisplayItem::PushOpacity(self.opacity)))
+    }
 }
 #[derive(Clone)]
 struct EffectNode<'a> {
@@ -827,6 +860,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 | DisplayItem::PushClip(_)
                 | DisplayItem::PushTransform(_)
                 | DisplayItem::PushOpacity(_)
+                | DisplayItem::PushBlend(_)
                 | DisplayItem::Pop => false,
             })
             || self.display_lists[page]
@@ -841,6 +875,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     | DisplayItem::PushClip(_)
                     | DisplayItem::PushTransform(_)
                     | DisplayItem::PushOpacity(_)
+                    | DisplayItem::PushBlend(_)
                     | DisplayItem::Pop => false,
                 })
     }
@@ -1591,7 +1626,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let positioned = owns_wrapper_properties && block.style.position != Position::Static;
         // Transforms, perspective and preserve-3d contain all descendants (CSS Transforms 2 §5).
         let transformed = owns_wrapper_properties && block.style.has_transform_effects();
-        let translucent = owns_wrapper_properties && block.style.is_translucent();
+        let grouped = owns_wrapper_properties && block.style.is_grouped();
         if transformed
             && (block.style.perspective.is_some() || block.style.preserves_3d())
             && (block.style.multicol.is_multicol() || block.style.display.is_table())
@@ -1601,14 +1636,19 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     .into(),
             )));
         }
-        // A transform or opacity makes a stacking context like z-index 0 (CSS Transforms 1 §3,
-        // CSS Color 4 §15).
+        // A transform, opacity, blending or isolation makes a stacking context like z-index 0
+        // (CSS Transforms 1 §3, CSS Color 4 §15, Compositing 1 §3.4).
         let z_index = (positioned || flex_item)
             .then_some(block.style.z_index)
             .flatten()
-            .or((transformed || translucent).then_some(0));
-        if translucent {
-            self.group = Some(self.opacity_group(self.group, block.style.opacity));
+            .or((transformed || grouped).then_some(0));
+        if z_index.is_some() {
+            let group = if grouped {
+                Group::of(block.style)
+            } else {
+                Group::IDENTITY
+            };
+            self.group = Some(self.stacking_group(self.group, group));
         }
         let paint_key = if positioned || z_index.is_some() {
             let order = self.reserved_order.take().unwrap_or_else(|| self.order());
@@ -2248,14 +2288,27 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     fn order(&self) -> PaintOrder {
         self.orders.take()
     }
-    fn opacity_group(&mut self, parent: Option<usize>, opacity: f32) -> usize {
+    /// A stacking context's group inside `parent`, which a blending group isolates.
+    fn stacking_group(&mut self, parent: Option<usize>, group: Group) -> usize {
+        if group.blend != crate::graphics::BlendMode::Normal {
+            self.isolate(parent);
+        }
         self.clips.push(EffectNode {
             areas: Vec::new(),
             parent,
-            effect: Effect::Opacity(opacity),
+            effect: Effect::Group(group),
             fragments: Vec::new(),
         });
         self.clips.len() - 1
+    }
+    /// Content blends only with its own stacking context, so that context is isolated; the
+    /// root stacking context is the page.
+    fn isolate(&mut self, group: Option<usize>) {
+        if let Some(group) = group
+            && let Effect::Group(group) = &mut self.clips[group].effect
+        {
+            group.isolated = true;
+        }
     }
     /// Each effect's region on the pages it covers, from its box fragments and the structural
     /// areas standing in for boxes. Groups apply on every page without geometry.
@@ -2271,7 +2324,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 Effect::Clip(axes) => Some(paint.inner_clip([0.0; 4], axes)),
                 Effect::BorderClip => Some(paint.background_clips().border),
                 Effect::PaintClip(clip) => Some(clip),
-                Effect::Transform(..) | Effect::Parent3d(_) | Effect::Opacity(_) => None,
+                Effect::Transform(..) | Effect::Parent3d(_) | Effect::Group(_) => None,
             };
             match node.effect {
                 Effect::Clip(_) | Effect::BorderClip | Effect::PaintClip(_) => {
@@ -2301,7 +2354,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         }
                     }
                 }
-                Effect::Parent3d(_) | Effect::Opacity(_) => {}
+                Effect::Parent3d(_) | Effect::Group(_) => {}
             }
             regions.push(node_regions);
         }
@@ -3945,9 +3998,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .map(|(page, _, rect)| (page, rect))
             .collect())
     }
-    /// Stacking context and opacity group of content inside `inline_box`: those of its
-    /// innermost translucent inline box, created when first needed, or `None` for the
-    /// current ones (CSS Color 4 §15 applies opacity to inline boxes too).
+    /// Stacking context and group of content inside `inline_box`: those of its innermost
+    /// translucent, blending or isolated inline box, created when first needed, or `None` for
+    /// the current ones (CSS Color 4 §15 and Compositing 1 §3.4 apply to inline boxes too).
     fn inline_layer(
         &mut self,
         layers: &mut InlineLayers<'_>,
@@ -3955,7 +4008,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     ) -> Option<Layer> {
         let boxes = layers.paragraph.boxes();
         let index = std::iter::successors(inline_box, |&index| boxes[index].parent)
-            .find(|&index| boxes[index].style.is_translucent())?;
+            .find(|&index| boxes[index].style.is_grouped())?;
         if let Some(layer) = &layers.layers[index] {
             return Some(layer.clone());
         }
@@ -3965,7 +4018,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let order = self.order();
         let layer = (
             extend(&context, (0, order)),
-            Some(self.opacity_group(group, boxes[index].style.opacity)),
+            Some(self.stacking_group(group, Group::of(&boxes[index].style))),
         );
         layers.layers[index] = Some(layer.clone());
         Some(layer)
@@ -4388,7 +4441,7 @@ fn clipped(
 ) -> Result<Vec<DisplayItem>, LayoutError> {
     let mut link_polygons = Vec::new();
     let mut output = Vec::with_capacity(items.len());
-    let mut open_groups: Vec<usize> = Vec::new();
+    let mut open_groups: Vec<(usize, usize)> = Vec::new();
     let mut groups = Vec::new();
     let mut open: Vec<usize> = Vec::new();
     let mut chain = Vec::new();
@@ -4459,26 +4512,36 @@ fn clipped(
         groups.clear();
         let mut group = paint.group;
         while let Some(index) = group {
-            groups.push(index);
+            let Effect::Group(effect) = nodes[index].effect else {
+                unreachable!("group chains hold only group nodes")
+            };
+            // A group without opacity, blending or isolation paints as its content does.
+            if effect.pushes().next().is_some() {
+                groups.push((index, effect));
+            }
             group = nodes[index].parent;
         }
         groups.reverse();
         // Clipping or transforming each member of a group equals doing so to the group, so
         // groups open outermost and clips and transforms reopen inside each group.
-        if groups != open_groups {
+        if !groups
+            .iter()
+            .map(|(index, _)| index)
+            .eq(open_groups.iter().map(|(index, _)| index))
+        {
             output.extend(open.drain(..).map(|_| DisplayItem::Pop));
             let common = open_groups
                 .iter()
                 .zip(&groups)
-                .take_while(|(a, b)| a == b)
+                .take_while(|((a, _), (b, _))| a == b)
                 .count();
-            output.extend(open_groups.drain(common..).map(|_| DisplayItem::Pop));
-            for &index in &groups[common..] {
-                let Effect::Opacity(alpha) = nodes[index].effect else {
-                    unreachable!("group chains hold only opacity nodes")
-                };
-                output.push(DisplayItem::PushOpacity(alpha));
-                open_groups.push(index);
+            for (_, pushes) in open_groups.drain(common..) {
+                output.extend(std::iter::repeat_n(DisplayItem::Pop, pushes));
+            }
+            for &(index, effect) in &groups[common..] {
+                let opened = output.len();
+                output.extend(effect.pushes());
+                open_groups.push((index, output.len() - opened));
             }
         }
         let common = open.iter().zip(&chain).take_while(|(a, b)| a == b).count();
@@ -4492,7 +4555,8 @@ fn clipped(
         }
         output.push(item);
     }
-    output.extend(open.iter().chain(&open_groups).map(|_| DisplayItem::Pop));
+    let pops = open.len() + open_groups.iter().map(|(_, pushes)| pushes).sum::<usize>();
+    output.extend(std::iter::repeat_n(DisplayItem::Pop, pops));
     located
         .links
         .push(crate::layout::navigation::link_areas(&link_polygons));

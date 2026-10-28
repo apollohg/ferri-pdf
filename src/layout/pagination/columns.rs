@@ -981,6 +981,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             DisplayItem::PushClip(_)
             | DisplayItem::PushTransform(_)
             | DisplayItem::PushOpacity(_)
+            | DisplayItem::PushBlend(_)
             | DisplayItem::Pop => {}
         }
         paint.ink.as_mut().map(shift);
@@ -994,7 +995,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     }
 
     /// The node standing for a column's effect `node` on its page. Clips and transforms
-    /// resolve from their fragment in each column; opacity groups have no geometry.
+    /// resolve from their fragment in each column; groups have no geometry.
     fn effect(
         &mut self,
         nodes: &[EffectNode<'a>],
@@ -1003,20 +1004,25 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         effects: &mut HashMap<(usize, Option<usize>), usize>,
     ) -> usize {
         let source = &nodes[node];
-        let opacity = matches!(source.effect, Effect::Opacity(_));
-        let key = (node, (!opacity).then_some(place.column));
+        let group = matches!(source.effect, Effect::Group(_));
+        let key = (node, (!group).then_some(place.column));
         if let Some(&index) = effects.get(&key) {
             return index;
         }
         let parent = match source.parent {
             Some(parent) => Some(self.effect(nodes, parent, place, effects)),
-            None if opacity => self.group,
+            None if group => self.group,
             None => self.clip,
         };
+        if let Effect::Group(effect) = source.effect
+            && effect.blend != crate::graphics::BlendMode::Normal
+        {
+            self.isolate(parent);
+        }
         let fragments = source
             .fragments
             .iter()
-            .filter(|(column, _)| !opacity && *column == place.column)
+            .filter(|(column, _)| !group && *column == place.column)
             .map(|(_, slot)| (place.page, place.slots + slot))
             .collect();
         let areas = source

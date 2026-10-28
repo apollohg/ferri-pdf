@@ -430,6 +430,7 @@ impl BlockBuilder<'_, '_, '_> {
             Display::None => unreachable!("hidden pseudo-elements are excluded by the cascade"),
             _ => {
                 self.flush()?;
+                self.inline.check_open_compositing()?;
                 style.opacity *= self.inline.open_opacity();
                 let children = Paragraph::generated_output(&output, &style)?
                     .into_iter()
@@ -923,6 +924,7 @@ fn block<'a>(
                     | Display::TableColumnGroup
                     | Display::TableCaption => {
                         builder.flush()?;
+                        builder.inline.check_open_compositing()?;
                         child_style.opacity *= builder.inline.open_opacity();
                         Some(Placement::Flow)
                     }

@@ -69,6 +69,29 @@ impl Color {
     };
 }
 
+/// Compositing 1 §10 `<blend-mode>`: the separable and non-separable modes, each identical to
+/// the PDF blend mode of the same name (PDF 32000 §11.3.5).
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
+pub enum BlendMode {
+    #[default]
+    Normal,
+    Multiply,
+    Screen,
+    Overlay,
+    Darken,
+    Lighten,
+    ColorDodge,
+    ColorBurn,
+    HardLight,
+    SoftLight,
+    Difference,
+    Exclusion,
+    Hue,
+    Saturation,
+    Color,
+    Luminosity,
+}
+
 #[derive(Clone, Copy, Debug, PartialEq, Serialize)]
 pub struct Rect {
     pub x: f32,

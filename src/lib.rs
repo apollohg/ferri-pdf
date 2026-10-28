@@ -50,9 +50,9 @@ pub use crate::fonts::{
     FontSlant, FontStyle, FontSynthesis, FontVariation, FontWeight, FontWidth, GenericFamily,
 };
 pub use crate::graphics::{
-    Border, BorderStyle, BoxDecoration, BoxPaint, Clip, ClipBounds, Color, Contour, DecorationLine,
-    DecorationPaint, DecorationStyle, DisplayItem, Fill, INLINE_EDGES, LengthPercentage, Point,
-    Radii, Rect, Segment, ShadowPaint, ShadowShape, Shape,
+    BlendMode, Border, BorderStyle, BoxDecoration, BoxPaint, Clip, ClipBounds, Color, Contour,
+    DecorationLine, DecorationPaint, DecorationStyle, DisplayItem, Fill, INLINE_EDGES,
+    LengthPercentage, Point, Radii, Rect, Segment, ShadowPaint, ShadowShape, Shape,
 };
 pub use crate::images::ImageError;
 pub use crate::layout::{Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine};

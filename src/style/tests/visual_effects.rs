@@ -1,5 +1,5 @@
 use crate::dom::{DocumentTree, Selector};
-use crate::paint::{LengthPercentage, PositionComponent};
+use crate::paint::{BlendMode, LengthPercentage, PositionComponent};
 use crate::resources::FileResolver;
 use crate::style::{
     Rotation, Style, StyleError, Stylesheet, StylesheetSource, TransformBox, TransformStyle,
@@ -154,4 +154,35 @@ fn transform_context_properties_compute_and_do_not_inherit() {
         Some(0.0),
         "clamping to 1px happens only when rendering"
     );
+}
+
+#[test]
+fn blending_and_isolation_compute_as_specified_without_inheriting() {
+    let (parent, child) = styles(
+        "#parent{mix-blend-mode:color-dodge;isolation:isolate;\
+         background-blend-mode:multiply,luminosity}",
+    )
+    .expect("compositing properties must compute");
+    assert_eq!(parent.mix_blend_mode, BlendMode::ColorDodge);
+    assert!(parent.isolate && parent.is_grouped());
+    assert_eq!(
+        parent.decoration.backgrounds.blend_modes,
+        [BlendMode::Multiply, BlendMode::Luminosity],
+        "one blend mode per listed background layer"
+    );
+    assert_eq!(child.mix_blend_mode, BlendMode::Normal);
+    assert!(!child.isolate && !child.is_grouped());
+    assert_eq!(
+        child.decoration.backgrounds.blend_modes,
+        [BlendMode::Normal]
+    );
+    for mode in ["plus-lighter", "plus-darker"] {
+        let error = styles(&format!("#parent{{mix-blend-mode:{mode}}}"))
+            .expect_err("additive compositing has no PDF equivalent");
+        assert!(
+            matches!(&error, StyleError::Unsupported(message)
+                if message.starts_with(&format!("mix-blend-mode: {mode} (additive compositing"))),
+            "{mode} must stay an error naming why: {error}"
+        );
+    }
 }

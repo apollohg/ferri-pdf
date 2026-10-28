@@ -93,10 +93,31 @@ fn draw_box(
     for shadow in paint.shadows(false) {
         crate::writer::shadows::draw(&shadow, surface)?;
     }
-    if let Some(background) = paint.background_fill() {
-        draw_fill(background, viewport, surface)?;
-    }
-    crate::writer::backgrounds::draw(paint, page_area, viewport, surface, images)?;
+    // Blended layers mix only with the box's own background, as an isolated group
+    // (Compositing 1 §3.4.3).
+    let blended = paint
+        .decoration
+        .backgrounds
+        .blend_modes
+        .iter()
+        .any(|mode| *mode != crate::graphics::BlendMode::Normal);
+    let (background_viewport, groups) = if blended {
+        let nested = local_bounds(viewport, surface)?;
+        (
+            nested,
+            push_blend(crate::graphics::BlendMode::Normal, surface),
+        )
+    } else {
+        (viewport, 0)
+    };
+    let background = (|| {
+        if let Some(background) = paint.background_fill() {
+            draw_fill(background, background_viewport, surface)?;
+        }
+        crate::writer::backgrounds::draw(paint, page_area, background_viewport, surface, images)
+    })();
+    pop_clips(groups, surface);
+    background?;
     for shadow in paint.shadows(true) {
         crate::writer::shadows::draw(&shadow, surface)?;
     }
@@ -173,6 +194,36 @@ pub(super) fn push_clip(
     }
     surface.push_clip_path(&outline, &FillRule::NonZero);
     Ok(1 + usize::from(bounds.is_some()))
+}
+
+/// Opens an isolated transparency group composited with `mode`, returning the pushes to pop.
+pub(super) fn push_blend(mode: crate::graphics::BlendMode, surface: &mut Surface<'_>) -> usize {
+    surface.push_blend_mode(pdf_blend_mode(mode));
+    surface.push_isolated();
+    2
+}
+
+pub(super) fn pdf_blend_mode(mode: crate::graphics::BlendMode) -> krilla::blend::BlendMode {
+    use crate::graphics::BlendMode as Css;
+    use krilla::blend::BlendMode as Pdf;
+    match mode {
+        Css::Normal => Pdf::Normal,
+        Css::Multiply => Pdf::Multiply,
+        Css::Screen => Pdf::Screen,
+        Css::Overlay => Pdf::Overlay,
+        Css::Darken => Pdf::Darken,
+        Css::Lighten => Pdf::Lighten,
+        Css::ColorDodge => Pdf::ColorDodge,
+        Css::ColorBurn => Pdf::ColorBurn,
+        Css::HardLight => Pdf::HardLight,
+        Css::SoftLight => Pdf::SoftLight,
+        Css::Difference => Pdf::Difference,
+        Css::Exclusion => Pdf::Exclusion,
+        Css::Hue => Pdf::Hue,
+        Css::Saturation => Pdf::Saturation,
+        Css::Color => Pdf::Color,
+        Css::Luminosity => Pdf::Luminosity,
+    }
 }
 
 pub(super) fn pop_clips(count: usize, surface: &mut Surface<'_>) {

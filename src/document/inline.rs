@@ -513,6 +513,23 @@ impl InlineCollector {
         }
         opacity
     }
+    /// Block-level content cannot take the open inline boxes' blending or isolation as its
+    /// opacity, so splitting such a box is refused.
+    pub(crate) fn check_open_compositing(&self) -> Result<(), DocumentError> {
+        let mut open = self.open_box;
+        while let Some(index) = open {
+            let style = &self.boxes[index].style;
+            if style.mix_blend_mode != crate::paint::BlendMode::Normal || style.isolate {
+                return Err(crate::style::StyleError::Unsupported(
+                    "mix-blend-mode or isolation on an inline box split by block-level content"
+                        .into(),
+                )
+                .into());
+            }
+            open = self.boxes[index].parent;
+        }
+        Ok(())
+    }
     /// An anchor can sit between blocks only outside an open inline box.
     pub(crate) fn is_between_blocks(&self) -> bool {
         self.text.is_empty() && self.open_box.is_none()

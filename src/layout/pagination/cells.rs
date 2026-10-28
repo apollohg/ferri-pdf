@@ -232,7 +232,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         for ancestor in layers.into_iter().flatten().filter(|layer| {
             let style = layer.source.style();
             style.position != Position::Static
-                || style.is_translucent()
+                || style.is_grouped()
                 || !style.decoration.shadows.is_empty()
                 || style.has_transform_effects()
         }) {
@@ -255,7 +255,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 }
                 let order = self.order();
                 // CSS Tables ignores z-index on rows and row groups.
-                let translucent = source.style().is_translucent();
+                let grouped = source.style().is_grouped();
                 let transformed = source.style().has_transform_effects();
                 let clip = if transformed {
                     let node = self.clips.len();
@@ -274,17 +274,19 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 } else {
                     self.clip
                 };
-                let group = if translucent {
-                    Some(self.opacity_group(self.group, source.style().opacity))
+                let group = if grouped || transformed {
+                    let group = if grouped {
+                        Group::of(source.style())
+                    } else {
+                        Group::IDENTITY
+                    };
+                    Some(self.stacking_group(self.group, group))
                 } else {
                     self.group
                 };
-                let mut paint = positioned_layer(
-                    &self.context,
-                    (translucent || transformed).then_some(0),
-                    order,
-                );
-                if !translucent && !transformed {
+                let mut paint =
+                    positioned_layer(&self.context, (grouped || transformed).then_some(0), order);
+                if !grouped && !transformed {
                     paint.key = extend(&paint.key, FLOW_LEVEL);
                 }
                 let layer = TableLayer { clip, paint, group };

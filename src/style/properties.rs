@@ -719,6 +719,18 @@ fn handler(property: Property) -> Option<Handler> {
             background_attachment,
             Some(|v, _| crate::style::background_values::attachments(v).is_ok()),
         ),
+        P::BackgroundBlendMode => (
+            background_blend_mode,
+            Some(|v, _| crate::style::compositing_values::blend_modes(v).is_ok()),
+        ),
+        P::MixBlendMode => (
+            mix_blend_mode,
+            Some(|v, _| crate::style::compositing_values::blend_mode(v).is_ok()),
+        ),
+        P::Isolation => (
+            isolation,
+            Some(|v, _| crate::style::compositing_values::isolation(v).is_ok()),
+        ),
         P::BorderTopWidth => (border_top_width, Some(|v, r| border_width(v, r).is_ok())),
         P::BorderRightWidth => (border_right_width, Some(|v, r| border_width(v, r).is_ok())),
         P::BorderBottomWidth => (border_bottom_width, Some(|v, r| border_width(v, r).is_ok())),
@@ -1585,6 +1597,14 @@ computed!(
 computed!(opacity, [opacity], |value, style, _parent, relative| {
     opacity_value(value, relative)?
 });
+computed!(
+    mix_blend_mode,
+    [mix_blend_mode],
+    |value, style, _parent, _relative| crate::style::compositing_values::blend_mode(value)?
+);
+computed!(isolation, [isolate], |value, style, _parent, _relative| {
+    crate::style::compositing_values::isolation(value)?
+});
 
 fn opacity_value(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
     Ok(match value.unwrap() {
@@ -1709,6 +1729,11 @@ background!(
     background_attachment,
     attachments,
     |value, style, _relative| { crate::style::background_values::attachments(value)? }
+);
+background!(
+    background_blend_mode,
+    blend_modes,
+    |value, style, _relative| { crate::style::compositing_values::blend_modes(value)? }
 );
 
 /// A `border-image-*` longhand, shared copy-on-write between styles.

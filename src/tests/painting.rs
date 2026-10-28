@@ -431,6 +431,7 @@ fn normal_flow_block_backgrounds_are_below_all_inline_text() {
             DisplayItem::PushClip(_)
             | DisplayItem::PushTransform(_)
             | DisplayItem::PushOpacity(_)
+            | DisplayItem::PushBlend(_)
             | DisplayItem::Pop => {
                 panic!("fixture has no paint effects")
             }

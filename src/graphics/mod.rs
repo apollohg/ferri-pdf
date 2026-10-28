@@ -5,9 +5,9 @@ pub(crate) use crate::paint::{
     Shading, ShadowMask, UnresolvedImage, image_size,
 };
 pub use crate::paint::{
-    Border, BorderStyle, Clip, ClipBounds, Color, Contour, DecorationLine, DecorationPaint,
-    DecorationStyle, Fill, INLINE_EDGES, LengthPercentage, Point, Radii, Rect, Segment,
-    ShadowPaint, ShadowShape, Shape,
+    BlendMode, Border, BorderStyle, Clip, ClipBounds, Color, Contour, DecorationLine,
+    DecorationPaint, DecorationStyle, Fill, INLINE_EDGES, LengthPercentage, Point, Radii, Rect,
+    Segment, ShadowPaint, ShadowShape, Shape,
 };
 use serde::Serialize;
 use std::sync::Arc;
@@ -34,6 +34,9 @@ pub enum DisplayItem {
     /// Composites later items as one isolated group with this constant alpha until the
     /// matching `Pop`.
     PushOpacity(f32),
+    /// Composites later items as one isolated group blended with this mode until the matching
+    /// `Pop`; `Normal` only isolates them.
+    PushBlend(BlendMode),
     Pop,
 }
 

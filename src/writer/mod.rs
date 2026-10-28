@@ -221,6 +221,11 @@ pub(crate) fn encode_parts_with_diagnostics(
                             scopes.push((1, viewport));
                             viewport = nested_viewport;
                         }
+                        DisplayItem::PushBlend(mode) => {
+                            let nested_viewport = painting::local_bounds(viewport, &surface)?;
+                            scopes.push((painting::push_blend(*mode, &mut surface), viewport));
+                            viewport = nested_viewport;
+                        }
                         DisplayItem::Pop => {
                             let (count, previous) =
                                 scopes.pop().ok_or(PdfError::InvalidGeometry)?;

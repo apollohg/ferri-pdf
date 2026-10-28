@@ -135,6 +135,7 @@ pub struct Backgrounds<I = Infallible> {
     pub origins: Vec<BoxArea>,
     pub clips: Vec<BoxArea>,
     pub attachments: Vec<Attachment>,
+    pub blend_modes: Vec<crate::paint::BlendMode>,
 }
 impl<I> Default for Backgrounds<I> {
     fn default() -> Self {
@@ -146,6 +147,7 @@ impl<I> Default for Backgrounds<I> {
             origins: vec![BoxArea::PaddingBox],
             clips: vec![BoxArea::BorderBox],
             attachments: vec![Attachment::Scroll],
+            blend_modes: vec![crate::paint::BlendMode::Normal],
         }
     }
 }
@@ -265,6 +267,8 @@ pub struct LayerPaint<'a, I = Infallible> {
     /// Distance between tile origins, including `space` gaps.
     pub step: [f32; 2],
     pub repeat: [bool; 2],
+    /// How the layer blends with the layers and colour below it (Compositing 1 §3.4.3).
+    pub blend: crate::paint::BlendMode,
 }
 
 /// Natural dimensions converted to points.
@@ -513,6 +517,7 @@ impl<I: ImageInfo> BoxPaint<I> {
                 },
                 step: [step_x, step_y],
                 repeat: [repeat_x, repeat_y],
+                blend: *cycle(&backgrounds.blend_modes, index),
             });
         }
         Ok(layers)
