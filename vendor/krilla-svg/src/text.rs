@@ -1,5 +1,5 @@
-use std::collections::hash_map::Entry;
 use std::collections::HashMap;
+use std::collections::hash_map::Entry;
 
 use fontdb::Database;
 use krilla::color::rgb;
@@ -13,8 +13,8 @@ use smallvec::SmallVec;
 use usvg::tiny_skia_path::Transform;
 use usvg::{FontOpticalSizing, FontVariation, PaintOrder};
 
-use crate::util::{convert_fill, convert_stroke, UsvgTransformExt};
-use crate::{path, ProcessContext};
+use crate::util::{UsvgTransformExt, convert_fill, convert_stroke};
+use crate::{ProcessContext, path};
 
 /// Render a text into a surface.
 pub(crate) fn render(

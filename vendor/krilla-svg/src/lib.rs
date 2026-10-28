@@ -18,7 +18,7 @@ use krilla::geom::{Rect, Size, Transform};
 use krilla::paint::FillRule;
 use krilla::surface::Surface;
 use krilla::text::GlyphId;
-use usvg::{fontdb, roxmltree, Node, Tree};
+use usvg::{Node, Tree, fontdb, roxmltree};
 
 use crate::text::Fonts;
 use crate::util::RectExt;

@@ -5,7 +5,7 @@ use krilla::surface::Surface;
 use usvg::ImageKind;
 
 use crate::util::RectExt;
-use crate::{group, ProcessContext};
+use crate::{ProcessContext, group};
 
 /// Render an image into a surface.
 ///

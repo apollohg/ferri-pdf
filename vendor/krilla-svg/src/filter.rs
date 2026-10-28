@@ -3,8 +3,8 @@ use krilla::image::Image;
 use krilla::surface::Surface;
 use usvg::tiny_skia_path::Transform;
 
-use crate::util::KrillaTransformExt;
 use crate::ProcessContext;
+use crate::util::KrillaTransformExt;
 
 /// Render a filter into a surface by rasterizing it with `resvg` and drawing
 /// the image.

@@ -4,8 +4,8 @@ use krilla::paint::FillRule;
 use krilla::surface::Surface;
 use usvg::tiny_skia_path::{PathSegment, Transform};
 
-use crate::util::{convert_fill_rule, UsvgTransformExt};
-use crate::{group, ProcessContext};
+use crate::util::{UsvgTransformExt, convert_fill_rule};
+use crate::{ProcessContext, group};
 
 /// Render a clip path into a surface.
 pub(crate) fn render(
@@ -102,7 +102,7 @@ fn extend_segments_from_group(
 ) {
     for child in group.children() {
         match child {
-            usvg::Node::Path(ref path) => {
+            usvg::Node::Path(path) => {
                 if path.is_visible() {
                     path.data().segments().for_each(|segment| match segment {
                         PathSegment::MoveTo(mut p) => {
@@ -139,11 +139,11 @@ fn extend_segments_from_group(
                     })
                 }
             }
-            usvg::Node::Group(ref group) => {
+            usvg::Node::Group(group) => {
                 let group_transform = transform.pre_concat(group.transform());
                 extend_segments_from_group(group, &group_transform, path_builder);
             }
-            usvg::Node::Text(ref text) => {
+            usvg::Node::Text(text) => {
                 // We could in theory preserve text in clip paths by using the appropriate
                 // rendering mode, but for now we just use the flattened version.
                 extend_segments_from_group(text.flattened(), transform, path_builder);
@@ -158,7 +158,7 @@ fn extend_segments_from_group(
 fn is_simple_clip_path(group: &usvg::Group) -> bool {
     group.children().iter().all(|n| {
         match n {
-            usvg::Node::Group(ref group) => {
+            usvg::Node::Group(group) => {
                 // We can only intersect one clipping path with another one, meaning that we
                 // can convert nested clip paths if a second clip path is defined on the clip
                 // path itself, but not if it is defined on a child.
@@ -173,13 +173,13 @@ fn is_simple_clip_path(group: &usvg::Group) -> bool {
 fn collect_clip_rules(group: &usvg::Group) -> Vec<usvg::FillRule> {
     let mut clip_rules = vec![];
     group.children().iter().for_each(|n| match n {
-        usvg::Node::Path(ref path) => {
+        usvg::Node::Path(path) => {
             if let Some(fill) = &path.fill() {
                 clip_rules.push(fill.rule());
             }
         }
-        usvg::Node::Text(ref text) => clip_rules.extend(collect_clip_rules(text.flattened())),
-        usvg::Node::Group(ref group) => {
+        usvg::Node::Text(text) => clip_rules.extend(collect_clip_rules(text.flattened())),
+        usvg::Node::Group(group) => {
             clip_rules.extend(collect_clip_rules(group));
         }
         _ => {}

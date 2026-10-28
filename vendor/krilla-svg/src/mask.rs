@@ -3,8 +3,8 @@ use krilla::mask::Mask;
 use krilla::paint::FillRule;
 use krilla::surface::Surface;
 
-use crate::util::{convert_mask_type, RectExt};
-use crate::{group, ProcessContext};
+use crate::util::{RectExt, convert_mask_type};
+use crate::{ProcessContext, group};
 
 /// Render a usvg `Mask` into a surface.
 #[must_use]
