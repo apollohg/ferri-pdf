@@ -29,8 +29,7 @@ autobins = false
 autoexamples = false
 autotests = false
 autobenches = false
-description = "Pure-Rust HEIF/HEIC decoder, bit-exact against the HEVC reference decoder. Handles iPhone grid photos, camera 4:2:2, alpha, orientation, ICC/EXIF/XMP. No unsafe, no C dependencies."
-documentation = "https://docs.rs/heic-decoder"
+description = "Fork of heic-decoder for ferri-pdf. Pure-Rust HEIF/HEIC decoder, bit-exact against the HEVC reference decoder. Handles iPhone grid photos, camera 4:2:2, alpha, orientation, ICC/EXIF/XMP. No unsafe, no C dependencies."
 readme = "README.md"
 keywords = [
     "heif",
@@ -44,7 +43,7 @@ categories = [
     "multimedia::video",
 ]
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/Multipad-cyber/heic-decoder-rust"
+repository = "https://github.com/apollohg/ferri-pdf"
 
 [features]
 internals = []

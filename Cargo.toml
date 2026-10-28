@@ -6,8 +6,6 @@ resolver = "3"
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.97"
-license = "MIT"
-publish = false
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
@@ -112,9 +110,10 @@ edition.workspace = true
 rust-version.workspace = true
 # Own code, inlined SVG libraries, CLDR and mdn-data, then the DejaVu and Liberation fonts.
 license = "MIT AND (Apache-2.0 OR MIT) AND Unicode-3.0 AND CC0-1.0 AND Bitstream-Vera AND LicenseRef-Arev AND OFL-1.1-RFN"
-publish.workspace = true
 description = "HTML and CSS to PDF renderer for print, in pure Rust"
 repository = "https://github.com/apollohg/ferri-pdf"
+keywords = ["pdf", "html", "css", "print", "renderer"]
+categories = ["rendering", "text-processing", "command-line-utilities"]
 include = [
     "/build.rs",
     "/build/**",

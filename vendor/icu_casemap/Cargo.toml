@@ -32,8 +32,7 @@ autobins = false
 autoexamples = false
 autotests = false
 autobenches = false
-description = "Unicode case mapping and folding algorithms"
-homepage = "https://icu4x.unicode.org"
+description = "Fork of icu_casemap for ferri-pdf. Unicode case mapping and folding algorithms"
 readme = "README.md"
 keywords = [
     "unicode",
@@ -48,7 +47,7 @@ categories = [
     "embedded",
 ]
 license = "Unicode-3.0"
-repository = "https://github.com/unicode-org/icu4x"
+repository = "https://github.com/apollohg/ferri-pdf"
 resolver = "2"
 
 [package.metadata.docs.rs]

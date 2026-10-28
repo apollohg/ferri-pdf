@@ -21,8 +21,7 @@ autobins = false
 autoexamples = false
 autotests = false
 autobenches = false
-description = "Convert AVIF images to PNG or decompressed pixel data"
-homepage = "https://lib.rs/avif-decode"
+description = "Fork of avif-decode for ferri-pdf. Convert AVIF images to PNG or decompressed pixel data"
 readme = "README.md"
 keywords = [
     "av1",
@@ -32,7 +31,7 @@ keywords = [
 ]
 categories = ["multimedia::images"]
 license = "BSD-3-Clause"
-repository = "https://github.com/kornelski/avif-decode"
+repository = "https://github.com/apollohg/ferri-pdf"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

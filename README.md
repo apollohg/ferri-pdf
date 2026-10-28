@@ -7,8 +7,8 @@ It covers the CSS print stack: paged media, page-margin boxes and named pages, f
 ## Command line
 
 ```sh
-cargo build --release
-target/release/ferri-pdf input.html output.pdf
+cargo install ferri-pdf
+ferri-pdf input.html output.pdf
 ```
 
 Use `-` for stdin or stdout. Options:
@@ -27,7 +27,7 @@ Use `-` for stdin or stdout. Options:
 
 ```toml
 [dependencies]
-ferri-pdf = { git = "https://github.com/apollohg/ferri-pdf" }
+ferri-pdf = "0.1"
 ```
 
 ```rust

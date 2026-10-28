@@ -22,7 +22,7 @@ autobins = false
 autoexamples = false
 autotests = false
 autobenches = false
-description = "A high-level crate for creating PDF files."
+description = "Fork of krilla for ferri-pdf. A high-level crate for creating PDF files."
 readme = "README.md"
 keywords = ["pdf"]
 categories = [
@@ -30,7 +30,7 @@ categories = [
     "multimedia",
 ]
 license = "(MIT OR Apache-2.0) AND MPL-2.0 AND CC0-1.0"
-repository = "https://github.com/LaurenzV/krilla"
+repository = "https://github.com/apollohg/ferri-pdf"
 
 [features]
 comemo = ["dep:comemo"]

@@ -35,7 +35,7 @@ autobins = false
 autoexamples = false
 autotests = false
 autobenches = false
-description = "AVIF container parser with zero-copy AvifParser API, grid images, animation, and resource limits. Fork of avif-parse."
+description = "Fork of zenavif-parse for ferri-pdf. AVIF container parser with zero-copy AvifParser API, grid images, animation, and resource limits. Fork of avif-parse."
 readme = "README.md"
 keywords = [
     "avif",
@@ -46,7 +46,7 @@ keywords = [
 ]
 categories = ["multimedia::images"]
 license = "MPL-2.0"
-repository = "https://github.com/imazen/zenavif-parse"
+repository = "https://github.com/apollohg/ferri-pdf"
 
 [package.metadata.docs.rs]
 all-features = true

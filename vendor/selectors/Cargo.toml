@@ -20,15 +20,14 @@ autobins = false
 autoexamples = false
 autotests = false
 autobenches = false
-description = "CSS Selectors matching for Rust"
-documentation = "https://docs.rs/selectors/"
+description = "Fork of selectors for ferri-pdf. CSS Selectors matching for Rust"
 readme = "README.md"
 keywords = [
     "css",
     "selectors",
 ]
 license = "MPL-2.0"
-repository = "https://github.com/servo/stylo"
+repository = "https://github.com/apollohg/ferri-pdf"
 
 [lib]
 name = "selectors"
