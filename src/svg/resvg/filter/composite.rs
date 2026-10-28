@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use super::{ImageRef, ImageRefMut, f32_bound};
+use crate::svg::usvg::ApproxZeroUlps;
 use rgb::RGBA8;
-use usvg::ApproxZeroUlps;
 
 /// Performs an arithmetic composition.
 ///

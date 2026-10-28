@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use super::{ImageRef, ImageRefMut, f32_bound};
+use crate::svg::usvg::filter::{DiffuseLighting, LightSource, SpecularLighting};
+use crate::svg::usvg::{ApproxEqUlps, ApproxZeroUlps, Color};
 use rgb::RGBA8;
-use usvg::filter::{DiffuseLighting, LightSource, SpecularLighting};
-use usvg::{ApproxEqUlps, ApproxZeroUlps, Color};
 
 const FACTOR_1_2: f32 = 1.0 / 2.0;
 const FACTOR_1_3: f32 = 1.0 / 3.0;

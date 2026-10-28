@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use super::{ImageRefMut, f32_bound};
-use usvg::filter::{ComponentTransfer, TransferFunction};
+use crate::svg::usvg::filter::{ComponentTransfer, TransferFunction};
 
 /// Applies component transfer functions for each `src` image channel.
 ///

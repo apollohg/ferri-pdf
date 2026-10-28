@@ -186,7 +186,7 @@ pub enum ImageError {
     #[error("image XML root is not an SVG element")]
     SvgRoot,
     #[error("invalid SVG: {0}")]
-    Svg(#[source] usvg::Error),
+    Svg(#[source] crate::svg::usvg::Error),
     #[error("SVG viewport must have positive finite dimensions")]
     SvgSize,
     #[error("nested SVG images exceed resource depth {0}")]

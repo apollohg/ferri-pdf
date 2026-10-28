@@ -1,3 +1,4 @@
+use crate::svg::usvg::{Font, FontProvider};
 use ferri_pdf_fonts::{
     DEFAULT_FAMILY, FontBook, FontError, FontFaceStyle, FontFamily, FontId, FontNamespace,
     FontSelection, FontStyle, FontWeight, FontWidth, GenericFamily, GlyphMatch,
@@ -8,7 +9,6 @@ use std::{
     collections::HashMap,
     sync::{Arc, OnceLock},
 };
-use usvg::{Font, FontProvider, fontdb};
 
 #[derive(Clone)]
 pub(crate) struct SvgFonts {
@@ -143,7 +143,7 @@ pub(crate) struct Provider<'a> {
     fonts: SvgFonts,
     resolver: Option<&'a dyn ResourceResolver>,
     failure: RefCell<Option<FontError>>,
-    variations: RefCell<HashMap<Font, HashMap<fontdb::ID, Vec<usvg::FontVariation>>>>,
+    variations: RefCell<HashMap<Font, HashMap<fontdb::ID, Vec<crate::svg::usvg::FontVariation>>>>,
     candidates: RefCell<HashMap<Font, Arc<[FontId]>>>,
     coverage: RefCell<HashMap<(FontId, char), bool>>,
 }
@@ -191,13 +191,18 @@ impl Provider<'_> {
                 .families()
                 .iter()
                 .map(|family| match family {
-                    usvg::FontFamily::Serif => FontFamily::Generic(GenericFamily::Serif),
-                    usvg::FontFamily::SansSerif => FontFamily::Generic(GenericFamily::SansSerif),
-                    usvg::FontFamily::Monospace => FontFamily::Generic(GenericFamily::Monospace),
-                    usvg::FontFamily::Cursive | usvg::FontFamily::Fantasy => {
-                        FontFamily::Generic(DEFAULT_FAMILY)
+                    crate::svg::usvg::FontFamily::Serif => {
+                        FontFamily::Generic(GenericFamily::Serif)
                     }
-                    usvg::FontFamily::Named(name) => FontFamily::Named(name.clone()),
+                    crate::svg::usvg::FontFamily::SansSerif => {
+                        FontFamily::Generic(GenericFamily::SansSerif)
+                    }
+                    crate::svg::usvg::FontFamily::Monospace => {
+                        FontFamily::Generic(GenericFamily::Monospace)
+                    }
+                    crate::svg::usvg::FontFamily::Cursive
+                    | crate::svg::usvg::FontFamily::Fantasy => FontFamily::Generic(DEFAULT_FAMILY),
+                    crate::svg::usvg::FontFamily::Named(name) => FontFamily::Named(name.clone()),
                 })
                 .collect::<Vec<_>>();
             let families = if font.uses_default_family() {
@@ -243,7 +248,7 @@ impl Provider<'_> {
     }
 }
 impl FontProvider for Provider<'_> {
-    fn variations(&self, font: &Font, mapped: fontdb::ID) -> Vec<usvg::FontVariation> {
+    fn variations(&self, font: &Font, mapped: fontdb::ID) -> Vec<crate::svg::usvg::FontVariation> {
         if let Some(values) = self
             .variations
             .borrow()
@@ -268,7 +273,7 @@ impl FontProvider for Provider<'_> {
             let mut values = instance
                 .variations
                 .iter()
-                .map(|value| usvg::FontVariation::new(value.tag, value.value))
+                .map(|value| crate::svg::usvg::FontVariation::new(value.tag, value.value))
                 .collect::<Vec<_>>();
             for explicit in font.explicit_variations() {
                 if let Some(value) = values.iter_mut().find(|value| value.tag == explicit.tag) {
@@ -312,21 +317,21 @@ fn selection(font: &Font) -> Result<FontSelection, FontError> {
     let mut selection = FontSelection::new(
         FontWeight::new(f32::from(font.weight()))?,
         match font.style() {
-            usvg::FontStyle::Normal => FontStyle::Normal,
-            usvg::FontStyle::Italic => FontStyle::Italic,
-            usvg::FontStyle::Oblique => FontStyle::Oblique,
+            crate::svg::usvg::FontStyle::Normal => FontStyle::Normal,
+            crate::svg::usvg::FontStyle::Italic => FontStyle::Italic,
+            crate::svg::usvg::FontStyle::Oblique => FontStyle::Oblique,
         },
     );
     selection.width = match font.stretch() {
-        usvg::FontStretch::UltraCondensed => FontWidth::ULTRA_CONDENSED,
-        usvg::FontStretch::ExtraCondensed => FontWidth::EXTRA_CONDENSED,
-        usvg::FontStretch::Condensed => FontWidth::CONDENSED,
-        usvg::FontStretch::SemiCondensed => FontWidth::SEMI_CONDENSED,
-        usvg::FontStretch::Normal => FontWidth::NORMAL,
-        usvg::FontStretch::SemiExpanded => FontWidth::SEMI_EXPANDED,
-        usvg::FontStretch::Expanded => FontWidth::EXPANDED,
-        usvg::FontStretch::ExtraExpanded => FontWidth::EXTRA_EXPANDED,
-        usvg::FontStretch::UltraExpanded => FontWidth::ULTRA_EXPANDED,
+        crate::svg::usvg::FontStretch::UltraCondensed => FontWidth::ULTRA_CONDENSED,
+        crate::svg::usvg::FontStretch::ExtraCondensed => FontWidth::EXTRA_CONDENSED,
+        crate::svg::usvg::FontStretch::Condensed => FontWidth::CONDENSED,
+        crate::svg::usvg::FontStretch::SemiCondensed => FontWidth::SEMI_CONDENSED,
+        crate::svg::usvg::FontStretch::Normal => FontWidth::NORMAL,
+        crate::svg::usvg::FontStretch::SemiExpanded => FontWidth::SEMI_EXPANDED,
+        crate::svg::usvg::FontStretch::Expanded => FontWidth::EXPANDED,
+        crate::svg::usvg::FontStretch::ExtraExpanded => FontWidth::EXTRA_EXPANDED,
+        crate::svg::usvg::FontStretch::UltraExpanded => FontWidth::ULTRA_EXPANDED,
     };
     Ok(selection)
 }

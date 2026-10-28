@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 pub(super) fn render(
-    image: &usvg::Image,
+    image: &crate::svg::usvg::Image,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
 ) {
@@ -14,13 +14,13 @@ pub(super) fn render(
 }
 
 pub(super) fn render_inner(
-    image_kind: &usvg::ImageKind,
+    image_kind: &crate::svg::usvg::ImageKind,
     transform: tiny_skia::Transform,
-    rendering_mode: usvg::ImageRendering,
+    rendering_mode: crate::svg::usvg::ImageRendering,
     pixmap: &mut tiny_skia::PixmapMut,
 ) {
     match image_kind {
-        usvg::ImageKind::SVG(tree) => {
+        crate::svg::usvg::ImageKind::SVG(tree) => {
             render_vector(tree, transform, pixmap);
         }
         _ => {
@@ -30,7 +30,7 @@ pub(super) fn render_inner(
 }
 
 fn render_vector(
-    tree: &usvg::Tree,
+    tree: &crate::svg::usvg::Tree,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
 ) -> Option<()> {
@@ -50,22 +50,22 @@ fn render_vector(
 
 mod raster_images {
     use crate::svg::resvg::OptionLog;
+    use crate::svg::usvg::ImageRendering;
     use std::io::Cursor;
-    use usvg::ImageRendering;
 
-    fn decode_raster(image: &usvg::ImageKind) -> Option<tiny_skia::Pixmap> {
+    fn decode_raster(image: &crate::svg::usvg::ImageKind) -> Option<tiny_skia::Pixmap> {
         match image {
-            usvg::ImageKind::SVG(_) => None,
-            usvg::ImageKind::JPEG(data) => {
+            crate::svg::usvg::ImageKind::SVG(_) => None,
+            crate::svg::usvg::ImageKind::JPEG(data) => {
                 decode_jpeg(data).log_none(|| log::warn!("Failed to decode a JPEG image."))
             }
-            usvg::ImageKind::PNG(data) => {
+            crate::svg::usvg::ImageKind::PNG(data) => {
                 decode_png(data).log_none(|| log::warn!("Failed to decode a PNG image."))
             }
-            usvg::ImageKind::GIF(data) => {
+            crate::svg::usvg::ImageKind::GIF(data) => {
                 decode_gif(data).log_none(|| log::warn!("Failed to decode a GIF image."))
             }
-            usvg::ImageKind::WEBP(data) => {
+            crate::svg::usvg::ImageKind::WEBP(data) => {
                 decode_webp(data).log_none(|| log::warn!("Failed to decode a WebP image."))
             }
         }
@@ -165,7 +165,7 @@ mod raster_images {
     }
 
     pub(crate) fn render_raster(
-        image: &usvg::ImageKind,
+        image: &crate::svg::usvg::ImageKind,
         transform: tiny_skia::Transform,
         rendering_mode: ImageRendering,
         pixmap: &mut tiny_skia::PixmapMut,

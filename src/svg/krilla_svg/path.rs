@@ -1,12 +1,12 @@
+use crate::svg::usvg::{Fill, PaintOrder, Stroke};
 use krilla::surface::Surface;
-use usvg::{Fill, PaintOrder, Stroke};
 
 use crate::svg::krilla_svg::ProcessContext;
 use crate::svg::krilla_svg::util::{PathExt, convert_fill, convert_stroke};
 
 /// Render a path into a surface.
 pub(crate) fn render(
-    path: &usvg::Path,
+    path: &crate::svg::usvg::Path,
     surface: &mut Surface,
     process_context: &mut ProcessContext,
 ) {
@@ -27,7 +27,7 @@ pub(crate) fn render(
 
 /// Render a filled and/or stroked path into a surface.
 pub(crate) fn draw_path(
-    path: &usvg::Path,
+    path: &crate::svg::usvg::Path,
     fill: Option<&Fill>,
     stroke: Option<&Stroke>,
     surface: &mut Surface,
@@ -38,7 +38,7 @@ pub(crate) fn draw_path(
             f,
             surface.stream_builder(),
             process_context,
-            usvg::Transform::identity(),
+            crate::svg::usvg::Transform::identity(),
         )
     });
 
@@ -47,7 +47,7 @@ pub(crate) fn draw_path(
             s,
             surface.stream_builder(),
             process_context,
-            usvg::Transform::identity(),
+            crate::svg::usvg::Transform::identity(),
         )
     });
 

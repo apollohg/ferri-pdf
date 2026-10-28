@@ -1,7 +1,7 @@
 use krilla::geom::Size;
 use krilla::image::Image;
 use krilla::surface::Surface;
-use usvg::tiny_skia_path::Transform;
+use tiny_skia_path::Transform;
 
 use crate::svg::krilla_svg::ProcessContext;
 use crate::svg::krilla_svg::util::KrillaTransformExt;
@@ -11,7 +11,7 @@ use crate::svg::krilla_svg::util::KrillaTransformExt;
 ///
 /// Returns `None` if converting the filter was unsuccessful.
 pub(crate) fn render(
-    group: &usvg::Group,
+    group: &crate::svg::usvg::Group,
     surface: &mut Surface,
     process_context: &ProcessContext,
 ) -> Option<()> {
@@ -71,7 +71,7 @@ pub(crate) fn render(
         ));
 
     crate::svg::resvg::render_node(
-        &usvg::Node::Group(Box::new(group.clone())),
+        &crate::svg::usvg::Node::Group(Box::new(group.clone())),
         initial_transform,
         &mut pixmap.as_mut(),
     );

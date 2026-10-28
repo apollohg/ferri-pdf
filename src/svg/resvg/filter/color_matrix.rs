@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use super::{ImageRefMut, f32_bound};
+use crate::svg::usvg::filter::ColorMatrixKind as ColorMatrix;
 use rgb::RGBA8;
-use usvg::filter::ColorMatrixKind as ColorMatrix;
 
 /// Applies a color matrix filter.
 ///

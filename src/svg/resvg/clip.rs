@@ -4,7 +4,7 @@
 use crate::svg::resvg::render::Context;
 
 pub(super) fn apply(
-    clip: &usvg::ClipPath,
+    clip: &crate::svg::usvg::ClipPath,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::Pixmap,
 ) {
@@ -28,14 +28,14 @@ pub(super) fn apply(
 }
 
 fn draw_children(
-    parent: &usvg::Group,
+    parent: &crate::svg::usvg::Group,
     mode: tiny_skia::BlendMode,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
 ) {
     for child in parent.children() {
         match child {
-            usvg::Node::Path(path) => {
+            crate::svg::usvg::Node::Path(path) => {
                 if !path.is_visible() {
                     continue;
                 }
@@ -47,10 +47,10 @@ fn draw_children(
 
                 crate::svg::resvg::path::fill_path(path, mode, &ctx, transform, pixmap);
             }
-            usvg::Node::Text(text) => {
+            crate::svg::usvg::Node::Text(text) => {
                 draw_children(text.flattened(), mode, transform, pixmap);
             }
-            usvg::Node::Group(group) => {
+            crate::svg::usvg::Node::Group(group) => {
                 let transform = transform.pre_concat(group.transform());
 
                 if let Some(clip) = group.clip_path() {
@@ -68,8 +68,8 @@ fn draw_children(
 }
 
 fn clip_group(
-    children: &usvg::Group,
-    clip: &usvg::ClipPath,
+    children: &crate::svg::usvg::Group,
+    clip: &crate::svg::usvg::ClipPath,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
 ) -> Option<()> {

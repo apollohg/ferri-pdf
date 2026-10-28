@@ -7,11 +7,11 @@ const SIZE: [f32; 2] = [200.0, 100.0];
 const EPSILON: f32 = 0.01;
 const SVG_OPEN: &str = "<svg xmlns='http://www.w3.org/2000/svg' width='200' height='100'>";
 
-fn tree(body: &str) -> usvg::Tree {
+fn tree(body: &str) -> crate::svg::usvg::Tree {
     svg(&format!("{SVG_OPEN}{body}</svg>"))
 }
 
-fn svg(xml: &str) -> usvg::Tree {
+fn svg(xml: &str) -> crate::svg::usvg::Tree {
     let image = ImageCache::default()
         .inline_svg(
             xml.to_owned(),
@@ -25,28 +25,28 @@ fn svg(xml: &str) -> usvg::Tree {
     svg.tree(SIZE).expect("SVG contents fixture must convert")
 }
 
-fn groups(tree: &usvg::Tree) -> Vec<&usvg::Group> {
+fn groups(tree: &crate::svg::usvg::Tree) -> Vec<&crate::svg::usvg::Group> {
     let mut output = Vec::new();
     let mut pending = vec![tree.root()];
     while let Some(group) = pending.pop() {
         output.push(group);
         for node in group.children() {
             match node {
-                usvg::Node::Group(group) => pending.push(group.as_ref()),
-                usvg::Node::Text(text) => pending.push(text.flattened()),
-                usvg::Node::Path(_) | usvg::Node::Image(_) => {}
+                crate::svg::usvg::Node::Group(group) => pending.push(group.as_ref()),
+                crate::svg::usvg::Node::Text(text) => pending.push(text.flattened()),
+                crate::svg::usvg::Node::Path(_) | crate::svg::usvg::Node::Image(_) => {}
             }
         }
     }
     output
 }
 
-fn paths(tree: &usvg::Tree) -> Vec<&usvg::Path> {
+fn paths(tree: &crate::svg::usvg::Tree) -> Vec<&crate::svg::usvg::Path> {
     groups(tree)
         .into_iter()
-        .flat_map(usvg::Group::children)
+        .flat_map(crate::svg::usvg::Group::children)
         .filter_map(|node| {
-            if let usvg::Node::Path(path) = node {
+            if let crate::svg::usvg::Node::Path(path) = node {
                 Some(path.as_ref())
             } else {
                 None
@@ -55,7 +55,7 @@ fn paths(tree: &usvg::Tree) -> Vec<&usvg::Path> {
         .collect()
 }
 
-fn assert_bounds(tree: &usvg::Tree, expected: [f32; 4]) {
+fn assert_bounds(tree: &crate::svg::usvg::Tree, expected: [f32; 4]) {
     let rect = tree.root().abs_bounding_box();
     let actual = [rect.x(), rect.y(), rect.width(), rect.height()];
     for (actual, expected) in actual.into_iter().zip(expected) {
@@ -66,14 +66,14 @@ fn assert_bounds(tree: &usvg::Tree, expected: [f32; 4]) {
     }
 }
 
-fn assert_fill(tree: &usvg::Tree, expected: [u8; 3]) {
+fn assert_fill(tree: &crate::svg::usvg::Tree, expected: [u8; 3]) {
     let paths = paths(tree);
     assert_eq!(paths.len(), 1, "the selector fixture must render one shape");
     assert_eq!(paint_color(paths[0].fill().unwrap().paint()), expected);
 }
 
-fn paint_color(paint: &usvg::Paint) -> [u8; 3] {
-    let usvg::Paint::Color(color) = paint else {
+fn paint_color(paint: &crate::svg::usvg::Paint) -> [u8; 3] {
+    let crate::svg::usvg::Paint::Color(color) = paint else {
         panic!("SVG fixture must have a solid paint")
     };
     [color.red, color.green, color.blue]
@@ -457,9 +457,11 @@ fn svg_css_component_depth_is_bounded_before_native_conversion() {
                 assert!(
                     matches!(
                         result,
-                        Err(ImageError::Svg(usvg::Error::CssComponentDepthLimit {
-                            limit: EXCESSIVE_DEPTH
-                        }))
+                        Err(ImageError::Svg(
+                            crate::svg::usvg::Error::CssComponentDepthLimit {
+                                limit: EXCESSIVE_DEPTH
+                            }
+                        ))
                     ),
                     "the CSS depth limit must remain typed, not recover as malformed content"
                 );
@@ -741,9 +743,11 @@ fn svg_functional_selector_depth_uses_the_existing_source_budget() {
             assert!(
                 matches!(
                     result,
-                    Err(ImageError::Svg(usvg::Error::CssComponentDepthLimit {
-                        limit: EXCESSIVE_DEPTH
-                    }))
+                    Err(ImageError::Svg(
+                        crate::svg::usvg::Error::CssComponentDepthLimit {
+                            limit: EXCESSIVE_DEPTH
+                        }
+                    ))
                 ),
                 "excessive selector nesting must retain the typed source limit"
             );

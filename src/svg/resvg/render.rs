@@ -8,7 +8,7 @@ pub(super) struct Context {
 }
 
 pub(super) fn render_nodes(
-    parent: &usvg::Group,
+    parent: &crate::svg::usvg::Group,
     ctx: &Context,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
@@ -19,16 +19,16 @@ pub(super) fn render_nodes(
 }
 
 pub(super) fn render_node(
-    node: &usvg::Node,
+    node: &crate::svg::usvg::Node,
     ctx: &Context,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
 ) {
     match node {
-        usvg::Node::Group(group) => {
+        crate::svg::usvg::Node::Group(group) => {
             render_group(group, ctx, transform, pixmap);
         }
-        usvg::Node::Path(path) => {
+        crate::svg::usvg::Node::Path(path) => {
             crate::svg::resvg::path::render(
                 path,
                 tiny_skia::BlendMode::SourceOver,
@@ -37,17 +37,17 @@ pub(super) fn render_node(
                 pixmap,
             );
         }
-        usvg::Node::Image(image) => {
+        crate::svg::usvg::Node::Image(image) => {
             crate::svg::resvg::image::render(image, transform, pixmap);
         }
-        usvg::Node::Text(text) => {
+        crate::svg::usvg::Node::Text(text) => {
             render_group(text.flattened(), ctx, transform, pixmap);
         }
     }
 }
 
 fn render_group(
-    group: &usvg::Group,
+    group: &crate::svg::usvg::Group,
     ctx: &Context,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
@@ -137,23 +137,23 @@ fn render_group(
     Some(())
 }
 
-pub(super) fn convert_blend_mode(mode: usvg::BlendMode) -> tiny_skia::BlendMode {
+pub(super) fn convert_blend_mode(mode: crate::svg::usvg::BlendMode) -> tiny_skia::BlendMode {
     match mode {
-        usvg::BlendMode::Normal => tiny_skia::BlendMode::SourceOver,
-        usvg::BlendMode::Multiply => tiny_skia::BlendMode::Multiply,
-        usvg::BlendMode::Screen => tiny_skia::BlendMode::Screen,
-        usvg::BlendMode::Overlay => tiny_skia::BlendMode::Overlay,
-        usvg::BlendMode::Darken => tiny_skia::BlendMode::Darken,
-        usvg::BlendMode::Lighten => tiny_skia::BlendMode::Lighten,
-        usvg::BlendMode::ColorDodge => tiny_skia::BlendMode::ColorDodge,
-        usvg::BlendMode::ColorBurn => tiny_skia::BlendMode::ColorBurn,
-        usvg::BlendMode::HardLight => tiny_skia::BlendMode::HardLight,
-        usvg::BlendMode::SoftLight => tiny_skia::BlendMode::SoftLight,
-        usvg::BlendMode::Difference => tiny_skia::BlendMode::Difference,
-        usvg::BlendMode::Exclusion => tiny_skia::BlendMode::Exclusion,
-        usvg::BlendMode::Hue => tiny_skia::BlendMode::Hue,
-        usvg::BlendMode::Saturation => tiny_skia::BlendMode::Saturation,
-        usvg::BlendMode::Color => tiny_skia::BlendMode::Color,
-        usvg::BlendMode::Luminosity => tiny_skia::BlendMode::Luminosity,
+        crate::svg::usvg::BlendMode::Normal => tiny_skia::BlendMode::SourceOver,
+        crate::svg::usvg::BlendMode::Multiply => tiny_skia::BlendMode::Multiply,
+        crate::svg::usvg::BlendMode::Screen => tiny_skia::BlendMode::Screen,
+        crate::svg::usvg::BlendMode::Overlay => tiny_skia::BlendMode::Overlay,
+        crate::svg::usvg::BlendMode::Darken => tiny_skia::BlendMode::Darken,
+        crate::svg::usvg::BlendMode::Lighten => tiny_skia::BlendMode::Lighten,
+        crate::svg::usvg::BlendMode::ColorDodge => tiny_skia::BlendMode::ColorDodge,
+        crate::svg::usvg::BlendMode::ColorBurn => tiny_skia::BlendMode::ColorBurn,
+        crate::svg::usvg::BlendMode::HardLight => tiny_skia::BlendMode::HardLight,
+        crate::svg::usvg::BlendMode::SoftLight => tiny_skia::BlendMode::SoftLight,
+        crate::svg::usvg::BlendMode::Difference => tiny_skia::BlendMode::Difference,
+        crate::svg::usvg::BlendMode::Exclusion => tiny_skia::BlendMode::Exclusion,
+        crate::svg::usvg::BlendMode::Hue => tiny_skia::BlendMode::Hue,
+        crate::svg::usvg::BlendMode::Saturation => tiny_skia::BlendMode::Saturation,
+        crate::svg::usvg::BlendMode::Color => tiny_skia::BlendMode::Color,
+        crate::svg::usvg::BlendMode::Luminosity => tiny_skia::BlendMode::Luminosity,
     }
 }

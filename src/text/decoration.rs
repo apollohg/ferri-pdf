@@ -35,7 +35,7 @@ impl DecoratingFont {
         let em = style.size / face.units_per_em() as f32;
         let metrics = BoxMetrics::of(context, style)?;
         let fallback = style.size * FALLBACK_THICKNESS_EM;
-        let line = |metrics: Option<rustybuzz::ttf_parser::LineMetrics>, top: f32| {
+        let line = |metrics: Option<ttf_parser::LineMetrics>, top: f32| {
             metrics
                 .filter(|metrics| metrics.thickness > 0)
                 .map_or([top, fallback], |metrics| {

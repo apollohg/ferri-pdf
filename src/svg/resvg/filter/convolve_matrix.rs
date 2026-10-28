@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use super::{ImageRefMut, f32_bound};
+use crate::svg::usvg::filter::{ConvolveMatrix, EdgeMode};
 use rgb::RGBA8;
-use usvg::filter::{ConvolveMatrix, EdgeMode};
 
 /// Applies a convolve matrix.
 ///

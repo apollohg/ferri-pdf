@@ -1,8 +1,8 @@
+use crate::svg::usvg::ImageKind;
 use krilla::geom::{Rect, Size};
 use krilla::image::Image;
 use krilla::paint::FillRule;
 use krilla::surface::Surface;
-use usvg::ImageKind;
 
 use crate::svg::krilla_svg::util::RectExt;
 use crate::svg::krilla_svg::{ProcessContext, group};
@@ -11,7 +11,7 @@ use crate::svg::krilla_svg::{ProcessContext, group};
 ///
 /// Returns `None` if the image could not be rendered.
 pub(crate) fn render(
-    image: &usvg::Image,
+    image: &crate::svg::usvg::Image,
     surface: &mut Surface,
     process_context: &mut ProcessContext,
 ) -> Option<()> {

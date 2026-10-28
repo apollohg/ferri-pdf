@@ -1,7 +1,7 @@
 [workspace]
 members = ["crates/*", "spec"]
 default-members = [".", "crates/*"]
-exclude = ["vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/usvg", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors"]
+exclude = ["vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors"]
 resolver = "3"
 
 [workspace.package]
@@ -71,7 +71,15 @@ base64 = "0.22"
 heic-decoder = { package = "ferri-pdf-heic-decoder", path = "vendor/heic-decoder", version = "=0.1.1", features = ["internals"] }
 moxcms = "=0.8.1"
 png = "0.18"
-usvg = { package = "ferri-pdf-usvg", path = "vendor/usvg", version = "=0.47.0", default-features = false, features = ["text"] }
+data-url = "0.3"
+flate2 = { version = "1.1", default-features = false, features = ["rust_backend"] }
+imagesize = "0.14.0"
+kurbo = "0.13.0"
+siphasher = "1.0"
+strict-num = "0.1.1"
+tiny-skia-path = "0.12.0"
+unicode-vo = "0.1"
+xmlwriter = "0.1"
 svgtypes = "0.16"
 log = "0.4"
 rgb = "0.8"
@@ -98,7 +106,7 @@ unicode-bidi = "0.3"
 unicode-linebreak = "0.1"
 unicode-script = "0.5"
 unicode-segmentation = "1.12"
-ttf-parser = "0.25"
+ttf-parser = { version = "0.25", features = ["gvar-alloc"] }
 thiserror = "2"
 ferri-pdf-fonts = { path = "crates/fonts", version = "0.1.0" }
 ferri-pdf-resources = { path = "crates/resources", version = "0.1.0", default-features = false }
@@ -133,7 +141,6 @@ ferri-pdf-style.workspace = true
 thiserror.workspace = true
 serde_json.workspace = true
 same-file.workspace = true
-usvg.workspace = true
 krilla.workspace = true
 fontdb.workspace = true
 skrifa.workspace = true
@@ -165,6 +172,16 @@ moxcms.workspace = true
 png.workspace = true
 image.workspace = true
 roxmltree.workspace = true
+base64.workspace = true
+data-url.workspace = true
+flate2.workspace = true
+imagesize.workspace = true
+kurbo.workspace = true
+cssparser.workspace = true
+siphasher.workspace = true
+strict-num.workspace = true
+tiny-skia-path.workspace = true
+ttf-parser.workspace = true
+unicode-vo.workspace = true
+xmlwriter.workspace = true
 
-[dev-dependencies]
-ferri-pdf-dom.workspace = true

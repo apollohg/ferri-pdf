@@ -32,7 +32,7 @@ mod render;
 ///
 /// The produced content is in the sRGB color space.
 pub(crate) fn render(
-    tree: &usvg::Tree,
+    tree: &crate::svg::usvg::Tree,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
 ) {
@@ -54,13 +54,13 @@ pub(crate) fn render(
 /// `transform` will be used as a root transform.
 /// Can be used to position SVG inside the `pixmap`.
 ///
-/// The expected pixmap size can be retrieved from `usvg::Node::abs_layer_bounding_box()`.
+/// The expected pixmap size can be retrieved from `crate::svg::usvg::Node::abs_layer_bounding_box()`.
 ///
 /// Returns `None` when `node` has a zero size.
 ///
 /// The produced content is in the sRGB color space.
 pub(crate) fn render_node(
-    node: &usvg::Node,
+    node: &crate::svg::usvg::Node,
     mut transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
 ) -> Option<()> {

@@ -2,15 +2,15 @@ use krilla::geom::{Path, PathBuilder};
 use krilla::mask::{Mask, MaskType};
 use krilla::paint::FillRule;
 use krilla::surface::Surface;
-use usvg::tiny_skia_path::{PathSegment, Transform};
+use tiny_skia_path::{PathSegment, Transform};
 
 use crate::svg::krilla_svg::util::{UsvgTransformExt, convert_fill_rule};
 use crate::svg::krilla_svg::{ProcessContext, group};
 
 /// Render a clip path into a surface.
 pub(crate) fn render(
-    group: &usvg::Group,
-    clip_path: &usvg::ClipPath,
+    group: &crate::svg::usvg::Group,
+    clip_path: &crate::svg::usvg::ClipPath,
     surface: &mut Surface,
     process_context: &mut ProcessContext,
 ) -> u16 {
@@ -39,10 +39,10 @@ pub(crate) fn render(
     let mut pop_count = 0;
 
     if is_simple_clip_path
-        && (clip_rules.iter().all(|f| *f == usvg::FillRule::NonZero)
+        && (clip_rules.iter().all(|f| *f == crate::svg::usvg::FillRule::NonZero)
         // For even odd, there must be at most one shape in the group, because
         // overlapping shapes with evenodd render differently in PDF
-        || (clip_rules.iter().all(|f| *f == usvg::FillRule::EvenOdd)
+        || (clip_rules.iter().all(|f| *f == crate::svg::usvg::FillRule::EvenOdd)
         && clip_rules.len() == 1))
     {
         let clips = create_clip_path(
@@ -50,7 +50,7 @@ pub(crate) fn render(
             clip_rules
                 .first()
                 .copied()
-                .unwrap_or(usvg::FillRule::NonZero),
+                .unwrap_or(crate::svg::usvg::FillRule::NonZero),
         );
 
         for (clip, rule) in clips {
@@ -66,8 +66,8 @@ pub(crate) fn render(
 
 /// Create a simple clip path.
 fn create_clip_path(
-    clip_path: &usvg::ClipPath,
-    clip_rule: usvg::FillRule,
+    clip_path: &crate::svg::usvg::ClipPath,
+    clip_rule: crate::svg::usvg::FillRule,
 ) -> Vec<(Path, FillRule)> {
     let mut clips = vec![];
     if let Some(clip_path) = clip_path.clip_path() {
@@ -96,13 +96,13 @@ fn create_clip_path(
 
 /// Collect the paths of a group so that they can be used in the clip path.
 fn extend_segments_from_group(
-    group: &usvg::Group,
+    group: &crate::svg::usvg::Group,
     transform: &Transform,
     path_builder: &mut PathBuilder,
 ) {
     for child in group.children() {
         match child {
-            usvg::Node::Path(path) => {
+            crate::svg::usvg::Node::Path(path) => {
                 if path.is_visible() {
                     path.data().segments().for_each(|segment| match segment {
                         PathSegment::MoveTo(mut p) => {
@@ -139,11 +139,11 @@ fn extend_segments_from_group(
                     })
                 }
             }
-            usvg::Node::Group(group) => {
+            crate::svg::usvg::Node::Group(group) => {
                 let group_transform = transform.pre_concat(group.transform());
                 extend_segments_from_group(group, &group_transform, path_builder);
             }
-            usvg::Node::Text(text) => {
+            crate::svg::usvg::Node::Text(text) => {
                 // We could in theory preserve text in clip paths by using the appropriate
                 // rendering mode, but for now we just use the flattened version.
                 extend_segments_from_group(text.flattened(), transform, path_builder);
@@ -155,10 +155,10 @@ fn extend_segments_from_group(
 }
 
 /// Check if the clip path is simple, i.e. it can be translated into a PDF clip path.
-fn is_simple_clip_path(group: &usvg::Group) -> bool {
+fn is_simple_clip_path(group: &crate::svg::usvg::Group) -> bool {
     group.children().iter().all(|n| {
         match n {
-            usvg::Node::Group(group) => {
+            crate::svg::usvg::Node::Group(group) => {
                 // We can only intersect one clipping path with another one, meaning that we
                 // can convert nested clip paths if a second clip path is defined on the clip
                 // path itself, but not if it is defined on a child.
@@ -170,16 +170,18 @@ fn is_simple_clip_path(group: &usvg::Group) -> bool {
 }
 
 /// Collect the filling rules used in the clip path.
-fn collect_clip_rules(group: &usvg::Group) -> Vec<usvg::FillRule> {
+fn collect_clip_rules(group: &crate::svg::usvg::Group) -> Vec<crate::svg::usvg::FillRule> {
     let mut clip_rules = vec![];
     group.children().iter().for_each(|n| match n {
-        usvg::Node::Path(path) => {
+        crate::svg::usvg::Node::Path(path) => {
             if let Some(fill) = &path.fill() {
                 clip_rules.push(fill.rule());
             }
         }
-        usvg::Node::Text(text) => clip_rules.extend(collect_clip_rules(text.flattened())),
-        usvg::Node::Group(group) => {
+        crate::svg::usvg::Node::Text(text) => {
+            clip_rules.extend(collect_clip_rules(text.flattened()))
+        }
+        crate::svg::usvg::Node::Group(group) => {
             clip_rules.extend(collect_clip_rules(group));
         }
         _ => {}
@@ -190,8 +192,8 @@ fn collect_clip_rules(group: &usvg::Group) -> Vec<usvg::FillRule> {
 
 /// Render a clip path by using alpha masks.
 fn render_complex(
-    parent: &usvg::Group,
-    clip_path: &usvg::ClipPath,
+    parent: &crate::svg::usvg::Group,
+    clip_path: &crate::svg::usvg::ClipPath,
     surface: &mut Surface,
     process_context: &mut ProcessContext,
 ) -> u16 {

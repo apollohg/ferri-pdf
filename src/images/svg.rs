@@ -1,5 +1,6 @@
 use crate::images::svg_fonts::SvgFonts;
 use crate::images::{Image, ImageCache, ImageError, RasterFormat};
+use crate::svg::usvg::{ImageKind, Tree};
 use ferri_pdf_fonts::{DEFAULT_FAMILY, FontNamespace};
 use ferri_pdf_resources::{Resource, ResourceBase, ResourceResolver};
 use std::{
@@ -8,7 +9,6 @@ use std::{
     sync::Arc,
 };
 use svgtypes::{Length, LengthUnit, ViewBox};
-use usvg::{ImageKind, Tree, fontdb, roxmltree};
 
 const SVG_NAMESPACE: &str = "http://www.w3.org/2000/svg";
 const XLINK_NAMESPACE: &str = "http://www.w3.org/1999/xlink";
@@ -113,7 +113,7 @@ impl SvgImage {
         let jpeg_images = RefCell::new(HashSet::new());
         let failure = RefCell::new(None::<ImageError>);
         let cache = RefCell::new(cache);
-        let resolve = |href: &str, _: &usvg::Options<'_>| {
+        let resolve = |href: &str, _: &crate::svg::usvg::Options<'_>| {
             if href.starts_with('#') || failure.borrow().is_some() {
                 return None;
             }
@@ -219,13 +219,14 @@ fn pixel_size(dimensions: crate::images::NaturalDimensions, available_width: f32
     }
 }
 
-fn options(size: [f32; 2]) -> Result<usvg::Options<'static>, ImageError> {
-    Ok(usvg::Options {
+fn options(size: [f32; 2]) -> Result<crate::svg::usvg::Options<'static>, ImageError> {
+    Ok(crate::svg::usvg::Options {
         fontdb: Arc::new(fontdb::Database::new()),
         font_family: DEFAULT_FAMILY.primary_name().into(),
         font_size: DEFAULT_FONT_SIZE as f32,
-        default_size: usvg::Size::from_wh(size[0], size[1]).ok_or(ImageError::SvgSize)?,
-        image_href_resolver: usvg::ImageHrefResolver {
+        default_size: crate::svg::usvg::Size::from_wh(size[0], size[1])
+            .ok_or(ImageError::SvgSize)?,
+        image_href_resolver: crate::svg::usvg::ImageHrefResolver {
             resolve_string: Box::new(|_, _| None),
             resolve_data: Box::new(|_, _, _| None),
         },

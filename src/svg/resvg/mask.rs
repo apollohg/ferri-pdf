@@ -4,7 +4,7 @@
 use crate::svg::resvg::render::Context;
 
 pub(super) fn apply(
-    mask: &usvg::Mask,
+    mask: &crate::svg::usvg::Mask,
     ctx: &Context,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::Pixmap,
@@ -42,8 +42,8 @@ pub(super) fn apply(
     }
 
     let mask_type = match mask.kind() {
-        usvg::MaskType::Luminance => tiny_skia::MaskType::Luminance,
-        usvg::MaskType::Alpha => tiny_skia::MaskType::Alpha,
+        crate::svg::usvg::MaskType::Luminance => tiny_skia::MaskType::Luminance,
+        crate::svg::usvg::MaskType::Alpha => tiny_skia::MaskType::Alpha,
     };
 
     let mask = tiny_skia::Mask::from_pixmap(mask_pixmap.as_ref(), mask_type);

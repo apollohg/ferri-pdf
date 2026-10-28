@@ -9,7 +9,7 @@ use crate::svg::krilla_svg::{ProcessContext, group};
 /// Render a usvg `Mask` into a surface.
 #[must_use]
 pub(crate) fn render(
-    mask: &usvg::Mask,
+    mask: &crate::svg::usvg::Mask,
     surface: &mut Surface,
     process_context: &mut ProcessContext,
 ) -> u16 {

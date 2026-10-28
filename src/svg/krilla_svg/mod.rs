@@ -14,11 +14,11 @@ to PDF.
     reason = "inlined upstream code keeps its upstream style"
 )]
 
+use crate::svg::usvg::Tree;
 use fontdb::Database;
 use krilla::geom::{Rect, Size, Transform};
 use krilla::paint::FillRule;
 use krilla::surface::Surface;
-use usvg::{Tree, fontdb};
 
 use crate::svg::krilla_svg::text::Fonts;
 use crate::svg::krilla_svg::util::RectExt;

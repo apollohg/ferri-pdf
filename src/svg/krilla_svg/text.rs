@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::collections::hash_map::Entry;
 
+use crate::svg::usvg::{FontOpticalSizing, FontVariation, PaintOrder};
 use fontdb::Database;
 use krilla::color::rgb;
 use krilla::geom::Point;
@@ -10,15 +11,14 @@ use krilla::surface::Surface;
 use krilla::text::{Font, Glyph, GlyphId, KrillaGlyph};
 use skrifa::{FontRef, MetadataProvider};
 use smallvec::SmallVec;
-use usvg::tiny_skia_path::Transform;
-use usvg::{FontOpticalSizing, FontVariation, PaintOrder};
+use tiny_skia_path::Transform;
 
 use crate::svg::krilla_svg::util::{UsvgTransformExt, convert_fill, convert_stroke};
 use crate::svg::krilla_svg::{ProcessContext, path};
 
 /// Render a text into a surface.
 pub(crate) fn render(
-    text: &usvg::Text,
+    text: &crate::svg::usvg::Text,
     surface: &mut Surface,
     process_context: &mut ProcessContext,
 ) {
@@ -58,8 +58,8 @@ pub(crate) fn render(
 }
 
 fn render_cluster(
-    glyphs: &[usvg::layout::PositionedGlyph],
-    span: &usvg::layout::Span,
+    glyphs: &[crate::svg::usvg::layout::PositionedGlyph],
+    span: &crate::svg::usvg::layout::Span,
     surface: &mut Surface,
     process_context: &mut ProcessContext,
 ) {
@@ -111,7 +111,7 @@ fn paint_glyphs(
     text: &str,
     transform: Transform,
     inverted: Transform,
-    span: &usvg::layout::Span,
+    span: &crate::svg::usvg::layout::Span,
     surface: &mut Surface,
     process_context: &mut ProcessContext,
 ) {
@@ -223,8 +223,8 @@ impl Glyph for ClusterGlyph {
 }
 
 fn render_cluster_batch(
-    glyphs: &[usvg::layout::PositionedGlyph],
-    span: &usvg::layout::Span,
+    glyphs: &[crate::svg::usvg::layout::PositionedGlyph],
+    span: &crate::svg::usvg::layout::Span,
     surface: &mut Surface,
     context: &mut ProcessContext,
 ) -> bool {
@@ -255,7 +255,7 @@ fn render_cluster_batch(
         {
             return false;
         }
-        let mut point = usvg::tiny_skia_path::Point::from_xy(current.tx, current.ty);
+        let mut point = tiny_skia_path::Point::from_xy(current.tx, current.ty);
         inverted.map_point(&mut point);
         positioned.push(ClusterGlyph(KrillaGlyph::new(
             GlyphId::new(glyph.id.0 as u32),
@@ -302,7 +302,7 @@ impl<'a> Fonts<'a> {
     }
 
     /// Retrieves the font identified by `id` from the cache or loads it.
-    fn retrieve(&mut self, span: &usvg::layout::Span, id: fontdb::ID) -> Option<Font> {
+    fn retrieve(&mut self, span: &crate::svg::usvg::layout::Span, id: fontdb::ID) -> Option<Font> {
         let variations = self.resolve_variations(span, id);
         match self.fonts.entry((id, variations)) {
             Entry::Occupied(entry) => entry.get().clone(),
@@ -326,7 +326,11 @@ impl<'a> Fonts<'a> {
 
     /// Resolves which variations are applicable for the given font (filtering out undefined axis
     /// values and taking into account optical sizing).
-    fn resolve_variations(&mut self, span: &usvg::layout::Span, id: fontdb::ID) -> FontVariations {
+    fn resolve_variations(
+        &mut self,
+        span: &crate::svg::usvg::layout::Span,
+        id: fontdb::ID,
+    ) -> FontVariations {
         let supported_axes = self.supported_axes.entry(id).or_insert_with(|| {
             self.db
                 .with_face_data(id, |data, index| {

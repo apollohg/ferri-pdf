@@ -21,23 +21,24 @@ The root package remains an implicit member.
 | icu_casemap | ferri-pdf-icu-casemap | 2.3.0 | Unicode-3.0 |
 | krilla | ferri-pdf-krilla | 0.8.2 | MIT OR Apache-2.0 |
 | selectors | ferri-pdf-selectors | 0.38.0 | MPL-2.0 |
-| usvg | ferri-pdf-usvg | 0.47.0 | Apache-2.0 OR MIT |
 | zenavif-parse | ferri-pdf-zenavif-parse | 0.6.2 | MPL-2.0 |
 
 ## Inlined modules
 
 These upstream libraries are compiled as private modules of `ferri-pdf` rather than
 as separate packages, because they share its DOM and font types. Each module directory
-keeps the upstream licences and provenance files. Only the code `ferri-pdf` builds is
-retained: binaries, examples, benches, unused features and unreachable API are removed.
+keeps the upstream licences and provenance files. Binaries, examples, disabled Cargo
+features and unused entry points (such as the usvg SVG writer) are removed. Each
+module's `PATCHES.md`, where present, lists its local changes.
 
 | Module | Upstream crate | Base version | Licence |
 |---|---|---|---|
 | src/svg/krilla_svg | krilla-svg | 0.8.1 | MIT OR Apache-2.0 |
 | src/svg/resvg | resvg | 0.47.0 | Apache-2.0 OR MIT |
+| src/svg/usvg | usvg | 0.47.0 | Apache-2.0 OR MIT |
 
 Resvg is copied from its published crate archive solely to route shared SVG types
-through the maintained usvg fork. Beyond inlining (module paths, visibility, the
+through the maintained usvg module. Beyond inlining (module paths, visibility, the
 always-enabled `raster-images` feature), its IIR blur views pixels through
 `bytemuck` instead of the deprecated `rgb::ComponentSlice`. Original registry
 archive checksum:

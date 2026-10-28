@@ -18,7 +18,7 @@ pub(super) struct ImageWriter {
     reported: HashSet<usize>,
     diagnostics: Vec<String>,
     images: HashMap<usize, Image>,
-    vectors: HashMap<(usize, u32, u32), usvg::Tree>,
+    vectors: HashMap<(usize, u32, u32), crate::svg::usvg::Tree>,
 }
 impl ImageWriter {
     pub(crate) fn take_diagnostics(&mut self) -> Vec<String> {
