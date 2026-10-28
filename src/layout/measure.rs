@@ -1,3 +1,4 @@
+use crate::document::{BlockBox, BlockContent, BoxNavigation};
 use crate::layout::{
     LayoutError,
     breaks::Fragmentainer,
@@ -6,7 +7,6 @@ use crate::layout::{
     multicol::{ColumnFlow, ColumnGeometry, MeasuredColumns, SpannerFragment},
 };
 use crate::text::{Line, TextContext};
-use ferri_pdf_document::{BlockBox, BlockContent, BoxNavigation};
 use ferri_pdf_graphics::{BoxDecoration, BoxPaint, Rect};
 use ferri_pdf_style::{BreakBetween, Display, Style};
 
@@ -247,7 +247,7 @@ pub(super) fn last_baseline(items: &[FlowItem<'_>]) -> Option<f32> {
 #[derive(Clone)]
 pub(super) struct MeasuredParagraph<'a> {
     pub index: usize,
-    pub paragraph: &'a ferri_pdf_document::Paragraph,
+    pub paragraph: &'a crate::document::Paragraph,
     pub style: &'a Style,
     pub x: f32,
     pub width: f32,
@@ -284,7 +284,7 @@ pub(super) struct PositionedFlow<'a> {
 #[derive(Clone)]
 pub(super) struct MeasuredCell<'a> {
     pub clipped_height: Option<f32>,
-    pub after_events: Vec<&'a ferri_pdf_document::SemanticEvent>,
+    pub after_events: Vec<&'a crate::document::SemanticEvent>,
     pub grid_cell: Option<usize>,
     pub backgrounds: Vec<crate::layout::tables::FragmentBackground<'a>>,
     pub block: MeasuredBlock<'a>,
@@ -308,7 +308,7 @@ pub(super) struct RowTarget {
 pub(super) struct CollapsedItem<'a> {
     pub source: &'a BlockBox,
     pub offset: f32,
-    pub after_events: Vec<&'a ferri_pdf_document::SemanticEvent>,
+    pub after_events: Vec<&'a crate::document::SemanticEvent>,
 }
 
 #[derive(Clone)]
@@ -356,7 +356,7 @@ pub(super) enum BlockEdge {
 
 #[derive(Clone)]
 pub(super) enum FlowItem<'a> {
-    Events(&'a [ferri_pdf_document::SemanticEvent]),
+    Events(&'a [crate::document::SemanticEvent]),
     Image {
         paint: ferri_pdf_graphics::ImagePaint,
         visible: bool,
@@ -430,7 +430,7 @@ pub(super) struct Measurer<'a> {
 impl Measurer<'_> {
     pub(crate) fn intrinsic_widths(
         &self,
-        paragraph: &ferri_pdf_document::Paragraph,
+        paragraph: &crate::document::Paragraph,
         atomics: &[crate::text::IntrinsicWidths],
     ) -> Result<crate::text::IntrinsicWidths, LayoutError> {
         self.work.spend(paragraph.text().len().max(1))?;
@@ -439,7 +439,7 @@ impl Measurer<'_> {
 
     pub(crate) fn text_lines(
         &self,
-        paragraph: &ferri_pdf_document::Paragraph,
+        paragraph: &crate::document::Paragraph,
         width: f32,
         atomics: &[crate::text::AtomicMetrics],
     ) -> Result<Vec<Line>, LayoutError> {
@@ -796,7 +796,7 @@ impl Measurer<'_> {
 
     fn paragraph<'a>(
         &mut self,
-        paragraph: &'a ferri_pdf_document::Paragraph,
+        paragraph: &'a crate::document::Paragraph,
         x: f32,
         width: f32,
         containing_height: Option<f32>,
@@ -1092,7 +1092,7 @@ impl<'a> FlowFrame<'a> {
 
 /// Static positions of a paragraph's absolutely positioned boxes (CSS 2.1 §10.3.7).
 pub(super) fn line_anchors<'a>(
-    paragraph: &'a ferri_pdf_document::Paragraph,
+    paragraph: &'a crate::document::Paragraph,
     lines: &[Line],
     complete: bool,
 ) -> Vec<LineAnchor<'a>> {

@@ -1,9 +1,9 @@
 mod dimensions;
+use crate::document::{PageBox, Paragraph};
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, TextLine};
 use crate::text::Line;
 use dimensions::{Variable, variable};
-use ferri_pdf_document::{PageBox, Paragraph};
 use ferri_pdf_graphics::{BoxDecoration, BoxPaint, DisplayItem, Rect};
 use ferri_pdf_style::{BoxSizing, MarginLocation, PageMargin, Size, VerticalAlign};
 
@@ -234,7 +234,7 @@ fn prepare<'a>(
             &margin.content.page_output_with_strings(
                 page,
                 pages,
-                ferri_pdf_document::MAX_INLINE_TEXT_BYTES,
+                crate::document::MAX_INLINE_TEXT_BYTES,
                 &style.quotes,
                 &mut |request| Ok(strings.text(page - 1, request)),
             )?,

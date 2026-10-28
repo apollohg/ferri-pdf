@@ -10,8 +10,8 @@ mod paragraph;
 mod shaping;
 mod spacing;
 mod whitespace;
+use crate::document::Paragraph;
 use bidi::resolve as paragraph_bidi;
-use ferri_pdf_document::Paragraph;
 use ferri_pdf_fonts::{
     FontBook, FontError, FontId, FontSelection, FontSynthesis, FontVariation, GlyphMatch,
 };
@@ -414,7 +414,7 @@ impl<'a> TextContext<'a> {
             resolver,
             faces: RefCell::new(HashMap::new()),
             matching_work: Cell::new(Some(MAX_GLYPH_MATCH_WORK)),
-            bidi_work: Cell::new(Some(ferri_pdf_document::MAX_INLINE_TEXT_BYTES)),
+            bidi_work: Cell::new(Some(crate::document::MAX_INLINE_TEXT_BYTES)),
         }
     }
     fn face(

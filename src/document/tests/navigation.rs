@@ -1,4 +1,4 @@
-use ferri_pdf_document::{
+use crate::document::{
     BlockBox, BlockContent, Bookmark, BoxNavigation, LinkTarget, StyledDocument,
 };
 use ferri_pdf_resources::{FileResolver, ResourceBase, Url};
@@ -315,7 +315,7 @@ fn unsupported_counters_in_bookmark_labels_are_errors() {
 
 #[test]
 fn multipart_capture_keeps_unreferenced_targets_and_html_fragment_precedence() {
-    use ferri_pdf_document::ParseOptions;
+    use crate::document::ParseOptions;
     use ferri_pdf_style::PrintSettings;
 
     let html = "<a href='#other-part'>Across parts</a><a href='#duplicate'>Local</a>\

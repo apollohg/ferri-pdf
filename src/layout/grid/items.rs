@@ -1,9 +1,9 @@
+use crate::document::BlockBox;
 use crate::layout::{
     LayoutError,
     geometry::{Edges, HorizontalBox, SizeConstraints},
     measure::{ItemMetrics, MeasuredBlock, MeasuredCell, Measurer},
 };
-use ferri_pdf_document::BlockBox;
 use ferri_pdf_style::{Alignment, COLUMNS, ROWS, Size};
 use std::ops::Range;
 

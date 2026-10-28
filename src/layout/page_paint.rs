@@ -1,4 +1,4 @@
-use ferri_pdf_document::PageBox;
+use crate::document::PageBox;
 use ferri_pdf_graphics::{BackgroundGeometry, BoxAreas, BoxPaint, Clip, DisplayItem, Rect};
 use std::sync::Arc;
 

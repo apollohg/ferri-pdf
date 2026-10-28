@@ -1,7 +1,7 @@
 use super::common;
 
+use crate::document::{BlockBox, BlockContent, StyledDocument};
 use common::{PROFILE, local_options};
-use ferri_pdf_document::{BlockBox, BlockContent, StyledDocument};
 use ferri_pdf_resources::FileResolver;
 use ferri_pdf_style::{Display, Page};
 

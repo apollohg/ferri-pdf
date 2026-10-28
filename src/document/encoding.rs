@@ -12,14 +12,14 @@ const CSS_ENCODING_PREFIX: &[u8] = b"@charset \"";
 const CSS_ENCODING_SCAN_BYTES: usize = 1024;
 
 #[derive(Debug)]
-pub struct DecodedInput {
+pub(crate) struct DecodedInput {
     pub text: String,
     pub encoding: String,
     pub had_errors: bool,
 }
 
-pub type DecodedHtml = DecodedInput;
-pub type DecodedCss = DecodedInput;
+pub(crate) type DecodedHtml = DecodedInput;
+pub(crate) type DecodedCss = DecodedInput;
 
 fn label(label: &str) -> Option<&'static Encoding> {
     Encoding::for_label(label.as_bytes())
@@ -171,7 +171,8 @@ pub(crate) fn decode_document(
 }
 
 /// Decode buffered HTML, honoring BOM/transport and actual parser encoding declarations.
-pub fn decode_html(
+#[cfg(test)]
+pub(crate) fn decode_html(
     bytes: &[u8],
     transport_charset: Option<&str>,
 ) -> Result<DecodedHtml, ferri_pdf_dom::DomError> {
@@ -196,7 +197,7 @@ fn css_declared_encoding(bytes: &[u8]) -> Option<&'static Encoding> {
 }
 
 /// Decode CSS using transport, exact @charset syntax and referring environment fallback.
-pub fn decode_css(
+pub(crate) fn decode_css(
     bytes: &[u8],
     transport_charset: Option<&str>,
     environment_encoding: Option<&str>,

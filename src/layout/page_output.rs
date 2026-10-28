@@ -25,7 +25,7 @@ pub struct PageRecord {
     pub output: PageOutput,
 }
 impl PageRecord {
-    pub(crate) fn new(page: &ferri_pdf_document::PageBox) -> Result<Self, LayoutError> {
+    pub(crate) fn new(page: &crate::document::PageBox) -> Result<Self, LayoutError> {
         Ok(Self {
             request: page.request.clone(),
             geometry: page.geometry.clone(),

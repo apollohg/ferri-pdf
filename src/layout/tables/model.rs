@@ -1,10 +1,10 @@
+use crate::document::{BlockBox, BlockContent};
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, geometry::Edges, intrinsic};
 use crate::table::{
     BorderBox, BorderOrigin, CellWidth, CollapsedBorders, ColumnWidth, Grid, RowGroup, Span,
     TableError,
 };
-use ferri_pdf_document::{BlockBox, BlockContent};
 use ferri_pdf_graphics::Border;
 use ferri_pdf_style::{BorderCollapse, Display, LengthPercentage, Size, Style};
 use std::{ops::Range, rc::Rc};

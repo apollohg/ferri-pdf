@@ -15,6 +15,7 @@
 #[cfg(test)]
 extern crate self as ferri_pdf;
 
+mod document;
 mod flex;
 mod grid;
 mod layout;
@@ -30,16 +31,16 @@ pub use multipart::{
     HtmlPart, MultipartOutput, PartOutput, render_parts, render_parts_with_resolver,
 };
 
+use crate::document::{DocumentError, StyledDocument};
 use crate::layout::LayoutError;
 use crate::text::TextError;
-use ferri_pdf_document::{DocumentError, StyledDocument};
 
+pub use crate::document::DocumentDiagnostic as RenderDiagnostic;
 pub use crate::layout::{Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine};
 pub use crate::text::{GlyphRun, PositionedGlyph};
 pub use crate::writer::{
     ImageDpi, ImageOptions, InvalidImageDpi, InvalidJpegQuality, JpegQuality, PdfError,
 };
-pub use ferri_pdf_document::DocumentDiagnostic as RenderDiagnostic;
 pub use ferri_pdf_fonts::{
     FontDescriptor, FontFaceStyle, FontFamily, FontId, FontPreferences, FontRange, FontSelection,
     FontSlant, FontStyle, FontSynthesis, FontVariation, FontWeight, FontWidth, GenericFamily,

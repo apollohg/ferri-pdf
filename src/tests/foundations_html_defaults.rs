@@ -450,7 +450,7 @@ fn heading_defaults_and_bookmarks_follow_computed_levels_and_author_cascade() {
          <h1 id=reverted>Offset</h1><div headingreset headingoffset=2><h2>Reset</h2></div>\
          <h6 headingoffset=1000>Capped</h6><h1 id=custom>Custom</h1>"
     );
-    let document = ferri_pdf_document::StyledDocument::parse(
+    let document = crate::document::StyledDocument::parse(
         &html,
         &local_options().base,
         &[],

@@ -1,6 +1,6 @@
+use crate::document::{BlockBox, BoxNavigation};
 use crate::layout::measure::{FlowItem, MeasuredBlock, Measurer};
 use crate::layout::{LayoutError, breaks, geometry, intrinsic, margin::MarginStrut};
-use ferri_pdf_document::{BlockBox, BoxNavigation};
 use ferri_pdf_style::{BreakBetween, CaptionSide};
 
 pub(super) fn minimum(

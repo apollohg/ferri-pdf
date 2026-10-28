@@ -1,8 +1,8 @@
-use crate::BlockContent;
+use crate::document::BlockContent;
 use ferri_pdf_style::{Display, Page, Style};
 use std::sync::Arc;
 
-use crate::{DocumentError, PageBox, PageMarginBox, formatting::ImageResources};
+use crate::document::{DocumentError, PageBox, PageMarginBox, formatting::ImageResources};
 use ferri_pdf_resources::{ResourceBase, ResourceResolver};
 use ferri_pdf_style::{PageRequest, ResolvedPage, Stylesheet};
 use std::{cell::RefCell, collections::HashMap};
@@ -11,7 +11,7 @@ impl PageBox {
     pub(crate) fn load(
         page: ResolvedPage,
         resources: &mut ImageResources<'_>,
-        generated: &crate::generated::GeneratedBindings,
+        generated: &crate::document::generated::GeneratedBindings,
     ) -> Result<Self, DocumentError> {
         let decoration = resources.backgrounds(&page.style)?;
         let margins = page
@@ -26,6 +26,7 @@ impl PageBox {
         Ok(Self {
             request: page.request,
             geometry: page.geometry,
+            #[cfg(test)]
             style: page.style,
             production: page.production,
             decoration,
@@ -39,14 +40,14 @@ pub(crate) struct PageProvider {
     records: RefCell<HashMap<PageRequest, Arc<PageBox>>>,
     images: std::rc::Rc<RefCell<ferri_pdf_images::ImageCache>>,
     base: ResourceBase,
-    generated: crate::generated::GeneratedBindings,
+    generated: crate::document::generated::GeneratedBindings,
 }
 impl PageProvider {
     pub(crate) fn new(
         first: PageBox,
         images: std::rc::Rc<RefCell<ferri_pdf_images::ImageCache>>,
         base: ResourceBase,
-        generated: crate::generated::GeneratedBindings,
+        generated: crate::document::generated::GeneratedBindings,
     ) -> Self {
         let first = Arc::new(first);
         Self {
@@ -93,7 +94,7 @@ impl PageProvider {
 
 /// Used ancestor scope and the values propagated at the box's flow boundaries.
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub struct PageBoundary {
+pub(crate) struct PageBoundary {
     pub used: Option<Arc<str>>,
     pub start: Option<Arc<str>>,
     pub end: Option<Arc<str>>,
@@ -107,7 +108,7 @@ pub(crate) fn used_name(page: &Page, ancestor: Option<&Arc<str>>) -> Option<Arc<
 }
 
 impl PageBoundary {
-    pub fn applies(display: &Display) -> bool {
+    pub(crate) fn applies(display: &Display) -> bool {
         matches!(
             display,
             Display::Block
@@ -166,7 +167,7 @@ pub(crate) fn in_flow_children<'a>(
             _ => 0,
         });
     } else if style.display.is_table() {
-        crate::tables::order(&mut children);
+        crate::document::tables::order(&mut children);
     }
     children
 }

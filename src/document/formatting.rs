@@ -1,5 +1,5 @@
-use crate::navigation::{BoxNavigation, NavigationBuilder};
-use crate::{DocumentError, Paragraph, inline::InlineCollector};
+use crate::document::navigation::{BoxNavigation, NavigationBuilder};
+use crate::document::{DocumentError, Paragraph, inline::InlineCollector};
 use ferri_pdf_dom::{ChildNodes, DocumentTree, Element, ElementId, TreeRelation};
 use ferri_pdf_graphics::BoxDecoration;
 use ferri_pdf_style::{Display, PseudoElement, Style, StyleError, Stylesheet};
@@ -15,28 +15,29 @@ fn canvas_background(decoration: &BoxDecoration) -> BoxDecoration {
     }
 }
 
-pub struct PageBox {
+pub(crate) struct PageBox {
     pub request: ferri_pdf_style::PageRequest,
     pub geometry: ferri_pdf_style::PageGeometry,
+    #[cfg(test)]
     pub style: Style,
     pub production: ferri_pdf_style::PageProduction,
     pub decoration: BoxDecoration,
     pub margins: Vec<PageMarginBox>,
 }
-pub struct PageMarginBox {
+pub(crate) struct PageMarginBox {
     pub margin: ferri_pdf_style::PageMargin,
     pub decoration: BoxDecoration,
 }
 pub(crate) struct Formatted {
     pub root: BlockBox,
     pub navigation: NavigationBuilder,
-    pub strings: crate::strings::StringAssignments,
-    pub generated: crate::generated::GeneratedReferences,
+    pub strings: crate::document::strings::StringAssignments,
+    pub generated: crate::document::generated::GeneratedReferences,
     pub canvas: BoxDecoration,
-    pub pages: crate::page::PageProvider,
+    pub pages: crate::document::page::PageProvider,
 }
 
-pub struct BlockBox {
+pub(crate) struct BlockBox {
     style: Box<Style>,
     decoration: BoxDecoration,
     children: Vec<BlockContent>,
@@ -44,11 +45,11 @@ pub struct BlockBox {
     image: Option<std::sync::Arc<ferri_pdf_images::Image>>,
     navigation: BoxNavigation,
     canvas_source: bool,
-    event: Option<crate::SemanticEvent>,
-    page: crate::PageBoundary,
+    event: Option<crate::document::SemanticEvent>,
+    page: crate::document::PageBoundary,
 }
-pub enum BlockContent {
-    Events(Vec<crate::SemanticEvent>),
+pub(crate) enum BlockContent {
+    Events(Vec<crate::document::SemanticEvent>),
     Block(BlockBox),
     Inline(Paragraph),
     /// Out-of-flow box (float or absolute positioning) anchored between flow blocks.
@@ -77,7 +78,7 @@ impl BlockBox {
                         if paragraph
                             .text()
                             .chars()
-                            .all(crate::inline::is_css_whitespace)
+                            .all(crate::document::inline::is_css_whitespace)
                         {
                             items.extend(paragraph.into_non_text());
                         } else {
@@ -95,8 +96,8 @@ impl BlockBox {
         } else {
             children
         };
-        let children = crate::tables::normalize(&style, children, page_scope.as_ref());
-        let page = crate::PageBoundary::new(page_scope, &style, &children);
+        let children = crate::document::tables::normalize(&style, children, page_scope.as_ref());
+        let page = crate::document::PageBoundary::new(page_scope, &style, &children);
         Self {
             style: Box::new(style),
             decoration,
@@ -109,7 +110,7 @@ impl BlockBox {
             page,
         }
     }
-    pub fn leading_events(&self) -> impl Iterator<Item = &crate::SemanticEvent> {
+    pub(crate) fn leading_events(&self) -> impl Iterator<Item = &crate::document::SemanticEvent> {
         self.children
             .iter()
             .take_while(|child| matches!(child, BlockContent::Events(_)))
@@ -118,10 +119,10 @@ impl BlockBox {
                 _ => &[],
             })
     }
-    pub fn following_events<'a>(
+    pub(crate) fn following_events<'a>(
         &'a self,
         preceding: &BlockBox,
-    ) -> impl Iterator<Item = &'a crate::SemanticEvent> {
+    ) -> impl Iterator<Item = &'a crate::document::SemanticEvent> {
         let boundary = self
             .children
             .iter()
@@ -140,35 +141,35 @@ impl BlockBox {
                 _ => &[],
             })
     }
-    pub fn semantic_event(&self) -> Option<&crate::SemanticEvent> {
+    pub(crate) fn semantic_event(&self) -> Option<&crate::document::SemanticEvent> {
         self.event.as_ref()
     }
-    pub fn image(&self) -> Option<&std::sync::Arc<ferri_pdf_images::Image>> {
+    pub(crate) fn image(&self) -> Option<&std::sync::Arc<ferri_pdf_images::Image>> {
         self.image.as_ref()
     }
-    pub fn style(&self) -> &Style {
+    pub(crate) fn style(&self) -> &Style {
         &self.style
     }
-    pub fn decoration(&self) -> &BoxDecoration {
+    pub(crate) fn decoration(&self) -> &BoxDecoration {
         &self.decoration
     }
-    pub fn children(&self) -> &[BlockContent] {
+    pub(crate) fn children(&self) -> &[BlockContent] {
         &self.children
     }
     /// In-flow children in flex order or table caption/group layout order.
-    pub fn in_flow_children(&self) -> Vec<&BlockContent> {
-        crate::page::in_flow_children(&self.style, &self.children)
+    pub(crate) fn in_flow_children(&self) -> Vec<&BlockContent> {
+        crate::document::page::in_flow_children(&self.style, &self.children)
     }
-    pub fn page_boundary(&self) -> &crate::PageBoundary {
+    pub(crate) fn page_boundary(&self) -> &crate::document::PageBoundary {
         &self.page
     }
-    pub fn marker(&self) -> Option<&Paragraph> {
+    pub(crate) fn marker(&self) -> Option<&Paragraph> {
         self.marker.as_deref()
     }
-    pub fn navigation(&self) -> BoxNavigation {
+    pub(crate) fn navigation(&self) -> BoxNavigation {
         self.navigation
     }
-    pub fn is_canvas_source(&self) -> bool {
+    pub(crate) fn is_canvas_source(&self) -> bool {
         self.canvas_source
     }
 }
@@ -177,10 +178,10 @@ impl BlockBox {
 pub(crate) struct Traversal<'a> {
     document: &'a DocumentTree,
     root_style: Style,
-    counters: crate::counters::Counters,
+    counters: crate::document::counters::Counters,
     navigation: NavigationBuilder,
-    strings: crate::strings::StringAssignments,
-    generated: crate::generated::GeneratedPass,
+    strings: crate::document::strings::StringAssignments,
+    generated: crate::document::generated::GeneratedPass,
     quotes: ferri_pdf_style::QuoteDepth,
     canvas: BoxDecoration,
     canvas_body: Option<ElementId>,
@@ -258,7 +259,7 @@ impl BlockBuilder<'_, '_, '_> {
             return Ok(());
         };
         let element_page_scope =
-            crate::page::used_name(&parent.page, self.element_page_scope.as_ref());
+            crate::document::page::used_name(&parent.page, self.element_page_scope.as_ref());
         validate_display(&style.display)?;
         normalize_child_display(&mut style.display, false, &self.style.display);
         let decoration = if style.display == Display::Contents {
@@ -292,7 +293,7 @@ impl BlockBuilder<'_, '_, '_> {
             .then(|| self.traversal.strings.generated_event(element, pseudo));
         let bound = self.traversal.generated.bind(&content, context)?;
         let output = bound.element_output_with_counters(
-            crate::MAX_INLINE_TEXT_BYTES,
+            crate::document::MAX_INLINE_TEXT_BYTES,
             &mut |request| self.traversal.counters.text(request),
             &style.quotes,
             &mut self.traversal.quotes,
@@ -398,9 +399,9 @@ impl BlockBuilder<'_, '_, '_> {
         children: Vec<BlockContent>,
         decoration: BoxDecoration,
         element_page_scope: Option<&std::sync::Arc<str>>,
-        event: Option<crate::SemanticEvent>,
+        event: Option<crate::document::SemanticEvent>,
     ) -> BlockBox {
-        let page_scope = crate::page::used_name(&style.page, element_page_scope);
+        let page_scope = crate::document::page::used_name(&style.page, element_page_scope);
         BlockBox {
             navigation: self.traversal.navigation.descendant(),
             canvas_source: false,
@@ -504,7 +505,7 @@ struct OpenBlock {
     image: Option<std::sync::Arc<ferri_pdf_images::Image>>,
     navigation: BoxNavigation,
     placement: Placement,
-    event: Option<crate::SemanticEvent>,
+    event: Option<crate::document::SemanticEvent>,
 }
 
 struct Frame<'d> {
@@ -527,7 +528,7 @@ impl<'d> Frame<'d> {
         placement: Option<Placement>,
         ancestor_page: Option<&std::sync::Arc<str>>,
     ) -> Self {
-        let page_scope = crate::page::used_name(&style.page, ancestor_page);
+        let page_scope = crate::document::page::used_name(&style.page, ancestor_page);
         Self {
             element,
             style,
@@ -628,7 +629,7 @@ fn block<'a>(
                         image
                     }
                     "svg" => Some(resources.cache.inline_svg_in_namespace(
-                        crate::svg::serialize(element),
+                        crate::document::svg::serialize(element),
                         resources.base,
                         resources.resolver,
                         frame.style.element_font_namespace(),
@@ -639,7 +640,7 @@ fn block<'a>(
                     .style
                     .display
                     .is_list_item()
-                    .then(|| crate::lists::marker(&frame.style, frame.ordinal, resources))
+                    .then(|| crate::document::lists::marker(&frame.style, frame.ordinal, resources))
                     .transpose()?
                     .flatten();
                 let assignment = traversal.strings.record(
@@ -996,17 +997,18 @@ pub(crate) fn build(
     base: &ferri_pdf_resources::ResourceBase,
     resolver: &dyn ferri_pdf_resources::ResourceResolver,
     navigation: NavigationBuilder,
-    values: crate::generated::GeneratedValues,
+    values: crate::document::generated::GeneratedValues,
     images: Option<std::rc::Rc<std::cell::RefCell<ferri_pdf_images::ImageCache>>>,
 ) -> Result<Formatted, DocumentError> {
-    let mut generated = crate::generated::GeneratedPass::new(navigation.targets.clone(), values);
+    let mut generated =
+        crate::document::generated::GeneratedPass::new(navigation.targets.clone(), values);
     let element = html.root_element();
     let mut style = sheet
         .resolve_document_root_with_pages(
             html,
             resolver,
-            &|styles| crate::first_page::select_name(html, styles, &generated),
-            &|styles| crate::first_page::select_side(html, styles, &generated),
+            &|styles| crate::document::first_page::select_name(html, styles, &generated),
+            &|styles| crate::document::first_page::select_side(html, styles, &generated),
         )
         .map_err(|error| match error {
             StyleError::GrammarLimit {
@@ -1040,8 +1042,8 @@ pub(crate) fn build(
     let page = PageBox::load(resolved, &mut resources, &bindings)?;
     validate_display(&style.display)?;
     if style.display == Display::None {
-        let mut strings = crate::strings::StringAssignments::new(html);
-        let mut counters = crate::counters::Counters::default();
+        let mut strings = crate::document::strings::StringAssignments::new(html);
+        let mut counters = crate::document::counters::Counters::default();
         let mut events = Vec::new();
         sheet.with_document_values(html, &style, resolver, |styles| {
             counters.visit_hidden(element, styles, |element, assignments, counters| {
@@ -1059,7 +1061,12 @@ pub(crate) fn build(
             strings,
             generated: generated.finish(),
             canvas: BoxDecoration::default(),
-            pages: crate::page::PageProvider::new(page, images.clone(), base.clone(), bindings),
+            pages: crate::document::page::PageProvider::new(
+                page,
+                images.clone(),
+                base.clone(),
+                bindings,
+            ),
         });
     }
     normalize_root_display(&mut style.display);
@@ -1068,7 +1075,7 @@ pub(crate) fn build(
         root_style: style.clone(),
         counters: Default::default(),
         navigation,
-        strings: crate::strings::StringAssignments::new(html),
+        strings: crate::document::strings::StringAssignments::new(html),
         generated,
         quotes: Default::default(),
         canvas: BoxDecoration::default(),
@@ -1108,7 +1115,12 @@ pub(crate) fn build(
         strings: traversal.strings,
         generated: traversal.generated.finish(),
         canvas: traversal.canvas,
-        pages: crate::page::PageProvider::new(page, images.clone(), base.clone(), bindings),
+        pages: crate::document::page::PageProvider::new(
+            page,
+            images.clone(),
+            base.clone(),
+            bindings,
+        ),
     })
 }
 

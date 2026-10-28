@@ -88,7 +88,7 @@ fn borrowed_layout_resolves_literal_targets_without_mutating_the_source_document
         "<style>{PROFILE}.next{{break-before:page}}.reference::after{{content:target-counter('#target',page)}}</style><p class=reference>Page </p><p id=target class=next>Destination</p>"
     );
     let document =
-        ferri_pdf_document::StyledDocument::parse(&html, &options.base, &[], &resolver).unwrap();
+        crate::document::StyledDocument::parse(&html, &options.base, &[], &resolver).unwrap();
     for iteration in 0..2 {
         let trace = crate::layout::layout(&document, &resolver).unwrap();
         assert_eq!(trace.pages.len(), 2, "borrowed layout pass {iteration}");
@@ -197,7 +197,7 @@ fn borrowed_layout_resolves_late_margin_targets_on_repeated_calls() {
         "<style>{PROFILE}@page chapter{{@top-left{{content:target-text('#target') ' ' target-counter('#target',page)}}}}h2{{page:chapter;break-before:page}}</style><p>Opening</p><h2 id=target>Destination</h2>"
     );
     let document =
-        ferri_pdf_document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
+        crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .unwrap();
     for iteration in 0..2 {
         let trace = crate::layout::layout(&document, &resolver).unwrap();
@@ -218,7 +218,7 @@ fn cyclic_target_text_fails_without_publishing_a_provisional_layout() {
         "<style>{PROFILE}#a::before{{content:target-text('#b',first-letter)}}#b::before{{content:target-text('#a',first-letter)}}</style><p id=a>A</p><p id=b>B</p>"
     );
     let document =
-        ferri_pdf_document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
+        crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .unwrap();
     assert!(
         matches!(
@@ -261,7 +261,7 @@ fn target_reference_in_an_explicit_bookmark_label_resolves() {
         "<style>{PROFILE}h2{{bookmark-label:target-text('#target') ' page ' target-counter('#target',page)}}.next{{break-before:page}}</style><h2>Opening</h2><p id=target class=next>Destination</p>"
     );
     let document =
-        ferri_pdf_document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
+        crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .unwrap();
     let (document, trace) = crate::layout::layout_document(document, &resolver).unwrap();
     assert_eq!(trace.pages.len(), 2);

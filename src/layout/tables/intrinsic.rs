@@ -1,9 +1,9 @@
 use super::{captions, model::Data};
+use crate::document::BlockBox;
 use crate::layout::LayoutError;
 use crate::layout::measure::Measurer;
 use crate::table::WidthInput;
 use crate::text::IntrinsicWidths;
-use ferri_pdf_document::BlockBox;
 use ferri_pdf_style::{BorderCollapse, LengthPercentage, Size, SizeConstraints};
 
 pub(crate) fn measure(

@@ -239,7 +239,7 @@ fn shadow_root_host_validation_and_ascii_mode_matching() {
 
 #[test]
 fn formatting_depth_limit_covers_block_inline_atomic_and_positioned_trees() {
-    use ferri_pdf_document::{BlockContent, DocumentError, StyledDocument};
+    use crate::document::{BlockContent, DocumentError, StyledDocument};
     const FORMATTING_LIMIT: usize = 512;
     const DOCUMENT_AND_PARAGRAPH_LEVELS: usize = 2;
     for (opening, closing) in [
@@ -277,7 +277,7 @@ fn formatting_depth_limit_covers_block_inline_atomic_and_positioned_trees() {
                             }
                             BlockContent::Inline(paragraph) => {
                                 text.extend(paragraph.text().chars().filter(|ch| {
-                                    *ch != ferri_pdf_document::OBJECT_REPLACEMENT_CHARACTER
+                                    *ch != crate::document::OBJECT_REPLACEMENT_CHARACTER
                                 }));
                                 pending.extend(
                                     paragraph
@@ -319,7 +319,7 @@ fn excessive_shadow_nesting_returns_an_html_tree_error() {
         assert!(
             matches!(
                 error,
-                Some(crate::Error::Html(ferri_pdf_document::DocumentError::Tree(
+                Some(crate::Error::Html(crate::document::DocumentError::Tree(
                     ferri_pdf_dom::DomError::TreeLimit {
                         resource: "shadow tree nesting",
                         limit: 64

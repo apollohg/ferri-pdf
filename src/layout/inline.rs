@@ -1,10 +1,10 @@
 //! Inline-level boxes: atomic inline measurement (CSS 2.1 §10.3.9, §10.8.1) and the
 //! painted border boxes of inline box fragments.
+use crate::document::{BlockBox, InlineBox};
 use crate::layout::LayoutError;
 use crate::layout::geometry::{Edges, inline_horizontal};
 use crate::layout::measure::{MeasuredBlock, Measurer};
 use crate::text::{AtomicMetrics, BoxFragment};
-use ferri_pdf_document::{BlockBox, InlineBox};
 use ferri_pdf_graphics::{BoxPaint, DecorationLine, DecorationPaint, DisplayItem, Rect};
 use ferri_pdf_style::Display;
 

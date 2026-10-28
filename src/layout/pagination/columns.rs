@@ -534,7 +534,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 marker: Some(Box::new(marker.clone())),
                 sliced: None,
                 canvas_root: false,
-                navigation: ferri_pdf_document::BoxNavigation::default(),
+                navigation: crate::document::BoxNavigation::default(),
             });
         }
         paginator
@@ -857,7 +857,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         group: self.group,
                         ink: None,
                         item: DisplayItem::Box(rule_paint(rule, x, top + self.offset[1], used)),
-                        navigation: ferri_pdf_document::BoxNavigation::default(),
+                        navigation: crate::document::BoxNavigation::default(),
                     });
                 }
             }

@@ -49,10 +49,7 @@ pub struct HeadingLocation {
 }
 
 impl crate::layout::LayoutTrace {
-    pub fn heading_locations(
-        &self,
-        headings: &[ferri_pdf_document::Heading],
-    ) -> Vec<HeadingLocation> {
+    pub fn heading_locations(&self, headings: &[crate::document::Heading]) -> Vec<HeadingLocation> {
         headings
             .iter()
             .filter_map(|heading| {

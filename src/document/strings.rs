@@ -1,4 +1,4 @@
-use crate::{
+use crate::document::{
     DocumentError, MAX_INLINE_TEXT_BYTES,
     content::ElementText,
     counters::{CounterSnapshot, Counters},
@@ -8,8 +8,7 @@ use ferri_pdf_style::{GeneratedContent, PseudoElement, StringAssignment, StyleEr
 use std::{collections::HashMap, sync::Arc};
 
 /// Assignments at one element's semantic position, before their page is known.
-pub struct RunningStringAssignment {
-    pub owner: ElementId,
+pub(crate) struct RunningStringAssignment {
     pub values: Vec<StringAssignment>,
 }
 
@@ -21,13 +20,13 @@ struct PendingValue {
 struct PendingOwner {
     owner: ElementId,
     values: Vec<PendingValue>,
-    before: crate::content::GeneratedText,
-    after: crate::content::GeneratedText,
+    before: crate::document::content::GeneratedText,
+    after: crate::document::content::GeneratedText,
     marker: Option<String>,
 }
 pub(crate) struct StringAssignments {
     owners: Vec<PendingOwner>,
-    tree: crate::semantics::SemanticTree,
+    tree: crate::document::semantics::SemanticTree,
     indices: HashMap<ElementId, usize>,
 }
 impl StringAssignments {
@@ -35,7 +34,7 @@ impl StringAssignments {
         Self {
             owners: Vec::new(),
             indices: HashMap::new(),
-            tree: crate::semantics::SemanticTree::new(document),
+            tree: crate::document::semantics::SemanticTree::new(document),
         }
     }
     pub(crate) fn event(
@@ -43,7 +42,7 @@ impl StringAssignments {
         element: Element<'_>,
         assignment: Option<usize>,
         visible: bool,
-    ) -> crate::SemanticEvent {
+    ) -> crate::document::SemanticEvent {
         self.tree.event(element, assignment, visible)
     }
 
@@ -51,7 +50,7 @@ impl StringAssignments {
         &self,
         element: Element<'_>,
         pseudo: PseudoElement,
-    ) -> crate::SemanticEvent {
+    ) -> crate::document::SemanticEvent {
         let mut event = self.tree.event(element, None, false);
         event.context.pseudo = Some(pseudo);
         event
@@ -101,10 +100,10 @@ impl StringAssignments {
         let owner = &mut self.owners[*index];
         match pseudo {
             PseudoElement::Before => {
-                owner.before = crate::content::GeneratedText::capture(text, style);
+                owner.before = crate::document::content::GeneratedText::capture(text, style);
             }
             PseudoElement::After => {
-                owner.after = crate::content::GeneratedText::capture(text, style);
+                owner.after = crate::document::content::GeneratedText::capture(text, style);
             }
         }
     }
@@ -139,10 +138,7 @@ impl StringAssignments {
                         })
                     })
                     .collect::<Result<_, DocumentError>>()?;
-                Ok(RunningStringAssignment {
-                    owner: owner.owner,
-                    values,
-                })
+                Ok(RunningStringAssignment { values })
             })
             .collect()
     }

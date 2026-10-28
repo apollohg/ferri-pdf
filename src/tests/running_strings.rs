@@ -90,7 +90,7 @@ fn running_strings_capture_counters_and_generated_element_content_at_assignment(
 }
 
 fn captured(css: &str, body: &str) -> Vec<Vec<(String, String)>> {
-    let document = ferri_pdf_document::StyledDocument::parse(
+    let document = crate::document::StyledDocument::parse(
         &format!("<style>{PROFILE}{css}</style>{body}"),
         &local_options().base,
         &[],
@@ -109,7 +109,7 @@ fn captured(css: &str, body: &str) -> Vec<Vec<(String, String)>> {
                         value.name.to_string(),
                         value
                             .content
-                            .page_text(2, 7, ferri_pdf_document::MAX_INLINE_TEXT_BYTES)
+                            .page_text(2, 7, crate::document::MAX_INLINE_TEXT_BYTES)
                             .expect("captured strings retain only page-dependent expressions"),
                     )
                 })

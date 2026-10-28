@@ -1,8 +1,8 @@
+use crate::document::Paragraph;
 use crate::text::{
     GlyphRun, Line, TextContext, TextError,
     line_boxes::{Slot, slot_width},
 };
-use ferri_pdf_document::Paragraph;
 use std::ops::Range;
 
 fn leader(paragraph: &Paragraph, runs: &[GlyphRun], slot: Slot) -> Option<usize> {
@@ -163,7 +163,7 @@ pub(super) fn expand(
     let mut runs = Vec::new();
     let mut mapped = vec![0; old_order.len() + 1];
     let mut position = 0.0;
-    let mut remaining = ferri_pdf_document::MAX_INLINE_TEXT_BYTES.saturating_sub(line.text.len());
+    let mut remaining = crate::document::MAX_INLINE_TEXT_BYTES.saturating_sub(line.text.len());
     let mut index = 0;
     let mut groups = groups.into_iter().peekable();
     while index < old_order.len() {
@@ -190,7 +190,7 @@ pub(super) fn expand(
                     .checked_mul(bytes)
                     .and_then(|bytes| remaining.checked_sub(bytes))
                     .ok_or(TextError::LeaderExpansionLimit {
-                        limit: ferri_pdf_document::MAX_INLINE_TEXT_BYTES,
+                        limit: crate::document::MAX_INLINE_TEXT_BYTES,
                     })?;
                 let glyphs: usize = pattern.iter().map(|run| run.glyphs.len()).sum();
                 context.spend_matching_work(

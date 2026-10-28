@@ -1,4 +1,4 @@
-use crate::{
+use crate::document::{
     formatting,
     tables::{self, Content},
 };
@@ -94,7 +94,7 @@ impl Drop for QuoteEvent {
 
 struct Selection<'a> {
     document: &'a DocumentTree,
-    generated: &'a crate::generated::GeneratedPass,
+    generated: &'a crate::document::generated::GeneratedPass,
     styles: &'a dyn PageSelection,
     quotes: Option<Rc<QuoteEvent>>,
     quote_scan: Option<QuoteDepth>,
@@ -226,7 +226,11 @@ impl Selection<'_> {
                     .position(|child| std::ptr::eq(child, *first))
             });
             match first.map(|index| children.swap_remove(index)) {
-                Some(next) if next.display().is_some_and(crate::PageBoundary::applies) => {
+                Some(next)
+                    if next
+                        .display()
+                        .is_some_and(crate::document::PageBoundary::applies) =>
+                {
                     child = next;
                 }
                 _ => return Ok((origin, before)),
@@ -304,10 +308,10 @@ impl Collector {
         }
         let whitespace = selection.styles.white_space(target)?;
         for ch in text.chars() {
-            let visible = !crate::inline::collapses_character(ch, whitespace);
+            let visible = !crate::document::inline::collapses_character(ch, whitespace);
             if visible && (ch != '\t' || selection.styles.tab_size(target)? != 0) {
                 self.text = true;
-                self.whitespace &= crate::inline::is_css_whitespace(ch);
+                self.whitespace &= crate::document::inline::is_css_whitespace(ch);
             }
         }
         Ok(())
@@ -490,13 +494,13 @@ impl Collector {
             if content.counter_requests().next().is_some() {
                 let mut counters = None;
                 bound.element_text_with_counters(
-                    crate::MAX_INLINE_TEXT_BYTES,
+                    crate::document::MAX_INLINE_TEXT_BYTES,
                     &mut |request| {
                         if let Some(text) = request.box_generation_text() {
                             return Ok(text);
                         }
                         if counters.is_none() {
-                            counters = Some(crate::counters::Counters::at(
+                            counters = Some(crate::document::counters::Counters::at(
                                 selection.document,
                                 selection.styles,
                                 source,
@@ -511,7 +515,7 @@ impl Collector {
             } else {
                 bound.element_text_with_quotes(
                     element,
-                    crate::MAX_INLINE_TEXT_BYTES,
+                    crate::document::MAX_INLINE_TEXT_BYTES,
                     &quotes,
                     &mut depth,
                 )?
@@ -587,7 +591,7 @@ impl<'a> Selection<'a> {
     fn new(
         document: &'a DocumentTree,
         styles: &'a dyn PageSelection,
-        generated: &'a crate::generated::GeneratedPass,
+        generated: &'a crate::document::generated::GeneratedPass,
     ) -> Self {
         Self {
             document,
@@ -627,7 +631,7 @@ impl<'a> Selection<'a> {
 pub(super) fn select_name(
     document: &DocumentTree,
     styles: &dyn PageSelection,
-    generated: &crate::generated::GeneratedPass,
+    generated: &crate::document::generated::GeneratedPass,
 ) -> Result<Option<Arc<str>>, StyleError> {
     let mut selection = Selection::new(document, styles, generated);
     match selection.first(false)? {
@@ -639,7 +643,7 @@ pub(super) fn select_name(
 pub(super) fn select_side(
     document: &DocumentTree,
     styles: &dyn PageSelection,
-    generated: &crate::generated::GeneratedPass,
+    generated: &crate::document::generated::GeneratedPass,
 ) -> Result<PageSide, StyleError> {
     let rtl = styles.progression_rtl()?;
     let before = Selection::new(document, styles, generated)

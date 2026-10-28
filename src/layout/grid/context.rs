@@ -1,6 +1,6 @@
 use super::{topology::Topology, tracks::TrackGeometry};
+use crate::document::BlockBox;
 use crate::layout::{LayoutError, measure::Measurer};
-use ferri_pdf_document::BlockBox;
 use ferri_pdf_style::ROWS;
 use std::{
     hash::{Hash, Hasher},

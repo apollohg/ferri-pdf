@@ -1,6 +1,6 @@
+use crate::document::Paragraph;
 use crate::text::shaping::MissingGlyphs;
 use crate::text::{GlyphRun, Piece, TextContext, TextError, line_boxes};
-use ferri_pdf_document::Paragraph;
 use ferri_pdf_style::Hyphens;
 
 pub(super) const SOFT_HYPHEN: char = '\u{00ad}';

@@ -2,6 +2,7 @@ use super::{
     Plan,
     items::{Baselines, Item},
 };
+use crate::document::{BlockBox, BlockContent};
 use crate::grid::{AvailableSpace, MaxSizing, MinSizing, SizeBounds, SizingItem};
 use crate::layout::{
     LayoutError,
@@ -12,7 +13,6 @@ use crate::layout::{
         PositionedFlow,
     },
 };
-use ferri_pdf_document::{BlockBox, BlockContent};
 use ferri_pdf_style::{Alignment, BreakBetween, COLUMNS, Overflow, ROWS};
 
 pub(crate) fn measure<'a>(

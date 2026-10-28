@@ -595,7 +595,7 @@ dependencies = [
 name = "ferri-pdf"
 version = "0.1.0"
 dependencies = [
- "ferri-pdf-document",
+ "encoding_rs",
  "ferri-pdf-dom",
  "ferri-pdf-fonts",
  "ferri-pdf-graphics",
@@ -609,6 +609,7 @@ dependencies = [
  "fontdb",
  "icu_locale_core",
  "icu_properties",
+ "percent-encoding",
  "roxmltree",
  "rustybuzz",
  "same-file",
@@ -635,24 +636,6 @@ dependencies = [
  "rav1d",
  "rgb",
  "yuv",
-]
-
-[[package]]
-name = "ferri-pdf-document"
-version = "0.1.0"
-dependencies = [
- "encoding_rs",
- "ferri-pdf-dom",
- "ferri-pdf-graphics",
- "ferri-pdf-icu-casemap",
- "ferri-pdf-images",
- "ferri-pdf-resources",
- "ferri-pdf-style",
- "icu_locale_core",
- "icu_properties",
- "percent-encoding",
- "thiserror",
- "unicode-segmentation",
 ]
 
 [[package]]

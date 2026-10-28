@@ -18,7 +18,7 @@ const PAGE_AREA: Rect = Rect {
 
 #[test]
 fn formatting_preserves_computed_background_and_border_image_urls() {
-    use ferri_pdf_document::{BlockContent, StyledDocument};
+    use crate::document::{BlockContent, StyledDocument};
     use ferri_pdf_resources::FileResolver;
     let settings = options();
     let reference = settings
@@ -567,7 +567,7 @@ fn stylesheet_urls_resolve_against_the_stylesheet_and_inline_urls_against_the_do
 
 #[test]
 fn page_document_and_margin_backgrounds_share_images_without_mutating_computed_urls() {
-    use ferri_pdf_document::StyledDocument;
+    use crate::document::StyledDocument;
     const IMAGE: &str = "https://example.test/shared.png";
     let resolver = RecordingResolver {
         requests: Mutex::default(),

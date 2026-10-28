@@ -22,8 +22,8 @@ mod source;
 mod strings;
 mod tables;
 mod work;
+use crate::document::StyledDocument;
 use crate::text::{GlyphRun, TextContext, TextError};
-use ferri_pdf_document::StyledDocument;
 use ferri_pdf_fonts::FontDescriptor;
 use ferri_pdf_graphics::{Color, DisplayItem, Rect};
 use ferri_pdf_resources::ResourceResolver;
@@ -99,14 +99,14 @@ pub(crate) fn layout_document(
 
 struct LayoutPass {
     trace: LayoutTrace,
-    generated: Option<ferri_pdf_document::GeneratedValues>,
+    generated: Option<crate::document::GeneratedValues>,
 }
 
 fn stabilize(
     mut document: StyledDocument,
     resolver: &dyn ResourceResolver,
     budget: &work::Budget,
-    mut previous: Vec<ferri_pdf_document::GeneratedValues>,
+    mut previous: Vec<crate::document::GeneratedValues>,
 ) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
     loop {
         let LayoutPass { trace, generated } = layout_pass(&document, resolver, budget.clone())?;
@@ -251,7 +251,7 @@ pub(crate) enum LayoutError {
     #[error("{0}")]
     Style(#[from] ferri_pdf_style::StyleError),
     #[error("{0}")]
-    Document(#[from] ferri_pdf_document::DocumentError),
+    Document(#[from] crate::document::DocumentError),
     #[error("{0}")]
     Image(#[from] ferri_pdf_images::ImageError),
     #[error("layout exceeds {limit} pages")]

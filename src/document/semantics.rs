@@ -3,7 +3,7 @@ use std::{collections::HashMap, ops::Range};
 
 /// An element's logical position, independent of painted boxes and glyphs.
 #[derive(Clone, Debug)]
-pub struct SemanticEvent {
+pub(crate) struct SemanticEvent {
     pub order: Range<usize>,
     pub context: ferri_pdf_style::PageStyleTarget,
     pub assignment: Option<usize>,
@@ -55,7 +55,7 @@ impl SemanticTree {
 }
 
 #[derive(Clone, Debug)]
-pub struct InlineEvent {
+pub(crate) struct InlineEvent {
     pub offset: usize,
     pub event: SemanticEvent,
     pub(crate) anchors_before: usize,

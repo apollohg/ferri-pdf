@@ -21,7 +21,7 @@ struct FloatTrial {
 #[derive(Clone)]
 pub(super) struct ParagraphCursor<'a, 't> {
     index: usize,
-    source: &'a ferri_pdf_document::Paragraph,
+    source: &'a crate::document::Paragraph,
     style: &'a ferri_pdf_style::Style,
     prepared: Option<Rc<crate::text::PreparedParagraph<'a, 't, 't>>>,
     positions: std::vec::IntoIter<crate::text::TextPosition<'a>>,
@@ -47,7 +47,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
     fn place_inline_float(
         &mut self,
         measured: floats::MeasuredFloat<'a>,
-        anchor: &ferri_pdf_document::Anchor,
+        anchor: &crate::document::Anchor,
         geometry: [f32; 3],
         layers: &mut InlineLayers<'a>,
     ) -> Result<(), LayoutError> {
@@ -525,7 +525,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 }
                 let text_start = source.text()[line.range.clone()]
                     .char_indices()
-                    .find(|(_, ch)| !ferri_pdf_document::is_css_whitespace(*ch))
+                    .find(|(_, ch)| !crate::document::is_css_whitespace(*ch))
                     .map(|(offset, _)| line.range.start + offset);
                 for event in source
                     .semantic_events()

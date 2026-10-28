@@ -1,6 +1,6 @@
 //! Document metadata from the HTML head (HTML §4.2.2, §4.2.5.1, §4.2.5.2) and the root
 //! element's language (HTML §3.2.6.2).
-use crate::content::collapse;
+use crate::document::content::collapse;
 use ferri_pdf_dom::{DocumentTree, HTML_NAMESPACE};
 
 const TITLE_ELEMENT: &str = "title";
@@ -15,7 +15,7 @@ const GENERATOR: &str = "generator";
 const KEYWORD_SEPARATOR: char = ',';
 
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
-pub struct DocumentMetadata {
+pub(crate) struct DocumentMetadata {
     /// The first `title` element's text with white space stripped and collapsed.
     pub title: Option<String>,
     /// Every `author` name, each naming one of the authors.

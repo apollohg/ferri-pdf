@@ -1,5 +1,5 @@
+use crate::document::BlockBox;
 use crate::layout::{LayoutError, measure::Measurer};
-use ferri_pdf_document::BlockBox;
 use ferri_pdf_style::{LengthPercentage, Size};
 use std::rc::Rc;
 

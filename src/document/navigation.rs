@@ -1,6 +1,6 @@
 //! Hyperlinks and their same-document targets (HTML §4.6.4, §7.4.6.4) and bookmarks
 //! (CSS GCPM 3 §4), located later by the boxes that carry them.
-use crate::{DocumentError, MAX_INLINE_TEXT_BYTES, content::element_text};
+use crate::document::{DocumentError, MAX_INLINE_TEXT_BYTES, content::element_text};
 use ferri_pdf_dom::{DocumentTree, Element, ElementId};
 use ferri_pdf_resources::{ResourceBase, Url};
 use ferri_pdf_style::{GeneratedContent, PseudoElement, QuoteDepth, Quotes, Style};
@@ -16,20 +16,20 @@ const TOP_FRAGMENT: &str = "top";
 
 /// The hyperlink and destination a generated box belongs to.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct BoxNavigation {
+pub(crate) struct BoxNavigation {
     /// The innermost hyperlink containing the box, as an index into [`Navigation::links`].
     pub link: Option<usize>,
     /// The destination of the box's element, located by its first box fragment.
     pub destination: Option<usize>,
 }
 impl BoxNavigation {
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         self.link.is_none() && self.destination.is_none()
     }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub enum LinkTarget {
+pub(crate) enum LinkTarget {
     /// An absolute URL in its URL Standard serialization.
     Uri(String),
     /// An element of this document.
@@ -39,7 +39,7 @@ pub enum LinkTarget {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub struct Bookmark {
+pub(crate) struct Bookmark {
     pub level: usize,
     pub label: String,
     /// `bookmark-state: open`.
@@ -57,7 +57,7 @@ pub struct Heading {
 
 /// Fragment targets retained for cross-document navigation.
 #[derive(Debug)]
-pub struct FragmentTargets {
+pub(crate) struct FragmentTargets {
     pub document_url: Option<Url>,
     pub root: usize,
     pub ids: BTreeMap<String, usize>,
@@ -65,13 +65,17 @@ pub struct FragmentTargets {
 }
 impl FragmentTargets {
     /// None means an external URL; Some(None) means a missing target in this document.
-    pub fn resolve_url(&self, reference: &str) -> Option<Option<usize>> {
+    #[expect(
+        clippy::option_option,
+        reason = "external URLs and missing same-document targets resolve differently"
+    )]
+    pub(crate) fn resolve_url(&self, reference: &str) -> Option<Option<usize>> {
         let url = Url::parse(reference).ok()?;
         let document = without_fragment(self.document_url.clone()?);
         (without_fragment(url.clone()) == document).then(|| self.resolve(url.fragment()))
     }
 
-    pub fn resolve(&self, fragment: Option<&str>) -> Option<usize> {
+    pub(crate) fn resolve(&self, fragment: Option<&str>) -> Option<usize> {
         indicated(
             fragment,
             |name| self.ids.get(name).or_else(|| self.names.get(name)).copied(),
@@ -82,7 +86,7 @@ impl FragmentTargets {
 
 /// Hyperlinks, and bookmarks in document order.
 #[derive(Debug, Default)]
-pub struct Navigation {
+pub(crate) struct Navigation {
     pub links: Vec<LinkTarget>,
     pub bookmarks: Vec<Bookmark>,
     pub headings: Vec<Heading>,
@@ -166,12 +170,12 @@ struct PendingLabel {
     index: Option<usize>,
     heading: Option<usize>,
     content: GeneratedContent,
-    counters: crate::counters::CounterSnapshot,
+    counters: crate::document::counters::CounterSnapshot,
     quotes: Quotes,
     marker: Option<String>,
     depth: QuoteDepth,
-    before: crate::content::GeneratedText,
-    after: crate::content::GeneratedText,
+    before: crate::document::content::GeneratedText,
+    after: crate::document::content::GeneratedText,
 }
 impl NavigationBuilder {
     pub(crate) fn new(
@@ -292,7 +296,7 @@ impl NavigationBuilder {
         style: &Style,
         marker: Option<&str>,
         depth: QuoteDepth,
-        counters: crate::counters::CounterSnapshot,
+        counters: crate::document::counters::CounterSnapshot,
         navigation: &mut BoxNavigation,
     ) {
         let heading_level = element.heading_level();
@@ -349,10 +353,10 @@ impl NavigationBuilder {
         if let Some(label) = self.labels.get_mut(&element.id()) {
             match pseudo {
                 PseudoElement::Before => {
-                    label.before = crate::content::GeneratedText::capture(text, style);
+                    label.before = crate::document::content::GeneratedText::capture(text, style);
                 }
                 PseudoElement::After => {
-                    label.after = crate::content::GeneratedText::capture(text, style);
+                    label.after = crate::document::content::GeneratedText::capture(text, style);
                 }
             }
         }
@@ -360,7 +364,7 @@ impl NavigationBuilder {
     pub(crate) fn finish(
         mut self,
         html: &DocumentTree,
-        generated: &crate::generated::GeneratedReferences,
+        generated: &crate::document::generated::GeneratedReferences,
     ) -> Result<Navigation, DocumentError> {
         for (id, mut input) in self.labels {
             input.content = generated
@@ -429,7 +433,7 @@ fn label(
     input: &PendingLabel,
     known_text: Option<&str>,
 ) -> Result<String, DocumentError> {
-    let mut content = crate::content::ElementText::new(
+    let mut content = crate::document::content::ElementText::new(
         element,
         known_text,
         &input.before,

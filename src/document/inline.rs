@@ -1,14 +1,14 @@
 mod transform;
 mod transform_maps;
-use crate::DocumentError;
+use crate::document::DocumentError;
 use ferri_pdf_style::{Clear, Style, TextAlign, WhiteSpace};
 use std::ops::Range;
 
-pub const MAX_INLINE_TEXT_BYTES: usize = 64 * 1024 * 1024;
+pub(crate) const MAX_INLINE_TEXT_BYTES: usize = 64 * 1024 * 1024;
 /// Stands for an atomic inline in paragraph text (CSS Text 3 §5.1).
-pub const OBJECT_REPLACEMENT_CHARACTER: char = '\u{fffc}';
+pub(crate) const OBJECT_REPLACEMENT_CHARACTER: char = '\u{fffc}';
 
-pub struct TextSpan {
+pub(crate) struct TextSpan {
     pub range: Range<usize>,
     pub style: Style,
     /// Innermost inline box containing the text; `None` is the paragraph's root inline box.
@@ -19,7 +19,7 @@ pub struct TextSpan {
     source: usize,
 }
 /// Non-replaced inline box (CSS 2.1 §9.2.2), stored in tree order.
-pub struct InlineBox {
+pub(crate) struct InlineBox {
     pub range: Range<usize>,
     pub style: Style,
     pub decoration: ferri_pdf_graphics::BoxDecoration,
@@ -29,7 +29,7 @@ pub struct InlineBox {
     /// Whether the box continues before its start and after its end in other paragraphs,
     /// having been split around block-level content (CSS 2.1 §9.2.1.1).
     pub continued: [bool; 2],
-    pub navigation: crate::BoxNavigation,
+    pub navigation: crate::document::BoxNavigation,
     pub canvas_source: bool,
 }
 impl InlineBox {
@@ -40,17 +40,17 @@ impl InlineBox {
     }
 }
 /// A float, absolute-position anchor, or atomic-inline placeholder at a source offset.
-pub struct Anchor {
+pub(crate) struct Anchor {
     pub offset: usize,
-    pub block: crate::BlockBox,
+    pub block: crate::document::BlockBox,
     /// Innermost inline box containing the anchor; `None` is the paragraph's root inline box.
     pub inline_box: Option<usize>,
 }
-pub struct InlineLink {
+pub(crate) struct InlineLink {
     pub range: Range<usize>,
     pub link: usize,
 }
-pub struct Paragraph {
+pub(crate) struct Paragraph {
     expanded_tabs: Vec<Range<usize>>,
     pub(crate) marker_image: Option<ferri_pdf_graphics::BackgroundImage>,
     pub(crate) first_formatted_line: bool,
@@ -63,16 +63,17 @@ pub struct Paragraph {
     optional_breaks: Vec<usize>,
     clearances: Vec<(usize, Clear, bool)>,
     links: Vec<InlineLink>,
-    events: Vec<crate::InlineEvent>,
+    events: Vec<crate::document::InlineEvent>,
 }
 impl Paragraph {
-    pub fn generated(text: &str, style: &Style) -> Result<Option<Self>, DocumentError> {
+    #[cfg(test)]
+    pub(crate) fn generated(text: &str, style: &Style) -> Result<Option<Self>, DocumentError> {
         let mut collector = InlineCollector::default();
         collector.append(text, style)?;
         Ok(collector.finish(style)?.ok())
     }
 
-    pub fn generated_output(
+    pub(crate) fn generated_output(
         output: &ferri_pdf_style::GeneratedOutput,
         style: &Style,
     ) -> Result<Option<Self>, DocumentError> {
@@ -113,14 +114,14 @@ impl Paragraph {
         transform::apply(&mut paragraph)?;
         Ok(paragraph)
     }
-    pub fn marker_image(&self) -> Option<&ferri_pdf_graphics::BackgroundImage> {
+    pub(crate) fn marker_image(&self) -> Option<&ferri_pdf_graphics::BackgroundImage> {
         self.marker_image.as_ref()
     }
-    pub fn expanded_tabs(&self) -> &[Range<usize>] {
+    pub(crate) fn expanded_tabs(&self) -> &[Range<usize>] {
         &self.expanded_tabs
     }
     /// CSS list marker default object size is one em square.
-    pub fn marker_image_size(&self) -> Option<[f32; 2]> {
+    pub(crate) fn marker_image_size(&self) -> Option<[f32; 2]> {
         use ferri_pdf_graphics::{BackgroundImage, NaturalDimensions, POINTS_PER_PIXEL};
         let natural = match self.marker_image.as_ref()? {
             BackgroundImage::Image { image } => {
@@ -139,33 +140,33 @@ impl Paragraph {
             [self.style.size; 2],
         ))
     }
-    pub fn first_formatted_line(&self) -> bool {
+    pub(crate) fn first_formatted_line(&self) -> bool {
         self.first_formatted_line
     }
-    pub fn text(&self) -> &str {
+    pub(crate) fn text(&self) -> &str {
         &self.text
     }
-    pub fn style(&self) -> &Style {
+    pub(crate) fn style(&self) -> &Style {
         &self.style
     }
-    pub fn spans(&self) -> &[TextSpan] {
+    pub(crate) fn spans(&self) -> &[TextSpan] {
         &self.spans
     }
-    pub fn anchors(&self) -> &[Anchor] {
+    pub(crate) fn anchors(&self) -> &[Anchor] {
         &self.anchors
     }
-    pub fn boxes(&self) -> &[InlineBox] {
+    pub(crate) fn boxes(&self) -> &[InlineBox] {
         &self.boxes
     }
     /// Atomic inlines in text order; each `offset` holds an [`OBJECT_REPLACEMENT_CHARACTER`].
-    pub fn atomics(&self) -> &[Anchor] {
+    pub(crate) fn atomics(&self) -> &[Anchor] {
         &self.atomics
     }
-    pub fn optional_breaks(&self) -> &[usize] {
+    pub(crate) fn optional_breaks(&self) -> &[usize] {
         &self.optional_breaks
     }
     /// Float clearance at the source position after a forced line break, with its direction.
-    pub fn clearance_at(&self, offset: usize) -> (Clear, bool) {
+    pub(crate) fn clearance_at(&self, offset: usize) -> (Clear, bool) {
         self.clearances
             .binary_search_by_key(&offset, |value| value.0)
             .ok()
@@ -174,25 +175,25 @@ impl Paragraph {
                 (clear, rtl)
             })
     }
-    pub fn links(&self) -> &[InlineLink] {
+    pub(crate) fn links(&self) -> &[InlineLink] {
         &self.links
     }
     /// Whether `inner` (an inline box, or `None` for the root) lies inside box `outer`.
-    pub fn is_within(&self, inner: Option<usize>, outer: usize) -> bool {
+    pub(crate) fn is_within(&self, inner: Option<usize>, outer: usize) -> bool {
         inner.is_some_and(|inner| (outer..=outer + self.boxes[outer].descendants).contains(&inner))
     }
-    pub fn semantic_events(&self) -> &[crate::InlineEvent] {
+    pub(crate) fn semantic_events(&self) -> &[crate::document::InlineEvent] {
         &self.events
     }
-    pub(crate) fn into_non_text(self) -> Vec<crate::BlockContent> {
+    pub(crate) fn into_non_text(self) -> Vec<crate::document::BlockContent> {
         non_text(self.anchors, self.events)
     }
-    pub fn leader_at(&self, offset: usize) -> bool {
+    pub(crate) fn leader_at(&self, offset: usize) -> bool {
         self.spans
             .get(self.spans.partition_point(|span| span.range.end <= offset))
             .is_some_and(|span| span.leader)
     }
-    pub fn style_at(&self, offset: usize) -> &Style {
+    pub(crate) fn style_at(&self, offset: usize) -> &Style {
         self.spans
             .get(self.spans.partition_point(|span| span.range.end <= offset))
             .map_or(&self.style, |span| &span.style)
@@ -234,13 +235,13 @@ pub(crate) struct InlineCollector {
     open_box: Option<usize>,
     after_space: Vec<Mark>,
     links: Vec<InlineLink>,
-    events: Vec<crate::InlineEvent>,
+    events: Vec<crate::document::InlineEvent>,
     open_links: Vec<Option<usize>>,
 }
 impl InlineCollector {
-    pub(crate) fn semantic_event(&mut self, event: crate::SemanticEvent) {
+    pub(crate) fn semantic_event(&mut self, event: crate::document::SemanticEvent) {
         let index = self.events.len();
-        self.events.push(crate::InlineEvent {
+        self.events.push(crate::document::InlineEvent {
             offset: self.text.len(),
             event,
             anchors_before: self.anchors.len(),
@@ -356,7 +357,7 @@ impl InlineCollector {
         }
     }
     /// Anchors an out-of-flow box at the current inline source position.
-    pub(crate) fn anchor(&mut self, block: crate::BlockBox) {
+    pub(crate) fn anchor(&mut self, block: crate::document::BlockBox) {
         self.mark(Mark::Anchor(self.anchors.len()));
         self.anchors.push(Anchor {
             offset: self.text.len(),
@@ -369,7 +370,7 @@ impl InlineCollector {
         &mut self,
         style: &Style,
         decoration: ferri_pdf_graphics::BoxDecoration,
-        navigation: crate::BoxNavigation,
+        navigation: crate::document::BoxNavigation,
         canvas_source: bool,
     ) {
         self.open_continued(style, decoration, navigation, false, canvas_source);
@@ -378,7 +379,7 @@ impl InlineCollector {
         &mut self,
         style: &Style,
         decoration: ferri_pdf_graphics::BoxDecoration,
-        navigation: crate::BoxNavigation,
+        navigation: crate::document::BoxNavigation,
         continued: bool,
         canvas_source: bool,
     ) {
@@ -471,7 +472,7 @@ impl InlineCollector {
     /// Places an atomic inline in the line, as a placeholder styled by its parent `style`.
     pub(crate) fn atomic(
         &mut self,
-        block: crate::BlockBox,
+        block: crate::document::BlockBox,
         style: &Style,
     ) -> Result<(), DocumentError> {
         self.emit_pending_space()?;
@@ -573,7 +574,7 @@ impl InlineCollector {
     pub(crate) fn finish(
         self,
         style: &Style,
-    ) -> Result<Result<Paragraph, Vec<crate::BlockContent>>, DocumentError> {
+    ) -> Result<Result<Paragraph, Vec<crate::document::BlockContent>>, DocumentError> {
         if (self.text.is_empty()
             || (self.spans.iter().any(|span| span.leader)
                 && self
@@ -608,7 +609,10 @@ impl InlineCollector {
     }
 }
 
-fn non_text(anchors: Vec<Anchor>, events: Vec<crate::InlineEvent>) -> Vec<crate::BlockContent> {
+fn non_text(
+    anchors: Vec<Anchor>,
+    events: Vec<crate::document::InlineEvent>,
+) -> Vec<crate::document::BlockContent> {
     let mut output = Vec::new();
     let mut events = events.into_iter().peekable();
     for (index, anchor) in anchors.into_iter().enumerate() {
@@ -617,18 +621,18 @@ fn non_text(anchors: Vec<Anchor>, events: Vec<crate::InlineEvent>) -> Vec<crate:
                 .map(|event| event.event)
                 .collect();
         if !pending.is_empty() {
-            output.push(crate::BlockContent::Events(pending));
+            output.push(crate::document::BlockContent::Events(pending));
         }
-        output.push(crate::BlockContent::Positioned(anchor.block));
+        output.push(crate::document::BlockContent::Positioned(anchor.block));
     }
     let remaining: Vec<_> = events.map(|event| event.event).collect();
     if !remaining.is_empty() {
-        output.push(crate::BlockContent::Events(remaining));
+        output.push(crate::document::BlockContent::Events(remaining));
     }
     output
 }
 
-pub fn is_css_whitespace(ch: char) -> bool {
+pub(crate) fn is_css_whitespace(ch: char) -> bool {
     matches!(ch, ' ' | '\t' | '\r' | '\n' | '\u{c}')
 }
 

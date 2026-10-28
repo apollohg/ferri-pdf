@@ -1,4 +1,4 @@
-use crate::{
+use crate::document::{
     MAX_INLINE_TEXT_BYTES,
     content::{ElementText, GeneratedText},
     counters::{CounterSnapshot, Counters},
@@ -16,7 +16,7 @@ use std::{
 };
 
 #[derive(Clone, Default, PartialEq, Eq)]
-pub struct GeneratedValues {
+pub(crate) struct GeneratedValues {
     targets: HashMap<TargetRequest, String>,
     strings: HashMap<(PageStyleTarget, NamedStringRequest), String>,
 }

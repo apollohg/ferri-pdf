@@ -1,4 +1,4 @@
-use ferri_pdf_document::BlockBox;
+use crate::document::BlockBox;
 use ferri_pdf_style::BreakBetween;
 use std::{collections::HashMap, ops::Range};
 

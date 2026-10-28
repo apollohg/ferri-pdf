@@ -100,7 +100,6 @@ thiserror = "2"
 ferri-pdf-fonts = { path = "crates/fonts", version = "0.1.0" }
 ferri-pdf-resources = { path = "crates/resources", version = "0.1.0", default-features = false }
 ferri-pdf-style = { path = "crates/style", version = "0.1.0" }
-ferri-pdf-document = { path = "crates/document", version = "0.1.0" }
 ferri-pdf-graphics = { path = "crates/graphics", version = "0.1.0" }
 ferri-pdf-paint = { path = "crates/paint", version = "0.1.0" }
 
@@ -130,7 +129,6 @@ ferri-pdf-images.workspace = true
 ferri-pdf-fonts.workspace = true
 ferri-pdf-resources.workspace = true
 ferri-pdf-style.workspace = true
-ferri-pdf-document.workspace = true
 ferri-pdf-graphics.workspace = true
 thiserror.workspace = true
 serde_json.workspace = true
@@ -151,6 +149,9 @@ unicode-bidi.workspace = true
 unicode-linebreak.workspace = true
 unicode-script.workspace = true
 unicode-segmentation.workspace = true
+ferri-pdf-dom.workspace = true
+encoding_rs.workspace = true
+percent-encoding.workspace = true
 
 [dev-dependencies]
 roxmltree.workspace = true

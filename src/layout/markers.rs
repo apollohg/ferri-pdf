@@ -1,6 +1,6 @@
+use crate::document::Paragraph;
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, TextLine};
-use ferri_pdf_document::Paragraph;
 
 #[derive(Clone)]
 pub(super) struct MeasuredMarker {

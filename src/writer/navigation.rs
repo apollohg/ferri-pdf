@@ -1,8 +1,8 @@
 //! Link annotations (PDF 1.7 §12.5.6.5), the document outline (§12.3.3) and the document
 //! information dictionary with its XMP counterpart (§14.3).
+use crate::document::{Bookmark, DocumentMetadata, LinkTarget};
 use crate::layout::{Destination, LinkArea, LinkShape};
 use crate::writer::PdfError;
-use ferri_pdf_document::{Bookmark, DocumentMetadata, LinkTarget};
 use krilla::{
     action::LinkAction,
     annotation::{LinkAnnotation, Target},

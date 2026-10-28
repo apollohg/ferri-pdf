@@ -1,7 +1,7 @@
 //! HTML loading, stylesheet discovery, and styled document construction.
 mod content;
 mod counters;
-pub mod encoding;
+pub(crate) mod encoding;
 mod first_page;
 mod formatting;
 mod generated;
@@ -20,17 +20,17 @@ use ferri_pdf_dom::DocumentTree;
 use ferri_pdf_resources::{ResourceError, ResourceResolver};
 use ferri_pdf_style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 
-pub use formatting::{BlockBox, BlockContent, PageBox, PageMarginBox};
-pub use generated::GeneratedValues;
-pub use inline::{
-    Anchor, InlineBox, InlineLink, MAX_INLINE_TEXT_BYTES, OBJECT_REPLACEMENT_CHARACTER, Paragraph,
-    TextSpan, is_css_whitespace,
+pub(crate) use formatting::{BlockBox, BlockContent, PageBox, PageMarginBox};
+pub(crate) use generated::GeneratedValues;
+pub(crate) use inline::{
+    Anchor, InlineBox, MAX_INLINE_TEXT_BYTES, OBJECT_REPLACEMENT_CHARACTER, Paragraph,
+    is_css_whitespace,
 };
-pub use metadata::DocumentMetadata;
-pub use navigation::{Bookmark, BoxNavigation, FragmentTargets, Heading, LinkTarget, Navigation};
-pub use page::PageBoundary;
-pub use semantics::{InlineEvent, SemanticEvent};
-pub use strings::RunningStringAssignment;
+pub(crate) use metadata::DocumentMetadata;
+pub(crate) use navigation::{Bookmark, BoxNavigation, Heading, LinkTarget, Navigation};
+pub(crate) use page::PageBoundary;
+pub(crate) use semantics::{InlineEvent, SemanticEvent};
+pub(crate) use strings::RunningStringAssignment;
 
 #[derive(Debug, thiserror::Error)]
 pub enum DocumentError {
@@ -73,7 +73,7 @@ pub enum DocumentDiagnostic {
 }
 
 /// An owned document whose text and style ranges have been resolved together.
-pub struct StyledDocument {
+pub(crate) struct StyledDocument {
     root: BlockBox,
     styles: Stylesheet,
     diagnostics: Vec<DocumentDiagnostic>,
@@ -123,7 +123,7 @@ impl FormattingSource {
 
 /// Borrowed inputs shared by string and byte document parsing.
 #[derive(Clone, Copy)]
-pub struct ParseOptions<'a> {
+pub(crate) struct ParseOptions<'a> {
     pub base: &'a ferri_pdf_resources::ResourceBase,
     pub additional: &'a [String],
     pub user: &'a [String],
@@ -139,7 +139,8 @@ struct HtmlInput {
 }
 
 impl StyledDocument {
-    pub fn parse(
+    #[cfg(test)]
+    pub(crate) fn parse(
         html: &str,
         base: &ferri_pdf_resources::ResourceBase,
         additional: &[String],
@@ -148,7 +149,8 @@ impl StyledDocument {
         Self::parse_with_origins(html, base, additional, &[], resolver)
     }
 
-    pub fn parse_with_origins(
+    #[cfg(test)]
+    pub(crate) fn parse_with_origins(
         html: &str,
         base: &ferri_pdf_resources::ResourceBase,
         additional: &[String],
@@ -165,7 +167,7 @@ impl StyledDocument {
         )
     }
 
-    pub fn parse_with_settings(
+    pub(crate) fn parse_with_settings(
         html: &str,
         base: &ferri_pdf_resources::ResourceBase,
         additional: &[String],
@@ -186,7 +188,7 @@ impl StyledDocument {
         )
     }
 
-    pub fn parse_with_options(
+    pub(crate) fn parse_with_options(
         html: &str,
         options: &ParseOptions<'_>,
         resolver: &dyn ResourceResolver,
@@ -203,33 +205,7 @@ impl StyledDocument {
         )
     }
 
-    pub fn parse_bytes(
-        bytes: &[u8],
-        base: &ferri_pdf_resources::ResourceBase,
-        additional: &[String],
-        resolver: &dyn ResourceResolver,
-    ) -> Result<Self, DocumentError> {
-        Self::parse_bytes_with_origins(bytes, base, additional, &[], resolver)
-    }
-
-    pub fn parse_bytes_with_origins(
-        bytes: &[u8],
-        base: &ferri_pdf_resources::ResourceBase,
-        additional: &[String],
-        user: &[String],
-        resolver: &dyn ResourceResolver,
-    ) -> Result<Self, DocumentError> {
-        Self::parse_bytes_with_settings(
-            bytes,
-            base,
-            additional,
-            user,
-            &PrintSettings::default(),
-            resolver,
-        )
-    }
-
-    pub fn parse_bytes_with_settings(
+    pub(crate) fn parse_bytes_with_settings(
         bytes: &[u8],
         base: &ferri_pdf_resources::ResourceBase,
         additional: &[String],
@@ -250,7 +226,7 @@ impl StyledDocument {
         )
     }
 
-    pub fn parse_bytes_with_options(
+    pub(crate) fn parse_bytes_with_options(
         bytes: &[u8],
         options: &ParseOptions<'_>,
         resolver: &dyn ResourceResolver,
@@ -372,7 +348,7 @@ impl StyledDocument {
         })
     }
 
-    pub fn resolve_generated(
+    pub(crate) fn resolve_generated(
         &self,
         pages: usize,
         destinations: &[Option<usize>],
@@ -398,7 +374,8 @@ impl StyledDocument {
     }
 
     /// Creates independent formatting state for a borrowed deferred-layout request.
-    pub fn fork_for_layout(
+    #[cfg(test)]
+    pub(crate) fn fork_for_layout(
         &self,
         values: GeneratedValues,
         resolver: &dyn ResourceResolver,
@@ -427,7 +404,7 @@ impl StyledDocument {
         })
     }
 
-    pub fn reformat(
+    pub(crate) fn reformat(
         &mut self,
         values: GeneratedValues,
         resolver: &dyn ResourceResolver,
@@ -457,7 +434,7 @@ impl StyledDocument {
         Ok(())
     }
 
-    pub fn into_diagnostics(mut self) -> Vec<DocumentDiagnostic> {
+    pub(crate) fn into_diagnostics(mut self) -> Vec<DocumentDiagnostic> {
         self.diagnostics.extend(
             self.pages
                 .images()
@@ -469,11 +446,11 @@ impl StyledDocument {
         self.diagnostics
     }
 
-    pub fn page_box(&self) -> &PageBox {
+    pub(crate) fn page_box(&self) -> &PageBox {
         self.pages.first()
     }
 
-    pub fn resolve_page(
+    pub(crate) fn resolve_page(
         &self,
         request: ferri_pdf_style::PageRequest,
         resolver: &dyn ResourceResolver,
@@ -482,60 +459,26 @@ impl StyledDocument {
             .resolve(&self.styles, self.root.style(), request, resolver)
     }
 
-    pub fn root(&self) -> &BlockBox {
+    pub(crate) fn root(&self) -> &BlockBox {
         &self.root
     }
-    pub fn styles(&self) -> &Stylesheet {
+    pub(crate) fn styles(&self) -> &Stylesheet {
         &self.styles
     }
-    pub fn navigation(&self) -> &Navigation {
+    pub(crate) fn navigation(&self) -> &Navigation {
         &self.navigation
     }
     /// Document-order string assignments with element values captured and page values deferred.
-    pub fn running_strings(&self) -> &[RunningStringAssignment] {
+    pub(crate) fn running_strings(&self) -> &[RunningStringAssignment] {
         &self.running_strings
     }
-    pub fn metadata(&self) -> &DocumentMetadata {
+    pub(crate) fn metadata(&self) -> &DocumentMetadata {
         &self.metadata
     }
-    pub fn canvas_background(&self) -> &ferri_pdf_graphics::BoxDecoration {
+    pub(crate) fn canvas_background(&self) -> &ferri_pdf_graphics::BoxDecoration {
         &self.canvas
     }
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-    use ferri_pdf_resources::FileResolver;
-
-    fn paragraphs<'a>(block: &'a BlockBox, output: &mut Vec<&'a Paragraph>) {
-        for child in block.children() {
-            match child {
-                BlockContent::Events(_) => {}
-                BlockContent::Block(child) | BlockContent::Positioned(child) => {
-                    paragraphs(child, output);
-                }
-                BlockContent::Inline(paragraph) => output.push(paragraph),
-            }
-        }
-    }
-
-    #[test]
-    fn html_newline_normalization_does_not_reinterpret_preserved_character_references() {
-        let document = StyledDocument::parse(
-            "<pre>A&#13;B\rC</pre>",
-            &ferri_pdf_resources::ResourceBase::default(),
-            &[],
-            &FileResolver::default(),
-        )
-        .unwrap();
-        let mut content = Vec::new();
-        paragraphs(document.root(), &mut content);
-        assert_eq!(content.len(), 1);
-        assert_eq!(
-            content[0].text(),
-            "A\rB\nC",
-            "literal CR is normalized by HTML parsing; an entity-produced control remains a font-coverage decision, not an invented forced line break"
-        );
-    }
-}
+mod tests;

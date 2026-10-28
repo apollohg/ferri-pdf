@@ -316,7 +316,7 @@
       ],
       "implementation_files": [
         "src/lib.rs",
-        "crates/document/src/lib.rs",
+        "src/document/mod.rs",
         "crates/style/src/stylesheet.rs",
         "crates/resources/src/lib.rs"
       ],
@@ -349,7 +349,7 @@
       ],
       "implementation_files": [
         "src/lib.rs",
-        "crates/document/src/lib.rs",
+        "src/document/mod.rs",
         "crates/style/src/stylesheet.rs",
         "crates/resources/src/lib.rs"
       ],
@@ -379,7 +379,7 @@
       ],
       "implementation_files": [
         "src/lib.rs",
-        "crates/document/src/lib.rs",
+        "src/document/mod.rs",
         "crates/style/src/stylesheet.rs",
         "crates/resources/src/lib.rs"
       ],
@@ -2197,7 +2197,7 @@
         "crates/dom/src/lib.rs",
         "crates/style/src/selector.rs",
         "crates/style/src/cascade.rs",
-        "crates/document/src/lib.rs"
+        "src/document/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2233,7 +2233,7 @@
         "crates/dom/src/lib.rs",
         "crates/style/src/selector.rs",
         "crates/style/src/cascade.rs",
-        "crates/document/src/lib.rs"
+        "src/document/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2267,7 +2267,7 @@
         "crates/dom/src/lib.rs",
         "crates/style/src/selector.rs",
         "crates/style/src/cascade.rs",
-        "crates/document/src/lib.rs"
+        "src/document/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2297,7 +2297,7 @@
         "crates/dom/src/lib.rs",
         "crates/style/src/selector.rs",
         "crates/style/src/cascade.rs",
-        "crates/document/src/lib.rs"
+        "src/document/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3345,7 +3345,7 @@
       "implementation_files": [
         "crates/dom/src/lib.rs",
         "crates/style/src/selector.rs",
-        "crates/document/src/lib.rs",
+        "src/document/mod.rs",
         "crates/dom/src/tree.rs"
       ],
       "case_ids": [],
@@ -3374,7 +3374,7 @@
       ],
       "implementation_files": [
         "src/lib.rs",
-        "crates/document/src/lib.rs",
+        "src/document/mod.rs",
         "crates/style/src/stylesheet.rs",
         "crates/resources/src/lib.rs"
       ],
@@ -3404,7 +3404,7 @@
         "html.foundation-html-language-direction"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
+        "src/document/mod.rs",
         "src/text/mod.rs"
       ],
       "case_ids": [],
@@ -3435,7 +3435,7 @@
         "html.foundation-html-hidden-inert"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
+        "src/document/mod.rs",
         "crates/style/src/user_agent.rs"
       ],
       "case_ids": [],
@@ -3465,7 +3465,7 @@
         "html.foundation-html-details-dialog"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
+        "src/document/mod.rs",
         "crates/style/src/user_agent.rs"
       ],
       "case_ids": [],
@@ -3493,7 +3493,7 @@
         "html.foundation-html-noscript-template"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
+        "src/document/mod.rs",
         "crates/style/src/user_agent.rs"
       ],
       "case_ids": [],
@@ -3524,8 +3524,8 @@
         "html.foundation-html-control-common"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3553,8 +3553,8 @@
         "html.foundation-input-text-search"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3582,8 +3582,8 @@
         "html.foundation-input-tel"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3611,8 +3611,8 @@
         "html.foundation-input-url"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3640,8 +3640,8 @@
         "html.foundation-input-email"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3669,8 +3669,8 @@
         "html.foundation-input-password"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3698,8 +3698,8 @@
         "html.foundation-input-date"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3727,8 +3727,8 @@
         "html.foundation-input-month"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3756,8 +3756,8 @@
         "html.foundation-input-week"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3785,8 +3785,8 @@
         "html.foundation-input-time"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3814,8 +3814,8 @@
         "html.foundation-input-datetime-local"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3843,8 +3843,8 @@
         "html.foundation-input-number"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3872,8 +3872,8 @@
         "html.foundation-input-range"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3901,8 +3901,8 @@
         "html.foundation-input-color"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3930,8 +3930,8 @@
         "html.foundation-input-checkbox"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3959,8 +3959,8 @@
         "html.foundation-input-radio"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -3988,8 +3988,8 @@
         "html.foundation-input-file"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4017,8 +4017,8 @@
         "html.foundation-input-submit"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4046,8 +4046,8 @@
         "html.foundation-input-image"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4075,8 +4075,8 @@
         "html.foundation-input-reset"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4104,8 +4104,8 @@
         "html.foundation-input-button"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4133,8 +4133,8 @@
         "html.foundation-input-hidden"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4163,8 +4163,8 @@
         "html.foundation-control-select"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4193,8 +4193,8 @@
         "html.foundation-control-textarea"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4223,8 +4223,8 @@
         "html.foundation-control-button"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4253,8 +4253,8 @@
         "html.foundation-control-progress"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4283,8 +4283,8 @@
         "html.foundation-control-meter"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4314,8 +4314,8 @@
         "html.foundation-control-fieldset-legend"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4352,8 +4352,8 @@
         "selectors-4.foundation-initial-control-selectors"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
-        "crates/document/src/inline.rs",
+        "src/document/mod.rs",
+        "src/document/inline.rs",
         "crates/style/src/user_agent.rs",
         "crates/style/src/selector.rs"
       ],
@@ -4385,7 +4385,7 @@
         "html.foundation-embedded-static-content"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
+        "src/document/mod.rs",
         "crates/fonts/src/lib.rs",
         "src/lib.rs"
       ],
@@ -4415,7 +4415,7 @@
         "html.foundation-embedded-images-fallback"
       ],
       "implementation_files": [
-        "crates/document/src/lib.rs",
+        "src/document/mod.rs",
         "crates/fonts/src/lib.rs",
         "src/lib.rs"
       ],

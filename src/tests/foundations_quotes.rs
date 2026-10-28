@@ -86,7 +86,7 @@ fn bookmark_content_uses_rendered_quote_depth_without_changing_it() {
     let markup = "<p><q>A<q style='bookmark-level:1;bookmark-label:content(before) \"|\" content(after)'>B</q></q></p><p><q>C</q></p>";
     let css = "body{quotes:'[' ']' '{' '}'}";
     let html = format!("<!doctype html><style>{PROFILE}{css}</style>{markup}");
-    let document = ferri_pdf_document::StyledDocument::parse(
+    let document = crate::document::StyledDocument::parse(
         &html,
         &local_options().base,
         &[],

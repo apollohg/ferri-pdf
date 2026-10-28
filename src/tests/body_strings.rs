@@ -116,7 +116,7 @@ fn named_string_bookmark_labels_resolve_on_the_heading_page() {
         "<style>{PROFILE}h2{{string-set:heading content();bookmark-label:'Chapter ' string(heading)}}h2+h2{{break-before:page}}</style><h2>Alpha</h2><h2>Beta</h2>"
     );
     let document =
-        ferri_pdf_document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
+        crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .unwrap();
     let (document, trace) = crate::layout::layout_document(document, &resolver).unwrap();
     assert_eq!(trace.pages.len(), 2);
@@ -168,7 +168,7 @@ fn body_string_reflow_cycles_fail_without_publishing_a_provisional_pdf() {
         "<style>{PROFILE}@page{{size:360pt 120pt;margin:20pt}}p,h2{{margin:0;font:12pt/18pt Spike}}h2{{string-set:heading content();break-after:auto}}p{{width:60pt}}p::after{{content:string(heading)}}</style><p>See </p><h2>A long destination heading that cannot fit in the reference width</h2>"
     );
     let document =
-        ferri_pdf_document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
+        crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .unwrap();
     assert!(
         matches!(
@@ -186,7 +186,7 @@ fn borrowed_layout_repeats_body_string_resolution_without_mutating_the_source() 
         "<style>{PROFILE}h2{{string-set:heading content()}}p::after{{content:string(heading)}}</style><p>See </p><h2>Title</h2>"
     );
     let document =
-        ferri_pdf_document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
+        crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .unwrap();
     for iteration in 0..2 {
         let trace = crate::layout::layout(&document, &resolver).unwrap();

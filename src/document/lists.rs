@@ -1,10 +1,10 @@
-use crate::{DocumentError, Paragraph};
+use crate::document::{DocumentError, Paragraph};
 use ferri_pdf_style::{ListStyleType, Style};
 
 pub(super) fn marker(
     style: &Style,
     ordinal: i128,
-    resources: &mut crate::formatting::ImageResources<'_>,
+    resources: &mut crate::document::formatting::ImageResources<'_>,
 ) -> Result<Option<Paragraph>, DocumentError> {
     let mut image = style.list_style_image.with_image_type();
     if !matches!(image, ferri_pdf_graphics::BackgroundImage::None)

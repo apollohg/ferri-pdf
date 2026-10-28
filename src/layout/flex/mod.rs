@@ -1,4 +1,5 @@
 pub(super) mod intrinsic;
+use crate::document::{BlockBox, BlockContent};
 use crate::flex::{Item, spacing};
 use crate::layout::{
     LayoutError,
@@ -11,7 +12,6 @@ use crate::layout::{
     },
     positioned::StaticAlignment,
 };
-use ferri_pdf_document::{BlockBox, BlockContent};
 use ferri_pdf_style::{Alignment, BoxSizing, BreakBetween, Display, FlexBasis, FlexWrap, Size};
 
 fn item_metrics(

@@ -1,8 +1,8 @@
 //! Independent HTML documents sharing one PDF and navigation space.
 use std::collections::HashMap;
 
+use crate::document::{ParseOptions, StyledDocument};
 use crate::writer::PdfPart;
-use ferri_pdf_document::{ParseOptions, StyledDocument};
 
 use crate::{
     DefaultResolver, Error, HeadingLocation, LayoutTrace, PdfError, RenderDiagnostic,

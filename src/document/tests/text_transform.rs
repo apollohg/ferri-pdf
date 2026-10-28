@@ -1,4 +1,4 @@
-use ferri_pdf_document::{BlockContent, Paragraph, StyledDocument};
+use crate::document::{BlockContent, Paragraph, StyledDocument};
 use ferri_pdf_resources::{FileResolver, ResourceBase, Url};
 use std::fmt::Write;
 

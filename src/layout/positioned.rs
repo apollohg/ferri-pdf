@@ -1,8 +1,8 @@
 //! Absolutely positioned boxes: CSS 2.1 §10.3.7 widths and §10.6.4 heights.
+use crate::document::BlockBox;
 use crate::layout::LayoutError;
 use crate::layout::geometry::{HorizontalBox, SizeConstraints};
 use crate::layout::measure::{MeasuredBlock, Measurer};
-use ferri_pdf_document::BlockBox;
 use ferri_pdf_graphics::Rect;
 use ferri_pdf_style::{Alignment, Style};
 

@@ -130,7 +130,7 @@ fn bookmark_labels_capture_counter_values_at_the_heading() {
     let html = format!(
         "<style>{PROFILE}body{{counter-reset:n}}h1{{counter-increment:n;bookmark-label:counter(n) ' ' content(text)}}</style><h1>First</h1><h1>Second</h1>"
     );
-    let document = ferri_pdf_document::StyledDocument::parse(
+    let document = crate::document::StyledDocument::parse(
         &html,
         &local_options().base,
         &[],

@@ -1,4 +1,4 @@
-use ferri_pdf_document::{RunningStringAssignment, SemanticEvent};
+use crate::document::{RunningStringAssignment, SemanticEvent};
 use ferri_pdf_style::{NamedStringMode, NamedStringRequest, PageStyleTarget, StyleError};
 use std::{collections::HashMap, ops::Range};
 
@@ -116,7 +116,7 @@ impl StringLocations {
                 let text = assignment.content.page_text(
                     location.page + 1,
                     pages,
-                    ferri_pdf_document::MAX_INLINE_TEXT_BYTES,
+                    crate::document::MAX_INLINE_TEXT_BYTES,
                 )?;
                 output
                     .names

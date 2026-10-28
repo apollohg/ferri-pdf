@@ -1,7 +1,7 @@
 use super::common;
 
+use crate::document::StyledDocument;
 use common::{PROFILE, local_options};
-use ferri_pdf_document::StyledDocument;
 use ferri_pdf_graphics::BackgroundImage;
 use ferri_pdf_resources::FileResolver;
 use ferri_pdf_style::{PageRequest, PageSide};

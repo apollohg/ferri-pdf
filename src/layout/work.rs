@@ -30,8 +30,8 @@ impl Budget {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::document::StyledDocument;
     use crate::layout::{MAX_LAYOUT_PAGES, MAX_LAYOUT_WORK, layout_with_work_limit};
-    use ferri_pdf_document::StyledDocument;
     use ferri_pdf_resources::{FileResolver, ResourceBase};
 
     #[test]

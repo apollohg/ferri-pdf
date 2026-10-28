@@ -1,6 +1,6 @@
 use super::*;
+use crate::document::StyledDocument;
 use crate::text::TextContext;
-use ferri_pdf_document::StyledDocument;
 use ferri_pdf_resources::FileResolver;
 
 impl<'a, 't> ColumnLayout<'a, 't> {

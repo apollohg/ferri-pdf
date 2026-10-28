@@ -1,8 +1,8 @@
 use super::common;
 
+use crate::document::{BlockContent, Paragraph, StyledDocument};
 use crate::text::{AtomicMetrics, Line, TextContext, TextError};
 use common::{assert_pt, local_options};
-use ferri_pdf_document::{BlockContent, Paragraph, StyledDocument};
 use ferri_pdf_resources::FileResolver;
 use ferri_pdf_style::TextAlign;
 
@@ -511,7 +511,7 @@ fn pathological_css_bidi_expansion_hits_a_sticky_typed_limit() {
         matches!(
             prepared.lines(prepared.start(), 100.0, &[]),
             Err(TextError::BidiExpansionLimit {
-                limit: ferri_pdf_document::MAX_INLINE_TEXT_BYTES
+                limit: crate::document::MAX_INLINE_TEXT_BYTES
             })
         ),
         "reopening deep CSS scopes must hit the typed expansion bound before running UBA on an unbounded stream"

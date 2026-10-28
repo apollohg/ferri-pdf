@@ -1,8 +1,8 @@
+use crate::document::Paragraph;
 use crate::text::{
     AtomicMetrics, Line, TextContext, TextError, breaking, decoration, ellipsis, hyphenation,
     line_boxes, paragraph_bidi, shape_line, spacing, whitespace,
 };
-use ferri_pdf_document::Paragraph;
 use unicode_linebreak::BreakOpportunity;
 
 /// Source progress after a successfully emitted line of its originating paragraph.

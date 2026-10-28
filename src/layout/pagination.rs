@@ -9,6 +9,7 @@ use order::{OrderSnapshots, PaintOrder, PaintOrders};
 
 use paragraph::ParagraphCursor;
 
+use crate::document::{BlockBox, BoxNavigation};
 use crate::layout::breaks::{BreakTail, Forced, Fragmentainer, fragmentainer_height};
 use crate::layout::margin::MarginStrut;
 use crate::layout::navigation::{Destination, LinkArea};
@@ -21,7 +22,6 @@ use crate::layout::{
     tables::BandPlacement,
 };
 pub(super) use columns::measure_columns;
-use ferri_pdf_document::{BlockBox, BoxNavigation};
 use ferri_pdf_graphics::{
     Backgrounds, BoxDecoration, BoxPaint, Clip, DecorationPaint, DisplayItem, Rect,
 };
@@ -45,7 +45,7 @@ struct LinePart {
 /// Layers of a paragraph's translucent inline boxes by box index, created when first painted.
 #[derive(Clone)]
 struct InlineLayers<'p> {
-    paragraph: &'p ferri_pdf_document::Paragraph,
+    paragraph: &'p crate::document::Paragraph,
     layers: Vec<Option<Layer>>,
     fragments: Vec<Vec<(usize, usize)>>,
 }
@@ -560,7 +560,7 @@ pub(super) struct Paginated {
     pub links: Vec<Vec<LinkArea>>,
     pub destinations: Vec<Option<Destination>>,
     pub string_locations: crate::layout::strings::StringLocations,
-    pub page_boxes: Vec<std::sync::Arc<ferri_pdf_document::PageBox>>,
+    pub page_boxes: Vec<std::sync::Arc<crate::document::PageBox>>,
     pub page_records: Vec<crate::layout::PageRecord>,
 }
 
@@ -1461,7 +1461,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         tail: BreakTail,
     ) -> Result<(MeasuredBlock<'a>, Option<BreakRequest>), LayoutError> {
         self.measurer.work.spend(1)?;
-        let changed = if ferri_pdf_document::PageBoundary::applies(&block.style.display) {
+        let changed = if crate::document::PageBoundary::applies(&block.style.display) {
             self.page_name(block.source.page_boundary().start.clone())
         } else {
             false
@@ -1679,10 +1679,10 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 .children()
                 .iter()
                 .filter_map(|child| match child {
-                    ferri_pdf_document::BlockContent::Block(child) => {
+                    crate::document::BlockContent::Block(child) => {
                         Some((child.style().flex.order, child))
                     }
-                    ferri_pdf_document::BlockContent::Positioned(child) => Some((0, child)),
+                    crate::document::BlockContent::Positioned(child) => Some((0, child)),
                     _ => None,
                 })
                 .collect::<Vec<_>>()
@@ -1720,7 +1720,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 constrained: block.constrained,
                 spanner_fragment: block.spanner_fragment,
             }),
-            page_scope: ferri_pdf_document::PageBoundary::applies(&block.style.display)
+            page_scope: crate::document::PageBoundary::applies(&block.style.display)
                 .then(|| block.source.page_boundary().used.clone()),
             offset: self.offset,
             scope: paint_key,
@@ -2517,10 +2517,10 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             events.extend(source.semantic_event());
             for child in source.children() {
                 match child {
-                    ferri_pdf_document::BlockContent::Events(values) => events.extend(values),
-                    ferri_pdf_document::BlockContent::Block(child)
-                    | ferri_pdf_document::BlockContent::Positioned(child) => blocks.push(child),
-                    ferri_pdf_document::BlockContent::Inline(paragraph) => {
+                    crate::document::BlockContent::Events(values) => events.extend(values),
+                    crate::document::BlockContent::Block(child)
+                    | crate::document::BlockContent::Positioned(child) => blocks.push(child),
+                    crate::document::BlockContent::Inline(paragraph) => {
                         events.extend(paragraph.semantic_events().iter().map(|event| &event.event));
                         blocks.extend(
                             paragraph
@@ -4126,7 +4126,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         mut self,
         root: Option<MeasuredBlock<'a>>,
         destinations: usize,
-        initial_events: impl Iterator<Item = &'a ferri_pdf_document::SemanticEvent>,
+        initial_events: impl Iterator<Item = &'a crate::document::SemanticEvent>,
     ) -> Result<Paginated, LayoutError> {
         if root.is_none() {
             for event in initial_events {

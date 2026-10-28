@@ -471,16 +471,20 @@ impl Counters {
                         pseudo: None,
                     };
                     let mut display = styles.display(target)?;
-                    let replaced = crate::formatting::is_replaced(element.name());
+                    let replaced = crate::document::formatting::is_replaced(element.name());
                     if let Some(parent) = &parent_display {
-                        crate::formatting::normalize_child_display(&mut display, replaced, parent);
+                        crate::document::formatting::normalize_child_display(
+                            &mut display,
+                            replaced,
+                            parent,
+                        );
                         if *parent == Display::TableColumnGroup
                             && !matches!(display, Display::Contents | Display::TableColumn)
                         {
                             continue;
                         }
                     } else {
-                        crate::formatting::normalize_root_display(&mut display);
+                        crate::document::formatting::normalize_root_display(&mut display);
                     }
                     if display == Display::None {
                         state.visit_hidden(element, styles, |_, assignments, counters| {
@@ -534,7 +538,7 @@ impl Counters {
                         continue;
                     };
                     let mut display = styles.display(target)?;
-                    crate::formatting::normalize_child_display(
+                    crate::document::formatting::normalize_child_display(
                         &mut display,
                         false,
                         &parent_display,
@@ -601,10 +605,10 @@ fn render_counter(
             .len()
             .saturating_add(separator.len())
             .saturating_add(part.len())
-            > crate::MAX_INLINE_TEXT_BYTES
+            > crate::document::MAX_INLINE_TEXT_BYTES
         {
             return Err(StyleError::GeneratedContentLimit {
-                limit: crate::MAX_INLINE_TEXT_BYTES,
+                limit: crate::document::MAX_INLINE_TEXT_BYTES,
             });
         }
         text.push_str(separator);

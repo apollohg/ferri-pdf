@@ -1,4 +1,4 @@
-use ferri_pdf_document::{BlockBox, BlockContent, Paragraph};
+use crate::document::{BlockBox, BlockContent, Paragraph};
 use std::collections::HashMap;
 
 /// Identities of the immutable formatting tree, independent of measurement probes.

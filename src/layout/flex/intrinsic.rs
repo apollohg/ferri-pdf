@@ -1,9 +1,9 @@
 use super::children;
+use crate::document::BlockBox;
 use crate::flex::Item;
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, geometry::SizeConstraints, intrinsic};
 use crate::text::IntrinsicWidths;
-use ferri_pdf_document::BlockBox;
 use ferri_pdf_style::{BoxSizing, FlexBasis, FlexWrap, Size};
 
 pub(crate) fn measure(

@@ -12,7 +12,7 @@ type Stretch<'a> = (
     Option<(usize, f32)>,
     Vec<crate::layout::tables::FragmentBackground<'a>>,
     Option<usize>,
-    Vec<&'a ferri_pdf_document::SemanticEvent>,
+    Vec<&'a crate::document::SemanticEvent>,
 );
 type Lane<'a, 't> = (
     cells::CellContinuation<'a, 't>,

@@ -1,9 +1,9 @@
 //! Text decoration lines of a line box (CSS Text Decoration 3 §2). Each decorating box
 //! draws its lines under the text it contains, skipping atomic inlines and the margins,
 //! borders and padding of nested boxes, at a position and thickness from its own font.
+use crate::document::Paragraph;
 use crate::text::line_boxes::BoxMetrics;
 use crate::text::{Line, TextContext, TextError};
-use ferri_pdf_document::Paragraph;
 use ferri_pdf_graphics::{DecorationLine, DecorationPaint, Rect};
 use ferri_pdf_style::{Style, TextDecoration, UnderlinePosition};
 

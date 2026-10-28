@@ -10,10 +10,10 @@ mod topology;
 mod tracks;
 pub(super) use layout::measure;
 
+use crate::document::{BlockBox, BlockContent};
 use crate::grid::{AvailableSpace, SizeBounds, SizingItem, size_tracks};
 use crate::layout::{LayoutError, measure::Measurer};
 use crate::text::IntrinsicWidths;
-use ferri_pdf_document::{BlockBox, BlockContent};
 use ferri_pdf_style::{COLUMNS, ROWS};
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 use tracks::TrackGeometry;
@@ -482,8 +482,8 @@ impl<'a> Geometry<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::document::StyledDocument;
     use crate::text::TextContext;
-    use ferri_pdf_document::StyledDocument;
     use ferri_pdf_resources::{FileResolver, ResourceBase};
 
     #[test]

@@ -1,5 +1,5 @@
+use crate::document::{PageBox, StyledDocument};
 use crate::layout::{LayoutError, PageRecord};
-use ferri_pdf_document::{PageBox, StyledDocument};
 use ferri_pdf_resources::ResourceResolver;
 use ferri_pdf_style::{PageRequest, PageSide};
 use std::sync::Arc;

@@ -1,3 +1,4 @@
+use crate::document::BlockBox;
 use crate::layout::{
     LayoutError,
     geometry::{HorizontalBox, SizeConstraints},
@@ -5,7 +6,6 @@ use crate::layout::{
     measure::{FlowItem, MeasuredBlock, Measurer},
 };
 use crate::text::IntrinsicWidths;
-use ferri_pdf_document::BlockBox;
 use ferri_pdf_graphics::{BoxPaint, ImagePaint, Rect};
 use ferri_pdf_style::POINTS_PER_PIXEL;
 

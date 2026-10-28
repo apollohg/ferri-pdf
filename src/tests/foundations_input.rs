@@ -1,11 +1,11 @@
 use super::common;
 
+use crate::document::encoding::{decode_css, decode_html};
 use crate::{
     RenderDiagnostic, ResolvedResource, Resource, ResourceBase, ResourceError, ResourceMetadata,
     ResourceResolver, render_bytes, render_bytes_with_resolver, render_html,
 };
 use common::{assert_pt, local_options, render_trace};
-use ferri_pdf_document::encoding::{decode_css, decode_html};
 use std::cell::Cell;
 
 #[test]

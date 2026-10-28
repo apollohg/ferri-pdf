@@ -54,8 +54,8 @@ def main():
         output += [f'pub(super) fn {name}(ch: char) -> char {{', '    match ch {']
         output += [f"        '\\u{{{source:x}}}' => '\\u{{{target:x}}}'," for source, target in sorted(mapping.items())]
         output += ['        _ => ch,', '    }', '}', '']
-    (ROOT / 'crates/document/src/inline/transform_maps.rs').write_text('\n'.join(output))
-    fixtures = ROOT / 'crates/document/tests/fixtures'
+    (ROOT / 'src/document/inline/transform_maps.rs').write_text('\n'.join(output))
+    fixtures = ROOT / 'src/document/tests/fixtures'
     fixtures.mkdir(exist_ok=True)
     (fixtures / 'width-decompositions.txt').write_text('\n'.join(records) + '\n')
     (fixtures / 'small-kana.txt').write_text('\n'.join(f'{source:04X};{target:04X}' for source, target in sorted(kana.items())) + '\n')

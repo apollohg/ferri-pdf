@@ -74,7 +74,7 @@ pub(super) struct CellContinuation<'a, 't> {
     pub grid_rows: Option<std::ops::Range<usize>>,
     remaining_height: Option<f32>,
     table_containing: Vec<crate::layout::tables::TableContaining<'a>>,
-    pub after_events: Vec<&'a ferri_pdf_document::SemanticEvent>,
+    pub after_events: Vec<&'a crate::document::SemanticEvent>,
     parent: FlowPosition<'a>,
     depths: BranchDepths,
     active: Option<CellFlow<'a, 't>>,

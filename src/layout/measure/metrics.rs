@@ -1,6 +1,6 @@
 use super::{MeasuredBlock, Measurer};
+use crate::document::BlockBox;
 use crate::layout::{LayoutError, breaks::Fragmentainer, geometry::HorizontalBox};
-use ferri_pdf_document::BlockBox;
 
 const MAX_ITEM_METRICS: usize = 4096;
 

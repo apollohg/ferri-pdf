@@ -1,7 +1,7 @@
 use super::common;
 
+use crate::document::{DocumentMetadata, Navigation};
 use crate::writer::PdfError;
-use ferri_pdf_document::{DocumentMetadata, Navigation};
 use ferri_pdf_fonts::FontBook;
 use ferri_pdf_graphics::{Clip, DisplayItem, Rect};
 

@@ -161,12 +161,12 @@ fn shape_run(
                         &mut mapped,
                     )
                     .expect("valid source offsets and String writes cannot fail");
-                if mapped.len() > ferri_pdf_document::MAX_INLINE_TEXT_BYTES {
+                if mapped.len() > crate::document::MAX_INLINE_TEXT_BYTES {
                     return Err(TextError::CaseExpansionLimit);
                 }
             }
             bytes += mapped.len();
-            if bytes > ferri_pdf_document::MAX_INLINE_TEXT_BYTES {
+            if bytes > crate::document::MAX_INLINE_TEXT_BYTES {
                 return Err(TextError::CaseExpansionLimit);
             }
             for ch in mapped.chars() {

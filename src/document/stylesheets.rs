@@ -1,4 +1,4 @@
-use crate::DocumentError;
+use crate::document::DocumentError;
 use ferri_pdf_dom::{DocumentTree, HTML_NAMESPACE, SVG_NAMESPACE};
 use ferri_pdf_resources::{CSS_MEDIA_TYPE, ResourceBase, ResourceMetadata};
 use ferri_pdf_style::{StylesheetInput, StylesheetSources};
@@ -80,7 +80,7 @@ pub(super) fn discover(
                 base: effective.clone(),
                 media,
                 owner,
-                fallback_encoding: crate::encoding::css_environment(
+                fallback_encoding: crate::document::encoding::css_environment(
                     element.attr("charset"),
                     encoding,
                 )

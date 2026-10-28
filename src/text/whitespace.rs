@@ -1,5 +1,5 @@
+use crate::document::{OBJECT_REPLACEMENT_CHARACTER, Paragraph};
 use crate::text::GlyphRun;
-use ferri_pdf_document::{OBJECT_REPLACEMENT_CHARACTER, Paragraph};
 use ferri_pdf_style::{TextAlign, WhiteSpace};
 use icu_properties::{CodePointMapData, props::GeneralCategory};
 use std::ops::Range;

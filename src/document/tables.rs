@@ -1,4 +1,4 @@
-use crate::{BlockBox, BlockContent};
+use crate::document::{BlockBox, BlockContent};
 use ferri_pdf_style::{CaptionSide, Display, Style};
 
 #[derive(Clone, Copy, Eq, Ord, PartialEq, PartialOrd)]
@@ -52,7 +52,7 @@ impl Content for BlockContent {
         }
     }
     fn whitespace(&self) -> bool {
-        matches!(self, Self::Inline(paragraph) if paragraph.text().chars().all(crate::inline::is_css_whitespace))
+        matches!(self, Self::Inline(paragraph) if paragraph.text().chars().all(crate::document::inline::is_css_whitespace))
     }
     fn caption_side(&self) -> CaptionSide {
         match self {

@@ -1,6 +1,6 @@
 //! Line box assembly and vertical alignment (CSS 2.1 §10.8, CSS Inline 3 §5.3).
+use crate::document::Paragraph;
 use crate::text::{GlyphRun, Line, TextContext, TextError};
-use ferri_pdf_document::Paragraph;
 use ferri_pdf_fonts::FaceMetrics;
 use ferri_pdf_style::{Style, VerticalAlign};
 use serde::Serialize;
@@ -121,7 +121,7 @@ impl Piece {
         match self {
             Self::Text(run) => (run.source_range.clone(), run.rtl),
             Self::Atomic { offset, rtl, .. } => (
-                *offset..*offset + ferri_pdf_document::OBJECT_REPLACEMENT_CHARACTER.len_utf8(),
+                *offset..*offset + crate::document::OBJECT_REPLACEMENT_CHARACTER.len_utf8(),
                 *rtl,
             ),
         }
@@ -184,7 +184,7 @@ impl Arranged {
             Slot::Run(index) => Some((self.runs[index].source_range.clone(), self.runs[index].rtl)),
             Slot::Atomic(index) => {
                 let offset = self.atomics[index].offset;
-                let length = ferri_pdf_document::OBJECT_REPLACEMENT_CHARACTER.len_utf8();
+                let length = crate::document::OBJECT_REPLACEMENT_CHARACTER.len_utf8();
                 Some((offset..offset + length, self.atomics[index].rtl))
             }
             Slot::Edge { .. } => None,
