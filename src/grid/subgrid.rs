@@ -1,5 +1,5 @@
 //! Parent line correspondence for CSS Grid 2 §9.
-use crate::{AxisLines, GridError};
+use crate::grid::{AxisLines, GridError};
 use ferri_pdf_style::{GridAreas, MAX_GRID_LINE, NamedArea, Subgrid};
 use std::ops::Range;
 
@@ -13,7 +13,7 @@ fn span(area: &Range<i64>) -> Result<usize, GridError> {
 
 impl AxisLines {
     /// Inherit explicit names only. Local names use the child's own line direction.
-    pub fn inherit(
+    pub(crate) fn inherit(
         &self,
         area: Range<i64>,
         reverse: bool,
@@ -45,7 +45,7 @@ impl AxisLines {
 }
 
 /// Intersect named areas in both parent axes, then express them in child coordinates.
-pub fn inherited_areas(
+pub(crate) fn inherited_areas(
     parent: &GridAreas,
     area: &[Range<i64>; 2],
     reverse: [bool; 2],

@@ -3,16 +3,16 @@ mod placement;
 mod sizing;
 mod subgrid;
 mod subgrid_sizing;
-pub use subgrid::inherited_areas;
-pub use subgrid_sizing::subgrid_contributions;
+pub(crate) use subgrid::inherited_areas;
+pub(crate) use subgrid_sizing::subgrid_contributions;
 
-pub use placement::{AxisLines, ItemPlacement, Placement, place};
-pub use sizing::{
+pub(crate) use placement::{AxisLines, ItemPlacement, Placement, place};
+pub(crate) use sizing::{
     AvailableSpace, MaxSizing, MinSizing, SizeBounds, SizingItem, TrackSizing, size_tracks,
 };
 
 #[derive(Debug, thiserror::Error)]
-pub enum GridError {
+pub(crate) enum GridError {
     #[error("invalid or non-finite grid geometry")]
     InvalidGeometry,
     #[error("grid item spans outside its {tracks} tracks")]

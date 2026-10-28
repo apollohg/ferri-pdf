@@ -5,7 +5,7 @@ pub(super) fn shared(style: &Style, axis: usize) -> bool {
     style.display.is_grid() && style.grid.templates[axis].subgrid.is_some()
 }
 
-pub(super) fn placement(style: &Style) -> ferri_pdf_grid::ItemPlacement {
+pub(super) fn placement(style: &Style) -> crate::grid::ItemPlacement {
     use ferri_pdf_style::{GridLine, MAX_GRID_LINE, ROWS};
     let mut placement = style.grid.placement.clone();
     for axis in [ROWS, COLUMNS] {

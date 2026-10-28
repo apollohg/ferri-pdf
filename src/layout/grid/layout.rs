@@ -2,6 +2,7 @@ use super::{
     Plan,
     items::{Baselines, Item},
 };
+use crate::grid::{AvailableSpace, MaxSizing, MinSizing, SizeBounds, SizingItem};
 use crate::layout::{
     LayoutError,
     geometry::{HorizontalBox, VerticalBox},
@@ -12,7 +13,6 @@ use crate::layout::{
     },
 };
 use ferri_pdf_document::{BlockBox, BlockContent};
-use ferri_pdf_grid::{AvailableSpace, MaxSizing, MinSizing, SizeBounds, SizingItem};
 use ferri_pdf_style::{Alignment, BreakBetween, COLUMNS, Overflow, ROWS};
 
 pub(crate) fn measure<'a>(
@@ -149,7 +149,7 @@ pub(crate) fn measure<'a>(
             if let Some(items) = &measured.grid_baselines {
                 measurer.work.spend(items.len().saturating_mul(4).max(1))?;
                 let sizes: Vec<_> = items.iter().map(|item| item.contribution.clone()).collect();
-                let projected = ferri_pdf_grid::subgrid_contributions(
+                let projected = crate::grid::subgrid_contributions(
                     &sizes,
                     area[ROWS].clone(),
                     false,

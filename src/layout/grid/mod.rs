@@ -10,10 +10,10 @@ mod topology;
 mod tracks;
 pub(super) use layout::measure;
 
+use crate::grid::{AvailableSpace, SizeBounds, SizingItem, size_tracks};
 use crate::layout::{LayoutError, measure::Measurer};
 use crate::text::IntrinsicWidths;
 use ferri_pdf_document::{BlockBox, BlockContent};
-use ferri_pdf_grid::{AvailableSpace, SizeBounds, SizingItem, size_tracks};
 use ferri_pdf_style::{COLUMNS, ROWS};
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 use tracks::TrackGeometry;
@@ -226,7 +226,7 @@ impl<'a> Plan<'a> {
                 measurer
                     .work
                     .spend(contributions.len().saturating_mul(4).max(1))?;
-                output.extend(ferri_pdf_grid::subgrid_contributions(
+                output.extend(crate::grid::subgrid_contributions(
                     &contributions,
                     area[COLUMNS].clone(),
                     self.rtl != style.rtl,
@@ -421,7 +421,7 @@ impl<'a> Geometry<'a> {
         padding_box: ferri_pdf_graphics::Rect,
         padding: [f32; 4],
         overflow: Option<ferri_pdf_graphics::Rect>,
-        item: &ferri_pdf_grid::ItemPlacement,
+        item: &crate::grid::ItemPlacement,
         measurer: &Measurer<'_>,
     ) -> Result<ferri_pdf_graphics::Rect, LayoutError> {
         let lines = self

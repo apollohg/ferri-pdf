@@ -599,7 +599,6 @@ dependencies = [
  "ferri-pdf-dom",
  "ferri-pdf-fonts",
  "ferri-pdf-graphics",
- "ferri-pdf-grid",
  "ferri-pdf-icu-casemap",
  "ferri-pdf-images",
  "ferri-pdf-krilla",
@@ -691,14 +690,6 @@ dependencies = [
  "ferri-pdf-images",
  "ferri-pdf-paint",
  "serde",
-]
-
-[[package]]
-name = "ferri-pdf-grid"
-version = "0.1.0"
-dependencies = [
- "ferri-pdf-style",
- "thiserror",
 ]
 
 [[package]]

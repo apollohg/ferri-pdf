@@ -16,6 +16,7 @@
 extern crate self as ferri_pdf;
 
 mod flex;
+mod grid;
 mod layout;
 mod multipart;
 mod svg;

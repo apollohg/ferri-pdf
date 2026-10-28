@@ -1,8 +1,8 @@
-use crate::{GridError, SizingItem};
+use crate::grid::{GridError, SizingItem};
 use std::{collections::BTreeMap, ops::Range};
 
 /// Project child contributions and edge-spanning hypothetical items (Grid 2 §9).
-pub fn subgrid_contributions(
+pub(crate) fn subgrid_contributions(
     items: &[SizingItem],
     parent: Range<usize>,
     reverse: bool,
@@ -125,7 +125,9 @@ mod tests {
     }
     #[test]
     fn projected_content_sizes_parent_auto_tracks_and_rejects_invalid_inputs() {
-        use crate::{AvailableSpace, MaxSizing, MinSizing, SizeBounds, TrackSizing, size_tracks};
+        use crate::grid::{
+            AvailableSpace, MaxSizing, MinSizing, SizeBounds, TrackSizing, size_tracks,
+        };
         let input = [item(0..1, 80.0), item(1..2, 60.0)];
         let projected = subgrid_contributions(&input, 0..2, true, [10.0, 20.0], -20.0).unwrap();
         let tracks = vec![

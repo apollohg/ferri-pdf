@@ -1,5 +1,5 @@
+use crate::grid::{AxisLines, MaxSizing, MinSizing, SizeBounds, TrackSizing};
 use crate::layout::{LayoutError, work::Budget};
-use ferri_pdf_grid::{AxisLines, MaxSizing, MinSizing, SizeBounds, TrackSizing};
 use ferri_pdf_style::{
     GridAreas, LengthPercentage, MAX_GRID_LINE, POINTS_PER_PIXEL, TrackBreadth, TrackList,
     TrackSize,
@@ -83,7 +83,7 @@ impl TrackGeometry {
             || edges.iter().any(|edge| !edge.is_finite())
             || gap.is_some_and(|gap| !gap.is_finite() || gap < 0.0)
         {
-            return Err(ferri_pdf_grid::GridError::InvalidGeometry.into());
+            return Err(crate::grid::GridError::InvalidGeometry.into());
         }
         let extent = self.area(area.clone());
         let gap = gap.unwrap_or(self.gap);

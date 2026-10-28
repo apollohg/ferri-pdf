@@ -1,6 +1,6 @@
 use super::tracks::Axis;
+use crate::grid::{AxisLines, ItemPlacement, Placement, SizeBounds};
 use crate::layout::{LayoutError, work::Budget};
-use ferri_pdf_grid::{AxisLines, ItemPlacement, Placement, SizeBounds};
 use ferri_pdf_style::{COLUMNS, GridAreas, ROWS, Style};
 
 pub(super) struct Topology {
@@ -65,7 +65,7 @@ impl Topology {
                 .placement
                 .areas
                 .get(item)
-                .ok_or(ferri_pdf_grid::GridError::InvalidGeometry)?;
+                .ok_or(crate::grid::GridError::InvalidGeometry)?;
             let coordinates = [ROWS, COLUMNS].map(|axis| {
                 let leading = parent.placement.leading[axis] as i64;
                 area[axis].start as i64 - leading..area[axis].end as i64 - leading
@@ -80,7 +80,7 @@ impl Topology {
             let inherited = parent
                 .areas
                 .as_ref()
-                .map(|areas| ferri_pdf_grid::inherited_areas(areas, &coordinates, reverse))
+                .map(|areas| crate::grid::inherited_areas(areas, &coordinates, reverse))
                 .transpose()?;
             if let Some(inherited) = &inherited {
                 work.spend(inherited.areas.len().max(1))?;
@@ -141,7 +141,7 @@ impl Topology {
             )
         });
         work.spend(placements.len().max(1))?;
-        let placement = ferri_pdf_grid::place(&lines, placements, style.grid.auto_flow)?;
+        let placement = crate::grid::place(&lines, placements, style.grid.auto_flow)?;
         for axis in [ROWS, COLUMNS] {
             if lines[axis].subgridded {
                 continue;

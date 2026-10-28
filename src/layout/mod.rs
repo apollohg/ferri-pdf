@@ -273,7 +273,7 @@ pub(crate) enum LayoutError {
     #[error("invalid normalized table structure")]
     InvalidTableStructure,
     #[error("{0}")]
-    Grid(#[from] ferri_pdf_grid::GridError),
+    Grid(#[from] crate::grid::GridError),
     #[error("invalid normalized grid structure")]
     InvalidGridStructure,
     #[error("overflow clip has no box fragment on page {page}")]

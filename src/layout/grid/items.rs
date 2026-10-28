@@ -17,11 +17,11 @@ pub(crate) struct Item<'a> {
 
 #[derive(Clone)]
 pub(crate) struct BaselineContribution {
-    pub contribution: ferri_pdf_grid::SizingItem,
+    pub contribution: crate::grid::SizingItem,
     pub baseline: f32,
 }
 
-pub(super) fn add_baseline_shim(item: &mut ferri_pdf_grid::SizingItem, shim: f32) {
+pub(super) fn add_baseline_shim(item: &mut crate::grid::SizingItem, shim: f32) {
     item.min_content += shim;
     item.max_content += shim;
     item.minimum += shim;
@@ -341,14 +341,14 @@ impl<'a> Item<'a> {
 
     pub(super) fn project_rows(
         &self,
-        rows: &[ferri_pdf_grid::SizingItem],
+        rows: &[crate::grid::SizingItem],
         parent: Range<usize>,
         parent_gap: f32,
         measurer: &Measurer<'_>,
-    ) -> Result<Vec<ferri_pdf_grid::SizingItem>, LayoutError> {
+    ) -> Result<Vec<crate::grid::SizingItem>, LayoutError> {
         let child_gap = self.source.style().flex.gap[ROWS].resolve_normal(0.0, parent_gap);
         measurer.work.spend(rows.len().saturating_mul(4).max(1))?;
-        Ok(ferri_pdf_grid::subgrid_contributions(
+        Ok(crate::grid::subgrid_contributions(
             rows,
             parent,
             false,

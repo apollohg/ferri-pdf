@@ -1,15 +1,15 @@
 //! Line-based placement and the auto-placement algorithm (CSS Grid 1 §8).
-use crate::GridError;
+use crate::grid::GridError;
 use ferri_pdf_style::{AutoFlow, COLUMNS, GridLine, MAX_GRID_LINE, ROWS};
 use std::{ops::Range, sync::Arc};
 
 /// Start and end lines of an item, indexed by [`ROWS`] and [`COLUMNS`].
-pub type ItemPlacement = [[GridLine; 2]; 2];
+pub(crate) type ItemPlacement = [[GridLine; 2]; 2];
 
 const LIMIT: i64 = MAX_GRID_LINE as i64;
 
 /// Names of the explicit grid lines along one axis, one more than its explicit tracks.
-pub struct AxisLines {
+pub(crate) struct AxisLines {
     pub names: Vec<Vec<Arc<str>>>,
     /// Names derived from template areas; recalculated when inherited by a subgrid.
     pub area_names: Vec<Vec<Arc<str>>>,
@@ -145,7 +145,7 @@ impl Occupancy {
     }
 }
 
-pub struct Placement {
+pub(crate) struct Placement {
     /// Tracks of each item, indexed by [`ROWS`] and [`COLUMNS`], from the implicit grid start.
     pub areas: Vec<[Range<usize>; 2]>,
     /// Tracks of the implicit grid per axis.
@@ -155,7 +155,7 @@ pub struct Placement {
 }
 
 /// The grid area of every item in order-modified document order, and the implicit grid.
-pub fn place(
+pub(crate) fn place(
     lines: &[AxisLines; 2],
     items: &[ItemPlacement],
     flow: AutoFlow,
@@ -347,7 +347,7 @@ impl Placement {
     /// CSS Grid 1 §9.1: lines of an absolutely positioned child in implicit-grid indices;
     /// `None` is the padding edge, which `auto`, lone spans and lines outside the implicit
     /// grid contribute.
-    pub fn absolute(
+    pub(crate) fn absolute(
         &self,
         lines: &[AxisLines; 2],
         item: &ItemPlacement,

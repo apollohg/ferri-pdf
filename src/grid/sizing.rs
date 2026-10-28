@@ -1,12 +1,12 @@
 //! The grid track sizing algorithm for one axis (CSS Grid 1 §11.3–§11.8).
-use crate::GridError;
+use crate::grid::GridError;
 use std::ops::Range;
 
 /// Distributable space below this is spent; it absorbs `f64` rounding in the freezing loops.
 const EPSILON: f64 = 1e-6;
 
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub enum MinSizing {
+pub(crate) enum MinSizing {
     Fixed(f32),
     MinContent,
     MaxContent,
@@ -22,7 +22,7 @@ impl MinSizing {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub enum MaxSizing {
+pub(crate) enum MaxSizing {
     Fixed(f32),
     MinContent,
     MaxContent,
@@ -56,14 +56,14 @@ impl MaxSizing {
 
 /// A track's resolved sizing functions; percentages are resolved or treated as `auto`.
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct TrackSizing {
+pub(crate) struct TrackSizing {
     pub min: MinSizing,
     pub max: MaxSizing,
 }
 
 /// The available grid space (CSS Grid 1 §11.1).
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub enum AvailableSpace {
+pub(crate) enum AvailableSpace {
     Definite(f32),
     /// Sizing under a min-content constraint: no free space.
     MinContent,
@@ -73,14 +73,14 @@ pub enum AvailableSpace {
 
 /// The grid container's inner minimum and maximum size along the axis.
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
-pub struct SizeBounds {
+pub(crate) struct SizeBounds {
     pub min: f32,
     pub max: Option<f32>,
 }
 
 /// An item's outer size contributions to the tracks it spans.
 #[derive(Clone, Debug, PartialEq)]
-pub struct SizingItem {
+pub(crate) struct SizingItem {
     pub tracks: Range<usize>,
     pub min_content: f32,
     pub max_content: f32,
@@ -149,7 +149,7 @@ struct Sizer<'a> {
 }
 
 /// Base sizes of the tracks, which are their used sizes.
-pub fn size_tracks(
+pub(crate) fn size_tracks(
     sizing: &[TrackSizing],
     gap: f32,
     items: &[SizingItem],

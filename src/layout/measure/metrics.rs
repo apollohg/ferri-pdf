@@ -9,7 +9,7 @@ pub(crate) struct ItemMetrics {
     pub height: f32,
     pub baseline: Option<f32>,
     pub grid_baselines: Option<std::rc::Rc<[crate::layout::grid::BaselineContribution]>>,
-    pub grid_rows: Option<std::rc::Rc<[ferri_pdf_grid::SizingItem]>>,
+    pub grid_rows: Option<std::rc::Rc<[crate::grid::SizingItem]>>,
 }
 impl ItemMetrics {
     pub(crate) fn of(block: &MeasuredBlock<'_>) -> Self {
