@@ -1,0 +1,22 @@
+# Local changes to krilla-svg 0.8.1
+
+`SOURCES.json` records the original registry checksum, upstream revision and file
+hashes. The MIT and Apache 2.0 licences are retained unchanged.
+
+Text rendering consumes native source-cluster identities and em advances from
+the patched usvg. Compatible glyphs sharing a source cluster are painted in one
+text operation, retaining each glyph's positioned origin and advance. This lets
+krilla emit one logical ActualText cluster while embedding every painted glyph
+with a Unicode mapping. The optional Glyph mapping hook defaults to the upstream
+behaviour for other callers. Incompatible per-glyph transforms retain individual
+painting and an enclosing ActualText span. Fill/stroke order, invisible painting
+and paint transforms use the same helper for both paths.
+
+`tests/font_geometry.py` independently checks fallback ligatures and a two-glyph
+combining cluster, including source outlines, relative HarfBuzz positions and
+Poppler extraction. These changes do not establish complete SVG text conformance.
+
+Glyph painting keeps positioned origins in the enclosing SVG coordinate system.
+The equivalent affine transform and inverse paint transform preserve visible
+geometry while allowing enclosing replacement-text spans to retain their
+selection coordinates across separate glyph operations.

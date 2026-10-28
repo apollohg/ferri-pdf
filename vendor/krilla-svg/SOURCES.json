@@ -1,0 +1,25 @@
+{
+  "package": "krilla-svg",
+  "version": "0.8.1",
+  "upstream": "https://github.com/LaurenzV/krilla",
+  "commit": "3ffdf0588cf98050aad6edba51ca70162e1fb5b5",
+  "path_in_vcs": "crates/krilla-svg",
+  "registry_checksum": "1237d7c37b16ca9fbc2e72dde13a10d321f9a44aceee35c062bc0a43bfc7ce16",
+  "original_files_sha256": {
+    "Cargo.toml": "abec8ce42e8155524be95c9ee3338e0bf85a1b722fd185963144d79f45d6248c",
+    "README.md": "55ea195be6097b38a46a4e9316928cad22e089a9911f6ab3b530c9db2db6d700",
+    "Cargo.toml.orig": "58656d0ba48541bebf827ef7eef572995c73a9a4013d9174a82915706416a65b",
+    "examples/svg.rs": "912f6d1710f629a4c4a6982b920baf952a5d46db17d70bc23d25228103b734be",
+    "src/util.rs": "3c998fde14bad921a030892e01c8abf054d53a201f763f8cde07bbc13dfca775",
+    "src/lib.rs": "00884cf1f08ad20c2494ee867c1157eec943c7de39a963871da9060e48a68b84",
+    "src/mask.rs": "ca98161d96c65e9c8b5622d729070606557e85e391c2377721187f8813fa07fe",
+    "src/image.rs": "a9c929301347362a8fd587564e5db4cbc6e501054fe71b473eea10e78732b807",
+    "src/path.rs": "c780f31933c98597873487039a7905a0659042699568bdecdd3c79c9578db44c",
+    "src/clip_path.rs": "e26439c3ecfcbd54fc7ea0a64d1d114a71e76f51547e933046810dbbb86b9dde",
+    "src/text.rs": "81cbd216b1b1756fbe9070c743e964f34036d5c3be57dae8b83dee1857b6e4be",
+    "src/filter.rs": "fee5c5d407452bae00aa6cc46e809fc29e8d7f538b4cdfff8c9a8dd605a9f252",
+    "src/group.rs": "d57077b09ae8288a7d4c91235c4c46f143b925aafc85eab228cf9e671d665198"
+  },
+  "licence": "MIT OR Apache-2.0",
+  "licence_text_source": "same upstream project; existing vendor/krilla copies"
+}
