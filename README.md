@@ -49,6 +49,8 @@ Requires Rust 1.97 or newer.
 
 ```sh
 cargo test --workspace
+cargo fmt --check
+cargo clippy --workspace --all-targets -- -D warnings
 ```
 
 The PDF checks in `tests/*.py` and the standards oracle in `tests/oracle` also need Python with Pillow and fontTools, Poppler and GNU FriBidi. See [tests/oracle/README.md](tests/oracle/README.md).
