@@ -8,8 +8,11 @@ pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
 const DEFAULT_DENSITY: f32 = 1.0;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
 
-fn canvas_background(decoration: &BoxDecoration) -> BoxDecoration {
-    BoxDecoration {
+/// The background colour and images of `decoration`, without its borders, outline or shadows.
+pub(super) fn background_only<I>(
+    decoration: &crate::paint::BoxDecoration<I>,
+) -> crate::paint::BoxDecoration<I> {
+    crate::paint::BoxDecoration {
         background: decoration.background,
         backgrounds: decoration.backgrounds.clone(),
         ..Default::default()
@@ -292,7 +295,7 @@ impl BlockBox {
             ];
             match child {
                 BlockContent::Inline(paragraph) => {
-                    paragraph.text_box_trim = inherited;
+                    paragraph.set_text_box_trim(inherited);
                     for block in paragraph.anchored_blocks_mut() {
                         block.trim_text_boxes([false; 2])?;
                     }
@@ -433,7 +436,7 @@ impl ImageResources<'_> {
 }
 
 /// A typographic pseudo-element laid out as an inline box, which takes no float or position.
-fn inline_pseudo_style(mut style: Style) -> Style {
+pub(super) fn inline_pseudo_style(mut style: Style) -> Style {
     style.display = Display::Inline;
     style.float = crate::style::Float::None;
     style.position = crate::style::Position::Static;
@@ -592,14 +595,34 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             .element(id)
             .expect("first-line origins belong to the formatted document")
     }
+    /// Finishes inline content `collected` in a block styled `style`, whose first formatted line
+    /// it holds for `origins`, if any.
+    fn finish_inline(
+        &mut self,
+        collected: InlineCollector,
+        style: &Style,
+        origins: Option<&[ElementId]>,
+    ) -> Result<Result<Paragraph, Vec<BlockContent>>, DocumentError> {
+        let (sheet, document) = (self.sheet, self.traversal.document);
+        let resources = &mut *self.resources;
+        collected.finish_with_first_line(style, |paragraph| match origins {
+            Some(origins) => {
+                crate::document::first_line::variant(paragraph, origins, sheet, document, resources)
+            }
+            None => Ok(None),
+        })
+    }
     fn flush(&mut self) -> Result<(), DocumentError> {
-        match self.inline.split().finish(self.style)? {
+        let collected = self.inline.split();
+        let origins = self.first_line.origins.clone();
+        let origins = origins.as_deref();
+        match self.finish_inline(collected, self.style, origins)? {
             Ok(mut paragraph) => {
-                paragraph.first_formatted_line = !self
+                let first = !self
                     .children
                     .iter()
                     .any(|child| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)));
-                paragraph.last_formatted_line = false;
+                paragraph.set_formatted_lines(first, false);
                 *self.first_line = FirstLine::default();
                 self.children.push(BlockContent::Inline(paragraph));
             }
@@ -883,15 +906,18 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         style: &Style,
     ) -> Result<Vec<BlockContent>, DocumentError> {
         let outer = std::mem::take(self.inline);
+        let origins = first_line.origins.clone();
         *self.first_line = first_line;
         let appended = self.append_generated(output, style);
         let contents = std::mem::replace(self.inline, outer);
         *self.first_line = FirstLine::default();
         appended?;
-        Ok(match contents.finish(style)? {
-            Ok(paragraph) => vec![BlockContent::Inline(paragraph)],
-            Err(stray) => stray,
-        })
+        Ok(
+            match self.finish_inline(contents, style, origins.as_deref())? {
+                Ok(paragraph) => vec![BlockContent::Inline(paragraph)],
+                Err(stray) => stray,
+            },
+        )
     }
 
     /// A pseudo-element's block, part of the current element's hyperlink.
@@ -1191,7 +1217,7 @@ fn block<'a>(
                 let skips = frame.style.skips_contents() && frame.style.containment().layout;
                 block.decoration = resources.backgrounds(&frame.style)?;
                 if index == 0 {
-                    traversal.canvas = canvas_background(&block.decoration);
+                    traversal.canvas = background_only(&block.decoration);
                 }
                 block.image =
                     match element.name() {
@@ -1401,7 +1427,7 @@ fn block<'a>(
                 traversal.canvas = if child_style.display == Display::None {
                     BoxDecoration::default()
                 } else {
-                    canvas_background(&resources.backgrounds(&child_style)?)
+                    background_only(&resources.backgrounds(&child_style)?)
                 };
             }
             validate_display(&child_style.display)?;
@@ -1655,7 +1681,7 @@ fn block<'a>(
             .iter_mut()
             .rfind(|child| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)))
         {
-            paragraph.last_formatted_line = true;
+            paragraph.set_formatted_lines(paragraph.first_formatted_line(), true);
         }
         let canvas_source = index == 0 || traversal.canvas_body == Some(element.id());
         let mut block = BlockBox::with_decoration(

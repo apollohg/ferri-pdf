@@ -47,6 +47,8 @@ pub(crate) struct PreparedParagraph<'p, 'context, 'font> {
     monotone: bool,
     plans: wrapping::Plans,
     clamp: Option<ParagraphClamp>,
+    /// The `::first-line` copy, which shapes and breaks the line from the paragraph's start.
+    first_line: Option<Box<Self>>,
 }
 
 /// Lines at one fragmentainer width, retaining absolute paragraph source coordinates.
@@ -90,6 +92,9 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
             }),
             plans: wrapping::Plans::default(),
             clamp: None,
+            first_line: paragraph
+                .first_line()
+                .map(|variant| Box::new(Self::new(context, variant))),
         }
     }
 
@@ -156,10 +161,19 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
     }
 }
 
-impl<'p> ParagraphLines<'_, 'p, '_, '_> {
+impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
     /// Resume at the last successfully emitted line, including empty inline-edge progress.
     pub(crate) fn checkpoint(&self) -> TextPosition<'p> {
         self.position
+    }
+
+    /// The paragraph shaping and breaking the line from `start`: its `::first-line` copy for
+    /// the first formatted line (CSS Pseudo-Elements 4 §2.1).
+    fn prepared_at(&self, start: usize) -> &'s PreparedParagraph<'p, 'context, 'font> {
+        match &self.prepared.first_line {
+            Some(first_line) if start == 0 => first_line,
+            _ => self.prepared,
+        }
     }
 
     fn available(&self) -> f32 {
@@ -176,7 +190,7 @@ impl<'p> ParagraphLines<'_, 'p, '_, '_> {
         trailing: Vec<GlyphRun>,
     ) -> Result<Line, TextError> {
         let available = self.width - indent;
-        let prepared = self.prepared;
+        let prepared = self.prepared_at(from);
         let bidi = prepared.bidi()?;
         let paragraph = prepared.paragraph;
         let text = paragraph.text();
@@ -251,19 +265,32 @@ impl<'p> ParagraphLines<'_, 'p, '_, '_> {
             ascent: 0.0,
             height: 0.0,
             ink_bounds: None,
-            align: paragraph.style().align,
+            // Alignment belongs to the block container, not its first line.
+            align: self.prepared.paragraph.style().align,
             decorations: Vec::new(),
             order: arranged.order,
             present: arranged.present,
             ellipsis: None,
             hangable,
             hanging: [0.0; 2],
+            first_line_styles: !std::ptr::eq(prepared, self.prepared),
         })
     }
 
     fn finalize(&self, mut line: Line, last: bool) -> Result<Line, TextError> {
-        let prepared = self.prepared;
+        let prepared = self.prepared_at(line.range.start);
         let paragraph = prepared.paragraph;
+        if line.first_line_styles
+            && let Some(fragment) = line.atomics.iter().find(|fragment| {
+                let [base, styled] = [self.prepared.paragraph, paragraph]
+                    .map(|source| &source.atomics()[fragment.index].block);
+                base.image().is_none() && !base.style().same_text_style(styled.style())
+            })
+        {
+            return Err(TextError::FirstLineAtomic {
+                index: fragment.index,
+            });
+        }
         if prepared.has_leaders {
             crate::text::leaders::expand(prepared.context, paragraph, &mut line, self.available())?;
         }
@@ -359,7 +386,7 @@ impl<'p> ParagraphLines<'_, 'p, '_, '_> {
         &self,
         ellipsis: &crate::style::BlockEllipsis,
     ) -> Result<Option<Line>, TextError> {
-        let prepared = self.prepared;
+        let prepared = self.prepared_at(self.position.offset);
         let paragraph = prepared.paragraph;
         let start = self.position.offset;
         let natural = if let Some(planned) = self.planned_end(start)? {
@@ -420,7 +447,7 @@ impl<'p> ParagraphLines<'_, 'p, '_, '_> {
     /// The first-fit line from `start` whose start edge has `indent`, and whether it is the
     /// last line before a forced break or the paragraph end.
     fn greedy(&self, start: usize, indent: f32) -> Result<Option<(Line, bool)>, TextError> {
-        let prepared = self.prepared;
+        let prepared = self.prepared_at(start);
         let paragraph = prepared.paragraph;
         let text = paragraph.text();
         let available = self.width - indent;

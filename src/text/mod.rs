@@ -263,6 +263,9 @@ pub(crate) struct Line {
     hangable: hanging::Hangable,
     /// Advance of punctuation hanging past the left and right edges, which `width` includes.
     hanging: [f32; 2],
+    /// The paragraph's `::first-line` copy styles the line, which its runs, inline box fragments
+    /// and decorations index.
+    pub first_line_styles: bool,
 }
 
 pub(crate) use crate::style::IntrinsicWidths;
@@ -464,6 +467,8 @@ pub(crate) enum TextError {
     AtomicMetrics { expected: usize, actual: usize },
     #[error("text continuation belongs to another paragraph")]
     ParagraphMismatch,
+    #[error("atomic inline {index} on a ::first-line inherits first-line styles into its contents")]
+    FirstLineAtomic { index: usize },
 }
 
 /// The content language, or the OpenType language system `font-language-override` names
@@ -546,6 +551,25 @@ pub(crate) struct TextContext<'a> {
     matching_work: Cell<Option<usize>>,
     bidi_work: Cell<Option<usize>>,
 }
+/// A paragraph's bidi and break context for intrinsic measurement.
+struct IntrinsicSource<'p> {
+    paragraph: &'p Paragraph,
+    bidi: bidi::ResolvedParagraph<'p>,
+    automatic: Vec<usize>,
+    opportunities: Vec<(usize, BreakOpportunity)>,
+}
+impl<'p> IntrinsicSource<'p> {
+    fn new(context: &TextContext<'_>, paragraph: &'p Paragraph) -> Result<Self, TextError> {
+        let automatic = hyphenation::automatic(paragraph);
+        Ok(Self {
+            paragraph,
+            bidi: paragraph_bidi(paragraph, &context.bidi_work)?,
+            opportunities: whitespace::opportunities(paragraph, &automatic),
+            automatic,
+        })
+    }
+}
+
 impl<'a> TextContext<'a> {
     pub(crate) fn resolver(&self) -> &'a dyn ResourceResolver {
         self.resolver
@@ -563,28 +587,43 @@ impl<'a> TextContext<'a> {
             });
         }
         let text = paragraph.text();
-        let bidi = paragraph_bidi(paragraph, &self.bidi_work)?;
-        let has_rtl = bidi.has_rtl();
-        let automatic = hyphenation::automatic(paragraph);
-        let opportunities = whitespace::opportunities(paragraph, &automatic);
+        let base = IntrinsicSource::new(self, paragraph)?;
+        let first_line = paragraph
+            .first_line()
+            .map(|variant| IntrinsicSource::new(self, variant))
+            .transpose()?;
+        let opportunities = &base.opportunities;
         let minimum: Vec<f32> = atomics.iter().map(|widths| widths.min).collect();
         let maximum: Vec<f32> = atomics.iter().map(|widths| widths.max).collect();
         let measure = |range: Range<usize>, atomic_widths: &[f32], min_content: bool| {
-            let context_range = breaking::context_range(&opportunities, range.clone());
+            // Content from the start sets the first formatted line at either intrinsic size.
+            let source = first_line
+                .as_ref()
+                .filter(|_| range.start == 0)
+                .unwrap_or(&base);
+            let paragraph = source.paragraph;
+            let context_range = breaking::context_range(&source.opportunities, range.clone());
             let visible = whitespace::visible(paragraph, range.clone());
             let mut pieces = shape_line(
                 self,
                 text,
-                &bidi,
+                &source.bidi,
                 visible.clone(),
                 context_range,
                 paragraph,
-                has_rtl,
+                source.bidi.has_rtl(),
             )?;
             if visible.end == range.end {
-                hyphenation::decorate(self, paragraph, &automatic, &bidi, range.end, &mut pieces)?;
+                hyphenation::decorate(
+                    self,
+                    paragraph,
+                    &source.automatic,
+                    &source.bidi,
+                    range.end,
+                    &mut pieces,
+                )?;
             }
-            let indent = paragraph::indent_at(paragraph, &opportunities, range.start, 0.0);
+            let indent = paragraph::indent_at(base.paragraph, opportunities, range.start, 0.0);
             let arranged =
                 line_boxes::arrange(paragraph, pieces, range.clone(), atomic_widths, 0.0);
             let hangable = hanging::hangable(

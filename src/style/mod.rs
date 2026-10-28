@@ -91,7 +91,7 @@ pub(crate) use bookmark_values::BookmarkStyle;
 pub(crate) use box_values::{
     BoxSizing, BreakBetween, BreakInside, Display, LengthPercentage, Size, Visibility,
 };
-pub(crate) use computed::Style;
+pub(crate) use computed::{OriginNode, Style, StyleOrigin};
 pub(crate) use container_queries::{QueryContainers, QuerySizes};
 pub(crate) use containment::{
     Contain, ContainIntrinsicSize, ContainerType, ContainmentStyle, ContentVisibility,

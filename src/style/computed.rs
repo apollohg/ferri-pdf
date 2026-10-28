@@ -53,6 +53,52 @@ fn adjust_box_generation(style: &mut Style, element: Element<'_>) {
     }
 }
 
+/// The element or pseudo-element a style was computed for, and the origin of the style it
+/// inherited from, which `::first-line` recomputes inheritance through (CSS Pseudo-Elements 4
+/// §2.1.3). Provenance is no computed value: it never makes two styles differ.
+#[derive(Clone, Default)]
+pub(crate) struct StyleOrigin(Option<Arc<OriginNode>>);
+#[derive(Debug)]
+pub(crate) struct OriginNode {
+    pub element: crate::dom::ElementId,
+    pub pseudo: Option<crate::style::PseudoElement>,
+    pub parent: StyleOrigin,
+}
+impl StyleOrigin {
+    fn of(
+        element: Element<'_>,
+        pseudo: Option<crate::style::PseudoElement>,
+        parent: &Style,
+    ) -> Self {
+        Self(Some(Arc::new(OriginNode {
+            element: element.id(),
+            pseudo,
+            parent: parent.origin.clone(),
+        })))
+    }
+    pub(crate) fn node(&self) -> Option<&Arc<OriginNode>> {
+        self.0.as_ref()
+    }
+    /// Whether both styles were computed for the same box, or both for none.
+    pub(crate) fn same(&self, other: &Self) -> bool {
+        match (&self.0, &other.0) {
+            (Some(node), Some(other)) => Arc::ptr_eq(node, other),
+            (None, None) => true,
+            _ => false,
+        }
+    }
+}
+impl PartialEq for StyleOrigin {
+    fn eq(&self, _: &Self) -> bool {
+        true
+    }
+}
+impl std::fmt::Debug for StyleOrigin {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        formatter.write_str("StyleOrigin")
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, serde::Serialize)]
 pub(crate) struct Style {
     #[serde(skip)]
@@ -65,6 +111,8 @@ pub(crate) struct Style {
     pub(super) content_context: crate::style::generated::ContentContext,
     #[serde(skip)]
     pub(super) page_parent: Option<Arc<Style>>,
+    #[serde(skip)]
+    pub(crate) origin: StyleOrigin,
     #[serde(skip)]
     document_root: bool,
     #[serde(skip)]
@@ -214,6 +262,7 @@ impl Default for Style {
             computed_content: crate::style::generated::INITIAL_CONTENT.clone(),
             content_context: Default::default(),
             page_parent: None,
+            origin: StyleOrigin::default(),
             document_root: false,
             item_parent: false,
             inlinifying_parent: false,
@@ -321,6 +370,19 @@ impl Default for Style {
     }
 }
 impl Style {
+    /// `base`, the style of a box holding a first formatted line, as the line's contents inherit
+    /// it through `::first-line` style `line` (CSS Pseudo-Elements 4 §2.1.3): standard inherited
+    /// properties come from `line`, except `writing-mode`, `direction` and `text-orientation`;
+    /// all others, and custom properties, from `base`.
+    pub(crate) fn through_first_line(base: &Self, line: &Self) -> Self {
+        let mut style = base.clone();
+        properties::inherit(&mut style, line);
+        // Copying leaves `currentcolor` text paint resolved for `base`; `line` resolved its own.
+        style.text_paint.clone_from(&line.text_paint);
+        // Text is set horizontally only, so `direction` alone needs restoring.
+        style.rtl = base.rtl;
+        style
+    }
     /// Font-name environment owned by the element's tree scope.
     pub(crate) fn element_font_namespace(&self) -> crate::fonts::FontNamespace {
         self.element_font_namespace
@@ -637,7 +699,9 @@ impl Stylesheet {
                 page_font: false,
             },
         )?;
-        self.computed_values(element, parent, style, winners, resolver)
+        let mut style = self.computed_values(element, parent, style, winners, resolver)?;
+        style.origin = StyleOrigin::of(element, None, parent);
+        Ok(style)
     }
 
     pub(super) fn computed_values(
@@ -869,10 +933,9 @@ impl Stylesheet {
             return Ok(None);
         }
         let relative = self.text_basis(&mut style, parent, &mut winners, inherited, resolver)?;
-        Ok(Some((
-            Self::apply_properties(style, parent, winners, &relative)?,
-            content,
-        )))
+        let mut style = Self::apply_properties(style, parent, winners, &relative)?;
+        style.origin = StyleOrigin::of(element, Some(pseudo), parent);
+        Ok(Some((style, content)))
     }
 
     /// The `::marker` of list item `element` (CSS Lists 3 §3.1): its computed style and the
@@ -929,7 +992,9 @@ impl Stylesheet {
         Self::generated(&mut winners, &mut style, parent, &inherited)?;
         Self::display(&mut style, parent, &mut winners, &inherited)?;
         let relative = self.text_basis(&mut style, parent, &mut winners, inherited, resolver)?;
-        Self::apply_properties(style, parent, winners, &relative)
+        let mut style = Self::apply_properties(style, parent, winners, &relative)?;
+        style.origin = StyleOrigin::of(element, Some(pseudo), parent);
+        Ok(style)
     }
 
     pub(super) fn prepare_pseudo(

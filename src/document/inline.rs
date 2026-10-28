@@ -55,9 +55,9 @@ pub(crate) struct InlineLink {
 pub(crate) struct Paragraph {
     expanded_tabs: Vec<Range<usize>>,
     marker_image: Option<crate::graphics::BackgroundImage>,
-    pub(crate) first_formatted_line: bool,
+    first_formatted_line: bool,
     /// Holds the last line box of its block container.
-    pub(crate) last_formatted_line: bool,
+    last_formatted_line: bool,
     /// Whether the paragraph's first and last lines are a block container's first and last
     /// formatted lines that it trims with `text-box-trim` (CSS Inline 3 §6.2).
     pub(crate) text_box_trim: [bool; 2],
@@ -71,8 +71,123 @@ pub(crate) struct Paragraph {
     clearances: Vec<(usize, Clear, bool)>,
     links: Vec<InlineLink>,
     events: Vec<crate::document::InlineEvent>,
+    /// The paragraph as `::first-line` styles its first formatted line, which shares its
+    /// source offsets, atomic inlines and line breaks (CSS Pseudo-Elements 4 §2.1).
+    first_line: Option<Box<Paragraph>>,
 }
 impl Paragraph {
+    pub(crate) fn first_line(&self) -> Option<&Self> {
+        self.first_line.as_deref()
+    }
+    pub(crate) fn set_text_box_trim(&mut self, trim: [bool; 2]) {
+        self.text_box_trim = trim;
+        if let Some(variant) = &mut self.first_line {
+            variant.text_box_trim = trim;
+        }
+    }
+    /// Records whether the paragraph holds its block container's first and last lines.
+    pub(crate) fn set_formatted_lines(&mut self, first: bool, last: bool) {
+        self.first_formatted_line = first;
+        self.last_formatted_line = last;
+        if let Some(variant) = &mut self.first_line {
+            variant.first_formatted_line = first;
+            variant.last_formatted_line = last;
+        }
+    }
+    /// A copy of this paragraph before `text-transform` for its first formatted line: the
+    /// `::first-line` boxes `lines` (outermost first, styled and decorated) wrap its contents,
+    /// its root inline box takes `root`, and its spans, inline boxes and atomic inlines take
+    /// `spans`, `boxes` and `atomics` in order.
+    pub(crate) fn first_line_copy(
+        &self,
+        root: Style,
+        lines: Vec<(Style, crate::graphics::BoxDecoration)>,
+        spans: Vec<Style>,
+        boxes: Vec<(Style, crate::graphics::BoxDecoration)>,
+        atomics: Vec<Style>,
+    ) -> Self {
+        let count = lines.len();
+        let shift = |inline_box: Option<usize>| {
+            inline_box.map_or(count.checked_sub(1), |index| Some(index + count))
+        };
+        let end = self.text.len();
+        let descendants = self.boxes.len();
+        let mut copied: Vec<InlineBox> = lines
+            .into_iter()
+            .enumerate()
+            .map(|(index, (style, decoration))| InlineBox {
+                range: 0..end,
+                style: style.into(),
+                decoration,
+                parent: index.checked_sub(1),
+                descendants: count - 1 - index + descendants,
+                continued: [false; 2],
+                navigation: crate::document::BoxNavigation::default(),
+                canvas_source: false,
+            })
+            .collect();
+        copied.extend(
+            self.boxes
+                .iter()
+                .zip(boxes)
+                .map(|(inline_box, (style, decoration))| InlineBox {
+                    range: inline_box.range.clone(),
+                    style: style.into(),
+                    decoration,
+                    parent: shift(inline_box.parent),
+                    descendants: inline_box.descendants,
+                    continued: inline_box.continued,
+                    navigation: inline_box.navigation,
+                    canvas_source: inline_box.canvas_source,
+                }),
+        );
+        Self {
+            expanded_tabs: self.expanded_tabs.clone(),
+            marker_image: None,
+            first_formatted_line: self.first_formatted_line,
+            last_formatted_line: self.last_formatted_line,
+            text_box_trim: self.text_box_trim,
+            text: self.text.clone(),
+            style: Box::new(root),
+            spans: self
+                .spans
+                .iter()
+                .zip(spans)
+                .map(|(span, style)| TextSpan {
+                    range: span.range.clone(),
+                    style,
+                    inline_box: shift(span.inline_box),
+                    atomic: span.atomic,
+                    leader: span.leader,
+                    source: span.source,
+                })
+                .collect(),
+            anchors: Vec::new(),
+            boxes: copied,
+            atomics: self
+                .atomics
+                .iter()
+                .zip(atomics)
+                .map(|(atomic, style)| Anchor {
+                    offset: atomic.offset,
+                    block: crate::document::BlockBox::anonymous(style, Vec::new(), None),
+                    inline_box: shift(atomic.inline_box),
+                })
+                .collect(),
+            optional_breaks: self.optional_breaks.clone(),
+            clearances: self.clearances.clone(),
+            links: self
+                .links
+                .iter()
+                .map(|link| InlineLink {
+                    range: link.range.clone(),
+                    link: link.link,
+                })
+                .collect(),
+            events: Vec::new(),
+            first_line: None,
+        }
+    }
     #[cfg(test)]
     pub(crate) fn generated(text: &str, style: &Style) -> Result<Option<Self>, DocumentError> {
         let mut collector = InlineCollector::default();
@@ -147,6 +262,7 @@ impl Paragraph {
             clearances: Vec::new(),
             links: Vec::new(),
             events: Vec::new(),
+            first_line: None,
         };
         transform::apply(&mut paragraph)?;
         Ok(paragraph)
@@ -339,7 +455,7 @@ impl InlineCollector {
         if self
             .styles
             .last()
-            .is_none_or(|last| !last.same_text_style(style))
+            .is_none_or(|last| !last.same_text_style(style) || !last.origin.same(&style.origin))
         {
             self.styles.push(style.clone());
         }
@@ -798,6 +914,15 @@ impl InlineCollector {
         self,
         style: &Style,
     ) -> Result<Result<Paragraph, Vec<crate::document::BlockContent>>, DocumentError> {
+        self.finish_with_first_line(style, |_| Ok(None))
+    }
+    /// As `finish`, attaching the copy of the paragraph that `first_line` styles for its first
+    /// formatted line, given the paragraph before `text-transform` (CSS Pseudo-Elements 4 §2.1).
+    pub(crate) fn finish_with_first_line(
+        self,
+        style: &Style,
+        first_line: impl FnOnce(&Paragraph) -> Result<Option<Paragraph>, DocumentError>,
+    ) -> Result<Result<Paragraph, Vec<crate::document::BlockContent>>, DocumentError> {
         if (self.text.is_empty()
             || (self.spans.iter().any(|span| span.leader)
                 && self
@@ -828,8 +953,29 @@ impl InlineCollector {
             clearances: self.clearances,
             links: self.links,
             events: self.events,
+            first_line: None,
         };
+        let variant = first_line(&paragraph)?;
         transform::apply(&mut paragraph)?;
+        if let Some(mut variant) = variant {
+            transform::apply(&mut variant)?;
+            // Both copies share source offsets, so casing must map each character alike.
+            if !variant
+                .text
+                .char_indices()
+                .map(|(offset, ch)| (offset, ch.len_utf8()))
+                .eq(paragraph
+                    .text
+                    .char_indices()
+                    .map(|(offset, ch)| (offset, ch.len_utf8())))
+            {
+                return Err(crate::style::StyleError::Unsupported(
+                    "::first-line text-transform that changes the encoded text length".into(),
+                )
+                .into());
+            }
+            paragraph.first_line = Some(Box::new(variant));
+        }
         Ok(Ok(paragraph))
     }
 }

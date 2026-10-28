@@ -334,3 +334,190 @@ fn legacy_single_colon_first_letter_and_floated_first_letter() {
         "lines below the float return to the content edge: {geometry:#?}"
     );
 }
+
+const PARAGRAPH: &str = "This is a somewhat long paragraph that will be broken into several \
+                         lines by the layout of its block.";
+
+fn texts(trace: &crate::LayoutTrace) -> Vec<String> {
+    trace.pages[0]
+        .iter()
+        .map(|line| line.text.clone())
+        .collect()
+}
+
+#[test]
+fn first_line_styles_the_first_formatted_line_after_line_breaking() {
+    let styled = trace(
+        "p{width:200pt}p::first-line{font-size:16pt;color:red;text-transform:uppercase}",
+        &format!("<p>{PARAGRAPH}</p>"),
+    );
+    let large = trace(
+        "p{width:200pt;font-size:16pt;text-transform:uppercase}",
+        &format!("<p>{PARAGRAPH}</p>"),
+    );
+    let plain = trace("p{width:200pt}", &format!("<p>{PARAGRAPH}</p>"));
+    let (styled, large, plain) = (texts(&styled), texts(&large), texts(&plain));
+    assert_eq!(
+        styled[0], large[0],
+        "the first line breaks where its ::first-line font size and casing fit: \
+         {styled:#?} {large:#?}"
+    );
+    assert_ne!(
+        large[0].len(),
+        plain[0].len(),
+        "the test needs the first-line styles to move the break"
+    );
+    let rest = PARAGRAPH[large[0].len()..].trim_start();
+    let following = texts(&trace("p{width:200pt}", &format!("<p>{rest}</p>")));
+    assert_eq!(
+        styled[1..],
+        following[..],
+        "later lines lay out the remaining text with the paragraph's own styles"
+    );
+    let lines = styled_lines(&trace(
+        "p{width:200pt}p::first-line{font-size:16pt;color:red}",
+        &format!("<p>{PARAGRAPH}</p>"),
+    ));
+    assert!(
+        lines[0].1.iter().all(|run| run.1 == RED && run.2 == 16.0),
+        "the first line takes the ::first-line styles: {lines:#?}"
+    );
+    assert!(
+        lines[1..]
+            .iter()
+            .flat_map(|line| &line.1)
+            .all(|run| run.1 == BLACK && run.2 == 12.0),
+        "later lines keep the paragraph's styles: {lines:#?}"
+    );
+}
+
+#[test]
+fn first_line_inherits_into_descendants_unless_they_set_their_own_values() {
+    let lines = styled_lines(&trace(
+        "p{width:300pt}p::first-line{font-size:16pt;color:red;direction:rtl}span{color:blue}\
+         em{font-size:12pt;font-style:normal}b{font-weight:normal}p::first-letter{color:green}",
+        "<p>Start <span>own colour</span> <em>own size</em> <b>inherited</b> then enough text \
+         to reach a second line of the paragraph</p>",
+    ));
+    assert_eq!(
+        lines[0].1,
+        [
+            styled("S", GREEN, 16.0),
+            styled("tart ", RED, 16.0),
+            styled("own colour", BLUE, 16.0),
+            styled(" ", RED, 16.0),
+            styled("own size", RED, 12.0),
+            styled(" ", RED, 16.0),
+            styled("inherited", RED, 16.0),
+        ],
+        "descendants on the first line inherit from ::first-line; ::first-letter nests \
+         inside it; direction does not apply (CSS Pseudo-Elements 4 §2.1.2): {lines:#?}"
+    );
+    assert!(
+        lines[1].1.iter().all(|run| run.2 == 12.0),
+        "the second line keeps the original styles: {lines:#?}"
+    );
+}
+
+#[test]
+fn first_line_box_paints_its_background_and_decorations_on_the_line_only() {
+    let trace = trace(
+        "div{width:200pt}div::first-line{background:yellow;text-decoration:underline}",
+        &format!("<div><p>{PARAGRAPH}</p><p>Second paragraph</p></div>"),
+    );
+    let yellow = common::painted_box(&trace, [255, 255, 0]);
+    let first = &trace.pages[0][0];
+    assert_labelled_pt("first-line background left", yellow.x, first.x);
+    assert_labelled_pt("first-line background width", yellow.width, first.width);
+    let underlines: Vec<_> = trace
+        .display_lists
+        .iter()
+        .flatten()
+        .filter_map(|item| match item {
+            crate::DisplayItem::Decoration(paint) => Some(paint.rect),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(
+        underlines.len(),
+        1,
+        "only the first formatted line of the div, in its first p, is underlined: \
+         {underlines:?}"
+    );
+    assert_labelled_pt("underline width", underlines[0].width, first.width);
+}
+
+#[test]
+fn first_line_needs_the_first_formatted_line_and_shrinks_to_fit_with_its_styles() {
+    let lines = styled_lines(&trace(
+        "p::first-line{color:red}",
+        "<p><br>First</p><div style='display:inline-block'><p>Inline</p></div>",
+    ));
+    assert!(
+        line_runs(&lines, "First").iter().all(|run| run.1 == BLACK),
+        "a forced break makes an empty first formatted line: {lines:#?}"
+    );
+    assert!(
+        line_runs(&lines, "Inline").iter().all(|run| run.1 == RED),
+        "an inline-block's paragraph has its own first line: {lines:#?}"
+    );
+    let trace = trace(
+        "div{float:left}p::first-line{font-size:24pt}",
+        "<div><p>Wide line<br>narrow</p></div>",
+    );
+    let first = &trace.pages[0][0];
+    let float = trace.pages[0]
+        .iter()
+        .map(|line| line.width)
+        .fold(0.0f32, f32::max);
+    assert_labelled_pt(
+        "the float shrinks to the max-content of its ::first-line styled first line",
+        float,
+        first.width,
+    );
+    assert!(
+        first.runs.iter().all(|run| run.font_size == 24.0),
+        "first line at 24pt"
+    );
+}
+
+#[test]
+fn first_line_rejects_inheritance_it_cannot_render() {
+    let atomic = render_html(
+        &format!(
+            "<style>{PROFILE}p::first-line{{color:red}}</style><p>Lead \
+             <span style='display:inline-block'>box</span></p>"
+        ),
+        &local_options(),
+    );
+    let error = atomic
+        .err()
+        .expect("an inline-block inheriting first-line colour fails");
+    assert!(
+        error.to_string().contains("::first-line"),
+        "the failure names the unsupported inheritance: {error}"
+    );
+    let later = render_html(
+        &format!(
+            "<style>{PROFILE}p{{width:60pt}}p::first-line{{color:red}}</style><p>Lead words \
+             wrap <span style='display:inline-block'>box</span></p>"
+        ),
+        &local_options(),
+    );
+    assert!(
+        later.is_ok(),
+        "an inline-block after the first line inherits nothing from it: {:?}",
+        later.err()
+    );
+    let casing = render_html(
+        &format!("<style>{PROFILE}p::first-line{{text-transform:uppercase}}</style><p>straße</p>"),
+        &local_options(),
+    );
+    let error = casing
+        .err()
+        .expect("uppercasing ß changes the source offsets");
+    assert!(
+        error.to_string().contains("::first-line text-transform"),
+        "{error}"
+    );
+}

@@ -74,6 +74,51 @@ struct InlineLayers<'p> {
     paragraph: &'p crate::document::Paragraph,
     containing: InlineContaining,
     fragments: Vec<Vec<(usize, usize)>>,
+    /// The layers of the paragraph's `::first-line` copy, which paints its first line.
+    first_line: Option<Box<InlineLayers<'p>>>,
+}
+impl<'p> InlineLayers<'p> {
+    fn new(paragraph: &'p crate::document::Paragraph, containing: InlineContaining) -> Self {
+        Self {
+            paragraph,
+            containing,
+            fragments: vec![Vec::new(); paragraph.boxes().len()],
+            first_line: paragraph
+                .first_line()
+                .map(|copy| Box::new(Self::new(copy, containing))),
+        }
+    }
+    /// Resolves the inline boxes of the paragraph and its copy against `containing`.
+    fn set_containing(&mut self, containing: InlineContaining) {
+        self.containing = containing;
+        if let Some(first_line) = &mut self.first_line {
+            first_line.set_containing(containing);
+        }
+    }
+    /// The layers painting `line`.
+    fn line(&mut self, line: &crate::text::Line) -> &mut Self {
+        if line.first_line_styles && self.first_line.is_some() {
+            return self
+                .first_line
+                .as_deref_mut()
+                .expect("a first-line copy paints its line");
+        }
+        self
+    }
+    /// Each inline box painted with the fragments it painted, in this paragraph and its copy.
+    fn painted(&self) -> impl Iterator<Item = (&crate::document::InlineBox, &[(usize, usize)])> {
+        self.paragraph
+            .boxes()
+            .iter()
+            .zip(self.fragments.iter().map(Vec::as_slice))
+            .chain(self.first_line.iter().flat_map(|first_line| {
+                first_line
+                    .paragraph
+                    .boxes()
+                    .iter()
+                    .zip(first_line.fragments.iter().map(Vec::as_slice))
+            }))
+    }
 }
 /// Absolutely positioned descendants of a non-atomic inline box waiting for the end of its
 /// block container, and the content boxes of its fragments by page and line in layout

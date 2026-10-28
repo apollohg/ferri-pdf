@@ -178,15 +178,14 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         let consumed_anchors = 0;
         let consumed_events = 0;
         let line_index = 0;
-        let layers = InlineLayers {
-            paragraph: paragraph.paragraph,
-            containing: InlineContaining {
+        let layers = InlineLayers::new(
+            paragraph.paragraph,
+            InlineContaining {
                 width,
                 height: containing_height,
                 rtl: style.rtl,
             },
-            fragments: vec![Vec::new(); paragraph.paragraph.boxes().len()],
-        };
+        );
         if lines.as_slice().is_empty() {
             for anchor in anchors.by_ref() {
                 self.line_anchor(&anchor, x, width, 0.0, 0.0, &layers);
@@ -413,11 +412,11 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     lines = remainder.into_iter();
                 }
             }
-            layers.containing = InlineContaining {
+            layers.set_containing(InlineContaining {
                 width,
                 height: containing_height,
                 rtl: style.rtl,
-            };
+            });
             let remaining = lines.as_slice().len();
             let mut height = 0.0;
             let available = lines
@@ -586,17 +585,18 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     marker.fragment.baseline = baseline;
                     self.emit_marker(*marker);
                 }
+                let line_layers = layers.line(&line);
                 self.inline_content(
                     &line,
                     line_width,
                     line_x + offset,
                     &mut atomics,
-                    &mut layers,
+                    line_layers,
                 )?;
+                let paragraph = line_layers.paragraph;
                 // Runs inside inline boxes with their own layers paint in them.
-                let parts = self.split_line(&layers, line.runs, &line.decorations);
+                let parts = self.split_line(line_layers, line.runs, &line.decorations);
                 let grouped = parts.len() > 1;
-                let paragraph = layers.paragraph;
                 let decorates = |run: &crate::text::GlyphRun, decoration: &DecorationPaint| {
                     decoration.owner.is_none_or(|owner| {
                         paragraph.is_within(paragraph.spans()[run.source_span].inline_box, owner)
@@ -688,7 +688,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         for event in &source.semantic_events()[consumed_events..] {
             self.string_locations.record(self.page, &event.event);
         }
-        for (inline_box, fragments) in source.boxes().iter().zip(&layers.fragments) {
+        for (inline_box, fragments) in layers.painted() {
             if !inline_box.style.clone_decoration {
                 assemble_background(fragments, &mut self.foreground, true, inline_box.style.rtl);
             }
