@@ -1,0 +1,19 @@
+{
+  "description": "Non-standard properties the engine implements that no CSS specification defines. The HTML user-agent rules map colspan and rowspan to them.",
+  "properties": {
+    "table-column-span": {
+      "syntax": "<integer [1,∞]>",
+      "initial": "1",
+      "inherited": false,
+      "groups": ["Extensions"],
+      "source": "HTML user-agent mapping: td[colspan], th[colspan] set table-column-span from the colspan attribute"
+    },
+    "table-row-span": {
+      "syntax": "<integer [0,∞]>",
+      "initial": "1",
+      "inherited": false,
+      "groups": ["Extensions"],
+      "source": "HTML user-agent mapping: td[rowspan], th[rowspan] set table-row-span from the rowspan attribute"
+    }
+  }
+}

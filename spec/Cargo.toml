@@ -1,0 +1,15 @@
+[package]
+name = "ferri-pdf-spec-data"
+version.workspace = true
+edition.workspace = true
+license = "MIT AND CC0-1.0 AND Unicode-3.0"
+license-file.workspace = true
+publish.workspace = true
+description = "Pinned grammar and language data used by ferri-pdf"
+include = ["Cargo.toml", "lib.rs", "css/**", "languages/**", "cldr/**"]
+
+[lib]
+path = "lib.rs"
+
+[lints]
+workspace = true

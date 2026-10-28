@@ -1,0 +1,357 @@
+{
+  "description": "Corrections to mdn-data from the cited specifications: productions the data references but does not define, and entries that predate the current specification. Each entry replaces only the fields it names. Additions are specification properties the data omits, defined in full.",
+  "syntaxes": {
+    "content-list": {
+      "syntax": "[ <string> | <image> | <attr()> | contents | <quote> | <leader()> | <target> | <string()> | <content()> | <counter> ]+",
+      "source": "https://www.w3.org/TR/2025/WD-css-content-3-20251204/#content-values"
+    },
+    "string()": {
+      "syntax": "string( <custom-ident> [ , [ first | start | last | first-except ] ]? )",
+      "source": "https://www.w3.org/TR/2025/WD-css-content-3-20251204/#string-function; optional second argument in prose"
+    },
+    "target-counter()": {
+      "syntax": "target-counter( [ <string> | <url> ] , <custom-ident> [ , <counter-style> ]? )",
+      "source": "https://www.w3.org/TR/2025/WD-css-content-3-20251204/#target-counter; optional counter-style in prose and examples"
+    },
+    "target-counters()": {
+      "syntax": "target-counters( [ <string> | <url> ] , <custom-ident> , <string> [ , <counter-style> ]? )",
+      "source": "https://www.w3.org/TR/2025/WD-css-content-3-20251204/#target-counters"
+    },
+    "target-text()": {
+      "syntax": "target-text( [ <string> | <url> ] [ , [ content | before | after | first-letter ] ]? )",
+      "source": "https://www.w3.org/TR/2025/WD-css-content-3-20251204/#target-text; optional second argument in prose"
+    },
+    "named-string-content": {
+      "syntax": "[ <string> | <counter()> | <counters()> | <content()> | <attr()> ]+",
+      "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#setting-named-strings-the-string-set-pro"
+    },
+    "font-format": {
+      "syntax": "<string> | collection | embedded-opentype | opentype | svg | truetype | woff | woff2",
+      "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-face-src-parsing"
+    },
+    "font-tech": {
+      "syntax": "features-opentype | features-aat | features-graphite | color-COLRv0 | color-COLRv1 | color-SVG | color-sbix | color-CBDT | variations | palettes | incremental",
+      "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-face-src-parsing"
+    },
+    "font-source-format": {
+      "syntax": "format( <font-format> )",
+      "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-face-src-parsing"
+    },
+    "font-source-tech": {
+      "syntax": "tech( <font-tech># )",
+      "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-face-src-parsing"
+    },
+    "attr-name": {
+      "syntax": "[ <ident>? '|' ]? <ident>",
+      "source": "https://drafts.csswg.org/css-values-5/#typedef-attr-name"
+    },
+    "autospace": {
+      "syntax": "no-autospace | [ ideograph-alpha || ideograph-numeric || punctuation ] || [ insert | replace ]",
+      "source": "https://drafts.csswg.org/css-text-4/#typedef-autospace"
+    },
+    "counter-style": {
+      "syntax": "<counter-style-name> | <symbols()>",
+      "source": "https://drafts.csswg.org/css-counter-styles-3/#typedef-counter-style"
+    },
+    "bottom": {
+      "syntax": "<length> | auto",
+      "source": "https://www.w3.org/TR/CSS21/visufx.html#value-def-shape"
+    },
+    "fixed-breadth": {
+      "syntax": "<length-percentage [0,∞]>",
+      "source": "https://drafts.csswg.org/css-grid-1/#typedef-fixed-breadth"
+    },
+    "inflexible-breadth": {
+      "syntax": "<length-percentage [0,∞]> | min-content | max-content | auto",
+      "source": "https://drafts.csswg.org/css-grid-1/#typedef-inflexible-breadth"
+    },
+    "track-breadth": {
+      "syntax": "<length-percentage [0,∞]> | <flex [0,∞]> | min-content | max-content | auto",
+      "source": "https://drafts.csswg.org/css-grid-1/#typedef-track-breadth"
+    },
+    "track-size": {
+      "syntax": "<track-breadth> | minmax( <inflexible-breadth> , <track-breadth> ) | fit-content( <length-percentage [0,∞]> )",
+      "source": "https://drafts.csswg.org/css-grid-1/#typedef-track-size"
+    },
+    "intrinsic-size-keyword": {
+      "syntax": "auto | min-content | max-content | fit-content | stretch",
+      "source": "https://drafts.csswg.org/css-values-5/#calc-size"
+    },
+    "left": {
+      "syntax": "<length> | auto",
+      "source": "https://www.w3.org/TR/CSS21/visufx.html#value-def-shape"
+    },
+    "right": {
+      "syntax": "<length> | auto",
+      "source": "https://www.w3.org/TR/CSS21/visufx.html#value-def-shape"
+    },
+    "syntax": {
+      "syntax": "'*' | <syntax-component> [ <syntax-combinator> <syntax-component> ]* | <syntax-string>",
+      "source": "https://drafts.css-houdini.org/css-properties-values-api-1/#syntax-strings"
+    },
+    "syntax-combinator": {
+      "syntax": "'|'",
+      "source": "https://drafts.css-houdini.org/css-properties-values-api-1/#syntax-strings"
+    },
+    "syntax-component": {
+      "syntax": "<syntax-single-component> <syntax-multiplier>? | '<' transform-list '>'",
+      "source": "https://drafts.css-houdini.org/css-properties-values-api-1/#syntax-strings"
+    },
+    "syntax-multiplier": {
+      "syntax": "'#' | '+'",
+      "source": "https://drafts.css-houdini.org/css-properties-values-api-1/#syntax-strings"
+    },
+    "syntax-single-component": {
+      "syntax": "'<' <syntax-type-name> '>' | <ident>",
+      "source": "https://drafts.css-houdini.org/css-properties-values-api-1/#syntax-strings"
+    },
+    "syntax-string": {
+      "syntax": "<string>",
+      "source": "https://drafts.css-houdini.org/css-properties-values-api-1/#syntax-strings"
+    },
+    "syntax-type-name": {
+      "syntax": "angle | color | custom-ident | image | integer | length | length-percentage | number | percentage | resolution | string | time | url | transform-function",
+      "source": "https://drafts.css-houdini.org/css-properties-values-api-1/#supported-names"
+    },
+    "top": {
+      "syntax": "<length> | auto",
+      "source": "https://www.w3.org/TR/CSS21/visufx.html#value-def-shape"
+    },
+    "x": {
+      "syntax": "<number>",
+      "source": "https://drafts.csswg.org/css-ui-4/#cursor"
+    },
+    "y": {
+      "syntax": "<number>",
+      "source": "https://drafts.csswg.org/css-ui-4/#cursor"
+    },
+    "content()": {
+      "syntax": "content( [ text | before | after | first-letter | marker ]? )",
+      "source": "https://drafts.csswg.org/css-gcpm-3/#content-function-header"
+    }
+  },
+  "properties": {
+    "object-position": {
+      "inherited": false,
+      "source": "https://www.w3.org/TR/2023/CRD-css-images-3-20231218/#the-object-position"
+    },
+    "font-style": {
+      "syntax": "normal | italic | left | right | oblique <angle [-90deg,90deg]>?",
+      "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-style-prop"
+    },
+    "font": {
+      "initial": [
+        "font-family",
+        "font-size",
+        "font-width",
+        "font-style",
+        "font-variant",
+        "font-weight",
+        "line-height",
+        "font-feature-settings",
+        "font-kerning",
+        "font-language-override",
+        "font-optical-sizing",
+        "font-size-adjust",
+        "font-variation-settings"
+      ],
+      "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-prop"
+    },
+    "font-variant": {
+      "initial": [
+        "font-variant-alternates",
+        "font-variant-caps",
+        "font-variant-east-asian",
+        "font-variant-emoji",
+        "font-variant-ligatures",
+        "font-variant-numeric",
+        "font-variant-position"
+      ],
+      "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-variant-prop"
+    },
+    "font-stretch": {
+      "syntax": "<'font-width'>",
+      "initial": [
+        "font-width"
+      ],
+      "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-stretch-prop"
+    },
+    "quotes": {
+      "syntax": "auto | none | match-parent | [ <string> <string> ]+",
+      "initial": "auto",
+      "source": "https://www.w3.org/TR/2025/WD-css-content-3-20251204/#quotes-property"
+    },
+    "font-synthesis": {
+      "initial": ["font-synthesis-weight", "font-synthesis-style", "font-synthesis-small-caps", "font-synthesis-position"],
+      "source": "https://drafts.csswg.org/css-fonts-4/#font-synthesis"
+    },
+    "column-count": {
+      "syntax": "auto | <integer [1,∞]>",
+      "source": "https://drafts.csswg.org/css-multicol-1/#propdef-column-count"
+    },
+    "column-fill": {
+      "syntax": "auto | balance | balance-all",
+      "source": "https://drafts.csswg.org/css-multicol-1/#propdef-column-fill"
+    },
+    "column-rule-style": {
+      "syntax": "<line-style>",
+      "source": "https://drafts.csswg.org/css-multicol-1/#propdef-column-rule-style"
+    },
+    "column-rule-width": {
+      "syntax": "<line-width>",
+      "source": "https://drafts.csswg.org/css-multicol-1/#propdef-column-rule-width"
+    },
+    "flex-grow": {
+      "syntax": "<number [0,∞]>",
+      "source": "https://drafts.csswg.org/css-flexbox-1/#flex-grow-property"
+    },
+    "flex-shrink": {
+      "syntax": "<number [0,∞]>",
+      "source": "https://drafts.csswg.org/css-flexbox-1/#flex-shrink-property"
+    },
+    "grid": {
+      "initial": ["grid-template-rows", "grid-template-columns", "grid-template-areas", "grid-auto-rows", "grid-auto-columns", "grid-auto-flow"],
+      "source": "https://drafts.csswg.org/css-grid-1/#grid-shorthand"
+    },
+    "grid-column-gap": {
+      "syntax": "<'column-gap'>",
+      "initial": ["column-gap"],
+      "source": "https://drafts.csswg.org/css-align-3/#gap-legacy"
+    },
+    "grid-gap": {
+      "syntax": "<'row-gap'> <'column-gap'>?",
+      "initial": ["row-gap", "column-gap"],
+      "source": "https://drafts.csswg.org/css-align-3/#gap-legacy"
+    },
+    "grid-row-gap": {
+      "syntax": "<'row-gap'>",
+      "initial": ["row-gap"],
+      "source": "https://drafts.csswg.org/css-align-3/#gap-legacy"
+    },
+    "letter-spacing": {
+      "syntax": "normal | <length-percentage>",
+      "source": "https://drafts.csswg.org/css-text-4/#letter-spacing-property"
+    },
+    "line-height": {
+      "syntax": "normal | <number [0,∞]> | <length-percentage [0,∞]>",
+      "source": "https://drafts.csswg.org/css-inline-3/#line-height-property"
+    },
+    "overflow": {
+      "initial": ["overflow-x", "overflow-y"],
+      "source": "https://drafts.csswg.org/css-overflow-3/#propdef-overflow"
+    },
+    "page-break-after": {
+      "initial": ["break-after"],
+      "source": "https://drafts.csswg.org/css-break-3/#page-break-properties"
+    },
+    "page-break-before": {
+      "initial": ["break-before"],
+      "source": "https://drafts.csswg.org/css-break-3/#page-break-properties"
+    },
+    "page-break-inside": {
+      "initial": ["break-inside"],
+      "source": "https://drafts.csswg.org/css-break-3/#page-break-properties"
+    },
+    "text-decoration": {
+      "initial": ["text-decoration-line", "text-decoration-style", "text-decoration-color", "text-decoration-thickness"],
+      "source": "https://drafts.csswg.org/css-text-decor-4/#text-decoration-property"
+    },
+    "text-decoration-thickness": {
+      "syntax": "auto | from-font | <length-percentage>",
+      "source": "https://drafts.csswg.org/css-text-decor-4/#text-decoration-thickness-property"
+    },
+    "text-underline-offset": {
+      "syntax": "auto | <length-percentage>",
+      "source": "https://drafts.csswg.org/css-text-decor-4/#underline-offset"
+    },
+    "text-align": {
+      "initial": "start",
+      "source": "https://drafts.csswg.org/css-text-3/#text-align-property"
+    },
+    "transform-origin": {
+      "syntax": "[ left | center | right | top | bottom | <length-percentage> ] | [ left | center | right | <length-percentage> ] [ top | center | bottom | <length-percentage> ] <length>? | [ [ center | left | right ] && [ center | top | bottom ] ] <length>?",
+      "source": "https://drafts.csswg.org/css-transforms-1/#transform-origin-property"
+    },
+    "vertical-align": {
+      "syntax": "baseline | sub | super | text-top | text-bottom | middle | top | bottom | <length-percentage>",
+      "source": "https://drafts.csswg.org/css-inline-3/#baseline-shift-property"
+    },
+    "widows": {
+      "syntax": "<integer [1,∞]>",
+      "source": "https://drafts.csswg.org/css-break-3/#widows-orphans"
+    },
+    "orphans": {
+      "syntax": "<integer [1,∞]>",
+      "source": "https://drafts.csswg.org/css-break-3/#widows-orphans"
+    },
+    "word-spacing": {
+      "syntax": "normal | <length-percentage>",
+      "source": "https://drafts.csswg.org/css-text-4/#word-spacing-property"
+    },
+    "word-wrap": {
+      "syntax": "normal | break-word | anywhere",
+      "initial": ["overflow-wrap"],
+      "source": "https://drafts.csswg.org/css-text-3/#overflow-wrap-property"
+    }
+  },
+  "descriptors": {
+    "@font-face": {
+      "font-weight": {
+        "syntax": "auto | <font-weight-absolute>{1,2}",
+        "initial": "auto",
+        "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-prop-desc"
+      },
+      "font-style": {
+        "syntax": "auto | normal | italic | left | right | oblique <angle [-90deg,90deg]>{0,2}",
+        "initial": "auto",
+        "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-prop-desc"
+      },
+      "font-width": {
+        "syntax": "auto | <'font-width'>{1,2}",
+        "initial": "auto",
+        "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-prop-desc"
+      },
+      "font-stretch": {
+        "syntax": "auto | <'font-width'>{1,2}",
+        "initial": "auto",
+        "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-prop-desc"
+      },
+      "src": {
+        "syntax": "[ <url> <font-source-format>? <font-source-tech>? | local( <family-name> ) ]#",
+        "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-face-src-parsing"
+      }
+    }
+  },
+  "additions": {
+    "string-set": {
+      "syntax": "[ <custom-ident> <named-string-content> ]# | none",
+      "initial": "none",
+      "inherited": false,
+      "groups": [
+        "CSS Generated Content for Paged Media"
+      ],
+      "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#setting-named-strings-the-string-set-pro"
+    },
+    "bookmark-label": {
+      "syntax": "<content-list>",
+      "initial": "content(text)",
+      "inherited": false,
+      "groups": ["CSS Generated Content for Paged Media"],
+      "source": "https://www.w3.org/TR/2025/WD-css-content-3-20251204/#bookmark-label; property grammar links to content/content-list"
+    },
+    "bookmark-level": {
+      "syntax": "none | <integer [1,∞]>",
+      "initial": "none",
+      "inherited": false,
+      "groups": ["CSS Generated Content for Paged Media"],
+      "source": "https://drafts.csswg.org/css-gcpm-3/#bookmark-level"
+    },
+    "bookmark-state": {
+      "syntax": "open | closed",
+      "initial": "open",
+      "inherited": false,
+      "groups": ["CSS Generated Content for Paged Media"],
+      "source": "https://drafts.csswg.org/css-gcpm-3/#bookmark-state"
+    }
+  }
+}

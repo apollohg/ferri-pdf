@@ -1,0 +1,1 @@
+Copied unmodified from the npm package `mdn-data` 2.27.1 (`css/properties.json`, `css/syntaxes.json`, `css/at-rules.json`, `css/units.json`, `LICENSE`; CC0-1.0, https://github.com/mdn/data). Corrections live in `../errata.json`; non-standard extension properties in `../extensions.json`.
