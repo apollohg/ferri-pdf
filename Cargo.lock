@@ -606,7 +606,6 @@ dependencies = [
  "ferri-pdf-icu-casemap",
  "ferri-pdf-krilla",
  "ferri-pdf-selectors",
- "ferri-pdf-spec-data",
  "ferri-pdf-zenavif-parse",
  "flate2",
  "fontdb",
@@ -729,10 +728,6 @@ dependencies = [
  "servo_arc",
  "smallvec",
 ]
-
-[[package]]
-name = "ferri-pdf-spec-data"
-version = "0.1.0"
 
 [[package]]
 name = "ferri-pdf-zenavif-parse"

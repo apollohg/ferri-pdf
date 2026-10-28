@@ -1,4 +1,4 @@
-use ferri_pdf_spec_data::languages as data;
+use crate::spec_data::languages as data;
 
 const SCRIPT_LENGTH: usize = 4;
 const REGION_ALPHA_LENGTH: usize = 2;

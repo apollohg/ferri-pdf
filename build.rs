@@ -15,10 +15,15 @@ mod source;
 #[path = "build/syntax.rs"]
 mod syntax;
 
-use std::{env, fs, path::PathBuf, process::ExitCode};
+use std::{
+    env, fs,
+    path::{Path, PathBuf},
+    process::ExitCode,
+};
 
 const BUILD_SOURCES: [&str; 2] = ["build.rs", "build"];
 const OUTPUT_FILE: &str = "grammar.rs";
+const SPEC_CSS_DIRECTORY: &str = "spec/css";
 
 #[derive(Debug, thiserror::Error)]
 pub(crate) enum BuildError {
@@ -70,7 +75,7 @@ fn run() -> Result<(), BuildError> {
     for source in BUILD_SOURCES {
         println!("cargo:rerun-if-changed={source}");
     }
-    let spec = source::Spec::load(&ferri_pdf_spec_data::css_directory())?;
+    let spec = source::Spec::load(&Path::new(env!("CARGO_MANIFEST_DIR")).join(SPEC_CSS_DIRECTORY))?;
     for file in &spec.files {
         println!("cargo:rerun-if-changed={file}");
     }

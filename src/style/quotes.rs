@@ -1,7 +1,7 @@
 use crate::style::{StyleError, box_values::unsupported, component::Component, grammar::Keyword};
 use std::sync::Arc;
 
-use ferri_pdf_spec_data::quotes as data;
+use crate::spec_data::quotes as data;
 
 const OPENING: usize = 0;
 const CLOSING: usize = 1;

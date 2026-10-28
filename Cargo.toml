@@ -1,6 +1,4 @@
 [workspace]
-members = ["spec"]
-default-members = ["."]
 exclude = ["vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors"]
 resolver = "3"
 
@@ -54,7 +52,6 @@ struct_excessive_bools = "allow"
 too_many_lines = "allow"
 
 [workspace.dependencies]
-ferri-pdf-spec-data = { path = "spec", version = "0.1.0" }
 ego-tree = "=0.11.0"
 encoding_rs = "0.8.35"
 html5ever = "=0.39.0"
@@ -130,7 +127,6 @@ name = "remote"
 required-features = ["http"]
 
 [build-dependencies]
-ferri-pdf-spec-data.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true
 
@@ -180,7 +176,6 @@ ttf-parser.workspace = true
 unicode-vo.workspace = true
 xmlwriter.workspace = true
 
-ferri-pdf-spec-data.workspace = true
 cssparser-color.workspace = true
 html5ever.workspace = true
 scraper.workspace = true

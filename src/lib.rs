@@ -27,6 +27,7 @@ mod images;
 mod layout;
 mod multipart;
 mod paint;
+mod spec_data;
 mod style;
 mod svg;
 mod table;
