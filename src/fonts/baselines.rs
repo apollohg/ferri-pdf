@@ -6,6 +6,8 @@ use ttf_parser::Face;
 const ROMAN: Tag = Tag::new(b"romn");
 const IDEOGRAPHIC_UNDER: Tag = Tag::new(b"ideo");
 const IDEOGRAPHIC_OVER: Tag = Tag::new(b"idtp");
+const IDEOGRAPHIC_INK_UNDER: Tag = Tag::new(b"icfb");
+const IDEOGRAPHIC_INK_OVER: Tag = Tag::new(b"icft");
 const HANGING: Tag = Tag::new(b"hang");
 const MATH: Tag = Tag::new(b"math");
 /// The script whose baselines apply when the table has no default script record.
@@ -16,6 +18,8 @@ const IDEOGRAPHIC_EM: f32 = 1.0;
 /// The minus sign's centre is the math baseline; the top of Devanagari Ka is the hanging one.
 const MINUS_SIGN: char = '\u{2212}';
 const DEVANAGARI_KA: char = '\u{0915}';
+/// The bounding box of 永 gives the ideographic character face edges.
+const ETERNITY_IDEOGRAPH: char = '\u{6C38}';
 /// The suggested hanging baseline where the font gives no way to find it.
 const FALLBACK_HANGING_EM: f32 = 0.6;
 
@@ -24,6 +28,8 @@ const FALLBACK_HANGING_EM: f32 = 0.6;
 pub(crate) struct BaselineTable {
     pub ideographic_over: f32,
     pub ideographic_under: f32,
+    pub ideographic_ink_over: f32,
+    pub ideographic_ink_under: f32,
     pub hanging: f32,
     pub math: f32,
 }
@@ -73,12 +79,11 @@ fn recorded(face: &Face<'_>) -> Vec<(Tag, f32)> {
     read().unwrap_or_default()
 }
 
-/// The vertical centre and top of `ch`'s glyph, in font units.
+/// The bottom and top of `ch`'s glyph, in font units.
 fn glyph_extent(face: &Face<'_>, ch: char) -> Option<[f32; 2]> {
     let glyph = face.glyph_index(ch).filter(|glyph| glyph.0 != 0)?;
     let bounds = face.glyph_bounding_box(glyph)?;
-    let [bottom, top] = [bounds.y_min, bounds.y_max].map(f32::from);
-    Some([f32::midpoint(bottom, top), top])
+    Some([bounds.y_min, bounds.y_max].map(f32::from))
 }
 
 impl BaselineTable {
@@ -105,14 +110,27 @@ impl BaselineTable {
                 let axis = face.tables().math?.constants?.axis_height().value;
                 Some(f32::from(axis) / units)
             })
-            .or_else(|| glyph_extent(face, MINUS_SIGN).map(|[centre, _]| centre / units))
+            .or_else(|| {
+                glyph_extent(face, MINUS_SIGN)
+                    .map(|[bottom, top]| f32::midpoint(bottom, top) / units)
+            })
             .unwrap_or(x_height / 2.0);
         let hanging = base(HANGING)
             .or_else(|| glyph_extent(face, DEVANAGARI_KA).map(|[_, top]| top / units))
             .unwrap_or(FALLBACK_HANGING_EM);
+        let face_edges =
+            glyph_extent(face, ETERNITY_IDEOGRAPH).map(|edges| edges.map(|edge| edge / units));
+        let ideographic_ink_over = base(IDEOGRAPHIC_INK_OVER)
+            .or(face_edges.map(|[_, top]| top))
+            .unwrap_or(ideographic_over);
+        let ideographic_ink_under = base(IDEOGRAPHIC_INK_UNDER)
+            .or(face_edges.map(|[bottom, _]| bottom))
+            .unwrap_or(ideographic_under);
         Self {
             ideographic_over,
             ideographic_under,
+            ideographic_ink_over,
+            ideographic_ink_under,
             hanging,
             math,
         }

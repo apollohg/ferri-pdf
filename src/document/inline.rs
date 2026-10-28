@@ -56,6 +56,9 @@ pub(crate) struct Paragraph {
     pub(crate) first_formatted_line: bool,
     /// Holds the last line box of its block container.
     pub(crate) last_formatted_line: bool,
+    /// Whether the paragraph's first and last lines are a block container's first and last
+    /// formatted lines that it trims with `text-box-trim` (CSS Inline 3 §6.2).
+    pub(crate) text_box_trim: [bool; 2],
     text: String,
     style: Box<Style>,
     spans: Vec<TextSpan>,
@@ -103,6 +106,7 @@ impl Paragraph {
             marker_image: None,
             first_formatted_line: false,
             last_formatted_line: false,
+            text_box_trim: [false; 2],
             text,
             style: Box::new(style),
             spans: vec![span],
@@ -162,6 +166,15 @@ impl Paragraph {
     /// Atomic inlines in text order; each `offset` holds an [`OBJECT_REPLACEMENT_CHARACTER`].
     pub(crate) fn atomics(&self) -> &[Anchor] {
         &self.atomics
+    }
+    /// The boxes anchored in the paragraph: floats, positioned boxes and atomic inlines.
+    pub(crate) fn anchored_blocks_mut(
+        &mut self,
+    ) -> impl Iterator<Item = &mut crate::document::BlockBox> {
+        self.anchors
+            .iter_mut()
+            .chain(&mut self.atomics)
+            .map(|anchor| &mut anchor.block)
     }
     pub(crate) fn optional_breaks(&self) -> &[usize] {
         &self.optional_breaks
@@ -729,6 +742,7 @@ impl InlineCollector {
             marker_image: None,
             first_formatted_line: true,
             last_formatted_line: true,
+            text_box_trim: [false; 2],
             text: self.text,
             style: Box::new(style.clone()),
             spans: self.spans,

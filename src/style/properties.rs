@@ -992,6 +992,14 @@ fn handler(property: Property) -> Option<Handler> {
             vertical_align,
             Some(|v, r| crate::style::VerticalAlign::from_component(v, r).is_ok()),
         ),
+        P::TextBoxTrim => (
+            text_box_trim,
+            Some(|v, _| crate::style::TextBox::trim(v).is_ok()),
+        ),
+        P::TextBoxEdge => (
+            text_box_edge,
+            Some(|v, _| crate::style::TextBox::edges(v).is_ok()),
+        ),
         P::DominantBaseline => (
             dominant_baseline,
             Some(|v, _| crate::style::Baseline::dominant(v).is_ok()),
@@ -2392,6 +2400,16 @@ computed!(
     |value, style, _parent, relative| {
         crate::style::VerticalAlign::from_component(value, relative)?
     }
+);
+computed!(
+    text_box_trim,
+    [text_box.trim],
+    |value, style, _parent, _relative| crate::style::TextBox::trim(value)?
+);
+computed!(
+    text_box_edge,
+    [text_box.edges],
+    |value, style, _parent, _relative| crate::style::TextBox::edges(value)?
 );
 computed!(
     dominant_baseline,

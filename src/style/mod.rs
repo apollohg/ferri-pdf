@@ -79,7 +79,9 @@ mod wide_keywords;
 pub(crate) mod will_change;
 
 use crate::resources::ResourceError;
-pub(crate) use baseline_values::{Baseline, BaselineAlignment, BaselineShift, BaselineSource};
+pub(crate) use baseline_values::{
+    Baseline, BaselineAlignment, BaselineShift, BaselineSource, TextBox, TextEdge,
+};
 pub(crate) use bookmark_values::BookmarkStyle;
 pub(crate) use box_values::{
     BoxSizing, BreakBetween, BreakInside, Display, LengthPercentage, Size, Visibility,

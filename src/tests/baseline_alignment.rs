@@ -230,3 +230,150 @@ fn line_height_steps_round_line_boxes_up_and_centre_them() {
         "the stepped line's content is centred in its step",
     );
 }
+
+/// `DejaVu Sans` has no `OS/2` cap height, so the top of `H` gives it.
+const DEJAVU_CAP_HEIGHT: f32 = 1493.0 / DEJAVU_UNITS;
+
+/// A line's ascent and descent around its baseline, without trimming.
+fn untrimmed() -> [f32; 2] {
+    let leading = LINE_HEIGHT_PT - (DEJAVU_ASCENT + DEJAVU_DESCENT) * PARENT_PT;
+    [
+        DEJAVU_ASCENT * PARENT_PT + leading / 2.0,
+        DEJAVU_DESCENT * PARENT_PT + leading / 2.0,
+    ]
+}
+
+/// The ascent and descent of each line of a red paragraph, from its box and baselines.
+fn line_extents(css: &str, body: &str) -> Vec<[f32; 2]> {
+    let trace = render(
+        &format!("p{{margin:0;line-height:{LINE_HEIGHT_PT}pt;background:red}}{css}"),
+        body,
+    );
+    let paint = red_box(&trace);
+    let baselines: Vec<f32> = trace.pages[0].iter().map(|line| line.baseline).collect();
+    let mut top = paint.rect.y;
+    let bottom = paint.rect.y + paint.rect.height;
+    baselines
+        .iter()
+        .enumerate()
+        .map(|(index, &baseline)| {
+            let ascent = baseline - top;
+            let next = baselines.get(index + 1).copied();
+            let descent = next.map_or(bottom - baseline, |_| f32::NAN);
+            top = baseline;
+            [ascent, descent]
+        })
+        .collect()
+}
+
+#[test]
+fn trimmed_block_lines_end_at_their_text_box_edges() {
+    let [ascent, descent] = untrimmed();
+    for (css, expected) in [
+        ("", [ascent, descent]),
+        (
+            "p{text-box:trim-both cap alphabetic}",
+            [DEJAVU_CAP_HEIGHT * PARENT_PT, 0.0],
+        ),
+        (
+            "p{text-box-trim:trim-start}",
+            [DEJAVU_ASCENT * PARENT_PT, descent],
+        ),
+        (
+            "p{text-box-trim:trim-end}",
+            [ascent, DEJAVU_DESCENT * PARENT_PT],
+        ),
+        (
+            "p{text-box:ex}",
+            [DEJAVU_X_HEIGHT * PARENT_PT, DEJAVU_DESCENT * PARENT_PT],
+        ),
+        // The edges are those of the line's containing block, the paragraph: `auto`.
+        (
+            "div{text-box:trim-both cap alphabetic}",
+            [DEJAVU_ASCENT * PARENT_PT, DEJAVU_DESCENT * PARENT_PT],
+        ),
+        (
+            "div{text-box-trim:trim-both}p{text-box-edge:cap alphabetic}",
+            [DEJAVU_CAP_HEIGHT * PARENT_PT, 0.0],
+        ),
+        (
+            "div{text-box-trim:trim-both;display:flex}",
+            [ascent, descent],
+        ),
+    ] {
+        let [[over, under]] = line_extents(css, "<div><p>Hx</p></div>")[..] else {
+            panic!("{css}: one line");
+        };
+        assert_pt(over, expected[0], &format!("{css}: ascent"));
+        assert_pt(under, expected[1], &format!("{css}: descent"));
+    }
+    let padded = line_extents(
+        "div{text-box-trim:trim-both}p{padding-top:1pt;text-box-edge:cap alphabetic}",
+        "<div><p>Hx</p></div>",
+    );
+    assert_pt(
+        padded[0][0],
+        1.0 + ascent,
+        "padding on the paragraph's top stops the div's start trim",
+    );
+    assert_pt(
+        padded[0][1],
+        0.0,
+        "the end trim still reaches the last line",
+    );
+    let two = line_extents("p{text-box:trim-both cap alphabetic}", "<p>H<br>x</p>");
+    assert_pt(
+        two[0][0],
+        DEJAVU_CAP_HEIGHT * PARENT_PT,
+        "the first line's over side",
+    );
+    assert_pt(
+        two[1][0],
+        descent + ascent,
+        "between the lines nothing is trimmed: the first descent and second ascent remain",
+    );
+    assert_pt(two[1][1], 0.0, "the last line's under side");
+}
+
+#[test]
+fn trimmed_inline_boxes_paint_their_content_box_to_the_edge_metrics() {
+    let trace = render(
+        &format!(
+            "p{{line-height:{LINE_HEIGHT_PT}pt}}b{{background:red;text-box:trim-both ex alphabetic}}"
+        ),
+        "<p>X<b>x</b></p>",
+    );
+    let line = &trace.pages[0][0];
+    let paint = red_box(&trace);
+    assert_pt(
+        paint.rect.y,
+        line.baseline - DEJAVU_X_HEIGHT * PARENT_PT,
+        "over edge at the x-height",
+    );
+    assert_pt(
+        paint.rect.y + paint.rect.height,
+        line.baseline,
+        "under edge at the baseline",
+    );
+}
+
+#[test]
+fn trimming_each_column_or_fragment_is_reported_unsupported() {
+    for css in [
+        "div{columns:2;text-box-trim:trim-start}",
+        "div{box-decoration-break:clone;text-box-trim:trim-end}",
+    ] {
+        let result = render_html(
+            &format!("<style>{PROFILE}{css}</style><div><p>x</p></div>"),
+            &local_options(),
+        );
+        assert!(
+            matches!(
+                result,
+                Err(crate::Error::Css(crate::style::StyleError::Unsupported(_)))
+            ),
+            "{css}: {:?}",
+            result.err()
+        );
+    }
+}

@@ -211,6 +211,70 @@ impl BlockBox {
     pub(crate) fn children(&self) -> &[BlockContent] {
         &self.children
     }
+    /// Marks the paragraphs holding the first and last formatted lines that this box or the
+    /// ancestors in `requested` trim (CSS Inline 3 §6.2): trimming passes into the first and
+    /// last in-flow child blocks without padding or borders on that side, but not into or
+    /// through flex, grid or table formatting contexts.
+    pub(super) fn trim_text_boxes(&mut self, requested: [bool; 2]) -> Result<(), DocumentError> {
+        let own = self.style.text_box.trim;
+        if own.contains(&true) {
+            if self.style.multicol.is_multicol() {
+                return Err(StyleError::Unsupported(
+                    "text-box-trim on a multi-column container's columns".into(),
+                )
+                .into());
+            }
+            if self.style.clone_decoration {
+                return Err(StyleError::Unsupported(
+                    "text-box-trim on each fragment of a box-decoration-break: clone box".into(),
+                )
+                .into());
+            }
+        }
+        let display = &self.style.display;
+        let requested = if display.is_item_container() || display.is_table() {
+            [false; 2]
+        } else {
+            [0, 1].map(|side| own[side] || requested[side])
+        };
+        let in_flow: Vec<usize> = self
+            .children
+            .iter()
+            .enumerate()
+            .filter(|(_, child)| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)))
+            .map(|(index, _)| index)
+            .collect();
+        let [first, last] = [in_flow.first().copied(), in_flow.last().copied()];
+        for (index, child) in self.children.iter_mut().enumerate() {
+            let inherited = [
+                requested[0] && first == Some(index),
+                requested[1] && last == Some(index),
+            ];
+            match child {
+                BlockContent::Inline(paragraph) => {
+                    paragraph.text_box_trim = inherited;
+                    for block in paragraph.anchored_blocks_mut() {
+                        block.trim_text_boxes([false; 2])?;
+                    }
+                }
+                BlockContent::Block(block) => {
+                    const TOP: usize = 0;
+                    const BOTTOM: usize = 2;
+                    let open = |side: usize| {
+                        block.style.padding[side].is_zero()
+                            && block.style.decoration.borders[side].used_width() == 0.0
+                    };
+                    block.trim_text_boxes([
+                        inherited[0] && open(TOP),
+                        inherited[1] && open(BOTTOM),
+                    ])?;
+                }
+                BlockContent::Positioned(block) => block.trim_text_boxes([false; 2])?,
+                BlockContent::Events(_) => {}
+            }
+        }
+        Ok(())
+    }
     /// In-flow children in flex order or table caption/group layout order.
     pub(crate) fn in_flow_children(&self) -> Vec<&BlockContent> {
         crate::document::page::in_flow_children(&self.style, &self.children)
@@ -1367,7 +1431,7 @@ pub(crate) fn build(
         0
     };
     let surface = sheet.canvas_surface(&style);
-    let root = block(
+    let mut root = block(
         element,
         Box::new(style),
         sheet,
@@ -1376,6 +1440,7 @@ pub(crate) fn build(
         &mut traversal,
         &mut resources,
     )?;
+    root.trim_text_boxes([false; 2])?;
     Ok(Formatted {
         root,
         navigation: traversal.navigation,

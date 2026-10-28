@@ -226,6 +226,7 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::LineClamp => line_clamp(&value, false)?,
         P::DashWebkitLineClamp => line_clamp(&value, true)?,
         P::DashWebkitBoxOrient => box_orient(&value)?,
+        P::TextBox => text_box(&value)?,
         P::DashWebkitTextStroke => slots(
             &value,
             &[P::DashWebkitTextStrokeWidth, P::DashWebkitTextStrokeColor],
@@ -587,6 +588,35 @@ fn box_orient(value: &Component) -> Result<Longhands, StyleError> {
         Property::FlexDirection,
         literal(Property::FlexDirection, direction)?,
     )])
+}
+
+/// CSS Inline 3 §6.1: `normal` resets both longhands; otherwise an omitted
+/// `text-box-trim` is `trim-both` and an omitted `text-box-edge` is initial.
+fn text_box(value: &Component) -> Result<Longhands, StyleError> {
+    const TRIM_SLOT: usize = 0;
+    const EDGE_SLOT: usize = 1;
+    const OMITTED_TRIM: &str = "trim-both";
+    if value.keyword() == Some(Keyword::Normal) {
+        return Ok(vec![
+            (Property::TextBoxTrim, initial()),
+            (Property::TextBoxEdge, initial()),
+        ]);
+    }
+    Ok(vec![
+        (
+            Property::TextBoxTrim,
+            match value.slot(TRIM_SLOT) {
+                Some(trim) => longhand(Property::TextBoxTrim, trim),
+                None => literal(Property::TextBoxTrim, OMITTED_TRIM)?,
+            },
+        ),
+        (
+            Property::TextBoxEdge,
+            value
+                .slot(EDGE_SLOT)
+                .map_or_else(initial, |edge| longhand(Property::TextBoxEdge, edge)),
+        ),
+    ])
 }
 
 /// A legacy name alias sharing the value of the property it names.

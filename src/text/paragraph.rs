@@ -275,6 +275,23 @@ impl<'p> ParagraphLines<'_, 'p, '_, '_> {
         )?;
         line.ascent = ascent;
         line.height = ascent + descent;
+        let trim = [
+            paragraph.text_box_trim[0] && line.range.start == 0,
+            paragraph.text_box_trim[1] && line.range.end == paragraph.text().len(),
+        ];
+        if trim.contains(&true) {
+            // The trimmed side moves to the root inline box's `text-box-edge` metric.
+            let root = line_boxes::BoxMetrics::of(prepared.context, paragraph.style())?;
+            let edges = paragraph.style().text_box.edges;
+            if trim[0] {
+                let over = -root.edge(edges[0], false);
+                line.height -= line.ascent - over;
+                line.ascent = over;
+            }
+            if trim[1] {
+                line.height = line.ascent + root.edge(edges[1], true);
+            }
+        }
         line.hanging = line
             .hangable
             .hanging(line.width, self.available(), paragraph.style().rtl);

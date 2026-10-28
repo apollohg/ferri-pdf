@@ -118,3 +118,67 @@ pub(crate) struct BaselineAlignment {
     pub shift: BaselineShift,
     pub source: BaselineSource,
 }
+
+/// A `text-box-edge` metric: an over edge, or with `alphabetic` an under edge (§6.3).
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
+pub(crate) enum TextEdge {
+    /// The text-over or text-under baseline: the ascent or descent.
+    #[default]
+    Text,
+    Cap,
+    Ex,
+    Ideographic,
+    IdeographicInk,
+    Alphabetic,
+}
+
+/// A computed `text-box-trim` and `text-box-edge` (§6).
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
+pub(crate) struct TextBox {
+    /// Whether the block-start and block-end sides are trimmed.
+    pub trim: [bool; 2],
+    /// The over and under edges trimmed to; `auto` is `text`, since `line-fit-edge` is
+    /// outside the pinned grammar and its initial `leading` reads as `text`.
+    pub edges: [TextEdge; 2],
+}
+impl TextBox {
+    pub(super) fn trim(value: &Component) -> Result<[bool; 2], StyleError> {
+        match value.keyword() {
+            Some(Keyword::None) => Ok([false, false]),
+            Some(Keyword::TrimStart) => Ok([true, false]),
+            Some(Keyword::TrimEnd) => Ok([false, true]),
+            Some(Keyword::TrimBoth) => Ok([true, true]),
+            _ => Err(unsupported(value)),
+        }
+    }
+    /// One keyword names both edges where it can, otherwise the under edge is `text`
+    /// (CSS Inline 3 §5.2 `<text-edge>`).
+    pub(super) fn edges(value: &Component) -> Result<[TextEdge; 2], StyleError> {
+        if value.keyword() == Some(Keyword::Auto) {
+            return Ok([TextEdge::Text; 2]);
+        }
+        let mut keywords = Vec::new();
+        value.keywords(&mut keywords);
+        let edge = |keyword: Keyword| match keyword {
+            Keyword::Text => Ok(TextEdge::Text),
+            Keyword::Cap => Ok(TextEdge::Cap),
+            Keyword::Ex => Ok(TextEdge::Ex),
+            Keyword::Ideographic => Ok(TextEdge::Ideographic),
+            Keyword::IdeographicInk => Ok(TextEdge::IdeographicInk),
+            Keyword::Alphabetic => Ok(TextEdge::Alphabetic),
+            _ => Err(unsupported(value)),
+        };
+        match keywords[..] {
+            [over] => {
+                let over = edge(over)?;
+                let under = match over {
+                    TextEdge::Cap | TextEdge::Ex => TextEdge::Text,
+                    shared => shared,
+                };
+                Ok([over, under])
+            }
+            [over, under] => Ok([edge(over)?, edge(under)?]),
+            _ => Err(unsupported(value)),
+        }
+    }
+}

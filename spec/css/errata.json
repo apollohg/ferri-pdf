@@ -190,6 +190,13 @@
       "initial": "normal",
       "source": "https://www.w3.org/TR/2023/CRD-css-speech-1-20230214/#speaking-props-speak-as"
     },
+    "text-box": {
+      "initial": [
+        "text-box-trim",
+        "text-box-edge"
+      ],
+      "source": "https://drafts.csswg.org/css-inline-3/#text-box-shorthand: a shorthand for text-box-trim and text-box-edge"
+    },
     "text-size-adjust": {
       "syntax": "auto | none | <percentage [0,∞]>",
       "initial": "auto",

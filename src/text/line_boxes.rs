@@ -1,7 +1,7 @@
 //! Line box assembly and vertical alignment (CSS 2.1 §10.8, CSS Inline 3 §5.3).
 use crate::document::Paragraph;
 use crate::fonts::FaceMetrics;
-use crate::style::{Baseline, BaselineShift, Style, VerticalAlign};
+use crate::style::{Baseline, BaselineShift, Style, TextEdge, VerticalAlign};
 use crate::text::{GlyphRun, Line, TextContext, TextError};
 use serde::Serialize;
 use std::ops::Range;
@@ -438,6 +438,7 @@ pub(crate) struct BoxMetrics {
     pub(crate) descent: f32,
     line_height: f32,
     pub(crate) x_height: f32,
+    cap_height: f32,
     /// The font's baseline table, in em, and the used size it scales by.
     baselines: crate::fonts::BaselineTable,
     size: f32,
@@ -463,6 +464,7 @@ impl BoxMetrics {
             descent,
             line_height: line_height.unwrap_or(ascent + descent + gap),
             x_height: metrics.x_height * size,
+            cap_height: metrics.cap_height * size,
             baselines: metrics.baselines,
             size,
         }
@@ -481,6 +483,22 @@ impl BoxMetrics {
             }
             Baseline::Mathematical => -table.math * self.size,
             Baseline::Hanging => -table.hanging * self.size,
+        }
+    }
+    /// How far a `text-box-edge` metric lies below the alphabetic baseline, as the over edge
+    /// or, with `under`, the under edge (CSS Inline 3 §5.2).
+    pub(crate) fn edge(&self, edge: TextEdge, under: bool) -> f32 {
+        let table = &self.baselines;
+        match (edge, under) {
+            (TextEdge::Text, false) => -self.ascent,
+            (TextEdge::Text, true) => self.descent,
+            (TextEdge::Cap, _) => -self.cap_height,
+            (TextEdge::Ex, _) => -self.x_height,
+            (TextEdge::Ideographic, false) => -table.ideographic_over * self.size,
+            (TextEdge::Ideographic, true) => -table.ideographic_under * self.size,
+            (TextEdge::IdeographicInk, false) => -table.ideographic_ink_over * self.size,
+            (TextEdge::IdeographicInk, true) => -table.ideographic_ink_under * self.size,
+            (TextEdge::Alphabetic, _) => 0.0,
         }
     }
     pub(crate) fn line_height(&self) -> f32 {
@@ -778,8 +796,19 @@ pub(crate) fn align(
     for fragment in &mut line.boxes {
         let (placed, metrics, _) = &aligned[position(fragment.index)];
         fragment.baseline = baseline(*placed);
-        fragment.ascent = metrics.ascent;
-        fragment.descent = metrics.descent;
+        // A trimmed side's content edge is its `text-box-edge` metric (CSS Inline 3 §6.2).
+        let text_box = &paragraph.boxes()[fragment.index].style.text_box;
+        let [ascent, descent] = [false, true].map(|under| {
+            let side = usize::from(under);
+            let edge = if text_box.trim[side] {
+                text_box.edges[side]
+            } else {
+                TextEdge::Text
+            };
+            metrics.edge(edge, under).abs()
+        });
+        fragment.ascent = ascent;
+        fragment.descent = descent;
     }
     line.present = present;
     Ok([ascent, descent])
