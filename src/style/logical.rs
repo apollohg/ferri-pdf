@@ -78,7 +78,7 @@ struct Group {
     positions: &'static [Position],
 }
 
-const GROUPS: [Group; 11] = {
+const GROUPS: [Group; 14] = {
     use Property as P;
     [
         Group {
@@ -196,8 +196,45 @@ const GROUPS: [Group; 11] = {
             flow_relative: &[P::OverflowBlock, P::OverflowInline],
             positions: &DIMENSIONS,
         },
+        Group {
+            physical: &[
+                P::ScrollMarginTop,
+                P::ScrollMarginRight,
+                P::ScrollMarginBottom,
+                P::ScrollMarginLeft,
+            ],
+            flow_relative: &[
+                P::ScrollMarginBlockStart,
+                P::ScrollMarginBlockEnd,
+                P::ScrollMarginInlineStart,
+                P::ScrollMarginInlineEnd,
+            ],
+            positions: &SIDES,
+        },
+        Group {
+            physical: &[
+                P::ScrollPaddingTop,
+                P::ScrollPaddingRight,
+                P::ScrollPaddingBottom,
+                P::ScrollPaddingLeft,
+            ],
+            flow_relative: &[
+                P::ScrollPaddingBlockStart,
+                P::ScrollPaddingBlockEnd,
+                P::ScrollPaddingInlineStart,
+                P::ScrollPaddingInlineEnd,
+            ],
+            positions: &SIDES,
+        },
+        Group {
+            physical: &[P::OverscrollBehaviorX, P::OverscrollBehaviorY],
+            flow_relative: &[P::OverscrollBehaviorBlock, P::OverscrollBehaviorInline],
+            positions: &DIMENSIONS,
+        },
     ]
 };
+/// The groups of properties without print effect, whose values live in `Style::inert`.
+const INERT_GROUPS: std::ops::Range<usize> = 11..14;
 
 impl Flow {
     pub(crate) fn of(style: &Style) -> Self {
@@ -338,5 +375,11 @@ pub(crate) fn reflowed(source: &Style, flow: Flow) -> Style {
     [style.min_width, style.min_height] = dimensions([&source.min_width, &source.min_height]);
     [style.max_width, style.max_height] = dimensions([&source.max_width, &source.max_height]);
     style.overflow = std::array::from_fn(|index| source.overflow[dimension(index)]);
+    for group in &GROUPS[INERT_GROUPS] {
+        for (index, property) in group.physical.iter().enumerate() {
+            let from = group.physical[flow.source(from, group.positions, index)];
+            crate::style::inert::copy_from(*property, &mut style, from, source);
+        }
+    }
     style
 }

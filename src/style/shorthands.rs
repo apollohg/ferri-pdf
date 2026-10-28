@@ -253,6 +253,19 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
             ],
         ),
         P::OverscrollBehavior => pair(&value, [P::OverscrollBehaviorX, P::OverscrollBehaviorY]),
+        P::ScrollMarginBlock => pair(&value, [P::ScrollMarginBlockStart, P::ScrollMarginBlockEnd]),
+        P::ScrollMarginInline => pair(
+            &value,
+            [P::ScrollMarginInlineStart, P::ScrollMarginInlineEnd],
+        ),
+        P::ScrollPaddingBlock => pair(
+            &value,
+            [P::ScrollPaddingBlockStart, P::ScrollPaddingBlockEnd],
+        ),
+        P::ScrollPaddingInline => pair(
+            &value,
+            [P::ScrollPaddingInlineStart, P::ScrollPaddingInlineEnd],
+        ),
         P::InterestDelay => pair(&value, [P::InterestDelayStart, P::InterestDelayEnd]),
         _ => {
             if let Some(longhands) = unordered_references(shorthand, &value)? {

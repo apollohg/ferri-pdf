@@ -205,9 +205,14 @@ pub(super) fn apply(
 }
 
 pub(super) fn copy(property: Property, target: &mut Style, source: &Style) {
+    copy_from(property, target, property, source);
+}
+
+/// Gives `target`'s `property` the value `source` has for `from`.
+pub(super) fn copy_from(property: Property, target: &mut Style, from: Property, source: &Style) {
     target
         .inert
-        .set(property, source.inert.0.get(&property).cloned());
+        .set(property, source.inert.0.get(&from).cloned());
 }
 
 pub(super) fn compute(

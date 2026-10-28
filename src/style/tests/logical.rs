@@ -414,3 +414,70 @@ fn user_agent_indents_sit_on_the_inline_start_side() {
         );
     }
 }
+
+#[test]
+fn scroll_and_overscroll_logical_properties_cascade_with_their_physical_pairs() {
+    use crate::style::{grammar::Property as P, inert::Computed};
+    let length = |style: &Style, property| match style.inert.get(property) {
+        Some(Computed::LengthPercentage(LengthPercentage::Length(value))) => Some(*value),
+        None => None,
+        other => panic!("{property:?} must compute to a length, got {other:?}"),
+    };
+    let declarations = "scroll-margin-inline-start:1pt;scroll-margin-left:2pt;\
+        scroll-margin-inline-end:3pt;scroll-padding-block:4pt 5pt";
+    let ltr = child(&format!("#child{{{declarations}}}"));
+    assert_eq!(
+        [
+            length(&ltr, P::ScrollMarginLeft),
+            length(&ltr, P::ScrollMarginRight)
+        ],
+        [Some(2.0), Some(3.0)],
+        "LTR: scroll-margin-left follows scroll-margin-inline-start"
+    );
+    assert_eq!(
+        [
+            length(&ltr, P::ScrollPaddingTop),
+            length(&ltr, P::ScrollPaddingBottom)
+        ],
+        [Some(4.0), Some(5.0)],
+        "the block shorthand sets the block-start then the block-end side"
+    );
+    let rtl = child(&format!("#child{{direction:rtl;{declarations}}}"));
+    assert_eq!(
+        [
+            length(&rtl, P::ScrollMarginLeft),
+            length(&rtl, P::ScrollMarginRight)
+        ],
+        [Some(3.0), Some(1.0)],
+        "RTL: inline-end maps to left, where the later inline-end declaration wins"
+    );
+    let (parent, inherited) = styles(
+        "#parent{scroll-padding-left:9pt;scroll-padding-right:6pt}\
+         #child{direction:rtl;scroll-padding-inline-end:inherit}",
+        DOCUMENT,
+    );
+    assert_eq!(length(&parent, P::ScrollPaddingRight), Some(6.0));
+    assert_eq!(
+        length(&inherited, P::ScrollPaddingLeft),
+        Some(6.0),
+        "inherit takes the LTR parent's inline-end, its right side, into the RTL child's left"
+    );
+    let overscroll = child("#child{overscroll-behavior-x:contain;overscroll-behavior-block:none}");
+    let keyword = |property| {
+        overscroll
+            .inert
+            .get(property)
+            .map(|value| format!("{value:?}"))
+    };
+    assert_eq!(
+        [
+            keyword(P::OverscrollBehaviorX),
+            keyword(P::OverscrollBehaviorY)
+        ],
+        [
+            Some("Specified(Keyword(Contain))".to_owned()),
+            Some("Specified(Keyword(None))".to_owned())
+        ],
+        "overscroll-behavior-block pairs with the vertical axis"
+    );
+}
