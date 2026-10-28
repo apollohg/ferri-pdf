@@ -606,6 +606,7 @@ dependencies = [
  "ferri-pdf-text",
  "ferri-pdf-writer",
  "roxmltree 0.21.2",
+ "same-file",
  "serde_json",
  "thiserror",
 ]
@@ -621,15 +622,6 @@ dependencies = [
  "rav1d",
  "rgb",
  "yuv",
-]
-
-[[package]]
-name = "ferri-pdf-cli"
-version = "0.1.0"
-dependencies = [
- "ferri-pdf",
- "same-file",
- "serde_json",
 ]
 
 [[package]]

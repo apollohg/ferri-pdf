@@ -105,7 +105,6 @@ ferri-pdf-table = { path = "crates/table", version = "0.1.0" }
 ferri-pdf-writer = { path = "crates/writer", version = "0.1.0" }
 ferri-pdf-graphics = { path = "crates/graphics", version = "0.1.0" }
 ferri-pdf-paint = { path = "crates/paint", version = "0.1.0" }
-ferri-pdf = { path = ".", version = "0.1.0", default-features = false }
 
 [package]
 name = "ferri-pdf"
@@ -139,8 +138,9 @@ ferri-pdf-layout.workspace = true
 ferri-pdf-writer.workspace = true
 ferri-pdf-graphics.workspace = true
 thiserror.workspace = true
+serde_json.workspace = true
+same-file.workspace = true
 
 [dev-dependencies]
 roxmltree.workspace = true
-serde_json.workspace = true
 ferri-pdf-dom.workspace = true
