@@ -1939,7 +1939,7 @@ computed!(
     [decoration.outline.color],
     |value, style, _parent, relative| match value.keyword() {
         Some(Keyword::Auto) if style.decoration.outline.style == OutlineStyle::Auto => {
-            crate::style::colors::accent(relative.color_scheme)
+            crate::style::colors::accent(relative)
         }
         Some(Keyword::Auto) => style.color,
         _ => crate::style::colors::color(value, relative, &style.computed_color)?,

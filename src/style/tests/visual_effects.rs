@@ -185,10 +185,17 @@ fn outline_longhands_compute_per_css_ui_4() {
         (auto.style, auto.color.rgb),
         (
             OutlineStyle::Auto,
-            crate::style::colors::accent(crate::style::ColorScheme::Light).rgb
+            crate::style::colors::accent(&crate::style::units::Relative::initial()).rgb
         ),
         "a lone auto sets both style and colour to auto; auto colour with auto style is the \
          accent colour"
+    );
+    assert_eq!(
+        outline("outline:auto;accent-color:rgb(10, 120, 30)")
+            .color
+            .rgb,
+        [10, 120, 30],
+        "an author accent-color becomes the accent colour of an auto outline"
     );
     assert_eq!(
         outline("outline:auto 1pt").used_width(),

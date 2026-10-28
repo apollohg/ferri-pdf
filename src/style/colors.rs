@@ -21,7 +21,6 @@ const ALPHA: &str = "alpha";
 pub(super) const CURRENT_COLOR: &str = "currentcolor";
 const ACCENT_COLOR: &str = "accentcolor";
 const CANVAS: &str = "canvas";
-const ACCENT_COLOR: &str = "accentcolor";
 const ACCENT_COLOR_TEXT: &str = "accentcolortext";
 /// The ambient flare WCAG 2 adds to relative luminances in contrast ratios.
 const LUMINANCE_FLARE: f32 = 0.05;
@@ -48,7 +47,7 @@ const DEFAULT_MIX: Interpolation = Interpolation {
 /// spec's legible foreground and background pairs meet WCAG AA contrast.
 const SYSTEM_COLORS: [(&str, [u8; 3], [u8; 3]); 19] = [
     (ACCENT_COLOR, [0x00, 0x60, 0xdf], [0x99, 0xc8, 0xff]),
-    ("accentcolortext", [0xff, 0xff, 0xff], [0x00, 0x00, 0x00]),
+    (ACCENT_COLOR_TEXT, [0xff, 0xff, 0xff], [0x00, 0x00, 0x00]),
     ("activetext", [0xee, 0x00, 0x00], [0xff, 0x9e, 0x9e]),
     ("buttonborder", [0x76, 0x76, 0x76], [0x8e, 0x8e, 0x8e]),
     ("buttonface", [0xef, 0xef, 0xef], [0x3b, 0x3b, 0x3b]),
@@ -417,9 +416,12 @@ pub(super) fn canvas(scheme: ColorScheme) -> Color {
         .used()
 }
 
-/// The `AccentColor` system colour in `scheme`.
-pub(super) fn accent(scheme: ColorScheme) -> Color {
-    system_color(ACCENT_COLOR, scheme)
+/// The used `AccentColor`: the author `accent-color` when set, else the UA accent.
+pub(super) fn accent(relative: &Relative<'_>) -> Color {
+    relative
+        .accent_color
+        .and_then(|accent| author_accent(ACCENT_COLOR, accent, relative.color_scheme))
+        .or_else(|| system_color(ACCENT_COLOR, relative.color_scheme))
         .expect("AccentColor is a system colour")
         .used()
 }
