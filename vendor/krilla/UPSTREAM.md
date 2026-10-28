@@ -39,4 +39,8 @@ The local patch changes these source files:
 - JPEG re-encoding averages chroma samples and applies the Annex K luminance
   table to all ordinary CMYK ink components, using the requested quality scale.
 
+- `graphics/shading_function.rs`: PostScript gradient functions find a colour stop
+  pair by bisection, nesting logarithmically, instead of a linear `ifelse` chain that
+  upstream limits by resampling to 97 stops; every stop is kept.
+
 Canvas allocation uses checked arithmetic. Every other recorded upstream file matches the registry package.

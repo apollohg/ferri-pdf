@@ -506,25 +506,6 @@ fn serialize_sweep_postscript(
     root_ref
 }
 
-const MAX_POSTSCRIPT_STOPS: usize = 97;
-
-fn trim_stops(stops: &[Stop]) -> Vec<Stop> {
-    let len = stops.len();
-    let factor = len as f32 / MAX_POSTSCRIPT_STOPS as f32;
-    let mut cur_index: f32 = 0.0;
-
-    let get_index = |i: f32| i.round() as usize;
-
-    let mut new_stops = vec![];
-
-    while get_index(cur_index) < stops.len() {
-        new_stops.push(stops[get_index(cur_index)].clone());
-        cur_index += factor;
-    }
-
-    new_stops
-}
-
 fn serialize_linear_postscript(
     properties: &PostScriptGradient,
     chunk: &mut Chunk,
@@ -678,15 +659,6 @@ fn encode_postscript_stops<'a>(
     // Our algorithm requires the stops to be padded.
     let mut stops = stops.to_vec();
 
-    // Most viewers have a nesting depth on how many `elseif` can be nested (100 for mupdf,
-    // 128 for Chrome and 256 for Acrobat), so we trim the stops if they are too large.
-    // this is of course a bit unfortunate, but it should be pretty rare to have that many
-    // stops, and if we do, the stops are most likely going to be very similar, so it's
-    // safe to just sample from in-between.
-    if stops.len() > MAX_POSTSCRIPT_STOPS {
-        stops = trim_stops(&stops);
-    }
-
     if let Some(first) = stops.first() {
         let mut first = first.clone();
         first.offset = NormalizedF32::ZERO;
@@ -750,49 +722,39 @@ fn encode_stops_impl<'a>(
             // c0, c1, c2, ...
         };
 
-    if stops.len() == 1 {
+    let length = max - min;
+    let position = |stop: &Stop| min + length * stop.offset.get();
+    let components = |stop: &Stop| {
         if use_opacities {
-            code.push(Real(stops[0].opacity.get()));
+            vec![stop.opacity.get()]
         } else {
-            code.extend(stops[0].color.to_pdf_color().into_iter().map(Real));
+            stop.color.to_pdf_color().into_iter().collect::<Vec<_>>()
         }
-    } else {
-        let length = max - min;
-        let stops_min = min + length * stops[0].offset.get();
-        let stops_max = min + length * stops[1].offset.get();
-        // Write the if conditions to find the corresponding set of two stops.
-
-        let if_stops = bump.alloc(vec![]);
-        if use_opacities {
-            encode_two_stops(
-                &[stops[0].opacity.get()],
-                &[stops[1].opacity.get()],
-                stops_min,
-                stops_max,
-                if_stops,
-            )
-        } else {
-            encode_two_stops(
-                &stops[0]
-                    .color
-                    .to_pdf_color()
-                    .into_iter()
-                    .collect::<Vec<_>>(),
-                &stops[1]
-                    .color
-                    .to_pdf_color()
-                    .into_iter()
-                    .collect::<Vec<_>>(),
-                stops_min,
-                stops_max,
-                if_stops,
-            )
-        };
-        let else_stops = bump.alloc(vec![]);
-        encode_stops_impl(&stops[1..], min, max, else_stops, bump, use_opacities);
-
-        code.extend([Dup, Real(stops_max), Le, IfElse(if_stops, else_stops)]);
+    };
+    let (first, last) = (&stops[0], &stops[stops.len() - 1]);
+    if stops.len() <= 2 {
+        encode_two_stops(
+            &components(first),
+            &components(last),
+            position(first),
+            position(last),
+            code,
+        );
+        return;
     }
+    // Viewers bound `ifelse` nesting (100 in MuPDF), so the segment is found by bisection,
+    // nesting logarithmically in the stop count instead of linearly.
+    let middle = stops.len() / 2;
+    let lower = bump.alloc(vec![]);
+    encode_stops_impl(&stops[..=middle], min, max, lower, bump, use_opacities);
+    let upper = bump.alloc(vec![]);
+    encode_stops_impl(&stops[middle..], min, max, upper, bump, use_opacities);
+    code.extend([
+        Dup,
+        Real(position(&stops[middle])),
+        Le,
+        IfElse(lower, upper),
+    ]);
 }
 
 fn serialize_stitching(
