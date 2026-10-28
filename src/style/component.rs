@@ -1,12 +1,15 @@
 //! Typed match trees: the specified value of a declaration as matched by its grammar.
 use crate::style::{
     calc::Kind,
-    grammar::{BlockKind, Keyword, Label, Range},
+    grammar::{BlockKind, Keyword, Label, NODES, Node, NodeId, Range},
     units::Length,
 };
+use cssparser::ToCss;
 use std::fmt;
 
 const PERCENT: f32 = 100.0;
+const SPACE: &str = " ";
+const LIST_SEPARATOR: &str = ", ";
 
 /// One matched grammar node. Juxtaposed and repeated groups become `Group` in source order,
 /// `||` and `&&` become `Slots` indexed by grammar alternative, `|` yields the chosen
@@ -137,18 +140,20 @@ impl Component {
     }
 }
 
-/// Approximate CSS for diagnostics: separators the grammar implies are not reproduced.
+/// CSS text for diagnostics. Commas between list items come from the grammar that each
+/// reference names; values converted at parse time, such as angles, print in canonical units.
 impl fmt::Display for Component {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let joined = |f: &mut fmt::Formatter<'_>, items: &mut dyn Iterator<Item = &Self>| {
-            for (index, item) in items.enumerate() {
-                if index > 0 {
-                    f.write_str(" ")?;
-                }
-                write!(f, "{item}")?;
-            }
-            Ok(())
-        };
+        self.serialize(None, f)
+    }
+}
+
+impl Component {
+    /// `node` is the grammar node this component matched, when known.
+    fn serialize(&self, node: Option<NodeId>, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let grammar = node
+            .and_then(|node| matched(node, self))
+            .map(|node| &NODES[usize::from(node)]);
         match self {
             Self::Keyword(keyword) => f.write_str(keyword.name()),
             Self::HtmlBaselineMiddle => f.write_str("<HTML baseline middle>"),
@@ -163,9 +168,13 @@ impl fmt::Display for Component {
             Self::Resolution(dppx) => write!(f, "{dppx}dppx"),
             Self::Flex(value) => write!(f, "{value}fr"),
             Self::Dimension(value, unit) => write!(f, "{value}{unit}"),
-            Self::Color(color) => write!(f, "{color:?}"),
-            Self::String(text) => write!(f, "{text:?}"),
-            Self::Url(url) => write!(f, "url({url:?})"),
+            Self::Color(color) => color.to_css(f),
+            Self::String(text) => cssparser::serialize_string(text, f),
+            Self::Url(url) => {
+                f.write_str("url(")?;
+                cssparser::serialize_string(url, f)?;
+                f.write_str(")")
+            }
             Self::Ident(text)
             | Self::Unit(text)
             | Self::Tokens(text)
@@ -176,15 +185,128 @@ impl fmt::Display for Component {
             Self::Function(name, body) => {
                 write!(f, "{}(", name.name())?;
                 if let Some(body) = body {
-                    write!(f, "{body}")?;
+                    let inner = match grammar {
+                        Some(Node::Function(_, inner)) => *inner,
+                        _ => None,
+                    };
+                    body.serialize(inner, f)?;
                 }
                 f.write_str(")")
             }
-            Self::Block(BlockKind::Parenthesis, body) => write!(f, "({body})"),
-            Self::Block(BlockKind::SquareBracket, body) => write!(f, "[{body}]"),
-            Self::Group(items) => joined(f, &mut items.iter()),
-            Self::Slots(slots) => joined(f, &mut slots.iter().flatten()),
-            Self::Reference(_, inner) => write!(f, "{inner}"),
+            Self::Block(kind, body) => {
+                let inner = match grammar {
+                    Some(Node::Block(_, inner)) => Some(*inner),
+                    _ => None,
+                };
+                let (open, close) = match kind {
+                    BlockKind::Parenthesis => ("(", ")"),
+                    BlockKind::SquareBracket => ("[", "]"),
+                };
+                f.write_str(open)?;
+                body.serialize(inner, f)?;
+                f.write_str(close)
+            }
+            Self::Group(items) => match grammar {
+                Some(Node::Repeat { node, comma, .. }) => joined(
+                    f,
+                    items.iter().map(|item| (item, Some(*node))),
+                    if *comma { LIST_SEPARATOR } else { SPACE },
+                ),
+                Some(Node::Sequence(children)) => {
+                    // Grammar commas next to omitted terms are omitted from the match.
+                    let mut children = children.iter().copied();
+                    let aligned = items.iter().map(|item| {
+                        let literal = matches!(item, Self::Delim(_));
+                        let child = children.by_ref().find(|child| {
+                            literal || !matches!(NODES[usize::from(*child)], Node::Delim(_))
+                        });
+                        (item, child)
+                    });
+                    joined(f, aligned, SPACE)
+                }
+                _ => joined(f, items.iter().map(|item| (item, None)), SPACE),
+            },
+            Self::Slots(slots) => {
+                let alternatives = match grammar {
+                    Some(Node::AnyOf(alternatives) | Node::AllOf(alternatives))
+                        if alternatives.len() == slots.len() =>
+                    {
+                        Some(*alternatives)
+                    }
+                    _ => None,
+                };
+                joined(
+                    f,
+                    slots.iter().enumerate().filter_map(|(index, slot)| {
+                        Some((
+                            slot.as_ref()?,
+                            alternatives.map(|alternatives| alternatives[index]),
+                        ))
+                    }),
+                    SPACE,
+                )
+            }
+            Self::Reference(label, inner) => inner.serialize(Some(target(*label)), f),
         }
+    }
+}
+
+/// Joins the non-empty serializations of `items`; a literal comma takes no space before it.
+fn joined<'a>(
+    f: &mut fmt::Formatter<'_>,
+    items: impl Iterator<Item = (&'a Component, Option<NodeId>)>,
+    separator: &str,
+) -> fmt::Result {
+    let mut first = true;
+    for (item, node) in items {
+        let text = Serialized(item, node).to_string();
+        if text.is_empty() {
+            continue;
+        }
+        if !first && !matches!(item, Component::Delim(',')) {
+            f.write_str(separator)?;
+        }
+        f.write_str(&text)?;
+        first = false;
+    }
+    Ok(())
+}
+
+struct Serialized<'a>(&'a Component, Option<NodeId>);
+impl fmt::Display for Serialized<'_> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        self.0.serialize(self.1, f)
+    }
+}
+
+/// The grammar a reference's label names.
+fn target(label: Label) -> NodeId {
+    let root = match label {
+        Label::Property(property) => property.data().root,
+        Label::Production(production) => production.root(),
+    };
+    match NODES[usize::from(root)] {
+        Node::Reference(found, target) if found == label => target,
+        _ => root,
+    }
+}
+
+/// The node, through wrappers and `|` alternatives, whose shape `component` has; `None` when
+/// the alternatives leave it ambiguous.
+fn matched(node: NodeId, component: &Component) -> Option<NodeId> {
+    match (&NODES[usize::from(node)], component) {
+        (Node::NonEmpty(inner), _) => matched(*inner, component),
+        (Node::OneOf(alternatives), _) => {
+            let mut fitting = alternatives
+                .iter()
+                .filter_map(|alternative| matched(*alternative, component));
+            let first = fitting.next()?;
+            fitting.next().is_none().then_some(first)
+        }
+        (Node::Repeat { .. } | Node::Sequence(_), Component::Group(_))
+        | (Node::AnyOf(_) | Node::AllOf(_), Component::Slots(_))
+        | (Node::Block(..), Component::Block(..)) => Some(node),
+        (Node::Function(name, _), Component::Function(found, _)) if name == found => Some(node),
+        _ => None,
     }
 }

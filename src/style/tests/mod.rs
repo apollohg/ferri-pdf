@@ -4,5 +4,6 @@ mod named_page_rules;
 mod page_selection;
 mod page_size;
 mod relative_units;
+mod unsupported_messages;
 mod variables;
 mod wide_keywords;

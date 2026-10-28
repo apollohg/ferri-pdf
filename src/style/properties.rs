@@ -16,6 +16,8 @@ use crate::style::{
     wide_keywords::Resolved,
 };
 
+/// Between a property name and its value in unsupported-value errors.
+pub(super) const DECLARATION_SEPARATOR: &str = ": ";
 const RELATIVE_FONT_SIZE_RATIO: f32 = 6.0 / 5.0;
 const THIN_BORDER_PT: f32 = 0.5625;
 const THICK_BORDER_PT: f32 = 2.8125;
@@ -131,7 +133,7 @@ fn apply_value(
         Specified::Toggle(_) => unreachable!("toggle values were computed above"),
         Specified::Unexpanded(shorthand, value) => {
             return Err(StyleError::Unsupported(format!(
-                "{}: {value}",
+                "{}{DECLARATION_SEPARATOR}{value}",
                 shorthand.name()
             )));
         }
@@ -155,7 +157,7 @@ fn apply_value(
             Input::Value(_) => Err(unsupported_property(property, input)),
         },
     };
-    result?;
+    result.map_err(|error| attributed(property, input, error))?;
     if property == Property::Display {
         style.normalize_display(relative);
     }
@@ -216,9 +218,34 @@ pub(super) fn projection(property: Property, source: &Style) -> Style {
     value
 }
 
+/// Unsupported values report the declaration they came from, once: errors that already name
+/// a property, such as those of a property this one depends on, pass through. A reason other
+/// than the unsupported part of the value follows the declaration.
+fn attributed(property: Property, input: Input<'_>, error: StyleError) -> StyleError {
+    let StyleError::Unsupported(detail) = error else {
+        return error;
+    };
+    if detail
+        .split_once(DECLARATION_SEPARATOR)
+        .is_some_and(|(name, _)| Property::from_name(name).is_some())
+    {
+        return StyleError::Unsupported(detail);
+    }
+    match (unsupported_property(property, input), input) {
+        (StyleError::Unsupported(declaration), Input::Value(value))
+            if !value.to_string().contains(&detail) =>
+        {
+            StyleError::Unsupported(format!("{declaration} ({detail})"))
+        }
+        (declaration, _) => declaration,
+    }
+}
+
 fn unsupported_property(property: Property, input: Input<'_>) -> StyleError {
     match input {
-        Input::Value(value) => StyleError::Unsupported(format!("{}: {value}", property.name())),
+        Input::Value(value) => {
+            StyleError::Unsupported(format!("{}{DECLARATION_SEPARATOR}{value}", property.name()))
+        }
         Input::Copy(_) => StyleError::Unsupported(property.name().to_owned()),
     }
 }

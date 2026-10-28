@@ -15,6 +15,18 @@ pub(crate) enum ElementContent {
     FirstLetter,
     Marker,
 }
+impl ElementContent {
+    /// The `content()` argument that names this source.
+    fn keyword(self) -> Keyword {
+        match self {
+            Self::Text => Keyword::Text,
+            Self::Before => Keyword::Before,
+            Self::After => Keyword::After,
+            Self::FirstLetter => Keyword::FirstLetter,
+            Self::Marker => Keyword::Marker,
+        }
+    }
+}
 #[derive(Clone, Debug, PartialEq, serde::Serialize)]
 enum GeneratedPart {
     Text(String),
@@ -480,7 +492,10 @@ impl GeneratedContent {
                 }
                 GeneratedPart::Element(source) => {
                     let content = content.as_mut().ok_or_else(|| {
-                        StyleError::Unsupported(format!("content({source:?}) outside an element"))
+                        StyleError::Unsupported(format!(
+                            "content({}) outside an element",
+                            source.keyword().name()
+                        ))
                     })?;
                     content(*source)?.into()
                 }

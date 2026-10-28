@@ -318,7 +318,11 @@ impl Display {
 
     pub(crate) fn validate(&self) -> Result<(), StyleError> {
         match self {
-            Self::Unsupported(value) => Err(StyleError::Unsupported(format!("display:{value}"))),
+            Self::Unsupported(value) => Err(StyleError::Unsupported(format!(
+                "{}{}{value}",
+                crate::style::grammar::Property::Display.name(),
+                crate::style::properties::DECLARATION_SEPARATOR
+            ))),
             _ => Ok(()),
         }
     }
