@@ -9,6 +9,8 @@ use std::ops::Range;
 /// `sub` lowers by half the parent's descent and `super` raises by half its ascent.
 const SUBSCRIPT_DESCENT_FRACTION: f32 = 0.5;
 const SUPERSCRIPT_ASCENT_FRACTION: f32 = 0.5;
+/// Line heights this close above a whole number of steps round down to it.
+const STEP_TOLERANCE_PT: f32 = 1e-3;
 const SIDE_RIGHT: usize = 1;
 const SIDE_LEFT: usize = 3;
 
@@ -747,6 +749,16 @@ pub(crate) fn align(
         .iter()
         .map(|tree| tree.bottom - tree.top)
         .fold(root.bottom - root.top, f32::max);
+    // `line-height-step` rounds the height up to whole steps, centring the line in the extra
+    // space as an inline box would that does not move the baseline (CSS Rhythmic Sizing 1 §3).
+    let step = paragraph.style().line_height_step;
+    let (ascent, height) = if step > 0.0 {
+        let steps = ((height - STEP_TOLERANCE_PT) / step).ceil();
+        let rounded = steps * step;
+        (ascent + (rounded - height) / 2.0, rounded)
+    } else {
+        (ascent, height)
+    };
     // Baseline-aligned content stays at the top when aligned subtrees enlarge the line.
     let descent = height - ascent;
     let baseline = |placed: Aligned| {

@@ -407,6 +407,10 @@ fn handler(property: Property) -> Option<Handler> {
             font_size_adjust,
             Some(|v, r| crate::style::font_values::size_adjust(v, r).is_ok()),
         ),
+        P::LineHeightStep => (
+            line_height_step,
+            Some(|v, r| line_height_step_value(v, r).is_ok()),
+        ),
         P::LineHeight => (
             line_height,
             Some(|v, r| LineHeight::from_component(v, r).is_ok()),
@@ -1253,6 +1257,19 @@ computed!(
     [line_height],
     |value, style, _parent, relative| { LineHeight::from_component(value, relative)? }
 );
+computed!(
+    line_height_step,
+    [line_height_step],
+    |value, style, _parent, relative| line_height_step_value(value, relative)?
+);
+/// `<length [0,∞]>` (CSS Rhythmic Sizing 1 §3).
+fn line_height_step_value(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
+    let step = crate::style::values::length(value, relative)?;
+    if step < 0.0 {
+        return Err(format!("negative line-height-step: {value}").into());
+    }
+    Ok(step)
+}
 computed!(
     letter_spacing,
     [letter_spacing],

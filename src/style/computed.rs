@@ -74,6 +74,8 @@ pub(crate) struct Style {
     inlinifying_parent: bool,
     pub size: f32,
     pub line_height: crate::style::LineHeight,
+    /// `line-height-step`; zero leaves line box heights unrounded.
+    pub line_height_step: f32,
     pub letter_spacing: f32,
     pub word_spacing: LengthPercentage,
     pub white_space: WhiteSpace,
@@ -209,6 +211,7 @@ impl Default for Style {
             inlinifying_parent: false,
             size: DEFAULT_FONT_SIZE,
             line_height: crate::style::LineHeight::Normal,
+            line_height_step: 0.0,
             letter_spacing: 0.0,
             word_spacing: LengthPercentage::ZERO,
             white_space: WhiteSpace::NORMAL,

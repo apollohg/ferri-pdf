@@ -206,3 +206,27 @@ fn baseline_source_chooses_the_first_or_last_line_of_an_inline_block() {
         "the block moves by the distance between its baselines",
     );
 }
+
+#[test]
+fn line_height_steps_round_line_boxes_up_and_centre_them() {
+    let step = 30.0;
+    let trace = render(
+        &format!("p{{margin:0;line-height:{LINE_HEIGHT_PT}pt}}.s{{line-height-step:{step}pt}}"),
+        "<p class=s>X</p><p>X</p><p class=s>X<span style=\"font-size:40pt;line-height:40pt\">X</span></p>",
+    );
+    let [stepped, plain, tall] = [0, 1, 2].map(|index| &trace.pages[0][index]);
+    assert_pt(stepped.height, step, "an 18pt line takes one 30pt step");
+    assert_pt(
+        plain.height,
+        LINE_HEIGHT_PT,
+        "lines without a step keep their height",
+    );
+    assert_pt(tall.height, 2.0 * step, "a line over one step takes two");
+    // The plain line's top is the stepped line's bottom; its baseline lies the same distance
+    // below its top as the stepped line's would without the step.
+    assert_pt(
+        plain.baseline - stepped.baseline,
+        step - (step - LINE_HEIGHT_PT) / 2.0,
+        "the stepped line's content is centred in its step",
+    );
+}
