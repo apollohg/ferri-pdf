@@ -11,7 +11,6 @@
     clippy::field_reassign_with_default,
     clippy::identity_op,
     clippy::too_many_arguments,
-    clippy::upper_case_acronyms,
     clippy::wrong_self_convention,
     elided_lifetimes_in_paths,
     reason = "inlined upstream code keeps its upstream style"
