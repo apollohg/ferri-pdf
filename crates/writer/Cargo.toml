@@ -1,0 +1,23 @@
+[package]
+name = "ferri-pdf-writer"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+license-file.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+krilla-svg.workspace = true
+usvg.workspace = true
+ferri-pdf-style.workspace = true
+ferri-pdf-document.workspace = true
+ferri-pdf-images.workspace = true
+ferri-pdf-graphics.workspace = true
+ferri-pdf-fonts.workspace = true
+ferri-pdf-layout.workspace = true
+ferri-pdf-text.workspace = true
+krilla.workspace = true
+thiserror.workspace = true
