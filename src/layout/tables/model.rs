@@ -1,12 +1,12 @@
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, geometry::Edges, intrinsic};
-use ferri_pdf_document::{BlockBox, BlockContent};
-use ferri_pdf_graphics::Border;
-use ferri_pdf_style::{BorderCollapse, Display, LengthPercentage, Size, Style};
-use ferri_pdf_table::{
+use crate::table::{
     BorderBox, BorderOrigin, CellWidth, CollapsedBorders, ColumnWidth, Grid, RowGroup, Span,
     TableError,
 };
+use ferri_pdf_document::{BlockBox, BlockContent};
+use ferri_pdf_graphics::Border;
+use ferri_pdf_style::{BorderCollapse, Display, LengthPercentage, Size, Style};
 use std::{ops::Range, rc::Rc};
 
 pub(super) struct Group<'a> {
@@ -108,9 +108,9 @@ impl<'a> Data<'a> {
                     });
                     column_count = column_count
                         .checked_add(span)
-                        .filter(|&count| count <= ferri_pdf_table::MAX_GRID_SLOTS)
+                        .filter(|&count| count <= crate::table::MAX_GRID_SLOTS)
                         .ok_or(TableError::GridLimit {
-                            limit: ferri_pdf_table::MAX_GRID_SLOTS,
+                            limit: crate::table::MAX_GRID_SLOTS,
                         })?;
                 }
                 Display::TableColumnGroup => {
@@ -119,9 +119,9 @@ impl<'a> Data<'a> {
                     if descendants.is_empty() {
                         column_count = column_count
                             .checked_add(child.style().table.column_span)
-                            .filter(|&count| count <= ferri_pdf_table::MAX_GRID_SLOTS)
+                            .filter(|&count| count <= crate::table::MAX_GRID_SLOTS)
                             .ok_or(TableError::GridLimit {
-                                limit: ferri_pdf_table::MAX_GRID_SLOTS,
+                                limit: crate::table::MAX_GRID_SLOTS,
                             })?;
                     } else {
                         for column in descendants {
@@ -133,9 +133,9 @@ impl<'a> Data<'a> {
                             });
                             column_count = column_count
                                 .checked_add(span)
-                                .filter(|&count| count <= ferri_pdf_table::MAX_GRID_SLOTS)
+                                .filter(|&count| count <= crate::table::MAX_GRID_SLOTS)
                                 .ok_or(TableError::GridLimit {
-                                    limit: ferri_pdf_table::MAX_GRID_SLOTS,
+                                    limit: crate::table::MAX_GRID_SLOTS,
                                 })?;
                         }
                     }

@@ -1,10 +1,10 @@
 use super::{captions, model::Data};
 use crate::layout::LayoutError;
 use crate::layout::measure::Measurer;
+use crate::table::WidthInput;
 use crate::text::IntrinsicWidths;
 use ferri_pdf_document::BlockBox;
 use ferri_pdf_style::{BorderCollapse, LengthPercentage, Size, SizeConstraints};
-use ferri_pdf_table::WidthInput;
 
 pub(crate) fn measure(
     block: &BlockBox,

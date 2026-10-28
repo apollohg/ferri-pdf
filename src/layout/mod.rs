@@ -263,7 +263,7 @@ pub(crate) enum LayoutError {
     #[error("{0}")]
     Text(#[from] TextError),
     #[error("{0}")]
-    Table(#[from] ferri_pdf_table::TableError),
+    Table(#[from] crate::table::TableError),
     #[error("unsupported table formatting at block {block}: {feature}")]
     UnsupportedTable { block: usize, feature: &'static str },
     #[error("{0}")]

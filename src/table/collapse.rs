@@ -1,12 +1,12 @@
 //! Collapsed border conflict resolution (CSS 2.1 §17.6.2.1) per grid edge segment.
-use crate::{Grid, TableError};
+use crate::table::{Grid, TableError};
 use ferri_pdf_graphics::{Border, BorderStyle};
 use std::cmp::Ordering;
 use std::ops::Range;
 
 /// Element kinds in ascending priority for otherwise equal borders.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
-pub enum BorderOrigin {
+pub(crate) enum BorderOrigin {
     Table,
     ColumnGroup,
     Column,
@@ -17,7 +17,7 @@ pub enum BorderOrigin {
 
 /// A table element covering a rectangle of grid slots.
 /// Borders are in logical top/end/bottom/start order.
-pub struct BorderBox {
+pub(crate) struct BorderBox {
     pub rows: Range<usize>,
     pub columns: Range<usize>,
     pub borders: [Border; 4],
@@ -25,7 +25,7 @@ pub struct BorderBox {
 }
 
 #[derive(Clone, Copy, Debug)]
-pub struct ResolvedBorder {
+pub(crate) struct ResolvedBorder {
     pub border: Border,
     pub origin: BorderOrigin,
     /// The element lies before the edge (above it, or towards the inline start).
@@ -49,7 +49,7 @@ fn style_rank(style: BorderStyle) -> u8 {
 
 impl ResolvedBorder {
     /// Order of §17.6.2.1: hidden, then width, style, origin, and finally the leading element.
-    pub fn priority(&self, other: &Self) -> Ordering {
+    pub(crate) fn priority(&self, other: &Self) -> Ordering {
         let hidden = |border: &Self| border.border.style == BorderStyle::Hidden;
         let present = |border: &Self| border.border.style != BorderStyle::None;
         hidden(self)
@@ -62,7 +62,7 @@ impl ResolvedBorder {
     }
     /// The winner of two borders meeting on one segment; ties keep `self`.
     #[must_use]
-    pub fn winner(self, other: Self) -> Self {
+    pub(crate) fn winner(self, other: Self) -> Self {
         if other.priority(&self) == Ordering::Greater {
             other
         } else {
@@ -70,11 +70,11 @@ impl ResolvedBorder {
         }
     }
     /// Painted width; hidden and none borders paint nothing.
-    pub fn width(&self) -> f32 {
+    pub(crate) fn width(&self) -> f32 {
         self.border.used_width()
     }
     /// Borders that paint identically and so join into one run.
-    pub fn same_paint(&self, other: &Self) -> bool {
+    pub(crate) fn same_paint(&self, other: &Self) -> bool {
         self.border.style == other.border.style
             && self.border.width == other.border.width
             && self.border.color == other.border.color
@@ -83,7 +83,7 @@ impl ResolvedBorder {
 
 /// Resolved borders of every grid edge segment, in logical grid coordinates.
 #[derive(Clone)]
-pub struct CollapsedBorders {
+pub(crate) struct CollapsedBorders {
     pub rows: usize,
     pub columns: usize,
     /// `rows + 1` horizontal lines of `columns` segments.
@@ -105,7 +105,7 @@ fn merge(slot: &mut Option<ResolvedBorder>, candidate: ResolvedBorder) {
 }
 
 impl CollapsedBorders {
-    pub fn new(grid: &Grid, boxes: &[BorderBox]) -> Result<Self, TableError> {
+    pub(crate) fn new(grid: &Grid, boxes: &[BorderBox]) -> Result<Self, TableError> {
         let (rows, columns) = (grid.rows, grid.columns);
         let mut resolved = Self {
             rows,
@@ -164,11 +164,11 @@ impl CollapsedBorders {
     }
 
     /// Segment on horizontal grid line `line` (`0..=rows`) over `column`.
-    pub fn horizontal(&self, line: usize, column: usize) -> Option<ResolvedBorder> {
+    pub(crate) fn horizontal(&self, line: usize, column: usize) -> Option<ResolvedBorder> {
         self.horizontal[line * self.columns + column]
     }
     /// Segment on vertical grid line `line` (`0..=columns`) beside `row`.
-    pub fn vertical(&self, row: usize, line: usize) -> Option<ResolvedBorder> {
+    pub(crate) fn vertical(&self, row: usize, line: usize) -> Option<ResolvedBorder> {
         self.vertical[row * (self.columns + 1) + line]
     }
     fn width(border: Option<ResolvedBorder>) -> f32 {
@@ -176,7 +176,7 @@ impl CollapsedBorders {
     }
     /// Border insets of a cell in logical order: half the first segment of each edge for
     /// spanning cells (CSS 2.1 leaves edges with several segments undefined).
-    pub fn cell_insets(&self, cell: &crate::Cell) -> [f32; 4] {
+    pub(crate) fn cell_insets(&self, cell: &crate::table::Cell) -> [f32; 4] {
         [
             self.horizontal(cell.row, cell.column),
             self.vertical(cell.row, cell.column + cell.columns),
@@ -187,7 +187,7 @@ impl CollapsedBorders {
     }
     /// Table border widths in logical order: half the first row's outer cells inline, and half
     /// the widest first and last row segments in the block axis. Wider later borders spill out.
-    pub fn table_insets(&self) -> [f32; 4] {
+    pub(crate) fn table_insets(&self) -> [f32; 4] {
         if self.rows == 0 || self.columns == 0 {
             return [0.0; 4];
         }
@@ -209,7 +209,7 @@ impl CollapsedBorders {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{RowGroup, Span};
+    use crate::table::{RowGroup, Span};
     use ferri_pdf_graphics::Color;
 
     const RED: Color = Color {

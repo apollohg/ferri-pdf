@@ -3,39 +3,39 @@ mod collapse;
 mod heights;
 mod widths;
 
-pub use collapse::{BorderBox, BorderOrigin, CollapsedBorders, ResolvedBorder};
-pub use heights::{CellHeight, HeightConstraint, HeightInput, RowHeights};
-pub use widths::{CellWidth, ColumnWidth, ColumnWidths, WidthInput};
+pub(crate) use collapse::{BorderBox, BorderOrigin, CollapsedBorders, ResolvedBorder};
+pub(crate) use heights::{CellHeight, HeightConstraint, HeightInput, RowHeights};
+pub(crate) use widths::{CellWidth, ColumnWidth, ColumnWidths, WidthInput};
 
-pub const MAX_GRID_SLOTS: usize = 1_000_000;
+pub(crate) const MAX_GRID_SLOTS: usize = 1_000_000;
 
 #[derive(Clone, Copy, Debug)]
-pub struct Span {
+pub(crate) struct Span {
     pub columns: usize,
     /// Zero extends to the end of the containing row group.
     pub rows: usize,
 }
 
-pub struct RowGroup {
+pub(crate) struct RowGroup {
     pub rows: Vec<Vec<Span>>,
 }
 
 #[derive(Clone, Copy, Debug)]
-pub struct Cell {
+pub(crate) struct Cell {
     pub row: usize,
     pub column: usize,
     pub rows: usize,
     pub columns: usize,
 }
 
-pub struct Grid {
+pub(crate) struct Grid {
     pub cells: Vec<Cell>,
     pub rows: usize,
     pub columns: usize,
 }
 
 impl Grid {
-    pub fn new(groups: &[RowGroup], declared_columns: usize) -> Result<Self, TableError> {
+    pub(crate) fn new(groups: &[RowGroup], declared_columns: usize) -> Result<Self, TableError> {
         let rows = groups
             .iter()
             .try_fold(0usize, |rows, group| rows.checked_add(group.rows.len()))
@@ -110,7 +110,7 @@ impl Grid {
 }
 
 #[derive(Debug, thiserror::Error)]
-pub enum TableError {
+pub(crate) enum TableError {
     #[error("table grid exceeds {limit} slots")]
     GridLimit { limit: usize },
     #[error("table cell has zero column span")]

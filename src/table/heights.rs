@@ -1,8 +1,8 @@
-use crate::{Grid, TableError, finite, grow};
+use crate::table::{Grid, TableError, finite, grow};
 use ferri_pdf_style::{BoxSizing, Size, SizeConstraints, VerticalAlign};
 
 #[derive(Clone, Debug, Default)]
-pub struct HeightConstraint {
+pub(crate) struct HeightConstraint {
     pub specified: Size,
     pub minimum: Size,
     pub maximum: Size,
@@ -34,14 +34,14 @@ impl HeightConstraint {
 }
 
 #[derive(Clone)]
-pub struct CellHeight {
+pub(crate) struct CellHeight {
     pub height: f32,
     pub baseline: f32,
     pub align: VerticalAlign,
     pub constraint: HeightConstraint,
 }
 
-pub struct HeightInput<'a> {
+pub(crate) struct HeightInput<'a> {
     pub cells: &'a [CellHeight],
     /// An empty slice denotes unconstrained rows.
     pub rows: &'a [HeightConstraint],
@@ -51,7 +51,7 @@ pub struct HeightInput<'a> {
 }
 
 impl<'a> HeightInput<'a> {
-    pub fn natural(cells: &'a [CellHeight], spacing: f32) -> Self {
+    pub(crate) fn natural(cells: &'a [CellHeight], spacing: f32) -> Self {
         Self {
             cells,
             rows: &[],
@@ -65,14 +65,14 @@ impl<'a> HeightInput<'a> {
     }
 }
 
-pub struct RowHeights {
+pub(crate) struct RowHeights {
     pub heights: Vec<f32>,
     pub offsets: Vec<f32>,
     pub table: f32,
 }
 
 impl Grid {
-    pub fn row_heights(&self, input: &HeightInput<'_>) -> Result<RowHeights, TableError> {
+    pub(crate) fn row_heights(&self, input: &HeightInput<'_>) -> Result<RowHeights, TableError> {
         let cells = input.cells;
         if cells.len() != self.cells.len() {
             return Err(TableError::MeasurementCount {
@@ -218,7 +218,7 @@ impl Grid {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{RowGroup, Span};
+    use crate::table::{RowGroup, Span};
 
     #[test]
     fn table_target_distributes_auto_rows_and_interpolates_percentages() {

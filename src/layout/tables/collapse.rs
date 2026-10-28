@@ -1,6 +1,6 @@
 //! Painting of resolved collapsed borders for the table bands placed on one page.
+use crate::table::{CollapsedBorders, ResolvedBorder};
 use ferri_pdf_graphics::{Border, BorderStyle, BoxDecoration, BoxPaint, Clip, Color, Rect};
-use ferri_pdf_table::{CollapsedBorders, ResolvedBorder};
 use std::{ops::Range, rc::Rc};
 
 const TOP: usize = 0;

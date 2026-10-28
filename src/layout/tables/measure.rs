@@ -8,10 +8,10 @@ use crate::layout::measure::{
     BlockEdge, FlowItem, MeasuredBlock, MeasuredCell, MeasuredRow, Measurer, RowTarget, TableFlow,
 };
 use crate::layout::{LayoutError, geometry, margin::MarginStrut};
+use crate::table::{CellHeight, HeightConstraint, HeightInput, WidthInput};
 use ferri_pdf_document::{BlockBox, BlockContent, SemanticEvent};
 use ferri_pdf_graphics::{Border, BorderStyle, BoxDecoration, Color, Rect};
 use ferri_pdf_style::{BreakBetween, Display, Style, TableLayout};
-use ferri_pdf_table::{CellHeight, HeightConstraint, HeightInput, WidthInput};
 use std::{
     cell::RefCell,
     collections::{BTreeMap, HashMap},
@@ -116,7 +116,7 @@ pub(crate) fn measure_placed<'a>(
 }
 
 struct WidthContributions {
-    cells: Vec<ferri_pdf_table::CellWidth>,
+    cells: Vec<crate::table::CellWidth>,
     caption_min: f32,
 }
 
@@ -124,8 +124,8 @@ pub(crate) struct TableGeometry {
     pub containing_height: Option<f32>,
     pub geometry: geometry::HorizontalBox,
     edges: geometry::Edges,
-    sizes: ferri_pdf_table::ColumnWidths,
-    original_sizes: Option<ferri_pdf_table::ColumnWidths>,
+    sizes: crate::table::ColumnWidths,
+    original_sizes: Option<crate::table::ColumnWidths>,
     collapsed_columns: Rc<[bool]>,
     starts: Vec<f32>,
     spacing: [f32; 2],
@@ -176,7 +176,7 @@ impl RowGeometry {
         self.original_starts = Some(original);
         self
     }
-    fn new(rows: ferri_pdf_table::RowHeights, spacing: f32) -> Self {
+    fn new(rows: crate::table::RowHeights, spacing: f32) -> Self {
         let mut starts = Vec::with_capacity(rows.heights.len() + 1);
         starts.push(0.0);
         for height in rows.heights {
@@ -222,7 +222,7 @@ pub(crate) struct TablePlan<'a> {
     cell_indices: HashMap<*const BlockBox, usize>,
     row_keep_ends: [Vec<usize>; 2],
     layers: Layers,
-    columns: Vec<ferri_pdf_table::ColumnWidth>,
+    columns: Vec<crate::table::ColumnWidth>,
     widths: RefCell<HashMap<u32, Rc<WidthContributions>>>,
     place: fn(&Style, f32, f32, bool, Option<f32>, geometry::Edges) -> geometry::HorizontalBox,
 }
@@ -687,7 +687,7 @@ impl<'a> TablePlan<'a> {
                 .zip(data.collapsed_columns.iter())
                 .filter_map(|(&width, &collapsed)| collapsed.then_some(width + horizontal))
                 .sum::<f32>();
-            let projected = ferri_pdf_table::ColumnWidths {
+            let projected = crate::table::ColumnWidths {
                 widths,
                 table: (sizes.table - removed).max(0.0),
             };
@@ -917,10 +917,10 @@ impl<'a> TablePlan<'a> {
             band
         };
         let range = self.data.row_ranges[band.start].start..self.data.row_ranges[band.end - 1].end;
-        let grid = ferri_pdf_table::Grid {
+        let grid = crate::table::Grid {
             cells: self.data.grid.cells[range.clone()]
                 .iter()
-                .map(|cell| ferri_pdf_table::Cell {
+                .map(|cell| crate::table::Cell {
                     row: cell.row - band.start,
                     ..*cell
                 })

@@ -1,8 +1,8 @@
-use crate::{Grid, TableError, finite, grow};
+use crate::table::{Grid, TableError, finite, grow};
 use ferri_pdf_style::{BoxSizing, LengthPercentage, Size, SizeConstraints, TableLayout};
 
 #[derive(Clone, Debug)]
-pub struct CellWidth {
+pub(crate) struct CellWidth {
     pub min: f32,
     pub max: f32,
     pub specified: Size,
@@ -69,7 +69,7 @@ impl CellWidth {
 }
 
 #[derive(Clone, Debug)]
-pub struct ColumnWidth {
+pub(crate) struct ColumnWidth {
     pub start: usize,
     pub span: usize,
     pub specified: Size,
@@ -98,7 +98,7 @@ fn track_size(size: &Size) -> Option<&LengthPercentage> {
     }
 }
 
-pub struct WidthInput<'a> {
+pub(crate) struct WidthInput<'a> {
     pub cells: &'a [CellWidth],
     pub columns: &'a [ColumnWidth],
     pub layout: TableLayout,
@@ -109,7 +109,7 @@ pub struct WidthInput<'a> {
     pub caption_min: f32,
 }
 
-pub struct ColumnWidths {
+pub(crate) struct ColumnWidths {
     pub widths: Vec<f32>,
     pub table: f32,
 }
@@ -123,7 +123,7 @@ struct Track {
 }
 
 impl Grid {
-    pub fn column_widths(&self, input: &WidthInput<'_>) -> Result<ColumnWidths, TableError> {
+    pub(crate) fn column_widths(&self, input: &WidthInput<'_>) -> Result<ColumnWidths, TableError> {
         if input.cells.len() != self.cells.len() {
             return Err(TableError::MeasurementCount {
                 expected: self.cells.len(),

@@ -103,7 +103,6 @@ ferri-pdf-style = { path = "crates/style", version = "0.1.0" }
 ferri-pdf-document = { path = "crates/document", version = "0.1.0" }
 ferri-pdf-flex = { path = "crates/flex", version = "0.1.0" }
 ferri-pdf-grid = { path = "crates/grid", version = "0.1.0" }
-ferri-pdf-table = { path = "crates/table", version = "0.1.0" }
 ferri-pdf-graphics = { path = "crates/graphics", version = "0.1.0" }
 ferri-pdf-paint = { path = "crates/paint", version = "0.1.0" }
 
@@ -145,7 +144,6 @@ fontdb.workspace = true
 skrifa.workspace = true
 smallvec.workspace = true
 tiny-skia.workspace = true
-ferri-pdf-table.workspace = true
 ferri-pdf-flex.workspace = true
 ferri-pdf-grid.workspace = true
 serde.workspace = true

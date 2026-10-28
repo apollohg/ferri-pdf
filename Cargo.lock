@@ -607,7 +607,6 @@ dependencies = [
  "ferri-pdf-resources",
  "ferri-pdf-resvg",
  "ferri-pdf-style",
- "ferri-pdf-table",
  "ferri-pdf-usvg",
  "fontdb",
  "icu_locale_core",
@@ -846,15 +845,6 @@ dependencies = [
  "ferri-pdf-spec-data",
  "serde",
  "serde_json",
- "thiserror",
-]
-
-[[package]]
-name = "ferri-pdf-table"
-version = "0.1.0"
-dependencies = [
- "ferri-pdf-graphics",
- "ferri-pdf-style",
  "thiserror",
 ]
 

@@ -336,7 +336,7 @@ pub(super) struct TableFlow<'a> {
     pub original_row_starts: Option<std::rc::Rc<[f32]>>,
     pub plan: std::rc::Rc<crate::layout::tables::TablePlan<'a>>,
     pub geometry: crate::layout::geometry::HorizontalBox,
-    pub heights: Vec<ferri_pdf_table::CellHeight>,
+    pub heights: Vec<crate::table::CellHeight>,
     /// Header and footer bands, empty unless they repeat.
     pub header: Vec<MeasuredRow<'a>>,
     pub footer: Vec<MeasuredRow<'a>>,
