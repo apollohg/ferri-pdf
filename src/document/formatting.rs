@@ -1,8 +1,8 @@
 use crate::document::navigation::{BoxNavigation, NavigationBuilder};
 use crate::document::{DocumentError, Paragraph, inline::InlineCollector};
+use crate::dom::{ChildNodes, DocumentTree, Element, ElementId, TreeRelation};
 use crate::graphics::BoxDecoration;
 use crate::style::{Display, PseudoElement, Style, StyleError, Stylesheet};
-use ferri_pdf_dom::{ChildNodes, DocumentTree, Element, ElementId, TreeRelation};
 
 pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
@@ -742,8 +742,7 @@ fn block<'a>(
                     builder.generated(element, style, PseudoElement::After)?;
                     frames[index].generated = false;
                 } else {
-                    if element.namespace() == ferri_pdf_dom::HTML_NAMESPACE
-                        && element.name() == "wbr"
+                    if element.namespace() == crate::dom::HTML_NAMESPACE && element.name() == "wbr"
                     {
                         builder.inline.optional_break(style);
                     }

@@ -1,4 +1,5 @@
 //! First-page dependencies are evaluated on demand, independently for each physical axis.
+use crate::dom::{DocumentTree, Element, TreeRelation};
 use crate::style::{
     Display, LineHeight, Size, SourceLocation, Style, StyleError, Stylesheet,
     cascade::{Cascaded, Customs, Properties, Winners},
@@ -13,7 +14,6 @@ use crate::style::{
     variables::{self, Reference},
     wide_keywords::{Resolved, WideKeyword},
 };
-use ferri_pdf_dom::{DocumentTree, Element, TreeRelation};
 use ferri_pdf_resources::ResourceResolver;
 use std::{
     cell::{Cell, OnceCell, RefCell},

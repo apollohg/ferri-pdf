@@ -1,7 +1,7 @@
 use super::common;
+use crate::dom::{DocumentTree, Selector};
 use crate::fonts::{FontFamily, FontStyle, FontWeight, GenericFamily};
 use crate::style::{LineHeight, Style, StyleError, Stylesheet, StylesheetSource};
-use ferri_pdf_dom::{DocumentTree, Selector};
 
 fn computed(css: &str) -> Result<Style, StyleError> {
     computed_at(css, Default::default())

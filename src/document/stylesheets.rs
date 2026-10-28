@@ -1,6 +1,6 @@
 use crate::document::DocumentError;
+use crate::dom::{DocumentTree, HTML_NAMESPACE, SVG_NAMESPACE};
 use crate::style::{StylesheetInput, StylesheetSources};
-use ferri_pdf_dom::{DocumentTree, HTML_NAMESPACE, SVG_NAMESPACE};
 use ferri_pdf_resources::{CSS_MEDIA_TYPE, ResourceBase, ResourceMetadata};
 
 const STYLESHEET: &str = "stylesheet";

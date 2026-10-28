@@ -1,6 +1,6 @@
 //! Byte decoding converges on the existing HTML tree builder.
+use crate::dom::DocumentTree;
 use encoding_rs::{Encoding, UTF_8, UTF_16BE, UTF_16LE, WINDOWS_1252, X_USER_DEFINED};
-use ferri_pdf_dom::DocumentTree;
 use std::ops::ControlFlow;
 
 const CHARSET_ATTRIBUTE: &str = "charset";
@@ -125,7 +125,7 @@ fn xml_encoding(bytes: &[u8]) -> Option<&'static Encoding> {
 fn parse_html(
     text: &str,
     current_encoding: Option<&'static Encoding>,
-) -> Result<ControlFlow<&'static Encoding, DocumentTree>, ferri_pdf_dom::DomError> {
+) -> Result<ControlFlow<&'static Encoding, DocumentTree>, crate::dom::DomError> {
     let mut tentative_encoding = current_encoding;
     DocumentTree::parse_with_encoding(text, |declaration| {
         if tentative_encoding.is_some() {
@@ -148,7 +148,7 @@ fn parse_html(
 pub(crate) fn decode_document(
     bytes: &[u8],
     transport_charset: Option<&str>,
-) -> Result<(DecodedHtml, DocumentTree), ferri_pdf_dom::DomError> {
+) -> Result<(DecodedHtml, DocumentTree), crate::dom::DomError> {
     let bom = Encoding::for_bom(bytes).map(|(encoding, _)| encoding);
     let transport = transport_charset.and_then(label);
     let encoding = bom
@@ -175,7 +175,7 @@ pub(crate) fn decode_document(
 pub(crate) fn decode_html(
     bytes: &[u8],
     transport_charset: Option<&str>,
-) -> Result<DecodedHtml, ferri_pdf_dom::DomError> {
+) -> Result<DecodedHtml, crate::dom::DomError> {
     decode_document(bytes, transport_charset).map(|(decoded, _)| decoded)
 }
 

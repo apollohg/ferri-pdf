@@ -62,9 +62,9 @@ fn ruby_fallback_pseudo_elements_cascade_and_inherit_normally() {
 
 #[test]
 fn horizontal_rules_use_html_borders_and_attribute_hints() {
+    use crate::dom::{DocumentTree, Selector};
     use crate::graphics::{BorderStyle, POINTS_PER_PIXEL};
     use crate::style::{LengthPercentage, Size, Style, Stylesheet, StylesheetSource};
-    use ferri_pdf_dom::{DocumentTree, Selector};
 
     for (attributes, height, border_px, solid) in [
         ("size=1", Size::Auto, [1.0, 1.0, 0.0, 1.0], false),
@@ -200,8 +200,8 @@ fn clear_attributes_enter_the_cascade_and_clear_matching_floats() {
 
 #[test]
 fn quirks_margin_rules_distinguish_text_comments_blank_nodes_and_cell_edges() {
+    use crate::dom::{DocumentTree, Selector};
     use crate::style::{LengthPercentage, Size, Style, Stylesheet, StylesheetSource};
-    use ferri_pdf_dom::{DocumentTree, Selector};
 
     for (markup, top, bottom) in [
         ("<p id=target>X</p>", 0.0, 12.0),
@@ -275,8 +275,8 @@ fn hidden_legacy_metadata_defaults_are_overridable_ua_rules() {
 
 #[test]
 fn legacy_text_alignment_keywords_apply_only_to_their_defined_elements() {
+    use crate::dom::{DocumentTree, Selector};
     use crate::style::{Style, Stylesheet, TextAlign};
-    use ferri_pdf_dom::{DocumentTree, Selector};
 
     for (markup, expected) in [
         ("<div id=target align=middle>X</div>", TextAlign::Center),
@@ -310,8 +310,8 @@ fn legacy_text_alignment_keywords_apply_only_to_their_defined_elements() {
 
 #[test]
 fn header_alignment_default_obeys_parent_and_cascade_rollback() {
+    use crate::dom::{DocumentTree, Selector};
     use crate::style::{Style, Stylesheet, TextAlign};
-    use ferri_pdf_dom::{DocumentTree, Selector};
 
     let tree =
         DocumentTree::parse("<!doctype html><table><tr><th id=target>Heading</th></tr></table>")

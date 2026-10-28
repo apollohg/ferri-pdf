@@ -1,6 +1,6 @@
+use crate::dom::{DocumentTree, Selector};
 use crate::fonts::{FontFamily, GenericFamily};
 use crate::style::{Style, Stylesheet, StylesheetSource};
-use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_resources::FileResolver;
 
 fn families(declaration: &str) -> Vec<FontFamily> {

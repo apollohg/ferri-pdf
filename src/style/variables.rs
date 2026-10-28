@@ -936,8 +936,8 @@ impl Evaluation for ReferencesOnly<'_> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::dom::{DocumentTree, Selector};
     use crate::style::{Style, Stylesheet, StylesheetSource};
-    use ferri_pdf_dom::{DocumentTree, Selector};
 
     fn attribute_environment(source: &str) -> Environment {
         let sheet = Stylesheet::parse(&[StylesheetSource {

@@ -1,7 +1,7 @@
 //! CSS Values 4 §6.1 relative lengths at computed-value time, against the bundled faces' own
 //! tables.
+use crate::dom::{DocumentTree, Selector};
 use crate::style::{LengthPercentage, Size, Style, Stylesheet, StylesheetSource};
-use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_resources::FileResolver;
 
 const TOLERANCE_PT: f32 = 1e-3;

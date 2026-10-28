@@ -1,4 +1,4 @@
-use crate::{Directionality, Element, ElementId, QuirksMode, TreeRelation, TreeScopeId};
+use crate::dom::{Directionality, Element, ElementId, QuirksMode, TreeRelation, TreeScopeId};
 use cssparser::{CowRcStr, ParseError, Parser, ParserInput, SourceLocation, ToCss, Token};
 use html5ever::Namespace;
 use scraper::{
@@ -16,9 +16,9 @@ use selectors::{
 use std::{collections::HashMap, fmt};
 
 /// The empty key binds the default element namespace; values are literal CSS strings.
-pub type NamespaceMap = HashMap<String, String>;
+pub(crate) type NamespaceMap = HashMap<String, String>;
 /// Parses the namespace binding shared by stylesheet consumers.
-pub fn parse_namespace<'i>(
+pub(crate) fn parse_namespace<'i>(
     input: &mut Parser<'i, '_>,
 ) -> Result<(String, String), cssparser::BasicParseError<'i>> {
     let prefix = input
@@ -29,23 +29,23 @@ pub fn parse_namespace<'i>(
     input.expect_exhausted()?;
     Ok((prefix, namespace))
 }
-pub type SelectorError<'a> = ParseError<'a, SelectorParseErrorKind<'a>>;
+pub(crate) type SelectorError<'a> = ParseError<'a, SelectorParseErrorKind<'a>>;
 const PART_ATTRIBUTE: &str = "part";
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub enum ScopeRoot {
+pub(crate) enum ScopeRoot {
     Element(ElementId),
     Document,
 }
 
 #[derive(Clone, Copy, Debug, Default)]
-pub struct SelectorScope {
+pub(crate) struct SelectorScope {
     pub root: Option<ScopeRoot>,
     pub origin: Option<ElementId>,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
-pub enum TreeContext {
+pub(crate) enum TreeContext {
     Document,
     Root(TreeScopeId),
     All,
@@ -72,7 +72,7 @@ impl TreeContext {
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub enum SelectorMode {
+pub(crate) enum SelectorMode {
     Normal,
     Nesting,
     Scope,
@@ -183,16 +183,16 @@ impl SelectorVisitor for MetricsVisitor {
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct Selector {
+pub(crate) struct Selector {
     selectors: SelectorList<StaticSelector>,
     metrics: SelectorMetrics,
 }
 impl Selector {
-    pub fn parse(input: &str) -> Result<Self, SelectorError<'_>> {
+    pub(crate) fn parse(input: &str) -> Result<Self, SelectorError<'_>> {
         Self::parse_with_namespaces(input, &NamespaceMap::new(), true)
     }
 
-    pub fn parse_with_namespaces<'i>(
+    pub(crate) fn parse_with_namespaces<'i>(
         input: &'i str,
         namespaces: &NamespaceMap,
         forgiving: bool,
@@ -200,15 +200,7 @@ impl Selector {
         Self::parse_context(input, namespaces, forgiving, SelectorMode::Normal)
     }
 
-    pub fn parse_nested<'i>(
-        input: &'i str,
-        namespaces: &NamespaceMap,
-        forgiving: bool,
-    ) -> Result<Self, SelectorError<'i>> {
-        Self::parse_context(input, namespaces, forgiving, SelectorMode::Nesting)
-    }
-
-    pub fn parse_context<'i>(
+    pub(crate) fn parse_context<'i>(
         input: &'i str,
         namespaces: &NamespaceMap,
         forgiving: bool,
@@ -218,7 +210,7 @@ impl Selector {
             .map(|selector| selector.bind_context(mode))
     }
 
-    pub fn parse_scope_boundary<'i>(
+    pub(crate) fn parse_scope_boundary<'i>(
         input: &'i str,
         namespaces: &NamespaceMap,
         forgiving: bool,
@@ -266,7 +258,7 @@ impl Selector {
         })
     }
 
-    pub fn list(selectors: &[Self]) -> Option<Self> {
+    pub(crate) fn list(selectors: &[Self]) -> Option<Self> {
         if selectors.is_empty() {
             return None;
         }
@@ -285,18 +277,18 @@ impl Selector {
         })
     }
 
-    pub fn nesting_work(&self, parent_work: usize) -> usize {
+    pub(crate) fn nesting_work(&self, parent_work: usize) -> usize {
         parent_work.saturating_mul(self.metrics.components)
     }
-    pub fn depth(&self) -> usize {
+    pub(crate) fn depth(&self) -> usize {
         self.metrics.depth
     }
-    pub fn resolved_depth(&self, parent: &Self) -> usize {
+    pub(crate) fn resolved_depth(&self, parent: &Self) -> usize {
         self.metrics.resolved(parent.metrics).depth
     }
 
     #[must_use]
-    pub fn resolve_parent(&self, parent: &Self) -> Self {
+    pub(crate) fn resolve_parent(&self, parent: &Self) -> Self {
         Self {
             selectors: self.selectors.replace_parent_selector(&parent.selectors),
             metrics: self.metrics.resolved(parent.metrics),
@@ -304,7 +296,7 @@ impl Selector {
     }
 
     #[must_use]
-    pub fn with_pseudo_element(&self, pseudo: GeneratedPseudoElement) -> Self {
+    pub(crate) fn with_pseudo_element(&self, pseudo: GeneratedPseudoElement) -> Self {
         let source = match pseudo {
             GeneratedPseudoElement::Before => "&::before",
             GeneratedPseudoElement::After => "&::after",
@@ -315,11 +307,12 @@ impl Selector {
         selector.resolve_parent(self)
     }
 
-    pub fn single_specificity(&self) -> Option<u32> {
+    pub(crate) fn single_specificity(&self) -> Option<u32> {
         let selectors = self.selectors.slice();
         (selectors.len() == 1).then(|| selectors[0].specificity())
     }
 
+    #[cfg(test)]
     pub(crate) fn matches(
         &self,
         element: Element<'_>,
@@ -413,7 +406,7 @@ impl Selector {
     }
 
     /// Origins and extra alias hops for a single selector's scope proximity.
-    pub fn scope_origins<'a>(
+    pub(crate) fn scope_origins<'a>(
         &self,
         element: Element<'a>,
         tree_context: TreeContext,
@@ -584,7 +577,7 @@ impl<'i> parser::Parser<'i> for StaticParser<'_> {
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub struct StaticSelector;
+pub(crate) struct StaticSelector;
 impl parser::SelectorImpl for StaticSelector {
     type AttrValue = CssString;
     type Identifier = CssLocalName;
@@ -599,7 +592,7 @@ impl parser::SelectorImpl for StaticSelector {
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub enum InactiveState {
+pub(crate) enum InactiveState {
     Hover,
     Active,
     Focus,
@@ -647,7 +640,7 @@ impl InactiveState {
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum StaticState {
+pub(crate) enum StaticState {
     Defined,
     Link,
     Target,
@@ -752,12 +745,12 @@ impl ToCss for StaticState {
 }
 
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
-pub enum GeneratedPseudoElement {
+pub(crate) enum GeneratedPseudoElement {
     Before,
     After,
 }
 impl GeneratedPseudoElement {
-    pub fn parse(name: &str) -> Option<Self> {
+    pub(crate) fn parse(name: &str) -> Option<Self> {
         if name.eq_ignore_ascii_case("before") {
             Some(Self::Before)
         } else if name.eq_ignore_ascii_case("after") {
@@ -956,7 +949,7 @@ impl SelectorElement for MatchingElement<'_> {
             },
             StaticState::Language(ranges) => ranges
                 .iter()
-                .any(|range| crate::language::matches(element.language(), range)),
+                .any(|range| crate::dom::language::matches(element.language(), range)),
             StaticState::Heading(levels) => element.heading_level().is_some_and(|level| {
                 levels
                     .as_ref()
@@ -1032,7 +1025,7 @@ impl SelectorElement for MatchingElement<'_> {
         !self.document
             && self.element.attr(PART_ATTRIBUTE).is_some_and(|parts| {
                 parts
-                    .split(crate::state::is_html_whitespace)
+                    .split(crate::dom::state::is_html_whitespace)
                     .any(|part| part == name.0.as_ref())
             })
     }
@@ -1043,10 +1036,9 @@ impl SelectorElement for MatchingElement<'_> {
                 .child_nodes(TreeRelation::Selector)
                 .any(|node| {
                     node.element().is_some()
-                        || node
-                            .value()
-                            .as_text()
-                            .is_some_and(|text| !text.chars().all(crate::state::is_html_whitespace))
+                        || node.value().as_text().is_some_and(|text| {
+                            !text.chars().all(crate::dom::state::is_html_whitespace)
+                        })
                 })
     }
     fn is_root(&self) -> bool {

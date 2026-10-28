@@ -4,11 +4,11 @@ use crate::document::{
     counters::{CounterSnapshot, Counters},
     navigation::FragmentIndex,
 };
+use crate::dom::{DocumentTree, Element, ElementId};
 use crate::style::{
     GeneratedContent, NamedStringRequest, PageStyleTarget, PseudoElement, Style, StyleError,
     TargetRequest, TargetValue,
 };
-use ferri_pdf_dom::{DocumentTree, Element, ElementId};
 use std::{
     cell::RefCell,
     collections::{HashMap, HashSet},

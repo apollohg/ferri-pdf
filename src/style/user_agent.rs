@@ -1,3 +1,4 @@
+use crate::dom::{Element, HTML_NAMESPACE, Node, QuirksMode, TreeRelation};
 use crate::style::{
     SourceLocation, StyleError,
     cascade::Origin,
@@ -6,7 +7,6 @@ use crate::style::{
     grammar::Property,
     parser::Declaration,
 };
-use ferri_pdf_dom::{Element, HTML_NAMESPACE, Node, QuirksMode, TreeRelation};
 use ferri_pdf_resources::ResourceBase;
 use std::sync::{Arc, OnceLock};
 
@@ -72,7 +72,7 @@ fn list_counter_hint(output: &mut Vec<PropertyDeclaration>, element: Element<'_>
     let reversed = element.name() == "ol" && element.attr("reversed").is_some();
     let value = element
         .attr(attribute)
-        .and_then(ferri_pdf_dom::integer_digits)
+        .and_then(crate::dom::integer_digits)
         .map(|(negative, digits)| {
             const DECIMAL_RADIX: i128 = 10;
             let value = digits.bytes().fold(0i128, |value, digit| {
@@ -209,7 +209,7 @@ fn embedded_hints(
     if tag == "iframe"
         && let Some(value) = element.attr("frameborder")
     {
-        let nonzero = ferri_pdf_dom::integer_digits(value)
+        let nonzero = crate::dom::integer_digits(value)
             .is_some_and(|(_, digits)| digits.bytes().any(|digit| digit != b'0'));
         if !nonzero {
             pixel_hint(output, Property::BorderWidth, Some(0.0))?;
@@ -262,7 +262,7 @@ fn bounded_number(value: &str) -> Option<f64> {
 
 /// HTML rules for parsing non-negative integers, including a sign and trailing garbage.
 pub(super) fn non_negative(value: &str) -> Option<f64> {
-    bounded_number(ferri_pdf_dom::non_negative_integer_digits(value)?)
+    bounded_number(crate::dom::non_negative_integer_digits(value)?)
 }
 
 /// HTML dimension parsing accepts a decimal prefix and an immediately following percent.
@@ -923,7 +923,7 @@ pub(super) fn declarations(
     }
     table_hints(&mut output, element)?;
     quirks(&mut output, element)?;
-    let bidi_rule = if element.input_type() == Some(ferri_pdf_dom::InputType::Text)
+    let bidi_rule = if element.input_type() == Some(crate::dom::InputType::Text)
         && element
             .attr("dir")
             .is_some_and(|value| value.eq_ignore_ascii_case("auto"))
@@ -937,7 +937,7 @@ pub(super) fn declarations(
         )?;
         static SPECIFICITY: OnceLock<u32> = OnceLock::new();
         let specificity = *SPECIFICITY.get_or_init(|| {
-            ferri_pdf_dom::Selector::parse("input[dir=auto i]")
+            crate::dom::Selector::parse("input[dir=auto i]")
                 .expect("the static UA input selector is valid")
                 .single_specificity()
                 .expect("one UA selector")

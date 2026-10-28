@@ -1,4 +1,4 @@
-use ferri_pdf_dom::{DocumentTree, Element, ElementId, TreeRelation};
+use crate::dom::{DocumentTree, Element, ElementId, TreeRelation};
 use std::{collections::HashMap, ops::Range};
 
 /// An element's logical position, independent of painted boxes and glyphs.

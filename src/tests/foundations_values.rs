@@ -1,6 +1,6 @@
 use super::common;
+use crate::dom::{DocumentTree, Selector};
 use crate::style::{LengthPercentage, Size, Style, StyleError, Stylesheet, StylesheetSource};
-use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_resources::{FileResolver, ResourceResolver};
 use std::fmt::Write;
 
@@ -53,7 +53,7 @@ fn computed_in(
         .next()
         .unwrap();
     let mut ancestors = element
-        .ancestors(ferri_pdf_dom::TreeRelation::Inheritance)
+        .ancestors(crate::dom::TreeRelation::Inheritance)
         .collect::<Vec<_>>();
     ancestors.reverse();
     let mut style = Style::default();
@@ -306,7 +306,7 @@ fn attribute_string_values_use_the_originating_element_without_css_unescaping() 
 fn attribute_names_keep_namespace_and_xml_case_sensitivity() {
     let document =
         roxmltree::Document::parse("<root xmlns:d='urn:data' d:Size='17pt' size='29pt'/>").unwrap();
-    let tree = ferri_pdf_dom::XmlTree::new(&document);
+    let tree = crate::dom::XmlTree::new(&document);
     let element = tree.element(document.root_element()).unwrap();
     let sheet = Stylesheet::parse(&[StylesheetSource{text:"@namespace d 'urn:data';root{width:attr(d|Size <length>);height:attr(size <length>);margin-left:attr(Size <length>,3pt);margin-right:attr(missing|Size <length>,4pt)}".into(),base:font_base()}]).unwrap();
     let style = sheet.computed(element, &Style::default()).unwrap();

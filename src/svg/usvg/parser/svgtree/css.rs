@@ -1,11 +1,11 @@
 // Copyright 2026 the ferri-pdf Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+use crate::dom::{DomError, MAX_COMPONENT_DEPTH, NamespaceMap, Selector, TreeScopeId, XmlTree};
 use cssparser::{
     AtRuleParser, CowRcStr, DeclarationParser, Delimiter, ParseError, Parser, ParserInput,
     ParserState, QualifiedRuleParser, RuleBodyItemParser, RuleBodyParser, StyleSheetParser, Token,
 };
-use ferri_pdf_dom::{DomError, MAX_COMPONENT_DEPTH, NamespaceMap, Selector, TreeScopeId, XmlTree};
 use std::cell::{Cell, RefCell};
 
 #[derive(Clone)]
@@ -241,7 +241,7 @@ impl<'i> AtRuleParser<'i> for Rules {
         input: &mut Parser<'i, 't>,
     ) -> Result<Self::Prelude, ParseError<'i, usize>> {
         if self.namespaces_allowed && name.eq_ignore_ascii_case("namespace") {
-            ferri_pdf_dom::parse_namespace(input).map_err(Into::into)
+            crate::dom::parse_namespace(input).map_err(Into::into)
         } else {
             Err(input.new_error(cssparser::BasicParseErrorKind::AtRuleInvalid(name)))
         }

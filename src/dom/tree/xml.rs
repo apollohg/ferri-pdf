@@ -1,5 +1,5 @@
 use super::{DocumentTree, Element, ElementId, TreeScopeId};
-use crate::{DomError, NodeData, Selector, SelectorScope, TreeContext, shadow::ShadowRoot};
+use crate::dom::{DomError, NodeData, Selector, SelectorScope, TreeContext, shadow::ShadowRoot};
 use html5ever::{Attribute, QualName};
 use roxmltree::{Document, Node, NodeType};
 use scraper::{Html, node};
@@ -12,7 +12,7 @@ const XML_PREFIX: &str = "xml";
 const XML_INSTANCE_NODES: &str = "XML instance nodes";
 
 /// Original XML nodes viewed through the shared static selector engine.
-pub struct XmlTree<'doc, 'input> {
+pub(crate) struct XmlTree<'doc, 'input> {
     source: &'doc Document<'input>,
     tree: DocumentTree,
     nodes: Vec<Option<ego_tree::NodeId>>,
@@ -22,7 +22,7 @@ pub struct XmlTree<'doc, 'input> {
 }
 
 impl<'doc, 'input> XmlTree<'doc, 'input> {
-    pub fn new(source: &'doc Document<'input>) -> Self {
+    pub(crate) fn new(source: &'doc Document<'input>) -> Self {
         let mut html = Html::new_document();
         let mut nodes = vec![Some(html.tree.root().id())];
         for source in source.descendants().skip(1) {
@@ -95,11 +95,12 @@ impl<'doc, 'input> XmlTree<'doc, 'input> {
         }
     }
 
-    pub fn element(&self, source: Node<'_, '_>) -> Option<Element<'_>> {
+    #[cfg(test)]
+    pub(crate) fn element(&self, source: Node<'_, '_>) -> Option<Element<'_>> {
         self.element_in(source, None)
     }
 
-    pub fn element_in(
+    pub(crate) fn element_in(
         &self,
         source: Node<'_, '_>,
         instance: Option<TreeScopeId>,
@@ -116,12 +117,13 @@ impl<'doc, 'input> XmlTree<'doc, 'input> {
         })
     }
 
-    pub fn matches(&self, source: Node<'_, '_>, selector: &Selector) -> bool {
+    #[cfg(test)]
+    pub(crate) fn matches(&self, source: Node<'_, '_>, selector: &Selector) -> bool {
         self.element(source)
             .is_some_and(|element| self.matches_element(element.id(), selector, None))
     }
 
-    pub fn matches_element(
+    pub(crate) fn matches_element(
         &self,
         element: ElementId,
         selector: &Selector,
@@ -138,7 +140,7 @@ impl<'doc, 'input> XmlTree<'doc, 'input> {
     }
 
     /// Clones one referenced subtree into a distinct shadow context at its actual host.
-    pub fn create_instance(
+    pub(crate) fn create_instance(
         &mut self,
         source: Node<'_, '_>,
         host: ElementId,
@@ -221,7 +223,7 @@ fn namespace_declarations<'a>(
         };
         // The parser rejects any other `xml` binding and omits it from in-scope namespaces.
         let uri = if prefix == Some(XML_PREFIX) {
-            crate::XML_NAMESPACE
+            crate::dom::XML_NAMESPACE
         } else {
             element.lookup_namespace_uri(prefix).unwrap_or_default()
         };

@@ -1,4 +1,4 @@
-use ferri_pdf_dom::{DocumentTree, Selector, non_negative_integer_digits};
+use crate::dom::{DocumentTree, Selector, non_negative_integer_digits};
 
 #[test]
 fn integer_digits_follow_html_sign_prefix_and_negative_zero_rules() {

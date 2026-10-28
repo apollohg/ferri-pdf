@@ -1,5 +1,5 @@
-use crate::state::is_html_whitespace;
-use crate::{
+use crate::dom::state::is_html_whitespace;
+use crate::dom::{
     Element, HTML_NAMESPACE, InitialState, SVG_NAMESPACE, TreeRelation, non_negative_integer_digits,
 };
 
@@ -87,7 +87,7 @@ pub(crate) fn initial_disabled(
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub enum InputType {
+pub(crate) enum InputType {
     Hidden,
     Text,
     Search,
@@ -168,7 +168,7 @@ fn html_element(element: Element<'_>, name: &str) -> bool {
 }
 
 impl Element<'_> {
-    pub fn input_type(self) -> Option<InputType> {
+    pub(crate) fn input_type(self) -> Option<InputType> {
         self.initial_state().input_type
     }
     fn tree_elements(self) -> impl Iterator<Item = Self> {
@@ -193,7 +193,7 @@ impl Element<'_> {
             .find(|element| html_element(*element, "form"))
     }
 
-    pub fn initially_checked(self) -> bool {
+    pub(crate) fn initially_checked(self) -> bool {
         if !html_element(self, "input") || self.attr("checked").is_none() {
             return false;
         }
@@ -219,7 +219,7 @@ impl Element<'_> {
         }
     }
 
-    pub fn initial_selected_options(self) -> Vec<Self> {
+    pub(crate) fn initial_selected_options(self) -> Vec<Self> {
         if !html_element(self, "select") {
             return Vec::new();
         }
@@ -285,7 +285,7 @@ impl Element<'_> {
         options
     }
 
-    pub fn option_value(self) -> Option<String> {
+    pub(crate) fn option_value(self) -> Option<String> {
         if !html_element(self, "option") {
             return None;
         }
@@ -320,7 +320,7 @@ impl Element<'_> {
         )
     }
 
-    pub fn is_blank_control(self) -> bool {
+    pub(crate) fn is_blank_control(self) -> bool {
         if self.namespace() != HTML_NAMESPACE {
             return false;
         }

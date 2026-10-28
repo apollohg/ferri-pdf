@@ -1,7 +1,7 @@
 //! Document metadata from the HTML head (HTML §4.2.2, §4.2.5.1, §4.2.5.2) and the root
 //! element's language (HTML §3.2.6.2).
 use crate::document::content::collapse;
-use ferri_pdf_dom::{DocumentTree, HTML_NAMESPACE};
+use crate::dom::{DocumentTree, HTML_NAMESPACE};
 
 const TITLE_ELEMENT: &str = "title";
 const META_ELEMENT: &str = "meta";

@@ -282,7 +282,7 @@ impl<'a> FontBasis<'a> {
 pub(crate) enum Tree<'a> {
     None,
     Root,
-    Element(ferri_pdf_dom::Element<'a>),
+    Element(crate::dom::Element<'a>),
 }
 impl Tree<'_> {
     pub(crate) fn siblings(self) -> Option<(usize, usize)> {
@@ -291,7 +291,7 @@ impl Tree<'_> {
             Self::None => None,
             Self::Root => Some(ROOT_POSITION),
             Self::Element(element) => {
-                Some(element.sibling_position(ferri_pdf_dom::TreeRelation::Inheritance))
+                Some(element.sibling_position(crate::dom::TreeRelation::Inheritance))
             }
         }
     }

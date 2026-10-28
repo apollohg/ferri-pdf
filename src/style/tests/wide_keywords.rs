@@ -1,8 +1,8 @@
+use crate::dom::{DocumentTree, Selector};
 use crate::style::{
     Display, LengthPercentage, Size, Style, Stylesheet, StylesheetSource, TableLayout,
     VerticalAlign, WhiteSpace,
 };
-use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_resources::FileResolver;
 
 fn styles(css: &str, html: &str) -> (Style, Style) {

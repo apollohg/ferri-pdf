@@ -298,7 +298,7 @@ impl GeneratedContent {
     }
     pub(crate) fn element_text_with_quotes(
         &self,
-        element: ferri_pdf_dom::Element<'_>,
+        element: crate::dom::Element<'_>,
         limit: usize,
         quotes: &Quotes,
         depth: &mut QuoteDepth,

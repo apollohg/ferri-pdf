@@ -1,26 +1,26 @@
 use super::common;
 
+use crate::dom::{
+    DocumentTree, HTML_NAMESPACE, MATHML_NAMESPACE, NodeData, QuirksMode, SVG_NAMESPACE, Selector,
+    TreeRelation,
+};
 use crate::{
     Resource, ResourceBase, ResourceError, ResourceResolver, render_html, render_with_resolver,
 };
 use common::{assert_pt, local_options};
-use ferri_pdf_dom::{
-    DocumentTree, HTML_NAMESPACE, MATHML_NAMESPACE, NodeData, QuirksMode, SVG_NAMESPACE, Selector,
-    TreeRelation,
-};
 use std::cell::Cell;
 
-fn select<'a>(tree: &'a DocumentTree, selector: &str) -> ferri_pdf_dom::Element<'a> {
+fn select<'a>(tree: &'a DocumentTree, selector: &str) -> crate::dom::Element<'a> {
     tree.select(&Selector::parse(selector).unwrap())
         .next()
         .unwrap()
 }
 
-fn formatting_element<'a>(tree: &'a DocumentTree, id: &str) -> ferri_pdf_dom::Element<'a> {
+fn formatting_element<'a>(tree: &'a DocumentTree, id: &str) -> crate::dom::Element<'a> {
     tree.root_element()
         .as_node()
         .inclusive_descendants(TreeRelation::Formatting)
-        .filter_map(ferri_pdf_dom::Node::element)
+        .filter_map(crate::dom::Node::element)
         .find(|element| element.attr("id") == Some(id))
         .expect("the composed formatting tree contains the requested shadow element")
 }
@@ -81,14 +81,14 @@ fn declarative_shadow_slots_preserve_three_relationships() {
     );
     assert_eq!(
         host.children(TreeRelation::Formatting)
-            .map(ferri_pdf_dom::Element::id)
+            .map(crate::dom::Element::id)
             .collect::<Vec<_>>(),
         [shadow.id()]
     );
     assert_eq!(
         named
             .children(TreeRelation::Formatting)
-            .map(ferri_pdf_dom::Element::id)
+            .map(crate::dom::Element::id)
             .collect::<Vec<_>>(),
         [assigned.id()],
         "slot projection retains original light-node identity"
@@ -320,7 +320,7 @@ fn excessive_shadow_nesting_returns_an_html_tree_error() {
             matches!(
                 error,
                 Some(crate::Error::Html(crate::document::DocumentError::Tree(
-                    ferri_pdf_dom::DomError::TreeLimit {
+                    crate::dom::DomError::TreeLimit {
                         resource: "shadow tree nesting",
                         limit: 64
                     }
@@ -432,7 +432,7 @@ fn scripting_disabled_noscript_and_template_parse_correctly() {
     assert!(contents.parent(TreeRelation::Selector).is_none());
     let inside = contents
         .children(TreeRelation::Selector)
-        .filter_map(ferri_pdf_dom::Node::element)
+        .filter_map(crate::dom::Node::element)
         .find(|element| element.attr("id") == Some("inside"))
         .unwrap();
     assert!(inside.parent(TreeRelation::Selector).is_none());
@@ -458,7 +458,7 @@ fn ordinary_tree_relations_preserve_existing_rendering() {
         assert_eq!(
             child
                 .children(relation)
-                .map(ferri_pdf_dom::Element::name)
+                .map(crate::dom::Element::name)
                 .collect::<Vec<_>>(),
             ["em"]
         );
@@ -525,7 +525,7 @@ fn language_and_direction_use_dom_parents_while_css_inherits_through_slots() {
     );
     assert_eq!(
         assigned.directionality(),
-        ferri_pdf_dom::Directionality::Ltr,
+        crate::dom::Directionality::Ltr,
         "HTML directionality must retain the light-tree parent even though CSS direction inherits through the slot"
     );
     assert_eq!(
@@ -539,19 +539,19 @@ fn automatic_direction_scans_dom_text_and_uses_shadow_slot_host_direction() {
     let host=DocumentTree::parse("<!doctype html><div id=host dir=auto><template shadowrootmode=open><p>Latin shadow text</p><slot></slot></template><span>אב</span></div>").unwrap();
     assert_eq!(
         select(&host, "#host").directionality(),
-        ferri_pdf_dom::Directionality::Rtl,
+        crate::dom::Directionality::Rtl,
         "shadow text must not replace the host's own descendant text in dir=auto discovery"
     );
     let fallback=DocumentTree::parse("<!doctype html><div dir=rtl><template shadowrootmode=open><p id=automatic dir=auto><slot>Latin fallback</slot></p></template></div>").unwrap();
     assert_eq!(
         formatting_element(&fallback, "automatic").directionality(),
-        ferri_pdf_dom::Directionality::Rtl,
+        crate::dom::Directionality::Rtl,
         "a descendant slot in a shadow tree contributes its host direction before scanning fallback text"
     );
     let assigned=DocumentTree::parse("<!doctype html><div><template shadowrootmode=open><p><slot id=automatic dir=auto></slot></p></template><span dir=ltr>Latin isolated</span><span>אב</span></div>").unwrap();
     assert_eq!(
         formatting_element(&assigned, "automatic").directionality(),
-        ferri_pdf_dom::Directionality::Rtl,
+        crate::dom::Directionality::Rtl,
         "slot auto direction must use assigned nodes and exclude a directionally isolated assigned root"
     );
 }

@@ -1,5 +1,5 @@
+use crate::dom::{DocumentTree, Selector};
 use crate::style::{Page, PageRequest, PageSide, Style, Stylesheet, StylesheetSource};
-use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_resources::FileResolver;
 
 const TOLERANCE_PT: f32 = 0.001;

@@ -1,4 +1,4 @@
-use crate::{Element, HTML_NAMESPACE};
+use crate::dom::{Element, HTML_NAMESPACE};
 
 const HEADING_TAGS: &[&str] = &["h1", "h2", "h3", "h4", "h5", "h6"];
 const FIRST_HEADING_LEVEL: u8 = 1;
@@ -8,13 +8,13 @@ const HEADING_OFFSET: &str = "headingoffset";
 const HEADING_RESET: &str = "headingreset";
 
 /// The digit prefix of an HTML non-negative integer, with its sign validated.
-pub fn non_negative_integer_digits(value: &str) -> Option<&str> {
+pub(crate) fn non_negative_integer_digits(value: &str) -> Option<&str> {
     let (negative, digits) = integer_digits(value)?;
     (!negative || digits.bytes().all(|digit| digit == b'0')).then_some(digits)
 }
 
 /// The `(negative, digits)` prefix of an HTML integer, without a numeric size limit.
-pub fn integer_digits(value: &str) -> Option<(bool, &str)> {
+pub(crate) fn integer_digits(value: &str) -> Option<(bool, &str)> {
     let value = value.trim_start_matches(|ch: char| ch.is_ascii_whitespace());
     let (negative, value) = if let Some(value) = value.strip_prefix('-') {
         (true, value)
@@ -27,7 +27,7 @@ pub fn integer_digits(value: &str) -> Option<(bool, &str)> {
 }
 
 impl Element<'_> {
-    pub fn has_rel(self, token: &str) -> bool {
+    pub(crate) fn has_rel(self, token: &str) -> bool {
         self.attr("rel").is_some_and(|value| {
             value
                 .split_ascii_whitespace()
@@ -36,7 +36,7 @@ impl Element<'_> {
     }
 
     /// HTML computed heading level, including inclusive offsets and reset boundaries.
-    pub fn heading_level(self) -> Option<u8> {
+    pub(crate) fn heading_level(self) -> Option<u8> {
         if self.namespace() != HTML_NAMESPACE {
             return None;
         }
@@ -70,7 +70,7 @@ impl Element<'_> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{DocumentTree, Selector, XmlTree};
+    use crate::dom::{DocumentTree, Selector, XmlTree};
 
     #[test]
     fn css_attribute_lookup_respects_html_foreign_and_xml_name_rules() {
@@ -100,7 +100,7 @@ mod tests {
         const ATTRIBUTE_NAMESPACE: &str = "urn:data";
         let source = format!(
             "<root xmlns='{}' xmlns:d='{ATTRIBUTE_NAMESPACE}' d:Size='17pt' Size='29pt' size='31pt'/>",
-            crate::HTML_NAMESPACE
+            crate::dom::HTML_NAMESPACE
         );
         let document = roxmltree::Document::parse(&source).unwrap();
         let xml = XmlTree::new(&document);

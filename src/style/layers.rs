@@ -1,5 +1,5 @@
+use crate::dom::TreeScopeId;
 use crate::style::cascade::Origin;
-use ferri_pdf_dom::TreeScopeId;
 use std::{
     cmp::Reverse,
     collections::{BTreeMap, HashMap},

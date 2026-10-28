@@ -1,8 +1,8 @@
-use ferri_pdf_dom::{Selector, XmlTree};
+use crate::dom::{Selector, XmlTree};
 
 #[test]
 fn xml_instance_initial_semantics_use_each_host_and_keep_source_state() {
-    use ferri_pdf_dom::Directionality;
+    use crate::dom::Directionality;
     const INSTANCE_NODE_LIMIT: usize = 64;
     let source = roxmltree::Document::parse("<svg xmlns='http://www.w3.org/2000/svg' xmlns:h='http://www.w3.org/1999/xhtml' xml:lang='en'><h:div xml:lang='fr' dir='rtl'><g id='source'><text id='inherited'/><text id='explicit' xml:lang='de'/></g></h:div><h:div id='first' xml:lang='tr' dir='ltr'/><h:div id='second' xml:lang='ja' dir='rtl'/></svg>").unwrap();
     let find = |id| {
@@ -96,7 +96,7 @@ fn xml_text_nodes_and_html_language_pragmas_keep_their_defined_semantics() {
     assert_eq!(
         tree.element(groups[0])
             .unwrap()
-            .child_nodes(ferri_pdf_dom::TreeRelation::Selector)
+            .child_nodes(crate::dom::TreeRelation::Selector)
             .count(),
         2
     );
@@ -104,7 +104,7 @@ fn xml_text_nodes_and_html_language_pragmas_keep_their_defined_semantics() {
 
 #[test]
 fn xml_instances_preserve_source_identity_with_bounded_distinct_shadow_scopes() {
-    use ferri_pdf_dom::{DomError, TreeRelation};
+    use crate::dom::{DomError, TreeRelation};
     const INSTANCE_NODES: usize = 3;
     let source = roxmltree::Document::parse(
         "<svg><g class='outside'><g id='branch'><g/><rect id='target'/></g></g><use id='first'/><use id='second'/></svg>",
@@ -200,7 +200,7 @@ fn xml_instances_preserve_source_identity_with_bounded_distinct_shadow_scopes() 
 
 #[test]
 fn tree_counting_positions_are_invalidated_when_an_xml_instance_changes_the_flat_tree() {
-    use ferri_pdf_dom::TreeRelation;
+    use crate::dom::TreeRelation;
     const INSTANCE_NODE_LIMIT: usize = 32;
     let source = roxmltree::Document::parse("<svg><defs><g id='source'><rect/><circle/></g></defs><use id='host'><fallback/><fallback/></use></svg>").unwrap();
     let root = source.root_element();

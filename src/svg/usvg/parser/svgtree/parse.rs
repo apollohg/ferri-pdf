@@ -256,7 +256,7 @@ pub(crate) fn parse_svg_element<'input>(
     tag_name: EId,
     style_sheet: &StyleSheet,
     ignore_ids: bool,
-    host_instance: Option<ferri_pdf_dom::TreeScopeId>,
+    host_instance: Option<crate::dom::TreeScopeId>,
     doc: &mut Document<'input>,
 ) -> Result<NodeId, Error> {
     let attrs_start_idx = doc.attrs.len();

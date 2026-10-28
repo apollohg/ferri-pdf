@@ -250,7 +250,7 @@ impl Cascaded {
                 DeclarationContext {
                     origin: Origin::UserAgent,
                     attached: false,
-                    encapsulation_order: ferri_pdf_dom::DOCUMENT_CONTEXT_ORDER,
+                    encapsulation_order: crate::dom::DOCUMENT_CONTEXT_ORDER,
                     layer: LayerId::Unlayered,
                     specificity: crate::style::user_agent::CONDITIONAL_SPECIFICITY,
                     scope_proximity: None,
@@ -289,7 +289,7 @@ pub(super) fn cascade<'a>(
             &mut values,
             declaration,
             DeclarationContext {
-                encapsulation_order: ferri_pdf_dom::DOCUMENT_CONTEXT_ORDER,
+                encapsulation_order: crate::dom::DOCUMENT_CONTEXT_ORDER,
                 origin: declaration.origin,
                 attached: false,
                 layer: declaration.layer,

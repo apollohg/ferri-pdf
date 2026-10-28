@@ -1,8 +1,8 @@
 //! Hyperlinks and their same-document targets (HTML §4.6.4, §7.4.6.4) and bookmarks
 //! (CSS GCPM 3 §4), located later by the boxes that carry them.
 use crate::document::{DocumentError, MAX_INLINE_TEXT_BYTES, content::element_text};
+use crate::dom::{DocumentTree, Element, ElementId};
 use crate::style::{GeneratedContent, PseudoElement, QuoteDepth, Quotes, Style};
-use ferri_pdf_dom::{DocumentTree, Element, ElementId};
 use ferri_pdf_resources::{ResourceBase, Url};
 
 use std::collections::{BTreeMap, HashMap};
@@ -470,7 +470,7 @@ mod target_tests {
             document
                 .element(target)
                 .unwrap()
-                .text_in(ferri_pdf_dom::TreeRelation::Formatting)
+                .text_in(crate::dom::TreeRelation::Formatting)
                 .collect::<String>(),
             "First"
         );

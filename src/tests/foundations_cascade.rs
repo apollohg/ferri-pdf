@@ -1,9 +1,9 @@
 use super::common;
 
+use crate::dom::{DocumentTree, Element, Selector, TreeRelation};
 use crate::style::{Display, LengthPercentage, Size, Style, Stylesheet, StylesheetSource};
 use crate::{render_bytes, render_html};
 use common::{PROFILE, assert_pt, local_options};
-use ferri_pdf_dom::{DocumentTree, Element, Selector, TreeRelation};
 
 fn sheet(author: &str, user: &str) -> Stylesheet {
     let source = |text: &str| StylesheetSource {

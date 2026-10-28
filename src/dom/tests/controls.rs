@@ -1,4 +1,4 @@
-use ferri_pdf_dom::{DocumentTree, Selector, XmlTree};
+use crate::dom::{DocumentTree, Selector, XmlTree};
 
 #[test]
 fn initial_selection_uses_the_defined_option_list_and_local_disabled_state() {

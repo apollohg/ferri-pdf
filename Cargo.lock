@@ -599,19 +599,21 @@ dependencies = [
  "cssparser",
  "cssparser-color",
  "data-url",
+ "ego-tree",
  "encoding_rs",
  "ferri-pdf-avif-decode",
- "ferri-pdf-dom",
  "ferri-pdf-heic-decoder",
  "ferri-pdf-icu-casemap",
  "ferri-pdf-krilla",
  "ferri-pdf-paint",
  "ferri-pdf-resources",
+ "ferri-pdf-selectors",
  "ferri-pdf-spec-data",
  "ferri-pdf-zenavif-parse",
  "flate2",
  "fontdb",
  "gif",
+ "html5ever",
  "icu_locale_core",
  "icu_properties",
  "image",
@@ -626,6 +628,7 @@ dependencies = [
  "roxmltree",
  "rustybuzz",
  "same-file",
+ "scraper",
  "serde",
  "serde_json",
  "siphasher",
@@ -642,6 +645,7 @@ dependencies = [
  "unicode-script",
  "unicode-segmentation",
  "unicode-vo",
+ "url",
  "xmlwriter",
  "zune-jpeg",
 ]
@@ -657,23 +661,6 @@ dependencies = [
  "rav1d",
  "rgb",
  "yuv",
-]
-
-[[package]]
-name = "ferri-pdf-dom"
-version = "0.1.0"
-dependencies = [
- "cssparser",
- "ego-tree",
- "ferri-pdf-selectors",
- "ferri-pdf-spec-data",
- "html5ever",
- "icu_properties",
- "percent-encoding",
- "roxmltree",
- "scraper",
- "thiserror",
- "url",
 ]
 
 [[package]]

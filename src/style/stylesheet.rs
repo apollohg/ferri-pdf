@@ -43,7 +43,7 @@ pub(super) struct StyleRule {
     pub(super) selectors: Vec<RuleSelector>,
     pub(super) declarations: Vec<PropertyDeclaration>,
     pub(super) scope: Option<usize>,
-    pub(super) tree_context: ferri_pdf_dom::TreeContext,
+    pub(super) tree_context: crate::dom::TreeContext,
     pub(super) encapsulation_order: usize,
 }
 
@@ -67,7 +67,7 @@ pub(crate) struct Stylesheet {
     pub(super) page_padding: [f32; 4],
     pub(super) page_border: [f32; 4],
     pub fonts: FontBook,
-    font_namespaces: HashMap<ferri_pdf_dom::TreeScopeId, FontNamespace>,
+    font_namespaces: HashMap<crate::dom::TreeScopeId, FontNamespace>,
 }
 
 /// Declarations with relative `url()`s resolved against the declaring stylesheet.
@@ -292,7 +292,7 @@ impl Stylesheet {
     }
 
     pub(crate) fn prepare(
-        tree: &ferri_pdf_dom::DocumentTree,
+        tree: &crate::dom::DocumentTree,
         sources: &crate::style::StylesheetSources,
         resolver: &dyn ResourceResolver,
         settings: &PrintSettings,
@@ -319,7 +319,7 @@ impl Stylesheet {
     fn from_prepared(
         prepared: PreparedStylesheets,
         settings: &PrintSettings,
-        tree: Option<&ferri_pdf_dom::DocumentTree>,
+        tree: Option<&crate::dom::DocumentTree>,
     ) -> Result<Self, StyleError> {
         let PreparedStylesheets {
             all,
@@ -502,10 +502,7 @@ impl Stylesheet {
         std::mem::take(self.diagnostics.get_mut())
     }
 
-    pub(super) fn font_namespace(
-        &self,
-        scope: Option<ferri_pdf_dom::TreeScopeId>,
-    ) -> FontNamespace {
+    pub(super) fn font_namespace(&self, scope: Option<crate::dom::TreeScopeId>) -> FontNamespace {
         scope
             .and_then(|scope| self.font_namespaces.get(&scope))
             .copied()

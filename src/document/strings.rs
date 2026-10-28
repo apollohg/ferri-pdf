@@ -3,8 +3,8 @@ use crate::document::{
     content::ElementText,
     counters::{CounterSnapshot, Counters},
 };
+use crate::dom::{DocumentTree, Element, ElementId};
 use crate::style::{GeneratedContent, PseudoElement, StringAssignment, StyleError};
-use ferri_pdf_dom::{DocumentTree, Element, ElementId};
 use std::{collections::HashMap, sync::Arc};
 
 /// Assignments at one element's semantic position, before their page is known.

@@ -1,7 +1,5 @@
 //! Standalone XML for `<svg>` elements embedded in HTML, so they share the SVG image pipeline.
-use ferri_pdf_dom::{
-    Element, NodeData, SVG_NAMESPACE, TreeRelation, XLINK_NAMESPACE, XML_NAMESPACE,
-};
+use crate::dom::{Element, NodeData, SVG_NAMESPACE, TreeRelation, XLINK_NAMESPACE, XML_NAMESPACE};
 use std::fmt::Write;
 
 /// Serializes the element's subtree as an SVG document with explicit namespaces.
@@ -64,7 +62,7 @@ fn escape(xml: &mut String, text: &str, attribute: bool) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use ferri_pdf_dom::{DocumentTree, Selector};
+    use crate::dom::{DocumentTree, Selector};
 
     #[test]
     fn html_parsed_svg_becomes_namespaced_xml_without_undeclared_prefixes() {

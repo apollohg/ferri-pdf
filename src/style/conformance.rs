@@ -1,6 +1,7 @@
 //! Conformance of the engine to the CSS specification data in `spec/css`: grammars accept
 //! generated valid values and reject invalid mutations, initial values compute to the
 //! engine's defaults, inheritance follows the data, and every other property is rejected.
+use crate::dom::{DocumentTree, Selector};
 use crate::style::{
     Style, StyleError, Stylesheet, StylesheetSource,
     component::Component,
@@ -11,7 +12,6 @@ use crate::style::{
     },
     properties::computed,
 };
-use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_resources::FileResolver;
 use std::collections::{BTreeMap, BTreeSet};
 

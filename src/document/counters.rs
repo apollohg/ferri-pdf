@@ -375,7 +375,7 @@ impl Counters {
     pub(crate) fn prepare(
         &mut self,
         properties: &CounterProperties,
-        document: &ferri_pdf_dom::DocumentTree,
+        document: &crate::dom::DocumentTree,
         sheet: &crate::style::Stylesheet,
         root: &crate::style::Style,
         resolver: &dyn ferri_pdf_resources::ResourceResolver,
@@ -402,15 +402,15 @@ impl Counters {
     }
     pub(crate) fn visit_hidden(
         &mut self,
-        element: ferri_pdf_dom::Element<'_>,
+        element: crate::dom::Element<'_>,
         styles: &dyn crate::style::PageSelection,
         mut visit: impl FnMut(
-            ferri_pdf_dom::Element<'_>,
+            crate::dom::Element<'_>,
             &[crate::style::StringAssignment],
             &mut Self,
         ) -> Result<(), StyleError>,
     ) -> Result<(), StyleError> {
-        use ferri_pdf_dom::TreeRelation;
+        use crate::dom::TreeRelation;
         let mut events = vec![Some(element)];
         while let Some(event) = events.pop() {
             self.charge(1)?;
@@ -435,7 +435,7 @@ impl Counters {
     }
 
     pub(crate) fn at(
-        document: &ferri_pdf_dom::DocumentTree,
+        document: &crate::dom::DocumentTree,
         styles: &dyn crate::style::PageSelection,
         wanted: PageStyleTarget,
         work: Rc<Cell<usize>>,
@@ -448,12 +448,12 @@ impl Counters {
     }
     fn walk(
         self,
-        document: &ferri_pdf_dom::DocumentTree,
+        document: &crate::dom::DocumentTree,
         styles: &dyn crate::style::PageSelection,
         wanted: Option<PageStyleTarget>,
     ) -> Result<Self, StyleError> {
+        use crate::dom::{Element, TreeRelation};
         use crate::style::{Display, PseudoElement};
-        use ferri_pdf_dom::{Element, TreeRelation};
         enum Event<'a> {
             Element(Element<'a>, Option<Display>),
             Pseudo(Element<'a>, PseudoElement, Display),
@@ -628,7 +628,7 @@ mod tests {
 
     #[test]
     fn independent_counter_scans_share_the_selection_work_limit() {
-        let document = ferri_pdf_dom::DocumentTree::parse("<p>Counter scans</p>").unwrap();
+        let document = crate::dom::DocumentTree::parse("<p>Counter scans</p>").unwrap();
         let target = PageStyleTarget {
             element: document.root_element().id(),
             pseudo: None,

@@ -1,3 +1,4 @@
+use crate::dom::{DocumentTree, ElementId, HTML_NAMESPACE, QuirksMode, TreeScopeId};
 use crate::style::{
     PrintSettings, SourceLocation, StyleDiagnostic, StyleDiagnosticKind, StyleError,
     cascade::Origin,
@@ -9,7 +10,6 @@ use crate::style::{
     parser::{ContentRule, ImportRule, Rule, rules},
     print::PrintEnvironment,
 };
-use ferri_pdf_dom::{DocumentTree, ElementId, HTML_NAMESPACE, QuirksMode, TreeScopeId};
 use ferri_pdf_resources::{
     CSS_MEDIA_TYPE, ResolvedResource, ResourceBase, ResourceError, ResourceResolver, Url,
 };
@@ -367,7 +367,7 @@ impl<'a> Loader<'a> {
         let owner = owner.and_then(|owner| self.tree.element(owner));
         let tree_scope = owner
             .filter(|owner| !owner.is_in_document_tree())
-            .map(ferri_pdf_dom::Element::tree_scope);
+            .map(crate::dom::Element::tree_scope);
         let scope = self.root(origin, tree_scope);
         let (slot, selection) = if let Some(element) = owner.filter(|_| origin == Origin::Author) {
             let condition = self.condition(None, None, RuleQuery::Constant(true));
@@ -402,12 +402,12 @@ impl<'a> Loader<'a> {
             implicit_root: owner
                 .and_then(|owner| {
                     owner
-                        .parent(ferri_pdf_dom::TreeRelation::Selector)
+                        .parent(crate::dom::TreeRelation::Selector)
                         .or_else(|| owner.shadow_host())
                 })
-                .map(ferri_pdf_dom::Element::id),
+                .map(crate::dom::Element::id),
             tree_scope,
-            encapsulation_order: owner.map_or(ferri_pdf_dom::DOCUMENT_CONTEXT_ORDER, |owner| {
+            encapsulation_order: owner.map_or(crate::dom::DOCUMENT_CONTEXT_ORDER, |owner| {
                 owner.encapsulation_order()
             }),
         };
@@ -973,8 +973,8 @@ pub(super) fn inline(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::dom::DocumentTree;
     use crate::style::{PrintSettings, StyleError};
-    use ferri_pdf_dom::DocumentTree;
     use ferri_pdf_resources::{
         FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver, Url,
     };
@@ -1001,8 +1001,8 @@ mod tests {
     }
     #[test]
     fn visual_hebrew_ua_rules_preserve_control_exceptions_and_selector_specificity() {
+        use crate::dom::Selector;
         use crate::style::{Style, Stylesheet, UnicodeBidi};
-        use ferri_pdf_dom::Selector;
         let tree = DocumentTree::parse("<!doctype html><p id=paragraph></p><span id=inline></span><math><mi id=foreign>x</mi></math><svg><a id=foreign-link href='https://example.test'>Link</a></svg><input id=text dir=auto><input id=unknown type=unknown dir=auto><input id=email type=email dir=auto><input id=submit type=SUBMIT><input id=reset type=reset dir=auto><input id=button type=button><textarea id=textarea></textarea><textarea id=auto dir=auto></textarea><pre id=pre dir=auto></pre><bdo id=override dir=rtl></bdo><bdi id=isolate></bdi><bdi id=directed dir=auto></bdi>").unwrap();
         let sources = StylesheetSources {
             document_encoding: VISUAL_HEBREW_ENCODING.into(),

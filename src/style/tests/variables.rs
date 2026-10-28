@@ -1,5 +1,5 @@
+use crate::dom::{DocumentTree, Selector};
 use crate::style::{LengthPercentage, Style, Stylesheet, StylesheetSource};
-use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_resources::FileResolver;
 use std::fmt::Write;
 

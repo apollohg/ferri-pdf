@@ -1,3 +1,4 @@
+use crate::dom::Element;
 use crate::fonts::{
     DEFAULT_FAMILY, FontFamily, FontId, FontSelection, FontSlant, FontStyle, FontSynthesis,
     FontWeight, FontWidth,
@@ -13,7 +14,6 @@ use crate::style::{
     units::{Faces, FontBasis, Line, Relative, Tree, Viewport},
 };
 use cssparser::{Parser, ParserInput};
-use ferri_pdf_dom::Element;
 use ferri_pdf_paint::{BoxDecoration, Color};
 use ferri_pdf_resources::ResourceResolver;
 use std::sync::Arc;
@@ -38,15 +38,15 @@ fn adjust_box_generation(style: &mut Style, element: Element<'_>) {
     if style.display != Display::Contents {
         return;
     }
-    let parent = element.parent(ferri_pdf_dom::TreeRelation::Selector);
-    if (element.namespace() == ferri_pdf_dom::HTML_NAMESPACE
+    let parent = element.parent(crate::dom::TreeRelation::Selector);
+    if (element.namespace() == crate::dom::HTML_NAMESPACE
         && CONTENTS_HIDDEN_HTML.contains(&element.name()))
-        || element.namespace() == ferri_pdf_dom::MATHML_NAMESPACE
-        || (element.namespace() == ferri_pdf_dom::SVG_NAMESPACE
+        || element.namespace() == crate::dom::MATHML_NAMESPACE
+        || (element.namespace() == crate::dom::SVG_NAMESPACE
             && (!CONTENTS_SVG_CONTAINERS.contains(&element.name())
                 || (element.name() == "svg"
                     && parent
-                        .is_none_or(|parent| parent.namespace() != ferri_pdf_dom::SVG_NAMESPACE))))
+                        .is_none_or(|parent| parent.namespace() != crate::dom::SVG_NAMESPACE))))
     {
         style.display = Display::None;
     }
@@ -476,7 +476,7 @@ impl Stylesheet {
         // The page context inherits the root's computed values even without a root box.
         if style.display == Display::None
             && element
-                .parent(ferri_pdf_dom::TreeRelation::Inheritance)
+                .parent(crate::dom::TreeRelation::Inheritance)
                 .is_some()
         {
             return Ok(style);
@@ -494,7 +494,7 @@ impl Stylesheet {
         style.element_font_namespace = self.font_namespace(Some(element.tree_scope()));
         style.document_root = element.is_in_document_tree()
             && element
-                .parent(ferri_pdf_dom::TreeRelation::Inheritance)
+                .parent(crate::dom::TreeRelation::Inheritance)
                 .is_none();
         style.item_parent = parent.display.is_item_container()
             || (parent.display == Display::Contents && parent.item_parent);
@@ -514,7 +514,7 @@ impl Stylesheet {
                     encapsulation_order: if declaration.origin == Origin::AuthorHint {
                         element.encapsulation_order()
                     } else {
-                        ferri_pdf_dom::DOCUMENT_CONTEXT_ORDER
+                        crate::dom::DOCUMENT_CONTEXT_ORDER
                     },
                     origin: declaration.origin,
                     attached: false,
@@ -529,7 +529,7 @@ impl Stylesheet {
                 },
             );
         }
-        if element.namespace() == ferri_pdf_dom::HTML_NAMESPACE && element.name() == "th" {
+        if element.namespace() == crate::dom::HTML_NAMESPACE && element.name() == "th" {
             cascaded.header_alignment(self.font_namespace(Some(element.tree_scope())));
         }
         if let Some(inline) = element.attr("style") {
@@ -692,7 +692,7 @@ impl Stylesheet {
                 &mut winners,
                 &declaration,
                 DeclarationContext {
-                    encapsulation_order: ferri_pdf_dom::DOCUMENT_CONTEXT_ORDER,
+                    encapsulation_order: crate::dom::DOCUMENT_CONTEXT_ORDER,
                     origin: declaration.origin,
                     attached: false,
                     layer: declaration.layer,

@@ -415,7 +415,7 @@ fn layer_name<'i>(
     Ok(name)
 }
 
-pub(super) use ferri_pdf_dom::MAX_COMPONENT_DEPTH;
+pub(super) use crate::dom::MAX_COMPONENT_DEPTH;
 
 pub(super) fn balanced_components(source: &str) -> Result<bool, StyleError> {
     let mut pending = vec![(source, 0)];
@@ -858,7 +858,7 @@ fn at_prelude<'i>(
         return import_prelude(input, namespaces).map(AtPrelude::Import);
     }
     if matches!(kind, AtRuleName::Namespace) {
-        let (prefix, namespace) = ferri_pdf_dom::parse_namespace(input)?;
+        let (prefix, namespace) = crate::dom::parse_namespace(input)?;
         return Ok(AtPrelude::Namespace(prefix, namespace));
     }
     if matches!(kind, AtRuleName::Else)
@@ -1283,7 +1283,7 @@ mod tests {
             }]);
             if allowed {
                 let sheet = result.expect("a selector at the inclusive resolved limit parses");
-                let tree = ferri_pdf_dom::DocumentTree::parse("<!doctype html><html class=item>")
+                let tree = crate::dom::DocumentTree::parse("<!doctype html><html class=item>")
                     .expect("parse test HTML");
                 let style = sheet
                     .computed(tree.root_element(), &crate::style::Style::default())
@@ -1316,7 +1316,7 @@ mod tests {
             base: Default::default(),
         }])
         .expect("the existing component-depth limit remains usable");
-        let tree = ferri_pdf_dom::DocumentTree::parse("<!doctype html><html class=item>")
+        let tree = crate::dom::DocumentTree::parse("<!doctype html><html class=item>")
             .expect("parse test HTML");
         let style = sheet
             .computed(tree.root_element(), &crate::style::Style::default())
@@ -1341,7 +1341,7 @@ mod tests {
             }]);
             if allowed {
                 let sheet = result.expect("scope groups at the inclusive bound parse");
-                let tree = ferri_pdf_dom::DocumentTree::parse("<!doctype html><p>Scoped</p>")
+                let tree = crate::dom::DocumentTree::parse("<!doctype html><p>Scoped</p>")
                     .expect("parse test HTML");
                 let target = tree
                     .elements()

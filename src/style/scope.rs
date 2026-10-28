@@ -1,9 +1,9 @@
+use crate::dom::{Element, ElementId, ScopeRoot, SelectorScope, TreeContext, TreeRelation};
 use crate::style::{
     StyleError,
     selector::{self, NamespaceMap, RuleSelector, SelectorMode},
 };
 use cssparser::{ParseError, Parser};
-use ferri_pdf_dom::{Element, ElementId, ScopeRoot, SelectorScope, TreeContext, TreeRelation};
 use std::collections::HashMap;
 
 pub(super) struct ScopePrelude {

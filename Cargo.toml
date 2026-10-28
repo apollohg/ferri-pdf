@@ -55,7 +55,6 @@ too_many_lines = "allow"
 
 [workspace.dependencies]
 ferri-pdf-spec-data = { path = "spec", version = "0.1.0" }
-ferri-pdf-dom = { path = "crates/dom", version = "0.1.0" }
 ego-tree = "=0.11.0"
 encoding_rs = "0.8.35"
 html5ever = "=0.39.0"
@@ -156,7 +155,6 @@ unicode-bidi.workspace = true
 unicode-linebreak.workspace = true
 unicode-script.workspace = true
 unicode-segmentation.workspace = true
-ferri-pdf-dom.workspace = true
 encoding_rs.workspace = true
 percent-encoding.workspace = true
 log.workspace = true
@@ -188,3 +186,8 @@ xmlwriter.workspace = true
 
 ferri-pdf-spec-data.workspace = true
 cssparser-color.workspace = true
+html5ever.workspace = true
+scraper.workspace = true
+ego-tree.workspace = true
+selectors.workspace = true
+url.workspace = true

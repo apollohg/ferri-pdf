@@ -1,8 +1,8 @@
-use ferri_pdf_dom::{DocumentTree, NodeData, Selector, TreeRelation};
+use crate::dom::{DocumentTree, NodeData, Selector, TreeRelation};
 
 #[test]
 fn initial_semantics_cover_light_shadow_and_inert_template_elements() {
-    use ferri_pdf_dom::{Directionality, InputType};
+    use crate::dom::{Directionality, InputType};
     let tree = DocumentTree::parse("<!doctype html><meta http-equiv=content-language content=fr><div id=host lang=tr dir=RTL><template shadowrootmode=open><section id=shadow lang=de dir=ltr><slot id=slot dir=auto></slot></section></template><span id=light>אב</span></div><input id=input type=unknown dir=auto value='אב'><template lang=en><p id=inert lang=ja><bdi id=inertbdi>אב</bdi></p></template>").unwrap();
     let elements: Vec<_> = tree.shadow_including_elements().collect();
     for (id, language, direction) in [
@@ -55,7 +55,7 @@ fn initial_semantics_cover_light_shadow_and_inert_template_elements() {
         .template_contents()
         .unwrap()
         .inclusive_descendants(TreeRelation::Selector)
-        .filter_map(ferri_pdf_dom::Node::element)
+        .filter_map(crate::dom::Node::element)
         .collect();
     assert_eq!(inert[0].initial_state().language.as_ref(), "ja");
     assert_eq!(inert[1].initial_state().language.as_ref(), "ja");
@@ -64,7 +64,7 @@ fn initial_semantics_cover_light_shadow_and_inert_template_elements() {
 
 #[test]
 fn initial_semantics_resolve_deep_ancestry_without_recursive_state_construction() {
-    use ferri_pdf_dom::Directionality;
+    use crate::dom::Directionality;
     const DEPTH: usize = 20_000;
     let markup = format!(
         "<!doctype html><div lang=ar dir=rtl>{}<span id=leaf>Text</span>{}</div>",
@@ -185,19 +185,19 @@ fn encapsulation_positions_include_sibling_shadow_and_inert_tree_scopes() {
         .shadow_root()
         .unwrap()
         .children(TreeRelation::Selector)
-        .find_map(ferri_pdf_dom::Node::element)
+        .find_map(crate::dom::Node::element)
         .unwrap();
     let inner = light
         .shadow_root()
         .unwrap()
         .children(TreeRelation::Selector)
-        .find_map(ferri_pdf_dom::Node::element)
+        .find_map(crate::dom::Node::element)
         .unwrap();
     let inert = find("#inert")
         .template_contents()
         .unwrap()
         .children(TreeRelation::Selector)
-        .find_map(ferri_pdf_dom::Node::element)
+        .find_map(crate::dom::Node::element)
         .unwrap();
     assert!(outer.is_in_document_tree());
     assert!(!slot.is_in_document_tree());

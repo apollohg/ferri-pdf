@@ -1,5 +1,5 @@
+use crate::dom::{DocumentTree, Selector};
 use crate::style::{LengthPercentage, Size, Style, StyleError, Stylesheet, StylesheetSource};
-use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_paint::MAX_CALC_MAGNITUDE;
 use ferri_pdf_resources::FileResolver;
 

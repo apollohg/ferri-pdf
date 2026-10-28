@@ -1,19 +1,18 @@
 //! Shared static HTML tree, selector matching and explicit navigation relationships.
 mod attributes;
 mod controls;
-pub use controls::InputType;
+pub(crate) use controls::InputType;
 mod language;
 mod selector;
 mod shadow;
 mod state;
 mod tree;
-pub use attributes::{integer_digits, non_negative_integer_digits};
-pub use selector::{
-    GeneratedPseudoElement, NamespaceMap, ScopeRoot, Selector, SelectorError, SelectorMode,
-    SelectorScope, TreeContext, parse_namespace,
+pub(crate) use attributes::{integer_digits, non_negative_integer_digits};
+pub(crate) use selector::{
+    GeneratedPseudoElement, NamespaceMap, ScopeRoot, Selector, SelectorMode, SelectorScope,
+    TreeContext, parse_namespace,
 };
-pub use shadow::MAX_SHADOW_DEPTH;
-pub use state::{Directionality, InitialState};
+pub(crate) use state::{Directionality, InitialState};
 
 #[derive(Debug, thiserror::Error)]
 pub enum DomError {
@@ -24,26 +23,26 @@ pub enum DomError {
     },
 }
 
-pub use html5ever::tree_builder::QuirksMode;
+pub(crate) use html5ever::tree_builder::QuirksMode;
 use html5ever::{
     TokenizerResult,
     tokenizer::{BufferQueue, Tokenizer},
     tree_builder::{TreeBuilder, TreeBuilderOpts, TreeSink},
 };
-pub use scraper::Node as NodeData;
+pub(crate) use scraper::Node as NodeData;
 use std::ops::ControlFlow;
-pub use tree::{
+pub(crate) use tree::{
     ChildNodes, DOCUMENT_CONTEXT_ORDER, DocumentTree, Element, ElementId, Node, TreeRelation,
     TreeScopeId, XmlTree,
 };
 
 /// Shared budget for nested CSS blocks and functions.
-pub const MAX_COMPONENT_DEPTH: usize = 256;
-pub const HTML_NAMESPACE: &str = "http://www.w3.org/1999/xhtml";
-pub const SVG_NAMESPACE: &str = "http://www.w3.org/2000/svg";
-pub const MATHML_NAMESPACE: &str = "http://www.w3.org/1998/Math/MathML";
-pub const XML_NAMESPACE: &str = "http://www.w3.org/XML/1998/namespace";
-pub const XLINK_NAMESPACE: &str = "http://www.w3.org/1999/xlink";
+pub(crate) const MAX_COMPONENT_DEPTH: usize = 256;
+pub(crate) const HTML_NAMESPACE: &str = "http://www.w3.org/1999/xhtml";
+pub(crate) const SVG_NAMESPACE: &str = "http://www.w3.org/2000/svg";
+pub(crate) const MATHML_NAMESPACE: &str = "http://www.w3.org/1998/Math/MathML";
+pub(crate) const XML_NAMESPACE: &str = "http://www.w3.org/XML/1998/namespace";
+pub(crate) const XLINK_NAMESPACE: &str = "http://www.w3.org/1999/xlink";
 const META_ELEMENT: &str = "meta";
 const CHARSET_ATTRIBUTE: &str = "charset";
 const HTTP_EQUIV_ATTRIBUTE: &str = "http-equiv";
@@ -52,13 +51,13 @@ const CONTENT_TYPE_PRAGMA: &str = "content-type";
 
 /// A declaration encountered by the real HTML parser, before any encoding restart.
 #[derive(Clone, Copy, Debug)]
-pub struct EncodingDeclaration<'a> {
+pub(crate) struct EncodingDeclaration<'a> {
     pub charset: Option<&'a str>,
     pub content_type: Option<&'a str>,
 }
 
 impl DocumentTree {
-    pub fn parse(html: &str) -> Result<Self, DomError> {
+    pub(crate) fn parse(html: &str) -> Result<Self, DomError> {
         match Self::parse_with_encoding(html, |_| {
             ControlFlow::<std::convert::Infallible>::Continue(())
         })? {
@@ -68,7 +67,7 @@ impl DocumentTree {
     }
 
     /// Stop only when the caller needs to re-decode the original buffered bytes.
-    pub fn parse_with_encoding<T>(
+    pub(crate) fn parse_with_encoding<T>(
         html: &str,
         mut on_encoding: impl FnMut(EncodingDeclaration<'_>) -> ControlFlow<T>,
     ) -> Result<ControlFlow<T, Self>, DomError> {
@@ -116,3 +115,6 @@ impl DocumentTree {
         Ok(ControlFlow::Continue(Self::from_parsed(html, shadow)))
     }
 }
+
+#[cfg(test)]
+mod tests;

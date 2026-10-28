@@ -16,8 +16,8 @@ mod stylesheets;
 mod svg;
 mod tables;
 
+use crate::dom::DocumentTree;
 use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
-use ferri_pdf_dom::DocumentTree;
 use ferri_pdf_resources::{ResourceError, ResourceResolver};
 
 pub(crate) use formatting::{BlockBox, BlockContent, PageBox, PageMarginBox};
@@ -35,7 +35,7 @@ pub(crate) use strings::RunningStringAssignment;
 #[derive(Debug, thiserror::Error)]
 pub enum DocumentError {
     #[error("{0}")]
-    Tree(#[from] ferri_pdf_dom::DomError),
+    Tree(#[from] crate::dom::DomError),
     #[error("{0}")]
     Image(#[from] crate::images::ImageError),
     #[error("{0}")]

@@ -1,8 +1,8 @@
+use crate::dom::ElementId;
 use crate::style::{
     CaptionSide, Display, GeneratedContent, Page, Position, PseudoElement, Quotes, StyleError,
     WhiteSpace,
 };
-use ferri_pdf_dom::ElementId;
 
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub(crate) struct PageStyleTarget {

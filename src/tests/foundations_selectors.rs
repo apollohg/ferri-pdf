@@ -1,8 +1,8 @@
 use super::common;
 
+use crate::dom::DocumentTree;
 use crate::style::{Style, Stylesheet, StylesheetSource};
 use common::{assert_pt, local_options};
-use ferri_pdf_dom::DocumentTree;
 
 #[test]
 fn initial_disabled_state_reaches_support_queries_and_real_style_consumers() {
@@ -1188,7 +1188,7 @@ fn target_resolution_checks_literal_fragments_before_decoding() {
             Some(crate::Url::parse(&format!("https://example.test/page#{fragment}")).unwrap()),
             crate::Url::parse("https://base.test/elsewhere/").unwrap(),
         );
-        let selector = ferri_pdf_dom::Selector::parse(":target").unwrap();
+        let selector = crate::dom::Selector::parse(":target").unwrap();
         let selected: Vec<_> = tree
             .select(&selector)
             .filter_map(|element| element.attr("id"))
@@ -1206,20 +1206,20 @@ fn radio_initial_state_respects_fragment_roots_and_empty_form_references() {
         "<!doctype html><form id=''><input id=outer name=x type=radio checked></form><input id=orphan form='' name=x type=radio checked><template><input id=first name=x type=radio checked><input id=last name=x type=radio checked></template>",
     ).expect("parse test HTML");
     for id in ["outer", "orphan"] {
-        let selector = ferri_pdf_dom::Selector::parse(&format!("#{id}")).unwrap();
+        let selector = crate::dom::Selector::parse(&format!("#{id}")).unwrap();
         assert!(
             tree.select(&selector).next().unwrap().initially_checked(),
             "empty form IDs cannot bind form='': {id}"
         );
     }
-    let template_selector = ferri_pdf_dom::Selector::parse("template").unwrap();
+    let template_selector = crate::dom::Selector::parse("template").unwrap();
     let template = tree.select(&template_selector).next().unwrap();
-    let blank = ferri_pdf_dom::Selector::parse(":blank").unwrap();
+    let blank = crate::dom::Selector::parse(":blank").unwrap();
     let selected: Vec<_> = template
         .template_contents()
         .unwrap()
-        .inclusive_descendants(ferri_pdf_dom::TreeRelation::Selector)
-        .filter_map(ferri_pdf_dom::Node::element)
+        .inclusive_descendants(crate::dom::TreeRelation::Selector)
+        .filter_map(crate::dom::Node::element)
         .filter(|element| element.matches(&blank))
         .filter_map(|element| element.attr("id"))
         .collect();

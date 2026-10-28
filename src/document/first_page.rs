@@ -2,11 +2,11 @@ use crate::document::{
     formatting,
     tables::{self, Content},
 };
+use crate::dom::{DocumentTree, Element, TreeRelation};
 use crate::style::{
     BreakBetween, CaptionSide, Display, Page, PageSelection, PageSide, PageStyleTarget,
     PseudoElement, QuoteDepth, StyleError,
 };
-use ferri_pdf_dom::{DocumentTree, Element, TreeRelation};
 use std::{
     cell::{Cell, OnceCell},
     rc::Rc,
@@ -245,7 +245,7 @@ struct OpenInline {
 }
 enum CollectStep<'a> {
     Contents(PageStyleTarget, usize),
-    Children(PageStyleTarget, usize, ferri_pdf_dom::ChildNodes<'a>),
+    Children(PageStyleTarget, usize, crate::dom::ChildNodes<'a>),
     After(Element<'a>, usize),
     CloseInline(PageStyleTarget),
     RestoreDisplay(Display),

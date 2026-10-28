@@ -1,4 +1,4 @@
-use crate::{DomError, HTML_NAMESPACE, NodeData, state};
+use crate::dom::{DomError, HTML_NAMESPACE, NodeData, state};
 use ego_tree::NodeId;
 use html5ever::{
     Attribute, QualName,
@@ -13,7 +13,7 @@ use std::{
     collections::{HashMap, HashSet},
 };
 
-pub const MAX_SHADOW_DEPTH: usize = 64;
+pub(crate) const MAX_SHADOW_DEPTH: usize = 64;
 const SHADOW_DEPTH: &str = "shadow tree nesting";
 const SHADOW_HOST_NAMES: &[&str] = &[
     "article",

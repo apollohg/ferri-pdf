@@ -2194,7 +2194,7 @@
         "css-shadow-1.foundation-shadow-selectors-cascade"
       ],
       "implementation_files": [
-        "crates/dom/src/lib.rs",
+        "src/dom/mod.rs",
         "src/style/selector.rs",
         "src/style/cascade.rs",
         "src/document/mod.rs"
@@ -2230,7 +2230,7 @@
         "css-shadow-1.foundation-shadow-parts-names"
       ],
       "implementation_files": [
-        "crates/dom/src/lib.rs",
+        "src/dom/mod.rs",
         "src/style/selector.rs",
         "src/style/cascade.rs",
         "src/document/mod.rs"
@@ -2264,7 +2264,7 @@
         "dom.foundation-shadow-slot-distribution"
       ],
       "implementation_files": [
-        "crates/dom/src/lib.rs",
+        "src/dom/mod.rs",
         "src/style/selector.rs",
         "src/style/cascade.rs",
         "src/document/mod.rs"
@@ -2294,7 +2294,7 @@
         "html.foundation-declarative-shadow-template"
       ],
       "implementation_files": [
-        "crates/dom/src/lib.rs",
+        "src/dom/mod.rs",
         "src/style/selector.rs",
         "src/style/cascade.rs",
         "src/document/mod.rs"
@@ -3343,10 +3343,10 @@
         "dom.foundation-shared-static-dom"
       ],
       "implementation_files": [
-        "crates/dom/src/lib.rs",
+        "src/dom/mod.rs",
         "src/style/selector.rs",
         "src/document/mod.rs",
-        "crates/dom/src/tree.rs"
+        "src/dom/tree.rs"
       ],
       "case_ids": [],
       "handoff": null

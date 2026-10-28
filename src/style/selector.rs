@@ -1,11 +1,11 @@
+pub(crate) use crate::dom::GeneratedPseudoElement as PseudoElement;
+use crate::dom::{Element, Selector, TreeContext, TreeScopeId};
+pub(super) use crate::dom::{NamespaceMap, SelectorMode};
 use crate::style::{
     StyleError,
     parser::{balanced_components, consume, raw},
 };
 use cssparser::{ParseError, Parser, ParserInput, Token};
-pub(crate) use ferri_pdf_dom::GeneratedPseudoElement as PseudoElement;
-use ferri_pdf_dom::{Element, Selector, TreeContext, TreeScopeId};
-pub(super) use ferri_pdf_dom::{NamespaceMap, SelectorMode};
 pub(super) type Namespaces = std::rc::Rc<std::cell::RefCell<NamespaceMap>>;
 
 pub(super) fn tree_context(
@@ -122,7 +122,7 @@ impl RuleSelector {
         &self,
         element: &Element<'_>,
         pseudo: Option<PseudoElement>,
-        scope: ferri_pdf_dom::SelectorScope,
+        scope: crate::dom::SelectorScope,
         tree: TreeContext,
     ) -> Option<u32> {
         (self.pseudo == pseudo && element.matches_in_selector_scope(&self.selector, tree, scope))

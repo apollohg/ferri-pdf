@@ -1,3 +1,4 @@
+use crate::dom::Element;
 use crate::style::{
     LengthPercentage, Style, StyleError,
     box_values::{length_percentage, unsupported},
@@ -5,7 +6,6 @@ use crate::style::{
     grammar::Keyword,
     units::Relative,
 };
-use ferri_pdf_dom::Element;
 use serde::Serialize;
 
 const MAX_HTML_COLUMN_SPAN: usize = 1000;
@@ -168,7 +168,7 @@ pub(super) fn span(value: &Component, relative: &Relative<'_>) -> Result<usize, 
 
 /// HTML table structure, independently of CSS presentation.
 pub(super) fn structure(style: &mut Style, element: Element<'_>) {
-    if element.namespace() != ferri_pdf_dom::HTML_NAMESPACE {
+    if element.namespace() != crate::dom::HTML_NAMESPACE {
         return;
     }
     match element.name() {

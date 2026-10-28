@@ -1,5 +1,7 @@
-use crate::controls::InputType;
-use crate::{Element, HTML_NAMESPACE, SVG_NAMESPACE, TreeRelation, XLINK_NAMESPACE, XML_NAMESPACE};
+use crate::dom::controls::InputType;
+use crate::dom::{
+    Element, HTML_NAMESPACE, SVG_NAMESPACE, TreeRelation, XLINK_NAMESPACE, XML_NAMESPACE,
+};
 use icu_properties::{CodePointMapData, props::BidiClass};
 use percent_encoding::percent_decode_str;
 use std::{collections::HashMap, sync::Arc};
@@ -36,19 +38,19 @@ pub(crate) fn is_custom_element_name(name: &str) -> bool {
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub enum Directionality {
+pub(crate) enum Directionality {
     Ltr,
     Rtl,
 }
 
 #[derive(Debug)]
-pub struct InitialState {
+pub(crate) struct InitialState {
     pub language: Arc<str>,
     pub direction: Directionality,
     pub input_type: Option<InputType>,
     /// None for elements to which HTML enabled/disabled states do not apply.
     pub disabled: Option<bool>,
-    pub(crate) control_ancestry: crate::controls::ControlAncestry,
+    pub(crate) control_ancestry: crate::dom::controls::ControlAncestry,
 }
 
 pub(crate) fn prepare_initial_states<'a>(
@@ -90,7 +92,7 @@ pub(crate) fn prepare_initial_states<'a>(
                     .expect("DOM parent state precedes its child")
             });
             let (disabled, control_ancestry) =
-                crate::controls::initial_disabled(element, control_parent);
+                crate::dom::controls::initial_disabled(element, control_parent);
             states.insert(
                 element.raw.id(),
                 InitialState {
@@ -123,7 +125,7 @@ enum DirectionAttribute {
 }
 
 impl<'a> Element<'a> {
-    pub fn initial_state(self) -> &'a InitialState {
+    pub(crate) fn initial_state(self) -> &'a InitialState {
         &self.tree.initial_states[&self.raw.id()]
     }
     fn direction_attribute(self) -> DirectionAttribute {
@@ -147,7 +149,7 @@ impl<'a> Element<'a> {
             && (matches!(self.name(), "bdi" | "script" | "style" | "textarea")
                 || self.direction_attribute() != DirectionAttribute::Undefined)
     }
-    pub fn language(self) -> &'a str {
+    pub(crate) fn language(self) -> &'a str {
         &self.initial_state().language
     }
     fn declared_language(self) -> Option<&'a str> {
@@ -163,7 +165,7 @@ impl<'a> Element<'a> {
             .flatten()
     }
 
-    pub fn directionality(self) -> Directionality {
+    pub(crate) fn directionality(self) -> Directionality {
         self.initial_state().direction
     }
     fn initial_directionality(
@@ -255,7 +257,7 @@ impl<'a> Element<'a> {
         None
     }
 
-    pub fn is_defined(self) -> bool {
+    pub(crate) fn is_defined(self) -> bool {
         if self.namespace() != HTML_NAMESPACE {
             return true;
         }
@@ -264,7 +266,7 @@ impl<'a> Element<'a> {
         !autonomous && self.attr("is").is_none()
     }
 
-    pub fn hyperlink(self) -> Option<&'a str> {
+    pub(crate) fn hyperlink(self) -> Option<&'a str> {
         match (self.namespace(), self.name()) {
             (HTML_NAMESPACE, "a" | "area") => self.attr("href"),
             (SVG_NAMESPACE, "a") => self.attr("href").or_else(|| {
@@ -280,7 +282,7 @@ impl<'a> Element<'a> {
         }
     }
 
-    pub fn is_target(self) -> bool {
+    pub(crate) fn is_target(self) -> bool {
         let Some(fragment) = self.tree.document_url.as_ref().and_then(Url::fragment) else {
             return false;
         };
@@ -304,7 +306,7 @@ impl<'a> Element<'a> {
             .is_some_and(|target| target == self)
     }
 
-    pub fn is_local_link(self, segments: Option<u32>) -> bool {
+    pub(crate) fn is_local_link(self, segments: Option<u32>) -> bool {
         let Some(document) = &self.tree.document_url else {
             return false;
         };
