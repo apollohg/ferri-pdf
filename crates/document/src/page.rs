@@ -1,0 +1,172 @@
+use crate::BlockContent;
+use ferri_pdf_style::{Display, Page, Style};
+use std::sync::Arc;
+
+use crate::{DocumentError, PageBox, PageMarginBox, formatting::ImageResources};
+use ferri_pdf_resources::{ResourceBase, ResourceResolver};
+use ferri_pdf_style::{PageRequest, ResolvedPage, Stylesheet};
+use std::{cell::RefCell, collections::HashMap};
+
+impl PageBox {
+    pub(crate) fn load(
+        page: ResolvedPage,
+        resources: &mut ImageResources<'_>,
+        generated: &crate::generated::GeneratedBindings,
+    ) -> Result<Self, DocumentError> {
+        let decoration = resources.backgrounds(&page.style)?;
+        let margins = page
+            .margins
+            .into_iter()
+            .map(|mut margin| {
+                margin.content = generated.bind(&margin.content, None)?.into_owned();
+                let decoration = resources.backgrounds(&margin.style)?;
+                Ok(PageMarginBox { margin, decoration })
+            })
+            .collect::<Result<_, DocumentError>>()?;
+        Ok(Self {
+            request: page.request,
+            geometry: page.geometry,
+            style: page.style,
+            production: page.production,
+            decoration,
+            margins,
+        })
+    }
+}
+
+pub(crate) struct PageProvider {
+    first: Arc<PageBox>,
+    records: RefCell<HashMap<PageRequest, Arc<PageBox>>>,
+    images: std::rc::Rc<RefCell<ferri_pdf_images::ImageCache>>,
+    base: ResourceBase,
+    generated: crate::generated::GeneratedBindings,
+}
+impl PageProvider {
+    pub fn new(
+        first: PageBox,
+        images: std::rc::Rc<RefCell<ferri_pdf_images::ImageCache>>,
+        base: ResourceBase,
+        generated: crate::generated::GeneratedBindings,
+    ) -> Self {
+        let first = Arc::new(first);
+        Self {
+            records: RefCell::new(HashMap::from([(first.request.clone(), first.clone())])),
+            first,
+            images,
+            base,
+            generated,
+        }
+    }
+    pub fn images(&self) -> std::rc::Rc<RefCell<ferri_pdf_images::ImageCache>> {
+        self.images.clone()
+    }
+    pub fn first(&self) -> &PageBox {
+        &self.first
+    }
+    pub fn resolve(
+        &self,
+        sheet: &Stylesheet,
+        root: &Style,
+        request: PageRequest,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Arc<PageBox>, DocumentError> {
+        if let Some(page) = self.records.borrow().get(&request) {
+            return Ok(page.clone());
+        }
+        let resolved = sheet.resolve_page(
+            root,
+            request.clone(),
+            Some(self.first.geometry.area),
+            resolver,
+        )?;
+        let mut cache = self.images.borrow_mut();
+        let mut resources = ImageResources {
+            base: &self.base,
+            resolver,
+            cache: &mut cache,
+        };
+        let page = Arc::new(PageBox::load(resolved, &mut resources, &self.generated)?);
+        self.records.borrow_mut().insert(request, page.clone());
+        Ok(page)
+    }
+}
+
+/// Used ancestor scope and the values propagated at the box's flow boundaries.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct PageBoundary {
+    pub used: Option<Arc<str>>,
+    pub start: Option<Arc<str>>,
+    pub end: Option<Arc<str>>,
+}
+
+pub(crate) fn used_name(page: &Page, ancestor: &Option<Arc<str>>) -> Option<Arc<str>> {
+    match page {
+        Page::Auto => ancestor.clone(),
+        Page::Name(name) => Some(name.clone()),
+    }
+}
+
+impl PageBoundary {
+    pub fn applies(display: &Display) -> bool {
+        matches!(
+            display,
+            Display::Block
+                | Display::FlowRoot
+                | Display::FlowRootListItem
+                | Display::Flex
+                | Display::ListItem
+                | Display::Table
+                | Display::TableRowGroup
+                | Display::TableHeaderGroup
+                | Display::TableFooterGroup
+                | Display::TableRow
+                | Display::TableCaption
+        )
+    }
+
+    pub(crate) fn new(used: Option<Arc<str>>, style: &Style, children: &[BlockContent]) -> Self {
+        let children: Vec<_> = in_flow_children(style, children)
+            .into_iter()
+            .filter(|child| !matches!(child, BlockContent::Events(_)))
+            .collect();
+        let boundary = |child: &&BlockContent, start| match child {
+            BlockContent::Block(child) if Self::applies(&child.style().display) => {
+                let page = child.page_boundary();
+                if start {
+                    page.start.clone()
+                } else {
+                    page.end.clone()
+                }
+            }
+            _ => used.clone(),
+        };
+        Self {
+            start: children
+                .first()
+                .map_or_else(|| used.clone(), |child| boundary(child, true)),
+            end: children
+                .last()
+                .map_or_else(|| used.clone(), |child| boundary(child, false)),
+            used,
+        }
+    }
+}
+
+pub(crate) fn in_flow_children<'a>(
+    style: &Style,
+    children: &'a [BlockContent],
+) -> Vec<&'a BlockContent> {
+    let mut children = children
+        .iter()
+        .filter(|child| !matches!(child, BlockContent::Positioned(_)))
+        .collect::<Vec<_>>();
+    if style.display.is_item_container() {
+        children.sort_by_key(|child| match child {
+            BlockContent::Block(block) => block.style().flex.order,
+            _ => 0,
+        });
+    } else if style.display.is_table() {
+        crate::tables::order(&mut children);
+    }
+    children
+}
