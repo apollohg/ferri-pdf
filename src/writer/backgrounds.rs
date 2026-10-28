@@ -70,7 +70,7 @@ fn strip(layer: &LayerPaint<'_>) -> Option<Rect> {
     })
 }
 
-fn draw_layer(
+pub(super) fn draw_layer(
     layer: &LayerPaint<'_>,
     viewport: Rect,
     surface: &mut Surface<'_>,

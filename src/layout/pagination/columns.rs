@@ -1002,6 +1002,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             | DisplayItem::PushOpacity(_)
             | DisplayItem::PushBlend(_)
             | DisplayItem::PushFilter(_)
+            | DisplayItem::PushMask(_)
             | DisplayItem::Pop => {}
         }
         paint.ink.as_mut().map(shift);
@@ -1088,8 +1089,22 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             }),
             effect => effect,
         };
+        let paints = source
+            .paints
+            .iter()
+            .filter(|(column, _)| *column == place.column)
+            .map(|(_, paint)| {
+                let mut paint = paint.clone();
+                for rect in std::iter::once(&mut paint.rect).chain(paint.background_box.as_mut()) {
+                    rect.x += place.shift[0];
+                    rect.y += place.shift[1];
+                }
+                (place.page, paint)
+            })
+            .collect();
         self.clips.push(EffectNode {
             areas,
+            paints,
             parent,
             effect,
             fragments,

@@ -36,13 +36,21 @@ pub(super) enum Step<'f> {
     Reference(Arc<Filter>),
 }
 
-pub(super) fn draw<'a>(
-    painter: &mut Painter<'a, '_, '_>,
+pub(super) fn draw(
+    painter: &mut Painter<'_, '_, '_>,
     filter: &FilterPaint,
-    items: &'a [crate::graphics::DisplayItem],
+    items: &[crate::graphics::DisplayItem],
     space: Space,
     surface: &mut Surface<'_>,
 ) -> Result<(), PdfError> {
+    if filter.bounds.is_none()
+        && filter
+            .functions
+            .iter()
+            .any(|function| matches!(function, FilterFunction::Url(_)))
+    {
+        return Err(PdfError::UnplacedEffect);
+    }
     // §5: a reference to anything but a filter element ignores the whole chain.
     let Some(steps) = steps(filter, painter.raster.definitions) else {
         return painter.draw(items, space, surface);
@@ -231,7 +239,10 @@ fn recolor(
             | DisplayItem::PushTransform(_)
             | DisplayItem::PushOpacity(_)
             | DisplayItem::Pop) => item.clone(),
-            DisplayItem::Image(_) | DisplayItem::PushBlend(_) | DisplayItem::PushFilter(_) => {
+            DisplayItem::Image(_)
+            | DisplayItem::PushBlend(_)
+            | DisplayItem::PushFilter(_)
+            | DisplayItem::PushMask(_) => {
                 return Ok(None);
             }
         });

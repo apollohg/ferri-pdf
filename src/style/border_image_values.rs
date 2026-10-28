@@ -39,15 +39,27 @@ fn number_like(value: &Component) -> bool {
     )
 }
 
+/// `border-image-slice`, whose `fill` may come first, or `mask-border-slice`, whose
+/// `fill` follows the offsets (CSS Masking 1 §8.3).
 pub(super) fn slice(
     value: &Component,
     relative: &Relative<'_>,
 ) -> Result<([ImageSlice; 4], bool), StyleError> {
-    let offsets = value
-        .slot(SLICE_OFFSETS)
-        .ok_or_else(|| unsupported(value))?
-        .items()
+    let mut keywords = Vec::new();
+    let offsets = if let Some(offsets) = value.slot(SLICE_OFFSETS) {
+        if let Some(fill) = value.slot(SLICE_FILL) {
+            fill.keywords(&mut keywords);
+        }
+        offsets.items()
+    } else {
+        value.keywords(&mut keywords);
+        value.items()
+    };
+    // The offsets repeat as a nested group when `fill` follows them.
+    let offsets = offsets
         .iter()
+        .flat_map(Component::items)
+        .filter(|item| item.keyword() != Some(Keyword::Fill))
         .map(|item| {
             Ok(if number_like(item) {
                 ImageSlice::Number(number(item, relative)?)
@@ -61,10 +73,6 @@ pub(super) fn slice(
             })
         })
         .collect::<Result<Vec<_>, StyleError>>()?;
-    let mut keywords = Vec::new();
-    if let Some(fill) = value.slot(SLICE_FILL) {
-        fill.keywords(&mut keywords);
-    }
     Ok((edges(&offsets)?, keywords.contains(&Keyword::Fill)))
 }
 

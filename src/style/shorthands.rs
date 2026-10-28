@@ -216,6 +216,8 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::FontVariant => crate::style::font_values::expand_variant(&value)?,
         P::FontSynthesis => font_synthesis(&value)?,
         P::Background => background(&value)?,
+        P::Mask => mask(&value),
+        P::MaskBorder => sliced_image(&value, &MASK_BORDER, MASK_BORDER_SLOTS),
         P::BackgroundPosition => background_position(&value)?,
         P::PageBreakBefore => legacy_break(&value, P::BreakBefore)?,
         P::PageBreakAfter => legacy_break(&value, P::BreakAfter)?,
@@ -434,10 +436,15 @@ fn slots(value: &Component, properties: &[Property]) -> Longhands {
 /// `<'border-image-source'> || <'border-image-slice'> [ / <'border-image-width'> |
 /// / <'border-image-width'>? / <'border-image-outset'> ]? || <'border-image-repeat'>`.
 fn border_image(value: &Component) -> Longhands {
-    BORDER_IMAGE
+    sliced_image(value, &BORDER_IMAGE, BORDER_IMAGE_SLOTS)
+}
+
+/// `border-image` or `mask-border`: each longhand where its slot names it, else initial.
+fn sliced_image(value: &Component, properties: &[Property], slots: usize) -> Longhands {
+    properties
         .iter()
         .map(|property| {
-            let found = (0..BORDER_IMAGE_SLOTS)
+            let found = (0..slots)
                 .filter_map(|slot| value.slot(slot))
                 .find_map(|slot| slot.find(Label::Property(*property)));
             (
@@ -789,6 +796,69 @@ fn background(value: &Component) -> Result<Longhands, StyleError> {
         &positions.iter().map(Option::as_ref).collect::<Vec<_>>(),
     )?);
     Ok(longhands)
+}
+
+/// `<mask-layer>` slots in grammar order (CSS Masking 1 §7.9).
+const MASK_REFERENCE: usize = 0;
+const MASK_POSITION: usize = 1;
+const MASK_REPEAT: usize = 2;
+const MASK_ORIGIN: usize = 3;
+const MASK_CLIP: usize = 4;
+const MASK_COMPOSITE: usize = 5;
+const MASK_MODE: usize = 6;
+/// Source, slice with width and outset, repeat, and mode (§8.7).
+const MASK_BORDER_SLOTS: usize = 4;
+/// `mask-border` longhands, which `mask` resets (§7.9).
+const MASK_BORDER: [Property; 6] = [
+    Property::MaskBorderSource,
+    Property::MaskBorderSlice,
+    Property::MaskBorderWidth,
+    Property::MaskBorderOutset,
+    Property::MaskBorderRepeat,
+    Property::MaskBorderMode,
+];
+
+/// CSS Masking 1 §7.9 `mask`: one `<geometry-box>` sets both `mask-origin` and `mask-clip`.
+fn mask(value: &Component) -> Longhands {
+    let mut layers = Vec::new();
+    value
+        .unwrap()
+        .references(&[Label::Production(Production::MaskLayer)], &mut layers);
+    let layers: Vec<&Component> = layers.into_iter().map(|(_, layer)| layer).collect();
+    let slot = |index: usize| move |layer: &Component| layer.slot(index).cloned();
+    let found = |production: Production| {
+        move |layer: &Component| {
+            layer
+                .slot(MASK_POSITION)
+                .and_then(|slot| slot.find(Label::Production(production)))
+                .map(|found| {
+                    Component::Reference(Label::Production(production), Box::new(found.clone()))
+                })
+        }
+    };
+    let clip = |layer: &Component| {
+        layer
+            .slot(MASK_CLIP)
+            .or_else(|| layer.slot(MASK_ORIGIN))
+            .cloned()
+    };
+    [
+        layered(Property::MaskImage, &layers, &slot(MASK_REFERENCE)),
+        layered(
+            Property::MaskPosition,
+            &layers,
+            &found(Production::Position),
+        ),
+        layered(Property::MaskSize, &layers, &found(Production::BgSize)),
+        layered(Property::MaskRepeat, &layers, &slot(MASK_REPEAT)),
+        layered(Property::MaskOrigin, &layers, &slot(MASK_ORIGIN)),
+        layered(Property::MaskClip, &layers, &clip),
+        layered(Property::MaskComposite, &layers, &slot(MASK_COMPOSITE)),
+        layered(Property::MaskMode, &layers, &slot(MASK_MODE)),
+    ]
+    .into_iter()
+    .chain(MASK_BORDER.map(|property| (property, initial())))
+    .collect()
 }
 
 /// CSS Backgrounds 4: `background-position` sets `background-position-x` and `-y`.

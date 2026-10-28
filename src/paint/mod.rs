@@ -11,6 +11,7 @@ mod easing;
 mod filter;
 mod gradient;
 mod length;
+mod mask;
 mod raster;
 mod rounded;
 mod shadow;
@@ -43,7 +44,6 @@ pub(crate) use filter::{
     BLUR_EXTENT, ColorMatrix, IDENTITY_MATRIX, alpha_scale, compose, preserves_unit_range,
     transform as transform_color,
 };
-#[cfg(test)]
 pub(crate) use gradient::GradientStop;
 pub(crate) use gradient::{
     CircleSize, EllipseSize, Gradient, GradientItem, GradientShape, LineDirection, RadialEnding,
@@ -51,6 +51,7 @@ pub(crate) use gradient::{
 };
 pub(crate) use image::{ImageInfo, NaturalDimensions};
 pub use length::LengthPercentage;
+pub use mask::{MaskComposite, MaskMode, Masks};
 pub use rounded::Radii;
 pub(crate) use rounded::rounded_rect;
 mod image;

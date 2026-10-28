@@ -227,7 +227,12 @@ pub(super) fn fragment_paint(
     if inline_box.canvas_source {
         decoration.clear_background();
     }
-    if !decoration.is_visible() && inline_box.navigation.is_empty() {
+    // Masks and referenced filters measure the fragment even when it paints nothing.
+    if !decoration.is_visible()
+        && inline_box.navigation.is_empty()
+        && !decoration.masks.is_masked()
+        && !style.is_filtered()
+    {
         return None;
     }
     Some(BoxPaint {

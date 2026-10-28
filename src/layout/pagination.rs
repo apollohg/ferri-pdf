@@ -212,6 +212,7 @@ struct Group<'a> {
     blend: crate::graphics::BlendMode,
     isolated: bool,
     filter: &'a [crate::graphics::FilterFunction],
+    masked: bool,
     /// The innermost clip or transform of the element's own box, inside which a group that
     /// does not commute with clipping and transforming opens.
     anchor: Option<usize>,
@@ -222,6 +223,7 @@ impl<'a> Group<'a> {
         blend: crate::graphics::BlendMode::Normal,
         isolated: false,
         filter: &[],
+        masked: false,
         anchor: None,
     };
     fn of(style: &'a crate::style::Style) -> Self {
@@ -230,19 +232,23 @@ impl<'a> Group<'a> {
             blend: style.mix_blend_mode,
             isolated: style.isolate,
             filter: &style.filter,
+            masked: style.decoration.masks.is_masked(),
             anchor: None,
         }
     }
     /// Filters act in the element's local coordinates and are clipped by its ancestors'
-    /// clips afterwards (Filter Effects 1 §5), so their group opens inside the clips and
-    /// transforms of the element's own box.
+    /// clips afterwards (Filter Effects 1 §5), and masks are positioned in those coordinates
+    /// (CSS Masking 1 §7), so their group opens inside the clips and transforms of the
+    /// element's own box.
     fn anchored(&self) -> bool {
-        !self.filter.is_empty()
+        !self.filter.is_empty() || self.masked
     }
     /// The display items opening this group, outermost first: an isolated blend group, an
-    /// opacity group, which is isolated itself, then the filter, which applies before both
-    /// (Filter Effects 1 §5). `bounds` is the element's border box on the page.
-    fn pushes(self, bounds: Option<Rect>) -> Vec<DisplayItem> {
+    /// opacity group, which is isolated itself, the mask, then the filter, which applies
+    /// before the others (Filter Effects 1 §5). `fragments` are the element's box fragments
+    /// on the page.
+    fn pushes(self, fragments: &[BoxPaint]) -> Vec<DisplayItem> {
+        let bounds = fragments.iter().map(|paint| paint.rect).reduce(Rect::union);
         let translucent = self.opacity < 1.0;
         let blend =
             self.blend != crate::graphics::BlendMode::Normal || (self.isolated && !translucent);
@@ -250,6 +256,11 @@ impl<'a> Group<'a> {
             .then_some(DisplayItem::PushBlend(self.blend))
             .into_iter()
             .chain(translucent.then_some(DisplayItem::PushOpacity(self.opacity)))
+            .chain(self.masked.then(|| {
+                DisplayItem::PushMask(crate::graphics::MaskPaint {
+                    fragments: fragments.to_vec(),
+                })
+            }))
             .chain((!self.filter.is_empty()).then(|| {
                 DisplayItem::PushFilter(crate::graphics::FilterPaint {
                     functions: self.filter.to_vec(),
@@ -263,6 +274,8 @@ impl<'a> Group<'a> {
 struct EffectNode<'a> {
     /// Reference boxes for structural elements without their own painted box.
     areas: Vec<(usize, Rect)>,
+    /// Inline box fragments an anchored group's element paints, by page.
+    paints: Vec<(usize, BoxPaint)>,
     /// Enclosing clip or transform, or for a group the enclosing group.
     parent: Option<usize>,
     effect: Effect<'a>,
@@ -960,6 +973,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 | DisplayItem::PushOpacity(_)
                 | DisplayItem::PushBlend(_)
                 | DisplayItem::PushFilter(_)
+                | DisplayItem::PushMask(_)
                 | DisplayItem::Pop => false,
             })
             || self.display_lists[page]
@@ -977,6 +991,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     | DisplayItem::PushOpacity(_)
                     | DisplayItem::PushBlend(_)
                     | DisplayItem::PushFilter(_)
+                    | DisplayItem::PushMask(_)
                     | DisplayItem::Pop => false,
                 })
     }
@@ -1790,6 +1805,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let effect_node = |paginator: &mut Self, effect| {
             paginator.clips.push(EffectNode {
                 areas: Vec::new(),
+                paints: Vec::new(),
                 parent: paginator.clip,
                 effect,
                 fragments: Vec::new(),
@@ -1900,6 +1916,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         .then(|| {
             self.clips.push(EffectNode {
                 areas: Vec::new(),
+                paints: Vec::new(),
                 parent: self.clip,
                 effect: if collapsed_clip {
                     Effect::BorderClip
@@ -2474,6 +2491,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
         self.clips.push(EffectNode {
             areas: Vec::new(),
+            paints: Vec::new(),
             parent,
             effect: Effect::Group(group),
             fragments: Vec::new(),
@@ -2564,8 +2582,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
         Ok(regions)
     }
-    /// Each anchored group's areas: its element's box fragments and inline box areas.
-    fn group_bounds(&self) -> Vec<Vec<(usize, Rect)>> {
+    /// Each anchored group's element's box fragments: its block fragments and inline boxes.
+    fn group_bounds(&self) -> Vec<Vec<(usize, BoxPaint)>> {
         self.clips
             .iter()
             .map(|node| match node.effect {
@@ -2573,10 +2591,10 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     .fragments
                     .iter()
                     .filter_map(|&(page, slot)| match &self.display_lists[page][slot].item {
-                        DisplayItem::Box(paint) => Some((page, paint.rect)),
+                        DisplayItem::Box(paint) => Some((page, paint.clone())),
                         _ => None,
                     })
-                    .chain(node.areas.iter().copied())
+                    .chain(node.paints.iter().cloned())
                     .collect(),
                 _ => Vec::new(),
             })
@@ -3929,6 +3947,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         });
                         let clip = self.clips.len();
                         self.clips.push(EffectNode {
+                            paints: Vec::new(),
                             areas: Vec::new(),
                             parent,
                             effect: Effect::PaintClip(border.clip),
@@ -4512,10 +4531,10 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 let layer = self.inline_layer(layers, Some(fragment.index));
                 let (scope, group) = self.layer_scope(layer.as_ref());
                 if let Some(node) = group
-                    && inline_box.style.is_filtered()
                     && layers.layers[fragment.index].is_some()
+                    && matches!(self.clips[node].effect, Effect::Group(group) if group.anchored())
                 {
-                    self.clips[node].areas.push((self.page, paint.rect));
+                    self.clips[node].paints.push((self.page, paint.clone()));
                 }
                 layers.fragments[fragment.index]
                     .push((self.page, self.foreground[self.page].len()));
@@ -4746,7 +4765,7 @@ fn clipped(
     page: usize,
     nodes: &[EffectNode<'_>],
     regions: &[Vec<(usize, Region)>],
-    bounds: &[Vec<(usize, Rect)>],
+    bounds: &[Vec<(usize, BoxPaint)>],
     located: &mut Located,
 ) -> Result<Vec<DisplayItem>, LayoutError> {
     let mut link_polygons = Vec::new();
@@ -4828,7 +4847,12 @@ fn clipped(
             };
             // A group without opacity, blending, isolation or filters paints as its content
             // does.
-            let pushes = effect.pushes(page_bounds(&bounds[index], page));
+            let fragments: Vec<BoxPaint> = bounds[index]
+                .iter()
+                .filter(|(fragment_page, _)| *fragment_page == page)
+                .map(|(_, paint)| paint.clone())
+                .collect();
+            let pushes = effect.pushes(&fragments);
             if !pushes.is_empty() {
                 groups.push((index, effect, pushes));
             }
@@ -4899,15 +4923,6 @@ fn clipped(
         .links
         .push(crate::layout::navigation::link_areas(&link_polygons));
     Ok(output)
-}
-
-/// The union of a group's areas on `page`.
-fn page_bounds(areas: &[(usize, Rect)], page: usize) -> Option<Rect> {
-    areas
-        .iter()
-        .filter(|(area_page, _)| *area_page == page)
-        .map(|(_, rect)| *rect)
-        .reduce(Rect::union)
 }
 
 fn assemble_background(

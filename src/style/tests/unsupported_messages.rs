@@ -79,10 +79,7 @@ fn unsupported_values_name_their_declaration_once() {
             "#target{scroll-snap-type:x mandatory}",
             "scroll-snap-type: x mandatory",
         ),
-        (
-            "#target{mask-clip:border-box,content-box}",
-            "mask-clip: border-box, content-box",
-        ),
+        ("#target{mask-type:alpha}", "mask-type: alpha"),
         (
             "#target{width:calc-mix(--clock,10pt,30pt)}",
             "width: calc-mix(--clock,10pt,30pt) (animation timeline interpolation is outside the static print profile)",

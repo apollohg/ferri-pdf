@@ -283,6 +283,8 @@ pub struct BoxDecoration<I = Infallible> {
     pub shadows: Arc<Vec<BoxShadow>>,
     pub border_image: Arc<BorderImage<I>>,
     pub outline: Outline,
+    /// `mask-*` layers, which mask the box's stacking context rather than paint.
+    pub masks: Arc<crate::paint::Masks<I>>,
 }
 impl<I> Default for BoxDecoration<I> {
     fn default() -> Self {
@@ -294,6 +296,7 @@ impl<I> Default for BoxDecoration<I> {
             shadows: Arc::default(),
             border_image: Arc::default(),
             outline: Outline::default(),
+            masks: Arc::default(),
         }
     }
 }
@@ -318,6 +321,23 @@ impl<I> BoxDecoration<I> {
         I: Clone,
     {
         Backgrounds::resolve_images(&mut self.backgrounds, &mut load)?;
+        if self
+            .masks
+            .layers
+            .images
+            .iter()
+            .any(|image| matches!(image, crate::paint::BackgroundImage::Url { .. }))
+        {
+            Backgrounds::resolve_images(&mut Arc::make_mut(&mut self.masks).layers, &mut load)?;
+        }
+        if matches!(
+            self.masks.border.source,
+            crate::paint::BackgroundImage::Url { .. }
+        ) {
+            Arc::make_mut(&mut Arc::make_mut(&mut self.masks).border)
+                .source
+                .load(&mut load)?;
+        }
         if matches!(
             self.border_image.source,
             crate::paint::BackgroundImage::Url { .. }
@@ -338,35 +358,14 @@ impl<I> BoxDecoration<I> {
 impl BoxDecoration<Infallible> {
     /// Copies computed values into an image consumer without acquiring resources.
     pub fn with_image_type<I>(&self) -> BoxDecoration<I> {
-        let backgrounds = &self.backgrounds;
-        let border_image = &self.border_image;
         BoxDecoration {
             background: self.background,
-            backgrounds: Arc::new(Backgrounds {
-                images: backgrounds
-                    .images
-                    .iter()
-                    .map(crate::paint::BackgroundImage::with_image_type)
-                    .collect(),
-                positions: backgrounds.positions.clone(),
-                sizes: backgrounds.sizes.clone(),
-                repeats: backgrounds.repeats.clone(),
-                origins: backgrounds.origins.clone(),
-                clips: backgrounds.clips.clone(),
-                attachments: backgrounds.attachments.clone(),
-                blend_modes: backgrounds.blend_modes.clone(),
-            }),
+            backgrounds: Arc::new(self.backgrounds.with_image_type()),
+            masks: Arc::new(self.masks.with_image_type()),
             borders: self.borders,
             radii: self.radii.clone(),
             shadows: self.shadows.clone(),
-            border_image: Arc::new(BorderImage {
-                source: border_image.source.with_image_type(),
-                slice: border_image.slice,
-                fill: border_image.fill,
-                widths: border_image.widths.clone(),
-                outset: border_image.outset,
-                repeat: border_image.repeat,
-            }),
+            border_image: Arc::new(self.border_image.with_image_type()),
             outline: self.outline,
         }
     }

@@ -52,8 +52,8 @@ pub use crate::fonts::{
 pub use crate::graphics::{
     BlendMode, Border, BorderStyle, BoxDecoration, BoxPaint, Clip, ClipBounds, Color, Contour,
     DecorationLine, DecorationPaint, DecorationStyle, DisplayItem, Fill, FilterFunction,
-    FilterPaint, INLINE_EDGES, LengthPercentage, Outline, OutlineStyle, Point, Radii, Rect,
-    Segment, ShadowPaint, ShadowShape, Shape,
+    FilterPaint, INLINE_EDGES, LengthPercentage, MaskComposite, MaskMode, MaskPaint, Masks,
+    Outline, OutlineStyle, Point, Radii, Rect, Segment, ShadowPaint, ShadowShape, Shape,
 };
 pub use crate::images::ImageError;
 pub use crate::layout::{Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine};

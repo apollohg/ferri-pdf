@@ -799,6 +799,67 @@ fn handler(property: Property) -> Option<Handler> {
                     .is_ok()
             }),
         ),
+        P::MaskImage => (
+            mask_image,
+            Some(|v, r| {
+                crate::style::mask_values::images(v, r, &crate::paint::AbsoluteColor::BLACK).is_ok()
+            }),
+        ),
+        P::MaskPosition => (
+            mask_position,
+            Some(|v, r| crate::style::mask_values::positions(v, r).is_ok()),
+        ),
+        P::MaskSize => (
+            mask_size,
+            Some(|v, r| crate::style::background_values::sizes(v, r).is_ok()),
+        ),
+        P::MaskRepeat => (
+            mask_repeat,
+            Some(|v, _| crate::style::background_values::repeats(v).is_ok()),
+        ),
+        P::MaskOrigin => (
+            mask_origin,
+            Some(|v, _| crate::style::mask_values::origins(v).is_ok()),
+        ),
+        P::MaskClip => (
+            mask_clip,
+            Some(|v, _| crate::style::mask_values::clips(v).is_ok()),
+        ),
+        P::MaskMode => (
+            mask_mode,
+            Some(|v, _| crate::style::mask_values::modes(v).is_ok()),
+        ),
+        P::MaskComposite => (
+            mask_composite,
+            Some(|v, _| crate::style::mask_values::composites(v).is_ok()),
+        ),
+        P::MaskBorderSource => (
+            mask_border_source,
+            Some(|v, r| {
+                crate::style::background_values::image(v, r, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
+            }),
+        ),
+        P::MaskBorderSlice => (
+            mask_border_slice,
+            Some(|v, r| crate::style::border_image_values::slice(v, r).is_ok()),
+        ),
+        P::MaskBorderWidth => (
+            mask_border_width,
+            Some(|v, r| crate::style::border_image_values::widths(v, r).is_ok()),
+        ),
+        P::MaskBorderOutset => (
+            mask_border_outset,
+            Some(|v, r| crate::style::border_image_values::outset(v, r).is_ok()),
+        ),
+        P::MaskBorderRepeat => (
+            mask_border_repeat,
+            Some(|v, _| crate::style::border_image_values::repeat(v).is_ok()),
+        ),
+        P::MaskBorderMode => (
+            mask_border_mode,
+            Some(|v, _| crate::style::mask_values::border_mode(v).is_ok()),
+        ),
         P::Isolation => (
             isolation,
             Some(|v, _| crate::style::compositing_values::isolation(v).is_ok()),
@@ -1821,6 +1882,129 @@ computed!(filter, [filter], |value, style, _parent, relative| {
         &style.computed_color,
     )?)
 });
+fn mask_image(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    let (images, sources) = match input {
+        Input::Value(value) => {
+            crate::style::mask_values::images(value, relative, &style.computed_color)?
+        }
+        Input::Copy(source) => (
+            source.decoration.masks.layers.images.clone(),
+            source.decoration.masks.sources.clone(),
+        ),
+    };
+    let masks = style.masks_mut();
+    std::sync::Arc::make_mut(&mut masks.layers).images = images;
+    masks.sources = sources;
+    Ok(())
+}
+fn mask_position(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    let positions = match input {
+        Input::Value(value) => {
+            let positions = crate::style::mask_values::positions(value, relative)?;
+            let axis = |index: usize| {
+                positions
+                    .iter()
+                    .map(|position| position[index].clone())
+                    .collect()
+            };
+            [axis(POSITION_X), axis(POSITION_Y)]
+        }
+        Input::Copy(source) => source.decoration.masks.layers.positions.clone(),
+    };
+    std::sync::Arc::make_mut(&mut style.masks_mut().layers).positions = positions;
+    Ok(())
+}
+fn mask_size(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    let sizes = match input {
+        Input::Value(value) => crate::style::background_values::sizes(value, relative)?,
+        Input::Copy(source) => source.decoration.masks.layers.sizes.clone(),
+    };
+    std::sync::Arc::make_mut(&mut style.masks_mut().layers).sizes = sizes;
+    Ok(())
+}
+fn mask_repeat(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    _: &Relative<'_>,
+) -> Result<(), StyleError> {
+    let repeats = match input {
+        Input::Value(value) => crate::style::background_values::repeats(value)?,
+        Input::Copy(source) => source.decoration.masks.layers.repeats.clone(),
+    };
+    std::sync::Arc::make_mut(&mut style.masks_mut().layers).repeats = repeats;
+    Ok(())
+}
+fn mask_origin(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    _: &Relative<'_>,
+) -> Result<(), StyleError> {
+    let origins = match input {
+        Input::Value(value) => crate::style::mask_values::origins(value)?,
+        Input::Copy(source) => source.decoration.masks.layers.origins.clone(),
+    };
+    std::sync::Arc::make_mut(&mut style.masks_mut().layers).origins = origins;
+    Ok(())
+}
+fn mask_clip(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    _: &Relative<'_>,
+) -> Result<(), StyleError> {
+    let (clips, unclipped) = match input {
+        Input::Value(value) => crate::style::mask_values::clips(value)?,
+        Input::Copy(source) => (
+            source.decoration.masks.layers.clips.clone(),
+            source.decoration.masks.unclipped.clone(),
+        ),
+    };
+    let masks = style.masks_mut();
+    std::sync::Arc::make_mut(&mut masks.layers).clips = clips;
+    masks.unclipped = unclipped;
+    Ok(())
+}
+fn mask_mode(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    _: &Relative<'_>,
+) -> Result<(), StyleError> {
+    style.masks_mut().modes = match input {
+        Input::Value(value) => crate::style::mask_values::modes(value)?,
+        Input::Copy(source) => source.decoration.masks.modes.clone(),
+    };
+    Ok(())
+}
+fn mask_composite(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    _: &Relative<'_>,
+) -> Result<(), StyleError> {
+    style.masks_mut().composites = match input {
+        Input::Value(value) => crate::style::mask_values::composites(value)?,
+        Input::Copy(source) => source.decoration.masks.composites.clone(),
+    };
+    Ok(())
+}
 computed!(isolation, [isolate], |value, style, _parent, _relative| {
     crate::style::compositing_values::isolation(value)?
 });
@@ -2053,8 +2237,9 @@ background!(
 );
 
 /// A `border-image-*` longhand, shared copy-on-write between styles.
+/// A `border-image-*` or `mask-border-*` longhand of the border image `$image` returns.
 macro_rules! border_image {
-    ($name:ident, [$($field:ident),+], |$value:ident, $style:ident, $relative:ident| $compute:expr) => {
+    ($name:ident, $image:ident, $image_mut:ident, [$($field:ident),+], |$value:ident, $style:ident, $relative:ident| $compute:expr) => {
         fn $name(
             $style: &mut Style,
             _: &Style,
@@ -2064,33 +2249,103 @@ macro_rules! border_image {
             let computed = match input {
                 Input::Value($value) => $compute,
                 Input::Copy(source) => {
-                    let image = &source.decoration.border_image;
+                    let image = source.$image();
                     ($(image.$field.clone()),+)
                 }
             };
-            let image = std::sync::Arc::make_mut(&mut $style.decoration.border_image);
+            let image = $style.$image_mut();
             ($(image.$field),+) = computed;
             Ok(())
         }
     };
 }
-border_image!(border_image_source, [source], |value, style, relative| {
-    crate::style::background_values::image(value, relative, &style.computed_color)?
-});
+border_image!(
+    border_image_source,
+    border_image,
+    border_image_mut,
+    [source],
+    |value, style, relative| {
+        crate::style::background_values::image(value, relative, &style.computed_color)?
+    }
+);
 border_image!(
     border_image_slice,
+    border_image,
+    border_image_mut,
     [slice, fill],
     |value, style, relative| { crate::style::border_image_values::slice(value, relative)? }
 );
-border_image!(border_image_width, [widths], |value, style, relative| {
-    crate::style::border_image_values::widths(value, relative)?
-});
-border_image!(border_image_outset, [outset], |value, style, relative| {
-    crate::style::border_image_values::outset(value, relative)?
-});
-border_image!(border_image_repeat, [repeat], |value, style, _relative| {
-    crate::style::border_image_values::repeat(value)?
-});
+border_image!(
+    border_image_width,
+    border_image,
+    border_image_mut,
+    [widths],
+    |value, style, relative| { crate::style::border_image_values::widths(value, relative)? }
+);
+border_image!(
+    border_image_outset,
+    border_image,
+    border_image_mut,
+    [outset],
+    |value, style, relative| { crate::style::border_image_values::outset(value, relative)? }
+);
+border_image!(
+    border_image_repeat,
+    border_image,
+    border_image_mut,
+    [repeat],
+    |value, style, _relative| { crate::style::border_image_values::repeat(value)? }
+);
+// CSS Masking 1 §8: the mask border image shares the border image grammar.
+border_image!(
+    mask_border_source,
+    mask_border,
+    mask_border_mut,
+    [source],
+    |value, style, relative| {
+        crate::style::background_values::image(value, relative, &style.computed_color)?
+    }
+);
+border_image!(
+    mask_border_slice,
+    mask_border,
+    mask_border_mut,
+    [slice, fill],
+    |value, style, relative| { crate::style::border_image_values::slice(value, relative)? }
+);
+border_image!(
+    mask_border_width,
+    mask_border,
+    mask_border_mut,
+    [widths],
+    |value, style, relative| { crate::style::border_image_values::widths(value, relative)? }
+);
+border_image!(
+    mask_border_outset,
+    mask_border,
+    mask_border_mut,
+    [outset],
+    |value, style, relative| { crate::style::border_image_values::outset(value, relative)? }
+);
+border_image!(
+    mask_border_repeat,
+    mask_border,
+    mask_border_mut,
+    [repeat],
+    |value, style, _relative| { crate::style::border_image_values::repeat(value)? }
+);
+fn mask_border_mode(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    _: &Relative<'_>,
+) -> Result<(), StyleError> {
+    style.masks_mut().border_mode = match input {
+        Input::Value(value) => crate::style::mask_values::border_mode(value)?,
+        Input::Copy(source) => source.decoration.masks.border_mode,
+    };
+    Ok(())
+}
 
 /// `<line-width>` converted to absolute points.
 fn border_width(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {

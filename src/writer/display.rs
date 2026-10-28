@@ -36,11 +36,11 @@ impl Space {
     }
 }
 
-impl<'a> Painter<'a, '_, '_> {
+impl Painter<'_, '_, '_> {
     /// Draws `items`, which open and close their own scopes.
     pub(super) fn draw(
         &mut self,
-        items: &'a [DisplayItem],
+        items: &[DisplayItem],
         space: Space,
         surface: &mut Surface<'_>,
     ) -> Result<(), PdfError> {
@@ -54,7 +54,7 @@ impl<'a> Painter<'a, '_, '_> {
 
     fn draw_scoped(
         &mut self,
-        items: &'a [DisplayItem],
+        items: &[DisplayItem],
         mut space: Space,
         scopes: &mut Vec<(usize, Space)>,
         surface: &mut Surface<'_>,
@@ -125,6 +125,11 @@ impl<'a> Painter<'a, '_, '_> {
                 DisplayItem::PushFilter(filter) => {
                     let end = index + group_length(&items[index..])?;
                     crate::writer::filters::draw(self, filter, &items[index..end], space, surface)?;
+                    index = end + 1;
+                }
+                DisplayItem::PushMask(mask) => {
+                    let end = index + group_length(&items[index..])?;
+                    crate::writer::masks::draw(self, mask, &items[index..end], space, surface)?;
                     index = end + 1;
                 }
                 DisplayItem::Pop => {
@@ -198,7 +203,8 @@ fn group_length(items: &[DisplayItem]) -> Result<usize, PdfError> {
             | DisplayItem::PushTransform(_)
             | DisplayItem::PushOpacity(_)
             | DisplayItem::PushBlend(_)
-            | DisplayItem::PushFilter(_) => depth += 1,
+            | DisplayItem::PushFilter(_)
+            | DisplayItem::PushMask(_) => depth += 1,
             DisplayItem::Pop if depth == 0 => return Ok(index),
             DisplayItem::Pop => depth -= 1,
             DisplayItem::Image(_)

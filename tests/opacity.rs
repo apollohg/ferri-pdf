@@ -20,6 +20,7 @@ fn effect_stacks(trace: &LayoutTrace, page: usize) -> Vec<(String, Vec<String>)>
             DisplayItem::PushOpacity(alpha) => stack.push(format!("O{alpha}")),
             DisplayItem::PushBlend(mode) => stack.push(format!("B{mode:?}")),
             DisplayItem::PushFilter(filter) => stack.push(format!("F{:?}", filter.functions)),
+            DisplayItem::PushMask(mask) => stack.push(format!("M{}", mask.fragments.len())),
             DisplayItem::PushClip(_) => stack.push("C".into()),
             DisplayItem::PushTransform(_) => stack.push("T".into()),
             DisplayItem::Pop => {

@@ -3,6 +3,7 @@ mod backgrounds;
 mod display;
 mod filters;
 mod images;
+mod masks;
 mod navigation;
 mod painting;
 mod pixels;
@@ -63,6 +64,12 @@ pub enum PdfError {
     RasterSize { width: f32, height: f32 },
     #[error("rasterizing a filtered group failed")]
     Raster,
+    /// Table rows and row groups have no box fragment of their own to place masks and
+    /// `objectBoundingBox` filter references against.
+    #[error(
+        "masks and filter references need a box fragment, which table rows and row groups lack"
+    )]
+    UnplacedEffect,
     #[error("{0}")]
     Serialization(#[from] krilla::error::KrillaError),
 }

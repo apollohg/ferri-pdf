@@ -217,6 +217,25 @@ impl<I> BackgroundImage<I> {
     }
 }
 
+impl Backgrounds<Infallible> {
+    pub fn with_image_type<I>(&self) -> Backgrounds<I> {
+        Backgrounds {
+            images: self
+                .images
+                .iter()
+                .map(BackgroundImage::with_image_type)
+                .collect(),
+            positions: self.positions.clone(),
+            sizes: self.sizes.clone(),
+            repeats: self.repeats.clone(),
+            origins: self.origins.clone(),
+            clips: self.clips.clone(),
+            attachments: self.attachments.clone(),
+            blend_modes: self.blend_modes.clone(),
+        }
+    }
+}
+
 impl BackgroundImage<Infallible> {
     pub fn with_image_type<I>(&self) -> BackgroundImage<I> {
         match self {
@@ -465,16 +484,34 @@ impl<I: ImageInfo> BoxPaint<I> {
         &self,
         page_area: Rect,
     ) -> Result<Vec<LayerPaint<'_, I>>, UnresolvedImage> {
-        let mut layers = Vec::new();
         if !self.draw_background {
-            return Ok(layers);
+            return Ok(Vec::new());
         }
+        Ok(self
+            .layers(&self.decoration.backgrounds, page_area)?
+            .into_iter()
+            .map(|(_, layer)| layer)
+            .collect())
+    }
+    /// Mask image layers bottom-most first with their list indices, placed and clipped like
+    /// background layers (CSS Masking 1 §7).
+    pub fn mask_layers(
+        &self,
+        page_area: Rect,
+    ) -> Result<Vec<(usize, LayerPaint<'_, I>)>, UnresolvedImage> {
+        self.layers(&self.decoration.masks.layers, page_area)
+    }
+    fn layers<'a>(
+        &'a self,
+        backgrounds: &'a Backgrounds<I>,
+        page_area: Rect,
+    ) -> Result<Vec<(usize, LayerPaint<'a, I>)>, UnresolvedImage> {
+        let mut layers = Vec::new();
         let page_area = self
             .background_geometry
             .as_ref()
             .and_then(|geometry| geometry.viewport)
             .unwrap_or(page_area);
-        let backgrounds = &self.decoration.backgrounds;
         for (index, image) in backgrounds.images.iter().enumerate().rev() {
             let source = match image {
                 BackgroundImage::None => continue,
@@ -522,19 +559,22 @@ impl<I: ImageInfo> BoxPaint<I> {
                     None => continue,
                 },
             };
-            layers.push(LayerPaint {
-                image,
-                clip: self.background_clip(*cycle(&backgrounds.clips, index)),
-                tile: Rect {
-                    x,
-                    y,
-                    width: tile[0],
-                    height: tile[1],
+            layers.push((
+                index,
+                LayerPaint {
+                    image,
+                    clip: self.background_clip(*cycle(&backgrounds.clips, index)),
+                    tile: Rect {
+                        x,
+                        y,
+                        width: tile[0],
+                        height: tile[1],
+                    },
+                    step: [step_x, step_y],
+                    repeat: [repeat_x, repeat_y],
+                    blend: *cycle(&backgrounds.blend_modes, index),
                 },
-                step: [step_x, step_y],
-                repeat: [repeat_x, repeat_y],
-                blend: *cycle(&backgrounds.blend_modes, index),
-            });
+            ));
         }
         Ok(layers)
     }

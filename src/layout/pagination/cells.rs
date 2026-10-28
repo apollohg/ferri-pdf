@@ -264,6 +264,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 let clip = if transformed {
                     let node = self.clips.len();
                     self.clips.push(EffectNode {
+                        paints: Vec::new(),
                         parent: self.clip,
                         effect: Effect::Transform(source.style(), None),
                         fragments: Vec::new(),

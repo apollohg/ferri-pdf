@@ -462,6 +462,21 @@ impl Style {
     pub(super) fn backgrounds_mut(&mut self) -> &mut crate::paint::Backgrounds {
         Arc::make_mut(&mut self.decoration.backgrounds)
     }
+    pub(super) fn masks_mut(&mut self) -> &mut crate::paint::Masks {
+        Arc::make_mut(&mut self.decoration.masks)
+    }
+    pub(super) fn border_image(&self) -> &crate::paint::BorderImage {
+        &self.decoration.border_image
+    }
+    pub(super) fn border_image_mut(&mut self) -> &mut crate::paint::BorderImage {
+        Arc::make_mut(&mut self.decoration.border_image)
+    }
+    pub(super) fn mask_border(&self) -> &crate::paint::BorderImage {
+        &self.decoration.masks.border
+    }
+    pub(super) fn mask_border_mut(&mut self) -> &mut crate::paint::BorderImage {
+        Arc::make_mut(&mut self.masks_mut().border)
+    }
     /// Opacity below one makes the box a stacking context painted as one group (CSS Color 4 §15).
     pub(crate) fn is_translucent(&self) -> bool {
         self.opacity < OPAQUE
@@ -473,6 +488,7 @@ impl Style {
             || self.mix_blend_mode != crate::paint::BlendMode::Normal
             || self.isolate
             || self.is_filtered()
+            || self.decoration.masks.is_masked()
     }
     /// A `filter` other than `none`.
     pub(crate) fn is_filtered(&self) -> bool {

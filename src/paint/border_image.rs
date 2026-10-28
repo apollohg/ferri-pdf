@@ -73,6 +73,18 @@ impl<I> Default for BorderImage<I> {
         }
     }
 }
+impl BorderImage<Infallible> {
+    pub fn with_image_type<I>(&self) -> BorderImage<I> {
+        BorderImage {
+            source: self.source.with_image_type(),
+            slice: self.slice,
+            fill: self.fill,
+            widths: self.widths.clone(),
+            outset: self.outset,
+            repeat: self.repeat,
+        }
+    }
+}
 impl<I> BorderImage<I> {
     /// Whether an image replaces the border styles.
     pub fn is_drawn(&self) -> bool {

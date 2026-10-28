@@ -100,9 +100,9 @@ impl Raster {
 
 /// Renders `items` as they would draw at `area` of the current drawing space, or `None`
 /// when the area covers no pixel.
-pub(super) fn rasterize<'a>(
-    painter: &mut Painter<'a, '_, '_>,
-    items: &'a [DisplayItem],
+pub(super) fn rasterize(
+    painter: &mut Painter<'_, '_, '_>,
+    items: &[DisplayItem],
     area: Rect,
     density: f32,
 ) -> Result<Option<Raster>, PdfError> {

@@ -35,17 +35,29 @@ pub(crate) fn render(
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
 ) {
-    let target_size = tiny_skia::IntSize::from_wh(pixmap.width(), pixmap.height()).unwrap();
+    let ctx = context(pixmap.width(), pixmap.height());
+    render::render_nodes(tree.root(), &ctx, transform, pixmap);
+}
+
+/// Multiplies the pixmap's alpha by the values of `mask` placed by `transform`.
+pub(crate) fn apply_mask(
+    mask: &crate::svg::usvg::Mask,
+    transform: tiny_skia::Transform,
+    pixmap: &mut tiny_skia::Pixmap,
+) {
+    let ctx = context(pixmap.width(), pixmap.height());
+    mask::apply(mask, &ctx, transform, pixmap);
+}
+
+fn context(width: u32, height: u32) -> render::Context {
     let max_bbox = tiny_skia::IntRect::from_xywh(
-        -(target_size.width() as i32) * 2,
-        -(target_size.height() as i32) * 2,
-        target_size.width() * 5,
-        target_size.height() * 5,
+        -(width as i32) * 2,
+        -(height as i32) * 2,
+        width * 5,
+        height * 5,
     )
     .unwrap();
-
-    let ctx = render::Context { max_bbox };
-    render::render_nodes(tree.root(), &ctx, transform, pixmap);
+    render::Context { max_bbox }
 }
 
 /// Renders a node onto the pixmap.

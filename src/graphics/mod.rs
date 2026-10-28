@@ -7,7 +7,8 @@ pub(crate) use crate::paint::{
 pub use crate::paint::{
     BlendMode, Border, BorderStyle, Clip, ClipBounds, Color, Contour, DecorationLine,
     DecorationPaint, DecorationStyle, Fill, FilterFunction, INLINE_EDGES, LengthPercentage,
-    Outline, OutlineStyle, Point, Radii, Rect, Segment, ShadowPaint, ShadowShape, Shape,
+    MaskComposite, MaskMode, Masks, Outline, OutlineStyle, Point, Radii, Rect, Segment,
+    ShadowPaint, ShadowShape, Shape,
 };
 use serde::Serialize;
 use std::sync::Arc;
@@ -41,6 +42,8 @@ pub enum DisplayItem {
     /// Filters later items as one group in the current coordinates until the matching `Pop`
     /// (Filter Effects 1 §5).
     PushFilter(FilterPaint),
+    /// Masks later items as one group until the matching `Pop` (CSS Masking 1 §7.10).
+    PushMask(MaskPaint),
     Pop,
 }
 
@@ -68,6 +71,12 @@ impl TextShadowPaint {
             decoration.rect.y += dy;
         }
     }
+}
+
+/// The masked element's box fragments on the page, whose mask layers combine.
+#[derive(Clone, Debug, Serialize)]
+pub struct MaskPaint {
+    pub fragments: Vec<BoxPaint>,
 }
 
 #[derive(Clone, Debug, Serialize)]
