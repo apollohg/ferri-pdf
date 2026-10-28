@@ -22,6 +22,9 @@ pub(super) const DECLARATION_SEPARATOR: &str = ": ";
 const RELATIVE_FONT_SIZE_RATIO: f32 = 6.0 / 5.0;
 const THIN_BORDER_PT: f32 = 0.5625;
 const THICK_BORDER_PT: f32 = 2.8125;
+/// Axis indices of the `background-position-x` and `-y` lists.
+const POSITION_X: usize = 0;
+const POSITION_Y: usize = 1;
 /// CSS Fonts 4 §2.5 absolute-size scaling factors against `medium`.
 const ABSOLUTE_SIZES: [(Keyword, f32); 8] = [
     (Keyword::XxSmall, 3.0 / 5.0),
@@ -220,11 +223,14 @@ pub(super) fn projection(property: Property, source: &Style) -> Style {
             .each_ref()
             .map(crate::paint::PositionComponent::canonical);
     }
-    if property == Property::BackgroundPosition {
-        for position in &mut std::sync::Arc::make_mut(&mut value.decoration.backgrounds).positions {
-            *position = position
-                .each_ref()
-                .map(crate::paint::PositionComponent::canonical);
+    if let Some(axis) = [Property::BackgroundPositionX, Property::BackgroundPositionY]
+        .iter()
+        .position(|axis| *axis == property)
+    {
+        for position in
+            &mut std::sync::Arc::make_mut(&mut value.decoration.backgrounds).positions[axis]
+        {
+            *position = position.canonical();
         }
     }
     if property == Property::FontFamily
@@ -550,6 +556,10 @@ fn handler(property: Property) -> Option<Handler> {
             transform_origin,
             Some(|v, r| crate::style::transform::origin(v, r).is_ok()),
         ),
+        P::Clip => (
+            clip,
+            Some(|v, r| crate::style::position::clip_rect(v, r).is_ok()),
+        ),
         P::Translate => (
             translate,
             Some(|v, r| crate::style::transform::translate(v, r).is_ok()),
@@ -695,9 +705,13 @@ fn handler(property: Property) -> Option<Handler> {
                     .is_ok()
             }),
         ),
-        P::BackgroundPosition => (
-            background_position,
-            Some(|v, r| crate::style::background_values::positions(v, r).is_ok()),
+        P::BackgroundPositionX => (
+            background_position_x,
+            Some(|v, r| crate::style::background_values::axis_positions(v, r, false).is_ok()),
+        ),
+        P::BackgroundPositionY => (
+            background_position_y,
+            Some(|v, r| crate::style::background_values::axis_positions(v, r, false).is_ok()),
         ),
         P::BackgroundSize => (
             background_size,
@@ -1495,6 +1509,9 @@ computed!(
     [transform_origin],
     |value, style, _parent, relative| { crate::style::transform::origin(value, relative)? }
 );
+computed!(clip, [clip], |value, style, _parent, relative| {
+    crate::style::position::clip_rect(value, relative)?
+});
 computed!(translate, [translate], |value, style, _parent, relative| {
     crate::style::transform::translate(value, relative)?
 });
@@ -1723,9 +1740,38 @@ macro_rules! background {
 background!(background_image, images, |value, style, relative| {
     crate::style::background_values::images(value, relative, &style.computed_color)?
 });
-background!(background_position, positions, |value, style, relative| {
-    crate::style::background_values::positions(value, relative)?
-});
+/// `background-position-x` or `-y`, the list at `axis` of the layer positions.
+fn background_position_axis(
+    axis: usize,
+    style: &mut Style,
+    input: Input<'_>,
+    relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    let computed = match input {
+        Input::Value(value) => {
+            crate::style::background_values::axis_positions(value, relative, style.rtl)?
+        }
+        Input::Copy(source) => source.decoration.backgrounds.positions[axis].clone(),
+    };
+    style.backgrounds_mut().positions[axis] = computed;
+    Ok(())
+}
+fn background_position_x(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    background_position_axis(POSITION_X, style, input, relative)
+}
+fn background_position_y(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    background_position_axis(POSITION_Y, style, input, relative)
+}
 background!(background_size, sizes, |value, style, relative| {
     crate::style::background_values::sizes(value, relative)?
 });

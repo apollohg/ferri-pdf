@@ -115,6 +115,8 @@ pub(crate) struct Style {
     pub clear: crate::style::Clear,
     /// `None` is `auto`.
     pub z_index: Option<i32>,
+    /// `clip`; `None` is `auto`.
+    pub clip: Option<crate::style::position::ClipRect>,
     /// Inline-level before blockification; selects the inline static position.
     pub inline_level_origin: bool,
     pub transform: Vec<crate::style::TransformFunction>,
@@ -230,6 +232,7 @@ impl Default for Style {
             float: crate::style::Float::None,
             clear: crate::style::Clear::None,
             z_index: None,
+            clip: None,
             inline_level_origin: false,
             transform: Vec::new(),
             opacity: OPAQUE,
@@ -1074,7 +1077,7 @@ impl Stylesheet {
         for property in Property::BorderStyle
             .longhands()
             .iter()
-            .chain([&Property::OutlineStyle])
+            .chain([&Property::OutlineStyle, &Property::Direction])
         {
             if let Some(value) = winners.remove(property) {
                 properties::apply(*property, &value, &mut style, parent, relative)?;

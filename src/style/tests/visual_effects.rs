@@ -214,6 +214,85 @@ fn outline_longhands_compute_per_css_ui_4() {
 }
 
 #[test]
+fn background_position_longhands_cascade_with_their_shorthand() {
+    let positions = |css: &str| parent(css).decoration.backgrounds.positions.clone();
+    let start = |offset| PositionComponent {
+        from_end: false,
+        offset,
+    };
+    let end = |offset| PositionComponent {
+        from_end: true,
+        offset,
+    };
+    let px = |value: f32| LengthPercentage::Length(value * PX);
+    assert_eq!(
+        positions("background-position:right 10px bottom 5px, 20% top"),
+        [
+            vec![end(px(10.0)), start(LengthPercentage::Percentage(0.2))],
+            vec![end(px(5.0)), start(LengthPercentage::ZERO)],
+        ],
+        "the shorthand splits each layer's position into its x and y longhands"
+    );
+    assert_eq!(
+        positions("background-position:10px 20px;background-position-x:right"),
+        [vec![end(LengthPercentage::ZERO)], vec![start(px(20.0))]],
+        "a later longhand overrides one axis of the earlier shorthand"
+    );
+    assert_eq!(
+        positions("background-position-y:bottom 1px, center;background-position:top"),
+        [
+            vec![PositionComponent::CENTER],
+            vec![start(LengthPercentage::ZERO)]
+        ],
+        "a later shorthand resets both axes; a lone vertical keyword centres x"
+    );
+    assert_eq!(
+        positions("background-position-x:3px, 4px, 5px")[0].len(),
+        3,
+        "each axis keeps its own list length, cycled independently over the layers"
+    );
+    for (direction, x_start, x_end) in [("ltr", false, true), ("rtl", true, false)] {
+        assert_eq!(
+            positions(&format!(
+                "direction:{direction};background-position-x:x-start 2px,x-end;\
+                 background-position-y:y-start,y-end 1px"
+            )),
+            [
+                vec![
+                    PositionComponent {
+                        from_end: x_start,
+                        offset: px(2.0),
+                    },
+                    PositionComponent {
+                        from_end: x_end,
+                        offset: LengthPercentage::ZERO,
+                    },
+                ],
+                vec![start(LengthPercentage::ZERO), end(px(1.0))],
+            ],
+            "{direction}: x-start and x-end are the inline-axis edges, y-start and y-end the \
+             block-axis edges"
+        );
+    }
+    assert_eq!(
+        positions("background:url(a.png) right 3px top / 4px"),
+        [vec![end(px(3.0))], vec![start(LengthPercentage::ZERO)]],
+        "the background shorthand sets both longhands"
+    );
+}
+
+#[test]
+fn clip_computes_edges_to_absolute_lengths_or_auto() {
+    assert_eq!(
+        parent("clip:rect(1em, auto, 2px, -3px)").clip,
+        Some([Some(FONT_SIZE_PT), None, Some(2.0 * PX), Some(-3.0 * PX)])
+    );
+    assert_eq!(parent("clip:rect(1px,2px,3px,4px);clip:auto").clip, None);
+    let (_, child) = styles("#parent{clip:rect(1px,2px,3px,4px)}").expect("clip computes");
+    assert_eq!(child.clip, None, "clip does not inherit");
+}
+
+#[test]
 fn blending_and_isolation_compute_as_specified_without_inheriting() {
     let (parent, child) = styles(
         "#parent{mix-blend-mode:color-dodge;isolation:isolate;\

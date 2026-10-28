@@ -26,6 +26,34 @@ impl Position {
         matches!(self, Self::Absolute | Self::Fixed)
     }
 }
+/// CSS Masking 1 §6.1 `rect()` offsets of the top, right, bottom and left clip edges from the
+/// border box's top-left corner; `None` is `auto`, the matching border edge.
+pub(crate) type ClipRect = [Option<f32>; 4];
+const TOP: usize = 0;
+const RIGHT: usize = 1;
+const BOTTOM: usize = 2;
+const LEFT: usize = 3;
+
+/// `clip`: `None` is `auto`.
+pub(crate) fn clip_rect(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<Option<ClipRect>, StyleError> {
+    if value.keyword() == Some(Keyword::Auto) {
+        return Ok(None);
+    }
+    let Component::Function(Keyword::Rect, _) = value.unwrap() else {
+        return Err(unsupported(value));
+    };
+    let edges = crate::style::transform::arguments(value)
+        .into_iter()
+        .map(|edge| match edge.keyword() {
+            Some(Keyword::Auto) => Ok(None),
+            _ => crate::style::values::length(edge, relative).map(Some),
+        })
+        .collect::<Result<Vec<_>, _>>()?;
+    edges.try_into().map(Some).map_err(|_| unsupported(value))
+}
 /// `z-index`: `None` is `auto`.
 pub(crate) fn z_index(
     value: &Component,
@@ -37,6 +65,19 @@ pub(crate) fn z_index(
     }
 }
 impl Style {
+    /// The `clip` region of an absolutely positioned box with border box `border`; `clip`
+    /// does not apply to other boxes (CSS Masking 1 §6.1).
+    pub(crate) fn clip_region(&self, border: crate::paint::Rect) -> Option<crate::paint::Rect> {
+        let edges = self.clip.filter(|_| self.position.is_out_of_flow())?;
+        let x = border.x + edges[LEFT].unwrap_or(0.0);
+        let y = border.y + edges[TOP].unwrap_or(0.0);
+        Some(crate::paint::Rect {
+            x,
+            y,
+            width: (border.x + edges[RIGHT].unwrap_or(border.width) - x).max(0.0),
+            height: (border.y + edges[BOTTOM].unwrap_or(border.height) - y).max(0.0),
+        })
+    }
     pub(crate) fn relative_offset(
         &self,
         width: f32,

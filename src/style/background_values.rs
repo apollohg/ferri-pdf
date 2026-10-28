@@ -18,10 +18,6 @@ const TO_RIGHT_DEG: f32 = 90.0;
 const TO_BOTTOM_DEG: f32 = 180.0;
 const TO_LEFT_DEG: f32 = 270.0;
 const MIN_GRADIENT_STOPS: usize = 2;
-const END: PositionComponent = PositionComponent {
-    from_end: true,
-    offset: LengthPercentage::ZERO,
-};
 /// `[ <angle> | <zero> | to <side-or-corner> ] || <color-interpolation-method>` slots.
 const DIRECTION_SLOT: usize = 0;
 /// `<side-or-corner>` slots.
@@ -69,12 +65,6 @@ pub(super) fn images(
     color: &AbsoluteColor,
 ) -> Result<Vec<BackgroundImage>, StyleError> {
     list(value, |item| image(item, relative, color))
-}
-pub(super) fn positions(
-    value: &Component,
-    relative: &Relative<'_>,
-) -> Result<Vec<Position>, StyleError> {
-    list(value, |item| position(item, relative))
 }
 pub(super) fn sizes(
     value: &Component,
@@ -468,46 +458,67 @@ fn terms(component: &Component) -> Vec<&Component> {
 }
 
 /// One axis: an edge keyword with an optional offset, `center`, or an offset from the start.
-fn axis(part: &Component, relative: &Relative<'_>) -> Result<PositionComponent, StyleError> {
+/// The flow-relative edges of CSS Backgrounds 4 compute to the physical edge they name in the
+/// element's horizontal writing mode, where x is the inline axis and y the block axis.
+fn axis(
+    part: &Component,
+    relative: &Relative<'_>,
+    rtl: bool,
+) -> Result<PositionComponent, StyleError> {
     let parts = terms(part);
+    let from_end = match parts.first().and_then(|term| term.keyword()) {
+        Some(Keyword::Center) => return Ok(PositionComponent::CENTER),
+        Some(Keyword::XStart) => rtl,
+        Some(Keyword::XEnd) => !rtl,
+        Some(Keyword::Right | Keyword::Bottom | Keyword::YEnd) => true,
+        _ => false,
+    };
     let offset = parts
         .iter()
         .find(|term| term.keyword().is_none())
         .map(|offset| length_percentage(offset, relative))
-        .transpose()?;
-    Ok(match parts.first().and_then(|term| term.keyword()) {
-        Some(Keyword::Center) => PositionComponent::CENTER,
-        Some(Keyword::Right | Keyword::Bottom) => PositionComponent {
-            offset: offset.unwrap_or(LengthPercentage::ZERO),
-            ..END
-        },
-        _ => PositionComponent {
-            from_end: false,
-            offset: offset.unwrap_or(LengthPercentage::ZERO),
-        },
-    })
+        .transpose()?
+        .unwrap_or(LengthPercentage::ZERO);
+    Ok(PositionComponent { from_end, offset })
 }
 
 /// `<bg-position>` or `<position>`: one value, a horizontal-vertical pair, or keyword groups
 /// in either order.
 pub(super) fn position(value: &Component, relative: &Relative<'_>) -> Result<Position, StyleError> {
+    let [x, y] = position_axes(value)?;
+    let side = |part: Option<&Component>| {
+        part.map_or(Ok(PositionComponent::CENTER), |part| {
+            axis(part, relative, false)
+        })
+    };
+    Ok([side(x)?, side(y)?])
+}
+
+/// The horizontal and vertical parts of a `<bg-position>` or `<position>`; `None` is `center`.
+pub(super) fn position_axes(value: &Component) -> Result<[Option<&Component>; 2], StyleError> {
     let value = value.unwrap();
     if let Component::Slots(slots) = value {
-        let side = |slot: &Option<Component>| {
-            slot.as_ref()
-                .map_or(Ok(PositionComponent::CENTER), |part| axis(part, relative))
-        };
-        return Ok([side(&slots[0])?, side(&slots[1])?]);
+        return Ok([slots[0].as_ref(), slots[1].as_ref()]);
     }
     let parts = terms(value);
     match parts.as_slice() {
         [single] if matches!(single.keyword(), Some(Keyword::Top | Keyword::Bottom)) => {
-            Ok([PositionComponent::CENTER, axis(single, relative)?])
+            Ok([None, Some(single)])
         }
-        [single] => Ok([axis(single, relative)?, PositionComponent::CENTER]),
-        [x, y] => Ok([axis(x, relative)?, axis(y, relative)?]),
+        [single] => Ok([Some(single), None]),
+        [x, y] => Ok([Some(x), Some(y)]),
         _ => Err(unsupported(value)),
     }
+}
+
+/// `background-position-x` or `-y` (CSS Backgrounds 4): per layer, `center` or an edge with
+/// an offset from it.
+pub(super) fn axis_positions(
+    value: &Component,
+    relative: &Relative<'_>,
+    rtl: bool,
+) -> Result<Vec<PositionComponent>, StyleError> {
+    list(value, |item| axis(item, relative, rtl))
 }
 
 /// `<bg-size>`: `cover`, `contain`, or a width and an optional height.

@@ -129,7 +129,8 @@ pub enum BackgroundImage<I = Infallible> {
 #[serde(bound(serialize = ""))]
 pub struct Backgrounds<I = Infallible> {
     pub images: Vec<BackgroundImage<I>>,
-    pub positions: Vec<Position>,
+    /// `background-position-x` and `background-position-y`, which cycle independently.
+    pub positions: [Vec<PositionComponent>; 2],
     pub sizes: Vec<BackgroundSize>,
     pub repeats: Vec<[Repeat; 2]>,
     pub origins: Vec<BoxArea>,
@@ -141,7 +142,10 @@ impl<I> Default for Backgrounds<I> {
     fn default() -> Self {
         Self {
             images: vec![BackgroundImage::None],
-            positions: vec![[PositionComponent::START; 2]],
+            positions: [
+                vec![PositionComponent::START],
+                vec![PositionComponent::START],
+            ],
             sizes: vec![BackgroundSize::default()],
             repeats: vec![[Repeat::Repeat; 2]],
             origins: vec![BoxArea::PaddingBox],
@@ -496,9 +500,21 @@ impl<I: ImageInfo> BoxPaint<I> {
             if !(tile[0] > 0.0 && tile[1] > 0.0 && tile.iter().all(|v| v.is_finite())) {
                 continue;
             }
-            let position = cycle(&backgrounds.positions, index);
-            let (x, step_x, repeat_x) = place(repeat[0], &position[0], area.x, extent[0], tile[0]);
-            let (y, step_y, repeat_y) = place(repeat[1], &position[1], area.y, extent[1], tile[1]);
+            let [position_x, position_y] = &backgrounds.positions;
+            let (x, step_x, repeat_x) = place(
+                repeat[0],
+                cycle(position_x, index),
+                area.x,
+                extent[0],
+                tile[0],
+            );
+            let (y, step_y, repeat_y) = place(
+                repeat[1],
+                cycle(position_y, index),
+                area.y,
+                extent[1],
+                tile[1],
+            );
             let image = match source {
                 Source::Image(image, _) => TileImage::Image(image),
                 Source::Gradient(gradient) => match gradient.resolve(tile) {

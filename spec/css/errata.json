@@ -151,6 +151,13 @@
     }
   },
   "properties": {
+    "background-position": {
+      "initial": [
+        "background-position-x",
+        "background-position-y"
+      ],
+      "source": "https://drafts.csswg.org/css-backgrounds-4/#background-position: a shorthand for background-position-x and background-position-y"
+    },
     "animation": {
       "initial": [
         "animation-name",

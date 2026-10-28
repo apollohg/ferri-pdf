@@ -649,6 +649,10 @@ impl<'a> Geometry<'a> {
         if property == Property::OutlineColor {
             self.property(context, Property::Color)?;
         }
+        // `x-start` and `x-end` name the element's inline-axis edges.
+        if property == Property::BackgroundPositionX {
+            self.property(context, Property::Direction)?;
+        }
         if let Some(parent) = self.parent_context(context)
             && needs_parent(property, value)
         {

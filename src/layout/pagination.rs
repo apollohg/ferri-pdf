@@ -190,6 +190,8 @@ enum Effect<'a> {
     BorderClip,
     /// A resolved paint fragment clip, with exterior edges left open.
     PaintClip(Clip),
+    /// The `clip` region of an absolutely positioned box, from its fragment's border box.
+    RectClip(&'a crate::style::Style),
     /// The box's transform about its fragment's reference box, placed by its parent's
     /// `Parent3d` node.
     Transform(&'a crate::style::Style, Option<usize>),
@@ -451,6 +453,7 @@ struct ActiveBox<'a> {
     group: Option<usize>,
     clip_node: Option<usize>,
     transform_node: Option<usize>,
+    clip_rect_node: Option<usize>,
     parent_3d_node: Option<usize>,
     paint: Option<(BoxPaint, usize)>,
     fragments: Vec<(usize, usize)>,
@@ -1688,6 +1691,15 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         if transform_node.is_some() {
             self.clip = transform_node;
         }
+        // CSS Masking 1 §6.1: `clip` cuts the box and its descendants, in its own coordinates.
+        let clip_rect_node = (owns_wrapper_properties
+            && block.style.position.is_out_of_flow()
+            && block.style.clip.is_some()
+            && block.paint.is_some())
+        .then(|| effect_node(self, Effect::RectClip(block.style)));
+        if clip_rect_node.is_some() {
+            self.clip = clip_rect_node;
+        }
         let previous_parent_3d = self.parent_3d;
         let parent_3d_node = (transformed
             && block.paint.is_some()
@@ -1812,6 +1824,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             group: self.group,
             clip_node,
             transform_node,
+            clip_rect_node,
             parent_3d_node,
             paint,
             fragments,
@@ -2031,6 +2044,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         for node in [
             active.clip_node,
             active.transform_node,
+            active.clip_rect_node,
             active.parent_3d_node,
         ]
         .into_iter()
@@ -2332,10 +2346,19 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 Effect::Clip(axes) => Some(paint.inner_clip([0.0; 4], axes)),
                 Effect::BorderClip => Some(paint.background_clips().border),
                 Effect::PaintClip(clip) => Some(clip),
+                Effect::RectClip(style) => style.clip_region(paint.rect).map(|rect| Clip {
+                    rect,
+                    radii: crate::graphics::Radii::default(),
+                    reference_box: None,
+                    axes: [true; 2],
+                }),
                 Effect::Transform(..) | Effect::Parent3d(_) | Effect::Group(_) => None,
             };
             match node.effect {
-                Effect::Clip(_) | Effect::BorderClip | Effect::PaintClip(_) => {
+                Effect::Clip(_)
+                | Effect::BorderClip
+                | Effect::PaintClip(_)
+                | Effect::RectClip(_) => {
                     for (page, paint) in node.fragments.iter().filter_map(fragment) {
                         node_regions.extend(clip(paint).map(|clip| (page, Region::Clip(clip))));
                     }
@@ -3885,6 +3908,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 for node in [
                     active.clip_node,
                     active.transform_node,
+                    active.clip_rect_node,
                     active.parent_3d_node,
                 ]
                 .into_iter()

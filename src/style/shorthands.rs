@@ -215,7 +215,8 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::FontStretch => alias(value.unwrap(), P::FontWidth),
         P::FontVariant => crate::style::font_values::expand_variant(&value)?,
         P::FontSynthesis => font_synthesis(&value)?,
-        P::Background => background(&value),
+        P::Background => background(&value)?,
+        P::BackgroundPosition => background_position(&value)?,
         P::PageBreakBefore => legacy_break(&value, P::BreakBefore)?,
         P::PageBreakAfter => legacy_break(&value, P::BreakAfter)?,
         P::PageBreakInside => legacy_break(&value, P::BreakInside)?,
@@ -641,7 +642,7 @@ fn animation_range(value: &Component) -> Longhands {
 }
 
 /// Per-layer longhand lists from `[ <bg-layer> , ]* <final-bg-layer>`.
-fn background(value: &Component) -> Longhands {
+fn background(value: &Component) -> Result<Longhands, StyleError> {
     let mut layers = Vec::new();
     value.unwrap().references(
         &[
@@ -687,7 +688,6 @@ fn background(value: &Component) -> Longhands {
     };
     let mut longhands = vec![
         layered(Property::BackgroundImage, &layers, &slot(LAYER_IMAGE)),
-        layered(Property::BackgroundPosition, &layers, &position),
         layered(Property::BackgroundSize, &layers, &size),
         layered(Property::BackgroundRepeat, &layers, &slot(LAYER_REPEAT)),
         layered(
@@ -703,7 +703,47 @@ fn background(value: &Component) -> Longhands {
         .and_then(|layer| layer.slot(LAYER_COLOR))
         .map_or_else(initial, |color| longhand(Property::BackgroundColor, color));
     longhands.push((Property::BackgroundColor, color));
-    longhands
+    let positions: Vec<Option<Component>> = layers.iter().map(|layer| position(layer)).collect();
+    longhands.extend(axis_lists(
+        &positions.iter().map(Option::as_ref).collect::<Vec<_>>(),
+    )?);
+    Ok(longhands)
+}
+
+/// CSS Backgrounds 4: `background-position` sets `background-position-x` and `-y`.
+fn background_position(value: &Component) -> Result<Longhands, StyleError> {
+    axis_lists(&value.items().iter().map(Some).collect::<Vec<_>>())
+}
+
+/// `background-position-x` and `-y` lists with one item per `<bg-position>`, where an omitted
+/// axis is `center` and an omitted position the longhands' initial item.
+fn axis_lists(positions: &[Option<&Component>]) -> Result<Longhands, StyleError> {
+    let axes = [Property::BackgroundPositionX, Property::BackgroundPositionY];
+    if positions.iter().all(Option::is_none) {
+        return Ok(axes.map(|axis| (axis, initial())).into());
+    }
+    let initial_item = |axis: Property| {
+        declaration::initial(axis)
+            .and_then(|initial| initial.items().first())
+            .cloned()
+            .ok_or_else(|| StyleError::Invalid(format!("{} has no initial item", axis.name())))
+    };
+    let mut lists = [Vec::new(), Vec::new()];
+    for position in positions {
+        let items = match position {
+            Some(position) => crate::style::background_values::position_axes(position)?
+                .map(|part| part.cloned().unwrap_or(Component::Keyword(Keyword::Center))),
+            None => [initial_item(axes[0])?, initial_item(axes[1])?],
+        };
+        for (list, item) in lists.iter_mut().zip(items) {
+            list.push(item);
+        }
+    }
+    Ok(axes
+        .into_iter()
+        .zip(lists)
+        .map(|(axis, items)| (axis, longhand(axis, &Component::Group(items))))
+        .collect())
 }
 
 /// One list item per layer; layers that omit it repeat the longhand's initial item.

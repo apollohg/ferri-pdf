@@ -524,6 +524,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 group: None,
                 clip_node: None,
                 transform_node: None,
+                clip_rect_node: None,
                 parent_3d_node: None,
                 paint: None,
                 fragments: Vec::new(),

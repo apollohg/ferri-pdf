@@ -102,6 +102,18 @@ class VisualEffectsPdf(unittest.TestCase):
         self.assertEqual(flow.crop(lower).tobytes(), plain.crop(lower).tobytes(),
                          'outlines take no space, so later content stays in place')
 
+    def test_position_longhands_place_layers_as_the_shorthand_does(self):
+        layer = (BOX + '.box{background-image:linear-gradient(red,red),linear-gradient(blue,blue);'
+                 'background-size:20pt 10pt;background-repeat:no-repeat}')
+        expected = self.pixels(layer + '.box{background-position:right 5pt top 10pt,'
+                                       'left 5pt bottom 0}')
+        self.assertNotEqual(expected.tobytes(), self.pixels(layer).tobytes(),
+                            'the probe positions must move the layers')
+        actual = self.pixels(layer + '.box{background-position-x:right 5pt,5pt;'
+                                     'background-position-y:10pt,bottom}')
+        self.assertEqual(actual.tobytes(), expected.tobytes(),
+                         'background-position-x and -y must place each layer as the shorthand')
+
     def groups(self, css, body):
         return groups(self.renderer.render(self.root, css, body))
 

@@ -148,7 +148,7 @@ fn rotation(axis: [f32; 3], angle: f32) -> Matrix3d {
 }
 
 /// A function's argument values in order, without the commas the grammar requires.
-fn arguments(function: &Component) -> Vec<&Component> {
+pub(super) fn arguments(function: &Component) -> Vec<&Component> {
     let mut output = Vec::new();
     function
         .arguments()
@@ -525,6 +525,7 @@ impl Style {
         self.transform_style == TransformStyle::Preserve3d
             && !self.is_scroll_container()
             && !self.is_grouped()
+            && self.clip.is_none()
     }
     /// The parent placement this box gives its transformed children.
     pub(crate) fn parent_3d(&self, boxes: &BoxAreas<Rect>) -> Option<Parent3d> {
