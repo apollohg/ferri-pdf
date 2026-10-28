@@ -988,6 +988,22 @@ fn handler(property: Property) -> Option<Handler> {
             vertical_align,
             Some(|v, r| crate::style::VerticalAlign::from_component(v, r).is_ok()),
         ),
+        P::DominantBaseline => (
+            dominant_baseline,
+            Some(|v, _| crate::style::Baseline::dominant(v).is_ok()),
+        ),
+        P::AlignmentBaseline => (
+            alignment_baseline,
+            Some(|v, _| crate::style::Baseline::alignment(v).is_ok()),
+        ),
+        P::BaselineShift => (
+            baseline_shift,
+            Some(|v, r| crate::style::BaselineShift::from_component(v, r).is_ok()),
+        ),
+        P::BaselineSource => (
+            baseline_source,
+            Some(|v, _| crate::style::BaselineSource::from_component(v).is_ok()),
+        ),
         P::TableColumnSpan => (
             table_column_span,
             Some(|v, r| crate::style::table_values::span(v, r).is_ok()),
@@ -2359,6 +2375,26 @@ computed!(
     |value, style, _parent, relative| {
         crate::style::VerticalAlign::from_component(value, relative)?
     }
+);
+computed!(
+    dominant_baseline,
+    [baseline.dominant],
+    |value, style, _parent, _relative| crate::style::Baseline::dominant(value)?
+);
+computed!(
+    alignment_baseline,
+    [baseline.alignment],
+    |value, style, _parent, _relative| crate::style::Baseline::alignment(value)?
+);
+computed!(
+    baseline_shift,
+    [baseline.shift],
+    |value, style, _parent, relative| crate::style::BaselineShift::from_component(value, relative)?
+);
+computed!(
+    baseline_source,
+    [baseline.source],
+    |value, style, _parent, _relative| crate::style::BaselineSource::from_component(value)?
 );
 computed!(
     table_column_span,

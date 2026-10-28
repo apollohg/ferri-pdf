@@ -7,7 +7,7 @@ use crate::graphics::{
 use crate::layout::LayoutError;
 use crate::layout::geometry::{Edges, inline_horizontal};
 use crate::layout::measure::{MeasuredBlock, Measurer};
-use crate::style::Display;
+use crate::style::{BaselineSource, Display};
 use crate::text::{AtomicMetrics, BoxFragment, GlyphRun};
 
 /// An atomic inline measured in its containing block, waiting for its line position.
@@ -62,14 +62,15 @@ fn measure_atomic<'a>(
         + geometry.border[1]
         + margin[1];
     let height = margin[0] + measured.height + margin[2];
-    let baseline = baseline(block, &measured).map_or(height, |baseline| margin[0] + baseline);
+    let content = baseline(block, &measured);
     Ok(MeasuredAtomic {
-        block: measured,
         metrics: AtomicMetrics {
             width,
             height,
-            baseline,
+            baseline: content.map_or(height, |baseline| margin[0] + baseline),
+            synthesized_baseline: content.is_none(),
         },
+        block: measured,
         margin_top: margin[0],
     })
 }
@@ -169,17 +170,20 @@ fn shrink_to_fit(
     Ok(constraints.constrain(width))
 }
 
-/// Baseline below the border-box top; `None` uses the bottom margin edge. Inline blocks use
-/// their last line box, other atomic containers their first baseline; replaced elements and
-/// scroll containers have none (CSS Align 3 §9.1).
+/// Baseline below the border-box top; `None` uses the bottom margin edge. `baseline-source`
+/// chooses the first or last baseline set; `auto` is the last line box for inline blocks and
+/// the first baseline for other atomic containers (CSS Inline 3 §4.2.1); replaced elements
+/// and scroll containers have none (CSS Align 3 §9.1).
 fn baseline(block: &BlockBox, measured: &MeasuredBlock<'_>) -> Option<f32> {
     let style = block.style();
     if block.image().is_some() || style.is_scroll_container() {
-        None
-    } else if style.display.is_inline_block() {
-        measured.last_baseline()
-    } else {
-        measured.first_baseline()
+        return None;
+    }
+    match style.baseline.source {
+        BaselineSource::Last => measured.last_baseline(),
+        BaselineSource::First => measured.first_baseline(),
+        BaselineSource::Auto if style.display.is_inline_block() => measured.last_baseline(),
+        BaselineSource::Auto => measured.first_baseline(),
     }
 }
 

@@ -281,11 +281,13 @@ fn resumed_atomic_metrics_keep_original_indices_and_ignore_consumed_objects() {
             width: 30.0,
             height: 10.0,
             baseline: 8.0,
+            synthesized_baseline: false,
         },
         AtomicMetrics {
             width: 40.0,
             height: 10.0,
             baseline: 8.0,
+            synthesized_baseline: false,
         },
     ];
     let changed = [

@@ -1,4 +1,5 @@
 //! Font data ownership and CSS face matching, independent of shaping and PDF output.
+mod baselines;
 mod bundled;
 mod feature_values;
 mod loading;
@@ -8,6 +9,7 @@ mod palettes;
 mod selection;
 mod silhouette;
 
+pub(crate) use baselines::BaselineTable;
 pub(crate) use feature_values::FeatureValueType;
 pub(crate) use metrics::{
     FALLBACK_IDEOGRAPH_ADVANCE_EM, FALLBACK_ZERO_ADVANCE_EM, FaceMetrics, InitialFont, SizeAdjust,

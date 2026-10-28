@@ -1,6 +1,7 @@
 //! CSS syntax, cascade, computed values, and page/font rules.
 mod angles;
 mod background_values;
+mod baseline_values;
 mod bookmark_values;
 mod border_image_values;
 mod box_values;
@@ -78,6 +79,7 @@ mod wide_keywords;
 pub(crate) mod will_change;
 
 use crate::resources::ResourceError;
+pub(crate) use baseline_values::{Baseline, BaselineAlignment, BaselineShift, BaselineSource};
 pub(crate) use bookmark_values::BookmarkStyle;
 pub(crate) use box_values::{
     BoxSizing, BreakBetween, BreakInside, Display, LengthPercentage, Size, Visibility,

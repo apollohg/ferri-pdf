@@ -34,6 +34,7 @@ pub(crate) struct FaceMetrics {
     pub zero_advance: Option<f32>,
     pub ideograph_advance: Option<f32>,
     pub ideograph_height: Option<f32>,
+    pub baselines: crate::fonts::BaselineTable,
 }
 impl FaceMetrics {
     pub(crate) fn of(face: &Face<'_>) -> Self {
@@ -44,17 +45,19 @@ impl FaceMetrics {
                 .map(|bounds| bounds.y_max)
         };
         let ascent = f32::from(face.ascender()) / units_per_em;
+        let descent = -f32::from(face.descender()) / units_per_em;
+        let x_height = face
+            .x_height()
+            .filter(|height| *height > 0)
+            .or_else(|| glyph_top(LOWERCASE_X))
+            .map_or(FALLBACK_X_HEIGHT_EM, |height| {
+                f32::from(height) / units_per_em
+            });
         Self {
             ascent,
-            descent: -f32::from(face.descender()) / units_per_em,
+            descent,
             line_gap: f32::from(face.line_gap()) / units_per_em,
-            x_height: face
-                .x_height()
-                .filter(|height| *height > 0)
-                .or_else(|| glyph_top(LOWERCASE_X))
-                .map_or(FALLBACK_X_HEIGHT_EM, |height| {
-                    f32::from(height) / units_per_em
-                }),
+            x_height,
             cap_height: face
                 .capital_height()
                 .filter(|height| *height > 0)
@@ -67,6 +70,7 @@ impl FaceMetrics {
                 .filter(|glyph| glyph.0 != 0)
                 .and_then(|glyph| face.glyph_ver_advance(glyph))
                 .map(|height| f32::from(height) / units_per_em),
+            baselines: crate::fonts::BaselineTable::of(face, ascent, descent, x_height),
         }
     }
     /// `line-height: normal`.

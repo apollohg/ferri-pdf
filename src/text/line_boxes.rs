@@ -1,7 +1,7 @@
 //! Line box assembly and vertical alignment (CSS 2.1 §10.8, CSS Inline 3 §5.3).
 use crate::document::Paragraph;
 use crate::fonts::FaceMetrics;
-use crate::style::{Style, VerticalAlign};
+use crate::style::{Baseline, BaselineShift, Style, VerticalAlign};
 use crate::text::{GlyphRun, Line, TextContext, TextError};
 use serde::Serialize;
 use std::ops::Range;
@@ -19,6 +19,8 @@ pub(crate) struct AtomicMetrics {
     pub height: f32,
     /// Distance from the margin-box top to the box's baseline.
     pub baseline: f32,
+    /// Whether the box has no content baseline, so that the baseline is its margin bottom.
+    pub synthesized_baseline: bool,
 }
 
 /// One visually contiguous piece of an inline box on a line.
@@ -434,6 +436,9 @@ pub(crate) struct BoxMetrics {
     pub(crate) descent: f32,
     line_height: f32,
     pub(crate) x_height: f32,
+    /// The font's baseline table, in em, and the used size it scales by.
+    baselines: crate::fonts::BaselineTable,
+    size: f32,
 }
 impl BoxMetrics {
     pub(crate) fn of(context: &TextContext<'_>, style: &Style) -> Result<Self, TextError> {
@@ -441,20 +446,40 @@ impl BoxMetrics {
         let instance = context
             .face(font, style)?
             .ok_or(TextError::NoFontCandidates)?;
-        let metrics = FaceMetrics::of(&instance.face);
-        let size = instance.used_size(style);
+        Ok(Self::of_face(
+            &FaceMetrics::of(&instance.face),
+            instance.used_size(style),
+            style.line_height.resolve(style.size),
+        ))
+    }
+    /// A face's metrics at `size`; `line_height` is `None` for `normal`.
+    fn of_face(metrics: &FaceMetrics, size: f32, line_height: Option<f32>) -> Self {
         let [ascent, descent, gap] =
             [metrics.ascent, metrics.descent, metrics.line_gap].map(|metric| metric * size);
-        let x_height = metrics.x_height * size;
-        Ok(Self {
+        Self {
             ascent,
             descent,
-            line_height: style
-                .line_height
-                .resolve(style.size)
-                .unwrap_or(ascent + descent + gap),
-            x_height,
-        })
+            line_height: line_height.unwrap_or(ascent + descent + gap),
+            x_height: metrics.x_height * size,
+            baselines: metrics.baselines,
+            size,
+        }
+    }
+    /// How far `baseline` lies below the alphabetic baseline (CSS Inline 3 §3.3).
+    pub(crate) fn baseline(&self, baseline: Baseline) -> f32 {
+        let table = &self.baselines;
+        match baseline {
+            Baseline::Alphabetic => 0.0,
+            Baseline::TextBottom => self.descent,
+            Baseline::TextTop => -self.ascent,
+            Baseline::Ideographic => -table.ideographic_under * self.size,
+            Baseline::Middle => -self.x_height / 2.0,
+            Baseline::Central => {
+                -f32::midpoint(table.ideographic_over, table.ideographic_under) * self.size
+            }
+            Baseline::Mathematical => -table.math * self.size,
+            Baseline::Hanging => -table.hanging * self.size,
+        }
     }
     pub(crate) fn line_height(&self) -> f32 {
         self.line_height
@@ -481,24 +506,50 @@ fn run_extent(run: &GlyphRun) -> [f32; 2] {
 }
 
 /// Baseline offset from the parent's baseline, positive downwards, for a box whose extent
-/// around its own baseline is `[top, bottom]`.
+/// around its own baseline is `[top, bottom]`. `vertical-align`, a longhand of the pinned
+/// grammar, keeps its CSS 2.1 meaning: its alignment keywords take the place of
+/// `alignment-baseline`, and its shifts add to `baseline-shift` (CSS Inline 3 §4.2).
 fn offset(
-    align: &VerticalAlign,
-    parent: &BoxMetrics,
+    align: &Alignment<'_>,
+    (parent, dominant): Parent<'_>,
     [top, bottom]: [f32; 2],
-    line_height: impl FnOnce() -> Result<f32, TextError>,
+    line_height: impl Fn() -> Result<f32, TextError>,
 ) -> Result<f32, TextError> {
-    Ok(match align {
-        VerticalAlign::Baseline | VerticalAlign::Top | VerticalAlign::Bottom => 0.0,
-        VerticalAlign::Sub => parent.descent * SUBSCRIPT_DESCENT_FRACTION,
-        VerticalAlign::Super => -parent.ascent * SUPERSCRIPT_ASCENT_FRACTION,
+    let shift = |shift: &BaselineShift| -> Result<f32, TextError> {
+        Ok(match shift {
+            BaselineShift::Raise(length) => -length.resolve(line_height()?),
+            BaselineShift::Sub => parent.descent * SUBSCRIPT_DESCENT_FRACTION,
+            BaselineShift::Super => -parent.ascent * SUPERSCRIPT_ASCENT_FRACTION,
+        })
+    };
+    let aligned = || {
+        let baseline = align.baseline.alignment.unwrap_or(dominant);
+        parent.baseline(baseline) - (align.own)(baseline)
+    };
+    let legacy = match align.vertical {
+        VerticalAlign::Top | VerticalAlign::Bottom => return Ok(0.0),
+        VerticalAlign::Baseline => aligned(),
+        VerticalAlign::Sub => aligned() + shift(&BaselineShift::Sub)?,
+        VerticalAlign::Super => aligned() + shift(&BaselineShift::Super)?,
+        VerticalAlign::Length(length) => aligned() + shift(&BaselineShift::Raise(length.clone()))?,
         VerticalAlign::TextTop => -parent.ascent - top,
         VerticalAlign::TextBottom => parent.descent - bottom,
         VerticalAlign::Middle => -parent.x_height / 2.0 - f32::midpoint(top, bottom),
         VerticalAlign::BaselineMiddle => -(top + bottom) / 2.0,
-        VerticalAlign::Length(length) => -length.resolve(line_height()?),
-    })
+    };
+    Ok(legacy + shift(&align.baseline.shift)?)
 }
+
+/// How a box aligns in its parent: its legacy `vertical-align`, its `alignment-baseline`
+/// and `baseline-shift`, and where each of its baselines lies below its alphabetic one.
+struct Alignment<'a> {
+    vertical: &'a VerticalAlign,
+    baseline: &'a crate::style::BaselineAlignment,
+    own: &'a dyn Fn(Baseline) -> f32,
+}
+
+/// A parent's metrics and the dominant baseline it aligns its children by.
+type Parent<'a> = (&'a BoxMetrics, Baseline);
 
 /// Vertical extent of boxes aligned together: the root inline box, or one `top`/`bottom` subtree.
 struct Extent {
@@ -535,17 +586,17 @@ impl Subtrees {
     /// Aligns a box with `extent` around its baseline inside `parent`, and includes it.
     fn place(
         &mut self,
-        align: &VerticalAlign,
-        parent: (Aligned, &BoxMetrics),
+        align: &Alignment<'_>,
+        parent: (Aligned, Parent<'_>),
         extent: [f32; 2],
-        line_height: impl FnOnce() -> Result<f32, TextError>,
+        line_height: impl Fn() -> Result<f32, TextError>,
     ) -> Result<Aligned, TextError> {
-        let placed = match align {
+        let placed = match align.vertical {
             VerticalAlign::Top | VerticalAlign::Bottom => {
                 self.trees.push(Extent {
                     top: extent[0],
                     bottom: extent[1],
-                    to_bottom: *align == VerticalAlign::Bottom,
+                    to_bottom: *align.vertical == VerticalAlign::Bottom,
                 });
                 Aligned {
                     shift: 0.0,
@@ -590,8 +641,9 @@ pub(crate) fn align(
         },
         trees: Vec::new(),
     };
+    let root_dominant = paragraph.style().baseline.dominant;
     let present = std::mem::take(&mut line.present);
-    let mut aligned: Vec<(Aligned, BoxMetrics)> = Vec::with_capacity(present.len());
+    let mut aligned: Vec<(Aligned, BoxMetrics, Baseline)> = Vec::with_capacity(present.len());
     let boxes = paragraph.boxes();
     // Content and boxes only belong to boxes present on their line, whose ancestors are present.
     let position = |owner: usize| {
@@ -604,24 +656,40 @@ pub(crate) fn align(
         let metrics = BoxMetrics::of(context, style)?;
         let parent = match boxes[index].parent {
             Some(parent) => {
-                let (placed, metrics) = &aligned[position(parent)];
-                (*placed, metrics)
+                let (placed, metrics, dominant) = &aligned[position(parent)];
+                (*placed, (metrics, *dominant))
             }
-            None => (ROOT, &root_metrics),
+            None => (ROOT, (&root_metrics, root_dominant)),
         };
+        let own = |baseline| metrics.baseline(baseline);
         let placed = subtrees.place(
-            &style.table.vertical_align,
+            &Alignment {
+                vertical: &style.table.vertical_align,
+                baseline: &style.baseline,
+                own: &own,
+            },
             parent,
             metrics.extent(),
             || Ok(metrics.line_height),
         )?;
-        aligned.push((placed, metrics));
+        aligned.push((placed, metrics, style.baseline.dominant));
     }
-    let placement = |owner: Option<usize>| owner.map_or(ROOT, |owner| aligned[position(owner)].0);
+    let owner = |owner: Option<usize>| {
+        owner.map_or((ROOT, &root_metrics, root_dominant), |owner| {
+            let (placed, metrics, dominant) = &aligned[position(owner)];
+            (*placed, metrics, *dominant)
+        })
+    };
     let mut runs = Vec::with_capacity(line.runs.len());
     for run in &line.runs {
         let span = &paragraph.spans()[run.source_span];
-        let placed = placement(span.inline_box);
+        let (placed, metrics, dominant) = owner(span.inline_box);
+        // Each glyph's dominant baseline lies on its box's (CSS Inline 3 §4.1).
+        let glyphs = BoxMetrics::of_face(&run.metrics, run.metric_size, None);
+        let placed = Aligned {
+            shift: placed.shift + metrics.baseline(dominant) - glyphs.baseline(dominant),
+            ..placed
+        };
         let mut extent = if span.style.line_height == crate::style::LineHeight::Normal {
             run_extent(run)
         } else {
@@ -639,7 +707,7 @@ pub(crate) fn align(
             .spans()
             .partition_point(|span| span.range.end <= offset)];
         subtrees.include(
-            placement(span.inline_box),
+            owner(span.inline_box).0,
             BoxMetrics::of(context, &span.style)?.extent(),
         );
     }
@@ -647,18 +715,30 @@ pub(crate) fn align(
     for fragment in &line.atomics {
         let metrics = atomics[fragment.index];
         let style = paragraph.atomics()[fragment.index].block.style();
-        let parent = match fragment.owner {
-            Some(owner) => {
-                let (placed, metrics) = &aligned[position(owner)];
-                (*placed, metrics)
+        let (placed, parent, dominant) = owner(fragment.owner);
+        let font = BoxMetrics::of(context, style)?;
+        // Without a content baseline the margin box gives the baselines (CSS Inline 3 §A.3).
+        let own = |baseline| {
+            if !metrics.synthesized_baseline {
+                return font.baseline(baseline);
             }
-            None => (ROOT, &root_metrics),
+            match baseline {
+                Baseline::Alphabetic | Baseline::TextBottom | Baseline::Ideographic => 0.0,
+                Baseline::Central | Baseline::Mathematical | Baseline::Middle => {
+                    -metrics.height / 2.0
+                }
+                Baseline::TextTop | Baseline::Hanging => -metrics.height,
+            }
         };
         atomic_placements.push(subtrees.place(
-            &style.table.vertical_align,
-            parent,
+            &Alignment {
+                vertical: &style.table.vertical_align,
+                baseline: &style.baseline,
+                own: &own,
+            },
+            (placed, (parent, dominant)),
             [-metrics.baseline, metrics.height - metrics.baseline],
-            || Ok(BoxMetrics::of(context, style)?.line_height),
+            || Ok(font.line_height),
         )?);
     }
     let Subtrees { root, trees } = subtrees;
@@ -684,7 +764,7 @@ pub(crate) fn align(
         fragment.baseline = baseline(placed);
     }
     for fragment in &mut line.boxes {
-        let (placed, metrics) = &aligned[position(fragment.index)];
+        let (placed, metrics, _) = &aligned[position(fragment.index)];
         fragment.baseline = baseline(*placed);
         fragment.ascent = metrics.ascent;
         fragment.descent = metrics.descent;

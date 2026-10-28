@@ -4,6 +4,7 @@ mod common;
 mod weasy_reference;
 
 mod backgrounds;
+mod baseline_alignment;
 mod body_strings;
 mod counters;
 mod first_page_selection;
