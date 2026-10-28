@@ -86,6 +86,9 @@ pub(super) fn defined(property: Property) -> bool {
             // engine displays none, so their colour and thickness never render.
             | P::ScrollbarColor
             | P::ScrollbarWidth
+            // CSS Overflow 3 §4.2: a scrollbar gutter is as wide as the scrollbar it reserves
+            // space for, and without scrollbars every gutter is zero-width.
+            | P::ScrollbarGutter
             // CSS UI 4: pointer, caret, selection, resizing, inertness and interest only
             // concern user interaction.
             | P::CaretAnimation
