@@ -386,7 +386,16 @@ impl QueryValues for ContainerValues<'_> {
             return Ok(None);
         };
         let style = &self.container.style;
-        value.substitute(&style.custom_properties, &style.inherited_custom_properties)
+        // `attr()` and `if()` need the container element's attributes and cascade, which
+        // its computed values no longer carry.
+        value
+            .substitute(&style.custom_properties, &style.inherited_custom_properties)
+            .map_err(|error| match error {
+                StyleError::Invalid(_) => {
+                    StyleError::Unsupported(format!("@container query substitution: {source}"))
+                }
+                error => error,
+            })
     }
     fn scalar(&self, source: &str) -> Result<Option<Scalar>, StyleError> {
         Scalar::parse(source, &self.relative())
