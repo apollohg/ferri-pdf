@@ -1,6 +1,6 @@
 //! Line-based placement and the auto-placement algorithm (CSS Grid 1 §8).
 use crate::grid::GridError;
-use ferri_pdf_style::{AutoFlow, COLUMNS, GridLine, MAX_GRID_LINE, ROWS};
+use crate::style::{AutoFlow, COLUMNS, GridLine, MAX_GRID_LINE, ROWS};
 use std::{ops::Range, sync::Arc};
 
 /// Start and end lines of an item, indexed by [`ROWS`] and [`COLUMNS`].

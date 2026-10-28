@@ -1,5 +1,5 @@
+use crate::style::{BoxSizing, Size, SizeConstraints, VerticalAlign};
 use crate::table::{Grid, TableError, finite, grow};
-use ferri_pdf_style::{BoxSizing, Size, SizeConstraints, VerticalAlign};
 
 #[derive(Clone, Debug, Default)]
 pub(crate) struct HeightConstraint {
@@ -222,7 +222,7 @@ mod tests {
 
     #[test]
     fn table_target_distributes_auto_rows_and_interpolates_percentages() {
-        use ferri_pdf_style::{LengthPercentage, Size};
+        use crate::style::{LengthPercentage, Size};
         let grid = Grid::new(
             &[RowGroup {
                 rows: vec![
@@ -342,7 +342,7 @@ mod tests {
 
     #[test]
     fn cell_constraints_include_box_edges_and_keep_natural_content() {
-        use ferri_pdf_style::LengthPercentage;
+        use crate::style::LengthPercentage;
         let grid = Grid::new(
             &[RowGroup {
                 rows: vec![

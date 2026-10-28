@@ -1,5 +1,5 @@
+use crate::style::{BoxSizing, LengthPercentage, Size, SizeConstraints, TableLayout};
 use crate::table::{Grid, TableError, finite, grow};
-use ferri_pdf_style::{BoxSizing, LengthPercentage, Size, SizeConstraints, TableLayout};
 
 #[derive(Clone, Debug)]
 pub(crate) struct CellWidth {
@@ -38,7 +38,7 @@ impl CellWidth {
             BoxSizing::ContentBox,
             0.0,
         );
-        let natural = ferri_pdf_style::IntrinsicWidths {
+        let natural = crate::style::IntrinsicWidths {
             min: (self.min - self.edges).max(0.0),
             max: (self.max - self.edges).max(0.0),
         };

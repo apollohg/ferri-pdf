@@ -273,7 +273,7 @@ fn target_reference_in_an_explicit_bookmark_label_resolves() {
 
 #[test]
 fn target_reference_errors_retain_the_reason_without_loading_external_documents() {
-    use ferri_pdf_style::{StyleError, TargetReferenceError};
+    use crate::style::{StyleError, TargetReferenceError};
     for (reference, expected) in [
         ("#absent", TargetReferenceError::MissingId),
         ("#", TargetReferenceError::MissingFragment),

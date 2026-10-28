@@ -1,4 +1,4 @@
-use ferri_pdf_style::{
+use crate::style::{
     CounterProperties, CounterRequest, DEFAULT_COUNTER_INCREMENT, Display, INITIAL_COUNTER_VALUE,
     LIST_ITEM_COUNTER, PageStyleTarget, StyleError,
 };
@@ -177,7 +177,7 @@ impl Counters {
     fn enter_scopes(
         &mut self,
         target: PageStyleTarget,
-        scopes: &ferri_pdf_style::CounterScopes,
+        scopes: &crate::style::CounterScopes,
         display: &Display,
     ) -> Result<(), StyleError> {
         self.inherit(target)?;
@@ -197,7 +197,7 @@ impl Counters {
     fn enter_selected(
         &mut self,
         target: PageStyleTarget,
-        styles: &dyn ferri_pdf_style::PageSelection,
+        styles: &dyn crate::style::PageSelection,
         display: &Display,
         scopes_only: bool,
     ) -> Result<(), StyleError> {
@@ -335,7 +335,7 @@ impl Counters {
     }
     pub(crate) fn snapshot(
         &mut self,
-        content: &ferri_pdf_style::GeneratedContent,
+        content: &crate::style::GeneratedContent,
     ) -> Result<CounterSnapshot, StyleError> {
         for request in content.counter_requests() {
             self.value(request.name.clone())?;
@@ -376,8 +376,8 @@ impl Counters {
         &mut self,
         properties: &CounterProperties,
         document: &ferri_pdf_dom::DocumentTree,
-        sheet: &ferri_pdf_style::Stylesheet,
-        root: &ferri_pdf_style::Style,
+        sheet: &crate::style::Stylesheet,
+        root: &crate::style::Style,
         resolver: &dyn ferri_pdf_resources::ResourceResolver,
     ) -> Result<(), StyleError> {
         if self.initials.is_some() || !properties.reset.iter().any(|reset| reset.value.is_none()) {
@@ -403,10 +403,10 @@ impl Counters {
     pub(crate) fn visit_hidden(
         &mut self,
         element: ferri_pdf_dom::Element<'_>,
-        styles: &dyn ferri_pdf_style::PageSelection,
+        styles: &dyn crate::style::PageSelection,
         mut visit: impl FnMut(
             ferri_pdf_dom::Element<'_>,
-            &[ferri_pdf_style::StringAssignment],
+            &[crate::style::StringAssignment],
             &mut Self,
         ) -> Result<(), StyleError>,
     ) -> Result<(), StyleError> {
@@ -436,7 +436,7 @@ impl Counters {
 
     pub(crate) fn at(
         document: &ferri_pdf_dom::DocumentTree,
-        styles: &dyn ferri_pdf_style::PageSelection,
+        styles: &dyn crate::style::PageSelection,
         wanted: PageStyleTarget,
         work: Rc<Cell<usize>>,
     ) -> Result<Self, StyleError> {
@@ -449,11 +449,11 @@ impl Counters {
     fn walk(
         self,
         document: &ferri_pdf_dom::DocumentTree,
-        styles: &dyn ferri_pdf_style::PageSelection,
+        styles: &dyn crate::style::PageSelection,
         wanted: Option<PageStyleTarget>,
     ) -> Result<Self, StyleError> {
+        use crate::style::{Display, PseudoElement};
         use ferri_pdf_dom::{Element, TreeRelation};
-        use ferri_pdf_style::{Display, PseudoElement};
         enum Event<'a> {
             Element(Element<'a>, Option<Display>),
             Pseudo(Element<'a>, PseudoElement, Display),
@@ -624,7 +624,7 @@ fn render_counter(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use ferri_pdf_style::CounterReset;
+    use crate::style::CounterReset;
 
     #[test]
     fn independent_counter_scans_share_the_selection_work_limit() {

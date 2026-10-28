@@ -3,9 +3,9 @@ use crate::document::{PageBox, Paragraph};
 use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, Rect};
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, TextLine};
+use crate::style::{BoxSizing, MarginLocation, PageMargin, Size, VerticalAlign};
 use crate::text::Line;
 use dimensions::{Variable, variable};
-use ferri_pdf_style::{BoxSizing, MarginLocation, PageMargin, Size, VerticalAlign};
 
 const HORIZONTAL: usize = 0;
 const VERTICAL: usize = 1;

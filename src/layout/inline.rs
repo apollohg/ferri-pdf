@@ -5,8 +5,8 @@ use crate::graphics::{BoxPaint, DecorationLine, DecorationPaint, DisplayItem, Re
 use crate::layout::LayoutError;
 use crate::layout::geometry::{Edges, inline_horizontal};
 use crate::layout::measure::{MeasuredBlock, Measurer};
+use crate::style::Display;
 use crate::text::{AtomicMetrics, BoxFragment};
-use ferri_pdf_style::Display;
 
 /// An atomic inline measured in its containing block, waiting for its line position.
 #[derive(Clone)]

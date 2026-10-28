@@ -4,7 +4,7 @@ use crate::layout::{
     geometry::{Edges, HorizontalBox, SizeConstraints},
     measure::{ItemMetrics, MeasuredBlock, MeasuredCell, Measurer},
 };
-use ferri_pdf_style::{Alignment, COLUMNS, ROWS, Size};
+use crate::style::{Alignment, COLUMNS, ROWS, Size};
 use std::ops::Range;
 
 pub(crate) struct Item<'a> {

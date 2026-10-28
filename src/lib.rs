@@ -22,6 +22,7 @@ mod grid;
 mod images;
 mod layout;
 mod multipart;
+mod style;
 mod svg;
 mod table;
 #[cfg(test)]
@@ -45,6 +46,9 @@ pub use crate::graphics::{
 };
 pub use crate::images::ImageError;
 pub use crate::layout::{Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine};
+pub use crate::style::{
+    ColorScheme, ContrastPreference, MotionPreference, PrintPreferences, PrintSettings, StyleError,
+};
 pub use crate::text::{GlyphRun, PositionedGlyph};
 pub use crate::writer::{
     ImageDpi, ImageOptions, InvalidImageDpi, InvalidJpegQuality, JpegQuality, PdfError,
@@ -60,9 +64,6 @@ pub use ferri_pdf_resources::{
 };
 #[cfg(feature = "http")]
 pub use ferri_pdf_resources::{LoaderOptions, UrlResolver};
-pub use ferri_pdf_style::{
-    ColorScheme, ContrastPreference, MotionPreference, PrintPreferences, PrintSettings, StyleError,
-};
 
 /// Settings for a rendering job. CSS controls page size and formatting.
 #[derive(Clone, Debug, Default)]

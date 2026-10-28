@@ -1,9 +1,9 @@
 //! Hyperlinks and their same-document targets (HTML §4.6.4, §7.4.6.4) and bookmarks
 //! (CSS GCPM 3 §4), located later by the boxes that carry them.
 use crate::document::{DocumentError, MAX_INLINE_TEXT_BYTES, content::element_text};
+use crate::style::{GeneratedContent, PseudoElement, QuoteDepth, Quotes, Style};
 use ferri_pdf_dom::{DocumentTree, Element, ElementId};
 use ferri_pdf_resources::{ResourceBase, Url};
-use ferri_pdf_style::{GeneratedContent, PseudoElement, QuoteDepth, Quotes, Style};
 
 use std::collections::{BTreeMap, HashMap};
 
@@ -133,8 +133,8 @@ impl FragmentIndex {
     pub(crate) fn contains(&self, element: ElementId) -> bool {
         self.owners.contains(&element)
     }
-    pub(crate) fn target(&self, reference: &str) -> Result<ElementId, ferri_pdf_style::StyleError> {
-        use ferri_pdf_style::{StyleError, TargetReferenceError};
+    pub(crate) fn target(&self, reference: &str) -> Result<ElementId, crate::style::StyleError> {
+        use crate::style::{StyleError, TargetReferenceError};
         let invalid = |reason| StyleError::TargetReference {
             reference: reference.to_owned(),
             reason,
@@ -370,7 +370,7 @@ impl NavigationBuilder {
             input.content = generated
                 .bind(
                     &input.content,
-                    ferri_pdf_style::PageStyleTarget {
+                    crate::style::PageStyleTarget {
                         element: id,
                         pseudo: None,
                     },
@@ -453,7 +453,7 @@ fn label(
 #[cfg(test)]
 mod target_tests {
     use super::*;
-    use ferri_pdf_style::{StyleError, TargetReferenceError};
+    use crate::style::{StyleError, TargetReferenceError};
 
     #[test]
     fn target_lookup_reuses_first_id_ownership_without_link_only_fallbacks() {

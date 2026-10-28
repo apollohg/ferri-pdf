@@ -1,8 +1,8 @@
 use crate::document::{BlockBox, BlockContent};
 use crate::layout::LayoutError;
 use crate::layout::measure::Measurer;
+use crate::style::{BoxSizing, LengthPercentage, Size};
 use crate::text::IntrinsicWidths;
-use ferri_pdf_style::{BoxSizing, LengthPercentage, Size};
 
 /// Content-box min- and max-content widths; replaced elements with only an aspect ratio
 /// stretch into `available`, the width of the containing block being sized into.
@@ -73,7 +73,7 @@ pub(super) fn measure(
 }
 
 pub(super) fn outer_widths(
-    style: &ferri_pdf_style::Style,
+    style: &crate::style::Style,
     mut sizes: IntrinsicWidths,
 ) -> IntrinsicWidths {
     let edges = style.padding[1].resolve(0.0)
@@ -91,8 +91,8 @@ pub(super) fn outer_widths(
     }
     let natural = sizes;
     match style.width {
-        Size::Intrinsic(ferri_pdf_style::IntrinsicSizing::MinContent) => sizes.max = sizes.min,
-        Size::Intrinsic(ferri_pdf_style::IntrinsicSizing::MaxContent) => sizes.min = sizes.max,
+        Size::Intrinsic(crate::style::IntrinsicSizing::MinContent) => sizes.max = sizes.min,
+        Size::Intrinsic(crate::style::IntrinsicSizing::MaxContent) => sizes.min = sizes.max,
         _ => {}
     }
     let constraints = crate::layout::geometry::SizeConstraints::new(
@@ -122,10 +122,10 @@ pub(super) fn width_constraints(
     basis: Option<f32>,
     edges: f32,
     available: Option<f32>,
-) -> Result<ferri_pdf_style::SizeConstraints, LayoutError> {
+) -> Result<crate::style::SizeConstraints, LayoutError> {
     let style = block.style();
     let sizes = [&style.width, &style.min_width, &style.max_width];
-    let constraints = ferri_pdf_style::SizeConstraints::new(sizes, basis, style.box_sizing, edges);
+    let constraints = crate::style::SizeConstraints::new(sizes, basis, style.box_sizing, edges);
     if sizes.iter().any(|size| matches!(size, Size::Intrinsic(_))) {
         let natural = content(block, measurer, basis.unwrap_or(0.0))?;
         Ok(constraints.with_intrinsic(sizes, natural, available))

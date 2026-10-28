@@ -1,7 +1,7 @@
 //! Page production geometry; content stays in the original layout coordinates.
 use crate::graphics::{BoxDecoration, BoxPaint, Color, Point, Rect};
 use crate::layout::LayoutError;
-use ferri_pdf_style::PageProduction;
+use crate::style::PageProduction;
 use serde::Serialize;
 
 const MARK_MARGIN_PT: f32 = 18.0;
@@ -20,8 +20,8 @@ pub struct PageOutput {
 
 #[derive(Clone, Serialize)]
 pub struct PageRecord {
-    pub request: ferri_pdf_style::PageRequest,
-    pub geometry: ferri_pdf_style::PageGeometry,
+    pub request: crate::style::PageRequest,
+    pub geometry: crate::style::PageGeometry,
     pub output: PageOutput,
 }
 impl PageRecord {

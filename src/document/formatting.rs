@@ -1,8 +1,8 @@
 use crate::document::navigation::{BoxNavigation, NavigationBuilder};
 use crate::document::{DocumentError, Paragraph, inline::InlineCollector};
 use crate::graphics::BoxDecoration;
+use crate::style::{Display, PseudoElement, Style, StyleError, Stylesheet};
 use ferri_pdf_dom::{ChildNodes, DocumentTree, Element, ElementId, TreeRelation};
-use ferri_pdf_style::{Display, PseudoElement, Style, StyleError, Stylesheet};
 
 pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
@@ -16,16 +16,16 @@ fn canvas_background(decoration: &BoxDecoration) -> BoxDecoration {
 }
 
 pub(crate) struct PageBox {
-    pub request: ferri_pdf_style::PageRequest,
-    pub geometry: ferri_pdf_style::PageGeometry,
+    pub request: crate::style::PageRequest,
+    pub geometry: crate::style::PageGeometry,
     #[cfg(test)]
     pub style: Style,
-    pub production: ferri_pdf_style::PageProduction,
+    pub production: crate::style::PageProduction,
     pub decoration: BoxDecoration,
     pub margins: Vec<PageMarginBox>,
 }
 pub(crate) struct PageMarginBox {
-    pub margin: ferri_pdf_style::PageMargin,
+    pub margin: crate::style::PageMargin,
     pub decoration: BoxDecoration,
 }
 pub(crate) struct Formatted {
@@ -182,7 +182,7 @@ pub(crate) struct Traversal<'a> {
     navigation: NavigationBuilder,
     strings: crate::document::strings::StringAssignments,
     generated: crate::document::generated::GeneratedPass,
-    quotes: ferri_pdf_style::QuoteDepth,
+    quotes: crate::style::QuoteDepth,
     canvas: BoxDecoration,
     canvas_body: Option<ElementId>,
 }
@@ -275,14 +275,14 @@ impl BlockBuilder<'_, '_, '_> {
             self.resources.resolver,
         )?;
         self.traversal.counters.enter(
-            ferri_pdf_style::PageStyleTarget {
+            crate::style::PageStyleTarget {
                 element: element.id(),
                 pseudo: Some(pseudo),
             },
             &style.counters,
             &style.display,
         )?;
-        let context = ferri_pdf_style::PageStyleTarget {
+        let context = crate::style::PageStyleTarget {
             element: element.id(),
             pseudo: Some(pseudo),
         };
@@ -416,7 +416,7 @@ fn validate_display(display: &Display) -> Result<(), StyleError> {
 }
 
 fn validate_inline(style: &Style) -> Result<(), DocumentError> {
-    if style.position != ferri_pdf_style::Position::Static {
+    if style.position != crate::style::Position::Static {
         return Err(DocumentError::Formatting(
             "inline positioning is not supported".into(),
         ));
@@ -670,11 +670,11 @@ fn block<'a>(
                         let [width, height] =
                             marker.marker_image_size().expect("image marker has size");
                         let mut style = frame.style.anonymous(Display::InlineBlock);
-                        style.width = ferri_pdf_style::Size::Value(
-                            ferri_pdf_style::LengthPercentage::Length(width),
+                        style.width = crate::style::Size::Value(
+                            crate::style::LengthPercentage::Length(width),
                         );
-                        style.height = ferri_pdf_style::Size::Value(
-                            ferri_pdf_style::LengthPercentage::Length(height),
+                        style.height = crate::style::Size::Value(
+                            crate::style::LengthPercentage::Length(height),
                         );
                         let mut decoration = BoxDecoration::default();
                         std::sync::Arc::make_mut(&mut decoration.backgrounds).images =
@@ -833,7 +833,7 @@ fn block<'a>(
                 resources.resolver,
             )?;
             traversal.counters.enter(
-                ferri_pdf_style::PageStyleTarget {
+                crate::style::PageStyleTarget {
                     element: child.id(),
                     pseudo: None,
                 },
@@ -1088,7 +1088,7 @@ pub(crate) fn build(
         .counters
         .prepare(&style.counters, html, sheet, &style, resolver)?;
     traversal.counters.enter(
-        ferri_pdf_style::PageStyleTarget {
+        crate::style::PageStyleTarget {
             element: element.id(),
             pseudo: None,
         },

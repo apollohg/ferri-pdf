@@ -1,5 +1,5 @@
-pub(super) use ferri_pdf_style::SizeConstraints;
-use ferri_pdf_style::Style;
+pub(super) use crate::style::SizeConstraints;
+use crate::style::Style;
 
 #[derive(Clone, PartialEq)]
 pub(super) struct HorizontalBox {
@@ -92,7 +92,7 @@ pub(super) fn horizontal_with_edges(
         [left, right],
         used_width,
         containing_rtl,
-        ferri_pdf_style::Overconstraint::AdjustEndMargin,
+        crate::style::Overconstraint::AdjustEndMargin,
     );
     HorizontalBox {
         containing_x,
@@ -163,7 +163,7 @@ impl VerticalBox {
             + horizontal.border[0]
             + horizontal.border[2];
         Self {
-            constraints: if style.display == ferri_pdf_style::Display::TableCell {
+            constraints: if style.display == crate::style::Display::TableCell {
                 SizeConstraints {
                     specified: None,
                     minimum: 0.0,
@@ -178,7 +178,7 @@ impl VerticalBox {
                 )
             },
             edges,
-            table_cell: style.display == ferri_pdf_style::Display::TableCell,
+            table_cell: style.display == crate::style::Display::TableCell,
         }
     }
     pub(crate) fn with_constraints(mut self, constraints: SizeConstraints) -> Self {

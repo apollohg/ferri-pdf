@@ -6,8 +6,8 @@ use crate::layout::{
     margin::MarginStrut,
     measure::{FlowItem, MeasuredBlock, Measurer},
 };
+use crate::style::POINTS_PER_PIXEL;
 use crate::text::IntrinsicWidths;
-use ferri_pdf_style::POINTS_PER_PIXEL;
 
 /// Content-box width and height constraints, percentages resolved against the containing block.
 pub(super) fn constraints(

@@ -2,11 +2,11 @@ use crate::document::{BlockBox, BlockContent};
 use crate::graphics::Border;
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, geometry::Edges, intrinsic};
+use crate::style::{BorderCollapse, Display, LengthPercentage, Size, Style};
 use crate::table::{
     BorderBox, BorderOrigin, CellWidth, CollapsedBorders, ColumnWidth, Grid, RowGroup, Span,
     TableError,
 };
-use ferri_pdf_style::{BorderCollapse, Display, LengthPercentage, Size, Style};
 use std::{ops::Range, rc::Rc};
 
 pub(super) struct Group<'a> {
@@ -182,7 +182,7 @@ impl<'a> Data<'a> {
         let grid = Grid::new(&spans, column_count)?;
         let mut collapsed_columns = vec![false; grid.columns];
         for column in &columns {
-            if column.source.style().visibility == ferri_pdf_style::Visibility::Collapse {
+            if column.source.style().visibility == crate::style::Visibility::Collapse {
                 collapsed_columns[column.start..column.start + column.span].fill(true);
             }
         }
@@ -190,9 +190,9 @@ impl<'a> Data<'a> {
             .iter()
             .enumerate()
             .map(|(index, source)| {
-                source.style().visibility == ferri_pdf_style::Visibility::Collapse
+                source.style().visibility == crate::style::Visibility::Collapse
                     || groups[row_groups[index]].source.is_some_and(|group| {
-                        group.style().visibility == ferri_pdf_style::Visibility::Collapse
+                        group.style().visibility == crate::style::Visibility::Collapse
                     })
             })
             .collect();

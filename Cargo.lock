@@ -597,6 +597,7 @@ version = "0.1.0"
 dependencies = [
  "base64 0.22.1",
  "cssparser",
+ "cssparser-color",
  "data-url",
  "encoding_rs",
  "ferri-pdf-avif-decode",
@@ -607,7 +608,7 @@ dependencies = [
  "ferri-pdf-krilla",
  "ferri-pdf-paint",
  "ferri-pdf-resources",
- "ferri-pdf-style",
+ "ferri-pdf-spec-data",
  "ferri-pdf-zenavif-parse",
  "flate2",
  "fontdb",
@@ -775,22 +776,6 @@ dependencies = [
 [[package]]
 name = "ferri-pdf-spec-data"
 version = "0.1.0"
-
-[[package]]
-name = "ferri-pdf-style"
-version = "0.1.0"
-dependencies = [
- "cssparser",
- "cssparser-color",
- "ferri-pdf-dom",
- "ferri-pdf-fonts",
- "ferri-pdf-paint",
- "ferri-pdf-resources",
- "ferri-pdf-spec-data",
- "serde",
- "serde_json",
- "thiserror",
-]
 
 [[package]]
 name = "ferri-pdf-zenavif-parse"

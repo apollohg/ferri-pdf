@@ -1,11 +1,11 @@
 use super::common;
 
+use crate::style::StyleDiagnosticKind;
 use crate::{
     RenderDiagnostic, Resource, ResourceBase, ResourceError, ResourceResolver, StyleError, Url,
     render_html, render_with_resolver,
 };
 use common::{assert_pt, local_options};
-use ferri_pdf_style::StyleDiagnosticKind;
 
 fn render_css(css: &str) -> crate::RenderOutput {
     render_html(

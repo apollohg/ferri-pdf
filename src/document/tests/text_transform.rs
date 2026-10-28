@@ -91,7 +91,7 @@ fn transformed_offsets_still_cover_links_boxes_breaks_and_atomics() {
     let after_break = offset + ch.len_utf8();
     assert_eq!(
         paragraph.clearance_at(after_break).0,
-        ferri_pdf_style::Clear::Both
+        crate::style::Clear::Both
     );
 }
 

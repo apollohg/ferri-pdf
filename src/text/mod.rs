@@ -11,12 +11,12 @@ mod shaping;
 mod spacing;
 mod whitespace;
 use crate::document::Paragraph;
+use crate::style::{Style, TextAlign, WhiteSpace};
 use bidi::resolve as paragraph_bidi;
 use ferri_pdf_fonts::{
     FontBook, FontError, FontId, FontSelection, FontSynthesis, FontVariation, GlyphMatch,
 };
 use ferri_pdf_resources::ResourceResolver;
-use ferri_pdf_style::{Style, TextAlign, WhiteSpace};
 use rustybuzz::Face;
 use serde::Serialize;
 use shaping::MissingGlyphs;
@@ -207,7 +207,7 @@ pub(crate) struct Line {
     ellipsis: Option<usize>,
 }
 
-pub(crate) use ferri_pdf_style::IntrinsicWidths;
+pub(crate) use crate::style::IntrinsicWidths;
 
 /// Font advances and offsets use em units; additional CSS spacing uses points. Y is downwards.
 /// Cluster byte ranges index the glyph run's UTF-8 text.

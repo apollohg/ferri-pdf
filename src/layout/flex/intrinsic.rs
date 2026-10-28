@@ -3,8 +3,8 @@ use crate::document::BlockBox;
 use crate::flex::Item;
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, geometry::SizeConstraints, intrinsic};
+use crate::style::{BoxSizing, FlexBasis, FlexWrap, Size};
 use crate::text::IntrinsicWidths;
-use ferri_pdf_style::{BoxSizing, FlexBasis, FlexWrap, Size};
 
 pub(crate) fn measure(
     block: &BlockBox,
@@ -76,7 +76,7 @@ pub(crate) fn measure(
             constraints.minimum
         };
         let item = Item {
-            collapsed: child_style.visibility == ferri_pdf_style::Visibility::Collapse,
+            collapsed: child_style.visibility == crate::style::Visibility::Collapse,
             basis,
             minimum,
             maximum: constraints.maximum,

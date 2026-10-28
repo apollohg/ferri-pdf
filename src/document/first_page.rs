@@ -2,11 +2,11 @@ use crate::document::{
     formatting,
     tables::{self, Content},
 };
-use ferri_pdf_dom::{DocumentTree, Element, TreeRelation};
-use ferri_pdf_style::{
+use crate::style::{
     BreakBetween, CaptionSide, Display, Page, PageSelection, PageSide, PageStyleTarget,
     PseudoElement, QuoteDepth, StyleError,
 };
+use ferri_pdf_dom::{DocumentTree, Element, TreeRelation};
 use std::{
     cell::{Cell, OnceCell},
     rc::Rc,
@@ -68,7 +68,7 @@ fn target(element: Element<'_>, pseudo: Option<PseudoElement>) -> PageStyleTarge
 }
 
 enum QuoteChange {
-    Content(ferri_pdf_style::GeneratedContent),
+    Content(crate::style::GeneratedContent),
     Subtree {
         target: PageStyleTarget,
         display: Display,

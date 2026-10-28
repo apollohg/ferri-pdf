@@ -2,9 +2,9 @@ use super::common;
 
 use crate::document::StyledDocument;
 use crate::graphics::BackgroundImage;
+use crate::style::{PageRequest, PageSide};
 use common::{PROFILE, local_options};
 use ferri_pdf_resources::FileResolver;
-use ferri_pdf_style::{PageRequest, PageSide};
 use std::sync::Arc;
 
 #[test]

@@ -1,7 +1,7 @@
 use crate::document::DocumentError;
+use crate::style::{StylesheetInput, StylesheetSources};
 use ferri_pdf_dom::{DocumentTree, HTML_NAMESPACE, SVG_NAMESPACE};
 use ferri_pdf_resources::{CSS_MEDIA_TYPE, ResourceBase, ResourceMetadata};
-use ferri_pdf_style::{StylesheetInput, StylesheetSources};
 
 const STYLESHEET: &str = "stylesheet";
 

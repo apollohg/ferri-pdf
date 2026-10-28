@@ -10,8 +10,8 @@ use crate::layout::measure::{
     BlockEdge, FlowItem, MeasuredBlock, MeasuredCell, MeasuredRow, Measurer, RowTarget, TableFlow,
 };
 use crate::layout::{LayoutError, geometry, margin::MarginStrut};
+use crate::style::{BreakBetween, Display, Style, TableLayout};
 use crate::table::{CellHeight, HeightConstraint, HeightInput, WidthInput};
-use ferri_pdf_style::{BreakBetween, Display, Style, TableLayout};
 use std::{
     cell::RefCell,
     collections::{BTreeMap, HashMap},
@@ -460,7 +460,7 @@ impl<'a> TablePlan<'a> {
             .copied()
             .chain(data.groups.iter().filter_map(|group| group.source))
             .any(|source| {
-                source.style().position != ferri_pdf_style::Position::Static
+                source.style().position != crate::style::Position::Static
                     || !source.style().transform.is_empty()
             });
         let has_scoped_internals = data.collapsed_columns.iter().any(|&value| value)
@@ -472,7 +472,7 @@ impl<'a> TablePlan<'a> {
                 .chain(data.cells.iter().copied())
                 .any(|source| {
                     let style = source.style();
-                    style.position != ferri_pdf_style::Position::Static
+                    style.position != crate::style::Position::Static
                         || !style.visibility.is_visible()
                         || !style.decoration.shadows.is_empty()
                         || style.is_translucent()
@@ -595,7 +595,7 @@ impl<'a> TablePlan<'a> {
         let mut table = captions::wrap(measurer, table, &self.data.captions, &geometry)?;
         let style = self.source.style();
         if self.has_captions()
-            && (style.position != ferri_pdf_style::Position::Static
+            && (style.position != crate::style::Position::Static
                 || !style.transform.is_empty()
                 || !style.visibility.is_visible()
                 || style.is_translucent()
@@ -763,7 +763,7 @@ impl<'a> TablePlan<'a> {
             .height
             .resolve_definite(None)
             .is_some()
-            || self.source.style().height != ferri_pdf_style::Size::Auto
+            || self.source.style().height != crate::style::Size::Auto
             || self.used_height.is_some()
     }
     pub(crate) fn cell_used_height(
@@ -1022,8 +1022,8 @@ impl<'a> TablePlan<'a> {
             {
                 let extra = (extent - spacing - alignment.content_height).max(0.0);
                 return match self.data.cells[index].style().table.vertical_align.cell() {
-                    ferri_pdf_style::VerticalAlign::Middle => extra / 2.0,
-                    ferri_pdf_style::VerticalAlign::Bottom => extra,
+                    crate::style::VerticalAlign::Middle => extra / 2.0,
+                    crate::style::VerticalAlign::Bottom => extra,
                     _ => alignment
                         .offset
                         .min((extent - spacing - alignment.first_fragment).max(0.0)),
@@ -1078,14 +1078,14 @@ impl<'a> TablePlan<'a> {
             spacing,
             table: self.used_height.map_or_else(
                 || {
-                    ferri_pdf_style::SizeConstraints::new(
+                    crate::style::SizeConstraints::new(
                         [&style.height, &style.min_height, &style.max_height],
                         self.containing_height,
                         style.box_sizing,
                         edges,
                     )
                 },
-                |height| ferri_pdf_style::SizeConstraints {
+                |height| crate::style::SizeConstraints {
                     specified: Some(height),
                     minimum: 0.0,
                     maximum: None,
@@ -1114,7 +1114,7 @@ impl<'a> TablePlan<'a> {
                             .max(0.0)
                     }),
                 baseline: 0.0,
-                align: ferri_pdf_style::VerticalAlign::Top,
+                align: crate::style::VerticalAlign::Top,
                 constraint: HeightConstraint::default(),
             })
             .collect::<Vec<_>>();

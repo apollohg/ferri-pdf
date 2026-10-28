@@ -1,6 +1,6 @@
 //! Parent line correspondence for CSS Grid 2 §9.
 use crate::grid::{AxisLines, GridError};
-use ferri_pdf_style::{GridAreas, MAX_GRID_LINE, NamedArea, Subgrid};
+use crate::style::{GridAreas, MAX_GRID_LINE, NamedArea, Subgrid};
 use std::ops::Range;
 
 fn span(area: &Range<i64>) -> Result<usize, GridError> {
@@ -93,7 +93,7 @@ mod tests {
         };
         let local = Subgrid {
             lines: vec![vec![Arc::from("start")], vec![Arc::from("end")]],
-            repeat: Some(ferri_pdf_style::NameRepeat {
+            repeat: Some(crate::style::NameRepeat {
                 at: 1,
                 lines: vec![vec![Arc::from("a")], vec![Arc::from("b")]],
             }),

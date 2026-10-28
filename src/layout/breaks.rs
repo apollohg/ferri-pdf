@@ -1,5 +1,5 @@
 use crate::layout::measure::{FlowItem, MeasuredBlock, MeasuredCell, MeasuredRow};
-use ferri_pdf_style::{BreakBetween, BreakInside, Style};
+use crate::style::{BreakBetween, BreakInside, Style};
 
 /// CSS Break 3 §4: fragmentation progress assumes at least one CSS pixel.
 pub(super) fn fragmentainer_height(height: f32) -> f32 {
@@ -128,7 +128,7 @@ impl Forced {
     pub(crate) fn is_page(self) -> bool {
         self != Self::Column
     }
-    pub(crate) fn side(self, rtl: bool) -> Option<ferri_pdf_style::PageSide> {
+    pub(crate) fn side(self, rtl: bool) -> Option<crate::style::PageSide> {
         self.value().page_side(rtl)
     }
     pub(crate) fn combine(earlier: Option<Self>, later: Option<Self>) -> Option<Self> {

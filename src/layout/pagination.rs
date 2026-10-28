@@ -24,8 +24,8 @@ use crate::layout::{
     },
     tables::BandPlacement,
 };
+use crate::style::Position;
 pub(super) use columns::measure_columns;
-use ferri_pdf_style::Position;
 use std::{
     collections::{BTreeMap, BTreeSet, HashMap, VecDeque},
     rc::Rc,
@@ -186,7 +186,7 @@ enum Effect<'a> {
     /// A resolved paint fragment clip, with exterior edges left open.
     PaintClip(Clip),
     /// The box's transform about its fragment's border box.
-    Transform(&'a ferri_pdf_style::Style),
+    Transform(&'a crate::style::Style),
     /// Group opacity of a stacking context. Groups nest by stacking context, independently
     /// of clips and transforms, which follow containing blocks.
     Opacity(f32),
@@ -433,7 +433,7 @@ impl ActiveBox<'_> {
 
 #[derive(Clone)]
 struct SlicedBox<'a> {
-    style: &'a ferri_pdf_style::Style,
+    style: &'a crate::style::Style,
     fragments: Vec<(usize, usize)>,
 }
 
@@ -467,10 +467,10 @@ struct BlockFrame<'a> {
     clipped_height: Option<f32>,
     defer_positioned: bool,
     end: Option<BlockEnd>,
-    style: &'a ferri_pdf_style::Style,
+    style: &'a crate::style::Style,
     height: f32,
     independent: bool,
-    break_after: ferri_pdf_style::BreakBetween,
+    break_after: crate::style::BreakBetween,
     continues: bool,
     table: bool,
     positioned: bool,
@@ -637,11 +637,11 @@ pagination_state! {
     canvas: BoxPaint,
     canvas_slots: Vec<Option<usize>>,
     canvas_roots: Vec<(usize, usize)>,
-    canvas_style: Option<&'a ferri_pdf_style::Style>,
+    canvas_style: Option<&'a crate::style::Style>,
     canvas_rect: Rect,
     bottom_reserve: f32,
     sliced: Vec<SlicedBox<'a>>,
-    open_slices: HashMap<*const ferri_pdf_style::Style, usize>,
+    open_slices: HashMap<*const crate::style::Style, usize>,
 }
 impl<M> PaginationState<'_, '_, M> {
     fn detach_orders(&mut self, snapshots: &mut OrderSnapshots) {
@@ -895,13 +895,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             && !(source.style().floating().is_some() && source.image().is_some())
             && matches!(
                 source.style().display,
-                ferri_pdf_style::Display::Block
-                    | ferri_pdf_style::Display::FlowRoot
-                    | ferri_pdf_style::Display::FlowRootListItem
-                    | ferri_pdf_style::Display::Grid
-                    | ferri_pdf_style::Display::ListItem
-                    | ferri_pdf_style::Display::TableCell
-                    | ferri_pdf_style::Display::TableCaption
+                crate::style::Display::Block
+                    | crate::style::Display::FlowRoot
+                    | crate::style::Display::FlowRootListItem
+                    | crate::style::Display::Grid
+                    | crate::style::Display::ListItem
+                    | crate::style::Display::TableCell
+                    | crate::style::Display::TableCaption
             )
     }
     fn containing_geometry(&self) -> (f32, f32, bool, Option<f32>) {
@@ -1420,7 +1420,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
         let source_geometry = self.physical_flow()
             || (self.continuation_flow()
-                && block.style.display != ferri_pdf_style::Display::TableCell);
+                && block.style.display != crate::style::Display::TableCell);
         if source_geometry && starts_source && block.style.floating().is_none() {
             let (x, width, rtl, height) = self.containing_geometry();
             if x != block.geometry.containing_x
@@ -3575,7 +3575,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let mut offset = active.offset;
             let mut reserve = self.bottom_reserve + self.band_footer_height(page);
             if let Some(flow) = &active.geometry
-                && flow.source.style().display == ferri_pdf_style::Display::TableCell
+                && flow.source.style().display == crate::style::Display::TableCell
             {
                 let path =
                     self.flow_geometry(page, self.fragmentainers.content_box(page), Some(flow))?;
@@ -3970,7 +3970,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     }
     fn register_slice(
         &mut self,
-        style: &'a ferri_pdf_style::Style,
+        style: &'a crate::style::Style,
         fragments: Vec<(usize, usize)>,
     ) -> usize {
         let paint = |&(page, slot): &(usize, usize)| match &self.display_lists[page][slot].item {

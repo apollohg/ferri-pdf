@@ -1,7 +1,7 @@
 use super::tracks::Axis;
 use crate::grid::{AxisLines, ItemPlacement, Placement, SizeBounds};
 use crate::layout::{LayoutError, work::Budget};
-use ferri_pdf_style::{COLUMNS, GridAreas, ROWS, Style};
+use crate::style::{COLUMNS, GridAreas, ROWS, Style};
 
 pub(super) struct Topology {
     pub lines: [AxisLines; 2],
@@ -168,14 +168,14 @@ impl Topology {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use ferri_pdf_style::{GridAreas, GridLine, NamedArea, Subgrid, TrackList, TrackSize};
+    use crate::style::{GridAreas, GridLine, NamedArea, Subgrid, TrackList, TrackSize};
     use std::sync::Arc;
 
     #[test]
     fn parent_aware_placement_clips_areas_reverses_names_and_bounds_implicit_tracks() {
         let mut style = Style::default();
         style.flex.gap[COLUMNS] =
-            ferri_pdf_style::Gap::Length(ferri_pdf_style::LengthPercentage::Length(20.0));
+            crate::style::Gap::Length(crate::style::LengthPercentage::Length(20.0));
         style.grid.templates[COLUMNS] = Arc::new(TrackList {
             tracks: vec![TrackSize::AUTO; 4],
             lines: (0..5)

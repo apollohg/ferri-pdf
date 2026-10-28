@@ -1,6 +1,6 @@
 use crate::document::{MAX_INLINE_TEXT_BYTES, inline::is_css_whitespace};
+use crate::style::{Display, ElementContent, Style, StyleError};
 use ferri_pdf_dom::{Element, TreeRelation};
-use ferri_pdf_style::{Display, ElementContent, Style, StyleError};
 use icu_properties::{
     CodePointMapData,
     props::{GeneralCategory, GeneralCategoryGroup},

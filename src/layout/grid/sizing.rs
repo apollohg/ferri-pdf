@@ -1,12 +1,12 @@
 use crate::layout::geometry::SizeConstraints;
-use ferri_pdf_style::{COLUMNS, Style};
+use crate::style::{COLUMNS, Style};
 
 pub(super) fn shared(style: &Style, axis: usize) -> bool {
     style.display.is_grid() && style.grid.templates[axis].subgrid.is_some()
 }
 
 pub(super) fn placement(style: &Style) -> crate::grid::ItemPlacement {
-    use ferri_pdf_style::{GridLine, MAX_GRID_LINE, ROWS};
+    use crate::style::{GridLine, MAX_GRID_LINE, ROWS};
     let mut placement = style.grid.placement.clone();
     for axis in [ROWS, COLUMNS] {
         if !shared(style, axis) {
@@ -60,12 +60,12 @@ pub(super) fn constraints(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use ferri_pdf_style::{Display, LengthPercentage, ROWS, Size, Subgrid, TrackList};
+    use crate::style::{Display, LengthPercentage, ROWS, Size, Subgrid, TrackList};
     use std::sync::Arc;
 
     #[test]
     fn automatic_subgrid_placement_uses_local_tracks_without_overriding_explicit_spans() {
-        use ferri_pdf_style::GridLine;
+        use crate::style::GridLine;
         let mut style = Style::default();
         style.display = Display::Grid;
         style.grid.templates[COLUMNS] = Arc::new(TrackList {

@@ -1,7 +1,7 @@
 mod transform;
 mod transform_maps;
 use crate::document::DocumentError;
-use ferri_pdf_style::{Clear, Style, TextAlign, WhiteSpace};
+use crate::style::{Clear, Style, TextAlign, WhiteSpace};
 use std::ops::Range;
 
 pub(crate) const MAX_INLINE_TEXT_BYTES: usize = 64 * 1024 * 1024;
@@ -74,7 +74,7 @@ impl Paragraph {
     }
 
     pub(crate) fn generated_output(
-        output: &ferri_pdf_style::GeneratedOutput,
+        output: &crate::style::GeneratedOutput,
         style: &Style,
     ) -> Result<Option<Self>, DocumentError> {
         let mut collector = InlineCollector::default();
@@ -267,7 +267,7 @@ impl InlineCollector {
     }
     pub(crate) fn append_generated(
         &mut self,
-        output: &ferri_pdf_style::GeneratedOutput,
+        output: &crate::style::GeneratedOutput,
         style: &Style,
     ) -> Result<(), DocumentError> {
         let mut from = 0;

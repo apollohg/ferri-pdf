@@ -16,9 +16,9 @@ mod stylesheets;
 mod svg;
 mod tables;
 
+use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 use ferri_pdf_dom::DocumentTree;
 use ferri_pdf_resources::{ResourceError, ResourceResolver};
-use ferri_pdf_style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 
 pub(crate) use formatting::{BlockBox, BlockContent, PageBox, PageMarginBox};
 pub(crate) use generated::GeneratedValues;
@@ -56,7 +56,7 @@ pub enum DocumentDiagnostic {
     #[error("image omitted during PDF encoding: {error}")]
     ImageDecode { error: String },
     #[error("{0}")]
-    Css(ferri_pdf_style::StyleDiagnostic),
+    Css(crate::style::StyleDiagnostic),
     #[error("decoding {reference:?} as {encoding} replaced malformed byte sequences")]
     Decoding {
         base: ferri_pdf_resources::ResourceBase,
@@ -353,8 +353,8 @@ impl StyledDocument {
         pages: usize,
         destinations: &[Option<usize>],
         strings: &mut dyn FnMut(
-            ferri_pdf_style::PageStyleTarget,
-            &ferri_pdf_style::NamedStringRequest,
+            crate::style::PageStyleTarget,
+            &crate::style::NamedStringRequest,
         ) -> Result<String, StyleError>,
     ) -> Result<Option<GeneratedValues>, DocumentError> {
         let values = self.generated.resolve(
@@ -452,7 +452,7 @@ impl StyledDocument {
 
     pub(crate) fn resolve_page(
         &self,
-        request: ferri_pdf_style::PageRequest,
+        request: crate::style::PageRequest,
         resolver: &dyn ResourceResolver,
     ) -> Result<std::sync::Arc<PageBox>, DocumentError> {
         self.pages

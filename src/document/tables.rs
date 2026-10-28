@@ -1,5 +1,5 @@
 use crate::document::{BlockBox, BlockContent};
-use ferri_pdf_style::{CaptionSide, Display, Style};
+use crate::style::{CaptionSide, Display, Style};
 
 #[derive(Clone, Copy, Eq, Ord, PartialEq, PartialOrd)]
 enum TableOrder {

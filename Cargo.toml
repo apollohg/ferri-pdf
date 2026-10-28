@@ -110,7 +110,6 @@ ttf-parser = { version = "0.25", features = ["gvar-alloc"] }
 thiserror = "2"
 ferri-pdf-fonts = { path = "crates/fonts", version = "0.1.0" }
 ferri-pdf-resources = { path = "crates/resources", version = "0.1.0", default-features = false }
-ferri-pdf-style = { path = "crates/style", version = "0.1.0" }
 ferri-pdf-paint = { path = "crates/paint", version = "0.1.0" }
 
 [package]
@@ -134,10 +133,14 @@ http = ["ferri-pdf-resources/http"]
 name = "remote"
 required-features = ["http"]
 
+[build-dependencies]
+ferri-pdf-spec-data.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+
 [dependencies]
 ferri-pdf-fonts.workspace = true
 ferri-pdf-resources.workspace = true
-ferri-pdf-style.workspace = true
 thiserror.workspace = true
 serde_json.workspace = true
 same-file.workspace = true
@@ -185,3 +188,5 @@ ttf-parser.workspace = true
 unicode-vo.workspace = true
 xmlwriter.workspace = true
 
+ferri-pdf-spec-data.workspace = true
+cssparser-color.workspace = true

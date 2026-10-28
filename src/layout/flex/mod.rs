@@ -12,7 +12,7 @@ use crate::layout::{
     },
     positioned::StaticAlignment,
 };
-use ferri_pdf_style::{Alignment, BoxSizing, BreakBetween, Display, FlexBasis, FlexWrap, Size};
+use crate::style::{Alignment, BoxSizing, BreakBetween, Display, FlexBasis, FlexWrap, Size};
 
 fn item_metrics(
     measurer: &mut Measurer<'_>,
@@ -247,7 +247,7 @@ pub(super) fn measure<'a>(
             item.main.edges,
         );
         let main_natural = if column {
-            ferri_pdf_style::IntrinsicWidths {
+            crate::style::IntrinsicWidths {
                 min: natural_main,
                 max: natural_main,
             }
@@ -433,14 +433,14 @@ pub(super) fn measure<'a>(
         if struts.is_some()
             || !data
                 .iter()
-                .any(|item| item.source.style().visibility == ferri_pdf_style::Visibility::Collapse)
+                .any(|item| item.source.style().visibility == crate::style::Visibility::Collapse)
         {
             break (lines, used_main, used_cross);
         }
         let mut sizes = vec![0.0; data.len()];
         for line in &lines {
             for index in line.range.clone() {
-                if data[index].source.style().visibility == ferri_pdf_style::Visibility::Collapse {
+                if data[index].source.style().visibility == crate::style::Visibility::Collapse {
                     numeric[index].collapsed = true;
                     sizes[index] = line.cross;
                 }

@@ -1,6 +1,6 @@
 use crate::graphics::Rect;
 use crate::layout::{LayoutError, work::Budget};
-use ferri_pdf_style::{Clear, FloatSide};
+use crate::style::{Clear, FloatSide};
 
 #[derive(Clone)]
 struct Exclusion {

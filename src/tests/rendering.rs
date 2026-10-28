@@ -36,7 +36,7 @@ impl ResourceResolver for Assets {
 }
 
 // HTML rendering defaults: 40px list padding at 96 CSS px per inch.
-const HTML_LIST_CONTENT_X_PT: f32 = 36.0 + 40.0 * ferri_pdf_style::POINTS_PER_PIXEL;
+const HTML_LIST_CONTENT_X_PT: f32 = 36.0 + 40.0 * crate::style::POINTS_PER_PIXEL;
 // DejaVu Sans hmtx: bullet 1208 + space 651 units, at 12pt with 2048 units/em.
 const BULLET_AND_SPACE_ADVANCE_PT: f32 = (1208.0 + 651.0) / 2048.0 * 12.0;
 

@@ -1,7 +1,7 @@
 use super::common;
+use crate::style::{LengthPercentage, Size, Style, StyleError, Stylesheet, StylesheetSource};
 use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_resources::{FileResolver, ResourceResolver};
-use ferri_pdf_style::{LengthPercentage, Size, Style, StyleError, Stylesheet, StylesheetSource};
 use std::fmt::Write;
 
 const FONT_SIZE_PT: f32 = 20.0;
@@ -25,7 +25,7 @@ fn computed_with(css: &str, resolver: &dyn ResourceResolver) -> Result<Style, St
         css,
         "<div id=parent><p id=target>0</p></div>",
         "#target",
-        &ferri_pdf_style::PrintSettings::default(),
+        &crate::style::PrintSettings::default(),
         resolver,
     )
 }
@@ -34,7 +34,7 @@ fn computed_in(
     css: &str,
     html: &str,
     selector: &str,
-    settings: &ferri_pdf_style::PrintSettings,
+    settings: &crate::style::PrintSettings,
     resolver: &dyn ResourceResolver,
 ) -> Result<Style, StyleError> {
     let sheet = Stylesheet::parse_with_settings(
@@ -75,7 +75,7 @@ fn media_computed(css: &str, resolver: &dyn ResourceResolver) -> Style {
         css,
         "<div id=parent><p id=target>0</p></div>",
         "#target",
-        &ferri_pdf_style::PrintSettings {
+        &crate::style::PrintSettings {
             paper: MEDIA_PAPER_PT,
             ..Default::default()
         },
@@ -451,10 +451,10 @@ fn conditional_values_select_the_first_matching_print_and_supports_branch() {
             17.0,
         );
     }
-    let settings = ferri_pdf_style::PrintSettings {
+    let settings = crate::style::PrintSettings {
         paper: MEDIA_PAPER_PT,
-        preferences: ferri_pdf_style::PrintPreferences {
-            color_scheme: ferri_pdf_style::ColorScheme::Dark,
+        preferences: crate::style::PrintPreferences {
+            color_scheme: crate::style::ColorScheme::Dark,
             ..Default::default()
         },
         ..Default::default()
@@ -670,8 +670,8 @@ fn conditional_overflow_queries_resolve_independent_axes_before_dependent_source
         assert_eq!(
             style.overflow,
             [
-                ferri_pdf_style::Overflow::Scroll,
-                ferri_pdf_style::Overflow::Hidden
+                crate::style::Overflow::Scroll,
+                crate::style::Overflow::Hidden
             ]
         );
     }
@@ -926,10 +926,7 @@ fn toggle_selects_after_the_first_matching_computed_value() {
         "#parent{font-style:italic;list-style-type:circle}#target{font-style:toggle(italic,normal);list-style-type:toggle(disc,circle,square)}",
     );
     assert_eq!(style.font_style, ferri_pdf_fonts::FontStyle::Normal);
-    assert_eq!(
-        style.list_style_type,
-        ferri_pdf_style::ListStyleType::Square
-    );
+    assert_eq!(style.list_style_type, crate::style::ListStyleType::Square);
 }
 
 #[test]
@@ -1101,14 +1098,14 @@ fn toggle_display_candidates_include_computed_blockification() {
     );
     assert_eq!(
         absolute.display,
-        ferri_pdf_style::Display::Flex,
+        crate::style::Display::Flex,
         "blockified inline matches the parent's block and selects inline-flex, which computes to flex"
     );
     let item =
         computed("#parent{display:flex}#target{display:toggle(inline-flex,inline-block,block)}");
     assert_eq!(
         item.display,
-        ferri_pdf_style::Display::Block,
+        crate::style::Display::Block,
         "blockification converts inline-block to block flow for legacy compatibility"
     );
     assert!(
@@ -1125,7 +1122,7 @@ fn toggle_overflow_candidates_include_axis_pairing() {
         ));
         assert_eq!(
             style.overflow[0],
-            ferri_pdf_style::Overflow::Scroll,
+            crate::style::Overflow::Scroll,
             "visible computes to auto beside {other}, matches the parent's auto, then selects scroll"
         );
     }
@@ -1133,7 +1130,7 @@ fn toggle_overflow_candidates_include_axis_pairing() {
 
 #[test]
 fn overflow_toggle_pairing_keeps_raw_values_and_avoids_false_cycles() {
-    use ferri_pdf_style::Overflow::{Auto, Clip, Hidden, Scroll, Visible};
+    use crate::style::Overflow::{Auto, Clip, Hidden, Scroll, Visible};
     for (parent, target, expected) in [
         ("visible", "overflow:toggle(visible,clip)", [Clip, Clip]),
         ("clip", "overflow:toggle(visible,clip)", [Visible, Visible]),
@@ -1201,7 +1198,7 @@ fn toggle_display_comparison_uses_contents_exceptions_and_box_ancestry() {
     .unwrap();
     assert_eq!(
         image.display,
-        ferri_pdf_style::Display::Block,
+        crate::style::Display::Block,
         "contents computes to none on img and matches the parent's computed none"
     );
     let item = computed_in(
@@ -1210,7 +1207,7 @@ fn toggle_display_comparison_uses_contents_exceptions_and_box_ancestry() {
     ).unwrap();
     assert_eq!(
         item.display,
-        ferri_pdf_style::Display::Block,
+        crate::style::Display::Block,
         "a boxless ancestor preserves the flex item context before candidate comparison"
     );
 }
@@ -1227,13 +1224,13 @@ fn computed_display_blockifies_roots_and_flex_items_before_value_comparison() {
     .unwrap();
     assert_eq!(
         root.display,
-        ferri_pdf_style::Display::Flex,
+        crate::style::Display::Flex,
         "the root's computed outer display is block"
     );
     let child = computed("#parent{display:flex}#target{display:inline-block}");
     assert_eq!(
         child.display,
-        ferri_pdf_style::Display::Block,
+        crate::style::Display::Block,
         "a flex item's inline-block computes to block flow"
     );
     assert!(
@@ -1820,7 +1817,7 @@ fn tree_counting_functions_resolve_against_element_siblings_in_typed_math() {
     let style = computed_in(
         "#target{order:sibling-count();z-index:sibling-index();font-size:calc(sibling-index() * 6pt);line-height:sibling-count();width:calc(100% / sibling-count());margin-left:calc(sibling-index() * 3pt);opacity:calc(sibling-count() / 8);color:rgb(calc(sibling-index() * 50) 0 0);--index:sibling-index();height:calc(var(--index) * 4pt)}",
         "<section>text<!--comment--><i></i><p id=target>0</p><span hidden></span><b style='display:none'></b></section>",
-        "#target", &ferri_pdf_style::PrintSettings::default(), &FileResolver::default(),
+        "#target", &crate::style::PrintSettings::default(), &FileResolver::default(),
     ).unwrap();
     assert_eq!(
         style.flex.order, 4,
@@ -1832,7 +1829,7 @@ fn tree_counting_functions_resolve_against_element_siblings_in_typed_math() {
         "the index starts at one and includes every element type"
     );
     common::assert_pt(style.size, 12.0);
-    assert_eq!(style.line_height, ferri_pdf_style::LineHeight::Number(4.0));
+    assert_eq!(style.line_height, crate::style::LineHeight::Number(4.0));
     common::assert_pt(style.width.resolve_definite(Some(200.0)).unwrap(), 50.0);
     assert_eq!(style.width.resolve_definite(None), None);
     common::assert_pt(points(&style.margin[3]), 6.0);
@@ -1856,7 +1853,7 @@ fn tree_counting_functions_preserve_syntax_validation_and_consumer_context() {
     }
     let style = computed_in(
         "section{--index:sibling-index()}#target{order:SiBlInG-CoUnT();z-index:sibling-\\69ndex();height:calc(var(--index) * 7pt);width:first-valid(calc(sibling-index() * 6pt),99pt)}@supports(width:calc(sibling-count() * 1pt)){#target{margin-left:14pt}}",
-        "<section><i></i><p id=target>0</p><b></b></section>","#target", &ferri_pdf_style::PrintSettings::default(), &FileResolver::default(),
+        "<section><i></i><p id=target>0</p><b></b></section>","#target", &crate::style::PrintSettings::default(), &FileResolver::default(),
     ).unwrap();
     assert_eq!(style.flex.order, 3);
     assert_eq!(style.z_index, Some(2));
@@ -1874,7 +1871,7 @@ fn tree_counting_uses_the_pinned_flat_tree_instead_of_light_siblings() {
             css,
             html,
             selector,
-            &ferri_pdf_style::PrintSettings::default(),
+            &crate::style::PrintSettings::default(),
             &FileResolver::default(),
         )
         .unwrap();

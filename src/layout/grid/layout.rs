@@ -13,7 +13,7 @@ use crate::layout::{
         PositionedFlow,
     },
 };
-use ferri_pdf_style::{Alignment, BreakBetween, COLUMNS, Overflow, ROWS};
+use crate::style::{Alignment, BreakBetween, COLUMNS, Overflow, ROWS};
 
 pub(crate) fn measure<'a>(
     measurer: &mut Measurer<'_>,

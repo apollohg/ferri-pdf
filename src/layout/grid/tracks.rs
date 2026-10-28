@@ -1,6 +1,6 @@
 use crate::grid::{AxisLines, MaxSizing, MinSizing, SizeBounds, TrackSizing};
 use crate::layout::{LayoutError, work::Budget};
-use ferri_pdf_style::{
+use crate::style::{
     GridAreas, LengthPercentage, MAX_GRID_LINE, POINTS_PER_PIXEL, TrackBreadth, TrackList,
     TrackSize,
 };
@@ -32,10 +32,10 @@ impl TrackGeometry {
         collapsed: &[bool],
         gap: f32,
         available: Option<f32>,
-        alignment: ferri_pdf_style::Alignment,
+        alignment: crate::style::Alignment,
         reverse: bool,
     ) -> Self {
-        use ferri_pdf_style::Alignment;
+        use crate::style::Alignment;
         let count = collapsed.iter().filter(|collapsed| !**collapsed).count();
         let extent = sizes.iter().sum::<f32>() + gap * count.saturating_sub(1) as f32;
         let available = available.unwrap_or(extent);
@@ -418,7 +418,7 @@ impl Axis {
 mod tests {
     #[test]
     fn inherited_geometry_keeps_parent_track_centres_with_child_gaps_and_edges() {
-        use ferri_pdf_style::Alignment;
+        use crate::style::Alignment;
         let parent = TrackGeometry::new(
             &[100.0, 150.0],
             &[false; 2],
@@ -461,7 +461,7 @@ mod tests {
     fn area_derived_names_are_distinct_from_explicit_names_for_subgrid_inheritance() {
         let areas = GridAreas {
             size: [1, 2],
-            areas: vec![ferri_pdf_style::NamedArea {
+            areas: vec![crate::style::NamedArea {
                 name: "panel".into(),
                 tracks: [0..1, 0..2],
             }],
@@ -490,7 +490,7 @@ mod tests {
         );
     }
     use super::*;
-    use ferri_pdf_style::{AutoRepeat, COLUMNS};
+    use crate::style::{AutoRepeat, COLUMNS};
 
     #[test]
     fn positioned_line_edges_exclude_gutters_on_the_outside_of_an_area() {
@@ -500,7 +500,7 @@ mod tests {
                 &[false; 2],
                 10.0,
                 Some(240.0),
-                ferri_pdf_style::Alignment::Center,
+                crate::style::Alignment::Center,
                 reverse,
             );
             let expected = if reverse {
@@ -531,7 +531,7 @@ mod tests {
                 &[false; 3],
                 10.0,
                 Some(240.0),
-                ferri_pdf_style::Alignment::Start,
+                crate::style::Alignment::Start,
                 reverse,
             );
             let area = tracks.area(1..3);
@@ -547,8 +547,8 @@ mod tests {
             assert!((tracks.extent() - 240.0).abs() < 0.001);
         }
         for alignment in [
-            ferri_pdf_style::Alignment::SpaceBetween,
-            ferri_pdf_style::Alignment::Center,
+            crate::style::Alignment::SpaceBetween,
+            crate::style::Alignment::Center,
         ] {
             let tracks = TrackGeometry::new(
                 &[0.0, 50.0, 0.0, 50.0, 0.0],
@@ -558,7 +558,7 @@ mod tests {
                 alignment,
                 false,
             );
-            let expected = if alignment == ferri_pdf_style::Alignment::SpaceBetween {
+            let expected = if alignment == crate::style::Alignment::SpaceBetween {
                 [0.0..50.0, 190.0..240.0]
             } else {
                 [65.0..115.0, 125.0..175.0]
@@ -572,7 +572,7 @@ mod tests {
             &[true; 3],
             10.0,
             Some(240.0),
-            ferri_pdf_style::Alignment::SpaceEvenly,
+            crate::style::Alignment::SpaceEvenly,
             false,
         );
         assert_eq!(empty.extent(), 0.0, "collapsed tracks retain no gutters");

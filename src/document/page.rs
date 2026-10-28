@@ -1,10 +1,10 @@
 use crate::document::BlockContent;
-use ferri_pdf_style::{Display, Page, Style};
+use crate::style::{Display, Page, Style};
 use std::sync::Arc;
 
 use crate::document::{DocumentError, PageBox, PageMarginBox, formatting::ImageResources};
+use crate::style::{PageRequest, ResolvedPage, Stylesheet};
 use ferri_pdf_resources::{ResourceBase, ResourceResolver};
-use ferri_pdf_style::{PageRequest, ResolvedPage, Stylesheet};
 use std::{cell::RefCell, collections::HashMap};
 
 impl PageBox {

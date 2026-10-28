@@ -7,7 +7,7 @@ const PROFILE: &str = "@font-face{font-family:Fixed;src:url('../assets/DejaVuSan
 
 #[test]
 fn leading_side_breaks_suppress_empty_sheets_and_alternate_from_the_first_printed_page() {
-    use ferri_pdf_style::PageSide;
+    use crate::style::PageSide;
     for (direction, before, first_side) in [
         ("ltr", "left", PageSide::Left),
         ("ltr", "right", PageSide::Right),
@@ -49,7 +49,7 @@ fn leading_side_breaks_suppress_empty_sheets_and_alternate_from_the_first_printe
 
 #[test]
 fn body_direction_controls_page_progression_and_recto() {
-    use ferri_pdf_style::PageSide;
+    use crate::style::PageSide;
     let output = render(
         "html{direction:ltr}body{direction:rtl}@page:left{size:300pt 200pt}@page:right{size:500pt 200pt}p+p{break-before:recto}",
         "<p>First</p><p>Second</p>",
@@ -97,7 +97,7 @@ fn forced_page_sides_insert_blank_pages_with_their_own_selected_geometry() {
 
 #[test]
 fn named_side_breaks_select_pending_type_for_blanks_and_restore_parent_scope() {
-    use ferri_pdf_style::PageSide;
+    use crate::style::PageSide;
     for (direction, side, first, blank) in [
         ("ltr", "right", PageSide::Right, PageSide::Left),
         ("rtl", "left", PageSide::Left, PageSide::Right),

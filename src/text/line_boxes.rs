@@ -1,8 +1,8 @@
 //! Line box assembly and vertical alignment (CSS 2.1 §10.8, CSS Inline 3 §5.3).
 use crate::document::Paragraph;
+use crate::style::{Style, VerticalAlign};
 use crate::text::{GlyphRun, Line, TextContext, TextError};
 use ferri_pdf_fonts::FaceMetrics;
-use ferri_pdf_style::{Style, VerticalAlign};
 use serde::Serialize;
 use std::ops::Range;
 
@@ -618,7 +618,7 @@ pub(crate) fn align(
     for run in &line.runs {
         let span = &paragraph.spans()[run.source_span];
         let placed = placement(span.inline_box);
-        let extent = if span.style.line_height == ferri_pdf_style::LineHeight::Normal {
+        let extent = if span.style.line_height == crate::style::LineHeight::Normal {
             run_extent(run)
         } else {
             // CSS Inline 3 excludes fallback metrics from non-normal layout bounds.

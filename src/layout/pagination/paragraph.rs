@@ -22,7 +22,7 @@ struct FloatTrial {
 pub(super) struct ParagraphCursor<'a, 't> {
     index: usize,
     source: &'a crate::document::Paragraph,
-    style: &'a ferri_pdf_style::Style,
+    style: &'a crate::style::Style,
     prepared: Option<Rc<crate::text::PreparedParagraph<'a, 't, 't>>>,
     positions: std::vec::IntoIter<crate::text::TextPosition<'a>>,
     position: crate::text::TextPosition<'a>,

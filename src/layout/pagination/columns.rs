@@ -13,7 +13,7 @@ use crate::layout::{
     measure::{FlowItem, Measurer, first_baseline, last_baseline},
     multicol::{ColumnGeometry, ColumnSegment, MeasuredColumns},
 };
-use ferri_pdf_style::ColumnFill;
+use crate::style::ColumnFill;
 use std::collections::HashMap;
 use std::rc::Rc;
 

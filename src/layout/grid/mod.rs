@@ -13,8 +13,8 @@ pub(super) use layout::measure;
 use crate::document::{BlockBox, BlockContent};
 use crate::grid::{AvailableSpace, SizeBounds, SizingItem, size_tracks};
 use crate::layout::{LayoutError, measure::Measurer};
+use crate::style::{COLUMNS, ROWS};
 use crate::text::IntrinsicWidths;
-use ferri_pdf_style::{COLUMNS, ROWS};
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 use tracks::TrackGeometry;
 
@@ -28,7 +28,7 @@ struct Plan<'a> {
     children: Vec<&'a BlockBox>,
     source_order: Vec<usize>,
     bounds: [SizeBounds; 2],
-    alignment: [ferri_pdf_style::Alignment; 2],
+    alignment: [crate::style::Alignment; 2],
     rtl: bool,
 }
 
@@ -124,8 +124,8 @@ impl<'a> Plan<'a> {
             && let Some(parent) = &self.inherited
         {
             let gap = match &self.source.style().flex.gap[axis] {
-                ferri_pdf_style::Gap::Normal => None,
-                gap @ ferri_pdf_style::Gap::Length(_) => Some(gap.resolve(basis.unwrap_or(0.0))),
+                crate::style::Gap::Normal => None,
+                gap @ crate::style::Gap::Length(_) => Some(gap.resolve(basis.unwrap_or(0.0))),
             };
             if let Some(geometry) = parent.geometry(axis, gap, axis == COLUMNS && self.rtl)? {
                 return Ok(geometry);
@@ -263,10 +263,10 @@ impl<'a> Plan<'a> {
                 } else {
                     constraints.minimum + edges + margins
                 },
-                content_minimum: (style.min_width == ferri_pdf_style::Size::Auto
+                content_minimum: (style.min_width == crate::style::Size::Auto
                     && matches!(
                         style.overflow[0],
-                        ferri_pdf_style::Overflow::Visible | ferri_pdf_style::Overflow::Clip
+                        crate::style::Overflow::Visible | crate::style::Overflow::Clip
                     ))
                 .then_some(
                     constraints
@@ -372,7 +372,7 @@ impl<'a> Geometry<'a> {
             AvailableSpace::Definite(width),
             matches!(
                 self.plan.source.style().flex.justify,
-                ferri_pdf_style::Alignment::Normal | ferri_pdf_style::Alignment::Stretch
+                crate::style::Alignment::Normal | crate::style::Alignment::Stretch
             ),
             measurer,
         )?);
@@ -529,7 +529,7 @@ mod tests {
                             &[false],
                             0.0,
                             None,
-                            ferri_pdf_style::Alignment::Start,
+                            crate::style::Alignment::Start,
                             false,
                         ))),
                     ],

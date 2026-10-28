@@ -3,8 +3,8 @@ use crate::document::{
     content::ElementText,
     counters::{CounterSnapshot, Counters},
 };
+use crate::style::{GeneratedContent, PseudoElement, StringAssignment, StyleError};
 use ferri_pdf_dom::{DocumentTree, Element, ElementId};
-use ferri_pdf_style::{GeneratedContent, PseudoElement, StringAssignment, StyleError};
 use std::{collections::HashMap, sync::Arc};
 
 /// Assignments at one element's semantic position, before their page is known.
@@ -92,7 +92,7 @@ impl StringAssignments {
         element: Element<'_>,
         pseudo: PseudoElement,
         text: &str,
-        style: &ferri_pdf_style::Style,
+        style: &crate::style::Style,
     ) {
         let Some(index) = self.indices.get(&element.id()) else {
             return;

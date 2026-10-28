@@ -570,7 +570,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     if let Some(index) = cell.grid_cell
                         && cell.stretch
                         && cell.block.style.table.vertical_align.cell()
-                            != ferri_pdf_style::VerticalAlign::Top
+                            != crate::style::VerticalAlign::Top
                         && let Some((page, y)) = paint_start
                     {
                         let band = row.band.as_ref().expect("table cells belong to a band");

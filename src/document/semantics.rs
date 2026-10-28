@@ -5,7 +5,7 @@ use std::{collections::HashMap, ops::Range};
 #[derive(Clone, Debug)]
 pub(crate) struct SemanticEvent {
     pub order: Range<usize>,
-    pub context: ferri_pdf_style::PageStyleTarget,
+    pub context: crate::style::PageStyleTarget,
     pub assignment: Option<usize>,
     pub visible: bool,
 }
@@ -44,7 +44,7 @@ impl SemanticTree {
     ) -> SemanticEvent {
         SemanticEvent {
             order: self.0[&element.id()].clone(),
-            context: ferri_pdf_style::PageStyleTarget {
+            context: crate::style::PageStyleTarget {
                 element: element.id(),
                 pseudo: None,
             },

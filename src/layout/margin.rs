@@ -1,6 +1,6 @@
 use crate::document::BlockBox;
 use crate::layout::{LayoutError, measure::Measurer};
-use ferri_pdf_style::{LengthPercentage, Size};
+use crate::style::{LengthPercentage, Size};
 use std::rc::Rc;
 
 #[derive(Clone, Copy, Default)]

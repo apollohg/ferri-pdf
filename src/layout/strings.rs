@@ -1,5 +1,5 @@
 use crate::document::{RunningStringAssignment, SemanticEvent};
-use ferri_pdf_style::{NamedStringMode, NamedStringRequest, PageStyleTarget, StyleError};
+use crate::style::{NamedStringMode, NamedStringRequest, PageStyleTarget, StyleError};
 use std::{collections::HashMap, ops::Range};
 
 #[derive(Clone, Default)]

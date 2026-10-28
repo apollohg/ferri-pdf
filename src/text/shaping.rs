@@ -1,6 +1,6 @@
+use crate::style::{FontVariantCaps, Style};
 use crate::text::{GlyphRun, PositionedGlyph, TextError};
 use ferri_pdf_fonts::{FontId, FontSynthesis, FontVariation};
-use ferri_pdf_style::{FontVariantCaps, Style};
 use icu_casemap::{CaseMapper, ContextCase};
 use icu_properties::{
     CodePointMapData, CodePointSetData,

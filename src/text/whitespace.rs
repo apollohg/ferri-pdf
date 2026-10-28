@@ -1,6 +1,6 @@
 use crate::document::{OBJECT_REPLACEMENT_CHARACTER, Paragraph};
+use crate::style::{TextAlign, WhiteSpace};
 use crate::text::GlyphRun;
-use ferri_pdf_style::{TextAlign, WhiteSpace};
 use icu_properties::{CodePointMapData, props::GeneralCategory};
 use std::ops::Range;
 use unicode_linebreak::{BreakClass, BreakOpportunity};
@@ -195,9 +195,9 @@ pub(super) fn wrapping_width(
 }
 
 pub(super) fn emergency_opportunities(paragraph: &Paragraph, intrinsic: bool) -> Vec<usize> {
-    use ferri_pdf_style::OverflowWrap;
+    use crate::style::OverflowWrap;
     use unicode_segmentation::UnicodeSegmentation;
-    let allows = |style: &ferri_pdf_style::Style| {
+    let allows = |style: &crate::style::Style| {
         style.white_space.wraps()
             && match style.overflow_wrap {
                 OverflowWrap::Normal => false,

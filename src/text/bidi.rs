@@ -1,6 +1,6 @@
 use crate::document::{MAX_INLINE_TEXT_BYTES, Paragraph};
+use crate::style::{Style, UnicodeBidi};
 use crate::text::TextError;
-use ferri_pdf_style::{Style, UnicodeBidi};
 use std::{cell::Cell, ops::Range};
 use unicode_bidi::{BidiClass, BidiInfo, Level, ParagraphBidiInfo, ParagraphInfo, bidi_class};
 

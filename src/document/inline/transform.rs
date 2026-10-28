@@ -1,6 +1,6 @@
 use super::{MAX_INLINE_TEXT_BYTES, Paragraph};
 use crate::document::DocumentError;
-use ferri_pdf_style::{TextCase, TextTransform};
+use crate::style::{TextCase, TextTransform};
 use icu_casemap::{CaseMapper, ContextCase};
 use icu_locale_core::LanguageIdentifier;
 use std::fmt::{self, Write};

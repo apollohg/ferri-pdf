@@ -1,5 +1,5 @@
+use crate::style::{Style, TextAlign};
 use crate::text::{GlyphRun, Line, TextError};
-use ferri_pdf_style::{Style, TextAlign};
 use icu_properties::{CodePointSetData, props::DefaultIgnorableCodePoint};
 
 const WRAP_SPACE_COMPRESSION: f32 = 1.0 / 6.0;

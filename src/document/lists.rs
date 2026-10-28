@@ -1,5 +1,5 @@
 use crate::document::{DocumentError, Paragraph};
-use ferri_pdf_style::{ListStyleType, Style};
+use crate::style::{ListStyleType, Style};
 
 pub(super) fn marker(
     style: &Style,

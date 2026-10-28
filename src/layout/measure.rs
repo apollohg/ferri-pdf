@@ -7,8 +7,8 @@ use crate::layout::{
     margin::MarginStrut,
     multicol::{ColumnFlow, ColumnGeometry, MeasuredColumns, SpannerFragment},
 };
+use crate::style::{BreakBetween, Display, Style};
 use crate::text::{Line, TextContext};
-use ferri_pdf_style::{BreakBetween, Display, Style};
 
 mod metrics;
 pub(super) use metrics::{ItemMetrics, MetricsKey};
@@ -460,7 +460,7 @@ impl Measurer<'_> {
         // Clips, containing blocks and navigation need their page fragments even without ink.
         let fragments = (block.is_canvas_source() && self.canvas_images)
             || style.clipped_axes().contains(&true)
-            || style.position != ferri_pdf_style::Position::Static
+            || style.position != crate::style::Position::Static
             || !style.transform.is_empty()
             || !block.navigation().is_empty();
         let rect = geometry.border_box(0.0);
@@ -729,21 +729,21 @@ impl Measurer<'_> {
                             || frame.cell_percentage_chain)
                             && frame.vertical.definite().is_none()
                             && child.image().is_none()
-                            && matches!(child_style.height, ferri_pdf_style::Size::Value(_))
+                            && matches!(child_style.height, crate::style::Size::Value(_))
                             && child_style.height.resolve_definite(None).is_none();
                         let used_height = (cell_percentage_chain
                             && matches!(
                                 child_style.overflow[1],
-                                ferri_pdf_style::Overflow::Auto | ferri_pdf_style::Overflow::Scroll
+                                crate::style::Overflow::Auto | crate::style::Overflow::Scroll
                             ))
                         .then(|| {
                             let edges = geometry.padding[0]
                                 + geometry.padding[2]
                                 + geometry.border[0]
                                 + geometry.border[2];
-                            ferri_pdf_style::SizeConstraints::new(
+                            crate::style::SizeConstraints::new(
                                 [
-                                    &ferri_pdf_style::Size::ZERO,
+                                    &crate::style::Size::ZERO,
                                     &child_style.min_height,
                                     &child_style.max_height,
                                 ],
@@ -855,7 +855,7 @@ pub(super) fn block_geometry(
     if used_width.is_some()
         || ![&style.width, &style.min_width, &style.max_width]
             .iter()
-            .any(|size| matches!(size, ferri_pdf_style::Size::Intrinsic(_)))
+            .any(|size| matches!(size, crate::style::Size::Intrinsic(_)))
     {
         return Ok(geometry);
     }
@@ -876,7 +876,7 @@ pub(super) fn block_geometry(
         margins,
         None,
         rtl,
-        ferri_pdf_style::Overconstraint::AdjustEndMargin,
+        crate::style::Overconstraint::AdjustEndMargin,
     );
     Ok(horizontal(style, x, width, rtl, Some(used.size)))
 }
@@ -937,7 +937,7 @@ impl<'a> FlowFrame<'a> {
         self.at_start = false;
     }
     fn push_block(&mut self, mut block: MeasuredBlock<'a>, spanner: bool) {
-        if block.style.clear != ferri_pdf_style::Clear::None || block.clearance_before.is_some() {
+        if block.style.clear != crate::style::Clear::None || block.clearance_before.is_some() {
             block.clearance_before = Some(Box::new(self.pending.clone()));
         }
         self.has_forced |= block.has_forced;
@@ -1062,7 +1062,7 @@ impl<'a> FlowFrame<'a> {
             ),
             style,
             canvas_source: block.is_canvas_source(),
-            clearance_before: (style.clear != ferri_pdf_style::Clear::None || items.iter().any(|item| matches!(item, FlowItem::Block(child) | FlowItem::Spanner(child) if child.clearance_before.is_some()))).then(|| Box::new(MarginStrut::default())),
+            clearance_before: (style.clear != crate::style::Clear::None || items.iter().any(|item| matches!(item, FlowItem::Block(child) | FlowItem::Spanner(child) if child.clearance_before.is_some()))).then(|| Box::new(MarginStrut::default())),
             clearance_target,
             before,
             after,

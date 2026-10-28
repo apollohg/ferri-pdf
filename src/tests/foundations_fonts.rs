@@ -1,7 +1,7 @@
 use super::common;
+use crate::style::{LineHeight, Style, StyleError, Stylesheet, StylesheetSource};
 use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_fonts::{FontFamily, FontStyle, FontWeight, GenericFamily};
-use ferri_pdf_style::{LineHeight, Style, StyleError, Stylesheet, StylesheetSource};
 
 fn computed(css: &str) -> Result<Style, StyleError> {
     computed_at(css, Default::default())
@@ -753,7 +753,7 @@ fn small_caps_cascade_resets_and_synthesis_permissions_reach_shaping() {
     let inherited = computed("#parent{font-variant-caps:small-caps;font-synthesis:none}#target{font-variant-caps:inherit}").unwrap();
     assert_eq!(
         inherited.font_variant_caps,
-        ferri_pdf_style::FontVariantCaps::SmallCaps
+        crate::style::FontVariantCaps::SmallCaps
     );
     assert_eq!(inherited.font_synthesis, Default::default());
     let reset =
@@ -761,7 +761,7 @@ fn small_caps_cascade_resets_and_synthesis_permissions_reach_shaping() {
             .unwrap();
     assert_eq!(
         reset.font_variant_caps,
-        ferri_pdf_style::FontVariantCaps::Normal
+        crate::style::FontVariantCaps::Normal
     );
     assert_eq!(reset.font_synthesis, Default::default());
     for unrendered in [

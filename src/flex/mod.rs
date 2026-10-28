@@ -1,5 +1,5 @@
 //! Flexible length resolution and axis-space distribution, independent of text and pages.
-use ferri_pdf_style::Alignment;
+use crate::style::Alignment;
 use std::ops::Range;
 
 #[derive(Clone, Copy, Debug)]

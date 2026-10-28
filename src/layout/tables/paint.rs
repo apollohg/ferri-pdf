@@ -1,7 +1,7 @@
 use super::model::{Data, relative_offset};
 use crate::document::BlockBox;
 use crate::graphics::{BoxDecoration, BoxPaint, Rect};
-use ferri_pdf_style::Display;
+use crate::style::Display;
 use std::ops::Range;
 
 /// Horizontal grid geometry.

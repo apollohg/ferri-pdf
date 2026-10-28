@@ -317,7 +317,7 @@
       "implementation_files": [
         "src/lib.rs",
         "src/document/mod.rs",
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "crates/resources/src/lib.rs"
       ],
       "case_ids": [],
@@ -350,7 +350,7 @@
       "implementation_files": [
         "src/lib.rs",
         "src/document/mod.rs",
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "crates/resources/src/lib.rs"
       ],
       "case_ids": [],
@@ -380,7 +380,7 @@
       "implementation_files": [
         "src/lib.rs",
         "src/document/mod.rs",
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "crates/resources/src/lib.rs"
       ],
       "case_ids": [],
@@ -410,8 +410,8 @@
         "css-syntax-3.foundation-css-token-recovery"
       ],
       "implementation_files": [
-        "crates/style/src/parser.rs",
-        "crates/style/src/declaration.rs"
+        "src/style/parser.rs",
+        "src/style/declaration.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -442,8 +442,8 @@
         "css-syntax-3.foundation-css-rule-recovery"
       ],
       "implementation_files": [
-        "crates/style/src/parser.rs",
-        "crates/style/src/declaration.rs"
+        "src/style/parser.rs",
+        "src/style/declaration.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -472,8 +472,8 @@
         "css-cascade-5.foundation-stylesheet-imports"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
-        "crates/style/src/parser.rs",
+        "src/style/stylesheet.rs",
+        "src/style/parser.rs",
         "crates/resources/src/lib.rs"
       ],
       "case_ids": [],
@@ -502,8 +502,8 @@
         "html.foundation-style-link-applicability"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
-        "crates/style/src/parser.rs",
+        "src/style/stylesheet.rs",
+        "src/style/parser.rs",
         "crates/resources/src/lib.rs"
       ],
       "case_ids": [],
@@ -532,8 +532,8 @@
         "url.foundation-resource-url-resolution"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
-        "crates/style/src/parser.rs",
+        "src/style/stylesheet.rs",
+        "src/style/parser.rs",
         "crates/resources/src/lib.rs"
       ],
       "case_ids": [],
@@ -563,10 +563,10 @@
         "css-cascade-5.foundation-cascade-origins"
       ],
       "implementation_files": [
-        "crates/style/src/cascade.rs",
-        "crates/style/src/computed.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/variables.rs"
+        "src/style/cascade.rs",
+        "src/style/computed.rs",
+        "src/style/user_agent.rs",
+        "src/style/variables.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -594,10 +594,10 @@
         "css-cascade-6.foundation-element-attached-cascade"
       ],
       "implementation_files": [
-        "crates/style/src/cascade.rs",
-        "crates/style/src/computed.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/variables.rs"
+        "src/style/cascade.rs",
+        "src/style/computed.rs",
+        "src/style/user_agent.rs",
+        "src/style/variables.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -630,10 +630,10 @@
         "css-cascade-5.foundation-css-wide-defaulting"
       ],
       "implementation_files": [
-        "crates/style/src/cascade.rs",
-        "crates/style/src/computed.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/variables.rs"
+        "src/style/cascade.rs",
+        "src/style/computed.rs",
+        "src/style/user_agent.rs",
+        "src/style/variables.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -665,10 +665,10 @@
         "css-variables-1.foundation-custom-property-substitution"
       ],
       "implementation_files": [
-        "crates/style/src/cascade.rs",
-        "crates/style/src/computed.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/variables.rs"
+        "src/style/cascade.rs",
+        "src/style/computed.rs",
+        "src/style/user_agent.rs",
+        "src/style/variables.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -701,8 +701,8 @@
         "css-cascade-5.foundation-cascade-layers"
       ],
       "implementation_files": [
-        "crates/style/src/cascade.rs",
-        "crates/style/src/parser.rs"
+        "src/style/cascade.rs",
+        "src/style/parser.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -729,8 +729,8 @@
         "css-cascade-5.foundation-layer-rollback"
       ],
       "implementation_files": [
-        "crates/style/src/cascade.rs",
-        "crates/style/src/parser.rs"
+        "src/style/cascade.rs",
+        "src/style/parser.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -762,10 +762,10 @@
         "html.foundation-html-ua-declarations"
       ],
       "implementation_files": [
-        "crates/style/src/cascade.rs",
-        "crates/style/src/computed.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/variables.rs"
+        "src/style/cascade.rs",
+        "src/style/computed.rs",
+        "src/style/user_agent.rs",
+        "src/style/variables.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -804,7 +804,7 @@
         "mediaqueries-5.foundation-media-query-syntax"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -831,7 +831,7 @@
         "mediaqueries-5.foundation-media-width"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -858,7 +858,7 @@
         "mediaqueries-5.foundation-media-height"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -885,7 +885,7 @@
         "mediaqueries-5.foundation-media-aspect-ratio"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -912,7 +912,7 @@
         "mediaqueries-5.foundation-media-orientation"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -939,7 +939,7 @@
         "mediaqueries-5.foundation-media-overflow-block"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -966,7 +966,7 @@
         "mediaqueries-5.foundation-media-overflow-inline"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -993,7 +993,7 @@
         "mediaqueries-5.foundation-media-horizontal-viewport-segments"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1020,7 +1020,7 @@
         "mediaqueries-5.foundation-media-vertical-viewport-segments"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1047,7 +1047,7 @@
         "mediaqueries-5.foundation-media-display-mode"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1074,7 +1074,7 @@
         "mediaqueries-5.foundation-media-resolution"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1101,7 +1101,7 @@
         "mediaqueries-5.foundation-media-scan"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1128,7 +1128,7 @@
         "mediaqueries-5.foundation-media-grid"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1155,7 +1155,7 @@
         "mediaqueries-5.foundation-media-update"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1182,7 +1182,7 @@
         "mediaqueries-5.foundation-media-environment-blending"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1209,7 +1209,7 @@
         "mediaqueries-5.foundation-media-color"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1236,7 +1236,7 @@
         "mediaqueries-5.foundation-media-color-index"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1263,7 +1263,7 @@
         "mediaqueries-5.foundation-media-monochrome"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1290,7 +1290,7 @@
         "mediaqueries-5.foundation-media-color-gamut"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1317,7 +1317,7 @@
         "mediaqueries-5.foundation-media-dynamic-range"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1344,7 +1344,7 @@
         "mediaqueries-5.foundation-media-inverted-colors"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1371,7 +1371,7 @@
         "mediaqueries-5.foundation-media-pointer"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1398,7 +1398,7 @@
         "mediaqueries-5.foundation-media-hover"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1425,7 +1425,7 @@
         "mediaqueries-5.foundation-media-any-pointer-hover"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1452,7 +1452,7 @@
         "mediaqueries-5.foundation-media-nav-controls"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1479,7 +1479,7 @@
         "mediaqueries-5.foundation-media-video-color-gamut"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1506,7 +1506,7 @@
         "mediaqueries-5.foundation-media-video-dynamic-range"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1533,7 +1533,7 @@
         "mediaqueries-5.foundation-media-scripting"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1560,7 +1560,7 @@
         "mediaqueries-5.foundation-media-prefers-reduced-motion"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1587,7 +1587,7 @@
         "mediaqueries-5.foundation-media-prefers-reduced-transparency"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1614,7 +1614,7 @@
         "mediaqueries-5.foundation-media-prefers-contrast"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1641,7 +1641,7 @@
         "mediaqueries-5.foundation-media-forced-colors"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1668,7 +1668,7 @@
         "mediaqueries-5.foundation-media-prefers-color-scheme"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1695,7 +1695,7 @@
         "mediaqueries-5.foundation-media-prefers-reduced-data"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1722,7 +1722,7 @@
         "mediaqueries-5.foundation-media-device-width"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1749,7 +1749,7 @@
         "mediaqueries-5.foundation-media-device-height"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1776,7 +1776,7 @@
         "mediaqueries-5.foundation-media-device-aspect-ratio"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1803,7 +1803,7 @@
         "mediaqueries-5.foundation-custom-media-queries"
       ],
       "implementation_files": [
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "src/lib.rs"
       ],
       "case_ids": [],
@@ -1831,9 +1831,9 @@
         "css-conditional-3.foundation-declaration-support"
       ],
       "implementation_files": [
-        "crates/style/src/conformance.rs",
-        "crates/style/src/selector.rs",
-        "crates/style/src/parser.rs"
+        "src/style/conformance.rs",
+        "src/style/selector.rs",
+        "src/style/parser.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -1860,9 +1860,9 @@
         "css-conditional-4.foundation-selector-support"
       ],
       "implementation_files": [
-        "crates/style/src/conformance.rs",
-        "crates/style/src/selector.rs",
-        "crates/style/src/parser.rs"
+        "src/style/conformance.rs",
+        "src/style/selector.rs",
+        "src/style/parser.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -1892,9 +1892,9 @@
         "css-conditional-5.foundation-extended-support"
       ],
       "implementation_files": [
-        "crates/style/src/conformance.rs",
-        "crates/style/src/selector.rs",
-        "crates/style/src/parser.rs"
+        "src/style/conformance.rs",
+        "src/style/selector.rs",
+        "src/style/parser.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -1921,9 +1921,9 @@
         "css-conditional-5.foundation-when-else"
       ],
       "implementation_files": [
-        "crates/style/src/conformance.rs",
-        "crates/style/src/selector.rs",
-        "crates/style/src/parser.rs"
+        "src/style/conformance.rs",
+        "src/style/selector.rs",
+        "src/style/parser.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -1953,8 +1953,8 @@
         "css-namespaces-3.foundation-selector-namespaces"
       ],
       "implementation_files": [
-        "crates/style/src/selector.rs",
-        "crates/style/src/parser.rs"
+        "src/style/selector.rs",
+        "src/style/parser.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -1996,8 +1996,8 @@
         "selectors-4.foundation-static-selector-structure"
       ],
       "implementation_files": [
-        "crates/style/src/selector.rs",
-        "crates/style/src/parser.rs"
+        "src/style/selector.rs",
+        "src/style/parser.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2032,8 +2032,8 @@
         "selectors-4.foundation-static-selector-logical"
       ],
       "implementation_files": [
-        "crates/style/src/selector.rs",
-        "crates/style/src/parser.rs"
+        "src/style/selector.rs",
+        "src/style/parser.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2066,8 +2066,8 @@
         "selectors-4.foundation-static-selector-language-links"
       ],
       "implementation_files": [
-        "crates/style/src/selector.rs",
-        "crates/style/src/parser.rs"
+        "src/style/selector.rs",
+        "src/style/parser.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2096,8 +2096,8 @@
         "selectors-5.foundation-static-selectors-level-five"
       ],
       "implementation_files": [
-        "crates/style/src/selector.rs",
-        "crates/style/src/parser.rs"
+        "src/style/selector.rs",
+        "src/style/parser.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2129,8 +2129,8 @@
         "css-nesting-1.foundation-css-nesting"
       ],
       "implementation_files": [
-        "crates/style/src/parser.rs",
-        "crates/style/src/selector.rs"
+        "src/style/parser.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2162,8 +2162,8 @@
         "css-cascade-6.foundation-css-scope"
       ],
       "implementation_files": [
-        "crates/style/src/cascade.rs",
-        "crates/style/src/selector.rs"
+        "src/style/cascade.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2195,8 +2195,8 @@
       ],
       "implementation_files": [
         "crates/dom/src/lib.rs",
-        "crates/style/src/selector.rs",
-        "crates/style/src/cascade.rs",
+        "src/style/selector.rs",
+        "src/style/cascade.rs",
         "src/document/mod.rs"
       ],
       "case_ids": [],
@@ -2231,8 +2231,8 @@
       ],
       "implementation_files": [
         "crates/dom/src/lib.rs",
-        "crates/style/src/selector.rs",
-        "crates/style/src/cascade.rs",
+        "src/style/selector.rs",
+        "src/style/cascade.rs",
         "src/document/mod.rs"
       ],
       "case_ids": [],
@@ -2265,8 +2265,8 @@
       ],
       "implementation_files": [
         "crates/dom/src/lib.rs",
-        "crates/style/src/selector.rs",
-        "crates/style/src/cascade.rs",
+        "src/style/selector.rs",
+        "src/style/cascade.rs",
         "src/document/mod.rs"
       ],
       "case_ids": [],
@@ -2295,8 +2295,8 @@
       ],
       "implementation_files": [
         "crates/dom/src/lib.rs",
-        "crates/style/src/selector.rs",
-        "crates/style/src/cascade.rs",
+        "src/style/selector.rs",
+        "src/style/cascade.rs",
         "src/document/mod.rs"
       ],
       "case_ids": [],
@@ -2324,9 +2324,9 @@
         "css-fonts-4.foundation-font-shorthand"
       ],
       "implementation_files": [
-        "crates/style/src/shorthands.rs",
-        "crates/style/src/properties.rs",
-        "crates/style/src/text_values.rs",
+        "src/style/shorthands.rs",
+        "src/style/properties.rs",
+        "src/style/text_values.rs",
         "spec/css/errata.json"
       ],
       "case_ids": [],
@@ -2358,9 +2358,9 @@
         "css-fonts-4.foundation-font-family-syntax"
       ],
       "implementation_files": [
-        "crates/style/src/shorthands.rs",
-        "crates/style/src/properties.rs",
-        "crates/style/src/text_values.rs",
+        "src/style/shorthands.rs",
+        "src/style/properties.rs",
+        "src/style/text_values.rs",
         "spec/css/errata.json"
       ],
       "case_ids": [],
@@ -2396,7 +2396,7 @@
       ],
       "implementation_files": [
         "crates/fonts/src/lib.rs",
-        "crates/style/src/text_values.rs"
+        "src/style/text_values.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2429,7 +2429,7 @@
       ],
       "implementation_files": [
         "crates/fonts/src/lib.rs",
-        "crates/style/src/text_values.rs"
+        "src/style/text_values.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2486,8 +2486,8 @@
         "css-fonts-4.foundation-font-size-metrics"
       ],
       "implementation_files": [
-        "crates/style/src/units.rs",
-        "crates/style/src/computed.rs",
+        "src/style/units.rs",
+        "src/style/computed.rs",
         "crates/fonts/src/lib.rs"
       ],
       "case_ids": [],
@@ -2514,8 +2514,8 @@
         "css-values-4.foundation-font-relative-units"
       ],
       "implementation_files": [
-        "crates/style/src/units.rs",
-        "crates/style/src/computed.rs",
+        "src/style/units.rs",
+        "src/style/computed.rs",
         "crates/fonts/src/lib.rs"
       ],
       "case_ids": [],
@@ -2544,9 +2544,9 @@
         "css-values-4.foundation-viewport-units"
       ],
       "implementation_files": [
-        "crates/style/src/page_values.rs",
-        "crates/style/src/units.rs",
-        "crates/style/src/stylesheet.rs"
+        "src/style/page_values.rs",
+        "src/style/units.rs",
+        "src/style/stylesheet.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2576,9 +2576,9 @@
         "css-page-3.foundation-page-size-environment"
       ],
       "implementation_files": [
-        "crates/style/src/page_values.rs",
-        "crates/style/src/units.rs",
-        "crates/style/src/stylesheet.rs"
+        "src/style/page_values.rs",
+        "src/style/units.rs",
+        "src/style/stylesheet.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -2616,8 +2616,8 @@
         "css-values-4.foundation-scalar-types-math"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2644,8 +2644,8 @@
         "css-values-4.foundation-math-calc"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2672,8 +2672,8 @@
         "css-values-4.foundation-math-min-max-clamp"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2700,8 +2700,8 @@
         "css-values-4.foundation-math-round-mod-rem"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2728,8 +2728,8 @@
         "css-values-4.foundation-math-sin-cos-tan-asin-acos-atan-atan2"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2756,8 +2756,8 @@
         "css-values-4.foundation-math-pow-sqrt-hypot-log-exp"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2784,8 +2784,8 @@
         "css-values-4.foundation-math-abs-sign"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2812,8 +2812,8 @@
         "css-values-4.foundation-math-constants"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2840,8 +2840,8 @@
         "css-values-5.foundation-static-function-progress"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2868,8 +2868,8 @@
         "css-values-5.foundation-static-function-media-progress"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2896,8 +2896,8 @@
         "css-values-5.foundation-static-function-calc-mix"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2924,8 +2924,8 @@
         "css-values-5.foundation-static-function-first-valid"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2952,8 +2952,8 @@
         "css-values-5.foundation-static-function-if"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -2980,8 +2980,8 @@
         "css-values-5.foundation-static-function-toggle"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -3008,8 +3008,8 @@
         "css-values-5.foundation-static-function-inherit"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -3036,8 +3036,8 @@
         "css-values-5.foundation-static-function-attr"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -3064,8 +3064,8 @@
         "css-values-5.foundation-static-function-random"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -3092,8 +3092,8 @@
         "css-values-5.foundation-static-function-random-item"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -3120,8 +3120,8 @@
         "css-values-5.foundation-static-function-sibling-count-index"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -3148,8 +3148,8 @@
         "css-values-5.foundation-static-function-calc-size"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -3180,8 +3180,8 @@
         "css-values-5.foundation-substitution-order"
       ],
       "implementation_files": [
-        "crates/style/src/calc.rs",
-        "crates/style/src/variables.rs",
+        "src/style/calc.rs",
+        "src/style/variables.rs",
         "src/graphics/calculation.rs"
       ],
       "case_ids": [],
@@ -3217,7 +3217,7 @@
         "css-sizing-3.foundation-intrinsic-sizing"
       ],
       "implementation_files": [
-        "crates/style/src/box_values.rs",
+        "src/style/box_values.rs",
         "src/layout/geometry.rs",
         "src/layout/intrinsic.rs"
       ],
@@ -3250,7 +3250,7 @@
         "css-sizing-4.foundation-aspect-ratio-sizing"
       ],
       "implementation_files": [
-        "crates/style/src/box_values.rs",
+        "src/style/box_values.rs",
         "src/layout/geometry.rs",
         "src/layout/intrinsic.rs"
       ],
@@ -3282,7 +3282,7 @@
         "css-logical-1.foundation-logical-sizing"
       ],
       "implementation_files": [
-        "crates/style/src/box_values.rs",
+        "src/style/box_values.rs",
         "src/layout/geometry.rs",
         "src/layout/intrinsic.rs"
       ],
@@ -3344,7 +3344,7 @@
       ],
       "implementation_files": [
         "crates/dom/src/lib.rs",
-        "crates/style/src/selector.rs",
+        "src/style/selector.rs",
         "src/document/mod.rs",
         "crates/dom/src/tree.rs"
       ],
@@ -3375,7 +3375,7 @@
       "implementation_files": [
         "src/lib.rs",
         "src/document/mod.rs",
-        "crates/style/src/stylesheet.rs",
+        "src/style/stylesheet.rs",
         "crates/resources/src/lib.rs"
       ],
       "case_ids": [],
@@ -3436,7 +3436,7 @@
       ],
       "implementation_files": [
         "src/document/mod.rs",
-        "crates/style/src/user_agent.rs"
+        "src/style/user_agent.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3466,7 +3466,7 @@
       ],
       "implementation_files": [
         "src/document/mod.rs",
-        "crates/style/src/user_agent.rs"
+        "src/style/user_agent.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3494,7 +3494,7 @@
       ],
       "implementation_files": [
         "src/document/mod.rs",
-        "crates/style/src/user_agent.rs"
+        "src/style/user_agent.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3526,8 +3526,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3555,8 +3555,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3584,8 +3584,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3613,8 +3613,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3642,8 +3642,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3671,8 +3671,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3700,8 +3700,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3729,8 +3729,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3758,8 +3758,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3787,8 +3787,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3816,8 +3816,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3845,8 +3845,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3874,8 +3874,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3903,8 +3903,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3932,8 +3932,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3961,8 +3961,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3990,8 +3990,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4019,8 +4019,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4048,8 +4048,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4077,8 +4077,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4106,8 +4106,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4135,8 +4135,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4165,8 +4165,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4195,8 +4195,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4225,8 +4225,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4255,8 +4255,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4285,8 +4285,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4316,8 +4316,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -4354,8 +4354,8 @@
       "implementation_files": [
         "src/document/mod.rs",
         "src/document/inline.rs",
-        "crates/style/src/user_agent.rs",
-        "crates/style/src/selector.rs"
+        "src/style/user_agent.rs",
+        "src/style/selector.rs"
       ],
       "case_ids": [],
       "handoff": null

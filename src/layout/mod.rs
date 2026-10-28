@@ -161,7 +161,7 @@ fn layout_pass(
         unbroken: false,
         named_pages: true,
     };
-    let root = (document.root().style().display != ferri_pdf_style::Display::None)
+    let root = (document.root().style().display != crate::style::Display::None)
         .then(|| {
             measurer.block(
                 document.root(),
@@ -246,10 +246,10 @@ pub(crate) enum LayoutError {
     NonFinitePageOutputGeometry,
     #[error("non-finite page-margin geometry at {location:?}")]
     NonFinitePageMarginGeometry {
-        location: ferri_pdf_style::MarginLocation,
+        location: crate::style::MarginLocation,
     },
     #[error("{0}")]
-    Style(#[from] ferri_pdf_style::StyleError),
+    Style(#[from] crate::style::StyleError),
     #[error("{0}")]
     Document(#[from] crate::document::DocumentError),
     #[error("{0}")]

@@ -1,9 +1,9 @@
 use super::common;
 
+use crate::style::{Display, LengthPercentage, Size, Style, Stylesheet, StylesheetSource};
 use crate::{render_bytes, render_html};
 use common::{PROFILE, assert_pt, local_options};
 use ferri_pdf_dom::{DocumentTree, Element, Selector, TreeRelation};
-use ferri_pdf_style::{Display, LengthPercentage, Size, Style, Stylesheet, StylesheetSource};
 
 fn sheet(author: &str, user: &str) -> Stylesheet {
     let source = |text: &str| StylesheetSource {
@@ -159,7 +159,7 @@ fn origin_importance_inline_and_hints_share_cascade() {
         "<table><tr><th id=target>Header</table>",
     );
     assert_eq!(th.font_weight, ferri_pdf_fonts::FontWeight::NORMAL);
-    assert_eq!(th.align, ferri_pdf_style::TextAlign::Left);
+    assert_eq!(th.align, crate::style::TextAlign::Left);
     let mut options = local_options();
     options
         .user_stylesheets
@@ -247,7 +247,7 @@ fn all_and_inherited_initial_values_match_registry() {
     assert_eq!(target.margin, [Size::ZERO; 4]);
     assert_eq!(target.padding, [LengthPercentage::ZERO; 4]);
     assert_eq!(target.color, crate::graphics::Color::BLACK);
-    assert_eq!(target.line_height, ferri_pdf_style::LineHeight::Normal);
+    assert_eq!(target.line_height, crate::style::LineHeight::Normal);
     let inherited = style(
         "section{font-size:20pt;width:70pt;padding:9pt}#target{all:inherit}",
         "",
@@ -320,7 +320,7 @@ fn pseudo_page_and_margin_boxes_use_the_same_origins_and_defaults() {
     );
     let parent = computed(&sheet, target);
     let (pseudo, _) = sheet
-        .pseudo(target, &parent, ferri_pdf_style::PseudoElement::Before)
+        .pseudo(target, &parent, crate::style::PseudoElement::Before)
         .unwrap()
         .unwrap();
     assert_pt(pseudo.size, 19.0);
@@ -474,7 +474,7 @@ fn html_hints_use_the_html_attribute_parsers_and_parent_context() {
         "",
         "<table><tr><th id=target>Header</table>",
     );
-    assert_eq!(header.align, ferri_pdf_style::TextAlign::Right);
+    assert_eq!(header.align, crate::style::TextAlign::Right);
 }
 
 #[test]
@@ -605,7 +605,7 @@ fn quirks_presentation_enters_the_ua_origin_and_hint_origin() {
         .unwrap();
     let target = computed(&styles, target);
     assert_pt(target.size, 12.0);
-    assert_eq!(target.white_space, ferri_pdf_style::WhiteSpace::Normal);
+    assert_eq!(target.white_space, crate::style::WhiteSpace::Normal);
     let tree = DocumentTree::parse("<li id=target>Orphan</li>").expect("parse test HTML");
     let target = tree
         .select(&Selector::parse("#target").unwrap())
@@ -613,7 +613,7 @@ fn quirks_presentation_enters_the_ua_origin_and_hint_origin() {
         .unwrap();
     assert_eq!(
         computed(&styles, target).list_style_position,
-        ferri_pdf_style::ListStylePosition::Inside
+        crate::style::ListStylePosition::Inside
     );
     let standard = style(
         "body{font-size:24pt}",
@@ -621,7 +621,7 @@ fn quirks_presentation_enters_the_ua_origin_and_hint_origin() {
         "<table><tr><td id=target nowrap width=20>Text</table>",
     );
     assert_pt(standard.size, 24.0);
-    assert_eq!(standard.white_space, ferri_pdf_style::WhiteSpace::Nowrap);
+    assert_eq!(standard.white_space, crate::style::WhiteSpace::Nowrap);
     let styles = sheet("td{white-space:pre}table{font-size:20pt}", "");
     let tree = DocumentTree::parse("<table><tr><td id=target nowrap width=20>Text</table>")
         .expect("parse test HTML");
@@ -631,7 +631,7 @@ fn quirks_presentation_enters_the_ua_origin_and_hint_origin() {
         .unwrap();
     let target = computed(&styles, target);
     assert_pt(target.size, 20.0);
-    assert_eq!(target.white_space, ferri_pdf_style::WhiteSpace::Pre);
+    assert_eq!(target.white_space, crate::style::WhiteSpace::Pre);
 }
 
 #[test]
@@ -665,17 +665,14 @@ fn phrasing_defaults_render_through_the_common_style_path() {
 #[test]
 fn list_match_parent_resolves_alignment_in_the_parents_direction() {
     let markup = "<ol style='direction:rtl'><li id=target dir=ltr>Text</li></ol>";
-    assert_eq!(
-        style("", "", markup).align,
-        ferri_pdf_style::TextAlign::Right
-    );
+    assert_eq!(style("", "", markup).align, crate::style::TextAlign::Right);
     assert_eq!(
         style("li{text-align:inherit}", "", markup).align,
-        ferri_pdf_style::TextAlign::Start
+        crate::style::TextAlign::Start
     );
     assert_eq!(
         style("li{text-align:match-parent}", "", markup).align,
-        ferri_pdf_style::TextAlign::Right
+        crate::style::TextAlign::Right
     );
 }
 
@@ -713,7 +710,7 @@ fn invalid_html_background_url_is_ignored_before_resource_resolution() {
 
 #[test]
 fn embedded_spacing_border_and_alignment_hints_use_the_common_origins() {
-    use ferri_pdf_style::VerticalAlign;
+    use crate::style::VerticalAlign;
     let markup = "<img id=target width=40 height=20 hspace='4%tail' vspace=2 border='+2tail' align=absmiddle>";
     let hints = style(
         "",
@@ -1064,7 +1061,7 @@ fn layer_rollback_is_shared_by_shorthands_pseudos_pages_and_margins() {
         .pseudo(
             target,
             &computed(&styles, target),
-            ferri_pdf_style::PseudoElement::Before,
+            crate::style::PseudoElement::Before,
         )
         .unwrap()
         .unwrap();
@@ -1125,7 +1122,7 @@ fn nested_layer_diagnostics_keep_original_line_and_column() {
 
 #[test]
 fn auto_direction_text_input_state_rules_outrank_generic_dir_isolation() {
-    use ferri_pdf_style::UnicodeBidi;
+    use crate::style::UnicodeBidi;
     for attributes in ["", "type=text", "type=TEXT", "type=unknown"] {
         let markup = format!("<input id=target dir=AUTO {attributes} value=אב>");
         assert_eq!(

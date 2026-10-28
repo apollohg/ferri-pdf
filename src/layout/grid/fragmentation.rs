@@ -1,5 +1,5 @@
 use crate::document::BlockBox;
-use ferri_pdf_style::BreakBetween;
+use crate::style::BreakBetween;
 use std::{collections::HashMap, ops::Range};
 
 pub(crate) struct Row {

@@ -4,7 +4,7 @@ use crate::graphics::Rect;
 use crate::layout::LayoutError;
 use crate::layout::geometry::{HorizontalBox, SizeConstraints};
 use crate::layout::measure::{MeasuredBlock, Measurer};
-use ferri_pdf_style::{Alignment, Style};
+use crate::style::{Alignment, Style};
 
 /// Hypothetical normal-flow position: margin-box edges `left`/`right` and top edge `y`.
 #[derive(Clone, Copy, Debug)]
@@ -230,7 +230,7 @@ fn solve<'a>(
     let intrinsic = if shrinks
         || [&style.width, &style.min_width, &style.max_width]
             .iter()
-            .any(|size| matches!(size, ferri_pdf_style::Size::Intrinsic(_)))
+            .any(|size| matches!(size, crate::style::Size::Intrinsic(_)))
     {
         Some(crate::layout::intrinsic::content(block, measurer, width)?)
     } else {

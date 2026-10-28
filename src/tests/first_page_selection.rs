@@ -1,15 +1,15 @@
 use super::common;
 
 use crate::document::{BlockBox, BlockContent, DocumentError, StyledDocument};
+use crate::style::StyleError;
 use common::{PROFILE, local_options};
 use ferri_pdf_resources::FileResolver;
-use ferri_pdf_style::StyleError;
 
 const PAGE_RULES: &str = "@page{size:200pt 300pt;margin:10pt}@page A{size:400pt 500pt;margin:20pt}@page B{size:600pt 700pt;margin:30pt}";
 
 #[test]
 fn first_page_side_and_name_are_selected_before_viewport_lengths() {
-    use ferri_pdf_style::PageSide;
+    use crate::style::PageSide;
     for (direction, before, side) in [
         ("ltr", "left", PageSide::Left),
         ("ltr", "right", PageSide::Right),
@@ -57,7 +57,7 @@ fn leading_side_selection_reports_its_viewport_cycle() {
     else {
         panic!("expected a source-bearing side cycle, got {error}");
     };
-    assert_ne!(sources, [] as [ferri_pdf_style::SourceLocation; 0]);
+    assert_ne!(sources, [] as [crate::style::SourceLocation; 0]);
     for expected in ["first-page-side", ".break-before", ".width"] {
         assert!(
             dependencies.iter().any(|node| node.ends_with(expected)),
@@ -93,7 +93,7 @@ fn side_independent_geometry_can_supply_viewport_values_during_selection() {
         ).unwrap_or_else(|error| panic!("independent geometry must not produce a false cycle for {css}: {error}"));
         assert_eq!(
             document.page_box().request.side,
-            ferri_pdf_style::PageSide::Left
+            crate::style::PageSide::Left
         );
         assert_eq!(document.styles().page, [200.0, 300.0]);
     }
@@ -111,7 +111,7 @@ fn independent_page_name_can_supply_geometry_to_side_selection() {
     assert_eq!(document.styles().page, [400.0, 500.0]);
     assert_eq!(
         document.page_box().request.side,
-        ferri_pdf_style::PageSide::Left
+        crate::style::PageSide::Left
     );
 }
 
@@ -125,7 +125,7 @@ fn independent_page_side_can_supply_geometry_to_name_selection() {
     assert_eq!(document.page_box().request.name.as_deref(), Some("A"));
     assert_eq!(
         document.page_box().request.side,
-        ferri_pdf_style::PageSide::Left
+        crate::style::PageSide::Left
     );
 }
 
@@ -139,7 +139,7 @@ fn inactive_side_qualified_page_names_do_not_create_viewport_cycles() {
     assert_eq!(document.page_box().request.name.as_deref(), Some("A"));
     assert_eq!(
         document.page_box().request.side,
-        ferri_pdf_style::PageSide::Right
+        crate::style::PageSide::Right
     );
 }
 

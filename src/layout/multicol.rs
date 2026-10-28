@@ -7,8 +7,8 @@ use crate::layout::{
     margin::MarginStrut,
     measure::{BlockEdge, FlowItem, MeasuredBlock, Measurer},
 };
+use crate::style::{BreakBetween, ColumnFill, Style};
 use crate::text::IntrinsicWidths;
-use ferri_pdf_style::{BreakBetween, ColumnFill, Style};
 
 /// Bounds the column boxes of one row, as a zero column width and gap would otherwise
 /// request unboundedly many.

@@ -219,9 +219,9 @@ pub(crate) fn stylesheet(
     bytes: &[u8],
     transport: Option<&str>,
     environment: Option<&str>,
-) -> ferri_pdf_style::DecodedStylesheet {
+) -> crate::style::DecodedStylesheet {
     let decoded = decode_css(bytes, transport, environment);
-    ferri_pdf_style::DecodedStylesheet {
+    crate::style::DecodedStylesheet {
         text: decoded.text,
         encoding: decoded.encoding,
         had_errors: decoded.had_errors,

@@ -361,7 +361,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     break;
                 };
                 block = self.reposition_float(&block, placement)?;
-                block.break_before = ferri_pdf_style::BreakBetween::Auto;
+                block.break_before = crate::style::BreakBetween::Auto;
                 (block, request) = self.prepare_block(block, tail)?;
             }
             for containing in &table_containing {

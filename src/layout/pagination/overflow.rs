@@ -1,5 +1,5 @@
 use super::{ActiveBox, DisplayItem, Paginator, Rect, Region};
-use ferri_pdf_style::{Overflow, Style};
+use crate::style::{Overflow, Style};
 
 impl Paginator<'_, '_, '_> {
     pub(super) fn record_overflow(&mut self, rect: Rect) {

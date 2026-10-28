@@ -354,7 +354,7 @@ pub(super) fn indent_at(
     basis: f32,
 ) -> f32 {
     let indent = &paragraph.style().text_indent;
-    if indent.amount == ferri_pdf_style::LengthPercentage::ZERO {
+    if indent.amount == crate::style::LengthPercentage::ZERO {
         return 0.0;
     }
     let first = offset == 0 && (paragraph.first_formatted_line() || indent.each_line);

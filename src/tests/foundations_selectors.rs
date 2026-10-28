@@ -1,8 +1,8 @@
 use super::common;
 
+use crate::style::{Style, Stylesheet, StylesheetSource};
 use common::{assert_pt, local_options};
 use ferri_pdf_dom::DocumentTree;
-use ferri_pdf_style::{Style, Stylesheet, StylesheetSource};
 
 #[test]
 fn initial_disabled_state_reaches_support_queries_and_real_style_consumers() {
@@ -76,12 +76,10 @@ fn host_selector_arguments_respect_component_limits_on_the_normal_thread() {
                 assert!(
                     matches!(
                         result,
-                        Err(crate::Error::Css(
-                            ferri_pdf_style::StyleError::GrammarLimit {
-                                limit: COMPONENT_LIMIT,
-                                ..
-                            }
-                        ))
+                        Err(crate::Error::Css(crate::style::StyleError::GrammarLimit {
+                            limit: COMPONENT_LIMIT,
+                            ..
+                        }))
                     ),
                     "one more nested argument must return the existing CSS limit error"
                 );
@@ -505,12 +503,10 @@ fn slotted_arguments_respect_component_limits_on_the_normal_thread() {
             assert!(
                 matches!(
                     result,
-                    Err(crate::Error::Css(
-                        ferri_pdf_style::StyleError::GrammarLimit {
-                            limit: COMPONENT_LIMIT,
-                            ..
-                        }
-                    ))
+                    Err(crate::Error::Css(crate::style::StyleError::GrammarLimit {
+                        limit: COMPONENT_LIMIT,
+                        ..
+                    }))
                 ),
                 "another slotted argument level must return the typed CSS limit error"
             );

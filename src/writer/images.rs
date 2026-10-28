@@ -92,7 +92,7 @@ impl ImageWriter {
                     self.vectors.entry(vector_key)
                 {
                     let size = [paint.rect.width, paint.rect.height]
-                        .map(|v| v / ferri_pdf_style::POINTS_PER_PIXEL);
+                        .map(|v| v / crate::style::POINTS_PER_PIXEL);
                     entry.insert(svg.tree(size).map_err(PdfError::Svg)?);
                 }
                 NoTransforms

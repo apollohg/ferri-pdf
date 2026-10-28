@@ -1,10 +1,10 @@
 use super::common;
 
 use crate::document::{BlockContent, Paragraph, StyledDocument};
+use crate::style::TextAlign;
 use crate::text::{AtomicMetrics, Line, TextContext, TextError};
 use common::{assert_pt, local_options};
 use ferri_pdf_resources::FileResolver;
-use ferri_pdf_style::TextAlign;
 
 const PROFILE: &str = "@font-face{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}html,body,p{margin:0;padding:0;font:10pt/10pt Fixed}";
 
@@ -615,28 +615,28 @@ fn intrinsic_indentation_uses_zero_percentage_and_the_selected_line() {
     let baseline = context.intrinsic_widths(source, &[]).unwrap();
     for (amount, hanging, each_line, min_extra, max_extra) in [
         (
-            ferri_pdf_style::LengthPercentage::Length(20.0),
+            crate::style::LengthPercentage::Length(20.0),
             false,
             false,
             20.0,
             20.0,
         ),
         (
-            ferri_pdf_style::LengthPercentage::Percentage(0.2),
+            crate::style::LengthPercentage::Percentage(0.2),
             false,
             false,
             0.0,
             0.0,
         ),
         (
-            ferri_pdf_style::LengthPercentage::Length(20.0),
+            crate::style::LengthPercentage::Length(20.0),
             true,
             false,
             20.0,
             0.0,
         ),
         (
-            ferri_pdf_style::LengthPercentage::Length(-10.0),
+            crate::style::LengthPercentage::Length(-10.0),
             false,
             false,
             0.0,
@@ -644,7 +644,7 @@ fn intrinsic_indentation_uses_zero_percentage_and_the_selected_line() {
         ),
     ] {
         let mut style = source.style().clone();
-        style.text_indent = ferri_pdf_style::TextIndent {
+        style.text_indent = crate::style::TextIndent {
             amount,
             hanging,
             each_line,
