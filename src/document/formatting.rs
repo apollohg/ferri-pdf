@@ -5,6 +5,7 @@ use crate::graphics::BoxDecoration;
 use crate::style::{Display, PseudoElement, Style, StyleError, Stylesheet};
 
 pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
+const DEFAULT_DENSITY: f32 = 1.0;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
 
 fn canvas_background(decoration: &BoxDecoration) -> BoxDecoration {
@@ -68,6 +69,9 @@ pub(crate) struct BlockBox {
     children: Vec<BlockContent>,
     marker: Option<Box<Paragraph>>,
     image: Option<std::sync::Arc<crate::images::Image>>,
+    /// The selected image source's pixel density, which divides its natural dimensions
+    /// (HTML §4.8.4.3.7).
+    density: f32,
     navigation: BoxNavigation,
     canvas_source: bool,
     event: Option<crate::document::SemanticEvent>,
@@ -160,6 +164,7 @@ impl BlockBox {
             children,
             marker: None,
             image: None,
+            density: DEFAULT_DENSITY,
             navigation: BoxNavigation::default(),
             canvas_source: false,
             event: None,
@@ -204,6 +209,9 @@ impl BlockBox {
     }
     pub(crate) fn image(&self) -> Option<&std::sync::Arc<crate::images::Image>> {
         self.image.as_ref()
+    }
+    pub(crate) fn image_density(&self) -> f32 {
+        self.density
     }
     pub(crate) fn style(&self) -> &Style {
         &self.style
@@ -302,6 +310,7 @@ impl BlockBox {
 /// Document-order state of the boxes being built: list counter scopes and hyperlinks.
 pub(crate) struct Traversal<'a> {
     document: &'a DocumentTree,
+    embedded: &'a crate::document::embedded::EmbeddedContent,
     root_style: Style,
     counters: crate::document::counters::Counters,
     navigation: NavigationBuilder,
@@ -666,25 +675,21 @@ fn validate_inline(style: &Style) -> Result<(), DocumentError> {
 fn unsupported_element(tag: &str) -> bool {
     matches!(
         tag,
-        "math"
-            | "input"
-            | "textarea"
-            | "select"
-            | "button"
-            | "video"
-            | "audio"
-            | "canvas"
-            | "iframe"
-            | "object"
-            | "embed"
-            | "picture"
-            | "fieldset"
+        "math" | "input" | "textarea" | "select" | "button" | "fieldset"
     )
 }
 
-/// Elements whose content is an image rather than child boxes.
-pub(super) fn is_replaced(tag: &str) -> bool {
-    matches!(tag, "img" | "svg")
+/// Elements whose content is an image or a nested navigable rather than child boxes (HTML
+/// §15.4). A `canvas` represents its fallback content with scripting disabled (HTML §4.12.5).
+pub(super) fn is_replaced(element: Element<'_>) -> bool {
+    match element.name() {
+        "svg" => true,
+        "img" | "iframe" | "embed" | "video" | "audio" => {
+            element.namespace() == crate::dom::HTML_NAMESPACE
+        }
+        "object" => element.namespace() == crate::dom::HTML_NAMESPACE && element.object_embeds(),
+        _ => false,
+    }
 }
 
 /// An inside marker opens the list item's inline content (CSS Lists 3 §3.5): an image marker
@@ -767,6 +772,7 @@ struct OpenBlock {
     inline: InlineCollector,
     marker: Option<Paragraph>,
     image: Option<std::sync::Arc<crate::images::Image>>,
+    density: f32,
     navigation: BoxNavigation,
     placement: Placement,
     event: Option<crate::document::SemanticEvent>,
@@ -810,6 +816,7 @@ impl<'d> Frame<'d> {
                 inline: InlineCollector::default(),
                 marker: None,
                 image: None,
+                density: DEFAULT_DENSITY,
                 navigation: BoxNavigation::default(),
                 placement,
                 event: None,
@@ -891,9 +898,10 @@ fn block<'a>(
                 }
                 block.image = match element.name() {
                     "img" => {
-                        let image = element.attr("src").and_then(|reference| {
+                        let image = sheet.image_source(element).and_then(|source| {
+                            block.density = source.density;
                             resources.cache.load_optional(
-                                reference,
+                                &source.url,
                                 resources.base,
                                 resources.resolver,
                                 frame.style.element_font_namespace(),
@@ -913,6 +921,15 @@ fn block<'a>(
                         resources.resolver,
                         frame.style.element_font_namespace(),
                     )?),
+                    "video" if is_replaced(element) => Some(crate::document::media::poster(
+                        element,
+                        &frame.style,
+                        resources,
+                    )),
+                    "audio" if is_replaced(element) => Some(
+                        crate::document::media::audio_controls(&frame.style, resources)?,
+                    ),
+                    _ if is_replaced(element) => traversal.embedded.content(element.id()).cloned(),
                     _ => None,
                 };
                 block.marker = (frame.style.display.is_list_item() && !skips)
@@ -1066,7 +1083,7 @@ fn block<'a>(
                 };
             }
             validate_display(&child_style.display)?;
-            let replaced = is_replaced(child.name());
+            let replaced = is_replaced(child);
             normalize_child_display(
                 &mut child_style.display,
                 replaced,
@@ -1315,6 +1332,7 @@ fn block<'a>(
         );
         block.marker = state.marker.map(Box::new);
         block.image = state.image;
+        block.density = state.density;
         block.navigation = state.navigation;
         block.event = state.event;
         block.canvas_source = canvas_source;
@@ -1343,15 +1361,26 @@ fn block<'a>(
     }
 }
 
+/// A document and the resources its elements loaded before formatting.
+pub(crate) struct Input<'a> {
+    pub html: &'a DocumentTree,
+    pub embedded: &'a crate::document::embedded::EmbeddedContent,
+    pub images: &'a std::rc::Rc<std::cell::RefCell<crate::images::ImageCache>>,
+}
+
 pub(crate) fn build(
-    html: &DocumentTree,
+    input: &Input<'_>,
     sheet: &mut Stylesheet,
     base: &crate::resources::ResourceBase,
     resolver: &dyn crate::resources::ResourceResolver,
     navigation: NavigationBuilder,
     values: crate::document::generated::GeneratedValues,
-    images: Option<std::rc::Rc<std::cell::RefCell<crate::images::ImageCache>>>,
 ) -> Result<Formatted, DocumentError> {
+    let Input {
+        html,
+        embedded,
+        images,
+    } = *input;
     let mut generated =
         crate::document::generated::GeneratedPass::new(navigation.targets.clone(), values);
     let element = html.root_element();
@@ -1372,11 +1401,6 @@ pub(crate) fn build(
             error => DocumentError::Style(error),
         })?;
     let sheet = &*sheet;
-    let images = images.unwrap_or_else(|| {
-        std::rc::Rc::new(std::cell::RefCell::new(
-            crate::images::ImageCache::with_fonts(sheet.fonts.clone()),
-        ))
-    });
     let mut cache = images.borrow_mut();
     let mut resources = ImageResources {
         base,
@@ -1425,6 +1449,7 @@ pub(crate) fn build(
     normalize_root_display(&mut style.display);
     let mut traversal = Traversal {
         document: html,
+        embedded,
         root_style: style.clone(),
         counters: Default::default(),
         navigation,

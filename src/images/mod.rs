@@ -21,11 +21,26 @@ impl crate::paint::ImageInfo for Image {
         Image::natural_size(self)
     }
     fn is_raster(&self) -> bool {
-        !matches!(self, Self::Svg(_))
+        matches!(self, Self::Raster(_) | Self::Pixels(_))
     }
 }
 
 const MAX_DECODED_BYTES: u64 = 2 * 1024 * 1024 * 1024;
+/// The size of replaced content with no natural dimensions (CSS Images 3 §4.1; HTML §4.8.11
+/// for video).
+pub(crate) const DEFAULT_OBJECT_SIZE: [f32; 2] = [300.0, 150.0];
+/// Image MIME types the decoders render.
+pub(crate) const SUPPORTED_TYPES: &[&str] = &[
+    "image/png",
+    "image/apng",
+    "image/jpeg",
+    "image/gif",
+    "image/webp",
+    "image/avif",
+    "image/heic",
+    "image/heif",
+    crate::resources::sniffing::SVG,
+];
 const MAX_BYTES_PER_PIXEL: u64 = 8;
 
 #[derive(Clone, Copy, Debug)]
@@ -117,6 +132,13 @@ pub enum Image {
     Raster(RasterImage),
     Svg(SvgImage),
     Pixels(Arc<PixelImage>),
+    /// Transparent black with no natural dimensions, as a `video` with no poster frame
+    /// represents (HTML §4.8.11).
+    Transparent,
+    /// The document of a nested navigable, laid out once its viewport size is known.
+    Frame(Arc<crate::document::Frame>),
+    /// A nested navigable's document laid out in its viewport.
+    Viewport(Arc<crate::layout::ViewportPaint>),
 }
 impl Image {
     pub fn natural_size(&self) -> NaturalDimensions {
@@ -130,6 +152,7 @@ impl Image {
                     ratio: Some(width / height),
                 }
             }
+            Self::Transparent | Self::Frame(_) | Self::Viewport(_) => NaturalDimensions::default(),
         }
     }
     pub fn pixel_size(&self, available_width: f32) -> [f32; 2] {
@@ -137,6 +160,7 @@ impl Image {
             Self::Raster(image) => image.pixel_size(),
             Self::Svg(image) => image.pixel_size(available_width),
             Self::Pixels(image) => [image.width as f32, image.height as f32],
+            Self::Transparent | Self::Frame(_) | Self::Viewport(_) => DEFAULT_OBJECT_SIZE,
         }
     }
     fn parse(
@@ -365,14 +389,46 @@ impl ImageCache {
             .get(base)
             .and_then(|sources| sources.get(reference))
             .cloned();
-        let image = Arc::new(if let Some(source) = source {
+        let image = if let Some(source) = source {
             Image::Svg(SvgImage::parse_source(
                 source, resolver, depth, self, namespace,
             )?)
         } else {
             let resource = resolver.resolve(reference, base)?;
             Image::parse(resource, resolver, depth, self, namespace)?
-        });
+        };
+        Ok(self.insert(reference, base, image, namespace))
+    }
+    /// Decodes an image resource its embedding element has already fetched, retaining a
+    /// diagnostic instead of aborting when it cannot be rendered.
+    pub(crate) fn decode_optional(
+        &mut self,
+        reference: &str,
+        base: &crate::resources::ResourceBase,
+        resource: crate::resources::Resource,
+        resolver: &dyn ResourceResolver,
+        namespace: FontNamespace,
+    ) -> Option<Arc<Image>> {
+        match Image::parse(resource, resolver, 0, self, namespace) {
+            Ok(image) => Some(self.insert(reference, base, image, namespace)),
+            Err(error) => {
+                self.failures.push(ImageFailure {
+                    base: base.clone(),
+                    reference: reference.to_owned(),
+                    error,
+                });
+                None
+            }
+        }
+    }
+    fn insert(
+        &mut self,
+        reference: &str,
+        base: &crate::resources::ResourceBase,
+        image: Image,
+        namespace: FontNamespace,
+    ) -> Arc<Image> {
+        let image = Arc::new(image);
         let namespace = match image.as_ref() {
             Image::Svg(svg) => {
                 self.svg_sources
@@ -382,6 +438,9 @@ impl ImageCache {
                 namespace
             }
             Image::Raster(_) | Image::Pixels(_) => FontNamespace::ROOT,
+            Image::Transparent | Image::Frame(_) | Image::Viewport(_) => {
+                unreachable!("image resources parse to decoded images")
+            }
         };
         self.images
             .entry(namespace)
@@ -389,7 +448,7 @@ impl ImageCache {
             .entry(base.clone())
             .or_default()
             .insert(reference.to_owned(), image.clone());
-        Ok(image)
+        image
     }
 }
 

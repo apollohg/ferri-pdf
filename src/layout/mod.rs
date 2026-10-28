@@ -23,6 +23,7 @@ mod source;
 mod sticky;
 mod strings;
 mod tables;
+mod viewport;
 mod work;
 use crate::document::StyledDocument;
 use crate::fonts::FontDescriptor;
@@ -33,6 +34,7 @@ use serde::Serialize;
 
 pub use navigation::{Destination, HeadingLocation, LinkArea, LinkShape};
 pub(crate) use page_output::{PageOutput, PageRecord};
+pub(crate) use viewport::ViewportPaint;
 
 pub(crate) const MAX_LAYOUT_PAGES: usize = 10_000;
 /// Aggregate layout-work units per job, shared by measurement and pagination probes.
@@ -172,6 +174,7 @@ fn layout_pass(
     let [page_width, page_height] = page.geometry.paper;
     let canvas_rect = page.geometry.content_box();
     let content_height = canvas_rect.height;
+    let continuous = sheet.presentation() == crate::style::Presentation::Viewport;
     let first_record = PageRecord::new(page)?;
     let page_output = first_record.output.clone();
     let painting =
@@ -188,8 +191,8 @@ fn layout_pass(
         fragmentainer: breaks::Fragmentainer::Page,
         column_flow: None,
         spanner: None,
-        unbroken: false,
-        named_pages: true,
+        unbroken: continuous,
+        named_pages: !continuous,
         container_sizes: Default::default(),
     };
     let root = (document.root().style().display != crate::style::Display::None)
@@ -204,6 +207,12 @@ fn layout_pass(
             )
         })
         .transpose()?;
+    let paginator = pagination::Paginator::for_document(
+        &mut measurer,
+        physical_pages::PhysicalPages::new(document, resolver)?,
+        painting.canvas.clone(),
+        canvas_rect,
+    );
     let pagination::Paginated {
         mut pages,
         mut display_lists,
@@ -212,12 +221,11 @@ fn layout_pass(
         page_boxes,
         page_records,
         string_locations,
-    } = pagination::Paginator::for_document(
-        &mut measurer,
-        physical_pages::PhysicalPages::new(document, resolver)?,
-        painting.canvas.clone(),
-        canvas_rect,
-    )
+    } = if continuous {
+        paginator.unbroken()
+    } else {
+        paginator
+    }
     .document(
         root,
         document.navigation().destinations,

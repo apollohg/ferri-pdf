@@ -45,6 +45,62 @@ impl ImageWriter {
         {
             return Ok(());
         }
+        match paint.image.as_ref() {
+            Asset::Raster(_) | Asset::Pixels(_) | Asset::Svg(_) => {
+                self.draw_decoded(paint, viewport, surface)
+            }
+            Asset::Transparent => Ok(()),
+            Asset::Viewport(view) => self.draw_viewport(paint, view, viewport, surface),
+            Asset::Frame(_) => unreachable!("layout replaces frames with their viewports"),
+        }
+    }
+
+    /// Paints a nested document's viewport at the paint rectangle's origin.
+    fn draw_viewport(
+        &mut self,
+        paint: &ImagePaint,
+        view: &crate::layout::ViewportPaint,
+        viewport: crate::graphics::Rect,
+        surface: &mut Surface<'_>,
+    ) -> Result<(), PdfError> {
+        let clips = paint
+            .clip
+            .as_ref()
+            .map(|clip| crate::writer::painting::push_clip(clip, viewport, surface))
+            .transpose()?
+            .unwrap_or(0);
+        let offset = [paint.rect.x - view.area.x, paint.rect.y - view.area.y];
+        surface.push_transform(&Transform::from_translate(offset[0], offset[1]));
+        let local = crate::graphics::Rect {
+            x: viewport.x - offset[0],
+            y: viewport.y - offset[1],
+            ..viewport
+        };
+        let mut text = crate::writer::text::TextWriter::new(&view.fonts);
+        let drawn = crate::writer::draw_items(
+            &crate::writer::Layer {
+                items: &view.items,
+                lines: &view.lines,
+                fonts: &view.fonts,
+                page: 0,
+                page_area: view.area,
+            },
+            local,
+            surface,
+            self,
+            &mut text,
+        );
+        surface.pop();
+        crate::writer::painting::pop_clips(clips, surface);
+        drawn
+    }
+
+    fn draw_decoded(
+        &mut self,
+        paint: &ImagePaint,
+        viewport: crate::graphics::Rect,
+        surface: &mut Surface<'_>,
+    ) -> Result<(), PdfError> {
         let key = Arc::as_ptr(&paint.image) as usize;
         let vector_key = (key, paint.rect.width.to_bits(), paint.rect.height.to_bits());
         if self.failed.contains_key(&key) {
@@ -66,7 +122,7 @@ impl ImageWriter {
                     Image::from_custom(crate::writer::pixels::Pixels(pixels.clone()), false)
                         .map(Image::with_jpeg_compression),
                 ),
-                Asset::Svg(_) => None,
+                Asset::Svg(_) | Asset::Transparent | Asset::Frame(_) | Asset::Viewport(_) => None,
             };
             if let Some(loaded) = loaded {
                 match loaded.and_then(|image| {
@@ -86,7 +142,9 @@ impl ImageWriter {
         }
         let orientation = match paint.image.as_ref() {
             Asset::Raster(raster) => raster.orientation,
-            Asset::Pixels(_) => NoTransforms,
+            Asset::Pixels(_) | Asset::Transparent | Asset::Frame(_) | Asset::Viewport(_) => {
+                NoTransforms
+            }
             Asset::Svg(svg) => {
                 if let std::collections::hash_map::Entry::Vacant(entry) =
                     self.vectors.entry(vector_key)
@@ -139,6 +197,9 @@ impl ImageWriter {
         match paint.image.as_ref() {
             Asset::Raster(_) | Asset::Pixels(_) => {
                 surface.draw_image(self.images[&key].clone(), unit_size);
+            }
+            Asset::Transparent | Asset::Frame(_) | Asset::Viewport(_) => {
+                unreachable!("draw dispatches only decoded images here")
             }
             Asset::Svg(svg) => {
                 let errors = std::cell::RefCell::new(std::collections::BTreeSet::new());

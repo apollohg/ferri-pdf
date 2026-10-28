@@ -547,6 +547,9 @@ pub(crate) struct TextContext<'a> {
     bidi_work: Cell<Option<usize>>,
 }
 impl<'a> TextContext<'a> {
+    pub(crate) fn resolver(&self) -> &'a dyn ResourceResolver {
+        self.resolver
+    }
     /// `atomics` holds the min- and max-content margin-box widths of the paragraph's atomic inlines.
     pub(crate) fn intrinsic_widths(
         &self,

@@ -170,6 +170,15 @@ pub(crate) fn decode_document(
     Ok((result, html))
 }
 
+/// Decode a plain text resource by its BOM, else its transport charset, else as UTF-8.
+pub(crate) fn decode_text(bytes: &[u8], transport_charset: Option<&str>) -> DecodedInput {
+    let encoding = Encoding::for_bom(bytes)
+        .map(|(encoding, _)| encoding)
+        .or_else(|| transport_charset.and_then(label))
+        .unwrap_or(UTF_8);
+    decoded(bytes, encoding)
+}
+
 /// Decode buffered HTML, honoring BOM/transport and actual parser encoding declarations.
 #[cfg(test)]
 pub(crate) fn decode_html(

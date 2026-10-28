@@ -10,6 +10,17 @@ use crate::layout::{
 use crate::style::POINTS_PER_PIXEL;
 use crate::text::IntrinsicWidths;
 
+/// The replaced content's natural size in points, scaled by its selected source's pixel
+/// density (HTML §4.8.4.3.7); a ratio-only image takes `available_width`.
+fn density_corrected(block: &BlockBox, available_width: f32) -> [f32; 2] {
+    let scale = POINTS_PER_PIXEL / block.image_density();
+    block
+        .image()
+        .unwrap()
+        .pixel_size(available_width / scale)
+        .map(|value| value * scale)
+}
+
 /// A replaced element's natural size in points and its preferred aspect ratio (CSS Sizing 4
 /// §4.1). Size containment treats the natural size as zero and drops the natural ratio
 /// (CSS Containment 2 §3.1); only an `aspect-ratio` `<ratio>` then relates the axes.
@@ -22,9 +33,7 @@ impl Natural {
         let image = block.image().unwrap();
         let style = block.style();
         let contained = style.containment().size;
-        let mut size = image
-            .pixel_size(available_width / POINTS_PER_PIXEL)
-            .map(|value| value * POINTS_PER_PIXEL);
+        let mut size = density_corrected(block, available_width);
         for (axis, contained) in contained.into_iter().enumerate() {
             if contained {
                 size[axis] = 0.0;
@@ -193,12 +202,24 @@ pub(super) fn measure<'a>(
         width,
         height,
     };
-    let intrinsic = block
-        .image()
-        .unwrap()
-        .pixel_size(width / POINTS_PER_PIXEL)
-        .map(|v| v * POINTS_PER_PIXEL);
-    let [paint_width, paint_height] = style.object_fit.size(intrinsic, [width, height]);
+    let image = match block.image().unwrap().as_ref() {
+        crate::images::Image::Frame(frame) => crate::layout::viewport::view(
+            frame,
+            [width, height],
+            measurer.text.resolver(),
+            &measurer.work,
+        )?,
+        _ => block.image().unwrap().clone(),
+    };
+    // A nested navigable's viewport and other content without natural dimensions fill the
+    // content box (CSS Images 3 §5.5).
+    let [paint_width, paint_height] = if image.natural_size() == Default::default() {
+        [width, height]
+    } else {
+        style
+            .object_fit
+            .size(density_corrected(block, width), [width, height])
+    };
     let border_box = BoxPaint {
         padding: geometry.padding,
         ..BoxPaint::whole(
@@ -218,7 +239,7 @@ pub(super) fn measure<'a>(
     // Images 3 §4.5 clips every fitted object to the content edge.
     let clip = Some(border_box.inner_clip(geometry.padding, [true; 2]));
     let paint = ImagePaint {
-        image: block.image().unwrap().clone(),
+        image,
         clip,
         rect: Rect {
             x: bounds.x + style.object_position[0].resolve(width - paint_width),

@@ -4,6 +4,7 @@ mod data_url;
 #[cfg(feature = "http")]
 mod http;
 mod mime;
+pub(crate) mod sniffing;
 pub use base::ResourceBase;
 pub use data_url::DataUrlError;
 #[cfg(feature = "http")]
@@ -211,3 +212,6 @@ impl ResourceResolver for FileResolver {
         })
     }
 }
+
+#[cfg(test)]
+mod tests;

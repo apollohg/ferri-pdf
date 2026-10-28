@@ -62,6 +62,7 @@ mod selector;
 mod shadow_values;
 mod shorthands;
 mod sizing;
+mod source_set;
 mod string_values;
 mod stylesheet;
 mod supports;
@@ -126,6 +127,7 @@ pub(crate) use page_rules::{PageRequest, PageSide};
 pub(crate) use page_selection::{PageSelection, PageStyleTarget};
 pub(crate) use page_values::{Page, PageMarks, PageProduction};
 pub(crate) use position::Position;
+pub(crate) use print::Presentation;
 pub use print::{
     ColorScheme, ContrastPreference, MotionPreference, PrintPreferences, PrintSettings,
 };
@@ -135,6 +137,7 @@ pub(crate) use selector::PseudoElement;
 pub(crate) use sizing::{
     AspectRatio, IntrinsicSizing, IntrinsicWidths, Overconstraint, SizeConstraints, UsedAxis,
 };
+pub(crate) use source_set::ImageSource;
 pub(crate) use string_values::StringAssignment;
 pub(crate) use stylesheet::Stylesheet;
 #[cfg(test)]

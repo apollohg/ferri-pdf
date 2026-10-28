@@ -93,6 +93,7 @@ pub fn render_parts_with_resolver(
             user: &options.user_stylesheets,
             settings: &options.print,
             capture_fragment_targets: true,
+            ancestors: &[],
         };
         let document = match part.source {
             HtmlSource::Text(html) => StyledDocument::parse_with_options(html, &parse, resolver),

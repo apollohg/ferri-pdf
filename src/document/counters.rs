@@ -505,7 +505,7 @@ impl Counters {
                         pseudo: None,
                     };
                     let mut display = styles.display(target)?;
-                    let replaced = crate::document::formatting::is_replaced(element.name());
+                    let replaced = crate::document::formatting::is_replaced(element);
                     if let Some(parent) = &parent_display {
                         crate::document::formatting::normalize_child_display(
                             &mut display,

@@ -123,6 +123,94 @@ fn validate(trace: &LayoutTrace) -> Result<(), PdfError> {
     Ok(())
 }
 
+/// A display list and the text lines its `Text` items refer to.
+struct Layer<'a> {
+    items: &'a [DisplayItem],
+    lines: &'a [crate::layout::TextLine],
+    /// The faces the layer's text and text shadows use.
+    fonts: &'a FontBook,
+    /// The page index reported for invalid text references.
+    page: usize,
+    page_area: crate::graphics::Rect,
+}
+
+/// Paints `layer` in order, balancing every scope it opens.
+fn draw_items<'a>(
+    layer: &Layer<'a>,
+    mut viewport: crate::graphics::Rect,
+    surface: &mut krilla::surface::Surface<'_>,
+    images: &mut images::ImageWriter,
+    text: &mut text::TextWriter<'a>,
+) -> Result<(), PdfError> {
+    let mut scopes = Vec::new();
+    let painted = (|| -> Result<(), PdfError> {
+        for item in layer.items {
+            match item {
+                DisplayItem::Image(paint) => images.draw(paint, viewport, surface)?,
+                DisplayItem::Box(box_paint) => {
+                    painting::draw(box_paint, layer.page_area, viewport, surface, images)?;
+                }
+                DisplayItem::Text { line } => {
+                    let fragment =
+                        layer
+                            .lines
+                            .get(*line)
+                            .ok_or(PdfError::InvalidTextReference {
+                                page: layer.page,
+                                line: *line,
+                            })?;
+                    text.draw(fragment, surface)?;
+                }
+                DisplayItem::TextShadow(shadow) => {
+                    text_shadows::draw(shadow, text, layer.fonts, viewport, surface)?;
+                }
+                DisplayItem::Decoration(decoration) => {
+                    for fill in decoration.fills() {
+                        painting::draw_fill(fill, viewport, surface)?;
+                    }
+                }
+                DisplayItem::PushClip(clip) => {
+                    scopes.push((painting::push_clip(clip, viewport, surface)?, viewport));
+                }
+                DisplayItem::PushTransform([a, b, c, d, e, f]) => {
+                    surface.push_transform(&Transform::from_row(*a, *b, *c, *d, *e, *f));
+                    scopes.push((1, viewport));
+                }
+                DisplayItem::PushOpacity(alpha) => {
+                    let opacity = krilla::num::NormalizedF32::new(*alpha)
+                        .ok_or(PdfError::InvalidAlpha(*alpha))?;
+                    let nested_viewport = if opacity == krilla::num::NormalizedF32::ONE {
+                        viewport
+                    } else {
+                        painting::local_bounds(viewport, surface)?
+                    };
+                    surface.push_opacity(opacity);
+                    scopes.push((1, viewport));
+                    viewport = nested_viewport;
+                }
+                DisplayItem::PushBlend(mode) => {
+                    let nested_viewport = painting::local_bounds(viewport, surface)?;
+                    scopes.push((painting::push_blend(*mode, surface), viewport));
+                    viewport = nested_viewport;
+                }
+                DisplayItem::Pop => {
+                    let (count, previous) = scopes.pop().ok_or(PdfError::InvalidGeometry)?;
+                    painting::pop_clips(count, surface);
+                    viewport = previous;
+                }
+            }
+        }
+        if !scopes.is_empty() {
+            return Err(PdfError::InvalidGeometry);
+        }
+        Ok(())
+    })();
+    while let Some((count, _)) = scopes.pop() {
+        painting::pop_clips(count, surface);
+    }
+    painted
+}
+
 /// Append independent layouts with common output settings.
 /// Cross-part links require navigation captured with `ParseOptions::capture_fragment_targets`.
 pub(crate) fn encode_parts_with_diagnostics(
@@ -174,84 +262,19 @@ pub(crate) fn encode_parts_with_diagnostics(
             let mut surface = page.surface();
             let bleed_clip = painting::rect_path(record.output.bleed)?;
             surface.push_clip_path(&bleed_clip, &krilla::paint::FillRule::NonZero);
-            let mut scopes = Vec::new();
-            let mut viewport = record.output.media;
-            let painted = (|| -> Result<(), PdfError> {
-                for item in items {
-                    match item {
-                        DisplayItem::Image(paint) => images.draw(paint, viewport, &mut surface)?,
-                        DisplayItem::Box(box_paint) => painting::draw(
-                            box_paint,
-                            page_area,
-                            viewport,
-                            &mut surface,
-                            &mut images,
-                        )?,
-                        DisplayItem::Text { line } => {
-                            let fragment =
-                                lines.get(*line).ok_or(PdfError::InvalidTextReference {
-                                    page: page_index,
-                                    line: *line,
-                                })?;
-                            text.draw(fragment, &mut surface)?;
-                        }
-                        DisplayItem::TextShadow(shadow) => {
-                            text_shadows::draw(
-                                shadow,
-                                &mut text,
-                                part.fonts,
-                                viewport,
-                                &mut surface,
-                            )?;
-                        }
-                        DisplayItem::Decoration(decoration) => {
-                            for fill in decoration.fills() {
-                                painting::draw_fill(fill, viewport, &mut surface)?;
-                            }
-                        }
-                        DisplayItem::PushClip(clip) => {
-                            scopes.push((
-                                painting::push_clip(clip, viewport, &mut surface)?,
-                                viewport,
-                            ));
-                        }
-                        DisplayItem::PushTransform([a, b, c, d, e, f]) => {
-                            surface.push_transform(&Transform::from_row(*a, *b, *c, *d, *e, *f));
-                            scopes.push((1, viewport));
-                        }
-                        DisplayItem::PushOpacity(alpha) => {
-                            let opacity = krilla::num::NormalizedF32::new(*alpha)
-                                .ok_or(PdfError::InvalidAlpha(*alpha))?;
-                            let nested_viewport = if opacity == krilla::num::NormalizedF32::ONE {
-                                viewport
-                            } else {
-                                painting::local_bounds(viewport, &surface)?
-                            };
-                            surface.push_opacity(opacity);
-                            scopes.push((1, viewport));
-                            viewport = nested_viewport;
-                        }
-                        DisplayItem::PushBlend(mode) => {
-                            let nested_viewport = painting::local_bounds(viewport, &surface)?;
-                            scopes.push((painting::push_blend(*mode, &mut surface), viewport));
-                            viewport = nested_viewport;
-                        }
-                        DisplayItem::Pop => {
-                            let (count, previous) =
-                                scopes.pop().ok_or(PdfError::InvalidGeometry)?;
-                            painting::pop_clips(count, &mut surface);
-                            viewport = previous;
-                        }
-                    }
-                }
-                if !scopes.is_empty() {
-                    return Err(PdfError::InvalidGeometry);
-                }
-                Ok(())
-            })();
-            while let Some((count, _)) = scopes.pop() {
-                painting::pop_clips(count, &mut surface);
-            }
+            let painted = draw_items(
+                &Layer {
+                    items,
+                    lines,
+                    fonts: part.fonts,
+                    page: page_index,
+                    page_area,
+                },
+                record.output.media,
+                &mut surface,
+                &mut images,
+                &mut text,
+            );
             surface.pop();
             if painted.is_ok() {
                 for mark in &record.output.marks {

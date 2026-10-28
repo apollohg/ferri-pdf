@@ -648,7 +648,9 @@ impl Stylesheet {
         }
         let (mut cascaded, mut order) =
             self.rule_winners(element, None, &parent.containers, resolver)?;
-        for default in crate::style::user_agent::declarations(element, &self.document_base)? {
+        for default in
+            crate::style::user_agent::declarations(element, &self.document_base, &self.environment)?
+        {
             let mut declaration = default.declaration;
             declaration.font_namespace = self.font_namespace(Some(element.tree_scope()));
             insert(

@@ -195,7 +195,7 @@ impl Selection<'_> {
                         before = before.combine(self.styles.break_before(target)?);
                     }
                     if target.pseudo.is_some()
-                        || formatting::is_replaced(self.element(target).name())
+                        || formatting::is_replaced(self.element(target))
                         || display == Display::TableRow
                         || (display.is_list_item() && self.styles.inside_marker(target)?)
                     {
@@ -365,9 +365,7 @@ impl Collector {
                         .document
                         .element(source.element)
                         .expect("generated target exists");
-                    if formatting::is_replaced(element.name())
-                        || self.display == Display::TableColumn
-                    {
+                    if formatting::is_replaced(element) || self.display == Display::TableColumn {
                         continue;
                     }
                     self.generated(selection, element, PseudoElement::Before, depth + 1)?;
@@ -403,7 +401,7 @@ impl Collector {
                     let source = target(element, None);
                     let mut display = selection.styles.display(source)?;
                     display.validate()?;
-                    let replaced = formatting::is_replaced(element.name());
+                    let replaced = formatting::is_replaced(element);
                     formatting::normalize_child_display(&mut display, replaced, &self.display);
                     if display == Display::None
                         || (self.display == Display::TableColumnGroup

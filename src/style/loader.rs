@@ -11,7 +11,7 @@ use crate::style::{
     layers::{LayerName, LayerNode, LayerTree},
     media::MediaQuery,
     parser::{ContentRule, ImportRule, Rule, rules},
-    print::PrintEnvironment,
+    print::{Presentation, PrintEnvironment},
 };
 use std::{
     cell::RefCell,
@@ -244,10 +244,11 @@ impl<'a> Loader<'a> {
         sources: &StylesheetSources,
         resolver: &'a dyn ResourceResolver,
         settings: &PrintSettings,
+        presentation: Presentation,
         decode: Option<CssDecoder>,
         limits: Limits,
     ) -> Result<Self, StyleError> {
-        let mut environment = PrintEnvironment::new(settings)?;
+        let mut environment = PrintEnvironment::new(settings, presentation)?;
         environment.page_color_schemes = crate::style::color_scheme::page_color_schemes(tree);
         Ok(Self {
             tree,
@@ -951,20 +952,38 @@ pub(super) fn prepare_with_limits(
     sources: &StylesheetSources,
     resolver: &dyn ResourceResolver,
     settings: &PrintSettings,
+    presentation: Presentation,
     decode: CssDecoder,
     limits: Limits,
 ) -> Result<PreparedStylesheets, StyleError> {
-    prepare(tree, sources, resolver, settings, Some(decode), limits)
+    prepare(
+        tree,
+        sources,
+        resolver,
+        settings,
+        presentation,
+        Some(decode),
+        limits,
+    )
 }
 fn prepare(
     tree: &DocumentTree,
     sources: &StylesheetSources,
     resolver: &dyn ResourceResolver,
     settings: &PrintSettings,
+    presentation: Presentation,
     decode: Option<CssDecoder>,
     limits: Limits,
 ) -> Result<PreparedStylesheets, StyleError> {
-    let mut loader = Loader::new(tree, sources, resolver, settings, decode, limits)?;
+    let mut loader = Loader::new(
+        tree,
+        sources,
+        resolver,
+        settings,
+        presentation,
+        decode,
+        limits,
+    )?;
     let visual = sources
         .document_encoding
         .eq_ignore_ascii_case(VISUAL_HEBREW_ENCODING)
@@ -1028,6 +1047,7 @@ pub(super) fn inline(
         &sources,
         &crate::resources::FileResolver::default(),
         settings,
+        Presentation::Paged,
         None,
         Limits::default(),
     )
@@ -1076,6 +1096,7 @@ mod tests {
             &sources,
             &FileResolver::default(),
             &PrintSettings::default(),
+            Presentation::Paged,
             decode,
         )
         .unwrap();
@@ -1134,6 +1155,7 @@ mod tests {
             &source("p{color:red;&{color:blue}color:green;&{color:yellow}color:black}"),
             &resolver,
             &PrintSettings::default(),
+            Presentation::Paged,
             decode,
             Limits {
                 rules: 4,
@@ -1174,6 +1196,7 @@ mod tests {
             &source(&css),
             &resolver,
             &PrintSettings::default(),
+            Presentation::Paged,
             decode,
             Limits::default(),
         );
@@ -1205,6 +1228,7 @@ mod tests {
             &source(&css),
             &resolver,
             &PrintSettings::default(),
+            Presentation::Paged,
             decode,
             Limits::default(),
         );
@@ -1259,6 +1283,7 @@ mod tests {
                 &source(CSS),
                 &resolver,
                 &PrintSettings::default(),
+                Presentation::Paged,
                 decode,
                 limits
             )
@@ -1269,6 +1294,7 @@ mod tests {
             &source(CSS),
             &resolver,
             &PrintSettings::default(),
+            Presentation::Paged,
             decode,
             Limits {
                 bytes: CSS.len() - 1,
@@ -1283,6 +1309,7 @@ mod tests {
             &source("p{color:red}p{color:blue}"),
             &resolver,
             &PrintSettings::default(),
+            Presentation::Paged,
             decode,
             limits,
         );
@@ -1292,6 +1319,7 @@ mod tests {
             &source("p{color:red}p{color:blue}"),
             &resolver,
             &PrintSettings::default(),
+            Presentation::Paged,
             decode,
             Limits {
                 bytes: MAX_STYLESHEET_BYTES,
@@ -1333,6 +1361,7 @@ mod tests {
             &sources,
             &resolver,
             &PrintSettings::default(),
+            Presentation::Paged,
             decode,
             Limits {
                 depth: 0,
@@ -1376,6 +1405,7 @@ mod tests {
             &sources,
             &FileResolver::default(),
             &PrintSettings::default(),
+            Presentation::Paged,
             decode,
             Limits {
                 bytes: include_str!("tests/fixtures/imports/canonical.css").len(),
@@ -1413,6 +1443,7 @@ mod tests {
                 &source(css),
                 &resolver,
                 &PrintSettings::default(),
+                Presentation::Paged,
                 decode,
                 Limits {
                     rules: limit,
@@ -1455,6 +1486,7 @@ mod tests {
                 &sources,
                 &resolver,
                 &PrintSettings::default(),
+                Presentation::Paged,
                 decode,
                 Limits {
                     rules: limit,
@@ -1510,6 +1542,7 @@ mod tests {
             &sources,
             &WrongType,
             &PrintSettings::default(),
+            Presentation::Paged,
             decode,
             Limits {
                 bytes: 1,

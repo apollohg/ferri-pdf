@@ -72,3 +72,6 @@ input[dir=auto i]:is([type=search i], [type=tel i], [type=url i], [type=email i]
 textarea[dir=auto i], pre[dir=auto i] { unicode-bidi: plaintext; }
 thead, tbody, tfoot, tr { border-color: inherit; }
 :is(table, thead, tbody, tfoot, tr) > form { display: none !important; }
+/* Embedded content (HTML Standard §15.4.1). */
+iframe { border: 2px inset; }
+video { object-fit: contain; }

@@ -753,6 +753,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     ) -> Self {
         Self::new(measurer, Fragmentainers::Pages(pages), canvas, canvas_rect)
     }
+    /// Lays the document out on its first page without fragmenting it, as continuous media.
+    pub(crate) fn unbroken(mut self) -> Self {
+        self.unbroken = 1;
+        self
+    }
     fn new(
         measurer: &'m mut Measurer<'t>,
         fragmentainers: Fragmentainers<'a, 't>,

@@ -7,6 +7,7 @@ mod backgrounds;
 mod baseline_alignment;
 mod body_strings;
 mod counters;
+mod embedded_content;
 mod first_page_selection;
 mod floats;
 mod font_features;

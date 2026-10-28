@@ -2,7 +2,8 @@ use crate::style::{
     StyleError, calc,
     conditions::{Condition, Truth, block_source},
     print::{
-        ColorScheme, ContrastPreference, MotionPreference, PrintEnvironment, PrintPreferences,
+        ColorScheme, ContrastPreference, MotionPreference, Presentation, PrintEnvironment,
+        PrintPreferences,
     },
     units::{self, Dimension, Relative, Scale},
 };
@@ -142,7 +143,12 @@ const LITERAL_RANGE: calc::Range = calc::Range {
     max: f32::MAX,
 };
 
-fn spec(name: &str, paper: [f32; 2], preferences: &PrintPreferences) -> Option<FeatureSpec> {
+fn spec(
+    name: &str,
+    paper: [f32; 2],
+    preferences: &PrintPreferences,
+    presentation: Presentation,
+) -> Option<FeatureSpec> {
     let number = FeatureSpec::number;
     let keywords = FeatureSpec::keywords;
     Some(match name {
@@ -170,7 +176,14 @@ fn spec(name: &str, paper: [f32; 2], preferences: &PrintPreferences) -> Option<F
         "horizontal-viewport-segments" | "vertical-viewport-segments" => {
             number(ValueKind::Integer, SINGLE_VIEWPORT_SEGMENT, false)
         }
-        "overflow-block" => keywords(&["none", "scroll", "paged"], Some("paged"), false),
+        "overflow-block" => keywords(
+            &["none", "scroll", "paged"],
+            Some(match presentation {
+                Presentation::Paged => "paged",
+                Presentation::Viewport => "none",
+            }),
+            false,
+        ),
         "overflow-inline" => keywords(&["none", "scroll"], Some("none"), false),
         "scan" => keywords(&["interlace", "progressive"], None, false),
         "display-mode" => keywords(
@@ -279,7 +292,12 @@ impl RangeFeature {
 }
 
 pub(super) fn range_feature(name: &str, paper: [f32; 2]) -> Option<RangeFeature> {
-    let spec = spec(name, paper, &PrintPreferences::default())?;
+    let spec = spec(
+        name,
+        paper,
+        &PrintPreferences::default(),
+        Presentation::default(),
+    )?;
     let kind = match spec.kind {
         ValueKind::Length => calc::Kind::Length,
         ValueKind::Ratio | ValueKind::Integer => calc::Kind::Number,
@@ -473,6 +491,7 @@ impl Value {
                                                     &name.to_ascii_lowercase(),
                                                     environment.paper,
                                                     &environment.preferences,
+                                                    environment.presentation,
                                                 )
                                             })
                                             .is_some_and(|spec| spec.paper);
@@ -574,7 +593,14 @@ impl Feature {
             };
         }
         self.evaluate_with(
-            |name| spec(name, environment.paper, &environment.preferences),
+            |name| {
+                spec(
+                    name,
+                    environment.paper,
+                    &environment.preferences,
+                    environment.presentation,
+                )
+            },
             &environment.relative,
         )
     }
@@ -636,7 +662,14 @@ impl Feature {
         &self,
         environment: &PrintEnvironment,
     ) -> Option<(FeatureSpec, Option<Comparison>)> {
-        self.definition_with(|name| spec(name, environment.paper, &environment.preferences))
+        self.definition_with(|name| {
+            spec(
+                name,
+                environment.paper,
+                &environment.preferences,
+                environment.presentation,
+            )
+        })
     }
 
     fn definition_with(
@@ -811,6 +844,77 @@ impl MediaQuery {
     }
 }
 
+/// A `<media-condition>` that evaluates to true, as `sizes` entries require (HTML §4.8.4.3.11).
+pub(super) fn condition_matches(source: &str, environment: &PrintEnvironment) -> bool {
+    Condition::parse(source, true, Truth::Unknown, Feature::parse).is_ok_and(|condition| {
+        condition.is_some_and(|condition| {
+            condition.evaluate(|feature| feature.evaluate(environment)) == Truth::True
+        })
+    })
+}
+
+/// A non-negative `<length>`, possibly a math function, in points.
+pub(super) fn source_size_length(source: &str, environment: &PrintEnvironment) -> Option<f32> {
+    let mut input = ParserInput::new(source);
+    let input = &mut Parser::new(&mut input);
+    let value = Value::atom(input)?;
+    input.expect_exhausted().ok()?;
+    let points = value.scalar(ValueKind::Length, &environment.relative)?;
+    (points >= 0.0).then_some(points as f32)
+}
+
+/// The top-level component values of `source` as `(start, token)` byte offsets and tokens,
+/// each block consumed with its opening token.
+fn component_values(source: &str) -> Vec<(usize, Token<'_>)> {
+    let mut input = ParserInput::new(source);
+    let input = &mut Parser::new(&mut input);
+    let mut values = Vec::new();
+    loop {
+        let start = input.position().byte_index();
+        let Ok(token) = input.next_including_whitespace().cloned() else {
+            return values;
+        };
+        if matches!(
+            token,
+            Token::Function(_)
+                | Token::ParenthesisBlock
+                | Token::SquareBracketBlock
+                | Token::CurlyBracketBlock
+        ) {
+            input
+                .parse_nested_block(|nested| {
+                    block_source(nested);
+                    Ok::<_, cssparser::ParseError<'_, ()>>(())
+                })
+                .expect("consuming a block cannot fail");
+        }
+        values.push((start, token));
+    }
+}
+
+/// CSS Syntax 3 §5.3.11 "parse a comma-separated list of component values", as source text.
+pub(super) fn comma_separated(source: &str) -> Vec<&str> {
+    let mut entries = Vec::new();
+    let mut start = 0;
+    for (offset, token) in component_values(source) {
+        if token == Token::Comma {
+            entries.push(&source[start..offset]);
+            start = offset + 1;
+        }
+    }
+    entries.push(&source[start..]);
+    entries
+}
+
+/// Splits `source` before its last component value other than white space; `None` when it
+/// has none.
+pub(super) fn split_last_component(source: &str) -> Option<(&str, &str)> {
+    let (last, _) = component_values(source)
+        .into_iter()
+        .rfind(|(_, token)| !matches!(token, Token::WhiteSpace(_)))?;
+    Some((&source[..last], &source[last..]))
+}
+
 pub(super) fn matches_media(query: &MediaQuery, environment: &PrintEnvironment) -> bool {
     query.queries.iter().any(|query| match query {
         Query::Constant(value) => *value,
@@ -837,10 +941,13 @@ mod tests {
     use crate::style::{PrintSettings, print::PrintEnvironment};
 
     fn matches(source: &str) -> bool {
-        let environment = PrintEnvironment::new(&PrintSettings {
-            paper: [600.0, 800.0],
-            ..Default::default()
-        })
+        let environment = PrintEnvironment::new(
+            &PrintSettings {
+                paper: [600.0, 800.0],
+                ..Default::default()
+            },
+            Presentation::Paged,
+        )
         .unwrap();
         matches_media(&MediaQuery::parse(source).unwrap(), &environment)
     }

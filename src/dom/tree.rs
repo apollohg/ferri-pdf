@@ -4,7 +4,7 @@ use scraper::{ElementRef, Html};
 use selectors::matching::SelectorCaches;
 use std::{
     cell::RefCell,
-    collections::HashMap,
+    collections::{HashMap, HashSet},
     fmt,
     sync::atomic::{AtomicU64, Ordering},
 };
@@ -50,6 +50,9 @@ pub(crate) struct DocumentTree {
     pub(crate) default_language: String,
     pub(crate) shadow: crate::dom::shadow::ShadowState,
     pub(crate) initial_states: HashMap<NodeId, crate::dom::InitialState>,
+    /// `object` elements that represent an image or their content navigable rather than their
+    /// fallback content (HTML §4.8.7).
+    embedding_objects: HashSet<NodeId>,
     sibling_positions: RefCell<HashMap<(NodeId, TreeRelation), (usize, usize)>>,
 }
 
@@ -75,6 +78,7 @@ impl DocumentTree {
             default_language: String::new(),
             shadow,
             initial_states: HashMap::new(),
+            embedding_objects: HashSet::new(),
             sibling_positions: RefCell::default(),
         };
         let connected = if tree.shadow.roots.is_empty() {
@@ -124,6 +128,14 @@ impl DocumentTree {
     }
     pub(crate) fn quirks_mode(&self) -> QuirksMode {
         self.html.quirks_mode
+    }
+    /// Records what the `object` element `id` represents once its resource is examined.
+    pub(crate) fn set_object_embeds(&mut self, id: ElementId) {
+        debug_assert_eq!(
+            id.document, self.identity,
+            "object belongs to this document"
+        );
+        self.embedding_objects.insert(id.node);
     }
     pub(crate) fn root_element(&self) -> Element<'_> {
         Element {
@@ -234,6 +246,10 @@ impl<'a> Element<'a> {
             document: self.tree.identity,
             node: self.raw.id(),
         }
+    }
+    /// An `object` element representing an image or its content navigable, not its fallback.
+    pub(crate) fn object_embeds(self) -> bool {
+        self.tree.embedding_objects.contains(&self.raw.id())
     }
     pub(crate) fn tree_scope(self) -> TreeScopeId {
         TreeScopeId {

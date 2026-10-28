@@ -62,9 +62,22 @@ impl PrintSettings {
     }
 }
 
+/// Where a document is laid out: on the printed pages, or in the viewport of a nested
+/// navigable (an `iframe`) on one of them.
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+pub(crate) enum Presentation {
+    #[default]
+    Paged,
+    /// Continuous media the size of the navigable's viewport; print cannot scroll it, so
+    /// overflowing content is not displayed (Media Queries 4 §7.1 `overflow-block: none`).
+    Viewport,
+}
+
 #[derive(Clone)]
 pub(super) struct PrintEnvironment {
+    /// The page sheet, or the viewport of a [`Presentation::Viewport`] document.
     pub paper: [f32; 2],
+    pub presentation: Presentation,
     pub preferences: PrintPreferences,
     /// The page's supported colour schemes, which `color-scheme: normal` takes.
     pub page_color_schemes: crate::style::color_scheme::ColorSchemes,
@@ -74,7 +87,10 @@ pub(super) struct PrintEnvironment {
 }
 
 impl PrintEnvironment {
-    pub(crate) fn new(settings: &PrintSettings) -> Result<Self, StyleError> {
+    pub(crate) fn new(
+        settings: &PrintSettings,
+        presentation: Presentation,
+    ) -> Result<Self, StyleError> {
         settings.validate()?;
         let initial_font = (!settings.fonts.is_empty()).then(|| {
             std::sync::Arc::new(crate::fonts::InitialFont::from_preferences(&settings.fonts))
@@ -82,6 +98,7 @@ impl PrintEnvironment {
         let relative = Relative::media(settings.paper, initial_font);
         Ok(Self {
             paper: settings.paper,
+            presentation,
             preferences: settings.preferences.clone(),
             page_color_schemes: Default::default(),
             relative,

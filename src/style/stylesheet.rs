@@ -361,6 +361,7 @@ impl Stylesheet {
         sources: &crate::style::StylesheetSources,
         resolver: &dyn ResourceResolver,
         settings: &PrintSettings,
+        presentation: crate::style::Presentation,
         decode: crate::style::CssDecoder,
     ) -> Result<Self, StyleError> {
         Self::from_prepared(
@@ -369,12 +370,25 @@ impl Stylesheet {
                 sources,
                 resolver,
                 settings,
+                presentation,
                 decode,
                 loader::Limits::default(),
             )?,
             settings,
             Some(tree),
         )
+    }
+
+    pub(crate) fn presentation(&self) -> crate::style::Presentation {
+        self.environment.presentation
+    }
+
+    /// The source an HTML `img` element selects for the print medium (HTML §4.8.4.3.7).
+    pub(crate) fn image_source(
+        &self,
+        img: crate::dom::Element<'_>,
+    ) -> Option<crate::style::ImageSource> {
+        crate::style::source_set::select(img, &self.environment)
     }
 
     pub(crate) fn take_source_diagnostics(&mut self) -> Vec<SourceDiagnostic> {
@@ -533,6 +547,9 @@ impl Stylesheet {
                         .collect(),
                     });
                 }
+                // CSS Paged Media 3 §3: page rules style page boxes, which continuous media lacks.
+                ContentRule::Page { .. }
+                    if sheet.environment.presentation == crate::style::Presentation::Viewport => {}
                 ContentRule::Page { selectors, items } => {
                     sheet
                         .page_rules

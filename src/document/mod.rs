@@ -1,12 +1,15 @@
 //! HTML loading, stylesheet discovery, and styled document construction.
 mod content;
 mod counters;
+mod embedded;
 pub(crate) mod encoding;
 mod first_page;
 mod formatting;
+pub(crate) mod frames;
 mod generated;
 mod inline;
 mod lists;
+mod media;
 mod metadata;
 mod navigation;
 mod page;
@@ -21,6 +24,7 @@ use crate::resources::{ResourceError, ResourceResolver};
 use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 
 pub(crate) use formatting::{BlockBox, BlockContent, PageBox, PageMarginBox};
+pub(crate) use frames::{Frame, FrameDocument};
 pub(crate) use generated::GeneratedValues;
 pub(crate) use inline::{
     Anchor, InlineBox, MAX_INLINE_TEXT_BYTES, OBJECT_REPLACEMENT_CHARACTER, Paragraph,
@@ -63,6 +67,13 @@ pub enum DocumentDiagnostic {
         reference: Option<String>,
         encoding: String,
     },
+    #[error("embedded resource {reference} is unavailable: {error}")]
+    UnavailableEmbedded {
+        base: crate::resources::ResourceBase,
+        reference: String,
+        #[source]
+        error: ResourceError,
+    },
     #[error("stylesheet {reference} is unavailable: {error}")]
     UnavailableSource {
         base: crate::resources::ResourceBase,
@@ -88,6 +99,7 @@ pub(crate) struct StyledDocument {
 
 struct FormattingSource {
     html: DocumentTree,
+    embedded: embedded::EmbeddedContent,
     base: crate::resources::ResourceBase,
     source_base: crate::resources::ResourceBase,
     document_url: Option<crate::resources::Url>,
@@ -99,7 +111,7 @@ impl FormattingSource {
         &self,
         styles: &mut Stylesheet,
         values: GeneratedValues,
-        images: std::rc::Rc<std::cell::RefCell<crate::images::ImageCache>>,
+        images: &std::rc::Rc<std::cell::RefCell<crate::images::ImageCache>>,
         resolver: &dyn ResourceResolver,
     ) -> Result<formatting::Formatted, DocumentError> {
         let navigation = navigation::NavigationBuilder::new(
@@ -110,13 +122,16 @@ impl FormattingSource {
             &self.source_base,
         )?;
         formatting::build(
-            &self.html,
+            &formatting::Input {
+                html: &self.html,
+                embedded: &self.embedded,
+                images,
+            },
             styles,
             &self.base,
             resolver,
             navigation,
             values,
-            Some(images),
         )
     }
 }
@@ -130,6 +145,9 @@ pub(crate) struct ParseOptions<'a> {
     pub settings: &'a PrintSettings,
     /// Retain targets and unresolved fragment intents for a multipart rendering job.
     pub capture_fragment_targets: bool,
+    /// Document URLs of the navigables containing this document's, outermost first; empty for
+    /// the printed document.
+    pub ancestors: &'a [Option<crate::resources::Url>],
 }
 
 struct HtmlInput {
@@ -183,6 +201,7 @@ impl StyledDocument {
                 user,
                 settings,
                 capture_fragment_targets: false,
+                ancestors: &[],
             },
             resolver,
         )
@@ -198,6 +217,25 @@ impl StyledDocument {
             HtmlInput {
                 tree: DocumentTree::parse(html)?,
                 encoding: "UTF-8".into(),
+                diagnostics: Vec::new(),
+            },
+            options,
+            resolver,
+        )
+    }
+
+    /// A nested navigable's document, already decoded from `encoding`.
+    pub(crate) fn parse_decoded(
+        html: &str,
+        encoding: &str,
+        options: &ParseOptions<'_>,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Self, DocumentError> {
+        options.settings.validate()?;
+        Self::from_input(
+            HtmlInput {
+                tree: DocumentTree::parse(html)?,
+                encoding: encoding.into(),
                 diagnostics: Vec::new(),
             },
             options,
@@ -221,6 +259,7 @@ impl StyledDocument {
                 user,
                 settings,
                 capture_fragment_targets: false,
+                ancestors: &[],
             },
             resolver,
         )
@@ -263,7 +302,13 @@ impl StyledDocument {
             user,
             settings,
             capture_fragment_targets,
+            ancestors,
         } = *options;
+        let presentation = if ancestors.is_empty() {
+            crate::style::Presentation::Paged
+        } else {
+            crate::style::Presentation::Viewport
+        };
         let HtmlInput {
             tree: mut html,
             encoding: document_encoding,
@@ -272,8 +317,33 @@ impl StyledDocument {
         let sources = stylesheets::discover(&html, base, &document_encoding, additional, user)?;
         html.set_document_urls(sources.document_url.clone(), sources.base.resolve("")?);
         let base = &sources.base;
-        let mut styles =
-            Stylesheet::prepare(&html, &sources, resolver, settings, encoding::stylesheet)?;
+        let mut styles = Stylesheet::prepare(
+            &html,
+            &sources,
+            resolver,
+            settings,
+            presentation,
+            encoding::stylesheet,
+        )?;
+        let images = std::rc::Rc::new(std::cell::RefCell::new(
+            crate::images::ImageCache::with_fonts(styles.fonts.clone()),
+        ));
+        let mut navigables = ancestors.to_vec();
+        navigables.push(sources.document_url.clone());
+        let (embedded, embedding) = embedded::resolve(
+            &mut html,
+            &embedded::Embedder {
+                base,
+                navigable: frames::Navigable {
+                    settings: settings.clone(),
+                    user: user.to_vec(),
+                    ancestors: navigables,
+                },
+                resolver,
+            },
+            &mut images.borrow_mut(),
+        )?;
+        diagnostics.extend(embedding);
         let links = navigation::NavigationBuilder::new(
             &html,
             base,
@@ -289,13 +359,16 @@ impl StyledDocument {
             canvas,
             pages,
         } = formatting::build(
-            &html,
+            &formatting::Input {
+                html: &html,
+                embedded: &embedded,
+                images: &images,
+            },
             &mut styles,
             base,
             resolver,
             links,
             Default::default(),
-            None,
         )?;
         diagnostics.extend(
             styles
@@ -340,6 +413,7 @@ impl StyledDocument {
             pages,
             source: std::rc::Rc::new(FormattingSource {
                 html,
+                embedded,
                 base: base.clone(),
                 source_base: options.base.clone(),
                 document_url: sources.document_url,
@@ -393,7 +467,7 @@ impl StyledDocument {
             generated,
             canvas,
             pages,
-        } = source.build(&mut styles, values, self.pages.images(), resolver)?;
+        } = source.build(&mut styles, values, &self.pages.images(), resolver)?;
         Ok(Self {
             root,
             styles,
@@ -434,7 +508,7 @@ impl StyledDocument {
             generated,
             canvas,
             pages,
-        } = source.build(&mut self.styles, values, self.pages.images(), resolver)?;
+        } = source.build(&mut self.styles, values, &self.pages.images(), resolver)?;
         self.navigation = navigation.finish(&source.html, &generated)?;
         self.running_strings = strings.finish(&source.html)?;
         self.root = root;
@@ -452,6 +526,8 @@ impl StyledDocument {
     }
 
     pub(crate) fn into_diagnostics(mut self) -> Vec<DocumentDiagnostic> {
+        self.diagnostics
+            .extend(self.source.embedded.take_diagnostics());
         self.diagnostics.extend(
             self.pages
                 .images()

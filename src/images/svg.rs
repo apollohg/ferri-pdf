@@ -18,8 +18,6 @@ const MILLIMETRES_PER_INCH: f64 = 25.4;
 const CENTIMETRES_PER_INCH: f64 = 2.54;
 const POINTS_PER_PICA: f64 = 12.0;
 const DEFAULT_FONT_SIZE: f64 = 16.0;
-const DEFAULT_HEIGHT: f32 = 150.0;
-const DEFAULT_WIDTH: f32 = 300.0;
 const MAX_RESOURCE_DEPTH: usize = 32;
 
 #[derive(Debug)]
@@ -105,7 +103,7 @@ impl SvgImage {
                 height,
                 ratio,
             },
-            DEFAULT_WIDTH,
+            crate::images::DEFAULT_OBJECT_SIZE[0],
         );
         let fonts = cache.fonts.in_namespace(namespace);
         let provider = fonts.provider(Some(resolver));
@@ -215,7 +213,10 @@ fn pixel_size(dimensions: crate::images::NaturalDimensions, available_width: f32
         (Some(w), None, Some(r)) => [w, w / r],
         (None, Some(h), Some(r)) => [h * r, h],
         (None, None, Some(r)) => [available_width, available_width / r],
-        (w, h, None) => [w.unwrap_or(DEFAULT_WIDTH), h.unwrap_or(DEFAULT_HEIGHT)],
+        (w, h, None) => [
+            w.unwrap_or(crate::images::DEFAULT_OBJECT_SIZE[0]),
+            h.unwrap_or(crate::images::DEFAULT_OBJECT_SIZE[1]),
+        ],
     }
 }
 
@@ -244,12 +245,15 @@ fn image_kind(image: &Image, jpeg_images: &mut HashSet<usize>) -> Result<ImageKi
         },
         Image::Svg(svg) => {
             jpeg_images.extend(svg.jpeg_images().iter().copied());
-            ImageKind::SVG(svg.tree(svg.pixel_size(DEFAULT_WIDTH))?)
+            ImageKind::SVG(svg.tree(svg.pixel_size(crate::images::DEFAULT_OBJECT_SIZE[0]))?)
         }
         Image::Pixels(pixels) => {
             let data = Arc::new(pixels.png()?);
             jpeg_images.insert(Arc::as_ptr(&data) as usize);
             ImageKind::PNG(data)
+        }
+        Image::Transparent | Image::Frame(_) | Image::Viewport(_) => {
+            unreachable!("SVG image references load only image resources")
         }
     })
 }

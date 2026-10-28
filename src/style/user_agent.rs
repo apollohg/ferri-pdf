@@ -158,6 +158,7 @@ fn hr_hints(output: &mut Vec<PropertyDeclaration>, element: Element<'_>) -> Resu
 fn embedded_hints(
     output: &mut Vec<PropertyDeclaration>,
     element: Element<'_>,
+    environment: &crate::style::print::PrintEnvironment,
 ) -> Result<(), StyleError> {
     let tag = element.name();
     let image_button = tag == "input"
@@ -165,8 +166,14 @@ fn embedded_hints(
             .attr("type")
             .is_some_and(|kind| kind.eq_ignore_ascii_case("image"));
     if matches!(tag, "embed" | "iframe" | "img" | "object" | "video") || image_button {
-        dimension_hint(output, element, "width", Property::Width, false)?;
-        dimension_hint(output, element, "height", Property::Height, false)?;
+        // HTML §15.4.3: an `img` maps its dimension attribute source's width and height.
+        let dimensions = if tag == "img" {
+            crate::style::source_set::dimension_source(element, environment)
+        } else {
+            element
+        };
+        dimension_hint(output, dimensions, "width", Property::Width, false)?;
+        dimension_hint(output, dimensions, "height", Property::Height, false)?;
     }
     if (matches!(tag, "embed" | "iframe" | "img" | "object") || image_button)
         && let Some(align) = element.attr("align")
@@ -705,13 +712,14 @@ pub(super) struct DefaultDeclaration {
 pub(super) fn declarations(
     element: Element<'_>,
     base: &ResourceBase,
+    environment: &crate::style::print::PrintEnvironment,
 ) -> Result<Vec<DefaultDeclaration>, StyleError> {
     let mut output = Vec::new();
     if element.namespace() != HTML_NAMESPACE {
         return Ok(Vec::new());
     }
     let tag = element.name();
-    embedded_hints(&mut output, element)?;
+    embedded_hints(&mut output, element, environment)?;
     list_counter_hint(&mut output, element);
     if let Some(level) = element.heading_level() {
         let (size, margin) = HEADING_DEFAULTS[usize::from(level).min(HEADING_DEFAULTS.len()) - 1];
