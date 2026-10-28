@@ -1,7 +1,7 @@
 [workspace]
-members = ["crates/*", "vendor/roxmltree", "spec"]
+members = ["crates/*", "spec"]
 default-members = [".", "crates/*"]
-exclude = ["vendor/resvg", "vendor/krilla", "vendor/scraper", "vendor/cssparser-color", "vendor/icu_casemap", "vendor/cssparser", "vendor/zenavif-parse", "vendor/html5ever", "vendor/rav1d", "vendor/usvg", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors", "vendor/krilla-svg"]
+exclude = ["vendor/resvg", "vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/usvg", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors", "vendor/krilla-svg"]
 resolver = "3"
 
 [workspace.package]
@@ -58,7 +58,7 @@ ferri-pdf-spec-data = { path = "spec", version = "0.1.0" }
 ferri-pdf-dom = { path = "crates/dom", version = "0.1.0" }
 ego-tree = "=0.11.0"
 encoding_rs = "0.8.35"
-html5ever = { package = "ferri-pdf-html5ever", path = "vendor/html5ever", version = "=0.39.0" }
+html5ever = "=0.39.0"
 icu_casemap = { package = "ferri-pdf-icu-casemap", path = "vendor/icu_casemap", version = "=2.3.0" }
 icu_locale_core = "=2.3.0"
 avif-decode = { package = "ferri-pdf-avif-decode", path = "vendor/avif-decode", version = "=3.0.0", default-features = false }
@@ -76,14 +76,14 @@ svgtypes = "0.16"
 krilla-svg = { package = "ferri-pdf-krilla-svg", path = "vendor/krilla-svg", version = "=0.8.1" }
 image = { version = "=0.25.10", default-features = false, features = ["png", "jpeg", "gif", "webp"] }
 ferri-pdf-images = { path = "crates/images", version = "0.1.0" }
-cssparser = { package = "ferri-pdf-cssparser", path = "vendor/cssparser", version = "0.37" }
-roxmltree = { package = "ferri-pdf-roxmltree", path = "vendor/roxmltree", version = "0.21.1" }
-cssparser-color = { package = "ferri-pdf-cssparser-color", path = "vendor/cssparser-color", version = "0.5", default-features = false }
+cssparser = "0.37"
+roxmltree = "0.21.2"
+cssparser-color = { version = "0.5", default-features = false }
 icu_properties = { version = "~2.3.0", default-features = false, features = ["compiled_data"] }
 selectors = { package = "ferri-pdf-selectors", path = "vendor/selectors", version = "0.38" }
 krilla = { package = "ferri-pdf-krilla", path = "vendor/krilla", version = "=0.8.2", default-features = false, features = ["raster-images"] }
 rustybuzz = "0.20"
-scraper = { package = "ferri-pdf-scraper", path = "vendor/scraper", version = "0.27", default-features = false }
+scraper = { version = "0.27", default-features = false }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 same-file = "1.0"

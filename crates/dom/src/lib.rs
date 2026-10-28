@@ -27,9 +27,8 @@ pub enum DomError {
 pub use html5ever::tree_builder::QuirksMode;
 use html5ever::{
     TokenizerResult,
-    driver::{ParseOpts, parse_document},
-    tendril::TendrilSink,
-    tree_builder::TreeBuilderOpts,
+    tokenizer::{BufferQueue, Tokenizer},
+    tree_builder::{TreeBuilder, TreeBuilderOpts, TreeSink},
 };
 pub use scraper::Node as NodeData;
 use std::ops::ControlFlow;
@@ -38,6 +37,8 @@ pub use tree::{
     TreeScopeId, XmlTree,
 };
 
+/// Shared budget for nested CSS blocks and functions.
+pub const MAX_COMPONENT_DEPTH: usize = 256;
 pub const HTML_NAMESPACE: &str = "http://www.w3.org/1999/xhtml";
 pub const SVG_NAMESPACE: &str = "http://www.w3.org/2000/svg";
 pub const MATHML_NAMESPACE: &str = "http://www.w3.org/1998/Math/MathML";
@@ -71,21 +72,22 @@ impl DocumentTree {
         html: &str,
         mut on_encoding: impl FnMut(EncodingDeclaration<'_>) -> ControlFlow<T>,
     ) -> Result<ControlFlow<T, Self>, DomError> {
-        let options = ParseOpts {
-            tree_builder: TreeBuilderOpts {
-                scripting_enabled: false,
-                ..Default::default()
-            },
+        let options = TreeBuilderOpts {
+            scripting_enabled: false,
             ..Default::default()
         };
-        let parser = parse_document(shadow::DocumentSink::new(), options);
-        parser.input_buffer.push_back(html.into());
+        let tokenizer = Tokenizer::new(
+            shadow::DocumentTokens(TreeBuilder::new(shadow::DocumentSink::new(), options)),
+            Default::default(),
+        );
+        let input = BufferQueue::default();
+        input.push_back(html.into());
         loop {
-            match parser.tokenizer.feed(&parser.input_buffer) {
+            match tokenizer.feed(&input) {
                 TokenizerResult::Done => break,
                 TokenizerResult::EncodingIndicator(_) => {
                     // Upstream also emits this for link/base attributes; only meta can change encoding.
-                    let document = parser.tokenizer.sink.sink.html.0.borrow();
+                    let document = tokenizer.sink.0.sink.html.0.borrow();
                     if let Some(element) = document
                         .tree
                         .nodes()
@@ -109,7 +111,8 @@ impl DocumentTree {
                 TokenizerResult::Script(_) => {}
             }
         }
-        let (html, shadow) = parser.finish()?;
+        tokenizer.end();
+        let (html, shadow) = tokenizer.sink.0.sink.finish()?;
         Ok(ControlFlow::Continue(Self::from_parsed(html, shadow)))
     }
 }

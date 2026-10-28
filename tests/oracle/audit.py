@@ -16,9 +16,9 @@ PLATFORM_LIBRARIES = {"/usr/lib/libSystem.B.dylib", "/usr/lib/libiconv.2.dylib"}
 RUST_LINK_GUARDS = {
     ("rayon-core", "1.13.0", "rayon-core"): "fa31cb198b772600d100a7c403ddedccef637d2e6b2da431fa7f02ca41307fc6",
 }
-# rav1d's unchanged build script is inert when only Rust bit-depth features are enabled.
+# rav1d's build script, and its cc and nasm-rs build tools, are inert when only Rust bit-depth features are enabled.
 RUST_ONLY_BUILD_FEATURES = {
-    ("ferri-pdf-rav1d", "1.1.0"): ("a7b17c3c9498d98835197a9654b1fe1f41f745e62e9fc9bf2fd27f7840a68c58", {"bitdepth_8", "bitdepth_16"}),
+    ("rav1d", "1.1.0"): ("a7b17c3c9498d98835197a9654b1fe1f41f745e62e9fc9bf2fd27f7840a68c58", {"bitdepth_8", "bitdepth_16"}),
 }
 NATIVE_BUILD_MARKERS = ("cc::Build", "cmake::", "pkg_config::", "vcpkg::")
 
@@ -43,6 +43,20 @@ def main():
     for name, version, features in re.findall(r"^(\S+) v([^\s|]+)[^|\n]*\|([^ \n]*)", tree, re.MULTILINE):
         active_features.setdefault((name, version), set()).update(filter(None, features.split(",")))
     active = set(active_features)
+    identities = {package["id"]: (package["name"], package["version"]) for package in metadata["packages"]}
+    dependents = {}
+    for node in metadata["resolve"]["nodes"]:
+        for dependency in node["deps"]:
+            dependents.setdefault(identities[dependency["pkg"]], set()).add(identities[node["id"]])
+    rust_only_builds = set()
+    for package in metadata["packages"]:
+        identity = (package["name"], package["version"])
+        feature_guard = RUST_ONLY_BUILD_FEATURES.get(identity)
+        if identity not in active or feature_guard is None:
+            continue
+        builds = [Path(target["src_path"]) for target in package["targets"] if "custom-build" in target["kind"]]
+        if all(hashlib.sha256(path.read_bytes()).hexdigest() == feature_guard[0] for path in builds) and active_features[identity].issubset(feature_guard[1]):
+            rust_only_builds.add(identity)
     inactive = []
     violations = []
     packages = []
@@ -57,15 +71,15 @@ def main():
             path = Path(target["src_path"])
             source = path.read_text()
             source_digest = hashlib.sha256(path.read_bytes()).hexdigest()
-            feature_guard = RUST_ONLY_BUILD_FEATURES.get((package["name"], package["version"]))
-            verified_rust_features = feature_guard is not None and source_digest == feature_guard[0] and active_features[(package["name"], package["version"])].issubset(feature_guard[1])
             for marker in NATIVE_BUILD_MARKERS:
-                if marker in source and not verified_rust_features:
+                if marker in source and (package["name"], package["version"]) not in rust_only_builds:
                     violations.append(f"native build marker {marker} in {path}")
             scripts.append({"file": path.name, "sha256": source_digest})
         guard = RUST_LINK_GUARDS.get((package["name"], package["version"], package.get("links")))
         verified_rust_guard = guard is not None and scripts == [{"file": "build.rs", "sha256": guard}]
-        if package["name"] in NATIVE_BUILD_CRATES or (package.get("links") and not verified_rust_guard):
+        dependent_builds = dependents.get((package["name"], package["version"]), set()) & active
+        unused_native_tool = package["name"] in NATIVE_BUILD_CRATES and dependent_builds and dependent_builds <= rust_only_builds
+        if (package["name"] in NATIVE_BUILD_CRATES and not unused_native_tool) or (package.get("links") and not verified_rust_guard):
             violations.append(f"native build/link candidate: {package['name']}")
         manifest = Path(package["manifest_path"])
         source = package["source"] or str(manifest.parent.relative_to(ROOT) if manifest.is_relative_to(ROOT) else manifest.parent)

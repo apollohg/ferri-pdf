@@ -8,6 +8,7 @@ use std::{cell::RefCell, collections::HashMap};
 
 const XMLNS_NAMESPACE: &str = "http://www.w3.org/2000/xmlns/";
 const XMLNS_PREFIX: &str = "xmlns";
+const XML_PREFIX: &str = "xml";
 const XML_INSTANCE_NODES: &str = "XML instance nodes";
 
 /// Original XML nodes viewed through the shared static selector engine.
@@ -38,14 +39,16 @@ impl<'doc, 'input> XmlTree<'doc, 'input> {
                             ),
                             value: attribute.value().into(),
                         })
-                        .chain(source.namespace_declarations().map(|namespace| Attribute {
-                            name: QualName::new(
-                                namespace.name().map(|_| XMLNS_PREFIX.into()),
-                                XMLNS_NAMESPACE.into(),
-                                namespace.name().unwrap_or(XMLNS_PREFIX).into(),
-                            ),
-                            value: namespace.uri().into(),
-                        }))
+                        .chain(
+                            namespace_declarations(source).map(|(prefix, uri)| Attribute {
+                                name: QualName::new(
+                                    prefix.map(|_| XMLNS_PREFIX.into()),
+                                    XMLNS_NAMESPACE.into(),
+                                    prefix.unwrap_or(XMLNS_PREFIX).into(),
+                                ),
+                                value: uri.into(),
+                            }),
+                        )
                         .collect();
                     let name = source.tag_name();
                     NodeData::Element(node::Element::new(
@@ -203,4 +206,48 @@ impl<'doc, 'input> XmlTree<'doc, 'input> {
         self.instance_nodes += count;
         Ok(Some(scope))
     }
+}
+
+/// Namespace declarations written on an element's start tag, in source order.
+/// roxmltree only exposes in-scope bindings, so redundant redeclarations are read from the tag.
+fn namespace_declarations<'a>(
+    element: Node<'a, '_>,
+) -> impl Iterator<Item = (Option<&'a str>, &'a str)> {
+    let tag = &element.document().input_text()[element.range().start..];
+    start_tag_attribute_names(tag).filter_map(move |name| {
+        let prefix = match name.strip_prefix(XMLNS_PREFIX)? {
+            "" => None,
+            rest => Some(rest.strip_prefix(':')?),
+        };
+        // The parser rejects any other `xml` binding and omits it from in-scope namespaces.
+        let uri = if prefix == Some(XML_PREFIX) {
+            crate::XML_NAMESPACE
+        } else {
+            element.lookup_namespace_uri(prefix).unwrap_or_default()
+        };
+        Some((prefix, uri))
+    })
+}
+
+fn start_tag_attribute_names(tag: &str) -> impl Iterator<Item = &str> {
+    let bytes = tag.as_bytes();
+    let ends_name = |byte: &u8| byte.is_ascii_whitespace() || matches!(byte, b'=' | b'/' | b'>');
+    let mut index = bytes.iter().position(ends_name).unwrap_or(bytes.len());
+    std::iter::from_fn(move || {
+        while bytes.get(index)?.is_ascii_whitespace() {
+            index += 1;
+        }
+        let start = index;
+        index += bytes[index..].iter().position(ends_name)?;
+        if index == start {
+            return None;
+        }
+        let name = &tag[start..index];
+        index += bytes[index..]
+            .iter()
+            .position(|byte| matches!(byte, b'\'' | b'"'))?;
+        let quote = bytes[index];
+        index += bytes[index + 1..].iter().position(|&byte| byte == quote)? + 2;
+        Some(name)
+    })
 }

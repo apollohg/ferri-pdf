@@ -38,8 +38,6 @@ path = "lib.rs"
 version = "2"
 
 [dependencies.cssparser]
-package = "ferri-pdf-cssparser"
-path = "../cssparser"
 version = "0.37"
 
 [dependencies.derive_more]

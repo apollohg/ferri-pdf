@@ -93,9 +93,7 @@ version = "0.5"
 features = ["eq-separator"]
 
 [dependencies.roxmltree]
-package = "ferri-pdf-roxmltree"
-path = "../roxmltree"
-version = "0.21.1"
+version = "0.21.2"
 
 [dependencies.rustybuzz]
 version = "0.20.1"
@@ -110,8 +108,6 @@ version = "0.1.0"
 path = "../../crates/dom"
 
 [dependencies.cssparser]
-package = "ferri-pdf-cssparser"
-path = "../cssparser"
 version = "0.37"
 
 [dependencies.siphasher]

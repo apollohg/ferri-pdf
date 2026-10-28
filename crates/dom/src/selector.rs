@@ -1,7 +1,10 @@
 use crate::{Directionality, Element, ElementId, QuirksMode, TreeRelation, TreeScopeId};
 use cssparser::{CowRcStr, ParseError, Parser, ParserInput, SourceLocation, ToCss, Token};
 use html5ever::Namespace;
-use scraper::selector::{CssLocalName, CssString};
+use scraper::{
+    ElementRef,
+    selector::{CssLocalName, CssString},
+};
 use selectors::{
     Element as SelectorElement, OpaqueElement,
     attr::{AttrSelectorOperation, CaseSensitivity, NamespaceConstraint},
@@ -813,7 +816,7 @@ impl SelectorElement for MatchingElement<'_> {
                     .value(),
             )
         } else {
-            self.element.raw.opaque()
+            OpaqueElement::new(self.element.as_node().value())
         }
     }
     fn parent_element(&self) -> Option<Self> {
@@ -861,23 +864,31 @@ impl SelectorElement for MatchingElement<'_> {
         if self.document {
             return None;
         }
-        self.element.raw.prev_sibling_element().map(|raw| {
-            self.with_element(Element {
-                tree: self.element.tree,
-                raw,
+        self.element
+            .raw
+            .prev_siblings()
+            .find_map(ElementRef::wrap)
+            .map(|raw| {
+                self.with_element(Element {
+                    tree: self.element.tree,
+                    raw,
+                })
             })
-        })
     }
     fn next_sibling_element(&self) -> Option<Self> {
         if self.document {
             return None;
         }
-        self.element.raw.next_sibling_element().map(|raw| {
-            self.with_element(Element {
-                tree: self.element.tree,
-                raw,
+        self.element
+            .raw
+            .next_siblings()
+            .find_map(ElementRef::wrap)
+            .map(|raw| {
+                self.with_element(Element {
+                    tree: self.element.tree,
+                    raw,
+                })
             })
-        })
     }
     fn first_element_child(&self) -> Option<Self> {
         if self.document {
@@ -892,10 +903,10 @@ impl SelectorElement for MatchingElement<'_> {
         !self.document && self.element.is_html_element_in_html_document()
     }
     fn has_local_name(&self, name: &CssLocalName) -> bool {
-        !self.document && self.element.raw.has_local_name(name)
+        !self.document && self.element.value().name.local == name.0
     }
     fn has_namespace(&self, namespace: &Namespace) -> bool {
-        !self.document && self.element.raw.has_namespace(namespace)
+        !self.document && self.element.value().name.ns == *namespace
     }
     fn is_same_type(&self, other: &Self) -> bool {
         !self.document
@@ -909,7 +920,12 @@ impl SelectorElement for MatchingElement<'_> {
         local_name: &CssLocalName,
         operation: &AttrSelectorOperation<&CssString>,
     ) -> bool {
-        !self.document && self.element.raw.attr_matches(ns, local_name, operation)
+        !self.document
+            && self.element.value().attrs.iter().any(|(name, value)| {
+                !matches!(*ns, NamespaceConstraint::Specific(url) if *url != name.ns)
+                    && local_name.0 == name.local
+                    && operation.eval_str(value)
+            })
     }
     fn match_non_ts_pseudo_class(
         &self,
@@ -976,10 +992,20 @@ impl SelectorElement for MatchingElement<'_> {
             .map(|slot| self.with_element(slot))
     }
     fn has_id(&self, id: &CssLocalName, case: CaseSensitivity) -> bool {
-        !self.document && self.element.raw.has_id(id, case)
+        !self.document
+            && self
+                .element
+                .value()
+                .id()
+                .is_some_and(|value| case.eq(id.0.as_bytes(), value.as_bytes()))
     }
     fn has_class(&self, name: &CssLocalName, case: CaseSensitivity) -> bool {
-        !self.document && self.element.raw.has_class(name, case)
+        !self.document
+            && self
+                .element
+                .value()
+                .classes()
+                .any(|class| case.eq(class.as_bytes(), name.0.as_bytes()))
     }
     fn has_custom_state(&self, _: &CssLocalName) -> bool {
         false
@@ -1024,7 +1050,12 @@ impl SelectorElement for MatchingElement<'_> {
                 })
     }
     fn is_root(&self) -> bool {
-        !self.document && self.element.raw.is_root()
+        !self.document
+            && self
+                .element
+                .raw
+                .parent()
+                .is_some_and(|parent| parent.value().is_document())
     }
     fn add_element_unique_hashes(&self, _: &mut BloomFilter) -> bool {
         false

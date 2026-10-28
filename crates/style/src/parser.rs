@@ -404,7 +404,7 @@ fn layer_name<'i>(
     Ok(name)
 }
 
-pub(super) use cssparser::MAX_COMPONENT_DEPTH;
+pub(super) use ferri_pdf_dom::MAX_COMPONENT_DEPTH;
 
 pub(super) fn balanced_components(source: &str) -> Result<bool, StyleError> {
     let mut pending = vec![(source, 0)];

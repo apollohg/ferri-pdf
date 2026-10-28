@@ -3,9 +3,11 @@
 
 use cssparser::{
     AtRuleParser, CowRcStr, DeclarationParser, Delimiter, ParseError, Parser, ParserInput,
-    ParserState, QualifiedRuleParser, RuleBodyItemParser, RuleBodyParser, StyleSheetParser,
+    ParserState, QualifiedRuleParser, RuleBodyItemParser, RuleBodyParser, StyleSheetParser, Token,
 };
-use ferri_pdf_dom::{DomError, NamespaceMap, Selector, TreeScopeId, XmlTree};
+use ferri_pdf_dom::{
+    DomError, MAX_COMPONENT_DEPTH, NamespaceMap, Selector, TreeScopeId, XmlTree,
+};
 use std::cell::{Cell, RefCell};
 
 #[derive(Clone)]
@@ -148,12 +150,32 @@ fn component_limit(error: &ParseError<'_, usize>) -> Option<usize> {
 }
 
 fn components<'i, 't>(input: &mut Parser<'i, 't>) -> Result<(), ParseError<'i, usize>> {
-    input
-        .expect_no_error_token_with_limit(cssparser::MAX_COMPONENT_DEPTH)
-        .map_err(|error| match error {
-            cssparser::ComponentParseError::Syntax(error) => error.into(),
-            cssparser::ComponentParseError::DepthLimit { limit } => input.new_custom_error(limit),
-        })
+    nested_components(input, 0)
+}
+
+fn nested_components<'i, 't>(
+    input: &mut Parser<'i, 't>,
+    depth: usize,
+) -> Result<(), ParseError<'i, usize>> {
+    if depth >= MAX_COMPONENT_DEPTH {
+        return Err(input.new_custom_error(MAX_COMPONENT_DEPTH));
+    }
+    while let Ok(token) = input.next_including_whitespace_and_comments() {
+        match token {
+            Token::Function(_)
+            | Token::ParenthesisBlock
+            | Token::SquareBracketBlock
+            | Token::CurlyBracketBlock => {
+                input.parse_nested_block(|input| nested_components(input, depth + 1))?;
+            }
+            token if token.is_parse_error() => {
+                let token = token.clone();
+                return Err(input.new_unexpected_token_error(token));
+            }
+            _ => {}
+        }
+    }
+    Ok(())
 }
 
 struct Declarations;

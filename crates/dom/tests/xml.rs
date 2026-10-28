@@ -244,3 +244,59 @@ fn tree_counting_positions_are_invalidated_when_an_xml_instance_changes_the_flat
         "cloned nodes have their own positions in the instance"
     );
 }
+
+#[test]
+fn xml_namespace_declarations_are_local_attributes_with_normalized_values() {
+    const XMLNS_NAMESPACE: &str = "http://www.w3.org/2000/xmlns/";
+    const XML_URI: &str = "http://www.w3.org/XML/1998/namespace";
+    let source = roxmltree::Document::parse_with_options(
+        "<!DOCTYPE root [<!ENTITY ns 'urn:entity'>]><root xmlns='urn:root' xmlns:s = \"&ns;\" data='xmlns:fake=\"x\" />' xmlns:xml='http://www.w3.org/XML/1998/namespace'><child xmlns:s='urn:entity'/><child/><child xmlns=''/><child\nxmlns:t='urn:t'\n/></root>",
+        roxmltree::ParsingOptions {
+            allow_dtd: true,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    let tree = XmlTree::new(&source);
+    let declarations = |node: roxmltree::Node<'_, '_>| {
+        let mut declarations: Vec<_> = tree
+            .element(node)
+            .unwrap()
+            .value()
+            .attrs
+            .iter()
+            .filter(|(name, _)| name.ns.as_ref() == XMLNS_NAMESPACE)
+            .map(|(name, value)| (name.local.to_string(), value.to_string()))
+            .collect();
+        declarations.sort();
+        eprintln!("{:?} declarations: {declarations:?}", node.tag_name());
+        declarations
+    };
+    let owned = |pairs: &[(&str, &str)]| {
+        pairs
+            .iter()
+            .map(|(name, value)| ((*name).to_owned(), (*value).to_owned()))
+            .collect::<Vec<_>>()
+    };
+    let root = source.root_element();
+    assert_eq!(
+        declarations(root),
+        owned(&[("s", "urn:entity"), ("xml", XML_URI), ("xmlns", "urn:root")]),
+        "quoted attribute text must not be read as a declaration"
+    );
+    let children: Vec<_> = root
+        .children()
+        .filter(roxmltree::Node::is_element)
+        .collect();
+    assert_eq!(
+        declarations(children[0]),
+        owned(&[("s", "urn:entity")]),
+        "redundant redeclarations stay local attributes"
+    );
+    assert!(
+        declarations(children[1]).is_empty(),
+        "inherited bindings are not local attributes"
+    );
+    assert_eq!(declarations(children[2]), owned(&[("xmlns", "")]));
+    assert_eq!(declarations(children[3]), owned(&[("t", "urn:t")]));
+}

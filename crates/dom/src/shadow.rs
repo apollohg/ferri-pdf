@@ -3,7 +3,8 @@ use ego_tree::NodeId;
 use html5ever::{
     Attribute, QualName,
     tendril::StrTendril,
-    tree_builder::{ElementFlags, NodeOrText, QuirksMode, TreeSink},
+    tokenizer::{TagKind, Token, TokenSink, TokenSinkResult},
+    tree_builder::{ElementFlags, NodeOrText, QuirksMode, TreeBuilder, TreeSink},
 };
 use scraper::{Html, HtmlTreeSink};
 use std::{
@@ -38,6 +39,9 @@ const SLOT_ELEMENT: &str = "slot";
 const SLOT_ATTRIBUTE: &str = "slot";
 const SLOT_NAME: &str = "name";
 const EXPORTPARTS_ATTRIBUTE: &str = "exportparts";
+const TEMPLATE_ELEMENT: &str = "template";
+const SHADOW_ROOT_MODE_ATTRIBUTE: &str = "shadowrootmode";
+const SHADOW_ROOT_MODES: [&str; 2] = ["open", "closed"];
 
 #[derive(Clone, Copy, Debug)]
 pub(crate) struct ShadowRoot {
@@ -190,6 +194,8 @@ pub(crate) struct DocumentSink {
     pub html: HtmlTreeSink,
     shadow: RefCell<ShadowState>,
     error: RefCell<Option<DomError>>,
+    /// Source spelling of the `shadowrootmode` keyword canonicalised for the current token.
+    shadow_root_mode: RefCell<Option<StrTendril>>,
 }
 impl DocumentSink {
     pub(crate) fn new() -> Self {
@@ -197,7 +203,44 @@ impl DocumentSink {
             html: HtmlTreeSink::new(Html::new_document()),
             shadow: RefCell::default(),
             error: RefCell::default(),
+            shadow_root_mode: RefCell::default(),
         }
+    }
+}
+
+/// The tree builder compares the enumerated `shadowrootmode` keywords case-sensitively,
+/// so template start tags reach it in canonical case; created elements keep the source value.
+pub(crate) struct DocumentTokens(pub TreeBuilder<NodeId, DocumentSink>);
+impl TokenSink for DocumentTokens {
+    type Handle = NodeId;
+
+    fn process_token(&self, mut token: Token, line_number: u64) -> TokenSinkResult<NodeId> {
+        if let Token::TagToken(tag) = &mut token
+            && tag.kind == TagKind::StartTag
+            && tag.name.as_ref() == TEMPLATE_ELEMENT
+            && let Some(attr) = tag
+                .attrs
+                .iter_mut()
+                .find(|attr| attr.name.local.as_ref() == SHADOW_ROOT_MODE_ATTRIBUTE)
+            && let Some(mode) = SHADOW_ROOT_MODES
+                .into_iter()
+                .find(|mode| attr.value.eq_ignore_ascii_case(mode))
+            && attr.value.as_ref() != mode
+        {
+            let source = std::mem::replace(&mut attr.value, StrTendril::from_slice(mode));
+            *self.0.sink.shadow_root_mode.borrow_mut() = Some(source);
+            let result = self.0.process_token(token, line_number);
+            self.0.sink.shadow_root_mode.take();
+            return result;
+        }
+        self.0.process_token(token, line_number)
+    }
+    fn end(&self) {
+        self.0.end();
+    }
+    fn adjusted_current_node_present_but_not_in_html_namespace(&self) -> bool {
+        self.0
+            .adjusted_current_node_present_but_not_in_html_namespace()
     }
 }
 impl TreeSink for DocumentSink {
@@ -226,9 +269,16 @@ impl TreeSink for DocumentSink {
     fn create_element(
         &self,
         name: QualName,
-        attrs: Vec<Attribute>,
+        mut attrs: Vec<Attribute>,
         flags: ElementFlags,
     ) -> Self::Handle {
+        if let Some(source) = self.shadow_root_mode.borrow().as_ref()
+            && let Some(attr) = attrs
+                .iter_mut()
+                .find(|attr| attr.name.local.as_ref() == SHADOW_ROOT_MODE_ATTRIBUTE)
+        {
+            attr.value = source.clone();
+        }
         let template = flags.template;
         let node = self.html.create_element(name, attrs, flags);
         if template {
