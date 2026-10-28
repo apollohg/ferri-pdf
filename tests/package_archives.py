@@ -64,12 +64,11 @@ class PackageArchives(unittest.TestCase):
                 '[features]\ndefault=["http"]\nhttp=["ferri-pdf/http"]\n[dependencies]\n'
                 'ferri-pdf={version=' + json.dumps('=' + version) + ',default-features=false}\n')
             (project / 'src/main.rs').write_text(CONSUMER_SOURCE)
-            fixture_root = sources / f'ferri-pdf-{version}'
             for features in ([], ['--no-default-features']):
-                self.run_cargo(['run', '--offline', '-j', '2', *features, '--', str(fixture_root)], project)
-            cli = next(package for package in packages if package['name'] == 'ferri-pdf-cli')
-            cli_manifest = sources / f"{cli['name']}-{cli['version']}" / 'Cargo.toml'
-            self.run_cargo(['check', '--offline', '-j', '2', '--manifest-path', str(cli_manifest)], project)
+                self.run_cargo(['run', '--offline', '-j', '2', *features, '--', str(ROOT)], project)
+            library_manifest = sources / f'ferri-pdf-{version}' / 'Cargo.toml'
+            self.run_cargo(['check', '--offline', '-j', '2', '--bin', 'ferri-pdf',
+                            '--manifest-path', str(library_manifest)], project)
             resolved = json.loads(self.run_cargo(['metadata', '--offline', '--format-version', '1'], project))
             local_names = {package['name'] for package in packages}
             print(f'Verified {len(packages)} local archives, both library feature configurations, and CLI', flush=True)
