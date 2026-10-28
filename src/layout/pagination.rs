@@ -55,6 +55,8 @@ const ROOT_LEVEL: (i32, PaintOrder) = (i32::MIN, PaintOrder::FIRST);
 const FLOW_LEVEL: (i32, PaintOrder) = (0, PaintOrder::FIRST);
 /// Within flow, float groups follow block backgrounds and precede inline paint keys.
 const FLOAT_PAINT_LEVEL: i32 = -1;
+/// Outlines follow every other level of their stacking context.
+const OUTLINE_LEVEL: i32 = i32::MAX;
 
 fn extend(key: &PaintKey, level: (i32, PaintOrder)) -> PaintKey {
     key.iter().cloned().chain(std::iter::once(level)).collect()
@@ -235,10 +237,12 @@ impl Group {
 struct EffectNode<'a> {
     /// Reference boxes for structural elements without their own painted box.
     areas: Vec<(usize, Rect)>,
-    /// Enclosing clip or transform, or for an opacity group the enclosing group.
+    /// Enclosing clip or transform, or for a group the enclosing group.
     parent: Option<usize>,
     effect: Effect<'a>,
     fragments: Vec<(usize, usize)>,
+    /// The stacking context a group composites; `None` for other effects.
+    context: Option<PaintKey>,
 }
 /// An effect resolved for one page.
 #[derive(Clone, Copy)]
@@ -1642,17 +1646,17 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .then_some(block.style.z_index)
             .flatten()
             .or((transformed || grouped).then_some(0));
-        if z_index.is_some() {
-            let group = if grouped {
-                Group::of(block.style)
-            } else {
-                Group::IDENTITY
-            };
-            self.group = Some(self.stacking_group(self.group, group));
-        }
         let paint_key = if positioned || z_index.is_some() {
             let order = self.reserved_order.take().unwrap_or_else(|| self.order());
             let layer = positioned_layer(&previous_context, z_index, order);
+            if z_index.is_some() {
+                let group = if grouped {
+                    Group::of(block.style)
+                } else {
+                    Group::IDENTITY
+                };
+                self.group = Some(self.stacking_group(self.group, group, layer.context.clone()));
+            }
             self.context = layer.context;
             self.key = layer.key;
             layer.background
@@ -1671,6 +1675,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 parent: paginator.clip,
                 effect,
                 fragments: Vec::new(),
+                context: None,
             });
             paginator.clips.len() - 1
         };
@@ -1747,6 +1752,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     Effect::Clip(block.style.clipped_axes())
                 },
                 fragments: Vec::new(),
+                context: None,
             });
             self.clips.len() - 1
         });
@@ -2288,8 +2294,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     fn order(&self) -> PaintOrder {
         self.orders.take()
     }
-    /// A stacking context's group inside `parent`, which a blending group isolates.
-    fn stacking_group(&mut self, parent: Option<usize>, group: Group) -> usize {
+    /// The group of stacking context `context` inside `parent`, which a blending group
+    /// isolates.
+    fn stacking_group(&mut self, parent: Option<usize>, group: Group, context: PaintKey) -> usize {
         if group.blend != crate::graphics::BlendMode::Normal {
             self.isolate(parent);
         }
@@ -2298,6 +2305,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             parent,
             effect: Effect::Group(group),
             fragments: Vec::new(),
+            context: Some(context),
         });
         self.clips.len() - 1
     }
@@ -3409,6 +3417,20 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 };
                 let table = self.tables.last().expect("active table");
                 let layer = table.layers[&(std::ptr::from_ref(ancestor.source) as usize)].clone();
+                // The outline paints from an otherwise empty box after the group's content.
+                if let Some(decoration) = table.flow.plan.structural_outline(ancestor.source) {
+                    let order = self.orders.take();
+                    self.display_lists[page].push(ScopedPaint {
+                        visible: ancestor.source.style().visibility.is_visible(),
+                        scope: layer.paint.background.clone(),
+                        order,
+                        clip: layer.clip,
+                        group: layer.group,
+                        ink: None,
+                        item: DisplayItem::Box(BoxPaint::whole(rect, decoration)),
+                        navigation: BoxNavigation::default(),
+                    });
+                }
                 let decorations = [false, true]
                     .map(|inset| table.flow.plan.structural_shadow(ancestor.source, inset));
                 for (inset, decoration) in [false, true].into_iter().zip(decorations) {
@@ -3693,6 +3715,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                             parent,
                             effect: Effect::PaintClip(border.clip),
                             fragments: vec![(page, slot)],
+                            context: None,
                         });
                         clip
                     });
@@ -4016,10 +4039,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .inline_layer(layers, boxes[index].parent)
             .unwrap_or_else(|| (self.context.clone(), self.group));
         let order = self.order();
-        let layer = (
-            extend(&context, (0, order)),
-            Some(self.stacking_group(group, Group::of(&boxes[index].style))),
-        );
+        let context = extend(&context, (0, order));
+        let group = self.stacking_group(group, Group::of(&boxes[index].style), context.clone());
+        let layer = (context, Some(group));
         layers.layers[index] = Some(layer.clone());
         Some(layer)
     }
@@ -4403,6 +4425,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 })
                 .collect();
             items.extend(foreground);
+            let outlines = outlines(&items, &self.clips);
+            items.extend(outlines);
             items.sort_by(|a, b| a.scope.cmp(&b.scope).then_with(|| a.order.cmp(&b.order)));
             display_lists.push(clipped(items, page, &self.clips, &regions, &mut located)?);
         }
@@ -4422,6 +4446,32 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             string_locations: self.string_locations,
         })
     }
+}
+
+/// The outline of each box fragment, painted over everything else in the stacking context its
+/// group composites (CSS 2.1 Appendix E step 10, which CSS UI 4 §3 leaves to implementations),
+/// under the box's own clips, transforms and groups.
+fn outlines(items: &[ScopedPaint], nodes: &[EffectNode<'_>]) -> Vec<ScopedPaint> {
+    items
+        .iter()
+        .filter_map(|paint| {
+            let DisplayItem::Box(fragment) = &paint.item else {
+                return None;
+            };
+            let outline = fragment.outline()?;
+            let context = paint
+                .group
+                .and_then(|group| nodes[group].context.clone())
+                .unwrap_or_else(|| Rc::from([]));
+            Some(ScopedPaint {
+                scope: extend(&context, (OUTLINE_LEVEL, paint.order.clone())),
+                ink: None,
+                item: DisplayItem::Box(outline),
+                navigation: BoxNavigation::default(),
+                ..paint.clone()
+            })
+        })
+        .collect()
 }
 
 /// Link areas by page, and each destination's first box fragment in page and paint order.

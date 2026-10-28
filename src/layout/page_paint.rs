@@ -7,6 +7,28 @@ pub(super) struct PagePaint {
     background: Option<BoxPaint>,
     border: Option<BoxPaint>,
 }
+/// The page box inside the page margins.
+fn page_box(page: &PageBox) -> BoxPaint {
+    let margin = page.geometry.margin_box();
+    let [top, right, bottom, left] = page.geometry.margin;
+    let border_rect = Rect {
+        x: left,
+        y: top,
+        width: margin.width - left - right,
+        height: margin.height - top - bottom,
+    };
+    BoxPaint {
+        padding: page.geometry.padding,
+        ..BoxPaint::whole(border_rect, page.decoration.clone())
+    }
+}
+
+/// The page box's outline, which paints over the page's content and margin boxes
+/// (CSS Page 3 Appendix A applies the outline properties to the page context).
+pub(super) fn page_outline(page: &PageBox) -> Option<DisplayItem> {
+    page_box(page).outline().map(DisplayItem::Box)
+}
+
 impl PagePaint {
     pub(crate) fn new(
         page: &PageBox,
@@ -14,17 +36,10 @@ impl PagePaint {
         bleed: Rect,
     ) -> Self {
         let margin = page.geometry.margin_box();
-        let [top, right, bottom, left] = page.geometry.margin;
-        let border_rect = Rect {
-            x: left,
-            y: top,
-            width: margin.width - left - right,
-            height: margin.height - top - bottom,
-        };
-        let base = BoxPaint {
-            padding: page.geometry.padding,
-            ..BoxPaint::whole(border_rect, page.decoration.clone())
-        };
+        let mut base = page_box(page);
+        // `page_outline` paints the outline over the page's content.
+        base.decoration.outline = crate::graphics::Outline::default();
+        let border_rect = base.rect;
         let clips = base.background_clips();
         let canvas = BoxPaint {
             background_geometry: Some(Arc::new(BackgroundGeometry {

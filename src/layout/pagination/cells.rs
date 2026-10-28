@@ -234,6 +234,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             style.position != Position::Static
                 || style.is_grouped()
                 || !style.decoration.shadows.is_empty()
+                || style.decoration.outline.is_drawn()
                 || style.has_transform_effects()
         }) {
             let source = ancestor.source;
@@ -246,7 +247,9 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             {
                 layer
             } else {
-                if !source.style().decoration.shadows.is_empty() {
+                if !source.style().decoration.shadows.is_empty()
+                    || source.style().decoration.outline.is_drawn()
+                {
                     self.tables
                         .last_mut()
                         .expect("active table")
@@ -264,6 +267,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                         effect: Effect::Transform(source.style(), None),
                         fragments: Vec::new(),
                         areas: Vec::new(),
+                        context: None,
                     });
                     self.tables
                         .last_mut()
@@ -274,18 +278,18 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 } else {
                     self.clip
                 };
+                let mut paint =
+                    positioned_layer(&self.context, (grouped || transformed).then_some(0), order);
                 let group = if grouped || transformed {
                     let group = if grouped {
                         Group::of(source.style())
                     } else {
                         Group::IDENTITY
                     };
-                    Some(self.stacking_group(self.group, group))
+                    Some(self.stacking_group(self.group, group, paint.context.clone()))
                 } else {
                     self.group
                 };
-                let mut paint =
-                    positioned_layer(&self.context, (grouped || transformed).then_some(0), order);
                 if !grouped && !transformed {
                     paint.key = extend(&paint.key, FLOW_LEVEL);
                 }

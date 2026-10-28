@@ -64,7 +64,7 @@ pub struct ShadowPaint {
 
 /// Radii of a shape grown by `growth` (negative shrinks); a radius smaller than a positive
 /// growth grows by `growth × (1 + (r / growth − 1)³)` so that sharp corners stay sharp (§7.1.1).
-fn spread_radii(radii: Radii, growth: f32) -> Radii {
+pub(crate) fn spread_radii(radii: Radii, growth: f32) -> Radii {
     radii.map(|corner| {
         corner.map(|radius| {
             let growth = if growth > 0.0 && radius < growth {

@@ -1,5 +1,5 @@
 use crate::dom::{DocumentTree, Selector};
-use crate::paint::{BlendMode, LengthPercentage, PositionComponent};
+use crate::paint::{BlendMode, BorderStyle, LengthPercentage, OutlineStyle, PositionComponent};
 use crate::resources::FileResolver;
 use crate::style::{
     Rotation, Style, StyleError, Stylesheet, StylesheetSource, TransformBox, TransformStyle,
@@ -153,6 +153,63 @@ fn transform_context_properties_compute_and_do_not_inherit() {
             .perspective,
         Some(0.0),
         "clamping to 1px happens only when rendering"
+    );
+}
+
+#[test]
+fn outline_longhands_compute_per_css_ui_4() {
+    let outline = |css: &str| parent(&format!("color:#00f;{css}")).decoration.outline;
+    let solid = outline("outline:thick solid;outline-offset:-1em");
+    assert_eq!(
+        (solid.style, solid.width, solid.offset, solid.color.rgb),
+        (
+            OutlineStyle::Line(BorderStyle::Solid),
+            2.8125,
+            -FONT_SIZE_PT,
+            [0, 0, 0xff]
+        ),
+        "thick is 3.75px, the offset an absolute length, and auto colour currentcolor"
+    );
+    assert_eq!(
+        outline("outline-width:5pt").computed_width(),
+        0.0,
+        "the computed width is zero while the style is none"
+    );
+    assert_eq!(
+        outline("outline-style:solid").width,
+        crate::paint::DEFAULT_BORDER_WIDTH,
+        "an undeclared width is the initial medium once the style is not none"
+    );
+    let auto = outline("outline:auto");
+    assert_eq!(
+        (auto.style, auto.color.rgb),
+        (OutlineStyle::Auto, [0; 3]),
+        "a lone auto sets both style and colour to auto; auto colour with auto style is the \
+         accent colour"
+    );
+    assert_eq!(
+        outline("outline:auto 1pt").used_width(),
+        crate::paint::DEFAULT_BORDER_WIDTH,
+        "outline-width is ignored when outline-style is auto"
+    );
+    assert_eq!(
+        outline("outline:1pt dotted red;outline-color:auto")
+            .color
+            .rgb,
+        [0, 0, 0xff],
+        "auto with a line style is currentcolor"
+    );
+    assert_eq!(
+        outline("outline:1pt dotted red;outline-style:hidden").style,
+        OutlineStyle::Line(BorderStyle::Dotted),
+        "hidden is not an outline style, so the declaration is dropped"
+    );
+    let (_, child) =
+        styles("#parent{outline:2pt solid red;outline-offset:2pt}").expect("outlines must compute");
+    assert_eq!(
+        child.decoration.outline.style,
+        OutlineStyle::default(),
+        "outlines do not inherit"
     );
 }
 

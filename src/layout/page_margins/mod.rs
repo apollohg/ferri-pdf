@@ -154,11 +154,13 @@ impl Prepared<'_> {
                 location: self.margin.location,
             });
         }
+        let paint = BoxPaint {
+            padding: self.padding,
+            ..BoxPaint::whole(rect, self.decoration.clone())
+        };
+        let outline = paint.outline();
         if self.decoration.is_visible() {
-            display.push(DisplayItem::Box(BoxPaint {
-                padding: self.padding,
-                ..BoxPaint::whole(rect, self.decoration.clone())
-            }));
+            display.push(DisplayItem::Box(paint));
         }
         let extra = self.content[1] - self.height();
         let offset = match style.table.vertical_align {
@@ -198,6 +200,8 @@ impl Prepared<'_> {
             });
             y += line.height;
         }
+        // The outline paints over the margin box's content (CSS UI 4 §3.1).
+        display.extend(outline.map(DisplayItem::Box));
         Ok(())
     }
 }

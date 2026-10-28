@@ -26,7 +26,7 @@ pub(crate) use border_image::{
 pub(crate) use boxes::{
     BackgroundGeometry, BoxAreas, BoxDecoration, BoxPaint, DEFAULT_BORDER_WIDTH,
 };
-pub use boxes::{Border, BorderStyle, INLINE_EDGES};
+pub use boxes::{Border, BorderStyle, INLINE_EDGES, Outline, OutlineStyle};
 #[cfg(test)]
 pub(crate) use calculation::MAX_CALC_MAGNITUDE;
 pub(crate) use calculation::{BinaryFunction, Calculation, RoundingStrategy, UnaryFunction};

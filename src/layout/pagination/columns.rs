@@ -915,9 +915,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 pending.position.left += shift[0];
                 pending.position.right += shift[0];
                 pending.position.y += shift[1];
-                pending.group = pending
-                    .group
-                    .map(|group| self.effect(&output.clips, group, &place, &mut effects));
+                pending.group = match pending.group {
+                    Some(group) => Some(self.effect(&output.clips, group, &place, &mut effects)),
+                    None => self.group,
+                };
+                pending.parent_3d = pending
+                    .parent_3d
+                    .map(|node| self.effect(&output.clips, node, &place, &mut effects));
                 self.enqueue(pending);
             }
         }
@@ -985,12 +989,15 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             | DisplayItem::Pop => {}
         }
         paint.ink.as_mut().map(shift);
-        paint.clip = paint
-            .clip
-            .map(|node| self.effect(nodes, node, place, effects));
-        paint.group = paint
-            .group
-            .map(|node| self.effect(nodes, node, place, effects));
+        // Items outside the columns' own effects take those enclosing the flow.
+        paint.clip = match paint.clip {
+            Some(node) => Some(self.effect(nodes, node, place, effects)),
+            None => self.clip,
+        };
+        paint.group = match paint.group {
+            Some(node) => Some(self.effect(nodes, node, place, effects)),
+            None => self.group,
+        };
         paint
     }
 
@@ -1047,6 +1054,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             parent,
             effect,
             fragments,
+            context: source.context.clone(),
         });
         let index = self.clips.len() - 1;
         effects.insert(key, index);

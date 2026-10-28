@@ -877,6 +877,10 @@ fn styles_in_context(property: Property, css: &str) -> Result<(Style, Style), St
         styles(&format!(
             "{PARENT_ELEMENT},{CHILD_ELEMENT}{{border-style:solid}}{css}"
         ))
+    } else if property == Property::OutlineWidth {
+        styles(&format!(
+            "{PARENT_ELEMENT},{CHILD_ELEMENT}{{outline-style:solid}}{css}"
+        ))
     } else {
         styles(css)
     }

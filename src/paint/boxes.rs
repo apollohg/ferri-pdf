@@ -215,6 +215,62 @@ impl Border {
         }
     }
 }
+/// CSS UI 4 §3.3 `outline-style`: `auto`, or a border line style other than `hidden`.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+pub enum OutlineStyle {
+    Auto,
+    Line(BorderStyle),
+}
+impl Default for OutlineStyle {
+    fn default() -> Self {
+        Self::Line(BorderStyle::None)
+    }
+}
+/// CSS UI 4 §3: an outline drawn outside the border box, taking no space.
+#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
+pub struct Outline {
+    pub width: f32,
+    pub style: OutlineStyle,
+    pub color: Color,
+    pub offset: f32,
+}
+impl Default for Outline {
+    fn default() -> Self {
+        Self {
+            width: DEFAULT_BORDER_WIDTH,
+            style: OutlineStyle::default(),
+            color: Color::BLACK,
+            offset: 0.0,
+        }
+    }
+}
+impl Outline {
+    /// The computed `outline-width`: zero with `outline-style: none` (§3.2).
+    pub fn computed_width(self) -> f32 {
+        match self.style {
+            OutlineStyle::Line(style) if style.suppresses_width() => 0.0,
+            OutlineStyle::Auto | OutlineStyle::Line(_) => self.width,
+        }
+    }
+    /// `outline-width` is ignored with `auto` style (§3.3), which this engine draws `medium`.
+    pub fn used_width(self) -> f32 {
+        match self.style {
+            OutlineStyle::Auto => DEFAULT_BORDER_WIDTH,
+            OutlineStyle::Line(_) => self.computed_width(),
+        }
+    }
+    pub fn is_drawn(self) -> bool {
+        self.used_width() > 0.0 && self.color.alpha > 0.0
+    }
+    /// User agents may treat `auto` as `solid` (§3.3).
+    fn line_style(self) -> BorderStyle {
+        match self.style {
+            OutlineStyle::Auto => BorderStyle::Solid,
+            OutlineStyle::Line(style) => style,
+        }
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(bound(serialize = ""))]
 pub struct BoxDecoration<I = Infallible> {
@@ -226,6 +282,7 @@ pub struct BoxDecoration<I = Infallible> {
     /// `box-shadow` layers, the first listed on top.
     pub shadows: Arc<Vec<BoxShadow>>,
     pub border_image: Arc<BorderImage<I>>,
+    pub outline: Outline,
 }
 impl<I> Default for BoxDecoration<I> {
     fn default() -> Self {
@@ -236,6 +293,7 @@ impl<I> Default for BoxDecoration<I> {
             radii: INITIAL_RADII.clone(),
             shadows: Arc::default(),
             border_image: Arc::default(),
+            outline: Outline::default(),
         }
     }
 }
@@ -245,6 +303,7 @@ impl<I> BoxDecoration<I> {
             || self.backgrounds.has_images()
             || self.has_shadows()
             || self.border_image.is_drawn()
+            || self.outline.is_drawn()
             || self
                 .borders
                 .iter()
@@ -308,6 +367,7 @@ impl BoxDecoration<Infallible> {
                 outset: border_image.outset,
                 repeat: border_image.repeat,
             }),
+            outline: self.outline,
         }
     }
 
@@ -534,11 +594,56 @@ impl<I> BoxPaint<I> {
                     || self.decoration.backgrounds.has_images()))
                 || self.decoration.has_shadows()
                 || self.decoration.border_image.is_drawn()
+                || self.decoration.outline.is_drawn()
                 || self
                     .widths()
                     .iter()
                     .zip(self.decoration.borders)
                     .any(|(width, border)| *width > 0.0 && border.color.alpha > 0.0))
+    }
+    /// This fragment's outline as a box whose uniform border is the outline (CSS UI 4 §3):
+    /// outside the border box by `outline-offset`, around each fragment on its own, and
+    /// following the fragment's corner radii grown like a shadow spread. A negative offset
+    /// keeps each outer dimension at least twice the width (§3.5).
+    pub fn outline(&self) -> Option<Self>
+    where
+        I: Clone,
+    {
+        let outline = self.decoration.outline;
+        if !outline.is_drawn() {
+            return None;
+        }
+        let width = outline.used_width();
+        let growth = outline.offset + width;
+        let side = |start: f32, extent: f32| {
+            let outer = (extent + 2.0 * growth).max(2.0 * width);
+            (start + extent / 2.0 - outer / 2.0, outer)
+        };
+        let (x, outer_width) = side(self.rect.x, self.rect.width);
+        let (y, outer_height) = side(self.rect.y, self.rect.height);
+        let fragment = Self {
+            background_box: None,
+            ..self.clone()
+        };
+        let radii = crate::paint::shadow::spread_radii(fragment.radii(), growth);
+        let border = Border {
+            width,
+            style: outline.line_style(),
+            color: outline.color,
+        };
+        Some(Self::whole(
+            Rect {
+                x,
+                y,
+                width: outer_width,
+                height: outer_height,
+            },
+            BoxDecoration {
+                borders: [border; 4],
+                radii: Arc::new(radii.map(|corner| corner.map(LengthPercentage::Length))),
+                ..BoxDecoration::default()
+            },
+        ))
     }
     /// Used corner radii of the assembled box, before cutting its fragments.
     pub fn radii(&self) -> Radii {

@@ -642,6 +642,13 @@ impl<'a> Geometry<'a> {
             self.property(context, Property::Position)?;
             self.property(context, Property::Float)?;
         }
+        // CSS UI 4 §3.2, §3.4: the outline's width and `auto` colour depend on its style.
+        if matches!(property, Property::OutlineWidth | Property::OutlineColor) {
+            self.property(context, Property::OutlineStyle)?;
+        }
+        if property == Property::OutlineColor {
+            self.property(context, Property::Color)?;
+        }
         if let Some(parent) = self.parent_context(context)
             && needs_parent(property, value)
         {

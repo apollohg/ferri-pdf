@@ -9,6 +9,9 @@ import table_positioning_pdf
 BODY = '<div class=box>Box</div>'
 BOX = '.box{width:80pt;height:40pt;margin:60pt;background:teal;color:white}'
 NORMAL = 'Normal'
+RED = (255, 0, 0)
+WHITE = (255, 255, 255)
+TEAL = (0, 128, 128)
 
 
 def groups(path):
@@ -79,6 +82,25 @@ class VisualEffectsPdf(unittest.TestCase):
                 self.assertNotEqual(expected, untransformed, f'{transform} must move ink')
                 self.assertEqual(self.pixels(BOX + f'.box{{{individual}}}').tobytes(), expected,
                                  f'{individual} must paint exactly as {transform}')
+
+    def test_outline_paints_outside_the_offset_following_the_grown_radius(self):
+        # The border box spans 80..160 by 80..120; a 4pt outline 3pt outside it spans 73..167
+        # by 73..127 with 19pt outer corner radii (12pt + 3pt + 4pt).
+        pixels = self.pixels(BOX + '.box{border-radius:12pt;outline:4pt solid red;'
+                                   'outline-offset:3pt}')
+        for (x, y), expected, reason in (
+                ((120, 75), RED, 'the outline band above the box'),
+                ((165, 100), RED, 'the outline band right of the box'),
+                ((120, 78), WHITE, 'the offset leaves a gap outside the border edge'),
+                ((74, 74), WHITE, 'the outer corner is rounded'),
+                ((80, 80), RED, 'the band follows the corner curve diagonally'),
+                ((100, 100), TEAL, 'the box itself')):
+            self.assertEqual(pixels.getpixel((x, y)), expected, f'{reason} at {(x, y)}')
+        flow = self.pixels(BOX + '.box{outline:4pt solid red}', BODY + '<p>After</p>')
+        plain = self.pixels(BOX, BODY + '<p>After</p>')
+        lower = (20, 130, 300, 300)
+        self.assertEqual(flow.crop(lower).tobytes(), plain.crop(lower).tobytes(),
+                         'outlines take no space, so later content stays in place')
 
     def groups(self, css, body):
         return groups(self.renderer.render(self.root, css, body))

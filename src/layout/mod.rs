@@ -205,6 +205,9 @@ fn layout_pass(
         &mut pages,
         &mut display_lists,
     )?;
+    for (list, page) in display_lists.iter_mut().zip(&page_boxes) {
+        list.extend(page_paint::page_outline(page));
+    }
     for (areas, record) in links.iter_mut().zip(&page_records) {
         navigation::clip_links(areas, record.output.bleed);
     }

@@ -31,6 +31,7 @@ fn initial_decoration() -> BoxDecoration {
     for border in &mut decoration.borders {
         border.width = border.used_width();
     }
+    decoration.outline.width = decoration.outline.computed_width();
     decoration
 }
 
@@ -399,11 +400,12 @@ impl Style {
             && self.color == other.color
             && self.visibility == other.visibility
     }
-    /// Initial `currentcolor` border and column rule colours take the element's colour.
+    /// Initial `currentcolor` border, outline and column rule colours take the element's colour.
     fn reset_current_colors(&mut self) {
         for border in &mut self.decoration.borders {
             border.color = self.color;
         }
+        self.decoration.outline.color = self.color;
         self.multicol.rule.color = self.color;
     }
     pub(super) fn backgrounds_mut(&mut self) -> &mut crate::paint::Backgrounds {
@@ -1069,13 +1071,21 @@ impl Stylesheet {
         mut winners: Winners,
         relative: &Relative<'_>,
     ) -> Result<Style, StyleError> {
-        for property in Property::BorderStyle.longhands() {
+        for property in Property::BorderStyle
+            .longhands()
+            .iter()
+            .chain([&Property::OutlineStyle])
+        {
             if let Some(value) = winners.remove(property) {
                 properties::apply(*property, &value, &mut style, parent, relative)?;
             }
         }
         let initial = Specified::Wide(crate::style::wide_keywords::WideKeyword::Initial);
-        for property in Property::BorderWidth.longhands() {
+        for property in Property::BorderWidth
+            .longhands()
+            .iter()
+            .chain([&Property::OutlineWidth])
+        {
             let value = winners.remove(property);
             properties::apply(
                 *property,

@@ -6,8 +6,8 @@ pub(crate) use crate::paint::{
 };
 pub use crate::paint::{
     BlendMode, Border, BorderStyle, Clip, ClipBounds, Color, Contour, DecorationLine,
-    DecorationPaint, DecorationStyle, Fill, INLINE_EDGES, LengthPercentage, Point, Radii, Rect,
-    Segment, ShadowPaint, ShadowShape, Shape,
+    DecorationPaint, DecorationStyle, Fill, INLINE_EDGES, LengthPercentage, Outline, OutlineStyle,
+    Point, Radii, Rect, Segment, ShadowPaint, ShadowShape, Shape,
 };
 use serde::Serialize;
 use std::sync::Arc;

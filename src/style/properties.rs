@@ -1,6 +1,6 @@
 //! The registry of supported longhands: computed values from match trees. Every other
 //! property is rejected here unless it keeps its initial value, which the engine renders.
-use crate::paint::{BorderStyle, DEFAULT_BORDER_WIDTH, LengthPercentage};
+use crate::paint::{BorderStyle, DEFAULT_BORDER_WIDTH, LengthPercentage, OutlineStyle};
 use crate::style::{
     BoxSizing, BreakBetween, BreakInside, Display, HangingPunctuation, HyphenateLimitChars,
     LineBreak, ListStylePosition, ListStyleType, Size, Style, StyleError, TextAlign, TextJustify,
@@ -735,6 +735,19 @@ fn handler(property: Property) -> Option<Handler> {
         P::BorderRightWidth => (border_right_width, Some(|v, r| border_width(v, r).is_ok())),
         P::BorderBottomWidth => (border_bottom_width, Some(|v, r| border_width(v, r).is_ok())),
         P::BorderLeftWidth => (border_left_width, Some(|v, r| border_width(v, r).is_ok())),
+        P::OutlineWidth => (outline_width, Some(|v, r| border_width(v, r).is_ok())),
+        P::OutlineStyle => (outline_style, Some(|v, _| outline_style_value(v).is_ok())),
+        P::OutlineColor => (
+            outline_color,
+            Some(|v, relative| {
+                v.keyword() == Some(Keyword::Auto)
+                    || crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
+            }),
+        ),
+        P::OutlineOffset => (
+            outline_offset,
+            Some(|v, r| crate::style::values::length(v, r).is_ok()),
+        ),
         P::BorderTopStyle => (border_top_style, Some(|v, _| border_style(v).is_ok())),
         P::BorderRightStyle => (border_right_style, Some(|v, _| border_style(v).is_ok())),
         P::BorderBottomStyle => (border_bottom_style, Some(|v, _| border_style(v).is_ok())),
@@ -1804,6 +1817,53 @@ fn border_style(value: &Component) -> Result<BorderStyle, StyleError> {
         _ => Err(StyleError::Unsupported(format!("border style {value}"))),
     }
 }
+/// CSS UI 4 §3.2: the computed width is zero when `outline-style` is `none`.
+fn outline_width(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    let outline = &mut style.decoration.outline;
+    outline.width = match input {
+        Input::Value(value) => border_width(value, relative)?,
+        Input::Copy(source) => source.decoration.outline.computed_width(),
+    };
+    outline.width = outline.computed_width();
+    Ok(())
+}
+/// `auto | <outline-line-style>`: the border line styles without `hidden`.
+fn outline_style_value(value: &Component) -> Result<OutlineStyle, StyleError> {
+    match value.keyword() {
+        Some(Keyword::Auto) => Ok(OutlineStyle::Auto),
+        Some(Keyword::Hidden) => Err(unsupported(value)),
+        _ => border_style(value).map(OutlineStyle::Line),
+    }
+}
+computed!(
+    outline_style,
+    [decoration.outline.style],
+    |value, style, _parent, _relative| outline_style_value(value)?
+);
+/// CSS UI 4 §3.4: `auto` is the accent colour with `auto` style and otherwise `currentcolor`.
+/// Without a platform accent, this engine's accent colour is `CanvasText`.
+const AUTO_OUTLINE_ACCENT: crate::paint::Color = crate::paint::Color::BLACK;
+computed!(
+    outline_color,
+    [decoration.outline.color],
+    |value, style, _parent, relative| match value.keyword() {
+        Some(Keyword::Auto) if style.decoration.outline.style == OutlineStyle::Auto => {
+            AUTO_OUTLINE_ACCENT
+        }
+        Some(Keyword::Auto) => style.color,
+        _ => crate::style::colors::color(value, relative, style.color)?,
+    }
+);
+computed!(
+    outline_offset,
+    [decoration.outline.offset],
+    |value, style, _parent, relative| crate::style::values::length(value, relative)?
+);
 macro_rules! border_side {
     ($width:ident, $style_name:ident, $color:ident, $side:literal) => {
         fn $width(

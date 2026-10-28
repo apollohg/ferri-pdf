@@ -487,6 +487,7 @@ impl<'a> TablePlan<'a> {
                     style.position != crate::style::Position::Static
                         || !style.visibility.is_visible()
                         || !style.decoration.shadows.is_empty()
+                        || style.decoration.outline.is_drawn()
                         || style.is_grouped()
                         || style.has_transform_effects()
                 });
@@ -882,6 +883,20 @@ impl<'a> TablePlan<'a> {
         }
         Some(BoxDecoration {
             shadows: shadows.into(),
+            radii: if self.data.collapsed.is_some() {
+                BoxDecoration::default().radii
+            } else {
+                decoration.radii.clone()
+            },
+            ..Default::default()
+        })
+    }
+    /// A row or row group's outline, drawn around each of its fragments; radii follow the
+    /// separated borders model only, as collapsed tables have none.
+    pub(crate) fn structural_outline(&self, source: &BlockBox) -> Option<BoxDecoration> {
+        let decoration = source.decoration();
+        decoration.outline.is_drawn().then(|| BoxDecoration {
+            outline: decoration.outline,
             radii: if self.data.collapsed.is_some() {
                 BoxDecoration::default().radii
             } else {
