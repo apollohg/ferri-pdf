@@ -354,13 +354,27 @@ impl InlineCollector {
         output: &crate::style::GeneratedOutput,
         style: &Style,
     ) -> Result<(), DocumentError> {
-        let mut from = 0;
+        self.append_generated_from(output, 0, style)
+    }
+    /// Appends the generated text after its first `start` bytes, which hold no leader.
+    pub(crate) fn append_generated_from(
+        &mut self,
+        output: &crate::style::GeneratedOutput,
+        start: usize,
+        style: &Style,
+    ) -> Result<(), DocumentError> {
+        let mut from = start;
         for range in output.leaders() {
             self.append(&output.text()[from..range.start], style)?;
             self.append_inner(&output.text()[range.clone()], style, true)?;
             from = range.end;
         }
         self.append(&output.text()[from..], style)
+    }
+    /// Whether no in-flow content but an inside marker precedes the next content on the first
+    /// line, where a first letter can begin (CSS Pseudo-Elements 4 §2.2.2).
+    pub(crate) fn at_line_start(&self) -> bool {
+        self.text.len() == self.marker_end
     }
     pub(crate) fn append(&mut self, text: &str, style: &Style) -> Result<(), DocumentError> {
         self.append_inner(text, style, false)

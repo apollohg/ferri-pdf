@@ -1,12 +1,7 @@
 use crate::document::{MAX_INLINE_TEXT_BYTES, inline::is_css_whitespace};
 use crate::dom::{Element, TreeRelation};
 use crate::style::{Display, ElementContent, Style, StyleError};
-use icu_properties::{
-    CodePointMapData,
-    props::{GeneralCategory, GeneralCategoryGroup},
-};
 use std::borrow::Cow;
-use unicode_segmentation::UnicodeSegmentation;
 
 #[derive(Default)]
 pub(crate) struct GeneratedText {
@@ -66,7 +61,12 @@ impl<'a, 'd> ElementText<'a, 'd> {
                     self.before.first_letter_text(),
                     self.after.first_letter_text(),
                 )?;
-                first_letter(&text).to_owned()
+                let first = crate::document::first_letter::find(
+                    &text,
+                    crate::style::WhiteSpaceCollapse::Collapse,
+                    self.element.language(),
+                );
+                text[..first.end().unwrap_or(0)].to_owned()
             }
             ElementContent::Before => collapse(&self.before.text),
             ElementContent::After => collapse(&self.after.text),
@@ -121,66 +121,9 @@ pub(crate) fn collapse(text: &str) -> String {
     collapsed
 }
 
-/// The first typographic letter unit of `text` (CSS Pseudo-Elements 4 §2.4): a letter, number
-/// or symbol grapheme with the punctuation and spaces before it and the punctuation after it.
-fn first_letter(text: &str) -> &str {
-    let categories = CodePointMapData::<GeneralCategory>::new();
-    let is = |grapheme: &str, group: GeneralCategoryGroup| {
-        grapheme
-            .chars()
-            .next()
-            .is_some_and(|first| group.contains(categories.get(first)))
-    };
-    let separator = |grapheme: &str| is(grapheme, GeneralCategoryGroup::SpaceSeparator);
-    let punctuation = |grapheme: &str| is(grapheme, GeneralCategoryGroup::Punctuation);
-    let mut graphemes = text.grapheme_indices(true).peekable();
-    while graphemes
-        .next_if(|(_, grapheme)| punctuation(grapheme) || separator(grapheme))
-        .is_some()
-    {}
-    let Some((start, letter)) = graphemes.next() else {
-        return "";
-    };
-    if ![
-        GeneralCategoryGroup::Letter,
-        GeneralCategoryGroup::Number,
-        GeneralCategoryGroup::Symbol,
-    ]
-    .into_iter()
-    .any(|group| is(letter, group))
-    {
-        return "";
-    }
-    let mut end = start + letter.len();
-    while let Some((index, grapheme)) = graphemes.next_if(|(_, grapheme)| punctuation(grapheme)) {
-        end = index + grapheme.len();
-    }
-    &text[..end]
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn first_letter_keeps_surrounding_punctuation_and_whole_graphemes() {
-        for (text, expected) in [
-            ("\"Quoted\" text", "\"Q"),
-            ("« Bonjour", "« B"),
-            ("(1) item", "(1)"),
-            ("e\u{301}lan", "e\u{301}"),
-            ("Ab", "A"),
-            ("...", ""),
-            ("", ""),
-            ("€5", "€"),
-        ] {
-            assert_eq!(
-                first_letter(text),
-                expected,
-                "first typographic letter unit of {text:?}"
-            );
-        }
-    }
 
     #[test]
     fn collapse_follows_white_space_normal() {

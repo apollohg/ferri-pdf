@@ -157,3 +157,180 @@ fn marker_rules_cascade_by_specificity_and_reject_pseudo_class_syntax() {
          pseudo-element (Selectors 4 §16): {runs:#?}"
     );
 }
+
+type StyledRun = (String, [u8; 3], f32);
+
+/// The first page's text lines as (text, [(run text, colour, font size)]).
+fn styled_lines(trace: &crate::LayoutTrace) -> Vec<(String, Vec<StyledRun>)> {
+    trace.pages[0]
+        .iter()
+        .map(|line| {
+            (
+                line.text.clone(),
+                line.runs
+                    .iter()
+                    .map(|run| (run.text.clone(), run.color.rgb, run.font_size))
+                    .collect(),
+            )
+        })
+        .collect()
+}
+
+fn line_runs(lines: &[(String, Vec<StyledRun>)], text: &str) -> Vec<StyledRun> {
+    lines
+        .iter()
+        .find(|line| line.0 == text)
+        .unwrap_or_else(|| panic!("no line {text:?} among {lines:#?}"))
+        .1
+        .clone()
+}
+
+fn styled(text: &str, color: [u8; 3], size: f32) -> StyledRun {
+    (text.to_owned(), color, size)
+}
+
+#[test]
+fn first_letter_wraps_the_first_letter_text_and_its_punctuation() {
+    let lines = styled_lines(&trace(
+        "p::first-letter{color:red;font-size:20pt}p.q::first-letter::prefix{color:blue}\
+         p.q::first-letter::suffix{color:green}",
+        "<p>Hello</p><p class=q>“(A)” quoted</p><p>67 million</p><p>\"\u{2009}Spaced\"</p>",
+    ));
+    assert_eq!(
+        line_runs(&lines, "Hello"),
+        [styled("H", RED, 20.0), styled("ello", BLACK, 12.0)]
+    );
+    assert_eq!(
+        line_runs(&lines, "“(A)” quoted"),
+        [
+            styled("“(", BLUE, 20.0),
+            styled("A", RED, 20.0),
+            styled(")”", GREEN, 20.0),
+            styled(" quoted", BLACK, 12.0)
+        ],
+        "::prefix and ::suffix nest inside the innermost ::first-letter and inherit from it"
+    );
+    assert_eq!(
+        line_runs(&lines, "67 million"),
+        [styled("6", RED, 20.0), styled("7 million", BLACK, 12.0)],
+        "a digit is a first letter"
+    );
+    assert_eq!(
+        line_runs(&lines, "\"\u{2009}Spaced\""),
+        [
+            styled("\"\u{2009}", RED, 20.0),
+            styled("S", RED, 20.0),
+            styled("paced\"", BLACK, 12.0)
+        ],
+        "typographic space between the preceding punctuation and the letter joins the \
+         ::prefix, which inherits from the ::first-letter"
+    );
+}
+
+#[test]
+fn first_letter_takes_generated_and_descendant_text_and_nests_by_origin() {
+    let lines = styled_lines(&trace(
+        "p::first-letter{color:red}div::first-letter{font-size:20pt;color:green}\
+         p.n::before{content:'Note: '}span{color:blue}p.s::first-letter{color:inherit}",
+        "<p class=n>with before</p><div><p>Nested</p></div><p class=s><span>The</span> span</p>",
+    ));
+    assert_eq!(
+        line_runs(&lines, "Note: with before"),
+        [
+            styled("N", RED, 12.0),
+            styled("ote: ", BLACK, 12.0),
+            styled("with before", BLACK, 12.0)
+        ],
+        "in-flow ::before content holds the first letter"
+    );
+    assert_eq!(
+        line_runs(&lines, "Nested"),
+        [styled("N", RED, 20.0), styled("ested", BLACK, 12.0)],
+        "p::first-letter nests in, and inherits from, div::first-letter"
+    );
+    assert_eq!(
+        line_runs(&lines, "The span"),
+        [
+            styled("T", BLUE, 12.0),
+            styled("he", BLUE, 12.0),
+            styled(" span", BLACK, 12.0)
+        ],
+        "the ::first-letter wraps text inside a descendant and inherits from it"
+    );
+}
+
+#[test]
+fn first_letter_needs_qualifying_text_first_on_the_first_formatted_line() {
+    let lines = styled_lines(&trace(
+        "p::first-letter,div::first-letter,li::first-letter{color:red}\
+         li{list-style-position:inside}.flex{display:flex}",
+        "<p><br>Second</p><p>...</p><div><span style='display:inline-block'>Inline</span> \
+         block</div><div class=flex><span>Flex</span></div><ol><li>Item</li></ol>\
+         <div><table><tr><td>Cell</td></tr></table>After</div>",
+    ));
+    for (line, reason) in [
+        ("Second", "a forced break empties the first formatted line"),
+        ("...", "punctuation alone has no first letter"),
+        (
+            "Inline",
+            "an inline-block's own lines are not its container's",
+        ),
+        ("Flex", "a flex container is not a block container"),
+        (
+            "Cell",
+            "a table cell's first line is not the enclosing block's",
+        ),
+        (
+            "After",
+            "the table wrapper first in flow takes the first formatted line",
+        ),
+    ] {
+        assert!(
+            line_runs(&lines, line).iter().all(|run| run.1 == BLACK),
+            "{reason}: {lines:#?}"
+        );
+    }
+    assert_eq!(
+        line_runs(&lines, "1. Item"),
+        [
+            styled("1. ", BLACK, 12.0),
+            styled("I", RED, 12.0),
+            styled("tem", BLACK, 12.0)
+        ],
+        "an inside marker is ignored as if out of flow"
+    );
+}
+
+#[test]
+fn legacy_single_colon_first_letter_and_floated_first_letter() {
+    let trace = trace(
+        "p:first-letter{float:left;font-size:36pt;line-height:36pt;color:red;margin-right:3pt}",
+        "<p>Floated first letter paragraph whose text wraps beside the floated letter for \
+         several lines of ordinary body text.</p>",
+    );
+    let lines = &trace.pages[0];
+    let geometry: Vec<_> = lines
+        .iter()
+        .map(|line| (line.text.as_str(), line.x, line.width))
+        .collect();
+    let letter = lines
+        .iter()
+        .find(|line| line.text == "F")
+        .unwrap_or_else(|| panic!("the floated first letter has its own line: {geometry:#?}"));
+    assert_eq!(letter.runs[0].color.rgb, RED);
+    assert_labelled_pt("floated letter size", letter.runs[0].font_size, 36.0);
+    let following: Vec<_> = lines.iter().filter(|line| line.text != "F").collect();
+    assert!(
+        following[0].text.starts_with("loated"),
+        "the rest of the word follows the float: {geometry:#?}"
+    );
+    assert!(
+        following[0].x >= letter.x + letter.width + 3.0 - 0.01,
+        "lines beside the float start after its margin box: {geometry:#?}"
+    );
+    let last = following.last().expect("the paragraph has lines");
+    assert!(
+        (last.x - letter.x).abs() < 0.01,
+        "lines below the float return to the content edge: {geometry:#?}"
+    );
+}

@@ -340,6 +340,26 @@ const DISPLAY_FORMS: &[(Display, &[&[Keyword]])] = &[
 ];
 
 impl Display {
+    /// A block container at block level in its parent's block formatting context, whose first
+    /// formatted line is its parent's when it is the first in-flow child (CSS Pseudo-Elements 4
+    /// §2.1.1).
+    pub(crate) fn is_block_level_block_container(&self) -> bool {
+        matches!(
+            self,
+            Self::Block | Self::FlowRoot | Self::ListItem | Self::FlowRootListItem
+        )
+    }
+    /// A block container, which has first formatted lines.
+    pub(crate) fn is_block_container(&self) -> bool {
+        self.is_block_level_block_container()
+            || matches!(
+                self,
+                Self::InlineBlock
+                    | Self::InlineFlowRootListItem
+                    | Self::TableCell
+                    | Self::TableCaption
+            )
+    }
     pub(crate) fn is_list_item(&self) -> bool {
         match self {
             Self::ListItem

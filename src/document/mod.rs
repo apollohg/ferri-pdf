@@ -3,6 +3,7 @@ mod content;
 mod counters;
 mod embedded;
 pub(crate) mod encoding;
+mod first_letter;
 mod first_page;
 mod formatting;
 pub(crate) mod frames;

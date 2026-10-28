@@ -269,6 +269,10 @@ pub(super) fn implemented_page_descriptor(descriptor: Descriptor) -> bool {
 }
 
 impl Stylesheet {
+    /// Whether any rule selects `pseudo`, which otherwise inherits every value it computes.
+    pub(crate) fn has_pseudo_rules(&self, pseudo: crate::style::PseudoElement) -> bool {
+        !self.rule_indices[crate::style::selector::target_index(Some(pseudo))].is_empty()
+    }
     /// Copies prepared rules and page context; source diagnostics remain with the original owner.
     #[must_use]
     #[cfg(test)]

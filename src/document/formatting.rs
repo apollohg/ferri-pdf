@@ -2,7 +2,7 @@ use crate::document::navigation::{BoxNavigation, NavigationBuilder};
 use crate::document::{DocumentError, Paragraph, inline::InlineCollector};
 use crate::dom::{ChildNodes, DocumentTree, Element, ElementId, TreeRelation};
 use crate::graphics::BoxDecoration;
-use crate::style::{Display, GeneratedPseudoElement, Style, StyleError, Stylesheet};
+use crate::style::{Display, GeneratedPseudoElement, PseudoElement, Style, StyleError, Stylesheet};
 
 pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
 const DEFAULT_DENSITY: f32 = 1.0;
@@ -357,8 +357,27 @@ struct BlockBuilder<'a, 's, 'c> {
     children: &'s mut Vec<BlockContent>,
     inline: &'s mut InlineCollector,
     run_in: &'s mut Option<RunInSequence>,
+    first_line: &'s mut FirstLine,
     traversal: &'c mut Traversal<'a>,
     resources: &'c mut ImageResources<'a>,
+}
+
+/// A block container's first formatted line while it is still to come (CSS Pseudo-Elements 4
+/// §2.1.1), which its first in-flow block-level child may hold instead.
+#[derive(Default)]
+struct FirstLine {
+    /// The elements whose first formatted line it is, outermost first.
+    origins: Option<std::rc::Rc<[ElementId]>>,
+    /// Its first-letter text is still to come (CSS Pseudo-Elements 4 §2.2.2).
+    letter: bool,
+}
+impl FirstLine {
+    fn of(origins: std::rc::Rc<[ElementId]>) -> Self {
+        Self {
+            origins: Some(origins),
+            letter: true,
+        }
+    }
 }
 
 /// A run-in sequence of a block's children (CSS Display 3 §5), collected apart from the
@@ -413,7 +432,166 @@ impl ImageResources<'_> {
     }
 }
 
-impl BlockBuilder<'_, '_, '_> {
+/// A typographic pseudo-element laid out as an inline box, which takes no float or position.
+fn inline_pseudo_style(mut style: Style) -> Style {
+    style.display = Display::Inline;
+    style.float = crate::style::Float::None;
+    style.position = crate::style::Position::Static;
+    style
+}
+
+impl<'a> BlockBuilder<'a, '_, '_> {
+    /// Appends inline text, wrapping the first-letter text it begins with in its
+    /// `::first-letter` boxes.
+    fn append_text(&mut self, text: &str, style: &Style) -> Result<(), DocumentError> {
+        let start = self.first_letter(text, style)?;
+        self.inline.append(&text[start..], style)
+    }
+    /// Appends generated text, as `append_text` does.
+    fn append_generated(
+        &mut self,
+        output: &crate::style::GeneratedOutput,
+        style: &Style,
+    ) -> Result<(), DocumentError> {
+        let leader = output
+            .leaders()
+            .first()
+            .map_or(output.text().len(), |range| range.start);
+        let start = self.first_letter(&output.text()[..leader], style)?;
+        self.inline.append_generated_from(output, start, style)
+    }
+    /// Appends the first-letter text that `text`, the next inline content, begins with in its
+    /// `::first-letter` boxes, returning the bytes consumed (CSS Pseudo-Elements 4 §2.2).
+    fn first_letter(&mut self, text: &str, style: &Style) -> Result<usize, DocumentError> {
+        if !self.first_line.letter {
+            return Ok(0);
+        }
+        let Some(origins) = self.first_line.origins.clone().filter(|_| {
+            self.inline.at_line_start()
+                && self.run_in.is_none()
+                && self.sheet.has_pseudo_rules(PseudoElement::FirstLetter)
+        }) else {
+            self.first_line.letter = false;
+            return Ok(0);
+        };
+        let found =
+            crate::document::first_letter::find(text, style.white_space.collapse, &style.language);
+        let crate::document::first_letter::FirstLetter::Found {
+            prefix,
+            letter,
+            suffix,
+        } = found
+        else {
+            self.first_line.letter = found == crate::document::first_letter::FirstLetter::Pending;
+            return Ok(0);
+        };
+        self.first_line.letter = false;
+        self.inline.append(&text[..prefix.start], style)?;
+        let mut parent = style.clone();
+        let mut opened = 0;
+        let mut floated = None;
+        for &origin in origins.iter() {
+            let element = self.element(origin);
+            let pseudo = self.sheet.typographic_pseudo_with_resolver(
+                element,
+                &parent,
+                PseudoElement::FirstLetter,
+                self.resources.resolver,
+            )?;
+            let decoration = self.resources.backgrounds(&pseudo)?;
+            parent = inline_pseudo_style(pseudo.clone());
+            if floated.is_none() && pseudo.floating().is_some() {
+                floated = Some((pseudo, decoration, std::mem::take(self.inline), opened));
+                opened = 0;
+            } else {
+                self.inline.open_box(
+                    &parent,
+                    decoration,
+                    self.traversal.navigation.descendant(),
+                    false,
+                );
+                opened += 1;
+            }
+        }
+        self.first_letter_part(
+            &origins,
+            PseudoElement::FirstLetterPrefix,
+            &parent,
+            &text[prefix],
+        )?;
+        self.inline.append(&text[letter], &parent)?;
+        self.first_letter_part(
+            &origins,
+            PseudoElement::FirstLetterSuffix,
+            &parent,
+            &text[suffix.clone()],
+        )?;
+        for _ in 0..opened {
+            self.inline.close_box();
+        }
+        if let Some((style, decoration, outer, outer_opened)) = floated {
+            let contents = std::mem::replace(self.inline, outer);
+            let children = match contents.finish(&style)? {
+                Ok(paragraph) => vec![BlockContent::Inline(paragraph)],
+                Err(stray) => stray,
+            };
+            let page_scope =
+                crate::document::page::used_name(&style.page, self.element_page_scope.as_ref());
+            let block = BlockBox {
+                navigation: self.traversal.navigation.descendant(),
+                ..BlockBox::with_decoration(style, children, decoration, page_scope)
+            };
+            self.out_of_flow(block);
+            for _ in 0..outer_opened {
+                self.inline.close_box();
+            }
+        }
+        Ok(suffix.end)
+    }
+    /// The punctuation `text` around the first letter, in the nested `::first-letter::prefix`
+    /// or `::suffix` boxes of `origins` inside the innermost `::first-letter` styled `parent`.
+    fn first_letter_part(
+        &mut self,
+        origins: &[ElementId],
+        pseudo: PseudoElement,
+        parent: &Style,
+        text: &str,
+    ) -> Result<(), DocumentError> {
+        if text.is_empty() {
+            return Ok(());
+        }
+        if !self.sheet.has_pseudo_rules(pseudo) {
+            return self.inline.append(text, parent);
+        }
+        let mut parent = parent.clone();
+        for &origin in origins {
+            let element = self.element(origin);
+            parent = inline_pseudo_style(self.sheet.typographic_pseudo_with_resolver(
+                element,
+                &parent,
+                pseudo,
+                self.resources.resolver,
+            )?);
+            let decoration = self.resources.backgrounds(&parent)?;
+            self.inline.open_box(
+                &parent,
+                decoration,
+                self.traversal.navigation.descendant(),
+                false,
+            );
+        }
+        self.inline.append(text, &parent)?;
+        for _ in origins {
+            self.inline.close_box();
+        }
+        Ok(())
+    }
+    fn element(&self, id: ElementId) -> Element<'a> {
+        self.traversal
+            .document
+            .element(id)
+            .expect("first-line origins belong to the formatted document")
+    }
     fn flush(&mut self) -> Result<(), DocumentError> {
         match self.inline.split().finish(self.style)? {
             Ok(mut paragraph) => {
@@ -422,11 +600,32 @@ impl BlockBuilder<'_, '_, '_> {
                     .iter()
                     .any(|child| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)));
                 paragraph.last_formatted_line = false;
+                *self.first_line = FirstLine::default();
                 self.children.push(BlockContent::Inline(paragraph));
             }
             Err(stray) => self.children.extend(stray),
         }
         Ok(())
+    }
+    /// The first line of a block-level child box `display` passes to it, which then holds
+    /// this block's first formatted line if it comes first in flow; that line is consumed.
+    fn child_first_line(&mut self, element: ElementId, display: &Display) -> FirstLine {
+        let inherited = std::mem::take(self.first_line);
+        let own = || std::rc::Rc::from([element]);
+        if !display.is_block_level_block_container() {
+            return if display.is_block_container() {
+                FirstLine::of(own())
+            } else {
+                FirstLine::default()
+            };
+        }
+        match inherited.origins {
+            Some(origins) => FirstLine {
+                origins: Some(origins.iter().copied().chain([element]).collect()),
+                letter: inherited.letter,
+            },
+            None => FirstLine::of(own()),
+        }
     }
     /// Starts, or continues, a run-in sequence with the run-in box laid out next.
     fn begin_run_in(&mut self) -> Result<(), DocumentError> {
@@ -605,7 +804,7 @@ impl BlockBuilder<'_, '_, '_> {
                 if let Some(event) = event {
                     self.inline.semantic_event(event);
                 }
-                self.inline.append_generated(&output, &style)?;
+                self.append_generated(&output, &style)?;
             }
             Display::Inline => {
                 if let Some(event) = event {
@@ -617,7 +816,7 @@ impl BlockBuilder<'_, '_, '_> {
                     self.traversal.navigation.descendant(),
                     false,
                 );
-                self.inline.append_generated(&output, &style)?;
+                self.append_generated(&output, &style)?;
                 self.inline.close_box();
             }
             Display::InlineBlock
@@ -651,10 +850,16 @@ impl BlockBuilder<'_, '_, '_> {
             Display::None => unreachable!("hidden pseudo-elements are excluded by the cascade"),
             _ => {
                 self.flush()?;
-                let children = Paragraph::generated_output(&output, &style)?
-                    .into_iter()
-                    .map(BlockContent::Inline)
-                    .collect();
+                // The pseudo-element's box comes first in flow, taking the first formatted line.
+                let first_line = std::mem::take(self.first_line);
+                let children = if style.display.is_block_level_block_container() {
+                    self.first_line_block(first_line, &output, &style)?
+                } else {
+                    Paragraph::generated_output(&output, &style)?
+                        .into_iter()
+                        .map(BlockContent::Inline)
+                        .collect()
+                };
                 let mut generated = self.generated_block(
                     style,
                     children,
@@ -667,6 +872,26 @@ impl BlockBuilder<'_, '_, '_> {
             }
         }
         Ok(())
+    }
+
+    /// The contents of a block-level generated box holding `output`, which holds the first
+    /// formatted line `first_line` passes to it.
+    fn first_line_block(
+        &mut self,
+        first_line: FirstLine,
+        output: &crate::style::GeneratedOutput,
+        style: &Style,
+    ) -> Result<Vec<BlockContent>, DocumentError> {
+        let outer = std::mem::take(self.inline);
+        *self.first_line = first_line;
+        let appended = self.append_generated(output, style);
+        let contents = std::mem::replace(self.inline, outer);
+        *self.first_line = FirstLine::default();
+        appended?;
+        Ok(match contents.finish(style)? {
+            Ok(paragraph) => vec![BlockContent::Inline(paragraph)],
+            Err(stray) => stray,
+        })
     }
 
     /// A pseudo-element's block, part of the current element's hyperlink.
@@ -764,7 +989,7 @@ fn list_marker(
         &content,
         crate::style::PageStyleTarget {
             element: element.id(),
-            pseudo: Some(crate::style::PseudoElement::Marker),
+            pseudo: Some(PseudoElement::Marker),
         },
     )?;
     let output = bound.element_output_with_counters(
@@ -841,6 +1066,7 @@ struct OpenBlock {
     run_in: Option<RunInSequence>,
     /// A run-in sequence that runs into this block, after its marker.
     pending_run_in: Option<InlineCollector>,
+    first_line: FirstLine,
 }
 
 struct Frame<'d> {
@@ -884,6 +1110,7 @@ impl<'d> Frame<'d> {
                 event: None,
                 run_in: None,
                 pending_run_in: None,
+                first_line: FirstLine::default(),
             }),
             started: false,
             quotes: None,
@@ -916,6 +1143,7 @@ fn active_builder<'a, 's, 'c>(
             children: &mut block.children,
             inline: &mut block.inline,
             run_in: &mut block.run_in,
+            first_line: &mut block.first_line,
             traversal,
             resources,
         },
@@ -940,6 +1168,13 @@ fn block<'a>(
         Some(Placement::Root),
         None,
     )];
+    if frames[0].style.display.is_block_container() {
+        frames[0]
+            .block
+            .as_mut()
+            .expect("the root frame is a block")
+            .first_line = FirstLine::of(std::rc::Rc::from([element.id()]));
+    }
     let mut blocks = vec![0];
     loop {
         let index = frames.len() - 1;
@@ -1154,7 +1389,7 @@ fn block<'a>(
                         builder.resolve_run_in(RunInFollower::Other)?;
                     }
                 }
-                builder.inline.append(text, style)?;
+                builder.append_text(text, style)?;
                 continue;
             }
             let Some(child) = node.element() else {
@@ -1348,6 +1583,13 @@ fn block<'a>(
             } else {
                 0
             };
+            let first_line = match placement {
+                Some(Placement::Flow) => builder.child_first_line(child.id(), &child_style.display),
+                Some(_) if child_style.display.is_block_container() => {
+                    FirstLine::of(std::rc::Rc::from([child.id()]))
+                }
+                _ => FirstLine::default(),
+            };
             if placement.is_some() {
                 blocks.push(frames.len());
             }
@@ -1359,6 +1601,9 @@ fn block<'a>(
                 placement,
                 ancestor_page.as_ref(),
             ));
+            if let Some(block) = frames.last_mut().and_then(|frame| frame.block.as_mut()) {
+                block.first_line = first_line;
+            }
             if let Some(run_in) = merged {
                 frames
                     .last_mut()
