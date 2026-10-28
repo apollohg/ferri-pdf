@@ -30,11 +30,13 @@ impl Glyph for PdfGlyph<'_> {
     fn x_offset(&self, size: f32) -> f32 {
         self.glyph.x_offset * size
     }
+    // Krilla's vertical offsets and advances point up, as OpenType's do; positioned glyphs'
+    // point down.
     fn y_offset(&self, size: f32) -> f32 {
-        self.glyph.y_offset * size
+        -self.glyph.y_offset * size
     }
     fn y_advance(&self, size: f32) -> f32 {
-        self.glyph.y_advance * size
+        -self.glyph.y_advance * size
     }
     fn location(&self) -> Option<krilla::surface::Location> {
         None
