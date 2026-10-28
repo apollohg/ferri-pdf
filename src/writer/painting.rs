@@ -155,6 +155,14 @@ pub(super) fn rect_path(rect: crate::graphics::Rect) -> Result<krilla::geom::Pat
     path.finish().ok_or(PdfError::InvalidGeometry)
 }
 
+/// The larger factor by which `transform` scales lengths along its axes.
+pub(super) fn transform_scale(transform: Transform) -> f32 {
+    transform
+        .sx()
+        .hypot(transform.ky())
+        .max(transform.kx().hypot(transform.sy()))
+}
+
 /// Bounds of the physical surface in the active drawing coordinates.
 pub(super) fn local_bounds(
     viewport: crate::graphics::Rect,

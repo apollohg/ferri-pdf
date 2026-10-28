@@ -3,8 +3,8 @@
 //! then placed into the enclosing flow one row of columns per fragmentainer.
 use super::{
     ActiveBox, BreakRequest, Container, Effect, EffectNode, FLOW_LEVEL, FRAGMENTATION_TOLERANCE_PT,
-    FlowCursor, Fragmentainers, OrderSnapshots, PaginationState, Paginator, PaintKey, PaintOrder,
-    PaintOrders, Pending, ScopedPaint, SlicedBox, StickyConstraints, overflows,
+    FlowCursor, Fragmentainers, Group, OrderSnapshots, PaginationState, Paginator, PaintKey,
+    PaintOrder, PaintOrders, Pending, ScopedPaint, SlicedBox, StickyConstraints, overflows,
 };
 use crate::graphics::{Border, BoxDecoration, BoxPaint, DisplayItem, Rect};
 use crate::layout::{
@@ -530,6 +530,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 sticky_node: None,
                 sticky_children: Vec::new(),
                 sticky_scrolled: Vec::new(),
+                group_node: None,
                 paint: None,
                 fragments: Vec::new(),
                 start_space: 0.0,
@@ -1000,6 +1001,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             | DisplayItem::PushTransform(_)
             | DisplayItem::PushOpacity(_)
             | DisplayItem::PushBlend(_)
+            | DisplayItem::PushFilter(_)
             | DisplayItem::Pop => {}
         }
         paint.ink.as_mut().map(shift);
@@ -1026,14 +1028,16 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         effects: &mut HashMap<(usize, Option<usize>), usize>,
     ) -> usize {
         let source = &nodes[node];
-        let group = matches!(source.effect, Effect::Group(_));
+        // Anchored groups follow their element's clips, which resolve per column.
+        let group = matches!(source.effect, Effect::Group(group) if !group.anchored());
         let key = (node, (!group).then_some(place.column));
         if let Some(&index) = effects.get(&key) {
             return index;
         }
+        let grouping = matches!(source.effect, Effect::Group(_));
         let parent = match source.parent {
             Some(parent) => Some(self.effect(nodes, sticky, parent, place, effects)),
-            None if group => self.group,
+            None if grouping => self.group,
             None => self.clip,
         };
         if let Effect::Group(effect) = source.effect
@@ -1075,6 +1079,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 self.sticky.push(adopted);
                 Effect::Sticky(style, self.sticky.len() - 1)
             }
+            Effect::Group(group) if group.anchored() => Effect::Group(Group {
+                anchor: match group.anchor {
+                    Some(anchor) => Some(self.effect(nodes, sticky, anchor, place, effects)),
+                    None => self.clip,
+                },
+                ..group
+            }),
             effect => effect,
         };
         self.clips.push(EffectNode {

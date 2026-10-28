@@ -8,6 +8,7 @@ mod clip;
 mod color_space;
 mod decoration;
 mod easing;
+mod filter;
 mod gradient;
 mod length;
 mod raster;
@@ -37,6 +38,11 @@ pub(crate) use color_space::{
 };
 pub use decoration::{DecorationLine, DecorationPaint, DecorationStyle};
 pub(crate) use easing::{Easing, LinearPoint, StepPosition};
+pub use filter::FilterFunction;
+pub(crate) use filter::{
+    BLUR_EXTENT, ColorMatrix, IDENTITY_MATRIX, alpha_scale, compose, preserves_unit_range,
+    transform as transform_color,
+};
 #[cfg(test)]
 pub(crate) use gradient::GradientStop;
 pub(crate) use gradient::{

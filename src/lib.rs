@@ -51,9 +51,9 @@ pub use crate::fonts::{
 };
 pub use crate::graphics::{
     BlendMode, Border, BorderStyle, BoxDecoration, BoxPaint, Clip, ClipBounds, Color, Contour,
-    DecorationLine, DecorationPaint, DecorationStyle, DisplayItem, Fill, INLINE_EDGES,
-    LengthPercentage, Outline, OutlineStyle, Point, Radii, Rect, Segment, ShadowPaint, ShadowShape,
-    Shape,
+    DecorationLine, DecorationPaint, DecorationStyle, DisplayItem, Fill, FilterFunction,
+    FilterPaint, INLINE_EDGES, LengthPercentage, Outline, OutlineStyle, Point, Radii, Rect,
+    Segment, ShadowPaint, ShadowShape, Shape,
 };
 pub use crate::images::ImageError;
 pub use crate::layout::{Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine};
@@ -196,11 +196,15 @@ fn render_document(
     resolver: &dyn ResourceResolver,
 ) -> Result<RenderOutput, Error> {
     let (document, trace) = prepare_document(document, resolver)?;
+    let definitions = document.svg_definitions();
     let encoded = writer::encode_with_diagnostics(
-        &trace,
-        &document.styles().fonts,
-        document.navigation(),
-        document.metadata(),
+        &writer::PdfPart {
+            trace: &trace,
+            fonts: &document.styles().fonts,
+            navigation: document.navigation(),
+            metadata: document.metadata(),
+            definitions: &definitions,
+        },
         &options.images,
     )
     .map_err(pdf_error)?;

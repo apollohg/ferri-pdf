@@ -792,6 +792,13 @@ fn handler(property: Property) -> Option<Handler> {
             mix_blend_mode,
             Some(|v, _| crate::style::compositing_values::blend_mode(v).is_ok()),
         ),
+        P::Filter => (
+            filter,
+            Some(|v, r| {
+                crate::style::filter_values::filters(v, r, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
+            }),
+        ),
         P::Isolation => (
             isolation,
             Some(|v, _| crate::style::compositing_values::isolation(v).is_ok()),
@@ -1807,6 +1814,13 @@ computed!(
     [mix_blend_mode],
     |value, style, _parent, _relative| crate::style::compositing_values::blend_mode(value)?
 );
+computed!(filter, [filter], |value, style, _parent, relative| {
+    std::sync::Arc::new(crate::style::filter_values::filters(
+        value,
+        relative,
+        &style.computed_color,
+    )?)
+});
 computed!(isolation, [isolate], |value, style, _parent, _relative| {
     crate::style::compositing_values::isolation(value)?
 });

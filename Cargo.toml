@@ -78,6 +78,8 @@ svgtypes = "0.16"
 log = "0.4"
 rgb = "0.8"
 gif = "0.14.1"
+# Rasterizes display-list subtrees that filters and additive blending composite in pixels.
+hayro = { version = "=0.8.0", default-features = false }
 image-webp = "0.2.4"
 zune-jpeg = "0.5.8"
 fontdb = { version = "0.23", default-features = false, features = ["std"] }
@@ -189,6 +191,7 @@ encoding_rs.workspace = true
 flate2.workspace = true
 fontdb.workspace = true
 gif.workspace = true
+hayro.workspace = true
 heic-decoder.workspace = true
 html5ever.workspace = true
 hypher.workspace = true

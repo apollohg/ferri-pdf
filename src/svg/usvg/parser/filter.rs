@@ -539,7 +539,8 @@ fn convert_color_matrix_kind(fe: SvgNode) -> Option<ColorMatrixKind> {
         Some("saturate") => {
             if let Some(list) = fe.attribute::<Vec<f32>>(AId::Values) {
                 if !list.is_empty() {
-                    let n = crate::svg::usvg::f32_bound(0.0, list[0], 1.0);
+                    // Filter Effects 1 §9.6: values above one oversaturate.
+                    let n = list[0].max(0.0);
                     return Some(ColorMatrixKind::Saturate(PositiveF32::new(n).unwrap()));
                 } else {
                     return Some(ColorMatrixKind::Saturate(PositiveF32::new(1.0).unwrap()));

@@ -50,49 +50,9 @@ impl ImageWriter {
                 self.draw_decoded(paint, viewport, surface)
             }
             Asset::Transparent => Ok(()),
-            Asset::Viewport(view) => self.draw_viewport(paint, view, viewport, surface),
+            Asset::Viewport(_) => unreachable!("painters draw nested viewports"),
             Asset::Frame(..) => unreachable!("layout replaces frames with their viewports"),
         }
-    }
-
-    /// Paints a nested document's viewport at the paint rectangle's origin.
-    fn draw_viewport(
-        &mut self,
-        paint: &ImagePaint,
-        view: &crate::layout::ViewportPaint,
-        viewport: crate::graphics::Rect,
-        surface: &mut Surface<'_>,
-    ) -> Result<(), PdfError> {
-        let clips = paint
-            .clip
-            .as_ref()
-            .map(|clip| crate::writer::painting::push_clip(clip, viewport, surface))
-            .transpose()?
-            .unwrap_or(0);
-        let offset = [paint.rect.x - view.area.x, paint.rect.y - view.area.y];
-        surface.push_transform(&Transform::from_translate(offset[0], offset[1]));
-        let local = crate::graphics::Rect {
-            x: viewport.x - offset[0],
-            y: viewport.y - offset[1],
-            ..viewport
-        };
-        let mut text = crate::writer::text::TextWriter::new(&view.fonts);
-        let drawn = crate::writer::draw_items(
-            &crate::writer::Layer {
-                items: &view.items,
-                lines: &view.lines,
-                fonts: &view.fonts,
-                page: 0,
-                page_area: view.area,
-            },
-            local,
-            surface,
-            self,
-            &mut text,
-        );
-        surface.pop();
-        crate::writer::painting::pop_clips(clips, surface);
-        drawn
     }
 
     fn draw_decoded(

@@ -124,13 +124,19 @@ pub fn render_parts_with_resolver(
         }
         prepared.push(pair);
     }
+    let definitions: Vec<_> = prepared
+        .iter()
+        .map(|(document, _)| document.svg_definitions())
+        .collect();
     let writer_parts: Vec<_> = prepared
         .iter()
-        .map(|(document, trace)| PdfPart {
+        .zip(&definitions)
+        .map(|((document, trace), definitions)| PdfPart {
             trace,
             fonts: &document.styles().fonts,
             navigation: document.navigation(),
             metadata: document.metadata(),
+            definitions,
         })
         .collect();
     let encoded = crate::writer::encode_parts_with_diagnostics(&writer_parts, &options.images)

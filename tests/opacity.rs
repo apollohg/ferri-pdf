@@ -19,6 +19,7 @@ fn effect_stacks(trace: &LayoutTrace, page: usize) -> Vec<(String, Vec<String>)>
         match item {
             DisplayItem::PushOpacity(alpha) => stack.push(format!("O{alpha}")),
             DisplayItem::PushBlend(mode) => stack.push(format!("B{mode:?}")),
+            DisplayItem::PushFilter(filter) => stack.push(format!("F{:?}", filter.functions)),
             DisplayItem::PushClip(_) => stack.push("C".into()),
             DisplayItem::PushTransform(_) => stack.push("T".into()),
             DisplayItem::Pop => {
@@ -595,5 +596,74 @@ fn positioned_spanning_descendant_keeps_transformed_group_on_continuation() {
         (0..output.pages.len())
             .map(|page| effect_stacks(&output, page))
             .collect::<Vec<_>>()
+    );
+}
+
+#[test]
+fn filters_open_inside_their_element_clips_and_enclose_descendant_groups() {
+    let trace = trace(
+        ".clip{overflow:hidden;height:60pt;background:#ff0000}\
+         .f{filter:blur(2pt);opacity:.5;background:#00ff00;transform:translateX(3pt)}\
+         .inner{opacity:.25;background:#0000ff}.after{background:#ffff00}",
+        "<div class='clip'><div class='f'>Filtered<div class='inner'>Inner</div></div></div>\
+         <div class='after'>After</div>",
+    );
+    let painted = effect_stacks(&trace, 0);
+    let expect = |name: &str, effects: &[&str]| {
+        assert_eq!(
+            stack_of(&painted, name),
+            effects,
+            "{name} effects in: {painted:#?}"
+        );
+    };
+    let filter = "F[Blur(2.0)]";
+    // Filter Effects 1 §5: the filter applies in the element's transformed coordinates,
+    // before its ancestors' clips; opacity and the descendants' groups apply around and
+    // inside it as one group.
+    expect("box #ff0000", &[]);
+    expect("box #00ff00", &["C", "T", "O0.5", filter]);
+    expect("text Filtered", &["C", "T", "O0.5", filter]);
+    expect("box #0000ff", &["C", "T", "O0.5", filter, "O0.25"]);
+    expect("text Inner", &["C", "T", "O0.5", filter, "O0.25"]);
+    expect("box #ffff00", &[]);
+}
+
+#[test]
+fn filtered_inline_boxes_and_fixed_descendants_form_one_filter_group() {
+    let trace = trace(
+        "span{filter:invert(1)}.f{filter:sepia(1);margin-left:40pt;background:#ff0000}\
+         .fixed{position:fixed;left:0;top:0;width:10pt;height:10pt;background:#00ff00}",
+        "<p>Plain <span>Inverted</span></p><div class='f'>Host<div class='fixed'></div></div>",
+    );
+    let painted = effect_stacks(&trace, 0);
+    for effects in [&["F[Invert(1.0)]"][..], &[]] {
+        assert!(
+            painted
+                .iter()
+                .any(|(name, stack)| name == "text Plain Inverted" && stack == effects),
+            "the line's runs split by the filtered span: {effects:?} in {painted:#?}"
+        );
+    }
+    assert_eq!(
+        stack_of(&painted, "box #00ff00"),
+        ["F[Sepia(1.0)]"],
+        "a fixed descendant is contained by and painted within the filter (Filter Effects 1 §5): {painted:#?}"
+    );
+    let rect_of = |rgb: [u8; 3]| {
+        trace.display_lists[0]
+            .iter()
+            .find_map(|item| match item {
+                DisplayItem::Box(paint) if paint.decoration.background.rgb == rgb => {
+                    Some(paint.rect)
+                }
+                _ => None,
+            })
+            .unwrap_or_else(|| panic!("box {rgb:?} painted: {painted:#?}"))
+    };
+    let (host, fixed) = (rect_of([255, 0, 0]), rect_of([0, 255, 0]));
+    assert_eq!(
+        [fixed.x, fixed.y],
+        [host.x, host.y],
+        "the filtered host is the fixed box's containing block"
     );
 }

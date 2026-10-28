@@ -12,6 +12,8 @@ pub struct ViewportPaint {
     pub(crate) items: Vec<DisplayItem>,
     pub(crate) lines: Vec<TextLine>,
     pub(crate) fonts: FontBook,
+    /// The SVG filters and masks the nested document's `url()` references name.
+    pub(crate) definitions: crate::document::svg::SvgDefinitions,
     /// The page area, which is the whole viewport.
     pub(crate) area: Rect,
 }
@@ -57,11 +59,13 @@ pub(super) fn view(
                 ..
             } = trace;
             let fonts = document.styles().fonts.clone();
+            let definitions = document.svg_definitions();
             frame.record_diagnostics(document.into_diagnostics());
             ViewportPaint {
                 items: display_lists.into_iter().next().unwrap_or_default(),
                 lines: pages.into_iter().next().unwrap_or_default(),
                 fonts,
+                definitions,
                 area: page_area,
             }
         }
@@ -90,6 +94,7 @@ fn svg_document(image: Arc<Image>, area: Rect) -> ViewportPaint {
         })],
         lines: Vec::new(),
         fonts: FontBook::default(),
+        definitions: crate::document::svg::SvgDefinitions::default(),
         area,
     }
 }

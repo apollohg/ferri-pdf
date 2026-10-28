@@ -619,6 +619,7 @@ fn consume_nested<'i>(
 }
 
 const URL_FUNCTION: &str = "url(";
+const FRAGMENT_PREFIX: char = '#';
 
 enum UrlPart {
     Token,
@@ -669,7 +670,8 @@ fn url_references<'i>(
 }
 
 /// Resolves relative `url()` references against the declaring stylesheet, as computed
-/// values require; absolute and `data:` references are unchanged.
+/// values require; absolute and `data:` references are unchanged, and so are fragment-only
+/// references, which name the current document whatever the base (CSS Values 4 §4.5.1).
 pub(super) fn absolute_urls(
     declaration: &mut Declaration,
     base: &ResourceBase,
@@ -695,7 +697,10 @@ pub(super) fn absolute_urls(
         part,
     } in found.into_iter().rev()
     {
-        if reference.is_empty() || crate::resources::Url::parse(&reference).is_ok() {
+        if reference.is_empty()
+            || reference.starts_with(FRAGMENT_PREFIX)
+            || crate::resources::Url::parse(&reference).is_ok()
+        {
             continue;
         }
         let absolute = base.resolve(&reference)?;

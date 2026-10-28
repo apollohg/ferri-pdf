@@ -17,7 +17,7 @@
 )]
 
 mod clip;
-mod filter;
+pub(crate) mod filter;
 mod geom;
 mod image;
 mod mask;

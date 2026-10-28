@@ -25,6 +25,7 @@ mod decoration_values;
 mod diagnostics;
 mod easing;
 mod feature_values;
+mod filter_values;
 mod flex_values;
 mod float_values;
 mod font_values;

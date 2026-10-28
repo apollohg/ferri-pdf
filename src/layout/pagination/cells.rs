@@ -286,7 +286,14 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     } else {
                         Group::IDENTITY
                     };
-                    Some(self.stacking_group(self.group, group, paint.context.clone()))
+                    let node = self.stacking_group(self.group, group, paint.context.clone());
+                    if group.anchored() {
+                        self.clips[node].effect = Effect::Group(Group {
+                            anchor: clip,
+                            ..group
+                        });
+                    }
+                    Some(node)
                 } else {
                     self.group
                 };

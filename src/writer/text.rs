@@ -45,6 +45,9 @@ type InstanceKey = (FontId, Vec<([u8; 4], u32)>, Option<Vec<PaletteColor>>);
 
 const CHANNEL_MAX: f32 = 255.0;
 
+/// OpenType tables holding glyphs drawn in their own fixed colours: bitmaps and SVG.
+const FIXED_COLOR_TABLES: [&[u8; 4]; 3] = [b"sbix", b"CBDT", b"SVG "];
+
 /// A `font-palette` colour as a krilla palette entry; colours are already sRGB.
 fn palette_color(color: crate::graphics::Color) -> Result<PaletteColor, PdfError> {
     let alpha = (color.alpha * CHANNEL_MAX).round();
@@ -59,7 +62,6 @@ pub(super) struct TextWriter<'a> {
     fonts: &'a FontBook,
     data: Vec<Option<krilla::Data>>,
     embedded: HashMap<InstanceKey, Font>,
-    glyphs: Vec<PdfGlyph<'a>>,
 }
 impl<'a> TextWriter<'a> {
     pub(crate) fn new(fonts: &'a FontBook) -> Self {
@@ -67,12 +69,31 @@ impl<'a> TextWriter<'a> {
             fonts,
             data: vec![None; fonts.faces().len()],
             embedded: HashMap::new(),
-            glyphs: Vec::new(),
         }
+    }
+    /// Whether every colour `runs` paint comes from their colours, strokes, palettes and
+    /// marks, which excludes bitmap and SVG colour glyphs.
+    pub(crate) fn paints_run_colors(&self, runs: &[GlyphRun]) -> Result<bool, PdfError> {
+        for run in runs {
+            let face = self
+                .fonts
+                .face(run.font_id)
+                .ok_or(PdfError::InvalidFontId(run.font_id))?;
+            let data = face.data().ok_or(PdfError::InvalidFont)?;
+            let parsed = ttf_parser::RawFace::parse(data, 0).map_err(|_| PdfError::InvalidFont)?;
+            if FIXED_COLOR_TABLES
+                .iter()
+                .any(|tag| parsed.table(ttf_parser::Tag::from_bytes(tag)).is_some())
+                || !self.paints_run_colors(&run.marks)?
+            {
+                return Ok(false);
+            }
+        }
+        Ok(true)
     }
     pub(crate) fn draw(
         &mut self,
-        line: &'a TextLine,
+        line: &TextLine,
         surface: &mut Surface<'_>,
     ) -> Result<(), PdfError> {
         let origin = [line.x, line.baseline];
@@ -88,7 +109,7 @@ impl<'a> TextWriter<'a> {
     /// their strokes, filled opaquely as paths: the shape they cast as a text shadow.
     pub(crate) fn draw_silhouette(
         &mut self,
-        runs: &'a [GlyphRun],
+        runs: &[GlyphRun],
         origin: [f32; 2],
         surface: &mut Surface<'_>,
     ) -> Result<(), PdfError> {
@@ -139,19 +160,20 @@ impl<'a> TextWriter<'a> {
     }
     fn draw_runs(
         &mut self,
-        runs: &'a [GlyphRun],
+        runs: &[GlyphRun],
         origin: [f32; 2],
         paint: Paint,
         surface: &mut Surface<'_>,
     ) -> Result<(), PdfError> {
+        let mut glyphs = Vec::new();
         for run in runs {
             if run.font_size == 0.0 {
                 continue;
             }
             let font = self.font(run)?;
-            self.glyphs.clear();
+            glyphs.clear();
             for glyph in run.glyphs() {
-                self.glyphs.push(PdfGlyph {
+                glyphs.push(PdfGlyph {
                     glyph,
                     advance: glyph
                         .normalized_advance(run.font_size)
@@ -164,7 +186,7 @@ impl<'a> TextWriter<'a> {
             }
             for [x, y] in run.copies(origin) {
                 let pen = Point::from_xy(x, y);
-                paint_glyphs(surface, run, pen, &self.glyphs, &font, paint)?;
+                paint_glyphs(surface, run, pen, &glyphs, &font, paint)?;
             }
             if shear.is_some() {
                 surface.pop();

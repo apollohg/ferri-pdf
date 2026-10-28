@@ -6,8 +6,8 @@ pub(crate) use crate::paint::{
 };
 pub use crate::paint::{
     BlendMode, Border, BorderStyle, Clip, ClipBounds, Color, Contour, DecorationLine,
-    DecorationPaint, DecorationStyle, Fill, INLINE_EDGES, LengthPercentage, Outline, OutlineStyle,
-    Point, Radii, Rect, Segment, ShadowPaint, ShadowShape, Shape,
+    DecorationPaint, DecorationStyle, Fill, FilterFunction, INLINE_EDGES, LengthPercentage,
+    Outline, OutlineStyle, Point, Radii, Rect, Segment, ShadowPaint, ShadowShape, Shape,
 };
 use serde::Serialize;
 use std::sync::Arc;
@@ -38,6 +38,9 @@ pub enum DisplayItem {
     /// Composites later items as one isolated group blended with this mode until the matching
     /// `Pop`; `Normal` only isolates them.
     PushBlend(BlendMode),
+    /// Filters later items as one group in the current coordinates until the matching `Pop`
+    /// (Filter Effects 1 §5).
+    PushFilter(FilterPaint),
     Pop,
 }
 
@@ -65,6 +68,14 @@ impl TextShadowPaint {
             decoration.rect.y += dy;
         }
     }
+}
+
+#[derive(Clone, Debug, Serialize)]
+pub struct FilterPaint {
+    pub functions: Vec<FilterFunction>,
+    /// The filtered element's border box on the page, which `objectBoundingBox` units of
+    /// referenced filters measure.
+    pub bounds: Option<Rect>,
 }
 
 #[derive(Clone, Debug, Serialize)]

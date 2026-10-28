@@ -28,3 +28,6 @@ The module is compiled inside `ferri-pdf` with the `text` feature always enabled
 command-line binary, the SVG writer (`Tree::to_string` and `WriteOptions`) and the
 system-font and memory-mapping features are removed. COLR painting reports unsupported
 sweep gradients and blend modes through `log` instead of printing to standard output.
+
+`feColorMatrix type="saturate"` keeps values above one, which oversaturate (Filter Effects 1
+§9.6), instead of clamping them to one as SVG 1.1 did.

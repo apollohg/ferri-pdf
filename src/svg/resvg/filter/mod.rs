@@ -335,7 +335,7 @@ struct FilterResult {
     image: Image,
 }
 
-pub(super) fn apply(
+pub(crate) fn apply(
     filter: &crate::svg::usvg::filter::Filter,
     ts: tiny_skia::Transform,
     source: &mut tiny_skia::Pixmap,

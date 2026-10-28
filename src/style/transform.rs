@@ -174,8 +174,8 @@ fn values(value: &Component) -> Vec<&Component> {
     collect_values(value, &mut output);
     output
 }
-/// `<number>`, or a `<percentage>` where scaling accepts one.
-fn number(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
+/// `<number>`, or a `<percentage>` as its fraction.
+pub(super) fn number(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
     match value.unwrap() {
         Component::Percentage(fraction) => Ok(*fraction),
         Component::Math(source, Kind::Percentage, range) => {

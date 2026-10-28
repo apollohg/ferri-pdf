@@ -1,6 +1,9 @@
 //! Standalone XML for `<svg>` elements embedded in HTML, so they share the SVG image pipeline.
-use crate::dom::{Element, NodeData, SVG_NAMESPACE, TreeRelation, XLINK_NAMESPACE, XML_NAMESPACE};
-use std::fmt::Write;
+use crate::dom::{
+    DocumentTree, Element, ElementId, NodeData, SVG_NAMESPACE, TreeRelation, XLINK_NAMESPACE,
+    XML_NAMESPACE,
+};
+use std::{collections::HashMap, fmt::Write, sync::Arc};
 
 /// Serializes the element's subtree as an SVG document with explicit namespaces.
 /// Elements and attributes with undeclared prefixes (editor metadata) are omitted.
@@ -45,6 +48,61 @@ pub(crate) fn serialize(element: Element<'_>) -> String {
         }
     }
     xml
+}
+
+/// SVG elements that CSS `url()` references select: Filter Effects 1 §5 `filter` and CSS
+/// Masking 1 §7.1 `mask` elements.
+const REFERENCED_ELEMENTS: [&str; 2] = ["filter", "mask"];
+
+/// The document's referenceable SVG resources by `id`, each with the standalone XML of the
+/// outermost `<svg>` holding it, so that references inside that SVG resolve too.
+#[derive(Default)]
+pub(crate) struct SvgDefinitions(HashMap<String, SvgDefinition>);
+
+#[derive(Clone)]
+pub(crate) struct SvgDefinition {
+    /// `filter` or `mask`.
+    pub(crate) element: &'static str,
+    pub(crate) xml: Arc<str>,
+}
+
+impl SvgDefinitions {
+    pub(crate) fn collect(tree: &DocumentTree) -> Self {
+        let mut roots: HashMap<ElementId, Arc<str>> = HashMap::new();
+        let mut definitions = HashMap::new();
+        for element in tree.elements() {
+            let Some(name) = REFERENCED_ELEMENTS
+                .into_iter()
+                .find(|name| element.namespace() == SVG_NAMESPACE && element.name() == *name)
+            else {
+                continue;
+            };
+            let Some(id) = element.attr("id").filter(|id| !id.is_empty()) else {
+                continue;
+            };
+            let Some(root) = element
+                .ancestors(TreeRelation::Selector)
+                .filter(|ancestor| {
+                    ancestor.namespace() == SVG_NAMESPACE && ancestor.name() == "svg"
+                })
+                .last()
+            else {
+                continue;
+            };
+            let xml = roots
+                .entry(root.id())
+                .or_insert_with(|| serialize(root).into())
+                .clone();
+            definitions
+                .entry(id.to_owned())
+                .or_insert(SvgDefinition { element: name, xml });
+        }
+        Self(definitions)
+    }
+    /// The definition a same-document `url(#id)` reference names.
+    pub(crate) fn get(&self, reference: &str) -> Option<&SvgDefinition> {
+        self.0.get(reference.strip_prefix('#')?)
+    }
 }
 
 fn escape(xml: &mut String, text: &str, attribute: bool) {

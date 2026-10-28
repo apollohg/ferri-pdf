@@ -61,9 +61,9 @@ fn ink(shadow: &TextShadowPaint, cut: Option<Rect>) -> Option<Rect> {
         .reduce(Rect::union)
 }
 
-pub(super) fn draw<'a>(
-    shadow: &'a TextShadowPaint,
-    text: &mut TextWriter<'a>,
+pub(super) fn draw(
+    shadow: &TextShadowPaint,
+    text: &mut TextWriter<'_>,
     fonts: &FontBook,
     viewport: Rect,
     surface: &mut Surface<'_>,

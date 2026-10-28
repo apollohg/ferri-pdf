@@ -201,33 +201,48 @@ enum Effect<'a> {
     /// from its fragment on each page; never an enclosing effect.
     Parent3d(&'a crate::style::Style),
     /// Compositing of a stacking context. Groups nest by stacking context, independently of
-    /// clips and transforms, which follow containing blocks.
-    Group(Group),
+    /// clips and transforms, which follow containing blocks, unless anchored.
+    Group(Group<'a>),
 }
 /// How a stacking context composites; every stacking context is an isolated group, which
 /// paints as its content does unless something inside it blends (Compositing 1 §3.2).
 #[derive(Clone, Copy)]
-struct Group {
+struct Group<'a> {
     opacity: f32,
     blend: crate::graphics::BlendMode,
     isolated: bool,
+    filter: &'a [crate::graphics::FilterFunction],
+    /// The innermost clip or transform of the element's own box, inside which a group that
+    /// does not commute with clipping and transforming opens.
+    anchor: Option<usize>,
 }
-impl Group {
+impl<'a> Group<'a> {
     const IDENTITY: Self = Self {
         opacity: 1.0,
         blend: crate::graphics::BlendMode::Normal,
         isolated: false,
+        filter: &[],
+        anchor: None,
     };
-    fn of(style: &crate::style::Style) -> Self {
+    fn of(style: &'a crate::style::Style) -> Self {
         Self {
             opacity: style.opacity,
             blend: style.mix_blend_mode,
             isolated: style.isolate,
+            filter: &style.filter,
+            anchor: None,
         }
     }
-    /// The display items opening this group: an isolated blend group, then an opacity group,
-    /// which is isolated itself.
-    fn pushes(self) -> impl Iterator<Item = DisplayItem> {
+    /// Filters act in the element's local coordinates and are clipped by its ancestors'
+    /// clips afterwards (Filter Effects 1 §5), so their group opens inside the clips and
+    /// transforms of the element's own box.
+    fn anchored(&self) -> bool {
+        !self.filter.is_empty()
+    }
+    /// The display items opening this group, outermost first: an isolated blend group, an
+    /// opacity group, which is isolated itself, then the filter, which applies before both
+    /// (Filter Effects 1 §5). `bounds` is the element's border box on the page.
+    fn pushes(self, bounds: Option<Rect>) -> Vec<DisplayItem> {
         let translucent = self.opacity < 1.0;
         let blend =
             self.blend != crate::graphics::BlendMode::Normal || (self.isolated && !translucent);
@@ -235,6 +250,13 @@ impl Group {
             .then_some(DisplayItem::PushBlend(self.blend))
             .into_iter()
             .chain(translucent.then_some(DisplayItem::PushOpacity(self.opacity)))
+            .chain((!self.filter.is_empty()).then(|| {
+                DisplayItem::PushFilter(crate::graphics::FilterPaint {
+                    functions: self.filter.to_vec(),
+                    bounds,
+                })
+            }))
+            .collect()
     }
 }
 #[derive(Clone)]
@@ -462,6 +484,8 @@ struct ActiveBox<'a> {
     /// container, this box is.
     sticky_children: Vec<usize>,
     sticky_scrolled: Vec<usize>,
+    /// The box's own anchored group, which its fragments bound.
+    group_node: Option<usize>,
     paint: Option<(BoxPaint, usize)>,
     fragments: Vec<(usize, usize)>,
     start_space: f32,
@@ -935,6 +959,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 | DisplayItem::PushTransform(_)
                 | DisplayItem::PushOpacity(_)
                 | DisplayItem::PushBlend(_)
+                | DisplayItem::PushFilter(_)
                 | DisplayItem::Pop => false,
             })
             || self.display_lists[page]
@@ -951,6 +976,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     | DisplayItem::PushTransform(_)
                     | DisplayItem::PushOpacity(_)
                     | DisplayItem::PushBlend(_)
+                    | DisplayItem::PushFilter(_)
                     | DisplayItem::Pop => false,
                 })
     }
@@ -1735,6 +1761,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .then_some(block.style.stacking_z_index())
             .flatten()
             .or((transformed || grouped || isolated).then_some(0));
+        let mut own_group = None;
         let paint_key = if positioned || z_index.is_some() {
             let order = self.reserved_order.take().unwrap_or_else(|| self.order());
             let layer = positioned_layer(&previous_context, z_index, order);
@@ -1744,7 +1771,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 } else {
                     Group::IDENTITY
                 };
-                self.group = Some(self.stacking_group(self.group, group, layer.context.clone()));
+                let node = self.stacking_group(self.group, group, layer.context.clone());
+                own_group = group.anchored().then_some(node);
+                self.group = Some(node);
             }
             self.context = layer.context;
             self.key = layer.key;
@@ -1810,6 +1839,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         .then(|| effect_node(self, Effect::RectClip(block.style)));
         if clip_rect_node.is_some() {
             self.clip = clip_rect_node;
+        }
+        if let Some(node) = own_group {
+            self.anchor_group(node);
         }
         let previous_parent_3d = self.parent_3d;
         let parent_3d_node = (transformed
@@ -1940,6 +1972,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             sticky_node,
             sticky_children: Vec::new(),
             sticky_scrolled: Vec::new(),
+            group_node: own_group,
             paint,
             fragments,
             start_space: block.start_space,
@@ -2159,6 +2192,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             active.clip_rect_node,
             active.parent_3d_node,
             active.sticky_node,
+            active.group_node,
         ]
         .into_iter()
         .flatten()
@@ -2429,7 +2463,12 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     }
     /// The group of stacking context `context` inside `parent`, which a blending group
     /// isolates.
-    fn stacking_group(&mut self, parent: Option<usize>, group: Group, context: PaintKey) -> usize {
+    fn stacking_group(
+        &mut self,
+        parent: Option<usize>,
+        group: Group<'a>,
+        context: PaintKey,
+    ) -> usize {
         if group.blend != crate::graphics::BlendMode::Normal {
             self.isolate(parent);
         }
@@ -2449,6 +2488,12 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             && let Effect::Group(group) = &mut self.clips[group].effect
         {
             group.isolated = true;
+        }
+    }
+    /// Opens anchored group `node` inside the current clips and transforms.
+    fn anchor_group(&mut self, node: usize) {
+        if let Effect::Group(group) = &mut self.clips[node].effect {
+            group.anchor = self.clip;
         }
     }
     /// Each effect's region on the pages it covers, from its box fragments and the structural
@@ -2518,6 +2563,24 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             regions.push(node_regions);
         }
         Ok(regions)
+    }
+    /// Each anchored group's areas: its element's box fragments and inline box areas.
+    fn group_bounds(&self) -> Vec<Vec<(usize, Rect)>> {
+        self.clips
+            .iter()
+            .map(|node| match node.effect {
+                Effect::Group(group) if group.anchored() => node
+                    .fragments
+                    .iter()
+                    .filter_map(|&(page, slot)| match &self.display_lists[page][slot].item {
+                        DisplayItem::Box(paint) => Some((page, paint.rect)),
+                        _ => None,
+                    })
+                    .chain(node.areas.iter().copied())
+                    .collect(),
+                _ => Vec::new(),
+            })
+            .collect()
     }
     /// The placement a `Parent3d` node gives its children on `page`, from its fragment there.
     fn parent_3d_on(
@@ -4043,6 +4106,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     active.clip_rect_node,
                     active.parent_3d_node,
                     active.sticky_node,
+                    active.group_node,
                 ]
                 .into_iter()
                 .flatten()
@@ -4184,7 +4248,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     /// Compositing 1 §3.4 apply to inline boxes too).
     fn inline_layer(
         &mut self,
-        layers: &mut InlineLayers<'_>,
+        layers: &mut InlineLayers<'a>,
         inline_box: Option<usize>,
     ) -> Option<Layer> {
         let boxes = layers.paragraph.boxes();
@@ -4200,7 +4264,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .unwrap_or_else(|| (self.context.clone(), self.group));
         let order = self.order();
         let context = extend(&context, (0, order));
-        let group = self.stacking_group(group, Group::of(&boxes[index].style), context.clone());
+        let effect = Group::of(&boxes[index].style);
+        let group = self.stacking_group(group, effect, context.clone());
+        if effect.anchored() {
+            self.anchor_group(group);
+        }
         let layer = (context, Some(group));
         layers.layers[index] = Some(layer.clone());
         Some(layer)
@@ -4219,7 +4287,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     /// drawing them, untouched ones first.
     fn split_line(
         &mut self,
-        layers: &mut InlineLayers<'_>,
+        layers: &mut InlineLayers<'a>,
         runs: Vec<crate::text::GlyphRun>,
         decorations: &[DecorationPaint],
     ) -> Vec<LinePart> {
@@ -4427,7 +4495,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         width: f32,
         left: f32,
         atomics: &mut [Option<crate::layout::inline::MeasuredAtomic<'a>>],
-        layers: &mut InlineLayers<'_>,
+        layers: &mut InlineLayers<'a>,
     ) -> Result<(), LayoutError> {
         let source = layers.paragraph;
         let baseline = self.y + line.ascent;
@@ -4443,6 +4511,12 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 self.page_content |= paint.has_ink() && paint.rect.intersects(self.page_rect);
                 let layer = self.inline_layer(layers, Some(fragment.index));
                 let (scope, group) = self.layer_scope(layer.as_ref());
+                if let Some(node) = group
+                    && inline_box.style.is_filtered()
+                    && layers.layers[fragment.index].is_some()
+                {
+                    self.clips[node].areas.push((self.page, paint.rect));
+                }
                 layers.fragments[fragment.index]
                     .push((self.page, self.foreground[self.page].len()));
                 self.foreground[self.page].push(ScopedPaint {
@@ -4571,6 +4645,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         self.assemble_sliced_boxes();
         self.position_canvas_backgrounds();
         let regions = self.effect_regions()?;
+        let bounds = self.group_bounds();
         let mut display_lists = Vec::with_capacity(self.display_lists.len());
         let mut located = Located {
             links: Vec::with_capacity(self.display_lists.len()),
@@ -4598,7 +4673,14 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let outlines = outlines(&items, &self.clips);
             items.extend(outlines);
             items.sort_by(|a, b| a.scope.cmp(&b.scope).then_with(|| a.order.cmp(&b.order)));
-            display_lists.push(clipped(items, page, &self.clips, &regions, &mut located)?);
+            display_lists.push(clipped(
+                items,
+                page,
+                &self.clips,
+                &regions,
+                &bounds,
+                &mut located,
+            )?);
         }
         let Fragmentainers::Pages(mut physical) = self.fragmentainers else {
             unreachable!("document pagination uses physical pages");
@@ -4650,6 +4732,13 @@ struct Located {
     destinations: Vec<Option<Destination>>,
 }
 
+/// One push of an item's effect chain: a group node or a clip or transform node.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum Frame {
+    Group(usize),
+    Clip(usize),
+}
+
 /// Wraps runs of items sharing an effect chain in push/pop pairs, and locates the link areas
 /// and destinations of box items through that chain.
 fn clipped(
@@ -4657,13 +4746,15 @@ fn clipped(
     page: usize,
     nodes: &[EffectNode<'_>],
     regions: &[Vec<(usize, Region)>],
+    bounds: &[Vec<(usize, Rect)>],
     located: &mut Located,
 ) -> Result<Vec<DisplayItem>, LayoutError> {
     let mut link_polygons = Vec::new();
     let mut output = Vec::with_capacity(items.len());
-    let mut open_groups: Vec<(usize, usize)> = Vec::new();
+    // Open frames and the pushes each emitted.
+    let mut open: Vec<(Frame, usize)> = Vec::new();
     let mut groups = Vec::new();
-    let mut open: Vec<usize> = Vec::new();
+    let mut frames = Vec::new();
     let mut chain = Vec::new();
     for paint in items {
         if !paint.visible {
@@ -4735,52 +4826,88 @@ fn clipped(
             let Effect::Group(effect) = nodes[index].effect else {
                 unreachable!("group chains hold only group nodes")
             };
-            // A group without opacity, blending or isolation paints as its content does.
-            if effect.pushes().next().is_some() {
-                groups.push((index, effect));
+            // A group without opacity, blending, isolation or filters paints as its content
+            // does.
+            let pushes = effect.pushes(page_bounds(&bounds[index], page));
+            if !pushes.is_empty() {
+                groups.push((index, effect, pushes));
             }
             group = nodes[index].parent;
         }
         groups.reverse();
         // Clipping or transforming each member of a group equals doing so to the group, so
-        // groups open outermost and clips and transforms reopen inside each group.
-        if !groups
-            .iter()
-            .map(|(index, _)| index)
-            .eq(open_groups.iter().map(|(index, _)| index))
-        {
-            output.extend(open.drain(..).map(|_| DisplayItem::Pop));
-            let common = open_groups
-                .iter()
-                .zip(&groups)
-                .take_while(|((a, _), (b, _))| a == b)
-                .count();
-            for (_, pushes) in open_groups.drain(common..) {
-                output.extend(std::iter::repeat_n(DisplayItem::Pop, pushes));
+        // groups open outermost and clips and transforms reopen inside each group; anchored
+        // groups open after the clips and transforms of their element's own box.
+        frames.clear();
+        let mut placed = 0;
+        for (index, effect, _) in &groups {
+            if effect.anchored() {
+                let depth = match effect.anchor {
+                    Some(anchor) => {
+                        chain
+                            .iter()
+                            .position(|&node| node == anchor)
+                            .ok_or(LayoutError::MissingClipFragment { page })?
+                            + 1
+                    }
+                    None => 0,
+                };
+                frames.extend(
+                    chain[placed..depth.max(placed)]
+                        .iter()
+                        .map(|&node| Frame::Clip(node)),
+                );
+                placed = depth.max(placed);
             }
-            for &(index, effect) in &groups[common..] {
-                let opened = output.len();
-                output.extend(effect.pushes());
-                open_groups.push((index, output.len() - opened));
-            }
+            frames.push(Frame::Group(*index));
         }
-        let common = open.iter().zip(&chain).take_while(|(a, b)| a == b).count();
-        output.extend(open.drain(common..).map(|_| DisplayItem::Pop));
-        for (&index, region) in chain[common..].iter().zip(&regions_here[common..]) {
-            output.push(match *region {
-                Region::Clip(clip) => DisplayItem::PushClip(clip),
-                Region::Transform(matrix) => DisplayItem::PushTransform(matrix),
-            });
-            open.push(index);
+        frames.extend(chain[placed..].iter().map(|&node| Frame::Clip(node)));
+        let common = open
+            .iter()
+            .zip(&frames)
+            .take_while(|((open, _), frame)| open == *frame)
+            .count();
+        for (_, pushes) in open.drain(common..).rev() {
+            output.extend(std::iter::repeat_n(DisplayItem::Pop, pushes));
+        }
+        for &frame in &frames[common..] {
+            let pushes = match frame {
+                Frame::Group(index) => groups
+                    .iter()
+                    .find(|(group, _, _)| *group == index)
+                    .map(|(_, _, pushes)| pushes.clone())
+                    .unwrap_or_default(),
+                Frame::Clip(index) => {
+                    let position = chain
+                        .iter()
+                        .position(|&node| node == index)
+                        .expect("clip frames come from the item's chain");
+                    vec![match regions_here[position] {
+                        Region::Clip(clip) => DisplayItem::PushClip(clip),
+                        Region::Transform(matrix) => DisplayItem::PushTransform(matrix),
+                    }]
+                }
+            };
+            open.push((frame, pushes.len()));
+            output.extend(pushes);
         }
         output.push(item);
     }
-    let pops = open.len() + open_groups.iter().map(|(_, pushes)| pushes).sum::<usize>();
+    let pops = open.iter().map(|(_, pushes)| pushes).sum::<usize>();
     output.extend(std::iter::repeat_n(DisplayItem::Pop, pops));
     located
         .links
         .push(crate::layout::navigation::link_areas(&link_polygons));
     Ok(output)
+}
+
+/// The union of a group's areas on `page`.
+fn page_bounds(areas: &[(usize, Rect)], page: usize) -> Option<Rect> {
+    areas
+        .iter()
+        .filter(|(area_page, _)| *area_page == page)
+        .map(|(_, rect)| *rect)
+        .reduce(Rect::union)
 }
 
 fn assemble_background(

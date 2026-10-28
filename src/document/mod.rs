@@ -16,7 +16,7 @@ mod page;
 mod semantics;
 mod strings;
 mod stylesheets;
-mod svg;
+pub(crate) mod svg;
 mod tables;
 
 use crate::dom::DocumentTree;
@@ -566,6 +566,10 @@ impl StyledDocument {
     }
     pub(crate) fn metadata(&self) -> &DocumentMetadata {
         &self.metadata
+    }
+    /// The SVG filters and masks that `url()` references in the document can name.
+    pub(crate) fn svg_definitions(&self) -> svg::SvgDefinitions {
+        svg::SvgDefinitions::collect(&self.source.html)
     }
     pub(crate) fn canvas_background(&self) -> &crate::graphics::BoxDecoration {
         &self.canvas
