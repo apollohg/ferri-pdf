@@ -131,7 +131,7 @@ impl Normal {
 /// # Panics
 ///
 /// - When `src` and `dest` have different sizes.
-pub fn diffuse_lighting(
+pub(super) fn diffuse_lighting(
     fe: &DiffuseLighting,
     light_source: LightSource,
     src: ImageRef,
@@ -176,7 +176,7 @@ pub fn diffuse_lighting(
 /// # Panics
 ///
 /// - When `src` and `dest` have different sizes.
-pub fn specular_lighting(
+pub(super) fn specular_lighting(
     fe: &SpecularLighting,
     light_source: LightSource,
     src: ImageRef,

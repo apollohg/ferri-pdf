@@ -5,17 +5,17 @@
 [resvg](https://github.com/linebender/resvg) is an SVG rendering library.
 */
 
-#![forbid(unsafe_code)]
-#![warn(missing_docs)]
-#![allow(clippy::field_reassign_with_default)]
-#![allow(clippy::identity_op)]
-#![allow(clippy::too_many_arguments)]
-#![allow(clippy::uninlined_format_args)]
-#![allow(clippy::upper_case_acronyms)]
-#![allow(clippy::wrong_self_convention)]
-
-pub use tiny_skia;
-pub use usvg;
+#![allow(
+    clippy::pedantic,
+    clippy::collapsible_if,
+    clippy::field_reassign_with_default,
+    clippy::identity_op,
+    clippy::too_many_arguments,
+    clippy::upper_case_acronyms,
+    clippy::wrong_self_convention,
+    elided_lifetimes_in_paths,
+    reason = "inlined upstream code keeps its upstream style"
+)]
 
 mod clip;
 mod filter;
@@ -31,7 +31,7 @@ mod render;
 /// Can be used to position SVG inside the `pixmap`.
 ///
 /// The produced content is in the sRGB color space.
-pub fn render(
+pub(crate) fn render(
     tree: &usvg::Tree,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
@@ -59,7 +59,7 @@ pub fn render(
 /// Returns `None` when `node` has a zero size.
 ///
 /// The produced content is in the sRGB color space.
-pub fn render_node(
+pub(crate) fn render_node(
     node: &usvg::Node,
     mut transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,

@@ -3,7 +3,10 @@
 
 // Based on https://github.com/fschutt/fastblur
 
-#![allow(clippy::needless_range_loop)]
+#![allow(
+    clippy::needless_range_loop,
+    reason = "inlined upstream code keeps its upstream style"
+)]
 
 use super::ImageRefMut;
 use rgb::RGBA8;
@@ -20,7 +23,7 @@ const STEPS: usize = 5;
 /// # Allocations
 ///
 /// This method will allocate a copy of the `src` image as a back buffer.
-pub fn apply(sigma_x: f64, sigma_y: f64, mut src: ImageRefMut) {
+pub(super) fn apply(sigma_x: f64, sigma_y: f64, mut src: ImageRefMut) {
     let boxes_horz = create_box_gauss(sigma_x as f32);
     let boxes_vert = create_box_gauss(sigma_y as f32);
     let mut backbuf = src.data.to_vec();

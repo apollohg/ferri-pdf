@@ -27,7 +27,7 @@ mod turbulence;
 /// Some filters will require premultiplied channels, some not.
 /// See specific filter documentation for details.
 #[derive(Clone, Copy)]
-pub struct ImageRef<'a> {
+pub(super) struct ImageRef<'a> {
     data: &'a [RGBA8],
     width: u32,
     height: u32,
@@ -38,7 +38,7 @@ impl<'a> ImageRef<'a> {
     ///
     /// Doesn't clone the provided data.
     #[inline]
-    pub fn new(width: u32, height: u32, data: &'a [RGBA8]) -> Self {
+    pub(super) fn new(width: u32, height: u32, data: &'a [RGBA8]) -> Self {
         ImageRef {
             data,
             width,
@@ -53,7 +53,7 @@ impl<'a> ImageRef<'a> {
 }
 
 /// A mutable `ImageRef` variant.
-pub struct ImageRefMut<'a> {
+pub(super) struct ImageRefMut<'a> {
     data: &'a mut [RGBA8],
     width: u32,
     height: u32,
@@ -64,7 +64,7 @@ impl<'a> ImageRefMut<'a> {
     ///
     /// Doesn't clone the provided data.
     #[inline]
-    pub fn new(width: u32, height: u32, data: &'a mut [RGBA8]) -> Self {
+    pub(super) fn new(width: u32, height: u32, data: &'a mut [RGBA8]) -> Self {
         ImageRefMut {
             data,
             width,
@@ -332,7 +332,7 @@ struct FilterResult {
     image: Image,
 }
 
-pub fn apply(
+pub(super) fn apply(
     filter: &usvg::filter::Filter,
     ts: tiny_skia::Transform,
     source: &mut tiny_skia::Pixmap,
@@ -711,7 +711,7 @@ fn apply_blend(
         0,
         input1.as_ref().as_ref(),
         &tiny_skia::PixmapPaint {
-            blend_mode: crate::render::convert_blend_mode(fe.mode()),
+            blend_mode: crate::svg::resvg::render::convert_blend_mode(fe.mode()),
             ..tiny_skia::PixmapPaint::default()
         },
         tiny_skia::Transform::identity(),
@@ -869,11 +869,11 @@ fn apply_image(
         subregion.y() as f32,
     );
 
-    let ctx = crate::render::Context {
-        max_bbox: tiny_skia::IntRect::from_xywh(0, 0, region.width(), region.height()).unwrap(),
+    let ctx = crate::svg::resvg::render::Context {
+        max_bbox: IntRect::from_xywh(0, 0, region.width(), region.height()).unwrap(),
     };
 
-    crate::render::render_nodes(fe.root(), &ctx, transform, &mut pixmap.as_mut());
+    crate::svg::resvg::render::render_nodes(fe.root(), &ctx, transform, &mut pixmap.as_mut());
 
     Ok(Image::from_image(
         pixmap,

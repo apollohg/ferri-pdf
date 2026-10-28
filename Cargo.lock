@@ -603,13 +603,16 @@ dependencies = [
  "ferri-pdf-images",
  "ferri-pdf-krilla",
  "ferri-pdf-resources",
- "ferri-pdf-resvg",
  "ferri-pdf-style",
  "ferri-pdf-usvg",
  "fontdb",
+ "gif",
  "icu_locale_core",
  "icu_properties",
+ "image-webp",
+ "log",
  "percent-encoding",
+ "rgb",
  "roxmltree",
  "rustybuzz",
  "same-file",
@@ -617,12 +620,14 @@ dependencies = [
  "serde_json",
  "skrifa",
  "smallvec",
+ "svgtypes",
  "thiserror",
  "tiny-skia",
  "unicode-bidi",
  "unicode-linebreak",
  "unicode-script",
  "unicode-segmentation",
+ "zune-jpeg",
 ]
 
 [[package]]
@@ -759,21 +764,6 @@ dependencies = [
  "thiserror",
  "ureq",
  "url",
-]
-
-[[package]]
-name = "ferri-pdf-resvg"
-version = "0.47.0"
-dependencies = [
- "ferri-pdf-usvg",
- "gif",
- "image-webp",
- "log",
- "pico-args",
- "rgb",
- "svgtypes",
- "tiny-skia",
- "zune-jpeg",
 ]
 
 [[package]]

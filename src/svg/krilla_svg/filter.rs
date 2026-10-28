@@ -62,7 +62,7 @@ pub(crate) fn render(
 
     let initial_transform = Transform::from_scale(raster_scale, raster_scale)
         .pre_concat(Transform::from_translate(-layer_bbox.x(), -layer_bbox.y()))
-        // This one is a hack because resvg::render_node will take the absolute layer bbox into consideration
+        // This one is a hack because crate::svg::resvg::render_node will take the absolute layer bbox into consideration
         // and translate by -layer_bbox.x() and -layer_bbox.y(), but we don't want that, so we
         // inverse it.
         .pre_concat(Transform::from_translate(
@@ -70,7 +70,7 @@ pub(crate) fn render(
             group.abs_layer_bounding_box().y(),
         ));
 
-    resvg::render_node(
+    crate::svg::resvg::render_node(
         &usvg::Node::Group(Box::new(group.clone())),
         initial_transform,
         &mut pixmap.as_mut(),

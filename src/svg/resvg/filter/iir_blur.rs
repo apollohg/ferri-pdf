@@ -26,7 +26,6 @@
 // TODO: Blurs right and bottom sides twice for some reason.
 
 use super::ImageRefMut;
-use rgb::ComponentSlice;
 
 struct BlurData {
     width: usize,
@@ -45,7 +44,7 @@ struct BlurData {
 /// # Allocations
 ///
 /// This method will allocate a 2x `src` buffer.
-pub fn apply(sigma_x: f64, sigma_y: f64, src: ImageRefMut) {
+pub(super) fn apply(sigma_x: f64, sigma_y: f64, src: ImageRefMut) {
     let buf_size = (src.width * src.height) as usize;
     let mut buf = vec![0.0; buf_size];
     let buf = &mut buf;
@@ -58,7 +57,7 @@ pub fn apply(sigma_x: f64, sigma_y: f64, src: ImageRefMut) {
         steps: 4,
     };
 
-    let data = src.data.as_mut_slice();
+    let data: &mut [u8] = rgb::bytemuck::cast_slice_mut(src.data);
     gaussian_channel(data, &d, 0, buf);
     gaussian_channel(data, &d, 1, buf);
     gaussian_channel(data, &d, 2, buf);

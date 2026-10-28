@@ -14,7 +14,7 @@ use usvg::filter::{ColorChannel, DisplacementMap};
 /// # Panics
 ///
 /// When `src`, `map` and `dest` have different sizes.
-pub fn apply(
+pub(super) fn apply(
     fe: &DisplacementMap,
     sx: f32,
     sy: f32,

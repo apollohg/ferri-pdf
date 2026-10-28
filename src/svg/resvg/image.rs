@@ -1,7 +1,7 @@
 // Copyright 2018 the Resvg Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-pub fn render(
+pub(super) fn render(
     image: &usvg::Image,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
@@ -13,23 +13,18 @@ pub fn render(
     render_inner(image.kind(), transform, image.rendering_mode(), pixmap);
 }
 
-pub fn render_inner(
+pub(super) fn render_inner(
     image_kind: &usvg::ImageKind,
     transform: tiny_skia::Transform,
-    #[allow(unused_variables)] rendering_mode: usvg::ImageRendering,
+    rendering_mode: usvg::ImageRendering,
     pixmap: &mut tiny_skia::PixmapMut,
 ) {
     match image_kind {
         usvg::ImageKind::SVG(tree) => {
             render_vector(tree, transform, pixmap);
         }
-        #[cfg(feature = "raster-images")]
         _ => {
             raster_images::render_raster(image_kind, transform, rendering_mode, pixmap);
-        }
-        #[cfg(not(feature = "raster-images"))]
-        _ => {
-            log::warn!("Images decoding was disabled by a build feature.");
         }
     }
 }
@@ -40,7 +35,7 @@ fn render_vector(
     pixmap: &mut tiny_skia::PixmapMut,
 ) -> Option<()> {
     let mut sub_pixmap = tiny_skia::Pixmap::new(pixmap.width(), pixmap.height()).unwrap();
-    crate::render(tree, transform, &mut sub_pixmap.as_mut());
+    crate::svg::resvg::render(tree, transform, &mut sub_pixmap.as_mut());
     pixmap.draw_pixmap(
         0,
         0,
@@ -53,9 +48,8 @@ fn render_vector(
     Some(())
 }
 
-#[cfg(feature = "raster-images")]
 mod raster_images {
-    use crate::OptionLog;
+    use crate::svg::resvg::OptionLog;
     use std::io::Cursor;
     use usvg::ImageRendering;
 
@@ -123,7 +117,7 @@ mod raster_images {
     }
 
     fn decode_webp(data: &[u8]) -> Option<tiny_skia::Pixmap> {
-        let mut decoder = image_webp::WebPDecoder::new(std::io::Cursor::new(data)).ok()?;
+        let mut decoder = image_webp::WebPDecoder::new(Cursor::new(data)).ok()?;
         let mut first_frame = vec![0; decoder.output_buffer_size()?];
         decoder.read_image(&mut first_frame).ok()?;
 
@@ -173,7 +167,7 @@ mod raster_images {
     pub(crate) fn render_raster(
         image: &usvg::ImageKind,
         transform: tiny_skia::Transform,
-        rendering_mode: usvg::ImageRendering,
+        rendering_mode: ImageRendering,
         pixmap: &mut tiny_skia::PixmapMut,
     ) -> Option<()> {
         let raster = decode_raster(image)?;

@@ -13,7 +13,7 @@ use usvg::ApproxZeroUlps;
 /// # Panics
 ///
 /// When `src1`, `src2` and `dest` have different sizes.
-pub fn arithmetic(
+pub(super) fn arithmetic(
     k1: f32,
     k2: f32,
     k3: f32,

@@ -12,7 +12,7 @@ use usvg::filter::{ConvolveMatrix, EdgeMode};
 /// # Allocations
 ///
 /// This method will allocate a copy of the `src` image as a back buffer.
-pub fn apply(matrix: &ConvolveMatrix, src: ImageRefMut) {
+pub(super) fn apply(matrix: &ConvolveMatrix, src: ImageRefMut) {
     fn bound(min: i32, val: i32, max: i32) -> i32 {
         core::cmp::max(min, core::cmp::min(max, val))
     }

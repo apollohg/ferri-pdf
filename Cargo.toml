@@ -1,7 +1,7 @@
 [workspace]
 members = ["crates/*", "spec"]
 default-members = [".", "crates/*"]
-exclude = ["vendor/resvg", "vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/usvg", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors"]
+exclude = ["vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/usvg", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors"]
 resolver = "3"
 
 [workspace.package]
@@ -73,7 +73,11 @@ moxcms = "=0.8.1"
 png = "0.18"
 usvg = { package = "ferri-pdf-usvg", path = "vendor/usvg", version = "=0.47.0", default-features = false, features = ["text"] }
 svgtypes = "0.16"
-resvg = { package = "ferri-pdf-resvg", path = "vendor/resvg", version = "=0.47.0", default-features = false, features = ["text", "raster-images"] }
+log = "0.4"
+rgb = "0.8"
+gif = "0.14.1"
+image-webp = "0.2.4"
+zune-jpeg = "0.5.8"
 fontdb = { version = "0.23", default-features = false, features = ["std"] }
 skrifa = "0.42"
 smallvec = { version = "1.15.1", features = ["union", "const_new", "write"] }
@@ -135,7 +139,6 @@ serde_json.workspace = true
 same-file.workspace = true
 usvg.workspace = true
 krilla.workspace = true
-resvg.workspace = true
 fontdb.workspace = true
 skrifa.workspace = true
 smallvec.workspace = true
@@ -152,6 +155,12 @@ unicode-segmentation.workspace = true
 ferri-pdf-dom.workspace = true
 encoding_rs.workspace = true
 percent-encoding.workspace = true
+log.workspace = true
+rgb.workspace = true
+svgtypes.workspace = true
+gif.workspace = true
+image-webp.workspace = true
+zune-jpeg.workspace = true
 
 [dev-dependencies]
 roxmltree.workspace = true

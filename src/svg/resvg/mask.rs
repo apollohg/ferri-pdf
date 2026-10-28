@@ -1,9 +1,9 @@
 // Copyright 2019 the Resvg Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use crate::render::Context;
+use crate::svg::resvg::render::Context;
 
-pub fn apply(
+pub(super) fn apply(
     mask: &usvg::Mask,
     ctx: &Context,
     transform: tiny_skia::Transform,
@@ -27,13 +27,18 @@ pub fn apply(
             transform,
         );
 
-        crate::render::render_nodes(mask.root(), ctx, transform, &mut mask_pixmap.as_mut());
+        crate::svg::resvg::render::render_nodes(
+            mask.root(),
+            ctx,
+            transform,
+            &mut mask_pixmap.as_mut(),
+        );
 
         mask_pixmap.apply_mask(&alpha_mask);
     }
 
     if let Some(mask) = mask.mask() {
-        self::apply(mask, ctx, transform, pixmap);
+        apply(mask, ctx, transform, pixmap);
     }
 
     let mask_type = match mask.kind() {

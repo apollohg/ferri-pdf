@@ -1,9 +1,9 @@
 // Copyright 2019 the Resvg Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use crate::render::Context;
+use crate::svg::resvg::render::Context;
 
-pub fn apply(
+pub(super) fn apply(
     clip: &usvg::ClipPath,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::Pixmap,
@@ -45,7 +45,7 @@ fn draw_children(
                     max_bbox: tiny_skia::IntRect::from_xywh(0, 0, 1, 1).unwrap(),
                 };
 
-                crate::path::fill_path(path, mode, &ctx, transform, pixmap);
+                crate::svg::resvg::path::fill_path(path, mode, &ctx, transform, pixmap);
             }
             usvg::Node::Text(text) => {
                 draw_children(text.flattened(), mode, transform, pixmap);

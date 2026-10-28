@@ -1,9 +1,9 @@
 // Copyright 2019 the Resvg Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use crate::render::Context;
+use crate::svg::resvg::render::Context;
 
-pub fn render(
+pub(super) fn render(
     path: &usvg::Path,
     blend_mode: tiny_skia::BlendMode,
     ctx: &Context,
@@ -23,7 +23,7 @@ pub fn render(
     }
 }
 
-pub fn fill_path(
+pub(super) fn fill_path(
     path: &usvg::Path,
     blend_mode: tiny_skia::BlendMode,
     ctx: &Context,
@@ -194,7 +194,7 @@ fn render_pattern_pixmap(
     let mut pixmap = tiny_skia::Pixmap::new(img_size.width(), img_size.height())?;
 
     let transform = tiny_skia::Transform::from_scale(sx, sy);
-    crate::render::render_nodes(pattern.root(), ctx, transform, &mut pixmap.as_mut());
+    crate::svg::resvg::render::render_nodes(pattern.root(), ctx, transform, &mut pixmap.as_mut());
 
     let mut ts = tiny_skia::Transform::default();
     ts = ts.pre_concat(pattern.transform());

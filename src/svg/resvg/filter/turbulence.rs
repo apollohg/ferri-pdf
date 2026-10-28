@@ -1,7 +1,10 @@
 // Copyright 2020 the Resvg Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-#![allow(clippy::needless_range_loop)]
+#![allow(
+    clippy::needless_range_loop,
+    reason = "inlined upstream code keeps its upstream style"
+)]
 
 use super::{ImageRefMut, f32_bound};
 use usvg::ApproxZeroUlps;
@@ -30,7 +33,7 @@ struct StitchInfo {
 ///
 /// - `offset_x` and `offset_y` indicate filter region offset.
 /// - `sx` and `sy` indicate canvas scale.
-pub fn apply(
+pub(super) fn apply(
     offset_x: f64,
     offset_y: f64,
     sx: f64,

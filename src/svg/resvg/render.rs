@@ -1,13 +1,13 @@
 // Copyright 2018 the Resvg Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use crate::OptionLog;
+use crate::svg::resvg::OptionLog;
 
-pub struct Context {
+pub(super) struct Context {
     pub max_bbox: tiny_skia::IntRect,
 }
 
-pub fn render_nodes(
+pub(super) fn render_nodes(
     parent: &usvg::Group,
     ctx: &Context,
     transform: tiny_skia::Transform,
@@ -18,7 +18,7 @@ pub fn render_nodes(
     }
 }
 
-pub fn render_node(
+pub(super) fn render_node(
     node: &usvg::Node,
     ctx: &Context,
     transform: tiny_skia::Transform,
@@ -29,7 +29,7 @@ pub fn render_node(
             render_group(group, ctx, transform, pixmap);
         }
         usvg::Node::Path(path) => {
-            crate::path::render(
+            crate::svg::resvg::path::render(
                 path,
                 tiny_skia::BlendMode::SourceOver,
                 ctx,
@@ -38,7 +38,7 @@ pub fn render_node(
             );
         }
         usvg::Node::Image(image) => {
-            crate::image::render(image, transform, pixmap);
+            crate::svg::resvg::image::render(image, transform, pixmap);
         }
         usvg::Node::Text(text) => {
             render_group(text.flattened(), ctx, transform, pixmap);
@@ -77,13 +77,13 @@ fn render_group(
         // Make sure our filter region is not bigger than 4x the canvas size.
         // This is required mainly to prevent huge filter regions that would tank the performance.
         // It should not affect the final result in any way.
-        crate::geom::fit_to_rect(bbox, ctx.max_bbox)?
+        crate::svg::resvg::geom::fit_to_rect(bbox, ctx.max_bbox)?
     };
 
     // Make sure our layer is not bigger than 4x the canvas size.
     // This is required to prevent huge layers.
     if group.filters().is_empty() {
-        ibbox = crate::geom::fit_to_rect(ibbox, ctx.max_bbox)?;
+        ibbox = crate::svg::resvg::geom::fit_to_rect(ibbox, ctx.max_bbox)?;
     }
 
     let shift_ts = {
@@ -107,16 +107,16 @@ fn render_group(
 
     if !group.filters().is_empty() {
         for filter in group.filters() {
-            crate::filter::apply(filter, transform, &mut sub_pixmap);
+            crate::svg::resvg::filter::apply(filter, transform, &mut sub_pixmap);
         }
     }
 
     if let Some(clip_path) = group.clip_path() {
-        crate::clip::apply(clip_path, transform, &mut sub_pixmap);
+        crate::svg::resvg::clip::apply(clip_path, transform, &mut sub_pixmap);
     }
 
     if let Some(mask) = group.mask() {
-        crate::mask::apply(mask, ctx, transform, &mut sub_pixmap);
+        crate::svg::resvg::mask::apply(mask, ctx, transform, &mut sub_pixmap);
     }
 
     let paint = tiny_skia::PixmapPaint {
@@ -137,7 +137,7 @@ fn render_group(
     Some(())
 }
 
-pub fn convert_blend_mode(mode: usvg::BlendMode) -> tiny_skia::BlendMode {
+pub(super) fn convert_blend_mode(mode: usvg::BlendMode) -> tiny_skia::BlendMode {
     match mode {
         usvg::BlendMode::Normal => tiny_skia::BlendMode::SourceOver,
         usvg::BlendMode::Multiply => tiny_skia::BlendMode::Multiply,

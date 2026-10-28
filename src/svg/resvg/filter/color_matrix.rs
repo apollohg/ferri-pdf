@@ -8,7 +8,7 @@ use usvg::filter::ColorMatrixKind as ColorMatrix;
 /// Applies a color matrix filter.
 ///
 /// Input image pixels should have an **unpremultiplied alpha**.
-pub fn apply(matrix: &ColorMatrix, src: ImageRefMut) {
+pub(super) fn apply(matrix: &ColorMatrix, src: ImageRefMut) {
     match matrix {
         ColorMatrix::Matrix(m) => {
             for pixel in src.data {

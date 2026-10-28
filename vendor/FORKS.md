@@ -20,7 +20,6 @@ The root package remains an implicit member.
 | heic-decoder | ferri-pdf-heic-decoder | 0.1.1 | MIT OR Apache-2.0 |
 | icu_casemap | ferri-pdf-icu-casemap | 2.3.0 | Unicode-3.0 |
 | krilla | ferri-pdf-krilla | 0.8.2 | MIT OR Apache-2.0 |
-| resvg | ferri-pdf-resvg | 0.47.0 | Apache-2.0 OR MIT |
 | selectors | ferri-pdf-selectors | 0.38.0 | MPL-2.0 |
 | usvg | ferri-pdf-usvg | 0.47.0 | Apache-2.0 OR MIT |
 | zenavif-parse | ferri-pdf-zenavif-parse | 0.6.2 | MPL-2.0 |
@@ -35,10 +34,13 @@ retained: binaries, examples, benches, unused features and unreachable API are r
 | Module | Upstream crate | Base version | Licence |
 |---|---|---|---|
 | src/svg/krilla_svg | krilla-svg | 0.8.1 | MIT OR Apache-2.0 |
+| src/svg/resvg | resvg | 0.47.0 | Apache-2.0 OR MIT |
 
 Resvg is copied from its published crate archive solely to route shared SVG types
-through the maintained usvg fork. Its implementation files are unchanged. Original
-registry archive checksum:
+through the maintained usvg fork. Beyond inlining (module paths, visibility, the
+always-enabled `raster-images` feature), its IIR blur views pixels through
+`bytemuck` instead of the deprecated `rgb::ComponentSlice`. Original registry
+archive checksum:
 
 - `resvg 0.47.0`: `9be183ad6a216aa96f33e4c8033b0988b8b3ea6fd2359d19af5bac4643fd8e81`
 
