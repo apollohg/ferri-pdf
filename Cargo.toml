@@ -1,0 +1,107 @@
+[workspace]
+members = ["crates/*", "vendor/roxmltree", "spec"]
+default-members = [".", "crates/*"]
+exclude = ["vendor/resvg", "vendor/krilla", "vendor/scraper", "vendor/cssparser-color", "vendor/icu_casemap", "vendor/cssparser", "vendor/zenavif-parse", "vendor/html5ever", "vendor/rav1d", "vendor/usvg", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors", "vendor/krilla-svg"]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+license-file = "LICENSE"
+publish = false
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.dependencies]
+ferri-pdf-spec-data = { path = "spec", version = "0.1.0" }
+ferri-pdf-dom = { path = "crates/dom", version = "0.1.0" }
+ego-tree = "=0.11.0"
+encoding_rs = "0.8.35"
+html5ever = { package = "ferri-pdf-html5ever", path = "vendor/html5ever", version = "=0.39.0" }
+icu_casemap = { package = "ferri-pdf-icu-casemap", path = "vendor/icu_casemap", version = "=2.3.0" }
+icu_locale_core = "=2.3.0"
+avif-decode = { package = "ferri-pdf-avif-decode", path = "vendor/avif-decode", version = "=3.0.0", default-features = false }
+zenavif-parse = { package = "ferri-pdf-zenavif-parse", path = "vendor/zenavif-parse", version = "=0.6.2" }
+url = "=2.5.8"
+percent-encoding = "=2.3.2"
+ureq = { version = "=3.4.2", default-features = false, features = ["rustls-no-provider", "rustls-webpki-roots", "gzip"] }
+rustls-rustcrypto = "=0.0.2-alpha"
+base64 = "0.22"
+heic-decoder = { package = "ferri-pdf-heic-decoder", path = "vendor/heic-decoder", version = "=0.1.1", features = ["internals"] }
+moxcms = "=0.8.1"
+png = "0.18"
+usvg = { package = "ferri-pdf-usvg", path = "vendor/usvg", version = "=0.47.0", default-features = false, features = ["text"] }
+svgtypes = "0.16"
+krilla-svg = { package = "ferri-pdf-krilla-svg", path = "vendor/krilla-svg", version = "=0.8.1" }
+image = { version = "=0.25.10", default-features = false, features = ["png", "jpeg", "gif", "webp"] }
+ferri-pdf-images = { path = "crates/images", version = "0.1.0" }
+cssparser = { package = "ferri-pdf-cssparser", path = "vendor/cssparser", version = "0.37" }
+roxmltree = { package = "ferri-pdf-roxmltree", path = "vendor/roxmltree", version = "0.21.1" }
+cssparser-color = { package = "ferri-pdf-cssparser-color", path = "vendor/cssparser-color", version = "0.5", default-features = false }
+icu_properties = { version = "~2.3.0", default-features = false, features = ["compiled_data"] }
+selectors = { package = "ferri-pdf-selectors", path = "vendor/selectors", version = "0.38" }
+krilla = { package = "ferri-pdf-krilla", path = "vendor/krilla", version = "=0.8.2", default-features = false, features = ["raster-images"] }
+rustybuzz = "0.20"
+scraper = { package = "ferri-pdf-scraper", path = "vendor/scraper", version = "0.27", default-features = false }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+same-file = "1.0"
+unicode-bidi = "0.3"
+unicode-linebreak = "0.1"
+unicode-script = "0.5"
+unicode-segmentation = "1.12"
+ttf-parser = "0.25"
+thiserror = "2"
+ferri-pdf-fonts = { path = "crates/fonts", version = "0.1.0" }
+ferri-pdf-resources = { path = "crates/resources", version = "0.1.0", default-features = false }
+ferri-pdf-style = { path = "crates/style", version = "0.1.0" }
+ferri-pdf-document = { path = "crates/document", version = "0.1.0" }
+ferri-pdf-text = { path = "crates/text", version = "0.1.0" }
+ferri-pdf-layout = { path = "crates/layout", version = "0.1.0" }
+ferri-pdf-flex = { path = "crates/flex", version = "0.1.0" }
+ferri-pdf-grid = { path = "crates/grid", version = "0.1.0" }
+ferri-pdf-table = { path = "crates/table", version = "0.1.0" }
+ferri-pdf-writer = { path = "crates/writer", version = "0.1.0" }
+ferri-pdf-graphics = { path = "crates/graphics", version = "0.1.0" }
+ferri-pdf-paint = { path = "crates/paint", version = "0.1.0" }
+ferri-pdf = { path = ".", version = "0.1.0", default-features = false }
+
+[package]
+name = "ferri-pdf"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+license-file.workspace = true
+publish.workspace = true
+exclude = [".private/**", ".superpowers/**", "tmp/**"]
+
+[lints]
+workspace = true
+
+[features]
+default = ["http"]
+# HTTP(S) resource fetching through `UrlResolver`.
+http = ["ferri-pdf-resources/http"]
+
+[[test]]
+name = "remote"
+required-features = ["http"]
+
+[dependencies]
+ferri-pdf-images.workspace = true
+ferri-pdf-fonts.workspace = true
+ferri-pdf-resources.workspace = true
+ferri-pdf-style.workspace = true
+ferri-pdf-document.workspace = true
+ferri-pdf-text.workspace = true
+ferri-pdf-layout.workspace = true
+ferri-pdf-writer.workspace = true
+ferri-pdf-graphics.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+roxmltree.workspace = true
+serde_json.workspace = true
+ferri-pdf-dom.workspace = true
