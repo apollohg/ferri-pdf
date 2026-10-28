@@ -8,14 +8,14 @@ pub(super) struct Budget {
 }
 
 impl Budget {
-    pub fn new(limit: usize) -> Self {
+    pub(crate) fn new(limit: usize) -> Self {
         Self {
             limit,
             remaining: Rc::new(Cell::new(Some(limit))),
         }
     }
 
-    pub fn spend(&self, units: usize) -> Result<(), LayoutError> {
+    pub(crate) fn spend(&self, units: usize) -> Result<(), LayoutError> {
         let remaining = self
             .remaining
             .get()
@@ -51,7 +51,7 @@ mod tests {
         let result = crate::stabilize(
             document,
             &resolver,
-            Budget::new(first_pass_work),
+            &Budget::new(first_pass_work),
             Vec::new(),
         );
         assert!(

@@ -158,12 +158,11 @@ fn shrink_to_fit(
         edges,
         Some(available),
     )?;
-    let width = match constraints.specified {
-        Some(width) => width,
-        None => {
-            let sizes = crate::intrinsic::content(block, measurer, containing_width)?;
-            sizes.max.min(sizes.min.max(available))
-        }
+    let width = if let Some(width) = constraints.specified {
+        width
+    } else {
+        let sizes = crate::intrinsic::content(block, measurer, containing_width)?;
+        sizes.max.min(sizes.min.max(available))
     };
     Ok(constraints.constrain(width))
 }

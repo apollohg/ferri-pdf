@@ -3891,7 +3891,7 @@ fn active_captions_reflow_while_their_table_grid_is_inactive() {
             .expect("active caption background continues");
         assert_pt(paint.rect.width, 190.0);
         assert_pt(paint.rect.height, final_height);
-        let grid_page = if side == "top" { 1 } else { 0 };
+        let grid_page = usize::from(side == "top");
         let grid = trace.display_lists[grid_page]
             .iter()
             .find_map(|item| match item {

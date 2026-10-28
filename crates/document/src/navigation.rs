@@ -126,10 +126,10 @@ impl FragmentIndex {
             document: without_fragment(source_base.resolve("")?),
         })
     }
-    pub fn contains(&self, element: ElementId) -> bool {
+    pub(crate) fn contains(&self, element: ElementId) -> bool {
         self.owners.contains(&element)
     }
-    pub fn target(&self, reference: &str) -> Result<ElementId, ferri_pdf_style::StyleError> {
+    pub(crate) fn target(&self, reference: &str) -> Result<ElementId, ferri_pdf_style::StyleError> {
         use ferri_pdf_style::{StyleError, TargetReferenceError};
         let invalid = |reason| StyleError::TargetReference {
             reference: reference.to_owned(),
@@ -174,7 +174,7 @@ struct PendingLabel {
     after: crate::content::GeneratedText,
 }
 impl NavigationBuilder {
-    pub fn new(
+    pub(crate) fn new(
         html: &DocumentTree,
         base: &ResourceBase,
         capture: bool,
@@ -260,7 +260,7 @@ impl NavigationBuilder {
         })
     }
     /// Enters `element`, returning the navigation of its boxes; [`Self::leave`] pairs with it.
-    pub fn enter(&mut self, element: Element<'_>) -> BoxNavigation {
+    pub(crate) fn enter(&mut self, element: Element<'_>) -> BoxNavigation {
         let link = self
             .links
             .get(&element.id())
@@ -272,21 +272,21 @@ impl NavigationBuilder {
             destination: self.destinations.get(&element.id()).copied(),
         }
     }
-    pub fn leave(&mut self) {
+    pub(crate) fn leave(&mut self) {
         self.scopes.pop();
     }
     fn current(&self) -> Option<usize> {
         self.scopes.last().copied().flatten()
     }
     /// Navigation of anonymous and generated boxes inside the current element.
-    pub fn descendant(&self) -> BoxNavigation {
+    pub(crate) fn descendant(&self) -> BoxNavigation {
         BoxNavigation {
             link: self.current(),
             destination: None,
         }
     }
     /// Records headings and CSS bookmarks at their shared element destination.
-    pub fn record(
+    pub(crate) fn record(
         &mut self,
         element: Element<'_>,
         style: &Style,
@@ -339,25 +339,25 @@ impl NavigationBuilder {
             },
         );
     }
-    pub fn generated(
+    pub(crate) fn generated(
         &mut self,
         element: Element<'_>,
         pseudo: PseudoElement,
         text: &str,
-        style: &ferri_pdf_style::Style,
+        style: &Style,
     ) {
         if let Some(label) = self.labels.get_mut(&element.id()) {
             match pseudo {
                 PseudoElement::Before => {
-                    label.before = crate::content::GeneratedText::capture(text, style)
+                    label.before = crate::content::GeneratedText::capture(text, style);
                 }
                 PseudoElement::After => {
-                    label.after = crate::content::GeneratedText::capture(text, style)
+                    label.after = crate::content::GeneratedText::capture(text, style);
                 }
             }
         }
     }
-    pub fn finish(
+    pub(crate) fn finish(
         mut self,
         html: &DocumentTree,
         generated: &crate::generated::GeneratedReferences,

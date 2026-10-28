@@ -14,7 +14,7 @@ pub(super) struct HorizontalBox {
 }
 
 impl HorizontalBox {
-    pub fn border_box(&self, height: f32) -> ferri_pdf_graphics::Rect {
+    pub(crate) fn border_box(&self, height: f32) -> ferri_pdf_graphics::Rect {
         ferri_pdf_graphics::Rect {
             x: self.x - self.padding[3] - self.border[3],
             y: 0.0,
@@ -32,16 +32,19 @@ pub(super) struct Edges {
 }
 impl Edges {
     /// The style's padding, resolved against `containing_width`, and border widths.
-    pub fn of(style: &Style, containing_width: f32) -> Self {
+    pub(crate) fn of(style: &Style, containing_width: f32) -> Self {
         Self {
             padding: style
                 .padding
                 .each_ref()
                 .map(|p| p.resolve(containing_width)),
-            border: style.decoration.borders.map(|b| b.used_width()),
+            border: style
+                .decoration
+                .borders
+                .map(ferri_pdf_graphics::Border::used_width),
         }
     }
-    pub fn horizontal(&self) -> f32 {
+    pub(crate) fn horizontal(&self) -> f32 {
         self.padding[1] + self.padding[3] + self.border[1] + self.border[3]
     }
 }
@@ -150,7 +153,11 @@ pub(super) struct VerticalBox {
     table_cell: bool,
 }
 impl VerticalBox {
-    pub fn new(style: &Style, horizontal: &HorizontalBox, containing_height: Option<f32>) -> Self {
+    pub(crate) fn new(
+        style: &Style,
+        horizontal: &HorizontalBox,
+        containing_height: Option<f32>,
+    ) -> Self {
         let edges = horizontal.padding[0]
             + horizontal.padding[2]
             + horizontal.border[0]
@@ -174,11 +181,11 @@ impl VerticalBox {
             table_cell: style.display == ferri_pdf_style::Display::TableCell,
         }
     }
-    pub fn with_constraints(mut self, constraints: SizeConstraints) -> Self {
+    pub(crate) fn with_constraints(mut self, constraints: SizeConstraints) -> Self {
         self.constraints = constraints;
         self
     }
-    pub fn with_used_height(mut self, height: Option<f32>) -> Self {
+    pub(crate) fn with_used_height(mut self, height: Option<f32>) -> Self {
         if let Some(height) = height {
             self.constraints = SizeConstraints {
                 specified: Some(height),
@@ -188,19 +195,19 @@ impl VerticalBox {
         }
         self
     }
-    pub fn definite(&self) -> Option<f32> {
+    pub(crate) fn definite(&self) -> Option<f32> {
         self.constraints
             .specified
             .map(|value| self.constraints.constrain(value))
     }
-    pub fn collapse_bottom(&self) -> bool {
+    pub(crate) fn collapse_bottom(&self) -> bool {
         self.constraints.specified.is_none()
     }
-    pub fn collapse_through(&self) -> bool {
+    pub(crate) fn collapse_through(&self) -> bool {
         self.constraints.minimum == 0.0
             && self.constraints.specified.is_none_or(|value| value == 0.0)
     }
-    pub fn used_height(&self, natural: f32) -> f32 {
+    pub(crate) fn used_height(&self, natural: f32) -> f32 {
         if self.table_cell {
             return self
                 .constraints

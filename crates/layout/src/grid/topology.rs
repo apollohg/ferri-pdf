@@ -13,7 +13,7 @@ pub(super) struct Topology {
 }
 
 impl Topology {
-    pub fn new(
+    pub(super) fn new(
         style: &Style,
         placements: &[ItemPlacement],
         sizes: [Option<f32>; 2],
@@ -23,7 +23,7 @@ impl Topology {
         Self::with_parent(style, placements, sizes, bounds, work, None)
     }
 
-    pub fn with_parent(
+    pub(super) fn with_parent(
         style: &Style,
         placements: &[ItemPlacement],
         sizes: [Option<f32>; 2],
@@ -80,7 +80,7 @@ impl Topology {
             let inherited = parent
                 .areas
                 .as_ref()
-                .map(|areas| ferri_pdf_grid::inherited_areas(areas, coordinates.clone(), reverse))
+                .map(|areas| ferri_pdf_grid::inherited_areas(areas, &coordinates, reverse))
                 .transpose()?;
             if let Some(inherited) = &inherited {
                 work.spend(inherited.areas.len().max(1))?;
@@ -133,7 +133,7 @@ impl Topology {
         let lines = axes.each_mut().map(|axis| {
             std::mem::replace(
                 &mut axis.lines,
-                ferri_pdf_grid::AxisLines {
+                AxisLines {
                     names: Vec::new(),
                     subgridded: false,
                     area_names: Vec::new(),

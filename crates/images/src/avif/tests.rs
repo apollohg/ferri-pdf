@@ -77,19 +77,19 @@ fn grid_dimensions_are_checked_before_tile_decode() {
     );
 }
 
-fn boxed(kind: &[u8; 4], payload: &[u8]) -> Vec<u8> {
+fn boxed(kind: [u8; 4], payload: &[u8]) -> Vec<u8> {
     const BOX_HEADER_BYTES: usize = 8;
     let mut output = ((payload.len() + BOX_HEADER_BYTES) as u32)
         .to_be_bytes()
         .to_vec();
-    output.extend_from_slice(kind);
+    output.extend_from_slice(&kind);
     output.extend_from_slice(payload);
     output
 }
 
 fn container(meta: &[u8]) -> Vec<u8> {
-    let mut output = boxed(b"ftyp", b"avif\0\0\0\0avif");
-    output.extend(boxed(b"meta", &[&[0; 4], meta].concat()));
+    let mut output = boxed(*b"ftyp", b"avif\0\0\0\0avif");
+    output.extend(boxed(*b"meta", &[&[0; 4], meta].concat()));
     output
 }
 
@@ -99,16 +99,15 @@ fn repeated_icc_associations_cannot_amplify_metadata_without_limit() {
     const ASSOCIATIONS: u32 = 65;
     let mut profile = b"prof".to_vec();
     profile.resize(PROFILE_BYTES, 0);
-    let ipco = boxed(b"ipco", &boxed(b"colr", &profile));
+    let ipco = boxed(*b"ipco", &boxed(*b"colr", &profile));
     let mut ipma = vec![0; 4];
     ipma.extend_from_slice(&ASSOCIATIONS.to_be_bytes());
     for _ in 0..ASSOCIATIONS {
         ipma.extend_from_slice(&[0, 1, 1, 1]);
     }
-    let bytes = container(&boxed(b"iprp", &[ipco, boxed(b"ipma", &ipma)].concat()));
-    let error = match AvifParser::from_bytes(&bytes) {
-        Ok(_) => panic!("unbounded ICC copies accepted"),
-        Err(error) => error,
+    let bytes = container(&boxed(*b"iprp", &[ipco, boxed(*b"ipma", &ipma)].concat()));
+    let Err(error) = AvifParser::from_bytes(&bytes) else {
+        panic!("unbounded ICC copies accepted")
     };
     assert!(
         matches!(error, zenavif_parse::Error::ResourceLimitExceeded(_)),
@@ -126,10 +125,9 @@ fn zero_width_iloc_records_cannot_expand_unbounded_extent_vectors() {
         iloc.extend_from_slice(&[0; 2]);
         iloc.extend_from_slice(&u16::MAX.to_be_bytes());
     }
-    let bytes = container(&boxed(b"iloc", &iloc));
-    let error = match AvifParser::from_bytes(&bytes) {
-        Ok(_) => panic!("unbounded extent vectors accepted"),
-        Err(error) => error,
+    let bytes = container(&boxed(*b"iloc", &iloc));
+    let Err(error) = AvifParser::from_bytes(&bytes) else {
+        panic!("unbounded extent vectors accepted")
     };
     assert!(
         matches!(error, zenavif_parse::Error::ResourceLimitExceeded(_)),

@@ -12,7 +12,7 @@ pub struct SemanticEvent {
 
 pub(crate) struct SemanticTree(HashMap<ElementId, Range<usize>>);
 impl SemanticTree {
-    pub fn new(document: &DocumentTree) -> Self {
+    pub(crate) fn new(document: &DocumentTree) -> Self {
         let mut positions = HashMap::new();
         let mut next = 0;
         let mut events = vec![(document.root_element(), false)];
@@ -36,7 +36,7 @@ impl SemanticTree {
         }
         Self(positions)
     }
-    pub fn event(
+    pub(crate) fn event(
         &self,
         element: Element<'_>,
         assignment: Option<usize>,

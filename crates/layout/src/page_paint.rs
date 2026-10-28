@@ -8,7 +8,7 @@ pub(super) struct PagePaint {
     border: Option<BoxPaint>,
 }
 impl PagePaint {
-    pub fn new(
+    pub(crate) fn new(
         page: &PageBox,
         canvas_background: &ferri_pdf_graphics::BoxDecoration,
         bleed: Rect,
@@ -66,7 +66,7 @@ impl PagePaint {
             border: border.has_ink().then_some(border),
         }
     }
-    pub fn decorate(&self, lists: &mut [Vec<DisplayItem>]) {
+    pub(crate) fn decorate(&self, lists: &mut [Vec<DisplayItem>]) {
         for list in lists {
             if let Some(border) = &self.border {
                 list.insert(

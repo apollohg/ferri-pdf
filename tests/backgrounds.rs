@@ -150,12 +150,12 @@ fn corner_gradients_run_perpendicular_to_the_other_diagonal_across_the_whole_box
     );
     close(
         "the line centre is the box centre (x)",
-        (start[0] + end[0]) / 2.0,
+        f32::midpoint(start[0], end[0]),
         100.0,
     );
     close(
         "the line centre is the box centre (y)",
-        (start[1] + end[1]) / 2.0,
+        f32::midpoint(start[1], end[1]),
         50.0,
     );
     assert!(
@@ -520,7 +520,10 @@ impl ferri_pdf::ResourceResolver for RecordingResolver {
     ) -> Result<ferri_pdf::Resource, ferri_pdf::ResourceError> {
         let url = base.resolve(reference)?;
         self.requests.lock().unwrap().push(url.to_string());
-        let bytes = if url.path().ends_with(".css") {
+        let bytes = if std::path::Path::new(url.path())
+            .extension()
+            .is_some_and(|ext| ext.eq_ignore_ascii_case("css"))
+        {
             b"div{width:80pt;height:40pt;background:url(img/pattern.png) no-repeat}".to_vec()
         } else {
             std::fs::read(concat!(

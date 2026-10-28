@@ -72,22 +72,19 @@ fn positioned_layer(
     z_index: Option<i32>,
     order: PaintOrder,
 ) -> PositionedLayer {
-    match z_index {
-        Some(z) => {
-            let context = extend(context, (z, order));
-            PositionedLayer {
-                key: extend(&context, FLOW_LEVEL),
-                background: extend(&context, ROOT_LEVEL),
-                context,
-            }
+    if let Some(z) = z_index {
+        let context = extend(context, (z, order));
+        PositionedLayer {
+            key: extend(&context, FLOW_LEVEL),
+            background: extend(&context, ROOT_LEVEL),
+            context,
         }
-        None => {
-            let key = extend(context, (0, order));
-            PositionedLayer {
-                context: context.clone(),
-                background: key.clone(),
-                key,
-            }
+    } else {
+        let key = extend(context, (0, order));
+        PositionedLayer {
+            context: context.clone(),
+            background: key.clone(),
+            key,
         }
     }
 }
@@ -153,7 +150,7 @@ enum Containing<'a> {
     },
     /// Padding boxes of a positioned ancestor's page fragments.
     Box {
-        grid: Option<std::rc::Rc<crate::grid::Geometry<'a>>>,
+        grid: Option<Rc<crate::grid::Geometry<'a>>>,
         overflow: BTreeMap<usize, Rect>,
         fragments: Vec<(usize, usize)>,
         areas: Vec<(usize, Rect)>,
@@ -271,7 +268,7 @@ impl Fragmentainers<'_, '_> {
                     .and_then(|forced| forced.side(pages.document.styles().page_progression_rtl()));
                 candidate + usize::from(side.is_some_and(|side| pages.side(candidate) != side))
             }
-            _ => candidate,
+            Self::Columns(_) => candidate,
         }
     }
 }
@@ -391,12 +388,16 @@ impl ActiveGeometry<'_> {
 #[derive(Clone)]
 struct ActiveBox<'a> {
     grid_orders: HashMap<*const BlockBox, PaintOrder>,
-    grid: Option<std::rc::Rc<crate::grid::Geometry<'a>>>,
+    grid: Option<Rc<crate::grid::Geometry<'a>>>,
     overflow: Option<BTreeMap<usize, Rect>>,
     visible: bool,
     pending: Vec<Pending<'a>>,
     float_placement: Option<floats::FloatPlacement>,
     geometry: Option<ActiveGeometry<'a>>,
+    #[expect(
+        clippy::option_option,
+        reason = "outer is whether the box is a page boundary, inner is its used page name"
+    )]
     page_scope: Option<Option<std::sync::Arc<str>>>,
     offset: [f32; 2],
     scope: PaintKey,
@@ -519,7 +520,7 @@ struct FlowCursor<'a, 't> {
     ready: Option<(FlowItem<'a>, BreakTail)>,
 }
 
-impl<'a, 't> FlowCursor<'a, 't> {
+impl<'a> FlowCursor<'a, '_> {
     fn detach_orders(&mut self, snapshots: &mut OrderSnapshots) {
         if let Some(row) = &mut self.row {
             row.detach_orders(snapshots);
@@ -642,7 +643,7 @@ pagination_state! {
     sliced: Vec<SlicedBox<'a>>,
     open_slices: HashMap<*const ferri_pdf_style::Style, usize>,
 }
-impl<'a, 't, M> PaginationState<'a, 't, M> {
+impl<M> PaginationState<'_, '_, M> {
     fn detach_orders(&mut self, snapshots: &mut OrderSnapshots) {
         snapshots.detach(&mut self.orders);
         for container in &mut self.containers {
@@ -673,7 +674,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         Ok(snapshot)
     }
 
-    pub fn for_document(
+    pub(crate) fn for_document(
         measurer: &'m mut Measurer<'t>,
         pages: crate::physical_pages::PhysicalPages<'a, 't>,
         canvas: BoxPaint,
@@ -777,7 +778,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     }
     fn finish_box_fragment(
         page: &mut [ScopedPaint],
-        active: &mut ActiveBox,
+        active: &mut ActiveBox<'_>,
         end: f32,
         last: bool,
     ) -> bool {
@@ -789,7 +790,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         page[*slot].item = DisplayItem::Box(paint.clone());
         paint.has_ink()
     }
-    fn normal_box_has_ink(active: &ActiveBox, page_rect: Rect) -> bool {
+    fn normal_box_has_ink(active: &ActiveBox<'_>, page_rect: Rect) -> bool {
         active.paint.as_ref().is_some_and(|(paint, _)| {
             let mut rect = paint.rect;
             rect.x -= active.offset[0];
@@ -1855,7 +1856,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let extent = ((constrained && self.forced_breaks == frame.forced_breaks)
                 || float_natural_height.is_some()
                 || frame.clipped_height.is_some())
-            .then(|| self.start_extent(frame.start_page, frame.start_y, true));
+            .then(|| Self::start_extent(frame.start_page, frame.start_y, true));
             let fragmented_height = if frame.grow_after_break && self.page > frame.start_page {
                 let mut height = 0.0;
                 let mut origin = frame.start_y;
@@ -2333,7 +2334,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         self.anchor(anchor.block, position, layer);
     }
     /// Lays out an absolutely positioned box on its anchor page without page breaks.
-    fn place(&mut self, pending: Pending<'a>, containing: &Containing) -> Result<(), LayoutError> {
+    fn place(
+        &mut self,
+        pending: Pending<'a>,
+        containing: &Containing<'_>,
+    ) -> Result<(), LayoutError> {
         let page = pending.position.page;
         let (cb, rtl, clip) = match containing {
             Containing::Rect { rect, rtl, clip } => (*rect, *rtl, *clip),
@@ -2539,7 +2544,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     ) -> Result<(), LayoutError> {
         self.finish_extent(start_page, start_y, |_, _, _| Ok(height))
     }
-    fn start_extent(&self, page: usize, origin: f32, reserve_end: bool) -> ExtentCursor {
+    fn start_extent(page: usize, origin: f32, reserve_end: bool) -> ExtentCursor {
         ExtentCursor {
             reserve_end,
             page,
@@ -2555,7 +2560,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         mut resolve: impl FnMut(&mut Self, usize, &ExtentSpace) -> Result<f32, LayoutError>,
     ) -> Result<(), LayoutError> {
         // Structural row extents continue independently of the enclosing sliced ends.
-        let mut cursor = self.start_extent(start_page, start_y, false);
+        let mut cursor = Self::start_extent(start_page, start_y, false);
         while let Some(request) = self.resume_extent(&mut cursor, &mut resolve)? {
             self.new_page(request.forced, request.preserve_empty)?;
         }
@@ -2701,7 +2706,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             return Ok(());
         }
         let mut measured =
-            crate::tables::resume(self.measurer, &table.flow, geometry, table.next_body)?;
+            crate::tables::resume(self.measurer, &table.flow, &geometry, table.next_body)?;
         let flow = measured
             .table
             .take()
@@ -2866,7 +2871,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             }
         }
         let end = row.band.as_ref().filter(|_| body).map(|band| band.end);
-        self.start_parallel_row(row, tail, end)
+        Ok(self.start_parallel_row(row, tail, end))
     }
     /// Places copies of a repeated header or footer group at the current position.
     fn repeat_group(
@@ -2887,7 +2892,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         Ok(())
     }
     fn place_row(&mut self, row: MeasuredRow<'a>) -> Result<(), LayoutError> {
-        let mut cursor = self.start_parallel_row(row, BreakTail::default(), None)?;
+        let mut cursor = self.start_parallel_row(row, BreakTail::default(), None);
         while let Some(request) = self.resume_row(&mut cursor)? {
             self.new_page(request.forced, request.preserve_empty)?;
         }
@@ -3012,7 +3017,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let old_height = self.measurer.page_height;
             self.measurer.page_height = self.fragmentainers.height(page);
             let measured =
-                crate::tables::resume(self.measurer, &table.flow, geometry, table.flow.body.end);
+                crate::tables::resume(self.measurer, &table.flow, &geometry, table.flow.body.end);
             self.measurer.page_height = old_height;
             let mut flow = measured?
                 .table
@@ -3525,7 +3530,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         mut active: ActiveBox<'a>,
         after: f32,
         paint_start: Option<(usize, f32)>,
-        backgrounds: Vec<crate::tables::FragmentBackground<'a>>,
+        backgrounds: &[crate::tables::FragmentBackground<'a>],
         fragment_ends: &BTreeMap<usize, f32>,
     ) -> Result<Vec<(usize, Rect)>, LayoutError> {
         let Some((mut paint, mut slot)) = active.paint.take() else {
@@ -3832,16 +3837,15 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         decorations: &[DecorationPaint],
     ) -> Vec<LinePart> {
         fn part(parts: &mut Vec<LinePart>, layer: Option<Layer>) -> &mut LinePart {
-            let index = match parts.iter().position(|part| part.layer == layer) {
-                Some(index) => index,
-                None => {
-                    parts.push(LinePart {
-                        layer,
-                        runs: Vec::new(),
-                        decorations: Vec::new(),
-                    });
-                    parts.len() - 1
-                }
+            let index = if let Some(index) = parts.iter().position(|part| part.layer == layer) {
+                index
+            } else {
+                parts.push(LinePart {
+                    layer,
+                    runs: Vec::new(),
+                    decorations: Vec::new(),
+                });
+                parts.len() - 1
             };
             &mut parts[index]
         }
@@ -3970,16 +3974,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let existing = (!first)
             .then(|| self.open_slices.get(&key).copied())
             .flatten();
-        let index = match existing {
-            Some(index) => {
-                self.sliced[index].fragments.extend(fragments);
-                index
-            }
-            None => {
-                let index = self.sliced.len();
-                self.sliced.push(SlicedBox { style, fragments });
-                index
-            }
+        let index = if let Some(index) = existing {
+            self.sliced[index].fragments.extend(fragments);
+            index
+        } else {
+            let index = self.sliced.len();
+            self.sliced.push(SlicedBox { style, fragments });
+            index
         };
         if last {
             self.open_slices.remove(&key);
@@ -4106,7 +4107,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
         Ok(())
     }
-    pub fn document(
+    pub(crate) fn document(
         mut self,
         root: Option<MeasuredBlock<'a>>,
         destinations: usize,
@@ -4370,7 +4371,7 @@ fn clipped(
     output.extend(open.iter().chain(&open_groups).map(|_| DisplayItem::Pop));
     located
         .links
-        .push(crate::navigation::link_areas(link_polygons));
+        .push(crate::navigation::link_areas(&link_polygons));
     Ok(output)
 }
 

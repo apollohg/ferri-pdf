@@ -48,19 +48,18 @@ pub(crate) fn side_runs(
     widths: [f32; 4],
     joined: impl Fn(usize, usize) -> bool,
 ) -> Vec<Vec<usize>> {
-    let start = match SIDE_ORDER.iter().find(|side| widths[**side] <= 0.0) {
-        Some(absent) => (absent + 1) % 4,
-        None => {
-            let mut start = SIDE_ORDER[0];
-            for _ in 1..SIDE_ORDER.len() {
-                let previous = (start + 3) % 4;
-                if !joined(previous, start) {
-                    break;
-                }
-                start = previous;
+    let start = if let Some(absent) = SIDE_ORDER.iter().find(|side| widths[**side] <= 0.0) {
+        (absent + 1) % 4
+    } else {
+        let mut start = SIDE_ORDER[0];
+        for _ in 1..SIDE_ORDER.len() {
+            let previous = (start + 3) % 4;
+            if !joined(previous, start) {
+                break;
             }
-            start
+            start = previous;
         }
+        start
     };
     let mut runs: Vec<Vec<usize>> = Vec::new();
     for side in (0..4).map(|offset| (start + offset) % 4) {
@@ -71,7 +70,7 @@ pub(crate) fn side_runs(
             Some(run)
                 if (run[run.len() - 1] + 1) % 4 == side && joined(run[run.len() - 1], side) =>
             {
-                run.push(side)
+                run.push(side);
             }
             _ => runs.push(vec![side]),
         }
@@ -154,6 +153,7 @@ impl BorderStyle {
 
     /// Style drawn in the collapsing border model, where `inset` draws as `ridge` and
     /// `outset` as `groove` (CSS 2.1 §17.6.3).
+    #[must_use]
     pub fn collapsed(self) -> Self {
         match self {
             Self::Inset => Self::Ridge,
@@ -344,6 +344,10 @@ pub struct BackgroundGeometry {
     pub viewport: Option<Rect>,
 }
 
+#[expect(
+    clippy::trivially_copy_pass_by_ref,
+    reason = "serde skip_serializing_if passes the field by reference"
+)]
 fn background_enabled(enabled: &bool) -> bool {
     *enabled
 }

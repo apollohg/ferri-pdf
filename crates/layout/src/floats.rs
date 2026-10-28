@@ -16,7 +16,7 @@ pub(super) struct FloatContext {
 }
 
 impl FloatContext {
-    pub fn insert(&mut self, side: FloatSide, fragments: Vec<(usize, Rect)>) {
+    pub(crate) fn insert(&mut self, side: FloatSide, fragments: Vec<(usize, Rect)>) {
         self.last_start = fragments.first().map(|(page, rect)| (*page, rect.y));
         self.exclusions
             .extend(
@@ -26,15 +26,15 @@ impl FloatContext {
             );
     }
 
-    pub fn last_start(&self) -> Option<(usize, f32)> {
+    pub(crate) fn last_start(&self) -> Option<(usize, f32)> {
         self.last_start
     }
 
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         self.exclusions.is_empty()
     }
 
-    pub fn occupies_page(
+    pub(crate) fn occupies_page(
         &self,
         page: usize,
         height: f32,
@@ -53,11 +53,11 @@ impl FloatContext {
         Ok(false)
     }
 
-    pub fn end(&self, work: &Budget) -> Result<Option<(usize, f32)>, LayoutError> {
+    pub(crate) fn end(&self, work: &Budget) -> Result<Option<(usize, f32)>, LayoutError> {
         self.clearance_end(0, Clear::Both, false, work)
     }
 
-    pub fn clearance_end(
+    pub(crate) fn clearance_end(
         &self,
         from_page: usize,
         clear: Clear,
@@ -81,7 +81,7 @@ impl FloatContext {
         Ok(end)
     }
 
-    pub fn band(
+    pub(crate) fn band(
         &self,
         page: usize,
         y: f32,
@@ -112,7 +112,7 @@ impl FloatContext {
         Ok((band, next))
     }
 
-    pub fn clearance(
+    pub(crate) fn clearance(
         &self,
         page: usize,
         y: f32,
@@ -133,7 +133,7 @@ impl FloatContext {
         Ok(bottom)
     }
 
-    pub fn place(
+    pub(crate) fn place(
         &self,
         page: usize,
         source_y: f32,

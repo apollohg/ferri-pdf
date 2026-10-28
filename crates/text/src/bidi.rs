@@ -139,7 +139,7 @@ impl ResolvedParagraph<'_> {
     pub(super) fn has_rtl(&self) -> bool {
         match self {
             Self::Plain(source) => source.has_rtl(),
-            Self::Controlled(controlled) => controlled.levels.iter().any(|level| level.is_rtl()),
+            Self::Controlled(controlled) => controlled.levels.iter().any(Level::is_rtl),
         }
     }
     pub(super) fn visual_runs(&self, range: Range<usize>) -> Vec<(Range<usize>, bool)> {

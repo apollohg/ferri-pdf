@@ -301,7 +301,9 @@ fn solve<'a>(
     let table = if let Some(plan) = table {
         let resolved = plan.resolve_positioned(measurer, &geometry)?;
         let actual_width = resolved.geometry.width;
-        let resolved = if actual_width != solved.size {
+        let resolved = if actual_width == solved.size {
+            resolved
+        } else {
             solved = horizontal.solve(Some(actual_width), &mut shrink_to_fit);
             if let Some(start) = aligned_start(&solved) {
                 horizontal.static_start = start;
@@ -309,10 +311,8 @@ fn solve<'a>(
             }
             geometry = box_geometry(&solved);
             plan.resolve_positioned(measurer, &geometry)?
-        } else {
-            resolved
         };
-        Some(plan.measure_wrapped(measurer, resolved)?.0)
+        Some(plan.measure_wrapped(measurer, &resolved)?.0)
     } else {
         None
     };

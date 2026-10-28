@@ -127,7 +127,7 @@ fn measure_item<'a>(
 pub(super) fn measure<'a>(
     measurer: &mut Measurer<'_>,
     block: &'a BlockBox,
-    geometry: HorizontalBox,
+    geometry: &HorizontalBox,
     containing_height: Option<f32>,
     used_height: Option<f32>,
 ) -> Result<MeasuredBlock<'a>, LayoutError> {
@@ -137,7 +137,7 @@ pub(super) fn measure<'a>(
     let main_reverse = flex.direction.reverse() ^ (!column && style.rtl);
     let cross_reverse = (column && style.rtl) ^ (flex.wrap == FlexWrap::WrapReverse);
     let vertical =
-        VerticalBox::new(style, &geometry, containing_height).with_used_height(used_height);
+        VerticalBox::new(style, geometry, containing_height).with_used_height(used_height);
     let content_height = vertical.definite();
     let main_size = if column {
         content_height
@@ -158,7 +158,10 @@ pub(super) fn measure<'a>(
         let child = source.style();
         let natural = block_intrinsic::content(source, measurer, geometry.width)?;
         let padding = child.padding.each_ref().map(|v| v.resolve(geometry.width));
-        let border = child.decoration.borders.map(|v| v.used_width());
+        let border = child
+            .decoration
+            .borders
+            .map(ferri_pdf_graphics::Border::used_width);
         let margins = child.margin.each_ref().map(|v| v.resolve(geometry.width));
         let width_edges = padding[1] + padding[3] + border[1] + border[3];
         let height_edges = padding[0] + padding[2] + border[0] + border[2];
@@ -224,7 +227,7 @@ pub(super) fn measure<'a>(
             let measured = item_metrics(
                 measurer,
                 &item,
-                &geometry,
+                geometry,
                 preliminary_width,
                 None,
                 content_height,
@@ -288,16 +291,13 @@ pub(super) fn measure<'a>(
                 main_natural,
                 main_size.map(|v| (v - item.main.edges).max(0.0)),
             ),
-            value => value
-                .resolve(main_size)
-                .map(|v| {
-                    if child.box_sizing == BoxSizing::BorderBox {
-                        (v - item.main.edges).max(0.0)
-                    } else {
-                        v
-                    }
-                })
-                .unwrap_or(natural_main),
+            value @ FlexBasis::Value(_) => value.resolve(main_size).map_or(natural_main, |v| {
+                if child.box_sizing == BoxSizing::BorderBox {
+                    (v - item.main.edges).max(0.0)
+                } else {
+                    v
+                }
+            }),
         };
         item.natural_main = natural_main;
         item.main.basis = basis;
@@ -378,7 +378,7 @@ pub(super) fn measure<'a>(
                 } else {
                     (size, None)
                 };
-                let child = item_metrics(measurer, item, &geometry, width, height, content_height)?;
+                let child = item_metrics(measurer, item, geometry, width, height, content_height)?;
                 let outer_cross = if column {
                     width + item.edges(false)
                 } else {
@@ -559,7 +559,7 @@ pub(super) fn measure<'a>(
             let mut measured = measure_item(
                 measurer,
                 item,
-                &geometry,
+                geometry,
                 left,
                 width,
                 height,
@@ -707,7 +707,7 @@ pub(super) fn measure<'a>(
         clearance_before: None,
         clearance_target: measurer
             .clearance_targets
-            .get(&(block as *const BlockBox))
+            .get(&std::ptr::from_ref::<BlockBox>(block))
             .copied(),
         source: block,
         geometry: geometry.clone(),
@@ -731,7 +731,7 @@ pub(super) fn measure<'a>(
         has_forced,
         break_before: edges[0],
         break_after: edges[1],
-        paint: measurer.box_paint(block, &geometry),
+        paint: measurer.box_paint(block, geometry),
         navigation: block.navigation(),
         items,
         start_space: top,

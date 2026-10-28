@@ -238,7 +238,7 @@ pub(crate) struct InlineCollector {
     open_links: Vec<Option<usize>>,
 }
 impl InlineCollector {
-    pub fn semantic_event(&mut self, event: crate::SemanticEvent) {
+    pub(crate) fn semantic_event(&mut self, event: crate::SemanticEvent) {
         let index = self.events.len();
         self.events.push(crate::InlineEvent {
             offset: self.text.len(),
@@ -264,7 +264,7 @@ impl InlineCollector {
         self.next_source += 1;
         self.next_source - 1
     }
-    pub fn append_generated(
+    pub(crate) fn append_generated(
         &mut self,
         output: &ferri_pdf_style::GeneratedOutput,
         style: &Style,
@@ -277,7 +277,7 @@ impl InlineCollector {
         }
         self.append(&output.text()[from..], style)
     }
-    pub fn append(&mut self, text: &str, style: &Style) -> Result<(), DocumentError> {
+    pub(crate) fn append(&mut self, text: &str, style: &Style) -> Result<(), DocumentError> {
         self.append_inner(text, style, false)
     }
     fn append_inner(
@@ -356,7 +356,7 @@ impl InlineCollector {
         }
     }
     /// Anchors an out-of-flow box at the current inline source position.
-    pub fn anchor(&mut self, block: crate::BlockBox) {
+    pub(crate) fn anchor(&mut self, block: crate::BlockBox) {
         self.mark(Mark::Anchor(self.anchors.len()));
         self.anchors.push(Anchor {
             offset: self.text.len(),
@@ -365,7 +365,7 @@ impl InlineCollector {
         });
     }
     /// Opens a non-replaced inline box styled `style`; content appended next lies inside it.
-    pub fn open_box(
+    pub(crate) fn open_box(
         &mut self,
         style: &Style,
         decoration: ferri_pdf_graphics::BoxDecoration,
@@ -396,7 +396,7 @@ impl InlineCollector {
         });
         self.open_box = Some(index);
     }
-    pub fn close_box(&mut self) {
+    pub(crate) fn close_box(&mut self) {
         let index = self
             .open_box
             .expect("inline boxes close in the order they were opened");
@@ -407,7 +407,7 @@ impl InlineCollector {
         inline_box.descendants = count - index - 1;
         self.open_box = inline_box.parent;
     }
-    pub fn open_contents(&mut self, link: Option<usize>) {
+    pub(crate) fn open_contents(&mut self, link: Option<usize>) {
         let index = link.map(|link| {
             let index = self.links.len();
             self.mark(Mark::LinkStart(index));
@@ -419,7 +419,7 @@ impl InlineCollector {
         });
         self.open_links.push(index);
     }
-    pub fn close_contents(&mut self) {
+    pub(crate) fn close_contents(&mut self) {
         if let Some(index) = self
             .open_links
             .pop()
@@ -431,7 +431,7 @@ impl InlineCollector {
     }
     /// Ends this run of inline content before block-level content, returning it for
     /// `finish`. Open inline boxes are split: they close here and reopen in the next run.
-    pub fn split(&mut self) -> Self {
+    pub(crate) fn split(&mut self) -> Self {
         let links: Vec<_> = self
             .open_links
             .iter()
@@ -469,7 +469,11 @@ impl InlineCollector {
         std::mem::replace(self, next)
     }
     /// Places an atomic inline in the line, as a placeholder styled by its parent `style`.
-    pub fn atomic(&mut self, block: crate::BlockBox, style: &Style) -> Result<(), DocumentError> {
+    pub(crate) fn atomic(
+        &mut self,
+        block: crate::BlockBox,
+        style: &Style,
+    ) -> Result<(), DocumentError> {
         self.emit_pending_space()?;
         let index = self.style_index(style);
         let source = self.next_source();
@@ -495,7 +499,7 @@ impl InlineCollector {
     }
     /// Product of the open inline boxes' opacities. Block-level content splitting them is a
     /// fragment of each, so it takes their opacity as its own group.
-    pub fn open_opacity(&self) -> f32 {
+    pub(crate) fn open_opacity(&self) -> f32 {
         let mut opacity = 1.0;
         let mut open = self.open_box;
         while let Some(index) = open {
@@ -505,10 +509,10 @@ impl InlineCollector {
         opacity
     }
     /// An anchor can sit between blocks only outside an open inline box.
-    pub fn is_between_blocks(&self) -> bool {
+    pub(crate) fn is_between_blocks(&self) -> bool {
         self.text.is_empty() && self.open_box.is_none()
     }
-    pub fn line_break(&mut self, style: &Style) -> Result<(), DocumentError> {
+    pub(crate) fn line_break(&mut self, style: &Style) -> Result<(), DocumentError> {
         self.drop_pending_space();
         let index = self.style_index(style);
         let source = self.next_source();
@@ -519,7 +523,7 @@ impl InlineCollector {
         }
         Ok(())
     }
-    pub fn optional_break(&mut self, style: &Style) {
+    pub(crate) fn optional_break(&mut self, style: &Style) {
         if style.white_space.wraps() {
             self.mark(Mark::OptionalBreak(self.optional_breaks.len()));
             self.optional_breaks.push(self.text.len());
@@ -566,7 +570,7 @@ impl InlineCollector {
         Ok(())
     }
     /// Returns the paragraph, or the anchors of an empty run as block-level boxes.
-    pub fn finish(
+    pub(crate) fn finish(
         self,
         style: &Style,
     ) -> Result<Result<Paragraph, Vec<crate::BlockContent>>, DocumentError> {

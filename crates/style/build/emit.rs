@@ -238,7 +238,7 @@ fn descriptor_variant(descriptor: &CompiledDescriptor) -> String {
 fn enumeration(out: &mut String, name: &str, variants: &BTreeMap<String, String>, lookup: bool) {
     writeln!(
         out,
-        "// Variant names are the specification's, which may repeat the enum name.\n#[allow(clippy::enum_variant_names)]\n#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]\npub(crate) enum {name} {{"
+        "#[allow(clippy::enum_variant_names, reason = \"variant names are the specification's and may repeat the enum name\")]\n#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]\npub(crate) enum {name} {{"
     )
     .unwrap();
     for variant in variants.values() {

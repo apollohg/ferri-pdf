@@ -78,7 +78,7 @@ pub(crate) fn apply(
     )
 }
 
-type ToggleChoices = std::collections::HashMap<*const [crate::declaration::ToggleArgument], usize>;
+type ToggleChoices = std::collections::HashMap<*const [declaration::ToggleArgument], usize>;
 
 fn apply_value(
     property: Property,
@@ -137,13 +137,14 @@ fn apply_value(
         }
         Specified::Wide(keyword) => match keyword.resolve(property.inherited()) {
             Resolved::Inherit => Input::Copy(parent),
-            Resolved::Initial => match declaration::initial(property) {
-                Some(initial) => Input::Value(initial),
-                None => {
+            Resolved::Initial => {
+                if let Some(initial) = declaration::initial(property) {
+                    Input::Value(initial)
+                } else {
                     user_agent = Style::default();
                     Input::Copy(&user_agent)
                 }
-            },
+            }
         },
     };
     let result = match handler(property) {
@@ -162,10 +163,10 @@ fn apply_value(
 }
 
 pub(super) fn toggle_index<T: PartialEq>(
-    values: &[crate::declaration::ToggleArgument],
+    values: &[declaration::ToggleArgument],
     inherited: &T,
     relative: &Relative<'_>,
-    mut compute: impl FnMut(&crate::declaration::ToggleArgument) -> Result<T, StyleError>,
+    mut compute: impl FnMut(&declaration::ToggleArgument) -> Result<T, StyleError>,
 ) -> Result<usize, StyleError> {
     let mut chosen = 0;
     let mut matched = false;
@@ -192,11 +193,13 @@ pub(super) fn projection(property: Property, source: &Style) -> Style {
         value.object_position = value
             .object_position
             .each_ref()
-            .map(|axis| axis.canonical());
+            .map(ferri_pdf_paint::PositionComponent::canonical);
     }
     if property == Property::BackgroundPosition {
         for position in &mut std::sync::Arc::make_mut(&mut value.decoration.backgrounds).positions {
-            *position = position.each_ref().map(|axis| axis.canonical());
+            *position = position
+                .each_ref()
+                .map(ferri_pdf_paint::PositionComponent::canonical);
         }
     }
     if property == Property::FontFamily
@@ -805,6 +808,10 @@ fn font_size_value(value: &Component, relative: &Relative<'_>) -> Result<f32, St
     }
     Ok(size)
 }
+#[expect(
+    clippy::unnecessary_wraps,
+    reason = "signature is the fallible Apply handler type"
+)]
 fn font_family(
     style: &mut Style,
     _parent: &Style,
@@ -814,7 +821,7 @@ fn font_family(
     match input {
         Input::Value(value) => style.families = crate::values::families(value),
         Input::Copy(source) => {
-            style.families = source.families.clone();
+            style.families.clone_from(&source.families);
             style.font_namespace = source.font_namespace;
         }
     }
@@ -1535,16 +1542,14 @@ fn justify_items(
 ) -> Result<(), StyleError> {
     let source = match input {
         Input::Copy(source) => &source.grid,
-        Input::Value(value) => match grid_values::justify_items(value)? {
-            Some((alignment, legacy)) => {
+        Input::Value(value) => {
+            if let Some((alignment, legacy)) = grid_values::justify_items(value)? {
                 (style.grid.justify_items, style.grid.legacy_justify) = (alignment, legacy);
                 return Ok(());
             }
-            None => {
-                style.grid.initial_justify_items(&parent.grid);
-                return Ok(());
-            }
-        },
+            style.grid.initial_justify_items(&parent.grid);
+            return Ok(());
+        }
     };
     (style.grid.justify_items, style.grid.legacy_justify) =
         (source.justify_items, source.legacy_justify);

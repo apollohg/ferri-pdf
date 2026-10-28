@@ -1,7 +1,7 @@
 use crate::common::local_options;
 use ferri_pdf::render_html;
 
-pub fn assert_weasy_lines(reference: &serde_json::Value) {
+pub(crate) fn assert_weasy_lines(reference: &serde_json::Value) {
     const REFERENCE_TOLERANCE_PT: f32 = 0.03;
     for case in reference["cases"].as_array().unwrap() {
         let output = render_weasy_case(reference, case);
@@ -59,7 +59,7 @@ pub fn assert_weasy_lines(reference: &serde_json::Value) {
     }
 }
 
-pub fn render_weasy_case(
+pub(crate) fn render_weasy_case(
     reference: &serde_json::Value,
     case: &serde_json::Value,
 ) -> ferri_pdf::RenderOutput {

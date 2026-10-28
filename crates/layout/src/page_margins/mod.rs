@@ -211,7 +211,10 @@ fn prepare<'a>(
     let style = &margin.style;
     let bases = [containing[1], containing[0], containing[1], containing[0]];
     let padding = std::array::from_fn(|i| style.padding[i].resolve(bases[i]));
-    let borders = style.decoration.borders.map(|border| border.used_width());
+    let borders = style
+        .decoration
+        .borders
+        .map(ferri_pdf_graphics::Border::used_width);
     let margins = std::array::from_fn(|i| style.margin[i].resolve(bases[i]));
     let mut specified = [style.width.resolve(containing[0]), None];
     if style.box_sizing == BoxSizing::BorderBox {

@@ -95,7 +95,7 @@ impl BlockBox {
         } else {
             children
         };
-        let children = crate::tables::normalize(&style, children, &page_scope);
+        let children = crate::tables::normalize(&style, children, page_scope.as_ref());
         let page = crate::PageBoundary::new(page_scope, &style, &children);
         Self {
             style: Box::new(style),
@@ -257,13 +257,14 @@ impl BlockBuilder<'_, '_, '_> {
         else {
             return Ok(());
         };
-        let element_page_scope = crate::page::used_name(&parent.page, self.element_page_scope);
+        let element_page_scope =
+            crate::page::used_name(&parent.page, self.element_page_scope.as_ref());
         validate_display(&style.display)?;
         normalize_child_display(&mut style.display, false, &self.style.display);
-        let decoration = if style.display != Display::Contents {
-            self.resources.backgrounds(&style)?
-        } else {
+        let decoration = if style.display == Display::Contents {
             BoxDecoration::default()
+        } else {
+            self.resources.backgrounds(&style)?
         };
         self.traversal.counters.prepare(
             &style.counters,
@@ -318,7 +319,7 @@ impl BlockBuilder<'_, '_, '_> {
                 style,
                 children,
                 decoration,
-                &element_page_scope,
+                element_page_scope.as_ref(),
                 event,
             ));
             return Ok(());
@@ -356,7 +357,7 @@ impl BlockBuilder<'_, '_, '_> {
                     style.clone(),
                     children,
                     decoration,
-                    &element_page_scope,
+                    element_page_scope.as_ref(),
                     event,
                 );
                 self.inline.atomic(atomic, parent)?;
@@ -377,8 +378,13 @@ impl BlockBuilder<'_, '_, '_> {
                     .into_iter()
                     .map(BlockContent::Inline)
                     .collect();
-                let generated =
-                    self.generated_block(style, children, decoration, &element_page_scope, event);
+                let generated = self.generated_block(
+                    style,
+                    children,
+                    decoration,
+                    element_page_scope.as_ref(),
+                    event,
+                );
                 self.children.push(BlockContent::Block(generated));
             }
         }
@@ -391,7 +397,7 @@ impl BlockBuilder<'_, '_, '_> {
         style: Style,
         children: Vec<BlockContent>,
         decoration: BoxDecoration,
-        element_page_scope: &Option<std::sync::Arc<str>>,
+        element_page_scope: Option<&std::sync::Arc<str>>,
         event: Option<crate::SemanticEvent>,
     ) -> BlockBox {
         let page_scope = crate::page::used_name(&style.page, element_page_scope);
@@ -519,7 +525,7 @@ impl<'d> Frame<'d> {
         depth: usize,
         ordinal: i128,
         placement: Option<Placement>,
-        ancestor_page: &Option<std::sync::Arc<str>>,
+        ancestor_page: Option<&std::sync::Arc<str>>,
     ) -> Self {
         let page_scope = crate::page::used_name(&style.page, ancestor_page);
         Self {
@@ -589,7 +595,7 @@ fn block<'a>(
         depth,
         ordinal,
         Some(Placement::Root),
-        &None,
+        None,
     )];
     let mut blocks = vec![0];
     loop {
@@ -711,13 +717,13 @@ fn block<'a>(
                 let (builder, style) =
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
                 builder.inline.semantic_event(event);
-                if style.display != Display::Contents {
+                if style.display == Display::Contents {
+                    builder.inline.open_contents(navigation.link);
+                } else {
                     let decoration = builder.resources.backgrounds(style)?;
                     builder
                         .inline
                         .open_box(style, decoration, navigation, canvas_source);
-                } else {
-                    builder.inline.open_contents(navigation.link);
                 }
                 frames[index].generated = true;
             }
@@ -916,7 +922,7 @@ fn block<'a>(
                 child_depth,
                 ordinal,
                 placement,
-                &ancestor_page,
+                ancestor_page.as_ref(),
             ));
             continue;
         }
@@ -929,10 +935,10 @@ fn block<'a>(
             builder.generated(element, style, PseudoElement::After)?;
         }
         if index != block_index {
-            if !contents {
-                builder.inline.close_box();
-            } else {
+            if contents {
                 builder.inline.close_contents();
+            } else {
+                builder.inline.close_box();
             }
             builder.traversal.navigation.leave();
             frames.pop();
@@ -1068,7 +1074,7 @@ pub(crate) fn build(
         canvas: BoxDecoration::default(),
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
-        .then(|| html.body_element().map(|child| child.id()))
+        .then(|| html.body_element().map(Element::id))
         .flatten(),
     };
     traversal

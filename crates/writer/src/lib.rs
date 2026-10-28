@@ -215,10 +215,10 @@ pub fn encode_parts_with_diagnostics(
                         DisplayItem::PushOpacity(alpha) => {
                             let opacity = krilla::num::NormalizedF32::new(*alpha)
                                 .ok_or(PdfError::InvalidAlpha(*alpha))?;
-                            let nested_viewport = if opacity != krilla::num::NormalizedF32::ONE {
-                                painting::local_bounds(viewport, &surface)?
-                            } else {
+                            let nested_viewport = if opacity == krilla::num::NormalizedF32::ONE {
                                 viewport
+                            } else {
+                                painting::local_bounds(viewport, &surface)?
                             };
                             surface.push_opacity(opacity);
                             scopes.push((1, viewport));

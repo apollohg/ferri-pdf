@@ -137,7 +137,7 @@ struct Geometry<'a> {
     tree_contexts: RefCell<HashMap<crate::PageStyleTarget, Rc<Computed>>>,
     provided_root: bool,
     provided_element: bool,
-    size: RefCell<Option<Option<Arc<Component>>>>,
+    size: OnceCell<Option<Arc<Component>>>,
     size_source: RefCell<Option<SourceLocation>>,
     element: Option<Rc<Computed>>,
     parent: Option<&'a Style>,
@@ -421,7 +421,7 @@ impl<'a> Geometry<'a> {
             tree_contexts: RefCell::default(),
             provided_root,
             provided_element: false,
-            size: RefCell::default(),
+            size: OnceCell::new(),
             size_source: RefCell::default(),
             element: None,
             parent: None,
@@ -570,7 +570,7 @@ impl<'a> Geometry<'a> {
                 let Some(value) = self.substitute(context, &pending.value, &query)? else {
                     return Ok(None);
                 };
-                crate::declaration::expand_substitution(pending, value)
+                crate::declaration::expand_substitution(pending, &value)
             },
         )?;
         let value = if let Some(winner) = winner {
@@ -921,7 +921,7 @@ impl<'a> Geometry<'a> {
     }
 
     fn page_size(&self) -> Result<Option<Arc<Component>>, StyleError> {
-        if let Some(value) = self.size.borrow().as_ref() {
+        if let Some(value) = self.size.get() {
             return Ok(value.clone());
         }
         let (value, source) = self
@@ -945,8 +945,7 @@ impl<'a> Geometry<'a> {
                 },
             )?;
         *self.size_source.borrow_mut() = source;
-        *self.size.borrow_mut() = Some(value.clone());
-        Ok(value)
+        Ok(self.size.get_or_init(|| value).clone())
     }
 
     fn font_unit(&self, context: Context, unit: FontUnit) -> Result<f32, StyleError> {
@@ -1011,7 +1010,7 @@ impl<'a> Geometry<'a> {
 
     fn page_axis(&self, axis: Axis) -> Result<f32, StyleError> {
         let basis = self.dimension(Node::Paper(axis))?;
-        let index = if axis == Axis::Width { 0 } else { 1 };
+        let index = usize::from(axis != Axis::Width);
         let sides = if axis == Axis::Width { [3, 1] } else { [0, 2] };
         for side in sides {
             for property in [
@@ -1072,7 +1071,7 @@ impl<'a> Geometry<'a> {
     fn compute_dimension(&self, node: Node) -> Result<f32, StyleError> {
         match node {
             Node::Paper(axis) => match self.page_size()? {
-                None => Ok(self.sheet.paper[if axis == Axis::Width { 0 } else { 1 }]),
+                None => Ok(self.sheet.paper[usize::from(axis != Axis::Width)]),
                 Some(value) => {
                     let page_font = FontContext {
                         geometry: self,
@@ -1139,7 +1138,10 @@ impl<'a> Geometry<'a> {
         let padding = std::array::from_fn(|side| {
             style.padding[side].resolve(specified[usize::from(side.is_multiple_of(2))])
         });
-        let border = style.decoration.borders.map(|border| border.used_width());
+        let border = style
+            .decoration
+            .borders
+            .map(ferri_pdf_paint::Border::used_width);
         if paper
             .iter()
             .any(|value| !value.is_finite() || *value <= 0.0)
@@ -1235,7 +1237,7 @@ impl crate::PageSelection for Geometry<'_> {
     fn string_set(
         &self,
         target: crate::PageStyleTarget,
-    ) -> Result<std::sync::Arc<[crate::StringAssignment]>, StyleError> {
+    ) -> Result<Arc<[crate::StringAssignment]>, StyleError> {
         self.selected_value(target, Property::StringSet, |style| {
             style.string_set.clone()
         })
@@ -1760,7 +1762,7 @@ pub(super) fn resolve_values(
     parent: &Style,
     values: Cascaded,
     resolver: &dyn ResourceResolver,
-    context: ValueContext<'_>,
+    context: &ValueContext<'_>,
 ) -> Result<(Style, Winners), StyleError> {
     if !values.contextual() {
         let winners = crate::cascade::resolve(values, &mut style)?;
@@ -1786,7 +1788,7 @@ pub(super) fn resolve_values(
         page_font: context.page_font,
         provided_root: true,
         provided_element: false,
-        size: RefCell::default(),
+        size: OnceCell::new(),
         size_source: RefCell::default(),
         complete: RefCell::default(),
         dimensions: RefCell::default(),
@@ -1834,7 +1836,7 @@ pub(super) fn substitute_known(
         page_font: true,
         provided_root: true,
         provided_element: true,
-        size: RefCell::default(),
+        size: OnceCell::new(),
         size_source: RefCell::default(),
         complete: RefCell::default(),
         dimensions: RefCell::default(),

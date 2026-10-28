@@ -78,7 +78,7 @@ fn ten_bit_avif_matches_independent_samples_without_eight_bit_quantization() {
     ));
     let color: Vec<u16> = decoded
         .color()
-        .as_chunks::<{ std::mem::size_of::<u16>() }>()
+        .as_chunks::<{ size_of::<u16>() }>()
         .0
         .iter()
         .copied()
@@ -87,7 +87,7 @@ fn ten_bit_avif_matches_independent_samples_without_eight_bit_quantization() {
     let alpha: Vec<u16> = decoded
         .alpha()
         .unwrap()
-        .as_chunks::<{ std::mem::size_of::<u16>() }>()
+        .as_chunks::<{ size_of::<u16>() }>()
         .0
         .iter()
         .copied()

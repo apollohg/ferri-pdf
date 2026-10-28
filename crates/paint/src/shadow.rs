@@ -343,7 +343,7 @@ mod tests {
             * (0.254_829_6
                 + t * (-0.284_496_7 + t * (1.421_413_8 + t * (-1.453_152 + t * 1.061_405_4))));
         let erf = 1.0 - poly * (-(z * z)).exp();
-        0.5 * (1.0 + erf.copysign(x))
+        f32::midpoint(1.0, erf.copysign(x))
     }
 
     /// Alpha of the pixel containing `point`, and that pixel's centre.

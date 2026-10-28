@@ -66,6 +66,7 @@ impl PositionComponent {
         offset: LengthPercentage::Percentage(0.5),
     };
     /// Top-left offsets with explicit length and percentage terms for computed-value comparisons.
+    #[must_use]
     pub fn canonical(&self) -> Self {
         use crate::Calculation;
         let offset = match &self.offset {
@@ -260,10 +261,10 @@ pub(crate) fn natural_points<I: ImageInfo>(image: &I) -> NaturalDimensions {
 
 fn contain(area: [f32; 2], ratio: f32, cover: bool) -> [f32; 2] {
     let width_limited = area[0] / ratio <= area[1];
-    if width_limited != cover {
-        [area[0], area[0] / ratio]
-    } else {
+    if width_limited == cover {
         [area[1] * ratio, area[1]]
+    } else {
+        [area[0], area[0] / ratio]
     }
 }
 

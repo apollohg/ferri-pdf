@@ -1,6 +1,7 @@
 use ferri_pdf_images::{Image, ImageCache, ImageError};
 use ferri_pdf_resources::{FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver};
 use std::cell::Cell;
+use std::fmt::Write;
 
 const SIZE: [f32; 2] = [200.0, 100.0];
 const EPSILON: f32 = 0.01;
@@ -43,7 +44,7 @@ fn groups(tree: &usvg::Tree) -> Vec<&usvg::Group> {
 fn paths(tree: &usvg::Tree) -> Vec<&usvg::Path> {
     groups(tree)
         .into_iter()
-        .flat_map(|group| group.children())
+        .flat_map(usvg::Group::children)
         .filter_map(|node| {
             if let usvg::Node::Path(path) = node {
                 Some(path.as_ref())
@@ -704,14 +705,16 @@ fn svg_instance_depth_uses_the_svg_budget_instead_of_the_html_shadow_budget() {
         "<style>:host(.themed){fill:#123456}</style><defs><rect id='source0' width='20' height='10'/>",
     );
     for index in 1..=INSTANCE_DEPTH {
-        body.push_str(&format!(
+        let _ = write!(
+            body,
             "<use id='source{index}' href='#source{}'/>",
             index - 1
-        ));
+        );
     }
-    body.push_str(&format!(
+    let _ = write!(
+        body,
         "</defs><use class='themed' href='#source{INSTANCE_DEPTH}'/>"
-    ));
+    );
     assert_fill(&tree(&body), [0x12, 0x34, 0x56]);
 }
 

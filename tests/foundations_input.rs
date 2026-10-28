@@ -267,12 +267,10 @@ struct GraphResolver {
     unavailable: std::collections::BTreeSet<&'static str>,
     calls: std::cell::RefCell<Vec<String>>,
 }
-impl GraphResolver {
-    fn options(&self) -> ferri_pdf::RenderOptions {
-        ferri_pdf::RenderOptions {
-            base: ferri_pdf::Url::parse(GRAPH_BASE).unwrap().into(),
-            ..local_options()
-        }
+fn graph_options() -> ferri_pdf::RenderOptions {
+    ferri_pdf::RenderOptions {
+        base: ferri_pdf::Url::parse(GRAPH_BASE).unwrap().into(),
+        ..local_options()
     }
 }
 impl ResourceResolver for GraphResolver {
@@ -322,7 +320,7 @@ fn imports_preserve_order_layers_and_redirect_bases() {
         ]),..Default::default()
     };
     let html = "<!doctype html><style>@import 'start.css' layer(outer) supports(width:12pt) print;@layer final,outer;@layer final{p{color:#123456}}</style><p>Import</p>";
-    let output = ferri_pdf::render_with_resolver(html, &resolver.options(), &resolver).unwrap();
+    let output = ferri_pdf::render_with_resolver(html, &graph_options(), &resolver).unwrap();
     let trace = output.layout.unwrap();
     assert_pt(trace.pages[0][0].font_size, 19.0);
     assert_eq!(
@@ -367,7 +365,7 @@ fn repeated_imports_keep_distinct_encoding_and_layer_context() {
         ..Default::default()
     };
     let html = "<!doctype html><style>@import 'first.css' layer(first);@import 'second.css' layer(second);</style><p class=é>One</p><p class=й>Two</p>";
-    let trace = ferri_pdf::render_with_resolver(html, &resolver.options(), &resolver)
+    let trace = ferri_pdf::render_with_resolver(html, &graph_options(), &resolver)
         .unwrap()
         .layout
         .unwrap();
@@ -401,7 +399,7 @@ fn repeated_imports_keep_distinct_encoding_and_layer_context() {
 fn false_import_conditions_do_not_fetch() {
     let resolver = GraphResolver::default();
     let html = "<!doctype html><style>@import 'grid.css' layer(first) supports(display:ruby);@import 'screen.css' screen;@import 'unknown.css' supports(future-function());@layer second,first;@layer second{p{font-size:23pt}}@layer first{p{font-size:19pt}}</style><p>Inactive</p>";
-    let trace = ferri_pdf::render_with_resolver(html, &resolver.options(), &resolver)
+    let trace = ferri_pdf::render_with_resolver(html, &graph_options(), &resolver)
         .unwrap()
         .layout
         .unwrap();
@@ -415,7 +413,7 @@ fn false_import_conditions_do_not_fetch() {
         ..Default::default()
     };
     let html = "<!doctype html><style>@import 'missing.css' layer(first) supports(width:12pt);@layer second,first;@layer second{p{font-size:23pt}}@layer first{p{font-size:19pt}}</style><p>Unavailable</p>";
-    let output = ferri_pdf::render_with_resolver(html, &resolver.options(), &resolver).unwrap();
+    let output = ferri_pdf::render_with_resolver(html, &graph_options(), &resolver).unwrap();
     assert_pt(output.layout.unwrap().pages[0][0].font_size, 23.0);
     assert_eq!(
         output.diagnostics.len(),
@@ -436,7 +434,7 @@ fn import_cycle_and_limit_errors_preserve_policy() {
     };
     let output = ferri_pdf::render_with_resolver(
         "<!doctype html><style>@import 'cycle.css';</style><p>Cycle</p>",
-        &resolver.options(),
+        &graph_options(),
         &resolver,
     )
     .expect("a cyclic edge is cut while the imported sheet's remaining rules still apply");
@@ -456,7 +454,7 @@ fn import_cycle_and_limit_errors_preserve_policy() {
         matches!(
             ferri_pdf::render_with_resolver(
                 "<!doctype html><style>@import 'denied.css';</style><p>Denied</p>",
-                &resolver.options(),
+                &graph_options(),
                 &resolver
             ),
             Err(ferri_pdf::Error::Css(ferri_pdf::StyleError::Resource(
@@ -478,7 +476,7 @@ fn html_style_link_applicability_matches_initial_document() {
         ..Default::default()
     };
     let html = "<!doctype html><style type='text/css; charset=utf-8'>p{display:ruby}</style><style type=text/plain>p{display:ruby}</style><style media=screen>p{display:ruby}</style><link rel='preload StyleSheet' href=active.css media=print type='Text/CSS; charset=utf-8'><link rel=stylesheet disabled href=disabled.css><link rel='alternate stylesheet' title=Unselected href=alternate.css><link rel=stylesheet type=text/plain href=wrong-type.css><link rel=stylesheet media=screen href=screen.css><link rel=stylesheet><p>Applicable</p>";
-    let mut options = resolver.options();
+    let mut options = graph_options();
     options.stylesheets.push("p{font-size:23pt}".into());
     let trace = ferri_pdf::render_with_resolver(html, &options, &resolver)
         .unwrap()
@@ -509,7 +507,7 @@ fn shadow_imports_keep_their_tree_and_layer_context_after_redirects() {
         ..Default::default()
     };
     let html = "<!doctype html><link rel=stylesheet href=common.css><p>Outside</p><div><template shadowrootmode=open><link rel=stylesheet title=Ignored href=entry.css><p>Imported</p></template></div><div><template shadowrootmode=closed><link rel=stylesheet href=common.css><p>Shared</p></template></div><p>After</p>";
-    let trace = ferri_pdf::render_with_resolver(html, &resolver.options(), &resolver)
+    let trace = ferri_pdf::render_with_resolver(html, &graph_options(), &resolver)
         .unwrap()
         .layout
         .unwrap();
@@ -550,7 +548,7 @@ fn alternate_sheets_with_empty_effective_titles_remain_enabled() {
         let html = format!(
             "<!doctype html><meta http-equiv=default-style content=Print><style title=Print>p{{font-size:13pt}}</style>{content}"
         );
-        let trace = ferri_pdf::render_with_resolver(&html, &resolver.options(), &resolver)
+        let trace = ferri_pdf::render_with_resolver(&html, &graph_options(), &resolver)
             .unwrap()
             .layout
             .unwrap();
@@ -594,7 +592,7 @@ fn initial_style_sets_use_case_sensitive_titles_and_meta_preference() {
         let html = format!(
             "<!doctype html><style title=First>p{{font-size:19pt}}</style><style title=Second>p{{font-size:23pt}}</style><style title=first>p{{font-size:31pt}}</style><link rel='alternate stylesheet' title=First href=selected.css><link rel='alternate stylesheet' href=untitled.css><style disabled>@page{{margin:0}}p{{margin-left:7pt}}</style>{meta}<p>Set</p>"
         );
-        let trace = ferri_pdf::render_with_resolver(&html, &resolver.options(), &resolver)
+        let trace = ferri_pdf::render_with_resolver(&html, &graph_options(), &resolver)
             .unwrap()
             .layout
             .unwrap();
@@ -635,7 +633,7 @@ fn link_charset_uses_valid_labels_before_the_document_encoding() {
             "<!doctype html><meta charset=windows-1251><link rel=stylesheet href=encoding.css charset={charset}><p>Body</p>"
         );
         let output =
-            render_bytes_with_resolver(html.as_bytes(), &resolver.options(), &resolver).unwrap();
+            render_bytes_with_resolver(html.as_bytes(), &graph_options(), &resolver).unwrap();
         assert_eq!(output.layout.unwrap().pages[0][0].text, expected);
         assert!(output.diagnostics.is_empty());
         assert_eq!(resolver.calls.borrow().len(), 1);
@@ -659,8 +657,7 @@ fn stylesheet_mime_quirks_use_document_origin_and_final_response_url() {
             ..Default::default()
         };
         let html = format!("{doctype}{base}<link rel=stylesheet href=plain.css><p>MIME</p>");
-        let output =
-            ferri_pdf::render_with_resolver(&html, &resolver.options(), &resolver).unwrap();
+        let output = ferri_pdf::render_with_resolver(&html, &graph_options(), &resolver).unwrap();
         assert_pt(output.layout.unwrap().pages[0][0].font_size, expected);
         assert_eq!(
             output.diagnostics.len(),
@@ -677,8 +674,7 @@ fn import_placement_and_clauses_follow_their_stylesheet_boundary() {
         let resolver = GraphResolver::default();
         let html =
             format!("<!doctype html><style>{prefix}@import 'denied.css';</style><p>Late</p>");
-        let output =
-            ferri_pdf::render_with_resolver(&html, &resolver.options(), &resolver).unwrap();
+        let output = ferri_pdf::render_with_resolver(&html, &graph_options(), &resolver).unwrap();
         assert!(
             resolver.calls.borrow().is_empty(),
             "a late import must not fetch after {prefix}"
@@ -695,8 +691,7 @@ fn import_placement_and_clauses_follow_their_stylesheet_boundary() {
     ] {
         let resolver = GraphResolver::default();
         let html = format!("<!doctype html><style>{import}</style><p>Invalid</p>");
-        let output =
-            ferri_pdf::render_with_resolver(&html, &resolver.options(), &resolver).unwrap();
+        let output = ferri_pdf::render_with_resolver(&html, &graph_options(), &resolver).unwrap();
         assert!(
             resolver.calls.borrow().is_empty(),
             "invalid import: {import}"
@@ -711,7 +706,7 @@ fn import_placement_and_clauses_follow_their_stylesheet_boundary() {
         ..Default::default()
     };
     let html = "<!doctype html><style>@unknown{}@layer before;@supports-condition --usable{width:12pt;}@import url('valid.css') layer(a.b) supports((--usable)) print;@layer a.b{p{color:#123456}}</style><p>Valid</p>";
-    let trace = ferri_pdf::render_with_resolver(html, &resolver.options(), &resolver)
+    let trace = ferri_pdf::render_with_resolver(html, &graph_options(), &resolver)
         .unwrap()
         .layout
         .unwrap();
@@ -737,7 +732,7 @@ fn import_discovery_resolves_names_without_changing_source_order() {
         ..Default::default()
     };
     let html = "<!doctype html><link rel=stylesheet href=first.css media='(--later)'><link rel=stylesheet href=seed.css><p>Forward</p>";
-    let trace = ferri_pdf::render_with_resolver(html, &resolver.options(), &resolver)
+    let trace = ferri_pdf::render_with_resolver(html, &graph_options(), &resolver)
         .unwrap()
         .layout
         .unwrap();
@@ -761,7 +756,7 @@ fn conditional_stylesheet_sources_retain_paper_dependencies() {
         ..Default::default()
     };
     let html = "<!doctype html><style>@import 'paper.css' (width > 1pt);@page{size:250pt 350pt}</style><p>Paper</p>";
-    let trace = ferri_pdf::render_with_resolver(html, &resolver.options(), &resolver)
+    let trace = ferri_pdf::render_with_resolver(html, &graph_options(), &resolver)
         .unwrap()
         .layout
         .unwrap();
@@ -798,8 +793,7 @@ fn unavailable_preferred_stylesheets_do_not_disable_the_next_available_set() {
         let html = format!(
             "<!doctype html><link rel=stylesheet href=missing-set.css title=First><style title=Second>p{{font-size:19pt}}</style>{meta}<p>Available set</p>"
         );
-        let output =
-            ferri_pdf::render_with_resolver(&html, &resolver.options(), &resolver).unwrap();
+        let output = ferri_pdf::render_with_resolver(&html, &graph_options(), &resolver).unwrap();
         assert_pt(output.layout.unwrap().pages[0][0].font_size, expected);
         assert_eq!(output.diagnostics.len(), 1);
     }

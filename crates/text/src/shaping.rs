@@ -145,8 +145,9 @@ fn shape_run(
         let language = style
             .language
             .parse::<icu_locale_core::Locale>()
-            .map(|locale| locale.id)
-            .unwrap_or(icu_locale_core::LanguageIdentifier::UNKNOWN);
+            .map_or(icu_locale_core::LanguageIdentifier::UNKNOWN, |locale| {
+                locale.id
+            });
         let mut bytes = 0;
         let mut mapped = String::new();
         for (start, cluster) in text.grapheme_indices(true) {
@@ -249,8 +250,8 @@ fn shape_run(
         if last_in_cluster {
             cluster_advance = 0.0;
         }
-        let top = pen_y - (bounds.y_max as f32 + pos.y_offset as f32) / upem * size;
-        let bottom = pen_y - (bounds.y_min as f32 + pos.y_offset as f32) / upem * size;
+        let top = pen_y - (f32::from(bounds.y_max) + pos.y_offset as f32) / upem * size;
+        let bottom = pen_y - (f32::from(bounds.y_min) + pos.y_offset as f32) / upem * size;
         ink_bounds = Some(match ink_bounds {
             Some([a, b]) => [a.min(top), b.max(bottom)],
             None => [top, bottom],

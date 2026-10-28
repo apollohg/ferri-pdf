@@ -59,16 +59,13 @@ pub(crate) fn measure(
             FlexBasis::Auto => constraints.specified.unwrap_or(natural.max),
             FlexBasis::Content => natural.max,
             FlexBasis::Intrinsic(value) => value.resolve(natural, None),
-            value => value
-                .resolve(None)
-                .map(|v| {
-                    if child_style.box_sizing == BoxSizing::BorderBox {
-                        (v - edges).max(0.0)
-                    } else {
-                        v
-                    }
-                })
-                .unwrap_or(natural.max),
+            value @ FlexBasis::Value(_) => value.resolve(None).map_or(natural.max, |v| {
+                if child_style.box_sizing == BoxSizing::BorderBox {
+                    (v - edges).max(0.0)
+                } else {
+                    v
+                }
+            }),
         };
         let minimum = if child_style.min_width == Size::Auto {
             natural

@@ -56,7 +56,7 @@ impl ResourceBase {
                         source,
                     })?;
                 Url::from_directory_path(path)
-                    .map_err(|_| ResourceError::InvalidBase(directory.to_path_buf()))?
+                    .map_err(|()| ResourceError::InvalidBase(directory.to_path_buf()))?
             }
         };
         base.join(reference).map_err(|source| ResourceError::Url {

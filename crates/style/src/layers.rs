@@ -21,7 +21,7 @@ pub(super) enum LayerPriority {
 }
 
 impl LayerId {
-    pub fn priority(self, important: bool) -> LayerPriority {
+    pub(crate) fn priority(self, important: bool) -> LayerPriority {
         if important {
             LayerPriority::Important(Reverse(self))
         } else {
@@ -47,7 +47,7 @@ pub(super) struct LayerTree {
 }
 
 impl LayerTree {
-    pub fn root(&mut self, origin: Origin, scope: Option<TreeScopeId>) -> LayerNode {
+    pub(crate) fn root(&mut self, origin: Origin, scope: Option<TreeScopeId>) -> LayerNode {
         if let Some(root) = self.roots.get(&(origin, scope)) {
             return *root;
         }
@@ -62,7 +62,7 @@ impl LayerTree {
         node
     }
 
-    pub fn register(&mut self, mut parent: LayerNode, name: Option<&[String]>) -> LayerNode {
+    pub(crate) fn register(&mut self, mut parent: LayerNode, name: Option<&[String]>) -> LayerNode {
         let Some(name) = name else {
             let child = self.allocate();
             self.nodes[parent.0].children.push(child);
@@ -82,7 +82,7 @@ impl LayerTree {
     }
 
     /// Postorder puts a layer's direct rules after all of its nested layers.
-    pub fn freeze(&mut self) {
+    pub(crate) fn freeze(&mut self) {
         self.order = vec![LayerId::Unlayered; self.nodes.len()];
         let mut rank = 0;
         for &root in self.roots.values() {
@@ -102,7 +102,7 @@ impl LayerTree {
         }
     }
 
-    pub fn id(&self, node: LayerNode) -> LayerId {
+    pub(crate) fn id(&self, node: LayerNode) -> LayerId {
         self.order[node.0]
     }
 }

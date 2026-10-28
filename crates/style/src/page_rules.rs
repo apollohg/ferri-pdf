@@ -77,7 +77,7 @@ pub(super) struct PageSelector {
     left_right: u32,
 }
 impl PageSelector {
-    pub fn new(name: Option<Arc<str>>) -> Self {
+    pub(crate) fn new(name: Option<Arc<str>>) -> Self {
         Self {
             name,
             left: false,
@@ -88,7 +88,7 @@ impl PageSelector {
             left_right: 0,
         }
     }
-    pub fn add_pseudo(&mut self, name: &str) -> bool {
+    pub(crate) fn add_pseudo(&mut self, name: &str) -> bool {
         let component = cssparser::match_ignore_ascii_case! {name,
             "left" => {self.left=true; &mut self.left_right},
             "right" => {self.right=true; &mut self.left_right},
@@ -99,7 +99,7 @@ impl PageSelector {
         *component = component.saturating_add(1).min(MAX_SPECIFICITY_COMPONENT);
         true
     }
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         self.name.is_none() && !(self.left || self.right || self.first || self.blank)
     }
     fn matching_specificity(&self, request: &PageRequest) -> Option<u32> {
@@ -196,7 +196,7 @@ impl PageRule {
         })
     }
 
-    pub fn parse(
+    pub(crate) fn parse(
         selectors: PageSelectors,
         items: Vec<PageItem>,
         context: DeclarationContext,
@@ -365,7 +365,7 @@ impl Stylesheet {
     }
 }
 impl MatchedPageRules {
-    pub fn validate_descriptors(
+    pub(crate) fn validate_descriptors(
         &self,
         sheet: &Stylesheet,
         page: &crate::Style,
@@ -389,7 +389,7 @@ impl MatchedPageRules {
         }
         Ok(())
     }
-    pub fn descriptor_value(
+    pub(crate) fn descriptor_value(
         &self,
         sheet: &Stylesheet,
         descriptor: Descriptor,
@@ -403,7 +403,7 @@ impl MatchedPageRules {
             )
         })
     }
-    pub fn descriptor_source(&self, descriptor: Descriptor) -> Option<SourceLocation> {
+    pub(crate) fn descriptor_source(&self, descriptor: Descriptor) -> Option<SourceLocation> {
         self.descriptors
             .get(&descriptor)?
             .last()?
@@ -411,7 +411,7 @@ impl MatchedPageRules {
             .as_deref()
             .cloned()
     }
-    pub fn descriptor_with(
+    pub(crate) fn descriptor_with(
         &self,
         descriptor: Descriptor,
         mut substitute: impl FnMut(
@@ -424,8 +424,7 @@ impl MatchedPageRules {
         let values = self
             .descriptors
             .get(&descriptor)
-            .map(Vec::as_slice)
-            .unwrap_or(&[]);
+            .map_or(&[][..], Vec::as_slice);
         let winner = choose(
             values,
             |index, value, _| {

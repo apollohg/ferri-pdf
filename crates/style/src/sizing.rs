@@ -32,6 +32,7 @@ pub struct SizeConstraints {
 }
 impl SizeConstraints {
     /// Intrinsic sizes describe the content box, regardless of box-sizing.
+    #[must_use]
     pub fn with_intrinsic(
         mut self,
         sizes: [&Size; 3],
@@ -106,7 +107,7 @@ impl SizeConstraints {
         let specified = used_size.is_some() || self.specified.is_some() || size != natural;
         let remainder = containing - edges - size - start.unwrap_or(0.0) - end.unwrap_or(0.0);
         let mut used = [start.unwrap_or(0.0), end.unwrap_or(0.0)];
-        let adjustable = if reverse { 0 } else { 1 };
+        let adjustable = usize::from(!reverse);
         let mut resize = false;
         if specified && remainder >= 0.0 {
             match (start, end) {

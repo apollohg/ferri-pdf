@@ -44,12 +44,11 @@ fn first_page_side_and_name_are_selected_before_viewport_lengths() {
 
 #[test]
 fn leading_side_selection_reports_its_viewport_cycle() {
-    let error = match parse(
+    let Err(error) = parse(
         "@page:left{size:300pt 400pt}p{break-before:if(style(width:100pt):left;else:right);width:10vw}",
         "<p>Coupled side</p>",
-    ) {
-        Ok(_) => panic!("side-dependent geometry must not be resolved by guessing a side"),
-        Err(error) => error,
+    ) else {
+        panic!("side-dependent geometry must not be resolved by guessing a side")
     };
     let DocumentError::Style(StyleError::DependencyCycle {
         sources,
@@ -58,7 +57,7 @@ fn leading_side_selection_reports_its_viewport_cycle() {
     else {
         panic!("expected a source-bearing side cycle, got {error}");
     };
-    assert!(!sources.is_empty());
+    assert_ne!(sources, [] as [ferri_pdf_style::SourceLocation; 0]);
     for expected in ["first-page-side", ".break-before", ".width"] {
         assert!(
             dependencies.iter().any(|node| node.ends_with(expected)),
@@ -202,14 +201,11 @@ fn generated_before_and_order_modified_items_select_the_first_page_without_loadi
 
 #[test]
 fn first_page_selection_reports_a_source_bearing_viewport_dependency_cycle() {
-    let error = match parse(
+    let Err(error) = parse(
         "p{page:if(style(width: 100pt): A; else: B);width:10vw}",
         "<p>Coupled selection</p>",
-    ) {
-        Ok(_) => panic!(
-            "page selection and its own viewport cannot be resolved by guessing a default page"
-        ),
-        Err(error) => error,
+    ) else {
+        panic!("page selection and its own viewport cannot be resolved by guessing a default page")
     };
     let DocumentError::Style(StyleError::DependencyCycle {
         sources,
@@ -229,11 +225,15 @@ fn first_page_selection_reports_a_source_bearing_viewport_dependency_cycle() {
         "{dependencies:?}"
     );
     assert!(
-        dependencies.iter().any(|node| node.ends_with(".page")),
+        dependencies.iter().any(|node| std::path::Path::new(node)
+            .extension()
+            .is_some_and(|ext| ext.eq_ignore_ascii_case("page"))),
         "{dependencies:?}"
     );
     assert!(
-        dependencies.iter().any(|node| node.ends_with(".width")),
+        dependencies.iter().any(|node| std::path::Path::new(node)
+            .extension()
+            .is_some_and(|ext| ext.eq_ignore_ascii_case("width"))),
         "{dependencies:?}"
     );
 }

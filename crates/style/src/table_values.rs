@@ -50,6 +50,7 @@ pub enum VerticalAlign {
 }
 impl VerticalAlign {
     /// Table cells honour only `top`, `middle` and `bottom`; other values align at the baseline.
+    #[must_use]
     pub fn cell(&self) -> Self {
         match self {
             Self::Top | Self::Middle | Self::Bottom => self.clone(),

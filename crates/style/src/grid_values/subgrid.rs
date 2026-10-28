@@ -1,4 +1,7 @@
-use super::*;
+use super::{
+    Arc, Component, Keyword, Label, LineNames, MAX_GRID_LINE, Production, Serialize, StyleError,
+    line_names, repeat_arguments, unsupported,
+};
 
 /// An auto-fill repetition of line-name sets, without track sizes.
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -120,6 +123,8 @@ pub(super) fn valid(value: &Component) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::grammar::Property;
+    use crate::grid_values::template;
 
     fn computed(source: &str) -> Subgrid {
         let value = crate::declaration::value(Property::GridTemplateColumns, source, &mut 0)
@@ -170,11 +175,11 @@ mod tests {
         );
         assert_eq!(resolve(1), vec![vec!["start"], vec!["end"]]);
         assert_eq!(resolve(2), vec![vec!["start"], vec!["end"], vec![]]);
-        assert!(value.line_names(4, 5).is_empty());
+        assert_eq!(value.line_names(4, 5), []);
         let value = computed("subgrid [] [a] [b] [c]");
-        assert!(value.line_names(1, 0).is_empty());
+        assert_eq!(value.line_names(1, 0), []);
         assert_eq!(value.line_names(1, 1)[0].as_ref(), "a");
-        assert!(value.line_names(1, 2).is_empty());
+        assert_eq!(value.line_names(1, 2), []);
     }
 
     #[test]
@@ -193,7 +198,7 @@ mod tests {
             ]
         );
         assert!(value.repeat.is_none());
-        assert!(computed("subgrid").lines.is_empty());
+        assert_eq!(computed("subgrid").lines, [] as [Vec<Arc<str>>; 0]);
     }
 
     #[test]

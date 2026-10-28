@@ -1,4 +1,5 @@
 mod common;
+use std::fmt::Write;
 
 use common::{assert_pt, local_options};
 use ferri_pdf::{
@@ -428,12 +429,9 @@ fn custom_media_alias_chains_are_bounded_by_input_without_recursive_evaluation()
     const ALIASES: usize = 2_000;
     let mut css = String::from("@page{margin:0}@media (--alias0){p{font-size:19pt}}");
     for index in 0..ALIASES {
-        css.push_str(&format!(
-            "@custom-media --alias{index} (--alias{});",
-            index + 1
-        ));
+        let _ = write!(css, "@custom-media --alias{index} (--alias{});", index + 1);
     }
-    css.push_str(&format!("@custom-media --alias{ALIASES} true;"));
+    let _ = write!(css, "@custom-media --alias{ALIASES} true;");
     let trace = render_html(
         &format!("<!doctype html><style>{css}</style><p>Chain</p>"),
         &local_options(),

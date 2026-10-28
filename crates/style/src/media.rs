@@ -240,7 +240,7 @@ pub(super) struct RangeFeature {
 }
 
 impl RangeFeature {
-    pub(super) fn calculation(&self, math: calc::Math) -> Option<ferri_pdf_paint::Calculation> {
+    pub(super) fn calculation(&self, math: &calc::Math) -> Option<ferri_pdf_paint::Calculation> {
         let value = math.resolve(0.0, calc::Range::ALL);
         if !self.value_kind.accepts_number(value.into()) {
             return None;
@@ -282,15 +282,14 @@ pub(super) fn comparison(input: &mut Parser<'_, '_>) -> Option<Comparison> {
         _ => return None,
     };
     let state = input.state();
-    match input.next_including_whitespace() {
-        Ok(Token::Delim('=')) => Some(match operator {
+    if let Ok(Token::Delim('=')) = input.next_including_whitespace() {
+        Some(match operator {
             Comparison::Less => Comparison::LessEqual,
             _ => Comparison::GreaterEqual,
-        }),
-        _ => {
-            input.reset(&state);
-            Some(operator)
-        }
+        })
+    } else {
+        input.reset(&state);
+        Some(operator)
     }
 }
 
@@ -421,7 +420,7 @@ impl Value {
         fn viewport(unit: &str) -> bool {
             matches!(
                 units::dimension(unit),
-                Some(Dimension::Length(crate::units::LengthUnit {
+                Some(Dimension::Length(units::LengthUnit {
                     scale: Scale::Viewport(_),
                     ..
                 }))
@@ -495,7 +494,7 @@ impl Feature {
                     test: Test::Boolean,
                 });
             }
-            if input.try_parse(|input| input.expect_colon()).is_ok() {
+            if input.try_parse(Parser::expect_colon).is_ok() {
                 let value = Value::parse(input)?;
                 input.expect_exhausted().ok()?;
                 return Some(Self {
@@ -660,13 +659,13 @@ impl Feature {
 }
 
 impl MediaQuery {
-    pub fn constant(value: bool) -> Self {
+    pub(crate) fn constant(value: bool) -> Self {
         Self {
             queries: vec![Query::Constant(value)],
         }
     }
 
-    pub fn parse(source: &str) -> Result<Self, StyleError> {
+    pub(crate) fn parse(source: &str) -> Result<Self, StyleError> {
         let mut input = ParserInput::new(source);
         let input = &mut Parser::new(&mut input);
         if input.is_exhausted() {
@@ -686,7 +685,7 @@ impl MediaQuery {
         let mut negate = false;
         let mut modifier = false;
         let start = input.state();
-        if let Ok(ident) = input.try_parse(|input| input.expect_ident_cloned()) {
+        if let Ok(ident) = input.try_parse(Parser::expect_ident_cloned) {
             if ident.eq_ignore_ascii_case("not") || ident.eq_ignore_ascii_case("only") {
                 negate = ident.eq_ignore_ascii_case("not");
                 modifier = true;
@@ -694,7 +693,7 @@ impl MediaQuery {
                 input.reset(&start);
             }
         }
-        if let Ok(name) = input.try_parse(|input| input.expect_ident_cloned()) {
+        if let Ok(name) = input.try_parse(Parser::expect_ident_cloned) {
             if ["only", "not", "and", "or", "layer"]
                 .iter()
                 .any(|reserved| name.eq_ignore_ascii_case(reserved))
@@ -729,7 +728,7 @@ impl MediaQuery {
         )
     }
 
-    pub fn dependencies(&self) -> impl Iterator<Item = &str> {
+    pub(crate) fn dependencies(&self) -> impl Iterator<Item = &str> {
         self.conditions()
             .flat_map(Condition::leaves)
             .filter_map(|feature| feature.dependency())
@@ -746,7 +745,7 @@ impl MediaQuery {
         })
     }
 
-    pub fn uses_paper(&self, environment: &PrintEnvironment) -> bool {
+    pub(crate) fn uses_paper(&self, environment: &PrintEnvironment) -> bool {
         self.conditions()
             .flat_map(Condition::leaves)
             .any(|feature| feature.uses_paper(environment))
@@ -937,7 +936,7 @@ mod tests {
         let source = format!("({source})");
         assert!(matches!(
             MediaQuery::parse(&source),
-            Err(crate::StyleError::GrammarLimit {
+            Err(StyleError::GrammarLimit {
                 resource: "condition nesting",
                 limit: MAX_CONDITION_DEPTH
             })

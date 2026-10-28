@@ -59,20 +59,20 @@ pub(crate) struct ShadowState {
     fragments: Vec<NodeId>,
 }
 impl ShadowState {
-    pub fn order_contexts(&mut self, connected: impl IntoIterator<Item = NodeId>) {
+    pub(crate) fn order_contexts(&mut self, connected: impl IntoIterator<Item = NodeId>) {
         for fragment in connected.into_iter().chain(self.fragments.iter().copied()) {
             let next = self.context_order.len() + 1;
             self.context_order.entry(fragment).or_insert(next);
         }
     }
-    pub fn alias_slot(&self, node: NodeId) -> Option<NodeId> {
+    pub(crate) fn alias_slot(&self, node: NodeId) -> Option<NodeId> {
         self.assigned
             .get(&node)
             .or_else(|| self.fallback_slots.get(&node))
             .copied()
     }
 
-    pub fn finish(&mut self, html: &Html) {
+    pub(crate) fn finish(&mut self, html: &Html) {
         for &fragment in &self.fragments {
             let mut pending = vec![fragment];
             while let Some(id) = pending.pop() {
@@ -192,7 +192,7 @@ pub(crate) struct DocumentSink {
     error: RefCell<Option<DomError>>,
 }
 impl DocumentSink {
-    pub fn new() -> Self {
+    pub(crate) fn new() -> Self {
         Self {
             html: HtmlTreeSink::new(Html::new_document()),
             shadow: RefCell::default(),

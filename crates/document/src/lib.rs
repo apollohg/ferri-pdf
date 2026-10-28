@@ -513,7 +513,7 @@ mod tests {
             match child {
                 BlockContent::Events(_) => {}
                 BlockContent::Block(child) | BlockContent::Positioned(child) => {
-                    paragraphs(child, output)
+                    paragraphs(child, output);
                 }
                 BlockContent::Inline(paragraph) => output.push(paragraph),
             }

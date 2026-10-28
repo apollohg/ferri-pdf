@@ -171,7 +171,7 @@ fn embedded_hints(
         match align.to_ascii_lowercase().as_str() {
             "left" | "right" => hint(output, Property::Float, &align.to_ascii_lowercase())?,
             "top" | "baseline" | "bottom" => {
-                hint(output, Property::VerticalAlign, &align.to_ascii_lowercase())?
+                hint(output, Property::VerticalAlign, &align.to_ascii_lowercase())?;
             }
             "texttop" => hint(output, Property::VerticalAlign, "text-top")?,
             "absmiddle" | "abscenter" => hint(output, Property::VerticalAlign, "middle")?,
@@ -379,9 +379,9 @@ fn color(value: &str) -> Option<String> {
     while channels[0].len() > HEX_CHANNEL_DIGITS
         && channels.iter().all(|channel| channel[0] == b'0')
     {
-        channels
-            .iter_mut()
-            .for_each(|channel| *channel = &channel[1..]);
+        for channel in &mut channels {
+            *channel = &channel[1..];
+        }
     }
     let mut output = String::from("#");
     for channel in channels {
@@ -764,7 +764,7 @@ pub(super) fn declarations(
         }
         "col" => dimension_hint(&mut output, element, "width", Property::Width, false)?,
         "thead" | "tbody" | "tfoot" | "tr" => {
-            dimension_hint(&mut output, element, "height", Property::Height, false)?
+            dimension_hint(&mut output, element, "height", Property::Height, false)?;
         }
         _ => {}
     }

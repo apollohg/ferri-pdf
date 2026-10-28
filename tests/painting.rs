@@ -110,7 +110,7 @@ fn border_shorthands_share_the_cascade_and_resolve_currentcolor_after_text_color
     assert_eq!(paint.decoration.borders[0].color.rgb, [0, 128, 0]);
     assert_eq!(paint.decoration.background.rgb, [255, 0, 0]);
     const HEX_ALPHA: f32 = 8.0 / 15.0;
-    assert!((paint.decoration.background.alpha - HEX_ALPHA).abs() < 0.000001);
+    assert!((paint.decoration.background.alpha - HEX_ALPHA).abs() < 0.000_001);
 }
 
 #[test]

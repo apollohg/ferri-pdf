@@ -19,7 +19,7 @@ pub fn parse_namespace<'i>(
     input: &mut Parser<'i, '_>,
 ) -> Result<(String, String), cssparser::BasicParseError<'i>> {
     let prefix = input
-        .try_parse(|input| input.expect_ident_cloned())
+        .try_parse(Parser::expect_ident_cloned)
         .map(|prefix| prefix.to_string())
         .unwrap_or_default();
     let namespace = input.expect_url_or_string()?.to_string();
@@ -48,7 +48,7 @@ pub enum TreeContext {
     All,
 }
 impl TreeContext {
-    fn host<'a>(self, element: Element<'a>) -> Option<Element<'a>> {
+    fn host(self, element: Element<'_>) -> Option<Element<'_>> {
         match self {
             Self::Root(root) => element.scope_host(root),
             Self::Document | Self::All => None,
@@ -292,6 +292,7 @@ impl Selector {
         self.metrics.resolved(parent.metrics).depth
     }
 
+    #[must_use]
     pub fn resolve_parent(&self, parent: &Self) -> Self {
         Self {
             selectors: self.selectors.replace_parent_selector(&parent.selectors),
@@ -299,6 +300,7 @@ impl Selector {
         }
     }
 
+    #[must_use]
     pub fn with_pseudo_element(&self, pseudo: GeneratedPseudoElement) -> Self {
         let source = match pseudo {
             GeneratedPseudoElement::Before => "&::before",
@@ -552,7 +554,7 @@ impl<'i> parser::Parser<'i> for StaticParser<'_> {
             if selectors.slice().iter().any(|selector| {
                 selector
                     .iter_raw_match_order()
-                    .any(|part| part.is_combinator())
+                    .any(parser::Component::is_combinator)
             }) {
                 return Err(input.new_custom_error(
                     SelectorParseErrorKind::UnsupportedPseudoClassOrElement(name),
@@ -660,10 +662,10 @@ pub enum StaticState {
 impl parser::NonTSPseudoClass for StaticState {
     type Impl = StaticSelector;
     fn has_parent_selector(&self) -> bool {
-        matches!(self, Self::Current(selectors) if selectors.slice().iter().any(|selector| selector.has_parent_selector()))
+        matches!(self, Self::Current(selectors) if selectors.slice().iter().any(parser::Selector::has_parent_selector))
     }
     fn has_scope_selector(&self) -> bool {
-        matches!(self, Self::Current(selectors) if selectors.slice().iter().any(|selector| selector.has_scope_selector()))
+        matches!(self, Self::Current(selectors) if selectors.slice().iter().any(parser::Selector::has_scope_selector))
     }
     fn replace_parent_selector(&self, parent: &SelectorList<StaticSelector>) -> Option<Self> {
         match self {

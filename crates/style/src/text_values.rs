@@ -267,10 +267,10 @@ impl TextIndent {
         })
     }
     pub fn resolve(&self, basis: f32, first: bool, after_forced_break: bool) -> f32 {
-        if (first || (self.each_line && after_forced_break)) != self.hanging {
-            self.amount.resolve(basis)
-        } else {
+        if (first || (self.each_line && after_forced_break)) == self.hanging {
             0.0
+        } else {
+            self.amount.resolve(basis)
         }
     }
 }

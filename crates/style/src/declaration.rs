@@ -150,7 +150,7 @@ pub(crate) fn parse_at_origin(
             layer: Default::default(),
             font_namespace: ferri_pdf_fonts::FontNamespace::ROOT,
             namespaces: declaration.namespaces.clone(),
-        })
+        });
     };
     if declaration.name.starts_with(CUSTOM_PROPERTY_PREFIX) {
         let contextual = variables::Value::with_substitutions(&declaration.value)?
@@ -560,7 +560,7 @@ pub(crate) fn substitute(
     let Some(value) = pending.value.substitute(environment, inherited)? else {
         return Ok(None);
     };
-    expand_substitution(pending, value)
+    expand_substitution(pending, &value)
 }
 
 pub(super) fn expand_expanded(
@@ -578,9 +578,9 @@ pub(super) fn expand_expanded(
 
 pub(super) fn expand_substitution(
     pending: &Pending,
-    value: variables::Expanded,
+    value: &variables::Expanded,
 ) -> Result<Option<Vec<(Property, Specified)>>, StyleError> {
-    if value.has_taint() && expand_expanded(pending.property, &value)?.is_none() {
+    if value.has_taint() && expand_expanded(pending.property, value)?.is_none() {
         return Ok(None);
     }
     let mut declaration = Declaration {

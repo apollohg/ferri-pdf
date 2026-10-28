@@ -81,7 +81,7 @@ pub(super) enum Fragmentainer {
 impl Fragmentainer {
     /// `column` and `avoid-column` apply only between columns; a page break also breaks the
     /// column (CSS Fragmentation 3 §3.1).
-    pub fn between(self, value: BreakBetween) -> BreakBetween {
+    pub(crate) fn between(self, value: BreakBetween) -> BreakBetween {
         match (self, value) {
             (Self::Page, BreakBetween::Column | BreakBetween::AvoidColumn) => BreakBetween::Auto,
             (Self::Column, BreakBetween::AvoidColumn) => BreakBetween::Avoid,
@@ -89,11 +89,11 @@ impl Fragmentainer {
         }
     }
     /// `break-before` and `break-after` of `style` in this fragmentainer.
-    pub fn edges(self, style: &Style) -> [BreakBetween; 2] {
+    pub(crate) fn edges(self, style: &Style) -> [BreakBetween; 2] {
         [style.break_before, style.break_after].map(|value| self.between(value))
     }
     /// Whether `break-inside` avoids breaks into this fragmentainer.
-    pub fn keeps(self, style: &Style) -> bool {
+    pub(crate) fn keeps(self, style: &Style) -> bool {
         match style.keep {
             BreakInside::Auto => false,
             BreakInside::Avoid => true,
@@ -114,7 +114,7 @@ pub(super) enum Forced {
 }
 impl Forced {
     /// The forced break of a resolved break value.
-    pub fn of(value: BreakBetween) -> Option<Self> {
+    pub(crate) fn of(value: BreakBetween) -> Option<Self> {
         match value {
             BreakBetween::Page => Some(Self::Page),
             BreakBetween::Column => Some(Self::Column),
@@ -125,13 +125,13 @@ impl Forced {
             BreakBetween::Auto | BreakBetween::Avoid | BreakBetween::AvoidColumn => None,
         }
     }
-    pub fn is_page(self) -> bool {
+    pub(crate) fn is_page(self) -> bool {
         self != Self::Column
     }
-    pub fn side(self, rtl: bool) -> Option<ferri_pdf_style::PageSide> {
+    pub(crate) fn side(self, rtl: bool) -> Option<ferri_pdf_style::PageSide> {
         self.value().page_side(rtl)
     }
-    pub fn combine(earlier: Option<Self>, later: Option<Self>) -> Option<Self> {
+    pub(crate) fn combine(earlier: Option<Self>, later: Option<Self>) -> Option<Self> {
         Self::of(
             earlier
                 .map_or(BreakBetween::Auto, Self::value)

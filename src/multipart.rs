@@ -35,6 +35,7 @@ impl<'a> HtmlPart<'a> {
         }
     }
     /// Override the common base; distinct document URLs enable URL-scoped links.
+    #[must_use]
     pub fn with_base(mut self, base: impl Into<ResourceBase>) -> Self {
         self.base = Some(base.into());
         self
@@ -147,7 +148,7 @@ pub fn render_parts_with_resolver(
                     .next()
                     .expect("writer returns diagnostics for every part")
                     .into_iter()
-                    .map(|error| crate::RenderDiagnostic::ImageDecode { error }),
+                    .map(|error| RenderDiagnostic::ImageDecode { error }),
             );
             let result = PartOutput {
                 first_page: page_count + 1,

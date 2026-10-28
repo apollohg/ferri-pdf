@@ -34,7 +34,7 @@ pub(super) const PAGE_MARGINS: [Property; 4] = [
 /// A stylesheet and the directory for resolving its relative resource references.
 pub struct StylesheetSource {
     pub text: String,
-    pub base: ferri_pdf_resources::ResourceBase,
+    pub base: ResourceBase,
 }
 
 #[derive(Clone)]
@@ -72,7 +72,7 @@ pub struct Stylesheet {
 /// Declarations with relative `url()`s resolved against the declaring stylesheet.
 pub(super) fn parsed(
     declarations: Vec<Declaration>,
-    base: &ferri_pdf_resources::ResourceBase,
+    base: &ResourceBase,
     diagnostics: &RefCell<Vec<StyleDiagnostic>>,
     namespace: FontNamespace,
 ) -> Result<Vec<PropertyDeclaration>, StyleError> {
@@ -86,7 +86,7 @@ pub(super) fn parsed(
         } else {
             Ok(())
         }
-        .and_then(|_| declaration::parse(&declaration, &mut output));
+        .and_then(|()| declaration::parse(&declaration, &mut output));
         for parsed in &mut output[before..] {
             parsed.font_namespace = namespace;
         }
@@ -97,7 +97,7 @@ pub(super) fn parsed(
                     location: declaration.location.clone(),
                     kind: StyleDiagnosticKind::InvalidDeclaration,
                     context: format!("{}: {}", declaration.name, declaration.value),
-                })
+                });
             }
             Err(error) => return Err(error),
         }
@@ -205,6 +205,7 @@ pub(super) fn implemented_page_descriptor(descriptor: Descriptor) -> bool {
 
 impl Stylesheet {
     /// Copies prepared rules and page context; source diagnostics remain with the original owner.
+    #[must_use]
     pub fn fork_for_layout(&self) -> Self {
         Self {
             environment: self.environment.clone(),
@@ -477,7 +478,7 @@ impl Stylesheet {
                         location,
                         kind: StyleDiagnosticKind::InvalidRule,
                         context,
-                    })
+                    });
                 }
                 Err(error) => return Err(error),
             }
@@ -502,7 +503,7 @@ impl Stylesheet {
     fn font_face(
         &mut self,
         declarations: &[Declaration],
-        base: ferri_pdf_resources::ResourceBase,
+        base: ResourceBase,
         namespace: FontNamespace,
     ) -> Result<(), StyleError> {
         let mut family = None;

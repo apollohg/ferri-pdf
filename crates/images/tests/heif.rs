@@ -84,7 +84,7 @@ fn ten_bit_heif_preserves_precision_against_libheif_reference() {
     ));
     let color: Vec<u16> = decoded
         .color()
-        .as_chunks::<{ std::mem::size_of::<u16>() }>()
+        .as_chunks::<{ size_of::<u16>() }>()
         .0
         .iter()
         .copied()
@@ -93,7 +93,7 @@ fn ten_bit_heif_preserves_precision_against_libheif_reference() {
     let alpha: Vec<u16> = decoded
         .alpha()
         .unwrap()
-        .as_chunks::<{ std::mem::size_of::<u16>() }>()
+        .as_chunks::<{ size_of::<u16>() }>()
         .0
         .iter()
         .copied()

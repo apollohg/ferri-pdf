@@ -88,7 +88,7 @@ pub(super) fn wrap<'a>(
         clearance_before: None,
         clearance_target: measurer
             .clearance_targets
-            .get(&(source as *const BlockBox))
+            .get(&std::ptr::from_ref::<BlockBox>(source))
             .copied(),
         source,
         geometry: geometry::HorizontalBox {

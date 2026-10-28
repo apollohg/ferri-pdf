@@ -1,6 +1,7 @@
 use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_resources::FileResolver;
 use ferri_pdf_style::{LengthPercentage, Style, Stylesheet, StylesheetSource};
+use std::fmt::Write;
 
 fn computed(css: &str, html: &str) -> Vec<Style> {
     let sheet = Stylesheet::parse(&[StylesheetSource {
@@ -86,7 +87,7 @@ fn invalid_shorthand_substitution_resets_every_component() {
         "<p id=root>X</p>",
     );
     assert!(
-        s[0].padding.iter().all(|value| value.is_zero()),
+        s[0].padding.iter().all(LengthPercentage::is_zero),
         "one invalid component invalidates the whole shorthand"
     );
 }
@@ -110,11 +111,12 @@ fn recursive_expansion_is_rejected_before_unbounded_allocation() {
     const EXPANSION_LEVELS: usize = 22;
     let mut css = String::from("#root{--v0:x;");
     for level in 1..EXPANSION_LEVELS {
-        css.push_str(&format!(
+        let _ = write!(
+            css,
             "--v{level}:var(--v{}) var(--v{});",
             level - 1,
             level - 1
-        ));
+        );
     }
     css.push('}');
     let sheet = Stylesheet::parse(&[StylesheetSource {
@@ -160,7 +162,7 @@ fn empty_custom_properties_still_consume_the_environment_budget() {
     const PROPERTY_COUNT: usize = 20_000;
     let mut css = String::from("#root{");
     for index in 0..PROPERTY_COUNT {
-        css.push_str(&format!("--empty{index}:;"));
+        let _ = write!(css, "--empty{index}:;");
     }
     css.push('}');
     let sheet = Stylesheet::parse(&[StylesheetSource {

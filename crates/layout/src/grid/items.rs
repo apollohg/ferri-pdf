@@ -33,19 +33,19 @@ pub(super) struct Baselines {
     pub items: Vec<(usize, Option<f32>)>,
 }
 impl Baselines {
-    pub fn new(rows: usize) -> Self {
+    pub(super) fn new(rows: usize) -> Self {
         Self {
             groups: vec![f32::NEG_INFINITY; rows],
             items: Vec::new(),
         }
     }
-    pub fn push(&mut self, row: usize, baseline: Option<f32>) {
+    pub(super) fn push(&mut self, row: usize, baseline: Option<f32>) {
         if let Some(baseline) = baseline {
             self.groups[row] = self.groups[row].max(baseline);
         }
         self.items.push((row, baseline));
     }
-    pub fn container(
+    pub(super) fn container(
         &self,
         cells: &[MeasuredCell<'_>],
         areas: &[[Range<usize>; 2]],
@@ -83,7 +83,7 @@ impl Baselines {
         })
     }
 
-    pub fn offset(&self, index: usize) -> f32 {
+    pub(super) fn offset(&self, index: usize) -> f32 {
         let (row, baseline) = self.items[index];
         baseline.map_or(0.0, |baseline| self.groups[row] - baseline)
     }
@@ -138,7 +138,7 @@ fn offset(alignment: Alignment, free: f32, reverse: bool, own_reverse: bool) -> 
 }
 
 impl<'a> Item<'a> {
-    pub fn new(
+    pub(crate) fn new(
         source: &'a BlockBox,
         area: Range<f32>,
         parent: &HorizontalBox,
@@ -264,7 +264,7 @@ impl<'a> Item<'a> {
         self.parent = parent.map(|parent| parent.with_geometry(tracks, [vertical, [left, right]]));
     }
 
-    pub fn measure(
+    pub(crate) fn measure(
         &self,
         measurer: &mut Measurer<'_>,
         height: Option<f32>,
@@ -290,7 +290,7 @@ impl<'a> Item<'a> {
                 crate::geometry::horizontal_with_edges,
             )?;
             let geometry = plan.resolve_positioned(measurer, &self.geometry)?;
-            plan.measure_wrapped(measurer, geometry)
+            plan.measure_wrapped(measurer, &geometry)
                 .map(|(block, _)| block)
         } else {
             measurer.format_block(
@@ -303,7 +303,7 @@ impl<'a> Item<'a> {
         }
     }
 
-    pub fn measure_area(
+    pub(crate) fn measure_area(
         &self,
         measurer: &mut Measurer<'_>,
         available: f32,
@@ -320,7 +320,7 @@ impl<'a> Item<'a> {
         self.measure(measurer, Some(available), used)
     }
 
-    pub fn height(&self, available: Option<f32>) -> SizeConstraints {
+    pub(crate) fn height(&self, available: Option<f32>) -> SizeConstraints {
         let style = self.source.style();
         super::sizing::constraints(
             style,
@@ -357,14 +357,14 @@ impl<'a> Item<'a> {
         )?)
     }
 
-    pub fn vertical_edges(&self) -> f32 {
+    pub(crate) fn vertical_edges(&self) -> f32 {
         self.geometry.padding[0]
             + self.geometry.padding[2]
             + self.geometry.border[0]
             + self.geometry.border[2]
     }
 
-    pub fn baseline(&self, measured: &ItemMetrics, intrinsic_tracks: bool) -> Option<f32> {
+    pub(crate) fn baseline(&self, measured: &ItemMetrics, intrinsic_tracks: bool) -> Option<f32> {
         let style = self.source.style();
         let cyclic = intrinsic_tracks
             && [&style.height, &style.min_height, &style.max_height]
@@ -379,7 +379,7 @@ impl<'a> Item<'a> {
             .then(|| measured.baseline.unwrap_or(measured.height) + self.margins[0].unwrap_or(0.0))
     }
 
-    pub fn stretch(&self) -> bool {
+    pub(crate) fn stretch(&self) -> bool {
         (super::sizing::shared(self.source.style(), ROWS)
             || self
                 .source
@@ -393,7 +393,7 @@ impl<'a> Item<'a> {
                     && self.source.image().is_none()))
     }
 
-    pub fn top(&self, available: f32, height: f32) -> f32 {
+    pub(crate) fn top(&self, available: f32, height: f32) -> f32 {
         let free =
             available - height - self.margins[0].unwrap_or(0.0) - self.margins[2].unwrap_or(0.0);
         let auto = usize::from(self.margins[0].is_none()) + usize::from(self.margins[2].is_none());

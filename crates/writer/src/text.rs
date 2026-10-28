@@ -50,7 +50,7 @@ pub(super) struct TextWriter<'a> {
     glyphs: Vec<PdfGlyph<'a>>,
 }
 impl<'a> TextWriter<'a> {
-    pub fn new(fonts: &'a FontBook) -> Self {
+    pub(crate) fn new(fonts: &'a FontBook) -> Self {
         Self {
             fonts,
             data: vec![None; fonts.faces().len()],
@@ -58,7 +58,11 @@ impl<'a> TextWriter<'a> {
             glyphs: Vec::new(),
         }
     }
-    pub fn draw(&mut self, line: &'a TextLine, surface: &mut Surface<'_>) -> Result<(), PdfError> {
+    pub(crate) fn draw(
+        &mut self,
+        line: &'a TextLine,
+        surface: &mut Surface<'_>,
+    ) -> Result<(), PdfError> {
         if line.runs.iter().any(|run| run.rtl || run.has_bidi_scopes()) {
             surface.with_actual_text(&line.text, |surface| self.draw_runs(line, surface))
         } else {

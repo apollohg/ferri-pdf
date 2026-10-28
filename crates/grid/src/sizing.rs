@@ -215,7 +215,7 @@ fn validate(
         if !contributions
             .into_iter()
             .chain(item.content_minimum)
-            .all(|value| value.is_finite())
+            .all(f32::is_finite)
         {
             return Err(GridError::InvalidGeometry);
         }

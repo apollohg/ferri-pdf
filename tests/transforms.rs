@@ -352,8 +352,8 @@ fn table_row_and_group_transforms_use_the_structural_reference_box() {
                     0.0,
                     0.0,
                     0.5,
-                    (PAGE_MARGIN_PT + 80.0) / 2.0,
-                    (PAGE_MARGIN_PT + height / 2.0) / 2.0,
+                    f32::midpoint(PAGE_MARGIN_PT, 80.0),
+                    f32::midpoint(PAGE_MARGIN_PT, height / 2.0),
                 ],
             ),
         ] {
@@ -369,7 +369,7 @@ fn table_row_and_group_transforms_use_the_structural_reference_box() {
                 "<table><tbody><tr><td>A</td><td>B</td></tr><tr><td>C</td><td>D</td></tr></tbody></table><p>After</p>",
             );
             let matrices = transforms(&output.display_lists[0]);
-            assert!(!matrices.is_empty());
+            assert_ne!(matrices, [] as [[f32; 6]; 0]);
             for matrix in matrices {
                 assert_matrix(selector, matrix, expected);
             }
@@ -385,7 +385,14 @@ fn structural_transforms_in_columns_use_the_placed_column_origin() {
     );
     let matrices = transforms(&output.display_lists[0]);
     for (x, y) in [(36.0, 36.0), (36.0, 76.0), (156.0, 36.0), (156.0, 76.0)] {
-        let expected = [0.5, 0.0, 0.0, 0.5, (x + 50.0) / 2.0, (y + 20.0) / 2.0];
+        let expected = [
+            0.5,
+            0.0,
+            0.0,
+            0.5,
+            f32::midpoint(x, 50.0),
+            f32::midpoint(y, 20.0),
+        ];
         assert!(
             matrices.iter().any(|matrix| matrix
                 .iter()

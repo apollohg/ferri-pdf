@@ -21,7 +21,7 @@ impl AxisLines {
         self.names.len().saturating_sub(1) as i64
     }
     fn named(&self, line: i64, name: &str) -> bool {
-        usize::try_from(line).ok().is_some_and(|line| {
+        usize::try_from(line).is_ok_and(|line| {
             self.names
                 .get(line)
                 .into_iter()

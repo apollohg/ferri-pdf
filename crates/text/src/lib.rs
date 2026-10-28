@@ -288,7 +288,7 @@ impl Line {
             .chain(self.atomics.iter().map(|atomic| atomic.offset))
             .min()
             .is_none_or(|start| offset <= start);
-        if at_start != rtl { 0.0 } else { self.width }
+        if at_start == rtl { self.width } else { 0.0 }
     }
 }
 

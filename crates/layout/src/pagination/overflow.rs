@@ -21,10 +21,10 @@ impl Paginator<'_, '_, '_> {
     }
 
     pub(super) fn propagate_overflow(&mut self, active: &ActiveBox<'_>, style: &Style) {
-        if !self
+        if self
             .boxes
             .last()
-            .is_some_and(|parent| parent.overflow.is_some())
+            .is_none_or(|parent| parent.overflow.is_none())
             && self.root_overflow.is_none()
         {
             return;

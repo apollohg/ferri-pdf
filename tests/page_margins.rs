@@ -173,13 +173,13 @@ fn page_counters_share_predefined_styles_without_marker_punctuation() {
     const PAGE_COUNT: usize = 28;
     let body = (0..PAGE_COUNT).map(|_| "<p>Body</p>").collect::<String>();
     let html = format!(
-        r#"<style>{PROFILE}
+        r"<style>{PROFILE}
       p + p {{break-before:page}}
       @page {{
         @top-left {{content:counter(page,lower-roman) '|' counter(page,lower-alpha) '|' counter(page,lower-greek) '|' counter(page,decimal-leading-zero)}}
         @bottom-center {{content:counter(pages,upper-roman)}}
       }}
-      </style>{body}"#
+      </style>{body}"
     );
     let trace = render_html(&html, &local_options())
         .expect("predefined page counter styles")
@@ -207,10 +207,10 @@ fn page_counters_share_predefined_styles_without_marker_punctuation() {
             "total pages must use its own counter style: {text:?}"
         );
     }
-    let symbols = render_html(&format!(r#"<style>{PROFILE}
+    let symbols = render_html(&format!(r"<style>{PROFILE}
       @page {{@top-left {{content:'[' counter(page,disc) counter(page,circle) counter(page,square) counter(page,none) ']'}}
                @bottom-center {{content:counter(page,upper-latin) '/' counter(pages,lower-latin)}}}}
-      </style><p>Body</p>"#), &local_options()).unwrap().layout.unwrap();
+      </style><p>Body</p>"), &local_options()).unwrap().layout.unwrap();
     let text = symbols.pages[0]
         .iter()
         .map(|line| line.text.as_str())

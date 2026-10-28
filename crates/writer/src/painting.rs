@@ -285,7 +285,7 @@ pub(super) fn contour_path(contours: &[Contour]) -> Result<krilla::geom::Path, P
             match *segment {
                 Segment::Line(point) => path.line_to(point[0], point[1]),
                 Segment::Cubic([first, second, end]) => {
-                    path.cubic_to(first[0], first[1], second[0], second[1], end[0], end[1])
+                    path.cubic_to(first[0], first[1], second[0], second[1], end[0], end[1]);
                 }
             }
         }

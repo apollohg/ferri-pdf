@@ -51,7 +51,7 @@ pub(crate) fn assignments(value: &Component) -> Result<Arc<[StringAssignment]>, 
 fn assignment_parts<'a>(value: &'a Component, parts: &mut Vec<&'a Component>) {
     match value {
         Component::Reference(Label::Production(Production::NamedStringContent), _) => {
-            parts.push(value)
+            parts.push(value);
         }
         Component::Reference(_, inner) => assignment_parts(inner, parts),
         Component::Group(items) => {

@@ -20,7 +20,7 @@ fn emergency_wrap_preserves_words_when_they_fit_and_never_splits_combining_seque
             .map(|line| line.text.as_str())
             .collect::<String>()
             .replace(' ', ""),
-        "onetwoabcdefghijklmnopqrstuvwxyztail".to_owned() + &"é".repeat(10)
+        "onetwoabcdefghijklmnopqrstuvwxyztail".to_owned() + &"e\u{301}".repeat(10)
     );
     assert!(lines.iter().all(|line| !line.text.starts_with('\u{301}')));
     let fit = format!(
@@ -81,7 +81,7 @@ fn oversized_graphemes_make_progress_without_inventing_blank_lines() {
             .iter()
             .map(|line| line.text.as_str())
             .collect::<Vec<_>>(),
-        ["W", "W", "é", "é"]
+        ["W", "W", "e\u{301}", "e\u{301}"]
     );
 }
 

@@ -63,15 +63,19 @@ pub(super) struct NestedRule {
     pub nesting: bool,
 }
 impl NestedRule {
-    pub fn work(&self, parent: &[RuleSelector]) -> usize {
+    pub(crate) fn work(&self, parent: &[RuleSelector]) -> usize {
         crate::selector::selector_work(&self.selectors, if self.nesting { parent } else { &[] })
     }
-    pub fn location(&self) -> SourceLocation {
+    pub(crate) fn location(&self) -> SourceLocation {
         self.source.location.clone()
     }
 }
 pub(super) struct ImportRule {
     pub reference: String,
+    #[expect(
+        clippy::option_option,
+        reason = "outer is whether the import is layered, inner is the layer block's anonymous-or-named name"
+    )]
     pub layer: Option<Option<crate::layers::LayerName>>,
     pub support: Option<crate::supports::SupportsCondition>,
     pub media: crate::media::MediaQuery,
@@ -104,10 +108,10 @@ fn relocate(location: &mut SourceLocation, start: &SourceLocation) {
 }
 
 impl RuleSource {
-    pub fn location(&self) -> SourceLocation {
+    pub(crate) fn location(&self) -> SourceLocation {
         self.location.clone()
     }
-    pub fn supports(self, budget: &mut crate::loader::Budget) -> Result<bool, StyleError> {
+    pub(crate) fn supports(self, budget: &mut crate::loader::Budget) -> Result<bool, StyleError> {
         supports_block_with_namespaces(
             &self.text[self.range],
             &self.location,
@@ -116,7 +120,7 @@ impl RuleSource {
             self.context,
         )
     }
-    pub fn parse(
+    pub(crate) fn parse(
         self,
         diagnostics: &RefCell<Vec<StyleDiagnostic>>,
         budget: &mut crate::loader::Budget,
@@ -172,7 +176,7 @@ impl RuleSource {
                         | Rule::Scope(_, source)
                         | Rule::Conditional(_, _, source)
                         | Rule::SupportDefinition(_, source) => {
-                            relocate(&mut source.location, &self.location)
+                            relocate(&mut source.location, &self.location);
                         }
                         Rule::Import(_, location) => relocate(location, &self.location),
                         Rule::Namespace | Rule::LayerStatement(_) | Rule::CustomMedia(..) => {}
@@ -231,7 +235,7 @@ impl AtRuleName {
                 | Self::Else
         )
     }
-    pub fn parse(name: &str) -> Option<Self> {
+    pub(crate) fn parse(name: &str) -> Option<Self> {
         match name.to_ascii_lowercase().as_str() {
             "page" => Some(Self::Page),
             "font-face" => Some(Self::Font),
@@ -378,15 +382,14 @@ fn layer_name<'i>(
     let mut name = vec![first.to_string()];
     loop {
         let state = input.state();
-        match input.next_including_whitespace().cloned() {
-            Ok(Token::Delim('.')) => match input.next_including_whitespace()?.clone() {
+        if let Ok(Token::Delim('.')) = input.next_including_whitespace().cloned() {
+            match input.next_including_whitespace()?.clone() {
                 Token::Ident(segment) => name.push(segment.to_string()),
                 token => return Err(input.new_unexpected_token_error(token)),
-            },
-            _ => {
-                input.reset(&state);
-                break;
             }
+        } else {
+            input.reset(&state);
+            break;
         }
     }
     if name
@@ -427,7 +430,7 @@ pub(super) fn balanced_components(source: &str) -> Result<bool, StyleError> {
                 | Token::CurlyBracketBlock => {
                     let (source, end) = input
                         .parse_nested_block(|nested| {
-                            let source = crate::conditions::block_source(nested);
+                            let source = block_source(nested);
                             Ok::<_, ParseError<'_, StyleError>>((
                                 source,
                                 nested.position().byte_index(),
@@ -565,7 +568,7 @@ fn consume_nested<'i>(
             | Token::ParenthesisBlock
             | Token::SquareBracketBlock
             | Token::CurlyBracketBlock => {
-                input.parse_nested_block(|nested| consume_nested(nested, depth + 1))?
+                input.parse_nested_block(|nested| consume_nested(nested, depth + 1))?;
             }
             token @ (Token::BadUrl(_)
             | Token::BadString(_)
@@ -621,7 +624,7 @@ fn url_references<'i>(
             | Token::ParenthesisBlock
             | Token::SquareBracketBlock
             | Token::CurlyBracketBlock => {
-                input.parse_nested_block(|nested| url_references(nested, found))?
+                input.parse_nested_block(|nested| url_references(nested, found))?;
             }
             _ => {}
         }
@@ -632,8 +635,8 @@ fn url_references<'i>(
 /// values require; absolute and `data:` references are unchanged.
 pub(super) fn absolute_urls(
     declaration: &mut Declaration,
-    base: &ferri_pdf_resources::ResourceBase,
-) -> Result<(), crate::StyleError> {
+    base: &ResourceBase,
+) -> Result<(), StyleError> {
     if !declaration.value.contains('\\')
         && !declaration
             .value
@@ -776,21 +779,21 @@ pub(super) fn recover<'i>(
 pub(super) fn failure(error: ParseError<'_, StyleError>) -> StyleError {
     match error.kind {
         cssparser::ParseErrorKind::Custom(error) => error,
-        _ => StyleError::Invalid(format!("{error:?}")),
+        cssparser::ParseErrorKind::Basic(_) => StyleError::Invalid(format!("{error:?}")),
     }
 }
 
-impl<'i> AtRuleParser<'i> for Declarations<'_> {
+impl AtRuleParser<'_> for Declarations<'_> {
     type Prelude = ();
     type AtRule = Declaration;
     type Error = StyleError;
 }
-impl<'i> QualifiedRuleParser<'i> for Declarations<'_> {
+impl QualifiedRuleParser<'_> for Declarations<'_> {
     type Prelude = ();
     type QualifiedRule = Declaration;
     type Error = StyleError;
 }
-impl<'i> RuleBodyItemParser<'i, Declaration, StyleError> for Declarations<'_> {
+impl RuleBodyItemParser<'_, Declaration, StyleError> for Declarations<'_> {
     fn parse_declarations(&self) -> bool {
         true
     }
@@ -820,7 +823,7 @@ pub(super) fn declarations<'i>(
     Ok(output)
 }
 fn at_prelude<'i>(
-    name: CowRcStr<'i>,
+    name: &str,
     input: &mut Parser<'i, '_>,
     chain: &mut Option<cssparser::SourcePosition>,
     namespaces: &Namespaces,
@@ -828,7 +831,7 @@ fn at_prelude<'i>(
     forgiving: bool,
 ) -> Result<AtPrelude, ParseError<'i, StyleError>> {
     let previous = chain.take();
-    let kind = AtRuleName::parse(&name).ok_or_else(|| {
+    let kind = AtRuleName::parse(name).ok_or_else(|| {
         input.new_custom_error(StyleError::Invalid(format!("unknown at-rule: @{name}")))
     })?;
     if matches!(kind, AtRuleName::Scope) {
@@ -852,7 +855,7 @@ fn at_prelude<'i>(
         AtRuleName::Media | AtRuleName::Supports | AtRuleName::When | AtRuleName::Else
     ) {
         let empty = input.is_exhausted();
-        let source = crate::conditions::block_source(input);
+        let source = block_source(input);
         let query = match kind {
             AtRuleName::Media => crate::conditions::RuleQuery::Media(
                 crate::media::MediaQuery::parse(source)
@@ -899,17 +902,17 @@ fn at_prelude<'i>(
             )));
         }
         let start = input.state();
-        let query = if let Ok(value) = input.try_parse(|input| input.expect_ident_cloned()) {
+        let query = if let Ok(value) = input.try_parse(Parser::expect_ident_cloned) {
             if value.eq_ignore_ascii_case("true") || value.eq_ignore_ascii_case("false") {
                 input.expect_exhausted()?;
                 crate::media::MediaQuery::constant(value.eq_ignore_ascii_case("true"))
             } else {
                 input.reset(&start);
-                crate::media::MediaQuery::parse(crate::conditions::block_source(input))
+                crate::media::MediaQuery::parse(block_source(input))
                     .map_err(|error| input.new_custom_error(error))?
             }
         } else {
-            crate::media::MediaQuery::parse(crate::conditions::block_source(input))
+            crate::media::MediaQuery::parse(block_source(input))
                 .map_err(|error| input.new_custom_error(error))?
         };
         return Ok(AtPrelude::CustomMedia(name.to_string(), query));
@@ -1016,7 +1019,7 @@ impl<'i> AtRuleParser<'i> for CssParser<'_> {
             ))));
         }
         at_prelude(
-            name,
+            &name,
             input,
             &mut self.chain,
             &self.namespaces,
@@ -1185,7 +1188,7 @@ impl<'i> DeclarationParser<'i> for CssParser<'_> {
             .map(|declaration| Rule::Declarations(vec![declaration], false))
     }
 }
-impl<'i> RuleBodyItemParser<'i, Rule, StyleError> for CssParser<'_> {
+impl RuleBodyItemParser<'_, Rule, StyleError> for CssParser<'_> {
     fn parse_declarations(&self) -> bool {
         true
     }
@@ -1473,7 +1476,7 @@ impl<'i> AtRuleParser<'i> for SupportProbe<'_> {
             unreachable!("descriptor contexts reject nested at-rules")
         };
         let prelude = at_prelude(
-            name,
+            &name,
             input,
             &mut self.chain,
             self.namespaces,
@@ -1612,7 +1615,7 @@ fn supports_block_with_namespaces(
             match item {
                 Ok(ProbeItem::Checked(true)) => {}
                 Ok(ProbeItem::Body(context, source, location)) => {
-                    pending.push((context, source, location, depth + 1))
+                    pending.push((context, source, location, depth + 1));
                 }
                 Ok(ProbeItem::Checked(false)) => return Ok(false),
                 Err((error, _)) => match failure(error) {

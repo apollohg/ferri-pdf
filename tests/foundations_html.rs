@@ -20,7 +20,7 @@ fn formatting_element<'a>(tree: &'a DocumentTree, id: &str) -> ferri_pdf_dom::El
     tree.root_element()
         .as_node()
         .inclusive_descendants(TreeRelation::Formatting)
-        .filter_map(|node| node.element())
+        .filter_map(ferri_pdf_dom::Node::element)
         .find(|element| element.attr("id") == Some(id))
         .expect("the composed formatting tree contains the requested shadow element")
 }
@@ -81,14 +81,14 @@ fn declarative_shadow_slots_preserve_three_relationships() {
     );
     assert_eq!(
         host.children(TreeRelation::Formatting)
-            .map(|element| element.id())
+            .map(ferri_pdf_dom::Element::id)
             .collect::<Vec<_>>(),
         [shadow.id()]
     );
     assert_eq!(
         named
             .children(TreeRelation::Formatting)
-            .map(|element| element.id())
+            .map(ferri_pdf_dom::Element::id)
             .collect::<Vec<_>>(),
         [assigned.id()],
         "slot projection retains original light-node identity"
@@ -273,7 +273,7 @@ fn formatting_depth_limit_covers_block_inline_atomic_and_positioned_trees() {
                         match content {
                             BlockContent::Events(_) => {}
                             BlockContent::Block(child) | BlockContent::Positioned(child) => {
-                                pending.push(child)
+                                pending.push(child);
                             }
                             BlockContent::Inline(paragraph) => {
                                 text.extend(paragraph.text().chars().filter(|ch| {
@@ -432,7 +432,7 @@ fn scripting_disabled_noscript_and_template_parse_correctly() {
     assert!(contents.parent(TreeRelation::Selector).is_none());
     let inside = contents
         .children(TreeRelation::Selector)
-        .filter_map(|node| node.element())
+        .filter_map(ferri_pdf_dom::Node::element)
         .find(|element| element.attr("id") == Some("inside"))
         .unwrap();
     assert!(inside.parent(TreeRelation::Selector).is_none());
@@ -458,7 +458,7 @@ fn ordinary_tree_relations_preserve_existing_rendering() {
         assert_eq!(
             child
                 .children(relation)
-                .map(|element| element.name())
+                .map(ferri_pdf_dom::Element::name)
                 .collect::<Vec<_>>(),
             ["em"]
         );

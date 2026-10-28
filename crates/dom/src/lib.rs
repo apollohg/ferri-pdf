@@ -106,7 +106,7 @@ impl DocumentTree {
                         }
                     }
                 }
-                _ => {}
+                TokenizerResult::Script(_) => {}
             }
         }
         let (html, shadow) = parser.finish()?;

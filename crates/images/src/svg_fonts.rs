@@ -30,11 +30,11 @@ impl std::fmt::Debug for SvgFonts {
                 "registered_faces",
                 &self.registry.get().map(|registry| registry.ids.len()),
             )
-            .finish()
+            .finish_non_exhaustive()
     }
 }
 impl SvgFonts {
-    pub fn new(book: Arc<FontBook>) -> Self {
+    pub(crate) fn new(book: Arc<FontBook>) -> Self {
         Self {
             book,
             namespace: FontNamespace::ROOT,
@@ -89,16 +89,16 @@ impl SvgFonts {
             }
         })
     }
-    pub fn in_namespace(&self, namespace: FontNamespace) -> Self {
+    pub(crate) fn in_namespace(&self, namespace: FontNamespace) -> Self {
         Self {
             namespace,
             ..self.clone()
         }
     }
-    pub fn database(&self) -> Arc<fontdb::Database> {
+    pub(crate) fn database(&self) -> Arc<fontdb::Database> {
         self.registry().database.clone()
     }
-    pub fn provider<'a>(&self, resolver: Option<&'a dyn ResourceResolver>) -> Provider<'a> {
+    pub(crate) fn provider<'a>(&self, resolver: Option<&'a dyn ResourceResolver>) -> Provider<'a> {
         Provider {
             fonts: self.clone(),
             resolver,
@@ -148,7 +148,7 @@ pub(crate) struct Provider<'a> {
     coverage: RefCell<HashMap<(FontId, char), bool>>,
 }
 impl Provider<'_> {
-    pub fn finish(self) -> Result<SvgFonts, FontError> {
+    pub(crate) fn finish(self) -> Result<SvgFonts, FontError> {
         if let Some(error) = self.failure.into_inner() {
             return Err(error);
         }
@@ -184,38 +184,32 @@ impl Provider<'_> {
         *database = fonts.database();
         let selection = selection(font)?;
         let cached = self.candidates.borrow().get(font).cloned();
-        let candidates = match cached {
-            Some(candidates) => candidates,
-            None => {
-                let families = font
-                    .families()
-                    .iter()
-                    .map(|family| match family {
-                        usvg::FontFamily::Serif => FontFamily::Generic(GenericFamily::Serif),
-                        usvg::FontFamily::SansSerif => {
-                            FontFamily::Generic(GenericFamily::SansSerif)
-                        }
-                        usvg::FontFamily::Monospace => {
-                            FontFamily::Generic(GenericFamily::Monospace)
-                        }
-                        usvg::FontFamily::Cursive | usvg::FontFamily::Fantasy => {
-                            FontFamily::Generic(DEFAULT_FAMILY)
-                        }
-                        usvg::FontFamily::Named(name) => FontFamily::Named(name.clone()),
-                    })
-                    .collect::<Vec<_>>();
-                let families = if font.uses_default_family() {
-                    vec![FontFamily::Generic(DEFAULT_FAMILY)]
-                } else {
-                    families
-                };
-                let candidates =
-                    book.candidates_in_namespace(fonts.namespace, &families, selection);
-                self.candidates
-                    .borrow_mut()
-                    .insert(font.clone(), candidates.clone());
-                candidates
-            }
+        let candidates = if let Some(candidates) = cached {
+            candidates
+        } else {
+            let families = font
+                .families()
+                .iter()
+                .map(|family| match family {
+                    usvg::FontFamily::Serif => FontFamily::Generic(GenericFamily::Serif),
+                    usvg::FontFamily::SansSerif => FontFamily::Generic(GenericFamily::SansSerif),
+                    usvg::FontFamily::Monospace => FontFamily::Generic(GenericFamily::Monospace),
+                    usvg::FontFamily::Cursive | usvg::FontFamily::Fantasy => {
+                        FontFamily::Generic(DEFAULT_FAMILY)
+                    }
+                    usvg::FontFamily::Named(name) => FontFamily::Named(name.clone()),
+                })
+                .collect::<Vec<_>>();
+            let families = if font.uses_default_family() {
+                vec![FontFamily::Generic(DEFAULT_FAMILY)]
+            } else {
+                families
+            };
+            let candidates = book.candidates_in_namespace(fonts.namespace, &families, selection);
+            self.candidates
+                .borrow_mut()
+                .insert(font.clone(), candidates.clone());
+            candidates
         };
         book.find_glyph(&candidates, |id| {
             let Some(mapped) = fonts.load(id, self.resolver)? else {
@@ -226,19 +220,18 @@ impl Provider<'_> {
             }
             if let Some(character) = character {
                 let cached = self.coverage.borrow().get(&(id, character)).copied();
-                let covered = match cached {
-                    Some(covered) => covered,
-                    None => {
-                        let Some(instance) = book.cached_instance(id, selection)? else {
-                            return Ok(GlyphMatch::Unavailable);
-                        };
-                        let covered = instance
-                            .face
-                            .glyph_index(character)
-                            .is_some_and(|glyph| glyph.0 != 0);
-                        self.coverage.borrow_mut().insert((id, character), covered);
-                        covered
-                    }
+                let covered = if let Some(covered) = cached {
+                    covered
+                } else {
+                    let Some(instance) = book.cached_instance(id, selection)? else {
+                        return Ok(GlyphMatch::Unavailable);
+                    };
+                    let covered = instance
+                        .face
+                        .glyph_index(character)
+                        .is_some_and(|glyph| glyph.0 != 0);
+                    self.coverage.borrow_mut().insert((id, character), covered);
+                    covered
                 };
                 if !covered {
                     return Ok(GlyphMatch::Missing);

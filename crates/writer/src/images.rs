@@ -21,7 +21,7 @@ pub(super) struct ImageWriter {
     vectors: HashMap<(usize, u32, u32), usvg::Tree>,
 }
 impl ImageWriter {
-    pub fn take_diagnostics(&mut self) -> Vec<String> {
+    pub(crate) fn take_diagnostics(&mut self) -> Vec<String> {
         self.reported.clear();
         std::mem::take(&mut self.diagnostics)
     }
@@ -31,7 +31,7 @@ impl ImageWriter {
         }
     }
 
-    pub fn draw(
+    pub(crate) fn draw(
         &mut self,
         paint: &ImagePaint,
         viewport: ferri_pdf_graphics::Rect,
@@ -86,7 +86,7 @@ impl ImageWriter {
         }
         let orientation = match paint.image.as_ref() {
             Asset::Raster(raster) => raster.orientation,
-            Asset::Pixels(_) => Orientation::NoTransforms,
+            Asset::Pixels(_) => NoTransforms,
             Asset::Svg(svg) => {
                 if let std::collections::hash_map::Entry::Vacant(entry) =
                     self.vectors.entry(vector_key)
@@ -95,10 +95,13 @@ impl ImageWriter {
                         .map(|v| v / ferri_pdf_style::POINTS_PER_PIXEL);
                     entry.insert(svg.tree(size).map_err(PdfError::Svg)?);
                 }
-                Orientation::NoTransforms
+                NoTransforms
             }
         };
-        use Orientation::*;
+        use Orientation::{
+            FlipHorizontal, FlipVertical, NoTransforms, Rotate90, Rotate90FlipH, Rotate180,
+            Rotate270, Rotate270FlipH,
+        };
         let [a, b, c, d, e, f] = match orientation {
             NoTransforms => [1.0, 0.0, 0.0, 1.0, 0.0, 0.0],
             FlipHorizontal => [-1.0, 0.0, 0.0, 1.0, 1.0, 0.0],
@@ -135,7 +138,7 @@ impl ImageWriter {
         let unit_size = Size::from_wh(1.0, 1.0).unwrap();
         match paint.image.as_ref() {
             Asset::Raster(_) | Asset::Pixels(_) => {
-                surface.draw_image(self.images[&key].clone(), unit_size)
+                surface.draw_image(self.images[&key].clone(), unit_size);
             }
             Asset::Svg(svg) => {
                 let errors = std::cell::RefCell::new(std::collections::BTreeSet::new());

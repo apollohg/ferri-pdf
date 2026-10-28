@@ -1,3 +1,7 @@
+#[allow(
+    clippy::wildcard_imports,
+    reason = "pagination submodules extend the parent paginator and share its scope"
+)]
 use super::*;
 
 #[cfg(test)]
@@ -137,7 +141,7 @@ struct CellFlow<'a, 't> {
     request: Option<BreakRequest>,
 }
 
-impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
+impl<'a, 't> Paginator<'a, '_, 't> {
     pub(super) fn flow_position(&self) -> FlowPosition<'a> {
         FlowPosition {
             page: self.page,
@@ -234,63 +238,62 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }) {
             let source = ancestor.source;
             let identity = std::ptr::from_ref(source) as usize;
-            let layer = match self
+            let layer = if let Some(layer) = self
                 .tables
                 .last()
                 .and_then(|table| table.layers.get(&identity))
                 .cloned()
             {
-                Some(layer) => layer,
-                None => {
-                    if !source.style().decoration.shadows.is_empty() {
-                        self.tables
-                            .last_mut()
-                            .expect("active table")
-                            .shadows
-                            .push(ancestor.clone());
-                    }
-                    let order = self.order();
-                    // CSS Tables ignores z-index on rows and row groups.
-                    let translucent = source.style().is_translucent();
-                    let transformed = !source.style().transform.is_empty();
-                    let clip = if transformed {
-                        let node = self.clips.len();
-                        self.clips.push(EffectNode {
-                            parent: self.clip,
-                            effect: Effect::Transform(source.style()),
-                            fragments: Vec::new(),
-                            areas: Vec::new(),
-                        });
-                        self.tables
-                            .last_mut()
-                            .expect("active table")
-                            .transforms
-                            .push((ancestor, node));
-                        Some(node)
-                    } else {
-                        self.clip
-                    };
-                    let group = if translucent {
-                        Some(self.opacity_group(self.group, source.style().opacity))
-                    } else {
-                        self.group
-                    };
-                    let mut paint = positioned_layer(
-                        &self.context,
-                        (translucent || transformed).then_some(0),
-                        order,
-                    );
-                    if !translucent && !transformed {
-                        paint.key = extend(&paint.key, FLOW_LEVEL);
-                    }
-                    let layer = TableLayer { paint, clip, group };
+                layer
+            } else {
+                if !source.style().decoration.shadows.is_empty() {
                     self.tables
                         .last_mut()
-                        .expect("table cell has an active table")
-                        .layers
-                        .insert(identity, layer.clone());
-                    layer
+                        .expect("active table")
+                        .shadows
+                        .push(ancestor.clone());
                 }
+                let order = self.order();
+                // CSS Tables ignores z-index on rows and row groups.
+                let translucent = source.style().is_translucent();
+                let transformed = !source.style().transform.is_empty();
+                let clip = if transformed {
+                    let node = self.clips.len();
+                    self.clips.push(EffectNode {
+                        parent: self.clip,
+                        effect: Effect::Transform(source.style()),
+                        fragments: Vec::new(),
+                        areas: Vec::new(),
+                    });
+                    self.tables
+                        .last_mut()
+                        .expect("active table")
+                        .transforms
+                        .push((ancestor, node));
+                    Some(node)
+                } else {
+                    self.clip
+                };
+                let group = if translucent {
+                    Some(self.opacity_group(self.group, source.style().opacity))
+                } else {
+                    self.group
+                };
+                let mut paint = positioned_layer(
+                    &self.context,
+                    (translucent || transformed).then_some(0),
+                    order,
+                );
+                if !translucent && !transformed {
+                    paint.key = extend(&paint.key, FLOW_LEVEL);
+                }
+                let layer = TableLayer { clip, paint, group };
+                self.tables
+                    .last_mut()
+                    .expect("table cell has an active table")
+                    .layers
+                    .insert(identity, layer.clone());
+                layer
             };
             self.context = layer.paint.context;
             self.key = layer.paint.key;
@@ -304,7 +307,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         block: MeasuredBlock<'a>,
         tail: BreakTail,
         start: CellStart,
-        mut float: Option<&mut super::floats::FloatPlacement>,
+        mut float: Option<&mut floats::FloatPlacement>,
     ) -> Result<CellContinuation<'a, 't>, LayoutError> {
         let CellStart {
             flex_item,
@@ -316,10 +319,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         } = start;
         let defer_positioned = table_cell && block.style.position != Position::Static;
         let layers = if table_cell {
-            self.tables
-                .last()
-                .map(|table| table.flow.plan.cell_layers(block.source))
-                .unwrap_or([None, None])
+            self.tables.last().map_or([None, None], |table| {
+                table.flow.plan.cell_layers(block.source)
+            })
         } else {
             [None, None]
         };
@@ -358,7 +360,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 let Some(placement) = float.as_deref_mut() else {
                     break;
                 };
-                block = self.reposition_float(block, placement)?;
+                block = self.reposition_float(&block, placement)?;
                 block.break_before = ferri_pdf_style::BreakBetween::Auto;
                 (block, request) = self.prepare_block(block, tail)?;
             }

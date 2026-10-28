@@ -73,12 +73,10 @@ pub(crate) fn prepare_initial_states<'a>(
                     .get(&parent.raw.id())
                     .expect("parent state precedes its child")
             });
-            let language = element
-                .declared_language()
-                .map(Arc::from)
-                .unwrap_or_else(|| {
-                    Arc::clone(parent.map_or(&default_language, |state| &state.language))
-                });
+            let language = element.declared_language().map_or_else(
+                || Arc::clone(parent.map_or(&default_language, |state| &state.language)),
+                Arc::from,
+            );
             let input_type = (element.namespace() == HTML_NAMESPACE && element.name() == "input")
                 .then(|| InputType::of(element));
             let direction = element.initial_directionality(

@@ -33,7 +33,7 @@ fn effect_stacks(trace: &LayoutTrace, page: usize) -> Vec<(String, Vec<String>)>
             )),
             DisplayItem::Image(_) => painted.push(("image".into(), stack.clone())),
             DisplayItem::Decoration(decoration) => {
-                painted.push((format!("{:?} decoration", decoration.line), stack.clone()))
+                painted.push((format!("{:?} decoration", decoration.line), stack.clone()));
             }
         }
     }
@@ -269,7 +269,7 @@ fn table_cell_background_and_content_share_the_cell_opacity_group() {
     let painted = effect_stacks(&trace, 0);
     assert_eq!(stack_of(&painted, "box #ff0000"), &["O0.5"]);
     assert_eq!(stack_of(&painted, "text Cell"), &["O0.5"]);
-    assert!(stack_of(&painted, "text After").is_empty());
+    assert_eq!(stack_of(&painted, "text After"), [] as [&str; 0]);
 }
 
 #[test]
@@ -312,8 +312,8 @@ fn column_non_background_effects_are_ignored_without_rejecting_the_table() {
         "<table><colgroup><col></colgroup><tr><td>Cell</td></tr></table>",
     );
     let painted = effect_stacks(&trace, 0);
-    assert!(stack_of(&painted, "box #ff0000").is_empty());
-    assert!(stack_of(&painted, "text Cell").is_empty());
+    assert_eq!(stack_of(&painted, "box #ff0000"), [] as [&str; 0]);
+    assert_eq!(stack_of(&painted, "text Cell"), [] as [&str; 0]);
     for item in trace.display_lists.iter().flatten() {
         if let DisplayItem::Box(paint) = item {
             assert!(
@@ -337,7 +337,7 @@ fn static_table_cell_transform_keeps_its_background_and_content_together() {
     let painted = effect_stacks(&trace, 0);
     assert_eq!(stack_of(&painted, "box #ff0000"), &["T"]);
     assert_eq!(stack_of(&painted, "text Cell"), &["T"]);
-    assert!(stack_of(&painted, "text After").is_empty());
+    assert_eq!(stack_of(&painted, "text After"), [] as [&str; 0]);
 }
 
 #[test]
@@ -394,7 +394,7 @@ fn positioned_descendants_and_nested_tables_keep_structural_opacity_ancestors() 
         stack_of(&painted, "text Nested"),
         &["O0.5", "O0.25", "O0.75"]
     );
-    assert!(stack_of(&painted, "text After").is_empty());
+    assert_eq!(stack_of(&painted, "text After"), [] as [&str; 0]);
 }
 
 #[test]
@@ -470,7 +470,7 @@ fn structural_transform_effects_survive_repeated_table_groups() {
             } else if name == "text Header" || name == "text Footer" {
                 assert_eq!(stack, ["T"], "page {page}: {name}");
             } else if name == "text After" {
-                assert!(stack.is_empty());
+                assert_eq!(stack, [] as [&str; 0], "page {page}: {name}");
             }
         }
     }
@@ -486,7 +486,7 @@ fn singular_row_transform_omits_paint_and_preserves_following_flow() {
     let painted = effect_stacks(&output, 0);
     assert!(!painted.iter().any(|(name, _)| name == "text Hidden"));
     for name in ["text Visible", "text After"] {
-        assert!(stack_of(&painted, name).is_empty());
+        assert_eq!(stack_of(&painted, name), [] as [&str; 0]);
     }
 }
 
@@ -504,7 +504,7 @@ fn transformed_origin_row_keeps_its_spanning_cell_on_later_named_pages() {
                 seen += 1;
                 assert_eq!(stack, ["T"], "{name} on page {page}");
             } else if name == "text B" || name == "text After" {
-                assert!(stack.is_empty());
+                assert_eq!(stack, [] as [&str; 0], "{name} on page {page}");
             }
         }
     }

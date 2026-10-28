@@ -113,7 +113,7 @@ fn cubic(input: f64, [x1, y1, x2, y2]: [f64; 4]) -> f64 {
     }
     let (mut lower, mut upper) = (0.0, 1.0);
     for _ in 0..BEZIER_ITERATIONS {
-        let middle = (lower + upper) * 0.5;
+        let middle = f64::midpoint(lower, upper);
         let value = coordinate(middle, x1, x2);
         if value == input {
             return coordinate(middle, y1, y2);
@@ -124,7 +124,7 @@ fn cubic(input: f64, [x1, y1, x2, y2]: [f64; 4]) -> f64 {
             upper = middle;
         }
     }
-    coordinate((lower + upper) * 0.5, y1, y2)
+    coordinate(f64::midpoint(lower, upper), y1, y2)
 }
 
 #[cfg(test)]

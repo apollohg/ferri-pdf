@@ -31,14 +31,14 @@ pub(crate) struct StringAssignments {
     indices: HashMap<ElementId, usize>,
 }
 impl StringAssignments {
-    pub fn new(document: &DocumentTree) -> Self {
+    pub(crate) fn new(document: &DocumentTree) -> Self {
         Self {
             owners: Vec::new(),
             indices: HashMap::new(),
             tree: crate::semantics::SemanticTree::new(document),
         }
     }
-    pub fn event(
+    pub(crate) fn event(
         &self,
         element: Element<'_>,
         assignment: Option<usize>,
@@ -47,7 +47,7 @@ impl StringAssignments {
         self.tree.event(element, assignment, visible)
     }
 
-    pub fn generated_event(
+    pub(crate) fn generated_event(
         &self,
         element: Element<'_>,
         pseudo: PseudoElement,
@@ -57,7 +57,7 @@ impl StringAssignments {
         event
     }
 
-    pub fn record(
+    pub(crate) fn record(
         &mut self,
         element: Element<'_>,
         assignments: &[StringAssignment],
@@ -88,7 +88,7 @@ impl StringAssignments {
         });
         Ok(Some(index))
     }
-    pub fn generated(
+    pub(crate) fn generated(
         &mut self,
         element: Element<'_>,
         pseudo: PseudoElement,
@@ -101,14 +101,14 @@ impl StringAssignments {
         let owner = &mut self.owners[*index];
         match pseudo {
             PseudoElement::Before => {
-                owner.before = crate::content::GeneratedText::capture(text, style)
+                owner.before = crate::content::GeneratedText::capture(text, style);
             }
             PseudoElement::After => {
-                owner.after = crate::content::GeneratedText::capture(text, style)
+                owner.after = crate::content::GeneratedText::capture(text, style);
             }
         }
     }
-    pub fn finish(
+    pub(crate) fn finish(
         self,
         html: &DocumentTree,
     ) -> Result<Vec<RunningStringAssignment>, DocumentError> {

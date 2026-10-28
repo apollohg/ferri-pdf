@@ -413,17 +413,17 @@ fn modern_font_source_hints_skip_unsupported_technology_and_keep_policy_errors()
     assert!(
         matches!(
             error,
-            Some(ferri_pdf::Error::Resource(
-                ferri_pdf::ResourceError::TooLarge {
+            Some(
+                ferri_pdf::Error::Resource(ferri_pdf::ResourceError::TooLarge {
                     limit: FONT_BYTE_LIMIT,
                     ..
-                }
-            )) | Some(ferri_pdf::Error::Css(StyleError::Resource(
-                ferri_pdf::ResourceError::TooLarge {
-                    limit: FONT_BYTE_LIMIT,
-                    ..
-                }
-            )))
+                }) | ferri_pdf::Error::Css(StyleError::Resource(
+                    ferri_pdf::ResourceError::TooLarge {
+                        limit: FONT_BYTE_LIMIT,
+                        ..
+                    }
+                ))
+            )
         ),
         "font technology fallback must not hide resource policy failures: {error:?}"
     );
@@ -837,7 +837,7 @@ fn exhausted_glyph_fallback_renders_visible_symbols_and_retains_source() {
     let glyphs = line
         .runs
         .iter()
-        .flat_map(|run| run.glyphs())
+        .flat_map(ferri_pdf::GlyphRun::glyphs)
         .collect::<Vec<_>>();
     assert_eq!(
         glyphs.len(),
@@ -937,7 +937,7 @@ fn missing_symbols_keep_source_clusters_and_default_ignorables() {
                 .runs
                 .iter()
                 .filter(|run| trace.fonts[run.font_id.index()].family == "DejaVu Sans")
-                .flat_map(|run| run.glyphs())
+                .flat_map(ferri_pdf::GlyphRun::glyphs)
                 .filter(|glyph| glyph.id == replacement)
                 .count();
             assert_eq!(

@@ -96,7 +96,7 @@ pub(crate) fn ellipsize(
                 atomics.push(line.atomics[index].clone());
                 Slot::Atomic(atomics.len() - 1)
             }
-            edge => edge,
+            edge @ Slot::Edge { .. } => edge,
         });
     }
     line.ellipsis = Some(runs.len());

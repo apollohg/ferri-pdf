@@ -141,7 +141,7 @@ pub(crate) fn match_value(
         return Ok(None);
     };
     match_items(
-        Pattern::Atom(Operand::Static(root)),
+        &Pattern::Atom(Operand::Static(root)),
         source,
         &items,
         steps,
@@ -177,7 +177,7 @@ pub(super) fn match_syntax(
                 comma: list == crate::syntax::List::Comma,
             }),
         };
-        if match_items(pattern, source, &items, steps, context)?.is_some() {
+        if match_items(&pattern, source, &items, steps, context)?.is_some() {
             return Ok(true);
         }
     }
@@ -204,7 +204,7 @@ pub(crate) fn match_comma_list(
     let mut steps = 0;
     for item in items.split(|item| matches!(item.kind, ItemKind::Comma)) {
         if let Some(value) = match_items(
-            Pattern::Atom(Operand::Static(*node)),
+            &Pattern::Atom(Operand::Static(*node)),
             source,
             item,
             &mut steps,
@@ -228,7 +228,7 @@ fn check_steps(steps: usize) -> Result<(), StyleError> {
 }
 
 fn match_items(
-    root: Pattern<'_>,
+    root: &Pattern<'_>,
     source: &str,
     items: &[Item],
     steps: &mut usize,
@@ -245,7 +245,7 @@ fn match_items(
             context,
             failure: RefCell::default(),
         };
-        let matched = match &root {
+        let matched = match root {
             Pattern::Atom(atom) => matcher.operand_ends(*atom, items, 0),
             Pattern::Repeat(repeat) => matcher.repeat_ends(repeat, items, 0),
         }
@@ -256,7 +256,7 @@ fn match_items(
         check_steps(matcher.steps)?;
         if matcher.claimed == excluded {
             let value = if matched {
-                match &root {
+                match root {
                     Pattern::Atom(atom) => matcher.operand_build(*atom, items, 0, items.len()),
                     Pattern::Repeat(repeat) => Some(Component::Group(matcher.repeat(
                         repeat,
@@ -383,7 +383,9 @@ impl Hasher for MemoHasher {
         self.0
     }
     fn write(&mut self, bytes: &[u8]) {
-        bytes.iter().for_each(|byte| self.add(u64::from(*byte)));
+        for byte in bytes {
+            self.add(u64::from(*byte));
+        }
     }
     fn write_u16(&mut self, value: u16) {
         self.add(u64::from(value));
@@ -988,7 +990,7 @@ impl Matcher<'_> {
             .and_then(|math| math.expect(&[kind]))
         {
             Ok(_) => Some(Component::Math(source.into(), kind, range)),
-            Err(crate::calc::MathError::Resolution(error @ StyleError::GrammarLimit { .. })) => {
+            Err(calc::MathError::Resolution(error @ StyleError::GrammarLimit { .. })) => {
                 *self.failure.borrow_mut() = Some(error);
                 None
             }

@@ -81,7 +81,7 @@ pub fn layout(
     };
     budget.spend(1)?;
     let owned = document.fork_for_layout(values.clone(), resolver)?;
-    stabilize(owned, resolver, budget, vec![values]).map(|(_, trace)| trace)
+    stabilize(owned, resolver, &budget, vec![values]).map(|(_, trace)| trace)
 }
 
 pub fn layout_document(
@@ -91,7 +91,7 @@ pub fn layout_document(
     stabilize(
         document,
         resolver,
-        work::Budget::new(MAX_LAYOUT_WORK),
+        &work::Budget::new(MAX_LAYOUT_WORK),
         Vec::new(),
     )
 }
@@ -104,7 +104,7 @@ struct LayoutPass {
 fn stabilize(
     mut document: StyledDocument,
     resolver: &dyn ResourceResolver,
-    budget: work::Budget,
+    budget: &work::Budget,
     mut previous: Vec<ferri_pdf_document::GeneratedValues>,
 ) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
     loop {

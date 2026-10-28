@@ -13,7 +13,7 @@ pub(super) struct PhysicalPages<'a, 'r> {
     pub name: Option<Arc<str>>,
 }
 impl<'a, 'r> PhysicalPages<'a, 'r> {
-    pub fn new(
+    pub(crate) fn new(
         document: &'a StyledDocument,
         resolver: &'r dyn ResourceResolver,
     ) -> Result<Self, LayoutError> {
@@ -26,10 +26,10 @@ impl<'a, 'r> PhysicalPages<'a, 'r> {
             boxes: vec![first],
         })
     }
-    pub fn resolve(&self, index: usize) -> Result<Arc<PageBox>, LayoutError> {
+    pub(crate) fn resolve(&self, index: usize) -> Result<Arc<PageBox>, LayoutError> {
         self.resolve_blank(index, false)
     }
-    pub fn side(&self, index: usize) -> PageSide {
+    pub(crate) fn side(&self, index: usize) -> PageSide {
         match (self.records[0].request.side, index.is_multiple_of(2)) {
             (PageSide::Left, true) | (PageSide::Right, false) => PageSide::Left,
             _ => PageSide::Right,
@@ -46,7 +46,7 @@ impl<'a, 'r> PhysicalPages<'a, 'r> {
             self.resolver,
         )?)
     }
-    pub fn ensure(&mut self, index: usize) -> Result<(), LayoutError> {
+    pub(crate) fn ensure(&mut self, index: usize) -> Result<(), LayoutError> {
         while self.records.len() <= index {
             let page = self.resolve(self.records.len())?;
             self.records.push(PageRecord::new(&page)?);
@@ -59,7 +59,7 @@ impl<'a, 'r> PhysicalPages<'a, 'r> {
         }
         Ok(())
     }
-    pub fn ensure_break(&mut self, index: usize) -> Result<(), LayoutError> {
+    pub(crate) fn ensure_break(&mut self, index: usize) -> Result<(), LayoutError> {
         while self.records.len() < index {
             let page = self.resolve_blank(self.records.len(), true)?;
             self.records.push(PageRecord::new(&page)?);

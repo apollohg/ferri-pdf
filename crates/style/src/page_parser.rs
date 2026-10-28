@@ -64,12 +64,12 @@ impl<'i> AtRuleParser<'i> for PageParser<'_> {
         ))
     }
 }
-impl<'i> QualifiedRuleParser<'i> for PageParser<'_> {
+impl QualifiedRuleParser<'_> for PageParser<'_> {
     type Prelude = ();
     type QualifiedRule = PageItem;
     type Error = StyleError;
 }
-impl<'i> RuleBodyItemParser<'i, PageItem, StyleError> for PageParser<'_> {
+impl RuleBodyItemParser<'_, PageItem, StyleError> for PageParser<'_> {
     fn parse_declarations(&self) -> bool {
         true
     }
@@ -117,7 +117,7 @@ pub(super) fn page_selectors<'i>(
         .parse_comma_separated(|input| {
             input.skip_whitespace();
             let name = input
-                .try_parse(|input| input.expect_ident_cloned())
+                .try_parse(Parser::expect_ident_cloned)
                 .ok()
                 .map(|name| std::sync::Arc::from(name.as_ref()));
             let mut selector = PageSelector::new(name);
@@ -138,10 +138,10 @@ pub(super) fn page_selectors<'i>(
                     token => return Err(input.new_unexpected_token_error(token)),
                 }
             }
-            if !selector.is_empty() {
-                Ok(selector)
-            } else {
+            if selector.is_empty() {
                 Err(input.new_custom_error(StyleError::Invalid("empty page selector".into())))
+            } else {
+                Ok(selector)
             }
         })
         .map(PageSelectors)

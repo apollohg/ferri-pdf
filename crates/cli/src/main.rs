@@ -1,3 +1,7 @@
+#![expect(
+    clippy::print_stderr,
+    reason = "the command line reports warnings, progress and errors on stderr"
+)]
 use ferri_pdf::{
     FontPreferences, HtmlPart, ImageDpi, ImageOptions, JpegQuality, RenderOptions, Url,
     render_bytes, render_parts,

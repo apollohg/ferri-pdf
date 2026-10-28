@@ -166,6 +166,5 @@ pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
 fn language(value: &str) -> LanguageIdentifier {
     value
         .parse::<icu_locale_core::Locale>()
-        .map(|locale| locale.id)
-        .unwrap_or(LanguageIdentifier::UNKNOWN)
+        .map_or(LanguageIdentifier::UNKNOWN, |locale| locale.id)
 }

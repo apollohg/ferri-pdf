@@ -73,7 +73,7 @@ fn proper_descendant(parent: &Display, child: Option<&Display>) -> bool {
 
 fn wrap_runs<T: Content>(
     children: Vec<T>,
-    role: Display,
+    role: &Display,
     anonymous: &impl Fn(Display, Vec<T>) -> T,
     wraps: impl Fn(&T) -> bool,
 ) -> Vec<T> {
@@ -105,13 +105,13 @@ fn wrap_runs<T: Content>(
 pub(super) fn normalize(
     style: &Style,
     children: Vec<BlockContent>,
-    page_scope: &Option<std::sync::Arc<str>>,
+    page_scope: Option<&std::sync::Arc<str>>,
 ) -> Vec<BlockContent> {
     normalize_with(&style.display, children, &|role, children| {
         BlockContent::Block(BlockBox::anonymous(
             style.anonymous(role),
             children,
-            page_scope.clone(),
+            page_scope.cloned(),
         ))
     })
 }
@@ -159,20 +159,22 @@ pub(super) fn normalize_with<T: Content>(
         .filter_map(|(keep, child)| keep.then_some(child))
         .collect();
     match parent {
-        table if table.is_table() => wrap_runs(children, Display::TableRow, anonymous, |child| {
+        table if table.is_table() => wrap_runs(children, &Display::TableRow, anonymous, |child| {
             !child.display().is_some_and(Display::is_table_child)
         }),
-        Display::TableRow => wrap_runs(children, Display::TableCell, anonymous, |child| {
+        Display::TableRow => wrap_runs(children, &Display::TableCell, anonymous, |child| {
             child.display() != Some(&Display::TableCell)
         }),
-        role if role.is_row_group() => wrap_runs(children, Display::TableRow, anonymous, |child| {
-            child.display() != Some(&Display::TableRow)
-        }),
+        role if role.is_row_group() => {
+            wrap_runs(children, &Display::TableRow, anonymous, |child| {
+                child.display() != Some(&Display::TableRow)
+            })
+        }
         _ => {
-            let children = wrap_runs(children, Display::TableRow, anonymous, |child| {
+            let children = wrap_runs(children, &Display::TableRow, anonymous, |child| {
                 child.display() == Some(&Display::TableCell)
             });
-            wrap_runs(children, Display::Table, anonymous, |child| {
+            wrap_runs(children, &Display::Table, anonymous, |child| {
                 child.display().is_some_and(Display::is_table_child)
             })
         }

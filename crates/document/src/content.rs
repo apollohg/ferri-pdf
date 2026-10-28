@@ -14,7 +14,7 @@ pub(crate) struct GeneratedText {
     in_flow: bool,
 }
 impl GeneratedText {
-    pub fn capture(text: &str, style: &Style) -> Self {
+    pub(crate) fn capture(text: &str, style: &Style) -> Self {
         Self {
             text: text.to_owned(),
             in_flow: style.display == Display::Contents
@@ -34,7 +34,7 @@ pub(crate) struct ElementText<'a, 'd> {
     marker: Option<&'a str>,
 }
 impl<'a, 'd> ElementText<'a, 'd> {
-    pub fn new(
+    pub(crate) fn new(
         element: Element<'d>,
         text: Option<&'a str>,
         before: &'a GeneratedText,
@@ -49,7 +49,7 @@ impl<'a, 'd> ElementText<'a, 'd> {
             marker,
         }
     }
-    pub fn resolve(&mut self, source: ElementContent) -> Result<String, StyleError> {
+    pub(crate) fn resolve(&mut self, source: ElementContent) -> Result<String, StyleError> {
         Ok(match source {
             ElementContent::Text => {
                 if self.text.is_none() {

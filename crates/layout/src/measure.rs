@@ -37,7 +37,7 @@ impl BlockSizing {
         }
     }
 
-    pub fn resolve(
+    pub(crate) fn resolve(
         &self,
         style: &Style,
         geometry: &crate::geometry::HorizontalBox,
@@ -111,7 +111,7 @@ pub(super) struct MeasuredBlock<'a> {
     pub spanner_fragment: Option<SpannerFragment>,
 }
 impl MeasuredBlock<'_> {
-    pub fn align_cell(&mut self, offset: f32) {
+    pub(crate) fn align_cell(&mut self, offset: f32) {
         if let Some(sizing) = &mut self.sizing {
             sizing.alignment = offset;
             (self.height, self.constrained) = sizing.resolve(
@@ -124,7 +124,7 @@ impl MeasuredBlock<'_> {
     }
 
     /// Resize the retained piece without reconstructing source consumed before its spanner.
-    pub fn resize_fragment(
+    pub(crate) fn resize_fragment(
         &mut self,
         geometry: crate::geometry::HorizontalBox,
         containing_height: Option<f32>,
@@ -168,7 +168,7 @@ impl MeasuredBlock<'_> {
         self.containing_height = containing_height;
     }
 
-    pub fn retain_fragment(&mut self) {
+    pub(crate) fn retain_fragment(&mut self) {
         self.paint.get_or_insert_with(|| BoxPaint {
             padding: self.geometry.padding,
             ..BoxPaint::whole(
@@ -178,11 +178,11 @@ impl MeasuredBlock<'_> {
         });
     }
 
-    pub fn first_baseline(&self) -> Option<f32> {
+    pub(crate) fn first_baseline(&self) -> Option<f32> {
         first_baseline(&self.items)
     }
     /// Baseline of the last line box in flow, from the border-box top.
-    pub fn last_baseline(&self) -> Option<f32> {
+    pub(crate) fn last_baseline(&self) -> Option<f32> {
         last_baseline(&self.items)
     }
 }
@@ -373,7 +373,7 @@ pub(super) enum FlowItem<'a> {
     Spanner(Box<MeasuredBlock<'a>>),
 }
 impl FlowItem<'_> {
-    pub fn height(&self) -> f32 {
+    pub(crate) fn height(&self) -> f32 {
         match self {
             Self::Image { height, .. } => *height,
             Self::Block(block) | Self::Spanner(block) => block.height,
@@ -426,7 +426,7 @@ pub(super) struct Measurer<'a> {
     pub named_pages: bool,
 }
 impl Measurer<'_> {
-    pub fn intrinsic_widths(
+    pub(crate) fn intrinsic_widths(
         &self,
         paragraph: &ferri_pdf_document::Paragraph,
         atomics: &[ferri_pdf_text::IntrinsicWidths],
@@ -435,12 +435,12 @@ impl Measurer<'_> {
         Ok(self.text.intrinsic_widths(paragraph, atomics)?)
     }
 
-    pub fn text_lines(
+    pub(crate) fn text_lines(
         &self,
         paragraph: &ferri_pdf_document::Paragraph,
         width: f32,
         atomics: &[ferri_pdf_text::AtomicMetrics],
-    ) -> Result<Vec<ferri_pdf_text::Line>, LayoutError> {
+    ) -> Result<Vec<Line>, LayoutError> {
         self.work.spend(paragraph.text().len().max(1))?;
         Ok(self.text.layout_paragraph(paragraph, width, atomics)?)
     }
@@ -470,7 +470,7 @@ impl Measurer<'_> {
             }
         })
     }
-    pub fn block<'a>(
+    pub(crate) fn block<'a>(
         &mut self,
         block: &'a BlockBox,
         x: f32,
@@ -565,19 +565,31 @@ impl Measurer<'_> {
                 return crate::images::measure(
                     self,
                     block,
-                    geometry,
+                    &geometry,
                     containing_height,
                     used_height,
                 )
                 .map(FlowStart::Complete);
             }
             if style.display.is_grid() {
-                return crate::grid::measure(self, block, geometry, containing_height, used_height)
-                    .map(FlowStart::Complete);
+                return crate::grid::measure(
+                    self,
+                    block,
+                    &geometry,
+                    containing_height,
+                    used_height,
+                )
+                .map(FlowStart::Complete);
             }
             if style.display.is_flex() {
-                return crate::flex::measure(self, block, geometry, containing_height, used_height)
-                    .map(FlowStart::Complete);
+                return crate::flex::measure(
+                    self,
+                    block,
+                    &geometry,
+                    containing_height,
+                    used_height,
+                )
+                .map(FlowStart::Complete);
             }
             let vertical = crate::geometry::VerticalBox::new(style, &geometry, containing_height)
                 .with_used_height(used_height);
@@ -965,7 +977,7 @@ impl<'a> FlowFrame<'a> {
         let style = block.style();
         let clearance_target = measurer
             .clearance_targets
-            .get(&(block as *const BlockBox))
+            .get(&std::ptr::from_ref::<BlockBox>(block))
             .copied();
         let through = clearance_target.is_none()
             && !root

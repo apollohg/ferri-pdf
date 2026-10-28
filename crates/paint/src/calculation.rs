@@ -63,6 +63,7 @@ impl Calculation {
     pub fn percentage(fraction: f32) -> Self {
         Self::Percentage(fraction)
     }
+    #[must_use]
     pub fn negate(self) -> Self {
         match self {
             Self::Sum(terms)
@@ -75,6 +76,7 @@ impl Calculation {
             other => other.scale(-1.0),
         }
     }
+    #[must_use]
     pub fn scale(self, factor: f32) -> Self {
         Self::Product(vec![Self::Value(factor), self]).simplify()
     }
@@ -94,6 +96,7 @@ impl Calculation {
         Self::Eased(easing, Box::new(input)).simplify()
     }
     /// Folds basis-independent nodes into values and linear percentage terms into one leaf.
+    #[must_use]
     pub fn simplify(self) -> Self {
         let constant = match &self {
             Self::Value(_) | Self::Percentage(_) => return self,
@@ -147,14 +150,13 @@ impl Calculation {
                         other => rest.push(other),
                     }
                 }
-                match rest.as_slice() {
-                    [Self::Percentage(p)] => Self::percentage(p * scale),
-                    _ => {
-                        if scale != 1.0 {
-                            rest.insert(0, Self::Value(scale));
-                        }
-                        single_or(rest, Self::Product)
+                if let [Self::Percentage(p)] = rest.as_slice() {
+                    Self::percentage(p * scale)
+                } else {
+                    if scale != 1.0 {
+                        rest.insert(0, Self::Value(scale));
                     }
+                    single_or(rest, Self::Product)
                 }
             }
             other => other,

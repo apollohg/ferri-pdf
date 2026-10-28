@@ -112,7 +112,7 @@ pub(crate) fn measure_placed<'a>(
 ) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), LayoutError> {
     let plan = TablePlan::new(measurer, block, containing_height, None, place)?;
     let resolved = plan.resolve_geometry(measurer, x, width, rtl)?;
-    plan.measure_wrapped(measurer, resolved)
+    plan.measure_wrapped(measurer, &resolved)
 }
 
 struct WidthContributions {
@@ -156,7 +156,7 @@ pub(crate) struct RowGeometry {
 }
 
 impl RowGeometry {
-    pub fn content_height(&self, rows: Range<usize>, spacing: f32) -> f32 {
+    pub(crate) fn content_height(&self, rows: Range<usize>, spacing: f32) -> f32 {
         let starts = self.original_starts.as_ref().unwrap_or(&self.starts);
         (starts[rows.end] - starts[rows.start] - spacing).max(0.0)
     }
@@ -234,7 +234,7 @@ pub(crate) struct TableContaining<'a> {
     ancestors: [Option<&'a BlockBox>; 2],
 }
 impl TableContaining<'_> {
-    pub fn rect(
+    pub(crate) fn rect(
         &self,
         geometry: &TableGeometry,
         placement: &super::BandPlacement,
@@ -327,7 +327,7 @@ fn structural_events<'a>(
 }
 
 impl<'a> TablePlan<'a> {
-    pub fn row_entry_events(&self, index: usize) -> Vec<&'a SemanticEvent> {
+    pub(crate) fn row_entry_events(&self, index: usize) -> Vec<&'a SemanticEvent> {
         let row = self.data.rows[index];
         let mut events = Vec::new();
         let group = &self.data.groups[self.data.row_groups[index]];
@@ -348,7 +348,7 @@ impl<'a> TablePlan<'a> {
         }
         events
     }
-    pub fn row_exit_events(&self, index: usize) -> Vec<&'a SemanticEvent> {
+    pub(crate) fn row_exit_events(&self, index: usize) -> Vec<&'a SemanticEvent> {
         let row = self.data.rows[index];
         let group = &self.data.groups[self.data.row_groups[index]];
         let mut events: Vec<_> = self.source.following_events(row).collect();
@@ -364,10 +364,10 @@ impl<'a> TablePlan<'a> {
         }
         events
     }
-    pub fn row_source(&self, index: usize) -> &'a BlockBox {
+    pub(crate) fn row_source(&self, index: usize) -> &'a BlockBox {
         self.data.rows[index]
     }
-    pub fn row_edges(
+    pub(crate) fn row_edges(
         &self,
         row: usize,
         fragmentainer: crate::breaks::Fragmentainer,
@@ -392,7 +392,7 @@ impl<'a> TablePlan<'a> {
         }
         edges
     }
-    pub fn row_keep_end(
+    pub(crate) fn row_keep_end(
         &self,
         row: usize,
         end: usize,
@@ -553,7 +553,7 @@ impl<'a> TablePlan<'a> {
             .insert(width.to_bits(), contributions.clone());
         Ok(contributions)
     }
-    pub fn resolve_geometry(
+    pub(crate) fn resolve_geometry(
         &self,
         measurer: &Measurer<'_>,
         x: f32,
@@ -588,10 +588,10 @@ impl<'a> TablePlan<'a> {
     pub(crate) fn measure_wrapped(
         self: &Rc<Self>,
         measurer: &mut Measurer<'_>,
-        resolved: TableGeometry,
+        resolved: &TableGeometry,
     ) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), LayoutError> {
         let containing_height = resolved.containing_height;
-        let (table, geometry) = measure_plan(measurer, self.clone(), resolved, None, 0)?;
+        let (table, geometry) = measure_plan(measurer, self, resolved, None, 0)?;
         let mut table = captions::wrap(measurer, table, &self.data.captions, &geometry)?;
         let style = self.source.style();
         if self.has_captions()
@@ -724,26 +724,26 @@ impl<'a> TablePlan<'a> {
             spacing: [horizontal, vertical],
         })
     }
-    pub fn has_collapsed_rows(&self) -> bool {
+    pub(crate) fn has_collapsed_rows(&self) -> bool {
         self.data.collapsed_rows.iter().any(|&value| value)
     }
-    pub fn rows_visible(&self, rows: std::ops::Range<usize>) -> bool {
+    pub(crate) fn rows_visible(&self, rows: Range<usize>) -> bool {
         self.data.collapsed_rows[rows].iter().any(|&value| !value)
     }
-    pub fn cell_collapsed(&self, index: usize) -> bool {
+    pub(crate) fn cell_collapsed(&self, index: usize) -> bool {
         let cell = &self.data.grid.cells[index];
         !self.rows_visible(cell.row..cell.row + cell.rows)
             || self.data.collapsed_columns[cell.column..cell.column + cell.columns]
                 .iter()
                 .all(|&value| value)
     }
-    pub fn cell_rows_collapsed(&self, index: usize) -> bool {
+    pub(crate) fn cell_rows_collapsed(&self, index: usize) -> bool {
         let cell = &self.data.grid.cells[index];
         self.data.collapsed_rows[cell.row..cell.row + cell.rows]
             .iter()
             .any(|&value| value)
     }
-    pub fn cell_clipped(&self, source: &BlockBox) -> bool {
+    pub(crate) fn cell_clipped(&self, source: &BlockBox) -> bool {
         self.cell_index(source).is_some_and(|index| {
             let cell = &self.data.grid.cells[index];
             self.data.collapsed_rows[cell.row..cell.row + cell.rows]
@@ -754,10 +754,10 @@ impl<'a> TablePlan<'a> {
                     .any(|&value| value)
         })
     }
-    pub fn cell_index(&self, source: &BlockBox) -> Option<usize> {
+    pub(crate) fn cell_index(&self, source: &BlockBox) -> Option<usize> {
         self.cell_indices.get(&std::ptr::from_ref(source)).copied()
     }
-    pub fn cell_has_explicit_height(&self, index: usize) -> bool {
+    pub(crate) fn cell_has_explicit_height(&self, index: usize) -> bool {
         self.data.cells[index]
             .style()
             .height
@@ -766,7 +766,7 @@ impl<'a> TablePlan<'a> {
             || self.source.style().height != ferri_pdf_style::Size::Auto
             || self.used_height.is_some()
     }
-    pub fn cell_used_height(
+    pub(crate) fn cell_used_height(
         &self,
         index: usize,
         assigned: f32,
@@ -779,7 +779,7 @@ impl<'a> TablePlan<'a> {
             (assigned - edges).max(0.0)
         })
     }
-    pub fn measure_cell(
+    pub(crate) fn measure_cell(
         &self,
         measurer: &mut Measurer<'_>,
         index: usize,
@@ -813,21 +813,26 @@ impl<'a> TablePlan<'a> {
         measured.paint = Some(paint);
         Ok(measured)
     }
-    pub fn cell_rows(&self, index: usize) -> Range<usize> {
+    pub(crate) fn cell_rows(&self, index: usize) -> Range<usize> {
         let cell = &self.data.grid.cells[index];
         cell.row..cell.row + cell.rows
     }
-    pub fn cell_offset(&self, index: usize, width: f32) -> [f32; 2] {
+    pub(crate) fn cell_offset(&self, index: usize, width: f32) -> [f32; 2] {
         super::model::relative_offset(
             &self.data.cell_ancestors(index),
             width,
             self.source.style().rtl,
         )
     }
-    pub fn scoped_borders(&self) -> bool {
+    pub(crate) fn scoped_borders(&self) -> bool {
         self.border_owners.is_some()
     }
-    pub fn border_owner(&self, row: usize, column: usize, width: f32) -> (Option<usize>, [f32; 2]) {
+    pub(crate) fn border_owner(
+        &self,
+        row: usize,
+        column: usize,
+        width: f32,
+    ) -> (Option<usize>, [f32; 2]) {
         let owner = self
             .border_owners
             .as_ref()
@@ -845,7 +850,11 @@ impl<'a> TablePlan<'a> {
         };
         (owner, offset)
     }
-    pub fn structural_shadow(&self, source: &BlockBox, inset: bool) -> Option<BoxDecoration> {
+    pub(crate) fn structural_shadow(
+        &self,
+        source: &BlockBox,
+        inset: bool,
+    ) -> Option<BoxDecoration> {
         if !inset && self.data.collapsed.is_some() {
             return None;
         }
@@ -854,7 +863,7 @@ impl<'a> TablePlan<'a> {
             .shadows
             .iter()
             .filter(|shadow| shadow.inset == inset)
-            .cloned()
+            .copied()
             .collect::<Vec<_>>();
         if shadows.is_empty() {
             return None;
@@ -869,17 +878,17 @@ impl<'a> TablePlan<'a> {
             ..Default::default()
         })
     }
-    pub fn cell_parents(&self, index: usize) -> [Option<&'a BlockBox>; 2] {
+    pub(crate) fn cell_parents(&self, index: usize) -> [Option<&'a BlockBox>; 2] {
         let [group, row, _] = self.data.cell_ancestors(index);
         [group, row]
     }
-    pub fn cell_layers(&self, source: &BlockBox) -> [Option<TableContaining<'a>>; 2] {
+    pub(crate) fn cell_layers(&self, source: &BlockBox) -> [Option<TableContaining<'a>>; 2] {
         let Some(index) = self.cell_index(source) else {
             return [None, None];
         };
         self.row_layers(self.data.grid.cells[index].row)
     }
-    pub fn row_layers(&self, row: usize) -> [Option<TableContaining<'a>>; 2] {
+    pub(crate) fn row_layers(&self, row: usize) -> [Option<TableContaining<'a>>; 2] {
         let group = self.data.row_groups[row];
         let group_source = self.data.groups[group].source;
         let row_source = Some(self.data.rows[row]);
@@ -896,7 +905,7 @@ impl<'a> TablePlan<'a> {
             }),
         ]
     }
-    pub fn cell_alignments(
+    pub(crate) fn cell_alignments(
         &self,
         measurer: &mut Measurer<'_>,
         band: Range<usize>,
@@ -964,7 +973,7 @@ impl<'a> TablePlan<'a> {
             cells: alignments,
         })
     }
-    pub fn fragment_alignment(
+    pub(crate) fn fragment_alignment(
         &self,
         alignments: &CellAlignments,
         index: usize,
@@ -1025,7 +1034,7 @@ impl<'a> TablePlan<'a> {
             .offset
             .min((available - alignment.first_fragment).max(0.0))
     }
-    pub fn resolve_rows(
+    pub(crate) fn resolve_rows(
         &self,
         measurer: &Measurer<'_>,
         cells: &[CellHeight],
@@ -1084,7 +1093,7 @@ impl<'a> TablePlan<'a> {
         })?;
         Ok(RowGeometry::new(rows, spacing).project(&self.data.collapsed_rows))
     }
-    pub fn used_row_starts(
+    pub(crate) fn used_row_starts(
         &self,
         measurer: &Measurer<'_>,
         heights: &[f32],
@@ -1124,13 +1133,17 @@ impl<'a> TablePlan<'a> {
         .project(&self.data.collapsed_rows)
         .starts)
     }
-    pub fn cell_span(&self, index: usize, resolved: &TableGeometry) -> (f32, f32) {
+    pub(crate) fn cell_span(&self, index: usize, resolved: &TableGeometry) -> (f32, f32) {
         let cell = &self.data.grid.cells[index];
         resolved
             .columns(self.source.style().rtl)
             .span(cell.column, cell.columns)
     }
-    pub fn cell_geometry(&self, index: usize, resolved: &TableGeometry) -> geometry::HorizontalBox {
+    pub(crate) fn cell_geometry(
+        &self,
+        index: usize,
+        resolved: &TableGeometry,
+    ) -> geometry::HorizontalBox {
         let cell = &self.data.grid.cells[index];
         let style = self.data.cells[index].style();
         let border = self.data.cell_borders(index);
@@ -1163,12 +1176,12 @@ impl<'a> TablePlan<'a> {
 pub(crate) fn resume<'a>(
     measurer: &mut Measurer<'_>,
     previous: &TableFlow<'a>,
-    resolved: TableGeometry,
+    resolved: &TableGeometry,
     next_body: usize,
 ) -> Result<MeasuredBlock<'a>, LayoutError> {
     measure_plan(
         measurer,
-        previous.plan.clone(),
+        &previous.plan,
         resolved,
         Some(previous),
         next_body,
@@ -1178,8 +1191,8 @@ pub(crate) fn resume<'a>(
 
 fn measure_plan<'a>(
     measurer: &mut Measurer<'_>,
-    plan: Rc<TablePlan<'a>>,
-    resolved: TableGeometry,
+    plan: &Rc<TablePlan<'a>>,
+    resolved: &TableGeometry,
     previous: Option<&TableFlow<'a>>,
     next_body: usize,
 ) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), LayoutError> {
@@ -1205,7 +1218,7 @@ fn measure_plan<'a>(
             blocks.push(None);
             continue;
         }
-        let measured = plan.measure_cell(measurer, cell_index, &resolved, None)?;
+        let measured = plan.measure_cell(measurer, cell_index, resolved, None)?;
         heights.push(cell_height(&measured));
         blocks.push(Some(measured));
     }
@@ -1339,8 +1352,8 @@ fn measure_plan<'a>(
                 row,
             );
             let content_height = rows.content_height(cell.row..cell.row + cell.rows, vertical);
-            if let Some(used_height) = plan.cell_used_height(index, content_height, &resolved) {
-                measured = plan.measure_cell(measurer, index, &resolved, Some(used_height))?;
+            if let Some(used_height) = plan.cell_used_height(index, content_height, resolved) {
+                measured = plan.measure_cell(measurer, index, resolved, Some(used_height))?;
             }
             measured.align_cell(cell_offsets[index]);
             cell_heights.push((index, rect.height));
@@ -1542,7 +1555,7 @@ fn measure_plan<'a>(
         clearance_before: None,
         clearance_target: measurer
             .clearance_targets
-            .get(&(block as *const BlockBox))
+            .get(&std::ptr::from_ref::<BlockBox>(block))
             .copied(),
         source: block,
         geometry: geometry.clone(),

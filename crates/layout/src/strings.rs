@@ -25,7 +25,7 @@ pub(super) struct StringLocations {
     starts: HashMap<usize, PageStart>,
 }
 impl StringLocations {
-    pub fn last_page(&self) -> usize {
+    pub(crate) fn last_page(&self) -> usize {
         self.locations
             .values()
             .chain(self.starts.keys())
@@ -34,7 +34,7 @@ impl StringLocations {
             .unwrap_or(0)
     }
 
-    pub fn retain_column_events(&mut self) {
+    pub(crate) fn retain_column_events(&mut self) {
         self.trace = Some(Vec::new());
     }
     fn trace(&mut self, page: usize, action: SemanticAction) {
@@ -45,7 +45,7 @@ impl StringLocations {
             trace[page].push(action);
         }
     }
-    pub fn adopt_column(&mut self, source: &mut Self, column: usize, page: usize) {
+    pub(crate) fn adopt_column(&mut self, source: &mut Self, column: usize, page: usize) {
         let Some(events) = source
             .trace
             .as_mut()
@@ -61,7 +61,7 @@ impl StringLocations {
         }
     }
 
-    pub fn record(&mut self, page: usize, event: &SemanticEvent) {
+    pub(crate) fn record(&mut self, page: usize, event: &SemanticEvent) {
         if self.locations.contains_key(&event.context) {
             return;
         }
@@ -85,14 +85,14 @@ impl StringLocations {
                 .or_insert(Location { page, start });
         }
     }
-    pub fn text(&mut self, page: usize) {
+    pub(crate) fn text(&mut self, page: usize) {
         let state = self.starts.entry(page).or_default();
         if !state.closed {
             state.closed = true;
             self.trace(page, SemanticAction::Text);
         }
     }
-    pub fn resolve(
+    pub(crate) fn resolve(
         self,
         assignments: &[RunningStringAssignment],
         pages: usize,
@@ -147,7 +147,7 @@ pub(super) struct PageStrings {
     locations: HashMap<PageStyleTarget, usize>,
 }
 impl PageStrings {
-    pub fn at_context(
+    pub(crate) fn at_context(
         &self,
         context: PageStyleTarget,
         request: &NamedStringRequest,
@@ -161,7 +161,7 @@ impl PageStrings {
         Ok(self.text(*page, request))
     }
 
-    pub fn text(&self, page: usize, request: &NamedStringRequest) -> String {
+    pub(crate) fn text(&self, page: usize, request: &NamedStringRequest) -> String {
         let Some(values) = self.names.get(request.name.as_ref()) else {
             return String::new();
         };

@@ -29,7 +29,7 @@ enum ColorError {
     Math(MathError),
 }
 impl From<()> for ColorError {
-    fn from(_: ()) -> Self {
+    fn from((): ()) -> Self {
         Self::InvalidComponent
     }
 }

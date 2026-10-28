@@ -55,7 +55,7 @@ fn initial_semantics_cover_light_shadow_and_inert_template_elements() {
         .template_contents()
         .unwrap()
         .inclusive_descendants(TreeRelation::Selector)
-        .filter_map(|node| node.element())
+        .filter_map(ferri_pdf_dom::Node::element)
         .collect();
     assert_eq!(inert[0].initial_state().language.as_ref(), "ja");
     assert_eq!(inert[1].initial_state().language.as_ref(), "ja");
@@ -185,19 +185,19 @@ fn encapsulation_positions_include_sibling_shadow_and_inert_tree_scopes() {
         .shadow_root()
         .unwrap()
         .children(TreeRelation::Selector)
-        .find_map(|node| node.element())
+        .find_map(ferri_pdf_dom::Node::element)
         .unwrap();
     let inner = light
         .shadow_root()
         .unwrap()
         .children(TreeRelation::Selector)
-        .find_map(|node| node.element())
+        .find_map(ferri_pdf_dom::Node::element)
         .unwrap();
     let inert = find("#inert")
         .template_contents()
         .unwrap()
         .children(TreeRelation::Selector)
-        .find_map(|node| node.element())
+        .find_map(ferri_pdf_dom::Node::element)
         .unwrap();
     assert!(outer.is_in_document_tree());
     assert!(!slot.is_in_document_tree());

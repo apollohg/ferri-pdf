@@ -5,7 +5,7 @@ mod weasy_reference;
 use common::assert_pt;
 use weasy_reference::{assert_weasy_lines, render_weasy_case};
 
-const PROBE_FIRST_BASELINE_PT: f32 = 18.461792;
+const PROBE_FIRST_BASELINE_PT: f32 = 18.461_792;
 const PROBE_LINE_HEIGHT_PT: f32 = 10.0;
 
 #[test]

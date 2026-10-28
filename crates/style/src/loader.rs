@@ -131,7 +131,10 @@ impl Budget {
             })?;
         Ok(())
     }
-    pub fn rule(&mut self, location: impl FnOnce() -> SourceLocation) -> Result<(), StyleError> {
+    pub(crate) fn rule(
+        &mut self,
+        location: impl FnOnce() -> SourceLocation,
+    ) -> Result<(), StyleError> {
         if self.rules == self.limits.rules {
             return Err(StyleError::StylesheetLimit {
                 resource: RULES,
@@ -319,9 +322,9 @@ impl<'a> Loader<'a> {
         definitions.insert(
             index,
             NamedDefinition {
+                order,
                 condition,
                 query,
-                order,
             },
         );
         self.dirty = true;
@@ -365,7 +368,7 @@ impl<'a> Loader<'a> {
         let owner = owner.and_then(|owner| self.tree.element(owner));
         let tree_scope = owner
             .filter(|owner| !owner.is_in_document_tree())
-            .map(|owner| owner.tree_scope());
+            .map(ferri_pdf_dom::Element::tree_scope);
         let scope = self.root(origin, tree_scope);
         let (slot, selection) = if let Some(element) = owner.filter(|_| origin == Origin::Author) {
             let condition = self.condition(None, None, RuleQuery::Constant(true));
@@ -403,7 +406,7 @@ impl<'a> Loader<'a> {
                         .parent(ferri_pdf_dom::TreeRelation::Selector)
                         .or_else(|| owner.shadow_host())
                 })
-                .map(|parent| parent.id()),
+                .map(ferri_pdf_dom::Element::id),
             tree_scope,
             encapsulation_order: owner.map_or(ferri_pdf_dom::DOCUMENT_CONTEXT_ORDER, |owner| {
                 owner.encapsulation_order()
@@ -414,7 +417,7 @@ impl<'a> Loader<'a> {
                 if origin != Origin::UserAgent {
                     self.budget.bytes(text.len(), location(base))?;
                 }
-                self.sheet(Arc::from(text.as_str()), context)
+                self.sheet(Arc::from(text.as_str()), &context)
             }
             StylesheetInput::External { reference, .. } => {
                 self.fetches.insert(
@@ -430,7 +433,7 @@ impl<'a> Loader<'a> {
             }
         }
     }
-    fn sheet(&mut self, text: Arc<str>, context: Context) -> Result<(), StyleError> {
+    fn sheet(&mut self, text: Arc<str>, context: &Context) -> Result<(), StyleError> {
         let budget = if context.origin == Origin::UserAgent {
             &mut self.trusted_budget
         } else {
@@ -537,10 +540,7 @@ impl<'a> Loader<'a> {
                         budget.rule(|| declarations[0].location.clone())?;
                     }
                     budget.nesting(selectors.len(), || declarations[0].location.clone())?;
-                    PendingKind::Content(crate::parser::ContentRule::Style(
-                        selectors.to_vec(),
-                        declarations,
-                    ))
+                    PendingKind::Content(ContentRule::Style(selectors.to_vec(), declarations))
                 }
                 Rule::Content(rule) => PendingKind::Content(rule),
                 Rule::LayerStatement(names) => PendingKind::LayerStatement(names),
@@ -840,7 +840,7 @@ impl<'a> Loader<'a> {
         context.encoding = decoded.encoding;
         context.path.push(requested);
         context.path.push(identity);
-        self.sheet(Arc::from(decoded.text), context)
+        self.sheet(Arc::from(decoded.text), &context)
     }
     fn css_type(&self, media_type: Option<&str>, response: &Url) -> bool {
         media_type.is_none_or(|kind| kind.eq_ignore_ascii_case(CSS_MEDIA_TYPE))

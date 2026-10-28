@@ -54,7 +54,7 @@ pub use ferri_pdf_writer::{
 #[derive(Clone, Debug, Default)]
 pub struct RenderOptions {
     /// Local directory or full document URL for resolving relative resources.
-    pub base: ferri_pdf_resources::ResourceBase,
+    pub base: ResourceBase,
     /// Additional author stylesheets, appended after document stylesheets.
     pub stylesheets: Vec<String>,
     /// User-origin stylesheets, including accessibility and personal print preferences.

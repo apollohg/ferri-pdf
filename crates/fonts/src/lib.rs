@@ -77,6 +77,7 @@ impl FontWeight {
     pub const fn value(self) -> f32 {
         self.0
     }
+    #[must_use]
     pub fn bolder(self) -> Self {
         if self >= Self::BLACK {
             return self;
@@ -89,6 +90,7 @@ impl FontWeight {
             Self::BLACK
         }
     }
+    #[must_use]
     pub fn lighter(self) -> Self {
         if self < Self::THIN {
             return self;
@@ -111,7 +113,7 @@ pub enum GenericFamily {
     Monospace,
 }
 impl GenericFamily {
-    /// Arial-, Times New Roman- and Courier New-compatible faces first, then wider DejaVu
+    /// Arial-, Times New Roman- and Courier New-compatible faces first, then wider `DejaVu`
     /// coverage.
     fn bundled_names(self) -> &'static [&'static str] {
         match self {
@@ -268,7 +270,7 @@ impl FontBook {
                 continue;
             }
             match probe(id)? {
-                GlyphMatch::Unavailable => continue,
+                GlyphMatch::Unavailable => {}
                 GlyphMatch::Found(value) => return Ok(Some((id, value))),
                 GlyphMatch::Missing if previous.is_none() => matched.push(descriptor),
                 GlyphMatch::Missing => {}

@@ -17,7 +17,7 @@ pub(crate) struct Rows {
 }
 
 impl Row {
-    pub fn required(&self, available: f32) -> f32 {
+    pub(crate) fn required(&self, available: f32) -> f32 {
         if self.kept_fragment <= available {
             self.kept_fragment
         } else {
@@ -26,7 +26,7 @@ impl Row {
     }
 }
 impl Rows {
-    pub fn resolve_keeps(&mut self) {
+    pub(crate) fn resolve_keeps(&mut self) {
         for index in (0..self.tracks.len()).rev() {
             let mut required = self.tracks[index].first_fragment;
             if let Some(next) = self.tracks.get(index + 1)

@@ -329,12 +329,11 @@ pub(crate) fn arrange(
         let belongs = |slot: &Slot| paragraph.is_within(arranged.owner(paragraph, *slot), index);
         let first = arranged.order.iter().position(belongs);
         let last = arranged.order.iter().rposition(belongs);
-        let (left_at, right_at) = match first.zip(last) {
-            Some((first, last)) => (first, last + 1),
-            None => {
-                let at = arranged.insertion(inline_box.range.start);
-                (at, at)
-            }
+        let (left_at, right_at) = if let Some((first, last)) = first.zip(last) {
+            (first, last + 1)
+        } else {
+            let at = arranged.insertion(inline_box.range.start);
+            (at, at)
         };
         if let Some(slot) = right {
             arranged.order.insert(right_at, slot);
@@ -491,7 +490,7 @@ fn offset(
         VerticalAlign::Super => -parent.ascent * SUPERSCRIPT_ASCENT_FRACTION,
         VerticalAlign::TextTop => -parent.ascent - top,
         VerticalAlign::TextBottom => parent.descent - bottom,
-        VerticalAlign::Middle => -parent.x_height / 2.0 - (top + bottom) / 2.0,
+        VerticalAlign::Middle => -parent.x_height / 2.0 - f32::midpoint(top, bottom),
         VerticalAlign::BaselineMiddle => -(top + bottom) / 2.0,
         VerticalAlign::Length(length) => -length.resolve(line_height()?),
     })

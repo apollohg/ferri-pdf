@@ -195,14 +195,14 @@ fn crossing(points: [Point; 4], origin: Point, direction: Point) -> f64 {
         };
     }
     for _ in 0..CROSSING_ITERATIONS {
-        let middle = (low + high) / 2.0;
+        let middle = f64::midpoint(low, high);
         if side(middle).signum() == low_side.signum() {
             low = middle;
         } else {
             high = middle;
         }
     }
-    (low + high) / 2.0
+    f64::midpoint(low, high)
 }
 
 fn offset(point: Point, direction: Point, distance: f32) -> Point {

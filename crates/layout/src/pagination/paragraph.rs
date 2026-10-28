@@ -1,3 +1,7 @@
+#[allow(
+    clippy::wildcard_imports,
+    reason = "pagination submodules extend the parent paginator and share its scope"
+)]
 use super::*;
 
 #[derive(Clone, Copy)]
@@ -39,10 +43,10 @@ pub(super) struct ParagraphCursor<'a, 't> {
     layers: InlineLayers<'a>,
 }
 
-impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
+impl<'a, 't> Paginator<'a, '_, 't> {
     fn place_inline_float(
         &mut self,
-        measured: super::floats::MeasuredFloat<'a>,
+        measured: floats::MeasuredFloat<'a>,
         anchor: &ferri_pdf_document::Anchor,
         geometry: [f32; 3],
         layers: &mut InlineLayers<'a>,

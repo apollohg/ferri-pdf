@@ -103,8 +103,8 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::BorderLeft => border(&value, &[LEFT]),
         P::Overflow => pair(&value, [P::OverflowX, P::OverflowY]),
         P::Gap | P::GridGap => pair(&value, [P::RowGap, P::ColumnGap]),
-        P::GridRowGap => alias(&value, P::RowGap)?,
-        P::GridColumnGap => alias(&value, P::ColumnGap)?,
+        P::GridRowGap => alias(&value, P::RowGap),
+        P::GridColumnGap => alias(&value, P::ColumnGap),
         P::GridRow => grid_lines(&value, [P::GridRowStart, P::GridRowEnd]),
         P::GridColumn => grid_lines(&value, [P::GridColumnStart, P::GridColumnEnd]),
         P::GridArea => grid_area(&value),
@@ -115,7 +115,7 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::PlaceSelf => pair(&value, [P::AlignSelf, P::JustifySelf]),
         P::Flex => flex(&value)?,
         P::Font => crate::font_values::expand_font(&value)?,
-        P::FontStretch => alias(value.unwrap(), P::FontWidth)?,
+        P::FontStretch => alias(value.unwrap(), P::FontWidth),
         P::FontVariant if value.keyword() == Some(Keyword::Normal) => {
             declaration::wide(P::FontVariant, WideKeyword::Initial)
         }
@@ -133,16 +133,17 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::PageBreakBefore => legacy_break(&value, P::BreakBefore)?,
         P::PageBreakAfter => legacy_break(&value, P::BreakAfter)?,
         P::PageBreakInside => legacy_break(&value, P::BreakInside)?,
-        P::WordWrap => alias(&value, P::OverflowWrap)?,
-        _ => match unordered_references(shorthand, &value)? {
-            Some(longhands) => longhands,
-            None => {
+        P::WordWrap => alias(&value, P::OverflowWrap),
+        _ => {
+            if let Some(longhands) = unordered_references(shorthand, &value)? {
+                longhands
+            } else {
                 let value = Arc::new(value);
                 declaration::longhands(shorthand)
                     .map(|longhand| (longhand, Specified::Unexpanded(shorthand, value.clone())))
                     .collect()
             }
-        },
+        }
     })
 }
 
@@ -389,8 +390,8 @@ fn legacy_break(value: &Component, property: Property) -> Result<Longhands, Styl
 }
 
 /// A legacy name alias sharing the value of the property it names.
-fn alias(value: &Component, property: Property) -> Result<Longhands, StyleError> {
-    Ok(vec![(property, longhand(property, value))])
+fn alias(value: &Component, property: Property) -> Longhands {
+    vec![(property, longhand(property, value))]
 }
 
 /// Per-layer longhand lists from `[ <bg-layer> , ]* <final-bg-layer>`.

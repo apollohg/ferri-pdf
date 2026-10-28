@@ -135,7 +135,7 @@ fn assignments_capture_content_counters_empty_values_and_boxless_owners() {
                 ("heading".into(), "2:Beta!".into()),
                 ("folio".into(), "2/2/7".into())
             ],
-            vec![("heading".into(), "".into())],
+            vec![("heading".into(), String::new())],
         ]
     );
 }

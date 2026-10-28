@@ -136,7 +136,7 @@ impl Spec {
                 .ok_or_else(|| BuildError::UnknownErratum { name: name.clone() })?;
             property.origin = Origin::Errata;
             if let Some(syntax) = entry.get("syntax") {
-                property.syntax = string(syntax, name, "syntax")?.to_owned();
+                string(syntax, name, "syntax")?.clone_into(&mut property.syntax);
             }
             if let Some(value) = entry.get("initial") {
                 property.initial = initial(value, name)?;
@@ -170,10 +170,11 @@ impl Spec {
                         descriptor.at_rule == *at_rule && descriptor.name == *name
                     }) {
                         if let Some(syntax) = entry.get("syntax") {
-                            descriptor.syntax = string(syntax, &context, "syntax")?.to_owned();
+                            string(syntax, &context, "syntax")?.clone_into(&mut descriptor.syntax);
                         }
                         if let Some(initial) = entry.get("initial") {
-                            descriptor.initial = string(initial, &context, "initial")?.to_owned();
+                            string(initial, &context, "initial")?
+                                .clone_into(&mut descriptor.initial);
                         }
                     } else {
                         self.descriptors.push(Descriptor {

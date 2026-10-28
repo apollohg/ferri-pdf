@@ -29,7 +29,7 @@ fn paragraphs(document: &StyledDocument) -> Vec<&Paragraph> {
             BlockContent::Events(_) => {}
             BlockContent::Inline(paragraph) => paragraphs.push(paragraph),
             BlockContent::Block(block) | BlockContent::Positioned(block) => {
-                pending.extend(block.children().iter().rev())
+                pending.extend(block.children().iter().rev());
             }
         }
     }
@@ -247,7 +247,7 @@ fn empty_inline_edges_are_consumed_once_even_when_the_next_page_changes_width() 
     let document = document("span{padding:2pt;border:1pt solid}", "<p><span></span></p>");
     let paragraphs = paragraphs(&document);
     assert_eq!(paragraphs.len(), 1);
-    assert!(paragraphs[0].text().is_empty());
+    assert_eq!(paragraphs[0].text(), "");
     assert!(!paragraphs[0].boxes().is_empty());
     let resolver = FileResolver::default();
     let context = TextContext::new(&document.styles().fonts, &resolver);

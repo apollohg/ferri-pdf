@@ -1,5 +1,6 @@
 use ferri_pdf_document::{BlockContent, Paragraph, StyledDocument};
 use ferri_pdf_resources::{FileResolver, ResourceBase, Url};
+use std::fmt::Write;
 
 fn document(css: &str, body: &str) -> StyledDocument {
     let base: ResourceBase = Url::parse("https://example.org/transform.html")
@@ -21,7 +22,7 @@ fn paragraphs(document: &StyledDocument) -> Vec<&Paragraph> {
         match child {
             BlockContent::Inline(paragraph) => result.push(paragraph),
             BlockContent::Block(block) | BlockContent::Positioned(block) => {
-                pending.extend(block.children().iter().rev())
+                pending.extend(block.children().iter().rev());
             }
             BlockContent::Events(_) => {}
         }
@@ -109,7 +110,7 @@ fn every_unicode_width_mapping_matches_its_original_decomposition_record() {
             "<narrow>" => (codepoint, decomposition),
             tag => panic!("unexpected width record tag: {tag}"),
         };
-        html.push_str(&format!("&#x{source:X};"));
+        let _ = write!(html, "&#x{source:X};");
         expected.push(char::from_u32(target).unwrap());
     }
     html.push_str("</p>");
@@ -123,7 +124,7 @@ fn every_pinned_small_kana_mapping_is_applied() {
     let mut expected = String::new();
     for record in include_str!("fixtures/small-kana.txt").lines() {
         let (source, target) = record.split_once(';').unwrap();
-        html.push_str(&format!("&#x{source};"));
+        let _ = write!(html, "&#x{source};");
         expected.push(char::from_u32(u32::from_str_radix(target, 16).unwrap()).unwrap());
     }
     html.push_str("</p>");

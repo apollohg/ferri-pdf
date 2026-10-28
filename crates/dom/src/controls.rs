@@ -167,7 +167,7 @@ fn html_element(element: Element<'_>, name: &str) -> bool {
     element.namespace() == HTML_NAMESPACE && element.name() == name
 }
 
-impl<'a> Element<'a> {
+impl Element<'_> {
     pub fn input_type(self) -> Option<InputType> {
         self.initial_state().input_type
     }
@@ -177,7 +177,7 @@ impl<'a> Element<'a> {
             root = parent;
         }
         root.inclusive_descendants(TreeRelation::Selector)
-            .filter_map(|node| node.element())
+            .filter_map(super::tree::Node::element)
     }
     fn form_owner(self) -> Option<Self> {
         if let Some(id) = self.attr("form") {
@@ -299,7 +299,7 @@ impl<'a> Element<'a> {
                 !node
                     .parent(TreeRelation::Selector)
                     .into_iter()
-                    .flat_map(|parent| parent.element())
+                    .filter_map(super::tree::Node::element)
                     .flat_map(|parent| {
                         std::iter::once(parent).chain(parent.ancestors(TreeRelation::Selector))
                     })
@@ -434,7 +434,7 @@ fn valid_time(value: &str) -> bool {
         let (seconds, fraction) = seconds
             .split_once('.')
             .map_or((seconds, None), |(s, f)| (s, Some(f)));
-        if !two_digits(seconds).is_some_and(|s| s < SECONDS_PER_MINUTE)
+        if two_digits(seconds).is_none_or(|s| s >= SECONDS_PER_MINUTE)
             || fraction.is_some_and(|f| f.is_empty() || !f.bytes().all(|ch| ch.is_ascii_digit()))
         {
             return false;

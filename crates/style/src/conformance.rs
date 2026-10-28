@@ -85,7 +85,7 @@ impl Sampler {
             Node::OneOf(alternatives) => {
                 let per_alternative: Vec<Vec<Tokens>> =
                     alternatives.iter().map(|alt| self.samples(*alt)).collect();
-                interleave(per_alternative)
+                interleave(&per_alternative)
             }
             Node::AnyOf(alternatives) => self.unordered(alternatives, false),
             Node::AllOf(alternatives) => self.unordered(alternatives, true),
@@ -253,7 +253,7 @@ fn base_samples(base: Base, range: Range) -> Vec<String> {
 }
 
 /// Round-robin over alternatives so every alternative contributes before any repeats.
-fn interleave(per_alternative: Vec<Vec<Tokens>>) -> Vec<Tokens> {
+fn interleave(per_alternative: &[Vec<Tokens>]) -> Vec<Tokens> {
     let longest = per_alternative.iter().map(Vec::len).max().unwrap_or(0);
     (0..longest)
         .flat_map(|index| {
@@ -422,7 +422,7 @@ fn invalid_values(root: NodeId, valid: &[Tokens]) -> Vec<(String, &'static str)>
         max_tokens(root, &mut Vec::new()),
         valid
             .iter()
-            .flat_map(|tokens| tokens.first())
+            .filter_map(|tokens| tokens.first())
             .find(|token| *token != ","),
     ) {
         invalid.push((

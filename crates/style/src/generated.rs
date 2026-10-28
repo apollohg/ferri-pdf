@@ -239,12 +239,7 @@ impl GeneratedContent {
             .collect::<Result<_, _>>()
             .map(Self)
     }
-    pub fn page_text(
-        &self,
-        page: usize,
-        pages: usize,
-        limit: usize,
-    ) -> Result<String, crate::StyleError> {
+    pub fn page_text(&self, page: usize, pages: usize, limit: usize) -> Result<String, StyleError> {
         self.page_text_with_quotes(page, pages, limit, &Quotes::default())
     }
     pub fn page_text_with_quotes(
@@ -294,7 +289,7 @@ impl GeneratedContent {
         &self,
         element: ferri_pdf_dom::Element<'_>,
         limit: usize,
-    ) -> Result<String, crate::StyleError> {
+    ) -> Result<String, StyleError> {
         self.element_text_with_quotes(
             element,
             limit,
@@ -319,7 +314,7 @@ impl GeneratedContent {
         element: ferri_pdf_dom::Element<'_>,
         limit: usize,
         content: &mut ElementContentText<'_>,
-    ) -> Result<String, crate::StyleError> {
+    ) -> Result<String, StyleError> {
         self.element_text_with_context(
             element,
             limit,
@@ -474,7 +469,7 @@ impl GeneratedContent {
         mut counters: Option<&mut CounterText<'_>>,
         quotes: &Quotes,
         depth: &mut QuoteDepth,
-    ) -> Result<GeneratedOutput, crate::StyleError> {
+    ) -> Result<GeneratedOutput, StyleError> {
         let mut text = String::new();
         let mut leaders = Vec::new();
         for part in &self.0 {
@@ -523,7 +518,7 @@ impl GeneratedContent {
                 .checked_add(fragment.len())
                 .is_none_or(|size| size > limit)
             {
-                return Err(crate::StyleError::GeneratedContentLimit { limit });
+                return Err(StyleError::GeneratedContentLimit { limit });
             }
             if matches!(part, GeneratedPart::Leader(_)) && !fragment.is_empty() {
                 leaders.push(text.len()..text.len() + fragment.len());
@@ -667,12 +662,11 @@ fn counter(
     item: &Component,
     multiple: bool,
 ) -> Result<GeneratedPart, StyleError> {
-    let name = match arguments
+    let Some(Component::Ident(name)) = arguments
         .find(Label::Production(Production::CounterName))
         .map(Component::unwrap)
-    {
-        Some(Component::Ident(name)) => name,
-        _ => return Err(unsupported(item)),
+    else {
+        return Err(unsupported(item));
     };
     let style = counter_style(arguments)?;
     let separator = if multiple {

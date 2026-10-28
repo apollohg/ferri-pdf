@@ -219,7 +219,7 @@ fn contains(outer: &[Point], inner: &[Point]) -> bool {
 
 /// A page's link areas: polygons covered by another area of the same link are dropped, and
 /// the rest become rectangles when axis-aligned, otherwise quadrilaterals.
-pub(crate) fn link_areas(polygons: Vec<(usize, Vec<Point>)>) -> Vec<LinkArea> {
+pub(crate) fn link_areas(polygons: &[(usize, Vec<Point>)]) -> Vec<LinkArea> {
     let kept: Vec<&(usize, Vec<Point>)> = polygons
         .iter()
         .enumerate()
@@ -375,7 +375,7 @@ mod tests {
             true,
         );
         assert_eq!(
-            link_areas(vec![(0, polygon)]),
+            link_areas(&[(0, polygon)]),
             vec![LinkArea {
                 link: 0,
                 shape: LinkShape::Rect(Rect {
@@ -394,7 +394,7 @@ mod tests {
             &[Region::Transform([cos, sin, -sin, cos, 0.0, 0.0])],
             true,
         );
-        let LinkShape::Quads(quads) = &link_areas(vec![(3, polygon)])[0].shape else {
+        let LinkShape::Quads(quads) = &link_areas(&[(3, polygon)])[0].shape else {
             panic!("a rotated rectangle needs quadrilaterals");
         };
         assert_eq!(quads.len(), 1, "{quads:?}");
@@ -436,7 +436,7 @@ mod tests {
             true,
         );
         assert_eq!(polygon.len(), 3, "half of a diamond: {polygon:?}");
-        let LinkShape::Quads(quads) = &link_areas(vec![(0, polygon.clone())])[0].shape else {
+        let LinkShape::Quads(quads) = &link_areas(&[(0, polygon.clone())])[0].shape else {
             panic!("the clipped diamond is not axis-aligned");
         };
         assert!(
@@ -459,7 +459,7 @@ mod tests {
             [3.0, 1.0],
             [2.0, 0.0],
         ];
-        let LinkShape::Quads(quads) = &link_areas(vec![(0, hexagon.clone())])[0].shape else {
+        let LinkShape::Quads(quads) = &link_areas(&[(0, hexagon.clone())])[0].shape else {
             panic!("a hexagon is not a rectangle");
         };
         assert_eq!(
@@ -492,7 +492,7 @@ mod tests {
             &[],
             true,
         );
-        let areas = link_areas(vec![
+        let areas = link_areas(&[
             (0, outer.clone()),
             (0, inner.clone()),
             (1, inner),

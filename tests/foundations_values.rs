@@ -2,6 +2,7 @@ mod common;
 use ferri_pdf_dom::{DocumentTree, Selector};
 use ferri_pdf_resources::{FileResolver, ResourceResolver};
 use ferri_pdf_style::{LengthPercentage, Size, Style, StyleError, Stylesheet, StylesheetSource};
+use std::fmt::Write;
 
 const FONT_SIZE_PT: f32 = 20.0;
 const SERIF_ZERO_PT: f32 = 10.0;
@@ -296,7 +297,7 @@ fn attribute_custom_values_freeze_lookup_on_the_declaring_element() {
 #[test]
 fn attribute_string_values_use_the_originating_element_without_css_unescaping() {
     let trace = common::render_trace(
-        r#"<style>@page{size:400pt 200pt;margin:10pt}body,p{margin:0;font:10pt/12pt serif}p::before{white-space:pre;content:attr(DATA-X) '|' attr(data-empty,'Fallback') '|' attr(missing,'Missing')}</style><p data-x='A\41 /*literal*/' data-empty=''>Body</p>"#,
+        r"<style>@page{size:400pt 200pt;margin:10pt}body,p{margin:0;font:10pt/12pt serif}p::before{white-space:pre;content:attr(DATA-X) '|' attr(data-empty,'Fallback') '|' attr(missing,'Missing')}</style><p data-x='A\41 /*literal*/' data-empty=''>Body</p>",
     );
     assert_eq!(trace.pages[0][0].text, r"A\41 /*literal*/||MissingBody");
 }
@@ -1044,9 +1045,10 @@ fn toggle_shared_rollback_values_do_not_expand_into_repeated_computation() {
     const LAYERS: usize = 14;
     let mut css = "@layer base{#target{width:17pt}}".to_owned();
     for index in 0..LAYERS {
-        css.push_str(&format!(
+        let _ = write!(
+            css,
             "@layer level{index}{{#target{{width:toggle(revert-layer,revert-layer)}}}}"
-        ));
+        );
     }
     common::assert_pt(points(&computed(&css).width), 17.0);
 }
@@ -1477,7 +1479,7 @@ fn calc_mix_easing_covers_bezier_steps_and_piecewise_linear_functions() {
         ("0", "steps(4,start)", 25.0),
         ("1", "steps(4,jump-start)", 100.0),
         ("0", "steps(4,jump-both)", 20.0),
-        (".5", "steps(4,jump-none)", 66.666664),
+        (".5", "steps(4,jump-none)", 66.666_664),
         ("-.25", "steps(4,end)", -25.0),
         ("1.25", "steps(4,end)", 125.0),
         (".5", "step-start", 100.0),
@@ -1595,7 +1597,7 @@ fn calc_mix_easing_parameters_keep_element_context_and_computed_ranges() {
     for (easing, expected) in [
         ("steps(calc(-10),start)", 100.0),
         ("steps(calc(1),jump-none)", 100.0),
-        ("steps(calc(5 / 2),start)", 66.666664),
+        ("steps(calc(5 / 2),start)", 66.666_664),
     ] {
         let style = computed(&format!(
             "#target{{margin-left:calc-mix(.5 by {easing},0pt,100pt)}}"
@@ -3109,9 +3111,8 @@ fn undefined_geometry_cycles_are_reported_instead_of_using_provisional_values() 
             &format!("<style>{css}</style><p>Cycle</p>"),
             &common::local_options(),
         );
-        let error = match result {
-            Ok(_) => panic!("geometry cycle was silently accepted: {css}"),
-            Err(error) => error,
+        let Err(error) = result else {
+            panic!("geometry cycle was silently accepted: {css}")
         };
         assert!(
             matches!(error, ferri_pdf::Error::Css(_)),

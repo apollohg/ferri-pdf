@@ -1,5 +1,5 @@
 //! CSS Text Decoration 3: propagation to in-flow content, decorating-box font metrics and
-//! painting order. Font metrics are read from the bundled DejaVu Sans and STIX General files.
+//! painting order. Font metrics are read from the bundled `DejaVu` Sans and STIX General files.
 mod common;
 use common::{PROFILE, local_options};
 use ferri_pdf::{

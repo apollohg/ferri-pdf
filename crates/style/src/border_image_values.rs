@@ -19,7 +19,7 @@ const BOTTOM: usize = 2;
 const LEFT: usize = 3;
 
 /// One to four values for top, right, bottom and left (CSS Backgrounds 3 §4.1).
-fn edges<T: Clone>(values: Vec<T>) -> Result<[T; 4], StyleError> {
+fn edges<T: Clone>(values: &[T]) -> Result<[T; 4], StyleError> {
     let index = |side: usize| match (values.len(), side) {
         (1, _) => 0,
         (2 | 3, LEFT) => RIGHT,
@@ -65,7 +65,7 @@ pub(super) fn slice(
     if let Some(fill) = value.slot(SLICE_FILL) {
         fill.keywords(&mut keywords);
     }
-    Ok((edges(offsets)?, keywords.contains(&Keyword::Fill)))
+    Ok((edges(&offsets)?, keywords.contains(&Keyword::Fill)))
 }
 
 pub(super) fn widths(
@@ -73,7 +73,7 @@ pub(super) fn widths(
     relative: &Relative<'_>,
 ) -> Result<[BorderImageWidth; 4], StyleError> {
     edges(
-        value
+        &value
             .items()
             .iter()
             .map(|item| {
@@ -94,7 +94,7 @@ pub(super) fn outset(
     relative: &Relative<'_>,
 ) -> Result<[BorderImageOutset; 4], StyleError> {
     edges(
-        value
+        &value
             .items()
             .iter()
             .map(|item| {

@@ -47,7 +47,7 @@ impl AxisLines {
 /// Intersect named areas in both parent axes, then express them in child coordinates.
 pub fn inherited_areas(
     parent: &GridAreas,
-    area: [Range<i64>; 2],
+    area: &[Range<i64>; 2],
     reverse: [bool; 2],
 ) -> Result<GridAreas, GridError> {
     let size = [span(&area[0])?, span(&area[1])?];
@@ -132,7 +132,7 @@ mod tests {
                 vec![Arc::from("end")]
             ]
         );
-        assert!(inherited.area_names.is_empty());
+        assert_eq!(inherited.area_names, [] as [Vec<Arc<str>>; 0]);
         assert!(inherited.subgridded);
         let nested = inherited.inherit(1..3, true, &Subgrid::default()).unwrap();
         assert_eq!(
@@ -191,7 +191,7 @@ mod tests {
                 },
             ],
         };
-        let inherited = inherited_areas(&parent, [3..6, 2..5], [false, true]).unwrap();
+        let inherited = inherited_areas(&parent, &[3..6, 2..5], [false, true]).unwrap();
         assert_eq!(inherited.size, [3, 3]);
         assert_eq!(inherited.areas.len(), 1);
         assert_eq!(inherited.areas[0].tracks, [0..2, 1..3]);
@@ -203,7 +203,7 @@ mod tests {
             inherited.line_names(1, 3).collect::<Vec<_>>(),
             ["panel-end"]
         );
-        let nested = inherited_areas(&inherited, [0..1, 2..3], [false; 2]).unwrap();
+        let nested = inherited_areas(&inherited, &[0..1, 2..3], [false; 2]).unwrap();
         assert_eq!(nested.areas[0].tracks, [0..1, 0..1]);
         assert_eq!(nested.line_names(1, 0).collect::<Vec<_>>(), ["panel-start"]);
     }

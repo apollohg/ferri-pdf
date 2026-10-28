@@ -239,6 +239,7 @@ pub(super) fn transform(
     Ok(output)
 }
 
+#[derive(Clone, Copy)]
 struct CoordinateMap {
     xx: i64,
     xy: i64,

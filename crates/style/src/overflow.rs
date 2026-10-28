@@ -58,16 +58,10 @@ pub(super) fn compute(
     relative: &Relative<'_>,
 ) -> Result<(), StyleError> {
     let specified = AXIS_PROPERTIES.map(|property| winners.remove(&property));
-    if !specified
+    if specified
         .iter()
         .any(|value| matches!(value, Some(Specified::Toggle(_))))
     {
-        for (property, value) in AXIS_PROPERTIES.into_iter().zip(specified) {
-            if let Some(value) = value {
-                crate::properties::apply(property, &value, style, parent, relative)?;
-            }
-        }
-    } else {
         let source = |axis: usize| {
             Ok(specified[axis].clone().map_or(
                 AxisValue::Computed(style.overflow[axis]),
@@ -76,6 +70,12 @@ pub(super) fn compute(
         };
         let mut axes = Axes::new(style, parent, relative, &source);
         style.overflow = [axes.raw(0)?, axes.raw(1)?];
+    } else {
+        for (property, value) in AXIS_PROPERTIES.into_iter().zip(specified) {
+            if let Some(value) = value {
+                crate::properties::apply(property, &value, style, parent, relative)?;
+            }
+        }
     }
     style.pair_overflow();
     Ok(())
@@ -242,17 +242,15 @@ impl<'a, 'r, 's> Axes<'a, 'r, 's> {
         let _work = relative.work.enter(relative.grammar_only);
         relative.work.charge(1)?;
         let key = (axis, Arc::as_ptr(values));
-        let chosen = match self.choices.get(&key) {
-            Some(&chosen) => chosen,
-            None => {
-                let chosen =
-                    crate::properties::toggle_index(values, &true, relative, |argument| {
-                        let value = self.value(axis, &argument.value)?;
-                        self.matches_parent(axis, value)
-                    })?;
-                self.choices.insert(key, chosen);
-                chosen
-            }
+        let chosen = if let Some(&chosen) = self.choices.get(&key) {
+            chosen
+        } else {
+            let chosen = crate::properties::toggle_index(values, &true, relative, |argument| {
+                let value = self.value(axis, &argument.value)?;
+                self.matches_parent(axis, value)
+            })?;
+            self.choices.insert(key, chosen);
+            chosen
         };
         self.value(axis, &values[chosen].value)
     }

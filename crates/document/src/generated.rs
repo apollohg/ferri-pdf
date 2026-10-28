@@ -36,7 +36,7 @@ pub(crate) struct GeneratedBindings {
     requests: Rc<RefCell<HashMap<TargetRequest, ElementId>>>,
 }
 impl GeneratedBindings {
-    pub fn bind<'a>(
+    pub(crate) fn bind<'a>(
         &self,
         content: &'a GeneratedContent,
         context: Option<PageStyleTarget>,
@@ -78,7 +78,7 @@ pub(crate) struct GeneratedPass {
     elements: HashMap<ElementId, TargetElement>,
 }
 impl GeneratedPass {
-    pub fn new(index: Rc<FragmentIndex>, values: GeneratedValues) -> Self {
+    pub(crate) fn new(index: Rc<FragmentIndex>, values: GeneratedValues) -> Self {
         Self {
             bindings: GeneratedBindings {
                 index,
@@ -89,22 +89,22 @@ impl GeneratedPass {
             elements: HashMap::new(),
         }
     }
-    pub fn bindings(&self) -> GeneratedBindings {
+    pub(crate) fn bindings(&self) -> GeneratedBindings {
         self.bindings.clone()
     }
-    pub fn bind<'a>(
+    pub(crate) fn bind<'a>(
         &self,
         content: &'a GeneratedContent,
         context: PageStyleTarget,
     ) -> Result<std::borrow::Cow<'a, GeneratedContent>, StyleError> {
         self.bindings.bind(content, Some(context))
     }
-    pub fn capture(&mut self, element: Element<'_>, counters: &Counters) {
+    pub(crate) fn capture(&mut self, element: Element<'_>, counters: &Counters) {
         if self.bindings.index.contains(element.id()) {
             self.elements.entry(element.id()).or_default().counters = counters.capture();
         }
     }
-    pub fn generated(
+    pub(crate) fn generated(
         &mut self,
         element: Element<'_>,
         pseudo: PseudoElement,
@@ -120,7 +120,7 @@ impl GeneratedPass {
             PseudoElement::After => target.after = generated,
         }
     }
-    pub fn finish(self) -> GeneratedReferences {
+    pub(crate) fn finish(self) -> GeneratedReferences {
         GeneratedReferences {
             bindings: self.bindings,
             elements: self.elements,
@@ -133,7 +133,7 @@ pub(crate) struct GeneratedReferences {
     elements: HashMap<ElementId, TargetElement>,
 }
 impl GeneratedReferences {
-    pub fn bind<'a>(
+    pub(crate) fn bind<'a>(
         &self,
         content: &'a GeneratedContent,
         context: PageStyleTarget,
@@ -141,7 +141,7 @@ impl GeneratedReferences {
         self.bindings.bind(content, Some(context))
     }
 
-    pub fn resolve(
+    pub(crate) fn resolve(
         &self,
         document: &DocumentTree,
         pages: usize,
@@ -189,7 +189,7 @@ impl GeneratedReferences {
             strings: named,
         })
     }
-    pub fn matches(&self, values: &GeneratedValues) -> bool {
+    pub(crate) fn matches(&self, values: &GeneratedValues) -> bool {
         self.bindings.values.as_ref() == values
     }
 }

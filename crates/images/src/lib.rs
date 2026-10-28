@@ -75,7 +75,7 @@ impl RasterImage {
     }
 
     pub fn pixel_size(&self) -> [f32; 2] {
-        use Orientation::*;
+        use Orientation::{Rotate90, Rotate90FlipH, Rotate270, Rotate270FlipH};
         match self.orientation {
             Rotate90 | Rotate270 | Rotate90FlipH | Rotate270FlipH => {
                 [self.height as f32, self.width as f32]
@@ -360,14 +360,13 @@ impl ImageCache {
             .get(base)
             .and_then(|sources| sources.get(reference))
             .cloned();
-        let image = Arc::new(match source {
-            Some(source) => Image::Svg(SvgImage::parse_source(
+        let image = Arc::new(if let Some(source) = source {
+            Image::Svg(SvgImage::parse_source(
                 source, resolver, depth, self, namespace,
-            )?),
-            None => {
-                let resource = resolver.resolve(reference, base)?;
-                Image::parse(resource, resolver, depth, self, namespace)?
-            }
+            )?)
+        } else {
+            let resource = resolver.resolve(reference, base)?;
+            Image::parse(resource, resolver, depth, self, namespace)?
         });
         let namespace = match image.as_ref() {
             Image::Svg(svg) => {

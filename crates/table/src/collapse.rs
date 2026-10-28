@@ -61,6 +61,7 @@ impl ResolvedBorder {
             .then(self.leading.cmp(&other.leading))
     }
     /// The winner of two borders meeting on one segment; ties keep `self`.
+    #[must_use]
     pub fn winner(self, other: Self) -> Self {
         if other.priority(&self) == Ordering::Greater {
             other

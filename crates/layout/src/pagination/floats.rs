@@ -1,3 +1,7 @@
+#[allow(
+    clippy::wildcard_imports,
+    reason = "pagination submodules extend the parent paginator and share its scope"
+)]
 use super::*;
 
 pub(super) struct MeasuredFloat<'a> {
@@ -74,7 +78,7 @@ impl FloatPlacement {
     }
 }
 
-impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
+impl<'a> Paginator<'a, '_, '_> {
     pub(super) fn reflow_float_geometry(
         &self,
         page: usize,
@@ -205,7 +209,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                             .is_some_and(|(page, bottom)| page > self.page || bottom > hypothetical)
                             && child.clearance_target.is_none()
                         {
-                            targets.insert(child.source as *const BlockBox, self.page);
+                            targets.insert(std::ptr::from_ref::<BlockBox>(child.source), self.page);
                             break;
                         }
                         if !child.through {
@@ -498,7 +502,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
 
     pub(super) fn reposition_float(
         &mut self,
-        block: MeasuredBlock<'a>,
+        block: &MeasuredBlock<'a>,
         placement: &mut FloatPlacement,
     ) -> Result<MeasuredBlock<'a>, LayoutError> {
         self.reflow_box_geometry()?;

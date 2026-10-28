@@ -255,7 +255,7 @@ pub(super) fn is_math_function(name: &str) -> bool {
 /// Parses the next component when it is a math function; otherwise consumes nothing.
 pub(super) fn math_function(
     input: &mut Parser<'_, '_>,
-    context: Context,
+    context: Context<'_>,
 ) -> Option<Result<Math, MathError>> {
     let start = input.state();
     match input.next() {
@@ -353,7 +353,7 @@ impl MathParser<'_> {
         ) {
             input
                 .parse_nested_block(crate::parser::consume)
-                .map_err(|error| error.into::<MathError>())?;
+                .map_err(ParseError::into::<MathError>)?;
         }
         Ok(input.slice_from(start).trim())
     }
@@ -503,7 +503,7 @@ impl MathParser<'_> {
                 kind: Some(feature.kind),
                 calculation,
             };
-            let Some(calculation) = feature.calculation(math) else {
+            let Some(calculation) = feature.calculation(&math) else {
                 return Self::invalid(input, "invalid media-progress() feature value");
             };
             Ok(calculation)

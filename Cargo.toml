@@ -13,6 +13,45 @@ publish = false
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
+rust_2018_idioms = { level = "warn", priority = -1 }
+unreachable_pub = "warn"
+unused_qualifications = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+cargo = { level = "warn", priority = -1 }
+allow_attributes_without_reason = "warn"
+dbg_macro = "warn"
+print_stderr = "warn"
+print_stdout = "warn"
+todo = "warn"
+unimplemented = "warn"
+# Geometry is f32 and is clamped before conversion to pixel, glyph and index domains.
+cast_possible_truncation = "allow"
+cast_possible_wrap = "allow"
+cast_precision_loss = "allow"
+cast_sign_loss = "allow"
+# CSS algorithms compare exact computed values.
+float_cmp = "allow"
+# Struct fields and arguments name the type, so `Default::default()` is unambiguous.
+default_trait_access = "allow"
+# Test fixtures build HTML by collecting formatted fragments.
+format_collect = "allow"
+# Named constants sit beside the statements that use them.
+items_after_statements = "allow"
+# Affine matrices and Bezier points use their conventional single-letter names.
+many_single_char_names = "allow"
+# Match arms mirror the specification's case lists.
+match_same_arms = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+must_use_candidate = "allow"
+# Duplicate versions come from transitive dependencies.
+multiple_crate_versions = "allow"
+similar_names = "allow"
+struct_excessive_bools = "allow"
+too_many_lines = "allow"
 
 [workspace.dependencies]
 ferri-pdf-spec-data = { path = "spec", version = "0.1.0" }

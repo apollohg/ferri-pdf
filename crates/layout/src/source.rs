@@ -7,7 +7,7 @@ pub(super) struct SourceIds {
     paragraphs: HashMap<*const Paragraph, usize>,
 }
 impl SourceIds {
-    pub fn new(root: &BlockBox) -> Self {
+    pub(crate) fn new(root: &BlockBox) -> Self {
         enum Entry<'a> {
             Block(&'a BlockBox),
             Paragraph(&'a Paragraph),
@@ -67,13 +67,13 @@ impl SourceIds {
         }
         ids
     }
-    pub fn block(&self, block: &BlockBox) -> usize {
+    pub(crate) fn block(&self, block: &BlockBox) -> usize {
         self.blocks[&std::ptr::from_ref(block)]
     }
-    pub fn paragraph(&self, paragraph: &Paragraph) -> usize {
+    pub(crate) fn paragraph(&self, paragraph: &Paragraph) -> usize {
         self.paragraphs[&std::ptr::from_ref(paragraph)]
     }
-    pub fn paragraph_count(&self) -> usize {
+    pub(crate) fn paragraph_count(&self) -> usize {
         self.paragraphs.len()
     }
 }

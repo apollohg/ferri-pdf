@@ -194,6 +194,7 @@ impl BreakBetween {
         }
     }
     /// Combines coincident breaks in flow order, retaining the latest side constraint.
+    #[must_use]
     pub fn combine(self, later: Self) -> Self {
         if later.page_side(false).is_some() {
             later
@@ -367,6 +368,7 @@ impl Display {
         matches!(self, Self::Table | Self::InlineTable)
     }
     /// CSS Display 3 blockification for flex and grid items and absolutely positioned boxes.
+    #[must_use]
     pub fn blockified(&self) -> Self {
         match self {
             Self::Inline | Self::InlineBlock => Self::Block,
@@ -386,15 +388,17 @@ impl Display {
         DISPLAY_FORMS
             .iter()
             .find(|(_, forms)| forms.contains(&keywords.as_slice()))
-            .map(|(display, _)| display.clone())
-            .unwrap_or_else(|| {
-                Self::Unsupported(
-                    keywords
-                        .iter()
-                        .map(|keyword| keyword.name())
-                        .collect::<Vec<_>>()
-                        .join(" "),
-                )
-            })
+            .map_or_else(
+                || {
+                    Self::Unsupported(
+                        keywords
+                            .iter()
+                            .map(|keyword| keyword.name())
+                            .collect::<Vec<_>>()
+                            .join(" "),
+                    )
+                },
+                |(display, _)| display.clone(),
+            )
     }
 }

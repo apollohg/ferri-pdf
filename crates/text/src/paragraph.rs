@@ -48,7 +48,9 @@ pub struct ParagraphLines<'s, 'p, 'context, 'font> {
 impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
     pub(crate) fn new(context: &'context TextContext<'font>, paragraph: &'p Paragraph) -> Self {
         let bidi = paragraph_bidi(paragraph, &context.bidi_work);
-        let has_rtl = bidi.as_ref().is_ok_and(|bidi| bidi.has_rtl());
+        let has_rtl = bidi
+            .as_ref()
+            .is_ok_and(super::bidi::ResolvedParagraph::has_rtl);
         let opportunities = whitespace::opportunities(paragraph);
         let ordinary = opportunities
             .iter()

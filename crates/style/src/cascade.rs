@@ -61,7 +61,7 @@ pub(super) struct Candidate<T> {
 }
 
 impl<T> Candidate<T> {
-    pub fn new(value: T, context: DeclarationContext, important: bool) -> Self {
+    pub(crate) fn new(value: T, context: DeclarationContext, important: bool) -> Self {
         Self {
             value,
             location: None,
@@ -70,7 +70,7 @@ impl<T> Candidate<T> {
         }
     }
 
-    pub fn with_location(mut self, location: Option<Arc<crate::SourceLocation>>) -> Self {
+    pub(crate) fn with_location(mut self, location: Option<Arc<crate::SourceLocation>>) -> Self {
         self.location = location;
         self
     }
@@ -631,7 +631,7 @@ impl PropertyResolver<'_, '_> {
                     }
                     _ => (argument.value.clone(), namespace),
                 };
-                resolved.push(crate::declaration::ToggleArgument {
+                resolved.push(declaration::ToggleArgument {
                     value,
                     font_namespace: (self.property == Property::FontFamily).then_some(owner),
                     location: self.candidates[index].location.clone(),

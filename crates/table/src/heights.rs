@@ -337,7 +337,7 @@ mod tests {
             })
             .unwrap();
         assert_eq!(result.table, 100.0);
-        assert!(result.heights.is_empty());
+        assert_eq!(result.heights, [] as [f32; 0]);
     }
 
     #[test]

@@ -43,7 +43,7 @@ pub enum DisplayItem {
 #[derive(Clone, Debug, Serialize)]
 pub struct ImagePaint {
     #[serde(skip)]
-    pub image: std::sync::Arc<ferri_pdf_images::Image>,
+    pub image: Arc<Image>,
     pub rect: Rect,
     pub clip: Option<Clip>,
 }

@@ -68,6 +68,7 @@ impl UrlResolver {
         }
     }
     /// Reject a URL before access, including redirect targets and nested resources.
+    #[must_use]
     pub fn with_url_filter(
         mut self,
         filter: impl Fn(&Url) -> bool + Send + Sync + 'static,

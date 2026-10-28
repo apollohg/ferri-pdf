@@ -36,7 +36,7 @@ impl Expanded {
         self.source.len()
     }
     fn storage_len(&self) -> usize {
-        self.len() + self.taint.as_deref().map_or(0, std::mem::size_of_val)
+        self.len() + self.taint.as_deref().map_or(0, size_of_val)
     }
     pub(super) fn has_taint(&self) -> bool {
         self.taint.is_some()
@@ -731,6 +731,10 @@ impl Resolver {
         self.values.borrow().keys().cloned().collect()
     }
 
+    #[expect(
+        clippy::option_option,
+        reason = "outer is whether the name is declared locally, inner is its value or guaranteed-invalid"
+    )]
     pub(super) fn local(&self, name: &str) -> Option<Option<Expanded>> {
         self.computed.borrow().values.get(name).cloned()
     }
@@ -813,7 +817,7 @@ impl Resolver {
                 match evaluation.recascade(name, keyword)? {
                     Recascade::Restart => return Ok(Some((name.to_owned(), keyword))),
                     Recascade::Source(source) => {
-                        self.replace(name, source)?;
+                        self.replace(name, source.as_deref())?;
                         continue;
                     }
                 }
@@ -835,8 +839,8 @@ impl Resolver {
         }
     }
 
-    fn replace(&self, name: &str, source: Option<String>) -> Result<(), StyleError> {
-        let keyword = source.as_deref().and_then(WideKeyword::parse);
+    fn replace(&self, name: &str, source: Option<&str>) -> Result<(), StyleError> {
+        let keyword = source.and_then(WideKeyword::parse);
         if source.is_none() || matches!(keyword, Some(WideKeyword::Inherit | WideKeyword::Unset)) {
             self.values.borrow_mut().remove(name);
             let mut computed = self.computed.borrow_mut();
@@ -856,8 +860,7 @@ impl Resolver {
             self.finished.borrow_mut().insert(name.to_owned());
             return Ok(());
         }
-        let value =
-            Value::parse(source.as_deref().expect("noninitial custom source exists"))?.map(Rc::new);
+        let value = Value::parse(source.expect("noninitial custom source exists"))?.map(Rc::new);
         self.values.borrow_mut().insert(name.to_owned(), value);
         let cyclic = cycles::members(&self.values.borrow());
         let mut computed = self.computed.borrow_mut();
@@ -959,7 +962,7 @@ mod tests {
             REPETITIONS,
             "authored tokens between attributes keep their distinct provenance"
         );
-        let retained = "--value".len() + value.len() + std::mem::size_of_val(origins);
+        let retained = "--value".len() + value.len() + size_of_val(origins);
         assert_eq!(
             environment.bytes,
             retained,
@@ -973,7 +976,7 @@ mod tests {
     fn inherited_attribute_metadata_reaches_the_environment_quota_before_text() {
         const ORIGINS_PER_ELEMENT: usize = 32 * 1024;
         const ELEMENTS: usize =
-            MAX_ENVIRONMENT_BYTES / (ORIGINS_PER_ELEMENT * std::mem::size_of::<Origin>()) + 1;
+            MAX_ENVIRONMENT_BYTES / (ORIGINS_PER_ELEMENT * size_of::<Origin>()) + 1;
         let source = "var(--token) x ".repeat(ORIGINS_PER_ELEMENT);
         let sheet = Stylesheet::parse(&[StylesheetSource {
             text: format!("div{{--token:attr(data-token *);--value:{source}}}"),

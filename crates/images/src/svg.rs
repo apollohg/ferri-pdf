@@ -151,7 +151,7 @@ impl SvgImage {
         let initial_tree = initial_tree.map_err(ImageError::Svg)?;
         let resources = resources.into_inner();
         Ok(Self {
-            source: source.clone(),
+            source,
             fonts,
             resources,
             jpeg_images: jpeg_images.into_inner(),

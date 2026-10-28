@@ -168,7 +168,7 @@ impl ResourceResolver for FileResolver {
         }
         let path = url
             .to_file_path()
-            .map_err(|_| ResourceError::InvalidFileUrl(url))?;
+            .map_err(|()| ResourceError::InvalidFileUrl(url))?;
         let canonical = path.canonicalize().map_err(|source| ResourceError::Read {
             path: path.clone(),
             source,
@@ -204,7 +204,7 @@ impl ResourceResolver for FileResolver {
             resource: Resource {
                 bytes,
                 base: Url::from_file_path(&canonical)
-                    .map_err(|_| ResourceError::InvalidBase(canonical.clone()))?
+                    .map_err(|()| ResourceError::InvalidBase(canonical.clone()))?
                     .into(),
             },
             metadata: ResourceMetadata::default(),

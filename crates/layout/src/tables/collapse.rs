@@ -44,6 +44,15 @@ impl PageLine {
             };
         }
     }
+
+    /// Widest horizontal segment beside vertical grid line `at`.
+    fn horizontal_crossing(&self, at: usize) -> f32 {
+        [at.checked_sub(1), (at < self.segments.len()).then_some(at)]
+            .into_iter()
+            .flatten()
+            .map(|column| width(self.segments[column]))
+            .fold(0.0, f32::max)
+    }
 }
 struct PageRow {
     row: usize,
@@ -409,15 +418,6 @@ impl CollapsedGrid {
         }
     }
 
-    /// Widest horizontal segment of `line` beside vertical grid line `at`.
-    fn horizontal_crossing(&self, line: &PageLine, at: usize) -> f32 {
-        [at.checked_sub(1), (at < line.segments.len()).then_some(at)]
-            .into_iter()
-            .flatten()
-            .map(|column| width(line.segments[column]))
-            .fold(0.0, f32::max)
-    }
-
     fn vertical_runs(
         &self,
         lines: &[PageLine],
@@ -445,8 +445,8 @@ impl CollapsedGrid {
                     index += 1;
                 }
                 let crossing = [
-                    self.horizontal_crossing(&lines[rows[start].top], at),
-                    self.horizontal_crossing(&lines[rows[index].bottom], at),
+                    lines[rows[start].top].horizontal_crossing(at),
+                    lines[rows[index].bottom].horizontal_crossing(at),
                 ];
                 let low = lines[rows[start].top].y - crossing[0] / 2.0;
                 let high = lines[rows[index].bottom].y + crossing[1] / 2.0;

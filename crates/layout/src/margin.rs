@@ -39,7 +39,7 @@ enum MarginSource<'a> {
     Within(&'a BlockBox, MarginStrut<'a>),
     Truncated(MarginStrut<'a>),
 }
-impl<'a> MarginSource<'a> {
+impl MarginSource<'_> {
     fn take_children(&mut self, pending: &mut Vec<Rc<Self>>) {
         match self {
             Self::Edge(..) => {}
@@ -63,7 +63,7 @@ impl Drop for MarginSource<'_> {
     }
 }
 impl<'a> MarginStrut<'a> {
-    pub fn from(value: f32) -> Self {
+    pub(crate) fn from(value: f32) -> Self {
         let mut all = Extremes::default();
         all.add(value);
         Self {
@@ -74,22 +74,22 @@ impl<'a> MarginStrut<'a> {
             clearance_owner: None,
         }
     }
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         self.clearance_owner.is_none()
             && self.source.is_none()
             && self.after_break.is_none()
             && self.all.positive == 0.0
             && self.all.negative == 0.0
     }
-    pub fn for_clearance(mut self, block: &'a BlockBox) -> Self {
+    pub(crate) fn for_clearance(mut self, block: &'a BlockBox) -> Self {
         self.clearance_owner = Some(block);
         self
     }
-    pub fn belongs_to(&self, block: &BlockBox) -> bool {
+    pub(crate) fn belongs_to(&self, block: &BlockBox) -> bool {
         self.clearance_owner
             .is_some_and(|owner| std::ptr::eq(owner, block))
     }
-    pub fn edge(block: &'a BlockBox, edge: usize, width: f32) -> Self {
+    pub(crate) fn edge(block: &'a BlockBox, edge: usize, width: f32) -> Self {
         let value = &block.style().margin[edge];
         let mut result = Self::from(value.resolve(width).unwrap_or(0.0));
         if matches!(value, Size::Value(value) if !matches!(value, LengthPercentage::Length(_))) {
@@ -97,14 +97,14 @@ impl<'a> MarginStrut<'a> {
         }
         result
     }
-    pub fn within(mut self, parent: &'a BlockBox) -> Self {
+    pub(crate) fn within(mut self, parent: &'a BlockBox) -> Self {
         if self.source.is_some() {
             self.source = Some(Rc::new(MarginSource::Within(parent, self.clone())));
             self.forced = false;
         }
         self
     }
-    pub fn truncated(self) -> Self {
+    pub(crate) fn truncated(self) -> Self {
         let mut result = Self::from(self.after_break().unwrap_or(0.0));
         result.clearance_owner = self.clearance_owner;
         if self.source.is_some() {
@@ -112,7 +112,7 @@ impl<'a> MarginStrut<'a> {
         }
         result
     }
-    pub fn resolve(&self, width: f32, measurer: &Measurer<'_>) -> Result<Self, LayoutError> {
+    pub(crate) fn resolve(&self, width: f32, measurer: &Measurer<'_>) -> Result<Self, LayoutError> {
         if self.source.is_none() {
             return Ok(self.clone());
         }
@@ -174,13 +174,13 @@ impl<'a> MarginStrut<'a> {
             }
         }
         let mut resolved = values.pop().expect("one margin strut was resolved");
-        resolved.source = self.source.clone();
+        resolved.source.clone_from(&self.source);
         resolved.forced = self.forced;
         resolved.clearance_owner = self.clearance_owner;
         Ok(resolved)
     }
     /// Merges `later`, which follows these margins in tree order.
-    pub fn merge(&mut self, later: Self) {
+    pub(crate) fn merge(&mut self, later: Self) {
         if later.is_empty() {
             return;
         }
@@ -202,18 +202,18 @@ impl<'a> MarginStrut<'a> {
         self.forced = false;
     }
     /// These margins with a forced break point before them.
-    pub fn after_forced_break(self) -> Self {
+    pub(crate) fn after_forced_break(self) -> Self {
         Self {
             after_break: Some(self.all),
             forced: true,
             ..self
         }
     }
-    pub fn value(&self) -> f32 {
+    pub(crate) fn value(&self) -> f32 {
         self.all.value()
     }
     /// Collapsed margins that follow the strut's forced break point, if it has one.
-    pub fn after_break(&self) -> Option<f32> {
+    pub(crate) fn after_break(&self) -> Option<f32> {
         self.after_break.map(Extremes::value)
     }
 }

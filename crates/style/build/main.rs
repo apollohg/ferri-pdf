@@ -1,5 +1,10 @@
 //! Compiles the CSS property grammars in `spec/css` into static tables. A malformed or
 //! unresolved production fails the build.
+#![expect(
+    clippy::print_stdout,
+    clippy::print_stderr,
+    reason = "build scripts report to Cargo on stdout and stderr"
+)]
 #[path = "../src/angles.rs"]
 mod angles;
 mod compile;

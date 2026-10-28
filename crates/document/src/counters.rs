@@ -77,7 +77,7 @@ impl Counters {
         }
         Ok(())
     }
-    pub fn enter(
+    pub(crate) fn enter(
         &mut self,
         target: PageStyleTarget,
         properties: &CounterProperties,
@@ -267,7 +267,7 @@ impl Counters {
         }
         Ok(())
     }
-    pub fn leave(&mut self) {
+    pub(crate) fn leave(&mut self) {
         let frame = self
             .frames
             .pop()
@@ -328,12 +328,12 @@ impl Counters {
         }
         self.instantiate(name, INITIAL_COUNTER_VALUE, false, None)
     }
-    pub fn ordinal(&mut self) -> Result<i128, StyleError> {
+    pub(crate) fn ordinal(&mut self) -> Result<i128, StyleError> {
         let value = self.value(Arc::from(LIST_ITEM_COUNTER))?.get();
         self.update_previous()?;
         Ok(value)
     }
-    pub fn snapshot(
+    pub(crate) fn snapshot(
         &mut self,
         content: &ferri_pdf_style::GeneratedContent,
     ) -> Result<CounterSnapshot, StyleError> {
@@ -343,7 +343,7 @@ impl Counters {
         self.update_previous()?;
         Ok(self.capture())
     }
-    pub fn capture(&self) -> CounterSnapshot {
+    pub(crate) fn capture(&self) -> CounterSnapshot {
         CounterSnapshot(
             self.frames
                 .last()
@@ -354,7 +354,7 @@ impl Counters {
                 .collect(),
         )
     }
-    pub fn text(&mut self, request: &CounterRequest) -> Result<String, StyleError> {
+    pub(crate) fn text(&mut self, request: &CounterRequest) -> Result<String, StyleError> {
         self.value(request.name.clone())?;
         let text = render_counter(
             request,
@@ -372,7 +372,7 @@ impl Counters {
 }
 
 impl Counters {
-    pub fn prepare(
+    pub(crate) fn prepare(
         &mut self,
         properties: &CounterProperties,
         document: &ferri_pdf_dom::DocumentTree,
@@ -400,7 +400,7 @@ impl Counters {
         );
         Ok(())
     }
-    pub fn visit_hidden(
+    pub(crate) fn visit_hidden(
         &mut self,
         element: ferri_pdf_dom::Element<'_>,
         styles: &dyn ferri_pdf_style::PageSelection,
@@ -434,7 +434,7 @@ impl Counters {
         Ok(())
     }
 
-    pub fn at(
+    pub(crate) fn at(
         document: &ferri_pdf_dom::DocumentTree,
         styles: &dyn ferri_pdf_style::PageSelection,
         wanted: PageStyleTarget,
@@ -573,7 +573,7 @@ impl Counters {
 #[derive(Default)]
 pub(crate) struct CounterSnapshot(Vec<(Arc<str>, i128)>);
 impl CounterSnapshot {
-    pub fn text(&self, request: &CounterRequest) -> Result<String, StyleError> {
+    pub(crate) fn text(&self, request: &CounterRequest) -> Result<String, StyleError> {
         render_counter(
             request,
             self.0

@@ -231,7 +231,8 @@ pub(super) fn expand(
                                 .map(|g| g.text_range.end)
                                 .max()
                                 .unwrap();
-                            cropped.text = cropped.text[lo..hi].to_owned();
+                            cropped.text.truncate(hi);
+                            cropped.text.drain(..lo);
                             for glyph in &mut cropped.glyphs {
                                 glyph.text_range.start -= lo;
                                 glyph.text_range.end -= lo;

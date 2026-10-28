@@ -6,7 +6,7 @@ use ferri_pdf_style::{LengthPercentage, Size, Style, Stylesheet, StylesheetSourc
 
 const TOLERANCE_PT: f32 = 1e-3;
 const UNITS_PER_EM: f32 = 2048.0;
-/// DejaVu Sans has no OS/2 x-height or cap height, so `ex` and `cap` take the tops of `x` and
+/// `DejaVu` Sans has no OS/2 x-height or cap height, so `ex` and `cap` take the tops of `x` and
 /// `H`; its `0` advances 1303 units.
 const DEJAVU_X_TOP: f32 = 1120.0;
 const DEJAVU_H_TOP: f32 = 1493.0;

@@ -66,7 +66,7 @@ fn selected_page_cycle_records_the_named_property_and_viewport_request() {
     else {
         panic!("{error}");
     };
-    assert!(!sources.is_empty());
+    assert_ne!(sources, [] as [ferri_pdf_style::SourceLocation; 0]);
     assert!(
         dependencies
             .iter()
@@ -76,13 +76,17 @@ fn selected_page_cycle_records_the_named_property_and_viewport_request() {
     assert!(
         dependencies
             .iter()
-            .any(|dependency| dependency.ends_with(".page")),
+            .any(|dependency| std::path::Path::new(dependency)
+                .extension()
+                .is_some_and(|ext| ext.eq_ignore_ascii_case("page"))),
         "{dependencies:?}"
     );
     assert!(
         dependencies
             .iter()
-            .any(|dependency| dependency.ends_with(".width")),
+            .any(|dependency| std::path::Path::new(dependency)
+                .extension()
+                .is_some_and(|ext| ext.eq_ignore_ascii_case("width"))),
         "{dependencies:?}"
     );
 }

@@ -166,7 +166,7 @@ impl Stylesheet {
                 page,
                 winners,
                 resolver,
-                crate::resolution::ValueContext {
+                &crate::resolution::ValueContext {
                     tree: crate::units::Tree::Root,
                     viewport,
                     page_font: false,

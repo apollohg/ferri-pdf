@@ -29,12 +29,12 @@ pub(crate) fn extlang_form(value: &str) -> String {
         return value.to_owned();
     }
     if let Some(alias) = replacement(data::LANGUAGE, &parts[0]) {
-        parts[0] = alias.to_owned();
+        alias.clone_into(&mut parts[0]);
     }
     if parts.len() > 1 && replacement(data::EXTLANG, &parts[1]) == Some(parts[0].as_str()) {
         parts.remove(0);
         if let Some(alias) = replacement(data::LANGUAGE, &parts[0]) {
-            parts[0] = alias.to_owned();
+            alias.clone_into(&mut parts[0]);
         }
     }
     let mut index = 1;
@@ -43,7 +43,7 @@ pub(crate) fn extlang_form(value: &str) -> String {
         .is_some_and(|part| part.len() == SCRIPT_LENGTH && alpha(part))
     {
         if let Some(alias) = replacement(data::SCRIPT, &parts[index]) {
-            parts[index] = alias.to_owned();
+            alias.clone_into(&mut parts[index]);
         }
         index += 1;
     }
@@ -52,7 +52,7 @@ pub(crate) fn extlang_form(value: &str) -> String {
             || (part.len() == REGION_NUMERIC_LENGTH && numeric(part))
     }) {
         if let Some(alias) = replacement(data::REGION, &parts[index]) {
-            parts[index] = alias.to_owned();
+            alias.clone_into(&mut parts[index]);
         }
         index += 1;
     }
@@ -61,7 +61,7 @@ pub(crate) fn extlang_form(value: &str) -> String {
             || (part.len() == SCRIPT_LENGTH && part.as_bytes()[0].is_ascii_digit())
     }) {
         if let Some(alias) = replacement(data::VARIANT, &parts[index]) {
-            parts[index] = alias.to_owned();
+            alias.clone_into(&mut parts[index]);
         }
         index += 1;
     }

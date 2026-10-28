@@ -3,8 +3,8 @@ use ferri_pdf_document::{
 };
 use ferri_pdf_resources::{FileResolver, ResourceBase, Url};
 
-fn parse(html: &str, base: ResourceBase) -> StyledDocument {
-    StyledDocument::parse(html, &base, &[], &FileResolver::default())
+fn parse(html: &str, base: &ResourceBase) -> StyledDocument {
+    StyledDocument::parse(html, base, &[], &FileResolver::default())
         .expect("navigation fixture must parse")
 }
 
@@ -69,7 +69,7 @@ fn hyperlinks_resolve_against_the_base_and_same_document_references_find_their_t
          <a href='#'>empty</a> <a href=''>self</a> <a href='#TOP'>top</a> <a href='#missing'>missing</a> \
          <a href='http://[bad'>bad</a> <a href='other.html#t2'>other</a>\
          <p id=t2>by id</p><a name=named>by name</a><a name=t2>shadowed name</a>",
-        url_base(),
+        &url_base(),
     );
     let links = &document.navigation().links;
     assert_eq!(
@@ -134,7 +134,7 @@ fn every_box_inside_a_hyperlink_carries_it_and_the_innermost_link_wins() {
          <img src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221%22 height=%221%22/%3E'>\
          <div>block inside</div> after</a></div>\
          <a href='https://block.example/' style='display:block'><p>para</p></a>",
-        url_base(),
+        &url_base(),
     );
     let mut found = Vec::new();
     boxes(document.root(), &mut found);
@@ -177,7 +177,7 @@ fn shadow_links_resolve_document_fragments_without_exposing_shadow_targets() {
          <template><a href='https://inert.example/'>Inert</a></template></div>\
          <p id=target>Document target</p><a name=public-name>Document name</a>\
          <a href='#target'>Document link</a><a href='#private'>Private from light</a>",
-        url_base(),
+        &url_base(),
     );
     assert_eq!(
         document.navigation().links,
@@ -226,7 +226,7 @@ fn bookmarks_follow_document_order_with_labels_from_their_elements() {
          <div class=label data-x=7><h4 class=before>Inner</h4></div>\
          <ol start=3><li>«Quoted item</li></ol>\
          <p>text <span class=inline>inline bookmark</span></p><h1 class=after>After</h1>",
-        url_base(),
+        &url_base(),
     );
     let bookmark = |level, label: &str, open, destination| Bookmark {
         level,
@@ -268,7 +268,7 @@ fn bookmark_text_uses_shadow_content_and_slot_order_instead_of_light_children() 
         "<style>.book{bookmark-level:2}</style>\
          <div class=book><template shadowrootmode=closed>Shadow <slot name=second>unused</slot> <slot name=first>unused</slot> <slot>Fallback</slot></template><span slot=first>First</span><span slot=second>Second</span><b slot=missing>Unassigned</b></div>\
          <div class=book><template shadowrootmode=open><section><template shadowrootmode=closed>Inner <slot name=forward></slot></template><slot slot=forward name=projected>Unused</slot></section></template><span slot=projected>Projected</span><span slot=missing>Excluded</span></div>",
-        url_base(),
+        &url_base(),
     );
     let labels: Vec<_> = document
         .navigation()
@@ -288,7 +288,7 @@ fn bookmark_first_letter_keeps_composed_graphemes_separate_from_after_content() 
     let document = parse(
         "<style>.book{bookmark-level:2;bookmark-label:content(first-letter) '|' content(text) '|' content(after)}.book::after{content:'After'}</style>\
          <div class=book><template shadowrootmode=closed>«e&#x301;lan <slot name=term>Fallback</slot></template><span slot=term>Assigned</span><b slot=missing>Wrong</b></div>",
-        url_base(),
+        &url_base(),
     );
     assert_eq!(
         document.navigation().bookmarks[0].label,
@@ -383,7 +383,7 @@ fn multipart_capture_keeps_unreferenced_targets_and_html_fragment_precedence() {
         "hidden target identity must not manufacture a rendered destination"
     );
 
-    let ordinary = parse(html, base);
+    let ordinary = parse(html, &base);
     assert!(ordinary.navigation().fragment_targets.is_none());
     assert_eq!(
         ordinary.navigation().links.len(),
@@ -397,7 +397,7 @@ fn declared_base_changes_reference_resolution_but_not_document_identity() {
     let document = parse(
         "<base href='body.html'><p id=duplicate>Local</p>\
          <a href='#duplicate'>Other document</a><a href='index.html#duplicate'>Own document</a>",
-        url_base(),
+        &url_base(),
     );
     assert_eq!(
         document.navigation().links,

@@ -72,7 +72,7 @@ pub(super) struct PrintEnvironment {
 }
 
 impl PrintEnvironment {
-    pub fn new(settings: &PrintSettings) -> Result<Self, StyleError> {
+    pub(crate) fn new(settings: &PrintSettings) -> Result<Self, StyleError> {
         settings.validate()?;
         let initial_font = (!settings.fonts.is_empty()).then(|| {
             std::sync::Arc::new(ferri_pdf_fonts::InitialFont::from_preferences(

@@ -125,7 +125,7 @@ impl<'a> Plan<'a> {
         {
             let gap = match &self.source.style().flex.gap[axis] {
                 ferri_pdf_style::Gap::Normal => None,
-                gap => Some(gap.resolve(basis.unwrap_or(0.0))),
+                gap @ ferri_pdf_style::Gap::Length(_) => Some(gap.resolve(basis.unwrap_or(0.0))),
             };
             if let Some(geometry) = parent.geometry(axis, gap, axis == COLUMNS && self.rtl)? {
                 return Ok(geometry);
@@ -308,11 +308,11 @@ pub(super) struct Geometry<'a> {
     items: HashMap<*const BlockBox, usize>,
 }
 impl<'a> Geometry<'a> {
-    pub fn matches_parent(&self, parent: Option<&ParentContext>) -> bool {
+    pub(crate) fn matches_parent(&self, parent: Option<&ParentContext>) -> bool {
         self.plan.inherited.as_ref() == parent
     }
 
-    pub fn reparent(
+    pub(crate) fn reparent(
         self: &Rc<Self>,
         parent: Option<ParentContext>,
         measurer: &Measurer<'_>,
@@ -381,13 +381,13 @@ impl<'a> Geometry<'a> {
         Ok(columns)
     }
 
-    pub fn item(
+    pub(crate) fn item(
         &self,
         source: &'a BlockBox,
         parent: &crate::geometry::HorizontalBox,
         measurer: &Measurer<'_>,
     ) -> Result<Option<(items::Item<'a>, f32)>, LayoutError> {
-        let Some(&index) = self.items.get(&(source as *const BlockBox)) else {
+        let Some(&index) = self.items.get(&std::ptr::from_ref::<BlockBox>(source)) else {
             return Ok(None);
         };
         let columns = self.columns(parent.width, measurer)?;
@@ -413,7 +413,7 @@ impl<'a> Geometry<'a> {
         Ok(Some((item, row.end - row.start)))
     }
 
-    pub fn area(
+    pub(crate) fn area(
         &self,
         padding_box: ferri_pdf_graphics::Rect,
         padding: [f32; 4],
@@ -669,7 +669,7 @@ mod tests {
             |block, measurer| {
                 let geometry =
                     crate::geometry::horizontal(block.style(), 0.0, 80.0, false, Some(80.0));
-                let measured = measure(measurer, block, geometry, None, None).unwrap();
+                let measured = measure(measurer, block, &geometry, None, None).unwrap();
                 assert_eq!(
                     measured.first_baseline(),
                     Some(10.0),
@@ -722,7 +722,7 @@ mod tests {
             with_probe(&html, |block, measurer| {
                 let geometry =
                     crate::geometry::horizontal(block.style(), 0.0, 240.0, false, Some(240.0));
-                let measured = measure(measurer, block, geometry, None, None).unwrap();
+                let measured = measure(measurer, block, &geometry, None, None).unwrap();
                 let mut actual = Vec::new();
                 let mut y = 0.0;
                 for flow in &measured.items {

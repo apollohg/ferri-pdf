@@ -17,13 +17,13 @@ pub struct Item {
 impl Item {
     fn clamp(self, value: f64) -> f64 {
         self.maximum
-            .map_or(value, |v| value.min(v as f64))
-            .max(self.minimum as f64)
+            .map_or(value, |v| value.min(f64::from(v)))
+            .max(f64::from(self.minimum))
             .max(0.0)
     }
     fn outer(self, value: f64) -> f64 {
         value
-            + self.edges as f64
+            + f64::from(self.edges)
             + self
                 .margins
                 .into_iter()
@@ -69,9 +69,14 @@ pub fn line_ranges(
         if item.collapsed {
             continue;
         }
-        let outer = item.outer(item.clamp(item.basis as f64));
-        let next = used + if participants > 0 { gap as f64 } else { 0.0 } + outer;
-        if wrap && i > start && available.is_some_and(|limit| next > limit as f64) {
+        let outer = item.outer(item.clamp(f64::from(item.basis)));
+        let next =
+            used + if participants > 0 {
+                f64::from(gap)
+            } else {
+                0.0
+            } + outer;
+        if wrap && i > start && available.is_some_and(|limit| next > f64::from(limit)) {
             result.push(start..i);
             start = i;
             used = outer;
@@ -157,27 +162,27 @@ fn resolve_visible_line(
     for item in items {
         item.validate()?;
     }
-    let gaps = gap as f64 * items.len().saturating_sub(1) as f64;
+    let gaps = f64::from(gap) * items.len().saturating_sub(1) as f64;
     let grow = items
         .iter()
-        .map(|i| i.outer(i.clamp(i.basis as f64)))
+        .map(|i| i.outer(i.clamp(f64::from(i.basis))))
         .sum::<f64>()
         + gaps
-        < available as f64;
-    let mut sizes: Vec<f64> = items.iter().map(|i| i.basis as f64).collect();
+        < f64::from(available);
+    let mut sizes: Vec<f64> = items.iter().map(|i| f64::from(i.basis)).collect();
     let mut frozen = vec![false; items.len()];
     for (index, item) in items.iter().copied().enumerate() {
-        let hypothetical = item.clamp(item.basis as f64);
+        let hypothetical = item.clamp(f64::from(item.basis));
         if (if grow { item.grow } else { item.shrink }) == 0.0
-            || (grow && item.basis as f64 > hypothetical)
-            || (!grow && (item.basis as f64) < hypothetical)
+            || (grow && f64::from(item.basis) > hypothetical)
+            || (!grow && f64::from(item.basis) < hypothetical)
         {
             frozen[index] = true;
             sizes[index] = hypothetical;
         }
     }
     let remaining = |sizes: &[f64], frozen: &[bool]| {
-        available as f64
+        f64::from(available)
             - gaps
             - items
                 .iter()
@@ -186,7 +191,7 @@ fn resolve_visible_line(
                     item.outer(if frozen[i] {
                         sizes[i]
                     } else {
-                        item.basis as f64
+                        f64::from(item.basis)
                     })
                 })
                 .sum::<f64>()
@@ -200,9 +205,9 @@ fn resolve_visible_line(
             .filter(|(_, f)| !**f)
             .map(|(item, _)| {
                 if grow {
-                    item.grow as f64
+                    f64::from(item.grow)
                 } else {
-                    item.shrink as f64
+                    f64::from(item.shrink)
                 }
             })
             .sum();
@@ -215,9 +220,9 @@ fn resolve_visible_line(
             .filter(|(_, f)| !**f)
             .map(|(item, _)| {
                 if grow {
-                    item.grow as f64
+                    f64::from(item.grow)
                 } else {
-                    item.shrink as f64 * item.basis as f64
+                    f64::from(item.shrink) * f64::from(item.basis)
                 }
             })
             .sum();
@@ -227,11 +232,11 @@ fn resolve_visible_line(
                 continue;
             }
             let factor = if grow {
-                item.grow as f64
+                f64::from(item.grow)
             } else {
-                item.shrink as f64 * item.basis as f64
+                f64::from(item.shrink) * f64::from(item.basis)
             };
-            let target = item.basis as f64
+            let target = f64::from(item.basis)
                 + if weight > 0.0 {
                     free * factor / weight
                 } else {
@@ -250,7 +255,7 @@ fn resolve_visible_line(
             }
         }
     }
-    let free = available as f64
+    let free = f64::from(available)
         - gaps
         - items
             .iter()
@@ -272,18 +277,20 @@ fn resolve_visible_line(
         if auto_margin > 0.0 { 0.0 } else { free as f32 },
         items.len(),
     );
-    let mut cursor = leading as f64;
+    let mut cursor = f64::from(leading);
     let mut starts = Vec::with_capacity(items.len());
     for (item, size) in items.iter().zip(&sizes) {
-        cursor += item.margins[0].map(f64::from).unwrap_or(auto_margin);
+        cursor += item.margins[0].map_or(auto_margin, f64::from);
         starts.push(cursor as f32);
         cursor += size
-            + item.edges as f64
-            + item.margins[1].map(f64::from).unwrap_or(auto_margin)
-            + gap as f64
-            + between as f64;
+            + f64::from(item.edges)
+            + item.margins[1].map_or(auto_margin, f64::from)
+            + f64::from(gap)
+            + f64::from(between);
     }
-    if sizes.iter().any(|v| !v.is_finite() || *v > f32::MAX as f64)
+    if sizes
+        .iter()
+        .any(|v| !v.is_finite() || *v > f64::from(f32::MAX))
         || starts.iter().any(|v| !v.is_finite())
     {
         return Err(FlexError::InvalidGeometry);
@@ -323,11 +330,11 @@ pub fn intrinsic_line(items: &[Item], contributions: &[f32], gap: f32) -> Result
         if !contribution.is_finite() || *contribution < 0.0 {
             return Err(FlexError::InvalidGeometry);
         }
-        let difference = *contribution as f64 - item.basis as f64;
+        let difference = f64::from(*contribution) - f64::from(item.basis);
         let fraction = if difference > 0.0 {
-            difference / (item.grow as f64).max(1.0)
+            difference / f64::from(item.grow).max(1.0)
         } else if difference < 0.0 {
-            let scaled = (item.shrink as f64).max(1.0) * item.basis as f64;
+            let scaled = f64::from(item.shrink).max(1.0) * f64::from(item.basis);
             if scaled > 0.0 {
                 difference / scaled
             } else {
@@ -341,16 +348,16 @@ pub fn intrinsic_line(items: &[Item], contributions: &[f32], gap: f32) -> Result
     if !chosen.is_finite() {
         chosen = 0.0;
     }
-    let mut size = gap as f64 * items.len().saturating_sub(1) as f64;
+    let mut size = f64::from(gap) * items.len().saturating_sub(1) as f64;
     for item in items.iter().copied() {
         let factor = if chosen >= 0.0 {
-            item.grow as f64
+            f64::from(item.grow)
         } else {
-            item.shrink as f64 * item.basis as f64
+            f64::from(item.shrink) * f64::from(item.basis)
         };
-        size += item.outer(item.clamp(item.basis as f64 + factor * chosen));
+        size += item.outer(item.clamp(f64::from(item.basis) + factor * chosen));
     }
-    if !size.is_finite() || size > f32::MAX as f64 {
+    if !size.is_finite() || size > f64::from(f32::MAX) {
         return Err(FlexError::InvalidGeometry);
     }
     Ok(size.max(0.0) as f32)

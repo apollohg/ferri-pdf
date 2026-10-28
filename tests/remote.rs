@@ -4,6 +4,7 @@ use ferri_pdf::{
 };
 use std::{
     collections::HashMap,
+    fmt::Write as _,
     io::{BufRead, BufReader, Write},
     net::{TcpListener, TcpStream},
     sync::{
@@ -66,7 +67,7 @@ impl Server {
                 match listener.accept() {
                     Ok((stream, _)) => serve(stream, &routes, &recorded),
                     Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => {
-                        thread::sleep(POLL_INTERVAL)
+                        thread::sleep(POLL_INTERVAL);
                     }
                     Err(error) => panic!("HTTP test server accept: {error}"),
                 }
@@ -128,12 +129,12 @@ fn serve(mut stream: TcpStream, routes: &HashMap<&str, Reply>, calls: &Mutex<Vec
         reply.body.len()
     );
     for (name, value) in &reply.headers {
-        response.push_str(&format!("{name}: {value}\r\n"));
+        let _ = write!(response, "{name}: {value}\r\n");
     }
     response.push_str("\r\n");
     let result = stream
         .write_all(response.as_bytes())
-        .and_then(|_| stream.write_all(&reply.body));
+        .and_then(|()| stream.write_all(&reply.body));
     if let Err(error) = result {
         assert!(
             matches!(

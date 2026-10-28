@@ -18,7 +18,7 @@ use ferri_pdf_style::{Alignment, BreakBetween, COLUMNS, Overflow, ROWS};
 pub(crate) fn measure<'a>(
     measurer: &mut Measurer<'_>,
     block: &'a BlockBox,
-    geometry: HorizontalBox,
+    geometry: &HorizontalBox,
     containing_height: Option<f32>,
     used_height: Option<f32>,
 ) -> Result<MeasuredBlock<'a>, LayoutError> {
@@ -36,7 +36,7 @@ pub(crate) fn measure<'a>(
         min: heights.minimum,
         max: heights.maximum,
     };
-    let vertical = VerticalBox::new(style, &geometry, containing_height)
+    let vertical = VerticalBox::new(style, geometry, containing_height)
         .with_constraints(heights)
         .with_used_height(used_height);
     let definite = vertical.definite();
@@ -355,9 +355,10 @@ pub(crate) fn measure<'a>(
     };
     for (cell, area) in cells.iter().zip(&plan.topology.placement.areas) {
         let range = area[ROWS].clone();
-        grid_rows
-            .items
-            .insert(cell.block.source as *const BlockBox, range.clone());
+        grid_rows.items.insert(
+            std::ptr::from_ref::<BlockBox>(cell.block.source),
+            range.clone(),
+        );
         let first = &mut grid_rows.tracks[range.start];
         first.first_fragment = first.first_fragment.max(
             (cell.offset - first.area.start + cell.block.first_fragment)
@@ -458,7 +459,7 @@ pub(crate) fn measure<'a>(
         .children
         .iter()
         .enumerate()
-        .map(|(index, source)| (*source as *const BlockBox, index))
+        .map(|(index, source)| (std::ptr::from_ref::<BlockBox>(*source), index))
         .collect();
     let grid = Some(std::rc::Rc::new(super::Geometry {
         row_contributions,
@@ -486,7 +487,7 @@ pub(crate) fn measure<'a>(
         clearance_before: None,
         clearance_target: measurer
             .clearance_targets
-            .get(&(block as *const BlockBox))
+            .get(&std::ptr::from_ref::<BlockBox>(block))
             .copied(),
         through: false,
         height,
@@ -499,7 +500,7 @@ pub(crate) fn measure<'a>(
         break_before,
         break_after,
         items,
-        paint: measurer.box_paint(block, &geometry),
+        paint: measurer.box_paint(block, geometry),
         navigation: block.navigation(),
         end_space: bottom,
         start_space: top,

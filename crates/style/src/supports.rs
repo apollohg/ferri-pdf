@@ -18,7 +18,7 @@ pub(super) enum SupportTest {
 }
 
 impl SupportTest {
-    pub fn declaration(source: &str) -> Option<Self> {
+    pub(crate) fn declaration(source: &str) -> Option<Self> {
         let mut input = ParserInput::new(source);
         let input = &mut Parser::new(&mut input);
         let name = input.expect_ident_cloned().ok()?;
@@ -62,7 +62,7 @@ impl SupportTest {
         Some(test)
     }
 
-    pub fn evaluate(&self, names: &SupportNames) -> bool {
+    pub(crate) fn evaluate(&self, names: &SupportNames) -> bool {
         self.evaluate_with(names, None)
     }
 
@@ -82,7 +82,7 @@ impl SupportTest {
         }
     }
 
-    pub fn name(&self) -> Option<&str> {
+    pub(crate) fn name(&self) -> Option<&str> {
         match self {
             Self::Named(name) => Some(name),
             Self::Known(_) | Self::Selector(..) => None,
@@ -97,7 +97,7 @@ pub(super) struct SupportsCondition {
 }
 
 impl SupportsCondition {
-    pub fn parse_with_namespaces(
+    pub(crate) fn parse_with_namespaces(
         source: &str,
         namespaces: &Namespaces,
     ) -> Result<Option<Self>, StyleError> {
@@ -113,19 +113,23 @@ impl SupportsCondition {
         }))
     }
 
-    pub fn matches_with(&self, names: &SupportNames, namespaces: Option<&Namespaces>) -> bool {
+    pub(crate) fn matches_with(
+        &self,
+        names: &SupportNames,
+        namespaces: Option<&Namespaces>,
+    ) -> bool {
         self.condition
             .evaluate(|test| test.evaluate_with(names, namespaces).into())
             == Truth::True
     }
 
-    pub fn bind(&mut self, names: &SupportNames) {
+    pub(crate) fn bind(&mut self, names: &SupportNames) {
         self.names = names.clone();
     }
-    pub fn dependencies(&self) -> impl Iterator<Item = &str> {
+    pub(crate) fn dependencies(&self) -> impl Iterator<Item = &str> {
         self.condition.leaves().filter_map(SupportTest::name)
     }
-    pub fn uses_paper(&self) -> bool {
+    pub(crate) fn uses_paper(&self) -> bool {
         let names = self.names.borrow();
         self.dependencies()
             .any(|name| names.get(name).is_some_and(|value| value.paper_dependent))

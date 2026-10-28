@@ -105,7 +105,7 @@ impl ColumnRows {
             row * self.geometry.count
         }
     }
-    pub fn content_box(&self, page: usize) -> Rect {
+    pub(super) fn content_box(&self, page: usize) -> Rect {
         let geometry = self.geometry(self.row(page));
         Rect {
             x: geometry.left(0),
@@ -114,7 +114,7 @@ impl ColumnRows {
             height: self.height(page),
         }
     }
-    pub fn containing(&self, page: usize) -> (f32, f32, bool, Option<f32>) {
+    pub(super) fn containing(&self, page: usize) -> (f32, f32, bool, Option<f32>) {
         let geometry = self.geometry(self.row(page));
         (
             geometry.left(0),
@@ -123,23 +123,23 @@ impl ColumnRows {
             self.containing_height,
         )
     }
-    pub fn offset(&self, page: usize) -> [f32; 2] {
+    pub(super) fn offset(&self, page: usize) -> [f32; 2] {
         self.frames
             .get(self.row(page))
             .or_else(|| self.frames.last())
             .map_or(self.offset, |frame| frame.offset)
     }
-    pub fn has_next_row(&self, page: usize) -> bool {
+    pub(super) fn has_next_row(&self, page: usize) -> bool {
         self.frames
             .get(self.row(page))
             .is_none_or(|frame| !frame.unbounded)
     }
-    pub fn height(&self, page: usize) -> f32 {
+    pub(super) fn height(&self, page: usize) -> f32 {
         self.frames
             .get(self.row(page))
             .map_or(self.provisional, |frame| frame.height)
     }
-    pub fn page_rect(&self, page: usize) -> Rect {
+    pub(super) fn page_rect(&self, page: usize) -> Rect {
         let row = self.row(page);
         match self.frames.get(row) {
             Some(frame) => Rect {
@@ -150,7 +150,7 @@ impl ColumnRows {
         }
     }
     /// The first column of the row after `page`'s, at or after `candidate`.
-    pub fn next_row(&self, page: usize, candidate: usize) -> usize {
+    pub(super) fn next_row(&self, page: usize, candidate: usize) -> usize {
         let target = candidate.max(self.first(self.row(page) + 1));
         let row = self.row(target);
         if target == self.first(row) || self.frames.get(row).is_some_and(|frame| frame.unbounded) {
@@ -159,13 +159,13 @@ impl ColumnRows {
             self.first(row + 1)
         }
     }
-    pub fn leave(&mut self, page: usize, y: f32) {
+    pub(super) fn leave(&mut self, page: usize, y: f32) {
         if self.extents.len() <= page {
             self.extents.resize(page + 1, 0.0);
         }
         self.extents[page] = self.extents[page].max(y);
     }
-    pub fn exit(&mut self, page: usize, next: usize, forced: Option<Forced>) {
+    pub(super) fn exit(&mut self, page: usize, next: usize, forced: Option<Forced>) {
         let (from, to) = (self.row(page), self.row(next));
         if to > from {
             if self.ends.len() <= from {
@@ -244,7 +244,7 @@ pub(super) struct ColumnCursor<'a, 't> {
     row: Option<ColumnRow<'a, 't>>,
     entry: Option<(Vec<FlowItem<'a>>, Balance)>,
 }
-impl<'a, 't> ColumnCursor<'a, 't> {
+impl<'a> ColumnCursor<'a, '_> {
     pub(super) fn detach_orders(&mut self, snapshots: &mut OrderSnapshots) {
         if let Some((spanner, _)) = &mut self.spanner {
             spanner.detach_orders(snapshots);
@@ -588,7 +588,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             }
             if let Some((items, balance)) = cursor.entry.take() {
                 cursor.row = Some(self.start_column_row(
-                    items,
+                    &items,
                     if cursor.segments.len() == 0 {
                         cursor.tail
                     } else {
@@ -656,7 +656,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
 
     fn start_column_row(
         &mut self,
-        items: Vec<FlowItem<'a>>,
+        items: &[FlowItem<'a>],
         tail: BreakTail,
         geometry: ColumnGeometry,
         containing_height: Option<f32>,
@@ -691,7 +691,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         rows.containing_height = containing_height;
         Ok(ColumnRow {
             tail,
-            layout: ColumnLayout::new(self.measurer, &items, rows, &start)?,
+            layout: ColumnLayout::new(self.measurer, items, rows, &start)?,
             balance,
             placements: Vec::new(),
         })

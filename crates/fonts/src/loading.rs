@@ -55,7 +55,7 @@ impl FontBook {
         };
         let mut weight = match descriptor.weight {
             FontRange::Auto => FontWeight::NORMAL.value(),
-            range => range.clamp(requested.weight).value(),
+            range @ FontRange::Values { .. } => range.clamp(requested.weight).value(),
         };
         let mut style = match descriptor.style {
             FontFaceStyle::Italic => FontStyle::Italic,

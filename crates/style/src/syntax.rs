@@ -40,7 +40,7 @@ impl Syntax {
             });
         }
         let parsed = input.parse_entirely(|input| {
-            if let Ok(source) = input.try_parse(|input| input.expect_string_cloned()) {
+            if let Ok(source) = input.try_parse(Parser::expect_string_cloned) {
                 input.expect_exhausted()?;
                 let mut raw = ParserInput::new(&source);
                 return Self::parse(&mut Parser::new(&mut raw), depth + 1)

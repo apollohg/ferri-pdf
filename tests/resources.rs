@@ -103,12 +103,12 @@ fn data_url_limits_handle_empty_and_unbounded_resources() {
             ..Default::default()
         };
         for reference in ["data:,", "data:;base64,"] {
-            assert!(
+            assert_eq!(
                 resolver
                     .resolve(reference, &Path::new(".").into())
                     .unwrap()
-                    .bytes
-                    .is_empty()
+                    .bytes,
+                [] as [u8; 0]
             );
         }
         let result = resolver.resolve("data:;base64,YQ==", &Path::new(".").into());

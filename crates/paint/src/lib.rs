@@ -67,6 +67,7 @@ pub struct Rect {
     pub height: f32,
 }
 impl Rect {
+    #[must_use]
     pub fn union(self, other: Self) -> Self {
         let x = self.x.min(other.x);
         let y = self.y.min(other.y);
@@ -78,6 +79,7 @@ impl Rect {
         }
     }
     /// The overlap of two rectangles, with zero width or height when they do not overlap.
+    #[must_use]
     pub fn intersection(self, other: Self) -> Self {
         let x = self.x.max(other.x);
         let y = self.y.max(other.y);

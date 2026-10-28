@@ -24,21 +24,21 @@ impl From<bool> for Truth {
 }
 
 impl Truth {
-    pub fn not(self) -> Self {
+    pub(crate) fn not(self) -> Self {
         match self {
             Self::True => Self::False,
             Self::False => Self::True,
             Self::Unknown => Self::Unknown,
         }
     }
-    pub fn and(self, other: Self) -> Self {
+    pub(crate) fn and(self, other: Self) -> Self {
         match (self, other) {
             (Self::False, _) | (_, Self::False) => Self::False,
             (Self::True, Self::True) => Self::True,
             _ => Self::Unknown,
         }
     }
-    pub fn or(self, other: Self) -> Self {
+    pub(crate) fn or(self, other: Self) -> Self {
         match (self, other) {
             (Self::True, _) | (_, Self::True) => Self::True,
             (Self::False, Self::False) => Self::False,
@@ -143,19 +143,19 @@ fn level(source: &str, allow_or: bool) -> Result<(Join, Vec<Part<'_>>), ()> {
 }
 
 impl<T> Condition<T> {
-    pub fn constant(value: Truth) -> Self {
+    pub(crate) fn constant(value: Truth) -> Self {
         Self {
             terms: vec![Term::Constant(value)],
         }
     }
 
-    pub fn value(value: T) -> Self {
+    pub(crate) fn value(value: T) -> Self {
         Self {
             terms: vec![Term::Value(value)],
         }
     }
 
-    pub fn parse(
+    pub(crate) fn parse(
         source: &str,
         allow_or: bool,
         fallback: Truth,
@@ -164,7 +164,7 @@ impl<T> Condition<T> {
         Self::parse_fallible(source, allow_or, fallback, |source| Ok(leaf(source)))
     }
 
-    pub fn parse_fallible(
+    pub(crate) fn parse_fallible(
         source: &str,
         allow_or: bool,
         fallback: Truth,
@@ -222,14 +222,14 @@ impl<T> Condition<T> {
         }
     }
 
-    pub fn evaluate(&self, mut value: impl FnMut(&T) -> Truth) -> Truth {
+    pub(crate) fn evaluate(&self, mut value: impl FnMut(&T) -> Truth) -> Truth {
         match self.try_evaluate(|term| Ok::<_, std::convert::Infallible>(value(term))) {
             Ok(value) => value,
             Err(never) => match never {},
         }
     }
 
-    pub fn try_evaluate<E>(
+    pub(crate) fn try_evaluate<E>(
         &self,
         mut value: impl FnMut(&T) -> Result<Truth, E>,
     ) -> Result<Truth, E> {
@@ -270,7 +270,7 @@ impl<T> Condition<T> {
         Ok(values[0])
     }
 
-    pub fn leaves(&self) -> impl Iterator<Item = &T> {
+    pub(crate) fn leaves(&self) -> impl Iterator<Item = &T> {
         self.terms.iter().filter_map(|term| match term {
             Term::Value(value) => Some(value),
             _ => None,
@@ -291,7 +291,7 @@ pub(super) struct WhenCondition {
 }
 
 impl WhenCondition {
-    pub fn parse(source: &str) -> Result<Option<Self>, StyleError> {
+    pub(crate) fn parse(source: &str) -> Result<Option<Self>, StyleError> {
         if !crate::parser::balanced_components(source)? {
             return Ok(None);
         }
@@ -343,7 +343,7 @@ struct NameRef<'a> {
 }
 
 impl RuleQuery {
-    pub fn bind(&mut self, environment: &PrintEnvironment) {
+    pub(crate) fn bind(&mut self, environment: &PrintEnvironment) {
         match self {
             Self::Supports(condition) => condition.bind(&environment.supports),
             Self::When(condition) => condition.names = environment.supports.clone(),
@@ -694,7 +694,7 @@ mod tests {
             let actual = condition.try_evaluate(|property| match property {
                 Property::Width => Ok(width),
                 Property::Color => Ok(Truth::True),
-                Property::Height => work.charge(MAX_MATCH_STEPS + 1).map(|_| Truth::True),
+                Property::Height => work.charge(MAX_MATCH_STEPS + 1).map(|()| Truth::True),
                 _ => unreachable!("only the named query properties are parsed"),
             });
             assert_eq!(
@@ -719,7 +719,7 @@ mod tests {
                 if *property == Property::Width {
                     Ok(Truth::True)
                 } else {
-                    work.charge(MAX_MATCH_STEPS + 1).map(|_| Truth::True)
+                    work.charge(MAX_MATCH_STEPS + 1).map(|()| Truth::True)
                 }
             });
             assert!(

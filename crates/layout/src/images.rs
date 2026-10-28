@@ -20,7 +20,10 @@ pub(super) fn constraints(
         .padding
         .each_ref()
         .map(|p| p.resolve(containing_width));
-    let border = style.decoration.borders.map(|b| b.used_width());
+    let border = style
+        .decoration
+        .borders
+        .map(ferri_pdf_graphics::Border::used_width);
     let mut constraints = [
         SizeConstraints::new(
             [&style.width, &style.min_width, &style.max_width],
@@ -130,7 +133,7 @@ pub(super) fn intrinsic(block: &BlockBox, available: f32) -> IntrinsicWidths {
 pub(super) fn measure<'a>(
     measurer: &Measurer<'_>,
     block: &'a BlockBox,
-    geometry: HorizontalBox,
+    geometry: &HorizontalBox,
     containing_height: Option<f32>,
     used_height: Option<f32>,
 ) -> Result<MeasuredBlock<'a>, LayoutError> {
@@ -197,7 +200,7 @@ pub(super) fn measure<'a>(
         clearance_before: None,
         clearance_target: measurer
             .clearance_targets
-            .get(&(block as *const BlockBox))
+            .get(&std::ptr::from_ref::<BlockBox>(block))
             .copied(),
         source: block,
         geometry: geometry.clone(),
@@ -226,7 +229,7 @@ pub(super) fn measure<'a>(
             height,
             visible: style.visibility.is_visible(),
         }],
-        paint: measurer.box_paint(block, &geometry),
+        paint: measurer.box_paint(block, geometry),
         navigation: block.navigation(),
         end_space: 0.0,
         start_space: 0.0,

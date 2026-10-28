@@ -12,16 +12,13 @@ pub(super) struct ScopePrelude {
     nesting: bool,
 }
 impl ScopePrelude {
-    pub fn parse<'i>(
+    pub(crate) fn parse<'i>(
         input: &mut Parser<'i, '_>,
         namespaces: &NamespaceMap,
         mode: SelectorMode,
         forgiving: bool,
     ) -> Result<Self, ParseError<'i, StyleError>> {
-        let start = if input
-            .try_parse(|input| input.expect_parenthesis_block())
-            .is_ok()
-        {
+        let start = if input.try_parse(Parser::expect_parenthesis_block).is_ok() {
             Some(input.parse_nested_block(|input| {
                 selector::scope_boundary(input, namespaces, mode, forgiving)
             })?)
@@ -45,7 +42,7 @@ impl ScopePrelude {
         })
     }
 
-    pub fn work(&self, parent: &[RuleSelector]) -> usize {
+    pub(crate) fn work(&self, parent: &[RuleSelector]) -> usize {
         self.start
             .as_ref()
             .map_or(0, |start| {
@@ -54,7 +51,7 @@ impl ScopePrelude {
             .saturating_add(selector::selector_work(&self.end, &[]))
     }
 
-    pub fn prepare(
+    pub(crate) fn prepare(
         self,
         parent: &[RuleSelector],
         outer: Option<usize>,
@@ -98,7 +95,7 @@ pub(super) struct ScopeCache<'a> {
     matched: HashMap<(usize, ElementId, usize), Vec<ScopeMatch>>,
 }
 impl<'a> ScopeCache<'a> {
-    pub fn new(element: Element<'a>) -> Self {
+    pub(crate) fn new(element: Element<'a>) -> Self {
         Self {
             element,
             ancestors: HashMap::new(),
@@ -106,7 +103,7 @@ impl<'a> ScopeCache<'a> {
         }
     }
 
-    pub fn roots(
+    pub(crate) fn roots(
         &mut self,
         index: Option<usize>,
         scopes: &[Scope],

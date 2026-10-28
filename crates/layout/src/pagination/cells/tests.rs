@@ -50,7 +50,7 @@ fn resumed_cells_keep_source_paint_order_when_a_later_lane_finishes_first() {
                 item_metrics: Default::default(),
                 grid_parent: None,
                 clearance_targets: Default::default(),
-                fragmentainer: crate::breaks::Fragmentainer::Page,
+                fragmentainer: Fragmentainer::Page,
                 column_flow: None,
                 spanner: None,
                 unbroken: false,

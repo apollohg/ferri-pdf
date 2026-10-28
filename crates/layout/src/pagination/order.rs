@@ -8,12 +8,12 @@ pub(super) struct PaintOrder {
 }
 
 impl PaintOrder {
-    pub const FIRST: Self = Self {
+    pub(super) const FIRST: Self = Self {
         prefix: None,
         index: 0,
     };
 
-    pub fn descendants(&self) -> PaintOrders {
+    pub(super) fn descendants(&self) -> PaintOrders {
         PaintOrders {
             prefix: Some(self.path().collect()),
             next: Rc::default(),
@@ -49,19 +49,19 @@ pub(super) struct PaintOrders {
 }
 
 impl PaintOrders {
-    pub fn commit(&self, candidate: &Self) {
+    pub(super) fn commit(&self, candidate: &Self) {
         debug_assert_eq!(self.prefix, candidate.prefix);
         self.next.set(self.next.get().max(candidate.next.get()));
     }
 
-    pub fn snapshot(&self) -> Self {
+    pub(super) fn snapshot(&self) -> Self {
         Self {
             prefix: self.prefix.clone(),
             next: Rc::new(Cell::new(self.next.get())),
         }
     }
 
-    pub fn take(&self) -> PaintOrder {
+    pub(super) fn take(&self) -> PaintOrder {
         let next = self.next.get() + 1;
         self.next.set(next);
         PaintOrder {
@@ -70,7 +70,7 @@ impl PaintOrders {
         }
     }
 
-    pub fn branch_index(&self, order: &PaintOrder) -> Option<u32> {
+    pub(super) fn branch_index(&self, order: &PaintOrder) -> Option<u32> {
         let mut path = order.path();
         for expected in self.prefix.as_deref().unwrap_or_default() {
             if path.next() != Some(*expected) {
@@ -80,7 +80,7 @@ impl PaintOrders {
         path.next()
     }
 
-    pub fn branch(&self) -> Self {
+    pub(super) fn branch(&self) -> Self {
         self.take().descendants()
     }
 }
@@ -90,7 +90,7 @@ pub(super) struct OrderSnapshots {
     counters: std::collections::HashMap<*const Cell<u32>, PaintOrders>,
 }
 impl OrderSnapshots {
-    pub fn detach(&mut self, orders: &mut PaintOrders) {
+    pub(super) fn detach(&mut self, orders: &mut PaintOrders) {
         let key = Rc::as_ptr(&orders.next);
         *orders = self
             .counters
@@ -98,7 +98,7 @@ impl OrderSnapshots {
             .or_insert_with(|| orders.snapshot())
             .clone();
     }
-    pub fn len(&self) -> usize {
+    pub(super) fn len(&self) -> usize {
         self.counters.len()
     }
 }

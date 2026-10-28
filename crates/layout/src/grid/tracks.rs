@@ -23,11 +23,11 @@ pub(super) struct TrackGeometry {
 }
 
 impl TrackGeometry {
-    pub fn gap(&self) -> f32 {
+    pub(super) fn gap(&self) -> f32 {
         self.gap
     }
 
-    pub fn new(
+    pub(super) fn new(
         sizes: &[f32],
         collapsed: &[bool],
         gap: f32,
@@ -71,7 +71,7 @@ impl TrackGeometry {
         }
     }
 
-    pub fn inherit(
+    pub(super) fn inherit(
         &self,
         area: Range<usize>,
         gap: Option<f32>,
@@ -127,7 +127,7 @@ impl TrackGeometry {
         })
     }
 
-    pub fn area(&self, tracks: Range<usize>) -> Range<f32> {
+    pub(super) fn area(&self, tracks: Range<usize>) -> Range<f32> {
         if tracks.is_empty() {
             return 0.0..0.0;
         }
@@ -136,7 +136,7 @@ impl TrackGeometry {
         start.min(end)..start.max(end)
     }
 
-    pub fn boundary(&self, line: usize, end: bool) -> f32 {
+    pub(super) fn boundary(&self, line: usize, end: bool) -> f32 {
         if self.tracks.is_empty() {
             return 0.0;
         }
@@ -154,7 +154,7 @@ impl TrackGeometry {
         }
     }
 
-    pub fn extent(&self) -> f32 {
+    pub(super) fn extent(&self) -> f32 {
         let area = self.area(0..self.tracks.len());
         area.end - area.start
     }
@@ -205,7 +205,7 @@ fn repeat_size(track: &TrackSize, basis: Option<f32>) -> Option<f32> {
 }
 
 impl Axis {
-    pub fn new(
+    pub(super) fn new(
         list: &TrackList,
         areas: Option<&GridAreas>,
         axis: usize,
@@ -333,7 +333,7 @@ impl Axis {
         Ok(output)
     }
 
-    pub fn implicit(
+    pub(super) fn implicit(
         &mut self,
         count: usize,
         leading: usize,
@@ -374,7 +374,7 @@ impl Axis {
         Ok(())
     }
 
-    pub fn sizing(&self, basis: Option<f32>) -> Vec<TrackSizing> {
+    pub(super) fn sizing(&self, basis: Option<f32>) -> Vec<TrackSizing> {
         self.tracks
             .iter()
             .map(|track| {
@@ -459,21 +459,21 @@ mod tests {
 
     #[test]
     fn area_derived_names_are_distinct_from_explicit_names_for_subgrid_inheritance() {
-        let areas = ferri_pdf_style::GridAreas {
+        let areas = GridAreas {
             size: [1, 2],
             areas: vec![ferri_pdf_style::NamedArea {
                 name: "panel".into(),
                 tracks: [0..1, 0..2],
             }],
         };
-        let axis = super::Axis::new(
-            &ferri_pdf_style::TrackList::default(),
+        let axis = Axis::new(
+            &TrackList::default(),
             Some(&areas),
-            ferri_pdf_style::COLUMNS,
+            COLUMNS,
             None,
-            ferri_pdf_grid::SizeBounds::default(),
+            SizeBounds::default(),
             0.0,
-            &crate::work::Budget::new(crate::MAX_LAYOUT_WORK),
+            &Budget::new(crate::MAX_LAYOUT_WORK),
         )
         .unwrap();
         assert!(

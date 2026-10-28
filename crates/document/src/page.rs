@@ -42,7 +42,7 @@ pub(crate) struct PageProvider {
     generated: crate::generated::GeneratedBindings,
 }
 impl PageProvider {
-    pub fn new(
+    pub(crate) fn new(
         first: PageBox,
         images: std::rc::Rc<RefCell<ferri_pdf_images::ImageCache>>,
         base: ResourceBase,
@@ -57,13 +57,13 @@ impl PageProvider {
             generated,
         }
     }
-    pub fn images(&self) -> std::rc::Rc<RefCell<ferri_pdf_images::ImageCache>> {
+    pub(crate) fn images(&self) -> std::rc::Rc<RefCell<ferri_pdf_images::ImageCache>> {
         self.images.clone()
     }
-    pub fn first(&self) -> &PageBox {
+    pub(crate) fn first(&self) -> &PageBox {
         &self.first
     }
-    pub fn resolve(
+    pub(crate) fn resolve(
         &self,
         sheet: &Stylesheet,
         root: &Style,
@@ -99,9 +99,9 @@ pub struct PageBoundary {
     pub end: Option<Arc<str>>,
 }
 
-pub(crate) fn used_name(page: &Page, ancestor: &Option<Arc<str>>) -> Option<Arc<str>> {
+pub(crate) fn used_name(page: &Page, ancestor: Option<&Arc<str>>) -> Option<Arc<str>> {
     match page {
-        Page::Auto => ancestor.clone(),
+        Page::Auto => ancestor.cloned(),
         Page::Name(name) => Some(name.clone()),
     }
 }

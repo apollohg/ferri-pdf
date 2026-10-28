@@ -12,7 +12,7 @@ pub(crate) struct ItemMetrics {
     pub grid_rows: Option<std::rc::Rc<[ferri_pdf_grid::SizingItem]>>,
 }
 impl ItemMetrics {
-    pub fn of(block: &MeasuredBlock<'_>) -> Self {
+    pub(crate) fn of(block: &MeasuredBlock<'_>) -> Self {
         Self {
             height: block.height,
             baseline: block.first_baseline(),
@@ -26,7 +26,7 @@ impl ItemMetrics {
                 .and_then(|grid| grid.row_contributions.clone()),
         }
     }
-    pub fn baseline_from_start(&self, reverse: bool) -> f32 {
+    pub(crate) fn baseline_from_start(&self, reverse: bool) -> f32 {
         let baseline = self.baseline.unwrap_or(self.height);
         if reverse {
             self.height - baseline
@@ -68,7 +68,7 @@ pub(crate) struct MetricsKey {
 }
 
 impl Measurer<'_> {
-    pub fn item_metrics<'a>(
+    pub(crate) fn item_metrics<'a>(
         &mut self,
         block: &'a BlockBox,
         geometry: &HorizontalBox,

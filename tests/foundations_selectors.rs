@@ -1108,7 +1108,10 @@ fn direction_uses_host_semantics_and_excludes_isolated_descendants() {
             "initial direction: {html}"
         );
     }
-    assert!(marked(":dir(sideways)", "<p id=sample>Text</p>").is_empty());
+    assert_eq!(
+        marked(":dir(sideways)", "<p id=sample>Text</p>"),
+        [] as [String; 0]
+    );
 }
 
 #[test]
@@ -1220,7 +1223,7 @@ fn radio_initial_state_respects_fragment_roots_and_empty_form_references() {
         .template_contents()
         .unwrap()
         .inclusive_descendants(ferri_pdf_dom::TreeRelation::Selector)
-        .filter_map(|node| node.element())
+        .filter_map(ferri_pdf_dom::Node::element)
         .filter(|element| element.matches(&blank))
         .filter_map(|element| element.attr("id"))
         .collect();

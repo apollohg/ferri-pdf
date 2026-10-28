@@ -272,9 +272,9 @@ fn empty_forced_lines_in_rtl_text_do_not_panic_or_lose_line_height() {
 #[test]
 fn narrow_no_break_spaces_use_half_the_faces_normal_space_width() {
     for (family, expected) in [
-        ("DejaVu Sans", 1.9072266),
-        ("DejaVu Serif", 1.9072266),
-        ("DejaVu Sans Mono", 3.6123047),
+        ("DejaVu Sans", 1.907_226_6),
+        ("DejaVu Serif", 1.907_226_6),
+        ("DejaVu Sans Mono", 3.612_304_7),
     ] {
         let html =
             format!("<style>{PROFILE}body{{font-family:'{family}'}}</style><p>i\u{202f}i</p>");
@@ -351,7 +351,7 @@ fn letter_spacing_disables_optional_ligatures_and_counts_the_final_cluster() {
         "tracking must disable the optional ffi ligature"
     );
     assert!(
-        (lines[1].width - 5.3339844).abs() < 0.0001,
+        (lines[1].width - 5.333_984_4).abs() < 0.0001,
         "the final cluster retains its tracking advance"
     );
     assert!(
@@ -473,8 +473,8 @@ fn justified_overfull_final_and_forced_lines_compress_before_last_line_alignment
 #[test]
 fn justification_compresses_mixed_spaces_proportionally_and_expands_them_equally() {
     for (width, expected_spaces) in [
-        (27.0, [3.3750165, 6.913998, 3.3750165]),
-        (40.0, [7.5546875, 11.5546875, 7.5546875]),
+        (27.0, [3.375_016_5, 6.913_998, 3.375_016_5]),
+        (40.0, [7.554_687_5, 11.554_687_5, 7.554_687_5]),
     ] {
         let html = format!(
             "<style>{PROFILE}p{{width:{width}pt;text-align:justify;text-align-last:justify}}</style><p>i <span style='word-spacing:4pt'>i i</span> i</p>"
@@ -516,7 +516,7 @@ fn unwrappable_justified_overflow_uses_the_full_space_compression_limit() {
             .layout
             .unwrap();
         let line = &trace.pages[0][0];
-        const EXPECTED_COMPRESSED_WIDTH_PT: f32 = 20.964844;
+        const EXPECTED_COMPRESSED_WIDTH_PT: f32 = 20.964_844;
         assert!(
             (line.width - EXPECTED_COMPRESSED_WIDTH_PT).abs() < 0.0001,
             "nowrap width:{width}: native compression limit {EXPECTED_COMPRESSED_WIDTH_PT}, got {}",
@@ -637,9 +637,8 @@ fn overflowing_text_spacing_returns_a_layout_error_before_pdf_painting() {
         let html = format!(
             "<style>{PROFILE}p{{{property}:{value};text-align:center}}</style><p>i i i i</p>"
         );
-        let error = match render_html(&html, &local_options()) {
-            Ok(_) => panic!("{property} accumulated beyond finite text geometry"),
-            Err(error) => error,
+        let Err(error) = render_html(&html, &local_options()) else {
+            panic!("{property} accumulated beyond finite text geometry")
         };
         assert!(
             matches!(error, ferri_pdf::Error::Layout(ref message) if message.contains("non-finite text geometry")),
@@ -1029,7 +1028,7 @@ fn identical_inline_styles_preserve_source_boundaries_for_shaping() {
         "matching styles must not erase independent source-node shaping boundaries"
     );
     assert!(
-        (trace.pages[0][1].width - 24.105469).abs() < 0.0001,
+        (trace.pages[0][1].width - 24.105_469).abs() < 0.0001,
         "isolated lam/alef forms are used across this source boundary, not the paragraph's lam-alef ligature"
     );
 }
@@ -1465,7 +1464,7 @@ fn missing_image_resources_cannot_vanish_when_display_is_block() {
     let output = result.unwrap();
     assert!(
         matches!(output.diagnostics.as_slice(), [ferri_pdf::RenderDiagnostic::UnavailableImage(failure)]
-        if matches!(&failure.error, ferri_pdf::ImageError::Resource(ferri_pdf::ResourceError::Read { path, .. }) if path.ends_with("image.png"))),
+        if matches!(&failure.error, ferri_pdf::ImageError::Resource(ResourceError::Read { path, .. }) if path.ends_with("image.png"))),
         "missing images must retain the resource failure in diagnostics"
     );
 }
@@ -1514,7 +1513,7 @@ fn inline_importance_and_unitless_leading_affect_real_measured_layout() {
         trace.pages[0][0].font_size, 16.0,
         "important author CSS must beat ordinary inline CSS"
     );
-    const EXPECTED_BASELINE_DELTA_PT: f32 = 31.615234;
+    const EXPECTED_BASELINE_DELTA_PT: f32 = 31.615_234;
     assert!(
         (trace.pages[0][1].baseline - trace.pages[0][0].baseline - EXPECTED_BASELINE_DELTA_PT)
             .abs()

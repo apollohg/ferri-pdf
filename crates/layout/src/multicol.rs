@@ -26,7 +26,7 @@ pub(super) struct ColumnGeometry {
 }
 impl ColumnGeometry {
     /// The §3.4 pseudo-algorithm over the container's content width `available`.
-    pub fn resolve(style: &Style, x: f32, available: f32) -> Self {
+    pub(crate) fn resolve(style: &Style, x: f32, available: f32) -> Self {
         let gap = style.flex.gap[1].resolve_normal(available, style.size);
         let fitting = |width: f32| {
             let count = ((available + gap) / (width + gap)).floor();
@@ -55,7 +55,7 @@ impl ColumnGeometry {
     }
     /// Left edge of column `index` in the inline direction; overflow columns continue past
     /// the container's inline end.
-    pub fn left(&self, index: usize) -> f32 {
+    pub(crate) fn left(&self, index: usize) -> f32 {
         let pitch = self.width + self.gap;
         if self.rtl {
             self.x + (self.count as f32 - 1.0 - index as f32) * pitch
@@ -64,11 +64,11 @@ impl ColumnGeometry {
         }
     }
     /// Horizontal offset of column `index` from column 0, where content is measured.
-    pub fn shift(&self, index: usize) -> f32 {
+    pub(crate) fn shift(&self, index: usize) -> f32 {
         self.left(index) - self.left(0)
     }
     /// The middle of the gap between columns `index` and `index + 1`.
-    pub fn rule_x(&self, index: usize) -> f32 {
+    pub(crate) fn rule_x(&self, index: usize) -> f32 {
         let [first, second] = [self.left(index), self.left(index + 1)];
         (first.min(second) + self.width + first.max(second)) / 2.0
     }
@@ -96,7 +96,11 @@ pub(super) struct SpannerFragment {
 }
 
 impl SpannerFragment {
-    pub fn cloned_extent(&self, style: &Style, geometry: &crate::geometry::HorizontalBox) -> f32 {
+    pub(crate) fn cloned_extent(
+        &self,
+        style: &Style,
+        geometry: &crate::geometry::HorizontalBox,
+    ) -> f32 {
         if !style.clone_decoration {
             return 0.0;
         }
@@ -112,7 +116,7 @@ impl SpannerFragment {
         };
         start + end
     }
-    pub fn resolve_size(
+    pub(crate) fn resolve_size(
         &self,
         style: &Style,
         geometry: &crate::geometry::HorizontalBox,
@@ -174,7 +178,7 @@ pub(super) fn measure<'a>(
 ) -> Result<MeasuredColumns<'a>, LayoutError> {
     let forces_page = forces_page(&content);
     let edge = |item: Option<&FlowItem<'_>>, after: bool| match item {
-        Some(FlowItem::Block(block)) | Some(FlowItem::Spanner(block)) => {
+        Some(FlowItem::Block(block) | FlowItem::Spanner(block)) => {
             let value = if after {
                 block.break_after
             } else {
@@ -343,7 +347,7 @@ fn fragment<'a>(
             FlowItem::Margin(_) | FlowItem::Space(_) | FlowItem::Edge(_, _)
         )
     });
-    if natural == 0.0 && !holds_content && !last && !(first && source.marker.is_some()) {
+    if !(natural != 0.0 || holds_content || last || first && source.marker.is_some()) {
         return None;
     }
     // Remaining used size follows source progress (CSS Fragmentation 3 §5.1).

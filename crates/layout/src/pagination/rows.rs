@@ -1,3 +1,7 @@
+#[allow(
+    clippy::wildcard_imports,
+    reason = "pagination submodules extend the parent paginator and share its scope"
+)]
 use super::*;
 use crate::measure::MeasuredCell;
 use std::ops::Range;
@@ -71,7 +75,7 @@ impl RowCursor<'_, '_> {
     }
 }
 
-impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
+impl<'a, 't> Paginator<'a, '_, 't> {
     fn end_row_fragment(&mut self, ends: &mut BTreeMap<usize, f32>, repeating: bool) {
         if repeating {
             let band = self.bands.last_mut().unwrap();
@@ -83,7 +87,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             }
         }
     }
-    fn place_row_target(&mut self, target: crate::measure::RowTarget, y: f32) {
+    fn place_row_target(&mut self, target: &crate::measure::RowTarget, y: f32) {
         let mut rect = target.rect;
         rect.x += self.offset[0] + target.offset[0];
         rect.y = self.top + y + self.offset[1] + target.offset[1];
@@ -103,7 +107,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         mut row: MeasuredRow<'a>,
         tail: BreakTail,
         body_end: Option<usize>,
-    ) -> Result<RowCursor<'a, 't>, LayoutError> {
+    ) -> RowCursor<'a, 't> {
         let previous_unbroken = self.unbroken;
         if overflows(row.height, self.height) && row.indivisible() {
             self.unbroken += 1;
@@ -207,7 +211,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         } else {
             for target in std::mem::take(&mut row.targets) {
                 let y = start + target.rect.y;
-                self.place_row_target(target, y);
+                self.place_row_target(&target, y);
             }
         }
         let end = (start_page, start);
@@ -240,9 +244,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             source_order,
         });
         if let Some(grid) = &row.grid {
-            cells
-                .make_contiguous()
-                .sort_by_key(|(cell, _)| grid.items[&(cell.block.source as *const BlockBox)].start);
+            cells.make_contiguous().sort_by_key(|(cell, _)| {
+                grid.items[&std::ptr::from_ref::<BlockBox>(cell.block.source)].start
+            });
         }
         let active_cells = VecDeque::new();
         let origin = (
@@ -276,7 +280,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .band
             .clone()
             .unwrap_or_else(|| 0..row.grid.as_ref().map_or(1, |grid| grid.tracks.len()));
-        Ok(RowCursor {
+        RowCursor {
             row,
             tail,
             start,
@@ -307,7 +311,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             fragment_ends: BTreeMap::new(),
             previous_unbroken,
             body_end,
-        })
+        }
     }
     pub(super) fn resume_row(
         &mut self,
@@ -506,7 +510,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         .is_some_and(|target| target.row == source_row)
                     {
                         let target = row.targets.pop().unwrap();
-                        self.place_row_target(target, self.y);
+                        self.place_row_target(&target, self.y);
                     }
                     for event in plan.row_entry_events(source_row) {
                         self.string_locations.record(self.page, event);
@@ -515,7 +519,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 }
                 while cells.front().is_some_and(|(cell, _)| {
                     if let Some(grid) = &row.grid {
-                        grid.items[&(cell.block.source as *const BlockBox)].start == source_index
+                        grid.items[&std::ptr::from_ref::<BlockBox>(cell.block.source)].start
+                            == source_index
                     } else {
                         cell.grid_cell
                             .map(|index| plan.as_ref().unwrap().cell_rows(index).start)
@@ -524,7 +529,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 }) {
                     let (mut cell, orders) = cells.pop_front().unwrap();
                     let grid_rows = row.grid.as_ref().map(|grid| {
-                        let range = grid.items[&(cell.block.source as *const BlockBox)].clone();
+                        let range =
+                            grid.items[&std::ptr::from_ref::<BlockBox>(cell.block.source)].clone();
                         cell.offset -= grid.tracks[range.start].area.start;
                         range
                     });
@@ -903,7 +909,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
         Ok(None)
     }
-    fn order_grid_text(&mut self, trace: GridTrace) {
+    fn order_grid_text(&mut self, trace: &GridTrace) {
         for (page, lines) in self.pages.iter_mut().enumerate() {
             let start = trace.starts.get(page).copied().unwrap_or(0);
             if lines.len() <= start + 1 {
@@ -1023,7 +1029,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 self.string_locations.record(self.page, event);
             }
             for (page, mut rect) in
-                self.stretch_box(active, after, paint_start, backgrounds, &fragment_ends)?
+                self.stretch_box(active, after, paint_start, &backgrounds, &fragment_ends)?
             {
                 if let Some(cell) = grid_cell
                     && self
@@ -1101,7 +1107,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let band = self.bands.pop().expect("active row owns its continuation");
             self.emit_band_groups(band, last_body, Forced::of(row.break_after))?;
         }
-        if let Some(trace) = trace {
+        if let Some(trace) = &trace {
             self.order_grid_text(trace);
         }
         self.has_flow |= row.height > 0.0;

@@ -272,16 +272,17 @@ impl Style {
             || [TOP, BOTTOM].into_iter().any(edge)
     }
 
+    #[must_use]
     pub fn anonymous(&self, display: Display) -> Self {
         let mut style = Self::default();
         properties::inherit(&mut style, self);
         style.display = display;
         style.custom_properties = self.custom_properties.clone();
         style.inherited_custom_properties = self.custom_properties.clone();
-        style.language = self.language.clone();
+        style.language.clone_from(&self.language);
         style.font_candidates = self.font_candidates.clone();
         style.element_font_namespace = self.element_font_namespace;
-        style.root_font = self.root_font.clone();
+        style.root_font.clone_from(&self.root_font);
         style.grid.initial_justify_items(&self.grid);
         style.text_decorations.propagated = if self.display == Display::Contents {
             self.text_decorations.propagated.clone()
@@ -442,7 +443,7 @@ impl Stylesheet {
             parent,
             cascaded,
             resolver,
-            crate::resolution::ValueContext {
+            &crate::resolution::ValueContext {
                 tree: Tree::Element(element),
                 viewport: self.page_area(),
                 page_font: false,
@@ -488,7 +489,7 @@ impl Stylesheet {
         style.item_parent = parent.display.is_item_container()
             || (parent.display == Display::Contents && parent.item_parent);
         crate::table_values::structure(&mut style, element);
-        style.language = element.language().to_owned();
+        element.language().clone_into(&mut style.language);
         if parent.root_font.is_none() {
             style.quotes = style.quotes.inherited(&style.language);
         }
@@ -656,7 +657,7 @@ impl Stylesheet {
             parent,
             winners,
             resolver,
-            crate::resolution::ValueContext {
+            &crate::resolution::ValueContext {
                 tree: Tree::Element(element),
                 viewport: self.page_area(),
                 page_font: false,
