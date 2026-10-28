@@ -19,7 +19,7 @@ The root package remains an implicit member.
 | avif-decode | ferri-pdf-avif-decode | 3.0.0 | BSD-3-Clause |
 | heic-decoder | ferri-pdf-heic-decoder | 0.1.1 | MIT OR Apache-2.0 |
 | icu_casemap | ferri-pdf-icu-casemap | 2.3.0 | Unicode-3.0 |
-| krilla | ferri-pdf-krilla | 0.8.2 | MIT OR Apache-2.0 |
+| krilla | ferri-pdf-krilla | 0.8.2 | (MIT OR Apache-2.0) AND MPL-2.0 AND CC0-1.0 |
 | selectors | ferri-pdf-selectors | 0.38.0 | MPL-2.0 |
 | zenavif-parse | ferri-pdf-zenavif-parse | 0.6.2 | MPL-2.0 |
 

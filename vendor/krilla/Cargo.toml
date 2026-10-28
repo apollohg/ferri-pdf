@@ -29,7 +29,7 @@ categories = [
     "graphics",
     "multimedia",
 ]
-license = "MIT OR Apache-2.0"
+license = "(MIT OR Apache-2.0) AND MPL-2.0 AND CC0-1.0"
 repository = "https://github.com/LaurenzV/krilla"
 
 [features]

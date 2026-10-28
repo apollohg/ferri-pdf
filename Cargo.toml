@@ -110,8 +110,8 @@ name = "ferri-pdf"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
-# Merged from the former member packages and the inlined SVG libraries.
-license = "MIT AND Unicode-3.0 AND CC0-1.0 AND (Apache-2.0 OR MIT)"
+# Own code, inlined SVG libraries, CLDR and mdn-data, then the DejaVu and Liberation fonts.
+license = "MIT AND (Apache-2.0 OR MIT) AND Unicode-3.0 AND CC0-1.0 AND Bitstream-Vera AND LicenseRef-Arev AND OFL-1.1-RFN"
 publish.workspace = true
 description = "HTML and CSS to PDF renderer for print, in pure Rust"
 repository = "https://github.com/apollohg/ferri-pdf"
