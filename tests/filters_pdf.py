@@ -4,6 +4,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import unittest
+from html import escape
 
 from PIL import Image
 
@@ -149,6 +150,61 @@ body{{margin:0}}div{{margin:0}}.box{{width:{BOX_WIDTH}pt;height:{BOX_HEIGHT}pt}}
                             'blurred content inside the clip stays solid away from the box edges')
             self.assertEqual(pixels.getpixel((PAGE_MARGIN + 62, PAGE_MARGIN + 20)), WHITE,
                              'the clip applies after the filter, so no blur crosses it')
+
+    def test_blended_descendants_composite_before_the_filter(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-filters-') as directory:
+            root = Path(directory)
+            output = self.render(
+                root, '.box{background:yellow;filter:grayscale(1)}'
+                      '.blend{mix-blend-mode:multiply;background:cyan;width:50pt;height:60pt}',
+                '<div class=box><div class=blend></div></div>')
+            self.assertEqual(len(self.images(output)), 1,
+                             'blending does not commute with the matrix, so the group rasterizes')
+            pixels = self.raster(root, output)
+            middle = PAGE_MARGIN + BOX_HEIGHT // 2
+            self.assertNear(pixels.getpixel((PAGE_MARGIN + 25, middle)), grayscale((0, 255, 0)),
+                            'grayscale() of cyan multiplied onto yellow')
+            self.assertNear(pixels.getpixel((PAGE_MARGIN + 75, middle)), grayscale((255, 255, 0)),
+                            'grayscale() of the unblended yellow')
+
+    def test_text_shadows_take_the_filter_in_both_paths(self):
+        # The shadow of an 8pt underline is a band 30pt below it.
+        css = ('p{margin:0;font-size:20pt;text-decoration:underline red 8pt;'
+               'text-decoration-skip-ink:none;text-shadow:0 30pt red;filter:FILTER}')
+        for function, colour, rasterized in (('grayscale(1)', grayscale(RED), False),
+                                             ('sepia(1)', sepia(RED), True)):
+            with self.subTest(filter=function), \
+                    tempfile.TemporaryDirectory(prefix='ferri-pdf-filters-') as directory:
+                root = Path(directory)
+                output = self.render(root, css.replace('FILTER', function), '<p>Shadowed</p>')
+                self.assertEqual(bool(self.images(output)), rasterized,
+                                 f'{function}: raster only where the matrix leaves the range')
+                pixels = self.raster(root, output)
+                column = [pixels.getpixel((PAGE_MARGIN + 20, y))
+                          for y in range(PAGE_MARGIN, PAGE_MARGIN + 80)]
+                self.assertTrue(
+                    sum(all(abs(a - e) <= COLOR_TOLERANCE for a, e in zip(pixel, colour))
+                        for pixel in column) >= 12,
+                    f'{function}: underline and its shadow both take {colour}: {column}')
+
+    def test_iframe_content_filters_inside_and_outside_its_document(self):
+        nested = ('<style>body{margin:0}div{width:40pt;height:40pt;background:red}'
+                  '.inner{filter:sepia(1)}</style><div class=inner></div><div></div>')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-filters-') as directory:
+            root = Path(directory)
+            output = self.render(
+                root, 'iframe{border:0;width:60pt;height:90pt;display:block}'
+                      '.outer{filter:invert(1) sepia(1)}',
+                f'<iframe srcdoc="{escape(nested)}"></iframe>'
+                f'<div class=outer><iframe srcdoc="{escape(nested)}"></iframe></div>')
+            pixels = self.raster(root, output)
+            self.assertNear(pixels.getpixel((PAGE_MARGIN + 20, PAGE_MARGIN + 20)), sepia(RED),
+                            "a filter in the nested document's own display list")
+            self.assertNear(pixels.getpixel((PAGE_MARGIN + 20, PAGE_MARGIN + 60)), RED,
+                            'unfiltered nested content')
+            inverted = (0, 255, 255)
+            self.assertNear(pixels.getpixel((PAGE_MARGIN + 20, PAGE_MARGIN + 90 + 60)),
+                            sepia(inverted), 'an enclosing filter rasterizes the nested document')
 
     def test_filtered_box_split_across_pages_filters_each_fragment(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-filters-') as directory:
