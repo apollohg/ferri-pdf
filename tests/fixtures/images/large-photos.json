@@ -1,0 +1,65 @@
+{
+  "tool": "1.23.6\nlibheif: 1.23.6\nplugin path: /opt/homebrew/lib/libheif",
+  "encoders": "AVC encoders:\nAVIF encoders:\n- aom = AOMedia Project AV1 Encoder 3.15.2 [default]\nHEIC encoders:\n- x265 = x265 HEVC encoder (4.3+1-e9b8812) [default]\nJPEG encoders:\nJPEG 2000 encoders:\nJPEG 2000 (HT) encoders:\nUncompressed encoders:\nVVIC encoders:",
+  "generator_sha256": "551bd41bdbfef3ffcb8c68cbbe710967ca6d57d1016a65d003026c453a7ea787",
+  "size": [
+    8000,
+    6000
+  ],
+  "source_color": [
+    19,
+    93,
+    201
+  ],
+  "files": {
+    "photo-48mp.heic": {
+      "sha256": "f2fae5b0b7e873a9a25df33eae6caa3545df1f7d30749cbf43c1b48315a525a6",
+      "arguments": [
+        "-p",
+        "preset=ultrafast",
+        "-p",
+        "x265:pools=1",
+        "-p",
+        "x265:frame-threads=1"
+      ],
+      "decoded_extrema": [
+        [
+          18,
+          18
+        ],
+        [
+          93,
+          93
+        ],
+        [
+          200,
+          200
+        ]
+      ]
+    },
+    "photo-48mp.avif": {
+      "sha256": "a8af447198705a8c58d9c7986d48626254f49306ce61b8accdde468899183b51",
+      "arguments": [
+        "-A",
+        "-p",
+        "speed=9",
+        "-p",
+        "threads=1"
+      ],
+      "decoded_extrema": [
+        [
+          18,
+          18
+        ],
+        [
+          93,
+          93
+        ],
+        [
+          200,
+          200
+        ]
+      ]
+    }
+  }
+}

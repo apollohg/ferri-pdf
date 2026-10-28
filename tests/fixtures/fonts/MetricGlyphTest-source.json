@@ -1,0 +1,21 @@
+{
+  "derived_from": "FontStyleTest-Ital.ttf",
+  "source_sha256": "4638fcdd22c9fcdfff1708251e57f20d69def0ba25fc4abff5a2b9b90f68e8d1",
+  "upstream_record": "FontStyleTest-source.json",
+  "license": "FontStyleTest-OFL.txt",
+  "tool": "fontTools 4.63.0",
+  "generator": "make-metric-font.py",
+  "removed_cmap_characters": "xH",
+  "notdef_character": "0",
+  "changes": "Zero unspecified x/cap metrics; explicit format-12 .notdef mapping for 0; renamed family identities; all original outlines, axes and other metrics retained.",
+  "sha256": "2a5e67963d8847a2b926fdd3bed3b041d8dac2c911ffbe4aea5de28ff1545179",
+  "bytes": 35732,
+  "metrics": {
+    "units_per_em": 1000,
+    "ascender": 950,
+    "descender": -250,
+    "line_gap": 0,
+    "x_height": 0,
+    "cap_height": 0
+  }
+}

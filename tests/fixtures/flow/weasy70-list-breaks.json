@@ -1,0 +1,544 @@
+{
+  "engine": "WeasyPrint",
+  "version": "70.0",
+  "font_path": "tests/oracle/assets/DejaVuSans.ttf",
+  "font_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+  "sources": {
+    "preferred.py": "a7973703cd8ac5fada246b35e7fea6e728a364002adc5dbb248ee08f084c0a6e",
+    "table.py": "3a5b6442410f18e6c59c1be299c9de916c2b09334aa65c5001594b344d6f7961",
+    "block.py": "9457dca0528c378f3ff6dd2ca5126d04ca017542de2fb77b1db48c3073401085",
+    "column.py": "83ae1a3e83596293e5ae66b81759f2ad6eff8e2e43058a1a980f7662b6c51d93",
+    "inline.py": "0e7c1569330f54734ed61b568789c4f279ba103c0385115efa6444f3c43b96b4",
+    "page.py": "d99c5aceb36d458619a9cecb466a09df8827b9160fafacab7b4972a0d354dcca",
+    "../css/html5_ua.css": "04dd53f16888e5325d8bb8feb02462d99d03c8329da713b167b333a2ea4b91bc",
+    "../formatting_structure/boxes.py": "8ffd28ab74a149f0097208fcba6a80df0c8bb01e8fd4f9ced95d11b7e9807e23",
+    "absolute.py": "240e268cec1e66dda1f87aec6bdd671e7bf36439c5fa09de32965f717893ba07"
+  },
+  "measurement": "lines",
+  "base_css": "@page{size:240pt 100pt;margin:10pt}html,body,p,ol,ul{margin:0;padding:0;font:10pt/10pt Probe;widows:2;orphans:2}ol,ul{padding-left:20pt;list-style:none}.lead{height:60pt}",
+  "cases": [
+    {
+      "name": "default-ol",
+      "css": "",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo</p><ol><li>First</li><li>Second</li><li>Third</li></ol><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "IntroOne",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "First",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "Second",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "Third",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "default-ul",
+      "css": "",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo</p><ul><li>First</li><li>Second</li><li>Third</li></ul><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "IntroOne",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "First",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "Second",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "Third",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "author-auto",
+      "css": "ul{break-before:auto}",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo</p><ul><li>First</li><li>Second</li><li>Third</li></ul><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroOne",
+            "baseline": 78.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 88.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "First",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "Second",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "Third",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 48.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "author-initial",
+      "css": "ul{break-before:initial}",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo</p><ul><li>First</li><li>Second</li><li>Third</li></ul><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroOne",
+            "baseline": 78.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 88.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "First",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "Second",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "Third",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 48.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "author-revert",
+      "css": "ul{break-before:revert}",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo</p><ul><li>First</li><li>Second</li><li>Third</li></ul><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "IntroOne",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "First",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "Second",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "Third",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "author-page",
+      "css": "ul{break-before:page}",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo</p><ul><li>First</li><li>Second</li><li>Third</li></ul><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroOne",
+            "baseline": 78.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 88.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "First",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "Second",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "Third",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 48.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "forced-after-intro",
+      "css": ".intro{break-after:page}",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo</p><ul><li>First</li><li>Second</li><li>Third</li></ul><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroOne",
+            "baseline": 78.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 88.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "First",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "Second",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "Third",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 48.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "wrapped-list",
+      "css": "",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo</p><section><ul><li>First</li><li>Second</li><li>Third</li></ul></section><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "IntroOne",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "First",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "Second",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "Third",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "preceding-block",
+      "css": "",
+      "body": "<p class=lead>Lead</p><section class=intro><p>IntroOne</p><p>IntroTwo</p></section><ul><li>First</li><li>Second</li><li>Third</li></ul><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroOne",
+            "baseline": 78.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "IntroTwo",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "First",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "Second",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "Third",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 58.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "long-intro",
+      "css": "",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo<br>IntroThree<br>IntroFour<br>IntroFive<br>IntroSix</p><ul><li>First</li><li>Second</li><li>Third</li></ul><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroOne",
+            "baseline": 78.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 88.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "IntroThree",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroFour",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "IntroFive",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "IntroSix",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "First",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "Second",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "Third",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "After",
+            "baseline": 88.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "empty-list",
+      "css": "",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo</p><ul></ul><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroOne",
+            "baseline": 78.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 88.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "marked-ordered",
+      "css": "ol{list-style:decimal}",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo</p><ol><li>First</li><li>Second</li><li>Third</li></ol><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "IntroOne",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "1. ",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "First",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "2. ",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "Second",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "3. ",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "Third",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "nested-lists",
+      "css": "",
+      "body": "<p class=lead>Lead</p><p class=intro>IntroOne<br>IntroTwo</p><ul><li>First<ol><li>Nested</li></ol></li><li>Second</li></ul><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "IntroOne",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "IntroTwo",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "First",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "Nested",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "Second",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    }
+  ]
+}

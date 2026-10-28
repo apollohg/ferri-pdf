@@ -1,0 +1,57 @@
+{
+  "repository": "https://github.com/web-platform-tests/wpt",
+  "commit": "5af3c135c9c97381733866150a7ada27d1029c50",
+  "tool": "fontTools 4.63.0",
+  "conversion": "fontTools.ttLib.woff2.decompress; only the font container changes, outlines, cmaps and advances are retained",
+  "artifacts": {
+    "WPT-FONTS-LICENSE.md": {
+      "source": "https://raw.githubusercontent.com/web-platform-tests/wpt/5af3c135c9c97381733866150a7ada27d1029c50/LICENSE.md",
+      "sha256": "5fac07febb0e2a97fb0d7b0def149ec08b642e1ba4b9c345283ab1cbd2af6570",
+      "bytes": 1500
+    },
+    "IcTestHalfWidth.woff2": {
+      "source": "https://raw.githubusercontent.com/web-platform-tests/wpt/5af3c135c9c97381733866150a7ada27d1029c50/css/css-values/resources/IcTestHalfWidth.woff2",
+      "sha256": "61d4ce117604cd879ec83ceda5f699a3aa55202a5529ca0c9dcc03654a8b11c8",
+      "bytes": 612
+    },
+    "IcTestHalfWidth.ttf": {
+      "derived_from": "IcTestHalfWidth.woff2",
+      "sha256": "b7f5ce0f186454693c11bd60fbe95d91892e13e1e26bdedcd380bce261c6469d",
+      "bytes": 1568
+    },
+    "IcTestZeroWidth.woff2": {
+      "source": "https://raw.githubusercontent.com/web-platform-tests/wpt/5af3c135c9c97381733866150a7ada27d1029c50/css/css-values/resources/IcTestZeroWidth.woff2",
+      "sha256": "56bb2c32b9a4f464243040cb7e64798f81656c997de19a0850553cb00fc66e6d",
+      "bytes": 616
+    },
+    "IcTestZeroWidth.ttf": {
+      "derived_from": "IcTestZeroWidth.woff2",
+      "sha256": "f670466315642a0646703eba2c3cc98a1e7b18c78ab6e0b288e3f2afb00c6913",
+      "bytes": 1568
+    }
+  },
+  "faces": {
+    "IcTestHalfWidth.ttf": {
+      "units_per_em": 1024,
+      "water_glyph_id": 3,
+      "water_advance": 512,
+      "water_bounds": [
+        100,
+        0,
+        400,
+        822
+      ]
+    },
+    "IcTestZeroWidth.ttf": {
+      "units_per_em": 1024,
+      "water_glyph_id": 3,
+      "water_advance": 0,
+      "water_bounds": [
+        -39,
+        0,
+        39,
+        818
+      ]
+    }
+  }
+}

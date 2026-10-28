@@ -1,0 +1,80 @@
+{
+  "unicode_version": "17.0.0",
+  "source": "https://www.unicode.org/Public/17.0.0/ucd/CaseFolding.txt",
+  "sha256": "ff8d8fefbf123574205085d6714c36149eb946d717a0c585c27f0f4ef58c4183",
+  "algorithm": "Default Caseless Matching: C/F mappings, no normalization or locale tailoring",
+  "mappings": {
+    "0041": "a",
+    "0044": "d",
+    "0045": "e",
+    "0046": "f",
+    "0049": "i",
+    "0052": "r",
+    "0053": "s",
+    "0054": "t",
+    "0055": "u",
+    "0056": "v",
+    "0058": "x",
+    "00C5": "å",
+    "00DF": "ss",
+    "0130": "i̇",
+    "017F": "s",
+    "039F": "ο",
+    "03A3": "σ",
+    "03C2": "σ",
+    "212A": "k",
+    "FB03": "ffi"
+  },
+  "cases": [
+    {
+      "declared": "Straße",
+      "requested": "STRASSE",
+      "matches": true
+    },
+    {
+      "declared": "ΟΣ",
+      "requested": "ος",
+      "matches": true
+    },
+    {
+      "declared": "İsim",
+      "requested": "i̇sim",
+      "matches": true
+    },
+    {
+      "declared": "Kelvin",
+      "requested": "kelvin",
+      "matches": true
+    },
+    {
+      "declared": "ﬃxture",
+      "requested": "FFIXTURE",
+      "matches": true
+    },
+    {
+      "declared": "Å",
+      "requested": "å",
+      "matches": true
+    },
+    {
+      "declared": "Å",
+      "requested": "Å",
+      "matches": false
+    },
+    {
+      "declared": "I",
+      "requested": "ı",
+      "matches": false
+    },
+    {
+      "declared": "İ",
+      "requested": "i",
+      "matches": false
+    },
+    {
+      "declared": "DejaVu ſans",
+      "requested": "DejaVu Sans",
+      "matches": true
+    }
+  ]
+}

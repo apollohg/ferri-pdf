@@ -1,0 +1,21 @@
+{
+  "repository": "https://github.com/arrowtype/vf-slnt-test",
+  "commit": "929d28efbfac07ae213a20a2ab0d80b3b8e97bdb",
+  "artifacts": {
+    "FontStyleTest.ttf": {
+      "source": "https://raw.githubusercontent.com/arrowtype/vf-slnt-test/929d28efbfac07ae213a20a2ab0d80b3b8e97bdb/font-sources/fonts/FontStyleTest-slnt_ital-VF.ttf",
+      "bytes": 35392,
+      "sha256": "1777d9aa9cf9a8548041746edd182c1bc75bd3572072b431955bccea64f0166b"
+    },
+    "FontStyleTest-OFL.txt": {
+      "source": "https://raw.githubusercontent.com/arrowtype/vf-slnt-test/929d28efbfac07ae213a20a2ab0d80b3b8e97bdb/font-sources/OFL.txt",
+      "bytes": 4369,
+      "sha256": "4389d100a9d1888be684e2ec5a3d68d0113e6adffa7996b00503818e4010cb7c"
+    },
+    "FontStyleTest-Ital.ttf": {
+      "source": "https://raw.githubusercontent.com/arrowtype/vf-slnt-test/929d28efbfac07ae213a20a2ab0d80b3b8e97bdb/font-sources/fonts/FontStyleTest-ital-VF.ttf",
+      "bytes": 35236,
+      "sha256": "4638fcdd22c9fcdfff1708251e57f20d69def0ba25fc4abff5a2b9b90f68e8d1"
+    }
+  }
+}

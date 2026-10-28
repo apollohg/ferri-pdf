@@ -1,0 +1,165 @@
+{
+  "generator": "hb-shape (HarfBuzz) 14.4.0",
+  "samples": [
+    {
+      "name": "native",
+      "font": "SourceSerif4-Regular.ttf",
+      "text": "Aa\u00df fi",
+      "features": "smcp",
+      "language": "und",
+      "units_per_em": 1000,
+      "glyphs": [
+        {
+          "g": 2,
+          "cl": 0,
+          "dx": 0,
+          "dy": 0,
+          "ax": 664,
+          "ay": 0
+        },
+        {
+          "g": 1113,
+          "cl": 1,
+          "dx": 0,
+          "dy": 0,
+          "ax": 589,
+          "ay": 0
+        },
+        {
+          "g": 1343,
+          "cl": 2,
+          "dx": 0,
+          "dy": 0,
+          "ax": 949,
+          "ay": 0
+        },
+        {
+          "g": 1,
+          "cl": 3,
+          "dx": 0,
+          "dy": 0,
+          "ax": 233,
+          "ay": 0
+        },
+        {
+          "g": 1118,
+          "cl": 4,
+          "dx": 0,
+          "dy": 0,
+          "ax": 538,
+          "ay": 0
+        },
+        {
+          "g": 1121,
+          "cl": 5,
+          "dx": 0,
+          "dy": 0,
+          "ax": 363,
+          "ay": 0
+        }
+      ]
+    },
+    {
+      "name": "native_turkish",
+      "font": "SourceSerif4-Regular.ttf",
+      "text": "i\u0131I\u0130",
+      "features": "smcp",
+      "language": "tr",
+      "units_per_em": 1000,
+      "glyphs": [
+        {
+          "g": 1205,
+          "cl": 0,
+          "dx": 0,
+          "dy": 0,
+          "ax": 363,
+          "ay": 0
+        },
+        {
+          "g": 1121,
+          "cl": 1,
+          "dx": 0,
+          "dy": 0,
+          "ax": 363,
+          "ay": 0
+        },
+        {
+          "g": 10,
+          "cl": 2,
+          "dx": 0,
+          "dy": 0,
+          "ax": 371,
+          "ay": 0
+        },
+        {
+          "g": 119,
+          "cl": 3,
+          "dx": 0,
+          "dy": 0,
+          "ax": 371,
+          "ay": 0
+        }
+      ]
+    },
+    {
+      "name": "synthetic_expansion",
+      "font": "../../../crates/fonts/assets/fonts/LiberationSerif-Regular.ttf",
+      "text": "ASS",
+      "features": "",
+      "language": "und",
+      "units_per_em": 2048,
+      "glyphs": [
+        {
+          "g": 36,
+          "cl": 0,
+          "dx": 0,
+          "dy": 0,
+          "ax": 1479,
+          "ay": 0
+        },
+        {
+          "g": 54,
+          "cl": 1,
+          "dx": 0,
+          "dy": 0,
+          "ax": 1139,
+          "ay": 0
+        },
+        {
+          "g": 54,
+          "cl": 2,
+          "dx": 0,
+          "dy": 0,
+          "ax": 1139,
+          "ay": 0
+        }
+      ]
+    },
+    {
+      "name": "synthetic_turkish",
+      "font": "../../../crates/fonts/assets/fonts/LiberationSerif-Regular.ttf",
+      "text": "\u0130I",
+      "features": "",
+      "language": "tr",
+      "units_per_em": 2048,
+      "glyphs": [
+        {
+          "g": 242,
+          "cl": 0,
+          "dx": 0,
+          "dy": 0,
+          "ax": 682,
+          "ay": 0
+        },
+        {
+          "g": 44,
+          "cl": 1,
+          "dx": 0,
+          "dy": 0,
+          "ax": 682,
+          "ay": 0
+        }
+      ]
+    }
+  ]
+}

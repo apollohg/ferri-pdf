@@ -1,0 +1,682 @@
+{
+  "engine": "WeasyPrint",
+  "version": "70.0",
+  "font_path": "tests/oracle/assets/DejaVuSans.ttf",
+  "font_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+  "sources": {
+    "preferred.py": "a7973703cd8ac5fada246b35e7fea6e728a364002adc5dbb248ee08f084c0a6e",
+    "table.py": "3a5b6442410f18e6c59c1be299c9de916c2b09334aa65c5001594b344d6f7961",
+    "block.py": "9457dca0528c378f3ff6dd2ca5126d04ca017542de2fb77b1db48c3073401085",
+    "column.py": "83ae1a3e83596293e5ae66b81759f2ad6eff8e2e43058a1a980f7662b6c51d93",
+    "inline.py": "0e7c1569330f54734ed61b568789c4f279ba103c0385115efa6444f3c43b96b4",
+    "page.py": "d99c5aceb36d458619a9cecb466a09df8827b9160fafacab7b4972a0d354dcca",
+    "../css/html5_ua.css": "04dd53f16888e5325d8bb8feb02462d99d03c8329da713b167b333a2ea4b91bc",
+    "float.py": "4e6cc308ad2a7d2a1aecb24b8517790fd4e154d839396ebb38dd3674e111c7c3",
+    "replaced.py": "efe7e86803c80150b7dbd4049d437fd6ed94e954eb11b434431db9e0196b2c2a"
+  },
+  "measurement": "line-geometry",
+  "base_css": "@page{size:240pt 240pt;margin:10pt}html,body{margin:0;padding:0}body{font:12pt/18pt Probe}p{margin:0;widows:1;orphans:1}.float{width:60pt;height:54pt}",
+  "cases": [
+    {
+      "name": "left-band",
+      "css": ".float{float:left}",
+      "body": "<div class=float>Float</div><p>One</p><p>Two</p><p>Three</p><p>Four</p>",
+      "pages": [
+        [
+          {
+            "text": "Float",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 29.63671875
+          },
+          {
+            "text": "One",
+            "baseline": 23.154296875,
+            "x": 70.0,
+            "width": 24.43359375
+          },
+          {
+            "text": "Two",
+            "baseline": 41.154296875,
+            "x": 70.0,
+            "width": 22.5
+          },
+          {
+            "text": "Three",
+            "baseline": 59.154296875,
+            "x": 70.0,
+            "width": 34.37109375
+          },
+          {
+            "text": "Four",
+            "baseline": 77.154296875,
+            "x": 10.0,
+            "width": 26.35546875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "right-band",
+      "css": ".float{float:right}p{text-align:right}",
+      "body": "<div class=float>Float</div><p>One</p><p>Two</p><p>Three</p><p>Four</p>",
+      "pages": [
+        [
+          {
+            "text": "Float",
+            "baseline": 23.154296875,
+            "x": 170.00000000000003,
+            "width": 29.63671875
+          },
+          {
+            "text": "One",
+            "baseline": 23.154296875,
+            "x": 145.56640625000003,
+            "width": 24.43359375
+          },
+          {
+            "text": "Two",
+            "baseline": 41.154296875,
+            "x": 147.50000000000003,
+            "width": 22.5
+          },
+          {
+            "text": "Three",
+            "baseline": 59.154296875,
+            "x": 135.62890625000003,
+            "width": 34.37109375
+          },
+          {
+            "text": "Four",
+            "baseline": 77.154296875,
+            "x": 203.64453125,
+            "width": 26.35546875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "opposing",
+      "css": ".left{float:left}.right{float:right}",
+      "body": "<div class=\"float left\">Left</div><div class=\"float right\">Right</div><p>Middle</p><p style=\"clear:both\">Below</p>",
+      "pages": [
+        [
+          {
+            "text": "Left",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 22.576171875
+          },
+          {
+            "text": "Right",
+            "baseline": 23.154296875,
+            "x": 170.0,
+            "width": 31.599609375
+          },
+          {
+            "text": "Middle",
+            "baseline": 23.154296875,
+            "x": 70.0,
+            "width": 39.638671875
+          },
+          {
+            "text": "Below",
+            "baseline": 77.154296875,
+            "x": 10.0,
+            "width": 36.10546875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "same-side-wrap",
+      "css": ".float{float:left;width:120pt}",
+      "body": "<div class=float>First</div><div class=float>Second</div><p style=\"clear:both\">After</p>",
+      "pages": [
+        [
+          {
+            "text": "First",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 25.25390625
+          },
+          {
+            "text": "Second",
+            "baseline": 77.154296875,
+            "x": 10.0,
+            "width": 44.162109375
+          },
+          {
+            "text": "After",
+            "baseline": 131.154296875,
+            "x": 10.0,
+            "width": 28.81640625
+          }
+        ]
+      ]
+    },
+    {
+      "name": "negative-clearance",
+      "css": ".float{float:left;height:24pt}.before{margin-bottom:48pt}.after{clear:left;margin-top:36pt}",
+      "body": "<p class=before>Before</p><div class=float>Float</div><p class=after>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Before",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 39.234375
+          },
+          {
+            "text": "Float",
+            "baseline": 89.154296875,
+            "x": 10.0,
+            "width": 29.63671875
+          },
+          {
+            "text": "After",
+            "baseline": 113.15429687499999,
+            "x": 10.0,
+            "width": 28.81640625
+          }
+        ]
+      ]
+    },
+    {
+      "name": "shrink-to-fit",
+      "css": ".float{float:left;width:auto;height:auto;margin-right:5pt}",
+      "body": "<div class=float>Short</div><p>Adjacent</p><p style=\"clear:both\">Below</p>",
+      "pages": [
+        [
+          {
+            "text": "Short",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 32.203125
+          },
+          {
+            "text": "Adjacent",
+            "baseline": 23.154296875,
+            "x": 47.203125,
+            "width": 52.59375
+          },
+          {
+            "text": "Below",
+            "baseline": 41.154296875,
+            "x": 10.0,
+            "width": 36.10546875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "bfc-encloses",
+      "css": ".float{float:left}section{overflow:hidden;border:1pt solid;padding:2pt}",
+      "body": "<section><div class=float>Float</div><p>Inside</p></section><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Float",
+            "baseline": 26.154296874999996,
+            "x": 13.0,
+            "width": 29.63671875
+          },
+          {
+            "text": "Inside",
+            "baseline": 26.154296874999996,
+            "x": 73.0,
+            "width": 35.73046875
+          },
+          {
+            "text": "After",
+            "baseline": 83.154296875,
+            "x": 10.0,
+            "width": 28.81640625
+          }
+        ]
+      ]
+    },
+    {
+      "name": "ordinary-does-not-enclose",
+      "css": ".float{float:left}",
+      "body": "<section><div class=float>Float</div><p>Inside</p></section><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Float",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 29.63671875
+          },
+          {
+            "text": "Inside",
+            "baseline": 23.154296875,
+            "x": 70.0,
+            "width": 35.73046875
+          },
+          {
+            "text": "After",
+            "baseline": 41.154296875,
+            "x": 70.0,
+            "width": 28.81640625
+          }
+        ]
+      ]
+    },
+    {
+      "name": "nested-contexts",
+      "css": ".outer{float:left;width:130pt;height:90pt}.inner{float:right;width:40pt;height:36pt}",
+      "body": "<div class=outer><div class=inner>Inner</div><p>Within</p><p style=\"clear:both\">Local</p></div><p>Outside</p><p style=\"clear:both\">End</p>",
+      "pages": [
+        [
+          {
+            "text": "Inner",
+            "baseline": 23.154296875,
+            "x": 99.99999999999999,
+            "width": 31.06640625
+          },
+          {
+            "text": "Within",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 38.185546875
+          },
+          {
+            "text": "Local",
+            "baseline": 59.154296875,
+            "x": 10.0,
+            "width": 31.1015625
+          },
+          {
+            "text": "Outside",
+            "baseline": 23.154296875,
+            "x": 140.0,
+            "width": 46.341796875
+          },
+          {
+            "text": "End",
+            "baseline": 113.154296875,
+            "x": 10.0,
+            "width": 22.8046875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "relative-offset",
+      "css": ".float{float:left;position:relative;left:5pt;top:7pt}",
+      "body": "<div class=float>Float</div><p>Adjacent</p><p style=\"clear:both\">Below</p>",
+      "pages": [
+        [
+          {
+            "text": "Float",
+            "baseline": 30.154296875,
+            "x": 15.0,
+            "width": 29.63671875
+          },
+          {
+            "text": "Adjacent",
+            "baseline": 23.154296875,
+            "x": 70.0,
+            "width": 52.59375
+          },
+          {
+            "text": "Below",
+            "baseline": 77.154296875,
+            "x": 10.0,
+            "width": 36.10546875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "float-clear",
+      "css": ".float{float:left}.second{clear:left}",
+      "body": "<div class=float>First</div><div class=\"float second\">Second</div><p style=\"clear:both\">End</p>",
+      "pages": [
+        [
+          {
+            "text": "First",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 25.25390625
+          },
+          {
+            "text": "Second",
+            "baseline": 77.154296875,
+            "x": 10.0,
+            "width": 44.162109375
+          },
+          {
+            "text": "End",
+            "baseline": 131.154296875,
+            "x": 10.0,
+            "width": 22.8046875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "unbreakable-moves-below",
+      "css": ".float{float:left;width:190pt}",
+      "body": "<div class=float>Float</div><p>Unbreakable</p>",
+      "pages": [
+        [
+          {
+            "text": "Float",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 29.63671875
+          },
+          {
+            "text": "Unbreakable",
+            "baseline": 77.154296875,
+            "x": 10.0,
+            "width": 75.837890625
+          }
+        ]
+      ]
+    },
+    {
+      "name": "oversized-width",
+      "css": ".float{float:left;width:260pt;height:36pt}",
+      "body": "<div class=float>Wide</div><p>Below</p>",
+      "pages": [
+        [
+          {
+            "text": "Wide",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 29.935546875
+          },
+          {
+            "text": "Below",
+            "baseline": 59.154296875,
+            "x": 10.0,
+            "width": 36.10546875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "fragmented-float",
+      "css": "@page{size:240pt 100pt}.float{float:left;height:auto}",
+      "body": "<div class=float><p>Float0</p><p>Float1</p><p>Float2</p><p>Float3</p><p>Float4</p><p>Float5</p><p>Float6</p><p>Float7</p></div><p>Body0</p><p>Body1</p><p>Body2</p><p>Body3</p><p>Body4</p><p>Body5</p><p>Body6</p><p>Body7</p>",
+      "pages": [
+        [
+          {
+            "text": "Float0",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 37.271484375
+          },
+          {
+            "text": "Float1",
+            "baseline": 41.154296875,
+            "x": 10.0,
+            "width": 37.271484375
+          },
+          {
+            "text": "Float2",
+            "baseline": 59.154296875,
+            "x": 10.0,
+            "width": 37.271484375
+          },
+          {
+            "text": "Float3",
+            "baseline": 77.154296875,
+            "x": 10.0,
+            "width": 37.271484375
+          },
+          {
+            "text": "Body0",
+            "baseline": 23.154296875,
+            "x": 70.0,
+            "width": 37.927734375
+          },
+          {
+            "text": "Body1",
+            "baseline": 41.154296875,
+            "x": 70.0,
+            "width": 37.927734375
+          },
+          {
+            "text": "Body2",
+            "baseline": 59.154296875,
+            "x": 70.0,
+            "width": 37.927734375
+          },
+          {
+            "text": "Body3",
+            "baseline": 77.154296875,
+            "x": 70.0,
+            "width": 37.927734375
+          }
+        ],
+        [
+          {
+            "text": "Float4",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 37.271484375
+          },
+          {
+            "text": "Float5",
+            "baseline": 41.154296875,
+            "x": 10.0,
+            "width": 37.271484375
+          },
+          {
+            "text": "Float6",
+            "baseline": 59.154296875,
+            "x": 10.0,
+            "width": 37.271484375
+          },
+          {
+            "text": "Float7",
+            "baseline": 77.154296875,
+            "x": 10.0,
+            "width": 37.271484375
+          },
+          {
+            "text": "Body4",
+            "baseline": 23.154296875,
+            "x": 70.0,
+            "width": 37.927734375
+          },
+          {
+            "text": "Body5",
+            "baseline": 41.154296875,
+            "x": 70.0,
+            "width": 37.927734375
+          },
+          {
+            "text": "Body6",
+            "baseline": 59.154296875,
+            "x": 70.0,
+            "width": 37.927734375
+          },
+          {
+            "text": "Body7",
+            "baseline": 77.154296875,
+            "x": 70.0,
+            "width": 37.927734375
+          }
+        ]
+      ]
+    },
+    {
+      "name": "columns",
+      "css": "article{columns:2;column-gap:10pt;height:90pt}.float{float:left;width:40pt;height:36pt}",
+      "body": "<article><div class=float>Float</div><p>Line0</p><p>Line1</p><p>Line2</p><p>Line3</p><p>Line4</p><p>Line5</p><p>Line6</p><p>Line7</p></article>",
+      "pages": [
+        [
+          {
+            "text": "Float",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 29.63671875
+          },
+          {
+            "text": "Line0",
+            "baseline": 23.154296875,
+            "x": 49.99999999999999,
+            "width": 32.642578125
+          },
+          {
+            "text": "Line1",
+            "baseline": 41.154296875,
+            "x": 49.99999999999999,
+            "width": 32.642578125
+          },
+          {
+            "text": "Line2",
+            "baseline": 59.154296875,
+            "x": 10.0,
+            "width": 32.642578125
+          },
+          {
+            "text": "Line3",
+            "baseline": 77.154296875,
+            "x": 10.0,
+            "width": 32.642578125
+          },
+          {
+            "text": "Line4",
+            "baseline": 23.154296875,
+            "x": 125.00000000000003,
+            "width": 32.642578125
+          },
+          {
+            "text": "Line5",
+            "baseline": 41.154296875,
+            "x": 125.00000000000003,
+            "width": 32.642578125
+          },
+          {
+            "text": "Line6",
+            "baseline": 59.154296875,
+            "x": 125.00000000000003,
+            "width": 32.642578125
+          },
+          {
+            "text": "Line7",
+            "baseline": 77.154296875,
+            "x": 125.00000000000003,
+            "width": 32.642578125
+          }
+        ]
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "name": "zero-outer-height",
+      "css": ".float{float:left;height:0}",
+      "body": "<div class=float>Float</div><p>Same</p><p>Next</p>",
+      "pages": [
+        [
+          {
+            "text": "Float",
+            "baseline": 23.154296875,
+            "x": 0.0,
+            "width": 29.63671875
+          },
+          {
+            "text": "Same",
+            "baseline": 23.154296875,
+            "x": 60.0,
+            "width": 34.04296875
+          },
+          {
+            "text": "Next",
+            "baseline": 41.154296875,
+            "x": 10.0,
+            "width": 27.955078125
+          }
+        ]
+      ]
+    },
+    {
+      "name": "bfc-beside-float",
+      "css": ".float{float:left}section{overflow:hidden}",
+      "body": "<div class=float>Float</div><section><p>Inside</p></section><p style=\"clear:both\">Below</p>",
+      "pages": [
+        [
+          {
+            "text": "Float",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 29.63671875
+          },
+          {
+            "text": "Inside",
+            "baseline": 77.154296875,
+            "x": 10.0,
+            "width": 35.73046875
+          },
+          {
+            "text": "Below",
+            "baseline": 95.154296875,
+            "x": 10.0,
+            "width": 36.10546875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "parallel-forced-break",
+      "css": "@page{size:240pt 100pt}.float{float:left;height:auto}",
+      "body": "<div class=float><p>FloatFirst</p><p style=\"break-before:page\">FloatNext</p></div><p>BodyFirst</p><p>BodyNext</p>",
+      "pages": [
+        [
+          {
+            "text": "FloatFirst",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 54.890625
+          },
+          {
+            "text": "BodyFirst",
+            "baseline": 23.154296875,
+            "x": 70.0,
+            "width": 55.546875
+          },
+          {
+            "text": "BodyNext",
+            "baseline": 41.154296875,
+            "x": 70.0,
+            "width": 58.248046875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "negative-outer-height",
+      "css": ".float{float:left;height:18pt;margin-bottom:-36pt}",
+      "body": "<div class=float>Float</div><p>First</p><p>Second</p>",
+      "pages": [
+        [
+          {
+            "text": "Float",
+            "baseline": 23.154296875,
+            "x": 10.0,
+            "width": 29.63671875
+          },
+          {
+            "text": "First",
+            "baseline": 23.154296875,
+            "x": 70.0,
+            "width": 25.25390625
+          },
+          {
+            "text": "Second",
+            "baseline": 41.154296875,
+            "x": 10.0,
+            "width": 44.162109375
+          }
+        ]
+      ]
+    }
+  ]
+}

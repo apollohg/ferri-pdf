@@ -1,0 +1,34 @@
+{
+  "tools": [
+    "hb-shape (HarfBuzz) 15.0.0",
+    "fontTools 4.63.0"
+  ],
+  "source": "crates/fonts/assets/fonts/DejaVuSans.ttf",
+  "sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+  "units_per_em": 2048,
+  "text": "a\u0346",
+  "options": [
+    "--output-format=json",
+    "--no-glyph-names",
+    "--direction=ltr",
+    "--language=en"
+  ],
+  "glyphs": [
+    {
+      "g": 68,
+      "cl": 0,
+      "dx": 0,
+      "dy": 0,
+      "ax": 1255,
+      "ay": 0
+    },
+    {
+      "g": 759,
+      "cl": 0,
+      "dx": -157,
+      "dy": 0,
+      "ax": 0,
+      "ay": 0
+    }
+  ]
+}

@@ -1,0 +1,3983 @@
+{
+  "engine": "WeasyPrint",
+  "version": "70.0",
+  "font_path": "crates/fonts/assets/fonts/DejaVuSans.ttf",
+  "font_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+  "sources": {
+    "preferred.py": "a7973703cd8ac5fada246b35e7fea6e728a364002adc5dbb248ee08f084c0a6e",
+    "table.py": "3a5b6442410f18e6c59c1be299c9de916c2b09334aa65c5001594b344d6f7961",
+    "block.py": "9457dca0528c378f3ff6dd2ca5126d04ca017542de2fb77b1db48c3073401085",
+    "column.py": "83ae1a3e83596293e5ae66b81759f2ad6eff8e2e43058a1a980f7662b6c51d93",
+    "inline.py": "0e7c1569330f54734ed61b568789c4f279ba103c0385115efa6444f3c43b96b4"
+  },
+  "measurement": "lines",
+  "base_css": "@page{size:240pt 120pt;margin:10pt}html,body,div,table,td{margin:0;padding:0;font:10pt/10pt Probe;widows:1;orphans:1}table{width:100%;table-layout:fixed;border-spacing:0}td{vertical-align:top}.lead{height:50pt}",
+  "cases": [
+    {
+      "name": "control",
+      "css": "",
+      "body": "<table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</td><td>B00<br>B01<br>B02</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "B01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "B02",
+            "baseline": 38.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A19",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A20",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A21",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A22",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "slice-bottom",
+      "css": "td{padding-bottom:10pt}",
+      "body": "<table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</td><td>B00<br>B01<br>B02</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "B01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "B02",
+            "baseline": 38.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A19",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A20",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A21",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A22",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 78.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "slice-top",
+      "css": "td{padding-top:10pt}",
+      "body": "<table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</td><td>B00<br>B01<br>B02</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A01",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A02",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A06",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A08",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "B01",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "B02",
+            "baseline": 48.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A09",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A10",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A11",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A16",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A18",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A19",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A20",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A21",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A22",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 78.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "slice-both",
+      "css": "td{padding-top:10pt;padding-bottom:10pt}",
+      "body": "<table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</td><td>B00<br>B01<br>B02</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A01",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A02",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A06",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A08",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "B01",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "B02",
+            "baseline": 48.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A09",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A10",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A11",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A16",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A18",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A19",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A20",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A21",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A22",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 88.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "collapsed-bottom",
+      "css": "table{border-collapse:collapse}td{padding-bottom:10pt}",
+      "body": "<table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</td><td>B00<br>B01<br>B02</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "B01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "B02",
+            "baseline": 38.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A19",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A20",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A21",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A22",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 78.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "bottom-border",
+      "css": "td{border-bottom:10pt solid blue}",
+      "body": "<table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</td><td>B00<br>B01<br>B02</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "B01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "B02",
+            "baseline": 38.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A19",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A20",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A21",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A22",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 78.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "nonfinal-block",
+      "css": "td{padding-bottom:10pt}p{margin:0;padding:0}",
+      "body": "<table><tr><td><p>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14</p><p>C00<br>C01<br>C02<br>C03<br>C04<br>C05<br>C06<br>C07</p></td><td>B00</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "C00",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "C01",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "C02",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "C03",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "C04",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "C05",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "C06",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "C07",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 58.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "nonfinal-paragraph-boundary",
+      "css": "td{padding-bottom:10pt}p{margin:0;padding:0}",
+      "body": "<table><tr><td><p>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19</p><p>C00<br>C01<br>C02</p></td><td>B00</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A19",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "C00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "C01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "C02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 58.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "first-fragment-needs-no-sliced-end",
+      "css": ".lead{height:85pt}td{padding-bottom:10pt}",
+      "body": "<div class=lead>Lead</div><table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</td><td>B00</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A00",
+            "baseline": 103.46179199218749
+          }
+        ],
+        [
+          {
+            "text": "A01",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A02",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A03",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A07",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A09",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A10",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A11",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A13",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A17",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A19",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A20",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A21",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A22",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A23",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "final-padding-fits",
+      "css": "td{padding-bottom:20pt}",
+      "body": "<table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07</td><td>B00</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "last-line-needs-padding",
+      "css": "td{padding-bottom:10pt}",
+      "body": "<table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09</td><td>B00</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A09",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 38.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "columns-control",
+      "css": "section{column-count:2;column-fill:auto;column-gap:0}",
+      "body": "<table><tr><td><section>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24<br>A25<br>A26<br>A27<br>A28<br>A29<br>A30<br>A31<br>A32<br>A33<br>A34<br>A35<br>A36<br>A37<br>A38<br>A39<br>A40<br>A41<br>A42<br>A43<br>A44<br>A45<br>A46<br>A47<br>A48<br>A49</section></td><td>B00</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A19",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A20",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A21",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A22",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A25",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A26",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A27",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A28",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A29",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "A30",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A31",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A32",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A33",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A34",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A35",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A36",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A37",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A38",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A39",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A40",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A41",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A42",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A43",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A44",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A45",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A46",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A47",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A48",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A49",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "nested-ends-fit",
+      "css": "td{padding-bottom:10pt}.inner{padding-bottom:5pt}p{margin:0;padding:0}",
+      "body": "<table><tr><td><div class=inner><p>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18</p></div><p>C00<br>C01<br>C02</p></td><td>B00</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "C00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "C01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "C02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 58.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "columns-sliced-end-fit",
+      "css": "td{padding-bottom:10pt}section{column-count:2;column-fill:auto;column-gap:0}",
+      "body": "<table><tr><td><section>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24<br>A25<br>A26<br>A27<br>A28<br>A29<br>A30<br>A31<br>A32<br>A33<br>A34<br>A35<br>A36<br>A37<br>A38<br>A39<br>A40<br>A41<br>A42<br>A43<br>A44<br>A45<br>A46<br>A47</section></td><td>B00</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A19",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A20",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A21",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A22",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A25",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A26",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A27",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A28",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A29",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "A30",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A31",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A32",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A33",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A34",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A35",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A36",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A37",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A38",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A39",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A40",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A41",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A42",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A43",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A44",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A45",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A46",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A47",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "After",
+            "baseline": 108.46179199218747
+          }
+        ]
+      ]
+    },
+    {
+      "name": "outer-table-long-end",
+      "css": "section{padding-bottom:10pt}p{margin:0}",
+      "body": "<section><table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</td></tr></table></section><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A19",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A20",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A21",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A22",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 78.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "nested-table-long-end",
+      "css": "td.outer{padding-bottom:10pt}p{margin:0}",
+      "body": "<table><tr><td class=outer><table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</td></tr></table></td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A19",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A20",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A21",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A22",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 78.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "nested-lead-end",
+      "css": ".lead{height:85pt}td{padding-bottom:10pt}p{margin:0}",
+      "body": "<div class=lead>Lead</div><table><tr><td><div>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</div></td><td>B00</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A00",
+            "baseline": 103.46179199218749
+          }
+        ],
+        [
+          {
+            "text": "A01",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A02",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A03",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A07",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A09",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A10",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A11",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A13",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A17",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A19",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A20",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A21",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A22",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A23",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "nested-slice-with-ongoing-cloned-parent",
+      "css": "td{padding-bottom:20pt;box-decoration-break:clone}.inner{padding-bottom:10pt}p{margin:0}",
+      "body": "<table><tr><td><div class=inner>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07</div><div>C00<br>C01<br>C02<br>C03<br>C04</div></td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          }
+        ],
+        [
+          {
+            "text": "A07",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "C00",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "C01",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "C02",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "C03",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "C04",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "After",
+            "baseline": 108.46179199218747
+          }
+        ]
+      ]
+    },
+    {
+      "name": "table-rows-sliced-end",
+      "css": "table{padding-bottom:10pt}p{margin:0}",
+      "body": "<table><tr><td>A00</td></tr><tr><td>A01</td></tr><tr><td>A02</td></tr><tr><td>A03</td></tr><tr><td>A04</td></tr><tr><td>A05</td></tr><tr><td>A06</td></tr><tr><td>A07</td></tr><tr><td>A08</td></tr><tr><td>A09</td></tr><tr><td>A10</td></tr><tr><td>A11</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "After",
+            "baseline": 48.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "block-border-slice",
+      "css": "@page{size:360pt 180pt;margin:36pt}html,body,div,p{font:12pt/18pt Probe}p{margin:0}div{border:4pt solid navy;padding:6pt;background:#ffcc00}",
+      "body": "<div>A0<br>A1<br>A2<br>A3<br>A4<br>A5<br>A6</div><p>B</p>",
+      "pages": [
+        [
+          {
+            "text": "A0",
+            "baseline": 59.15429687500001
+          },
+          {
+            "text": "A1",
+            "baseline": 77.154296875
+          },
+          {
+            "text": "A2",
+            "baseline": 95.154296875
+          },
+          {
+            "text": "A3",
+            "baseline": 113.154296875
+          },
+          {
+            "text": "A4",
+            "baseline": 131.154296875
+          }
+        ],
+        [
+          {
+            "text": "A5",
+            "baseline": 49.154296875
+          },
+          {
+            "text": "A6",
+            "baseline": 67.154296875
+          },
+          {
+            "text": "B",
+            "baseline": 95.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "resumed-padding-full-9",
+      "css": "@page:left{size:400pt 120pt}p{margin:0;font:10pt/10pt Probe}.box{padding:5% 0 10%;background:blue}",
+      "body": "<div class=outer><div class=box>Line01<br>Line02<br>Line03<br>Line04<br>Line05<br>Line06<br>Line07<br>Line08<br>Line09</div><p>After</p></div>",
+      "pages": [
+        [
+          {
+            "text": "Line01",
+            "baseline": 29.4617919921875
+          },
+          {
+            "text": "Line02",
+            "baseline": 39.46179199218749
+          },
+          {
+            "text": "Line03",
+            "baseline": 49.4617919921875
+          },
+          {
+            "text": "Line04",
+            "baseline": 59.46179199218749
+          },
+          {
+            "text": "Line05",
+            "baseline": 69.46179199218749
+          },
+          {
+            "text": "Line06",
+            "baseline": 79.46179199218749
+          },
+          {
+            "text": "Line07",
+            "baseline": 89.46179199218749
+          },
+          {
+            "text": "Line08",
+            "baseline": 99.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "Line09",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 66.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "resumed-padding-full-10",
+      "css": "@page:left{size:400pt 120pt}p{margin:0;font:10pt/10pt Probe}.box{padding:5% 0 10%;background:blue}",
+      "body": "<div class=outer><div class=box>Line01<br>Line02<br>Line03<br>Line04<br>Line05<br>Line06<br>Line07<br>Line08<br>Line09<br>Line10</div><p>After</p></div>",
+      "pages": [
+        [
+          {
+            "text": "Line01",
+            "baseline": 29.4617919921875
+          },
+          {
+            "text": "Line02",
+            "baseline": 39.46179199218749
+          },
+          {
+            "text": "Line03",
+            "baseline": 49.4617919921875
+          },
+          {
+            "text": "Line04",
+            "baseline": 59.46179199218749
+          },
+          {
+            "text": "Line05",
+            "baseline": 69.46179199218749
+          },
+          {
+            "text": "Line06",
+            "baseline": 79.46179199218749
+          },
+          {
+            "text": "Line07",
+            "baseline": 89.46179199218749
+          },
+          {
+            "text": "Line08",
+            "baseline": 99.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "Line09",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "Line10",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "After",
+            "baseline": 76.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "resumed-padding-half-9",
+      "css": "@page:left{size:400pt 120pt}p{margin:0;font:10pt/10pt Probe}.outer{width:50%}.box{padding:5% 0 10%;background:blue}",
+      "body": "<div class=outer><div class=box>Line01<br>Line02<br>Line03<br>Line04<br>Line05<br>Line06<br>Line07<br>Line08<br>Line09</div><p>After</p></div>",
+      "pages": [
+        [
+          {
+            "text": "Line01",
+            "baseline": 23.9617919921875
+          },
+          {
+            "text": "Line02",
+            "baseline": 33.9617919921875
+          },
+          {
+            "text": "Line03",
+            "baseline": 43.96179199218749
+          },
+          {
+            "text": "Line04",
+            "baseline": 53.9617919921875
+          },
+          {
+            "text": "Line05",
+            "baseline": 63.96179199218749
+          },
+          {
+            "text": "Line06",
+            "baseline": 73.96179199218749
+          },
+          {
+            "text": "Line07",
+            "baseline": 83.96179199218749
+          },
+          {
+            "text": "Line08",
+            "baseline": 93.96179199218749
+          }
+        ],
+        [
+          {
+            "text": "Line09",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 47.461791992187486
+          }
+        ]
+      ]
+    },
+    {
+      "name": "resumed-padding-half-10",
+      "css": "@page:left{size:400pt 120pt}p{margin:0;font:10pt/10pt Probe}.outer{width:50%}.box{padding:5% 0 10%;background:blue}",
+      "body": "<div class=outer><div class=box>Line01<br>Line02<br>Line03<br>Line04<br>Line05<br>Line06<br>Line07<br>Line08<br>Line09<br>Line10</div><p>After</p></div>",
+      "pages": [
+        [
+          {
+            "text": "Line01",
+            "baseline": 23.9617919921875
+          },
+          {
+            "text": "Line02",
+            "baseline": 33.9617919921875
+          },
+          {
+            "text": "Line03",
+            "baseline": 43.96179199218749
+          },
+          {
+            "text": "Line04",
+            "baseline": 53.9617919921875
+          },
+          {
+            "text": "Line05",
+            "baseline": 63.96179199218749
+          },
+          {
+            "text": "Line06",
+            "baseline": 73.96179199218749
+          },
+          {
+            "text": "Line07",
+            "baseline": 83.96179199218749
+          },
+          {
+            "text": "Line08",
+            "baseline": 93.96179199218749
+          },
+          {
+            "text": "Line09",
+            "baseline": 103.96179199218747
+          }
+        ],
+        [
+          {
+            "text": "Line10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 47.461791992187486
+          }
+        ]
+      ]
+    },
+    {
+      "name": "resumed-table-padding-9",
+      "css": "@page:left{size:400pt 120pt}table{padding:5% 0 10%;background:blue}p{margin:0;font:10pt/10pt Probe}",
+      "body": "<table><tr><td>Line01</td></tr><tr><td>Line02</td></tr><tr><td>Line03</td></tr><tr><td>Line04</td></tr><tr><td>Line05</td></tr><tr><td>Line06</td></tr><tr><td>Line07</td></tr><tr><td>Line08</td></tr><tr><td>Line09</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Line01",
+            "baseline": 29.4617919921875
+          },
+          {
+            "text": "Line02",
+            "baseline": 39.46179199218749
+          },
+          {
+            "text": "Line03",
+            "baseline": 49.4617919921875
+          },
+          {
+            "text": "Line04",
+            "baseline": 59.46179199218749
+          },
+          {
+            "text": "Line05",
+            "baseline": 69.46179199218749
+          },
+          {
+            "text": "Line06",
+            "baseline": 79.46179199218749
+          },
+          {
+            "text": "Line07",
+            "baseline": 89.46179199218749
+          },
+          {
+            "text": "Line08",
+            "baseline": 99.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "Line09",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 66.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "resumed-table-padding-10",
+      "css": "@page:left{size:400pt 120pt}table{padding:5% 0 10%;background:blue}p{margin:0;font:10pt/10pt Probe}",
+      "body": "<table><tr><td>Line01</td></tr><tr><td>Line02</td></tr><tr><td>Line03</td></tr><tr><td>Line04</td></tr><tr><td>Line05</td></tr><tr><td>Line06</td></tr><tr><td>Line07</td></tr><tr><td>Line08</td></tr><tr><td>Line09</td></tr><tr><td>Line10</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Line01",
+            "baseline": 29.4617919921875
+          },
+          {
+            "text": "Line02",
+            "baseline": 39.46179199218749
+          },
+          {
+            "text": "Line03",
+            "baseline": 49.4617919921875
+          },
+          {
+            "text": "Line04",
+            "baseline": 59.46179199218749
+          },
+          {
+            "text": "Line05",
+            "baseline": 69.46179199218749
+          },
+          {
+            "text": "Line06",
+            "baseline": 79.46179199218749
+          },
+          {
+            "text": "Line07",
+            "baseline": 89.46179199218749
+          },
+          {
+            "text": "Line08",
+            "baseline": 99.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "Line09",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "Line10",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "After",
+            "baseline": 76.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "columns-nonfinal-block",
+      "css": "td{padding-bottom:10pt}section{column-count:2;column-fill:auto;column-gap:0}p{margin:0}",
+      "body": "<table><tr><td><section>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18</section><div>C00<br>C01<br>C02</div></td><td>B00</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "C00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "C01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "C02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 58.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "columns-first-progress",
+      "css": "td{padding-bottom:10pt}section{column-count:2;column-fill:auto;column-gap:0}p{margin:0}.lead{height:85pt}",
+      "body": "<div class=lead>Lead</div><table><tr><td><section>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09</section></td><td>B00</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A00",
+            "baseline": 103.46179199218749
+          },
+          {
+            "text": "A01",
+            "baseline": 103.46179199218749
+          }
+        ],
+        [
+          {
+            "text": "A02",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A04",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A07",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A08",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A09",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 108.46179199218747
+          }
+        ]
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "name": "nested-ends",
+      "css": "td{padding-bottom:10pt}.inner{padding-bottom:5pt}p{margin:0;padding:0}",
+      "body": "<table><tr><td><div class=inner><p>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19</p></div><p>C00<br>C01<br>C02</p></td><td>B00</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A19",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "C00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "C01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "C02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 58.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "columns-sliced-end",
+      "css": "td{padding-bottom:10pt}section{column-count:2;column-fill:auto;column-gap:0}",
+      "body": "<table><tr><td><section>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24<br>A25<br>A26<br>A27<br>A28<br>A29<br>A30<br>A31<br>A32<br>A33<br>A34<br>A35<br>A36<br>A37<br>A38<br>A39<br>A40<br>A41<br>A42<br>A43<br>A44<br>A45<br>A46<br>A47<br>A48<br>A49</section></td><td>B00</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A19",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A20",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A21",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A22",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A25",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A26",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A27",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A28",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A29",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "A30",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A31",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A32",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A33",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A34",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A35",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A36",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A37",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A38",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A39",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A40",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A41",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A42",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A43",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A44",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A45",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A46",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A47",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A48",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A49",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "clone-bottom",
+      "css": "td{padding-bottom:10pt;box-decoration-break:clone}",
+      "body": "<table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</td><td>B00<br>B01<br>B02</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "B01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "B02",
+            "baseline": 38.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A08",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A09",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A10",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A15",
+            "baseline": 88.46179199218749
+          }
+        ],
+        [
+          {
+            "text": "A16",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A17",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A18",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A19",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A20",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A21",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A22",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A23",
+            "baseline": 88.46179199218749
+          }
+        ],
+        [
+          {
+            "text": "A24",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 38.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "clone-both",
+      "css": "td{padding-top:10pt;padding-bottom:10pt;box-decoration-break:clone}",
+      "body": "<table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24</td><td>B00<br>B01<br>B02</td></tr></table><div>After</div>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A01",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A02",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A06",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "B00",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "B01",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "B02",
+            "baseline": 48.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A07",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A08",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A09",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A10",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A13",
+            "baseline": 88.46179199218749
+          }
+        ],
+        [
+          {
+            "text": "A14",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A15",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A17",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A18",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A19",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A20",
+            "baseline": 88.46179199218749
+          }
+        ],
+        [
+          {
+            "text": "A21",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A22",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A23",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A24",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 78.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "outer-table-end",
+      "css": "section{padding-bottom:10pt}p{margin:0}",
+      "body": "<section><table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09</td></tr></table></section><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "nested-table-end",
+      "css": "td.outer{padding-bottom:10pt}p{margin:0}",
+      "body": "<table><tr><td class=outer><table><tr><td>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09</td></tr></table></td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "columns-final-19",
+      "css": "td{padding-bottom:10pt}section{column-count:2;column-fill:auto;column-gap:0}p{margin:0}",
+      "body": "<table><tr><td><section>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18</section></td><td>B00</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "columns-footer-final-47",
+      "css": "tbody td{padding-bottom:10pt}section{column-count:2;column-fill:auto;column-gap:0}p{margin:0}",
+      "body": "<table><thead><tr><td colspan=2>Head</td></tr></thead><tbody><tr><td><section>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<br>A19<br>A20<br>A21<br>A22<br>A23<br>A24<br>A25<br>A26<br>A27<br>A28<br>A29<br>A30<br>A31<br>A32<br>A33<br>A34<br>A35<br>A36<br>A37<br>A38<br>A39<br>A40<br>A41<br>A42<br>A43<br>A44<br>A45<br>A46</section></td><td>B00</td></tr></tbody><tfoot><tr><td colspan=2>Foot</td></tr></tfoot></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Head",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A00",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A01",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A02",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A06",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A08",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A09",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A10",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A14",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A15",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "Foot",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "Head",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A17",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A18",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A19",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A20",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A21",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A22",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A23",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A24",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A25",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A26",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A27",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A28",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A29",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A30",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A31",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "Foot",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A32",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A33",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A34",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A35",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A36",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A37",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A38",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A39",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A40",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A41",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "A42",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A43",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A44",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A45",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A46",
+            "baseline": 58.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "columns-nonfinal-spanner",
+      "css": "td{padding-bottom:10pt}section{column-count:2;column-fill:auto;column-gap:0}p{margin:0}.spanner{column-span:all}",
+      "body": "<table><tr><td><section>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14<br>A15<br>A16<br>A17<br>A18<div class=spanner>Span</div>C00<br>C01<br>C02<br>C03<br>C04<br>C05<br>C06<br>C07<br>C08<br>C09<br>C10<br>C11<br>C12<br>C13<br>C14<br>C15<br>C16<br>C17<br>C18</section></td><td>B00</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A15",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A16",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A17",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A18",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "columns-spanner-ending-block",
+      "css": "td{padding-bottom:10pt}section{column-count:2;column-fill:auto;column-gap:0}p{margin:0}.spanner{column-span:all;height:75pt}",
+      "body": "<table><tr><td><section>A00<div class=spanner>Span</div>C00<br>C01</section></td><td>B00</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "Span",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "C00",
+            "baseline": 103.46179199218749
+          },
+          {
+            "text": "C01",
+            "baseline": 103.46179199218749
+          },
+          {
+            "text": "B00",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "engine": "WeasyPrint",
+  "version": "70.0",
+  "font_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+  "base_css": "@page{size:400pt 600pt;margin:20pt}html,body,table,td{margin:0;padding:0;font:20pt/24pt Probe}table{border-spacing:0;background:#808080}td{padding:4pt;border:1pt solid black}#c0{background:red}#c1{background:blue}",
+  "cases": [
+    {
+      "name": "max-length",
+      "css": "td:first-child{max-width:40pt}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 49.99999999999999,
+        "c1": 23.700683593749993
+      },
+      "table_width": 73.70068359374999
+    },
+    {
+      "name": "min-length",
+      "css": "td:first-child{min-width:80pt}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 199.4189453124999,
+        "c1": 23.700683593749993
+      },
+      "table_width": 223.11962890624994
+    },
+    {
+      "name": "min-wins",
+      "css": "td:first-child{min-width:80pt;max-width:40pt}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 89.99999999999997,
+        "c1": 23.700683593749993
+      },
+      "table_width": 113.70068359374999
+    },
+    {
+      "name": "max-percentage",
+      "css": "td:first-child{max-width:25%}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 199.4189453124999,
+        "c1": 23.700683593749993
+      },
+      "table_width": 223.11962890624994
+    },
+    {
+      "name": "min-percentage",
+      "css": "td:first-child{min-width:75%}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 199.4189453124999,
+        "c1": 66.47298177083331
+      },
+      "table_width": 265.89192708333326
+    },
+    {
+      "name": "max-zero-percentage",
+      "css": "td:first-child{max-width:0%}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 10.0,
+        "c1": 23.700683593749993
+      },
+      "table_width": 33.70068359375
+    },
+    {
+      "name": "narrow-length",
+      "css": "td:first-child{width:1px}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 86.16967773437497,
+        "c1": 23.700683593749993
+      },
+      "table_width": 109.87036132812497
+    },
+    {
+      "name": "zero-length",
+      "css": "td:first-child{width:0}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 86.16967773437497,
+        "c1": 23.700683593749993
+      },
+      "table_width": 109.87036132812497
+    },
+    {
+      "name": "border-box-limit",
+      "css": "td:first-child{box-sizing:border-box;max-width:40pt}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 49.99999999999999,
+        "c1": 23.700683593749993
+      },
+      "table_width": 73.70068359374999
+    },
+    {
+      "name": "wide-capped",
+      "css": "td:first-child{width:100pt;max-width:40pt}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 49.99999999999999,
+        "c1": 23.700683593749993
+      },
+      "table_width": 73.70068359374999
+    },
+    {
+      "name": "wide-within-specified-table",
+      "css": "table{width:200pt}td:first-child{width:250pt}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 176.29931640625,
+        "c1": 23.700683593749993
+      },
+      "table_width": 199.99999999999997
+    },
+    {
+      "name": "percentage-columns-under-total",
+      "css": "table{width:200pt}",
+      "body": "<table><col style=\"width:40%\"><col style=\"width:50%\"><tr><td id=c0>A</td><td id=c1>B</td></tr></table>",
+      "widths": {
+        "c0": 88.88888888888887,
+        "c1": 111.11111111111111
+      },
+      "table_width": 199.99999999999997
+    },
+    {
+      "name": "percentage-cells-under-total",
+      "css": "table{width:200pt}#c0{width:40%}#c1{width:50%}",
+      "body": "<table><tr><td id=c0>A</td><td id=c1>B</td></tr></table>",
+      "widths": {
+        "c0": 88.88888888888887,
+        "c1": 111.11111111111111
+      },
+      "table_width": 199.99999999999997
+    },
+    {
+      "name": "collapsed-limits",
+      "css": "table{border-collapse:collapse}#c0{max-width:40pt}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 49.000000000000014,
+        "c1": 22.70068359375
+      },
+      "table_width": 72.70068359375001
+    },
+    {
+      "name": "fixed-layout-limits",
+      "css": "table{table-layout:fixed;width:200pt}#c0{width:100pt;max-width:40pt}",
+      "body": "<table><tr><td id=c0>alpha beta gamma</td><td id=c1>Z</td></tr></table>",
+      "widths": {
+        "c0": 110.00000000000003,
+        "c1": 89.99999999999994
+      },
+      "table_width": 199.99999999999997
+    }
+  ],
+  "font_path": "crates/fonts/assets/fonts/DejaVuSans.ttf",
+  "sources": {
+    "preferred.py": "a7973703cd8ac5fada246b35e7fea6e728a364002adc5dbb248ee08f084c0a6e",
+    "table.py": "3a5b6442410f18e6c59c1be299c9de916c2b09334aa65c5001594b344d6f7961"
+  }
+}

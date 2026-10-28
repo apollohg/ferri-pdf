@@ -1,0 +1,1779 @@
+{
+  "engine": "WeasyPrint",
+  "version": "70.0",
+  "font_path": "tests/oracle/assets/DejaVuSans.ttf",
+  "font_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+  "sources": {
+    "preferred.py": "a7973703cd8ac5fada246b35e7fea6e728a364002adc5dbb248ee08f084c0a6e",
+    "table.py": "3a5b6442410f18e6c59c1be299c9de916c2b09334aa65c5001594b344d6f7961",
+    "block.py": "9457dca0528c378f3ff6dd2ca5126d04ca017542de2fb77b1db48c3073401085",
+    "column.py": "83ae1a3e83596293e5ae66b81759f2ad6eff8e2e43058a1a980f7662b6c51d93",
+    "inline.py": "0e7c1569330f54734ed61b568789c4f279ba103c0385115efa6444f3c43b96b4",
+    "page.py": "d99c5aceb36d458619a9cecb466a09df8827b9160fafacab7b4972a0d354dcca",
+    "../css/html5_ua.css": "04dd53f16888e5325d8bb8feb02462d99d03c8329da713b167b333a2ea4b91bc",
+    "../formatting_structure/boxes.py": "8ffd28ab74a149f0097208fcba6a80df0c8bb01e8fd4f9ced95d11b7e9807e23",
+    "absolute.py": "240e268cec1e66dda1f87aec6bdd671e7bf36439c5fa09de32965f717893ba07"
+  },
+  "measurement": "lines",
+  "base_css": "@page{size:240pt 120pt;margin:10pt}html,body,p{margin:0;padding:0;font:10pt/10pt Probe;widows:1;orphans:1}.lead{height:30pt}.box{break-inside:avoid}",
+  "cases": [
+    {
+      "name": "oversized-avoid",
+      "css": "",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "oversized-auto",
+      "css": ".box{break-inside:auto}",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A00",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A02",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A04",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A05",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A06",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A07",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A08",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A09",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A10",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A14",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "After",
+            "baseline": 98.46179199218747
+          }
+        ]
+      ]
+    },
+    {
+      "name": "column-only-avoid-on-pages",
+      "css": ".box{break-inside:avoid-column}",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A00",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A02",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A04",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A05",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A06",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A07",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A08",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A09",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A10",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A14",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "After",
+            "baseline": 98.46179199218747
+          }
+        ]
+      ]
+    },
+    {
+      "name": "initial-oversized",
+      "css": "",
+      "body": "<div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "empty-lead",
+      "css": ".lead{font-size:0}",
+      "body": "<div class=lead></div><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [],
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "positioned-lead",
+      "css": ".lead{position:absolute;top:0;left:0}",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "legacy-avoid",
+      "css": ".box{break-inside:auto;page-break-inside:avoid}",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "oversized-one-paragraph",
+      "css": "",
+      "body": "<p class=lead>Lead</p><p class=box>A00<br>A01<br>A02<br>A03<br>A04<br>A05<br>A06<br>A07<br>A08<br>A09<br>A10<br>A11<br>A12<br>A13<br>A14</p><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "nested-avoid",
+      "css": "",
+      "body": "<p class=lead>Lead</p><section class=box><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div></section><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "forced-before",
+      "css": ".box{break-before:page}",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "taller-destination",
+      "css": "@page:left{size:240pt 220pt}",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          },
+          {
+            "text": "A10",
+            "baseline": 118.46179199218749
+          },
+          {
+            "text": "A11",
+            "baseline": 128.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 138.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 148.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 158.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 168.46179199218753
+          }
+        ]
+      ]
+    },
+    {
+      "name": "shorter-destination",
+      "css": "@page:left{size:240pt 80pt}",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A06",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A07",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A08",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A09",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A10",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A13",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A14",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "After",
+            "baseline": 108.46179199218747
+          }
+        ]
+      ]
+    },
+    {
+      "name": "oversized-sliced-edges",
+      "css": ".box{padding:5pt 0 7pt;border:1pt solid red}",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A00",
+            "baseline": 24.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 34.4617919921875
+          },
+          {
+            "text": "A02",
+            "baseline": 44.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 54.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 64.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 74.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 84.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 94.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 104.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A09",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A10",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A11",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 86.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "oversized-cloned-edges",
+      "css": ".box{padding:5pt 0 7pt;border:1pt solid red;box-decoration-break:clone}",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A00",
+            "baseline": 24.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 34.4617919921875
+          },
+          {
+            "text": "A02",
+            "baseline": 44.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 54.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 64.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 74.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 84.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 94.46179199218749
+          }
+        ],
+        [
+          {
+            "text": "A08",
+            "baseline": 24.4617919921875
+          },
+          {
+            "text": "A09",
+            "baseline": 34.4617919921875
+          },
+          {
+            "text": "A10",
+            "baseline": 44.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 54.4617919921875
+          },
+          {
+            "text": "A12",
+            "baseline": 64.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 74.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 84.46179199218749
+          },
+          {
+            "text": "After",
+            "baseline": 102.46179199218747
+          }
+        ]
+      ]
+    },
+    {
+      "name": "oversized-columns",
+      "css": "section{column-count:2;column-fill:auto;column-gap:0}",
+      "body": "<section><p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p></section>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "column-only-avoid-in-columns",
+      "css": "section{column-count:2;column-fill:auto;column-gap:0}.box{break-inside:avoid-column}",
+      "body": "<section><p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p></section>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A08",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A09",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A10",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A12",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A13",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A14",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 68.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "fitting-avoid",
+      "css": "",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A05",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A07",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "After",
+            "baseline": 98.46179199218747
+          }
+        ]
+      ]
+    },
+    {
+      "name": "fitting-auto",
+      "css": ".box{break-inside:auto}",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A00",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A02",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A04",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A05",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A06",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "A07",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 28.461791992187496
+          }
+        ]
+      ]
+    },
+    {
+      "name": "caption-top-auto",
+      "css": "@page:left{size:400pt 120pt}table{width:50%;table-layout:fixed;border-spacing:0}caption,td{margin:0;padding:0;font:10pt/10pt Probe;text-align:left;widows:1;orphans:1}caption{caption-side:top;background:blue;break-after:avoid;break-inside:auto}td{background:lime}",
+      "body": "<table><caption>S000 S001 S002 S003 S004 S005 S006 S007 S008 S009 S010 S011 S012 S013 S014 S015 S016 S017 S018 S019 S020 S021 S022 S023 S024 S025 S026 S027 S028 S029 S030 S031 S032 S033 S034 S035 S036 S037 S038 S039 S040 S041 S042 S043 S044 S045 S046 S047 S048 S049 S050 S051 S052 S053 S054 S055 S056 S057 S058 S059</caption><tr><td>Cell</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "S000 S001 S002",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "S003 S004 S005",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "S006 S007 S008",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "S009 S010 S011",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "S012 S013 S014",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "S015 S016 S017",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "S018 S019 S020",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "S021 S022 S023",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "S024 S025 S026",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "S027 S028 S029",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "S030 S031 S032 S033 S034 S035",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "S036 S037 S038 S039 S040 S041",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "S042 S043 S044 S045 S046 S047",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "S048 S049 S050 S051 S052 S053",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "S054 S055 S056 S057 S058 S059",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "Cell",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 78.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "caption-top-avoid",
+      "css": "@page:left{size:400pt 120pt}table{width:50%;table-layout:fixed;border-spacing:0}caption,td{margin:0;padding:0;font:10pt/10pt Probe;text-align:left;widows:1;orphans:1}caption{caption-side:top;background:blue;break-after:avoid;break-inside:avoid}td{background:lime}",
+      "body": "<table><caption>S000 S001 S002 S003 S004 S005 S006 S007 S008 S009 S010 S011 S012 S013 S014 S015 S016 S017 S018 S019 S020 S021 S022 S023 S024 S025 S026 S027 S028 S029 S030 S031 S032 S033 S034 S035 S036 S037 S038 S039 S040 S041 S042 S043 S044 S045 S046 S047 S048 S049 S050 S051 S052 S053 S054 S055 S056 S057 S058 S059</caption><tr><td>Cell</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "S000 S001 S002",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "S003 S004 S005",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "S006 S007 S008",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "S009 S010 S011",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "S012 S013 S014",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "S015 S016 S017",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "S018 S019 S020",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "S021 S022 S023",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "S024 S025 S026",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "S027 S028 S029",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "S030 S031 S032 S033 S034 S035",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "S036 S037 S038 S039 S040 S041",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "S042 S043 S044 S045 S046 S047",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "S048 S049 S050 S051 S052 S053",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "S054 S055 S056 S057 S058 S059",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "Cell",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 78.46179199218749
+          }
+        ]
+      ]
+    },
+    {
+      "name": "caption-bottom-auto",
+      "css": "@page:left{size:400pt 120pt}table{width:50%;table-layout:fixed;border-spacing:0}caption,td{margin:0;padding:0;font:10pt/10pt Probe;text-align:left;widows:1;orphans:1}caption{caption-side:bottom;background:blue;break-after:avoid;break-inside:auto}td{background:lime}",
+      "body": "<table><caption>S000 S001 S002 S003 S004 S005 S006 S007 S008 S009 S010 S011 S012 S013 S014 S015 S016 S017 S018 S019 S020 S021 S022 S023 S024 S025 S026 S027 S028 S029 S030 S031 S032 S033 S034 S035 S036 S037 S038 S039 S040 S041 S042 S043 S044 S045 S046 S047 S048 S049 S050 S051 S052 S053 S054 S055 S056 S057 S058 S059</caption><tr><td>Cell</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Cell",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "S000 S001 S002",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "S003 S004 S005",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "S006 S007 S008",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "S009 S010 S011",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "S012 S013 S014",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "S015 S016 S017",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "S018 S019 S020",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "S021 S022 S023",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "S024 S025 S026",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "S027 S028 S029 S030 S031 S032",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "S033 S034 S035 S036 S037 S038",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "S039 S040 S041 S042 S043 S044",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "S045 S046 S047 S048 S049 S050",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "S051 S052 S053 S054 S055 S056",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "S057 S058 S059",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "After",
+            "baseline": 78.46179199218749
+          }
+        ]
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "name": "forced-descendant",
+      "css": ".box p:nth-child(6){break-before:page}",
+      "body": "<p class=lead>Lead</p><div class=box><p>A00</p><p>A01</p><p>A02</p><p>A03</p><p>A04</p><p>A05</p><p>A06</p><p>A07</p><p>A08</p><p>A09</p><p>A10</p><p>A11</p><p>A12</p><p>A13</p><p>A14</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A00",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A01",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A02",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A03",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A04",
+            "baseline": 58.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "A05",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "A06",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "A07",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "A08",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "A09",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "A10",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "A11",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "A12",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "A13",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "A14",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "caption-bottom-avoid",
+      "css": "@page:left{size:400pt 120pt}table{width:50%;table-layout:fixed;border-spacing:0}caption,td{margin:0;padding:0;font:10pt/10pt Probe;text-align:left;widows:1;orphans:1}caption{caption-side:bottom;background:blue;break-after:avoid;break-inside:avoid}td{background:lime}",
+      "body": "<table><caption>S000 S001 S002 S003 S004 S005 S006 S007 S008 S009 S010 S011 S012 S013 S014 S015 S016 S017 S018 S019 S020 S021 S022 S023 S024 S025 S026 S027 S028 S029 S030 S031 S032 S033 S034 S035 S036 S037 S038 S039 S040 S041 S042 S043 S044 S045 S046 S047 S048 S049 S050 S051 S052 S053 S054 S055 S056 S057 S058 S059</caption><tr><td>Cell</td></tr></table><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Cell",
+            "baseline": 18.4617919921875
+          }
+        ],
+        [
+          {
+            "text": "S000 S001 S002 S003 S004 S005",
+            "baseline": 18.4617919921875
+          },
+          {
+            "text": "S006 S007 S008 S009 S010 S011",
+            "baseline": 28.461791992187496
+          },
+          {
+            "text": "S012 S013 S014 S015 S016 S017",
+            "baseline": 38.4617919921875
+          },
+          {
+            "text": "S018 S019 S020 S021 S022 S023",
+            "baseline": 48.4617919921875
+          },
+          {
+            "text": "S024 S025 S026 S027 S028 S029",
+            "baseline": 58.4617919921875
+          },
+          {
+            "text": "S030 S031 S032 S033 S034 S035",
+            "baseline": 68.4617919921875
+          },
+          {
+            "text": "S036 S037 S038 S039 S040 S041",
+            "baseline": 78.46179199218749
+          },
+          {
+            "text": "S042 S043 S044 S045 S046 S047",
+            "baseline": 88.46179199218749
+          },
+          {
+            "text": "S048 S049 S050 S051 S052 S053",
+            "baseline": 98.46179199218747
+          },
+          {
+            "text": "S054 S055 S056 S057 S058 S059",
+            "baseline": 108.46179199218747
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 18.4617919921875
+          }
+        ]
+      ]
+    }
+  ]
+}

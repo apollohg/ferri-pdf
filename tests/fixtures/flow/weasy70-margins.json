@@ -1,0 +1,486 @@
+{
+  "engine": "WeasyPrint",
+  "version": "70.0",
+  "font_path": "tests/oracle/assets/DejaVuSans.ttf",
+  "font_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+  "sources": {
+    "preferred.py": "a7973703cd8ac5fada246b35e7fea6e728a364002adc5dbb248ee08f084c0a6e",
+    "table.py": "3a5b6442410f18e6c59c1be299c9de916c2b09334aa65c5001594b344d6f7961",
+    "block.py": "9457dca0528c378f3ff6dd2ca5126d04ca017542de2fb77b1db48c3073401085",
+    "column.py": "83ae1a3e83596293e5ae66b81759f2ad6eff8e2e43058a1a980f7662b6c51d93",
+    "inline.py": "0e7c1569330f54734ed61b568789c4f279ba103c0385115efa6444f3c43b96b4",
+    "page.py": "d99c5aceb36d458619a9cecb466a09df8827b9160fafacab7b4972a0d354dcca",
+    "../css/html5_ua.css": "04dd53f16888e5325d8bb8feb02462d99d03c8329da713b167b333a2ea4b91bc"
+  },
+  "measurement": "lines",
+  "base_css": "@page{size:240pt 120pt;margin:10pt}html{font:12pt/14pt Probe}p{margin:0}h2{font-weight:normal;line-height:22pt;margin-bottom:0;break-after:auto}",
+  "cases": [
+    {
+      "name": "ua-body",
+      "css": "",
+      "body": "<p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Body",
+            "baseline": 27.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "reset-body",
+      "css": "body{margin:0}",
+      "body": "<p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Body",
+            "baseline": 21.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "ua-heading",
+      "css": "",
+      "body": "<h2>Heading</h2><p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Heading",
+            "baseline": 42.1714453125
+          },
+          {
+            "text": "Body",
+            "baseline": 58.09429687499999
+          }
+        ]
+      ]
+    },
+    {
+      "name": "heading-margin",
+      "css": "body{margin:0}h2{margin-top:15pt}",
+      "body": "<h2>Heading</h2><p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Heading",
+            "baseline": 42.23144531249999
+          },
+          {
+            "text": "Body",
+            "baseline": 58.154296874999986
+          }
+        ]
+      ]
+    },
+    {
+      "name": "body-heading-collapse",
+      "css": "body{margin-top:20pt}h2{margin-top:15pt}",
+      "body": "<h2>Heading</h2><p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Heading",
+            "baseline": 47.2314453125
+          },
+          {
+            "text": "Body",
+            "baseline": 63.15429687499999
+          }
+        ]
+      ]
+    },
+    {
+      "name": "nested-empty-collapse",
+      "css": "h2{margin-top:15pt}.empty{margin-top:30pt}",
+      "body": "<section><div class=empty></div><h2>Heading</h2></section><p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Heading",
+            "baseline": 57.2314453125
+          },
+          {
+            "text": "Body",
+            "baseline": 73.15429687499999
+          }
+        ]
+      ]
+    },
+    {
+      "name": "mixed-sign-collapse",
+      "css": "body{margin-top:20pt}p{margin-top:-4pt}",
+      "body": "<p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Body",
+            "baseline": 37.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "negative-start",
+      "css": "body{margin-top:-5pt}",
+      "body": "<p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Body",
+            "baseline": 16.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "body-barrier",
+      "css": "body{border-top:2pt solid blue;padding-top:3pt}p{margin-top:12pt}",
+      "body": "<p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Body",
+            "baseline": 44.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "root-body-margins",
+      "css": "html{margin-top:9pt}body{margin-top:6pt}p{margin-top:12pt}",
+      "body": "<p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Body",
+            "baseline": 42.15429687499999
+          }
+        ]
+      ]
+    },
+    {
+      "name": "forced-margin",
+      "css": "body{margin:0}.lead{height:30pt}.after{break-before:page;margin-top:12pt}",
+      "body": "<div class=lead>Lead</div><p class=after>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 21.154296875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 33.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "automatic-margin",
+      "css": "body{margin:0}.lead{height:95pt}.after{margin-top:12pt}",
+      "body": "<div class=lead>Lead</div><p class=after>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 21.154296875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 21.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "automatic-negative-margin",
+      "css": "body{margin:0}.lead{height:100pt}.after{margin-top:-5pt}",
+      "body": "<div class=lead>Lead</div><p class=after>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 21.154296875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 21.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "first-forced-margin",
+      "css": "body{margin-top:20pt}p{break-before:page;margin-top:5pt}",
+      "body": "<p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Body",
+            "baseline": 41.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "positioned-before-flow",
+      "css": "i{position:absolute;top:0;left:0;width:3pt;height:3pt;background:red}",
+      "body": "<i></i><p>Body</p>",
+      "pages": [
+        [
+          {
+            "text": "Body",
+            "baseline": 27.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "cell-independent",
+      "css": "body{margin:0}table{border-spacing:0}td{padding:0}p{margin-top:12pt}",
+      "body": "<table><tr><td><p>Left</p></td><td><p>Right</p></td></tr></table>",
+      "pages": [
+        [
+          {
+            "text": "Left",
+            "baseline": 33.154296875
+          },
+          {
+            "text": "Right",
+            "baseline": 33.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "flex-independent",
+      "css": "body{margin:0}section{display:flex}p{margin-top:12pt}",
+      "body": "<section><div><p>Left</p></div><div><p>Right</p></div></section>",
+      "pages": [
+        [
+          {
+            "text": "Left",
+            "baseline": 33.154296875
+          },
+          {
+            "text": "Right",
+            "baseline": 33.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "columns-initial-and-forced",
+      "css": "body{margin:0}section{column-count:2;column-fill:auto;column-gap:0}p{margin-top:12pt}.next{break-before:column}",
+      "body": "<section><p>First</p><p class=next>Second</p><p class=next>Third</p></section>",
+      "pages": [
+        [
+          {
+            "text": "First",
+            "baseline": 33.154296875
+          },
+          {
+            "text": "Second",
+            "baseline": 33.154296875
+          }
+        ],
+        [
+          {
+            "text": "Third",
+            "baseline": 33.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "percentage-collapsed",
+      "css": "body{margin-top:5%}section{width:50%}p{margin-top:20%}",
+      "body": "<section><p>Body</p></section>",
+      "pages": [
+        [
+          {
+            "text": "Body",
+            "baseline": 41.954296875000004
+          }
+        ]
+      ]
+    },
+    {
+      "name": "named-margin",
+      "css": "body{margin:0}.lead{height:30pt;margin-bottom:40pt}.after{page:B;margin-top:12pt}@page B{size:240pt 120pt}",
+      "body": "<div class=lead>Lead</div><p class=after>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 21.154296875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 33.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "named-negative-margin",
+      "css": "body{margin:0}.lead{height:30pt;margin-bottom:40pt}.after{page:B;margin-top:-5pt}@page B{size:240pt 120pt}",
+      "body": "<div class=lead>Lead</div><p class=after>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 21.154296875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 16.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "forced-negative-margin",
+      "css": "body{margin:0}.lead{height:30pt;margin-bottom:40pt}.after{break-before:page;margin-top:-5pt}",
+      "body": "<div class=lead>Lead</div><p class=after>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 21.154296875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 16.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "forced-preceding-negative",
+      "css": "body{margin:0}.lead{height:30pt;margin-bottom:-5pt}.after{break-before:page;margin-top:0}",
+      "body": "<div class=lead>Lead</div><p class=after>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 21.154296875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 21.154296875
+          }
+        ]
+      ]
+    },
+    {
+      "name": "named-percentage-full",
+      "css": "body{margin:0}.lead{height:30pt;margin-bottom:50%}.after{page:B;margin-top:10%}@page B{size:400pt 120pt}",
+      "body": "<section><div class=lead>Lead</div><p class=after>After</p></section>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 21.154296875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 59.154296874999986
+          }
+        ]
+      ]
+    },
+    {
+      "name": "named-percentage-half",
+      "css": "body{margin:0}.lead{height:30pt;margin-bottom:50%}.after{page:B;margin-top:10%}@page B{size:400pt 120pt}section{width:50%}",
+      "body": "<section><div class=lead>Lead</div><p class=after>After</p></section>",
+      "pages": [
+        [
+          {
+            "text": "Lead",
+            "baseline": 21.154296875
+          }
+        ],
+        [
+          {
+            "text": "After",
+            "baseline": 40.154296874999986
+          }
+        ]
+      ]
+    },
+    {
+      "name": "initial-overflow-barriers",
+      "css": "@page{size:360pt 480pt;margin:36pt}html,body{margin:0;padding:0}body{font:12pt/18pt Probe}div{overflow:hidden;background:#fea}div.clip{overflow:visible;background:#cef}p{margin:20pt 0}",
+      "body": "<p>Before</p><div><p>Inside</p></div><div class=clip><p>Clipped</p></div><p>After</p>",
+      "pages": [
+        [
+          {
+            "text": "Before",
+            "baseline": 69.154296875
+          },
+          {
+            "text": "Inside",
+            "baseline": 127.15429687499997
+          },
+          {
+            "text": "Clipped",
+            "baseline": 185.15429687499997
+          },
+          {
+            "text": "After",
+            "baseline": 223.15429687499994
+          }
+        ]
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "name": "columns-initial-and-auto",
+      "css": "body{margin:0}section{column-count:2;column-fill:auto;column-gap:0}p{height:60pt;break-inside:avoid;margin-top:12pt}",
+      "body": "<section><p>First</p><p>Second</p><p>Third</p><p>Fourth</p></section>",
+      "pages": [
+        [
+          {
+            "text": "First",
+            "baseline": 33.154296875
+          },
+          {
+            "text": "Second",
+            "baseline": 33.154296875
+          }
+        ],
+        [
+          {
+            "text": "Third",
+            "baseline": 33.154296875
+          },
+          {
+            "text": "Fourth",
+            "baseline": 33.154296875
+          }
+        ]
+      ]
+    }
+  ]
+}

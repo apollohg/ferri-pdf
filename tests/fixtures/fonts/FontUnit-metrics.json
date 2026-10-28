@@ -1,0 +1,42 @@
+{
+  "tool": "fontTools 4.63.0",
+  "method": "Unmodified default font instances; OS/2 x/cap heights, cmap/hmtx zero advances, hhea or USE_TYPO_METRICS OS/2 line metrics",
+  "faces": {
+    "RobotoFlex": {
+      "file": "tests/fixtures/fonts/RobotoFlex.ttf",
+      "sha256": "9b523f7d82593df0107173849ebb8c817471a1df4b4fb2c3cbf40cfd810c8281",
+      "units_per_em": 2048,
+      "x_height": 1052,
+      "cap_height": 1456,
+      "zero_advance": 1156,
+      "ascender": 1900,
+      "descender": -500,
+      "line_gap": 0,
+      "use_typographic_metrics": true
+    },
+    "SourceSerif4": {
+      "file": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "sha256": "e5a4ee6a3d87bb9024796be390c6771e2a0eb1883dae25effaf57ca01668e24b",
+      "units_per_em": 1000,
+      "x_height": 475,
+      "cap_height": 670,
+      "zero_advance": 500,
+      "ascender": 1036,
+      "descender": -335,
+      "line_gap": 0,
+      "use_typographic_metrics": false
+    },
+    "InitialSerif": {
+      "file": "crates/fonts/assets/fonts/LiberationSerif-Regular.ttf",
+      "sha256": "058ea80864aef09a23f45cbec2bb5400bc3dfbdea01c3f10538a21fcb497fb74",
+      "units_per_em": 2048,
+      "x_height": 940,
+      "cap_height": 1341,
+      "zero_advance": 1024,
+      "ascender": 1825,
+      "descender": -443,
+      "line_gap": 87,
+      "use_typographic_metrics": false
+    }
+  }
+}

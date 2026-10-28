@@ -1,0 +1,26 @@
+{
+  "tool": "libjpeg-turbo version 3.2.0 (build 20260630)",
+  "inspection_tool": "Pillow 12.1.1",
+  "generator_sha256": "296fa0dba0d30f71880d6de9b0878b3bc912791af69a64beb6803715de98fef5",
+  "quality": 97,
+  "files": {
+    "rgb.jpg": {
+      "sha256": "01c02944fdd9130ac069b1481b46c3e4658c6ebf1eae89cfa9f8cc78b13cb81d",
+      "size": [
+        64,
+        48
+      ],
+      "mode": "RGB",
+      "adobe_transform": 0
+    },
+    "ycck.jpg": {
+      "sha256": "b5c882bba24849d448f17a0bb653fa43e4354ce1e9759fdba53559f4724e0f96",
+      "size": [
+        64,
+        48
+      ],
+      "mode": "CMYK",
+      "adobe_transform": 2
+    }
+  }
+}

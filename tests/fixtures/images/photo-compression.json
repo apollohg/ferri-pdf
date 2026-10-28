@@ -1,0 +1,71 @@
+{
+  "tool": "1.23.6\nlibheif: 1.23.6\nplugin path: /opt/homebrew/lib/libheif",
+  "size": [
+    128,
+    96
+  ],
+  "files": {
+    "photo-opaque.heic": {
+      "sha256": "027834a5e9d13036c443165efd463c7b26578098aa5ca41c7b86b4c85978348e",
+      "reference": "photo-opaque-heic.png",
+      "reference_sha256": "76435009ad39af83f80ea3f2c736ea1b071051fd105b9f28516f96ef3e0dc011",
+      "arguments": [
+        "-p",
+        "preset=ultrafast",
+        "-p",
+        "x265:pools=1",
+        "-p",
+        "x265:frame-threads=1",
+        "-q",
+        "95"
+      ]
+    },
+    "photo-opaque.avif": {
+      "sha256": "da5a5e12191599291b8107eed5d247645bf07a0a0c446a10e49ed687849cc60b",
+      "reference": "photo-opaque-avif.png",
+      "reference_sha256": "ed625414c40926f6a6c74f2527aa2507d59955afbd4fde18e0a6170fef70a808",
+      "arguments": [
+        "-A",
+        "-p",
+        "speed=9",
+        "-p",
+        "threads=1",
+        "-q",
+        "95"
+      ]
+    },
+    "photo-10bit.heic": {
+      "sha256": "90e874ce47821696242efa912c6d94adf65ace4c97701398e31e070ff1e0edaa",
+      "reference": "photo-10bit-heic.png",
+      "reference_sha256": "667b4652c06603df32ae529917c56e1e954c63fefba2ad8aafe5dfc084ba900f",
+      "arguments": [
+        "-p",
+        "preset=ultrafast",
+        "-p",
+        "x265:pools=1",
+        "-p",
+        "x265:frame-threads=1",
+        "-q",
+        "95",
+        "-b",
+        "10"
+      ]
+    },
+    "photo-10bit.avif": {
+      "sha256": "aca2948cc97355ab185a34f062dafefaa80ecfac6882fa5515ea52d53da171ee",
+      "reference": "photo-10bit-avif.png",
+      "reference_sha256": "6b25541342f482721c5bda89c367e442663312a4e59369fdb9647844f0fd25d5",
+      "arguments": [
+        "-A",
+        "-p",
+        "speed=9",
+        "-p",
+        "threads=1",
+        "-q",
+        "95",
+        "-b",
+        "10"
+      ]
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "tool": "hb-shape (HarfBuzz) 14.4.0 + fontTools 4.63.0",
+  "method": "HarfBuzz shapes f with the specified axes (other axes retain file defaults); FontTools draws the resulting original glyph ID with getGlyphSet(location) and BoundsPen",
+  "faces": [
+    {
+      "file": "FontStyleTest.ttf",
+      "units_per_em": 1000,
+      "axes": [
+        {
+          "tag": "slnt",
+          "min": -15.0,
+          "default": 0.0,
+          "max": 0.0
+        },
+        {
+          "tag": "ital",
+          "min": 0.0,
+          "default": 0.5,
+          "max": 1.0
+        }
+      ],
+      "samples": [
+        {
+          "style": "normal",
+          "location": {
+            "slnt": 0
+          },
+          "character": "f",
+          "glyph_id": 127,
+          "glyph": "uni0066.mono",
+          "advance": 600,
+          "bounds": [
+            60,
+            0,
+            550,
+            770
+          ]
+        },
+        {
+          "style": "italic",
+          "location": {
+            "ital": 1
+          },
+          "character": "f",
+          "glyph_id": 109,
+          "glyph": "uni0066.italic",
+          "advance": 600,
+          "bounds": [
+            61,
+            -199,
+            574,
+            770
+          ]
+        },
+        {
+          "style": "oblique 14deg",
+          "location": {
+            "slnt": -14
+          },
+          "character": "f",
+          "glyph_id": 109,
+          "glyph": "uni0066.italic",
+          "advance": 600,
+          "bounds": [
+            -32.62696629213483,
+            -199,
+            681.0007662835249,
+            770
+          ]
+        }
+      ]
+    },
+    {
+      "file": "FontStyleTest-Ital.ttf",
+      "units_per_em": 1000,
+      "axes": [
+        {
+          "tag": "ital",
+          "min": 0.0,
+          "default": 0.0,
+          "max": 1.0
+        }
+      ],
+      "samples": [
+        {
+          "style": "normal",
+          "location": {
+            "ital": 0
+          },
+          "character": "f",
+          "glyph_id": 127,
+          "glyph": "uni0066.mono",
+          "advance": 600,
+          "bounds": [
+            60,
+            0,
+            550,
+            770
+          ]
+        },
+        {
+          "style": "italic",
+          "location": {
+            "ital": 1
+          },
+          "character": "f",
+          "glyph_id": 109,
+          "glyph": "uni0066.italic",
+          "advance": 600,
+          "bounds": [
+            -39.333333333333336,
+            -199,
+            688.6666666666666,
+            770
+          ]
+        }
+      ]
+    }
+  ]
+}

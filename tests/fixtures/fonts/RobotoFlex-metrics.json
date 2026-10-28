@@ -1,0 +1,295 @@
+{
+  "tool": "fontTools 4.63.0",
+  "method": "TTFont.getGlyphSet(location), H advance and BoundsPen outline bounds plus zero advance; unspecified axes retain file defaults",
+  "units_per_em": 2048,
+  "axes": [
+    {
+      "tag": "opsz",
+      "min": 8.0,
+      "default": 14.0,
+      "max": 144.0
+    },
+    {
+      "tag": "wght",
+      "min": 100.0,
+      "default": 400.0,
+      "max": 1000.0
+    },
+    {
+      "tag": "GRAD",
+      "min": -200.0,
+      "default": 0.0,
+      "max": 150.0
+    },
+    {
+      "tag": "wdth",
+      "min": 25.0,
+      "default": 100.0,
+      "max": 151.0
+    },
+    {
+      "tag": "slnt",
+      "min": -10.0,
+      "default": 0.0,
+      "max": 0.0
+    },
+    {
+      "tag": "XOPQ",
+      "min": 27.0,
+      "default": 96.0,
+      "max": 175.0
+    },
+    {
+      "tag": "YOPQ",
+      "min": 25.0,
+      "default": 79.0,
+      "max": 135.0
+    },
+    {
+      "tag": "XTRA",
+      "min": 323.0,
+      "default": 468.0,
+      "max": 603.0
+    },
+    {
+      "tag": "YTUC",
+      "min": 528.0,
+      "default": 712.0,
+      "max": 760.0
+    },
+    {
+      "tag": "YTLC",
+      "min": 416.0,
+      "default": 514.0,
+      "max": 570.0
+    },
+    {
+      "tag": "YTAS",
+      "min": 649.0,
+      "default": 750.0,
+      "max": 854.0
+    },
+    {
+      "tag": "YTDE",
+      "min": -305.0,
+      "default": -203.0,
+      "max": -98.0
+    },
+    {
+      "tag": "YTFI",
+      "min": 560.0,
+      "default": 738.0,
+      "max": 788.0
+    }
+  ],
+  "samples": [
+    {
+      "location": {
+        "wght": 100,
+        "wdth": 100,
+        "slnt": 0
+      },
+      "glyph": "uni0048",
+      "advance": 1408.0,
+      "bounds": [
+        170,
+        0,
+        1238,
+        1456
+      ],
+      "zero_advance": 1156.0
+    },
+    {
+      "location": {
+        "wght": 400,
+        "wdth": 100,
+        "slnt": 0
+      },
+      "glyph": "uni0048",
+      "advance": 1458.0,
+      "bounds": [
+        170,
+        0,
+        1288,
+        1456
+      ],
+      "zero_advance": 1156.0
+    },
+    {
+      "location": {
+        "wght": 750,
+        "wdth": 100,
+        "slnt": 0
+      },
+      "glyph": "uni0048",
+      "advance": 1516.3333333333333,
+      "bounds": [
+        152.5,
+        0,
+        1365,
+        1456
+      ],
+      "zero_advance": 1156.0
+    },
+    {
+      "location": {
+        "wght": 1000,
+        "wdth": 100,
+        "slnt": 0
+      },
+      "glyph": "uni0048",
+      "advance": 1558.0,
+      "bounds": [
+        140,
+        0,
+        1420,
+        1456
+      ],
+      "zero_advance": 1156.0
+    },
+    {
+      "location": {
+        "wght": 400,
+        "wdth": 25,
+        "slnt": 0
+      },
+      "glyph": "uni0048",
+      "advance": 1302.0,
+      "bounds": [
+        170,
+        0,
+        1132,
+        1456
+      ],
+      "zero_advance": 1038.0
+    },
+    {
+      "location": {
+        "wght": 400,
+        "wdth": 75,
+        "slnt": 0
+      },
+      "glyph": "uni0048",
+      "advance": 1406.0,
+      "bounds": [
+        170,
+        0,
+        1236,
+        1456
+      ],
+      "zero_advance": 1116.6666666666667
+    },
+    {
+      "location": {
+        "wght": 400,
+        "wdth": 125,
+        "slnt": 0
+      },
+      "glyph": "uni0048",
+      "advance": 1535.9411764705883,
+      "bounds": [
+        170,
+        0,
+        1365.9411764705883,
+        1456
+      ],
+      "zero_advance": 1213.3529411764705
+    },
+    {
+      "location": {
+        "wght": 400,
+        "wdth": 151,
+        "slnt": 0
+      },
+      "glyph": "uni0048",
+      "advance": 1617.0,
+      "bounds": [
+        170,
+        0,
+        1447,
+        1456
+      ],
+      "zero_advance": 1273.0
+    },
+    {
+      "location": {
+        "wght": 400,
+        "wdth": 100,
+        "slnt": -10
+      },
+      "glyph": "uni0048",
+      "advance": 1458.0,
+      "bounds": [
+        42,
+        0,
+        1417,
+        1456
+      ],
+      "zero_advance": 1156.0
+    },
+    {
+      "location": {
+        "wght": 600,
+        "wdth": 125,
+        "slnt": -10
+      },
+      "glyph": "uni0048",
+      "advance": 1569.6013071895425,
+      "bounds": [
+        32,
+        0,
+        1538.9411764705883,
+        1456
+      ],
+      "zero_advance": 1213.3529411764705
+    },
+    {
+      "location": {
+        "wght": 300,
+        "wdth": 75,
+        "slnt": 0
+      },
+      "glyph": "uni0048",
+      "advance": 1389.3333333333333,
+      "bounds": [
+        170,
+        0,
+        1219.3333333333333,
+        1456
+      ],
+      "zero_advance": 1116.6666666666667
+    },
+    {
+      "location": {
+        "wght": 600,
+        "wdth": 125,
+        "slnt": 0
+      },
+      "glyph": "uni0048",
+      "advance": 1569.6013071895425,
+      "bounds": [
+        160,
+        0,
+        1409.9411764705883,
+        1456
+      ],
+      "zero_advance": 1213.3529411764705
+    },
+    {
+      "location": {
+        "wght": 700,
+        "wdth": 100,
+        "slnt": 0
+      },
+      "glyph": "uni0048",
+      "advance": 1508.0,
+      "bounds": [
+        155,
+        0,
+        1354,
+        1456
+      ],
+      "zero_advance": 1156.0
+    }
+  ]
+}
