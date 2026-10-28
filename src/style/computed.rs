@@ -121,6 +121,21 @@ pub(crate) struct Style {
     pub opacity: f32,
     pub visibility: crate::style::Visibility,
     pub transform_origin: [LengthPercentage; 3],
+    /// `translate`, `rotate` and `scale`; `None` is `none`.
+    pub translate: Option<[LengthPercentage; 3]>,
+    pub rotate: Option<crate::style::Rotation>,
+    pub scale: Option<[f32; 3]>,
+    pub transform_box: crate::style::TransformBox,
+    #[expect(
+        clippy::struct_field_names,
+        reason = "the field names the CSS transform-style property"
+    )]
+    pub transform_style: crate::style::TransformStyle,
+    /// `None` is `none`.
+    pub perspective: Option<f32>,
+    pub perspective_origin: crate::paint::Position,
+    /// `backface-visibility: hidden`.
+    pub backface_hidden: bool,
     pub inset: [Size; 4],
     pub width: Size,
     pub min_width: Size,
@@ -216,6 +231,14 @@ impl Default for Style {
             opacity: OPAQUE,
             visibility: crate::style::Visibility::Visible,
             transform_origin: crate::style::transform::INITIAL_ORIGIN,
+            translate: None,
+            rotate: None,
+            scale: None,
+            transform_box: crate::style::TransformBox::default(),
+            transform_style: crate::style::TransformStyle::default(),
+            perspective: None,
+            perspective_origin: crate::style::transform::INITIAL_PERSPECTIVE_ORIGIN,
+            backface_hidden: false,
             inset: [const { Size::Auto }; 4],
             width: Size::Auto,
             min_width: Size::Auto,

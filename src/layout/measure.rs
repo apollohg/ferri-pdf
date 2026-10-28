@@ -512,7 +512,7 @@ impl Measurer<'_> {
         let fragments = (block.is_canvas_source() && self.canvas_images)
             || style.clipped_axes().contains(&true)
             || style.position != crate::style::Position::Static
-            || !style.transform.is_empty()
+            || style.has_transform_effects()
             || !block.navigation().is_empty();
         let rect = geometry.border_box(0.0);
         (style.display != Display::None && (decoration.is_visible() || fragments)).then(|| {

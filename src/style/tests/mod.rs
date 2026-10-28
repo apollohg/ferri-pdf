@@ -10,4 +10,5 @@ mod page_size;
 mod relative_units;
 mod unsupported_messages;
 mod variables;
+mod visual_effects;
 mod wide_keywords;

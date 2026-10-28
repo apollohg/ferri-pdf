@@ -234,7 +234,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             style.position != Position::Static
                 || style.is_translucent()
                 || !style.decoration.shadows.is_empty()
-                || !style.transform.is_empty()
+                || style.has_transform_effects()
         }) {
             let source = ancestor.source;
             let identity = std::ptr::from_ref(source) as usize;
@@ -256,12 +256,12 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 let order = self.order();
                 // CSS Tables ignores z-index on rows and row groups.
                 let translucent = source.style().is_translucent();
-                let transformed = !source.style().transform.is_empty();
+                let transformed = source.style().has_transform_effects();
                 let clip = if transformed {
                     let node = self.clips.len();
                     self.clips.push(EffectNode {
                         parent: self.clip,
-                        effect: Effect::Transform(source.style()),
+                        effect: Effect::Transform(source.style(), None),
                         fragments: Vec::new(),
                         areas: Vec::new(),
                     });
@@ -330,7 +330,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             .flatten()
             .filter(|layer| {
                 layer.source.style().position != Position::Static
-                    || !layer.source.style().transform.is_empty()
+                    || layer.source.style().has_transform_effects()
             })
             .cloned()
             .collect::<Vec<_>>();
@@ -367,7 +367,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             for containing in &table_containing {
                 self.containers.push(Container {
                     pending: Vec::new(),
-                    fixed: !containing.source.style().transform.is_empty(),
+                    fixed: containing.source.style().has_transform_effects(),
                 });
             }
             let mut frame = self.start_block(block)?;

@@ -11,7 +11,7 @@ use paragraph::ParagraphCursor;
 
 use crate::document::{BlockBox, BoxNavigation};
 use crate::graphics::{
-    Backgrounds, BoxDecoration, BoxPaint, Clip, DecorationPaint, DisplayItem, Rect,
+    Backgrounds, BoxAreas, BoxDecoration, BoxPaint, Clip, DecorationPaint, DisplayItem, Rect,
 };
 use crate::layout::breaks::{BreakTail, Forced, Fragmentainer, fragmentainer_height};
 use crate::layout::margin::MarginStrut;
@@ -108,6 +108,8 @@ struct Pending<'a> {
     position: StaticPosition,
     context: PaintKey,
     group: Option<usize>,
+    /// 3D placement node of the box's parent.
+    parent_3d: Option<usize>,
     order: PaintOrder,
     orders: PaintOrders,
 }
@@ -137,6 +139,7 @@ struct Unbroken {
     clip: Option<usize>,
     context: PaintKey,
     group: Option<usize>,
+    parent_3d: Option<usize>,
     key: PaintKey,
     reserved_order: Option<PaintOrder>,
 }
@@ -185,8 +188,12 @@ enum Effect<'a> {
     BorderClip,
     /// A resolved paint fragment clip, with exterior edges left open.
     PaintClip(Clip),
-    /// The box's transform about its fragment's border box.
-    Transform(&'a crate::style::Style),
+    /// The box's transform about its fragment's reference box, placed by its parent's
+    /// `Parent3d` node.
+    Transform(&'a crate::style::Style, Option<usize>),
+    /// The perspective and 3D rendering context a box gives its transformed children, resolved
+    /// from its fragment on each page; never an enclosing effect.
+    Parent3d(&'a crate::style::Style),
     /// Group opacity of a stacking context. Groups nest by stacking context, independently
     /// of clips and transforms, which follow containing blocks.
     Opacity(f32),
@@ -407,6 +414,7 @@ struct ActiveBox<'a> {
     group: Option<usize>,
     clip_node: Option<usize>,
     transform_node: Option<usize>,
+    parent_3d_node: Option<usize>,
     paint: Option<(BoxPaint, usize)>,
     fragments: Vec<(usize, usize)>,
     start_space: f32,
@@ -483,6 +491,7 @@ struct BlockFrame<'a> {
     previous_context: PaintKey,
     previous_clip: Option<usize>,
     previous_group: Option<usize>,
+    previous_parent_3d: Option<usize>,
     previous_reserve: f32,
     items: Vec<FlowItem<'a>>,
 }
@@ -628,6 +637,8 @@ pagination_state! {
     clip: Option<usize>,
     /// Innermost opacity group of the current stacking context.
     group: Option<usize>,
+    /// 3D placement node of the box whose children are being laid out.
+    parent_3d: Option<usize>,
     clips: Vec<EffectNode<'a>>,
     boxes: Vec<ActiveBox<'a>>,
     root_overflow: Option<BTreeMap<usize, Rect>>,
@@ -726,6 +737,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             fixed: Vec::new(),
             clip: None,
             group: None,
+            parent_3d: None,
             clips: Vec::new(),
             boxes: Vec::new(),
             root_overflow: None,
@@ -1516,7 +1528,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     fn start_block(&mut self, block: MeasuredBlock<'a>) -> Result<BlockFrame<'a>, LayoutError> {
         let mut block = self.refresh_block(block)?;
         let track_overflow = (block.grid.is_some()
-            && (block.style.position != Position::Static || !block.style.transform.is_empty()))
+            && (block.style.position != Position::Static || block.style.has_transform_effects()))
             || self
                 .boxes
                 .last()
@@ -1577,8 +1589,18 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .as_ref()
             .is_none_or(|table| !table.plan.has_captions());
         let positioned = owns_wrapper_properties && block.style.position != Position::Static;
-        let transformed = owns_wrapper_properties && !block.style.transform.is_empty();
+        // Transforms, perspective and preserve-3d contain all descendants (CSS Transforms 2 §5).
+        let transformed = owns_wrapper_properties && block.style.has_transform_effects();
         let translucent = owns_wrapper_properties && block.style.is_translucent();
+        if transformed
+            && (block.style.perspective.is_some() || block.style.preserves_3d())
+            && (block.style.multicol.is_multicol() || block.style.display.is_table())
+        {
+            return Err(LayoutError::Style(crate::style::StyleError::Unsupported(
+                "perspective or transform-style: preserve-3d on a multi-column container or table"
+                    .into(),
+            )));
+        }
         // A transform or opacity makes a stacking context like z-index 0 (CSS Transforms 1 §3,
         // CSS Color 4 §15).
         let z_index = (positioned || flex_item)
@@ -1603,17 +1625,32 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         };
         let previous_reserve = self.bottom_reserve;
         self.bottom_reserve += block.end_space;
-        let transform_node = (transformed && block.paint.is_some()).then(|| {
-            self.clips.push(EffectNode {
+        let effect_node = |paginator: &mut Self, effect| {
+            paginator.clips.push(EffectNode {
                 areas: Vec::new(),
-                parent: self.clip,
-                effect: Effect::Transform(block.style),
+                parent: paginator.clip,
+                effect,
                 fragments: Vec::new(),
             });
-            self.clips.len() - 1
-        });
+            paginator.clips.len() - 1
+        };
+        let transform_node =
+            (owns_wrapper_properties && block.style.is_transformed() && block.paint.is_some())
+                .then(|| {
+                    let parent_3d = self.parent_3d;
+                    effect_node(self, Effect::Transform(block.style, parent_3d))
+                });
         if transform_node.is_some() {
             self.clip = transform_node;
+        }
+        let previous_parent_3d = self.parent_3d;
+        let parent_3d_node = (transformed
+            && block.paint.is_some()
+            && (block.style.perspective.is_some() || block.style.preserves_3d()))
+        .then(|| effect_node(self, Effect::Parent3d(block.style)));
+        // Anonymous boxes are not their content's parent element.
+        if !block.source.is_anonymous() {
+            self.parent_3d = parent_3d_node;
         }
         let canvas_root = self.canvas.has_ink()
             && block.canvas_source
@@ -1729,6 +1766,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             group: self.group,
             clip_node,
             transform_node,
+            parent_3d_node,
             paint,
             fragments,
             start_space: block.start_space,
@@ -1796,6 +1834,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             previous_context,
             previous_clip,
             previous_group,
+            previous_parent_3d,
             previous_reserve,
             items: block.items,
         })
@@ -1925,6 +1964,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             previous_context,
             previous_clip,
             previous_group,
+            previous_parent_3d,
             end,
             ..
         } = frame;
@@ -1942,9 +1982,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             self.at_page_start = false;
         }
         let mut active = self.boxes.pop().unwrap();
-        for node in [active.clip_node, active.transform_node]
-            .into_iter()
-            .flatten()
+        for node in [
+            active.clip_node,
+            active.transform_node,
+            active.parent_3d_node,
+        ]
+        .into_iter()
+        .flatten()
         {
             self.clips[node].fragments.clone_from(&active.fragments);
         }
@@ -1997,7 +2041,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             }
         }
         if !frame.defer_positioned {
-            self.propagate_overflow(&active, style);
+            self.propagate_overflow(&active, style)?;
         }
         self.offset = if reflowed || (self.page != frame.start_page && self.continuation_flow()) {
             self.boxes.last().map_or_else(
@@ -2014,6 +2058,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         self.context = previous_context;
         self.clip = previous_clip;
         self.group = previous_group;
+        self.parent_3d = previous_parent_3d;
         if let Some(forced) = Forced::of(break_after) {
             self.pending_break = Some(forced);
         }
@@ -2189,7 +2234,12 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         y: self.top + self.y + self.pending_value() + item.margin + self.offset[1],
                         alignment: item.alignment,
                     };
-                    self.anchor(item.block, position, (self.context.clone(), self.group));
+                    self.anchor(
+                        item.block,
+                        position,
+                        (self.context.clone(), self.group),
+                        self.parent_3d,
+                    );
                 }
             }
         }
@@ -2207,9 +2257,85 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         });
         self.clips.len() - 1
     }
+    /// Each effect's region on the pages it covers, from its box fragments and the structural
+    /// areas standing in for boxes. Groups apply on every page without geometry.
+    fn effect_regions(&self) -> Result<Vec<Vec<(usize, Region)>>, LayoutError> {
+        let fragment = |&(page, slot): &(usize, usize)| match &self.display_lists[page][slot].item {
+            DisplayItem::Box(paint) => Some((page, paint)),
+            _ => None,
+        };
+        let mut regions = Vec::with_capacity(self.clips.len());
+        for node in &self.clips {
+            let mut node_regions = Vec::new();
+            let clip = |paint: &BoxPaint| match node.effect {
+                Effect::Clip(axes) => Some(paint.inner_clip([0.0; 4], axes)),
+                Effect::BorderClip => Some(paint.background_clips().border),
+                Effect::PaintClip(clip) => Some(clip),
+                Effect::Transform(..) | Effect::Parent3d(_) | Effect::Opacity(_) => None,
+            };
+            match node.effect {
+                Effect::Clip(_) | Effect::BorderClip | Effect::PaintClip(_) => {
+                    for (page, paint) in node.fragments.iter().filter_map(fragment) {
+                        node_regions.extend(clip(paint).map(|clip| (page, Region::Clip(clip))));
+                    }
+                }
+                Effect::Transform(style, parent) => {
+                    let areas = node
+                        .fragments
+                        .iter()
+                        .filter_map(|slot| {
+                            fragment(slot).map(|(page, paint)| (page, paint.fragment_areas()))
+                        })
+                        .chain(
+                            node.areas
+                                .iter()
+                                .map(|&(page, rect)| (page, BoxAreas::single(rect))),
+                        );
+                    for (page, areas) in areas {
+                        let parent = parent
+                            .map(|parent| self.parent_3d_on(&self.clips[parent], page))
+                            .transpose()?
+                            .flatten();
+                        if let Some(matrix) = style.transform_matrix(&areas, parent.as_ref())? {
+                            node_regions.push((page, Region::Transform(matrix)));
+                        }
+                    }
+                }
+                Effect::Parent3d(_) | Effect::Opacity(_) => {}
+            }
+            regions.push(node_regions);
+        }
+        Ok(regions)
+    }
+    /// The placement a `Parent3d` node gives its children on `page`, from its fragment there.
+    fn parent_3d_on(
+        &self,
+        node: &EffectNode<'_>,
+        page: usize,
+    ) -> Result<Option<crate::style::Parent3d>, LayoutError> {
+        let Effect::Parent3d(style) = node.effect else {
+            unreachable!("transforms are placed by parent 3D nodes")
+        };
+        let paint = node.fragments.iter().find_map(|&(fragment_page, slot)| {
+            match &self.display_lists[fragment_page][slot].item {
+                DisplayItem::Box(paint) if fragment_page == page => Some(paint),
+                _ => None,
+            }
+        });
+        match paint {
+            Some(paint) => Ok(style.parent_3d(&paint.fragment_areas())),
+            None => Err(LayoutError::MissingContainingFragment { page }),
+        }
+    }
     /// Records a static position in stacking context `layer` and reserves the box's tree-order
     /// paint slot.
-    fn anchor(&mut self, block: &'a BlockBox, position: StaticPosition, layer: Layer) {
+    fn anchor(
+        &mut self,
+        block: &'a BlockBox,
+        position: StaticPosition,
+        layer: Layer,
+        parent_3d: Option<usize>,
+    ) {
         let (context, group) = layer;
         let order = self.grid_order(block).unwrap_or_else(|| self.order());
         let pending = Pending {
@@ -2217,6 +2343,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             position,
             context,
             group,
+            parent_3d,
             orders: order.descendants(),
             order,
         };
@@ -2332,7 +2459,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             },
         };
         let layer = layer.unwrap_or_else(|| (self.context.clone(), self.group));
-        self.anchor(anchor.block, position, layer);
+        // An inline box, which is not transformable, is the parent of an anchor inside it.
+        let parent_3d = self.parent_3d.filter(|_| anchor.inline_box.is_none());
+        self.anchor(anchor.block, position, layer, parent_3d);
     }
     /// Lays out an absolutely positioned box on its anchor page without page breaks.
     fn place(
@@ -2411,6 +2540,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 clip,
                 context: pending.context,
                 group: pending.group,
+                parent_3d: pending.parent_3d,
                 key: self.key.clone(),
                 reserved_order: Some(pending.order),
             },
@@ -2447,6 +2577,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let saved_key = std::mem::replace(&mut self.key, at.key);
         let saved_context = std::mem::replace(&mut self.context, at.context);
         let saved_group = std::mem::replace(&mut self.group, at.group);
+        let saved_parent_3d = std::mem::replace(&mut self.parent_3d, at.parent_3d);
         let saved_break = self.pending_break;
         let saved_reserve = std::mem::take(&mut self.bottom_reserve);
         self.unbroken += 1;
@@ -2474,6 +2605,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         self.key = saved_key;
         self.context = saved_context;
         self.group = saved_group;
+        self.parent_3d = saved_parent_3d;
         self.pending_break = saved_break;
         self.bottom_reserve = saved_reserve;
         result
@@ -3117,6 +3249,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     clip: self.clip,
                     context: self.context.clone(),
                     group: self.group,
+                    parent_3d: self.parent_3d,
                     key: self.key.clone(),
                     reserved_order: None,
                 };
@@ -3334,7 +3467,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 .flatten()
             {
                 if let Some(rect) = rectangles.get(&(std::ptr::from_ref(source), page))
-                    && let Some(matrix) = source.style().transform_matrix(*rect)
+                    && let Some(matrix) = source
+                        .style()
+                        .transform_matrix(&BoxAreas::single(*rect), None)?
                 {
                     area = overflow::transformed_bounds(area, matrix);
                 }
@@ -3671,9 +3806,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 if let Some(index) = active.sliced {
                     insert(&mut self.sliced[index].fragments);
                 }
-                for node in [active.clip_node, active.transform_node]
-                    .into_iter()
-                    .flatten()
+                for node in [
+                    active.clip_node,
+                    active.transform_node,
+                    active.parent_3d_node,
+                ]
+                .into_iter()
+                .flatten()
                 {
                     insert(&mut self.clips[node].fragments);
                 }
@@ -3790,7 +3929,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 let DisplayItem::Box(paint) = &self.display_lists[page][slot].item else {
                     continue;
                 };
-                let area = overflow::box_bounds(&active, geometry.source.style(), paint, page);
+                let area = overflow::box_bounds(&active, geometry.source.style(), paint, page)?;
                 if let Some(table) = self.tables.last_mut()
                     && !table.transforms.is_empty()
                     && let Some(cell) = table.flow.plan.cell_index(geometry.source)
@@ -4115,6 +4254,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     clip: self.clip,
                     context: layer.map_or_else(|| self.context.clone(), |(context, _)| context),
                     group,
+                    parent_3d: self
+                        .parent_3d
+                        .filter(|_| source.atomics()[fragment.index].inline_box.is_none()),
                     key,
                     reserved_order: None,
                 },
@@ -4183,41 +4325,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
         self.assemble_sliced_boxes();
         self.position_canvas_backgrounds();
-        let regions: Vec<Vec<(usize, Region)>> = self
-            .clips
-            .iter()
-            .map(|node| {
-                node.fragments
-                    .iter()
-                    .filter_map(|&(page, slot)| {
-                        let DisplayItem::Box(paint) = &self.display_lists[page][slot].item else {
-                            return None;
-                        };
-                        let region = match node.effect {
-                            Effect::Clip(axes) => Region::Clip(paint.inner_clip([0.0; 4], axes)),
-                            Effect::BorderClip => Region::Clip(paint.background_clips().border),
-                            Effect::PaintClip(clip) => Region::Clip(clip),
-                            Effect::Transform(style) => {
-                                Region::Transform(style.transform_matrix(paint.rect)?)
-                            }
-                            // Groups apply on every page without geometry.
-                            Effect::Opacity(_) => return None,
-                        };
-                        Some((page, region))
-                    })
-                    .chain(
-                        node.areas
-                            .iter()
-                            .filter_map(|&(page, rect)| match node.effect {
-                                Effect::Transform(style) => {
-                                    Some((page, Region::Transform(style.transform_matrix(rect)?)))
-                                }
-                                _ => None,
-                            }),
-                    )
-                    .collect()
-            })
-            .collect();
+        let regions = self.effect_regions()?;
         let mut display_lists = Vec::with_capacity(self.display_lists.len());
         let mut located = Located {
             links: Vec::with_capacity(self.display_lists.len()),

@@ -451,6 +451,18 @@ impl<'a> TablePlan<'a> {
                 feature: "row and row-group border images",
             });
         }
+        if data
+            .rows
+            .iter()
+            .copied()
+            .chain(data.groups.iter().filter_map(|group| group.source))
+            .any(|source| source.style().perspective.is_some() || source.style().preserves_3d())
+        {
+            return Err(LayoutError::UnsupportedTable {
+                block: index,
+                feature: "row and row-group perspective and transform-style: preserve-3d",
+            });
+        }
         measurer
             .work
             .spend(data.grid.rows.saturating_add(data.grid.cells.len()).max(1))?;
@@ -461,7 +473,7 @@ impl<'a> TablePlan<'a> {
             .chain(data.groups.iter().filter_map(|group| group.source))
             .any(|source| {
                 source.style().position != crate::style::Position::Static
-                    || !source.style().transform.is_empty()
+                    || source.style().has_transform_effects()
             });
         let has_scoped_internals = data.collapsed_columns.iter().any(|&value| value)
             || data
@@ -476,7 +488,7 @@ impl<'a> TablePlan<'a> {
                         || !style.visibility.is_visible()
                         || !style.decoration.shadows.is_empty()
                         || style.is_translucent()
-                        || !style.transform.is_empty()
+                        || style.has_transform_effects()
                 });
         let border_owners = if has_scoped_internals && data.collapsed.is_some() {
             let slots = data.grid.rows * data.grid.columns;
@@ -596,7 +608,7 @@ impl<'a> TablePlan<'a> {
         let style = self.source.style();
         if self.has_captions()
             && (style.position != crate::style::Position::Static
-                || !style.transform.is_empty()
+                || style.has_transform_effects()
                 || !style.visibility.is_visible()
                 || style.is_translucent()
                 || style.clipped_axes().contains(&true))

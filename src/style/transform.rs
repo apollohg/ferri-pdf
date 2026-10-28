@@ -1,5 +1,6 @@
-//! CSS Transforms 1/2 functions, composed in 3D and flattened to 2D affine matrices for print.
-use crate::paint::Rect;
+//! CSS Transforms 1/2 functions and properties, composed in 3D and projected to 2D affine
+//! matrices for print.
+use crate::paint::{BoxAreas, Position, PositionComponent, Rect};
 use crate::style::{
     LengthPercentage, POINTS_PER_PIXEL, Style, StyleError,
     box_values::{length_percentage, unsupported},
@@ -14,11 +15,29 @@ use serde::Serialize;
 /// Affine matrix `[a, b, c, d, e, f]`: `x' = a·x + c·y + e`, `y' = b·x + d·y + f`.
 pub(crate) type Matrix = [f32; 6];
 /// Column-major 4×4 matrix in `matrix3d()` argument order.
-type Matrix3d = [f32; 16];
+pub(crate) type Matrix3d = [f32; 16];
+/// A box that projects behind the viewer or turns its hidden back face towards them is not
+/// rendered: it collapses to a point, which paints nothing.
+pub(crate) const NOT_RENDERED: Matrix = [0.0; 6];
 const IDENTITY: Matrix3d = [
     1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
 ];
 const DIMENSION: usize = 4;
+/// Column-major indices of the `w` row, and of the `z` row's planar terms.
+const W_FROM_X: usize = 3;
+const W_FROM_Y: usize = 7;
+const W_FROM_Z: usize = 11;
+const W_CONSTANT: usize = 15;
+const Z_FROM_X: usize = 2;
+const Z_FROM_Y: usize = 6;
+const Z_FROM_Z: usize = 10;
+const Z_CONSTANT: usize = 14;
+const TRANSLATION: std::ops::Range<usize> = 12..15;
+/// Relative variation of `w` across a box, and depth a plane gains, within which a projection
+/// is affine and planar for print: far below a device dot over any page.
+const PROJECTION_TOLERANCE: f32 = 1.0e-6;
+/// Transforms 2 §8: perspective distances below 1px render as 1px.
+const MIN_PERSPECTIVE_PT: f32 = POINTS_PER_PIXEL;
 const X_AXIS: [f32; 3] = [1.0, 0.0, 0.0];
 const Y_AXIS: [f32; 3] = [0.0, 1.0, 0.0];
 const Z_AXIS: [f32; 3] = [0.0, 0.0, 1.0];
@@ -26,6 +45,48 @@ const START: LengthPercentage = LengthPercentage::Percentage(0.0);
 const CENTRE: LengthPercentage = LengthPercentage::Percentage(0.5);
 const END: LengthPercentage = LengthPercentage::Percentage(1.0);
 pub(crate) const INITIAL_ORIGIN: [LengthPercentage; 3] = [CENTRE, CENTRE, LengthPercentage::ZERO];
+pub(crate) const INITIAL_PERSPECTIVE_ORIGIN: Position = [PositionComponent::CENTER; 2];
+
+/// A `rotate` property value: an angle in radians about an origin-centred axis.
+#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
+pub(crate) struct Rotation {
+    pub(crate) axis: [f32; 3],
+    pub(crate) angle: f32,
+}
+
+/// `transform-box`; boxes with a CSS layout box use the content box for `fill-box` and the
+/// border box for `stroke-box` and `view-box` (CSS Transforms 1 §3).
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
+#[expect(
+    clippy::enum_variant_names,
+    reason = "variants name the CSS transform-box keywords"
+)]
+pub(crate) enum TransformBox {
+    ContentBox,
+    BorderBox,
+    FillBox,
+    StrokeBox,
+    #[default]
+    ViewBox,
+}
+impl TransformBox {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        Ok(match value.keyword() {
+            Some(Keyword::ContentBox) => Self::ContentBox,
+            Some(Keyword::BorderBox) => Self::BorderBox,
+            Some(Keyword::FillBox) => Self::FillBox,
+            Some(Keyword::StrokeBox) => Self::StrokeBox,
+            Some(Keyword::ViewBox) => Self::ViewBox,
+            _ => return Err(unsupported(value)),
+        })
+    }
+    fn reference(self, boxes: &BoxAreas<Rect>) -> Rect {
+        match self {
+            Self::ContentBox | Self::FillBox => boxes.content,
+            Self::BorderBox | Self::StrokeBox | Self::ViewBox => boxes.border,
+        }
+    }
+}
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub(crate) enum TransformFunction {
@@ -45,7 +106,13 @@ fn multiply(m: &Matrix3d, n: &Matrix3d) -> Matrix3d {
 }
 fn translation([x, y, z]: [f32; 3]) -> Matrix3d {
     let mut m = IDENTITY;
-    m[12..15].copy_from_slice(&[x, y, z]);
+    m[TRANSLATION].copy_from_slice(&[x, y, z]);
+    m
+}
+/// `perspective(d)`: depth `d` points in front of the drawing plane.
+fn perspective(depth: f32) -> Matrix3d {
+    let mut m = IDENTITY;
+    m[W_FROM_Z] = -1.0 / depth.max(MIN_PERSPECTIVE_PT);
     m
 }
 /// Matrix whose linear part has these rows.
@@ -82,19 +149,29 @@ fn rotation(axis: [f32; 3], angle: f32) -> Matrix3d {
 
 /// A function's argument values in order, without the commas the grammar requires.
 fn arguments(function: &Component) -> Vec<&Component> {
-    fn collect<'a>(component: &'a Component, output: &mut Vec<&'a Component>) {
-        match component {
-            Component::Group(items) => items.iter().for_each(|item| collect(item, output)),
-            Component::Reference(_, inner) => collect(inner, output),
-            Component::Delim(_) => {}
-            value => output.push(value),
-        }
-    }
     let mut output = Vec::new();
     function
         .arguments()
         .iter()
-        .for_each(|item| collect(item, &mut output));
+        .for_each(|item| collect_values(item, &mut output));
+    output
+}
+fn collect_values<'a>(component: &'a Component, output: &mut Vec<&'a Component>) {
+    match component {
+        Component::Group(items) => items.iter().for_each(|item| collect_values(item, output)),
+        Component::Slots(slots) => slots
+            .iter()
+            .flatten()
+            .for_each(|slot| collect_values(slot, output)),
+        Component::Reference(_, inner) => collect_values(inner, output),
+        Component::Delim(_) => {}
+        value => output.push(value),
+    }
+}
+/// A property value's components in order, without grouping.
+fn values(value: &Component) -> Vec<&Component> {
+    let mut output = Vec::new();
+    collect_values(value, &mut output);
     output
 }
 /// `<number>`, or a `<percentage>` where scaling accepts one.
@@ -136,14 +213,12 @@ fn function(value: &Component, relative: &Relative<'_>) -> Result<TransformFunct
         }
         Keyword::Matrix3d => {
             let mut m: Matrix3d = numbers()?.try_into().map_err(|_| unsupported(value))?;
-            // PDF content matrices are affine; a perspective row cannot be drawn.
-            if m[3] != 0.0 || m[7] != 0.0 || m[11] != 0.0 || m[15] <= 0.0 {
-                return Err("projective matrix3d() is unsupported".into());
-            }
-            let w = m[15];
-            m = m.map(|v| v / w);
-            for translation in &mut m[12..15] {
+            // Unitless translations are CSS pixels; the `w` row divides them back out.
+            for translation in &mut m[TRANSLATION] {
                 *translation *= POINTS_PER_PIXEL;
+            }
+            for w in [W_FROM_X, W_FROM_Y, W_FROM_Z] {
+                m[w] /= POINTS_PER_PIXEL;
             }
             m
         }
@@ -205,9 +280,12 @@ fn function(value: &Component, relative: &Relative<'_>) -> Result<TransformFunct
         }
         Keyword::Skewx => planar([1.0, 0.0, angle(args[0], relative)?.tan(), 1.0]),
         Keyword::Skewy => planar([1.0, angle(args[0], relative)?.tan(), 0.0, 1.0]),
-        Keyword::Perspective => {
-            return Err("perspective() is unsupported: PDF matrices are affine".into());
-        }
+        Keyword::Perspective => match args.first() {
+            Some(depth) if depth.keyword() != Some(Keyword::None) => {
+                perspective(crate::style::values::length(depth, relative)?)
+            }
+            _ => IDENTITY,
+        },
         _ => return Err(unsupported(value)),
     }))
 }
@@ -276,23 +354,226 @@ pub(crate) fn origin(
     Ok([horizontal(x)?, vertical(y)?, z])
 }
 
+/// `translate`: `none`, or x, y and z offsets where omitted ones are zero.
+pub(crate) fn translate(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<Option<[LengthPercentage; 3]>, StyleError> {
+    if value.keyword() == Some(Keyword::None) {
+        return Ok(None);
+    }
+    let parts = values(value);
+    let offset = |index: usize| {
+        parts.get(index).map_or(Ok(LengthPercentage::ZERO), |part| {
+            length_percentage(part, relative)
+        })
+    };
+    Ok(Some([offset(0)?, offset(1)?, offset(2)?]))
+}
+
+/// `rotate`: `none`, or an angle about the z axis, a named axis or an axis vector.
+pub(crate) fn rotate(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<Option<Rotation>, StyleError> {
+    if value.keyword() == Some(Keyword::None) {
+        return Ok(None);
+    }
+    let mut axis = Z_AXIS;
+    let mut vector = Vec::new();
+    let mut rotation = None;
+    for part in values(value) {
+        match (part.keyword(), part.unwrap()) {
+            (Some(Keyword::X), _) => axis = X_AXIS,
+            (Some(Keyword::Y), _) => axis = Y_AXIS,
+            (Some(Keyword::Z), _) => axis = Z_AXIS,
+            (_, Component::Angle(_) | Component::Math(_, Kind::Angle, _)) => {
+                rotation = Some(angle(part, relative)?);
+            }
+            _ => vector.push(crate::style::values::number(part, relative)?),
+        }
+    }
+    if let Ok(components) = <[f32; 3]>::try_from(vector.as_slice()) {
+        axis = components;
+    }
+    Ok(Some(Rotation {
+        axis,
+        angle: rotation.ok_or_else(|| unsupported(value))?,
+    }))
+}
+
+/// `scale`: `none`, or x, y and z factors where y defaults to x and z to one.
+pub(crate) fn scale(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<Option<[f32; 3]>, StyleError> {
+    if value.keyword() == Some(Keyword::None) {
+        return Ok(None);
+    }
+    let factors = values(value)
+        .into_iter()
+        .map(|part| number(part, relative))
+        .collect::<Result<Vec<_>, _>>()?;
+    let x = *factors.first().ok_or_else(|| unsupported(value))?;
+    Ok(Some([
+        x,
+        factors.get(1).copied().unwrap_or(x),
+        factors.get(2).copied().unwrap_or(1.0),
+    ]))
+}
+
+/// `perspective`: `none`, or the distance in points from the viewer to the drawing plane.
+pub(crate) fn perspective_distance(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<Option<f32>, StyleError> {
+    if value.keyword() == Some(Keyword::None) {
+        return Ok(None);
+    }
+    crate::style::values::length(value, relative).map(Some)
+}
+
+/// `transform-style`.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
+pub(crate) enum TransformStyle {
+    #[default]
+    Flat,
+    Preserve3d,
+}
+impl TransformStyle {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.keyword() {
+            Some(Keyword::Flat) => Ok(Self::Flat),
+            Some(Keyword::Preserve3d) => Ok(Self::Preserve3d),
+            _ => Err(unsupported(value)),
+        }
+    }
+}
+
+/// How a transformed box's parent places it in 3D space (CSS Transforms 2 §4.1.4).
+#[derive(Clone, Copy, Debug, Default)]
+pub(crate) struct Parent3d {
+    /// The parent's perspective matrix in page space.
+    pub(crate) perspective: Option<Matrix3d>,
+    /// Whether the parent establishes or extends a 3D rendering context.
+    pub(crate) preserves_3d: bool,
+}
+
+fn corners(rect: Rect) -> [[f32; 2]; 4] {
+    let [right, bottom] = [rect.x + rect.width, rect.y + rect.height];
+    [
+        [rect.x, rect.y],
+        [right, rect.y],
+        [right, bottom],
+        [rect.x, bottom],
+    ]
+}
+
+/// CSS Transforms 2 §4.2: the page-space matrix applied to points `(x, y, 0, 1)` of `reference`,
+/// divided by their `w`. A box with `w ≤ 0` throughout is behind the viewer and a hidden back
+/// face (§10) is not rendered. A `w` that varies across the box is a projective map, which
+/// PDF content matrices cannot express.
+fn project(m: &Matrix3d, reference: Rect, backface_hidden: bool) -> Result<Matrix, StyleError> {
+    if backface_hidden && m[Z_FROM_Z] < 0.0 {
+        return Ok(NOT_RENDERED);
+    }
+    let w = |[x, y]: [f32; 2]| m[W_FROM_X] * x + m[W_FROM_Y] * y + m[W_CONSTANT];
+    let depth = w([
+        reference.x + reference.width / 2.0,
+        reference.y + reference.height / 2.0,
+    ]);
+    if corners(reference)
+        .into_iter()
+        .any(|corner| (w(corner) - depth).abs() > PROJECTION_TOLERANCE * depth.abs())
+    {
+        return Err(StyleError::Unsupported(format!(
+            "perspective projection varying across a {}pt by {}pt box: PDF content matrices are affine",
+            reference.width, reference.height
+        )));
+    }
+    if depth <= 0.0 {
+        return Ok(NOT_RENDERED);
+    }
+    Ok([m[0], m[1], m[4], m[5], m[12], m[13]].map(|value| value / depth))
+}
+
+/// Whether `m` keeps the points of `reference` in the drawing plane, `z = 0`.
+fn stays_in_plane(m: &Matrix3d, reference: Rect) -> bool {
+    corners(reference).into_iter().all(|[x, y]| {
+        let depth = m[Z_FROM_X] * x + m[Z_FROM_Y] * y + m[Z_CONSTANT];
+        depth.abs() <= PROJECTION_TOLERANCE * x.abs().max(y.abs()).max(1.0)
+    })
+}
+
 impl Style {
-    /// Page-space matrix for this box's `border_box`, or `None` without a transform.
-    pub(crate) fn transform_matrix(&self, border_box: Rect) -> Option<Matrix> {
-        if self.transform.is_empty() {
+    /// `transform`, `translate`, `rotate` or `scale` other than `none`.
+    pub(crate) fn is_transformed(&self) -> bool {
+        !self.transform.is_empty()
+            || self.translate.is_some()
+            || self.rotate.is_some()
+            || self.scale.is_some()
+    }
+    /// Transforms, perspective and `preserve-3d` establish a stacking context and a containing
+    /// block for all descendants (CSS Transforms 2 §5, §7, §8).
+    pub(crate) fn has_transform_effects(&self) -> bool {
+        self.is_transformed()
+            || self.perspective.is_some()
+            || self.transform_style == TransformStyle::Preserve3d
+    }
+    /// The used `transform-style`: grouping property values force `flat` (§7.1).
+    pub(crate) fn preserves_3d(&self) -> bool {
+        self.transform_style == TransformStyle::Preserve3d
+            && !self.is_scroll_container()
+            && !self.is_translucent()
+    }
+    /// The parent placement this box gives its transformed children.
+    pub(crate) fn parent_3d(&self, boxes: &BoxAreas<Rect>) -> Option<Parent3d> {
+        let preserves_3d = self.preserves_3d();
+        let perspective = self.perspective.map(|depth| {
+            let reference = self.transform_box.reference(boxes);
+            let [x, y] = &self.perspective_origin;
+            let origin = [
+                reference.x + x.resolve(reference.width),
+                reference.y + y.resolve(reference.height),
+                0.0,
+            ];
+            multiply(
+                &multiply(&translation(origin), &perspective(depth)),
+                &translation(origin.map(|v| -v)),
+            )
+        });
+        (perspective.is_some() || preserves_3d).then_some(Parent3d {
+            perspective,
+            preserves_3d,
+        })
+    }
+    /// CSS Transforms 2 §6: the page-space transformation matrix of a box with these areas, or
+    /// `None` without a transform.
+    fn transformation(&self, boxes: &BoxAreas<Rect>) -> Option<Matrix3d> {
+        if !self.is_transformed() {
             return None;
         }
+        let reference = self.transform_box.reference(boxes);
         // z components are lengths, so their percentage basis is irrelevant.
         let resolve = |[x, y, z]: &[LengthPercentage; 3]| {
             [
-                x.resolve(border_box.width),
-                y.resolve(border_box.height),
+                x.resolve(reference.width),
+                y.resolve(reference.height),
                 z.resolve(0.0),
             ]
         };
         let [x, y, z] = resolve(&self.transform_origin);
-        let origin = [border_box.x + x, border_box.y + y, z];
+        let origin = [reference.x + x, reference.y + y, z];
         let mut result = translation(origin);
+        if let Some(offset) = &self.translate {
+            result = multiply(&result, &translation(resolve(offset)));
+        }
+        if let Some(Rotation { axis, angle }) = self.rotate {
+            result = multiply(&result, &rotation(axis, angle));
+        }
+        if let Some([x, y, z]) = self.scale {
+            result = multiply(&result, &scaling(x, y, z));
+        }
         for function in &self.transform {
             let step = match function {
                 TransformFunction::Matrix(m) => *m,
@@ -300,8 +581,31 @@ impl Style {
             };
             result = multiply(&result, &step);
         }
-        let m = multiply(&result, &translation(origin.map(|v| -v)));
-        // Orthographic flattening (CSS Transforms 2 §6) keeps the x/y rows and columns.
-        Some([m[0], m[1], m[4], m[5], m[12], m[13]])
+        Some(multiply(&result, &translation(origin.map(|v| -v))))
+    }
+    /// The affine page-space matrix drawing this box, or `None` without a transform. Its
+    /// parent's perspective applies first; in a 3D rendering context the box must stay in its
+    /// parent's plane, as planes that leave it are depth-sorted and intersected (§4.1.2).
+    pub(crate) fn transform_matrix(
+        &self,
+        boxes: &BoxAreas<Rect>,
+        parent: Option<&Parent3d>,
+    ) -> Result<Option<Matrix>, StyleError> {
+        let Some(own) = self.transformation(boxes) else {
+            return Ok(None);
+        };
+        let reference = self.transform_box.reference(boxes);
+        if parent.is_some_and(|parent| parent.preserves_3d) && !stays_in_plane(&own, reference) {
+            return Err(StyleError::Unsupported(
+                "transform-style: preserve-3d with a child leaving its plane: depth-sorting \
+                 intersecting planes is not implemented"
+                    .into(),
+            ));
+        }
+        let accumulated = match parent.and_then(|parent| parent.perspective) {
+            Some(perspective) => multiply(&perspective, &own),
+            None => own,
+        };
+        project(&accumulated, reference, self.backface_hidden).map(Some)
     }
 }

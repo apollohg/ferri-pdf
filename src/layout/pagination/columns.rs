@@ -524,6 +524,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 group: None,
                 clip_node: None,
                 transform_node: None,
+                parent_3d_node: None,
                 paint: None,
                 fragments: Vec::new(),
                 start_space: 0.0,
@@ -1029,10 +1030,16 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 (place.page, rect)
             })
             .collect();
+        let effect = match source.effect {
+            Effect::Transform(style, Some(placement)) => {
+                Effect::Transform(style, Some(self.effect(nodes, placement, place, effects)))
+            }
+            effect => effect,
+        };
         self.clips.push(EffectNode {
             areas,
             parent,
-            effect: source.effect,
+            effect,
             fragments,
         });
         let index = self.clips.len() - 1;

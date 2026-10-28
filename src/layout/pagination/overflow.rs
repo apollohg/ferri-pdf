@@ -1,5 +1,5 @@
 use super::{ActiveBox, DisplayItem, Paginator, Rect, Region};
-use crate::style::{Overflow, Style};
+use crate::style::{Overflow, Style, StyleError};
 
 impl Paginator<'_, '_, '_> {
     pub(super) fn record_overflow(&mut self, rect: Rect) {
@@ -20,20 +20,24 @@ impl Paginator<'_, '_, '_> {
         }
     }
 
-    pub(super) fn propagate_overflow(&mut self, active: &ActiveBox<'_>, style: &Style) {
+    pub(super) fn propagate_overflow(
+        &mut self,
+        active: &ActiveBox<'_>,
+        style: &Style,
+    ) -> Result<(), StyleError> {
         if self
             .boxes
             .last()
             .is_none_or(|parent| parent.overflow.is_none())
             && self.root_overflow.is_none()
         {
-            return;
+            return Ok(());
         }
         for &(page, slot) in &active.fragments {
             let DisplayItem::Box(paint) = &self.display_lists[page][slot].item else {
                 continue;
             };
-            let area = box_bounds(active, style, paint, page);
+            let area = box_bounds(active, style, paint, page)?;
             if area.width > 0.0 && area.height > 0.0 {
                 if let Some(parent) = self.boxes.last()
                     && let Some((_, parent_slot)) = parent
@@ -67,6 +71,7 @@ impl Paginator<'_, '_, '_> {
                     .or_insert(area);
             }
         }
+        Ok(())
     }
 }
 
@@ -87,7 +92,7 @@ pub(super) fn box_bounds(
     style: &Style,
     paint: &super::BoxPaint,
     page: usize,
-) -> Rect {
+) -> Result<Rect, StyleError> {
     let border = paint.rect;
     let mut area = border;
     if let Some(descendants) = active
@@ -124,8 +129,9 @@ pub(super) fn box_bounds(
         };
         area = area.union(margin);
     }
-    if let Some(matrix) = style.transform_matrix(border) {
+    // Scrollable overflow ignores the parent's perspective, which only paint resolves.
+    if let Some(matrix) = style.transform_matrix(&paint.fragment_areas(), None)? {
         area = transformed_bounds(area, matrix);
     }
-    area
+    Ok(area)
 }

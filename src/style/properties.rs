@@ -214,6 +214,12 @@ pub(super) fn projection(property: Property, source: &Style) -> Style {
             .each_ref()
             .map(crate::paint::PositionComponent::canonical);
     }
+    if property == Property::PerspectiveOrigin {
+        value.perspective_origin = value
+            .perspective_origin
+            .each_ref()
+            .map(crate::paint::PositionComponent::canonical);
+    }
     if property == Property::BackgroundPosition {
         for position in &mut std::sync::Arc::make_mut(&mut value.decoration.backgrounds).positions {
             *position = position
@@ -544,6 +550,35 @@ fn handler(property: Property) -> Option<Handler> {
             transform_origin,
             Some(|v, r| crate::style::transform::origin(v, r).is_ok()),
         ),
+        P::Translate => (
+            translate,
+            Some(|v, r| crate::style::transform::translate(v, r).is_ok()),
+        ),
+        P::Rotate => (
+            rotate,
+            Some(|v, r| crate::style::transform::rotate(v, r).is_ok()),
+        ),
+        P::Scale => (
+            scale,
+            Some(|v, r| crate::style::transform::scale(v, r).is_ok()),
+        ),
+        P::TransformBox => (
+            transform_box,
+            Some(|v, _| crate::style::TransformBox::from_component(v).is_ok()),
+        ),
+        P::TransformStyle => (
+            transform_style,
+            Some(|v, _| crate::style::TransformStyle::from_component(v).is_ok()),
+        ),
+        P::Perspective => (
+            perspective,
+            Some(|v, r| crate::style::transform::perspective_distance(v, r).is_ok()),
+        ),
+        P::PerspectiveOrigin => (
+            perspective_origin,
+            Some(|v, r| crate::style::background_values::position(v, r).is_ok()),
+        ),
+        P::BackfaceVisibility => (backface_visibility, Some(|_, _| true)),
         P::ObjectFit => (
             object_fit,
             Some(|v, _| crate::style::ObjectFit::from_component(v).is_ok()),
@@ -1434,6 +1469,47 @@ computed!(
     transform_origin,
     [transform_origin],
     |value, style, _parent, relative| { crate::style::transform::origin(value, relative)? }
+);
+computed!(translate, [translate], |value, style, _parent, relative| {
+    crate::style::transform::translate(value, relative)?
+});
+computed!(rotate, [rotate], |value, style, _parent, relative| {
+    crate::style::transform::rotate(value, relative)?
+});
+computed!(scale, [scale], |value, style, _parent, relative| {
+    crate::style::transform::scale(value, relative)?
+});
+computed!(
+    transform_box,
+    [transform_box],
+    |value, style, _parent, _relative| crate::style::TransformBox::from_component(value)?
+);
+computed!(
+    transform_style,
+    [transform_style],
+    |value, style, _parent, _relative| crate::style::TransformStyle::from_component(value)?
+);
+computed!(
+    perspective,
+    [perspective],
+    |value, style, _parent, relative| {
+        crate::style::transform::perspective_distance(value, relative)?
+    }
+);
+computed!(
+    perspective_origin,
+    [perspective_origin],
+    |value, style, _parent, relative| {
+        crate::style::background_values::position(value, relative)?
+    }
+);
+computed!(
+    backface_visibility,
+    [backface_hidden],
+    |value, style, _parent, _relative| flag(
+        value,
+        &[(Keyword::Hidden, true), (Keyword::Visible, false)]
+    )?
 );
 computed!(
     object_fit,

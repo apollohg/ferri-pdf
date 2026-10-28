@@ -49,7 +49,7 @@ mod print;
 mod quotes;
 pub(crate) use object::ObjectFit;
 pub(crate) use overflow::{BlockEllipsis, Continue, LineClamp, Overflow, TextOverflow};
-pub(crate) use transform::TransformFunction;
+pub(crate) use transform::{Parent3d, Rotation, TransformBox, TransformFunction, TransformStyle};
 mod attribute;
 mod properties;
 mod resolution;

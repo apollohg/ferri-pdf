@@ -329,6 +329,16 @@ pub struct BoxAreas<T> {
     pub padding: T,
     pub content: T,
 }
+impl BoxAreas<Rect> {
+    /// A box without borders or padding.
+    pub(crate) fn single(rect: Rect) -> Self {
+        Self {
+            border: rect,
+            padding: rect,
+            content: rect,
+        }
+    }
+}
 impl<T: Copy> BoxAreas<T> {
     pub fn area(&self, area: crate::paint::BoxArea) -> T {
         match area {
@@ -462,6 +472,26 @@ impl<I> BoxPaint<I> {
             }
         }
         clip
+    }
+    /// This fragment's border, padding and content boxes; sliced edges have neither borders
+    /// nor padding.
+    pub(crate) fn fragment_areas(&self) -> BoxAreas<Rect> {
+        let sliced = self.sliced();
+        let padding = std::array::from_fn(|side| {
+            if sliced[side] {
+                0.0
+            } else {
+                self.padding[side]
+            }
+        });
+        let (padding_box, _) =
+            crate::paint::rounded::inset(self.rect, Radii::default(), self.widths());
+        let (content, _) = crate::paint::rounded::inset(padding_box, Radii::default(), padding);
+        BoxAreas {
+            border: self.rect,
+            padding: padding_box,
+            content,
+        }
     }
     /// Border widths scaled down when opposite borders exceed the box.
     pub(crate) fn inner_widths(&self) -> [f32; 4] {

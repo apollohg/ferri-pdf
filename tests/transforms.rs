@@ -132,26 +132,33 @@ fn transform_lists_compose_about_the_origin_and_flatten_3d_functions() {
     );
 }
 
+/// Layout failure of a transform whose projection varies across its box.
+const PROJECTIVE: &str = "perspective projection varying across";
+
+fn layout_error(css: &str, body: &str) -> String {
+    match render_html(
+        &format!("<style>{PROFILE}{css}</style>{body}"),
+        &local_options(),
+    ) {
+        Err(ferri_pdf::Error::Layout(message)) => message,
+        other => panic!(
+            "{css} must fail at layout, got {:?}",
+            other.map(|_| "a rendering")
+        ),
+    }
+}
+
 #[test]
 fn projective_and_malformed_transforms_are_errors_not_flat_drawings() {
-    for (css, expected) in [
-        (
-            "transform:perspective(100pt) rotateY(30deg)",
-            "perspective() is unsupported: PDF matrices are affine",
-        ),
-        (
-            "transform:matrix3d(1,0,0,0.01,0,1,0,0,0,0,1,0,0,0,0,1)",
-            "projective matrix3d() is unsupported",
-        ),
+    for css in [
+        "div{transform:perspective(100pt) rotateY(30deg)}",
+        "div{transform:matrix3d(1,0,0,0.01,0,1,0,0,0,0,1,0,0,0,0,1)}",
+        "div{perspective:100pt}div div{transform:rotateX(20deg)}",
     ] {
-        let result = render_html(
-            &format!("<style>{PROFILE}div{{{css}}}</style><div>X</div>"),
-            &local_options(),
-        );
+        let message = layout_error(css, "<div>X<div>Y</div></div>");
         assert!(
-            matches!(result, Err(ferri_pdf::Error::Css(ferri_pdf::StyleError::Invalid(ref message))) if message == expected),
-            "{css} must fail with {expected:?}: {:?}",
-            result.err()
+            message.contains("unsupported CSS") && message.contains(PROJECTIVE),
+            "{css} must fail as a non-affine projection: {message}"
         );
     }
     // CSS Transforms 1 orders lengths horizontal then vertical and keeps keywords on their own
@@ -180,16 +187,216 @@ fn projective_and_malformed_transforms_are_errors_not_flat_drawings() {
         transforms(&trace.display_lists[0]).is_empty(),
         "a transform invalid at computed time is unset rather than the earlier declaration"
     );
-    let substituted = render_html(
-        &format!(
-            "<style>{PROFILE}div{{--t:perspective(1pt);transform:rotate(90deg);transform:var(--t)}}</style><div>X</div>"
-        ),
-        &local_options(),
+    let substituted = layout_error(
+        "div{--t:perspective(1pt) rotateY(10deg);transform:rotate(90deg);transform:var(--t)}",
+        "<div>X</div>",
     );
     assert!(
-        matches!(substituted, Err(ferri_pdf::Error::Css(ferri_pdf::StyleError::Invalid(ref message))) if message == "perspective() is unsupported: PDF matrices are affine"),
-        "a valid substituted transform the engine cannot draw is an error: {:?}",
-        substituted.err()
+        substituted.contains(PROJECTIVE),
+        "a valid substituted transform the engine cannot draw is an error: {substituted}"
+    );
+}
+
+#[test]
+fn individual_transforms_apply_translate_rotate_scale_then_transform() {
+    let equivalent = [
+        (
+            "translate:10pt 5%;rotate:30deg;scale:2 3",
+            "transform:translate(10pt,5%) rotate(30deg) scale(2,3)",
+        ),
+        (
+            "translate:10pt;transform:scale(2) rotate(10deg)",
+            "transform:translateX(10pt) scale(2) rotate(10deg)",
+        ),
+        (
+            "rotate:x 60deg;scale:50% 50% 2;translate:0 0 9pt",
+            "transform:translateZ(9pt) rotateX(60deg) scale3d(.5,.5,2)",
+        ),
+        (
+            "rotate:0 0 1 45deg;transform-origin:0 0",
+            "transform:rotate(45deg);transform-origin:0 0",
+        ),
+        ("rotate:1 1 0 70deg", "transform:rotate3d(1,1,0,70deg)"),
+    ];
+    for (individual, transform) in equivalent {
+        let matrices = |css: &str| {
+            transforms(
+                &trace(
+                    &format!("div{{width:100pt;height:40pt;{css}}}"),
+                    "<div>X</div>",
+                )
+                .display_lists[0],
+            )
+        };
+        let [actual] = matrices(individual)[..] else {
+            panic!("{individual} must push one transform");
+        };
+        let [expected] = matrices(transform)[..] else {
+            panic!("{transform} must push one transform");
+        };
+        assert_matrix(
+            &format!("{individual} equals {transform}"),
+            actual,
+            expected,
+        );
+    }
+    let identity = trace(
+        ".n{translate:0;background:#ffeeaa}.n,.later{height:10pt}.later{background:#99ccff}",
+        "<div class='n'>A</div><div class='later'>B</div>",
+    );
+    assert_eq!(
+        paint_order(&identity, 0),
+        [
+            "box #99ccff",
+            "text B",
+            "push",
+            "box #ffeeaa",
+            "text A",
+            "pop"
+        ],
+        "translate:0 is a transform, so the box paints as a stacking context above later flow"
+    );
+}
+
+#[test]
+fn transform_box_selects_the_content_box_for_origin_and_percentages() {
+    const PADDING_PT: f32 = 5.0;
+    const BORDER_PT: f32 = 3.0;
+    let output = trace(
+        "div{width:100pt;height:40pt;padding:5pt;border:3pt solid navy;transform-origin:0 0}\
+         .c{transform-box:content-box;translate:50% 25%;rotate:90deg}\
+         .f{transform-box:fill-box;translate:50% 25%;rotate:90deg}\
+         .b{transform-box:stroke-box;translate:50% 25%;rotate:90deg}",
+        "<div class='c'>A</div><div class='f'>B</div><div class='b'>C</div>",
+    );
+    let matrices = transforms(&output.display_lists[0]);
+    assert_eq!(matrices.len(), 3, "one transform per box: {matrices:?}");
+    let pitch = BOX_HEIGHT_PT + 2.0 * (PADDING_PT + BORDER_PT);
+    let inset = PADDING_PT + BORDER_PT;
+    let rotated =
+        |[ox, oy]: [f32; 2], [tx, ty]: [f32; 2]| [0.0, 1.0, -1.0, 0.0, ox + tx + oy, oy + ty - ox];
+    for (index, label) in [(0, "content-box"), (1, "fill-box uses the content box")] {
+        let origin = [
+            PAGE_MARGIN_PT + inset,
+            PAGE_MARGIN_PT + pitch * index as f32 + inset,
+        ];
+        assert_matrix(
+            label,
+            matrices[index],
+            rotated(origin, [0.5 * BOX_WIDTH_PT, 0.25 * BOX_HEIGHT_PT]),
+        );
+    }
+    let border = [BOX_WIDTH_PT + 2.0 * inset, BOX_HEIGHT_PT + 2.0 * inset];
+    assert_matrix(
+        "stroke-box uses the border box",
+        matrices[2],
+        rotated(
+            [PAGE_MARGIN_PT, PAGE_MARGIN_PT + 2.0 * pitch],
+            [0.5 * border[0], 0.25 * border[1]],
+        ),
+    );
+}
+
+#[test]
+fn parent_perspective_scales_depth_translations_about_its_origin() {
+    const DEPTH_PT: f32 = 100.0;
+    const LIFT_PT: f32 = 50.0;
+    const PARENT_HEIGHT_PT: f32 = 120.0;
+    let output = trace(
+        &format!(
+            ".p{{height:{PARENT_HEIGHT_PT}pt;perspective:{DEPTH_PT}pt}}.o{{perspective-origin:left top}}\
+             .p div{{width:40pt;height:20pt;transform:translateZ({LIFT_PT}pt)}}\
+             .flat div{{transform:rotate(90deg)}}"
+        ),
+        "<div class='p'><div>A</div></div><div class='p o'><div>B</div></div>\
+         <div class='p flat'><div>C</div></div>",
+    );
+    let matrices = transforms(&output.display_lists[0]);
+    assert_eq!(matrices.len(), 3, "one transform per child: {matrices:?}");
+    let scale = DEPTH_PT / (DEPTH_PT - LIFT_PT);
+    let about = |[ox, oy]: [f32; 2]| [scale, 0.0, 0.0, scale, ox - scale * ox, oy - scale * oy];
+    let width = output.page_area.width;
+    assert_matrix(
+        "the default origin is the centre of the parent's border box",
+        matrices[0],
+        about([
+            PAGE_MARGIN_PT + width / 2.0,
+            PAGE_MARGIN_PT + PARENT_HEIGHT_PT / 2.0,
+        ]),
+    );
+    assert_matrix(
+        "perspective-origin moves the vanishing point to the parent's corner",
+        matrices[1],
+        about([PAGE_MARGIN_PT, PAGE_MARGIN_PT + PARENT_HEIGHT_PT]),
+    );
+    let [ox, oy] = [
+        PAGE_MARGIN_PT + 20.0,
+        PAGE_MARGIN_PT + 2.0 * PARENT_HEIGHT_PT + 10.0,
+    ];
+    assert_matrix(
+        "perspective leaves transforms within the drawing plane unchanged",
+        matrices[2],
+        [0.0, 1.0, -1.0, 0.0, ox + oy, oy - ox],
+    );
+}
+
+#[test]
+fn boxes_behind_the_viewer_or_facing_away_with_hidden_backfaces_are_not_rendered() {
+    let output = trace(
+        "div{height:20pt}.behind{transform:perspective(50pt) translateZ(100pt);background:red}\
+         .back{transform:rotateY(180deg);backface-visibility:hidden;background:red}\
+         .front{transform:rotateY(180deg);background:blue}\
+         .flipped{scale:-1 1;backface-visibility:hidden;background:lime}",
+        "<div class='behind'>Behind</div><div class='back'>Back</div>\
+         <div class='front'>Front</div><div class='flipped'>Flipped</div>",
+    );
+    let order = paint_order(&output, 0);
+    assert!(
+        !order
+            .iter()
+            .any(|label| label == "box #ff0000" || label == "text Behind" || label == "text Back"),
+        "w < 0 and a hidden back face must not paint: {order:?}"
+    );
+    for visible in ["box #0000ff", "text Front", "box #00ff00", "text Flipped"] {
+        assert!(
+            order.iter().any(|label| label == visible),
+            "{visible} must paint: a visible back face, and a mirror within the plane, show: {order:?}"
+        );
+    }
+}
+
+#[test]
+fn preserve_3d_renders_planar_children_and_rejects_depth_sorting() {
+    let message = layout_error(
+        ".s{transform-style:preserve-3d}.s div{transform:rotateX(30deg)}",
+        "<div class='s'><div>A</div></div>",
+    );
+    assert!(
+        message.contains("preserve-3d"),
+        "children leaving the plane of a 3D rendering context must fail: {message}"
+    );
+    let planar = |css: &str| {
+        transforms(
+            &trace(
+                &format!("div{{height:20pt}}.s div{{transform:rotate(20deg)}}{css}"),
+                "<div class='s'><div>A</div></div>",
+            )
+            .display_lists[0],
+        )
+    };
+    assert_eq!(
+        planar(".s{transform-style:preserve-3d}"),
+        planar(""),
+        "coplanar planes render in painting order, as when flattened"
+    );
+    let grouped = trace(
+        "div{height:20pt}.s{transform-style:preserve-3d;opacity:.5}.s div{transform:rotateX(30deg)}",
+        "<div class='s'><div>A</div></div>",
+    );
+    assert_eq!(
+        transforms(&grouped.display_lists[0]).len(),
+        1,
+        "opacity is a grouping property, so the used transform-style is flat"
     );
 }
 
