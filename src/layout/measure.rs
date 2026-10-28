@@ -1,4 +1,5 @@
 use crate::document::{BlockBox, BlockContent, BoxNavigation};
+use crate::graphics::{BoxDecoration, BoxPaint, Rect};
 use crate::layout::{
     LayoutError,
     breaks::Fragmentainer,
@@ -7,7 +8,6 @@ use crate::layout::{
     multicol::{ColumnFlow, ColumnGeometry, MeasuredColumns, SpannerFragment},
 };
 use crate::text::{Line, TextContext};
-use ferri_pdf_graphics::{BoxDecoration, BoxPaint, Rect};
 use ferri_pdf_style::{BreakBetween, Display, Style};
 
 mod metrics;
@@ -358,7 +358,7 @@ pub(super) enum BlockEdge {
 pub(super) enum FlowItem<'a> {
     Events(&'a [crate::document::SemanticEvent]),
     Image {
-        paint: ferri_pdf_graphics::ImagePaint,
+        paint: crate::graphics::ImagePaint,
         visible: bool,
         height: f32,
     },

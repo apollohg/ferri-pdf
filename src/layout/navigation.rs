@@ -1,7 +1,7 @@
 //! Page-space activation areas of hyperlinks and positions of destinations, from box
 //! fragments and the clips and transforms enclosing them.
+use crate::graphics::{ClipBounds, Point, Rect};
 use crate::layout::pagination::Region;
-use ferri_pdf_graphics::{ClipBounds, Point, Rect};
 use serde::Serialize;
 
 /// Coordinates closer than this coincide when classifying and comparing areas.
@@ -294,7 +294,7 @@ pub(crate) fn destination(page: usize, rect: Rect, regions: &[Region]) -> Destin
 #[cfg(test)]
 mod tests {
     use super::*;
-    use ferri_pdf_graphics::{Clip, Radii};
+    use crate::graphics::{Clip, Radii};
 
     const RECT: Rect = Rect {
         x: 10.0,

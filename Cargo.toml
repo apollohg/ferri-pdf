@@ -104,7 +104,6 @@ thiserror = "2"
 ferri-pdf-fonts = { path = "crates/fonts", version = "0.1.0" }
 ferri-pdf-resources = { path = "crates/resources", version = "0.1.0", default-features = false }
 ferri-pdf-style = { path = "crates/style", version = "0.1.0" }
-ferri-pdf-graphics = { path = "crates/graphics", version = "0.1.0" }
 ferri-pdf-paint = { path = "crates/paint", version = "0.1.0" }
 
 [package]
@@ -133,7 +132,6 @@ ferri-pdf-images.workspace = true
 ferri-pdf-fonts.workspace = true
 ferri-pdf-resources.workspace = true
 ferri-pdf-style.workspace = true
-ferri-pdf-graphics.workspace = true
 thiserror.workspace = true
 serde_json.workspace = true
 same-file.workspace = true
@@ -143,7 +141,7 @@ fontdb.workspace = true
 skrifa.workspace = true
 smallvec.workspace = true
 tiny-skia.workspace = true
-serde.workspace = true
+serde = { workspace = true, features = ["rc"] }
 rustybuzz.workspace = true
 icu_properties.workspace = true
 icu_casemap.workspace = true
@@ -161,6 +159,7 @@ svgtypes.workspace = true
 gif.workspace = true
 image-webp.workspace = true
 zune-jpeg.workspace = true
+ferri-pdf-paint.workspace = true
 
 [dev-dependencies]
 roxmltree.workspace = true

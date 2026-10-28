@@ -1,6 +1,6 @@
 //! Page production geometry; content stays in the original layout coordinates.
+use crate::graphics::{BoxDecoration, BoxPaint, Color, Point, Rect};
 use crate::layout::LayoutError;
-use ferri_pdf_graphics::{BoxDecoration, BoxPaint, Color, Point, Rect};
 use ferri_pdf_style::PageProduction;
 use serde::Serialize;
 

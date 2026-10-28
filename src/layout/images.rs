@@ -1,4 +1,5 @@
 use crate::document::BlockBox;
+use crate::graphics::{BoxPaint, ImagePaint, Rect};
 use crate::layout::{
     LayoutError,
     geometry::{HorizontalBox, SizeConstraints},
@@ -6,7 +7,6 @@ use crate::layout::{
     measure::{FlowItem, MeasuredBlock, Measurer},
 };
 use crate::text::IntrinsicWidths;
-use ferri_pdf_graphics::{BoxPaint, ImagePaint, Rect};
 use ferri_pdf_style::POINTS_PER_PIXEL;
 
 /// Content-box width and height constraints, percentages resolved against the containing block.
@@ -23,7 +23,7 @@ pub(super) fn constraints(
     let border = style
         .decoration
         .borders
-        .map(ferri_pdf_graphics::Border::used_width);
+        .map(crate::graphics::Border::used_width);
     let mut constraints = [
         SizeConstraints::new(
             [&style.width, &style.min_width, &style.max_width],

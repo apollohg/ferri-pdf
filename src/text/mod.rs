@@ -63,7 +63,7 @@ pub struct GlyphRun {
     pub synthesis: FontSynthesis,
     pub oblique_skew: f32,
     pub variations: Vec<FontVariation>,
-    pub color: ferri_pdf_graphics::Color,
+    pub color: crate::graphics::Color,
     #[serde(skip)]
     pub white_space: WhiteSpace,
     #[serde(skip)]
@@ -200,7 +200,7 @@ pub(crate) struct Line {
     pub ink_bounds: Option<[f32; 2]>,
     pub align: TextAlign,
     /// Text decoration lines from the line's left edge and baseline, in painting order.
-    pub decorations: Vec<ferri_pdf_graphics::DecorationPaint>,
+    pub decorations: Vec<crate::graphics::DecorationPaint>,
     order: Vec<Slot>,
     present: Vec<usize>,
     /// Index of the first run of a `text-overflow` ellipsis, which ends `runs`.

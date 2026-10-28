@@ -1,8 +1,8 @@
 use super::common;
 
 use crate::document::StyledDocument;
+use crate::graphics::BackgroundImage;
 use common::{PROFILE, local_options};
-use ferri_pdf_graphics::BackgroundImage;
 use ferri_pdf_resources::FileResolver;
 use ferri_pdf_style::{PageRequest, PageSide};
 use std::sync::Arc;

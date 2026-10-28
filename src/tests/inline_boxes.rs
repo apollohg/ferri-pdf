@@ -477,7 +477,7 @@ fn inline_boxes_split_around_blocks_keep_edges_only_at_their_outer_ends() {
 
 #[test]
 fn inline_image_backgrounds_are_loaded_and_shared_across_block_splits() {
-    use ferri_pdf_graphics::BackgroundImage;
+    use crate::graphics::BackgroundImage;
     use std::sync::Arc;
     let trace = render(
         ".a{background:url(../assets/image-pattern.png);padding:0 8pt;border:2pt solid navy}",

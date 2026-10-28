@@ -10,6 +10,9 @@ use order::{OrderSnapshots, PaintOrder, PaintOrders};
 use paragraph::ParagraphCursor;
 
 use crate::document::{BlockBox, BoxNavigation};
+use crate::graphics::{
+    Backgrounds, BoxDecoration, BoxPaint, Clip, DecorationPaint, DisplayItem, Rect,
+};
 use crate::layout::breaks::{BreakTail, Forced, Fragmentainer, fragmentainer_height};
 use crate::layout::margin::MarginStrut;
 use crate::layout::navigation::{Destination, LinkArea};
@@ -22,9 +25,6 @@ use crate::layout::{
     tables::BandPlacement,
 };
 pub(super) use columns::measure_columns;
-use ferri_pdf_graphics::{
-    Backgrounds, BoxDecoration, BoxPaint, Clip, DecorationPaint, DisplayItem, Rect,
-};
 use ferri_pdf_style::Position;
 use std::{
     collections::{BTreeMap, BTreeSet, HashMap, VecDeque},

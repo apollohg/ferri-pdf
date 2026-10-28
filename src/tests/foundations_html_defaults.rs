@@ -62,8 +62,8 @@ fn ruby_fallback_pseudo_elements_cascade_and_inherit_normally() {
 
 #[test]
 fn horizontal_rules_use_html_borders_and_attribute_hints() {
+    use crate::graphics::{BorderStyle, POINTS_PER_PIXEL};
     use ferri_pdf_dom::{DocumentTree, Selector};
-    use ferri_pdf_graphics::{BorderStyle, POINTS_PER_PIXEL};
     use ferri_pdf_style::{LengthPercentage, Size, Style, Stylesheet, StylesheetSource};
 
     for (attributes, height, border_px, solid) in [

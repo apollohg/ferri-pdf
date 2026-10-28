@@ -1,7 +1,7 @@
 use crate::document::navigation::{BoxNavigation, NavigationBuilder};
 use crate::document::{DocumentError, Paragraph, inline::InlineCollector};
+use crate::graphics::BoxDecoration;
 use ferri_pdf_dom::{ChildNodes, DocumentTree, Element, ElementId, TreeRelation};
-use ferri_pdf_graphics::BoxDecoration;
 use ferri_pdf_style::{Display, PseudoElement, Style, StyleError, Stylesheet};
 
 pub(super) const MAX_FORMATTING_DEPTH: usize = 512;

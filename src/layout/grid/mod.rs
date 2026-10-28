@@ -418,12 +418,12 @@ impl<'a> Geometry<'a> {
 
     pub(crate) fn area(
         &self,
-        padding_box: ferri_pdf_graphics::Rect,
+        padding_box: crate::graphics::Rect,
         padding: [f32; 4],
-        overflow: Option<ferri_pdf_graphics::Rect>,
+        overflow: Option<crate::graphics::Rect>,
         item: &crate::grid::ItemPlacement,
         measurer: &Measurer<'_>,
-    ) -> Result<ferri_pdf_graphics::Rect, LayoutError> {
+    ) -> Result<crate::graphics::Rect, LayoutError> {
         let lines = self
             .plan
             .topology
@@ -470,7 +470,7 @@ impl<'a> Geometry<'a> {
                 }
             }
         }
-        Ok(ferri_pdf_graphics::Rect {
+        Ok(crate::graphics::Rect {
             x: edges[COLUMNS][0],
             y: edges[ROWS][0],
             width: (edges[COLUMNS][1] - edges[COLUMNS][0]).max(0.0),

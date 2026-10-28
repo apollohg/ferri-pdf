@@ -1,6 +1,6 @@
 //! Collapsed border conflict resolution (CSS 2.1 §17.6.2.1) per grid edge segment.
+use crate::graphics::{Border, BorderStyle};
 use crate::table::{Grid, TableError};
-use ferri_pdf_graphics::{Border, BorderStyle};
 use std::cmp::Ordering;
 use std::ops::Range;
 
@@ -209,8 +209,8 @@ impl CollapsedBorders {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::graphics::Color;
     use crate::table::{RowGroup, Span};
-    use ferri_pdf_graphics::Color;
 
     const RED: Color = Color {
         rgb: [255, 0, 0],

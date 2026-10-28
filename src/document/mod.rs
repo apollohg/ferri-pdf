@@ -82,7 +82,7 @@ pub(crate) struct StyledDocument {
     generated: generated::GeneratedReferences,
     source: std::rc::Rc<FormattingSource>,
     metadata: DocumentMetadata,
-    canvas: ferri_pdf_graphics::BoxDecoration,
+    canvas: crate::graphics::BoxDecoration,
     pages: page::PageProvider,
 }
 
@@ -475,7 +475,7 @@ impl StyledDocument {
     pub(crate) fn metadata(&self) -> &DocumentMetadata {
         &self.metadata
     }
-    pub(crate) fn canvas_background(&self) -> &ferri_pdf_graphics::BoxDecoration {
+    pub(crate) fn canvas_background(&self) -> &crate::graphics::BoxDecoration {
         &self.canvas
     }
 }

@@ -1,5 +1,5 @@
+use crate::graphics::Rect;
 use crate::layout::{LayoutError, work::Budget};
-use ferri_pdf_graphics::Rect;
 use ferri_pdf_style::{Clear, FloatSide};
 
 #[derive(Clone)]

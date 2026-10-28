@@ -598,10 +598,10 @@ dependencies = [
  "encoding_rs",
  "ferri-pdf-dom",
  "ferri-pdf-fonts",
- "ferri-pdf-graphics",
  "ferri-pdf-icu-casemap",
  "ferri-pdf-images",
  "ferri-pdf-krilla",
+ "ferri-pdf-paint",
  "ferri-pdf-resources",
  "ferri-pdf-style",
  "ferri-pdf-usvg",
@@ -669,15 +669,6 @@ dependencies = [
  "serde",
  "thiserror",
  "ttf-parser",
-]
-
-[[package]]
-name = "ferri-pdf-graphics"
-version = "0.1.0"
-dependencies = [
- "ferri-pdf-images",
- "ferri-pdf-paint",
- "serde",
 ]
 
 [[package]]

@@ -161,7 +161,7 @@ pub(super) fn measure<'a>(
         let border = child
             .decoration
             .borders
-            .map(ferri_pdf_graphics::Border::used_width);
+            .map(crate::graphics::Border::used_width);
         let margins = child.margin.each_ref().map(|v| v.resolve(geometry.width));
         let width_edges = padding[1] + padding[3] + border[1] + border[3];
         let height_edges = padding[0] + padding[2] + border[0] + border[2];

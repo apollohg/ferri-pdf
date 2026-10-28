@@ -1,9 +1,9 @@
 use super::common;
 
 use crate::document::{DocumentMetadata, Navigation};
+use crate::graphics::{Clip, DisplayItem, Rect};
 use crate::writer::PdfError;
 use ferri_pdf_fonts::FontBook;
-use ferri_pdf_graphics::{Clip, DisplayItem, Rect};
 
 #[test]
 fn pdf_errors_unwind_nested_display_list_scopes() {

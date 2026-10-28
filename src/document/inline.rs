@@ -22,7 +22,7 @@ pub(crate) struct TextSpan {
 pub(crate) struct InlineBox {
     pub range: Range<usize>,
     pub style: Style,
-    pub decoration: ferri_pdf_graphics::BoxDecoration,
+    pub decoration: crate::graphics::BoxDecoration,
     pub parent: Option<usize>,
     /// Boxes nested inside this one, which immediately follow it in tree order.
     pub descendants: usize,
@@ -52,7 +52,7 @@ pub(crate) struct InlineLink {
 }
 pub(crate) struct Paragraph {
     expanded_tabs: Vec<Range<usize>>,
-    pub(crate) marker_image: Option<ferri_pdf_graphics::BackgroundImage>,
+    pub(crate) marker_image: Option<crate::graphics::BackgroundImage>,
     pub(crate) first_formatted_line: bool,
     text: String,
     style: Box<Style>,
@@ -114,7 +114,7 @@ impl Paragraph {
         transform::apply(&mut paragraph)?;
         Ok(paragraph)
     }
-    pub(crate) fn marker_image(&self) -> Option<&ferri_pdf_graphics::BackgroundImage> {
+    pub(crate) fn marker_image(&self) -> Option<&crate::graphics::BackgroundImage> {
         self.marker_image.as_ref()
     }
     pub(crate) fn expanded_tabs(&self) -> &[Range<usize>] {
@@ -122,7 +122,7 @@ impl Paragraph {
     }
     /// CSS list marker default object size is one em square.
     pub(crate) fn marker_image_size(&self) -> Option<[f32; 2]> {
-        use ferri_pdf_graphics::{BackgroundImage, NaturalDimensions, POINTS_PER_PIXEL};
+        use crate::graphics::{BackgroundImage, NaturalDimensions, POINTS_PER_PIXEL};
         let natural = match self.marker_image.as_ref()? {
             BackgroundImage::Image { image } => {
                 let size = image.natural_size();
@@ -134,7 +134,7 @@ impl Paragraph {
             }
             _ => NaturalDimensions::default(),
         };
-        Some(ferri_pdf_graphics::image_size(
+        Some(crate::graphics::image_size(
             &Default::default(),
             natural,
             [self.style.size; 2],
@@ -369,7 +369,7 @@ impl InlineCollector {
     pub(crate) fn open_box(
         &mut self,
         style: &Style,
-        decoration: ferri_pdf_graphics::BoxDecoration,
+        decoration: crate::graphics::BoxDecoration,
         navigation: crate::document::BoxNavigation,
         canvas_source: bool,
     ) {
@@ -378,7 +378,7 @@ impl InlineCollector {
     fn open_continued(
         &mut self,
         style: &Style,
-        decoration: ferri_pdf_graphics::BoxDecoration,
+        decoration: crate::graphics::BoxDecoration,
         navigation: crate::document::BoxNavigation,
         continued: bool,
         canvas_source: bool,

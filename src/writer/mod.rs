@@ -7,9 +7,9 @@ mod pixels;
 mod shadows;
 mod text;
 use crate::document::{DocumentMetadata, Navigation};
+use crate::graphics::DisplayItem;
 use crate::layout::LayoutTrace;
 use ferri_pdf_fonts::{FontBook, FontId};
-use ferri_pdf_graphics::DisplayItem;
 use krilla::{Document, geom::Transform, page::PageSettings};
 
 pub use krilla::image::{ImageDpi, InvalidImageDpi, InvalidJpegQuality, JpegQuality};
@@ -48,7 +48,7 @@ pub enum PdfError {
     #[error("display list on page {page} refers to absent text line {line}")]
     InvalidTextReference { page: usize, line: usize },
     #[error("{0}")]
-    UnresolvedImage(#[source] ferri_pdf_graphics::UnresolvedImage),
+    UnresolvedImage(#[source] crate::graphics::UnresolvedImage),
     #[error("invalid paint geometry")]
     InvalidGeometry,
     #[error("invalid paint alpha {0}")]
@@ -161,7 +161,7 @@ pub(crate) fn encode_parts_with_diagnostics(
             let page_area = record.geometry.content_box();
             let settings = PageSettings::from_wh(width, height)
                 .ok_or(PdfError::InvalidPageSize { width, height })?;
-            let production_rect = |rect: ferri_pdf_graphics::Rect| {
+            let production_rect = |rect: crate::graphics::Rect| {
                 krilla::geom::Rect::from_xywh(rect.x, rect.y, rect.width, rect.height)
                     .ok_or(PdfError::InvalidGeometry)
             };

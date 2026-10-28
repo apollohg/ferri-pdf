@@ -1,10 +1,10 @@
 mod dimensions;
 use crate::document::{PageBox, Paragraph};
+use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, Rect};
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, TextLine};
 use crate::text::Line;
 use dimensions::{Variable, variable};
-use ferri_pdf_graphics::{BoxDecoration, BoxPaint, DisplayItem, Rect};
 use ferri_pdf_style::{BoxSizing, MarginLocation, PageMargin, Size, VerticalAlign};
 
 const HORIZONTAL: usize = 0;
@@ -215,7 +215,7 @@ fn prepare<'a>(
     let borders = style
         .decoration
         .borders
-        .map(ferri_pdf_graphics::Border::used_width);
+        .map(crate::graphics::Border::used_width);
     let margins = std::array::from_fn(|i| style.margin[i].resolve(bases[i]));
     let mut specified = [style.width.resolve(containing[0]), None];
     if style.box_sizing == BoxSizing::BorderBox {

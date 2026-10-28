@@ -3333,10 +3333,10 @@ fn page_box_edges_auto_margins_and_constraints_define_the_initial_containing_blo
         (
             "margin:20pt;border-style:solid",
             [400.0, 600.0],
-            [20.0 + ferri_pdf_graphics::DEFAULT_BORDER_WIDTH; 2],
+            [20.0 + ferri_pdf_paint::DEFAULT_BORDER_WIDTH; 2],
             [
-                360.0 - 2.0 * ferri_pdf_graphics::DEFAULT_BORDER_WIDTH,
-                560.0 - 2.0 * ferri_pdf_graphics::DEFAULT_BORDER_WIDTH,
+                360.0 - 2.0 * ferri_pdf_paint::DEFAULT_BORDER_WIDTH,
+                560.0 - 2.0 * ferri_pdf_paint::DEFAULT_BORDER_WIDTH,
             ],
         ),
         (
@@ -3771,7 +3771,7 @@ fn oversized_lines_overflow_without_being_rejected() {
 
 #[test]
 fn subpixel_page_areas_keep_their_viewport_while_fragmentation_progresses_by_one_pixel() {
-    const PROGRESS_PT: f32 = ferri_pdf_graphics::POINTS_PER_PIXEL;
+    const PROGRESS_PT: f32 = crate::graphics::POINTS_PER_PIXEL;
     for height in [0.0, 0.25, 0.5] {
         let trace = common::render_trace(&format!(
             "<style>@page{{size:400pt 600pt;margin:20pt;height:{height}pt}}body,p{{margin:0;font:12pt/14pt serif}}div{{height:3px;background:navy}}</style><div></div><p>C</p>"

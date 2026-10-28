@@ -31,7 +31,7 @@ fn render(css: &str, body: &str) -> LayoutTrace {
     .unwrap()
 }
 
-fn image_paints(trace: &LayoutTrace) -> Vec<(usize, &ferri_pdf_graphics::ImagePaint)> {
+fn image_paints(trace: &LayoutTrace) -> Vec<(usize, &crate::graphics::ImagePaint)> {
     trace
         .display_lists
         .iter()

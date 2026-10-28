@@ -43,7 +43,7 @@ pub(crate) struct BoxFragment {
 #[derive(Clone)]
 pub(crate) struct LinkFragment {
     pub link: usize,
-    pub rect: ferri_pdf_graphics::Rect,
+    pub rect: crate::graphics::Rect,
     pub inline_box: Option<usize>,
 }
 
@@ -74,7 +74,7 @@ pub(crate) fn links(paragraph: &Paragraph, line: &Line) -> Vec<LinkFragment> {
             let [top, bottom] = run_extent(run);
             fragments.push(LinkFragment {
                 link: link.link,
-                rect: ferri_pdf_graphics::Rect {
+                rect: crate::graphics::Rect {
                     x: run.x + left,
                     y: run.baseline_shift + top,
                     width: right - left,

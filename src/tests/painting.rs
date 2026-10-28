@@ -517,7 +517,7 @@ fn patterned_borders_reserve_the_same_space_as_solid_borders() {
 
 #[test]
 fn narrow_page_margin_dots_stay_inside_the_border_box() {
-    use ferri_pdf_graphics::Shape;
+    use crate::graphics::Shape;
     let html = format!(
         "<style>{PROFILE}html{{font-family:Spike}}@page{{margin-top:4pt;@top-center{{content:'X';width:60pt;border:4pt dotted navy}}}}</style><p>Body</p>"
     );
@@ -574,7 +574,7 @@ fn narrow_page_margin_dots_stay_inside_the_border_box() {
 
 #[test]
 fn subnormal_border_widths_keep_valid_positive_dash_spacing() {
-    use ferri_pdf_graphics::{Border, BorderStyle, BoxDecoration, Color, Shape};
+    use crate::graphics::{Border, BorderStyle, BoxDecoration, Color, Shape};
     const SUBNORMAL_WIDTH: f32 = 1e-40;
     let paint = BoxPaint::whole(
         Rect {
@@ -853,7 +853,7 @@ fn sliced_fragments_retain_the_unbroken_corners_across_the_break() {
             [[RADIUS_PT; 2]; 4],
             "slice preserves the whole box's radius on page {page}"
         );
-        let clip = paint.box_area(ferri_pdf_graphics::BoxArea::BorderBox);
+        let clip = paint.box_area(crate::graphics::BoxArea::BorderBox);
         let whole = clip
             .reference_box
             .expect("the curve continues across the fragment cut");

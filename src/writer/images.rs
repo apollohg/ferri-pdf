@@ -1,6 +1,6 @@
+use crate::graphics::ImagePaint;
 use crate::svg::krilla_svg::SurfaceExt;
 use crate::writer::PdfError;
-use ferri_pdf_graphics::ImagePaint;
 use ferri_pdf_images::{Image as Asset, Orientation, RasterFormat};
 use krilla::{
     geom::{Size, Transform},
@@ -34,7 +34,7 @@ impl ImageWriter {
     pub(crate) fn draw(
         &mut self,
         paint: &ImagePaint,
-        viewport: ferri_pdf_graphics::Rect,
+        viewport: crate::graphics::Rect,
         surface: &mut Surface<'_>,
     ) -> Result<(), PdfError> {
         if paint.rect.width == 0.0

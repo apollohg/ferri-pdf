@@ -246,7 +246,7 @@ fn all_and_inherited_initial_values_match_registry() {
     assert_eq!(target.display, Display::Inline);
     assert_eq!(target.margin, [Size::ZERO; 4]);
     assert_eq!(target.padding, [LengthPercentage::ZERO; 4]);
-    assert_eq!(target.color, ferri_pdf_graphics::Color::BLACK);
+    assert_eq!(target.color, crate::graphics::Color::BLACK);
     assert_eq!(target.line_height, ferri_pdf_style::LineHeight::Normal);
     let inherited = style(
         "section{font-size:20pt;width:70pt;padding:9pt}#target{all:inherit}",

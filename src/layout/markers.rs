@@ -5,10 +5,10 @@ use crate::layout::{LayoutError, TextLine};
 #[derive(Clone)]
 pub(super) struct MeasuredMarker {
     pub fragment: TextLine,
-    pub image: Option<ferri_pdf_graphics::BoxPaint>,
+    pub image: Option<crate::graphics::BoxPaint>,
     pub ascent: f32,
     pub ink_bounds: Option<[f32; 2]>,
-    pub decorations: Vec<ferri_pdf_graphics::DecorationPaint>,
+    pub decorations: Vec<crate::graphics::DecorationPaint>,
 }
 
 pub(super) fn measure(
@@ -28,7 +28,7 @@ pub(super) fn measure(
         let [width, height] = paragraph
             .marker_image_size()
             .expect("image marker has size");
-        let mut decoration = ferri_pdf_graphics::BoxDecoration::default();
+        let mut decoration = crate::graphics::BoxDecoration::default();
         std::sync::Arc::make_mut(&mut decoration.backgrounds).images = vec![image.clone()];
         let x = if style.rtl { line.width } else { 0.0 };
         if !style.rtl {
@@ -44,8 +44,8 @@ pub(super) fn measure(
                 .map_or(-height, |bounds| bounds[0].min(-height)),
             line.ink_bounds.map_or(0.0, |bounds| bounds[1]),
         ]);
-        ferri_pdf_graphics::BoxPaint::whole(
-            ferri_pdf_graphics::Rect {
+        crate::graphics::BoxPaint::whole(
+            crate::graphics::Rect {
                 x,
                 y: -height,
                 width,

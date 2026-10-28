@@ -6,13 +6,13 @@ use super::{
     FlowCursor, Fragmentainers, OrderSnapshots, PaginationState, Paginator, PaintKey, PaintOrder,
     PaintOrders, Pending, ScopedPaint, SlicedBox, overflows,
 };
+use crate::graphics::{Border, BoxDecoration, BoxPaint, DisplayItem, Rect};
 use crate::layout::{
     LayoutError, TextLine,
     breaks::{BreakTail, Forced, first_fragment},
     measure::{FlowItem, Measurer, first_baseline, last_baseline},
     multicol::{ColumnGeometry, ColumnSegment, MeasuredColumns},
 };
-use ferri_pdf_graphics::{Border, BoxDecoration, BoxPaint, DisplayItem, Rect};
 use ferri_pdf_style::ColumnFill;
 use std::collections::HashMap;
 use std::rc::Rc;

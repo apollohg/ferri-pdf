@@ -1,5 +1,6 @@
 //! CSS Multi-column Layout 1: column geometry, spanners and measured column flows. Columns
 //! are laid out as fragmentainers by the paginator (`pagination::columns`).
+use crate::graphics::Border;
 use crate::layout::{
     LayoutError,
     breaks::{Fragmentainer, first_fragment},
@@ -7,7 +8,6 @@ use crate::layout::{
     measure::{BlockEdge, FlowItem, MeasuredBlock, Measurer},
 };
 use crate::text::IntrinsicWidths;
-use ferri_pdf_graphics::Border;
 use ferri_pdf_style::{BreakBetween, ColumnFill, Style};
 
 /// Bounds the column boxes of one row, as a zero column width and gap would otherwise

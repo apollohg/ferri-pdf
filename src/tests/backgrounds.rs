@@ -1,10 +1,10 @@
 use super::common;
+use crate::graphics::{
+    BackgroundImage, Color, NaturalDimensions, ResolvedGradient, Shading, TileImage, image_size,
+};
 use crate::{BoxPaint, DisplayItem, Rect, render_html};
 use common::{PROFILE, local_options as options};
-use ferri_pdf_graphics::{
-    BackgroundImage, BackgroundSize, Color, GradientStop, NaturalDimensions, Repeat,
-    ResolvedGradient, Shading, SizeComponent, TileImage, image_size, rounded_size,
-};
+use ferri_pdf_paint::{BackgroundSize, GradientStop, Repeat, SizeComponent, rounded_size};
 use std::sync::{Arc, Mutex};
 
 const TOLERANCE: f32 = 1.0e-3;
@@ -452,14 +452,8 @@ fn shorthand_layers_reset_omitted_longhands_and_split_position_size_and_boxes() 
         vec![[Repeat::NoRepeat, Repeat::Repeat], [Repeat::Repeat; 2]],
         "repeat-y is no-repeat horizontally"
     );
-    assert_eq!(
-        backgrounds.origins[0],
-        ferri_pdf_graphics::BoxArea::PaddingBox
-    );
-    assert_eq!(
-        backgrounds.clips[0],
-        ferri_pdf_graphics::BoxArea::ContentBox
-    );
+    assert_eq!(backgrounds.origins[0], crate::graphics::BoxArea::PaddingBox);
+    assert_eq!(backgrounds.clips[0], crate::graphics::BoxArea::ContentBox);
     let layer = &paint.background_layers(PAGE_AREA).unwrap()[0];
     close(
         "right 4pt places the tile's right edge 4pt inside the padding box",

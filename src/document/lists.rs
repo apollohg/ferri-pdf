@@ -7,7 +7,7 @@ pub(super) fn marker(
     resources: &mut crate::document::formatting::ImageResources<'_>,
 ) -> Result<Option<Paragraph>, DocumentError> {
     let mut image = style.list_style_image.with_image_type();
-    if !matches!(image, ferri_pdf_graphics::BackgroundImage::None)
+    if !matches!(image, crate::graphics::BackgroundImage::None)
         && image
             .load(&mut |reference| {
                 resources

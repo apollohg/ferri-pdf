@@ -1,5 +1,5 @@
 use crate::document::PageBox;
-use ferri_pdf_graphics::{BackgroundGeometry, BoxAreas, BoxPaint, Clip, DisplayItem, Rect};
+use crate::graphics::{BackgroundGeometry, BoxAreas, BoxPaint, Clip, DisplayItem, Rect};
 use std::sync::Arc;
 
 pub(super) struct PagePaint {
@@ -10,7 +10,7 @@ pub(super) struct PagePaint {
 impl PagePaint {
     pub(crate) fn new(
         page: &PageBox,
-        canvas_background: &ferri_pdf_graphics::BoxDecoration,
+        canvas_background: &crate::graphics::BoxDecoration,
         bleed: Rect,
     ) -> Self {
         let margin = page.geometry.margin_box();

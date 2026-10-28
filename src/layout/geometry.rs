@@ -14,8 +14,8 @@ pub(super) struct HorizontalBox {
 }
 
 impl HorizontalBox {
-    pub(crate) fn border_box(&self, height: f32) -> ferri_pdf_graphics::Rect {
-        ferri_pdf_graphics::Rect {
+    pub(crate) fn border_box(&self, height: f32) -> crate::graphics::Rect {
+        crate::graphics::Rect {
             x: self.x - self.padding[3] - self.border[3],
             y: 0.0,
             width: self.width + self.padding[1] + self.padding[3] + self.border[1] + self.border[3],
@@ -41,7 +41,7 @@ impl Edges {
             border: style
                 .decoration
                 .borders
-                .map(ferri_pdf_graphics::Border::used_width),
+                .map(crate::graphics::Border::used_width),
         }
     }
     pub(crate) fn horizontal(&self) -> f32 {

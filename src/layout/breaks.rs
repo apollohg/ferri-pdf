@@ -3,7 +3,7 @@ use ferri_pdf_style::{BreakBetween, BreakInside, Style};
 
 /// CSS Break 3 §4: fragmentation progress assumes at least one CSS pixel.
 pub(super) fn fragmentainer_height(height: f32) -> f32 {
-    height.max(ferri_pdf_graphics::POINTS_PER_PIXEL)
+    height.max(crate::graphics::POINTS_PER_PIXEL)
 }
 
 /// A single line or replaced element can overflow without splitting its enclosing cell.

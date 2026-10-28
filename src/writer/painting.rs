@@ -1,5 +1,5 @@
+use crate::graphics::{BoxPaint, Color, Contour, Point, Segment, Shape};
 use crate::writer::PdfError;
-use ferri_pdf_graphics::{BoxPaint, Color, Contour, Point, Segment, Shape};
 use krilla::{
     geom::{PathBuilder, Rect, Transform},
     num::NormalizedF32,
@@ -18,8 +18,8 @@ pub(super) fn fill(color: Color) -> Result<Fill, PdfError> {
 /// borders or the border image (Backgrounds 3 §6, §7.1).
 pub(super) fn draw(
     paint: &BoxPaint,
-    page_area: ferri_pdf_graphics::Rect,
-    viewport: ferri_pdf_graphics::Rect,
+    page_area: crate::graphics::Rect,
+    viewport: crate::graphics::Rect,
     surface: &mut Surface<'_>,
     images: &mut crate::writer::images::ImageWriter,
 ) -> Result<(), PdfError> {
@@ -31,12 +31,12 @@ pub(super) fn draw(
         .radii
         .iter()
         .flatten()
-        .any(|radius| *radius != ferri_pdf_graphics::LengthPercentage::ZERO);
+        .any(|radius| *radius != crate::graphics::LengthPercentage::ZERO);
     if paint.background_geometry.is_none() && (rounded || !paint.decoration.shadows.is_empty()) {
         let assembled = paint.assembled_box();
         let origin = assembled.unwrap_or(paint.rect);
         let mut local = paint.clone();
-        local.rect = ferri_pdf_graphics::Rect {
+        local.rect = crate::graphics::Rect {
             x: 0.0,
             y: 0.0,
             ..origin
@@ -44,30 +44,30 @@ pub(super) fn draw(
         local.background_box = paint
             .background_box
             .filter(|_| assembled.is_none())
-            .map(|rect| ferri_pdf_graphics::Rect {
+            .map(|rect| crate::graphics::Rect {
                 x: rect.x - origin.x,
                 y: rect.y - origin.y,
                 ..rect
             });
         local.first_fragment = true;
         local.last_fragment = true;
-        local.inline_edges = ferri_pdf_graphics::INLINE_EDGES;
+        local.inline_edges = crate::graphics::INLINE_EDGES;
         let bounds = local_bounds(viewport, surface)?;
-        let local_viewport = ferri_pdf_graphics::Rect {
+        let local_viewport = crate::graphics::Rect {
             x: bounds.x - origin.x,
             y: bounds.y - origin.y,
             ..bounds
         };
         let mut clips = 0;
         if let Some(fragment) = paint
-            .box_area(ferri_pdf_graphics::BoxArea::BorderBox)
+            .box_area(crate::graphics::BoxArea::BorderBox)
             .fragment_bounds()
         {
             let bounds = fragment.clip_rect(bounds);
             surface.push_clip_path(&rect_path(bounds)?, &FillRule::NonZero);
             clips = 1;
         }
-        let page_area = ferri_pdf_graphics::Rect {
+        let page_area = crate::graphics::Rect {
             x: page_area.x - origin.x,
             y: page_area.y - origin.y,
             ..page_area
@@ -85,8 +85,8 @@ pub(super) fn draw(
 
 fn draw_box(
     paint: &BoxPaint,
-    page_area: ferri_pdf_graphics::Rect,
-    viewport: ferri_pdf_graphics::Rect,
+    page_area: crate::graphics::Rect,
+    viewport: crate::graphics::Rect,
     surface: &mut Surface<'_>,
     images: &mut crate::writer::images::ImageWriter,
 ) -> Result<(), PdfError> {
@@ -115,7 +115,7 @@ fn draw_box(
     Ok(())
 }
 
-pub(super) fn rect_path(rect: ferri_pdf_graphics::Rect) -> Result<krilla::geom::Path, PdfError> {
+pub(super) fn rect_path(rect: crate::graphics::Rect) -> Result<krilla::geom::Path, PdfError> {
     let mut path = PathBuilder::new();
     path.push_rect(
         Rect::from_xywh(rect.x, rect.y, rect.width, rect.height)
@@ -126,14 +126,14 @@ pub(super) fn rect_path(rect: ferri_pdf_graphics::Rect) -> Result<krilla::geom::
 
 /// Bounds of the physical surface in the active drawing coordinates.
 pub(super) fn local_bounds(
-    viewport: ferri_pdf_graphics::Rect,
+    viewport: crate::graphics::Rect,
     surface: &Surface<'_>,
-) -> Result<ferri_pdf_graphics::Rect, PdfError> {
+) -> Result<crate::graphics::Rect, PdfError> {
     let transform = surface.cur_transform();
     let determinant = f64::from(transform.sx()) * f64::from(transform.sy())
         - f64::from(transform.kx()) * f64::from(transform.ky());
     if determinant == 0.0 {
-        return Ok(ferri_pdf_graphics::Rect {
+        return Ok(crate::graphics::Rect {
             x: 0.0,
             y: 0.0,
             width: 0.0,
@@ -144,7 +144,7 @@ pub(super) fn local_bounds(
     let rect = Rect::from_xywh(viewport.x, viewport.y, viewport.width, viewport.height)
         .and_then(|rect| rect.transform(inverse))
         .ok_or(PdfError::InvalidGeometry)?;
-    Ok(ferri_pdf_graphics::Rect {
+    Ok(crate::graphics::Rect {
         x: rect.left(),
         y: rect.top(),
         width: rect.width(),
@@ -154,8 +154,8 @@ pub(super) fn local_bounds(
 
 /// Keep original curves and intersect only the changed fragment edges.
 pub(super) fn push_clip(
-    clip: &ferri_pdf_graphics::Clip,
-    viewport: ferri_pdf_graphics::Rect,
+    clip: &crate::graphics::Clip,
+    viewport: crate::graphics::Rect,
     surface: &mut Surface<'_>,
 ) -> Result<usize, PdfError> {
     if clip.axes != [true; 2] {
@@ -182,8 +182,8 @@ pub(super) fn pop_clips(count: usize, surface: &mut Surface<'_>) {
 }
 
 pub(super) fn draw_fill(
-    item: ferri_pdf_graphics::Fill,
-    viewport: ferri_pdf_graphics::Rect,
+    item: crate::graphics::Fill,
+    viewport: crate::graphics::Rect,
     surface: &mut Surface<'_>,
 ) -> Result<(), PdfError> {
     let color = fill(item.color)?;
@@ -193,7 +193,7 @@ pub(super) fn draw_fill(
             if bounds.width > 0.0 && bounds.height > 0.0 {
                 surface.push_clip_path(&rect_path(bounds)?, &FillRule::NonZero);
                 let result = draw_fill(
-                    ferri_pdf_graphics::Fill {
+                    crate::graphics::Fill {
                         shape: *shape,
                         color: item.color,
                     },

@@ -17,6 +17,7 @@ extern crate self as ferri_pdf;
 
 mod document;
 mod flex;
+mod graphics;
 mod grid;
 mod layout;
 mod multipart;
@@ -36,6 +37,11 @@ use crate::layout::LayoutError;
 use crate::text::TextError;
 
 pub use crate::document::DocumentDiagnostic as RenderDiagnostic;
+pub use crate::graphics::{
+    Border, BorderStyle, BoxDecoration, BoxPaint, Clip, ClipBounds, Color, Contour, DecorationLine,
+    DecorationPaint, DecorationStyle, DisplayItem, Fill, INLINE_EDGES, LengthPercentage, Point,
+    Radii, Rect, Segment, ShadowPaint, ShadowShape, Shape,
+};
 pub use crate::layout::{Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine};
 pub use crate::text::{GlyphRun, PositionedGlyph};
 pub use crate::writer::{
@@ -44,11 +50,6 @@ pub use crate::writer::{
 pub use ferri_pdf_fonts::{
     FontDescriptor, FontFaceStyle, FontFamily, FontId, FontPreferences, FontRange, FontSelection,
     FontSlant, FontStyle, FontSynthesis, FontVariation, FontWeight, FontWidth, GenericFamily,
-};
-pub use ferri_pdf_graphics::{
-    Border, BorderStyle, BoxDecoration, BoxPaint, Clip, ClipBounds, Color, Contour, DecorationLine,
-    DecorationPaint, DecorationStyle, DisplayItem, Fill, INLINE_EDGES, LengthPercentage, Point,
-    Radii, Rect, Segment, ShadowPaint, ShadowShape, Shape,
 };
 pub use ferri_pdf_images::ImageError;
 pub use ferri_pdf_resources as resources;

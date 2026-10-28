@@ -5,12 +5,12 @@ use super::{
     paint::{Areas, Columns, FragmentBackground, Layers},
 };
 use crate::document::{BlockBox, BlockContent, SemanticEvent};
+use crate::graphics::{Border, BorderStyle, BoxDecoration, Color, Rect};
 use crate::layout::measure::{
     BlockEdge, FlowItem, MeasuredBlock, MeasuredCell, MeasuredRow, Measurer, RowTarget, TableFlow,
 };
 use crate::layout::{LayoutError, geometry, margin::MarginStrut};
 use crate::table::{CellHeight, HeightConstraint, HeightInput, WidthInput};
-use ferri_pdf_graphics::{Border, BorderStyle, BoxDecoration, Color, Rect};
 use ferri_pdf_style::{BreakBetween, Display, Style, TableLayout};
 use std::{
     cell::RefCell,

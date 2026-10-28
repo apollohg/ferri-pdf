@@ -14,20 +14,22 @@ fn gradient_markers_use_one_em_and_precede_inside_text() {
         "<ul><li>Item</li></ul>",
     );
     let trace = output.layout.unwrap();
-    let marker =
-        trace.display_lists[0]
-            .iter()
-            .find_map(|item| match item {
-                DisplayItem::Box(paint)
-                    if !paint.decoration.backgrounds.images.iter().all(|image| {
-                        matches!(image, ferri_pdf_graphics::BackgroundImage::None)
-                    }) =>
-                {
-                    Some(paint)
-                }
-                _ => None,
-            })
-            .expect("image marker has a paint box");
+    let marker = trace.display_lists[0]
+        .iter()
+        .find_map(|item| match item {
+            DisplayItem::Box(paint)
+                if !paint
+                    .decoration
+                    .backgrounds
+                    .images
+                    .iter()
+                    .all(|image| matches!(image, crate::graphics::BackgroundImage::None)) =>
+            {
+                Some(paint)
+            }
+            _ => None,
+        })
+        .expect("image marker has a paint box");
     assert_pt(marker.rect.width, 12.0);
     assert_pt(marker.rect.height, 12.0);
     let item = trace.pages[0]
@@ -64,7 +66,7 @@ fn unavailable_marker_images_fall_back_without_aborting_the_pdf() {
     }
 }
 
-fn markers(trace: &crate::LayoutTrace) -> Vec<(usize, &ferri_pdf_graphics::BoxPaint)> {
+fn markers(trace: &crate::LayoutTrace) -> Vec<(usize, &crate::graphics::BoxPaint)> {
     trace
         .display_lists
         .iter()
@@ -72,9 +74,12 @@ fn markers(trace: &crate::LayoutTrace) -> Vec<(usize, &ferri_pdf_graphics::BoxPa
         .flat_map(|(page, items)| {
             items.iter().filter_map(move |item| match item {
                 DisplayItem::Box(paint)
-                    if paint.decoration.backgrounds.images.iter().any(|image| {
-                        !matches!(image, ferri_pdf_graphics::BackgroundImage::None)
-                    }) =>
+                    if paint
+                        .decoration
+                        .backgrounds
+                        .images
+                        .iter()
+                        .any(|image| !matches!(image, crate::graphics::BackgroundImage::None)) =>
                 {
                     Some((page, paint))
                 }

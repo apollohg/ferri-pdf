@@ -1,9 +1,9 @@
 //! Absolutely positioned boxes: CSS 2.1 §10.3.7 widths and §10.6.4 heights.
 use crate::document::BlockBox;
+use crate::graphics::Rect;
 use crate::layout::LayoutError;
 use crate::layout::geometry::{HorizontalBox, SizeConstraints};
 use crate::layout::measure::{MeasuredBlock, Measurer};
-use ferri_pdf_graphics::Rect;
 use ferri_pdf_style::{Alignment, Style};
 
 /// Hypothetical normal-flow position: margin-box edges `left`/`right` and top edge `y`.
