@@ -109,7 +109,7 @@ impl Budget {
             work_limit: MAX_STYLESHEET_WORK,
         }
     }
-    fn unlimited() -> Self {
+    pub(super) fn unlimited() -> Self {
         let mut budget = Self::new(Limits {
             bytes: usize::MAX,
             depth: usize::MAX,

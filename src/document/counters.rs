@@ -592,14 +592,14 @@ fn render_counter(
     mut values: impl DoubleEndedIterator<Item = i128>,
 ) -> Result<String, StyleError> {
     let Some(separator) = &request.separator else {
-        return Ok(request
+        return request
             .style
-            .representation(values.next_back().unwrap_or(INITIAL_COUNTER_VALUE)));
+            .representation(values.next_back().unwrap_or(INITIAL_COUNTER_VALUE));
     };
     let mut text = String::new();
     let mut empty = true;
     for value in values {
-        let part = request.style.representation(value);
+        let part = request.style.representation(value)?;
         let separator = if empty { "" } else { separator.as_ref() };
         if text
             .len()
@@ -616,7 +616,7 @@ fn render_counter(
         empty = false;
     }
     if empty {
-        text = request.style.representation(INITIAL_COUNTER_VALUE);
+        text = request.style.representation(INITIAL_COUNTER_VALUE)?;
     }
     Ok(text)
 }

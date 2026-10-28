@@ -52,13 +52,24 @@ struct Handler {
     check: Option<Check>,
 }
 
+/// Counter style names resolve from the element's tree scope (CSS Counter Styles 3 §5).
+fn element_scope<'a>(
+    relative: &'a Relative<'_>,
+    style: &Style,
+) -> crate::style::counter_style::Scope<'a> {
+    crate::style::counter_style::Scope::of(relative, style.element_font_namespace())
+}
+fn validation_scope<'a>(relative: &'a Relative<'_>) -> crate::style::counter_style::Scope<'a> {
+    crate::style::counter_style::Scope::of(relative, crate::fonts::FontNamespace::ROOT)
+}
+
 /// Flow-relative properties share their physical counterparts' grammar and computation.
 fn computing(property: Property) -> Property {
     crate::style::logical::physical(property, crate::style::logical::Flow::default())
 }
 
 pub(super) fn supports_property(property: Property) -> bool {
-    inert::defined(property)
+    inert::defined(computing(property))
         || handler(computing(property)).is_some_and(|handler| handler.check.is_some())
 }
 
@@ -67,8 +78,8 @@ pub(super) fn supports_value(
     value: &Component,
     relative: &Relative<'_>,
 ) -> bool {
-    if inert::defined(property) {
-        return inert::compute(property, value, relative).is_ok();
+    if inert::defined(computing(property)) {
+        return inert::compute(computing(property), value, relative).is_ok();
     }
     handler(computing(property))
         .and_then(|handler| handler.check)
@@ -320,7 +331,7 @@ pub(crate) fn inherit(style: &mut Style, parent: &Style) {
 /// Computed-field coverage is separate from usable value support.
 #[cfg(test)]
 pub(crate) fn computed(property: Property) -> bool {
-    inert::defined(property) || handler(computing(property)).is_some()
+    inert::defined(computing(property)) || handler(computing(property)).is_some()
 }
 
 fn handler(property: Property) -> Option<Handler> {
@@ -328,7 +339,9 @@ fn handler(property: Property) -> Option<Handler> {
     let (apply, check): (Apply, Option<Check>) = match property {
         P::StringSet => (
             string_set,
-            Some(|value, _| crate::style::string_values::assignments(value).is_ok()),
+            Some(|value, relative| {
+                crate::style::string_values::assignments(value, &validation_scope(relative)).is_ok()
+            }),
         ),
         P::CounterReset => (
             counter_reset,
@@ -497,7 +510,7 @@ fn handler(property: Property) -> Option<Handler> {
         ),
         P::ListStyleType => (
             list_style_type,
-            Some(|v, _| ListStyleType::from_component(v).is_ok()),
+            Some(|v, r| ListStyleType::from_component(v, &validation_scope(r)).is_ok()),
         ),
         P::ListStylePosition => (
             list_style_position,
@@ -813,10 +826,11 @@ fn handler(property: Property) -> Option<Handler> {
         ),
         P::Content => (
             content,
-            Some(|v, _| {
+            Some(|v, r| {
                 crate::style::generated::ComputedContent::from_component(
                     v,
                     crate::style::generated::ContentContext::BeforeAfter,
+                    &validation_scope(r),
                 )
                 .is_ok_and(|content| content.supported())
             }),
@@ -954,8 +968,8 @@ fn handler(property: Property) -> Option<Handler> {
         ),
         P::BookmarkLabel => (
             bookmark_label,
-            Some(|v, _| {
-                crate::style::GeneratedContent::from_list(v)
+            Some(|v, r| {
+                crate::style::GeneratedContent::from_list(v, &validation_scope(r))
                     .is_ok_and(|content| content.supported())
             }),
         ),
@@ -1381,7 +1395,9 @@ computed!(
 computed!(
     list_style_type,
     [list_style_type],
-    |value, style, _parent, _relative| { ListStyleType::from_component(value)? }
+    |value, style, _parent, relative| {
+        ListStyleType::from_component(value, &element_scope(relative, style))?
+    }
 );
 computed!(
     list_style_position,
@@ -2001,12 +2017,14 @@ fn content(
     style: &mut Style,
     _: &Style,
     input: Input<'_>,
-    _: &Relative<'_>,
+    relative: &Relative<'_>,
 ) -> Result<(), StyleError> {
     style.computed_content = match input {
-        Input::Value(value) => {
-            crate::style::generated::ComputedContent::from_component(value, style.content_context)?
-        }
+        Input::Value(value) => crate::style::generated::ComputedContent::from_component(
+            value,
+            style.content_context,
+            &element_scope(relative, style),
+        )?,
         Input::Copy(source) => source.computed_content.clone(),
     };
     Ok(())
@@ -2245,7 +2263,9 @@ computed!(
 computed!(
     bookmark_label,
     [bookmark.label],
-    |value, style, _parent, _relative| { crate::style::GeneratedContent::from_list(value)? }
+    |value, style, _parent, relative| {
+        crate::style::GeneratedContent::from_list(value, &element_scope(relative, style))?
+    }
 );
 computed!(
     bookmark_state,
@@ -2284,5 +2304,7 @@ computed!(
 computed!(
     string_set,
     [string_set],
-    |value, style, _parent, _relative| { crate::style::string_values::assignments(value)? }
+    |value, style, _parent, relative| {
+        crate::style::string_values::assignments(value, &element_scope(relative, style))?
+    }
 );

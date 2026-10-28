@@ -15,7 +15,7 @@ const EXTENSIONS_FILE: &str = "extensions.json";
 const EXCLUDED_STATUS: &str = "nonstandard";
 const CUSTOM_PROPERTY_ENTRY: &str = "--*";
 /// At-rules whose descriptors the engine parses.
-pub(crate) const AT_RULES: [&str; 3] = ["@page", "@font-face", "@font-palette-values"];
+pub(crate) const AT_RULES: [&str; 4] = ["@page", "@font-face", "@font-palette-values", "@counter-style"];
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) enum Origin {

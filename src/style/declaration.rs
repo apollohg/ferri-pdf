@@ -500,6 +500,7 @@ fn value_with_context(
             crate::style::grid_values::valid(property, value)
                 && crate::style::inert::valid(property, value)
                 && crate::style::font_values::valid(property, value)
+                && crate::style::counter_style::valid(value)
         }),
     )
 }

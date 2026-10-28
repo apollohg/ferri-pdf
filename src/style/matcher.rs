@@ -113,6 +113,7 @@ impl<'a> ValueContext<'a> {
                 paper: source.paper,
                 work: source.work.clone(),
                 initial_font: source.initial_font.clone(),
+                counter_styles: source.counter_styles.clone(),
                 ..Relative::validation()
             },
         };

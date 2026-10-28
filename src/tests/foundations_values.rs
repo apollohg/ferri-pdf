@@ -926,7 +926,12 @@ fn toggle_selects_after_the_first_matching_computed_value() {
         "#parent{font-style:italic;list-style-type:circle}#target{font-style:toggle(italic,normal);list-style-type:toggle(disc,circle,square)}",
     );
     assert_eq!(style.font_style, crate::fonts::FontStyle::Normal);
-    assert_eq!(style.list_style_type, crate::style::ListStyleType::Square);
+    assert_eq!(
+        style.list_style_type,
+        crate::style::ListStyleType::Counter(
+            crate::style::counter_style::CounterStyle::predefined("square")
+        )
+    );
 }
 
 #[test]
@@ -1088,7 +1093,7 @@ fn toggle_content_capabilities_include_alternative_value_computation() {
     let style = computed(
         "#target{margin-left:7pt}@supports(content:toggle('x'/'alt',none)){#target{margin-left:13pt}}@supports(content:toggle('x'/counter(missing),none)){#target{margin-left:17pt}}@supports(content:toggle('x'/counter(missing,symbols(cyclic 'x')),none)){#target{margin-left:99pt}}",
     );
-    common::assert_pt(points(&style.margin[3]), 17.0);
+    common::assert_pt(points(&style.margin[3]), 99.0);
 }
 
 #[test]

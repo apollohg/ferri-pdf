@@ -164,7 +164,7 @@ impl GeneratedReferences {
                             request.reference
                         ))
                     })?;
-                    counter.page_text(number, pages).expect("page counter")
+                    counter.page_text(number, pages).expect("page counter")?
                 }
                 TargetValue::Counter(counter) => target.counters.text(counter)?,
                 TargetValue::Text(source) => ElementText::new(

@@ -18,7 +18,10 @@ pub(crate) fn empty() -> Arc<[StringAssignment]> {
     EMPTY_ASSIGNMENTS.clone()
 }
 
-pub(crate) fn assignments(value: &Component) -> Result<Arc<[StringAssignment]>, StyleError> {
+pub(crate) fn assignments(
+    value: &Component,
+    scope: &crate::style::counter_style::Scope<'_>,
+) -> Result<Arc<[StringAssignment]>, StyleError> {
     if value.keyword() == Some(Keyword::None) {
         return Ok(empty());
     }
@@ -38,7 +41,7 @@ pub(crate) fn assignments(value: &Component) -> Result<Arc<[StringAssignment]>, 
             };
             Ok(StringAssignment {
                 name: Arc::from(name.as_ref()),
-                content: GeneratedContent::from_list(content)?,
+                content: GeneratedContent::from_list(content, scope)?,
             })
         })
         .collect::<Result<Vec<_>, StyleError>>()?;
@@ -69,6 +72,7 @@ mod tests {
     use super::*;
     use crate::style::{
         QuoteDepth, Quotes,
+        counter_style::CounterStyle,
         grammar::Property,
         matcher::{ValueContext, match_value},
     };
@@ -84,7 +88,11 @@ mod tests {
         )
         .expect("string-set grammar must match within its work budget")
         .unwrap_or_else(|| panic!("invalid string-set test input: {source}"));
-        assignments(&component).unwrap_or_else(|error| panic!("cannot compute {source}: {error}"))
+        assignments(
+            &component,
+            &crate::style::counter_style::Scope::predefined(),
+        )
+        .unwrap_or_else(|error| panic!("cannot compute {source}: {error}"))
     }
 
     #[test]
@@ -108,12 +116,12 @@ mod tests {
                         TEST_CONTENT_LIMIT,
                         &mut |request| match request.name.as_ref() {
                             "chapter" => {
-                                assert_eq!(request.style, crate::style::ListStyleType::UpperRoman);
+                                assert_eq!(request.style, CounterStyle::predefined("upper-roman"));
                                 assert_eq!(request.separator, None);
-                                Ok(request.style.representation(4))
+                                request.style.representation(4)
                             }
                             "section" => {
-                                assert_eq!(request.style, crate::style::ListStyleType::LowerAlpha);
+                                assert_eq!(request.style, CounterStyle::predefined("lower-alpha"));
                                 assert_eq!(request.separator.as_deref(), Some("."));
                                 Ok("a.b".to_owned())
                             }

@@ -848,7 +848,10 @@ impl Stylesheet {
     }
 
     pub(super) fn initial_relative(&self) -> Relative<'static> {
-        Relative::with_initial_font(self.environment.relative.initial_font.clone())
+        Relative {
+            counter_styles: Some(self.counter_styles.clone()),
+            ..Relative::with_initial_font(self.environment.relative.initial_font.clone())
+        }
     }
 
     /// `Canvas` in the root's used colour scheme, the canvas surface colour (CSS Color
@@ -909,6 +912,7 @@ impl Stylesheet {
                 initial_page_font_size: false,
                 initial_font: self.environment.relative.initial_font.clone(),
                 color_scheme: self.used_color_scheme(&parent.color_scheme),
+                counter_styles: Some(self.counter_styles.clone()),
             },
         }
     }
@@ -1000,6 +1004,7 @@ impl Stylesheet {
             initial_page_font_size: false,
             initial_font: self.environment.relative.initial_font.clone(),
             color_scheme,
+            counter_styles: Some(self.counter_styles.clone()),
         };
         if let Some(value) = winners.remove(&Property::LineHeight) {
             properties::apply(Property::LineHeight, &value, style, parent, &line_basis)?;
@@ -1036,6 +1041,7 @@ impl Stylesheet {
             initial_page_font_size: false,
             initial_font: self.environment.relative.initial_font.clone(),
             color_scheme,
+            counter_styles: Some(self.counter_styles.clone()),
         };
         // The root's initial `canvastext` follows its own colour scheme.
         let initial = Specified::Wide(crate::style::wide_keywords::WideKeyword::Initial);

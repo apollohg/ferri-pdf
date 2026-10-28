@@ -795,6 +795,7 @@ impl<'a> Geometry<'a> {
                 initial_page_font_size: self.page_font && property == Property::FontSize,
                 initial_font: self.sheet.environment.relative.initial_font.clone(),
                 color_scheme,
+                counter_styles: Some(self.sheet.counter_styles.clone()),
             });
         }
         compute(&Relative {
@@ -820,6 +821,7 @@ impl<'a> Geometry<'a> {
             initial_page_font_size: context == Context::Page && property == Property::FontSize,
             initial_font: self.sheet.environment.relative.initial_font.clone(),
             color_scheme,
+            counter_styles: Some(self.sheet.counter_styles.clone()),
         })
     }
 
@@ -1164,6 +1166,7 @@ impl<'a> Geometry<'a> {
                         color_scheme: self.sheet.used_color_scheme(
                             &self.context(Context::Page).style.borrow().color_scheme,
                         ),
+                        counter_styles: Some(self.sheet.counter_styles.clone()),
                     };
                     crate::style::page_values::page_dimension(
                         &value,
@@ -1391,12 +1394,11 @@ impl crate::style::PageSelection for Geometry<'_> {
             return Ok(false);
         }
         Ok(
-            self.selected_value(target, Property::ListStyleType, |style| {
-                style.list_style_type
-            })? != crate::style::ListStyleType::None
-                || self.selected_value(target, Property::ListStyleImage, |style| {
-                    !matches!(style.list_style_image, crate::paint::BackgroundImage::None)
-                })?,
+            !self.selected_value(target, Property::ListStyleType, |style| {
+                style.list_style_type.is_none()
+            })? || self.selected_value(target, Property::ListStyleImage, |style| {
+                !matches!(style.list_style_image, crate::paint::BackgroundImage::None)
+            })?,
         )
     }
 }

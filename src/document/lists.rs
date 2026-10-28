@@ -1,5 +1,5 @@
 use crate::document::{DocumentError, Paragraph};
-use crate::style::{ListStyleType, Style};
+use crate::style::Style;
 
 pub(super) fn marker(
     style: &Style,
@@ -28,10 +28,8 @@ pub(super) fn marker(
         paragraph.marker_image = Some(image);
         return Ok(Some(paragraph));
     }
-    if style.list_style_type == ListStyleType::None {
+    let Some(text) = style.list_style_type.marker(ordinal, style.rtl)? else {
         return Ok(None);
-    }
-    let mut text = style.list_style_type.representation(ordinal);
-    text.push_str(style.list_style_type.suffix());
+    };
     Ok(Some(Paragraph::marker(text, style)?))
 }

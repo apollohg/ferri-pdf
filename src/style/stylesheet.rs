@@ -69,6 +69,7 @@ pub(crate) struct Stylesheet {
     pub(super) page_border: [f32; 4],
     pub fonts: FontBook,
     font_namespaces: HashMap<crate::dom::TreeScopeId, FontNamespace>,
+    pub(super) counter_styles: std::sync::Arc<crate::style::counter_style::CounterStyles>,
 }
 
 /// Declarations with relative `url()`s resolved against the declaring stylesheet.
@@ -214,6 +215,9 @@ pub(super) fn supports_descriptor(at_rule: &str, decl: &Declaration) -> bool {
                 },
             );
     }
+    if at_rule == crate::style::counter_style::COUNTER_STYLE_AT_RULE {
+        return !decl.important && crate::style::counter_style::supported(descriptor, &value);
+    }
     unimplemented_descriptor(descriptor, &value, at_rule).is_ok()
 }
 
@@ -264,6 +268,7 @@ impl Stylesheet {
             page_border: self.page_border,
             fonts: self.fonts.clone(),
             font_namespaces: self.font_namespaces.clone(),
+            counter_styles: self.counter_styles.clone(),
         }
     }
 
@@ -398,6 +403,7 @@ impl Stylesheet {
         layers.freeze();
         let mut font_book = FontBook::with_preferences(settings.fonts.clone());
         let mut font_namespaces = HashMap::new();
+        let mut scope_parents = HashMap::new();
         if let Some(tree) = tree {
             font_namespaces.insert(tree.root_element().tree_scope(), FontNamespace::ROOT);
             for element in tree.shadow_including_elements() {
@@ -405,7 +411,11 @@ impl Stylesheet {
                     let parent = font_namespaces[&host.tree_scope()];
                     font_namespaces
                         .entry(element.tree_scope())
-                        .or_insert_with(|| font_book.child_namespace(parent));
+                        .or_insert_with(|| {
+                            let child = font_book.child_namespace(parent);
+                            scope_parents.insert(child, parent);
+                            child
+                        });
                 }
             }
         }
@@ -432,10 +442,12 @@ impl Stylesheet {
             page_border: [0.0; 4],
             fonts: font_book,
             font_namespaces,
+            counter_styles: crate::style::counter_style::CounterStyles::predefined(),
         };
         let mut fonts = Vec::new();
         let mut feature_values = Vec::new();
         let mut palettes = Vec::new();
+        let mut counter_styles = Vec::new();
         let mut page_order = 0;
         for (
             order,
@@ -527,8 +539,38 @@ impl Stylesheet {
                         namespace,
                     ));
                 }
+                ContentRule::CounterStyle(name, declarations, location) => {
+                    counter_styles.push((
+                        (origin, layer, order),
+                        name,
+                        declarations,
+                        location,
+                        namespace,
+                    ));
+                }
             }
         }
+        // CSS Counter Styles 3 §3: rules of one name cascade atomically; the last in cascade
+        // order wins.
+        counter_styles.sort_by_key(|(priority, ..)| *priority);
+        let mut rules = Vec::new();
+        for (_, name, declarations, location, namespace) in counter_styles {
+            match crate::style::counter_style::CounterStyleRule::parse(
+                &name,
+                &declarations,
+                namespace,
+            )? {
+                Some(rule) => rules.push(rule),
+                None => sheet.diagnostics.borrow_mut().push(StyleDiagnostic {
+                    location,
+                    kind: StyleDiagnosticKind::InvalidRule,
+                    context: format!("@counter-style {name}"),
+                }),
+            }
+        }
+        sheet.counter_styles = std::sync::Arc::new(
+            crate::style::counter_style::CounterStyles::new(rules, scope_parents),
+        );
         fonts.sort_by_key(|(priority, ..)| *priority);
         for (_, declarations, location, source_base, namespace) in fonts {
             match sheet.font_face(&declarations, source_base, namespace) {

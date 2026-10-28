@@ -2,54 +2,49 @@ use crate::style::{
     StyleError,
     box_values::unsupported,
     component::Component,
-    grammar::{Keyword, Label, Production},
+    counter_style::{CounterStyle, Scope},
+    grammar::Keyword,
 };
 use serde::Serialize;
+use std::sync::Arc;
 
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Hash, Serialize)]
-#[serde(rename_all = "kebab-case")]
+const INITIAL_LIST_STYLE_TYPE: &str = "disc";
+
+/// The computed `list-style-type` (CSS Lists 3 §3.4).
+#[derive(Clone, Debug, Eq, PartialEq, Serialize)]
 pub(crate) enum ListStyleType {
     None,
-    #[default]
-    Disc,
-    Circle,
-    Square,
-    Decimal,
-    DecimalLeadingZero,
-    LowerRoman,
-    UpperRoman,
-    LowerGreek,
-    LowerAlpha,
-    UpperAlpha,
+    String(Arc<str>),
+    Counter(CounterStyle),
+}
+impl Default for ListStyleType {
+    fn default() -> Self {
+        Self::Counter(CounterStyle::predefined(INITIAL_LIST_STYLE_TYPE))
+    }
 }
 impl ListStyleType {
-    /// A predefined counter style name (CSS Counter Styles 3 §6), ASCII case-insensitive.
-    pub(super) fn named(name: &str) -> Option<Self> {
-        Some(match name.to_ascii_lowercase().as_str() {
-            "none" => Self::None,
-            "disc" => Self::Disc,
-            "circle" => Self::Circle,
-            "square" => Self::Square,
-            "decimal" => Self::Decimal,
-            "decimal-leading-zero" => Self::DecimalLeadingZero,
-            "lower-roman" => Self::LowerRoman,
-            "upper-roman" => Self::UpperRoman,
-            "lower-greek" => Self::LowerGreek,
-            "lower-alpha" | "lower-latin" => Self::LowerAlpha,
-            "upper-alpha" | "upper-latin" => Self::UpperAlpha,
-            _ => return None,
-        })
-    }
-    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+    pub(super) fn from_component(value: &Component, scope: &Scope<'_>) -> Result<Self, StyleError> {
         if value.keyword() == Some(Keyword::None) {
             return Ok(Self::None);
         }
-        match value
-            .find(Label::Production(Production::CounterStyleName))
-            .map(Component::unwrap)
-        {
-            Some(Component::Ident(name)) => Self::named(name).ok_or_else(|| unsupported(value)),
-            _ => Err(unsupported(value)),
+        if let Component::String(text) = value.unwrap() {
+            return Ok(Self::String(Arc::from(&**text)));
+        }
+        Ok(match scope.resolve(value)? {
+            CounterStyle::None => Self::None,
+            style => Self::Counter(style),
+        })
+    }
+    pub(crate) fn is_none(&self) -> bool {
+        matches!(self, Self::None)
+    }
+    /// The marker string of a list item whose `list-item` counter is `ordinal`, or `None`
+    /// when there is none.
+    pub(crate) fn marker(&self, ordinal: i128, rtl: bool) -> Result<Option<String>, StyleError> {
+        match self {
+            Self::None => Ok(None),
+            Self::String(text) => Ok(Some(text.to_string())),
+            Self::Counter(style) => style.marker(ordinal, rtl).map(Some),
         }
     }
 }

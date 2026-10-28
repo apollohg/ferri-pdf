@@ -357,6 +357,9 @@ pub(crate) struct Relative<'a> {
     pub(crate) initial_font: Option<Arc<InitialFont>>,
     /// The element's used colour scheme, for `light-dark()` and system colours.
     pub(crate) color_scheme: crate::style::ColorScheme,
+    /// The document's counter styles, which `<counter-style>` values name; `None` before
+    /// any document, which leaves the predefined ones.
+    pub(crate) counter_styles: Option<Arc<crate::style::counter_style::CounterStyles>>,
 }
 impl Relative<'_> {
     /// Initial values and the default page area, for values computed without an element
@@ -376,6 +379,7 @@ impl Relative<'_> {
             initial_page_font_size: false,
             initial_font,
             color_scheme: crate::style::ColorScheme::Light,
+            counter_styles: None,
         }
     }
     pub(crate) fn media(paper: [f32; 2], font: Option<Arc<InitialFont>>) -> Self {

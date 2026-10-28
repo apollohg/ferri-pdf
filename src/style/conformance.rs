@@ -523,6 +523,7 @@ fn property_grammars_accept_generated_values_and_reject_mutations() {
                     .is_some_and(|matched| {
                         !crate::style::grid_values::valid(property, &matched)
                             || !crate::style::inert::valid(property, &matched)
+                            || !crate::style::counter_style::valid(&matched)
                     }))
             },
             &mut failures,

@@ -15,7 +15,7 @@ mod conditional;
 mod conditions;
 #[cfg(test)]
 mod conformance;
-mod counter_style;
+pub(crate) mod counter_style;
 mod counter_values;
 mod declaration;
 mod decoration_values;

@@ -95,6 +95,7 @@ pub(super) enum ContentRule {
         definitions: Vec<crate::style::feature_values::FeatureValueDefinition>,
     },
     Palette(String, Vec<Declaration>, SourceLocation),
+    CounterStyle(String, Vec<Declaration>, SourceLocation),
 }
 
 #[derive(Clone)]
@@ -162,7 +163,8 @@ impl RuleSource {
                         Rule::Style(rule) => relocate(&mut rule.source.location, &self.location),
                         Rule::Content(
                             ContentRule::Font(declarations, location)
-                            | ContentRule::Palette(_, declarations, location),
+                            | ContentRule::Palette(_, declarations, location)
+                            | ContentRule::CounterStyle(_, declarations, location),
                         ) => {
                             relocate(location, &self.location);
                             for declaration in declarations {
@@ -233,6 +235,7 @@ pub(super) enum AtRuleName {
     Font,
     FeatureValues,
     Palette,
+    CounterStyle,
     Layer,
     Scope,
     Media,
@@ -263,6 +266,7 @@ impl AtRuleName {
             "font-face" => Some(Self::Font),
             "font-feature-values" => Some(Self::FeatureValues),
             "font-palette-values" => Some(Self::Palette),
+            "counter-style" => Some(Self::CounterStyle),
             "layer" => Some(Self::Layer),
             "scope" => Some(Self::Scope),
             "media" => Some(Self::Media),
@@ -283,6 +287,7 @@ enum AtPrelude {
     Font,
     FeatureValues(Vec<String>),
     Palette(String),
+    CounterStyle(String),
     Layer(Vec<crate::style::layers::LayerName>),
     Scope(crate::style::scope::ScopePrelude),
     Conditional(crate::style::conditions::RuleQuery, bool),
@@ -973,6 +978,24 @@ fn at_prelude<'i>(
         }
         input.expect_exhausted()?;
         return Ok(AtPrelude::Palette(name.to_string()));
+    if matches!(kind, AtRuleName::CounterStyle) {
+        let source = block_source(input);
+        return match crate::style::matcher::match_value(
+            crate::style::grammar::Production::CounterStyleName.root(),
+            source,
+            &mut 0,
+            crate::style::matcher::ValueContext::Independent,
+        )
+        .map_err(|error| input.new_custom_error(error))?
+        .as_ref()
+        .map(crate::style::component::Component::unwrap)
+        {
+            Some(crate::style::component::Component::Ident(name)) => {
+                Ok(AtPrelude::CounterStyle(name.to_string()))
+            }
+            _ => Err(input
+                .new_custom_error(StyleError::Invalid(format!("counter style name: {source}")))),
+        };
     }
     input.expect_exhausted()?;
     Ok(AtPrelude::Font)
@@ -1164,6 +1187,7 @@ impl<'i> AtRuleParser<'i> for CssParser<'_> {
                 )?,
             }),
             AtPrelude::Palette(name) => Rule::Content(ContentRule::Palette(
+            AtPrelude::CounterStyle(name) => Rule::Content(ContentRule::CounterStyle(
                 name,
                 declarations(input, self.base, self.diagnostics)?,
                 SourceLocation::new(self.base, state.source_location()),
@@ -1482,6 +1506,7 @@ fn follows_conditional(source: &str) -> bool {
 enum ProbeContext {
     Style(RuleContext, bool),
     Font,
+    CounterStyle,
     Page,
     Margin,
 }
@@ -1520,6 +1545,10 @@ impl<'i> DeclarationParser<'i> for SupportProbe<'_> {
             ProbeContext::Font => {
                 crate::style::stylesheet::supports_descriptor("@font-face", &declaration)
             }
+            ProbeContext::CounterStyle => crate::style::stylesheet::supports_descriptor(
+                crate::style::counter_style::COUNTER_STYLE_AT_RULE,
+                &declaration,
+            ),
             ProbeContext::Page => {
                 crate::style::stylesheet::supports_descriptor("@page", &declaration)
             }
@@ -1555,7 +1584,10 @@ impl<'i> AtRuleParser<'i> for SupportProbe<'_> {
         }
         if matches!(
             self.context,
-            ProbeContext::Font | ProbeContext::Page | ProbeContext::Margin
+            ProbeContext::Font
+                | ProbeContext::CounterStyle
+                | ProbeContext::Page
+                | ProbeContext::Margin
         ) {
             return Err(
                 input.new_custom_error(StyleError::Invalid("at-rule in descriptor context".into()))
@@ -1581,6 +1613,7 @@ impl<'i> AtRuleParser<'i> for SupportProbe<'_> {
         )?;
         let context = match prelude {
             AtPrelude::Font => ProbeContext::Font,
+            AtPrelude::CounterStyle(_) => ProbeContext::CounterStyle,
             AtPrelude::Page(_) => ProbeContext::Page,
             AtPrelude::Scope(_) => ProbeContext::Style(rules.scoped(), rules.nested),
             _ => self.context,

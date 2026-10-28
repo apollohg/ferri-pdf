@@ -2,9 +2,13 @@ use crate::style::{
     StyleError,
     box_values::unsupported,
     component::Component,
+    counter_style::{CounterStyle, Scope},
     grammar::{Keyword, Label, Production},
     quotes::{QuoteAction, QuoteDepth, Quotes},
 };
+
+/// CSS Lists 3 §4.7: the style of `counter()` and `counters()` without one.
+const DEFAULT_COUNTER_STYLE: &str = "decimal";
 
 /// What `content()` takes from its element (CSS GCPM 3 §1.1.1).
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, serde::Serialize)]
@@ -34,8 +38,8 @@ enum GeneratedPart {
     Counter(CounterRequest),
     NamedString(NamedStringRequest),
     Target(TargetRequest),
-    Page(crate::style::ListStyleType),
-    Pages(crate::style::ListStyleType),
+    Page(CounterStyle),
+    Pages(CounterStyle),
     Element(ElementContent),
     Quote(QuoteAction),
 }
@@ -87,6 +91,7 @@ impl ComputedContent {
     pub(super) fn from_component(
         value: &Component,
         context: ContentContext,
+        scope: &Scope<'_>,
     ) -> Result<std::sync::Arc<Self>, StyleError> {
         let value = match value.keyword() {
             Some(Keyword::Normal) if context != ContentContext::BeforeAfter => {
@@ -94,10 +99,10 @@ impl ComputedContent {
             }
             Some(Keyword::Normal | Keyword::None) => Self::None,
             _ => Self::Items {
-                content: GeneratedContent::from_component(value)?
+                content: GeneratedContent::from_component(value, scope)?
                     .ok_or_else(|| unsupported(value))?,
                 alternative: alternative(value)
-                    .map(|value| GeneratedContent::from_list(&value))
+                    .map(|value| GeneratedContent::from_list(&value, scope))
                     .transpose()?,
             },
         };
@@ -129,13 +134,17 @@ const PAGES_COUNTER: &str = "pages";
 pub(crate) struct CounterRequest {
     pub name: std::sync::Arc<str>,
     pub separator: Option<std::sync::Arc<str>>,
-    pub style: crate::style::ListStyleType,
+    pub style: CounterStyle,
 }
 impl CounterRequest {
     pub(crate) fn is_page_counter(&self) -> bool {
         matches!(self.name.as_ref(), PAGE_COUNTER | PAGES_COUNTER)
     }
-    pub(crate) fn page_text(&self, page: usize, pages: usize) -> Option<String> {
+    pub(crate) fn page_text(
+        &self,
+        page: usize,
+        pages: usize,
+    ) -> Option<Result<String, StyleError>> {
         let value = match self.name.as_ref() {
             PAGE_COUNTER => page,
             PAGES_COUNTER => pages,
@@ -144,20 +153,17 @@ impl CounterRequest {
         Some(self.style.representation(value as i128))
     }
 
-    /// First-page selection needs box existence, not the numeric glyphs.
+    /// First-page selection needs box existence, not the numeric glyphs; `None` when only
+    /// the counter values can tell.
     pub(crate) fn box_generation_text(&self) -> Option<String> {
-        if self.style == crate::style::ListStyleType::None
-            && self
-                .separator
-                .as_ref()
-                .is_some_and(|separator| !separator.is_empty())
-        {
-            return None;
+        match (&self.style, &self.separator) {
+            (CounterStyle::None, Some(separator)) if !separator.is_empty() => None,
+            (CounterStyle::None, _) => Some(String::new()),
+            (style, _) if style.may_be_empty() => None,
+            (style, _) => style
+                .representation(crate::style::INITIAL_COUNTER_VALUE)
+                .ok(),
         }
-        Some(
-            self.style
-                .representation(crate::style::INITIAL_COUNTER_VALUE),
-        )
     }
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq, thiserror::Error)]
@@ -239,20 +245,23 @@ impl GeneratedContent {
     }
     /// `normal` and `none` generate nothing. Alternative text after `/` describes the content
     /// for assistive technology and does not render.
-    pub(super) fn from_component(value: &Component) -> Result<Option<Self>, StyleError> {
+    pub(super) fn from_component(
+        value: &Component,
+        scope: &Scope<'_>,
+    ) -> Result<Option<Self>, StyleError> {
         if matches!(value.keyword(), Some(Keyword::Normal | Keyword::None)) {
             return Ok(None);
         }
         let list = value
             .find(Label::Production(Production::ContentList))
             .ok_or_else(|| unsupported(value))?;
-        Self::from_list(list).map(Some)
+        Self::from_list(list, scope).map(Some)
     }
     /// A content list, such as `bookmark-label`'s (CSS GCPM 3 §1.1).
-    pub(super) fn from_list(list: &Component) -> Result<Self, StyleError> {
+    pub(super) fn from_list(list: &Component, scope: &Scope<'_>) -> Result<Self, StyleError> {
         list.items()
             .iter()
-            .map(part)
+            .map(|item| part(item, scope))
             .collect::<Result<_, _>>()
             .map(Self)
     }
@@ -487,7 +496,7 @@ impl GeneratedContent {
                             page.number as i128
                         } else {
                             page.total as i128
-                        })
+                        })?
                         .into()
                 }
                 GeneratedPart::Element(source) => {
@@ -516,7 +525,7 @@ impl GeneratedContent {
     }
 }
 
-fn part(item: &Component) -> Result<GeneratedPart, StyleError> {
+fn part(item: &Component, scope: &Scope<'_>) -> Result<GeneratedPart, StyleError> {
     match item.unwrap() {
         Component::Keyword(Keyword::OpenQuote) => Ok(GeneratedPart::Quote(QuoteAction::Open)),
         Component::Keyword(Keyword::CloseQuote) => Ok(GeneratedPart::Quote(QuoteAction::Close)),
@@ -538,12 +547,16 @@ fn part(item: &Component) -> Result<GeneratedPart, StyleError> {
                     .collect(),
             ))
         }
-        Component::Function(Keyword::Counter, Some(arguments)) => counter(arguments, item, false),
-        Component::Function(Keyword::Counters, Some(arguments)) => counter(arguments, item, true),
+        Component::Function(Keyword::Counter, Some(arguments)) => {
+            counter(arguments, item, false, scope)
+        }
+        Component::Function(Keyword::Counters, Some(arguments)) => {
+            counter(arguments, item, true, scope)
+        }
         Component::Function(
             function @ (Keyword::TargetCounter | Keyword::TargetCounters | Keyword::TargetText),
             Some(arguments),
-        ) => target(*function, arguments, item),
+        ) => target(*function, arguments, item, scope),
         Component::Function(Keyword::String, Some(arguments)) => {
             let Some(Component::Ident(name)) = arguments.items().first().map(Component::unwrap)
             else {
@@ -586,6 +599,7 @@ fn target(
     function: Keyword,
     arguments: &Component,
     item: &Component,
+    scope: &Scope<'_>,
 ) -> Result<GeneratedPart, StyleError> {
     let items = arguments.items();
     let reference = match items.first().map(Component::unwrap) {
@@ -630,24 +644,25 @@ fn target(
         TargetValue::Counter(CounterRequest {
             name,
             separator,
-            style: counter_style(arguments)?,
+            style: counter_style(arguments, scope)?,
         })
     };
     Ok(GeneratedPart::Target(TargetRequest { reference, value }))
 }
 
-fn counter_style(arguments: &Component) -> Result<crate::style::ListStyleType, StyleError> {
+fn counter_style(arguments: &Component, scope: &Scope<'_>) -> Result<CounterStyle, StyleError> {
     match arguments.find(Label::Production(Production::CounterStyle)) {
-        None => Ok(crate::style::ListStyleType::Decimal),
-        Some(style) => crate::style::ListStyleType::from_component(style),
+        None => Ok(scope.named(DEFAULT_COUNTER_STYLE)),
+        Some(style) => scope.resolve(style),
     }
 }
 
-/// Page counters use the same predefined representations as list markers.
+/// Page counters use the same counter styles as list markers.
 fn counter(
     arguments: &Component,
     item: &Component,
     multiple: bool,
+    scope: &Scope<'_>,
 ) -> Result<GeneratedPart, StyleError> {
     let Some(Component::Ident(name)) = arguments
         .find(Label::Production(Production::CounterName))
@@ -655,7 +670,7 @@ fn counter(
     else {
         return Err(unsupported(item));
     };
-    let style = counter_style(arguments)?;
+    let style = counter_style(arguments, scope)?;
     let separator = if multiple {
         Some(
             arguments
@@ -701,7 +716,9 @@ mod tests {
         )
         .unwrap()
         .expect("target grammar must accept all three reference forms");
-        let content = GeneratedContent::from_component(&value).unwrap().unwrap();
+        let content = GeneratedContent::from_component(&value, &Scope::predefined())
+            .unwrap()
+            .unwrap();
         let requests: Vec<_> = content.target_requests().collect();
         assert_eq!(requests.len(), 3);
         assert_eq!(requests[0].reference.as_ref(), "#chapter");
@@ -710,7 +727,7 @@ mod tests {
             TargetValue::Counter(CounterRequest {
                 name: "page".into(),
                 separator: None,
-                style: crate::style::ListStyleType::UpperRoman,
+                style: CounterStyle::predefined("upper-roman"),
             })
         );
         assert_eq!(requests[1].reference.as_ref(), "#part");
@@ -719,7 +736,7 @@ mod tests {
             TargetValue::Counter(CounterRequest {
                 name: "section".into(),
                 separator: Some(".".into()),
-                style: crate::style::ListStyleType::LowerAlpha,
+                style: CounterStyle::predefined("lower-alpha"),
             })
         );
         assert_eq!(requests[2].value, TargetValue::Text(ElementContent::Before));
@@ -765,7 +782,9 @@ mod tests {
         )
         .unwrap()
         .unwrap();
-        let content = GeneratedContent::from_component(&value).unwrap().unwrap();
+        let content = GeneratedContent::from_component(&value, &Scope::predefined())
+            .unwrap()
+            .unwrap();
         let mut modes = Vec::new();
         let text = content
             .page_text_with_strings(
