@@ -17,7 +17,7 @@ class SpecPackage(unittest.TestCase):
         environment = dict(os.environ, CARGO_PROFILE_DEV_DEBUG='0', CARGO_INCREMENTAL='0')
         environment.setdefault('CARGO_TARGET_DIR', str(ROOT / 'target'))
         packaged = subprocess.run(
-            ['cargo', 'package', '--offline', '--allow-dirty', '--no-verify', '-p', PACKAGE],
+            ['cargo', 'package', '--offline', '--allow-dirty', '--no-verify', '--exclude-lockfile', '-p', PACKAGE],
             cwd=ROOT, env=environment, text=True, capture_output=True)
         self.assertEqual(packaged.returncode, 0, packaged.stdout + packaged.stderr)
         archive = Path(environment['CARGO_TARGET_DIR']) / 'package' / f'{PACKAGE}-{VERSION}.crate'

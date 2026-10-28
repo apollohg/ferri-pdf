@@ -110,9 +110,22 @@ name = "ferri-pdf"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
-license.workspace = true
+# Merged from the former member packages and the inlined SVG libraries.
+license = "MIT AND Unicode-3.0 AND CC0-1.0 AND (Apache-2.0 OR MIT)"
 publish.workspace = true
-exclude = [".private/**", ".superpowers/**", "tmp/**"]
+description = "HTML and CSS to PDF renderer for print, in pure Rust"
+repository = "https://github.com/apollohg/ferri-pdf"
+include = [
+    "/build.rs",
+    "/build/**",
+    "/src/**",
+    "/spec/css/**",
+    "/spec/languages/**",
+    "/spec/cldr/**",
+    "/assets/**",
+    "/LICENSE",
+    "/README.md",
+]
 
 [lints]
 workspace = true
@@ -131,59 +144,58 @@ serde_json.workspace = true
 thiserror.workspace = true
 
 [dependencies]
-thiserror.workspace = true
-serde_json.workspace = true
-same-file.workspace = true
-krilla.workspace = true
+avif-decode.workspace = true
+base64.workspace = true
+cssparser-color.workspace = true
+cssparser.workspace = true
+data-url.workspace = true
+ego-tree.workspace = true
+encoding_rs.workspace = true
+flate2.workspace = true
 fontdb.workspace = true
-skrifa.workspace = true
-smallvec.workspace = true
-tiny-skia.workspace = true
-serde = { workspace = true, features = ["rc"] }
-rustybuzz.workspace = true
-icu_properties.workspace = true
+gif.workspace = true
+heic-decoder.workspace = true
+html5ever.workspace = true
 icu_casemap.workspace = true
 icu_locale_core.workspace = true
+icu_properties.workspace = true
+image-webp.workspace = true
+image.workspace = true
+imagesize.workspace = true
+krilla.workspace = true
+kurbo.workspace = true
+log.workspace = true
+moxcms.workspace = true
+percent-encoding.workspace = true
+png.workspace = true
+rgb.workspace = true
+roxmltree.workspace = true
+rustls-rustcrypto = { workspace = true, optional = true }
+rustybuzz.workspace = true
+same-file.workspace = true
+scraper.workspace = true
+selectors.workspace = true
+serde = { workspace = true, features = ["rc"] }
+serde_json.workspace = true
+siphasher.workspace = true
+skrifa.workspace = true
+smallvec.workspace = true
+strict-num.workspace = true
+svgtypes.workspace = true
+thiserror.workspace = true
+tiny-skia-path.workspace = true
+tiny-skia.workspace = true
+ttf-parser.workspace = true
 unicode-bidi.workspace = true
 unicode-linebreak.workspace = true
 unicode-script.workspace = true
 unicode-segmentation.workspace = true
-encoding_rs.workspace = true
-percent-encoding.workspace = true
-log.workspace = true
-rgb.workspace = true
-svgtypes.workspace = true
-gif.workspace = true
-image-webp.workspace = true
-zune-jpeg.workspace = true
-avif-decode.workspace = true
-zenavif-parse.workspace = true
-heic-decoder.workspace = true
-moxcms.workspace = true
-png.workspace = true
-image.workspace = true
-roxmltree.workspace = true
-base64.workspace = true
-data-url.workspace = true
-flate2.workspace = true
-imagesize.workspace = true
-kurbo.workspace = true
-cssparser.workspace = true
-siphasher.workspace = true
-strict-num.workspace = true
-tiny-skia-path.workspace = true
-ttf-parser.workspace = true
 unicode-vo.workspace = true
-xmlwriter.workspace = true
-
-cssparser-color.workspace = true
-html5ever.workspace = true
-scraper.workspace = true
-ego-tree.workspace = true
-selectors.workspace = true
-url.workspace = true
 ureq = { workspace = true, optional = true }
-rustls-rustcrypto = { workspace = true, optional = true }
+url.workspace = true
+xmlwriter.workspace = true
+zenavif-parse.workspace = true
+zune-jpeg.workspace = true
 
 [dev-dependencies]
 rustls = { version = "=0.23.46", default-features = false, features = ["std", "tls12"] }
