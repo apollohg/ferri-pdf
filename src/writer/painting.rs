@@ -14,6 +14,16 @@ pub(super) fn fill(color: Color) -> Result<Fill, PdfError> {
         ..Default::default()
     })
 }
+/// A solid, butt-capped, miter-joined stroke.
+pub(super) fn stroke(color: Color, width: f32) -> Result<Stroke, PdfError> {
+    let color = fill(color)?;
+    Ok(Stroke {
+        paint: color.paint,
+        opacity: color.opacity,
+        width,
+        ..Default::default()
+    })
+}
 /// Outer shadows, background colour, image layers bottom-most first, inset shadows, then
 /// borders or the border image (Backgrounds 3 §6, §7.1).
 pub(super) fn draw(
@@ -304,12 +314,7 @@ pub(super) fn draw_fill(
         }
         Shape::Stroke { contours, width } => {
             surface.set_fill(None);
-            surface.set_stroke(Some(Stroke {
-                paint: color.paint,
-                opacity: color.opacity,
-                width,
-                ..Default::default()
-            }));
+            surface.set_stroke(Some(stroke(item.color, width)?));
             surface.draw_path(&contour_path(&contours)?);
             surface.set_stroke(None);
         }

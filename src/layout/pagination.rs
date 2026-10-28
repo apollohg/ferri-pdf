@@ -864,6 +864,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 // Decorations accompany text lines, which are counted above.
                 DisplayItem::Text { .. }
                 | DisplayItem::Decoration(_)
+                | DisplayItem::TextShadow(_)
                 | DisplayItem::PushClip(_)
                 | DisplayItem::PushTransform(_)
                 | DisplayItem::PushOpacity(_)
@@ -879,6 +880,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     // Decorations accompany text lines, which are counted above.
                     DisplayItem::Text { .. }
                     | DisplayItem::Decoration(_)
+                    | DisplayItem::TextShadow(_)
                     | DisplayItem::PushClip(_)
                     | DisplayItem::PushTransform(_)
                     | DisplayItem::PushOpacity(_)
@@ -4157,16 +4159,19 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             marker.ink_bounds,
             &marker.decorations,
             None,
+            &|_, _| true,
         );
     }
 
-    /// Emits a visible text line between its decoration lines, in stacking context `layer`.
+    /// Emits a visible text line between its decoration lines, above its text shadows, in
+    /// stacking context `layer`; `decorates` tells which runs a decoration is drawn over.
     fn emit_line(
         &mut self,
         line: TextLine,
         ink_bounds: Option<[f32; 2]>,
         decorations: &[DecorationPaint],
         layer: Option<&Layer>,
+        decorates: &dyn Fn(&crate::text::GlyphRun, &DecorationPaint) -> bool,
     ) {
         let visible = |baseline| {
             ink_bounds.is_none_or(|[above, below]| {
@@ -4182,6 +4187,12 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 width: line.width,
                 height: below - above,
             });
+            let shadows = crate::layout::inline::shadow_items(
+                &line.runs,
+                decorations,
+                [line.x, line.baseline],
+                decorates,
+            );
             let [below, above] =
                 crate::layout::inline::decoration_items(decorations, line.x, line.baseline);
             self.pages[self.page].push(line);
@@ -4189,8 +4200,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 line: self.pages[self.page].len() - 1,
             };
             let (scope, group) = self.layer_scope(layer);
-            for (item, ink) in below
+            for (item, ink) in shadows
                 .into_iter()
+                .chain(below)
                 .map(|item| (item, None))
                 .chain(std::iter::once((text, ink)))
                 .chain(above.into_iter().map(|item| (item, None)))

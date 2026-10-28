@@ -10,6 +10,7 @@ mod decoration;
 mod easing;
 mod gradient;
 mod length;
+mod raster;
 mod rounded;
 mod shadow;
 #[cfg(test)]
@@ -45,9 +46,11 @@ pub(crate) use gradient::{
 pub(crate) use image::{ImageInfo, NaturalDimensions};
 pub use length::LengthPercentage;
 pub use rounded::Radii;
+pub(crate) use rounded::rounded_rect;
 mod image;
+pub(crate) use raster::{bounds as shape_bounds, cover, opaque, within};
 use serde::Serialize;
-pub(crate) use shadow::{BoxShadow, ShadowMask};
+pub(crate) use shadow::{BoxShadow, ShadowMask, blurred_shadow};
 pub use shadow::{ShadowPaint, ShadowShape};
 
 /// CSS reference pixel in PDF points.

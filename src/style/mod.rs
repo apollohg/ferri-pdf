@@ -64,6 +64,7 @@ mod stylesheet;
 mod supports;
 mod syntax;
 mod table_values;
+mod text_paint_values;
 mod text_values;
 mod transform;
 mod units;
@@ -94,7 +95,7 @@ pub(crate) use flex_values::{Alignment, FlexBasis, FlexStyle, FlexWrap, Gap};
 pub(crate) use float_values::{Clear, Float, FloatSide};
 pub(crate) use font_values::{
     FontFeatures, FontKerning, FontVariantAlternates, FontVariantCaps, FontVariantEmoji,
-    FontVariantPosition, language_system_tag,
+    FontVariantPosition, RUBY_FEATURE, language_system_tag,
 };
 pub(crate) use generated::{
     CounterRequest, ElementContent, GeneratedContent, GeneratedOutput, NamedStringMode,
@@ -130,6 +131,9 @@ pub(crate) use stylesheet::Stylesheet;
 pub(crate) use stylesheet::StylesheetSource;
 pub(crate) use table_values::{
     BorderCollapse, CaptionSide, TableLayout, TableStyle, VerticalAlign,
+};
+pub(crate) use text_paint_values::{
+    EmphasisPosition, EmphasisShape, EmphasisStyle, InheritedColor, TextPaint, TextShadow,
 };
 pub(crate) use text_values::UnicodeBidi;
 pub(crate) use text_values::{

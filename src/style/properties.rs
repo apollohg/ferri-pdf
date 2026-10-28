@@ -652,6 +652,32 @@ fn handler(property: Property) -> Option<Handler> {
                     .is_ok()
             }),
         ),
+        P::TextShadow => (
+            text_shadow,
+            Some(|v, r| {
+                crate::style::text_paint_values::text_shadows(
+                    v,
+                    r,
+                    &crate::paint::AbsoluteColor::BLACK,
+                )
+                .is_ok()
+            }),
+        ),
+        P::DashWebkitTextFillColor => (text_fill_color, Some(color_check)),
+        P::DashWebkitTextStrokeColor => (text_stroke_color, Some(color_check)),
+        P::DashWebkitTextStrokeWidth => (
+            text_stroke_width,
+            Some(|v, r| crate::style::text_paint_values::stroke_width(v, r).is_ok()),
+        ),
+        P::TextEmphasisStyle => (
+            text_emphasis_style,
+            Some(|v, _| crate::style::EmphasisStyle::from_component(v).is_ok()),
+        ),
+        P::TextEmphasisColor => (text_emphasis_color, Some(color_check)),
+        P::TextEmphasisPosition => (
+            text_emphasis_position,
+            Some(|v, _| crate::style::EmphasisPosition::from_component(v).is_ok()),
+        ),
         P::Visibility => (
             visibility,
             Some(|v, _| Visibility::from_component(v).is_ok()),
@@ -1699,6 +1725,74 @@ computed!(
             &style.computed_color,
         )?)
     }
+);
+fn color_check(value: &Component, relative: &Relative<'_>) -> bool {
+    crate::style::colors::color(value, relative, &crate::paint::AbsoluteColor::BLACK).is_ok()
+}
+/// An inherited `<color>` keeping `currentcolor` for each inheriting element to resolve.
+macro_rules! inherited_color {
+    ($name:ident, $field:ident) => {
+        fn $name(
+            style: &mut Style,
+            _parent: &Style,
+            input: Input<'_>,
+            relative: &Relative<'_>,
+        ) -> Result<(), StyleError> {
+            style.text_paint.$field = match input {
+                Input::Value(value) => {
+                    crate::style::InheritedColor::compute(value, relative, &style.computed_color)?
+                }
+                Input::Copy(source) => {
+                    let mut color = source.text_paint.$field.clone();
+                    color.resolve(relative, &style.computed_color)?;
+                    color
+                }
+            };
+            Ok(())
+        }
+    };
+}
+inherited_color!(text_fill_color, fill);
+inherited_color!(text_stroke_color, stroke_color);
+inherited_color!(text_emphasis_color, emphasis_color);
+fn text_shadow(
+    style: &mut Style,
+    _parent: &Style,
+    input: Input<'_>,
+    relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    style.text_paint.shadows = match input {
+        Input::Value(value) => {
+            crate::style::text_paint_values::text_shadows(value, relative, &style.computed_color)?
+        }
+        Input::Copy(source) => {
+            let mut shadows = source.text_paint.shadows.clone();
+            crate::style::text_paint_values::resolve_shadows(
+                &mut shadows,
+                relative,
+                &style.computed_color,
+            )?;
+            shadows
+        }
+    };
+    Ok(())
+}
+computed!(
+    text_stroke_width,
+    [text_paint.stroke_width],
+    |value, style, _parent, relative| crate::style::text_paint_values::stroke_width(
+        value, relative
+    )?
+);
+computed!(
+    text_emphasis_style,
+    [text_paint.emphasis],
+    |value, style, _parent, _relative| crate::style::EmphasisStyle::from_component(value)?
+);
+computed!(
+    text_emphasis_position,
+    [text_paint.emphasis_position],
+    |value, style, _parent, _relative| crate::style::EmphasisPosition::from_component(value)?
 );
 computed!(
     text_decoration_line,

@@ -6,6 +6,7 @@ mod painting;
 mod pixels;
 mod shadows;
 mod text;
+mod text_shadows;
 use crate::document::{DocumentMetadata, Navigation};
 use crate::fonts::{FontBook, FontId};
 use crate::graphics::DisplayItem;
@@ -193,6 +194,15 @@ pub(crate) fn encode_parts_with_diagnostics(
                                     line: *line,
                                 })?;
                             text.draw(fragment, &mut surface)?;
+                        }
+                        DisplayItem::TextShadow(shadow) => {
+                            text_shadows::draw(
+                                shadow,
+                                &mut text,
+                                part.fonts,
+                                viewport,
+                                &mut surface,
+                            )?;
                         }
                         DisplayItem::Decoration(decoration) => {
                             for fill in decoration.fills() {

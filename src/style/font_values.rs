@@ -193,6 +193,8 @@ fn variant_parts<'a>(value: &'a Component, output: &mut Vec<&'a Component>) {
 const LIGATURES: Property = Property::FontVariantLigatures;
 const NUMERIC: Property = Property::FontVariantNumeric;
 const EAST_ASIAN: Property = Property::FontVariantEastAsian;
+/// Ruby glyph variants, `font-variant-east-asian: ruby` (§6.10).
+pub(crate) const RUBY_FEATURE: FontFeature = FontFeature::on(*b"ruby");
 /// The property and OpenType features of each keyword of `font-variant-ligatures`,
 /// `-numeric` and `-east-asian` (§6.4, §6.7, §6.10).
 const KEYWORD_FEATURES: &[(Keyword, Property, &[FontFeature])] = &[
@@ -284,7 +286,7 @@ const KEYWORD_FEATURES: &[(Keyword, Property, &[FontFeature])] = &[
         EAST_ASIAN,
         &[FontFeature::on(*b"pwid")],
     ),
-    (Keyword::Ruby, EAST_ASIAN, &[FontFeature::on(*b"ruby")]),
+    (Keyword::Ruby, EAST_ASIAN, &[RUBY_FEATURE]),
 ];
 
 fn keyword_features(keyword: Keyword) -> Option<(Property, &'static [FontFeature])> {

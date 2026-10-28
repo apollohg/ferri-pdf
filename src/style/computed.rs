@@ -179,6 +179,7 @@ pub(crate) struct Style {
     pub decoration: BoxDecoration,
     pub clone_decoration: bool,
     pub text_decorations: crate::style::TextDecorations,
+    pub text_paint: crate::style::TextPaint,
     /// Line-left and line-right `text-overflow`.
     pub text_overflow: [crate::style::TextOverflow; 2],
     pub clamp: crate::style::LineClamp,
@@ -287,6 +288,7 @@ impl Default for Style {
             decoration: initial_decoration(),
             clone_decoration: false,
             text_decorations: crate::style::TextDecorations::default(),
+            text_paint: crate::style::TextPaint::default(),
             text_overflow: [crate::style::TextOverflow::Clip; 2],
             clamp: crate::style::LineClamp::default(),
             table: crate::style::TableStyle::default(),
@@ -427,6 +429,7 @@ impl Style {
             && self.font_adjustments == other.font_adjustments
             && self.rtl == other.rtl
             && self.color == other.color
+            && self.text_paint == other.text_paint
             && self.visibility == other.visibility
     }
     /// Initial `currentcolor` border, outline and column rule colours take the element's colour.
@@ -1116,6 +1119,7 @@ impl Stylesheet {
         style.decoration = initial_decoration();
         style.reset_current_colors();
         style.text_decorations.declared.color = style.color;
+        style.text_paint.resolve(&relative, &style.computed_color)?;
         Ok(relative)
     }
 

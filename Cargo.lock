@@ -603,6 +603,7 @@ dependencies = [
  "html5ever",
  "hypher",
  "icu_locale_core",
+ "icu_normalizer",
  "icu_properties",
  "image",
  "image-webp",

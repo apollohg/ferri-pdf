@@ -1,6 +1,6 @@
 use crate::fonts::{FontBook, FontId};
 use crate::layout::TextLine;
-use crate::text::PositionedGlyph;
+use crate::text::{GlyphRun, PositionedGlyph};
 use crate::writer::PdfError;
 use krilla::{
     geom::{Point, Transform},
@@ -9,9 +9,6 @@ use krilla::{
 };
 use std::collections::HashMap;
 use std::ops::Range;
-
-// Synthetic bold stroke width.
-const SYNTHETIC_BOLD_OFFSET_EM: f32 = 0.02;
 
 struct PdfGlyph<'a> {
     glyph: &'a PositionedGlyph,
@@ -78,60 +75,80 @@ impl<'a> TextWriter<'a> {
         line: &'a TextLine,
         surface: &mut Surface<'_>,
     ) -> Result<(), PdfError> {
+        let origin = [line.x, line.baseline];
         if line.runs.iter().any(|run| run.rtl || run.has_bidi_scopes()) {
-            surface.with_actual_text(&line.text, |surface| self.draw_runs(line, surface))
+            surface.with_actual_text(&line.text, |surface| {
+                self.draw_runs(&line.runs, origin, Paint::Text, surface)
+            })
         } else {
-            self.draw_runs(line, surface)
+            self.draw_runs(&line.runs, origin, Paint::Text, surface)
         }
     }
-    fn draw_runs(&mut self, line: &'a TextLine, surface: &mut Surface<'_>) -> Result<(), PdfError> {
-        for run in &line.runs {
+    /// The outlines of `runs` placed from their line's left edge and baseline `origin`, with
+    /// their strokes, filled opaquely as paths: the shape they cast as a text shadow.
+    pub(crate) fn draw_silhouette(
+        &mut self,
+        runs: &'a [GlyphRun],
+        origin: [f32; 2],
+        surface: &mut Surface<'_>,
+    ) -> Result<(), PdfError> {
+        self.draw_runs(runs, origin, Paint::Silhouette, surface)
+    }
+    fn font(&mut self, run: &GlyphRun) -> Result<Font, PdfError> {
+        let palette = run
+            .palette
+            .as_deref()
+            .map(|colors| colors.iter().copied().map(palette_color).collect())
+            .transpose()?;
+        let key = (
+            run.font_id,
+            run.variations
+                .iter()
+                .map(|variation| (variation.tag, variation.value.to_bits()))
+                .collect(),
+            palette,
+        );
+        if let Some(font) = self.embedded.get(&key) {
+            return Ok(font.clone());
+        }
+        let data = self
+            .data
+            .get_mut(run.font_id.index())
+            .ok_or(PdfError::InvalidFontId(run.font_id))?;
+        if data.is_none() {
+            let face = self
+                .fonts
+                .face(run.font_id)
+                .ok_or(PdfError::InvalidFontId(run.font_id))?;
+            *data = Some(face.data().ok_or(PdfError::InvalidFont)?.to_vec().into());
+        }
+        let coordinates: Vec<_> = run
+            .variations
+            .iter()
+            .map(|variation| (Tag::new(&variation.tag), variation.value))
+            .collect();
+        let font = Font::new_variable_with_palette(
+            data.as_ref().unwrap().clone(),
+            0,
+            &coordinates,
+            key.2.clone(),
+        )
+        .ok_or(PdfError::InvalidFont)?;
+        self.embedded.insert(key, font.clone());
+        Ok(font)
+    }
+    fn draw_runs(
+        &mut self,
+        runs: &'a [GlyphRun],
+        origin: [f32; 2],
+        paint: Paint,
+        surface: &mut Surface<'_>,
+    ) -> Result<(), PdfError> {
+        for run in runs {
             if run.font_size == 0.0 {
                 continue;
             }
-            let x = line.x + run.x;
-            let palette = run
-                .palette
-                .as_deref()
-                .map(|colors| colors.iter().copied().map(palette_color).collect())
-                .transpose()?;
-            let key = (
-                run.font_id,
-                run.variations
-                    .iter()
-                    .map(|variation| (variation.tag, variation.value.to_bits()))
-                    .collect(),
-                palette,
-            );
-            let font = if let Some(font) = self.embedded.get(&key) {
-                font.clone()
-            } else {
-                let data = self
-                    .data
-                    .get_mut(run.font_id.index())
-                    .ok_or(PdfError::InvalidFontId(run.font_id))?;
-                if data.is_none() {
-                    let face = self
-                        .fonts
-                        .face(run.font_id)
-                        .ok_or(PdfError::InvalidFontId(run.font_id))?;
-                    *data = Some(face.data().ok_or(PdfError::InvalidFont)?.to_vec().into());
-                }
-                let coordinates: Vec<_> = run
-                    .variations
-                    .iter()
-                    .map(|variation| (Tag::new(&variation.tag), variation.value))
-                    .collect();
-                let font = Font::new_variable_with_palette(
-                    data.as_ref().unwrap().clone(),
-                    0,
-                    &coordinates,
-                    key.2.clone(),
-                )
-                .ok_or(PdfError::InvalidFont)?;
-                self.embedded.insert(key, font.clone());
-                font
-            };
+            let font = self.font(run)?;
             self.glyphs.clear();
             for glyph in run.glyphs() {
                 self.glyphs.push(PdfGlyph {
@@ -141,45 +158,110 @@ impl<'a> TextWriter<'a> {
                         .ok_or(PdfError::InvalidGeometry)?,
                 });
             }
-            surface.set_fill(Some(crate::writer::painting::fill(run.color)?));
-            let oblique = run.synthesis.oblique;
-            let baseline = line.baseline + run.baseline_shift;
-            if oblique {
-                surface.push_transform(&Transform::from_row(
-                    1.0,
-                    0.0,
-                    -run.oblique_skew,
-                    1.0,
-                    run.oblique_skew * baseline,
-                    0.0,
-                ));
+            let shear = run.shear(origin[1] + run.baseline_shift);
+            if let Some([a, b, c, d, e, f]) = shear {
+                surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
             }
-            let origin = Point::from_xy(x, baseline);
-            surface.draw_glyphs(
-                origin,
-                &self.glyphs,
-                font.clone(),
-                &run.text,
-                run.font_size,
-                false,
-            );
-            if run.synthesis.bold {
-                surface.draw_glyphs(
-                    Point::from_xy(
-                        origin.x + run.font_size * SYNTHETIC_BOLD_OFFSET_EM,
-                        origin.y,
-                    ),
-                    &self.glyphs,
-                    font.clone(),
-                    &run.text,
-                    run.font_size,
-                    false,
-                );
+            for [x, y] in run.copies(origin) {
+                let pen = Point::from_xy(x, y);
+                paint_glyphs(surface, run, pen, &self.glyphs, &font, paint)?;
             }
-            if oblique {
+            if shear.is_some() {
+                surface.pop();
+            }
+            if !run.marks.is_empty() {
+                let marks = if paint == Paint::Silhouette {
+                    Paint::Silhouette
+                } else {
+                    Paint::Annotation
+                };
+                self.draw_runs(&run.marks, origin, marks, surface)?;
+            }
+            for mark in &run.mark_shapes {
+                let color = if paint == Paint::Silhouette {
+                    crate::graphics::Color::BLACK
+                } else {
+                    mark.color
+                };
+                surface.push_transform(&Transform::from_translate(origin[0], origin[1]));
+                surface.set_fill(Some(krilla::paint::Fill {
+                    rule: krilla::paint::FillRule::EvenOdd,
+                    ..crate::writer::painting::fill(color)?
+                }));
+                surface.draw_path(&crate::writer::painting::contour_path(&mark.contours)?);
                 surface.pop();
             }
         }
         Ok(())
     }
+}
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum Paint {
+    Text,
+    /// Glyphs that are not text content, such as emphasis marks, as outline paths.
+    Annotation,
+    Silhouette,
+}
+
+/// Fills a run's glyphs and strokes them with `-webkit-text-stroke` as one text object, in
+/// stroke-only or fill-then-stroke render mode. A PDF text object strokes and fills at one
+/// opacity, so a fill and stroke of different opacities stroke the outlines separately.
+/// Annotations are outline paths and silhouettes opaque ones.
+fn paint_glyphs(
+    surface: &mut Surface<'_>,
+    run: &GlyphRun,
+    origin: Point,
+    glyphs: &[PdfGlyph<'_>],
+    font: &Font,
+    paint: Paint,
+) -> Result<(), PdfError> {
+    let silhouette = paint == Paint::Silhouette;
+    let paint_color = |color| {
+        if silhouette {
+            crate::graphics::Color::BLACK
+        } else {
+            color
+        }
+    };
+    let fill = crate::writer::painting::fill(paint_color(run.color))?;
+    let stroke = run
+        .stroke
+        .map(|stroke| crate::writer::painting::stroke(paint_color(stroke.color), stroke.width))
+        .transpose()?;
+    let draw = |surface: &mut Surface<'_>, outlined: bool| {
+        surface.draw_glyphs(
+            origin,
+            glyphs,
+            font.clone(),
+            &run.text,
+            run.font_size,
+            outlined,
+        );
+    };
+    match stroke {
+        None => {
+            surface.set_fill(Some(fill));
+            draw(surface, paint != Paint::Text);
+        }
+        Some(stroke) if silhouette => {
+            surface.set_fill(Some(fill));
+            surface.set_stroke(Some(stroke));
+            draw(surface, true);
+        }
+        Some(stroke) if run.color.alpha == 0.0 || stroke.opacity == fill.opacity => {
+            surface.set_fill((run.color.alpha > 0.0).then_some(fill));
+            surface.set_stroke(Some(stroke));
+            draw(surface, false);
+        }
+        Some(stroke) => {
+            surface.set_fill(Some(fill));
+            draw(surface, false);
+            surface.set_fill(None);
+            surface.set_stroke(Some(stroke));
+            draw(surface, true);
+        }
+    }
+    surface.set_stroke(None);
+    Ok(())
 }

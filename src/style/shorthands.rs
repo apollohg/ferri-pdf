@@ -226,6 +226,10 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::LineClamp => line_clamp(&value, false)?,
         P::DashWebkitLineClamp => line_clamp(&value, true)?,
         P::DashWebkitBoxOrient => box_orient(&value)?,
+        P::DashWebkitTextStroke => slots(
+            &value,
+            &[P::DashWebkitTextStrokeWidth, P::DashWebkitTextStrokeColor],
+        ),
         P::Transition => slotted_list(&value, &TRANSITION),
         P::Animation => slotted_list(&value, &ANIMATION)
             .into_iter()
@@ -379,15 +383,19 @@ fn radius(value: &Component) -> Longhands {
 
 /// `<line-width> || <line-style> || <color>` for each side.
 fn border(value: &Component, sides: &[BorderSide]) -> Longhands {
-    sides
+    sides.iter().flat_map(|side| slots(value, side)).collect()
+}
+
+/// `||` alternatives, each setting the longhand at its position; omitted ones are initial.
+fn slots(value: &Component, properties: &[Property]) -> Longhands {
+    properties
         .iter()
-        .flat_map(|side| {
-            side.iter().enumerate().map(|(part, property)| {
-                let specified = value
-                    .slot(part)
-                    .map_or_else(initial, |slot| longhand(*property, slot));
-                (*property, specified)
-            })
+        .enumerate()
+        .map(|(part, property)| {
+            let specified = value
+                .slot(part)
+                .map_or_else(initial, |slot| longhand(*property, slot));
+            (*property, specified)
         })
         .collect()
 }

@@ -33,6 +33,7 @@ fn effect_stacks(trace: &LayoutTrace, page: usize) -> Vec<(String, Vec<String>)>
                 stack.clone(),
             )),
             DisplayItem::Image(_) => painted.push(("image".into(), stack.clone())),
+            DisplayItem::TextShadow(_) => painted.push(("text shadow".into(), stack.clone())),
             DisplayItem::Decoration(decoration) => {
                 painted.push((format!("{:?} decoration", decoration.line), stack.clone()));
             }

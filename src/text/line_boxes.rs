@@ -107,7 +107,7 @@ pub(crate) struct AtomicFragment {
 
 /// Line content in visual order, before inline box edges are inserted.
 pub(crate) enum Piece {
-    Text(GlyphRun),
+    Text(Box<GlyphRun>),
     Atomic {
         index: usize,
         offset: usize,
@@ -279,7 +279,7 @@ pub(crate) fn arrange(
         match piece {
             Piece::Text(run) => {
                 arranged.order.push(Slot::Run(arranged.runs.len()));
-                arranged.runs.push(run);
+                arranged.runs.push(*run);
             }
             Piece::Atomic {
                 index,
@@ -456,6 +456,9 @@ impl BoxMetrics {
             x_height,
         })
     }
+    pub(crate) fn line_height(&self) -> f32 {
+        self.line_height
+    }
     fn half_leading(&self) -> f32 {
         (self.line_height - self.ascent - self.descent) / 2.0
     }
@@ -619,12 +622,15 @@ pub(crate) fn align(
     for run in &line.runs {
         let span = &paragraph.spans()[run.source_span];
         let placed = placement(span.inline_box);
-        let extent = if span.style.line_height == crate::style::LineHeight::Normal {
+        let mut extent = if span.style.line_height == crate::style::LineHeight::Normal {
             run_extent(run)
         } else {
             // CSS Inline 3 excludes fallback metrics from non-normal layout bounds.
             BoxMetrics::of(context, &span.style)?.extent()
         };
+        if let Some((leading, under)) = crate::text::emphasis::leading(context, &span.style, run)? {
+            extent[usize::from(under)] += if under { leading } else { -leading };
+        }
         subtrees.include(placed, extent);
         runs.push(placed);
     }

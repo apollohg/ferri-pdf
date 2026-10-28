@@ -87,6 +87,7 @@ tiny-skia = "0.12"
 image = { version = "=0.25.10", default-features = false, features = ["png", "jpeg", "gif", "webp"] }
 cssparser = "0.37"
 roxmltree = "0.21.2"
+icu_normalizer = { version = "~2.3.0", default-features = false, features = ["compiled_data"] }
 icu_properties = { version = "~2.3.0", default-features = false, features = ["compiled_data"] }
 selectors = { package = "ferri-pdf-selectors", path = "vendor/selectors", version = "0.38" }
 krilla = { package = "ferri-pdf-krilla", path = "vendor/krilla", version = "=0.8.2", default-features = false, features = ["raster-images"] }
@@ -193,6 +194,7 @@ html5ever.workspace = true
 hypher.workspace = true
 icu_casemap.workspace = true
 icu_locale_core.workspace = true
+icu_normalizer.workspace = true
 icu_properties.workspace = true
 image-webp.workspace = true
 image.workspace = true

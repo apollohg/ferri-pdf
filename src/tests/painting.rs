@@ -421,7 +421,7 @@ fn normal_flow_block_backgrounds_are_below_all_inline_text() {
     for item in &trace.display_lists[0] {
         match item {
             DisplayItem::Text { .. } => text_seen = true,
-            DisplayItem::Image(_) | DisplayItem::Decoration(_) => {
+            DisplayItem::Image(_) | DisplayItem::Decoration(_) | DisplayItem::TextShadow(_) => {
                 panic!("text and box fixture unexpectedly emitted an image or decoration")
             }
             DisplayItem::Box(_) => assert!(

@@ -27,6 +27,7 @@ pub enum DisplayItem {
         line: usize,
     },
     Decoration(DecorationPaint),
+    TextShadow(TextShadowPaint),
     /// Clips later items until the matching `Pop`.
     PushClip(Clip),
     /// Transforms later items by affine `[a, b, c, d, e, f]` until the matching `Pop`.
@@ -38,6 +39,32 @@ pub enum DisplayItem {
     /// `Pop`; `Normal` only isolates them.
     PushBlend(BlendMode),
     Pop,
+}
+
+/// One `text-shadow` layer of a stretch of glyph runs sharing their shadows, with the text
+/// decorations drawn over them (CSS Text Decoration 3 §4).
+#[derive(Clone, Debug, Serialize)]
+pub struct TextShadowPaint {
+    /// The line's left edge and baseline, which the runs are placed from.
+    pub origin: Point,
+    pub runs: Vec<crate::text::GlyphRun>,
+    /// Decorations over the runs, shadowed only between `extent`'s left and right edges.
+    pub decorations: Vec<DecorationPaint>,
+    pub extent: [f32; 2],
+    pub offset: [f32; 2],
+    /// Blur radius; the Gaussian's standard deviation is half of it.
+    pub blur: f32,
+    pub color: Color,
+}
+impl TextShadowPaint {
+    pub(crate) fn translate(&mut self, [dx, dy]: [f32; 2]) {
+        self.origin = [self.origin[0] + dx, self.origin[1] + dy];
+        self.extent = self.extent.map(|x| x + dx);
+        for decoration in &mut self.decorations {
+            decoration.rect.x += dx;
+            decoration.rect.y += dy;
+        }
+    }
 }
 
 #[derive(Clone, Debug, Serialize)]

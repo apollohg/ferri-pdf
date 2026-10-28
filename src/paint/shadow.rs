@@ -27,11 +27,11 @@ pub struct BoxShadow {
     pub inset: bool,
 }
 impl BoxShadow {
-    fn sigma(&self) -> f32 {
+    pub(crate) fn sigma(&self) -> f32 {
         self.blur * SIGMA_PER_BLUR
     }
     /// Distance beyond the spread shape that the blurred shadow reaches.
-    fn extent(&self) -> f32 {
+    pub(crate) fn extent(&self) -> f32 {
         self.sigma() * BLUR_EXTENT_SIGMAS
     }
 }
@@ -295,6 +295,16 @@ fn blurred_mask(
     sigma: f32,
     invert: bool,
 ) -> ShadowMask {
+    blurred(region, sigma, invert, |size, pitch| {
+        shape.map_or_else(
+            || vec![0.0; size[0] * size[1]],
+            |shape| coverage(region, size, pitch, shape),
+        )
+    })
+}
+
+/// Pixels sampling `region` for a blur of standard deviation `sigma`, and their pitch.
+fn mask_grid(region: Rect, sigma: f32) -> ([usize; 2], [f32; 2]) {
     let mut density = (MASK_SIGMA_PIXELS / sigma).min(MAX_MASK_PIXELS_PER_PT);
     let pixels = region.width * region.height * density * density;
     if pixels > MAX_MASK_PIXELS {
@@ -306,10 +316,27 @@ fn blurred_mask(
         region.width / size[0] as f32,
         region.height / size[1] as f32,
     ];
-    let mut values = shape.map_or_else(
-        || vec![0.0; size[0] * size[1]],
-        |shape| coverage(region, size, pitch, shape),
-    );
+    (size, pitch)
+}
+
+/// A blurred text shadow over `region`: `coverage` gives the alpha, `0..=1`, of the
+/// unblurred shadow on a grid of `size` pixels whose pitch is in points, rows top to bottom.
+pub(crate) fn blurred_shadow(
+    region: Rect,
+    sigma: f32,
+    coverage: impl FnOnce([usize; 2], [f32; 2]) -> Vec<f32>,
+) -> ShadowMask {
+    blurred(region, sigma, false, coverage)
+}
+
+fn blurred(
+    region: Rect,
+    sigma: f32,
+    invert: bool,
+    coverage: impl FnOnce([usize; 2], [f32; 2]) -> Vec<f32>,
+) -> ShadowMask {
+    let (size, pitch) = mask_grid(region, sigma);
+    let mut values = coverage(size, pitch);
     for (axis, vertical) in [(0, false), (1, true)] {
         values = convolve(
             &values,

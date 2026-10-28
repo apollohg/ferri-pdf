@@ -6,6 +6,7 @@ mod matching;
 mod metrics;
 mod palettes;
 mod selection;
+mod silhouette;
 
 pub(crate) use feature_values::FeatureValueType;
 pub(crate) use metrics::{
@@ -15,6 +16,7 @@ pub(crate) use metrics::{
 pub(crate) use palettes::{BasePalette, FontPalette};
 pub(crate) use selection::{FaceSettings, FontAdjustments, FontFeature, FontInstance};
 pub use selection::{FontFaceStyle, FontRange, FontSelection, FontSlant, FontVariation, FontWidth};
+pub(crate) use silhouette::Silhouettes;
 
 use serde::Serialize;
 use std::sync::{Arc, OnceLock};

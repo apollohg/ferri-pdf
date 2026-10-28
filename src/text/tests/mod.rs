@@ -1,3 +1,4 @@
+mod emphasis;
 mod features;
 mod hyphenation;
 mod tailoring;

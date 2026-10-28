@@ -584,6 +584,12 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 // Runs inside translucent inline boxes paint in their boxes' groups.
                 let parts = self.split_line(&mut layers, line.runs, &line.decorations);
                 let grouped = parts.len() > 1;
+                let paragraph = layers.paragraph;
+                let decorates = |run: &crate::text::GlyphRun, decoration: &DecorationPaint| {
+                    decoration.owner.is_none_or(|owner| {
+                        paragraph.is_within(paragraph.spans()[run.source_span].inline_box, owner)
+                    })
+                };
                 for part in parts {
                     if grouped && part.runs.is_empty() && part.decorations.is_empty() {
                         continue;
@@ -603,6 +609,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                         line.ink_bounds,
                         &part.decorations,
                         part.layer.as_ref(),
+                        &decorates,
                     );
                 }
                 self.y += line.height;

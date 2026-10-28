@@ -287,15 +287,17 @@ impl<'p> ParagraphLines<'_, 'p, '_, '_> {
         if overflows {
             ellipsis::ellipsize(prepared.context, paragraph, &mut line, self.available())?;
         }
+        line.place();
+        crate::text::emphasis::place(prepared.context, paragraph, &mut line)?;
         line.ink_bounds = line
             .runs
             .iter()
+            .flat_map(|run| std::iter::once(run).chain(&run.marks))
             .filter_map(|run| {
                 run.ink_bounds
                     .map(|ink| ink.map(|y| y + run.baseline_shift))
             })
             .reduce(|[a, b], [c, d]| [a.min(c), b.max(d)]);
-        line.place();
         line.links = line_boxes::links(paragraph, &line);
         line.decorations = decoration::paint(prepared.context, paragraph, &line)?;
         Ok(line)

@@ -212,7 +212,10 @@ pub(super) fn decorate<'p>(
         }),
         source.start,
     );
-    pieces.splice(insertion..insertion, runs.into_iter().map(Piece::Text));
+    pieces.splice(
+        insertion..insertion,
+        runs.into_iter().map(|run| Piece::Text(Box::new(run))),
+    );
     Ok(Some(text))
 }
 

@@ -3,6 +3,7 @@ mod bidi;
 mod breaking;
 mod decoration;
 mod ellipsis;
+mod emphasis;
 mod features;
 mod hanging;
 mod hyphenation;
@@ -38,12 +39,14 @@ use unicode_segmentation::UnicodeSegmentation;
 
 pub(crate) use line_boxes::{AtomicFragment, AtomicMetrics, BoxFragment, LinkFragment};
 
+/// Synthetic bold draws a second copy of a run this far to the right.
+const SYNTHETIC_BOLD_OFFSET_EM: f32 = 0.02;
 /// Maximum conservative cluster-shaping and fallback-probe work in one text context.
 pub(crate) const MAX_GLYPH_MATCH_WORK: usize = 100_000_000;
 use line_boxes::{Piece, Slot};
 pub(crate) use paragraph::{ParagraphClamp, PreparedParagraph, TextPosition};
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, Debug, Serialize)]
 pub struct GlyphRun {
     pub text: String,
     /// Source coordinates refer to the containing paragraph's UTF-8 text and spans.
@@ -71,17 +74,61 @@ pub struct GlyphRun {
     /// The colours of a COLR face's palette, where `font-palette` replaces its default.
     #[serde(skip)]
     pub palette: Option<Arc<[crate::graphics::Color]>>,
+    /// The glyph fill, `-webkit-text-fill-color`.
     pub color: crate::graphics::Color,
+    pub(crate) stroke: Option<TextStroke>,
+    /// Emphasis marks over or under the run's characters, placed from the line's left edge
+    /// and baseline like the run.
+    pub(crate) marks: Vec<GlyphRun>,
+    /// Emphasis marks the UA draws as shapes where no font has their character.
+    pub(crate) mark_shapes: Vec<MarkShape>,
+    /// `text-shadow` layers, the topmost first.
+    #[serde(skip)]
+    pub(crate) shadows: Arc<[crate::style::TextShadow]>,
     #[serde(skip)]
     pub white_space: WhiteSpace,
     #[serde(skip)]
     leading: Option<f32>,
     #[serde(skip)]
     ink_bounds: Option<[f32; 2]>,
+    /// The face's horizontal glyph extremes from a glyph origin, in em.
+    #[serde(skip)]
+    ink_sides: [f32; 2],
     #[serde(skip)]
     metrics: crate::fonts::FaceMetrics,
     #[serde(skip)]
     glyphs: Vec<PositionedGlyph>,
+}
+
+/// A synthesized emphasis mark: contours filled even-odd, placed like its run.
+#[derive(Clone, Debug, Serialize)]
+pub(crate) struct MarkShape {
+    pub contours: Vec<crate::graphics::Contour>,
+    pub color: crate::graphics::Color,
+}
+impl MarkShape {
+    pub(crate) fn shape(&self) -> crate::graphics::Shape {
+        crate::graphics::Shape::Path {
+            contours: self.contours.clone(),
+            even_odd: true,
+            clip: None,
+        }
+    }
+}
+
+/// `-webkit-text-stroke`: a stroke of `width` centred on each glyph outline.
+#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
+pub(crate) struct TextStroke {
+    pub width: f32,
+    pub color: crate::graphics::Color,
+}
+impl TextStroke {
+    pub(crate) fn of(style: &Style) -> Option<Self> {
+        (style.text_paint.stroke_width > 0.0).then_some(Self {
+            width: style.text_paint.stroke_width,
+            color: style.text_paint.stroke_color.used,
+        })
+    }
 }
 
 fn script_ranges(text: &str, range: Range<usize>) -> Vec<Range<usize>> {
@@ -165,7 +212,7 @@ fn shape_line(
                 run.source_span = span;
                 run.leader = piece.leader;
             }
-            result.extend(runs.into_iter().map(Piece::Text));
+            result.extend(runs.into_iter().map(|run| Piece::Text(Box::new(run))));
         }
         Ok(result)
     };
@@ -248,6 +295,93 @@ impl PositionedGlyph {
 impl GlyphRun {
     pub fn has_bidi_scopes(&self) -> bool {
         self.bidi_scoped
+    }
+    /// Pen origins of the copies of the run drawn from its line's left edge and baseline
+    /// `origin`: synthetic bold adds a second, offset copy.
+    pub(crate) fn copies(&self, [x, y]: [f32; 2]) -> Vec<[f32; 2]> {
+        let pen = [x + self.x, y + self.baseline_shift];
+        let mut copies = vec![pen];
+        if self.synthesis.bold {
+            copies.push([pen[0] + self.font_size * SYNTHETIC_BOLD_OFFSET_EM, pen[1]]);
+        }
+        copies
+    }
+    /// The synthetic oblique shear about the run's `baseline`, as an affine `[a b c d e f]`.
+    pub(crate) fn shear(&self, baseline: f32) -> Option<[f32; 6]> {
+        self.synthesis.oblique.then(|| {
+            [
+                1.0,
+                0.0,
+                -self.oblique_skew,
+                1.0,
+                self.oblique_skew * baseline,
+                0.0,
+            ]
+        })
+    }
+    /// Each glyph and its origin, from the pen origin `pen`; y is downwards.
+    pub(crate) fn glyph_origins(&self, [x, y]: [f32; 2]) -> Vec<(&PositionedGlyph, [f32; 2])> {
+        let mut pen = x;
+        self.glyphs
+            .iter()
+            .map(|glyph| {
+                let origin = [
+                    pen + glyph.x_offset * self.font_size,
+                    y + glyph.y_offset * self.font_size,
+                ];
+                pen += glyph.advance(self.font_size);
+                (glyph, origin)
+            })
+            .collect()
+    }
+    /// A bound on the ink of the run's glyphs and strokes, drawn from its line's left edge
+    /// and baseline `origin`, within the face's global glyph box.
+    pub(crate) fn ink_rect(&self, [x, y]: [f32; 2]) -> Option<crate::graphics::Rect> {
+        let [top, bottom] = self.ink_bounds?;
+        let shear = if self.synthesis.oblique {
+            self.oblique_skew.abs() * top.abs().max(bottom.abs())
+        } else {
+            0.0
+        };
+        let bold = if self.synthesis.bold {
+            self.font_size * SYNTHETIC_BOLD_OFFSET_EM
+        } else {
+            0.0
+        };
+        let stroke = self.stroke.map_or(0.0, |stroke| stroke.width / 2.0);
+        let left = x + self.x + (self.ink_sides[0] * self.font_size).min(0.0) - shear - stroke;
+        let right = x
+            + self.x
+            + self.width
+            + (self.ink_sides[1] * self.font_size).max(0.0)
+            + shear
+            + bold
+            + stroke;
+        let top = y + self.baseline_shift + top - stroke;
+        let bottom = y + self.baseline_shift + bottom + stroke;
+        let glyphs = crate::graphics::Rect {
+            x: left,
+            y: top,
+            width: right - left,
+            height: bottom - top,
+        };
+        Some(
+            self.marks
+                .iter()
+                .filter_map(|mark| mark.ink_rect([x, y]))
+                .chain(self.mark_shapes.iter().filter_map(|mark| {
+                    crate::paint::shape_bounds(&mark.shape()).map(|rect| crate::graphics::Rect {
+                        x: rect.x + x,
+                        y: rect.y + y,
+                        ..rect
+                    })
+                }))
+                .fold(glyphs, crate::graphics::Rect::union),
+        )
+    }
+    /// The run followed by its emphasis marks.
+    pub(crate) fn with_marks(&self) -> impl Iterator<Item = &Self> {
+        std::iter::once(self).chain(&self.marks)
     }
     pub fn glyphs(&self) -> &[PositionedGlyph] {
         &self.glyphs

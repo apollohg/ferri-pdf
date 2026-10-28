@@ -1,11 +1,14 @@
 //! Inline-level boxes: atomic inline measurement (CSS 2.1 §10.3.9, §10.8.1) and the
 //! painted border boxes of inline box fragments.
 use crate::document::{BlockBox, InlineBox};
-use crate::graphics::{BoxPaint, DecorationLine, DecorationPaint, DisplayItem, Rect};
+use crate::graphics::{
+    BoxPaint, DecorationLine, DecorationPaint, DisplayItem, Point, Rect, TextShadowPaint,
+};
 use crate::layout::LayoutError;
 use crate::layout::geometry::{Edges, inline_horizontal};
 use crate::layout::measure::{MeasuredBlock, Measurer};
-use crate::text::{AtomicMetrics, BoxFragment};
+use crate::style::Display;
+use crate::text::{AtomicMetrics, BoxFragment, GlyphRun};
 
 /// An atomic inline measured in its containing block, waiting for its line position.
 #[derive(Clone)]
@@ -214,6 +217,73 @@ pub(super) fn fragment_paint(
         inline_edges: fragment.edges,
         ..BoxPaint::whole(rect, decoration)
     })
+}
+
+/// Runs this close together share one shadow.
+const SHADOW_JOIN_TOLERANCE_PT: f32 = 1.0e-3;
+
+/// `text-shadow` layers of a line at its left edge and baseline `origin`, bottom-most
+/// first: one per layer of each stretch of adjacent runs with the same shadows, covering
+/// them and the decorations that `decorates` draws over them (CSS Text Decoration 3 §4).
+pub(super) fn shadow_items(
+    runs: &[GlyphRun],
+    decorations: &[DecorationPaint],
+    origin: Point,
+    decorates: &dyn Fn(&GlyphRun, &DecorationPaint) -> bool,
+) -> Vec<DisplayItem> {
+    let mut items = Vec::new();
+    let mut start = 0;
+    while start < runs.len() {
+        let shadows = &runs[start].shadows;
+        let mut end = start + 1;
+        while end < runs.len()
+            && runs[end].shadows == *shadows
+            && (runs[end].x - runs[end - 1].x - runs[end - 1].width).abs()
+                <= SHADOW_JOIN_TOLERANCE_PT
+        {
+            end += 1;
+        }
+        let group = &runs[start..end];
+        start = end;
+        if shadows.is_empty() {
+            continue;
+        }
+        let extent = [
+            group[0].x,
+            group[group.len() - 1].x + group[group.len() - 1].width,
+        ];
+        let decorations: Vec<DecorationPaint> = decorations
+            .iter()
+            .filter(|decoration| {
+                decoration.rect.x < extent[1]
+                    && decoration.rect.x + decoration.rect.width > extent[0]
+                    && group.iter().any(|run| decorates(run, decoration))
+            })
+            .map(|decoration| DecorationPaint {
+                rect: Rect {
+                    x: decoration.rect.x + origin[0],
+                    y: decoration.rect.y + origin[1],
+                    ..decoration.rect
+                },
+                ..*decoration
+            })
+            .collect();
+        for shadow in shadows.iter().rev() {
+            if shadow.color.used.alpha <= 0.0 {
+                continue;
+            }
+            items.push(DisplayItem::TextShadow(TextShadowPaint {
+                origin,
+                runs: group.to_vec(),
+                decorations: decorations.clone(),
+                extent: extent.map(|x| x + origin[0]),
+                offset: shadow.offset,
+                blur: shadow.blur,
+                color: shadow.color.used,
+            }));
+        }
+    }
+    items
 }
 
 /// A line's decorations at its left edge `x` and `baseline`: those painted below its text,

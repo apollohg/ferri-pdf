@@ -982,6 +982,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 }
             }
             DisplayItem::Decoration(decoration) => shift(&mut decoration.rect),
+            DisplayItem::TextShadow(shadow) => shadow.translate([dx, dy]),
             DisplayItem::Text { line } => *line += place.lines,
             DisplayItem::PushClip(_)
             | DisplayItem::PushTransform(_)
