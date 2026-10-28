@@ -17,6 +17,7 @@ impl Position {
         match value.keyword() {
             Some(Keyword::Static) => Ok(Self::Static),
             Some(Keyword::Relative) => Ok(Self::Relative),
+            Some(Keyword::Sticky) => Ok(Self::Sticky),
             Some(Keyword::Absolute) => Ok(Self::Absolute),
             Some(Keyword::Fixed) => Ok(Self::Fixed),
             _ => Err(unsupported(value)),

@@ -49,6 +49,7 @@ pub(super) enum Rule {
     Content(ContentRule),
     Style(NestedRule),
     Scope(crate::style::scope::ScopePrelude, RuleSource),
+    Container(crate::style::container_queries::ContainerQuery, RuleSource),
     Declarations(Vec<Declaration>, bool),
     LayerStatement(Vec<crate::style::layers::LayerName>),
     LayerBlock(Option<crate::style::layers::LayerName>, RuleSource),
@@ -195,6 +196,7 @@ impl RuleSource {
                         }
                         Rule::LayerBlock(_, source)
                         | Rule::Scope(_, source)
+                        | Rule::Container(_, source)
                         | Rule::Conditional(_, _, source)
                         | Rule::SupportDefinition(_, source) => {
                             relocate(&mut source.location, &self.location);
@@ -239,6 +241,7 @@ pub(super) enum AtRuleName {
     Layer,
     Scope,
     Media,
+    Container,
     CustomMedia,
     Supports,
     SupportsCondition,
@@ -254,6 +257,7 @@ impl AtRuleName {
             Self::Layer
                 | Self::Scope
                 | Self::Media
+                | Self::Container
                 | Self::Supports
                 | Self::SupportsCondition
                 | Self::When
@@ -270,6 +274,7 @@ impl AtRuleName {
             "layer" => Some(Self::Layer),
             "scope" => Some(Self::Scope),
             "media" => Some(Self::Media),
+            "container" => Some(Self::Container),
             "custom-media" => Some(Self::CustomMedia),
             "supports" => Some(Self::Supports),
             "supports-condition" => Some(Self::SupportsCondition),
@@ -290,6 +295,7 @@ enum AtPrelude {
     CounterStyle(String),
     Layer(Vec<crate::style::layers::LayerName>),
     Scope(crate::style::scope::ScopePrelude),
+    Container(crate::style::container_queries::ContainerQuery),
     Conditional(crate::style::conditions::RuleQuery, bool),
     SupportDefinition(String),
     CustomMedia(String, crate::style::media::MediaQuery),
@@ -877,6 +883,11 @@ fn at_prelude<'i>(
     if matches!(kind, AtRuleName::Import) {
         return import_prelude(input, namespaces).map(AtPrelude::Import);
     }
+    if matches!(kind, AtRuleName::Container) {
+        return crate::style::container_queries::ContainerQuery::parse(block_source(input))
+            .map(AtPrelude::Container)
+            .map_err(|error| input.new_custom_error(error));
+    }
     if matches!(kind, AtRuleName::Namespace) {
         let (prefix, namespace) = crate::dom::parse_namespace(input)?;
         return Ok(AtPrelude::Namespace(prefix, namespace));
@@ -1166,6 +1177,7 @@ impl<'i> AtRuleParser<'i> for CssParser<'_> {
                 source.context = self.context.scoped();
                 Rule::Scope(scope, source)
             }
+            AtPrelude::Container(query) => Rule::Container(query, self.group(input)?),
             AtPrelude::Page(selectors) => Rule::Content(ContentRule::Page {
                 selectors,
                 items: crate::style::page_parser::page_items(
@@ -1757,8 +1769,9 @@ fn supports_block_with_namespaces(
                     pending.push((context, source, location, depth + 1));
                 }
                 Ok(ProbeItem::Checked(false)) => return Ok(false),
+                // A rule the engine does not implement is not supported.
                 Err((error, _)) => match failure(error) {
-                    StyleError::Invalid(_) => return Ok(false),
+                    StyleError::Invalid(_) | StyleError::Unsupported(_) => return Ok(false),
                     error => return Err(error),
                 },
             }

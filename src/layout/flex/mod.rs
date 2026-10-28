@@ -617,14 +617,26 @@ pub(super) fn measure<'a>(
                 height,
                 content_height,
             )?;
-            if (!column && item.cross.specified.is_none() && item.cross.maximum.is_none())
+            // A preferred aspect ratio makes an automatic cross size definite.
+            let ratio = crate::layout::ratio::PreferredRatio::of_box(
+                item.source.style(),
+                &crate::layout::geometry::Edges {
+                    padding: item.padding,
+                    border: item.border,
+                },
+            );
+            if (!column
+                && item.cross.specified.is_none()
+                && item.cross.maximum.is_none()
+                && (ratio.is_none() || stretch))
                 || (column
                     && item
                         .source
                         .style()
                         .height
                         .is_auto_block_size(item.source.image().is_some())
-                    && main == item.natural_main)
+                    && main == item.natural_main
+                    && ratio.is_none())
             {
                 measured.constrained = false;
             }
@@ -776,7 +788,7 @@ pub(super) fn measure<'a>(
         through: false,
         height,
         sizing: None,
-        constrained: vertical.definite().is_some(),
+        constrained: vertical.definite().is_some() || style.containment().size[1],
         independent: true,
         overflow_height,
         first_fragment,

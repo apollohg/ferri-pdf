@@ -219,7 +219,7 @@ fn extended_font_and_at_rule_queries_reflect_the_rendering_pipeline() {
         ("at-rule(@supports)", true),
         ("at-rule(@layer)", true),
         ("at-rule(@charset)", false),
-        ("at-rule(@container)", false),
+        ("at-rule(@container)", true),
     ] {
         assert_eq!(
             condition_size(&format!("supports {condition}"), Default::default()),

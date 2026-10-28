@@ -240,12 +240,16 @@ enum Feature {
 pub(super) struct StyleQuery(Condition<Feature>);
 impl StyleQuery {
     fn parse(source: &str) -> Result<Option<Self>, StyleError> {
+        Self::parse_general(source, Truth::False)
+    }
+    /// `<style-query>`, with `<general-enclosed>` evaluating to `general`.
+    pub(super) fn parse_general(source: &str, general: Truth) -> Result<Option<Self>, StyleError> {
         if let Some(feature) = Feature::parse(source) {
             return Ok(Some(Self(Condition::value(feature))));
         }
-        Ok(Condition::parse(source, true, Truth::False, Feature::parse)?.map(Self))
+        Ok(Condition::parse(source, true, general, Feature::parse)?.map(Self))
     }
-    fn evaluate(&self, values: &impl QueryValues) -> Result<Truth, StyleError> {
+    pub(super) fn evaluate(&self, values: &impl QueryValues) -> Result<Truth, StyleError> {
         self.0
             .try_evaluate(|feature| feature.evaluate(values).map(Truth::from))
     }

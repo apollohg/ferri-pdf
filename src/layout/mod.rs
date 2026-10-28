@@ -20,6 +20,7 @@ mod physical_pages;
 mod positioned;
 mod ratio;
 mod source;
+mod sticky;
 mod strings;
 mod tables;
 mod work;
@@ -77,12 +78,18 @@ pub(crate) fn layout(
     resolver: &dyn ResourceResolver,
 ) -> Result<LayoutTrace, LayoutError> {
     let budget = work::Budget::new(MAX_LAYOUT_WORK);
-    let LayoutPass { trace, generated } = layout_pass(document, resolver, budget.clone())?;
-    let Some(values) = generated else {
+    let LayoutPass {
+        trace,
+        generated,
+        container_sizes,
+    } = layout_pass(document, resolver, budget.clone())?;
+    let settled = document.styles().query_sizes().settled(&container_sizes);
+    if generated.is_none() && settled {
         return Ok(trace);
-    };
+    }
+    let values = generated.unwrap_or_else(|| document.generated_values());
     budget.spend(1)?;
-    let owned = document.fork_for_layout(values.clone(), resolver)?;
+    let owned = document.fork_for_layout(values.clone(), container_sizes, resolver)?;
     stabilize(owned, resolver, &budget, vec![values]).map(|(_, trace)| trace)
 }
 
@@ -101,6 +108,8 @@ pub(crate) fn layout_document(
 struct LayoutPass {
     trace: LayoutTrace,
     generated: Option<crate::document::GeneratedValues>,
+    /// The content-box size each query container measured.
+    container_sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
 }
 
 fn stabilize(
@@ -109,15 +118,35 @@ fn stabilize(
     budget: &work::Budget,
     mut previous: Vec<crate::document::GeneratedValues>,
 ) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
+    let mut measured_sizes = Vec::new();
     loop {
-        let LayoutPass { trace, generated } = layout_pass(&document, resolver, budget.clone())?;
-        let Some(values) = generated else {
-            return Ok((document, trace));
+        let LayoutPass {
+            trace,
+            generated,
+            container_sizes,
+        } = layout_pass(&document, resolver, budget.clone())?;
+        // CSS Conditional 5 §5: each container's descendants are styled with the size of
+        // the container they query, so the styles stand once a layout reproduces every size
+        // they consulted.
+        let settled = document.styles().query_sizes().settled(&container_sizes);
+        let values = match generated {
+            None if settled => return Ok((document, trace)),
+            None => document.generated_values(),
+            Some(values) => {
+                if settled && previous.contains(&values) {
+                    return Err(LayoutError::GeneratedContentCycle);
+                }
+                previous.push(values.clone());
+                values
+            }
         };
-        if previous.contains(&values) {
-            return Err(LayoutError::GeneratedContentCycle);
+        if !settled {
+            if measured_sizes.contains(&container_sizes) {
+                return Err(LayoutError::ContainerQueryCycle);
+            }
+            measured_sizes.push(container_sizes.clone());
+            document.measured_containers(container_sizes);
         }
-        previous.push(values.clone());
         budget.spend(1)?;
         document.reformat(values, resolver)?;
     }
@@ -161,6 +190,7 @@ fn layout_pass(
         spanner: None,
         unbroken: false,
         named_pages: true,
+        container_sizes: Default::default(),
     };
     let root = (document.root().style().display != crate::style::Display::None)
         .then(|| {
@@ -222,6 +252,7 @@ fn layout_pass(
         })?;
     Ok(LayoutPass {
         generated,
+        container_sizes: measurer.container_sizes,
         trace: LayoutTrace {
             page_width,
             page_height,
@@ -246,6 +277,8 @@ fn layout_pass(
 pub(crate) enum LayoutError {
     #[error("generated content resolution repeats without reaching a fixed layout")]
     GeneratedContentCycle,
+    #[error("container query sizes repeat without reaching a fixed layout")]
+    ContainerQueryCycle,
     #[error("non-finite page production geometry")]
     NonFinitePageOutputGeometry,
     #[error("non-finite page-margin geometry at {location:?}")]

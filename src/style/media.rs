@@ -4,7 +4,7 @@ use crate::style::{
     print::{
         ColorScheme, ContrastPreference, MotionPreference, PrintEnvironment, PrintPreferences,
     },
-    units::{self, Dimension, Scale},
+    units::{self, Dimension, Relative, Scale},
 };
 use cssparser::{Parser, ParserInput, Token};
 
@@ -233,6 +233,29 @@ fn spec(name: &str, paper: [f32; 2], preferences: &PrintPreferences) -> Option<F
     })
 }
 
+/// CSS Conditional 5 §6.1: the size features of a query container with content-box `size`.
+fn container_spec(name: &str, [width, height]: [f32; 2]) -> Option<FeatureSpec> {
+    Some(match name {
+        "width" | "inline-size" => FeatureSpec::number(ValueKind::Length, width.into(), false),
+        "height" | "block-size" => FeatureSpec::number(ValueKind::Length, height.into(), false),
+        "aspect-ratio" => FeatureSpec::number(
+            ValueKind::Ratio,
+            f64::from(width) / f64::from(height),
+            false,
+        ),
+        "orientation" => FeatureSpec::keywords(
+            &["portrait", "landscape"],
+            Some(if height >= width {
+                "portrait"
+            } else {
+                "landscape"
+            }),
+            false,
+        ),
+        _ => return None,
+    })
+}
+
 pub(super) struct RangeFeature {
     pub(super) kind: calc::Kind,
     pub(super) actual: f32,
@@ -331,7 +354,7 @@ impl Value {
         Some(value)
     }
 
-    fn scalar(&self, kind: ValueKind, environment: &PrintEnvironment) -> Option<f64> {
+    fn scalar(&self, kind: ValueKind, relative: &Relative<'_>) -> Option<f64> {
         match (self, kind) {
             (Self::Number { value: 0.0, .. }, ValueKind::Length) => Some(0.0),
             (
@@ -343,7 +366,7 @@ impl Value {
             ) => Some((*value).into()),
             (Self::Dimension(value, name), ValueKind::Length) => match units::dimension(name)? {
                 Dimension::Length(unit) => Some(
-                    (*value * environment.relative.per_unit(unit.scale).ok()?)
+                    (*value * relative.per_unit(unit.scale).ok()?)
                         .clamp(LITERAL_RANGE.min, LITERAL_RANGE.max)
                         .into(),
                 ),
@@ -358,15 +381,13 @@ impl Value {
             (Self::Ident(name), ValueKind::Resolution) if name == "infinite" => Some(f64::INFINITY),
             (value, ValueKind::Ratio) => {
                 let (left, right) = match value {
-                    Self::Ratio(left, right) => {
-                        (left.number(environment)?, right.number(environment)?)
-                    }
-                    _ => (value.number(environment)?, 1.0),
+                    Self::Ratio(left, right) => (left.number(relative)?, right.number(relative)?),
+                    _ => (value.number(relative)?, 1.0),
                 };
                 (kind.accepts_number(left) && kind.accepts_number(right)).then_some(left / right)
             }
             (Self::Math(_), kind) => {
-                let math = self.calculation(environment)?;
+                let math = self.calculation(relative)?;
                 let expected = match kind {
                     ValueKind::Length => calc::Kind::Length,
                     ValueKind::Resolution => calc::Kind::Resolution,
@@ -384,12 +405,12 @@ impl Value {
         }
     }
 
-    fn number(&self, environment: &PrintEnvironment) -> Option<f64> {
+    fn number(&self, relative: &Relative<'_>) -> Option<f64> {
         match self {
             Self::Number { value, .. } => Some((*value).into()),
             Self::Math(_) => {
                 let math = self
-                    .calculation(environment)?
+                    .calculation(relative)?
                     .expect(&[calc::Kind::Number])
                     .ok()?;
                 Some(math.resolve(0.0, calc::Range::ALL).into())
@@ -398,7 +419,7 @@ impl Value {
         }
     }
 
-    fn calculation(&self, environment: &PrintEnvironment) -> Option<calc::Math> {
+    fn calculation(&self, relative: &Relative<'_>) -> Option<calc::Math> {
         let Self::Math(source) = self else {
             return None;
         };
@@ -407,7 +428,7 @@ impl Value {
         let value = calc::math_function(
             input,
             calc::Context {
-                relative: &environment.relative,
+                relative,
                 percentage: None,
                 channels: &[],
             },
@@ -422,7 +443,7 @@ impl Value {
             matches!(
                 units::dimension(unit),
                 Some(Dimension::Length(units::LengthUnit {
-                    scale: Scale::Viewport(_),
+                    scale: Scale::Viewport(_) | Scale::Container(_),
                     ..
                 }))
             )
@@ -552,7 +573,40 @@ impl Feature {
                 Truth::Unknown
             };
         }
-        let Some((spec, prefix)) = self.definition(environment) else {
+        self.evaluate_with(
+            |name| spec(name, environment.paper, &environment.preferences),
+            &environment.relative,
+        )
+    }
+
+    /// CSS Conditional 5 §6.1: a size feature of a query container with content-box `size`,
+    /// relative lengths resolving against `relative`, the container's computed values.
+    pub(super) fn evaluate_container(&self, size: [f32; 2], relative: &Relative<'_>) -> Truth {
+        self.evaluate_with(|name| container_spec(name, size), relative)
+    }
+
+    /// The width and height a size container feature queries; `None` for a feature that is
+    /// not one, which no container answers.
+    pub(super) fn container_axes(&self) -> Option<[bool; 2]> {
+        self.definition_with(|name| container_spec(name, [0.0; 2]))?;
+        let name = self.name.to_ascii_lowercase();
+        let name = name
+            .strip_prefix("min-")
+            .or_else(|| name.strip_prefix("max-"))
+            .unwrap_or(&name);
+        Some(match name {
+            "width" | "inline-size" => [true, false],
+            "height" | "block-size" => [false, true],
+            _ => [true, true],
+        })
+    }
+
+    fn evaluate_with(
+        &self,
+        lookup: impl Fn(&str) -> Option<FeatureSpec>,
+        relative: &Relative<'_>,
+    ) -> Truth {
+        let Some((spec, prefix)) = self.definition_with(lookup) else {
             return Truth::Unknown;
         };
         match &self.test {
@@ -561,16 +615,13 @@ impl Feature {
                 Some(Actual::Keyword(value)) => (!matches!(value, "none" | "no-preference")).into(),
                 None => Truth::False,
             },
-            Test::Plain(value) => Self::compare(
-                &spec,
-                prefix.unwrap_or(Comparison::Equal),
-                value,
-                environment,
-            ),
+            Test::Plain(value) => {
+                Self::compare(&spec, prefix.unwrap_or(Comparison::Equal), value, relative)
+            }
             Test::Range(comparisons) => {
                 let mut result = Truth::True;
                 for (comparison, value) in comparisons {
-                    let comparison = Self::compare(&spec, *comparison, value, environment);
+                    let comparison = Self::compare(&spec, *comparison, value, relative);
                     if comparison == Truth::Unknown {
                         return Truth::Unknown;
                     }
@@ -585,13 +636,20 @@ impl Feature {
         &self,
         environment: &PrintEnvironment,
     ) -> Option<(FeatureSpec, Option<Comparison>)> {
+        self.definition_with(|name| spec(name, environment.paper, &environment.preferences))
+    }
+
+    fn definition_with(
+        &self,
+        lookup: impl Fn(&str) -> Option<FeatureSpec>,
+    ) -> Option<(FeatureSpec, Option<Comparison>)> {
         let name = self.name.to_ascii_lowercase();
         let (name, prefix) = match (name.strip_prefix("min-"), name.strip_prefix("max-")) {
             (Some(name), _) => (name, Some(Comparison::GreaterEqual)),
             (_, Some(name)) => (name, Some(Comparison::LessEqual)),
             _ => (name.as_str(), None),
         };
-        let spec = spec(name, environment.paper, &environment.preferences)?;
+        let spec = lookup(name)?;
         if prefix.is_some()
             && (!matches!(self.test, Test::Plain(_))
                 || matches!(spec.kind, ValueKind::Keywords(_) | ValueKind::Grid))
@@ -610,7 +668,7 @@ impl Feature {
         spec: &FeatureSpec,
         comparison: Comparison,
         value: &Value,
-        environment: &PrintEnvironment,
+        relative: &Relative<'_>,
     ) -> Truth {
         match spec.kind {
             ValueKind::Keywords(allowed) => {
@@ -623,7 +681,7 @@ impl Feature {
                 matches!(spec.actual,Some(Actual::Keyword(actual)) if actual==value).into()
             }
             kind => {
-                let Some(value) = value.scalar(kind, environment) else {
+                let Some(value) = value.scalar(kind, relative) else {
                     return Truth::Unknown;
                 };
                 if matches!(kind, ValueKind::Grid) && value != 0.0 && value != 1.0 {

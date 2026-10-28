@@ -272,6 +272,21 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
             [P::ScrollPaddingInlineStart, P::ScrollPaddingInlineEnd],
         ),
         P::InterestDelay => pair(&value, [P::InterestDelayStart, P::InterestDelayEnd]),
+        // CSS Conditional 5 §5.3: an omitted `container-type` is its initial value.
+        P::Container => {
+            let names = value
+                .find(Label::Property(P::ContainerName))
+                .ok_or_else(|| StyleError::Invalid(format!("container without names: {value}")))?;
+            vec![
+                (P::ContainerName, longhand(P::ContainerName, names)),
+                (
+                    P::ContainerType,
+                    value
+                        .find(Label::Property(P::ContainerType))
+                        .map_or_else(initial, |kind| longhand(P::ContainerType, kind)),
+                ),
+            ]
+        }
         // CSS Sizing 4 §5.2: one value applies to both axes.
         P::ContainIntrinsicSize => {
             let items = value.items();

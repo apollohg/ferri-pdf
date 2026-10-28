@@ -378,10 +378,14 @@ impl StyledDocument {
     pub(crate) fn fork_for_layout(
         &self,
         values: GeneratedValues,
+        container_sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
         resolver: &dyn ResourceResolver,
     ) -> Result<Self, DocumentError> {
         let source = self.source.clone();
         let mut styles = self.styles.fork_for_layout();
+        if !self.styles.query_sizes().settled(&container_sizes) {
+            styles.query_sizes_mut().measured(container_sizes);
+        }
         let formatting::Formatted {
             root,
             navigation,
@@ -402,6 +406,19 @@ impl StyledDocument {
             pages,
             source,
         })
+    }
+
+    /// The generated values the current formatting resolved.
+    pub(crate) fn generated_values(&self) -> GeneratedValues {
+        self.generated.values()
+    }
+
+    /// Restyling uses the query container sizes a layout measured.
+    pub(crate) fn measured_containers(
+        &mut self,
+        sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
+    ) {
+        self.styles.query_sizes_mut().measured(sizes);
     }
 
     pub(crate) fn reformat(

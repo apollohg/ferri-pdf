@@ -4,7 +4,7 @@
 use super::{
     ActiveBox, BreakRequest, Container, Effect, EffectNode, FLOW_LEVEL, FRAGMENTATION_TOLERANCE_PT,
     FlowCursor, Fragmentainers, OrderSnapshots, PaginationState, Paginator, PaintKey, PaintOrder,
-    PaintOrders, Pending, ScopedPaint, SlicedBox, overflows,
+    PaintOrders, Pending, ScopedPaint, SlicedBox, StickyConstraints, overflows,
 };
 use crate::graphics::{Border, BoxDecoration, BoxPaint, DisplayItem, Rect};
 use crate::layout::{
@@ -479,6 +479,7 @@ struct ColumnOutput<'a> {
     /// Columns holding content, between which rules are drawn (§4).
     content: Vec<bool>,
     clips: Vec<EffectNode<'a>>,
+    sticky: Vec<StickyConstraints>,
     sliced: Vec<SlicedBox<'a>>,
     /// Absolutely positioned and fixed boxes whose containing block is outside the columns.
     pending: Vec<Pending<'a>>,
@@ -526,6 +527,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 transform_node: None,
                 clip_rect_node: None,
                 parent_3d_node: None,
+                sticky_node: None,
+                sticky_children: Vec::new(),
+                sticky_scrolled: Vec::new(),
                 paint: None,
                 fragments: Vec::new(),
                 start_space: 0.0,
@@ -565,6 +569,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             flow_content: self.flow_content,
             content,
             clips: self.clips,
+            sticky: self.sticky,
             sliced: self.sliced,
             pending,
             orders: self.orders.snapshot(),
@@ -899,11 +904,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 slots,
             };
             for paint in std::mem::take(&mut output.display_lists[column]) {
-                let paint = self.adopt(paint, &output.clips, &place, &mut effects);
+                let paint = self.adopt(paint, &output.clips, &output.sticky, &place, &mut effects);
                 self.display_lists[page].push(paint);
             }
             for paint in std::mem::take(&mut output.foreground[column]) {
-                let paint = self.adopt(paint, &output.clips, &place, &mut effects);
+                let paint = self.adopt(paint, &output.clips, &output.sticky, &place, &mut effects);
                 self.foreground[page].push(paint);
             }
             self.flow_content[page] |= output.flow_content[column];
@@ -917,12 +922,18 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 pending.position.right += shift[0];
                 pending.position.y += shift[1];
                 pending.group = match pending.group {
-                    Some(group) => Some(self.effect(&output.clips, group, &place, &mut effects)),
+                    Some(group) => Some(self.effect(
+                        &output.clips,
+                        &output.sticky,
+                        group,
+                        &place,
+                        &mut effects,
+                    )),
                     None => self.group,
                 };
-                pending.parent_3d = pending
-                    .parent_3d
-                    .map(|node| self.effect(&output.clips, node, &place, &mut effects));
+                pending.parent_3d = pending.parent_3d.map(|node| {
+                    self.effect(&output.clips, &output.sticky, node, &place, &mut effects)
+                });
                 self.enqueue(pending);
             }
         }
@@ -962,6 +973,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         &mut self,
         mut paint: ScopedPaint,
         nodes: &[EffectNode<'a>],
+        sticky: &[StickyConstraints],
         place: &Placement,
         effects: &mut HashMap<(usize, Option<usize>), usize>,
     ) -> ScopedPaint {
@@ -993,11 +1005,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         paint.ink.as_mut().map(shift);
         // Items outside the columns' own effects take those enclosing the flow.
         paint.clip = match paint.clip {
-            Some(node) => Some(self.effect(nodes, node, place, effects)),
+            Some(node) => Some(self.effect(nodes, sticky, node, place, effects)),
             None => self.clip,
         };
         paint.group = match paint.group {
-            Some(node) => Some(self.effect(nodes, node, place, effects)),
+            Some(node) => Some(self.effect(nodes, sticky, node, place, effects)),
             None => self.group,
         };
         paint
@@ -1008,6 +1020,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     fn effect(
         &mut self,
         nodes: &[EffectNode<'a>],
+        sticky: &[StickyConstraints],
         node: usize,
         place: &Placement,
         effects: &mut HashMap<(usize, Option<usize>), usize>,
@@ -1019,7 +1032,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             return index;
         }
         let parent = match source.parent {
-            Some(parent) => Some(self.effect(nodes, parent, place, effects)),
+            Some(parent) => Some(self.effect(nodes, sticky, parent, place, effects)),
             None if group => self.group,
             None => self.clip,
         };
@@ -1028,12 +1041,14 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         {
             self.isolate(parent);
         }
-        let fragments = source
-            .fragments
-            .iter()
-            .filter(|(column, _)| !group && *column == place.column)
-            .map(|(_, slot)| (place.page, place.slots + slot))
-            .collect();
+        let adopt_fragments = |fragments: &[(usize, usize)]| -> Vec<(usize, usize)> {
+            fragments
+                .iter()
+                .filter(|(column, _)| !group && *column == place.column)
+                .map(|(_, slot)| (place.page, place.slots + slot))
+                .collect()
+        };
+        let fragments = adopt_fragments(&source.fragments);
         let areas = source
             .areas
             .iter()
@@ -1046,8 +1061,19 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             })
             .collect();
         let effect = match source.effect {
-            Effect::Transform(style, Some(placement)) => {
-                Effect::Transform(style, Some(self.effect(nodes, placement, place, effects)))
+            Effect::Transform(style, Some(placement)) => Effect::Transform(
+                style,
+                Some(self.effect(nodes, sticky, placement, place, effects)),
+            ),
+            Effect::Sticky(style, index) => {
+                let constraints = &sticky[index];
+                let adopted = StickyConstraints {
+                    containing: adopt_fragments(&constraints.containing),
+                    scrollport: constraints.scrollport.as_deref().map(adopt_fragments),
+                    ..constraints.clone()
+                };
+                self.sticky.push(adopted);
+                Effect::Sticky(style, self.sticky.len() - 1)
             }
             effect => effect,
         };

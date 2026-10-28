@@ -44,6 +44,8 @@ pub(super) struct StyleRule {
     pub(super) selectors: Vec<RuleSelector>,
     pub(super) declarations: Vec<PropertyDeclaration>,
     pub(super) scope: Option<usize>,
+    /// The innermost enclosing `@container` rule.
+    pub(super) container: Option<usize>,
     pub(super) tree_context: crate::dom::TreeContext,
     pub(super) encapsulation_order: usize,
 }
@@ -56,6 +58,8 @@ pub(crate) struct Stylesheet {
     pub(super) rules: Vec<StyleRule>,
     pub(super) layers: LayerTree,
     pub(super) scopes: Vec<crate::style::scope::Scope>,
+    pub(super) container_rules: Vec<crate::style::container_queries::ContainerRule>,
+    pub(super) query_sizes: crate::style::QuerySizes,
     source_diagnostics: Vec<SourceDiagnostic>,
     pub(super) paper: [f32; 2],
     pub(super) document_base: ResourceBase,
@@ -277,6 +281,8 @@ impl Stylesheet {
             rules: self.rules.clone(),
             layers: self.layers.clone(),
             scopes: self.scopes.clone(),
+            container_rules: self.container_rules.clone(),
+            query_sizes: self.query_sizes.clone(),
             source_diagnostics: Vec::new(),
             paper: self.paper,
             document_base: self.document_base.clone(),
@@ -385,6 +391,7 @@ impl Stylesheet {
             mut layers,
             mut scopes,
             style_scopes,
+            container_rules,
             conditions,
             environment,
             diagnostics,
@@ -402,6 +409,9 @@ impl Stylesheet {
             }
             let parent = scopes[rule.scope].expect("an active rule has an active enclosing layer");
             match rule.kind {
+                // CSS Conditional 5 §5.4: page contexts have no query container, so their rules
+                // inside `@container` never apply; name-defining rules are unconditional.
+                PendingKind::Content(ContentRule::Page { .. }) if rule.container.is_some() => {}
                 PendingKind::Content(content_rule) => content.push((
                     content_rule,
                     rule.base,
@@ -410,6 +420,7 @@ impl Stylesheet {
                     rule.condition
                         .is_some_and(|index| applicable[index].paper_dependent),
                     rule.style_scope,
+                    rule.container,
                     rule.tree_scope,
                     rule.encapsulation_order,
                 )),
@@ -450,6 +461,8 @@ impl Stylesheet {
             rules: Vec::new(),
             layers,
             scopes: style_scopes,
+            container_rules,
+            query_sizes: crate::style::QuerySizes::default(),
             source_diagnostics,
             paper: settings.paper,
             document_base: document_base.clone(),
@@ -482,6 +495,7 @@ impl Stylesheet {
                 node,
                 paper_qualified,
                 scope,
+                container,
                 tree_scope,
                 encapsulation_order,
             ),
@@ -501,6 +515,7 @@ impl Stylesheet {
                     sheet.rules.push(StyleRule {
                         selectors,
                         scope,
+                        container,
                         tree_context: crate::style::selector::tree_context(origin, tree_scope),
                         encapsulation_order,
                         declarations: parsed(

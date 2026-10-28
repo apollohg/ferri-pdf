@@ -106,6 +106,7 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
             spanner: None,
             unbroken: false,
             named_pages: true,
+            container_sizes: Default::default(),
         };
         let measured = measurer
             .block(

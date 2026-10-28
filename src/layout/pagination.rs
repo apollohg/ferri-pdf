@@ -195,6 +195,8 @@ enum Effect<'a> {
     /// The box's transform about its fragment's reference box, placed by its parent's
     /// `Parent3d` node.
     Transform(&'a crate::style::Style, Option<usize>),
+    /// A sticky box's shift on each page, constrained by `Paginator::sticky` entry `usize`.
+    Sticky(&'a crate::style::Style, usize),
     /// The perspective and 3D rendering context a box gives its transformed children, resolved
     /// from its fragment on each page; never an enclosing effect.
     Parent3d(&'a crate::style::Style),
@@ -455,6 +457,11 @@ struct ActiveBox<'a> {
     transform_node: Option<usize>,
     clip_rect_node: Option<usize>,
     parent_3d_node: Option<usize>,
+    sticky_node: Option<usize>,
+    /// `Paginator::sticky` entries whose containing block, and whose nearest scroll
+    /// container, this box is.
+    sticky_children: Vec<usize>,
+    sticky_scrolled: Vec<usize>,
     paint: Option<(BoxPaint, usize)>,
     fragments: Vec<(usize, usize)>,
     start_space: f32,
@@ -477,6 +484,17 @@ impl ActiveBox<'_> {
             placement.record(page, top, paint, geometry, last);
         }
     }
+}
+
+/// What constrains a sticky box (CSS Position 3 §3.4): its margins, the fragments of its
+/// containing block, and those of its nearest scroll container, whose padding boxes are the
+/// scrollports; without one the page area is.
+#[derive(Clone, Default)]
+pub(super) struct StickyConstraints {
+    margins: [f32; 4],
+    containing_rtl: bool,
+    containing: Vec<(usize, usize)>,
+    scrollport: Option<Vec<(usize, usize)>>,
 }
 
 #[derive(Clone)]
@@ -692,6 +710,8 @@ pagination_state! {
     canvas_rect: Rect,
     bottom_reserve: f32,
     sliced: Vec<SlicedBox<'a>>,
+    /// What constrains each sticky box, indexed by `Effect::Sticky`.
+    sticky: Vec<StickyConstraints>,
     open_slices: HashMap<*const crate::style::Style, usize>,
 }
 impl<M> PaginationState<'_, '_, M> {
@@ -791,6 +811,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             canvas_rect,
             bottom_reserve: 0.0,
             sliced: Vec::new(),
+            sticky: Vec::new(),
             open_slices: HashMap::new(),
         };
         paginator.canvas(0);
@@ -853,6 +874,46 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     fn current_page_has_ink(&self) -> bool {
         self.page_has_ink(self.page)
     }
+    /// The shift of sticky box fragment `paint` on `page`, once every box has its fragments.
+    fn sticky_shift(
+        &self,
+        style: &crate::style::Style,
+        constraints: &StickyConstraints,
+        page: usize,
+        paint: &BoxPaint,
+    ) -> [f32; 2] {
+        let fragment = |fragments: &[(usize, usize)]| {
+            fragments
+                .iter()
+                .find(|(fragment_page, _)| *fragment_page == page)
+                .and_then(|&(_, slot)| match &self.display_lists[page][slot].item {
+                    DisplayItem::Box(paint) => Some(paint.clone()),
+                    _ => None,
+                })
+        };
+        let Some(containing) = fragment(&constraints.containing) else {
+            return [0.0; 2];
+        };
+        let scrollport = match &constraints.scrollport {
+            Some(fragments) => match fragment(fragments) {
+                Some(scroller) => scroller.inner_clip([0.0; 4], [true; 2]).rect,
+                None => return [0.0; 2],
+            },
+            None => match &self.fragmentainers {
+                Fragmentainers::Pages(pages) => pages.records[page].geometry.content_box(),
+                Fragmentainers::Columns(_) => self.canvas_rect,
+            },
+        };
+        crate::layout::sticky::offset(
+            style,
+            paint.rect,
+            constraints.margins,
+            containing.inner_clip(containing.padding, [true; 2]).rect,
+            scrollport,
+            constraints.containing_rtl,
+        )
+    }
+
     fn page_has_ink(&self, page: usize) -> bool {
         let page_rect = self.fragmentainers.rect(page);
         !self.pages[page].is_empty()
@@ -1576,6 +1637,16 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     }
     fn start_block(&mut self, block: MeasuredBlock<'a>) -> Result<BlockFrame<'a>, LayoutError> {
         let mut block = self.refresh_block(block)?;
+        if let Some(element) = block.source.query_container() {
+            let vertical = block.geometry.padding[0]
+                + block.geometry.padding[2]
+                + block.geometry.border[0]
+                + block.geometry.border[2];
+            self.measurer
+                .container_sizes
+                .entry(element)
+                .or_insert([block.geometry.width, (block.height - vertical).max(0.0)]);
+        }
         let track_overflow = (block.grid.is_some() && block.style.contains_absolute())
             || self
                 .boxes
@@ -1642,6 +1713,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let grouped = owns_wrapper_properties && block.style.is_grouped();
         let isolated = owns_wrapper_properties && block.style.forced_stacking_context();
         let containing = owns_wrapper_properties && block.style.contains_absolute();
+        let sticky = owns_wrapper_properties && block.style.position == Position::Sticky;
         if transformed
             && (block.style.perspective.is_some() || block.style.preserves_3d())
             && (block.style.multicol.is_multicol() || block.style.display.is_table())
@@ -1691,6 +1763,31 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             });
             paginator.clips.len() - 1
         };
+        let sticky_node = (sticky && block.paint.is_some()).then(|| {
+            let index = self.sticky.len();
+            let scrolled = self.boxes.iter().rposition(|active| {
+                active
+                    .geometry
+                    .as_ref()
+                    .is_some_and(|geometry| geometry.source.style().is_scroll_container())
+            });
+            self.sticky.push(StickyConstraints {
+                margins: block.geometry.margin.map(|margin| margin.unwrap_or(0.0)),
+                containing_rtl: block.geometry.containing_rtl,
+                containing: Vec::new(),
+                scrollport: scrolled.map(|_| Vec::new()),
+            });
+            if let Some(parent) = self.boxes.last_mut() {
+                parent.sticky_children.push(index);
+            }
+            if let Some(scrolled) = scrolled {
+                self.boxes[scrolled].sticky_scrolled.push(index);
+            }
+            effect_node(self, Effect::Sticky(block.style, index))
+        });
+        if sticky_node.is_some() {
+            self.clip = sticky_node;
+        }
         let transform_node =
             (owns_wrapper_properties && block.style.is_transformed() && block.paint.is_some())
                 .then(|| {
@@ -1835,6 +1932,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             transform_node,
             clip_rect_node,
             parent_3d_node,
+            sticky_node,
+            sticky_children: Vec::new(),
+            sticky_scrolled: Vec::new(),
             paint,
             fragments,
             start_space: block.start_space,
@@ -2053,11 +2153,18 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             active.transform_node,
             active.clip_rect_node,
             active.parent_3d_node,
+            active.sticky_node,
         ]
         .into_iter()
         .flatten()
         {
             self.clips[node].fragments.clone_from(&active.fragments);
+        }
+        for &index in &active.sticky_children {
+            self.sticky[index].containing.clone_from(&active.fragments);
+        }
+        for &index in &active.sticky_scrolled {
+            self.sticky[index].scrollport = Some(active.fragments.clone());
         }
         for &(page, slot) in &active.fragments {
             if page > self.page
@@ -2359,7 +2466,10 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     reference_box: None,
                     axes: [true; 2],
                 }),
-                Effect::Transform(..) | Effect::Parent3d(_) | Effect::Group(_) => None,
+                Effect::Transform(..)
+                | Effect::Sticky(..)
+                | Effect::Parent3d(_)
+                | Effect::Group(_) => None,
             };
             match node.effect {
                 Effect::Clip(_)
@@ -2390,6 +2500,12 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         if let Some(matrix) = style.transform_matrix(&areas, parent.as_ref())? {
                             node_regions.push((page, Region::Transform(matrix)));
                         }
+                    }
+                }
+                Effect::Sticky(style, index) => {
+                    for (page, paint) in node.fragments.iter().filter_map(fragment) {
+                        let [x, y] = self.sticky_shift(style, &self.sticky[index], page, paint);
+                        node_regions.push((page, Region::Transform([1.0, 0.0, 0.0, 1.0, x, y])));
                     }
                 }
                 Effect::Parent3d(_) | Effect::Group(_) => {}
@@ -2493,7 +2609,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             fragments: active.fragments.clone(),
             areas,
             rtl,
-            clip: active.clip_node.or(active.transform_node).or(active.clip),
+            clip: active
+                .clip_node
+                .or(active.transform_node)
+                .or(active.sticky_node)
+                .or(active.clip),
         };
         let pending = std::mem::take(&mut active.pending);
         let track_overflow = active.overflow.is_some() && !pending.is_empty();
@@ -3917,6 +4037,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     active.transform_node,
                     active.clip_rect_node,
                     active.parent_3d_node,
+                    active.sticky_node,
                 ]
                 .into_iter()
                 .flatten()

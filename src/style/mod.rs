@@ -16,6 +16,7 @@ mod conditional;
 mod conditions;
 #[cfg(test)]
 mod conformance;
+mod container_queries;
 mod containment;
 pub(crate) mod counter_style;
 mod counter_values;
@@ -88,6 +89,7 @@ pub(crate) use box_values::{
     BoxSizing, BreakBetween, BreakInside, Display, LengthPercentage, Size, Visibility,
 };
 pub(crate) use computed::Style;
+pub(crate) use container_queries::{QueryContainers, QuerySizes};
 pub(crate) use containment::{
     Contain, ContainIntrinsicSize, ContainerType, ContainmentStyle, ContentVisibility,
 };

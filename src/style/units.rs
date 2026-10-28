@@ -49,6 +49,9 @@ pub(crate) enum Scale {
     /// The root element's font.
     Root(FontUnit),
     Viewport(Axis),
+    /// The nearest query container's content box in the axis, or else the small viewport
+    /// (CSS Conditional 5 §7).
+    Container(Axis),
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -363,6 +366,9 @@ pub(crate) struct Relative<'a> {
     /// The element's computed `accent-color`, which `AccentColor` takes (CSS Color 4 §6.2);
     /// `None` is `auto`.
     pub(crate) accent_color: Option<crate::paint::AbsoluteColor>,
+    /// The element's inclusive-ancestor query containers, and the sizes they measure.
+    pub(crate) containers: crate::style::QueryContainers,
+    pub(crate) query_sizes: Option<&'a crate::style::QuerySizes>,
 }
 impl Relative<'_> {
     /// Initial values and the default page area, for values computed without an element
@@ -384,6 +390,8 @@ impl Relative<'_> {
             color_scheme: crate::style::ColorScheme::Light,
             counter_styles: None,
             accent_color: None,
+            containers: crate::style::QueryContainers::default(),
+            query_sizes: None,
         }
     }
     pub(crate) fn media(paper: [f32; 2], font: Option<Arc<InitialFont>>) -> Self {
@@ -411,6 +419,21 @@ impl Relative<'_> {
             Scale::Font(unit) => self.font.per_unit(unit)?,
             Scale::Root(unit) => self.root.per_unit(unit)?,
             Scale::Viewport(axis) => self.viewport.dimension(axis)? / PERCENT,
+            Scale::Container(axis) => self.container_dimension(axis)? / PERCENT,
+        })
+    }
+    /// CSS Conditional 5 §7: each axis without an eligible container uses the small viewport.
+    fn container_dimension(&self, axis: Axis) -> Result<f32, StyleError> {
+        let [inline, block] = self
+            .query_sizes
+            .map_or([None; 2], |sizes| self.containers.unit_basis(sizes));
+        let inline = inline.map_or_else(|| self.viewport.dimension(Axis::Width), Ok)?;
+        let block = block.map_or_else(|| self.viewport.dimension(Axis::Height), Ok)?;
+        Ok(match axis {
+            Axis::Width => inline,
+            Axis::Height => block,
+            Axis::Min => inline.min(block),
+            Axis::Max => inline.max(block),
         })
     }
 }
@@ -438,11 +461,13 @@ const fn font(name: &'static str, unit: FontUnit) -> (&'static str, Dimension) {
 const fn root(name: &'static str, unit: FontUnit) -> (&'static str, Dimension) {
     length(name, Scale::Root(unit))
 }
-/// Paged media has no dynamic toolbars, so small, large and dynamic viewports coincide; the
-/// only writing mode is horizontal, so the inline axis is the width; and without query
-/// containers, container units use the small viewport (CSS Containment 3 §6).
+/// Paged media has no dynamic toolbars, so small, large and dynamic viewports coincide, and
+/// the only writing mode is horizontal, so the inline axis is the width.
 const fn viewport(name: &'static str, axis: Axis) -> (&'static str, Dimension) {
     length(name, Scale::Viewport(axis))
+}
+const fn container(name: &'static str, axis: Axis) -> (&'static str, Dimension) {
+    length(name, Scale::Container(axis))
 }
 
 const DIMENSIONS: &[(&str, Dimension)] = &[
@@ -495,12 +520,12 @@ const DIMENSIONS: &[(&str, Dimension)] = &[
     viewport("svmax", Axis::Max),
     viewport("lvmax", Axis::Max),
     viewport("dvmax", Axis::Max),
-    viewport("cqw", Axis::Width),
-    viewport("cqh", Axis::Height),
-    viewport("cqi", Axis::Width),
-    viewport("cqb", Axis::Height),
-    viewport("cqmin", Axis::Min),
-    viewport("cqmax", Axis::Max),
+    container("cqw", Axis::Width),
+    container("cqh", Axis::Height),
+    container("cqi", Axis::Width),
+    container("cqb", Axis::Height),
+    container("cqmin", Axis::Min),
+    container("cqmax", Axis::Max),
     ("s", Dimension::Time(1.0)),
     ("ms", Dimension::Time(SECONDS_PER_MILLISECOND)),
     ("hz", Dimension::Frequency(1.0)),

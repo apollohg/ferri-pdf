@@ -224,8 +224,13 @@ impl<'a> Geometry<'a> {
             }
             let parent = self.parent_style(context);
             let (style, values) = match target.pseudo {
-                Some(pseudo) => self.sheet.prepare_pseudo(element, &parent, pseudo)?,
-                None => self.sheet.prepare_element(element, &parent)?,
+                Some(pseudo) => {
+                    self.sheet
+                        .prepare_pseudo(element, &parent, pseudo, self.resolver)?
+                }
+                None => self
+                    .sheet
+                    .prepare_element(element, &parent, self.resolver)?,
             };
             self.tree_contexts
                 .borrow_mut()
@@ -797,6 +802,8 @@ impl<'a> Geometry<'a> {
                 color_scheme,
                 counter_styles: Some(self.sheet.counter_styles.clone()),
                 accent_color: inherited.accent_color,
+                containers: inherited.containers.clone(),
+                query_sizes: inherited.query_sizes,
             });
         }
         compute(&Relative {
@@ -824,6 +831,8 @@ impl<'a> Geometry<'a> {
             color_scheme,
             counter_styles: Some(self.sheet.counter_styles.clone()),
             accent_color: None,
+            containers: Default::default(),
+            query_sizes: Some(&self.sheet.query_sizes),
         })
     }
 
@@ -1170,6 +1179,8 @@ impl<'a> Geometry<'a> {
                         ),
                         counter_styles: Some(self.sheet.counter_styles.clone()),
                         accent_color: None,
+                        containers: Default::default(),
+                        query_sizes: None,
                     };
                     crate::style::page_values::page_dimension(
                         &value,
@@ -1564,7 +1575,7 @@ impl Stylesheet {
         side: &crate::style::page_selection::SelectFirstPageSide<'_>,
     ) -> Result<Style, StyleError> {
         let element = document.root_element();
-        let (style, values) = self.prepare_element(element, &Style::default())?;
+        let (style, values) = self.prepare_element(element, &Style::default(), resolver)?;
         let mut graph = Geometry::new(
             self,
             resolver,
@@ -1608,7 +1619,7 @@ impl Stylesheet {
         element: Element<'_>,
         resolver: &dyn ResourceResolver,
     ) -> Result<Style, StyleError> {
-        let (style, values) = self.prepare_element(element, &Style::default())?;
+        let (style, values) = self.prepare_element(element, &Style::default(), resolver)?;
         let root = Computed::new(style, values)?;
         let mut graph = Geometry::new(
             self,

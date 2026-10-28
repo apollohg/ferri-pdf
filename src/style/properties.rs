@@ -1049,10 +1049,7 @@ fn handler(property: Property) -> Option<Handler> {
             contain,
             Some(|v, _| crate::style::Contain::from_component(v).is_ok()),
         ),
-        P::ContainerType => (
-            container_type,
-            Some(|v, _| crate::style::ContainerType::from_component(v).is_ok()),
-        ),
+        P::ContainerType => (container_type, Some(|_, _| true)),
         P::ContainerName => (
             container_name,
             Some(|v, _| crate::style::containment::container_names(v).is_ok()),
@@ -1650,7 +1647,7 @@ computed!(
 computed!(
     container_type,
     [containment.container_type],
-    |value, style, _parent, _relative| { crate::style::ContainerType::from_component(value)? }
+    |value, style, _parent, _relative| { crate::style::ContainerType::from_component(value) }
 );
 computed!(
     container_name,

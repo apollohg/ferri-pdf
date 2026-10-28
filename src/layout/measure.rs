@@ -477,6 +477,8 @@ pub(super) struct Measurer<'a> {
     pub unbroken: bool,
     /// Named-page boundaries are excluded beneath table cells.
     pub named_pages: bool,
+    /// The content-box size of each query container's first box fragment.
+    pub container_sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
 }
 impl Measurer<'_> {
     pub(crate) fn intrinsic_widths(
@@ -508,10 +510,13 @@ impl Measurer<'_> {
         if block.is_canvas_source() && !self.canvas_images {
             decoration.clear_background();
         }
-        // Clips, containing blocks and navigation need their page fragments even without ink.
+        // Clips, containing blocks, scrollports and navigation need their page fragments even
+        // without ink.
         let fragments = (block.is_canvas_source() && self.canvas_images)
             || style.clipped_axes().contains(&true)
             || style.contains_absolute()
+            || style.is_scroll_container()
+            || contains_sticky(block)
             || !block.navigation().is_empty();
         let rect = geometry.border_box(0.0);
         (style.display != Display::None && (decoration.is_visible() || fragments)).then(|| {
@@ -1371,6 +1376,20 @@ impl<'a> FlowFrame<'a> {
             spanner_fragment: None,
         })
     }
+}
+
+/// Whether the block is the containing block of a sticky box, which its fragments constrain
+/// (CSS Position 3 §3.4).
+fn contains_sticky(block: &BlockBox) -> bool {
+    let sticky = |child: &BlockBox| child.style().position == crate::style::Position::Sticky;
+    block.children().iter().any(|child| match child {
+        BlockContent::Block(child) | BlockContent::Positioned(child) => sticky(child),
+        BlockContent::Inline(paragraph) => paragraph
+            .atomics()
+            .iter()
+            .any(|atomic| sticky(&atomic.block)),
+        BlockContent::Events(_) => false,
+    })
 }
 
 /// Static positions of a paragraph's absolutely positioned boxes (CSS 2.1 §10.3.7).

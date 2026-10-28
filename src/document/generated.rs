@@ -192,4 +192,7 @@ impl GeneratedReferences {
     pub(crate) fn matches(&self, values: &GeneratedValues) -> bool {
         self.bindings.values.as_ref() == values
     }
+    pub(crate) fn values(&self) -> GeneratedValues {
+        self.bindings.values.as_ref().clone()
+    }
 }

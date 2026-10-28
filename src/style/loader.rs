@@ -174,6 +174,8 @@ pub(super) struct PendingRule {
     pub scope: usize,
     pub condition: Option<usize>,
     pub style_scope: Option<usize>,
+    /// The innermost enclosing `@container` rule.
+    pub container: Option<usize>,
     pub tree_scope: Option<TreeScopeId>,
     pub encapsulation_order: usize,
 }
@@ -182,6 +184,7 @@ pub(super) struct PreparedStylesheets {
     pub layers: LayerTree,
     pub scopes: Vec<Option<LayerNode>>,
     pub style_scopes: Vec<crate::style::scope::Scope>,
+    pub container_rules: Vec<crate::style::container_queries::ContainerRule>,
     pub conditions: Vec<RuleCondition>,
     pub environment: PrintEnvironment,
     pub diagnostics: RefCell<Vec<StyleDiagnostic>>,
@@ -259,6 +262,7 @@ impl<'a> Loader<'a> {
                 layers: LayerTree::default(),
                 scopes: Vec::new(),
                 style_scopes: Vec::new(),
+                container_rules: Vec::new(),
                 conditions: Vec::new(),
                 environment,
                 diagnostics: RefCell::new(Vec::new()),
@@ -448,12 +452,29 @@ impl<'a> Loader<'a> {
             .map(|(index, rule)| {
                 let mut order = context.order.clone();
                 order.push(index);
-                (rule, context.scope, context.condition, 0, order, None, None)
+                (
+                    rule,
+                    context.scope,
+                    context.condition,
+                    0,
+                    order,
+                    None,
+                    None,
+                    None,
+                )
             })
             .collect();
         let mut chains = vec![None];
-        while let Some((rule, parent, condition, list, order, nearest_style, style_scope)) =
-            pending.pop()
+        while let Some((
+            rule,
+            parent,
+            condition,
+            list,
+            order,
+            nearest_style,
+            style_scope,
+            container,
+        )) = pending.pop()
         {
             let previous = chains[list].take();
             let kind = match rule {
@@ -490,6 +511,41 @@ impl<'a> Loader<'a> {
                                 order,
                                 nearest_style.clone(),
                                 Some(index),
+                                container,
+                            )
+                        },
+                    ));
+                    continue;
+                }
+                Rule::Container(query, source) => {
+                    let index = self.prepared.container_rules.len();
+                    self.prepared.container_rules.push(
+                        crate::style::container_queries::ContainerRule {
+                            parent: container,
+                            query,
+                        },
+                    );
+                    let budget = if context.origin == Origin::UserAgent {
+                        &mut self.trusted_budget
+                    } else {
+                        &mut self.budget
+                    };
+                    let parsed = source.parse(&self.prepared.diagnostics, budget)?;
+                    let child = chains.len();
+                    chains.push(None);
+                    pending.extend(parsed.into_iter().enumerate().rev().map(
+                        |(child_index, rule)| {
+                            let mut order = order.clone();
+                            order.push(child_index);
+                            (
+                                rule,
+                                parent,
+                                condition,
+                                child,
+                                order,
+                                nearest_style.clone(),
+                                style_scope,
+                                Some(index),
                             )
                         },
                     ));
@@ -522,6 +578,7 @@ impl<'a> Loader<'a> {
                                     order,
                                     Some(prepared.selectors.clone()),
                                     style_scope,
+                                    container,
                                 )
                             },
                         ));
@@ -567,6 +624,7 @@ impl<'a> Loader<'a> {
                             order,
                             nearest_style.clone(),
                             style_scope,
+                            container,
                         )
                     }));
                     PendingKind::LayerBlock(name, scope)
@@ -595,6 +653,7 @@ impl<'a> Loader<'a> {
                                 order,
                                 nearest_style.clone(),
                                 style_scope,
+                                container,
                             )
                         },
                     ));
@@ -648,6 +707,7 @@ impl<'a> Loader<'a> {
                     scope: parent,
                     condition,
                     style_scope,
+                    container,
                     tree_scope: context.tree_scope,
                     encapsulation_order: context.encapsulation_order,
                 },
@@ -674,6 +734,7 @@ impl<'a> Loader<'a> {
                     scope: context.scope,
                     condition: context.condition,
                     style_scope: None,
+                    container: None,
                     tree_scope: context.tree_scope,
                     encapsulation_order: context.encapsulation_order,
                 },

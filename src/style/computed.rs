@@ -197,6 +197,9 @@ pub(crate) struct Style {
     pub view_transition_named: bool,
     pub aspect_ratio: crate::style::AspectRatio,
     pub containment: crate::style::ContainmentStyle,
+    /// The nearest query container among the element's inclusive ancestors.
+    #[serde(skip)]
+    pub(super) containers: crate::style::QueryContainers,
     #[serde(skip)]
     pub(super) inert: crate::style::inert::InertValues,
 }
@@ -309,6 +312,7 @@ impl Default for Style {
             view_transition_named: false,
             aspect_ratio: crate::style::AspectRatio::default(),
             containment: crate::style::ContainmentStyle::default(),
+            containers: crate::style::QueryContainers::default(),
             inert: crate::style::inert::InertValues::default(),
         }
     }
@@ -361,6 +365,7 @@ impl Style {
         style.font_candidates = self.font_candidates.clone();
         style.element_font_namespace = self.element_font_namespace;
         style.root_font.clone_from(&self.root_font);
+        style.containers = self.containers.clone();
         style.grid.initial_justify_items(&self.grid);
         style.text_decorations.propagated = if self.display == Display::Contents {
             self.text_decorations.propagated.clone()
@@ -580,7 +585,7 @@ impl Stylesheet {
         parent: &Style,
         resolver: &dyn ResourceResolver,
     ) -> Result<Style, StyleError> {
-        let (style, cascaded) = self.prepare_element(element, parent)?;
+        let (style, cascaded) = self.prepare_element(element, parent, resolver)?;
         let (style, winners) = crate::style::resolution::resolve_values(
             self,
             style,
@@ -616,13 +621,16 @@ impl Stylesheet {
             return Ok(style);
         }
         let relative = self.text_basis(&mut style, parent, &mut winners, inherited, resolver)?;
-        Self::apply_properties(style, parent, winners, &relative)
+        let mut style = Self::apply_properties(style, parent, winners, &relative)?;
+        self.record_container(element.id(), &mut style);
+        Ok(style)
     }
 
     pub(super) fn prepare_element(
         &self,
         element: Element<'_>,
         parent: &Style,
+        resolver: &dyn ResourceResolver,
     ) -> Result<(Style, Cascaded), StyleError> {
         let mut style = parent.anonymous(Display::Inline);
         style.element_font_namespace = self.font_namespace(Some(element.tree_scope()));
@@ -638,7 +646,8 @@ impl Stylesheet {
         if parent.root_font.is_none() {
             style.quotes = style.quotes.inherited(&style.language);
         }
-        let (mut cascaded, mut order) = self.rule_winners(element, None);
+        let (mut cascaded, mut order) =
+            self.rule_winners(element, None, &parent.containers, resolver)?;
         for default in crate::style::user_agent::declarations(element, &self.document_base)? {
             let mut declaration = default.declaration;
             declaration.font_namespace = self.font_namespace(Some(element.tree_scope()));
@@ -723,16 +732,26 @@ impl Stylesheet {
         self.page_geometry().content_box()
     }
 
+    /// `ancestors` are the element's inclusive-ancestor query containers; a pseudo-element's
+    /// include its originating element (CSS Conditional 5 §5).
     fn rule_winners(
         &self,
         element: Element<'_>,
         pseudo: Option<crate::style::PseudoElement>,
-    ) -> (Cascaded, usize) {
+        ancestors: &crate::style::QueryContainers,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<(Cascaded, usize), StyleError> {
         let mut winners = Cascaded::default();
         let mut order = 0;
         let mut scopes = crate::style::scope::ScopeCache::new(element);
+        let mut containers = std::collections::HashMap::new();
         for &index in &self.rule_indices[crate::style::selector::target_index(pseudo)] {
             let rule = &self.rules[index];
+            if let Some(container) = rule.container
+                && !self.container_rule_matches(container, ancestors, resolver, &mut containers)?
+            {
+                continue;
+            }
             if let Some((specificity, scope_proximity)) = rule
                 .selectors
                 .iter()
@@ -776,7 +795,7 @@ impl Stylesheet {
                 }
             }
         }
-        (winners, order)
+        Ok((winners, order))
     }
 
     pub(crate) fn pseudo_with_resolver(
@@ -786,7 +805,7 @@ impl Stylesheet {
         pseudo: crate::style::PseudoElement,
         resolver: &dyn ResourceResolver,
     ) -> Result<Option<(Style, crate::style::GeneratedContent)>, StyleError> {
-        let (style, winners) = self.prepare_pseudo(element, parent, pseudo)?;
+        let (style, winners) = self.prepare_pseudo(element, parent, pseudo, resolver)?;
         let (mut style, mut winners) = crate::style::resolution::resolve_values(
             self,
             style,
@@ -820,8 +839,10 @@ impl Stylesheet {
         element: Element<'_>,
         parent: &Style,
         pseudo: crate::style::PseudoElement,
+        resolver: &dyn ResourceResolver,
     ) -> Result<(Style, Cascaded), StyleError> {
-        let (mut winners, _) = self.rule_winners(element, Some(pseudo));
+        let (mut winners, _) =
+            self.rule_winners(element, Some(pseudo), &parent.containers, resolver)?;
         for declaration in crate::style::user_agent::pseudo_declarations(element, pseudo)? {
             insert(
                 &mut winners,
@@ -955,6 +976,8 @@ impl Stylesheet {
                 viewport: Viewport::Known(viewport),
                 paper: self.paper,
                 tree: Tree::Root,
+                containers: parent.containers.clone(),
+                query_sizes: Some(&self.query_sizes),
                 ..self.initial_relative()
             },
             Some(root) => Relative {
@@ -984,6 +1007,8 @@ impl Stylesheet {
                 color_scheme: self.used_color_scheme(&parent.color_scheme),
                 counter_styles: Some(self.counter_styles.clone()),
                 accent_color: parent.accent_color,
+                containers: parent.containers.clone(),
+                query_sizes: Some(&self.query_sizes),
             },
         }
     }
@@ -1050,6 +1075,8 @@ impl Stylesheet {
             paper,
             tree,
             work,
+            containers,
+            query_sizes,
             ..
         } = inherited;
         let own = |line| FontBasis::Known {
@@ -1083,6 +1110,8 @@ impl Stylesheet {
             color_scheme,
             counter_styles: Some(self.counter_styles.clone()),
             accent_color: style.accent_color,
+            containers: containers.clone(),
+            query_sizes,
         };
         if let Some(value) = winners.remove(&Property::LineHeight) {
             properties::apply(Property::LineHeight, &value, style, parent, &line_basis)?;
@@ -1121,6 +1150,8 @@ impl Stylesheet {
             color_scheme,
             counter_styles: Some(self.counter_styles.clone()),
             accent_color: style.accent_color,
+            containers,
+            query_sizes,
         };
         // The root's initial `canvastext` follows its own colour scheme.
         let initial = Specified::Wide(crate::style::wide_keywords::WideKeyword::Initial);

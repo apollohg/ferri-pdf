@@ -57,16 +57,16 @@ pub(crate) struct ContainerType {
     pub scroll_state: bool,
 }
 impl ContainerType {
-    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+    pub(super) fn from_component(value: &Component) -> Self {
         if value.keyword() == Some(Keyword::Normal) {
-            return Ok(Self::default());
+            return Self::default();
         }
         let axes = value.slot(0).and_then(Component::keyword);
-        Ok(Self {
+        Self {
             size: axes == Some(Keyword::Size),
             inline_size: axes == Some(Keyword::InlineSize),
             scroll_state: value.slot(1).is_some(),
-        })
+        }
     }
 }
 
