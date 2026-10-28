@@ -1,0 +1,1030 @@
+use crate::{Directionality, Element, ElementId, QuirksMode, TreeRelation, TreeScopeId};
+use cssparser::{CowRcStr, ParseError, Parser, ParserInput, SourceLocation, ToCss, Token};
+use html5ever::Namespace;
+use scraper::selector::{CssLocalName, CssString};
+use selectors::{
+    Element as SelectorElement, OpaqueElement,
+    attr::{AttrSelectorOperation, CaseSensitivity, NamespaceConstraint},
+    bloom::BloomFilter,
+    matching::{self, MatchingContext, SelectorCaches},
+    parser::{self, ParseRelative, SelectorList, SelectorParseErrorKind},
+    visitor::{SelectorListKind, SelectorVisitor},
+};
+use std::{collections::HashMap, fmt};
+
+/// The empty key binds the default element namespace; values are literal CSS strings.
+pub type NamespaceMap = HashMap<String, String>;
+/// Parses the namespace binding shared by stylesheet consumers.
+pub fn parse_namespace<'i>(
+    input: &mut Parser<'i, '_>,
+) -> Result<(String, String), cssparser::BasicParseError<'i>> {
+    let prefix = input
+        .try_parse(|input| input.expect_ident_cloned())
+        .map(|prefix| prefix.to_string())
+        .unwrap_or_default();
+    let namespace = input.expect_url_or_string()?.to_string();
+    input.expect_exhausted()?;
+    Ok((prefix, namespace))
+}
+pub type SelectorError<'a> = ParseError<'a, SelectorParseErrorKind<'a>>;
+const PART_ATTRIBUTE: &str = "part";
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum ScopeRoot {
+    Element(ElementId),
+    Document,
+}
+
+#[derive(Clone, Copy, Debug, Default)]
+pub struct SelectorScope {
+    pub root: Option<ScopeRoot>,
+    pub origin: Option<ElementId>,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
+pub enum TreeContext {
+    Document,
+    Root(TreeScopeId),
+    All,
+}
+impl TreeContext {
+    fn host<'a>(self, element: Element<'a>) -> Option<Element<'a>> {
+        match self {
+            Self::Root(root) => element.scope_host(root),
+            Self::Document | Self::All => None,
+        }
+    }
+    fn contains(self, element: Element<'_>) -> bool {
+        match self {
+            Self::Document => element.is_in_document_tree(),
+            Self::Root(root) => {
+                element.tree_scope() == root
+                    || self
+                        .host(element)
+                        .is_some_and(|host| host.id() == element.id())
+            }
+            Self::All => true,
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum SelectorMode {
+    Normal,
+    Nesting,
+    Scope,
+}
+impl SelectorMode {
+    fn relative(self) -> ParseRelative {
+        match self {
+            Self::Normal => ParseRelative::No,
+            Self::Nesting => ParseRelative::ForNesting,
+            Self::Scope => ParseRelative::ForScope,
+        }
+    }
+}
+
+const ROOT_SELECTOR_DEPTH: usize = 1;
+
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+struct SelectorMetrics {
+    depth: usize,
+    parent_depth: Option<usize>,
+    components: usize,
+    parent_count: usize,
+}
+impl SelectorMetrics {
+    fn parsed(selectors: &SelectorList<StaticSelector>) -> Self {
+        let mut visitor = MetricsVisitor {
+            depth: ROOT_SELECTOR_DEPTH,
+            metrics: Self::default(),
+        };
+        for selector in selectors.slice() {
+            selector.visit(&mut visitor);
+        }
+        visitor.metrics
+    }
+    fn merge(self, other: Self) -> Self {
+        Self {
+            depth: self.depth.max(other.depth),
+            parent_depth: self
+                .parent_depth
+                .into_iter()
+                .chain(other.parent_depth)
+                .max(),
+            components: self.components.saturating_add(other.components),
+            parent_count: self.parent_count.saturating_add(other.parent_count),
+        }
+    }
+    fn resolved(self, parent: Self) -> Self {
+        Self {
+            depth: self.depth.max(
+                self.parent_depth
+                    .map_or(0, |depth| depth.saturating_add(parent.depth)),
+            ),
+            parent_depth: self
+                .parent_depth
+                .zip(parent.parent_depth)
+                .map(|(depth, parent)| depth.saturating_add(parent)),
+            components: self
+                .components
+                .saturating_add(self.parent_count.saturating_mul(parent.components)),
+            parent_count: self.parent_count.saturating_mul(parent.parent_count),
+        }
+    }
+}
+struct MetricsVisitor {
+    depth: usize,
+    metrics: SelectorMetrics,
+}
+impl MetricsVisitor {
+    fn nested<'a>(
+        &mut self,
+        mut selectors: impl Iterator<Item = &'a parser::Selector<StaticSelector>>,
+    ) -> bool {
+        self.depth += 1;
+        let result = selectors.all(|selector| selector.visit(self));
+        self.depth -= 1;
+        result
+    }
+}
+impl SelectorVisitor for MetricsVisitor {
+    type Impl = StaticSelector;
+    fn visit_simple_selector(&mut self, component: &parser::Component<StaticSelector>) -> bool {
+        self.metrics.depth = self.metrics.depth.max(self.depth);
+        self.metrics.components = self.metrics.components.saturating_add(1);
+        if matches!(component, parser::Component::ParentSelector) {
+            self.metrics.parent_count = self.metrics.parent_count.saturating_add(1);
+            self.metrics.parent_depth = Some(
+                self.metrics
+                    .parent_depth
+                    .unwrap_or_default()
+                    .max(self.depth),
+            );
+        }
+        true
+    }
+    fn visit_selector_list(
+        &mut self,
+        _: SelectorListKind,
+        selectors: &[parser::Selector<StaticSelector>],
+    ) -> bool {
+        self.nested(selectors.iter())
+    }
+    fn visit_relative_selector_list(
+        &mut self,
+        selectors: &[parser::RelativeSelector<StaticSelector>],
+    ) -> bool {
+        self.nested(selectors.iter().map(|selector| &selector.selector))
+    }
+}
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct Selector {
+    selectors: SelectorList<StaticSelector>,
+    metrics: SelectorMetrics,
+}
+impl Selector {
+    pub fn parse(input: &str) -> Result<Self, SelectorError<'_>> {
+        Self::parse_with_namespaces(input, &NamespaceMap::new(), true)
+    }
+
+    pub fn parse_with_namespaces<'i>(
+        input: &'i str,
+        namespaces: &NamespaceMap,
+        forgiving: bool,
+    ) -> Result<Self, SelectorError<'i>> {
+        Self::parse_context(input, namespaces, forgiving, SelectorMode::Normal)
+    }
+
+    pub fn parse_nested<'i>(
+        input: &'i str,
+        namespaces: &NamespaceMap,
+        forgiving: bool,
+    ) -> Result<Self, SelectorError<'i>> {
+        Self::parse_context(input, namespaces, forgiving, SelectorMode::Nesting)
+    }
+
+    pub fn parse_context<'i>(
+        input: &'i str,
+        namespaces: &NamespaceMap,
+        forgiving: bool,
+        mode: SelectorMode,
+    ) -> Result<Self, SelectorError<'i>> {
+        Self::parse_unresolved(input, namespaces, forgiving, mode.relative(), true)
+            .map(|selector| selector.bind_context(mode))
+    }
+
+    pub fn parse_scope_boundary<'i>(
+        input: &'i str,
+        namespaces: &NamespaceMap,
+        forgiving: bool,
+        mode: SelectorMode,
+    ) -> Result<Self, SelectorError<'i>> {
+        Self::parse_unresolved(input, namespaces, forgiving, mode.relative(), false)
+            .map(|selector| selector.bind_context(mode))
+    }
+
+    fn bind_context(self, mode: SelectorMode) -> Self {
+        if mode == SelectorMode::Nesting {
+            return self;
+        }
+        self.resolve_parent(&Self {
+            selectors: SelectorList::implicit_scope(),
+            metrics: SelectorMetrics {
+                depth: ROOT_SELECTOR_DEPTH,
+                components: 1,
+                ..Default::default()
+            },
+        })
+    }
+
+    fn parse_unresolved<'i>(
+        input: &'i str,
+        namespaces: &NamespaceMap,
+        forgiving: bool,
+        relative: ParseRelative,
+        allow_pseudo: bool,
+    ) -> Result<Self, SelectorError<'i>> {
+        let parser = &StaticParser {
+            namespaces,
+            forgiving,
+        };
+        let mut source = ParserInput::new(input);
+        let input = &mut Parser::new(&mut source);
+        let parsed = if allow_pseudo {
+            SelectorList::parse(parser, input, relative)
+        } else {
+            SelectorList::parse_disallow_pseudo(parser, input, relative)
+        };
+        parsed.map(|selectors| Self {
+            metrics: SelectorMetrics::parsed(&selectors),
+            selectors,
+        })
+    }
+
+    pub fn list(selectors: &[Self]) -> Option<Self> {
+        if selectors.is_empty() {
+            return None;
+        }
+        let metrics = selectors
+            .iter()
+            .fold(SelectorMetrics::default(), |metrics, selector| {
+                metrics.merge(selector.metrics)
+            });
+        let selectors: Vec<_> = selectors
+            .iter()
+            .flat_map(|selector| selector.selectors.slice().iter().cloned())
+            .collect();
+        Some(Self {
+            selectors: SelectorList::from_iter(selectors.into_iter()),
+            metrics,
+        })
+    }
+
+    pub fn nesting_work(&self, parent_work: usize) -> usize {
+        parent_work.saturating_mul(self.metrics.components)
+    }
+    pub fn depth(&self) -> usize {
+        self.metrics.depth
+    }
+    pub fn resolved_depth(&self, parent: &Self) -> usize {
+        self.metrics.resolved(parent.metrics).depth
+    }
+
+    pub fn resolve_parent(&self, parent: &Self) -> Self {
+        Self {
+            selectors: self.selectors.replace_parent_selector(&parent.selectors),
+            metrics: self.metrics.resolved(parent.metrics),
+        }
+    }
+
+    pub fn with_pseudo_element(&self, pseudo: GeneratedPseudoElement) -> Self {
+        let source = match pseudo {
+            GeneratedPseudoElement::Before => "&::before",
+            GeneratedPseudoElement::After => "&::after",
+        };
+        let selector =
+            Self::parse_unresolved(source, &NamespaceMap::new(), true, ParseRelative::No, true)
+                .expect("registered generated pseudo-element template");
+        selector.resolve_parent(self)
+    }
+
+    pub fn single_specificity(&self) -> Option<u32> {
+        let selectors = self.selectors.slice();
+        (selectors.len() == 1).then(|| selectors[0].specificity())
+    }
+
+    pub(crate) fn matches(
+        &self,
+        element: Element<'_>,
+        caches: &mut SelectorCaches,
+        scope: Option<ScopeRoot>,
+    ) -> bool {
+        self.matches_context(
+            element,
+            caches,
+            SelectorScope {
+                root: scope,
+                origin: None,
+            },
+            TreeContext::Root(element.tree_scope()),
+        )
+    }
+
+    pub(crate) fn matches_context(
+        &self,
+        element: Element<'_>,
+        caches: &mut SelectorCaches,
+        scope: SelectorScope,
+        tree_context: TreeContext,
+    ) -> bool {
+        let host = tree_context.host(element);
+        let is_host = host.is_some_and(|host| host.id() == element.id());
+        let visible = match tree_context {
+            TreeContext::Document => element.is_in_document_tree(),
+            TreeContext::Root(root) => element.tree_scope() == root || is_host,
+            TreeContext::All => true,
+        };
+        if !visible
+            && !self
+                .selectors
+                .slice()
+                .iter()
+                .any(|selector| selector.is_part() || selector.is_slotted())
+        {
+            return false;
+        }
+        let quirks = match element.tree.quirks_mode() {
+            QuirksMode::Quirks => matching::QuirksMode::Quirks,
+            QuirksMode::LimitedQuirks => matching::QuirksMode::LimitedQuirks,
+            QuirksMode::NoQuirks => matching::QuirksMode::NoQuirks,
+        };
+        let mut context = MatchingContext::new(
+            matching::MatchingMode::Normal,
+            None,
+            caches,
+            quirks,
+            matching::NeedsSelectorFlags::No,
+            matching::MatchingForInvalidation::No,
+        );
+        context.current_host = host.map(|host| MatchingElement::new(host, false).opaque());
+        let virtual_root = scope.root == Some(ScopeRoot::Document);
+        context.scope_element = scope.root.and_then(|scope| match scope {
+            ScopeRoot::Element(id) => element
+                .tree
+                .element(id)
+                .map(|element| MatchingElement::new(element, false).opaque()),
+            ScopeRoot::Document => Some(
+                MatchingElement {
+                    element: element.tree.root_element(),
+                    virtual_root: true,
+                    document: true,
+                }
+                .opaque(),
+            ),
+        });
+        let element = MatchingElement::new(element, virtual_root);
+        context.with_featureless(is_host, |context| {
+            self.selectors.slice().iter().any(|selector| {
+                if selector.is_part() || selector.is_slotted() {
+                    matching::originating_elements(selector, &element, context.current_host)
+                        .filter(|origin| {
+                            tree_context.contains(origin.element)
+                                && scope.origin.is_none_or(|id| origin.element.id() == id)
+                        })
+                        .any(|origin| {
+                            matching::matches_selector_from_origin(
+                                selector, 0, None, &element, &origin, context,
+                            )
+                        })
+                } else {
+                    visible
+                        && scope.origin.is_none_or(|id| element.element.id() == id)
+                        && matching::matches_selector(selector, 0, None, &element, context)
+                }
+            })
+        })
+    }
+
+    /// Origins and extra alias hops for a single selector's scope proximity.
+    pub fn scope_origins<'a>(
+        &self,
+        element: Element<'a>,
+        tree_context: TreeContext,
+    ) -> impl Iterator<Item = (Element<'a>, usize)> + Clone + use<'a> {
+        let host = tree_context
+            .host(element)
+            .map(|host| MatchingElement::new(host, false).opaque());
+        let selector = self
+            .selectors
+            .slice()
+            .first()
+            .filter(|_| self.selectors.slice().len() == 1);
+        let hops = usize::from(
+            selector.is_some_and(|selector| selector.is_part() || selector.is_slotted()),
+        );
+        let origins = selector.map(|selector| {
+            matching::originating_elements(selector, &MatchingElement::new(element, false), host)
+        });
+        origins.into_iter().flatten().filter_map(move |origin| {
+            tree_context
+                .contains(origin.element)
+                .then_some((origin.element, hops))
+        })
+    }
+}
+
+struct StaticParser<'a> {
+    namespaces: &'a NamespaceMap,
+    forgiving: bool,
+}
+impl<'i> parser::Parser<'i> for StaticParser<'_> {
+    type Impl = StaticSelector;
+    type Error = SelectorParseErrorKind<'i>;
+
+    fn parse_is_and_where(&self) -> bool {
+        true
+    }
+    fn parse_has(&self) -> bool {
+        true
+    }
+    fn parse_host(&self) -> bool {
+        true
+    }
+    fn parse_slotted(&self) -> bool {
+        true
+    }
+    fn parse_part(&self) -> bool {
+        true
+    }
+    fn parse_parent_selector(&self) -> bool {
+        true
+    }
+    fn parse_pseudo_element(
+        &self,
+        location: SourceLocation,
+        name: CowRcStr<'i>,
+    ) -> Result<GeneratedPseudoElement, SelectorError<'i>> {
+        GeneratedPseudoElement::parse(&name).ok_or_else(|| {
+            location.new_custom_error(SelectorParseErrorKind::UnsupportedPseudoClassOrElement(
+                name,
+            ))
+        })
+    }
+    fn parse_nth_child_of(&self) -> bool {
+        true
+    }
+    fn allow_forgiving_selectors(&self) -> bool {
+        self.forgiving
+    }
+    fn default_namespace(&self) -> Option<Namespace> {
+        self.namespaces.get("").map(|name| name.as_str().into())
+    }
+    fn namespace_for_prefix(&self, prefix: &CssLocalName) -> Option<Namespace> {
+        self.namespaces
+            .get(prefix.0.as_ref())
+            .map(|name| name.as_str().into())
+    }
+    fn parse_non_ts_pseudo_class(
+        &self,
+        location: SourceLocation,
+        name: CowRcStr<'i>,
+    ) -> Result<StaticState, SelectorError<'i>> {
+        if name.eq_ignore_ascii_case("heading") {
+            return Ok(StaticState::Heading(None));
+        }
+        let state = match name.to_ascii_lowercase().as_str() {
+            "defined" => Some(StaticState::Defined),
+            "link" | "any-link" => Some(StaticState::Link),
+            "target" => Some(StaticState::Target),
+            "local-link" => Some(StaticState::LocalLink(None)),
+            "blank" => Some(StaticState::Blank),
+            "enabled" => Some(StaticState::Enabled),
+            "disabled" => Some(StaticState::Disabled),
+            "has-slotted" => Some(StaticState::HasSlotted),
+            _ => None,
+        };
+        if let Some(state) = state {
+            return Ok(state);
+        }
+        if let Some(state) = InactiveState::parse(&name) {
+            return Ok(StaticState::Inactive(state));
+        }
+        Err(
+            location.new_custom_error(SelectorParseErrorKind::UnsupportedPseudoClassOrElement(
+                name,
+            )),
+        )
+    }
+    fn parse_non_ts_functional_pseudo_class<'t>(
+        &self,
+        name: CowRcStr<'i>,
+        input: &mut Parser<'i, 't>,
+        _: bool,
+    ) -> Result<StaticState, SelectorError<'i>> {
+        if name.eq_ignore_ascii_case("heading") {
+            return input
+                .parse_comma_separated(|input| {
+                    let token = input.next()?.clone();
+                    match token {
+                        Token::Number {
+                            int_value: Some(level),
+                            ..
+                        } => Ok(level),
+                        _ => Err(input.new_unexpected_token_error(token)),
+                    }
+                })
+                .map(|levels| StaticState::Heading(Some(levels)));
+        }
+        if name.eq_ignore_ascii_case("dir") {
+            return Ok(StaticState::Direction(
+                input.expect_ident_cloned()?.to_ascii_lowercase(),
+            ));
+        }
+        if name.eq_ignore_ascii_case("lang") {
+            return input
+                .parse_comma_separated(|input| Ok(input.expect_ident_or_string()?.to_string()))
+                .map(StaticState::Language);
+        }
+        if name.eq_ignore_ascii_case("current") {
+            let selectors = SelectorList::parse(self, input, ParseRelative::No)?;
+            if selectors.slice().iter().any(|selector| {
+                selector
+                    .iter_raw_match_order()
+                    .any(|part| part.is_combinator())
+            }) {
+                return Err(input.new_custom_error(
+                    SelectorParseErrorKind::UnsupportedPseudoClassOrElement(name),
+                ));
+            }
+            return Ok(StaticState::Current(Box::new(selectors)));
+        }
+        if name.eq_ignore_ascii_case("local-link") {
+            let token = input.next()?.clone();
+            return match token {
+                Token::Number {
+                    int_value: Some(value),
+                    ..
+                } if value >= 0 => Ok(StaticState::LocalLink(Some(value as u32))),
+                _ => Err(input.new_unexpected_token_error(token)),
+            };
+        }
+        Err(
+            input.new_custom_error(SelectorParseErrorKind::UnsupportedPseudoClassOrElement(
+                name,
+            )),
+        )
+    }
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct StaticSelector;
+impl parser::SelectorImpl for StaticSelector {
+    type AttrValue = CssString;
+    type Identifier = CssLocalName;
+    type LocalName = CssLocalName;
+    type NamespacePrefix = CssLocalName;
+    type NamespaceUrl = Namespace;
+    type BorrowedNamespaceUrl = Namespace;
+    type BorrowedLocalName = CssLocalName;
+    type NonTSPseudoClass = StaticState;
+    type PseudoElement = GeneratedPseudoElement;
+    type ExtraMatchingData<'a> = ();
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum InactiveState {
+    Hover,
+    Active,
+    Focus,
+    FocusVisible,
+    FocusWithin,
+    Visited,
+    InterestSource,
+    InterestTarget,
+    Current,
+    Past,
+    Future,
+}
+impl InactiveState {
+    fn parse(name: &str) -> Option<Self> {
+        match name.to_ascii_lowercase().as_str() {
+            "hover" => Some(Self::Hover),
+            "active" => Some(Self::Active),
+            "focus" => Some(Self::Focus),
+            "focus-visible" => Some(Self::FocusVisible),
+            "focus-within" => Some(Self::FocusWithin),
+            "visited" => Some(Self::Visited),
+            "interest-source" => Some(Self::InterestSource),
+            "interest-target" => Some(Self::InterestTarget),
+            "current" => Some(Self::Current),
+            "past" => Some(Self::Past),
+            "future" => Some(Self::Future),
+            _ => None,
+        }
+    }
+    fn name(self) -> &'static str {
+        match self {
+            Self::Hover => "hover",
+            Self::Active => "active",
+            Self::Focus => "focus",
+            Self::FocusVisible => "focus-visible",
+            Self::FocusWithin => "focus-within",
+            Self::Visited => "visited",
+            Self::InterestSource => "interest-source",
+            Self::InterestTarget => "interest-target",
+            Self::Current => "current",
+            Self::Past => "past",
+            Self::Future => "future",
+        }
+    }
+}
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub enum StaticState {
+    Defined,
+    Link,
+    Target,
+    LocalLink(Option<u32>),
+    Direction(String),
+    Language(Vec<String>),
+    Blank,
+    Enabled,
+    Disabled,
+    HasSlotted,
+    Current(Box<SelectorList<StaticSelector>>),
+    Heading(Option<Vec<i32>>),
+    Inactive(InactiveState),
+}
+impl parser::NonTSPseudoClass for StaticState {
+    type Impl = StaticSelector;
+    fn has_parent_selector(&self) -> bool {
+        matches!(self, Self::Current(selectors) if selectors.slice().iter().any(|selector| selector.has_parent_selector()))
+    }
+    fn has_scope_selector(&self) -> bool {
+        matches!(self, Self::Current(selectors) if selectors.slice().iter().any(|selector| selector.has_scope_selector()))
+    }
+    fn replace_parent_selector(&self, parent: &SelectorList<StaticSelector>) -> Option<Self> {
+        match self {
+            Self::Current(selectors) if self.has_parent_selector() => Some(Self::Current(
+                Box::new(selectors.replace_parent_selector(parent)),
+            )),
+            _ => None,
+        }
+    }
+    fn visit<V: SelectorVisitor<Impl = StaticSelector>>(&self, visitor: &mut V) -> bool {
+        match self {
+            Self::Current(selectors) => {
+                visitor.visit_selector_list(SelectorListKind::empty(), selectors.slice())
+            }
+            _ => true,
+        }
+    }
+    fn is_active_or_hover(&self) -> bool {
+        matches!(
+            self,
+            Self::Inactive(InactiveState::Active | InactiveState::Hover)
+        )
+    }
+    fn is_user_action_state(&self) -> bool {
+        matches!(
+            self,
+            Self::Inactive(
+                InactiveState::Active
+                    | InactiveState::Hover
+                    | InactiveState::Focus
+                    | InactiveState::FocusVisible
+                    | InactiveState::FocusWithin
+                    | InactiveState::InterestSource
+                    | InactiveState::InterestTarget
+            )
+        )
+    }
+}
+impl ToCss for StaticState {
+    fn to_css<W: fmt::Write>(&self, dest: &mut W) -> fmt::Result {
+        match self {
+            Self::Defined => dest.write_str(":defined"),
+            Self::Blank => dest.write_str(":blank"),
+            Self::Enabled => dest.write_str(":enabled"),
+            Self::Disabled => dest.write_str(":disabled"),
+            Self::HasSlotted => dest.write_str(":has-slotted"),
+            Self::Current(selectors) => {
+                dest.write_str(":current(")?;
+                selectors.to_css(dest)?;
+                dest.write_str(")")
+            }
+            Self::Link => dest.write_str(":any-link"),
+            Self::Target => dest.write_str(":target"),
+            Self::LocalLink(None) => dest.write_str(":local-link"),
+            Self::LocalLink(Some(value)) => write!(dest, ":local-link({value})"),
+            Self::Direction(value) => write!(dest, ":dir({value})"),
+            Self::Language(ranges) => {
+                dest.write_str(":lang(")?;
+                for (index, range) in ranges.iter().enumerate() {
+                    if index != 0 {
+                        dest.write_str(", ")?;
+                    }
+                    cssparser::serialize_string(range, dest)?;
+                }
+                dest.write_str(")")
+            }
+            Self::Inactive(state) => write!(dest, ":{}", state.name()),
+            Self::Heading(None) => dest.write_str(":heading"),
+            Self::Heading(Some(levels)) => {
+                dest.write_str(":heading(")?;
+                for (index, level) in levels.iter().enumerate() {
+                    if index != 0 {
+                        dest.write_str(", ")?;
+                    }
+                    write!(dest, "{level}")?;
+                }
+                dest.write_str(")")
+            }
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+pub enum GeneratedPseudoElement {
+    Before,
+    After,
+}
+impl GeneratedPseudoElement {
+    pub fn parse(name: &str) -> Option<Self> {
+        if name.eq_ignore_ascii_case("before") {
+            Some(Self::Before)
+        } else if name.eq_ignore_ascii_case("after") {
+            Some(Self::After)
+        } else {
+            None
+        }
+    }
+}
+impl parser::PseudoElement for GeneratedPseudoElement {
+    type Impl = StaticSelector;
+    fn valid_after_slotted(&self) -> bool {
+        true
+    }
+    fn is_before_or_after(&self) -> bool {
+        true
+    }
+}
+impl ToCss for GeneratedPseudoElement {
+    fn to_css<W: fmt::Write>(&self, dest: &mut W) -> fmt::Result {
+        dest.write_str(match self {
+            Self::Before => "::before",
+            Self::After => "::after",
+        })
+    }
+}
+
+#[derive(Clone, Copy, Debug)]
+// A virtual document retains its tree through the document element.
+struct MatchingElement<'a> {
+    element: Element<'a>,
+    virtual_root: bool,
+    document: bool,
+}
+impl<'a> MatchingElement<'a> {
+    fn new(element: Element<'a>, virtual_root: bool) -> Self {
+        Self {
+            element,
+            virtual_root,
+            document: false,
+        }
+    }
+    fn with_element(&self, element: Element<'a>) -> Self {
+        Self::new(element, self.virtual_root)
+    }
+}
+impl SelectorElement for MatchingElement<'_> {
+    type Impl = StaticSelector;
+    fn opaque(&self) -> OpaqueElement {
+        if self.document {
+            OpaqueElement::new(
+                self.element
+                    .raw
+                    .parent()
+                    .expect("the document element has a document parent")
+                    .value(),
+            )
+        } else {
+            self.element.raw.opaque()
+        }
+    }
+    fn parent_element(&self) -> Option<Self> {
+        if self.document {
+            return None;
+        }
+        self.element
+            .parent(TreeRelation::Selector)
+            .map(|parent| self.with_element(parent))
+            .or_else(|| {
+                (self.virtual_root
+                    && self
+                        .element
+                        .raw
+                        .parent()
+                        .is_some_and(|parent| parent.value().is_document()))
+                .then_some(Self {
+                    document: true,
+                    ..*self
+                })
+            })
+    }
+    fn is_virtual_scope_root(&self) -> bool {
+        self.document
+    }
+    fn parent_node_is_shadow_root(&self) -> bool {
+        !self.document
+            && self.element.shadow_host().is_some()
+            && self
+                .element
+                .raw
+                .parent()
+                .is_some_and(|parent| parent.value().is_fragment())
+    }
+    fn containing_shadow_host(&self) -> Option<Self> {
+        (!self.document)
+            .then(|| self.element.shadow_host())
+            .flatten()
+            .map(|host| self.with_element(host))
+    }
+    fn is_pseudo_element(&self) -> bool {
+        false
+    }
+    fn prev_sibling_element(&self) -> Option<Self> {
+        if self.document {
+            return None;
+        }
+        self.element.raw.prev_sibling_element().map(|raw| {
+            self.with_element(Element {
+                tree: self.element.tree,
+                raw,
+            })
+        })
+    }
+    fn next_sibling_element(&self) -> Option<Self> {
+        if self.document {
+            return None;
+        }
+        self.element.raw.next_sibling_element().map(|raw| {
+            self.with_element(Element {
+                tree: self.element.tree,
+                raw,
+            })
+        })
+    }
+    fn first_element_child(&self) -> Option<Self> {
+        if self.document {
+            return Some(self.with_element(self.element));
+        }
+        self.element
+            .children(TreeRelation::Selector)
+            .next()
+            .map(|child| self.with_element(child))
+    }
+    fn is_html_element_in_html_document(&self) -> bool {
+        !self.document && self.element.is_html_element_in_html_document()
+    }
+    fn has_local_name(&self, name: &CssLocalName) -> bool {
+        !self.document && self.element.raw.has_local_name(name)
+    }
+    fn has_namespace(&self, namespace: &Namespace) -> bool {
+        !self.document && self.element.raw.has_namespace(namespace)
+    }
+    fn is_same_type(&self, other: &Self) -> bool {
+        !self.document
+            && !other.document
+            && self.element.name() == other.element.name()
+            && self.element.namespace() == other.element.namespace()
+    }
+    fn attr_matches(
+        &self,
+        ns: &NamespaceConstraint<&Namespace>,
+        local_name: &CssLocalName,
+        operation: &AttrSelectorOperation<&CssString>,
+    ) -> bool {
+        !self.document && self.element.raw.attr_matches(ns, local_name, operation)
+    }
+    fn match_non_ts_pseudo_class(
+        &self,
+        state: &StaticState,
+        _: &mut MatchingContext<'_, StaticSelector>,
+    ) -> bool {
+        if self.document {
+            return false;
+        }
+        let element = self.element;
+        match state {
+            StaticState::Defined => element.is_defined(),
+            StaticState::Blank => element.is_blank_control(),
+            StaticState::Enabled => element.initial_state().disabled == Some(false),
+            StaticState::Disabled => element.initial_state().disabled == Some(true),
+            StaticState::HasSlotted => element
+                .tree
+                .shadow
+                .populated_slots
+                .contains(&element.raw.id()),
+            StaticState::Link => element.hyperlink().is_some(),
+            StaticState::Target => element.is_target(),
+            StaticState::LocalLink(segments) => element.is_local_link(*segments),
+            StaticState::Direction(value) => match value.as_str() {
+                "ltr" => element.directionality() == Directionality::Ltr,
+                "rtl" => element.directionality() == Directionality::Rtl,
+                _ => false,
+            },
+            StaticState::Language(ranges) => ranges
+                .iter()
+                .any(|range| crate::language::matches(element.language(), range)),
+            StaticState::Heading(levels) => element.heading_level().is_some_and(|level| {
+                levels
+                    .as_ref()
+                    .is_none_or(|levels| levels.contains(&i32::from(level)))
+            }),
+            StaticState::Inactive(_) | StaticState::Current(_) => false,
+        }
+    }
+    fn match_pseudo_element(
+        &self,
+        _: &GeneratedPseudoElement,
+        _: &mut MatchingContext<'_, StaticSelector>,
+    ) -> bool {
+        false
+    }
+    fn apply_selector_flags(&self, _: matching::ElementSelectorFlags) {}
+    fn is_link(&self) -> bool {
+        !self.document && self.element.hyperlink().is_some()
+    }
+    fn is_html_slot_element(&self) -> bool {
+        !self.document
+            && self
+                .element
+                .tree
+                .shadow
+                .slots
+                .contains_key(&self.element.raw.id())
+    }
+    fn assigned_slot(&self) -> Option<Self> {
+        (!self.document)
+            .then(|| self.element.alias_slot())
+            .flatten()
+            .map(|slot| self.with_element(slot))
+    }
+    fn has_id(&self, id: &CssLocalName, case: CaseSensitivity) -> bool {
+        !self.document && self.element.raw.has_id(id, case)
+    }
+    fn has_class(&self, name: &CssLocalName, case: CaseSensitivity) -> bool {
+        !self.document && self.element.raw.has_class(name, case)
+    }
+    fn has_custom_state(&self, _: &CssLocalName) -> bool {
+        false
+    }
+    fn imported_part(&self, name: &CssLocalName) -> Option<CssLocalName> {
+        self.imported_parts(name).into_iter().next()
+    }
+    fn imported_parts(&self, name: &CssLocalName) -> Vec<CssLocalName> {
+        if self.document {
+            return Vec::new();
+        }
+        self.element
+            .tree
+            .shadow
+            .exports
+            .get(&self.element.raw.id())
+            .and_then(|names| names.get(name.0.as_ref()))
+            .into_iter()
+            .flatten()
+            .map(|name| name.as_str().into())
+            .collect()
+    }
+    fn is_part(&self, name: &CssLocalName) -> bool {
+        !self.document
+            && self.element.attr(PART_ATTRIBUTE).is_some_and(|parts| {
+                parts
+                    .split(crate::state::is_html_whitespace)
+                    .any(|part| part == name.0.as_ref())
+            })
+    }
+    fn is_empty(&self) -> bool {
+        !self.document
+            && !self
+                .element
+                .child_nodes(TreeRelation::Selector)
+                .any(|node| {
+                    node.element().is_some()
+                        || node
+                            .value()
+                            .as_text()
+                            .is_some_and(|text| !text.chars().all(crate::state::is_html_whitespace))
+                })
+    }
+    fn is_root(&self) -> bool {
+        !self.document && self.element.raw.is_root()
+    }
+    fn add_element_unique_hashes(&self, _: &mut BloomFilter) -> bool {
+        false
+    }
+}
