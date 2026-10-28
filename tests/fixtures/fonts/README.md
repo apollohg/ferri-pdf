@@ -37,3 +37,11 @@ test checks both embedded outlines and their relative positions after fallback
 from a face without the mark, alongside a preceding fallback ligature. Regenerate
 with `python3 tests/fixtures/fonts/make-svg-cluster-reference.py` using the recorded
 HarfBuzz and FontTools versions. Existing font notices apply.
+
+`FontFeatures-reference.json` records independent HarfBuzz shaping of the OpenType features that CSS font feature properties select: figure, fraction, ordinal and position forms and stylistic sets in Source Serif 4; small capitals with English and Turkish language systems; kerned and unkerned Liberation Serif; and DejaVu Sans ligatures and stylistic alternates. `make-feature-reference.py` regenerates it with `hb-shape --output-format=json --no-glyph-names --features=FEATURES --language=LANG` and records the font digests. No font binary is added.
+
+`RobotoFlex-optical.json` records FontTools measurements of the capital H at the optical sizes the optical-sizing tests request, with unspecified axes at their defaults. Regenerate with `python3 tests/fixtures/fonts/make-optical-reference.py`.
+
+`PresentationTest.ttf` is a renamed subset of the bundled DejaVu Sans made by `make-presentation-font.py`. It keeps the original glyph IDs and adds format-14 text and emoji presentation sequences for U+2764 and U+2615 that select the distinct A, B and C glyphs, exposing which presentation selector, explicit or implied by `font-variant-emoji`, reached the face. `PresentationTest-source.json` pins the source and derived hashes and records independent HarfBuzz glyph selection; `assets/fonts/FONT-LICENSE.txt` applies.
+
+`PaletteTest.ttf` is a renamed subset of the bundled Liberation Sans made by `make-palette-font.py`. COLRv0 paints A with palette entry 0, H with entry 1 and I with the foreground colour; its version 1 CPAL table has default, light-background and dark-background palettes. `PaletteTest-source.json` pins both hashes and records the palettes read back with FontTools; the Liberation licence applies. Each glyph uses one entry, so painted colours identify the palette and overrides that `font-palette` selects.

@@ -1,0 +1,602 @@
+{
+  "generator": "make-feature-reference.py",
+  "shaper": "hb-shape (HarfBuzz) 15.0.0",
+  "shaper_options": [
+    "--output-format=json",
+    "--no-glyph-names"
+  ],
+  "fonts": {
+    "assets/fonts/DejaVuSans.ttf": {
+      "sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+      "units_per_em": 2048
+    },
+    "assets/fonts/LiberationSerif-Regular.ttf": {
+      "sha256": "058ea80864aef09a23f45cbec2bb5400bc3dfbdea01c3f10538a21fcb497fb74",
+      "units_per_em": 2048
+    },
+    "tests/fixtures/fonts/SourceSerif4-Regular.ttf": {
+      "sha256": "e5a4ee6a3d87bb9024796be390c6771e2a0eb1883dae25effaf57ca01668e24b",
+      "units_per_em": 1000
+    }
+  },
+  "samples": {
+    "default_figures": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "1011",
+      "features": "",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 429,
+          "cl": 0,
+          "ax": 500,
+          "dy": 0
+        },
+        {
+          "g": 428,
+          "cl": 1,
+          "ax": 500,
+          "dy": 0
+        },
+        {
+          "g": 429,
+          "cl": 2,
+          "ax": 500,
+          "dy": 0
+        },
+        {
+          "g": 429,
+          "cl": 3,
+          "ax": 500,
+          "dy": 0
+        }
+      ]
+    },
+    "tabular_figures": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "1011",
+      "features": "tnum",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 429,
+          "cl": 0,
+          "ax": 500,
+          "dy": 0
+        },
+        {
+          "g": 428,
+          "cl": 1,
+          "ax": 500,
+          "dy": 0
+        },
+        {
+          "g": 429,
+          "cl": 2,
+          "ax": 500,
+          "dy": 0
+        },
+        {
+          "g": 429,
+          "cl": 3,
+          "ax": 500,
+          "dy": 0
+        }
+      ]
+    },
+    "proportional_figures": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "1011",
+      "features": "pnum",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 440,
+          "cl": 0,
+          "ax": 426,
+          "dy": 0
+        },
+        {
+          "g": 439,
+          "cl": 1,
+          "ax": 502,
+          "dy": 0
+        },
+        {
+          "g": 440,
+          "cl": 2,
+          "ax": 426,
+          "dy": 0
+        },
+        {
+          "g": 440,
+          "cl": 3,
+          "ax": 426,
+          "dy": 0
+        }
+      ]
+    },
+    "oldstyle_figures": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "1011",
+      "features": "onum",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 450,
+          "cl": 0,
+          "ax": 500,
+          "dy": 0
+        },
+        {
+          "g": 449,
+          "cl": 1,
+          "ax": 500,
+          "dy": 0
+        },
+        {
+          "g": 450,
+          "cl": 2,
+          "ax": 500,
+          "dy": 0
+        },
+        {
+          "g": 450,
+          "cl": 3,
+          "ax": 500,
+          "dy": 0
+        }
+      ]
+    },
+    "oldstyle_proportional_figures": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "1011",
+      "features": "onum,pnum",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 460,
+          "cl": 0,
+          "ax": 436,
+          "dy": 0
+        },
+        {
+          "g": 459,
+          "cl": 1,
+          "ax": 550,
+          "dy": 0
+        },
+        {
+          "g": 460,
+          "cl": 2,
+          "ax": 417,
+          "dy": 0
+        },
+        {
+          "g": 460,
+          "cl": 3,
+          "ax": 436,
+          "dy": 0
+        }
+      ]
+    },
+    "slashed_zero": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "0",
+      "features": "zero",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 427,
+          "cl": 0,
+          "ax": 500,
+          "dy": 0
+        }
+      ]
+    },
+    "diagonal_fractions": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "1/2",
+      "features": "frac",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 600,
+          "cl": 0,
+          "ax": 370,
+          "dy": 0
+        },
+        {
+          "g": 696,
+          "cl": 1,
+          "ax": 140,
+          "dy": 0
+        },
+        {
+          "g": 585,
+          "cl": 2,
+          "ax": 370,
+          "dy": 0
+        }
+      ]
+    },
+    "ordinals": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "2a",
+      "features": "ordn",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 430,
+          "cl": 0,
+          "ax": 500,
+          "dy": 0
+        },
+        {
+          "g": 643,
+          "cl": 1,
+          "ax": 351,
+          "dy": 0
+        }
+      ]
+    },
+    "superscripts": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "2a",
+      "features": "sups",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 549,
+          "cl": 0,
+          "ax": 370,
+          "dy": 0
+        },
+        {
+          "g": 643,
+          "cl": 1,
+          "ax": 351,
+          "dy": 0
+        }
+      ]
+    },
+    "subscripts": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "20",
+      "features": "subs",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 569,
+          "cl": 0,
+          "ax": 370,
+          "dy": 0
+        },
+        {
+          "g": 567,
+          "cl": 1,
+          "ax": 370,
+          "dy": 0
+        }
+      ]
+    },
+    "all_small_caps": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "Ag",
+      "features": "c2sc,smcp",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 1113,
+          "cl": 0,
+          "ax": 560,
+          "dy": 0
+        },
+        {
+          "g": 1119,
+          "cl": 1,
+          "ax": 622,
+          "dy": 0
+        }
+      ]
+    },
+    "petite_caps_fallback": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "Ag",
+      "features": "smcp",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 2,
+          "cl": 0,
+          "ax": 664,
+          "dy": 0
+        },
+        {
+          "g": 1119,
+          "cl": 1,
+          "ax": 622,
+          "dy": 0
+        }
+      ]
+    },
+    "small_caps_english": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "i",
+      "features": "smcp",
+      "language": "en",
+      "glyphs": [
+        {
+          "g": 1121,
+          "cl": 0,
+          "ax": 363,
+          "dy": 0
+        }
+      ]
+    },
+    "small_caps_turkish": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "i",
+      "features": "smcp",
+      "language": "tr",
+      "glyphs": [
+        {
+          "g": 1205,
+          "cl": 0,
+          "ax": 363,
+          "dy": 0
+        }
+      ]
+    },
+    "styleset_one": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "\u0432",
+      "features": "ss01",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 1078,
+          "cl": 0,
+          "ax": 554,
+          "dy": 0
+        }
+      ]
+    },
+    "styleset_two": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "\u0431",
+      "features": "ss02",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 1072,
+          "cl": 0,
+          "ax": 543,
+          "dy": 0
+        }
+      ]
+    },
+    "default_cyrillic": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "\u0432\u0431",
+      "features": "",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 998,
+          "cl": 0,
+          "ax": 517,
+          "dy": 0
+        },
+        {
+          "g": 997,
+          "cl": 1,
+          "ax": 543,
+          "dy": 0
+        }
+      ]
+    },
+    "both_stylesets": {
+      "font": "tests/fixtures/fonts/SourceSerif4-Regular.ttf",
+      "text": "\u0432\u0431",
+      "features": "ss01,ss02",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 1078,
+          "cl": 0,
+          "ax": 554,
+          "dy": 0
+        },
+        {
+          "g": 1072,
+          "cl": 1,
+          "ax": 543,
+          "dy": 0
+        }
+      ]
+    },
+    "kerned": {
+      "font": "assets/fonts/LiberationSerif-Regular.ttf",
+      "text": "AVA",
+      "features": "",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 36,
+          "cl": 0,
+          "ax": 1215,
+          "dy": 0
+        },
+        {
+          "g": 57,
+          "cl": 1,
+          "ax": 1215,
+          "dy": 0
+        },
+        {
+          "g": 36,
+          "cl": 2,
+          "ax": 1479,
+          "dy": 0
+        }
+      ]
+    },
+    "unkerned": {
+      "font": "assets/fonts/LiberationSerif-Regular.ttf",
+      "text": "AVA",
+      "features": "-kern",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 36,
+          "cl": 0,
+          "ax": 1479,
+          "dy": 0
+        },
+        {
+          "g": 57,
+          "cl": 1,
+          "ax": 1479,
+          "dy": 0
+        },
+        {
+          "g": 36,
+          "cl": 2,
+          "ax": 1479,
+          "dy": 0
+        }
+      ]
+    },
+    "native_superscript": {
+      "font": "assets/fonts/LiberationSerif-Regular.ttf",
+      "text": "45",
+      "features": "sups",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 2054,
+          "cl": 0,
+          "ax": 714,
+          "dy": 0
+        },
+        {
+          "g": 2055,
+          "cl": 1,
+          "ax": 714,
+          "dy": 0
+        }
+      ]
+    },
+    "plain_superscript_candidates": {
+      "font": "assets/fonts/LiberationSerif-Regular.ttf",
+      "text": "4x",
+      "features": "",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 23,
+          "cl": 0,
+          "ax": 1024,
+          "dy": 0
+        },
+        {
+          "g": 91,
+          "cl": 1,
+          "ax": 1024,
+          "dy": 0
+        }
+      ]
+    },
+    "common_ligature": {
+      "font": "assets/fonts/DejaVuSans.ttf",
+      "text": "fi",
+      "features": "",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 5039,
+          "cl": 0,
+          "ax": 1290,
+          "dy": 0
+        }
+      ]
+    },
+    "no_common_ligature": {
+      "font": "assets/fonts/DejaVuSans.ttf",
+      "text": "fi",
+      "features": "-liga",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 73,
+          "cl": 0,
+          "ax": 721,
+          "dy": 0
+        },
+        {
+          "g": 76,
+          "cl": 1,
+          "ax": 569,
+          "dy": 0
+        }
+      ]
+    },
+    "discretionary_ligature": {
+      "font": "assets/fonts/DejaVuSans.ttf",
+      "text": "st",
+      "features": "dlig",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 5044,
+          "cl": 0,
+          "ax": 1763,
+          "dy": 0
+        }
+      ]
+    },
+    "historical_ligature": {
+      "font": "assets/fonts/DejaVuSans.ttf",
+      "text": "\u017ft",
+      "features": "hlig",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 5043,
+          "cl": 0,
+          "ax": 1405,
+          "dy": 0
+        }
+      ]
+    },
+    "stylistic_alternate": {
+      "font": "assets/fonts/DejaVuSans.ttf",
+      "text": "a",
+      "features": "salt=1",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 531,
+          "cl": 0,
+          "ax": 1300,
+          "dy": 0
+        }
+      ]
+    },
+    "default_alternate": {
+      "font": "assets/fonts/DejaVuSans.ttf",
+      "text": "a",
+      "features": "",
+      "language": "und",
+      "glyphs": [
+        {
+          "g": 68,
+          "cl": 0,
+          "ax": 1255,
+          "dy": 0
+        }
+      ]
+    }
+  }
+}

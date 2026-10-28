@@ -8,6 +8,7 @@ mod body_strings;
 mod counters;
 mod first_page_selection;
 mod floats;
+mod font_features;
 mod foundations_cascade;
 mod foundations_fonts;
 mod foundations_html;

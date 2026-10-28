@@ -1,0 +1,88 @@
+{
+  "source": "RobotoFlex.ttf",
+  "sha256": "9b523f7d82593df0107173849ebb8c817471a1df4b4fb2c3cbf40cfd810c8281",
+  "generator": "make-optical-reference.py",
+  "tool": "fontTools 4.63.0",
+  "method": "TTFont.getGlyphSet(location) advance and BoundsPen bounds of the cmap glyph for H; unspecified axes retain file defaults",
+  "units_per_em": 2048,
+  "optical_axis": [
+    8.0,
+    14.0,
+    144.0
+  ],
+  "samples": [
+    {
+      "location": {
+        "opsz": 8
+      },
+      "advance": 1528.0,
+      "bounds": [
+        170,
+        0,
+        1358,
+        1456
+      ]
+    },
+    {
+      "location": {
+        "opsz": 14
+      },
+      "advance": 1458.0,
+      "bounds": [
+        170,
+        0,
+        1288,
+        1456
+      ]
+    },
+    {
+      "location": {
+        "opsz": 20
+      },
+      "advance": 1419.3597936142473,
+      "bounds": [
+        164.63330466864545,
+        0,
+        1254.726488945602,
+        1456
+      ]
+    },
+    {
+      "location": {
+        "opsz": 40
+      },
+      "advance": 1305.4133506700487,
+      "bounds": [
+        148.80740981528456,
+        0,
+        1156.6059408547642,
+        1456
+      ]
+    },
+    {
+      "location": {
+        "opsz": 144
+      },
+      "advance": 1170.0,
+      "bounds": [
+        130,
+        0,
+        1040,
+        1456
+      ]
+    },
+    {
+      "location": {
+        "opsz": 20,
+        "wght": 700
+      },
+      "advance": 1476.0681627784404,
+      "bounds": [
+        145.60828317012954,
+        0,
+        1331.325712225027,
+        1456
+      ]
+    }
+  ]
+}

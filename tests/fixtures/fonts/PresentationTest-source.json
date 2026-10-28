@@ -1,0 +1,55 @@
+{
+  "derived_from": "assets/fonts/DejaVuSans.ttf",
+  "source_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+  "license": "../../../assets/fonts/FONT-LICENSE.txt",
+  "generator": "make-presentation-font.py",
+  "tool": "FontTools 4.63.0",
+  "shaper": "hb-shape (HarfBuzz) 15.0.0",
+  "shaper_options": [
+    "--output-format=json",
+    "--no-glyph-names",
+    "--remove-default-ignorables"
+  ],
+  "changes": "Subset to ABC, space, U+2764 and U+2615 with original glyph IDs, outlines and metrics; renamed family; format-14 text and emoji presentation sequences select the A, B and C glyphs.",
+  "sha256": "b3bc96bd73a3595933efe17b5372f6875f3a3247b5a903bf680329ea686d8fe0",
+  "bytes": 29536,
+  "units_per_em": 2048,
+  "samples": [
+    {
+      "text": "\u2764",
+      "glyph_id": 4075,
+      "glyph": "uni2764",
+      "advance": 1716
+    },
+    {
+      "text": "\u2764\ufe0e",
+      "glyph_id": 36,
+      "glyph": "A",
+      "advance": 1401
+    },
+    {
+      "text": "\u2764\ufe0f",
+      "glyph_id": 37,
+      "glyph": "B",
+      "advance": 1405
+    },
+    {
+      "text": "\u2615",
+      "glyph_id": 3820,
+      "glyph": "uni2615",
+      "advance": 1836
+    },
+    {
+      "text": "\u2615\ufe0e",
+      "glyph_id": 38,
+      "glyph": "C",
+      "advance": 1430
+    },
+    {
+      "text": "\u2615\ufe0f",
+      "glyph_id": 37,
+      "glyph": "B",
+      "advance": 1405
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "derived_from": "assets/fonts/LiberationSans-Regular.ttf",
+  "source_sha256": "76d04c18ea243f426b7de1f3ad208e927008f961dc5945e5aad352d0dfde8ee8",
+  "license": "../../../assets/fonts/LIBERATION-LICENSE.txt",
+  "generator": "make-palette-font.py",
+  "tool": "FontTools 4.63.0",
+  "changes": "Subset to AHI and space, renamed family; COLRv0 paints A with entry 0, H with entry 1 and I with the foreground colour; CPAL version 1 has three palettes typed default, light and dark.",
+  "sha256": "9f6445b50d0da984970f9fa2e2c362f05331c9d871b8c71d5aebdd3273b25319",
+  "bytes": 5368,
+  "units_per_em": 2048,
+  "palette_types": [
+    0,
+    1,
+    2
+  ],
+  "palettes": [
+    [
+      [
+        200,
+        0,
+        0,
+        255
+      ],
+      [
+        0,
+        120,
+        0,
+        255
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        200,
+        255
+      ],
+      [
+        200,
+        120,
+        0,
+        255
+      ]
+    ],
+    [
+      [
+        220,
+        220,
+        0,
+        255
+      ],
+      [
+        0,
+        200,
+        200,
+        255
+      ]
+    ]
+  ],
+  "layers": {
+    "A": [
+      [
+        "A",
+        0
+      ]
+    ],
+    "H": [
+      [
+        "H",
+        1
+      ]
+    ],
+    "I": [
+      [
+        "I",
+        65535
+      ]
+    ]
+  }
+}
