@@ -234,7 +234,8 @@ impl BreakInside {
     }
 }
 
-/// CSS Display 3 §2.7 equivalences of the legacy keywords the engine models.
+/// CSS Display 3 §2.7 equivalences of the legacy keywords the engine models, and the
+/// Compat §3.4.5 keyword mappings of `-webkit-box` and `-webkit-inline-box`.
 const DISPLAY_FORMS: &[(Display, &[&[Keyword]])] = &[
     (
         Display::Inline,
@@ -254,7 +255,11 @@ const DISPLAY_FORMS: &[(Display, &[&[Keyword]])] = &[
     ),
     (
         Display::Flex,
-        &[&[Keyword::Flex], &[Keyword::Block, Keyword::Flex]],
+        &[
+            &[Keyword::Flex],
+            &[Keyword::Block, Keyword::Flex],
+            &[Keyword::DashWebkitBox],
+        ],
     ),
     (
         Display::Grid,
@@ -297,7 +302,11 @@ const DISPLAY_FORMS: &[(Display, &[&[Keyword]])] = &[
     ),
     (
         Display::InlineFlex,
-        &[&[Keyword::InlineFlex], &[Keyword::Inline, Keyword::Flex]],
+        &[
+            &[Keyword::InlineFlex],
+            &[Keyword::Inline, Keyword::Flex],
+            &[Keyword::DashWebkitInlineBox],
+        ],
     ),
     (
         Display::InlineGrid,
@@ -390,6 +399,13 @@ impl Display {
             }
             other => other.clone(),
         }
+    }
+    /// CSS Overflow 4 §5.1.1 distinguishes the `-webkit-box` forms of flex containers.
+    pub(super) fn is_legacy_box(value: &Component) -> bool {
+        matches!(
+            value.keyword(),
+            Some(Keyword::DashWebkitBox | Keyword::DashWebkitInlineBox)
+        )
     }
     /// `||` and `&&` slots follow the grammar, so keywords arrive as outside, inside, marker.
     pub(super) fn from_component(value: &Component) -> Self {

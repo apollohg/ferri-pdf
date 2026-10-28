@@ -251,7 +251,7 @@ fn deeply_nested_values_are_rejected_during_stylesheet_parsing() {
 }
 
 #[test]
-fn substitution_preserves_display_values_and_unsupported_whitespace() {
+fn substitution_preserves_display_values_and_white_space_longhands() {
     use crate::style::Display;
     // CSS Display 3 §2: `flow` alone is `block flow`, and `inline flex` is `inline-flex`.
     for (display, expected) in [
@@ -282,15 +282,20 @@ fn substitution_preserves_display_values_and_unsupported_whitespace() {
     .unwrap();
     let html = DocumentTree::parse("<p id=root>X</p>").expect("parse test HTML");
     let selector = Selector::parse("#root").unwrap();
-    assert!(
-        sheet
-            .computed_with_resolver(
-                html.select(&selector).next().unwrap(),
-                &Style::default(),
-                &FileResolver::default()
-            )
-            .is_err(),
-        "valid unsupported white-space combination must not silently reset"
+    let style = sheet
+        .computed_with_resolver(
+            html.select(&selector).next().unwrap(),
+            &Style::default(),
+            &FileResolver::default(),
+        )
+        .expect("a substituted white-space shorthand expands to its longhands");
+    assert_eq!(
+        style.white_space,
+        crate::style::WhiteSpace {
+            collapse: crate::style::WhiteSpaceCollapse::PreserveSpaces,
+            wrap: true,
+        },
+        "CSS Text 4 §3: an omitted text-wrap-mode takes its initial value"
     );
 }
 

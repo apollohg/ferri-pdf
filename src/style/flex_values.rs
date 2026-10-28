@@ -146,6 +146,8 @@ pub(crate) struct FlexStyle {
     pub shrink: f32,
     pub basis: FlexBasis,
     pub order: i32,
+    /// The computed `display` is `-webkit-box` or `-webkit-inline-box`.
+    pub legacy_box: bool,
 }
 impl Default for FlexStyle {
     fn default() -> Self {
@@ -161,6 +163,7 @@ impl Default for FlexStyle {
             shrink: 1.0,
             basis: FlexBasis::Auto,
             order: 0,
+            legacy_box: false,
         }
     }
 }

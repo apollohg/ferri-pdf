@@ -1,5 +1,5 @@
 use crate::document::{OBJECT_REPLACEMENT_CHARACTER, Paragraph};
-use crate::style::{TextAlign, WhiteSpace};
+use crate::style::TextAlign;
 use crate::text::GlyphRun;
 use icu_properties::{CodePointMapData, props::GeneralCategory};
 use std::ops::Range;
@@ -7,13 +7,25 @@ use unicode_linebreak::{BreakClass, BreakOpportunity};
 
 const NO_BREAK_SPACE: char = '\u{a0}';
 
-pub(super) fn opportunities(paragraph: &Paragraph) -> Vec<(usize, BreakOpportunity)> {
-    let mut breaks: Vec<_> = unicode_linebreak::linebreaks(paragraph.text())
+/// Soft wrap and mandatory break opportunities, including the `automatic` hyphenation ones.
+pub(super) fn opportunities(
+    paragraph: &Paragraph,
+    automatic: &[usize],
+) -> Vec<(usize, BreakOpportunity)> {
+    let mut breaks: Vec<_> = crate::text::tailoring::linebreaks(paragraph)
+        .into_iter()
         .filter(|&(end, opportunity)| {
             opportunity == BreakOpportunity::Mandatory
                 || (wraps(paragraph, end) && crate::text::hyphenation::allowed(paragraph, end))
         })
         .collect();
+    breaks.extend(
+        automatic
+            .iter()
+            .copied()
+            .filter(|&offset| wraps(paragraph, offset))
+            .map(|offset| (offset, BreakOpportunity::Allowed)),
+    );
     breaks.extend(
         paragraph
             .optional_breaks()
@@ -25,14 +37,14 @@ pub(super) fn opportunities(paragraph: &Paragraph) -> Vec<(usize, BreakOpportuni
     let breaks_spaces = paragraph
         .spans()
         .iter()
-        .any(|span| span.style.white_space == WhiteSpace::BreakSpaces);
+        .any(|span| span.style.white_space.breaks_spaces());
     let categories = CodePointMapData::<GeneralCategory>::new();
     for (offset, ch) in paragraph.text().char_indices() {
         let end = offset + ch.len_utf8();
         if breaks_spaces
             && ch != NO_BREAK_SPACE
             && categories.get(ch) == GeneralCategory::SpaceSeparator
-            && paragraph.style_at(offset).white_space == WhiteSpace::BreakSpaces
+            && paragraph.style_at(offset).white_space.breaks_spaces()
             && !inside_tab(paragraph, end)
         {
             breaks.push((end, BreakOpportunity::Allowed));
@@ -47,7 +59,7 @@ pub(super) fn opportunities(paragraph: &Paragraph) -> Vec<(usize, BreakOpportuni
     }
     if preserved_spaces_wrap_before(paragraph) {
         for span in paragraph.spans() {
-            if span.style.white_space != WhiteSpace::PreWrap {
+            if !span.style.white_space.hangs_spaces() {
                 continue;
             }
             let mut after_space = true;
@@ -173,7 +185,7 @@ pub(super) fn wrapping_width(
     let mut hanging = end;
     for (offset, ch) in paragraph.text()[source_start..end].char_indices().rev() {
         let index = source_start + offset;
-        if ch != ' ' || paragraph.style_at(index).white_space != WhiteSpace::PreWrap {
+        if ch != ' ' || !paragraph.style_at(index).white_space.hangs_spaces() {
             break;
         }
         hanging = index;
@@ -197,9 +209,11 @@ pub(super) fn wrapping_width(
 pub(super) fn emergency_opportunities(paragraph: &Paragraph, intrinsic: bool) -> Vec<usize> {
     use crate::style::OverflowWrap;
     use unicode_segmentation::UnicodeSegmentation;
+    // CSS Text 4 §6.1: `word-break: break-word` acts as `overflow-wrap: anywhere`.
     let allows = |style: &crate::style::Style| {
         style.white_space.wraps()
             && match style.overflow_wrap {
+                _ if style.line_breaking.word_break == crate::style::WordBreak::BreakWord => true,
                 OverflowWrap::Normal => false,
                 OverflowWrap::Anywhere => true,
                 OverflowWrap::BreakWord => !intrinsic,

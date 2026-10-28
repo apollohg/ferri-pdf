@@ -11,6 +11,43 @@ const ELLIPSIS: &str = "\u{2026}";
 /// The permitted substitute when no font has an ellipsis character.
 const THREE_DOTS: &str = "...";
 
+/// `text` in the block's style, or the ellipsis character, or three dots where no font has
+/// one. A string takes the direction of its first strong character, as `unicode-bidi:
+/// plaintext` gives the block overflow ellipsis (CSS Overflow 4 §4.2).
+pub(super) fn shape(
+    context: &TextContext<'_>,
+    style: &crate::style::Style,
+    text: Option<&str>,
+) -> Result<Vec<GlyphRun>, TextError> {
+    if let Some(text) = text {
+        if text.is_empty() {
+            return Ok(Vec::new());
+        }
+        let rtl = match unicode_bidi::get_base_direction(text) {
+            unicode_bidi::Direction::Rtl => true,
+            unicode_bidi::Direction::Ltr => false,
+            unicode_bidi::Direction::Mixed => style.rtl,
+        };
+        return context.shape(text, 0..text.len(), rtl, style, MissingGlyphs::Substitute);
+    }
+    match context.shape(
+        ELLIPSIS,
+        0..ELLIPSIS.len(),
+        style.rtl,
+        style,
+        MissingGlyphs::Reject,
+    ) {
+        Err(TextError::MissingGlyph { .. }) => context.shape(
+            THREE_DOTS,
+            0..THREE_DOTS.len(),
+            style.rtl,
+            style,
+            MissingGlyphs::Substitute,
+        ),
+        shaped => shaped,
+    }
+}
+
 /// Where truncation stops, in slots visited from the line's inline start.
 struct Cut {
     /// Slots before this one are kept whole.
@@ -33,22 +70,7 @@ pub(crate) fn ellipsize(
         return Ok(());
     }
     let rtl = style.rtl;
-    let mut ellipsis = match context.shape(
-        ELLIPSIS,
-        0..ELLIPSIS.len(),
-        rtl,
-        style,
-        MissingGlyphs::Reject,
-    ) {
-        Err(TextError::MissingGlyph { .. }) => context.shape(
-            THREE_DOTS,
-            0..THREE_DOTS.len(),
-            rtl,
-            style,
-            MissingGlyphs::Substitute,
-        )?,
-        shaped => shaped?,
-    };
+    let mut ellipsis = shape(context, style, None)?;
     let limit = available - ellipsis.iter().map(|run| run.width).sum::<f32>();
     let Some(cut) = find_cut(line, limit, rtl) else {
         return Ok(());

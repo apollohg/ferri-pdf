@@ -144,6 +144,10 @@
     "image-set-option": {
       "syntax": "[ <image> | <string> ] [ <resolution> || type(<string>) ]?",
       "source": "https://www.w3.org/TR/2025/WD-css-images-4-20250930/#image-set-notation"
+    },
+    "display-legacy": {
+      "syntax": "inline-block | inline-list-item | inline-table | inline-flex | inline-grid | -webkit-box | -webkit-inline-box",
+      "source": "https://compat.spec.whatwg.org/commit-snapshots/159624eff7222f84fbdaae006e998e65bf60daa0/#css-keyword-mappings: -webkit-box and -webkit-inline-box, which https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#webkit-line-clamp requires to compute as themselves"
     }
   },
   "properties": {
@@ -331,6 +335,40 @@
       "initial": "start",
       "source": "https://drafts.csswg.org/css-text-3/#text-align-property"
     },
+    "white-space": {
+      "initial": ["white-space-collapse", "text-wrap-mode"],
+      "source": "https://www.w3.org/TR/2026/WD-css-text-4-20260814/#white-space-property: a shorthand for white-space-collapse and text-wrap-mode"
+    },
+    "text-wrap": {
+      "initial": ["text-wrap-mode", "text-wrap-style"],
+      "source": "https://www.w3.org/TR/2026/WD-css-text-4-20260814/#text-wrap: a shorthand for text-wrap-mode and text-wrap-style"
+    },
+    "word-break": {
+      "syntax": "normal | break-all | keep-all | manual | auto-phrase | break-word",
+      "source": "https://www.w3.org/TR/2026/WD-css-text-4-20260814/#word-break-property"
+    },
+    "text-justify": {
+      "syntax": "auto | none | inter-word | inter-character | distribute",
+      "source": "https://www.w3.org/TR/2026/CRD-css-text-3-20260814/#text-justify-property with the distribute keyword its prose requires"
+    },
+    "hyphenate-limit-chars": {
+      "syntax": "[ auto | <integer [0,∞]> ]{1,3}",
+      "source": "https://www.w3.org/TR/2026/WD-css-text-4-20260814/#hyphenate-char-limits"
+    },
+    "max-lines": {
+      "syntax": "none | <integer [1,∞]>",
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#max-lines"
+    },
+    "line-clamp": {
+      "syntax": "none | <integer [1,∞]> <'block-ellipsis'>?",
+      "initial": ["max-lines", "block-ellipsis", "continue"],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#line-clamp: a shorthand for max-lines, block-ellipsis and continue"
+    },
+    "-webkit-line-clamp": {
+      "syntax": "none | <integer [1,∞]>",
+      "initial": ["max-lines", "block-ellipsis", "continue"],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#webkit-line-clamp: a shorthand for max-lines, block-ellipsis and continue"
+    },
     "transform-origin": {
       "syntax": "[ left | center | right | top | bottom | <length-percentage> ] | [ left | center | right | <length-percentage> ] [ top | center | bottom | <length-percentage> ] <length>? | [ [ center | left | right ] && [ center | top | bottom ] ] <length>?",
       "source": "https://drafts.csswg.org/css-transforms-1/#transform-origin-property"
@@ -471,6 +509,27 @@
       "inherited": false,
       "groups": ["CSS Generated Content for Paged Media"],
       "source": "https://drafts.csswg.org/css-gcpm-3/#bookmark-state"
+    },
+    "block-ellipsis": {
+      "syntax": "none | auto | <string>",
+      "initial": "none",
+      "inherited": true,
+      "groups": ["CSS Overflow"],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#block-ellipsis"
+    },
+    "continue": {
+      "syntax": "auto | discard | -webkit-discard",
+      "initial": "auto",
+      "inherited": false,
+      "groups": ["CSS Overflow"],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#continue with the -webkit-discard value of https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#webkit-line-clamp"
+    },
+    "-webkit-box-orient": {
+      "syntax": "horizontal | vertical | inline-axis | block-axis",
+      "initial": ["flex-direction"],
+      "inherited": false,
+      "groups": ["Compatibility"],
+      "source": "https://compat.spec.whatwg.org/commit-snapshots/159624eff7222f84fbdaae006e998e65bf60daa0/#css-property-mappings: a mapping to flex-direction"
     }
   }
 }

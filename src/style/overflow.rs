@@ -279,6 +279,54 @@ impl TextOverflow {
         }
     }
 }
+/// `block-ellipsis` (CSS Overflow 4 §4.2).
+#[derive(Clone, Debug, Default, PartialEq, Eq, serde::Serialize)]
+pub(crate) enum BlockEllipsis {
+    #[default]
+    None,
+    Auto,
+    String(Arc<str>),
+}
+impl BlockEllipsis {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.unwrap() {
+            Component::Keyword(Keyword::None) => Ok(Self::None),
+            Component::Keyword(Keyword::Auto) => Ok(Self::Auto),
+            Component::String(text) => Ok(Self::String(Arc::from(text.as_ref()))),
+            other => Err(unsupported(other)),
+        }
+    }
+}
+
+/// `continue` (CSS Overflow 4 §5.3 and §5.1.1).
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub(crate) enum Continue {
+    #[default]
+    Auto,
+    Discard,
+    WebkitDiscard,
+}
+impl Continue {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.keyword() {
+            Some(Keyword::Auto) => Ok(Self::Auto),
+            Some(Keyword::Discard) => Ok(Self::Discard),
+            Some(Keyword::DashWebkitDiscard) => Ok(Self::WebkitDiscard),
+            _ => Err(unsupported(value)),
+        }
+    }
+}
+
+/// The longhands of `line-clamp` (CSS Overflow 4 §5).
+#[derive(Clone, Debug, Default, PartialEq, Eq, serde::Serialize)]
+pub(crate) struct LineClamp {
+    /// `None` is `none`.
+    pub max_lines: Option<usize>,
+    pub block_ellipsis: BlockEllipsis,
+    pub continuation: Continue,
+}
+
 impl Style {
     /// CSS Overflow 3: visible and clip become auto and hidden beside a scroll container axis.
     pub(crate) fn pair_overflow(&mut self) {

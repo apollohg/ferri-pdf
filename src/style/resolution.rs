@@ -1273,11 +1273,13 @@ impl crate::style::PageSelection for Geometry<'_> {
             style.table.caption_side
         })
     }
-    fn white_space(
+    fn white_space_collapse(
         &self,
         target: crate::style::PageStyleTarget,
-    ) -> Result<crate::style::WhiteSpace, StyleError> {
-        self.selected_value(target, Property::WhiteSpace, |style| style.white_space)
+    ) -> Result<crate::style::WhiteSpaceCollapse, StyleError> {
+        self.selected_value(target, Property::WhiteSpaceCollapse, |style| {
+            style.white_space.collapse
+        })
     }
     fn content(
         &self,

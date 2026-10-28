@@ -2,8 +2,9 @@
 //! property is rejected here unless it keeps its initial value, which the engine renders.
 use crate::paint::{BorderStyle, DEFAULT_BORDER_WIDTH, LengthPercentage};
 use crate::style::{
-    BoxSizing, BreakBetween, BreakInside, Display, ListStylePosition, ListStyleType, Size, Style,
-    StyleError, TextAlign, Visibility, WhiteSpace,
+    BoxSizing, BreakBetween, BreakInside, Display, HangingPunctuation, HyphenateLimitChars,
+    LineBreak, ListStylePosition, ListStyleType, Size, Style, StyleError, TextAlign, TextJustify,
+    TextWrapStyle, Visibility, WhiteSpaceCollapse, WordBreak,
     box_values::{length_percentage, unsupported},
     calc::Kind,
     component::Component,
@@ -11,7 +12,7 @@ use crate::style::{
     flex_values::{Alignment, FlexBasis, FlexDirection, FlexWrap, factor, gap},
     grammar::{Keyword, Property},
     grid_values, inert,
-    text_values::{LineHeight, OverflowWrap, TextTransform},
+    text_values::{self, LineHeight, OverflowWrap, TextTransform},
     units::Relative,
     wide_keywords::Resolved,
 };
@@ -401,9 +402,47 @@ fn handler(property: Property) -> Option<Handler> {
             overflow_wrap,
             Some(|v, _| OverflowWrap::from_component(v).is_ok()),
         ),
-        P::WhiteSpace => (
-            white_space,
-            Some(|v, _| WhiteSpace::from_component(v).is_ok()),
+        P::WhiteSpaceCollapse => (
+            white_space_collapse,
+            Some(|v, _| WhiteSpaceCollapse::from_component(v).is_ok()),
+        ),
+        P::TextWrapMode => (text_wrap_mode, Some(|_, _| true)),
+        P::TextWrapStyle => (
+            text_wrap_style,
+            Some(|v, _| TextWrapStyle::from_component(v).is_ok()),
+        ),
+        P::WordBreak => (
+            word_break,
+            Some(|v, _| WordBreak::from_component(v).is_ok()),
+        ),
+        P::LineBreak => (
+            line_break,
+            Some(|v, _| LineBreak::from_component(v).is_ok()),
+        ),
+        P::HangingPunctuation => (
+            hanging_punctuation,
+            Some(|v, _| HangingPunctuation::from_component(v).is_ok()),
+        ),
+        P::TextJustify => (
+            text_justify,
+            Some(|v, _| TextJustify::from_component(v).is_ok()),
+        ),
+        P::HyphenateCharacter => (
+            hyphenate_character,
+            Some(|v, _| text_values::hyphenate_character(v).is_ok()),
+        ),
+        P::HyphenateLimitChars => (
+            hyphenate_limit_chars,
+            Some(|v, r| HyphenateLimitChars::from_component(v, r).is_ok()),
+        ),
+        P::MaxLines => (max_lines, Some(|v, r| max_lines_value(v, r).is_ok())),
+        P::BlockEllipsis => (
+            block_ellipsis,
+            Some(|v, _| crate::style::BlockEllipsis::from_component(v).is_ok()),
+        ),
+        P::Continue => (
+            continuation,
+            Some(|v, _| crate::style::Continue::from_component(v).is_ok()),
         ),
         P::TabSize => (tab_size, Some(|v, r| tab_size_value(v, r).is_ok())),
         P::Direction => (direction, Some(|_, _| true)),
@@ -1097,9 +1136,80 @@ computed!(
     |value, style, _parent, _relative| { OverflowWrap::from_component(value)? }
 );
 computed!(
-    white_space,
-    [white_space],
-    |value, style, _parent, _relative| { WhiteSpace::from_component(value)? }
+    white_space_collapse,
+    [white_space.collapse],
+    |value, style, _parent, _relative| { WhiteSpaceCollapse::from_component(value)? }
+);
+computed!(
+    text_wrap_mode,
+    [white_space.wrap],
+    |value, style, _parent, _relative| flag(
+        value,
+        &[(Keyword::Wrap, true), (Keyword::Nowrap, false)]
+    )?
+);
+computed!(
+    text_wrap_style,
+    [line_breaking.wrap_style],
+    |value, style, _parent, _relative| { TextWrapStyle::from_component(value)? }
+);
+computed!(
+    word_break,
+    [line_breaking.word_break],
+    |value, style, _parent, _relative| { WordBreak::from_component(value)? }
+);
+computed!(
+    line_break,
+    [line_breaking.line_break],
+    |value, style, _parent, _relative| { LineBreak::from_component(value)? }
+);
+computed!(
+    hanging_punctuation,
+    [line_breaking.hanging_punctuation],
+    |value, style, _parent, _relative| { HangingPunctuation::from_component(value)? }
+);
+computed!(
+    text_justify,
+    [line_breaking.justify],
+    |value, style, _parent, _relative| { TextJustify::from_component(value)? }
+);
+computed!(
+    hyphenate_character,
+    [line_breaking.hyphenate_character],
+    |value, style, _parent, _relative| { text_values::hyphenate_character(value)? }
+);
+computed!(
+    hyphenate_limit_chars,
+    [line_breaking.hyphenate_limit_chars],
+    |value, style, _parent, relative| { HyphenateLimitChars::from_component(value, relative)? }
+);
+computed!(
+    max_lines,
+    [clamp.max_lines],
+    |value, style, _parent, relative| { max_lines_value(value, relative)? }
+);
+
+fn max_lines_value(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<Option<usize>, StyleError> {
+    if value.keyword() == Some(Keyword::None) {
+        return Ok(None);
+    }
+    match usize::try_from(crate::style::values::integer(value, relative)?) {
+        Ok(lines) if lines > 0 => Ok(Some(lines)),
+        _ => Err(unsupported(value)),
+    }
+}
+computed!(
+    block_ellipsis,
+    [clamp.block_ellipsis],
+    |value, style, _parent, _relative| { crate::style::BlockEllipsis::from_component(value)? }
+);
+computed!(
+    continuation,
+    [clamp.continuation],
+    |value, style, _parent, _relative| { crate::style::Continue::from_component(value)? }
 );
 computed!(tab_size, [tab_size], |value, style, _parent, relative| {
     tab_size_value(value, relative)?
@@ -1289,9 +1399,28 @@ computed!(
         BoxSizing::ContentBox
     }
 );
-computed!(display, [display], |value, style, _parent, _relative| {
-    Display::from_component(value)
-});
+#[expect(
+    clippy::unnecessary_wraps,
+    reason = "signature is the fallible Apply handler type"
+)]
+fn display(
+    style: &mut Style,
+    _parent: &Style,
+    input: Input<'_>,
+    _relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    match input {
+        Input::Copy(source) => {
+            style.display = source.display.clone();
+            style.flex.legacy_box = source.flex.legacy_box;
+        }
+        Input::Value(value) => {
+            style.display = Display::from_component(value);
+            style.flex.legacy_box = Display::is_legacy_box(value);
+        }
+    }
+    Ok(())
+}
 computed!(position, [position], |value, style, _parent, _relative| {
     crate::style::Position::from_component(value)?
 });

@@ -5,9 +5,6 @@ use crate::style::{
 use serde::Serialize;
 
 pub(crate) const DEFAULT_TAB_SIZE: usize = 8;
-/// `white-space` shorthand slots (CSS Text 4 §3).
-const COLLAPSE_SLOT: usize = 0;
-const WRAP_MODE_SLOT: usize = 1;
 /// `text-transform` case slot.
 const CASE_SLOT: usize = 0;
 
@@ -42,65 +39,310 @@ pub(crate) enum Hyphens {
     None,
     #[default]
     Manual,
+    Auto,
 }
 impl Hyphens {
     pub(crate) fn from_component(value: &Component) -> Result<Self, StyleError> {
         match value.keyword() {
             Some(Keyword::None) => Ok(Self::None),
             Some(Keyword::Manual) => Ok(Self::Manual),
+            Some(Keyword::Auto) => Ok(Self::Auto),
             _ => Err(unsupported(value)),
         }
     }
 }
 
+/// `white-space-collapse` (CSS Text 4 §4.1).
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
 #[serde(rename_all = "kebab-case")]
-pub enum WhiteSpace {
+pub enum WhiteSpaceCollapse {
     #[default]
-    Normal,
-    Nowrap,
-    Pre,
-    PreWrap,
-    PreLine,
+    Collapse,
+    Preserve,
+    PreserveBreaks,
+    PreserveSpaces,
     BreakSpaces,
-    BreakSpacesNowrap,
 }
-impl WhiteSpace {
-    pub fn collapses_spaces(self) -> bool {
-        matches!(self, Self::Normal | Self::Nowrap | Self::PreLine)
-    }
-    pub fn preserves_breaks(self) -> bool {
-        !matches!(self, Self::Normal | Self::Nowrap)
-    }
-    pub fn wraps(self) -> bool {
-        !matches!(self, Self::Pre | Self::Nowrap | Self::BreakSpacesNowrap)
-    }
-    /// The legacy keywords and the collapse and wrap-mode pairs they abbreviate.
+impl WhiteSpaceCollapse {
     pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
-        let pair = match value.keyword() {
-            Some(Keyword::Normal) => return Ok(Self::Normal),
-            Some(Keyword::Pre) => return Ok(Self::Pre),
-            Some(Keyword::PreWrap) => return Ok(Self::PreWrap),
-            Some(Keyword::PreLine) => return Ok(Self::PreLine),
-            _ => (
-                value
-                    .slot(COLLAPSE_SLOT)
-                    .map_or(Some(Keyword::Collapse), Component::keyword),
-                value
-                    .slot(WRAP_MODE_SLOT)
-                    .map_or(Some(Keyword::Wrap), Component::keyword),
-            ),
-        };
-        match pair {
-            (Some(Keyword::Collapse), Some(Keyword::Wrap)) => Ok(Self::Normal),
-            (Some(Keyword::Collapse), Some(Keyword::Nowrap)) => Ok(Self::Nowrap),
-            (Some(Keyword::Preserve), Some(Keyword::Nowrap)) => Ok(Self::Pre),
-            (Some(Keyword::Preserve), Some(Keyword::Wrap)) => Ok(Self::PreWrap),
-            (Some(Keyword::PreserveBreaks), Some(Keyword::Wrap)) => Ok(Self::PreLine),
-            (Some(Keyword::BreakSpaces), Some(Keyword::Wrap)) => Ok(Self::BreakSpaces),
-            (Some(Keyword::BreakSpaces), Some(Keyword::Nowrap)) => Ok(Self::BreakSpacesNowrap),
+        match value.keyword() {
+            Some(Keyword::Collapse) => Ok(Self::Collapse),
+            Some(Keyword::Preserve) => Ok(Self::Preserve),
+            Some(Keyword::PreserveBreaks) => Ok(Self::PreserveBreaks),
+            Some(Keyword::PreserveSpaces) => Ok(Self::PreserveSpaces),
+            Some(Keyword::BreakSpaces) => Ok(Self::BreakSpaces),
             _ => Err(unsupported(value)),
         }
+    }
+}
+
+/// The `white-space-collapse` and `text-wrap-mode` longhands of `white-space`.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize)]
+pub struct WhiteSpace {
+    pub collapse: WhiteSpaceCollapse,
+    pub wrap: bool,
+}
+impl Default for WhiteSpace {
+    fn default() -> Self {
+        Self::NORMAL
+    }
+}
+impl WhiteSpace {
+    pub const NORMAL: Self = Self {
+        collapse: WhiteSpaceCollapse::Collapse,
+        wrap: true,
+    };
+    pub const NOWRAP: Self = Self {
+        collapse: WhiteSpaceCollapse::Collapse,
+        wrap: false,
+    };
+    pub const PRE: Self = Self {
+        collapse: WhiteSpaceCollapse::Preserve,
+        wrap: false,
+    };
+    pub const PRE_WRAP: Self = Self {
+        collapse: WhiteSpaceCollapse::Preserve,
+        wrap: true,
+    };
+    pub fn collapses_spaces(self) -> bool {
+        self.collapse.collapses_spaces()
+    }
+    pub fn preserves_breaks(self) -> bool {
+        self.collapse.preserves_breaks()
+    }
+    pub fn wraps(self) -> bool {
+        self.wrap
+    }
+    /// CSS Text 4 §4.1.3: preserved spaces at the end of a wrapping line hang.
+    pub fn hangs_spaces(self) -> bool {
+        self.wrap
+            && matches!(
+                self.collapse,
+                WhiteSpaceCollapse::Preserve | WhiteSpaceCollapse::PreserveSpaces
+            )
+    }
+    /// `break-spaces` in a wrapping line: every preserved space is a soft wrap opportunity.
+    pub fn breaks_spaces(self) -> bool {
+        self.wrap && self.collapse == WhiteSpaceCollapse::BreakSpaces
+    }
+}
+impl WhiteSpaceCollapse {
+    pub fn collapses_spaces(self) -> bool {
+        matches!(self, Self::Collapse | Self::PreserveBreaks)
+    }
+    pub fn preserves_breaks(self) -> bool {
+        matches!(
+            self,
+            Self::Preserve | Self::PreserveBreaks | Self::BreakSpaces
+        )
+    }
+    /// `preserve-spaces` converts tabs and segment breaks to spaces.
+    pub fn converts_to_spaces(self) -> bool {
+        self == Self::PreserveSpaces
+    }
+}
+
+/// `text-wrap-style` (CSS Text 4 §5.4).
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub(crate) enum TextWrapStyle {
+    #[default]
+    Auto,
+    Balance,
+    /// Equivalent to `auto` unless content is edited, which a static rendering never is.
+    Stable,
+    Pretty,
+}
+impl TextWrapStyle {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.keyword() {
+            Some(Keyword::Auto) => Ok(Self::Auto),
+            Some(Keyword::Balance) => Ok(Self::Balance),
+            Some(Keyword::Stable) => Ok(Self::Stable),
+            Some(Keyword::Pretty) => Ok(Self::Pretty),
+            _ => Err(unsupported(value)),
+        }
+    }
+}
+
+/// `word-break` (CSS Text 4 §6.1).
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub(crate) enum WordBreak {
+    #[default]
+    Normal,
+    BreakAll,
+    KeepAll,
+    Manual,
+    AutoPhrase,
+    BreakWord,
+}
+impl WordBreak {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.keyword() {
+            Some(Keyword::Normal) => Ok(Self::Normal),
+            Some(Keyword::BreakAll) => Ok(Self::BreakAll),
+            Some(Keyword::KeepAll) => Ok(Self::KeepAll),
+            Some(Keyword::Manual) => Ok(Self::Manual),
+            Some(Keyword::AutoPhrase) => Ok(Self::AutoPhrase),
+            Some(Keyword::BreakWord) => Ok(Self::BreakWord),
+            _ => Err(unsupported(value)),
+        }
+    }
+}
+
+/// `line-break` (CSS Text 4 §6.2).
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub(crate) enum LineBreak {
+    #[default]
+    Auto,
+    Loose,
+    Normal,
+    Strict,
+    Anywhere,
+}
+impl LineBreak {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.keyword() {
+            Some(Keyword::Auto) => Ok(Self::Auto),
+            Some(Keyword::Loose) => Ok(Self::Loose),
+            Some(Keyword::Normal) => Ok(Self::Normal),
+            Some(Keyword::Strict) => Ok(Self::Strict),
+            Some(Keyword::Anywhere) => Ok(Self::Anywhere),
+            _ => Err(unsupported(value)),
+        }
+    }
+}
+
+/// The line-end part of `hanging-punctuation` (CSS Text 4 §9.2).
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub(crate) enum HangingEnd {
+    Force,
+    Allow,
+}
+
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
+pub(crate) struct HangingPunctuation {
+    pub first: bool,
+    pub end: Option<HangingEnd>,
+    pub last: bool,
+}
+impl HangingPunctuation {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        if value.keyword() == Some(Keyword::None) {
+            return Ok(Self::default());
+        }
+        let mut keywords = Vec::new();
+        value.keywords(&mut keywords);
+        let end = if keywords.contains(&Keyword::ForceEnd) {
+            Some(HangingEnd::Force)
+        } else if keywords.contains(&Keyword::AllowEnd) {
+            Some(HangingEnd::Allow)
+        } else {
+            None
+        };
+        let hanging = Self {
+            first: keywords.contains(&Keyword::First),
+            end,
+            last: keywords.contains(&Keyword::Last),
+        };
+        if hanging == Self::default() {
+            Err(unsupported(value))
+        } else {
+            Ok(hanging)
+        }
+    }
+}
+
+/// `text-justify` (CSS Text 3 §7.4); `distribute` computes to `inter-character`.
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub(crate) enum TextJustify {
+    #[default]
+    Auto,
+    None,
+    InterWord,
+    InterCharacter,
+}
+impl TextJustify {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.keyword() {
+            Some(Keyword::Auto) => Ok(Self::Auto),
+            Some(Keyword::None) => Ok(Self::None),
+            Some(Keyword::InterWord) => Ok(Self::InterWord),
+            Some(Keyword::InterCharacter | Keyword::Distribute) => Ok(Self::InterCharacter),
+            _ => Err(unsupported(value)),
+        }
+    }
+}
+
+/// `hyphenate-limit-chars` minimums for the word and either side of the hyphenation point
+/// (CSS Text 4 §6.3.4); `None` is `auto`.
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
+pub(crate) struct HyphenateLimitChars {
+    pub word: Option<usize>,
+    pub before: Option<usize>,
+    pub after: Option<usize>,
+}
+impl HyphenateLimitChars {
+    pub(super) fn from_component(
+        value: &Component,
+        relative: &Relative<'_>,
+    ) -> Result<Self, StyleError> {
+        let limit = |item: &Component| match item.keyword() {
+            Some(Keyword::Auto) => Ok(None),
+            _ => usize::try_from(crate::style::values::integer(item, relative)?)
+                .map(Some)
+                .map_err(|_| unsupported(item)),
+        };
+        let limits = value
+            .items()
+            .iter()
+            .map(limit)
+            .collect::<Result<Vec<_>, _>>()?;
+        match limits[..] {
+            [word] => Ok(Self {
+                word,
+                ..Self::default()
+            }),
+            [word, before] => Ok(Self {
+                word,
+                before,
+                after: before,
+            }),
+            [word, before, after] => Ok(Self {
+                word,
+                before,
+                after,
+            }),
+            _ => Err(unsupported(value)),
+        }
+    }
+}
+
+/// Inherited CSS Text 4 wrapping, hyphenation and justification controls.
+#[derive(Clone, Debug, Default, PartialEq, Serialize)]
+pub(crate) struct LineBreaking {
+    pub word_break: WordBreak,
+    pub line_break: LineBreak,
+    pub wrap_style: TextWrapStyle,
+    pub hanging_punctuation: HangingPunctuation,
+    pub justify: TextJustify,
+    /// `None` is `auto`.
+    pub hyphenate_character: Option<std::sync::Arc<str>>,
+    pub hyphenate_limit_chars: HyphenateLimitChars,
+}
+
+/// `hyphenate-character`; `None` is `auto`.
+pub(super) fn hyphenate_character(
+    value: &Component,
+) -> Result<Option<std::sync::Arc<str>>, StyleError> {
+    match value.unwrap() {
+        Component::Keyword(Keyword::Auto) => Ok(None),
+        Component::String(text) => Ok(Some(std::sync::Arc::from(text.as_ref()))),
+        other => Err(unsupported(other)),
     }
 }
 

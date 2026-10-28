@@ -4,12 +4,14 @@ mod breaking;
 mod decoration;
 mod ellipsis;
 mod features;
+mod hanging;
 mod hyphenation;
 mod leaders;
 mod line_boxes;
 mod paragraph;
 mod shaping;
 mod spacing;
+mod tailoring;
 #[cfg(test)]
 mod tests;
 mod whitespace;
@@ -39,7 +41,7 @@ pub(crate) use line_boxes::{AtomicFragment, AtomicMetrics, BoxFragment, LinkFrag
 /// Maximum conservative cluster-shaping and fallback-probe work in one text context.
 pub(crate) const MAX_GLYPH_MATCH_WORK: usize = 100_000_000;
 use line_boxes::{Piece, Slot};
-pub(crate) use paragraph::{PreparedParagraph, TextPosition};
+pub(crate) use paragraph::{ParagraphClamp, PreparedParagraph, TextPosition};
 
 #[derive(Clone, Serialize)]
 pub struct GlyphRun {
@@ -211,6 +213,9 @@ pub(crate) struct Line {
     present: Vec<usize>,
     /// Index of the first run of a `text-overflow` ellipsis, which ends `runs`.
     ellipsis: Option<usize>,
+    hangable: hanging::Hangable,
+    /// Advance of punctuation hanging past the left and right edges, which `width` includes.
+    hanging: [f32; 2],
 }
 
 pub(crate) use crate::style::IntrinsicWidths;
@@ -268,7 +273,12 @@ impl GlyphRun {
 impl Line {
     pub(crate) fn alignment_offset(&self, available: f32, rtl: bool) -> f32 {
         let start = if rtl { 0.0 } else { self.indent };
-        start + self.align.offset(available - self.indent, self.width, rtl)
+        let [left, right] = self.hanging;
+        start
+            + self
+                .align
+                .offset(available - self.indent, self.width - left - right, rtl)
+            - left
     }
     /// Distance from the line's left edge to paragraph `offset`. Offsets outside the
     /// line's runs resolve to its logical start or end in the paragraph direction.
@@ -418,10 +428,11 @@ impl<'a> TextContext<'a> {
         let text = paragraph.text();
         let bidi = paragraph_bidi(paragraph, &self.bidi_work)?;
         let has_rtl = bidi.has_rtl();
-        let opportunities = whitespace::opportunities(paragraph);
+        let automatic = hyphenation::automatic(paragraph);
+        let opportunities = whitespace::opportunities(paragraph, &automatic);
         let minimum: Vec<f32> = atomics.iter().map(|widths| widths.min).collect();
         let maximum: Vec<f32> = atomics.iter().map(|widths| widths.max).collect();
-        let measure = |range: Range<usize>, atomic_widths: &[f32]| {
+        let measure = |range: Range<usize>, atomic_widths: &[f32], min_content: bool| {
             let context_range = breaking::context_range(&opportunities, range.clone());
             let visible = whitespace::visible(paragraph, range.clone());
             let mut pieces = shape_line(
@@ -434,20 +445,29 @@ impl<'a> TextContext<'a> {
                 has_rtl,
             )?;
             if visible.end == range.end {
-                hyphenation::decorate(self, paragraph, &bidi, range.end, &mut pieces)?;
+                hyphenation::decorate(self, paragraph, &automatic, &bidi, range.end, &mut pieces)?;
             }
             let indent = paragraph::indent_at(paragraph, &opportunities, range.start, 0.0);
-            let arranged = line_boxes::arrange(paragraph, pieces, range, atomic_widths, 0.0);
+            let arranged =
+                line_boxes::arrange(paragraph, pieces, range.clone(), atomic_widths, 0.0);
+            let hangable = hanging::hangable(
+                paragraph,
+                range.clone(),
+                visible.clone(),
+                &arranged.runs,
+                &arranged.order,
+            );
             let width =
                 whitespace::wrapping_width(paragraph, visible.end, &arranged.runs, arranged.width)
-                    + indent;
+                    + indent
+                    - hangable.intrinsic(min_content);
             if !width.is_finite() {
                 return Err(TextError::NonFiniteGeometry);
             }
             Ok(width)
         };
         if text.is_empty() {
-            let width = measure(0..0, &maximum)?;
+            let width = measure(0..0, &maximum, false)?;
             return Ok(IntrinsicWidths {
                 min: width,
                 max: width,
@@ -461,16 +481,16 @@ impl<'a> TextContext<'a> {
         for (end, opportunity) in opportunities.iter().copied() {
             while emergency.peek().is_some_and(|&offset| offset < end) {
                 let offset = emergency.next().unwrap();
-                widths.min = widths.min.max(measure(word_start..offset, &minimum)?);
+                widths.min = widths.min.max(measure(word_start..offset, &minimum, true)?);
                 word_start = offset;
             }
             if emergency.peek() == Some(&end) {
                 emergency.next();
             }
-            widths.min = widths.min.max(measure(word_start..end, &minimum)?);
+            widths.min = widths.min.max(measure(word_start..end, &minimum, true)?);
             word_start = end;
             if opportunity == BreakOpportunity::Mandatory {
-                widths.max = widths.max.max(measure(line_start..end, &maximum)?);
+                widths.max = widths.max.max(measure(line_start..end, &maximum, false)?);
                 line_start = end;
             }
         }

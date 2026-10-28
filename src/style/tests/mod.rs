@@ -2,6 +2,7 @@ mod calc;
 mod colors;
 mod font_family;
 mod inert;
+mod line_breaking;
 mod logical;
 mod named_page_rules;
 mod page_selection;

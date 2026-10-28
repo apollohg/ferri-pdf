@@ -1,7 +1,7 @@
 mod transform;
 mod transform_maps;
 use crate::document::DocumentError;
-use crate::style::{Clear, Style, TextAlign, WhiteSpace};
+use crate::style::{Clear, Style, TextAlign, WhiteSpace, WhiteSpaceCollapse};
 use std::ops::Range;
 
 pub(crate) const MAX_INLINE_TEXT_BYTES: usize = 64 * 1024 * 1024;
@@ -54,6 +54,8 @@ pub(crate) struct Paragraph {
     expanded_tabs: Vec<Range<usize>>,
     pub(crate) marker_image: Option<crate::graphics::BackgroundImage>,
     pub(crate) first_formatted_line: bool,
+    /// Holds the last line box of its block container.
+    pub(crate) last_formatted_line: bool,
     text: String,
     style: Box<Style>,
     spans: Vec<TextSpan>,
@@ -84,7 +86,7 @@ impl Paragraph {
 
     pub(crate) fn marker(text: String, style: &Style) -> Result<Self, DocumentError> {
         let mut style = style.clone();
-        style.white_space = WhiteSpace::Pre;
+        style.white_space = WhiteSpace::PRE;
         style.align = TextAlign::Start;
         style.align_last = None;
         style.text_indent = Default::default();
@@ -100,6 +102,7 @@ impl Paragraph {
             expanded_tabs: Vec::new(),
             marker_image: None,
             first_formatted_line: false,
+            last_formatted_line: false,
             text,
             style: Box::new(style),
             spans: vec![span],
@@ -137,6 +140,9 @@ impl Paragraph {
     }
     pub(crate) fn first_formatted_line(&self) -> bool {
         self.first_formatted_line
+    }
+    pub(crate) fn last_formatted_line(&self) -> bool {
+        self.last_formatted_line
     }
     pub(crate) fn text(&self) -> &str {
         &self.text
@@ -293,7 +299,7 @@ impl InlineCollector {
             if ch == '\n' && style.white_space.preserves_breaks() {
                 self.drop_pending_space();
                 self.push('\n', index, source, 1, inline_box)?;
-            } else if collapses_character(ch, style.white_space) {
+            } else if collapses_character(ch, style.white_space.collapse) {
                 if self.pending_space.is_none()
                     && (leader || (!self.text.is_empty() && !self.text.ends_with('\n')))
                 {
@@ -303,6 +309,9 @@ impl InlineCollector {
                         inline_box,
                     });
                 }
+            } else if style.white_space.collapse.converts_to_spaces() && matches!(ch, '\n' | '\t') {
+                self.emit_pending_space()?;
+                self.push(' ', index, source, 1, inline_box)?;
             } else {
                 self.emit_pending_space()?;
                 if ch == '\t' {
@@ -588,6 +597,7 @@ impl InlineCollector {
             expanded_tabs: self.expanded_tabs,
             marker_image: None,
             first_formatted_line: true,
+            last_formatted_line: true,
             text: self.text,
             style: Box::new(style.clone()),
             spans: self.spans,
@@ -631,8 +641,8 @@ pub(crate) fn is_css_whitespace(ch: char) -> bool {
     matches!(ch, ' ' | '\t' | '\r' | '\n' | '\u{c}')
 }
 
-pub(crate) fn collapses_character(ch: char, white_space: WhiteSpace) -> bool {
-    white_space.collapses_spaces()
+pub(crate) fn collapses_character(ch: char, collapse: WhiteSpaceCollapse) -> bool {
+    collapse.collapses_spaces()
         && is_css_whitespace(ch)
-        && !(ch == '\n' && white_space.preserves_breaks())
+        && !(ch == '\n' && collapse.preserves_breaks())
 }

@@ -41,6 +41,7 @@ pub(super) struct ParagraphCursor<'a, 't> {
     consumed_floats: usize,
     line_index: usize,
     layers: InlineLayers<'a>,
+    clamp: Option<crate::text::ParagraphClamp>,
 }
 
 impl<'a, 't> Paginator<'a, '_, 't> {
@@ -180,6 +181,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         }
         let source = paragraph.paragraph;
         let index = paragraph.index;
+        let clamp = paragraph.clamp;
         ParagraphCursor {
             index,
             source,
@@ -202,6 +204,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             consumed_floats: 0,
             line_index,
             layers,
+            clamp,
         }
     }
     pub(super) fn paragraph_fragment(
@@ -232,6 +235,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             mut consumed_floats,
             mut line_index,
             mut layers,
+            clamp,
         } = cursor;
         let float_anchors: Vec<_> = source
             .anchors()
@@ -284,8 +288,9 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                         self.measurer.work.spend(source.text().len().max(1))?;
                     }
                     self.measurer.work.spend(metrics.len().max(1))?;
-                    let prepared =
-                        prepared.get_or_insert_with(|| Rc::new(text.prepare_paragraph(source)));
+                    let prepared = prepared.get_or_insert_with(|| {
+                        Rc::new(text.prepare_paragraph(source).clamped(clamp.clone()))
+                    });
                     let mut stream = prepared.lines(position, width, &metrics)?;
                     geometry.clear();
                     let mut float_position = position;
@@ -458,8 +463,9 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 if prepared.is_none() {
                     self.measurer.work.spend(source.text().len().max(1))?;
                 }
-                let prepared =
-                    prepared.get_or_insert_with(|| Rc::new(text.prepare_paragraph(source)));
+                let prepared = prepared.get_or_insert_with(|| {
+                    Rc::new(text.prepare_paragraph(source).clamped(clamp.clone()))
+                });
                 while take > 0 {
                     self.measurer.work.spend(next_metrics.len().max(1))?;
                     let checkpoint = positions.as_slice()[take - 1];
@@ -647,6 +653,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 consumed_floats,
                 line_index,
                 layers,
+                clamp,
             }));
         }
         if let Some((left, destination_width, height)) = self.paragraph_geometry() {

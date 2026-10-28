@@ -1,15 +1,117 @@
+//! Manual and automatic hyphenation (CSS Text 4 §6.3). Automatic opportunities come from the
+//! hyphenation patterns of the content language; languages without patterns hyphenate only
+//! at conditional hyphens.
 use crate::document::Paragraph;
-use crate::style::Hyphens;
+use crate::style::{Hyphens, LineBreak, Style, WordBreak};
 use crate::text::shaping::MissingGlyphs;
 use crate::text::{GlyphRun, Piece, TextContext, TextError, line_boxes};
+use icu_properties::{
+    CodePointMapData,
+    props::{GeneralCategory, GeneralCategoryGroup},
+};
+use unicode_segmentation::UnicodeSegmentation;
 
 pub(super) const SOFT_HYPHEN: char = '\u{00ad}';
 const HYPHEN: &str = "\u{2010}";
 const ARMENIAN_HYPHEN: &str = "\u{058a}";
+const ARMENIAN: &str = "hy";
 const HYPHEN_FALLBACK: &str = "-";
+/// No visible hyphen, as for scripts that do not mark hyphenation.
+const NO_HYPHEN: &str = "";
+/// CSS Text 4 §6.3.4: the suggested `auto` minimum length of a hyphenated word.
+const AUTO_WORD_MINIMUM: usize = 5;
+/// The pattern resources hyphenate between letters, so at least one counts on each side.
+const MINIMUM_SIDE: usize = 1;
 
-pub(super) fn is_soft_break(paragraph: &Paragraph, end: usize) -> bool {
-    end < paragraph.text().len() && paragraph.text()[..end].ends_with(SOFT_HYPHEN)
+/// CSS Text 4 §6.1: `auto-phrase` suppresses hyphenation as `none` does; `break-all` and
+/// `line-break: anywhere` apply no automatic hyphenation.
+pub(super) fn used(style: &Style) -> Hyphens {
+    let breaking = &style.line_breaking;
+    match style.hyphens {
+        _ if breaking.word_break == WordBreak::AutoPhrase => Hyphens::None,
+        Hyphens::Auto
+            if breaking.word_break == WordBreak::BreakAll
+                || breaking.line_break == LineBreak::Anywhere =>
+        {
+            Hyphens::Manual
+        }
+        hyphens => hyphens,
+    }
+}
+
+/// The hyphenation resource of a content language, by its primary subtag.
+fn resource(language: &str) -> Option<hypher::Lang> {
+    let primary = language.split('-').next()?.to_ascii_lowercase();
+    let code: [u8; 2] = primary.as_bytes().try_into().ok()?;
+    hypher::Lang::from_iso(code)
+}
+
+/// CSS Text 4 §6.3.4: nonspacing marks and punctuation do not count towards the limits.
+fn counted(text: &str) -> usize {
+    let categories = CodePointMapData::<GeneralCategory>::new();
+    text.chars()
+        .filter(|&ch| {
+            let category = categories.get(ch);
+            category != GeneralCategory::NonspacingMark
+                && !GeneralCategoryGroup::Punctuation.contains(category)
+        })
+        .count()
+}
+
+/// Automatic hyphenation opportunities in offset order. Words with a conditional hyphen
+/// keep only their explicit opportunities; both sides of an opportunity must hyphenate
+/// automatically. Inline box boundaries do not delimit words.
+pub(super) fn automatic(paragraph: &Paragraph) -> Vec<usize> {
+    if !paragraph
+        .spans()
+        .iter()
+        .any(|span| used(&span.style) == Hyphens::Auto)
+    {
+        return Vec::new();
+    }
+    let text = paragraph.text();
+    let mut points = Vec::new();
+    for (start, word) in text.split_word_bound_indices() {
+        if word.contains(SOFT_HYPHEN) || !word.chars().any(char::is_alphabetic) {
+            continue;
+        }
+        let style = paragraph.style_at(start);
+        let Some(language) = resource(&style.language) else {
+            continue;
+        };
+        let limits = style.line_breaking.hyphenate_limit_chars;
+        let (left, right) = language.bounds();
+        let before = limits.before.unwrap_or(left);
+        let after = limits.after.unwrap_or(right);
+        let total = counted(word);
+        if total < limits.word.unwrap_or(AUTO_WORD_MINIMUM) {
+            continue;
+        }
+        let mut offset = start;
+        let mut syllables =
+            hypher::hyphenate_bounded(word, language, MINIMUM_SIDE, MINIMUM_SIDE).peekable();
+        while let Some(syllable) = syllables.next() {
+            offset += syllable.len();
+            if syllables.peek().is_none() {
+                break;
+            }
+            let leading = counted(&text[start..offset]);
+            if leading >= before
+                && total - leading >= after
+                && used(paragraph.style_at(offset - 1)) == Hyphens::Auto
+                && used(paragraph.style_at(offset)) == Hyphens::Auto
+            {
+                points.push(offset);
+            }
+        }
+    }
+    points
+}
+
+/// Whether the opportunity at `end` hyphenates: after a conditional hyphen, or automatic.
+pub(super) fn is_soft_break(paragraph: &Paragraph, automatic: &[usize], end: usize) -> bool {
+    automatic.binary_search(&end).is_ok()
+        || (end < paragraph.text().len() && paragraph.text()[..end].ends_with(SOFT_HYPHEN))
 }
 
 pub(super) fn allowed(paragraph: &Paragraph, end: usize) -> bool {
@@ -21,42 +123,71 @@ pub(super) fn allowed(paragraph: &Paragraph, end: usize) -> bool {
         .spans()
         .iter()
         .find(|span| span.range.contains(&offset))
-        .is_none_or(|span| span.style.hyphens != Hyphens::None)
+        .is_none_or(|span| used(&span.style) != Hyphens::None)
 }
 
-/// The conditional glyph belongs to the soft hyphen's own span, including its bidi level.
-pub(super) fn decorate(
+/// CSS Text 4 §6.3.2: `hyphenate-character`, or the content language's convention.
+fn character(style: &Style) -> &str {
+    if let Some(text) = &style.line_breaking.hyphenate_character {
+        return text;
+    }
+    let primary = style.language.split('-').next().unwrap_or_default();
+    if primary.eq_ignore_ascii_case(ARMENIAN) {
+        ARMENIAN_HYPHEN
+    } else if resource(&style.language)
+        .is_some_and(|language| language.hyphenation_character().is_none())
+    {
+        NO_HYPHEN
+    } else {
+        HYPHEN
+    }
+}
+
+/// Inserts the hyphenation string of a hyphenating break at `end`. A conditional hyphen's
+/// string belongs to its own span, including its bidi level; an automatic one belongs to
+/// the character before the break.
+pub(super) fn decorate<'p>(
     context: &TextContext<'_>,
-    paragraph: &Paragraph,
+    paragraph: &'p Paragraph,
+    automatic: &[usize],
     bidi: &crate::text::bidi::ResolvedParagraph<'_>,
     end: usize,
     pieces: &mut Vec<Piece>,
-) -> Result<Option<&'static str>, TextError> {
-    if !is_soft_break(paragraph, end) || !allowed(paragraph, end) {
+) -> Result<Option<&'p str>, TextError> {
+    if !is_soft_break(paragraph, automatic, end) || !allowed(paragraph, end) {
         return Ok(None);
     }
-    let offset = end - SOFT_HYPHEN.len_utf8();
+    let conditional = paragraph.text()[..end].ends_with(SOFT_HYPHEN);
+    let (offset, source) = if conditional {
+        let offset = end - SOFT_HYPHEN.len_utf8();
+        (offset, offset..end)
+    } else {
+        let previous = paragraph.text()[..end]
+            .char_indices()
+            .next_back()
+            .map_or(0, |(offset, _)| offset);
+        (previous, end..end)
+    };
     let span_index = paragraph
         .spans()
         .partition_point(|span| span.range.end <= offset);
     let style = &paragraph.spans()[span_index].style;
     let rtl = bidi.level(offset).is_rtl();
-    let preferred = if style
-        .language
-        .split('-')
-        .next()
-        .is_some_and(|language| language.eq_ignore_ascii_case("hy"))
-    {
-        ARMENIAN_HYPHEN
-    } else {
-        HYPHEN
-    };
+    let preferred = character(style);
+    if preferred.is_empty() {
+        return Ok(Some(preferred));
+    }
+    let custom = style.line_breaking.hyphenate_character.is_some();
     let (mut runs, text): (Vec<GlyphRun>, _) = match context.shape(
         preferred,
         0..preferred.len(),
         rtl,
         style,
-        MissingGlyphs::Reject,
+        if custom {
+            MissingGlyphs::Substitute
+        } else {
+            MissingGlyphs::Reject
+        },
     ) {
         Err(TextError::MissingGlyph { .. }) => (
             context.shape(
@@ -71,7 +202,7 @@ pub(super) fn decorate(
         result => (result?, preferred),
     };
     for run in &mut runs {
-        run.source_range = offset..end;
+        run.source_range = source.clone();
         run.source_span = span_index;
     }
     let insertion = line_boxes::insertion(
@@ -79,14 +210,14 @@ pub(super) fn decorate(
             let (range, rtl) = piece.source();
             (index, range, rtl)
         }),
-        offset,
+        source.start,
     );
     pieces.splice(insertion..insertion, runs.into_iter().map(Piece::Text));
     Ok(Some(text))
 }
 
 pub(super) fn text(source: &str, hyphen: Option<&str>) -> String {
-    if !source.contains(SOFT_HYPHEN) {
+    if !source.contains(SOFT_HYPHEN) && hyphen.is_none_or(str::is_empty) {
         return source.to_owned();
     }
     let mut text: String = source.chars().filter(|&ch| ch != SOFT_HYPHEN).collect();

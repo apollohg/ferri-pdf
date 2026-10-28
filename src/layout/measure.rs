@@ -258,6 +258,57 @@ pub(super) struct MeasuredParagraph<'a> {
     pub anchors: Vec<LineAnchor<'a>>,
     /// Atomic inlines in paragraph order, taken when their line is placed.
     pub atomics: Vec<Option<crate::layout::inline::MeasuredAtomic<'a>>>,
+    /// The region break of a `continue: discard` container that ends the paragraph.
+    pub clamp: Option<crate::text::ParagraphClamp>,
+}
+
+/// The line boxes a `continue: discard` container still holds before its region break
+/// (CSS Overflow 4 §5.2), and whether in-flow content follows the measured box inside it.
+#[derive(Clone, Copy)]
+pub(super) struct LineBudget {
+    pub lines: usize,
+    pub following: bool,
+}
+
+/// CSS Overflow 4 §5.3: `continue: discard` makes a block container a fragmentation container
+/// that captures region breaks, whose content after the first is not rendered.
+fn discards(style: &Style) -> bool {
+    style.clamp.continuation == crate::style::Continue::Discard
+        && matches!(
+            style.display,
+            Display::Block
+                | Display::ListItem
+                | Display::FlowRoot
+                | Display::FlowRootListItem
+                | Display::InlineBlock
+                | Display::TableCell
+                | Display::TableCaption
+        )
+}
+
+/// Counts the line boxes of a measured flow in its block formatting context, and those of
+/// them ending within `limit` of the flow's top, until the first that does not.
+fn lines_within(items: &[FlowItem<'_>], top: f32, limit: f32, counts: &mut [usize; 2]) {
+    let mut y = top;
+    for item in items {
+        match item {
+            FlowItem::Paragraph(paragraph) => {
+                for line in &paragraph.lines {
+                    y += line.height;
+                    if counts[0] == counts[1] && y <= limit {
+                        counts[0] += 1;
+                    }
+                    counts[1] += 1;
+                }
+                continue;
+            }
+            FlowItem::Block(block) if !block.independent => {
+                lines_within(&block.items, y, limit, counts);
+            }
+            _ => {}
+        }
+        y += item.height();
+    }
 }
 /// Absolutely positioned box anchored in a paragraph line.
 #[derive(Clone)]
@@ -525,10 +576,142 @@ impl Measurer<'_> {
         containing_height: Option<f32>,
         used_height: Option<f32>,
     ) -> Result<MeasuredBlock<'a>, LayoutError> {
+        self.measure_flow(block, geometry, root, containing_height, used_height, None)
+    }
+
+    /// A block's flow; a `continue: discard` container keeps at most `budget` line boxes and
+    /// the content before its block size overflows.
+    fn measure_flow<'a>(
+        &mut self,
+        block: &'a BlockBox,
+        geometry: crate::layout::geometry::HorizontalBox,
+        root: bool,
+        containing_height: Option<f32>,
+        used_height: Option<f32>,
+        budget: Option<LineBudget>,
+    ) -> Result<MeasuredBlock<'a>, LayoutError> {
         let context = (self.fragmentainer, self.column_flow);
-        let measured = self.format_flow(block, geometry, root, containing_height, used_height);
+        let measured = if discards(block.style()) {
+            self.discarding_flow(
+                block,
+                geometry,
+                root,
+                containing_height,
+                used_height,
+                budget,
+            )
+        } else {
+            self.format_flow(block, geometry, root, containing_height, used_height, None)
+        };
         (self.fragmentainer, self.column_flow) = context;
         measured
+    }
+
+    /// CSS Overflow 4 §5.2–5.3: a region break after `max-lines` line boxes or an earlier
+    /// break of an enclosing container, or else the unforced break where content overflows
+    /// the block size, which follows the last line box that fits but never precedes the first.
+    fn discarding_flow<'a>(
+        &mut self,
+        block: &'a BlockBox,
+        geometry: crate::layout::geometry::HorizontalBox,
+        root: bool,
+        containing_height: Option<f32>,
+        used_height: Option<f32>,
+        outer: Option<LineBudget>,
+    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+        let style = block.style();
+        if style.multicol.is_multicol() {
+            return Err(LayoutError::UnsupportedClamp {
+                feature: "continue: discard on a multi-column container",
+            });
+        }
+        let budget = match (style.clamp.max_lines, outer) {
+            (Some(lines), Some(outer)) => Some(LineBudget {
+                lines: lines.min(outer.lines),
+                following: outer.following && outer.lines <= lines,
+            }),
+            (Some(lines), None) => Some(LineBudget {
+                lines,
+                following: false,
+            }),
+            (None, outer) => outer,
+        };
+        let context = (self.fragmentainer, self.column_flow);
+        let measured = self.format_flow(
+            block,
+            geometry.clone(),
+            root,
+            containing_height,
+            used_height,
+            budget,
+        )?;
+        if measured
+            .sizing
+            .is_none_or(|sizing| sizing.natural_height <= measured.height)
+        {
+            return Ok(measured);
+        }
+        let mut counts = [0; 2];
+        lines_within(
+            &measured.items,
+            0.0,
+            measured.height - measured.end_space,
+            &mut counts,
+        );
+        let [fitting, total] = counts;
+        if fitting >= total {
+            return Ok(measured);
+        }
+        (self.fragmentainer, self.column_flow) = context;
+        self.format_flow(
+            block,
+            geometry,
+            root,
+            containing_height,
+            used_height,
+            Some(LineBudget {
+                lines: fitting.max(1),
+                following: true,
+            }),
+        )
+    }
+
+    /// Lines the discarding container of the flow still holds, unless an independent
+    /// formatting context separates the current frame from it.
+    fn budget(frames: &[FlowFrame<'_>]) -> Option<usize> {
+        let clamp = frames[0].clamp.as_ref()?;
+        (!frames[1..].iter().any(|frame| frame.independent)).then_some(clamp.remaining)
+    }
+
+    /// Whether in-flow content follows in the open frames, or after the discarding container.
+    fn following(frames: &[FlowFrame<'_>]) -> bool {
+        frames[0]
+            .clamp
+            .as_ref()
+            .is_some_and(|clamp| clamp.following)
+            || frames.iter().any(|frame| {
+                frame
+                    .children
+                    .clone()
+                    .any(|child| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)))
+            })
+    }
+
+    /// Counts `lines` against the discarding container. At its region break, content after
+    /// the break is not rendered and every box the break crosses ends its first fragment.
+    fn spend_lines(frames: &mut [FlowFrame<'_>], lines: usize, broken: bool) {
+        let Some(clamp) = frames[0].clamp.as_mut() else {
+            return;
+        };
+        clamp.remaining = clamp.remaining.saturating_sub(lines);
+        if broken {
+            for frame in frames.iter_mut() {
+                frame.children = [].iter();
+            }
+            for frame in &mut frames[1..] {
+                frame.fragmented = true;
+            }
+        }
     }
 
     fn start_flow<'a>(
@@ -663,6 +846,8 @@ impl Measurer<'_> {
                 previous_break_after: BreakBetween::Auto,
                 children: if visible { block.children() } else { &[] }.iter(),
                 marker,
+                clamp: None,
+                fragmented: false,
             }))
         })();
         if !matches!(&started, Ok(FlowStart::Pending(_))) {
@@ -678,11 +863,18 @@ impl Measurer<'_> {
         root: bool,
         containing_height: Option<f32>,
         used_height: Option<f32>,
+        budget: Option<LineBudget>,
     ) -> Result<MeasuredBlock<'a>, LayoutError> {
         let mut frames =
             match self.start_flow(block, geometry, root, containing_height, used_height)? {
                 FlowStart::Complete(measured) => return Ok(measured),
-                FlowStart::Pending(frame) => vec![frame],
+                FlowStart::Pending(mut frame) => {
+                    frame.clamp = budget.map(|budget| FrameClamp {
+                        remaining: budget.lines,
+                        following: budget.following,
+                    });
+                    vec![frame]
+                }
             };
         loop {
             let frame = frames.last_mut().unwrap();
@@ -714,6 +906,32 @@ impl Measurer<'_> {
                             )?,
                             false,
                         );
+                    } else if discards(child.style()) {
+                        let geometry = block_geometry(
+                            self,
+                            child,
+                            frame.content_x,
+                            frame.content_width,
+                            frame.block.style().rtl,
+                            frame.vertical.definite(),
+                        )?;
+                        let containing = frame.vertical.definite();
+                        let budget = Self::budget(&frames).map(|lines| LineBudget {
+                            lines,
+                            following: Self::following(&frames),
+                        });
+                        let measured =
+                            self.measure_flow(child, geometry, false, containing, None, budget)?;
+                        let mut counts = [0; 2];
+                        if !measured.independent {
+                            lines_within(&measured.items, 0.0, f32::INFINITY, &mut counts);
+                        }
+                        let broken = budget
+                            .is_some_and(|budget| counts[1] >= budget.lines && budget.following);
+                        frames.last_mut().unwrap().push_block(measured, false);
+                        if budget.is_some() {
+                            Self::spend_lines(&mut frames, counts[1], broken);
+                        }
                     } else {
                         let geometry = block_geometry(
                             self,
@@ -769,15 +987,24 @@ impl Measurer<'_> {
                     }
                 }
                 Some(BlockContent::Inline(paragraph)) => {
-                    let paragraph = self.paragraph(
-                        paragraph,
+                    let (x, width, containing, rtl) = (
                         frame.content_x,
                         frame.content_width,
                         frame.vertical.definite(),
                         frame.block.style().rtl,
-                    )?;
+                    );
+                    let budget = Self::budget(&frames).map(|lines| LineBudget {
+                        lines,
+                        following: Self::following(&frames),
+                    });
+                    let paragraph = self.paragraph(paragraph, x, width, containing, rtl, budget)?;
+                    let (lines, broken) = (paragraph.lines.len(), paragraph.clamp.is_some());
+                    let frame = frames.last_mut().unwrap();
                     frame.previous_break_after = BreakBetween::Auto;
                     frame.push(FlowItem::Paragraph(paragraph));
+                    if budget.is_some() {
+                        Self::spend_lines(&mut frames, lines, broken);
+                    }
                 }
                 None => {
                     let frame = frames.pop().unwrap();
@@ -801,6 +1028,7 @@ impl Measurer<'_> {
         width: f32,
         containing_height: Option<f32>,
         rtl: bool,
+        budget: Option<LineBudget>,
     ) -> Result<MeasuredParagraph<'a>, LayoutError> {
         self.work.spend(paragraph.text().len().max(1))?;
         let index = self.sources.paragraph(paragraph);
@@ -812,17 +1040,39 @@ impl Measurer<'_> {
             })
             .collect::<Result<Vec<_>, _>>()?;
         let metrics: Vec<_> = atomics.iter().map(|atomic| atomic.metrics).collect();
-        let prepared = self.text.prepare_paragraph(paragraph);
+        let text = self.text;
+        let prepared = text.prepare_paragraph(paragraph);
         let mut stream = prepared.lines(prepared.start(), width, &metrics)?;
         let mut lines = Vec::new();
         let mut positions = vec![stream.checkpoint()];
-        while let Some(line) = stream.next() {
+        let limit = budget.map_or(usize::MAX, |budget| budget.lines);
+        while lines.len() < limit
+            && let Some(line) = stream.next()
+        {
             self.work.spend(1)?;
             lines.push(line?);
             positions.push(stream.checkpoint());
         }
+        let more = lines.len() == limit && stream.next().transpose()?.is_some();
+        let clamp = budget
+            .filter(|budget| lines.len() == budget.lines && (more || budget.following))
+            .map(|budget| crate::text::ParagraphClamp {
+                lines: budget.lines,
+                ellipsis: Some(paragraph.style().clamp.block_ellipsis.clone())
+                    .filter(|ellipsis| *ellipsis != crate::style::BlockEllipsis::None),
+            });
+        if let Some(clamp) = clamp.as_ref().filter(|clamp| clamp.ellipsis.is_some()) {
+            let clamped = text
+                .prepare_paragraph(paragraph)
+                .clamped(Some(clamp.clone()));
+            let mut stream = clamped.lines(positions[clamp.lines - 1], width, &metrics)?;
+            if let Some(line) = stream.next() {
+                lines[clamp.lines - 1] = line?;
+                positions[clamp.lines] = stream.checkpoint();
+            }
+        }
         let height = lines.iter().map(|line| line.height).sum();
-        let anchors = line_anchors(paragraph, &lines, true);
+        let anchors = line_anchors(paragraph, &lines, clamp.is_none());
         Ok(MeasuredParagraph {
             index,
             paragraph,
@@ -835,6 +1085,7 @@ impl Measurer<'_> {
             positions,
             anchors,
             atomics: atomics.into_iter().map(Some).collect(),
+            clamp,
         })
     }
 }
@@ -914,6 +1165,16 @@ struct FlowFrame<'a> {
     previous_break_after: BreakBetween,
     children: std::slice::Iter<'a, BlockContent>,
     marker: Option<crate::layout::markers::MeasuredMarker>,
+    /// The region break budget of the `continue: discard` container this frame measures.
+    clamp: Option<FrameClamp>,
+    /// A region break inside the box ends its first fragment, which keeps no end edge.
+    fragmented: bool,
+}
+
+struct FrameClamp {
+    remaining: usize,
+    /// Content follows the container in an enclosing one that breaks with it.
+    following: bool,
 }
 impl<'a> FlowFrame<'a> {
     fn push(&mut self, item: FlowItem<'a>) {
@@ -969,20 +1230,30 @@ impl<'a> FlowFrame<'a> {
             vertical,
             mut before,
             mut after,
-            pending,
+            mut pending,
             mut items,
             at_start,
             top_edge,
-            bottom_edge,
+            mut bottom_edge,
             independent,
             edges,
             mut has_forced,
             columns,
             outer,
             marker,
+            fragmented,
             ..
         } = self;
         let style = block.style();
+        // CSS Break 3 §5.2 and §5.4: margins adjoining the break are truncated, and a sliced
+        // first fragment has no end edge.
+        if fragmented {
+            pending = MarginStrut::default();
+            after = MarginStrut::default();
+            if !style.clone_decoration {
+                bottom_edge = 0.0;
+            }
+        }
         let clearance_target = measurer
             .clearance_targets
             .get(&std::ptr::from_ref::<BlockBox>(block))

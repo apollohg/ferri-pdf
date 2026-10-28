@@ -121,7 +121,28 @@ impl BlockBox {
         } else {
             children
         };
-        let children = crate::document::tables::normalize(&style, children, page_scope.as_ref());
+        let mut children =
+            crate::document::tables::normalize(&style, children, page_scope.as_ref());
+        // CSS Overflow 4 §5.1.1: children of a `-webkit-box` use its clamping values, and
+        // `-webkit-discard` discards only in a vertical one.
+        if style.flex.legacy_box {
+            for child in &mut children {
+                if let BlockContent::Block(block) = child {
+                    block.style.clamp = crate::style::LineClamp {
+                        continuation: match style.clamp.continuation {
+                            crate::style::Continue::WebkitDiscard
+                                if style.flex.direction.column() =>
+                            {
+                                crate::style::Continue::Discard
+                            }
+                            crate::style::Continue::WebkitDiscard => crate::style::Continue::Auto,
+                            continuation => continuation,
+                        },
+                        ..style.clamp.clone()
+                    };
+                }
+            }
+        }
         let page = crate::document::PageBoundary::new(page_scope, &style, &children);
         Self {
             style: Box::new(style),
@@ -256,6 +277,7 @@ impl BlockBuilder<'_, '_, '_> {
                     .children
                     .iter()
                     .any(|child| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)));
+                paragraph.last_formatted_line = false;
                 self.children.push(BlockContent::Inline(paragraph));
             }
             Err(stray) => self.children.extend(stray),
@@ -982,7 +1004,14 @@ fn block<'a>(
         traversal.navigation.leave();
         let frame = frames.pop().unwrap();
         blocks.pop();
-        let state = frame.block.unwrap();
+        let mut state = frame.block.unwrap();
+        if let Some(BlockContent::Inline(paragraph)) = state
+            .children
+            .iter_mut()
+            .rfind(|child| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)))
+        {
+            paragraph.last_formatted_line = true;
+        }
         let canvas_source = index == 0 || traversal.canvas_body == Some(element.id());
         let mut block = BlockBox::with_decoration(
             *frame.style,

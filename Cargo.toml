@@ -101,14 +101,50 @@ unicode-script = "0.5"
 unicode-segmentation = "1.12"
 ttf-parser = { version = "0.25", features = ["gvar-alloc"] }
 thiserror = "2"
+# Only languages whose patterns are MIT, BSD-3-Clause, Unlicense or FSFAP-no-warranty-disclaimer
+# licensed; assets/hyphenation/PATTERNS.txt carries their notices.
+hypher = { version = "=0.1.8", default-features = false, features = [
+    "alloc",
+    "albanian",
+    "assamese",
+    "belarusian",
+    "bengali",
+    "czech",
+    "danish",
+    "english",
+    "estonian",
+    "finnish",
+    "french",
+    "galician",
+    "german",
+    "gujarati",
+    "hindi",
+    "italian",
+    "kannada",
+    "latin",
+    "lithuanian",
+    "malayalam",
+    "marathi",
+    "mongolian",
+    "oriya",
+    "panjabi",
+    "polish",
+    "portuguese",
+    "slovenian",
+    "spanish",
+    "tamil",
+    "telugu",
+    "turkmen",
+] }
 
 [package]
 name = "ferri-pdf"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
-# Own code, inlined SVG libraries, CLDR and mdn-data, then the DejaVu and Liberation fonts.
-license = "MIT AND (Apache-2.0 OR MIT) AND Unicode-3.0 AND CC0-1.0 AND Bitstream-Vera AND LicenseRef-Arev AND OFL-1.1-RFN"
+# Own code, inlined SVG libraries, CLDR and mdn-data, the DejaVu and Liberation fonts, then
+# the hyphenation patterns embedded through hypher.
+license = "MIT AND (Apache-2.0 OR MIT) AND Unicode-3.0 AND CC0-1.0 AND Bitstream-Vera AND LicenseRef-Arev AND OFL-1.1-RFN AND BSD-3-Clause AND Unlicense AND FSFAP-no-warranty-disclaimer"
 description = "HTML and CSS to PDF renderer for print, in pure Rust"
 repository = "https://github.com/apollohg/ferri-pdf"
 keywords = ["pdf", "html", "css", "print", "renderer"]
@@ -154,6 +190,7 @@ fontdb.workspace = true
 gif.workspace = true
 heic-decoder.workspace = true
 html5ever.workspace = true
+hypher.workspace = true
 icu_casemap.workspace = true
 icu_locale_core.workspace = true
 icu_properties.workspace = true

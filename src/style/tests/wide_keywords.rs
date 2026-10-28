@@ -107,7 +107,7 @@ fn wide_keywords_apply_to_table_values_and_escaped_keyword_tokens() {
         "unset overrides HTML cell alignment"
     );
     assert_eq!(child.table.spacing, [3.0, 7.0]);
-    assert_eq!(child.white_space, WhiteSpace::Normal);
+    assert_eq!(child.white_space, WhiteSpace::NORMAL);
     assert_eq!(child.display, Display::Inline);
     assert_eq!(child.box_sizing, crate::style::BoxSizing::ContentBox);
 }

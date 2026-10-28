@@ -306,7 +306,7 @@ impl Collector {
         if text.is_empty() {
             return Ok(());
         }
-        let whitespace = selection.styles.white_space(target)?;
+        let whitespace = selection.styles.white_space_collapse(target)?;
         for ch in text.chars() {
             let visible = !crate::document::inline::collapses_character(ch, whitespace);
             if visible && (ch != '\t' || selection.styles.tab_size(target)? != 0) {

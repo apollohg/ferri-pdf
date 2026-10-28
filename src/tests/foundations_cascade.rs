@@ -605,7 +605,7 @@ fn quirks_presentation_enters_the_ua_origin_and_hint_origin() {
         .unwrap();
     let target = computed(&styles, target);
     assert_pt(target.size, 12.0);
-    assert_eq!(target.white_space, crate::style::WhiteSpace::Normal);
+    assert_eq!(target.white_space, crate::style::WhiteSpace::NORMAL);
     let tree = DocumentTree::parse("<li id=target>Orphan</li>").expect("parse test HTML");
     let target = tree
         .select(&Selector::parse("#target").unwrap())
@@ -621,7 +621,7 @@ fn quirks_presentation_enters_the_ua_origin_and_hint_origin() {
         "<table><tr><td id=target nowrap width=20>Text</table>",
     );
     assert_pt(standard.size, 24.0);
-    assert_eq!(standard.white_space, crate::style::WhiteSpace::Nowrap);
+    assert_eq!(standard.white_space, crate::style::WhiteSpace::NOWRAP);
     let styles = sheet("td{white-space:pre}table{font-size:20pt}", "");
     let tree = DocumentTree::parse("<table><tr><td id=target nowrap width=20>Text</table>")
         .expect("parse test HTML");
@@ -631,7 +631,7 @@ fn quirks_presentation_enters_the_ua_origin_and_hint_origin() {
         .unwrap();
     let target = computed(&styles, target);
     assert_pt(target.size, 20.0);
-    assert_eq!(target.white_space, crate::style::WhiteSpace::Pre);
+    assert_eq!(target.white_space, crate::style::WhiteSpace::PRE);
 }
 
 #[test]

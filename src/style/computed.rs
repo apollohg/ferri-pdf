@@ -73,6 +73,7 @@ pub(crate) struct Style {
     pub letter_spacing: f32,
     pub word_spacing: LengthPercentage,
     pub white_space: WhiteSpace,
+    pub line_breaking: crate::style::LineBreaking,
     pub hyphens: crate::style::Hyphens,
     pub overflow_wrap: crate::style::OverflowWrap,
     pub text_transform: crate::style::TextTransform,
@@ -154,6 +155,7 @@ pub(crate) struct Style {
     pub text_decorations: crate::style::TextDecorations,
     /// Line-left and line-right `text-overflow`.
     pub text_overflow: [crate::style::TextOverflow; 2],
+    pub clamp: crate::style::LineClamp,
     pub table: crate::style::TableStyle,
     pub flex: crate::style::FlexStyle,
     pub bookmark: crate::style::BookmarkStyle,
@@ -177,7 +179,8 @@ impl Default for Style {
             line_height: crate::style::LineHeight::Normal,
             letter_spacing: 0.0,
             word_spacing: LengthPercentage::ZERO,
-            white_space: WhiteSpace::Normal,
+            white_space: WhiteSpace::NORMAL,
+            line_breaking: crate::style::LineBreaking::default(),
             hyphens: crate::style::Hyphens::default(),
             overflow_wrap: crate::style::OverflowWrap::Normal,
             text_transform: crate::style::TextTransform::default(),
@@ -243,6 +246,7 @@ impl Default for Style {
             clone_decoration: false,
             text_decorations: crate::style::TextDecorations::default(),
             text_overflow: [crate::style::TextOverflow::Clip; 2],
+            clamp: crate::style::LineClamp::default(),
             table: crate::style::TableStyle::default(),
             flex: crate::style::FlexStyle::default(),
             bookmark: crate::style::BookmarkStyle::default(),
@@ -351,6 +355,7 @@ impl Style {
             && self.language == other.language
             && self.overflow_wrap == other.overflow_wrap
             && self.white_space == other.white_space
+            && self.line_breaking == other.line_breaking
             && self.hyphens == other.hyphens
             && self.tab_size == other.tab_size
             && self.families == other.families

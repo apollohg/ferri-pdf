@@ -48,7 +48,7 @@ mod position;
 mod print;
 mod quotes;
 pub(crate) use object::ObjectFit;
-pub(crate) use overflow::{Overflow, TextOverflow};
+pub(crate) use overflow::{BlockEllipsis, Continue, LineClamp, Overflow, TextOverflow};
 pub(crate) use transform::TransformFunction;
 mod attribute;
 mod properties;
@@ -131,8 +131,9 @@ pub(crate) use table_values::{
 };
 pub(crate) use text_values::UnicodeBidi;
 pub(crate) use text_values::{
-    DEFAULT_TAB_SIZE, Hyphens, LineHeight, OverflowWrap, TextAlign, TextCase, TextIndent,
-    TextTransform, WhiteSpace,
+    DEFAULT_TAB_SIZE, HangingEnd, HangingPunctuation, HyphenateLimitChars, Hyphens, LineBreak,
+    LineBreaking, LineHeight, OverflowWrap, TextAlign, TextCase, TextIndent, TextJustify,
+    TextTransform, TextWrapStyle, WhiteSpace, WhiteSpaceCollapse, WordBreak,
 };
 #[cfg(test)]
 pub(crate) use {

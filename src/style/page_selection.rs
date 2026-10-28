@@ -1,7 +1,7 @@
 use crate::dom::ElementId;
 use crate::style::{
     CaptionSide, Display, GeneratedContent, Page, Position, PseudoElement, Quotes, StyleError,
-    WhiteSpace,
+    WhiteSpaceCollapse,
 };
 
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
@@ -22,7 +22,10 @@ pub(crate) trait PageSelection {
     fn progression_rtl(&self) -> Result<bool, StyleError>;
     fn order(&self, target: PageStyleTarget) -> Result<i32, StyleError>;
     fn caption_side(&self, target: PageStyleTarget) -> Result<CaptionSide, StyleError>;
-    fn white_space(&self, target: PageStyleTarget) -> Result<WhiteSpace, StyleError>;
+    fn white_space_collapse(
+        &self,
+        target: PageStyleTarget,
+    ) -> Result<WhiteSpaceCollapse, StyleError>;
     fn content(&self, target: PageStyleTarget) -> Result<Option<GeneratedContent>, StyleError>;
     fn bookmark_label(
         &self,

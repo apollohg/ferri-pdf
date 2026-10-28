@@ -114,8 +114,8 @@ fn selecting_a_deep_target_prepares_ancestors_without_recursive_stack_growth() {
                     pseudo: None,
                 };
                 assert_eq!(
-                    styles.white_space(target)?,
-                    crate::style::WhiteSpace::PreWrap,
+                    styles.white_space_collapse(target)?,
+                    crate::style::WhiteSpaceCollapse::Preserve,
                     "deep inherited whitespace retains the root declaration"
                 );
                 match styles.page(target)? {

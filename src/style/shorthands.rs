@@ -103,6 +103,20 @@ const ANIMATION: [Property; 9] = [
 const ANIMATION_RESET: [Property; 2] = [Property::AnimationRangeStart, Property::AnimationRangeEnd];
 /// Scroll-driven Animations 1 §A: an omitted range end with a named start ends that range.
 const NAMED_RANGE_END: f32 = 1.0;
+/// CSS Text 4 §3: the `white-space` keywords and their collapse and wrap-mode longhands.
+const WHITE_SPACE_KEYWORDS: [(Keyword, &str, &str); 4] = [
+    (Keyword::Normal, "collapse", "wrap"),
+    (Keyword::Pre, "preserve", "nowrap"),
+    (Keyword::PreWrap, "preserve", "wrap"),
+    (Keyword::PreLine, "preserve-breaks", "wrap"),
+];
+/// CSS Overflow 4 §5.1 and §5.1.1: the `continue` value a clamping integer sets.
+const CLAMP_DISCARD: &str = "discard";
+const CLAMP_WEBKIT_DISCARD: &str = "-webkit-discard";
+const CLAMP_ELLIPSIS: &str = "auto";
+/// Compat §3.4.4: `-webkit-box-orient` maps onto `flex-direction`.
+const ORIENT_ROW: &str = "row";
+const ORIENT_COLUMN: &str = "column";
 const SYNTHESIS_ON: &str = "auto";
 const SYNTHESIS_OFF: &str = "none";
 
@@ -206,6 +220,11 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::PageBreakAfter => legacy_break(&value, P::BreakAfter)?,
         P::PageBreakInside => legacy_break(&value, P::BreakInside)?,
         P::WordWrap => alias(&value, P::OverflowWrap),
+        P::WhiteSpace => white_space(&value)?,
+        P::TextWrap => slotted(&value, &[P::TextWrapMode, P::TextWrapStyle]),
+        P::LineClamp => line_clamp(&value, false)?,
+        P::DashWebkitLineClamp => line_clamp(&value, true)?,
+        P::DashWebkitBoxOrient => box_orient(&value)?,
         P::Transition => slotted_list(&value, &TRANSITION),
         P::Animation => slotted_list(&value, &ANIMATION)
             .into_iter()
@@ -465,6 +484,87 @@ fn legacy_break(value: &Component, property: Property) -> Result<Longhands, Styl
         None => return Err(StyleError::Invalid(format!("legacy break {value}"))),
     };
     Ok(vec![(property, literal(property, keyword.name())?)])
+}
+
+fn white_space(value: &Component) -> Result<Longhands, StyleError> {
+    if let Some(keyword) = value.keyword()
+        && let Some((_, collapse, wrap)) = WHITE_SPACE_KEYWORDS
+            .iter()
+            .find(|(candidate, ..)| *candidate == keyword)
+    {
+        return Ok(vec![
+            (
+                Property::WhiteSpaceCollapse,
+                literal(Property::WhiteSpaceCollapse, collapse)?,
+            ),
+            (
+                Property::TextWrapMode,
+                literal(Property::TextWrapMode, wrap)?,
+            ),
+        ]);
+    }
+    Ok(slotted(
+        value,
+        &[Property::WhiteSpaceCollapse, Property::TextWrapMode],
+    ))
+}
+
+/// `||` slots in grammar order, one per longhand; omitted ones take their initial value.
+fn slotted(value: &Component, properties: &[Property]) -> Longhands {
+    properties
+        .iter()
+        .enumerate()
+        .map(|(slot, &property)| {
+            let specified = value
+                .slot(slot)
+                .map_or_else(initial, |slot| longhand(property, slot));
+            (property, specified)
+        })
+        .collect()
+}
+
+/// `none` resets the longhands; an integer also discards later content and adds an
+/// ellipsis. The legacy form always sets the ellipsis and discards only in `-webkit-box`.
+fn line_clamp(value: &Component, legacy: bool) -> Result<Longhands, StyleError> {
+    let ellipsis = match value.find(Label::Property(Property::BlockEllipsis)) {
+        Some(ellipsis) => longhand(Property::BlockEllipsis, ellipsis),
+        None if legacy || value.keyword() != Some(Keyword::None) => {
+            literal(Property::BlockEllipsis, CLAMP_ELLIPSIS)?
+        }
+        None => initial(),
+    };
+    let (lines, continuation) = if value.keyword() == Some(Keyword::None) {
+        (initial(), initial())
+    } else {
+        (
+            longhand(Property::MaxLines, &value.items()[0]),
+            literal(
+                Property::Continue,
+                if legacy {
+                    CLAMP_WEBKIT_DISCARD
+                } else {
+                    CLAMP_DISCARD
+                },
+            )?,
+        )
+    };
+    Ok(vec![
+        (Property::MaxLines, lines),
+        (Property::BlockEllipsis, ellipsis),
+        (Property::Continue, continuation),
+    ])
+}
+
+fn box_orient(value: &Component) -> Result<Longhands, StyleError> {
+    let direction = match value.keyword() {
+        Some(Keyword::Horizontal | Keyword::InlineAxis) => ORIENT_ROW,
+        Some(Keyword::Vertical | Keyword::BlockAxis) => ORIENT_COLUMN,
+        _ => return Err(StyleError::Invalid(format!("box orientation {value}"))),
+    };
+    Ok(vec![(
+        Property::FlexDirection,
+        literal(Property::FlexDirection, direction)?,
+    )])
 }
 
 /// A legacy name alias sharing the value of the property it names.
