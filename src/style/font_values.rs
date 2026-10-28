@@ -448,14 +448,46 @@ pub(crate) fn size_adjust(
     Ok(Some(SizeAdjust { metric, value }))
 }
 
-/// `font-palette` (§9.1). Interpolating palettes with `palette-mix()` needs CSS Color 4 §13
-/// colour interpolation, which colour values do not provide.
-pub(crate) fn palette(value: &Component) -> Result<FontPalette, StyleError> {
+/// `font-palette` (§9.1); `palette-mix()` takes a palette and an optional percentage per item.
+pub(crate) fn palette(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<FontPalette, StyleError> {
+    const PALETTE_SLOT: usize = 0;
+    const PERCENTAGE_SLOT: usize = 1;
     match value.unwrap() {
         Component::Keyword(Keyword::Normal) => Ok(FontPalette::Normal),
         Component::Keyword(Keyword::Light) => Ok(FontPalette::Light),
         Component::Keyword(Keyword::Dark) => Ok(FontPalette::Dark),
         Component::Ident(name) => Ok(FontPalette::Named(name.clone())),
+        Component::Function(Keyword::PaletteMix, Some(body)) => {
+            let method = body
+                .find(Label::Production(Production::ColorInterpolationMethod))
+                .ok_or_else(|| unsupported(value))?;
+            let palettes = body
+                .items()
+                .last()
+                .ok_or_else(|| unsupported(value))?
+                .items()
+                .iter()
+                .map(|item| {
+                    let palette = palette(
+                        item.slot(PALETTE_SLOT).ok_or_else(|| unsupported(item))?,
+                        relative,
+                    )?;
+                    let share = item
+                        .slot(PERCENTAGE_SLOT)
+                        .and_then(|share| share.items().first())
+                        .map(|share| crate::style::values::percentage(share, relative))
+                        .transpose()?;
+                    Ok((palette, share))
+                })
+                .collect::<Result<Vec<_>, StyleError>>()?;
+            Ok(FontPalette::mix(
+                crate::style::background_values::interpolation_method(method)?,
+                palettes,
+            ))
+        }
         _ => Err(unsupported(value)),
     }
 }

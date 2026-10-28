@@ -70,7 +70,29 @@ pub(crate) struct Stylesheet {
     pub fonts: FontBook,
     font_namespaces: HashMap<crate::dom::TreeScopeId, FontNamespace>,
     pub(super) counter_styles: std::sync::Arc<crate::style::counter_style::CounterStyles>,
+    /// `@font-palette-values` rules in cascade order, which resolve once the root element's
+    /// style is known.
+    palette_rules: Vec<PaletteRule>,
 }
+
+/// An `@font-palette-values` rule awaiting its root-element context (CSS Fonts 4 §9.2).
+#[derive(Clone)]
+struct PaletteRule {
+    name: String,
+    declarations: Vec<Declaration>,
+    location: crate::style::SourceLocation,
+    namespace: FontNamespace,
+}
+
+/// A resolved `@font-palette-values` rule: its namespace, name, families, base palette and
+/// override colours.
+type PaletteDefinition = (
+    FontNamespace,
+    String,
+    Vec<String>,
+    BasePalette,
+    Vec<(u32, crate::paint::AbsoluteColor)>,
+);
 
 /// Declarations with relative `url()`s resolved against the declaring stylesheet.
 pub(super) fn parsed(
@@ -128,7 +150,7 @@ pub(super) fn unimplemented_descriptor(
 fn override_colors(
     value: &Component,
     relative: &Relative<'_>,
-) -> Result<Option<Vec<(u32, crate::paint::Color)>>, StyleError> {
+) -> Result<Option<Vec<(u32, crate::paint::AbsoluteColor)>>, StyleError> {
     let mut colors = Vec::new();
     for entry in value.items() {
         let [index, color] = entry.items() else {
@@ -142,7 +164,7 @@ fn override_colors(
         }
         colors.push((
             index,
-            crate::style::colors::color(color, relative, &crate::paint::AbsoluteColor::BLACK)?,
+            crate::style::colors::absolute(color, relative, &crate::paint::AbsoluteColor::BLACK)?,
         ));
     }
     Ok(Some(colors))
@@ -269,6 +291,7 @@ impl Stylesheet {
             fonts: self.fonts.clone(),
             font_namespaces: self.font_namespaces.clone(),
             counter_styles: self.counter_styles.clone(),
+            palette_rules: self.palette_rules.clone(),
         }
     }
 
@@ -443,6 +466,7 @@ impl Stylesheet {
             fonts: font_book,
             font_namespaces,
             counter_styles: crate::style::counter_style::CounterStyles::predefined(),
+            palette_rules: Vec::new(),
         };
         let mut fonts = Vec::new();
         let mut feature_values = Vec::new();
@@ -600,20 +624,48 @@ impl Stylesheet {
             }
         }
         palettes.sort_by_key(|(priority, ..)| *priority);
-        for (_, name, declarations, location, namespace) in palettes {
-            match sheet.palette_values(&name, &declarations, namespace) {
-                Ok(()) => {}
-                Err(StyleError::Invalid(context)) => {
-                    sheet.diagnostics.borrow_mut().push(StyleDiagnostic {
-                        location,
-                        kind: StyleDiagnosticKind::InvalidRule,
-                        context,
-                    });
+        sheet.palette_rules = palettes
+            .into_iter()
+            .map(|(_, name, declarations, location, namespace)| PaletteRule {
+                name,
+                declarations,
+                location,
+                namespace,
+            })
+            .collect();
+        Ok(sheet)
+    }
+
+    /// Defines the `@font-palette-values` palettes in the context of the root element's
+    /// computed style `root`, which `var()` and relative units refer to (CSS Fonts 4 §9.2).
+    pub(super) fn define_palettes(
+        &mut self,
+        root: &crate::style::Style,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<(), StyleError> {
+        let rules = std::mem::take(&mut self.palette_rules);
+        let mut definitions = Vec::with_capacity(rules.len());
+        {
+            let relative = self.inherited(root, self.page_area(), resolver);
+            for rule in &rules {
+                match Self::palette_values(rule, root, &relative) {
+                    Ok(definition) => definitions.push(definition),
+                    Err(StyleError::Invalid(context)) => {
+                        self.diagnostics.borrow_mut().push(StyleDiagnostic {
+                            location: rule.location.clone(),
+                            kind: StyleDiagnosticKind::InvalidRule,
+                            context,
+                        });
+                    }
+                    Err(error) => return Err(error),
                 }
-                Err(error) => return Err(error),
             }
         }
-        Ok(sheet)
+        for (namespace, name, families, base, overrides) in definitions {
+            self.fonts
+                .define_palette(namespace, &name, families, base, overrides);
+        }
+        Ok(())
     }
 
     pub(crate) fn take_diagnostics(&mut self) -> Vec<StyleDiagnostic> {
@@ -628,37 +680,37 @@ impl Stylesheet {
     }
 
     /// An `@font-palette-values` rule (CSS Fonts 4 §9.2). Invalid descriptors are ignored; a
-    /// rule without `font-family` is invalid, and generic families match no face.
+    /// rule without `font-family` is invalid, and generic families match no face. `var()`
+    /// substitutes the root element's custom properties; a reference that fails makes its
+    /// descriptor invalid.
     fn palette_values(
-        &mut self,
-        name: &str,
-        declarations: &[Declaration],
-        namespace: FontNamespace,
-    ) -> Result<(), StyleError> {
+        rule: &PaletteRule,
+        root: &crate::style::Style,
+        relative: &Relative<'_>,
+    ) -> Result<PaletteDefinition, StyleError> {
         let mut families = None;
         let mut base = BasePalette::Index(0);
         let mut overrides = Vec::new();
-        let relative = Relative {
-            paper: self.paper,
-            ..self.initial_relative()
-        };
-        for d in declarations {
+        for d in &rule.declarations {
             let Some(descriptor) = Descriptor::find(PALETTE_AT_RULE, &d.name) else {
                 continue;
             };
-            if variables::Value::with_substitutions(&d.value)?.is_some() {
-                return Err(StyleError::Unsupported(format!(
-                    "{PALETTE_AT_RULE} descriptor: {}: {} (root-element substitution)",
-                    d.name, d.value
-                )));
-            }
-            let Some(value) = declaration::descriptor(descriptor, &d.value)? else {
+            let source = match variables::Value::with_substitutions(&d.value)? {
+                None => d.value.clone(),
+                Some(value) => match value
+                    .substitute(&root.custom_properties, &root.inherited_custom_properties)?
+                {
+                    Some(expanded) => expanded.as_str().to_owned(),
+                    None => continue,
+                },
+            };
+            let Some(value) = declaration::descriptor(descriptor, &source)? else {
                 continue;
             };
             match descriptor {
                 Descriptor::FontPaletteValuesFontFamily => {
                     families = Some(
-                        declaration::value(Property::FontFamily, &d.value, &mut 0)?
+                        declaration::value(Property::FontFamily, &source, &mut 0)?
                             .map(|list| crate::style::values::families(&list))
                             .unwrap_or_default(),
                     );
@@ -668,13 +720,13 @@ impl Stylesheet {
                         Component::Keyword(Keyword::Light) => BasePalette::Light,
                         Component::Keyword(Keyword::Dark) => BasePalette::Dark,
                         _ => BasePalette::Index(
-                            u32::try_from(crate::style::values::integer(&value, &relative)?)
-                                .map_err(|_| StyleError::Invalid(d.value.clone()))?,
+                            u32::try_from(crate::style::values::integer(&value, relative)?)
+                                .map_err(|_| StyleError::Invalid(source.clone()))?,
                         ),
                     };
                 }
                 Descriptor::FontPaletteValuesOverrideColors => {
-                    if let Some(colors) = override_colors(&value, &relative)? {
+                    if let Some(colors) = override_colors(&value, relative)? {
                         overrides = colors;
                     }
                 }
@@ -690,9 +742,7 @@ impl Stylesheet {
             })
             .collect::<Option<Vec<_>>>()
             .unwrap_or_default();
-        self.fonts
-            .define_palette(namespace, name, named, base, overrides);
-        Ok(())
+        Ok((rule.namespace, rule.name.clone(), named, base, overrides))
     }
 
     fn font_face(

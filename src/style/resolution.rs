@@ -1576,7 +1576,9 @@ impl Stylesheet {
         self.first_page = request;
         self.page_progression_rtl = progression_rtl;
         self.set_page_geometry(&geometry);
-        self.computed_values(element, &Style::default(), style, winners, resolver)
+        let root = self.computed_values(element, &Style::default(), style, winners, resolver)?;
+        self.define_palettes(&root, resolver)?;
+        Ok(root)
     }
 
     pub(super) fn set_page_geometry(&mut self, geometry: &PageGeometry) {
@@ -1610,7 +1612,9 @@ impl Stylesheet {
         let (style, winners) = graph.materialized(Context::Root)?;
         drop(graph);
         self.set_page_geometry(&geometry);
-        self.computed_values(element, &Style::default(), style, winners, resolver)
+        let root = self.computed_values(element, &Style::default(), style, winners, resolver)?;
+        self.define_palettes(&root, resolver)?;
+        Ok(root)
     }
 }
 

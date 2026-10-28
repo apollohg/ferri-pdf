@@ -1,7 +1,7 @@
 //! COLR palette selection from the font's CPAL table, `font-palette` and
 //! `@font-palette-values` (CSS Fonts 4 §9).
 use crate::fonts::{FontBook, FontNamespace, matching};
-use crate::paint::Color;
+use crate::paint::{AbsoluteColor, Color, Interpolation, MixItem};
 use serde::Serialize;
 use skrifa::raw::{FontRef, TableProvider, tables::cpal::PaletteType};
 use std::sync::Arc;
@@ -10,7 +10,7 @@ const DEFAULT_PALETTE: usize = 0;
 const CHANNEL_MAX: f32 = 255.0;
 
 /// A computed `font-palette`; palette names resolve per face family (§9.1).
-#[derive(Clone, Debug, Default, Eq, PartialEq, Serialize)]
+#[derive(Clone, Debug, Default, PartialEq, Serialize)]
 #[serde(rename_all = "kebab-case")]
 pub(crate) enum FontPalette {
     #[default]
@@ -18,6 +18,36 @@ pub(crate) enum FontPalette {
     Light,
     Dark,
     Named(Box<str>),
+    Mix(Arc<PaletteMix>),
+}
+
+/// `palette-mix()`: each palette entry mixes the palettes' entries of that index as
+/// `color-mix()` mixes colours, with percentages as fractions (§9.1).
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub(crate) struct PaletteMix {
+    pub method: Interpolation,
+    pub palettes: Vec<(FontPalette, Option<f32>)>,
+}
+impl FontPalette {
+    /// A mix that yields one of its palettes unchanged computes to that palette (§9.1): all
+    /// mixed palettes are the same, or one takes the whole mix.
+    pub(crate) fn mix(method: Interpolation, palettes: Vec<(Self, Option<f32>)>) -> Self {
+        let specified: f32 = palettes.iter().filter_map(|(_, share)| *share).sum();
+        let omitted = palettes.iter().filter(|(_, share)| share.is_none()).count();
+        let whole = omitted > 0 || specified >= 1.0;
+        let sole = palettes
+            .iter()
+            .filter(|(_, share)| share.is_none_or(|share| share > 0.0))
+            .map(|(palette, _)| palette)
+            .collect::<Vec<_>>();
+        if whole
+            && let [first, rest @ ..] = sole.as_slice()
+            && rest.iter().all(|palette| palette == first)
+        {
+            return (*first).clone();
+        }
+        Self::Mix(Arc::new(PaletteMix { method, palettes }))
+    }
 }
 
 /// The `base-palette` descriptor (§9.2.2).
@@ -34,7 +64,7 @@ pub(super) struct PaletteValues {
     name: Box<str>,
     families: Vec<String>,
     base: BasePalette,
-    overrides: Vec<(u32, Color)>,
+    overrides: Vec<(u32, AbsoluteColor)>,
 }
 
 /// The palettes of a face's CPAL table.
@@ -76,15 +106,17 @@ impl<'a> Palettes<'a> {
                 .unwrap_or(DEFAULT_PALETTE),
         }
     }
-    fn colors(&self, palette: usize) -> Option<Vec<Color>> {
+    fn colors(&self, palette: usize) -> Option<Vec<AbsoluteColor>> {
         let start = usize::from(self.indices.get(palette)?.get());
         let records = self.records.get(start..start + self.entries)?;
         Some(
             records
                 .iter()
-                .map(|record| Color {
-                    rgb: [record.red(), record.green(), record.blue()],
-                    alpha: f32::from(record.alpha()) / CHANNEL_MAX,
+                .map(|record| {
+                    AbsoluteColor::from_rgb8(
+                        [record.red(), record.green(), record.blue()],
+                        f32::from(record.alpha()) / CHANNEL_MAX,
+                    )
                 })
                 .collect(),
         )
@@ -100,7 +132,7 @@ impl FontBook {
         name: &str,
         families: Vec<String>,
         base: BasePalette,
-        overrides: Vec<(u32, Color)>,
+        overrides: Vec<(u32, AbsoluteColor)>,
     ) {
         self.palettes.push(PaletteValues {
             namespace,
@@ -144,17 +176,61 @@ impl FontBook {
         family: &str,
         data: &[u8],
     ) -> Option<Arc<[Color]>> {
-        let (base, overrides) = match palette {
+        let undefined = |name: &str| self.palette_values(namespace, name, family).is_none();
+        match palette {
             FontPalette::Normal => return None,
-            FontPalette::Light => (BasePalette::Light, &[][..]),
-            FontPalette::Dark => (BasePalette::Dark, &[][..]),
-            FontPalette::Named(name) => {
-                let values = self.palette_values(namespace, name, family)?;
-                (values.base, values.overrides.as_slice())
-            }
-        };
+            FontPalette::Named(name) if undefined(name) => return None,
+            _ => {}
+        }
         let font = FontRef::new(data).ok()?;
         let palettes = Palettes::of(&font)?;
+        let colors = self.palette_colors(namespace, palette, family, &palettes)?;
+        Some(colors.iter().map(AbsoluteColor::used).collect())
+    }
+
+    fn palette_colors(
+        &self,
+        namespace: FontNamespace,
+        palette: &FontPalette,
+        family: &str,
+        palettes: &Palettes<'_>,
+    ) -> Option<Vec<AbsoluteColor>> {
+        let (base, overrides) = match palette {
+            FontPalette::Normal => return palettes.colors(DEFAULT_PALETTE),
+            FontPalette::Light => (BasePalette::Light, &[][..]),
+            FontPalette::Dark => (BasePalette::Dark, &[][..]),
+            FontPalette::Named(name) => match self.palette_values(namespace, name, family) {
+                Some(values) => (values.base, values.overrides.as_slice()),
+                // An undefined palette behaves as `normal` (§9.1).
+                None => return palettes.colors(DEFAULT_PALETTE),
+            },
+            FontPalette::Mix(mix) => {
+                let mixed = mix
+                    .palettes
+                    .iter()
+                    .map(|(palette, share)| {
+                        Some((
+                            self.palette_colors(namespace, palette, family, palettes)?,
+                            *share,
+                        ))
+                    })
+                    .collect::<Option<Vec<_>>>()?;
+                return Some(
+                    (0..palettes.entries)
+                        .map(|entry| {
+                            let items: Vec<MixItem> = mixed
+                                .iter()
+                                .map(|(colors, share)| MixItem {
+                                    color: colors[entry],
+                                    percentage: *share,
+                                })
+                                .collect();
+                            mix.method.mix(&items)
+                        })
+                        .collect(),
+                );
+            }
+        };
         let mut colors = palettes.colors(palettes.base(base))?;
         // Keys outside the palette are ignored; the last of repeated keys wins (§9.2.3).
         for (index, color) in overrides {
@@ -165,6 +241,6 @@ impl FontBook {
                 *entry = *color;
             }
         }
-        Some(colors.into())
+        Some(colors)
     }
 }

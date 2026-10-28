@@ -497,6 +497,76 @@ impl AbsoluteColor {
     }
 }
 
+/// Percentages are fractions of the whole; an even mix weighs both colours equally.
+const WHOLE: f32 = 1.0;
+const EVEN_MIX: f32 = 0.5;
+
+/// A `color-mix()` colour and its percentage, as a fraction (CSS Color 5 §3.1).
+pub(crate) struct MixItem {
+    pub color: AbsoluteColor,
+    pub percentage: Option<f32>,
+}
+
+/// Normalizes mix percentages with forced normalization: omitted percentages share what the
+/// specified ones leave, and the shortfall below 100% becomes the alpha multiplier's
+/// complement (CSS Color 5 §3.2).
+fn normalize(items: &[MixItem]) -> (Vec<f32>, f32) {
+    let specified: f32 = items.iter().filter_map(|item| item.percentage).sum();
+    let omitted = items
+        .iter()
+        .filter(|item| item.percentage.is_none())
+        .count();
+    let share = if omitted == 0 {
+        0.0
+    } else {
+        ((WHOLE - specified) / omitted as f32).max(0.0)
+    };
+    let mut percentages: Vec<f32> = items
+        .iter()
+        .map(|item| item.percentage.unwrap_or(share))
+        .collect();
+    let total: f32 = percentages.iter().sum();
+    let leftover = (WHOLE - total).max(0.0);
+    if total > 0.0 {
+        for percentage in &mut percentages {
+            *percentage /= total;
+        }
+    }
+    (percentages, leftover)
+}
+
+impl Interpolation {
+    /// Mixes `items` as `color-mix()` does (CSS Color 5 §3.3).
+    pub(crate) fn mix(self, items: &[MixItem]) -> AbsoluteColor {
+        let (percentages, leftover) = normalize(items);
+        let mut stack: Vec<(AbsoluteColor, f32)> = items
+            .iter()
+            .zip(percentages)
+            .rev()
+            .map(|(item, percentage)| (item.color, percentage))
+            .collect();
+        let mut color = if let [(only, _)] = stack.as_slice() {
+            only.convert_carrying(self.space)
+        } else {
+            while stack.len() >= 2 {
+                let (a, a_percentage) = stack.pop().expect("two items remain");
+                let (b, b_percentage) = stack.pop().expect("two items remain");
+                let combined = a_percentage + b_percentage;
+                let progress = if combined > 0.0 {
+                    b_percentage / combined
+                } else {
+                    EVEN_MIX
+                };
+                stack.push((self.interpolate(&a, &b, progress), combined));
+            }
+            stack[0].0
+        };
+        color.alpha = color.alpha.map(|alpha| alpha * (WHOLE - leftover));
+        color.legacy = false;
+        color
+    }
+}
+
 /// The interpolation colour space and hue arc (CSS Color 4 §13.2, §13.5).
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub struct Interpolation {

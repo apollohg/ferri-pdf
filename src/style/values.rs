@@ -85,6 +85,20 @@ pub(super) fn resolution(value: &Component, relative: &Relative<'_>) -> Result<f
     }
 }
 /// `<length>` in points.
+/// A `<percentage>` as a fraction.
+pub(super) fn percentage(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
+    match value.unwrap() {
+        Component::Percentage(fraction) => Ok(*fraction),
+        Component::Math(source, Kind::Percentage, range) => {
+            Ok(
+                math(source, relative, Kind::Percentage, Some(Kind::Percentage))?
+                    .resolve(0.0, *range),
+            )
+        }
+        other => Err(unsupported(other)),
+    }
+}
+
 pub(super) fn length(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
     match value.unwrap() {
         Component::Length(length) => length.points(relative),

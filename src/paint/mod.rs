@@ -33,7 +33,7 @@ pub(crate) use calculation::MAX_CALC_MAGNITUDE;
 pub(crate) use calculation::{BinaryFunction, Calculation, RoundingStrategy, UnaryFunction};
 pub use clip::{Clip, ClipBounds};
 pub(crate) use color_space::{
-    AbsoluteColor, ColorSpace, HueInterpolation, Interpolation, normalize_hue, quantize,
+    AbsoluteColor, ColorSpace, HueInterpolation, Interpolation, MixItem, normalize_hue, quantize,
 };
 pub use decoration::{DecorationLine, DecorationPaint, DecorationStyle};
 pub(crate) use easing::{Easing, LinearPoint, StepPosition};

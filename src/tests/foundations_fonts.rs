@@ -141,6 +141,36 @@ fn font_shorthand_resets_only_its_defined_properties() {
 }
 
 #[test]
+fn palette_mixes_equivalent_to_one_palette_compute_to_it() {
+    use crate::fonts::FontPalette;
+    for (value, expected) in [
+        ("palette-mix(in oklab, light, light)", FontPalette::Light),
+        (
+            "palette-mix(in srgb, --a 100%, dark 0%)",
+            FontPalette::Named("--a".into()),
+        ),
+        (
+            "palette-mix(in hsl, normal 70%, normal)",
+            FontPalette::Normal,
+        ),
+    ] {
+        let style = computed(&format!("#target{{font-palette:{value}}}")).unwrap();
+        assert_eq!(style.font_features.palette, expected, "{value}");
+    }
+    for value in [
+        "palette-mix(in srgb, light, dark)",
+        "palette-mix(in srgb, light 30%, light 30%)",
+    ] {
+        let style = computed(&format!("#target{{font-palette:{value}}}")).unwrap();
+        assert!(
+            matches!(style.font_features.palette, FontPalette::Mix(_)),
+            "{value} mixes distinct palettes or keeps a shortfall's alpha: {:?}",
+            style.font_features.palette
+        );
+    }
+}
+
+#[test]
 fn system_keywords_and_named_family_positions_differ() {
     for keyword in [
         "caption",

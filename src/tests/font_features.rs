@@ -818,16 +818,76 @@ fn palettes_resolve_per_family_from_cpal_and_palette_rules() {
         plain.runs[0].palette, None,
         "faces without CPAL keep their colours"
     );
-    let substituted = render(
-        "@font-palette-values --variable{font-family:Palette;override-colors:0 var(--colour)}",
-        "<p style=\"font-family:Palette;font-palette:--variable\">A</p>",
+    // Descriptors substitute the root element's custom properties (CSS Fonts 4 §9.2).
+    let substituted = |rules: &str| {
+        line(
+            &format!("@font-palette-values --variable{{font-family:Palette;base-palette:var(--base, 0);override-colors:var(--entry, 0) var(--colour)}}{rules}"),
+            "font-family:Palette;font-palette:--variable",
+            "A",
+        )
+        .runs[0]
+            .palette
+            .as_deref()
+            .map(<[Color]>::to_vec)
+    };
+    let mut overridden = palette(1);
+    overridden[1] = MAGENTA;
+    assert_eq!(
+        substituted(":root{--base:1;--entry:1;--colour:magenta}"),
+        Some(overridden),
+        "root custom properties substitute into the base palette and override colours"
     );
-    assert!(
-        matches!(
-            substituted,
-            Err(crate::Error::Css(crate::style::StyleError::Unsupported(_)))
+    assert_eq!(
+        substituted(":root{--base:1}p{--colour:magenta}"),
+        Some(palette(1)),
+        "an element's custom properties do not reach the rule, whose undefined var() makes \
+         override-colors invalid and ignored"
+    );
+}
+
+/// Each entry mixed as `color-mix()` would: gamma-encoded sRGB averages here, weighted by the
+/// normalized percentages; a shortfall below 100% scales the alpha (CSS Color 5 §3.2).
+#[test]
+fn palette_mixes_interpolate_each_entry_of_the_mixed_palettes() {
+    let rules = "@font-palette-values --custom{font-family:Palette;base-palette:2;override-colors:1 rgb(255,0,255)}";
+    let colour = |rgb: [u8; 3], alpha: f32| Color { rgb, alpha };
+    for (value, expected) in [
+        (
+            "palette-mix(in srgb, light, dark)",
+            vec![colour([110, 110, 100], 1.0), colour([100, 160, 100], 1.0)],
         ),
-        "root-element substitution in palette descriptors is not provided: {:?}",
-        substituted.err()
-    );
+        (
+            "palette-mix(in srgb, normal 25%, --custom)",
+            vec![colour([215, 165, 0], 1.0), colour([191, 30, 191], 1.0)],
+        ),
+        (
+            "palette-mix(in srgb, light 20%, dark 20%)",
+            vec![colour([110, 110, 100], 0.4), colour([100, 160, 100], 0.4)],
+        ),
+        (
+            "palette-mix(in srgb, palette-mix(in srgb, light, dark) 50%, normal)",
+            vec![colour([155, 55, 50], 1.0), colour([50, 140, 50], 1.0)],
+        ),
+    ] {
+        let line = line(
+            rules,
+            &format!("font-family:Palette;font-palette:{value}"),
+            "A",
+        );
+        let actual = line.runs[0]
+            .palette
+            .as_deref()
+            .map_or_else(|| panic!("{value} gives a palette"), <[Color]>::to_vec);
+        assert_eq!(
+            actual.len(),
+            expected.len(),
+            "{value}: one colour per entry"
+        );
+        for (index, (actual, expected)) in actual.iter().zip(&expected).enumerate() {
+            assert!(
+                actual.rgb == expected.rgb && (actual.alpha - expected.alpha).abs() < 1e-3,
+                "{value}: entry {index} is {actual:?}, expected {expected:?}"
+            );
+        }
+    }
 }

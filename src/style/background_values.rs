@@ -210,6 +210,11 @@ fn interpolation(
             },
         )));
     };
+    interpolation_method(method)
+}
+
+/// A matched `<color-interpolation-method>`.
+pub(super) fn interpolation_method(method: &Component) -> Result<Interpolation, StyleError> {
     let mut keywords = Vec::new();
     method.keywords(&mut keywords);
     let words: Vec<&str> = keywords

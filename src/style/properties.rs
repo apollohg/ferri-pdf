@@ -396,7 +396,7 @@ fn handler(property: Property) -> Option<Handler> {
         P::FontLanguageOverride => (font_language_override, Some(|_, _| true)),
         P::FontPalette => (
             font_palette,
-            Some(|v, _| crate::style::font_values::palette(v).is_ok()),
+            Some(|v, r| crate::style::font_values::palette(v, r).is_ok()),
         ),
         P::FontOpticalSizing => (font_optical_sizing, Some(|_, _| true)),
         P::FontVariationSettings => (
@@ -1226,7 +1226,7 @@ computed!(
 computed!(
     font_palette,
     [font_features.palette],
-    |value, style, _parent, _relative| crate::style::font_values::palette(value)?
+    |value, style, _parent, relative| crate::style::font_values::palette(value, relative)?
 );
 computed!(
     font_optical_sizing,
