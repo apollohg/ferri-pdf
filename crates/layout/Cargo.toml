@@ -1,0 +1,24 @@
+[package]
+name = "ferri-pdf-layout"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+license-file.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+ferri-pdf-style.workspace = true
+ferri-pdf-graphics.workspace = true
+ferri-pdf-images.workspace = true
+ferri-pdf-resources.workspace = true
+ferri-pdf-fonts.workspace = true
+ferri-pdf-document.workspace = true
+ferri-pdf-text.workspace = true
+ferri-pdf-table.workspace = true
+ferri-pdf-flex.workspace = true
+ferri-pdf-grid.workspace = true
+serde.workspace = true
+thiserror.workspace = true

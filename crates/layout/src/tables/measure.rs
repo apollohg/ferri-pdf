@@ -1,0 +1,1645 @@
+use super::{
+    captions,
+    collapse::CollapsedGrid,
+    model::Data,
+    paint::{Areas, Columns, FragmentBackground, Layers},
+};
+use crate::measure::{
+    BlockEdge, FlowItem, MeasuredBlock, MeasuredCell, MeasuredRow, Measurer, RowTarget, TableFlow,
+};
+use crate::{LayoutError, geometry, margin::MarginStrut};
+use ferri_pdf_document::{BlockBox, BlockContent, SemanticEvent};
+use ferri_pdf_graphics::{Border, BorderStyle, BoxDecoration, Color, Rect};
+use ferri_pdf_style::{BreakBetween, Display, Style, TableLayout};
+use ferri_pdf_table::{CellHeight, HeightConstraint, HeightInput, WidthInput};
+use std::{
+    cell::RefCell,
+    collections::{BTreeMap, HashMap},
+    ops::Range,
+    rc::Rc,
+};
+
+/// Grid rows of the header and footer groups, which repeat on every page of the table.
+fn repeated_rows(data: &Data<'_>) -> [Range<usize>; 2] {
+    let group_role = |index: usize| {
+        data.groups[index]
+            .source
+            .map(|source| source.style().display.clone())
+    };
+    let rows = data.grid.rows;
+    let header = match data.groups.first() {
+        Some(group) if group_role(0) == Some(Display::TableHeaderGroup) => 0..group.rows.len(),
+        _ => 0..0,
+    };
+    let footer = match data.groups.last() {
+        Some(group) if group_role(data.groups.len() - 1) == Some(Display::TableFooterGroup) => {
+            rows - group.rows.len()..rows
+        }
+        _ => rows..rows,
+    };
+    [header, footer]
+}
+
+/// Collapsed borders paint along grid lines instead of around each box; the box keeps its
+/// half-border insets as transparent borders, so background origins and clips stay inside them.
+fn collapsed_decoration(mut decoration: BoxDecoration, insets: [f32; 4]) -> BoxDecoration {
+    decoration.borders = insets.map(|width| Border {
+        width,
+        style: BorderStyle::Solid,
+        color: Color::TRANSPARENT,
+    });
+    decoration
+}
+
+pub(crate) fn cell_height(measured: &MeasuredBlock<'_>) -> CellHeight {
+    CellHeight {
+        height: measured.height,
+        baseline: measured.first_baseline().unwrap_or(measured.height),
+        align: measured.style.table.vertical_align.cell(),
+        constraint: HeightConstraint {
+            specified: measured.style.height.clone(),
+            minimum: measured.style.min_height.clone(),
+            maximum: measured.style.max_height.clone(),
+            box_sizing: measured.style.box_sizing,
+            edges: measured.geometry.padding[0]
+                + measured.geometry.padding[2]
+                + measured.geometry.border[0]
+                + measured.geometry.border[2],
+        },
+    }
+}
+
+/// Physical x of each vertical grid line in logical column order.
+fn grid_lines(x: f32, widths: &[f32], table: f32, rtl: bool) -> Vec<f32> {
+    std::iter::once(0.0)
+        .chain(widths.iter().scan(0.0, |position, width| {
+            *position += width;
+            Some(*position)
+        }))
+        .map(|position| x + if rtl { table - position } else { position })
+        .collect()
+}
+
+pub(crate) fn measure<'a>(
+    measurer: &mut Measurer<'_>,
+    block: &'a BlockBox,
+    x: f32,
+    width: f32,
+    rtl: bool,
+    containing_height: Option<f32>,
+) -> Result<MeasuredBlock<'a>, LayoutError> {
+    measure_placed(
+        measurer,
+        block,
+        x,
+        width,
+        rtl,
+        containing_height,
+        geometry::horizontal_with_edges,
+    )
+    .map(|(table, _)| table)
+}
+
+/// Measures a table whose wrapper box geometry comes from `place`, returning that geometry.
+pub(crate) fn measure_placed<'a>(
+    measurer: &mut Measurer<'_>,
+    block: &'a BlockBox,
+    x: f32,
+    width: f32,
+    rtl: bool,
+    containing_height: Option<f32>,
+    place: fn(&Style, f32, f32, bool, Option<f32>, geometry::Edges) -> geometry::HorizontalBox,
+) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), LayoutError> {
+    let plan = TablePlan::new(measurer, block, containing_height, None, place)?;
+    let resolved = plan.resolve_geometry(measurer, x, width, rtl)?;
+    plan.measure_wrapped(measurer, resolved)
+}
+
+struct WidthContributions {
+    cells: Vec<ferri_pdf_table::CellWidth>,
+    caption_min: f32,
+}
+
+pub(crate) struct TableGeometry {
+    pub containing_height: Option<f32>,
+    pub geometry: geometry::HorizontalBox,
+    edges: geometry::Edges,
+    sizes: ferri_pdf_table::ColumnWidths,
+    original_sizes: Option<ferri_pdf_table::ColumnWidths>,
+    collapsed_columns: Rc<[bool]>,
+    starts: Vec<f32>,
+    spacing: [f32; 2],
+}
+impl TableGeometry {
+    pub(crate) fn grid_lines(&self, rtl: bool) -> Vec<f32> {
+        grid_lines(self.geometry.x, &self.sizes.widths, self.sizes.table, rtl)
+    }
+    pub(crate) fn columns(&self, rtl: bool) -> Columns<'_> {
+        Columns {
+            x: self.geometry.x,
+            table: self.sizes.table,
+            rtl,
+            starts: &self.starts,
+            widths: &self.sizes.widths,
+            collapsed: &self.collapsed_columns,
+            horizontal: self.spacing[0],
+        }
+    }
+}
+
+#[derive(Clone)]
+pub(crate) struct RowGeometry {
+    original_starts: Option<Vec<f32>>,
+    pub starts: Vec<f32>,
+    pub offsets: Vec<f32>,
+    pub height: f32,
+}
+
+impl RowGeometry {
+    pub fn content_height(&self, rows: Range<usize>, spacing: f32) -> f32 {
+        let starts = self.original_starts.as_ref().unwrap_or(&self.starts);
+        (starts[rows.end] - starts[rows.start] - spacing).max(0.0)
+    }
+    fn project(mut self, collapsed: &[bool]) -> Self {
+        if !collapsed.iter().any(|&value| value) {
+            return self;
+        }
+        let original = self.starts.clone();
+        let mut removed = 0.0;
+        for (index, &hidden) in collapsed.iter().enumerate() {
+            if hidden {
+                removed += original[index + 1] - original[index];
+            }
+            self.starts[index + 1] -= removed;
+        }
+        self.height = (self.height - removed).max(0.0);
+        self.original_starts = Some(original);
+        self
+    }
+    fn new(rows: ferri_pdf_table::RowHeights, spacing: f32) -> Self {
+        let mut starts = Vec::with_capacity(rows.heights.len() + 1);
+        starts.push(0.0);
+        for height in rows.heights {
+            starts.push(starts.last().unwrap() + height + spacing);
+        }
+        Self {
+            original_starts: None,
+            starts,
+            offsets: rows.offsets,
+            height: rows.table,
+        }
+    }
+}
+
+#[derive(Clone, Copy)]
+pub(crate) struct CellAlignment {
+    pub offset: f32,
+    pub height: f32,
+    pub first_fragment: f32,
+    content_height: f32,
+}
+
+#[derive(Clone)]
+pub(crate) struct CellAlignments {
+    first: usize,
+    start_row: usize,
+    row_starts: Vec<f32>,
+    spacing: f32,
+    cells: Vec<CellAlignment>,
+}
+
+pub(crate) struct TablePlan<'a> {
+    pub has_containing_ancestors: bool,
+    pub has_scoped_internals: bool,
+    pub has_height_constraints: bool,
+    border_owners: Option<Vec<Option<usize>>>,
+    containing_height: Option<f32>,
+    used_height: Option<f32>,
+    pub source: &'a BlockBox,
+    named_pages: bool,
+    data: Data<'a>,
+    boundary_events: BTreeMap<usize, Vec<&'a SemanticEvent>>,
+    cell_indices: HashMap<*const BlockBox, usize>,
+    row_keep_ends: [Vec<usize>; 2],
+    layers: Layers,
+    columns: Vec<ferri_pdf_table::ColumnWidth>,
+    widths: RefCell<HashMap<u32, Rc<WidthContributions>>>,
+    place: fn(&Style, f32, f32, bool, Option<f32>, geometry::Edges) -> geometry::HorizontalBox,
+}
+
+#[derive(Clone)]
+pub(crate) struct TableContaining<'a> {
+    pub source: &'a BlockBox,
+    pub rows: Range<usize>,
+    ancestors: [Option<&'a BlockBox>; 2],
+}
+impl TableContaining<'_> {
+    pub fn rect(
+        &self,
+        geometry: &TableGeometry,
+        placement: &super::BandPlacement,
+        starts: &[f32],
+        rtl: bool,
+        overflow: bool,
+    ) -> Option<Rect> {
+        let first = if overflow {
+            self.rows.start
+        } else {
+            self.rows.start.max(placement.rows.start)
+        };
+        let end = if overflow {
+            self.rows.end
+        } else {
+            self.rows.end.min(placement.rows.end)
+        };
+        if first >= end {
+            return None;
+        }
+        let base = starts[placement.rows.start];
+        let slice = placement
+            .slice
+            .clone()
+            .unwrap_or(0.0..starts[placement.rows.end] - base);
+        let top = starts[first] - base;
+        let bottom = starts[end] - base - geometry.spacing[1];
+        let (top, bottom) = if overflow {
+            (top, bottom)
+        } else {
+            (top.max(slice.start), bottom.min(slice.end))
+        };
+        if bottom < top {
+            return None;
+        }
+        let columns = geometry.columns(rtl);
+        let (x, width) = columns.span(0, columns.widths.len());
+        let offset = super::model::relative_offset(&self.ancestors, geometry.geometry.width, rtl);
+        Some(Rect {
+            x: x + offset[0],
+            y: placement.y + top - slice.start + offset[1],
+            width,
+            height: bottom - top,
+        })
+    }
+}
+fn structural_events<'a>(
+    source: &'a BlockBox,
+    data: &Data<'a>,
+) -> BTreeMap<usize, Vec<&'a SemanticEvent>> {
+    fn collect<'a>(source: &'a BlockBox, events: &mut Vec<&'a SemanticEvent>) {
+        events.extend(source.semantic_event());
+        for child in source.children() {
+            match child {
+                BlockContent::Events(pending) => events.extend(pending),
+                BlockContent::Block(child) => collect(child, events),
+                _ => {}
+            }
+        }
+    }
+    let mut boundaries: BTreeMap<usize, Vec<&SemanticEvent>> = BTreeMap::new();
+    boundaries
+        .entry(0)
+        .or_default()
+        .extend(source.leading_events());
+    for child in source.children() {
+        if let BlockContent::Block(child) = child
+            && matches!(
+                child.style().display,
+                Display::TableColumn | Display::TableColumnGroup
+            )
+        {
+            let events = boundaries.entry(0).or_default();
+            collect(child, events);
+            events.extend(source.following_events(child));
+        }
+    }
+    let mut boundary = 0;
+    for group in &data.groups {
+        if group.rows.is_empty()
+            && let Some(group) = group.source
+        {
+            let events = boundaries.entry(boundary).or_default();
+            collect(group, events);
+            events.extend(source.following_events(group));
+        }
+        boundary += group.rows.len();
+    }
+    boundaries
+}
+
+impl<'a> TablePlan<'a> {
+    pub fn row_entry_events(&self, index: usize) -> Vec<&'a SemanticEvent> {
+        let row = self.data.rows[index];
+        let mut events = Vec::new();
+        let group = &self.data.groups[self.data.row_groups[index]];
+        if group
+            .rows
+            .first()
+            .is_some_and(|first| std::ptr::eq(*first, row))
+            && let Some(source) = group.source
+        {
+            events.extend(source.semantic_event());
+            events.extend(source.leading_events());
+        }
+        events.extend(row.semantic_event());
+        for child in row.children() {
+            if let BlockContent::Events(pending) = child {
+                events.extend(pending);
+            }
+        }
+        events
+    }
+    pub fn row_exit_events(&self, index: usize) -> Vec<&'a SemanticEvent> {
+        let row = self.data.rows[index];
+        let group = &self.data.groups[self.data.row_groups[index]];
+        let mut events: Vec<_> = self.source.following_events(row).collect();
+        if let Some(source) = group.source {
+            events.extend(source.following_events(row));
+            if group
+                .rows
+                .last()
+                .is_some_and(|last| std::ptr::eq(*last, row))
+            {
+                events.extend(self.source.following_events(source));
+            }
+        }
+        events
+    }
+    pub fn row_source(&self, index: usize) -> &'a BlockBox {
+        self.data.rows[index]
+    }
+    pub fn row_edges(
+        &self,
+        row: usize,
+        fragmentainer: crate::breaks::Fragmentainer,
+    ) -> [BreakBetween; 2] {
+        let data = &self.data;
+        let mut edges = fragmentainer.edges(data.rows[row].style());
+        let group = data.row_groups[row];
+        if let Some(source) = data.groups[group].source {
+            let group_edges = fragmentainer.edges(source.style());
+            if row == 0 || data.row_groups[row - 1] != group {
+                edges[0] = group_edges[0].combine(edges[0]);
+            }
+            if row + 1 == data.grid.rows || data.row_groups[row + 1] != group {
+                edges[1] = group_edges[1].combine(edges[1]);
+            }
+        }
+        if self.named_pages
+            && row > 0
+            && data.rows[row - 1].page_boundary().end != data.rows[row].page_boundary().start
+        {
+            edges[0] = edges[0].combine(BreakBetween::Page);
+        }
+        edges
+    }
+    pub fn row_keep_end(
+        &self,
+        row: usize,
+        end: usize,
+        fragmentainer: crate::breaks::Fragmentainer,
+    ) -> usize {
+        let index = match fragmentainer {
+            crate::breaks::Fragmentainer::Page => 0,
+            crate::breaks::Fragmentainer::Column => 1,
+        };
+        self.row_keep_ends[index][row].min(end)
+    }
+    fn resolve_row_keeps(&self, fragmentainer: crate::breaks::Fragmentainer) -> Vec<usize> {
+        // Group keeps depend on available height and belong to band measurement.
+        let data = &self.data;
+        let mut protected = vec![0; data.grid.rows + 1];
+        for (cell, source) in data.grid.cells.iter().zip(&data.cells) {
+            if cell.rows > 1 && fragmentainer.keeps(source.style()) {
+                protected[cell.row + 1] = protected[cell.row + 1].max(cell.row + cell.rows);
+            }
+        }
+        let mut ends = vec![data.grid.rows; data.grid.rows];
+        let mut until = 0;
+        for next in 1..data.grid.rows {
+            until = until.max(protected[next]);
+            let edge = self.row_edges(next - 1, fragmentainer)[1]
+                .combine(self.row_edges(next, fragmentainer)[0]);
+            if edge.is_forced() || (next >= until && edge != BreakBetween::Avoid) {
+                ends[next - 1] = next;
+            }
+        }
+        for row in (0..data.grid.rows.saturating_sub(1)).rev() {
+            ends[row] = ends[row].min(ends[row + 1]);
+        }
+        ends
+    }
+    pub(crate) fn new(
+        measurer: &Measurer<'_>,
+        block: &'a BlockBox,
+        containing_height: Option<f32>,
+        used_height: Option<f32>,
+        place: fn(&Style, f32, f32, bool, Option<f32>, geometry::Edges) -> geometry::HorizontalBox,
+    ) -> Result<Rc<Self>, LayoutError> {
+        measurer.work.spend(1)?;
+        let index = measurer.sources.block(block);
+        let data = Data::new(block)?;
+        let boundary_events = structural_events(block, &data);
+        if data
+            .rows
+            .iter()
+            .copied()
+            .chain(data.groups.iter().filter_map(|group| group.source))
+            .any(|source| source.style().decoration.border_image.is_drawn())
+        {
+            return Err(LayoutError::UnsupportedTable {
+                block: index,
+                feature: "row and row-group border images",
+            });
+        }
+        measurer
+            .work
+            .spend(data.grid.rows.saturating_add(data.grid.cells.len()).max(1))?;
+        let has_containing_ancestors = data
+            .rows
+            .iter()
+            .copied()
+            .chain(data.groups.iter().filter_map(|group| group.source))
+            .any(|source| {
+                source.style().position != ferri_pdf_style::Position::Static
+                    || !source.style().transform.is_empty()
+            });
+        let has_scoped_internals = data.collapsed_columns.iter().any(|&value| value)
+            || data
+                .rows
+                .iter()
+                .copied()
+                .chain(data.groups.iter().filter_map(|group| group.source))
+                .chain(data.cells.iter().copied())
+                .any(|source| {
+                    let style = source.style();
+                    style.position != ferri_pdf_style::Position::Static
+                        || !style.visibility.is_visible()
+                        || !style.decoration.shadows.is_empty()
+                        || style.is_translucent()
+                        || !style.transform.is_empty()
+                });
+        let border_owners = if has_scoped_internals && data.collapsed.is_some() {
+            let slots = data.grid.rows * data.grid.columns;
+            measurer.work.spend(slots)?;
+            let mut owners = vec![None; slots];
+            for (index, cell) in data.grid.cells.iter().enumerate() {
+                for row in cell.row..cell.row + cell.rows {
+                    owners[row * data.grid.columns + cell.column
+                        ..row * data.grid.columns + cell.column + cell.columns]
+                        .fill(Some(index));
+                }
+            }
+            Some(owners)
+        } else {
+            None
+        };
+        let has_height_constraints = used_height.is_some()
+            || std::iter::once(block)
+                .chain(data.rows.iter().copied())
+                .chain(data.cells.iter().copied())
+                .any(|source| {
+                    [
+                        &source.style().height,
+                        &source.style().min_height,
+                        &source.style().max_height,
+                    ]
+                    .into_iter()
+                    .any(|size| !size.is_auto_block_size(false))
+                });
+        let mut plan = Self {
+            has_containing_ancestors,
+            has_scoped_internals,
+            has_height_constraints,
+            border_owners,
+            containing_height,
+            used_height,
+            source: block,
+            named_pages: measurer.named_pages && !measurer.unbroken,
+            columns: data.column_widths(),
+            layers: Layers::new(&data),
+            cell_indices: data
+                .cells
+                .iter()
+                .enumerate()
+                .map(|(index, source)| (std::ptr::from_ref(*source), index))
+                .collect(),
+            data,
+            boundary_events,
+            row_keep_ends: [Vec::new(), Vec::new()],
+            widths: RefCell::new(HashMap::new()),
+            place,
+        };
+        plan.row_keep_ends = [
+            crate::breaks::Fragmentainer::Page,
+            crate::breaks::Fragmentainer::Column,
+        ]
+        .map(|fragmentainer| plan.resolve_row_keeps(fragmentainer));
+        Ok(Rc::new(plan))
+    }
+    fn contributions(
+        &self,
+        measurer: &Measurer<'_>,
+        width: f32,
+    ) -> Result<Rc<WidthContributions>, LayoutError> {
+        if let Some(contributions) = self.widths.borrow().get(&width.to_bits()) {
+            return Ok(contributions.clone());
+        }
+        let contributions = Rc::new(WidthContributions {
+            cells: self.data.widths(measurer, 0.0, width)?,
+            caption_min: captions::minimum(&self.data.captions, measurer, width)?,
+        });
+        self.widths
+            .borrow_mut()
+            .insert(width.to_bits(), contributions.clone());
+        Ok(contributions)
+    }
+    pub fn resolve_geometry(
+        &self,
+        measurer: &Measurer<'_>,
+        x: f32,
+        width: f32,
+        rtl: bool,
+    ) -> Result<TableGeometry, LayoutError> {
+        self.resolve(measurer, x, width, rtl, None)
+    }
+
+    pub(crate) fn has_captions(&self) -> bool {
+        !self.data.captions.is_empty()
+    }
+
+    pub(crate) fn edges(&self, width: f32) -> geometry::Edges {
+        self.data.table_edges(self.source.style(), width)
+    }
+
+    pub(crate) fn resolve_positioned(
+        &self,
+        measurer: &Measurer<'_>,
+        geometry: &geometry::HorizontalBox,
+    ) -> Result<TableGeometry, LayoutError> {
+        self.resolve(
+            measurer,
+            geometry.containing_x,
+            geometry.containing_width,
+            geometry.containing_rtl,
+            Some(geometry),
+        )
+    }
+
+    pub(crate) fn measure_wrapped(
+        self: &Rc<Self>,
+        measurer: &mut Measurer<'_>,
+        resolved: TableGeometry,
+    ) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), LayoutError> {
+        let containing_height = resolved.containing_height;
+        let (table, geometry) = measure_plan(measurer, self.clone(), resolved, None, 0)?;
+        let mut table = captions::wrap(measurer, table, &self.data.captions, &geometry)?;
+        let style = self.source.style();
+        if self.has_captions()
+            && (style.position != ferri_pdf_style::Position::Static
+                || !style.transform.is_empty()
+                || !style.visibility.is_visible()
+                || style.is_translucent()
+                || style.clipped_axes().contains(&true))
+        {
+            table.retain_fragment();
+        }
+        table.containing_height = containing_height;
+        table.offset = self.source.style().relative_offset(
+            geometry.containing_width,
+            containing_height,
+            geometry.containing_rtl,
+        );
+        Ok((table, geometry))
+    }
+
+    fn resolve(
+        &self,
+        measurer: &Measurer<'_>,
+        x: f32,
+        width: f32,
+        rtl: bool,
+        positioned: Option<&geometry::HorizontalBox>,
+    ) -> Result<TableGeometry, LayoutError> {
+        measurer.work.spend(
+            self.data
+                .grid
+                .rows
+                .saturating_mul(self.data.grid.columns)
+                .max(1),
+        )?;
+        let style = self.source.style();
+        let data = &self.data;
+        let index = measurer.sources.block(self.source);
+        let place = self.place;
+        let collapsed = data.collapsed.is_some();
+        let table_edges = data.table_edges(style, width);
+        let provisional = positioned
+            .cloned()
+            .unwrap_or_else(|| place(style, x, width, rtl, None, table_edges));
+        let edges = provisional.padding[1]
+            + provisional.padding[3]
+            + provisional.border[1]
+            + provisional.border[3];
+        let available = (width
+            - edges
+            - provisional.margin[1].unwrap_or(0.0)
+            - provisional.margin[3].unwrap_or(0.0))
+        .max(0.0);
+        let mut constraints = crate::intrinsic::width_constraints(
+            self.source,
+            measurer,
+            Some(width),
+            edges,
+            Some(available),
+        )?;
+        if let Some(geometry) = positioned {
+            constraints.specified = Some(geometry.width);
+        }
+        let contributions = self.contributions(measurer, width)?;
+        let [horizontal, vertical] = if collapsed {
+            [0.0; 2]
+        } else {
+            style.table.spacing
+        };
+        let mut sizes = data.grid.column_widths(&WidthInput {
+            cells: &contributions.cells,
+            columns: &self.columns,
+            layout: if positioned.is_some() && style.width.resolve(width).is_none() {
+                TableLayout::Auto
+            } else {
+                style.table.layout
+            },
+            table: constraints,
+            available,
+            spacing: horizontal,
+            caption_min: (contributions.caption_min - edges).max(0.0),
+        })?;
+        let original_sizes = if data.collapsed_columns.iter().any(|&value| value) {
+            let widths: Vec<_> = sizes
+                .widths
+                .iter()
+                .zip(data.collapsed_columns.iter())
+                .map(|(&width, &collapsed)| if collapsed { 0.0 } else { width })
+                .collect();
+            let removed = sizes
+                .widths
+                .iter()
+                .zip(data.collapsed_columns.iter())
+                .filter_map(|(&width, &collapsed)| collapsed.then_some(width + horizontal))
+                .sum::<f32>();
+            let projected = ferri_pdf_table::ColumnWidths {
+                widths,
+                table: (sizes.table - removed).max(0.0),
+            };
+            Some(std::mem::replace(&mut sizes, projected))
+        } else {
+            None
+        };
+        let geometry = positioned.map_or_else(
+            || place(style, x, width, rtl, Some(sizes.table), table_edges),
+            |geometry| geometry::HorizontalBox {
+                width: sizes.table,
+                ..geometry.clone()
+            },
+        );
+        if !geometry.x.is_finite() || !geometry.width.is_finite() {
+            return Err(LayoutError::NonFiniteBlockGeometry { block: index });
+        }
+        let mut starts = Vec::with_capacity(data.grid.columns);
+        let mut cursor = horizontal;
+        for (&column_width, &collapsed) in sizes.widths.iter().zip(data.collapsed_columns.iter()) {
+            starts.push(cursor);
+            if !collapsed {
+                cursor += column_width + horizontal;
+            }
+        }
+        Ok(TableGeometry {
+            containing_height: self.containing_height,
+            geometry,
+            edges: table_edges,
+            sizes,
+            original_sizes,
+            collapsed_columns: data.collapsed_columns.clone(),
+            starts,
+            spacing: [horizontal, vertical],
+        })
+    }
+    pub fn has_collapsed_rows(&self) -> bool {
+        self.data.collapsed_rows.iter().any(|&value| value)
+    }
+    pub fn rows_visible(&self, rows: std::ops::Range<usize>) -> bool {
+        self.data.collapsed_rows[rows].iter().any(|&value| !value)
+    }
+    pub fn cell_collapsed(&self, index: usize) -> bool {
+        let cell = &self.data.grid.cells[index];
+        !self.rows_visible(cell.row..cell.row + cell.rows)
+            || self.data.collapsed_columns[cell.column..cell.column + cell.columns]
+                .iter()
+                .all(|&value| value)
+    }
+    pub fn cell_rows_collapsed(&self, index: usize) -> bool {
+        let cell = &self.data.grid.cells[index];
+        self.data.collapsed_rows[cell.row..cell.row + cell.rows]
+            .iter()
+            .any(|&value| value)
+    }
+    pub fn cell_clipped(&self, source: &BlockBox) -> bool {
+        self.cell_index(source).is_some_and(|index| {
+            let cell = &self.data.grid.cells[index];
+            self.data.collapsed_rows[cell.row..cell.row + cell.rows]
+                .iter()
+                .any(|&value| value)
+                || self.data.collapsed_columns[cell.column..cell.column + cell.columns]
+                    .iter()
+                    .any(|&value| value)
+        })
+    }
+    pub fn cell_index(&self, source: &BlockBox) -> Option<usize> {
+        self.cell_indices.get(&std::ptr::from_ref(source)).copied()
+    }
+    pub fn cell_has_explicit_height(&self, index: usize) -> bool {
+        self.data.cells[index]
+            .style()
+            .height
+            .resolve_definite(None)
+            .is_some()
+            || self.source.style().height != ferri_pdf_style::Size::Auto
+            || self.used_height.is_some()
+    }
+    pub fn cell_used_height(
+        &self,
+        index: usize,
+        assigned: f32,
+        resolved: &TableGeometry,
+    ) -> Option<f32> {
+        self.cell_has_explicit_height(index).then(|| {
+            let geometry = self.cell_geometry(index, resolved);
+            let edges =
+                geometry.padding[0] + geometry.padding[2] + geometry.border[0] + geometry.border[2];
+            (assigned - edges).max(0.0)
+        })
+    }
+    pub fn measure_cell(
+        &self,
+        measurer: &mut Measurer<'_>,
+        index: usize,
+        resolved: &TableGeometry,
+        used_height: Option<f32>,
+    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+        let source = self.data.cells[index];
+        let geometry = self.cell_geometry(index, resolved);
+        let named_pages = std::mem::replace(&mut measurer.named_pages, false);
+        let measured = measurer.format_block(source, geometry, true, None, used_height);
+        measurer.named_pages = named_pages;
+        let mut measured = measured?;
+        measured.offset = self.cell_offset(index, resolved.geometry.width);
+        let Some(mut paint) = measured.paint.take() else {
+            return Ok(measured);
+        };
+        if self.data.collapsed.is_some() {
+            paint.decoration =
+                collapsed_decoration(paint.decoration, self.data.cell_borders(index));
+            // Collapsed internal elements have neither radii nor border images.
+            let initial = BoxDecoration::default();
+            paint.decoration.radii = initial.radii;
+            paint.decoration.border_image = initial.border_image;
+            if paint.decoration.shadows.iter().any(|shadow| !shadow.inset) {
+                std::sync::Arc::make_mut(&mut paint.decoration.shadows)
+                    .retain(|shadow| shadow.inset);
+            }
+        } else if !source.style().table.empty_cells && source.children().is_empty() {
+            return Ok(measured);
+        }
+        measured.paint = Some(paint);
+        Ok(measured)
+    }
+    pub fn cell_rows(&self, index: usize) -> Range<usize> {
+        let cell = &self.data.grid.cells[index];
+        cell.row..cell.row + cell.rows
+    }
+    pub fn cell_offset(&self, index: usize, width: f32) -> [f32; 2] {
+        super::model::relative_offset(
+            &self.data.cell_ancestors(index),
+            width,
+            self.source.style().rtl,
+        )
+    }
+    pub fn scoped_borders(&self) -> bool {
+        self.border_owners.is_some()
+    }
+    pub fn border_owner(&self, row: usize, column: usize, width: f32) -> (Option<usize>, [f32; 2]) {
+        let owner = self
+            .border_owners
+            .as_ref()
+            .and_then(|owners| owners[row * self.data.grid.columns + column]);
+        let offset = match owner {
+            Some(index) => self.cell_offset(index, width),
+            None => super::model::relative_offset(
+                &[
+                    self.data.groups[self.data.row_groups[row]].source,
+                    Some(self.data.rows[row]),
+                ],
+                width,
+                self.source.style().rtl,
+            ),
+        };
+        (owner, offset)
+    }
+    pub fn structural_shadow(&self, source: &BlockBox, inset: bool) -> Option<BoxDecoration> {
+        if !inset && self.data.collapsed.is_some() {
+            return None;
+        }
+        let decoration = source.decoration();
+        let shadows = decoration
+            .shadows
+            .iter()
+            .filter(|shadow| shadow.inset == inset)
+            .cloned()
+            .collect::<Vec<_>>();
+        if shadows.is_empty() {
+            return None;
+        }
+        Some(BoxDecoration {
+            shadows: shadows.into(),
+            radii: if self.data.collapsed.is_some() {
+                BoxDecoration::default().radii
+            } else {
+                decoration.radii.clone()
+            },
+            ..Default::default()
+        })
+    }
+    pub fn cell_parents(&self, index: usize) -> [Option<&'a BlockBox>; 2] {
+        let [group, row, _] = self.data.cell_ancestors(index);
+        [group, row]
+    }
+    pub fn cell_layers(&self, source: &BlockBox) -> [Option<TableContaining<'a>>; 2] {
+        let Some(index) = self.cell_index(source) else {
+            return [None, None];
+        };
+        self.row_layers(self.data.grid.cells[index].row)
+    }
+    pub fn row_layers(&self, row: usize) -> [Option<TableContaining<'a>>; 2] {
+        let group = self.data.row_groups[row];
+        let group_source = self.data.groups[group].source;
+        let row_source = Some(self.data.rows[row]);
+        [
+            group_source.map(|source| TableContaining {
+                source,
+                rows: self.layers.group_rows[group].clone(),
+                ancestors: [group_source, None],
+            }),
+            row_source.map(|source| TableContaining {
+                source,
+                rows: row..row + 1,
+                ancestors: [group_source, row_source],
+            }),
+        ]
+    }
+    pub fn cell_alignments(
+        &self,
+        measurer: &mut Measurer<'_>,
+        band: Range<usize>,
+        geometry: &TableGeometry,
+    ) -> Result<CellAlignments, LayoutError> {
+        let band = if self.has_height_constraints || self.has_collapsed_rows() {
+            0..self.data.grid.rows
+        } else {
+            band
+        };
+        let range = self.data.row_ranges[band.start].start..self.data.row_ranges[band.end - 1].end;
+        let grid = ferri_pdf_table::Grid {
+            cells: self.data.grid.cells[range.clone()]
+                .iter()
+                .map(|cell| ferri_pdf_table::Cell {
+                    row: cell.row - band.start,
+                    ..*cell
+                })
+                .collect(),
+            rows: band.len(),
+            columns: self.data.grid.columns,
+        };
+        let mut first_fragments = Vec::with_capacity(range.len());
+        let heights = range
+            .clone()
+            .map(|index| {
+                let measured = self.measure_cell(measurer, index, geometry, None)?;
+                first_fragments.push(measured.first_fragment);
+                Ok(cell_height(&measured))
+            })
+            .collect::<Result<Vec<_>, LayoutError>>()?;
+        measurer
+            .work
+            .spend(grid.rows.saturating_mul(grid.columns).max(1))?;
+        let rows = if self.has_height_constraints || self.has_collapsed_rows() {
+            self.resolve_rows(measurer, &heights, geometry.spacing[1], &geometry.geometry)?
+        } else {
+            RowGeometry::new(
+                grid.row_heights(&HeightInput::natural(&heights, geometry.spacing[1]))?,
+                geometry.spacing[1],
+            )
+        };
+        let alignments = grid
+            .cells
+            .iter()
+            .zip(rows.offsets)
+            .zip(first_fragments)
+            .zip(&heights)
+            .map(
+                |(((cell, offset), first_fragment), measured)| CellAlignment {
+                    content_height: measured.height,
+                    offset,
+                    height: rows.starts[cell.row + cell.rows]
+                        - rows.starts[cell.row]
+                        - geometry.spacing[1],
+                    first_fragment,
+                },
+            )
+            .collect();
+        Ok(CellAlignments {
+            first: range.start,
+            start_row: band.start,
+            row_starts: rows.starts,
+            spacing: geometry.spacing[1],
+            cells: alignments,
+        })
+    }
+    pub fn fragment_alignment(
+        &self,
+        alignments: &CellAlignments,
+        index: usize,
+        available: f32,
+        fresh: f32,
+        fragmentainer: crate::breaks::Fragmentainer,
+    ) -> f32 {
+        let spacing = alignments.spacing;
+        let alignment = alignments.cells[index - alignments.first];
+        if crate::pagination::overflows(alignment.height, fresh)
+            || crate::pagination::overflows(alignment.first_fragment, available)
+        {
+            return alignment.offset;
+        }
+        let cell_rows = self.cell_rows(index);
+        let mut extent = 0.0;
+        for row in cell_rows.clone() {
+            let local = row - alignments.start_row;
+            let height = alignments.row_starts[local + 1] - alignments.row_starts[local] - spacing;
+            let keep_end = self.row_keep_end(
+                row,
+                alignments.start_row + alignments.row_starts.len() - 1,
+                fragmentainer,
+            );
+            let prefix = alignments.row_starts[keep_end - alignments.start_row]
+                - alignments.row_starts[local]
+                - spacing;
+            let required = if keep_end > row + 1 && !crate::pagination::overflows(prefix, fresh) {
+                prefix
+            } else if fragmentainer.keeps(self.row_source(row).style())
+                && !crate::pagination::overflows(height, fresh)
+            {
+                height
+            } else {
+                0.0
+            };
+            let forced = row > cell_rows.start
+                && self.row_edges(row - 1, fragmentainer)[1]
+                    .combine(self.row_edges(row, fragmentainer)[0])
+                    .is_forced();
+            if row > cell_rows.start
+                && (forced
+                    || (required > 0.0
+                        && crate::pagination::overflows(extent + required, available)))
+            {
+                let extra = (extent - spacing - alignment.content_height).max(0.0);
+                return match self.data.cells[index].style().table.vertical_align.cell() {
+                    ferri_pdf_style::VerticalAlign::Middle => extra / 2.0,
+                    ferri_pdf_style::VerticalAlign::Bottom => extra,
+                    _ => alignment
+                        .offset
+                        .min((extent - spacing - alignment.first_fragment).max(0.0)),
+                };
+            }
+            extent += height + spacing;
+        }
+        alignment
+            .offset
+            .min((available - alignment.first_fragment).max(0.0))
+    }
+    pub fn resolve_rows(
+        &self,
+        measurer: &Measurer<'_>,
+        cells: &[CellHeight],
+        spacing: f32,
+        geometry: &geometry::HorizontalBox,
+    ) -> Result<RowGeometry, LayoutError> {
+        measurer.work.spend(
+            self.data
+                .grid
+                .rows
+                .saturating_mul(self.data.grid.columns)
+                .max(1),
+        )?;
+        if !self.has_height_constraints {
+            return Ok(RowGeometry::new(
+                self.data
+                    .grid
+                    .row_heights(&HeightInput::natural(cells, spacing))?,
+                spacing,
+            )
+            .project(&self.data.collapsed_rows));
+        }
+        let style = self.source.style();
+        let rows = self
+            .data
+            .rows
+            .iter()
+            .map(|row| HeightConstraint {
+                specified: row.style().height.clone(),
+                minimum: row.style().min_height.clone(),
+                maximum: row.style().max_height.clone(),
+                ..HeightConstraint::default()
+            })
+            .collect::<Vec<_>>();
+        let edges =
+            geometry.padding[0] + geometry.padding[2] + geometry.border[0] + geometry.border[2];
+        let rows = self.data.grid.row_heights(&HeightInput {
+            cells,
+            rows: &rows,
+            spacing,
+            table: self.used_height.map_or_else(
+                || {
+                    ferri_pdf_style::SizeConstraints::new(
+                        [&style.height, &style.min_height, &style.max_height],
+                        self.containing_height,
+                        style.box_sizing,
+                        edges,
+                    )
+                },
+                |height| ferri_pdf_style::SizeConstraints {
+                    specified: Some(height),
+                    minimum: 0.0,
+                    maximum: None,
+                },
+            ),
+        })?;
+        Ok(RowGeometry::new(rows, spacing).project(&self.data.collapsed_rows))
+    }
+    pub fn used_row_starts(
+        &self,
+        measurer: &Measurer<'_>,
+        heights: &[f32],
+        spacing: f32,
+        projection: Option<(&[f32], &[f32])>,
+    ) -> Result<Vec<f32>, LayoutError> {
+        // Border-box extents already include baseline and vertical alignment.
+        let cells = heights
+            .iter()
+            .enumerate()
+            .map(|(index, &height)| CellHeight {
+                height: height
+                    + projection.map_or(0.0, |(original, projected)| {
+                        let cell = &self.data.grid.cells[index];
+                        ((original[cell.row + cell.rows] - original[cell.row])
+                            - (projected[cell.row + cell.rows] - projected[cell.row]))
+                            .max(0.0)
+                    }),
+                baseline: 0.0,
+                align: ferri_pdf_style::VerticalAlign::Top,
+                constraint: HeightConstraint::default(),
+            })
+            .collect::<Vec<_>>();
+        measurer.work.spend(
+            self.data
+                .grid
+                .rows
+                .saturating_mul(self.data.grid.columns)
+                .max(1),
+        )?;
+        Ok(RowGeometry::new(
+            self.data
+                .grid
+                .row_heights(&HeightInput::natural(&cells, spacing))?,
+            spacing,
+        )
+        .project(&self.data.collapsed_rows)
+        .starts)
+    }
+    pub fn cell_span(&self, index: usize, resolved: &TableGeometry) -> (f32, f32) {
+        let cell = &self.data.grid.cells[index];
+        resolved
+            .columns(self.source.style().rtl)
+            .span(cell.column, cell.columns)
+    }
+    pub fn cell_geometry(&self, index: usize, resolved: &TableGeometry) -> geometry::HorizontalBox {
+        let cell = &self.data.grid.cells[index];
+        let style = self.data.cells[index].style();
+        let border = self.data.cell_borders(index);
+        let original = resolved.original_sizes.as_ref().unwrap_or(&resolved.sizes);
+        let padding = style
+            .padding
+            .each_ref()
+            .map(|padding| padding.resolve(original.table));
+        let (mut left, projected) = self.cell_span(index, resolved);
+        let outer = original.widths[cell.column..cell.column + cell.columns]
+            .iter()
+            .sum::<f32>()
+            + resolved.spacing[0] * cell.columns.saturating_sub(1) as f32;
+        if self.source.style().rtl {
+            left += projected - outer;
+        }
+        geometry::HorizontalBox {
+            containing_x: resolved.geometry.x,
+            containing_width: original.table,
+            containing_rtl: self.source.style().rtl,
+            x: left + padding[3] + border[3],
+            width: (outer - padding[1] - padding[3] - border[1] - border[3]).max(0.0),
+            padding,
+            border,
+            margin: [Some(0.0); 4],
+        }
+    }
+}
+
+pub(crate) fn resume<'a>(
+    measurer: &mut Measurer<'_>,
+    previous: &TableFlow<'a>,
+    resolved: TableGeometry,
+    next_body: usize,
+) -> Result<MeasuredBlock<'a>, LayoutError> {
+    measure_plan(
+        measurer,
+        previous.plan.clone(),
+        resolved,
+        Some(previous),
+        next_body,
+    )
+    .map(|(table, _)| table)
+}
+
+fn measure_plan<'a>(
+    measurer: &mut Measurer<'_>,
+    plan: Rc<TablePlan<'a>>,
+    resolved: TableGeometry,
+    previous: Option<&TableFlow<'a>>,
+    next_body: usize,
+) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), LayoutError> {
+    let block = plan.source;
+    let index = measurer.sources.block(block);
+    let style = block.style();
+    let data = &plan.data;
+    measurer.work.spend(data.cells.len().max(1))?;
+    let collapsed = data.collapsed.is_some();
+    let geometry = resolved.geometry.clone();
+    let table_edges = resolved.edges;
+    let sizes = &resolved.sizes;
+    let vertical = resolved.spacing[1];
+    let columns = resolved.columns(style.rtl);
+    let mut blocks = Vec::new();
+    let mut heights = Vec::new();
+    for (cell_index, cell) in data.grid.cells.iter().enumerate() {
+        if let Some(previous) = previous
+            && previous.body.contains(&cell.row)
+            && cell.row < next_body
+        {
+            heights.push(previous.heights[cell_index].clone());
+            blocks.push(None);
+            continue;
+        }
+        let measured = plan.measure_cell(measurer, cell_index, &resolved, None)?;
+        heights.push(cell_height(&measured));
+        blocks.push(Some(measured));
+    }
+    let mut has_forced = blocks.iter().flatten().any(|block| block.has_forced);
+    let rows = plan.resolve_rows(measurer, &heights, vertical, &geometry)?;
+    let row_starts = &rows.starts;
+    let cell_offsets = &rows.offsets;
+    let content_height = rows.height;
+    let top = geometry.padding[0] + geometry.border[0];
+    let bottom = geometry.padding[2] + geometry.border[2];
+    let height = top + content_height + bottom;
+    if !height.is_finite() {
+        return Err(LayoutError::NonFiniteBlockGeometry { block: index });
+    }
+    let [header_rows, footer_rows] = repeated_rows(data);
+    let mut header = Vec::new();
+    let mut footer = Vec::new();
+    let repeated_height: f32 = [&header_rows, &footer_rows]
+        .into_iter()
+        .map(|rows| row_starts[rows.end] - row_starts[rows.start])
+        .sum();
+    let mut tallest_body: f32 = 0.0;
+    let mut items = vec![FlowItem::Edge(BlockEdge::Start, top)];
+    if let Some(events) = plan.boundary_events.get(&0) {
+        items.extend(
+            events
+                .iter()
+                .map(|event| FlowItem::Events(std::slice::from_ref(*event))),
+        );
+    }
+    if data.grid.rows > 0 {
+        items.push(FlowItem::Space(vertical));
+    } else if content_height > 0.0 {
+        items.push(FlowItem::Space(content_height));
+    }
+    let areas = Areas {
+        columns: &columns,
+        row_starts,
+        vertical,
+    };
+    let group_ends = data
+        .groups
+        .iter()
+        .scan(0, |end, group| {
+            *end += group.rows.len();
+            Some(*end)
+        })
+        .collect::<Vec<_>>();
+    let mut row = 0;
+    while row < data.grid.rows {
+        let group_index = data.row_groups[row];
+        let group_end = group_ends[group_index];
+        let body_band = row >= header_rows.end && group_end <= footer_rows.start;
+        let reserved_groups = if body_band { repeated_height } else { 0.0 };
+        let available_height =
+            crate::breaks::fragmentainer_height(measurer.page_height) - reserved_groups;
+        let group_kept = data.groups[group_index]
+            .source
+            .is_some_and(|source| measurer.fragmentainer.keeps(source.style()))
+            && row_starts[group_end] - row_starts[row] + top + bottom <= available_height;
+        let mut end = if group_kept { group_end } else { row + 1 };
+        let mut scan = row;
+        while scan < end {
+            for cell in &data.grid.cells[data.row_ranges[scan].clone()] {
+                end = end.max(cell.row + cell.rows);
+            }
+            scan += 1;
+        }
+        if previous.is_some_and(|flow| flow.body.contains(&row)) && end <= next_body {
+            row = end;
+            continue;
+        }
+        let band_height = (row_starts[end] - row_starts[row] - vertical).max(0.0);
+        let range = data.row_ranges[row].start..data.row_ranges[end - 1].end;
+        let forced = blocks[range.clone()]
+            .iter()
+            .flatten()
+            .any(|block| block.has_forced);
+        let internal_forced = (row + 1..end).any(|index| {
+            plan.row_edges(index - 1, measurer.fragmentainer)[1].is_forced()
+                || plan.row_edges(index, measurer.fragmentainer)[0].is_forced()
+        });
+        has_forced |= internal_forced;
+        let kept = group_kept
+            || data.rows[row..end]
+                .iter()
+                .chain(data.cells[range.clone()].iter())
+                .any(|source| measurer.fragmentainer.keeps(source.style()));
+        let expanded_cells = plan.has_height_constraints
+            && range.clone().any(|index| {
+                let cell = &data.grid.cells[index];
+                blocks[index].as_ref().is_some_and(|block| {
+                    row_starts[cell.row + cell.rows] - row_starts[cell.row] - vertical
+                        > block.height
+                })
+            });
+        let soft_break = expanded_cells
+            || blocks[range.clone()]
+                .iter()
+                .flatten()
+                .any(|block| block.first_fragment > 0.0 && block.first_fragment < block.height);
+        let keep_end = plan.row_keep_end(row, end, measurer.fragmentainer);
+        let row_boundaries = end > row + 1
+            && !group_kept
+            && (keep_end < end || band_height + top + bottom + vertical > available_height);
+        let fragments = !measurer.unbroken
+            && (row_boundaries
+                || forced
+                || internal_forced
+                || ((expanded_cells
+                    || !blocks[range.clone()]
+                        .iter()
+                        .flatten()
+                        .all(crate::breaks::indivisible))
+                    && ((body_band && !kept && soft_break)
+                        || band_height + top + bottom + vertical > available_height)));
+        let mut painted_cells = Vec::new();
+        let mut collapsed_cells = Vec::new();
+        let mut cell_heights = Vec::new();
+        let mut visible_cells = Vec::new();
+        let mut own_paints = Vec::new();
+        let mut targets = band_targets(data, &areas, row..end);
+        for (offset, slot) in blocks[range.clone()].iter_mut().enumerate() {
+            let index = range.start + offset;
+            let cell = &data.grid.cells[index];
+            let mut measured = slot.take().unwrap();
+            let stretch = fragments || plan.has_scoped_internals;
+            let rect = areas.rect(
+                cell.column..cell.column + cell.columns,
+                cell.row..cell.row + cell.rows,
+                row,
+            );
+            let content_height = rows.content_height(cell.row..cell.row + cell.rows, vertical);
+            if let Some(used_height) = plan.cell_used_height(index, content_height, &resolved) {
+                measured = plan.measure_cell(measurer, index, &resolved, Some(used_height))?;
+            }
+            measured.align_cell(cell_offsets[index]);
+            cell_heights.push((index, rect.height));
+            if plan.cell_collapsed(index) {
+                collapsed_cells.push(crate::measure::CollapsedItem {
+                    source: measured.source,
+                    offset: rect.y,
+                    after_events: Vec::new(),
+                });
+                continue;
+            }
+            let hidden = !collapsed
+                && !data.cells[index].style().table.empty_cells
+                && data.cells[index].children().is_empty();
+            if let Some(mut paint) = measured.paint.take() {
+                paint.rect = rect;
+                if stretch {
+                    measured.paint = Some(paint);
+                } else {
+                    own_paints.push(paint);
+                }
+            }
+            if !hidden {
+                visible_cells.push(index);
+            }
+            if !stretch && !measured.navigation.is_empty() {
+                targets.push(RowTarget {
+                    visible: measured.style.visibility.is_visible(),
+                    row: cell.row,
+                    rect,
+                    offset: [0.0; 2],
+                    navigation: measured.navigation,
+                });
+            }
+            let backgrounds: Vec<_> = if stretch && !hidden {
+                plan.layers
+                    .backgrounds(data, &[index])
+                    .into_iter()
+                    .map(|source| FragmentBackground::new(source, data))
+                    .collect()
+            } else {
+                Vec::new()
+            };
+            if stretch {
+                measured.retain_fragment();
+            }
+            painted_cells.push(MeasuredCell {
+                clipped_height: plan
+                    .cell_rows_collapsed(index)
+                    .then_some((rect.height - cell_offsets[index]).max(0.0)),
+                after_events: Vec::new(),
+                grid_cell: Some(index),
+                backgrounds,
+                flex_item: false,
+                block: measured,
+                offset: rect.y + cell_offsets[index],
+                paint_offset: stretch.then_some(rect.y),
+                stretch,
+                after: 0.0,
+            });
+        }
+        let backgrounds = plan.layers.backgrounds(
+            data,
+            if fragments || plan.has_scoped_internals {
+                &[]
+            } else {
+                &visible_cells
+            },
+        );
+        let background_rows = backgrounds
+            .iter()
+            .map(|background| background.rows(data))
+            .collect();
+        let mut paints = backgrounds
+            .iter()
+            .map(|background| background.paint(data, &areas, row))
+            .collect::<Vec<_>>();
+        paints.extend(own_paints);
+        let break_before = plan.row_edges(row, measurer.fragmentainer)[0];
+        let break_after = plan.row_edges(end - 1, measurer.fragmentainer)[1];
+        has_forced |= break_before.is_forced() || break_after.is_forced();
+        let kept_height = (row_starts[keep_end] - row_starts[row] - vertical).max(0.0);
+        let row_height = (row_starts[row + 1] - row_starts[row] - vertical).max(0.0);
+        let first_fragment =
+            if row_boundaries && keep_end > row + 1 && kept_height <= available_height {
+                kept_height
+            } else if row_boundaries
+                && measurer.fragmentainer.keeps(data.rows[row].style())
+                && row_height <= available_height
+            {
+                row_height
+            } else if fragments && !group_kept {
+                crate::breaks::parallel_progress(
+                    painted_cells
+                        .iter()
+                        .filter(|cell| plan.cell_rows(cell.grid_cell.unwrap()).start == row),
+                    !expanded_cells,
+                )
+                .min(band_height)
+            } else {
+                band_height
+            };
+        let measured_row = MeasuredRow {
+            grid: None,
+            baselines: None,
+            collapsed: collapsed_cells,
+            background_rows,
+            cell_heights,
+            height: band_height,
+            first_fragment,
+            paints,
+            targets,
+            cells: painted_cells,
+            break_before,
+            break_after,
+            band: Some(row..end),
+        };
+        if end <= header_rows.end {
+            header.push(measured_row.clone());
+        } else if row >= footer_rows.start {
+            footer.push(measured_row.clone());
+        } else {
+            tallest_body = tallest_body.max(measured_row.progress_height());
+        }
+        items.push(FlowItem::Row(Box::new(measured_row)));
+        if let Some(events) = plan.boundary_events.get(&end) {
+            items.extend(
+                events
+                    .iter()
+                    .map(|event| FlowItem::Events(std::slice::from_ref(*event))),
+            );
+        }
+        if plan.rows_visible(row..end) {
+            items.push(FlowItem::Space(vertical));
+        }
+        row = end;
+    }
+    items.push(FlowItem::Edge(BlockEdge::End, bottom));
+    // Repeating groups must leave room for a body band on every page.
+    let repeat = !(header.is_empty() && footer.is_empty())
+        && top + repeated_height + tallest_body + 2.0 * vertical + bottom <= measurer.page_height;
+    let footer_height = if repeat {
+        footer.iter().map(|row| row.height + vertical).sum()
+    } else {
+        0.0
+    };
+    if !repeat {
+        header.clear();
+        footer.clear();
+    }
+    // A page holding only the repeated header would show it again on the next page, so the
+    // header bands stay with the first body band unless a forced break separates them.
+    if !header.is_empty() {
+        for item in &mut items {
+            if let FlowItem::Row(row) = item
+                && row
+                    .band
+                    .as_ref()
+                    .is_some_and(|band| band.end <= header_rows.end)
+                && !row.break_after.is_forced()
+            {
+                row.break_after = BreakBetween::Avoid;
+            }
+        }
+    }
+    let original_row_starts = rows.original_starts.map(Rc::from);
+    let row_starts: Rc<[f32]> = rows.starts.into();
+    let collapsed_grid = data.collapsed.clone().map(|borders| CollapsedGrid {
+        borders,
+        lines: grid_lines(geometry.x, &sizes.widths, sizes.table, style.rtl),
+        offsets: row_starts.clone(),
+    });
+    let table = Some(Box::new(TableFlow {
+        original_row_starts,
+        row_starts,
+        plan: plan.clone(),
+        geometry: geometry.clone(),
+        heights,
+        header,
+        footer,
+        body: header_rows.end..footer_rows.start,
+        footer_height,
+        spacing: vertical,
+        collapsed: collapsed_grid,
+    }));
+    let overflow_height = crate::measure::overflow_height(&items).max(height);
+    let edges = measurer.fragmentainer.edges(style);
+    let (break_before, break_after) = crate::breaks::boundaries(&items, edges);
+    let first_fragment = if !has_forced
+        && measurer.fragmentainer.keeps(style)
+        && overflow_height <= measurer.page_height
+    {
+        overflow_height
+    } else {
+        (crate::breaks::first_fragment(&items) + bottom + footer_height).min(height)
+    };
+    let measured = MeasuredBlock {
+        grid: None,
+        clearance_before: None,
+        clearance_target: measurer
+            .clearance_targets
+            .get(&(block as *const BlockBox))
+            .copied(),
+        source: block,
+        geometry: geometry.clone(),
+        containing_height: resolved.containing_height,
+        offset: if data.captions.is_empty() {
+            style.relative_offset(
+                geometry.containing_width,
+                resolved.containing_height,
+                geometry.containing_rtl,
+            )
+        } else {
+            [0.0; 2]
+        },
+        style,
+        canvas_source: block.is_canvas_source(),
+        before: MarginStrut::edge(block, 0, geometry.containing_width),
+        after: MarginStrut::edge(block, 2, geometry.containing_width),
+        through: false,
+        height,
+        sizing: None,
+        constrained: false,
+        independent: true,
+        overflow_height,
+        first_fragment,
+        has_forced: has_forced || edges.iter().any(|edge| edge.is_forced()),
+        break_before,
+        break_after,
+        items,
+        paint: measurer.box_paint(block, &geometry).map(|mut paint| {
+            if collapsed {
+                paint.decoration = collapsed_decoration(paint.decoration, table_edges.border);
+            }
+            paint
+        }),
+        navigation: block.navigation(),
+        end_space: bottom,
+        start_space: top,
+        // A collapsed continuation keeps the table's top border width above its first grid line.
+        repeat_space: if collapsed && !style.clone_decoration {
+            top
+        } else {
+            vertical
+        },
+        marker: None,
+        table,
+        continues: false,
+        spanner_fragment: None,
+    };
+    Ok((measured, geometry))
+}
+
+/// Border boxes, within the band of grid rows `band`, of its rows and of the row-group pieces
+/// it holds, where those carry navigation.
+fn band_targets(data: &Data<'_>, areas: &Areas<'_>, band: Range<usize>) -> Vec<RowTarget> {
+    let columns = 0..data.grid.columns;
+    let mut targets = Vec::new();
+    let mut start = band.start;
+    while start < band.end {
+        let group = data.row_groups[start];
+        let end = (start..band.end)
+            .find(|&row| data.row_groups[row] != group)
+            .unwrap_or(band.end);
+        if let Some(source) = data.groups[group].source
+            && !source.navigation().is_empty()
+        {
+            targets.push(RowTarget {
+                visible: source.style().visibility.is_visible(),
+                row: start,
+                rect: areas.rect(columns.clone(), start..end, band.start),
+                offset: super::model::relative_offset(
+                    &[Some(source)],
+                    areas.columns.table,
+                    areas.columns.rtl,
+                ),
+                navigation: source.navigation(),
+            });
+        }
+        start = end;
+    }
+    for row in band.clone() {
+        let navigation = data.rows[row].navigation();
+        if !navigation.is_empty() {
+            targets.push(RowTarget {
+                visible: data.rows[row].style().visibility.is_visible(),
+                row,
+                rect: areas.rect(columns.clone(), row..row + 1, band.start),
+                offset: super::model::relative_offset(
+                    &[
+                        data.groups[data.row_groups[row]].source,
+                        Some(data.rows[row]),
+                    ],
+                    areas.columns.table,
+                    areas.columns.rtl,
+                ),
+                navigation,
+            });
+        }
+    }
+    targets
+}
