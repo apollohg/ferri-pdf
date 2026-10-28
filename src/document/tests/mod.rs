@@ -3,7 +3,7 @@ mod shadow_fonts;
 mod text_transform;
 
 use super::*;
-use ferri_pdf_resources::FileResolver;
+use crate::resources::FileResolver;
 
 fn paragraphs<'a>(block: &'a BlockBox, output: &mut Vec<&'a Paragraph>) {
     for child in block.children() {
@@ -21,7 +21,7 @@ fn paragraphs<'a>(block: &'a BlockBox, output: &mut Vec<&'a Paragraph>) {
 fn html_newline_normalization_does_not_reinterpret_preserved_character_references() {
     let document = StyledDocument::parse(
         "<pre>A&#13;B\rC</pre>",
-        &ferri_pdf_resources::ResourceBase::default(),
+        &crate::resources::ResourceBase::default(),
         &[],
         &FileResolver::default(),
     )

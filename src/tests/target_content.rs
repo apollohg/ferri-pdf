@@ -83,7 +83,7 @@ fn target_counters_preserve_nested_instances_and_counter_styles() {
 #[test]
 fn borrowed_layout_resolves_literal_targets_without_mutating_the_source_document() {
     let options = local_options();
-    let resolver = ferri_pdf_resources::FileResolver::default();
+    let resolver = crate::resources::FileResolver::default();
     let html = format!(
         "<style>{PROFILE}.next{{break-before:page}}.reference::after{{content:target-counter('#target',page)}}</style><p class=reference>Page </p><p id=target class=next>Destination</p>"
     );
@@ -192,7 +192,7 @@ fn late_named_page_margins_resolve_targets_not_seen_on_the_first_page() {
 
 #[test]
 fn borrowed_layout_resolves_late_margin_targets_on_repeated_calls() {
-    let resolver = ferri_pdf_resources::FileResolver::default();
+    let resolver = crate::resources::FileResolver::default();
     let html = format!(
         "<style>{PROFILE}@page chapter{{@top-left{{content:target-text('#target') ' ' target-counter('#target',page)}}}}h2{{page:chapter;break-before:page}}</style><p>Opening</p><h2 id=target>Destination</h2>"
     );
@@ -213,7 +213,7 @@ fn borrowed_layout_resolves_late_margin_targets_on_repeated_calls() {
 
 #[test]
 fn cyclic_target_text_fails_without_publishing_a_provisional_layout() {
-    let resolver = ferri_pdf_resources::FileResolver::default();
+    let resolver = crate::resources::FileResolver::default();
     let html = format!(
         "<style>{PROFILE}#a::before{{content:target-text('#b',first-letter)}}#b::before{{content:target-text('#a',first-letter)}}</style><p id=a>A</p><p id=b>B</p>"
     );
@@ -256,7 +256,7 @@ fn target_references_in_string_assignments_reach_page_margins() {
 
 #[test]
 fn target_reference_in_an_explicit_bookmark_label_resolves() {
-    let resolver = ferri_pdf_resources::FileResolver::default();
+    let resolver = crate::resources::FileResolver::default();
     let html = format!(
         "<style>{PROFILE}h2{{bookmark-label:target-text('#target') ' page ' target-counter('#target',page)}}.next{{break-before:page}}</style><h2>Opening</h2><p id=target class=next>Destination</p>"
     );

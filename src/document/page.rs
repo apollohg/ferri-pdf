@@ -3,8 +3,8 @@ use crate::style::{Display, Page, Style};
 use std::sync::Arc;
 
 use crate::document::{DocumentError, PageBox, PageMarginBox, formatting::ImageResources};
+use crate::resources::{ResourceBase, ResourceResolver};
 use crate::style::{PageRequest, ResolvedPage, Stylesheet};
-use ferri_pdf_resources::{ResourceBase, ResourceResolver};
 use std::{cell::RefCell, collections::HashMap};
 
 impl PageBox {

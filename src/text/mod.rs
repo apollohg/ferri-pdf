@@ -14,9 +14,9 @@ use crate::document::Paragraph;
 use crate::fonts::{
     FontBook, FontError, FontId, FontSelection, FontSynthesis, FontVariation, GlyphMatch,
 };
+use crate::resources::ResourceResolver;
 use crate::style::{Style, TextAlign, WhiteSpace};
 use bidi::resolve as paragraph_bidi;
-use ferri_pdf_resources::ResourceResolver;
 use rustybuzz::Face;
 use serde::Serialize;
 use shaping::MissingGlyphs;

@@ -2,11 +2,11 @@
 use crate::fonts::{
     FaceMetrics, FontBook, FontError, FontId, FontSelection, InitialFont, initial_font,
 };
+use crate::resources::ResourceResolver;
 use crate::style::{
     DEFAULT_FONT_SIZE, DEFAULT_PAGE, DEFAULT_PAGE_AREA, MILLIMETRES_PER_CENTIMETRE,
     MILLIMETRES_PER_INCH, POINTS_PER_INCH, POINTS_PER_PIXEL, StyleError, text_values::LineHeight,
 };
-use ferri_pdf_resources::ResourceResolver;
 use std::{cell::OnceCell, rc::Rc, sync::Arc};
 
 const POINTS_PER_PICA: f32 = 12.0;

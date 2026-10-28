@@ -318,7 +318,7 @@
         "src/lib.rs",
         "src/document/mod.rs",
         "src/style/stylesheet.rs",
-        "crates/resources/src/lib.rs"
+        "src/resources/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -351,7 +351,7 @@
         "src/lib.rs",
         "src/document/mod.rs",
         "src/style/stylesheet.rs",
-        "crates/resources/src/lib.rs"
+        "src/resources/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -381,7 +381,7 @@
         "src/lib.rs",
         "src/document/mod.rs",
         "src/style/stylesheet.rs",
-        "crates/resources/src/lib.rs"
+        "src/resources/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -474,7 +474,7 @@
       "implementation_files": [
         "src/style/stylesheet.rs",
         "src/style/parser.rs",
-        "crates/resources/src/lib.rs"
+        "src/resources/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -504,7 +504,7 @@
       "implementation_files": [
         "src/style/stylesheet.rs",
         "src/style/parser.rs",
-        "crates/resources/src/lib.rs"
+        "src/resources/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -534,7 +534,7 @@
       "implementation_files": [
         "src/style/stylesheet.rs",
         "src/style/parser.rs",
-        "crates/resources/src/lib.rs"
+        "src/resources/mod.rs"
       ],
       "case_ids": [],
       "handoff": null
@@ -3376,7 +3376,7 @@
         "src/lib.rs",
         "src/document/mod.rs",
         "src/style/stylesheet.rs",
-        "crates/resources/src/lib.rs"
+        "src/resources/mod.rs"
       ],
       "case_ids": [],
       "handoff": null

@@ -2,7 +2,7 @@ use crate::fonts::{
     FontBook, FontData, FontError, FontFaceStyle, FontId, FontInstance, FontRange, FontSelection,
     FontSlant, FontSource, FontSources, FontStyle, FontVariation, FontWeight, matching, validate,
 };
-use ferri_pdf_resources::ResourceResolver;
+use crate::resources::ResourceResolver;
 
 const WEIGHT_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wght");
 const WIDTH_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wdth");

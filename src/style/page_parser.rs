@@ -1,3 +1,4 @@
+use crate::resources::ResourceBase;
 use crate::style::{
     SourceLocation, StyleDiagnostic, StyleDiagnosticKind, StyleError,
     page_margins::MarginLocation,
@@ -7,7 +8,6 @@ use cssparser::{
     AtRuleParser, CowRcStr, DeclarationParser, ParseError, Parser, ParserState,
     QualifiedRuleParser, RuleBodyItemParser, RuleBodyParser,
 };
-use ferri_pdf_resources::ResourceBase;
 use std::cell::RefCell;
 
 pub(super) enum PageItem {

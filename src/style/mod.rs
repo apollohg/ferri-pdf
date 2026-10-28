@@ -70,6 +70,7 @@ mod values;
 mod variables;
 mod wide_keywords;
 
+use crate::resources::ResourceError;
 pub(crate) use bookmark_values::BookmarkStyle;
 pub(crate) use box_values::{
     BoxSizing, BreakBetween, BreakInside, Display, LengthPercentage, Size, Visibility,
@@ -83,7 +84,6 @@ pub(crate) use decoration_values::{
     DecorationLines, TextDecoration, TextDecorations, UnderlinePosition,
 };
 pub(crate) use diagnostics::{SourceLocation, StyleDiagnostic, StyleDiagnosticKind};
-use ferri_pdf_resources::ResourceError;
 pub(crate) use flex_values::{Alignment, FlexBasis, FlexStyle, FlexWrap, Gap};
 pub(crate) use float_values::{Clear, Float, FloatSide};
 pub(crate) use font_values::FontVariantCaps;

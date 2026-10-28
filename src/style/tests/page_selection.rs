@@ -1,6 +1,6 @@
 use crate::dom::{DocumentTree, Selector};
+use crate::resources::FileResolver;
 use crate::style::{Page, PageSide, PageStyleTarget, StyleError, Stylesheet, StylesheetSource};
-use ferri_pdf_resources::FileResolver;
 
 fn sheet(css: &str) -> Stylesheet {
     Stylesheet::parse(&[StylesheetSource {

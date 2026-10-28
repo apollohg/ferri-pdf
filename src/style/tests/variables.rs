@@ -1,6 +1,6 @@
 use crate::dom::{DocumentTree, Selector};
+use crate::resources::FileResolver;
 use crate::style::{LengthPercentage, Style, Stylesheet, StylesheetSource};
-use ferri_pdf_resources::FileResolver;
 use std::fmt::Write;
 
 fn computed(css: &str, html: &str) -> Vec<Style> {

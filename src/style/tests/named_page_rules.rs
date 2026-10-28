@@ -1,6 +1,6 @@
 use crate::dom::{DocumentTree, Selector};
+use crate::resources::FileResolver;
 use crate::style::{Page, PageRequest, PageSide, Style, Stylesheet, StylesheetSource};
-use ferri_pdf_resources::FileResolver;
 
 const TOLERANCE_PT: f32 = 0.001;
 const CONTENT_LIMIT: usize = 1024;

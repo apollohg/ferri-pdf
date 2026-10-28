@@ -4,6 +4,7 @@ use crate::fonts::{
     FontWeight, FontWidth,
 };
 use crate::paint::{BoxDecoration, Color};
+use crate::resources::ResourceResolver;
 use crate::style::{
     BoxSizing, BreakBetween, BreakInside, DEFAULT_FONT_SIZE, DEFAULT_TAB_SIZE, Display,
     LengthPercentage, ListStylePosition, ListStyleType, Size, StyleError, Stylesheet, TextAlign,
@@ -15,7 +16,6 @@ use crate::style::{
     units::{Faces, FontBasis, Line, Relative, Tree, Viewport},
 };
 use cssparser::{Parser, ParserInput};
-use ferri_pdf_resources::ResourceResolver;
 use std::sync::Arc;
 
 /// Initial `opacity`.
@@ -414,11 +414,7 @@ impl Stylesheet {
         element: Element<'_>,
         parent: &Style,
     ) -> Result<Style, StyleError> {
-        self.computed_with_resolver(
-            element,
-            parent,
-            &ferri_pdf_resources::FileResolver::default(),
-        )
+        self.computed_with_resolver(element, parent, &crate::resources::FileResolver::default())
     }
 
     #[cfg(test)]
@@ -432,7 +428,7 @@ impl Stylesheet {
             element,
             parent,
             pseudo,
-            &ferri_pdf_resources::FileResolver::default(),
+            &crate::resources::FileResolver::default(),
         )
     }
 

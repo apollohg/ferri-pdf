@@ -1,4 +1,4 @@
-use ferri_pdf_resources::ResourceBase;
+use crate::resources::ResourceBase;
 use std::fmt;
 
 #[derive(Clone, Debug, Eq, PartialEq)]

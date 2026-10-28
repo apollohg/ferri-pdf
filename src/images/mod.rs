@@ -6,7 +6,7 @@ mod svg;
 mod svg_fonts;
 use crate::fonts::{FontBook, FontNamespace};
 pub(crate) use crate::paint::NaturalDimensions;
-use ferri_pdf_resources::{ResourceError, ResourceResolver};
+use crate::resources::{ResourceError, ResourceResolver};
 pub(crate) use image::metadata::Orientation;
 use image::{ImageDecoder, ImageFormat, ImageReader};
 pub(crate) use pixels::{PixelDepth, PixelImage};
@@ -137,7 +137,7 @@ impl Image {
         }
     }
     fn parse(
-        resource: ferri_pdf_resources::Resource,
+        resource: crate::resources::Resource,
         resolver: &dyn ResourceResolver,
         depth: usize,
         cache: &mut ImageCache,
@@ -204,7 +204,7 @@ pub enum ImageError {
 #[derive(Debug, thiserror::Error)]
 #[error("image {reference} is unavailable: {error}")]
 pub struct ImageFailure {
-    pub base: ferri_pdf_resources::ResourceBase,
+    pub base: crate::resources::ResourceBase,
     pub reference: String,
     #[source]
     pub error: ImageError,
@@ -213,13 +213,13 @@ pub struct ImageFailure {
 #[derive(Default)]
 pub(crate) struct ImageCache {
     validated_markers: HashSet<usize>,
-    failed: HashSet<(FontNamespace, ferri_pdf_resources::ResourceBase, String)>,
+    failed: HashSet<(FontNamespace, crate::resources::ResourceBase, String)>,
     failures: Vec<ImageFailure>,
     fonts: svg_fonts::SvgFonts,
-    svg_sources: HashMap<ferri_pdf_resources::ResourceBase, HashMap<String, Arc<svg::SvgSource>>>,
+    svg_sources: HashMap<crate::resources::ResourceBase, HashMap<String, Arc<svg::SvgSource>>>,
     images: HashMap<
         FontNamespace,
-        HashMap<ferri_pdf_resources::ResourceBase, HashMap<String, Arc<Image>>>,
+        HashMap<crate::resources::ResourceBase, HashMap<String, Arc<Image>>>,
     >,
 }
 impl ImageCache {
@@ -237,7 +237,7 @@ impl ImageCache {
     pub(crate) fn load(
         &mut self,
         reference: &str,
-        base: &ferri_pdf_resources::ResourceBase,
+        base: &crate::resources::ResourceBase,
         resolver: &dyn ResourceResolver,
     ) -> Result<Arc<Image>, ImageError> {
         self.load_in_namespace(reference, base, resolver, FontNamespace::ROOT)
@@ -245,7 +245,7 @@ impl ImageCache {
     pub(crate) fn load_in_namespace(
         &mut self,
         reference: &str,
-        base: &ferri_pdf_resources::ResourceBase,
+        base: &crate::resources::ResourceBase,
         resolver: &dyn ResourceResolver,
         namespace: FontNamespace,
     ) -> Result<Arc<Image>, ImageError> {
@@ -255,7 +255,7 @@ impl ImageCache {
     pub(crate) fn load_optional(
         &mut self,
         reference: &str,
-        base: &ferri_pdf_resources::ResourceBase,
+        base: &crate::resources::ResourceBase,
         resolver: &dyn ResourceResolver,
         namespace: FontNamespace,
     ) -> Option<Arc<Image>> {
@@ -280,7 +280,7 @@ impl ImageCache {
     pub(crate) fn load_marker(
         &mut self,
         reference: &str,
-        base: &ferri_pdf_resources::ResourceBase,
+        base: &crate::resources::ResourceBase,
         resolver: &dyn ResourceResolver,
         namespace: FontNamespace,
     ) -> Option<Arc<Image>> {
@@ -311,7 +311,7 @@ impl ImageCache {
     pub(crate) fn inline_svg(
         &mut self,
         xml: String,
-        base: &ferri_pdf_resources::ResourceBase,
+        base: &crate::resources::ResourceBase,
         resolver: &dyn ResourceResolver,
     ) -> Result<Arc<Image>, ImageError> {
         self.inline_svg_in_namespace(xml, base, resolver, FontNamespace::ROOT)
@@ -319,11 +319,11 @@ impl ImageCache {
     pub(crate) fn inline_svg_in_namespace(
         &mut self,
         xml: String,
-        base: &ferri_pdf_resources::ResourceBase,
+        base: &crate::resources::ResourceBase,
         resolver: &dyn ResourceResolver,
         namespace: FontNamespace,
     ) -> Result<Arc<Image>, ImageError> {
-        let resource = ferri_pdf_resources::Resource {
+        let resource = crate::resources::Resource {
             bytes: xml.into_bytes(),
             base: base.clone(),
         };
@@ -334,7 +334,7 @@ impl ImageCache {
     pub(crate) fn load_nested(
         &mut self,
         reference: &str,
-        base: &ferri_pdf_resources::ResourceBase,
+        base: &crate::resources::ResourceBase,
         resolver: &dyn ResourceResolver,
         depth: usize,
         namespace: FontNamespace,

@@ -111,7 +111,7 @@ fn absent_named_string_in_an_empty_document_is_an_empty_value() {
 
 #[test]
 fn named_string_bookmark_labels_resolve_on_the_heading_page() {
-    let resolver = ferri_pdf_resources::FileResolver::default();
+    let resolver = crate::resources::FileResolver::default();
     let html = format!(
         "<style>{PROFILE}h2{{string-set:heading content();bookmark-label:'Chapter ' string(heading)}}h2+h2{{break-before:page}}</style><h2>Alpha</h2><h2>Beta</h2>"
     );
@@ -163,7 +163,7 @@ fn string_expansion_and_target_pages_stabilize_together() {
 
 #[test]
 fn body_string_reflow_cycles_fail_without_publishing_a_provisional_pdf() {
-    let resolver = ferri_pdf_resources::FileResolver::default();
+    let resolver = crate::resources::FileResolver::default();
     let html = format!(
         "<style>{PROFILE}@page{{size:360pt 120pt;margin:20pt}}p,h2{{margin:0;font:12pt/18pt Spike}}h2{{string-set:heading content();break-after:auto}}p{{width:60pt}}p::after{{content:string(heading)}}</style><p>See </p><h2>A long destination heading that cannot fit in the reference width</h2>"
     );
@@ -181,7 +181,7 @@ fn body_string_reflow_cycles_fail_without_publishing_a_provisional_pdf() {
 
 #[test]
 fn borrowed_layout_repeats_body_string_resolution_without_mutating_the_source() {
-    let resolver = ferri_pdf_resources::FileResolver::default();
+    let resolver = crate::resources::FileResolver::default();
     let html = format!(
         "<style>{PROFILE}h2{{string-set:heading content()}}p::after{{content:string(heading)}}</style><p>See </p><h2>Title</h2>"
     );

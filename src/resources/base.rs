@@ -1,4 +1,4 @@
-use crate::ResourceError;
+use crate::resources::ResourceError;
 use std::path::{Path, PathBuf};
 use url::Url;
 

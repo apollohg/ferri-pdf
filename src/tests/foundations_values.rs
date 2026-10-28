@@ -1,7 +1,7 @@
 use super::common;
 use crate::dom::{DocumentTree, Selector};
+use crate::resources::{FileResolver, ResourceResolver};
 use crate::style::{LengthPercentage, Size, Style, StyleError, Stylesheet, StylesheetSource};
-use ferri_pdf_resources::{FileResolver, ResourceResolver};
 use std::fmt::Write;
 
 const FONT_SIZE_PT: f32 = 20.0;
@@ -2897,7 +2897,7 @@ impl ResourceResolver for RecordingResolver {
         &self,
         reference: &str,
         base: &crate::ResourceBase,
-    ) -> Result<ferri_pdf_resources::Resource, ferri_pdf_resources::ResourceError> {
+    ) -> Result<crate::resources::Resource, crate::resources::ResourceError> {
         self.requests.borrow_mut().push(reference.into());
         self.inner.resolve(reference, base)
     }
@@ -2981,7 +2981,7 @@ fn active_metric_policy_failures_are_not_font_availability_fallbacks() {
             matches!(
                 error,
                 StyleError::Font(crate::fonts::FontError::Resource(
-                    ferri_pdf_resources::ResourceError::TooLarge {
+                    crate::resources::ResourceError::TooLarge {
                         limit: RESOURCE_LIMIT_BYTES,
                         ..
                     }

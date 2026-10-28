@@ -1,4 +1,4 @@
-use crate::ResourceMetadata;
+use crate::resources::ResourceMetadata;
 
 const CHARSET_PARAMETER: &[u8] = b"charset";
 

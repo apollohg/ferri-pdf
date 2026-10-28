@@ -1,7 +1,7 @@
 use crate::document::{
     BlockBox, BlockContent, Bookmark, BoxNavigation, LinkTarget, StyledDocument,
 };
-use ferri_pdf_resources::{FileResolver, ResourceBase, Url};
+use crate::resources::{FileResolver, ResourceBase, Url};
 
 fn parse(html: &str, base: &ResourceBase) -> StyledDocument {
     StyledDocument::parse(html, base, &[], &FileResolver::default())

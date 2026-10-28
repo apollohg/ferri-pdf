@@ -2,8 +2,8 @@
 //! (CSS GCPM 3 §4), located later by the boxes that carry them.
 use crate::document::{DocumentError, MAX_INLINE_TEXT_BYTES, content::element_text};
 use crate::dom::{DocumentTree, Element, ElementId};
+use crate::resources::{ResourceBase, Url};
 use crate::style::{GeneratedContent, PseudoElement, QuoteDepth, Quotes, Style};
-use ferri_pdf_resources::{ResourceBase, Url};
 
 use std::collections::{BTreeMap, HashMap};
 

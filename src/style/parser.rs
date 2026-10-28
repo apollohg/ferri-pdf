@@ -1,3 +1,4 @@
+use crate::resources::ResourceBase;
 use crate::style::selector::Namespaces;
 use crate::style::{
     SourceLocation, StyleDiagnostic, StyleDiagnosticKind, StyleError, selector::RuleSelector,
@@ -7,7 +8,6 @@ use cssparser::{
     AtRuleParser, CowRcStr, DeclarationParser, ParseError, Parser, ParserInput, ParserState,
     QualifiedRuleParser, RuleBodyItemParser, RuleBodyParser, StyleSheetParser, Token,
 };
-use ferri_pdf_resources::ResourceBase;
 use std::{cell::RefCell, ops::Range, sync::Arc};
 
 #[derive(Clone, Debug)]
@@ -669,7 +669,7 @@ pub(super) fn absolute_urls(
         part,
     } in found.into_iter().rev()
     {
-        if reference.is_empty() || ferri_pdf_resources::Url::parse(&reference).is_ok() {
+        if reference.is_empty() || crate::resources::Url::parse(&reference).is_ok() {
             continue;
         }
         let absolute = base.resolve(&reference)?;

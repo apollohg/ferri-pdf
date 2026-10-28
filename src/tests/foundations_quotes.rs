@@ -90,7 +90,7 @@ fn bookmark_content_uses_rendered_quote_depth_without_changing_it() {
         &html,
         &local_options().base,
         &[],
-        &ferri_pdf_resources::FileResolver::default(),
+        &crate::resources::FileResolver::default(),
     )
     .unwrap();
     assert_eq!(document.navigation().bookmarks[0].label, "{|}");

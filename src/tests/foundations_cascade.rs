@@ -978,7 +978,7 @@ fn layer_names_compare_decoded_identifiers_without_reparsing_them() {
 #[test]
 fn font_face_collisions_follow_layer_precedence_before_source_order() {
     use crate::fonts::{FontBook, FontFamily, FontStyle, FontWeight};
-    use ferri_pdf_resources::FileResolver;
+    use crate::resources::FileResolver;
     let css = "@layer low,high;@layer high{@font-face{font-family:Layered;src:local('DejaVu Serif')}}@layer low{@font-face{font-family:Layered;src:local('DejaVu Sans')}}";
     let styles = sheet(css, "");
     let candidates = styles.fonts.candidates(

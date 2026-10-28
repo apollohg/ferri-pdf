@@ -3,7 +3,7 @@ use crate::fonts::{
     DEFAULT_FAMILY, FontBook, FontData, FontError, FontFamily, FontId, FontPreferences,
     FontSelection, GlyphMatch,
 };
-use ferri_pdf_resources::ResourceResolver;
+use crate::resources::ResourceResolver;
 use std::sync::OnceLock;
 use ttf_parser::Face;
 

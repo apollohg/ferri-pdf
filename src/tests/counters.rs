@@ -134,7 +134,7 @@ fn bookmark_labels_capture_counter_values_at_the_heading() {
         &html,
         &local_options().base,
         &[],
-        &ferri_pdf_resources::FileResolver::default(),
+        &crate::resources::FileResolver::default(),
     )
     .expect("counter labels must retain heading snapshots");
     assert_eq!(

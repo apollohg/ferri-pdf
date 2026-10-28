@@ -1,4 +1,5 @@
 use crate::dom::{Element, HTML_NAMESPACE, Node, QuirksMode, TreeRelation};
+use crate::resources::ResourceBase;
 use crate::style::{
     SourceLocation, StyleError,
     cascade::Origin,
@@ -7,7 +8,6 @@ use crate::style::{
     grammar::Property,
     parser::Declaration,
 };
-use ferri_pdf_resources::ResourceBase;
 use std::sync::{Arc, OnceLock};
 
 const DEFAULT_TABLE_BORDER_PX: f64 = 1.0;
@@ -420,7 +420,7 @@ fn background_hint(
     if let Some(value) = element.attr("background").filter(|value| !value.is_empty()) {
         let url = match base.resolve(value) {
             Ok(url) => url,
-            Err(ferri_pdf_resources::ResourceError::Url { .. }) => return Ok(()),
+            Err(crate::resources::ResourceError::Url { .. }) => return Ok(()),
             Err(error) => return Err(error.into()),
         };
         let mut quoted = String::new();

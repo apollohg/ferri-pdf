@@ -199,7 +199,7 @@ pub(crate) enum FontSource {
 
 pub(crate) struct FontSources {
     pub sources: Vec<FontSource>,
-    pub base: ferri_pdf_resources::ResourceBase,
+    pub base: crate::resources::ResourceBase,
 }
 
 #[derive(Clone)]
@@ -460,7 +460,7 @@ fn validate(data: &[u8]) -> Result<(), FontError> {
 #[derive(Debug, thiserror::Error)]
 pub enum FontError {
     #[error("{0}")]
-    Resource(#[from] ferri_pdf_resources::ResourceError),
+    Resource(#[from] crate::resources::ResourceError),
     #[error("font ID {0:?} is absent from the font book")]
     UnknownFont(FontId),
     #[error("font ID {0:?} has not been resolved in this job")]

@@ -19,7 +19,7 @@ const PAGE_AREA: Rect = Rect {
 #[test]
 fn formatting_preserves_computed_background_and_border_image_urls() {
     use crate::document::{BlockContent, StyledDocument};
-    use ferri_pdf_resources::FileResolver;
+    use crate::resources::FileResolver;
     let settings = options();
     let reference = settings
         .base

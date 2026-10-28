@@ -15,6 +15,8 @@
 #[cfg(test)]
 extern crate self as ferri_pdf;
 
+pub mod resources;
+
 mod document;
 mod dom;
 mod flex;
@@ -53,6 +55,12 @@ pub use crate::graphics::{
 };
 pub use crate::images::ImageError;
 pub use crate::layout::{Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine};
+pub use crate::resources::{
+    FileResolver, ResolvedResource, Resource, ResourceBase, ResourceError, ResourceMetadata,
+    ResourceResolver, Url,
+};
+#[cfg(feature = "http")]
+pub use crate::resources::{LoaderOptions, UrlResolver};
 pub use crate::style::{
     ColorScheme, ContrastPreference, MotionPreference, PrintPreferences, PrintSettings, StyleError,
 };
@@ -60,13 +68,6 @@ pub use crate::text::{GlyphRun, PositionedGlyph};
 pub use crate::writer::{
     ImageDpi, ImageOptions, InvalidImageDpi, InvalidJpegQuality, JpegQuality, PdfError,
 };
-pub use ferri_pdf_resources as resources;
-pub use ferri_pdf_resources::{
-    FileResolver, ResolvedResource, Resource, ResourceBase, ResourceError, ResourceMetadata,
-    ResourceResolver, Url,
-};
-#[cfg(feature = "http")]
-pub use ferri_pdf_resources::{LoaderOptions, UrlResolver};
 
 /// Settings for a rendering job. CSS controls page size and formatting.
 #[derive(Clone, Debug, Default)]

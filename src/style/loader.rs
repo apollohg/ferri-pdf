@@ -1,4 +1,7 @@
 use crate::dom::{DocumentTree, ElementId, HTML_NAMESPACE, QuirksMode, TreeScopeId};
+use crate::resources::{
+    CSS_MEDIA_TYPE, ResolvedResource, ResourceBase, ResourceError, ResourceResolver, Url,
+};
 use crate::style::{
     PrintSettings, SourceLocation, StyleDiagnostic, StyleDiagnosticKind, StyleError,
     cascade::Origin,
@@ -9,9 +12,6 @@ use crate::style::{
     media::MediaQuery,
     parser::{ContentRule, ImportRule, Rule, rules},
     print::PrintEnvironment,
-};
-use ferri_pdf_resources::{
-    CSS_MEDIA_TYPE, ResolvedResource, ResourceBase, ResourceError, ResourceResolver, Url,
 };
 use std::{
     cell::RefCell,
@@ -963,7 +963,7 @@ pub(super) fn inline(
     prepare(
         &DocumentTree::parse("").expect("an empty document has no shadow tree"),
         &sources,
-        &ferri_pdf_resources::FileResolver::default(),
+        &crate::resources::FileResolver::default(),
         settings,
         None,
         Limits::default(),
@@ -974,10 +974,10 @@ pub(super) fn inline(
 mod tests {
     use super::*;
     use crate::dom::DocumentTree;
-    use crate::style::{PrintSettings, StyleError};
-    use ferri_pdf_resources::{
+    use crate::resources::{
         FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver, Url,
     };
+    use crate::style::{PrintSettings, StyleError};
     use std::cell::Cell;
 
     fn decode(bytes: &[u8], _: Option<&str>, _: Option<&str>) -> DecodedStylesheet {
@@ -1425,7 +1425,7 @@ mod tests {
             ) -> Result<ResolvedResource, ResourceError> {
                 Ok(ResolvedResource {
                     resource: self.resolve(reference, base)?,
-                    metadata: ferri_pdf_resources::ResourceMetadata {
+                    metadata: crate::resources::ResourceMetadata {
                         media_type: Some("text/plain".into()),
                         ..Default::default()
                     },

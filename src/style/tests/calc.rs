@@ -1,7 +1,7 @@
 use crate::dom::{DocumentTree, Selector};
 use crate::paint::MAX_CALC_MAGNITUDE;
+use crate::resources::FileResolver;
 use crate::style::{LengthPercentage, Size, Style, StyleError, Stylesheet, StylesheetSource};
-use ferri_pdf_resources::FileResolver;
 
 const TOLERANCE: f32 = 1e-4;
 

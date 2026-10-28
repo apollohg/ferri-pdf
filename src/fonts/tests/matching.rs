@@ -424,7 +424,7 @@ fn generic_preferences_cannot_turn_an_authored_face_into_installed_fallback() {
 #[test]
 fn cloned_books_share_lazy_results_and_original_bytes_without_acquiring_cached_faces() {
     use crate::fonts::{FontError, FontSource, FontSources};
-    use ferri_pdf_resources::{Resource, ResourceBase, ResourceError, ResourceResolver};
+    use crate::resources::{Resource, ResourceBase, ResourceError, ResourceResolver};
     use std::cell::Cell;
     struct Assets {
         calls: Cell<usize>,

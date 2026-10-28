@@ -197,8 +197,8 @@ struct BlockBuilder<'a, 's, 'c> {
     resources: &'c mut ImageResources<'a>,
 }
 pub(crate) struct ImageResources<'a> {
-    pub base: &'a ferri_pdf_resources::ResourceBase,
-    pub resolver: &'a dyn ferri_pdf_resources::ResourceResolver,
+    pub base: &'a crate::resources::ResourceBase,
+    pub resolver: &'a dyn crate::resources::ResourceResolver,
     pub cache: &'a mut crate::images::ImageCache,
 }
 impl ImageResources<'_> {
@@ -481,7 +481,7 @@ fn computed_style(
     sheet: &Stylesheet,
     element: Element<'_>,
     parent: &Style,
-    resolver: &dyn ferri_pdf_resources::ResourceResolver,
+    resolver: &dyn crate::resources::ResourceResolver,
 ) -> Result<Box<Style>, DocumentError> {
     sheet
         .computed_with_resolver(element, parent, resolver)
@@ -993,8 +993,8 @@ fn block<'a>(
 pub(crate) fn build(
     html: &DocumentTree,
     sheet: &mut Stylesheet,
-    base: &ferri_pdf_resources::ResourceBase,
-    resolver: &dyn ferri_pdf_resources::ResourceResolver,
+    base: &crate::resources::ResourceBase,
+    resolver: &dyn crate::resources::ResourceResolver,
     navigation: NavigationBuilder,
     values: crate::document::generated::GeneratedValues,
     images: Option<std::rc::Rc<std::cell::RefCell<crate::images::ImageCache>>>,

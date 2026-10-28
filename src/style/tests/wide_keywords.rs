@@ -1,9 +1,9 @@
 use crate::dom::{DocumentTree, Selector};
+use crate::resources::FileResolver;
 use crate::style::{
     Display, LengthPercentage, Size, Style, Stylesheet, StylesheetSource, TableLayout,
     VerticalAlign, WhiteSpace,
 };
-use ferri_pdf_resources::FileResolver;
 
 fn styles(css: &str, html: &str) -> (Style, Style) {
     let sheet = Stylesheet::parse(&[StylesheetSource {

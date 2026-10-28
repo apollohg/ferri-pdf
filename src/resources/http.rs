@@ -1,4 +1,4 @@
-use crate::{
+use crate::resources::{
     FileResolver, ResolvedResource, Resource, ResourceBase, ResourceError, ResourceResolver, Url,
     mime::parse_content_type,
 };
@@ -213,9 +213,9 @@ mod tests {
         thread,
     };
 
-    const CERT: &[u8] = include_bytes!("../tests/assets/localhost.der");
-    const KEY: &[u8] = include_bytes!("../tests/assets/localhost-key.der");
-    const ROOT: &[u8] = include_bytes!("../tests/assets/root.der");
+    const CERT: &[u8] = include_bytes!("../../tests/fixtures/tls/localhost.der");
+    const KEY: &[u8] = include_bytes!("../../tests/fixtures/tls/localhost-key.der");
+    const ROOT: &[u8] = include_bytes!("../../tests/fixtures/tls/root.der");
 
     fn server(
         version: &'static rustls::SupportedProtocolVersion,

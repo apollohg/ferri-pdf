@@ -32,7 +32,7 @@ mod tests {
     use super::*;
     use crate::document::StyledDocument;
     use crate::layout::{MAX_LAYOUT_PAGES, MAX_LAYOUT_WORK, layout_with_work_limit};
-    use ferri_pdf_resources::{FileResolver, ResourceBase};
+    use crate::resources::{FileResolver, ResourceBase};
 
     #[test]
     fn target_stabilization_charges_all_passes_to_one_budget() {

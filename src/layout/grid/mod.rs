@@ -483,8 +483,8 @@ impl<'a> Geometry<'a> {
 mod tests {
     use super::*;
     use crate::document::StyledDocument;
+    use crate::resources::{FileResolver, ResourceBase};
     use crate::text::TextContext;
-    use ferri_pdf_resources::{FileResolver, ResourceBase};
 
     #[test]
     fn item_metrics_distinguish_parent_plans_and_restore_context_after_errors() {

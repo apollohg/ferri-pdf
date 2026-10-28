@@ -1,9 +1,9 @@
 use super::common;
 
 use crate::document::{BlockBox, BlockContent, StyledDocument};
+use crate::resources::FileResolver;
 use crate::style::{Display, Page};
 use common::{PROFILE, local_options};
-use ferri_pdf_resources::FileResolver;
 
 fn document(css: &str, body: &str) -> StyledDocument {
     StyledDocument::parse(

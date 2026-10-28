@@ -1,6 +1,6 @@
 [workspace]
-members = ["crates/*", "spec"]
-default-members = [".", "crates/*"]
+members = ["spec"]
+default-members = ["."]
 exclude = ["vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors"]
 resolver = "3"
 
@@ -107,7 +107,6 @@ unicode-script = "0.5"
 unicode-segmentation = "1.12"
 ttf-parser = { version = "0.25", features = ["gvar-alloc"] }
 thiserror = "2"
-ferri-pdf-resources = { path = "crates/resources", version = "0.1.0", default-features = false }
 
 [package]
 name = "ferri-pdf"
@@ -124,7 +123,7 @@ workspace = true
 [features]
 default = ["http"]
 # HTTP(S) resource fetching through `UrlResolver`.
-http = ["ferri-pdf-resources/http"]
+http = ["dep:ureq", "dep:rustls-rustcrypto"]
 
 [[test]]
 name = "remote"
@@ -136,7 +135,6 @@ serde_json.workspace = true
 thiserror.workspace = true
 
 [dependencies]
-ferri-pdf-resources.workspace = true
 thiserror.workspace = true
 serde_json.workspace = true
 same-file.workspace = true
@@ -189,3 +187,8 @@ scraper.workspace = true
 ego-tree.workspace = true
 selectors.workspace = true
 url.workspace = true
+ureq = { workspace = true, optional = true }
+rustls-rustcrypto = { workspace = true, optional = true }
+
+[dev-dependencies]
+rustls = { version = "=0.23.46", default-features = false, features = ["std", "tls12"] }

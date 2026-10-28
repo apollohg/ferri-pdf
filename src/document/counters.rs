@@ -378,7 +378,7 @@ impl Counters {
         document: &crate::dom::DocumentTree,
         sheet: &crate::style::Stylesheet,
         root: &crate::style::Style,
-        resolver: &dyn ferri_pdf_resources::ResourceResolver,
+        resolver: &dyn crate::resources::ResourceResolver,
     ) -> Result<(), StyleError> {
         if self.initials.is_some() || !properties.reset.iter().any(|reset| reset.value.is_none()) {
             return Ok(());

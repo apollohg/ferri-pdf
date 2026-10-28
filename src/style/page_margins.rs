@@ -1,9 +1,9 @@
+use crate::resources::ResourceResolver;
 use crate::style::GeneratedContent;
 use crate::style::{
     Display, Style, StyleError, Stylesheet, cascade::Origin, computed::cascade, declaration,
     grammar::Property,
 };
-use ferri_pdf_resources::ResourceResolver;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub(crate) enum MarginLocation {
@@ -94,7 +94,7 @@ pub(crate) struct PageMargin {
 impl Stylesheet {
     #[cfg(test)]
     pub(crate) fn page_margins(&self, root: &Style) -> Result<Vec<PageMargin>, StyleError> {
-        self.page_margins_with_resolver(root, &ferri_pdf_resources::FileResolver::default())
+        self.page_margins_with_resolver(root, &crate::resources::FileResolver::default())
     }
 
     /// Margin boxes use the first page area as the viewport.

@@ -1,5 +1,5 @@
 use crate::document::{BlockContent, StyledDocument};
-use ferri_pdf_resources::{FileResolver, ResourceBase};
+use crate::resources::{FileResolver, ResourceBase};
 
 const SERIF: &[u8] = include_bytes!("../../../assets/fonts/DejaVuSerif.ttf");
 const SANS: &[u8] = include_bytes!("../../../assets/fonts/DejaVuSans.ttf");

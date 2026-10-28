@@ -303,7 +303,7 @@ impl Stylesheet {
         root: &crate::style::Style,
         request: PageRequest,
         first_viewport: Option<[f32; 2]>,
-        resolver: &dyn ferri_pdf_resources::ResourceResolver,
+        resolver: &dyn crate::resources::ResourceResolver,
     ) -> Result<ResolvedPage, StyleError> {
         let rules = self.match_page(&request);
         let (geometry, style) =
@@ -370,7 +370,7 @@ impl MatchedPageRules {
         sheet: &Stylesheet,
         page: &crate::style::Style,
         viewport: [f32; 2],
-        resolver: &dyn ferri_pdf_resources::ResourceResolver,
+        resolver: &dyn crate::resources::ResourceResolver,
     ) -> Result<(), StyleError> {
         let mut descriptors = self
             .descriptors
@@ -395,7 +395,7 @@ impl MatchedPageRules {
         descriptor: Descriptor,
         context: &crate::style::Style,
         viewport: [f32; 2],
-        resolver: &dyn ferri_pdf_resources::ResourceResolver,
+        resolver: &dyn crate::resources::ResourceResolver,
     ) -> Result<(Option<Arc<Component>>, Option<SourceLocation>), StyleError> {
         self.descriptor_with(descriptor, |pending, namespace, namespaces, _| {
             crate::style::resolution::substitute_known(

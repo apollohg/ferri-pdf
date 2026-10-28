@@ -1479,7 +1479,7 @@ fn without_the_http_feature_remote_images_are_an_unsupported_scheme() {
     let output = result.unwrap();
     assert!(
         matches!(output.diagnostics.as_slice(), [crate::RenderDiagnostic::UnavailableImage(failure)]
-        if matches!(&failure.error, crate::ImageError::Resource(crate::ResourceError::UnsupportedScheme(scheme)) if scheme == "https")),
+        if matches!(&failure.error, crate::ImageError::Resource(ResourceError::UnsupportedScheme(scheme)) if scheme == "https")),
         "remote images must retain the unsupported-scheme diagnostic without network access"
     );
 }

@@ -2,6 +2,7 @@ use crate::fonts::{
     FontBook, FontDescriptor, FontFaceStyle, FontNamespace, FontRange, FontSources, FontWeight,
     FontWidth,
 };
+use crate::resources::{ResourceBase, ResourceResolver};
 use crate::style::{
     DEFAULT_PAGE_MARGIN, PrintSettings, StyleDiagnostic, StyleDiagnosticKind, StyleError,
     cascade::DeclarationContext,
@@ -19,7 +20,6 @@ use crate::style::{
     variables,
     wide_keywords::WideKeyword,
 };
-use ferri_pdf_resources::{ResourceBase, ResourceResolver};
 use std::{cell::RefCell, collections::HashMap};
 
 pub(super) const PAGE_AT_RULE: &str = "@page";
@@ -245,10 +245,7 @@ impl Stylesheet {
         &mut self,
         root: &crate::style::Style,
     ) -> Result<(), StyleError> {
-        self.resolve_page_geometry_with_resolver(
-            root,
-            &ferri_pdf_resources::FileResolver::default(),
-        )
+        self.resolve_page_geometry_with_resolver(root, &crate::resources::FileResolver::default())
     }
 
     #[cfg(test)]

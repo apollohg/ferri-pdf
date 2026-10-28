@@ -1,7 +1,7 @@
 use crate::document::{PageBox, StyledDocument};
 use crate::layout::{LayoutError, PageRecord};
+use crate::resources::ResourceResolver;
 use crate::style::{PageRequest, PageSide};
-use ferri_pdf_resources::ResourceResolver;
 use std::sync::Arc;
 
 #[derive(Clone)]

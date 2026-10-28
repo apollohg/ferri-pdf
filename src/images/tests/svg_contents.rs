@@ -1,5 +1,5 @@
 use crate::images::{Image, ImageCache, ImageError};
-use ferri_pdf_resources::{FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver};
+use crate::resources::{FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver};
 use std::cell::Cell;
 use std::fmt::Write;
 

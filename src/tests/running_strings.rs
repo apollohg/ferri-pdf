@@ -94,7 +94,7 @@ fn captured(css: &str, body: &str) -> Vec<Vec<(String, String)>> {
         &format!("<style>{PROFILE}{css}</style>{body}"),
         &local_options().base,
         &[],
-        &ferri_pdf_resources::FileResolver::default(),
+        &crate::resources::FileResolver::default(),
     )
     .expect("string assignments must be captured without laying out page headers");
     document

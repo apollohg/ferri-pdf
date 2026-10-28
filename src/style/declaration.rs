@@ -26,7 +26,7 @@ pub(super) fn supports_declaration(name: &str, value: &str) -> bool {
     {
         return false;
     }
-    let base = ferri_pdf_resources::ResourceBase::default();
+    let base = crate::resources::ResourceBase::default();
     let mut value_input = ParserInput::new(value);
     let input = &mut Parser::new(&mut value_input);
     let state = input.state();

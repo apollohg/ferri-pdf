@@ -1,10 +1,10 @@
 use super::common;
 
 use crate::document::{BlockContent, Paragraph, StyledDocument};
+use crate::resources::FileResolver;
 use crate::style::TextAlign;
 use crate::text::{AtomicMetrics, Line, TextContext, TextError};
 use common::{assert_pt, local_options};
-use ferri_pdf_resources::FileResolver;
 
 const PROFILE: &str = "@font-face{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}html,body,p{margin:0;padding:0;font:10pt/10pt Fixed}";
 
@@ -335,23 +335,19 @@ fn producing_one_line_does_not_shape_an_unrequested_suffix_or_repeat_a_terminal_
     );
     let paragraphs = paragraphs(&document);
     struct DeniedFallback(std::cell::Cell<usize>);
-    impl ferri_pdf_resources::ResourceResolver for DeniedFallback {
+    impl crate::resources::ResourceResolver for DeniedFallback {
         fn resolve(
             &self,
             reference: &str,
-            base: &ferri_pdf_resources::ResourceBase,
-        ) -> Result<ferri_pdf_resources::Resource, ferri_pdf_resources::ResourceError> {
+            base: &crate::resources::ResourceBase,
+        ) -> Result<crate::resources::Resource, crate::resources::ResourceError> {
             if reference.ends_with("blocked.ttf") {
                 self.0.set(self.0.get() + 1);
-                return Err(ferri_pdf_resources::ResourceError::Denied(
+                return Err(crate::resources::ResourceError::Denied(
                     base.resolve(reference)?,
                 ));
             }
-            ferri_pdf_resources::ResourceResolver::resolve(
-                &FileResolver::default(),
-                reference,
-                base,
-            )
+            crate::resources::ResourceResolver::resolve(&FileResolver::default(), reference, base)
         }
     }
     let resolver = DeniedFallback(std::cell::Cell::new(0));
@@ -369,7 +365,7 @@ fn producing_one_line_does_not_shape_an_unrequested_suffix_or_repeat_a_terminal_
         match line {
             Ok(_) => {}
             Err(TextError::Font(crate::fonts::FontError::Resource(
-                ferri_pdf_resources::ResourceError::Denied(_),
+                crate::resources::ResourceError::Denied(_),
             ))) => {
                 denied = true;
                 break;

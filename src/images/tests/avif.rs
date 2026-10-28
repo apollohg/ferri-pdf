@@ -1,5 +1,5 @@
 use crate::images::{Image, ImageCache};
-use ferri_pdf_resources::FileResolver;
+use crate::resources::FileResolver;
 use std::{path::PathBuf, sync::Arc};
 
 #[test]

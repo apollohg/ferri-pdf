@@ -1,5 +1,5 @@
 use crate::document::{BlockContent, Paragraph, StyledDocument};
-use ferri_pdf_resources::{FileResolver, ResourceBase, Url};
+use crate::resources::{FileResolver, ResourceBase, Url};
 use std::fmt::Write;
 
 fn document(css: &str, body: &str) -> StyledDocument {

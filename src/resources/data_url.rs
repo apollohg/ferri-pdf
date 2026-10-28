@@ -1,4 +1,4 @@
-use crate::{ResourceError, ResourceMetadata, mime::parse_content_type};
+use crate::resources::{ResourceError, ResourceMetadata, mime::parse_content_type};
 use base64::{
     Engine, alphabet,
     engine::{DecodePaddingMode, GeneralPurpose, GeneralPurposeConfig},

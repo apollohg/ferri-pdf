@@ -1,9 +1,9 @@
 use super::common;
 
 use crate::document::{BlockBox, BlockContent, DocumentError, StyledDocument};
+use crate::resources::FileResolver;
 use crate::style::StyleError;
 use common::{PROFILE, local_options};
-use ferri_pdf_resources::FileResolver;
 
 const PAGE_RULES: &str = "@page{size:200pt 300pt;margin:10pt}@page A{size:400pt 500pt;margin:20pt}@page B{size:600pt 700pt;margin:30pt}";
 

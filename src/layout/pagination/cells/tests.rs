@@ -1,7 +1,7 @@
 use super::*;
 use crate::document::StyledDocument;
+use crate::resources::{FileResolver, ResourceBase};
 use crate::text::TextContext;
-use ferri_pdf_resources::{FileResolver, ResourceBase};
 
 fn flex_cells(block: MeasuredBlock<'_>) -> Vec<crate::layout::measure::MeasuredCell<'_>> {
     for item in block.items {

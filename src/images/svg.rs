@@ -1,8 +1,8 @@
 use crate::fonts::{DEFAULT_FAMILY, FontNamespace};
 use crate::images::svg_fonts::SvgFonts;
 use crate::images::{Image, ImageCache, ImageError, RasterFormat};
+use crate::resources::{Resource, ResourceBase, ResourceResolver};
 use crate::svg::usvg::{ImageKind, Tree};
-use ferri_pdf_resources::{Resource, ResourceBase, ResourceResolver};
 use std::{
     cell::RefCell,
     collections::{HashMap, HashSet},

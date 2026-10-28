@@ -17,8 +17,8 @@ mod svg;
 mod tables;
 
 use crate::dom::DocumentTree;
+use crate::resources::{ResourceError, ResourceResolver};
 use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
-use ferri_pdf_resources::{ResourceError, ResourceResolver};
 
 pub(crate) use formatting::{BlockBox, BlockContent, PageBox, PageMarginBox};
 pub(crate) use generated::GeneratedValues;
@@ -59,13 +59,13 @@ pub enum DocumentDiagnostic {
     Css(crate::style::StyleDiagnostic),
     #[error("decoding {reference:?} as {encoding} replaced malformed byte sequences")]
     Decoding {
-        base: ferri_pdf_resources::ResourceBase,
+        base: crate::resources::ResourceBase,
         reference: Option<String>,
         encoding: String,
     },
     #[error("stylesheet {reference} is unavailable: {error}")]
     UnavailableSource {
-        base: ferri_pdf_resources::ResourceBase,
+        base: crate::resources::ResourceBase,
         reference: String,
         #[source]
         error: ResourceError,
@@ -88,9 +88,9 @@ pub(crate) struct StyledDocument {
 
 struct FormattingSource {
     html: DocumentTree,
-    base: ferri_pdf_resources::ResourceBase,
-    source_base: ferri_pdf_resources::ResourceBase,
-    document_url: Option<ferri_pdf_resources::Url>,
+    base: crate::resources::ResourceBase,
+    source_base: crate::resources::ResourceBase,
+    document_url: Option<crate::resources::Url>,
     capture_fragment_targets: bool,
 }
 
@@ -124,7 +124,7 @@ impl FormattingSource {
 /// Borrowed inputs shared by string and byte document parsing.
 #[derive(Clone, Copy)]
 pub(crate) struct ParseOptions<'a> {
-    pub base: &'a ferri_pdf_resources::ResourceBase,
+    pub base: &'a crate::resources::ResourceBase,
     pub additional: &'a [String],
     pub user: &'a [String],
     pub settings: &'a PrintSettings,
@@ -142,7 +142,7 @@ impl StyledDocument {
     #[cfg(test)]
     pub(crate) fn parse(
         html: &str,
-        base: &ferri_pdf_resources::ResourceBase,
+        base: &crate::resources::ResourceBase,
         additional: &[String],
         resolver: &dyn ResourceResolver,
     ) -> Result<Self, DocumentError> {
@@ -152,7 +152,7 @@ impl StyledDocument {
     #[cfg(test)]
     pub(crate) fn parse_with_origins(
         html: &str,
-        base: &ferri_pdf_resources::ResourceBase,
+        base: &crate::resources::ResourceBase,
         additional: &[String],
         user: &[String],
         resolver: &dyn ResourceResolver,
@@ -169,7 +169,7 @@ impl StyledDocument {
 
     pub(crate) fn parse_with_settings(
         html: &str,
-        base: &ferri_pdf_resources::ResourceBase,
+        base: &crate::resources::ResourceBase,
         additional: &[String],
         user: &[String],
         settings: &PrintSettings,
@@ -207,7 +207,7 @@ impl StyledDocument {
 
     pub(crate) fn parse_bytes_with_settings(
         bytes: &[u8],
-        base: &ferri_pdf_resources::ResourceBase,
+        base: &crate::resources::ResourceBase,
         additional: &[String],
         user: &[String],
         settings: &PrintSettings,

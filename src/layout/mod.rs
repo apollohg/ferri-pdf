@@ -25,8 +25,8 @@ mod work;
 use crate::document::StyledDocument;
 use crate::fonts::FontDescriptor;
 use crate::graphics::{Color, DisplayItem, Rect};
+use crate::resources::ResourceResolver;
 use crate::text::{GlyphRun, TextContext, TextError};
-use ferri_pdf_resources::ResourceResolver;
 use serde::Serialize;
 
 pub use navigation::{Destination, HeadingLocation, LinkArea, LinkShape};

@@ -75,7 +75,7 @@ impl crate::style::Stylesheet {
         page: &crate::style::Style,
         rules: &crate::style::page_rules::MatchedPageRules,
         viewport: [f32; 2],
-        resolver: &dyn ferri_pdf_resources::ResourceResolver,
+        resolver: &dyn crate::resources::ResourceResolver,
     ) -> Result<PageProduction, StyleError> {
         use crate::style::grammar::Descriptor;
         let marks = rules

@@ -1,5 +1,5 @@
+use crate::resources::FileResolver;
 use crate::style::{Style, Stylesheet, StylesheetSource};
-use ferri_pdf_resources::FileResolver;
 
 const TOLERANCE_PT: f32 = 0.005;
 const A5_WIDTH_PT: f32 = 419.528;
