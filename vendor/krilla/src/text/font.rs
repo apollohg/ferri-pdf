@@ -40,9 +40,25 @@ impl Font {
     /// Like [`Font::new`], creates a new font from some data, but allows you to specify
     /// variation coordinates in case the font is variable.
     pub fn new_variable(data: Data, index: u32, variation_coords: &[(Tag, f32)]) -> Option<Self> {
-        let font_info = FontInfo::new(data.as_ref(), index, variation_coords)?;
+        Self::new_variable_with_palette(data, index, variation_coords, None)
+    }
+
+    /// Like [`Font::new_variable`], but COLR glyphs use `palette`, indexed by palette entry,
+    /// in place of the font's default CPAL palette.
+    pub fn new_variable_with_palette(
+        data: Data,
+        index: u32,
+        variation_coords: &[(Tag, f32)],
+        palette: Option<Vec<PaletteColor>>,
+    ) -> Option<Self> {
+        let mut font_info = FontInfo::new(data.as_ref(), index, variation_coords)?;
+        font_info.palette = palette;
 
         Font::new_with_info(data.clone(), Arc::new(font_info))
+    }
+
+    pub(crate) fn palette(&self) -> Option<&[PaletteColor]> {
+        self.0.font_info.palette.as_deref()
     }
 
     pub(crate) fn new_with_info(data: Data, font_info: Arc<FontInfo>) -> Option<Self> {
@@ -155,6 +171,9 @@ impl Font {
     }
 }
 
+/// A COLR palette entry: sRGB red, green and blue, and alpha.
+pub type PaletteColor = [u8; 4];
+
 /// A 4-byte OpenType tag.
 #[derive(Copy, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Tag([u8; 4]);
@@ -230,6 +249,7 @@ pub(crate) struct FontInfo {
     has_cff: bool,
     has_cff2: bool,
     stretch: FiniteF32,
+    palette: Option<Vec<PaletteColor>>,
 }
 
 struct Repr {
@@ -333,6 +353,7 @@ impl FontInfo {
             stretch,
             italic_angle,
             global_bbox,
+            palette: None,
         })
     }
 

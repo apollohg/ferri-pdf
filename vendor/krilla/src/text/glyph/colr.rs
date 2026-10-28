@@ -246,17 +246,24 @@ impl ColrBuilder {
         alpha: f32,
     ) -> Option<(rgb::Color, NormalizedF32)> {
         if palette_index != u16::MAX {
-            let color = self
-                .font
-                .font_ref()
-                .cpal()
-                .ok()?
-                .color_records_array()?
-                .ok()?[palette_index as usize];
+            let [red, green, blue, entry_alpha] = match self.font.palette() {
+                Some(palette) => *palette.get(usize::from(palette_index))?,
+                None => {
+                    // Palette entries index the default palette's records, which start at the
+                    // first palette's record index.
+                    let cpal = self.font.font_ref().cpal().ok()?;
+                    let start = usize::from(cpal.color_record_indices().first()?.get());
+                    let color = cpal
+                        .color_records_array()?
+                        .ok()?
+                        .get(start + usize::from(palette_index))?;
+                    [color.red, color.green, color.blue, color.alpha]
+                }
+            };
 
             Some((
-                rgb::Color::new(color.red, color.green, color.blue),
-                NormalizedF32::new(alpha * color.alpha as f32 / 255.0)?,
+                rgb::Color::new(red, green, blue),
+                NormalizedF32::new(alpha * entry_alpha as f32 / 255.0)?,
             ))
         } else {
             Some((self.context_color, NormalizedF32::new(alpha)?))

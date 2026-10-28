@@ -38,6 +38,11 @@ The local patch changes these source files:
   storage above 512 MiB per image.
 - JPEG re-encoding averages chroma samples and applies the Annex K luminance
   table to all ordinary CMYK ink components, using the requested quality scale.
+- `text/font.rs` and `text/glyph/colr.rs`: `Font::new_variable_with_palette`
+  gives COLR glyphs a caller-supplied palette, which is part of the font's
+  identity. Without one, palette entries index the default palette from its CPAL
+  record index; upstream indexes the colour records directly, which is correct
+  only when the first palette starts at record zero.
 
 - `graphics/shading_function.rs`: PostScript gradient functions find a colour stop
   pair by bisection, nesting logarithmically, instead of a linear `ifelse` chain that

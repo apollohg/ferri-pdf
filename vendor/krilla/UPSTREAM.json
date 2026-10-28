@@ -89,7 +89,9 @@
   "crates_io_checksum": "27da593198b20eeba65caeb73c2bbeec3e53ab08fa549898312ce81c4fce5e33",
   "patched_files": [
     "src/graphics/image.rs",
-    "src/surface.rs"
+    "src/surface.rs",
+    "src/text/font.rs",
+    "src/text/glyph/colr.rs"
   ],
   "additional_notices": {
     "LICENSE_MPL": {
