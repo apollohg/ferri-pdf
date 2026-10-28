@@ -267,7 +267,7 @@ pub(crate) enum LayoutError {
     #[error("unsupported table formatting at block {block}: {feature}")]
     UnsupportedTable { block: usize, feature: &'static str },
     #[error("{0}")]
-    Flex(#[from] ferri_pdf_flex::FlexError),
+    Flex(#[from] crate::flex::FlexError),
     #[error("unsupported flex formatting: {feature}")]
     UnsupportedFlex { feature: &'static str },
     #[error("invalid normalized table structure")]

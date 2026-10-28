@@ -1,9 +1,9 @@
 use super::children;
+use crate::flex::Item;
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, geometry::SizeConstraints, intrinsic};
 use crate::text::IntrinsicWidths;
 use ferri_pdf_document::BlockBox;
-use ferri_pdf_flex::Item;
 use ferri_pdf_style::{BoxSizing, FlexBasis, FlexWrap, Size};
 
 pub(crate) fn measure(
@@ -109,10 +109,10 @@ pub(crate) fn measure(
         let gap = style.flex.gap[1].resolve(0.0);
         if style.flex.wrap == FlexWrap::NoWrap {
             measurer.work.spend(items.len().max(1))?;
-            result.min = ferri_pdf_flex::intrinsic_line(&items, &minima, gap)?;
+            result.min = crate::flex::intrinsic_line(&items, &minima, gap)?;
         }
         measurer.work.spend(items.len().max(1))?;
-        result.max = ferri_pdf_flex::intrinsic_line(&items, &maxima, gap)?.max(result.min);
+        result.max = crate::flex::intrinsic_line(&items, &maxima, gap)?.max(result.min);
     }
     Ok(result)
 }

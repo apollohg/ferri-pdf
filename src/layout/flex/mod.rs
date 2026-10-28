@@ -1,4 +1,5 @@
 pub(super) mod intrinsic;
+use crate::flex::{Item, spacing};
 use crate::layout::{
     LayoutError,
     geometry::{HorizontalBox, SizeConstraints, VerticalBox},
@@ -11,7 +12,6 @@ use crate::layout::{
     positioned::StaticAlignment,
 };
 use ferri_pdf_document::{BlockBox, BlockContent};
-use ferri_pdf_flex::{Item, spacing};
 use ferri_pdf_style::{Alignment, BoxSizing, BreakBetween, Display, FlexBasis, FlexWrap, Size};
 
 fn item_metrics(
@@ -311,7 +311,7 @@ pub(super) fn measure<'a>(
     let mut numeric: Vec<_> = data.iter().map(|item| item.main).collect();
     struct FlexLine {
         range: std::ops::Range<usize>,
-        resolved: ferri_pdf_flex::Line,
+        resolved: crate::flex::Line,
         measured: Vec<Metrics>,
         cross: f32,
         baseline: f32,
@@ -319,12 +319,8 @@ pub(super) fn measure<'a>(
     let mut struts: Option<Vec<f32>> = None;
     let (lines, used_main, used_cross) = loop {
         measurer.work.spend(numeric.len().max(1))?;
-        let ranges = ferri_pdf_flex::line_ranges(
-            &numeric,
-            main_size,
-            main_gap,
-            flex.wrap != FlexWrap::NoWrap,
-        )?;
+        let ranges =
+            crate::flex::line_ranges(&numeric, main_size, main_gap, flex.wrap != FlexWrap::NoWrap)?;
         let mut lines = Vec::new();
         let mut used_main = main_size.unwrap_or(0.0);
         for range in ranges {
@@ -350,7 +346,7 @@ pub(super) fn measure<'a>(
             let main = main_size.unwrap_or(natural_main);
             used_main = used_main.max(main);
             measurer.work.spend(range.len().max(1))?;
-            let resolved = ferri_pdf_flex::resolve_line(
+            let resolved = crate::flex::resolve_line(
                 &numeric[range.clone()],
                 main,
                 main_gap,

@@ -3,7 +3,7 @@ use ferri_pdf_style::Alignment;
 use std::ops::Range;
 
 #[derive(Clone, Copy, Debug)]
-pub struct Item {
+pub(crate) struct Item {
     /// Second-pass visibility strut: retains line membership without main-axis space.
     pub collapsed: bool,
     pub basis: f32,
@@ -44,16 +44,16 @@ impl Item {
     }
 }
 #[derive(Debug, thiserror::Error)]
-pub enum FlexError {
+pub(crate) enum FlexError {
     #[error("invalid or non-finite flex geometry")]
     InvalidGeometry,
 }
-pub struct Line {
+pub(crate) struct Line {
     pub sizes: Vec<f32>,
     /// Border-box starts measured from the main-start edge.
     pub starts: Vec<f32>,
 }
-pub fn line_ranges(
+pub(crate) fn line_ranges(
     items: &[Item],
     available: Option<f32>,
     gap: f32,
@@ -99,7 +99,7 @@ fn validate_container(available: Option<f32>, gap: f32) -> Result<(), FlexError>
     }
 }
 /// Returns leading space and additional space between adjacent items.
-pub fn spacing(alignment: Alignment, free: f32, count: usize) -> (f32, f32) {
+pub(crate) fn spacing(alignment: Alignment, free: f32, count: usize) -> (f32, f32) {
     if count == 0 {
         return (0.0, 0.0);
     }
@@ -115,7 +115,7 @@ pub fn spacing(alignment: Alignment, free: f32, count: usize) -> (f32, f32) {
         _ => (0.0, 0.0),
     }
 }
-pub fn resolve_line(
+pub(crate) fn resolve_line(
     items: &[Item],
     available: f32,
     gap: f32,
@@ -302,7 +302,11 @@ fn resolve_visible_line(
 }
 
 /// Main-axis intrinsic size, using each item's content contribution.
-pub fn intrinsic_line(items: &[Item], contributions: &[f32], gap: f32) -> Result<f32, FlexError> {
+pub(crate) fn intrinsic_line(
+    items: &[Item],
+    contributions: &[f32],
+    gap: f32,
+) -> Result<f32, FlexError> {
     validate_container(None, gap)?;
     if items.len() != contributions.len() {
         return Err(FlexError::InvalidGeometry);

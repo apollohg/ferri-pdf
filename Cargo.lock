@@ -597,7 +597,6 @@ version = "0.1.0"
 dependencies = [
  "ferri-pdf-document",
  "ferri-pdf-dom",
- "ferri-pdf-flex",
  "ferri-pdf-fonts",
  "ferri-pdf-graphics",
  "ferri-pdf-grid",
@@ -672,14 +671,6 @@ dependencies = [
  "scraper",
  "thiserror",
  "url",
-]
-
-[[package]]
-name = "ferri-pdf-flex"
-version = "0.1.0"
-dependencies = [
- "ferri-pdf-style",
- "thiserror",
 ]
 
 [[package]]

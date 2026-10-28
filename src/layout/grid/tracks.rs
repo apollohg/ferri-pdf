@@ -44,7 +44,7 @@ impl TrackGeometry {
             (Alignment::Left, false) | (Alignment::Right, true) => Alignment::Start,
             (alignment, _) => alignment,
         };
-        let (mut cursor, between) = ferri_pdf_flex::spacing(alignment, available - extent, count);
+        let (mut cursor, between) = crate::flex::spacing(alignment, available - extent, count);
         let mut previous = false;
         let tracks = sizes
             .iter()
