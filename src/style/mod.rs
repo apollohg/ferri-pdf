@@ -74,6 +74,7 @@ mod value_definition_syntax;
 mod values;
 mod variables;
 mod wide_keywords;
+pub(crate) mod will_change;
 
 use crate::resources::ResourceError;
 pub(crate) use bookmark_values::BookmarkStyle;

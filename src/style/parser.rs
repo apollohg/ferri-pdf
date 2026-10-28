@@ -978,6 +978,7 @@ fn at_prelude<'i>(
         }
         input.expect_exhausted()?;
         return Ok(AtPrelude::Palette(name.to_string()));
+    }
     if matches!(kind, AtRuleName::CounterStyle) {
         let source = block_source(input);
         return match crate::style::matcher::match_value(
@@ -1187,6 +1188,10 @@ impl<'i> AtRuleParser<'i> for CssParser<'_> {
                 )?,
             }),
             AtPrelude::Palette(name) => Rule::Content(ContentRule::Palette(
+                name,
+                declarations(input, self.base, self.diagnostics)?,
+                SourceLocation::new(self.base, state.source_location()),
+            )),
             AtPrelude::CounterStyle(name) => Rule::Content(ContentRule::CounterStyle(
                 name,
                 declarations(input, self.base, self.diagnostics)?,

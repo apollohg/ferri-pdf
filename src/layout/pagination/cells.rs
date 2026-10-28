@@ -231,11 +231,11 @@ impl<'a, 't> Paginator<'a, '_, 't> {
     ) {
         for ancestor in layers.into_iter().flatten().filter(|layer| {
             let style = layer.source.style();
-            style.position != Position::Static
+            style.contains_absolute()
                 || style.is_grouped()
+                || style.forced_stacking_context()
                 || !style.decoration.shadows.is_empty()
                 || style.decoration.outline.is_drawn()
-                || style.has_transform_effects()
         }) {
             let source = ancestor.source;
             let identity = std::ptr::from_ref(source) as usize;
@@ -260,6 +260,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 // CSS Tables ignores z-index on rows and row groups.
                 let grouped = source.style().is_grouped();
                 let transformed = source.style().has_transform_effects();
+                let isolated = grouped || transformed || source.style().forced_stacking_context();
                 let clip = if transformed {
                     let node = self.clips.len();
                     self.clips.push(EffectNode {
@@ -278,9 +279,8 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 } else {
                     self.clip
                 };
-                let mut paint =
-                    positioned_layer(&self.context, (grouped || transformed).then_some(0), order);
-                let group = if grouped || transformed {
+                let mut paint = positioned_layer(&self.context, isolated.then_some(0), order);
+                let group = if isolated {
                     let group = if grouped {
                         Group::of(source.style())
                     } else {
@@ -290,7 +290,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 } else {
                     self.group
                 };
-                if !grouped && !transformed {
+                if !isolated {
                     paint.key = extend(&paint.key, FLOW_LEVEL);
                 }
                 let layer = TableLayer { clip, paint, group };
@@ -334,10 +334,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         let table_containing = layers
             .iter()
             .flatten()
-            .filter(|layer| {
-                layer.source.style().position != Position::Static
-                    || layer.source.style().has_transform_effects()
-            })
+            .filter(|layer| layer.source.style().contains_absolute())
             .cloned()
             .collect::<Vec<_>>();
         let mut parent = self.flow_position();
@@ -373,7 +370,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             for containing in &table_containing {
                 self.containers.push(Container {
                     pending: Vec::new(),
-                    fixed: containing.source.style().has_transform_effects(),
+                    fixed: containing.source.style().contains_fixed(),
                 });
             }
             let mut frame = self.start_block(block)?;

@@ -521,8 +521,8 @@ struct BlockFrame<'a> {
     break_after: crate::style::BreakBetween,
     continues: bool,
     table: bool,
-    positioned: bool,
-    transformed: bool,
+    /// Contains positioned descendants, which place when it ends.
+    containing: bool,
     start_page: usize,
     forced_breaks: usize,
     start_y: f32,
@@ -1569,8 +1569,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     }
     fn start_block(&mut self, block: MeasuredBlock<'a>) -> Result<BlockFrame<'a>, LayoutError> {
         let mut block = self.refresh_block(block)?;
-        let track_overflow = (block.grid.is_some()
-            && (block.style.position != Position::Static || block.style.has_transform_effects()))
+        let track_overflow = (block.grid.is_some() && block.style.contains_absolute())
             || self
                 .boxes
                 .last()
@@ -1634,6 +1633,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         // Transforms, perspective and preserve-3d contain all descendants (CSS Transforms 2 §5).
         let transformed = owns_wrapper_properties && block.style.has_transform_effects();
         let grouped = owns_wrapper_properties && block.style.is_grouped();
+        let isolated = owns_wrapper_properties && block.style.forced_stacking_context();
+        let containing = owns_wrapper_properties && block.style.contains_absolute();
         if transformed
             && (block.style.perspective.is_some() || block.style.preserves_3d())
             && (block.style.multicol.is_multicol() || block.style.display.is_table())
@@ -1643,12 +1644,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     .into(),
             )));
         }
-        // A transform, opacity, blending or isolation makes a stacking context like z-index 0
-        // (CSS Transforms 1 §3, CSS Color 4 §15, Compositing 1 §3.4).
+        // A transform, opacity, blending, isolation or forced stacking context makes a stacking
+        // context like z-index 0 (CSS Transforms 1 §3, CSS Color 4 §15, Compositing 1 §3.4,
+        // CSS Will Change 1 §3.1).
         let z_index = (positioned || flex_item)
-            .then_some(block.style.z_index)
+            .then_some(block.style.stacking_z_index())
             .flatten()
-            .or((transformed || grouped).then_some(0));
+            .or((transformed || grouped || isolated).then_some(0));
         let paint_key = if positioned || z_index.is_some() {
             let order = self.reserved_order.take().unwrap_or_else(|| self.order());
             let layer = positioned_layer(&previous_context, z_index, order);
@@ -1841,10 +1843,10 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         if clip_node.is_some() {
             self.clip = clip_node;
         }
-        if positioned || transformed {
+        if containing {
             self.containers.push(Container {
                 pending: Vec::new(),
-                fixed: transformed,
+                fixed: block.style.contains_fixed(),
             });
         }
         let table = block.table.is_some();
@@ -1883,8 +1885,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             break_after: block.break_after,
             continues,
             table,
-            positioned,
-            transformed,
+            containing,
             start_page,
             forced_breaks,
             start_y,
@@ -2016,8 +2017,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             height,
             break_after,
             continues,
-            positioned,
-            transformed,
+            containing,
             previous_offset,
             previous_key,
             previous_context,
@@ -2090,7 +2090,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         if active.canvas_root {
             self.canvas_roots.extend(active.fragments.iter().copied());
         }
-        if positioned || transformed {
+        if containing {
             active.pending = self
                 .containers
                 .pop()
@@ -4046,16 +4046,19 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .collect())
     }
     /// Stacking context and group of content inside `inline_box`: those of its innermost
-    /// translucent, blending or isolated inline box, created when first needed, or `None` for
-    /// the current ones (CSS Color 4 §15 and Compositing 1 §3.4 apply to inline boxes too).
+    /// inline box that is a stacking context (translucent, blending, isolated or forced),
+    /// created when first needed, or `None` for the current ones (CSS Color 4 §15 and
+    /// Compositing 1 §3.4 apply to inline boxes too).
     fn inline_layer(
         &mut self,
         layers: &mut InlineLayers<'_>,
         inline_box: Option<usize>,
     ) -> Option<Layer> {
         let boxes = layers.paragraph.boxes();
-        let index = std::iter::successors(inline_box, |&index| boxes[index].parent)
-            .find(|&index| boxes[index].style.is_grouped())?;
+        let index =
+            std::iter::successors(inline_box, |&index| boxes[index].parent).find(|&index| {
+                boxes[index].style.is_grouped() || boxes[index].style.forced_stacking_context()
+            })?;
         if let Some(layer) = &layers.layers[index] {
             return Some(layer.clone());
         }

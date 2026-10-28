@@ -30,9 +30,10 @@ const DOCUMENT: &str = "<div id=parent><span id=child>X</span></div>";
 const USER_AGENT_INITIAL: &[Property] = &[Property::FontFamily];
 const INITIAL_GAPS: &[(Property, &str)] = &[];
 /// Supported properties whose values no computed field records, because every accepted value
-/// renders alike.
+/// renders alike, or, for `will-change`, only the boxes its named properties generate count.
 const WITHOUT_COMPUTED_FIELD: &[Property] = &[
     Property::Content,
+    Property::WillChange,
     Property::FontSynthesisPosition,
     Property::FontSynthesisSmallCaps,
     Property::TextDecorationSkipInk,

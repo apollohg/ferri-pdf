@@ -974,6 +974,11 @@ fn handler(property: Property) -> Option<Handler> {
             }),
         ),
         P::BookmarkState => (bookmark_state, Some(|_, _| true)),
+        P::WillChange => (
+            will_change,
+            Some(|v, _| crate::style::will_change::WillChange::from_component(v).is_ok()),
+        ),
+        P::ViewTransitionName => (view_transition_name, Some(|_, _| true)),
         _ => return None,
     };
     Some(Handler { apply, check })
@@ -2273,6 +2278,18 @@ computed!(
     |value, style, _parent, _relative| {
         flag(value, &[(Keyword::Open, true), (Keyword::Closed, false)])?
     }
+);
+computed!(
+    will_change,
+    [will_change],
+    |value, style, _parent, _relative| {
+        crate::style::will_change::WillChange::from_component(value)?
+    }
+);
+computed!(
+    view_transition_name,
+    [view_transition_named],
+    |value, style, _parent, _relative| { value.keyword() != Some(Keyword::None) }
 );
 
 computed!(

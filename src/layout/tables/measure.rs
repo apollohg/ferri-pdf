@@ -471,10 +471,7 @@ impl<'a> TablePlan<'a> {
             .iter()
             .copied()
             .chain(data.groups.iter().filter_map(|group| group.source))
-            .any(|source| {
-                source.style().position != crate::style::Position::Static
-                    || source.style().has_transform_effects()
-            });
+            .any(|source| source.style().contains_absolute());
         let has_scoped_internals = data.collapsed_columns.iter().any(|&value| value)
             || data
                 .rows
@@ -484,12 +481,12 @@ impl<'a> TablePlan<'a> {
                 .chain(data.cells.iter().copied())
                 .any(|source| {
                     let style = source.style();
-                    style.position != crate::style::Position::Static
+                    style.contains_absolute()
                         || !style.visibility.is_visible()
                         || !style.decoration.shadows.is_empty()
                         || style.decoration.outline.is_drawn()
                         || style.is_grouped()
-                        || style.has_transform_effects()
+                        || style.forced_stacking_context()
                 });
         let border_owners = if has_scoped_internals && data.collapsed.is_some() {
             let slots = data.grid.rows * data.grid.columns;
@@ -608,10 +605,10 @@ impl<'a> TablePlan<'a> {
         let mut table = captions::wrap(measurer, table, &self.data.captions, &geometry)?;
         let style = self.source.style();
         if self.has_captions()
-            && (style.position != crate::style::Position::Static
-                || style.has_transform_effects()
+            && (style.contains_absolute()
                 || !style.visibility.is_visible()
                 || style.is_grouped()
+                || style.forced_stacking_context()
                 || style.clipped_axes().contains(&true))
         {
             table.retain_fragment();

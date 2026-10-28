@@ -80,8 +80,8 @@ fn unsupported_values_name_their_declaration_once() {
             "scroll-snap-type: x mandatory",
         ),
         (
-            "#target{will-change:transform,opacity}",
-            "will-change: transform, opacity",
+            "#target{mask-clip:border-box,content-box}",
+            "mask-clip: border-box, content-box",
         ),
         (
             "#target{width:calc-mix(--clock,10pt,30pt)}",

@@ -964,7 +964,7 @@ fn block<'a>(
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
                 if block_child {
                     if text.chars().all(|ch| {
-                        crate::document::inline::collapses_character(ch, style.white_space)
+                        crate::document::inline::collapses_character(ch, style.white_space.collapse)
                     }) {
                         if builder.defer_run_in_whitespace(text, style) {
                             continue;
