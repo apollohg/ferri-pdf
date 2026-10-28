@@ -85,7 +85,7 @@ fn wide_shorthands_preserve_longhand_priority_and_current_color() {
     assert_eq!(child.padding, parent.padding);
     for border in child.decoration.borders {
         assert_eq!(border.width, 3.0);
-        assert_eq!(border.style, ferri_pdf_paint::BorderStyle::Solid);
+        assert_eq!(border.style, crate::paint::BorderStyle::Solid);
         assert_eq!(
             border.color, child.color,
             "initial border color is the child's currentColor"

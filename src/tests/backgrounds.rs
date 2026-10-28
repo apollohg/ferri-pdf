@@ -2,9 +2,9 @@ use super::common;
 use crate::graphics::{
     BackgroundImage, Color, NaturalDimensions, ResolvedGradient, Shading, TileImage, image_size,
 };
+use crate::paint::{BackgroundSize, GradientStop, Repeat, SizeComponent, rounded_size};
 use crate::{BoxPaint, DisplayItem, Rect, render_html};
 use common::{PROFILE, local_options as options};
-use ferri_pdf_paint::{BackgroundSize, GradientStop, Repeat, SizeComponent, rounded_size};
 use std::sync::{Arc, Mutex};
 
 const TOLERANCE: f32 = 1.0e-3;

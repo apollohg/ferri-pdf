@@ -1,15 +1,15 @@
 //! CSS Backgrounds 3 longhands and CSS Images 3 gradients from match trees.
+use crate::paint::{
+    Attachment, BackgroundImage, BackgroundSize, BoxArea, CircleSize, Color, EllipseSize, Gradient,
+    GradientItem, GradientShape, LengthPercentage, LineDirection, Position, PositionComponent,
+    RadialEnding, RadialExtent, Repeat, SizeComponent,
+};
 use crate::style::{
     StyleError,
     box_values::{length_percentage, unsupported},
     component::Component,
     grammar::{Keyword, Label, Production},
     units::Relative,
-};
-use ferri_pdf_paint::{
-    Attachment, BackgroundImage, BackgroundSize, BoxArea, CircleSize, Color, EllipseSize, Gradient,
-    GradientItem, GradientShape, LengthPercentage, LineDirection, Position, PositionComponent,
-    RadialEnding, RadialExtent, Repeat, SizeComponent,
 };
 
 const TO_TOP_DEG: f32 = 0.0;

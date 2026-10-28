@@ -1,10 +1,10 @@
 //! CSS Backgrounds 3 §6 border images: nine-slice regions, their sizes and tiling.
-use crate::background::{Source, TileImage, UnresolvedImage, natural_points};
-use crate::{
+use crate::paint::background::{Source, TileImage, UnresolvedImage, natural_points};
+use crate::paint::{
     BackgroundImage, BackgroundSize, Border, BoxPaint, LengthPercentage, POINTS_PER_PIXEL, Rect,
     image_size,
 };
-use crate::{ImageInfo, NaturalDimensions};
+use crate::paint::{ImageInfo, NaturalDimensions};
 use serde::Serialize;
 use std::convert::Infallible;
 

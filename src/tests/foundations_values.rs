@@ -3330,10 +3330,10 @@ fn page_box_edges_auto_margins_and_constraints_define_the_initial_containing_blo
         (
             "margin:20pt;border-style:solid",
             [400.0, 600.0],
-            [20.0 + ferri_pdf_paint::DEFAULT_BORDER_WIDTH; 2],
+            [20.0 + crate::paint::DEFAULT_BORDER_WIDTH; 2],
             [
-                360.0 - 2.0 * ferri_pdf_paint::DEFAULT_BORDER_WIDTH,
-                560.0 - 2.0 * ferri_pdf_paint::DEFAULT_BORDER_WIDTH,
+                360.0 - 2.0 * crate::paint::DEFAULT_BORDER_WIDTH,
+                560.0 - 2.0 * crate::paint::DEFAULT_BORDER_WIDTH,
             ],
         ),
         (

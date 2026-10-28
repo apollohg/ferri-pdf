@@ -3,7 +3,7 @@ use crate::style::{
 };
 use serde::Serialize;
 
-pub(crate) use ferri_pdf_paint::LengthPercentage;
+pub(crate) use crate::paint::LengthPercentage;
 
 /// Specified `<length-percentage>` to points, a fraction, or a calculation over both.
 pub(super) fn length_percentage(

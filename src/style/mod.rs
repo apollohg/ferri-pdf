@@ -188,7 +188,7 @@ impl From<&str> for StyleError {
     }
 }
 
-pub(crate) use ferri_pdf_paint::POINTS_PER_PIXEL;
+pub(crate) use crate::paint::POINTS_PER_PIXEL;
 const POINTS_PER_INCH: f32 = 72.0;
 const MILLIMETRES_PER_INCH: f32 = 25.4;
 const MILLIMETRES_PER_CENTIMETRE: f32 = 10.0;

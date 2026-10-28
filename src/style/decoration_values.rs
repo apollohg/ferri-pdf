@@ -1,4 +1,5 @@
 //! CSS Text Decoration 3/4: decoration lines and their propagation to descendants.
+use crate::paint::{Color, DecorationStyle};
 use crate::style::{
     LengthPercentage, StyleError,
     box_values::{length_percentage, unsupported},
@@ -6,7 +7,6 @@ use crate::style::{
     grammar::Keyword,
     units::Relative,
 };
-use ferri_pdf_paint::{Color, DecorationStyle};
 use serde::Serialize;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]

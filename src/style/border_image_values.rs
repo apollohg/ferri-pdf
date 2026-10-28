@@ -1,4 +1,5 @@
 //! CSS Backgrounds 3 §6 `border-image-*` longhands from their match trees.
+use crate::paint::{BorderImageOutset, BorderImageRepeat, BorderImageWidth, ImageSlice};
 use crate::style::{
     StyleError,
     box_values::{length_percentage, unsupported},
@@ -8,7 +9,6 @@ use crate::style::{
     units::Relative,
     values::{length, number},
 };
-use ferri_pdf_paint::{BorderImageOutset, BorderImageRepeat, BorderImageWidth, ImageSlice};
 
 /// `[ <number> | <percentage> ]{1,4} && fill?` slots.
 const SLICE_OFFSETS: usize = 0;
@@ -53,7 +53,7 @@ pub(super) fn slice(
                 ImageSlice::Number(number(item, relative)?)
             } else {
                 match length_percentage(item, relative)? {
-                    ferri_pdf_paint::LengthPercentage::Percentage(fraction) => {
+                    crate::paint::LengthPercentage::Percentage(fraction) => {
                         ImageSlice::Percentage(fraction)
                     }
                     _ => return Err(unsupported(item)),

@@ -1,7 +1,7 @@
 //! CSS Backgrounds 3 layers: computed value lists, image sizing, tiling and painting areas.
-use crate::gradient::{Gradient, ResolvedGradient};
-use crate::{Border, BoxPaint, Clip, LengthPercentage, POINTS_PER_PIXEL, Rect};
-use crate::{ImageInfo, NaturalDimensions};
+use crate::paint::gradient::{Gradient, ResolvedGradient};
+use crate::paint::{Border, BoxPaint, Clip, LengthPercentage, POINTS_PER_PIXEL, Rect};
+use crate::paint::{ImageInfo, NaturalDimensions};
 use serde::Serialize;
 use std::convert::Infallible;
 use std::sync::Arc;
@@ -10,6 +10,10 @@ use std::sync::Arc;
 const SPACE_FIT_TOLERANCE: f32 = 1.0e-4;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
+#[expect(
+    clippy::enum_variant_names,
+    reason = "variants name the CSS border-box, padding-box and content-box keywords"
+)]
 pub enum BoxArea {
     #[default]
     BorderBox,
@@ -17,6 +21,10 @@ pub enum BoxArea {
     ContentBox,
 }
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
+#[expect(
+    clippy::enum_variant_names,
+    reason = "variants name the CSS repeat and no-repeat keywords"
+)]
 pub enum Repeat {
     #[default]
     Repeat,
@@ -68,7 +76,7 @@ impl PositionComponent {
     /// Top-left offsets with explicit length and percentage terms for computed-value comparisons.
     #[must_use]
     pub fn canonical(&self) -> Self {
-        use crate::Calculation;
+        use crate::paint::Calculation;
         let offset = match &self.offset {
             LengthPercentage::Length(value) => Calculation::Value(*value),
             LengthPercentage::Percentage(value) => Calculation::Percentage(*value),
@@ -96,7 +104,7 @@ impl PositionComponent {
     }
 }
 /// Horizontal and vertical components.
-pub type Position = [PositionComponent; 2];
+pub(crate) type Position = [PositionComponent; 2];
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(bound(serialize = ""))]
@@ -270,7 +278,11 @@ fn contain(area: [f32; 2], ratio: f32, cover: bool) -> [f32; 2] {
 
 /// `background-size` and the CSS Images 3 default sizing algorithm, before `round`;
 /// natural dimensions are in points.
-pub fn image_size(size: &BackgroundSize, natural: NaturalDimensions, area: [f32; 2]) -> [f32; 2] {
+pub(crate) fn image_size(
+    size: &BackgroundSize,
+    natural: NaturalDimensions,
+    area: [f32; 2],
+) -> [f32; 2] {
     let NaturalDimensions {
         width,
         height,
@@ -302,7 +314,7 @@ pub fn image_size(size: &BackgroundSize, natural: NaturalDimensions, area: [f32;
 }
 
 /// Second and third `round` steps of CSS Backgrounds 3 §3.9.
-pub fn rounded_size(
+pub(crate) fn rounded_size(
     mut tile: [f32; 2],
     size: &BackgroundSize,
     repeat: [Repeat; 2],
@@ -377,15 +389,15 @@ impl<I> BoxPaint<I> {
             BoxArea::ContentBox => self.inner_clip(self.fragment_padding(), [true; 2]),
         }
     }
-    pub fn background_clips(&self) -> crate::BoxAreas<Clip> {
-        crate::BoxAreas {
+    pub fn background_clips(&self) -> crate::paint::BoxAreas<Clip> {
+        crate::paint::BoxAreas {
             border: self.box_area(BoxArea::BorderBox),
             padding: self.box_area(BoxArea::PaddingBox),
             content: self.box_area(BoxArea::ContentBox),
         }
     }
-    pub fn background_origins(&self) -> crate::BoxAreas<Rect> {
-        crate::BoxAreas {
+    pub fn background_origins(&self) -> crate::paint::BoxAreas<Rect> {
+        crate::paint::BoxAreas {
             border: self.positioning_area(BoxArea::BorderBox),
             padding: self.positioning_area(BoxArea::PaddingBox),
             content: self.positioning_area(BoxArea::ContentBox),

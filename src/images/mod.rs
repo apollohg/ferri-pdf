@@ -5,7 +5,7 @@ mod pixels;
 mod svg;
 mod svg_fonts;
 use crate::fonts::{FontBook, FontNamespace};
-pub(crate) use ferri_pdf_paint::NaturalDimensions;
+pub(crate) use crate::paint::NaturalDimensions;
 use ferri_pdf_resources::{ResourceError, ResourceResolver};
 pub(crate) use image::metadata::Orientation;
 use image::{ImageDecoder, ImageFormat, ImageReader};
@@ -16,7 +16,7 @@ use std::{
     sync::Arc,
 };
 pub(crate) use svg::SvgImage;
-impl ferri_pdf_paint::ImageInfo for Image {
+impl crate::paint::ImageInfo for Image {
     fn natural_size(&self) -> NaturalDimensions {
         Image::natural_size(self)
     }

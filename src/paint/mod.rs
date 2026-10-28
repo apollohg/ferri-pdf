@@ -11,37 +11,42 @@ mod gradient;
 mod length;
 mod rounded;
 mod shadow;
-pub use background::{
+#[cfg(test)]
+pub(crate) use background::rounded_size;
+pub(crate) use background::{
     Attachment, BackgroundImage, BackgroundSize, Backgrounds, BoxArea, LayerPaint, Position,
-    PositionComponent, Repeat, SizeComponent, TileImage, UnresolvedImage, image_size, rounded_size,
+    PositionComponent, Repeat, SizeComponent, TileImage, UnresolvedImage, image_size,
 };
-pub use border_image::{
+pub(crate) use border_image::{
     BorderImage, BorderImageOutset, BorderImagePaint, BorderImageRepeat, BorderImageWidth,
-    ImagePiece, ImageSlice,
+    ImageSlice,
 };
-pub use boxes::{
-    BackgroundGeometry, Border, BorderStyle, BoxAreas, BoxDecoration, BoxPaint,
-    DEFAULT_BORDER_WIDTH, INLINE_EDGES,
+pub(crate) use boxes::{
+    BackgroundGeometry, BoxAreas, BoxDecoration, BoxPaint, DEFAULT_BORDER_WIDTH,
 };
-pub use calculation::{
-    BinaryFunction, Calculation, MAX_CALC_MAGNITUDE, RoundingStrategy, UnaryFunction,
-};
+pub use boxes::{Border, BorderStyle, INLINE_EDGES};
+#[cfg(test)]
+pub(crate) use calculation::MAX_CALC_MAGNITUDE;
+pub(crate) use calculation::{BinaryFunction, Calculation, RoundingStrategy, UnaryFunction};
 pub use clip::{Clip, ClipBounds};
 pub use decoration::{DecorationLine, DecorationPaint, DecorationStyle};
-pub use easing::{Easing, LinearPoint, StepPosition};
-pub use gradient::{
-    CircleSize, EllipseSize, Gradient, GradientItem, GradientShape, GradientStop, LineDirection,
-    RadialEnding, RadialExtent, ResolvedGradient, Shading,
+pub(crate) use easing::{Easing, LinearPoint, StepPosition};
+#[cfg(test)]
+pub(crate) use gradient::GradientStop;
+pub(crate) use gradient::{
+    CircleSize, EllipseSize, Gradient, GradientItem, GradientShape, LineDirection, RadialEnding,
+    RadialExtent, ResolvedGradient, Shading,
 };
-pub use image::{ImageInfo, NaturalDimensions};
+pub(crate) use image::{ImageInfo, NaturalDimensions};
 pub use length::LengthPercentage;
 pub use rounded::Radii;
 mod image;
 use serde::Serialize;
-pub use shadow::{BoxShadow, ShadowMask, ShadowPaint, ShadowShape};
+pub(crate) use shadow::{BoxShadow, ShadowMask};
+pub use shadow::{ShadowPaint, ShadowShape};
 
 /// CSS reference pixel in PDF points.
-pub const POINTS_PER_PIXEL: f32 = 0.75;
+pub(crate) const POINTS_PER_PIXEL: f32 = 0.75;
 
 #[derive(Clone, Copy, Debug, PartialEq, Serialize)]
 pub struct Color {

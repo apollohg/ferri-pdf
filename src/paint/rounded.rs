@@ -1,6 +1,8 @@
 //! Rounded box geometry: corner arcs, side regions and pattern paths.
-use crate::boxes::{DASH_GAP_WIDTHS, DASH_LENGTH_WIDTHS, dash_gap, dot_gap, ring, side_runs};
-use crate::{BorderStyle, BoxDecoration, Contour, Fill, Point, Rect, Segment, Shape};
+use crate::paint::boxes::{
+    DASH_GAP_WIDTHS, DASH_LENGTH_WIDTHS, dash_gap, dot_gap, ring, side_runs,
+};
+use crate::paint::{BorderStyle, BoxDecoration, Contour, Fill, Point, Rect, Segment, Shape};
 
 /// Cubic control distance as a fraction of the radius.
 const KAPPA: f32 = 0.552;

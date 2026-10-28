@@ -1,9 +1,9 @@
 //! CSS Backgrounds 3 `box-shadow`: `none | <shadow>#` from its match tree.
+use crate::paint::{BoxShadow, Color};
 use crate::style::{
     StyleError, box_values::unsupported, component::Component, grammar::Keyword, units::Relative,
     values::length,
 };
-use ferri_pdf_paint::{BoxShadow, Color};
 
 /// `inset? && <length>{2,4} && <color>?` slots.
 const INSET_SLOT: usize = 0;

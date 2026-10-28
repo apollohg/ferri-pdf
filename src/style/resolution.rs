@@ -38,18 +38,18 @@ pub struct PageGeometry {
     pub border: [f32; 4],
 }
 impl PageGeometry {
-    pub fn margin_box(&self) -> ferri_pdf_paint::Rect {
-        ferri_pdf_paint::Rect {
+    pub fn margin_box(&self) -> crate::paint::Rect {
+        crate::paint::Rect {
             x: 0.0,
             y: 0.0,
             width: self.extent[0],
             height: self.extent[1],
         }
     }
-    pub fn content_box(&self) -> ferri_pdf_paint::Rect {
+    pub fn content_box(&self) -> crate::paint::Rect {
         let edges: [f32; 4] =
             std::array::from_fn(|side| self.margin[side] + self.padding[side] + self.border[side]);
-        ferri_pdf_paint::Rect {
+        crate::paint::Rect {
             x: edges[3],
             y: edges[0],
             width: self.area[0],
@@ -1147,7 +1147,7 @@ impl<'a> Geometry<'a> {
         let border = style
             .decoration
             .borders
-            .map(ferri_pdf_paint::Border::used_width);
+            .map(crate::paint::Border::used_width);
         if paper
             .iter()
             .any(|value| !value.is_finite() || *value <= 0.0)
@@ -1325,10 +1325,7 @@ impl crate::style::PageSelection for Geometry<'_> {
                 style.list_style_type
             })? != crate::style::ListStyleType::None
                 || self.selected_value(target, Property::ListStyleImage, |style| {
-                    !matches!(
-                        style.list_style_image,
-                        ferri_pdf_paint::BackgroundImage::None
-                    )
+                    !matches!(style.list_style_image, crate::paint::BackgroundImage::None)
                 })?,
         )
     }

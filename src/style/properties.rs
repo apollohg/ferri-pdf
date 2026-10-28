@@ -1,5 +1,6 @@
 //! The registry of supported longhands: computed values from match trees. Every other
 //! property is rejected here unless it keeps its initial value, which the engine renders.
+use crate::paint::{BorderStyle, DEFAULT_BORDER_WIDTH, LengthPercentage};
 use crate::style::{
     BoxSizing, BreakBetween, BreakInside, Display, ListStylePosition, ListStyleType, Size, Style,
     StyleError, TextAlign, Visibility, WhiteSpace,
@@ -14,7 +15,6 @@ use crate::style::{
     units::Relative,
     wide_keywords::Resolved,
 };
-use ferri_pdf_paint::{BorderStyle, DEFAULT_BORDER_WIDTH, LengthPercentage};
 
 const RELATIVE_FONT_SIZE_RATIO: f32 = 6.0 / 5.0;
 const THIN_BORDER_PT: f32 = 0.5625;
@@ -193,13 +193,13 @@ pub(super) fn projection(property: Property, source: &Style) -> Style {
         value.object_position = value
             .object_position
             .each_ref()
-            .map(ferri_pdf_paint::PositionComponent::canonical);
+            .map(crate::paint::PositionComponent::canonical);
     }
     if property == Property::BackgroundPosition {
         for position in &mut std::sync::Arc::make_mut(&mut value.decoration.backgrounds).positions {
             *position = position
                 .each_ref()
-                .map(ferri_pdf_paint::PositionComponent::canonical);
+                .map(crate::paint::PositionComponent::canonical);
         }
     }
     if property == Property::FontFamily
@@ -365,13 +365,13 @@ fn handler(property: Property) -> Option<Handler> {
         P::Color => (
             color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::ListStyleImage => (
             list_style_image,
             Some(|v, r| {
-                crate::style::background_values::image(v, r, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::background_values::image(v, r, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::ListStyleType => (
@@ -473,7 +473,7 @@ fn handler(property: Property) -> Option<Handler> {
         P::BoxShadow => (
             box_shadow,
             Some(|v, r| {
-                crate::style::shadow_values::shadows(v, r, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::shadow_values::shadows(v, r, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::Visibility => (
@@ -484,7 +484,7 @@ fn handler(property: Property) -> Option<Handler> {
         P::BorderImageSource => (
             border_image_source,
             Some(|v, r| {
-                crate::style::background_values::image(v, r, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::background_values::image(v, r, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::BorderImageSlice => (
@@ -514,7 +514,7 @@ fn handler(property: Property) -> Option<Handler> {
         P::TextDecorationColor => (
             text_decoration_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::TextDecorationThickness => (
@@ -537,13 +537,13 @@ fn handler(property: Property) -> Option<Handler> {
         P::BackgroundColor => (
             background_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::BackgroundImage => (
             background_image,
             Some(|v, r| {
-                crate::style::background_values::images(v, r, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::background_values::images(v, r, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::BackgroundPosition => (
@@ -581,25 +581,25 @@ fn handler(property: Property) -> Option<Handler> {
         P::BorderTopColor => (
             border_top_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::BorderRightColor => (
             border_right_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::BorderBottomColor => (
             border_bottom_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::BorderLeftColor => (
             border_left_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::BorderTopLeftRadius => (
@@ -719,7 +719,7 @@ fn handler(property: Property) -> Option<Handler> {
         P::ColumnRuleColor => (
             column_rule_color,
             Some(|v, relative| {
-                crate::style::colors::color(v, relative, ferri_pdf_paint::Color::BLACK).is_ok()
+                crate::style::colors::color(v, relative, crate::paint::Color::BLACK).is_ok()
             }),
         ),
         P::TableLayout => (

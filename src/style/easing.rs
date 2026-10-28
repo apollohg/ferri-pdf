@@ -1,3 +1,4 @@
+use crate::paint::{Easing, LinearPoint, StepPosition};
 use crate::style::{
     StyleError,
     calc::Kind,
@@ -7,7 +8,6 @@ use crate::style::{
     units::Relative,
     values,
 };
-use ferri_pdf_paint::{Easing, LinearPoint, StepPosition};
 
 const EASE: [f32; 4] = [0.25, 0.1, 0.25, 1.0];
 const EASE_IN: [f32; 4] = [0.42, 0.0, 1.0, 1.0];

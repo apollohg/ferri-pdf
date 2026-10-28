@@ -1,6 +1,6 @@
 //! CSS Backgrounds 3 §7 box shadows: spread shapes, clip regions and blurred alpha masks.
-use crate::rounded::{Radii, inset, rounded_rect};
-use crate::{BoxPaint, Color, Contour, Rect};
+use crate::paint::rounded::{Radii, inset, rounded_rect};
+use crate::paint::{BoxPaint, Color, Contour, Rect};
 use serde::Serialize;
 use std::sync::Arc;
 
@@ -184,7 +184,7 @@ impl<I> BoxPaint<I> {
     }
 }
 
-fn corners(rect: Rect) -> [crate::Point; 4] {
+fn corners(rect: Rect) -> [crate::paint::Point; 4] {
     [
         [rect.x, rect.y],
         [rect.x + rect.width, rect.y],

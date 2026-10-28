@@ -1,3 +1,4 @@
+use crate::paint::Color;
 use crate::style::{
     StyleError,
     calc::{Context, Kind, MathError, math_function},
@@ -10,7 +11,6 @@ use cssparser_color::{
     AngleOrNumber, Color as ParsedColor, ColorParser, DefaultColorParser, NumberOrPercentage,
     RgbaLegacy,
 };
-use ferri_pdf_paint::Color;
 use std::cell::Cell;
 
 /// CSS Color 4 §6.2 system colours for a white page with black text.

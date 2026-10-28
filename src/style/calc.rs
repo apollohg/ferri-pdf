@@ -1,11 +1,11 @@
 //! CSS Values 4 math functions, type-checked into graphics calculation trees.
+use crate::paint::{
+    BinaryFunction, Calculation, LengthPercentage, RoundingStrategy, UnaryFunction,
+};
 use crate::style::StyleError;
 use crate::style::parser::MAX_COMPONENT_DEPTH;
 use crate::style::units::{self, Dimension, Relative};
 use cssparser::{BasicParseError, Delimiter, ParseError, ParseErrorKind, Parser, Token};
-use ferri_pdf_paint::{
-    BinaryFunction, Calculation, LengthPercentage, RoundingStrategy, UnaryFunction,
-};
 use std::cell::Cell;
 
 const MATH_FUNCTIONS: &[&str] = &[
@@ -360,7 +360,7 @@ impl MathParser<'_> {
     fn mix_easing<'i>(
         &mut self,
         input: &mut Parser<'i, '_>,
-    ) -> Result<ferri_pdf_paint::Easing, ParseError<'i, MathError>> {
+    ) -> Result<crate::paint::Easing, ParseError<'i, MathError>> {
         let source = Self::component_source(input)?;
         crate::style::easing::parse(source, self.context.relative)
             .map_err(|error| input.new_custom_error(MathError::Resolution(error)))?

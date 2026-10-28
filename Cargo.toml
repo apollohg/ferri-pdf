@@ -108,7 +108,6 @@ unicode-segmentation = "1.12"
 ttf-parser = { version = "0.25", features = ["gvar-alloc"] }
 thiserror = "2"
 ferri-pdf-resources = { path = "crates/resources", version = "0.1.0", default-features = false }
-ferri-pdf-paint = { path = "crates/paint", version = "0.1.0" }
 
 [package]
 name = "ferri-pdf"
@@ -163,7 +162,6 @@ svgtypes.workspace = true
 gif.workspace = true
 image-webp.workspace = true
 zune-jpeg.workspace = true
-ferri-pdf-paint.workspace = true
 avif-decode.workspace = true
 zenavif-parse.workspace = true
 heic-decoder.workspace = true

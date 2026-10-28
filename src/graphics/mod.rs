@@ -1,23 +1,23 @@
 //! Materialized image paint values and ordered display lists.
 use crate::images::Image;
-pub(crate) use ferri_pdf_paint::{
+pub(crate) use crate::paint::{
     BackgroundGeometry, BoxArea, BoxAreas, NaturalDimensions, POINTS_PER_PIXEL, ResolvedGradient,
     Shading, ShadowMask, UnresolvedImage, image_size,
 };
-pub use ferri_pdf_paint::{
+pub use crate::paint::{
     Border, BorderStyle, Clip, ClipBounds, Color, Contour, DecorationLine, DecorationPaint,
     DecorationStyle, Fill, INLINE_EDGES, LengthPercentage, Point, Radii, Rect, Segment,
     ShadowPaint, ShadowShape, Shape,
 };
 use serde::Serialize;
 use std::sync::Arc;
-pub(crate) type BackgroundImage = ferri_pdf_paint::BackgroundImage<Arc<Image>>;
-pub(crate) type Backgrounds = ferri_pdf_paint::Backgrounds<Arc<Image>>;
-pub(crate) type BorderImagePaint<'a> = ferri_pdf_paint::BorderImagePaint<'a, Arc<Image>>;
-pub type BoxDecoration = ferri_pdf_paint::BoxDecoration<Arc<Image>>;
-pub type BoxPaint = ferri_pdf_paint::BoxPaint<Arc<Image>>;
-pub(crate) type LayerPaint<'a> = ferri_pdf_paint::LayerPaint<'a, Arc<Image>>;
-pub(crate) type TileImage<'a> = ferri_pdf_paint::TileImage<'a, Arc<Image>>;
+pub(crate) type BackgroundImage = crate::paint::BackgroundImage<Arc<Image>>;
+pub(crate) type Backgrounds = crate::paint::Backgrounds<Arc<Image>>;
+pub(crate) type BorderImagePaint<'a> = crate::paint::BorderImagePaint<'a, Arc<Image>>;
+pub type BoxDecoration = crate::paint::BoxDecoration<Arc<Image>>;
+pub type BoxPaint = crate::paint::BoxPaint<Arc<Image>>;
+pub(crate) type LayerPaint<'a> = crate::paint::LayerPaint<'a, Arc<Image>>;
+pub(crate) type TileImage<'a> = crate::paint::TileImage<'a, Arc<Image>>;
 
 #[derive(Clone, Debug, Serialize)]
 pub enum DisplayItem {

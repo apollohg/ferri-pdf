@@ -1,4 +1,4 @@
-use crate::Calculation;
+use crate::paint::Calculation;
 use serde::Serialize;
 use std::sync::Arc;
 
@@ -26,7 +26,7 @@ impl LengthPercentage {
 impl From<Calculation> for LengthPercentage {
     fn from(calculation: Calculation) -> Self {
         match calculation.simplify() {
-            Calculation::Value(value) => Self::Length(crate::calculation::censor(value)),
+            Calculation::Value(value) => Self::Length(crate::paint::calculation::censor(value)),
             Calculation::Percentage(fraction) if fraction.is_finite() => Self::Percentage(fraction),
             calculation => Self::Calc(Arc::new(calculation)),
         }

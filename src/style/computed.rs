@@ -3,6 +3,7 @@ use crate::fonts::{
     DEFAULT_FAMILY, FontFamily, FontId, FontSelection, FontSlant, FontStyle, FontSynthesis,
     FontWeight, FontWidth,
 };
+use crate::paint::{BoxDecoration, Color};
 use crate::style::{
     BoxSizing, BreakBetween, BreakInside, DEFAULT_FONT_SIZE, DEFAULT_TAB_SIZE, Display,
     LengthPercentage, ListStylePosition, ListStyleType, Size, StyleError, Stylesheet, TextAlign,
@@ -14,7 +15,6 @@ use crate::style::{
     units::{Faces, FontBasis, Line, Relative, Tree, Viewport},
 };
 use cssparser::{Parser, ParserInput};
-use ferri_pdf_paint::{BoxDecoration, Color};
 use ferri_pdf_resources::ResourceResolver;
 use std::sync::Arc;
 
@@ -81,7 +81,7 @@ pub(crate) struct Style {
     pub counters: crate::style::CounterProperties,
     pub string_set: Arc<[crate::style::StringAssignment]>,
     pub tab_size: usize,
-    pub list_style_image: ferri_pdf_paint::BackgroundImage,
+    pub list_style_image: crate::paint::BackgroundImage,
     pub list_style_type: ListStyleType,
     pub list_style_position: ListStylePosition,
     pub families: Vec<FontFamily>,
@@ -128,7 +128,7 @@ pub(crate) struct Style {
     pub display: Display,
     pub box_sizing: BoxSizing,
     pub object_fit: crate::style::ObjectFit,
-    pub object_position: ferri_pdf_paint::Position,
+    pub object_position: crate::paint::Position,
     pub page: crate::style::Page,
     /// Horizontal and vertical overflow after axis pairing.
     pub overflow: [crate::style::Overflow; 2],
@@ -179,7 +179,7 @@ impl Default for Style {
             counters: Default::default(),
             string_set: crate::style::string_values::empty(),
             tab_size: DEFAULT_TAB_SIZE,
-            list_style_image: ferri_pdf_paint::BackgroundImage::None,
+            list_style_image: crate::paint::BackgroundImage::None,
             list_style_type: ListStyleType::default(),
             list_style_position: ListStylePosition::default(),
             families: vec![FontFamily::Generic(DEFAULT_FAMILY)],
@@ -214,7 +214,7 @@ impl Default for Style {
             display: Display::Inline,
             box_sizing: BoxSizing::ContentBox,
             object_fit: crate::style::ObjectFit::default(),
-            object_position: [const { ferri_pdf_paint::PositionComponent::CENTER }; 2],
+            object_position: [const { crate::paint::PositionComponent::CENTER }; 2],
             page: crate::style::Page::default(),
             overflow: [crate::style::Overflow::Visible; 2],
             rtl: false,
@@ -249,10 +249,7 @@ impl Style {
     pub(crate) fn has_inside_marker(&self) -> bool {
         self.list_style_position == ListStylePosition::Inside
             && (self.list_style_type != ListStyleType::None
-                || !matches!(
-                    self.list_style_image,
-                    ferri_pdf_paint::BackgroundImage::None
-                ))
+                || !matches!(self.list_style_image, crate::paint::BackgroundImage::None))
     }
 
     /// Inline padding, borders and unsplit margins retain an otherwise empty line.
@@ -358,7 +355,7 @@ impl Style {
         }
         self.multicol.rule.color = self.color;
     }
-    pub(super) fn backgrounds_mut(&mut self) -> &mut ferri_pdf_paint::Backgrounds {
+    pub(super) fn backgrounds_mut(&mut self) -> &mut crate::paint::Backgrounds {
         Arc::make_mut(&mut self.decoration.backgrounds)
     }
     /// Opacity below one makes the box a stacking context painted as one group (CSS Color 4 §15).
@@ -584,7 +581,7 @@ impl Stylesheet {
     }
 
     /// The first page area's rectangle, including the page box's padding and border insets.
-    pub(crate) fn page_content_box(&self) -> ferri_pdf_paint::Rect {
+    pub(crate) fn page_content_box(&self) -> crate::paint::Rect {
         self.page_geometry().content_box()
     }
 

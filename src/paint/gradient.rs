@@ -1,6 +1,6 @@
 //! CSS Images 3 gradients: computed values and their resolution into PDF shading
 //! geometry with stops normalised to the shading's own `0..=1` domain.
-use crate::{Color, LengthPercentage, Point, background::Position};
+use crate::paint::{Color, LengthPercentage, Point, background::Position};
 use serde::Serialize;
 
 /// Interior samples per stop pair whose premultiplied or hinted interpolation is not linear.

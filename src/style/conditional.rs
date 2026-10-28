@@ -483,7 +483,7 @@ impl Scalar {
         }
         Ok(Some(Self {
             kind,
-            value: ferri_pdf_paint::Calculation::Value(value).resolve(0.0),
+            value: crate::paint::Calculation::Value(value).resolve(0.0),
         }))
     }
 }

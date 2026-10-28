@@ -24,6 +24,7 @@ mod grid;
 mod images;
 mod layout;
 mod multipart;
+mod paint;
 mod style;
 mod svg;
 mod table;

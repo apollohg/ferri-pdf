@@ -1,10 +1,10 @@
 //! CSS Values 4 calculation trees kept until layout supplies the percentage basis.
-use crate::Easing;
+use crate::paint::Easing;
 use serde::Serialize;
 use std::cmp::Ordering;
 
 /// Finite boundary shared with the representation of authored numeric values.
-pub const MAX_CALC_MAGNITUDE: f32 = f32::MAX;
+pub(crate) const MAX_CALC_MAGNITUDE: f32 = f32::MAX;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize)]
 pub enum RoundingStrategy {

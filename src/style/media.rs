@@ -240,12 +240,12 @@ pub(super) struct RangeFeature {
 }
 
 impl RangeFeature {
-    pub(super) fn calculation(&self, math: &calc::Math) -> Option<ferri_pdf_paint::Calculation> {
+    pub(super) fn calculation(&self, math: &calc::Math) -> Option<crate::paint::Calculation> {
         let value = math.resolve(0.0, calc::Range::ALL);
         if !self.value_kind.accepts_number(value.into()) {
             return None;
         }
-        Some(ferri_pdf_paint::Calculation::Value(
+        Some(crate::paint::Calculation::Value(
             if matches!(self.value_kind, ValueKind::Integer) {
                 math.integer(calc::Range::ALL) as f32
             } else {

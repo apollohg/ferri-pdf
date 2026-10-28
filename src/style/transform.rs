@@ -1,4 +1,5 @@
 //! CSS Transforms 1/2 functions, composed in 3D and flattened to 2D affine matrices for print.
+use crate::paint::Rect;
 use crate::style::{
     LengthPercentage, POINTS_PER_PIXEL, Style, StyleError,
     box_values::{length_percentage, unsupported},
@@ -8,7 +9,6 @@ use crate::style::{
     units::Relative,
     values::math,
 };
-use ferri_pdf_paint::Rect;
 use serde::Serialize;
 
 /// Affine matrix `[a, b, c, d, e, f]`: `x' = a·x + c·y + e`, `y' = b·x + d·y + f`.

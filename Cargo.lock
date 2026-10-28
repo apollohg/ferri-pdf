@@ -605,7 +605,6 @@ dependencies = [
  "ferri-pdf-heic-decoder",
  "ferri-pdf-icu-casemap",
  "ferri-pdf-krilla",
- "ferri-pdf-paint",
  "ferri-pdf-resources",
  "ferri-pdf-selectors",
  "ferri-pdf-spec-data",
@@ -710,13 +709,6 @@ dependencies = [
  "xmp-writer",
  "yoke",
  "zune-jpeg",
-]
-
-[[package]]
-name = "ferri-pdf-paint"
-version = "0.1.0"
-dependencies = [
- "serde",
 ]
 
 [[package]]

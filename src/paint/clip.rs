@@ -1,4 +1,4 @@
-use crate::{Contour, Point, Radii, Rect, rounded};
+use crate::paint::{Contour, Point, Radii, Rect, rounded};
 use serde::Serialize;
 
 /// Lower and upper bounds on each physical axis; `None` leaves an edge open.

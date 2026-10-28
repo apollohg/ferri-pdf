@@ -1,6 +1,6 @@
 //! Text decoration lines (CSS Text Decoration 3 §2) as fills.
-use crate::boxes::{DASH_LENGTH_WIDTHS, dash_gap, dot_gap};
-use crate::{Color, Contour, Fill, Point, Rect, Segment, Shape};
+use crate::paint::boxes::{DASH_LENGTH_WIDTHS, dash_gap, dot_gap};
+use crate::paint::{Color, Contour, Fill, Point, Rect, Segment, Shape};
 use serde::Serialize;
 
 /// Offset of a double line's second line, or of a wavy line's centre, from a single line, in thicknesses.

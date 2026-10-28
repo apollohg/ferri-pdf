@@ -1,5 +1,5 @@
-use crate::rounded::Radii;
-use crate::{
+use crate::paint::rounded::Radii;
+use crate::paint::{
     Backgrounds, BorderImage, BoxShadow, Clip, Color, Contour, Fill, LengthPercentage, Point, Rect,
     Segment, Shape,
 };
@@ -38,7 +38,7 @@ pub(crate) fn dash_gap(length: f32, width: f32) -> f32 {
     }
 }
 
-pub const DEFAULT_BORDER_WIDTH: f32 = 1.6875;
+pub(crate) const DEFAULT_BORDER_WIDTH: f32 = 1.6875;
 
 /// Clockwise from the left side; painting starts after the first absent side.
 const SIDE_ORDER: [usize; 4] = [3, 0, 1, 2];
@@ -259,7 +259,10 @@ impl<I> BoxDecoration<I> {
         I: Clone,
     {
         Backgrounds::resolve_images(&mut self.backgrounds, &mut load)?;
-        if matches!(self.border_image.source, crate::BackgroundImage::Url(_)) {
+        if matches!(
+            self.border_image.source,
+            crate::paint::BackgroundImage::Url(_)
+        ) {
             Arc::make_mut(&mut self.border_image)
                 .source
                 .load(&mut load)?;
@@ -284,7 +287,7 @@ impl BoxDecoration<Infallible> {
                 images: backgrounds
                     .images
                     .iter()
-                    .map(crate::BackgroundImage::with_image_type)
+                    .map(crate::paint::BackgroundImage::with_image_type)
                     .collect(),
                 positions: backgrounds.positions.clone(),
                 sizes: backgrounds.sizes.clone(),
@@ -327,11 +330,11 @@ pub struct BoxAreas<T> {
     pub content: T,
 }
 impl<T: Copy> BoxAreas<T> {
-    pub fn area(&self, area: crate::BoxArea) -> T {
+    pub fn area(&self, area: crate::paint::BoxArea) -> T {
         match area {
-            crate::BoxArea::BorderBox => self.border,
-            crate::BoxArea::PaddingBox => self.padding,
-            crate::BoxArea::ContentBox => self.content,
+            crate::paint::BoxArea::BorderBox => self.border,
+            crate::paint::BoxArea::PaddingBox => self.padding,
+            crate::paint::BoxArea::ContentBox => self.content,
         }
     }
 }
@@ -477,7 +480,7 @@ impl<I> BoxPaint<I> {
     /// An axis that does not clip extends without bound and drops the corner curves.
     pub fn inner_clip(&self, padding: [f32; 4], axes: [bool; 2]) -> Clip {
         let widths = self.inner_widths();
-        let (rect, mut radii) = crate::rounded::inset(
+        let (rect, mut radii) = crate::paint::rounded::inset(
             self.decoration_rect(),
             self.radii(),
             std::array::from_fn(|side| widths[side] + padding[side]),
@@ -606,7 +609,7 @@ impl<I> BoxPaint<I> {
         let inner_widths = self.inner_widths();
         let radii = self.radii();
         if radii.iter().any(|corner| corner[0] > 0.0) {
-            return crate::rounded::border_fills(
+            return crate::paint::rounded::border_fills(
                 rect,
                 &self.decoration,
                 widths,

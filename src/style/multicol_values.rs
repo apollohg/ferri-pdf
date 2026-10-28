@@ -1,6 +1,6 @@
 //! CSS Multi-column Layout 1 computed values.
+use crate::paint::{Border, BorderStyle, Color, DEFAULT_BORDER_WIDTH};
 use crate::style::{StyleError, box_values::unsupported, component::Component, grammar::Keyword};
-use ferri_pdf_paint::{Border, BorderStyle, Color, DEFAULT_BORDER_WIDTH};
 use serde::Serialize;
 
 /// `column-fill`.
