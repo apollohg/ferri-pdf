@@ -13,6 +13,11 @@ fn values_serialize_as_css() {
             "1px 1px rgba(255, 0, 0, 0.5), 2px 2px rgb(0, 0, 255)",
         ),
         (
+            Property::TextShadow,
+            "1px 1px oklch(70% 0.1 none / 50%), 2px 2px color(xyz .1 .2 .3), 0 0 lab(50 20 -30)",
+            "1px 1px oklch(0.7 0.1 none / 0.5), 2px 2px color(xyz-d65 0.1 0.2 0.3), 0 0 lab(50 20 -30)",
+        ),
+        (
             Property::ClipPath,
             "polygon(0 0,100% 0,50% 100%)",
             "polygon(0 0, 100% 0, 50% 100%)",

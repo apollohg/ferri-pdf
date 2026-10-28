@@ -110,6 +110,56 @@ const INTERPOLATION_SPACES: [(&str, ColorSpace); 6] = [
     ("lch", ColorSpace::Lch),
     ("oklch", ColorSpace::Oklch),
 ];
+/// Serializes a computed colour (CSS Color 4 §15): legacy sRGB colours as `rgb()`/`rgba()`,
+/// everything else in its own notation, with missing components as `none`.
+pub(crate) fn serialize(
+    color: &AbsoluteColor,
+    f: &mut std::fmt::Formatter<'_>,
+) -> std::fmt::Result {
+    if color.legacy || matches!(color.space, ColorSpace::Hsl | ColorSpace::Hwb) {
+        let Color {
+            rgb: [red, green, blue],
+            alpha,
+        } = color.used();
+        return if alpha < 1.0 {
+            write!(f, "rgba({red}, {green}, {blue}, {alpha})")
+        } else {
+            write!(f, "rgb({red}, {green}, {blue})")
+        };
+    }
+    // `xyz` and `xyz-d65` share a space; the reverse search finds the canonical `xyz-d65`.
+    if let Some((name, _)) = PREDEFINED_SPACES
+        .iter()
+        .rev()
+        .find(|(_, space)| *space == color.space)
+    {
+        write!(f, "color({name} ")?;
+    } else if let Some((name, _)) = INTERPOLATION_SPACES
+        .iter()
+        .find(|(_, space)| *space == color.space)
+    {
+        write!(f, "{name}(")?;
+    }
+    for (index, component) in color.components.iter().enumerate() {
+        if index > 0 {
+            f.write_str(" ")?;
+        }
+        write_component(*component, f)?;
+    }
+    if color.alpha != Some(1.0) {
+        f.write_str(" / ")?;
+        write_component(color.alpha, f)?;
+    }
+    f.write_str(")")
+}
+
+fn write_component(component: Option<f32>, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    match component {
+        Some(value) => write!(f, "{value}"),
+        None => f.write_str("none"),
+    }
+}
+
 const HUE_METHODS: [(&str, HueInterpolation); 4] = [
     ("shorter", HueInterpolation::Shorter),
     ("longer", HueInterpolation::Longer),

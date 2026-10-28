@@ -4,7 +4,6 @@ use crate::style::{
     grammar::{BlockKind, Keyword, Label, NODES, Node, NodeId, Range},
     units::Length,
 };
-use cssparser::ToCss;
 use std::fmt;
 
 const PERCENT: f32 = 100.0;
@@ -169,7 +168,7 @@ impl Component {
             Self::Resolution(dppx) => write!(f, "{dppx}dppx"),
             Self::Flex(value) => write!(f, "{value}fr"),
             Self::Dimension(value, unit) => write!(f, "{value}{unit}"),
-            Self::Color(color) => color.to_css(f),
+            Self::Color(color) => crate::style::colors::serialize(color, f),
             Self::String(text) => cssparser::serialize_string(text, f),
             Self::Url(url) => {
                 f.write_str("url(")?;
