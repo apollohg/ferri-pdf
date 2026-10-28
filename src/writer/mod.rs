@@ -58,7 +58,7 @@ pub enum PdfError {
 }
 
 /// An independently laid-out document to append to a shared PDF.
-pub struct PdfPart<'a> {
+pub(crate) struct PdfPart<'a> {
     pub trace: &'a LayoutTrace,
     pub fonts: &'a FontBook,
     pub navigation: &'a Navigation,
@@ -66,12 +66,13 @@ pub struct PdfPart<'a> {
 }
 
 /// PDF bytes and recoverable image-decoding diagnostics for each input part.
-pub struct EncodedPdf {
+pub(crate) struct EncodedPdf {
     pub pdf: Vec<u8>,
     pub image_diagnostics: Vec<Vec<String>>,
 }
 
-pub fn encode(
+#[cfg(test)]
+pub(crate) fn encode(
     trace: &LayoutTrace,
     fonts: &FontBook,
     navigation: &Navigation,
@@ -81,7 +82,7 @@ pub fn encode(
     Ok(encode_with_diagnostics(trace, fonts, navigation, metadata, images)?.pdf)
 }
 
-pub fn encode_with_diagnostics(
+pub(crate) fn encode_with_diagnostics(
     trace: &LayoutTrace,
     fonts: &FontBook,
     navigation: &Navigation,
@@ -123,11 +124,7 @@ fn validate(trace: &LayoutTrace) -> Result<(), PdfError> {
 
 /// Append independent layouts with common output settings.
 /// Cross-part links require navigation captured with `ParseOptions::capture_fragment_targets`.
-pub fn encode_parts(parts: &[PdfPart<'_>], images: &ImageOptions) -> Result<Vec<u8>, PdfError> {
-    Ok(encode_parts_with_diagnostics(parts, images)?.pdf)
-}
-
-pub fn encode_parts_with_diagnostics(
+pub(crate) fn encode_parts_with_diagnostics(
     parts: &[PdfPart<'_>],
     images: &ImageOptions,
 ) -> Result<EncodedPdf, PdfError> {

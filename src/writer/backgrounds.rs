@@ -1,6 +1,6 @@
 //! Background image layers: single tiles are drawn in place and repeated tiles become
 //! tiling patterns; gradients are vector axial or radial shadings.
-use crate::{
+use crate::writer::{
     PdfError,
     images::ImageWriter,
     painting::{self, rect_path},

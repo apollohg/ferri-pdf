@@ -1,8 +1,8 @@
 //! Independent HTML documents sharing one PDF and navigation space.
 use std::collections::HashMap;
 
+use crate::writer::PdfPart;
 use ferri_pdf_document::{ParseOptions, StyledDocument};
-use ferri_pdf_writer::PdfPart;
 
 use crate::{
     DefaultResolver, Error, HeadingLocation, LayoutTrace, PdfError, RenderDiagnostic,
@@ -131,7 +131,7 @@ pub fn render_parts_with_resolver(
             metadata: document.metadata(),
         })
         .collect();
-    let encoded = ferri_pdf_writer::encode_parts_with_diagnostics(&writer_parts, &options.images)
+    let encoded = crate::writer::encode_parts_with_diagnostics(&writer_parts, &options.images)
         .map_err(pdf_error)?;
     let mut image_diagnostics = encoded.image_diagnostics.into_iter();
     let mut page_count = 0;

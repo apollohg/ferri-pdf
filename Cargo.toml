@@ -102,7 +102,6 @@ ferri-pdf-layout = { path = "crates/layout", version = "0.1.0" }
 ferri-pdf-flex = { path = "crates/flex", version = "0.1.0" }
 ferri-pdf-grid = { path = "crates/grid", version = "0.1.0" }
 ferri-pdf-table = { path = "crates/table", version = "0.1.0" }
-ferri-pdf-writer = { path = "crates/writer", version = "0.1.0" }
 ferri-pdf-graphics = { path = "crates/graphics", version = "0.1.0" }
 ferri-pdf-paint = { path = "crates/paint", version = "0.1.0" }
 
@@ -135,11 +134,13 @@ ferri-pdf-style.workspace = true
 ferri-pdf-document.workspace = true
 ferri-pdf-text.workspace = true
 ferri-pdf-layout.workspace = true
-ferri-pdf-writer.workspace = true
 ferri-pdf-graphics.workspace = true
 thiserror.workspace = true
 serde_json.workspace = true
 same-file.workspace = true
+krilla-svg.workspace = true
+usvg.workspace = true
+krilla.workspace = true
 
 [dev-dependencies]
 roxmltree.workspace = true

@@ -600,11 +600,13 @@ dependencies = [
  "ferri-pdf-fonts",
  "ferri-pdf-graphics",
  "ferri-pdf-images",
+ "ferri-pdf-krilla",
+ "ferri-pdf-krilla-svg",
  "ferri-pdf-layout",
  "ferri-pdf-resources",
  "ferri-pdf-style",
  "ferri-pdf-text",
- "ferri-pdf-writer",
+ "ferri-pdf-usvg",
  "roxmltree 0.21.2",
  "same-file",
  "serde_json",
@@ -922,23 +924,6 @@ dependencies = [
  "unicode-script",
  "unicode-vo",
  "xmlwriter",
-]
-
-[[package]]
-name = "ferri-pdf-writer"
-version = "0.1.0"
-dependencies = [
- "ferri-pdf-document",
- "ferri-pdf-fonts",
- "ferri-pdf-graphics",
- "ferri-pdf-images",
- "ferri-pdf-krilla",
- "ferri-pdf-krilla-svg",
- "ferri-pdf-layout",
- "ferri-pdf-style",
- "ferri-pdf-text",
- "ferri-pdf-usvg",
- "thiserror",
 ]
 
 [[package]]

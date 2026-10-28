@@ -1,4 +1,4 @@
-use crate::PdfError;
+use crate::writer::PdfError;
 use ferri_pdf_graphics::ImagePaint;
 use ferri_pdf_images::{Image as Asset, Orientation, RasterFormat};
 use krilla::{
@@ -63,7 +63,7 @@ impl ImageWriter {
                     })
                 }
                 Asset::Pixels(pixels) => Some(
-                    Image::from_custom(crate::pixels::Pixels(pixels.clone()), false)
+                    Image::from_custom(crate::writer::pixels::Pixels(pixels.clone()), false)
                         .map(Image::with_jpeg_compression),
                 ),
                 Asset::Svg(_) => None,
@@ -124,7 +124,7 @@ impl ImageWriter {
         let clips = paint
             .clip
             .as_ref()
-            .map(|clip| crate::painting::push_clip(clip, viewport, surface))
+            .map(|clip| crate::writer::painting::push_clip(clip, viewport, surface))
             .transpose()?
             .unwrap_or(0);
         surface.push_transform(&Transform::from_row(
@@ -158,7 +158,7 @@ impl ImageWriter {
             }
         }
         surface.pop();
-        crate::painting::pop_clips(clips, surface);
+        crate::writer::painting::pop_clips(clips, surface);
         Ok(())
     }
 }

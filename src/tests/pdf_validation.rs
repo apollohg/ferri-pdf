@@ -1,9 +1,9 @@
 use super::common;
 
+use crate::writer::PdfError;
 use ferri_pdf_document::{DocumentMetadata, Navigation};
 use ferri_pdf_fonts::FontBook;
 use ferri_pdf_graphics::{Clip, DisplayItem, Rect};
-use ferri_pdf_writer::PdfError;
 
 #[test]
 fn pdf_errors_unwind_nested_display_list_scopes() {
@@ -29,7 +29,7 @@ fn pdf_errors_unwind_nested_display_list_scopes() {
         }),
         DisplayItem::Text { line: 0 },
     ];
-    let result = ferri_pdf_writer::encode(
+    let result = crate::writer::encode(
         &trace,
         &FontBook::default(),
         &Navigation::default(),
@@ -60,7 +60,7 @@ fn writer_uses_physical_page_records_and_validates_their_count() {
     trace.links.push(Vec::new());
     assert!(
         matches!(
-            ferri_pdf_writer::encode(&trace, &fonts, &navigation, &metadata, &Default::default()),
+            crate::writer::encode(&trace, &fonts, &navigation, &metadata, &Default::default()),
             Err(PdfError::PageRecordCount {
                 pages: 2,
                 records: 1
@@ -83,11 +83,11 @@ fn writer_uses_physical_page_records_and_validates_their_count() {
     trace.page_height = f32::NAN;
     trace.page_area.width = f32::NAN;
     trace.page_output.media.width = f32::NAN;
-    ferri_pdf_writer::encode(&trace, &fonts, &navigation, &metadata, &Default::default())
+    crate::writer::encode(&trace, &fonts, &navigation, &metadata, &Default::default())
         .expect("first-page compatibility fields must not drive physical page serialization");
     trace.page_records[1].geometry.paper[0] = f32::NAN;
     assert!(
-        matches!(ferri_pdf_writer::encode(&trace, &fonts, &navigation, &metadata, &Default::default()), Err(PdfError::InvalidPageSize { width, height: 300.0 }) if width.is_nan()),
+        matches!(crate::writer::encode(&trace, &fonts, &navigation, &metadata, &Default::default()), Err(PdfError::InvalidPageSize { width, height: 300.0 }) if width.is_nan()),
         "each physical page validates its own dimensions"
     );
 }

@@ -1,6 +1,6 @@
 //! Link annotations (PDF 1.7 §12.5.6.5), the document outline (§12.3.3) and the document
 //! information dictionary with its XMP counterpart (§14.3).
-use crate::PdfError;
+use crate::writer::PdfError;
 use ferri_pdf_document::{Bookmark, DocumentMetadata, LinkTarget};
 use ferri_pdf_layout::{Destination, LinkArea, LinkShape};
 use krilla::{
@@ -40,7 +40,7 @@ pub(super) enum ResolvedLink {
 }
 
 pub(super) fn resolve_links(
-    parts: &[crate::PdfPart<'_>],
+    parts: &[crate::writer::PdfPart<'_>],
     destinations: &[Vec<Option<XyzDestination>>],
 ) -> Vec<Vec<Option<ResolvedLink>>> {
     let target = |part: usize, index: usize| {

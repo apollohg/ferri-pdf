@@ -1,4 +1,4 @@
-use crate::PdfError;
+use crate::writer::PdfError;
 use ferri_pdf_graphics::{BoxPaint, Color, Contour, Point, Segment, Shape};
 use krilla::{
     geom::{PathBuilder, Rect, Transform},
@@ -21,7 +21,7 @@ pub(super) fn draw(
     page_area: ferri_pdf_graphics::Rect,
     viewport: ferri_pdf_graphics::Rect,
     surface: &mut Surface<'_>,
-    images: &mut crate::images::ImageWriter,
+    images: &mut crate::writer::images::ImageWriter,
 ) -> Result<(), PdfError> {
     if paint.rect.width <= 0.0 || paint.rect.height <= 0.0 {
         return Ok(());
@@ -88,21 +88,26 @@ fn draw_box(
     page_area: ferri_pdf_graphics::Rect,
     viewport: ferri_pdf_graphics::Rect,
     surface: &mut Surface<'_>,
-    images: &mut crate::images::ImageWriter,
+    images: &mut crate::writer::images::ImageWriter,
 ) -> Result<(), PdfError> {
     for shadow in paint.shadows(false) {
-        crate::shadows::draw(&shadow, surface)?;
+        crate::writer::shadows::draw(&shadow, surface)?;
     }
     if let Some(background) = paint.background_fill() {
         draw_fill(background, viewport, surface)?;
     }
-    crate::backgrounds::draw(paint, page_area, viewport, surface, images)?;
+    crate::writer::backgrounds::draw(paint, page_area, viewport, surface, images)?;
     for shadow in paint.shadows(true) {
-        crate::shadows::draw(&shadow, surface)?;
+        crate::writer::shadows::draw(&shadow, surface)?;
     }
     // A border image replaces the border styles (Backgrounds 3 §6).
     if let Some(border_image) = paint.border_image().map_err(PdfError::UnresolvedImage)? {
-        return crate::backgrounds::draw_border_image(&border_image, viewport, surface, images);
+        return crate::writer::backgrounds::draw_border_image(
+            &border_image,
+            viewport,
+            surface,
+            images,
+        );
     }
     for item in paint.border_fills() {
         draw_fill(item, viewport, surface)?;

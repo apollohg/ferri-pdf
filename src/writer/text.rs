@@ -1,4 +1,4 @@
-use crate::PdfError;
+use crate::writer::PdfError;
 use ferri_pdf_fonts::{FontBook, FontId};
 use ferri_pdf_layout::TextLine;
 use ferri_pdf_text::PositionedGlyph;
@@ -115,7 +115,7 @@ impl<'a> TextWriter<'a> {
                         .ok_or(PdfError::InvalidGeometry)?,
                 });
             }
-            surface.set_fill(Some(crate::painting::fill(run.color)?));
+            surface.set_fill(Some(crate::writer::painting::fill(run.color)?));
             let oblique = run.synthesis.oblique;
             let baseline = line.baseline + run.baseline_shift;
             if oblique {

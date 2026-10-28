@@ -18,6 +18,7 @@ extern crate self as ferri_pdf;
 mod multipart;
 #[cfg(test)]
 mod tests;
+mod writer;
 
 pub use multipart::{
     HtmlPart, MultipartOutput, PartOutput, render_parts, render_parts_with_resolver,
@@ -27,6 +28,9 @@ use ferri_pdf_document::{DocumentError, StyledDocument};
 use ferri_pdf_layout::LayoutError;
 use ferri_pdf_text::TextError;
 
+pub use crate::writer::{
+    ImageDpi, ImageOptions, InvalidImageDpi, InvalidJpegQuality, JpegQuality, PdfError,
+};
 pub use ferri_pdf_document::DocumentDiagnostic as RenderDiagnostic;
 pub use ferri_pdf_fonts::{
     FontDescriptor, FontFaceStyle, FontFamily, FontId, FontPreferences, FontRange, FontSelection,
@@ -52,9 +56,6 @@ pub use ferri_pdf_style::{
     ColorScheme, ContrastPreference, MotionPreference, PrintPreferences, PrintSettings, StyleError,
 };
 pub use ferri_pdf_text::{GlyphRun, PositionedGlyph};
-pub use ferri_pdf_writer::{
-    ImageDpi, ImageOptions, InvalidImageDpi, InvalidJpegQuality, JpegQuality, PdfError,
-};
 
 /// Settings for a rendering job. CSS controls page size and formatting.
 #[derive(Clone, Debug, Default)]
@@ -181,7 +182,7 @@ fn render_document(
     resolver: &dyn ResourceResolver,
 ) -> Result<RenderOutput, Error> {
     let (document, trace) = prepare_document(document, resolver)?;
-    let encoded = ferri_pdf_writer::encode_with_diagnostics(
+    let encoded = writer::encode_with_diagnostics(
         &trace,
         &document.styles().fonts,
         document.navigation(),

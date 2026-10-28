@@ -1,6 +1,6 @@
 //! Box shadows: sharp shadows are vector fills; blurred ones fill their colour through a
 //! luminosity soft mask holding the blurred alpha.
-use crate::{
+use crate::writer::{
     PdfError,
     painting::{contour_path, fill, rect_path},
     pixels::MaskPixels,
