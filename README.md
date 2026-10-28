@@ -45,7 +45,7 @@ Relative URLs resolve against `base`. HTTP(S) fetching is behind the default `ht
 
 ## Development
 
-Requires Rust 1.85 or newer.
+Requires Rust 1.97 or newer.
 
 ```sh
 cargo test --workspace
