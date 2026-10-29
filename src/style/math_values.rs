@@ -108,9 +108,10 @@ impl crate::style::Stylesheet {
             return Ok(None);
         };
         let relative = self.inherited(style, self.page_area(), resolver);
-        let Ok(value) = crate::style::box_values::length_percentage(&value, &relative) else {
-            return Ok(None);
-        };
-        Ok(Some(value))
+        match crate::style::box_values::length_percentage(&value, &relative) {
+            Ok(value) => Ok(Some(value)),
+            Err(StyleError::Invalid(_)) => Ok(None),
+            Err(error) => Err(error),
+        }
     }
 }
