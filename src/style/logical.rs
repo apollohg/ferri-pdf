@@ -78,7 +78,7 @@ struct Group {
     positions: &'static [Position],
 }
 
-const GROUPS: [Group; 15] = {
+const GROUPS: [Group; 16] = {
     use Property as P;
     [
         Group {
@@ -236,6 +236,21 @@ const GROUPS: [Group; 15] = {
             flow_relative: &[P::OverscrollBehaviorBlock, P::OverscrollBehaviorInline],
             positions: &DIMENSIONS,
         },
+        Group {
+            physical: &[
+                P::OverflowClipMarginTop,
+                P::OverflowClipMarginRight,
+                P::OverflowClipMarginBottom,
+                P::OverflowClipMarginLeft,
+            ],
+            flow_relative: &[
+                P::OverflowClipMarginBlockStart,
+                P::OverflowClipMarginBlockEnd,
+                P::OverflowClipMarginInlineStart,
+                P::OverflowClipMarginInlineEnd,
+            ],
+            positions: &SIDES,
+        },
     ]
 };
 /// The groups of properties without print effect, whose values live in `Style::inert`.
@@ -380,6 +395,8 @@ pub(crate) fn reflowed(source: &Style, flow: Flow) -> Style {
     [style.min_width, style.min_height] = dimensions([&source.min_width, &source.min_height]);
     [style.max_width, style.max_height] = dimensions([&source.max_width, &source.max_height]);
     style.overflow = std::array::from_fn(|index| source.overflow[dimension(index)]);
+    style.overflow_clip_margin =
+        std::array::from_fn(|index| source.overflow_clip_margin[side(index)]);
     for group in &GROUPS[INERT_GROUPS] {
         for (index, property) in group.physical.iter().enumerate() {
             let from = group.physical[flow.source(from, group.positions, index)];

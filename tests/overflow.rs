@@ -259,3 +259,89 @@ fn overflow_clip_margin_moves_only_the_overflow_clip_edge() {
         }
     }
 }
+
+#[test]
+fn overflow_clip_margin_sides_use_independent_visual_box_origins() {
+    const BOX: &str = "#box{width:100pt;height:40pt;padding:4pt;border:3pt solid navy;border-radius:16pt;overflow:clip}";
+    const BODY: &str =
+        "<section><div id=box><p style='margin:0'>Overflowing content</p></div></section>";
+    for (declarations, expected, radii) in [
+        (
+            "#box{overflow-clip-margin-top:border-box 2pt;overflow-clip-margin-right:content-box 3pt;overflow-clip-margin-bottom:padding-box 5pt;overflow-clip-margin-left:border-box 7pt}",
+            [29.0, 34.0, 117.0, 58.0],
+            [[23.0, 18.0], [12.0, 18.0], [12.0, 18.0], [23.0, 18.0]],
+        ),
+        (
+            "#box{direction:rtl;overflow-clip-margin:content-box 1pt;overflow-clip-margin-block:border-box 2pt;overflow-clip-margin-inline-start:padding-box 5pt;overflow-clip-margin-inline-end:border-box 7pt}",
+            [29.0, 34.0, 123.0, 58.0],
+            [[23.0, 18.0], [18.0, 18.0], [18.0, 18.0], [23.0, 18.0]],
+        ),
+        (
+            "section{overflow-clip-margin:content-box 8pt}#box{overflow-clip-margin:inherit;overflow-clip-margin-top:2pt border-box;overflow-clip-margin-left:initial}",
+            [39.0, 34.0, 112.0, 57.0],
+            [[13.0, 18.0], [17.0, 18.0], [17.0, 17.0], [13.0, 17.0]],
+        ),
+        (
+            "#box{--edge:content-box 1pt;overflow-clip-margin-left:border-box 7pt!important;overflow-clip-margin:var(--edge)}",
+            [29.0, 42.0, 115.0, 42.0],
+            [[23.0, 10.0], [10.0, 10.0], [10.0, 10.0], [23.0, 10.0]],
+        ),
+        (
+            "section{overflow-clip-margin-inline-start:border-box 7pt}#box{direction:rtl;overflow-clip-margin-inline-start:inherit;overflow-clip-margin-block:content-box 1pt}",
+            [39.0, 42.0, 118.0, 42.0],
+            [[13.0, 10.0], [23.0, 10.0], [23.0, 10.0], [13.0, 10.0]],
+        ),
+        (
+            "section{overflow-clip-margin:border-box 30pt}",
+            [39.0, 39.0, 108.0, 48.0],
+            [[13.0, 13.0]; 4],
+        ),
+    ] {
+        let result = trace(&format!("{BOX}{declarations}"), BODY);
+        let clips = clips(&result.display_lists[0]);
+        assert_eq!(clips.len(), 1, "{declarations}: {clips:?}");
+        let [x, y, width, height] = expected;
+        assert_rect(
+            declarations,
+            clips[0].rect,
+            Rect {
+                x,
+                y,
+                width,
+                height,
+            },
+        );
+        for (actual, expected) in clips[0].radii.iter().flatten().zip(radii.iter().flatten()) {
+            assert!(
+                (actual - expected).abs() < TOLERANCE_PT,
+                "{declarations}: corner radii {:?}, expected {radii:?}",
+                clips[0].radii
+            );
+        }
+    }
+}
+
+#[test]
+fn clip_margin_shorthands_reject_multiple_offsets_and_reset_their_sides() {
+    const BOX: &str =
+        "div{width:100pt;height:40pt;padding:4pt;border:3pt solid navy;overflow:clip}";
+    for declarations in [
+        "overflow-clip-margin:content-box 1pt;overflow-clip-margin-inline:8pt 9pt;overflow-clip-margin-block:-1pt",
+        "overflow-clip-margin:content-box 1pt;overflow-clip-margin:2pt 3pt;overflow-clip-margin-top:-2pt",
+        "overflow-clip-margin-left:30pt;overflow-clip-margin-inline:content-box 1pt;overflow-clip-margin-block:content-box 1pt",
+    ] {
+        let result = trace(&format!("{BOX}div{{{declarations}}}"), "<div>Text</div>");
+        let clips = clips(&result.display_lists[0]);
+        assert_eq!(clips.len(), 1, "{declarations}: {clips:?}");
+        assert_rect(
+            declarations,
+            clips[0].rect,
+            Rect {
+                x: 42.0,
+                y: 42.0,
+                width: 102.0,
+                height: 42.0,
+            },
+        );
+    }
+}

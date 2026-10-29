@@ -38,6 +38,22 @@ class ClipPathPdf(unittest.TestCase):
         self.assertEqual(image.getpixel((PAGE_MARGIN + 3, PAGE_MARGIN + 3)), WHITE,
                          'the corners outside the circle are clipped away')
 
+    def test_overflow_clip_margin_sides_match_an_asymmetric_rounded_inset(self):
+        css = ('.c{position:relative;width:100pt;height:40pt;padding:4pt;margin:30pt;'
+               'border:3pt solid transparent;border-radius:16pt}'
+               '.c div{position:absolute;left:-100pt;top:-100pt;'
+               'width:300pt;height:300pt;background:#f00}')
+        body = '<div class=c><div></div></div>'
+        actual = self.raster(css + '.c{overflow:clip;'
+                             'overflow-clip-margin-top:border-box 2pt;'
+                             'overflow-clip-margin-right:content-box 3pt;'
+                             'overflow-clip-margin-bottom:padding-box 5pt;'
+                             'overflow-clip-margin-left:border-box 7pt}', body)
+        expected = self.raster(css + '.c{clip-path:inset(-2pt 4pt -2pt -7pt '
+                               'round 23pt 12pt 12pt 23pt / 18pt)}', body)
+        self.assertEqual(actual.tobytes(), expected.tobytes(),
+                         'each side origin and corner axis must reach the PDF clip path')
+
     def test_descendants_are_clipped_and_even_odd_polygons_leave_holes(self):
         css = (f'.c{{width:{SIZE}pt;height:{SIZE}pt;background:#f00}}'
                '.c div{width:200pt;height:20pt;background:#00f}')

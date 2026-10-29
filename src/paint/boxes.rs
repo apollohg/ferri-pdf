@@ -610,13 +610,27 @@ impl<I> BoxPaint<I> {
         margin: f32,
         axes: [bool; 2],
     ) -> Clip {
+        self.overflow_clip_sides([(area, margin); 4], axes)
+    }
+    pub(crate) fn overflow_clip_sides(
+        &self,
+        margins: [(crate::paint::BoxArea, f32); 4],
+        axes: [bool; 2],
+    ) -> Clip {
         let widths = self.inner_widths();
-        let edge = match area {
-            crate::paint::BoxArea::BorderBox => widths.map(|width| -width),
-            crate::paint::BoxArea::PaddingBox => [0.0; 4],
-            crate::paint::BoxArea::ContentBox => self.fragment_padding(),
-        };
-        self.inner_clip(edge.map(|edge| edge - margin), axes)
+        let padding = self.fragment_padding();
+        self.inner_clip(
+            std::array::from_fn(|side| {
+                let (area, margin) = margins[side];
+                let edge = match area {
+                    crate::paint::BoxArea::BorderBox => -widths[side],
+                    crate::paint::BoxArea::PaddingBox => 0.0,
+                    crate::paint::BoxArea::ContentBox => padding[side],
+                };
+                edge - margin
+            }),
+            axes,
+        )
     }
     pub fn has_ink(&self) -> bool {
         self.rect.width > 0.0

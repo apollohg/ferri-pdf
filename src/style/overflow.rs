@@ -411,11 +411,15 @@ impl Style {
         let axes = self.clip_edge_axes(edge);
         match edge {
             ClipEdge::Padding => paint.inner_clip([0.0; 4], axes),
-            ClipEdge::Overflow => {
-                let margin = self.overflow_clip_margin;
-                paint.overflow_clip_edge(margin.area, margin.length, axes)
-            }
+            ClipEdge::Overflow => self.overflow_clip_edge(paint, axes),
         }
+    }
+    pub(crate) fn overflow_clip_edge<I>(&self, paint: &BoxPaint<I>, axes: [bool; 2]) -> Clip {
+        paint.overflow_clip_sides(
+            self.overflow_clip_margin
+                .map(|margin| (margin.area, margin.length)),
+            axes,
+        )
     }
     /// Overflow other than `visible` and `clip`, after axis pairing.
     pub(crate) fn is_scroll_container(&self) -> bool {

@@ -217,6 +217,13 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::BorderBlock => border(&value, &[BORDER_BLOCK_START, BORDER_BLOCK_END]),
         P::BorderInline => border(&value, &[BORDER_INLINE_START, BORDER_INLINE_END]),
         P::Overflow => pair(&value, [P::OverflowX, P::OverflowY]),
+        P::OverflowClipMargin | P::OverflowClipMarginInline | P::OverflowClipMarginBlock => {
+            shorthand
+                .longhands()
+                .iter()
+                .map(|&property| (property, longhand(property, &value)))
+                .collect()
+        }
         P::Gap | P::GridGap => pair(&value, [P::RowGap, P::ColumnGap]),
         P::GridRowGap => alias(&value, P::RowGap),
         P::GridColumnGap => alias(&value, P::ColumnGap),

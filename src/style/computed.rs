@@ -219,7 +219,7 @@ pub(crate) struct Style {
     pub page: crate::style::Page,
     /// Horizontal and vertical overflow after axis pairing.
     pub overflow: [crate::style::Overflow; 2],
-    pub overflow_clip_margin: crate::style::OverflowClipMargin,
+    pub overflow_clip_margin: [crate::style::OverflowClipMargin; 4],
     pub rtl: bool,
     pub unicode_bidi: crate::style::UnicodeBidi,
     pub text_indent: crate::style::TextIndent,
@@ -361,7 +361,7 @@ impl Default for Style {
             object_position: [const { crate::paint::PositionComponent::CENTER }; 2],
             page: crate::style::Page::default(),
             overflow: [crate::style::Overflow::Visible; 2],
-            overflow_clip_margin: crate::style::OverflowClipMargin::default(),
+            overflow_clip_margin: [crate::style::OverflowClipMargin::default(); 4],
             rtl: false,
             unicode_bidi: crate::style::UnicodeBidi::Normal,
             text_indent: crate::style::TextIndent::default(),

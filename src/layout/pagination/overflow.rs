@@ -103,12 +103,7 @@ pub(super) fn box_bounds(
         // Scroll containers clip at the padding edge, `overflow: clip` at the overflow clip
         // edge (CSS Overflow 3 §3.2).
         let padding = descendants.intersection(paint.inner_clip([0.0; 4], [true; 2]).rect);
-        let margin = style.overflow_clip_margin;
-        let edge = descendants.intersection(
-            paint
-                .overflow_clip_edge(margin.area, margin.length, [true; 2])
-                .rect,
-        );
+        let edge = descendants.intersection(style.overflow_clip_edge(paint, [true; 2]).rect);
         let mut descendants = *descendants;
         for (axis, overflow) in style.overflow.into_iter().enumerate() {
             let clipped = match overflow {

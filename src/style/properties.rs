@@ -709,8 +709,20 @@ fn handler(property: Property) -> Option<Handler> {
             overflow_y,
             Some(|v, _| crate::style::Overflow::from_component(v).is_ok()),
         ),
-        P::OverflowClipMargin => (
-            overflow_clip_margin,
+        P::OverflowClipMarginTop => (
+            overflow_clip_margin_top,
+            Some(|v, r| crate::style::OverflowClipMargin::from_component(v, r).is_ok()),
+        ),
+        P::OverflowClipMarginRight => (
+            overflow_clip_margin_right,
+            Some(|v, r| crate::style::OverflowClipMargin::from_component(v, r).is_ok()),
+        ),
+        P::OverflowClipMarginBottom => (
+            overflow_clip_margin_bottom,
+            Some(|v, r| crate::style::OverflowClipMargin::from_component(v, r).is_ok()),
+        ),
+        P::OverflowClipMarginLeft => (
+            overflow_clip_margin_left,
             Some(|v, r| crate::style::OverflowClipMargin::from_component(v, r).is_ok()),
         ),
         P::BreakBefore => (
@@ -1554,8 +1566,29 @@ fn font_style(
     Ok(())
 }
 computed!(
-    overflow_clip_margin,
-    [overflow_clip_margin],
+    overflow_clip_margin_top,
+    [overflow_clip_margin[TOP]],
+    |value, style, _parent, relative| {
+        crate::style::OverflowClipMargin::from_component(value, relative)?
+    }
+);
+computed!(
+    overflow_clip_margin_right,
+    [overflow_clip_margin[RIGHT]],
+    |value, style, _parent, relative| {
+        crate::style::OverflowClipMargin::from_component(value, relative)?
+    }
+);
+computed!(
+    overflow_clip_margin_bottom,
+    [overflow_clip_margin[BOTTOM]],
+    |value, style, _parent, relative| {
+        crate::style::OverflowClipMargin::from_component(value, relative)?
+    }
+);
+computed!(
+    overflow_clip_margin_left,
+    [overflow_clip_margin[LEFT]],
     |value, style, _parent, relative| {
         crate::style::OverflowClipMargin::from_component(value, relative)?
     }

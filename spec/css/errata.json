@@ -536,6 +536,15 @@
       "initial": ["border-inline-end-width", "border-inline-end-style", "border-inline-end-color"],
       "source": "https://www.w3.org/TR/2025/WD-css-logical-1-20251204/#propdef-border-inline-end"
     },
+    "overflow-clip-margin": {
+      "initial": [
+        "overflow-clip-margin-top",
+        "overflow-clip-margin-right",
+        "overflow-clip-margin-bottom",
+        "overflow-clip-margin-left"
+      ],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#overflow-clip-margin: restricted shorthand for the four physical sides"
+    },
     "overflow-block": {
       "initial": "visible",
       "source": "https://www.w3.org/TR/2025/WD-css-overflow-3-20251007/#propdef-overflow-block"
@@ -670,6 +679,102 @@
     }
   },
   "additions": {
+    "overflow-clip-margin-top": {
+      "syntax": "<visual-box> || <length [0,∞]>",
+      "initial": "0px",
+      "inherited": false,
+      "groups": [
+        "CSS Overflow"
+      ],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#overflow-clip-margin"
+    },
+    "overflow-clip-margin-right": {
+      "syntax": "<visual-box> || <length [0,∞]>",
+      "initial": "0px",
+      "inherited": false,
+      "groups": [
+        "CSS Overflow"
+      ],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#overflow-clip-margin"
+    },
+    "overflow-clip-margin-bottom": {
+      "syntax": "<visual-box> || <length [0,∞]>",
+      "initial": "0px",
+      "inherited": false,
+      "groups": [
+        "CSS Overflow"
+      ],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#overflow-clip-margin"
+    },
+    "overflow-clip-margin-left": {
+      "syntax": "<visual-box> || <length [0,∞]>",
+      "initial": "0px",
+      "inherited": false,
+      "groups": [
+        "CSS Overflow"
+      ],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#overflow-clip-margin"
+    },
+    "overflow-clip-margin-block-start": {
+      "syntax": "<visual-box> || <length [0,∞]>",
+      "initial": "0px",
+      "inherited": false,
+      "groups": [
+        "CSS Overflow"
+      ],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#overflow-clip-margin"
+    },
+    "overflow-clip-margin-inline-start": {
+      "syntax": "<visual-box> || <length [0,∞]>",
+      "initial": "0px",
+      "inherited": false,
+      "groups": [
+        "CSS Overflow"
+      ],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#overflow-clip-margin"
+    },
+    "overflow-clip-margin-block-end": {
+      "syntax": "<visual-box> || <length [0,∞]>",
+      "initial": "0px",
+      "inherited": false,
+      "groups": [
+        "CSS Overflow"
+      ],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#overflow-clip-margin"
+    },
+    "overflow-clip-margin-inline-end": {
+      "syntax": "<visual-box> || <length [0,∞]>",
+      "initial": "0px",
+      "inherited": false,
+      "groups": [
+        "CSS Overflow"
+      ],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#overflow-clip-margin"
+    },
+    "overflow-clip-margin-inline": {
+      "syntax": "<visual-box> || <length [0,∞]>",
+      "initial": [
+        "overflow-clip-margin-inline-start",
+        "overflow-clip-margin-inline-end"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Overflow"
+      ],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#overflow-clip-margin"
+    },
+    "overflow-clip-margin-block": {
+      "syntax": "<visual-box> || <length [0,∞]>",
+      "initial": [
+        "overflow-clip-margin-block-start",
+        "overflow-clip-margin-block-end"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Overflow"
+      ],
+      "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#overflow-clip-margin"
+    },
     "color-adjust": {
       "syntax": "<'print-color-adjust'>",
       "initial": ["print-color-adjust"],
