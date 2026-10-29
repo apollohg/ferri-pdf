@@ -17,7 +17,6 @@ const TO_TOP_DEG: f32 = 0.0;
 const TO_RIGHT_DEG: f32 = 90.0;
 const TO_BOTTOM_DEG: f32 = 180.0;
 const TO_LEFT_DEG: f32 = 270.0;
-const MIN_GRADIENT_STOPS: usize = 2;
 /// `[ <angle> | <zero> | to <side-or-corner> ] || <color-interpolation-method>` slots.
 const DIRECTION_SLOT: usize = 0;
 /// `<side-or-corner>` slots.
@@ -440,15 +439,6 @@ fn stop_list(
                 .into_iter()
                 .map(|position| GradientItem::Stop { color, position }),
         );
-    }
-    let stops = items
-        .iter()
-        .filter(|item| matches!(item, GradientItem::Stop { .. }))
-        .count();
-    if stops < MIN_GRADIENT_STOPS {
-        return Err(StyleError::Unsupported(format!(
-            "gradient with fewer than {MIN_GRADIENT_STOPS} colour stops: {list}"
-        )));
     }
     Ok(items)
 }

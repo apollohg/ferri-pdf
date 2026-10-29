@@ -158,6 +158,10 @@ impl Gradient {
                 },
             ),
         };
+        // CSS Images 4 §3: one stop fills the image, regardless of its position.
+        if let [GradientItem::Stop { color, .. }] = self.items.as_slice() {
+            return Some(axis.solid(color.used()));
+        }
         let placed = dense(&fixup(&self.items, ray), self.interpolation);
         let (low, high) = match axis {
             Axis::Line { .. } | Axis::Turn { .. } => (0.0, ray),

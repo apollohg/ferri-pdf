@@ -248,6 +248,27 @@ body{{margin:0}}div{{margin:0}}{css}</style>{body}''')
                     self.assertNear(pixels.getpixel((int(x), PAGE_MARGIN + 10)), expected,
                                     SHADING_TOLERANCE, f'{step / 10:.1f} along the line')
 
+    def test_single_stop_gradients_paint_uniform_colour_and_alpha(self):
+        functions = ('linear-gradient', 'radial-gradient', 'conic-gradient',
+                     'repeating-linear-gradient', 'repeating-radial-gradient',
+                     'repeating-conic-gradient')
+        colour, alpha = (20, 80, 160), 0.4
+        expected = tuple(round(channel * alpha + 255 * (1 - alpha)) for channel in colour)
+        width = 200
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-single-stop-') as directory:
+            root = Path(directory)
+            for function in functions:
+                for position in ('', ' 150%', ' -150%'):
+                    with self.subTest(function=function, position=position):
+                        css = (f'div{{width:{width}pt;height:{SWATCH_HEIGHT}pt;'
+                               f'background:{function}(rgb(20 80 160 / 40%){position})}}')
+                        with self.raster(root, self.render(root, css, '<div></div>')) as pixels:
+                            for x in (1, width // 2, width - 1):
+                                self.assertNear(pixels.getpixel((PAGE_MARGIN + x,
+                                                               PAGE_MARGIN + SWATCH_HEIGHT // 2)),
+                                                expected, SOLID_TOLERANCE,
+                                                f'{function}{position}, x={x}')
+
     def test_a_dark_root_scheme_darkens_the_canvas_and_initial_text(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-scheme-') as directory:
             root = Path(directory)

@@ -182,6 +182,40 @@ fn stop_fixup_interpolates_outside_stops_and_clamps_decreasing_positions() {
 }
 
 #[test]
+fn single_stop_gradients_fill_the_tile_independently_of_stop_position_and_repetition() {
+    for function in [
+        "linear-gradient",
+        "radial-gradient",
+        "conic-gradient",
+        "repeating-linear-gradient",
+        "repeating-radial-gradient",
+        "repeating-conic-gradient",
+    ] {
+        let positions: &[&str] = if function.contains("conic") {
+            &["", " -90deg", " 150%", " 30deg 60deg"]
+        } else {
+            &["", " -30pt", " 150%", " 30pt 60pt"]
+        };
+        for position in positions {
+            let source = format!("{function}(rgb(20 80 160 / 40%){position})");
+            let resolved = gradient(&source);
+            assert!(!resolved.stops.is_empty(), "{source} must paint its color");
+            for stop in &resolved.stops {
+                assert_eq!(stop.color.rgb, [20, 80, 160], "{source}: {stop:?}");
+                close(&source, stop.color.alpha, 0.4);
+            }
+            for point in [[0.0, 0.0], [100.0, 50.0], [200.0, 100.0]] {
+                close(
+                    &format!("{source} opacity at {point:?}"),
+                    resolved.alpha_at(point),
+                    0.4,
+                );
+            }
+        }
+    }
+}
+
+#[test]
 fn interpolation_is_premultiplied_so_transparent_ends_keep_their_neighbour_colour() {
     let resolved = gradient("linear-gradient(to right,red,transparent)");
     assert_stops(
@@ -738,12 +772,17 @@ fn root_backgrounds_use_root_positioning_while_fixed_layers_use_the_page_area() 
 
 #[test]
 fn colour_stop_currentcolor_and_invalid_gradients_are_resolved_at_computed_time() {
-    let resolved = gradient("linear-gradient(currentcolor,blue)");
-    assert_eq!(
-        resolved.stops[0].color,
-        Color::BLACK,
-        "currentcolor uses the element colour"
-    );
+    for source in [
+        "linear-gradient(currentcolor)",
+        "linear-gradient(currentcolor,blue)",
+    ] {
+        let resolved = gradient(source);
+        assert_eq!(
+            resolved.stops[0].color,
+            Color::BLACK,
+            "{source}: currentcolor uses the element colour"
+        );
+    }
     // Outside the CSS Images grammar: the declaration is dropped for the earlier gradient.
     for invalid in [
         "linear-gradient(red,10%,20%,blue)",
@@ -758,18 +797,12 @@ fn colour_stop_currentcolor_and_invalid_gradients_are_resolved_at_computed_time(
             "{invalid} must be dropped, keeping the earlier two-stop gradient"
         );
     }
-    // Grammatical but not drawable: one colour stop, or a circle with two radii.
-    for undrawable in [
-        "linear-gradient(red)",
-        "radial-gradient(circle 10% 20%,red,blue)",
-    ] {
-        let html =
-            format!("<style>{PROFILE}div{{background-image:{undrawable}}}</style><div>A</div>");
-        assert!(
-            render_html(&html, &options()).is_err(),
-            "{undrawable} must be reported rather than painted"
-        );
-    }
+    let undrawable = "radial-gradient(circle 10% 20%,red,blue)";
+    let html = format!("<style>{PROFILE}div{{background-image:{undrawable}}}</style><div>A</div>");
+    assert!(
+        render_html(&html, &options()).is_err(),
+        "a circle with two radii must be reported rather than painted: {undrawable}"
+    );
 }
 
 #[test]
