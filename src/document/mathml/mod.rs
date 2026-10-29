@@ -2,6 +2,7 @@
 mod metrics;
 mod operator;
 mod operator_data;
+mod schedule;
 mod stretch;
 use crate::document::{DocumentError, Paragraph};
 use crate::dom::{Element, MATHML_NAMESPACE, NodeData, TreeRelation};
@@ -13,16 +14,19 @@ use crate::style::{Display, LengthPercentage, Size, Style, StyleError, Styleshee
 use crate::text::TextContext;
 use metrics::Metrics;
 use operator::{Form, Operator};
+use schedule::{MathError, Requests};
+use std::collections::HashMap;
 use std::sync::Arc;
 
 const MAX_MATH_DEPTH: usize = 256;
 const UNCONSTRAINED_LINE: f32 = f32::MAX;
 
+#[derive(Clone)]
 enum Paint {
     Text(TextLine),
     Box(BoxPaint),
 }
-#[derive(Default)]
+#[derive(Clone, Default)]
 struct MathBox {
     width: f32,
     ascent: f32,
@@ -102,18 +106,20 @@ fn script_pairs(
         })
         .collect()
 }
-struct Builder<'a> {
+struct Builder<'a, 'd> {
     sheet: &'a Stylesheet,
     resolver: &'a dyn ResourceResolver,
     text: TextContext<'a>,
+    jobs: Vec<schedule::Job<'d>>,
+    cache: HashMap<schedule::Key, MathBox>,
 }
-fn unsupported(detail: impl Into<String>) -> DocumentError {
+fn unsupported<'d>(detail: impl Into<String>) -> MathError<'d> {
     StyleError::Unsupported(format!("MathML {}", detail.into())).into()
 }
-fn text_error(error: crate::text::TextError) -> DocumentError {
+fn text_error<'d>(error: crate::text::TextError) -> MathError<'d> {
     match error {
         crate::text::TextError::Font(error) => StyleError::Font(error).into(),
-        other => DocumentError::Formatting(other.to_string()),
+        other => DocumentError::Formatting(other.to_string()).into(),
     }
 }
 pub(super) fn render(
@@ -122,12 +128,14 @@ pub(super) fn render(
     sheet: &Stylesheet,
     resolver: &dyn ResourceResolver,
 ) -> Result<Arc<Image>, DocumentError> {
-    let builder = Builder {
+    let mut builder = Builder {
         sheet,
         resolver,
         text: TextContext::new(&sheet.fonts, resolver),
+        jobs: Vec::new(),
+        cache: HashMap::new(),
     };
-    let content = builder.element(element, style, 0, true, MathLayout::default())?;
+    let content = builder.run(element, style)?;
     let mut lines = Vec::new();
     let mut items = Vec::new();
     for paint in content.paint {
@@ -157,18 +165,18 @@ pub(super) fn render(
         baseline: Some(content.ascent),
     }))))
 }
-impl Builder<'_> {
-    fn metrics(&self, style: &Style) -> Result<Metrics, DocumentError> {
+impl<'d> Builder<'_, 'd> {
+    fn metrics(&self, style: &Style) -> Result<Metrics, MathError<'d>> {
         Metrics::of(&self.sheet.fonts, style, self.resolver)
             .map_err(|error| StyleError::Font(error).into())
     }
-    fn token(&self, text: &str, style: &Style) -> Result<MathBox, DocumentError> {
+    fn token(&self, text: &str, style: &Style) -> Result<MathBox, MathError<'d>> {
         let Some(paragraph) = Paragraph::generated(text, style)? else {
             return Ok(MathBox::default());
         };
         self.shape_token(&paragraph, style)
     }
-    fn token_element(&self, element: Element<'_>, style: &Style) -> Result<MathBox, DocumentError> {
+    fn token_element(&self, element: Element<'d>, style: &Style) -> Result<MathBox, MathError<'d>> {
         let mut collector = crate::document::inline::InlineCollector::default();
         for text in Self::text_nodes(element)? {
             collector.append(text, style)?;
@@ -178,7 +186,7 @@ impl Builder<'_> {
         };
         self.shape_token(&paragraph, style)
     }
-    fn shape_token(&self, paragraph: &Paragraph, style: &Style) -> Result<MathBox, DocumentError> {
+    fn shape_token(&self, paragraph: &Paragraph, style: &Style) -> Result<MathBox, MathError<'d>> {
         let lines = self
             .text
             .layout_paragraph(paragraph, UNCONSTRAINED_LINE, &[])
@@ -247,19 +255,21 @@ impl Builder<'_> {
         Ok(result)
     }
     fn row(
-        &self,
-        element: Element<'_>,
-        style: &Style,
+        &mut self,
+        element: Element<'d>,
+        style: &Arc<Style>,
         depth: usize,
         layout: MathLayout,
-    ) -> Result<MathBox, DocumentError> {
+    ) -> Result<MathBox, MathError<'d>> {
         let mut children = Vec::new();
+        let mut requests = Requests::default();
         for node in element.as_node().children(TreeRelation::Formatting) {
             let child = match node.value() {
                 NodeData::Text(text) if !text.chars().all(crate::document::is_css_whitespace) => {
-                    let mut child = self.token(text, style)?;
-                    child.space_like = true;
-                    child
+                    self.token(text, style).map(|mut child| {
+                        child.space_like = true;
+                        child
+                    })
                 }
                 NodeData::Element(_) => self.element(
                     node.element().expect("element node"),
@@ -267,11 +277,14 @@ impl Builder<'_> {
                     depth + 1,
                     false,
                     MathLayout::default(),
-                )?,
+                ),
                 _ => continue,
             };
-            children.push((node.element(), child));
+            if let Some(child) = requests.collect(child)? {
+                children.push((node.element(), child));
+            }
         }
+        requests.finish()?;
         let significant: Vec<_> = children
             .iter()
             .enumerate()
@@ -279,6 +292,7 @@ impl Builder<'_> {
             .map(|(index, _)| index)
             .collect();
         let embellished = significant.len() == 1 && children[significant[0]].1.operator.is_some();
+        let mut requests = Requests::default();
         for (index, (source, child)) in children.iter_mut().enumerate() {
             let Some(operator) = &child.operator else {
                 continue;
@@ -293,8 +307,8 @@ impl Builder<'_> {
                 Form::Infix
             };
             let inherited_stretch = if embellished { layout.stretch } else { None };
-            if (!operator.explicit_form && operator.form != form) || inherited_stretch.is_some() {
-                *child = self.element(
+            if ((!operator.explicit_form && operator.form != form) || inherited_stretch.is_some())
+                && let Some(resolved) = requests.collect(self.element(
                     source.expect("only elements are embellished"),
                     style,
                     depth + 1,
@@ -303,9 +317,12 @@ impl Builder<'_> {
                         form: Some(form),
                         stretch: inherited_stretch,
                     },
-                )?;
+                ))?
+            {
+                *child = resolved;
             }
         }
+        requests.finish()?;
         if layout.stretch.is_none() {
             let (ascent, descent) = children
                 .iter()
@@ -318,12 +335,12 @@ impl Builder<'_> {
                 .fold((0.0f32, 0.0f32), |(ascent, descent), (_, child)| {
                     (ascent.max(child.ink_ascent), descent.max(child.ink_descent))
                 });
+            let mut requests = Requests::default();
             for (source, child) in &mut children {
                 if let Some(operator) = &child.operator
                     && operator.stretchy
                     && !operator.inline_axis
-                {
-                    *child = self.element(
+                    && let Some(resolved) = requests.collect(self.element(
                         source.expect("operator source"),
                         style,
                         depth + 1,
@@ -332,9 +349,12 @@ impl Builder<'_> {
                             form: Some(operator.form),
                             stretch: Some(Stretch::Block(ascent, descent)),
                         },
-                    )?;
+                    ))?
+                {
+                    *child = resolved;
                 }
             }
+            requests.finish()?;
         }
         let add_space = element.name() == "math" || !embellished;
         let mut positions = Vec::with_capacity(children.len());
@@ -404,31 +424,17 @@ impl Builder<'_> {
         }
         Ok(result)
     }
-    fn element(
-        &self,
-        element: Element<'_>,
-        parent: &Style,
+    fn layout_element(
+        &mut self,
+        element: Element<'d>,
+        style: &Arc<Style>,
         depth: usize,
         root: bool,
         layout: MathLayout,
-    ) -> Result<MathBox, DocumentError> {
-        if depth >= MAX_MATH_DEPTH {
-            return Err(DocumentError::Formatting(format!(
-                "MathML nesting exceeds {MAX_MATH_DEPTH}"
-            )));
-        }
+    ) -> Result<MathBox, MathError<'d>> {
         if element.namespace() != MATHML_NAMESPACE {
             return Err(unsupported(format!("foreign content {}", element.name())));
         }
-        let computed;
-        let style = if root {
-            parent
-        } else {
-            computed = self
-                .sheet
-                .computed_with_resolver(element, parent, self.resolver)?;
-            &computed
-        };
         if style.display == Display::None {
             return Ok(MathBox {
                 space_like: true,
@@ -442,11 +448,12 @@ impl Builder<'_> {
                 element.name()
             )));
         }
-        if style.position.is_out_of_flow()
-            || style.floating().is_some()
-            || style.has_transform_effects()
-            || style.is_filtered()
-            || style.has_backdrop_filter()
+        if !root
+            && (style.position.is_out_of_flow()
+                || style.floating().is_some()
+                || style.has_transform_effects()
+                || style.is_filtered()
+                || style.has_backdrop_filter())
         {
             return Err(unsupported(format!(
                 "positioning or effects on {}",
@@ -479,11 +486,11 @@ impl Builder<'_> {
         }
         Ok(content)
     }
-    fn in_flow_children<'d>(
+    fn in_flow_children(
         &self,
         element: Element<'d>,
         style: &Style,
-    ) -> Result<Vec<Element<'d>>, DocumentError> {
+    ) -> Result<Vec<Element<'d>>, MathError<'d>> {
         let mut children = Vec::new();
         for child in element.children(TreeRelation::Formatting) {
             if self
@@ -498,13 +505,14 @@ impl Builder<'_> {
         Ok(children)
     }
     fn children(
-        &self,
-        element: Element<'_>,
-        style: &Style,
+        &mut self,
+        element: Element<'d>,
+        style: &Arc<Style>,
         depth: usize,
         layout: MathLayout,
-    ) -> Result<Vec<MathBox>, DocumentError> {
+    ) -> Result<Vec<MathBox>, MathError<'d>> {
         let mut boxes = Vec::new();
+        let mut requests = Requests::default();
         for (index, child) in self
             .in_flow_children(element, style)?
             .into_iter()
@@ -528,11 +536,16 @@ impl Builder<'_> {
                     stretch: None,
                 }
             };
-            boxes.push(self.element(child, style, depth + 1, false, child_layout)?);
+            if let Some(child) =
+                requests.collect(self.element(child, style, depth + 1, false, child_layout))?
+            {
+                boxes.push(child);
+            }
         }
+        requests.finish()?;
         Ok(boxes)
     }
-    fn text_nodes(element: Element<'_>) -> Result<Vec<&str>, DocumentError> {
+    fn text_nodes(element: Element<'d>) -> Result<Vec<&'d str>, MathError<'d>> {
         let mut nodes = Vec::new();
         for node in element.as_node().children(TreeRelation::Formatting) {
             match node.value() {
@@ -552,7 +565,7 @@ impl Builder<'_> {
         target: f32,
         horizontal: bool,
         variants_only: bool,
-    ) -> Result<Option<MathBox>, DocumentError> {
+    ) -> Result<Option<MathBox>, MathError<'d>> {
         let mut visible = style.clone();
         visible.visibility = crate::style::Visibility::Visible;
         let mut normal = self.token(&character.to_string(), &visible)?;
@@ -622,11 +635,11 @@ impl Builder<'_> {
         Ok(Some(normal))
     }
     fn operator(
-        &self,
-        element: Element<'_>,
-        style: &Style,
+        &mut self,
+        element: Element<'d>,
+        style: &Arc<Style>,
         layout: MathLayout,
-    ) -> Result<MathBox, DocumentError> {
+    ) -> Result<MathBox, MathError<'d>> {
         let text = Self::text_nodes(element)?.concat();
         let operator = Operator::of(
             element,
@@ -714,10 +727,10 @@ impl Builder<'_> {
     }
     fn attribute(
         &self,
-        element: Element<'_>,
+        element: Element<'d>,
         name: &str,
         style: &Style,
-    ) -> Result<Option<f32>, DocumentError> {
+    ) -> Result<Option<f32>, MathError<'d>> {
         let Some(source) = element.attr(name) else {
             return Ok(None);
         };
@@ -731,7 +744,7 @@ impl Builder<'_> {
             },
         )
     }
-    fn space(&self, element: Element<'_>, style: &Style) -> Result<MathBox, DocumentError> {
+    fn space(&self, element: Element<'d>, style: &Style) -> Result<MathBox, MathError<'d>> {
         let ascent = self
             .attribute(element, "height", style)?
             .unwrap_or(0.0)
@@ -756,12 +769,12 @@ impl Builder<'_> {
         })
     }
     fn padded(
-        &self,
-        element: Element<'_>,
-        style: &Style,
+        &mut self,
+        element: Element<'d>,
+        style: &Arc<Style>,
         depth: usize,
         layout: MathLayout,
-    ) -> Result<MathBox, DocumentError> {
+    ) -> Result<MathBox, MathError<'d>> {
         let inner = self.row(element, style, depth, layout)?;
         let width = match &style.width {
             Size::Value(LengthPercentage::Length(value)) => *value,
@@ -791,12 +804,12 @@ impl Builder<'_> {
         Ok(result)
     }
     fn radical(
-        &self,
-        element: Element<'_>,
-        style: &Style,
+        &mut self,
+        element: Element<'d>,
+        style: &Arc<Style>,
         depth: usize,
         layout: MathLayout,
-    ) -> Result<MathBox, DocumentError> {
+    ) -> Result<MathBox, MathError<'d>> {
         let (base, index) = if element.name() == "mroot" {
             let mut children = self.children(element, style, depth, MathLayout::default())?;
             if children.len() != 2 {
@@ -872,12 +885,12 @@ impl Builder<'_> {
         Ok(result)
     }
     fn fraction(
-        &self,
-        element: Element<'_>,
-        style: &Style,
+        &mut self,
+        element: Element<'d>,
+        style: &Arc<Style>,
         depth: usize,
         layout: MathLayout,
-    ) -> Result<MathBox, DocumentError> {
+    ) -> Result<MathBox, MathError<'d>> {
         let mut children = self.children(element, style, depth, layout)?;
         if children.len() != 2 {
             return self.row(element, style, depth, layout);
@@ -943,12 +956,12 @@ impl Builder<'_> {
         Ok(result)
     }
     fn scripts(
-        &self,
-        element: Element<'_>,
-        style: &Style,
+        &mut self,
+        element: Element<'d>,
+        style: &Arc<Style>,
         depth: usize,
         layout: MathLayout,
-    ) -> Result<MathBox, DocumentError> {
+    ) -> Result<MathBox, MathError<'d>> {
         let children = self.children(element, style, depth, layout)?;
         let paired = element.name() == "msubsup";
         if children.len() != if paired { 3 } else { 2 } {
@@ -964,7 +977,7 @@ impl Builder<'_> {
         sub: Option<MathBox>,
         sup: Option<MathBox>,
         style: &Style,
-    ) -> Result<MathBox, DocumentError> {
+    ) -> Result<MathBox, MathError<'d>> {
         let metrics = self.metrics(style)?;
         let [down, up] = Self::script_shifts(&base, sub.as_ref(), sup.as_ref(), style, &metrics);
         let x = base.width;
@@ -1040,12 +1053,12 @@ impl Builder<'_> {
         [down, up]
     }
     fn multiscripts(
-        &self,
-        element: Element<'_>,
-        style: &Style,
+        &mut self,
+        element: Element<'d>,
+        style: &Arc<Style>,
         depth: usize,
         layout: MathLayout,
-    ) -> Result<MathBox, DocumentError> {
+    ) -> Result<MathBox, MathError<'d>> {
         let sources = self.in_flow_children(element, style)?;
         if sources
             .first()
@@ -1153,12 +1166,12 @@ impl Builder<'_> {
         Ok(result)
     }
     fn limits(
-        &self,
-        element: Element<'_>,
-        style: &Style,
+        &mut self,
+        element: Element<'d>,
+        style: &Arc<Style>,
         depth: usize,
         layout: MathLayout,
-    ) -> Result<MathBox, DocumentError> {
+    ) -> Result<MathBox, MathError<'d>> {
         let mut children = self.children(element, style, depth, layout)?;
         let paired = element.name() == "munderover";
         if children.len() != if paired { 3 } else { 2 } {
@@ -1189,6 +1202,7 @@ impl Builder<'_> {
             .map(|(_, child)| child.width)
             .fold(0.0, f32::max);
         let sources = self.in_flow_children(element, style)?;
+        let mut requests = Requests::default();
         for (index, child) in children.iter_mut().enumerate() {
             if index == 0 && layout.stretch.is_some() {
                 continue;
@@ -1196,8 +1210,7 @@ impl Builder<'_> {
             if let Some(operator) = &child.operator
                 && operator.stretchy
                 && operator.inline_axis
-            {
-                *child = self.element(
+                && let Some(resolved) = requests.collect(self.element(
                     sources[index],
                     style,
                     depth + 1,
@@ -1206,9 +1219,12 @@ impl Builder<'_> {
                         form: Some(operator.form),
                         stretch: Some(Stretch::Inline(target)),
                     },
-                )?;
+                ))?
+            {
+                *child = resolved;
             }
         }
+        requests.finish()?;
         let (base, under, over) = script_children(
             children,
             element.name() != "mover",
@@ -1320,7 +1336,7 @@ impl Builder<'_> {
         result.ink_descent = result.descent;
         Ok(result)
     }
-    fn edges(content: MathBox, style: &Style) -> Result<MathBox, DocumentError> {
+    fn edges(content: MathBox, style: &Style) -> Result<MathBox, MathError<'d>> {
         let length = |value: &LengthPercentage| match value {
             LengthPercentage::Length(value) => Ok(*value),
             _ => Err(unsupported("percentage edges")),

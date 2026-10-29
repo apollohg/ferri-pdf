@@ -619,3 +619,117 @@ fn overscript_top_accent_attachment_uses_logical_inline_start_edges() {
         rtl.area.width
     );
 }
+
+#[test]
+fn math_nesting_limit_returns_an_error_without_overflowing_a_library_thread() {
+    const CHILD_ENV: &str = "FERRI_MATH_NESTING_CHILD";
+    const TEST_NAME: &str =
+        "tests::mathml::math_nesting_limit_returns_an_error_without_overflowing_a_library_thread";
+    const MATH_NESTING_LIMIT: usize = 256;
+    const LIBRARY_STACK_BYTES: usize = 2 * 1024 * 1024;
+    if std::env::var_os(CHILD_ENV).is_none() {
+        let status = std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact", TEST_NAME, "--nocapture"])
+            .env(CHILD_ENV, "1")
+            .status()
+            .expect("MathML depth regression subprocess must start");
+        assert!(
+            status.success(),
+            "MathML nesting must remain bounded on a {LIBRARY_STACK_BYTES}-byte library thread; child exit: {status}"
+        );
+        return;
+    }
+    std::thread::Builder::new()
+        .stack_size(LIBRARY_STACK_BYTES)
+        .spawn(|| {
+            for (levels, allowed) in [(MATH_NESTING_LIMIT - 2, true), (MATH_NESTING_LIMIT - 1, false)] {
+                eprintln!("checking native MathML boundary: {levels} mrows on a {LIBRARY_STACK_BYTES}-byte stack");
+                let html = format!("<math>{}<mn>1</mn>{}</math>", "<mrow>".repeat(levels), "</mrow>".repeat(levels));
+                let result = render_html(&html, &local_options());
+                if allowed {
+                    let output = result.expect("the inclusive MathML nesting boundary must render");
+                    assert!(output.layout.unwrap().display_lists.iter().flatten().any(|item| matches!(item, DisplayItem::Image(_))), "valid deep math must retain its native paint");
+                } else {
+                    let error = result.err().expect("one further native math level must return its nesting error");
+                    assert!(error.to_string().contains(&format!("MathML nesting exceeds {MATH_NESTING_LIMIT}")), "native math must report its explicit resource boundary: {error}");
+                }
+            }
+        })
+        .expect("bounded-stack library thread must start")
+        .join()
+        .expect("bounded-stack math layout must finish");
+}
+
+#[test]
+fn outer_math_uses_the_shared_positioning_and_effects_pipeline() {
+    let output = render_html(
+        "<style>@page{margin:0}body{margin:0}math{position:absolute;left:30pt;top:40pt;transform:translate(7pt,9pt);opacity:.4;filter:opacity(.8)}</style><math><mfrac><mn>1</mn><mn>2</mn></mfrac></math>",
+        &local_options(),
+    ).expect("outer native math effects belong to the existing CSS box painter");
+    let trace = output.layout.unwrap();
+    let items: Vec<_> = trace.display_lists.iter().flatten().collect();
+    let image = items
+        .iter()
+        .find_map(|item| match item {
+            DisplayItem::Image(paint) => Some(paint),
+            _ => None,
+        })
+        .expect("positioned math must retain native paint");
+    assert!(
+        (image.rect.x - 30.0).abs() < 0.01 && (image.rect.y - 40.0).abs() < 0.01,
+        "absolute math content must use its containing block offsets: {:?}",
+        image.rect
+    );
+    assert!(items.iter().any(|item| matches!(item, DisplayItem::PushTransform(matrix) if (matrix[4] - 7.0).abs() < 0.01 && (matrix[5] - 9.0).abs() < 0.01)), "outer transform must reach the shared display list");
+    assert!(
+        items
+            .iter()
+            .any(|item| matches!(item, DisplayItem::PushOpacity(alpha) if *alpha == 0.4)),
+        "outer opacity must reach the shared compositor"
+    );
+    assert!(
+        items
+            .iter()
+            .any(|item| matches!(item, DisplayItem::PushFilter(_))),
+        "outer filter must reach the shared filter painter"
+    );
+}
+
+#[test]
+fn scroll_and_layout_containment_suppress_native_math_baseline_participation() {
+    for css in [
+        "overflow:auto",
+        "overflow:hidden",
+        "overflow:scroll",
+        "contain:layout",
+    ] {
+        let html = format!(
+            "<style>@page{{margin:0}}body{{margin:0;font:20pt DejaVu Serif}}</style>L<math style='{css}'><mn>g</mn></math>R"
+        );
+        let trace = render_html(&html, &local_options())
+            .expect("contained math must render")
+            .layout
+            .unwrap();
+        let baseline = trace
+            .pages
+            .iter()
+            .flatten()
+            .find(|line| line.text.contains('L'))
+            .unwrap()
+            .baseline;
+        let image = trace
+            .display_lists
+            .iter()
+            .flatten()
+            .find_map(|item| match item {
+                DisplayItem::Image(paint) => Some(paint),
+                _ => None,
+            })
+            .unwrap();
+        assert!(
+            (image.rect.y + image.rect.height - baseline).abs() < 0.01,
+            "{css}: a math box without baseline participation aligns its bottom margin edge to the surrounding alphabetic baseline; bottom {}, baseline {baseline}",
+            image.rect.y + image.rect.height
+        );
+    }
+}

@@ -5,7 +5,7 @@ use crate::dom::Element;
 use crate::resources::ResourceResolver;
 use crate::style::{LengthPercentage, Style, Stylesheet};
 
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Default, Eq, Hash, PartialEq)]
 pub(super) enum Form {
     #[default]
     Infix,

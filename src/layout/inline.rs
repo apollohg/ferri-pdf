@@ -394,13 +394,16 @@ pub(super) fn shrink_to_fit<'a>(
 /// §3.2) have none.
 fn baseline(block: &BlockBox, measured: &MeasuredBlock<'_>) -> Option<f32> {
     let style = block.style();
+    if style.is_scroll_container() || style.containment().layout {
+        return None;
+    }
     if let Some(image) = block.image()
         && let crate::images::Image::Viewport(view) = image.as_ref()
         && let Some(baseline) = view.baseline
     {
         return Some(measured.geometry.border[0] + measured.geometry.padding[0] + baseline);
     }
-    if block.image().is_some() || style.is_scroll_container() || style.containment().layout {
+    if block.image().is_some() {
         return None;
     }
     match style.baseline.source {
