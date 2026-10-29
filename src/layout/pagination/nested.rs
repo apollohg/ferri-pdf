@@ -164,7 +164,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             return Ok(());
         }
         if !ready {
-            super::frames::prepare(self.measurer, inner, &self.frame_templates)?;
+            super::frames::prepare(self.measurer, &inner, &self.frame_templates)?;
         }
         self.measurer.work.spend(super::frames::payload_work(
             &self.frame_templates.borrow().completed[&key],

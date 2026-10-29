@@ -1,7 +1,10 @@
 //! Native flows paginate bottom-up before their paint joins the enclosing flow.
 use super::{Effect, FLOW_LEVEL, MeasuredBlock, PaginationState, Paginator, PaintKey, PaintOrder};
 use crate::graphics::Rect;
-use crate::layout::{LayoutError, measure::Measurer};
+use crate::layout::{
+    LayoutError,
+    measure::{Failure, Measurer},
+};
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
 type RawFrame<'a> = PaginationState<'a, 'a, ()>;
@@ -37,6 +40,15 @@ enum RawOutcome<'a> {
 }
 
 pub(super) fn prepare<'a>(
+    measurer: &mut Measurer<'a>,
+    root: &Rc<MeasuredBlock<'a>>,
+    templates: &Rc<RefCell<Templates<'a>>>,
+) -> Result<(), LayoutError> {
+    measurer
+        .run(|measurer| prepare_frames(measurer, root.clone(), templates).map_err(Failure::from))
+}
+
+fn prepare_frames<'a>(
     measurer: &mut Measurer<'a>,
     root: Rc<MeasuredBlock<'a>>,
     templates: &Rc<RefCell<Templates<'a>>>,

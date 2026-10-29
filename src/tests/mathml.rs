@@ -989,6 +989,28 @@ fn math_nesting_limit_returns_an_error_without_overflowing_a_library_thread() {
                     assert!(error.to_string().contains(&format!("MathML nesting exceeds {MATH_NESTING_LIMIT}")), "native math must report its explicit resource boundary: {error}");
                 }
             }
+            const ELEMENTS_PER_MIXED_SEGMENT: usize = 4;
+            const MIXED_SEGMENTS: usize = (MATH_NESTING_LIMIT - 1) / ELEMENTS_PER_MIXED_SEGMENT;
+            const REMAINING_ROWS: usize = MATH_NESTING_LIMIT - 2 - MIXED_SEGMENTS * ELEMENTS_PER_MIXED_SEGMENT;
+            for (rows, allowed) in [(REMAINING_ROWS, true), (REMAINING_ROWS + 1, false)] {
+                const MIXED_CSS_SIZE_PT: usize = 30;
+                let open = format!("<mrow><mtext><span style='display:block;width:{MIXED_CSS_SIZE_PT}pt;height:{MIXED_CSS_SIZE_PT}pt;writing-mode:vertical-rl;opacity:.9'><math>");
+                let close = "</math></span></mtext></mrow>";
+                let html = format!(
+                    "<math>{}{}<mn>1</mn>{}{}</math>",
+                    open.repeat(MIXED_SEGMENTS), "<mrow>".repeat(rows),
+                    "</mrow>".repeat(rows), close.repeat(MIXED_SEGMENTS)
+                );
+                eprintln!("checking mixed Math/CSS/writing boundary: {MIXED_SEGMENTS} four-element segments plus {rows} rows on a {LIBRARY_STACK_BYTES}-byte stack");
+                let result = render_html(&html, &local_options());
+                if allowed {
+                    let output = result.expect("mixed source/native boundaries must preserve the same inclusive depth and default stack");
+                    assert_eq!(output.layout.unwrap().pages.iter().flatten().filter(|line| line.text == "1").count(), 1, "mixed native/CSS transport must retain the single canonical token exactly once");
+                } else {
+                    let error = result.err().expect("a Math/CSS/writing boundary must not reset the scoped depth counter");
+                    assert!(error.to_string().contains(&format!("MathML nesting exceeds {MATH_NESTING_LIMIT}")), "mixed sources must report the same typed formatting boundary: {error}");
+                }
+            }
         })
         .expect("bounded-stack library thread must start")
         .join()

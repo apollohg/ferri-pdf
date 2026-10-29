@@ -169,6 +169,128 @@ mod tests {
     }
 
     #[test]
+    fn mixed_native_css_layout_and_raw_paint_share_a_bounded_measurement_cache() {
+        const SEGMENTS: usize = 8;
+        const OVER_BUDGET_SEGMENTS: usize = 12;
+        const LIMIT: usize = 1_000_000;
+        let resolver = FileResolver::default();
+        let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        let open = "<mrow><mtext><span style='display:block;writing-mode:vertical-rl'><math>";
+        let close = "</math></span></mtext></mrow>";
+        let parse = |segments| {
+            StyledDocument::parse(
+            &format!("<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}math{{font:10pt Fixed}}</style><math>{}<mn>1</mn>{}</math>", open.repeat(segments), close.repeat(segments)),
+            &base, &[], &resolver,
+        ).unwrap()
+        };
+        let document = parse(SEGMENTS);
+        let check = || {
+            let output = layout_with_work_limit(&document, &resolver, LIMIT)
+                .unwrap_or_else(|error| panic!("{SEGMENTS} auto-sized mixed native/CSS boundaries must reuse measurement dependencies through raw paint within {LIMIT} shared units: {error}"));
+            assert_eq!(
+                output
+                    .pages
+                    .iter()
+                    .flatten()
+                    .filter(|line| line.text == "1")
+                    .count(),
+                1,
+                "the single retained token must survive every native/CSS transport exactly once"
+            );
+        };
+        check();
+        assert!(
+            matches!(
+                layout_with_work_limit(&parse(OVER_BUDGET_SEGMENTS), &resolver, LIMIT),
+                Err(LayoutError::WorkLimit { limit: LIMIT })
+            ),
+            "more auto-sized orthogonal candidates must exhaust the same shared budget with the typed error"
+        );
+        check();
+    }
+
+    #[test]
+    fn wide_native_math_batches_siblings_under_one_linear_work_budget() {
+        const TOKENS: usize = 8192;
+        const WORK_PER_TOKEN: usize = 512;
+        const LIMIT: usize = TOKENS * WORK_PER_TOKEN;
+        let resolver = FileResolver::default();
+        let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        let content = (0..TOKENS)
+            .map(|index| format!("<mn id=token{index}>1</mn>"))
+            .collect::<String>();
+        let document = StyledDocument::parse(
+            &format!("<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}@page{{size:100000pt 100pt;margin:0}}html,body{{margin:0}}math{{font:10pt Fixed}}</style><math>{content}</math>"),
+            &base, &[], &resolver,
+        ).unwrap();
+        assert_eq!(document.navigation().destinations, TOKENS);
+        for limit in [MAX_LAYOUT_WORK, LIMIT] {
+            let output = layout_with_work_limit(&document, &resolver, limit)
+                .unwrap_or_else(|error| panic!("{TOKENS} native siblings must batch within {limit} shared work units: {error}"));
+            assert_eq!(
+                output.pages.len(),
+                1,
+                "the wide physical page must hold one native row"
+            );
+            let lines = output.pages[0]
+                .iter()
+                .filter(|line| line.text == "1")
+                .collect::<Vec<_>>();
+            assert_eq!(
+                lines.len(),
+                TOKENS,
+                "every canonical token must paint exactly once"
+            );
+            assert!(
+                output.pages[0].iter().all(|line| line.text == "1"
+                    || line
+                        .text
+                        .chars()
+                        .all(|ch| ch == crate::document::OBJECT_REPLACEMENT_CHARACTER)),
+                "the host atomic placeholder must not introduce additional visible text"
+            );
+            assert!(
+                lines
+                    .windows(2)
+                    .all(|pair| pair[0].paragraph < pair[1].paragraph)
+                    && lines.iter().all(|line| line.width > 0.0),
+                "batch replay must preserve canonical sibling order and positive glyph advances"
+            );
+            let mut paragraphs = lines.iter().map(|line| line.paragraph).collect::<Vec<_>>();
+            paragraphs.sort_unstable();
+            paragraphs.dedup();
+            assert_eq!(
+                paragraphs.len(),
+                TOKENS,
+                "native siblings must retain distinct canonical paragraph identities"
+            );
+            assert_eq!(
+                output.destinations.iter().flatten().count(),
+                TOKENS,
+                "each canonical target must retain one page location"
+            );
+        }
+        const EXHAUSTED_LIMIT: usize = TOKENS;
+        assert!(
+            matches!(
+                layout_with_work_limit(&document, &resolver, EXHAUSTED_LIMIT),
+                Err(LayoutError::WorkLimit {
+                    limit: EXHAUSTED_LIMIT
+                })
+            ),
+            "native frame requests must consume the shared job budget"
+        );
+        assert!(
+            layout_with_work_limit(&document, &resolver, LIMIT).is_ok(),
+            "a bounded failure must not poison the next render of the same retained source"
+        );
+    }
+
+    #[test]
     fn balancing_stops_when_adjacent_heights_cannot_be_bisected() {
         const LIMIT: usize = 4096;
         let resolver = FileResolver::default();

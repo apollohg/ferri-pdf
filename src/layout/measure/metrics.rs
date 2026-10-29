@@ -136,6 +136,7 @@ impl MetricsKey {
             named_pages: measurer.named_pages,
             orthogonal_columns: measurer
                 .orthogonal_columns
+                .filter(|columns| columns.matches(block))
                 .map(|columns| OrthogonalColumnKey {
                     source: columns.source as usize,
                     inline_size: columns.geometry.inline_size.to_bits(),
