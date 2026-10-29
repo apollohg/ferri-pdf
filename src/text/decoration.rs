@@ -4,7 +4,7 @@
 use crate::document::Paragraph;
 use crate::graphics::{DecorationLine, DecorationPaint, Rect};
 use crate::style::{Style, TextDecoration, UnderlinePosition};
-use crate::text::line_boxes::BoxMetrics;
+use crate::text::line_boxes::{BoxMetrics, Slot, slot_width};
 use crate::text::{Line, TextContext, TextError};
 
 /// Line thickness, and underline depth, of a font without `post` or `OS/2` metrics.
@@ -165,34 +165,39 @@ pub(crate) fn paint(
     Ok(paints)
 }
 
-/// Contiguous `[left, right]` extents of the text inside box `owner` (`None` is the root
-/// inline box, which also holds the ellipsis), from the line's left edge, each with the
-/// positioned box inside `owner` that moves it; text under different such boxes is not joined.
+/// Contiguous `[left, right]` extents of the text and `text-autospace` spacing inside box
+/// `owner` (`None` is the root inline box, which also holds the ellipsis), from the line's
+/// left edge, each with the positioned box inside `owner` that moves it; content under
+/// different such boxes is not joined.
 fn segments(
     paragraph: &Paragraph,
     line: &Line,
     owner: Option<usize>,
 ) -> Vec<([f32; 2], Option<usize>)> {
     let content = line.ellipsis.unwrap_or(line.runs.len());
-    let mut extents: Vec<([f32; 2], Option<usize>)> = line
-        .runs
-        .iter()
-        .enumerate()
-        .filter(|(index, run)| {
-            run.width > 0.0
-                && owner.is_none_or(|owner| {
-                    *index < content
-                        && paragraph.is_within(paragraph.spans()[run.source_span].inline_box, owner)
-                })
-        })
-        .map(|(_, run)| {
-            let inline_box = paragraph.spans()[run.source_span].inline_box;
-            (
-                [run.x, run.x + run.width],
+    let inside = |inner: Option<usize>| owner.is_none_or(|owner| paragraph.is_within(inner, owner));
+    let mut extents: Vec<([f32; 2], Option<usize>)> = Vec::new();
+    let mut x = 0.0;
+    for &slot in &line.order {
+        let width = slot_width(&line.runs, &line.atomics, slot);
+        let decorated = match slot {
+            Slot::Run(index) => {
+                let inline_box = paragraph.spans()[line.runs[index].source_span].inline_box;
+                ((owner.is_none() || index < content) && inside(inline_box)).then_some(inline_box)
+            }
+            Slot::Space { owner: inner, .. } => inside(inner).then_some(inner),
+            Slot::Atomic(_) | Slot::Edge { .. } => None,
+        };
+        if let Some(inline_box) = decorated
+            && width > 0.0
+        {
+            extents.push((
+                [x, x + width],
                 paragraph.positioned_within(inline_box, owner),
-            )
-        })
-        .collect();
+            ));
+        }
+        x += width;
+    }
     extents.sort_by(|a, b| a.0[0].total_cmp(&b.0[0]));
     let mut joined: Vec<([f32; 2], Option<usize>)> = Vec::with_capacity(extents.len());
     for ([left, right], positioned) in extents {

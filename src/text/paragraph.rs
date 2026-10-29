@@ -1,7 +1,8 @@
 use crate::document::Paragraph;
 use crate::text::{
-    AtomicMetrics, GlyphRun, Line, Piece, TextContext, TextError, breaking, decoration, ellipsis,
-    hanging, hyphenation, line_boxes, paragraph_bidi, shape_line, spacing, whitespace,
+    AtomicMetrics, GlyphRun, Line, Piece, TextContext, TextError, autospace::Autospace, breaking,
+    decoration, ellipsis, hanging, hyphenation, line_boxes, paragraph_bidi, shape_line, spacing,
+    spacing_trim, whitespace,
 };
 use unicode_linebreak::BreakOpportunity;
 
@@ -60,6 +61,7 @@ pub(crate) struct ParagraphLines<'s, 'p, 'context, 'font> {
     indent: f32,
     atomics: &'s [AtomicMetrics],
     atomic_widths: Vec<f32>,
+    autospace: Option<Autospace<'p, 'context, 'font>>,
     finished: bool,
 }
 
@@ -156,6 +158,7 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
             indent: 0.0,
             atomics,
             atomic_widths: atomics.iter().map(|metrics| metrics.width).collect(),
+            autospace: Autospace::of(self.context, self.paragraph),
             finished: false,
         })
     }
@@ -227,28 +230,49 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
         } else {
             pieces.extend(trailing.into_iter().map(|run| Piece::Text(Box::new(run))));
         }
-        let arranged =
-            line_boxes::arrange(paragraph, pieces, from..to, &self.atomic_widths, available);
-        let measured_width = arranged.width;
-        let leader_width = if prepared.has_leaders {
-            crate::text::leaders::wrapping_width(paragraph, &arranged, available, from)
-        } else {
-            None
-        };
-        let wrap_width = spacing::wrapping_width(
+        let mut arranged = line_boxes::arrange(
             paragraph,
-            &arranged.runs,
-            whitespace::wrapping_width(paragraph, visible.end, &arranged.runs, measured_width),
-        );
-        let wrap_width = leader_width.map_or(wrap_width, |width| wrap_width.max(width));
-        let hangable = hanging::hangable(
-            paragraph,
+            pieces,
             from..to,
-            visible.clone(),
-            &arranged.runs,
-            &arranged.order,
-        );
-        let wrap_width = wrap_width - hangable.fit();
+            &self.atomic_widths,
+            available,
+            self.autospace.as_ref(),
+        )?;
+        let end_trim = spacing_trim::trim(
+            prepared.context,
+            paragraph,
+            &mut arranged,
+            starts_block_line(paragraph, &prepared.opportunities, from),
+        )?;
+        let fit = |arranged: &line_boxes::Arranged| {
+            let leader_width = if prepared.has_leaders {
+                crate::text::leaders::wrapping_width(paragraph, arranged, available, from)
+            } else {
+                None
+            };
+            let wrap_width = spacing::wrapping_width(
+                paragraph,
+                &arranged.runs,
+                whitespace::wrapping_width(paragraph, visible.end, &arranged.runs, arranged.width),
+            );
+            let wrap_width = leader_width.map_or(wrap_width, |width| wrap_width.max(width));
+            let hangable = hanging::hangable(
+                paragraph,
+                from..to,
+                visible.clone(),
+                &arranged.runs,
+                &arranged.order,
+            );
+            (wrap_width - hangable.fit(), hangable)
+        };
+        let (mut wrap_width, mut hangable) = fit(&arranged);
+        if wrap_width > available
+            && let Some(end_trim) = end_trim
+        {
+            end_trim.apply(&mut arranged);
+            (wrap_width, hangable) = fit(&arranged);
+        }
+        let measured_width = arranged.width;
         if !measured_width.is_finite() || !wrap_width.is_finite() || !available.is_finite() {
             return Err(TextError::NonFiniteGeometry);
         }
@@ -562,6 +586,24 @@ impl Iterator for ParagraphLines<'_, '_, '_, '_> {
 
 impl std::iter::FusedIterator for ParagraphLines<'_, '_, '_, '_> {}
 
+/// Whether a line starting at `offset` follows a forced line break.
+fn after_forced_break(opportunities: &[(usize, BreakOpportunity)], offset: usize) -> bool {
+    offset != 0
+        && opportunities
+            .binary_search_by_key(&offset, |(end, _)| *end)
+            .is_ok_and(|index| opportunities[index].1 == BreakOpportunity::Mandatory)
+}
+
+/// Whether a line starting at `offset` is its block container's first line or follows a
+/// forced line break.
+pub(super) fn starts_block_line(
+    paragraph: &Paragraph,
+    opportunities: &[(usize, BreakOpportunity)],
+    offset: usize,
+) -> bool {
+    (offset == 0 && paragraph.first_formatted_line()) || after_forced_break(opportunities, offset)
+}
+
 pub(super) fn indent_at(
     paragraph: &Paragraph,
     opportunities: &[(usize, BreakOpportunity)],
@@ -573,10 +615,6 @@ pub(super) fn indent_at(
         return 0.0;
     }
     let first = offset == 0 && (paragraph.first_formatted_line() || indent.each_line);
-    let forced = indent.each_line
-        && offset != 0
-        && opportunities
-            .binary_search_by_key(&offset, |(end, _)| *end)
-            .is_ok_and(|index| opportunities[index].1 == BreakOpportunity::Mandatory);
+    let forced = indent.each_line && after_forced_break(opportunities, offset);
     indent.resolve(basis, first, forced)
 }

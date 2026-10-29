@@ -117,7 +117,7 @@ pub(super) fn alone(line: &Line) -> bool {
                 !line.runs[*index].leader && !line.runs[*index].text.trim().is_empty()
             }
             Slot::Atomic(_) => true,
-            Slot::Edge { .. } => false,
+            Slot::Edge { .. } | Slot::Space { .. } => false,
         })
 }
 

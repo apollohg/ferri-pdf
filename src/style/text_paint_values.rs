@@ -188,10 +188,7 @@ impl EmphasisPosition {
         match self.side {
             EmphasisSide::Over => false,
             EmphasisSide::Under => true,
-            EmphasisSide::Auto => language
-                .split(['-', '_'])
-                .next()
-                .is_some_and(|primary| primary.eq_ignore_ascii_case(CHINESE)),
+            EmphasisSide::Auto => crate::style::has_primary_language(language, CHINESE),
         }
     }
 }

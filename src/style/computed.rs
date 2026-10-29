@@ -126,6 +126,7 @@ pub(crate) struct Style {
     pub line_height_step: f32,
     pub letter_spacing: f32,
     pub word_spacing: LengthPercentage,
+    pub text_spacing: crate::style::TextSpacing,
     pub white_space: WhiteSpace,
     pub line_breaking: crate::style::LineBreaking,
     pub hyphens: crate::style::Hyphens,
@@ -273,6 +274,7 @@ impl Default for Style {
             line_height_step: 0.0,
             letter_spacing: 0.0,
             word_spacing: LengthPercentage::ZERO,
+            text_spacing: crate::style::TextSpacing::default(),
             white_space: WhiteSpace::NORMAL,
             line_breaking: crate::style::LineBreaking::default(),
             hyphens: crate::style::Hyphens::default(),
@@ -496,6 +498,7 @@ impl Style {
             && self.line_height == other.line_height
             && self.letter_spacing == other.letter_spacing
             && self.word_spacing == other.word_spacing
+            && self.text_spacing == other.text_spacing
             && self.text_transform == other.text_transform
             && self.language == other.language
             && self.overflow_wrap == other.overflow_wrap

@@ -163,6 +163,12 @@ pub(crate) enum Slot {
         margin: f32,
         width: f32,
     },
+    /// `text-autospace` spacing rendered within inline box `owner` (`None` is the root
+    /// inline box) but outside the nested box whose content precedes it (CSS Text 4 §8.4).
+    Space {
+        owner: Option<usize>,
+        width: f32,
+    },
 }
 
 pub(crate) struct Arranged {
@@ -180,6 +186,7 @@ impl Arranged {
             Slot::Run(index) => paragraph.spans()[self.runs[index].source_span].inline_box,
             Slot::Atomic(index) => self.atomics[index].owner,
             Slot::Edge { owner, .. } => Some(owner),
+            Slot::Space { owner, .. } => owner,
         }
     }
     /// Logical text range and direction of a content slot.
@@ -191,7 +198,7 @@ impl Arranged {
                 let length = crate::document::OBJECT_REPLACEMENT_CHARACTER.len_utf8();
                 Some((offset..offset + length, self.atomics[index].rtl))
             }
-            Slot::Edge { .. } => None,
+            Slot::Edge { .. } | Slot::Space { .. } => None,
         }
     }
     fn insertion(&self, offset: usize) -> usize {
@@ -208,7 +215,7 @@ pub(crate) fn slot_width(runs: &[GlyphRun], atomics: &[AtomicFragment], slot: Sl
     match slot {
         Slot::Run(index) => runs[index].width,
         Slot::Atomic(index) => atomics[index].width,
-        Slot::Edge { width, .. } => width,
+        Slot::Edge { width, .. } | Slot::Space { width, .. } => width,
     }
 }
 
@@ -264,13 +271,15 @@ fn present_boxes(paragraph: &Paragraph, line: Range<usize>) -> Vec<usize> {
 /// Orders `pieces` with the margins, borders and padding of the inline boxes they lie in.
 /// A box's left and right edges sit beside its leftmost and rightmost content on the line
 /// (CSS 2.1 §8.6); a sliced box keeps only the edges of the lines where it starts or ends.
+/// `autospace` spaces the adjoining characters it applies to.
 pub(crate) fn arrange(
     paragraph: &Paragraph,
     pieces: Vec<Piece>,
     line: Range<usize>,
     atomic_widths: &[f32],
     basis: f32,
-) -> Arranged {
+    autospace: Option<&crate::text::autospace::Autospace<'_, '_, '_>>,
+) -> Result<Arranged, TextError> {
     let mut arranged = Arranged {
         runs: Vec::new(),
         atomics: Vec::new(),
@@ -346,6 +355,9 @@ pub(crate) fn arrange(
             arranged.order.insert(left_at, slot);
         }
     }
+    if let Some(autospace) = autospace {
+        autospace.apply(&mut arranged)?;
+    }
     for (position, &index) in arranged.present.iter().enumerate() {
         let belongs: Vec<bool> = arranged
             .order
@@ -386,7 +398,7 @@ pub(crate) fn arrange(
         .iter()
         .map(|slot| slot_width(&arranged.runs, &arranged.atomics, *slot))
         .sum();
-    arranged
+    Ok(arranged)
 }
 
 impl Line {
@@ -399,7 +411,7 @@ impl Line {
             match slot {
                 Slot::Run(index) => self.runs[index].x = x,
                 Slot::Atomic(index) => self.atomics[index].x = x,
-                Slot::Edge { .. } => {}
+                Slot::Edge { .. } | Slot::Space { .. } => {}
             }
             x += slot_width(&self.runs, &self.atomics, slot);
         }

@@ -53,6 +53,7 @@ fn word_space(paragraph: &Paragraph, run: &GlyphRun, index: usize) -> bool {
             TextJustify::Auto | TextJustify::InterWord
         )
         && word_space_text(&run.text[glyph.text_range.clone()])
+        && !run.removed_spaces.contains(&glyph.text_range.start)
         && run
             .glyphs
             .get(index + 1)
@@ -81,7 +82,7 @@ fn cursive_letter(text: &str) -> bool {
 
 /// CSS Text 3 §7.4 `inter-character`: the gap after each typographic character unit, in
 /// visual order, except after the line's last and between two cursive letters. A gap between
-/// two spans justifies by the paragraph's value.
+/// two spans justifies by the paragraph's value. Spaces `text-autospace` removed are not units.
 fn character_gaps(paragraph: &Paragraph, line: &Line) -> Vec<GlyphIndex> {
     let mut gaps = Vec::new();
     let mut previous: Option<(GlyphIndex, usize, bool)> = None;
@@ -99,7 +100,7 @@ fn character_gaps(paragraph: &Paragraph, line: &Line) -> Vec<GlyphIndex> {
                 .glyphs
                 .get(index + 1)
                 .is_none_or(|next| next.text_range != glyph.text_range);
-            if !ends_cluster {
+            if !ends_cluster || run.removed_spaces.contains(&glyph.text_range.start) {
                 continue;
             }
             let cursive = cursive_letter(&run.text[glyph.text_range.clone()]);

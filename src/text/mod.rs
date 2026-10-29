@@ -1,4 +1,5 @@
 //! Font shaping, bidi resolution, and measured inline layout.
+mod autospace;
 mod bidi;
 mod breaking;
 mod decoration;
@@ -13,6 +14,7 @@ mod line_boxes;
 mod paragraph;
 mod shaping;
 mod spacing;
+mod spacing_trim;
 mod tailoring;
 #[cfg(test)]
 mod tests;
@@ -102,6 +104,9 @@ pub struct GlyphRun {
     metrics: crate::fonts::FaceMetrics,
     #[serde(skip)]
     glyphs: Vec<PositionedGlyph>,
+    /// Run-text offsets of the U+0020 spaces that `text-autospace: replace` removed.
+    #[serde(skip)]
+    removed_spaces: Vec<usize>,
 }
 
 /// A synthesized emphasis mark: contours filled even-odd, placed like its run.
@@ -608,14 +613,18 @@ impl<'a> TextContext<'a> {
             .map(|variant| IntrinsicSource::new(self, variant))
             .transpose()?;
         let opportunities = &base.opportunities;
+        let base_autospace = autospace::Autospace::of(self, paragraph);
+        let first_line_autospace = first_line
+            .as_ref()
+            .and_then(|source| autospace::Autospace::of(self, source.paragraph));
         let minimum: Vec<f32> = atomics.iter().map(|widths| widths.min).collect();
         let maximum: Vec<f32> = atomics.iter().map(|widths| widths.max).collect();
         let measure = |range: Range<usize>, atomic_widths: &[f32], min_content: bool| {
             // Content from the start sets the first formatted line at either intrinsic size.
-            let source = first_line
-                .as_ref()
-                .filter(|_| range.start == 0)
-                .unwrap_or(&base);
+            let (source, autospace) = match first_line.as_ref().filter(|_| range.start == 0) {
+                Some(source) => (source, first_line_autospace.as_ref()),
+                None => (&base, base_autospace.as_ref()),
+            };
             let paragraph = source.paragraph;
             let context_range = breaking::context_range(&source.opportunities, range.clone());
             let visible = whitespace::visible(paragraph, range.clone());
@@ -639,8 +648,24 @@ impl<'a> TextContext<'a> {
                 )?;
             }
             let indent = paragraph::indent_at(base.paragraph, opportunities, range.start, 0.0);
-            let arranged =
-                line_boxes::arrange(paragraph, pieces, range.clone(), atomic_widths, 0.0);
+            let mut arranged = line_boxes::arrange(
+                paragraph,
+                pieces,
+                range.clone(),
+                atomic_widths,
+                0.0,
+                autospace,
+            )?;
+            let end_trim = spacing_trim::trim(
+                self,
+                paragraph,
+                &mut arranged,
+                paragraph::starts_block_line(base.paragraph, opportunities, range.start),
+            )?;
+            // Min-content fits no closing punctuation that is trimmed only where it overflows.
+            if min_content && let Some(end_trim) = end_trim {
+                end_trim.apply(&mut arranged);
+            }
             let hangable = hanging::hangable(
                 paragraph,
                 range.clone(),

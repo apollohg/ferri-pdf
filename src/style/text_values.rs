@@ -278,6 +278,108 @@ impl TextJustify {
     }
 }
 
+/// Whether the primary subtag of content language `language` is `subtag`, ignoring case.
+pub(crate) fn has_primary_language(language: &str, subtag: &str) -> bool {
+    language
+        .split(['-', '_'])
+        .next()
+        .is_some_and(|primary| primary.eq_ignore_ascii_case(subtag))
+}
+
+/// `text-autospace` (CSS Text 4 §8.4): the character class boundaries that receive
+/// automatic spacing, and whether a U+0020 already at such a boundary is replaced.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize)]
+pub(crate) struct TextAutospace {
+    pub ideograph_alpha: bool,
+    pub ideograph_numeric: bool,
+    pub punctuation: bool,
+    pub replace: bool,
+}
+impl Default for TextAutospace {
+    fn default() -> Self {
+        Self::NORMAL
+    }
+}
+impl TextAutospace {
+    /// `normal` behaves as `ideograph-alpha ideograph-numeric`.
+    const NORMAL: Self = Self {
+        ideograph_alpha: true,
+        ideograph_numeric: true,
+        punctuation: false,
+        replace: false,
+    };
+    /// `none` for the `no-autospace` keyword.
+    const NONE: Self = Self {
+        ideograph_alpha: false,
+        ideograph_numeric: false,
+        punctuation: false,
+        replace: false,
+    };
+    /// The UA's typographic choice for `auto`: inter-script spacing and the language-specific
+    /// punctuation spacing, leaving existing spaces in place.
+    const AUTO: Self = Self {
+        punctuation: true,
+        ..Self::NORMAL
+    };
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        let mut keywords = Vec::new();
+        value.keywords(&mut keywords);
+        match keywords[..] {
+            [Keyword::Normal] => return Ok(Self::NORMAL),
+            [Keyword::Auto] => return Ok(Self::AUTO),
+            [Keyword::NoAutospace] => return Ok(Self::NONE),
+            _ => {}
+        }
+        let mut spacing = Self::NONE;
+        for keyword in keywords {
+            match keyword {
+                Keyword::IdeographAlpha => spacing.ideograph_alpha = true,
+                Keyword::IdeographNumeric => spacing.ideograph_numeric = true,
+                Keyword::Punctuation => spacing.punctuation = true,
+                Keyword::Replace => spacing.replace = true,
+                Keyword::Insert => {}
+                _ => return Err(unsupported(value)),
+            }
+        }
+        Ok(spacing)
+    }
+}
+
+/// `text-spacing-trim` (CSS Text 4 §8.5).
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub(crate) enum TextSpacingTrim {
+    SpaceAll,
+    #[default]
+    Normal,
+    SpaceFirst,
+    TrimStart,
+    TrimBoth,
+    TrimAll,
+    Auto,
+}
+impl TextSpacingTrim {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.keyword() {
+            Some(Keyword::SpaceAll) => Ok(Self::SpaceAll),
+            Some(Keyword::Normal) => Ok(Self::Normal),
+            Some(Keyword::SpaceFirst) => Ok(Self::SpaceFirst),
+            Some(Keyword::TrimStart) => Ok(Self::TrimStart),
+            Some(Keyword::TrimBoth) => Ok(Self::TrimBoth),
+            Some(Keyword::TrimAll) => Ok(Self::TrimAll),
+            Some(Keyword::Auto) => Ok(Self::Auto),
+            _ => Err(unsupported(value)),
+        }
+    }
+}
+
+/// The CSS Text 4 §8.6 character class spacing longhands.
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
+pub(crate) struct TextSpacing {
+    pub autospace: TextAutospace,
+    pub trim: TextSpacingTrim,
+}
+
 /// `hyphenate-limit-chars` minimums for the word and either side of the hyphenation point
 /// (CSS Text 4 §6.3.4); `None` is `auto`.
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]

@@ -118,7 +118,7 @@ pub(crate) fn ellipsize(
                 atomics.push(line.atomics[index].clone());
                 Slot::Atomic(atomics.len() - 1)
             }
-            edge @ Slot::Edge { .. } => edge,
+            spacing @ (Slot::Edge { .. } | Slot::Space { .. }) => spacing,
         });
     }
     line.ellipsis = Some(runs.len());
@@ -183,7 +183,7 @@ fn find_cut(line: &Line, limit: f32, rtl: bool) -> Option<Cut> {
             lefts[index]
         };
         if near + width <= limit {
-            content |= !matches!(slot, Slot::Edge { .. });
+            content |= !matches!(slot, Slot::Edge { .. } | Slot::Space { .. });
             continue;
         }
         let partial = match slot {

@@ -14,7 +14,7 @@ const STOPS_AND_COMMAS: [char; 13] = [
 ];
 /// Quotes that open or close in addition to the Pi, Pf, Ps and Pe categories.
 const ASCII_QUOTES: [char; 2] = ['\'', '"'];
-const IDEOGRAPHIC_SPACE: char = '\u{3000}';
+pub(super) const IDEOGRAPHIC_SPACE: char = '\u{3000}';
 
 /// Punctuation that may hang at a line's logical start and end, by advance.
 #[derive(Clone, Copy, Debug, Default)]

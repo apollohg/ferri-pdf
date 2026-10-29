@@ -264,9 +264,7 @@ fn anywhere(style: &Style) -> bool {
 }
 
 fn chinese_or_japanese(style: &Style) -> bool {
-    style.language.split('-').next().is_some_and(|language| {
-        CHINESE_OR_JAPANESE
-            .iter()
-            .any(|candidate| language.eq_ignore_ascii_case(candidate))
-    })
+    CHINESE_OR_JAPANESE
+        .iter()
+        .any(|subtag| crate::style::has_primary_language(&style.language, subtag))
 }

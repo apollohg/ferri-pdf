@@ -3,8 +3,8 @@
 use crate::paint::{BorderStyle, DEFAULT_BORDER_WIDTH, LengthPercentage, OutlineStyle};
 use crate::style::{
     BoxSizing, BreakBetween, BreakInside, Display, HangingPunctuation, HyphenateLimitChars,
-    LineBreak, ListStylePosition, ListStyleType, Size, Style, StyleError, TextAlign, TextJustify,
-    TextWrapStyle, Visibility, WhiteSpaceCollapse, WordBreak,
+    LineBreak, ListStylePosition, ListStyleType, Size, Style, StyleError, TextAlign, TextAutospace,
+    TextJustify, TextSpacingTrim, TextWrapStyle, Visibility, WhiteSpaceCollapse, WordBreak,
     box_values::{length_percentage, unsupported},
     calc::Kind,
     component::Component,
@@ -455,6 +455,14 @@ fn handler(property: Property) -> Option<Handler> {
         P::TextJustify => (
             text_justify,
             Some(|v, _| TextJustify::from_component(v).is_ok()),
+        ),
+        P::TextAutospace => (
+            text_autospace,
+            Some(|v, _| TextAutospace::from_component(v).is_ok()),
+        ),
+        P::TextSpacingTrim => (
+            text_spacing_trim,
+            Some(|v, _| TextSpacingTrim::from_component(v).is_ok()),
         ),
         P::HyphenateCharacter => (
             hyphenate_character,
@@ -1442,6 +1450,16 @@ computed!(
     text_justify,
     [line_breaking.justify],
     |value, style, _parent, _relative| { TextJustify::from_component(value)? }
+);
+computed!(
+    text_autospace,
+    [text_spacing.autospace],
+    |value, style, _parent, _relative| { TextAutospace::from_component(value)? }
+);
+computed!(
+    text_spacing_trim,
+    [text_spacing.trim],
+    |value, style, _parent, _relative| { TextSpacingTrim::from_component(value)? }
 );
 computed!(
     hyphenate_character,

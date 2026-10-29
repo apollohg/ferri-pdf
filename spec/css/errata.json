@@ -59,7 +59,11 @@
     },
     "autospace": {
       "syntax": "no-autospace | [ ideograph-alpha || ideograph-numeric || punctuation ] || [ insert | replace ]",
-      "source": "https://drafts.csswg.org/css-text-4/#typedef-autospace"
+      "source": "https://www.w3.org/TR/2026/WD-css-text-4-20260814/#typedef-autospace"
+    },
+    "spacing-trim": {
+      "syntax": "space-all | normal | space-first | trim-start | trim-both | trim-all",
+      "source": "https://www.w3.org/TR/2026/WD-css-text-4-20260814/#typedef-spacing-trim"
     },
     "counter-style": {
       "syntax": "<counter-style-name> | <symbols()>",
@@ -360,6 +364,10 @@
     "word-break": {
       "syntax": "normal | break-all | keep-all | manual | auto-phrase | break-word",
       "source": "https://www.w3.org/TR/2026/WD-css-text-4-20260814/#word-break-property"
+    },
+    "text-spacing-trim": {
+      "syntax": "<spacing-trim> | auto",
+      "source": "https://www.w3.org/TR/2026/WD-css-text-4-20260814/#text-spacing-trim-property"
     },
     "text-justify": {
       "syntax": "auto | none | inter-word | inter-character | distribute",

@@ -569,5 +569,6 @@ fn shape_run(
         ink_sides: [bounds.x_min, bounds.x_max].map(|side| f32::from(side) / upem),
         metrics: crate::fonts::FaceMetrics::of(face),
         glyphs,
+        removed_spaces: Vec::new(),
     })
 }

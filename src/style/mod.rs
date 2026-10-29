@@ -152,12 +152,13 @@ pub(crate) use table_values::{
 pub(crate) use text_paint_values::{
     EmphasisPosition, EmphasisShape, EmphasisStyle, InheritedColor, TextPaint, TextShadow,
 };
-pub(crate) use text_values::UnicodeBidi;
 pub(crate) use text_values::{
     DEFAULT_TAB_SIZE, HangingEnd, HangingPunctuation, HyphenateLimitChars, Hyphens, LineBreak,
-    LineBreaking, LineHeight, OverflowWrap, TextAlign, TextCase, TextIndent, TextJustify,
-    TextTransform, TextWrapStyle, WhiteSpace, WhiteSpaceCollapse, WordBreak,
+    LineBreaking, LineHeight, OverflowWrap, TextAlign, TextAutospace, TextCase, TextIndent,
+    TextJustify, TextSpacing, TextSpacingTrim, TextTransform, TextWrapStyle, WhiteSpace,
+    WhiteSpaceCollapse, WordBreak,
 };
+pub(crate) use text_values::{UnicodeBidi, has_primary_language};
 #[cfg(test)]
 pub(crate) use {
     counter_values::CounterReset,
