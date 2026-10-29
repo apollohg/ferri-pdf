@@ -1,0 +1,54 @@
+name: Publish crates
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: crates-io-publish
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_TARGET_DIR: ${{ github.workspace }}/target
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: crates-io
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.99.1
+      - uses: Swatinem/rust-cache@v2
+      - uses: ./.github/actions/publish-crate
+        with:
+          manifest-path: vendor/krilla/Cargo.toml
+      - uses: ./.github/actions/publish-crate
+        with:
+          manifest-path: vendor/icu_casemap/Cargo.toml
+      - uses: ./.github/actions/publish-crate
+        with:
+          manifest-path: vendor/zenavif-parse/Cargo.toml
+      - uses: ./.github/actions/publish-crate
+        with:
+          manifest-path: vendor/avif-decode/Cargo.toml
+      - uses: ./.github/actions/publish-crate
+        with:
+          manifest-path: vendor/heic-decoder/Cargo.toml
+      - uses: ./.github/actions/publish-crate
+        with:
+          manifest-path: vendor/selectors/Cargo.toml
+      - uses: ./.github/actions/publish-crate
+        with:
+          manifest-path: Cargo.toml
