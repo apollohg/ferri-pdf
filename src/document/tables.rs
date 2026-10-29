@@ -107,12 +107,21 @@ pub(super) fn normalize(
     children: Vec<BlockContent>,
     page_scope: Option<&std::sync::Arc<str>>,
 ) -> Vec<BlockContent> {
-    normalize_with(&style.display, children, &|role, children| {
-        BlockContent::Block(BlockBox::anonymous(
-            style.anonymous(role),
-            children,
-            page_scope.cloned(),
-        ))
+    normalize_with(&style.display, children, &|role, mut children| {
+        // The anonymous box takes the place of its children among the inline boxes split
+        // around them.
+        let mut enclosing = Vec::new();
+        for child in &mut children {
+            if let BlockContent::Block(block) = child {
+                let split = block.take_enclosing_inline();
+                if enclosing.is_empty() {
+                    enclosing = split;
+                }
+            }
+        }
+        let mut block = BlockBox::anonymous(style.anonymous(role), children, page_scope.cloned());
+        block.set_enclosing_inline(enclosing);
+        BlockContent::Block(block)
     })
 }
 

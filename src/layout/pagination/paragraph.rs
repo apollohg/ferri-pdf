@@ -50,24 +50,34 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         measured: floats::MeasuredFloat<'a>,
         anchor: &crate::document::Anchor,
         geometry: [f32; 3],
-        layers: &mut InlineLayers<'a>,
+        layers: &InlineLayers<'a>,
     ) -> Result<(), LayoutError> {
-        let layer = self.inline_layer(layers, anchor.inline_box);
+        let chain = inline_chain(layers.paragraph, anchor.inline_box);
+        let chain_layers = self.chain_layers(&chain, layers.containing);
         let saved_context = self.context.clone();
         let saved_key = self.key.clone();
         let saved_group = self.group;
+        let saved_clip = self.clip;
+        let saved_offset = self.offset;
         let saved_has_flow = self.has_flow;
-        if let Some((context, group)) = layer {
-            self.key = extend(&context, FLOW_LEVEL);
-            self.context = context;
-            self.group = group;
+        if let Some(layer) = chain_layers.last() {
+            self.context = layer.context.clone();
+            self.key = layer.key.clone();
+            self.group = layer.group;
+            self.clip = layer.clip;
+            self.offset[0] += layer.offset[0];
+            self.offset[1] += layer.offset[1];
         }
+        let opened = self.open_inline_containers(&chain, &chain_layers);
         // Candidate lines preceding this float have not been painted yet.
         self.has_flow |= geometry[2] > self.y;
         let result = self.place_measured_float(measured, geometry[0], geometry[1], geometry[2]);
+        self.close_inline_containers(&opened);
         self.context = saved_context;
         self.key = saved_key;
         self.group = saved_group;
+        self.clip = saved_clip;
+        self.offset = saved_offset;
         self.has_flow = saved_has_flow;
         result
     }
@@ -168,15 +178,18 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         let consumed_anchors = 0;
         let consumed_events = 0;
         let line_index = 0;
-        let mut layers = InlineLayers {
+        let layers = InlineLayers {
             paragraph: paragraph.paragraph,
-            layers: vec![None; paragraph.paragraph.boxes().len()],
+            containing: InlineContaining {
+                width,
+                height: containing_height,
+                rtl: style.rtl,
+            },
             fragments: vec![Vec::new(); paragraph.paragraph.boxes().len()],
         };
         if lines.as_slice().is_empty() {
             for anchor in anchors.by_ref() {
-                let layer = self.inline_layer(&mut layers, anchor.inline_box);
-                self.line_anchor(&anchor, x, width, 0.0, 0.0, layer);
+                self.line_anchor(&anchor, x, width, 0.0, 0.0, &layers);
             }
         }
         let source = paragraph.paragraph;
@@ -353,12 +366,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                                     } else {
                                         0.0
                                     };
-                                self.place_inline_float(
-                                    measured,
-                                    anchor,
-                                    [x, width, y],
-                                    &mut layers,
-                                )?;
+                                self.place_inline_float(measured, anchor, [x, width, y], &layers)?;
                                 trials.push(FloatTrial {
                                     anchor: next_anchor,
                                     line: remainder.len(),
@@ -405,6 +413,11 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     lines = remainder.into_iter();
                 }
             }
+            layers.containing = InlineContaining {
+                width,
+                height: containing_height,
+                rtl: style.rtl,
+            };
             let remaining = lines.as_slice().len();
             let mut height = 0.0;
             let available = lines
@@ -505,7 +518,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 for trial in &trials[..accepted] {
                     let anchor = float_anchors[trial.anchor];
                     let measured = self.measure_float(&anchor.block, width, containing_height)?;
-                    self.place_inline_float(measured, anchor, [x, width, trial.y], &mut layers)?;
+                    self.place_inline_float(measured, anchor, [x, width, trial.y], &layers)?;
                 }
             }
             consumed_floats += accepted;
@@ -526,8 +539,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 let offset = line.alignment_offset(line_width, style.rtl);
                 while let Some(anchor) = anchors.next_if(|anchor| anchor.line == line_index) {
                     consumed_anchors += 1;
-                    let layer = self.inline_layer(&mut layers, anchor.inline_box);
-                    self.line_anchor(&anchor, line_x, line_width, offset, line.height, layer);
+                    self.line_anchor(&anchor, line_x, line_width, offset, line.height, &layers);
                 }
                 let text_start = source.text()[line.range.clone()]
                     .char_indices()
@@ -581,8 +593,8 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     &mut atomics,
                     &mut layers,
                 )?;
-                // Runs inside translucent inline boxes paint in their boxes' groups.
-                let parts = self.split_line(&mut layers, line.runs, &line.decorations);
+                // Runs inside inline boxes with their own layers paint in them.
+                let parts = self.split_line(&layers, line.runs, &line.decorations);
                 let grouped = parts.len() > 1;
                 let paragraph = layers.paragraph;
                 let decorates = |run: &crate::text::GlyphRun, decoration: &DecorationPaint| {
@@ -608,7 +620,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                         },
                         line.ink_bounds,
                         &part.decorations,
-                        part.layer.as_ref(),
+                        &part.layer,
                         &decorates,
                     );
                 }
@@ -671,7 +683,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         for anchor in &float_anchors[consumed_floats..] {
             self.measurer.work.spend(1)?;
             let measured = self.measure_float(&anchor.block, width, containing_height)?;
-            self.place_inline_float(measured, anchor, [x, width, self.y], &mut layers)?;
+            self.place_inline_float(measured, anchor, [x, width, self.y], &layers)?;
         }
         for event in &source.semantic_events()[consumed_events..] {
             self.string_locations.record(self.page, &event.event);

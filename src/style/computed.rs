@@ -515,6 +515,19 @@ impl Style {
             || self.contains_fixed()
             || self.will_change.absolute_containing_block
     }
+    /// Generates the containing block of absolutely positioned descendants as a non-atomic
+    /// inline box, which transforms (CSS Transforms 1 §3) and layout and paint containment
+    /// (CSS Containment 2 §3.2, §3.4) do not apply to.
+    pub(crate) fn inline_contains_absolute(&self) -> bool {
+        self.position != crate::style::Position::Static
+            || self.inline_contains_fixed()
+            || self.will_change.absolute_containing_block
+    }
+    /// Generates the containing block of fixed positioned descendants as a non-atomic inline
+    /// box: only through `will-change` (CSS Will Change 1 §3.1).
+    pub(crate) fn inline_contains_fixed(&self) -> bool {
+        self.will_change.fixed_containing_block
+    }
     /// Generates the containing block of fixed positioned descendants (CSS Transforms 1 §3,
     /// CSS Transforms 2 §5, CSS Containment 2 §3.2 and §3.4); a filter does unless on the
     /// document root (Filter Effects 1 §5).

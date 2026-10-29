@@ -73,17 +73,29 @@ fn blending_boxes_isolate_their_stacking_context_and_nest_inside_its_group() {
         );
     }
     expect("box #ffff00", &["BDarken"]);
-    let split = render_html(
-        &format!(
-            "<style>{PROFILE}span{{mix-blend-mode:multiply}}</style><div><span>A<div>Block</div>B</span></div>"
-        ),
-        &local_options(),
+}
+
+#[test]
+fn block_content_splitting_a_blending_inline_blends_in_its_group() {
+    let trace = trace(
+        "span{mix-blend-mode:multiply}.block{background:#ff00ff}",
+        "<div><span>A<div class='block'>Block</div>B</span></div>",
     );
-    assert!(
-        matches!(&split, Err(ferri_pdf::Error::Document(message) | ferri_pdf::Error::Css(ferri_pdf::StyleError::Unsupported(message)))
-            if message.contains("mix-blend-mode or isolation on an inline box split by block-level content")),
-        "block-level content cannot take an inline box's blending as its opacity: {:?}",
-        split.err()
+    let painted = effect_stacks(&trace, 0);
+    for name in ["text A", "box #ff00ff", "text Block", "text B"] {
+        assert_eq!(
+            stack_of(&painted, name),
+            ["BMultiply"],
+            "{name} blends as part of the split span: {painted:#?}"
+        );
+    }
+    let opened = trace.display_lists[0]
+        .iter()
+        .filter(|item| matches!(item, DisplayItem::PushBlend(ferri_pdf::BlendMode::Multiply)))
+        .count();
+    assert_eq!(
+        opened, 1,
+        "the span's parts and the block it splits form one blend group: {painted:#?}"
     );
 }
 
@@ -188,7 +200,7 @@ fn translucent_inline_boxes_split_their_runs_into_groups() {
 }
 
 #[test]
-fn block_content_splitting_a_translucent_inline_takes_its_opacity() {
+fn block_content_splitting_a_translucent_inline_composites_in_its_group() {
     let trace = trace(
         ".o{opacity:.5}.b{display:block;background:#ff0000;opacity:.5}",
         "<p>Start <span class='o'>in<span class='b'>Block</span>out</span></p>",
@@ -196,10 +208,30 @@ fn block_content_splitting_a_translucent_inline_takes_its_opacity() {
     let painted = effect_stacks(&trace, 0);
     assert_eq!(
         stack_of(&painted, "box #ff0000"),
-        ["O0.25"],
-        "the block fragment of the split inline multiplies the inline's opacity into its own"
+        ["O0.5", "O0.5"],
+        "the block splitting the inline composites its own group inside the inline's: {painted:#?}"
     );
-    assert_eq!(stack_of(&painted, "text Block"), ["O0.25"]);
+    assert_eq!(stack_of(&painted, "text Block"), ["O0.5", "O0.5"]);
+    for (line, effects) in [
+        ("text Start in", &[][..]),
+        ("text Start in", &["O0.5"]),
+        ("text out", &["O0.5"]),
+    ] {
+        assert!(
+            painted
+                .iter()
+                .any(|(name, stack)| name == line && stack == effects),
+            "{line} has runs in {effects:?}: {painted:#?}"
+        );
+    }
+    let opened = trace.display_lists[0]
+        .iter()
+        .filter(|item| matches!(item, DisplayItem::PushOpacity(_)))
+        .count();
+    assert_eq!(
+        opened, 2,
+        "the inline's parts and the block share one group, which opens once: {painted:#?}"
+    );
 }
 
 #[test]

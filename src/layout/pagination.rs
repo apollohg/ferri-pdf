@@ -34,20 +34,66 @@ use std::{
 /// Painting order: a stacking-context path of `(z-index, tree order)` levels, compared
 /// lexicographically (CSS 2.1 Appendix E).
 type PaintKey = Rc<[(i32, PaintOrder)]>;
-/// A stacking context and the innermost opacity group its content paints in.
-type Layer = (PaintKey, Option<usize>);
+/// Where content paints: the stacking context of its positioned and stacking-context
+/// descendants, the key of its own items, its innermost opacity group and enclosing effect,
+/// and the relative offset of the inline boxes it lies in (CSS Position 3 §3.3).
+#[derive(Clone, PartialEq)]
+struct Layer {
+    context: PaintKey,
+    key: PaintKey,
+    group: Option<usize>,
+    clip: Option<usize>,
+    offset: [f32; 2],
+}
 /// Glyph runs and decorations of one line that paint in one layer.
 struct LinePart {
-    layer: Option<Layer>,
+    layer: Layer,
     runs: Vec<crate::text::GlyphRun>,
     decorations: Vec<DecorationPaint>,
 }
-/// Layers of a paragraph's translucent inline boxes by box index, created when first painted.
+/// The containing block of a paragraph's inline boxes, which their percentage offsets resolve
+/// against.
+#[derive(Clone, Copy)]
+struct InlineContaining {
+    width: f32,
+    height: Option<f32>,
+    rtl: bool,
+}
+impl InlineContaining {
+    /// The containing block a block container's geometry `(x, width, rtl, height)` gives.
+    fn of((_, width, rtl, height): (f32, f32, bool, Option<f32>)) -> Self {
+        Self { width, height, rtl }
+    }
+    fn relative(self, style: &crate::style::Style) -> [f32; 2] {
+        style.relative_offset(self.width, self.height, self.rtl)
+    }
+}
+/// A paragraph being painted: its containing block and its inline boxes' painted fragments.
 #[derive(Clone)]
 struct InlineLayers<'p> {
     paragraph: &'p crate::document::Paragraph,
-    layers: Vec<Option<Layer>>,
+    containing: InlineContaining,
     fragments: Vec<Vec<(usize, usize)>>,
+}
+/// Absolutely positioned descendants of a non-atomic inline box waiting for the end of its
+/// block container, and the content boxes of its fragments by page and line in layout
+/// order, which form their containing block (CSS Position 3 §2.1).
+#[derive(Clone)]
+struct InlineContainer<'a> {
+    pending: Vec<Pending<'a>>,
+    lines: Vec<(usize, Vec<Rect>)>,
+    rtl: bool,
+    /// The effect enclosing the box's content.
+    clip: Option<usize>,
+    /// Depth in `Paginator::boxes` of its block container.
+    depth: usize,
+}
+/// Identifies an inline element by the style its split boxes share.
+type InlineElement = *const crate::style::Style;
+/// Whether an inline box paints its content in its own layer: a stacking context or a
+/// relatively or sticky positioned box (CSS 2.1 Appendix E).
+fn paints_in_own_layer(style: &crate::style::Style) -> bool {
+    style.position != Position::Static || style.is_grouped() || style.forced_stacking_context()
 }
 /// A stacking context's own background precedes its negative z-index descendants.
 const ROOT_LEVEL: (i32, PaintOrder) = (i32::MIN, PaintOrder::FIRST);
@@ -272,7 +318,8 @@ impl<'a> Group<'a> {
 }
 #[derive(Clone)]
 struct EffectNode<'a> {
-    /// Reference boxes for structural elements without their own painted box.
+    /// Reference boxes for structural elements without their own painted box, and the border
+    /// boxes of a sticky inline box's fragments.
     areas: Vec<(usize, Rect)>,
     /// Inline box fragments an anchored group's element paints, by page.
     paints: Vec<(usize, BoxPaint)>,
@@ -588,7 +635,16 @@ struct BlockFrame<'a> {
     previous_group: Option<usize>,
     previous_parent_3d: Option<usize>,
     previous_reserve: f32,
+    split: SplitInline<'a>,
     items: Vec<FlowItem<'a>>,
+}
+/// The inline boxes a block splits (CSS 2.1 §9.2.1.1): those that are the containing blocks
+/// of positioned descendants, with the layer inside each, and the sticky and anchored group
+/// nodes whose regions its fragments bound.
+#[derive(Clone, Default)]
+struct SplitInline<'a> {
+    containers: Vec<(&'a crate::style::Style, Layer)>,
+    nodes: Vec<usize>,
 }
 
 #[derive(Clone)]
@@ -750,6 +806,11 @@ pagination_state! {
     /// What constrains each sticky box, indexed by `Effect::Sticky`.
     sticky: Vec<StickyConstraints>,
     open_slices: HashMap<*const crate::style::Style, usize>,
+    /// Layers of inline elements that paint in their own, shared by their split boxes; their
+    /// offsets resolve where they paint.
+    inline_layers: HashMap<InlineElement, Layer>,
+    /// Inline containing blocks of positioned boxes in creation order.
+    inline_containers: Vec<(InlineElement, InlineContainer<'a>)>,
 }
 impl<M> PaginationState<'_, '_, M> {
     fn detach_orders(&mut self, snapshots: &mut OrderSnapshots) {
@@ -757,7 +818,11 @@ impl<M> PaginationState<'_, '_, M> {
         for container in &mut self.containers {
             container.detach_orders(snapshots);
         }
-        for pending in &mut self.fixed {
+        for pending in self.fixed.iter_mut().chain(
+            self.inline_containers
+                .iter_mut()
+                .flat_map(|(_, container)| &mut container.pending),
+        ) {
             snapshots.detach(&mut pending.orders);
         }
     }
@@ -855,6 +920,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             sliced: Vec::new(),
             sticky: Vec::new(),
             open_slices: HashMap::new(),
+            inline_layers: HashMap::new(),
+            inline_containers: Vec::new(),
         };
         paginator.canvas(0);
         paginator
@@ -916,13 +983,14 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     fn current_page_has_ink(&self) -> bool {
         self.page_has_ink(self.page)
     }
-    /// The shift of sticky box fragment `paint` on `page`, once every box has its fragments.
+    /// The shift on `page` of a sticky box whose border box there is `border`, once every box
+    /// has its fragments.
     fn sticky_shift(
         &self,
         style: &crate::style::Style,
         constraints: &StickyConstraints,
         page: usize,
-        paint: &BoxPaint,
+        border: Rect,
     ) -> [f32; 2] {
         let fragment = |fragments: &[(usize, usize)]| {
             fragments
@@ -948,7 +1016,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         };
         crate::layout::sticky::offset(
             style,
-            paint.rect,
+            border,
             constraints.margins,
             containing.inner_clip(containing.padding, [true; 2]).rect,
             scrollport,
@@ -1244,10 +1312,18 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             {
                 [0.0; 2]
             } else {
-                style.relative_offset(
-                    flow.horizontal.containing_width,
-                    flow.containing_height,
-                    flow.horizontal.containing_rtl,
+                // The inline boxes a block splits offset it with them (CSS 2.1 §9.2.1.1).
+                let enclosing = InlineContaining::of(containing);
+                flow.source.enclosing_inline().iter().fold(
+                    style.relative_offset(
+                        flow.horizontal.containing_width,
+                        flow.containing_height,
+                        flow.horizontal.containing_rtl,
+                    ),
+                    |[x, y], inline| {
+                        let [dx, dy] = enclosing.relative(inline);
+                        [x + dx, y + dy]
+                    },
                 )
             };
             if let Some(grid) = &flow.grid {
@@ -1550,13 +1626,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         mut block: MeasuredBlock<'a>,
     ) -> Result<MeasuredBlock<'a>, LayoutError> {
         let clearance_before = block.clearance_before.take();
-        // A caption wrapper and its inner table share one source element.
-        let starts_source = self.boxes.last().is_none_or(|parent| {
-            parent
-                .geometry
-                .as_ref()
-                .is_none_or(|flow| !std::ptr::eq(flow.source, block.source))
-        });
+        let starts_source = self.starts_source(block.source);
         if starts_source && self.continuation_flow() {
             let mut grid_item = None;
             for parent in self
@@ -1681,8 +1751,19 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
         Ok((block, request))
     }
+    /// Whether `source` starts a box rather than continuing its parent's: a caption wrapper
+    /// and its inner table share one source element.
+    fn starts_source(&self, source: &BlockBox) -> bool {
+        self.boxes.last().is_none_or(|parent| {
+            parent
+                .geometry
+                .as_ref()
+                .is_none_or(|flow| !std::ptr::eq(flow.source, source))
+        })
+    }
     fn start_block(&mut self, block: MeasuredBlock<'a>) -> Result<BlockFrame<'a>, LayoutError> {
         let mut block = self.refresh_block(block)?;
+        let starts_source = self.starts_source(block.source);
         if let Some(element) = block.source.query_container() {
             let vertical = block.geometry.padding[0]
                 + block.geometry.padding[2]
@@ -1746,6 +1827,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let previous_context = self.context.clone();
         let previous_clip = self.clip;
         let previous_group = self.group;
+        let previous_parent_3d = self.parent_3d;
+        let split = self.enter_split_inline(&mut block, starts_source);
         self.offset[0] += block.offset[0];
         self.offset[1] += block.offset[1];
         let flex_item = std::mem::take(&mut self.flex_item);
@@ -1779,7 +1862,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let mut own_group = None;
         let paint_key = if positioned || z_index.is_some() {
             let order = self.reserved_order.take().unwrap_or_else(|| self.order());
-            let layer = positioned_layer(&previous_context, z_index, order);
+            let layer = positioned_layer(&self.context, z_index, order);
             if z_index.is_some() {
                 let group = if grouped {
                     Group::of(block.style)
@@ -1795,55 +1878,28 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             layer.background
         } else if block.style.floating().is_some() {
             let order = self.order();
-            self.key = extend(&previous_key, (FLOAT_PAINT_LEVEL, order));
+            self.key = extend(&self.key, (FLOAT_PAINT_LEVEL, order));
             self.key.clone()
         } else {
             self.key.clone()
         };
         let previous_reserve = self.bottom_reserve;
         self.bottom_reserve += block.end_space;
-        let effect_node = |paginator: &mut Self, effect| {
-            paginator.clips.push(EffectNode {
-                areas: Vec::new(),
-                paints: Vec::new(),
-                parent: paginator.clip,
-                effect,
-                fragments: Vec::new(),
-                context: None,
-            });
-            paginator.clips.len() - 1
-        };
         let sticky_node = (sticky && block.paint.is_some()).then(|| {
-            let index = self.sticky.len();
-            let scrolled = self.boxes.iter().rposition(|active| {
-                active
-                    .geometry
-                    .as_ref()
-                    .is_some_and(|geometry| geometry.source.style().is_scroll_container())
-            });
-            self.sticky.push(StickyConstraints {
-                margins: block.geometry.margin.map(|margin| margin.unwrap_or(0.0)),
-                containing_rtl: block.geometry.containing_rtl,
-                containing: Vec::new(),
-                scrollport: scrolled.map(|_| Vec::new()),
-            });
-            if let Some(parent) = self.boxes.last_mut() {
-                parent.sticky_children.push(index);
-            }
-            if let Some(scrolled) = scrolled {
-                self.boxes[scrolled].sticky_scrolled.push(index);
-            }
-            effect_node(self, Effect::Sticky(block.style, index))
+            self.sticky_node(
+                block.style,
+                block.geometry.margin.map(|margin| margin.unwrap_or(0.0)),
+                block.geometry.containing_rtl,
+                self.clip,
+            )
         });
         if sticky_node.is_some() {
             self.clip = sticky_node;
         }
-        let transform_node =
-            (owns_wrapper_properties && block.style.is_transformed() && block.paint.is_some())
-                .then(|| {
-                    let parent_3d = self.parent_3d;
-                    effect_node(self, Effect::Transform(block.style, parent_3d))
-                });
+        let transform_node = (owns_wrapper_properties
+            && block.style.is_transformed()
+            && block.paint.is_some())
+        .then(|| self.effect_node(self.clip, Effect::Transform(block.style, self.parent_3d)));
         if transform_node.is_some() {
             self.clip = transform_node;
         }
@@ -1852,18 +1908,17 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             && block.style.position.is_out_of_flow()
             && block.style.clip.is_some()
             && block.paint.is_some())
-        .then(|| effect_node(self, Effect::RectClip(block.style)));
+        .then(|| self.effect_node(self.clip, Effect::RectClip(block.style)));
         if clip_rect_node.is_some() {
             self.clip = clip_rect_node;
         }
         if let Some(node) = own_group {
-            self.anchor_group(node);
+            self.anchor_group(node, self.clip);
         }
-        let previous_parent_3d = self.parent_3d;
         let parent_3d_node = (transformed
             && block.paint.is_some()
             && (block.style.perspective.is_some() || block.style.preserves_3d()))
-        .then(|| effect_node(self, Effect::Parent3d(block.style)));
+        .then(|| self.effect_node(self.clip, Effect::Parent3d(block.style)));
         // Anonymous boxes are not their content's parent element.
         if !block.source.is_anonymous() {
             self.parent_3d = parent_3d_node;
@@ -2058,6 +2113,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             previous_group,
             previous_parent_3d,
             previous_reserve,
+            split,
             items: block.items,
         })
     }
@@ -2186,6 +2242,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             previous_clip,
             previous_group,
             previous_parent_3d,
+            split,
             end,
             ..
         } = frame;
@@ -2202,6 +2259,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             // Margins after a box with height no longer adjoin the page start.
             self.at_page_start = false;
         }
+        self.place_inline_pending(self.boxes.len())?;
         let mut active = self.boxes.pop().unwrap();
         for node in [
             active.clip_node,
@@ -2215,6 +2273,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         .flatten()
         {
             self.clips[node].fragments.clone_from(&active.fragments);
+        }
+        for &node in &split.nodes {
+            self.clips[node]
+                .fragments
+                .extend_from_slice(&active.fragments);
         }
         for &index in &active.sticky_children {
             self.sticky[index].containing.clone_from(&active.fragments);
@@ -2289,6 +2352,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         self.clip = previous_clip;
         self.group = previous_group;
         self.parent_3d = previous_parent_3d;
+        // The empty box each inline box continues in after the block, in a line box of zero
+        // height (CSS 2.1 §9.4.2).
+        let end = self.top + self.y;
+        self.close_inline_containers(&split.containers);
+        for (style, layer) in &split.containers {
+            self.split_fragment(style, layer, end);
+        }
         if let Some(forced) = Forced::of(break_after) {
             self.pending_break = Some(forced);
         }
@@ -2464,12 +2534,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         y: self.top + self.y + self.pending_value() + item.margin + self.offset[1],
                         alignment: item.alignment,
                     };
-                    self.anchor(
-                        item.block,
-                        position,
-                        (self.context.clone(), self.group),
-                        self.parent_3d,
-                    );
+                    let layer = self.current_layer();
+                    self.anchor(item.block, position, &layer, self.parent_3d);
                 }
             }
         }
@@ -2508,11 +2574,52 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             group.isolated = true;
         }
     }
-    /// Opens anchored group `node` inside the current clips and transforms.
-    fn anchor_group(&mut self, node: usize) {
+    /// Opens anchored group `node` inside clip or transform `anchor` and those enclosing it.
+    fn anchor_group(&mut self, node: usize, anchor: Option<usize>) {
         if let Effect::Group(group) = &mut self.clips[node].effect {
-            group.anchor = self.clip;
+            group.anchor = anchor;
         }
+    }
+    fn effect_node(&mut self, parent: Option<usize>, effect: Effect<'a>) -> usize {
+        self.clips.push(EffectNode {
+            areas: Vec::new(),
+            paints: Vec::new(),
+            parent,
+            effect,
+            fragments: Vec::new(),
+            context: None,
+        });
+        self.clips.len() - 1
+    }
+    /// The shift node of a sticky box with `margins` inside `parent`, constrained by the
+    /// current block container and the nearest scroll container (CSS Position 3 §3.4).
+    fn sticky_node(
+        &mut self,
+        style: &'a crate::style::Style,
+        margins: [f32; 4],
+        containing_rtl: bool,
+        parent: Option<usize>,
+    ) -> usize {
+        let index = self.sticky.len();
+        let scrolled = self.boxes.iter().rposition(|active| {
+            active
+                .geometry
+                .as_ref()
+                .is_some_and(|geometry| geometry.source.style().is_scroll_container())
+        });
+        self.sticky.push(StickyConstraints {
+            margins,
+            containing_rtl,
+            containing: Vec::new(),
+            scrollport: scrolled.map(|_| Vec::new()),
+        });
+        if let Some(parent) = self.boxes.last_mut() {
+            parent.sticky_children.push(index);
+        }
+        if let Some(scrolled) = scrolled {
+            self.boxes[scrolled].sticky_scrolled.push(index);
+        }
+        self.effect_node(parent, Effect::Sticky(style, index))
     }
     /// Each effect's region on the pages it covers, from its box fragments and the structural
     /// areas standing in for boxes. Groups apply on every page without geometry.
@@ -2571,8 +2678,23 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     }
                 }
                 Effect::Sticky(style, index) => {
-                    for (page, paint) in node.fragments.iter().filter_map(fragment) {
-                        let [x, y] = self.sticky_shift(style, &self.sticky[index], page, paint);
+                    // An inline box's border box on a page bounds its fragments there and the
+                    // blocks splitting it.
+                    let mut borders: BTreeMap<usize, Rect> = BTreeMap::new();
+                    for (page, rect) in node
+                        .fragments
+                        .iter()
+                        .filter_map(fragment)
+                        .map(|(page, paint)| (page, paint.rect))
+                        .chain(node.areas.iter().copied())
+                    {
+                        borders
+                            .entry(page)
+                            .and_modify(|border| *border = border.union(rect))
+                            .or_insert(rect);
+                    }
+                    for (page, border) in borders {
+                        let [x, y] = self.sticky_shift(style, &self.sticky[index], page, border);
                         node_regions.push((page, Region::Transform([1.0, 0.0, 0.0, 1.0, x, y])));
                     }
                 }
@@ -2620,26 +2742,34 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             None => Err(LayoutError::MissingContainingFragment { page }),
         }
     }
-    /// Records a static position in stacking context `layer` and reserves the box's tree-order
-    /// paint slot.
+    /// Records a static position in `layer` and reserves the box's tree-order paint slot.
+    fn pending(
+        &self,
+        block: &'a BlockBox,
+        position: StaticPosition,
+        layer: &Layer,
+        parent_3d: Option<usize>,
+    ) -> Pending<'a> {
+        let order = self.grid_order(block).unwrap_or_else(|| self.order());
+        Pending {
+            block,
+            position,
+            context: layer.context.clone(),
+            group: layer.group,
+            parent_3d,
+            orders: order.descendants(),
+            order,
+        }
+    }
+    /// Queues a positioned box anchored at `position` in `layer`.
     fn anchor(
         &mut self,
         block: &'a BlockBox,
         position: StaticPosition,
-        layer: Layer,
+        layer: &Layer,
         parent_3d: Option<usize>,
     ) {
-        let (context, group) = layer;
-        let order = self.grid_order(block).unwrap_or_else(|| self.order());
-        let pending = Pending {
-            block,
-            position,
-            context,
-            group,
-            parent_3d,
-            orders: order.descendants(),
-            order,
-        };
+        let pending = self.pending(block, position, layer, parent_3d);
         self.enqueue(pending);
     }
     fn grid_order(&self, block: &BlockBox) -> Option<PaintOrder> {
@@ -2728,6 +2858,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             None => self.fixed.push(pending),
         }
     }
+    /// Anchors a positioned box at its static position on the current line, which the inline
+    /// boxes holding it offset, with the innermost of them that contains it.
     fn line_anchor(
         &mut self,
         anchor: &crate::layout::measure::LineAnchor<'a>,
@@ -2735,10 +2867,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         width: f32,
         align_offset: f32,
         line_height: f32,
-        layer: Option<Layer>,
+        layers: &InlineLayers<'a>,
     ) {
-        let left = x + self.offset[0];
-        let top = self.top + self.y + self.offset[1];
+        let layer = self.inline_layer(layers, anchor.inline_box);
+        let left = x + self.offset[0] + layer.offset[0];
+        let top = self.top + self.y + self.offset[1] + layer.offset[1];
         let position = match anchor.x {
             Some(inline) => StaticPosition {
                 page: self.page,
@@ -2755,10 +2888,28 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 alignment: None,
             },
         };
-        let layer = layer.unwrap_or_else(|| (self.context.clone(), self.group));
         // An inline box, which is not transformable, is the parent of an anchor inside it.
         let parent_3d = self.parent_3d.filter(|_| anchor.inline_box.is_none());
-        self.anchor(anchor.block, position, layer, parent_3d);
+        let fixed = anchor.block.style().position == Position::Fixed;
+        let boxes = layers.paragraph.boxes();
+        let containing = std::iter::successors(anchor.inline_box, |&index| boxes[index].parent)
+            .find(|&index| {
+                let style = &boxes[index].style;
+                if fixed {
+                    style.inline_contains_fixed()
+                } else {
+                    style.inline_contains_absolute()
+                }
+            });
+        let Some(index) = containing else {
+            self.anchor(anchor.block, position, &layer, parent_3d);
+            return;
+        };
+        let pending = self.pending(anchor.block, position, &layer, parent_3d);
+        let clip = self.inline_layer(layers, Some(index)).clip;
+        self.inline_container(&boxes[index].style, clip)
+            .pending
+            .push(pending);
     }
     /// Lays out an absolutely positioned box on its anchor page without page breaks.
     fn place(
@@ -4261,56 +4412,116 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .map(|(page, _, rect)| (page, rect))
             .collect())
     }
-    /// Stacking context and group of content inside `inline_box`: those of its innermost
-    /// inline box that is a stacking context (translucent, blending, isolated or forced),
-    /// created when first needed, or `None` for the current ones (CSS Color 4 §15 and
-    /// Compositing 1 §3.4 apply to inline boxes too).
-    fn inline_layer(
+    /// Where the current flow's content paints.
+    fn current_layer(&self) -> Layer {
+        Layer {
+            context: self.context.clone(),
+            key: self.key.clone(),
+            group: self.group,
+            clip: self.clip,
+            offset: [0.0; 2],
+        }
+    }
+    /// The layer inside each inline box of `chain`, outermost first: that of the box itself
+    /// when it paints in its own, created when first needed and shared by its split boxes,
+    /// else the one enclosing it, offset by the relative offsets of the boxes resolved in
+    /// `containing` (CSS Position 3 §3.3).
+    fn chain_layers(
         &mut self,
-        layers: &mut InlineLayers<'a>,
-        inline_box: Option<usize>,
-    ) -> Option<Layer> {
-        let boxes = layers.paragraph.boxes();
-        let index =
-            std::iter::successors(inline_box, |&index| boxes[index].parent).find(|&index| {
-                boxes[index].style.is_grouped() || boxes[index].style.forced_stacking_context()
-            })?;
-        if let Some(layer) = &layers.layers[index] {
-            return Some(layer.clone());
-        }
-        let (context, group) = self
-            .inline_layer(layers, boxes[index].parent)
-            .unwrap_or_else(|| (self.context.clone(), self.group));
-        let order = self.order();
-        let context = extend(&context, (0, order));
-        let effect = Group::of(&boxes[index].style);
-        let group = self.stacking_group(group, effect, context.clone());
-        if effect.anchored() {
-            self.anchor_group(group);
-        }
-        let layer = (context, Some(group));
-        layers.layers[index] = Some(layer.clone());
-        Some(layer)
-    }
-    /// Paint key and opacity group of the next inline item in `layer`.
-    fn layer_scope(&mut self, layer: Option<&Layer>) -> (PaintKey, Option<usize>) {
-        match layer {
-            Some((context, group)) => {
-                let order = self.order();
-                (extend(context, (0, order)), *group)
+        chain: &[&'a crate::style::Style],
+        containing: InlineContaining,
+    ) -> Vec<Layer> {
+        let mut current = self.current_layer();
+        let mut layers = Vec::with_capacity(chain.len());
+        for &style in chain {
+            if paints_in_own_layer(style) {
+                let element = std::ptr::from_ref(style);
+                let layer = if let Some(layer) = self.inline_layers.get(&element) {
+                    layer.clone()
+                } else {
+                    let layer = self.new_inline_layer(style, &current, containing);
+                    self.inline_layers.insert(element, layer.clone());
+                    layer
+                };
+                let [x, y] = containing.relative(style);
+                current = Layer {
+                    offset: [current.offset[0] + x, current.offset[1] + y],
+                    ..layer
+                };
             }
-            None => (self.inline_key(), self.group),
+            layers.push(current.clone());
+        }
+        layers
+    }
+    /// The layer of an inline box inside `parent`. Relative positioning makes a stacking
+    /// context only with an integer `z-index`; sticky positioning, opacity, blending,
+    /// isolation, filters, masks and forced stacking contexts always do, like z-index 0 (CSS
+    /// Position 3 §3.3 and §3.4, CSS Color 4 §15, Compositing 1 §3.4).
+    fn new_inline_layer(
+        &mut self,
+        style: &'a crate::style::Style,
+        parent: &Layer,
+        containing: InlineContaining,
+    ) -> Layer {
+        let order = self.order();
+        let z_index = (style.position != Position::Static)
+            .then(|| style.stacking_z_index())
+            .flatten()
+            .or((style.is_grouped() || style.forced_stacking_context()).then_some(0));
+        let PositionedLayer { context, key, .. } =
+            positioned_layer(&parent.context, z_index, order);
+        let clip = if style.position == Position::Sticky {
+            // Vertical margins do not apply to non-replaced inline boxes (CSS 2.1 §10.6.1).
+            let margin = |side: usize| style.margin[side].resolve(containing.width).unwrap_or(0.0);
+            let margins = [0.0, margin(1), 0.0, margin(3)];
+            Some(self.sticky_node(style, margins, containing.rtl, parent.clip))
+        } else {
+            parent.clip
+        };
+        let group = if z_index.is_some() {
+            let effect = if style.is_grouped() {
+                Group::of(style)
+            } else {
+                Group::IDENTITY
+            };
+            let node = self.stacking_group(parent.group, effect, context.clone());
+            if effect.anchored() {
+                self.anchor_group(node, clip);
+            }
+            Some(node)
+        } else {
+            parent.group
+        };
+        Layer {
+            context,
+            key,
+            group,
+            clip,
+            offset: [0.0; 2],
         }
     }
-    /// A line's glyph runs and decorations by the innermost translucent inline box holding or
-    /// drawing them, untouched ones first.
+    /// The layer of content inside `inline_box`, or the current one for the root inline box.
+    fn inline_layer(&mut self, layers: &InlineLayers<'a>, inline_box: Option<usize>) -> Layer {
+        let chain = inline_chain(layers.paragraph, inline_box);
+        self.chain_layers(&chain, layers.containing)
+            .pop()
+            .unwrap_or_else(|| self.current_layer())
+    }
+    /// Paint key of the next inline item in `layer`.
+    fn layer_scope(&mut self, layer: &Layer) -> PaintKey {
+        let order = self.order();
+        extend(&layer.key, (0, order))
+    }
+    /// A line's glyph runs and decorations by the layer of the innermost inline box holding or
+    /// drawing them, untouched ones first. Decorations over a positioned descendant of their
+    /// box move with it (CSS Text Decoration 3 §2).
     fn split_line(
         &mut self,
-        layers: &mut InlineLayers<'a>,
+        layers: &InlineLayers<'a>,
         runs: Vec<crate::text::GlyphRun>,
         decorations: &[DecorationPaint],
     ) -> Vec<LinePart> {
-        fn part(parts: &mut Vec<LinePart>, layer: Option<Layer>) -> &mut LinePart {
+        fn part(parts: &mut Vec<LinePart>, layer: Layer) -> &mut LinePart {
             let index = if let Some(index) = parts.iter().position(|part| part.layer == layer) {
                 index
             } else {
@@ -4325,7 +4536,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
         let preserve_empty = runs.is_empty() && layers.paragraph.style().visibility.is_visible();
         let mut parts = vec![LinePart {
-            layer: None,
+            layer: self.current_layer(),
             runs: Vec::new(),
             decorations: Vec::new(),
         }];
@@ -4346,7 +4557,12 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             if !style.visibility.is_visible() {
                 continue;
             }
-            let layer = self.inline_layer(layers, decoration.owner);
+            let mut layer = self.inline_layer(layers, decoration.owner);
+            if decoration.positioned.is_some() {
+                let carrier = self.inline_layer(layers, decoration.positioned);
+                layer.offset = carrier.offset;
+                layer.clip = carrier.clip;
+            }
             part(&mut parts, layer).decorations.push(*decoration);
         }
         parts
@@ -4372,23 +4588,24 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 self.page_content = true;
             }
         }
+        let layer = self.current_layer();
         self.emit_line(
             marker.fragment,
             marker.ink_bounds,
             &marker.decorations,
-            None,
+            &layer,
             &|_, _| true,
         );
     }
 
     /// Emits a visible text line between its decoration lines, above its text shadows, in
-    /// stacking context `layer`; `decorates` tells which runs a decoration is drawn over.
+    /// `layer`, which offsets it; `decorates` tells which runs a decoration is drawn over.
     fn emit_line(
         &mut self,
-        line: TextLine,
+        mut line: TextLine,
         ink_bounds: Option<[f32; 2]>,
         decorations: &[DecorationPaint],
-        layer: Option<&Layer>,
+        layer: &Layer,
         decorates: &dyn Fn(&crate::text::GlyphRun, &DecorationPaint) -> bool,
     ) {
         let visible = |baseline| {
@@ -4398,6 +4615,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             })
         };
         self.flow_content[self.page] |= visible(line.baseline - self.offset[1]);
+        line.x += layer.offset[0];
+        line.baseline += layer.offset[1];
         if visible(line.baseline) {
             let ink = ink_bounds.map(|[above, below]| Rect {
                 x: line.x,
@@ -4417,7 +4636,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let text = DisplayItem::Text {
                 line: self.pages[self.page].len() - 1,
             };
-            let (scope, group) = self.layer_scope(layer);
+            let scope = self.layer_scope(layer);
             for (item, ink) in shadows
                 .into_iter()
                 .chain(below)
@@ -4429,8 +4648,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     visible: true,
                     order: self.orders.take(),
                     scope: scope.clone(),
-                    clip: self.clip,
-                    group,
+                    clip: layer.clip,
+                    group: layer.group,
                     ink,
                     item,
                     navigation: BoxNavigation::default(),
@@ -4518,44 +4737,75 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     ) -> Result<(), LayoutError> {
         let source = layers.paragraph;
         let baseline = self.y + line.ascent;
+        let origin = [left + self.offset[0], self.top + baseline + self.offset[1]];
+        // Content boxes on this line of the boxes containing positioned descendants.
+        let mut containing: Vec<(&'a crate::style::Style, Option<usize>, Vec<Rect>)> = Vec::new();
         for fragment in &line.boxes {
             let inline_box = &source.boxes()[fragment.index];
-            if let Some(mut paint) =
-                crate::layout::inline::fragment_paint(inline_box, fragment, width)
-            {
-                for rect in std::iter::once(&mut paint.rect).chain(paint.background_box.as_mut()) {
-                    rect.x += left + self.offset[0];
-                    rect.y += self.top + baseline + self.offset[1];
-                }
-                self.page_content |= paint.has_ink() && paint.rect.intersects(self.page_rect);
-                let layer = self.inline_layer(layers, Some(fragment.index));
-                let (scope, group) = self.layer_scope(layer.as_ref());
-                if let Some(node) = group
-                    && layers.layers[fragment.index].is_some()
-                    && matches!(self.clips[node].effect, Effect::Group(group) if group.anchored())
-                {
-                    self.clips[node].paints.push((self.page, paint.clone()));
-                }
-                layers.fragments[fragment.index]
-                    .push((self.page, self.foreground[self.page].len()));
-                self.foreground[self.page].push(ScopedPaint {
-                    visible: inline_box.style.visibility.is_visible(),
-                    order: self.orders.take(),
-                    scope,
-                    clip: self.clip,
-                    group,
-                    ink: None,
-                    item: DisplayItem::Box(paint),
-                    navigation: inline_box.navigation,
-                });
+            let style: &'a crate::style::Style = &inline_box.style;
+            let layer = self.inline_layer(layers, Some(fragment.index));
+            let (mut border, padding) =
+                crate::layout::inline::fragment_border_box(inline_box, fragment, width);
+            border.x += origin[0] + layer.offset[0];
+            border.y += origin[1] + layer.offset[1];
+            // Positioned boxes overflow where they are offset to (CSS Overflow 3 §2.2).
+            if layer.offset != [0.0; 2] {
+                self.record_overflow(border);
             }
+            if style.position == Position::Sticky
+                && let Some(node) = layer.clip
+            {
+                self.clips[node].areas.push((self.page, border));
+            }
+            if style.inline_contains_absolute() {
+                let content = crate::layout::inline::fragment_content_box(
+                    inline_box,
+                    fragment,
+                    (border, padding),
+                );
+                match containing
+                    .iter_mut()
+                    .find(|(element, _, _)| std::ptr::eq(*element, style))
+                {
+                    Some((_, _, rects)) => rects.push(content),
+                    None => containing.push((style, layer.clip, vec![content])),
+                }
+            }
+            let Some(paint) =
+                crate::layout::inline::fragment_paint(inline_box, fragment, (border, padding))
+            else {
+                continue;
+            };
+            self.page_content |= paint.has_ink() && paint.rect.intersects(self.page_rect);
+            let scope = self.layer_scope(&layer);
+            // The box's own filter or mask group is bounded by its fragments.
+            if Group::of(style).anchored()
+                && let Some(node) = layer.group
+            {
+                self.clips[node].paints.push((self.page, paint.clone()));
+            }
+            layers.fragments[fragment.index].push((self.page, self.foreground[self.page].len()));
+            self.foreground[self.page].push(ScopedPaint {
+                visible: style.visibility.is_visible(),
+                order: self.orders.take(),
+                scope,
+                clip: layer.clip,
+                group: layer.group,
+                ink: None,
+                item: DisplayItem::Box(paint),
+                navigation: inline_box.navigation,
+            });
+        }
+        for (style, clip, rects) in containing {
+            let page = self.page;
+            self.inline_container(style, clip).lines.push((page, rects));
         }
         for fragment in &line.links {
-            let mut rect = fragment.rect;
-            rect.x += left + self.offset[0];
-            rect.y += self.top + baseline + self.offset[1];
             let layer = self.inline_layer(layers, fragment.inline_box);
-            let (scope, group) = self.layer_scope(layer.as_ref());
+            let mut rect = fragment.rect;
+            rect.x += origin[0] + layer.offset[0];
+            rect.y += origin[1] + layer.offset[1];
+            let scope = self.layer_scope(&layer);
             self.foreground[self.page].push(ScopedPaint {
                 visible: fragment
                     .inline_box
@@ -4564,8 +4814,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     .is_visible(),
                 order: self.orders.take(),
                 scope,
-                clip: self.clip,
-                group,
+                clip: layer.clip,
+                group: layer.group,
                 ink: None,
                 item: DisplayItem::Box(BoxPaint {
                     inline_edges: [false; 2],
@@ -4581,24 +4831,181 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let atomic = atomics[fragment.index]
                 .take()
                 .expect("each atomic inline is placed on exactly one line");
-            let layer = self.inline_layer(layers, source.atomics()[fragment.index].inline_box);
-            let (key, group) = self.layer_scope(layer.as_ref());
+            let inline_box = source.atomics()[fragment.index].inline_box;
+            let chain = inline_chain(source, inline_box);
+            let chain_layers = self.chain_layers(&chain, layers.containing);
+            let layer = chain_layers
+                .last()
+                .cloned()
+                .unwrap_or_else(|| self.current_layer());
+            let key = self.layer_scope(&layer);
+            let opened = self.open_inline_containers(&chain, &chain_layers);
             self.unbroken_block(
                 atomic.block,
                 Unbroken {
                     page: self.page,
                     y: baseline + fragment.baseline - atomic.metrics.baseline + atomic.margin_top,
-                    offset: [self.offset[0] + left + fragment.x, self.offset[1]],
-                    clip: self.clip,
-                    context: layer.map_or_else(|| self.context.clone(), |(context, _)| context),
-                    group,
-                    parent_3d: self
-                        .parent_3d
-                        .filter(|_| source.atomics()[fragment.index].inline_box.is_none()),
+                    offset: [
+                        self.offset[0] + left + fragment.x + layer.offset[0],
+                        self.offset[1] + layer.offset[1],
+                    ],
+                    clip: layer.clip,
+                    context: layer.context,
+                    group: layer.group,
+                    parent_3d: self.parent_3d.filter(|_| inline_box.is_none()),
                     key,
                     reserved_order: None,
                 },
             )?;
+            self.close_inline_containers(&opened);
+        }
+        Ok(())
+    }
+    /// Opens a container for each box of `chain` with layers `layers` that is the containing
+    /// block of positioned descendants of the content laid out next (CSS Position 3 §2.1).
+    fn open_inline_containers(
+        &mut self,
+        chain: &[&'a crate::style::Style],
+        layers: &[Layer],
+    ) -> Vec<(&'a crate::style::Style, Layer)> {
+        let mut opened = Vec::new();
+        for (&style, layer) in chain.iter().zip(layers) {
+            if style.inline_contains_absolute() {
+                self.containers.push(Container {
+                    pending: Vec::new(),
+                    fixed: style.inline_contains_fixed(),
+                });
+                opened.push((style, layer.clone()));
+            }
+        }
+        opened
+    }
+    /// Closes containers that `open_inline_containers` opened, handing their positioned boxes
+    /// to the inline boxes.
+    fn close_inline_containers(&mut self, opened: &[(&'a crate::style::Style, Layer)]) {
+        for (style, layer) in opened.iter().rev() {
+            let pending = self
+                .containers
+                .pop()
+                .expect("inline containers close in the order they opened")
+                .pending;
+            self.inline_container(style, layer.clip)
+                .pending
+                .extend(pending);
+        }
+    }
+    /// The containing block that inline box `style` forms for positioned descendants, which
+    /// waits for the end of its block container, the current one.
+    fn inline_container(
+        &mut self,
+        style: &'a crate::style::Style,
+        clip: Option<usize>,
+    ) -> &mut InlineContainer<'a> {
+        let element = std::ptr::from_ref(style);
+        let index = if let Some(index) = self
+            .inline_containers
+            .iter()
+            .position(|(container, _)| *container == element)
+        {
+            index
+        } else {
+            self.inline_containers.push((
+                element,
+                InlineContainer {
+                    pending: Vec::new(),
+                    lines: Vec::new(),
+                    rtl: style.rtl,
+                    clip,
+                    depth: self.boxes.len(),
+                },
+            ));
+            self.inline_containers.len() - 1
+        };
+        &mut self.inline_containers[index].1
+    }
+    /// Records the empty fragment of split inline box `style` with layer `layer` at the start
+    /// of the current line at `y`, which a block splitting it adjoins.
+    fn split_fragment(&mut self, style: &'a crate::style::Style, layer: &Layer, y: f32) {
+        let (x, width, rtl, _) = self.containing_geometry();
+        let rect = Rect {
+            x: if rtl { x + width } else { x } + self.offset[0] + layer.offset[0],
+            y: y + self.offset[1] + layer.offset[1],
+            width: 0.0,
+            height: 0.0,
+        };
+        let page = self.page;
+        self.inline_container(style, layer.clip)
+            .lines
+            .push((page, vec![rect]));
+    }
+    /// Enters the layers of the inline boxes that `block` splits, when it starts its source
+    /// box, with the offsets they give it.
+    fn enter_split_inline(
+        &mut self,
+        block: &mut MeasuredBlock<'a>,
+        starts_source: bool,
+    ) -> SplitInline<'a> {
+        let source: &'a BlockBox = block.source;
+        if !starts_source || source.enclosing_inline().is_empty() {
+            return SplitInline::default();
+        }
+        let chain: Vec<&'a crate::style::Style> = source
+            .enclosing_inline()
+            .iter()
+            .map(|style| &**style)
+            .collect();
+        let layers = self.chain_layers(&chain, InlineContaining::of(self.containing_geometry()));
+        let start = self.top + self.y + self.pending_value();
+        let containers = self.open_inline_containers(&chain, &layers);
+        for (style, layer) in &containers {
+            if self.inline_container(style, layer.clip).lines.is_empty() {
+                self.split_fragment(style, layer, start);
+            }
+        }
+        let nodes = chain
+            .iter()
+            .zip(&layers)
+            .filter_map(|(style, layer)| {
+                if style.position == Position::Sticky {
+                    layer.clip
+                } else if Group::of(style).anchored() {
+                    layer.group
+                } else {
+                    None
+                }
+            })
+            .collect();
+        let inner = layers.last().expect("the chain holds the enclosing boxes");
+        self.context = inner.context.clone();
+        self.key = inner.key.clone();
+        self.group = inner.group;
+        self.clip = inner.clip;
+        // An inline box, which is not transformable, is the parent of the block.
+        self.parent_3d = None;
+        block.offset[0] += inner.offset[0];
+        block.offset[1] += inner.offset[1];
+        SplitInline { containers, nodes }
+    }
+    /// Places the positioned boxes of the inline containing blocks whose block container is
+    /// at `depth` or deeper, which has ended.
+    fn place_inline_pending(&mut self, depth: usize) -> Result<(), LayoutError> {
+        let (ready, open): (Vec<_>, Vec<_>) = std::mem::take(&mut self.inline_containers)
+            .into_iter()
+            .partition(|(_, container)| container.depth >= depth);
+        self.inline_containers = open;
+        for (_, mut container) in ready {
+            for pending in std::mem::take(&mut container.pending) {
+                let page = pending.position.page;
+                let rect = inline_containing_rect(&container, &self.fragmentainers, page)?;
+                self.place(
+                    pending,
+                    &Containing::Rect {
+                        rect,
+                        rtl: container.rtl,
+                        clip: container.clip,
+                    },
+                )?;
+            }
         }
         Ok(())
     }
@@ -4717,6 +5124,82 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             string_locations: self.string_locations,
         })
     }
+}
+
+/// The styles of the inline boxes holding `inline_box` and of the box itself, outermost first.
+fn inline_chain(
+    paragraph: &crate::document::Paragraph,
+    inline_box: Option<usize>,
+) -> Vec<&crate::style::Style> {
+    let mut chain: Vec<_> =
+        std::iter::successors(inline_box, |&index| paragraph.boxes()[index].parent)
+            .map(|index| &*paragraph.boxes()[index].style)
+            .collect();
+    chain.reverse();
+    chain
+}
+
+/// The containing block that an inline box's fragments form on `page`: a rectangle from the
+/// start-most content edges of its first fragment to the end-most content edges of its
+/// end-most fragments in each axis, in the box's direction (CSS Position 3 §2.1), cut by the
+/// page as a box continuing across page breaks is.
+fn inline_containing_rect(
+    container: &InlineContainer<'_>,
+    fragmentainers: &Fragmentainers<'_, '_>,
+    page: usize,
+) -> Result<Rect, LayoutError> {
+    let (Some((first_page, first_line)), Some((end_page, _))) =
+        (container.lines.first(), container.lines.last())
+    else {
+        return Err(LayoutError::MissingContainingFragment { page });
+    };
+    let right = |rect: &Rect| rect.x + rect.width;
+    let bottom = |rect: &Rect| rect.y + rect.height;
+    let rects = || container.lines.iter().flat_map(|(_, rects)| rects);
+    let first = first_line
+        .iter()
+        .copied()
+        .reduce(|start, rect| {
+            let starts_before = if container.rtl {
+                right(&rect) > right(&start)
+            } else {
+                rect.x < start.x
+            };
+            if starts_before { rect } else { start }
+        })
+        .ok_or(LayoutError::MissingContainingFragment { page })?;
+    let [left, right] = if container.rtl {
+        [
+            rects().map(|rect| rect.x).fold(f32::INFINITY, f32::min),
+            right(&first),
+        ]
+    } else {
+        [
+            first.x,
+            rects().map(right).fold(f32::NEG_INFINITY, f32::max),
+        ]
+    };
+    let end = container
+        .lines
+        .iter()
+        .filter(|(line_page, _)| line_page == end_page)
+        .flat_map(|(_, rects)| rects)
+        .map(bottom)
+        .fold(f32::NEG_INFINITY, f32::max);
+    let area = fragmentainers.content_box(page);
+    let edge = |fragment_page: usize, on_page: f32| match page.cmp(&fragment_page) {
+        std::cmp::Ordering::Less => area.y + area.height,
+        std::cmp::Ordering::Equal => on_page,
+        std::cmp::Ordering::Greater => area.y,
+    };
+    let top = edge(*first_page, first.y);
+    let end = edge(*end_page, end);
+    Ok(Rect {
+        x: left,
+        y: top,
+        width: (right - left).max(0.0),
+        height: (end - top).max(0.0),
+    })
 }
 
 /// The outline of each box fragment, painted over everything else in the stacking context its

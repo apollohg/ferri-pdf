@@ -96,6 +96,9 @@ pub(crate) struct BlockBox {
     anonymous: bool,
     /// The element whose size container queries consult, when the box is its principal box.
     query_container: Option<ElementId>,
+    /// Styles of the inline boxes split around this block-level box, outermost first, whose
+    /// positioning and compositing it shares (CSS 2.1 §9.2.1.1).
+    enclosing_inline: Vec<std::sync::Arc<Style>>,
 }
 pub(crate) enum BlockContent {
     Events(Vec<crate::document::SemanticEvent>),
@@ -187,6 +190,7 @@ impl BlockBox {
             page,
             anonymous: false,
             query_container: None,
+            enclosing_inline: Vec::new(),
         }
     }
     pub(crate) fn leading_events(&self) -> impl Iterator<Item = &crate::document::SemanticEvent> {
@@ -231,6 +235,15 @@ impl BlockBox {
     }
     pub(crate) fn style(&self) -> &Style {
         &self.style
+    }
+    pub(crate) fn enclosing_inline(&self) -> &[std::sync::Arc<Style>] {
+        &self.enclosing_inline
+    }
+    pub(super) fn take_enclosing_inline(&mut self) -> Vec<std::sync::Arc<Style>> {
+        std::mem::take(&mut self.enclosing_inline)
+    }
+    pub(super) fn set_enclosing_inline(&mut self, enclosing: Vec<std::sync::Arc<Style>>) {
+        self.enclosing_inline = enclosing;
     }
     pub(crate) fn decoration(&self) -> &BoxDecoration {
         &self.decoration
@@ -480,9 +493,8 @@ impl BlockBuilder<'_, '_, '_> {
         Ok(None)
     }
     /// Item containers and positions outside inline boxes anchor between blocks.
-    fn out_of_flow(&mut self, mut block: BlockBox) {
+    fn out_of_flow(&mut self, block: BlockBox) {
         if self.style.display.is_item_container() || self.inline.is_between_blocks() {
-            block.style.opacity *= self.inline.open_opacity();
             self.children.push(BlockContent::Positioned(block));
         } else {
             self.inline.anchor(block);
@@ -593,7 +605,6 @@ impl BlockBuilder<'_, '_, '_> {
                 self.inline.append_generated(&output, &style)?;
             }
             Display::Inline => {
-                validate_inline(&style)?;
                 if let Some(event) = event {
                     self.inline.semantic_event(event);
                 }
@@ -637,19 +648,18 @@ impl BlockBuilder<'_, '_, '_> {
             Display::None => unreachable!("hidden pseudo-elements are excluded by the cascade"),
             _ => {
                 self.flush()?;
-                self.inline.check_open_compositing()?;
-                style.opacity *= self.inline.open_opacity();
                 let children = Paragraph::generated_output(&output, &style)?
                     .into_iter()
                     .map(BlockContent::Inline)
                     .collect();
-                let generated = self.generated_block(
+                let mut generated = self.generated_block(
                     style,
                     children,
                     decoration,
                     element_page_scope.as_ref(),
                     event,
                 );
+                generated.enclosing_inline = self.inline.open_boxes();
                 self.children.push(BlockContent::Block(generated));
             }
         }
@@ -677,15 +687,6 @@ impl BlockBuilder<'_, '_, '_> {
 
 fn validate_display(display: &Display) -> Result<(), StyleError> {
     display.validate()
-}
-
-fn validate_inline(style: &Style) -> Result<(), DocumentError> {
-    if style.position != crate::style::Position::Static {
-        return Err(DocumentError::Formatting(
-            "inline positioning is not supported".into(),
-        ));
-    }
-    Ok(())
 }
 
 fn unsupported_element(tag: &str) -> bool {
@@ -1233,8 +1234,6 @@ fn block<'a>(
                     | Display::TableColumnGroup
                     | Display::TableCaption => {
                         builder.flush()?;
-                        builder.inline.check_open_compositing()?;
-                        child_style.opacity *= builder.inline.open_opacity();
                         Some(Placement::Flow)
                     }
                     Display::InlineBlock
@@ -1244,12 +1243,8 @@ fn block<'a>(
                     | Display::InlineFlowRootListItem => Some(Placement::Atomic),
                     Display::RunIn(_) => unreachable!("run-in boxes take their inner display"),
                     Display::Inline if replaced => Some(Placement::Atomic),
-                    Display::InlineListItem => {
-                        validate_inline(&child_style)?;
-                        None
-                    }
+                    Display::InlineListItem => None,
                     Display::Inline => {
-                        validate_inline(&child_style)?;
                         if child.name() == "br" {
                             builder
                                 .traversal
@@ -1379,7 +1374,10 @@ fn block<'a>(
             resources,
         );
         match state.placement {
-            Placement::Flow => builder.children.push(BlockContent::Block(block)),
+            Placement::Flow => {
+                block.enclosing_inline = builder.inline.open_boxes();
+                builder.children.push(BlockContent::Block(block));
+            }
             Placement::Positioned => builder.out_of_flow(block),
             Placement::Atomic => builder.inline.atomic(block, parent)?,
             Placement::Root => unreachable!("root returned before attaching to a parent"),

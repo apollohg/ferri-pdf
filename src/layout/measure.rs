@@ -517,6 +517,7 @@ impl Measurer<'_> {
             || style.contains_absolute()
             || style.is_scroll_container()
             || contains_sticky(block)
+            || bounds_enclosing_inline(block)
             || !block.navigation().is_empty();
         let rect = geometry.border_box(0.0);
         (style.display != Display::None && (decoration.is_visible() || fragments)).then(|| {
@@ -1378,18 +1379,43 @@ impl<'a> FlowFrame<'a> {
     }
 }
 
+fn is_sticky(style: &Style) -> bool {
+    style.position == crate::style::Position::Sticky
+}
+
 /// Whether the block is the containing block of a sticky box, which its fragments constrain
 /// (CSS Position 3 §3.4).
 fn contains_sticky(block: &BlockBox) -> bool {
-    let sticky = |child: &BlockBox| child.style().position == crate::style::Position::Sticky;
+    let sticky = |child: &BlockBox| {
+        is_sticky(child.style())
+            || child
+                .enclosing_inline()
+                .iter()
+                .any(|style| is_sticky(style))
+    };
     block.children().iter().any(|child| match child {
         BlockContent::Block(child) | BlockContent::Positioned(child) => sticky(child),
-        BlockContent::Inline(paragraph) => paragraph
-            .atomics()
-            .iter()
-            .any(|atomic| sticky(&atomic.block)),
+        BlockContent::Inline(paragraph) => {
+            paragraph
+                .atomics()
+                .iter()
+                .any(|atomic| sticky(&atomic.block))
+                || paragraph
+                    .boxes()
+                    .iter()
+                    .any(|inline| is_sticky(&inline.style))
+        }
         BlockContent::Events(_) => false,
     })
+}
+
+/// Whether the block splits an inline box whose sticky shift, filter region or mask its
+/// fragments bound with the inline box's own (CSS 2.1 §9.2.1.1).
+fn bounds_enclosing_inline(block: &BlockBox) -> bool {
+    block
+        .enclosing_inline()
+        .iter()
+        .any(|style| is_sticky(style) || style.is_filtered() || style.decoration.masks.is_masked())
 }
 
 /// Static positions of a paragraph's absolutely positioned boxes (CSS 2.1 §10.3.7).

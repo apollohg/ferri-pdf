@@ -201,28 +201,62 @@ fn baseline(block: &BlockBox, measured: &MeasuredBlock<'_>) -> Option<f32> {
     }
 }
 
-/// Border box of an inline box fragment relative to the line's left edge and baseline, when
-/// it paints or carries navigation. Vertical padding and borders surround the content area
-/// without affecting the line height.
-pub(super) fn fragment_paint(
+const TOP: usize = 0;
+const RIGHT: usize = 1;
+const BOTTOM: usize = 2;
+const LEFT: usize = 3;
+
+/// Border box of an inline box fragment relative to the line's left edge and baseline, with
+/// its resolved padding. Vertical padding and borders surround the content area without
+/// affecting the line height.
+pub(super) fn fragment_border_box(
     inline_box: &InlineBox,
     fragment: &BoxFragment,
     containing_width: f32,
-) -> Option<BoxPaint> {
+) -> (Rect, [f32; 4]) {
     let style = &inline_box.style;
     let padding = style
         .padding
         .each_ref()
         .map(|padding| padding.resolve(containing_width));
     let outside = |side: usize| padding[side] + style.decoration.borders[side].used_width();
-    let top = fragment.baseline - fragment.ascent - outside(0);
-    let bottom = fragment.baseline + fragment.descent + outside(2);
+    let top = fragment.baseline - fragment.ascent - outside(TOP);
+    let bottom = fragment.baseline + fragment.descent + outside(BOTTOM);
     let rect = Rect {
         x: fragment.x,
         y: top,
         width: fragment.width,
         height: bottom - top,
     };
+    (rect, padding)
+}
+
+/// Content box of an inline box fragment with border box `border` and resolved `padding`:
+/// the inline-axis borders and padding belong only to the fragments holding the box's edges.
+pub(super) fn fragment_content_box(
+    inline_box: &InlineBox,
+    fragment: &BoxFragment,
+    (border, padding): (Rect, [f32; 4]),
+) -> Rect {
+    let borders = &inline_box.style.decoration.borders;
+    let inset = |side: usize| padding[side] + borders[side].used_width();
+    let left = if fragment.edges[0] { inset(LEFT) } else { 0.0 };
+    let right = if fragment.edges[1] { inset(RIGHT) } else { 0.0 };
+    Rect {
+        x: border.x + left,
+        y: border.y + inset(TOP),
+        width: (border.width - left - right).max(0.0),
+        height: (border.height - inset(TOP) - inset(BOTTOM)).max(0.0),
+    }
+}
+
+/// Paint of an inline box fragment with border box `rect`, when it paints or carries
+/// navigation.
+pub(super) fn fragment_paint(
+    inline_box: &InlineBox,
+    fragment: &BoxFragment,
+    (rect, padding): (Rect, [f32; 4]),
+) -> Option<BoxPaint> {
     let mut decoration = inline_box.decoration.clone();
     if inline_box.canvas_source {
         decoration.clear_background();
@@ -231,7 +265,7 @@ pub(super) fn fragment_paint(
     if !decoration.is_visible()
         && inline_box.navigation.is_empty()
         && !decoration.masks.is_masked()
-        && !style.is_filtered()
+        && !inline_box.style.is_filtered()
     {
         return None;
     }

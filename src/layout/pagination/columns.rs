@@ -440,13 +440,16 @@ impl<'a, 't> ColumnLayout<'a, 't> {
         if let Some(request) = self.request {
             paginator.new_page(request.forced, request.preserve_empty)?;
         }
-        let (cursor, request) = match paginator.resume_flow(
-            self.cursor
-                .expect("completed column layouts are not resumed"),
-        )? {
-            Some((cursor, request)) => (Some(cursor), Some(request)),
-            None => (None, None),
-        };
+        let (cursor, request) = paginator
+            .resume_flow(
+                self.cursor
+                    .expect("completed column layouts are not resumed"),
+            )?
+            .unzip();
+        if cursor.is_none() {
+            // The columns' own inline content has no block container here.
+            paginator.place_inline_pending(0)?;
+        }
         Ok(Self {
             state: paginator.with_measurer(()),
             cursor,

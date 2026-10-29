@@ -3,6 +3,7 @@ mod transform_maps;
 use crate::document::DocumentError;
 use crate::style::{Clear, Style, TextAlign, WhiteSpace, WhiteSpaceCollapse};
 use std::ops::Range;
+use std::sync::Arc;
 
 pub(crate) const MAX_INLINE_TEXT_BYTES: usize = 64 * 1024 * 1024;
 /// Stands for an atomic inline in paragraph text (CSS Text 3 §5.1).
@@ -21,7 +22,8 @@ pub(crate) struct TextSpan {
 /// Non-replaced inline box (CSS 2.1 §9.2.2), stored in tree order.
 pub(crate) struct InlineBox {
     pub range: Range<usize>,
-    pub style: Style,
+    /// Shared by every box an element's inline box is split into, which it identifies.
+    pub style: Arc<Style>,
     pub decoration: crate::graphics::BoxDecoration,
     pub parent: Option<usize>,
     /// Boxes nested inside this one, which immediately follow it in tree order.
@@ -516,11 +518,17 @@ impl InlineCollector {
         navigation: crate::document::BoxNavigation,
         canvas_source: bool,
     ) {
-        self.open_continued(style, decoration, navigation, false, canvas_source);
+        self.open_continued(
+            Arc::new(style.clone()),
+            decoration,
+            navigation,
+            false,
+            canvas_source,
+        );
     }
     fn open_continued(
         &mut self,
-        style: &Style,
+        style: Arc<Style>,
         decoration: crate::graphics::BoxDecoration,
         navigation: crate::document::BoxNavigation,
         continued: bool,
@@ -530,7 +538,7 @@ impl InlineCollector {
         self.mark(Mark::BoxStart(index));
         self.boxes.push(InlineBox {
             range: self.text.len()..self.text.len(),
-            style: style.clone(),
+            style,
             decoration,
             parent: self.open_box,
             descendants: 0,
@@ -604,8 +612,8 @@ impl InlineCollector {
             next_source: self.next_source,
             ..Self::default()
         };
-        for (style, decoration, navigation, canvas_source) in open.iter().rev() {
-            next.open_continued(style, decoration.clone(), *navigation, true, *canvas_source);
+        for (style, decoration, navigation, canvas_source) in open.into_iter().rev() {
+            next.open_continued(style, decoration, navigation, true, canvas_source);
         }
         for link in links {
             next.open_contents(link);
@@ -641,33 +649,15 @@ impl InlineCollector {
         });
         Ok(())
     }
-    /// Product of the open inline boxes' opacities. Block-level content splitting them is a
-    /// fragment of each, so it takes their opacity as its own group.
-    pub(crate) fn open_opacity(&self) -> f32 {
-        let mut opacity = 1.0;
-        let mut open = self.open_box;
-        while let Some(index) = open {
-            opacity *= self.boxes[index].style.opacity;
-            open = self.boxes[index].parent;
-        }
-        opacity
-    }
-    /// Block-level content cannot take the open inline boxes' blending or isolation as its
-    /// opacity, so splitting such a box is refused.
-    pub(crate) fn check_open_compositing(&self) -> Result<(), DocumentError> {
-        let mut open = self.open_box;
-        while let Some(index) = open {
-            let style = &self.boxes[index].style;
-            if style.mix_blend_mode != crate::paint::BlendMode::Normal || style.isolate {
-                return Err(crate::style::StyleError::Unsupported(
-                    "mix-blend-mode or isolation on an inline box split by block-level content"
-                        .into(),
-                )
-                .into());
-            }
-            open = self.boxes[index].parent;
-        }
-        Ok(())
+    /// Styles of the open inline boxes, outermost first, which block-level content splits
+    /// (CSS 2.1 §9.2.1.1).
+    pub(crate) fn open_boxes(&self) -> Vec<Arc<Style>> {
+        let mut open: Vec<_> =
+            std::iter::successors(self.open_box, |&index| self.boxes[index].parent)
+                .map(|index| Arc::clone(&self.boxes[index].style))
+                .collect();
+        open.reverse();
+        open
     }
     /// An anchor can sit between blocks only outside an open inline box.
     pub(crate) fn is_between_blocks(&self) -> bool {
