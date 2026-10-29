@@ -595,7 +595,7 @@ fn named_conditions_probe_all_features_without_applying_their_contents() {
         ("@media screen{p{display:ruby}}", false),
         ("p:is(p,:unknown){width:12pt}", false),
         ("&{color:red}", true),
-        ("@container scroll-state(stuck:top){}", false),
+        ("@container scroll-state(stuck:top){}", true),
         (
             "@font-face{font-family:Probe;src:url('must-not-fetch.ttf')}",
             true,
