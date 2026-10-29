@@ -851,7 +851,11 @@ impl<'d> Builder<'_, 'd> {
             .unwrap_or(0.0)
             .max(0.0);
         let y = self.attribute(element, "voffset", style)?.unwrap_or(0.0);
-        let mut result = MathBox::default();
+        let mut result = MathBox {
+            operator: inner.operator.clone(),
+            space_like: inner.space_like,
+            ..Default::default()
+        };
         result.place(inner, x, -y);
         result.width = width;
         result.intrinsic = intrinsic;

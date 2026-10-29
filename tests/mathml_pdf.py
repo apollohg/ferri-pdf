@@ -205,6 +205,25 @@ class MathmlPdf(unittest.TestCase):
         self.assertTrue(all(glyph.fill == (1, 0, 0, 1) for glyph in glyphs),
                         'HTML block math must preserve CSS first-line propagation in serialized glyph paint')
 
+    def test_padded_semantics_preserve_fence_assemblies_and_prefix_spacing(self):
+        _, content = self.render(
+            "<math style='font-family:MathTest'><mo>(</mo><mspace height='40pt' depth='10pt'/></math><br>"
+            "<math style='font-family:MathTest'><mpadded><mo>(</mo></mpadded><mspace height='40pt' depth='10pt'/></math>")
+        spans = [span for span in content['replacement_text'] if span.text == '(']
+        self.assertEqual(len(spans), 2, 'both bare and padded fences must remain native assemblies with one ActualText cluster each')
+        lengths = [span.glyph_end - span.glyph_start for span in spans]
+        self.assertGreater(lengths[0], 1, 'the fixture must stretch beyond its base glyph')
+        self.assertEqual(lengths[0], lengths[1], 'mpadded must forward the same block stretch target')
+        _, content = self.render(
+            "<math><mo>+</mo><mn>1</mn></math><br>"
+            "<math><mpadded><mspace width='10pt'/></mpadded><mo>+</mo><mn>1</mn></math>")
+        plus = [glyph for glyph in content['glyphs'] if glyph.text == '+']
+        digit = [glyph for glyph in content['glyphs'] if glyph.text == '1']
+        self.assertEqual((len(plus), len(digit)), (2, 2))
+        self.assertAlmostEqual(digit[0].origin[0] - plus[0].origin[0],
+                               digit[1].origin[0] - plus[1].origin[0], delta=TOLERANCE,
+                               msg='space-like mpadded content must preserve prefix operator spacing in serialized glyph positions')
+
     def test_math_alphabetic_baseline_matches_surrounding_inline_text(self):
         _, content = self.render('L<math><mn>8</mn></math>R')
         glyphs = {glyph.text: glyph for glyph in content['glyphs']}

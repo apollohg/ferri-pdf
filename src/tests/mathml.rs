@@ -1027,3 +1027,48 @@ fn math_attribute_metrics_preserve_active_font_policy_errors() {
         "mpadded lspace=1ex must retain its typed resource error rather than silently replacing the valid attribute by zero: {error}"
     );
 }
+
+#[test]
+fn padded_operators_forward_their_parent_stretch_constraint() {
+    let bare = math(
+        "<math style='font-family:MathTest'><mo>(</mo><mspace height='40pt' depth='10pt'/></math>",
+    );
+    let padded = math(
+        "<math style='font-family:MathTest'><mpadded><mo>(</mo></mpadded><mspace height='40pt' depth='10pt'/></math>",
+    );
+    let glyphs = |view: &crate::layout::ViewportPaint| {
+        view.lines
+            .iter()
+            .find(|line| line.text == "(")
+            .expect("fixture retains its fence")
+            .runs
+            .iter()
+            .flat_map(|run| run.glyphs().iter().map(|glyph| glyph.id))
+            .collect::<Vec<_>>()
+    };
+    let bare_glyphs = glyphs(&bare);
+    assert!(
+        bare_glyphs.len() > 1,
+        "the fixture must exercise a valid native fence assembly: {bare_glyphs:?}"
+    );
+    assert_eq!(
+        glyphs(&padded),
+        bare_glyphs,
+        "Core3.2.4.1 keeps mpadded embellished, forwarding its parent's stretch target to the same core operator"
+    );
+}
+
+#[test]
+fn space_like_padding_does_not_change_neighboring_operator_form() {
+    const SPACE_WIDTH: f32 = 10.0;
+    let bare = math("<math><mo>+</mo><mn>1</mn></math>");
+    let padded = math("<math><mpadded><mspace width='10pt'/></mpadded><mo>+</mo><mn>1</mn></math>");
+    let position = |view: &crate::layout::ViewportPaint| {
+        view.lines.iter().find(|line| line.text == "1").unwrap().x
+    };
+    let offset = position(&padded) - position(&bare);
+    assert!(
+        (offset - SPACE_WIDTH).abs() < 0.01,
+        "Core3.2.5.1 keeps a padding group of spaces space-like: it reserves {SPACE_WIDTH}pt without turning prefix plus into infix; got {offset}pt"
+    );
+}
