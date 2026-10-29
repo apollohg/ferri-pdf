@@ -677,6 +677,108 @@ fn list_match_parent_resolves_alignment_in_the_parents_direction() {
 }
 
 #[test]
+fn text_alignment_shorthand_resets_last_while_the_all_longhand_preserves_it() {
+    use crate::style::TextAlign::{Center, Justify, Left, Right};
+    for (declarations, expected) in [
+        ("text-align-last:right;text-align:center", (Center, None)),
+        (
+            "text-align-last:right;text-align-all:center",
+            (Center, Some(Right)),
+        ),
+        ("text-align:justify-all", (Justify, Some(Justify))),
+        (
+            "text-align:justify-all;text-align-all:left",
+            (Left, Some(Justify)),
+        ),
+        (
+            "--alignment:center;text-align-last:right;text-align:var(--alignment)",
+            (Center, None),
+        ),
+    ] {
+        let computed = style(
+            &format!("#target{{{declarations}}}"),
+            "",
+            "<p id=target>A B</p>",
+        );
+        assert_eq!(
+            (computed.align, computed.align_last),
+            expected,
+            "{declarations}: shorthand and longhands must cascade independently"
+        );
+    }
+}
+
+#[test]
+fn text_alignment_match_parent_resolves_both_longhands_in_the_parent_direction() {
+    use crate::style::TextAlign::{Left, Right, Start};
+    let inherited = style(
+        "#parent{direction:rtl;text-align-all:end;text-align-last:start}#target{direction:ltr;text-align:match-parent}",
+        "",
+        "<section id=parent><p id=target>A B</p></section>",
+    );
+    assert_eq!(
+        (inherited.align, inherited.align_last),
+        (Left, Some(Right)),
+        "match-parent must turn the parent's opposing logical alignments into physical ones"
+    );
+    let root = style(
+        "html{text-align:match-parent}",
+        "",
+        "<html id=target dir=rtl><body>A B</body></html>",
+    );
+    assert_eq!(
+        (root.align, root.align_last),
+        (Start, Some(Start)),
+        "match-parent computes to start on the root element"
+    );
+}
+
+#[test]
+fn text_alignment_table_header_default_resets_both_longhands_only_when_it_applies() {
+    use crate::style::TextAlign::{Center, Right};
+    for (alignment, expected_last) in [("start", None), ("center", Some(Right))] {
+        let computed = style(
+            &format!("#parent{{text-align-all:{alignment};text-align-last:right}}"),
+            "",
+            "<table><tr id=parent><th id=target>A B</th></tr></table>",
+        );
+        assert_eq!(
+            (computed.align, computed.align_last),
+            (Center, expected_last),
+            "parent text-align-all:{alignment}: conditional header alignment must reset exactly the declarations it wins"
+        );
+    }
+}
+
+#[test]
+fn text_alignment_shorthand_controls_actual_final_line_placement_and_justification() {
+    const WIDTH: f32 = 100.0;
+    const LEFT: f32 = 36.0;
+    for (declarations, factor) in [
+        ("text-align-last:right;text-align:center", 0.5),
+        ("text-align-last:right;text-align-all:center", 1.0),
+    ] {
+        let trace = render_html(
+            &format!("<style>{PROFILE}p{{width:{WIDTH}pt;{declarations}}}</style><p>A B</p>"),
+            &local_options(),
+        )
+        .unwrap()
+        .layout
+        .unwrap();
+        let line = &trace.pages[0][0];
+        assert_pt(line.x, LEFT + (WIDTH - line.width) * factor);
+    }
+    let trace = render_html(
+        &format!("<style>{PROFILE}p{{width:{WIDTH}pt;text-align:justify-all}}</style><p>A B</p>"),
+        &local_options(),
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    assert_pt(trace.pages[0][0].width, WIDTH);
+}
+
+#[test]
 fn html_table_spans_reuse_integer_prefix_parsing_and_html_bounds() {
     let target = style(
         "",

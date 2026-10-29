@@ -114,7 +114,7 @@ pub(crate) struct Style {
     #[serde(skip)]
     pub(crate) origin: StyleOrigin,
     #[serde(skip)]
-    document_root: bool,
+    pub(super) document_root: bool,
     #[serde(skip)]
     item_parent: bool,
     /// The parent inlinifies its in-flow children (CSS Display 3 §2.7, §5).

@@ -240,25 +240,36 @@ pub(super) struct CustomValue {
 
 impl Cascaded {
     pub(super) fn header_alignment(&mut self, namespace: crate::fonts::FontNamespace) {
-        let value = Specified::Value(Arc::new(crate::style::component::Component::Keyword(
-            crate::style::grammar::Keyword::Center,
-        )));
-        self.properties
-            .entry(Property::TextAlign)
-            .or_default()
-            .push(Candidate::new(
-                (Value::HeaderAlignment(value), namespace),
-                DeclarationContext {
-                    origin: Origin::UserAgent,
-                    attached: false,
-                    encapsulation_order: crate::dom::DOCUMENT_CONTEXT_ORDER,
-                    layer: LayerId::Unlayered,
-                    specificity: crate::style::user_agent::CONDITIONAL_SPECIFICITY,
-                    scope_proximity: None,
-                    order: 0,
-                },
-                false,
-            ));
+        for (property, keyword) in [
+            (
+                Property::TextAlignAll,
+                crate::style::grammar::Keyword::Center,
+            ),
+            (
+                Property::TextAlignLast,
+                crate::style::grammar::Keyword::Auto,
+            ),
+        ] {
+            let value = Specified::Value(Arc::new(crate::style::component::Component::Keyword(
+                keyword,
+            )));
+            self.properties
+                .entry(property)
+                .or_default()
+                .push(Candidate::new(
+                    (Value::HeaderAlignment(value), namespace),
+                    DeclarationContext {
+                        origin: Origin::UserAgent,
+                        attached: false,
+                        encapsulation_order: crate::dom::DOCUMENT_CONTEXT_ORDER,
+                        layer: LayerId::Unlayered,
+                        specificity: crate::style::user_agent::CONDITIONAL_SPECIFICITY,
+                        scope_proximity: None,
+                        order: 0,
+                    },
+                    false,
+                ));
+        }
     }
     /// Whether an author-origin value of any of `properties` survives rolling back
     /// `revert` and `revert-layer` (CSS UI 4 §7.2.1).

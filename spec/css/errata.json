@@ -175,6 +175,15 @@
     }
   },
   "properties": {
+    "text-align": {
+      "syntax": "start | end | left | right | center | justify | justify-all | match-parent",
+      "initial": ["text-align-all", "text-align-last"],
+      "source": "https://www.w3.org/TR/2026/CRD-css-text-3-20260814/#text-align-property: shorthand for default and final-line alignment"
+    },
+    "text-align-last": {
+      "syntax": "auto | start | end | left | right | center | justify | match-parent",
+      "source": "https://www.w3.org/TR/2026/CRD-css-text-3-20260814/#text-align-last-property"
+    },
     "border-spacing": {
       "syntax": "<length [0,∞]>{1,2}",
       "source": "https://www.w3.org/TR/2025/WD-css-tables-3-20251216/#propdef-border-spacing: two non-negative lengths"
@@ -392,10 +401,6 @@
     "text-underline-offset": {
       "syntax": "auto | <length-percentage>",
       "source": "https://drafts.csswg.org/css-text-decor-4/#underline-offset"
-    },
-    "text-align": {
-      "initial": "start",
-      "source": "https://drafts.csswg.org/css-text-3/#text-align-property"
     },
     "white-space": {
       "initial": ["white-space-collapse", "text-wrap-mode"],
@@ -631,6 +636,13 @@
     }
   },
   "additions": {
+    "text-align-all": {
+      "syntax": "start | end | left | right | center | justify | match-parent",
+      "initial": "start",
+      "inherited": true,
+      "groups": ["CSS Text"],
+      "source": "https://www.w3.org/TR/2026/CRD-css-text-3-20260814/#text-align-all-property"
+    },
     "border-top-radius": {
       "syntax": "<border-side-radius>",
       "initial": ["border-top-left-radius", "border-top-right-radius"],

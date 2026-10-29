@@ -562,7 +562,7 @@ impl<'a> Geometry<'a> {
             property,
             &mut || {
                 if let Some(parent) = self.parent_context(context) {
-                    self.property(parent, Property::TextAlign)?;
+                    self.property(parent, Property::TextAlignAll)?;
                 }
                 Ok(self.parent_style(context).align)
             },
@@ -661,6 +661,9 @@ impl<'a> Geometry<'a> {
         if let Some(parent) = self.parent_context(context)
             && needs_parent(property, value)
         {
+            if matches_parent_alignment(property, value) {
+                self.property(parent, Property::Direction)?;
+            }
             let source = match value {
                 Specified::FlowRelative(flow, _) => logical::corresponding(
                     property,
@@ -1831,12 +1834,27 @@ fn inherits(value: &Specified, property: Property) -> bool {
     }
 }
 
+fn matches_parent_alignment(property: Property, value: &Specified) -> bool {
+    if !matches!(property, Property::TextAlignAll | Property::TextAlignLast) {
+        return false;
+    }
+    match value {
+        Specified::Value(value) => value.keyword() == Some(Keyword::MatchParent),
+        Specified::Toggle(values) => values
+            .iter()
+            .any(|value| matches_parent_alignment(property, &value.value)),
+        Specified::FlowRelative(_, value) => matches_parent_alignment(property, value),
+        _ => false,
+    }
+}
+
 pub(super) fn needs_parent(property: Property, value: &Specified) -> bool {
     if let Specified::FlowRelative(_, value) = value {
         return needs_parent(property, value);
     }
     inherits(value, property)
         || matches!(value, Specified::Toggle(_))
+        || matches_parent_alignment(property, value)
         || (property == Property::FontWeight
             && matches!(value, Specified::Value(value) if matches!(value.keyword(), Some(Keyword::Bolder | Keyword::Lighter))))
         || (property == Property::Color && current_color(property, value))

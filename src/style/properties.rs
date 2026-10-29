@@ -491,15 +491,18 @@ fn handler(property: Property) -> Option<Handler> {
             text_indent,
             Some(|v, r| crate::style::TextIndent::from_component(v, r).is_ok()),
         ),
-        P::TextAlign => (
-            text_align,
+        P::TextAlignAll => (
+            text_align_all,
             Some(|v, _| {
                 v.keyword() == Some(Keyword::MatchParent) || TextAlign::from_component(v).is_ok()
             }),
         ),
         P::TextAlignLast => (
             text_align_last,
-            Some(|v, _| v.keyword() == Some(Keyword::Auto) || TextAlign::from_component(v).is_ok()),
+            Some(|v, _| {
+                matches!(v.keyword(), Some(Keyword::Auto | Keyword::MatchParent))
+                    || TextAlign::from_component(v).is_ok()
+            }),
         ),
         P::Hyphens => (
             hyphens,
@@ -1728,35 +1731,29 @@ computed!(
         crate::style::TextIndent::from_component(value, relative)?
     }
 );
-computed!(text_align, [align], |value, style, parent, _relative| {
-    if value.keyword() == Some(Keyword::MatchParent) {
-        match parent.align {
-            TextAlign::Start => {
-                if parent.rtl {
-                    TextAlign::Right
-                } else {
-                    TextAlign::Left
-                }
+computed!(
+    text_align_all,
+    [align],
+    |value, style, parent, _relative| {
+        if value.keyword() == Some(Keyword::MatchParent) {
+            if style.document_root {
+                TextAlign::Start
+            } else {
+                parent.align.physical(parent.rtl)
             }
-            TextAlign::End => {
-                if parent.rtl {
-                    TextAlign::Left
-                } else {
-                    TextAlign::Right
-                }
-            }
-            value => value,
+        } else {
+            TextAlign::from_component(value)?
         }
-    } else {
-        TextAlign::from_component(value)?
     }
-});
+);
 
 computed!(
     text_align_last,
     [align_last],
-    |value, style, _parent, _relative| match value.keyword() {
+    |value, style, parent, _relative| match value.keyword() {
         Some(Keyword::Auto) => None,
+        Some(Keyword::MatchParent) if style.document_root => Some(TextAlign::Start),
+        Some(Keyword::MatchParent) => parent.align_last.map(|align| align.physical(parent.rtl)),
         _ => Some(TextAlign::from_component(value)?),
     }
 );

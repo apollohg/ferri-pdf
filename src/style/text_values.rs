@@ -473,6 +473,15 @@ pub(crate) enum TextAlign {
     Justify,
 }
 impl TextAlign {
+    pub(super) fn physical(self, rtl: bool) -> Self {
+        match self {
+            Self::Start if rtl => Self::Right,
+            Self::Start => Self::Left,
+            Self::End if rtl => Self::Left,
+            Self::End => Self::Right,
+            other => other,
+        }
+    }
     pub(crate) fn offset(self, available: f32, width: f32, rtl: bool) -> f32 {
         match self {
             Self::Right => available - width,

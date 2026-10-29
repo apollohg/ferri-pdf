@@ -131,6 +131,7 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::Size => pair(&value, [P::Width, P::Height]),
         P::MinSize => pair(&value, [P::MinWidth, P::MinHeight]),
         P::MaxSize => pair(&value, [P::MaxWidth, P::MaxHeight]),
+        P::TextAlign => text_align(&value),
         P::Margin => edges(
             &value,
             [P::MarginTop, P::MarginRight, P::MarginBottom, P::MarginLeft],
@@ -405,6 +406,26 @@ fn pair(value: &Component, properties: [Property; 2]) -> Longhands {
     vec![
         (properties[0], longhand(properties[0], first)),
         (properties[1], longhand(properties[1], second)),
+    ]
+}
+
+fn text_align(value: &Component) -> Longhands {
+    let justify = Component::Keyword(Keyword::Justify);
+    let auto = Component::Keyword(Keyword::Auto);
+    let (all, last) = match value.keyword() {
+        Some(Keyword::JustifyAll) => (&justify, &justify),
+        Some(Keyword::MatchParent) => (value, value),
+        _ => (value, &auto),
+    };
+    vec![
+        (
+            Property::TextAlignAll,
+            longhand(Property::TextAlignAll, all),
+        ),
+        (
+            Property::TextAlignLast,
+            longhand(Property::TextAlignLast, last),
+        ),
     ]
 }
 
