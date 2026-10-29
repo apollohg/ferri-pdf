@@ -3,7 +3,11 @@ use crate::document::StyledDocument;
 use crate::resources::FileResolver;
 use crate::text::TextContext;
 
-impl<'a, 't> ColumnLayout<'a, 't> {
+impl<'a, 't> ColumnLayout<'a, 't>
+where
+    'a: 't,
+    't: 'a,
+{
     fn complete(mut self, measurer: &mut Measurer<'t>) -> Result<ColumnOutput<'a>, LayoutError> {
         while self.cursor.is_some() {
             self = self.advance(measurer)?;
@@ -93,6 +97,12 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
         let text = TextContext::new(&document.styles().fonts, &resolver);
         let area = document.page_box().geometry.content_box();
         let mut measurer = Measurer {
+            frame_measurements: Default::default(),
+            raw_templates: Default::default(),
+            raw_pagination: false,
+            column_measurement: false,
+            orthogonal_columns: None,
+            space: Default::default(),
             work: crate::layout::work::Budget::new(crate::layout::MAX_LAYOUT_WORK),
             text: &text,
             canvas_images: false,

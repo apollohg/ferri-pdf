@@ -456,6 +456,7 @@ pub struct BoxPaint<I = Infallible> {
 /// border box, `gap` from the box's left edge.
 #[derive(Clone, Copy, Debug, PartialEq, Serialize)]
 pub struct LegendCut {
+    pub side: usize,
     pub inset: f32,
     pub gap: [f32; 2],
 }

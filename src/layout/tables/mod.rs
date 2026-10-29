@@ -9,7 +9,7 @@ pub(super) use collapse::{BandPlacement, CollapsedGrid};
 pub(super) use intrinsic::{content as intrinsic_content, measure as intrinsic};
 pub(super) use measure::{
     CellAlignments, RowGeometry, TableContaining, TableGeometry, TablePlan, cell_height, measure,
-    measure_placed, resume,
+    measure_format, measure_placed, resume,
 };
 
 pub(super) use paint::{BackgroundRows, FragmentBackground};

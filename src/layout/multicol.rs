@@ -1,8 +1,8 @@
 //! CSS Multi-column Layout 1: column geometry, spanners and measured column flows. Columns
 //! are laid out as fragmentainers by the paginator (`pagination::columns`).
 use crate::graphics::Border;
+use crate::layout::measure::Failure;
 use crate::layout::{
-    LayoutError,
     breaks::{Fragmentainer, first_fragment},
     margin::MarginStrut,
     measure::{BlockEdge, FlowItem, MeasuredBlock, Measurer},
@@ -19,6 +19,7 @@ pub(super) const MAX_COLUMN_COUNT: usize = 1000;
 pub(super) struct ColumnGeometry {
     pub count: usize,
     pub width: f32,
+    pub inline_size: f32,
     pub gap: f32,
     /// Left content edge of the multi-column container.
     pub x: f32,
@@ -36,9 +37,7 @@ impl ColumnGeometry {
                 MAX_COLUMN_COUNT
             }
         };
-        let specified = style.multicol.count.map(|count| {
-            usize::try_from(count).map_or(MAX_COLUMN_COUNT, |count| count.min(MAX_COLUMN_COUNT))
-        });
+        let specified = specified_count(style);
         let count = match (style.multicol.width, specified) {
             (None, Some(count)) => count,
             (Some(width), None) => fitting(width),
@@ -48,9 +47,10 @@ impl ColumnGeometry {
         Self {
             count,
             width: ((available + gap) / count as f32 - gap).max(0.0),
+            inline_size: available,
             gap,
             x,
-            rtl: style.rtl,
+            rtl: style.used_rtl(),
         }
     }
     /// Left edge of column `index` in the inline direction; overflow columns continue past
@@ -58,7 +58,7 @@ impl ColumnGeometry {
     pub(crate) fn left(&self, index: usize) -> f32 {
         let pitch = self.width + self.gap;
         if self.rtl {
-            self.x + (self.count as f32 - 1.0 - index as f32) * pitch
+            self.x + self.inline_size - self.width - index as f32 * pitch
         } else {
             self.x + index as f32 * pitch
         }
@@ -72,6 +72,92 @@ impl ColumnGeometry {
         let [first, second] = [self.left(index), self.left(index + 1)];
         (first.min(second) + self.width + first.max(second)) / 2.0
     }
+}
+
+#[derive(Clone, Copy)]
+pub(super) struct OrthogonalColumns {
+    pub source: *const crate::document::BlockBox,
+    pub geometry: ColumnGeometry,
+    pub length: Option<f32>,
+    pub principal: bool,
+    pub block_auto: bool,
+    pub content_max: f32,
+    pub minimum: f32,
+    pub maximum: Option<f32>,
+}
+impl OrthogonalColumns {
+    pub(super) fn matches(self, block: &crate::document::BlockBox) -> bool {
+        std::ptr::eq(self.source, block)
+    }
+    pub(super) fn constrain(self, value: f32) -> f32 {
+        self.maximum
+            .map_or(value, |maximum| value.min(maximum))
+            .max(self.minimum)
+    }
+    pub(super) fn adjusted(mut self, columns: &MeasuredColumns<'_>, style: &Style) -> Option<Self> {
+        let pitch = self.geometry.width + self.geometry.gap;
+        let used = if pitch > 0.0 {
+            ((columns.used_inline + self.geometry.gap) / pitch)
+                .round()
+                .max(1.0) as usize
+        } else {
+            1
+        };
+        if used == 1 && !columns.wraps {
+            let preferred = self.constrain(self.content_max);
+            let inline = if self.principal {
+                preferred
+            } else {
+                self.geometry.inline_size
+            };
+            if self.geometry.width != preferred || self.geometry.inline_size != inline {
+                self.geometry.width = preferred;
+                self.geometry.inline_size = inline;
+                self.geometry.gap = style.flex.gap[1].resolve_normal(inline, style.size);
+                return Some(self);
+            }
+        }
+        if style.multicol.count.is_none() && used > self.geometry.count {
+            self.geometry.count = used;
+            if self.principal {
+                let gap = style.flex.gap[1].resolve_normal(0.0, style.size);
+                self.geometry.inline_size = self.constrain(
+                    self.geometry.width * used as f32 + gap * used.saturating_sub(1) as f32,
+                );
+            }
+            self.geometry.gap =
+                style.flex.gap[1].resolve_normal(self.geometry.inline_size, style.size);
+            return Some(self);
+        }
+        if used == 1
+            && self.block_auto
+            && self.length.is_some_and(|length| {
+                super::pagination::overflows(length, columns.content_height)
+                    || super::pagination::overflows(columns.content_height, length)
+            })
+        {
+            self.length = Some(columns.content_height);
+            return Some(self);
+        }
+        None
+    }
+}
+
+pub(super) fn specified_count(style: &Style) -> Option<usize> {
+    style.multicol.count.map(|count| {
+        usize::try_from(count).map_or(MAX_COLUMN_COUNT, |count| count.min(MAX_COLUMN_COUNT))
+    })
+}
+
+pub(super) fn orthogonal_width(style: &Style, widths: IntrinsicWidths, available: f32) -> f32 {
+    style.multicol.width.unwrap_or_else(|| {
+        let gap = style.flex.gap[1].resolve_normal(0.0, style.size);
+        let count = specified_count(style).unwrap_or(1);
+        widths
+            .max
+            .min((available - gap * count.saturating_sub(1) as f32).max(0.0))
+            .max(widths.min)
+    })
 }
 
 /// The multi-column container whose column flow is being measured: in-flow block-level
@@ -147,8 +233,17 @@ pub(super) enum ColumnSegment<'a> {
     Spanner(Vec<FlowItem<'a>>),
 }
 
+pub(super) struct ColumnMeasurement {
+    pub height: f32,
+    pub baselines: [Option<f32>; 2],
+    pub used_inline: f32,
+    pub content_height: f32,
+}
+
 #[derive(Clone)]
 pub(super) struct MeasuredColumns<'a> {
+    pub orthogonal: bool,
+    pub wraps: bool,
     pub geometry: ColumnGeometry,
     pub rule: Border,
     pub fill: ColumnFill,
@@ -158,6 +253,8 @@ pub(super) struct MeasuredColumns<'a> {
     pub segments: Vec<ColumnSegment<'a>>,
     /// Height laid out from the top of an empty page, or unbroken.
     pub height: f32,
+    pub used_inline: f32,
+    pub content_height: f32,
     pub first_fragment: f32,
     /// First and last baselines from the top of the columns.
     pub baselines: [Option<f32>; 2],
@@ -170,13 +267,29 @@ pub(super) struct MeasuredColumns<'a> {
 
 /// Measures a multi-column container's content flow, already measured at the column width.
 pub(super) fn measure<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     geometry: ColumnGeometry,
     style: &Style,
     content: Vec<FlowItem<'a>>,
     definite: Option<f32>,
-) -> Result<MeasuredColumns<'a>, LayoutError> {
+    orthogonal: bool,
+) -> Result<MeasuredColumns<'a>, Failure> {
+    if style.clamp.continuation == crate::style::Continue::Discard {
+        return Err(super::LayoutError::UnsupportedClamp {
+            feature: "continue: discard on a multi-column container",
+        }
+        .into());
+    }
+    if style.text_box.trim.contains(&true) {
+        return Err(
+            super::LayoutError::Style(crate::style::StyleError::Unsupported(
+                "text-box-trim on a multi-column container's columns".into(),
+            ))
+            .into(),
+        );
+    }
     let forces_page = forces_page(&content);
+    let wraps = wraps(&content);
     let edge = |item: Option<&FlowItem<'_>>, after: bool| match item {
         Some(FlowItem::Block(block) | FlowItem::Spanner(block)) => {
             let value = if after {
@@ -205,22 +318,77 @@ pub(super) fn measure<'a>(
         ColumnSegment::Row(items) | ColumnSegment::Spanner(items) => first_fragment(items),
     });
     let mut columns = MeasuredColumns {
+        orthogonal,
+        wraps,
         geometry,
         rule: style.multicol.rule,
         fill: style.multicol.fill,
         definite,
         segments,
         height: 0.0,
+        used_inline: geometry.width,
+        content_height: 0.0,
         first_fragment,
         baselines: [None; 2],
         break_before,
         break_after,
         forces_page,
     };
-    let (height, baselines) = crate::layout::pagination::measure_columns(measurer, &columns)?;
-    columns.height = height;
-    columns.baselines = baselines;
+    let measurement = crate::layout::pagination::measure_columns(measurer, &columns)?;
+    columns.height = measurement.height;
+    columns.baselines = measurement.baselines;
+    columns.used_inline = measurement.used_inline;
+    columns.content_height = measurement.content_height;
     Ok(columns)
+}
+
+fn wraps(items: &[FlowItem<'_>]) -> bool {
+    enum Entry<'b, 'a> {
+        Items(&'b [FlowItem<'a>]),
+        Block(&'b MeasuredBlock<'a>),
+    }
+    let mut pending = vec![Entry::Items(items)];
+    while let Some(entry) = pending.pop() {
+        let items = match entry {
+            Entry::Items(items) => items,
+            Entry::Block(block) => {
+                if let Some(table) = &block.table {
+                    pending.extend(
+                        table
+                            .header
+                            .iter()
+                            .chain(&table.footer)
+                            .flat_map(|row| &row.cells)
+                            .map(|cell| Entry::Block(&cell.block)),
+                    );
+                }
+                &block.items
+            }
+        };
+        for item in items {
+            match item {
+                FlowItem::Paragraph(paragraph)
+                    if paragraph.lines.iter().any(|line| line.wrapped) =>
+                {
+                    return true;
+                }
+                FlowItem::Block(block) | FlowItem::Spanner(block) => {
+                    pending.push(Entry::Block(block));
+                }
+                FlowItem::Row(row) => {
+                    pending.extend(row.cells.iter().map(|cell| Entry::Block(&cell.block)));
+                }
+                FlowItem::Columns(columns) => {
+                    pending.extend(columns.segments.iter().map(|segment| {
+                        let (ColumnSegment::Row(items) | ColumnSegment::Spanner(items)) = segment;
+                        Entry::Items(items)
+                    }));
+                }
+                _ => {}
+            }
+        }
+    }
+    false
 }
 
 /// Whether the flow, or a box in it, forces a page break.
@@ -241,7 +409,8 @@ fn forces_page(items: &[FlowItem<'_>]) -> bool {
             crate::layout::breaks::Forced::of(*edge)
                 .is_some_and(crate::layout::breaks::Forced::is_page)
         }),
-        FlowItem::Image { .. }
+        FlowItem::Frame { .. }
+        | FlowItem::Image { .. }
         | FlowItem::Paragraph(_)
         | FlowItem::Margin(_)
         | FlowItem::Space(_)
@@ -382,6 +551,7 @@ fn fragment<'a>(
         paint.first_fragment = first || source.style.clone_decoration;
     }
     Some(MeasuredBlock {
+        frame_key: None,
         clearance_before: None,
         clearance_target: source.clearance_target,
         before: if first {

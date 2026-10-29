@@ -1,6 +1,7 @@
 use super::tracks::Axis;
 use crate::grid::{AxisLines, ItemPlacement, Placement, SizeBounds};
-use crate::layout::{LayoutError, work::Budget};
+use crate::layout::measure::Failure;
+use crate::layout::work::Budget;
 use crate::style::{COLUMNS, GridAreas, ROWS, Style};
 
 pub(super) struct Topology {
@@ -19,7 +20,7 @@ impl Topology {
         sizes: [Option<f32>; 2],
         bounds: [SizeBounds; 2],
         work: &Budget,
-    ) -> Result<Self, LayoutError> {
+    ) -> Result<Self, Failure> {
         Self::with_parent(style, placements, sizes, bounds, work, None)
     }
 
@@ -30,7 +31,7 @@ impl Topology {
         bounds: [SizeBounds; 2],
         work: &Budget,
         parent: Option<(&Self, usize)>,
-    ) -> Result<Self, LayoutError> {
+    ) -> Result<Self, Failure> {
         let intrinsic_gaps = [ROWS, COLUMNS].map(|axis| {
             let normal = parent
                 .filter(|_| style.grid.templates[axis].subgrid.is_some())
@@ -70,7 +71,7 @@ impl Topology {
                 let leading = parent.placement.leading[axis] as i64;
                 area[axis].start as i64 - leading..area[axis].end as i64 - leading
             });
-            let reverse = [false, style.rtl != parent.rtl];
+            let reverse = [false, style.used_rtl() != parent.rtl];
             work.spend(
                 parent
                     .areas
@@ -160,7 +161,7 @@ impl Topology {
             placement,
             intrinsic_gaps,
             areas,
-            rtl: style.rtl,
+            rtl: style.used_rtl(),
         })
     }
 }

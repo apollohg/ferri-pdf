@@ -81,6 +81,18 @@ impl PagePaint {
             border: border.has_ink().then_some(border),
         }
     }
+    pub(crate) fn in_flow(
+        page: &PageBox,
+        canvas: &crate::graphics::BoxDecoration,
+        flow: crate::style::logical::Flow,
+    ) -> Result<Self, crate::layout::LayoutError> {
+        let record = crate::layout::PageRecord::new(page)?;
+        let frame = crate::layout::writing::Frame::physical(flow, page.geometry.paper).inverse();
+        let mut paint = Self::new(page, canvas, record.output.bleed);
+        frame.paint(&mut paint.canvas);
+        Ok(paint)
+    }
+
     pub(crate) fn decorate(&self, lists: &mut [Vec<DisplayItem>]) {
         for list in lists {
             if let Some(border) = &self.border {

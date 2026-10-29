@@ -5,7 +5,7 @@ use crate::document::{
     BlockBox, BlockContent, BoxNavigation, DocumentError, inline::InlineCollector,
 };
 use crate::graphics::BoxDecoration;
-use crate::style::{Display, RubyMerge, RubyPosition, Style, StyleError, TextAlign, Visibility};
+use crate::style::{Display, RubyMerge, RubyPosition, Style, TextAlign, Visibility};
 use std::ops::Range;
 use std::sync::Arc;
 
@@ -52,7 +52,7 @@ impl Ruby {
 pub(crate) struct Segment {
     /// The inline boxes of its ruby bases, one per column.
     pub bases: Vec<usize>,
-    /// Its interlinear annotation levels, the first level first.
+    /// Its annotation levels, the first level first.
     pub levels: Vec<Level>,
 }
 
@@ -63,6 +63,7 @@ pub(crate) struct Level {
     pub style: Arc<Style>,
     /// It lies under the bases rather than over them (§4.1).
     pub under: bool,
+    pub inter_character: bool,
     pub annotations: Vec<Annotation>,
 }
 
@@ -227,6 +228,17 @@ impl RubyStack {
 
     /// Text appended next; `true` where it is intra-ruby white space held until its next
     /// sibling classifies it.
+    pub(super) fn annotation_mode(&self) -> Option<crate::style::logical::WritingMode> {
+        self.open
+            .iter()
+            .rev()
+            .flat_map(|ruby| ruby.parts.iter().rev())
+            .find_map(|part| match part {
+                Part::Annotation(annotation) => Some(annotation.style.used_writing_mode()),
+                _ => None,
+            })
+    }
+
     pub(super) fn text(
         &mut self,
         inline: &mut InlineCollector,
@@ -392,7 +404,7 @@ impl RubyStack {
             Display::RubyBaseContainer => {
                 ruby.classify(inline, Kind::BaseContainer)?;
                 ruby.close_anonymous(inline)?;
-                ruby.end_segment(inline)?;
+                ruby.end_segment(inline);
                 ruby.parts.push(Part::BaseContainer {
                     explicit: true,
                     style,
@@ -538,7 +550,7 @@ impl OpenRuby {
             (Some(previous), Kind::Base | Kind::BaseContainer) => {
                 if matches!(previous, Kind::Annotation | Kind::Level) {
                     self.close_anonymous_level();
-                    self.end_segment(inline)?;
+                    self.end_segment(inline);
                 }
                 inline.append(&text, &style)?;
             }
@@ -582,7 +594,7 @@ impl OpenRuby {
             self.close_part(inline)?;
         }
         if !matches!(self.parts.last(), Some(Part::BaseContainer { .. })) {
-            self.end_segment(inline)?;
+            self.end_segment(inline);
             self.parts.push(Part::BaseContainer {
                 explicit: false,
                 style: self.style.clone(),
@@ -611,7 +623,17 @@ impl OpenRuby {
     }
 
     /// Sets the base level aside to collect an annotation styled `style`.
-    fn open_annotation(&mut self, inline: &mut InlineCollector, style: Arc<Style>, explicit: bool) {
+    fn open_annotation(
+        &mut self,
+        inline: &mut InlineCollector,
+        mut style: Arc<Style>,
+        explicit: bool,
+    ) {
+        if style.ruby.position == RubyPosition::InterCharacter
+            && !self.style.used_writing_mode().vertical()
+        {
+            Arc::make_mut(&mut style).writing_mode = crate::style::logical::WritingMode::VerticalRl;
+        }
         self.parts.push(Part::Annotation(Box::new(OpenAnnotation {
             explicit,
             outer: std::mem::take(inline),
@@ -643,14 +665,27 @@ impl OpenRuby {
                 if explicit {
                     inline.close_box();
                 }
-                let wrapper = wrapper_style(&self.level_style());
+                let mut wrapper = wrapper_style(&self.level_style());
+                if style.ruby.position == RubyPosition::InterCharacter
+                    && !self.style.used_writing_mode().vertical()
+                {
+                    wrapper = wrapper_style(&style);
+                    wrapper.writing_mode = crate::style::logical::WritingMode::VerticalRl;
+                }
                 let contents = std::mem::replace(inline, outer);
                 let block = match contents.finish(&wrapper)? {
-                    Ok(paragraph) => Some(inline.push_annotation(BlockBox::anonymous(
-                        wrapper,
-                        vec![BlockContent::Inline(paragraph)],
-                        None,
-                    ))),
+                    Ok(mut paragraph) => {
+                        if style.ruby.position == RubyPosition::InterCharacter
+                            && !self.style.used_writing_mode().vertical()
+                        {
+                            paragraph.align_annotation(style.ruby.align);
+                        }
+                        Some(inline.push_annotation(BlockBox::anonymous(
+                            wrapper,
+                            vec![BlockContent::Inline(paragraph)],
+                            None,
+                        )))
+                    }
                     Err(stray) => {
                         for content in stray {
                             match content {
@@ -690,9 +725,9 @@ impl OpenRuby {
 
     /// Ends the current segment, pairing its annotations with its bases (§2.3.2) and adding
     /// empty anonymous bases at the end of its base container for annotations beyond them.
-    fn end_segment(&mut self, inline: &mut InlineCollector) -> Result<(), DocumentError> {
+    fn end_segment(&mut self, inline: &mut InlineCollector) {
         if self.bases.is_empty() && self.levels.is_empty() {
-            return Ok(());
+            return;
         }
         let needed = self
             .levels
@@ -721,15 +756,12 @@ impl OpenRuby {
         let mut levels = Vec::with_capacity(self.levels.len());
         let mut previous = None;
         for level in std::mem::take(&mut self.levels) {
-            if level.style.ruby.position == RubyPosition::InterCharacter {
-                return Err(StyleError::Unsupported(
-                    "ruby-position: inter-character, whose annotations are laid out vertical-rl"
-                        .into(),
-                )
-                .into());
-            }
+            let inter_character = level.style.ruby.position == RubyPosition::InterCharacter
+                && !self.style.used_writing_mode().vertical();
             let under = level.style.ruby.position.under(previous);
-            previous = Some(under);
+            if !inter_character {
+                previous = Some(under);
+            }
             let spanning = pairing(&level) == Pairing::Spanning;
             let hides = level.style.ruby.merge != RubyMerge::Merge;
             let mut seen = 0;
@@ -760,6 +792,7 @@ impl OpenRuby {
             levels.push(Level {
                 style: level.style,
                 under,
+                inter_character,
                 annotations,
             });
         }
@@ -770,7 +803,6 @@ impl OpenRuby {
                 .collect(),
             levels,
         });
-        Ok(())
     }
 
     /// Closes the container: its last segment ends, and the paragraph records its structure.
@@ -778,7 +810,7 @@ impl OpenRuby {
         while !self.parts.is_empty() {
             self.close_part(inline)?;
         }
-        self.end_segment(inline)?;
+        self.end_segment(inline);
         inline.close_box();
         if !self.segments.is_empty() {
             inline.push_ruby(Ruby {

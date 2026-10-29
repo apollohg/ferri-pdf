@@ -1,5 +1,6 @@
 use crate::document::{BlockBox, BlockContent};
 use crate::graphics::Border;
+use crate::layout::measure::Failure;
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, geometry::Edges, intrinsic};
 use crate::style::{BorderCollapse, Display, LengthPercentage, Size, Style};
@@ -56,7 +57,7 @@ fn logical<T: Copy>(sides: [T; 4], rtl: bool) -> [T; 4] {
     }
 }
 
-fn children(block: &BlockBox) -> Result<Vec<&BlockBox>, LayoutError> {
+fn children(block: &BlockBox) -> Result<Vec<&BlockBox>, Failure> {
     block
         .in_flow_children()
         .into_iter()
@@ -64,7 +65,7 @@ fn children(block: &BlockBox) -> Result<Vec<&BlockBox>, LayoutError> {
         .map(|child| match child {
             BlockContent::Block(child) => Ok(child),
             BlockContent::Inline(_) | BlockContent::Positioned(_) | BlockContent::Events(_) => {
-                Err(LayoutError::InvalidTableStructure)
+                Err(LayoutError::InvalidTableStructure.into())
             }
         })
         .collect()
@@ -79,7 +80,7 @@ impl<'a> Data<'a> {
             Some(self.cells[index]),
         ]
     }
-    pub(super) fn new(block: &'a BlockBox) -> Result<Self, LayoutError> {
+    pub(super) fn new(block: &'a BlockBox) -> Result<Self, Failure> {
         let mut groups: Vec<Group<'a>> = Vec::new();
         let mut columns = Vec::new();
         let mut captions = Vec::new();
@@ -146,7 +147,7 @@ impl<'a> Data<'a> {
                     });
                 }
                 Display::TableCaption => captions.push(child),
-                _ => return Err(LayoutError::InvalidTableStructure),
+                _ => return Err(LayoutError::InvalidTableStructure.into()),
             }
         }
         let mut rows = Vec::new();
@@ -158,14 +159,14 @@ impl<'a> Data<'a> {
             let mut group_rows = Vec::new();
             for &row in &group.rows {
                 if row.style().display != Display::TableRow {
-                    return Err(LayoutError::InvalidTableStructure);
+                    return Err(LayoutError::InvalidTableStructure.into());
                 }
                 rows.push(row);
                 let start = cells.len();
                 let mut row_cells = Vec::new();
                 for cell in children(row)? {
                     if cell.style().display != Display::TableCell {
-                        return Err(LayoutError::InvalidTableStructure);
+                        return Err(LayoutError::InvalidTableStructure.into());
                     }
                     row_cells.push(Span {
                         columns: cell.style().table.column_span,
@@ -208,7 +209,7 @@ impl<'a> Data<'a> {
             columns,
             captions,
             collapsed: None,
-            rtl: block.style().rtl,
+            rtl: block.style().used_rtl(),
         };
         if block.style().table.collapse == BorderCollapse::Collapse {
             data.collapsed = Some(Rc::new(CollapsedBorders::new(
@@ -302,10 +303,10 @@ impl<'a> Data<'a> {
 
     pub(super) fn widths(
         &self,
-        measurer: &Measurer<'_>,
+        measurer: &Measurer<'a>,
         reference: f32,
         available: f32,
-    ) -> Result<Vec<CellWidth>, LayoutError> {
+    ) -> Result<Vec<CellWidth>, Failure> {
         self.cells
             .iter()
             .enumerate()

@@ -1,33 +1,31 @@
 use super::{captions, model::Data};
-use crate::layout::LayoutError;
-use crate::layout::measure::BlockSource;
-use crate::layout::measure::Measurer;
+use crate::layout::measure::{BlockSource, Failure, Measurer};
 use crate::style::{BorderCollapse, LengthPercentage, Size, SizeConstraints};
 use crate::table::WidthInput;
 use crate::text::IntrinsicWidths;
 
 pub(crate) fn measure<'a>(
     block: impl Into<BlockSource<'a>>,
-    measurer: &Measurer<'_>,
+    measurer: &Measurer<'a>,
     available: f32,
-) -> Result<IntrinsicWidths, LayoutError> {
+) -> Result<IntrinsicWidths, Failure> {
     measure_inner(block.into(), measurer, available, false)
 }
 
 pub(crate) fn content<'a>(
     block: impl Into<BlockSource<'a>>,
-    measurer: &Measurer<'_>,
+    measurer: &Measurer<'a>,
     available: f32,
-) -> Result<IntrinsicWidths, LayoutError> {
+) -> Result<IntrinsicWidths, Failure> {
     measure_inner(block.into(), measurer, available, true)
 }
 
-fn measure_inner(
-    block: BlockSource<'_>,
-    measurer: &Measurer<'_>,
+fn measure_inner<'a>(
+    block: BlockSource<'a>,
+    measurer: &Measurer<'a>,
     available: f32,
     content_only: bool,
-) -> Result<IntrinsicWidths, LayoutError> {
+) -> Result<IntrinsicWidths, Failure> {
     let data = Data::new(block.block)?;
     let cells = data.widths(measurer, 0.0, available)?;
     let columns = data.column_widths();

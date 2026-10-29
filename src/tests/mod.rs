@@ -41,3 +41,5 @@ mod svg_fonts;
 mod target_content;
 mod text_continuation;
 mod text_effects;
+
+mod writing_modes;

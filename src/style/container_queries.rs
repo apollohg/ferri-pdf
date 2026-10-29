@@ -16,7 +16,7 @@ use crate::style::{
     media::Feature,
     properties,
     selector::Namespaces,
-    units::Relative,
+    units::{Axis, Relative},
     variables,
 };
 use cssparser::{Parser, ParserInput, Token};
@@ -75,13 +75,22 @@ impl QueryContainers {
     }
     /// Container query length units' inline and block basis: the content-box size of the
     /// nearest container answering size queries in each axis (CSS Conditional 5 §7).
-    pub(super) fn unit_basis(&self, sizes: &QuerySizes) -> [Option<f32>; 2] {
-        [0, 1].map(|axis| {
-            self.iter()
-                .find(|container| container.answers_axes([axis == 0, axis == 1]))
-                .and_then(|container| sizes.size(container.element))
-                .map(|size| size[axis])
-        })
+    pub(super) fn unit_basis(&self, sizes: &QuerySizes, axis: Axis) -> Option<f32> {
+        let index = usize::from(axis == Axis::Height);
+        self.iter()
+            .find(|container| {
+                let block = (index == 1) != container.style.writing_mode.vertical();
+                container.answers_axes([!block, block])
+            })
+            .and_then(|container| sizes.size(container.element))
+            .map(|size| size[index])
+    }
+    pub(super) fn logical_unit_basis(&self, sizes: &QuerySizes, block: bool) -> Option<f32> {
+        let container = self
+            .iter()
+            .find(|container| container.answers_axes([!block, block]))?;
+        let index = usize::from(block != container.style.writing_mode.vertical());
+        sizes.size(container.element).map(|size| size[index])
     }
 }
 
@@ -326,7 +335,9 @@ impl ContainerCondition {
                         continue;
                     }
                 };
-                let Some(needed) = feature.as_ref().and_then(Feature::container_axes) else {
+                let Some(needed) = feature.as_ref().and_then(|feature| {
+                    feature.container_axes(container.style.writing_mode.vertical())
+                }) else {
                     return Ok(Truth::Unknown);
                 };
                 axes = [axes[0] || needed[0], axes[1] || needed[1]];
@@ -423,7 +434,11 @@ impl ContainerValues<'_> {
         let Some(size) = self.sheet.query_sizes.size(self.container.element) else {
             return Truth::Unknown;
         };
-        feature.evaluate_container(size, &self.relative())
+        feature.evaluate_container(
+            size,
+            self.container.style.writing_mode.vertical(),
+            &self.relative(),
+        )
     }
 }
 impl ContainerValues<'_> {

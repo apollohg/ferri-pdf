@@ -2,9 +2,9 @@
 //! multi-column container is laid out by a nested paginator whose pages are its column boxes,
 //! then placed into the enclosing flow one row of columns per fragmentainer.
 use super::{
-    ActiveBox, BreakRequest, Container, Effect, EffectNode, FLOW_LEVEL, FRAGMENTATION_TOLERANCE_PT,
-    FlowCursor, Fragmentainers, Group, OrderSnapshots, PaginationState, Paginator, PaintKey,
-    PaintOrder, PaintOrders, Pending, ScopedPaint, SlicedBox, StickyConstraints, overflows,
+    ActiveBox, BreakRequest, Container, EffectNode, FLOW_LEVEL, FRAGMENTATION_TOLERANCE_PT,
+    FlowCursor, Fragmentainers, OrderSnapshots, PaginationState, Paginator, PaintKey, PaintOrder,
+    PaintOrders, Pending, ScopedPaint, SlicedBox, StickyConstraints, nested::Placement, overflows,
 };
 use crate::graphics::{Border, BoxDecoration, BoxPaint, DisplayItem, Rect};
 use crate::layout::{
@@ -234,6 +234,7 @@ impl Balance {
 #[derive(Clone)]
 pub(super) struct ColumnCursor<'a, 't> {
     geometry: ColumnGeometry,
+    orthogonal: bool,
     rule: Border,
     fill: ColumnFill,
     remaining: Option<f32>,
@@ -244,7 +245,7 @@ pub(super) struct ColumnCursor<'a, 't> {
     row: Option<ColumnRow<'a, 't>>,
     entry: Option<(Vec<FlowItem<'a>>, Balance)>,
 }
-impl<'a> ColumnCursor<'a, '_> {
+impl<'a: 't, 't: 'a> ColumnCursor<'a, 't> {
     pub(super) fn detach_orders(&mut self, snapshots: &mut OrderSnapshots) {
         if let Some((spanner, _)) = &mut self.spanner {
             spanner.detach_orders(snapshots);
@@ -259,6 +260,7 @@ impl<'a> ColumnCursor<'a, '_> {
     pub(super) fn new(columns: MeasuredColumns<'a>, tail: BreakTail) -> Self {
         Self {
             geometry: columns.geometry,
+            orthogonal: columns.orthogonal,
             rule: columns.rule,
             fill: columns.fill,
             remaining: columns.definite,
@@ -293,7 +295,7 @@ struct ColumnLayout<'a, 't> {
     cursor: Option<Box<FlowCursor<'a, 't>>>,
     request: Option<BreakRequest>,
 }
-impl<'a, 't> ColumnLayout<'a, 't> {
+impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
     fn new(
         measurer: &mut Measurer<'t>,
         items: &[FlowItem<'a>],
@@ -477,8 +479,10 @@ struct ColumnOutput<'a> {
     overflow: Option<std::collections::BTreeMap<usize, Rect>>,
     string_locations: crate::layout::strings::StringLocations,
     pages: Vec<Vec<TextLine>>,
+    geometric_baselines: Vec<[Option<f32>; 2]>,
     display_lists: Vec<Vec<ScopedPaint>>,
     foreground: Vec<Vec<ScopedPaint>>,
+    underlays: HashMap<(usize, usize), Vec<ScopedPaint>>,
     flow_content: Vec<bool>,
     /// Columns holding content, between which rules are drawn (§4).
     content: Vec<bool>,
@@ -488,10 +492,12 @@ struct ColumnOutput<'a> {
     /// Absolutely positioned and fixed boxes whose containing block is outside the columns.
     pending: Vec<Pending<'a>>,
     orders: PaintOrders,
+    frame_requests: Vec<Rc<super::MeasuredBlock<'a>>>,
+    frame_reads: Vec<super::frames::Key>,
     rows: ColumnRows,
     markers_left: bool,
 }
-impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
+impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     fn nested(measurer: &'m mut Measurer<'t>, rows: ColumnRows, start: &FlowStart) -> Self {
         let page_rect = rows.page_rect(0);
         let content_box = rows.content_box(0);
@@ -572,8 +578,10 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             overflow: self.root_overflow,
             string_locations: self.string_locations,
             pages: self.pages,
+            geometric_baselines: self.geometric_baselines,
             display_lists: self.display_lists,
             foreground: self.foreground,
+            underlays: self.underlays,
             flow_content: self.flow_content,
             content,
             clips: self.clips,
@@ -581,9 +589,34 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             sliced: self.sliced,
             pending,
             orders: self.orders.snapshot(),
+            frame_requests: self.frame_requests,
+            frame_reads: self.frame_reads,
             rows,
             markers_left: self.boxes.iter().any(|active| active.marker.is_some()),
         }
+    }
+
+    pub(super) fn for_frame(measurer: &'m mut Measurer<'t>, area: Rect) -> Self {
+        let rows = ColumnRows::new(
+            ColumnGeometry {
+                count: 1,
+                width: area.width,
+                inline_size: area.width,
+                gap: 0.0,
+                x: area.x,
+                rtl: false,
+            },
+            area.height,
+        );
+        let start = FlowStart {
+            track_overflow: false,
+            offset: [0.0; 2],
+            key: Rc::from([FLOW_LEVEL]),
+            context: Rc::from([]),
+            orders: PaintOrders::default(),
+            markers: Vec::new(),
+        };
+        Self::nested(measurer, rows, &start).unbroken()
     }
 
     /// Advances columns and spanners until the enclosing fragmentainer must change.
@@ -615,9 +648,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 )?);
             }
             if let Some(row) = cursor.row.take() {
-                if let Some((row, request)) =
-                    self.column_fragment(row, cursor.geometry, cursor.rule, &mut cursor.remaining)?
-                {
+                if let Some((row, request)) = self.column_fragment(
+                    row,
+                    cursor.geometry,
+                    cursor.orthogonal,
+                    cursor.rule,
+                    &mut cursor.remaining,
+                )? {
                     cursor.row = Some(row);
                     return Ok(Some(request));
                 }
@@ -717,6 +754,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         &mut self,
         mut cursor: ColumnRow<'a, 't>,
         fallback: ColumnGeometry,
+        orthogonal: bool,
         rule: Border,
         remaining: &mut Option<f32>,
     ) -> Result<Option<(ColumnRow<'a, 't>, BreakRequest)>, LayoutError> {
@@ -738,11 +776,18 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .last()
             .and_then(|active| active.geometry.as_ref())
             .map_or(fallback, |flow| {
-                ColumnGeometry::resolve(
-                    flow.source.style(),
-                    flow.horizontal.x,
-                    flow.horizontal.width,
-                )
+                if orthogonal {
+                    ColumnGeometry {
+                        x: flow.horizontal.x,
+                        ..fallback
+                    }
+                } else {
+                    ColumnGeometry::resolve(
+                        flow.source.style(),
+                        flow.horizontal.x,
+                        flow.horizontal.width,
+                    )
+                }
             });
         let frame = RowFrame {
             geometry,
@@ -865,6 +910,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 if output.content[column - 1] && output.content[column] {
                     let x = geometry.rule_x(column - 1 - first) + self.offset[0];
                     self.display_lists[page].push(ScopedPaint {
+                        native: None,
                         visible: self.boxes.last().is_none_or(|active| active.visible),
                         order: self.orders.take(),
                         scope: scope.clone(),
@@ -893,15 +939,32 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     ..*bounds
                 });
             }
+            self.record_baselines(
+                page,
+                output.geometric_baselines[column].map(|baseline| baseline.map(|y| y + shift[1])),
+            );
             let lines = self.pages[page].len();
             let slots = self.display_lists[page].len();
             if placements.len() <= column {
                 placements.resize(column + 1, (page, slots));
             }
             placements[column] = (page, slots);
-            for mut line in std::mem::take(&mut output.pages[column]) {
-                line.x += shift[0];
-                line.baseline += shift[1];
+            let native_lines: std::collections::HashSet<_> = output.display_lists[column]
+                .iter()
+                .chain(&output.foreground[column])
+                .filter_map(|paint| match paint.item {
+                    DisplayItem::Text { line } if paint.native.is_some() => Some(line),
+                    _ => None,
+                })
+                .collect();
+            for (index, mut line) in std::mem::take(&mut output.pages[column])
+                .into_iter()
+                .enumerate()
+            {
+                if !native_lines.contains(&index) {
+                    line.x += shift[0];
+                    line.baseline += shift[1];
+                }
                 self.pages[page].push(line);
             }
             let place = Placement {
@@ -910,6 +973,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 shift,
                 lines,
                 slots,
+                native: None,
             };
             for paint in std::mem::take(&mut output.display_lists[column]) {
                 let paint = self.adopt(paint, &output.clips, &output.sticky, &place, &mut effects);
@@ -927,6 +991,15 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 .or(self.clip)
             });
             self.anchors = anchors;
+            self.adopt_underlays(
+                &mut output.underlays,
+                &output.clips,
+                &output.sticky,
+                &place,
+                &mut effects,
+            );
+            self.frame_requests.append(&mut output.frame_requests);
+            self.frame_reads.append(&mut output.frame_reads);
             self.flow_content[page] |= output.flow_content[column];
             let (anchored, others): (Vec<_>, Vec<_>) = std::mem::take(&mut output.pending)
                 .into_iter()
@@ -937,6 +1010,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 pending.position.left += shift[0];
                 pending.position.right += shift[0];
                 pending.position.y += shift[1];
+                pending.position.bottom += shift[1];
                 pending.group = match pending.group {
                     Some(group) => Some(self.effect(
                         &output.clips,
@@ -983,163 +1057,6 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             }
         }
     }
-
-    /// A column's paint item in page coordinates, under the effects of the enclosing flow.
-    fn adopt(
-        &mut self,
-        mut paint: ScopedPaint,
-        nodes: &[EffectNode<'a>],
-        sticky: &[StickyConstraints],
-        place: &Placement,
-        effects: &mut HashMap<(usize, Option<usize>), usize>,
-    ) -> ScopedPaint {
-        let [dx, dy] = place.shift;
-        let shift = |rect: &mut Rect| {
-            rect.x += dx;
-            rect.y += dy;
-        };
-        match &mut paint.item {
-            DisplayItem::Box(fragment) => {
-                shift(&mut fragment.rect);
-                fragment.background_box.as_mut().map(shift);
-            }
-            DisplayItem::Image(image) => {
-                shift(&mut image.rect);
-                if let Some(clip) = &mut image.clip {
-                    clip.translate([dx, dy]);
-                }
-            }
-            DisplayItem::Decoration(decoration) => shift(&mut decoration.rect),
-            DisplayItem::TextShadow(shadow) => shadow.translate([dx, dy]),
-            DisplayItem::Text { line } => *line += place.lines,
-            DisplayItem::Backdrop(backdrop) => backdrop.border.translate([dx, dy]),
-            DisplayItem::PushClip(_)
-            | DisplayItem::PushTransform(_)
-            | DisplayItem::PushOpacity(_)
-            | DisplayItem::PushBlend(_)
-            | DisplayItem::PushFilter(_)
-            | DisplayItem::PushMask(_)
-            | DisplayItem::PushBackdropRoot
-            | DisplayItem::Pop => {}
-        }
-        paint.ink.as_mut().map(shift);
-        // Items outside the columns' own effects take those enclosing the flow.
-        paint.clip = match paint.clip {
-            Some(node) => Some(self.effect(nodes, sticky, node, place, effects)),
-            None => self.clip,
-        };
-        paint.group = match paint.group {
-            Some(node) => Some(self.effect(nodes, sticky, node, place, effects)),
-            None => self.group,
-        };
-        paint
-    }
-
-    /// The node standing for a column's effect `node` on its page. Clips and transforms
-    /// resolve from their fragment in each column; groups have no geometry.
-    fn effect(
-        &mut self,
-        nodes: &[EffectNode<'a>],
-        sticky: &[StickyConstraints],
-        node: usize,
-        place: &Placement,
-        effects: &mut HashMap<(usize, Option<usize>), usize>,
-    ) -> usize {
-        let source = &nodes[node];
-        // Anchored groups follow their element's clips, which resolve per column.
-        let group = matches!(source.effect, Effect::Group(group) if !group.anchored());
-        let key = (node, (!group).then_some(place.column));
-        if let Some(&index) = effects.get(&key) {
-            return index;
-        }
-        let grouping = matches!(source.effect, Effect::Group(_));
-        let parent = match source.parent {
-            Some(parent) => Some(self.effect(nodes, sticky, parent, place, effects)),
-            None if grouping => self.group,
-            None => self.clip,
-        };
-        if let Effect::Group(effect) = source.effect
-            && effect.blend != crate::graphics::BlendMode::Normal
-        {
-            self.isolate(parent);
-        }
-        let adopt_fragments = |fragments: &[(usize, usize)]| -> Vec<(usize, usize)> {
-            fragments
-                .iter()
-                .filter(|(column, _)| !group && *column == place.column)
-                .map(|(_, slot)| (place.page, place.slots + slot))
-                .collect()
-        };
-        let fragments = adopt_fragments(&source.fragments);
-        let areas = source
-            .areas
-            .iter()
-            .filter(|(column, _)| *column == place.column)
-            .map(|(_, rect)| {
-                let mut rect = *rect;
-                rect.x += place.shift[0];
-                rect.y += place.shift[1];
-                (place.page, rect)
-            })
-            .collect();
-        let effect = match source.effect {
-            Effect::Transform(style, Some(placement)) => Effect::Transform(
-                style,
-                Some(self.effect(nodes, sticky, placement, place, effects)),
-            ),
-            Effect::Sticky(style, index) => {
-                let constraints = &sticky[index];
-                let adopted = StickyConstraints {
-                    containing: adopt_fragments(&constraints.containing),
-                    scrollport: constraints.scrollport.as_deref().map(adopt_fragments),
-                    ..constraints.clone()
-                };
-                self.sticky.push(adopted);
-                Effect::Sticky(style, self.sticky.len() - 1)
-            }
-            Effect::Group(group) if group.anchored() => Effect::Group(Group {
-                anchor: match group.anchor {
-                    Some(anchor) => Some(self.effect(nodes, sticky, anchor, place, effects)),
-                    None => self.clip,
-                },
-                ..group
-            }),
-            effect => effect,
-        };
-        let paints = source
-            .paints
-            .iter()
-            .filter(|(column, _)| *column == place.column)
-            .map(|(_, paint)| {
-                let mut paint = paint.clone();
-                for rect in std::iter::once(&mut paint.rect).chain(paint.background_box.as_mut()) {
-                    rect.x += place.shift[0];
-                    rect.y += place.shift[1];
-                }
-                (place.page, paint)
-            })
-            .collect();
-        self.clips.push(EffectNode {
-            areas,
-            paints,
-            parent,
-            effect,
-            fragments,
-            context: source.context.clone(),
-        });
-        let index = self.clips.len() - 1;
-        effects.insert(key, index);
-        index
-    }
-}
-
-/// Where one column's items are placed: its page, offset and first line and slot there.
-struct Placement {
-    column: usize,
-    page: usize,
-    shift: [f32; 2],
-    lines: usize,
-    slots: usize,
 }
 
 /// The column height of the next row and whether the container's definite height ends in it.
@@ -1171,7 +1088,7 @@ fn rule_paint(rule: Border, x: f32, y: f32, height: f32) -> BoxPaint {
 }
 
 /// Balances only the uncommitted row, retaining its resulting source checkpoint.
-fn lay_out_row<'a, 't>(
+fn lay_out_row<'a: 't, 't: 'a>(
     measurer: &mut Measurer<'t>,
     mut checkpoint: ColumnLayout<'a, 't>,
     row: usize,
@@ -1221,83 +1138,114 @@ fn lay_out_row<'a, 't>(
 
 /// The height and first and last baselines of a multi-column container's content laid out
 /// from the top of an empty page, or unbroken.
-pub(crate) fn measure_columns(
-    measurer: &mut Measurer<'_>,
-    columns: &MeasuredColumns<'_>,
-) -> Result<(f32, [Option<f32>; 2]), LayoutError> {
-    let available = if measurer.unbroken {
-        f32::INFINITY
-    } else {
-        measurer.page_height
-    };
-    let start = FlowStart {
-        track_overflow: false,
-        offset: [0.0; 2],
-        key: Rc::from([FLOW_LEVEL]),
-        context: Rc::from([]),
-        orders: PaintOrders::default(),
-        markers: Vec::new(),
-    };
-    let mut remaining = columns.definite;
-    let mut height = 0.0;
-    let mut baselines = [None; 2];
-    let count = columns.segments.len();
-    for (index, segment) in columns.segments.iter().enumerate() {
-        match segment {
-            ColumnSegment::Spanner(items) => {
-                baselines[0] = baselines[0].or(first_baseline(items).map(|y| y + height));
-                if let Some(baseline) = last_baseline(items) {
-                    baselines[1] = Some(baseline + height);
-                }
-                let spanner: f32 = items.iter().map(FlowItem::height).sum();
-                height += spanner;
-                if let Some(remaining) = &mut remaining {
-                    *remaining = (*remaining - spanner).max(0.0);
-                }
+pub(crate) fn measure_columns<'a>(
+    measurer: &mut Measurer<'a>,
+    columns: &MeasuredColumns<'a>,
+) -> Result<crate::layout::multicol::ColumnMeasurement, LayoutError> {
+    let previous = std::mem::replace(&mut measurer.column_measurement, true);
+    let result = (|| {
+        let available = if measurer.unbroken {
+            f32::INFINITY
+        } else {
+            measurer.page_height
+        };
+        let start = FlowStart {
+            track_overflow: false,
+            offset: [0.0; 2],
+            key: Rc::from([FLOW_LEVEL]),
+            context: Rc::from([]),
+            orders: PaintOrders::default(),
+            markers: Vec::new(),
+        };
+        let mut remaining = columns.definite;
+        let mut height = 0.0;
+        let mut baselines = [None; 2];
+        let mut used_inline = 0.0f32;
+        let mut content_height = 0.0;
+        let inline_extent = |geometry: ColumnGeometry, count: usize| {
+            if count == 0 {
+                0.0
+            } else {
+                geometry.width + count.saturating_sub(1) as f32 * (geometry.width + geometry.gap)
             }
-            ColumnSegment::Row(items) => {
-                let balance = Balance::new(
-                    columns.fill,
-                    index + 1 < count,
-                    columns.definite.is_some() || !measurer.unbroken,
-                );
-                let mut rows = ColumnRows::new(columns.geometry, available);
-                rows.containing_height = columns.definite;
-                let mut layout = ColumnLayout::new(measurer, items, rows, &start)?;
-                loop {
-                    let frame = frame_height(remaining, available, measurer.unbroken);
-                    let row = layout.push_frame(RowFrame {
-                        geometry: columns.geometry,
-                        first: 0,
-                        offset: [0.0; 2],
-                        height: frame.0,
-                        unbounded: frame.1,
-                        page_rect: UNPLACED_PAGE,
-                    });
-                    let (output, end) = lay_out_row(measurer, layout, row, balance)?;
-                    let pages = output.rows().pages(row, output.state.pages.len());
-                    let first_line = pages
-                        .clone()
-                        .find_map(|page| output.state.pages[page].first())
-                        .map(|line| line.baseline + height);
-                    baselines[0] = baselines[0].or(first_line);
-                    if let Some(line) = pages.rev().find_map(|page| output.state.pages[page].last())
-                    {
-                        baselines[1] = Some(line.baseline + height);
+        };
+        let count = columns.segments.len();
+        for (index, segment) in columns.segments.iter().enumerate() {
+            match segment {
+                ColumnSegment::Spanner(items) => {
+                    baselines[0] = baselines[0].or(first_baseline(items).map(|y| y + height));
+                    if let Some(baseline) = last_baseline(items) {
+                        baselines[1] = Some(baseline + height);
                     }
-                    let used =
-                        output.used_height(row, frame.0, columns.definite.is_some(), balance, end);
-                    height += used;
+                    let spanner: f32 = items.iter().map(FlowItem::height).sum();
+                    height += spanner;
+                    content_height += spanner;
+                    used_inline =
+                        used_inline.max(inline_extent(columns.geometry, columns.geometry.count));
                     if let Some(remaining) = &mut remaining {
-                        *remaining = (*remaining - used).max(0.0);
+                        *remaining = (*remaining - spanner).max(0.0);
                     }
-                    layout = output;
-                    if end == RowEnd::Content {
-                        break;
+                }
+                ColumnSegment::Row(items) => {
+                    let balance = Balance::new(
+                        columns.fill,
+                        index + 1 < count,
+                        columns.definite.is_some() || !measurer.unbroken,
+                    );
+                    let mut rows = ColumnRows::new(columns.geometry, available);
+                    rows.containing_height = columns.definite;
+                    let mut layout = ColumnLayout::new(measurer, items, rows, &start)?;
+                    loop {
+                        let frame = frame_height(remaining, available, measurer.unbroken);
+                        let row = layout.push_frame(RowFrame {
+                            geometry: columns.geometry,
+                            first: 0,
+                            offset: [0.0; 2],
+                            height: frame.0,
+                            unbounded: frame.1,
+                            page_rect: UNPLACED_PAGE,
+                        });
+                        let (output, end) = lay_out_row(measurer, layout, row, balance)?;
+                        let pages = output.rows().pages(row, output.state.pages.len());
+                        used_inline = used_inline
+                            .max(inline_extent(output.rows().geometry(row), pages.len()));
+                        content_height += output.extent(row);
+                        let first = pages
+                            .clone()
+                            .find_map(|page| output.state.geometric_baselines[page][0]);
+                        baselines[0] = baselines[0].or(first.map(|y| y + height));
+                        if let Some(last) = pages
+                            .rev()
+                            .find_map(|page| output.state.geometric_baselines[page][1])
+                        {
+                            baselines[1] = Some(last + height);
+                        }
+                        let used = output.used_height(
+                            row,
+                            frame.0,
+                            columns.definite.is_some(),
+                            balance,
+                            end,
+                        );
+                        height += used;
+                        if let Some(remaining) = &mut remaining {
+                            *remaining = (*remaining - used).max(0.0);
+                        }
+                        layout = output;
+                        if end == RowEnd::Content {
+                            break;
+                        }
                     }
                 }
             }
         }
-    }
-    Ok((height, baselines))
+        Ok(crate::layout::multicol::ColumnMeasurement {
+            height,
+            baselines,
+            used_inline,
+            content_height,
+        })
+    })();
+    measurer.column_measurement = previous;
+    result
 }

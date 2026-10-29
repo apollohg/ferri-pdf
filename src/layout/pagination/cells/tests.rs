@@ -42,6 +42,12 @@ fn resumed_cells_keep_source_paint_order_when_a_later_lane_finishes_first() {
             let text = TextContext::new(&document.styles().fonts, &resolver);
             let area = document.page_box().geometry.content_box();
             let mut measurer = Measurer {
+                frame_measurements: Default::default(),
+                raw_templates: Default::default(),
+                raw_pagination: false,
+                column_measurement: false,
+                orthogonal_columns: None,
+                space: Default::default(),
                 work: crate::layout::work::Budget::new(crate::layout::MAX_LAYOUT_WORK),
                 text: &text,
                 canvas_images: false,

@@ -247,7 +247,8 @@ fn recolor(
             | DisplayItem::PushOpacity(_)
             | DisplayItem::Pop) => item.clone(),
             item @ DisplayItem::PushBackdropRoot => item.clone(),
-            DisplayItem::Image(_)
+            DisplayItem::Frame(_)
+            | DisplayItem::Image(_)
             | DisplayItem::Backdrop(_)
             | DisplayItem::PushBlend(_)
             | DisplayItem::PushFilter(_)

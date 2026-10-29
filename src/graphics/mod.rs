@@ -24,6 +24,7 @@ pub(crate) type TileImage<'a> = crate::paint::TileImage<'a, Arc<Image>>;
 #[derive(Clone, Debug, Serialize)]
 pub enum DisplayItem {
     Image(ImagePaint),
+    Frame(Box<FlowPaint>),
     Box(BoxPaint),
     Text {
         line: usize,
@@ -52,6 +53,15 @@ pub enum DisplayItem {
     /// in its own effects (Filter Effects 2 §2.1).
     Backdrop(BackdropPaint),
     Pop,
+}
+
+/// An independent flow in its own physical coordinates, placed inside another flow.
+#[derive(Clone, Debug, Serialize)]
+pub struct FlowPaint {
+    pub matrix: [f32; 6],
+    pub area: Rect,
+    pub items: Vec<DisplayItem>,
+    pub lines: Vec<crate::layout::TextLine>,
 }
 
 /// A `backdrop-filter` applied to the Backdrop Root Image behind one box fragment and clipped

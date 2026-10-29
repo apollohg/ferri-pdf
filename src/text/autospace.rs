@@ -103,7 +103,7 @@ pub(super) fn advance(
             style.font_selection(),
             &style.font_adjustments,
             style.size,
-            ch,
+            (ch, false),
             context.resolver,
         )?
         .map(|(advance, scale)| advance * scale * style.size))

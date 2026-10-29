@@ -27,6 +27,7 @@ mod strings;
 mod tables;
 mod viewport;
 mod work;
+mod writing;
 use crate::document::StyledDocument;
 use crate::fonts::FontDescriptor;
 use crate::graphics::{Color, DisplayItem, Rect};
@@ -44,7 +45,7 @@ pub(crate) const MAX_LAYOUT_PAGES: usize = 10_000;
 /// Exhaustion returns [`LayoutError::WorkLimit`]; this is not a time or memory limit.
 pub(crate) const MAX_LAYOUT_WORK: usize = 100_000_000;
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, Debug, Serialize)]
 pub struct TextLine {
     pub paragraph: usize,
     pub text: String,
@@ -189,36 +190,33 @@ fn layout_pass(
     let text = TextContext::new(&sheet.fonts, resolver);
     let page = document.page_box();
     let [page_width, page_height] = page.geometry.paper;
-    let canvas_rect = page.geometry.content_box();
+    let flow = crate::style::logical::Flow::used(document.root().style());
+    let mut logical_geometry = page.geometry.clone();
+    writing::Frame::physical(flow, page.geometry.paper)
+        .inverse()
+        .geometry(&mut logical_geometry);
+    let canvas_rect = logical_geometry.content_box();
     let content_height = canvas_rect.height;
     let continuous = sheet.presentation() != crate::style::Presentation::Paged;
     let first_record = PageRecord::new(page)?;
     let page_output = first_record.output.clone();
-    let painting =
-        page_paint::PagePaint::new(page, document.canvas_background(), page_output.bleed);
-    let mut measurer = measure::Measurer {
-        work: budget,
-        text: &text,
-        canvas_images: document.canvas_background().backgrounds.has_images(),
-        page_height: content_height,
-        sources: source::SourceIds::new(document.root()),
-        item_metrics: Default::default(),
-        grid_parent: None,
-        clearance_targets: Default::default(),
-        fragmentainer: breaks::Fragmentainer::Page,
-        column_flow: None,
-        spanner: None,
-        unbroken: continuous,
-        named_pages: !continuous,
-        container_sizes: Default::default(),
-    };
+    let painting = page_paint::PagePaint::in_flow(page, document.canvas_background(), flow)?;
+    let mut measurer = measure::Measurer::new(
+        &text,
+        document.root(),
+        [canvas_rect.width, content_height],
+        budget,
+    );
+    measurer.canvas_images = document.canvas_background().backgrounds.has_images();
+    measurer.unbroken = continuous;
+    measurer.named_pages = !continuous;
     let root = (document.root().style().display != crate::style::Display::None)
         .then(|| {
             measurer.block(
                 document.root(),
                 canvas_rect.x,
                 canvas_rect.width,
-                document.root().style().rtl,
+                document.root().style().used_rtl(),
                 true,
                 Some(content_height),
             )
@@ -235,9 +233,10 @@ fn layout_pass(
         mut pages,
         mut display_lists,
         mut links,
-        destinations,
+        mut destinations,
+        destination_bounds,
         page_boxes,
-        page_records,
+        mut page_records,
         string_locations,
     } = if continuous {
         paginator.unbroken()
@@ -249,6 +248,26 @@ fn layout_pass(
         document.navigation().destinations,
         document.root().leading_events(),
     )?;
+    for (index, page) in page_boxes.iter().enumerate() {
+        let frame = writing::Frame::physical(flow, page.geometry.paper);
+        for area in &mut links[index] {
+            match &mut area.shape {
+                LinkShape::Rect(rect) => *rect = frame.rect(*rect),
+                LinkShape::Quads(quads) => {
+                    for point in quads.iter_mut().flatten() {
+                        *point = frame.point(*point);
+                    }
+                }
+            }
+        }
+        page_records[index] = PageRecord::new(page)?;
+    }
+    for (destination, bounds) in destinations.iter_mut().zip(destination_bounds) {
+        if let (Some(destination), Some(bounds)) = (destination, bounds) {
+            let frame = writing::Frame::physical(flow, page_boxes[destination.page].geometry.paper);
+            destination.top = frame.rect(bounds).y;
+        }
+    }
     for ((list, page), record) in display_lists.iter_mut().zip(&page_boxes).zip(&page_records) {
         page_paint::PagePaint::new(page, document.canvas_background(), record.output.bleed)
             .decorate(std::slice::from_mut(list));
@@ -283,7 +302,7 @@ fn layout_pass(
         trace: LayoutTrace {
             page_width,
             page_height,
-            page_area: canvas_rect,
+            page_area: page.geometry.content_box(),
             page_output,
             page_records,
             pages,

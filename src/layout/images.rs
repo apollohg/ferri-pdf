@@ -15,11 +15,20 @@ use crate::text::IntrinsicWidths;
 /// density (HTML §4.8.4.3.7); a ratio-only image takes `available_width`.
 fn density_corrected(block: &BlockBox, available_width: f32) -> [f32; 2] {
     let scale = POINTS_PER_PIXEL / block.image_density();
-    block
+    let mut size = block
         .image()
         .unwrap()
         .pixel_size(available_width / scale)
-        .map(|value| value * scale)
+        .map(|value| value * scale);
+    if block.layout_flow().writing_mode.vertical()
+        && !matches!(
+            block.image().unwrap().as_ref(),
+            crate::images::Image::Widget(_)
+        )
+    {
+        size.swap(0, 1);
+    }
+    size
 }
 
 /// A replaced element's natural size in points and its preferred aspect ratio (CSS Sizing 4
@@ -45,7 +54,16 @@ impl Natural {
         let natural = (!contained.contains(&true))
             .then(|| image.natural_size().ratio)
             .flatten()
-            .filter(|ratio| ratio.is_finite() && *ratio > 0.0);
+            .filter(|ratio| ratio.is_finite() && *ratio > 0.0)
+            .map(|ratio| {
+                if block.layout_flow().writing_mode.vertical()
+                    && !matches!(image.as_ref(), crate::images::Image::Widget(_))
+                {
+                    ratio.recip()
+                } else {
+                    ratio
+                }
+            });
         Self {
             size,
             ratio: PreferredRatio::of(style, natural, edges),
@@ -216,7 +234,11 @@ pub(super) fn measure<'a>(
     let image = match block.image().unwrap().as_ref() {
         crate::images::Image::Frame(frame, color_scheme) => crate::layout::viewport::view(
             frame,
-            [width, height],
+            if block.layout_flow().writing_mode.vertical() {
+                [height, width]
+            } else {
+                [width, height]
+            },
             *color_scheme,
             measurer.text.resolver(),
             &measurer.work,
@@ -277,6 +299,7 @@ pub(super) fn measure<'a>(
     }
     let edges = measurer.fragmentainer.edges(style);
     Ok(MeasuredBlock {
+        frame_key: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer
@@ -310,6 +333,7 @@ pub(super) fn measure<'a>(
             paint,
             height,
             visible: style.visibility.is_visible() && !style.skips_contents(),
+            rotate: widget && block.layout_flow().writing_mode.vertical(),
         }],
         paint: measurer.box_paint(block, geometry),
         navigation: block.navigation(),

@@ -36,6 +36,16 @@ impl PageRecord {
             )?,
         })
     }
+    pub(super) fn reflow(&mut self, flow: crate::style::logical::Flow) {
+        let frame = crate::layout::writing::Frame::physical(flow, self.geometry.paper).inverse();
+        frame.geometry(&mut self.geometry);
+        self.output.media = frame.rect(self.output.media);
+        self.output.trim = frame.rect(self.output.trim);
+        self.output.bleed = frame.rect(self.output.bleed);
+        for mark in &mut self.output.marks {
+            frame.paint(mark);
+        }
+    }
 }
 
 impl PageOutput {

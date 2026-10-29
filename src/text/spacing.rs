@@ -233,6 +233,22 @@ pub(super) fn align(
     last: bool,
 ) -> Result<(), TextError> {
     let style = paragraph.style();
+    if let Some(align) = paragraph.annotation_align()
+        && line.width <= available
+    {
+        let opportunities = match align {
+            crate::style::RubyAlign::SpaceBetween | crate::style::RubyAlign::SpaceAround => {
+                opportunities(paragraph, &line.runs, &line.order)
+            }
+            crate::style::RubyAlign::Start | crate::style::RubyAlign::Center => Vec::new(),
+        };
+        let (leading, _, each) =
+            super::ruby::distribution(align, available - line.width, opportunities.len());
+        adjust(line, &opportunities, |_| each)?;
+        line.indent += leading;
+        line.align = TextAlign::Start;
+        return Ok(());
+    }
     if line.width > available {
         line.align = TextAlign::Start;
         if style.align == TextAlign::Justify {

@@ -37,8 +37,20 @@ pub(super) fn draw(
     let paint = match paint.legend.filter(|_| paint.first_fragment) {
         Some(cut) => {
             let mut fieldset = paint.clone();
-            fieldset.rect.y += cut.inset;
-            fieldset.rect.height -= cut.inset;
+            use crate::style::logical::{BOTTOM, LEFT, RIGHT, TOP};
+            match cut.side {
+                TOP => {
+                    fieldset.rect.y += cut.inset;
+                    fieldset.rect.height -= cut.inset;
+                }
+                RIGHT => fieldset.rect.width -= cut.inset,
+                BOTTOM => fieldset.rect.height -= cut.inset,
+                LEFT => {
+                    fieldset.rect.x += cut.inset;
+                    fieldset.rect.width -= cut.inset;
+                }
+                _ => return Err(PdfError::InvalidGeometry),
+            }
             shifted = fieldset;
             &shifted
         }
@@ -178,15 +190,28 @@ fn push_legend_gap(
         Rect::from_xywh(bounds.x, bounds.y, bounds.width, bounds.height)
             .ok_or(PdfError::InvalidGeometry)?,
     );
-    path.push_rect(
-        Rect::from_xywh(
+    use crate::style::logical::{BOTTOM, LEFT, RIGHT, TOP};
+    let width = paint.decoration.borders[cut.side].used_width();
+    let gap = cut.gap[1] - cut.gap[0];
+    let hole = match cut.side {
+        TOP => Rect::from_xywh(paint.rect.x + cut.gap[0], paint.rect.y, gap, width),
+        RIGHT => Rect::from_xywh(
+            paint.rect.x + paint.rect.width - width,
+            paint.rect.y + cut.gap[0],
+            width,
+            gap,
+        ),
+        BOTTOM => Rect::from_xywh(
             paint.rect.x + cut.gap[0],
-            paint.rect.y,
-            cut.gap[1] - cut.gap[0],
-            paint.decoration.borders[0].used_width(),
-        )
-        .ok_or(PdfError::InvalidGeometry)?,
-    );
+            paint.rect.y + paint.rect.height - width,
+            gap,
+            width,
+        ),
+        LEFT => Rect::from_xywh(paint.rect.x, paint.rect.y + cut.gap[0], width, gap),
+        _ => return Err(PdfError::InvalidGeometry),
+    }
+    .ok_or(PdfError::InvalidGeometry)?;
+    path.push_rect(hole);
     surface.push_clip_path(
         &path.finish().ok_or(PdfError::InvalidGeometry)?,
         &FillRule::EvenOdd,

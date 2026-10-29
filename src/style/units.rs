@@ -52,6 +52,8 @@ pub(crate) enum Scale {
     /// The nearest query container's content box in the axis, or else the small viewport
     /// (CSS Conditional 5 §7).
     Container(Axis),
+    ViewportLogical(bool),
+    ContainerLogical(bool),
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -167,6 +169,7 @@ impl<'a> Faces<'a> {
         &self,
         ch: char,
         cell: &OnceCell<Option<Scaled<f32>>>,
+        vertical: bool,
     ) -> Result<Option<Scaled<f32>>, FontError> {
         if let Some(advance) = cell.get() {
             return Ok(*advance);
@@ -175,7 +178,7 @@ impl<'a> Faces<'a> {
             Source::Initial(font) => font
                 .as_deref()
                 .unwrap_or_else(|| initial_font())
-                .advance(ch)
+                .advance((ch, vertical))
                 .map(|advance| (advance, 1.0)),
             Source::Book {
                 book,
@@ -184,7 +187,14 @@ impl<'a> Faces<'a> {
                 selection,
                 adjustments,
                 size,
-            } => book.advance(candidates, *selection, adjustments, *size, ch, *resolver)?,
+            } => book.advance(
+                candidates,
+                *selection,
+                adjustments,
+                *size,
+                (ch, vertical),
+                *resolver,
+            )?,
         };
         Ok(*cell.get_or_init(|| advance))
     }
@@ -198,18 +208,29 @@ pub(crate) trait FontUnits {
 
 pub(crate) trait ViewportUnits {
     fn dimension(&self, axis: Axis) -> Result<f32, StyleError>;
+    fn logical_dimension(&self, block: bool) -> Result<f32, StyleError>;
 }
 
 #[derive(Clone, Copy)]
 pub(crate) enum Viewport<'a> {
-    Known([f32; 2]),
+    Known([f32; 2], bool),
     Deferred(&'a dyn ViewportUnits),
 }
 impl Viewport<'_> {
+    fn logical_dimension(&self, block: bool) -> Result<f32, StyleError> {
+        match self {
+            Self::Deferred(source) => source.logical_dimension(block),
+            Self::Known(_, vertical) => self.dimension(if block == *vertical {
+                Axis::Width
+            } else {
+                Axis::Height
+            }),
+        }
+    }
     fn dimension(&self, axis: Axis) -> Result<f32, StyleError> {
         match self {
             Self::Deferred(source) => source.dimension(axis),
-            Self::Known([width, height]) => Ok(match axis {
+            Self::Known([width, height], _) => Ok(match axis {
                 Axis::Width => *width,
                 Axis::Height => *height,
                 Axis::Min => width.min(*height),
@@ -225,7 +246,7 @@ pub(crate) enum Line<'a> {
     Known {
         height: LineHeight,
         size: f32,
-        faces: Faces<'a>,
+        faces: Box<Faces<'a>>,
     },
     Deferred(&'a dyn FontUnits),
 }
@@ -234,7 +255,7 @@ impl Line<'_> {
         Self::Known {
             height: LineHeight::Normal,
             size: DEFAULT_FONT_SIZE,
-            faces: Faces::initial(font),
+            faces: Box::new(Faces::initial(font)),
         }
     }
     fn points(&self) -> Result<f32, StyleError> {
@@ -263,6 +284,7 @@ impl Line<'_> {
 )]
 pub(crate) enum FontBasis<'a> {
     Known {
+        vertical: [bool; 2],
         size: f32,
         faces: Faces<'a>,
         line: Line<'a>,
@@ -272,10 +294,20 @@ pub(crate) enum FontBasis<'a> {
 impl<'a> FontBasis<'a> {
     pub(crate) fn with_initial_font(font: Option<Arc<InitialFont>>) -> Self {
         Self::Known {
+            vertical: [false; 2],
             size: DEFAULT_FONT_SIZE,
             faces: Faces::initial(font.clone()),
             line: Line::initial(font),
         }
+    }
+    pub(crate) fn with_vertical_units(mut self, vertical: [bool; 2]) -> Self {
+        if let Self::Known {
+            vertical: units, ..
+        } = &mut self
+        {
+            *units = vertical;
+        }
+        self
     }
     pub(crate) fn size(&self) -> Result<f32, StyleError> {
         match self {
@@ -290,8 +322,13 @@ impl<'a> FontBasis<'a> {
         }
     }
     pub(crate) fn per_unit(&self, unit: FontUnit) -> Result<f32, StyleError> {
-        let (size, faces, line) = match self {
-            Self::Known { size, faces, line } => (size, faces, line),
+        let (size, faces, line, vertical) = match self {
+            Self::Known {
+                size,
+                faces,
+                line,
+                vertical,
+            } => (size, faces, line, vertical),
             Self::Deferred(source) => return source.per_unit(unit),
         };
         // `font-size-adjust` scales metric-based units but not `em` (CSS Fonts 5 §3.4).
@@ -306,11 +343,16 @@ impl<'a> FontBasis<'a> {
                 let (metrics, scale) = faces.first()?;
                 metrics.cap_height * scale
             }
-            FontUnit::Ch => faces
-                .advance(ZERO, &faces.zero)?
-                .map_or(FALLBACK_ZERO_ADVANCE_EM, scaled),
+            FontUnit::Ch => faces.advance(ZERO, &faces.zero, vertical[0])?.map_or(
+                if vertical[0] {
+                    FALLBACK_IDEOGRAPH_ADVANCE_EM
+                } else {
+                    FALLBACK_ZERO_ADVANCE_EM
+                },
+                scaled,
+            ),
             FontUnit::Ic => faces
-                .advance(WATER_IDEOGRAPH, &faces.water)?
+                .advance(WATER_IDEOGRAPH, &faces.water, vertical[1])?
                 .map_or(FALLBACK_IDEOGRAPH_ADVANCE_EM, scaled),
             FontUnit::Lh => return line.points(),
         };
@@ -382,7 +424,7 @@ impl Relative<'_> {
         Self {
             font: FontBasis::with_initial_font(initial_font.clone()),
             root: FontBasis::with_initial_font(initial_font.clone()),
-            viewport: Viewport::Known(DEFAULT_PAGE_AREA),
+            viewport: Viewport::Known(DEFAULT_PAGE_AREA, false),
             paper: DEFAULT_PAGE,
             tree: Tree::None,
             grammar_only: false,
@@ -399,7 +441,7 @@ impl Relative<'_> {
     }
     pub(crate) fn media(paper: [f32; 2], font: Option<Arc<InitialFont>>) -> Self {
         Self {
-            viewport: Viewport::Known(paper),
+            viewport: Viewport::Known(paper, false),
             paper,
             ..Self::with_initial_font(font)
         }
@@ -421,23 +463,40 @@ impl Relative<'_> {
             }
             Scale::Font(unit) => self.font.per_unit(unit)?,
             Scale::Root(unit) => self.root.per_unit(unit)?,
+            Scale::ViewportLogical(block) => self.viewport.logical_dimension(block)? / PERCENT,
+            Scale::ContainerLogical(block) => self.container_logical_dimension(block)? / PERCENT,
             Scale::Viewport(axis) => self.viewport.dimension(axis)? / PERCENT,
             Scale::Container(axis) => self.container_dimension(axis)? / PERCENT,
         })
     }
     /// CSS Conditional 5 §7: each axis without an eligible container uses the small viewport.
     fn container_dimension(&self, axis: Axis) -> Result<f32, StyleError> {
-        let [inline, block] = self
-            .query_sizes
-            .map_or([None; 2], |sizes| self.containers.unit_basis(sizes));
-        let inline = inline.map_or_else(|| self.viewport.dimension(Axis::Width), Ok)?;
-        let block = block.map_or_else(|| self.viewport.dimension(Axis::Height), Ok)?;
+        if matches!(axis, Axis::Min | Axis::Max) {
+            let inline = self.container_logical_dimension(false)?;
+            let block = self.container_logical_dimension(true)?;
+            return Ok(if axis == Axis::Min {
+                inline.min(block)
+            } else {
+                inline.max(block)
+            });
+        }
+        let [width, height] = [Axis::Width, Axis::Height].map(|axis| {
+            self.query_sizes
+                .and_then(|sizes| self.containers.unit_basis(sizes, axis))
+        });
+        let width = width.map_or_else(|| self.viewport.dimension(Axis::Width), Ok)?;
+        let height = height.map_or_else(|| self.viewport.dimension(Axis::Height), Ok)?;
         Ok(match axis {
-            Axis::Width => inline,
-            Axis::Height => block,
-            Axis::Min => inline.min(block),
-            Axis::Max => inline.max(block),
+            Axis::Width => width,
+            Axis::Height => height,
+            Axis::Min => width.min(height),
+            Axis::Max => width.max(height),
         })
+    }
+    fn container_logical_dimension(&self, block: bool) -> Result<f32, StyleError> {
+        self.query_sizes
+            .and_then(|sizes| self.containers.logical_unit_basis(sizes, block))
+            .map_or_else(|| self.viewport.logical_dimension(block), Ok)
     }
 }
 
@@ -464,8 +523,7 @@ const fn font(name: &'static str, unit: FontUnit) -> (&'static str, Dimension) {
 const fn root(name: &'static str, unit: FontUnit) -> (&'static str, Dimension) {
     length(name, Scale::Root(unit))
 }
-/// Paged media has no dynamic toolbars, so small, large and dynamic viewports coincide, and
-/// the only writing mode is horizontal, so the inline axis is the width.
+/// Paged media has no dynamic toolbars, so small, large and dynamic viewports coincide.
 const fn viewport(name: &'static str, axis: Axis) -> (&'static str, Dimension) {
     length(name, Scale::Viewport(axis))
 }
@@ -507,14 +565,14 @@ const DIMENSIONS: &[(&str, Dimension)] = &[
     viewport("svh", Axis::Height),
     viewport("lvh", Axis::Height),
     viewport("dvh", Axis::Height),
-    viewport("vi", Axis::Width),
-    viewport("svi", Axis::Width),
-    viewport("lvi", Axis::Width),
-    viewport("dvi", Axis::Width),
-    viewport("vb", Axis::Height),
-    viewport("svb", Axis::Height),
-    viewport("lvb", Axis::Height),
-    viewport("dvb", Axis::Height),
+    length("vi", Scale::ViewportLogical(false)),
+    length("svi", Scale::ViewportLogical(false)),
+    length("lvi", Scale::ViewportLogical(false)),
+    length("dvi", Scale::ViewportLogical(false)),
+    length("vb", Scale::ViewportLogical(true)),
+    length("svb", Scale::ViewportLogical(true)),
+    length("lvb", Scale::ViewportLogical(true)),
+    length("dvb", Scale::ViewportLogical(true)),
     viewport("vmin", Axis::Min),
     viewport("svmin", Axis::Min),
     viewport("lvmin", Axis::Min),
@@ -525,8 +583,8 @@ const DIMENSIONS: &[(&str, Dimension)] = &[
     viewport("dvmax", Axis::Max),
     container("cqw", Axis::Width),
     container("cqh", Axis::Height),
-    container("cqi", Axis::Width),
-    container("cqb", Axis::Height),
+    length("cqi", Scale::ContainerLogical(false)),
+    length("cqb", Scale::ContainerLogical(true)),
     container("cqmin", Axis::Min),
     container("cqmax", Axis::Max),
     ("s", Dimension::Time(1.0)),

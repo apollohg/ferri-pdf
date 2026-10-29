@@ -111,7 +111,7 @@ pub(super) fn hangable(
     {
         return hangable;
     }
-    let rtl = paragraph.style().rtl;
+    let rtl = paragraph.style().used_rtl();
     let edge_run = |right: bool| {
         let mut slots = order
             .iter()

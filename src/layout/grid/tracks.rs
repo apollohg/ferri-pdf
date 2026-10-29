@@ -1,5 +1,6 @@
 use crate::grid::{AxisLines, MaxSizing, MinSizing, SizeBounds, TrackSizing};
-use crate::layout::{LayoutError, work::Budget};
+use crate::layout::measure::Failure;
+use crate::layout::work::Budget;
 use crate::style::{
     GridAreas, LengthPercentage, MAX_GRID_LINE, POINTS_PER_PIXEL, TrackBreadth, TrackList,
     TrackSize,
@@ -77,7 +78,7 @@ impl TrackGeometry {
         gap: Option<f32>,
         edges: [f32; 2],
         reverse: bool,
-    ) -> Result<Self, LayoutError> {
+    ) -> Result<Self, Failure> {
         if area.is_empty()
             || area.end > self.tracks.len()
             || edges.iter().any(|edge| !edge.is_finite())
@@ -213,7 +214,7 @@ impl Axis {
         bounds: SizeBounds,
         gap: f32,
         work: &Budget,
-    ) -> Result<Self, LayoutError> {
+    ) -> Result<Self, Failure> {
         let mut output = Self {
             lines: AxisLines {
                 names: vec![Vec::new()],
@@ -340,7 +341,7 @@ impl Axis {
         cycle: &[TrackSize],
         areas: impl Iterator<Item = Range<usize>>,
         work: &Budget,
-    ) -> Result<(), LayoutError> {
+    ) -> Result<(), Failure> {
         work.spend(count)?;
         let explicit = std::mem::take(&mut self.tracks);
         self.tracks = (0..count)

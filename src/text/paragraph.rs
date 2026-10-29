@@ -232,7 +232,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
         } else {
             None
         };
-        if paragraph.style().rtl {
+        if paragraph.style().used_rtl() {
             pieces.splice(
                 0..0,
                 trailing
@@ -293,6 +293,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             return Err(TextError::NonFiniteGeometry);
         }
         Ok(Line {
+            wrapped: false,
             indent,
             text: hyphenation::text(&text[visible], hyphen),
             range: from..to,
@@ -322,6 +323,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
     fn finalize(&self, mut line: Line, last: bool) -> Result<Line, TextError> {
         let prepared = self.prepared_at(line.range.start);
         let paragraph = prepared.paragraph;
+        line.wrapped = !last && !after_forced_break(&prepared.opportunities, line.range.end);
         if ruby::ends_inside_base(paragraph, line.range.end) {
             return Err(ruby::WITHIN_BASES);
         }
@@ -372,9 +374,9 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
                 line.height = line.ascent + root.edge(edges[1], true);
             }
         }
-        line.hanging = line
-            .hangable
-            .hanging(line.width, self.available(), paragraph.style().rtl);
+        line.hanging =
+            line.hangable
+                .hanging(line.width, self.available(), paragraph.style().used_rtl());
         let hanging = line.hanging[0] + line.hanging[1];
         line.width -= hanging;
         spacing::align(&mut line, paragraph, self.available(), last)?;

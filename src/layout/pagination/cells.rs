@@ -34,6 +34,7 @@ pub(super) struct FlowPosition<'a> {
     parallel_depth: usize,
     reflow_lanes: usize,
     named_pages: bool,
+    space: crate::layout::measure::FlowSpace,
 }
 
 impl FlowPosition<'_> {
@@ -80,7 +81,11 @@ pub(super) struct CellContinuation<'a, 't> {
     active: Option<CellFlow<'a, 't>>,
 }
 
-impl CellContinuation<'_, '_> {
+impl<'a, 't> CellContinuation<'a, 't>
+where
+    'a: 't,
+    't: 'a,
+{
     pub(super) fn clip_to(&mut self, height: f32) {
         self.remaining_height = Some(height);
         self.active
@@ -141,7 +146,7 @@ struct CellFlow<'a, 't> {
     request: Option<BreakRequest>,
 }
 
-impl<'a, 't> Paginator<'a, '_, 't> {
+impl<'a> Paginator<'a, '_, 'a> {
     pub(super) fn flow_position(&self) -> FlowPosition<'a> {
         FlowPosition {
             page: self.page,
@@ -169,6 +174,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             parallel_depth: self.parallel_depth,
             reflow_lanes: self.reflow_lanes,
             named_pages: self.measurer.named_pages,
+            space: self.measurer.space,
         }
     }
 
@@ -201,6 +207,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         self.parallel_depth = position.parallel_depth;
         self.reflow_lanes = position.reflow_lanes;
         self.measurer.named_pages = position.named_pages;
+        self.measurer.space = position.space;
         if changed {
             self.reflow_open_boxes()?;
         }
@@ -264,6 +271,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 let mut clip = if transformed {
                     let node = self.clips.len();
                     self.clips.push(EffectNode {
+                        native: None,
                         paints: Vec::new(),
                         parent: self.clip,
                         effect: Effect::Transform(source.style(), None),
@@ -325,7 +333,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         tail: BreakTail,
         start: CellStart,
         mut float: Option<&mut floats::FloatPlacement>,
-    ) -> Result<CellContinuation<'a, 't>, LayoutError> {
+    ) -> Result<CellContinuation<'a, 'a>, LayoutError> {
         let CellStart {
             flex_item,
             table_cell,
@@ -367,7 +375,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         );
         self.flex_item = flex_item;
         self.measurer.named_pages &= !table_cell;
-        let started: Result<CellFlow<'a, 't>, LayoutError> = (|| {
+        let started: Result<CellFlow<'a, 'a>, LayoutError> = (|| {
             let (mut block, mut request) = self.prepare_block(block, tail)?;
             while let Some(next) = request {
                 self.new_page(next.forced, next.preserve_empty || preserve_empty)?;
@@ -428,7 +436,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
 
     pub(super) fn advance_cell(
         &mut self,
-        cell: &mut CellContinuation<'a, 't>,
+        cell: &mut CellContinuation<'a, 'a>,
     ) -> Result<Option<ActiveBox<'a>>, LayoutError> {
         let CellFlow {
             mut frame,

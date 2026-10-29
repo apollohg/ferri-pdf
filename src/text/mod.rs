@@ -2,6 +2,7 @@
 mod autospace;
 mod bidi;
 mod breaking;
+mod combine;
 mod decoration;
 mod ellipsis;
 mod emphasis;
@@ -44,7 +45,7 @@ use unicode_segmentation::UnicodeSegmentation;
 pub(crate) use initial_letter::{
     Surrounding as LetterSurrounding, font_scale as initial_letter_scale,
 };
-pub(crate) use line_boxes::{AtomicFragment, AtomicMetrics, BoxFragment, LinkFragment};
+pub(crate) use line_boxes::{AtomicFragment, AtomicMetrics, BoxFragment, BoxMetrics, LinkFragment};
 
 /// Synthetic bold draws a second copy of a run this far to the right.
 const SYNTHETIC_BOLD_OFFSET_EM: f32 = 0.02;
@@ -52,6 +53,32 @@ const SYNTHETIC_BOLD_OFFSET_EM: f32 = 0.02;
 pub(crate) const MAX_GLYPH_MATCH_WORK: usize = 100_000_000;
 use line_boxes::{Piece, Slot};
 pub(crate) use paragraph::{ParagraphClamp, PreparedParagraph, TextPosition};
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
+pub(crate) enum GlyphOrientation {
+    #[default]
+    Horizontal,
+    UprightRl,
+    UprightLr,
+    UprightSidewaysLr,
+    ReflectedSideways,
+}
+impl GlyphOrientation {
+    /// Font coordinates (y down) to the containing flow's horizontal layout coordinates.
+    pub(crate) fn matrix(self) -> [f32; 4] {
+        match self {
+            Self::Horizontal => [1.0, 0.0, 0.0, 1.0],
+            Self::UprightRl => [0.0, -1.0, 1.0, 0.0],
+            Self::UprightLr => [0.0, 1.0, 1.0, 0.0],
+            Self::UprightSidewaysLr => [0.0, 1.0, -1.0, 0.0],
+            Self::ReflectedSideways => [1.0, 0.0, 0.0, -1.0],
+        }
+    }
+    pub(crate) fn font_vector(self, [x, y]: [f32; 2]) -> [f32; 2] {
+        let [a, b, c, d] = self.matrix();
+        [a * x + b * y, c * x + d * y]
+    }
+}
 
 #[derive(Clone, Debug, Serialize)]
 pub struct GlyphRun {
@@ -62,6 +89,9 @@ pub struct GlyphRun {
     #[serde(skip)]
     pub source_span: usize,
     pub rtl: bool,
+    pub(crate) orientation: GlyphOrientation,
+    pub(crate) inline_scale: f32,
+    pub(crate) combined: bool,
     #[serde(skip)]
     bidi_scoped: bool,
     #[serde(skip)]
@@ -174,6 +204,8 @@ fn shape_line(
     }
     let start = range.start;
     let text = &text[range.clone()];
+    let combined = combine::groups(paragraph);
+    let emitted = RefCell::new(std::collections::HashSet::new());
     let shape_range = |range: Range<usize>, rtl: bool| -> Result<Vec<Piece>, TextError> {
         let absolute = (start + range.start)..(start + range.end);
         let first = paragraph
@@ -205,24 +237,47 @@ fn shape_line(
                 });
                 continue;
             }
-            let (style, source) = (&piece.style, piece.range.clone());
-            let shaping_context =
-                source.start.max(context_range.start)..source.end.min(context_range.end);
-            let mut runs = context.shape(
-                &paragraph.text()[shaping_context.clone()],
-                (r.start - shaping_context.start)..(r.end - shaping_context.start),
-                rtl,
-                style,
-                MissingGlyphs::Substitute,
-            )?;
-            for run in &mut runs {
-                run.bidi_scoped = bidi.has_controls();
-                run.source_range.start += shaping_context.start;
-                run.source_range.end += shaping_context.start;
-                run.source_span = span;
-                run.leader = piece.leader;
+            let mut boundaries = vec![r.start, r.end];
+            for group in &combined {
+                boundaries.extend(
+                    [group.range.start, group.range.end]
+                        .into_iter()
+                        .filter(|offset| r.start < *offset && *offset < r.end),
+                );
             }
-            result.extend(runs.into_iter().map(|run| Piece::Text(Box::new(run))));
+            boundaries.sort_unstable();
+            boundaries.dedup();
+            for bounds in boundaries.windows(2) {
+                let r = bounds[0]..bounds[1];
+                if let Some(group) = combined.iter().find(|group| group.range.contains(&r.start)) {
+                    if emitted.borrow_mut().insert(group.range.start) {
+                        result.extend(
+                            combine::shape(context, paragraph, group)?
+                                .into_iter()
+                                .map(|run| Piece::Text(Box::new(run))),
+                        );
+                    }
+                    continue;
+                }
+                let (style, source) = (&piece.style, piece.range.clone());
+                let shaping_context =
+                    source.start.max(context_range.start)..source.end.min(context_range.end);
+                let mut runs = context.shape(
+                    &paragraph.text()[shaping_context.clone()],
+                    (r.start - shaping_context.start)..(r.end - shaping_context.start),
+                    rtl,
+                    style,
+                    MissingGlyphs::Substitute,
+                )?;
+                for run in &mut runs {
+                    run.bidi_scoped = bidi.has_controls();
+                    run.source_range.start += shaping_context.start;
+                    run.source_range.end += shaping_context.start;
+                    run.source_span = span;
+                    run.leader = piece.leader;
+                }
+                result.extend(runs.into_iter().map(|run| Piece::Text(Box::new(run))));
+            }
         }
         Ok(result)
     };
@@ -248,6 +303,7 @@ fn shape_line(
 
 #[derive(Clone)]
 pub(crate) struct Line {
+    pub wrapped: bool,
     /// Logical start-edge margin, excluded from shaped content width.
     pub indent: f32,
     pub text: String,
@@ -318,7 +374,9 @@ impl GlyphRun {
         let pen = [x + self.x, y + self.baseline_shift];
         let mut copies = vec![pen];
         if self.synthesis.bold {
-            copies.push([pen[0] + self.font_size * SYNTHETIC_BOLD_OFFSET_EM, pen[1]]);
+            let [a, b, _, _] = self.orientation.matrix();
+            let bold = self.font_size * SYNTHETIC_BOLD_OFFSET_EM * self.inline_scale;
+            copies.push([pen[0] + a * bold, pen[1] + b * bold]);
         }
         copies
     }

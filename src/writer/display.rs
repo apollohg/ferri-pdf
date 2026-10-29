@@ -184,6 +184,23 @@ impl Painter<'_, '_, '_> {
                     }
                     _ => self.images.draw(paint, space.viewport, surface)?,
                 },
+                DisplayItem::Frame(frame) => {
+                    let [a, b, c, d, e, f] = frame.matrix;
+                    surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
+                    let result = Painter {
+                        lines: &frame.lines,
+                        page: self.page,
+                        page_area: frame.area,
+                        text: self.text,
+                        fonts: self.fonts,
+                        images: self.images,
+                        raster: self.raster,
+                        prepared: Prepared::default(),
+                    }
+                    .draw(&frame.items, space, surface);
+                    surface.pop();
+                    result?;
+                }
                 DisplayItem::Box(box_paint) => painting::draw(
                     box_paint,
                     self.page_area,
@@ -379,7 +396,8 @@ pub(super) fn group_length(items: &[DisplayItem]) -> Result<usize, PdfError> {
             | DisplayItem::PushBackdropRoot => depth += 1,
             DisplayItem::Pop if depth == 0 => return Ok(index),
             DisplayItem::Pop => depth -= 1,
-            DisplayItem::Image(_)
+            DisplayItem::Frame(_)
+            | DisplayItem::Image(_)
             | DisplayItem::Box(_)
             | DisplayItem::Text { .. }
             | DisplayItem::TextShadow(_)

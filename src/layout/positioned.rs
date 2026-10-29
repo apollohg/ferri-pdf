@@ -1,8 +1,8 @@
 //! Absolutely positioned boxes: CSS 2.1 §10.3.7 widths and §10.6.4 heights.
 use crate::document::BlockBox;
 use crate::graphics::Rect;
-use crate::layout::LayoutError;
 use crate::layout::geometry::{HorizontalBox, SizeConstraints};
+use crate::layout::measure::Failure;
 use crate::layout::measure::{MeasuredBlock, Measurer};
 use crate::style::{Alignment, Style};
 
@@ -13,6 +13,7 @@ pub(super) struct StaticPosition {
     pub left: f32,
     pub right: f32,
     pub y: f32,
+    pub bottom: f32,
     pub alignment: Option<StaticAlignment>,
 }
 
@@ -27,6 +28,35 @@ pub(super) struct StaticAlignment {
     pub align: Alignment,
 }
 impl StaticAlignment {
+    pub(super) fn mapped(mut self, [a, b, c, d, _, _]: [f32; 6]) -> Self {
+        let reversed = if self.row {
+            [a + b < 0.0, c + d < 0.0]
+        } else {
+            [c + d < 0.0, a + b < 0.0]
+        };
+        if a == 0.0 && d == 0.0 {
+            self.content.swap(0, 1);
+            self.row = !self.row;
+        }
+        let opposite = |alignment| match alignment {
+            Alignment::Start => Alignment::End,
+            Alignment::End => Alignment::Start,
+            Alignment::SelfStart => Alignment::SelfEnd,
+            Alignment::SelfEnd => Alignment::SelfStart,
+            Alignment::Left => Alignment::Right,
+            Alignment::Right => Alignment::Left,
+            other => other,
+        };
+        self.main_reverse ^= reversed[0];
+        self.cross_reverse ^= reversed[1];
+        if reversed[0] {
+            self.justify = opposite(self.justify);
+        }
+        if reversed[1] {
+            self.align = opposite(self.align);
+        }
+        self
+    }
     fn offset(free: f32, alignment: Alignment, reverse: bool) -> f32 {
         let (start, end) = if reverse { (free, 0.0) } else { (0.0, free) };
         match alignment {
@@ -157,13 +187,13 @@ impl Axis {
 /// Measures and places `block` against containing block padding box `cb`, unbroken.
 /// Returns the measured box and the y of its border-box top.
 pub(super) fn place<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     block: &'a BlockBox,
     cb: Rect,
     rtl: bool,
     position: &StaticPosition,
     page: Option<usize>,
-) -> Result<(MeasuredBlock<'a>, f32), LayoutError> {
+) -> Result<(MeasuredBlock<'a>, f32), Failure> {
     let unbroken = std::mem::replace(&mut measurer.unbroken, true);
     let base = block.style();
     let styles = page
@@ -266,13 +296,13 @@ pub(super) fn overflows(style: &Style, cb: Rect, rtl: bool, border: Rect) -> boo
 }
 
 fn solve<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     block: &'a BlockBox,
     style: &'a Style,
     original: Rect,
     rtl: bool,
     position: &StaticPosition,
-) -> Result<(MeasuredBlock<'a>, f32), LayoutError> {
+) -> Result<(MeasuredBlock<'a>, f32), Failure> {
     let anchor = style
         .anchor
         .frame
@@ -467,7 +497,7 @@ fn solve<'a>(
         && height_constraints.specified.is_none()
         && crate::layout::ratio::PreferredRatio::of_box(style, &edges).is_some();
     let ratio_measured = if ratio {
-        Some(measurer.format_block(source, geometry.clone(), false, Some(height), None)?)
+        Some(measurer.measure_format(source, geometry.clone(), false, Some(height), None)?)
     } else {
         None
     };
@@ -490,7 +520,7 @@ fn solve<'a>(
         ratio_measured
     } else if height_constraints.specified.is_none() && vertical.insets.iter().any(Option::is_none)
     {
-        Some(measurer.format_block(source, geometry.clone(), false, Some(height), None)?)
+        Some(measurer.measure_format(source, geometry.clone(), false, Some(height), None)?)
     } else {
         None
     };
@@ -512,7 +542,7 @@ fn solve<'a>(
     };
     let mut measured = match natural {
         Some(measured) if Some(placed.size) == natural_height => measured,
-        _ => measurer.format_block(source, geometry, false, Some(height), Some(placed.size))?,
+        _ => measurer.measure_format(source, geometry, false, Some(height), Some(placed.size))?,
     };
     measured.style = style;
     let mut top = cb.y + placed.start;

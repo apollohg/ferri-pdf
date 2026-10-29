@@ -1,6 +1,7 @@
 use crate::document::Paragraph;
+use crate::layout::TextLine;
+use crate::layout::measure::Failure;
 use crate::layout::measure::Measurer;
-use crate::layout::{LayoutError, TextLine};
 
 #[derive(Clone)]
 pub(super) struct MeasuredMarker {
@@ -19,7 +20,7 @@ pub(super) fn measure(
     left: f32,
     right: f32,
     owner: Option<crate::style::PageStyleTarget>,
-) -> Result<MeasuredMarker, LayoutError> {
+) -> Result<MeasuredMarker, Failure> {
     let mut line = measurer
         .text_lines(paragraph, f32::MAX, &[])?
         .into_iter()
@@ -32,8 +33,8 @@ pub(super) fn measure(
             .expect("image marker has size");
         let mut decoration = crate::graphics::BoxDecoration::default();
         std::sync::Arc::make_mut(&mut decoration.backgrounds).images = vec![image.clone()];
-        let x = if style.rtl { line.width } else { 0.0 };
-        if !style.rtl {
+        let x = if style.used_rtl() { line.width } else { 0.0 };
+        if !style.used_rtl() {
             for run in &mut line.runs {
                 run.x += width;
             }
@@ -64,7 +65,11 @@ pub(super) fn measure(
         decorations: line.decorations,
         fragment: TextLine {
             paragraph: index,
-            x: if style.rtl { right } else { left - line.width },
+            x: if style.used_rtl() {
+                right
+            } else {
+                left - line.width
+            },
             baseline: line.ascent,
             text: line.text,
             width: line.width,

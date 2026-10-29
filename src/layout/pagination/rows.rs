@@ -64,7 +64,11 @@ pub(super) struct RowCursor<'a, 't> {
     body_end: Option<usize>,
 }
 
-impl RowCursor<'_, '_> {
+impl<'a, 't> RowCursor<'a, 't>
+where
+    'a: 't,
+    't: 'a,
+{
     pub(super) fn detach_orders(&mut self, snapshots: &mut OrderSnapshots) {
         for (_, orders) in &mut self.cells {
             snapshots.detach(orders);
@@ -75,7 +79,7 @@ impl RowCursor<'_, '_> {
     }
 }
 
-impl<'a, 't> Paginator<'a, '_, 't> {
+impl<'a> Paginator<'a, '_, 'a> {
     fn end_row_fragment(&mut self, ends: &mut BTreeMap<usize, f32>, repeating: bool) {
         if repeating {
             let band = self.bands.last_mut().unwrap();
@@ -92,6 +96,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         rect.x += self.offset[0] + target.offset[0];
         rect.y = self.top + y + self.offset[1] + target.offset[1];
         self.display_lists[self.page].push(ScopedPaint {
+            native: None,
             visible: target.visible,
             order: self.orders.take(),
             scope: self.key.clone(),
@@ -107,7 +112,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         mut row: MeasuredRow<'a>,
         tail: BreakTail,
         body_end: Option<usize>,
-    ) -> RowCursor<'a, 't> {
+    ) -> RowCursor<'a, 'a> {
         if row.cells.is_empty()
             && let Some((band, plan)) = row
                 .band
@@ -209,6 +214,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     });
                 }
                 self.display_lists[self.page].push(ScopedPaint {
+                    native: None,
                     visible: true,
                     order: self.orders.take(),
                     scope: self.key.clone(),
@@ -331,7 +337,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
     }
     fn enter_row(
         &mut self,
-        cursor: &mut RowCursor<'a, 't>,
+        cursor: &mut RowCursor<'a, 'a>,
     ) -> Result<Option<BreakRequest>, LayoutError> {
         let RowCursor {
             row,
@@ -443,12 +449,14 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 {
                     *source_row_geometry = Some((
                         source_row,
-                        plan.resolve_rows(
-                            self.measurer,
-                            &table.flow.heights,
-                            table.flow.spacing,
-                            &table.flow.geometry,
-                        )?,
+                        self.measurer.run(|measurer| {
+                            plan.resolve_rows(
+                                measurer,
+                                &table.flow.heights,
+                                table.flow.spacing,
+                                &table.flow.geometry,
+                            )
+                        })?,
                     ));
                 }
                 let geometry = &source_row_geometry.as_ref().unwrap().1;
@@ -478,12 +486,14 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 {
                     *source_row_geometry = Some((
                         source_row,
-                        plan.resolve_rows(
-                            self.measurer,
-                            &table.flow.heights,
-                            table.flow.spacing,
-                            &table.flow.geometry,
-                        )?,
+                        self.measurer.run(|measurer| {
+                            plan.resolve_rows(
+                                measurer,
+                                &table.flow.heights,
+                                table.flow.spacing,
+                                &table.flow.geometry,
+                            )
+                        })?,
                     ));
                 }
                 let geometry = &source_row_geometry.as_ref().unwrap().1;
@@ -545,12 +555,14 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 {
                     *source_row_geometry = Some((
                         cell_row,
-                        table.flow.plan.resolve_rows(
-                            self.measurer,
-                            &table.flow.heights,
-                            table.flow.spacing,
-                            &table.flow.geometry,
-                        )?,
+                        self.measurer.run(|measurer| {
+                            table.flow.plan.resolve_rows(
+                                measurer,
+                                &table.flow.heights,
+                                table.flow.spacing,
+                                &table.flow.geometry,
+                            )
+                        })?,
                     ));
                 }
                 let (_, geometry) = source_row_geometry.as_ref().unwrap();
@@ -583,8 +595,9 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     if !alignment_cache.contains_key(&key) {
                         let previous_height = paginator.measurer.page_height;
                         paginator.measurer.page_height = height;
-                        let measured =
-                            plan.cell_alignments(paginator.measurer, band.clone(), &geometry);
+                        let measured = paginator.measurer.run(|measurer| {
+                            plan.cell_alignments(measurer, band.clone(), &geometry)
+                        });
                         paginator.measurer.page_height = previous_height;
                         let alignments = measured?;
                         if alignment_cache.len() == MAX_TABLE_ALIGNMENT_GEOMETRIES {
@@ -618,18 +631,21 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 let geometry = self.table_geometry(self.page)?;
                 let table = self.tables.last_mut().unwrap();
                 if table.flow.plan.cell_geometry(index, &geometry) != cell.block.geometry {
-                    let natural =
+                    let natural = self.measurer.run(|measurer| {
                         table
                             .flow
                             .plan
-                            .measure_cell(self.measurer, index, &geometry, None)?;
+                            .measure_cell(measurer, index, &geometry, None)
+                    })?;
                     table.flow.heights[index] = crate::layout::tables::cell_height(&natural);
-                    let rows = table.flow.plan.resolve_rows(
-                        self.measurer,
-                        &table.flow.heights,
-                        table.flow.spacing,
-                        &geometry.geometry,
-                    )?;
+                    let rows = self.measurer.run(|measurer| {
+                        table.flow.plan.resolve_rows(
+                            measurer,
+                            &table.flow.heights,
+                            table.flow.spacing,
+                            &geometry.geometry,
+                        )
+                    })?;
                     let range = table.flow.plan.cell_rows(index);
                     let assigned =
                         rows.starts[range.end] - rows.starts[range.start] - table.flow.spacing;
@@ -640,12 +656,14 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                             .plan
                             .cell_used_height(index, content_height, &geometry)
                     {
-                        table.flow.plan.measure_cell(
-                            self.measurer,
-                            index,
-                            &geometry,
-                            Some(used_height),
-                        )?
+                        self.measurer.run(|measurer| {
+                            table.flow.plan.measure_cell(
+                                measurer,
+                                index,
+                                &geometry,
+                                Some(used_height),
+                            )
+                        })?
                     } else {
                         natural
                     };
@@ -714,7 +732,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
     }
     pub(super) fn resume_row(
         &mut self,
-        cursor: &mut RowCursor<'a, 't>,
+        cursor: &mut RowCursor<'a, 'a>,
     ) -> Result<Option<BreakRequest>, LayoutError> {
         if cursor.yielded {
             cursor.frontier = self.page;
@@ -897,12 +915,14 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 if !events.is_empty() {
                     let position = self.flow_position();
                     let table = self.tables.last().unwrap();
-                    let geometry = plan.resolve_rows(
-                        self.measurer,
-                        &table.flow.heights,
-                        table.flow.spacing,
-                        &table.flow.geometry,
-                    )?;
+                    let geometry = self.measurer.run(|measurer| {
+                        plan.resolve_rows(
+                            measurer,
+                            &table.flow.heights,
+                            table.flow.spacing,
+                            &table.flow.geometry,
+                        )
+                    })?;
                     let height = geometry.starts[source_row + 1]
                         - geometry.starts[origin.0]
                         - table.flow.spacing;
@@ -968,7 +988,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         }
     }
 
-    pub(super) fn finish_row(&mut self, cursor: RowCursor<'a, 't>) -> Result<(), LayoutError> {
+    pub(super) fn finish_row(&mut self, cursor: RowCursor<'a, 'a>) -> Result<(), LayoutError> {
         let RowCursor {
             row,
             start,
@@ -1020,12 +1040,14 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         let geometry =
             if !stretches.is_empty() && row.band.as_ref().is_some_and(|band| band.len() > 1) {
                 let table = self.tables.last().unwrap();
-                Some(table.flow.plan.resolve_rows(
-                    self.measurer,
-                    &table.flow.heights,
-                    table.flow.spacing,
-                    &table.flow.geometry,
-                )?)
+                Some(self.measurer.run(|measurer| {
+                    table.flow.plan.resolve_rows(
+                        measurer,
+                        &table.flow.heights,
+                        table.flow.spacing,
+                        &table.flow.geometry,
+                    )
+                })?)
             } else {
                 None
             };
@@ -1112,7 +1134,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                         let grid = crate::layout::tables::CollapsedGrid {
                             borders: source.borders.clone(),
                             offsets: source.offsets.clone(),
-                            lines: geometry.grid_lines(table.flow.plan.source.style().rtl),
+                            lines: geometry.grid_lines(table.flow.plan.source.style().used_rtl()),
                         };
                         table.grids.entry(page).or_insert(grid);
                     }

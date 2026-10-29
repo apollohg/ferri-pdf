@@ -221,6 +221,12 @@ pub(crate) struct Style {
     pub overflow: [crate::style::Overflow; 2],
     pub overflow_clip_margin: [crate::style::OverflowClipMargin; 4],
     pub rtl: bool,
+    pub writing_mode: crate::style::logical::WritingMode,
+    pub(crate) principal_flow: Option<crate::style::logical::Flow>,
+    pub(crate) layout_writing_mode: crate::style::logical::WritingMode,
+    pub(super) parent_writing_mode: crate::style::logical::WritingMode,
+    pub text_orientation: crate::style::logical::TextOrientation,
+    pub text_combine: crate::style::logical::TextCombine,
     pub unicode_bidi: crate::style::UnicodeBidi,
     pub text_indent: crate::style::TextIndent,
     pub align: TextAlign,
@@ -363,6 +369,12 @@ impl Default for Style {
             overflow: [crate::style::Overflow::Visible; 2],
             overflow_clip_margin: [crate::style::OverflowClipMargin::default(); 4],
             rtl: false,
+            writing_mode: crate::style::logical::WritingMode::default(),
+            principal_flow: None,
+            layout_writing_mode: crate::style::logical::WritingMode::default(),
+            parent_writing_mode: crate::style::logical::WritingMode::default(),
+            text_orientation: crate::style::logical::TextOrientation::default(),
+            text_combine: crate::style::logical::TextCombine::default(),
             unicode_bidi: crate::style::UnicodeBidi::Normal,
             text_indent: crate::style::TextIndent::default(),
             align: TextAlign::Start,
@@ -416,8 +428,9 @@ impl Style {
         properties::inherit(&mut style, line);
         // Copying leaves `currentcolor` text paint resolved for `base`; `line` resolved its own.
         style.text_paint.clone_from(&line.text_paint);
-        // Text is set horizontally only, so `direction` alone needs restoring.
         style.rtl = base.rtl;
+        style.writing_mode = base.writing_mode;
+        style.text_orientation = base.text_orientation;
         style
     }
     /// Font-name environment owned by the element's tree scope.
@@ -461,6 +474,7 @@ impl Style {
         let mut style = Self::default();
         properties::inherit(&mut style, self);
         style.display = display;
+        style.parent_writing_mode = self.writing_mode;
         style.custom_properties = self.custom_properties.clone();
         style.inherited_custom_properties = self.custom_properties.clone();
         style.language.clone_from(&self.language);
@@ -479,6 +493,14 @@ impl Style {
         style
     }
     pub(super) fn normalize_display(&mut self, relative: &Relative<'_>) {
+        if self.writing_mode != self.parent_writing_mode {
+            self.display = match self.display {
+                Display::Inline => Display::InlineBlock,
+                Display::Block => Display::FlowRoot,
+                Display::ListItem => Display::FlowRootListItem,
+                _ => self.display.clone(),
+            };
+        }
         if self.document_root && self.display == Display::Contents {
             self.display = Display::Block;
         }
@@ -519,16 +541,52 @@ impl Style {
         self.document_root || self.item_parent
     }
 
+    pub(crate) fn used_writing_mode(&self) -> crate::style::logical::WritingMode {
+        self.principal_flow
+            .map_or(self.writing_mode, |flow| flow.writing_mode)
+    }
+    pub(crate) fn vertical_typographic_mode(&self) -> bool {
+        matches!(
+            self.used_writing_mode(),
+            crate::style::logical::WritingMode::VerticalRl
+                | crate::style::logical::WritingMode::VerticalLr
+        ) && self.text_orientation != crate::style::logical::TextOrientation::Sideways
+    }
+    pub(crate) fn vertical_font_units(&self) -> [bool; 2] {
+        use crate::style::logical::{TextOrientation, WritingMode};
+        if !matches!(
+            self.writing_mode,
+            WritingMode::VerticalRl | WritingMode::VerticalLr
+        ) {
+            return [false; 2];
+        }
+        [
+            self.text_orientation == TextOrientation::Upright,
+            self.text_orientation != TextOrientation::Sideways,
+        ]
+    }
+    pub(crate) fn used_rtl(&self) -> bool {
+        self.principal_flow.map_or(self.rtl, |flow| flow.rtl)
+            && !(matches!(
+                self.used_writing_mode(),
+                crate::style::logical::WritingMode::VerticalRl
+                    | crate::style::logical::WritingMode::VerticalLr
+            ) && self.text_orientation == crate::style::logical::TextOrientation::Upright)
+    }
+
     pub(crate) fn floating(&self) -> Option<crate::style::FloatSide> {
         if self.document_root || self.item_parent || self.position.is_out_of_flow() {
             None
         } else {
-            self.float.side(self.rtl)
+            self.float.side(self.used_rtl())
         }
     }
 
     pub(crate) fn same_text_style(&self, other: &Self) -> bool {
-        self.size == other.size
+        self.writing_mode == other.writing_mode
+            && self.text_orientation == other.text_orientation
+            && self.text_combine == other.text_combine
+            && self.size == other.size
             && self.line_height == other.line_height
             && self.letter_spacing == other.letter_spacing
             && self.word_spacing == other.word_spacing
@@ -681,6 +739,8 @@ impl Style {
 /// The computed font properties of the root element.
 #[derive(Clone, Debug, PartialEq)]
 pub(super) struct RootFont {
+    writing_mode: crate::style::logical::WritingMode,
+    vertical_units: [bool; 2],
     size: f32,
     line_height: crate::style::LineHeight,
     candidates: Arc<[FontId]>,
@@ -1463,6 +1523,12 @@ impl Stylesheet {
         winners: &mut Winners,
         relative: &Relative<'_>,
     ) -> Result<(), StyleError> {
+        if let Some(value) = winners.remove(&Property::WritingMode) {
+            properties::apply(Property::WritingMode, &value, style, parent, relative)?;
+        }
+        if let Some(value) = winners.remove(&Property::TextOrientation) {
+            properties::apply(Property::TextOrientation, &value, style, parent, relative)?;
+        }
         if let Some(value) = winners.remove(&Property::Position) {
             properties::apply(Property::Position, &value, style, parent, relative)?;
         }
@@ -1498,12 +1564,13 @@ impl Stylesheet {
             )
         };
         FontBasis::Known {
+            vertical: [false; 2],
             size,
             faces: faces(),
             line: Line::Known {
                 height: line_height,
                 size,
-                faces: faces(),
+                faces: Box::new(faces()),
             },
         }
     }
@@ -1543,7 +1610,7 @@ impl Stylesheet {
     ) -> Relative<'a> {
         match &parent.root_font {
             None => Relative {
-                viewport: Viewport::Known(viewport),
+                viewport: Viewport::Known(viewport, false),
                 paper: self.paper,
                 tree: Tree::Root,
                 containers: parent.containers.clone(),
@@ -1551,23 +1618,33 @@ impl Stylesheet {
                 ..self.initial_relative()
             },
             Some(root) => Relative {
-                font: self.basis(
-                    parent.size,
-                    parent.line_height,
-                    &parent.font_candidates,
-                    parent.font_selection(),
-                    &parent.font_adjustments,
-                    resolver,
+                font: self
+                    .basis(
+                        parent.size,
+                        parent.line_height,
+                        &parent.font_candidates,
+                        parent.font_selection(),
+                        &parent.font_adjustments,
+                        resolver,
+                    )
+                    .with_vertical_units(parent.vertical_font_units()),
+                root: self
+                    .basis(
+                        root.size,
+                        root.line_height,
+                        &root.candidates,
+                        root.selection,
+                        &root.adjustments,
+                        resolver,
+                    )
+                    .with_vertical_units(root.vertical_units),
+                viewport: Viewport::Known(
+                    viewport,
+                    parent
+                        .root_font
+                        .as_ref()
+                        .is_some_and(|root| root.writing_mode.vertical()),
                 ),
-                root: self.basis(
-                    root.size,
-                    root.line_height,
-                    &root.candidates,
-                    root.selection,
-                    &root.adjustments,
-                    resolver,
-                ),
-                viewport: Viewport::Known(viewport),
                 paper: self.paper,
                 tree: Tree::Root,
                 grammar_only: false,
@@ -1597,6 +1674,9 @@ impl Stylesheet {
         resolver: &'a dyn ResourceResolver,
     ) -> Result<Relative<'a>, StyleError> {
         let root = parent.root_font.is_none();
+        if root && let Viewport::Known(size, _) = inherited.viewport {
+            inherited.viewport = Viewport::Known(size, style.writing_mode.vertical());
+        }
         if let Some(value) = winners.remove(&Property::ColorScheme) {
             properties::apply(Property::ColorScheme, &value, style, parent, &inherited)?;
         }
@@ -1651,17 +1731,21 @@ impl Stylesheet {
             anchoring,
             ..
         } = inherited;
-        let own = |line| FontBasis::Known {
-            size: style.size,
-            faces: Faces::book(
-                &self.fonts,
-                resolver,
-                style.font_candidates.clone(),
-                style.font_selection(),
-                style.font_adjustments.clone(),
-                style.size,
-            ),
-            line,
+        let own = |line| {
+            FontBasis::Known {
+                vertical: [false; 2],
+                size: style.size,
+                faces: Faces::book(
+                    &self.fonts,
+                    resolver,
+                    style.font_candidates.clone(),
+                    style.font_selection(),
+                    style.font_adjustments.clone(),
+                    style.size,
+                ),
+                line,
+            }
+            .with_vertical_units(style.vertical_font_units())
         };
         // On the root, root-relative units measure the root's font except that `rlh` keeps
         // the initial line height until `line-height` computes.
@@ -1693,14 +1777,16 @@ impl Stylesheet {
             self.capture_root_font(style);
         }
         let mut relative = Relative {
-            font: self.basis(
-                style.size,
-                style.line_height,
-                &style.font_candidates,
-                style.font_selection(),
-                &style.font_adjustments,
-                resolver,
-            ),
+            font: self
+                .basis(
+                    style.size,
+                    style.line_height,
+                    &style.font_candidates,
+                    style.font_selection(),
+                    &style.font_adjustments,
+                    resolver,
+                )
+                .with_vertical_units(style.vertical_font_units()),
             root: if root {
                 self.basis(
                     style.size,
@@ -1710,6 +1796,7 @@ impl Stylesheet {
                     &style.font_adjustments,
                     resolver,
                 )
+                .with_vertical_units(style.vertical_font_units())
             } else {
                 line_basis.root
             },
@@ -1761,6 +1848,8 @@ impl Stylesheet {
             );
         }
         style.root_font = Some(RootFont {
+            writing_mode: style.writing_mode,
+            vertical_units: style.vertical_font_units(),
             size: style.size,
             line_height: style.line_height,
             candidates: style.font_candidates.clone(),

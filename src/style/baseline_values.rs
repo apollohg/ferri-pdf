@@ -13,6 +13,7 @@ use serde::Serialize;
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
 pub(crate) enum Baseline {
     #[default]
+    Auto,
     Alphabetic,
     /// The text-under baseline.
     TextBottom,
@@ -30,7 +31,8 @@ impl Baseline {
     /// `dominant-baseline`; `auto` is alphabetic in horizontal writing modes (§4.1).
     pub(super) fn dominant(value: &Component) -> Result<Self, StyleError> {
         match value.keyword() {
-            Some(Keyword::Auto | Keyword::Alphabetic) => Ok(Self::Alphabetic),
+            Some(Keyword::Auto) => Ok(Self::Auto),
+            Some(Keyword::Alphabetic) => Ok(Self::Alphabetic),
             Some(Keyword::Hanging) => Ok(Self::Hanging),
             _ => Self::shared(value),
         }

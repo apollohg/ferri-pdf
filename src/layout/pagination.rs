@@ -1,6 +1,8 @@
 mod cells;
 mod columns;
 mod floats;
+pub(super) mod frames;
+mod nested;
 mod order;
 mod overflow;
 mod paragraph;
@@ -199,6 +201,7 @@ pub(super) fn overflows(extent: f32, limit: f32) -> bool {
 struct Pending<'a> {
     force_hidden: bool,
     block: &'a BlockBox,
+    space: crate::layout::measure::FlowSpace,
     position: StaticPosition,
     context: PaintKey,
     group: Option<usize>,
@@ -261,6 +264,7 @@ enum Containing<'a> {
 
 #[derive(Clone)]
 struct ScopedPaint {
+    native: Option<nested::NativeSpace>,
     visible: bool,
     scope: PaintKey,
     order: PaintOrder,
@@ -294,6 +298,7 @@ enum Effect<'a> {
     /// The perspective and 3D rendering context a box gives its transformed children, resolved
     /// from its fragment on each page; never an enclosing effect.
     Parent3d(&'a crate::style::Style),
+    InheritedParent3d,
     /// Compositing of a stacking context. Groups nest by stacking context, independently of
     /// clips and transforms, which follow containing blocks, unless anchored.
     Group(Group<'a>),
@@ -384,6 +389,7 @@ impl<'a> Group<'a> {
 }
 #[derive(Clone)]
 struct EffectNode<'a> {
+    native: Option<nested::NativeSpace>,
     /// Reference boxes for structural elements without their own painted box, and the border
     /// boxes of a sticky inline box's fragments.
     areas: Vec<(usize, Rect)>,
@@ -703,6 +709,7 @@ struct BlockFrame<'a> {
     previous_clip: Option<usize>,
     previous_group: Option<usize>,
     previous_parent_3d: Option<usize>,
+    previous_space: crate::layout::measure::FlowSpace,
     previous_reserve: f32,
     split: SplitInline<'a>,
     items: Vec<FlowItem<'a>>,
@@ -750,7 +757,7 @@ struct FlowCursor<'a, 't> {
     ready: Option<(FlowItem<'a>, BreakTail)>,
 }
 
-impl<'a> FlowCursor<'a, '_> {
+impl<'a: 't, 't: 'a> FlowCursor<'a, 't> {
     fn detach_orders(&mut self, snapshots: &mut OrderSnapshots) {
         if let Some(row) = &mut self.row {
             row.detach_orders(snapshots);
@@ -790,6 +797,7 @@ pub(super) struct Paginated {
     pub display_lists: Vec<Vec<DisplayItem>>,
     pub links: Vec<Vec<LinkArea>>,
     pub destinations: Vec<Option<Destination>>,
+    pub destination_bounds: Vec<Option<Rect>>,
     pub string_locations: crate::layout::strings::StringLocations,
     pub page_boxes: Vec<std::sync::Arc<crate::document::PageBox>>,
     pub page_records: Vec<crate::layout::PageRecord>,
@@ -820,8 +828,13 @@ macro_rules! pagination_state {
 }
 
 pagination_state! {
+    frame_templates: Rc<std::cell::RefCell<frames::Templates<'a>>>,
+    template: bool,
+    frame_requests: Vec<Rc<MeasuredBlock<'a>>>,
+    frame_reads: Vec<frames::Key>,
     string_locations: crate::layout::strings::StringLocations,
     pages: Vec<Vec<TextLine>>,
+    geometric_baselines: Vec<[Option<f32>; 2]>,
     page: usize,
     furthest_page: usize,
     forced_breaks: usize,
@@ -901,7 +914,7 @@ impl<M> PaginationState<'_, '_, M> {
     }
 }
 
-impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
+impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     fn snapshot(&self) -> Result<PaginationState<'a, 't, ()>, LayoutError> {
         let lines: usize = self.pages.iter().map(Vec::len).sum();
         let paints: usize = self
@@ -942,10 +955,17 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let height = fragmentainers.height(0);
         let page_rect = fragmentainers.rect(0);
         let top = fragmentainers.top(0);
+        let frame_templates = measurer.raw_templates.clone();
+        let template = measurer.raw_pagination;
         let mut paginator = Self {
             measurer,
+            frame_templates,
+            template,
+            frame_requests: Vec::new(),
+            frame_reads: Vec::new(),
             string_locations: Default::default(),
             pages: vec![Vec::new()],
+            geometric_baselines: vec![[None; 2]],
             page: 0,
             furthest_page: 0,
             forced_breaks: 0,
@@ -1007,11 +1027,12 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         } else {
             match &self.fragmentainers {
                 Fragmentainers::Pages(pages) => {
-                    crate::layout::page_paint::PagePaint::new(
+                    crate::layout::page_paint::PagePaint::in_flow(
                         &pages.boxes[page],
                         pages.document.canvas_background(),
-                        pages.records[page].output.bleed,
+                        crate::style::logical::Flow::used(pages.document.root().style()),
                     )
+                    .expect("resolved physical pages have valid paint geometry")
                     .canvas
                 }
                 Fragmentainers::Columns(_) => self.canvas.clone(),
@@ -1022,6 +1043,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         } else if canvas.has_ink() {
             self.canvas_slots[page] = Some(self.display_lists[page].len());
             self.display_lists[page].push(ScopedPaint {
+                native: None,
                 visible: true,
                 order: self.orders.take(),
                 scope: Rc::from([ROOT_LEVEL]),
@@ -1066,34 +1088,54 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         constraints: &StickyConstraints,
         page: usize,
         border: Rect,
+        native: Option<nested::NativeSpace>,
     ) -> [f32; 2] {
-        let fragment = |fragments: &[(usize, usize)]| {
+        let into_native = native.map_or(kurbo::Affine::IDENTITY, |space| {
+            kurbo::Affine::new(space.matrix().map(f64::from)).inverse()
+        });
+        let fragment = |fragments: &[(usize, usize)], content: bool| {
             fragments
                 .iter()
                 .find(|(fragment_page, _)| *fragment_page == page)
                 .and_then(|&(_, slot)| match &self.display_lists[page][slot].item {
-                    DisplayItem::Box(paint) => Some(paint.clone()),
+                    DisplayItem::Box(paint) => {
+                        let source = self.display_lists[page][slot]
+                            .native
+                            .map_or(kurbo::Affine::IDENTITY, |space| {
+                                kurbo::Affine::new(space.matrix().map(f64::from))
+                            });
+                        let rect = paint
+                            .inner_clip(if content { paint.padding } else { [0.0; 4] }, [true; 2])
+                            .rect;
+                        Some(crate::layout::writing::map_rect(
+                            (into_native * source).as_coeffs().map(|v| v as f32),
+                            rect,
+                        ))
+                    }
                     _ => None,
                 })
         };
-        let Some(containing) = fragment(&constraints.containing) else {
+        let Some(containing) = fragment(&constraints.containing, true) else {
             return [0.0; 2];
         };
         let scrollport = match &constraints.scrollport {
-            Some(fragments) => match fragment(fragments) {
-                Some(scroller) => scroller.inner_clip([0.0; 4], [true; 2]).rect,
+            Some(fragments) => match fragment(fragments, false) {
+                Some(scroller) => scroller,
                 None => return [0.0; 2],
             },
-            None => match &self.fragmentainers {
-                Fragmentainers::Pages(pages) => pages.records[page].geometry.content_box(),
-                Fragmentainers::Columns(_) => self.canvas_rect,
-            },
+            None => crate::layout::writing::map_rect(
+                into_native.as_coeffs().map(|v| v as f32),
+                match &self.fragmentainers {
+                    Fragmentainers::Pages(pages) => pages.records[page].geometry.content_box(),
+                    Fragmentainers::Columns(_) => self.canvas_rect,
+                },
+            ),
         };
         crate::layout::sticky::offset(
             style,
             border,
             constraints.margins,
-            containing.inner_clip(containing.padding, [true; 2]).rect,
+            containing,
             scrollport,
             constraints.containing_rtl,
         )
@@ -1103,6 +1145,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let page_rect = self.fragmentainers.rect(page);
         !self.pages[page].is_empty()
             || self.foreground[page].iter().any(|paint| match &paint.item {
+                DisplayItem::Frame(frame) => !frame.items.is_empty(),
                 DisplayItem::Image(image) => image.visible_rect().intersects(page_rect),
                 DisplayItem::Box(fragment) => {
                     fragment.has_ink() && fragment.rect.intersects(page_rect)
@@ -1127,6 +1170,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 .skip(usize::from(self.canvas.has_ink()))
                 .any(|item| match &item.item {
                     DisplayItem::Box(paint) => paint.has_ink(),
+                    DisplayItem::Frame(frame) => !frame.items.is_empty(),
                     DisplayItem::Image(paint) => paint.visible_rect().intersects(page_rect),
                     // Decorations accompany text lines, which are counted above, and backdrops
                     // their boxes.
@@ -1175,19 +1219,26 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         if let Fragmentainers::Pages(pages) = &self.fragmentainers {
             self.top = self.canvas_rect.y;
             self.measurer.page_height = self.height;
-            self.canvas = crate::layout::page_paint::PagePaint::new(
+            self.canvas = crate::layout::page_paint::PagePaint::in_flow(
                 &pages.boxes[page],
                 pages.document.canvas_background(),
-                pages.records[page].output.bleed,
+                crate::style::logical::Flow::used(pages.document.root().style()),
             )
+            .expect("resolved physical pages have valid paint geometry")
             .canvas;
         }
         if page < self.display_lists.len() {
             self.canvas(page);
         }
     }
+    pub(super) fn record_baselines(&mut self, page: usize, baselines: [Option<f32>; 2]) {
+        let current = &mut self.geometric_baselines[page];
+        current[0] = current[0].or(baselines[0]);
+        current[1] = baselines[1].or(current[1]);
+    }
     fn push_page(&mut self) {
         self.pages.push(Vec::new());
+        self.geometric_baselines.push([None; 2]);
         self.display_lists.push(Vec::new());
         self.foreground.push(Vec::new());
         self.flow_content.push(false);
@@ -1225,7 +1276,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             Some(parent) => (
                 parent.horizontal.x,
                 parent.horizontal.width,
-                parent.source.style().rtl,
+                parent.source.style().used_rtl(),
                 parent.definite_height(),
             ),
             None if matches!(self.fragmentainers, Fragmentainers::Columns(_)) => {
@@ -1243,7 +1294,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
     }
     fn flow_geometry(
-        &self,
+        &mut self,
         page: usize,
         area: Rect,
         extra: Option<&ActiveGeometry<'a>>,
@@ -1279,7 +1330,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let style = flow.source.style();
             let mut grid_item = None;
             for (grid, parent) in grids.iter().rev() {
-                grid_item = grid.item(flow.source, parent, self.measurer)?;
+                grid_item = self
+                    .measurer
+                    .run(|measurer| grid.item(flow.source, parent, measurer))?;
                 if grid_item.is_some() {
                     break;
                 }
@@ -1291,14 +1344,17 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     .any(|(source, _, _)| std::ptr::eq(*source, flow.source))
                 {
                     let mut resolved = if let Some((geometry, _)) = &grid_item {
-                        plan.resolve_positioned(self.measurer, &geometry.geometry)?
+                        self.measurer
+                            .run(|measurer| plan.resolve_positioned(measurer, &geometry.geometry))?
                     } else {
-                        plan.resolve_geometry(
-                            self.measurer,
-                            containing.0,
-                            containing.1,
-                            containing.2,
-                        )?
+                        self.measurer.run(|measurer| {
+                            plan.resolve_geometry(
+                                measurer,
+                                containing.0,
+                                containing.1,
+                                containing.2,
+                            )
+                        })?
                     };
                     resolved.containing_height = grid_item
                         .as_ref()
@@ -1336,30 +1392,37 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 flow.containing_height = None;
             } else if let Some((item, height)) = grid_item {
                 if let Some(grid) = &flow.grid {
-                    flow.grid = Some(grid.reparent(item.parent.clone(), self.measurer)?);
+                    flow.grid = Some(
+                        self.measurer
+                            .run(|measurer| grid.reparent(item.parent.clone(), measurer))?,
+                    );
                 }
                 flow.horizontal = item.geometry;
                 flow.containing_height = Some(height);
             } else if style.floating().is_some() && flow.source.image().is_none() {
-                flow.horizontal = crate::layout::inline::shrink_to_fit_geometry(
-                    self.measurer,
-                    flow.source,
-                    containing.1,
-                    containing.3,
-                    containing.2,
-                )?;
+                flow.horizontal = self.measurer.run(|measurer| {
+                    crate::layout::inline::shrink_to_fit_geometry(
+                        measurer,
+                        flow.source,
+                        containing.1,
+                        containing.3,
+                        containing.2,
+                    )
+                })?;
                 flow.horizontal.containing_x = containing.0;
                 flow.containing_height = containing.3;
                 self.reflow_float_geometry(page, &mut flow)?;
             } else if flow.normal {
-                flow.horizontal = crate::layout::measure::block_geometry(
-                    self.measurer,
-                    flow.source,
-                    containing.0,
-                    containing.1,
-                    containing.2,
-                    containing.3,
-                )?;
+                flow.horizontal = self.measurer.run(|measurer| {
+                    crate::layout::measure::block_geometry(
+                        measurer,
+                        flow.source,
+                        containing.0,
+                        containing.1,
+                        containing.2,
+                        containing.3,
+                    )
+                })?;
                 flow.containing_height = containing.3;
             }
             if flow.normal
@@ -1413,7 +1476,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             containing = (
                 flow.horizontal.x,
                 flow.horizontal.width,
-                style.rtl,
+                style.used_rtl(),
                 flow.definite_height(),
             );
             result.push(Some(flow));
@@ -1440,7 +1503,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             _ => None,
         }
     }
-    fn next_paragraph_geometry(&self) -> Result<Option<(f32, Option<f32>)>, LayoutError> {
+    fn next_paragraph_geometry(&mut self) -> Result<Option<(f32, Option<f32>)>, LayoutError> {
         if !self.continuation_flow() {
             return Ok(None);
         }
@@ -1448,7 +1511,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             return Ok(None);
         };
         let page = pages.resolve(self.page + 1)?;
-        let path = self.flow_geometry(self.page + 1, page.geometry.content_box(), None)?;
+        let mut record = crate::layout::PageRecord::new(&page)?;
+        record.reflow(crate::style::logical::Flow::used(
+            pages.document.root().style(),
+        ));
+        let path = self.flow_geometry(self.page + 1, record.geometry.content_box(), None)?;
         Ok(path
             .last()
             .and_then(Option::as_ref)
@@ -1512,7 +1579,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         self.bottom_reserve += new_reserve - old_reserve;
         let width = self.containing_geometry().1;
         for margin in &mut self.pending {
-            *margin = margin.resolve(width, self.measurer)?;
+            *margin = self
+                .measurer
+                .run(|measurer| margin.resolve(width, measurer))?;
         }
         Ok(())
     }
@@ -1641,6 +1710,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     Err(index) => {
                         *slot = page.len();
                         page.push(ScopedPaint {
+                            native: None,
                             visible: active.visible,
                             order: active.order.clone(),
                             scope: active.scope.clone(),
@@ -1717,7 +1787,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 .filter_map(|active| active.geometry.as_ref())
             {
                 if let Some(grid) = &parent.grid {
-                    grid_item = grid.item(block.source, &parent.horizontal, self.measurer)?;
+                    grid_item = self
+                        .measurer
+                        .run(|measurer| grid.item(block.source, &parent.horizontal, measurer))?;
                     if grid_item.is_some() {
                         break;
                     }
@@ -1731,7 +1803,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         .as_ref()
                         .is_some_and(|grid| !grid.matches_parent(item.parent.as_ref()))
                 {
-                    block = item.measure_area(self.measurer, height)?;
+                    block = self
+                        .measurer
+                        .run(|measurer| item.measure_area(measurer, height))?;
                 }
                 block.clearance_before = clearance_before;
                 return Ok(block);
@@ -1749,14 +1823,16 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             {
                 if let Some(edges) = block.spanner_fragment {
                     self.measurer.work.spend(block.items.len().max(1))?;
-                    let geometry = crate::layout::measure::block_geometry(
-                        self.measurer,
-                        block.source,
-                        x,
-                        width,
-                        rtl,
-                        height,
-                    )?;
+                    let geometry = self.measurer.run(|measurer| {
+                        crate::layout::measure::block_geometry(
+                            measurer,
+                            block.source,
+                            x,
+                            width,
+                            rtl,
+                            height,
+                        )
+                    })?;
                     block.resize_fragment(geometry, height, edges);
                 } else {
                     let root = self.boxes.is_empty()
@@ -1853,10 +1929,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 + block.geometry.padding[2]
                 + block.geometry.border[0]
                 + block.geometry.border[2];
-            self.measurer
-                .container_sizes
-                .entry(element)
-                .or_insert([block.geometry.width, (block.height - vertical).max(0.0)]);
+            let mut size = [block.geometry.width, (block.height - vertical).max(0.0)];
+            if block.source.layout_flow().writing_mode.vertical() {
+                size.swap(0, 1);
+            }
+            self.measurer.container_sizes.entry(element).or_insert(size);
         }
         let track_overflow = (block.grid.is_some() && block.style.contains_absolute())
             || self
@@ -1872,6 +1949,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
         self.clear_block(&block)?;
         block.offset[0] += self.avoid_floats(&block)?;
+        let previous_space = self.measurer.space;
+        self.measurer.space = previous_space.enter(
+            block.source,
+            &block.geometry,
+            block.containing_height,
+            block.sizing.and_then(|sizing| sizing.used_height),
+        );
         let table_plan = if let Some(table) = &block.table {
             Some(table.plan.clone())
         } else if block.style.display.is_table() {
@@ -2029,6 +2113,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let page = &mut self.display_lists[self.page];
             let slot = page.len();
             page.push(ScopedPaint {
+                native: None,
                 visible: block.style.visibility.is_visible(),
                 order: paint_order.clone(),
                 scope: paint_key.clone(),
@@ -2206,6 +2291,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             previous_clip,
             previous_group,
             previous_parent_3d,
+            previous_space,
             previous_reserve,
             split,
             items: block.items,
@@ -2233,16 +2319,18 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     || !table.transforms.is_empty()
                     || !table.shadows.is_empty()
                 {
-                    table.flow.plan.used_row_starts(
-                        self.measurer,
-                        &table.cell_heights,
-                        table.flow.spacing,
-                        table
-                            .flow
-                            .original_row_starts
-                            .as_deref()
-                            .map(|original| (original, table.flow.row_starts.as_ref())),
-                    )?
+                    self.measurer.run(|measurer| {
+                        table.flow.plan.used_row_starts(
+                            measurer,
+                            &table.cell_heights,
+                            table.flow.spacing,
+                            table
+                                .flow
+                                .original_row_starts
+                                .as_deref()
+                                .map(|original| (original, table.flow.row_starts.as_ref())),
+                        )
+                    })?
                 } else {
                     Vec::new()
                 };
@@ -2344,6 +2432,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             previous_clip,
             previous_group,
             previous_parent_3d,
+            previous_space,
             split,
             end,
             ..
@@ -2471,7 +2560,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 .map(|container| container.pending)
                 .unwrap_or_default();
             if !frame.defer_positioned {
-                self.place_box_pending(&mut active, style.rtl)?;
+                self.place_box_pending(&mut active, style.used_rtl())?;
             }
         }
         if !frame.defer_positioned {
@@ -2493,6 +2582,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         self.clip = previous_clip;
         self.group = previous_group;
         self.parent_3d = previous_parent_3d;
+        self.measurer.space = previous_space;
         // The empty box each inline box continues in after the block, in a line box of zero
         // height (CSS 2.1 §9.4.2).
         let end = self.top + self.y;
@@ -2565,40 +2655,18 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 (item, tail, false)
             };
             match item {
+                FlowItem::Frame {
+                    inner,
+                    area,
+                    height,
+                    baselines,
+                } => self.place_frame(inner, area, height, baselines)?,
                 FlowItem::Image {
-                    mut paint,
+                    paint,
                     height,
                     visible,
-                } => {
-                    self.flush_margin();
-                    let mut normal_rect = paint.visible_rect();
-                    normal_rect.y += self.top + self.y;
-                    self.flow_content[self.page] |= normal_rect.intersects(self.page_rect);
-                    paint.rect.x += self.offset[0];
-                    paint.rect.y += self.top + self.y + self.offset[1];
-                    if let Some(clip) = &mut paint.clip {
-                        clip.translate([self.offset[0], self.top + self.y + self.offset[1]]);
-                    }
-                    if paint.visible_rect().intersects(self.page_rect)
-                        && paint.rect.intersects(paint.visible_rect())
-                    {
-                        let scope = self.inline_key();
-                        self.foreground[self.page].push(ScopedPaint {
-                            visible,
-                            order: self.orders.take(),
-                            scope,
-                            clip: self.clip,
-                            group: self.group,
-                            ink: None,
-                            item: DisplayItem::Image(paint),
-                            navigation: BoxNavigation::default(),
-                        });
-                        self.page_content = true;
-                    }
-                    self.y += height;
-                    self.has_flow = true;
-                    self.at_page_start = false;
-                }
+                    rotate,
+                } => self.place_image(paint, height, visible, rotate),
                 FlowItem::Block(child) | FlowItem::Spanner(child) => {
                     let child = if ready {
                         *child
@@ -2633,7 +2701,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 }
                 FlowItem::Margin(margin) => {
                     let width = self.containing_geometry().1;
-                    let margin = margin.resolve(width, self.measurer)?;
+                    let margin = self
+                        .measurer
+                        .run(|measurer| margin.resolve(width, measurer))?;
                     if !margin.is_empty() {
                         self.pending.push(margin);
                     }
@@ -2678,6 +2748,12 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         left: item.left + self.offset[0],
                         right: item.right + self.offset[0],
                         y: self.top + self.y + self.pending_value() + item.margin + self.offset[1],
+                        bottom: self.top
+                            + self.y
+                            + self.pending_value()
+                            + item.margin
+                            + self.offset[1]
+                            + item.alignment.map_or(0.0, |alignment| alignment.content[1]),
                         alignment: item.alignment,
                     };
                     let layer = self.current_layer();
@@ -2702,6 +2778,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             self.isolate(parent);
         }
         self.clips.push(EffectNode {
+            native: None,
             areas: Vec::new(),
             paints: Vec::new(),
             parent,
@@ -2728,6 +2805,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     }
     fn effect_node(&mut self, parent: Option<usize>, effect: Effect<'a>) -> usize {
         self.clips.push(EffectNode {
+            native: None,
             areas: Vec::new(),
             paints: Vec::new(),
             parent,
@@ -2790,6 +2868,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 Effect::Transform(..)
                 | Effect::Sticky(..)
                 | Effect::Parent3d(_)
+                | Effect::InheritedParent3d
                 | Effect::Group(_)
                 | Effect::PathClip(_) => None,
             };
@@ -2819,8 +2898,23 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                             .map(|parent| self.parent_3d_on(&self.clips[parent], page))
                             .transpose()?
                             .flatten();
-                        if let Some(matrix) = style.transform_matrix(&areas, parent.as_ref())? {
-                            node_regions.push((page, Region::Transform(matrix)));
+                        let frame = crate::layout::writing::Frame::for_style(style);
+                        let canonical = node.native.map_or(kurbo::Affine::IDENTITY, |space| {
+                            kurbo::Affine::new(space.matrix().map(f64::from))
+                        });
+                        let parent = parent.map(|parent| {
+                            parent.mapped(
+                                (kurbo::Affine::new(frame.matrix.map(f64::from))
+                                    * canonical.inverse())
+                                .as_coeffs()
+                                .map(|v| v as f32),
+                            )
+                        });
+                        if let Some(matrix) =
+                            style.transform_matrix(&frame.boxes(&areas), parent.as_ref())?
+                        {
+                            node_regions
+                                .push((page, Region::Transform(frame.into_logical(matrix))));
                         }
                     }
                 }
@@ -2841,11 +2935,25 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                             .or_insert(rect);
                     }
                     for (page, border) in borders {
-                        let [x, y] = self.sticky_shift(style, &self.sticky[index], page, border);
+                        let [x, y] = self.sticky_shift(
+                            style,
+                            &self.sticky[index],
+                            page,
+                            border,
+                            node.native,
+                        );
                         node_regions.push((page, Region::Transform([1.0, 0.0, 0.0, 1.0, x, y])));
                     }
                 }
-                Effect::Parent3d(_) | Effect::Group(_) | Effect::PathClip(_) => {}
+                Effect::Parent3d(_)
+                | Effect::InheritedParent3d
+                | Effect::Group(_)
+                | Effect::PathClip(_) => {}
+            }
+            if let Some(space) = node.native {
+                for (_, region) in &mut node_regions {
+                    *region = space.region(*region);
+                }
             }
             regions.push(node_regions);
         }
@@ -2901,6 +3009,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         node: &EffectNode<'_>,
         page: usize,
     ) -> Result<Option<crate::style::Parent3d>, LayoutError> {
+        if matches!(node.effect, Effect::InheritedParent3d) {
+            return Ok(None);
+        }
         let Effect::Parent3d(style) = node.effect else {
             unreachable!("transforms are placed by parent 3D nodes")
         };
@@ -2911,7 +3022,19 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             }
         });
         match paint {
-            Some(paint) => Ok(style.parent_3d(&paint.fragment_areas())),
+            Some(paint) => {
+                let frame = crate::layout::writing::Frame::for_style(style);
+                let canonical = node.native.map_or(kurbo::Affine::IDENTITY, |space| {
+                    kurbo::Affine::new(space.matrix().map(f64::from))
+                });
+                let mapping = (canonical
+                    * kurbo::Affine::new(frame.inverse().matrix.map(f64::from)))
+                .as_coeffs()
+                .map(|v| v as f32);
+                Ok(style
+                    .parent_3d(&frame.boxes(&paint.fragment_areas()))
+                    .map(|parent| parent.mapped(mapping)))
+            }
             None => Err(LayoutError::MissingContainingFragment { page }),
         }
     }
@@ -2927,6 +3050,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         Pending {
             force_hidden: self.force_hidden,
             block,
+            space: self.measurer.space,
             position,
             context: layer.context.clone(),
             group: layer.group,
@@ -2971,6 +3095,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 };
                 let mut rect = paint.inner_clip([0.0; 4], [true; 2]).rect;
                 let resolved = self.table_geometry(page)?;
+                let table = self.tables.last().unwrap();
                 let geometry = table.flow.plan.cell_geometry(index, &resolved);
                 rect.x += geometry.x
                     - geometry.padding[3]
@@ -2978,12 +3103,14 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     - table.flow.plan.cell_span(index, &resolved).0;
                 rect.width = geometry.width + geometry.padding[1] + geometry.padding[3];
                 if table.flow.plan.cell_rows_collapsed(index) {
-                    let rows = table.flow.plan.resolve_rows(
-                        self.measurer,
-                        &table.flow.heights,
-                        table.flow.spacing,
-                        &resolved.geometry,
-                    )?;
+                    let rows = self.measurer.run(|measurer| {
+                        table.flow.plan.resolve_rows(
+                            measurer,
+                            &table.flow.heights,
+                            table.flow.spacing,
+                            &resolved.geometry,
+                        )
+                    })?;
                     rect.height = (rows
                         .content_height(table.flow.plan.cell_rows(index), table.flow.spacing)
                         - geometry.border[0]
@@ -3052,6 +3179,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 left: left + align_offset + inline,
                 right: left + align_offset + inline,
                 y: top,
+                bottom: top,
                 alignment: None,
             },
             None => StaticPosition {
@@ -3059,6 +3187,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 left,
                 right: left + width,
                 y: if anchor.below { top + line_height } else { top },
+                bottom: if anchor.below { top + line_height } else { top },
                 alignment: None,
             },
         };
@@ -3089,7 +3218,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     fn place(
         &mut self,
         pending: Pending<'a>,
-        containing: &Containing<'_>,
+        containing: &Containing<'a>,
     ) -> Result<(), LayoutError> {
         let page = pending.position.page;
         let (cb, rtl, clip) = match containing {
@@ -3122,27 +3251,32 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     .find_map(|&(area_page, rect)| (area_page == page).then_some(rect))
                     .unwrap_or_else(|| paint.inner_clip([0.0; 4], [true; 2]).rect);
                 let rect = if let Some(grid) = grid {
-                    grid.area(
-                        rect,
-                        paint.padding,
-                        overflow.get(&page).copied(),
-                        &pending.block.style().grid.placement,
-                        self.measurer,
-                    )?
+                    self.measurer.run(|measurer| {
+                        grid.area(
+                            rect,
+                            paint.padding,
+                            overflow.get(&page).copied(),
+                            &pending.block.style().grid.placement,
+                            measurer,
+                        )
+                    })?
                 } else {
                     rect
                 };
                 (rect, *rtl, *clip)
             }
         };
-        let (measured, top) = crate::layout::positioned::place(
-            self.measurer,
-            pending.block,
-            cb,
-            rtl,
-            &pending.position,
-            matches!(self.fragmentainers, Fragmentainers::Pages(_)).then_some(page),
-        )?;
+        let (measured, top) = self.measurer.run(|measurer| {
+            measurer.space = pending.space;
+            crate::layout::positioned::place(
+                measurer,
+                pending.block,
+                cb,
+                rtl,
+                &pending.position,
+                matches!(self.fragmentainers, Fragmentainers::Pages(_)).then_some(page),
+            )
+        })?;
         let mut border = measured.geometry.border_box(measured.height);
         border.x += measured.offset[0];
         border.y = top;
@@ -3169,6 +3303,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         pending: Pending<'a>,
     ) -> Result<(), LayoutError> {
         let orders = std::mem::replace(&mut self.orders, pending.orders.snapshot());
+        let previous_space = std::mem::replace(&mut self.measurer.space, pending.space);
         let result = self.unbroken_block(
             measured,
             Unbroken {
@@ -3185,6 +3320,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             },
         );
         self.orders = orders;
+        self.measurer.space = previous_space;
         result
     }
     /// Lays out `measured` at a fixed position without page breaks, then restores the flow.
@@ -3370,7 +3506,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
         Ok(())
     }
-    fn extent_space(&self, page: usize) -> Result<ExtentSpace, LayoutError> {
+    fn extent_space(&mut self, page: usize) -> Result<ExtentSpace, LayoutError> {
         let mut space = ExtentSpace {
             start: self.repeated_start(page, self.boxes.len()),
             cloned_end: self.cloned_end_space(),
@@ -3416,7 +3552,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         mut resolve: impl FnMut(&mut Self, usize, &ExtentSpace) -> Result<f32, LayoutError>,
     ) -> Result<Option<BreakRequest>, LayoutError> {
         if self.unbroken > 0 {
-            self.y = cursor.origin + resolve(self, cursor.page, &self.extent_space(cursor.page)?)?;
+            let space = self.extent_space(cursor.page)?;
+            self.y = cursor.origin + resolve(self, cursor.page, &space)?;
             self.pending.clear();
             return Ok(None);
         }
@@ -3506,11 +3643,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             return Ok(());
         };
         let geometry = self.table_geometry(self.page)?;
+        let table = self.tables.last().unwrap();
         if geometry.geometry == table.flow.geometry {
             return Ok(());
         }
-        let mut measured =
-            crate::layout::tables::resume(self.measurer, &table.flow, &geometry, table.next_body)?;
+        let mut measured = self.measurer.run(|measurer| {
+            crate::layout::tables::resume(measurer, &table.flow, &geometry, table.next_body)
+        })?;
         let flow = measured
             .table
             .take()
@@ -3703,13 +3842,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         self.finish_row(cursor)
     }
     fn table_geometry(
-        &self,
+        &mut self,
         page: usize,
     ) -> Result<crate::layout::tables::TableGeometry, LayoutError> {
         self.table_geometry_at(self.tables.len() - 1, page)
     }
     fn table_geometry_at(
-        &self,
+        &mut self,
         table_index: usize,
         page: usize,
     ) -> Result<crate::layout::tables::TableGeometry, LayoutError> {
@@ -3723,6 +3862,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         } else {
             self.flow_geometry(page, self.fragmentainers.content_box(page), None)?
         };
+        let table = &self.tables[table_index];
         let flow = path
             .iter()
             .flatten()
@@ -3730,17 +3870,21 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .find(|flow| std::ptr::eq(flow.source, table.flow.plan.source))
             .expect("table has active geometry");
         let mut resolved = if flow.grid_item {
-            table
-                .flow
-                .plan
-                .resolve_positioned(self.measurer, &flow.horizontal)?
+            self.measurer.run(|measurer| {
+                table
+                    .flow
+                    .plan
+                    .resolve_positioned(measurer, &flow.horizontal)
+            })?
         } else {
-            table.flow.plan.resolve_geometry(
-                self.measurer,
-                flow.horizontal.containing_x,
-                flow.horizontal.containing_width,
-                flow.horizontal.containing_rtl,
-            )?
+            self.measurer.run(|measurer| {
+                table.flow.plan.resolve_geometry(
+                    measurer,
+                    flow.horizontal.containing_x,
+                    flow.horizontal.containing_width,
+                    flow.horizontal.containing_rtl,
+                )
+            })?
         };
         resolved.containing_height = flow.containing_height;
         if floating {
@@ -3818,17 +3962,15 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             if self.bands[index].pages.contains_key(&page) {
                 continue;
             }
+            let table_index = self.bands[index].table;
+            let geometry = self.table_geometry_at(table_index, page)?;
             let band = &self.bands[index];
-            let geometry = self.table_geometry_at(band.table, page)?;
-            let table = &self.tables[band.table];
+            let table = &self.tables[table_index];
             let old_height = self.measurer.page_height;
             self.measurer.page_height = self.fragmentainers.height(page);
-            let measured = crate::layout::tables::resume(
-                self.measurer,
-                &table.flow,
-                &geometry,
-                table.flow.body.end,
-            );
+            let measured = self.measurer.run(|measurer| {
+                crate::layout::tables::resume(measurer, &table.flow, &geometry, table.flow.body.end)
+            });
             self.measurer.page_height = old_height;
             let mut flow = measured?
                 .table
@@ -3957,7 +4099,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 } else {
                     &table.flow.row_starts
                 },
-                table.flow.plan.source.style().rtl,
+                table.flow.plan.source.style().used_rtl(),
                 false,
             ) {
                 rect = Some(rect.map_or(fragment, |area| area.union(fragment)));
@@ -3977,7 +4119,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 } else {
                     &table.flow.row_starts
                 },
-                table.flow.plan.source.style().rtl,
+                table.flow.plan.source.style().used_rtl(),
                 true,
             );
         }
@@ -4035,6 +4177,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     }
                     let order = self.orders.take();
                     self.display_lists[page].push(ScopedPaint {
+                        native: None,
                         visible: ancestor.source.style().visibility.is_visible(),
                         scope: layer.paint.background.clone(),
                         order,
@@ -4059,6 +4202,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     fragments[index][usize::from(inset)]
                         .push((page, self.display_lists[page].len()));
                     self.display_lists[page].push(ScopedPaint {
+                        native: None,
                         visible: ancestor.source.style().visibility.is_visible(),
                         scope: layer.paint.background.clone(),
                         order,
@@ -4217,7 +4361,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 &geometry,
                 &placement,
                 &table.flow.row_starts,
-                table.flow.plan.source.style().rtl,
+                table.flow.plan.source.style().used_rtl(),
                 false,
             )
             .expect("zero-row structural boxes have a boundary rectangle");
@@ -4283,7 +4427,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         } else {
                             &table.flow.row_starts
                         },
-                        table.flow.plan.source.style().rtl,
+                        table.flow.plan.source.style().used_rtl(),
                         true,
                     )
                     .expect("a table anchor fragment has source geometry");
@@ -4395,7 +4539,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     pending,
                     &Containing::Rect {
                         rect,
-                        rtl: ancestor.source.style().rtl,
+                        rtl: ancestor.source.style().used_rtl(),
                         clip,
                     },
                 )?;
@@ -4506,6 +4650,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     let clip = *clips.entry(key).or_insert_with(|| {
                         let slot = self.display_lists[page].len();
                         self.display_lists[page].push(ScopedPaint {
+                            native: None,
                             visible: true,
                             order: order.clone(),
                             scope: scope.clone(),
@@ -4517,6 +4662,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         });
                         let clip = self.clips.len();
                         self.clips.push(EffectNode {
+                            native: None,
                             paints: Vec::new(),
                             areas: Vec::new(),
                             parent,
@@ -4527,6 +4673,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         clip
                     });
                     self.display_lists[page].push(ScopedPaint {
+                        native: None,
                         visible,
                         order,
                         scope,
@@ -4542,6 +4689,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             for paint in grid.paints(&bands, table.x_offset, starts) {
                 if paint.has_ink() {
                     self.display_lists[page].push(ScopedPaint {
+                        native: None,
                         visible: true,
                         order: self.orders.take(),
                         scope: self.key.clone(),
@@ -4672,6 +4820,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             if existing.is_none() {
                 slot = self.display_lists[page].len();
                 self.display_lists[page].push(ScopedPaint {
+                    native: None,
                     visible: active.visible,
                     order: active.order.clone(),
                     scope: active.scope.clone(),
@@ -4773,6 +4922,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                                 })
                                 .unwrap_or_else(|| (self.key.clone(), self.group, self.clip));
                             ScopedPaint {
+                                native: None,
                                 visible: true,
                                 order: self.display_lists[page][slot].order.clone(),
                                 scope,
@@ -4781,7 +4931,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                                 ink: None,
                                 item: DisplayItem::Box(background.paint(
                                     rect,
-                                    &geometry.columns(table.flow.plan.source.style().rtl),
+                                    &geometry.columns(table.flow.plan.source.style().used_rtl()),
                                 )),
                                 navigation: BoxNavigation::default(),
                             }
@@ -4808,7 +4958,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let rtl = active
             .geometry
             .as_ref()
-            .is_some_and(|flow| flow.source.style().rtl);
+            .is_some_and(|flow| flow.source.style().used_rtl());
         self.place_box_pending(&mut active, rtl)?;
         if active.overflow.is_some()
             && let Some(geometry) = &active.geometry
@@ -5032,6 +5182,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             if paint.rect.intersects(self.page_rect) {
                 let scope = self.inline_key();
                 self.foreground[self.page].push(ScopedPaint {
+                    native: None,
                     visible: true,
                     order: self.orders.take(),
                     scope,
@@ -5104,6 +5255,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 .chain(above.into_iter().map(|item| (item, None)))
             {
                 self.foreground[self.page].push(ScopedPaint {
+                    native: None,
                     visible: true,
                     order: self.orders.take(),
                     scope: scope.clone(),
@@ -5280,6 +5432,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 self.clips[node].paints.push((self.page, paint.clone()));
                 if let Some(backdrop) = group.backdrop(&paint) {
                     self.foreground[self.page].push(ScopedPaint {
+                        native: None,
                         visible: style.visibility.is_visible(),
                         order: self.orders.take(),
                         scope: scope.clone(),
@@ -5293,6 +5446,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             }
             layers.fragments[fragment.index].push((self.page, self.foreground[self.page].len()));
             self.foreground[self.page].push(ScopedPaint {
+                native: None,
                 visible: style.visibility.is_visible(),
                 order: self.orders.take(),
                 scope,
@@ -5314,6 +5468,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             rect.y += origin[1] + layer.offset[1];
             let scope = self.layer_scope(&layer);
             self.foreground[self.page].push(ScopedPaint {
+                native: None,
                 visible: fragment
                     .inline_box
                     .map_or_else(|| source.style(), |index| &source.boxes()[index].style)
@@ -5342,13 +5497,15 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let anchor = source.inline_block(fragment.index);
             // A ruby column wider than its annotation gives it its width (CSS Ruby 1 §4.3).
             if annotations.contains(&fragment.index) && fragment.width != atomic.metrics.width {
-                atomic = crate::layout::inline::measure_annotation(
-                    self.measurer,
-                    &anchor.block,
-                    fragment.width,
-                    layers.containing.height,
-                    layers.containing.rtl,
-                )?;
+                atomic = self.measurer.run(|measurer| {
+                    crate::layout::inline::measure_annotation(
+                        measurer,
+                        &anchor.block,
+                        fragment.width,
+                        layers.containing.height,
+                        layers.containing.rtl,
+                    )
+                })?;
             }
             let inline_box = anchor.inline_box;
             let chain = inline_chain(source, inline_box);
@@ -5364,7 +5521,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let (y, x) = match atomic.letter {
                 Some(letter) => (
                     self.y + letter.top + atomic.margin_top,
-                    if source.style().rtl {
+                    if source.style().used_rtl() {
                         fragment.x
                     } else {
                         fragment.x - letter.kerning
@@ -5450,7 +5607,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 InlineContainer {
                     pending: Vec::new(),
                     lines: Vec::new(),
-                    rtl: style.rtl,
+                    rtl: style.used_rtl(),
                     clip,
                     depth: self.boxes.len(),
                 },
@@ -5595,17 +5752,20 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     (!pending.block.style().anchor.pages.is_empty()).then_some(page),
                 );
                 if let std::collections::hash_map::Entry::Vacant(entry) = measurements.entry(key) {
-                    entry.insert(crate::layout::positioned::place(
-                        self.measurer,
-                        pending.block,
-                        canvas,
-                        false,
-                        &StaticPosition {
-                            page,
-                            ..pending.position
-                        },
-                        Some(page),
-                    )?);
+                    entry.insert(self.measurer.run(|measurer| {
+                        measurer.space = pending.space;
+                        crate::layout::positioned::place(
+                            measurer,
+                            pending.block,
+                            canvas,
+                            false,
+                            &StaticPosition {
+                                page,
+                                ..pending.position
+                            },
+                            Some(page),
+                        )
+                    })?);
                 }
                 let (measured, top) = &measurements[&key];
                 let mut border = measured.geometry.border_box(measured.height);
@@ -5715,6 +5875,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let mut located = Located {
             links: Vec::with_capacity(self.display_lists.len()),
             destinations: vec![None; destinations],
+            destination_bounds: vec![None; destinations],
         };
         for (page, (foreground, mut items)) in self
             .foreground
@@ -5738,29 +5899,46 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let outlines = outlines(&items, &self.clips);
             items.extend(outlines);
             items.sort_by(|a, b| a.scope.cmp(&b.scope).then_with(|| a.order.cmp(&b.order)));
+            let physical = match &self.fragmentainers {
+                Fragmentainers::Pages(pages) => {
+                    let flow = crate::style::logical::Flow::used(pages.document.root().style());
+                    flow.writing_mode.vertical().then(|| {
+                        crate::layout::writing::Frame::physical(
+                            flow,
+                            pages.boxes[page].geometry.paper,
+                        )
+                    })
+                }
+                Fragmentainers::Columns(_) => None,
+            };
             display_lists.push(clipped(
                 items,
                 page,
+                physical,
                 &self.clips,
                 &regions,
                 &bounds,
                 &mut located,
             )?);
         }
-        let Fragmentainers::Pages(mut physical) = self.fragmentainers else {
-            unreachable!("document pagination uses physical pages");
+        let (page_boxes, page_records) = match self.fragmentainers {
+            Fragmentainers::Pages(mut physical) => {
+                physical.boxes.truncate(page_count);
+                physical.records.truncate(page_count);
+                (physical.boxes, physical.records)
+            }
+            Fragmentainers::Columns(_) => (Vec::new(), Vec::new()),
         };
-        physical.boxes.truncate(page_count);
-        physical.records.truncate(page_count);
         self.pages.truncate(page_count);
         Ok(Paginated {
             anchors: self.anchors,
-            page_boxes: physical.boxes,
-            page_records: physical.records,
+            page_boxes,
+            page_records,
             pages: self.pages,
             display_lists,
             links: located.links,
             destinations: located.destinations,
+            destination_bounds: located.destination_bounds,
             string_locations: self.string_locations,
         })
     }
@@ -5872,6 +6050,7 @@ fn outlines(items: &[ScopedPaint], nodes: &[EffectNode<'_>]) -> Vec<ScopedPaint>
 struct Located {
     links: Vec<Vec<LinkArea>>,
     destinations: Vec<Option<Destination>>,
+    destination_bounds: Vec<Option<Rect>>,
 }
 
 /// One push of an item's effect chain: a group node or a clip or transform node.
@@ -5886,6 +6065,7 @@ enum Frame {
 fn clipped(
     items: Vec<ScopedPaint>,
     page: usize,
+    physical: Option<crate::layout::writing::Frame>,
     nodes: &[EffectNode<'_>],
     regions: &[Vec<(usize, Region)>],
     bounds: &[Vec<(usize, BoxPaint)>],
@@ -5931,8 +6111,13 @@ fn clipped(
         }
         if let DisplayItem::Box(fragment) = &paint.item {
             if let Some(link) = paint.navigation.link {
-                let polygon =
-                    crate::layout::navigation::page_polygon(fragment.rect, &regions_here, true);
+                let polygon = crate::layout::navigation::page_polygon(
+                    paint
+                        .native
+                        .map_or(fragment.rect, |space| space.rect(fragment.rect)),
+                    &regions_here,
+                    true,
+                );
                 if !polygon.is_empty() {
                     link_polygons.push((link, polygon));
                 }
@@ -5942,9 +6127,18 @@ fn clipped(
             {
                 located.destinations[destination] = Some(crate::layout::navigation::destination(
                     page,
-                    fragment.rect,
+                    paint
+                        .native
+                        .map_or(fragment.rect, |space| space.rect(fragment.rect)),
                     &regions_here,
                 ));
+                located.destination_bounds[destination] =
+                    Some(crate::layout::navigation::destination_rect(
+                        paint
+                            .native
+                            .map_or(fragment.rect, |space| space.rect(fragment.rect)),
+                        &regions_here,
+                    ));
             }
         }
         // Ink is compared only with clips in its own coordinate space.
@@ -5952,7 +6146,9 @@ fn clipped(
             .iter()
             .rposition(|region| matches!(region, Region::Transform(_)))
             .map_or(0, |index| index + 1);
-        if let Some(ink) = paint.ink
+        if let Some(ink) = paint
+            .ink
+            .map(|ink| paint.native.map_or(ink, |space| space.rect(ink)))
             && regions_here[untransformed..]
                 .iter()
                 .any(|region| matches!(region, Region::Clip(clip) if !clip.bounds().overlaps(ink)))
@@ -5985,7 +6181,17 @@ fn clipped(
                         .into(),
                 )));
             }
-            let pushes = effect.pushes(&fragments);
+            let mut pushes = effect.pushes(&fragments);
+            let pushes = if let Some(space) = nodes[index].native {
+                physical
+                    .map_or(space, |frame| space.placed(frame.matrix))
+                    .pushes(pushes)
+            } else {
+                if let Some(frame) = physical {
+                    frame.items(&mut pushes);
+                }
+                pushes
+            };
             if !pushes.is_empty() {
                 groups.push((index, effect, pushes));
             }
@@ -6044,17 +6250,36 @@ fn clipped(
                                 (*fragment_page == page).then_some(*region)
                             })
                             .ok_or(LayoutError::MissingClipFragment { page })?;
-                        vec![match region {
+                        let mut pushes = vec![match region {
                             Region::Clip(clip) => DisplayItem::PushClip(clip),
                             Region::Transform(matrix) => DisplayItem::PushTransform(matrix),
-                        }]
+                        }];
+                        if let Some(frame) = physical {
+                            frame.items(&mut pushes);
+                        }
+                        pushes
                     }
                 }
             };
             open.push((frame, pushes.len()));
             output.extend(pushes);
         }
-        output.push(item);
+        match paint.native {
+            Some(space) => output.extend(
+                physical
+                    .map_or(space, |frame| space.placed(frame.matrix))
+                    .paint(item),
+            ),
+            None => {
+                if let Some(frame) = physical {
+                    let mut items = vec![item];
+                    frame.items(&mut items);
+                    output.extend(items);
+                } else {
+                    output.push(item);
+                }
+            }
+        }
     }
     let pops = open.iter().map(|(_, pushes)| pushes).sum::<usize>();
     output.extend(std::iter::repeat_n(DisplayItem::Pop, pops));

@@ -26,21 +26,21 @@ pub(super) fn shape(
         let rtl = match unicode_bidi::get_base_direction(text) {
             unicode_bidi::Direction::Rtl => true,
             unicode_bidi::Direction::Ltr => false,
-            unicode_bidi::Direction::Mixed => style.rtl,
+            unicode_bidi::Direction::Mixed => style.used_rtl(),
         };
         return context.shape(text, 0..text.len(), rtl, style, MissingGlyphs::Substitute);
     }
     match context.shape(
         ELLIPSIS,
         0..ELLIPSIS.len(),
-        style.rtl,
+        style.used_rtl(),
         style,
         MissingGlyphs::Reject,
     ) {
         Err(TextError::MissingGlyph { .. }) => context.shape(
             THREE_DOTS,
             0..THREE_DOTS.len(),
-            style.rtl,
+            style.used_rtl(),
             style,
             MissingGlyphs::Substitute,
         ),
@@ -69,7 +69,7 @@ pub(crate) fn ellipsize(
     if !style.ellipsizes() || line.width <= available {
         return Ok(());
     }
-    let rtl = style.rtl;
+    let rtl = style.used_rtl();
     let mut ellipsis = shape(context, style, None)?;
     let limit = available - ellipsis.iter().map(|run| run.width).sum::<f32>();
     let Some(cut) = find_cut(line, limit, rtl) else {

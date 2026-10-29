@@ -331,16 +331,22 @@ fn annotations_take_the_ua_size_feature_and_line_height() {
 }
 
 #[test]
-fn inter_character_annotations_report_their_vertical_layout() {
-    let error = document(
+fn inter_character_annotations_force_vertical_children_without_changing_the_container() {
+    let document = document(
         "rtc{ruby-position:inter-character}",
-        "<p><ruby>漢<rtc>ㄏㄢˋ</rtc></ruby></p>",
+        "<p><ruby>漢<rtc><rt>あア</rt></rtc></ruby></p>",
     )
-    .err()
-    .expect("inter-character ruby is not laid out");
-    assert!(
-        error.to_string().contains("inter-character"),
-        "the error names the value: {error}"
+    .unwrap();
+    let paragraph = paragraph(&document);
+    let level = &paragraph.rubies()[0].segments[0].levels[0];
+    assert!(level.inter_character);
+    assert_eq!(
+        level.style.writing_mode,
+        crate::style::logical::WritingMode::HorizontalTb
+    );
+    assert_eq!(
+        level.annotations[0].style.writing_mode,
+        crate::style::logical::WritingMode::VerticalRl
     );
 }
 

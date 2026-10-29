@@ -34,7 +34,7 @@ pub(crate) use frames::{Frame, FrameDocument};
 pub(crate) use generated::GeneratedValues;
 pub(crate) use inline::{
     Anchor, InlineBox, MAX_INLINE_TEXT_BYTES, OBJECT_REPLACEMENT_CHARACTER, Paragraph,
-    is_css_whitespace,
+    is_css_whitespace, narrow_width,
 };
 pub(crate) use metadata::DocumentMetadata;
 pub(crate) use navigation::{Bookmark, BoxNavigation, Heading, LinkTarget, Navigation};

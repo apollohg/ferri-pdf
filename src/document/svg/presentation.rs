@@ -520,6 +520,7 @@ fn paint(paint: &Paint) -> String {
 /// CSS Inline 3 §4.1 baselines as SVG `dominant-baseline` keywords.
 fn baseline(baseline: Baseline) -> &'static str {
     match baseline {
+        Baseline::Auto => "auto",
         Baseline::Alphabetic => "alphabetic",
         Baseline::TextBottom => "text-after-edge",
         Baseline::TextTop => "text-before-edge",

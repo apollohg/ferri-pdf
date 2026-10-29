@@ -2,6 +2,7 @@ use crate::document::{BlockBox, BlockContent, Paragraph};
 use std::collections::HashMap;
 
 /// Identities of the immutable formatting tree, independent of measurement probes.
+#[derive(Clone)]
 pub(super) struct SourceIds {
     blocks: HashMap<*const BlockBox, usize>,
     paragraphs: HashMap<*const Paragraph, usize>,
@@ -20,6 +21,9 @@ impl SourceIds {
         while let Some(entry) = pending.pop() {
             match entry {
                 Entry::Block(block) => {
+                    if let Some(flow) = block.flow() {
+                        pending.push(Entry::Block(flow));
+                    }
                     let index = ids.blocks.len();
                     assert!(
                         ids.blocks.insert(block, index).is_none(),

@@ -147,8 +147,15 @@ pub(super) fn place(
             };
         let mut marks = Vec::new();
         let mut shapes = Vec::new();
-        for (offset, cluster) in run.text.grapheme_indices(true) {
-            if !marked(cluster, style.text_paint.emphasis_skip) {
+        let clusters = if run.combined {
+            vec![(0, run.text.as_str())]
+        } else {
+            run.text.grapheme_indices(true).collect()
+        };
+        for (offset, cluster) in clusters {
+            if (run.combined && run.width == 0.0)
+                || (!run.combined && !marked(cluster, style.text_paint.emphasis_skip))
+            {
                 continue;
             }
             let start = run.source_range.start + offset;

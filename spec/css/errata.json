@@ -217,6 +217,10 @@
       "syntax": "normal | <length-percentage [0,∞]>",
       "source": "https://www.w3.org/TR/2026/WD-css-align-3-20261008/#column-row-gap: negative values are invalid"
     },
+    "text-combine-upright": {
+      "syntax": "none | all | [ digits <integer [2,4]>? ]",
+      "source": "https://www.w3.org/TR/css-writing-modes-4/#text-combine-upright: digit limits outside 2–4 are invalid"
+    },
     "appearance": {
       "syntax": "none | auto | base | base-select | <compat-auto> | <compat-special>",
       "source": "https://drafts.csswg.org/css-ui-4/#appearance-switching: the base and base-select keywords"

@@ -266,6 +266,49 @@ pub(super) fn shape_runs(
     rtl: bool,
     style: &Style,
 ) -> Result<Vec<GlyphRun>, TextError> {
+    use crate::style::logical::TextOrientation;
+    if !style.vertical_typographic_mode() {
+        return shape_variants(font, paragraph, range, rtl, style, false);
+    }
+    let mut pieces: Vec<(Range<usize>, bool)> = Vec::new();
+    for (offset, cluster) in paragraph[range.clone()].grapheme_indices(true) {
+        let first = cluster.chars().next().expect("a grapheme is nonempty");
+        let upright = style.text_orientation == TextOrientation::Upright
+            || match unicode_vo::char_orientation(first) {
+                unicode_vo::Orientation::Upright
+                | unicode_vo::Orientation::TransformedOrUpright => true,
+                unicode_vo::Orientation::TransformedOrRotated => {
+                    has_feature(font.face, *b"vert") || has_feature(font.face, *b"vrt2")
+                }
+                unicode_vo::Orientation::Rotated => false,
+            };
+        let start = range.start + offset;
+        if let Some((previous, orientation)) = pieces.last_mut()
+            && *orientation == upright
+        {
+            previous.end = start + cluster.len();
+        } else {
+            pieces.push((start..start + cluster.len(), upright));
+        }
+    }
+    if rtl {
+        pieces.reverse();
+    }
+    let mut runs = Vec::new();
+    for (range, upright) in pieces {
+        runs.extend(shape_variants(font, paragraph, range, rtl, style, upright)?);
+    }
+    Ok(runs)
+}
+
+fn shape_variants(
+    font: ShapingFont<'_, '_>,
+    paragraph: &str,
+    range: Range<usize>,
+    rtl: bool,
+    style: &Style,
+    upright: bool,
+) -> Result<Vec<GlyphRun>, TextError> {
     let caps = features::caps_plan(
         style.font_variant_caps,
         |tag| has_feature(font.face, tag),
@@ -273,8 +316,10 @@ pub(super) fn shape_runs(
     );
     let position = position_form(font, &paragraph[range.clone()], rtl, style, caps);
     if !caps.synthetic() {
-        return shape_run(font, paragraph, range, rtl, style, caps, position, false)
-            .map(|run| vec![run]);
+        return shape_run(
+            font, paragraph, range, rtl, style, caps, position, false, upright,
+        )
+        .map(|run| vec![run]);
     }
     let cased = CodePointSetData::new::<Cased>();
     let mut pieces: Vec<(Range<usize>, bool)> = Vec::new();
@@ -300,7 +345,11 @@ pub(super) fn shape_runs(
     }
     pieces
         .into_iter()
-        .map(|(range, small)| shape_run(font, paragraph, range, rtl, style, caps, position, small))
+        .map(|(range, small)| {
+            shape_run(
+                font, paragraph, range, rtl, style, caps, position, small, upright,
+            )
+        })
         .collect()
 }
 
@@ -317,6 +366,7 @@ fn shape_run(
     caps: CapsPlan,
     position: Position,
     synthetic_caps: bool,
+    upright: bool,
 ) -> Result<GlyphRun, TextError> {
     let ShapingFont {
         face,
@@ -417,7 +467,9 @@ fn shape_run(
     buffer.set_flags(BufferFlags::REMOVE_DEFAULT_IGNORABLES);
     buffer.set_pre_context(&paragraph[..range.start]);
     buffer.set_post_context(&paragraph[range.end..]);
-    buffer.set_direction(if rtl {
+    buffer.set_direction(if upright {
+        Direction::TopToBottom
+    } else if rtl {
         Direction::RightToLeft
     } else {
         Direction::LeftToRight
@@ -461,6 +513,13 @@ fn shape_run(
     let mut ink_bounds: Option<[f32; 2]> = None;
     let mut pen_y = baseline_offset;
     let mut cluster_advance = 0.0;
+    let vertical_advance = |pos: &rustybuzz::GlyphPosition| {
+        if upright {
+            -pos.y_advance as f32
+        } else {
+            pos.x_advance as f32
+        }
+    };
     let word_spacing = style.word_spacing.resolve(size);
     let em_offset = if size == 0.0 {
         0.0
@@ -483,10 +542,11 @@ fn shape_run(
             .get(index + 1)
             .is_none_or(|next| next.cluster != info.cluster);
         let advance = if last_in_cluster && text[start..end].starts_with(NARROW_NO_BREAK_SPACE) {
-            narrow_space_advance
-                .map_or(pos.x_advance as f32 / upem, |width| width - cluster_advance)
+            narrow_space_advance.map_or(vertical_advance(pos) / upem, |width| {
+                width - cluster_advance
+            })
         } else {
-            pos.x_advance as f32 / upem
+            vertical_advance(pos) / upem
         };
         cluster_advance += advance;
         if last_in_cluster {
@@ -531,9 +591,28 @@ fn shape_run(
             id: info.glyph_id,
             x_advance: advance,
             x_spacing,
-            x_offset: pos.x_offset as f32 / upem,
-            y_offset: em_offset - (pos.y_offset as f32) / upem,
-            y_advance: -(pos.y_advance as f32) / upem,
+            x_offset: if upright {
+                -pos.y_offset as f32 / upem
+            } else {
+                pos.x_offset as f32 / upem
+            },
+            y_offset: if upright {
+                let sign = if style.used_writing_mode()
+                    == crate::style::logical::WritingMode::VerticalLr
+                {
+                    1.0
+                } else {
+                    -1.0
+                };
+                sign * pos.x_offset as f32 / upem
+            } else {
+                em_offset - pos.y_offset as f32 / upem
+            },
+            y_advance: if upright {
+                0.0
+            } else {
+                -pos.y_advance as f32 / upem
+            },
             text_range,
         };
         if size != 0.0 && glyph.normalized_advance(size).is_none() {
@@ -541,12 +620,28 @@ fn shape_run(
         }
         glyphs.push(glyph);
     }
+    let mut metrics = crate::fonts::FaceMetrics::of(face);
+    if upright {
+        metrics = metrics.upright(face);
+    }
     Ok(GlyphRun {
         leader: false,
         text: text.into(),
         source_range: range.clone(),
         source_span: 0,
         rtl,
+        orientation: match (upright, style.writing_mode) {
+            (true, crate::style::logical::WritingMode::VerticalLr) => {
+                crate::text::GlyphOrientation::UprightLr
+            }
+            (true, _) => crate::text::GlyphOrientation::UprightRl,
+            (false, crate::style::logical::WritingMode::VerticalLr) => {
+                crate::text::GlyphOrientation::ReflectedSideways
+            }
+            (false, _) => crate::text::GlyphOrientation::Horizontal,
+        },
+        inline_scale: 1.0,
+        combined: false,
         bidi_scoped: false,
         x: 0.0,
         width,
@@ -565,9 +660,13 @@ fn shape_run(
         shadows: style.text_paint.shadows.clone(),
         leading: style.line_height.resolve(style.size),
         white_space: style.white_space,
-        ink_bounds,
+        ink_bounds: if upright {
+            Some([-size / 2.0, size / 2.0])
+        } else {
+            ink_bounds
+        },
         ink_sides: [bounds.x_min, bounds.x_max].map(|side| f32::from(side) / upem),
-        metrics: crate::fonts::FaceMetrics::of(face),
+        metrics,
         glyphs,
         removed_spaces: Vec::new(),
     })

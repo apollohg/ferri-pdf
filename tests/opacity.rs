@@ -45,6 +45,7 @@ fn effect_stacks(trace: &LayoutTrace, page: usize) -> Vec<(String, Vec<String>)>
                 format!("text {}", trace.pages[page][*line].text.trim()),
                 stack_here(),
             )),
+            DisplayItem::Frame(_) => painted.push(("flow frame".into(), stack_here())),
             DisplayItem::Image(_) => painted.push(("image".into(), stack_here())),
             DisplayItem::TextShadow(_) => painted.push(("text shadow".into(), stack_here())),
             DisplayItem::Decoration(decoration) => {

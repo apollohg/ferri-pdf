@@ -1,16 +1,15 @@
 use super::children;
 use crate::flex::Item;
-use crate::layout::measure::BlockSource;
-use crate::layout::measure::Measurer;
-use crate::layout::{LayoutError, geometry::SizeConstraints, intrinsic};
+use crate::layout::measure::{BlockSource, Failure, Measurer};
+use crate::layout::{geometry::SizeConstraints, intrinsic};
 use crate::style::{BoxSizing, FlexBasis, FlexWrap, Size};
 use crate::text::IntrinsicWidths;
 
 pub(crate) fn measure<'a>(
     block: impl Into<BlockSource<'a>>,
-    measurer: &Measurer<'_>,
+    measurer: &Measurer<'a>,
     available: f32,
-) -> Result<IntrinsicWidths, LayoutError> {
+) -> Result<IntrinsicWidths, Failure> {
     let block = block.into();
     let style = block.style();
     let mut result = IntrinsicWidths::default();

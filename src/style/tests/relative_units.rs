@@ -313,3 +313,52 @@ fn page_context_lengths_use_its_font_and_the_first_page_area() {
         "size lengths in em use the page context's font, the root's 20pt"
     );
 }
+
+#[test]
+fn logical_viewport_units_follow_the_root_axis_and_font_units_follow_glyph_orientation() {
+    let page = "@page{size:400pt 600pt;margin:50pt 20pt}";
+    for mode in ["vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"] {
+        check(
+            &format!(
+                "{page}html{{writing-mode:{mode}}}#target{{writing-mode:horizontal-tb;margin:10vi 10vb 10cqi 10cqb}}"
+            ),
+            &[
+                ("vi follows the root inline axis", MARGIN_TOP, 50.0),
+                ("vb follows the root block axis", MARGIN_RIGHT, 36.0),
+                (
+                    "cqi without a container follows the small viewport inline axis",
+                    MARGIN_BOTTOM,
+                    50.0,
+                ),
+                (
+                    "cqb without a container follows the small viewport block axis",
+                    MARGIN_LEFT,
+                    36.0,
+                ),
+            ],
+        );
+    }
+    check(
+        "#target{writing-mode:vertical-rl;text-orientation:upright;font-size:20pt;margin:1ch 1ic}",
+        &[
+            (
+                "an upright zero without vertical metrics advances one em",
+                MARGIN_TOP,
+                20.0,
+            ),
+            (
+                "the missing upright ideograph falls back to one em",
+                MARGIN_RIGHT,
+                20.0,
+            ),
+        ],
+    );
+    check(
+        "#target{writing-mode:vertical-rl;text-orientation:sideways;font-size:20pt;margin:1ch}",
+        &[(
+            "a sideways zero retains its horizontal advance",
+            MARGIN_TOP,
+            10.0,
+        )],
+    );
+}

@@ -22,9 +22,14 @@ impl<'a, 'r> PhysicalPages<'a, 'r> {
             document,
             resolver,
             name: first.request.name.clone(),
-            records: vec![PageRecord::new(&first)?],
+            records: vec![Self::record(document, &first)?],
             boxes: vec![first],
         })
+    }
+    fn record(document: &StyledDocument, page: &PageBox) -> Result<PageRecord, LayoutError> {
+        let mut record = PageRecord::new(page)?;
+        record.reflow(crate::style::logical::Flow::used(document.root().style()));
+        Ok(record)
     }
     pub(crate) fn resolve(&self, index: usize) -> Result<Arc<PageBox>, LayoutError> {
         self.resolve_blank(index, false)
@@ -49,12 +54,12 @@ impl<'a, 'r> PhysicalPages<'a, 'r> {
     pub(crate) fn ensure(&mut self, index: usize) -> Result<(), LayoutError> {
         while self.records.len() <= index {
             let page = self.resolve(self.records.len())?;
-            self.records.push(PageRecord::new(&page)?);
+            self.records.push(Self::record(self.document, &page)?);
             self.boxes.push(page);
         }
         if self.records[index].request.blank {
             let page = self.resolve(index)?;
-            self.records[index] = PageRecord::new(&page)?;
+            self.records[index] = Self::record(self.document, &page)?;
             self.boxes[index] = page;
         }
         Ok(())
@@ -62,7 +67,7 @@ impl<'a, 'r> PhysicalPages<'a, 'r> {
     pub(crate) fn ensure_break(&mut self, index: usize) -> Result<(), LayoutError> {
         while self.records.len() < index {
             let page = self.resolve_blank(self.records.len(), true)?;
-            self.records.push(PageRecord::new(&page)?);
+            self.records.push(Self::record(self.document, &page)?);
             self.boxes.push(page);
         }
         self.ensure(index)?;

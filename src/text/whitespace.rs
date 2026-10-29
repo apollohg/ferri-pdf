@@ -15,6 +15,7 @@ pub(super) fn opportunities(
 ) -> Vec<(usize, BreakOpportunity)> {
     let mut breaks = unconstrained(paragraph, automatic);
     crate::text::ruby::constrain(paragraph, &mut breaks);
+    crate::text::combine::constrain(paragraph, &mut breaks, |entry| entry.0);
     breaks
 }
 
@@ -229,7 +230,7 @@ pub(super) fn emergency_opportunities(paragraph: &Paragraph, intrinsic: bool) ->
     if !paragraph.spans().iter().any(|span| allows(&span.style)) {
         return Vec::new();
     }
-    paragraph
+    let mut opportunities = paragraph
         .text()
         .grapheme_indices(true)
         .skip(1)
@@ -239,7 +240,9 @@ pub(super) fn emergency_opportunities(paragraph: &Paragraph, intrinsic: bool) ->
                 && !inside_tab(paragraph, offset)
                 && (allows(paragraph.style_at(offset - 1)) || allows(paragraph.style_at(offset)))
         })
-        .collect()
+        .collect();
+    crate::text::combine::constrain(paragraph, &mut opportunities, |offset| *offset);
+    opportunities
 }
 
 fn inside_tab(paragraph: &Paragraph, offset: usize) -> bool {

@@ -17,7 +17,7 @@ pub(super) fn indivisible(block: &MeasuredBlock<'_>) -> bool {
         for item in &block.items {
             match item {
                 FlowItem::Paragraph(paragraph) => leaves += paragraph.lines.len(),
-                FlowItem::Image { .. } => leaves += 1,
+                FlowItem::Image { .. } | FlowItem::Frame { .. } => leaves += 1,
                 FlowItem::Block(block) | FlowItem::Spanner(block) => blocks.push(block),
                 FlowItem::Space(value) | FlowItem::Edge(_, value) if *value > 0.0 => return false,
                 FlowItem::Margin(margin) if margin.value() > 0.0 => return false,
@@ -173,7 +173,7 @@ pub(super) struct BreakTail {
 impl FlowItem<'_> {
     fn break_info(&self) -> Option<BreakInfo> {
         match self {
-            Self::Image { height, .. } => Some(BreakInfo {
+            Self::Image { height, .. } | Self::Frame { height, .. } => Some(BreakInfo {
                 height: *height,
                 first_fragment: *height,
                 before: BreakBetween::Auto,

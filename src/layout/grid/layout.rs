@@ -4,7 +4,7 @@ use super::{
 };
 use crate::document::{BlockBox, BlockContent};
 use crate::grid::{AvailableSpace, MaxSizing, MinSizing, SizeBounds, SizingItem};
-use crate::layout::measure::BlockSource;
+use crate::layout::measure::{BlockSource, Failure};
 use crate::layout::{
     LayoutError,
     geometry::{HorizontalBox, VerticalBox},
@@ -17,12 +17,12 @@ use crate::layout::{
 use crate::style::{Alignment, BreakBetween, COLUMNS, Overflow, ROWS};
 
 pub(crate) fn measure<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     block: impl Into<BlockSource<'a>>,
     geometry: &HorizontalBox,
     containing_height: Option<f32>,
     used_height: Option<f32>,
-) -> Result<MeasuredBlock<'a>, LayoutError> {
+) -> Result<MeasuredBlock<'a>, Failure> {
     let block = block.into();
     let style = block.style();
     let top = geometry.padding[0] + geometry.border[0];
@@ -112,7 +112,7 @@ pub(crate) fn measure<'a>(
     let mut contributions = Vec::with_capacity(plan.children.len());
     let mut descendants = Vec::new();
     let mut parent = geometry.clone();
-    parent.containing_rtl = style.rtl;
+    parent.containing_rtl = style.used_rtl();
     for (index, (source, area)) in plan
         .children
         .iter()
@@ -127,15 +127,20 @@ pub(crate) fn measure<'a>(
             fixed_heights[index],
             measurer,
         )?;
+        item.inline_definite = plan.definite_columns(index, geometry.width, measurer);
         item.inherit(plan.child_context(index), [None, Some(columns.clone())]);
-        let measured = measurer.with_grid_parent(item.parent.clone(), |measurer| {
-            measurer.item_metrics(
-                source,
-                &item.geometry,
-                None,
-                fixed_heights[index],
-                |measurer| item.measure(measurer, fixed_heights[index], None),
-            )
+        let mut space = measurer.space;
+        space.indefinite_inline &= !item.inline_definite;
+        let measured = measurer.with_space(space, |measurer| {
+            measurer.with_grid_parent(item.parent.clone(), |measurer| {
+                measurer.item_metrics(
+                    source,
+                    &item.geometry,
+                    None,
+                    fixed_heights[index],
+                    |measurer| item.measure(measurer, fixed_heights[index], None),
+                )
+            })
         })?;
         baselines.push(
             area[ROWS].start,
@@ -268,7 +273,8 @@ pub(crate) fn measure<'a>(
     if !height.is_finite() {
         return Err(LayoutError::NonFiniteBlockGeometry {
             block: measurer.sources.block(block.block),
-        });
+        }
+        .into());
     }
     let content = (height - top - bottom).max(0.0);
     let rows = if definite.is_none() {
@@ -310,6 +316,7 @@ pub(crate) fn measure<'a>(
         } else {
             item
         };
+        item.inline_definite = plan.definite_columns(index, geometry.width, measurer);
         item.inherit(
             plan.child_context(index)
                 .map(|parent| parent.with_baselines(baseline_groups.clone())),
@@ -411,8 +418,8 @@ pub(crate) fn measure<'a>(
                         } else {
                             child.style().grid.justify_self.in_flow()
                         },
-                        style.rtl,
-                        child.style().rtl,
+                        style.used_rtl(),
+                        child.style().used_rtl(),
                     ),
                     align: super::items::physical_alignment(
                         if child.style().flex.align_self == Alignment::Auto {
@@ -474,6 +481,7 @@ pub(crate) fn measure<'a>(
         items: item_indices,
     }));
     Ok(MeasuredBlock {
+        frame_key: None,
         grid,
         source: block.block,
         geometry: geometry.clone(),

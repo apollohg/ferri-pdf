@@ -13,6 +13,18 @@ impl PaintOrder {
         index: 0,
     };
 
+    pub(super) fn within(&self, parent: &Self) -> Self {
+        Self {
+            prefix: Some(
+                parent
+                    .path()
+                    .chain(self.prefix.as_deref().unwrap_or_default().iter().copied())
+                    .collect(),
+            ),
+            index: self.index,
+        }
+    }
+
     pub(super) fn descendants(&self) -> PaintOrders {
         PaintOrders {
             prefix: Some(self.path().collect()),
@@ -49,6 +61,18 @@ pub(super) struct PaintOrders {
 }
 
 impl PaintOrders {
+    pub(super) fn within(&self, parent: &PaintOrder) -> Self {
+        Self {
+            prefix: Some(
+                parent
+                    .path()
+                    .chain(self.prefix.as_deref().unwrap_or_default().iter().copied())
+                    .collect(),
+            ),
+            next: Rc::new(Cell::new(self.next.get())),
+        }
+    }
+
     pub(super) fn commit(&self, candidate: &Self) {
         debug_assert_eq!(self.prefix, candidate.prefix);
         self.next.set(self.next.get().max(candidate.next.get()));

@@ -1,5 +1,4 @@
-//! A face's baseline table (CSS Inline 3 §3.3): from the horizontal axis of its `BASE`
-//! table where it records a baseline, otherwise synthesized as Appendix A.2 suggests.
+//! Horizontal and vertical baseline sets (CSS Inline 3 §3.3 and Writing Modes 4 §4).
 use skrifa::raw::{FontRef, TableProvider, types::Tag};
 use ttf_parser::Face;
 
@@ -23,9 +22,10 @@ const ETERNITY_IDEOGRAPH: char = '\u{6C38}';
 /// The suggested hanging baseline where the font gives no way to find it.
 const FALLBACK_HANGING_EM: f32 = 0.6;
 
-/// Baseline heights above the alphabetic baseline, in em.
+/// Baselines above the horizontal alphabetic or vertical central origin, in em.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub(crate) struct BaselineTable {
+    pub alphabetic: f32,
     pub ideographic_over: f32,
     pub ideographic_under: f32,
     pub ideographic_ink_over: f32,
@@ -34,12 +34,18 @@ pub(crate) struct BaselineTable {
     pub math: f32,
 }
 
-/// The coordinates the horizontal `BASE` axis gives the default or Latin script, by tag, in
+/// The coordinates a `BASE` axis gives the default or Latin script, by tag, in
 /// font units above its roman baseline.
-fn recorded(face: &Face<'_>) -> Vec<(Tag, f32)> {
+fn recorded(face: &Face<'_>, vertical: bool) -> Vec<(Tag, f32)> {
     let read = || -> Option<Vec<(Tag, f32)>> {
         let font = FontRef::new(face.raw_face().data).ok()?;
-        let axis = font.base().ok()?.horiz_axis()?.ok()?;
+        let base = font.base().ok()?;
+        let axis = if vertical {
+            base.vert_axis()?
+        } else {
+            base.horiz_axis()?
+        }
+        .ok()?;
         let tags = axis.base_tag_list()?.ok()?;
         let scripts = axis.base_script_list().ok()?;
         let records = scripts.base_script_records();
@@ -80,17 +86,68 @@ fn recorded(face: &Face<'_>) -> Vec<(Tag, f32)> {
 }
 
 /// The bottom and top of `ch`'s glyph, in font units.
-fn glyph_extent(face: &Face<'_>, ch: char) -> Option<[f32; 2]> {
+fn glyph_extent(face: &Face<'_>, ch: char, vertical: bool) -> Option<[f32; 2]> {
     let glyph = face.glyph_index(ch).filter(|glyph| glyph.0 != 0)?;
     let bounds = face.glyph_bounding_box(glyph)?;
-    Some([bounds.y_min, bounds.y_max].map(f32::from))
+    Some(if vertical {
+        let origin = f32::from(face.glyph_hor_advance(glyph)?) / 2.0;
+        [bounds.x_min, bounds.x_max].map(|edge| f32::from(edge) - origin)
+    } else {
+        [bounds.y_min, bounds.y_max].map(f32::from)
+    })
 }
 
 impl BaselineTable {
+    pub(crate) fn upright(self, face: &Face<'_>) -> Self {
+        let units = f32::from(face.units_per_em());
+        let recorded = recorded(face, true);
+        let base = |tag| {
+            recorded
+                .iter()
+                .find(|(found, _)| *found == tag)
+                .map(|(_, coordinate)| coordinate / units)
+        };
+        let (over, under, center, alphabetic) = if recorded.is_empty() {
+            let center = f32::midpoint(self.ideographic_over, self.ideographic_under);
+            (IDEOGRAPHIC_EM / 2.0, -IDEOGRAPHIC_EM / 2.0, 0.0, -center)
+        } else {
+            let under = base(IDEOGRAPHIC_UNDER)
+                .or_else(|| base(IDEOGRAPHIC_OVER).map(|over| over - IDEOGRAPHIC_EM))
+                .unwrap_or(0.0);
+            let over = base(IDEOGRAPHIC_OVER).unwrap_or(under + IDEOGRAPHIC_EM);
+            let center = f32::midpoint(over, under);
+            (over, under, center, -center)
+        };
+        let glyph =
+            |ch| glyph_extent(face, ch, true).map(|bounds| bounds.map(|value| value / units));
+        let ink = glyph(ETERNITY_IDEOGRAPH);
+        Self {
+            alphabetic,
+            ideographic_over: over - center,
+            ideographic_under: under - center,
+            ideographic_ink_over: base(IDEOGRAPHIC_INK_OVER)
+                .map(|value| value - center)
+                .or(ink.map(|[_, over]| over))
+                .unwrap_or(over - center),
+            ideographic_ink_under: base(IDEOGRAPHIC_INK_UNDER)
+                .map(|value| value - center)
+                .or(ink.map(|[under, _]| under))
+                .unwrap_or(under - center),
+            hanging: base(HANGING)
+                .map(|value| value - center)
+                .or_else(|| glyph(DEVANAGARI_KA).map(|[_, over]| over))
+                .unwrap_or(self.hanging + alphabetic),
+            math: base(MATH)
+                .map(|value| value - center)
+                .or_else(|| glyph(MINUS_SIGN).map(|[under, over]| f32::midpoint(under, over)))
+                .unwrap_or(self.math + alphabetic),
+        }
+    }
+
     /// `ascent` and `descent` are the face's, and `x_height` its x-height, in em.
     pub(crate) fn of(face: &Face<'_>, ascent: f32, descent: f32, x_height: f32) -> Self {
         let units = f32::from(face.units_per_em());
-        let recorded = recorded(face);
+        let recorded = recorded(face, false);
         let base = |wanted: Tag| {
             recorded
                 .iter()
@@ -111,15 +168,15 @@ impl BaselineTable {
                 Some(f32::from(axis) / units)
             })
             .or_else(|| {
-                glyph_extent(face, MINUS_SIGN)
+                glyph_extent(face, MINUS_SIGN, false)
                     .map(|[bottom, top]| f32::midpoint(bottom, top) / units)
             })
             .unwrap_or(x_height / 2.0);
         let hanging = base(HANGING)
-            .or_else(|| glyph_extent(face, DEVANAGARI_KA).map(|[_, top]| top / units))
+            .or_else(|| glyph_extent(face, DEVANAGARI_KA, false).map(|[_, top]| top / units))
             .unwrap_or(FALLBACK_HANGING_EM);
-        let face_edges =
-            glyph_extent(face, ETERNITY_IDEOGRAPH).map(|edges| edges.map(|edge| edge / units));
+        let face_edges = glyph_extent(face, ETERNITY_IDEOGRAPH, false)
+            .map(|edges| edges.map(|edge| edge / units));
         let ideographic_ink_over = base(IDEOGRAPHIC_INK_OVER)
             .or(face_edges.map(|[_, top]| top))
             .unwrap_or(ideographic_over);
@@ -127,6 +184,7 @@ impl BaselineTable {
             .or(face_edges.map(|[bottom, _]| bottom))
             .unwrap_or(ideographic_under);
         Self {
+            alphabetic: 0.0,
             ideographic_over,
             ideographic_under,
             ideographic_ink_over,

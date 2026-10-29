@@ -1,6 +1,6 @@
 //! CSS Sizing 4 §4: preferred aspect ratios and the sizes they transfer between axes.
-use crate::layout::measure::BlockSource;
-use crate::layout::{LayoutError, geometry::Edges, measure::Measurer};
+use crate::layout::measure::{BlockSource, Failure};
+use crate::layout::{geometry::Edges, measure::Measurer};
 use crate::style::{BoxSizing, Size, SizeConstraints, Style};
 
 /// Width over height, converting content-box sizes.
@@ -58,12 +58,12 @@ pub(super) fn content_minimum(style: &Style, minimum: &Size) -> bool {
 /// definite: the used height converted through the ratio (§4.2), within the width's own
 /// limits and its automatic minimum (§4.3).
 pub(super) fn width_from_height<'a>(
-    measurer: &Measurer<'_>,
+    measurer: &Measurer<'a>,
     block: impl Into<BlockSource<'a>>,
     containing_width: f32,
     containing_height: Option<f32>,
     edges: &Edges,
-) -> Result<Option<f32>, LayoutError> {
+) -> Result<Option<f32>, Failure> {
     let block = block.into();
     let style = block.style();
     if block.image().is_some() || style.width != Size::Auto {

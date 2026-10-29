@@ -567,3 +567,58 @@ fn scroll_and_overscroll_logical_properties_cascade_with_their_physical_pairs() 
         "overscroll-behavior-block pairs with the vertical axis"
     );
 }
+
+#[test]
+fn vertical_modes_map_logical_sides_dimensions_and_inherited_pairs() {
+    for (mode, block_start, block_end, inline_start, inline_end) in [
+        ("vertical-rl", RIGHT, LEFT, TOP, BOTTOM),
+        ("vertical-lr", LEFT, RIGHT, TOP, BOTTOM),
+        ("sideways-rl", RIGHT, LEFT, TOP, BOTTOM),
+        ("sideways-lr", LEFT, RIGHT, BOTTOM, TOP),
+    ] {
+        for rtl in [false, true] {
+            let direction = if rtl { "rtl" } else { "ltr" };
+            let css = format!(
+                "#parent{{writing-mode:{mode};direction:{direction};margin-block-start:11pt;\
+                margin-block-end:13pt;margin-inline-start:17pt;margin-inline-end:19pt;\
+                inline-size:101pt;block-size:103pt}}\
+                #child{{margin-block-start:inherit;margin-inline-start:inherit;\
+                block-size:inherit;inline-size:inherit}}"
+            );
+            let (parent, child) = styles(&css, DOCUMENT);
+            let (inline_start, inline_end) = if rtl {
+                (inline_end, inline_start)
+            } else {
+                (inline_start, inline_end)
+            };
+            for (side, expected) in [
+                (block_start, 11.0),
+                (block_end, 13.0),
+                (inline_start, 17.0),
+                (inline_end, 19.0),
+            ] {
+                assert_eq!(
+                    parent.margin[side],
+                    points(expected),
+                    "{mode}/{direction} physical side {side}: {:?}",
+                    parent.margin
+                );
+            }
+            assert_eq!(
+                child.margin[block_start],
+                points(11.0),
+                "{mode}/{direction}: inherited block-start"
+            );
+            assert_eq!(
+                child.margin[inline_start],
+                points(17.0),
+                "{mode}/{direction}: inherited inline-start"
+            );
+            assert_eq!(
+                [child.width, child.height],
+                [points(103.0), points(101.0)],
+                "{mode}/{direction}: physical dimensions"
+            );
+        }
+    }
+}

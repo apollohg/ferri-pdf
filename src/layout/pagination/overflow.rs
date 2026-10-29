@@ -1,7 +1,7 @@
 use super::{ActiveBox, DisplayItem, Paginator, Rect, Region};
 use crate::style::{Overflow, Style, StyleError};
 
-impl Paginator<'_, '_, '_> {
+impl<'a> Paginator<'a, '_, 'a> {
     pub(super) fn record_overflow(&mut self, rect: Rect) {
         self.record_overflow_on(self.page, rect);
     }
@@ -51,7 +51,7 @@ impl Paginator<'_, '_, '_> {
                     let rtl = parent
                         .geometry
                         .as_ref()
-                        .is_some_and(|geometry| geometry.source.style().rtl);
+                        .is_some_and(|geometry| geometry.source.style().used_rtl());
                     let before_inline_start = if rtl {
                         area.x >= padding.x + padding.width
                     } else {

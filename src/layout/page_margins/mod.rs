@@ -47,6 +47,16 @@ struct Prepared<'a> {
     lines: Vec<Line>,
 }
 impl Prepared<'_> {
+    fn inline_axis(&self) -> usize {
+        if self.margin.style.used_writing_mode().vertical() {
+            VERTICAL
+        } else {
+            HORIZONTAL
+        }
+    }
+    fn block_axis(&self) -> usize {
+        1 - self.inline_axis()
+    }
     fn sides(axis: usize) -> [usize; 2] {
         if axis == HORIZONTAL { [3, 1] } else { [0, 2] }
     }
@@ -104,12 +114,12 @@ impl Prepared<'_> {
         self.lines = self
             .paragraph
             .as_ref()
-            .map(|p| measurer.text_lines(p, self.content[HORIZONTAL], &[]))
+            .map(|p| measurer.text_lines(p, self.content[self.inline_axis()], &[]))
             .transpose()?
             .unwrap_or_default();
         Ok(())
     }
-    fn height(&self) -> f32 {
+    fn block_extent(&self) -> f32 {
         self.lines.iter().map(|line| line.height).sum()
     }
     fn paint(
@@ -120,11 +130,13 @@ impl Prepared<'_> {
         display: &mut Vec<DisplayItem>,
     ) -> Result<(), LayoutError> {
         self.validate()?;
+        let block_axis = self.block_axis();
+        let vertical = self.inline_axis() == VERTICAL;
         let mut used = 0.0;
         let mut retained = 0;
         for line in &self.lines {
-            if self.content[VERTICAL] < 0.0
-                || (retained > 0 && used + line.height > self.content[VERTICAL])
+            if self.content[block_axis] < 0.0
+                || (retained > 0 && used + line.height > self.content[block_axis])
             {
                 break;
             }
@@ -162,7 +174,17 @@ impl Prepared<'_> {
         if self.decoration.is_visible() {
             display.push(DisplayItem::Box(paint));
         }
-        let extra = self.content[1] - self.height();
+        let inline_extent = if vertical {
+            self.lines.iter().map(|line| line.width).fold(0.0, f32::max)
+        } else {
+            self.content[HORIZONTAL]
+        };
+        let physical_height = if vertical {
+            inline_extent
+        } else {
+            self.block_extent()
+        };
+        let extra = self.content[VERTICAL] - physical_height;
         let offset = match style.table.vertical_align {
             VerticalAlign::Middle => extra / 2.0,
             VerticalAlign::Bottom => extra,
@@ -175,19 +197,30 @@ impl Prepared<'_> {
             | VerticalAlign::TextBottom
             | VerticalAlign::Length(_) => 0.0,
         };
-        let mut y = rect.y + self.padding[0] + self.borders[0] + offset;
+        let content_origin = [
+            rect.x + self.padding[3] + self.borders[3],
+            rect.y + self.padding[0] + self.borders[0] + offset,
+        ];
+        let mut frame_lines = Vec::new();
+        let mut frame_items = Vec::new();
+        let (text_lines, text_items) = if vertical {
+            (&mut frame_lines, &mut frame_items)
+        } else {
+            (&mut *page, &mut *display)
+        };
+        let mut y = if vertical { 0.0 } else { content_origin[1] };
         for line in self.lines {
-            let x = rect.x
-                + self.padding[3]
-                + self.borders[3]
-                + line.alignment_offset(self.content[0], style.rtl);
+            let x = if vertical { 0.0 } else { content_origin[0] }
+                + line.alignment_offset(inline_extent, style.used_rtl());
             let baseline = y + line.ascent;
             let [below, above] =
                 crate::layout::inline::decoration_items(&line.decorations, x, baseline);
-            display.extend(below);
-            display.push(DisplayItem::Text { line: page.len() });
-            display.extend(above);
-            page.push(TextLine {
+            text_items.extend(below);
+            text_items.push(DisplayItem::Text {
+                line: text_lines.len(),
+            });
+            text_items.extend(above);
+            text_lines.push(TextLine {
                 paragraph: index,
                 text: line.text,
                 x,
@@ -199,6 +232,22 @@ impl Prepared<'_> {
                 color: style.color,
             });
             y += line.height;
+        }
+        if vertical {
+            let size = [self.content[HORIZONTAL], inline_extent];
+            crate::layout::writing::Frame::physical(crate::style::logical::Flow::used(style), size)
+                .items(&mut frame_items);
+            display.push(DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
+                matrix: [1.0, 0.0, 0.0, 1.0, content_origin[0], content_origin[1]],
+                area: Rect {
+                    x: 0.0,
+                    y: 0.0,
+                    width: size[0],
+                    height: size[1],
+                },
+                items: frame_items,
+                lines: frame_lines,
+            })));
         }
         // The outline paints over the margin box's content (CSS UI 4 §3.1).
         display.extend(outline.map(DisplayItem::Box));
@@ -304,25 +353,32 @@ pub(super) fn render(
                 let mut prepared =
                     prepare(margin, decoration, containing, number + 1, total, strings)?;
                 prepared.validate()?;
-                let bounds = if axis == HORIZONTAL {
-                    prepared.fixed(VERTICAL, containing[1]);
+                let fixed_axis = 1 - axis;
+                prepared.fixed(fixed_axis, containing[fixed_axis]);
+                let bounds = if axis == prepared.inline_axis() {
                     let intrinsic = prepared
                         .paragraph
                         .as_ref()
                         .map(|p| measurer.intrinsic_widths(p, &[]))
                         .transpose()?
                         .unwrap_or_default();
-                    if let Size::Intrinsic(keyword) = prepared.margin.style.width {
-                        let available = containing[HORIZONTAL] - prepared.outer_edges(HORIZONTAL);
-                        prepared.specified[HORIZONTAL] =
-                            Some(keyword.resolve(intrinsic, Some(available.max(0.0))));
-                    }
                     [intrinsic.min, intrinsic.max]
                 } else {
-                    prepared.fixed(HORIZONTAL, containing[0]);
                     prepared.layout(measurer)?;
-                    [prepared.height(); 2]
+                    [prepared.block_extent(); 2]
                 };
+                if axis == HORIZONTAL
+                    && let Size::Intrinsic(keyword) = prepared.margin.style.width
+                {
+                    let available = containing[axis] - prepared.outer_edges(axis);
+                    prepared.specified[axis] = Some(keyword.resolve(
+                        crate::style::IntrinsicWidths {
+                            min: bounds[0],
+                            max: bounds[1],
+                        },
+                        Some(available.max(0.0)),
+                    ));
+                }
                 let edges = prepared.outer_edges(axis);
                 dimensions[position] = Variable {
                     min: bounds[0] + edges,
@@ -336,9 +392,7 @@ pub(super) fn render(
             for (position, prepared) in boxes.into_iter().enumerate() {
                 if let Some(mut prepared) = prepared {
                     prepared.variable(axis, containing[axis], sizes[position], position);
-                    if axis == HORIZONTAL {
-                        prepared.layout(measurer)?;
-                    }
+                    prepared.layout(measurer)?;
                     let index = first_index + prepared.margin.location as usize;
                     prepared.paint(origin, index, page, display)?;
                 }

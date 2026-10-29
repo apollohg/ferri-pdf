@@ -13,6 +13,8 @@ use std::ops::Range;
 struct PdfGlyph<'a> {
     glyph: &'a PositionedGlyph,
     advance: f32,
+    orientation: crate::text::GlyphOrientation,
+    scale: f32,
 }
 impl Glyph for PdfGlyph<'_> {
     fn glyph_id(&self) -> GlyphId {
@@ -22,18 +24,30 @@ impl Glyph for PdfGlyph<'_> {
         self.glyph.text_range.clone()
     }
     fn x_advance(&self, size: f32) -> f32 {
-        self.advance * size
+        self.orientation
+            .font_vector([self.advance, self.glyph.y_advance])[0]
+            * size
+            / self.scale
     }
     fn x_offset(&self, size: f32) -> f32 {
-        self.glyph.x_offset * size
+        self.orientation
+            .font_vector([self.glyph.x_offset, self.glyph.y_offset])[0]
+            * size
+            / self.scale
     }
     // Krilla's vertical offsets and advances point up, as OpenType's do; positioned glyphs'
     // point down.
     fn y_offset(&self, size: f32) -> f32 {
-        -self.glyph.y_offset * size
+        -self
+            .orientation
+            .font_vector([self.glyph.x_offset, self.glyph.y_offset])[1]
+            * size
     }
     fn y_advance(&self, size: f32) -> f32 {
-        -self.glyph.y_advance * size
+        -self
+            .orientation
+            .font_vector([self.advance, self.glyph.y_advance])[1]
+            * size
     }
     fn location(&self) -> Option<krilla::surface::Location> {
         None
@@ -175,21 +189,40 @@ impl<'a> TextWriter<'a> {
             for glyph in run.glyphs() {
                 glyphs.push(PdfGlyph {
                     glyph,
+                    orientation: run.orientation,
+                    scale: run.inline_scale,
                     advance: glyph
                         .normalized_advance(run.font_size)
                         .ok_or(PdfError::InvalidGeometry)?,
                 });
             }
-            let shear = run.shear(origin[1] + run.baseline_shift);
-            if let Some([a, b, c, d, e, f]) = shear {
-                surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
-            }
             for [x, y] in run.copies(origin) {
+                let oriented = run.orientation != crate::text::GlyphOrientation::Horizontal
+                    || run.inline_scale != 1.0;
+                if oriented {
+                    let [a, b, c, d] = run.orientation.matrix();
+                    let (a, b) = (a * run.inline_scale, b * run.inline_scale);
+                    surface.push_transform(&Transform::from_row(
+                        a,
+                        b,
+                        c,
+                        d,
+                        x - a * x - c * y,
+                        y - b * x - d * y,
+                    ));
+                }
+                let shear = run.shear(y);
+                if let Some([a, b, c, d, e, f]) = shear {
+                    surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
+                }
                 let pen = Point::from_xy(x, y);
                 paint_glyphs(surface, run, pen, &glyphs, &font, paint)?;
-            }
-            if shear.is_some() {
-                surface.pop();
+                if shear.is_some() {
+                    surface.pop();
+                }
+                if oriented {
+                    surface.pop();
+                }
             }
             if !run.marks.is_empty() {
                 let marks = if paint == Paint::Silhouette {

@@ -6,10 +6,10 @@ use super::{
 };
 use crate::document::{BlockBox, BlockContent, SemanticEvent};
 use crate::graphics::{Border, BorderStyle, BoxDecoration, Color, Rect};
-use crate::layout::measure::BlockSource;
 use crate::layout::measure::{
     BlockEdge, FlowItem, MeasuredBlock, MeasuredCell, MeasuredRow, Measurer, RowTarget, TableFlow,
 };
+use crate::layout::measure::{BlockSource, Failure};
 use crate::layout::{LayoutError, geometry, margin::MarginStrut};
 use crate::style::{BreakBetween, Display, Style, TableLayout};
 use crate::table::{CellHeight, HeightConstraint, HeightInput, WidthInput};
@@ -82,13 +82,13 @@ fn grid_lines(x: f32, widths: &[f32], table: f32, rtl: bool) -> Vec<f32> {
 }
 
 pub(crate) fn measure<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     block: &'a BlockBox,
     x: f32,
     width: f32,
     rtl: bool,
     containing_height: Option<f32>,
-) -> Result<MeasuredBlock<'a>, LayoutError> {
+) -> Result<MeasuredBlock<'a>, Failure> {
     measure_placed(
         measurer,
         block,
@@ -103,17 +103,36 @@ pub(crate) fn measure<'a>(
 
 /// Measures a table whose wrapper box geometry comes from `place`, returning that geometry.
 pub(crate) fn measure_placed<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     block: &'a BlockBox,
     x: f32,
     width: f32,
     rtl: bool,
     containing_height: Option<f32>,
     place: fn(&Style, f32, f32, bool, Option<f32>, geometry::Edges) -> geometry::HorizontalBox,
-) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), LayoutError> {
+) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), Failure> {
     let plan = TablePlan::new(measurer, block, containing_height, None, place)?;
     let resolved = plan.resolve_geometry(measurer, x, width, rtl)?;
     plan.measure_wrapped(measurer, &resolved)
+}
+
+pub(crate) fn measure_format<'a>(
+    measurer: &mut Measurer<'a>,
+    block: impl Into<BlockSource<'a>>,
+    geometry: &geometry::HorizontalBox,
+    containing_height: Option<f32>,
+    used_height: Option<f32>,
+) -> Result<MeasuredBlock<'a>, Failure> {
+    let plan = TablePlan::new(
+        measurer,
+        block,
+        containing_height,
+        used_height,
+        geometry::horizontal_with_edges,
+    )?;
+    let resolved = plan.resolve_positioned(measurer, geometry)?;
+    plan.measure_wrapped(measurer, &resolved)
+        .map(|(block, _)| block)
 }
 
 struct WidthContributions {
@@ -440,7 +459,7 @@ impl<'a> TablePlan<'a> {
         containing_height: Option<f32>,
         used_height: Option<f32>,
         place: fn(&Style, f32, f32, bool, Option<f32>, geometry::Edges) -> geometry::HorizontalBox,
-    ) -> Result<Rc<Self>, LayoutError> {
+    ) -> Result<Rc<Self>, Failure> {
         let block = block.into();
         measurer.work.spend(1)?;
         let index = measurer.sources.block(block.block);
@@ -456,7 +475,8 @@ impl<'a> TablePlan<'a> {
             return Err(LayoutError::UnsupportedTable {
                 block: index,
                 feature: "row and row-group border images",
-            });
+            }
+            .into());
         }
         if data
             .rows
@@ -468,7 +488,8 @@ impl<'a> TablePlan<'a> {
             return Err(LayoutError::UnsupportedTable {
                 block: index,
                 feature: "row and row-group perspective and transform-style: preserve-3d",
-            });
+            }
+            .into());
         }
         measurer
             .work
@@ -565,9 +586,9 @@ impl<'a> TablePlan<'a> {
     }
     fn contributions(
         &self,
-        measurer: &Measurer<'_>,
+        measurer: &Measurer<'a>,
         width: f32,
-    ) -> Result<Rc<WidthContributions>, LayoutError> {
+    ) -> Result<Rc<WidthContributions>, Failure> {
         if let Some(contributions) = self.widths.borrow().get(&width.to_bits()) {
             return Ok(contributions.clone());
         }
@@ -582,11 +603,11 @@ impl<'a> TablePlan<'a> {
     }
     pub(crate) fn resolve_geometry(
         &self,
-        measurer: &Measurer<'_>,
+        measurer: &Measurer<'a>,
         x: f32,
         width: f32,
         rtl: bool,
-    ) -> Result<TableGeometry, LayoutError> {
+    ) -> Result<TableGeometry, Failure> {
         self.resolve(measurer, x, width, rtl, None)
     }
 
@@ -600,9 +621,9 @@ impl<'a> TablePlan<'a> {
 
     pub(crate) fn resolve_positioned(
         &self,
-        measurer: &Measurer<'_>,
+        measurer: &Measurer<'a>,
         geometry: &geometry::HorizontalBox,
-    ) -> Result<TableGeometry, LayoutError> {
+    ) -> Result<TableGeometry, Failure> {
         self.resolve(
             measurer,
             geometry.containing_x,
@@ -614,9 +635,9 @@ impl<'a> TablePlan<'a> {
 
     pub(crate) fn measure_wrapped(
         self: &Rc<Self>,
-        measurer: &mut Measurer<'_>,
+        measurer: &mut Measurer<'a>,
         resolved: &TableGeometry,
-    ) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), LayoutError> {
+    ) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), Failure> {
         let containing_height = resolved.containing_height;
         let (table, geometry) = measure_plan(measurer, self, resolved, None, 0)?;
         let mut table = captions::wrap(measurer, table, &self.data.captions, &geometry)?;
@@ -641,12 +662,12 @@ impl<'a> TablePlan<'a> {
 
     fn resolve(
         &self,
-        measurer: &Measurer<'_>,
+        measurer: &Measurer<'a>,
         x: f32,
         width: f32,
         rtl: bool,
         positioned: Option<&geometry::HorizontalBox>,
-    ) -> Result<TableGeometry, LayoutError> {
+    ) -> Result<TableGeometry, Failure> {
         measurer.work.spend(
             self.data
                 .grid
@@ -730,7 +751,7 @@ impl<'a> TablePlan<'a> {
             },
         );
         if !geometry.x.is_finite() || !geometry.width.is_finite() {
-            return Err(LayoutError::NonFiniteBlockGeometry { block: index });
+            return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
         }
         let mut starts = Vec::with_capacity(data.grid.columns);
         let mut cursor = horizontal;
@@ -808,15 +829,15 @@ impl<'a> TablePlan<'a> {
     }
     pub(crate) fn measure_cell(
         &self,
-        measurer: &mut Measurer<'_>,
+        measurer: &mut Measurer<'a>,
         index: usize,
         resolved: &TableGeometry,
         used_height: Option<f32>,
-    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+    ) -> Result<MeasuredBlock<'a>, Failure> {
         let source = self.data.cells[index];
         let geometry = self.cell_geometry(index, resolved);
         let named_pages = std::mem::replace(&mut measurer.named_pages, false);
-        let measured = measurer.format_block(source, geometry, true, None, used_height);
+        let measured = measurer.measure_format(source, geometry, true, None, used_height);
         measurer.named_pages = named_pages;
         let mut measured = measured?;
         measured.offset = self.cell_offset(index, resolved.geometry.width);
@@ -845,7 +866,11 @@ impl<'a> TablePlan<'a> {
         cell.row..cell.row + cell.rows
     }
     pub(crate) fn cell_offset(&self, index: usize, width: f32) -> [f32; 2] {
-        super::model::relative_offset(&self.data.cell_ancestors(index), width, self.style.rtl)
+        super::model::relative_offset(
+            &self.data.cell_ancestors(index),
+            width,
+            self.style.used_rtl(),
+        )
     }
     pub(crate) fn scoped_borders(&self) -> bool {
         self.border_owners.is_some()
@@ -868,7 +893,7 @@ impl<'a> TablePlan<'a> {
                     Some(self.data.rows[row]),
                 ],
                 width,
-                self.style.rtl,
+                self.style.used_rtl(),
             ),
         };
         (owner, offset)
@@ -989,10 +1014,10 @@ impl<'a> TablePlan<'a> {
     }
     pub(crate) fn cell_alignments(
         &self,
-        measurer: &mut Measurer<'_>,
+        measurer: &mut Measurer<'a>,
         band: Range<usize>,
         geometry: &TableGeometry,
-    ) -> Result<CellAlignments, LayoutError> {
+    ) -> Result<CellAlignments, Failure> {
         let band = if self.has_height_constraints || self.has_collapsed_rows() {
             0..self.data.grid.rows
         } else {
@@ -1018,7 +1043,7 @@ impl<'a> TablePlan<'a> {
                 first_fragments.push(measured.first_fragment);
                 Ok(cell_height(&measured))
             })
-            .collect::<Result<Vec<_>, LayoutError>>()?;
+            .collect::<Result<Vec<_>, Failure>>()?;
         measurer
             .work
             .spend(grid.rows.saturating_mul(grid.columns).max(1))?;
@@ -1123,7 +1148,7 @@ impl<'a> TablePlan<'a> {
         cells: &[CellHeight],
         spacing: f32,
         geometry: &geometry::HorizontalBox,
-    ) -> Result<RowGeometry, LayoutError> {
+    ) -> Result<RowGeometry, Failure> {
         measurer.work.spend(
             self.data
                 .grid
@@ -1182,7 +1207,7 @@ impl<'a> TablePlan<'a> {
         heights: &[f32],
         spacing: f32,
         projection: Option<(&[f32], &[f32])>,
-    ) -> Result<Vec<f32>, LayoutError> {
+    ) -> Result<Vec<f32>, Failure> {
         // Border-box extents already include baseline and vertical alignment.
         let cells = heights
             .iter()
@@ -1219,7 +1244,7 @@ impl<'a> TablePlan<'a> {
     pub(crate) fn cell_span(&self, index: usize, resolved: &TableGeometry) -> (f32, f32) {
         let cell = &self.data.grid.cells[index];
         resolved
-            .columns(self.style.rtl)
+            .columns(self.style.used_rtl())
             .span(cell.column, cell.columns)
     }
     pub(crate) fn cell_geometry(
@@ -1240,13 +1265,13 @@ impl<'a> TablePlan<'a> {
             .iter()
             .sum::<f32>()
             + resolved.spacing[0] * cell.columns.saturating_sub(1) as f32;
-        if self.style.rtl {
+        if self.style.used_rtl() {
             left += projected - outer;
         }
         geometry::HorizontalBox {
             containing_x: resolved.geometry.x,
             containing_width: original.table,
-            containing_rtl: self.style.rtl,
+            containing_rtl: self.style.used_rtl(),
             x: left + padding[3] + border[3],
             width: (outer - padding[1] - padding[3] - border[1] - border[3]).max(0.0),
             padding,
@@ -1257,11 +1282,11 @@ impl<'a> TablePlan<'a> {
 }
 
 pub(crate) fn resume<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     previous: &TableFlow<'a>,
     resolved: &TableGeometry,
     next_body: usize,
-) -> Result<MeasuredBlock<'a>, LayoutError> {
+) -> Result<MeasuredBlock<'a>, Failure> {
     measure_plan(
         measurer,
         &previous.plan,
@@ -1283,12 +1308,12 @@ fn append_table_boxes<'a>(
 }
 
 fn measure_plan<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     plan: &Rc<TablePlan<'a>>,
     resolved: &TableGeometry,
     previous: Option<&TableFlow<'a>>,
     next_body: usize,
-) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), LayoutError> {
+) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), Failure> {
     let block = BlockSource {
         block: plan.source,
         selected: plan.style,
@@ -1302,7 +1327,7 @@ fn measure_plan<'a>(
     let table_edges = resolved.edges;
     let sizes = &resolved.sizes;
     let vertical = resolved.spacing[1];
-    let columns = resolved.columns(style.rtl);
+    let columns = resolved.columns(style.used_rtl());
     let mut blocks = Vec::new();
     let mut heights = Vec::new();
     for (cell_index, cell) in data.grid.cells.iter().enumerate() {
@@ -1327,7 +1352,7 @@ fn measure_plan<'a>(
     let bottom = geometry.padding[2] + geometry.border[2];
     let height = top + content_height + bottom;
     if !height.is_finite() {
-        return Err(LayoutError::NonFiniteBlockGeometry { block: index });
+        return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
     }
     let [header_rows, footer_rows] = repeated_rows(data);
     let mut header = Vec::new();
@@ -1641,7 +1666,7 @@ fn measure_plan<'a>(
     let row_starts: Rc<[f32]> = rows.starts.into();
     let collapsed_grid = data.collapsed.clone().map(|borders| CollapsedGrid {
         borders,
-        lines: grid_lines(geometry.x, &sizes.widths, sizes.table, style.rtl),
+        lines: grid_lines(geometry.x, &sizes.widths, sizes.table, style.used_rtl()),
         offsets: row_starts.clone(),
     });
     let table = Some(Box::new(TableFlow {
@@ -1669,6 +1694,7 @@ fn measure_plan<'a>(
         (crate::layout::breaks::first_fragment(&items) + bottom + footer_height).min(height)
     };
     let measured = MeasuredBlock {
+        frame_key: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer

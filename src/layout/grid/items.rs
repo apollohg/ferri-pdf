@@ -1,6 +1,6 @@
 use crate::document::BlockBox;
+use crate::layout::measure::Failure;
 use crate::layout::{
-    LayoutError,
     geometry::{Edges, HorizontalBox, SizeConstraints},
     measure::{ItemMetrics, MeasuredBlock, MeasuredCell, Measurer},
 };
@@ -10,6 +10,7 @@ use std::ops::Range;
 pub(crate) struct Item<'a> {
     pub parent: Option<super::ParentContext>,
     pub source: &'a BlockBox,
+    pub inline_definite: bool,
     pub geometry: HorizontalBox,
     pub margins: [Option<f32>; 4],
     pub align: Alignment,
@@ -144,8 +145,8 @@ impl<'a> Item<'a> {
         parent: &HorizontalBox,
         alignment: [Alignment; 2],
         height: Option<f32>,
-        measurer: &Measurer<'_>,
-    ) -> Result<Self, LayoutError> {
+        measurer: &Measurer<'a>,
+    ) -> Result<Self, Failure> {
         let style = source.style();
         let available = area.end - area.start;
         let edges = Edges::of(style, available);
@@ -240,12 +241,13 @@ impl<'a> Item<'a> {
         } else {
             0.0
         }) + if auto == 0 {
-            offset(justify, free, parent.containing_rtl, style.rtl)
+            offset(justify, free, parent.containing_rtl, style.used_rtl())
         } else {
             0.0
         };
         Ok(Self {
             source,
+            inline_definite: !measurer.space.indefinite_inline,
             geometry: HorizontalBox {
                 containing_x: parent.x + area.start,
                 containing_width: available,
@@ -279,34 +281,35 @@ impl<'a> Item<'a> {
 
     pub(crate) fn measure(
         &self,
-        measurer: &mut Measurer<'_>,
+        measurer: &mut Measurer<'a>,
         height: Option<f32>,
         used_height: Option<f32>,
-    ) -> Result<MeasuredBlock<'a>, LayoutError> {
-        measurer.with_grid_parent(self.parent.clone(), |measurer| {
-            self.measure_contents(measurer, height, used_height)
+    ) -> Result<MeasuredBlock<'a>, Failure> {
+        let mut space = measurer.space;
+        space.indefinite_inline &= !self.inline_definite;
+        measurer.with_space(space, |measurer| {
+            measurer.with_grid_parent(self.parent.clone(), |measurer| {
+                self.measure_contents(measurer, height, used_height)
+            })
         })
     }
 
     fn measure_contents(
         &self,
-        measurer: &mut Measurer<'_>,
+        measurer: &mut Measurer<'a>,
         height: Option<f32>,
         used_height: Option<f32>,
-    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+    ) -> Result<MeasuredBlock<'a>, Failure> {
         if self.source.style().display.is_table() {
-            let plan = crate::layout::tables::TablePlan::new(
+            crate::layout::tables::measure_format(
                 measurer,
                 self.source,
+                &self.geometry,
                 height,
                 used_height,
-                crate::layout::geometry::horizontal_with_edges,
-            )?;
-            let geometry = plan.resolve_positioned(measurer, &self.geometry)?;
-            plan.measure_wrapped(measurer, &geometry)
-                .map(|(block, _)| block)
+            )
         } else {
-            measurer.format_block(
+            measurer.measure_format(
                 self.source,
                 self.geometry.clone(),
                 true,
@@ -318,9 +321,9 @@ impl<'a> Item<'a> {
 
     pub(crate) fn measure_area(
         &self,
-        measurer: &mut Measurer<'_>,
+        measurer: &mut Measurer<'a>,
         available: f32,
-    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+    ) -> Result<MeasuredBlock<'a>, Failure> {
         let used = self.stretch().then(|| {
             self.height(Some(available)).constrain(
                 (available
@@ -358,7 +361,7 @@ impl<'a> Item<'a> {
         parent: Range<usize>,
         parent_gap: f32,
         measurer: &Measurer<'_>,
-    ) -> Result<Vec<crate::grid::SizingItem>, LayoutError> {
+    ) -> Result<Vec<crate::grid::SizingItem>, Failure> {
         let child_gap = self.source.style().flex.gap[ROWS].resolve_normal(0.0, parent_gap);
         measurer.work.spend(rows.len().saturating_mul(4).max(1))?;
         Ok(crate::grid::subgrid_contributions(

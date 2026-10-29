@@ -247,10 +247,20 @@ fn spec(
 }
 
 /// CSS Conditional 5 §6.1: the size features of a query container with content-box `size`.
-fn container_spec(name: &str, [width, height]: [f32; 2]) -> Option<FeatureSpec> {
+fn container_spec(name: &str, [width, height]: [f32; 2], vertical: bool) -> Option<FeatureSpec> {
     Some(match name {
-        "width" | "inline-size" => FeatureSpec::number(ValueKind::Length, width.into(), false),
-        "height" | "block-size" => FeatureSpec::number(ValueKind::Length, height.into(), false),
+        "width" => FeatureSpec::number(ValueKind::Length, width.into(), false),
+        "height" => FeatureSpec::number(ValueKind::Length, height.into(), false),
+        "inline-size" => FeatureSpec::number(
+            ValueKind::Length,
+            if vertical { height } else { width }.into(),
+            false,
+        ),
+        "block-size" => FeatureSpec::number(
+            ValueKind::Length,
+            if vertical { width } else { height }.into(),
+            false,
+        ),
         "aspect-ratio" => FeatureSpec::number(
             ValueKind::Ratio,
             f64::from(width) / f64::from(height),
@@ -462,7 +472,10 @@ impl Value {
             matches!(
                 units::dimension(unit),
                 Some(Dimension::Length(units::LengthUnit {
-                    scale: Scale::Viewport(_) | Scale::Container(_),
+                    scale: Scale::Viewport(_)
+                        | Scale::Container(_)
+                        | Scale::ViewportLogical(_)
+                        | Scale::ContainerLogical(_),
                     ..
                 }))
             )
@@ -608,22 +621,29 @@ impl Feature {
 
     /// CSS Conditional 5 §6.1: a size feature of a query container with content-box `size`,
     /// relative lengths resolving against `relative`, the container's computed values.
-    pub(super) fn evaluate_container(&self, size: [f32; 2], relative: &Relative<'_>) -> Truth {
-        self.evaluate_with(|name| container_spec(name, size), relative)
+    pub(super) fn evaluate_container(
+        &self,
+        size: [f32; 2],
+        vertical: bool,
+        relative: &Relative<'_>,
+    ) -> Truth {
+        self.evaluate_with(|name| container_spec(name, size, vertical), relative)
     }
 
     /// The width and height a size container feature queries; `None` for a feature that is
     /// not one, which no container answers.
-    pub(super) fn container_axes(&self) -> Option<[bool; 2]> {
-        self.definition_with(|name| container_spec(name, [0.0; 2]))?;
+    pub(super) fn container_axes(&self, vertical: bool) -> Option<[bool; 2]> {
+        self.definition_with(|name| container_spec(name, [0.0; 2], vertical))?;
         let name = self.name.to_ascii_lowercase();
         let name = name
             .strip_prefix("min-")
             .or_else(|| name.strip_prefix("max-"))
             .unwrap_or(&name);
         Some(match name {
-            "width" | "inline-size" => [true, false],
-            "height" | "block-size" => [false, true],
+            "width" => [!vertical, vertical],
+            "height" => [vertical, !vertical],
+            "inline-size" => [true, false],
+            "block-size" => [false, true],
             _ => [true, true],
         })
     }

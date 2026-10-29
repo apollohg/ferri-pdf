@@ -67,8 +67,11 @@ impl FloatPlacement {
         last: bool,
     ) {
         let style = geometry.source.style();
-        let relative =
-            style.relative_offset(self.containing_width, geometry.containing_height, style.rtl);
+        let relative = style.relative_offset(
+            self.containing_width,
+            geometry.containing_height,
+            style.used_rtl(),
+        );
         self.fragments.truncate(
             self.fragments
                 .partition_point(|fragment| fragment.page < page),
@@ -157,7 +160,7 @@ impl FloatPlacement {
     }
 }
 
-impl<'a> Paginator<'a, '_, '_> {
+impl<'a> Paginator<'a, '_, 'a> {
     pub(super) fn reflow_float_geometry(
         &self,
         page: usize,
@@ -283,7 +286,7 @@ impl<'a> Paginator<'a, '_, '_> {
                             .clearance_end(
                                 self.page,
                                 child.style.clear,
-                                child.style.rtl,
+                                child.style.used_rtl(),
                                 &self.measurer.work,
                             )?;
                         if end
@@ -318,7 +321,7 @@ impl<'a> Paginator<'a, '_, '_> {
         let previous = std::mem::replace(&mut self.measurer.clearance_targets, targets);
         let result = self.measurer.format_block(
             block.source,
-            block.geometry.clone(),
+            &block.geometry,
             false,
             block.containing_height,
             None,
@@ -395,7 +398,7 @@ impl<'a> Paginator<'a, '_, '_> {
                 .clearance_end(
                     self.page,
                     block.style.clear,
-                    block.style.rtl,
+                    block.style.used_rtl(),
                     &self.measurer.work,
                 )?
                 .is_some_and(|(page, _)| page > self.page)
@@ -412,7 +415,7 @@ impl<'a> Paginator<'a, '_, '_> {
                 self.page,
                 hypothetical,
                 block.style.clear,
-                block.style.rtl,
+                block.style.used_rtl(),
                 &self.measurer.work,
             )?;
         let targeted = block.clearance_target == Some(self.page);
@@ -425,7 +428,7 @@ impl<'a> Paginator<'a, '_, '_> {
                     self.page,
                     f32::NEG_INFINITY,
                     block.style.clear,
-                    block.style.rtl,
+                    block.style.used_rtl(),
                     &self.measurer.work,
                 )?;
         }
@@ -433,8 +436,14 @@ impl<'a> Paginator<'a, '_, '_> {
             return Ok(());
         }
         let width = block.geometry.containing_width;
-        let before = before.resolve(width, self.measurer)?.value();
-        let after = block.before.resolve(width, self.measurer)?.value();
+        let before = self
+            .measurer
+            .run(|measurer| before.resolve(width, measurer))?
+            .value();
+        let after = self
+            .measurer
+            .run(|measurer| block.before.resolve(width, measurer))?
+            .value();
         let separated = before + after;
         // CSS 2.1 §9.5.2: clearance itself may be negative after margins stop collapsing.
         let clearance = (bottom - self.y - separated)
@@ -454,13 +463,15 @@ impl<'a> Paginator<'a, '_, '_> {
         let style = source.style();
         let previous = self.measurer.fragmentainer;
         self.measurer.fragmentainer = self.fragmentainers.kind();
-        let measured = crate::layout::inline::measure_shrink_to_fit(
-            self.measurer,
-            source,
-            width,
-            containing_height,
-            style.rtl,
-        );
+        let measured = self.measurer.run(|measurer| {
+            crate::layout::inline::measure_shrink_to_fit(
+                measurer,
+                source,
+                width,
+                containing_height,
+                style.used_rtl(),
+            )
+        });
         self.measurer.fragmentainer = previous;
         let (block, geometry) = measured?;
         let margins = geometry.margin.map(|margin| margin.unwrap_or(0.0));
@@ -561,7 +572,7 @@ impl<'a> Paginator<'a, '_, '_> {
             y,
             style.clear,
             side,
-            style.rtl,
+            style.used_rtl(),
             &self.measurer.work,
         )?;
         let placed = context.place(

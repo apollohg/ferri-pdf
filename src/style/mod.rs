@@ -38,7 +38,7 @@ mod initial_letter_values;
 mod layers;
 mod list_values;
 mod loader;
-mod logical;
+pub(crate) mod logical;
 mod mask_values;
 mod matcher;
 mod media;

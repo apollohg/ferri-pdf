@@ -1,7 +1,5 @@
 use crate::document::{BlockBox, BlockContent};
-use crate::layout::LayoutError;
-use crate::layout::measure::BlockSource;
-use crate::layout::measure::Measurer;
+use crate::layout::measure::{BlockSource, Failure, Measurer};
 use crate::style::{BoxSizing, LengthPercentage, Size};
 use crate::text::IntrinsicWidths;
 
@@ -9,11 +7,21 @@ use crate::text::IntrinsicWidths;
 /// stretch into `available`, the width of the containing block being sized into.
 pub(super) fn content<'a>(
     block: impl Into<BlockSource<'a>>,
-    measurer: &Measurer<'_>,
+    measurer: &Measurer<'a>,
     available: f32,
-) -> Result<IntrinsicWidths, LayoutError> {
+) -> Result<IntrinsicWidths, Failure> {
     let block = block.into();
     measurer.work.spend(1)?;
+    if block.flow().is_some() {
+        let mut probe = measurer.clone();
+        let geometry =
+            crate::layout::geometry::horizontal(block.style(), 0.0, available, false, None);
+        let measured = probe.frame(block, &geometry, None, None)?;
+        return Ok(IntrinsicWidths {
+            min: measured.geometry.width,
+            max: measured.geometry.width,
+        });
+    }
     if block.image().is_some() {
         return Ok(crate::layout::images::intrinsic(block, available));
     }
@@ -53,11 +61,11 @@ pub(super) fn content<'a>(
 }
 
 /// The largest widths of the block's in-flow children.
-fn flow(
-    block: &BlockBox,
-    measurer: &Measurer<'_>,
+pub(super) fn flow<'a>(
+    block: &'a BlockBox,
+    measurer: &Measurer<'a>,
     available: f32,
-) -> Result<IntrinsicWidths, LayoutError> {
+) -> Result<IntrinsicWidths, Failure> {
     let mut sizes = IntrinsicWidths::default();
     for child in block.children() {
         let child = match child {
@@ -79,9 +87,9 @@ fn flow(
 
 pub(super) fn measure<'a>(
     block: impl Into<BlockSource<'a>>,
-    measurer: &Measurer<'_>,
+    measurer: &Measurer<'a>,
     available: f32,
-) -> Result<IntrinsicWidths, LayoutError> {
+) -> Result<IntrinsicWidths, Failure> {
     let block = block.into();
     if block.style().display.is_table() {
         return crate::layout::tables::intrinsic(block, measurer, available);
@@ -163,11 +171,11 @@ pub(super) fn outer_widths(
 /// Width constraints with content measurements only when a keyword needs them.
 pub(super) fn width_constraints<'a>(
     block: impl Into<BlockSource<'a>>,
-    measurer: &Measurer<'_>,
+    measurer: &Measurer<'a>,
     basis: Option<f32>,
     edges: f32,
     available: Option<f32>,
-) -> Result<crate::style::SizeConstraints, LayoutError> {
+) -> Result<crate::style::SizeConstraints, Failure> {
     let block = block.into();
     let style = block.style();
     let sizes = [&style.width, &style.min_width, &style.max_width];

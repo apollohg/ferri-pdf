@@ -32,13 +32,13 @@ impl From<ExpansionLimit> for TextError {
 fn controls(style: &Style, root: bool) -> Controls {
     match style.unicode_bidi {
         UnicodeBidi::Normal => ("", ""),
-        UnicodeBidi::Embed if !root => (if style.rtl { RLE } else { LRE }, PDF),
-        UnicodeBidi::Isolate if !root => (if style.rtl { RLI } else { LRI }, PDI),
-        UnicodeBidi::BidiOverride => (if style.rtl { RLO } else { LRO }, PDF),
+        UnicodeBidi::Embed if !root => (if style.used_rtl() { RLE } else { LRE }, PDF),
+        UnicodeBidi::Isolate if !root => (if style.used_rtl() { RLI } else { LRI }, PDI),
+        UnicodeBidi::BidiOverride => (if style.used_rtl() { RLO } else { LRO }, PDF),
         UnicodeBidi::IsolateOverride if !root => {
-            (if style.rtl { FSI_RLO } else { FSI_LRO }, PDF_PDI)
+            (if style.used_rtl() { FSI_RLO } else { FSI_LRO }, PDF_PDI)
         }
-        UnicodeBidi::IsolateOverride => (if style.rtl { RLO } else { LRO }, PDF),
+        UnicodeBidi::IsolateOverride => (if style.used_rtl() { RLO } else { LRO }, PDF),
         UnicodeBidi::Plaintext if !root => (FSI, PDI),
         _ => ("", ""),
     }
@@ -48,6 +48,7 @@ struct Event {
     offset: usize,
     controls: Controls,
     opening: bool,
+    rank: u8,
 }
 
 fn events(paragraph: &Paragraph) -> Vec<Event> {
@@ -62,6 +63,7 @@ fn events(paragraph: &Paragraph) -> Vec<Event> {
                 offset: item.range.end,
                 controls: pair,
                 opening: false,
+                rank: 0,
             });
         }
     };
@@ -78,6 +80,7 @@ fn events(paragraph: &Paragraph) -> Vec<Event> {
                 offset: item.range.start,
                 controls: pair,
                 opening: true,
+                rank: 0,
             });
         }
         stack.push(index);
@@ -85,6 +88,55 @@ fn events(paragraph: &Paragraph) -> Vec<Event> {
     for index in stack.into_iter().rev() {
         close(index, &mut result);
     }
+    for span in paragraph.spans() {
+        if matches!(
+            span.style.used_writing_mode(),
+            crate::style::logical::WritingMode::VerticalRl
+                | crate::style::logical::WritingMode::VerticalLr
+        ) && span.style.text_orientation == crate::style::logical::TextOrientation::Upright
+            && span.atomic.is_none()
+        {
+            result.push(Event {
+                offset: span.range.start,
+                controls: (LRO, PDF),
+                opening: true,
+                rank: 1,
+            });
+            result.push(Event {
+                offset: span.range.end,
+                controls: (LRO, PDF),
+                opening: false,
+                rank: 1,
+            });
+        }
+    }
+    for group in crate::text::combine::groups(paragraph) {
+        let pair = (FSI_LRO, PDF_PDI);
+        result.push(Event {
+            offset: group.range.start,
+            controls: pair,
+            opening: true,
+            rank: 2,
+        });
+        result.push(Event {
+            offset: group.range.end,
+            controls: pair,
+            opening: false,
+            rank: 2,
+        });
+    }
+    result.sort_by_key(|event| {
+        (
+            event.offset,
+            match (event.rank, event.opening) {
+                (0, _) => 2,
+                (1, false) => 1,
+                (1, true) => 3,
+                (_, false) => 0,
+                (_, true) => 4,
+            },
+        )
+    });
     result
 }
 
@@ -334,7 +386,7 @@ pub(super) fn resolve<'p>(
     let text = paragraph.text();
     let style = paragraph.style();
     let base = (style.unicode_bidi != UnicodeBidi::Plaintext).then(|| {
-        if style.rtl {
+        if style.used_rtl() {
             Level::rtl()
         } else {
             Level::ltr()
@@ -343,6 +395,14 @@ pub(super) fn resolve<'p>(
     let root = controls(style, true);
     if text.is_empty()
         || (root.0.is_empty()
+            && crate::text::combine::groups(paragraph).is_empty()
+            && !paragraph.spans().iter().any(|span| {
+                matches!(
+                    span.style.used_writing_mode(),
+                    crate::style::logical::WritingMode::VerticalRl
+                        | crate::style::logical::WritingMode::VerticalLr
+                ) && span.style.text_orientation == crate::style::logical::TextOrientation::Upright
+            })
             && paragraph
                 .boxes()
                 .iter()

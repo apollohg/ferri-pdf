@@ -1,6 +1,7 @@
 use super::{topology::Topology, tracks::TrackGeometry};
 use crate::document::BlockBox;
-use crate::layout::{LayoutError, measure::Measurer};
+use crate::layout::measure::Failure;
+use crate::layout::measure::Measurer;
 use crate::style::ROWS;
 use std::{
     hash::{Hash, Hasher},
@@ -75,7 +76,7 @@ impl ParentContext {
         axis: usize,
         gap: Option<f32>,
         reverse: bool,
-    ) -> Result<Option<TrackGeometry>, LayoutError> {
+    ) -> Result<Option<TrackGeometry>, Failure> {
         self.tracks[axis]
             .as_ref()
             .map(|tracks| {
@@ -135,8 +136,8 @@ impl Measurer<'_> {
     pub(crate) fn with_grid_parent<T>(
         &mut self,
         parent: Option<ParentContext>,
-        measure: impl FnOnce(&mut Self) -> Result<T, LayoutError>,
-    ) -> Result<T, LayoutError> {
+        measure: impl FnOnce(&mut Self) -> Result<T, Failure>,
+    ) -> Result<T, Failure> {
         let previous = std::mem::replace(&mut self.grid_parent, parent);
         let result = measure(self);
         self.grid_parent = previous;

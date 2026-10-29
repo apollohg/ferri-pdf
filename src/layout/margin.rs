@@ -1,5 +1,6 @@
 use crate::document::BlockBox;
-use crate::layout::{LayoutError, measure::Measurer};
+use crate::layout::measure::Failure;
+use crate::layout::measure::Measurer;
 use crate::style::{LengthPercentage, Size};
 use std::rc::Rc;
 
@@ -112,7 +113,7 @@ impl<'a> MarginStrut<'a> {
         }
         result
     }
-    pub(crate) fn resolve(&self, width: f32, measurer: &Measurer<'_>) -> Result<Self, LayoutError> {
+    pub(crate) fn resolve(&self, width: f32, measurer: &Measurer<'a>) -> Result<Self, Failure> {
         if self.source.is_none() {
             return Ok(self.clone());
         }

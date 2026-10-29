@@ -716,7 +716,7 @@ fn clipped(
             Effect::Region(region, _) => {
                 pieces = pieces
                     .into_iter()
-                    .map(|polygon| super::navigation::map_polygon(polygon, *region))
+                    .map(|polygon| super::navigation::map_region(polygon, *region))
                     .filter(|polygon| !polygon.is_empty())
                     .collect();
             }

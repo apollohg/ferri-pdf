@@ -1,4 +1,4 @@
-use crate::layout::measure::BlockSource;
+use crate::layout::measure::{BlockSource, Failure};
 mod context;
 pub(crate) use context::ParentContext;
 mod fragmentation;
@@ -34,12 +34,26 @@ struct Plan<'a> {
 }
 
 impl<'a> Plan<'a> {
+    fn definite_columns(&self, index: usize, width: f32, measurer: &Measurer<'_>) -> bool {
+        if !measurer.space.indefinite_inline {
+            return true;
+        }
+        let area = self.topology.placement.areas[index][COLUMNS].clone();
+        let tracks = self.topology.axes[COLUMNS].sizing(Some(width));
+        tracks::fixed_extent(
+            &tracks[area.clone()],
+            &self.topology.axes[COLUMNS].collapsed[area],
+            self.gap(COLUMNS, Some(width)),
+        )
+        .is_some()
+    }
+
     fn new(
         block: BlockSource<'a>,
         measurer: &Measurer<'_>,
         sizes: [Option<f32>; 2],
         bounds: [SizeBounds; 2],
-    ) -> Result<Self, LayoutError> {
+    ) -> Result<Self, Failure> {
         let parent = measurer
             .grid_parent
             .as_ref()
@@ -55,13 +69,13 @@ impl<'a> Plan<'a> {
         bounds: [SizeBounds; 2],
         inherited: Option<ParentContext>,
         empty: bool,
-    ) -> Result<Self, LayoutError> {
+    ) -> Result<Self, Failure> {
         let style = block.style();
         let mut children = Vec::new();
         for child in block.children().iter().filter(|_| !empty) {
             match child {
                 BlockContent::Block(child) => children.push((children.len(), child)),
-                BlockContent::Inline(_) => return Err(LayoutError::InvalidGridStructure),
+                BlockContent::Inline(_) => return Err(LayoutError::InvalidGridStructure.into()),
                 BlockContent::Positioned(_) | BlockContent::Events(_) => {}
             }
         }
@@ -92,7 +106,7 @@ impl<'a> Plan<'a> {
             source_order,
             bounds,
             alignment: [style.flex.align_content, style.flex.justify],
-            rtl: style.rtl,
+            rtl: style.used_rtl(),
         })
     }
 
@@ -121,7 +135,7 @@ impl<'a> Plan<'a> {
         space: AvailableSpace,
         stretch: bool,
         measurer: &Measurer<'_>,
-    ) -> Result<TrackGeometry, LayoutError> {
+    ) -> Result<TrackGeometry, Failure> {
         if self.topology.lines[axis].subgridded
             && let Some(parent) = &self.inherited
         {
@@ -189,10 +203,10 @@ impl<'a> Plan<'a> {
     }
     fn column_contributions(
         &self,
-        measurer: &Measurer<'_>,
+        measurer: &Measurer<'a>,
         available: f32,
         parent_gap: f32,
-    ) -> Result<Vec<SizingItem>, LayoutError> {
+    ) -> Result<Vec<SizingItem>, Failure> {
         let mut output = Vec::new();
         for (index, (child, area)) in self
             .children
@@ -223,7 +237,7 @@ impl<'a> Plan<'a> {
                         + box_edges.border[side]
                         + style.margin[side].resolve(0.0).unwrap_or(0.0)
                 });
-                if style.rtl {
+                if style.used_rtl() {
                     sides.reverse();
                 }
                 measurer
@@ -232,7 +246,7 @@ impl<'a> Plan<'a> {
                 output.extend(crate::grid::subgrid_contributions(
                     &contributions,
                     area[COLUMNS].clone(),
-                    self.rtl != style.rtl,
+                    self.rtl != style.used_rtl(),
                     sides,
                     child_gap - parent_gap,
                 )?);
@@ -288,10 +302,10 @@ impl<'a> Plan<'a> {
 /// Min- and max-content widths; a size-contained grid is sized as if it had no items.
 pub(super) fn intrinsic<'a>(
     block: impl Into<BlockSource<'a>>,
-    measurer: &Measurer<'_>,
+    measurer: &Measurer<'a>,
     available: f32,
     contained: bool,
-) -> Result<IntrinsicWidths, LayoutError> {
+) -> Result<IntrinsicWidths, Failure> {
     let block = block.into();
     let bounds = [SizeBounds::default(); 2];
     let parent = measurer
@@ -330,7 +344,7 @@ impl<'a> Geometry<'a> {
         self: &Rc<Self>,
         parent: Option<ParentContext>,
         measurer: &Measurer<'_>,
-    ) -> Result<Rc<Self>, LayoutError> {
+    ) -> Result<Rc<Self>, Failure> {
         if self.matches_parent(parent.as_ref()) {
             return Ok(self.clone());
         }
@@ -364,11 +378,7 @@ impl<'a> Geometry<'a> {
         }))
     }
 
-    fn columns(
-        &self,
-        width: f32,
-        measurer: &Measurer<'_>,
-    ) -> Result<Rc<TrackGeometry>, LayoutError> {
+    fn columns(&self, width: f32, measurer: &Measurer<'a>) -> Result<Rc<TrackGeometry>, Failure> {
         if let Some(columns) = self.columns.borrow().get(&width.to_bits()) {
             return Ok(columns.clone());
         }
@@ -399,8 +409,8 @@ impl<'a> Geometry<'a> {
         &self,
         source: &'a BlockBox,
         parent: &crate::layout::geometry::HorizontalBox,
-        measurer: &Measurer<'_>,
-    ) -> Result<Option<(items::Item<'a>, f32)>, LayoutError> {
+        measurer: &Measurer<'a>,
+    ) -> Result<Option<(items::Item<'a>, f32)>, Failure> {
         let Some(&index) = self.items.get(&std::ptr::from_ref::<BlockBox>(source)) else {
             return Ok(None);
         };
@@ -418,6 +428,7 @@ impl<'a> Geometry<'a> {
             Some(row.end - row.start),
             measurer,
         )?;
+        item.inline_definite = self.plan.definite_columns(index, parent.width, measurer);
         item.inherit(
             self.plan
                 .child_context(index)
@@ -433,8 +444,8 @@ impl<'a> Geometry<'a> {
         padding: [f32; 4],
         overflow: Option<crate::graphics::Rect>,
         item: &crate::grid::ItemPlacement,
-        measurer: &Measurer<'_>,
-    ) -> Result<crate::graphics::Rect, LayoutError> {
+        measurer: &Measurer<'a>,
+    ) -> Result<crate::graphics::Rect, Failure> {
         let lines = self
             .plan
             .topology
@@ -518,17 +529,29 @@ mod tests {
                 let second = ParentContext::new(block, build_parent(), 0);
                 let geometry =
                     crate::layout::geometry::horizontal(block.style(), 0.0, 100.0, false, None);
-                let measure = |measurer: &mut Measurer<'_>, parent: ParentContext| {
+                fn measure<'a>(
+                    measurer: &mut Measurer<'a>,
+                    block: &'a BlockBox,
+                    geometry: &crate::layout::geometry::HorizontalBox,
+                    parent: ParentContext,
+                ) -> Result<crate::layout::measure::ItemMetrics, Failure> {
                     measurer.with_grid_parent(Some(parent), |measurer| {
-                        measurer.item_metrics(block, &geometry, None, None, |measurer| {
-                            measurer.format_block(block, geometry.clone(), true, None, None)
+                        measurer.item_metrics(block, geometry, None, None, |measurer| {
+                            measurer.measure_format(block, geometry.clone(), true, None, None)
                         })
                     })
-                };
-                assert_eq!(measure(measurer, first.clone()).unwrap().height, 20.0);
+                }
+                assert_eq!(
+                    measure(measurer, block, &geometry, first.clone())
+                        .unwrap()
+                        .height,
+                    20.0
+                );
                 measurer.work = crate::layout::work::Budget::new(0);
                 assert_eq!(
-                    measure(measurer, first.clone()).unwrap().height,
+                    measure(measurer, block, &geometry, first.clone())
+                        .unwrap()
+                        .height,
                     20.0,
                     "identical inherited context must reuse measurement"
                 );
@@ -548,16 +571,16 @@ mod tests {
                 );
                 assert!(
                     matches!(
-                        measure(measurer, geometry_context),
-                        Err(LayoutError::WorkLimit { .. })
+                        measure(measurer, block, &geometry, geometry_context),
+                        Err(Failure::Layout(LayoutError::WorkLimit { .. }))
                     ),
                     "resolved parent geometry must also distinguish cached measurements"
                 );
                 measurer.grid_parent = Some(first.clone());
                 assert!(
                     matches!(
-                        measure(measurer, second),
-                        Err(LayoutError::WorkLimit { .. })
+                        measure(measurer, block, &geometry, second),
+                        Err(Failure::Layout(LayoutError::WorkLimit { .. }))
                     ),
                     "a different parent plan must not reuse cached metrics"
                 );
@@ -586,7 +609,7 @@ mod tests {
                 let first = measurer
                     .item_metrics(block, &geometry, None, None, |measurer| {
                         let mut measured =
-                            measurer.format_block(block, geometry.clone(), true, None, None)?;
+                            measurer.measure_format(block, geometry.clone(), true, None, None)?;
                         Rc::get_mut(measured.grid.as_mut().expect("grid geometry"))
                             .expect("fresh measurement owns its geometry")
                             .row_contributions = Some(contributions.clone());
@@ -621,36 +644,56 @@ mod tests {
             |block, measurer| {
                 let geometry =
                     crate::layout::geometry::horizontal(block.style(), 0.0, 100.0, false, None);
-                let measure = |measurer: &mut Measurer<'_>, basis| {
-                    measurer.item_metrics(block, &geometry, None, Some(basis), |measurer| {
-                        measurer.format_block(block, geometry.clone(), true, Some(basis), None)
+                fn measure<'a>(
+                    measurer: &mut Measurer<'a>,
+                    block: &'a BlockBox,
+                    geometry: &crate::layout::geometry::HorizontalBox,
+                    basis: f32,
+                ) -> Result<crate::layout::measure::ItemMetrics, Failure> {
+                    measurer.item_metrics(block, geometry, None, Some(basis), |measurer| {
+                        measurer.measure_format(block, geometry.clone(), true, Some(basis), None)
                     })
-                };
-                let first = measure(measurer, 100.0).unwrap();
+                }
+                let first = measure(measurer, block, &geometry, 100.0).unwrap();
                 assert_eq!(first.height, 50.0);
                 measurer.work = crate::layout::work::Budget::new(0);
                 assert_eq!(
-                    measure(measurer, 100.0).unwrap().height,
+                    measure(measurer, block, &geometry, 100.0).unwrap().height,
                     first.height,
                     "an identical request must reuse the completed measurement"
                 );
                 assert!(
-                    matches!(measure(measurer, 200.0), Err(LayoutError::WorkLimit { .. })),
+                    matches!(
+                        measure(measurer, block, &geometry, 200.0),
+                        Err(Failure::Layout(LayoutError::WorkLimit { .. }))
+                    ),
                     "a different percentage basis must run measurement again"
                 );
                 measurer.work = crate::layout::work::Budget::new(crate::layout::MAX_LAYOUT_WORK);
-                assert_eq!(measure(measurer, 200.0).unwrap().height, 100.0);
-                assert_eq!(measure(measurer, 100.0).unwrap().height, 50.0);
+                assert_eq!(
+                    measure(measurer, block, &geometry, 200.0).unwrap().height,
+                    100.0
+                );
+                assert_eq!(
+                    measure(measurer, block, &geometry, 100.0).unwrap().height,
+                    50.0
+                );
             },
         );
     }
 
-    fn with_probe(html: &str, check: impl FnOnce(&BlockBox, &mut Measurer<'_>)) {
+    fn with_probe(html: &str, check: impl for<'a> FnOnce(&'a BlockBox, &mut Measurer<'a>)) {
         let resolver = FileResolver::default();
         let document =
             StyledDocument::parse(html, &ResourceBase::default(), &[], &resolver).unwrap();
         let text = TextContext::new(&document.styles().fonts, &resolver);
         let mut measurer = Measurer {
+            frame_measurements: Default::default(),
+            raw_templates: Default::default(),
+            raw_pagination: false,
+            column_measurement: false,
+            orthogonal_columns: None,
+            space: Default::default(),
             work: crate::layout::work::Budget::new(crate::layout::MAX_LAYOUT_WORK),
             text: &text,
             canvas_images: false,

@@ -15,17 +15,22 @@ fn trace(css: &str, body: &str) -> LayoutTrace {
 }
 
 fn colors(trace: &LayoutTrace) -> Vec<[u8; 3]> {
-    trace
-        .display_lists
-        .iter()
-        .flatten()
-        .filter_map(|item| match item {
-            DisplayItem::Box(paint) if paint.decoration.background.alpha > 0.0 => {
-                Some(paint.decoration.background.rgb)
+    fn collect(items: &[DisplayItem], colors: &mut Vec<[u8; 3]>) {
+        for item in items {
+            match item {
+                DisplayItem::Box(paint) if paint.decoration.background.alpha > 0.0 => {
+                    colors.push(paint.decoration.background.rgb);
+                }
+                DisplayItem::Frame(frame) => collect(&frame.items, colors),
+                _ => {}
             }
-            _ => None,
-        })
-        .collect()
+        }
+    }
+    let mut colors = Vec::new();
+    for page in &trace.display_lists {
+        collect(page, &mut colors);
+    }
+    colors
 }
 
 /// Each element queries its nearest size container, whose width layout measures; the query
@@ -326,4 +331,19 @@ fn query_substitutions_read_the_container_attributes_and_conditions() {
          <div class=c><div class='x z'></div></div>",
     );
     assert_eq!(colors(&trace), [GREEN, RED, RED, BLUE, GREEN]);
+}
+
+#[test]
+fn vertical_query_containers_distinguish_physical_sizes_from_logical_axes() {
+    for mode in ["vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"] {
+        let css = format!(
+            ".c{{writing-mode:{mode};container-type:size;width:80pt;height:120pt}}            .x{{background:red;width:10pt;height:10pt}}            @container (width:80pt) and (height:120pt) and (inline-size:120pt) and (block-size:80pt){{.x{{background:green}}}}"
+        );
+        let trace = trace(&css, "<div class=c><div class=x></div></div>");
+        assert_eq!(
+            colors(&trace),
+            [GREEN],
+            "{mode}: logical queries must use the container's axes while width/height stay physical"
+        );
+    }
 }

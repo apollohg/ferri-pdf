@@ -3,24 +3,127 @@
 use crate::style::{Style, grammar::Property};
 use std::sync::Arc;
 
-pub(super) const TOP: usize = 0;
-pub(super) const RIGHT: usize = 1;
-pub(super) const BOTTOM: usize = 2;
-pub(super) const LEFT: usize = 3;
+pub(crate) const TOP: usize = 0;
+pub(crate) const RIGHT: usize = 1;
+pub(crate) const BOTTOM: usize = 2;
+pub(crate) const LEFT: usize = 3;
 /// Physical corners in `border-radius` order, as the two sides meeting there.
 const CORNER_SIDES: [[usize; 2]; 4] = [[TOP, LEFT], [TOP, RIGHT], [BOTTOM, RIGHT], [BOTTOM, LEFT]];
 /// Physical dimensions: `width`/`overflow-x`, then `height`/`overflow-y`.
 const HORIZONTAL: usize = 0;
 const VERTICAL: usize = 1;
 
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize)]
 pub(crate) enum WritingMode {
     #[default]
     HorizontalTb,
+    VerticalRl,
+    VerticalLr,
+    SidewaysRl,
+    SidewaysLr,
+}
+impl WritingMode {
+    pub(super) fn from_component(
+        value: &crate::style::component::Component,
+    ) -> Result<Self, crate::style::StyleError> {
+        use crate::style::grammar::Keyword;
+        match value.keyword() {
+            Some(Keyword::HorizontalTb) => Ok(Self::HorizontalTb),
+            Some(Keyword::VerticalRl) => Ok(Self::VerticalRl),
+            Some(Keyword::VerticalLr) => Ok(Self::VerticalLr),
+            Some(Keyword::SidewaysRl) => Ok(Self::SidewaysRl),
+            Some(Keyword::SidewaysLr) => Ok(Self::SidewaysLr),
+            _ => Err(crate::style::box_values::unsupported(value)),
+        }
+    }
+    pub(crate) fn vertical(self) -> bool {
+        self != Self::HorizontalTb
+    }
+    pub(crate) fn page_progression_rtl(self, rtl: bool) -> bool {
+        match self {
+            Self::HorizontalTb => rtl,
+            Self::VerticalRl | Self::SidewaysRl => true,
+            Self::VerticalLr | Self::SidewaysLr => false,
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize)]
+pub(crate) enum TextOrientation {
+    #[default]
+    Mixed,
+    Upright,
+    Sideways,
+}
+impl TextOrientation {
+    pub(super) fn from_component(
+        value: &crate::style::component::Component,
+    ) -> Result<Self, crate::style::StyleError> {
+        use crate::style::grammar::Keyword;
+        match value.keyword() {
+            Some(Keyword::Mixed) => Ok(Self::Mixed),
+            Some(Keyword::Upright) => Ok(Self::Upright),
+            Some(Keyword::Sideways) => Ok(Self::Sideways),
+            _ => Err(crate::style::box_values::unsupported(value)),
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize)]
+pub(crate) enum TextCombine {
+    #[default]
+    None,
+    All,
+    Digits(u8),
+}
+impl TextCombine {
+    pub(super) fn from_component(
+        value: &crate::style::component::Component,
+        relative: &crate::style::units::Relative<'_>,
+    ) -> Result<Self, crate::style::StyleError> {
+        use crate::style::grammar::Keyword;
+        if value.keyword() == Some(Keyword::None) {
+            return Ok(Self::None);
+        }
+        if value.keyword() == Some(Keyword::All) {
+            return Ok(Self::All);
+        }
+        let mut leaves = Vec::new();
+        let mut pending = vec![value];
+        while let Some(value) = pending.pop() {
+            match value.unwrap() {
+                crate::style::component::Component::Group(items) => {
+                    pending.extend(items.iter().rev());
+                }
+                other => leaves.push(other),
+            }
+        }
+        let mut digits = false;
+        let mut count = 2;
+        for leaf in leaves {
+            if leaf.keyword() == Some(Keyword::Digits) {
+                digits = true;
+            } else {
+                count = crate::style::values::integer(leaf, relative)?;
+            }
+        }
+        if digits && (2..=4).contains(&count) {
+            Ok(Self::Digits(count as u8))
+        } else {
+            Err(crate::style::box_values::unsupported(value))
+        }
+    }
+    pub(crate) fn accepts(self, ch: char) -> bool {
+        match self {
+            Self::None => false,
+            Self::All => ch != crate::document::OBJECT_REPLACEMENT_CHARACTER,
+            Self::Digits(_) => ch.is_ascii_digit(),
+        }
+    }
 }
 
 /// How flow-relative terms map to physical ones for one box (CSS Writing Modes 4 §6).
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize)]
 pub(crate) struct Flow {
     pub(crate) writing_mode: WritingMode,
     pub(crate) rtl: bool,
@@ -259,32 +362,51 @@ const INERT_GROUPS: std::ops::Range<usize> = 12..15;
 impl Flow {
     pub(crate) fn of(style: &Style) -> Self {
         Self {
-            // The registry computes no `writing-mode` but its initial `horizontal-tb`.
-            writing_mode: WritingMode::HorizontalTb,
+            writing_mode: style.writing_mode,
             rtl: style.rtl,
         }
     }
 
-    fn side(self, axis: Axis, edge: Edge) -> usize {
-        match (self.writing_mode, axis) {
-            (WritingMode::HorizontalTb, Axis::Block) => match edge {
-                Edge::Start => TOP,
-                Edge::End => BOTTOM,
-            },
-            (WritingMode::HorizontalTb, Axis::Inline) => {
-                if (edge == Edge::Start) == self.rtl {
-                    RIGHT
-                } else {
-                    LEFT
-                }
-            }
+    pub(crate) fn used(style: &Style) -> Self {
+        Self {
+            writing_mode: style.used_writing_mode(),
+            rtl: style.used_rtl(),
         }
     }
 
+    pub(crate) fn horizontal(self) -> Self {
+        Self {
+            writing_mode: WritingMode::HorizontalTb,
+            ..self
+        }
+    }
+
+    pub(crate) fn sides<T: Clone>(self, from: Self, values: &[T; 4]) -> [T; 4] {
+        std::array::from_fn(|index| values[self.source(from, &SIDES, index)].clone())
+    }
+
+    pub(crate) fn corners<T: Clone>(self, from: Self, values: &[T; 4]) -> [T; 4] {
+        std::array::from_fn(|index| values[self.source(from, &CORNERS, index)].clone())
+    }
+
+    fn side(self, axis: Axis, edge: Edge) -> usize {
+        let ends = match (self.writing_mode, axis) {
+            (WritingMode::HorizontalTb, Axis::Block) => [TOP, BOTTOM],
+            (WritingMode::HorizontalTb, Axis::Inline) => [LEFT, RIGHT],
+            (WritingMode::VerticalRl | WritingMode::SidewaysRl, Axis::Block) => [RIGHT, LEFT],
+            (WritingMode::VerticalLr | WritingMode::SidewaysLr, Axis::Block) => [LEFT, RIGHT],
+            (WritingMode::SidewaysLr, Axis::Inline) => [BOTTOM, TOP],
+            (_, Axis::Inline) => [TOP, BOTTOM],
+        };
+        let end = (edge == Edge::End) ^ (axis == Axis::Inline && self.rtl);
+        ends[usize::from(end)]
+    }
+
     fn dimension(self, axis: Axis) -> usize {
-        match (self.writing_mode, axis) {
-            (WritingMode::HorizontalTb, Axis::Inline) => HORIZONTAL,
-            (WritingMode::HorizontalTb, Axis::Block) => VERTICAL,
+        if (axis == Axis::Block) == self.writing_mode.vertical() {
+            HORIZONTAL
+        } else {
+            VERTICAL
         }
     }
 
@@ -373,30 +495,59 @@ pub(crate) fn corresponding(property: Property, from: Flow, to: Flow) -> Propert
     counterpart(property, from).map_or(property, |logical| physical(logical, to))
 }
 
+pub(crate) fn decoration<I: Clone>(
+    source: &crate::paint::BoxDecoration<I>,
+    from: Flow,
+    to: Flow,
+) -> crate::paint::BoxDecoration<I> {
+    let mut result = source.clone();
+    result.borders = to.sides(from, &source.borders);
+    let mut radii = to.corners(from, &source.radii);
+    if from.writing_mode.vertical() != to.writing_mode.vertical() {
+        for corner in &mut radii {
+            corner.swap(0, 1);
+        }
+    }
+    result.radii = Arc::new(radii);
+    result
+}
+
 /// `source` with its box properties arranged for `flow`: each physical property holds the
 /// value of the property corresponding to it in `source`'s own flow.
 pub(crate) fn reflowed(source: &Style, flow: Flow) -> Style {
     let from = Flow::of(source);
     let side = |index| flow.source(from, &SIDES, index);
-    let corner = |index| flow.source(from, &CORNERS, index);
     let dimension = |index| flow.source(from, &DIMENSIONS, index);
     let dimensions = |values: [&crate::style::Size; 2]| -> [crate::style::Size; 2] {
         std::array::from_fn(|index| values[dimension(index)].clone())
     };
     let mut style = source.clone();
+    style.layout_writing_mode = from.writing_mode;
     style.margin = std::array::from_fn(|index| source.margin[side(index)].clone());
     style.padding = std::array::from_fn(|index| source.padding[side(index)].clone());
     style.inset = std::array::from_fn(|index| source.inset[side(index)].clone());
-    style.decoration.borders = std::array::from_fn(|index| source.decoration.borders[side(index)]);
-    style.decoration.radii = Arc::new(std::array::from_fn(|index| {
-        source.decoration.radii[corner(index)].clone()
-    }));
+    style.decoration = decoration(&source.decoration, from, flow);
     [style.width, style.height] = dimensions([&source.width, &source.height]);
     [style.min_width, style.min_height] = dimensions([&source.min_width, &source.min_height]);
     [style.max_width, style.max_height] = dimensions([&source.max_width, &source.max_height]);
     style.overflow = std::array::from_fn(|index| source.overflow[dimension(index)]);
     style.overflow_clip_margin =
         std::array::from_fn(|index| source.overflow_clip_margin[side(index)]);
+    style.object_position = std::array::from_fn(|axis| {
+        let edge = if axis == HORIZONTAL { LEFT } else { TOP };
+        let source_edge = flow.source(from, &SIDES, edge);
+        let source_axis = if matches!(source_edge, LEFT | RIGHT) {
+            HORIZONTAL
+        } else {
+            VERTICAL
+        };
+        let mut position = source.object_position[source_axis].clone();
+        position.from_end ^= matches!(source_edge, RIGHT | BOTTOM);
+        position
+    });
+    if from.writing_mode.vertical() != flow.writing_mode.vertical() {
+        style.aspect_ratio.ratio = source.aspect_ratio.ratio.map(f32::recip);
+    }
     for group in &GROUPS[INERT_GROUPS] {
         for (index, property) in group.physical.iter().enumerate() {
             let from = group.physical[flow.source(from, group.positions, index)];

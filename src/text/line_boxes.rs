@@ -331,7 +331,7 @@ pub(crate) fn arrange(
         let clone = inline_box.style.clone_decoration;
         let starts = clone || (!inline_box.continued[0] && line.start <= inline_box.range.start);
         let ends = clone || (!inline_box.continued[1] && inline_box.range.end <= line.end);
-        let present = if inline_box.style.rtl {
+        let present = if inline_box.style.used_rtl() {
             [ends, starts]
         } else {
             [starts, ends]
@@ -468,6 +468,7 @@ pub(crate) struct BoxMetrics {
     /// The font's baseline table, in em, and the used size it scales by.
     baselines: crate::fonts::BaselineTable,
     size: f32,
+    vertical: bool,
 }
 impl BoxMetrics {
     pub(crate) fn of(context: &TextContext<'_>, style: &Style) -> Result<Self, TextError> {
@@ -475,14 +476,21 @@ impl BoxMetrics {
         let instance = context
             .face(font, style)?
             .ok_or(TextError::NoFontCandidates)?;
+        let vertical = style.vertical_typographic_mode();
+        let metrics = FaceMetrics::of(&instance.face);
         Ok(Self::of_face(
-            &FaceMetrics::of(&instance.face),
+            &if vertical {
+                metrics.upright(&instance.face)
+            } else {
+                metrics
+            },
             instance.used_size(style),
             style.line_height.resolve(style.size),
+            vertical,
         ))
     }
     /// A face's metrics at `size`; `line_height` is `None` for `normal`.
-    fn of_face(metrics: &FaceMetrics, size: f32, line_height: Option<f32>) -> Self {
+    fn of_face(metrics: &FaceMetrics, size: f32, line_height: Option<f32>, vertical: bool) -> Self {
         let [ascent, descent, gap] =
             [metrics.ascent, metrics.descent, metrics.line_gap].map(|metric| metric * size);
         Self {
@@ -493,17 +501,28 @@ impl BoxMetrics {
             cap_height: metrics.cap_height * size,
             baselines: metrics.baselines,
             size,
+            vertical,
         }
     }
     /// How far `baseline` lies below the alphabetic baseline (CSS Inline 3 §3.3).
     pub(crate) fn baseline(&self, baseline: Baseline) -> f32 {
         let table = &self.baselines;
+        let baseline = if baseline == Baseline::Auto {
+            if self.vertical {
+                Baseline::Central
+            } else {
+                Baseline::Alphabetic
+            }
+        } else {
+            baseline
+        };
         match baseline {
-            Baseline::Alphabetic => 0.0,
+            Baseline::Auto => unreachable!("auto baseline was resolved"),
+            Baseline::Alphabetic => -table.alphabetic * self.size,
             Baseline::TextBottom => self.descent,
             Baseline::TextTop => -self.ascent,
             Baseline::Ideographic => -table.ideographic_under * self.size,
-            Baseline::Middle => -self.x_height / 2.0,
+            Baseline::Middle => -table.alphabetic * self.size - self.x_height / 2.0,
             Baseline::Central => {
                 -f32::midpoint(table.ideographic_over, table.ideographic_under) * self.size
             }
@@ -518,13 +537,13 @@ impl BoxMetrics {
         match (edge, under) {
             (TextEdge::Text, false) => -self.ascent,
             (TextEdge::Text, true) => self.descent,
-            (TextEdge::Cap, _) => -self.cap_height,
-            (TextEdge::Ex, _) => -self.x_height,
+            (TextEdge::Cap, _) => -table.alphabetic * self.size - self.cap_height,
+            (TextEdge::Ex, _) => -table.alphabetic * self.size - self.x_height,
             (TextEdge::Ideographic, false) => -table.ideographic_over * self.size,
             (TextEdge::Ideographic, true) => -table.ideographic_under * self.size,
             (TextEdge::IdeographicInk, false) => -table.ideographic_ink_over * self.size,
             (TextEdge::IdeographicInk, true) => -table.ideographic_ink_under * self.size,
-            (TextEdge::Alphabetic, _) => 0.0,
+            (TextEdge::Alphabetic, _) => -table.alphabetic * self.size,
             (TextEdge::Hanging, _) => -table.hanging * self.size,
         }
     }
@@ -730,7 +749,7 @@ pub(crate) fn align(
         let own = |baseline| metrics.baseline(baseline);
         let mut extent = metrics.extent();
         if let Some(ruby) = ruby {
-            let [over, under] = ruby.leading(index, &present, &metrics, basis)?;
+            let [over, under] = ruby.leading(index, &present, &metrics, atomics, basis)?;
             extent[0] -= over;
             extent[1] += under;
         }
@@ -755,23 +774,31 @@ pub(crate) fn align(
     let mut runs = Vec::with_capacity(line.runs.len());
     for run in &line.runs {
         let span = &paragraph.spans()[run.source_span];
-        let (placed, metrics, dominant) = owner(span.inline_box);
+        let (owner_placement, metrics, dominant) = owner(span.inline_box);
         // Each glyph's dominant baseline lies on its box's (CSS Inline 3 §4.1).
-        let glyphs = BoxMetrics::of_face(&run.metrics, run.metric_size, None);
+        let glyphs = BoxMetrics::of_face(&run.metrics, run.metric_size, None, metrics.vertical);
         let placed = Aligned {
-            shift: placed.shift + metrics.baseline(dominant) - glyphs.baseline(dominant),
-            ..placed
+            shift: owner_placement.shift + metrics.baseline(dominant) - glyphs.baseline(dominant),
+            ..owner_placement
         };
-        let mut extent = if span.style.line_height == crate::style::LineHeight::Normal {
-            run_extent(run)
+        let (layout, mut extent) = if span.style.line_height == crate::style::LineHeight::Normal {
+            (placed, run_extent(run))
         } else {
-            // CSS Inline 3 excludes fallback metrics from non-normal layout bounds.
-            BoxMetrics::of(context, &span.style)?.extent()
+            // Explicit leading uses the primary font's box, independently of glyph alignment.
+            let primary = BoxMetrics::of(context, &span.style)?;
+            (
+                Aligned {
+                    shift: owner_placement.shift + metrics.baseline(dominant)
+                        - primary.baseline(dominant),
+                    ..owner_placement
+                },
+                primary.extent(),
+            )
         };
         if let Some((leading, under)) = crate::text::emphasis::leading(context, &span.style, run)? {
             extent[usize::from(under)] += if under { leading } else { -leading };
         }
-        subtrees.include(placed, extent);
+        subtrees.include(layout, extent);
         runs.push(placed);
     }
     if let Some(offset) = newline {
@@ -795,7 +822,11 @@ pub(crate) fn align(
                 return font.baseline(baseline);
             }
             match baseline {
-                Baseline::Alphabetic | Baseline::TextBottom | Baseline::Ideographic => 0.0,
+                Baseline::Auto if parent.vertical => -metrics.height / 2.0,
+                Baseline::Auto
+                | Baseline::Alphabetic
+                | Baseline::TextBottom
+                | Baseline::Ideographic => 0.0,
                 Baseline::Central | Baseline::Mathematical | Baseline::Middle => {
                     -metrics.height / 2.0
                 }

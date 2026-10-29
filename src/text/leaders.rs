@@ -98,7 +98,7 @@ pub(super) fn wrapping_width(
                 left + width + extra,
                 width,
                 available,
-                paragraph.style().rtl,
+                paragraph.style().used_rtl(),
             )
             .1
         {
@@ -181,7 +181,7 @@ pub(super) fn expand(
             if width > 0.0 && width.is_finite() && extent.is_finite() {
                 let left = position;
                 let right = position + extent;
-                let origin = phase(left, right, width, available, paragraph.style().rtl).0;
+                let origin = phase(left, right, width, available, paragraph.style().used_rtl()).0;
                 let start = ((left - origin) / width).floor();
                 let end = ((right - origin) / width).ceil();
                 let count = (end - start).max(0.0) as usize;
@@ -295,7 +295,7 @@ pub(super) fn expand(
         text.push_str(&line.text[original..original + before]);
         original += before
             + crate::text::hyphenation::text(&paragraph.text()[span.range.clone()], None).len();
-        if span.style.rtl {
+        if span.style.used_rtl() {
             runs.reverse();
         }
         for run in runs {

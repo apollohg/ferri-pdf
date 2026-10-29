@@ -567,27 +567,29 @@ fn element_flows(
     style: &Style,
     parent: &Style,
 ) -> Result<Flows, StyleError> {
-    let direction = declarations.resolve_with(
-        Property::Direction,
-        &mut || Ok(style.align),
-        &mut || unreachable!("direction belongs to no logical property group"),
-        &mut |pending, _| {
-            declaration::substitute(
-                pending,
-                &style.custom_properties,
-                &style.inherited_custom_properties,
-            )
-        },
-    )?;
     let mut element = parent.clone();
-    if let Some(direction) = direction {
-        crate::style::properties::apply(
-            Property::Direction,
-            &direction.value,
-            &mut element,
-            parent,
-            &crate::style::units::Relative::initial(),
+    for property in [Property::Direction, Property::WritingMode] {
+        let value = declarations.resolve_with(
+            property,
+            &mut || Ok(style.align),
+            &mut || unreachable!("flow properties belong to no logical property group"),
+            &mut |pending, _| {
+                declaration::substitute(
+                    pending,
+                    &style.custom_properties,
+                    &style.inherited_custom_properties,
+                )
+            },
         )?;
+        if let Some(value) = value {
+            crate::style::properties::apply(
+                property,
+                &value.value,
+                &mut element,
+                parent,
+                &crate::style::units::Relative::initial(),
+            )?;
+        }
     }
     Ok(Flows {
         element: Flow::of(&element),

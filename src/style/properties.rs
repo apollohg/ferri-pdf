@@ -210,6 +210,12 @@ fn apply_value(
     };
     result.map_err(|error| attributed(property, input, error))?;
     if property == Property::Display {
+        if style.display == Display::RubyText
+            && parent.ruby.position == crate::style::RubyPosition::InterCharacter
+            && !parent.used_writing_mode().vertical()
+        {
+            style.writing_mode = crate::style::logical::WritingMode::VerticalRl;
+        }
         style.normalize_display(relative);
     }
     Ok(())
@@ -502,6 +508,18 @@ fn handler(property: Property) -> Option<Handler> {
             Some(|v, _| crate::style::Continue::from_component(v).is_ok()),
         ),
         P::TabSize => (tab_size, Some(|v, r| tab_size_value(v, r).is_ok())),
+        P::TextCombineUpright => (
+            text_combine,
+            Some(|v, r| crate::style::logical::TextCombine::from_component(v, r).is_ok()),
+        ),
+        P::TextOrientation => (
+            text_orientation,
+            Some(|v, _| crate::style::logical::TextOrientation::from_component(v).is_ok()),
+        ),
+        P::WritingMode => (
+            writing_mode,
+            Some(|v, _| crate::style::logical::WritingMode::from_component(v).is_ok()),
+        ),
         P::Direction => (direction, Some(|_, _| true)),
         P::UnicodeBidi => (
             unicode_bidi,
@@ -1856,6 +1874,27 @@ computed!(
     unicode_bidi,
     [unicode_bidi],
     |value, style, _parent, _relative| { crate::style::UnicodeBidi::from_component(value)? }
+);
+computed!(
+    text_combine,
+    [text_combine],
+    |value, style, _parent, relative| {
+        crate::style::logical::TextCombine::from_component(value, relative)?
+    }
+);
+computed!(
+    text_orientation,
+    [text_orientation],
+    |value, style, _parent, _relative| {
+        crate::style::logical::TextOrientation::from_component(value)?
+    }
+);
+computed!(
+    writing_mode,
+    [writing_mode],
+    |value, style, _parent, _relative| {
+        crate::style::logical::WritingMode::from_component(value)?
+    }
 );
 computed!(direction, [rtl], |value, style, _parent, _relative| flag(
     value,

@@ -82,6 +82,8 @@ pub(crate) struct Formatted {
 
 pub(crate) struct BlockBox {
     style: Box<Style>,
+    flow: Option<Box<BlockBox>>,
+    layout_flow: crate::style::logical::Flow,
     decoration: BoxDecoration,
     /// A float's `shape-outside` with its image loaded.
     shape_outside: crate::graphics::ShapeOutside,
@@ -127,6 +129,107 @@ pub(crate) enum BlockContent {
     Positioned(BlockBox),
 }
 impl BlockBox {
+    pub(crate) fn flow(&self) -> Option<&BlockBox> {
+        self.flow.as_deref()
+    }
+    pub(crate) fn layout_flow(&self) -> crate::style::logical::Flow {
+        self.layout_flow
+    }
+    pub(super) fn reflow(&mut self, parent: crate::style::logical::Flow) {
+        use crate::style::logical::{self, Flow};
+        enum Entry<'a> {
+            Block(&'a mut BlockBox, Flow, [Flow; 2]),
+            Paragraph(&'a mut Paragraph, Flow, [Flow; 2]),
+        }
+        let mut pending = vec![Entry::Block(self, parent, [parent; 2])];
+        while let Some(entry) = pending.pop() {
+            let (block, parent, mut containers) = match entry {
+                Entry::Block(block, parent, containers) => (block, parent, containers),
+                Entry::Paragraph(paragraph, flow, containers) => {
+                    pending.extend(
+                        paragraph
+                            .reflow()
+                            .into_iter()
+                            .map(|block| Entry::Block(block, flow, containers)),
+                    );
+                    continue;
+                }
+            };
+            let parent = match block.style.position {
+                crate::style::Position::Absolute => containers[0],
+                crate::style::Position::Fixed => containers[1],
+                _ => parent,
+            };
+            let computed = Flow::of(&block.style);
+            if (block.style.display.is_table_internal()
+                && block.style.display != Display::TableCell)
+                || matches!(
+                    block.style.display,
+                    Display::RubyBaseContainer | Display::RubyTextContainer
+                )
+            {
+                // Writing Modes 4 §3.1 excludes these structural boxes; descendants still inherit their computed value.
+                block.style.principal_flow = Some(parent);
+            }
+            let own = Flow::used(&block.style);
+            if block.style.contains_absolute() {
+                containers[0] = own;
+            }
+            if block.style.contains_fixed() {
+                containers[1] = own;
+            }
+            block.layout_flow = parent;
+            if own.writing_mode != parent.writing_mode && block.image.is_none() {
+                let mut style = block.style.anonymous(block.style.display.clone());
+                style.flex = block.style.flex.clone();
+                style.grid = block.style.grid.clone();
+                style.table = block.style.table.clone();
+                style.multicol = block.style.multicol.clone();
+                style.clamp = block.style.clamp.clone();
+                style.text_box = block.style.text_box;
+                let mut inner = Self::anonymous(style, Vec::new(), None);
+                inner.children = std::mem::take(&mut block.children);
+                inner.marker = block.marker.take();
+                block.flow = Some(Box::new(inner));
+                block.style.display = if block.style.display == Display::TableCell {
+                    Display::TableCell
+                } else if block.style.display.is_inline_level() {
+                    Display::InlineBlock
+                } else {
+                    Display::FlowRoot
+                };
+            }
+            if parent.writing_mode.vertical() {
+                let mut physical = (*block.style).clone();
+                physical.writing_mode = parent.writing_mode;
+                physical.rtl = parent.rtl;
+                block.decoration =
+                    logical::decoration(&block.decoration, parent, parent.horizontal());
+                *block.style = logical::reflowed(&physical, parent.horizontal());
+            }
+            block.style.writing_mode = computed.writing_mode;
+            block.style.rtl = computed.rtl;
+            block.style.layout_writing_mode = parent.writing_mode;
+            if let Some(inner) = &mut block.flow {
+                pending.push(Entry::Block(inner, own, containers));
+            }
+            for child in &mut block.children {
+                match child {
+                    BlockContent::Block(child) | BlockContent::Positioned(child) => {
+                        pending.push(Entry::Block(child, own, containers));
+                    }
+                    BlockContent::Inline(paragraph) => {
+                        pending.push(Entry::Paragraph(paragraph, own, containers));
+                    }
+                    BlockContent::Events(_) => {}
+                }
+            }
+            if let Some(marker) = &mut block.marker {
+                pending.push(Entry::Paragraph(marker, own, containers));
+            }
+        }
+    }
+
     pub(super) fn anonymous(
         style: Style,
         children: Vec<BlockContent>,
@@ -208,7 +311,9 @@ impl BlockBox {
         }
         let page = crate::document::PageBoundary::new(page_scope, &style, &children);
         Self {
+            layout_flow: crate::style::logical::Flow::of(&style),
             style: Box::new(style),
+            flow: None,
             decoration,
             shape_outside: crate::graphics::ShapeOutside::None,
             children,
@@ -565,6 +670,16 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         if self.ruby.text(self.inline, text, style)? {
             return Ok(());
         }
+        let overridden = self
+            .ruby
+            .annotation_mode()
+            .filter(|mode| self.inline.open_style().is_none() && *mode != style.used_writing_mode())
+            .map(|mode| {
+                let mut style = style.clone();
+                style.writing_mode = mode;
+                style
+            });
+        let style = overridden.as_ref().unwrap_or(style);
         if self.ruby.in_annotation() && style.white_space.preserves_breaks() {
             for (index, part) in text.split(SEGMENT_BREAK).enumerate() {
                 if index > 0 {
@@ -2044,6 +2159,14 @@ fn block<'a>(
             if let Some(inner) = run_in {
                 child_style.display = inner;
             }
+            if child_style.display == Display::Inline
+                && builder
+                    .ruby
+                    .annotation_mode()
+                    .is_some_and(|mode| mode != child_style.used_writing_mode())
+            {
+                child_style.display = Display::InlineBlock;
+            }
             let placement = if child_style.display == Display::Contents {
                 None
             } else if child_style.position.is_out_of_flow() || child_style.floating().is_some() {
@@ -2408,6 +2531,12 @@ pub(crate) fn build(
         &mut resources,
     )?;
     root.trim_text_boxes([false; 2])?;
+    // Writing Modes 4 §8: HTML's first body supplies the root's used flow after style computation.
+    if let Some(body) = html.body_element() {
+        let principal = sheet.computed_with_resolver(body, root.style(), resolver)?;
+        root.style.principal_flow = Some(crate::style::logical::Flow::of(&principal));
+    }
+    root.reflow(crate::style::logical::Flow::used(root.style()));
     Ok(Formatted {
         root,
         navigation: traversal.navigation,

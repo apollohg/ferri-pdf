@@ -89,7 +89,7 @@ fn letter_exclusion(
     ))
 }
 
-impl<'a, 't> Paginator<'a, '_, 't> {
+impl<'a> Paginator<'a, '_, 'a> {
     fn place_inline_float(
         &mut self,
         measured: floats::MeasuredFloat<'a>,
@@ -173,7 +173,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
 
     fn fit_float_line(
         &self,
-        prepared: &crate::text::PreparedParagraph<'a, 't, 't>,
+        prepared: &crate::text::PreparedParagraph<'a, 'a, 'a>,
         position: crate::text::TextPosition<'a>,
         metrics: &[crate::text::AtomicMetrics],
         bounds: [f32; 2],
@@ -244,7 +244,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
     pub(super) fn start_paragraph(
         &mut self,
         paragraph: MeasuredParagraph<'a>,
-    ) -> ParagraphCursor<'a, 't> {
+    ) -> ParagraphCursor<'a, 'a> {
         self.pending_break = None;
         self.flush_margin();
         let prepared = None;
@@ -278,7 +278,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             InlineContaining {
                 width,
                 height: containing_height,
-                rtl: style.rtl,
+                rtl: style.used_rtl(),
             },
         );
         if lines.as_slice().is_empty() {
@@ -322,9 +322,9 @@ impl<'a, 't> Paginator<'a, '_, 't> {
     }
     pub(super) fn paragraph_fragment(
         &mut self,
-        cursor: Box<ParagraphCursor<'a, 't>>,
+        cursor: Box<ParagraphCursor<'a, 'a>>,
         tail: BreakTail,
-    ) -> Result<Option<Box<ParagraphCursor<'a, 't>>>, LayoutError> {
+    ) -> Result<Option<Box<ParagraphCursor<'a, 'a>>>, LayoutError> {
         let text = self.measurer.text;
         let ParagraphCursor {
             index,
@@ -387,13 +387,15 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     containing_height = height;
                     for (index, atomic) in atomics.iter_mut().enumerate() {
                         if atomic.is_some() {
-                            let measured = crate::layout::inline::measure(
-                                self.measurer,
-                                &source.inline_block(index).block,
-                                width,
-                                height,
-                                style.rtl,
-                            )?;
+                            let measured = self.measurer.run(|measurer| {
+                                crate::layout::inline::measure(
+                                    measurer,
+                                    &source.inline_block(index).block,
+                                    width,
+                                    height,
+                                    style.used_rtl(),
+                                )
+                            })?;
                             metrics[index] = measured.metrics;
                             *atomic = Some(measured);
                         }
@@ -478,8 +480,8 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                             }) {
                                 let measured =
                                     self.measure_float(&anchor.block, width, containing_height)?;
-                                let prefix = (line.x_at(anchor.offset, style.rtl)
-                                    - line.x_at(line.range.start, style.rtl))
+                                let prefix = (line.x_at(anchor.offset, style.used_rtl())
+                                    - line.x_at(line.range.start, style.used_rtl()))
                                 .abs();
                                 let occupied =
                                     prefix + if prefix > 0.0 { line.indent } else { 0.0 };
@@ -497,7 +499,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                                         &atomics,
                                         &line,
                                         placement,
-                                        style.rtl,
+                                        style.used_rtl(),
                                         &mut trials,
                                     );
                                 }
@@ -515,7 +517,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                                     &atomics,
                                     &line,
                                     placement,
-                                    style.rtl,
+                                    style.used_rtl(),
                                     &mut trials,
                                 );
                             }
@@ -561,7 +563,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             layers.set_containing(InlineContaining {
                 width,
                 height: containing_height,
-                rtl: style.rtl,
+                rtl: style.used_rtl(),
             });
             let remaining = lines.as_slice().len();
             let mut height = 0.0;
@@ -608,14 +610,18 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 let mut next_metrics = metrics.clone();
                 for (index, atomic) in atomics.iter().enumerate() {
                     if atomic.is_some() {
-                        next_metrics[index] = crate::layout::inline::measure(
-                            self.measurer,
-                            &source.inline_block(index).block,
-                            next_width,
-                            next_height,
-                            style.rtl,
-                        )?
-                        .metrics;
+                        next_metrics[index] = self
+                            .measurer
+                            .run(|measurer| {
+                                crate::layout::inline::measure(
+                                    measurer,
+                                    &source.inline_block(index).block,
+                                    next_width,
+                                    next_height,
+                                    style.used_rtl(),
+                                )
+                            })?
+                            .metrics;
                     }
                 }
                 if prepared.is_none() {
@@ -716,7 +722,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 } else {
                     (x, width)
                 };
-                let offset = line.alignment_offset(line_width, style.rtl);
+                let offset = line.alignment_offset(line_width, style.used_rtl());
                 while let Some(anchor) = anchors.next_if(|anchor| anchor.line == line_index) {
                     consumed_anchors += 1;
                     self.line_anchor(&anchor, line_x, line_width, offset, line.height, &layers);
@@ -742,6 +748,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 self.string_locations.text(self.page);
                 line_index += 1;
                 let baseline = self.top + self.y + line.ascent + self.offset[1];
+                self.record_baselines(self.page, [Some(baseline); 2]);
                 self.record_overflow(Rect {
                     x: line_x + offset + self.offset[0],
                     y: self.top + self.y + self.offset[1],
@@ -774,6 +781,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     &mut atomics,
                     line_layers,
                 )?;
+                self.record_baselines(self.page, [Some(baseline); 2]);
                 letter = None;
                 let paragraph = line_layers.paragraph;
                 // Runs inside inline boxes with their own layers paint in them.
@@ -909,7 +917,12 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         }
         for (inline_box, fragments) in layers.painted() {
             if !inline_box.style.clone_decoration {
-                assemble_background(fragments, &mut self.foreground, true, inline_box.style.rtl);
+                assemble_background(
+                    fragments,
+                    &mut self.foreground,
+                    true,
+                    inline_box.style.used_rtl(),
+                );
             }
         }
         Ok(None)

@@ -366,6 +366,9 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                 let natural = cells.clone();
                 let mut spanning = Vec::new();
                 for (level_index, level) in segment.levels.iter().enumerate() {
+                    if level.inter_character {
+                        continue;
+                    }
                     let merged = self.merges(level, &bases, &gaps, span, widths)?;
                     if merged && level.style.ruby.merge == RubyMerge::Auto {
                         ruby_line
@@ -419,6 +422,42 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                     &natural,
                     &mut ruby_line,
                 )?;
+                let mut reservations = Vec::new();
+                for level in segment.levels.iter().filter(|level| level.inter_character) {
+                    for annotation in level
+                        .annotations
+                        .iter()
+                        .filter(|annotation| !annotation.hidden && !annotation.whitespace)
+                    {
+                        if annotation.bases.is_empty() {
+                            continue;
+                        }
+                        let base_index = if ruby_rtl(paragraph, ruby) {
+                            annotation.bases.start
+                        } else {
+                            annotation.bases.end - 1
+                        };
+                        if base_index < first || base_index > last {
+                            continue;
+                        }
+                        let base = segment.bases[base_index];
+                        let at = slot_span(paragraph, arranged, base).map_or_else(
+                            || arranged.insertion(paragraph.boxes()[base].range.end),
+                            |[_, end]| end + 1,
+                        );
+                        reservations.push((at, self.width(annotation, widths)?));
+                    }
+                }
+                reservations.sort_by_key(|(at, _)| std::cmp::Reverse(*at));
+                for (at, width) in reservations {
+                    arranged.order.insert(
+                        at,
+                        Slot::Space {
+                            owner: Some(ruby.container),
+                            width,
+                        },
+                    );
+                }
             }
         }
         self.overhang(arranged, &mut ruby_line, widths)?;
@@ -489,7 +528,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
             } else {
                 (0.0, 0.0)
             };
-            let (leading, trailing) = if paragraph.boxes()[base].style.rtl {
+            let (leading, trailing) = if paragraph.boxes()[base].style.used_rtl() {
                 (trailing, leading)
             } else {
                 (leading, trailing)
@@ -546,7 +585,16 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         widths: &[f32],
     ) -> Result<(), TextError> {
         let paragraph = self.paragraph;
-        let rubies: Vec<&Ruby> = paragraph.rubies().iter().collect();
+        let rubies: Vec<&Ruby> = paragraph
+            .rubies()
+            .iter()
+            .filter(|ruby| {
+                !ruby
+                    .segments
+                    .iter()
+                    .any(|segment| segment.levels.iter().any(|level| level.inter_character))
+            })
+            .collect();
         for ruby in rubies {
             let Some([start, end]) = slot_span(paragraph, arranged, ruby.container) else {
                 continue;
@@ -758,7 +806,67 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                 }
                 let mut over = container[0];
                 let mut under = container[1];
+                let mut inter_offsets = HashMap::<usize, f32>::new();
                 for (level_index, level) in segment.levels.iter().enumerate() {
+                    if level.inter_character {
+                        for annotation in level
+                            .annotations
+                            .iter()
+                            .filter(|annotation| !annotation.hidden && !annotation.whitespace)
+                        {
+                            let Some(block) = annotation.block else {
+                                continue;
+                            };
+                            let base_index = if ruby_rtl(paragraph, ruby) {
+                                annotation.bases.start
+                            } else {
+                                annotation.bases.end - 1
+                            };
+                            if base_index < first || base_index > last {
+                                continue;
+                            }
+                            let base = segment.bases[base_index];
+                            let Some(pieces) = fragments.get(&base) else {
+                                continue;
+                            };
+                            let top = pieces
+                                .iter()
+                                .map(|piece| piece.baseline - piece.ascent)
+                                .fold(f32::INFINITY, f32::min);
+                            let bottom = pieces
+                                .iter()
+                                .map(|piece| piece.baseline + piece.descent)
+                                .fold(f32::NEG_INFINITY, f32::max);
+                            let right = pieces
+                                .iter()
+                                .map(|piece| piece.x + piece.width)
+                                .fold(f32::NEG_INFINITY, f32::max)
+                                + paragraph.boxes()[base].style.margin[RIGHT]
+                                    .resolve(basis)
+                                    .unwrap_or(0.0);
+                            let index = paragraph.atomics().len() + block;
+                            let metric = metrics[index];
+                            let y = if annotation.style.ruby.align == RubyAlign::Start {
+                                top
+                            } else {
+                                f32::midpoint(top, bottom) - metric.height * HALF
+                            };
+                            let offset = inter_offsets.entry(base).or_default();
+                            placed.push(AtomicFragment {
+                                index,
+                                x: right + *offset,
+                                width: metric.width,
+                                baseline: y + metric.baseline,
+                                offset: paragraph.annotations()[block].offset,
+                                owner: Some(ruby.container),
+                                rtl: false,
+                            });
+                            *offset += metric.width;
+                            over = over.min(y);
+                            under = under.max(y + metric.height);
+                        }
+                        continue;
+                    }
                     let merged = level.style.ruby.merge == RubyMerge::Merge
                         || line
                             .ruby
@@ -912,6 +1020,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         container: usize,
         present: &[usize],
         container_metrics: &BoxMetrics,
+        metrics: &[super::AtomicMetrics],
         basis: f32,
     ) -> Result<[f32; 2], TextError> {
         let Some(ruby) = self
@@ -922,7 +1031,18 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         else {
             return Ok([0.0; 2]);
         };
-        let ([above, below], heights) = self.stack(ruby, present, basis)?;
+        let ([above, below], heights) = self.stack(ruby, present, metrics, basis)?;
+        if ruby
+            .segments
+            .iter()
+            .any(|segment| segment.levels.iter().any(|level| level.inter_character))
+        {
+            let extent = container_metrics.extent();
+            return Ok([
+                (above + heights[0] + extent[0]).max(0.0),
+                (below + heights[1] - extent[1]).max(0.0),
+            ]);
+        }
         let extra = heights[0] + above + below + heights[1] - container_metrics.line_height();
         let annotated = heights[0] + heights[1];
         if extra <= 0.0 || annotated <= 0.0 {
@@ -938,6 +1058,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         &self,
         ruby: &Ruby,
         present: &[usize],
+        metrics: &[super::AtomicMetrics],
         basis: f32,
     ) -> Result<([f32; 2], [f32; 2]), TextError> {
         let paragraph = self.paragraph;
@@ -958,12 +1079,34 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                     .iter()
                     .filter(|nested| paragraph.is_within(Some(nested.container), base))
                 {
-                    let ([above, below], [over, under]) = self.stack(nested, present, basis)?;
+                    let ([above, below], [over, under]) =
+                        self.stack(nested, present, metrics, basis)?;
                     content = [content[0].max(above + over), content[1].max(below + under)];
                 }
             }
             let mut sides = [0.0f32; 2];
+            let base_content = content;
             for level in &segment.levels {
+                if level.inter_character {
+                    for annotation in level
+                        .annotations
+                        .iter()
+                        .filter(|annotation| !annotation.hidden && !annotation.whitespace)
+                    {
+                        let Some(block) = annotation.block else {
+                            continue;
+                        };
+                        let height = metrics[paragraph.atomics().len() + block].height;
+                        let top = if annotation.style.ruby.align == RubyAlign::Start {
+                            -base_content[0]
+                        } else {
+                            (base_content[1] - base_content[0] - height) * HALF
+                        };
+                        content[0] = content[0].max(-top);
+                        content[1] = content[1].max(top + height);
+                    }
+                    continue;
+                }
                 let mut extent = [0.0f32; 2];
                 let mut any = false;
                 for placement in Self::placed(level, span, false) {
@@ -989,7 +1132,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
 /// Whether `ruby`'s base container, which shares its container's direction, runs right to
 /// left.
 fn ruby_rtl(paragraph: &Paragraph, ruby: &Ruby) -> bool {
-    paragraph.boxes()[ruby.container].style.rtl
+    paragraph.boxes()[ruby.container].style.used_rtl()
 }
 
 /// The `[left, right]` extents of a line's columns, where a base without a fragment on the
@@ -1017,7 +1160,7 @@ fn collapsed_columns(columns: &[Option<[f32; 2]>], rtl: bool) -> Vec<[f32; 2]> {
 /// How `ruby-align` spreads `extra` space around content with `count` justification
 /// opportunities: the space before and after it, and what each opportunity takes (§4.3).
 /// Without opportunities, the justifying values centre the content.
-fn distribution(align: RubyAlign, extra: f32, count: usize) -> (f32, f32, f32) {
+pub(super) fn distribution(align: RubyAlign, extra: f32, count: usize) -> (f32, f32, f32) {
     match align {
         RubyAlign::Start => (0.0, extra, 0.0),
         RubyAlign::SpaceBetween if count > 0 => (0.0, 0.0, extra / count as f32),

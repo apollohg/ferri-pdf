@@ -141,6 +141,7 @@ fn own_backdrops(
                 backdrops.push((item, backdrop, transform));
             }
             DisplayItem::Backdrop(_)
+            | DisplayItem::Frame(_)
             | DisplayItem::Image(_)
             | DisplayItem::Box(_)
             | DisplayItem::Text { .. }

@@ -1,13 +1,14 @@
 use crate::document::{BlockBox, BoxNavigation};
+use crate::layout::measure::Failure;
 use crate::layout::measure::{FlowItem, MeasuredBlock, Measurer};
-use crate::layout::{LayoutError, breaks, geometry, intrinsic, margin::MarginStrut};
+use crate::layout::{breaks, geometry, intrinsic, margin::MarginStrut};
 use crate::style::{BreakBetween, CaptionSide};
 
-pub(super) fn minimum(
-    captions: &[&BlockBox],
-    measurer: &Measurer<'_>,
+pub(super) fn minimum<'a>(
+    captions: &[&'a BlockBox],
+    measurer: &Measurer<'a>,
     available: f32,
-) -> Result<f32, LayoutError> {
+) -> Result<f32, Failure> {
     let mut minimum: f32 = 0.0;
     for caption in captions {
         minimum = minimum.max(intrinsic::measure(*caption, measurer, available)?.min);
@@ -16,11 +17,11 @@ pub(super) fn minimum(
 }
 
 pub(super) fn wrap<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     mut table: MeasuredBlock<'a>,
     captions: &[&'a BlockBox],
     geometry: &geometry::HorizontalBox,
-) -> Result<MeasuredBlock<'a>, LayoutError> {
+) -> Result<MeasuredBlock<'a>, Failure> {
     if captions.is_empty() {
         return Ok(table);
     }
@@ -42,9 +43,15 @@ pub(super) fn wrap<'a>(
     let mut top = Vec::new();
     let mut bottom = Vec::new();
     for &source in captions {
-        let caption_geometry =
-            crate::layout::measure::block_geometry(measurer, source, x, width, style.rtl, None)?;
-        let caption = measurer.format_block(source, caption_geometry, true, None, None)?;
+        let caption_geometry = crate::layout::measure::block_geometry(
+            measurer,
+            source,
+            x,
+            width,
+            style.used_rtl(),
+            None,
+        )?;
+        let caption = measurer.measure_format(source, caption_geometry, true, None, None)?;
         match source.style().table.caption_side {
             CaptionSide::Top => top.push(caption),
             CaptionSide::Bottom => bottom.push(caption),
@@ -84,6 +91,7 @@ pub(super) fn wrap<'a>(
     };
     let (break_before, break_after) = breaks::boundaries(style, &items, edges);
     Ok(MeasuredBlock {
+        frame_key: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer

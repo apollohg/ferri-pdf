@@ -459,6 +459,26 @@ pub(crate) struct Parent3d {
     pub(crate) preserves_3d: bool,
 }
 
+impl Parent3d {
+    pub(crate) fn mapped(self, affine: Matrix) -> Self {
+        let lift =
+            |[a, b, c, d, x, y]: Matrix| multiply(&translation([x, y, 0.0]), &planar([a, b, c, d]));
+        let into = lift(affine);
+        let out = lift(
+            kurbo::Affine::new(affine.map(f64::from))
+                .inverse()
+                .as_coeffs()
+                .map(|value| value as f32),
+        );
+        Self {
+            perspective: self
+                .perspective
+                .map(|matrix| multiply(&into, &multiply(&matrix, &out))),
+            ..self
+        }
+    }
+}
+
 fn corners(rect: Rect) -> [[f32; 2]; 4] {
     let [right, bottom] = [rect.x + rect.width, rect.y + rect.height];
     [
@@ -643,5 +663,65 @@ impl Style {
             None => own,
         };
         project(&accumulated, reference, self.backface_hidden).map(Some)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn mapped_parent_perspective_preserves_depth_and_off_center_projection() {
+        const DEPTH: f32 = 100.0;
+        const POINT: [f32; 3] = [11.0, 17.0, 25.0];
+        const ORIGIN: [f32; 3] = [7.0, 13.0, 0.0];
+        const TOLERANCE: f32 = 1e-4;
+        let parent = Parent3d {
+            perspective: Some(multiply(
+                &multiply(&translation(ORIGIN), &perspective(DEPTH)),
+                &translation(ORIGIN.map(|value| -value)),
+            )),
+            preserves_3d: true,
+        };
+        for affine @ [a, b, c, d, x, y] in [
+            [0.0, 1.0, -1.0, 0.0, 200.0, 30.0],
+            [0.0, 1.0, 1.0, 0.0, 20.0, 30.0],
+            [0.0, -1.0, 1.0, 0.0, 20.0, 200.0],
+        ] {
+            let mapped = parent.mapped(affine);
+            assert!(
+                mapped.preserves_3d,
+                "changing writing coordinates preserves the rendering context"
+            );
+            let matrix = mapped
+                .perspective
+                .expect("mapped parent retains perspective");
+            let [px, py, pz] = POINT;
+            let point = [a * px + c * py + x, b * px + d * py + y, pz, 1.0];
+            let homogeneous: [f32; 4] = std::array::from_fn(|row| {
+                (0..DIMENSION)
+                    .map(|column| matrix[column * DIMENSION + row] * point[column])
+                    .sum()
+            });
+            let w = 1.0 - pz / DEPTH;
+            let original = [
+                (px - ORIGIN[0] * pz / DEPTH) / w,
+                (py - ORIGIN[1] * pz / DEPTH) / w,
+                pz / w,
+            ];
+            let expected = [
+                a * original[0] + c * original[1] + x,
+                b * original[0] + d * original[1] + y,
+                original[2],
+            ];
+            for axis in 0..3 {
+                let actual = homogeneous[axis] / homogeneous[3];
+                assert!(
+                    (actual - expected[axis]).abs() < TOLERANCE,
+                    "{affine:?}, axis {axis}: mapped projection {actual}, expected {}",
+                    expected[axis]
+                );
+            }
+        }
     }
 }

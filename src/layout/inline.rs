@@ -6,6 +6,7 @@ use crate::graphics::{
 };
 use crate::layout::LayoutError;
 use crate::layout::geometry::{Edges, inline_horizontal};
+use crate::layout::measure::Failure;
 use crate::layout::measure::{FlowItem, MeasuredBlock, Measurer};
 use crate::style::BaselineSource;
 use crate::text::{AtomicMetrics, BoxFragment, GlyphRun};
@@ -41,12 +42,12 @@ impl LetterExtent {
 
 /// Measures an atomic inline, which is laid out unbroken.
 pub(super) fn measure<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     block: &'a BlockBox,
     containing_width: f32,
     containing_height: Option<f32>,
     containing_rtl: bool,
-) -> Result<MeasuredAtomic<'a>, LayoutError> {
+) -> Result<MeasuredAtomic<'a>, Failure> {
     let unbroken = std::mem::replace(&mut measurer.unbroken, true);
     let measured = measure_atomic(
         measurer,
@@ -60,12 +61,12 @@ pub(super) fn measure<'a>(
 }
 
 fn measure_atomic<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     block: &'a BlockBox,
     containing_width: f32,
     containing_height: Option<f32>,
     containing_rtl: bool,
-) -> Result<MeasuredAtomic<'a>, LayoutError> {
+) -> Result<MeasuredAtomic<'a>, Failure> {
     if let Some(letter) = block.initial_letter() {
         return measure_initial_letter(
             measurer,
@@ -89,12 +90,12 @@ fn measure_atomic<'a>(
 /// Lays a ruby annotation box out again at the `width` its ruby column gives it, which its
 /// contents fill by its `ruby-align` (CSS Ruby 1 §4.3).
 pub(super) fn measure_annotation<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     block: &'a BlockBox,
     width: f32,
     containing_height: Option<f32>,
     containing_rtl: bool,
-) -> Result<MeasuredAtomic<'a>, LayoutError> {
+) -> Result<MeasuredAtomic<'a>, Failure> {
     let unbroken = std::mem::replace(&mut measurer.unbroken, true);
     let geometry = inline_horizontal(
         block.style(),
@@ -104,7 +105,7 @@ pub(super) fn measure_annotation<'a>(
         Some(width),
         Edges::of(block.style(), width),
     );
-    let measured = measurer.format_block(block, geometry.clone(), false, containing_height, None);
+    let measured = measurer.measure_format(block, geometry.clone(), false, containing_height, None);
     measurer.unbroken = unbroken;
     Ok(measured_atomic(block, measured?, &geometry))
 }
@@ -144,13 +145,13 @@ fn measured_atomic<'a>(
 /// inline letter's content box fits its sink and its glyph outlines; a definite one aligns
 /// its line by `align-content`.
 fn measure_initial_letter<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     block: &'a BlockBox,
     letter: &crate::document::InitialLetterBox,
     containing_width: f32,
     containing_height: Option<f32>,
     containing_rtl: bool,
-) -> Result<MeasuredAtomic<'a>, LayoutError> {
+) -> Result<MeasuredAtomic<'a>, Failure> {
     let style = block.style();
     let initial = style
         .initial_letter
@@ -186,7 +187,8 @@ fn measure_initial_letter<'a>(
         let [line] = paragraph.lines.as_slice() else {
             return Err(LayoutError::UnsupportedInitialLetter {
                 feature: "contents wrapping onto several lines",
-            });
+            }
+            .into());
         };
         let outline = measurer.text.outline_bounds(paragraph.paragraph, line)?;
         // The outlines' extent below the line box top, which is the over alignment point.
@@ -230,7 +232,7 @@ fn measure_initial_letter<'a>(
             })
             && let Some(rect) = outline
         {
-            kerning = if style.rtl {
+            kerning = if style.used_rtl() {
                 line.width - (rect.x + rect.width)
             } else {
                 rect.x
@@ -243,7 +245,7 @@ fn measure_initial_letter<'a>(
                 measured.height - start - end - lead
             };
             geometry.padding[0] += lead;
-            measured = measurer.format_block(
+            measured = measurer.measure_format(
                 block,
                 geometry.clone(),
                 false,
@@ -279,12 +281,12 @@ fn measure_initial_letter<'a>(
 
 /// Shared shrink-to-fit geometry for atomic inlines and floating boxes.
 pub(super) fn measure_shrink_to_fit<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     block: &'a BlockBox,
     containing_width: f32,
     containing_height: Option<f32>,
     containing_rtl: bool,
-) -> Result<(MeasuredBlock<'a>, crate::layout::geometry::HorizontalBox), LayoutError> {
+) -> Result<(MeasuredBlock<'a>, crate::layout::geometry::HorizontalBox), Failure> {
     let result = if block.style().display.is_table() {
         crate::layout::tables::measure_placed(
             measurer,
@@ -304,19 +306,19 @@ pub(super) fn measure_shrink_to_fit<'a>(
             containing_rtl,
         )?;
         let measured =
-            measurer.format_block(block, geometry.clone(), false, containing_height, None)?;
+            measurer.measure_format(block, geometry.clone(), false, containing_height, None)?;
         (measured, geometry)
     };
     Ok(result)
 }
 
-pub(super) fn shrink_to_fit_geometry(
-    measurer: &Measurer<'_>,
-    block: &BlockBox,
+pub(super) fn shrink_to_fit_geometry<'a>(
+    measurer: &Measurer<'a>,
+    block: &'a BlockBox,
     containing_width: f32,
     containing_height: Option<f32>,
     containing_rtl: bool,
-) -> Result<crate::layout::geometry::HorizontalBox, LayoutError> {
+) -> Result<crate::layout::geometry::HorizontalBox, Failure> {
     let style = block.style();
     let width = if block.image().is_some() {
         crate::layout::images::size(
@@ -343,12 +345,12 @@ pub(super) fn shrink_to_fit_geometry(
 
 /// `width: auto` resolves to min(max(min-content, available), max-content), or through a
 /// preferred aspect ratio from a definite height (CSS Sizing 4 §4.2).
-fn shrink_to_fit(
-    measurer: &Measurer<'_>,
-    block: &BlockBox,
+fn shrink_to_fit<'a>(
+    measurer: &Measurer<'a>,
+    block: &'a BlockBox,
     containing_width: f32,
     containing_height: Option<f32>,
-) -> Result<f32, LayoutError> {
+) -> Result<f32, Failure> {
     let style = block.style();
     let edges = Edges::of(style, containing_width);
     if let Some(width) = crate::layout::ratio::width_from_height(

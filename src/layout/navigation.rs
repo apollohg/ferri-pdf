@@ -119,16 +119,19 @@ pub(super) fn rect_corners(rect: Rect) -> [Point; 4] {
 /// clips when `clip` is set. Each clip is axis-aligned in its own space, so the area stays a
 /// convex polygon.
 pub(crate) fn page_polygon(rect: Rect, regions: &[Region], clip: bool) -> Vec<Point> {
-    let mut polygon = rect_corners(rect).to_vec();
+    map_polygon(rect_corners(rect).to_vec(), regions, clip)
+}
+
+pub(crate) fn map_polygon(mut polygon: Vec<Point>, regions: &[Region], clip: bool) -> Vec<Point> {
     for region in regions.iter().rev() {
         if clip || matches!(region, Region::Transform(_)) {
-            polygon = map_polygon(polygon, *region);
+            polygon = map_region(polygon, *region);
         }
     }
     polygon
 }
 
-pub(super) fn map_polygon(mut polygon: Vec<Point>, region: Region) -> Vec<Point> {
+pub(super) fn map_region(mut polygon: Vec<Point>, region: Region) -> Vec<Point> {
     match region {
         Region::Transform(matrix) => {
             for point in &mut polygon {
@@ -290,10 +293,21 @@ fn bounds(values: impl Iterator<Item = f32>) -> (f32, f32) {
 
 /// The destination a box fragment's border box gives on `page`.
 pub(crate) fn destination(page: usize, rect: Rect, regions: &[Region]) -> Destination {
-    let polygon = page_polygon(rect, regions, false);
     Destination {
         page,
-        top: bounds(polygon.iter().map(|point| point[1])).0,
+        top: destination_rect(rect, regions).y,
+    }
+}
+
+pub(crate) fn destination_rect(rect: Rect, regions: &[Region]) -> Rect {
+    let polygon = page_polygon(rect, regions, false);
+    let (left, right) = bounds(polygon.iter().map(|point| point[0]));
+    let (top, bottom) = bounds(polygon.iter().map(|point| point[1]));
+    Rect {
+        x: left,
+        y: top,
+        width: right - left,
+        height: bottom - top,
     }
 }
 
@@ -523,7 +537,7 @@ mod tests {
             RECT,
             &[Region::Transform([0.0, 1.0, -1.0, 0.0, 0.0, 0.0])],
         );
-        assert_eq!(turned, Destination { page: 2, top: 10.0 });
+        assert_eq!((turned.page, turned.top), (2, 10.0));
         assert_eq!(destination(0, RECT, &[]).top, RECT.y);
     }
 }

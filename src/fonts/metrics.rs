@@ -11,6 +11,7 @@ use ttf_parser::Face;
 
 /// CSS Values 4 §6.1.1: an x-height that cannot be determined is 0.5em.
 const FALLBACK_X_HEIGHT_EM: f32 = 0.5;
+const HALF_EM: f32 = 0.5;
 const LOWERCASE_X: char = 'x';
 const CAPITAL_H: char = 'H';
 /// `ch` measures the advance of "0" and `ic` that of "水" (CSS Values 4 §6.1.1).
@@ -93,6 +94,20 @@ impl FaceMetrics {
             baselines: crate::fonts::BaselineTable::of(face, ascent, descent, x_height),
         }
     }
+    pub(crate) fn upright(mut self, face: &Face<'_>) -> Self {
+        let units = f32::from(face.units_per_em());
+        self.ascent = face
+            .vertical_ascender()
+            .map_or(HALF_EM, |value| f32::from(value) / units);
+        self.descent = face
+            .vertical_descender()
+            .map_or(HALF_EM, |value| -f32::from(value) / units);
+        self.line_gap = face
+            .vertical_line_gap()
+            .map_or(0.0, |value| f32::from(value) / units);
+        self.baselines = self.baselines.upright(face);
+        self
+    }
     /// `line-height: normal`.
     pub(crate) fn normal_line_height(&self) -> f32 {
         self.ascent + self.descent + self.line_gap
@@ -143,8 +158,18 @@ impl SizeAdjust {
 
 /// The horizontal advance of `ch` in em, when the face has a glyph for it.
 pub(crate) fn advance(face: &Face<'_>, ch: char) -> Option<f32> {
+    advance_in_axis(face, ch, false)
+}
+
+fn advance_in_axis(face: &Face<'_>, ch: char, vertical: bool) -> Option<f32> {
     let glyph = face.glyph_index(ch).filter(|glyph| glyph.0 != 0)?;
-    Some(f32::from(face.glyph_hor_advance(glyph)?) / f32::from(face.units_per_em()))
+    let advance = if vertical {
+        face.glyph_ver_advance(glyph)
+            .unwrap_or_else(|| face.units_per_em())
+    } else {
+        face.glyph_hor_advance(glyph)?
+    };
+    Some(f32::from(advance) / f32::from(face.units_per_em()))
 }
 
 impl FontBook {
@@ -209,7 +234,7 @@ impl FontBook {
         selection: FontSelection,
         adjustments: &FontAdjustments,
         size: f32,
-        ch: char,
+        (ch, vertical): (char, bool),
         resolver: &dyn ResourceResolver,
     ) -> Result<Option<(f32, f32)>, FontError> {
         self.find_glyph(candidates, |id| -> Result<_, FontError> {
@@ -218,11 +243,10 @@ impl FontBook {
             else {
                 return Ok(GlyphMatch::Unavailable);
             };
-            Ok(
-                advance(&instance.face, ch).map_or(GlyphMatch::Missing, |advance| {
+            Ok(advance_in_axis(&instance.face, ch, vertical)
+                .map_or(GlyphMatch::Missing, |advance| {
                     GlyphMatch::Found((advance, scale(used, size)))
-                }),
-            )
+                }))
         })
         .map(|found| found.map(|(_, advance)| advance))
     }
@@ -263,8 +287,10 @@ impl InitialFont {
         FaceMetrics::of(&self.faces[0])
     }
     /// The advance of `ch` in em in the first initial face that has it.
-    pub(crate) fn advance(&self, ch: char) -> Option<f32> {
-        self.faces.iter().find_map(|face| advance(face, ch))
+    pub(crate) fn advance(&self, (ch, vertical): (char, bool)) -> Option<f32> {
+        self.faces
+            .iter()
+            .find_map(|face| advance_in_axis(face, ch, vertical))
     }
 }
 

@@ -10,8 +10,12 @@ use crate::layout::{
 use crate::style::{BreakBetween, Display, Style};
 use crate::text::{Line, TextContext};
 
+mod frames;
 mod metrics;
+mod space;
+pub(super) use frames::{Failure, FrameKey};
 pub(super) use metrics::{ItemMetrics, MetricsKey};
+pub(super) use space::FlowSpace;
 
 #[derive(Clone, Copy)]
 pub(super) struct BlockSizing {
@@ -76,6 +80,7 @@ impl BlockSizing {
 
 #[derive(Clone)]
 pub(super) struct MeasuredBlock<'a> {
+    pub(super) frame_key: Option<std::rc::Rc<FrameKey>>,
     pub grid: Option<std::rc::Rc<crate::layout::grid::Geometry<'a>>>,
     pub source: &'a BlockBox,
     pub geometry: crate::layout::geometry::HorizontalBox,
@@ -197,6 +202,7 @@ pub(super) fn first_baseline(items: &[FlowItem<'_>]) -> Option<f32> {
             FlowItem::Paragraph(paragraph) => paragraph.lines.first().map(|line| line.ascent),
             FlowItem::Block(block) | FlowItem::Spanner(block) => block.first_baseline(),
             FlowItem::Columns(columns) => columns.baselines[0],
+            FlowItem::Frame { baselines, .. } => baselines[0],
             FlowItem::Row(row) => row.baselines.map_or_else(
                 || {
                     row.cells.first().and_then(|cell| {
@@ -227,6 +233,7 @@ pub(super) fn last_baseline(items: &[FlowItem<'_>]) -> Option<f32> {
                 .map(|line| paragraph.height - line.height + line.ascent),
             FlowItem::Block(block) | FlowItem::Spanner(block) => block.last_baseline(),
             FlowItem::Columns(columns) => columns.baselines[1],
+            FlowItem::Frame { baselines, .. } => baselines[1],
             FlowItem::Row(row) => row.baselines.map_or_else(
                 || {
                     row.cells.first().and_then(|cell| {
@@ -416,10 +423,17 @@ pub(super) struct MeasuredTableBox<'a> {
 pub(super) enum FlowItem<'a> {
     Events(&'a [crate::document::SemanticEvent]),
     TableBox(Box<MeasuredTableBox<'a>>),
+    Frame {
+        inner: std::rc::Rc<MeasuredBlock<'a>>,
+        area: Rect,
+        height: f32,
+        baselines: [Option<f32>; 2],
+    },
     Image {
         paint: crate::graphics::ImagePaint,
         visible: bool,
         height: f32,
+        rotate: bool,
     },
     Block(Box<MeasuredBlock<'a>>),
     Paragraph(MeasuredParagraph<'a>),
@@ -436,7 +450,7 @@ pub(super) enum FlowItem<'a> {
 impl FlowItem<'_> {
     pub(crate) fn height(&self) -> f32 {
         match self {
-            Self::Image { height, .. } => *height,
+            Self::Image { height, .. } | Self::Frame { height, .. } => *height,
             Self::Block(block) | Self::Spanner(block) => block.height,
             Self::Columns(columns) => columns.height,
             Self::Paragraph(paragraph) => paragraph.height,
@@ -446,6 +460,70 @@ impl FlowItem<'_> {
             Self::Positioned(_) | Self::Events(_) | Self::TableBox(_) => 0.0,
         }
     }
+}
+
+/// Immediate native-frame dependencies; their own descendants are separate jobs.
+pub(super) fn frame_dependencies<'a>(
+    root: &MeasuredBlock<'a>,
+) -> Vec<std::rc::Rc<MeasuredBlock<'a>>> {
+    enum Entry<'r, 'a> {
+        Block(&'r MeasuredBlock<'a>),
+        Item(&'r FlowItem<'a>),
+        Row(&'r MeasuredRow<'a>),
+    }
+    let mut pending = vec![Entry::Block(root)];
+    let mut seen = std::collections::HashSet::new();
+    let mut frames = Vec::new();
+    while let Some(entry) = pending.pop() {
+        match entry {
+            Entry::Block(block) => {
+                if let Some(table) = &block.table {
+                    pending.extend(table.footer.iter().rev().map(Entry::Row));
+                }
+                pending.extend(block.items.iter().rev().map(Entry::Item));
+                if let Some(table) = &block.table {
+                    pending.extend(table.header.iter().rev().map(Entry::Row));
+                }
+            }
+            Entry::Row(row) => {
+                pending.extend(row.cells.iter().rev().map(|cell| Entry::Block(&cell.block)));
+            }
+            Entry::Item(item) => match item {
+                FlowItem::Frame { inner, .. } => {
+                    if seen.insert(std::rc::Rc::as_ptr(inner)) {
+                        frames.push(inner.clone());
+                    }
+                }
+                FlowItem::Block(block) | FlowItem::Spanner(block) => {
+                    pending.push(Entry::Block(block));
+                }
+                FlowItem::Row(row) => pending.push(Entry::Row(row)),
+                FlowItem::Paragraph(paragraph) => pending.extend(
+                    paragraph
+                        .atomics
+                        .iter()
+                        .rev()
+                        .flatten()
+                        .map(|atomic| Entry::Block(&atomic.block)),
+                ),
+                FlowItem::Columns(columns) => {
+                    for segment in columns.segments.iter().rev() {
+                        let (crate::layout::multicol::ColumnSegment::Row(items)
+                        | crate::layout::multicol::ColumnSegment::Spanner(items)) = segment;
+                        pending.extend(items.iter().rev().map(Entry::Item));
+                    }
+                }
+                FlowItem::TableBox(_)
+                | FlowItem::Events(_)
+                | FlowItem::Image { .. }
+                | FlowItem::Margin(_)
+                | FlowItem::Space(_)
+                | FlowItem::Edge(_, _)
+                | FlowItem::Positioned(_) => {}
+            },
+        }
+    }
+    frames
 }
 
 pub(super) fn overflow_height(items: &[FlowItem<'_>]) -> f32 {
@@ -495,9 +573,23 @@ impl<'a> BlockSource<'a> {
     pub(crate) fn marker(self) -> Option<&'a crate::document::Paragraph> {
         self.block.marker()
     }
+    pub(crate) fn flow(self) -> Option<&'a BlockBox> {
+        self.block.flow()
+    }
+    pub(crate) fn layout_flow(self) -> crate::style::logical::Flow {
+        self.block.layout_flow()
+    }
 }
 
+#[derive(Clone)]
 pub(super) struct Measurer<'a> {
+    pub(super) frame_measurements: std::rc::Rc<std::cell::RefCell<frames::Measurements<'a>>>,
+    pub(super) raw_templates:
+        std::rc::Rc<std::cell::RefCell<crate::layout::pagination::frames::Templates<'a>>>,
+    pub(super) raw_pagination: bool,
+    pub(super) column_measurement: bool,
+    pub(super) orthogonal_columns: Option<crate::layout::multicol::OrthogonalColumns>,
+    pub(super) space: FlowSpace,
     pub work: crate::layout::work::Budget,
     pub text: &'a TextContext<'a>,
     pub canvas_images: bool,
@@ -520,7 +612,48 @@ pub(super) struct Measurer<'a> {
     /// The content-box size of each query container's first box fragment.
     pub container_sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
 }
-impl Measurer<'_> {
+impl<'a> Measurer<'a> {
+    pub(super) fn new(
+        text: &'a TextContext<'a>,
+        root: &'a BlockBox,
+        size: [f32; 2],
+        work: crate::layout::work::Budget,
+    ) -> Self {
+        Measurer {
+            frame_measurements: Default::default(),
+            raw_templates: Default::default(),
+            raw_pagination: false,
+            column_measurement: false,
+            orthogonal_columns: None,
+            space: FlowSpace::new(crate::style::logical::Flow::used(root.style()), size),
+            work,
+            text,
+            canvas_images: false,
+            page_height: size[1],
+            sources: crate::layout::source::SourceIds::new(root),
+            item_metrics: Default::default(),
+            grid_parent: None,
+            clearance_targets: Default::default(),
+            fragmentainer: Fragmentainer::Page,
+            column_flow: None,
+            spanner: None,
+            unbroken: false,
+            named_pages: true,
+            container_sizes: Default::default(),
+        }
+    }
+
+    pub(super) fn with_space<T>(
+        &mut self,
+        space: FlowSpace,
+        compute: impl FnOnce(&mut Self) -> T,
+    ) -> T {
+        let previous = std::mem::replace(&mut self.space, space);
+        let result = compute(self);
+        self.space = previous;
+        result
+    }
+
     pub(crate) fn intrinsic_widths(
         &self,
         paragraph: &crate::document::Paragraph,
@@ -540,9 +673,9 @@ impl Measurer<'_> {
         Ok(self.text.layout_paragraph(paragraph, width, atomics)?)
     }
 
-    pub(super) fn box_paint<'a>(
+    pub(super) fn box_paint<'b>(
         &self,
-        block: impl Into<BlockSource<'a>>,
+        block: impl Into<BlockSource<'b>>,
         geometry: &crate::layout::geometry::HorizontalBox,
     ) -> Option<BoxPaint> {
         let block = block.into();
@@ -571,7 +704,30 @@ impl Measurer<'_> {
             }
         })
     }
-    pub(crate) fn block<'a>(
+    pub(crate) fn block(
+        &mut self,
+        block: &'a BlockBox,
+        x: f32,
+        width: f32,
+        rtl: bool,
+        root: bool,
+        height: Option<f32>,
+    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+        self.run(|measurer| measurer.measure_block(block, x, width, rtl, root, height))
+    }
+    pub(super) fn format_block(
+        &mut self,
+        block: &'a BlockBox,
+        geometry: &crate::layout::geometry::HorizontalBox,
+        root: bool,
+        containing: Option<f32>,
+        height: Option<f32>,
+    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+        self.run(|measurer| {
+            measurer.measure_format(block, geometry.clone(), root, containing, height)
+        })
+    }
+    pub(crate) fn measure_block(
         &mut self,
         block: &'a BlockBox,
         x: f32,
@@ -579,7 +735,7 @@ impl Measurer<'_> {
         containing_rtl: bool,
         root: bool,
         containing_height: Option<f32>,
-    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+    ) -> Result<MeasuredBlock<'a>, Failure> {
         let style = block.style();
         if style.display.is_table() {
             return crate::layout::tables::measure(
@@ -592,19 +748,19 @@ impl Measurer<'_> {
             );
         }
         let geometry = block_geometry(self, block, x, width, containing_rtl, containing_height)?;
-        self.format_block(block, geometry, root, containing_height, None)
+        self.measure_format(block, geometry, root, containing_height, None)
     }
 
     /// Measures `child` as a spanner across the multi-column container of `flow`.
-    fn spanner<'a>(
+    fn spanner(
         &mut self,
         child: &'a BlockBox,
         flow: ColumnFlow,
-    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+    ) -> Result<MeasuredBlock<'a>, Failure> {
         let saved = (self.fragmentainer, self.spanner);
         self.fragmentainer = flow.fragmentainer;
         self.spanner = Some(child);
-        let measured = self.block(
+        let measured = self.measure_block(
             child,
             flow.x,
             flow.width,
@@ -616,14 +772,14 @@ impl Measurer<'_> {
         measured
     }
 
-    pub(super) fn format_block<'a>(
+    pub(super) fn measure_format(
         &mut self,
         block: impl Into<BlockSource<'a>>,
         geometry: crate::layout::geometry::HorizontalBox,
         root: bool,
         containing_height: Option<f32>,
         used_height: Option<f32>,
-    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+    ) -> Result<MeasuredBlock<'a>, Failure> {
         self.measure_flow(
             block.into(),
             geometry,
@@ -636,7 +792,7 @@ impl Measurer<'_> {
 
     /// A block's flow; a `continue: discard` container keeps at most `budget` line boxes and
     /// the content before its block size overflows.
-    fn measure_flow<'a>(
+    fn measure_flow(
         &mut self,
         block: BlockSource<'a>,
         geometry: crate::layout::geometry::HorizontalBox,
@@ -644,8 +800,13 @@ impl Measurer<'_> {
         containing_height: Option<f32>,
         used_height: Option<f32>,
         budget: Option<LineBudget>,
-    ) -> Result<MeasuredBlock<'a>, LayoutError> {
-        let context = (self.fragmentainer, self.column_flow);
+    ) -> Result<MeasuredBlock<'a>, Failure> {
+        let context = (
+            self.fragmentainer,
+            self.column_flow,
+            self.space,
+            self.orthogonal_columns,
+        );
         let measured = if discards(block.style()) {
             self.discarding_flow(
                 block,
@@ -658,14 +819,19 @@ impl Measurer<'_> {
         } else {
             self.format_flow(block, geometry, root, containing_height, used_height, None)
         };
-        (self.fragmentainer, self.column_flow) = context;
+        (
+            self.fragmentainer,
+            self.column_flow,
+            self.space,
+            self.orthogonal_columns,
+        ) = context;
         measured
     }
 
     /// CSS Overflow 4 §5.2–5.3: a region break after `max-lines` line boxes or an earlier
     /// break of an enclosing container, or else the unforced break where content overflows
     /// the block size, which follows the last line box that fits but never precedes the first.
-    fn discarding_flow<'a>(
+    fn discarding_flow(
         &mut self,
         block: BlockSource<'a>,
         geometry: crate::layout::geometry::HorizontalBox,
@@ -673,12 +839,13 @@ impl Measurer<'_> {
         containing_height: Option<f32>,
         used_height: Option<f32>,
         outer: Option<LineBudget>,
-    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+    ) -> Result<MeasuredBlock<'a>, Failure> {
         let style = block.style();
         if style.multicol.is_multicol() {
             return Err(LayoutError::UnsupportedClamp {
                 feature: "continue: discard on a multi-column container",
-            });
+            }
+            .into());
         }
         let budget = match (style.clamp.max_lines, outer) {
             (Some(lines), Some(outer)) => Some(LineBudget {
@@ -691,7 +858,12 @@ impl Measurer<'_> {
             }),
             (None, outer) => outer,
         };
-        let context = (self.fragmentainer, self.column_flow);
+        let context = (
+            self.fragmentainer,
+            self.column_flow,
+            self.space,
+            self.orthogonal_columns,
+        );
         let measured = self.format_flow(
             block,
             geometry.clone(),
@@ -717,7 +889,12 @@ impl Measurer<'_> {
         if fitting >= total {
             return Ok(measured);
         }
-        (self.fragmentainer, self.column_flow) = context;
+        (
+            self.fragmentainer,
+            self.column_flow,
+            self.space,
+            self.orthogonal_columns,
+        ) = context;
         self.format_flow(
             block,
             geometry,
@@ -769,16 +946,18 @@ impl Measurer<'_> {
         }
     }
 
-    fn start_flow<'a>(
+    fn start_flow(
         &mut self,
         block: BlockSource<'a>,
         geometry: crate::layout::geometry::HorizontalBox,
         root: bool,
         containing_height: Option<f32>,
         used_height: Option<f32>,
-    ) -> Result<FlowStart<'a>, LayoutError> {
+    ) -> Result<FlowStart<'a>, Failure> {
         self.work.spend(1)?;
         let restore_column_flow = self.column_flow;
+        let outer_space = self.space;
+        let outer_columns = self.orthogonal_columns;
         let style = block.style();
         let spanning = self
             .spanner
@@ -790,6 +969,89 @@ impl Measurer<'_> {
             self.column_flow = None;
         }
         let started = (|| {
+            if block.flow().is_some() {
+                return self
+                    .frame(block, &geometry, containing_height, used_height)
+                    .map(FlowStart::Complete);
+            }
+            if self.space.indefinite_inline
+                && block.image().is_none()
+                && style.display.is_block_container()
+                && style.width == crate::style::Size::Auto
+                && !self
+                    .orthogonal_columns
+                    .is_some_and(|columns| columns.matches(block.block))
+            {
+                let horizontal = geometry.padding[1]
+                    + geometry.padding[3]
+                    + geometry.border[1]
+                    + geometry.border[3];
+                let available = (self
+                    .space
+                    .fallback(crate::style::logical::Flow::used(style), None)
+                    - horizontal
+                    - geometry.margin[1].unwrap_or(0.0)
+                    - geometry.margin[3].unwrap_or(0.0))
+                .max(0.0);
+                let widths = crate::layout::intrinsic::flow(block.block, self, available)?;
+                let vertical =
+                    crate::layout::geometry::VerticalBox::new(style, &geometry, containing_height)
+                        .with_used_height(used_height);
+                let limits = crate::style::SizeConstraints::new(
+                    [&style.width, &style.min_width, &style.max_width],
+                    None,
+                    style.box_sizing,
+                    horizontal,
+                )
+                .with_intrinsic(
+                    [&style.width, &style.min_width, &style.max_width],
+                    widths,
+                    None,
+                );
+                self.orthogonal_columns = Some(crate::layout::multicol::OrthogonalColumns {
+                    principal: false,
+                    block_auto: vertical.definite().is_none()
+                        && used_height.is_none()
+                        && style.height.is_auto_block_size(false),
+                    content_max: widths.max,
+                    minimum: limits.minimum,
+                    maximum: limits.maximum,
+                    source: std::ptr::from_ref(block.block),
+                    geometry: ColumnGeometry {
+                        count: crate::layout::multicol::specified_count(style).unwrap_or(1),
+                        width: crate::layout::multicol::orthogonal_width(style, widths, available),
+                        inline_size: geometry.width,
+                        gap: style.flex.gap[1].resolve_normal(geometry.width, style.size),
+                        x: geometry.x,
+                        rtl: style.used_rtl(),
+                    },
+                    length: vertical.definite().or_else(|| {
+                        (style.height.is_auto_block_size(false)
+                            && (style.multicol.count.is_none() || style.multicol.width.is_none()))
+                        .then_some(containing_height)
+                        .flatten()
+                        .map(|height| {
+                            (height
+                                - geometry.padding[0]
+                                - geometry.padding[2]
+                                - geometry.border[0]
+                                - geometry.border[2]
+                                - geometry.margin[0].unwrap_or(0.0)
+                                - geometry.margin[2].unwrap_or(0.0))
+                            .max(0.0)
+                        })
+                    }),
+                });
+            }
+            if self
+                .orthogonal_columns
+                .is_some_and(|columns| columns.matches(block.block))
+            {
+                self.space.indefinite_inline = false;
+            }
+            self.space = self
+                .space
+                .enter(block, &geometry, containing_height, used_height);
             let index = self.sources.block(block.block);
             if !geometry.width.is_finite()
                 || !geometry.x.is_finite()
@@ -799,10 +1061,21 @@ impl Measurer<'_> {
                     .chain(geometry.margin.iter().flatten())
                     .any(|p| !p.is_finite())
             {
-                return Err(LayoutError::NonFiniteBlockGeometry { block: index });
+                return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
             }
             if block.image().is_some() {
                 return crate::layout::images::measure(
+                    self,
+                    block,
+                    &geometry,
+                    containing_height,
+                    used_height,
+                )
+                .map(FlowStart::Complete)
+                .map_err(Failure::from);
+            }
+            if style.display.is_table() {
+                return crate::layout::tables::measure_format(
                     self,
                     block,
                     &geometry,
@@ -849,22 +1122,37 @@ impl Measurer<'_> {
             };
             let top_edge = geometry.padding[0] + geometry.border[0];
             let bottom_edge = geometry.padding[2] + geometry.border[2];
-            let independent = style.establishes_formatting_context() || spanning;
+            let independent = style.establishes_formatting_context()
+                || spanning
+                || self
+                    .orthogonal_columns
+                    .is_some_and(|columns| columns.matches(block.block));
             let edges = self.fragmentainer.edges(style);
-            let columns = (style.display != Display::None && style.multicol.is_multicol())
-                .then(|| ColumnGeometry::resolve(style, geometry.x, geometry.width));
+            let columns = self
+                .orthogonal_columns
+                .filter(|columns| columns.matches(block.block))
+                .map(|columns| columns.geometry)
+                .or_else(|| {
+                    (style.display != Display::None && style.multicol.is_multicol())
+                        .then(|| ColumnGeometry::resolve(style, geometry.x, geometry.width))
+                });
             let (content_x, content_width) = columns
                 .as_ref()
                 .map_or((geometry.x, geometry.width), |columns| {
                     (columns.left(0), columns.width)
                 });
-            let outer = (self.fragmentainer, self.column_flow);
+            let outer = Box::new((
+                self.fragmentainer,
+                self.column_flow,
+                outer_space,
+                outer_columns,
+            ));
             if columns.is_some() {
                 self.fragmentainer = Fragmentainer::Column;
                 self.column_flow = Some(ColumnFlow {
                     x: geometry.x,
                     width: geometry.width,
-                    rtl: style.rtl,
+                    rtl: style.used_rtl(),
                     containing_height: vertical.definite(),
                     fragmentainer: outer.0,
                 });
@@ -908,11 +1196,13 @@ impl Measurer<'_> {
         })();
         if !matches!(&started, Ok(FlowStart::Pending(_))) {
             self.column_flow = restore_column_flow;
+            self.space = outer_space;
+            self.orthogonal_columns = outer_columns;
         }
         started
     }
 
-    fn format_flow<'a>(
+    fn format_flow(
         &mut self,
         block: BlockSource<'a>,
         geometry: crate::layout::geometry::HorizontalBox,
@@ -920,18 +1210,23 @@ impl Measurer<'_> {
         containing_height: Option<f32>,
         used_height: Option<f32>,
         budget: Option<LineBudget>,
-    ) -> Result<MeasuredBlock<'a>, LayoutError> {
-        let mut frames =
-            match self.start_flow(block, geometry, root, containing_height, used_height)? {
-                FlowStart::Complete(measured) => return Ok(measured),
-                FlowStart::Pending(mut frame) => {
-                    frame.clamp = budget.map(|budget| FrameClamp {
-                        remaining: budget.lines,
-                        following: budget.following,
-                    });
-                    vec![frame]
-                }
-            };
+    ) -> Result<MeasuredBlock<'a>, Failure> {
+        match self.start_flow(block, geometry, root, containing_height, used_height)? {
+            FlowStart::Complete(measured) => Ok(measured),
+            FlowStart::Pending(frame) => self.continue_flow(frame, budget),
+        }
+    }
+
+    fn continue_flow(
+        &mut self,
+        mut frame: FlowFrame<'a>,
+        budget: Option<LineBudget>,
+    ) -> Result<MeasuredBlock<'a>, Failure> {
+        frame.clamp = budget.map(|budget| FrameClamp {
+            remaining: budget.lines,
+            following: budget.following,
+        });
+        let mut frames = vec![frame];
         loop {
             let frame = frames.last_mut().unwrap();
             let child = frame.children.next();
@@ -952,11 +1247,11 @@ impl Measurer<'_> {
                         frame.push_block(self.spanner(child, flow)?, true);
                     } else if child.style().display.is_table() {
                         frame.push_block(
-                            self.block(
+                            self.measure_block(
                                 child,
                                 frame.content_x,
                                 frame.content_width,
-                                frame.block.style().rtl,
+                                frame.block.style().used_rtl(),
                                 false,
                                 frame.vertical.definite(),
                             )?,
@@ -968,7 +1263,7 @@ impl Measurer<'_> {
                             child,
                             frame.content_x,
                             frame.content_width,
-                            frame.block.style().rtl,
+                            frame.block.style().used_rtl(),
                             frame.vertical.definite(),
                         )?;
                         let containing = frame.vertical.definite();
@@ -1000,7 +1295,7 @@ impl Measurer<'_> {
                             child,
                             frame.content_x,
                             frame.content_width,
-                            frame.block.style().rtl,
+                            frame.block.style().used_rtl(),
                             frame.vertical.definite(),
                         )?;
                         let child_style = child.style();
@@ -1053,7 +1348,7 @@ impl Measurer<'_> {
                         frame.content_x,
                         frame.content_width,
                         frame.vertical.definite(),
-                        frame.block.style().rtl,
+                        frame.block.style().used_rtl(),
                     );
                     let budget = Self::budget(&frames).map(|lines| LineBudget {
                         lines,
@@ -1071,8 +1366,36 @@ impl Measurer<'_> {
                 None => {
                     let frame = frames.pop().unwrap();
                     let restore = frame.restore_column_flow;
-                    let measured = frame.finish(self)?;
+                    let finished = frame.finish(self)?;
                     self.column_flow = restore;
+                    let measured = match finished {
+                        FlowFinished::Complete(measured) => measured,
+                        FlowFinished::Restart {
+                            block,
+                            columns,
+                            root,
+                        } => {
+                            self.work.spend(1)?;
+                            let previous_columns = self.orthogonal_columns;
+                            self.orthogonal_columns = Some(columns);
+                            let FlowStart::Pending(mut next) = self.start_flow(
+                                BlockSource {
+                                    block: block.source,
+                                    selected: block.style,
+                                },
+                                block.geometry,
+                                root,
+                                block.containing_height,
+                                block.sizing.and_then(|sizing| sizing.used_height),
+                            )?
+                            else {
+                                unreachable!("an automatic column block has a flow continuation")
+                            };
+                            next.outer.3 = previous_columns;
+                            frames.push(next);
+                            continue;
+                        }
+                    };
                     if let Some(parent) = frames.last_mut() {
                         parent.push_block(measured, false);
                     } else {
@@ -1083,7 +1406,7 @@ impl Measurer<'_> {
         }
     }
 
-    fn paragraph<'a>(
+    fn paragraph(
         &mut self,
         paragraph: &'a crate::document::Paragraph,
         x: f32,
@@ -1091,13 +1414,27 @@ impl Measurer<'_> {
         containing_height: Option<f32>,
         rtl: bool,
         budget: Option<LineBudget>,
-    ) -> Result<MeasuredParagraph<'a>, LayoutError> {
+    ) -> Result<MeasuredParagraph<'a>, Failure> {
         self.work.spend(paragraph.text().len().max(1))?;
         let index = self.sources.paragraph(paragraph);
         let atomics = paragraph
             .inline_blocks()
-            .map(|atomic| {
-                crate::layout::inline::measure(self, &atomic.block, width, containing_height, rtl)
+            .enumerate()
+            .map(|(index, atomic)| {
+                let base_height = paragraph
+                    .inter_character_base_style(index)
+                    .map(|style| {
+                        crate::text::BoxMetrics::of(self.text, style)
+                            .map(|metrics| metrics.ascent + metrics.descent)
+                    })
+                    .transpose()?;
+                crate::layout::inline::measure(
+                    self,
+                    &atomic.block,
+                    width,
+                    base_height.or(containing_height),
+                    rtl,
+                )
             })
             .collect::<Result<Vec<_>, _>>()?;
         let metrics: Vec<_> = atomics.iter().map(|atomic| atomic.metrics).collect();
@@ -1157,14 +1494,14 @@ impl Measurer<'_> {
     }
 }
 
-pub(super) fn block_geometry(
-    measurer: &Measurer<'_>,
-    block: &BlockBox,
+pub(super) fn block_geometry<'a>(
+    measurer: &Measurer<'a>,
+    block: &'a BlockBox,
     x: f32,
     width: f32,
     rtl: bool,
     containing_height: Option<f32>,
-) -> Result<crate::layout::geometry::HorizontalBox, LayoutError> {
+) -> Result<crate::layout::geometry::HorizontalBox, Failure> {
     let style = block.style();
     let edges = crate::layout::geometry::Edges::of(style, width);
     let used_width = match block.image() {
@@ -1212,6 +1549,15 @@ pub(super) fn block_geometry(
     Ok(horizontal(style, x, width, rtl, Some(used.size)))
 }
 
+enum FlowFinished<'a> {
+    Complete(MeasuredBlock<'a>),
+    Restart {
+        block: MeasuredBlock<'a>,
+        columns: crate::layout::multicol::OrthogonalColumns,
+        root: bool,
+    },
+}
+
 enum FlowStart<'a> {
     Complete(MeasuredBlock<'a>),
     Pending(FlowFrame<'a>),
@@ -1240,7 +1586,12 @@ struct FlowFrame<'a> {
     columns: Option<ColumnGeometry>,
     content_x: f32,
     content_width: f32,
-    outer: (Fragmentainer, Option<ColumnFlow>),
+    outer: Box<(
+        Fragmentainer,
+        Option<ColumnFlow>,
+        FlowSpace,
+        Option<crate::layout::multicol::OrthogonalColumns>,
+    )>,
     restore_column_flow: Option<ColumnFlow>,
     previous_break_after: BreakBetween,
     children: std::slice::Iter<'a, BlockContent>,
@@ -1300,7 +1651,7 @@ impl<'a> FlowFrame<'a> {
             self.push(FlowItem::Block(Box::new(block)));
         }
     }
-    fn finish(self, measurer: &mut Measurer<'_>) -> Result<MeasuredBlock<'a>, LayoutError> {
+    fn finish(self, measurer: &mut Measurer<'a>) -> Result<FlowFinished<'a>, Failure> {
         let Self {
             block,
             geometry,
@@ -1357,7 +1708,10 @@ impl<'a> FlowFrame<'a> {
         } else {
             items.push(FlowItem::Margin(pending));
         }
-        (measurer.fragmentainer, measurer.column_flow) = outer;
+        let orthogonal = measurer
+            .orthogonal_columns
+            .filter(|columns| columns.matches(block.block));
+        (measurer.fragmentainer, measurer.column_flow) = (outer.0, outer.1);
         if let Some(columns) = columns {
             let content = items.split_off(1);
             let columns = crate::layout::multicol::measure(
@@ -1365,17 +1719,22 @@ impl<'a> FlowFrame<'a> {
                 columns,
                 style,
                 content,
-                vertical.definite(),
+                orthogonal
+                    .and_then(|columns| columns.length)
+                    .or_else(|| vertical.definite()),
+                orthogonal.is_some(),
             )?;
             has_forced = edges.iter().any(|edge| edge.is_forced()) || columns.forces_page;
             items.push(FlowItem::Columns(Box::new(columns)));
         }
+        measurer.space = outer.2;
+        measurer.orthogonal_columns = outer.3;
         items.push(FlowItem::Edge(BlockEdge::End, bottom_edge));
         let legend = place_legend(&mut items, &geometry);
         let top_edge = legend.map_or(top_edge, |(_, start)| start);
         let mut height = items.iter().map(FlowItem::height).sum::<f32>();
         if !height.is_finite() {
-            return Err(LayoutError::NonFiniteBlockGeometry { block: index });
+            return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
         }
         if height < 0.0 {
             items.push(FlowItem::Space(-height));
@@ -1384,7 +1743,7 @@ impl<'a> FlowFrame<'a> {
         let mut natural_height = height;
         height = vertical.used_height(height);
         if !height.is_finite() {
-            return Err(LayoutError::NonFiniteBlockGeometry { block: index });
+            return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
         }
         let constrained = height != natural_height || vertical.definite().is_some();
         let alignment = content_alignment(style, height - natural_height);
@@ -1412,7 +1771,8 @@ impl<'a> FlowFrame<'a> {
         if let Some(paint) = &mut paint {
             paint.legend = legend.map(|(cut, _)| cut);
         }
-        Ok(MeasuredBlock {
+        let measured = MeasuredBlock {
+        frame_key: None,
             grid: None,
             source: block.block,
             geometry: geometry.clone(),
@@ -1448,7 +1808,25 @@ impl<'a> FlowFrame<'a> {
             table: None,
             continues: false,
             spanner_fragment: None,
-        })
+        };
+        if let Some(columns) = orthogonal.filter(|columns| !columns.principal) {
+            let content = measured
+                .items
+                .iter()
+                .find_map(|item| match item {
+                    FlowItem::Columns(columns) => Some(columns),
+                    _ => None,
+                })
+                .expect("an automatic column block measures columns");
+            if let Some(columns) = columns.adjusted(content, style) {
+                return Ok(FlowFinished::Restart {
+                    block: measured,
+                    columns,
+                    root,
+                });
+            }
+        }
+        Ok(FlowFinished::Complete(measured))
     }
 }
 
@@ -1492,6 +1870,7 @@ fn place_legend(
     items[index + 1] = FlowItem::Space(area - top - before - height);
     Some((
         crate::graphics::LegendCut {
+            side: crate::style::logical::TOP,
             inset,
             gap: [
                 legend_box.x - fieldset_box.x,
@@ -1564,7 +1943,7 @@ pub(super) fn line_anchors<'a>(
     lines: &[Line],
     complete: bool,
 ) -> Vec<LineAnchor<'a>> {
-    let rtl = paragraph.style().rtl;
+    let rtl = paragraph.style().used_rtl();
     paragraph
         .anchors()
         .iter()

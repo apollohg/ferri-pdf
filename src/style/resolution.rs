@@ -652,6 +652,13 @@ impl<'a> Geometry<'a> {
         value: &Specified,
     ) -> Result<(), StyleError> {
         if property == Property::Display {
+            self.property(context, Property::WritingMode)?;
+            if let Some(parent) = self.parent_context(context) {
+                self.property(parent, Property::WritingMode)?;
+                self.property(parent, Property::RubyPosition)?;
+                let mode = self.context(parent).style.borrow().writing_mode;
+                self.context(context).style.borrow_mut().parent_writing_mode = mode;
+            }
             self.property(context, Property::Position)?;
             self.property(context, Property::Float)?;
         }
@@ -803,7 +810,7 @@ impl<'a> Geometry<'a> {
                     FontBasis::Deferred(&own_font)
                 },
                 root,
-                viewport: Viewport::Known(viewport),
+                viewport: Viewport::Deferred(self),
                 paper: self.sheet.paper,
                 tree: self.tree,
                 grammar_only: false,
@@ -1041,7 +1048,11 @@ impl<'a> Geometry<'a> {
         if unit == FontUnit::Em {
             return Ok(size);
         }
+        self.property(context, Property::WritingMode)?;
+        self.property(context, Property::TextOrientation)?;
+        let vertical = self.context(context).style.borrow().vertical_font_units();
         self.font_basis(context, size, LineHeight::Normal, true)?
+            .with_vertical_units(vertical)
             .per_unit(unit)
     }
 
@@ -1305,7 +1316,10 @@ impl crate::style::PageSelection for Geometry<'_> {
             element: element.id(),
             pseudo: None,
         };
-        self.selected_value(target, Property::Direction, |style| style.rtl)
+        let rtl = self.selected_value(target, Property::Direction, |style| style.rtl)?;
+        let mode =
+            self.selected_value(target, Property::WritingMode, |style| style.writing_mode)?;
+        Ok(mode.page_progression_rtl(rtl))
     }
     fn order(&self, target: crate::style::PageStyleTarget) -> Result<i32, StyleError> {
         self.selected_value(target, Property::Order, |style| style.flex.order)
@@ -1461,6 +1475,18 @@ impl crate::style::PageSelection for Geometry<'_> {
 }
 
 impl ViewportUnits for Geometry<'_> {
+    fn logical_dimension(&self, block: bool) -> Result<f32, StyleError> {
+        self.property(Context::Root, Property::WritingMode)?;
+        let vertical = self.root.style.borrow().writing_mode.vertical();
+        <Self as ViewportUnits>::dimension(
+            self,
+            if block == vertical {
+                Axis::Width
+            } else {
+                Axis::Height
+            },
+        )
+    }
     fn dimension(&self, axis: Axis) -> Result<f32, StyleError> {
         if let Some([width, height]) = self.viewport {
             return Ok(match axis {

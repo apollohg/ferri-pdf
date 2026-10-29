@@ -4,6 +4,7 @@ use crate::document::DocumentError;
 use crate::style::{Clear, Style, TextAlign, WhiteSpaceCollapse};
 use std::ops::Range;
 use std::sync::Arc;
+pub(crate) use transform_maps::narrow_width;
 
 pub(crate) const MAX_INLINE_TEXT_BYTES: usize = 64 * 1024 * 1024;
 /// Stands for an atomic inline in paragraph text (CSS Text 3 §5.1).
@@ -70,6 +71,7 @@ pub(crate) struct Paragraph {
     /// Ruby annotation boxes, each anchored at the end of its annotation in the base level.
     annotations: Vec<Anchor>,
     rubies: Vec<crate::document::ruby::Ruby>,
+    annotation_align: Option<crate::style::RubyAlign>,
     optional_breaks: Vec<usize>,
     clearances: Vec<(usize, Clear, bool)>,
     links: Vec<InlineLink>,
@@ -79,6 +81,43 @@ pub(crate) struct Paragraph {
     first_line: Option<Box<Paragraph>>,
 }
 impl Paragraph {
+    pub(super) fn reflow(&mut self) -> Vec<&mut crate::document::BlockBox> {
+        use crate::style::logical::{self, Flow};
+        let reflow = |style: &Style| logical::reflowed(style, Flow::of(style).horizontal());
+        let mut paragraphs = vec![self];
+        let mut blocks = Vec::new();
+        while let Some(paragraph) = paragraphs.pop() {
+            if paragraph.style.used_writing_mode().vertical() {
+                *paragraph.style = reflow(&paragraph.style);
+            }
+            for span in &mut paragraph.spans {
+                if span.style.used_writing_mode().vertical() {
+                    span.style = reflow(&span.style);
+                }
+            }
+            for inline in &mut paragraph.boxes {
+                let flow = Flow::of(&inline.style);
+                if flow.writing_mode.vertical() {
+                    inline.decoration =
+                        logical::decoration(&inline.decoration, flow, flow.horizontal());
+                    *Arc::make_mut(&mut inline.style) = reflow(&inline.style);
+                }
+            }
+            blocks.extend(
+                paragraph
+                    .anchors
+                    .iter_mut()
+                    .chain(&mut paragraph.atomics)
+                    .chain(&mut paragraph.annotations)
+                    .map(|anchor| &mut anchor.block),
+            );
+            if let Some(first) = &mut paragraph.first_line {
+                paragraphs.push(first);
+            }
+        }
+        blocks
+    }
+
     pub(crate) fn first_line(&self) -> Option<&Self> {
         self.first_line.as_deref()
     }
@@ -159,6 +198,7 @@ impl Paragraph {
                 }),
         );
         let mut copy = Self {
+            annotation_align: self.annotation_align,
             expanded_tabs: self.expanded_tabs.clone(),
             marker_image: None,
             first_formatted_line: self.first_formatted_line,
@@ -277,6 +317,7 @@ impl Paragraph {
         let mut paragraph = Self {
             expanded_tabs: Vec::new(),
             marker_image: Some(image),
+            annotation_align: None,
             first_formatted_line: false,
             last_formatted_line: false,
             text_box_trim: [false; 2],
@@ -355,9 +396,44 @@ impl Paragraph {
     pub(crate) fn annotations(&self) -> &[Anchor] {
         &self.annotations
     }
+    pub(super) fn align_annotation(&mut self, align: crate::style::RubyAlign) {
+        self.annotation_align = Some(align);
+        if let Some(first_line) = &mut self.first_line {
+            first_line.align_annotation(align);
+        }
+    }
+    pub(crate) fn annotation_align(&self) -> Option<crate::style::RubyAlign> {
+        self.annotation_align
+    }
     pub(crate) fn rubies(&self) -> &[crate::document::ruby::Ruby] {
         &self.rubies
     }
+    pub(crate) fn inter_character_base_style(&self, atomic: usize) -> Option<&Style> {
+        let annotation = atomic.checked_sub(self.atomics.len())?;
+        for ruby in &self.rubies {
+            for segment in &ruby.segments {
+                for level in &segment.levels {
+                    if !level.inter_character {
+                        continue;
+                    }
+                    if let Some(annotation) = level
+                        .annotations
+                        .iter()
+                        .find(|item| item.block == Some(annotation))
+                    {
+                        let base = if self.boxes[ruby.container].style.used_rtl() {
+                            annotation.bases.start
+                        } else {
+                            annotation.bases.end - 1
+                        };
+                        return Some(&self.boxes[segment.bases[base]].style);
+                    }
+                }
+            }
+        }
+        None
+    }
+
     /// The style of the annotation box that annotation box `index` lays out.
     pub(crate) fn annotation_box_style(&self, index: usize) -> &Style {
         self.rubies
@@ -1102,6 +1178,7 @@ impl InlineCollector {
             return Ok(Err(non_text(self.anchors, self.events)));
         }
         let mut paragraph = Paragraph {
+            annotation_align: None,
             expanded_tabs: self.expanded_tabs,
             marker_image: None,
             first_formatted_line: true,

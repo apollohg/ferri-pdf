@@ -1,4 +1,4 @@
-use crate::layout::measure::BlockSource;
+use crate::layout::measure::{BlockSource, Failure};
 pub(super) mod intrinsic;
 use crate::document::{BlockBox, BlockContent};
 use crate::flex::{Item, spacing};
@@ -15,32 +15,36 @@ use crate::layout::{
 };
 use crate::style::{Alignment, BoxSizing, BreakBetween, Display, FlexBasis, FlexWrap, Size};
 
-fn item_metrics(
-    measurer: &mut Measurer<'_>,
-    item: &FlexItem<'_>,
+fn item_metrics<'a>(
+    measurer: &mut Measurer<'a>,
+    item: &FlexItem<'a>,
     parent: &HorizontalBox,
     width: f32,
     height: Option<f32>,
     containing_height: Option<f32>,
-) -> Result<Metrics, LayoutError> {
+) -> Result<Metrics, Failure> {
     let geometry = item_geometry(item, parent, 0.0, width);
-    measurer.item_metrics(
-        item.source,
-        &geometry,
-        height,
-        containing_height,
-        |measurer| {
-            measure_item(
-                measurer,
-                item,
-                parent,
-                0.0,
-                width,
-                height,
-                containing_height,
-            )
-        },
-    )
+    let mut space = measurer.space;
+    space.indefinite_inline &= !item.inline_definite;
+    measurer.with_space(space, |measurer| {
+        measurer.item_metrics(
+            item.source,
+            &geometry,
+            height,
+            containing_height,
+            |measurer| {
+                measure_item(
+                    measurer,
+                    item,
+                    parent,
+                    0.0,
+                    width,
+                    height,
+                    containing_height,
+                )
+            },
+        )
+    })
 }
 
 struct FlexItem<'a> {
@@ -54,6 +58,7 @@ struct FlexItem<'a> {
     align: Alignment,
     natural_cross: f32,
     natural_main: f32,
+    inline_definite: bool,
 }
 impl FlexItem<'_> {
     fn edges(&self, column: bool) -> f32 {
@@ -64,7 +69,7 @@ impl FlexItem<'_> {
         }
     }
 }
-fn children(block: &BlockBox) -> Result<Vec<&BlockBox>, LayoutError> {
+fn children(block: &BlockBox) -> Result<Vec<&BlockBox>, Failure> {
     block
         .in_flow_children()
         .into_iter()
@@ -73,7 +78,8 @@ fn children(block: &BlockBox) -> Result<Vec<&BlockBox>, LayoutError> {
             BlockContent::Positioned(_) | BlockContent::Events(_) => None,
             BlockContent::Inline(_) => Some(Err(LayoutError::UnsupportedFlex {
                 feature: "unnormalized inline item",
-            })),
+            }
+            .into())),
         })
         .collect()
 }
@@ -103,51 +109,56 @@ fn item_geometry(
     }
 }
 fn measure_item<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     item: &FlexItem<'a>,
     parent: &HorizontalBox,
     left: f32,
     width: f32,
     height: Option<f32>,
     containing_height: Option<f32>,
-) -> Result<MeasuredBlock<'a>, LayoutError> {
+) -> Result<MeasuredBlock<'a>, Failure> {
     if item.source.style().display == Display::Table {
         return Err(LayoutError::UnsupportedFlex {
             feature: "table flex item sizing",
-        });
+        }
+        .into());
     }
-    measurer.format_block(
-        item.source,
-        item_geometry(item, parent, left, width),
-        true,
-        containing_height,
-        height,
-    )
+    let mut space = measurer.space;
+    space.indefinite_inline &= !item.inline_definite;
+    measurer.with_space(space, |measurer| {
+        measurer.measure_format(
+            item.source,
+            item_geometry(item, parent, left, width),
+            true,
+            containing_height,
+            height,
+        )
+    })
 }
 
 pub(super) fn measure<'a>(
-    measurer: &mut Measurer<'_>,
+    measurer: &mut Measurer<'a>,
     block: impl Into<BlockSource<'a>>,
     geometry: &HorizontalBox,
     containing_height: Option<f32>,
     used_height: Option<f32>,
-) -> Result<MeasuredBlock<'a>, LayoutError> {
+) -> Result<MeasuredBlock<'a>, Failure> {
     let block = block.into();
     let style = block.style();
     let flex = &style.flex;
     let column = flex.direction.column();
-    let main_reverse = flex.direction.reverse() ^ (!column && style.rtl);
-    let cross_reverse = (column && style.rtl) ^ (flex.wrap == FlexWrap::WrapReverse);
+    let main_reverse = flex.direction.reverse() ^ (!column && style.used_rtl());
+    let cross_reverse = (column && style.used_rtl()) ^ (flex.wrap == FlexWrap::WrapReverse);
     let vertical =
         VerticalBox::new(style, geometry, containing_height).with_used_height(used_height);
     let content_height = vertical.definite();
     let main_size = if column {
         content_height
     } else {
-        Some(geometry.width)
+        (!measurer.space.indefinite_inline).then_some(geometry.width)
     };
     let cross_size = if column {
-        Some(geometry.width)
+        (!measurer.space.indefinite_inline).then_some(geometry.width)
     } else {
         content_height
     };
@@ -206,7 +217,7 @@ pub(super) fn measure<'a>(
         }));
         let mut item = FlexItem {
             source,
-            containing_rtl: style.rtl,
+            containing_rtl: style.used_rtl(),
             main: Item {
                 collapsed: false,
                 basis: 0.0,
@@ -224,6 +235,7 @@ pub(super) fn measure<'a>(
             align,
             natural_cross: preliminary_width,
             natural_main: 0.0,
+            inline_definite: false,
         };
         // CSS Flexbox 1 §9.8: a stretched item of a single-line container with a definite
         // cross size has a definite cross size.
@@ -357,6 +369,27 @@ pub(super) fn measure<'a>(
                 }
             }),
         };
+        let basis_definite = match &child.flex.basis {
+            FlexBasis::Auto => {
+                let preferred = if column { &child.height } else { &child.width };
+                preferred.resolve_definite(main_size).is_some()
+                    || (ratio.is_some() && definite_cross.is_some())
+            }
+            value @ FlexBasis::Value(_) => value.resolve(main_size).is_some(),
+            FlexBasis::Content | FlexBasis::Intrinsic(_) => false,
+        };
+        item.inline_definite = !measurer.space.indefinite_inline
+            || if column {
+                child.width.resolve_definite(None).is_some()
+                    || (cross_size.is_some()
+                        && flex.wrap == FlexWrap::NoWrap
+                        && matches!(align, Alignment::Normal | Alignment::Stretch)
+                        && margins[1].is_some()
+                        && margins[3].is_some())
+                    || (ratio.is_some() && (main_size.is_some() || basis_definite))
+            } else {
+                main_size.is_some() || basis_definite
+            };
         item.natural_main = natural_main;
         item.main.basis = basis;
         item.main.minimum = minimum;
@@ -688,7 +721,8 @@ pub(super) fn measure<'a>(
     if !height.is_finite() {
         return Err(LayoutError::UnsupportedFlex {
             feature: "non-finite container size",
-        });
+        }
+        .into());
     }
     if column && (!placed.is_empty() || !column_collapsed.is_empty()) {
         groups.push((0.0, content, placed, column_collapsed));
@@ -770,6 +804,7 @@ pub(super) fn measure<'a>(
         first_fragment + bottom
     };
     Ok(MeasuredBlock {
+        frame_key: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer
