@@ -9,6 +9,7 @@ use fontdb::{Database, ID};
 use kurbo::{ParamCurve, ParamCurveArclen, ParamCurveDeriv};
 use rustybuzz::ttf_parser;
 use rustybuzz::ttf_parser::{GlyphId, Tag};
+
 use strict_num::NonZeroPositiveF32;
 use tiny_skia_path::{NonZeroRect, Transform};
 use unicode_script::UnicodeScript;
@@ -19,6 +20,17 @@ use crate::svg::usvg::{
     FontProvider, LengthAdjust, PaintOrder, Path, ShapeRendering, Stroke, Text, TextAnchor,
     TextChunk, TextDecorationStyle, TextFlow, TextPath, TextSpan, WritingMode,
 };
+
+#[cfg(test)]
+mod tests;
+
+const VERTICAL_ROTATION: f32 = 90.0;
+type OrientationSpans<'a> = Option<
+    &'a [(
+        std::ops::Range<usize>,
+        crate::style::logical::TextOrientation,
+    )],
+>;
 
 /// A glyph that has already been positioned correctly.
 ///
@@ -179,6 +191,7 @@ pub struct Span {
 struct GlyphCluster {
     byte_idx: ByteIndex,
     codepoint: char,
+    vertical: bool,
     width: f32,
     advance: f32,
     ascent: f32,
@@ -186,7 +199,6 @@ struct GlyphCluster {
     has_relative_shift: bool,
     glyphs: Vec<PositionedGlyph>,
     transform: Transform,
-    path_transform: Transform,
     visible: bool,
 }
 
@@ -196,7 +208,7 @@ impl GlyphCluster {
     }
 
     pub(crate) fn transform(&self) -> Transform {
-        self.path_transform.post_concat(self.transform)
+        self.transform
     }
 }
 
@@ -231,7 +243,13 @@ pub(crate) fn layout_text(
             TextFlow::Path(_) => (0.0, 0.0),
         };
 
-        let mut clusters = process_chunk(chunk, &fonts_cache, resolver, fontdb);
+        let mut clusters = process_chunk(
+            chunk,
+            text_node.writing_mode,
+            &fonts_cache,
+            resolver,
+            fontdb,
+        );
         if clusters.is_empty() {
             char_offset += chunk.text.chars().count();
             continue;
@@ -254,7 +272,7 @@ pub(crate) fn layout_text(
         let mut text_ts = Transform::default();
         if text_node.writing_mode == WritingMode::TopToBottom {
             if let TextFlow::Linear = chunk.text_flow {
-                text_ts = text_ts.pre_rotate_at(90.0, x, y);
+                text_ts = text_ts.pre_rotate_at(VERTICAL_ROTATION, x, y);
             }
         }
 
@@ -883,8 +901,37 @@ fn collect_normals(
 ///
 /// This function will do the BIDI reordering, text shaping and glyphs outlining,
 /// but not the text layouting. So all clusters are in the 0x0 position.
+fn directional_text(chunk: &TextChunk, writing_mode: WritingMode) -> std::borrow::Cow<'_, str> {
+    use crate::style::logical::TextOrientation;
+    if writing_mode != WritingMode::TopToBottom
+        || !chunk
+            .spans
+            .iter()
+            .any(|span| span.text_orientation == TextOrientation::Upright)
+    {
+        return std::borrow::Cow::Borrowed(&chunk.text);
+    }
+    // Strong-LTR representatives preserve source UTF-8 offsets for the shared bidi analysis.
+    const LTR_BY_WIDTH: [char; 4] = ['A', '\u{0100}', '\u{4e00}', '\u{20000}'];
+    let mut text = String::with_capacity(chunk.text.len());
+    let mut from = 0;
+    for span in &chunk.spans {
+        text.push_str(&chunk.text[from..span.start]);
+        let source = &chunk.text[span.start..span.end];
+        if span.text_orientation == TextOrientation::Upright {
+            text.extend(source.chars().map(|ch| LTR_BY_WIDTH[ch.len_utf8() - 1]));
+        } else {
+            text.push_str(source);
+        }
+        from = span.end;
+    }
+    text.push_str(&chunk.text[from..]);
+    std::borrow::Cow::Owned(text)
+}
+
 fn process_chunk(
     chunk: &TextChunk,
+    writing_mode: WritingMode,
     fonts_cache: &FontsCache,
     resolver: &dyn FontProvider,
     fontdb: &mut Arc<Database>,
@@ -926,6 +973,15 @@ fn process_chunk(
     let mut positions = HashSet::new();
 
     let mut glyphs = Vec::new();
+    let directional = directional_text(chunk, writing_mode);
+    let orientation_spans = (writing_mode == WritingMode::TopToBottom).then(|| {
+        chunk
+            .spans
+            .iter()
+            .map(|span| (span.start..span.end, span.text_orientation))
+            .collect::<Vec<_>>()
+    });
+    let orientations = orientation_spans.as_deref();
     for span in &chunk.spans {
         let font = match fonts_cache.get(&span.font) {
             Some(v) => v.clone(),
@@ -934,7 +990,9 @@ fn process_chunk(
 
         let tmp_glyphs = shape_text(
             &chunk.text,
+            &directional,
             chunk.rtl,
+            orientations,
             &span.font,
             span.start..span.end,
             font,
@@ -1067,39 +1125,15 @@ fn apply_length_adjust(chunk: &TextChunk, clusters: &mut [GlyphCluster]) {
     }
 }
 
-/// Rotates clusters according to
-/// [Unicode Vertical_Orientation Property](https://www.unicode.org/reports/tr50/tr50-19.html).
+/// Centres sideways glyphs on the vertical column; upright glyphs already have vertical origins.
 fn apply_writing_mode(writing_mode: WritingMode, clusters: &mut [GlyphCluster]) {
     if writing_mode != WritingMode::TopToBottom {
         return;
     }
-
-    for cluster in clusters {
-        let orientation = unicode_vo::char_orientation(cluster.codepoint);
-        if orientation == unicode_vo::Orientation::Upright {
-            let mut ts = Transform::default();
-            // Position glyph in the center of vertical axis.
-            ts = ts.pre_translate(0.0, (cluster.ascent + cluster.descent) / 2.0);
-            // Rotate by 90 degrees in the center.
-            ts = ts.pre_rotate_at(
-                -90.0,
-                cluster.width / 2.0,
-                -(cluster.ascent + cluster.descent) / 2.0,
-            );
-
-            cluster.path_transform = ts;
-
-            // Move "baseline" to the middle and make height equal to width.
-            cluster.ascent = cluster.width / 2.0;
-            cluster.descent = -cluster.width / 2.0;
-        } else {
-            // Could not find a spec that explains this,
-            // but this is how other applications are shifting the "rotated" characters
-            // in the top-to-bottom mode.
-            cluster.transform = cluster
-                .transform
-                .pre_translate(0.0, (cluster.ascent + cluster.descent) / 2.0);
-        }
+    for cluster in clusters.iter_mut().filter(|cluster| !cluster.vertical) {
+        cluster.transform = cluster
+            .transform
+            .pre_translate(0.0, (cluster.ascent + cluster.descent) / 2.0);
     }
 }
 
@@ -1187,7 +1221,13 @@ fn form_glyph_clusters(glyphs: &[Glyph], text: &str, font_size: f32) -> GlyphClu
         // but the later one will have an offset from the "current position".
         // So we have to keep an advance.
         // TODO: should be done only inside a single text span
-        let ts = Transform::from_translate(x + glyph.dx as f32, -glyph.dy as f32);
+        let ts = if glyph.vertical {
+            Transform::from_translate(x, 0.0)
+                .pre_rotate(-VERTICAL_ROTATION)
+                .pre_translate(glyph.dx as f32, -glyph.dy as f32)
+        } else {
+            Transform::from_translate(x + glyph.dx as f32, -glyph.dy as f32)
+        };
 
         positioned_glyphs.push(PositionedGlyph {
             glyph_ts: ts,
@@ -1217,13 +1257,21 @@ fn form_glyph_clusters(glyphs: &[Glyph], text: &str, font_size: f32) -> GlyphClu
     GlyphCluster {
         byte_idx,
         codepoint: byte_idx.char_from(text),
+        vertical: glyphs[0].vertical,
         width,
         advance: width,
-        ascent: font.ascent(font_size),
-        descent: font.descent(font_size),
+        ascent: if glyphs[0].vertical {
+            font_size / 2.0
+        } else {
+            font.ascent(font_size)
+        },
+        descent: if glyphs[0].vertical {
+            -font_size / 2.0
+        } else {
+            font.descent(font_size)
+        },
         has_relative_shift: false,
         transform: Transform::default(),
-        path_transform: Transform::default(),
         glyphs: positioned_glyphs,
         visible: true,
     }
@@ -1323,7 +1371,9 @@ impl DatabaseExt for Database {
 /// Text shaping with font fallback.
 pub(crate) fn shape_text(
     text: &str,
+    directional: &str,
     rtl: bool,
+    orientations: OrientationSpans<'_>,
     request: &Font,
     active: std::ops::Range<usize>,
     font: Arc<ResolvedFont>,
@@ -1337,8 +1387,10 @@ pub(crate) fn shape_text(
     let variations = resolver.variations(request, font.id);
     let mut glyphs = shape_text_with_font(
         text,
+        directional,
         0..text.len(),
         rtl,
+        orientations,
         font.clone(),
         small_caps,
         apply_kerning,
@@ -1430,8 +1482,10 @@ pub(crate) fn shape_text(
             }
             let candidate = shape_text_with_font(
                 text,
+                directional,
                 group_source.clone(),
                 rtl,
+                orientations,
                 fallback.clone(),
                 small_caps,
                 apply_kerning,
@@ -1449,8 +1503,10 @@ pub(crate) fn shape_text(
             if group_end != end {
                 let candidate = shape_text_with_font(
                     text,
+                    directional,
                     source.value()..source_end,
                     rtl,
+                    orientations,
                     fallback.clone(),
                     small_caps,
                     apply_kerning,
@@ -1478,8 +1534,10 @@ pub(crate) fn shape_text(
                 let variations = resolver.variations(request, fallback.id);
                 let merged = shape_text_with_font(
                     text,
+                    directional,
                     combined.clone(),
                     rtl,
+                    orientations,
                     fallback.clone(),
                     small_caps,
                     apply_kerning,
@@ -1532,8 +1590,10 @@ pub(crate) fn shape_text(
 /// This function will do the BIDI reordering and text shaping.
 fn shape_text_with_font(
     text: &str,
+    directional: &str,
     source: std::ops::Range<usize>,
     rtl: bool,
+    orientations: OrientationSpans<'_>,
     font: Arc<ResolvedFont>,
     small_caps: bool,
     apply_kerning: bool,
@@ -1587,73 +1647,109 @@ fn shape_text_with_font(
         } else {
             unicode_bidi::Level::ltr()
         };
-        let bidi_info = unicode_bidi::BidiInfo::new(text, Some(base));
+        let bidi_info = unicode_bidi::BidiInfo::new(directional, Some(base));
         let paragraph = &bidi_info.paragraphs[0];
         let line = paragraph.range.clone();
 
         let mut glyphs = Vec::new();
 
         let (levels, runs) = bidi_info.visual_runs(paragraph, line);
-        for run in runs.iter() {
+        let vertical_forms = crate::fonts::has_feature(&rb_font, *b"vert")
+            || crate::fonts::has_feature(&rb_font, *b"vrt2");
+        for run in &runs {
             let run = run.start.max(source.start)..run.end.min(source.end);
             if run.start >= run.end {
                 continue;
             }
-            let sub_text = &text[run.clone()];
-            if sub_text.is_empty() {
-                continue;
-            }
-
-            let ltr = levels[run.start].is_ltr();
-            let hb_direction = if ltr {
-                rustybuzz::Direction::LeftToRight
+            let mut pieces: Vec<(std::ops::Range<usize>, bool)> = Vec::new();
+            if let Some(orientations) = orientations {
+                for (range, orientation) in orientations {
+                    let range = range.start.max(run.start)..range.end.min(run.end);
+                    if range.is_empty() {
+                        continue;
+                    }
+                    for (range, vertical) in orientation.ranges(text, range, vertical_forms) {
+                        if let Some((previous, prior_vertical)) = pieces.last_mut()
+                            && previous.end == range.start
+                            && *prior_vertical == vertical
+                        {
+                            previous.end = range.end;
+                        } else {
+                            pieces.push((range, vertical));
+                        }
+                    }
+                }
             } else {
-                rustybuzz::Direction::RightToLeft
-            };
-
-            let mut buffer = rustybuzz::UnicodeBuffer::new();
-            buffer.push_str(sub_text);
-            buffer.set_pre_context(&text[..run.start]);
-            buffer.set_post_context(&text[run.end..]);
-            buffer.set_direction(hb_direction);
-
-            let mut features = Vec::new();
-            if small_caps {
-                features.push(rustybuzz::Feature::new(Tag::from_bytes(b"smcp"), 1, ..));
+                pieces.push((run.clone(), false));
             }
-
-            if !apply_kerning {
-                features.push(rustybuzz::Feature::new(Tag::from_bytes(b"kern"), 0, ..));
+            if levels[run.start].is_rtl() {
+                pieces.reverse();
             }
+            for (run, vertical) in pieces {
+                let sub_text = &text[run.clone()];
+                if sub_text.is_empty() {
+                    continue;
+                }
 
-            let output = rustybuzz::shape(&rb_font, &features, buffer);
+                let ltr = levels[run.start].is_ltr();
+                let hb_direction = if vertical {
+                    rustybuzz::Direction::TopToBottom
+                } else if ltr {
+                    rustybuzz::Direction::LeftToRight
+                } else {
+                    rustybuzz::Direction::RightToLeft
+                };
 
-            let positions = output.glyph_positions();
-            let infos = output.glyph_infos();
-            let boundaries = crate::fonts::cluster_boundaries(
-                infos.iter().map(|glyph| glyph.cluster as usize),
-                sub_text.len(),
-            );
+                let mut buffer = rustybuzz::UnicodeBuffer::new();
+                buffer.push_str(sub_text);
+                buffer.set_pre_context(&text[..run.start]);
+                buffer.set_post_context(&text[run.end..]);
+                buffer.set_direction(hb_direction);
+                buffer.guess_segment_properties();
 
-            for i in 0..output.len() {
-                let pos = positions[i];
-                let info = infos[i];
-                let idx = run.start + info.cluster as usize;
+                let mut features = Vec::new();
+                if small_caps {
+                    features.push(rustybuzz::Feature::new(Tag::from_bytes(b"smcp"), 1, ..));
+                }
 
-                let start = info.cluster as usize;
+                if !apply_kerning {
+                    features.push(rustybuzz::Feature::new(Tag::from_bytes(b"kern"), 0, ..));
+                }
 
-                let end = boundaries[boundaries.binary_search(&start).unwrap() + 1];
+                let output = rustybuzz::shape(&rb_font, &features, buffer);
 
-                glyphs.push(Glyph {
-                    byte_idx: ByteIndex::new(idx),
-                    cluster_len: end - start,
-                    text: sub_text[start..end].to_string(),
-                    id: GlyphId(info.glyph_id as u16),
-                    dx: pos.x_offset,
-                    dy: pos.y_offset,
-                    width: pos.x_advance,
-                    font: font.clone(),
-                });
+                let positions = output.glyph_positions();
+                let infos = output.glyph_infos();
+                let boundaries = crate::fonts::cluster_boundaries(
+                    infos.iter().map(|glyph| glyph.cluster as usize),
+                    sub_text.len(),
+                );
+
+                for i in 0..output.len() {
+                    let pos = positions[i];
+                    let info = infos[i];
+                    let idx = run.start + info.cluster as usize;
+
+                    let start = info.cluster as usize;
+
+                    let end = boundaries[boundaries.binary_search(&start).unwrap() + 1];
+
+                    glyphs.push(Glyph {
+                        byte_idx: ByteIndex::new(idx),
+                        cluster_len: end - start,
+                        text: sub_text[start..end].to_string(),
+                        id: GlyphId(info.glyph_id as u16),
+                        dx: pos.x_offset,
+                        dy: pos.y_offset,
+                        width: if vertical {
+                            -pos.y_advance
+                        } else {
+                            pos.x_advance
+                        },
+                        vertical,
+                        font: font.clone(),
+                    });
+                }
             }
         }
 
@@ -1754,6 +1850,7 @@ pub(crate) struct Glyph {
 
     /// The glyph width / X-advance in font units.
     pub(crate) width: i32,
+    pub(crate) vertical: bool,
 
     /// Reference to the source font.
     ///

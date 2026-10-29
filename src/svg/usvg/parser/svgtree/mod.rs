@@ -747,6 +747,7 @@ impl AId {
                 | AId::TextOverflow
                 | AId::TextRendering
                 | AId::Transform
+                | AId::TextOrientation
                 | AId::TransformOrigin
                 | AId::UnicodeBidi
                 | AId::VectorEffect
@@ -812,6 +813,7 @@ impl AId {
                 | AId::StrokeMiterlimit
                 | AId::StrokeOpacity
                 | AId::StrokeWidth
+                | AId::TextOrientation
                 | AId::TextAnchor
                 | AId::TextDecoration
                 | AId::TextRendering

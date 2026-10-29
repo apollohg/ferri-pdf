@@ -217,6 +217,10 @@
       "syntax": "normal | <length-percentage [0,∞]>",
       "source": "https://www.w3.org/TR/2026/WD-css-align-3-20261008/#column-row-gap: negative values are invalid"
     },
+    "writing-mode": {
+      "syntax": "horizontal-tb | vertical-rl | vertical-lr | sideways-rl | sideways-lr | lr | lr-tb | rl | rl-tb | tb | tb-rl",
+      "source": "https://www.w3.org/TR/css-writing-modes-4/#svg-writing-mode-css: six obsolete SVG1.1 spellings compute to their modern equivalents without changing direction"
+    },
     "text-combine-upright": {
       "syntax": "none | all | [ digits <integer [2,4]>? ]",
       "source": "https://www.w3.org/TR/css-writing-modes-4/#text-combine-upright: digit limits outside 2–4 are invalid"
@@ -911,6 +915,17 @@
       "inherited": false,
       "groups": ["CSS Box Sizing"],
       "source": "https://www.w3.org/TR/2026/WD-css-sizing-4-20260904/#propdef-max-size: omitted max-height copies max-width"
+    },
+    "glyph-orientation-vertical": {
+      "syntax": "auto | <dimension> | <integer>",
+      "initial": [
+        "text-orientation"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Writing Modes"
+      ],
+      "source": "https://www.w3.org/TR/css-writing-modes-4/#glyph-orientation: shorthand of text-orientation; prose restricts dimensions to 0deg/90deg and integers to 0/90"
     },
     "-webkit-appearance": {
       "syntax": "<'appearance'>",

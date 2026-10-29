@@ -291,14 +291,22 @@ pub(crate) fn parse_svg_element<'input>(
             continue;
         }
 
-        append_attribute(
-            parent_id,
-            tag_name,
-            aid,
-            attr.value_storage().clone(),
-            false,
-            doc,
-        );
+        let normalized;
+        let (aid, value) = if is_writing_attribute(aid) {
+            let Some((mapped, mut value)) =
+                writing_attribute(aid, attr.value()).or_else(|| writing_attribute(aid, "initial"))
+            else {
+                continue;
+            };
+            if matches!(value.as_str(), "revert" | "revert-layer") {
+                value = "inherit".into();
+            }
+            normalized = roxmltree::StringStorage::new_owned(&value);
+            (mapped, normalized)
+        } else {
+            (aid, attr.value_storage().clone())
+        };
+        append_attribute(parent_id, tag_name, aid, value, false, doc);
     }
 
     let presentation_end_idx = doc.attrs.len();
@@ -316,7 +324,57 @@ pub(crate) fn parse_svg_element<'input>(
         Vec::new()
     };
 
+    let inline_phase = std::cell::Cell::new(false);
+    let presentation_baseline: HashMap<_, _> = doc.attrs[attrs_start_idx..presentation_end_idx]
+        .iter()
+        .filter(|attr| is_writing_attribute(attr.name))
+        .map(|attr| (attr.name.to_str(), attr.value.to_string()))
+        .collect();
+    let mut inline_baseline = HashMap::<&str, Option<String>>::new();
     let mut insert_attribute = |aid, value: &str, important: bool, override_presentation: bool| {
+        let normalized;
+        let (aid, value) = if is_writing_attribute(aid) {
+            let Some((mapped, mut value)) = writing_attribute(aid, value) else {
+                return;
+            };
+            if inline_phase.get() {
+                inline_baseline.entry(mapped.to_str()).or_insert_with(|| {
+                    doc.attrs[attrs_start_idx..]
+                        .iter()
+                        .find(|attr| attr.name == mapped)
+                        .map(|attr| attr.value.to_string())
+                });
+            }
+            if value == "revert-layer" {
+                let previous = if inline_phase.get() {
+                    inline_baseline
+                        .get(mapped.to_str())
+                        .and_then(Option::as_ref)
+                } else {
+                    presentation_baseline.get(mapped.to_str())
+                };
+                if let Some(previous) = previous {
+                    value.clone_from(previous);
+                }
+            }
+            if matches!(value.as_str(), "revert" | "revert-layer") {
+                value = if mapped == AId::WritingMode {
+                    xml_node
+                        .attribute("writing-mode")
+                        .filter(|value| {
+                            matches!(*value, "lr" | "lr-tb" | "rl" | "rl-tb" | "tb" | "tb-rl")
+                        })
+                        .and_then(|value| writing_attribute(mapped, value).map(|(_, value)| value))
+                        .unwrap_or_else(|| "inherit".into())
+                } else {
+                    "inherit".into()
+                };
+            }
+            normalized = value;
+            (mapped, normalized.as_str())
+        } else {
+            (aid, value)
+        };
         // Check that attribute already exists.
         let idx = doc.attrs[attrs_start_idx..]
             .iter_mut()
@@ -452,9 +510,11 @@ pub(crate) fn parse_svg_element<'input>(
     for declaration in style_sheet.matching_declarations(xml_node, None) {
         write_declaration(declaration, true);
     }
+    inline_phase.set(true);
     for declaration in &inline_declarations {
         write_declaration(declaration, true);
     }
+    inline_phase.set(false);
     for declaration in host_declarations().filter(|declaration| declaration.important) {
         write_declaration(declaration, true);
     }
@@ -472,6 +532,21 @@ pub(crate) fn parse_svg_element<'input>(
     );
 
     Ok(node_id)
+}
+
+fn is_writing_attribute(aid: AId) -> bool {
+    matches!(
+        aid,
+        AId::WritingMode
+            | AId::TextOrientation
+            | AId::GlyphOrientationVertical
+            | AId::GlyphOrientationHorizontal
+    )
+}
+
+fn writing_attribute(aid: AId, source: &str) -> Option<(AId, String)> {
+    let (name, value) = crate::style::svg_values::writing_attribute(aid.to_str(), source)?;
+    Some((AId::from_str(name)?, value.to_owned()))
 }
 
 fn append_attribute<'input>(
@@ -609,6 +684,7 @@ fn resolve_inherit(parent_id: NodeId, aid: AId, doc: &mut Document) -> bool {
         AId::StrokeMiterlimit => "4",
         AId::StrokeWidth => "1",
         AId::TextAnchor => "start",
+        AId::TextOrientation => "mixed",
         AId::Visibility => "visible",
         AId::WritingMode => "lr-tb",
         _ => return false,

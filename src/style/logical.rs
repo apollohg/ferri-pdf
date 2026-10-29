@@ -23,13 +23,15 @@ pub(crate) enum WritingMode {
     SidewaysLr,
 }
 impl WritingMode {
-    pub(super) fn from_component(
+    pub(crate) fn from_component(
         value: &crate::style::component::Component,
     ) -> Result<Self, crate::style::StyleError> {
         use crate::style::grammar::Keyword;
         match value.keyword() {
-            Some(Keyword::HorizontalTb) => Ok(Self::HorizontalTb),
-            Some(Keyword::VerticalRl) => Ok(Self::VerticalRl),
+            Some(
+                Keyword::HorizontalTb | Keyword::Lr | Keyword::LrTb | Keyword::Rl | Keyword::RlTb,
+            ) => Ok(Self::HorizontalTb),
+            Some(Keyword::VerticalRl | Keyword::Tb | Keyword::TbRl) => Ok(Self::VerticalRl),
             Some(Keyword::VerticalLr) => Ok(Self::VerticalLr),
             Some(Keyword::SidewaysRl) => Ok(Self::SidewaysRl),
             Some(Keyword::SidewaysLr) => Ok(Self::SidewaysLr),
@@ -38,6 +40,15 @@ impl WritingMode {
     }
     pub(crate) fn vertical(self) -> bool {
         self != Self::HorizontalTb
+    }
+    pub(crate) fn name(self) -> &'static str {
+        match self {
+            Self::HorizontalTb => "horizontal-tb",
+            Self::VerticalRl => "vertical-rl",
+            Self::VerticalLr => "vertical-lr",
+            Self::SidewaysRl => "sideways-rl",
+            Self::SidewaysLr => "sideways-lr",
+        }
     }
     pub(crate) fn page_progression_rtl(self, rtl: bool) -> bool {
         match self {
@@ -56,17 +67,84 @@ pub(crate) enum TextOrientation {
     Sideways,
 }
 impl TextOrientation {
-    pub(super) fn from_component(
-        value: &crate::style::component::Component,
-    ) -> Result<Self, crate::style::StyleError> {
-        use crate::style::grammar::Keyword;
-        match value.keyword() {
-            Some(Keyword::Mixed) => Ok(Self::Mixed),
-            Some(Keyword::Upright) => Ok(Self::Upright),
-            Some(Keyword::Sideways) => Ok(Self::Sideways),
-            _ => Err(crate::style::box_values::unsupported(value)),
+    pub(crate) fn ranges(
+        self,
+        text: &str,
+        range: std::ops::Range<usize>,
+        vertical_forms: bool,
+    ) -> Vec<(std::ops::Range<usize>, bool)> {
+        use unicode_segmentation::UnicodeSegmentation;
+        let mut pieces: Vec<(std::ops::Range<usize>, bool)> = Vec::new();
+        for (offset, cluster) in text[range.clone()].grapheme_indices(true) {
+            let first = cluster.chars().next().expect("a grapheme is nonempty");
+            let upright = match self {
+                Self::Upright => true,
+                Self::Sideways => false,
+                Self::Mixed => match unicode_vo::char_orientation(first) {
+                    unicode_vo::Orientation::Upright
+                    | unicode_vo::Orientation::TransformedOrUpright => true,
+                    unicode_vo::Orientation::TransformedOrRotated => vertical_forms,
+                    unicode_vo::Orientation::Rotated => false,
+                },
+            };
+            let start = range.start + offset;
+            if let Some((previous, orientation)) = pieces.last_mut()
+                && *orientation == upright
+            {
+                previous.end = start + cluster.len();
+            } else {
+                pieces.push((start..start + cluster.len(), upright));
+            }
+        }
+        pieces
+    }
+    pub(crate) fn from_name(name: &str) -> Option<Self> {
+        [Self::Mixed, Self::Upright, Self::Sideways]
+            .into_iter()
+            .find(|value| name.eq_ignore_ascii_case(value.name()))
+    }
+    pub(crate) fn name(self) -> &'static str {
+        match self {
+            Self::Mixed => "mixed",
+            Self::Upright => "upright",
+            Self::Sideways => "sideways",
         }
     }
+    pub(crate) fn from_component(
+        value: &crate::style::component::Component,
+    ) -> Result<Self, crate::style::StyleError> {
+        value
+            .keyword()
+            .and_then(|keyword| Self::from_name(keyword.name()))
+            .ok_or_else(|| crate::style::box_values::unsupported(value))
+    }
+}
+
+/// Writing Modes 4 §5.1.3: only these legacy values alias `text-orientation`.
+pub(super) fn glyph_orientation(
+    value: &crate::style::component::Component,
+) -> Option<crate::style::grammar::Keyword> {
+    use crate::style::{component::Component, grammar::Keyword};
+    const QUARTER_TURN: i32 = 90;
+    match value.unwrap() {
+        Component::Keyword(Keyword::Auto) => Some(Keyword::Mixed),
+        Component::Integer(0) => Some(Keyword::Upright),
+        Component::Integer(QUARTER_TURN) => Some(Keyword::Sideways),
+        Component::Dimension(angle, unit) if unit.eq_ignore_ascii_case("deg") => {
+            if *angle == 0.0 {
+                Some(Keyword::Upright)
+            } else if *angle == QUARTER_TURN as f32 {
+                Some(Keyword::Sideways)
+            } else {
+                None
+            }
+        }
+        _ => None,
+    }
+}
+
+pub(super) fn valid(property: Property, value: &crate::style::component::Component) -> bool {
+    property != Property::GlyphOrientationVertical || glyph_orientation(value).is_some()
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize)]

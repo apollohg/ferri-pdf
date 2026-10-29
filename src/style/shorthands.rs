@@ -133,6 +133,12 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::MaxSize => pair(&value, [P::MaxWidth, P::MaxHeight]),
         P::TextAlign => text_align(&value),
         P::BoxShadow => box_shadow(&value),
+        P::GlyphOrientationVertical => alias(
+            &Component::Keyword(crate::style::logical::glyph_orientation(&value).ok_or_else(
+                || StyleError::Invalid(format!("glyph-orientation-vertical: {value}")),
+            )?),
+            P::TextOrientation,
+        ),
         P::Margin => edges(
             &value,
             [P::MarginTop, P::MarginRight, P::MarginBottom, P::MarginLeft],

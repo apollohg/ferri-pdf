@@ -240,7 +240,13 @@ fn collect_text_chunks_impl(
             continue;
         }
 
-        let rtl = parent.find_attribute::<&str>(AId::Direction) == Some(RIGHT_TO_LEFT);
+        let text_orientation = parent
+            .find_attribute::<&str>(AId::TextOrientation)
+            .and_then(crate::style::logical::TextOrientation::from_name)
+            .unwrap_or_default();
+        let rtl = parent.find_attribute::<&str>(AId::Direction) == Some(RIGHT_TO_LEFT)
+            && !(convert_writing_mode(parent) == WritingMode::TopToBottom
+                && text_orientation == crate::style::logical::TextOrientation::Upright);
         // SVG 2 §11.10.1.1: in right-to-left text `start` aligns the right side, `end` the left.
         let anchor = match parent.find_attribute(AId::TextAnchor).unwrap_or_default() {
             TextAnchor::Start if rtl => TextAnchor::End,
@@ -315,6 +321,7 @@ fn collect_text_chunks_impl(
             font,
             font_size,
             small_caps: parent.find_attribute::<&str>(AId::FontVariant) == Some("small-caps"),
+            text_orientation,
             apply_kerning,
             font_optical_sizing,
             decoration: resolve_decoration(parent, state, cache),

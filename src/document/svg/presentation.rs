@@ -124,6 +124,8 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
         image_rendering_keyword(svg.image_rendering),
     );
     push("dominant-baseline", baseline(style.baseline.dominant));
+    push("writing-mode", style.writing_mode.name());
+    push("text-orientation", style.text_orientation.name());
     push("visibility", visibility(style.visibility));
     if !root {
         push("opacity", &number(style.opacity));

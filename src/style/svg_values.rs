@@ -596,7 +596,7 @@ impl InitialOnly {
 
 /// SVG 2 §6.6 presentation attributes that the cascade takes on every SVG element. The SVG
 /// renderer reads the others directly.
-const PRESENTATION_ATTRIBUTES: [Property; 48] = [
+const PRESENTATION_ATTRIBUTES: [Property; 51] = [
     Property::ClipPath,
     Property::ClipRule,
     Property::Color,
@@ -617,6 +617,7 @@ const PRESENTATION_ATTRIBUTES: [Property; 48] = [
     Property::FontStyle,
     Property::FontVariant,
     Property::FontWeight,
+    Property::GlyphOrientationVertical,
     Property::ImageRendering,
     Property::LetterSpacing,
     Property::LightingColor,
@@ -640,11 +641,13 @@ const PRESENTATION_ATTRIBUTES: [Property; 48] = [
     Property::StrokeOpacity,
     Property::StrokeWidth,
     Property::TextAnchor,
+    Property::TextOrientation,
     Property::TextRendering,
     Property::TransformOrigin,
     Property::VectorEffect,
     Property::Visibility,
     Property::WordSpacing,
+    Property::WritingMode,
 ];
 const SIZED_ELEMENTS: &[&str] = &["foreignObject", "image", "rect", "svg", "symbol", "use"];
 const CIRCULAR_ELEMENTS: &[&str] = &["circle", "ellipse"];
@@ -672,6 +675,46 @@ const TRANSFORM_ATTRIBUTES: [(&str, &str); 3] = [
 const TRANSFORM_ATTRIBUTE: &str = "transform";
 /// SVG Animations elements, whose `fill` attribute is the animation's fill mode instead.
 const ANIMATION_ELEMENTS: &[&str] = &["animate", "animateMotion", "animateTransform", "set"];
+
+/// Uses the document's modern value and shorthand parsing for standalone SVG text too.
+pub(crate) fn writing_attribute(name: &str, source: &str) -> Option<(&'static str, &'static str)> {
+    use crate::style::{
+        logical::{TextOrientation, WritingMode},
+        wide_keywords::Resolved,
+    };
+    let (property, mapped, initial) = match name {
+        "writing-mode" => (
+            Property::WritingMode,
+            "writing-mode",
+            WritingMode::default().name(),
+        ),
+        "text-orientation" => (
+            Property::TextOrientation,
+            "text-orientation",
+            TextOrientation::default().name(),
+        ),
+        "glyph-orientation-vertical" => (
+            Property::GlyphOrientationVertical,
+            "text-orientation",
+            TextOrientation::default().name(),
+        ),
+        _ => return None,
+    };
+    let (_, value) = declaration::expand(property, source).ok()??.pop()?;
+    let name = match value {
+        Specified::Value(value) if mapped == "writing-mode" => {
+            WritingMode::from_component(&value).ok()?.name()
+        }
+        Specified::Value(value) => TextOrientation::from_component(&value).ok()?.name(),
+        Specified::Wide(wide @ (WideKeyword::Revert | WideKeyword::RevertLayer)) => wide.name(),
+        Specified::Wide(wide) => match wide.resolve(true) {
+            Resolved::Initial => initial,
+            Resolved::Inherit => "inherit",
+        },
+        _ => return None,
+    };
+    Some((mapped, name))
+}
 
 /// The property that the attribute `name` of the SVG element `tag` is a presentation
 /// attribute for, if the cascade takes it.
@@ -725,6 +768,12 @@ pub(super) fn user_agent_declarations(
 ) -> Result<Vec<PropertyDeclaration>, StyleError> {
     let content = is_svg_content(element);
     let mut output = Vec::new();
+    // Writing Modes 4 §3.2.1.2: legacy SVG attributes also establish a UA default.
+    if let Some(value) = element.attr("writing-mode")
+        && matches!(value, "lr" | "lr-tb" | "rl" | "rl-tb" | "tb" | "tb-rl")
+    {
+        declaration::append(&mut output, Origin::UserAgent, Property::WritingMode, value)?;
+    }
     if CLIPPING_ELEMENTS.contains(&element.name()) || (element.name() == SVG_ELEMENT && content) {
         declaration::append(&mut output, Origin::UserAgent, Property::Overflow, "hidden")?;
     }

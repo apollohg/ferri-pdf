@@ -105,15 +105,6 @@ pub(super) fn supports_variations(
     true
 }
 
-/// Whether the face's substitution or positioning features include `tag`.
-pub(super) fn has_feature(face: &Face<'_>, tag: [u8; 4]) -> bool {
-    let tag = Tag::from_bytes(&tag);
-    [face.tables().gsub, face.tables().gpos]
-        .into_iter()
-        .flatten()
-        .any(|table| table.features.find(tag).is_some())
-}
-
 /// Whether the face defines `tag` as a language system of any script.
 pub(super) fn has_language_system(face: &Face<'_>, tag: [u8; 4]) -> bool {
     let tag = Tag::from_bytes(&tag);
@@ -266,31 +257,15 @@ pub(super) fn shape_runs(
     rtl: bool,
     style: &Style,
 ) -> Result<Vec<GlyphRun>, TextError> {
-    use crate::style::logical::TextOrientation;
     if !style.vertical_typographic_mode() {
         return shape_variants(font, paragraph, range, rtl, style, false);
     }
-    let mut pieces: Vec<(Range<usize>, bool)> = Vec::new();
-    for (offset, cluster) in paragraph[range.clone()].grapheme_indices(true) {
-        let first = cluster.chars().next().expect("a grapheme is nonempty");
-        let upright = style.text_orientation == TextOrientation::Upright
-            || match unicode_vo::char_orientation(first) {
-                unicode_vo::Orientation::Upright
-                | unicode_vo::Orientation::TransformedOrUpright => true,
-                unicode_vo::Orientation::TransformedOrRotated => {
-                    has_feature(font.face, *b"vert") || has_feature(font.face, *b"vrt2")
-                }
-                unicode_vo::Orientation::Rotated => false,
-            };
-        let start = range.start + offset;
-        if let Some((previous, orientation)) = pieces.last_mut()
-            && *orientation == upright
-        {
-            previous.end = start + cluster.len();
-        } else {
-            pieces.push((start..start + cluster.len(), upright));
-        }
-    }
+    let mut pieces = style.text_orientation.ranges(
+        paragraph,
+        range,
+        crate::fonts::has_feature(font.face, *b"vert")
+            || crate::fonts::has_feature(font.face, *b"vrt2"),
+    );
     if rtl {
         pieces.reverse();
     }
@@ -311,7 +286,7 @@ fn shape_variants(
 ) -> Result<Vec<GlyphRun>, TextError> {
     let caps = features::caps_plan(
         style.font_variant_caps,
-        |tag| has_feature(font.face, tag),
+        |tag| crate::fonts::has_feature(font.face, tag),
         style.font_synthesis.small_caps,
     );
     let position = position_form(font, &paragraph[range.clone()], rtl, style, caps);

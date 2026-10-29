@@ -513,3 +513,12 @@ pub enum FontError {
 
 #[cfg(test)]
 mod tests;
+
+/// Whether the face's substitution or positioning features include `tag`.
+pub(crate) fn has_feature(face: &ttf_parser::Face<'_>, tag: [u8; 4]) -> bool {
+    let tag = ttf_parser::Tag::from_bytes(&tag);
+    [face.tables().gsub, face.tables().gpos]
+        .into_iter()
+        .flatten()
+        .any(|table| table.features.find(tag).is_some())
+}

@@ -59,6 +59,36 @@ fn value(xml: &str, id: &str, name: &str) -> String {
 }
 
 #[test]
+fn legacy_text_properties_share_svg_inheritance_variables_and_author_overrides() {
+    let serialized = xml(
+        "svg{--legacy:90;text-orientation:upright}.rule{text-orientation:sideways}\
+         #variable{glyph-orientation-vertical:var(--legacy)}\
+         #initial{glyph-orientation-vertical:initial}\
+         #inherit{glyph-orientation-vertical:inherit}\
+         #revert{writing-mode:horizontal-tb;writing-mode:revert}",
+        "<svg><text id=attribute writing-mode=tb glyph-orientation-vertical=0>A</text>\
+         <text id=variable>B</text><text id=initial>C</text><text id=inherit>D</text>\
+         <text id=rule class=rule glyph-orientation-vertical=0>E</text>\
+         <text id=revert writing-mode=tb>F</text></svg>",
+    );
+    for (id, property, expected) in [
+        ("attribute", "writing-mode", "vertical-rl"),
+        ("attribute", "text-orientation", "upright"),
+        ("variable", "text-orientation", "sideways"),
+        ("initial", "text-orientation", "mixed"),
+        ("inherit", "text-orientation", "upright"),
+        ("rule", "text-orientation", "sideways"),
+        ("revert", "writing-mode", "vertical-rl"),
+    ] {
+        assert_eq!(
+            value(&serialized, id, property),
+            expected,
+            "#{id}/{property}"
+        );
+    }
+}
+
+#[test]
 fn html_parsed_svg_becomes_namespaced_xml_without_undeclared_prefixes() {
     let xml = xml(
         "",

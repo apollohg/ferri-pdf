@@ -43,6 +43,109 @@ fn child(css: &str) -> Style {
     styles(css, DOCUMENT).1
 }
 
+#[test]
+fn legacy_writing_modes_compute_to_modern_values_without_changing_direction() {
+    use crate::style::logical::WritingMode;
+    for (aliases, expected) in [
+        (
+            &["lr", "lr-tb", "rl", "rl-tb"][..],
+            WritingMode::HorizontalTb,
+        ),
+        (&["tb", "tb-rl"][..], WritingMode::VerticalRl),
+    ] {
+        for alias in aliases {
+            for direction in ["ltr", "rtl"] {
+                let actual = child(&format!(
+                    "#child{{writing-mode:vertical-lr;direction:{direction};writing-mode:{alias}}}"
+                ));
+                assert_eq!(actual.writing_mode, expected, "{alias}/{direction}");
+                assert_eq!(
+                    actual.rtl,
+                    direction == "rtl",
+                    "{alias} preserves direction"
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn glyph_orientation_is_a_single_longhand_shorthand_in_the_normal_cascade() {
+    use crate::style::logical::TextOrientation::{Mixed, Sideways, Upright};
+    for (value, expected) in [
+        ("auto", Mixed),
+        ("0", Upright),
+        ("0deg", Upright),
+        ("90", Sideways),
+        ("90deg", Sideways),
+    ] {
+        let css = format!(
+            "#parent{{--legacy:{value};text-orientation:sideways}}\
+                           #child{{text-orientation:mixed;glyph-orientation-vertical:var(--legacy)}}"
+        );
+        assert_eq!(
+            child(&css).text_orientation,
+            expected,
+            "{value}: substituted shorthand"
+        );
+    }
+    for (declarations, expected) in [
+        (
+            "glyph-orientation-vertical:90;text-orientation:upright",
+            Upright,
+        ),
+        (
+            "text-orientation:upright;glyph-orientation-vertical:90",
+            Sideways,
+        ),
+        (
+            "glyph-orientation-vertical:90!important;text-orientation:upright",
+            Sideways,
+        ),
+        ("glyph-orientation-vertical:inherit", Upright),
+        ("glyph-orientation-vertical:unset", Upright),
+        ("glyph-orientation-vertical:initial", Mixed),
+    ] {
+        assert_eq!(
+            child(&format!(
+                "#parent{{text-orientation:upright}}#child{{{declarations}}}"
+            ))
+            .text_orientation,
+            expected,
+            "{declarations}: cascade uses the text-orientation longhand"
+        );
+    }
+}
+
+#[test]
+fn obsolete_glyph_orientation_rejects_other_angles_units_and_horizontal_property() {
+    use crate::style::logical::TextOrientation::Upright;
+    for declaration in [
+        "glyph-orientation-vertical:180",
+        "glyph-orientation-vertical:180deg",
+        "glyph-orientation-vertical:270",
+        "glyph-orientation-vertical:270deg",
+        "glyph-orientation-vertical:1",
+        "glyph-orientation-vertical:45deg",
+        "glyph-orientation-vertical:0rad",
+        "glyph-orientation-vertical:90grad",
+        "glyph-orientation-vertical:.25turn",
+        "glyph-orientation-vertical:sideways",
+        "glyph-orientation-horizontal:90deg",
+        "writing-mode:tb-lr",
+    ] {
+        let actual = child(&format!(
+            "#child{{writing-mode:vertical-lr;text-orientation:upright;{declaration}}}"
+        ));
+        assert_eq!(actual.text_orientation, Upright, "invalid {declaration}");
+        assert_eq!(
+            actual.writing_mode,
+            crate::style::logical::WritingMode::VerticalLr,
+            "invalid {declaration} preserves the preceding writing-mode"
+        );
+    }
+}
+
 fn points(value: f32) -> Size {
     Size::Value(LengthPercentage::Length(value))
 }

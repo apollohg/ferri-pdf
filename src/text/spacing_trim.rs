@@ -6,7 +6,7 @@ use crate::fonts::SizeMetric;
 use crate::style::TextSpacingTrim;
 use crate::text::hanging::IDEOGRAPHIC_SPACE;
 use crate::text::line_boxes::Arranged;
-use crate::text::{GlyphRun, TextContext, TextError, shaping, shaping_language};
+use crate::text::{GlyphRun, TextContext, TextError, shaping_language};
 use icu_properties::{
     CodePointMapData,
     props::{EastAsianWidth, GeneralCategory},
@@ -231,7 +231,7 @@ fn kerning(
         .iter()
         .map(|glyph| glyph.x_advance)
         .sum();
-    if shaping::has_feature(face, HALT) {
+    if crate::fonts::has_feature(face, HALT) {
         let cluster = &run.text[run.glyphs[glyphs.start].text_range.clone()];
         return Ok(halt(
             face,

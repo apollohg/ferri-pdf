@@ -344,6 +344,7 @@ pub struct TextSpan {
     pub(crate) font: Font,
     pub(crate) font_size: NonZeroPositiveF32,
     pub(crate) small_caps: bool,
+    pub(crate) text_orientation: crate::style::logical::TextOrientation,
     pub(crate) apply_kerning: bool,
     pub(crate) font_optical_sizing: FontOpticalSizing,
     pub(crate) decoration: TextDecoration,

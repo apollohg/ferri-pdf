@@ -524,6 +524,7 @@ fn value_with_context(
             && crate::style::shape_values::valid(value)
             && crate::style::svg_values::valid(property, value)
             && crate::style::anchor_values::valid(property, value)
+            && crate::style::logical::valid(property, value)
     }))
 }
 
