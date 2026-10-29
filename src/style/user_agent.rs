@@ -1112,6 +1112,28 @@ fn math_defaults(element: Element<'_>) -> Result<Vec<DefaultDeclaration>, StyleE
             }
         }
     }
+    if let Some(parent) = element
+        .parent(TreeRelation::Inheritance)
+        .filter(|parent| parent.namespace() == crate::dom::MATHML_NAMESPACE)
+    {
+        let (position, _) = element.sibling_position(TreeRelation::Selector);
+        let over = matches!(parent.name(), "mover" | "munderover")
+            && parent
+                .attr("accent")
+                .is_some_and(|value| value.eq_ignore_ascii_case("true"));
+        let under = matches!(parent.name(), "munder" | "munderover")
+            && parent
+                .attr("accentunder")
+                .is_some_and(|value| value.eq_ignore_ascii_case("true"));
+        if (under && position == 2)
+            || (over && position == if parent.name() == "mover" { 2 } else { 3 })
+        {
+            add(Property::FontSize, "inherit")?;
+        }
+        if over && position == 1 {
+            add(Property::MathShift, "compact")?;
+        }
+    }
     if tag == "mi"
         && element
             .attr("mathvariant")

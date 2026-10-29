@@ -468,6 +468,13 @@ impl GlyphRun {
     pub(crate) fn with_marks(&self) -> impl Iterator<Item = &Self> {
         std::iter::once(self).chain(&self.marks)
     }
+    pub(crate) fn set_math_glyphs(&mut self, mut glyphs: Vec<PositionedGlyph>, width: f32) {
+        for glyph in &mut glyphs {
+            glyph.text_range = 0..self.text.len();
+        }
+        self.glyphs = glyphs;
+        self.width = width;
+    }
     pub fn glyphs(&self) -> &[PositionedGlyph] {
         &self.glyphs
     }

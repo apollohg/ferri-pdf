@@ -2,8 +2,10 @@ use super::common::local_options;
 use crate::{DisplayItem, render_html};
 
 fn math(body: &str) -> std::sync::Arc<crate::layout::ViewportPaint> {
+    let font =
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/fonts/MathTest.ttf");
     let output = render_html(
-        &format!("<style>math{{font-family:DejaVu Serif;font-size:20pt}}</style>{body}"),
+        &format!("<style>@font-face{{font-family:MathTest;src:url('{}')}}math{{font-family:DejaVu Serif;font-size:20pt}}</style>{body}", font.display()),
         &local_options(),
     )
     .unwrap_or_else(|error| panic!("MathML fixture must render: {error}\n{body}"));
@@ -162,5 +164,156 @@ fn css_overrides_math_script_size_and_semantics_hides_annotations() {
             .iter()
             .any(|line| line.text.contains("do not paint")),
         "semantics annotations must not be flattened into visible text"
+    );
+}
+
+#[test]
+fn operator_dictionary_spacing_depends_on_form_and_stretches_fences_from_math_assemblies() {
+    let infix = math("<math><mn>1</mn><mo>+</mo><mn>2</mn></math>");
+    let prefix = math("<math><mn>1</mn><mo form='prefix'>+</mo><mn>2</mn></math>");
+    let position = |view: &crate::layout::ViewportPaint, text: &str| {
+        view.lines.iter().find(|line| line.text == text).unwrap().x
+    };
+    const OPERATOR_MEDIUM_SPACE_EM: f32 = 4.0 / 18.0;
+    assert!(
+        (position(&infix, "2") - position(&prefix, "2") - 2.0 * OPERATOR_MEDIUM_SPACE_EM * 20.0)
+            .abs()
+            < 0.01,
+        "infix and explicit-prefix plus must use their distinct dictionary spacing"
+    );
+    let view = math(
+        "<math style=\"font-family:MathTest\"><mo>(</mo><mfrac><mfrac><mn>1</mn><mn>2</mn></mfrac><mn>3</mn></mfrac><mo>)</mo></math>",
+    );
+    let fence = view.lines.iter().find(|line| line.text == "(").unwrap();
+    assert!(
+        fence.runs[0].glyphs().len() > 1,
+        "a tall fence must use the font's MATH glyph assembly, without geometric distortion"
+    );
+    assert!(
+        fence.height
+            >= view
+                .lines
+                .iter()
+                .filter(|line| line.text != "(" && line.text != ")")
+                .map(|line| line.height)
+                .fold(0.0, f32::max),
+        "stretched fence must cover the enclosed ink"
+    );
+}
+
+#[test]
+fn radicals_add_native_surd_and_overbar_and_size_root_indices_from_math_table() {
+    let view = math(
+        "<math style=\"font-family:MathTest\"><mroot><mfrac><mn>1</mn><mn>2</mn></mfrac><mn>3</mn></mroot></math>",
+    );
+    let surd = view
+        .lines
+        .iter()
+        .find(|line| line.text == "√")
+        .expect("radical symbol stays selectable");
+    let index = view.lines.iter().find(|line| line.text == "3").unwrap();
+    assert_eq!(
+        index.font_size, 12.0,
+        "root indices use MATH scriptScriptPercentScaleDown, rather than scaling once or twice by the script percentage"
+    );
+    assert!(
+        surd.runs[0].glyphs().len() > 1,
+        "fraction radicand must construct a tall surd from the font"
+    );
+    assert_eq!(
+        view.items
+            .iter()
+            .filter(|item| matches!(item, DisplayItem::Box(_)))
+            .count(),
+        2,
+        "fraction bar and radical overbar must both paint as vector rules"
+    );
+}
+
+#[test]
+fn invalid_bundled_assemblies_keep_the_specified_base_glyph_fallback() {
+    let view = math(
+        "<math><mo>(</mo><mfrac><mfrac><mn>1</mn><mn>2</mn></mfrac><mn>3</mn></mfrac><mo>)</mo></math>",
+    );
+    let fence = view.lines.iter().find(|line| line.text == "(").unwrap();
+    assert_eq!(
+        fence.runs[0].glyphs().len(),
+        1,
+        "the unmodified bundled font has outer connectors below MinConnectorOverlap, so its assembly must be rejected under Core §5.3.1"
+    );
+    assert_eq!(
+        fence.font_size, 20.0,
+        "invalid assemblies must not be replaced by geometric font scaling"
+    );
+}
+
+#[test]
+fn movable_limits_switch_to_scripts_in_compact_math_and_accents_stretch_inline() {
+    let compact = math(
+        "<math style='font-family:MathTest'><munderover><mo>∑</mo><mn>1</mn><mn>2</mn></munderover></math>",
+    );
+    let display = math(
+        "<math display='block' style='font-family:MathTest'><munderover><mo>∑</mo><mn>1</mn><mn>2</mn></munderover></math>",
+    );
+    let base = |view: &crate::layout::ViewportPaint| {
+        view.lines
+            .iter()
+            .find(|line| line.text == "∑")
+            .unwrap()
+            .clone()
+    };
+    let lower = |view: &crate::layout::ViewportPaint| {
+        view.lines
+            .iter()
+            .find(|line| line.text == "1")
+            .unwrap()
+            .clone()
+    };
+    assert!(
+        lower(&compact).x >= base(&compact).x + base(&compact).width,
+        "movable limits must become scripts in compact math"
+    );
+    assert!(
+        (lower(&display).x + lower(&display).width / 2.0
+            - base(&display).x
+            - base(&display).width / 2.0)
+            .abs()
+            < 0.01,
+        "display-style limits must centre under the large operator"
+    );
+    assert_ne!(
+        base(&display).runs[0].glyphs()[0].id,
+        base(&compact).runs[0].glyphs()[0].id,
+        "normal math style must select the MATH display-operator variant"
+    );
+    let accent = math(
+        "<math style='font-family:MathTest'><mover accent='true'><mn>123456</mn><mo>_</mo></mover></math>",
+    );
+    let bar = accent.lines.iter().find(|line| line.text == "_").unwrap();
+    let digits = accent
+        .lines
+        .iter()
+        .find(|line| line.text == "123456")
+        .unwrap();
+    assert!(
+        bar.width >= digits.width,
+        "horizontal MATH assembly must cover the accent base"
+    );
+    assert_eq!(
+        bar.font_size, 20.0,
+        "accent scripts inherit the base font size rather than reducing it"
+    );
+}
+
+#[test]
+fn automatic_math_italic_uses_original_text_node_boundaries_before_collapsing_spaces() {
+    let view = math("<math><mi>a<!-- split -->b</mi><mi>ab</mi><mi> a </mi></math>");
+    assert_eq!(
+        view.lines
+            .iter()
+            .map(|line| line.text.as_str())
+            .collect::<Vec<_>>(),
+        ["𝑎𝑏", "ab", "a"],
+        "Core §4.2 applies math-auto separately to original single-character text nodes; comments and collapsed whitespace must not change eligibility"
     );
 }

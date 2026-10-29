@@ -1,0 +1,10 @@
+{
+  "derived_from": "assets/fonts/DejaVuSerif.ttf",
+  "source_sha256": "107244956e9962b9e96faccdc551825e0ae0898ae13737133e1b921a2fd35ffa",
+  "license": "MathTest-LICENSE.txt",
+  "tool": "fontTools 4.63.0",
+  "generator": "make-math-font.py",
+  "changes": "Subset Unicode coverage; rename family; raise unused outer connector lengths to MinConnectorOverlap to meet pinned MathML Core 5.3.1 validity. Original outlines, MATH constants, part advances and usable connectors are retained.",
+  "sha256": "22c68a815db93f6a9889f37d83299796aaa4aef4fe749ac0ffb124fd2531d2ee",
+  "bytes": 83868
+}
