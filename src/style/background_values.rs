@@ -568,7 +568,7 @@ fn repeat(value: &Component) -> Result<[Repeat; 2], StyleError> {
 }
 
 /// `<visual-box>`; `background-clip`'s `border-area` and `text` are not modelled.
-fn box_area(value: &Component) -> Result<BoxArea, StyleError> {
+pub(super) fn box_area(value: &Component) -> Result<BoxArea, StyleError> {
     match value.keyword() {
         Some(Keyword::BorderBox) => Ok(BoxArea::BorderBox),
         Some(Keyword::PaddingBox) => Ok(BoxArea::PaddingBox),

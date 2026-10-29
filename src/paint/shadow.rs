@@ -65,7 +65,7 @@ pub struct ShadowPaint {
 /// Radii of a shape grown by `growth` (negative shrinks); a radius smaller than a positive
 /// growth grows by `growth × (1 + (r / growth − 1)³)` so that sharp corners stay sharp (§7.1.1).
 pub(crate) fn spread_radii(radii: Radii, growth: f32) -> Radii {
-    radii.map(|corner| corner.map(|radius| spread(radius, growth)))
+    radii.map(|corner| corner.map(|radius| crate::paint::rounded::spread_radius(radius, growth)))
 }
 
 /// Radii of a box outset by `distance` (top/right/bottom/left), each radius growing by the
@@ -73,17 +73,10 @@ pub(crate) fn spread_radii(radii: Radii, growth: f32) -> Radii {
 pub(crate) fn outset_radii(radii: Radii, [top, right, bottom, left]: [f32; 4]) -> Radii {
     let growth = [[left, top], [right, top], [right, bottom], [left, bottom]];
     std::array::from_fn(|corner| {
-        std::array::from_fn(|axis| spread(radii[corner][axis], growth[corner][axis]))
+        std::array::from_fn(|axis| {
+            crate::paint::rounded::spread_radius(radii[corner][axis], growth[corner][axis])
+        })
     })
-}
-
-fn spread(radius: f32, growth: f32) -> f32 {
-    let growth = if growth > 0.0 && radius < growth {
-        growth * (1.0 + (radius / growth - 1.0).powi(3))
-    } else {
-        growth
-    };
-    (radius + growth).max(0.0)
 }
 
 pub(crate) fn outset(rect: Rect, distance: [f32; 4]) -> Rect {

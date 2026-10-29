@@ -100,16 +100,29 @@ pub(super) fn box_bounds(
         .as_ref()
         .and_then(|bounds| bounds.get(&page))
     {
-        let padding = paint.inner_clip([0.0; 4], [true; 2]).rect;
-        let clipped = descendants.intersection(padding);
+        // Scroll containers clip at the padding edge, `overflow: clip` at the overflow clip
+        // edge (CSS Overflow 3 §3.2).
+        let padding = descendants.intersection(paint.inner_clip([0.0; 4], [true; 2]).rect);
+        let margin = style.overflow_clip_margin;
+        let edge = descendants.intersection(
+            paint
+                .overflow_clip_edge(margin.area, margin.length, [true; 2])
+                .rect,
+        );
         let mut descendants = *descendants;
-        if style.overflow[0] != Overflow::Visible {
-            descendants.x = clipped.x;
-            descendants.width = clipped.width;
-        }
-        if style.overflow[1] != Overflow::Visible {
-            descendants.y = clipped.y;
-            descendants.height = clipped.height;
+        for (axis, overflow) in style.overflow.into_iter().enumerate() {
+            let clipped = match overflow {
+                Overflow::Visible => continue,
+                Overflow::Clip => edge,
+                Overflow::Hidden | Overflow::Auto | Overflow::Scroll => padding,
+            };
+            if axis == 0 {
+                descendants.x = clipped.x;
+                descendants.width = clipped.width;
+            } else {
+                descendants.y = clipped.y;
+                descendants.height = clipped.height;
+            }
         }
         if descendants.width > 0.0 && descendants.height > 0.0 {
             area = area.union(descendants);

@@ -86,6 +86,19 @@ fn corners(rect: Rect, radii: Radii) -> [Curve; 4] {
 }
 
 /// Insets are in top/right/bottom/left order; each radius shrinks by its adjacent inset.
+/// CSS Backgrounds 3 §6.1.1: a corner radius grown by `growth` like a shadow's spread, so
+/// that sharp corners stay sharp; a negative growth shrinks it.
+pub(crate) fn spread_radius(radius: f32, growth: f32) -> f32 {
+    let growth = if growth > 0.0 && radius < growth {
+        growth * (1.0 + (radius / growth - 1.0).powi(3))
+    } else {
+        growth
+    };
+    (radius + growth).max(0.0)
+}
+
+/// `rect` and its corner radii moved inward by `insets`; negative insets move outward with
+/// spread corners.
 pub(crate) fn inset(rect: Rect, radii: Radii, insets: [f32; 4]) -> (Rect, Radii) {
     let [top, right, bottom, left] = insets;
     let inner = Rect {
@@ -97,8 +110,8 @@ pub(crate) fn inset(rect: Rect, radii: Radii, insets: [f32; 4]) -> (Rect, Radii)
     let shrink = [[left, top], [right, top], [right, bottom], [left, bottom]];
     let radii = std::array::from_fn(|corner| {
         [
-            (radii[corner][0] - shrink[corner][0]).max(0.0),
-            (radii[corner][1] - shrink[corner][1]).max(0.0),
+            spread_radius(radii[corner][0], -shrink[corner][0]),
+            spread_radius(radii[corner][1], -shrink[corner][1]),
         ]
     });
     (inner, radii)

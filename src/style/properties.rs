@@ -650,6 +650,10 @@ fn handler(property: Property) -> Option<Handler> {
             overflow_y,
             Some(|v, _| crate::style::Overflow::from_component(v).is_ok()),
         ),
+        P::OverflowClipMargin => (
+            overflow_clip_margin,
+            Some(|v, r| crate::style::OverflowClipMargin::from_component(v, r).is_ok()),
+        ),
         P::BreakBefore => (
             break_before,
             Some(|v, _| BreakBetween::from_component(v).is_ok()),
@@ -1430,6 +1434,13 @@ fn font_style(
     };
     Ok(())
 }
+computed!(
+    overflow_clip_margin,
+    [overflow_clip_margin],
+    |value, style, _parent, relative| {
+        crate::style::OverflowClipMargin::from_component(value, relative)?
+    }
+);
 computed!(
     font_width,
     [font_width],

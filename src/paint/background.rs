@@ -407,7 +407,7 @@ fn place(
 
 impl<I> BoxPaint<I> {
     /// Padding without the sliced edges of a fragment.
-    fn fragment_padding(&self) -> [f32; 4] {
+    pub(super) fn fragment_padding(&self) -> [f32; 4] {
         let mut padding = self.padding;
         if self.assembled_box().is_some() {
             return padding;

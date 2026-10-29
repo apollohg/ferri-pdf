@@ -188,3 +188,74 @@ fn rounded_images_are_trimmed_to_the_content_edge_curve() {
         clip.radii
     );
 }
+
+/// CSS Overflow 3 §3.2: `overflow: clip` and paint containment clip at the overflow clip
+/// edge, the chosen box edge expanded by the margin with corners shaped like a box-shadow
+/// spread from the border edge; scroll containers keep clipping at the padding edge.
+#[test]
+fn overflow_clip_margin_moves_only_the_overflow_clip_edge() {
+    // The border box is 36..150 by 36..90 with 3pt borders and 4pt padding.
+    const BOX: &str =
+        "div{width:100pt;height:40pt;padding:4pt;border:3pt solid navy;border-radius:16pt}";
+    const BODY: &str = "<div><p style='margin:0'>One two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen</p></div>";
+    let rect = |x: f32, y: f32, width: f32, height: f32| Rect {
+        x,
+        y,
+        width,
+        height,
+    };
+    for (css, expected) in [
+        (
+            "div{overflow:clip;overflow-clip-margin:5pt}",
+            vec![(rect(34.0, 34.0, 118.0, 58.0), [true; 2], 18.0)],
+        ),
+        (
+            "div{overflow:clip;overflow-clip-margin:content-box}",
+            vec![(rect(43.0, 43.0, 100.0, 40.0), [true; 2], 9.0)],
+        ),
+        (
+            "div{overflow:clip;overflow-clip-margin:10pt border-box}",
+            vec![(rect(26.0, 26.0, 134.0, 74.0), [true; 2], 26.0)],
+        ),
+        (
+            // A radius smaller than the spread grows less: 4 + 10 × (1 + (0.4 − 1)³).
+            "div{overflow:clip;overflow-clip-margin:border-box 10pt;border-radius:4pt}",
+            vec![(rect(26.0, 26.0, 134.0, 74.0), [true; 2], 11.84)],
+        ),
+        (
+            "div{overflow-x:clip;overflow-clip-margin:5pt}",
+            vec![(rect(34.0, 34.0, 118.0, 58.0), [true, false], 0.0)],
+        ),
+        (
+            "div{overflow:hidden;overflow-clip-margin:20pt}",
+            vec![(rect(39.0, 39.0, 108.0, 48.0), [true; 2], 13.0)],
+        ),
+        (
+            "div{overflow:hidden;contain:paint;overflow-clip-margin:content-box}",
+            vec![
+                (rect(39.0, 39.0, 108.0, 48.0), [true; 2], 13.0),
+                (rect(43.0, 43.0, 100.0, 40.0), [true; 2], 9.0),
+            ],
+        ),
+        (
+            "div{contain:paint;overflow-clip-margin:2pt}",
+            vec![(rect(37.0, 37.0, 112.0, 52.0), [true; 2], 15.0)],
+        ),
+    ] {
+        let trace = trace(&format!("{BOX}{css}"), BODY);
+        let clips = clips(&trace.display_lists[0]);
+        assert_eq!(clips.len(), expected.len(), "{css}: clips pushed {clips:?}");
+        for (clip, (rect, axes, radius)) in clips.iter().zip(expected) {
+            assert_rect(css, clip.rect, rect);
+            assert_eq!(clip.axes, axes, "{css}: clipped axes");
+            assert!(
+                clip.radii
+                    .iter()
+                    .flatten()
+                    .all(|r| (r - radius).abs() < 0.01),
+                "{css}: radii {:?}, expected {radius}",
+                clip.radii
+            );
+        }
+    }
+}

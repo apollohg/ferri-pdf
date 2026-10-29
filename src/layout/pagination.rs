@@ -276,8 +276,8 @@ struct ScopedPaint {
 /// Paint effect of one box, resolved per page from that page's fragment.
 #[derive(Clone, Copy)]
 enum Effect<'a> {
-    /// Overflow clip to the fragment's padding box along the clipped axes.
-    Clip([bool; 2]),
+    /// The overflow clip at one edge of the box with this style.
+    Clip(&'a crate::style::Style, crate::style::ClipEdge),
     BorderClip,
     /// A resolved paint fragment clip, with exterior edges left open.
     PaintClip(Clip),
@@ -599,6 +599,8 @@ struct ActiveBox<'a> {
     clip: Option<usize>,
     group: Option<usize>,
     clip_node: Option<usize>,
+    /// The clip enclosing `clip_node` when the box clips at two edges.
+    outer_clip_node: Option<usize>,
     transform_node: Option<usize>,
     clip_rect_node: Option<usize>,
     parent_3d_node: Option<usize>,
@@ -2035,24 +2037,25 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .tables
             .last()
             .is_some_and(|table| table.flow.plan.cell_clipped(block.source));
-        let clip_node = (owns_wrapper_properties
-            && paint.is_some()
-            && (collapsed_clip || block.style.clipped_axes().contains(&true)))
-        .then(|| {
-            self.clips.push(EffectNode {
-                areas: Vec::new(),
-                paints: Vec::new(),
-                parent: self.clip,
-                effect: if collapsed_clip {
-                    Effect::BorderClip
-                } else {
-                    Effect::Clip(block.style.clipped_axes())
-                },
-                fragments: Vec::new(),
-                context: None,
-            });
-            self.clips.len() - 1
-        });
+        // Each clip edge nests inside the previous one, so the contents take their intersection.
+        let mut clip_nodes = Vec::new();
+        if owns_wrapper_properties && paint.is_some() {
+            let effects: Vec<Effect<'a>> = if collapsed_clip {
+                vec![Effect::BorderClip]
+            } else {
+                block
+                    .style
+                    .clip_edges()
+                    .map(|edge| Effect::Clip(block.style, edge))
+                    .collect()
+            };
+            for effect in effects {
+                let parent = clip_nodes.last().copied().or(self.clip);
+                clip_nodes.push(self.effect_node(parent, effect));
+            }
+        }
+        let clip_node = clip_nodes.last().copied();
+        let outer_clip_node = clip_nodes.first().copied().filter(|_| clip_nodes.len() > 1);
         let mut grid_children = if block.grid.is_some() {
             block
                 .source
@@ -2108,6 +2111,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             clip: self.clip,
             group: self.group,
             clip_node,
+            outer_clip_node,
             transform_node,
             clip_rect_node,
             parent_3d_node,
@@ -2333,6 +2337,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let mut active = self.boxes.pop().unwrap();
         for node in [
             active.clip_node,
+            active.outer_clip_node,
             active.transform_node,
             active.clip_rect_node,
             active.parent_3d_node,
@@ -2702,7 +2707,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         for node in &self.clips {
             let mut node_regions = Vec::new();
             let clip = |paint: &BoxPaint| match node.effect {
-                Effect::Clip(axes) => Some(paint.inner_clip([0.0; 4], axes)),
+                Effect::Clip(style, edge) => Some(style.overflow_clip(paint, edge)),
                 Effect::BorderClip => Some(paint.background_clips().border),
                 Effect::PaintClip(clip) => Some(clip),
                 Effect::RectClip(style) => style.clip_region(paint.rect).map(|rect| Clip {
@@ -2717,7 +2722,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 | Effect::Group(_) => None,
             };
             match node.effect {
-                Effect::Clip(_)
+                Effect::Clip(..)
                 | Effect::BorderClip
                 | Effect::PaintClip(_)
                 | Effect::RectClip(_) => {
@@ -4368,6 +4373,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 }
                 for node in [
                     active.clip_node,
+                    active.outer_clip_node,
                     active.transform_node,
                     active.clip_rect_node,
                     active.parent_3d_node,

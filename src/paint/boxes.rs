@@ -601,6 +601,23 @@ impl<I> BoxPaint<I> {
             axes,
         })
     }
+    /// The overflow clip edge (CSS Overflow 3 §3.2): `area`'s edge expanded by `margin`, its
+    /// corners shaped like an outer box-shadow spread by each side's offset from the border
+    /// edge.
+    pub fn overflow_clip_edge(
+        &self,
+        area: crate::paint::BoxArea,
+        margin: f32,
+        axes: [bool; 2],
+    ) -> Clip {
+        let widths = self.inner_widths();
+        let edge = match area {
+            crate::paint::BoxArea::BorderBox => widths.map(|width| -width),
+            crate::paint::BoxArea::PaddingBox => [0.0; 4],
+            crate::paint::BoxArea::ContentBox => self.fragment_padding(),
+        };
+        self.inner_clip(edge.map(|edge| edge - margin), axes)
+    }
     pub fn has_ink(&self) -> bool {
         self.rect.width > 0.0
             && self.rect.height > 0.0

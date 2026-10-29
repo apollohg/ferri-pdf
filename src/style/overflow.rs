@@ -1,3 +1,4 @@
+use crate::paint::{BoxArea, BoxPaint, Clip};
 use crate::style::{
     Display, Style, StyleError,
     box_values::unsupported,
@@ -43,6 +44,45 @@ impl Overflow {
     }
 }
 const AXIS_PROPERTIES: [Property; 2] = [Property::OverflowX, Property::OverflowY];
+
+/// Where a box clips its overflowing contents.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum ClipEdge {
+    Padding,
+    Overflow,
+}
+
+/// `overflow-clip-margin` (CSS Overflow 3 §3.2): the box edge of the overflow clip edge and
+/// how far it expands.
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize)]
+pub(crate) struct OverflowClipMargin {
+    pub area: BoxArea,
+    pub length: f32,
+}
+impl Default for OverflowClipMargin {
+    fn default() -> Self {
+        Self {
+            area: BoxArea::PaddingBox,
+            length: 0.0,
+        }
+    }
+}
+impl OverflowClipMargin {
+    pub(crate) fn from_component(
+        value: &Component,
+        relative: &Relative<'_>,
+    ) -> Result<Self, StyleError> {
+        let initial = Self::default();
+        Ok(Self {
+            area: value
+                .slot(0)
+                .map_or(Ok(initial.area), crate::style::background_values::box_area)?,
+            length: value.slot(1).map_or(Ok(initial.length), |length| {
+                crate::style::values::length(length, relative)
+            })?,
+        })
+    }
+}
 type ArgumentList = *const [crate::style::declaration::ToggleArgument];
 
 #[derive(Clone)]
@@ -346,6 +386,36 @@ impl Style {
             x.clips() || paint,
             y.clips() || (x.clips() && y.scroll_container()) || paint,
         ]
+    }
+    /// The axes `clipped_axes` clips at `edge`: scroll containers at the padding edge (CSS
+    /// Overflow 3 §3.1), `overflow: clip` and paint containment at the overflow clip edge
+    /// (§3.2, CSS Containment 2 §3.4).
+    fn clip_edge_axes(&self, edge: ClipEdge) -> [bool; 2] {
+        let clipped = self.clipped_axes();
+        let paint_contained = self.containment().paint;
+        std::array::from_fn(|axis| match edge {
+            ClipEdge::Padding => clipped[axis] && self.overflow[axis].scroll_container(),
+            ClipEdge::Overflow => {
+                paint_contained || (clipped[axis] && self.overflow[axis] == Overflow::Clip)
+            }
+        })
+    }
+    /// The edges this box clips its contents at, which nest.
+    pub(crate) fn clip_edges(&self) -> impl Iterator<Item = ClipEdge> + '_ {
+        [ClipEdge::Padding, ClipEdge::Overflow]
+            .into_iter()
+            .filter(|edge| self.clip_edge_axes(*edge).contains(&true))
+    }
+    /// The clip of fragment `paint` at `edge`.
+    pub(crate) fn overflow_clip<I>(&self, paint: &BoxPaint<I>, edge: ClipEdge) -> Clip {
+        let axes = self.clip_edge_axes(edge);
+        match edge {
+            ClipEdge::Padding => paint.inner_clip([0.0; 4], axes),
+            ClipEdge::Overflow => {
+                let margin = self.overflow_clip_margin;
+                paint.overflow_clip_edge(margin.area, margin.length, axes)
+            }
+        }
     }
     /// Overflow other than `visible` and `clip`, after axis pairing.
     pub(crate) fn is_scroll_container(&self) -> bool {

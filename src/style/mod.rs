@@ -56,7 +56,9 @@ mod print;
 mod quotes;
 pub(crate) use colors::{parse_color_value, widget_palette};
 pub(crate) use object::ObjectFit;
-pub(crate) use overflow::{BlockEllipsis, Continue, LineClamp, Overflow, TextOverflow};
+pub(crate) use overflow::{
+    BlockEllipsis, ClipEdge, Continue, LineClamp, Overflow, OverflowClipMargin, TextOverflow,
+};
 pub(crate) use transform::{Parent3d, Rotation, TransformBox, TransformFunction, TransformStyle};
 pub(crate) use user_agent::legacy_color;
 pub(crate) use widget_values::{Appearance, FieldSizing, WidgetStyle};
