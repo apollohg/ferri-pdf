@@ -822,10 +822,17 @@ fn handler(property: Property) -> Option<Handler> {
         ),
         P::MixBlendMode => (
             mix_blend_mode,
-            Some(|v, _| crate::style::compositing_values::blend_mode(v).is_ok()),
+            Some(|v, _| crate::style::compositing_values::mix_blend_mode(v).is_ok()),
         ),
         P::Filter => (
             filter,
+            Some(|v, r| {
+                crate::style::filter_values::filters(v, r, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
+            }),
+        ),
+        P::BackdropFilter => (
+            backdrop_filter,
             Some(|v, r| {
                 crate::style::filter_values::filters(v, r, &crate::paint::AbsoluteColor::BLACK)
                     .is_ok()
@@ -2089,7 +2096,7 @@ computed!(
 computed!(
     mix_blend_mode,
     [mix_blend_mode],
-    |value, style, _parent, _relative| crate::style::compositing_values::blend_mode(value)?
+    |value, style, _parent, _relative| crate::style::compositing_values::mix_blend_mode(value)?
 );
 computed!(filter, [filter], |value, style, _parent, relative| {
     std::sync::Arc::new(crate::style::filter_values::filters(
@@ -2112,6 +2119,17 @@ fn clip_path(
     };
     Ok(())
 }
+computed!(
+    backdrop_filter,
+    [backdrop_filter],
+    |value, style, _parent, relative| {
+        std::sync::Arc::new(crate::style::filter_values::filters(
+            value,
+            relative,
+            &style.computed_color,
+        )?)
+    }
+);
 fn mask_image(
     style: &mut Style,
     _: &Style,

@@ -126,7 +126,7 @@ fn draw_box(
         let nested = local_bounds(viewport, surface)?;
         (
             nested,
-            push_blend(crate::graphics::BlendMode::Normal, surface),
+            push_blend(crate::graphics::BlendMode::Normal, surface)?,
         )
     } else {
         (viewport, 0)
@@ -263,16 +263,22 @@ pub(super) fn push_clip(
 }
 
 /// Opens an isolated transparency group composited with `mode`, returning the pushes to pop.
-pub(super) fn push_blend(mode: crate::graphics::BlendMode, surface: &mut Surface<'_>) -> usize {
-    surface.push_blend_mode(pdf_blend_mode(mode));
+pub(super) fn push_blend(
+    mode: crate::graphics::BlendMode,
+    surface: &mut Surface<'_>,
+) -> Result<usize, PdfError> {
+    surface.push_blend_mode(pdf_blend_mode(mode)?);
     surface.push_isolated();
-    2
+    Ok(2)
 }
 
-pub(super) fn pdf_blend_mode(mode: crate::graphics::BlendMode) -> krilla::blend::BlendMode {
+/// The PDF blend mode of `mode`; `plus-lighter` has none and composites in pixels instead.
+pub(super) fn pdf_blend_mode(
+    mode: crate::graphics::BlendMode,
+) -> Result<krilla::blend::BlendMode, PdfError> {
     use crate::graphics::BlendMode as Css;
     use krilla::blend::BlendMode as Pdf;
-    match mode {
+    Ok(match mode {
         Css::Normal => Pdf::Normal,
         Css::Multiply => Pdf::Multiply,
         Css::Screen => Pdf::Screen,
@@ -289,7 +295,8 @@ pub(super) fn pdf_blend_mode(mode: crate::graphics::BlendMode) -> krilla::blend:
         Css::Saturation => Pdf::Saturation,
         Css::Color => Pdf::Color,
         Css::Luminosity => Pdf::Luminosity,
-    }
+        Css::PlusLighter => return Err(PdfError::VectorPlusLighter),
+    })
 }
 
 pub(super) fn pop_clips(count: usize, surface: &mut Surface<'_>) {

@@ -45,7 +45,21 @@ pub enum DisplayItem {
     PushFilter(FilterPaint),
     /// Masks later items as one group until the matching `Pop` (CSS Masking 1 §7.10).
     PushMask(MaskPaint),
+    /// Later items until the matching `Pop` belong to a Backdrop Root, the start of the
+    /// backdrop their backdrop filters read (Filter Effects 2 §3).
+    PushBackdropRoot,
+    /// The filtered backdrop behind a box fragment, which the fragment's element paints first
+    /// in its own effects (Filter Effects 2 §2.1).
+    Backdrop(BackdropPaint),
     Pop,
+}
+
+/// A `backdrop-filter` applied to the Backdrop Root Image behind one box fragment and clipped
+/// to the fragment's border box, rounded by its radii.
+#[derive(Clone, Debug, Serialize)]
+pub struct BackdropPaint {
+    pub functions: Vec<FilterFunction>,
+    pub border: Clip,
 }
 
 /// One `text-shadow` layer of a stretch of glyph runs sharing their shadows, with the text

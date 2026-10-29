@@ -109,7 +109,7 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
     push("visibility", visibility(style.visibility));
     if !root {
         push("opacity", &number(style.opacity));
-        push("mix-blend-mode", blend_mode(style.mix_blend_mode));
+        push("mix-blend-mode", blend_mode(style.mix_blend_mode)?);
         push("isolation", if style.isolate { "isolate" } else { "auto" });
         push("filter", &filters(&style.filter));
         match style.display {
@@ -276,8 +276,8 @@ fn visibility(visibility: Visibility) -> &'static str {
     }
 }
 
-fn blend_mode(mode: BlendMode) -> &'static str {
-    match mode {
+fn blend_mode(mode: BlendMode) -> Result<&'static str, StyleError> {
+    Ok(match mode {
         BlendMode::Normal => "normal",
         BlendMode::Multiply => "multiply",
         BlendMode::Screen => "screen",
@@ -294,7 +294,13 @@ fn blend_mode(mode: BlendMode) -> &'static str {
         BlendMode::Saturation => "saturation",
         BlendMode::Color => "color",
         BlendMode::Luminosity => "luminosity",
-    }
+        // The SVG renderer composites with PDF blend modes, none of which adds.
+        BlendMode::PlusLighter => {
+            return Err(StyleError::Unsupported(
+                "mix-blend-mode: plus-lighter on SVG content".into(),
+            ));
+        }
+    })
 }
 
 /// Filter Effects 1 §6 functions in their computed form; lengths are CSS pixels.

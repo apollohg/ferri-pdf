@@ -303,7 +303,10 @@ struct Group<'a> {
     blend: crate::graphics::BlendMode,
     isolated: bool,
     filter: &'a [crate::graphics::FilterFunction],
+    backdrop: &'a [crate::graphics::FilterFunction],
     masked: bool,
+    /// The element is a Backdrop Root (Filter Effects 2 §3).
+    root: bool,
     /// The innermost clip or transform of the element's own box, inside which a group that
     /// does not commute with clipping and transforming opens.
     anchor: Option<usize>,
@@ -314,7 +317,9 @@ impl<'a> Group<'a> {
         blend: crate::graphics::BlendMode::Normal,
         isolated: false,
         filter: &[],
+        backdrop: &[],
         masked: false,
+        root: false,
         anchor: None,
     };
     fn of(style: &'a crate::style::Style) -> Self {
@@ -323,29 +328,33 @@ impl<'a> Group<'a> {
             blend: style.mix_blend_mode,
             isolated: style.isolate,
             filter: &style.filter,
+            backdrop: &style.backdrop_filter,
             masked: style.decoration.masks.is_masked(),
+            root: style.is_backdrop_root(),
             anchor: None,
         }
     }
     /// Filters act in the element's local coordinates and are clipped by its ancestors'
     /// clips afterwards (Filter Effects 1 §5), and masks are positioned in those coordinates
     /// (CSS Masking 1 §7), so their group opens inside the clips and transforms of the
-    /// element's own box.
+    /// element's own box. A backdrop filter draws behind the element's own box fragments,
+    /// which the group records.
     fn anchored(&self) -> bool {
-        !self.filter.is_empty() || self.masked
+        !self.filter.is_empty() || self.masked || !self.backdrop.is_empty()
     }
-    /// The display items opening this group, outermost first: an isolated blend group, an
-    /// opacity group, which is isolated itself, the mask, then the filter, which applies
-    /// before the others (Filter Effects 1 §5). `fragments` are the element's box fragments
-    /// on the page.
+    /// The display items opening this group, outermost first: the Backdrop Root, an isolated
+    /// blend group, an opacity group, which is isolated itself, the mask, then the filter,
+    /// which applies before the others (Filter Effects 1 §5). `fragments` are the element's
+    /// box fragments on the page.
     fn pushes(self, fragments: &[BoxPaint]) -> Vec<DisplayItem> {
         let bounds = fragments.iter().map(|paint| paint.rect).reduce(Rect::union);
         let translucent = self.opacity < 1.0;
         let blend =
             self.blend != crate::graphics::BlendMode::Normal || (self.isolated && !translucent);
-        blend
-            .then_some(DisplayItem::PushBlend(self.blend))
+        self.root
+            .then_some(DisplayItem::PushBackdropRoot)
             .into_iter()
+            .chain(blend.then_some(DisplayItem::PushBlend(self.blend)))
             .chain(translucent.then_some(DisplayItem::PushOpacity(self.opacity)))
             .chain(self.masked.then(|| {
                 DisplayItem::PushMask(crate::graphics::MaskPaint {
@@ -359,6 +368,15 @@ impl<'a> Group<'a> {
                 })
             }))
             .collect()
+    }
+    /// The filtered backdrop behind `fragment`, one of the element's own box fragments.
+    fn backdrop(&self, fragment: &BoxPaint) -> Option<DisplayItem> {
+        (!self.backdrop.is_empty()).then(|| {
+            DisplayItem::Backdrop(crate::graphics::BackdropPaint {
+                functions: self.backdrop.to_vec(),
+                border: fragment.background_clips().border,
+            })
+        })
     }
 }
 #[derive(Clone)]
@@ -1078,16 +1096,19 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 DisplayItem::Box(fragment) => {
                     fragment.has_ink() && fragment.rect.intersects(page_rect)
                 }
-                // Decorations accompany text lines, which are counted above.
+                // Decorations accompany text lines, which are counted above, and backdrops
+                // their boxes.
                 DisplayItem::Text { .. }
                 | DisplayItem::Decoration(_)
                 | DisplayItem::TextShadow(_)
+                | DisplayItem::Backdrop(_)
                 | DisplayItem::PushClip(_)
                 | DisplayItem::PushTransform(_)
                 | DisplayItem::PushOpacity(_)
                 | DisplayItem::PushBlend(_)
                 | DisplayItem::PushFilter(_)
                 | DisplayItem::PushMask(_)
+                | DisplayItem::PushBackdropRoot
                 | DisplayItem::Pop => false,
             })
             || self.display_lists[page]
@@ -1096,16 +1117,19 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 .any(|item| match &item.item {
                     DisplayItem::Box(paint) => paint.has_ink(),
                     DisplayItem::Image(paint) => paint.visible_rect().intersects(page_rect),
-                    // Decorations accompany text lines, which are counted above.
+                    // Decorations accompany text lines, which are counted above, and backdrops
+                    // their boxes.
                     DisplayItem::Text { .. }
                     | DisplayItem::Decoration(_)
                     | DisplayItem::TextShadow(_)
+                    | DisplayItem::Backdrop(_)
                     | DisplayItem::PushClip(_)
                     | DisplayItem::PushTransform(_)
                     | DisplayItem::PushOpacity(_)
                     | DisplayItem::PushBlend(_)
                     | DisplayItem::PushFilter(_)
                     | DisplayItem::PushMask(_)
+                    | DisplayItem::PushBackdropRoot
                     | DisplayItem::Pop => false,
                 })
     }
@@ -1910,7 +1934,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let order = self.reserved_order.take().unwrap_or_else(|| self.order());
             let layer = positioned_layer(&self.context, z_index, order);
             if z_index.is_some() {
-                let group = if grouped {
+                let group = if grouped || block.style.is_backdrop_root() {
                     Group::of(block.style)
                 } else {
                     Group::IDENTITY
@@ -2767,6 +2791,32 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 _ => Vec::new(),
             })
             .collect()
+    }
+    /// Each backdrop-filtered element's filtered backdrop under its block box fragments; inline
+    /// box fragments place theirs as they are painted.
+    fn underlay_backdrops(&mut self) {
+        for node in &self.clips {
+            let Effect::Group(group) = node.effect else {
+                continue;
+            };
+            for &(page, slot) in &node.fragments {
+                let paint = &self.display_lists[page][slot];
+                if let DisplayItem::Box(fragment) = &paint.item
+                    && let Some(backdrop) = group.backdrop(fragment)
+                {
+                    let underlay = ScopedPaint {
+                        ink: None,
+                        item: backdrop,
+                        navigation: BoxNavigation::default(),
+                        ..paint.clone()
+                    };
+                    self.underlays
+                        .entry((page, slot))
+                        .or_default()
+                        .push(underlay);
+                }
+            }
+        }
     }
     /// The placement a `Parent3d` node gives its children on `page`, from its fragment there.
     fn parent_3d_on(
@@ -4827,11 +4877,25 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             };
             self.page_content |= paint.has_ink() && paint.rect.intersects(self.page_rect);
             let scope = self.layer_scope(&layer);
-            // The box's own filter or mask group is bounded by its fragments.
-            if Group::of(style).anchored()
+            // The box's own filter, mask or backdrop group is bounded by its fragments, and its
+            // filtered backdrop lies behind each of them.
+            let group = Group::of(style);
+            if group.anchored()
                 && let Some(node) = layer.group
             {
                 self.clips[node].paints.push((self.page, paint.clone()));
+                if let Some(backdrop) = group.backdrop(&paint) {
+                    self.foreground[self.page].push(ScopedPaint {
+                        visible: style.visibility.is_visible(),
+                        order: self.orders.take(),
+                        scope: scope.clone(),
+                        clip: layer.clip,
+                        group: layer.group,
+                        ink: None,
+                        item: backdrop,
+                        navigation: BoxNavigation::default(),
+                    });
+                }
             }
             layers.fragments[fragment.index].push((self.page, self.foreground[self.page].len()));
             self.foreground[self.page].push(ScopedPaint {
@@ -5137,6 +5201,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         self.position_canvas_backgrounds();
         let regions = self.effect_regions()?;
         let bounds = self.group_bounds();
+        self.underlay_backdrops();
         let mut display_lists = Vec::with_capacity(self.display_lists.len());
         let mut located = Located {
             links: Vec::with_capacity(self.display_lists.len()),
@@ -5400,6 +5465,13 @@ fn clipped(
                 .filter(|(fragment_page, _)| *fragment_page == page)
                 .map(|(_, paint)| paint.clone())
                 .collect();
+            if !effect.backdrop.is_empty() && fragments.is_empty() {
+                return Err(LayoutError::Style(crate::style::StyleError::Unsupported(
+                    "backdrop-filter on a table row or row group, which has no border box \
+                     fragment to clip its backdrop to"
+                        .into(),
+                )));
+            }
             let pushes = effect.pushes(&fragments);
             if !pushes.is_empty() {
                 groups.push((index, effect, pushes));

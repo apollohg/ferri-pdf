@@ -105,7 +105,7 @@ fn soft_mask(
         fill(area, Color::BLACK, &mut values)?;
         // Fragments occupy disjoint areas, so their masks unite.
         for fragment in &mask.fragments {
-            let pushes = painting::push_blend(BlendMode::Screen, &mut values);
+            let pushes = painting::push_blend(BlendMode::Screen, &mut values)?;
             let result = draw(painter, fragment, &mut values);
             painting::pop_clips(pushes, &mut values);
             result?;
@@ -237,7 +237,7 @@ fn draw_fragment(
             masks.composite(index)
         };
         if operator == MaskComposite::Subtract {
-            let pushes = painting::push_blend(BlendMode::Difference, surface);
+            let pushes = painting::push_blend(BlendMode::Difference, surface)?;
             let inverted = fill(area, WHITE, surface);
             painting::pop_clips(pushes, surface);
             inverted?;
@@ -247,7 +247,7 @@ fn draw_fragment(
             MaskComposite::Subtract | MaskComposite::Intersect => BlendMode::Multiply,
             MaskComposite::Exclude => BlendMode::Exclusion,
         };
-        let pushes = painting::push_blend(blend, surface);
+        let pushes = painting::push_blend(blend, surface)?;
         let drawn = (|| {
             fill(area, Color::BLACK, surface)?;
             if let Some(reference) = masks.source(index) {

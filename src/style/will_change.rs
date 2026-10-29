@@ -30,6 +30,17 @@ const STACKING: &[Property] = &[
     Property::Position,
     Property::ViewTransitionName,
 ];
+/// Properties some non-initial value of which makes the element a Backdrop Root (Filter
+/// Effects 2 §3).
+const BACKDROP_ROOT: &[Property] = &[
+    Property::Filter,
+    Property::Opacity,
+    Property::MaskImage,
+    Property::MaskBorderSource,
+    Property::ClipPath,
+    Property::BackdropFilter,
+    Property::MixBlendMode,
+];
 /// Properties some non-initial value of which makes a fixed-positioning containing block, and
 /// with it an absolute-positioning one.
 const FIXED_CONTAINING: &[Property] = &[
@@ -50,6 +61,7 @@ const FIXED_CONTAINING: &[Property] = &[
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, serde::Serialize)]
 pub(crate) struct WillChange {
     pub(crate) stacking_context: bool,
+    pub(crate) backdrop_root: bool,
     /// `z-index`, which creates a stacking context only where it applies.
     pub(crate) z_index: bool,
     pub(crate) absolute_containing_block: bool,
@@ -72,6 +84,7 @@ impl WillChange {
                     };
                     for longhand in declaration::longhands(property) {
                         hints.stacking_context |= STACKING.contains(&longhand);
+                        hints.backdrop_root |= BACKDROP_ROOT.contains(&longhand);
                         hints.z_index |= longhand == Property::ZIndex;
                         hints.fixed_containing_block |= FIXED_CONTAINING.contains(&longhand);
                         hints.absolute_containing_block |=

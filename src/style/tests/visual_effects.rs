@@ -1,5 +1,8 @@
 use crate::dom::{DocumentTree, Selector};
-use crate::paint::{BlendMode, BorderStyle, LengthPercentage, OutlineStyle, PositionComponent};
+use crate::paint::{
+    BlendMode, BorderStyle, Color, FilterFunction, LengthPercentage, OutlineStyle,
+    PositionComponent,
+};
 use crate::resources::FileResolver;
 use crate::style::{
     Rotation, Style, StyleError, Stylesheet, StylesheetSource, TransformBox, TransformStyle,
@@ -322,13 +325,56 @@ fn blending_and_isolation_compute_as_specified_without_inheriting() {
         child.decoration.backgrounds.blend_modes,
         [BlendMode::Normal]
     );
-    for mode in ["plus-lighter", "plus-darker"] {
-        let error = styles(&format!("#parent{{mix-blend-mode:{mode}}}"))
-            .expect_err("additive compositing has no PDF equivalent");
-        assert!(
-            matches!(&error, StyleError::Unsupported(message)
-                if message.starts_with(&format!("mix-blend-mode: {mode} (additive compositing"))),
-            "{mode} must stay an error naming why: {error}"
+    let (parent, child) =
+        styles("#parent{mix-blend-mode:plus-lighter}").expect("plus-lighter computes");
+    assert_eq!(parent.mix_blend_mode, BlendMode::PlusLighter);
+    assert!(parent.is_grouped() && parent.is_backdrop_root());
+    assert_eq!(
+        child.mix_blend_mode,
+        BlendMode::Normal,
+        "plus-lighter does not inherit"
+    );
+    let error = styles("#parent{mix-blend-mode:plus-darker}")
+        .expect_err("plus-darker's formula has no premultiplied result");
+    assert!(
+        matches!(&error, StyleError::Unsupported(message)
+            if message.starts_with("mix-blend-mode: plus-darker") && message.contains("§9.1.14")),
+        "plus-darker must stay an error naming why: {error}"
+    );
+}
+
+#[test]
+fn backdrop_filter_computes_a_stacking_backdrop_root_without_inheriting() {
+    let (parent, child) =
+        styles("#parent{color:red;backdrop-filter:blur(1em) drop-shadow(1px 2px)}")
+            .expect("backdrop-filter computes");
+    assert_eq!(
+        *parent.backdrop_filter,
+        [
+            FilterFunction::Blur(FONT_SIZE_PT),
+            FilterFunction::DropShadow {
+                offset: [PX, 2.0 * PX],
+                deviation: 0.0,
+                color: Color {
+                    rgb: [255, 0, 0],
+                    alpha: 1.0
+                },
+            },
+        ],
+        "lengths compute to points and the omitted shadow colour to the current colour"
+    );
+    assert!(
+        parent.is_grouped() && parent.is_backdrop_root() && parent.contains_fixed(),
+        "Filter Effects 2 §2.1: a stacking context, Backdrop Root and fixed containing block"
+    );
+    assert!(child.backdrop_filter.is_empty() && !child.is_backdrop_root());
+    for (hint, root) in [("opacity", true), ("mask", true), ("transform", false)] {
+        let (parent, _) =
+            styles(&format!("#parent{{will-change:{hint}}}")).expect("will-change computes");
+        assert_eq!(
+            parent.is_backdrop_root(),
+            root,
+            "§3: will-change: {hint} makes a Backdrop Root only if the property would"
         );
     }
 }

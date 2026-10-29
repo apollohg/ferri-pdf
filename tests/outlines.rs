@@ -174,6 +174,7 @@ fn outlines_paint_last_in_their_stacking_context_under_the_box_effects() {
                 Some(format!("outline #{r:02x}{g:02x}{b:02x}"))
             }
             DisplayItem::PushOpacity(_) => Some("group".into()),
+            DisplayItem::PushBackdropRoot => Some("backdrop root".into()),
             DisplayItem::Pop => Some("pop".into()),
             _ => None,
         })
@@ -184,9 +185,11 @@ fn outlines_paint_last_in_their_stacking_context_under_the_box_effects() {
             "box #ffff00",
             "box #0000ff",
             "box #0000ff",
+            "backdrop root",
             "group",
             "box #00ffff",
             "outline #00ff00",
+            "pop",
             "pop",
             "outline #ff0000",
         ],

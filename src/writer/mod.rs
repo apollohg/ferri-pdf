@@ -1,4 +1,5 @@
 //! PDF serialization of ordered display lists; no document parsing or layout.
+mod backdrops;
 mod backgrounds;
 mod display;
 mod filters;
@@ -64,6 +65,10 @@ pub enum PdfError {
     RasterSize { width: f32, height: f32 },
     #[error("rasterizing a filtered group failed")]
     Raster,
+    /// Compositing 2 §9.1.15 `plus-lighter` has no PDF blend mode; only display-list groups,
+    /// which composite it in pixels, may use it.
+    #[error("plus-lighter compositing outside a display-list group")]
+    VectorPlusLighter,
     /// Table rows and row groups have no box fragment of their own to place masks and
     /// `objectBoundingBox` filter references against.
     #[error(
@@ -200,6 +205,7 @@ pub(crate) fn encode_parts_with_diagnostics(
                 fonts: part.fonts,
                 images: &mut images,
                 raster: &raster,
+                prepared: backdrops::Prepared::default(),
             }
             .draw(
                 items,

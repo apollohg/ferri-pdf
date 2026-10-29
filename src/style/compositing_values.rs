@@ -21,15 +21,23 @@ pub(super) fn blend_mode(value: &Component) -> Result<BlendMode, StyleError> {
         Some(Keyword::Saturation) => BlendMode::Saturation,
         Some(Keyword::Color) => BlendMode::Color,
         Some(Keyword::Luminosity) => BlendMode::Luminosity,
-        Some(Keyword::PlusLighter | Keyword::PlusDarker) => {
-            return Err(StyleError::Unsupported(
-                "additive compositing, which no PDF blend mode or transparency group \
-                 expresses (PDF 32000 §11.3.5)"
-                    .into(),
-            ));
-        }
         _ => return Err(unsupported(value)),
     })
+}
+
+/// `mix-blend-mode`: a `<blend-mode>`, or the Compositing 2 §9.1.15 `plus-lighter` operator.
+pub(super) fn mix_blend_mode(value: &Component) -> Result<BlendMode, StyleError> {
+    match value.keyword() {
+        Some(Keyword::PlusLighter) => Ok(BlendMode::PlusLighter),
+        // §9.1.14 gives `αo = max(0, 1 - αs + 1 - αb)`, which makes two opaque layers
+        // transparent, and a colour `co` that exceeds `αo`, which no premultiplied pixel holds.
+        Some(Keyword::PlusDarker) => Err(StyleError::Unsupported(
+            "the Compositing 2 §9.1.14 plus-darker formula, which yields no valid premultiplied \
+             colour"
+                .into(),
+        )),
+        _ => blend_mode(value),
+    }
 }
 
 /// `<blend-mode>#`, one per background layer.

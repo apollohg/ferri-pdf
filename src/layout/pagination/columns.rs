@@ -1000,12 +1000,14 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             DisplayItem::Decoration(decoration) => shift(&mut decoration.rect),
             DisplayItem::TextShadow(shadow) => shadow.translate([dx, dy]),
             DisplayItem::Text { line } => *line += place.lines,
+            DisplayItem::Backdrop(backdrop) => backdrop.border.translate([dx, dy]),
             DisplayItem::PushClip(_)
             | DisplayItem::PushTransform(_)
             | DisplayItem::PushOpacity(_)
             | DisplayItem::PushBlend(_)
             | DisplayItem::PushFilter(_)
             | DisplayItem::PushMask(_)
+            | DisplayItem::PushBackdropRoot
             | DisplayItem::Pop => {}
         }
         paint.ink.as_mut().map(shift);

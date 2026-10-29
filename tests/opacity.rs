@@ -12,11 +12,22 @@ fn trace(css: &str, body: &str) -> LayoutTrace {
 
 /// Each painted item with the effects enclosing it, outermost first: `O<alpha>` opacity and
 /// `B<mode>` blend groups, `C` clips and `T` transforms. Boxes are named by their background, text by its line text.
+/// Backdrop Roots only bound backdrop filters and are left out.
 fn effect_stacks(trace: &LayoutTrace, page: usize) -> Vec<(String, Vec<String>)> {
+    const BACKDROP_ROOT: &str = "R";
     let mut stack: Vec<String> = Vec::new();
     let mut painted = Vec::new();
     for item in &trace.display_lists[page] {
+        let stack_here = || -> Vec<String> {
+            stack
+                .iter()
+                .filter(|effect| *effect != BACKDROP_ROOT)
+                .cloned()
+                .collect()
+        };
         match item {
+            DisplayItem::PushBackdropRoot => stack.push(BACKDROP_ROOT.into()),
+            DisplayItem::Backdrop(_) => painted.push(("backdrop".into(), stack_here())),
             DisplayItem::PushOpacity(alpha) => stack.push(format!("O{alpha}")),
             DisplayItem::PushBlend(mode) => stack.push(format!("B{mode:?}")),
             DisplayItem::PushFilter(filter) => stack.push(format!("F{:?}", filter.functions)),
@@ -28,16 +39,16 @@ fn effect_stacks(trace: &LayoutTrace, page: usize) -> Vec<(String, Vec<String>)>
             }
             DisplayItem::Box(paint) => {
                 let [r, g, b] = paint.decoration.background.rgb;
-                painted.push((format!("box #{r:02x}{g:02x}{b:02x}"), stack.clone()));
+                painted.push((format!("box #{r:02x}{g:02x}{b:02x}"), stack_here()));
             }
             DisplayItem::Text { line } => painted.push((
                 format!("text {}", trace.pages[page][*line].text.trim()),
-                stack.clone(),
+                stack_here(),
             )),
-            DisplayItem::Image(_) => painted.push(("image".into(), stack.clone())),
-            DisplayItem::TextShadow(_) => painted.push(("text shadow".into(), stack.clone())),
+            DisplayItem::Image(_) => painted.push(("image".into(), stack_here())),
+            DisplayItem::TextShadow(_) => painted.push(("text shadow".into(), stack_here())),
             DisplayItem::Decoration(decoration) => {
-                painted.push((format!("{:?} decoration", decoration.line), stack.clone()));
+                painted.push((format!("{:?} decoration", decoration.line), stack_here()));
             }
         }
     }

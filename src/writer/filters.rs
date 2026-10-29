@@ -85,8 +85,20 @@ pub(super) fn draw(
     let Some(mut raster) = reach.and_then(|reach| raster.cropped(reach)) else {
         return Ok(());
     };
+    apply(&steps, &mut raster)?;
+    match raster
+        .ink()
+        .and_then(|ink| raster.cropped(ink.intersection(visible)))
+    {
+        Some(raster) => raster::embed(&raster, surface),
+        None => Ok(()),
+    }
+}
+
+/// Runs the chain on `raster`'s pixels in place.
+pub(super) fn apply(steps: &[Step<'_>], raster: &mut raster::Raster) -> Result<(), PdfError> {
     let transform = raster.transform();
-    for step in &steps {
+    for step in steps {
         match step {
             Step::Function(function) => {
                 let filter = function_filter(function, raster.area)?;
@@ -99,16 +111,10 @@ pub(super) fn draw(
             ),
         }
     }
-    match raster
-        .ink()
-        .and_then(|ink| raster.cropped(ink.intersection(visible)))
-    {
-        Some(raster) => raster::embed(&raster, surface),
-        None => Ok(()),
-    }
+    Ok(())
 }
 
-fn expand(rect: Rect, by: f32) -> Rect {
+pub(super) fn expand(rect: Rect, by: f32) -> Rect {
     Rect {
         x: rect.x - by,
         y: rect.y - by,
@@ -164,6 +170,7 @@ fn draw_recolored(
         fonts: painter.fonts,
         images: painter.images,
         raster: painter.raster,
+        prepared: crate::writer::backdrops::Prepared::default(),
     };
     let drawn = if translucent {
         let nested = Space {
@@ -189,7 +196,7 @@ type Recolored = (
 /// `items` and the text lines they draw with every colour mapped by `matrix`, or `None` when
 /// something paints colours the matrix cannot reach exactly: images, gradients and border
 /// images, three-dimensional border styles, whose shades scale the mapped colour, blending,
-/// nested filters, and bitmap or SVG colour glyphs.
+/// nested filters, backdrops, which read unmapped colours, and bitmap or SVG colour glyphs.
 fn recolor(
     painter: &Painter<'_, '_, '_>,
     items: &[crate::graphics::DisplayItem],
@@ -239,7 +246,9 @@ fn recolor(
             | DisplayItem::PushTransform(_)
             | DisplayItem::PushOpacity(_)
             | DisplayItem::Pop) => item.clone(),
+            item @ DisplayItem::PushBackdropRoot => item.clone(),
             DisplayItem::Image(_)
+            | DisplayItem::Backdrop(_)
             | DisplayItem::PushBlend(_)
             | DisplayItem::PushFilter(_)
             | DisplayItem::PushMask(_) => {
@@ -325,7 +334,7 @@ pub(super) fn map_color(
 }
 
 /// The chain's steps, or `None` when a reference does not name a usable filter element.
-fn steps<'f>(
+pub(super) fn steps<'f>(
     filter: &'f FilterPaint,
     definitions: &crate::document::svg::SvgDefinitions,
 ) -> Option<Vec<Step<'f>>> {
@@ -343,7 +352,7 @@ fn steps<'f>(
 
 impl Step<'_> {
     /// How far the step moves ink, in drawing units, at `density` pixels per unit.
-    fn spread(&self, density: f32) -> f32 {
+    pub(super) fn spread(&self, density: f32) -> f32 {
         match self {
             Self::Function(function) => function.spread(),
             Self::Reference(filter) => filter

@@ -184,6 +184,8 @@ pub(crate) struct Style {
     pub mix_blend_mode: crate::paint::BlendMode,
     /// `filter`, applied in order; empty is `none`.
     pub filter: Arc<Vec<crate::paint::FilterFunction>>,
+    /// `backdrop-filter`, applied in order to the backdrop; empty is `none`.
+    pub backdrop_filter: Arc<Vec<crate::paint::FilterFunction>>,
     /// `isolation: isolate`.
     pub isolate: bool,
     pub visibility: crate::style::Visibility,
@@ -324,6 +326,7 @@ impl Default for Style {
             opacity: OPAQUE,
             mix_blend_mode: crate::paint::BlendMode::Normal,
             filter: Arc::default(),
+            backdrop_filter: Arc::default(),
             isolate: false,
             visibility: crate::style::Visibility::Visible,
             transform_origin: crate::style::transform::INITIAL_ORIGIN,
@@ -563,18 +566,35 @@ impl Style {
     pub(crate) fn is_translucent(&self) -> bool {
         self.opacity < OPAQUE
     }
-    /// Opacity, blending, `isolation: isolate` and filters make the box a stacking context
-    /// composited as one group (Compositing 1 §3.4, Filter Effects 1 §5).
+    /// Opacity, blending, `isolation: isolate`, filters and backdrop filters make the box a
+    /// stacking context composited as one group (Compositing 1 §3.4, Filter Effects 1 §5,
+    /// Filter Effects 2 §2.1).
     pub(crate) fn is_grouped(&self) -> bool {
         self.is_translucent()
             || self.mix_blend_mode != crate::paint::BlendMode::Normal
             || self.isolate
             || self.is_filtered()
+            || self.has_backdrop_filter()
             || self.decoration.masks.is_masked()
     }
     /// A `filter` other than `none`.
     pub(crate) fn is_filtered(&self) -> bool {
         !self.filter.is_empty()
+    }
+    /// A `backdrop-filter` other than `none`.
+    pub(crate) fn has_backdrop_filter(&self) -> bool {
+        !self.backdrop_filter.is_empty()
+    }
+    /// The box forms a Backdrop Root (Filter Effects 2 §3), which bounds the backdrop its
+    /// descendants' backdrop filters read; the document root is the page's.
+    pub(crate) fn is_backdrop_root(&self) -> bool {
+        self.is_translucent()
+            || self.mix_blend_mode != crate::paint::BlendMode::Normal
+            || self.is_filtered()
+            || self.has_backdrop_filter()
+            || self.decoration.masks.is_masked()
+            || self.will_change.backdrop_root
+            || self.view_transition_named
     }
     /// A stacking context from a `will-change` hint (CSS Will Change 1 §3.1), a view
     /// transition name, which also makes the box a backdrop root (CSS View Transitions 1 §3),
@@ -611,13 +631,13 @@ impl Style {
         self.will_change.fixed_containing_block
     }
     /// Generates the containing block of fixed positioned descendants (CSS Transforms 1 §3,
-    /// CSS Transforms 2 §5, CSS Containment 2 §3.2 and §3.4); a filter does unless on the
-    /// document root (Filter Effects 1 §5).
+    /// CSS Transforms 2 §5, CSS Containment 2 §3.2 and §3.4); a filter or backdrop filter
+    /// does unless on the document root (Filter Effects 1 §5, Filter Effects 2 §2.1).
     pub(crate) fn contains_fixed(&self) -> bool {
         self.has_transform_effects()
             || self.will_change.fixed_containing_block
             || self.contains_positioned()
-            || (self.is_filtered() && !self.document_root)
+            || ((self.is_filtered() || self.has_backdrop_filter()) && !self.document_root)
     }
     pub(crate) fn font_selection(&self) -> FontSelection {
         FontSelection {

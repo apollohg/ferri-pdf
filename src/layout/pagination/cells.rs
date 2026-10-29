@@ -282,7 +282,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 };
                 let mut paint = positioned_layer(&self.context, isolated.then_some(0), order);
                 let group = if isolated {
-                    let group = if grouped {
+                    let group = if grouped || source.style().is_backdrop_root() {
                         Group::of(source.style())
                     } else {
                         Group::IDENTITY

@@ -106,6 +106,19 @@ pub(super) fn rasterize(
     area: Rect,
     density: f32,
 ) -> Result<Option<Raster>, PdfError> {
+    render(painter, area, density, |painter, space, surface| {
+        painter.draw(items, space, surface)
+    })
+}
+
+/// Renders what `draw` paints in the current drawing space at `area`, or `None` when the area
+/// covers no pixel.
+pub(super) fn render(
+    painter: &mut Painter<'_, '_, '_>,
+    area: Rect,
+    density: f32,
+    draw: impl FnOnce(&mut Painter<'_, '_, '_>, Space, &mut Surface<'_>) -> Result<(), PdfError>,
+) -> Result<Option<Raster>, PdfError> {
     let columns = (area.width * density).ceil();
     let rows = (area.height * density).ceil();
     if !(columns >= 1.0 && rows >= 1.0) {
@@ -137,8 +150,8 @@ pub(super) fn rasterize(
     let mut pdf_page = document.start_page_with(settings);
     let mut surface = pdf_page.surface();
     surface.push_transform(&Transform::from_translate(-area.x, -area.y));
-    let drawn = painter.draw(
-        items,
+    let drawn = draw(
+        painter,
         Space {
             viewport: Rect {
                 x: 0.0,

@@ -89,7 +89,8 @@ impl Color {
 }
 
 /// Compositing 1 §10 `<blend-mode>`: the separable and non-separable modes, each identical to
-/// the PDF blend mode of the same name (PDF 32000 §11.3.5).
+/// the PDF blend mode of the same name (PDF 32000 §11.3.5), and the Compositing 2 §9.1.15
+/// `plus-lighter` operator, which no PDF blend mode expresses.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
 pub enum BlendMode {
     #[default]
@@ -109,6 +110,7 @@ pub enum BlendMode {
     Saturation,
     Color,
     Luminosity,
+    PlusLighter,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Serialize)]
