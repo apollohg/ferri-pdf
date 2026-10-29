@@ -242,6 +242,10 @@ impl Viewport<'_> {
 
 /// The computed line height and the font that converts `normal` to an absolute length.
 #[derive(Clone)]
+#[expect(
+    clippy::large_enum_variant,
+    reason = "font bases are stack values; boxing each line basis adds allocations during style resolution"
+)]
 pub(crate) enum Line<'a> {
     Known {
         height: LineHeight,
@@ -313,6 +317,14 @@ impl<'a> FontBasis<'a> {
         match self {
             Self::Known { size, .. } => Ok(*size),
             Self::Deferred(source) => source.per_unit(FontUnit::Em),
+        }
+    }
+    pub(crate) fn math_scaling(&self) -> Result<Option<[f32; 2]>, StyleError> {
+        match self {
+            Self::Known { faces, .. } => Ok(faces.first()?.0.math_scaling),
+            Self::Deferred(_) => Err(StyleError::Unsupported(
+                "font-size: math with deferred page font metrics".into(),
+            )),
         }
     }
     pub(crate) fn into_line(self) -> Line<'a> {

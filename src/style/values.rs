@@ -147,6 +147,7 @@ pub(super) fn families(value: &Component) -> Vec<FontFamily> {
             match generic.and_then(Component::keyword) {
                 Some(Keyword::SansSerif) => FontFamily::Generic(GenericFamily::SansSerif),
                 Some(Keyword::Serif) => FontFamily::Generic(GenericFamily::Serif),
+                Some(Keyword::Math) => FontFamily::Generic(GenericFamily::Math),
                 Some(Keyword::Monospace) => FontFamily::Generic(GenericFamily::Monospace),
                 // Generics without a configured face fall through to the next family.
                 _ => FontFamily::Named(

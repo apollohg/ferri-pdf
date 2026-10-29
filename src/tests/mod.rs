@@ -27,6 +27,7 @@ mod initial_letters;
 mod inline_boxes;
 mod leaders;
 mod list_images;
+mod mathml;
 mod named_pages;
 mod object_position;
 mod overflow_wrap;

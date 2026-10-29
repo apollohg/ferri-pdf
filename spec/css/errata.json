@@ -1,6 +1,10 @@
 {
   "description": "Corrections to mdn-data from the cited specifications: productions the data references but does not define, and entries that predate the current specification. Each entry replaces only the fields it names. Additions are specification properties the data omits, defined in full.",
   "syntaxes": {
+    "display-inside": {
+      "syntax": "flow | flow-root | table | flex | grid | ruby | math",
+      "source": "https://www.w3.org/TR/2025/CR-mathml-core-20250624/#the-display-math-value"
+    },
     "spread-shadow": {
       "syntax": "<color>? && [ [ none | <length>{2} ] [ <length [0,∞]> <length>? ]? ] && [ outset | inset ]?",
       "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#typedef-spread-shadow: each longhand contributes one list item to a shadow"

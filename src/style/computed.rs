@@ -120,6 +120,7 @@ pub(crate) struct Style {
     /// The parent inlinifies its in-flow children (CSS Display 3 §2.7, §5).
     #[serde(skip)]
     inlinifying_parent: bool,
+    pub math: crate::style::math_values::Math,
     pub size: f32,
     pub line_height: crate::style::LineHeight,
     /// `line-height-step`; zero leaves line box heights unrounded.
@@ -307,6 +308,7 @@ impl Default for Style {
             hyphens: crate::style::Hyphens::default(),
             overflow_wrap: crate::style::OverflowWrap::Normal,
             text_transform: crate::style::TextTransform::default(),
+            math: crate::style::math_values::Math::default(),
             language: String::new(),
             quotes: crate::style::Quotes::default(),
             counters: Default::default(),
@@ -1691,7 +1693,15 @@ impl Stylesheet {
         if let Some(value) = &accent {
             properties::apply(Property::AccentColor, value, style, parent, &inherited)?;
         }
-        for property in [Property::FontSize].iter().chain(&FONT_SELECTION) {
+        for property in [
+            Property::MathDepth,
+            Property::MathStyle,
+            Property::MathShift,
+            Property::FontSize,
+        ]
+        .iter()
+        .chain(&FONT_SELECTION)
+        {
             if let Some(value) = winners.remove(property) {
                 properties::apply(*property, &value, style, parent, &inherited)?;
             }

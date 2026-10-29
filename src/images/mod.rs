@@ -171,7 +171,16 @@ impl Image {
                     ratio: Some(width / height),
                 }
             }
-            Self::Transparent | Self::Frame(..) | Self::Viewport(_) => NaturalDimensions::default(),
+            Self::Viewport(view) => {
+                let [width, height] = [view.area.width, view.area.height]
+                    .map(|value| value / crate::style::POINTS_PER_PIXEL);
+                NaturalDimensions {
+                    width: Some(width),
+                    height: Some(height),
+                    ratio: (height > 0.0).then_some(width / height),
+                }
+            }
+            Self::Transparent | Self::Frame(..) => NaturalDimensions::default(),
             Self::Widget(widget) => widget.natural_size(),
         }
     }
@@ -180,7 +189,9 @@ impl Image {
             Self::Raster(image) => image.pixel_size(),
             Self::Svg(image) => image.pixel_size(available_width),
             Self::Pixels(image) => [image.width as f32, image.height as f32],
-            Self::Transparent | Self::Frame(..) | Self::Viewport(_) => DEFAULT_OBJECT_SIZE,
+            Self::Viewport(view) => [view.area.width, view.area.height]
+                .map(|value| value / crate::style::POINTS_PER_PIXEL),
+            Self::Transparent | Self::Frame(..) => DEFAULT_OBJECT_SIZE,
             Self::Widget(widget) => widget.natural,
         }
     }

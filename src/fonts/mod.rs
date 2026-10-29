@@ -121,6 +121,7 @@ impl FontWeight {
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum GenericFamily {
+    Math,
     SansSerif,
     Serif,
     Monospace,
@@ -132,6 +133,7 @@ impl GenericFamily {
         match self {
             Self::SansSerif => &[bundled::LIBERATION_SANS, bundled::DEJAVU_SANS],
             Self::Serif => &[bundled::LIBERATION_SERIF, bundled::DEJAVU_SERIF],
+            Self::Math => &[bundled::DEJAVU_SERIF],
             Self::Monospace => &[bundled::LIBERATION_MONO, bundled::DEJAVU_SANS_MONO],
         }
     }
@@ -158,6 +160,7 @@ impl FontPreferences {
     }
     fn generic(&self, family: GenericFamily) -> &[String] {
         match family {
+            GenericFamily::Math => &[],
             GenericFamily::SansSerif => &self.sans_serif,
             GenericFamily::Serif => &self.serif,
             GenericFamily::Monospace => &self.monospace,

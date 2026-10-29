@@ -29,6 +29,7 @@ const HHEA_MAXIMUM_ADVANCE: usize = 10;
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub(crate) struct FaceMetrics {
     pub ascent: f32,
+    pub math_scaling: Option<[f32; 2]>,
     pub descent: f32,
     pub line_gap: f32,
     /// OS/2 `sxHeight`, else the top of `x`, else 0.5em.
@@ -73,6 +74,17 @@ impl FaceMetrics {
                 .map(|value| f32::from(value) / units_per_em)
         };
         Self {
+            math_scaling: face
+                .tables()
+                .math
+                .and_then(|math| math.constants)
+                .map(|constants| {
+                    const PERCENT: f32 = 100.0;
+                    [
+                        f32::from(constants.script_percent_scale_down()) / PERCENT,
+                        f32::from(constants.script_script_percent_scale_down()) / PERCENT,
+                    ]
+                }),
             average_advance: table_advance(OS2_TABLE, OS2_AVERAGE_WIDTH).unwrap_or(fallback),
             maximum_advance: table_advance(HHEA_TABLE, HHEA_MAXIMUM_ADVANCE).unwrap_or(fallback),
             ascent,

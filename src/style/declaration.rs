@@ -694,7 +694,7 @@ mod tests {
                 "full-size-kana lowercase full-width",
                 true,
             ),
-            ("text-transform", "math-auto", false),
+            ("text-transform", "math-auto", true),
             ("tab-size", "2pt", false),
             ("hyphens", "manual", true),
             ("hyphens", "auto", true),

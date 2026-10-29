@@ -641,6 +641,7 @@ fn families(families: &[FontFamily]) -> String {
             FontFamily::Generic(GenericFamily::Serif) => "serif".into(),
             FontFamily::Generic(GenericFamily::SansSerif) => "sans-serif".into(),
             FontFamily::Generic(GenericFamily::Monospace) => "monospace".into(),
+            FontFamily::Generic(GenericFamily::Math) => "math".into(),
         })
         .collect::<Vec<_>>()
         .join(",")

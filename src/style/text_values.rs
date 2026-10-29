@@ -547,6 +547,7 @@ pub(crate) enum TextCase {
     Uppercase,
     Lowercase,
     Capitalize,
+    MathAuto,
 }
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
@@ -559,6 +560,12 @@ impl TextTransform {
     pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
         if value.keyword() == Some(Keyword::None) {
             return Ok(Self::default());
+        }
+        if value.keyword() == Some(Keyword::MathAuto) {
+            return Ok(Self {
+                case: TextCase::MathAuto,
+                ..Default::default()
+            });
         }
         let mut keywords = Vec::new();
         value.keywords(&mut keywords);

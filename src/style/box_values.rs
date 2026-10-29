@@ -162,6 +162,8 @@ pub(crate) enum Display {
     TableColumnGroup,
     TableCaption,
     InlineBlock,
+    InlineMath,
+    BlockMath,
     InlineFlex,
     InlineGrid,
     InlineTable,
@@ -367,6 +369,11 @@ const DISPLAY_FORMS: &[(Display, &[&[Keyword]])] = &[
     (Display::RubyText, &[&[Keyword::RubyText]]),
     (Display::RubyBaseContainer, &[&[Keyword::RubyBaseContainer]]),
     (Display::RubyTextContainer, &[&[Keyword::RubyTextContainer]]),
+    (Display::InlineMath, &[&[Keyword::Inline, Keyword::Math]]),
+    (
+        Display::BlockMath,
+        &[&[Keyword::Math], &[Keyword::Block, Keyword::Math]],
+    ),
     (Display::Contents, &[&[Keyword::Contents]]),
     (Display::None, &[&[Keyword::None]]),
 ];
@@ -390,7 +397,8 @@ impl Display {
         self.is_block_level_block_container()
             || matches!(
                 self,
-                Self::InlineBlock
+                Self::InlineMath
+                    | Self::InlineBlock
                     | Self::InlineFlowRootListItem
                     | Self::TableCell
                     | Self::TableCaption
@@ -426,7 +434,7 @@ impl Display {
     /// An inline-level block container, `inline flow-root` (CSS Display 3 §2.6).
     pub(crate) fn is_inline_block(&self) -> bool {
         match self {
-            Self::InlineBlock | Self::InlineFlowRootListItem => true,
+            Self::InlineBlock | Self::InlineMath | Self::InlineFlowRootListItem => true,
             Self::RunIn(inner) => inner.is_inline_block(),
             _ => false,
         }
@@ -486,7 +494,8 @@ impl Display {
     /// Inline-level boxes laid out as one unbreakable unit in their line (CSS 2.1 §9.2.2).
     pub(crate) fn is_atomic_inline(&self) -> bool {
         match self {
-            Self::InlineBlock
+            Self::InlineMath
+            | Self::InlineBlock
             | Self::InlineFlex
             | Self::InlineGrid
             | Self::InlineTable
@@ -529,6 +538,7 @@ impl Display {
         match self {
             // CSS Display 3 §2.7: inline and run-in flow-root boxes become block boxes.
             Self::Inline | Self::InlineBlock => Self::Block,
+            Self::InlineMath => Self::BlockMath,
             Self::InlineListItem | Self::InlineFlowRootListItem => Self::ListItem,
             Self::InlineFlex => Self::Flex,
             Self::InlineGrid => Self::Grid,
@@ -560,6 +570,7 @@ impl Display {
     pub(crate) fn inlinified(&self) -> Self {
         match self {
             Self::Block | Self::FlowRoot => Self::InlineBlock,
+            Self::BlockMath => Self::InlineMath,
             Self::ListItem | Self::FlowRootListItem => Self::InlineFlowRootListItem,
             Self::Flex => Self::InlineFlex,
             Self::Grid => Self::InlineGrid,

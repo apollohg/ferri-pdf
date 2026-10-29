@@ -400,7 +400,16 @@ fn handler(property: Property) -> Option<Handler> {
                     .is_ok()
             }),
         ),
-        P::FontSize => (font_size, Some(|v, r| font_size_value(v, r).is_ok())),
+        P::MathStyle => (math_style, Some(|v, _| math_compact(v).is_ok())),
+        P::MathShift => (math_shift, Some(|v, _| math_compact(v).is_ok())),
+        P::MathDepth => (
+            math_depth,
+            Some(|v, r| crate::style::math_values::depth(v, &Style::default(), r).is_ok()),
+        ),
+        P::FontSize => (
+            font_size,
+            Some(|v, r| v.keyword() == Some(Keyword::Math) || font_size_value(v, r).is_ok()),
+        ),
         P::FontFamily => (font_family, Some(|_, _| true)),
         P::FontWeight => (
             font_weight,
@@ -1551,7 +1560,7 @@ fn flag(value: &Component, choices: &[(Keyword, bool)]) -> Result<bool, StyleErr
 /// `relative` is the parent's: font-relative units in `font-size` measure the parent's font.
 fn font_size(
     style: &mut Style,
-    _: &Style,
+    parent: &Style,
     input: Input<'_>,
     relative: &Relative<'_>,
 ) -> Result<(), StyleError> {
@@ -1561,6 +1570,14 @@ fn font_size(
     }
     style.size = match input {
         Input::Copy(_) => unreachable!("computed copy returned above"),
+        Input::Value(value) if value.keyword() == Some(Keyword::Math) => {
+            parent.size
+                * crate::style::math_values::scale(
+                    parent.math.depth,
+                    style.math.depth,
+                    relative.font.math_scaling()?,
+                )?
+        }
         Input::Value(value) => font_size_value(value, relative)?,
     };
     Ok(())
@@ -3538,4 +3555,23 @@ computed!(
     |value, style, _parent, relative| {
         crate::style::string_values::assignments(value, &element_scope(relative, style))?
     }
+);
+
+fn math_compact(value: &Component) -> Result<bool, StyleError> {
+    flag(value, &[(Keyword::Normal, false), (Keyword::Compact, true)])
+}
+computed!(
+    math_style,
+    [math.compact],
+    |value, style, _parent, _relative| { math_compact(value)? }
+);
+computed!(
+    math_shift,
+    [math.shift],
+    |value, style, _parent, _relative| { math_compact(value)? }
+);
+computed!(
+    math_depth,
+    [math.depth],
+    |value, style, parent, relative| { crate::style::math_values::depth(value, parent, relative)? }
 );

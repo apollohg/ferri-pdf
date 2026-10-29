@@ -154,3 +154,16 @@ fn full_width_does_not_widen_expanded_tabs() {
         assert_eq!(paragraph.expanded_tabs()[0], "ＳＳ".len().."ＳＳ   ".len());
     }
 }
+
+#[test]
+fn math_auto_maps_single_text_nodes_and_preserves_long_identifiers() {
+    let document = document(
+        "span{text-transform:math-auto}",
+        "<p><span>x</span><span>exp</span><span>h</span><span>α</span><span>∞</span></p>",
+    );
+    assert_eq!(
+        paragraphs(&document)[0].text(),
+        "𝑥expℎ𝛼∞",
+        "MathML Core §4.2 maps a single source text node, including non-BMP mappings and the Planck constant exception"
+    );
+}

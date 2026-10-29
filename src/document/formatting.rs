@@ -1419,7 +1419,8 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 self.append_generated(&output, &style)?;
                 self.close_inline()?;
             }
-            Display::InlineBlock
+            Display::InlineMath
+            | Display::InlineBlock
             | Display::InlineFlex
             | Display::InlineGrid
             | Display::InlineTable => {
@@ -1532,15 +1533,12 @@ fn validate_box(style: &Style) -> Result<(), StyleError> {
     Ok(())
 }
 
-fn unsupported_element(tag: &str) -> bool {
-    matches!(tag, "math")
-}
-
 /// Elements whose content is an image or a nested navigable rather than child boxes (HTML
 /// §15.4). A `canvas` represents its fallback content with scripting disabled (HTML §4.12.5).
 pub(super) fn is_replaced(element: Element<'_>) -> bool {
     match element.name() {
         "svg" => true,
+        "math" => element.namespace() == crate::dom::MATHML_NAMESPACE,
         "img" | "iframe" | "embed" | "video" | "audio" => {
             element.namespace() == crate::dom::HTML_NAMESPACE
         }
@@ -1593,6 +1591,7 @@ pub(super) fn normalize_child_display(display: &mut Display, replaced: bool, par
         // CSS Ruby 1 §2.1: replaced elements with ruby displays take their outer display.
         *display = Display::Block;
     } else if replaced
+        && !matches!(display, Display::InlineMath | Display::BlockMath)
         && (display.is_table_internal()
             || display.is_ruby()
             || display.is_atomic_inline()
@@ -1840,6 +1839,14 @@ fn block<'a>(
                                 block.inline.append(alt, &frame.style)?;
                             }
                             image
+                        }
+                        "math" if element.namespace() == crate::dom::MATHML_NAMESPACE => {
+                            Some(crate::document::mathml::render(
+                                element,
+                                &frame.style,
+                                sheet,
+                                resources.resolver,
+                            )?)
                         }
                         "svg" => Some(resources.cache.inline_svg_in_namespace(
                             crate::document::svg::serialize(
@@ -2113,12 +2120,6 @@ fn block<'a>(
                 }
                 continue;
             }
-            if child_style.display != Display::Contents && unsupported_element(child.name()) {
-                return Err(DocumentError::Formatting(format!(
-                    "unsupported formatting element: {}",
-                    child.name()
-                )));
-            }
             traversal.counters.prepare(
                 &child_style.counters,
                 traversal.document,
@@ -2182,7 +2183,8 @@ fn block<'a>(
                 match &child_style.display {
                     Display::None => unreachable!("hidden elements are skipped before traversal"),
                     Display::Contents => unreachable!("boxless elements have no placement"),
-                    Display::Block
+                    Display::BlockMath
+                    | Display::Block
                     | Display::FlowRoot
                     | Display::Flex
                     | Display::Grid
@@ -2200,7 +2202,8 @@ fn block<'a>(
                         builder.flush()?;
                         Some(Placement::Flow)
                     }
-                    Display::InlineBlock
+                    Display::InlineMath
+                    | Display::InlineBlock
                     | Display::InlineFlex
                     | Display::InlineGrid
                     | Display::InlineTable

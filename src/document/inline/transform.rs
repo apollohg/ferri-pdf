@@ -129,7 +129,7 @@ pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
                 prefix = offset..end;
             }
             let mapping = match span.style.text_transform.case {
-                TextCase::None => None,
+                TextCase::None | TextCase::MathAuto => None,
                 TextCase::Uppercase => Some(ContextCase::Upper),
                 TextCase::Lowercase => Some(ContextCase::Lower),
                 TextCase::Capitalize => {
@@ -148,7 +148,15 @@ pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
             let result = if let Some(mapping) = mapping {
                 context.map_char(offset, &language, mapping, &mut transformed)
             } else {
-                transformed.write_char(ch)
+                transformed.write_char(
+                    if span.style.text_transform.case == TextCase::MathAuto
+                        && span.single_character_source
+                    {
+                        super::transform_math::italic(ch)
+                    } else {
+                        ch
+                    },
+                )
             };
             result.map_err(|_| DocumentError::TextExpansionLimit {
                 limit: MAX_INLINE_TEXT_BYTES,

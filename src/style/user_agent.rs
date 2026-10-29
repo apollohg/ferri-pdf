@@ -731,6 +731,9 @@ pub(super) fn declarations(
             })
             .collect());
     }
+    if element.namespace() == crate::dom::MATHML_NAMESPACE {
+        return math_defaults(element);
+    }
     if element.namespace() != HTML_NAMESPACE {
         return Ok(Vec::new());
     }
@@ -998,6 +1001,186 @@ pub(super) fn declarations(
                 Some((at, specificity)) if at == index => specificity,
                 _ => CONDITIONAL_SPECIFICITY,
             },
+        })
+        .collect())
+}
+
+fn math_defaults(element: Element<'_>) -> Result<Vec<DefaultDeclaration>, StyleError> {
+    let mut output = Vec::new();
+    let mut add = |property, value: &str| append(&mut output, Origin::UserAgent, property, value);
+    add(Property::Display, "block math")?;
+    add(Property::FontSize, "math")?;
+    let tag = element.name();
+    if tag == "math" {
+        for (property, value) in [
+            (
+                Property::Display,
+                if element
+                    .attr("display")
+                    .is_some_and(|value| value.eq_ignore_ascii_case("block"))
+                {
+                    "block math"
+                } else {
+                    "inline math"
+                },
+            ),
+            (Property::FontFamily, "math"),
+            (Property::FontSize, "inherit"),
+            (Property::FontStyle, "normal"),
+            (Property::FontWeight, "normal"),
+            (
+                Property::MathStyle,
+                if element
+                    .attr("display")
+                    .is_some_and(|value| value.eq_ignore_ascii_case("block"))
+                {
+                    "normal"
+                } else {
+                    "compact"
+                },
+            ),
+            (Property::MathDepth, "0"),
+            (Property::MathShift, "normal"),
+            (Property::LineHeight, "normal"),
+            (Property::Direction, "ltr"),
+            (Property::LetterSpacing, "normal"),
+            (Property::WordSpacing, "normal"),
+            (Property::TextIndent, "0"),
+        ] {
+            add(property, value)?;
+        }
+    }
+    if tag == "mi" {
+        add(Property::TextTransform, "math-auto")?;
+    }
+    if tag == "mfrac" {
+        add(Property::PaddingInline, "1px")?;
+    }
+    if matches!(tag, "msqrt" | "mroot") {
+        add(Property::MathShift, "compact")?;
+    }
+    if tag == "mphantom" {
+        add(Property::Visibility, "hidden")?;
+    }
+    if tag == "merror" {
+        add(Property::Border, "1px solid red")?;
+        add(Property::BackgroundColor, "lightyellow")?;
+    }
+    if let Some(parent) = element
+        .parent(TreeRelation::Inheritance)
+        .filter(|parent| parent.namespace() == crate::dom::MATHML_NAMESPACE)
+    {
+        let children: Vec<_> = parent.children(TreeRelation::Selector).collect();
+        let index = children
+            .iter()
+            .position(|child| child.id() == element.id())
+            .unwrap_or(0);
+        if matches!(parent.name(), "semantics" | "maction") && index > 0 {
+            add(Property::Display, "none")?;
+        }
+        if parent.name() == "mfrac" {
+            add(Property::MathDepth, "auto-add")?;
+            add(Property::MathStyle, "compact")?;
+            if index == 1 {
+                add(Property::MathShift, "compact")?;
+            }
+        }
+        if index > 0
+            && matches!(
+                parent.name(),
+                "msub"
+                    | "msup"
+                    | "msubsup"
+                    | "mmultiscripts"
+                    | "munder"
+                    | "mover"
+                    | "munderover"
+                    | "mroot"
+            )
+        {
+            add(
+                Property::MathDepth,
+                if parent.name() == "mroot" {
+                    "add(2)"
+                } else {
+                    "add(1)"
+                },
+            )?;
+            add(Property::MathStyle, "compact")?;
+            if index == 1 && matches!(parent.name(), "msub" | "msubsup") {
+                add(Property::MathShift, "compact")?;
+            }
+        }
+    }
+    if tag == "mi"
+        && element
+            .attr("mathvariant")
+            .is_some_and(|value| value.eq_ignore_ascii_case("normal"))
+    {
+        append(
+            &mut output,
+            Origin::AuthorHint,
+            Property::TextTransform,
+            "none",
+        )?;
+    }
+    for (attribute, property) in [
+        ("mathcolor", Property::Color),
+        ("mathbackground", Property::BackgroundColor),
+        ("mathsize", Property::FontSize),
+    ] {
+        if let Some(value) = element.attr(attribute) {
+            append(&mut output, Origin::AuthorHint, property, value)?;
+        }
+    }
+    if let Some(value) = element.attr("displaystyle") {
+        if value.eq_ignore_ascii_case("true") {
+            append(
+                &mut output,
+                Origin::AuthorHint,
+                Property::MathStyle,
+                "normal",
+            )?;
+        }
+        if value.eq_ignore_ascii_case("false") {
+            append(
+                &mut output,
+                Origin::AuthorHint,
+                Property::MathStyle,
+                "compact",
+            )?;
+        }
+    }
+    if let Some(value) = element
+        .attr("scriptlevel")
+        .and_then(|value| value.parse::<i32>().ok().map(|integer| (value, integer)))
+    {
+        let depth = if value.0.starts_with(['+', '-']) {
+            format!("add({})", value.1)
+        } else {
+            value.1.to_string()
+        };
+        append(&mut output, Origin::AuthorHint, Property::MathDepth, &depth)?;
+    }
+    append(
+        &mut output,
+        Origin::UserAgent,
+        Property::WritingMode,
+        "horizontal-tb",
+    )?;
+    for declaration in &mut output {
+        if matches!(
+            &declaration.declared,
+            declaration::Declared::Longhand(Property::WritingMode, _)
+        ) {
+            declaration.important = true;
+        }
+    }
+    Ok(output
+        .into_iter()
+        .map(|declaration| DefaultDeclaration {
+            declaration,
+            specificity: 0,
         })
         .collect())
 }

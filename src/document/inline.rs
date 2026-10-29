@@ -1,5 +1,6 @@
 mod transform;
 mod transform_maps;
+mod transform_math;
 use crate::document::DocumentError;
 use crate::style::{Clear, Style, TextAlign, WhiteSpaceCollapse};
 use std::ops::Range;
@@ -19,6 +20,7 @@ pub(crate) struct TextSpan {
     pub atomic: Option<usize>,
     pub leader: bool,
     source: usize,
+    single_character_source: bool,
 }
 /// Non-replaced inline box (CSS 2.1 §9.2.2), stored in tree order.
 pub(crate) struct InlineBox {
@@ -217,6 +219,7 @@ impl Paragraph {
                     atomic: span.atomic,
                     leader: span.leader,
                     source: span.source,
+                    single_character_source: span.single_character_source,
                 })
                 .collect(),
             anchors: Vec::new(),
@@ -313,6 +316,7 @@ impl Paragraph {
             atomic: None,
             leader: false,
             source: 0,
+            single_character_source: true,
         };
         let mut paragraph = Self {
             expanded_tabs: Vec::new(),
@@ -532,6 +536,7 @@ enum Mark {
 struct PendingSpace {
     style: usize,
     source: usize,
+    single_character_source: bool,
     inline_box: Option<usize>,
 }
 
@@ -736,10 +741,11 @@ impl InlineCollector {
         let index = self.style_index(style);
         let source = self.next_source();
         let inline_box = self.open_box;
+        let single_character_source = text.chars().nth(1).is_none();
         for ch in text.chars() {
             if ch == '\n' && style.white_space.preserves_breaks() {
                 self.drop_pending_space();
-                self.push('\n', index, source, 1, inline_box)?;
+                self.push('\n', index, source, single_character_source, 1, inline_box)?;
             } else if collapses_character(ch, style.white_space.collapse) {
                 // Collapsible white space after an inside marker is discarded, as its `pre`
                 // white space intends (CSS Lists 3 §3.1.1, issues 4448 and 4891).
@@ -752,22 +758,30 @@ impl InlineCollector {
                     self.pending_space = Some(PendingSpace {
                         style: index,
                         source,
+                        single_character_source,
                         inline_box,
                     });
                 }
             } else if style.white_space.collapse.converts_to_spaces() && matches!(ch, '\n' | '\t') {
                 self.emit_pending_space()?;
-                self.push(' ', index, source, 1, inline_box)?;
+                self.push(' ', index, source, single_character_source, 1, inline_box)?;
             } else {
                 self.emit_pending_space()?;
                 if ch == '\t' {
                     let start = self.text.len();
-                    self.push(' ', index, source, style.tab_size, inline_box)?;
+                    self.push(
+                        ' ',
+                        index,
+                        source,
+                        single_character_source,
+                        style.tab_size,
+                        inline_box,
+                    )?;
                     if start < self.text.len() {
                         self.expanded_tabs.push(start..self.text.len());
                     }
                 } else {
-                    self.push(ch, index, source, 1, inline_box)?;
+                    self.push(ch, index, source, single_character_source, 1, inline_box)?;
                 }
             }
         }
@@ -781,7 +795,14 @@ impl InlineCollector {
     }
     fn emit_pending_space(&mut self) -> Result<(), DocumentError> {
         if let Some(space) = self.pending_space.take() {
-            self.push(' ', space.style, space.source, 1, space.inline_box)?;
+            self.push(
+                ' ',
+                space.style,
+                space.source,
+                space.single_character_source,
+                1,
+                space.inline_box,
+            )?;
             let end = self.text.len();
             for mark in std::mem::take(&mut self.after_space) {
                 match mark {
@@ -866,6 +887,7 @@ impl InlineCollector {
         self.pending_space = other.pending_space.map(|space| PendingSpace {
             style: space.style + styles,
             source: space.source + sources,
+            single_character_source: space.single_character_source,
             inline_box: inline_box(space.inline_box),
         });
         self.after_space
@@ -1063,6 +1085,7 @@ impl InlineCollector {
             OBJECT_REPLACEMENT_CHARACTER,
             index,
             source,
+            false,
             1,
             self.open_box,
         )?;
@@ -1096,7 +1119,7 @@ impl InlineCollector {
         self.drop_pending_space();
         let index = self.style_index(style);
         let source = self.next_source();
-        self.push('\n', index, source, 1, self.open_box)?;
+        self.push('\n', index, source, false, 1, self.open_box)?;
         if style.clear != Clear::None {
             self.clearances
                 .push((self.text.len(), style.clear, style.rtl));
@@ -1114,6 +1137,7 @@ impl InlineCollector {
         ch: char,
         index: usize,
         source: usize,
+        single_character_source: bool,
         count: usize,
         inline_box: Option<usize>,
     ) -> Result<(), DocumentError> {
@@ -1145,6 +1169,7 @@ impl InlineCollector {
                 atomic: None,
                 leader: false,
                 source,
+                single_character_source,
             });
         }
         Ok(())
