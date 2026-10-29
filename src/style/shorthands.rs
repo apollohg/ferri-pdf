@@ -172,7 +172,15 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
                 P::BorderLeftColor,
             ],
         ),
-        P::BorderRadius => radius(&value),
+        P::BorderRadius
+        | P::BorderTopRadius
+        | P::BorderRightRadius
+        | P::BorderBottomRadius
+        | P::BorderLeftRadius
+        | P::BorderBlockStartRadius
+        | P::BorderBlockEndRadius
+        | P::BorderInlineStartRadius
+        | P::BorderInlineEndRadius => radius(&value, shorthand.longhands()),
         // CSS Backgrounds 3 §4.4: `border` also resets `border-image`.
         P::Border => border(
             &value,
@@ -424,17 +432,13 @@ pub(super) fn corner_values(value: &Component) -> [Component; 4] {
     })
 }
 
-fn radius(value: &Component) -> Longhands {
-    [
-        Property::BorderTopLeftRadius,
-        Property::BorderTopRightRadius,
-        Property::BorderBottomRightRadius,
-        Property::BorderBottomLeftRadius,
-    ]
-    .into_iter()
-    .zip(corner_values(value))
-    .map(|(property, radii)| (property, longhand(property, &radii)))
-    .collect()
+fn radius(value: &Component, properties: &[Property]) -> Longhands {
+    properties
+        .iter()
+        .copied()
+        .zip(corner_values(value))
+        .map(|(property, radii)| (property, longhand(property, &radii)))
+        .collect()
 }
 
 /// `<line-width> || <line-style> || <color>` for each side.

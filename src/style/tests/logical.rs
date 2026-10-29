@@ -52,6 +52,92 @@ fn margins(style: &Style) -> [Size; 4] {
 }
 
 #[test]
+fn side_radius_shorthands_order_their_two_ellipses_in_each_direction() {
+    for (name, ltr, rtl) in [
+        (
+            "border-top-radius",
+            [TOP_LEFT, TOP_RIGHT],
+            [TOP_LEFT, TOP_RIGHT],
+        ),
+        (
+            "border-right-radius",
+            [TOP_RIGHT, BOTTOM_RIGHT],
+            [TOP_RIGHT, BOTTOM_RIGHT],
+        ),
+        (
+            "border-bottom-radius",
+            [BOTTOM_LEFT, BOTTOM_RIGHT],
+            [BOTTOM_LEFT, BOTTOM_RIGHT],
+        ),
+        (
+            "border-left-radius",
+            [TOP_LEFT, BOTTOM_LEFT],
+            [TOP_LEFT, BOTTOM_LEFT],
+        ),
+        (
+            "border-block-start-radius",
+            [TOP_LEFT, TOP_RIGHT],
+            [TOP_RIGHT, TOP_LEFT],
+        ),
+        (
+            "border-block-end-radius",
+            [BOTTOM_LEFT, BOTTOM_RIGHT],
+            [BOTTOM_RIGHT, BOTTOM_LEFT],
+        ),
+        (
+            "border-inline-start-radius",
+            [TOP_LEFT, BOTTOM_LEFT],
+            [TOP_RIGHT, BOTTOM_RIGHT],
+        ),
+        (
+            "border-inline-end-radius",
+            [TOP_RIGHT, BOTTOM_RIGHT],
+            [TOP_LEFT, BOTTOM_LEFT],
+        ),
+    ] {
+        for (direction, corners) in [("ltr", ltr), ("rtl", rtl)] {
+            for (value, first, second) in [
+                ("10pt", [10.0, 10.0], [10.0, 10.0]),
+                ("10pt 20pt", [10.0, 10.0], [20.0, 20.0]),
+                ("10pt 20pt / 30pt 40pt", [10.0, 30.0], [20.0, 40.0]),
+            ] {
+                let css = format!("#child{{direction:{direction};{name}:{value}}}");
+                let style = child(&css);
+                let mut expected = [const { [LengthPercentage::ZERO; 2] }; 4];
+                expected[corners[0]] = first.map(LengthPercentage::Length);
+                expected[corners[1]] = second.map(LengthPercentage::Length);
+                assert_eq!(
+                    *style.decoration.radii, expected,
+                    "{css}: each side sets only its two corners, in specification order"
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn side_radius_shorthands_share_corner_cascade_and_inherit_corresponding_corners() {
+    let css = "#parent{border-radius:1pt 2pt 3pt 4pt / 5pt 6pt 7pt 8pt}\
+               #child{direction:rtl;border-block-start-radius:inherit;\
+               border-top-left-radius:9pt 10pt;border-block-end-radius:11pt;\
+               border-bottom-radius:-1pt 12pt}";
+    let style = child(css);
+    assert_eq!(
+        *style.decoration.radii,
+        [
+            [
+                LengthPercentage::Length(9.0),
+                LengthPercentage::Length(10.0)
+            ],
+            [LengthPercentage::Length(1.0), LengthPercentage::Length(5.0)],
+            [const { LengthPercentage::Length(11.0) }; 2],
+            [const { LengthPercentage::Length(11.0) }; 2],
+        ],
+        "{css}: logical inheritance maps through the parent flow, later physical corners win, and an invalid pair changes neither corner"
+    );
+}
+
+#[test]
 fn declaration_order_decides_between_paired_properties_in_each_direction() {
     // The CSS Logical 1 §4 example: inline-start pairs with left in LTR, inline-end in RTL.
     let declarations = "margin-inline-start:1pt;margin-left:2pt;margin-inline-end:3pt";

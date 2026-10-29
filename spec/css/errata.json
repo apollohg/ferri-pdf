@@ -1,6 +1,10 @@
 {
   "description": "Corrections to mdn-data from the cited specifications: productions the data references but does not define, and entries that predate the current specification. Each entry replaces only the fields it names. Additions are specification properties the data omits, defined in full.",
   "syntaxes": {
+    "border-side-radius": {
+      "syntax": "<length-percentage [0,∞]>{1,2} [ / <length-percentage [0,∞]>{1,2} ]?",
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-border-top-radius: shared grammar of the physical and logical side radius shorthands"
+    },
     "line-width": {
       "syntax": "<length [0,∞]> | thin | medium | thick",
       "source": "https://www.w3.org/TR/2024/CRD-css-backgrounds-3-20240311/#typedef-line-width: negative values are invalid; also used by outline-width"
@@ -627,6 +631,62 @@
     }
   },
   "additions": {
+    "border-top-radius": {
+      "syntax": "<border-side-radius>",
+      "initial": ["border-top-left-radius", "border-top-right-radius"],
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-border-top-radius"
+    },
+    "border-right-radius": {
+      "syntax": "<border-side-radius>",
+      "initial": ["border-top-right-radius", "border-bottom-right-radius"],
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-border-right-radius"
+    },
+    "border-bottom-radius": {
+      "syntax": "<border-side-radius>",
+      "initial": ["border-bottom-left-radius", "border-bottom-right-radius"],
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-border-bottom-radius"
+    },
+    "border-left-radius": {
+      "syntax": "<border-side-radius>",
+      "initial": ["border-top-left-radius", "border-bottom-left-radius"],
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-border-left-radius"
+    },
+    "border-block-start-radius": {
+      "syntax": "<border-side-radius>",
+      "initial": ["border-start-start-radius", "border-start-end-radius"],
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-border-block-start-radius"
+    },
+    "border-block-end-radius": {
+      "syntax": "<border-side-radius>",
+      "initial": ["border-end-start-radius", "border-end-end-radius"],
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-border-block-end-radius"
+    },
+    "border-inline-start-radius": {
+      "syntax": "<border-side-radius>",
+      "initial": ["border-start-start-radius", "border-end-start-radius"],
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-border-inline-start-radius"
+    },
+    "border-inline-end-radius": {
+      "syntax": "<border-side-radius>",
+      "initial": ["border-start-end-radius", "border-end-end-radius"],
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-border-inline-end-radius"
+    },
     "size": {
       "syntax": "<'width'> <'height'>?",
       "initial": ["width", "height"],
