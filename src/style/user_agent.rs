@@ -1008,9 +1008,17 @@ pub(super) fn declarations(
 fn math_defaults(element: Element<'_>) -> Result<Vec<DefaultDeclaration>, StyleError> {
     let mut output = Vec::new();
     let mut add = |property, value: &str| append(&mut output, Origin::UserAgent, property, value);
-    add(Property::Display, "block math")?;
-    add(Property::FontSize, "math")?;
     let tag = element.name();
+    add(
+        Property::Display,
+        match tag {
+            "mtable" => "inline-table",
+            "mtr" => "table-row",
+            "mtd" => "table-cell",
+            _ => "block math",
+        },
+    )?;
+    add(Property::FontSize, "math")?;
     if tag == "math" {
         for (property, value) in [
             (

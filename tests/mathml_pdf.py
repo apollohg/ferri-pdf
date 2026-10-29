@@ -188,6 +188,23 @@ class MathmlPdf(unittest.TestCase):
         self.assertAlmostEqual(following['D'].origin[0] - fences[1].origin[0], expected_derived, delta=TOLERANCE,
                                msg='valid assembly width must reach CSS max-content spacing in the produced PDF')
 
+    def test_non_math_display_math_preserves_css_flow_in_the_written_pdf(self):
+        _, content = self.render('A <span style="display:inline math">x y z</span> B',
+                                 'body{font:10pt/12pt monospace;width:35pt}')
+        glyphs = {glyph.text: glyph for glyph in content['glyphs'] if glyph.text in ['A', 'x', 'y', 'z', 'B']}
+        for character in ['x', 'y']:
+            self.assertAlmostEqual(glyphs[character].origin[1], glyphs['A'].origin[1], delta=TOLERANCE,
+                                   msg='HTML inline math must wrap as ordinary inline flow')
+        self.assertAlmostEqual(glyphs['z'].origin[1], glyphs['B'].origin[1], delta=TOLERANCE)
+        self.assertAlmostEqual(glyphs['A'].origin[1] - glyphs['z'].origin[1], 12, delta=TOLERANCE,
+                               msg='the inline span must fragment across the two 12pt lines')
+        _, content = self.render('<p><span style="display:block math">First</span></p>',
+                                 'p::first-line{color:red}')
+        glyphs = content['glyphs']
+        self.assertEqual(''.join(glyph.text for glyph in glyphs), 'First')
+        self.assertTrue(all(glyph.fill == (1, 0, 0, 1) for glyph in glyphs),
+                        'HTML block math must preserve CSS first-line propagation in serialized glyph paint')
+
     def test_math_alphabetic_baseline_matches_surrounding_inline_text(self):
         _, content = self.render('L<math><mn>8</mn></math>R')
         glyphs = {glyph.text: glyph for glyph in content['glyphs']}

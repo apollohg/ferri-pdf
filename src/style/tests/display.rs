@@ -84,3 +84,68 @@ fn run_in_flow_boxes_inlinify_their_in_flow_contents() {
         "a floated run-in blockifies to a block box"
     );
 }
+
+#[test]
+fn math_inner_display_uses_namespace_and_table_tag_before_box_fixup() {
+    for (specified, html_display, table_display) in [
+        ("inline math", Display::Inline, Display::InlineTable),
+        ("block math", Display::Block, Display::Table),
+    ] {
+        let sheet = Stylesheet::parse(&[StylesheetSource {
+            text: format!("#target{{display:{specified}}}"),
+            base: Default::default(),
+        }])
+        .unwrap();
+        for (markup, expected) in [
+            ("<div id=target>X</div>", html_display.clone()),
+            ("<mtable id=target>X</mtable>", html_display.clone()),
+            ("<svg><g id='target'/></svg>", html_display),
+            ("<math><mtable id=target></mtable></math>", table_display),
+            (
+                "<math><mtable><mtr id=target></mtr></mtable></math>",
+                Display::TableRow,
+            ),
+            (
+                "<math><mtable><mtr><mtd id=target></mtd></mtr></mtable></math>",
+                Display::TableCell,
+            ),
+            (
+                "<math><mrow id=target></mrow></math>",
+                if specified == "inline math" {
+                    Display::InlineMath
+                } else {
+                    Display::BlockMath
+                },
+            ),
+        ] {
+            let document = DocumentTree::parse(markup).unwrap();
+            let target = document
+                .select(&Selector::parse("#target").unwrap())
+                .next()
+                .unwrap_or_else(|| {
+                    panic!("computed-display fixture must retain #target: {markup}")
+                });
+            let style = sheet
+                .computed_with_resolver(target, &Style::default(), &FileResolver::default())
+                .unwrap();
+            assert_eq!(
+                style.display, expected,
+                "Core4.1 computed display for {specified} on {markup}"
+            );
+        }
+    }
+    let sheet = Stylesheet::parse(&[]).unwrap();
+    let document = DocumentTree::parse("<math><mtable id=target></mtable></math>").unwrap();
+    let target = document
+        .select(&Selector::parse("#target").unwrap())
+        .next()
+        .unwrap();
+    assert_eq!(
+        sheet
+            .computed_with_resolver(target, &Style::default(), &FileResolver::default())
+            .unwrap()
+            .display,
+        Display::InlineTable,
+        "Core UA default keeps mtable inline unless the author changes it"
+    );
+}

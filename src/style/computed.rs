@@ -36,7 +36,32 @@ fn initial_decoration() -> BoxDecoration {
 }
 
 fn adjust_box_generation(style: &mut Style, element: Element<'_>) {
-    if style.display != Display::Contents {
+    let element_box = style.content_context == crate::style::generated::ContentContext::Element;
+    // MathML Core §4.1 resolves math/table display before CSS Display's box fixups.
+    if matches!(style.display, Display::InlineMath | Display::BlockMath) {
+        let inline = style.display == Display::InlineMath;
+        if element_box && element.namespace() == crate::dom::MATHML_NAMESPACE {
+            match element.name() {
+                "mtable" => {
+                    style.display = if inline {
+                        Display::InlineTable
+                    } else {
+                        Display::Table
+                    }
+                }
+                "mtr" => style.display = Display::TableRow,
+                "mtd" => style.display = Display::TableCell,
+                _ => {}
+            }
+        } else {
+            style.display = if inline {
+                Display::Inline
+            } else {
+                Display::Block
+            };
+        }
+    }
+    if !element_box || style.display != Display::Contents {
         return;
     }
     let parent = element.parent(crate::dom::TreeRelation::Selector);
@@ -508,9 +533,7 @@ impl Style {
         if self.document_root && self.display == Display::Contents {
             self.display = Display::Block;
         }
-        if self.content_context == crate::style::generated::ContentContext::Element
-            && let Tree::Element(element) = relative.tree
-        {
+        if let Tree::Element(element) = relative.tree {
             adjust_box_generation(self, element);
         }
         if self.position.is_out_of_flow() {

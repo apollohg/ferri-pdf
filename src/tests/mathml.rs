@@ -947,3 +947,45 @@ fn preferred_assembly_width_and_radical_intrinsics_keep_original_font_fallback()
         }
     }
 }
+
+#[test]
+fn non_math_display_math_keeps_ordinary_inline_fragmentation() {
+    let output = render_html(
+        "<style>@page{margin:0}body{margin:0;width:35pt;font:10pt/12pt monospace}span{display:inline math}</style>A <span>x y z</span> B",
+        &local_options(),
+    ).expect("non-MathML inline math computes to inline flow");
+    let lines: Vec<_> = output
+        .layout
+        .unwrap()
+        .pages
+        .into_iter()
+        .flatten()
+        .map(|line| line.text)
+        .collect();
+    assert_eq!(
+        lines,
+        ["A x y", "z B"],
+        "display:inline math on HTML must fragment with surrounding text rather than create an atomic math container"
+    );
+}
+
+#[test]
+fn non_math_display_math_keeps_block_first_line_propagation() {
+    let output = render_html(
+        "<style>p::first-line{color:red}span{display:block math}</style><p><span>First</span></p>",
+        &local_options(),
+    )
+    .expect("non-MathML block math computes to block flow");
+    let trace = output.layout.unwrap();
+    let line = trace
+        .pages
+        .iter()
+        .flatten()
+        .find(|line| line.text == "First")
+        .unwrap();
+    assert!(
+        line.runs.iter().all(|run| run.color.rgb == [255, 0, 0]),
+        "HTML block math must retain ordinary first-line propagation through its block container: {:?}",
+        line.runs.iter().map(|run| run.color).collect::<Vec<_>>()
+    );
+}
