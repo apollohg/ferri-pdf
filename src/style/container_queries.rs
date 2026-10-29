@@ -5,7 +5,7 @@
 //! layout pass measured and records the ones it consults; the document is restyled and laid
 //! out again until a layout reproduces every consulted size, so each container's descendants
 //! are styled with the size of the container they query.
-use crate::dom::ElementId;
+use crate::dom::{Element, ElementId};
 use crate::resources::ResourceResolver;
 use crate::style::{
     Style, StyleError, Stylesheet,
@@ -15,6 +15,7 @@ use crate::style::{
     grammar::Property,
     media::Feature,
     properties,
+    selector::Namespaces,
     units::Relative,
     variables,
 };
@@ -23,7 +24,22 @@ use std::{cell::RefCell, collections::HashMap, sync::Arc};
 
 const STYLE_FUNCTION: &str = "style";
 const SCROLL_STATE_FUNCTION: &str = "scroll-state";
-const VARIABLE_FUNCTION: &str = "var";
+/// CSS Conditional 5 §6.3.2: the edges `stuck` takes.
+const EDGES: [&str; 8] = [
+    "top",
+    "right",
+    "bottom",
+    "left",
+    "block-start",
+    "inline-start",
+    "block-end",
+    "inline-end",
+];
+/// CSS Conditional 5 §6.3.4–6.3.5: the axes `scrollable` and `scrolled` also take.
+const SCROLL_AXES: [&str; 4] = ["x", "y", "block", "inline"];
+/// CSS Conditional 5 §6.3.3: the axes `snapped` takes.
+const SNAP_AXES: [&str; 5] = ["x", "y", "block", "inline", "both"];
+const NONE: &str = "none";
 /// CSS Conditional 5 §5.4: names a `<container-name>` cannot take.
 const RESERVED_NAMES: [&str; 4] = ["none", "and", "not", "or"];
 
@@ -108,9 +124,13 @@ impl QuerySizes {
     }
 }
 
-/// `@container <container-condition>#`: true if any condition is.
+/// `@container <container-condition>#`: true if any condition is. The rule's namespaces
+/// resolve `attr()` prefixes and `selector()` tests its features substitute.
 #[derive(Clone)]
-pub(super) struct ContainerQuery(Vec<ContainerCondition>);
+pub(super) struct ContainerQuery {
+    conditions: Vec<ContainerCondition>,
+    namespaces: Namespaces,
+}
 
 #[derive(Clone)]
 struct ContainerCondition {
@@ -121,13 +141,77 @@ struct ContainerCondition {
 #[derive(Clone)]
 enum Test {
     Size(Feature),
-    /// A size feature with custom properties, substituted from the container's values.
+    /// A size feature with substitution functions, substituted from the container.
     Substituted(Box<str>),
     Style(StyleQuery),
+    ScrollState(Condition<ScrollStateFeature>),
+}
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum ScrollState {
+    Stuck,
+    Snapped,
+    Scrollable,
+    Scrolled,
+}
+
+/// A `<scroll-state-feature>`: a name and, outside a boolean context, one of its keywords.
+#[derive(Clone)]
+struct ScrollStateFeature {
+    state: ScrollState,
+    none: Option<bool>,
+}
+impl ScrollStateFeature {
+    fn parse(source: &str) -> Option<Self> {
+        let mut input = ParserInput::new(source);
+        let input = &mut Parser::new(&mut input);
+        let name = input.expect_ident_cloned().ok()?;
+        let (state, values): (_, &[&[&str]]) = match name.to_ascii_lowercase().as_str() {
+            "stuck" => (ScrollState::Stuck, &[&EDGES]),
+            "snapped" => (ScrollState::Snapped, &[&SNAP_AXES]),
+            "scrollable" => (ScrollState::Scrollable, &[&EDGES, &SCROLL_AXES]),
+            "scrolled" => (ScrollState::Scrolled, &[&EDGES, &SCROLL_AXES]),
+            _ => return None,
+        };
+        if input.is_exhausted() {
+            return Some(Self { state, none: None });
+        }
+        input.expect_colon().ok()?;
+        let value = input.expect_ident_cloned().ok()?;
+        input.expect_exhausted().ok()?;
+        let none = value.eq_ignore_ascii_case(NONE);
+        (none
+            || values
+                .iter()
+                .flat_map(|values| values.iter())
+                .any(|known| value.eq_ignore_ascii_case(known)))
+        .then_some(Self {
+            state,
+            none: Some(none),
+        })
+    }
+
+    /// Static media never scroll (CSS Overflow 3 §3.1.3): no scroll container has overflow
+    /// a user can reach by scrolling or has been scrolled, and nothing snaps, so only `none`
+    /// holds, and only for the boxes each feature describes. A boolean context is true for
+    /// any value but `none`.
+    fn evaluate(&self, style: &Style) -> Result<Truth, StyleError> {
+        let described = match self.state {
+            ScrollState::Scrollable | ScrollState::Scrolled => style.is_scroll_container(),
+            ScrollState::Snapped => true,
+            ScrollState::Stuck if style.position == crate::style::Position::Sticky => {
+                return Err(StyleError::Unsupported(
+                    "@container scroll-state(stuck) of a sticky query container".into(),
+                ));
+            }
+            ScrollState::Stuck => false,
+        };
+        Ok((described && self.none == Some(true)).into())
+    }
 }
 
 impl ContainerQuery {
-    pub(super) fn parse(source: &str) -> Result<Self, StyleError> {
+    pub(super) fn parse(source: &str, namespaces: Namespaces) -> Result<Self, StyleError> {
         let mut input = ParserInput::new(source);
         let input = &mut Parser::new(&mut input);
         let conditions = input
@@ -136,19 +220,33 @@ impl ContainerQuery {
                     .map_err(|error| input.new_custom_error(error))
             })
             .map_err(crate::style::parser::failure)?;
-        Ok(Self(conditions))
+        Ok(Self {
+            conditions,
+            namespaces,
+        })
     }
 
-    /// Whether the query holds for an element whose inclusive-ancestor containers start at
+    /// Whether the query holds for `element`, whose inclusive-ancestor containers start at
     /// `ancestors`.
     pub(super) fn matches(
         &self,
+        element: Element<'_>,
         ancestors: &QueryContainers,
         sheet: &Stylesheet,
         resolver: &dyn ResourceResolver,
     ) -> Result<bool, StyleError> {
-        for condition in &self.0 {
-            if condition.evaluate(ancestors, sheet, resolver)? == Truth::True {
+        for condition in &self.conditions {
+            let values = |container| ContainerValues {
+                container,
+                element: element
+                    .tree
+                    .element(container.element)
+                    .expect("a query container is an element of the queried element's tree"),
+                namespaces: &self.namespaces,
+                sheet,
+                resolver,
+            };
+            if condition.evaluate(ancestors, values)? == Truth::True {
                 return Ok(true);
             }
         }
@@ -196,11 +294,10 @@ impl ContainerCondition {
     /// The condition against the nearest ancestor container with the name that answers
     /// every feature it queries; unknown without one (CSS Conditional 5 §5.4). Features
     /// that substitute custom properties take them from each candidate container.
-    fn evaluate(
+    fn evaluate<'a>(
         &self,
-        ancestors: &QueryContainers,
-        sheet: &Stylesheet,
-        resolver: &dyn ResourceResolver,
+        ancestors: &'a QueryContainers,
+        values: impl Fn(&'a QueryContainer) -> ContainerValues<'a>,
     ) -> Result<Truth, StyleError> {
         for container in ancestors.iter() {
             if self.name.as_deref().is_some_and(|name| {
@@ -216,24 +313,27 @@ impl ContainerCondition {
             let Some(query) = &self.query else {
                 return Ok(Truth::True);
             };
-            let values = ContainerValues {
-                container,
-                sheet,
-                resolver,
-            };
+            let values = values(container);
             let mut axes = [false; 2];
+            let mut scroll_state = false;
             for test in query.leaves() {
                 let feature = match test {
                     Test::Size(feature) => Some(feature.clone()),
                     Test::Substituted(source) => values.substituted_feature(source)?,
                     Test::Style(_) => continue,
+                    Test::ScrollState(_) => {
+                        scroll_state = true;
+                        continue;
+                    }
                 };
                 let Some(needed) = feature.as_ref().and_then(Feature::container_axes) else {
                     return Ok(Truth::Unknown);
                 };
                 axes = [axes[0] || needed[0], axes[1] || needed[1]];
             }
-            if axes.contains(&true) && !container.answers_axes(axes) {
+            if (axes.contains(&true) && !container.answers_axes(axes))
+                || (scroll_state && !container.style.containment.container_type.scroll_state)
+            {
                 continue;
             }
             return query.try_evaluate(|test| test.evaluate(&values));
@@ -256,15 +356,19 @@ impl Test {
                 return Ok(StyleQuery::parse_general(inner, Truth::Unknown)?.map(Self::Style));
             }
             if name.eq_ignore_ascii_case(SCROLL_STATE_FUNCTION) {
-                return Err(StyleError::Unsupported(format!(
-                    "@container {SCROLL_STATE_FUNCTION}({inner})"
-                )));
+                let query = match ScrollStateFeature::parse(inner) {
+                    Some(feature) => Some(Condition::value(feature)),
+                    None => {
+                        Condition::parse(inner, true, Truth::Unknown, ScrollStateFeature::parse)?
+                    }
+                };
+                return Ok(query.map(Self::ScrollState));
             }
         }
         if let Some(feature) = Feature::parse(source) {
             return Ok(Some(Self::Size(feature)));
         }
-        if uses_variables(source)
+        if matches!(variables::Value::with_substitutions(source), Ok(Some(_)))
             && Condition::parse(source, true, Truth::Unknown, |_| None::<()>)?.is_none()
         {
             return Ok(Some(Self::Substituted(source.into())));
@@ -280,38 +384,18 @@ impl Test {
                 None => Ok(Truth::Unknown),
             },
             Self::Style(query) => query.evaluate(values),
+            Self::ScrollState(query) => {
+                query.try_evaluate(|feature| feature.evaluate(&values.container.style))
+            }
         }
     }
 }
 
-/// Whether `source` substitutes `var()` at any depth.
-fn uses_variables(source: &str) -> bool {
-    let mut pending = vec![source];
-    while let Some(source) = pending.pop() {
-        let mut input = ParserInput::new(source);
-        let input = &mut Parser::new(&mut input);
-        while let Ok(token) = input.next().cloned() {
-            if let Token::Function(name) = &token
-                && name.eq_ignore_ascii_case(VARIABLE_FUNCTION)
-            {
-                return true;
-            }
-            if matches!(
-                token,
-                Token::Function(_) | Token::ParenthesisBlock | Token::SquareBracketBlock
-            ) && let Ok(inner) = input.parse_nested_block(|nested| {
-                Ok::<_, cssparser::ParseError<'_, ()>>(block_source(nested))
-            }) {
-                pending.push(inner);
-            }
-        }
-    }
-    false
-}
-
-/// A query container's computed values, against which its queries evaluate.
+/// A query container's computed values and attributes, against which its queries evaluate.
 struct ContainerValues<'a> {
     container: &'a QueryContainer,
+    element: Element<'a>,
+    namespaces: &'a Namespaces,
     sheet: &'a Stylesheet,
     resolver: &'a dyn ResourceResolver,
 }
@@ -329,7 +413,7 @@ impl ContainerValues<'_> {
             .as_ref()
             .map_or_else(Style::default, |parent| parent.style.clone())
     }
-    /// A size feature after substituting the container's custom properties.
+    /// A size feature after the container's substitutions.
     fn substituted_feature(&self, source: &str) -> Result<Option<Feature>, StyleError> {
         Ok(self
             .substitute(source, false)?
@@ -340,6 +424,55 @@ impl ContainerValues<'_> {
             return Truth::Unknown;
         };
         feature.evaluate_container(size, &self.relative())
+    }
+}
+impl ContainerValues<'_> {
+    /// Substitutes the container's custom properties and attributes, and evaluates `if()`
+    /// tests against the container (CSS Values 5 §6–7).
+    fn expand(&self, value: &variables::Value) -> Result<Option<variables::Expanded>, StyleError> {
+        let style = &self.container.style;
+        value.substitute_context(
+            &mut |reference, name| {
+                let source = match reference {
+                    variables::Reference::Local => &style.custom_properties,
+                    variables::Reference::Inherited => &style.inherited_custom_properties,
+                };
+                Ok(source.get(name).and_then(Clone::clone))
+            },
+            &mut |test| test.evaluate(&self.sheet.environment, Some(self.namespaces), self),
+            &mut |attribute| attribute.resolve(self),
+        )
+    }
+}
+impl crate::style::attribute::Context for ContainerValues<'_> {
+    fn attribute_data(&self, prefix: Option<&str>, name: &str) -> Option<&str> {
+        let namespace = match prefix {
+            Some(prefix) => Some(self.namespaces.borrow().get(prefix)?.clone()),
+            None => None,
+        };
+        self.element.attr_in_namespace(namespace.as_deref(), name)
+    }
+    fn expand_attribute_value(
+        &self,
+        value: &variables::Value,
+    ) -> Result<Option<variables::Expanded>, StyleError> {
+        self.expand(value)
+    }
+    fn matches_attribute_syntax(
+        &self,
+        syntax: &crate::style::syntax::Syntax,
+        value: &variables::Expanded,
+    ) -> Result<bool, StyleError> {
+        let relative = self.relative();
+        let mut steps = 0;
+        let result = crate::style::matcher::match_syntax(
+            syntax,
+            value.as_str(),
+            &mut steps,
+            crate::style::matcher::ValueContext::Nested(&relative),
+        );
+        relative.work.charge(steps)?;
+        result
     }
 }
 impl QueryValues for ContainerValues<'_> {
@@ -382,20 +515,10 @@ impl QueryValues for ContainerValues<'_> {
         source: &str,
         property_syntax: bool,
     ) -> Result<Option<variables::Expanded>, StyleError> {
-        let Some(value) = variables::Value::parse_context(source, 0, property_syntax)? else {
-            return Ok(None);
-        };
-        let style = &self.container.style;
-        // `attr()` and `if()` need the container element's attributes and cascade, which
-        // its computed values no longer carry.
-        value
-            .substitute(&style.custom_properties, &style.inherited_custom_properties)
-            .map_err(|error| match error {
-                StyleError::Invalid(_) => {
-                    StyleError::Unsupported(format!("@container query substitution: {source}"))
-                }
-                error => error,
-            })
+        match variables::Value::parse_context(source, 0, property_syntax)? {
+            Some(value) => self.expand(&value),
+            None => Ok(None),
+        }
     }
     fn scalar(&self, source: &str) -> Result<Option<Scalar>, StyleError> {
         Scalar::parse(source, &self.relative())
@@ -420,11 +543,12 @@ impl Stylesheet {
         }
     }
 
-    /// Whether `@container` rule `index` and the rules enclosing it hold for an element
+    /// Whether `@container` rule `index` and the rules enclosing it hold for `element`,
     /// whose inclusive-ancestor containers start at `ancestors`.
     pub(super) fn container_rule_matches(
         &self,
         index: usize,
+        element: Element<'_>,
         ancestors: &QueryContainers,
         resolver: &dyn ResourceResolver,
         cache: &mut HashMap<usize, bool>,
@@ -436,7 +560,7 @@ impl Stylesheet {
             } else {
                 let matching = self.container_rules[index]
                     .query
-                    .matches(ancestors, self, resolver)?;
+                    .matches(element, ancestors, self, resolver)?;
                 cache.insert(index, matching);
                 matching
             };

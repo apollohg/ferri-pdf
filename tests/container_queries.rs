@@ -246,16 +246,84 @@ fn page_rules_inside_container_rules_do_not_apply() {
     assert_labelled_pt("page width", trace.page_width, 400.0);
 }
 
+/// Static media never scroll (CSS Overflow 3 §3.1.3): scroll containers have no reachable
+/// or scrolled overflow and nothing snaps, so only `none` holds, and only for the boxes each
+/// feature describes; a boolean context is false. Only `scroll-state` containers answer.
 #[test]
-fn scroll_state_queries_are_unsupported() {
+fn scroll_state_queries_see_an_unscrolled_document() {
+    const SCROLLER: &str = "container-type:scroll-state;overflow:auto;height:20pt";
+    const PLAIN: &str = "container-type:scroll-state";
+    const SIZE: &str = "container-type:inline-size;overflow:auto;height:20pt";
+    for (container, query, matches) in [
+        (SCROLLER, "scroll-state(scrollable: none)", true),
+        (SCROLLER, "scroll-state(scrollable: bottom)", false),
+        (SCROLLER, "scroll-state(scrollable: y)", false),
+        (SCROLLER, "scroll-state(scrollable)", false),
+        (SCROLLER, "not scroll-state(scrollable)", true),
+        (PLAIN, "scroll-state(scrollable: none)", false),
+        (SCROLLER, "scroll-state(scrolled: none)", true),
+        (SCROLLER, "scroll-state(scrolled: block-end)", false),
+        (PLAIN, "scroll-state(scrolled: none)", false),
+        (PLAIN, "scroll-state(snapped: none)", true),
+        (PLAIN, "scroll-state(snapped: both)", false),
+        (PLAIN, "scroll-state(snapped)", false),
+        (PLAIN, "scroll-state(stuck: none)", false),
+        (PLAIN, "scroll-state(stuck: top)", false),
+        (
+            PLAIN,
+            "scroll-state((snapped: none) and (stuck: left))",
+            false,
+        ),
+        (
+            PLAIN,
+            "scroll-state((snapped: none) or (stuck: left))",
+            true,
+        ),
+        (SIZE, "scroll-state(scrollable: none)", false),
+        (SCROLLER, "scroll-state(scrollable: sideways)", false),
+    ] {
+        let trace = trace(
+            &format!(
+                ".c{{{container}}}.x{{height:10pt;background:red}}@container {query}{{.x{{background:green}}}}"
+            ),
+            "<div class=c><div class=x></div></div>",
+        );
+        let expected = if matches { GREEN } else { RED };
+        assert_eq!(colors(&trace), [expected], "`{container}` with {query}");
+    }
+}
+
+/// A sticky container's stuck state depends on its shift, which differs on each page a
+/// static rendering fragments it across.
+#[test]
+fn stuck_queries_on_sticky_containers_are_unsupported() {
     let error = ferri_pdf::render_html(
-        "<style>.c{container-type:scroll-state}@container scroll-state(stuck: top){p{color:red}}</style><p>x</p>",
+        "<style>.c{container-type:scroll-state;position:sticky;top:0}@container scroll-state(stuck: top){p{color:red}}</style><div class=c><p>x</p></div>",
         &ferri_pdf::RenderOptions::default(),
     )
     .err()
-    .expect("scroll-state queries abort the document");
+    .expect("a sticky query container's stuck state aborts the document");
     assert!(
-        error.to_string().contains("scroll-state"),
+        error.to_string().contains("scroll-state(stuck)"),
         "the error names the query: {error}"
     );
+}
+
+/// `attr()` and `if()` in a query substitute from the query container, not the element
+/// styled (CSS Conditional 5 §6.1).
+#[test]
+fn query_substitutions_read_the_container_attributes_and_conditions() {
+    let trace = trace(
+        ".c{container-type:inline-size;width:200pt;--mode:print}\
+         .x{height:10pt;background:red}\
+         @container (width > attr(data-limit <length>)){.x{background:green}}\
+         @container style(--copy: attr(data-copy)){.y{background:blue}}\
+         @container style(--mode: if(media(print): print; else: screen)){.z{background:green}}",
+        "<div class=c data-limit=100pt data-copy=yes style='--copy:\"yes\"'><div class=x data-limit=300pt></div></div>\
+         <div class=c data-limit=300pt><div class=x data-limit=100pt></div></div>\
+         <div class=c data-copy=no style='--copy:\"yes\"'><div class='x y'></div></div>\
+         <div class=c data-limit=300pt data-copy=yes style='--copy:\"yes\"'><div class='x y'></div></div>\
+         <div class=c><div class='x z'></div></div>",
+    );
+    assert_eq!(colors(&trace), [GREEN, RED, RED, BLUE, GREEN]);
 }

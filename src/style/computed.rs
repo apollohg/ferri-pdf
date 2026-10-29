@@ -940,7 +940,13 @@ impl Stylesheet {
                 rule.encapsulation_order
             };
             if let Some(container) = rule.container
-                && !self.container_rule_matches(container, ancestors, resolver, &mut containers)?
+                && !self.container_rule_matches(
+                    container,
+                    element,
+                    ancestors,
+                    resolver,
+                    &mut containers,
+                )?
             {
                 continue;
             }

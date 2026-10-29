@@ -889,9 +889,12 @@ fn at_prelude<'i>(
         return import_prelude(input, namespaces).map(AtPrelude::Import);
     }
     if matches!(kind, AtRuleName::Container) {
-        return crate::style::container_queries::ContainerQuery::parse(block_source(input))
-            .map(AtPrelude::Container)
-            .map_err(|error| input.new_custom_error(error));
+        return crate::style::container_queries::ContainerQuery::parse(
+            block_source(input),
+            namespaces.clone(),
+        )
+        .map(AtPrelude::Container)
+        .map_err(|error| input.new_custom_error(error));
     }
     if matches!(kind, AtRuleName::Namespace) {
         let (prefix, namespace) = crate::dom::parse_namespace(input)?;
