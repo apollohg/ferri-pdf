@@ -2749,7 +2749,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     cursor.columns = Some(Box::new(columns::ColumnCursor::new(*columns, tail)));
                 }
                 FlowItem::Paragraph(paragraph) => {
-                    if !ready && let Some(request) = self.paragraph_break() {
+                    if !ready
+                        && !paragraph.is_phantom()
+                        && let Some(request) = self.paragraph_break()
+                    {
                         cursor.ready = Some((FlowItem::Paragraph(paragraph), tail));
                         return Ok(Some((cursor, request)));
                     }

@@ -245,8 +245,10 @@ impl<'a> Paginator<'a, '_, 'a> {
         &mut self,
         paragraph: MeasuredParagraph<'a>,
     ) -> ParagraphCursor<'a, 'a> {
-        self.pending_break = None;
-        self.flush_margin();
+        if !paragraph.is_phantom() {
+            self.pending_break = None;
+            self.flush_margin();
+        }
         let prepared = None;
         let mut positions = paragraph.positions.into_iter();
         let position = positions
@@ -730,7 +732,9 @@ impl<'a> Paginator<'a, '_, 'a> {
                 self.line_events(source, &line, &mut consumed_events);
                 line_index += 1;
                 let baseline = self.top + self.y + line.ascent + self.offset[1];
-                self.record_baselines(self.page, [Some(baseline); 2]);
+                if !line.phantom {
+                    self.record_baselines(self.page, [Some(baseline); 2]);
+                }
                 self.record_overflow(Rect {
                     x: line_x + offset + self.offset[0],
                     y: self.top + self.y + self.offset[1],
@@ -763,7 +767,9 @@ impl<'a> Paginator<'a, '_, 'a> {
                     &mut atomics,
                     line_layers,
                 )?;
-                self.record_baselines(self.page, [Some(baseline); 2]);
+                if !line.phantom {
+                    self.record_baselines(self.page, [Some(baseline); 2]);
+                }
                 letter = None;
                 self.emit_paragraph_line(
                     index,
@@ -773,7 +779,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                     line_layers,
                 );
                 self.y += line.height;
-                if line.height > 0.0 || !line.text.is_empty() {
+                if !line.phantom && (line.height > 0.0 || !line.text.is_empty()) {
                     self.has_flow = true;
                     self.at_page_start = false;
                 }
@@ -846,10 +852,14 @@ impl<'a> Paginator<'a, '_, 'a> {
         line: &crate::text::Line,
         consumed_events: &mut usize,
     ) {
-        let text_start = source.text()[line.range.clone()]
-            .char_indices()
-            .find(|(_, ch)| !crate::document::is_css_whitespace(*ch))
-            .map(|(offset, _)| line.range.start + offset);
+        let text_start = (!line.phantom)
+            .then(|| {
+                source.text()[line.range.clone()]
+                    .char_indices()
+                    .find(|(_, ch)| !crate::document::is_css_whitespace(*ch))
+                    .map(|(offset, _)| line.range.start + offset)
+            })
+            .flatten();
         for event in source
             .semantic_events()
             .iter()
@@ -864,7 +874,9 @@ impl<'a> Paginator<'a, '_, 'a> {
             self.string_locations.record(self.page, &event.event);
             *consumed_events += 1;
         }
-        self.string_locations.text(self.page);
+        if !line.phantom {
+            self.string_locations.text(self.page);
+        }
     }
 
     fn emit_paragraph_line(

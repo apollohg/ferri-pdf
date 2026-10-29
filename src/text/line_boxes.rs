@@ -714,6 +714,7 @@ pub(crate) fn align(
             .iter()
             .all(|inline| !inline.style.has_inline_edges(inline.continued))
     {
+        line.phantom = true;
         return Ok([0.0, 0.0]);
     }
     let root_metrics = BoxMetrics::of(context, paragraph.style())?;

@@ -203,7 +203,11 @@ pub(super) fn first_baseline(items: &[FlowItem<'_>]) -> Option<f32> {
     let mut y = 0.0;
     for item in items {
         let baseline = match item {
-            FlowItem::Paragraph(paragraph) => paragraph.lines.first().map(|line| line.ascent),
+            FlowItem::Paragraph(paragraph) => paragraph
+                .lines
+                .iter()
+                .find(|line| !line.phantom)
+                .map(|line| line.ascent),
             FlowItem::Block(block) | FlowItem::Spanner(block) => block.first_baseline(),
             FlowItem::Columns(columns) => columns.baselines[0],
             FlowItem::Frame { baselines, .. } => baselines[0],
@@ -233,7 +237,9 @@ pub(super) fn last_baseline(items: &[FlowItem<'_>]) -> Option<f32> {
         let baseline = match item {
             FlowItem::Paragraph(paragraph) => paragraph
                 .lines
-                .last()
+                .iter()
+                .rev()
+                .find(|line| !line.phantom)
                 .map(|line| paragraph.height - line.height + line.ascent),
             FlowItem::Block(block) | FlowItem::Spanner(block) => block.last_baseline(),
             FlowItem::Columns(columns) => columns.baselines[1],
@@ -271,6 +277,12 @@ pub(super) struct MeasuredParagraph<'a> {
     pub atomics: Vec<Option<crate::layout::inline::MeasuredAtomic<'a>>>,
     /// The region break of a `continue: discard` container that ends the paragraph.
     pub clamp: Option<crate::text::ParagraphClamp>,
+}
+
+impl MeasuredParagraph<'_> {
+    pub(super) fn is_phantom(&self) -> bool {
+        self.lines.iter().all(|line| line.phantom)
+    }
 }
 
 /// The line boxes a `continue: discard` container still holds before its region break
@@ -1475,7 +1487,9 @@ impl<'a> Measurer<'a> {
                     let paragraph = self.paragraph(paragraph, x, width, containing, rtl, budget)?;
                     let (lines, broken) = (paragraph.lines.len(), paragraph.clamp.is_some());
                     let frame = frames.last_mut().unwrap();
-                    frame.previous_break_after = BreakBetween::Auto;
+                    if !paragraph.is_phantom() {
+                        frame.previous_break_after = BreakBetween::Auto;
+                    }
                     frame.push(FlowItem::Paragraph(paragraph));
                     if budget.is_some() {
                         Self::spend_lines(&mut frames, lines, broken);
@@ -1750,6 +1764,10 @@ struct FrameClamp {
 }
 impl<'a> FlowFrame<'a> {
     fn push(&mut self, item: FlowItem<'a>) {
+        if matches!(&item, FlowItem::Paragraph(paragraph) if paragraph.is_phantom()) {
+            self.items.push(item);
+            return;
+        }
         let cleared = matches!(&item, FlowItem::Block(block) | FlowItem::Spanner(block) if block.clearance_target.is_some());
         if self.at_start && self.collapse_top && !cleared {
             self.before

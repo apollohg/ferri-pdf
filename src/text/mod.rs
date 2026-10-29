@@ -303,6 +303,8 @@ fn shape_line(
 
 #[derive(Clone)]
 pub(crate) struct Line {
+    /// An ignored empty line box under CSS 2.1 §9.4.2.
+    pub phantom: bool,
     pub wrapped: bool,
     /// Logical start-edge margin, excluded from shaped content width.
     pub indent: f32,

@@ -106,6 +106,142 @@ fn empty_alternative_text_of_a_failed_inline_image_does_not_create_a_line() {
     );
 }
 
+#[test]
+fn empty_failed_inline_images_do_not_separate_adjoining_paragraph_margins() {
+    let baselines = |image: &str| {
+        let output = render_with_resolver(
+            &format!("<!doctype html><style>{} @page{{size:300pt 200pt;margin:20pt}}body{{font-size:12pt}}p{{margin:1em 0}}</style><p>BEFORE</p>{image}<p>AFTER</p>", common::PROFILE),
+            &common::local_options(), &ImageResolver(None),
+        ).expect("missing empty-alt image must retain surrounding paragraphs");
+        let trace = output.layout.unwrap();
+        ["BEFORE", "AFTER"].map(|label| {
+            trace.pages[0]
+                .iter()
+                .find(|line| line.text == label)
+                .unwrap_or_else(|| panic!("fixture lost {label}: {:?}", trace.pages[0]))
+                .baseline
+        })
+    };
+    let reference = baselines("");
+    let block = baselines("<img src=broken.png alt='' style='display:block'>");
+    let inline = baselines("<img src=broken.png alt=''>");
+    assert_eq!(
+        block, reference,
+        "empty block fallback permits adjoining margins"
+    );
+    assert_eq!(
+        inline, reference,
+        "an ignored zero-height inline fallback line must not split the default12pt paragraph margin strut; inline={inline:?}, block={block:?}, absent={reference:?}"
+    );
+    assert_eq!(
+        baselines("<div style='text-box-trim:trim-both'><img src=broken.png alt=''></div>"),
+        reference,
+        "text-box trimming cannot create geometry for an ignored image line"
+    );
+}
+
+#[test]
+fn phantom_image_lines_preserve_semantic_events_and_destinations() {
+    let output = render_with_resolver(
+        &format!("<!doctype html><style>{}@page{{size:300pt 200pt;margin:20pt;@top-left{{content:string(label,last)}}}}p{{margin:1em 0}}</style><p>BEFORE</p><img id=empty src=broken.png alt='' style='string-set:label \"Empty\"'><p><a href='#empty'>AFTER</a></p>", common::PROFILE),
+        &common::local_options(), &ImageResolver(None),
+    ).expect("phantom image must retain its semantic source");
+    let trace = output.layout.unwrap();
+    assert!(
+        trace.pages[0].iter().any(|line| line.text == "Empty"),
+        "string assignment on ignored image line must reach the page header"
+    );
+    assert_eq!(
+        trace.links[0].len(),
+        1,
+        "later source link must remain clickable"
+    );
+    assert!(
+        trace.destinations.iter().any(Option::is_some),
+        "the failed image's destination must remain addressable"
+    );
+}
+
+#[test]
+fn zero_height_real_text_still_separates_block_margins() {
+    const MARGIN: f32 = 12.0;
+    let baseline = |middle: &str| {
+        let output = render_with_resolver(
+            &format!("<!doctype html><style>{}body{{font-size:0;line-height:0}}p{{font-size:12pt;line-height:18pt;margin:12pt 0}}</style><p>BEFORE</p>{middle}<p>AFTER</p>", common::PROFILE),
+            &common::local_options(), &ImageResolver(None),
+        ).unwrap();
+        output.layout.unwrap().pages[0]
+            .iter()
+            .find(|line| line.text == "AFTER")
+            .unwrap()
+            .baseline
+    };
+    let reference = baseline("");
+    common::assert_labelled_pt(
+        "genuine zero-height text keeps its line box",
+        baseline("<span>X</span>"),
+        reference + MARGIN,
+    );
+    common::assert_labelled_pt(
+        "zero-height phantom image does not keep a line box",
+        baseline("<img src=broken.png alt=''>"),
+        reference,
+    );
+    common::assert_labelled_pt(
+        "authored zero dimensions retain a genuine atomic line",
+        baseline("<img src=broken.png alt='' style='width:0;height:0'>"),
+        reference + MARGIN,
+    );
+}
+
+#[test]
+fn phantom_image_lines_do_not_supply_atomic_baselines() {
+    for (placement, css, body) in [
+        (
+            "inline-block-last",
+            "",
+            "<span class=box>{image}<p>A</p></span> B",
+        ),
+        (
+            "inline-block-first",
+            ".box{baseline-source:first}",
+            "<span class=box>{image}<p>A</p></span> B",
+        ),
+        (
+            "inline-block-trailing",
+            "",
+            "<span class=box><p>A</p>{image}</span> B",
+        ),
+        (
+            "flex-first",
+            "section{display:flex;align-items:baseline}.box{display:block}",
+            "<section><span class=box>{image}<p>A</p></span><span>B</span></section>",
+        ),
+    ] {
+        let render = |image| {
+            let body = body.replace("{image}", image);
+            render_with_resolver(&format!("<!doctype html><style>{}p{{margin:0}}.box{{display:inline-block}}{css}</style>{body}", common::PROFILE), &common::local_options(), &ImageResolver(None)).unwrap().layout.unwrap()
+                .pages[0].iter().flat_map(|line| line.runs.iter().filter(|run| matches!(run.text.trim(), "A" | "B")).map(|run| (run.text.trim().to_owned(), line.baseline + run.baseline_shift))).collect::<Vec<_>>()
+        };
+        let control = render("");
+        let actual = render("<img src=broken.png alt=''>");
+        assert_eq!(
+            control.len(),
+            2,
+            "{placement}: both baseline comparison glyphs must exist"
+        );
+        assert_eq!(
+            actual.len(),
+            2,
+            "{placement}: neither source glyph may disappear"
+        );
+        assert_eq!(
+            actual, control,
+            "{placement}: ignored source line must not supply a first/last atomic baseline"
+        );
+    }
+}
+
 struct ImageResolver(Option<Vec<u8>>);
 impl ResourceResolver for ImageResolver {
     fn resolve(&self, reference: &str, base: &ResourceBase) -> Result<Resource, ResourceError> {

@@ -309,6 +309,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             return Err(TextError::NonFiniteGeometry);
         }
         Ok(Line {
+            phantom: false,
             wrapped: false,
             indent,
             text: hyphenation::text(&text[visible], hyphen),
@@ -377,7 +378,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             paragraph.text_box_trim[0] && line.range.start == 0,
             paragraph.text_box_trim[1] && line.range.end == paragraph.text().len(),
         ];
-        if trim.contains(&true) {
+        if !line.phantom && trim.contains(&true) {
             // The trimmed side moves to the root inline box's `text-box-edge` metric.
             let root = line_boxes::BoxMetrics::of(prepared.context, paragraph.style())?;
             let edges = paragraph.style().text_box.edges;
