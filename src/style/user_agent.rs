@@ -1058,6 +1058,13 @@ fn math_defaults(element: Element<'_>) -> Result<Vec<DefaultDeclaration>, StyleE
             add(property, value)?;
         }
     }
+    if tag == "mtable" {
+        add(Property::MathStyle, "compact")?;
+    }
+    if tag == "mtd" {
+        add(Property::TextAlign, "center")?;
+        add(Property::Padding, "0.5ex 0.4em")?;
+    }
     if tag == "mi" {
         add(Property::TextTransform, "math-auto")?;
     }

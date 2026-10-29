@@ -1,4 +1,5 @@
 //! Semantic data retained while the ordinary formatter creates `MathML` boxes.
+pub(super) mod table;
 use crate::document::{BlockBox, BlockContent, DocumentError, Paragraph};
 use crate::dom::{Element as DomElement, MATHML_NAMESPACE, NodeData, TreeRelation};
 use crate::resources::ResourceResolver;

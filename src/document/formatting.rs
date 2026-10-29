@@ -2201,6 +2201,10 @@ fn block<'a>(
                 )));
             }
             let ancestor_page = frames[index].page_scope.clone();
+            let math_cell = crate::document::mathml::table::is_cell(
+                frames[block_index].element,
+                &frames[block_index].style.display,
+            );
             let (mut builder, _) =
                 active_builder(&mut frames, block_index, sheet, traversal, resources);
             let run_in = child_style.display.run_in().cloned();
@@ -2269,7 +2273,7 @@ fn block<'a>(
                         if matches!(
                             builder.style.display,
                             Display::BlockMath | Display::InlineMath
-                        ) =>
+                        ) || math_cell =>
                     {
                         builder.flush()?;
                         Some(Placement::Flow)
@@ -2454,6 +2458,15 @@ fn block<'a>(
             .containment()
             .query_container
             .then(|| element.id());
+        if crate::document::mathml::table::is_cell(element, &block.style().display) {
+            let children = std::mem::take(&mut block.children);
+            block.children = crate::document::mathml::table::cell(
+                block.style(),
+                children,
+                sheet,
+                resources.resolver,
+            )?;
+        }
         crate::document::mathml::prepare(element, &mut block, sheet, resources.resolver)?;
         if matches!(state.placement, Placement::Root) {
             return Ok(block);

@@ -28,6 +28,7 @@ mod inline_boxes;
 mod leaders;
 mod list_images;
 mod mathml;
+mod mathml_tables;
 mod named_pages;
 mod object_position;
 mod overflow_wrap;

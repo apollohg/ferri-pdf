@@ -166,33 +166,31 @@ pub(super) fn span(value: &Component, relative: &Relative<'_>) -> Result<usize, 
     usize::try_from(span).map_err(|_| format!("negative table span: {value}").into())
 }
 
-/// HTML table structure, independently of CSS presentation.
+/// HTML and `MathML` Core table structure, independently of CSS presentation.
 pub(super) fn structure(style: &mut Style, element: Element<'_>) {
-    if element.namespace() != crate::dom::HTML_NAMESPACE {
-        return;
-    }
-    match element.name() {
-        "td" | "th" => {
-            style.table.column_span = element
-                .attr("colspan")
-                .and_then(crate::style::user_agent::non_negative)
-                .unwrap_or(1.0)
-                .clamp(1.0, MAX_HTML_COLUMN_SPAN as f64)
-                as usize;
-            style.table.row_span = element
-                .attr("rowspan")
-                .and_then(crate::style::user_agent::non_negative)
-                .unwrap_or(1.0)
-                .min(MAX_HTML_ROW_SPAN as f64) as usize;
-        }
-        "col" | "colgroup" => {
-            style.table.column_span = element
-                .attr("span")
-                .and_then(crate::style::user_agent::non_negative)
-                .unwrap_or(1.0)
-                .clamp(1.0, MAX_HTML_COLUMN_SPAN as f64)
-                as usize;
-        }
-        _ => {}
+    let column_span = match (element.namespace(), element.name()) {
+        (crate::dom::HTML_NAMESPACE, "td" | "th") => Some("colspan"),
+        (crate::dom::MATHML_NAMESPACE, "mtd") => Some("columnspan"),
+        _ => None,
+    };
+    if let Some(attribute) = column_span {
+        style.table.column_span = element
+            .attr(attribute)
+            .and_then(crate::style::user_agent::non_negative)
+            .unwrap_or(1.0)
+            .clamp(1.0, MAX_HTML_COLUMN_SPAN as f64) as usize;
+        style.table.row_span = element
+            .attr("rowspan")
+            .and_then(crate::style::user_agent::non_negative)
+            .unwrap_or(1.0)
+            .min(MAX_HTML_ROW_SPAN as f64) as usize;
+    } else if element.namespace() == crate::dom::HTML_NAMESPACE
+        && matches!(element.name(), "col" | "colgroup")
+    {
+        style.table.column_span = element
+            .attr("span")
+            .and_then(crate::style::user_agent::non_negative)
+            .unwrap_or(1.0)
+            .clamp(1.0, MAX_HTML_COLUMN_SPAN as f64) as usize;
     }
 }

@@ -867,6 +867,7 @@ impl<'a> TablePlan<'a> {
         let measured = measurer.measure_format(source, geometry, true, None, used_height);
         measurer.named_pages = named_pages;
         let mut measured = measured?;
+        crate::layout::mathml::table::align_cell(&mut measured);
         measured.offset = self.cell_offset(index, resolved.geometry.width);
         let Some(mut paint) = measured.paint.take() else {
             return Ok(measured);

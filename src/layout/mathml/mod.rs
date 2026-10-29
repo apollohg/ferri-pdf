@@ -3,6 +3,7 @@ mod metrics;
 mod operator;
 mod operator_data;
 mod stretch;
+pub(super) mod table;
 use crate::document::{BlockBox, BlockContent, Paragraph};
 use crate::graphics::{BoxDecoration, BoxPaint, Rect};
 use crate::layout::measure::frames::{Batch as Requests, RequestKind};
@@ -538,7 +539,8 @@ impl<'a> Builder<'_, 'a> {
             .measurer
             .request(source, &geometry, self.containing, None, kind)?;
         let class = crate::document::mathml::block_class(element.0);
-        let mut result = Self::measured_box(measured, class.space_like);
+        let baseline = table::baseline(self.measurer, source, &measured)?;
+        let mut result = Self::measured_box(measured, class.space_like, baseline);
         if let Some(intrinsic) = intrinsic {
             result.intrinsic = intrinsic;
         }
@@ -553,9 +555,14 @@ impl<'a> Builder<'_, 'a> {
         }
         Ok(result)
     }
-    fn measured_box(measured: MeasuredBlock<'a>, space_like: bool) -> MathBox<'a> {
+    fn measured_box(
+        measured: MeasuredBlock<'a>,
+        space_like: bool,
+        baseline: Option<f32>,
+    ) -> MathBox<'a> {
         let margins = measured.geometry.margin.map(|value| value.unwrap_or(0.0));
-        let baseline = measured.first_baseline().unwrap_or(measured.height);
+        let baseline =
+            baseline.unwrap_or_else(|| measured.first_baseline().unwrap_or(measured.height));
         let mut result = measured
             .math
             .as_deref()
@@ -642,6 +649,7 @@ impl<'a> Builder<'_, 'a> {
         let mut result = Self::measured_box(
             measured,
             matches!(element.name(), "mtext" | "annotation" | "annotation-xml"),
+            None,
         );
         result.css_content = true;
         result.intrinsic = intrinsic;
