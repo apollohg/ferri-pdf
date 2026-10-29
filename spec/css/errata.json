@@ -1,6 +1,10 @@
 {
   "description": "Corrections to mdn-data from the cited specifications: productions the data references but does not define, and entries that predate the current specification. Each entry replaces only the fields it names. Additions are specification properties the data omits, defined in full.",
   "syntaxes": {
+    "line-width": {
+      "syntax": "<length [0,∞]> | thin | medium | thick",
+      "source": "https://www.w3.org/TR/2024/CRD-css-backgrounds-3-20240311/#typedef-line-width: negative values are invalid; also used by outline-width"
+    },
     "single-animation": {
       "syntax": "[ auto | <time [0s,∞]> ] || <easing-function> || <time> || <single-animation-iteration-count> || <single-animation-direction> || <single-animation-fill-mode> || <single-animation-play-state> || [ none | <keyframes-name> ] || <single-animation-timeline>",
       "source": "https://www.w3.org/TR/2023/WD-css-animations-2-20230602/#animation-shorthand with one value per list item: the first <time> is the duration and the second the delay (https://www.w3.org/TR/2023/WD-css-animations-1-20230302/#animation)"
@@ -167,6 +171,22 @@
     }
   },
   "properties": {
+    "border-spacing": {
+      "syntax": "<length [0,∞]>{1,2}",
+      "source": "https://www.w3.org/TR/2025/WD-css-tables-3-20251216/#propdef-border-spacing: two non-negative lengths"
+    },
+    "column-gap": {
+      "syntax": "normal | <length-percentage [0,∞]>",
+      "source": "https://www.w3.org/TR/2026/WD-css-align-3-20261008/#column-row-gap: negative values are invalid"
+    },
+    "line-height-step": {
+      "syntax": "<length [0,∞]>",
+      "source": "https://www.w3.org/TR/2026/WD-css-rhythm-1-20260217/#line-height-step: negative values are not allowed"
+    },
+    "row-gap": {
+      "syntax": "normal | <length-percentage [0,∞]>",
+      "source": "https://www.w3.org/TR/2026/WD-css-align-3-20261008/#column-row-gap: negative values are invalid"
+    },
     "appearance": {
       "syntax": "none | auto | base | base-select | <compat-auto> | <compat-special>",
       "source": "https://drafts.csswg.org/css-ui-4/#appearance-switching: the base and base-select keywords"

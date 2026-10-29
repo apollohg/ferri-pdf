@@ -261,6 +261,47 @@ fn numeric_contexts_round_integers_and_clamp_ranges() {
 }
 
 #[test]
+fn negative_spacing_literals_drop_whole_declarations_but_math_clamps_each_value() {
+    let fallback = child(
+        "gap:3pt 5pt;gap:-1pt 7pt;border-spacing:4pt 6pt;border-spacing:8pt -2pt;line-height-step:9pt;line-height-step:-3pt;outline:7pt solid;outline-width:-4pt",
+    );
+    assert_eq!(
+        fallback.flex.gap.map(|gap| gap.resolve(100.0)),
+        [3.0, 5.0],
+        "an invalid gap shorthand must preserve both earlier axes"
+    );
+    assert_eq!(
+        fallback.table.spacing,
+        [4.0, 6.0],
+        "an invalid second border-spacing value must preserve both earlier axes"
+    );
+    assert_eq!(
+        fallback.line_height_step, 9.0,
+        "a negative literal must not abort style computation or replace its fallback"
+    );
+    assert_eq!(
+        fallback.decoration.outline.width, 7.0,
+        "negative outline widths must be discarded before computing the outline"
+    );
+
+    let calculated = child(
+        "gap:calc(1pt - 3pt) calc(2% - 5%);border-spacing:calc(2pt - 8pt) 6pt;line-height-step:calc(1pt - 4pt);outline:solid;outline-width:calc(2pt - 6pt)",
+    );
+    assert_eq!(
+        calculated.flex.gap.map(|gap| gap.resolve(100.0)),
+        [0.0; 2],
+        "negative length and percentage calculations clamp to the grammar minimum"
+    );
+    assert_eq!(
+        calculated.table.spacing,
+        [0.0, 6.0],
+        "range clamping applies to each spacing component separately"
+    );
+    assert_eq!(calculated.line_height_step, 0.0);
+    assert_eq!(calculated.decoration.outline.width, 0.0);
+}
+
+#[test]
 fn typography_percentages_resolve_against_font_sizes() {
     let style = child(
         "font-size:calc(10pt + 50%);line-height:calc(100% + 4pt);letter-spacing:calc(1pt + 0.5pt)",
