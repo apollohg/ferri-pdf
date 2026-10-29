@@ -15,6 +15,7 @@ mod mask;
 mod raster;
 mod rounded;
 mod shadow;
+mod shape;
 #[cfg(test)]
 pub(crate) use background::rounded_size;
 pub(crate) use background::{
@@ -57,8 +58,11 @@ pub(crate) use rounded::rounded_rect;
 mod image;
 pub(crate) use raster::{bounds as shape_bounds, cover, opaque, within};
 use serde::Serialize;
-pub(crate) use shadow::{BoxShadow, ShadowMask, blurred_shadow};
+pub(crate) use shadow::{BoxShadow, ShadowMask, blurred_shadow, outset, outset_radii};
 pub use shadow::{ShadowPaint, ShadowShape};
+pub(crate) use shape::{
+    AxisRadius, BasicShape, CircleRadius, CornerRadii, EllipseRadii, ShapeBox, ShapeOutside,
+};
 
 /// CSS reference pixel in PDF points.
 pub(crate) const POINTS_PER_PIXEL: f32 = 0.75;

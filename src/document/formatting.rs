@@ -85,6 +85,8 @@ pub(crate) struct Formatted {
 pub(crate) struct BlockBox {
     style: Box<Style>,
     decoration: BoxDecoration,
+    /// A float's `shape-outside` with its image loaded.
+    shape_outside: crate::graphics::ShapeOutside,
     children: Vec<BlockContent>,
     marker: Option<Box<Paragraph>>,
     image: Option<std::sync::Arc<crate::images::Image>>,
@@ -208,6 +210,7 @@ impl BlockBox {
         Self {
             style: Box::new(style),
             decoration,
+            shape_outside: crate::graphics::ShapeOutside::None,
             children,
             marker: None,
             image: None,
@@ -277,6 +280,9 @@ impl BlockBox {
     }
     pub(crate) fn decoration(&self) -> &BoxDecoration {
         &self.decoration
+    }
+    pub(crate) fn shape_outside(&self) -> &crate::graphics::ShapeOutside {
+        &self.shape_outside
     }
     pub(crate) fn children(&self) -> &[BlockContent] {
         &self.children
@@ -480,6 +486,18 @@ impl ImageResources<'_> {
             self.resolver,
             style.element_font_namespace(),
         )
+    }
+    /// Loads a float's `shape-outside` image; other boxes have no float area.
+    pub(crate) fn shape_outside(
+        &mut self,
+        style: &Style,
+    ) -> Result<crate::graphics::ShapeOutside, DocumentError> {
+        if style.floating().is_none() {
+            return Ok(crate::graphics::ShapeOutside::None);
+        }
+        Ok(style
+            .shape_outside
+            .load_image(&mut |reference| self.load(reference, style))?)
     }
     /// Loads the box's `url()` background layers and border image; inline style URLs use the
     /// document base.
@@ -1179,13 +1197,16 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 .into_iter()
                 .map(BlockContent::Inline)
                 .collect();
-            self.out_of_flow(self.generated_block(
+            let shape_outside = self.resources.shape_outside(&style)?;
+            let mut generated = self.generated_block(
                 style,
                 children,
                 decoration,
                 element_page_scope.as_ref(),
                 event,
-            ));
+            );
+            generated.shape_outside = shape_outside;
+            self.out_of_flow(generated);
             return Ok(());
         }
         match &style.display {
@@ -1417,6 +1438,7 @@ enum Placement {
 
 struct OpenBlock {
     decoration: BoxDecoration,
+    shape_outside: crate::graphics::ShapeOutside,
     children: Vec<BlockContent>,
     inline: InlineCollector,
     marker: Option<Paragraph>,
@@ -1466,6 +1488,7 @@ impl<'d> Frame<'d> {
             leading: None,
             block: placement.map(|placement| OpenBlock {
                 decoration: BoxDecoration::default(),
+                shape_outside: crate::graphics::ShapeOutside::None,
                 children: Vec::new(),
                 inline: InlineCollector::default(),
                 marker: None,
@@ -1558,6 +1581,7 @@ fn block<'a>(
                 // pseudo-elements or replaced fallback for them.
                 let skips = frame.style.skips_contents() && frame.style.containment().layout;
                 block.decoration = resources.backgrounds(&frame.style)?;
+                block.shape_outside = resources.shape_outside(&frame.style)?;
                 if index == 0 {
                     traversal.canvas = background_only(&block.decoration);
                 }
@@ -2073,6 +2097,7 @@ fn block<'a>(
             BlockBox::with_decoration(style, children, state.decoration, frame.page_scope);
         block.rendered_legend = rendered_legend;
         block.marker = state.marker.map(Box::new);
+        block.shape_outside = state.shape_outside;
         block.image = state.image;
         block.density = state.density;
         block.navigation = state.navigation;

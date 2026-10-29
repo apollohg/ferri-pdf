@@ -69,14 +69,16 @@ pub struct RasterImage {
     pub orientation: Orientation,
 }
 impl RasterImage {
-    fn validate_samples(&self) -> Result<(), ImageError> {
-        let format = match self.format {
+    fn image_format(&self) -> ImageFormat {
+        match self.format {
             RasterFormat::Png => ImageFormat::Png,
             RasterFormat::Jpeg => ImageFormat::Jpeg,
             RasterFormat::Gif => ImageFormat::Gif,
             RasterFormat::WebP => ImageFormat::WebP,
-        };
-        let decoder = raster_reader(&self.bytes, format).into_decoder()?;
+        }
+    }
+    fn validate_samples(&self) -> Result<(), ImageError> {
+        let decoder = raster_reader(&self.bytes, self.image_format()).into_decoder()?;
         let bytes = decoder.total_bytes();
         if bytes > MAX_DECODED_BYTES {
             return Err(ImageError::Dimensions {
@@ -91,6 +93,19 @@ impl RasterImage {
         samples.resize(bytes as usize, 0);
         decoder.read_image(&mut samples)?;
         Ok(())
+    }
+
+    /// The first frame's alpha samples in display orientation, row by row, with its width.
+    pub(crate) fn alpha(&self) -> Result<(u32, Vec<u8>), ImageError> {
+        let mut image = raster_reader(&self.bytes, self.image_format()).decode()?;
+        image.apply_orientation(self.orientation);
+        let rgba = image.into_rgba8();
+        Ok((
+            rgba.width(),
+            rgba.pixels()
+                .map(|pixel| pixel.0[pixels::RGB_CHANNELS])
+                .collect(),
+        ))
     }
 
     pub fn pixel_size(&self) -> [f32; 2] {

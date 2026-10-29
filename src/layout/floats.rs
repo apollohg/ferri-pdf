@@ -1,6 +1,16 @@
 use crate::graphics::Rect;
-use crate::layout::{LayoutError, work::Budget};
+use crate::layout::{
+    LayoutError,
+    float_area::{FloatArea, meets},
+    work::Budget,
+};
 use crate::style::{Clear, FloatSide};
+use std::sync::Arc;
+
+/// Line box positions found by bisection lie within this distance of the first that fits.
+const FIT_TOLERANCE_PT: f32 = 0.01;
+/// The golden ratio's reciprocal, which shrinks a golden-section search interval each step.
+const GOLDEN_SECTION: f32 = 0.618_034;
 
 #[derive(Clone)]
 struct Exclusion {
@@ -10,6 +20,23 @@ struct Exclusion {
     /// An initial letter's, which is in-flow content rather than a float (CSS Inline 3
     /// §7.9.3).
     letter: bool,
+    /// The float area line boxes wrap around; the margin box when `None`.
+    area: Option<Arc<FloatArea>>,
+}
+
+impl Exclusion {
+    fn bottom(&self) -> f32 {
+        self.area
+            .as_ref()
+            .map_or(self.margin.y + self.margin.height, |area| area.bottom())
+    }
+}
+
+/// One page's part of a float: its margin box and the float area it defines there.
+pub(crate) struct FloatFragment {
+    pub page: usize,
+    pub margin: Rect,
+    pub area: Option<FloatArea>,
 }
 
 #[derive(Clone, Default)]
@@ -19,14 +46,17 @@ pub(super) struct FloatContext {
 }
 
 impl FloatContext {
-    pub(crate) fn insert(&mut self, side: FloatSide, fragments: Vec<(usize, Rect)>) {
-        self.last_start = fragments.first().map(|(page, rect)| (*page, rect.y));
+    pub(crate) fn insert(&mut self, side: FloatSide, fragments: Vec<FloatFragment>) {
+        self.last_start = fragments
+            .first()
+            .map(|fragment| (fragment.page, fragment.margin.y));
         self.exclusions
-            .extend(fragments.into_iter().map(|(page, margin)| Exclusion {
-                page,
+            .extend(fragments.into_iter().map(|fragment| Exclusion {
+                page: fragment.page,
                 side,
-                margin,
+                margin: fragment.margin,
                 letter: false,
+                area: fragment.area.map(Arc::new),
             }));
     }
 
@@ -38,6 +68,7 @@ impl FloatContext {
             side,
             margin,
             letter: true,
+            area: None,
         });
     }
 
@@ -129,9 +160,7 @@ impl FloatContext {
             let rect = float.margin;
             if float.page != page
                 || rect.height <= 0.0
-                || rect.y > y + height
-                || (height > 0.0 && rect.y == y + height)
-                || rect.y + rect.height <= y
+                || !meets(rect.y, rect.y + rect.height, y, height)
             {
                 continue;
             }
@@ -143,6 +172,91 @@ impl FloatContext {
             next = Some(next.map_or(bottom, |value| value.min(bottom)));
         }
         Ok((band, next))
+    }
+
+    /// The edges left to a line box at `y` of `height` within `bounds` beside the float areas
+    /// it meets (CSS Shapes 1 §1.3), and whether it meets any.
+    pub(crate) fn line_band(
+        &self,
+        page: usize,
+        y: f32,
+        height: f32,
+        bounds: [f32; 2],
+        work: &Budget,
+    ) -> Result<([f32; 2], bool), LayoutError> {
+        let mut band = bounds;
+        let mut met = false;
+        for float in &self.exclusions {
+            work.spend(1)?;
+            if float.page != page {
+                continue;
+            }
+            let rect = float.margin;
+            let edge = if let Some(area) = &float.area {
+                area.edge(y, height, float.side, work)?
+            } else {
+                (rect.height > 0.0 && meets(rect.y, rect.y + rect.height, y, height)).then_some(
+                    match float.side {
+                        FloatSide::Left => rect.x + rect.width,
+                        FloatSide::Right => rect.x,
+                    },
+                )
+            };
+            let Some(edge) = edge else {
+                continue;
+            };
+            met = true;
+            match float.side {
+                FloatSide::Left => band[0] = band[0].max(edge),
+                FloatSide::Right => band[1] = band[1].min(edge),
+            }
+        }
+        Ok((band, met))
+    }
+
+    /// CSS 2.1 §9.5: the first position below `y` where a line box of `height` that needs
+    /// `width` fits beside the float areas, or where it meets none. Between the positions
+    /// where a float area's vertex enters or leaves the line box, each area's edge is the
+    /// outermost of linearly moving points, so the band's width is concave there and its
+    /// first fit is found by bisection.
+    pub(crate) fn line_fit(
+        &self,
+        page: usize,
+        y: f32,
+        height: f32,
+        bounds: [f32; 2],
+        width: f32,
+        work: &Budget,
+    ) -> Result<f32, LayoutError> {
+        let mut breakpoints = Vec::new();
+        let mut end = y;
+        for float in self.exclusions.iter().filter(|float| float.page == page) {
+            work.spend(1)?;
+            if let Some(area) = &float.area {
+                area.breakpoints(height, &mut breakpoints);
+            } else {
+                let rect = float.margin;
+                breakpoints.extend([rect.y - height, rect.y + rect.height]);
+            }
+            end = end.max(float.bottom());
+        }
+        breakpoints.retain(|position| *position > y && *position < end);
+        breakpoints.push(end);
+        breakpoints.sort_by(f32::total_cmp);
+        breakpoints.dedup();
+        work.spend(breakpoints.len())?;
+        let slack = |position: f32| -> Result<f32, LayoutError> {
+            let (band, _) = self.line_band(page, position, height, bounds, work)?;
+            Ok(band[1] - band[0] - width)
+        };
+        let mut start = y;
+        for stop in breakpoints {
+            if let Some(fit) = first_fit([start, stop], &slack)? {
+                return Ok(fit);
+            }
+            start = stop;
+        }
+        Ok(end)
     }
 
     pub(crate) fn clearance(
@@ -229,4 +343,60 @@ impl FloatContext {
             y = next.expect("an obstructing float has a bottom edge");
         }
     }
+}
+
+/// The first position in `(start, stop]` where `slack` is not negative, given that it is
+/// negative at `start` and concave strictly between the two.
+fn first_fit(
+    [start, stop]: [f32; 2],
+    slack: &impl Fn(f32) -> Result<f32, LayoutError>,
+) -> Result<Option<f32>, LayoutError> {
+    let step = FIT_TOLERANCE_PT.min((stop - start) / 2.0);
+    let inner = stop - step;
+    if inner > start && slack(inner)? >= 0.0 {
+        return bisect([start, inner], slack).map(Some);
+    }
+    if slack(stop)? >= 0.0 {
+        return Ok(Some(stop));
+    }
+    let near_start = start + step;
+    // A concave slack rising after `start` and falling before `stop` peaks between them.
+    if inner - near_start <= step
+        || slack(near_start + step)? <= slack(near_start)?
+        || slack(inner)? >= slack(inner - step)?
+    {
+        return Ok(None);
+    }
+    let [mut low, mut high] = [near_start, inner];
+    while high - low > FIT_TOLERANCE_PT {
+        let left = high - (high - low) * GOLDEN_SECTION;
+        let right = low + (high - low) * GOLDEN_SECTION;
+        if slack(left)? < slack(right)? {
+            low = left;
+        } else {
+            high = right;
+        }
+    }
+    let peak = f32::midpoint(low, high);
+    if slack(peak)? >= 0.0 {
+        bisect([start, peak], slack).map(Some)
+    } else {
+        Ok(None)
+    }
+}
+
+/// Narrows `[low, high]`, where `slack` turns from negative to not negative, to its crossing.
+fn bisect(
+    [mut low, mut high]: [f32; 2],
+    slack: &impl Fn(f32) -> Result<f32, LayoutError>,
+) -> Result<f32, LayoutError> {
+    while high - low > FIT_TOLERANCE_PT {
+        let middle = f32::midpoint(low, high);
+        if slack(middle)? >= 0.0 {
+            high = middle;
+        } else {
+            low = middle;
+        }
+    }
+    Ok(high)
 }

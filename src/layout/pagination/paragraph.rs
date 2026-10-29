@@ -190,7 +190,8 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         let mut height = 0.0f32;
         loop {
             self.measurer.work.spend(metrics.len().max(1))?;
-            let (band, next) = context.band(self.page, y, height, bounds, &self.measurer.work)?;
+            let (band, met) =
+                context.line_band(self.page, y, height, bounds, &self.measurer.work)?;
             let width = (band[1] - band[0]).max(0.0);
             let mut lines =
                 prepared.lines_in_block(position, width, bounds[1] - bounds[0], metrics)?;
@@ -203,10 +204,15 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 height = line.height;
                 continue;
             }
-            if line.width + line.indent > width
-                && let Some(bottom) = next
-            {
-                y = bottom;
+            if line.width + line.indent > width && met {
+                y = context.line_fit(
+                    self.page,
+                    y,
+                    height,
+                    bounds,
+                    line.width + line.indent,
+                    &self.measurer.work,
+                )?;
                 height = 0.0;
                 continue;
             }

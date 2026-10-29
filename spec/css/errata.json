@@ -69,6 +69,14 @@
       "syntax": "<counter-style-name> | <symbols()>",
       "source": "https://drafts.csswg.org/css-counter-styles-3/#typedef-counter-style"
     },
+    "circle()": {
+      "syntax": "circle( [ <radial-extent> | <length-percentage [0,∞]> ]? [ at <position> ]? )",
+      "source": "https://www.w3.org/TR/2025/CRD-css-shapes-1-20250612/#funcdef-basic-shape-circle with the <radial-size> of https://www.w3.org/TR/2025/WD-css-images-4-20250930/#radial-size, whose two-component values are invalid for circle()"
+    },
+    "ellipse()": {
+      "syntax": "ellipse( [ <radial-extent> | [ <length-percentage [0,∞]> | closest-side | farthest-side ]{2} ]? [ at <position> ]? )",
+      "source": "https://www.w3.org/TR/2025/CRD-css-shapes-1-20250612/#funcdef-basic-shape-ellipse with the <radial-size> of https://www.w3.org/TR/2025/WD-css-images-4-20250930/#radial-size: one extent for both radii, or a horizontal and a vertical radius"
+    },
     "bottom": {
       "syntax": "<length> | auto",
       "source": "https://www.w3.org/TR/CSS21/visufx.html#value-def-shape"
@@ -324,6 +332,10 @@
     "line-height": {
       "syntax": "normal | <number [0,∞]> | <length-percentage [0,∞]>",
       "source": "https://drafts.csswg.org/css-inline-3/#line-height-property"
+    },
+    "shape-margin": {
+      "syntax": "<length-percentage [0,∞]>",
+      "source": "https://www.w3.org/TR/2025/CRD-css-shapes-1-20250612/#shape-margin-property"
     },
     "overflow": {
       "initial": ["overflow-x", "overflow-y"],

@@ -119,6 +119,27 @@ fn contour(curves: [Curve; 4]) -> Contour {
     }
 }
 
+/// CSS Backgrounds 3 §4.5: all radii scaled down together until adjacent radii fit along
+/// every side of a box of `[width, height]`.
+pub(crate) fn constrain(mut radii: Radii, [width, height]: [f32; 2]) -> Radii {
+    let factor = [
+        (width, radii[0][0] + radii[1][0]),
+        (height, radii[1][1] + radii[2][1]),
+        (width, radii[2][0] + radii[3][0]),
+        (height, radii[3][1] + radii[0][1]),
+    ]
+    .into_iter()
+    .filter(|(_, sum)| *sum > 0.0)
+    .map(|(length, sum)| length / sum)
+    .fold(1.0_f32, f32::min);
+    if factor < 1.0 {
+        for corner in &mut radii {
+            *corner = corner.map(|radius| radius * factor);
+        }
+    }
+    radii
+}
+
 pub(crate) fn rounded_rect(rect: Rect, radii: Radii) -> Contour {
     contour(corners(rect, radii))
 }

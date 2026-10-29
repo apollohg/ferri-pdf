@@ -661,7 +661,7 @@ impl<I> BoxPaint<I> {
     pub fn radii(&self) -> Radii {
         let rect = self.decoration_rect();
         let sliced = self.sliced();
-        let mut radii: Radii = std::array::from_fn(|corner| {
+        let radii: Radii = std::array::from_fn(|corner| {
             let [horizontal, vertical] = &self.decoration.radii[corner];
             // Corner `c` joins side `c` (clockwise from the top-left corner) and the side before it.
             let open =
@@ -676,22 +676,7 @@ impl<I> BoxPaint<I> {
                 [0.0; 2]
             }
         });
-        let factor = [
-            (rect.width, radii[0][0] + radii[1][0]),
-            (rect.height, radii[1][1] + radii[2][1]),
-            (rect.width, radii[2][0] + radii[3][0]),
-            (rect.height, radii[3][1] + radii[0][1]),
-        ]
-        .into_iter()
-        .filter(|(_, sum)| *sum > 0.0)
-        .map(|(length, sum)| length / sum)
-        .fold(1.0_f32, f32::min);
-        if factor < 1.0 {
-            for corner in &mut radii {
-                *corner = corner.map(|radius| radius * factor);
-            }
-        }
-        radii
+        crate::paint::rounded::constrain(radii, [rect.width, rect.height])
     }
     /// Background colour within the bottom layer's `background-clip` area.
     pub fn background_fill(&self) -> Option<Fill> {

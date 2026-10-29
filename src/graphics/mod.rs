@@ -18,6 +18,7 @@ pub(crate) type BorderImagePaint<'a> = crate::paint::BorderImagePaint<'a, Arc<Im
 pub type BoxDecoration = crate::paint::BoxDecoration<Arc<Image>>;
 pub type BoxPaint = crate::paint::BoxPaint<Arc<Image>>;
 pub(crate) type LayerPaint<'a> = crate::paint::LayerPaint<'a, Arc<Image>>;
+pub(crate) type ShapeOutside = crate::paint::ShapeOutside<Arc<Image>>;
 pub(crate) type TileImage<'a> = crate::paint::TileImage<'a, Arc<Image>>;
 
 #[derive(Clone, Debug, Serialize)]

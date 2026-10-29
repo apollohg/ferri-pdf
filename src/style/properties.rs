@@ -703,6 +703,18 @@ fn handler(property: Property) -> Option<Handler> {
             Some(|v, _| Visibility::from_component(v).is_ok()),
         ),
         P::Opacity => (opacity, Some(|v, r| opacity_value(v, r).is_ok())),
+        P::ShapeOutside => (
+            shape_outside,
+            Some(|v, r| {
+                crate::style::shape_values::shape_outside(v, r, &crate::paint::AbsoluteColor::BLACK)
+                    .is_ok()
+            }),
+        ),
+        P::ShapeMargin => (shape_margin, Some(|v, r| length_percentage(v, r).is_ok())),
+        P::ShapeImageThreshold => (
+            shape_image_threshold,
+            Some(|v, r| opacity_value(v, r).is_ok()),
+        ),
         P::BorderImageSource => (
             border_image_source,
             Some(|v, r| {
@@ -1905,6 +1917,28 @@ computed!(opacity, [opacity], |value, style, _parent, relative| {
     opacity_value(value, relative)?
 });
 computed!(
+    shape_outside,
+    [shape_outside],
+    |value, style, _parent, relative| {
+        std::sync::Arc::new(crate::style::shape_values::shape_outside(
+            value,
+            relative,
+            &style.computed_color,
+        )?)
+    }
+);
+computed!(
+    shape_margin,
+    [shape_margin],
+    |value, style, _parent, relative| length_percentage(value, relative)?
+);
+// CSS Shapes 1 §6.2: an `<opacity-value>` clamped to `0..=1`.
+computed!(
+    shape_image_threshold,
+    [shape_image_threshold],
+    |value, style, _parent, relative| opacity_value(value, relative)?
+);
+computed!(
     mix_blend_mode,
     [mix_blend_mode],
     |value, style, _parent, _relative| crate::style::compositing_values::blend_mode(value)?
@@ -2043,7 +2077,7 @@ computed!(isolation, [isolate], |value, style, _parent, _relative| {
     crate::style::compositing_values::isolation(value)?
 });
 
-fn opacity_value(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
+pub(super) fn opacity_value(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
     Ok(match value.unwrap() {
         Component::Percentage(fraction) => *fraction,
         Component::Math(source, Kind::Percentage, range) => {
@@ -2503,7 +2537,7 @@ border_side!(
 border_side!(border_left_width, border_left_style, border_left_color, 3);
 
 /// `<length-percentage [0,∞]>{1,2}`: horizontal then vertical radius.
-fn corner_radius(
+pub(super) fn corner_radius(
     value: &Component,
     relative: &Relative<'_>,
 ) -> Result<[LengthPercentage; 2], StyleError> {

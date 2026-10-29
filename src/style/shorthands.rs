@@ -341,19 +341,28 @@ fn literal(property: Property, source: &str) -> Result<Specified, StyleError> {
         .ok_or_else(|| StyleError::Invalid(format!("{source} is not a {}", property.name())))
 }
 
-/// CSS Backgrounds 3 §4.1: one to four values for top, right, bottom and left.
-fn edges(value: &Component, sides: [Property; 4]) -> Longhands {
-    let items = value.items();
-    let index = |side: usize| match (items.len(), side) {
+/// CSS Backgrounds 3 §4.1: which of `count` values, one to four for top, right, bottom and
+/// left, sets `side`; corners clockwise from the top left follow the same rule.
+pub(super) fn edge_value(count: usize, side: usize) -> usize {
+    match (count, side) {
         (1, _) => 0,
         (2 | 3, LEFT) => 1,
         (2, BOTTOM) => 0,
         _ => side,
-    };
+    }
+}
+
+fn edges(value: &Component, sides: [Property; 4]) -> Longhands {
+    let items = value.items();
     sides
         .iter()
         .enumerate()
-        .map(|(side, property)| (*property, longhand(*property, &items[index(side)])))
+        .map(|(side, property)| {
+            (
+                *property,
+                longhand(*property, &items[edge_value(items.len(), side)]),
+            )
+        })
         .collect()
 }
 
@@ -377,9 +386,10 @@ fn pair(value: &Component, properties: [Property; 2]) -> Longhands {
     ]
 }
 
-/// `<length-percentage>{1,4} [ / <length-percentage>{1,4} ]?`; an omitted vertical list
-/// repeats the horizontal one.
-fn radius(value: &Component) -> Longhands {
+/// `<length-percentage>{1,4} [ / <length-percentage>{1,4} ]?` as each corner's
+/// `<length-percentage>{1,2}`, top-left first; an omitted vertical list repeats the horizontal
+/// one.
+pub(super) fn corner_values(value: &Component) -> [Component; 4] {
     let [horizontal, vertical] = match value.unwrap() {
         Component::Group(parts) => [
             parts[0].items(),
@@ -391,27 +401,25 @@ fn radius(value: &Component) -> Longhands {
         ],
         single => [std::slice::from_ref(single), &[][..]],
     };
-    let corner = |values: &[Component], index: usize| match (values.len(), index) {
-        (1, _) => 0,
-        (2 | 3, 3) => 1,
-        (2, 2) => 0,
-        _ => index,
-    };
+    std::array::from_fn(|corner| {
+        let mut radii = vec![horizontal[edge_value(horizontal.len(), corner)].clone()];
+        if !vertical.is_empty() {
+            radii.push(vertical[edge_value(vertical.len(), corner)].clone());
+        }
+        Component::Group(radii)
+    })
+}
+
+fn radius(value: &Component) -> Longhands {
     [
         Property::BorderTopLeftRadius,
         Property::BorderTopRightRadius,
         Property::BorderBottomRightRadius,
         Property::BorderBottomLeftRadius,
     ]
-    .iter()
-    .enumerate()
-    .map(|(index, property)| {
-        let mut radii = vec![horizontal[corner(horizontal, index)].clone()];
-        if !vertical.is_empty() {
-            radii.push(vertical[corner(vertical, index)].clone());
-        }
-        (*property, longhand(*property, &Component::Group(radii)))
-    })
+    .into_iter()
+    .zip(corner_values(value))
+    .map(|(property, radii)| (property, longhand(property, &radii)))
     .collect()
 }
 

@@ -167,6 +167,11 @@ pub(crate) struct Style {
     pub position: crate::style::Position,
     pub float: crate::style::Float,
     pub clear: crate::style::Clear,
+    /// CSS Shapes 1 §6: the float area's shape, the margin that expands it, and the alpha
+    /// threshold that extracts it from an image.
+    pub shape_outside: Arc<crate::paint::ShapeOutside>,
+    pub shape_margin: LengthPercentage,
+    pub shape_image_threshold: f32,
     /// `None` is `auto`.
     pub z_index: Option<i32>,
     /// `clip`; `None` is `auto`.
@@ -307,6 +312,9 @@ impl Default for Style {
             position: crate::style::Position::Static,
             float: crate::style::Float::None,
             clear: crate::style::Clear::None,
+            shape_outside: Arc::default(),
+            shape_margin: LengthPercentage::ZERO,
+            shape_image_threshold: 0.0,
             z_index: None,
             clip: None,
             inline_level_origin: false,

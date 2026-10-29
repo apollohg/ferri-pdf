@@ -1,6 +1,7 @@
 //! Block measurement, page fragmentation, and positioned text fragments.
 mod breaks;
 mod flex;
+mod float_area;
 mod floats;
 mod geometry;
 mod grid;

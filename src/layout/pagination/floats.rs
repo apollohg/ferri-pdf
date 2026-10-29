@@ -17,9 +17,20 @@ pub(super) struct FloatFlow {
     pub top: f32,
 }
 
+/// A float's box on one page, in its float context's coordinates.
+#[derive(Clone)]
+pub(super) struct FloatFragmentBox {
+    page: usize,
+    margin: Rect,
+    paint: BoxPaint,
+    /// The margins above and below the fragment's border box.
+    before: f32,
+    after: f32,
+}
+
 #[derive(Clone)]
 pub(super) struct FloatPlacement {
-    pub fragments: Vec<(usize, Rect)>,
+    fragments: Vec<FloatFragmentBox>,
     pub reflow: bool,
     first_top_margin: f32,
     fragment_top_margin: f32,
@@ -58,23 +69,91 @@ impl FloatPlacement {
         let style = geometry.source.style();
         let relative =
             style.relative_offset(self.containing_width, geometry.containing_height, style.rtl);
-        self.fragments
-            .truncate(self.fragments.partition_point(|(index, _)| *index < page));
+        self.fragments.truncate(
+            self.fragments
+                .partition_point(|fragment| fragment.page < page),
+        );
         let before = if self.fragments.is_empty() {
             self.first_top_margin
         } else {
             self.fragment_top_margin
         };
         let after = if last { self.margins[2] } else { 0.0 };
-        self.fragments.push((
+        let mut paint = paint.clone();
+        paint.rect.x -= self.offset[0] + relative[0];
+        paint.rect.y -= top + self.offset[1] + relative[1];
+        self.fragments.push(FloatFragmentBox {
             page,
-            Rect {
-                x: paint.rect.x - self.offset[0] - relative[0] - self.margins[3],
-                y: paint.rect.y - top - self.offset[1] - relative[1] - before,
+            margin: Rect {
+                x: paint.rect.x - self.margins[3],
+                y: paint.rect.y - before,
                 width: paint.rect.width + self.margins[1] + self.margins[3],
                 height: paint.rect.height + before + after,
             },
-        ));
+            paint,
+            before,
+            after,
+        });
+    }
+
+    /// Each fragment's margin box and the float area `source` defines on its page. Sliced
+    /// fragments share the shape of their assembled box (CSS Fragmentation 3 §5.4).
+    fn exclusions(
+        self,
+        source: &BlockBox,
+        work: &crate::layout::work::Budget,
+    ) -> Result<Vec<crate::layout::floats::FloatFragment>, LayoutError> {
+        let style = source.style();
+        let margin = style.shape_margin.resolve(self.containing_width);
+        let sliced = !style.clone_decoration && self.fragments.len() > 1;
+        let total: f32 = self
+            .fragments
+            .iter()
+            .map(|fragment| fragment.paint.rect.height)
+            .sum();
+        let edges = [
+            self.fragments
+                .first()
+                .map_or(0.0, |fragment| fragment.before),
+            self.fragments.last().map_or(0.0, |fragment| fragment.after),
+        ];
+        let mut consumed = 0.0;
+        let mut exclusions = Vec::with_capacity(self.fragments.len());
+        for mut fragment in self.fragments {
+            let margins = if sliced {
+                fragment.paint.background_box = Some(Rect {
+                    y: fragment.paint.rect.y - consumed,
+                    height: total,
+                    ..fragment.paint.rect
+                });
+                consumed += fragment.paint.rect.height;
+                [edges[0], self.margins[1], edges[1], self.margins[3]]
+            } else {
+                [
+                    fragment.before,
+                    self.margins[1],
+                    fragment.after,
+                    self.margins[3],
+                ]
+            };
+            let area = crate::layout::float_area::float_area(
+                source.shape_outside(),
+                margin,
+                style.shape_image_threshold,
+                &crate::layout::float_area::FloatBoxes {
+                    paint: &fragment.paint,
+                    margins,
+                    bounds: fragment.margin,
+                },
+                work,
+            )?;
+            exclusions.push(crate::layout::floats::FloatFragment {
+                page: fragment.page,
+                margin: fragment.margin,
+                area,
+            });
+        }
+        Ok(exclusions)
     }
 }
 
@@ -433,6 +512,7 @@ impl<'a> Paginator<'a, '_, '_> {
             y = start;
         }
         let (measured, mut placement) = self.position_float(measured, left, width, y)?;
+        let source = measured.source;
         let style = measured.style;
         let side = style.floating().expect("float source has an active side");
         let mut flow = self.start_cell(
@@ -450,7 +530,7 @@ impl<'a> Paginator<'a, '_, '_> {
         let exclusions = active
             .float_placement
             .expect("floating boxes retain fragment geometry")
-            .fragments;
+            .exclusions(source, &self.measurer.work)?;
         self.restore_flow_position(parent)?;
         let context = self.floats.last_mut().expect("flow has a float context");
         context.insert(side, exclusions);

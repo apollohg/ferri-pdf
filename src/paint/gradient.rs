@@ -194,6 +194,45 @@ impl Gradient {
     }
 }
 
+impl ResolvedGradient {
+    /// The opacity the gradient paints at `point` of its tile, with the padding the PDF
+    /// shading extends beyond its first and last stops.
+    pub(crate) fn alpha_at(&self, [x, y]: Point) -> f32 {
+        let offset = match self.shading {
+            Shading::Axial { start, end } => {
+                let axis = [end[0] - start[0], end[1] - start[1]];
+                ((x - start[0]) * axis[0] + (y - start[1]) * axis[1])
+                    / (axis[0] * axis[0] + axis[1] * axis[1])
+            }
+            Shading::Radial {
+                center,
+                radii,
+                scale_y,
+            } => {
+                let distance = (x - center[0]).hypot((y - center[1]) / scale_y);
+                (distance - radii[0]) / (radii[1] - radii[0])
+            }
+            Shading::Conic { center, angle } => {
+                let clockwise_from_up = (x - center[0]).atan2(center[1] - y).to_degrees();
+                (clockwise_from_up - angle).rem_euclid(FULL_TURN_DEG) / FULL_TURN_DEG
+            }
+        }
+        .clamp(0.0, 1.0);
+        let next = self.stops.partition_point(|stop| stop.offset <= offset);
+        match (
+            next.checked_sub(1).map(|index| self.stops[index]),
+            self.stops.get(next).copied(),
+        ) {
+            (Some(before), Some(after)) => {
+                let progress = (offset - before.offset) / (after.offset - before.offset);
+                before.color.alpha + (after.color.alpha - before.color.alpha) * progress
+            }
+            (Some(stop), None) | (None, Some(stop)) => stop.color.alpha,
+            (None, None) => 0.0,
+        }
+    }
+}
+
 impl LineDirection {
     /// Clockwise degrees from "to top"; corners point perpendicular to the other diagonal.
     pub fn angle(self, [width, height]: [f32; 2]) -> f32 {
@@ -228,7 +267,7 @@ impl RadialExtent {
             ],
         }
     }
-    fn circle(self, center: Point, size: [f32; 2]) -> f32 {
+    pub(crate) fn circle(self, center: Point, size: [f32; 2]) -> f32 {
         let [x, y] = self.sides(center, size);
         match self {
             Self::ClosestSide => x.min(y),
@@ -237,7 +276,7 @@ impl RadialExtent {
         }
     }
     /// Corner extents keep the side extents' aspect ratio and pass through the corner.
-    fn ellipse(self, center: Point, size: [f32; 2]) -> [f32; 2] {
+    pub(crate) fn ellipse(self, center: Point, size: [f32; 2]) -> [f32; 2] {
         let [x, y] = self.sides(center, size);
         match self {
             Self::ClosestSide | Self::FarthestSide => [x, y],
