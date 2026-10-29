@@ -128,7 +128,7 @@ pub struct GlyphRun {
     leading: Option<f32>,
     #[serde(skip)]
     ink_bounds: Option<[f32; 2]>,
-    /// The face's horizontal glyph extremes from a glyph origin, in em.
+    /// Conservative horizontal overhangs beyond the run's edges, in em.
     #[serde(skip)]
     ink_sides: [f32; 2],
     #[serde(skip)]
@@ -470,12 +470,48 @@ impl GlyphRun {
     pub(crate) fn with_marks(&self) -> impl Iterator<Item = &Self> {
         std::iter::once(self).chain(&self.marks)
     }
-    pub(crate) fn set_math_glyphs(&mut self, mut glyphs: Vec<PositionedGlyph>, width: f32) {
+    pub(crate) fn set_math_glyphs(
+        &mut self,
+        mut glyphs: Vec<PositionedGlyph>,
+        width: f32,
+        face: &ttf_parser::Face<'_>,
+    ) {
         for glyph in &mut glyphs {
             glyph.text_range = 0..self.text.len();
         }
         self.glyphs = glyphs;
         self.width = width;
+        let bounds = self
+            .outline_rects(face)
+            .reduce(crate::graphics::Rect::union);
+        self.ink_bounds = bounds.map(|rect| [rect.y, rect.y + rect.height]);
+        self.ink_sides = bounds
+            .filter(|_| self.font_size > 0.0)
+            .map_or([0.0; 2], |rect| {
+                [
+                    (rect.x - self.x) / self.font_size,
+                    (rect.x + rect.width - self.x - self.width) / self.font_size,
+                ]
+            });
+    }
+    fn outline_rects<'r>(
+        &'r self,
+        face: &'r ttf_parser::Face<'_>,
+    ) -> impl Iterator<Item = crate::graphics::Rect> + 'r {
+        let scale = self.font_size / f32::from(face.units_per_em());
+        self.glyph_origins([self.x, 0.0])
+            .into_iter()
+            .filter_map(move |(glyph, [x, y])| {
+                let outline = u16::try_from(glyph.id)
+                    .ok()
+                    .and_then(|id| face.glyph_bounding_box(ttf_parser::GlyphId(id)))?;
+                Some(crate::graphics::Rect {
+                    x: x + f32::from(outline.x_min) * scale,
+                    y: y - f32::from(outline.y_max) * scale,
+                    width: (f32::from(outline.x_max) - f32::from(outline.x_min)) * scale,
+                    height: (f32::from(outline.y_max) - f32::from(outline.y_min)) * scale,
+                })
+            })
     }
     pub fn glyphs(&self) -> &[PositionedGlyph] {
         &self.glyphs
@@ -499,6 +535,18 @@ impl GlyphRun {
     }
 }
 impl Line {
+    pub(crate) fn refresh_ink_bounds(&mut self) {
+        self.ink_bounds = self
+            .runs
+            .iter()
+            .flat_map(GlyphRun::with_marks)
+            .filter_map(|run| {
+                run.ink_bounds
+                    .map(|ink| ink.map(|y| y + run.baseline_shift))
+            })
+            .reduce(|[a, b], [c, d]| [a.min(c), b.max(d)]);
+    }
+
     pub(crate) fn alignment_offset(&self, available: f32, rtl: bool) -> f32 {
         let start = if rtl { 0.0 } else { self.indent };
         let [left, right] = self.hanging;
@@ -1154,24 +1202,10 @@ impl<'a> TextContext<'a> {
             let Some(instance) = self.face(run.font_id, style)? else {
                 continue;
             };
-            let face = &instance.face;
-            let scale = run.font_size / face.units_per_em() as f32;
-            for (glyph, [x, y]) in run.glyph_origins([run.x, 0.0]) {
-                let Some(outline) = u16::try_from(glyph.id)
-                    .ok()
-                    .and_then(|id| face.glyph_bounding_box(ttf_parser::GlyphId(id)))
-                else {
-                    continue;
-                };
+            for rect in run.outline_rects(&instance.face) {
                 let ink = run.synthesized_ink(
-                    [
-                        x + f32::from(outline.x_min) * scale,
-                        x + f32::from(outline.x_max) * scale,
-                    ],
-                    [
-                        y - f32::from(outline.y_max) * scale,
-                        y - f32::from(outline.y_min) * scale,
-                    ],
+                    [rect.x, rect.x + rect.width],
+                    [rect.y, rect.y + rect.height],
                     [0.0, 0.0],
                 );
                 bounds = Some(bounds.map_or(ink, |bounds| bounds.union(ink)));
@@ -1179,6 +1213,25 @@ impl<'a> TextContext<'a> {
         }
         Ok(bounds)
     }
+    pub(crate) fn place_line_emphasis(
+        &self,
+        paragraph: &Paragraph,
+        line: &mut Line,
+    ) -> Result<(), TextError> {
+        emphasis::place(self, paragraph, line)
+    }
+
+    pub(crate) fn finish_line_paint(
+        &self,
+        paragraph: &Paragraph,
+        line: &mut Line,
+    ) -> Result<(), TextError> {
+        line.refresh_ink_bounds();
+        line.links = line_boxes::links(paragraph, line);
+        line.decorations = decoration::paint(self, paragraph, line)?;
+        Ok(())
+    }
+
     pub(crate) fn prepare_paragraph<'p, 'context>(
         &'context self,
         paragraph: &'p Paragraph,

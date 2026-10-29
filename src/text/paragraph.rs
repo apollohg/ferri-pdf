@@ -1,8 +1,8 @@
 use crate::document::Paragraph;
 use crate::text::{
     AtomicMetrics, GlyphRun, Line, Piece, TextContext, TextError, autospace::Autospace, breaking,
-    decoration, ellipsis, hanging, hyphenation, line_boxes, paragraph_bidi, ruby, shape_line,
-    spacing, spacing_trim, whitespace,
+    ellipsis, hanging, hyphenation, line_boxes, paragraph_bidi, ruby, shape_line, spacing,
+    spacing_trim, whitespace,
 };
 use unicode_linebreak::{BreakClass, BreakOpportunity, break_property};
 
@@ -404,7 +404,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             ellipsis::ellipsize(prepared.context, paragraph, &mut line, self.available())?;
         }
         line.place();
-        crate::text::emphasis::place(prepared.context, paragraph, &mut line)?;
+        prepared.context.place_line_emphasis(paragraph, &mut line)?;
         if let Some(ruby) = &prepared.ruby {
             ruby.place(&mut line, self.atomics, self.containing_width)?;
         }
@@ -421,17 +421,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
                 index: fragment.index,
             });
         }
-        line.ink_bounds = line
-            .runs
-            .iter()
-            .flat_map(|run| std::iter::once(run).chain(&run.marks))
-            .filter_map(|run| {
-                run.ink_bounds
-                    .map(|ink| ink.map(|y| y + run.baseline_shift))
-            })
-            .reduce(|[a, b], [c, d]| [a.min(c), b.max(d)]);
-        line.links = line_boxes::links(paragraph, &line);
-        line.decorations = decoration::paint(prepared.context, paragraph, &line)?;
+        prepared.context.finish_line_paint(paragraph, &mut line)?;
         Ok(line)
     }
 

@@ -1162,9 +1162,11 @@ impl<'a> Builder<'_, 'a> {
         };
         let size = run.font_size;
         let width = shape.width * size;
-        run.set_math_glyphs(shape.glyphs, width);
+        run.set_math_glyphs(shape.glyphs, width, &instance.face);
         line.width = width;
         line.height = (shape.ascent + shape.descent) * size;
+        self.measurer.text.place_line_emphasis(paragraph, line)?;
+        self.measurer.text.finish_line_paint(paragraph, line)?;
         normal.width = width;
         normal.ascent = shape.ascent * size;
         normal.descent = shape.descent * size;
