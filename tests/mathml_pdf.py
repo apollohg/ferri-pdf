@@ -95,6 +95,41 @@ class MathmlPdf(unittest.TestCase):
         self.assertIn('1', extracted)
         self.assertIn('234', extracted)
 
+    def test_paired_script_baselines_use_math_constraints_in_the_pdf(self):
+        _, content = self.render('<math><msubsup><mn>8</mn><mn>1</mn><mn>2</mn></msubsup></math>')
+        glyphs = {glyph.text: glyph for glyph in content['glyphs']}
+        with TTFont(FONT) as font:
+            constants = font['MATH'].table.MathConstants
+            units = font['head'].unitsPerEm
+            script_size = FONT_SIZE * constants.ScriptPercentScaleDown / 100
+            cmap = font.getBestCmap()
+            def ascent(character, size):
+                return font['glyf'][cmap[ord(character)]].yMax * size / units
+            def descent(character, size):
+                return -font['glyf'][cmap[ord(character)]].yMin * size / units
+            def value(name):
+                return getattr(constants, name).Value * FONT_SIZE / units
+            down = max(value('SubscriptShiftDown'),
+                       ascent('1', script_size) - value('SubscriptTopMax'),
+                       value('SubscriptBaselineDropMin') + descent('8', FONT_SIZE))
+            up = max(value('SuperscriptShiftUp'),
+                     value('SuperscriptBottomMin') + descent('2', script_size),
+                     ascent('8', FONT_SIZE) - value('SuperscriptBaselineDropMax'))
+            gap = down - ascent('1', script_size) + up - descent('2', script_size)
+            if gap < value('SubSuperscriptGapMin'):
+                adjustment = min(max(value('SuperscriptBottomMaxWithSubscript') -
+                                     (up - descent('2', script_size)), 0),
+                                 value('SubSuperscriptGapMin') - gap)
+                up += adjustment
+                down += max(value('SubSuperscriptGapMin') - gap - adjustment, 0)
+            self.assertAlmostEqual(glyphs['8'].origin[1] - glyphs['1'].origin[1], down,
+                                   delta=TOLERANCE, msg='PDF subscript baseline must follow the font constraints')
+            self.assertAlmostEqual(glyphs['2'].origin[1] - glyphs['8'].origin[1], up,
+                                   delta=TOLERANCE, msg='PDF superscript baseline must follow the font constraints')
+            for character in ['1', '2']:
+                self.assertAlmostEqual(glyphs[character].matrix[0], script_size, delta=TOLERANCE,
+                                       msg='script sizing must survive PDF serialization')
+
     def test_stretched_fences_and_radicals_keep_font_size_and_extract_each_symbol_once(self):
         output, content = self.render('<math style="font-family:MathTest"><mo>(</mo><mroot><mfrac><mfrac><mn>1</mn><mn>2</mn></mfrac><mn>4</mn></mfrac><mn>3</mn></mroot><mo>)</mo></math>')
         self.assertFalse(content['images'], 'font assemblies must remain native selectable vector glyphs')

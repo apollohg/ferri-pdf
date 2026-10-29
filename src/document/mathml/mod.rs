@@ -89,6 +89,19 @@ fn script_children(
     let over = above.then(|| children.next()).flatten();
     (base, under, over)
 }
+fn script_pairs(
+    children: &mut impl Iterator<Item = MathBox>,
+    count: usize,
+) -> Vec<(MathBox, MathBox)> {
+    (0..count)
+        .map(|_| {
+            (
+                children.next().expect("valid subscript"),
+                children.next().expect("valid superscript"),
+            )
+        })
+        .collect()
+}
 struct Builder<'a> {
     sheet: &'a Stylesheet,
     resolver: &'a dyn ResourceResolver,
@@ -408,7 +421,7 @@ impl Builder<'_> {
         } else {
             computed = self
                 .sheet
-                .computed_without_box(element, parent, self.resolver)?;
+                .computed_with_resolver(element, parent, self.resolver)?;
             &computed
         };
         if style.display == Display::None {
@@ -436,9 +449,8 @@ impl Builder<'_> {
             )));
         }
         let mut content = match element.name() {
-            "math" | "mrow" | "mstyle" | "merror" | "mphantom" | "semantics" | "maction" => {
-                self.row(element, style, depth, layout)?
-            }
+            "math" | "mrow" | "mstyle" | "merror" | "mphantom" | "semantics" | "maction"
+            | "mprescripts" => self.row(element, style, depth, layout)?,
             "mi" | "mn" | "mtext" | "ms" | "annotation" => self.token_element(element, style)?,
             "mo" => self.operator(element, style, layout)?,
             "mspace" => self.space(element, style)?,
@@ -447,7 +459,9 @@ impl Builder<'_> {
             "msqrt" | "mroot" => self.radical(element, style, depth, layout)?,
             "msub" | "msup" | "msubsup" => self.scripts(element, style, depth, layout)?,
             "munder" | "mover" | "munderover" => self.limits(element, style, depth, layout)?,
-            other => return Err(unsupported(other)),
+            "mmultiscripts" => self.multiscripts(element, style, depth, layout)?,
+            "annotation-xml" | "mtable" | "mtr" | "mtd" => return Err(unsupported(element.name())),
+            _ => self.row(element, style, depth, layout)?,
         };
         if matches!(
             element.name(),
@@ -460,6 +474,24 @@ impl Builder<'_> {
         }
         Ok(content)
     }
+    fn in_flow_children<'d>(
+        &self,
+        element: Element<'d>,
+        style: &Style,
+    ) -> Result<Vec<Element<'d>>, DocumentError> {
+        let mut children = Vec::new();
+        for child in element.children(TreeRelation::Formatting) {
+            if self
+                .sheet
+                .computed_with_resolver(child, style, self.resolver)?
+                .display
+                != Display::None
+            {
+                children.push(child);
+            }
+        }
+        Ok(children)
+    }
     fn children(
         &self,
         element: Element<'_>,
@@ -468,31 +500,30 @@ impl Builder<'_> {
         layout: MathLayout,
     ) -> Result<Vec<MathBox>, DocumentError> {
         let mut boxes = Vec::new();
-        for (index, child) in element.children(TreeRelation::Formatting).enumerate() {
-            let computed = self
-                .sheet
-                .computed_without_box(child, style, self.resolver)?;
-            if computed.display != Display::None {
-                let child_layout = if index == 0 {
-                    layout
-                } else {
-                    MathLayout {
-                        form: matches!(
-                            element.name(),
-                            "msub"
-                                | "msup"
-                                | "msubsup"
-                                | "munder"
-                                | "mover"
-                                | "munderover"
-                                | "mmultiscripts"
-                        )
-                        .then_some(Form::Postfix),
-                        stretch: None,
-                    }
-                };
-                boxes.push(self.element(child, style, depth + 1, false, child_layout)?);
-            }
+        for (index, child) in self
+            .in_flow_children(element, style)?
+            .into_iter()
+            .enumerate()
+        {
+            let child_layout = if index == 0 {
+                layout
+            } else {
+                MathLayout {
+                    form: matches!(
+                        element.name(),
+                        "msub"
+                            | "msup"
+                            | "msubsup"
+                            | "munder"
+                            | "mover"
+                            | "munderover"
+                            | "mmultiscripts"
+                    )
+                    .then_some(Form::Postfix),
+                    stretch: None,
+                }
+            };
+            boxes.push(self.element(child, style, depth + 1, false, child_layout)?);
         }
         Ok(boxes)
     }
@@ -553,7 +584,10 @@ impl Builder<'_> {
         if id != run.font_id {
             return Ok(None);
         }
-        let Some(glyph) = instance.face.glyph_index(character) else {
+        let [glyph] = run.glyphs() else {
+            return Ok(None);
+        };
+        let Some(glyph) = u16::try_from(glyph.id).ok().map(ttf_parser::GlyphId) else {
             return Ok(None);
         };
         let Some(shape) = stretch::shape(
@@ -697,21 +731,14 @@ impl Builder<'_> {
             .attribute(element, "height", style)?
             .unwrap_or(0.0)
             .max(0.0);
-        let depth = self
-            .attribute(element, "depth", style)?
-            .unwrap_or(0.0)
-            .max(0.0);
         let width = match &style.width {
             Size::Value(LengthPercentage::Length(value)) => *value,
-            Size::Auto => self
-                .attribute(element, "width", style)?
-                .unwrap_or(0.0)
-                .max(0.0),
+            Size::Auto => 0.0,
             _ => return Err(unsupported("intrinsic or percentage mspace width")),
         };
         let height = match &style.height {
             Size::Value(LengthPercentage::Length(value)) => *value,
-            Size::Auto => ascent + depth,
+            Size::Auto => 0.0,
             _ => return Err(unsupported("intrinsic or percentage mspace height")),
         };
         Ok(MathBox {
@@ -733,10 +760,7 @@ impl Builder<'_> {
         let inner = self.row(element, style, depth, layout)?;
         let width = match &style.width {
             Size::Value(LengthPercentage::Length(value)) => *value,
-            Size::Auto => self
-                .attribute(element, "width", style)?
-                .unwrap_or(inner.width)
-                .max(0.0),
+            Size::Auto => inner.width,
             _ => return Err(unsupported("intrinsic or percentage mpadded width")),
         };
         let ascent = self
@@ -937,18 +961,60 @@ impl Builder<'_> {
         style: &Style,
     ) -> Result<MathBox, DocumentError> {
         let metrics = self.metrics(style)?;
-        let mut down = sub.as_ref().map_or(0.0, |sub| {
+        let [down, up] = Self::script_shifts(&base, sub.as_ref(), sup.as_ref(), style, &metrics);
+        let x = base.width;
+        let large = base
+            .operator
+            .as_ref()
+            .is_some_and(|operator| operator.large);
+        let italic = if large { 0.0 } else { base.italic };
+        let sub_x = x - if large { base.italic } else { 0.0 };
+        let width = base
+            .width
+            .max(sub.as_ref().map_or(0.0, |sub| sub_x + sub.width))
+            .max(sup.as_ref().map_or(0.0, |sup| x + italic + sup.width))
+            + metrics.after_script;
+        let physical = |x, size| if style.rtl { width - x - size } else { x };
+        let mut result = MathBox {
+            width,
+            ascent: base.ascent,
+            descent: base.descent,
+            ink_ascent: base.ink_ascent,
+            ink_descent: base.ink_descent,
+            operator: base.operator.clone(),
+            ..Default::default()
+        };
+        let base_x = physical(0.0, base.width);
+        result.place(base, base_x, 0.0);
+        if let Some(sub) = sub {
+            let sub_x = physical(sub_x, sub.width);
+            result.place(sub, sub_x, down);
+        }
+        if let Some(sup) = sup {
+            let sup_x = physical(x + italic, sup.width);
+            result.place(sup, sup_x, -up);
+        }
+        Ok(result)
+    }
+    fn script_shifts(
+        base: &MathBox,
+        sub: Option<&MathBox>,
+        sup: Option<&MathBox>,
+        style: &Style,
+        metrics: &Metrics,
+    ) -> [f32; 2] {
+        let mut down = sub.map_or(0.0, |sub| {
             metrics
                 .sub_shift
                 .max(sub.ink_ascent - metrics.sub_top)
                 .max(metrics.sub_drop + base.ink_descent)
         });
-        let mut up = sup.as_ref().map_or(0.0, |sup| {
+        let mut up = sup.map_or(0.0, |sup| {
             metrics.sup_shift[usize::from(style.math.shift)]
                 .max(metrics.sup_bottom + sup.ink_descent)
                 .max(base.ink_ascent - metrics.sup_drop)
         });
-        if let (Some(sub), Some(sup)) = (&sub, &sup) {
+        if let (Some(sub), Some(sup)) = (sub, sup) {
             let gap = down - sub.ink_ascent + up - sup.ink_descent;
             if gap < metrics.script_gap {
                 let adjustment = (metrics.sup_bottom_with_sub - (up - sup.ink_descent))
@@ -958,25 +1024,111 @@ impl Builder<'_> {
                 down += (metrics.script_gap - gap - adjustment).max(0.0);
             }
         }
-        let x = base.width;
+        [down, up]
+    }
+    fn multiscripts(
+        &self,
+        element: Element<'_>,
+        style: &Style,
+        depth: usize,
+        layout: MathLayout,
+    ) -> Result<MathBox, DocumentError> {
+        let sources = self.in_flow_children(element, style)?;
+        if sources
+            .first()
+            .is_none_or(|child| child.name() == "mprescripts")
+        {
+            return self.row(element, style, depth, layout);
+        }
+        let separators: Vec<_> = sources
+            .iter()
+            .enumerate()
+            .filter(|(_, child)| child.name() == "mprescripts")
+            .map(|(index, _)| index)
+            .collect();
+        if separators.len() > 1 {
+            return self.row(element, style, depth, layout);
+        }
+        let post_count = separators.first().copied().unwrap_or(sources.len()) - 1;
+        let pre_count = separators
+            .first()
+            .map_or(0, |index| sources.len() - index - 1);
+        if post_count % 2 != 0 || pre_count % 2 != 0 {
+            return self.row(element, style, depth, layout);
+        }
+        let mut children = self.children(element, style, depth, layout)?.into_iter();
+        let base = children.next().expect("valid tensor base");
+        let post = script_pairs(&mut children, post_count / 2);
+        let marker = separators
+            .first()
+            .map(|_| children.next().expect("prescripts separator"));
+        let pre = script_pairs(&mut children, pre_count / 2);
+        let metrics = self.metrics(style)?;
+        let [down, up] = post
+            .iter()
+            .chain(&pre)
+            .fold([0.0f32, 0.0f32], |shifts, (sub, sup)| {
+                let pair = Self::script_shifts(&base, Some(sub), Some(sup), style, &metrics);
+                [shifts[0].max(pair[0]), shifts[1].max(pair[1])]
+            });
         let large = base
             .operator
             .as_ref()
             .is_some_and(|operator| operator.large);
-        let italic = if large { 0.0 } else { base.italic };
-        let sub_x = x - if large { base.italic } else { 0.0 };
+        let sub_italic = if large { base.italic } else { 0.0 };
+        let sup_italic = if large { 0.0 } else { base.italic };
+        let has_posts = !post.is_empty();
+        let mut nodes = Vec::new();
+        let mut offset = 0.0;
+        let pre_start = 1 + post_count + usize::from(marker.is_some());
+        for (index, (sub, sup)) in pre.into_iter().enumerate() {
+            offset += metrics.after_script;
+            let width = sub.width.max(sup.width);
+            let sub_x = offset + width - sub.width;
+            let sup_x = offset + width - sup.width;
+            nodes.push((pre_start + 2 * index, sub, sub_x, down));
+            nodes.push((pre_start + 2 * index + 1, sup, sup_x, -up));
+            offset += width;
+        }
+        let operator = base.operator.clone();
+        let (ascent, descent) = (base.ascent, base.descent);
+        if let Some(marker) = marker {
+            nodes.push((1 + post_count, marker, offset, 0.0));
+        }
+        let base_x = offset;
+        offset += base.width;
+        nodes.push((0, base, base_x, 0.0));
+        for (index, (sub, sup)) in post.into_iter().enumerate() {
+            let width = sub.width.max(sup.width);
+            nodes.push((1 + 2 * index, sub, offset - sub_italic, down));
+            nodes.push((2 + 2 * index, sup, offset + sup_italic, -up));
+            offset += width + metrics.after_script;
+        }
+        let width = nodes
+            .iter()
+            .filter(|(index, _, _, _)| Some(index) != separators.first())
+            .map(|(_, child, x, _)| x + child.width)
+            .fold(0.0, f32::max)
+            + if has_posts { metrics.after_script } else { 0.0 };
         let mut result = MathBox {
-            operator: base.operator.clone(),
+            width,
+            ascent,
+            descent,
+            operator,
             ..Default::default()
         };
-        result.place(base, 0.0, 0.0);
-        if let Some(sub) = sub {
-            result.place(sub, sub_x, down);
+        nodes.sort_by_key(|(index, _, _, _)| *index);
+        for (_, child, x, y) in nodes {
+            let x = if style.rtl {
+                width - x - child.width
+            } else {
+                x
+            };
+            result.place(child, x, y);
         }
-        if let Some(sup) = sup {
-            result.place(sup, x + italic, -up);
-        }
-        result.width += metrics.after_script;
+        result.width = width;
+        result.ink_ascent = result.ascent;
+        result.ink_descent = result.descent;
         Ok(result)
     }
     fn limits(
@@ -1015,17 +1167,7 @@ impl Builder<'_> {
             })
             .map(|(_, child)| child.width)
             .fold(0.0, f32::max);
-        let mut sources = Vec::new();
-        for child in element.children(TreeRelation::Formatting) {
-            if self
-                .sheet
-                .computed_without_box(child, style, self.resolver)?
-                .display
-                != Display::None
-            {
-                sources.push(child);
-            }
-        }
+        let sources = self.in_flow_children(element, style)?;
         for (index, child) in children.iter_mut().enumerate() {
             if index == 0 && layout.stretch.is_some() {
                 continue;

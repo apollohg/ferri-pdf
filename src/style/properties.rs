@@ -1570,6 +1570,11 @@ fn font_size(
     }
     style.size = match input {
         Input::Copy(_) => unreachable!("computed copy returned above"),
+        Input::Value(value)
+            if value.keyword() == Some(Keyword::Math) && parent.math.depth == style.math.depth =>
+        {
+            parent.size
+        }
         Input::Value(value) if value.keyword() == Some(Keyword::Math) => {
             parent.size
                 * crate::style::math_values::scale(

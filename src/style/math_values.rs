@@ -68,6 +68,35 @@ pub(super) fn scale(
     }
 }
 
+pub(super) fn attribute_length(source: &str) -> Result<Option<Component>, StyleError> {
+    Ok(crate::style::declaration::value(
+        crate::style::grammar::Property::MarginTop,
+        source,
+        &mut 0,
+    )?
+    .filter(|value| {
+        matches!(
+            value.unwrap(),
+            Component::Length(_)
+                | Component::Percentage(_)
+                | Component::Math(
+                    _,
+                    crate::style::calc::Kind::Length | crate::style::calc::Kind::Percentage,
+                    _
+                )
+        )
+    }))
+}
+
+pub(super) fn non_percentage_attribute(source: &str) -> Result<bool, StyleError> {
+    Ok(attribute_length(source)?.is_some_and(|value| {
+        !matches!(
+            value.unwrap(),
+            Component::Percentage(_) | Component::Math(_, crate::style::calc::Kind::Percentage, _)
+        )
+    }))
+}
+
 impl crate::style::Stylesheet {
     pub(crate) fn math_attribute_length(
         &self,
@@ -75,12 +104,7 @@ impl crate::style::Stylesheet {
         style: &Style,
         resolver: &dyn crate::resources::ResourceResolver,
     ) -> Result<Option<crate::style::LengthPercentage>, StyleError> {
-        let Some(value) = crate::style::declaration::value(
-            crate::style::grammar::Property::MarginTop,
-            source,
-            &mut 0,
-        )?
-        else {
+        let Some(value) = attribute_length(source)? else {
             return Ok(None);
         };
         let relative = self.inherited(style, self.page_area(), resolver);

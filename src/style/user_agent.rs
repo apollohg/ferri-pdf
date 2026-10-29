@@ -1078,6 +1078,17 @@ fn math_defaults(element: Element<'_>) -> Result<Vec<DefaultDeclaration>, StyleE
         if matches!(parent.name(), "semantics" | "maction") && index > 0 {
             add(Property::Display, "none")?;
         }
+        if parent.name() == "mmultiscripts" {
+            let after_separator = children[..index]
+                .iter()
+                .any(|child| child.name() == "mprescripts");
+            let position = index + 1;
+            if (after_separator && position % 2 == 1) || (!after_separator && position % 2 == 0) {
+                add(Property::MathShift, "compact")?;
+            } else if after_separator {
+                add(Property::MathShift, "inherit")?;
+            }
+        }
         if parent.name() == "mfrac" {
             add(Property::MathDepth, "auto-add")?;
             add(Property::MathStyle, "compact")?;
@@ -1146,14 +1157,56 @@ fn math_defaults(element: Element<'_>) -> Result<Vec<DefaultDeclaration>, StyleE
             "none",
         )?;
     }
+    if matches!(tag, "mspace" | "mpadded")
+        && let Some(width) = element.attr("width")
+        && crate::style::math_values::non_percentage_attribute(width)?
+    {
+        append(&mut output, Origin::AuthorHint, Property::Width, width)?;
+    }
+    if tag == "mspace" {
+        let mut dimensions = Vec::new();
+        for attribute in ["height", "depth"] {
+            if let Some(value) = element.attr(attribute)
+                && crate::style::math_values::non_percentage_attribute(value)?
+            {
+                dimensions.push(value);
+            }
+        }
+        let height = match dimensions.as_slice() {
+            [one] => Some((*one).to_owned()),
+            [height, depth] => Some(format!("calc({height} + {depth})")),
+            _ => None,
+        };
+        if let Some(height) = height {
+            append(&mut output, Origin::AuthorHint, Property::Height, &height)?;
+        }
+    }
     for (attribute, property) in [
         ("mathcolor", Property::Color),
         ("mathbackground", Property::BackgroundColor),
         ("mathsize", Property::FontSize),
     ] {
         if let Some(value) = element.attr(attribute) {
-            append(&mut output, Origin::AuthorHint, property, value)?;
+            let valid = if property == Property::FontSize {
+                crate::style::math_values::attribute_length(value)?.is_some()
+            } else {
+                declaration::value(property, value, &mut 0)?.is_some()
+            };
+            if valid {
+                append(&mut output, Origin::AuthorHint, property, value)?;
+            }
         }
+    }
+    if let Some(direction) = element
+        .attr("dir")
+        .filter(|value| value.eq_ignore_ascii_case("ltr") || value.eq_ignore_ascii_case("rtl"))
+    {
+        append(
+            &mut output,
+            Origin::AuthorHint,
+            Property::Direction,
+            direction,
+        )?;
     }
     if let Some(value) = element.attr("displaystyle") {
         if value.eq_ignore_ascii_case("true") {

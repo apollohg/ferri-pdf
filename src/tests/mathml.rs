@@ -317,3 +317,203 @@ fn automatic_math_italic_uses_original_text_node_boundaries_before_collapsing_sp
         "Core §4.2 applies math-auto separately to original single-character text nodes; comments and collapsed whitespace must not change eligibility"
     );
 }
+
+#[test]
+fn tensor_prescripts_and_postscripts_share_baselines_and_single_pair_matches_subsup() {
+    let ordinary = math("<math><msubsup><mn>8</mn><mn>1</mn><mn>2</mn></msubsup></math>");
+    let tensor = math("<math><mmultiscripts><mn>8</mn><mn>1</mn><mn>2</mn></mmultiscripts></math>");
+    assert_eq!(
+        (tensor.area.width, tensor.area.height),
+        (ordinary.area.width, ordinary.area.height),
+        "Core §3.4.3.1 requires one postscript pair to match msubsup exactly"
+    );
+    for (actual, expected) in tensor.lines.iter().zip(&ordinary.lines) {
+        assert_eq!(
+            (actual.text.as_str(), actual.x, actual.baseline),
+            (expected.text.as_str(), expected.x, expected.baseline),
+            "single-pair tensor geometry differs from msubsup"
+        );
+    }
+    let view = math(
+        "<math><mmultiscripts><mn>8</mn><mn>1</mn><mn>2</mn><mprescripts/><mn>3</mn><mn>4</mn></mmultiscripts></math>",
+    );
+    let find = |text| view.lines.iter().find(|line| line.text == text).unwrap();
+    let (base, post_sub, post_sup, pre_sub, pre_sup) =
+        (find("8"), find("1"), find("2"), find("3"), find("4"));
+    assert!(
+        pre_sub.x + pre_sub.width <= base.x && pre_sup.x + pre_sup.width <= base.x,
+        "both prescripts must precede the base without overlap"
+    );
+    assert!(
+        post_sub.x >= base.x + base.width && post_sup.x >= base.x + base.width,
+        "both postscripts must follow the base"
+    );
+    assert_eq!(
+        (pre_sub.baseline, pre_sup.baseline),
+        (post_sub.baseline, post_sup.baseline),
+        "tensor script shifts must be shared across pre/post pairs"
+    );
+    let invalid = math("<math><mmultiscripts><mn>8</mn><mn>1</mn></mmultiscripts></math>");
+    assert_eq!(
+        invalid.lines[0].baseline, invalid.lines[1].baseline,
+        "an odd script count recovers through mrow, without silently dropping a script"
+    );
+}
+
+#[test]
+fn unknown_legacy_math_elements_recover_as_rows_without_inventing_old_notation() {
+    let view = math(
+        "<math><mfenced open='[' close=']'><mn>1</mn><mn>2</mn></mfenced><mstack><mn>3</mn><mn>4</mn></mstack></math>",
+    );
+    assert_eq!(
+        view.lines
+            .iter()
+            .map(|line| line.text.as_str())
+            .collect::<Vec<_>>(),
+        ["1", "2", "3", "4"],
+        "Core §4.1 maps unknown MathML elements to mrow; legacy fence and stack attributes do not invent extra notation"
+    );
+    assert!(
+        view.lines
+            .windows(2)
+            .all(|pair| pair[0].baseline == pair[1].baseline),
+        "unknown grouping elements use row baselines"
+    );
+    let script = math("<math><mmultiscripts><mn>8</mn><none/><mn>2</mn></mmultiscripts></math>");
+    assert_eq!(
+        script
+            .lines
+            .iter()
+            .map(|line| line.text.as_str())
+            .collect::<Vec<_>>(),
+        ["8", "2"],
+        "the old none element is an empty unknown row, usable as a tensor placeholder"
+    );
+}
+
+#[test]
+fn legacy_math_style_hints_accept_only_their_attribute_grammar_and_follow_author_css() {
+    let view = math(
+        "<math mathcolor='red'><mn mathsize='small'>1</mn><mn mathsize='inherit' mathcolor='initial'>2</mn><mn mathsize='50%'>3</mn><mn mathsize='50%' style='font-size:11pt'>4</mn></math>",
+    );
+    assert_eq!(
+        view.lines
+            .iter()
+            .map(|line| line.font_size)
+            .collect::<Vec<_>>(),
+        [20.0, 20.0, 10.0, 11.0],
+        "mathsize accepts length-percentage attributes, not CSS global/absolute-size keywords, and author CSS wins over valid hints"
+    );
+    assert!(
+        view.lines.iter().all(|line| line.color.rgb == [255, 0, 0]),
+        "invalid mathcolor=initial must inherit the parent's valid red hint"
+    );
+}
+
+#[test]
+fn math_direction_hints_mirror_inline_positions_scripts_and_stretched_fence_glyphs() {
+    let view = math(
+        "<math dir='rtl'><mn>1</mn><msubsup><mn>8</mn><mn>2</mn><mn>3</mn></msubsup><mn>4</mn></math>",
+    );
+    let find = |text| view.lines.iter().find(|line| line.text == text).unwrap();
+    assert!(
+        find("1").x > find("8").x && find("8").x > find("4").x,
+        "dir=rtl is a MathML presentation hint affecting row progression"
+    );
+    assert!(
+        find("2").x + find("2").width <= find("8").x
+            && find("3").x + find("3").width <= find("8").x,
+        "scripts must follow the base in the RTL inline direction"
+    );
+    let ltr = math(
+        "<math style='font-family:MathTest'><mo>(</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>)</mo></math>",
+    );
+    let rtl = math(
+        "<math style='font-family:MathTest;direction:rtl'><mo>(</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>)</mo></math>",
+    );
+    let glyphs = |view: &crate::layout::ViewportPaint, text: &str| {
+        view.lines
+            .iter()
+            .find(|line| line.text == text)
+            .unwrap()
+            .runs[0]
+            .glyphs()
+            .iter()
+            .map(|glyph| glyph.id)
+            .collect::<Vec<_>>()
+    };
+    assert_eq!(
+        glyphs(&rtl, "("),
+        glyphs(&ltr, ")"),
+        "stretching must use the bidi-mirrored base glyph selected by normal shaping"
+    );
+    assert_eq!(
+        glyphs(&rtl, ")"),
+        glyphs(&ltr, "("),
+        "both fence assemblies must preserve bidi mirroring"
+    );
+}
+
+#[test]
+fn space_dimension_attributes_participate_in_the_cascade_and_preserve_negative_depth() {
+    let view =
+        math("<math><mn>1</mn><mspace width='30pt' style='width:inherit'/><mn>2</mn></math>");
+    assert_eq!(
+        view.lines[1].x,
+        view.lines[0].x + view.lines[0].width,
+        "an author width:inherit overriding the mspace width hint must inherit auto, rather than reapply the attribute after the cascade"
+    );
+    let space = math(
+        "<math><mspace width='10pt' height='30pt' depth='-10pt' mathbackground='red'/></math>",
+    );
+    assert_eq!(
+        space.area.height, 20.0,
+        "mspace height presentation hint is calc(height + depth), before nonnegative CSS height clamping; negative depth is not independently clamped"
+    );
+    assert_eq!(
+        space.baseline,
+        Some(30.0),
+        "the requested ascent comes from the separately clamped height attribute"
+    );
+}
+
+#[test]
+fn unchanged_math_depth_does_not_load_unused_font_metrics_while_formatting_a_space() {
+    #[derive(Default)]
+    struct Resolver(std::cell::RefCell<Vec<String>>);
+    impl crate::resources::ResourceResolver for Resolver {
+        fn resolve(
+            &self,
+            reference: &str,
+            _: &crate::resources::ResourceBase,
+        ) -> Result<crate::resources::Resource, crate::resources::ResourceError> {
+            self.0.borrow_mut().push(reference.to_owned());
+            Err(crate::resources::ResourceError::UnsupportedScheme(
+                reference.to_owned(),
+            ))
+        }
+    }
+    let resolver = Resolver::default();
+    let options = local_options();
+    crate::document::StyledDocument::parse("<style>@font-face{font-family:UnusedMath;src:url(unused-math.ttf)}math{font-family:UnusedMath}</style><math><mspace width='10pt' height='20pt'/></math>", &options.base, &[], &resolver).expect("formatting a fixed-size math space needs no font-size metrics when depth is unchanged");
+    assert!(
+        resolver.0.borrow().is_empty(),
+        "Core §4.5 returns scale 1 before consulting MATH when inherited and computed depths match; unexpected fetches: {:?}",
+        resolver.0.borrow()
+    );
+}
+
+#[test]
+fn hidden_semantic_annotations_do_not_activate_unsupported_style_or_font_work() {
+    let view = math(
+        "<math><semantics><mn>1</mn><annotation style='tab-size:2pt'>hidden</annotation></semantics><maction><mn>2</mn><mrow style='tab-size:2pt'><mn>3</mn></mrow></maction></math>",
+    );
+    assert_eq!(
+        view.lines
+            .iter()
+            .map(|line| line.text.as_str())
+            .collect::<Vec<_>>(),
+        ["1", "2"],
+        "Core UA display:none annotations and alternative actions must take the renderer's normal hidden-box path"
+    );
+}
