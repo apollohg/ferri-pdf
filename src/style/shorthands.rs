@@ -241,6 +241,7 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::PageBreakAfter => legacy_break(&value, P::BreakAfter)?,
         P::PageBreakInside => legacy_break(&value, P::BreakInside)?,
         P::WordWrap => alias(&value, P::OverflowWrap),
+        P::ColorAdjust => alias(&value, P::PrintColorAdjust),
         P::DashWebkitAppearance => alias(&value, P::Appearance),
         // SVG 2 §13.7.3: the value applies to each marker longhand unchanged.
         P::Marker => MARKERS

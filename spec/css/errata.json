@@ -645,6 +645,13 @@
     }
   },
   "additions": {
+    "color-adjust": {
+      "syntax": "<'print-color-adjust'>",
+      "initial": ["print-color-adjust"],
+      "inherited": true,
+      "groups": ["CSS Color Adjustment"],
+      "source": "https://www.w3.org/TR/2025/CR-css-color-adjust-1-20251216/#propdef-color-adjust"
+    },
     "box-shadow-color": {
       "syntax": "<color>#",
       "initial": "currentcolor",
