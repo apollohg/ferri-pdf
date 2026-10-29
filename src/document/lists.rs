@@ -12,6 +12,9 @@ pub(super) fn used_style(marker: &Style) -> Style {
         .propagated
         .clone_from(&marker.text_decorations.propagated);
     used.unicode_bidi = marker.unicode_bidi;
+    // `initial-letter` applies to inside markers, and an outside marker takes no inline place
+    // to start (CSS Inline 3 §7.3).
+    used.initial_letter = marker.initial_letter;
     used
 }
 

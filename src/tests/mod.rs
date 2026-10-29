@@ -21,6 +21,7 @@ mod foundations_selectors;
 mod foundations_syntax;
 mod foundations_values;
 mod generated_content;
+mod initial_letters;
 mod inline_boxes;
 mod leaders;
 mod list_images;

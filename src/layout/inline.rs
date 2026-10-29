@@ -6,7 +6,7 @@ use crate::graphics::{
 };
 use crate::layout::LayoutError;
 use crate::layout::geometry::{Edges, inline_horizontal};
-use crate::layout::measure::{MeasuredBlock, Measurer};
+use crate::layout::measure::{FlowItem, MeasuredBlock, Measurer};
 use crate::style::BaselineSource;
 use crate::text::{AtomicMetrics, BoxFragment, GlyphRun};
 
@@ -17,6 +17,26 @@ pub(super) struct MeasuredAtomic<'a> {
     pub block: MeasuredBlock<'a>,
     pub metrics: AtomicMetrics,
     pub margin_top: f32,
+    /// An initial letter's place against its originating line, which it does not grow.
+    pub letter: Option<LetterExtent>,
+}
+
+/// An initial letter's margin box against its originating line box (CSS Inline 3 §7.6).
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub(super) struct LetterExtent {
+    /// Its top and bottom below the line box's top.
+    pub top: f32,
+    pub bottom: f32,
+    /// How far its inline-start edge is inset to kern its glyphs to the line's start
+    /// (§7.6.2); the advance it takes on the line is its width less this.
+    pub kerning: f32,
+}
+impl LetterExtent {
+    /// How far the originating line moves down so that the letter stays below the
+    /// containing block's block-start content edge (§7.6.1).
+    pub(super) fn rise(&self) -> f32 {
+        (-self.top).max(0.0)
+    }
 }
 
 /// Measures an atomic inline, which is laid out unbroken.
@@ -46,6 +66,16 @@ fn measure_atomic<'a>(
     containing_height: Option<f32>,
     containing_rtl: bool,
 ) -> Result<MeasuredAtomic<'a>, LayoutError> {
+    if let Some(letter) = block.initial_letter() {
+        return measure_initial_letter(
+            measurer,
+            block,
+            letter,
+            containing_width,
+            containing_height,
+            containing_rtl,
+        );
+    }
     let (measured, geometry) = measure_shrink_to_fit(
         measurer,
         block,
@@ -70,6 +100,146 @@ fn measure_atomic<'a>(
             baseline: content.map_or(height, |baseline| margin[0] + baseline),
             synthesized_baseline: content.is_none(),
         },
+        block: measured,
+        margin_top: margin[0],
+        letter: None,
+    })
+}
+
+/// Measures an initial letter box (CSS Inline 3 §§7.5.5–7.6.2). Its alignment points sit at
+/// the surrounding text's: the edges of an atomic inline's content box, or else those its
+/// trimmed line box holds, or with `border-box` its border edges. An automatically sized
+/// inline letter's content box fits its sink and its glyph outlines; a definite one aligns
+/// its line by `align-content`.
+fn measure_initial_letter<'a>(
+    measurer: &mut Measurer<'_>,
+    block: &'a BlockBox,
+    letter: &crate::document::InitialLetterBox,
+    containing_width: f32,
+    containing_height: Option<f32>,
+    containing_rtl: bool,
+) -> Result<MeasuredAtomic<'a>, LayoutError> {
+    let style = block.style();
+    let initial = style
+        .initial_letter
+        .expect("an initial letter has a size and sink");
+    let border_box = style.initial_letter_align.border_box;
+    let surrounding = letter.surrounding;
+    let (mut measured, mut geometry) = measure_shrink_to_fit(
+        measurer,
+        block,
+        containing_width,
+        containing_height,
+        containing_rtl,
+    )?;
+    let margin = geometry.margin.map(|margin| margin.unwrap_or(0.0));
+    let start = geometry.padding[0] + geometry.border[0];
+    let end = geometry.padding[2] + geometry.border[2];
+    let mut kerning = 0.0;
+    // The border box top below the line box top.
+    let top = if letter.atomic {
+        if border_box {
+            surrounding.over_position(initial, measured.height)
+        } else {
+            surrounding.over_position(initial, measured.height - start - end) - start
+        }
+    } else {
+        let Some(FlowItem::Paragraph(paragraph)) = measured
+            .items
+            .iter()
+            .find(|item| matches!(item, FlowItem::Paragraph(_)))
+        else {
+            unreachable!("an inline initial letter holds its contents' paragraph")
+        };
+        let [line] = paragraph.lines.as_slice() else {
+            return Err(LayoutError::UnsupportedInitialLetter {
+                feature: "contents wrapping onto several lines",
+            });
+        };
+        let outline = measurer.text.outline_bounds(paragraph.paragraph, line)?;
+        // The outlines' extent below the line box top, which is the over alignment point.
+        let [ink_top, ink_bottom] = outline.map_or([0.0, line.height], |rect| {
+            [rect.y + line.ascent, rect.y + rect.height + line.ascent]
+        });
+        let ink_bottom = ink_bottom.max(line.height);
+        let automatic = style.height == crate::style::Size::Auto;
+        // The content box's extent above the line box top: glyphs above the over point,
+        // which only padding or borders bring into it, or `align-content`'s free space.
+        let lead = if automatic {
+            if start > 0.0 {
+                (-ink_top).max(0.0)
+            } else {
+                0.0
+            }
+        } else {
+            let content = measured.height - start - end;
+            crate::flex::spacing(
+                super::flex::alignment(style.flex.align_content, false),
+                content - line.height,
+                1,
+            )
+            .0
+        };
+        // The content box's extent below the line box top that reaches the sink's under
+        // point from a line box top at `line_top`, and covers the glyphs.
+        let fitted =
+            |line_top: f32| (surrounding.under_of(initial.sink) - line_top).max(ink_bottom);
+        let (top, below) = if border_box {
+            let natural = start + lead + ink_bottom + end;
+            let top = surrounding.over_position(initial, natural);
+            (top, fitted(top + start + lead + end))
+        } else {
+            let line_top = surrounding.over_position(initial, line.height);
+            (line_top - lead - start, fitted(line_top))
+        };
+        if style.width == crate::style::Size::Auto
+            && (0..4).all(|side| {
+                style.padding[side].is_zero() && style.decoration.borders[side].used_width() == 0.0
+            })
+            && let Some(rect) = outline
+        {
+            kerning = if style.rtl {
+                line.width - (rect.x + rect.width)
+            } else {
+                rect.x
+            };
+        }
+        if automatic || lead != 0.0 {
+            let content = if automatic {
+                below
+            } else {
+                measured.height - start - end - lead
+            };
+            geometry.padding[0] += lead;
+            measured = measurer.format_block(
+                block,
+                geometry.clone(),
+                false,
+                containing_height,
+                Some(content),
+            )?;
+        }
+        top
+    };
+    let width = margin[3]
+        + geometry.border[3]
+        + geometry.padding[3]
+        + geometry.width
+        + geometry.padding[1]
+        + geometry.border[1]
+        + margin[1];
+    Ok(MeasuredAtomic {
+        metrics: AtomicMetrics {
+            width: width - kerning,
+            height: 0.0,
+            baseline: 0.0,
+            synthesized_baseline: false,
+        },
+        letter: Some(LetterExtent {
+            top: top - margin[0],
+            bottom: top + measured.height + margin[2],
+            kerning,
+        }),
         block: measured,
         margin_top: margin[0],
     })

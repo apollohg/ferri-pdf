@@ -132,7 +132,9 @@ impl<'a> Paginator<'a, '_, '_> {
             block.geometry.containing_x + block.geometry.containing_width,
         ];
         let margin = self.pending_value();
-        let mut y = self.y + margin;
+        // An independent formatting context clears initial letters rather than narrowing
+        // beside them (CSS Inline 3 §7.9.2).
+        let mut y = context.letter_clearance(self.page, self.y + margin, &self.measurer.work)?;
         loop {
             self.measurer.work.spend(1)?;
             let (band, next) =
@@ -474,7 +476,14 @@ impl<'a> Paginator<'a, '_, '_> {
         let style = measured.style;
         let side = style.floating().expect("float source has an active side");
         let context = self.floats.last().expect("flow has a float context");
-        let y = context.clearance(self.page, y, style.clear, style.rtl, &self.measurer.work)?;
+        let y = context.float_clearance(
+            self.page,
+            y,
+            style.clear,
+            side,
+            style.rtl,
+            &self.measurer.work,
+        )?;
         let placed = context.place(
             self.page,
             y,

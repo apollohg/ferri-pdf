@@ -7,6 +7,9 @@ struct Exclusion {
     page: usize,
     side: FloatSide,
     margin: Rect,
+    /// An initial letter's, which is in-flow content rather than a float (CSS Inline 3
+    /// §7.9.3).
+    letter: bool,
 }
 
 #[derive(Clone, Default)]
@@ -19,11 +22,41 @@ impl FloatContext {
     pub(crate) fn insert(&mut self, side: FloatSide, fragments: Vec<(usize, Rect)>) {
         self.last_start = fragments.first().map(|(page, rect)| (*page, rect.y));
         self.exclusions
-            .extend(
-                fragments
-                    .into_iter()
-                    .map(|(page, margin)| Exclusion { page, side, margin }),
-            );
+            .extend(fragments.into_iter().map(|(page, margin)| Exclusion {
+                page,
+                side,
+                margin,
+                letter: false,
+            }));
+    }
+
+    /// Excludes the lines after an initial letter's originating line that its margin box
+    /// `margin` reaches on `page` at their `side` start (CSS Inline 3 §7.5).
+    pub(crate) fn insert_letter(&mut self, page: usize, side: FloatSide, margin: Rect) {
+        self.exclusions.push(Exclusion {
+            page,
+            side,
+            margin,
+            letter: true,
+        });
+    }
+
+    /// The bottom of the initial letters on `page`, which a block that starts with an
+    /// initial letter or establishes an independent formatting context clears (§7.9.2).
+    pub(crate) fn letter_clearance(
+        &self,
+        page: usize,
+        y: f32,
+        work: &Budget,
+    ) -> Result<f32, LayoutError> {
+        let mut bottom = y;
+        for exclusion in &self.exclusions {
+            work.spend(1)?;
+            if exclusion.letter && exclusion.page == page {
+                bottom = bottom.max(exclusion.margin.y + exclusion.margin.height);
+            }
+        }
+        Ok(bottom)
     }
 
     pub(crate) fn last_start(&self) -> Option<(usize, f32)> {
@@ -133,6 +166,33 @@ impl FloatContext {
         Ok(bottom)
     }
 
+    /// Where a float on `side` styled `clear` may start at or below `y` on `page`. `clear`
+    /// does not see initial letters, but a float on their inline-start side placed beside
+    /// one clears it (CSS Inline 3 §7.9.3).
+    pub(crate) fn float_clearance(
+        &self,
+        page: usize,
+        y: f32,
+        clear: Clear,
+        side: FloatSide,
+        rtl: bool,
+        work: &Budget,
+    ) -> Result<f32, LayoutError> {
+        let mut bottom = y;
+        for exclusion in &self.exclusions {
+            work.spend(1)?;
+            let clears = if exclusion.letter {
+                exclusion.side == side
+            } else {
+                clear.clears(exclusion.side, rtl)
+            };
+            if exclusion.page == page && clears {
+                bottom = bottom.max(exclusion.margin.y + exclusion.margin.height);
+            }
+        }
+        Ok(bottom)
+    }
+
     pub(crate) fn place(
         &self,
         page: usize,
@@ -145,7 +205,7 @@ impl FloatContext {
         let mut y = source_y;
         for float in &self.exclusions {
             work.spend(1)?;
-            if float.page == page {
+            if float.page == page && !float.letter {
                 y = y.max(float.margin.y);
             }
         }

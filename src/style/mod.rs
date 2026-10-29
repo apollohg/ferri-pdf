@@ -33,6 +33,7 @@ mod generated;
 mod grammar;
 mod grid_values;
 mod inert;
+mod initial_letter_values;
 mod layers;
 mod list_values;
 mod loader;
@@ -118,6 +119,7 @@ pub(crate) use grid_values::{
     AutoFlow, COLUMNS, GridAreas, GridLine, GridStyle, MAX_GRID_LINE, NamedArea, ROWS, Subgrid,
     TrackBreadth, TrackList, TrackSize,
 };
+pub(crate) use initial_letter_values::{InitialLetter, InitialLetterAlign, LetterAlignment};
 pub(crate) use list_values::{ListStylePosition, ListStyleType};
 pub(crate) use loader::{
     CssDecoder, DecodedStylesheet, SourceDiagnostic, StylesheetInput, StylesheetSources,

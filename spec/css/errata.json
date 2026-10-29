@@ -365,6 +365,16 @@
       "syntax": "auto | none | inter-word | inter-character | distribute",
       "source": "https://www.w3.org/TR/2026/CRD-css-text-3-20260814/#text-justify-property with the distribute keyword its prose requires"
     },
+    "initial-letter": {
+      "syntax": "normal | <number [1,∞]> <integer [1,∞]> | <number [1,∞]> && [ drop | raise ]?",
+      "source": "https://www.w3.org/TR/2024/WD-css-inline-3-20241218/#sizing-drop-initials"
+    },
+    "initial-letter-align": {
+      "syntax": "[ border-box? [ alphabetic | ideographic | hanging | leading ]? ]!",
+      "initial": "alphabetic",
+      "inherited": true,
+      "source": "https://www.w3.org/TR/2024/WD-css-inline-3-20241218/#aligning-initial-letter"
+    },
     "hyphenate-limit-chars": {
       "syntax": "[ auto | <integer [0,∞]> ]{1,3}",
       "source": "https://www.w3.org/TR/2026/WD-css-text-4-20260814/#hyphenate-char-limits"

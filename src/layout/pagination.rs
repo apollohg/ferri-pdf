@@ -718,7 +718,8 @@ struct RowEntry<'a> {
 #[derive(Clone)]
 struct FlowCursor<'a, 't> {
     frames: Vec<FlowFrame<'a>>,
-    paragraph: Option<(ParagraphCursor<'a, 't>, BreakTail)>,
+    /// Boxed, as the row cursor is, to keep the recursive flow's frames small.
+    paragraph: Option<(Box<ParagraphCursor<'a, 't>>, BreakTail)>,
     row: Option<Box<rows::RowCursor<'a, 't>>>,
     columns: Option<Box<columns::ColumnCursor<'a, 't>>>,
     row_entry: Option<RowEntry<'a>>,
@@ -2526,7 +2527,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         cursor.ready = Some((FlowItem::Paragraph(paragraph), tail));
                         return Ok(Some((cursor, request)));
                     }
-                    cursor.paragraph = Some((self.start_paragraph(paragraph), tail));
+                    cursor.paragraph = Some((Box::new(self.start_paragraph(paragraph)), tail));
                 }
                 FlowItem::Row(row) => {
                     let (entry, request) = self.prepare_row(*row, tail)?;
@@ -4885,13 +4886,29 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 .unwrap_or_else(|| self.current_layer());
             let key = self.layer_scope(&layer);
             let opened = self.open_inline_containers(&chain, &chain_layers);
+            // An initial letter sits against its line box's top, and its kerning insets it
+            // past the line's start (CSS Inline 3 §§7.6.1–7.6.2).
+            let (y, x) = match atomic.letter {
+                Some(letter) => (
+                    self.y + letter.top + atomic.margin_top,
+                    if source.style().rtl {
+                        fragment.x
+                    } else {
+                        fragment.x - letter.kerning
+                    },
+                ),
+                None => (
+                    baseline + fragment.baseline - atomic.metrics.baseline + atomic.margin_top,
+                    fragment.x,
+                ),
+            };
             self.unbroken_block(
                 atomic.block,
                 Unbroken {
                     page: self.page,
-                    y: baseline + fragment.baseline - atomic.metrics.baseline + atomic.margin_top,
+                    y,
                     offset: [
-                        self.offset[0] + left + fragment.x + layer.offset[0],
+                        self.offset[0] + left + x + layer.offset[0],
                         self.offset[1] + layer.offset[1],
                     ],
                     clip: layer.clip,

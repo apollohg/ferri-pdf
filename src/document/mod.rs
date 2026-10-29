@@ -25,7 +25,7 @@ use crate::dom::DocumentTree;
 use crate::resources::{ResourceError, ResourceResolver};
 use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 
-pub(crate) use formatting::{BlockBox, BlockContent, PageBox, PageMarginBox};
+pub(crate) use formatting::{BlockBox, BlockContent, InitialLetterBox, PageBox, PageMarginBox};
 pub(crate) use frames::{Frame, FrameDocument};
 pub(crate) use generated::GeneratedValues;
 pub(crate) use inline::{

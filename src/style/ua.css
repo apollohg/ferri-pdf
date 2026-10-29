@@ -22,6 +22,11 @@ menu dir, menu dl, menu menu, menu ol, menu ul,
 ol dir, ol dl, ol menu, ol ol, ol ul,
 ul dir, ul dl, ul menu, ul ol, ul ul { margin-block: 0; }
 li { display: list-item; text-align: match-parent; }
+/* CSS Inline 3 §7.4.1 */
+[lang]:lang(zh, ja, ko, ii) { initial-letter-align: ideographic; }
+[lang]:lang(hi, mr, ne, pi, kok, brx, mai, sd, sa) { initial-letter-align: hanging; }
+[lang]:lang('*-Latn', '*-Cyrl') { initial-letter-align: alphabetic; }
+[lang]:lang('*-Hani', '*-Hant', '*-Hans') { initial-letter-align: ideographic; }
 /* CSS Lists 3 §3.1.1 */
 ::marker { unicode-bidi: isolate; font-variant-numeric: tabular-nums; white-space: pre;
     text-transform: none; }

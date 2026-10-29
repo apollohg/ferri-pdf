@@ -15,35 +15,10 @@ pub(super) fn variant(
     document: &DocumentTree,
     resources: &mut ImageResources<'_>,
 ) -> Result<Option<Paragraph>, DocumentError> {
-    if !sheet.has_pseudo_rules(PseudoElement::FirstLine) {
+    let Some(FirstLineStyles { mut restyle, lines }) =
+        FirstLineStyles::of(paragraph.style(), origins, sheet, document, resources)?
+    else {
         return Ok(None);
-    }
-    let block = paragraph.style();
-    let mut parent = block.clone();
-    let mut lines = Vec::with_capacity(origins.len());
-    for &origin in origins {
-        let line = sheet.typographic_pseudo_with_resolver(
-            element(document, origin),
-            &parent,
-            PseudoElement::FirstLine,
-            resources.resolver,
-        )?;
-        let mut boxed = line.clone();
-        // Margins, borders and padding do not apply to `::first-line` (§2.1.2).
-        boxed.margin = [Size::ZERO; 4];
-        boxed.padding = [crate::style::LengthPercentage::ZERO; 4];
-        boxed.decoration = crate::document::formatting::background_only(&line.decoration);
-        let decoration = resources.backgrounds(&boxed)?;
-        lines.push((boxed, decoration));
-        parent = line;
-    }
-    let mut restyle = Restyle {
-        sheet,
-        document,
-        resolver: resources.resolver,
-        block: &block.origin,
-        root: Style::through_first_line(block, &parent),
-        styles: HashMap::new(),
     };
     let spans = paragraph
         .spans()
@@ -69,6 +44,61 @@ pub(super) fn variant(
     Ok(Some(
         paragraph.first_line_copy(root, lines, spans, boxes, atomics),
     ))
+}
+
+/// The styles a block's first formatted line gives its contents.
+pub(super) struct FirstLineStyles<'a> {
+    restyle: Restyle<'a>,
+    /// The `::first-line` boxes, outermost first, styled and decorated.
+    lines: Vec<(Style, crate::graphics::BoxDecoration)>,
+}
+impl<'a> FirstLineStyles<'a> {
+    /// The first formatted line of `origins` (outermost first, ending with the block styled
+    /// `block`); `None` where no rule selects `::first-line`.
+    pub(super) fn of<'r: 'a>(
+        block: &'a Style,
+        origins: &[ElementId],
+        sheet: &'a Stylesheet,
+        document: &'a DocumentTree,
+        resources: &mut ImageResources<'r>,
+    ) -> Result<Option<Self>, DocumentError> {
+        if !sheet.has_pseudo_rules(PseudoElement::FirstLine) {
+            return Ok(None);
+        }
+        let mut parent = block.clone();
+        let mut lines = Vec::with_capacity(origins.len());
+        for &origin in origins {
+            let line = sheet.typographic_pseudo_with_resolver(
+                element(document, origin),
+                &parent,
+                PseudoElement::FirstLine,
+                resources.resolver,
+            )?;
+            let mut boxed = line.clone();
+            // Margins, borders and padding do not apply to `::first-line` (§2.1.2).
+            boxed.margin = [Size::ZERO; 4];
+            boxed.padding = [crate::style::LengthPercentage::ZERO; 4];
+            boxed.decoration = crate::document::formatting::background_only(&line.decoration);
+            let decoration = resources.backgrounds(&boxed)?;
+            lines.push((boxed, decoration));
+            parent = line;
+        }
+        Ok(Some(Self {
+            restyle: Restyle {
+                sheet,
+                document,
+                resolver: resources.resolver,
+                block: &block.origin,
+                root: Style::through_first_line(block, &parent),
+                styles: HashMap::new(),
+            },
+            lines,
+        }))
+    }
+    /// `style` on the first line, keeping its box's display.
+    pub(super) fn style(&mut self, style: &Style) -> Result<Style, DocumentError> {
+        self.restyle.style(style)
+    }
 }
 
 fn element(document: &DocumentTree, id: ElementId) -> crate::dom::Element<'_> {

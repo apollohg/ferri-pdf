@@ -1068,6 +1068,14 @@ fn handler(property: Property) -> Option<Handler> {
             text_box_edge,
             Some(|v, _| crate::style::TextBox::edges(v).is_ok()),
         ),
+        P::InitialLetter => (
+            initial_letter,
+            Some(|v, r| crate::style::InitialLetter::from_component(v, r).is_ok()),
+        ),
+        P::InitialLetterAlign => (
+            initial_letter_align,
+            Some(|v, _| crate::style::InitialLetterAlign::from_component(v).is_ok()),
+        ),
         P::DominantBaseline => (
             dominant_baseline,
             Some(|v, _| crate::style::Baseline::dominant(v).is_ok()),
@@ -2745,6 +2753,16 @@ computed!(
     text_box_edge,
     [text_box.edges],
     |value, style, _parent, _relative| crate::style::TextBox::edges(value)?
+);
+computed!(
+    initial_letter,
+    [initial_letter],
+    |value, style, _parent, relative| crate::style::InitialLetter::from_component(value, relative)?
+);
+computed!(
+    initial_letter_align,
+    [initial_letter_align],
+    |value, style, _parent, _relative| crate::style::InitialLetterAlign::from_component(value)?
 );
 computed!(
     dominant_baseline,

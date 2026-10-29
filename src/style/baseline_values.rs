@@ -130,6 +130,9 @@ pub(crate) enum TextEdge {
     Ideographic,
     IdeographicInk,
     Alphabetic,
+    /// The hanging baseline, which initial letters of some Indic scripts align (CSS Inline 3
+    /// §7.4); no `text-box-edge` value names it.
+    Hanging,
 }
 
 /// A computed `text-box-trim` and `text-box-edge` (§6).

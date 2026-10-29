@@ -11,10 +11,24 @@ struct LineGeometry {
     y: f32,
 }
 
-struct FloatTrial {
-    anchor: usize,
-    line: usize,
-    y: f32,
+/// An exclusion placed while fitting the lines of a fragment, kept only if the line it
+/// belongs to is.
+enum FloatTrial {
+    /// The float of the paragraph's `anchor`th float anchor, placed at `y`.
+    Float { anchor: usize, line: usize, y: f32 },
+    /// The exclusion of the initial letter on the paragraph's first line.
+    Letter {
+        side: crate::style::FloatSide,
+        margin: Rect,
+    },
+}
+impl FloatTrial {
+    fn line(&self) -> usize {
+        match self {
+            Self::Float { line, .. } => *line,
+            Self::Letter { .. } => 0,
+        }
+    }
 }
 
 /// Retains source progress and inline paint state between physical page fragments.
@@ -42,6 +56,37 @@ pub(super) struct ParagraphCursor<'a, 't> {
     line_index: usize,
     layers: InlineLayers<'a>,
     clamp: Option<crate::text::ParagraphClamp>,
+    /// The atomic inline index of an initial letter on the first line, until it is placed.
+    letter: Option<usize>,
+}
+
+/// Where an initial letter on a fitted first line excludes the lines after it (CSS Inline 3
+/// §7.5): its margin box below the line, at the line's start side.
+fn letter_exclusion(
+    extent: crate::layout::inline::LetterExtent,
+    width: f32,
+    fragment: &crate::text::AtomicFragment,
+    line: &crate::text::Line,
+    placement: LineGeometry,
+    rtl: bool,
+) -> Option<(crate::style::FloatSide, Rect)> {
+    let x = placement.x + line.alignment_offset(placement.width, rtl) + fragment.x;
+    let top = placement.y + line.height;
+    let bottom = placement.y + extent.bottom;
+    let side = if rtl {
+        crate::style::FloatSide::Right
+    } else {
+        crate::style::FloatSide::Left
+    };
+    (bottom > top).then_some((
+        side,
+        Rect {
+            x: if rtl { x } else { x - extent.kerning },
+            y: top,
+            width: width + extent.kerning,
+            height: bottom - top,
+        },
+    ))
 }
 
 impl<'a, 't> Paginator<'a, '_, 't> {
@@ -80,6 +125,50 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         self.offset = saved_offset;
         self.has_flow = saved_has_flow;
         result
+    }
+
+    /// Excludes the lines after the fitted first line `line`, at `placement`, that its
+    /// initial letter `letter` reaches, once per fragment's trials.
+    fn place_letter_trial(
+        &mut self,
+        letter: Option<usize>,
+        atomics: &[Option<crate::layout::inline::MeasuredAtomic<'a>>],
+        line: &crate::text::Line,
+        placement: LineGeometry,
+        rtl: bool,
+        trials: &mut Vec<FloatTrial>,
+    ) {
+        let Some(index) = letter else {
+            return;
+        };
+        if trials
+            .iter()
+            .any(|trial| matches!(trial, FloatTrial::Letter { .. }))
+        {
+            return;
+        }
+        let atomic = atomics[index]
+            .as_ref()
+            .expect("the initial letter is measured until its line is placed");
+        let fragment = line
+            .atomics
+            .iter()
+            .find(|fragment| fragment.index == index)
+            .expect("the initial letter lies on the first line");
+        if let Some((side, margin)) = letter_exclusion(
+            atomic.letter.expect("an initial letter has an extent"),
+            atomic.metrics.width,
+            fragment,
+            line,
+            placement,
+            rtl,
+        ) {
+            self.floats
+                .last_mut()
+                .expect("flow has a float context")
+                .insert_letter(self.page, side, margin);
+            trials.push(FloatTrial::Letter { side, margin });
+        }
     }
 
     fn fit_float_line(
@@ -194,6 +283,11 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         let source = paragraph.paragraph;
         let index = paragraph.index;
         let clamp = paragraph.clamp;
+        let letter = source
+            .atomics()
+            .first()
+            .filter(|atomic| atomic.offset == 0 && atomic.block.initial_letter().is_some())
+            .map(|_| 0);
         ParagraphCursor {
             index,
             source,
@@ -217,13 +311,14 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             line_index,
             layers,
             clamp,
+            letter,
         }
     }
     pub(super) fn paragraph_fragment(
         &mut self,
-        cursor: ParagraphCursor<'a, 't>,
+        cursor: Box<ParagraphCursor<'a, 't>>,
         tail: BreakTail,
-    ) -> Result<Option<ParagraphCursor<'a, 't>>, LayoutError> {
+    ) -> Result<Option<Box<ParagraphCursor<'a, 't>>>, LayoutError> {
         let text = self.measurer.text;
         let ParagraphCursor {
             index,
@@ -248,13 +343,14 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             mut line_index,
             mut layers,
             clamp,
-        } = cursor;
+            mut letter,
+        } = *cursor;
         let float_anchors: Vec<_> = source
             .anchors()
             .iter()
             .filter(|anchor| anchor.block.style().floating().is_some())
             .collect();
-        let has_inline_floats = consumed_floats < float_anchors.len();
+        let has_inline_floats = consumed_floats < float_anchors.len() || letter.is_some();
         let mut snapshot = has_inline_floats.then(|| self.snapshot()).transpose()?;
         let saved_layers = has_inline_floats.then(|| layers.clone());
         let mut trials: Vec<FloatTrial> = Vec::new();
@@ -332,6 +428,24 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                                             bottom.max(extent - reserve)
                                         }
                                     });
+                                // An initial letter's line clears earlier initial letters
+                                // (CSS Inline 3 §7.9.2) and moves down for the letter to
+                                // stay below the content edge (§7.6.1).
+                                let y = match letter.and_then(|index| atomics[index].as_ref()) {
+                                    Some(atomic) if remainder.is_empty() => self
+                                        .floats
+                                        .last()
+                                        .expect("flow has a float context")
+                                        .letter_clearance(self.page, y, &self.measurer.work)?
+                                        .max(
+                                            extent - reserve
+                                                + atomic
+                                                    .letter
+                                                    .expect("an initial letter has an extent")
+                                                    .rise(),
+                                        ),
+                                    _ => y,
+                                };
                                 line_clearance_y = Some(y);
                                 y
                             };
@@ -345,7 +459,11 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                             else {
                                 break;
                             };
-                            let next_anchor = consumed_floats + trials.len();
+                            let next_anchor = consumed_floats
+                                + trials
+                                    .iter()
+                                    .filter(|trial| matches!(trial, FloatTrial::Float { .. }))
+                                    .count();
                             if let Some(anchor) = float_anchors.get(next_anchor).filter(|anchor| {
                                 anchor.offset < line.range.end
                                     || (anchor.offset == line.range.end
@@ -365,13 +483,35 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                                     } else {
                                         0.0
                                     };
+                                // A float after the first line clears the initial letter
+                                // beside it, which then excludes the lines it reaches.
+                                if y > placement.y && remainder.is_empty() {
+                                    self.place_letter_trial(
+                                        letter,
+                                        &atomics,
+                                        &line,
+                                        placement,
+                                        style.rtl,
+                                        &mut trials,
+                                    );
+                                }
                                 self.place_inline_float(measured, anchor, [x, width, y], &layers)?;
-                                trials.push(FloatTrial {
+                                trials.push(FloatTrial::Float {
                                     anchor: next_anchor,
                                     line: remainder.len(),
                                     y,
                                 });
                                 continue;
+                            }
+                            if remainder.is_empty() {
+                                self.place_letter_trial(
+                                    letter,
+                                    &atomics,
+                                    &line,
+                                    placement,
+                                    style.rtl,
+                                    &mut trials,
+                                );
                             }
                             extent = placement.y + reserve;
                             geometry.push_back(placement);
@@ -507,20 +647,55 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     0
                 };
             }
+            // An initial letter is monolithic, and breaks between the lines beside it are
+            // avoided (CSS Inline 3 §7.9.4).
+            if take > 0
+                && self.unbroken == 0
+                && self.has_flow
+                && let Some(atomic) = letter.and_then(|index| atomics[index].as_ref())
+                && let Some(first) = geometry.front()
+            {
+                let bottom = first.y
+                    + atomic
+                        .letter
+                        .expect("an initial letter has an extent")
+                        .bottom;
+                let beside = 1 + geometry
+                    .iter()
+                    .skip(1)
+                    .filter(|line| line.y < bottom)
+                    .count();
+                if take < beside.min(remaining) || overflows(bottom, self.height) {
+                    take = 0;
+                }
+            }
             if take == 0 && !self.has_flow {
                 take = available.min(remaining).max(1);
             }
-            let accepted = trials.partition_point(|trial| trial.line < take);
+            let accepted = trials.partition_point(|trial| trial.line() < take);
             if accepted < trials.len() {
                 self.restore_state(snapshot.take().expect("inline float trial has a snapshot"));
                 layers = saved_layers.expect("inline float trial saves its layers");
                 for trial in &trials[..accepted] {
-                    let anchor = float_anchors[trial.anchor];
-                    let measured = self.measure_float(&anchor.block, width, containing_height)?;
-                    self.place_inline_float(measured, anchor, [x, width, trial.y], &layers)?;
+                    match *trial {
+                        FloatTrial::Float { anchor, y, .. } => {
+                            let anchor = float_anchors[anchor];
+                            let measured =
+                                self.measure_float(&anchor.block, width, containing_height)?;
+                            self.place_inline_float(measured, anchor, [x, width, y], &layers)?;
+                        }
+                        FloatTrial::Letter { side, margin } => self
+                            .floats
+                            .last_mut()
+                            .expect("flow has a float context")
+                            .insert_letter(self.page, side, margin),
+                    }
                 }
             }
-            consumed_floats += accepted;
+            consumed_floats += trials[..accepted]
+                .iter()
+                .filter(|trial| matches!(trial, FloatTrial::Float { .. }))
+                .count();
             if take == 0 {
                 break 'fragment;
             }
@@ -593,6 +768,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     &mut atomics,
                     line_layers,
                 )?;
+                letter = None;
                 let paragraph = line_layers.paragraph;
                 // Runs inside inline boxes with their own layers paint in them.
                 let parts = self.split_line(line_layers, line.runs, &line.decorations);
@@ -650,7 +826,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             }
         }
         if !lines.as_slice().is_empty() || !candidate_complete || trailing_clearance {
-            return Ok(Some(ParagraphCursor {
+            return Ok(Some(Box::new(ParagraphCursor {
                 index,
                 source,
                 style,
@@ -673,7 +849,8 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 line_index,
                 layers,
                 clamp,
-            }));
+                letter,
+            })));
         }
         if let Some((left, destination_width, height)) = self.paragraph_geometry() {
             x = left;

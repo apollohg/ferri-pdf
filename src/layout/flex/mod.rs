@@ -76,7 +76,7 @@ fn children(block: &BlockBox) -> Result<Vec<&BlockBox>, LayoutError> {
         })
         .collect()
 }
-fn alignment(value: Alignment, reverse: bool) -> Alignment {
+pub(super) fn alignment(value: Alignment, reverse: bool) -> Alignment {
     match (value, reverse) {
         (Alignment::Start, true) => Alignment::End,
         (Alignment::End, true) => Alignment::Start,

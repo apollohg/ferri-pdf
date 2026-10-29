@@ -7,6 +7,7 @@ mod emphasis;
 mod features;
 mod hanging;
 mod hyphenation;
+mod initial_letter;
 mod leaders;
 mod line_boxes;
 mod paragraph;
@@ -37,6 +38,9 @@ use unicode_linebreak::BreakOpportunity;
 use unicode_script::{Script, UnicodeScript};
 use unicode_segmentation::UnicodeSegmentation;
 
+pub(crate) use initial_letter::{
+    Surrounding as LetterSurrounding, font_scale as initial_letter_scale,
+};
 pub(crate) use line_boxes::{AtomicFragment, AtomicMetrics, BoxFragment, LinkFragment};
 
 /// Synthetic bold draws a second copy of a run this far to the right.
@@ -340,34 +344,14 @@ impl GlyphRun {
     /// A bound on the ink of the run's glyphs and strokes, drawn from its line's left edge
     /// and baseline `origin`, within the face's global glyph box.
     pub(crate) fn ink_rect(&self, [x, y]: [f32; 2]) -> Option<crate::graphics::Rect> {
-        let [top, bottom] = self.ink_bounds?;
-        let shear = if self.synthesis.oblique {
-            self.oblique_skew.abs() * top.abs().max(bottom.abs())
-        } else {
-            0.0
-        };
-        let bold = if self.synthesis.bold {
-            self.font_size * SYNTHETIC_BOLD_OFFSET_EM
-        } else {
-            0.0
-        };
-        let stroke = self.stroke.map_or(0.0, |stroke| stroke.width / 2.0);
-        let left = x + self.x + (self.ink_sides[0] * self.font_size).min(0.0) - shear - stroke;
-        let right = x
-            + self.x
-            + self.width
-            + (self.ink_sides[1] * self.font_size).max(0.0)
-            + shear
-            + bold
-            + stroke;
-        let top = y + self.baseline_shift + top - stroke;
-        let bottom = y + self.baseline_shift + bottom + stroke;
-        let glyphs = crate::graphics::Rect {
-            x: left,
-            y: top,
-            width: right - left,
-            height: bottom - top,
-        };
+        let glyphs = self.synthesized_ink(
+            [
+                self.x + (self.ink_sides[0] * self.font_size).min(0.0),
+                self.x + self.width + (self.ink_sides[1] * self.font_size).max(0.0),
+            ],
+            self.ink_bounds?,
+            [x, y],
+        );
         Some(
             self.marks
                 .iter()
@@ -381,6 +365,37 @@ impl GlyphRun {
                 }))
                 .fold(glyphs, crate::graphics::Rect::union),
         )
+    }
+    /// The ink of glyphs spanning `[left, right]` from the line's left edge and `[top,
+    /// bottom]` around the run's baseline, grown by its synthetic bold, oblique shear and
+    /// stroke, drawn from its line's left edge and baseline `origin`.
+    fn synthesized_ink(
+        &self,
+        [left, right]: [f32; 2],
+        [top, bottom]: [f32; 2],
+        [x, y]: [f32; 2],
+    ) -> crate::graphics::Rect {
+        let shear = if self.synthesis.oblique {
+            self.oblique_skew.abs() * top.abs().max(bottom.abs())
+        } else {
+            0.0
+        };
+        let bold = if self.synthesis.bold {
+            self.font_size * SYNTHETIC_BOLD_OFFSET_EM
+        } else {
+            0.0
+        };
+        let stroke = self.stroke.map_or(0.0, |stroke| stroke.width / 2.0);
+        let left = x + left - shear - stroke;
+        let right = x + right + shear + bold + stroke;
+        let top = y + self.baseline_shift + top - stroke;
+        let bottom = y + self.baseline_shift + bottom + stroke;
+        crate::graphics::Rect {
+            x: left,
+            y: top,
+            width: right - left,
+            height: bottom - top,
+        }
     }
     /// The run followed by its emphasis marks.
     pub(crate) fn with_marks(&self) -> impl Iterator<Item = &Self> {
@@ -1008,6 +1023,45 @@ impl<'a> TextContext<'a> {
     ) -> Result<Vec<Line>, TextError> {
         let prepared = self.prepare_paragraph(paragraph);
         prepared.lines(prepared.start(), width, atomics)?.collect()
+    }
+    /// The bounding box of the glyph outlines `line` of `paragraph` paints, from the line's
+    /// left edge and baseline; `None` where it paints none. Initial letters fit and kern to
+    /// these outlines rather than the faces' global boxes (CSS Inline 3 §§7.5.5, 7.6.2).
+    pub(crate) fn outline_bounds(
+        &self,
+        paragraph: &Paragraph,
+        line: &Line,
+    ) -> Result<Option<crate::graphics::Rect>, TextError> {
+        let mut bounds: Option<crate::graphics::Rect> = None;
+        for run in &line.runs {
+            let style = &paragraph.spans()[run.source_span].style;
+            let Some(instance) = self.face(run.font_id, style)? else {
+                continue;
+            };
+            let face = &instance.face;
+            let scale = run.font_size / face.units_per_em() as f32;
+            for (glyph, [x, y]) in run.glyph_origins([run.x, 0.0]) {
+                let Some(outline) = u16::try_from(glyph.id)
+                    .ok()
+                    .and_then(|id| face.glyph_bounding_box(ttf_parser::GlyphId(id)))
+                else {
+                    continue;
+                };
+                let ink = run.synthesized_ink(
+                    [
+                        x + f32::from(outline.x_min) * scale,
+                        x + f32::from(outline.x_max) * scale,
+                    ],
+                    [
+                        y - f32::from(outline.y_max) * scale,
+                        y - f32::from(outline.y_min) * scale,
+                    ],
+                    [0.0, 0.0],
+                );
+                bounds = Some(bounds.map_or(ink, |bounds| bounds.union(ink)));
+            }
+        }
+        Ok(bounds)
     }
     pub(crate) fn prepare_paragraph<'p, 'context>(
         &'context self,

@@ -85,6 +85,20 @@ impl Paragraph {
             variant.text_box_trim = trim;
         }
     }
+    /// Lays the paragraph out as an inline initial letter's contents (CSS Inline 3 §7.5.3):
+    /// its text at used font sizes `ratio` times their computed values, and its root inline
+    /// box's text box edges the `edges` that hold the letter's alignment points, which its
+    /// trimmed line box takes.
+    pub(crate) fn size_initial_letter(&mut self, ratio: f32, edges: [crate::style::TextEdge; 2]) {
+        self.style.size *= ratio;
+        self.style.text_box.edges = edges;
+        for span in &mut self.spans {
+            span.style.size *= ratio;
+        }
+        for inline_box in &mut self.boxes {
+            Arc::make_mut(&mut inline_box.style).size *= ratio;
+        }
+    }
     /// Records whether the paragraph holds its block container's first and last lines.
     pub(crate) fn set_formatted_lines(&mut self, first: bool, last: bool) {
         self.first_formatted_line = first;
@@ -420,6 +434,9 @@ pub(crate) struct InlineCollector {
     /// Where an inside marker box ends, which content selecting a first letter ignores
     /// (CSS Pseudo-Elements 4 §2.2.2).
     marker_end: usize,
+    /// Where a sunken initial letter ends, after which collapsible white space is collapsed
+    /// away (CSS Inline 3 §7.8.1).
+    sunken_letter_end: Option<usize>,
 }
 impl InlineCollector {
     /// Opens the inline marker box of a list item (CSS Lists 3 §3.5).
@@ -492,6 +509,76 @@ impl InlineCollector {
     pub(crate) fn at_line_start(&self) -> bool {
         self.text.len() == self.marker_end
     }
+    /// Whether the next inline-level box is the first-most of the first line: only its open
+    /// first-child inline box ancestors precede it, where an initial letter can begin (CSS
+    /// Inline 3 §7.3.1).
+    pub(crate) fn at_first_child(&self) -> bool {
+        let mut open = 0;
+        let mut inner = self.open_box;
+        while let Some(index) = inner {
+            if self.boxes[index].continued[0] {
+                return false;
+            }
+            open += 1;
+            inner = self.boxes[index].parent;
+        }
+        self.text.is_empty() && self.atomics.is_empty() && open == self.boxes.len()
+    }
+    /// The style of the innermost open inline box, which content appended next lies in.
+    pub(crate) fn open_style(&self) -> Option<&Style> {
+        self.open_box.map(|index| &*self.boxes[index].style)
+    }
+    /// Places an initial letter box as an atomic inline styled by its parent `style`; one
+    /// that inside marker `marker` makes ends the marker (CSS Inline 3 §7.3.1). The inline
+    /// boxes open around it, which nothing precedes, start after it: it lies outside their
+    /// start edges (§7.8.3).
+    pub(crate) fn initial_letter(
+        &mut self,
+        block: crate::document::BlockBox,
+        style: &Style,
+        marker: bool,
+    ) -> Result<(), DocumentError> {
+        let sunken = block
+            .style()
+            .initial_letter
+            .is_some_and(|initial| initial.sink > 1);
+        let start = self.text.len();
+        let ancestors = std::mem::take(&mut self.open_box);
+        self.atomic(block, style)?;
+        self.open_box = ancestors;
+        for inline_box in &mut self.boxes {
+            if inline_box.range.start == start {
+                inline_box.range.start = self.text.len();
+            }
+        }
+        if marker {
+            self.marker_end = self.text.len();
+        }
+        if sunken {
+            self.sunken_letter_end = Some(self.text.len());
+        }
+        Ok(())
+    }
+    /// Gives the collected content, which the first formatted line alone holds, the styles
+    /// `restyle` computes through `::first-line`, decorating its inline boxes with
+    /// `decorate` (CSS Pseudo-Elements 4 §2.1.1).
+    pub(crate) fn restyle(
+        &mut self,
+        mut restyle: impl FnMut(&Style) -> Result<Style, DocumentError>,
+        mut decorate: impl FnMut(&Style) -> Result<crate::graphics::BoxDecoration, DocumentError>,
+    ) -> Result<(), DocumentError> {
+        for style in &mut self.styles {
+            *style = restyle(style)?;
+        }
+        for span in &mut self.spans {
+            span.style = restyle(&span.style)?;
+        }
+        for inline_box in &mut self.boxes {
+            inline_box.style = restyle(&inline_box.style)?.into();
+            inline_box.decoration = decorate(&inline_box.style)?;
+        }
+        Ok(())
+    }
     pub(crate) fn append(&mut self, text: &str, style: &Style) -> Result<(), DocumentError> {
         self.append_inner(text, style, false)
     }
@@ -517,7 +604,9 @@ impl InlineCollector {
                 // white space intends (CSS Lists 3 §3.1.1, issues 4448 and 4891).
                 if self.pending_space.is_none()
                     && (leader
-                        || (self.text.len() != self.marker_end && !self.text.ends_with('\n')))
+                        || (self.text.len() != self.marker_end
+                            && self.sunken_letter_end != Some(self.text.len())
+                            && !self.text.ends_with('\n')))
                 {
                     self.pending_space = Some(PendingSpace {
                         style: index,

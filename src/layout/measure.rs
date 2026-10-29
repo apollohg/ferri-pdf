@@ -1076,7 +1076,13 @@ impl Measurer<'_> {
                 positions[clamp.lines] = stream.checkpoint();
             }
         }
-        let height = lines.iter().map(|line| line.height).sum();
+        // An initial letter moves its line down to stay below the content edge (CSS Inline 3
+        // §7.6.1).
+        let rise = atomics
+            .first()
+            .and_then(|atomic| atomic.letter)
+            .map_or(0.0, |letter| letter.rise());
+        let height = lines.iter().map(|line| line.height).sum::<f32>() + rise;
         let anchors = line_anchors(paragraph, &lines, clamp.is_none());
         Ok(MeasuredParagraph {
             index,

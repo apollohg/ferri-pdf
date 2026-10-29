@@ -102,6 +102,18 @@ pub(crate) struct BlockBox {
     /// Styles of the inline boxes split around this block-level box, outermost first, whose
     /// positioning and compositing it shares (CSS 2.1 §9.2.1.1).
     enclosing_inline: Vec<std::sync::Arc<Style>>,
+    initial_letter: Option<InitialLetterBox>,
+}
+
+/// An initial letter box (CSS Inline 3 §7.5): an atomic inline of its originating line that
+/// does not grow it, and excludes the start of the lines after it that it reaches.
+#[derive(Clone, Copy)]
+pub(crate) struct InitialLetterBox {
+    /// The containing block's root inline box, which sizes and positions it.
+    pub surrounding: crate::text::LetterSurrounding,
+    /// It arises from an atomic inline, whose content box edges are its alignment points,
+    /// rather than an inline box whose contents give them (§7.4).
+    pub atomic: bool,
 }
 pub(crate) enum BlockContent {
     Events(Vec<crate::document::SemanticEvent>),
@@ -194,6 +206,7 @@ impl BlockBox {
             anonymous: false,
             query_container: None,
             enclosing_inline: Vec::new(),
+            initial_letter: None,
         }
     }
     pub(crate) fn leading_events(&self) -> impl Iterator<Item = &crate::document::SemanticEvent> {
@@ -259,6 +272,13 @@ impl BlockBox {
     /// last in-flow child blocks without padding or borders on that side, but not into or
     /// through flex, grid or table formatting contexts.
     pub(super) fn trim_text_boxes(&mut self, requested: [bool; 2]) -> Result<(), DocumentError> {
+        // An inline initial letter's line box is trimmed to its alignment points (CSS Inline 3
+        // §7.5.3).
+        let requested = if self.initial_letter.is_some_and(|letter| !letter.atomic) {
+            [true; 2]
+        } else {
+            requested
+        };
         let own = self.style.text_box.trim;
         if own.contains(&true) {
             if self.style.multicol.is_multicol() {
@@ -334,6 +354,9 @@ impl BlockBox {
     pub(crate) fn is_canvas_source(&self) -> bool {
         self.canvas_source
     }
+    pub(crate) fn initial_letter(&self) -> Option<&InitialLetterBox> {
+        self.initial_letter.as_ref()
+    }
     pub(crate) fn query_container(&self) -> Option<ElementId> {
         self.query_container
     }
@@ -361,8 +384,23 @@ struct BlockBuilder<'a, 's, 'c> {
     inline: &'s mut InlineCollector,
     run_in: &'s mut Option<RunInSequence>,
     first_line: &'s mut FirstLine,
+    letter: &'s mut Option<OpenLetter>,
     traversal: &'c mut Traversal<'a>,
     resources: &'c mut ImageResources<'a>,
+}
+
+/// An inline initial letter whose contents are collected apart from the line it originates
+/// in (CSS Inline 3 §7.5), which it joins as an atomic inline once its box closes.
+struct OpenLetter {
+    /// The block's inline content before the letter.
+    outer: InlineCollector,
+    style: Style,
+    decoration: BoxDecoration,
+    navigation: BoxNavigation,
+    /// The style of the letter's parent, which its placeholder takes.
+    parent: Style,
+    /// Inline boxes opened inside the letter and still open.
+    depth: usize,
 }
 
 /// A block container's first formatted line while it is still to come (CSS Pseudo-Elements 4
@@ -435,6 +473,32 @@ impl ImageResources<'_> {
     }
 }
 
+/// Maps a font metrics failure while sizing an initial letter to the document error the
+/// renderer reports for its style.
+fn letter_text_error(error: crate::text::TextError) -> DocumentError {
+    match error {
+        crate::text::TextError::Font(error) => StyleError::Font(error).into(),
+        error => DocumentError::Formatting(error.to_string()),
+    }
+}
+
+/// An initial letter's block-axis padding and borders, which size it from computed values
+/// alone (CSS Inline 3 §7.5.3): a percentage, which needs layout, cannot.
+fn block_axis_edges(style: &Style) -> Result<f32, DocumentError> {
+    const SIDES: [usize; 2] = [0, 2];
+    SIDES
+        .into_iter()
+        .try_fold(0.0, |sum, side| match style.padding[side] {
+            crate::style::LengthPercentage::Length(padding) => {
+                Ok(sum + padding + style.decoration.borders[side].used_width())
+            }
+            _ => Err(StyleError::Unsupported(
+                "percentage block-axis padding on an initial letter sized by it".into(),
+            )
+            .into()),
+        })
+}
+
 /// A typographic pseudo-element laid out as an inline box, which takes no float or position.
 pub(super) fn inline_pseudo_style(mut style: Style) -> Style {
     style.display = Display::Inline;
@@ -493,6 +557,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         let mut parent = style.clone();
         let mut opened = 0;
         let mut floated = None;
+        let mut initial = None;
         for &origin in origins.iter() {
             let element = self.element(origin);
             let pseudo = self.sheet.typographic_pseudo_with_resolver(
@@ -502,19 +567,36 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 self.resources.resolver,
             )?;
             let decoration = self.resources.backgrounds(&pseudo)?;
-            parent = inline_pseudo_style(pseudo.clone());
-            if floated.is_none() && pseudo.floating().is_some() {
-                floated = Some((pseudo, decoration, std::mem::take(self.inline), opened));
-                opened = 0;
-            } else {
-                self.inline.open_box(
-                    &parent,
-                    decoration,
-                    self.traversal.navigation.descendant(),
-                    false,
-                );
-                opened += 1;
+            let outer = std::mem::replace(&mut parent, inline_pseudo_style(pseudo.clone()));
+            if floated.is_none() && initial.is_none() {
+                if pseudo.floating().is_some() {
+                    floated = Some((pseudo, decoration, std::mem::take(self.inline), opened));
+                    opened = 0;
+                    continue;
+                }
+                if pseudo.initial_letter.is_some() && self.initial_letter_allowed() {
+                    initial = Some((
+                        OpenLetter {
+                            outer: std::mem::take(self.inline),
+                            style: parent.clone(),
+                            decoration,
+                            navigation: self.traversal.navigation.descendant(),
+                            parent: outer,
+                            depth: 0,
+                        },
+                        opened,
+                    ));
+                    opened = 0;
+                    continue;
+                }
             }
+            self.inline.open_box(
+                &parent,
+                decoration,
+                self.traversal.navigation.descendant(),
+                false,
+            );
+            opened += 1;
         }
         self.first_letter_part(
             &origins,
@@ -549,7 +631,238 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 self.inline.close_box();
             }
         }
+        if let Some((letter, outer_opened)) = initial {
+            self.finish_letter(letter, false)?;
+            for _ in 0..outer_opened {
+                self.inline.close_box();
+            }
+        }
         Ok(suffix.end)
+    }
+    /// Whether an initial letter can begin with the next inline-level box: the first-most
+    /// one of the first line, outside any other initial letter (CSS Inline 3 §7.3.1).
+    fn initial_letter_allowed(&self) -> bool {
+        self.letter.is_none() && self.run_in.is_none() && self.inline.at_first_child()
+    }
+    /// Opens an inline box, which collects its contents apart as an initial letter where its
+    /// style makes it one.
+    fn open_inline(
+        &mut self,
+        style: &Style,
+        decoration: BoxDecoration,
+        navigation: BoxNavigation,
+        canvas_source: bool,
+    ) {
+        if let Some(letter) = self.letter.as_mut() {
+            letter.depth += 1;
+        } else if style.initial_letter.is_some() && self.initial_letter_allowed() {
+            *self.letter = Some(OpenLetter {
+                parent: self.inline.open_style().unwrap_or(self.style).clone(),
+                outer: std::mem::take(self.inline),
+                style: style.clone(),
+                decoration,
+                navigation,
+                depth: 0,
+            });
+            return;
+        }
+        self.inline
+            .open_box(style, decoration, navigation, canvas_source);
+    }
+    /// Closes the inline box `open_inline` opened last, placing an initial letter it ends.
+    fn close_inline(&mut self) -> Result<(), DocumentError> {
+        match self.letter.as_mut() {
+            Some(letter) if letter.depth > 0 => letter.depth -= 1,
+            Some(_) => {
+                let letter = self.letter.take().expect("an open initial letter closes");
+                return self.finish_letter(letter, false);
+            }
+            None => {}
+        }
+        self.inline.close_box();
+        Ok(())
+    }
+    /// Places an atomic inline styled by its parent `parent`, as an initial letter where its
+    /// style makes it one.
+    fn atomic(&mut self, mut block: BlockBox, parent: &Style) -> Result<(), DocumentError> {
+        if block.style.initial_letter.is_none() || !self.initial_letter_allowed() {
+            return self.inline.atomic(block, parent);
+        }
+        let context = crate::text::TextContext::new(&self.sheet.fonts, self.resources.resolver);
+        let style = &mut block.style;
+        let initial = style
+            .initial_letter
+            .expect("an initial letter has a size and sink");
+        let surrounding = crate::text::LetterSurrounding::of(
+            &context,
+            self.style,
+            style.initial_letter_align.alignment,
+        )
+        .map_err(letter_text_error)?;
+        // §7.5.5: an automatic block size spans the letter's lines as border-box alignment
+        // would, and is definite.
+        if style.height == crate::style::Size::Auto {
+            let span = surrounding.span(initial.size);
+            let height = match style.box_sizing {
+                crate::style::BoxSizing::BorderBox => span,
+                crate::style::BoxSizing::ContentBox => span - block_axis_edges(style)?,
+            };
+            style.height =
+                crate::style::Size::Value(crate::style::LengthPercentage::Length(height.max(0.0)));
+        }
+        block.initial_letter = Some(InitialLetterBox {
+            surrounding,
+            atomic: true,
+        });
+        self.inline.initial_letter(block, parent, false)
+    }
+    /// Places the inline initial letter `letter`, whose contents the collector holds, in the
+    /// content before it; one that inside marker `marker` makes ends the marker.
+    fn finish_letter(&mut self, letter: OpenLetter, marker: bool) -> Result<(), DocumentError> {
+        let OpenLetter {
+            outer,
+            mut style,
+            mut decoration,
+            navigation,
+            parent,
+            ..
+        } = letter;
+        let mut contents = std::mem::replace(self.inline, outer);
+        // The letter lies on its block's first formatted line, so it inherits through
+        // `::first-line` (CSS Pseudo-Elements 4 §2.1.1).
+        if let Some(origins) = self.first_line.origins.clone()
+            && let Some(mut styles) = crate::document::first_line::FirstLineStyles::of(
+                self.style,
+                &origins,
+                self.sheet,
+                self.traversal.document,
+                self.resources,
+            )?
+        {
+            let resources = &mut *self.resources;
+            contents.restyle(
+                |style| styles.style(style),
+                |style| resources.backgrounds(style),
+            )?;
+            style = styles.style(&style)?;
+            decoration = self.resources.backgrounds(&style)?;
+        }
+        // `text-indent` applies to block containers, which the letter is not (CSS Text 3 §8.1).
+        style.text_indent = crate::style::TextIndent::default();
+        match contents.finish(&style)? {
+            Ok(paragraph) => {
+                let block = self.inline_letter_box(style, decoration, navigation, paragraph)?;
+                self.inline.initial_letter(block, &parent, marker)
+            }
+            Err(stray) => {
+                // An initial letter without contents is an empty inline box.
+                self.inline.open_box(&style, decoration, navigation, false);
+                for content in stray {
+                    match content {
+                        BlockContent::Events(events) => {
+                            for event in events {
+                                self.inline.semantic_event(event);
+                            }
+                        }
+                        BlockContent::Positioned(block) => self.inline.anchor(block),
+                        BlockContent::Block(_) | BlockContent::Inline(_) => {
+                            unreachable!("empty inline content holds no flow boxes")
+                        }
+                    }
+                }
+                self.inline.close_box();
+                Ok(())
+            }
+        }
+    }
+    /// An inside marker is an inline box opening the list item's inline content (CSS Lists 3
+    /// §3.5): an image marker holds an inline replaced box followed by a space. A marker can
+    /// be an initial letter (CSS Inline 3 §7.3.1).
+    fn place_inside_marker(&mut self, marker: &Paragraph) -> Result<(), DocumentError> {
+        let style = marker.style();
+        let navigation = self.traversal.navigation.descendant();
+        let letter =
+            (style.initial_letter.is_some() && self.initial_letter_allowed()).then(|| OpenLetter {
+                parent: self.inline.open_style().unwrap_or(self.style).clone(),
+                outer: std::mem::take(self.inline),
+                style: style.clone(),
+                decoration: BoxDecoration::default(),
+                navigation,
+                depth: 0,
+            });
+        if letter.is_none() {
+            self.inline.open_marker(style, navigation);
+        }
+        if let Some(image) = marker.marker_image() {
+            let [width, height] = marker.marker_image_size().expect("image marker has size");
+            let mut box_style = style.anonymous(Display::InlineBlock);
+            box_style.width =
+                crate::style::Size::Value(crate::style::LengthPercentage::Length(width));
+            box_style.height =
+                crate::style::Size::Value(crate::style::LengthPercentage::Length(height));
+            let mut decoration = BoxDecoration::default();
+            std::sync::Arc::make_mut(&mut decoration.backgrounds).images = vec![image.clone()];
+            let atomic = BlockBox::with_decoration(
+                box_style,
+                Vec::new(),
+                decoration,
+                self.element_page_scope.clone(),
+            );
+            self.inline.atomic(atomic, style)?;
+        }
+        self.inline.append(marker.text(), style)?;
+        if let Some(letter) = letter {
+            return self.finish_letter(letter, true);
+        }
+        self.inline.close_marker();
+        Ok(())
+    }
+    /// The atomic box of an inline initial letter styled `style` holding `paragraph`, set at
+    /// its used font size (CSS Inline 3 §7.5.3).
+    fn inline_letter_box(
+        &mut self,
+        mut style: Style,
+        decoration: BoxDecoration,
+        navigation: BoxNavigation,
+        mut paragraph: Paragraph,
+    ) -> Result<BlockBox, DocumentError> {
+        let context = crate::text::TextContext::new(&self.sheet.fonts, self.resources.resolver);
+        let surrounding = crate::text::LetterSurrounding::of(
+            &context,
+            self.style,
+            style.initial_letter_align.alignment,
+        )
+        .map_err(letter_text_error)?;
+        let edges = if style.initial_letter_align.border_box {
+            block_axis_edges(&style)?
+        } else {
+            0.0
+        };
+        let (scale, aligned) = crate::text::initial_letter_scale(
+            &context,
+            &surrounding,
+            paragraph.style(),
+            paragraph.text(),
+            edges,
+        )
+        .map_err(letter_text_error)?;
+        paragraph.size_initial_letter(scale, aligned);
+        style.display = Display::InlineBlock;
+        let page_scope =
+            crate::document::page::used_name(&style.page, self.element_page_scope.as_ref());
+        Ok(BlockBox {
+            navigation,
+            initial_letter: Some(InitialLetterBox {
+                surrounding,
+                atomic: false,
+            }),
+            ..BlockBox::with_decoration(
+                style,
+                vec![BlockContent::Inline(paragraph)],
+                decoration,
+                page_scope,
+            )
+        })
     }
     /// The punctuation `text` around the first letter, in the nested `::first-letter::prefix`
     /// or `::suffix` boxes of `origins` inside the innermost `::first-letter` styled `parent`.
@@ -613,6 +926,12 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         })
     }
     fn flush(&mut self) -> Result<(), DocumentError> {
+        if self.letter.is_some() {
+            return Err(StyleError::Unsupported(
+                "block-level content inside an initial letter".into(),
+            )
+            .into());
+        }
         let collected = self.inline.split();
         let origins = self.first_line.origins.clone();
         let origins = origins.as_deref();
@@ -833,14 +1152,14 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 if let Some(event) = event {
                     self.inline.semantic_event(event);
                 }
-                self.inline.open_box(
+                self.open_inline(
                     &style,
                     decoration,
                     self.traversal.navigation.descendant(),
                     false,
                 );
                 self.append_generated(&output, &style)?;
-                self.inline.close_box();
+                self.close_inline()?;
             }
             Display::InlineBlock
             | Display::InlineFlex
@@ -857,7 +1176,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                     element_page_scope.as_ref(),
                     event,
                 );
-                self.inline.atomic(atomic, parent)?;
+                self.atomic(atomic, parent)?;
             }
             Display::Unsupported(value) => {
                 return Err(StyleError::Unsupported(format!("generated display: {value}")).into());
@@ -963,33 +1282,6 @@ pub(super) fn is_replaced(element: Element<'_>) -> bool {
     }
 }
 
-/// An inside marker is an inline box opening the list item's inline content (CSS Lists 3
-/// §3.5): an image marker holds an inline replaced box followed by a space.
-fn place_inside_marker(
-    inline: &mut InlineCollector,
-    marker: &Paragraph,
-    navigation: BoxNavigation,
-    page_scope: Option<&std::sync::Arc<str>>,
-) -> Result<(), DocumentError> {
-    let style = marker.style();
-    inline.open_marker(style, navigation);
-    if let Some(image) = marker.marker_image() {
-        let [width, height] = marker.marker_image_size().expect("image marker has size");
-        let mut box_style = style.anonymous(Display::InlineBlock);
-        box_style.width = crate::style::Size::Value(crate::style::LengthPercentage::Length(width));
-        box_style.height =
-            crate::style::Size::Value(crate::style::LengthPercentage::Length(height));
-        let mut decoration = BoxDecoration::default();
-        std::sync::Arc::make_mut(&mut decoration.backgrounds).images = vec![image.clone()];
-        let atomic =
-            BlockBox::with_decoration(box_style, Vec::new(), decoration, page_scope.cloned());
-        inline.atomic(atomic, style)?;
-    }
-    inline.append(marker.text(), style)?;
-    inline.close_marker();
-    Ok(())
-}
-
 /// The marker box of list item `element` (CSS Lists 3 §3), filled and styled by its
 /// `::marker`.
 fn list_marker(
@@ -1093,6 +1385,7 @@ struct OpenBlock {
     /// A run-in sequence that runs into this block, after its marker.
     pending_run_in: Option<InlineCollector>,
     first_line: FirstLine,
+    letter: Option<OpenLetter>,
 }
 
 struct Frame<'d> {
@@ -1137,6 +1430,7 @@ impl<'d> Frame<'d> {
                 run_in: None,
                 pending_run_in: None,
                 first_line: FirstLine::default(),
+                letter: None,
             }),
             started: false,
             quotes: None,
@@ -1170,6 +1464,7 @@ fn active_builder<'a, 's, 'c>(
             inline: &mut block.inline,
             run_in: &mut block.run_in,
             first_line: &mut block.first_line,
+            letter: &mut block.letter,
             traversal,
             resources,
         },
@@ -1298,16 +1593,18 @@ fn block<'a>(
                     },
                     &mut block.navigation,
                 );
-                if frame.style.has_inside_marker()
-                    && let Some(marker) = block.marker.take()
-                {
-                    place_inside_marker(
-                        &mut block.inline,
-                        &marker,
-                        traversal.navigation.descendant(),
-                        frame.page_scope.as_ref(),
-                    )?;
+                let inside_marker = frame
+                    .style
+                    .has_inside_marker()
+                    .then(|| block.marker.take())
+                    .flatten();
+                if let Some(marker) = inside_marker {
+                    let (mut builder, _) =
+                        active_builder(&mut frames, index, sheet, traversal, resources);
+                    builder.place_inside_marker(&marker)?;
                 }
+                let frame = &mut frames[index];
+                let block = frame.block.as_mut().expect("a block frame builds a block");
                 if let Some(run_in) = block.pending_run_in.take() {
                     block.run_in = Some(RunInSequence {
                         preceding: std::mem::replace(&mut block.inline, run_in),
@@ -1350,24 +1647,16 @@ fn block<'a>(
                     &mut navigation,
                 );
                 let canvas_source = index == 0 || traversal.canvas_body == Some(element.id());
-                let page_scope = frames[index].page_scope.clone();
-                let (builder, style) =
+                let (mut builder, style) =
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
                 builder.inline.semantic_event(event);
                 if style.display == Display::Contents {
                     builder.inline.open_contents(navigation.link);
                 } else {
                     let decoration = builder.resources.backgrounds(style)?;
-                    builder
-                        .inline
-                        .open_box(style, decoration, navigation, canvas_source);
+                    builder.open_inline(style, decoration, navigation, canvas_source);
                     if let Some(marker) = marker {
-                        place_inside_marker(
-                            builder.inline,
-                            &marker,
-                            builder.traversal.navigation.descendant(),
-                            page_scope.as_ref(),
-                        )?;
+                        builder.place_inside_marker(&marker)?;
                     }
                 }
                 frames[index].generated = true;
@@ -1655,7 +1944,7 @@ fn block<'a>(
             if contents {
                 builder.inline.close_contents();
             } else {
-                builder.inline.close_box();
+                builder.close_inline()?;
             }
             builder.traversal.navigation.leave();
             frames.pop();
@@ -1717,7 +2006,7 @@ fn block<'a>(
                 builder.children.push(BlockContent::Block(block));
             }
             Placement::Positioned => builder.out_of_flow(block),
-            Placement::Atomic => builder.inline.atomic(block, parent)?,
+            Placement::Atomic => builder.atomic(block, parent)?,
             Placement::Root => unreachable!("root returned before attaching to a parent"),
         }
         traversal.counters.leave();

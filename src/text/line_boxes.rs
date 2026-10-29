@@ -499,6 +499,7 @@ impl BoxMetrics {
             (TextEdge::IdeographicInk, false) => -table.ideographic_ink_over * self.size,
             (TextEdge::IdeographicInk, true) => -table.ideographic_ink_under * self.size,
             (TextEdge::Alphabetic, _) => 0.0,
+            (TextEdge::Hanging, _) => -table.hanging * self.size,
         }
     }
     pub(crate) fn line_height(&self) -> f32 {
@@ -508,7 +509,7 @@ impl BoxMetrics {
         (self.line_height - self.ascent - self.descent) / 2.0
     }
     /// Inline box extent around its baseline: the content area plus half-leading (§10.8.1).
-    fn extent(&self) -> [f32; 2] {
+    pub(crate) fn extent(&self) -> [f32; 2] {
         [
             -(self.ascent + self.half_leading()),
             self.descent + self.half_leading(),
