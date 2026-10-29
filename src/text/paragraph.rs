@@ -4,7 +4,7 @@ use crate::text::{
     decoration, ellipsis, hanging, hyphenation, line_boxes, paragraph_bidi, ruby, shape_line,
     spacing, spacing_trim, whitespace,
 };
-use unicode_linebreak::BreakOpportunity;
+use unicode_linebreak::{BreakClass, BreakOpportunity, break_property};
 
 mod wrapping;
 
@@ -117,6 +117,22 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
     pub(crate) fn clamped(mut self, clamp: Option<ParagraphClamp>) -> Self {
         self.clamp = clamp;
         self
+    }
+
+    /// Internal opportunities and a final explicit separator exclude the ordinary end-of-text break.
+    pub(crate) fn has_break_opportunities(&self) -> bool {
+        self.opportunities
+            .iter()
+            .any(|&(end, _)| end < self.paragraph.text().len())
+            || self.paragraph.text().chars().next_back().is_some_and(|ch| {
+                matches!(
+                    break_property(ch as u32),
+                    BreakClass::Mandatory
+                        | BreakClass::CarriageReturn
+                        | BreakClass::LineFeed
+                        | BreakClass::NextLine
+                )
+            })
     }
 
     pub(crate) fn start(&self) -> TextPosition<'p> {

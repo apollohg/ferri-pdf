@@ -31,7 +31,7 @@ fn math(body: &str) -> MathView {
         let matrix = *stack.last().unwrap();
         match item {
             DisplayItem::PushTransform(transform) => {
-                stack.push(matrix * kurbo::Affine::new(transform.map(f64::from)))
+                stack.push(matrix * kurbo::Affine::new(transform.map(f64::from)));
             }
             DisplayItem::PushClip(_)
             | DisplayItem::PushOpacity(_)
@@ -97,6 +97,61 @@ fn math(body: &str) -> MathView {
             y: 0.0,
             ..area
         },
+    }
+}
+
+#[test]
+fn token_ink_metrics_ignore_nonbreaking_spaces_and_nowrap_soft_candidates() {
+    for tag in ["mi", "mn", "mtext", "ms"] {
+        let reference = math(&format!("<math><{tag}>AA</{tag}></math>"));
+        for text in ["A A", "A&#160;A"] {
+            let actual = math(&format!("<math><{tag}>{text}</{tag}></math>"));
+            assert!(
+                (actual.area.height - reference.area.height).abs() < 0.01
+                    && (actual.baseline.unwrap() - reference.baseline.unwrap()).abs() < 0.01,
+                "{tag} {text}: nowrap token text must keep the same A-glyph ink ascent/descent as AA; actual height/baseline={}/{:?}, expected={}/{:?}",
+                actual.area.height,
+                actual.baseline,
+                reference.area.height,
+                reference.baseline
+            );
+        }
+    }
+}
+
+#[test]
+fn forced_unicode_token_lines_use_the_canonical_css_line_baselines() {
+    for tag in ["mi", "mn", "mtext", "ms"] {
+        for text in ["A&#x2028;A", "A&#x2028;"] {
+            let body = |display| {
+                format!("<math><{tag} style='line-height:30pt;{display}'>{text}</{tag}></math>")
+            };
+            let actual = math(&body(""));
+            let reference = math(&body("display:block"));
+            assert_eq!(
+                actual.lines.len(),
+                reference.lines.len(),
+                "{tag}/{text}: a mandatory Unicode line separator must retain the canonical CSS lines"
+            );
+            assert!(
+                !reference.lines.is_empty(),
+                "{tag}/{text}: the CSS control must paint its visible A glyphs"
+            );
+            assert!(
+                (actual.area.height - reference.area.height).abs() < 0.01,
+                "{tag}/{text}: forced-break token height {} must match ordinary CSS height {}",
+                actual.area.height,
+                reference.area.height
+            );
+            for (actual, expected) in actual.lines.iter().zip(&reference.lines) {
+                assert!(
+                    (actual.baseline - expected.baseline).abs() < 0.01,
+                    "{tag}/{text}: mandatory-break token baseline {} must match ordinary CSS baseline {}",
+                    actual.baseline,
+                    expected.baseline
+                );
+            }
+        }
     }
 }
 

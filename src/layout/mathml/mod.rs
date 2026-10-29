@@ -61,7 +61,24 @@ pub(super) fn measure<'a>(
         edges.horizontal(),
     )
     .with_intrinsic(sizes, content.intrinsic, Some(geometry.width));
-    let width = constraints.constrain(constraints.specified.unwrap_or(content.width));
+    let natural_width = if layout.fill_width {
+        geometry.width
+    } else {
+        content.width
+    };
+    let width = constraints.constrain(constraints.specified.unwrap_or(natural_width));
+    if source
+        .math()
+        .is_some_and(|math| math.name.as_ref() == "math")
+        && style.display == Display::BlockMath
+    {
+        content.placement = ContentPlacement::Centered;
+    }
+    let content_x = match content.placement {
+        ContentPlacement::Centered | ContentPlacement::Fraction => (width - content.width) / 2.0,
+        ContentPlacement::InlineStart if style.used_rtl() => width - content.width,
+        ContentPlacement::InlineStart => 0.0,
+    };
     let mut geometry = geometry.clone();
     geometry.width = width;
     let top = geometry.padding[0] + geometry.border[0];
@@ -75,7 +92,7 @@ pub(super) fn measure<'a>(
     for paint in std::mem::take(&mut content.paint) {
         match paint {
             Paint::Child { mut block, x, y } => {
-                block.offset[0] += x;
+                block.offset[0] += x + content_x;
                 cells.push(MeasuredCell {
                     clipped_height: None,
                     after_events: Vec::new(),
@@ -90,10 +107,17 @@ pub(super) fn measure<'a>(
                 });
             }
             Paint::Text(mut paint) => {
+                paint.x += content_x;
                 paint.baseline += content.ascent;
                 after.push(RowPaint::Text(paint));
             }
             Paint::Box(mut paint) => {
+                if content.placement == ContentPlacement::Fraction {
+                    paint.rect.x = 0.0;
+                    paint.rect.width = width;
+                } else {
+                    paint.rect.x += content_x;
+                }
                 paint.rect.y += content.ascent;
                 after.push(RowPaint::Box(paint));
             }
@@ -285,7 +309,15 @@ pub(super) struct MathBox<'a> {
     space_like: bool,
     /// The canonical CSS child already carries this element's events and positioned boxes.
     css_content: bool,
+    placement: ContentPlacement,
     paint: Vec<Paint<'a>>,
+}
+#[derive(Clone, Copy, Default, PartialEq, Eq)]
+enum ContentPlacement {
+    #[default]
+    InlineStart,
+    Centered,
+    Fraction,
 }
 impl MathBox<'_> {
     fn place(&mut self, child: Self, x: f32, y: f32) {
@@ -382,6 +414,16 @@ fn script_pairs<'a>(
 pub(super) struct LayoutKey {
     form: Option<Form>,
     stretch: Option<Constraint>,
+    fill_width: bool,
+}
+impl LayoutKey {
+    pub(super) fn for_flow(source: BlockSource<'_>) -> Self {
+        Self {
+            fill_width: source.style().display == Display::BlockMath
+                && source.math().is_some_and(|math| math.principal),
+            ..Self::default()
+        }
+    }
 }
 #[derive(Clone, Copy, Hash, PartialEq, Eq)]
 enum Constraint {
@@ -392,6 +434,7 @@ impl From<MathLayout> for LayoutKey {
     fn from(layout: MathLayout) -> Self {
         Self {
             form: layout.form,
+            fill_width: false,
             stretch: layout.stretch.map(|stretch| match stretch {
                 Stretch::Inline(size) => Constraint::Inline(size.to_bits()),
                 Stretch::Block(ascent, descent) => {
@@ -470,6 +513,9 @@ impl<'a> Builder<'_, 'a> {
         } else {
             RequestKind::Css
         };
+        let intrinsic = (kind == RequestKind::Css)
+            .then(|| super::intrinsic::measure(source, self.measurer, self.available))
+            .transpose()?;
         let geometry = if native || source.flow().is_some() {
             super::geometry::inline_horizontal(
                 style,
@@ -493,6 +539,9 @@ impl<'a> Builder<'_, 'a> {
             .request(source, &geometry, self.containing, None, kind)?;
         let class = crate::document::mathml::block_class(element.0);
         let mut result = Self::measured_box(measured, class.space_like);
+        if let Some(intrinsic) = intrinsic {
+            result.intrinsic = intrinsic;
+        }
         result.space_like = class.space_like;
         if let Some(core) = class.operator {
             result.operator = Some(Operator::of(
@@ -531,8 +580,19 @@ impl<'a> Builder<'_, 'a> {
             + margins[1]
             + margins[3];
         result.width = measured.geometry.width + horizontal;
-        result.intrinsic.min += horizontal;
-        result.intrinsic.max += horizontal;
+        if measured.math.is_some() {
+            result.intrinsic = super::intrinsic::outer_widths(
+                measured.style,
+                result.intrinsic,
+                super::geometry::Edges {
+                    padding: measured.geometry.padding,
+                    border: measured.geometry.border,
+                },
+            );
+        } else {
+            result.intrinsic.min += horizontal;
+            result.intrinsic.max += horizontal;
+        }
         result.ascent = baseline + margins[0];
         result.descent = measured.height - baseline + margins[2];
         let before = if measured.style.rtl { 1 } else { 3 };
@@ -562,12 +622,9 @@ impl<'a> Builder<'_, 'a> {
         });
         result
     }
-    fn css_content(
-        &mut self,
-        element: Element<'a>,
-        _style: &Style,
-    ) -> Result<MathBox<'a>, Failure> {
+    fn css_content(&mut self, element: Element<'a>) -> Result<MathBox<'a>, Failure> {
         let content = element.content();
+        let intrinsic = super::intrinsic::measure(content, self.measurer, self.available)?;
         let geometry = super::inline::shrink_to_fit_geometry(
             self.measurer,
             content,
@@ -579,7 +636,7 @@ impl<'a> Builder<'_, 'a> {
             content.into(),
             &geometry,
             self.containing,
-            None,
+            self.containing,
             RequestKind::Css,
         )?;
         let mut result = Self::measured_box(
@@ -587,6 +644,7 @@ impl<'a> Builder<'_, 'a> {
             matches!(element.name(), "mtext" | "annotation" | "annotation-xml"),
         );
         result.css_content = true;
+        result.intrinsic = intrinsic;
         Ok(result)
     }
     fn metrics(&self, style: &Style) -> Result<Metrics, Failure> {
@@ -597,28 +655,38 @@ impl<'a> Builder<'_, 'a> {
         )
         .map_err(|error| StyleError::Font(error).into())
     }
-    fn token_element(&self, element: Element<'a>, style: &Style) -> Result<MathBox<'a>, Failure> {
-        self.shape_token(
-            element
-                .paragraph()
-                .expect("native token has one canonical paragraph"),
-            style,
-        )
+    fn token_element(&mut self, element: Element<'a>) -> Result<MathBox<'a>, Failure> {
+        let paragraph = element
+            .paragraph()
+            .expect("native token has one canonical paragraph");
+        self.measurer.work.spend(paragraph.text().len().max(1))?;
+        let prepared = self.measurer.text.prepare_paragraph(paragraph);
+        if prepared.has_break_opportunities() {
+            return self.css_content(element);
+        }
+        let line = prepared
+            .lines(prepared.start(), UNCONSTRAINED_LINE, &[])?
+            .next()
+            .transpose()?;
+        self.token_box(paragraph, line)
     }
-    fn shape_token(
-        &self,
-        paragraph: &'a Paragraph,
-        _style: &Style,
-    ) -> Result<MathBox<'a>, Failure> {
+    fn shape_token(&self, paragraph: &'a Paragraph) -> Result<MathBox<'a>, Failure> {
         self.measurer.work.spend(paragraph.text().len().max(1))?;
         let lines = self
             .measurer
             .text
             .layout_paragraph(paragraph, UNCONSTRAINED_LINE, &[])?;
         if lines.len() > 1 {
-            return Err(unsupported("token with forced line breaks"));
+            return Err(unsupported("generated token with forced line breaks"));
         }
-        let Some(line) = lines.into_iter().next() else {
+        self.token_box(paragraph, lines.into_iter().next())
+    }
+    fn token_box(
+        &self,
+        paragraph: &'a Paragraph,
+        line: Option<crate::text::Line>,
+    ) -> Result<MathBox<'a>, Failure> {
+        let Some(line) = line else {
             return Ok(MathBox::default());
         };
         let bounds = self.measurer.text.outline_bounds(paragraph, &line)?;
@@ -874,19 +942,12 @@ impl<'a> Builder<'_, 'a> {
                 !paragraph.anchors().is_empty() || paragraph.inline_blocks().next().is_some()
             }))
         {
-            return self.css_content(element, style);
-        }
-        if element.name() == "mtext"
-            && element
-                .paragraph()
-                .is_some_and(|paragraph| paragraph.text().chars().any(char::is_whitespace))
-        {
-            return self.css_content(element, style);
+            return self.css_content(element);
         }
         let mut content = match element.name() {
             "math" | "mrow" | "mstyle" | "merror" | "mphantom" | "semantics" | "maction"
             | "mprescripts" => self.row(element, style, layout, RowKind::Grouping)?,
-            "mi" | "mn" | "mtext" | "ms" | "annotation" => self.token_element(element, style)?,
+            "mi" | "mn" | "mtext" | "ms" | "annotation" => self.token_element(element)?,
             "mo" => self.operator(element, style, layout)?,
             "mspace" => self.space(element, style),
             "mpadded" => self.padded(element, style, layout)?,
@@ -895,7 +956,7 @@ impl<'a> Builder<'_, 'a> {
             "msub" | "msup" | "msubsup" => self.scripts(element, style, layout)?,
             "munder" | "mover" | "munderover" => self.limits(element, style, layout)?,
             "mmultiscripts" => self.multiscripts(element, style, layout)?,
-            "annotation-xml" => return self.css_content(element, style),
+            "annotation-xml" => return self.css_content(element),
             _ => self.row(element, style, layout, RowKind::Grouping)?,
         };
         if matches!(
@@ -949,7 +1010,7 @@ impl<'a> Builder<'_, 'a> {
         horizontal: bool,
         variants_only: bool,
     ) -> Result<Option<MathBox<'a>>, Failure> {
-        let mut normal = self.shape_token(paragraph, style)?;
+        let mut normal = self.shape_token(paragraph)?;
         let Some(Paint::Text(paint)) = normal.paint.first_mut() else {
             return Ok(None);
         };
@@ -1047,7 +1108,7 @@ impl<'a> Builder<'_, 'a> {
             style,
             layout.form.unwrap_or_default(),
         );
-        let mut result = self.token_element(element, style)?;
+        let mut result = self.token_element(element)?;
         let mut chars = text.chars();
         if let Some(character) = chars.next().filter(|_| chars.next().is_none()) {
             let metrics = self.metrics(style)?;
@@ -1263,7 +1324,6 @@ impl<'a> Builder<'_, 'a> {
                             .math()
                             .and_then(|math| math.radical.as_ref())
                             .expect("radical paragraph"),
-                        style,
                     )
                 },
                 Ok,
@@ -1392,6 +1452,7 @@ impl<'a> Builder<'_, 'a> {
                 min: numerator.intrinsic.min.max(denominator.intrinsic.min),
                 max: numerator.intrinsic.max.max(denominator.intrinsic.max),
             },
+            placement: ContentPlacement::Fraction,
             operator: numerator.operator.clone(),
             ..Default::default()
         };
@@ -1781,6 +1842,7 @@ impl<'a> Builder<'_, 'a> {
             ascent: base.ascent,
             descent: base.descent,
             operator: base.operator.clone(),
+            placement: ContentPlacement::Centered,
             ..Default::default()
         };
         let under_layout = under.map(|under| {

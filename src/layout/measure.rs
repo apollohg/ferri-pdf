@@ -1082,7 +1082,9 @@ impl<'a> Measurer<'a> {
                         &geometry,
                         containing_height,
                         used_height,
-                        frames::RequestKind::Math(Default::default()),
+                        frames::RequestKind::Math(crate::layout::mathml::LayoutKey::for_flow(
+                            block,
+                        )),
                     )
                     .map(FlowStart::Complete);
             }
