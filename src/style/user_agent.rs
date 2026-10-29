@@ -361,7 +361,8 @@ fn dimension_hint(
     Ok(())
 }
 
-fn color(value: &str) -> Option<String> {
+/// HTML §2.3.6 "rules for parsing a legacy colour value", as a hexadecimal colour.
+pub(crate) fn legacy_color(value: &str) -> Option<String> {
     if value.is_empty() {
         return None;
     }
@@ -440,7 +441,7 @@ fn color_hint(
     property: Property,
     value: Option<&str>,
 ) -> Result<(), StyleError> {
-    if let Some(value) = value.and_then(color) {
+    if let Some(value) = value.and_then(legacy_color) {
         hint(output, property, &value)?;
     }
     Ok(())
@@ -802,6 +803,32 @@ pub(super) fn declarations(
             )?;
         }
         "col" => dimension_hint(&mut output, element, "width", Property::Width, false)?,
+        // HTML §15.5.13.
+        "marquee" => {
+            color_hint(
+                &mut output,
+                Property::BackgroundColor,
+                element.attr("bgcolor"),
+            )?;
+            dimension_hint(&mut output, element, "width", Property::Width, false)?;
+            dimension_hint(&mut output, element, "height", Property::Height, false)?;
+            for (attribute, properties) in [
+                ("hspace", [Property::MarginLeft, Property::MarginRight]),
+                ("vspace", [Property::MarginTop, Property::MarginBottom]),
+            ] {
+                for property in properties {
+                    dimension_hint(&mut output, element, attribute, property, false)?;
+                }
+            }
+        }
+        // HTML §15.5.17: `wrap=off` turns off wrapping for historical reasons.
+        "textarea"
+            if element
+                .attr("wrap")
+                .is_some_and(|wrap| wrap.eq_ignore_ascii_case("off")) =>
+        {
+            hint(&mut output, Property::WhiteSpace, "pre")?;
+        }
         "thead" | "tbody" | "tfoot" | "tr" => {
             dimension_hint(&mut output, element, "height", Property::Height, false)?;
         }

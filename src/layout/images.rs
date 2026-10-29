@@ -212,11 +212,19 @@ pub(super) fn measure<'a>(
             measurer.text.resolver(),
             &measurer.work,
         )?,
+        crate::images::Image::Widget(widget) => {
+            widget.render([width, height].map(|side| side / POINTS_PER_PIXEL))?
+        }
         _ => block.image().unwrap().clone(),
     };
     // A nested navigable's viewport and other content without natural dimensions fill the
-    // content box (CSS Images 3 §5.5).
-    let [paint_width, paint_height] = if image.natural_size() == Default::default() {
+    // content box (CSS Images 3 §5.5), as do widgets, which `object-fit` does not apply to
+    // (CSS UI 4 §7.2).
+    let widget = matches!(
+        block.image().unwrap().as_ref(),
+        crate::images::Image::Widget(_)
+    );
+    let [paint_width, paint_height] = if widget || image.natural_size() == Default::default() {
         [width, height]
     } else {
         style

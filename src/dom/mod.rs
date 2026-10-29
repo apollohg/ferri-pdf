@@ -1,7 +1,9 @@
 //! Shared static HTML tree, selector matching and explicit navigation relationships.
 mod attributes;
+mod control_values;
 mod controls;
-pub(crate) use controls::InputType;
+pub(crate) use control_values::{parse_float, stripped_newlines, valid_float};
+pub(crate) use controls::{GaugeRegion, InputAttribute, InputType, non_negative_integer};
 mod language;
 mod selector;
 mod shadow;

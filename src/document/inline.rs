@@ -202,7 +202,6 @@ impl Paragraph {
             first_line: None,
         }
     }
-    #[cfg(test)]
     pub(crate) fn generated(text: &str, style: &Style) -> Result<Option<Self>, DocumentError> {
         let mut collector = InlineCollector::default();
         collector.append(text, style)?;

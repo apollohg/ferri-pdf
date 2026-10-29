@@ -94,15 +94,37 @@ pub(super) fn horizontal_with_edges(
         containing_rtl,
         crate::style::Overconstraint::AdjustEndMargin,
     );
+    let start = match (left, right, self_alignment(style, containing_rtl)) {
+        (Some(left), Some(right), Some(factor)) => {
+            left + factor * (containing_width - used.size - horizontal_edges - left - right)
+        }
+        _ => used.margins[0],
+    };
     HorizontalBox {
         containing_x,
         containing_width,
         containing_rtl,
-        x: containing_x + used.margins[0] + padding[3] + border[3],
+        x: containing_x + start + padding[3] + border[3],
         width: used.size,
         padding,
         margin,
         border,
+    }
+}
+
+/// CSS Box Alignment 3 §6.1: a block-level box with a positional `justify-self` and no
+/// `auto` margins sits at this fraction of its containing block's free space; other values
+/// leave the over-constrained end margin to absorb it.
+fn self_alignment(style: &Style, containing_rtl: bool) -> Option<f32> {
+    use crate::style::Alignment;
+    let start = if containing_rtl { 1.0 } else { 0.0 };
+    match style.grid.justify_self {
+        Alignment::Left => Some(0.0),
+        Alignment::Right => Some(1.0),
+        Alignment::Center => Some(0.5),
+        Alignment::Start | Alignment::FlexStart | Alignment::SelfStart => Some(start),
+        Alignment::End | Alignment::FlexEnd | Alignment::SelfEnd => Some(1.0 - start),
+        _ => None,
     }
 }
 

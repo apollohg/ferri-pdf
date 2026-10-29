@@ -19,7 +19,7 @@ pub(super) fn tree_context(
     }
 }
 
-pub(super) const SELECTOR_TARGET_COUNT: usize = 8;
+pub(super) const SELECTOR_TARGET_COUNT: usize = 10;
 pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
     match pseudo {
         None => 0,
@@ -30,6 +30,8 @@ pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
         Some(PseudoElement::FirstLetter) => 5,
         Some(PseudoElement::FirstLetterPrefix) => 6,
         Some(PseudoElement::FirstLetterSuffix) => 7,
+        Some(PseudoElement::Placeholder) => 8,
+        Some(PseudoElement::FileSelectorButton) => 9,
     }
 }
 
@@ -117,6 +119,9 @@ impl RuleSelector {
     pub(super) fn resolve_parent(&self, parent: &Selector) -> Result<Self, StyleError> {
         selector_depth(self.selector.resolved_depth(parent))?;
         Self::from_parsed(self.selector.resolve_parent(parent), self.pseudo)
+    }
+    pub(super) fn uses_validity(&self) -> bool {
+        self.selector.uses_validity()
     }
     pub(super) fn target_index(&self) -> usize {
         target_index(self.pseudo)

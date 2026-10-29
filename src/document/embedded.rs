@@ -79,7 +79,7 @@ pub(crate) fn resolve(
     let mut objects = HashSet::new();
     for element in tree.shadow_including_elements() {
         if element.namespace() != HTML_NAMESPACE
-            || !matches!(element.name(), "iframe" | "embed" | "object")
+            || !matches!(element.name(), "iframe" | "embed" | "object" | "frame")
             || element
                 .ancestors(TreeRelation::Formatting)
                 .any(|ancestor| hides_descendants(ancestor, &objects))
@@ -88,6 +88,15 @@ pub(crate) fn resolve(
         }
         let replaced = match element.name() {
             "iframe" => Some(Embedded::Navigable(resolution.iframe(element)?)),
+            // HTML §15.6: only frames in a frameset render their content navigable.
+            "frame" => element
+                .parent(TreeRelation::Formatting)
+                .filter(|parent| {
+                    parent.namespace() == HTML_NAMESPACE && parent.name() == "frameset"
+                })
+                .map(|_| resolution.frame(element))
+                .transpose()?
+                .map(Embedded::Navigable),
             "embed" => Some(Embedded::Image(resolution.embed(element)?)),
             _ => {
                 let represented = resolution.object(element)?;
@@ -144,11 +153,20 @@ impl Resolution<'_, '_> {
     /// HTML §4.8.5 "process the iframe attributes"; with scripting disabled nothing loads
     /// lazily (HTML §2.5.7).
     fn iframe(&mut self, element: Element<'_>) -> Result<Arc<Frame>, DocumentError> {
+        if let Some(srcdoc) = element.attr("srcdoc") {
+            return Ok(Frame::html(
+                srcdoc.to_owned(),
+                self.embedder.base,
+                self.child()?,
+            ));
+        }
+        self.frame(element)
+    }
+
+    /// The `src` attribute navigation shared by iframes and frames (HTML §4.8.5, §16.3.1).
+    fn frame(&mut self, element: Element<'_>) -> Result<Arc<Frame>, DocumentError> {
         let base = self.embedder.base;
         let navigable = self.child()?;
-        if let Some(srcdoc) = element.attr("srcdoc") {
-            return Ok(Frame::html(srcdoc.to_owned(), base, navigable));
-        }
         let Some(url) = element
             .attr("src")
             .filter(|reference| !reference.is_empty())

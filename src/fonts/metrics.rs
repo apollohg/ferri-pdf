@@ -19,6 +19,10 @@ pub(crate) const WATER_IDEOGRAPH: char = '\u{6c34}';
 /// CSS Values 4 §6.1.1 sizes where the font has no such glyph.
 pub(crate) const FALLBACK_ZERO_ADVANCE_EM: f32 = 0.5;
 pub(crate) const FALLBACK_IDEOGRAPH_ADVANCE_EM: f32 = 1.0;
+const OS2_TABLE: &[u8; 4] = b"OS/2";
+const OS2_AVERAGE_WIDTH: usize = 2;
+const HHEA_TABLE: &[u8; 4] = b"hhea";
+const HHEA_MAXIMUM_ADVANCE: usize = 10;
 
 /// Vertical metrics of one face, in em.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -34,6 +38,10 @@ pub(crate) struct FaceMetrics {
     pub zero_advance: Option<f32>,
     pub ideograph_advance: Option<f32>,
     pub ideograph_height: Option<f32>,
+    /// OS/2 `xAvgCharWidth` and hhea `advanceWidthMax`, which size form controls by
+    /// characters (HTML §15.5.6); the advance of "0" stands in where a face lacks them.
+    pub average_advance: f32,
+    pub maximum_advance: f32,
     pub baselines: crate::fonts::BaselineTable,
 }
 impl FaceMetrics {
@@ -53,7 +61,19 @@ impl FaceMetrics {
             .map_or(FALLBACK_X_HEIGHT_EM, |height| {
                 f32::from(height) / units_per_em
             });
+        let zero_advance = advance(face, ZERO);
+        let fallback = zero_advance.unwrap_or(FALLBACK_ZERO_ADVANCE_EM);
+        let table_advance = |tag: &[u8; 4], offset: usize| {
+            face.raw_face()
+                .table(ttf_parser::Tag::from_bytes(tag))
+                .and_then(|table| table.get(offset..offset + 2))
+                .map(|bytes| i16::from_be_bytes([bytes[0], bytes[1]]))
+                .filter(|value| *value > 0)
+                .map(|value| f32::from(value) / units_per_em)
+        };
         Self {
+            average_advance: table_advance(OS2_TABLE, OS2_AVERAGE_WIDTH).unwrap_or(fallback),
+            maximum_advance: table_advance(HHEA_TABLE, HHEA_MAXIMUM_ADVANCE).unwrap_or(fallback),
             ascent,
             descent,
             line_gap: f32::from(face.line_gap()) / units_per_em,
@@ -63,7 +83,7 @@ impl FaceMetrics {
                 .filter(|height| *height > 0)
                 .or_else(|| glyph_top(CAPITAL_H))
                 .map_or(ascent, |height| f32::from(height) / units_per_em),
-            zero_advance: advance(face, ZERO),
+            zero_advance,
             ideograph_advance: advance(face, WATER_IDEOGRAPH),
             ideograph_height: face
                 .glyph_index(WATER_IDEOGRAPH)

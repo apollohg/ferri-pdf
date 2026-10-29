@@ -52,6 +52,7 @@ impl ImageWriter {
             Asset::Transparent => Ok(()),
             Asset::Viewport(_) => unreachable!("painters draw nested viewports"),
             Asset::Frame(..) => unreachable!("layout replaces frames with their viewports"),
+            Asset::Widget(_) => unreachable!("layout replaces widgets with their drawings"),
         }
     }
 
@@ -82,7 +83,11 @@ impl ImageWriter {
                     Image::from_custom(crate::writer::pixels::Pixels(pixels.clone()), false)
                         .map(Image::with_jpeg_compression),
                 ),
-                Asset::Svg(_) | Asset::Transparent | Asset::Frame(..) | Asset::Viewport(_) => None,
+                Asset::Svg(_)
+                | Asset::Transparent
+                | Asset::Frame(..)
+                | Asset::Viewport(_)
+                | Asset::Widget(_) => None,
             };
             if let Some(loaded) = loaded {
                 match loaded.and_then(|image| {
@@ -102,9 +107,11 @@ impl ImageWriter {
         }
         let orientation = match paint.image.as_ref() {
             Asset::Raster(raster) => raster.orientation,
-            Asset::Pixels(_) | Asset::Transparent | Asset::Frame(..) | Asset::Viewport(_) => {
-                NoTransforms
-            }
+            Asset::Pixels(_)
+            | Asset::Transparent
+            | Asset::Frame(..)
+            | Asset::Viewport(_)
+            | Asset::Widget(_) => NoTransforms,
             Asset::Svg(svg) => {
                 if let std::collections::hash_map::Entry::Vacant(entry) =
                     self.vectors.entry(vector_key)
@@ -158,7 +165,7 @@ impl ImageWriter {
             Asset::Raster(_) | Asset::Pixels(_) => {
                 surface.draw_image(self.images[&key].clone(), unit_size);
             }
-            Asset::Transparent | Asset::Frame(..) | Asset::Viewport(_) => {
+            Asset::Transparent | Asset::Frame(..) | Asset::Viewport(_) | Asset::Widget(_) => {
                 unreachable!("draw dispatches only decoded images here")
             }
             Asset::Svg(svg) => {

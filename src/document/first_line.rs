@@ -166,7 +166,13 @@ impl Restyle<'_> {
                             self.resolver,
                         )?,
                     )),
-                    Some(PseudoElement::Marker | PseudoElement::FirstLine) => None,
+                    // Control internals are atomic inlines, which no first line reaches.
+                    Some(
+                        PseudoElement::Marker
+                        | PseudoElement::FirstLine
+                        | PseudoElement::Placeholder
+                        | PseudoElement::FileSelectorButton,
+                    ) => None,
                 }
             }
             None => None,

@@ -228,6 +228,7 @@ pub(crate) struct Style {
     pub computed_color: crate::paint::AbsoluteColor,
     /// `accent-color`; `None` is `auto`.
     pub accent_color: Option<crate::paint::AbsoluteColor>,
+    pub widget: crate::style::WidgetStyle,
     pub color_scheme: crate::style::color_scheme::ColorSchemes,
     pub decoration: BoxDecoration,
     pub clone_decoration: bool,
@@ -350,6 +351,7 @@ impl Default for Style {
             color: Color::BLACK,
             computed_color: crate::paint::AbsoluteColor::BLACK,
             accent_color: None,
+            widget: crate::style::WidgetStyle::default(),
             color_scheme: Default::default(),
             decoration: initial_decoration(),
             clone_decoration: false,
@@ -819,11 +821,15 @@ impl Stylesheet {
                 );
             }
         }
+        if element.is_widget() {
+            style.widget.author_decorated = cascaded
+                .author_cascades(&crate::style::widget_values::NATIVE_APPEARANCE_DISABLERS)?;
+        }
         Ok((style, cascaded))
     }
 
     /// The page area, which is the viewport in paged media (CSS Page 3 §3).
-    pub(super) fn page_area(&self) -> [f32; 2] {
+    pub(crate) fn page_area(&self) -> [f32; 2] {
         let area = self.page_content_box();
         [area.width, area.height]
     }
@@ -1002,6 +1008,36 @@ impl Stylesheet {
         let mut style = Self::apply_properties(style, parent, winners, &relative)?;
         style.origin = StyleOrigin::of(element, Some(pseudo), parent);
         Ok(style)
+    }
+
+    /// The style of an element-backed pseudo-element of `element`, to which `content` does
+    /// not apply (CSS Pseudo 4 §4).
+    pub(crate) fn element_backed_with_resolver(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
+        pseudo: crate::style::PseudoElement,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Style, StyleError> {
+        let (style, winners) = self.prepare_pseudo(element, parent, pseudo, resolver)?;
+        let (mut style, mut winners) = crate::style::resolution::resolve_values(
+            self,
+            style,
+            parent,
+            winners,
+            resolver,
+            &crate::style::resolution::ValueContext {
+                tree: Tree::Element(element),
+                viewport: self.page_area(),
+                page_font: false,
+            },
+        )?;
+        winners.remove(&Property::Content);
+        let mut inherited = self.inherited(parent, self.page_area(), resolver);
+        inherited.tree = Tree::Element(element);
+        Self::display(&mut style, parent, &mut winners, &inherited)?;
+        let relative = self.text_basis(&mut style, parent, &mut winners, inherited, resolver)?;
+        Self::apply_properties(style, parent, winners, &relative)
     }
 
     pub(super) fn prepare_pseudo(

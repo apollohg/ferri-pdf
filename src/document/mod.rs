@@ -1,6 +1,8 @@
 //! HTML loading, stylesheet discovery, and styled document construction.
 mod content;
+mod controls;
 mod counters;
+mod details;
 mod embedded;
 pub(crate) mod encoding;
 mod first_letter;
@@ -8,6 +10,7 @@ mod first_line;
 mod first_page;
 mod formatting;
 pub(crate) mod frames;
+mod frameset;
 mod generated;
 mod inline;
 mod lists;

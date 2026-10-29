@@ -33,6 +33,17 @@ pub(super) fn draw(
     surface: &mut Surface<'_>,
     images: &mut crate::writer::images::ImageWriter,
 ) -> Result<(), PdfError> {
+    let shifted;
+    let paint = match paint.legend.filter(|_| paint.first_fragment) {
+        Some(cut) => {
+            let mut fieldset = paint.clone();
+            fieldset.rect.y += cut.inset;
+            fieldset.rect.height -= cut.inset;
+            shifted = fieldset;
+            &shifted
+        }
+        None => paint,
+    };
     if paint.rect.width <= 0.0 || paint.rect.height <= 0.0 {
         return Ok(());
     }
@@ -140,9 +151,46 @@ fn draw_box(
             images,
         );
     }
-    for item in paint.border_fills() {
-        draw_fill(item, viewport, surface)?;
+    let gapped = paint.legend.is_some() && paint.first_fragment;
+    if gapped {
+        push_legend_gap(paint, viewport, surface)?;
     }
+    let borders = paint
+        .border_fills()
+        .into_iter()
+        .try_for_each(|item| draw_fill(item, viewport, surface));
+    if gapped {
+        surface.pop();
+    }
+    borders
+}
+
+/// Clips out the part of a fieldset's block-start border behind its rendered legend.
+fn push_legend_gap(
+    paint: &BoxPaint,
+    viewport: crate::graphics::Rect,
+    surface: &mut Surface<'_>,
+) -> Result<(), PdfError> {
+    let cut = paint.legend.expect("a gapped box has a legend");
+    let bounds = local_bounds(viewport, surface)?;
+    let mut path = PathBuilder::new();
+    path.push_rect(
+        Rect::from_xywh(bounds.x, bounds.y, bounds.width, bounds.height)
+            .ok_or(PdfError::InvalidGeometry)?,
+    );
+    path.push_rect(
+        Rect::from_xywh(
+            paint.rect.x + cut.gap[0],
+            paint.rect.y,
+            cut.gap[1] - cut.gap[0],
+            paint.decoration.borders[0].used_width(),
+        )
+        .ok_or(PdfError::InvalidGeometry)?,
+    );
+    surface.push_clip_path(
+        &path.finish().ok_or(PdfError::InvalidGeometry)?,
+        &FillRule::EvenOdd,
+    );
     Ok(())
 }
 

@@ -506,6 +506,14 @@ fn handler(property: Property) -> Option<Handler> {
             Some(|v, _| crate::style::Hyphens::from_component(v).is_ok()),
         ),
         P::ColorScheme => (color_scheme, Some(|_, _| true)),
+        P::Appearance => (
+            appearance,
+            Some(|v, _| crate::style::Appearance::from_component(v).is_ok()),
+        ),
+        P::FieldSizing => (
+            field_sizing,
+            Some(|v, _| crate::style::FieldSizing::from_component(v).is_ok()),
+        ),
         P::AccentColor => (
             accent_color,
             Some(|v, relative| {
@@ -981,7 +989,7 @@ fn handler(property: Property) -> Option<Handler> {
         ),
         P::AlignContent => (
             align_content,
-            Some(|v, _| Alignment::from_component(v).is_ok()),
+            Some(|v, _| Alignment::content_from_component(v).is_ok()),
         ),
         P::AlignSelf => (
             align_self,
@@ -2583,15 +2591,32 @@ computed!(
     |value, style, _parent, _relative| { Alignment::from_component(value)? }
 );
 computed!(
+    appearance,
+    [widget.appearance],
+    |value, style, _parent, _relative| { crate::style::Appearance::from_component(value)? }
+);
+computed!(
+    field_sizing,
+    [widget.field_sizing],
+    |value, style, _parent, _relative| { crate::style::FieldSizing::from_component(value)? }
+);
+computed!(
     align_items,
     [flex.align_items],
     |value, style, _parent, _relative| { Alignment::from_component(value)? }
 );
-computed!(
-    align_content,
-    [flex.align_content],
-    |value, style, _parent, _relative| { Alignment::from_component(value)? }
-);
+fn align_content(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    _: &Relative<'_>,
+) -> Result<(), StyleError> {
+    (style.flex.align_content, style.flex.align_content_unsafe) = match input {
+        Input::Value(value) => Alignment::content_from_component(value)?,
+        Input::Copy(source) => (source.flex.align_content, source.flex.align_content_unsafe),
+    };
+    Ok(())
+}
 computed!(
     align_self,
     [flex.align_self],

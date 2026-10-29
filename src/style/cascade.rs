@@ -260,6 +260,36 @@ impl Cascaded {
                 false,
             ));
     }
+    /// Whether an author-origin value of any of `properties` survives rolling back
+    /// `revert` and `revert-layer` (CSS UI 4 §7.2.1).
+    pub(super) fn author_cascades(&self, properties: &[Property]) -> Result<bool, StyleError> {
+        for property in properties {
+            let Some(candidates) = self.properties.get(property) else {
+                continue;
+            };
+            let mut candidates = candidates.clone();
+            sort(&mut candidates);
+            let winner = choose(
+                &candidates,
+                |_, value, _| Ok(value.0.clone()),
+                |value| match value {
+                    Value::Specified(specified) | Value::HeaderAlignment(specified) => {
+                        specified_keyword(specified)
+                    }
+                    Value::Pending(_) => None,
+                },
+            )?;
+            if winner.is_some_and(|(index, _)| {
+                matches!(
+                    candidates[index].context.origin,
+                    Origin::Author | Origin::AuthorHint
+                )
+            }) {
+                return Ok(true);
+            }
+        }
+        Ok(false)
+    }
     pub(super) fn is_empty(&self) -> bool {
         self.properties.is_empty() && self.custom.is_empty()
     }

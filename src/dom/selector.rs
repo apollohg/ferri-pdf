@@ -95,6 +95,8 @@ struct SelectorMetrics {
     parent_depth: Option<usize>,
     components: usize,
     parent_count: usize,
+    /// Matches `:valid` or `:invalid`, which need every control's constraint validation.
+    validity: bool,
 }
 impl SelectorMetrics {
     fn parsed(selectors: &SelectorList<StaticSelector>) -> Self {
@@ -117,6 +119,7 @@ impl SelectorMetrics {
                 .max(),
             components: self.components.saturating_add(other.components),
             parent_count: self.parent_count.saturating_add(other.parent_count),
+            validity: self.validity || other.validity,
         }
     }
     fn resolved(self, parent: Self) -> Self {
@@ -133,6 +136,7 @@ impl SelectorMetrics {
                 .components
                 .saturating_add(self.parent_count.saturating_mul(parent.components)),
             parent_count: self.parent_count.saturating_mul(parent.parent_count),
+            validity: self.validity || parent.validity,
         }
     }
 }
@@ -156,6 +160,12 @@ impl SelectorVisitor for MetricsVisitor {
     fn visit_simple_selector(&mut self, component: &parser::Component<StaticSelector>) -> bool {
         self.metrics.depth = self.metrics.depth.max(self.depth);
         self.metrics.components = self.metrics.components.saturating_add(1);
+        self.metrics.validity |= matches!(
+            component,
+            parser::Component::NonTSPseudoClass(StaticState::Form(
+                FormState::Valid | FormState::Invalid
+            ))
+        );
         if matches!(component, parser::Component::ParentSelector) {
             self.metrics.parent_count = self.metrics.parent_count.saturating_add(1);
             self.metrics.parent_depth = Some(
@@ -279,6 +289,9 @@ impl Selector {
 
     pub(crate) fn nesting_work(&self, parent_work: usize) -> usize {
         parent_work.saturating_mul(self.metrics.components)
+    }
+    pub(crate) fn uses_validity(&self) -> bool {
+        self.metrics.validity
     }
     pub(crate) fn depth(&self) -> usize {
         self.metrics.depth
@@ -498,7 +511,7 @@ impl<'i> parser::Parser<'i> for StaticParser<'_> {
             "enabled" => Some(StaticState::Enabled),
             "disabled" => Some(StaticState::Disabled),
             "has-slotted" => Some(StaticState::HasSlotted),
-            _ => None,
+            _ => FormState::parse(&name).map(StaticState::Form),
         };
         if let Some(state) = state {
             return Ok(state);
@@ -636,6 +649,97 @@ impl InactiveState {
     }
 }
 
+/// Form, collapse and top-layer states (Selectors 4 §11–§12, HTML §4.16.3) as the document's
+/// initial state has them: no user has interacted with a control, and without script no
+/// dialog is modal, no popover shows and nothing is autofilled.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub(crate) enum FormState {
+    Checked,
+    Unchecked,
+    Indeterminate,
+    Default,
+    PlaceholderShown,
+    Autofill,
+    WebkitAutofill,
+    Valid,
+    Invalid,
+    UserValid,
+    UserInvalid,
+    InRange,
+    OutOfRange,
+    Required,
+    Optional,
+    ReadOnly,
+    ReadWrite,
+    Open,
+    Modal,
+    PopoverOpen,
+}
+impl FormState {
+    const NAMES: [(&str, Self); 20] = [
+        ("checked", Self::Checked),
+        ("unchecked", Self::Unchecked),
+        ("indeterminate", Self::Indeterminate),
+        ("default", Self::Default),
+        ("placeholder-shown", Self::PlaceholderShown),
+        ("autofill", Self::Autofill),
+        ("-webkit-autofill", Self::WebkitAutofill),
+        ("valid", Self::Valid),
+        ("invalid", Self::Invalid),
+        ("user-valid", Self::UserValid),
+        ("user-invalid", Self::UserInvalid),
+        ("in-range", Self::InRange),
+        ("out-of-range", Self::OutOfRange),
+        ("required", Self::Required),
+        ("optional", Self::Optional),
+        ("read-only", Self::ReadOnly),
+        ("read-write", Self::ReadWrite),
+        ("open", Self::Open),
+        ("modal", Self::Modal),
+        ("popover-open", Self::PopoverOpen),
+    ];
+    fn parse(name: &str) -> Option<Self> {
+        Self::NAMES
+            .iter()
+            .find(|(candidate, _)| name.eq_ignore_ascii_case(candidate))
+            .map(|(_, state)| *state)
+    }
+    fn name(self) -> &'static str {
+        Self::NAMES
+            .iter()
+            .find(|(_, state)| *state == self)
+            .map(|(name, _)| *name)
+            .expect("every form state has a name")
+    }
+    fn matches(self, element: Element<'_>) -> bool {
+        match self {
+            Self::Checked => element.is_checked(),
+            Self::Unchecked => element.is_checkable() && !element.is_checked(),
+            Self::Indeterminate => element.is_indeterminate(),
+            Self::Default => element.is_default(),
+            Self::PlaceholderShown => element.shown_placeholder().is_some(),
+            Self::Valid => element.validity() == Some(true),
+            Self::Invalid => element.validity() == Some(false),
+            Self::InRange => element.range_state() == Some(true),
+            Self::OutOfRange => element.range_state() == Some(false),
+            Self::Required => element.required_state() == Some(true),
+            Self::Optional => element.required_state() == Some(false),
+            Self::ReadWrite => element.is_read_write(),
+            Self::ReadOnly => {
+                element.namespace() == crate::dom::HTML_NAMESPACE && !element.is_read_write()
+            }
+            Self::Open => element.is_open(),
+            // User validity starts false and only user interaction sets it (HTML §4.10.18.4).
+            Self::Autofill
+            | Self::WebkitAutofill
+            | Self::UserValid
+            | Self::UserInvalid
+            | Self::Modal
+            | Self::PopoverOpen => false,
+        }
+    }
+}
+
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub(crate) enum StaticState {
     Defined,
@@ -651,6 +755,7 @@ pub(crate) enum StaticState {
     Current(Box<SelectorList<StaticSelector>>),
     Heading(Option<Vec<i32>>),
     Inactive(InactiveState),
+    Form(FormState),
 }
 impl parser::NonTSPseudoClass for StaticState {
     type Impl = StaticSelector;
@@ -726,6 +831,7 @@ impl ToCss for StaticState {
                 dest.write_str(")")
             }
             Self::Inactive(state) => write!(dest, ":{}", state.name()),
+            Self::Form(state) => write!(dest, ":{}", state.name()),
             Self::Heading(None) => dest.write_str(":heading"),
             Self::Heading(Some(levels)) => {
                 dest.write_str(":heading(")?;
@@ -760,6 +866,10 @@ pub(crate) enum PseudoElement {
     FirstLetterPrefix,
     /// `::first-letter::suffix`, the punctuation following the first letter.
     FirstLetterSuffix,
+    /// The element-backed pseudo-elements of form controls (CSS Pseudo-Elements 4 §4.2,
+    /// §4.3), which style parts of a control's internal content.
+    Placeholder,
+    FileSelectorButton,
 }
 impl From<GeneratedPseudoElement> for PseudoElement {
     fn from(pseudo: GeneratedPseudoElement) -> Self {
@@ -787,9 +897,14 @@ impl PseudoElement {
             ("marker", Self::Marker),
             ("first-line", Self::FirstLine),
             ("first-letter", Self::FirstLetter),
+            ("placeholder", Self::Placeholder),
+            ("file-selector-button", Self::FileSelectorButton),
         ]
         .into_iter()
         .find_map(|(known, pseudo)| name.eq_ignore_ascii_case(known).then_some(pseudo))
+    }
+    pub(crate) fn is_element_backed(self) -> bool {
+        matches!(self, Self::Placeholder | Self::FileSelectorButton)
     }
     /// The sub-pseudo-element `::name` of this one, which only `::first-letter` has (CSS
     /// Pseudo-Elements 4 §2.2).
@@ -820,16 +935,21 @@ impl PseudoElement {
             Self::FirstLetter => "::first-letter",
             Self::FirstLetterPrefix => "::first-letter::prefix",
             Self::FirstLetterSuffix => "::first-letter::suffix",
+            Self::Placeholder => "::placeholder",
+            Self::FileSelectorButton => "::file-selector-button",
         }
     }
 }
 impl parser::PseudoElement for PseudoElement {
     type Impl = StaticSelector;
     fn valid_after_slotted(&self) -> bool {
-        true
+        !self.is_element_backed()
     }
     fn is_before_or_after(&self) -> bool {
-        true
+        !self.is_element_backed()
+    }
+    fn parses_as_element_backed(&self) -> bool {
+        self.is_element_backed()
     }
 }
 impl ToCss for PseudoElement {
@@ -1015,6 +1135,7 @@ impl SelectorElement for MatchingElement<'_> {
                     .as_ref()
                     .is_none_or(|levels| levels.contains(&i32::from(level)))
             }),
+            StaticState::Form(state) => state.matches(element),
             StaticState::Inactive(_) | StaticState::Current(_) => false,
         }
     }

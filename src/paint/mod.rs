@@ -27,7 +27,7 @@ pub(crate) use border_image::{
     ImageSlice,
 };
 pub(crate) use boxes::{
-    BackgroundGeometry, BoxAreas, BoxDecoration, BoxPaint, DEFAULT_BORDER_WIDTH,
+    BackgroundGeometry, BoxAreas, BoxDecoration, BoxPaint, DEFAULT_BORDER_WIDTH, LegendCut,
 };
 pub use boxes::{Border, BorderStyle, INLINE_EDGES, Outline, OutlineStyle};
 #[cfg(test)]

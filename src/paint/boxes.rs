@@ -444,6 +444,18 @@ pub struct BoxPaint<I = Infallible> {
     /// Whether the left and right edges belong to this fragment; inline boxes broken
     /// across lines are sliced there (CSS Fragmentation 3 `box-decoration-break`).
     pub inline_edges: [bool; 2],
+    /// A fieldset's rendered legend in its block-start border.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub legend: Option<LegendCut>,
+}
+
+/// Where a fieldset with a rendered legend paints (HTML §15.3.12): its background and border
+/// start `inset` below its border box's top, and its block-start border skips the legend's
+/// border box, `gap` from the box's left edge.
+#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
+pub struct LegendCut {
+    pub inset: f32,
+    pub gap: [f32; 2],
 }
 impl<I> BoxPaint<I> {
     /// A box without padding that is not split across fragments.
@@ -458,6 +470,7 @@ impl<I> BoxPaint<I> {
             first_fragment: true,
             last_fragment: true,
             inline_edges: INLINE_EDGES,
+            legend: None,
         }
     }
     /// Edges sliced off this fragment, top/right/bottom/left.

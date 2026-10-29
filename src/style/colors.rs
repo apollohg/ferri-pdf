@@ -22,6 +22,9 @@ pub(super) const CURRENT_COLOR: &str = "currentcolor";
 const ACCENT_COLOR: &str = "accentcolor";
 const CANVAS: &str = "canvas";
 const ACCENT_COLOR_TEXT: &str = "accentcolortext";
+const FIELD: &str = "field";
+const BUTTON_BORDER: &str = "buttonborder";
+const BUTTON_FACE: &str = "buttonface";
 /// The ambient flare WCAG 2 adds to relative luminances in contrast ratios.
 const LUMINANCE_FLARE: f32 = 0.05;
 const TRANSPARENT: &str = "transparent";
@@ -366,6 +369,14 @@ pub(super) fn parse(
     })
 }
 
+/// HTML §2.3.6 "parse a CSS `<color>` value" without an element, where `currentcolor` is
+/// opaque black.
+pub(crate) fn parse_color_value(value: &str) -> Option<Color> {
+    parse(value, &Relative::initial(), &AbsoluteColor::BLACK)
+        .ok()
+        .map(|parsed| parsed.color.used())
+}
+
 /// Computes a matched `<color>`; `current` is the element's computed `color`.
 pub(super) fn absolute(
     value: &Component,
@@ -423,6 +434,29 @@ pub(super) fn accent(relative: &Relative<'_>) -> Color {
         .or_else(|| system_color(ACCENT_COLOR, relative.color_scheme))
         .expect("AccentColor is a system colour")
         .used()
+}
+
+/// The colours a widget's native appearance draws with in `scheme`: the element's used
+/// `AccentColor` and `AccentColorText` (CSS UI 4 §7.1) and the field and button system
+/// colours.
+pub(crate) fn widget_palette(
+    accent: Option<AbsoluteColor>,
+    scheme: ColorScheme,
+) -> crate::images::widget::WidgetPalette {
+    let named = |name| {
+        accent
+            .and_then(|accent| author_accent(name, accent, scheme))
+            .or_else(|| system_color(name, scheme))
+            .expect("widget colours are system colours")
+            .used()
+    };
+    crate::images::widget::WidgetPalette {
+        accent: named(ACCENT_COLOR),
+        accent_text: named(ACCENT_COLOR_TEXT),
+        field: named(FIELD),
+        border: named(BUTTON_BORDER),
+        track: named(BUTTON_FACE),
+    }
 }
 
 /// A system colour in `scheme`, with deprecated names mapped (CSS Color 4 §6.2, Appendix A).

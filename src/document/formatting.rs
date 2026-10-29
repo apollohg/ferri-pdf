@@ -103,6 +103,8 @@ pub(crate) struct BlockBox {
     /// positioning and compositing it shares (CSS 2.1 §9.2.1.1).
     enclosing_inline: Vec<std::sync::Arc<Style>>,
     initial_letter: Option<InitialLetterBox>,
+    /// The rendered legend of its fieldset parent (HTML §15.3.12).
+    rendered_legend: bool,
 }
 
 /// An initial letter box (CSS Inline 3 §7.5): an atomic inline of its originating line that
@@ -134,10 +136,21 @@ impl BlockBox {
             ..Self::with_decoration(style, children, decoration, page_scope)
         }
     }
+    /// An anonymous replaced box showing `image`, such as a part of a widget.
+    pub(super) fn anonymous_replaced(
+        style: Style,
+        image: std::sync::Arc<crate::images::Image>,
+        page_scope: Option<std::sync::Arc<str>>,
+    ) -> Self {
+        Self {
+            image: Some(image),
+            ..Self::anonymous(style, Vec::new(), page_scope)
+        }
+    }
     pub(crate) fn is_anonymous(&self) -> bool {
         self.anonymous
     }
-    fn with_decoration(
+    pub(super) fn with_decoration(
         style: Style,
         children: Vec<BlockContent>,
         decoration: BoxDecoration,
@@ -207,6 +220,7 @@ impl BlockBox {
             query_container: None,
             enclosing_inline: Vec::new(),
             initial_letter: None,
+            rendered_legend: false,
         }
     }
     pub(crate) fn leading_events(&self) -> impl Iterator<Item = &crate::document::SemanticEvent> {
@@ -356,6 +370,9 @@ impl BlockBox {
     }
     pub(crate) fn initial_letter(&self) -> Option<&InitialLetterBox> {
         self.initial_letter.as_ref()
+    }
+    pub(crate) fn is_rendered_legend(&self) -> bool {
+        self.rendered_legend
     }
     pub(crate) fn query_container(&self) -> Option<ElementId> {
         self.query_container
@@ -774,6 +791,36 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 Ok(())
             }
         }
+    }
+    /// HTML §15.5.5: a `details` element's default summary, a list item with an inside
+    /// disclosure marker.
+    fn default_summary(&mut self, details: Element<'_>, style: Style) -> Result<(), DocumentError> {
+        let marker = list_marker(
+            self.sheet,
+            details,
+            &style,
+            0,
+            self.traversal,
+            self.resources,
+        )?;
+        self.flush()?;
+        let outer = std::mem::take(self.inline);
+        if let Some(marker) = &marker {
+            self.place_inside_marker(marker)?;
+        }
+        self.inline
+            .append(crate::document::details::DEFAULT_SUMMARY, &style)?;
+        let content = std::mem::replace(self.inline, outer);
+        let children = match content.finish(&style)? {
+            Ok(paragraph) => vec![BlockContent::Inline(paragraph)],
+            Err(stray) => stray,
+        };
+        self.children.push(BlockContent::Block(BlockBox::anonymous(
+            style,
+            children,
+            self.element_page_scope.clone(),
+        )));
+        Ok(())
     }
     /// An inside marker is an inline box opening the list item's inline content (CSS Lists 3
     /// §3.5): an image marker holds an inline replaced box followed by a space. A marker can
@@ -1263,10 +1310,7 @@ fn validate_display(display: &Display) -> Result<(), StyleError> {
 }
 
 fn unsupported_element(tag: &str) -> bool {
-    matches!(
-        tag,
-        "math" | "input" | "textarea" | "select" | "button" | "fieldset"
-    )
+    matches!(tag, "math")
 }
 
 /// Elements whose content is an image or a nested navigable rather than child boxes (HTML
@@ -1394,6 +1438,8 @@ struct Frame<'d> {
     page_scope: Option<std::sync::Arc<str>>,
     depth: usize,
     nodes: Option<ChildNodes<'d>>,
+    /// A child laid out before `nodes`: the summary a `details` element's first slot takes.
+    leading: Option<crate::dom::Node<'d>>,
     block: Option<OpenBlock>,
     started: bool,
     /// The quote depth before a style-contained element's subtree, restored after it.
@@ -1417,6 +1463,7 @@ impl<'d> Frame<'d> {
             page_scope,
             depth,
             nodes: None,
+            leading: None,
             block: placement.map(|placement| OpenBlock {
                 decoration: BoxDecoration::default(),
                 children: Vec::new(),
@@ -1514,7 +1561,30 @@ fn block<'a>(
                 if index == 0 {
                     traversal.canvas = background_only(&block.decoration);
                 }
-                block.image =
+                let control = if skips {
+                    None
+                } else if let Some(frameset) = crate::document::frameset::content(
+                    element,
+                    &frame.style,
+                    sheet,
+                    traversal.embedded,
+                    frame.page_scope.as_ref(),
+                ) {
+                    Some(frameset)
+                } else {
+                    crate::document::controls::content(
+                        element,
+                        &frame.style,
+                        sheet,
+                        resources,
+                        frame.page_scope.as_ref(),
+                    )?
+                };
+                let rendered_control = control.is_some();
+                block.image = if let Some(control) = control {
+                    block.children.extend(control.children);
+                    control.image
+                } else {
                     match element.name() {
                         "img" => {
                             let image = sheet.image_source(element).and_then(|source| {
@@ -1560,7 +1630,8 @@ fn block<'a>(
                             },
                         ),
                         _ => None,
-                    };
+                    }
+                };
                 block.marker = if skips {
                     None
                 } else {
@@ -1614,8 +1685,10 @@ fn block<'a>(
                         whitespace: Vec::new(),
                     });
                 }
-                frame.generated =
-                    !skips && block.image.is_none() && frame.style.display != Display::TableColumn;
+                frame.generated = !skips
+                    && !rendered_control
+                    && block.image.is_none()
+                    && frame.style.display != Display::TableColumn;
             } else {
                 // CSS Lists 3 §3.5: an inline list item's marker is always inside.
                 let marker = list_marker(
@@ -1679,13 +1752,27 @@ fn block<'a>(
                     {
                         builder.inline.optional_break(style);
                     }
+                    if let Some(summary) =
+                        crate::document::details::default_summary_style(element, style)
+                    {
+                        builder.default_summary(element, summary)?;
+                    }
                     frames[index].nodes = Some(element.child_nodes(TreeRelation::Formatting));
+                    frames[index].leading = crate::document::details::summary(element);
                 }
             }
             frames[index].started = true;
             continue;
         }
-        if let Some(node) = frames[index].nodes.as_mut().and_then(Iterator::next) {
+        let leading = frames[index].leading.take();
+        if let Some(node) =
+            leading.or_else(|| frames[index].nodes.as_mut().and_then(Iterator::next))
+        {
+            if leading.is_none()
+                && !crate::document::details::renders_child(frames[index].element, node)
+            {
+                continue;
+            }
             // Children of the block and of its boxless descendants are the block's children.
             let block_child = frames[block_index + 1..=index]
                 .iter()
@@ -1726,6 +1813,8 @@ fn block<'a>(
                 replaced,
                 &frames[block_index].style.display,
             );
+            crate::document::controls::used_style(child, &mut child_style);
+            crate::document::frameset::used_style(child, &mut child_style, sheet);
             if frames[block_index].style.display == Display::TableColumnGroup
                 && child_style.display != Display::Contents
                 && child_style.display != Display::TableColumn
@@ -1973,12 +2062,16 @@ fn block<'a>(
             paragraph.set_formatted_lines(paragraph.first_formatted_line(), true);
         }
         let canvas_source = index == 0 || traversal.canvas_body == Some(element.id());
-        let mut block = BlockBox::with_decoration(
+        let rendered_legend = crate::document::controls::is_rendered_legend(element, &frame.style);
+        let (style, children) = crate::document::controls::fieldset(
+            element,
             *frame.style,
             state.children,
-            state.decoration,
-            frame.page_scope,
+            frame.page_scope.as_ref(),
         );
+        let mut block =
+            BlockBox::with_decoration(style, children, state.decoration, frame.page_scope);
+        block.rendered_legend = rendered_legend;
         block.marker = state.marker.map(Box::new);
         block.image = state.image;
         block.density = state.density;

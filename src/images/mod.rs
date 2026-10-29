@@ -4,6 +4,7 @@ mod heif;
 mod pixels;
 mod svg;
 mod svg_fonts;
+pub(crate) mod widget;
 use crate::fonts::{FontBook, FontNamespace};
 pub(crate) use crate::paint::NaturalDimensions;
 use crate::resources::{ResourceError, ResourceResolver};
@@ -140,6 +141,8 @@ pub enum Image {
     Frame(Arc<crate::document::Frame>, crate::style::ColorScheme),
     /// A nested navigable's document laid out in its viewport.
     Viewport(Arc<crate::layout::ViewportPaint>),
+    /// A widget's native appearance, drawn once its box's used size is known.
+    Widget(Arc<widget::Widget>),
 }
 impl Image {
     pub fn natural_size(&self) -> NaturalDimensions {
@@ -154,6 +157,7 @@ impl Image {
                 }
             }
             Self::Transparent | Self::Frame(..) | Self::Viewport(_) => NaturalDimensions::default(),
+            Self::Widget(widget) => widget.natural_size(),
         }
     }
     pub fn pixel_size(&self, available_width: f32) -> [f32; 2] {
@@ -162,6 +166,7 @@ impl Image {
             Self::Svg(image) => image.pixel_size(available_width),
             Self::Pixels(image) => [image.width as f32, image.height as f32],
             Self::Transparent | Self::Frame(..) | Self::Viewport(_) => DEFAULT_OBJECT_SIZE,
+            Self::Widget(widget) => widget.natural,
         }
     }
     fn parse(
@@ -439,7 +444,7 @@ impl ImageCache {
                 namespace
             }
             Image::Raster(_) | Image::Pixels(_) => FontNamespace::ROOT,
-            Image::Transparent | Image::Frame(..) | Image::Viewport(_) => {
+            Image::Transparent | Image::Frame(..) | Image::Viewport(_) | Image::Widget(_) => {
                 unreachable!("image resources parse to decoded images")
             }
         };

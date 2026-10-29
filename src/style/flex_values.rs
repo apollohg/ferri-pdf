@@ -82,25 +82,44 @@ impl Alignment {
         }
         let mut keywords = Vec::new();
         value.keywords(&mut keywords);
-        match keywords.as_slice() {
-            [Keyword::Auto] => Ok(Self::Auto),
-            [Keyword::Normal] => Ok(Self::Normal),
-            [Keyword::Start] => Ok(Self::Start),
-            [Keyword::End] => Ok(Self::End),
-            [Keyword::FlexStart] => Ok(Self::FlexStart),
-            [Keyword::FlexEnd] => Ok(Self::FlexEnd),
-            [Keyword::SelfStart] => Ok(Self::SelfStart),
-            [Keyword::SelfEnd] => Ok(Self::SelfEnd),
-            [Keyword::Left] => Ok(Self::Left),
-            [Keyword::Right] => Ok(Self::Right),
-            [Keyword::Center] => Ok(Self::Center),
-            [Keyword::Stretch] => Ok(Self::Stretch),
-            [Keyword::Baseline] | [Keyword::First, Keyword::Baseline] => Ok(Self::Baseline),
-            [Keyword::SpaceBetween] => Ok(Self::SpaceBetween),
-            [Keyword::SpaceAround] => Ok(Self::SpaceAround),
-            [Keyword::SpaceEvenly] => Ok(Self::SpaceEvenly),
+        Self::from_keywords(&keywords).ok_or_else(|| unsupported(value))
+    }
+    /// `align-content`, whose alignment may be explicitly `unsafe`: content overflows
+    /// both edges equally. `safe` alignment is not modelled.
+    pub(crate) fn content_from_component(value: &Component) -> Result<(Self, bool), StyleError> {
+        let mut keywords = Vec::new();
+        value.keywords(&mut keywords);
+        let (unsafe_overflow, keywords) = match keywords.split_first() {
+            Some((Keyword::Unsafe, rest)) => (true, rest),
+            _ => (false, keywords.as_slice()),
+        };
+        match Self::from_keywords(keywords) {
+            Some(alignment) if !keywords.contains(&Keyword::Safe) => {
+                Ok((alignment, unsafe_overflow))
+            }
             _ => Err(unsupported(value)),
         }
+    }
+    fn from_keywords(keywords: &[Keyword]) -> Option<Self> {
+        Some(match keywords {
+            [Keyword::Auto] => Self::Auto,
+            [Keyword::Normal] => Self::Normal,
+            [Keyword::Start] => Self::Start,
+            [Keyword::End] => Self::End,
+            [Keyword::FlexStart] => Self::FlexStart,
+            [Keyword::FlexEnd] => Self::FlexEnd,
+            [Keyword::SelfStart] => Self::SelfStart,
+            [Keyword::SelfEnd] => Self::SelfEnd,
+            [Keyword::Left] => Self::Left,
+            [Keyword::Right] => Self::Right,
+            [Keyword::Center] => Self::Center,
+            [Keyword::Stretch] => Self::Stretch,
+            [Keyword::Baseline] | [Keyword::First, Keyword::Baseline] => Self::Baseline,
+            [Keyword::SpaceBetween] => Self::SpaceBetween,
+            [Keyword::SpaceAround] => Self::SpaceAround,
+            [Keyword::SpaceEvenly] => Self::SpaceEvenly,
+            _ => return None,
+        })
     }
 }
 #[derive(Clone, Debug, Default, PartialEq, Serialize)]
@@ -140,6 +159,8 @@ pub(crate) struct FlexStyle {
     pub justify: Alignment,
     pub align_items: Alignment,
     pub align_content: Alignment,
+    /// `align-content` names `unsafe` overflow alignment.
+    pub align_content_unsafe: bool,
     pub align_self: Alignment,
     pub gap: [Gap; 2],
     pub grow: f32,
@@ -157,6 +178,7 @@ impl Default for FlexStyle {
             justify: Alignment::Normal,
             align_items: Alignment::Normal,
             align_content: Alignment::Normal,
+            align_content_unsafe: false,
             align_self: Alignment::Auto,
             gap: [const { Gap::Normal }; 2],
             grow: 0.0,

@@ -155,6 +155,10 @@
     }
   },
   "properties": {
+    "appearance": {
+      "syntax": "none | auto | base | base-select | <compat-auto> | <compat-special>",
+      "source": "https://drafts.csswg.org/css-ui-4/#appearance-switching: the base and base-select keywords"
+    },
     "background-position": {
       "initial": [
         "background-position-x",
@@ -512,6 +516,17 @@
     }
   },
   "additions": {
+    "-webkit-appearance": {
+      "syntax": "<'appearance'>",
+      "initial": [
+        "appearance"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Basic User Interface"
+      ],
+      "source": "https://drafts.csswg.org/css-ui-4/#appearance-switching: a legacy name alias of appearance"
+    },
     "string-set": {
       "syntax": "[ <custom-ident> <named-string-content> ]# | none",
       "initial": "none",

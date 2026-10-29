@@ -375,5 +375,7 @@ impl Style {
             || self.floating().is_some()
             || self.display.is_atomic_inline()
             || self.multicol.is_multicol()
+            // CSS Box Alignment 3 §5.4: content alignment makes a block container independent.
+            || self.flex.align_content != crate::style::Alignment::Normal
     }
 }

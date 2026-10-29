@@ -1314,6 +1314,8 @@ impl<'a> FlowFrame<'a> {
             items.push(FlowItem::Columns(Box::new(columns)));
         }
         items.push(FlowItem::Edge(BlockEdge::End, bottom_edge));
+        let legend = place_legend(&mut items, &geometry);
+        let top_edge = legend.map_or(top_edge, |(_, start)| start);
         let mut height = items.iter().map(FlowItem::height).sum::<f32>();
         if !height.is_finite() {
             return Err(LayoutError::NonFiniteBlockGeometry { block: index });
@@ -1322,12 +1324,17 @@ impl<'a> FlowFrame<'a> {
             items.push(FlowItem::Space(-height));
             height = 0.0;
         }
-        let natural_height = height;
+        let mut natural_height = height;
         height = vertical.used_height(height);
         if !height.is_finite() {
             return Err(LayoutError::NonFiniteBlockGeometry { block: index });
         }
         let constrained = height != natural_height || vertical.definite().is_some();
+        let alignment = content_alignment(style, height - natural_height);
+        if alignment != 0.0 {
+            items.insert(1, FlowItem::Space(alignment));
+            natural_height += alignment;
+        }
         let overflow_height = overflow_height(&items).max(height);
         let first_fragment = if measurer.fragmentainer.keeps(style)
             && !has_forced
@@ -1344,7 +1351,10 @@ impl<'a> FlowFrame<'a> {
             .min(overflow_height)
         };
         let (break_before, break_after) = crate::layout::breaks::boundaries(style, &items, edges);
-        let paint = measurer.box_paint(block, &geometry);
+        let mut paint = measurer.box_paint(block, &geometry);
+        if let Some(paint) = &mut paint {
+            paint.legend = legend.map(|(cut, _)| cut);
+        }
         Ok(MeasuredBlock {
             grid: None,
             source: block,
@@ -1383,6 +1393,74 @@ impl<'a> FlowFrame<'a> {
             spanner_fragment: None,
         })
     }
+}
+
+/// HTML §15.3.12: a fieldset's rendered legend sits in its block-start border area, as tall
+/// as the border or the legend's margin box, whichever is greater, with the legend's border
+/// box centred over the border. Returns where the border paints and the gap it leaves, and
+/// the space before the legend, which replaces the block-start edge.
+fn place_legend(
+    items: &mut [FlowItem<'_>],
+    geometry: &crate::layout::geometry::HorizontalBox,
+) -> Option<(crate::graphics::LegendCut, f32)> {
+    let index = items
+        .iter()
+        .position(|item| matches!(item, FlowItem::Block(_)))?;
+    let (FlowItem::Edge(BlockEdge::Start, _), FlowItem::Margin(_), FlowItem::Margin(_)) = (
+        items.first()?,
+        items.get(index.checked_sub(1)?)?,
+        items.get(index + 1)?,
+    ) else {
+        return None;
+    };
+    let FlowItem::Block(legend) = &items[index] else {
+        unreachable!("the legend position holds a block")
+    };
+    if !legend.source.is_rendered_legend() {
+        return None;
+    }
+    let border = geometry.border[0];
+    let height = legend.height;
+    let legend_box = legend.geometry.border_box(height);
+    let fieldset_box = geometry.border_box(0.0);
+    let [before, after] = [index - 1, index + 1].map(|at| items[at].height());
+    let outer = before + height + after;
+    let area = border.max(outer);
+    let (top, inset) = if outer > border {
+        (0.0, before + (height - border) / 2.0)
+    } else {
+        ((border - height) / 2.0 - before, 0.0)
+    };
+    items[0] = FlowItem::Edge(BlockEdge::Start, top);
+    items[index + 1] = FlowItem::Space(area - top - before - height);
+    Some((
+        crate::graphics::LegendCut {
+            inset,
+            gap: [
+                legend_box.x - fieldset_box.x,
+                legend_box.x - fieldset_box.x + legend_box.width,
+            ],
+        },
+        top,
+    ))
+}
+
+/// CSS Box Alignment 3 §5.4: the block-axis offset of a block container's content within
+/// `free` space. Without an explicit `unsafe`, overflowing content stays at the start edge
+/// of a scroll container, and distributed alignment falls back to safe centring.
+fn content_alignment(style: &Style, free: f32) -> f32 {
+    use crate::style::Alignment;
+    let (factor, safe) = match style.flex.align_content {
+        Alignment::Center => (0.5, false),
+        Alignment::End | Alignment::FlexEnd => (1.0, false),
+        Alignment::SpaceAround | Alignment::SpaceEvenly => (0.5, true),
+        _ => return 0.0,
+    };
+    let safe = !style.flex.align_content_unsafe && (safe || style.is_scroll_container());
+    if free < 0.0 && safe {
+        return 0.0;
+    }
+    free * factor
 }
 
 fn is_sticky(style: &Style) -> bool {

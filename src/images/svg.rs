@@ -252,7 +252,7 @@ fn image_kind(image: &Image, jpeg_images: &mut HashSet<usize>) -> Result<ImageKi
             jpeg_images.insert(Arc::as_ptr(&data) as usize);
             ImageKind::PNG(data)
         }
-        Image::Transparent | Image::Frame(..) | Image::Viewport(_) => {
+        Image::Transparent | Image::Frame(..) | Image::Viewport(_) | Image::Widget(_) => {
             unreachable!("SVG image references load only image resources")
         }
     })
