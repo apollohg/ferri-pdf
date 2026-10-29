@@ -15,6 +15,8 @@ pub(crate) use self::text::*;
 
 use crate::svg::usvg::OptionLog;
 
+const EMPTY_LAYER_EXTENT: f32 = 1.0;
+
 /// An alias to `NormalizedF32`.
 pub(crate) type Opacity = NormalizedF32;
 
@@ -1060,8 +1062,20 @@ impl Group {
             abs_bounding_box: dummy,
             stroke_bounding_box: dummy,
             abs_stroke_bounding_box: dummy,
-            layer_bounding_box: NonZeroRect::from_xywh(0.0, 0.0, 1.0, 1.0).unwrap(),
-            abs_layer_bounding_box: NonZeroRect::from_xywh(0.0, 0.0, 1.0, 1.0).unwrap(),
+            layer_bounding_box: NonZeroRect::from_xywh(
+                0.0,
+                0.0,
+                EMPTY_LAYER_EXTENT,
+                EMPTY_LAYER_EXTENT,
+            )
+            .unwrap(),
+            abs_layer_bounding_box: NonZeroRect::from_xywh(
+                0.0,
+                0.0,
+                EMPTY_LAYER_EXTENT,
+                EMPTY_LAYER_EXTENT,
+            )
+            .unwrap(),
             children: Vec::new(),
         }
     }
@@ -1162,7 +1176,7 @@ impl Group {
     /// Element's "layer" bounding box in object units.
     ///
     /// Conceptually, this is `stroke_bounding_box` expanded and/or clipped
-    /// by `filters_bounding_box`, but also including all the children.
+    /// by its filters, but also including all the children.
     /// This is the bounding box `resvg` will later use to allocate layers/pixmaps
     /// during isolated groups rendering.
     ///
@@ -1199,25 +1213,6 @@ impl Group {
     /// Returns `true` if the group has any children.
     pub fn has_children(&self) -> bool {
         !self.children.is_empty()
-    }
-
-    /// Calculates a node's filter bounding box.
-    ///
-    /// Filters with `objectBoundingBox` and missing or zero `bounding_box` would be ignored.
-    ///
-    /// Note that a filter region can act like a clipping rectangle,
-    /// therefore this function can produce a bounding box smaller than `bounding_box`.
-    ///
-    /// Returns `None` when then group has no filters.
-    ///
-    /// This function is very fast, that's why we do not store this bbox as a `Group` field.
-    pub fn filters_bounding_box(&self) -> Option<NonZeroRect> {
-        let mut full_region = BBox::default();
-        for filter in &self.filters {
-            full_region = full_region.expand(filter.rect);
-        }
-
-        full_region.to_non_zero_rect()
     }
 
     fn subroots(&self, f: &mut dyn FnMut(&Group)) {
@@ -1898,12 +1893,19 @@ impl Group {
             self.abs_stroke_bounding_box = abs_stroke_bbox.to_rect()?;
         }
 
-        // Filter bbox has a higher priority than layers bbox.
-        if let Some(filter_bbox) = self.filters_bounding_box() {
-            self.layer_bounding_box = filter_bbox;
-        } else {
-            self.layer_bounding_box = layer_bbox.to_non_zero_rect()?;
+        let mut support = layer_bbox.to_rect();
+        for filter in &self.filters {
+            support = filter.support_bounds(support);
         }
+        self.layer_bounding_box =
+            support
+                .and_then(|rect| rect.to_non_zero_rect())
+                .unwrap_or(NonZeroRect::from_xywh(
+                    0.0,
+                    0.0,
+                    EMPTY_LAYER_EXTENT,
+                    EMPTY_LAYER_EXTENT,
+                )?);
 
         self.abs_layer_bounding_box = self.layer_bounding_box.transform(self.abs_transform)?;
 

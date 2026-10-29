@@ -343,7 +343,8 @@ pub(super) fn steps<'f>(
         .iter()
         .map(|function| match function {
             FilterFunction::Url(reference) => {
-                referenced_filter(reference, filter.bounds, definitions).map(Step::Reference)
+                crate::svg::referenced_filter(reference, filter.bounds, definitions)
+                    .map(Step::Reference)
             }
             function => Some(Step::Function(function)),
         })
@@ -445,29 +446,5 @@ pub(super) fn function_filter(function: &FilterFunction, area: Rect) -> Result<F
             result: RESULT.into(),
             kind,
         }],
-    })
-}
-
-/// The `filter` element `reference` names, resolved for an element with border box
-/// `bounds`, through the SVG parser's filter conversion (§7, §8).
-fn referenced_filter(
-    reference: &str,
-    bounds: Option<Rect>,
-    definitions: &crate::document::svg::SvgDefinitions,
-) -> Option<Arc<Filter>> {
-    let definition = definitions.get(reference)?;
-    if definition.element != "filter" {
-        return None;
-    }
-    let tree = crate::svg::reference_tree(&definition.xml, "filter", reference, bounds)?;
-    first_filter(tree.root())
-}
-
-pub(super) fn first_filter(group: &crate::svg::usvg::Group) -> Option<Arc<Filter>> {
-    group.filters().first().cloned().or_else(|| {
-        group.children().iter().find_map(|node| match node {
-            crate::svg::usvg::Node::Group(group) => first_filter(group),
-            _ => None,
-        })
     })
 }

@@ -645,3 +645,161 @@ fn outside_list_markers_and_descendant_shadows_contribute_anchor_ink() {
         assert_rect(targets(&trace)[0].1, [50.0, 30.0, 20.0, 10.0]);
     }
 }
+
+#[test]
+fn filter_support_bounds_control_anchor_visibility_without_using_whole_filter_regions() {
+    for (filter, primitive, visible) in [
+        ("drop-shadow(-20pt 0 green)", "", true),
+        ("blur(8pt)", "", true),
+        ("url(#ink)", "<feColorMatrix/>", false),
+        (
+            "url(#ink)",
+            "<feFlood x='40' y='26.666667' width='10' height='10' result='band'/><feComposite in='band' in2='band' operator='arithmetic' k1='-1'/>",
+            false,
+        ),
+        (
+            "url(#ink)",
+            "<feFlood x='40' y='26.666667' width='10' height='10' result='band'/><feComposite in='band' in2='band' operator='arithmetic' k1='1' k2='-1'/>",
+            false,
+        ),
+        (
+            "url(#ink)",
+            "<feFlood x='40' y='26.666667' width='10' height='10' result='band'/><feComposite in='band' in2='SourceGraphic' operator='arithmetic' k2='-1' k3='1'/>",
+            false,
+        ),
+        (
+            "url(#ink)",
+            "<feSpecularLighting lighting-color='black' specularConstant='1'><feDistantLight elevation='90'/></feSpecularLighting>",
+            false,
+        ),
+        (
+            "url(#ink)",
+            "<feSpecularLighting lighting-color='white' specularConstant='1'><feDistantLight elevation='90'/></feSpecularLighting>",
+            true,
+        ),
+        (
+            "url(#ink)",
+            "<feDiffuseLighting lighting-color='black' diffuseConstant='1'><feDistantLight elevation='90'/></feDiffuseLighting>",
+            true,
+        ),
+        (
+            "url(#ink)",
+            "<feDiffuseLighting diffuseConstant='0'><feDistantLight elevation='90'/></feDiffuseLighting>",
+            true,
+        ),
+        ("url(#ink)", "<feOffset dx='30'/>", false),
+        ("url(#ink)", "<feOffset dx='-26.666667'/>", true),
+        ("url(#ink)", "<feGaussianBlur stdDeviation='8'/>", true),
+        (
+            "url(#ink)",
+            "<feDropShadow dx='-26.666667' dy='0' stdDeviation='0'/>",
+            true,
+        ),
+        (
+            "url(#ink)",
+            "<feFlood x='40' y='26.666667' width='10' height='10' flood-color='green'/>",
+            true,
+        ),
+        (
+            "url(#ink)",
+            "<feFlood x='100' y='26.666667' width='10' height='10' flood-color='green'/>",
+            false,
+        ),
+        (
+            "url(#ink)",
+            "<feImage x='40' y='26.666667' width='10' height='10' href='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%2210%22%3E%3Crect width=%2210%22 height=%2210%22 fill=%22green%22/%3E%3C/svg%3E'/>",
+            true,
+        ),
+    ] {
+        let trace = render(
+            &format!(
+                "section{{width:20pt;height:40pt;overflow:hidden}}.anchor{{margin-left:30pt;width:10pt;height:10pt;filter:{filter}}}.target{{left:anchor(left);top:anchor(bottom);position-visibility:anchors-visible}}"
+            ),
+            &format!(
+                "<svg style='display:none'><defs><filter id='ink' filterUnits='userSpaceOnUse' x='0' y='0' width='300' height='300'>{primitive}</filter></defs></svg><section><div class=anchor></div></section><div class=target></div>"
+            ),
+        );
+        assert_eq!(
+            !targets(&trace).is_empty(),
+            visible,
+            "filter {filter}: {primitive}"
+        );
+        if visible {
+            assert_rect(targets(&trace)[0].1, [50.0, 30.0, 20.0, 10.0]);
+        }
+    }
+}
+
+#[test]
+fn filtered_descendant_ink_is_clipped_after_filtering_and_does_not_leak_source_ink() {
+    for (offset, indent, visible) in [
+        (0.0, 0.0, false),
+        (-20.0, 0.0, true),
+        (20.0, 0.0, false),
+        (40.0, -25.0, false),
+    ] {
+        let trace = render(
+            "section{width:20pt;height:40pt;overflow:hidden}.anchor{margin-left:30pt;width:10pt;height:10pt}.target{left:anchor(left);top:anchor(bottom);position-visibility:anchors-visible}",
+            &format!(
+                "<svg style='display:none'><defs><filter id='shift' filterUnits='userSpaceOnUse' x='0' y='0' width='300' height='300'><feOffset dx='{}'/></filter></defs></svg><section><div class=anchor><div style='filter:url(#shift);text-indent:{indent}pt'><span style='font:10pt monospace'>Ink</span></div></div></section><div class=target></div>",
+                offset / crate::graphics::POINTS_PER_PIXEL
+            ),
+        );
+        assert_eq!(
+            !targets(&trace).is_empty(),
+            visible,
+            "filtered descendant offset {offset}pt"
+        );
+    }
+    let trace = render(
+        "section{width:20pt;height:40pt;overflow:hidden}.anchor{margin-left:30pt;width:10pt;height:10pt;filter:url(#clipped)}.target{position-visibility:anchors-visible}",
+        "<svg style='display:none'><defs><filter id='clipped' filterUnits='userSpaceOnUse' x='80' y='0' width='200' height='200'><feOffset dx='-26.666667'/></filter></defs></svg><section><div class=anchor></div></section><div class=target></div>",
+    );
+    assert!(
+        targets(&trace).is_empty(),
+        "filter-region clipping removes the input before its offset"
+    );
+}
+
+#[test]
+fn anchor_visibility_requires_clipping_by_an_intervening_ancestor() {
+    for css in [
+        ".anchor{clip-path:inset(100%)}",
+        ".anchor{transform:scale(0)}",
+        ".anchor{filter:url(#empty)}",
+    ] {
+        let trace = render(
+            &format!(
+                "{css}.target{{left:anchor(left);top:anchor(bottom);position-visibility:anchors-visible}}"
+            ),
+            "<svg style='display:none'><defs><filter id='empty'><feColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0'/></filter></defs></svg><div class=anchor></div><div class=target></div>",
+        );
+        assert_eq!(
+            targets(&trace).len(),
+            1,
+            "{css} does not add an intervening ancestor clip"
+        );
+    }
+}
+
+#[test]
+fn visible_children_of_hidden_filtered_boxes_contribute_anchor_ink() {
+    let trace = render(
+        "section{width:20pt;height:40pt;overflow:hidden}.anchor{margin-left:30pt;width:10pt;height:10pt}.hidden{visibility:hidden;filter:drop-shadow(-20pt 0 green)}.child{visibility:visible;width:1pt;height:5pt;background:green}.target{left:anchor(left);top:anchor(bottom);position-visibility:anchors-visible}",
+        "<section><div class=anchor><div class=hidden><div class=child></div></div></div></section><div class=target></div>",
+    );
+    assert_eq!(
+        targets(&trace).len(),
+        1,
+        "a visible descendant still passes through its hidden parent's filter"
+    );
+    assert_rect(targets(&trace)[0].1, [50.0, 30.0, 20.0, 10.0]);
+    let trace = render(
+        "section{width:20pt;height:40pt;overflow:hidden}.anchor{margin-left:30pt;width:10pt;height:10pt}.hidden{visibility:hidden;width:10pt;height:10pt;filter:drop-shadow(-20pt 0 green)}.target{position-visibility:anchors-visible}",
+        "<section><div class=anchor><div class=hidden></div></div></section><div class=target></div>",
+    );
+    assert!(
+        targets(&trace).is_empty(),
+        "a hidden empty filtered box contributes no input ink"
+    );
+}

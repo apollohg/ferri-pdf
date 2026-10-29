@@ -4783,6 +4783,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         parts
     }
     fn emit_marker(&mut self, mut marker: crate::layout::markers::MeasuredMarker) {
+        if self.force_hidden {
+            return;
+        }
         let origin = [marker.fragment.x, marker.fragment.baseline];
         for run in &marker.fragment.runs {
             self.anchors
@@ -5036,7 +5039,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             ) else {
                 continue;
             };
-            if style.visibility.is_visible() {
+            if style.visibility.is_visible() && !self.force_hidden {
                 self.anchors.ink(
                     super::anchors::key(style),
                     self.page,
@@ -5471,14 +5474,22 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let mut chain = Vec::new();
             let mut next = clip;
             while let Some(index) = next {
+                let owner = match nodes[index].effect {
+                    Effect::Clip(style, _)
+                    | Effect::RectClip(style)
+                    | Effect::PathClip(style)
+                    | Effect::Transform(style, _)
+                    | Effect::Sticky(style, _) => super::anchors::key(style),
+                    _ => None,
+                };
                 if let Some((_, region)) = regions[index]
                     .iter()
                     .find(|(fragment_page, _)| *fragment_page == page)
                 {
-                    chain.push((index, super::anchors::Effect::Region(*region)));
+                    chain.push((index, super::anchors::Effect::Region(*region, owner)));
                 }
                 if let Some(polygons) = paths[index].get(&page) {
-                    chain.push((index, super::anchors::Effect::Path(polygons.clone())));
+                    chain.push((index, super::anchors::Effect::Path(polygons.clone(), owner)));
                 }
                 next = nodes[index].parent;
             }

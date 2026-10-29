@@ -92,7 +92,6 @@ pub(crate) enum Error {
 trait PixmapExt: Sized {
     fn try_create(width: u32, height: u32) -> Result<tiny_skia::Pixmap, Error>;
     fn copy_region(&self, region: IntRect) -> Result<tiny_skia::Pixmap, Error>;
-    fn clear(&mut self);
     fn into_srgb(&mut self);
     fn into_linear_rgb(&mut self);
 }
@@ -106,10 +105,6 @@ impl PixmapExt for tiny_skia::Pixmap {
         let rect = IntRect::from_xywh(region.x(), region.y(), region.width(), region.height())
             .ok_or(Error::InvalidRegion)?;
         self.clone_rect(rect).ok_or(Error::InvalidRegion)
-    }
-
-    fn clear(&mut self) {
-        self.fill(tiny_skia::Color::TRANSPARENT);
     }
 
     fn into_srgb(&mut self) {
@@ -941,18 +936,16 @@ fn apply_morphology(
     ts: crate::svg::usvg::Transform,
     input: Image,
 ) -> Result<Image, Error> {
-    let mut pixmap = input.into_color_space(cs)?.take()?;
-
     let (rx, ry) = match scale_coordinates(fe.radius_x().get(), fe.radius_y().get(), ts) {
         Some(v) => v,
-        None => return Ok(Image::from_image(pixmap, cs)),
+        None => return Ok(input),
     };
 
     if !(rx > 0.0 && ry > 0.0) {
-        pixmap.clear();
-        return Ok(Image::from_image(pixmap, cs));
+        return Ok(input);
     }
 
+    let mut pixmap = input.into_color_space(cs)?.take()?;
     morphology::apply(fe.operator(), rx, ry, pixmap.as_image_ref_mut());
 
     Ok(Image::from_image(pixmap, cs))

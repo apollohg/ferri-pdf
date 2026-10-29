@@ -279,7 +279,7 @@ fn layout_pass(
     Ok(LayoutPass {
         generated,
         container_sizes: measurer.container_sizes,
-        anchor_frames: anchors.frames(sheet, &measurer.work)?,
+        anchor_frames: anchors.frames(sheet, &document.svg_definitions(), &measurer.work)?,
         trace: LayoutTrace {
             page_width,
             page_height,

@@ -734,7 +734,7 @@ fn convert_displacement_map(fe: SvgNode, scale: Size, primitives: &[Primitive]) 
 }
 
 fn convert_drop_shadow(fe: SvgNode, scale: Size, primitives: &[Primitive]) -> Kind {
-    let (std_dev_x, std_dev_y) = convert_std_dev_attr(fe, scale, "2 2");
+    let (std_dev_x, std_dev_y) = convert_scaled_pair(fe, AId::StdDeviation, scale, "2 2");
 
     let (color, opacity) = fe
         .attribute(AId::FloodColor)
@@ -773,7 +773,7 @@ fn convert_flood(fe: SvgNode) -> Kind {
 }
 
 fn convert_gaussian_blur(fe: SvgNode, scale: Size, primitives: &[Primitive]) -> Kind {
-    let (std_dev_x, std_dev_y) = convert_std_dev_attr(fe, scale, "0 0");
+    let (std_dev_x, std_dev_y) = convert_scaled_pair(fe, AId::StdDeviation, scale, "0 0");
     Kind::GaussianBlur(GaussianBlur {
         input: resolve_input(fe, AId::In, primitives),
         std_dev_x,
@@ -781,29 +781,33 @@ fn convert_gaussian_blur(fe: SvgNode, scale: Size, primitives: &[Primitive]) -> 
     })
 }
 
-fn convert_std_dev_attr(fe: SvgNode, scale: Size, default: &str) -> (PositiveF32, PositiveF32) {
-    let text = fe.attribute(AId::StdDeviation).unwrap_or(default);
+fn convert_scaled_pair(
+    fe: SvgNode,
+    attribute: AId,
+    scale: Size,
+    default: &str,
+) -> (PositiveF32, PositiveF32) {
+    let text = fe.attribute(attribute).unwrap_or(default);
     let mut parser = svgtypes::NumberListParser::from(text);
 
-    let n1 = parser.next().and_then(|n| n.ok());
-    let n2 = parser.next().and_then(|n| n.ok());
-    // `stdDeviation` must have no more than two values.
-    // Otherwise we should fallback to `0 0`.
-    let n3 = parser.next().and_then(|n| n.ok());
+    let n1 = parser.next();
+    let n2 = parser.next();
+    // Invalid pairs resolve to zero on both axes.
+    let n3 = parser.next();
 
-    let (std_dev_x, std_dev_y) = match (n1, n2, n3) {
-        (Some(n1), Some(n2), None) => (n1, n2),
-        (Some(n1), None, None) => (n1, n1),
+    let (x, y) = match (n1, n2, n3) {
+        (Some(Ok(n1)), Some(Ok(n2)), None) => (n1, n2),
+        (Some(Ok(n1)), None, None) => (n1, n1),
         _ => (0.0, 0.0),
     };
 
-    let std_dev_x = (std_dev_x as f32) * scale.width();
-    let std_dev_y = (std_dev_y as f32) * scale.height();
+    let x = (x as f32) * scale.width();
+    let y = (y as f32) * scale.height();
 
-    let std_dev_x = PositiveF32::new(std_dev_x).unwrap_or(PositiveF32::ZERO);
-    let std_dev_y = PositiveF32::new(std_dev_y).unwrap_or(PositiveF32::ZERO);
+    let x = PositiveF32::new(x).unwrap_or(PositiveF32::ZERO);
+    let y = PositiveF32::new(y).unwrap_or(PositiveF32::ZERO);
 
-    (std_dev_x, std_dev_y)
+    (x, y)
 }
 
 fn convert_image(
@@ -988,39 +992,7 @@ fn convert_morphology(fe: SvgNode, scale: Size, primitives: &[Primitive]) -> Kin
         _ => MorphologyOperator::Erode,
     };
 
-    let mut radius_x = PositiveF32::new(scale.width()).unwrap();
-    let mut radius_y = PositiveF32::new(scale.height()).unwrap();
-    if let Some(list) = fe.attribute::<Vec<f32>>(AId::Radius) {
-        let mut rx = 0.0;
-        let mut ry = 0.0;
-        if list.len() == 2 {
-            rx = list[0];
-            ry = list[1];
-        } else if list.len() == 1 {
-            rx = list[0];
-            ry = list[0]; // The same as `rx`.
-        }
-
-        if rx.approx_zero_ulps(4) && ry.approx_zero_ulps(4) {
-            rx = 1.0;
-            ry = 1.0;
-        }
-
-        // If only one of the values is zero, reset it to 1.0
-        // This is not specified in the spec, but this is how Chrome and Safari work.
-        if rx.approx_zero_ulps(4) && !ry.approx_zero_ulps(4) {
-            rx = 1.0;
-        }
-        if !rx.approx_zero_ulps(4) && ry.approx_zero_ulps(4) {
-            ry = 1.0;
-        }
-
-        // Both values must be positive.
-        if rx.is_sign_positive() && ry.is_sign_positive() {
-            radius_x = PositiveF32::new(rx * scale.width()).unwrap();
-            radius_y = PositiveF32::new(ry * scale.height()).unwrap();
-        }
-    }
+    let (radius_x, radius_y) = convert_scaled_pair(fe, AId::Radius, scale, "0 0");
 
     Kind::Morphology(Morphology {
         input: resolve_input(fe, AId::In, primitives),

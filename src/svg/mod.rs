@@ -26,3 +26,27 @@ pub(crate) fn reference_tree(
     );
     usvg::Tree::from_str(&document, &usvg::Options::default()).ok()
 }
+
+/// The `filter` element `reference` names, resolved for an element with border box
+/// `bounds`, through the SVG parser's filter conversion (§7, §8).
+pub(crate) fn referenced_filter(
+    reference: &str,
+    bounds: Option<crate::graphics::Rect>,
+    definitions: &crate::document::svg::SvgDefinitions,
+) -> Option<std::sync::Arc<usvg::filter::Filter>> {
+    let definition = definitions.get(reference)?;
+    if definition.element != "filter" {
+        return None;
+    }
+    let tree = reference_tree(&definition.xml, "filter", reference, bounds)?;
+    first_filter(tree.root())
+}
+
+pub(crate) fn first_filter(group: &usvg::Group) -> Option<std::sync::Arc<usvg::filter::Filter>> {
+    group.filters().first().cloned().or_else(|| {
+        group.children().iter().find_map(|node| match node {
+            usvg::Node::Group(group) => first_filter(group),
+            _ => None,
+        })
+    })
+}

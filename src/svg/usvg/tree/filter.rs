@@ -3,6 +3,8 @@
 
 //! SVG filter types.
 
+mod bounds;
+
 use strict_num::PositiveF32;
 
 use crate::svg::usvg::{BlendMode, Color, Group, NonEmptyString, NonZeroF32, NonZeroRect, Opacity};
@@ -291,6 +293,52 @@ pub enum TransferFunction {
         exponent: f32,
         offset: f32,
     },
+}
+
+impl TransferFunction {
+    pub(crate) fn evaluate(&self, c: f32) -> f32 {
+        let c = match self {
+            TransferFunction::Identity => c,
+            TransferFunction::Table(values) if values.is_empty() => c,
+            TransferFunction::Discrete(values) if values.is_empty() => c,
+            TransferFunction::Table(values) => {
+                let n = values.len() - 1;
+                let k = (c * (n as f32)).floor() as usize;
+                let k = std::cmp::min(k, n);
+                if k == n {
+                    values[k]
+                } else {
+                    let vk = values[k];
+                    let vk1 = values[k + 1];
+                    let k = k as f32;
+                    let n = n as f32;
+                    vk + (c - k / n) * n * (vk1 - vk)
+                }
+            }
+            TransferFunction::Discrete(values) => {
+                let n = values.len();
+                let k = (c * (n as f32)).floor() as usize;
+                values[std::cmp::min(k, n - 1)]
+            }
+            TransferFunction::Linear { slope, intercept } => slope * c + intercept,
+            TransferFunction::Gamma {
+                amplitude,
+                exponent,
+                offset,
+            } => amplitude * c.powf(*exponent) + offset,
+        };
+
+        c.clamp(0.0, 1.0)
+    }
+
+    pub(crate) fn has_positive_output(&self) -> bool {
+        match self {
+            Self::Table(values) | Self::Discrete(values) if !values.is_empty() => {
+                values.iter().any(|value| *value > 0.0)
+            }
+            _ => self.evaluate(0.0) > 0.0 || self.evaluate(1.0) > 0.0,
+        }
+    }
 }
 
 /// A composite filter primitive.

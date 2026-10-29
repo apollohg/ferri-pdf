@@ -785,7 +785,9 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     })
                 };
                 for part in parts {
-                    if grouped && part.runs.is_empty() && part.decorations.is_empty() {
+                    if self.force_hidden
+                        || (grouped && part.runs.is_empty() && part.decorations.is_empty())
+                    {
                         continue;
                     }
                     let origin = [

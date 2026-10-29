@@ -1,7 +1,7 @@
 // Copyright 2020 the Resvg Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use super::{ImageRefMut, f32_bound};
+use super::ImageRefMut;
 use crate::svg::usvg::filter::{ComponentTransfer, TransferFunction};
 
 /// Applies component transfer functions for each `src` image channel.
@@ -39,34 +39,7 @@ fn is_dummy(func: &TransferFunction) -> bool {
 
 fn transfer(func: &TransferFunction, c: u8) -> u8 {
     let c = c as f32 / 255.0;
-    let c = match func {
-        TransferFunction::Identity => c,
-        TransferFunction::Table(values) => {
-            let n = values.len() - 1;
-            let k = (c * (n as f32)).floor() as usize;
-            let k = std::cmp::min(k, n);
-            if k == n {
-                values[k]
-            } else {
-                let vk = values[k];
-                let vk1 = values[k + 1];
-                let k = k as f32;
-                let n = n as f32;
-                vk + (c - k / n) * n * (vk1 - vk)
-            }
-        }
-        TransferFunction::Discrete(values) => {
-            let n = values.len();
-            let k = (c * (n as f32)).floor() as usize;
-            values[std::cmp::min(k, n - 1)]
-        }
-        TransferFunction::Linear { slope, intercept } => slope * c + intercept,
-        TransferFunction::Gamma {
-            amplitude,
-            exponent,
-            offset,
-        } => amplitude * c.powf(*exponent) + offset,
-    };
+    let c = func.evaluate(c);
 
-    (f32_bound(0.0, c, 1.0) * 255.0) as u8
+    (c * f32::from(u8::MAX)) as u8
 }

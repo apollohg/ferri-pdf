@@ -153,7 +153,7 @@ fn colour_functions_match_their_svg_filter_equivalents() {
         // The referencing rectangle is in CSS pixels; userSpaceOnUse units ignore it.
         let tree = crate::svg::reference_tree(&markup, "filter", "#f", Some(AREA))
             .unwrap_or_else(|| panic!("{function:?}: spec markup must parse: {markup}"));
-        let spec = crate::writer::filters::first_filter(tree.root())
+        let spec = crate::svg::first_filter(tree.root())
             .unwrap_or_else(|| panic!("{function:?}: spec markup must give a filter: {markup}"));
         let mut theirs = samples();
         crate::svg::resvg::filter::apply(&spec, tiny_skia::Transform::identity(), &mut theirs);
