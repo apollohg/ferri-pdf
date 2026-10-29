@@ -117,6 +117,11 @@ const CLAMP_ELLIPSIS: &str = "auto";
 /// Compat §3.4.4: `-webkit-box-orient` maps onto `flex-direction`.
 const ORIENT_ROW: &str = "row";
 const ORIENT_COLUMN: &str = "column";
+const MARKERS: [Property; 3] = [
+    Property::MarkerStart,
+    Property::MarkerMid,
+    Property::MarkerEnd,
+];
 const SYNTHESIS_ON: &str = "auto";
 const SYNTHESIS_OFF: &str = "none";
 
@@ -224,6 +229,11 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::PageBreakInside => legacy_break(&value, P::BreakInside)?,
         P::WordWrap => alias(&value, P::OverflowWrap),
         P::DashWebkitAppearance => alias(&value, P::Appearance),
+        // SVG 2 §13.7.3: the value applies to each marker longhand unchanged.
+        P::Marker => MARKERS
+            .into_iter()
+            .map(|marker| (marker, longhand(marker, &value)))
+            .collect(),
         P::WhiteSpace => white_space(&value)?,
         P::TextWrap => slotted(&value, &[P::TextWrapMode, P::TextWrapStyle]),
         P::LineClamp => line_clamp(&value, false)?,

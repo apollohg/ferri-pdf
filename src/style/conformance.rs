@@ -39,6 +39,13 @@ const WITHOUT_COMPUTED_FIELD: &[Property] = &[
     Property::TextDecorationSkipInk,
 ];
 const EXTENSION_PROPERTIES: [&str; 2] = ["table-column-span", "table-row-span"];
+/// Properties that compute only same-document references, which generated samples are not.
+const FRAGMENT_REFERENCES: [Property; 3] = [
+    Property::MarkerStart,
+    Property::MarkerMid,
+    Property::MarkerEnd,
+];
+const FRAGMENT_SAMPLE: &str = "url(#sample)";
 
 type Tokens = Vec<String>;
 
@@ -947,10 +954,16 @@ fn initial_values_compute_to_the_engine_defaults() {
 fn effective_sample(property: Property) -> Option<String> {
     let (default, _) = styles_in_context(property, "").expect("empty stylesheet");
     let default = computed_text(&default);
-    Sampler::new()
-        .samples(property.data().root)
+    FRAGMENT_REFERENCES
+        .contains(&property)
+        .then(|| FRAGMENT_SAMPLE.to_owned())
         .into_iter()
-        .map(joined)
+        .chain(
+            Sampler::new()
+                .samples(property.data().root)
+                .into_iter()
+                .map(joined),
+        )
         .find(|sample| {
             styles_in_context(
                 property,

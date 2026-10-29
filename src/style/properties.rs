@@ -11,7 +11,7 @@ use crate::style::{
     declaration::{self, Specified},
     flex_values::{Alignment, FlexBasis, FlexDirection, FlexWrap, factor, gap},
     grammar::{Keyword, Property},
-    grid_values, inert,
+    grid_values, inert, svg_values,
     text_values::{self, LineHeight, OverflowWrap, TextTransform},
     units::Relative,
     wide_keywords::Resolved,
@@ -44,7 +44,7 @@ pub(crate) enum Input<'a> {
     Copy(&'a Style),
 }
 
-type Apply = fn(&mut Style, &Style, Input<'_>, &Relative<'_>) -> Result<(), StyleError>;
+pub(super) type Apply = fn(&mut Style, &Style, Input<'_>, &Relative<'_>) -> Result<(), StyleError>;
 type Check = fn(&Component, &Relative<'_>) -> bool;
 
 struct Handler {
@@ -1107,6 +1107,150 @@ fn handler(property: Property) -> Option<Handler> {
         P::InitialLetterAlign => (
             initial_letter_align,
             Some(|v, _| crate::style::InitialLetterAlign::from_component(v).is_ok()),
+        ),
+        P::Fill => (
+            svg_values::fill,
+            Some(|v, r| svg_values::supported(svg_values::fill, v, r)),
+        ),
+        P::FillOpacity => (
+            svg_values::fill_opacity,
+            Some(|v, r| svg_values::supported(svg_values::fill_opacity, v, r)),
+        ),
+        P::FillRule => (
+            svg_values::fill_rule,
+            Some(|v, r| svg_values::supported(svg_values::fill_rule, v, r)),
+        ),
+        P::Stroke => (
+            svg_values::stroke,
+            Some(|v, r| svg_values::supported(svg_values::stroke, v, r)),
+        ),
+        P::StrokeOpacity => (
+            svg_values::stroke_opacity,
+            Some(|v, r| svg_values::supported(svg_values::stroke_opacity, v, r)),
+        ),
+        P::StrokeWidth => (
+            svg_values::stroke_width,
+            Some(|v, r| svg_values::supported(svg_values::stroke_width, v, r)),
+        ),
+        P::StrokeDasharray => (
+            svg_values::stroke_dasharray,
+            Some(|v, r| svg_values::supported(svg_values::stroke_dasharray, v, r)),
+        ),
+        P::StrokeDashoffset => (
+            svg_values::stroke_dashoffset,
+            Some(|v, r| svg_values::supported(svg_values::stroke_dashoffset, v, r)),
+        ),
+        P::StrokeLinecap => (
+            svg_values::stroke_linecap,
+            Some(|v, r| svg_values::supported(svg_values::stroke_linecap, v, r)),
+        ),
+        P::StrokeLinejoin => (
+            svg_values::stroke_linejoin,
+            Some(|v, r| svg_values::supported(svg_values::stroke_linejoin, v, r)),
+        ),
+        P::StrokeMiterlimit => (
+            svg_values::stroke_miterlimit,
+            Some(|v, r| svg_values::supported(svg_values::stroke_miterlimit, v, r)),
+        ),
+        P::MarkerStart => (
+            svg_values::marker_start,
+            Some(|v, r| svg_values::supported(svg_values::marker_start, v, r)),
+        ),
+        P::MarkerMid => (
+            svg_values::marker_mid,
+            Some(|v, r| svg_values::supported(svg_values::marker_mid, v, r)),
+        ),
+        P::MarkerEnd => (
+            svg_values::marker_end,
+            Some(|v, r| svg_values::supported(svg_values::marker_end, v, r)),
+        ),
+        P::PaintOrder => (
+            svg_values::paint_order,
+            Some(|v, r| svg_values::supported(svg_values::paint_order, v, r)),
+        ),
+        P::StopColor => (
+            svg_values::stop_color,
+            Some(|v, r| svg_values::supported(svg_values::stop_color, v, r)),
+        ),
+        P::StopOpacity => (
+            svg_values::stop_opacity,
+            Some(|v, r| svg_values::supported(svg_values::stop_opacity, v, r)),
+        ),
+        P::FloodColor => (
+            svg_values::flood_color,
+            Some(|v, r| svg_values::supported(svg_values::flood_color, v, r)),
+        ),
+        P::FloodOpacity => (
+            svg_values::flood_opacity,
+            Some(|v, r| svg_values::supported(svg_values::flood_opacity, v, r)),
+        ),
+        P::LightingColor => (
+            svg_values::lighting_color,
+            Some(|v, r| svg_values::supported(svg_values::lighting_color, v, r)),
+        ),
+        P::ClipRule => (
+            svg_values::clip_rule,
+            Some(|v, r| svg_values::supported(svg_values::clip_rule, v, r)),
+        ),
+        P::MaskType => (
+            svg_values::mask_type,
+            Some(|v, r| svg_values::supported(svg_values::mask_type, v, r)),
+        ),
+        P::ColorInterpolation => (
+            svg_values::color_interpolation,
+            Some(|v, r| svg_values::supported(svg_values::color_interpolation, v, r)),
+        ),
+        P::ColorInterpolationFilters => (
+            svg_values::color_interpolation_filters,
+            Some(|v, r| svg_values::supported(svg_values::color_interpolation_filters, v, r)),
+        ),
+        P::TextAnchor => (
+            svg_values::text_anchor,
+            Some(|v, r| svg_values::supported(svg_values::text_anchor, v, r)),
+        ),
+        P::ShapeRendering => (
+            svg_values::shape_rendering,
+            Some(|v, r| svg_values::supported(svg_values::shape_rendering, v, r)),
+        ),
+        P::TextRendering => (
+            svg_values::text_rendering,
+            Some(|v, r| svg_values::supported(svg_values::text_rendering, v, r)),
+        ),
+        P::ImageRendering => (
+            svg_values::image_rendering,
+            Some(|v, r| svg_values::supported(svg_values::image_rendering, v, r)),
+        ),
+        P::Cx => (
+            svg_values::cx,
+            Some(|v, r| svg_values::supported(svg_values::cx, v, r)),
+        ),
+        P::Cy => (
+            svg_values::cy,
+            Some(|v, r| svg_values::supported(svg_values::cy, v, r)),
+        ),
+        P::R => (
+            svg_values::r,
+            Some(|v, r| svg_values::supported(svg_values::r, v, r)),
+        ),
+        P::Rx => (
+            svg_values::rx,
+            Some(|v, r| svg_values::supported(svg_values::rx, v, r)),
+        ),
+        P::Ry => (
+            svg_values::ry,
+            Some(|v, r| svg_values::supported(svg_values::ry, v, r)),
+        ),
+        P::X => (
+            svg_values::x,
+            Some(|v, r| svg_values::supported(svg_values::x, v, r)),
+        ),
+        P::Y => (
+            svg_values::y,
+            Some(|v, r| svg_values::supported(svg_values::y, v, r)),
+        ),
+        P::D => (
+            svg_values::d,
+            Some(|v, r| svg_values::supported(svg_values::d, v, r)),
         ),
         P::DominantBaseline => (
             dominant_baseline,

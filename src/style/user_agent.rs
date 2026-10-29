@@ -750,6 +750,15 @@ pub(super) fn declarations(
     environment: &crate::style::print::PrintEnvironment,
 ) -> Result<Vec<DefaultDeclaration>, StyleError> {
     let mut output = Vec::new();
+    if element.namespace() == crate::dom::SVG_NAMESPACE {
+        return Ok(crate::style::svg_values::presentation_hints(element)?
+            .into_iter()
+            .map(|declaration| DefaultDeclaration {
+                declaration,
+                specificity: 0,
+            })
+            .collect());
+    }
     if element.namespace() != HTML_NAMESPACE {
         return Ok(Vec::new());
     }

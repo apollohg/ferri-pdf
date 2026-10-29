@@ -100,6 +100,7 @@ pub(crate) struct StyledDocument {
     metadata: DocumentMetadata,
     canvas: crate::graphics::BoxDecoration,
     pages: page::PageProvider,
+    svg_definitions: svg::SvgDefinitions,
 }
 
 struct FormattingSource {
@@ -362,6 +363,7 @@ impl StyledDocument {
             generated,
             canvas,
             pages,
+            svg_definitions,
         } = formatting::build(
             &formatting::Input {
                 html: &html,
@@ -415,6 +417,7 @@ impl StyledDocument {
             metadata: DocumentMetadata::from_html(&html),
             canvas,
             pages,
+            svg_definitions,
             source: std::rc::Rc::new(FormattingSource {
                 html,
                 embedded,
@@ -471,6 +474,7 @@ impl StyledDocument {
             generated,
             canvas,
             pages,
+            svg_definitions,
         } = source.build(&mut styles, values, &self.pages.images(), resolver)?;
         Ok(Self {
             root,
@@ -482,6 +486,7 @@ impl StyledDocument {
             metadata: self.metadata.clone(),
             canvas,
             pages,
+            svg_definitions,
             source,
         })
     }
@@ -512,6 +517,7 @@ impl StyledDocument {
             generated,
             canvas,
             pages,
+            svg_definitions,
         } = source.build(&mut self.styles, values, &self.pages.images(), resolver)?;
         self.navigation = navigation.finish(&source.html, &generated)?;
         self.running_strings = strings.finish(&source.html)?;
@@ -519,6 +525,7 @@ impl StyledDocument {
         self.generated = generated;
         self.canvas = canvas;
         self.pages = pages;
+        self.svg_definitions = svg_definitions;
         for diagnostic in self.styles.take_diagnostics() {
             if !self.diagnostics.iter().any(
                 |known| matches!(known, DocumentDiagnostic::Css(known) if *known == diagnostic),
@@ -574,7 +581,7 @@ impl StyledDocument {
     }
     /// The SVG filters and masks that `url()` references in the document can name.
     pub(crate) fn svg_definitions(&self) -> svg::SvgDefinitions {
-        svg::SvgDefinitions::collect(&self.source.html)
+        self.svg_definitions.clone()
     }
     pub(crate) fn canvas_background(&self) -> &crate::graphics::BoxDecoration {
         &self.canvas

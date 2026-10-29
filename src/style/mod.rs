@@ -73,6 +73,7 @@ mod source_set;
 mod string_values;
 mod stylesheet;
 mod supports;
+pub(crate) mod svg_values;
 mod syntax;
 mod table_values;
 mod text_paint_values;

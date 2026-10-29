@@ -20,10 +20,7 @@ pub(super) fn background_only<I>(
 }
 
 /// PDF pages are white paper, which an opaque white canvas surface leaves unchanged.
-const PAPER: crate::graphics::Color = crate::graphics::Color {
-    rgb: [u8::MAX; 3],
-    alpha: 1.0,
-};
+const PAPER: crate::graphics::Color = crate::graphics::Color::WHITE;
 
 /// The canvas surface colour lies beneath the propagated background colour and images
 /// (CSS Color Adjustment 1 §2.2); `None` leaves what lies beneath visible.
@@ -80,6 +77,7 @@ pub(crate) struct Formatted {
     pub generated: crate::document::generated::GeneratedReferences,
     pub canvas: BoxDecoration,
     pub pages: crate::document::page::PageProvider,
+    pub svg_definitions: crate::document::svg::SvgDefinitions,
 }
 
 pub(crate) struct BlockBox {
@@ -1637,7 +1635,14 @@ fn block<'a>(
                             image
                         }
                         "svg" => Some(resources.cache.inline_svg_in_namespace(
-                            crate::document::svg::serialize(element),
+                            crate::document::svg::serialize(
+                                element,
+                                &frame.style,
+                                &crate::document::svg::Styling {
+                                    sheet,
+                                    resolver: resources.resolver,
+                                },
+                            )?,
                             resources.base,
                             resources.resolver,
                             frame.style.element_font_namespace(),
@@ -2210,6 +2215,11 @@ pub(crate) fn build(
             })
         })?;
         let canvas = canvas_surface(BoxDecoration::default(), surface_beneath(sheet, &style));
+        let svg_definitions = crate::document::svg::SvgDefinitions::collect(
+            html,
+            &style,
+            &crate::document::svg::Styling { sheet, resolver },
+        )?;
         return Ok(Formatted {
             root: BlockBox::anonymous(style, vec![BlockContent::Events(events)], None),
             navigation,
@@ -2222,6 +2232,7 @@ pub(crate) fn build(
                 base.clone(),
                 bindings,
             ),
+            svg_definitions,
         });
     }
     normalize_root_display(&mut style.display);
@@ -2258,6 +2269,11 @@ pub(crate) fn build(
         0
     };
     let surface = surface_beneath(sheet, &style);
+    let svg_definitions = crate::document::svg::SvgDefinitions::collect(
+        html,
+        &style,
+        &crate::document::svg::Styling { sheet, resolver },
+    )?;
     let mut root = block(
         element,
         Box::new(style),
@@ -2280,6 +2296,7 @@ pub(crate) fn build(
             base.clone(),
             bindings,
         ),
+        svg_definitions,
     })
 }
 

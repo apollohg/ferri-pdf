@@ -35,6 +35,16 @@ impl Default for InheritedColor {
     }
 }
 impl InheritedColor {
+    /// A colour independent of the element.
+    pub(super) fn specified(used: Color) -> Self {
+        Self {
+            used,
+            current: None,
+        }
+    }
+    pub(super) fn depends_on_color(&self) -> bool {
+        self.current.is_some()
+    }
     pub(super) fn compute(
         value: &Component,
         relative: &Relative<'_>,

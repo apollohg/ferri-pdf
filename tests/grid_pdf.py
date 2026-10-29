@@ -97,18 +97,19 @@ class GridPdf(unittest.TestCase):
         self.assertEqual(outline[0]['destination'], links[0]['destination'])
 
     def test_percentage_height_image_keeps_ratio_and_grid_alignment(self):
-        body = ('<section><svg xmlns="http://www.w3.org/2000/svg" width="80" height="40">'
-                '<rect width="40" height="40" fill="red"/>'
-                '<rect x="40" width="40" height="40" fill="blue"/></svg></section>')
+        body = ('<section><img src="data:image/svg+xml,'
+                "<svg xmlns='http://www.w3.org/2000/svg' width='80' height='40'>"
+                "<rect width='40' height='40' fill='red'/>"
+                "<rect x='40' width='40' height='40' fill='blue'/></svg>\"></section>")
         reference = self.renderer.render(self.root,
             'section{position:relative;width:100pt;height:80pt}'
-            'svg{position:absolute;left:10pt;top:20pt;width:80pt;height:40pt}', body)
+            'img{position:absolute;left:10pt;top:20pt;width:80pt;height:40pt}', body)
         with self.renderer.raster(self.root, reference, vector_antialias=False) as raster:
             expected = raster.copy()
             self.addCleanup(expected.close)
         output = self.renderer.render(self.root,
             'section{display:grid;width:100pt;grid-template-columns:100pt;grid-template-rows:80pt;'
-            'justify-items:center;align-items:center}svg{height:50%}', body)
+            'justify-items:center;align-items:center}img{height:50%}', body)
         with self.renderer.raster(self.root, output, vector_antialias=False) as raster:
             self.assertIsNone(ImageChops.difference(raster, expected).getbbox(),
                               'percentage-height image must preserve ratio and center in its Grid area')

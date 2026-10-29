@@ -160,6 +160,10 @@
     "display-legacy": {
       "syntax": "inline-block | inline-list-item | inline-table | inline-flex | inline-grid | -webkit-box | -webkit-inline-box",
       "source": "https://compat.spec.whatwg.org/commit-snapshots/159624eff7222f84fbdaae006e998e65bf60daa0/#css-keyword-mappings: -webkit-box and -webkit-inline-box, which https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#webkit-line-clamp requires to compute as themselves"
+    },
+    "dasharray": {
+      "syntax": "[ [ <length-percentage [0,∞]> | <number [0,∞]> ]+ ]#",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/painting.html#StrokeDasharrayProperty: a list with a negative value is invalid"
     }
   },
   "properties": {
@@ -497,6 +501,77 @@
     "min-inline-size": {
       "initial": "auto",
       "source": "https://www.w3.org/TR/2026/WD-css-sizing-3-20260904/#propdef-min-inline-size"
+    },
+    "stroke": {
+      "syntax": "<paint>",
+      "initial": "none",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/painting.html#StrokeProperty: a longhand"
+    },
+    "stroke-width": {
+      "syntax": "<length-percentage [0,∞]> | <number [0,∞]>",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/painting.html#StrokeWidthProperty: a negative value is invalid"
+    },
+    "stroke-miterlimit": {
+      "syntax": "<number [0,∞]>",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/painting.html#StrokeMiterlimitProperty: a negative value is invalid"
+    },
+    "paint-order": {
+      "syntax": "normal | [ fill | stroke | markers ]{1,3}",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/painting.html#PaintOrderProperty: normal | [ fill || stroke || markers ], whose written order is the painting order; each keyword occurs at most once"
+    },
+    "stroke-linejoin": {
+      "syntax": "miter | round | bevel",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/painting.html#StrokeLinejoinProperty"
+    },
+    "stop-opacity": {
+      "initial": "1",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/pservers.html#StopOpacityProperty"
+    },
+    "flood-opacity": {
+      "initial": "1",
+      "source": "https://www.w3.org/TR/2024/WD-filter-effects-1-20241218/#FloodOpacityProperty"
+    },
+    "shape-rendering": {
+      "inherited": true,
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/painting.html#ShapeRenderingProperty"
+    },
+    "image-rendering": {
+      "syntax": "auto | smooth | high-quality | pixelated | crisp-edges | optimizeSpeed | optimizeQuality",
+      "source": "https://www.w3.org/TR/2023/CRD-css-images-3-20231218/#the-image-rendering: optimizeSpeed and optimizeQuality are valid deprecated values"
+    },
+    "cx": {
+      "syntax": "<length-percentage>",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/geometry.html#CX"
+    },
+    "cy": {
+      "syntax": "<length-percentage>",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/geometry.html#CY"
+    },
+    "r": {
+      "syntax": "<length-percentage>",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/geometry.html#R"
+    },
+    "rx": {
+      "syntax": "<length-percentage> | auto",
+      "initial": "auto",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/geometry.html#RX"
+    },
+    "ry": {
+      "syntax": "<length-percentage> | auto",
+      "initial": "auto",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/geometry.html#RY"
+    },
+    "x": {
+      "syntax": "<length-percentage>",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/geometry.html#X"
+    },
+    "y": {
+      "syntax": "<length-percentage>",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/geometry.html#Y"
+    },
+    "d": {
+      "syntax": "none | <string>",
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/paths.html#TheDProperty"
     }
   },
   "descriptors": {
@@ -589,6 +664,13 @@
       "inherited": false,
       "groups": ["Compatibility"],
       "source": "https://compat.spec.whatwg.org/commit-snapshots/159624eff7222f84fbdaae006e998e65bf60daa0/#css-property-mappings: a mapping to flex-direction"
+    },
+    "color-interpolation": {
+      "syntax": "auto | sRGB | linearRGB",
+      "initial": "sRGB",
+      "inherited": true,
+      "groups": ["Scalable Vector Graphics"],
+      "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/painting.html#ColorInterpolationProperty"
     }
   }
 }

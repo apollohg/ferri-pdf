@@ -781,9 +781,9 @@ fn replaced_grid_items_resolve_area_height_before_preserving_aspect_ratio() {
     ] {
         let trace = render(
             &format!(
-                ".grid{{width:100pt;grid-template-columns:100pt;grid-template-rows:80pt;align-items:normal;justify-items:normal}}svg{{background:red;{sizing}}}"
+                ".grid{{width:100pt;grid-template-columns:100pt;grid-template-rows:80pt;align-items:normal;justify-items:normal}}img{{background:red;{sizing}}}"
             ),
-            "<div class=grid><svg xmlns='http://www.w3.org/2000/svg' width='80' height='40'><rect width='80' height='40' fill='blue'/></svg></div>",
+            "<div class=grid><img src=\"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='40'><rect width='80' height='40' fill='blue'/></svg>\"></div>",
         );
         let image = painted_box(&trace, [255, 0, 0]);
         assert!(
@@ -800,15 +800,15 @@ fn grid_image_automatic_minimum_respects_zero_override_and_flexible_spans() {
     for (minimum, peer_offset) in [("", 70.0), ("min-width:0", 30.0)] {
         let trace = render(
             &format!(
-                ".grid{{width:50pt;grid-template-columns:1fr 20pt;gap:10pt}}svg{{{minimum}}}.peer{{background:red}}"
+                ".grid{{width:50pt;grid-template-columns:1fr 20pt;gap:10pt}}img{{{minimum}}}.peer{{background:red}}"
             ),
-            "<div class=grid><svg xmlns='http://www.w3.org/2000/svg' width='80' height='40'></svg><div class=peer>Peer</div></div>",
+            "<div class=grid><img src=\"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='40'></svg>\"><div class=peer>Peer</div></div>",
         );
         assert_pt(painted_box(&trace, [255, 0, 0]).x, 36.0 + peer_offset);
     }
     let trace = render(
-        ".grid{width:50pt;grid-template-columns:1fr 1fr;gap:10pt}svg{grid-column:span 2}.peer{background:red;min-width:0;grid-column:2;grid-row:2}",
-        "<div class=grid><svg xmlns='http://www.w3.org/2000/svg' width='80' height='40'></svg><div class=peer>Peer</div></div>",
+        ".grid{width:50pt;grid-template-columns:1fr 1fr;gap:10pt}img{grid-column:span 2}.peer{background:red;min-width:0;grid-column:2;grid-row:2}",
+        "<div class=grid><img src=\"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='40'></svg>\"><div class=peer>Peer</div></div>",
     );
     assert_pt(painted_box(&trace, [255, 0, 0]).x, 66.0);
 }

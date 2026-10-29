@@ -261,6 +261,8 @@ pub(crate) struct Style {
     pub(super) containers: crate::style::QueryContainers,
     #[serde(skip)]
     pub(super) inert: crate::style::inert::InertValues,
+    #[serde(skip)]
+    pub(crate) svg: Arc<crate::style::svg_values::SvgStyle>,
 }
 impl Default for Style {
     fn default() -> Self {
@@ -382,6 +384,7 @@ impl Default for Style {
             containment: crate::style::ContainmentStyle::default(),
             containers: crate::style::QueryContainers::default(),
             inert: crate::style::inert::InertValues::default(),
+            svg: Arc::default(),
         }
     }
 }
@@ -703,6 +706,27 @@ impl Stylesheet {
         parent: &Style,
         resolver: &dyn ResourceResolver,
     ) -> Result<Style, StyleError> {
+        self.computed_element(element, parent, resolver, false)
+    }
+
+    /// Every computed value of an element, even one whose box `display: none` suppresses: SVG
+    /// content there can still be referenced and rendered elsewhere (SVG 2 §3.2).
+    pub(crate) fn computed_without_box(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Style, StyleError> {
+        self.computed_element(element, parent, resolver, true)
+    }
+
+    fn computed_element(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
+        resolver: &dyn ResourceResolver,
+        without_box: bool,
+    ) -> Result<Style, StyleError> {
         let (style, cascaded) = self.prepare_element(element, parent, resolver)?;
         let (style, winners) = crate::style::resolution::resolve_values(
             self,
@@ -716,7 +740,8 @@ impl Stylesheet {
                 page_font: false,
             },
         )?;
-        let mut style = self.computed_values(element, parent, style, winners, resolver)?;
+        let mut style =
+            self.finish_values(element, parent, style, winners, resolver, without_box)?;
         style.origin = StyleOrigin::of(element, None, parent);
         Ok(style)
     }
@@ -725,15 +750,28 @@ impl Stylesheet {
         &self,
         element: Element<'_>,
         parent: &Style,
+        style: Style,
+        winners: Winners,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Style, StyleError> {
+        self.finish_values(element, parent, style, winners, resolver, false)
+    }
+
+    fn finish_values(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
         mut style: Style,
         mut winners: Winners,
         resolver: &dyn ResourceResolver,
+        without_box: bool,
     ) -> Result<Style, StyleError> {
         let mut inherited = self.inherited(parent, self.page_area(), resolver);
         inherited.tree = Tree::Element(element);
         Self::display(&mut style, parent, &mut winners, &inherited)?;
         // The page context inherits the root's computed values even without a root box.
-        if style.display == Display::None
+        if !without_box
+            && style.display == Display::None
             && element
                 .parent(crate::dom::TreeRelation::Inheritance)
                 .is_some()
@@ -1395,6 +1433,11 @@ impl Stylesheet {
         style.reset_current_colors();
         style.text_decorations.declared.color = style.color;
         style.text_paint.resolve(&relative, &style.computed_color)?;
+        crate::style::svg_values::SvgStyle::resolve(
+            &mut style.svg,
+            &relative,
+            &style.computed_color,
+        )?;
         Ok(relative)
     }
 

@@ -78,6 +78,10 @@ impl Color {
         rgb: [0; 3],
         alpha: 1.0,
     };
+    pub const WHITE: Self = Self {
+        rgb: [u8::MAX; 3],
+        alpha: 1.0,
+    };
     pub const TRANSPARENT: Self = Self {
         rgb: [0; 3],
         alpha: 0.0,

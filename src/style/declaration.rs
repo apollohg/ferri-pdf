@@ -195,6 +195,13 @@ pub(crate) fn expand(
 ) -> Result<Option<Vec<(Property, Specified)>>, StyleError> {
     expand_with_context(property, source, ValueContext::Element)
 }
+/// The longhands of an SVG presentation attribute's value (SVG 2 §4.2), or `None` if invalid.
+pub(crate) fn expand_presentation(
+    property: Property,
+    source: &str,
+) -> Result<Option<Vec<(Property, Specified)>>, StyleError> {
+    expand_with_context(property, source, ValueContext::Presentation)
+}
 fn expand_with_context(
     property: Property,
     source: &str,
@@ -502,6 +509,7 @@ fn value_with_context(
                 && crate::style::font_values::valid(property, value)
                 && crate::style::counter_style::valid(value)
                 && crate::style::shape_values::valid(value)
+                && crate::style::svg_values::valid(property, value)
         }),
     )
 }

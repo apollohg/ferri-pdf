@@ -28,6 +28,8 @@ const PERCENT: char = '%';
 const PERCENT_RANGE_SCALE: f32 = 100.0;
 const URL_FUNCTION: &str = "url";
 const DASHED_PREFIX: &str = "--";
+/// SVG 2 §4.2: presentation attributes take unitless lengths in CSS pixels.
+const PRESENTATION_LENGTH_UNIT: &str = "px";
 
 #[derive(Debug)]
 struct Item {
@@ -99,6 +101,9 @@ impl<'a> Origins<'a> {
 #[derive(Clone, Copy)]
 pub(crate) enum ValueContext<'a> {
     Element,
+    /// An SVG presentation attribute, whose grammar also takes a `<number>` wherever it takes
+    /// a `<length>`, `<length-percentage>` or `<angle>` (SVG 2 §4.2).
+    Presentation,
     Independent,
     Substituted(&'a Origins<'a>),
     Nested(&'a Relative<'a>),
@@ -106,7 +111,7 @@ pub(crate) enum ValueContext<'a> {
 impl<'a> ValueContext<'a> {
     fn relative(self) -> Relative<'a> {
         let mut relative = match self {
-            Self::Element | Self::Substituted(_) => Relative::validation(),
+            Self::Element | Self::Presentation | Self::Substituted(_) => Relative::validation(),
             Self::Independent => Relative::initial(),
             Self::Nested(source) => Relative {
                 tree: source.tree,
@@ -1031,6 +1036,23 @@ impl Matcher<'_> {
                 if *value == 0.0 =>
             {
                 Component::Length(Length::ZERO)
+            }
+            (Base::Length | Base::LengthPercentage, ItemKind::Number { value, .. })
+                if matches!(self.context, ValueContext::Presentation) =>
+            {
+                let Some(Dimension::Length(unit)) = units::dimension(PRESENTATION_LENGTH_UNIT)
+                else {
+                    unreachable!("px is a length unit");
+                };
+                Component::Length(Length {
+                    value: signed(*value)?,
+                    unit,
+                })
+            }
+            (Base::Angle | Base::AnglePercentage, ItemKind::Number { value, .. })
+                if matches!(self.context, ValueContext::Presentation) =>
+            {
+                Component::Angle(signed(*value)?)
             }
             (Base::Dimension, ItemKind::Dimension { value, unit }) => {
                 Component::Dimension(*value, unit.clone())
