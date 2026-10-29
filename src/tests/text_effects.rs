@@ -134,6 +134,90 @@ fn marked_line(css: &str) -> TextLine {
     render(css, "<p>Hi</p>").pages[0].remove(0)
 }
 
+fn marked_text(line: &TextLine) -> Vec<&str> {
+    line.runs
+        .iter()
+        .flat_map(|run| &run.marks)
+        .map(|mark| &line.text[mark.source_range.clone()])
+        .collect()
+}
+
+#[test]
+fn emphasis_skip_selects_typographic_units_without_changing_their_advances() {
+    const TEXT: &str = "A ,+# B";
+    let plain = render("p{white-space:pre}", &format!("<p>{TEXT}</p>"));
+    let width = plain.pages[0][0].width;
+    for (skip, expected) in [
+        ("spaces", vec!["A", ",", "+", "#", "B"]),
+        ("punctuation", vec!["A", " ", "+", "#", " ", "B"]),
+        ("symbols", vec!["A", " ", ",", " ", "B"]),
+        ("spaces punctuation symbols", vec!["A", "B"]),
+        ("narrow", vec![]),
+    ] {
+        let trace = render(
+            &format!("p{{white-space:pre;text-emphasis:dot;text-emphasis-skip:{skip}}}"),
+            &format!("<p>{TEXT}</p>"),
+        );
+        let line = &trace.pages[0][0];
+        assert_eq!(
+            marked_text(line),
+            expected,
+            "text-emphasis-skip:{skip} on {TEXT:?}"
+        );
+        assert_pt(
+            line.width,
+            width,
+            "emphasis eligibility must not change base advances",
+        );
+    }
+    let trace = render(
+        "@font-face{font-family:Cjk;src:url('../../fixtures/fonts/CJKSpacingTest.otf')}p{font-family:Spike,Cjk;text-emphasis:dot;text-emphasis-skip:narrow}",
+        "<p>AＡ漢</p>",
+    );
+    assert_eq!(
+        marked_text(&trace.pages[0][0]),
+        ["Ａ", "漢"],
+        "narrow skips ASCII while retaining fullwidth and wide character units"
+    );
+    let trace = render(
+        "p{white-space:pre;text-emphasis:dot;text-emphasis-skip:symbols}",
+        "<p>  </p>",
+    );
+    assert_eq!(
+        marked_text(&trace.pages[0][0]),
+        [" ", " "],
+        "spaces receive marks even when no base glyph has visible ink"
+    );
+}
+
+#[test]
+fn emphasis_skip_inheritance_and_initial_affect_the_actual_marks() {
+    let trace = render(
+        "div{--skip:symbols;text-emphasis:dot;text-emphasis-skip:var(--skip)}.initial{text-emphasis-skip:initial}",
+        "<div><p>A,<span>+</span><span class=initial>+,</span>B</p></div>",
+    );
+    assert_eq!(
+        marked_text(&trace.pages[0][0]),
+        ["A", ",", "+", "B"],
+        "the inherited symbols value marks punctuation, while initial restores spaces/punctuation exclusions"
+    );
+}
+
+#[test]
+fn skipped_emphasis_marks_do_not_inflate_line_leading() {
+    let line = marked_line("p{line-height:20pt;text-emphasis:dot;text-emphasis-skip:narrow}");
+    assert!(
+        marked_text(&line).is_empty(),
+        "narrow text has no marks: {:?}",
+        marked_text(&line)
+    );
+    assert_pt(
+        line.height,
+        SIZE_PT,
+        "skipped marks contribute no extra leading",
+    );
+}
+
 #[test]
 fn marks_are_half_size_centred_on_their_characters_and_abut_the_content_area() {
     for (css, under) in [

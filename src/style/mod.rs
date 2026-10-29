@@ -161,7 +161,8 @@ pub(crate) use table_values::{
     BorderCollapse, CaptionSide, TableLayout, TableStyle, VerticalAlign,
 };
 pub(crate) use text_paint_values::{
-    EmphasisPosition, EmphasisShape, EmphasisStyle, InheritedColor, TextPaint, TextShadow,
+    EmphasisPosition, EmphasisShape, EmphasisSkip, EmphasisStyle, InheritedColor, TextPaint,
+    TextShadow,
 };
 pub(crate) use text_values::{
     DEFAULT_TAB_SIZE, HangingEnd, HangingPunctuation, HyphenateLimitChars, Hyphens, LineBreak,

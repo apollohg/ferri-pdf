@@ -3,54 +3,64 @@
 //! the `ruby` feature.
 use crate::document::Paragraph;
 use crate::graphics::{Contour, Point, Rect, Segment};
-use crate::style::EmphasisShape;
 use crate::style::Style;
+use crate::style::{EmphasisShape, EmphasisSkip};
 use crate::text::line_boxes::BoxMetrics;
 use crate::text::shaping::MissingGlyphs;
 use crate::text::{GlyphRun, Line, MarkShape, TextContext, TextError};
 use icu_properties::{
     CodePointMapData,
-    props::{GeneralCategory, GeneralCategoryGroup},
+    props::{EastAsianWidth, GeneralCategory, GeneralCategoryGroup},
 };
 use unicode_segmentation::UnicodeSegmentation;
 
 /// Marks are drawn at half the element's font size (§3.1).
 const MARK_SCALE: f32 = 0.5;
-/// Punctuation still marked, and what normalizes to it under NFKD (§3.1).
-const MARKED_PUNCTUATION: [char; 15] = [
+/// Punctuation classified as symbols, including NFKD equivalents (§3.5).
+const PUNCTUATION_SYMBOLS: [char; 15] = [
     '#', '%', '\u{2030}', '\u{2031}', '\u{066A}', '\u{0609}', '\u{060A}', '&', '\u{204A}', '@',
     '\u{00A7}', '\u{00B6}', '\u{204B}', '\u{2053}', '\u{303D}',
 ];
 
-/// Whether a typographic character unit takes a mark: not a separator unless combining
-/// characters follow it, not punctuation other than the listed symbols, and not a control,
-/// format or unassigned character (§3.1).
-pub(super) fn marked(cluster: &str) -> bool {
+/// Eligibility of one typographic character unit (CSS Text Decoration 4 §3.5).
+pub(super) fn marked(cluster: &str, skip: EmphasisSkip) -> bool {
     let categories = CodePointMapData::<GeneralCategory>::new();
     let mut chars = cluster.chars();
     let Some(first) = chars.next() else {
         return false;
     };
     let category = categories.get(first);
-    if GeneralCategoryGroup::Separator.contains(category) {
-        return chars.any(|ch| GeneralCategoryGroup::Mark.contains(categories.get(ch)));
-    }
-    if GeneralCategoryGroup::Punctuation.contains(category) {
-        let normalizer = icu_normalizer::DecomposingNormalizerBorrowed::new_nfkd();
-        let mut buffer = [0; 4];
-        let decomposed = normalizer.normalize(first.encode_utf8(&mut buffer));
-        let mut decomposed = decomposed.chars();
-        return decomposed
-            .next()
-            .is_some_and(|symbol| MARKED_PUNCTUATION.contains(&symbol))
-            && decomposed.next().is_none();
-    }
-    ![
+    if [
         GeneralCategory::Control,
         GeneralCategory::Format,
         GeneralCategory::Unassigned,
     ]
     .contains(&category)
+        || (skip.narrow
+            && !matches!(
+                CodePointMapData::<EastAsianWidth>::new().get(first),
+                EastAsianWidth::Wide | EastAsianWidth::Fullwidth
+            ))
+    {
+        return false;
+    }
+    if GeneralCategoryGroup::Separator.contains(category) {
+        return !skip.spaces
+            || chars.any(|ch| GeneralCategoryGroup::Mark.contains(categories.get(ch)));
+    }
+    let punctuation = GeneralCategoryGroup::Punctuation.contains(category);
+    let symbol = GeneralCategoryGroup::Symbol.contains(category)
+        || (punctuation && {
+            let normalizer = icu_normalizer::DecomposingNormalizerBorrowed::new_nfkd();
+            let mut buffer = [0; 4];
+            let decomposed = normalizer.normalize(first.encode_utf8(&mut buffer));
+            let mut decomposed = decomposed.chars();
+            decomposed
+                .next()
+                .is_some_and(|symbol| PUNCTUATION_SYMBOLS.contains(&symbol))
+                && decomposed.next().is_none()
+        });
+    !(symbol && skip.symbols || punctuation && !symbol && skip.punctuation)
 }
 
 /// The style marks are drawn in: the element's font at half size with the `ruby` feature,
@@ -70,8 +80,10 @@ fn mark_style(style: &Style) -> Style {
 }
 
 /// Whether any typographic character unit of `run` takes a mark.
-fn has_marks(run: &GlyphRun) -> bool {
-    run.text.graphemes(true).any(marked)
+fn has_marks(run: &GlyphRun, skip: EmphasisSkip) -> bool {
+    run.text
+        .graphemes(true)
+        .any(|cluster| marked(cluster, skip))
 }
 
 /// Extra leading the marks of `run` need, and whether it goes under the text: as for ruby,
@@ -81,7 +93,8 @@ pub(super) fn leading(
     style: &Style,
     run: &GlyphRun,
 ) -> Result<Option<(f32, bool)>, TextError> {
-    if style.text_paint.emphasis.mark().is_none() || !has_marks(run) {
+    if style.text_paint.emphasis.mark().is_none() || !has_marks(run, style.text_paint.emphasis_skip)
+    {
         return Ok(None);
     }
     let base = BoxMetrics::of(context, style)?;
@@ -103,7 +116,7 @@ pub(super) fn place(
         let Some(text) = style.text_paint.emphasis.mark() else {
             continue;
         };
-        if !has_marks(run) {
+        if !has_marks(run, style.text_paint.emphasis_skip) {
             continue;
         }
         let mark_style = mark_style(style);
@@ -135,7 +148,7 @@ pub(super) fn place(
         let mut marks = Vec::new();
         let mut shapes = Vec::new();
         for (offset, cluster) in run.text.grapheme_indices(true) {
-            if !marked(cluster) {
+            if !marked(cluster, style.text_paint.emphasis_skip) {
                 continue;
             }
             let start = run.source_range.start + offset;

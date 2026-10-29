@@ -679,6 +679,13 @@
     }
   },
   "additions": {
+    "text-emphasis-skip": {
+      "syntax": "spaces || punctuation || symbols || narrow",
+      "initial": "spaces punctuation",
+      "inherited": true,
+      "groups": ["CSS Text Decoration"],
+      "source": "https://www.w3.org/TR/2022/WD-css-text-decor-4-20220504/#propdef-text-emphasis-skip"
+    },
     "overflow-clip-margin-top": {
       "syntax": "<visual-box> || <length [0,∞]>",
       "initial": "0px",

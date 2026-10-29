@@ -213,6 +213,40 @@ class TextEffectsPdf(unittest.TestCase):
                                 [centre - mark_size, baseline - 2 * SIZE_PT, centre + mark_size, baseline])
             self.assert_box(mark, expected, f"mark over character {index}")
 
+    def test_emphasis_skip_marks_only_the_requested_character_categories(self):
+        dot = metrics("•")
+        mark_size = SIZE_PT / 2
+        ink_offset = ((dot["box"][0] + dot["box"][2]) / 2 - dot["advance"] / 2) * mark_size
+        for text, skip, indices in [("A ,+ B", "symbols", [0, 1, 2, 4, 5]),
+                                    ("A ,+ B", "spaces punctuation", [0, 3, 5]),
+                                    ("A ,+ B", "narrow", []), ("  ", "symbols", [0, 1])]:
+            with self.subTest(skip=skip, text=text):
+                centres, pen = [], LEFT_PT
+                for character in text:
+                    advance = metrics(character)["advance"] * SIZE_PT
+                    centres.append((pen + advance / 2 + ink_offset) * PX_PER_PT)
+                    pen += advance
+                target = self.render("white-space:pre;text-emphasis:filled dot red;color:black;"
+                                     f"text-emphasis-skip:{skip}", text)
+                self.assertEqual("".join(g.text for g in pdf_content.glyphs(target)), text,
+                                 "mark exclusions must not change extracted text")
+                image = self.raster(target)
+                pixels = image.load()
+                columns = [x for x in range(image.width)
+                           if any(pixels[x, y][0] > 200 and pixels[x, y][1] < 80
+                                  for y in range(image.height))]
+                marks = []
+                for column in columns:
+                    if marks and column == marks[-1][1] + 1:
+                        marks[-1][1] = column
+                    else:
+                        marks.append([column, column])
+                self.assertEqual(len(marks), len(indices),
+                                 f"{skip}: red mark bounds {marks}, expected indices {indices}")
+                for bounds, index in zip(marks, indices):
+                    self.assertAlmostEqual(sum(bounds) / 2, centres[index], delta=EDGE_TOLERANCE_PX,
+                                           msg=f"{skip}: mark must remain centred on character {index}")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -1,4 +1,5 @@
 //! Which typographic character units take emphasis marks (CSS Text Decoration 3 §3.1).
+use crate::style::EmphasisSkip;
 use crate::text::emphasis::marked;
 
 #[test]
@@ -36,10 +37,92 @@ fn marks_skip_separators_punctuation_and_controls_but_not_listed_symbols() {
     ];
     for (cluster, expected, reason) in cases {
         assert_eq!(
-            marked(cluster),
+            marked(cluster, EmphasisSkip::default()),
             expected,
             "{cluster:?} ({:?}): {reason}",
             cluster.chars().map(u32::from).collect::<Vec<_>>()
+        );
+    }
+}
+
+#[test]
+fn configurable_skips_distinguish_unicode_symbols_widths_and_combining_spaces() {
+    let symbols = EmphasisSkip {
+        spaces: false,
+        punctuation: false,
+        symbols: true,
+        narrow: false,
+    };
+    let narrow = EmphasisSkip {
+        narrow: true,
+        spaces: false,
+        punctuation: false,
+        symbols: false,
+    };
+    for (skip, cluster, expected, reason) in [
+        (
+            symbols,
+            ",",
+            true,
+            "ordinary punctuation is independent of symbols",
+        ),
+        (symbols, "+", false, "Unicode Sm is a symbol"),
+        (symbols, "♥", false, "Unicode So is a symbol"),
+        (symbols, "#", false, "listed Po belongs to emphasis symbols"),
+        (
+            symbols,
+            "\u{FF03}",
+            false,
+            "NFKD fullwidth number sign is a symbol",
+        ),
+        (
+            symbols,
+            "\u{FE5F}",
+            false,
+            "NFKD small number sign is a symbol",
+        ),
+        (symbols, " ", true, "spaces can receive marks"),
+        (symbols, "\u{3000}", true, "wide spaces can receive marks"),
+        (
+            symbols,
+            "\u{0007}",
+            false,
+            "control characters are always excluded",
+        ),
+        (
+            symbols,
+            "\u{200B}",
+            false,
+            "format characters are always excluded",
+        ),
+        (
+            symbols,
+            "\u{0378}",
+            false,
+            "unassigned characters are always excluded",
+        ),
+        (narrow, "A", false, "narrow Latin"),
+        (narrow, "Ａ", true, "fullwidth Latin"),
+        (narrow, "漢", true, "wide ideograph"),
+        (narrow, "♥", false, "ambiguous width is not F or W"),
+        (narrow, "ｱ", false, "halfwidth Katakana is not F or W"),
+        (
+            narrow,
+            "。",
+            true,
+            "wide punctuation remains eligible without punctuation skip",
+        ),
+        (
+            EmphasisSkip::default(),
+            " \u{0301}",
+            true,
+            "combining marks exempt a separator from spaces skip",
+        ),
+    ] {
+        assert_eq!(
+            marked(cluster, skip),
+            expected,
+            "{cluster:?}, {skip:?}: {reason}"
         );
     }
 }

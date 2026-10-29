@@ -785,6 +785,10 @@ fn handler(property: Property) -> Option<Handler> {
             Some(|v, _| crate::style::EmphasisStyle::from_component(v).is_ok()),
         ),
         P::TextEmphasisColor => (text_emphasis_color, Some(color_check)),
+        P::TextEmphasisSkip => (
+            text_emphasis_skip,
+            Some(|v, _| crate::style::EmphasisSkip::from_component(v).is_ok()),
+        ),
         P::TextEmphasisPosition => (
             text_emphasis_position,
             Some(|v, _| crate::style::EmphasisPosition::from_component(v).is_ok()),
@@ -2637,6 +2641,11 @@ computed!(
     text_emphasis_style,
     [text_paint.emphasis],
     |value, style, _parent, _relative| crate::style::EmphasisStyle::from_component(value)?
+);
+computed!(
+    text_emphasis_skip,
+    [text_paint.emphasis_skip],
+    |value, style, _parent, _relative| crate::style::EmphasisSkip::from_component(value)?
 );
 computed!(
     text_emphasis_position,

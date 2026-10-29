@@ -203,6 +203,47 @@ impl EmphasisPosition {
     }
 }
 
+/// Character classes omitted by `text-emphasis-skip` (CSS Text Decoration 4 §3.5).
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+pub(crate) struct EmphasisSkip {
+    pub spaces: bool,
+    pub punctuation: bool,
+    pub symbols: bool,
+    pub narrow: bool,
+}
+impl Default for EmphasisSkip {
+    fn default() -> Self {
+        Self {
+            spaces: true,
+            punctuation: true,
+            symbols: false,
+            narrow: false,
+        }
+    }
+}
+impl EmphasisSkip {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        let mut keywords = Vec::new();
+        value.keywords(&mut keywords);
+        let mut skip = Self {
+            spaces: false,
+            punctuation: false,
+            symbols: false,
+            narrow: false,
+        };
+        for keyword in keywords {
+            match keyword {
+                Keyword::Spaces => skip.spaces = true,
+                Keyword::Punctuation => skip.punctuation = true,
+                Keyword::Symbols => skip.symbols = true,
+                Keyword::Narrow => skip.narrow = true,
+                _ => return Err(unsupported(value)),
+            }
+        }
+        Ok(skip)
+    }
+}
+
 /// Inherited text paint of an element.
 #[derive(Clone, Debug, Default, PartialEq, Serialize)]
 pub(crate) struct TextPaint {
@@ -216,6 +257,7 @@ pub(crate) struct TextPaint {
     pub emphasis: EmphasisStyle,
     pub emphasis_color: InheritedColor,
     pub emphasis_position: EmphasisPosition,
+    pub emphasis_skip: EmphasisSkip,
 }
 impl TextPaint {
     /// Resolves the `currentcolor`-dependent colours once the element's colour is known.
