@@ -189,6 +189,12 @@ impl BlockBox {
                 style.clamp = block.style.clamp.clone();
                 style.text_box = block.style.text_box;
                 let mut inner = Self::anonymous(style, Vec::new(), None);
+                if block.style.display.is_table()
+                    && block.style.table.collapse == crate::style::BorderCollapse::Collapse
+                {
+                    inner.style.decoration.borders = block.style.decoration.borders;
+                    inner.decoration = block.decoration.clone();
+                }
                 inner.children = std::mem::take(&mut block.children);
                 inner.marker = block.marker.take();
                 block.flow = Some(Box::new(inner));

@@ -4,6 +4,25 @@ use crate::layout::measure::{FlowItem, MeasuredBlock, Measurer};
 use crate::layout::{breaks, geometry, intrinsic, margin::MarginStrut};
 use crate::style::{BreakBetween, CaptionSide};
 
+pub(crate) fn principal<'m, 'a>(table: &'m mut MeasuredBlock<'a>) -> &'m mut MeasuredBlock<'a> {
+    if table.table.is_some() {
+        return table;
+    }
+    let source = table.source;
+    table
+        .items
+        .iter_mut()
+        .find_map(|item| match item {
+            FlowItem::Block(child)
+                if std::ptr::eq(child.source, source) && child.table.is_some() =>
+            {
+                Some(child.as_mut())
+            }
+            _ => None,
+        })
+        .expect("a caption wrapper retains its principal table")
+}
+
 pub(super) fn minimum<'a>(
     captions: &[&'a BlockBox],
     measurer: &Measurer<'a>,

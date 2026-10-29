@@ -3,7 +3,6 @@ use crate::graphics::{BoxDecoration, BoxPaint, Rect};
 use crate::layout::{
     LayoutError,
     breaks::Fragmentainer,
-    geometry::horizontal,
     margin::MarginStrut,
     multicol::{ColumnFlow, ColumnGeometry, MeasuredColumns, SpannerFragment},
 };
@@ -580,6 +579,13 @@ impl<'a> BlockSource<'a> {
     pub(crate) fn flow(self) -> Option<&'a BlockBox> {
         self.block.flow()
     }
+    pub(super) fn collapsed_table(self) -> Option<&'a BlockBox> {
+        self.flow().filter(|inner| {
+            inner.style().display.is_table()
+                && inner.style().table.collapse == crate::style::BorderCollapse::Collapse
+        })
+    }
+
     pub(crate) fn layout_flow(self) -> crate::style::logical::Flow {
         self.block.layout_flow()
     }
@@ -602,6 +608,7 @@ pub(super) struct NativeSizing {
 #[derive(Clone)]
 pub(super) struct Measurer<'a> {
     pub(super) native_sizing: Option<std::rc::Rc<NativeSizing>>,
+    pub(super) table_data: std::rc::Rc<crate::layout::tables::Inputs<'a>>,
     pub(super) frame_measurements: std::rc::Rc<std::cell::RefCell<frames::Measurements<'a>>>,
     pub(super) raw_templates:
         std::rc::Rc<std::cell::RefCell<crate::layout::pagination::frames::Templates<'a>>>,
@@ -641,6 +648,7 @@ impl<'a> Measurer<'a> {
     ) -> Self {
         Measurer {
             native_sizing: None,
+            table_data: Default::default(),
             frame_measurements: Default::default(),
             raw_templates: Default::default(),
             raw_pagination: false,
@@ -711,6 +719,37 @@ impl<'a> Measurer<'a> {
     ) -> Result<Vec<Line>, LayoutError> {
         self.work.spend(paragraph.text().len().max(1))?;
         Ok(self.text.layout_paragraph(paragraph, width, atomics)?)
+    }
+
+    pub(super) fn box_edges(
+        &self,
+        block: impl Into<BlockSource<'a>>,
+        width: f32,
+    ) -> Result<crate::layout::geometry::Edges, Failure> {
+        let block = block.into();
+        if let Some(inner) = block.collapsed_table() {
+            let own = crate::style::logical::Flow::used(inner.style());
+            let parent = block.layout_flow();
+            let edges = self
+                .table_data
+                .get(inner)?
+                .table_edges(inner.style(), width);
+            return Ok(crate::layout::geometry::Edges {
+                padding: parent
+                    .horizontal()
+                    .sides(parent, &own.sides(own.horizontal(), &edges.padding)),
+                border: parent
+                    .horizontal()
+                    .sides(parent, &own.sides(own.horizontal(), &edges.border)),
+            });
+        }
+        if block.style().display.is_table() {
+            return Ok(self
+                .table_data
+                .get(block)?
+                .table_edges(block.style(), width));
+        }
+        Ok(crate::layout::geometry::Edges::of(block.style(), width))
     }
 
     pub(super) fn box_paint<'b>(
@@ -1549,10 +1588,24 @@ pub(super) fn block_geometry<'a>(
     containing_height: Option<f32>,
 ) -> Result<crate::layout::geometry::HorizontalBox, Failure> {
     let style = block.style();
-    let edges = crate::layout::geometry::Edges::of(style, width);
+    let edges = measurer.box_edges(block, width)?;
     let used_width = match block.image() {
         Some(_) => {
             Some(crate::layout::images::size(block, width, width, containing_height, None, None)[0])
+        }
+        None if BlockSource::from(block)
+            .collapsed_table()
+            .is_some_and(|inner| {
+                block.layout_flow().writing_mode.vertical()
+                    == inner.style().used_writing_mode().vertical()
+            }) =>
+        {
+            Some(crate::layout::inline::shrink_to_fit(
+                measurer,
+                block,
+                width,
+                containing_height,
+            )?)
         }
         None => crate::layout::ratio::width_from_height(
             measurer,
@@ -1562,7 +1615,8 @@ pub(super) fn block_geometry<'a>(
             &edges,
         )?,
     };
-    let geometry = horizontal(style, x, width, rtl, used_width);
+    let geometry =
+        crate::layout::geometry::horizontal_with_edges(style, x, width, rtl, used_width, edges);
     let transfers = crate::layout::ratio::PreferredRatio::of_box(style, &edges).is_some();
     if used_width.is_some()
         || (!transfers
@@ -1592,7 +1646,14 @@ pub(super) fn block_geometry<'a>(
         rtl,
         crate::style::Overconstraint::AdjustEndMargin,
     );
-    Ok(horizontal(style, x, width, rtl, Some(used.size)))
+    Ok(crate::layout::geometry::horizontal_with_edges(
+        style,
+        x,
+        width,
+        rtl,
+        Some(used.size),
+        edges,
+    ))
 }
 
 enum FlowFinished<'a> {

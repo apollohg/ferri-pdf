@@ -12,10 +12,22 @@ pub(super) fn content<'a>(
 ) -> Result<IntrinsicWidths, Failure> {
     let block = block.into();
     measurer.work.spend(1)?;
+    if let Some(inner) = block.collapsed_table()
+        && block.layout_flow().writing_mode.vertical()
+            == inner.style().used_writing_mode().vertical()
+    {
+        return crate::layout::tables::intrinsic_content(inner, measurer, available);
+    }
     if block.flow().is_some() {
         let mut probe = measurer.clone();
-        let geometry =
-            crate::layout::geometry::horizontal(block.style(), 0.0, available, false, None);
+        let geometry = crate::layout::geometry::horizontal_with_edges(
+            block.style(),
+            0.0,
+            available,
+            false,
+            None,
+            measurer.box_edges(block, available)?,
+        );
         let measured = probe.frame(block, &geometry, None, None)?;
         return Ok(IntrinsicWidths {
             min: measured.geometry.width,
@@ -97,14 +109,15 @@ pub(super) fn measure<'a>(
     Ok(outer_widths(
         block.style(),
         content(block, measurer, available)?,
+        measurer.box_edges(block, 0.0)?,
     ))
 }
 
 pub(super) fn outer_widths(
     style: &crate::style::Style,
     mut sizes: IntrinsicWidths,
+    box_edges: crate::layout::geometry::Edges,
 ) -> IntrinsicWidths {
-    let box_edges = crate::layout::geometry::Edges::of(style, 0.0);
     let edges = box_edges.horizontal();
     if let Size::Value(LengthPercentage::Length(width)) = style.width {
         let content = if style.box_sizing == BoxSizing::BorderBox {

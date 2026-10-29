@@ -215,7 +215,8 @@ impl<'a> Plan<'a> {
             .enumerate()
         {
             let style = child.style();
-            let edges = crate::layout::geometry::Edges::of(style, 0.0).horizontal();
+            let box_edges = measurer.box_edges(*child, 0.0)?;
+            let edges = box_edges.horizontal();
             let margins = [style.margin[1].resolve(0.0), style.margin[3].resolve(0.0)]
                 .into_iter()
                 .flatten()
@@ -231,7 +232,6 @@ impl<'a> Plan<'a> {
                 )?;
                 let child_gap = style.flex.gap[COLUMNS].resolve_normal(0.0, parent_gap);
                 let contributions = plan.column_contributions(measurer, available, child_gap)?;
-                let box_edges = crate::layout::geometry::Edges::of(style, 0.0);
                 let mut sides = [3, 1].map(|side| {
                     box_edges.padding[side]
                         + box_edges.border[side]
@@ -265,7 +265,7 @@ impl<'a> Plan<'a> {
             } else {
                 let natural = crate::layout::intrinsic::content(*child, measurer, available)?;
                 (
-                    crate::layout::intrinsic::outer_widths(style, natural),
+                    crate::layout::intrinsic::outer_widths(style, natural, box_edges),
                     natural.min,
                 )
             };
@@ -689,6 +689,7 @@ mod tests {
         let text = TextContext::new(&document.styles().fonts, &resolver);
         let mut measurer = Measurer {
             native_sizing: None,
+            table_data: Default::default(),
             frame_measurements: Default::default(),
             raw_templates: Default::default(),
             raw_pagination: false,

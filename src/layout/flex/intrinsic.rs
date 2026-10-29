@@ -25,17 +25,15 @@ pub(crate) fn measure<'a>(
             continue;
         }
         let child_style = child.style();
-        let edges = child_style.padding[1].resolve(0.0)
-            + child_style.padding[3].resolve(0.0)
-            + child_style.decoration.borders[1].used_width()
-            + child_style.decoration.borders[3].used_width();
+        let box_edges = measurer.box_edges(*child, 0.0)?;
+        let edges = box_edges.horizontal();
         let margins = [
             child_style.margin[3].resolve(0.0),
             child_style.margin[1].resolve(0.0),
         ];
         let outer = edges + margins.into_iter().flatten().sum::<f32>();
         let natural = intrinsic::content(*child, measurer, available)?;
-        let size = intrinsic::outer_widths(child_style, natural);
+        let size = intrinsic::outer_widths(child_style, natural, box_edges);
         let constraints = SizeConstraints::new(
             [
                 &child_style.width,

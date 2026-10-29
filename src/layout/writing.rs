@@ -289,6 +289,20 @@ pub(super) fn measure<'a>(
         super::measure::FrameKey::new(measurer, block, geometry, containing_height, used_height);
     let inner = block.flow().expect("a flow frame has content");
     let style = block.style();
+    let table_edges = if block.collapsed_table().is_some() {
+        Some(
+            measurer
+                .table_data
+                .get(inner)?
+                .table_edges(inner.style(), geometry.containing_width),
+        )
+    } else {
+        None
+    };
+    let native_block_edges = table_edges.map_or(0.0, |edges| {
+        edges.padding[0] + edges.padding[2] + edges.border[0] + edges.border[2]
+    });
+    let native_inline_edges = table_edges.map_or(0.0, |edges| edges.horizontal());
     let perpendicular =
         block.layout_flow().writing_mode.vertical() != inner.style().used_writing_mode().vertical();
     let top = geometry.padding[logical::TOP] + geometry.border[logical::TOP];
@@ -346,7 +360,9 @@ pub(super) fn measure<'a>(
         let available = inner_width;
         inner_width = if automatic {
             super::multicol::orthogonal_width(style, sizes, available)
-        } else if inner.style().display.is_block_container() {
+        } else if inner.style().display.is_block_container()
+            || (inner.style().display.is_table() && containing_height.is_some())
+        {
             sizes.max.min(available).max(sizes.min)
         } else if containing_height.is_none() {
             sizes.max
@@ -424,13 +440,24 @@ pub(super) fn measure<'a>(
     });
     let mut measured = loop {
         measurer.work.spend(1)?;
-        let inner_geometry = geometry::horizontal(
-            inner.style(),
-            0.0,
-            inner_width,
-            inner.style().used_rtl(),
-            Some(inner_width),
-        );
+        let inner_geometry = if let Some(edges) = table_edges {
+            geometry::horizontal_with_edges(
+                inner.style(),
+                0.0,
+                inner_width,
+                inner.style().used_rtl(),
+                Some(inner_width),
+                edges,
+            )
+        } else {
+            geometry::horizontal(
+                inner.style(),
+                0.0,
+                inner_width,
+                inner.style().used_rtl(),
+                Some(inner_width),
+            )
+        };
         let saved = (
             measurer.unbroken,
             measurer.column_flow,
@@ -496,8 +523,37 @@ pub(super) fn measure<'a>(
         }
         break measured;
     };
+    if table_edges.is_some() {
+        let principal = super::tables::principal(&mut measured);
+        principal.navigation = block.navigation();
+        principal.retain_fragment();
+        if let Some(paint) = &mut principal.paint {
+            paint.decoration = super::tables::collapsed_decoration(
+                std::mem::take(&mut paint.decoration),
+                principal.geometry.border,
+            );
+        }
+    }
     measured.frame_key = Some(std::rc::Rc::new(key));
-    let geometry = if perpendicular && !matches!(style.width, crate::style::Size::Value(_)) {
+    let inner_height = (measured.height - native_block_edges).max(0.0);
+    let geometry = if table_edges.is_some() {
+        let content_width = if perpendicular {
+            inner_height
+        } else {
+            (measured.geometry.border_box(measured.height).width - native_inline_edges).max(0.0)
+        };
+        geometry::horizontal_with_edges(
+            style,
+            geometry.containing_x,
+            geometry.containing_width,
+            geometry.containing_rtl,
+            Some(content_width),
+            geometry::Edges {
+                padding: geometry.padding,
+                border: geometry.border,
+            },
+        )
+    } else if perpendicular && !matches!(style.width, crate::style::Size::Value(_)) {
         let edges = geometry::Edges {
             padding: geometry.padding,
             border: geometry.border,
@@ -511,8 +567,8 @@ pub(super) fn measure<'a>(
         .with_intrinsic(
             [&style.width, &style.min_width, &style.max_width],
             crate::text::IntrinsicWidths {
-                min: measured.height,
-                max: measured.height,
+                min: inner_height,
+                max: inner_height,
             },
             Some(geometry.containing_width),
         );
@@ -520,51 +576,69 @@ pub(super) fn measure<'a>(
         let preferred = if style.width == crate::style::Size::Auto {
             super::ratio::PreferredRatio::of_box(style, &edges)
                 .zip(vertical.definite())
-                .map_or(measured.height, |(ratio, height)| {
+                .map_or(inner_height, |(ratio, height)| {
                     let width = ratio.width(height);
                     if super::ratio::content_minimum(style, &style.min_width) {
-                        width.max(measured.height)
+                        width.max(inner_height)
                     } else {
                         width
                     }
                 })
         } else {
-            constraints.specified.unwrap_or(measured.height)
+            constraints.specified.unwrap_or(inner_height)
         };
-        geometry::horizontal(
+        geometry::horizontal_with_edges(
             style,
             geometry.containing_x,
             geometry.containing_width,
             geometry.containing_rtl,
             Some(constraints.constrain(preferred)),
+            edges,
         )
     } else {
         geometry.clone()
     };
-    if perpendicular && measured.height != geometry.width {
-        measured.height = geometry.width;
-        measured.overflow_height = measured.overflow_height.max(geometry.width);
+    let native_height = geometry.width + native_block_edges;
+    if perpendicular && table_edges.is_none() && measured.height != native_height {
+        measured.height = native_height;
+        measured.overflow_height = measured.overflow_height.max(native_height);
         measured.constrained = true;
         if let Some(sizing) = &mut measured.sizing {
             sizing.used_height = Some(geometry.width);
         }
     }
     let content_height = if perpendicular {
-        measured.geometry.width
+        (measured.geometry.border_box(measured.height).width - native_inline_edges).max(0.0)
     } else {
-        measured.height
+        (measured.height - native_block_edges).max(0.0)
     };
-    let height = vertical.used_height(top + content_height + bottom);
+    let natural_height = top + content_height + bottom;
+    let height = if table_edges.is_some() {
+        natural_height
+    } else {
+        vertical.used_height(natural_height)
+    };
     let used_content_height = (height - top - bottom).max(0.0);
-    if !perpendicular {
-        measured.constrained |= measured.height != used_content_height;
-        measured.height = used_content_height;
-        measured.overflow_height = measured.overflow_height.max(used_content_height);
+    if !perpendicular && table_edges.is_none() {
+        let native_height = used_content_height + native_block_edges;
+        measured.constrained |= measured.height != native_height;
+        measured.height = native_height;
+        measured.overflow_height = measured.overflow_height.max(native_height);
         if let Some(sizing) = &mut measured.sizing {
             sizing.used_height = Some(used_content_height);
         }
     }
-    let mut physical_size = [geometry.width, used_content_height];
+    let area = if table_edges.is_some() {
+        geometry.border_box(height)
+    } else {
+        Rect {
+            x: geometry.x,
+            y: top,
+            width: geometry.width,
+            height: used_content_height,
+        }
+    };
+    let mut physical_size = [area.width, area.height];
     if block.layout_flow().writing_mode.vertical() {
         physical_size.swap(0, 1);
     }
@@ -590,16 +664,32 @@ pub(super) fn measure<'a>(
             Frame::physical(own, size).inverse().matrix,
             Frame::physical(block.layout_flow(), size).matrix,
         );
-        measured.frame_owner = Some(Box::new(super::measure::FrameOwner {
-            source: block,
-            paint: owner_paint(block, &geometry, padding, own, size),
-            containing: map_rect(matrix, padding),
-            padding: own.horizontal().sides(
-                own,
-                &block
-                    .layout_flow()
-                    .sides(block.layout_flow().horizontal(), &geometry.padding),
-            ),
+        measured.frame_owner = Some(Box::new(if table_edges.is_some() {
+            let rect = measured.geometry.border_box(measured.height);
+            let mut paint = measured.paint.clone().unwrap_or_else(|| {
+                BoxPaint::whole(rect, crate::graphics::BoxDecoration::default())
+            });
+            paint.rect.height = measured.height;
+            let containing =
+                crate::paint::outset(rect, measured.geometry.border.map(|width| -width));
+            super::measure::FrameOwner {
+                source: block,
+                paint,
+                containing,
+                padding: measured.geometry.padding,
+            }
+        } else {
+            super::measure::FrameOwner {
+                source: block,
+                paint: owner_paint(block, &geometry, padding, own, size),
+                containing: map_rect(matrix, padding),
+                padding: own.horizontal().sides(
+                    own,
+                    &block
+                        .layout_flow()
+                        .sides(block.layout_flow().horizontal(), &geometry.padding),
+                ),
+            }
         }));
     }
     let baselines = if perpendicular {
@@ -612,7 +702,7 @@ pub(super) fn measure<'a>(
             Frame::physical(own, size).matrix,
         );
         [measured.first_baseline(), measured.last_baseline()]
-            .map(|baseline| baseline.map(|y| map_point(matrix, [0.0, y])[1] + top))
+            .map(|baseline| baseline.map(|y| map_point(matrix, [0.0, y])[1] + area.y))
     };
     let edges = measurer.fragmentainer.edges(style);
     Ok(MeasuredBlock {
@@ -648,17 +738,24 @@ pub(super) fn measure<'a>(
         break_after: edges[1],
         items: vec![FlowItem::Frame {
             inner: std::rc::Rc::new(measured),
-            area: Rect {
-                x: geometry.x,
-                y: top,
-                width: geometry.width,
-                height: (height - top - bottom).max(0.0),
-            },
+            area,
             height,
             baselines,
         }],
-        paint: measurer.box_paint(block, &geometry),
-        navigation: block.navigation(),
+        paint: measurer.box_paint(block, &geometry).map(|mut paint| {
+            if table_edges.is_some() {
+                paint.decoration = super::tables::collapsed_decoration(
+                    crate::graphics::BoxDecoration::default(),
+                    geometry.border,
+                );
+            }
+            paint
+        }),
+        navigation: if table_edges.is_some() {
+            Default::default()
+        } else {
+            block.navigation()
+        },
         end_space: 0.0,
         start_space: 0.0,
         repeat_space: 0.0,

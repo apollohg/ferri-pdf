@@ -19,7 +19,8 @@ TOLERANCE_PT = 0.01
 
 
 class WritingModesPdf(unittest.TestCase):
-    def render(self, mode, body="<p>AB</p><p>CD</p>", rules="", pixels=False, navigation=False):
+    def render(self, mode, body="<p>AB</p><p>CD</p>", rules="", pixels=False, navigation=False,
+               vector_antialias=True):
         with tempfile.TemporaryDirectory(prefix="ferri-writing-modes-") as directory:
             source = Path(directory) / "input.html"
             target = Path(directory) / "output.pdf"
@@ -31,7 +32,8 @@ class WritingModesPdf(unittest.TestCase):
             self.assertEqual(result.returncode, 0, f"{mode} must render: {result.stderr}")
             if pixels:
                 prefix = Path(directory) / "raster"
-                raster = subprocess.run(["pdftoppm", "-png", "-singlefile", "-r", "72", str(target), str(prefix)],
+                raster = subprocess.run(["pdftoppm", "-png", "-singlefile", "-r", "72",
+                                         "-aaVector", "yes" if vector_antialias else "no", str(target), str(prefix)],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(raster.returncode, 0, raster.stderr)
                 with Image.open(prefix.with_suffix(".png")) as image:

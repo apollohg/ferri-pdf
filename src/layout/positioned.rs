@@ -341,10 +341,11 @@ fn solve<'a>(
     } else {
         None
     };
-    let edges = table.as_ref().map_or_else(
-        || crate::layout::geometry::Edges::of(style, width),
-        |plan| plan.edges(width),
-    );
+    let edges = if let Some(plan) = &table {
+        plan.edges(width)
+    } else {
+        measurer.box_edges(source, width)?
+    };
     let padding = edges.padding;
     let border = edges.border;
     let margin = style.margin.each_ref().map(|m| m.resolve(width));

@@ -1,4 +1,4 @@
-use super::{captions, model::Data};
+use super::captions;
 use crate::layout::measure::{BlockSource, Failure, Measurer};
 use crate::style::{BorderCollapse, LengthPercentage, Size, SizeConstraints};
 use crate::table::WidthInput;
@@ -26,7 +26,7 @@ fn measure_inner<'a>(
     available: f32,
     content_only: bool,
 ) -> Result<IntrinsicWidths, Failure> {
-    let data = Data::new(block.block)?;
+    let data = measurer.table_data.get(block)?;
     let cells = data.widths(measurer, 0.0, available)?;
     let columns = data.column_widths();
     let style = block.style();

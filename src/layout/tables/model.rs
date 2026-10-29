@@ -1,14 +1,14 @@
 use crate::document::{BlockBox, BlockContent};
 use crate::graphics::Border;
-use crate::layout::measure::Failure;
 use crate::layout::measure::Measurer;
+use crate::layout::measure::{BlockSource, Failure};
 use crate::layout::{LayoutError, geometry::Edges, intrinsic};
 use crate::style::{BorderCollapse, Display, LengthPercentage, Size, Style};
 use crate::table::{
     BorderBox, BorderOrigin, CellWidth, CollapsedBorders, ColumnWidth, Grid, RowGroup, Span,
     TableError,
 };
-use std::{ops::Range, rc::Rc};
+use std::{cell::RefCell, collections::HashMap, ops::Range, rc::Rc};
 
 pub(super) struct Group<'a> {
     pub(super) source: Option<&'a BlockBox>,
@@ -31,7 +31,28 @@ pub(super) fn relative_offset(sources: &[Option<&BlockBox>], width: f32, rtl: bo
             offset
         })
 }
-pub(super) struct Data<'a> {
+#[derive(Default)]
+pub(crate) struct Inputs<'a> {
+    data: RefCell<HashMap<(*const BlockBox, *const Style), Rc<Data<'a>>>>,
+}
+
+impl<'a> Inputs<'a> {
+    pub(crate) fn get(&self, block: impl Into<BlockSource<'a>>) -> Result<Rc<Data<'a>>, Failure> {
+        let block = block.into();
+        let key = (
+            std::ptr::from_ref(block.block),
+            std::ptr::from_ref(block.style()),
+        );
+        if let Some(data) = self.data.borrow().get(&key) {
+            return Ok(data.clone());
+        }
+        let data = Rc::new(Data::new(block)?);
+        self.data.borrow_mut().insert(key, data.clone());
+        Ok(data)
+    }
+}
+
+pub(crate) struct Data<'a> {
     pub(super) grid: Grid,
     pub(super) groups: Vec<Group<'a>>,
     pub(super) rows: Vec<&'a BlockBox>,
@@ -72,6 +93,10 @@ fn children(block: &BlockBox) -> Result<Vec<&BlockBox>, Failure> {
 }
 
 impl<'a> Data<'a> {
+    pub(crate) fn has_captions(&self) -> bool {
+        !self.captions.is_empty()
+    }
+
     pub(super) fn cell_ancestors(&self, index: usize) -> [Option<&'a BlockBox>; 3] {
         let row = self.grid.cells[index].row;
         [
@@ -80,12 +105,13 @@ impl<'a> Data<'a> {
             Some(self.cells[index]),
         ]
     }
-    pub(super) fn new(block: &'a BlockBox) -> Result<Self, Failure> {
+    fn new(block: impl Into<BlockSource<'a>>) -> Result<Self, Failure> {
+        let block = block.into();
         let mut groups: Vec<Group<'a>> = Vec::new();
         let mut columns = Vec::new();
         let mut captions = Vec::new();
         let mut column_count = 0usize;
-        for child in children(block)? {
+        for child in children(block.block)? {
             match &child.style().display {
                 Display::TableRow => {
                     if groups.last().is_none_or(|group| group.source.is_some()) {
@@ -291,7 +317,7 @@ impl<'a> Data<'a> {
     }
 
     /// Used table padding and border widths; collapsed tables have no padding (CSS 2.1 §17.6.2).
-    pub(super) fn table_edges(&self, style: &Style, reference: f32) -> Edges {
+    pub(crate) fn table_edges(&self, style: &Style, reference: f32) -> Edges {
         match &self.collapsed {
             Some(collapsed) => Edges {
                 padding: [0.0; 4],

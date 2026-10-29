@@ -43,7 +43,10 @@ fn repeated_rows(data: &Data<'_>) -> [Range<usize>; 2] {
 
 /// Collapsed borders paint along grid lines instead of around each box; the box keeps its
 /// half-border insets as transparent borders, so background origins and clips stay inside them.
-fn collapsed_decoration(mut decoration: BoxDecoration, insets: [f32; 4]) -> BoxDecoration {
+pub(crate) fn collapsed_decoration(
+    mut decoration: BoxDecoration,
+    insets: [f32; 4],
+) -> BoxDecoration {
     decoration.borders = insets.map(|width| Border {
         width,
         style: BorderStyle::Solid,
@@ -251,7 +254,7 @@ pub(crate) struct TablePlan<'a> {
     pub source: &'a BlockBox,
     pub style: &'a Style,
     named_pages: bool,
-    data: Data<'a>,
+    data: Rc<Data<'a>>,
     entry_events: Vec<&'a SemanticEvent>,
     cell_indices: HashMap<*const BlockBox, usize>,
     row_keep_ends: [Vec<usize>; 2],
@@ -466,7 +469,7 @@ impl<'a> TablePlan<'a> {
         ends
     }
     pub(crate) fn new(
-        measurer: &Measurer<'_>,
+        measurer: &Measurer<'a>,
         block: impl Into<BlockSource<'a>>,
         containing_height: Option<f32>,
         used_height: Option<f32>,
@@ -475,7 +478,7 @@ impl<'a> TablePlan<'a> {
         let block = block.into();
         measurer.work.spend(1)?;
         let index = measurer.sources.block(block.block);
-        let data = Data::new(block.block)?;
+        let data = measurer.table_data.get(block)?;
         let entry_events = table_entry_events(block.block);
         if data
             .rows
@@ -633,7 +636,7 @@ impl<'a> TablePlan<'a> {
     }
 
     pub(crate) fn has_captions(&self) -> bool {
-        !self.data.captions.is_empty()
+        self.data.has_captions()
     }
 
     pub(crate) fn edges(&self, width: f32) -> geometry::Edges {

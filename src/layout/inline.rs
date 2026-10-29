@@ -5,7 +5,7 @@ use crate::graphics::{
     BoxPaint, DecorationLine, DecorationPaint, DisplayItem, Point, Rect, TextShadowPaint,
 };
 use crate::layout::LayoutError;
-use crate::layout::geometry::{Edges, inline_horizontal};
+use crate::layout::geometry::inline_horizontal;
 use crate::layout::measure::Failure;
 use crate::layout::measure::{FlowItem, MeasuredBlock, Measurer};
 use crate::style::BaselineSource;
@@ -103,7 +103,7 @@ pub(super) fn measure_annotation<'a>(
         width,
         containing_rtl,
         Some(width),
-        Edges::of(block.style(), width),
+        measurer.box_edges(block, width)?,
     );
     let measured = measurer.measure_format(block, geometry.clone(), false, containing_height, None);
     measurer.unbroken = unbroken;
@@ -338,21 +338,21 @@ pub(super) fn shrink_to_fit_geometry<'a>(
         containing_width,
         containing_rtl,
         Some(width),
-        Edges::of(style, containing_width),
+        measurer.box_edges(block, containing_width)?,
     );
     Ok(geometry)
 }
 
 /// `width: auto` resolves to min(max(min-content, available), max-content), or through a
 /// preferred aspect ratio from a definite height (CSS Sizing 4 §4.2).
-fn shrink_to_fit<'a>(
+pub(super) fn shrink_to_fit<'a>(
     measurer: &Measurer<'a>,
     block: &'a BlockBox,
     containing_width: f32,
     containing_height: Option<f32>,
 ) -> Result<f32, Failure> {
     let style = block.style();
-    let edges = Edges::of(style, containing_width);
+    let edges = measurer.box_edges(block, containing_width)?;
     if let Some(width) = crate::layout::ratio::width_from_height(
         measurer,
         block,

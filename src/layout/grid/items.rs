@@ -149,7 +149,7 @@ impl<'a> Item<'a> {
     ) -> Result<Self, Failure> {
         let style = source.style();
         let available = area.end - area.start;
-        let edges = Edges::of(style, available);
+        let edges = measurer.box_edges(source, available)?;
         let mut margins = style
             .margin
             .each_ref()

@@ -172,11 +172,9 @@ pub(super) fn measure<'a>(
     for source in children(block.block)? {
         let child = source.style();
         let natural = block_intrinsic::content(source, measurer, geometry.width)?;
-        let padding = child.padding.each_ref().map(|v| v.resolve(geometry.width));
-        let border = child
-            .decoration
-            .borders
-            .map(crate::graphics::Border::used_width);
+        let edges = measurer.box_edges(source, geometry.width)?;
+        let padding = edges.padding;
+        let border = edges.border;
         let margins = child.margin.each_ref().map(|v| v.resolve(geometry.width));
         let width_edges = padding[1] + padding[3] + border[1] + border[3];
         let height_edges = padding[0] + padding[2] + border[0] + border[2];
