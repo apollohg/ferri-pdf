@@ -727,25 +727,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                     consumed_anchors += 1;
                     self.line_anchor(&anchor, line_x, line_width, offset, line.height, &layers);
                 }
-                let text_start = source.text()[line.range.clone()]
-                    .char_indices()
-                    .find(|(_, ch)| !crate::document::is_css_whitespace(*ch))
-                    .map(|(offset, _)| line.range.start + offset);
-                for event in source
-                    .semantic_events()
-                    .iter()
-                    .skip(consumed_events)
-                    .take_while(|event| {
-                        event.offset < line.range.end || line.range.end == source.text().len()
-                    })
-                {
-                    if text_start.is_some_and(|start| start < event.offset) {
-                        self.string_locations.text(self.page);
-                    }
-                    self.string_locations.record(self.page, &event.event);
-                    consumed_events += 1;
-                }
-                self.string_locations.text(self.page);
+                self.line_events(source, &line, &mut consumed_events);
                 line_index += 1;
                 let baseline = self.top + self.y + line.ascent + self.offset[1];
                 self.record_baselines(self.page, [Some(baseline); 2]);
@@ -858,6 +840,33 @@ impl<'a> Paginator<'a, '_, 'a> {
         self.finish_inline_backgrounds(&layers);
         Ok(None)
     }
+    fn line_events(
+        &mut self,
+        source: &crate::document::Paragraph,
+        line: &crate::text::Line,
+        consumed_events: &mut usize,
+    ) {
+        let text_start = source.text()[line.range.clone()]
+            .char_indices()
+            .find(|(_, ch)| !crate::document::is_css_whitespace(*ch))
+            .map(|(offset, _)| line.range.start + offset);
+        for event in source
+            .semantic_events()
+            .iter()
+            .skip(*consumed_events)
+            .take_while(|event| {
+                event.offset < line.range.end || line.range.end == source.text().len()
+            })
+        {
+            if text_start.is_some_and(|start| start < event.offset) {
+                self.string_locations.text(self.page);
+            }
+            self.string_locations.record(self.page, &event.event);
+            *consumed_events += 1;
+        }
+        self.string_locations.text(self.page);
+    }
+
     fn emit_paragraph_line(
         &mut self,
         index: usize,
@@ -956,9 +965,12 @@ impl<'a> Paginator<'a, '_, 'a> {
                 .saturating_add(text.line.boxes.len())
                 .saturating_add(text.line.links.len())
                 .saturating_add(text.line.decorations.len())
+                .saturating_add(text.source.semantic_events().len())
                 .max(1),
         )?;
         self.y = row_top + text.baseline - text.line.ascent;
+        let mut consumed_events = 0;
+        self.line_events(text.source, &text.line, &mut consumed_events);
         let baseline = self.top + row_top + text.baseline + self.offset[1];
         self.record_baselines(self.page, [Some(baseline); 2]);
         self.record_overflow(Rect {

@@ -48,7 +48,7 @@ fn after_child_row_paints_keep_canonical_text_navigation_and_stacking() {
     const RAISED_COLOR: [u8; 3] = [0, 128, 0];
     let resolver = FileResolver::default();
     let document = StyledDocument::parse(
-        "<!doctype html><style>@page{size:200pt 100pt;margin:0}html,body{margin:0}section{display:flex;margin-top:12pt}article{width:50pt;height:30pt;background:blue}article+article{position:relative;z-index:1;left:-50pt;background:green}a{display:contents;text-decoration:underline;text-shadow:2pt 1pt red;font-size:12pt}</style><section><article><a href='https://example.test/radical'>√</a></article><article></article></section>",
+        "<!doctype html><style>@page{size:200pt 100pt;margin:0}html,body{margin:0}section{display:flex;margin-top:12pt}article{width:50pt;height:30pt;background:blue}article+article{position:relative;z-index:1;left:-50pt;background:green}a{display:contents;text-decoration:underline;text-shadow:2pt 1pt red;font-size:12pt}.assignment{display:contents;string-set:heading 'After'}</style><section><article><a href='https://example.test/radical'>√<span class=assignment></span></a></article><article></article></section>",
         &ResourceBase::default(), &[], &resolver,
     ).unwrap();
     let text = TextContext::new(&document.styles().fonts, &resolver);
@@ -157,6 +157,24 @@ fn after_child_row_paints_keep_canonical_text_navigation_and_stacking() {
             document.root().leading_events(),
         )
         .unwrap();
+    let strings = output
+        .string_locations
+        .resolve(document.running_strings(), output.pages.len())
+        .expect("arranged source events must have committed page locations");
+    let request = |mode| crate::style::NamedStringRequest {
+        name: "heading".into(),
+        mode,
+    };
+    assert_eq!(
+        strings.text(0, &request(crate::style::NamedStringMode::Last)),
+        "After",
+        "the source-end inline assignment must emit on the arranged line's page"
+    );
+    assert_eq!(
+        strings.text(0, &request(crate::style::NamedStringMode::Start)),
+        "",
+        "selectable text before the source-end assignment closes page-start eligibility"
+    );
     let lines: Vec<_> = output
         .pages
         .iter()
