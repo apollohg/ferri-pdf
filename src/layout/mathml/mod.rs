@@ -112,30 +112,32 @@ pub(super) fn measure<'a>(
     );
     let mut prefix = Vec::new();
     let mut preceding = None;
-    for child in content_source.children() {
-        match child {
-            BlockContent::Block(source) => {
-                preceding = cells
-                    .iter()
-                    .position(|cell| std::ptr::eq(cell.block.source, source));
-            }
-            BlockContent::Events(events) => {
-                if let Some(index) = preceding {
-                    cells[index].after_events.extend(events);
-                } else {
-                    prefix.push(FlowItem::Events(events));
+    if !content.css_content {
+        for child in content_source.children() {
+            match child {
+                BlockContent::Block(source) => {
+                    preceding = cells
+                        .iter()
+                        .position(|cell| std::ptr::eq(cell.block.source, source));
                 }
+                BlockContent::Events(events) => {
+                    if let Some(index) = preceding {
+                        cells[index].after_events.extend(events);
+                    } else {
+                        prefix.push(FlowItem::Events(events));
+                    }
+                }
+                BlockContent::Positioned(block) => {
+                    prefix.push(FlowItem::Positioned(super::measure::PositionedFlow {
+                        block,
+                        left: 0.0,
+                        right: width,
+                        margin: 0.0,
+                        alignment: None,
+                    }));
+                }
+                BlockContent::Inline(_) => {}
             }
-            BlockContent::Positioned(block) => {
-                prefix.push(FlowItem::Positioned(super::measure::PositionedFlow {
-                    block,
-                    left: 0.0,
-                    right: width,
-                    margin: 0.0,
-                    alignment: None,
-                }));
-            }
-            BlockContent::Inline(_) => {}
         }
     }
     let row = MeasuredRow {
@@ -281,6 +283,8 @@ pub(super) struct MathBox<'a> {
     accent: Option<f32>,
     operator: Option<Operator>,
     space_like: bool,
+    /// The canonical CSS child already carries this element's events and positioned boxes.
+    css_content: bool,
     paint: Vec<Paint<'a>>,
 }
 impl MathBox<'_> {
@@ -578,10 +582,12 @@ impl<'a> Builder<'_, 'a> {
             None,
             RequestKind::Css,
         )?;
-        Ok(Self::measured_box(
+        let mut result = Self::measured_box(
             measured,
             matches!(element.name(), "mtext" | "annotation" | "annotation-xml"),
-        ))
+        );
+        result.css_content = true;
+        Ok(result)
     }
     fn metrics(&self, style: &Style) -> Result<Metrics, Failure> {
         Metrics::of(
