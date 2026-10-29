@@ -457,68 +457,79 @@ impl BlockBox {
     /// last in-flow child blocks without padding or borders on that side, but not into or
     /// through flex, grid or table formatting contexts.
     pub(super) fn trim_text_boxes(&mut self, requested: [bool; 2]) -> Result<(), DocumentError> {
-        // An inline initial letter's line box is trimmed to its alignment points (CSS Inline 3
-        // §7.5.3).
-        let requested = if self.initial_letter.is_some_and(|letter| !letter.atomic) {
-            [true; 2]
-        } else {
-            requested
-        };
-        let own = self.style.text_box.trim;
-        if own.contains(&true) {
-            if self.style.multicol.is_multicol() {
-                return Err(StyleError::Unsupported(
-                    "text-box-trim on a multi-column container's columns".into(),
-                )
-                .into());
+        let mut pending = vec![(self, requested)];
+        while let Some((block, requested)) = pending.pop() {
+            // An inline initial letter's line box is trimmed to its alignment points (CSS Inline 3
+            // §7.5.3).
+            let requested = if block.initial_letter.is_some_and(|letter| !letter.atomic) {
+                [true; 2]
+            } else {
+                requested
+            };
+            let own = block.style.text_box.trim;
+            if own.contains(&true) {
+                if block.style.multicol.is_multicol() {
+                    return Err(StyleError::Unsupported(
+                        "text-box-trim on a multi-column container's columns".into(),
+                    )
+                    .into());
+                }
+                if block.style.clone_decoration {
+                    return Err(StyleError::Unsupported(
+                        "text-box-trim on each fragment of a box-decoration-break: clone box"
+                            .into(),
+                    )
+                    .into());
+                }
             }
-            if self.style.clone_decoration {
-                return Err(StyleError::Unsupported(
-                    "text-box-trim on each fragment of a box-decoration-break: clone box".into(),
-                )
-                .into());
+            let display = &block.style.display;
+            let requested = if display.is_item_container() || display.is_table() {
+                [false; 2]
+            } else {
+                [0, 1].map(|side| own[side] || requested[side])
+            };
+            let in_flow: Vec<usize> = block
+                .children
+                .iter()
+                .enumerate()
+                .filter(|(_, child)| {
+                    matches!(child, BlockContent::Block(_) | BlockContent::Inline(_))
+                })
+                .map(|(index, _)| index)
+                .collect();
+            let [first, last] = [in_flow.first().copied(), in_flow.last().copied()];
+            if let Some(content) = &mut block.math_content {
+                pending.push((content.as_mut(), [false; 2]));
             }
-        }
-        let display = &self.style.display;
-        let requested = if display.is_item_container() || display.is_table() {
-            [false; 2]
-        } else {
-            [0, 1].map(|side| own[side] || requested[side])
-        };
-        let in_flow: Vec<usize> = self
-            .children
-            .iter()
-            .enumerate()
-            .filter(|(_, child)| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)))
-            .map(|(index, _)| index)
-            .collect();
-        let [first, last] = [in_flow.first().copied(), in_flow.last().copied()];
-        for (index, child) in self.children.iter_mut().enumerate() {
-            let inherited = [
-                requested[0] && first == Some(index),
-                requested[1] && last == Some(index),
-            ];
-            match child {
-                BlockContent::Inline(paragraph) => {
-                    paragraph.set_text_box_trim(inherited);
-                    for block in paragraph.anchored_blocks_mut() {
-                        block.trim_text_boxes([false; 2])?;
+            for (index, child) in block.children.iter_mut().enumerate().rev() {
+                let inherited = [
+                    requested[0] && first == Some(index),
+                    requested[1] && last == Some(index),
+                ];
+                match child {
+                    BlockContent::Inline(paragraph) => {
+                        paragraph.set_text_box_trim(inherited);
+                        let start = pending.len();
+                        pending.extend(
+                            paragraph
+                                .anchored_blocks_mut()
+                                .map(|block| (block, [false; 2])),
+                        );
+                        pending[start..].reverse();
                     }
+                    BlockContent::Block(block) => {
+                        const TOP: usize = 0;
+                        const BOTTOM: usize = 2;
+                        let open = |side: usize| {
+                            block.style.padding[side].is_zero()
+                                && block.style.decoration.borders[side].used_width() == 0.0
+                        };
+                        let inherited = [inherited[0] && open(TOP), inherited[1] && open(BOTTOM)];
+                        pending.push((block, inherited));
+                    }
+                    BlockContent::Positioned(block) => pending.push((block, [false; 2])),
+                    BlockContent::Events(_) => {}
                 }
-                BlockContent::Block(block) => {
-                    const TOP: usize = 0;
-                    const BOTTOM: usize = 2;
-                    let open = |side: usize| {
-                        block.style.padding[side].is_zero()
-                            && block.style.decoration.borders[side].used_width() == 0.0
-                    };
-                    block.trim_text_boxes([
-                        inherited[0] && open(TOP),
-                        inherited[1] && open(BOTTOM),
-                    ])?;
-                }
-                BlockContent::Positioned(block) => block.trim_text_boxes([false; 2])?,
-                BlockContent::Events(_) => {}
             }
         }
         Ok(())
