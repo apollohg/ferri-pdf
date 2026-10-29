@@ -51,6 +51,30 @@ class ImageFallbackPdf(unittest.TestCase):
                     self.assertEqual(glyph.matrix, expected.matrix,
                                      "an ignored source line cannot establish first or last baseline geometry")
 
+    def test_ignored_image_lines_do_not_consume_clamp_lines_or_add_ellipsis(self):
+        image = "<img src=missing.png alt=''>"
+        rules = "body{font-size:12pt;line-height:18pt}p{margin:0}.c{line-clamp:1}"
+        for name, before, after, second in [
+            ("leading", image, "", ""),
+            ("wrapped leading", f"<div>{image}</div>", "", ""),
+            ("trailing", "", image, ""),
+            ("nested trailing", "", f"<div><div>{image}</div></div>", ""),
+            ("real clamp", image, image, "<p>Second</p>"),
+            ("wrapped real clamp", f"<div>{image}</div>", f"<div>{image}</div>", "<p>Second</p>"),
+        ]:
+            with self.subTest(name=name):
+                control = f"<div class=c><p>First</p>{second}</div><p>Outside</p>"
+                body = f"<div class=c>{before}<p>First</p>{after}{second}</div><p>Outside</p>"
+                reference = self.render("horizontal-tb", control, rules)
+                actual = self.render("horizontal-tb", body, rules)
+                self.assertEqual([(g.text, g.matrix) for g in actual["glyphs"]],
+                                 [(g.text, g.matrix) for g in reference["glyphs"]],
+                                 "ignored source lines cannot consume the first real line or invent an ellipsis")
+                expected_pixels = self.render("horizontal-tb", control, rules, pixels=True)
+                actual_pixels = self.render("horizontal-tb", body, rules, pixels=True)
+                self.assertEqual(actual_pixels.tobytes(), expected_pixels.tobytes(),
+                                 "clamped PDF ink must match the actual no-image control exactly")
+
     def test_loaded_image_margin_at_unforced_break_is_truncated(self):
         image_size = 100
         margin = 20

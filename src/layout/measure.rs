@@ -281,7 +281,11 @@ pub(super) struct MeasuredParagraph<'a> {
 
 impl MeasuredParagraph<'_> {
     pub(super) fn is_phantom(&self) -> bool {
-        self.lines.iter().all(|line| line.phantom)
+        self.line_count() == 0
+    }
+
+    fn line_count(&self) -> usize {
+        self.lines.iter().filter(|line| !line.phantom).count()
     }
 }
 
@@ -318,6 +322,9 @@ fn lines_within(items: &[FlowItem<'_>], top: f32, limit: f32, counts: &mut [usiz
             FlowItem::Paragraph(paragraph) => {
                 for line in &paragraph.lines {
                     y += line.height;
+                    if line.phantom {
+                        continue;
+                    }
                     if counts[0] == counts[1] && y <= limit {
                         counts[0] += 1;
                     }
@@ -333,6 +340,37 @@ fn lines_within(items: &[FlowItem<'_>], top: f32, limit: f32, counts: &mut [usiz
         y += item.height();
     }
 }
+/// A collapsing wrapper contributes only ignored source lines, without independent content.
+fn phantom_flow(block: &MeasuredBlock<'_>) -> bool {
+    let mut pending = vec![block];
+    let mut phantom = false;
+    while let Some(block) = pending.pop() {
+        if !block.through
+            || block.independent
+            || block.has_forced
+            || block.before.value() != 0.0
+            || block.after.value() != 0.0
+            || block
+                .paint
+                .as_ref()
+                .is_some_and(|paint| paint.decoration.is_visible())
+        {
+            return false;
+        }
+        for item in &block.items {
+            match item {
+                FlowItem::Paragraph(paragraph) if paragraph.is_phantom() => phantom = true,
+                FlowItem::Block(child) => pending.push(child),
+                FlowItem::Events(_) | FlowItem::Positioned(_) => {}
+                FlowItem::Edge(_, value) | FlowItem::Space(value) if *value == 0.0 => {}
+                FlowItem::Margin(margin) if margin.value() == 0.0 => {}
+                _ => return false,
+            }
+        }
+    }
+    phantom
+}
+
 /// Absolutely positioned box anchored in a paragraph line.
 #[derive(Clone)]
 pub(super) struct LineAnchor<'a> {
@@ -1026,18 +1064,79 @@ impl<'a> Measurer<'a> {
         (!frames[1..].iter().any(|frame| frame.independent)).then_some(clamp.remaining)
     }
 
-    /// Whether in-flow content follows in the open frames, or after the discarding container.
-    fn following(frames: &[FlowFrame<'_>]) -> bool {
-        frames[0]
+    /// Whether content other than ignored lines follows the prospective region break.
+    fn following(&self, frames: &[FlowFrame<'a>]) -> Result<bool, Failure> {
+        if frames[0]
             .clamp
             .as_ref()
             .is_some_and(|clamp| clamp.following)
-            || frames.iter().any(|frame| {
-                frame
-                    .children
-                    .clone()
-                    .any(|child| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)))
-            })
+        {
+            return Ok(true);
+        }
+        let mut probe = self.clone();
+        for frame in frames.iter().rev() {
+            for child in frame.children.clone() {
+                let budget = Some(LineBudget {
+                    lines: 1,
+                    following: true,
+                });
+                match child {
+                    BlockContent::Inline(paragraph) => {
+                        if !probe
+                            .paragraph(
+                                paragraph,
+                                frame.content_x,
+                                frame.content_width,
+                                frame.vertical.definite(),
+                                frame.block.style().used_rtl(),
+                                budget,
+                            )?
+                            .is_phantom()
+                        {
+                            return Ok(true);
+                        }
+                    }
+                    BlockContent::Block(child) => {
+                        let style = child.style();
+                        if child.image().is_some()
+                            || child.flow().is_some()
+                            || !matches!(style.display, Display::Block | Display::ListItem)
+                            || style.establishes_formatting_context()
+                        {
+                            return Ok(true);
+                        }
+                        let geometry = block_geometry(
+                            &probe,
+                            child,
+                            frame.content_x,
+                            frame.content_width,
+                            frame.block.style().used_rtl(),
+                            frame.vertical.definite(),
+                        )?;
+                        let measured = probe.measure_flow(
+                            child.into(),
+                            geometry,
+                            false,
+                            frame.vertical.definite(),
+                            None,
+                            budget,
+                        )?;
+                        if !phantom_flow(&measured) {
+                            return Ok(true);
+                        }
+                    }
+                    BlockContent::Events(_) | BlockContent::Positioned(_) => {}
+                }
+            }
+            (
+                probe.fragmentainer,
+                _,
+                probe.space,
+                probe.orthogonal_columns,
+            ) = *frame.outer;
+            probe.column_flow = frame.restore_column_flow;
+        }
+        Ok(false)
     }
 
     /// Counts `lines` against the discarding container. At its region break, content after
@@ -1397,10 +1496,14 @@ impl<'a> Measurer<'a> {
                             frame.vertical.definite(),
                         )?;
                         let containing = frame.vertical.definite();
-                        let budget = Self::budget(&frames).map(|lines| LineBudget {
-                            lines,
-                            following: Self::following(&frames),
-                        });
+                        let budget = Self::budget(&frames)
+                            .map(|lines| {
+                                Ok::<_, Failure>(LineBudget {
+                                    lines,
+                                    following: self.following(&frames)?,
+                                })
+                            })
+                            .transpose()?;
                         let measured = self.measure_flow(
                             child.into(),
                             geometry,
@@ -1482,10 +1585,19 @@ impl<'a> Measurer<'a> {
                     );
                     let budget = Self::budget(&frames).map(|lines| LineBudget {
                         lines,
-                        following: Self::following(&frames),
+                        following: false,
                     });
-                    let paragraph = self.paragraph(paragraph, x, width, containing, rtl, budget)?;
-                    let (lines, broken) = (paragraph.lines.len(), paragraph.clamp.is_some());
+                    let mut paragraph =
+                        self.paragraph(paragraph, x, width, containing, rtl, budget)?;
+                    let lines = paragraph.line_count();
+                    if lines > 0
+                        && budget.is_some_and(|budget| lines == budget.lines)
+                        && paragraph.clamp.is_none()
+                        && self.following(&frames)?
+                    {
+                        self.clamp_paragraph(&mut paragraph)?;
+                    }
+                    let broken = paragraph.clamp.is_some();
                     let frame = frames.last_mut().unwrap();
                     if !paragraph.is_phantom() {
                         frame.previous_break_after = BreakBetween::Auto;
@@ -1573,31 +1685,23 @@ impl<'a> Measurer<'a> {
         let mut lines = Vec::new();
         let mut positions = vec![stream.checkpoint()];
         let limit = budget.map_or(usize::MAX, |budget| budget.lines);
-        while lines.len() < limit
-            && let Some(line) = stream.next()
-        {
+        let mut count = 0;
+        let mut more = false;
+        while let Some(line) = stream.next() {
             self.work.spend(1)?;
-            lines.push(line?);
+            let line = line?;
+            if !line.phantom {
+                if count == limit {
+                    more = true;
+                    break;
+                }
+                count += 1;
+            }
+            lines.push(line);
             positions.push(stream.checkpoint());
         }
-        let more = lines.len() == limit && stream.next().transpose()?.is_some();
-        let clamp = budget
-            .filter(|budget| lines.len() == budget.lines && (more || budget.following))
-            .map(|budget| crate::text::ParagraphClamp {
-                lines: budget.lines,
-                ellipsis: Some(paragraph.style().clamp.block_ellipsis.clone())
-                    .filter(|ellipsis| *ellipsis != crate::style::BlockEllipsis::None),
-            });
-        if let Some(clamp) = clamp.as_ref().filter(|clamp| clamp.ellipsis.is_some()) {
-            let clamped = text
-                .prepare_paragraph(paragraph)
-                .clamped(Some(clamp.clone()));
-            let mut stream = clamped.lines(positions[clamp.lines - 1], width, &metrics)?;
-            if let Some(line) = stream.next() {
-                lines[clamp.lines - 1] = line?;
-                positions[clamp.lines] = stream.checkpoint();
-            }
-        }
+        let broken = count > 0
+            && budget.is_some_and(|budget| count == budget.lines && (more || budget.following));
         // An initial letter moves its line down to stay below the content edge (CSS Inline 3
         // §7.6.1).
         let rise = atomics
@@ -1605,8 +1709,8 @@ impl<'a> Measurer<'a> {
             .and_then(|atomic| atomic.letter)
             .map_or(0.0, |letter| letter.rise());
         let height = lines.iter().map(|line| line.height).sum::<f32>() + rise;
-        let anchors = line_anchors(paragraph, &lines, clamp.is_none());
-        Ok(MeasuredParagraph {
+        let anchors = line_anchors(paragraph, &lines, true);
+        let mut measured = MeasuredParagraph {
             index,
             paragraph,
             style: paragraph.style(),
@@ -1618,8 +1722,55 @@ impl<'a> Measurer<'a> {
             positions,
             anchors,
             atomics: atomics.into_iter().map(Some).collect(),
-            clamp,
-        })
+            clamp: None,
+        };
+        if broken {
+            self.clamp_paragraph(&mut measured)?;
+        }
+        Ok(measured)
+    }
+
+    fn clamp_paragraph(&self, paragraph: &mut MeasuredParagraph<'a>) -> Result<(), Failure> {
+        let lines = paragraph
+            .lines
+            .iter()
+            .rposition(|line| !line.phantom)
+            .expect("only a real line can end a clamped paragraph")
+            + 1;
+        let clamp = crate::text::ParagraphClamp {
+            lines,
+            ellipsis: Some(paragraph.style.clamp.block_ellipsis.clone())
+                .filter(|ellipsis| *ellipsis != crate::style::BlockEllipsis::None),
+        };
+        if clamp.ellipsis.is_some() {
+            let metrics: Vec<_> = paragraph
+                .atomics
+                .iter()
+                .map(|atomic| {
+                    atomic
+                        .as_ref()
+                        .expect("paragraph atomics are not yet placed")
+                        .metrics
+                })
+                .collect();
+            let prepared = self
+                .text
+                .prepare_paragraph(paragraph.paragraph)
+                .clamped(Some(clamp.clone()));
+            let mut stream =
+                prepared.lines(paragraph.positions[lines - 1], paragraph.width, &metrics)?;
+            if let Some(line) = stream.next() {
+                let line = line?;
+                paragraph.height += line.height - paragraph.lines[lines - 1].height;
+                paragraph.lines[lines - 1] = line;
+                paragraph.positions[lines] = stream.checkpoint();
+            }
+        }
+        paragraph.lines.truncate(lines);
+        paragraph.positions.truncate(lines + 1);
+        paragraph.anchors = line_anchors(paragraph.paragraph, &paragraph.lines, false);
+        paragraph.clamp = Some(clamp);
+        Ok(())
     }
 }
 

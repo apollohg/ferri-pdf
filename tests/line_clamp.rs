@@ -178,3 +178,156 @@ fn page_breaks_inside_a_clamped_box_discard_nothing() {
     assert!(kept[5].ends_with(ELLIPSIS));
     assert!(kept[..5].iter().all(|text| !text.ends_with(ELLIPSIS)));
 }
+
+#[test]
+fn ignored_image_lines_do_not_spend_clamp_budgets_or_create_ellipsis() {
+    const IMAGE: &str = "<img src=missing.png alt=''>";
+    for css in [
+        "line-clamp:1",
+        "max-lines:1;continue:discard;block-ellipsis:auto",
+    ] {
+        for (name, before, after) in [
+            ("leading", IMAGE.to_owned(), String::new()),
+            (
+                "wrapped leading",
+                format!("<div>{IMAGE}</div>"),
+                String::new(),
+            ),
+            ("trailing", String::new(), IMAGE.to_owned()),
+            (
+                "wrapped trailing",
+                String::new(),
+                format!("<div>{IMAGE}</div>"),
+            ),
+            (
+                "nested trailing",
+                String::new(),
+                format!("<div><div>{IMAGE}</div></div>"),
+            ),
+        ] {
+            let control = trace(
+                &format!(".c{{{css}}}"),
+                "<div class=c><p>First</p></div><p>Outside</p>",
+            );
+            let actual = trace(
+                &format!(".c{{{css}}}"),
+                &format!("<div class=c>{before}<p>First</p>{after}</div><p>Outside</p>"),
+            );
+            let visible: Vec<_> = lines(&actual)
+                .into_iter()
+                .filter(|line| line.text != "\u{fffc}")
+                .map(|line| (line.text.as_str(), line.baseline))
+                .collect();
+            let expected: Vec<_> = lines(&control)
+                .into_iter()
+                .map(|line| (line.text.as_str(), line.baseline))
+                .collect();
+            assert_eq!(
+                visible, expected,
+                "{css}; {name}: ignored lines retain the first real line, do not add an ellipsis, and do not advance Outside"
+            );
+        }
+    }
+}
+
+#[test]
+fn ignored_lines_leave_the_last_real_line_available_for_a_real_clamp() {
+    for image in [
+        "<img src=missing.png alt=''>",
+        "<div><img src=missing.png alt=''></div>",
+    ] {
+        let actual = trace(
+            ".c{line-clamp:1}",
+            &format!("<div class=c>{image}<p>First</p>{image}<p>Second</p></div><p>Outside</p>"),
+        );
+        let visible: Vec<_> = texts(&actual)
+            .into_iter()
+            .filter(|text| *text != "\u{fffc}")
+            .collect();
+        assert_eq!(
+            visible,
+            ["First…", "Outside"],
+            "{image}: the second real line forces the break and ellipsis"
+        );
+    }
+    // A real line remains countable even when its line-height is zero.
+    let zero = trace(
+        ".c{line-clamp:1}.zero{font-size:0;line-height:0}",
+        "<div class=c><p class=zero>Zero</p><p>Second</p></div><p>Outside</p>",
+    );
+    assert_eq!(
+        texts(&zero),
+        ["Zero…", "Outside"],
+        "text with zero geometric height still consumes one line"
+    );
+}
+
+#[test]
+fn ignored_clamp_lines_preserve_source_events_and_destinations() {
+    for image in [
+        "<img id=empty src=missing.png alt='' style='string-set:label \"Empty\"'>".to_owned(),
+        "<div id=empty style='string-set:label \"Empty\"'><img src=missing.png alt=''></div>"
+            .to_owned(),
+    ] {
+        let actual = trace(
+            "@page{@top-left{content:string(label,last)}}.c{line-clamp:1}",
+            &format!("<div class=c><p>First</p>{image}</div><p><a href='#empty'>Outside</a></p>"),
+        );
+        assert!(
+            texts(&actual).contains(&"First"),
+            "ignored trailing source must not add ellipsis: {:?}",
+            texts(&actual)
+        );
+        assert_eq!(
+            texts(&actual)
+                .iter()
+                .filter(|text| **text == "Empty")
+                .count(),
+            1,
+            "the retained ignored source sets the actual page header once"
+        );
+        assert_eq!(actual.links[0].len(), 1, "source link remains clickable");
+        assert!(
+            actual.destinations.iter().any(Option::is_some),
+            "ignored image or wrapper destination remains addressable"
+        );
+    }
+}
+
+#[test]
+fn clamp_lookahead_keeps_forced_styled_and_independent_content() {
+    for following in [
+        "<img src=missing.png alt='' style='width:0;height:0'>",
+        "<img src=missing.png alt=''><br>",
+        "<span style='white-space:pre'> </span>",
+        "<div style='border:1pt solid red'><img src=missing.png alt=''></div>",
+        "<div style='display:flow-root'><img src=missing.png alt=''></div>",
+    ] {
+        let actual = trace(
+            ".c{line-clamp:1}",
+            &format!("<div class=c><p>First</p>{following}</div><p>Outside</p>"),
+        );
+        assert_eq!(
+            texts(&actual),
+            ["First…", "Outside"],
+            "{following}: actual following content still forces a clamp"
+        );
+    }
+}
+
+#[test]
+fn height_discard_counts_real_lines_after_ignored_sources() {
+    let actual = trace(
+        &format!(".c{{continue:discard;height:{LINE}pt;block-ellipsis:auto}}"),
+        "<div class=c><div><img src=missing.png alt=''></div><p>First</p><p>Second</p></div><p>Outside</p>",
+    );
+    let visible: Vec<_> = texts(&actual)
+        .into_iter()
+        .filter(|text| *text != "\u{fffc}")
+        .collect();
+    assert_eq!(
+        visible,
+        ["First…", "Outside"],
+        "height-based discard must use the same real-line counts as max-lines"
+    );
+}
