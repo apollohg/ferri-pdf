@@ -149,8 +149,14 @@ fn supports_compounds_custom_properties_and_general_enclosed() {
         ("not future-function()", true),
         ("future-function()", false),
         ("not (--unrecognized)", true),
-        ("(width:12pt) and (text-transform:math-auto) or (color:red)", false),
-        ("((width:12pt) and (text-transform:math-auto)) or (color:red)", true),
+        (
+            "(width:12pt) and (text-transform:math-auto) or (color:red)",
+            false,
+        ),
+        (
+            "((width:12pt) and (text-transform:math-auto)) or (color:red)",
+            true,
+        ),
         ("selector(p > .notice)", true),
         ("selector(p,q)", false),
         ("selector(:is(p,:not-a-pseudo))", false),
@@ -555,14 +561,26 @@ fn alias_selection_preserves_paper_dependencies_of_skipped_candidates() {
 #[test]
 fn else_chains_obey_source_adjacency_and_parent_conditions() {
     for (prefix, gap, matched) in [
-        ("@supports (text-transform:math-auto){}", " /* retained */ \n", true),
+        (
+            "@supports (text-transform:math-auto){}",
+            " /* retained */ \n",
+            true,
+        ),
         ("@media screen{}", "", true),
         ("@media print{}", "", false),
         ("@when media(future-feature){}", "", true),
         ("@supports (text-transform:math-auto){}", ";", false),
         ("@supports (text-transform:math-auto){}", "<!-- -->", false),
-        ("@supports (text-transform:math-auto){}", "@unknown{}", false),
-        ("@supports (text-transform:math-auto){}", "@layer intervening;", false),
+        (
+            "@supports (text-transform:math-auto){}",
+            "@unknown{}",
+            false,
+        ),
+        (
+            "@supports (text-transform:math-auto){}",
+            "@layer intervening;",
+            false,
+        ),
         ("@supports (text-transform:math-auto){}", "p{}", false),
         ("", "", false),
     ] {
