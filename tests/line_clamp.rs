@@ -331,3 +331,27 @@ fn height_discard_counts_real_lines_after_ignored_sources() {
         "height-based discard must use the same real-line counts as max-lines"
     );
 }
+
+#[test]
+fn a_list_marker_is_real_following_content_after_an_ignored_line() {
+    const RULES: &str =
+        ".c{line-clamp:1;padding-left:40pt}.item{display:list-item;list-style-type:disc}";
+    let forced = trace(
+        RULES,
+        "<div class=c><p>First</p><div class=item><br></div></div><p>Outside</p>",
+    );
+    let ignored = trace(
+        RULES,
+        "<div class=c><p>First</p><div class=item><img src=missing.png alt=''></div></div><p>Outside</p>",
+    );
+    assert_eq!(
+        texts(&forced),
+        ["First…", "Outside"],
+        "a real following list item must force the region break"
+    );
+    assert_eq!(
+        texts(&ignored),
+        texts(&forced),
+        "an ignored image line does not make the list marker empty following content"
+    );
+}

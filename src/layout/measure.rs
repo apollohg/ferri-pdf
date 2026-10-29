@@ -347,6 +347,7 @@ fn phantom_flow(block: &MeasuredBlock<'_>) -> bool {
     while let Some(block) = pending.pop() {
         if !block.through
             || block.independent
+            || block.marker.is_some()
             || block.has_forced
             || block.before.value() != 0.0
             || block.after.value() != 0.0

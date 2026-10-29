@@ -75,6 +75,24 @@ class ImageFallbackPdf(unittest.TestCase):
                 self.assertEqual(actual_pixels.tobytes(), expected_pixels.tobytes(),
                                  "clamped PDF ink must match the actual no-image control exactly")
 
+    def test_clamp_lookahead_retains_a_visible_list_marker(self):
+        rules = ("body{font-size:12pt;line-height:18pt}p{margin:0}"
+                 ".c{line-clamp:1;padding-left:40pt}.item{display:list-item;list-style-type:disc}")
+        image = "<img src=missing.png alt=''>"
+        body = "<div class=c><p>First</p><div class=item>{content}</div></div><p>Outside</p>"
+        unbounded = self.render("horizontal-tb", body.format(content=image), rules + ".c{line-clamp:none}")
+        self.assertTrue(any(g.text == "•" for g in unbounded["glyphs"]),
+                        "the left-padded unclamped control must really paint its list marker")
+        control = self.render("horizontal-tb", body.format(content="<br>"), rules)
+        actual = self.render("horizontal-tb", body.format(content=image), rules)
+        self.assertEqual([(g.text, g.matrix) for g in actual["glyphs"]],
+                         [(g.text, g.matrix) for g in control["glyphs"]],
+                         "a real marker requires the same ellipsis and discard as a forced list-item line")
+        expected_pixels = self.render("horizontal-tb", body.format(content="<br>"), rules, pixels=True)
+        actual_pixels = self.render("horizontal-tb", body.format(content=image), rules, pixels=True)
+        self.assertEqual(actual_pixels.tobytes(), expected_pixels.tobytes(),
+                         "the discarded list marker must not leave PDF ink after the clamp")
+
     def test_loaded_image_margin_at_unforced_break_is_truncated(self):
         image_size = 100
         margin = 20
