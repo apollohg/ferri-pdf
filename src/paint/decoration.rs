@@ -47,6 +47,9 @@ pub struct DecorationPaint {
     pub rect: Rect,
     /// The decorating inline box; `None` is the paragraph's root inline box.
     pub owner: Option<usize>,
+    /// The innermost relatively or sticky positioned box inside `owner` holding the decorated
+    /// text, which carries the line with it (CSS Text Decoration 3 §2).
+    pub positioned: Option<usize>,
 }
 impl DecorationPaint {
     /// Double and wavy lines move away from the text: underlines down, overlines up, and
@@ -180,6 +183,7 @@ mod tests {
                 height: THICKNESS,
             },
             owner: None,
+            positioned: None,
         }
     }
 

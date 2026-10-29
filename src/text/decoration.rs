@@ -144,17 +144,20 @@ pub(crate) fn paint(
                 .filter(|decoration| draws(decoration, kind))
             {
                 let [top, thickness] = font.place(kind, decoration, decorating.style);
-                paints.extend(segments.iter().map(|&[left, right]| DecorationPaint {
-                    line: kind,
-                    style: decoration.style,
-                    color: decoration.color,
-                    rect: Rect {
-                        x: left,
-                        y: decorating.baseline + top,
-                        width: right - left,
-                        height: thickness,
-                    },
-                    owner: decorating.owner,
+                paints.extend(segments.iter().map(|&([left, right], positioned)| {
+                    DecorationPaint {
+                        line: kind,
+                        style: decoration.style,
+                        color: decoration.color,
+                        rect: Rect {
+                            x: left,
+                            y: decorating.baseline + top,
+                            width: right - left,
+                            height: thickness,
+                        },
+                        owner: decorating.owner,
+                        positioned,
+                    }
                 }));
             }
         }
@@ -163,10 +166,15 @@ pub(crate) fn paint(
 }
 
 /// Contiguous `[left, right]` extents of the text inside box `owner` (`None` is the root
-/// inline box, which also holds the ellipsis), from the line's left edge.
-fn segments(paragraph: &Paragraph, line: &Line, owner: Option<usize>) -> Vec<[f32; 2]> {
+/// inline box, which also holds the ellipsis), from the line's left edge, each with the
+/// positioned box inside `owner` that moves it; text under different such boxes is not joined.
+fn segments(
+    paragraph: &Paragraph,
+    line: &Line,
+    owner: Option<usize>,
+) -> Vec<([f32; 2], Option<usize>)> {
     let content = line.ellipsis.unwrap_or(line.runs.len());
-    let mut extents: Vec<[f32; 2]> = line
+    let mut extents: Vec<([f32; 2], Option<usize>)> = line
         .runs
         .iter()
         .enumerate()
@@ -177,14 +185,24 @@ fn segments(paragraph: &Paragraph, line: &Line, owner: Option<usize>) -> Vec<[f3
                         && paragraph.is_within(paragraph.spans()[run.source_span].inline_box, owner)
                 })
         })
-        .map(|(_, run)| [run.x, run.x + run.width])
+        .map(|(_, run)| {
+            let inline_box = paragraph.spans()[run.source_span].inline_box;
+            (
+                [run.x, run.x + run.width],
+                paragraph.positioned_within(inline_box, owner),
+            )
+        })
         .collect();
-    extents.sort_by(|a, b| a[0].total_cmp(&b[0]));
-    let mut joined: Vec<[f32; 2]> = Vec::with_capacity(extents.len());
-    for [left, right] in extents {
+    extents.sort_by(|a, b| a.0[0].total_cmp(&b.0[0]));
+    let mut joined: Vec<([f32; 2], Option<usize>)> = Vec::with_capacity(extents.len());
+    for ([left, right], positioned) in extents {
         match joined.last_mut() {
-            Some(last) if left <= last[1] + JOIN_TOLERANCE_PT => last[1] = last[1].max(right),
-            _ => joined.push([left, right]),
+            Some((last, last_positioned))
+                if *last_positioned == positioned && left <= last[1] + JOIN_TOLERANCE_PT =>
+            {
+                last[1] = last[1].max(right);
+            }
+            _ => joined.push(([left, right], positioned)),
         }
     }
     joined

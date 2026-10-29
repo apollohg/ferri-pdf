@@ -192,6 +192,18 @@ impl Paragraph {
     pub(crate) fn links(&self) -> &[InlineLink] {
         &self.links
     }
+    /// The innermost relatively or sticky positioned box holding `inner` (an inline box, or
+    /// `None` for the root) inside box `outer`, whose decorations over `inner` move with it
+    /// (CSS Text Decoration 3 §2).
+    pub(crate) fn positioned_within(
+        &self,
+        inner: Option<usize>,
+        outer: Option<usize>,
+    ) -> Option<usize> {
+        std::iter::successors(inner, |&index| self.boxes[index].parent)
+            .take_while(|&index| Some(index) != outer)
+            .find(|&index| self.boxes[index].style.position != crate::style::Position::Static)
+    }
     /// Whether `inner` (an inline box, or `None` for the root) lies inside box `outer`.
     pub(crate) fn is_within(&self, inner: Option<usize>, outer: usize) -> bool {
         inner.is_some_and(|inner| (outer..=outer + self.boxes[outer].descendants).contains(&inner))
