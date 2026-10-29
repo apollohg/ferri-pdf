@@ -1,4 +1,5 @@
 //! CSS syntax, cascade, computed values, and page/font rules.
+pub(crate) mod anchor_values;
 mod angles;
 mod background_values;
 mod baseline_values;

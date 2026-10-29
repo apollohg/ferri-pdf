@@ -503,13 +503,21 @@ fn value_with_context(
     context: ValueContext<'_>,
 ) -> Result<Option<Component>, StyleError> {
     Ok(
-        match_value(property.data().root, source, steps, context)?.filter(|value| {
+        crate::style::matcher::match_value_with_anchors(
+            property.data().root,
+            source,
+            steps,
+            context,
+            crate::style::anchor_values::functions(property),
+        )?
+        .filter(|value| {
             crate::style::grid_values::valid(property, value)
                 && crate::style::inert::valid(property, value)
                 && crate::style::font_values::valid(property, value)
                 && crate::style::counter_style::valid(value)
                 && crate::style::shape_values::valid(value)
                 && crate::style::svg_values::valid(property, value)
+                && crate::style::anchor_values::valid(property, value)
         }),
     )
 }

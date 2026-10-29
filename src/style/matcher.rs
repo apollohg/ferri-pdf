@@ -5,6 +5,7 @@
 //! than the number of components, so long values cannot exhaust the stack.
 use crate::style::{
     StyleError,
+    anchor_values::{AnchorEvaluation, AnchorFunctions},
     calc::{self, Context, Kind},
     component::Component,
     grammar::{Base, BlockKind, Keyword, Label, NODES, Node, NodeId, Production, Range, UNBOUNDED},
@@ -139,6 +140,18 @@ pub(crate) fn match_value(
     steps: &mut usize,
     context: ValueContext<'_>,
 ) -> Result<Option<Component>, StyleError> {
+    match_value_with_anchors(root, source, steps, context, AnchorFunctions::default())
+}
+
+/// A property's value, whose math functions may contain the anchor functions `anchors`
+/// (CSS Anchor Positioning 1 §3.2, §5.1).
+pub(crate) fn match_value_with_anchors(
+    root: NodeId,
+    source: &str,
+    steps: &mut usize,
+    context: ValueContext<'_>,
+    anchors: AnchorFunctions,
+) -> Result<Option<Component>, StyleError> {
     let mut input = ParserInput::new(source);
     let Ok(items) = tokenize(&mut Parser::new(&mut input), 0) else {
         return Ok(None);
@@ -149,6 +162,7 @@ pub(crate) fn match_value(
         &items,
         steps,
         context,
+        anchors,
     )
 }
 
@@ -182,7 +196,16 @@ pub(super) fn match_syntax(
                 comma: list == crate::style::syntax::List::Comma,
             }),
         };
-        if match_items(&pattern, source, &items, steps, context)?.is_some() {
+        if match_items(
+            &pattern,
+            source,
+            &items,
+            steps,
+            context,
+            AnchorFunctions::default(),
+        )?
+        .is_some()
+        {
             return Ok(true);
         }
     }
@@ -214,6 +237,7 @@ pub(crate) fn match_comma_list(
             item,
             &mut steps,
             ValueContext::Independent,
+            AnchorFunctions::default(),
         )? {
             values.push(value);
         }
@@ -238,6 +262,7 @@ fn match_items(
     items: &[Item],
     steps: &mut usize,
     context: ValueContext<'_>,
+    anchors: AnchorFunctions,
 ) -> Result<Option<Component>, StyleError> {
     let mut excluded = HashSet::new();
     loop {
@@ -248,6 +273,7 @@ fn match_items(
             ends: Memo::with_capacity_and_hasher(MEMO_CAPACITY, Default::default()),
             steps: *steps,
             context,
+            anchors,
             failure: RefCell::default(),
         };
         let matched = match root {
@@ -412,6 +438,8 @@ struct Matcher<'s> {
     ends: Memo<Key, Vec<usize>>,
     steps: usize,
     context: ValueContext<'s>,
+    /// The anchor functions math functions may contain.
+    anchors: AnchorFunctions,
     failure: RefCell<Option<StyleError>>,
 }
 
@@ -991,6 +1019,10 @@ impl Matcher<'_> {
             relative: &relative,
             percentage,
             channels: &[],
+            anchors: Some(AnchorEvaluation {
+                functions: self.anchors,
+                context: None,
+            }),
         };
         match calc::math_function(&mut Parser::new(&mut input), context)?
             .and_then(|math| math.expect(&[kind]))

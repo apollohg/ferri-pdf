@@ -3,6 +3,7 @@ use crate::paint::{
     BinaryFunction, Calculation, LengthPercentage, RoundingStrategy, UnaryFunction,
 };
 use crate::style::StyleError;
+use crate::style::anchor_values::{AnchorDimension, AnchorEvaluation, AnchorQuery, AnchorSide};
 use crate::style::parser::MAX_COMPONENT_DEPTH;
 use crate::style::units::{self, Dimension, Relative};
 use cssparser::{BasicParseError, Delimiter, ParseError, ParseErrorKind, Parser, Token};
@@ -84,6 +85,7 @@ impl Drop for WorkGuard<'_> {
 }
 
 const CLAMP_ARGUMENTS: usize = 3;
+const ANCHOR_SIZE_FUNCTION: &str = "anchor-size";
 const NONE: &str = "none";
 /// Integers round half towards positive infinity.
 const INTEGER_ROUNDING_MIDPOINT: f32 = 0.5;
@@ -178,6 +180,8 @@ pub(super) struct Context<'r> {
     pub(super) percentage: Option<Kind>,
     /// Relative colour channel keywords and their `<number>` values (CSS Color 5 §4.2).
     pub(super) channels: &'r [(&'r str, f32)],
+    /// The anchor functions the property accepts, and what they resolve against.
+    pub(super) anchors: Option<AnchorEvaluation<'r>>,
 }
 
 #[derive(Debug, thiserror::Error)]
@@ -475,6 +479,7 @@ impl MathParser<'_> {
                 relative: &relative,
                 percentage: None,
                 channels: &[],
+                anchors: None,
             },
             depth: self.depth,
         };
@@ -697,6 +702,70 @@ impl MathParser<'_> {
             kind,
         ))
     }
+    /// CSS Anchor Positioning 1 §3.2 `anchor()` and §5.1 `anchor-size()`: a `<length>` that
+    /// the element's anchors resolve, else the fallback; one unresolvable without a fallback
+    /// is recorded, making the declaration invalid at computed-value time.
+    fn anchor_function<'i>(&mut self, size: bool, input: &mut Parser<'i, '_>) -> MathResult<'i> {
+        let query = input.parse_until_before(Delimiter::Comma, |input| {
+            let mut name = None;
+            let mut side = None;
+            let mut dimension = None;
+            while !input.is_exhausted() {
+                let token = input.next()?.clone();
+                match token {
+                    Token::Ident(ident) if ident.starts_with("--") && name.is_none() => {
+                        name = Some(std::sync::Arc::from(ident.as_ref()));
+                    }
+                    Token::Ident(ident) if size && dimension.is_none() => {
+                        let Some(found) = AnchorDimension::from_name(&ident) else {
+                            return Self::invalid(input, format!("unknown anchor size {ident}"));
+                        };
+                        dimension = Some(found);
+                    }
+                    Token::Ident(ident) if !size && side.is_none() => {
+                        let Some(found) = AnchorSide::from_name(&ident) else {
+                            return Self::invalid(input, format!("unknown anchor side {ident}"));
+                        };
+                        side = Some(found);
+                    }
+                    Token::Percentage { unit_value, .. } if !size && side.is_none() => {
+                        side = Some(AnchorSide::Fraction(unsigned_zero(unit_value)));
+                    }
+                    token => return Err(input.new_unexpected_token_error(token)),
+                }
+            }
+            Ok(if size {
+                AnchorQuery::Size { name, dimension }
+            } else {
+                let Some(side) = side else {
+                    return Self::invalid(input, "anchor() requires an anchor side");
+                };
+                AnchorQuery::Anchor { name, side }
+            })
+        })?;
+        let fallback = if input.try_parse(Parser::expect_comma).is_ok() {
+            let (fallback, kind) = self.sum(input)?;
+            if kind != CalcType::of(Kind::Length) {
+                return Self::invalid(input, "an anchor function fallback is a <length-percentage>");
+            }
+            Some(fallback)
+        } else {
+            None
+        };
+        input.expect_exhausted()?;
+        let length = CalcType::of(Kind::Length);
+        let Some(context) = self.context.anchors.and_then(|anchors| anchors.context) else {
+            return Ok((Calculation::Value(0.0), length));
+        };
+        Ok(match (context.resolve(&query), fallback) {
+            (Some(value), _) => (Calculation::Value(value), length),
+            (None, Some(fallback)) => (fallback, length),
+            (None, None) => {
+                context.fail();
+                (Calculation::Value(0.0), length)
+            }
+        })
+    }
     /// `+` and `-` require surrounding whitespace.
     fn sum<'i>(&mut self, input: &mut Parser<'i, '_>) -> MathResult<'i> {
         let (first, kind) = self.product(input)?;
@@ -813,6 +882,15 @@ impl MathParser<'_> {
                 Ok((Calculation::Value(value), CalcType::NUMBER))
             }
             Token::ParenthesisBlock => self.nested(input, Self::sum),
+            Token::Function(name)
+                if self
+                    .context
+                    .anchors
+                    .is_some_and(|anchors| anchors.functions.allows(&name)) =>
+            {
+                let size = name.eq_ignore_ascii_case(ANCHOR_SIZE_FUNCTION);
+                self.nested(input, |parser, input| parser.anchor_function(size, input))
+            }
             Token::Function(name) if is_math_function(&name) => {
                 self.function(&name.to_ascii_lowercase(), input)
             }

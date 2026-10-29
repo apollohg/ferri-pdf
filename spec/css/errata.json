@@ -176,6 +176,14 @@
     "dasharray": {
       "syntax": "[ [ <length-percentage [0,∞]> | <number [0,∞]> ]+ ]#",
       "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/painting.html#StrokeDasharrayProperty: a list with a negative value is invalid"
+    },
+    "position-area": {
+      "syntax": "[ start | center | end | span-start | span-end | span-all ]{1,2} | [ self-start | center | self-end | span-self-start | span-self-end | span-all ]{1,2} | [ left | center | right | span-left | span-right | x-start | x-end | span-x-start | span-x-end | self-x-start | self-x-end | span-self-x-start | span-self-x-end | span-all ] || [ top | center | bottom | span-top | span-bottom | y-start | y-end | span-y-start | span-y-end | self-y-start | self-y-end | span-self-y-start | span-self-y-end | span-all ] | [ block-start | center | block-end | span-block-start | span-block-end | span-all ] || [ inline-start | center | inline-end | span-inline-start | span-inline-end | span-all ] | [ self-block-start | center | self-block-end | span-self-block-start | span-self-block-end | span-all ] || [ self-inline-start | center | self-inline-end | span-self-inline-start | span-self-inline-end | span-all ]",
+      "source": "https://www.w3.org/TR/2026/WD-css-anchor-position-1-20260327/#typedef-position-area with the order-sensitive {1,2} alternatives first, whose first keyword is the block axis when both are ambiguous"
+    },
+    "try-tactic": {
+      "syntax": "[ flip-block | flip-inline | flip-start | flip-x | flip-y ]{1,5}",
+      "source": "https://www.w3.org/TR/2026/WD-css-anchor-position-1-20260327/#typedef-position-try-fallbacks-try-tactic in source order, which composes the transformations; each keyword occurs once"
     }
   },
   "properties": {
@@ -614,6 +622,23 @@
     "d": {
       "syntax": "none | <string>",
       "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/paths.html#TheDProperty"
+    },
+    "position-anchor": {
+      "syntax": "normal | none | auto | <anchor-name> | match-parent",
+      "initial": "normal",
+      "source": "https://www.w3.org/TR/2026/WD-css-anchor-position-1-20260327/#propdef-position-anchor"
+    },
+    "position-try-fallbacks": {
+      "syntax": "none | [ [ <dashed-ident> || <try-tactic> ] | <position-area> ]#",
+      "source": "https://www.w3.org/TR/2026/WD-css-anchor-position-1-20260327/#propdef-position-try-fallbacks"
+    },
+    "anchor-name": {
+      "syntax": "none | <anchor-name>#",
+      "source": "https://www.w3.org/TR/2026/WD-css-anchor-position-1-20260327/#propdef-anchor-name"
+    },
+    "anchor-scope": {
+      "syntax": "none | all | <anchor-name>#",
+      "source": "https://www.w3.org/TR/2026/WD-css-anchor-position-1-20260327/#propdef-anchor-scope"
     }
   },
   "descriptors": {

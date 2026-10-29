@@ -673,6 +673,7 @@ impl ColorParser<'_> {
             relative: self.relative,
             percentage,
             channels: &numbers,
+            anchors: None,
         };
         let math = math_function(input, context)
             .ok_or_else(|| input.new_custom_error(ColorError::Invalid))?

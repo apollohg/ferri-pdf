@@ -8,7 +8,7 @@ use crate::style::{
     cascade::DeclarationContext,
     component::Component,
     conditions,
-    declaration::{self, CUSTOM_PROPERTY_PREFIX, PropertyDeclaration, Specified},
+    declaration::{self, CUSTOM_PROPERTY_PREFIX, Declared, PropertyDeclaration, Specified},
     grammar::{Descriptor, Keyword, Property},
     layers::LayerTree,
     loader::{self, PendingKind, PreparedStylesheets, SourceDiagnostic},
@@ -20,7 +20,7 @@ use crate::style::{
     variables,
     wide_keywords::WideKeyword,
 };
-use std::{cell::RefCell, collections::HashMap};
+use std::{cell::RefCell, collections::HashMap, sync::Arc};
 
 pub(super) const PAGE_AT_RULE: &str = "@page";
 const FONT_FACE_AT_RULE: &str = "@font-face";
@@ -77,6 +77,13 @@ pub(crate) struct Stylesheet {
     /// `@font-palette-values` rules in cascade order, which resolve once the root element's
     /// style is known.
     palette_rules: Vec<PaletteRule>,
+    /// Each tree scope's enclosing one, for loosely matched tree-scoped names.
+    scope_parents: HashMap<FontNamespace, FontNamespace>,
+    /// `@position-try` rules by name: the declarations of the last in cascade order
+    /// (CSS Anchor Positioning 1 §6.4).
+    position_try: HashMap<crate::style::anchor_values::AnchorName, Arc<[PropertyDeclaration]>>,
+    /// The anchor frames the previous layout measured.
+    pub(super) anchor_frames: crate::style::anchor_values::AnchorFrames,
 }
 
 /// An `@font-palette-values` rule awaiting its root-element context (CSS Fonts 4 §9.2).
@@ -302,6 +309,9 @@ impl Stylesheet {
             font_namespaces: self.font_namespaces.clone(),
             counter_styles: self.counter_styles.clone(),
             palette_rules: self.palette_rules.clone(),
+            scope_parents: self.scope_parents.clone(),
+            position_try: self.position_try.clone(),
+            anchor_frames: self.anchor_frames.clone(),
         }
     }
 
@@ -498,11 +508,15 @@ impl Stylesheet {
             font_namespaces,
             counter_styles: crate::style::counter_style::CounterStyles::predefined(),
             palette_rules: Vec::new(),
+            scope_parents: scope_parents.clone(),
+            position_try: HashMap::new(),
+            anchor_frames: crate::style::anchor_values::AnchorFrames::default(),
         };
         let mut fonts = Vec::new();
         let mut feature_values = Vec::new();
         let mut palettes = Vec::new();
         let mut counter_styles = Vec::new();
+        let mut position_try = Vec::new();
         let mut page_order = 0;
         for (
             order,
@@ -608,6 +622,16 @@ impl Stylesheet {
                         namespace,
                     ));
                 }
+                ContentRule::PositionTry(name, declarations, location) => {
+                    position_try.push((
+                        (origin, layer, order),
+                        name,
+                        declarations,
+                        location,
+                        source_base,
+                        namespace,
+                    ));
+                }
             }
         }
         // CSS Counter Styles 3 §3: rules of one name cascade atomically; the last in cascade
@@ -631,6 +655,24 @@ impl Stylesheet {
         sheet.counter_styles = std::sync::Arc::new(
             crate::style::counter_style::CounterStyles::new(rules, scope_parents),
         );
+        // CSS Anchor Positioning 1 §6.4: rules of one name cascade as `@keyframes` rules
+        // do, the last in cascade order winning whole.
+        position_try.sort_by_key(|(priority, ..)| *priority);
+        for (_, name, declarations, location, source_base, namespace) in position_try {
+            let declarations = sheet.position_try_declarations(
+                declarations,
+                &source_base,
+                &location,
+                namespace,
+            )?;
+            sheet.position_try.insert(
+                crate::style::anchor_values::AnchorName {
+                    name: Arc::from(name),
+                    scope: namespace,
+                },
+                declarations,
+            );
+        }
         fonts.sort_by_key(|(priority, ..)| *priority);
         for (_, declarations, location, source_base, namespace) in fonts {
             match sheet.font_face(&declarations, source_base, namespace) {
@@ -670,6 +712,80 @@ impl Stylesheet {
             })
             .collect();
         Ok(sheet)
+    }
+
+    /// The declarations of a `@position-try` rule (CSS Anchor Positioning 1 §6.4): only
+    /// accepted `@position-try` properties apply, and `!important` makes a declaration
+    /// invalid.
+    fn position_try_declarations(
+        &self,
+        declarations: Vec<Declaration>,
+        base: &ResourceBase,
+        location: &crate::style::SourceLocation,
+        namespace: FontNamespace,
+    ) -> Result<Arc<[PropertyDeclaration]>, StyleError> {
+        let mut accepted = Vec::new();
+        for declaration in parsed(declarations, base, &self.diagnostics, namespace)? {
+            let property = match &declaration.declared {
+                Declared::Longhand(property, _) | Declared::Pending(property, _) => Some(*property),
+                Declared::Custom(..) => None,
+            };
+            if !declaration.important
+                && property.is_some_and(crate::style::anchor_values::accepted)
+            {
+                accepted.push(declaration);
+            } else {
+                self.diagnostics.borrow_mut().push(StyleDiagnostic {
+                    location: declaration
+                        .location
+                        .as_deref()
+                        .unwrap_or(location)
+                        .clone(),
+                    kind: StyleDiagnosticKind::InvalidDeclaration,
+                    context: format!(
+                        "{} in @position-try",
+                        property.map_or("custom property", Property::name)
+                    ),
+                });
+            }
+        }
+        Ok(Arc::from(accepted))
+    }
+
+    /// The `@position-try` rule a tree-scoped reference names: the rule of that name in its
+    /// own tree scope or the nearest enclosing one.
+    pub(crate) fn position_try(
+        &self,
+        name: &crate::style::anchor_values::AnchorName,
+    ) -> Option<&Arc<[PropertyDeclaration]>> {
+        let mut scope = name.scope;
+        loop {
+            let candidate = crate::style::anchor_values::AnchorName {
+                name: name.name.clone(),
+                scope,
+            };
+            if let Some(declarations) = self.position_try.get(&candidate) {
+                return Some(declarations);
+            }
+            scope = *self.scope_parents.get(&scope)?;
+        }
+    }
+
+    /// Whether a name in tree scope `defining` is visible to references from `referring`:
+    /// the same scope or one enclosing it (CSS Scoping 1 §3.5).
+    pub(crate) fn scope_includes(&self, defining: FontNamespace, referring: FontNamespace) -> bool {
+        std::iter::successors(Some(referring), |scope| self.scope_parents.get(scope).copied())
+            .any(|scope| scope == defining)
+    }
+
+    /// The anchor frames this styling consulted, which a layout must reproduce.
+    pub(crate) fn anchor_frames(&self) -> &crate::style::anchor_values::AnchorFrames {
+        &self.anchor_frames
+    }
+    pub(crate) fn anchor_frames_mut(
+        &mut self,
+    ) -> &mut crate::style::anchor_values::AnchorFrames {
+        &mut self.anchor_frames
     }
 
     /// Defines the `@font-palette-values` palettes in the context of the root element's

@@ -26,6 +26,21 @@ pub(super) fn length_percentage(
     }
 }
 
+/// A `<length-percentage>` math function whose anchor functions resolve through `anchors`.
+pub(super) fn anchored_length_percentage(
+    value: &Component,
+    relative: &Relative<'_>,
+    anchors: crate::style::anchor_values::AnchorEvaluation<'_>,
+) -> Result<LengthPercentage, StyleError> {
+    match value.unwrap() {
+        Component::Math(source, Kind::Length, range) => {
+            Ok(crate::style::values::anchored_math(source, relative, anchors)?
+                .length_percentage(*range))
+        }
+        other => Err(unsupported(other)),
+    }
+}
+
 /// Font percentages need a font-size basis; an already absolute length does not.
 pub(super) fn font_length_percentage(
     value: &Component,

@@ -406,7 +406,7 @@ pub(crate) fn measure<'a>(
                         if child.style().grid.justify_self == Alignment::Auto {
                             style.grid.justify_items
                         } else {
-                            child.style().grid.justify_self
+                            child.style().grid.justify_self.in_flow()
                         },
                         style.rtl,
                         child.style().rtl,
@@ -415,7 +415,7 @@ pub(crate) fn measure<'a>(
                         if child.style().flex.align_self == Alignment::Auto {
                             style.flex.align_items
                         } else {
-                            child.style().flex.align_self
+                            child.style().flex.align_self.in_flow()
                         },
                         false,
                         false,

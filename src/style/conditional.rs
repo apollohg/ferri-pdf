@@ -450,6 +450,7 @@ impl Scalar {
                 relative,
                 percentage: None,
                 channels: &[],
+                anchors: None,
             },
         ) {
             let math = match math {

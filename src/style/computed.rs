@@ -262,6 +262,12 @@ pub(crate) struct Style {
     pub view_transition_named: bool,
     pub aspect_ratio: crate::style::AspectRatio,
     pub containment: crate::style::ContainmentStyle,
+    #[serde(skip)]
+    pub anchor: crate::style::anchor_values::AnchorStyle,
+    /// `visibility: force-hidden` (CSS Anchor Positioning 1 §6.6), which descendants inherit
+    /// and cannot override.
+    #[serde(skip)]
+    pub force_hidden: bool,
     /// The nearest query container among the element's inclusive ancestors.
     #[serde(skip)]
     pub(super) containers: crate::style::QueryContainers,
@@ -392,6 +398,8 @@ impl Default for Style {
             view_transition_named: false,
             aspect_ratio: crate::style::AspectRatio::default(),
             containment: crate::style::ContainmentStyle::default(),
+            anchor: crate::style::anchor_values::AnchorStyle::default(),
+            force_hidden: false,
             containers: crate::style::QueryContainers::default(),
             inert: crate::style::inert::InertValues::default(),
             svg: Arc::default(),
@@ -460,6 +468,7 @@ impl Style {
         style.element_font_namespace = self.element_font_namespace;
         style.root_font.clone_from(&self.root_font);
         style.containers = self.containers.clone();
+        style.force_hidden = self.force_hidden;
         style.grid.initial_justify_items(&self.grid);
         style.text_decorations.propagated = if self.display == Display::Contents {
             self.text_decorations.propagated.clone()
@@ -1293,6 +1302,7 @@ impl Stylesheet {
                 accent_color: parent.accent_color,
                 containers: parent.containers.clone(),
                 query_sizes: Some(&self.query_sizes),
+                anchoring: None,
             },
         }
     }
@@ -1361,6 +1371,7 @@ impl Stylesheet {
             work,
             containers,
             query_sizes,
+            anchoring,
             ..
         } = inherited;
         let own = |line| FontBasis::Known {
@@ -1396,6 +1407,7 @@ impl Stylesheet {
             accent_color: style.accent_color,
             containers: containers.clone(),
             query_sizes,
+            anchoring,
         };
         if let Some(value) = winners.remove(&Property::LineHeight) {
             properties::apply(Property::LineHeight, &value, style, parent, &line_basis)?;
@@ -1436,6 +1448,7 @@ impl Stylesheet {
             accent_color: style.accent_color,
             containers,
             query_sizes,
+            anchoring,
         };
         // The root's initial `canvastext` follows its own colour scheme.
         let initial = Specified::Wide(crate::style::wide_keywords::WideKeyword::Initial);

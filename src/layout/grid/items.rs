@@ -173,14 +173,14 @@ impl<'a> Item<'a> {
         } else if style.grid.justify_self == Alignment::Auto {
             alignment[1]
         } else {
-            style.grid.justify_self
+            style.grid.justify_self.in_flow()
         };
         let align = if shared[ROWS] {
             Alignment::Stretch
         } else if style.flex.align_self == Alignment::Auto {
             alignment[0]
         } else {
-            style.flex.align_self
+            style.flex.align_self.in_flow()
         };
         let auto = usize::from(margins[1].is_none()) + usize::from(margins[3].is_none());
         let space = (available

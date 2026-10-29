@@ -807,6 +807,7 @@ impl<'a> Geometry<'a> {
                 accent_color: inherited.accent_color,
                 containers: inherited.containers.clone(),
                 query_sizes: inherited.query_sizes,
+                anchoring: inherited.anchoring,
             });
         }
         compute(&Relative {
@@ -836,6 +837,7 @@ impl<'a> Geometry<'a> {
             accent_color: None,
             containers: Default::default(),
             query_sizes: Some(&self.sheet.query_sizes),
+            anchoring: None,
         })
     }
 
@@ -1184,6 +1186,7 @@ impl<'a> Geometry<'a> {
                         accent_color: None,
                         containers: Default::default(),
                         query_sizes: None,
+                        anchoring: None,
                     };
                     crate::style::page_values::page_dimension(
                         &value,

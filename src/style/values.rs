@@ -4,6 +4,7 @@ use crate::fonts::{
 };
 use crate::style::{
     StyleError,
+    anchor_values::AnchorEvaluation,
     box_values::unsupported,
     calc::{Context, Kind, Math, MathError, math_function},
     component::Component,
@@ -26,11 +27,38 @@ pub(super) fn math(
     kind: Kind,
     percentage: Option<Kind>,
 ) -> Result<Math, StyleError> {
+    math_with_anchors(source, relative, kind, percentage, None)
+}
+
+/// A matched `<length-percentage>` math function whose anchor functions resolve through
+/// `anchors` (CSS Anchor Positioning 1 §3.2, §5.1).
+pub(super) fn anchored_math(
+    source: &str,
+    relative: &Relative<'_>,
+    anchors: AnchorEvaluation<'_>,
+) -> Result<Math, StyleError> {
+    math_with_anchors(
+        source,
+        relative,
+        Kind::Length,
+        Some(Kind::Length),
+        Some(anchors),
+    )
+}
+
+fn math_with_anchors(
+    source: &str,
+    relative: &Relative<'_>,
+    kind: Kind,
+    percentage: Option<Kind>,
+    anchors: Option<AnchorEvaluation<'_>>,
+) -> Result<Math, StyleError> {
     let mut input = ParserInput::new(source);
     let context = Context {
         relative,
         percentage,
         channels: &[],
+        anchors,
     };
     match math_function(&mut Parser::new(&mut input), context)
         .map(|math| math.and_then(|math| math.expect(&[kind])))

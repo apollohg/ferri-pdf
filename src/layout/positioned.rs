@@ -30,7 +30,10 @@ impl StaticAlignment {
     fn offset(free: f32, alignment: Alignment, reverse: bool) -> f32 {
         let (start, end) = if reverse { (free, 0.0) } else { (0.0, free) };
         match alignment {
-            Alignment::Center | Alignment::SpaceAround | Alignment::SpaceEvenly => free / 2.0,
+            Alignment::Center
+            | Alignment::AnchorCenter
+            | Alignment::SpaceAround
+            | Alignment::SpaceEvenly => free / 2.0,
             Alignment::End | Alignment::SelfEnd | Alignment::Right => free,
             Alignment::FlexEnd => end,
             Alignment::Start | Alignment::SelfStart | Alignment::Left => 0.0,

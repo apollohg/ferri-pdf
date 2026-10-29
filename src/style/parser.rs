@@ -97,6 +97,7 @@ pub(super) enum ContentRule {
     },
     Palette(String, Vec<Declaration>, SourceLocation),
     CounterStyle(String, Vec<Declaration>, SourceLocation),
+    PositionTry(String, Vec<Declaration>, SourceLocation),
 }
 
 #[derive(Clone)]
@@ -165,7 +166,8 @@ impl RuleSource {
                         Rule::Content(
                             ContentRule::Font(declarations, location)
                             | ContentRule::Palette(_, declarations, location)
-                            | ContentRule::CounterStyle(_, declarations, location),
+                            | ContentRule::CounterStyle(_, declarations, location)
+                            | ContentRule::PositionTry(_, declarations, location),
                         ) => {
                             relocate(location, &self.location);
                             for declaration in declarations {
@@ -238,6 +240,7 @@ pub(super) enum AtRuleName {
     FeatureValues,
     Palette,
     CounterStyle,
+    PositionTry,
     Layer,
     Scope,
     Media,
@@ -271,6 +274,7 @@ impl AtRuleName {
             "font-feature-values" => Some(Self::FeatureValues),
             "font-palette-values" => Some(Self::Palette),
             "counter-style" => Some(Self::CounterStyle),
+            "position-try" => Some(Self::PositionTry),
             "layer" => Some(Self::Layer),
             "scope" => Some(Self::Scope),
             "media" => Some(Self::Media),
@@ -293,6 +297,7 @@ enum AtPrelude {
     FeatureValues(Vec<String>),
     Palette(String),
     CounterStyle(String),
+    PositionTry(String),
     Layer(Vec<crate::style::layers::LayerName>),
     Scope(crate::style::scope::ScopePrelude),
     Container(crate::style::container_queries::ContainerQuery),
@@ -998,6 +1003,17 @@ fn at_prelude<'i>(
         input.expect_exhausted()?;
         return Ok(AtPrelude::Palette(name.to_string()));
     }
+    // CSS Anchor Positioning 1 §6.4: the prelude is the rule's `<dashed-ident>` name.
+    if matches!(kind, AtRuleName::PositionTry) {
+        let name = input.expect_ident_cloned()?;
+        if !name.starts_with(CUSTOM_PROPERTY_PREFIX) {
+            return Err(input.new_custom_error(StyleError::Invalid(
+                "position-try names are dashed identifiers".into(),
+            )));
+        }
+        input.expect_exhausted()?;
+        return Ok(AtPrelude::PositionTry(name.to_string()));
+    }
     if matches!(kind, AtRuleName::CounterStyle) {
         let source = block_source(input);
         return match crate::style::matcher::match_value(
@@ -1213,6 +1229,11 @@ impl<'i> AtRuleParser<'i> for CssParser<'_> {
                 SourceLocation::new(self.base, state.source_location()),
             )),
             AtPrelude::CounterStyle(name) => Rule::Content(ContentRule::CounterStyle(
+                name,
+                declarations(input, self.base, self.diagnostics)?,
+                SourceLocation::new(self.base, state.source_location()),
+            )),
+            AtPrelude::PositionTry(name) => Rule::Content(ContentRule::PositionTry(
                 name,
                 declarations(input, self.base, self.diagnostics)?,
                 SourceLocation::new(self.base, state.source_location()),

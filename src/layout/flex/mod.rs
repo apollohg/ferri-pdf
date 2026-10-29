@@ -191,7 +191,7 @@ pub(super) fn measure<'a>(
                 ),
             ]
         };
-        let align = match child.flex.align_self {
+        let align = match child.flex.align_self.in_flow() {
             Alignment::Auto => flex.align_items,
             v => v,
         };
@@ -704,7 +704,7 @@ pub(super) fn measure<'a>(
     );
     for child in block.children() {
         if let BlockContent::Positioned(child) = child {
-            let align = match child.style().flex.align_self {
+            let align = match child.style().flex.align_self.in_flow() {
                 Alignment::Auto => flex.align_items,
                 align => align,
             };

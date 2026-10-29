@@ -369,6 +369,8 @@ pub(crate) struct Relative<'a> {
     /// The element's inclusive-ancestor query containers, and the sizes they measure.
     pub(crate) containers: crate::style::QueryContainers,
     pub(crate) query_sizes: Option<&'a crate::style::QuerySizes>,
+    /// The element's measured anchors, which its anchor functions resolve against.
+    pub(crate) anchoring: Option<crate::style::anchor_values::Anchoring<'a>>,
 }
 impl Relative<'_> {
     /// Initial values and the default page area, for values computed without an element
@@ -392,6 +394,7 @@ impl Relative<'_> {
             accent_color: None,
             containers: crate::style::QueryContainers::default(),
             query_sizes: None,
+            anchoring: None,
         }
     }
     pub(crate) fn media(paper: [f32; 2], font: Option<Arc<InitialFont>>) -> Self {

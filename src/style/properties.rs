@@ -1,9 +1,12 @@
 //! The registry of supported longhands: computed values from match trees. Every other
 //! property is rejected here unless it keeps its initial value, which the engine renders.
+use crate::fonts::FontNamespace;
 use crate::paint::{BorderStyle, DEFAULT_BORDER_WIDTH, LengthPercentage, OutlineStyle};
 use crate::style::{
+    anchor_values::{self, AnchorTarget, HORIZONTAL, VERTICAL},
+    logical::{BOTTOM, LEFT, RIGHT, TOP},
     BoxSizing, BreakBetween, BreakInside, Display, HangingPunctuation, HyphenateLimitChars,
-    LineBreak, ListStylePosition, ListStyleType, Size, Style, StyleError, TextAlign, TextAutospace,
+    LineBreak, ListStylePosition, ListStyleType, Style, StyleError, TextAlign, TextAutospace,
     TextJustify, TextSpacingTrim, TextWrapStyle, Visibility, WhiteSpaceCollapse, WordBreak,
     box_values::{length_percentage, unsupported},
     calc::Kind,
@@ -60,7 +63,7 @@ fn element_scope<'a>(
     crate::style::counter_style::Scope::of(relative, style.element_font_namespace())
 }
 fn validation_scope<'a>(relative: &'a Relative<'_>) -> crate::style::counter_style::Scope<'a> {
-    crate::style::counter_style::Scope::of(relative, crate::fonts::FontNamespace::ROOT)
+    crate::style::counter_style::Scope::of(relative, FontNamespace::ROOT)
 }
 
 /// Flow-relative properties share their physical counterparts' grammar and computation.
@@ -547,30 +550,66 @@ fn handler(property: Property) -> Option<Handler> {
             list_style_position,
             Some(|v, _| ListStylePosition::from_component(v).is_ok()),
         ),
-        P::MarginTop => (margin_top, Some(|v, r| Size::from_component(v, r).is_ok())),
+        P::MarginTop => (
+            margin_top,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Margin(TOP))),
+        ),
         P::MarginRight => (
             margin_right,
-            Some(|v, r| Size::from_component(v, r).is_ok()),
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Margin(RIGHT))),
         ),
         P::MarginBottom => (
             margin_bottom,
-            Some(|v, r| Size::from_component(v, r).is_ok()),
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Margin(BOTTOM))),
         ),
-        P::MarginLeft => (margin_left, Some(|v, r| Size::from_component(v, r).is_ok())),
+        P::MarginLeft => (
+            margin_left,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Margin(LEFT))),
+        ),
         P::PaddingTop => (padding_top, Some(|v, r| length_percentage(v, r).is_ok())),
         P::PaddingRight => (padding_right, Some(|v, r| length_percentage(v, r).is_ok())),
         P::PaddingBottom => (padding_bottom, Some(|v, r| length_percentage(v, r).is_ok())),
         P::PaddingLeft => (padding_left, Some(|v, r| length_percentage(v, r).is_ok())),
-        P::Top => (top, Some(|v, r| Size::from_component(v, r).is_ok())),
-        P::Right => (right, Some(|v, r| Size::from_component(v, r).is_ok())),
-        P::Bottom => (bottom, Some(|v, r| Size::from_component(v, r).is_ok())),
-        P::Left => (left, Some(|v, r| Size::from_component(v, r).is_ok())),
-        P::Width => (width, Some(|v, r| Size::from_component(v, r).is_ok())),
-        P::MinWidth => (min_width, Some(|v, r| Size::from_component(v, r).is_ok())),
-        P::MaxWidth => (max_width, Some(|v, r| Size::from_component(v, r).is_ok())),
-        P::Height => (height, Some(|v, r| Size::from_component(v, r).is_ok())),
-        P::MinHeight => (min_height, Some(|v, r| Size::from_component(v, r).is_ok())),
-        P::MaxHeight => (max_height, Some(|v, r| Size::from_component(v, r).is_ok())),
+        P::Top => (
+            top,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Inset(TOP))),
+        ),
+        P::Right => (
+            right,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Inset(RIGHT))),
+        ),
+        P::Bottom => (
+            bottom,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Inset(BOTTOM))),
+        ),
+        P::Left => (
+            left,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Inset(LEFT))),
+        ),
+        P::Width => (
+            width,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Size(HORIZONTAL))),
+        ),
+        P::MinWidth => (
+            min_width,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Size(HORIZONTAL))),
+        ),
+        P::MaxWidth => (
+            max_width,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Size(HORIZONTAL))),
+        ),
+        P::Height => (
+            height,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Size(VERTICAL))),
+        ),
+        P::MinHeight => (
+            min_height,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Size(VERTICAL))),
+        ),
+        P::MaxHeight => (
+            max_height,
+            Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Size(VERTICAL))),
+        ),
         P::BoxSizing => (box_sizing, Some(|_, _| true)),
         P::Display => (
             display,
@@ -1364,6 +1403,34 @@ fn handler(property: Property) -> Option<Handler> {
             contain_intrinsic_height,
             Some(|v, r| crate::style::ContainIntrinsicSize::from_component(v, r).is_ok()),
         ),
+        P::AnchorName => (
+            anchor_name,
+            Some(|v, _| anchor_values::anchor_names(v, FontNamespace::ROOT).is_ok()),
+        ),
+        P::AnchorScope => (
+            anchor_scope,
+            Some(|v, _| anchor_values::anchor_scope(v, FontNamespace::ROOT).is_ok()),
+        ),
+        P::PositionAnchor => (
+            position_anchor,
+            Some(|v, _| anchor_values::position_anchor(v, FontNamespace::ROOT).is_ok()),
+        ),
+        P::PositionArea => (
+            position_area,
+            Some(|v, _| anchor_values::position_area(v).is_ok()),
+        ),
+        P::PositionTryFallbacks => (
+            position_try_fallbacks,
+            Some(|v, _| anchor_values::try_fallbacks(v, FontNamespace::ROOT).is_ok()),
+        ),
+        P::PositionTryOrder => (
+            position_try_order,
+            Some(|v, _| anchor_values::try_order(v).is_ok()),
+        ),
+        P::PositionVisibility => (
+            position_visibility,
+            Some(|v, _| anchor_values::position_visibility(v).is_ok()),
+        ),
         _ => return None,
     };
     Some(Handler { apply, check })
@@ -1830,26 +1897,18 @@ computed!(
     [list_style_position],
     |value, style, _parent, _relative| { ListStylePosition::from_component(value)? }
 );
-computed!(
-    margin_top,
-    [margin[0]],
-    |value, style, _parent, relative| { Size::from_component(value, relative)? }
-);
-computed!(
-    margin_right,
-    [margin[1]],
-    |value, style, _parent, relative| { Size::from_component(value, relative)? }
-);
-computed!(
-    margin_bottom,
-    [margin[2]],
-    |value, style, _parent, relative| { Size::from_component(value, relative)? }
-);
-computed!(
-    margin_left,
-    [margin[3]],
-    |value, style, _parent, relative| { Size::from_component(value, relative)? }
-);
+computed!(margin_top, [margin[0]], |value, style, _parent, relative| {
+    anchor_values::size(value, style, relative, AnchorTarget::Margin(TOP))?
+});
+computed!(margin_right, [margin[1]], |value, style, _parent, relative| {
+    anchor_values::size(value, style, relative, AnchorTarget::Margin(RIGHT))?
+});
+computed!(margin_bottom, [margin[2]], |value, style, _parent, relative| {
+    anchor_values::size(value, style, relative, AnchorTarget::Margin(BOTTOM))?
+});
+computed!(margin_left, [margin[3]], |value, style, _parent, relative| {
+    anchor_values::size(value, style, relative, AnchorTarget::Margin(LEFT))?
+});
 computed!(
     padding_top,
     [padding[0]],
@@ -1871,39 +1930,35 @@ computed!(
     |value, style, _parent, relative| { length_percentage(value, relative)? }
 );
 computed!(top, [inset[0]], |value, style, _parent, relative| {
-    Size::from_component(value, relative)?
+    anchor_values::size(value, style, relative, AnchorTarget::Inset(TOP))?
 });
 computed!(right, [inset[1]], |value, style, _parent, relative| {
-    Size::from_component(value, relative)?
+    anchor_values::size(value, style, relative, AnchorTarget::Inset(RIGHT))?
 });
 computed!(bottom, [inset[2]], |value, style, _parent, relative| {
-    Size::from_component(value, relative)?
+    anchor_values::size(value, style, relative, AnchorTarget::Inset(BOTTOM))?
 });
 computed!(left, [inset[3]], |value, style, _parent, relative| {
-    Size::from_component(value, relative)?
+    anchor_values::size(value, style, relative, AnchorTarget::Inset(LEFT))?
 });
 computed!(width, [width], |value, style, _parent, relative| {
-    Size::from_component(value, relative)?
+    anchor_values::size(value, style, relative, AnchorTarget::Size(HORIZONTAL))?
 });
 computed!(min_width, [min_width], |value, style, _parent, relative| {
-    Size::from_component(value, relative)?
+    anchor_values::size(value, style, relative, AnchorTarget::Size(HORIZONTAL))?
 });
 computed!(max_width, [max_width], |value, style, _parent, relative| {
-    Size::from_component(value, relative)?
+    anchor_values::size(value, style, relative, AnchorTarget::Size(HORIZONTAL))?
 });
 computed!(height, [height], |value, style, _parent, relative| {
-    Size::from_component(value, relative)?
+    anchor_values::size(value, style, relative, AnchorTarget::Size(VERTICAL))?
 });
-computed!(
-    min_height,
-    [min_height],
-    |value, style, _parent, relative| { Size::from_component(value, relative)? }
-);
-computed!(
-    max_height,
-    [max_height],
-    |value, style, _parent, relative| { Size::from_component(value, relative)? }
-);
+computed!(min_height, [min_height], |value, style, _parent, relative| {
+    anchor_values::size(value, style, relative, AnchorTarget::Size(VERTICAL))?
+});
+computed!(max_height, [max_height], |value, style, _parent, relative| {
+    anchor_values::size(value, style, relative, AnchorTarget::Size(VERTICAL))?
+});
 computed!(
     box_sizing,
     [box_sizing],
@@ -1981,6 +2036,39 @@ computed!(
     |value, style, _parent, relative| {
         crate::style::ContainIntrinsicSize::from_component(value, relative)?
     }
+);
+computed!(anchor_name, [anchor.names], |value, style, _parent, _relative| {
+    anchor_values::anchor_names(value, style.element_font_namespace())?
+});
+computed!(anchor_scope, [anchor.scope], |value, style, _parent, _relative| {
+    anchor_values::anchor_scope(value, style.element_font_namespace())?
+});
+computed!(
+    position_anchor,
+    [anchor.position_anchor],
+    |value, style, _parent, _relative| {
+        anchor_values::position_anchor(value, style.element_font_namespace())?
+    }
+);
+computed!(position_area, [anchor.area], |value, style, _parent, _relative| {
+    anchor_values::position_area(value)?
+});
+computed!(
+    position_try_fallbacks,
+    [anchor.fallbacks],
+    |value, style, _parent, _relative| {
+        anchor_values::try_fallbacks(value, style.element_font_namespace())?
+    }
+);
+computed!(
+    position_try_order,
+    [anchor.order],
+    |value, style, _parent, _relative| { anchor_values::try_order(value)? }
+);
+computed!(
+    position_visibility,
+    [anchor.visibility],
+    |value, style, _parent, _relative| { anchor_values::position_visibility(value)? }
 );
 computed!(z_index, [z_index], |value, style, _parent, relative| {
     crate::style::position::z_index(value, relative)?

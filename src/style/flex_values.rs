@@ -69,10 +69,13 @@ pub(crate) enum Alignment {
     SpaceBetween,
     SpaceAround,
     SpaceEvenly,
+    /// CSS Anchor Positioning 1 §4.2: centred over the default anchor box; `center` for boxes
+    /// that are not absolutely positioned or have no default anchor box.
+    AnchorCenter,
 }
 impl Alignment {
-    /// Each property's grammar admits only its own keywords; overflow positions, `last`
-    /// baselines and anchor centring are not modelled.
+    /// Each property's grammar admits only its own keywords; overflow positions and `last`
+    /// baselines are not modelled.
     pub(crate) fn from_component(value: &Component) -> Result<Self, StyleError> {
         if value
             .find(Label::Production(Production::OverflowPosition))
@@ -100,6 +103,14 @@ impl Alignment {
             _ => Err(unsupported(value)),
         }
     }
+    /// §4.2: `anchor-center` behaves as `center` outside absolute positioning.
+    pub(crate) fn in_flow(self) -> Self {
+        if self == Self::AnchorCenter {
+            Self::Center
+        } else {
+            self
+        }
+    }
     fn from_keywords(keywords: &[Keyword]) -> Option<Self> {
         Some(match keywords {
             [Keyword::Auto] => Self::Auto,
@@ -118,6 +129,7 @@ impl Alignment {
             [Keyword::SpaceBetween] => Self::SpaceBetween,
             [Keyword::SpaceAround] => Self::SpaceAround,
             [Keyword::SpaceEvenly] => Self::SpaceEvenly,
+            [Keyword::AnchorCenter] => Self::AnchorCenter,
             _ => return None,
         })
     }

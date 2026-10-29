@@ -130,7 +130,7 @@ pub(super) fn horizontal_with_edges(
 fn self_alignment(style: &Style, containing_rtl: bool) -> Option<f32> {
     use crate::style::Alignment;
     let start = if containing_rtl { 1.0 } else { 0.0 };
-    match style.grid.justify_self {
+    match style.grid.justify_self.in_flow() {
         Alignment::Left => Some(0.0),
         Alignment::Right => Some(1.0),
         Alignment::Center => Some(0.5),
