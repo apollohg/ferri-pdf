@@ -272,7 +272,8 @@ pub(super) fn push_blend(
     Ok(2)
 }
 
-/// The PDF blend mode of `mode`; `plus-lighter` has none and composites in pixels instead.
+/// The PDF blend mode of `mode`; the additive operators have none and composite in pixels
+/// instead.
 pub(super) fn pdf_blend_mode(
     mode: crate::graphics::BlendMode,
 ) -> Result<krilla::blend::BlendMode, PdfError> {
@@ -295,7 +296,7 @@ pub(super) fn pdf_blend_mode(
         Css::Saturation => Pdf::Saturation,
         Css::Color => Pdf::Color,
         Css::Luminosity => Pdf::Luminosity,
-        Css::PlusLighter => return Err(PdfError::VectorPlusLighter),
+        Css::PlusDarker | Css::PlusLighter => return Err(PdfError::VectorAdditive),
     })
 }
 

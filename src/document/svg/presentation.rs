@@ -294,10 +294,11 @@ fn blend_mode(mode: BlendMode) -> Result<&'static str, StyleError> {
         BlendMode::Saturation => "saturation",
         BlendMode::Color => "color",
         BlendMode::Luminosity => "luminosity",
-        // The SVG renderer composites with PDF blend modes, none of which adds.
-        BlendMode::PlusLighter => {
+        // The SVG renderer draws vector groups with PDF blend modes, none of which adds, and
+        // the additive operators' raster read-back works on the document's display list only.
+        BlendMode::PlusDarker | BlendMode::PlusLighter => {
             return Err(StyleError::Unsupported(
-                "mix-blend-mode: plus-lighter on SVG content".into(),
+                "additive mix-blend-mode on SVG content, which composites as vectors".into(),
             ));
         }
     })

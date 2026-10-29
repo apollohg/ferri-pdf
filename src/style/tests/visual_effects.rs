@@ -334,13 +334,10 @@ fn blending_and_isolation_compute_as_specified_without_inheriting() {
         BlendMode::Normal,
         "plus-lighter does not inherit"
     );
-    let error = styles("#parent{mix-blend-mode:plus-darker}")
-        .expect_err("plus-darker's formula has no premultiplied result");
-    assert!(
-        matches!(&error, StyleError::Unsupported(message)
-            if message.starts_with("mix-blend-mode: plus-darker") && message.contains("§9.1.14")),
-        "plus-darker must stay an error naming why: {error}"
-    );
+    let (parent, _) =
+        styles("#parent{mix-blend-mode:plus-darker}").expect("plus-darker computes");
+    assert_eq!(parent.mix_blend_mode, BlendMode::PlusDarker);
+    assert!(parent.is_grouped() && parent.is_backdrop_root());
 }
 
 #[test]

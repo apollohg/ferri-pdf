@@ -1,4 +1,5 @@
-use crate::writer::backdrops::{mirror, over_color};
+use crate::graphics::BlendMode;
+use crate::writer::backdrops::{additive_color, mirror, over_color};
 
 /// Premultiplied samples: transparent, opaque extremes, translucent and nearly opaque.
 const COLOURS: [[f32; 4]; 8] = [
@@ -18,33 +19,70 @@ fn plus_lighter(source: [f32; 4], backdrop: [f32; 4]) -> [f32; 4] {
     std::array::from_fn(|channel| (source[channel] + backdrop[channel]).min(1.0))
 }
 
+/// Core Graphics' `kCGBlendModePlusDarker`, the adopted reading of Compositing 2 §9.1.14, on
+/// premultiplied colours.
+fn plus_darker(source: [f32; 4], backdrop: [f32; 4]) -> [f32; 4] {
+    let alpha = (source[3] + backdrop[3]).min(1.0);
+    std::array::from_fn(|channel| {
+        if channel == 3 {
+            alpha
+        } else {
+            (alpha - (source[3] - source[channel]) - (backdrop[3] - backdrop[channel])).max(0.0)
+        }
+    })
+}
+
 /// Compositing 1 §9.1.4 source-over on premultiplied colours.
 fn source_over(source: [f32; 4], backdrop: [f32; 4]) -> [f32; 4] {
     std::array::from_fn(|channel| source[channel] + backdrop[channel] * (1.0 - source[3]))
 }
 
 #[test]
-fn drawing_the_over_colour_onto_the_backdrop_gives_plus_lighter() {
-    for source in COLOURS {
-        for backdrop in COLOURS {
-            let over = over_color(source, backdrop);
-            assert!(
-                (0.0..=1.0).contains(&over[3])
-                    && over[..3].iter().all(|c| (0.0..=over[3]).contains(c)),
-                "{over:?} drawn for source {source:?} on {backdrop:?} must be a premultiplied colour"
-            );
-            let drawn = source_over(over, backdrop);
-            let expected = plus_lighter(source, backdrop);
-            assert!(
-                drawn
-                    .iter()
-                    .zip(expected)
-                    .all(|(a, e)| (a - e).abs() < EPSILON),
-                "source {source:?} on {backdrop:?}: drawing {over:?} gives {drawn:?}, \
-                 plus-lighter is {expected:?}"
-            );
+fn drawing_the_over_colour_onto_the_backdrop_gives_the_additive_result() {
+    for (operator, reference) in [
+        (BlendMode::PlusLighter, plus_lighter as fn(_, _) -> _),
+        (BlendMode::PlusDarker, plus_darker),
+    ] {
+        for source in COLOURS {
+            for backdrop in COLOURS {
+                let over = over_color(operator, source, backdrop);
+                assert!(
+                    (0.0..=1.0).contains(&over[3])
+                        && over[..3].iter().all(|c| (0.0..=over[3]).contains(c)),
+                    "{operator:?}: {over:?} drawn for source {source:?} on {backdrop:?} must be \
+                     a premultiplied colour"
+                );
+                let drawn = source_over(over, backdrop);
+                let expected = reference(source, backdrop);
+                assert!(
+                    drawn
+                        .iter()
+                        .zip(expected)
+                        .all(|(a, e)| (a - e).abs() < EPSILON),
+                    "{operator:?}: source {source:?} on {backdrop:?}: drawing {over:?} gives \
+                     {drawn:?}, expected {expected:?}"
+                );
+            }
         }
     }
+}
+
+#[test]
+fn plus_darker_subtracts_the_complements_of_opaque_layers() {
+    let result = additive_color(
+        BlendMode::PlusDarker,
+        [0.6, 0.8, 1.0, 1.0],
+        [0.7, 0.1, 1.0, 1.0],
+    );
+    let expected = [0.3, 0.0, 1.0, 1.0];
+    assert!(
+        result
+            .iter()
+            .zip(expected)
+            .all(|(a, e)| (a - e).abs() < EPSILON),
+        "opaque layers give 1 − ((1 − cs) + (1 − cb)), clamped at zero: {result:?}, expected \
+         {expected:?}"
+    );
 }
 
 #[test]

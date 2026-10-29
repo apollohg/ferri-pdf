@@ -201,15 +201,36 @@ height:{PANEL[3]}pt}}{css}</style>{body}''')
             self.assertNear(self.raster(root, output).getpixel((50, 50)), (191, 128, 191),
                             'plus-lighter cross-fade over white')
 
-    def test_plus_darker_is_rejected(self):
-        with tempfile.TemporaryDirectory(prefix='ferri-pdf-plus-darker-') as directory:
-            source = Path(directory) / 'input.html'
-            source.write_text('<div style="mix-blend-mode:plus-darker">x</div>')
-            result = subprocess.run([str(RENDERER), str(source), str(Path(directory) / 'o.pdf')],
-                                    capture_output=True, text=True)
-            self.assertNotEqual(result.returncode, 0, 'plus-darker must not render silently')
-            self.assertIn('plus-darker', result.stderr, result.stderr)
-
+    def test_plus_darker_subtracts_the_complements_of_both_layers(self):
+        """Compositing 2 §9.1.14 read as Core Graphics' `kCGBlendModePlusDarker`: over an
+        opaque backdrop each channel is `max(0, 1 − ((1 − cs) + (1 − cb)))`."""
+        cases = {
+            'darker sum': ('rgb(200,150,255)', 'rgb(150,250,100)', (95, 145, 100)),
+            'sum clamps to zero': ('rgb(100,0,255)', 'rgb(100,255,0)', (0, 0, 0)),
+        }
+        for label, (below, above, expected) in cases.items():
+            with self.subTest(label), tempfile.TemporaryDirectory(
+                    prefix='ferri-pdf-plus-darker-') as directory:
+                root = Path(directory)
+                output = self.render(
+                    root,
+                    f'.below{{position:absolute;left:0;top:0;width:100pt;height:40pt;'
+                    f'background:{below}}}.above{{width:50pt;height:40pt;background:{above};'
+                    'mix-blend-mode:plus-darker}',
+                    '<div class=below><div class=above></div></div>')
+                pixels = self.raster(root, output)
+                self.assertNear(pixels.getpixel((25, 20)), expected, label)
+                self.assertEqual(pixels.getpixel((75, 20)),
+                                 tuple(int(part) for part in below[4:-1].split(',')),
+                                 f'{label}: the backdrop beside the source is unchanged')
+        with self.subTest('over the white page'), tempfile.TemporaryDirectory(
+                prefix='ferri-pdf-plus-darker-') as directory:
+            root = Path(directory)
+            output = self.render(root, '.above{width:50pt;height:40pt;'
+                                 'background:rgb(10,120,250);mix-blend-mode:plus-darker}',
+                                 '<div class=above></div>')
+            self.assertNear(self.raster(root, output).getpixel((25, 20)), (10, 120, 250),
+                            'white is the identity of plus-darker')
 
 if __name__ == '__main__':
     unittest.main()

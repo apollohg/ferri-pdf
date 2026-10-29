@@ -7,10 +7,10 @@
 //! the chain blurs, and drawn behind the fragment clipped to its rounded border box, inside
 //! the element's own effects.
 //!
-//! Compositing 2 §9.1.15 `plus-lighter`: the group composites as `min(1, source + backdrop)`
-//! with its backdrop, which no PDF blend mode computes; the result is drawn over the vector
+//! Compositing 2 §9.1.14 `plus-darker` and §9.1.15 `plus-lighter`: the group composites
+//! additively with its backdrop, which no PDF blend mode computes; the result is drawn over the vector
 //! backdrop as the colour that source-over compositing turns into that sum.
-use crate::graphics::{BackdropPaint, DisplayItem, FilterFunction, FilterPaint, Rect};
+use crate::graphics::{BackdropPaint, BlendMode, DisplayItem, FilterFunction, FilterPaint, Rect};
 use crate::writer::{
     PdfError,
     display::{Painter, Scopes, Space, group_length, matrix_transform},
@@ -313,9 +313,10 @@ fn embed(readback: &Readback, surface: &mut Surface<'_>) -> Result<(), PdfError>
     drawn
 }
 
-/// Draws the `plus-lighter` group whose push and pop are at `group`'s ends.
-pub(super) fn plus_lighter(
+/// Draws the additive `operator` group whose push and pop are at `group`'s ends.
+pub(super) fn additive(
     painter: &mut Painter<'_, '_, '_>,
+    operator: BlendMode,
     items: &[DisplayItem],
     group: Range<usize>,
     scopes: &Scopes<'_>,
@@ -324,7 +325,7 @@ pub(super) fn plus_lighter(
 ) -> Result<(), PdfError> {
     let push = &items[group.start];
     if painter.prepared.get(push).is_none() {
-        let composite = composite(painter, items, group, scopes, space, surface)?;
+        let composite = composite(painter, operator, items, group, scopes, space, surface)?;
         painter.prepared.insert(
             push,
             composite.map(|raster| Readback {
@@ -340,9 +341,10 @@ pub(super) fn plus_lighter(
 }
 
 /// The group's content and, behind it, the content of its enclosing group so far, composited
-/// by `plus-lighter` and expressed as the colour to draw over that backdrop.
+/// by `operator` and expressed as the colour to draw over that backdrop.
 fn composite(
     painter: &mut Painter<'_, '_, '_>,
+    operator: BlendMode,
     items: &[DisplayItem],
     group: Range<usize>,
     scopes: &Scopes<'_>,
@@ -386,6 +388,7 @@ fn composite(
     for (index, pixel) in source.pixmap.pixels_mut().iter_mut().enumerate() {
         let below = behind[index / columns * backdrop_columns + index % columns];
         let over = over_color(
+            operator,
             unit(*pixel),
             [below.red(), below.green(), below.blue(), below.alpha()]
                 .map(|channel| f32::from(channel) / CHANNEL_MAX),
@@ -407,13 +410,35 @@ fn unit(pixel: tiny_skia::PremultipliedColorU8) -> [f32; CHANNELS] {
         .map(|channel| f32::from(channel) / CHANNEL_MAX)
 }
 
+/// The premultiplied result of the additive `operator`, `plus-darker` or `plus-lighter`.
+pub(super) fn additive_color(
+    operator: BlendMode,
+    source: [f32; CHANNELS],
+    backdrop: [f32; CHANNELS],
+) -> [f32; CHANNELS] {
+    let alpha = (source[ALPHA] + backdrop[ALPHA]).min(1.0);
+    std::array::from_fn(|channel| match operator {
+        _ if channel == ALPHA => alpha,
+        // §9.1.14 as written leaves two opaque layers transparent; this is the premultiplied
+        // form of Core Graphics' `kCGBlendModePlusDarker`, which the operator comes from:
+        // `co = max(0, αo − ((αs − cs) + (αb − cb)))`.
+        BlendMode::PlusDarker => (alpha
+            - ((source[ALPHA] - source[channel]) + (backdrop[ALPHA] - backdrop[channel])))
+            .max(0.0),
+        // §9.1.15: `co = min(1, cs + cb)`.
+        _ => (source[channel] + backdrop[channel]).min(1.0),
+    })
+}
+
 /// The premultiplied colour that source-over compositing onto premultiplied `backdrop` turns
-/// into `plus-lighter` of `source` and `backdrop`: `co = min(1, cs + cb)` for every
-/// premultiplied channel, alpha included (§9.1.15). Over an opaque backdrop that is the result
-/// itself; otherwise `αx = (αo − αb) / (1 − αb)` and `cx = co − cb·(1 − αx)`.
-pub(super) fn over_color(source: [f32; CHANNELS], backdrop: [f32; CHANNELS]) -> [f32; CHANNELS] {
-    let result: [f32; CHANNELS] =
-        std::array::from_fn(|channel| (source[channel] + backdrop[channel]).min(1.0));
+/// into the additive `operator`'s result. Over an opaque backdrop that is the result itself;
+/// otherwise `αx = (αo − αb) / (1 − αb)` and `cx = co − cb·(1 − αx)`.
+pub(super) fn over_color(
+    operator: BlendMode,
+    source: [f32; CHANNELS],
+    backdrop: [f32; CHANNELS],
+) -> [f32; CHANNELS] {
+    let result = additive_color(operator, source, backdrop);
     let alpha = if backdrop[ALPHA] >= 1.0 {
         1.0
     } else {

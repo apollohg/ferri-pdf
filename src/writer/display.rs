@@ -1,5 +1,5 @@
 //! Display lists drawn onto a surface: scopes nest pushes and pops, filtered groups are
-//! drawn through their filters, and backdrops and `plus-lighter` groups read back what the
+//! drawn through their filters, and backdrops and additive groups read back what the
 //! list painted before them.
 use crate::graphics::{BlendMode, DisplayItem, Rect};
 use crate::layout::TextLine;
@@ -251,14 +251,15 @@ impl Painter<'_, '_, '_> {
                     });
                     space = nested;
                 }
-                DisplayItem::PushBlend(BlendMode::PlusLighter) => {
+                DisplayItem::PushBlend(mode @ (BlendMode::PlusDarker | BlendMode::PlusLighter)) => {
                     let end = index + group_length(&items[index..])?;
                     let open = Scopes {
                         frame,
                         open: scopes,
                     };
-                    crate::writer::backdrops::plus_lighter(
+                    crate::writer::backdrops::additive(
                         self,
+                        *mode,
                         items,
                         index - 1..end,
                         &open,
