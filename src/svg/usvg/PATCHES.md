@@ -29,5 +29,8 @@ command-line binary, the SVG writer (`Tree::to_string` and `WriteOptions`) and t
 system-font and memory-mapping features are removed. COLR painting reports unsupported
 sweep gradients and blend modes through `log` instead of printing to standard output.
 
+`font-weight` takes any whole number from 1 to 1000 (CSS Fonts 4 §2.2), not only multiples of
+one hundred, so font matching receives the weight the document's cascade computed.
+
 `feColorMatrix type="saturate"` keeps values above one, which oversaturate (Filter Effects 1
 §9.6), instead of clamping them to one as SVG 1.1 did.

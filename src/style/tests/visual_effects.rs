@@ -334,8 +334,7 @@ fn blending_and_isolation_compute_as_specified_without_inheriting() {
         BlendMode::Normal,
         "plus-lighter does not inherit"
     );
-    let (parent, _) =
-        styles("#parent{mix-blend-mode:plus-darker}").expect("plus-darker computes");
+    let (parent, _) = styles("#parent{mix-blend-mode:plus-darker}").expect("plus-darker computes");
     assert_eq!(parent.mix_blend_mode, BlendMode::PlusDarker);
     assert!(parent.is_grouped() && parent.is_backdrop_root());
 }

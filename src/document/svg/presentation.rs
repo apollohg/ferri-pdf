@@ -11,8 +11,6 @@ use std::fmt::Write;
 /// SVG 2 §10: text content elements, which take the font and text properties.
 const TEXT_CONTENT: &[&str] = &["text", "tspan", "textPath", "tref"];
 const PERCENT: f32 = 100.0;
-/// The weights the renderer's font matching takes, in steps of a hundred (CSS Fonts 4 §2.2).
-const WEIGHT_STEP: f32 = 100.0;
 /// CSS Fonts 4 §2.3: the `font-width` keywords and their percentages.
 const WIDTH_KEYWORDS: [(FontWidth, &str); 9] = [
     (FontWidth::ULTRA_CONDENSED, "ultra-condensed"),
@@ -374,9 +372,11 @@ fn font_style(style: &Style) -> Result<&'static str, StyleError> {
     }
 }
 
+/// The renderer's font matching takes whole weights, which covers every weight but a
+/// fractional one.
 fn font_weight(weight: FontWeight) -> Result<String, StyleError> {
     let value = weight.value();
-    if value % WEIGHT_STEP == 0.0 && (FontWeight::THIN..=FontWeight::BLACK).contains(&weight) {
+    if value.fract() == 0.0 {
         Ok(number(value))
     } else {
         Err(StyleError::Unsupported(format!(

@@ -174,6 +174,16 @@ fn inheritance_crosses_from_html_into_svg_and_currentcolor_follows_each_element(
     assert_eq!(text["font-family"], "\"Liberation Sans\"", "{xml}");
     assert_eq!(text["font-weight"], "700", "{xml}");
     assert_eq!(text["font-style"], "italic", "{xml}");
+    let light = styled(
+        "p{font-weight:350}",
+        "<p><svg><text id='light'>Light</text></svg></p>",
+    )
+    .expect("a whole weight is supported");
+    assert_eq!(
+        value(&light, "light", "font-weight"),
+        "350",
+        "CSS Fonts 4 §2.2: any whole weight reaches font matching\n{light}"
+    );
 }
 
 #[test]
@@ -353,14 +363,17 @@ fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
         ("rect{transform:rotate(45deg)}", "transform"),
         ("rect{overflow:hidden}", "overflow-x"),
         ("text{direction:rtl}", "direction"),
-        ("text{font-weight:450}", "font-weight: 450"),
+        ("text{font-weight:450.5}", "font-weight: 450.5"),
         (
             "text{font-variant-caps:all-small-caps}",
             "font-variant-caps",
         ),
         ("rect{vector-effect:non-scaling-stroke}", "vector-effect"),
         ("rect{color-interpolation:linearRGB}", "color-interpolation"),
-        ("rect{mix-blend-mode:plus-lighter}", "additive mix-blend-mode"),
+        (
+            "rect{mix-blend-mode:plus-lighter}",
+            "additive mix-blend-mode",
+        ),
         ("rect{fill:url(other.svg#paint)}", "another document"),
         ("rect{cx:calc(10% + 1px)}", ""),
     ] {

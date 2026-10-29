@@ -609,6 +609,9 @@ fn conv_font_stretch(node: SvgNode) -> FontStretch {
     }
 }
 
+const MIN_FONT_WEIGHT: usize = 1;
+const MAX_FONT_WEIGHT: usize = 1000;
+
 fn resolve_font_weight(node: SvgNode) -> u16 {
     fn bound(min: usize, val: usize, max: usize) -> usize {
         std::cmp::max(min, std::cmp::min(max, val))
@@ -650,7 +653,12 @@ fn resolve_font_weight(node: SvgNode) -> u16 {
 
                 bound(100, weight - step, 900)
             }
-            _ => weight,
+            // CSS Fonts 4 §2.2: any number from 1 to 1000.
+            number => number
+                .parse::<usize>()
+                .ok()
+                .filter(|number| (MIN_FONT_WEIGHT..=MAX_FONT_WEIGHT).contains(number))
+                .unwrap_or(weight),
         };
     }
 
