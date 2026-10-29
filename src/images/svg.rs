@@ -31,6 +31,7 @@ pub struct SvgImage {
     source: Arc<SvgSource>,
     fonts: SvgFonts,
     resources: HashMap<String, ImageKind>,
+    motion_resources: HashMap<String, Option<Arc<str>>>,
     jpeg_images: HashSet<usize>,
     width: Option<f32>,
     height: Option<f32>,
@@ -108,6 +109,7 @@ impl SvgImage {
         let fonts = cache.fonts.in_namespace(namespace);
         let provider = fonts.provider(Some(resolver));
         let resources = RefCell::new(HashMap::<String, ImageKind>::new());
+        let motion_resources = RefCell::new(HashMap::<String, Option<Arc<str>>>::new());
         let jpeg_images = RefCell::new(HashSet::new());
         let failure = RefCell::new(None::<ImageError>);
         let cache = RefCell::new(cache);
@@ -135,12 +137,27 @@ impl SvgImage {
         };
         let mut options = options(initial_size)?;
         options.fontdb = fonts.database();
+        let resolve_motion = |reference: &str| {
+            if let Some(source) = motion_resources.borrow().get(reference) {
+                return source.clone();
+            }
+            let document = resolver
+                .resolve(reference, &source.base)
+                .ok()
+                .and_then(|resource| String::from_utf8(resource.bytes).ok())
+                .map(Arc::<str>::from);
+            motion_resources
+                .borrow_mut()
+                .insert(reference.to_owned(), document.clone());
+            document
+        };
         let initial_tree = Tree::from_str_with_resolvers(
             xml,
             &options,
             Some(options.default_size),
             &resolve,
             &provider,
+            &resolve_motion,
         );
         let fonts = provider.finish()?;
         if let Some(error) = failure.into_inner() {
@@ -152,6 +169,7 @@ impl SvgImage {
             source,
             fonts,
             resources,
+            motion_resources: motion_resources.into_inner(),
             jpeg_images: jpeg_images.into_inner(),
             width,
             height,
@@ -194,6 +212,7 @@ impl SvgImage {
             Some(options.default_size),
             &|href, _| self.resources.get(href).cloned(),
             &provider,
+            &|reference| self.motion_resources.get(reference).cloned().flatten(),
         );
         provider.finish()?;
         result.map_err(ImageError::Svg)

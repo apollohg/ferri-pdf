@@ -499,7 +499,11 @@ fn custom_properties(
 ) -> Result<crate::style::variables::Environment, StyleError> {
     let declarations = Customs::new(declarations);
     loop {
-        match crate::style::variables::resolve(parent, declarations.sources()?)? {
+        match crate::style::variables::resolve(
+            parent,
+            declarations.sources()?,
+            crate::style::variables::WideHandling::Recascade,
+        )? {
             crate::style::variables::Resolution::Complete(computed) => return Ok(computed),
             crate::style::variables::Resolution::Wide { name, keyword } => {
                 declarations.recascade(&name, keyword)?;

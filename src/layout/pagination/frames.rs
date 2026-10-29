@@ -113,6 +113,9 @@ fn render<'a>(
         paginator.template = true;
         if let Some(owner) = &root.frame_owner {
             paginator.containers[0].fixed = owner.source.style().contains_fixed();
+            let node = paginator.effect_node(None, Effect::MotionReference(true, None));
+            paginator.clips[node].paints.push((0, owner.paint.clone()));
+            paginator.motion_root = Some((root.source, node));
         }
         paginator.root_overflow = Some(Default::default());
         paginator.frame_templates = templates.clone();
@@ -121,7 +124,9 @@ fn render<'a>(
         content.independent = false;
         paginator.pending.push(content.before.clone());
         paginator.block(content, super::BreakTail::default())?;
-        if let Some(owner) = &root.frame_owner {
+        if let Some(owner) = &root.frame_owner
+            && (owner.source.style().contains_absolute() || owner.source.style().contains_fixed())
+        {
             loop {
                 let pending = std::mem::take(&mut paginator.containers[0].pending);
                 if pending.is_empty() {
@@ -150,6 +155,8 @@ fn render<'a>(
                         pending,
                         &super::Containing::Rect {
                             rect,
+                            paint: owner.paint.clone(),
+                            radius: None,
                             flow: crate::style::logical::Flow::used(owner.source.style()),
                             clip: None,
                         },
@@ -161,6 +168,7 @@ fn render<'a>(
             return Ok(RawOutcome::Needs(paginator.frame_requests));
         }
         paginator.assemble_sliced_boxes();
+        paginator.complete_column_motion()?;
         paginator.position_canvas_backgrounds();
         let mut output = paginator.with_measurer(());
         output.frame_templates = Rc::default();
@@ -189,6 +197,10 @@ pub(super) fn payload_work(output: &RawFrame<'_>) -> usize {
             .saturating_add(node.areas.len())
             .saturating_add(node.paints.len())
             .saturating_add(node.context.as_ref().map_or(0, |key| key.len()))
+            .saturating_add(usize::from(matches!(
+                node.effect,
+                Effect::Transform(_, _, Some(_))
+            )))
             .saturating_add(1)
     });
     let lines = output.pages.iter().flatten().map(|line| {
@@ -207,6 +219,12 @@ pub(super) fn payload_work(output: &RawFrame<'_>) -> usize {
         .chain(effects)
         .chain(lines)
         .chain(pending)
+        .chain(
+            output
+                .column_motion_overflow
+                .iter()
+                .map(|pending| pending.transforms.len().saturating_add(1)),
+        )
         .chain([output.anchors.payload_work()])
         .fold(1, usize::saturating_add)
 }

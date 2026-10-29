@@ -14,7 +14,7 @@ use crate::paint::{
     AxisRadius, BasicShape, Calculation, CircleRadius, CornerRadii, EllipseRadii, LengthPercentage,
     POINTS_PER_PIXEL, Position, PositionComponent, RadialExtent, Segment,
 };
-use crate::style::shape_values::{auto_edge, path_data, remainder, sides};
+use crate::style::shape_values::{PathErrors, auto_edge, path_data, remainder, sides};
 use crate::svg::usvg::{ClipPath, Fill, FillRule, Group, Node, Path, Rect, Transform, Units};
 
 const CALC: &str = "calc";
@@ -294,7 +294,7 @@ fn shape(name: &str, items: &[Item]) -> Option<BasicShape> {
             };
             BasicShape::Path {
                 even_odd,
-                contours: path_data(data)?,
+                contours: path_data(data, PathErrors::Discard)?,
             }
         }
         _ => return None,

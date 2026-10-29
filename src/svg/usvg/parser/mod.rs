@@ -8,6 +8,8 @@ mod filter;
 mod image;
 mod marker;
 mod mask;
+mod motion;
+pub(crate) use motion::motion_path;
 mod options;
 mod paint_server;
 mod shapes;
@@ -45,6 +47,7 @@ pub enum Error {
     ///
     /// Also occurs if width, height and viewBox are not set.
     InvalidSize,
+    Style(std::sync::Arc<crate::style::StyleError>),
 
     /// Failed to parse an SVG data.
     ParsingFailed(roxmltree::Error),
@@ -71,6 +74,7 @@ impl std::fmt::Display for Error {
             Error::CssComponentDepthLimit { limit } => {
                 write!(f, "SVG CSS component depth exceeds {limit}")
             }
+            Error::Style(ref error) => write!(f, "SVG style: {error}"),
             Error::InvalidSize => {
                 write!(f, "SVG has an invalid size")
             }
@@ -148,7 +152,7 @@ impl crate::svg::usvg::Tree {
 
     /// Parses `Tree` from an SVG string.
     pub fn from_str(text: &str, opt: &Options) -> Result<Self, Error> {
-        Self::from_str_impl(text, opt, None, None, None)
+        Self::from_str_impl(text, opt, None, None, None, None)
     }
 
     /// Parses with a caller-owned resolver receiving original image references after styling.
@@ -160,7 +164,7 @@ impl crate::svg::usvg::Tree {
         viewport: Option<crate::svg::usvg::Size>,
         resolver: &dyn Fn(&str, &Options) -> Option<crate::svg::usvg::ImageKind>,
     ) -> Result<Self, Error> {
-        Self::from_str_impl(text, opt, viewport, Some(resolver), None)
+        Self::from_str_impl(text, opt, viewport, Some(resolver), None, None)
     }
 
     /// Parses with borrowed image and font providers without retaining either provider.
@@ -170,8 +174,9 @@ impl crate::svg::usvg::Tree {
         viewport: Option<crate::svg::usvg::Size>,
         images: &dyn Fn(&str, &Options) -> Option<crate::svg::usvg::ImageKind>,
         fonts: &dyn crate::svg::usvg::FontProvider,
+        motion: &dyn Fn(&str) -> Option<std::sync::Arc<str>>,
     ) -> Result<Self, Error> {
-        Self::from_str_impl(text, opt, viewport, Some(images), Some(fonts))
+        Self::from_str_impl(text, opt, viewport, Some(images), Some(fonts), Some(motion))
     }
 
     fn from_str_impl(
@@ -180,6 +185,7 @@ impl crate::svg::usvg::Tree {
         viewport: Option<crate::svg::usvg::Size>,
         resolver: Option<&dyn Fn(&str, &Options) -> Option<crate::svg::usvg::ImageKind>>,
         fonts: Option<&dyn crate::svg::usvg::FontProvider>,
+        motion: Option<&dyn Fn(&str) -> Option<std::sync::Arc<str>>>,
     ) -> Result<Self, Error> {
         let xml_opt = roxmltree::ParsingOptions {
             allow_dtd: true,
@@ -190,13 +196,13 @@ impl crate::svg::usvg::Tree {
             roxmltree::Document::parse_with_options(text, xml_opt).map_err(Error::ParsingFailed)?;
 
         let doc = svgtree::Document::parse_tree(&doc, opt.style_sheet.as_deref())?;
-        converter::convert_doc(&doc, opt, viewport, resolver, fonts)
+        converter::convert_doc(&doc, opt, viewport, resolver, fonts, motion)
     }
 
     /// Parses `Tree` from `roxmltree::Document`.
     pub fn from_xmltree(doc: &roxmltree::Document, opt: &Options) -> Result<Self, Error> {
         let doc = svgtree::Document::parse_tree(doc, opt.style_sheet.as_deref())?;
-        converter::convert_doc(&doc, opt, None, None, None)
+        converter::convert_doc(&doc, opt, None, None, None, None)
     }
 }
 

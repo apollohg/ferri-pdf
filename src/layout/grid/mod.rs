@@ -698,6 +698,7 @@ mod tests {
             work: crate::layout::work::Budget::new(crate::layout::MAX_LAYOUT_WORK),
             text: &text,
             canvas_images: false,
+            motion: Default::default(),
             page_height: document.page_box().geometry.content_box().height,
             sources: crate::layout::source::SourceIds::new(document.root()),
             clearance_targets: Default::default(),

@@ -52,6 +52,17 @@ fn collapsed_decoration(mut decoration: BoxDecoration, insets: [f32; 4]) -> BoxD
     decoration
 }
 
+fn collapsed_cell_decoration(decoration: BoxDecoration, insets: [f32; 4]) -> BoxDecoration {
+    let mut decoration = collapsed_decoration(decoration, insets);
+    let initial = BoxDecoration::default();
+    decoration.radii = initial.radii;
+    decoration.border_image = initial.border_image;
+    if decoration.shadows.iter().any(|shadow| !shadow.inset) {
+        std::sync::Arc::make_mut(&mut decoration.shadows).retain(|shadow| shadow.inset);
+    }
+    decoration
+}
+
 pub(crate) fn cell_height(measured: &MeasuredBlock<'_>) -> CellHeight {
     CellHeight {
         height: measured.height,
@@ -311,7 +322,7 @@ impl TableContaining<'_> {
     }
 }
 fn structural_geometry(style: &Style) -> bool {
-    !style.anchor.names.is_empty() || style.is_grouped()
+    !style.anchor.names.is_empty() || style.is_grouped() || style.has_transform_effects()
 }
 fn collect_structural_events<'a>(source: &'a BlockBox, events: &mut Vec<&'a SemanticEvent>) {
     events.extend(source.semantic_event());
@@ -859,18 +870,11 @@ impl<'a> TablePlan<'a> {
         };
         if self.data.collapsed.is_some() {
             paint.decoration =
-                collapsed_decoration(paint.decoration, self.data.cell_borders(index));
-            // Collapsed internal elements have neither radii nor border images.
-            let initial = BoxDecoration::default();
-            paint.decoration.radii = initial.radii;
-            paint.decoration.border_image = initial.border_image;
-            if paint.decoration.shadows.iter().any(|shadow| !shadow.inset) {
-                std::sync::Arc::make_mut(&mut paint.decoration.shadows)
-                    .retain(|shadow| shadow.inset);
-            }
+                collapsed_cell_decoration(paint.decoration, self.data.cell_borders(index));
         } else if !source.style().table.empty_cells && source.children().is_empty() {
             return Ok(measured);
         }
+        crate::layout::writing::owner_decoration(&mut measured, &paint.decoration);
         measured.paint = Some(paint);
         Ok(measured)
     }

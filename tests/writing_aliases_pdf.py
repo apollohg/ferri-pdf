@@ -160,6 +160,24 @@ class WritingAliasesPdf(unittest.TestCase):
                                           "text{glyph-orientation-vertical:revert-layer;writing-mode:revert-layer}", context),
                                expected, "stylesheet revert-layer restores the author presentational hint origin")
 
+    def test_svg_variables_resolve_before_alias_mapping_and_canonical_rollback(self):
+        for context in ["inline", "external", "data"]:
+            with self.subTest(context=context):
+                upright = self.image('writing-mode="vertical-rl" text-orientation="upright"', context=context)
+                self.assertInk(self.image('',
+                    "svg{--flow:tb;--glyph:0deg}text{writing-mode:var(--flow);glyph-orientation-vertical:var(--glyph)}", context),
+                    upright, "inherited variables feed the legacy grammar before canonical longhand mapping")
+                self.assertInk(self.image('writing-mode="tb" style="writing-mode:revert"',
+                    "svg{--glyph:0}text{glyph-orientation-vertical:var(--glyph)}", context),
+                    upright, "legacy writing-mode UA rollback survives variable-backed orientation")
+                sideways = self.image('writing-mode="vertical-rl" text-orientation="sideways"', context=context)
+                self.assertInk(self.image('writing-mode="vertical-rl" style="text-orientation:revert-layer"',
+                    "text{--glyph:90;glyph-orientation-vertical:var(--glyph)}", context),
+                    sideways, "modern inline rollback finds the variable-backed alias by canonical longhand")
+                self.assertInk(self.image('writing-mode="vertical-rl"',
+                    "svg{text-orientation:upright;--glyph:180deg}text{text-orientation:sideways;glyph-orientation-vertical:var(--glyph)}", context),
+                    upright, "invalid substituted alias syntax becomes unset rather than exposing a prior declaration")
+
     def test_later_upright_svg_span_controls_chunk_bidi_order(self):
         font = writing.ROOT / "tests/fixtures/fonts/CJKWritingTest.otf"
         rules = f"@font-face{{font-family:J;src:url('{font.as_uri()}')}}"

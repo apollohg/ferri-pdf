@@ -12,6 +12,7 @@ use crate::style::{
 const STACKING: &[Property] = &[
     Property::Opacity,
     Property::Transform,
+    Property::OffsetPath,
     Property::Translate,
     Property::Rotate,
     Property::Scale,
@@ -45,6 +46,7 @@ const BACKDROP_ROOT: &[Property] = &[
 /// with it an absolute-positioning one.
 const FIXED_CONTAINING: &[Property] = &[
     Property::Transform,
+    Property::OffsetPath,
     Property::Translate,
     Property::Rotate,
     Property::Scale,

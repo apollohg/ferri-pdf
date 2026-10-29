@@ -427,44 +427,49 @@ fn active_svg_data_urls_obey_the_callers_resource_budget() {
 fn svg_css_component_depth_is_bounded_before_native_conversion() {
     const EXCESSIVE_DEPTH: usize = 256;
     for (depth, allowed) in [(EXCESSIVE_DEPTH - 1, true), (EXCESSIVE_DEPTH, false)] {
-        let value = format!("{}x{}", "f(".repeat(depth), ")".repeat(depth));
-        for body in [
-            format!(
-                "<style>g{{--value:{value};display:contents}}</style><g transform='translate(50)'><rect width='20' height='20'/></g>"
-            ),
-            format!(
-                "<g style='--value:{value};display:contents' transform='translate(50)'><rect width='20' height='20'/></g>"
-            ),
-        ] {
-            let xml = format!("{SVG_OPEN}{body}</svg>");
-            let result = ImageCache::default().inline_svg(
-                xml,
-                &ResourceBase::default(),
-                &FileResolver::default(),
-            );
-            assert_eq!(
-                result.is_ok(),
-                allowed,
-                "CSS component depth {depth} must respect the established source bound"
-            );
-            if allowed {
-                let image = result.unwrap();
-                let Image::Svg(svg) = image.as_ref() else {
-                    panic!("vector image expected")
-                };
-                assert_bounds(&svg.tree(SIZE).unwrap(), [0.0, 0.0, 20.0, 20.0]);
-            } else {
-                assert!(
-                    matches!(
-                        result,
-                        Err(ImageError::Svg(
-                            crate::svg::usvg::Error::CssComponentDepthLimit {
-                                limit: EXCESSIVE_DEPTH
-                            }
-                        ))
-                    ),
-                    "the CSS depth limit must remain typed, not recover as malformed content"
+        for literal in ["x", r"\61", r#""var(""#] {
+            let value = format!("{}{literal}{}", "f(".repeat(depth), ")".repeat(depth));
+            for body in [
+                format!(
+                    "<style>g{{--value:{value};display:contents}}</style><g transform='translate(50)'><rect width='20' height='20'/></g>"
+                ),
+                format!(
+                    "<g style='--value:{value};display:contents' transform='translate(50)'><rect width='20' height='20'/></g>"
+                ),
+                format!(
+                    "<style>g{{--value:{value}}}</style><g style='--value:var(--missing,revert-layer);display:contents' transform='translate(50)'><rect width='20' height='20'/></g>"
+                ),
+            ] {
+                let xml = format!("{SVG_OPEN}{body}</svg>");
+                let result = ImageCache::default().inline_svg(
+                    xml,
+                    &ResourceBase::default(),
+                    &FileResolver::default(),
                 );
+                assert_eq!(
+                    result.is_ok(),
+                    allowed,
+                    "CSS component depth {depth} around {literal:?} must respect the established source bound"
+                );
+                if allowed {
+                    let image = result.unwrap();
+                    let Image::Svg(svg) = image.as_ref() else {
+                        panic!("vector image expected")
+                    };
+                    assert_bounds(&svg.tree(SIZE).unwrap(), [0.0, 0.0, 20.0, 20.0]);
+                } else {
+                    assert!(
+                        matches!(
+                            result,
+                            Err(ImageError::Svg(
+                                crate::svg::usvg::Error::CssComponentDepthLimit {
+                                    limit: EXCESSIVE_DEPTH
+                                }
+                            ))
+                        ),
+                        "the CSS depth limit must remain typed, not recover as malformed content"
+                    );
+                }
             }
         }
     }

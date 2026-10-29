@@ -268,13 +268,19 @@ impl<'a> Paginator<'a, '_, 'a> {
                 let grouped = source.style().is_grouped();
                 let transformed = source.style().has_transform_effects();
                 let isolated = grouped || transformed || source.style().forced_stacking_context();
+                let reference = source
+                    .style()
+                    .motion
+                    .active()
+                    .then(|| self.motion_block_reference())
+                    .flatten();
                 let mut clip = if transformed {
                     let node = self.clips.len();
                     self.clips.push(EffectNode {
                         native: None,
                         paints: Vec::new(),
                         parent: self.clip,
-                        effect: Effect::Transform(source.style(), None),
+                        effect: Effect::Transform(source.style(), None, reference),
                         fragments: Vec::new(),
                         areas: Vec::new(),
                         context: None,

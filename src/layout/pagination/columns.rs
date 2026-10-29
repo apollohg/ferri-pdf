@@ -48,6 +48,7 @@ struct RowFrame {
     first: usize,
     offset: [f32; 2],
     height: f32,
+    reference_height: f32,
     /// The container's definite height ends in this row, so further columns continue in the
     /// inline direction (§8.2).
     unbounded: bool,
@@ -111,7 +112,10 @@ impl ColumnRows {
             x: geometry.left(0),
             y: 0.0,
             width: geometry.width,
-            height: self.height(page),
+            height: self
+                .frames
+                .get(self.row(page))
+                .map_or(self.provisional, |frame| frame.reference_height),
         }
     }
     pub(super) fn containing(&self, page: usize) -> (f32, f32, bool, Option<f32>) {
@@ -464,7 +468,7 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
         self.state.height = self.state.fragmentainers.height(self.state.page);
     }
 
-    fn into_output(self, measurer: &mut Measurer<'t>) -> ColumnOutput<'a> {
+    fn into_output(self, measurer: &mut Measurer<'t>) -> Result<ColumnOutput<'a>, LayoutError> {
         assert!(
             self.cursor.is_none(),
             "column output requires a completed flow"
@@ -536,6 +540,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 clip_node: None,
                 outer_clip_node: None,
                 transform_node: None,
+                motion_reference_node: None,
+                motion_overflow: Vec::new(),
                 clip_rect_node: None,
                 clip_path_node: None,
                 parent_3d_node: None,
@@ -559,7 +565,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         paginator
     }
 
-    fn into_output(mut self) -> ColumnOutput<'a> {
+    fn into_output(mut self) -> Result<ColumnOutput<'a>, LayoutError> {
+        self.complete_column_motion()?;
         self.enter(self.page);
         let content = (0..self.pages.len())
             .map(|page| self.flow_content[page] || self.page_has_ink(page))
@@ -571,9 +578,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             .unwrap_or_default();
         pending.append(&mut self.fixed);
         let Fragmentainers::Columns(rows) = self.fragmentainers else {
-            unreachable!("nested paginators lay out columns")
+            unreachable!("nested paginators lay out columns");
         };
-        ColumnOutput {
+        Ok(ColumnOutput {
             anchors: self.anchors,
             overflow: self.root_overflow,
             string_locations: self.string_locations,
@@ -593,7 +600,19 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             frame_reads: self.frame_reads,
             rows,
             markers_left: self.boxes.iter().any(|active| active.marker.is_some()),
+        })
+    }
+
+    pub(super) fn complete_column_motion(&mut self) -> Result<(), LayoutError> {
+        if let Some(node) = self.motion_column {
+            let Fragmentainers::Columns(rows) = &self.fragmentainers else {
+                unreachable!("column references belong to column paginators");
+            };
+            self.clips[node].areas = (0..self.pages.len())
+                .map(|column| (column, rows.content_box(column)))
+                .collect();
         }
+        self.complete_column_overflow()
     }
 
     pub(super) fn for_frame(measurer: &'m mut Measurer<'t>, area: Rect) -> Self {
@@ -794,6 +813,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             first: 0,
             offset: self.offset,
             height: height.0,
+            reference_height: height.0,
             unbounded: height.1,
             page_rect: Rect {
                 y: self.page_rect.y - self.top - self.y,
@@ -848,6 +868,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             cursor
                 .layout
                 .used_height(row, height.0, remaining.is_some(), cursor.balance, end);
+        cursor.layout.rows_mut().frames[row].reference_height = used;
         cursor.placements.push(RowPlacement {
             position: self.flow_position(),
             used,
@@ -864,7 +885,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let forced = match end {
             RowEnd::Content => {
                 let final_position = self.flow_position();
-                let mut output = cursor.layout.into_output(self.measurer);
+                let mut output = cursor.layout.into_output(self.measurer)?;
                 let mut placements = Vec::new();
                 for (row, placement) in cursor.placements.into_iter().enumerate() {
                     self.measurer.work.spend(1)?;
@@ -1211,6 +1232,7 @@ pub(crate) fn measure_columns<'a>(
                             first: 0,
                             offset: [0.0; 2],
                             height: frame.0,
+                            reference_height: frame.0,
                             unbounded: frame.1,
                             page_rect: UNPLACED_PAGE,
                         });

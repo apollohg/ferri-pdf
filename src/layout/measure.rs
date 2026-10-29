@@ -588,6 +588,7 @@ impl<'a> BlockSource<'a> {
 #[derive(Clone)]
 pub(super) struct FrameOwner<'a> {
     pub source: BlockSource<'a>,
+    pub paint: BoxPaint,
     pub containing: Rect,
     pub padding: [f32; 4],
 }
@@ -611,6 +612,7 @@ pub(super) struct Measurer<'a> {
     pub work: crate::layout::work::Budget,
     pub text: &'a TextContext<'a>,
     pub canvas_images: bool,
+    pub motion: std::rc::Rc<crate::layout::motion::Resources>,
     pub page_height: f32,
     pub sources: crate::layout::source::SourceIds,
     pub clearance_targets: std::collections::HashMap<*const BlockBox, usize>,
@@ -648,6 +650,7 @@ impl<'a> Measurer<'a> {
             work,
             text,
             canvas_images: false,
+            motion: Default::default(),
             page_height: size[1],
             sources: crate::layout::source::SourceIds::new(root),
             item_metrics: Default::default(),
@@ -728,7 +731,9 @@ impl<'a> Measurer<'a> {
             || style.decoration.masks.is_masked()
             || style.contains_absolute()
             || style.is_scroll_container()
-            || contains_sticky(block.block)
+            || contains_child(block.block, |style| {
+                is_sticky(style) || style.motion.active()
+            })
             || bounds_enclosing_inline(block.block)
             || !block.navigation().is_empty();
         let rect = geometry.border_box(0.0);
@@ -1959,13 +1964,9 @@ fn is_sticky(style: &Style) -> bool {
 
 /// Whether the block is the containing block of a sticky box, which its fragments constrain
 /// (CSS Position 3 §3.4).
-fn contains_sticky(block: &BlockBox) -> bool {
+fn contains_child(block: &BlockBox, check: impl Fn(&Style) -> bool) -> bool {
     let sticky = |child: &BlockBox| {
-        is_sticky(child.style())
-            || child
-                .enclosing_inline()
-                .iter()
-                .any(|style| is_sticky(style))
+        check(child.style()) || child.enclosing_inline().iter().any(|style| check(style))
     };
     block.children().iter().any(|child| match child {
         BlockContent::Block(child) | BlockContent::Positioned(child) => sticky(child),
@@ -1973,10 +1974,7 @@ fn contains_sticky(block: &BlockBox) -> bool {
             paragraph
                 .inline_blocks()
                 .any(|atomic| sticky(&atomic.block))
-                || paragraph
-                    .boxes()
-                    .iter()
-                    .any(|inline| is_sticky(&inline.style))
+                || paragraph.boxes().iter().any(|inline| check(&inline.style))
         }
         BlockContent::Events(_) => false,
     })

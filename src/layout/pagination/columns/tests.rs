@@ -12,7 +12,7 @@ where
         while self.cursor.is_some() {
             self = self.advance(measurer)?;
         }
-        Ok(self.into_output(measurer))
+        self.into_output(measurer)
     }
 }
 
@@ -107,6 +107,7 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
             work: crate::layout::work::Budget::new(crate::layout::MAX_LAYOUT_WORK),
             text: &text,
             canvas_images: false,
+            motion: Default::default(),
             page_height: area.height,
             sources: crate::layout::source::SourceIds::new(document.root()),
             item_metrics: Default::default(),
@@ -140,6 +141,7 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
             first: 0,
             offset: [0.0; 2],
             height: COLUMN_HEIGHT,
+            reference_height: COLUMN_HEIGHT,
             unbounded: false,
             page_rect: UNPLACED_PAGE,
         });
@@ -205,7 +207,11 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
                         let layout = layout.advance(&mut measurer).unwrap();
                         advances += 1;
                         if layout.cursor.is_none() {
-                            outputs.push(layout.into_output(&mut measurer));
+                            outputs.push(
+                                layout
+                                    .into_output(&mut measurer)
+                                    .expect("finalize completed column candidate"),
+                            );
                         } else {
                             layouts[index] = Some(layout);
                         }
@@ -266,7 +272,9 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
             while candidate.cursor.is_some() {
                 candidate = candidate.advance(&mut measurer).unwrap();
             }
-            let output = candidate.into_output(&mut measurer);
+            let output = candidate
+                .into_output(&mut measurer)
+                .expect("finalize column candidate");
             assert_eq!(
                 lines(&output),
                 lines(&expected),
@@ -282,7 +290,9 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
         while committed.cursor.is_some() {
             committed = committed.advance(&mut measurer).unwrap();
         }
-        let output = committed.into_output(&mut measurer);
+        let output = committed
+            .into_output(&mut measurer)
+            .expect("finalize committed columns");
         assert_eq!(
             lines(&output),
             lines(&expected),

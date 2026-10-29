@@ -32,6 +32,18 @@ impl Expanded {
     pub(super) fn as_str(&self) -> &str {
         &self.source
     }
+    fn literal(source: String) -> Result<Self, StyleError> {
+        if source.len() > MAX_VALUE_BYTES {
+            return Err(StyleError::VariableLimit {
+                resource: "specified value bytes",
+                limit: MAX_VALUE_BYTES,
+            });
+        }
+        Ok(Self {
+            source: source.into(),
+            taint: None,
+        })
+    }
     pub(super) fn len(&self) -> usize {
         self.source.len()
     }
@@ -136,6 +148,12 @@ impl Reference {
             })
     }
 }
+pub(super) fn substitution_function(name: &str) -> bool {
+    Reference::from_name(name).is_some()
+        || name.eq_ignore_ascii_case(crate::style::conditional::FUNCTION)
+        || name.eq_ignore_ascii_case(crate::style::attribute::FUNCTION)
+}
+
 #[derive(Debug)]
 enum ValueError {
     Syntax,
@@ -656,20 +674,36 @@ pub(super) fn dependencies_in(
     scan(&mut Parser::new(&mut input), depth, output)
 }
 
+pub(super) enum Source {
+    Css(String),
+    /// A substitution-free token stream already validated by its source parser.
+    Literal(String),
+}
+impl From<String> for Source {
+    fn from(value: String) -> Self {
+        Self::Css(value)
+    }
+}
 pub(super) enum Resolution {
     Complete(Environment),
     Wide { name: String, keyword: WideKeyword },
 }
 
+#[derive(Clone, Copy)]
+pub(super) enum WideHandling<'a> {
+    Recascade,
+    Fallback(&'a RefCell<HashMap<String, Source>>),
+}
 pub(super) fn resolve(
     parent: &Environment,
-    declarations: HashMap<String, String>,
+    declarations: HashMap<String, impl Into<Source>>,
+    wide: WideHandling<'_>,
 ) -> Result<Resolution, StyleError> {
     if declarations.is_empty() {
         return Ok(Resolution::Complete(parent.clone()));
     }
     let resolver = Resolver::new(parent, declarations)?;
-    let evaluation = ReferencesOnly(&resolver);
+    let evaluation = ReferencesOnly(&resolver, wide);
     for name in resolver.names() {
         if let Some((name, keyword)) = resolver.compute(&name, &evaluation)? {
             return Ok(Resolution::Wide { name, keyword });
@@ -682,7 +716,7 @@ mod cycles;
 pub(super) type Values = HashMap<String, Option<Rc<Value>>>;
 pub(super) enum Recascade {
     Restart,
-    Source(Option<String>),
+    Source(Option<Source>),
 }
 pub(super) trait Evaluation {
     fn enter(&self, name: &str) -> Result<(), StyleError>;
@@ -704,7 +738,7 @@ pub(super) struct Resolver {
 impl Resolver {
     pub(super) fn new(
         parent: &Environment,
-        declarations: HashMap<String, String>,
+        declarations: HashMap<String, impl Into<Source>>,
     ) -> Result<Self, StyleError> {
         let mut computed = Variables {
             parent: Some(parent.clone()),
@@ -714,6 +748,11 @@ impl Resolver {
         };
         let mut values = Values::new();
         for (name, source) in declarations {
+            let source = source.into();
+            let (source, literal) = match source {
+                Source::Css(source) => (source, false),
+                Source::Literal(source) => (source, true),
+            };
             let wide = WideKeyword::parse(&source);
             if matches!(
                 wide,
@@ -734,6 +773,12 @@ impl Resolver {
                 });
             }
             computed.charge_bytes(name.len())?;
+            if literal && wide.is_none() {
+                let value = Expanded::literal(source)?;
+                computed.charge_bytes(value.storage_len())?;
+                computed.values.insert(name, Some(value));
+                continue;
+            }
             computed.values.insert(name.clone(), None);
             if !matches!(wide, Some(WideKeyword::Initial)) {
                 values.insert(name, Value::parse(&source)?.map(Rc::new));
@@ -838,7 +883,7 @@ impl Resolver {
                 match evaluation.recascade(name, keyword)? {
                     Recascade::Restart => return Ok(Some((name.to_owned(), keyword))),
                     Recascade::Source(source) => {
-                        self.replace(name, source.as_deref())?;
+                        self.replace(name, source)?;
                         continue;
                     }
                 }
@@ -860,8 +905,13 @@ impl Resolver {
         }
     }
 
-    fn replace(&self, name: &str, source: Option<&str>) -> Result<(), StyleError> {
-        let keyword = source.and_then(WideKeyword::parse);
+    fn replace(&self, name: &str, source: Option<Source>) -> Result<(), StyleError> {
+        let (source, literal) = match source {
+            Some(Source::Literal(source)) => (Some(source), true),
+            Some(Source::Css(source)) => (Some(source), false),
+            None => (None, false),
+        };
+        let keyword = source.as_deref().and_then(WideKeyword::parse);
         if source.is_none() || matches!(keyword, Some(WideKeyword::Inherit | WideKeyword::Unset)) {
             self.values.borrow_mut().remove(name);
             let mut computed = self.computed.borrow_mut();
@@ -881,7 +931,17 @@ impl Resolver {
             self.finished.borrow_mut().insert(name.to_owned());
             return Ok(());
         }
-        let value = Value::parse(source.expect("noninitial custom source exists"))?.map(Rc::new);
+        if literal && keyword.is_none() {
+            let value = Expanded::literal(source.expect("literal custom source exists"))?;
+            self.values.borrow_mut().remove(name);
+            let mut computed = self.computed.borrow_mut();
+            computed.charge_bytes(value.storage_len())?;
+            computed.values.insert(name.to_owned(), Some(value));
+            self.finished.borrow_mut().insert(name.to_owned());
+            return Ok(());
+        }
+        let value =
+            Value::parse(source.as_deref().expect("noninitial custom source exists"))?.map(Rc::new);
         self.values.borrow_mut().insert(name.to_owned(), value);
         let cyclic = cycles::members(&self.values.borrow());
         let mut computed = self.computed.borrow_mut();
@@ -895,7 +955,7 @@ impl Resolver {
     }
 }
 
-struct ReferencesOnly<'a>(&'a Resolver);
+struct ReferencesOnly<'a>(&'a Resolver, WideHandling<'a>);
 impl Evaluation for ReferencesOnly<'_> {
     fn enter(&self, _name: &str) -> Result<(), StyleError> {
         Ok(())
@@ -928,8 +988,15 @@ impl Evaluation for ReferencesOnly<'_> {
             Ok(source.get(name).and_then(Clone::clone))
         })
     }
-    fn recascade(&self, _name: &str, _keyword: WideKeyword) -> Result<Recascade, StyleError> {
-        Ok(Recascade::Restart)
+    fn recascade(&self, name: &str, keyword: WideKeyword) -> Result<Recascade, StyleError> {
+        Ok(match self.1 {
+            WideHandling::Recascade => Recascade::Restart,
+            WideHandling::Fallback(previous) => Recascade::Source(match keyword {
+                WideKeyword::Initial => Some(keyword.name().to_owned().into()),
+                WideKeyword::RevertLayer => previous.borrow_mut().remove(name),
+                _ => None,
+            }),
+        })
     }
 }
 

@@ -70,6 +70,8 @@ fn parse<'input>(
 ) -> Result<Document<'input>, Error> {
     let mut doc = Document {
         nodes: Vec::new(),
+        variables: HashMap::new(),
+        style_error: None,
         attrs: Vec::new(),
         links: HashMap::new(),
         css_limit: None,
@@ -324,106 +326,233 @@ pub(crate) fn parse_svg_element<'input>(
         Vec::new()
     };
 
-    let inline_phase = std::cell::Cell::new(false);
-    let presentation_baseline: HashMap<_, _> = doc.attrs[attrs_start_idx..presentation_end_idx]
-        .iter()
-        .filter(|attr| is_writing_attribute(attr.name))
-        .map(|attr| (attr.name.to_str(), attr.value.to_string()))
+    let host = || {
+        host_instance
+            .into_iter()
+            .flat_map(|scope| style_sheet.matching_declarations(xml_node, Some(scope)))
+    };
+    let mut declarations: Vec<(&Declaration, bool, bool)> = host()
+        .filter(|decl| !decl.important)
+        .map(|decl| (decl, false, false))
         .collect();
-    let mut inline_baseline = HashMap::<&str, Option<String>>::new();
-    let mut insert_attribute = |aid, value: &str, important: bool, override_presentation: bool| {
-        let normalized;
-        let (aid, value) = if is_writing_attribute(aid) {
-            let Some((mapped, mut value)) = writing_attribute(aid, value) else {
-                return;
-            };
-            if inline_phase.get() {
-                inline_baseline.entry(mapped.to_str()).or_insert_with(|| {
-                    doc.attrs[attrs_start_idx..]
-                        .iter()
-                        .find(|attr| attr.name == mapped)
-                        .map(|attr| attr.value.to_string())
-                });
-            }
-            if value == "revert-layer" {
-                let previous = if inline_phase.get() {
-                    inline_baseline
-                        .get(mapped.to_str())
-                        .and_then(Option::as_ref)
-                } else {
-                    presentation_baseline.get(mapped.to_str())
-                };
-                if let Some(previous) = previous {
-                    value.clone_from(previous);
-                }
-            }
-            if matches!(value.as_str(), "revert" | "revert-layer") {
-                value = if mapped == AId::WritingMode {
-                    xml_node
-                        .attribute("writing-mode")
-                        .filter(|value| {
-                            matches!(*value, "lr" | "lr-tb" | "rl" | "rl-tb" | "tb" | "tb-rl")
-                        })
-                        .and_then(|value| writing_attribute(mapped, value).map(|(_, value)| value))
-                        .unwrap_or_else(|| "inherit".into())
-                } else {
-                    "inherit".into()
-                };
-            }
-            normalized = value;
-            (mapped, normalized.as_str())
-        } else {
-            (aid, value)
-        };
-        // Check that attribute already exists.
-        let idx = doc.attrs[attrs_start_idx..]
-            .iter_mut()
-            .position(|a| a.name == aid);
-        if !override_presentation
-            && idx.is_some_and(|idx| attrs_start_idx + idx < presentation_end_idx)
-        {
-            return;
+    declarations.extend(
+        style_sheet
+            .matching_declarations(xml_node, None)
+            .map(|decl| (decl, true, false)),
+    );
+    declarations.extend(inline_declarations.iter().map(|decl| (decl, true, true)));
+    declarations.extend(
+        host()
+            .filter(|decl| decl.important)
+            .map(|decl| (decl, true, false)),
+    );
+    let mut custom: HashMap<String, (String, bool, bool)> = HashMap::new();
+    let mut custom_baseline = None;
+    let mut custom_previous = HashMap::new();
+    for (declaration, _, inline) in &declarations {
+        if *inline && custom_baseline.is_none() {
+            custom_baseline = Some(custom.clone());
         }
-
-        // Append an attribute as usual.
-        let added = append_attribute(
-            parent_id,
-            tag_name,
-            aid,
-            roxmltree::StringStorage::new_owned(value),
-            important,
-            doc,
-        );
-
-        // Check that attribute was actually added, because it could be skipped.
-        if added {
-            if let Some(idx) = idx {
-                let last_idx = doc.attrs.len() - 1;
-                let existing_idx = attrs_start_idx + idx;
-
-                let has_precedence = important || !doc.attrs[existing_idx].important;
-
-                if has_precedence {
-                    doc.attrs.swap(existing_idx, last_idx);
-                }
-
-                // Remove last.
-                doc.attrs.pop();
+        if !declaration.name.starts_with("--") {
+            continue;
+        }
+        match crate::style::svg_cascade::valid_custom(declaration.value, declaration.substitutions)
+        {
+            Ok(true) => {}
+            Ok(false) => continue,
+            Err(error) => {
+                doc.style_error.get_or_insert(std::sync::Arc::new(error));
+                continue;
             }
+        }
+        if custom
+            .get(&*declaration.name)
+            .is_some_and(|(_, important, _)| *important && !declaration.important)
+        {
+            continue;
+        }
+        let previous = custom_baseline
+            .as_ref()
+            .filter(|_| *inline)
+            .and_then(|baseline| baseline.get(&*declaration.name));
+        custom_previous.remove(&*declaration.name);
+        if let Some((value, _, substitutions)) = previous {
+            custom_previous.insert(
+                declaration.name.to_string(),
+                (value.clone(), *substitutions),
+            );
+        }
+        let (value, substitutions) =
+            if crate::style::svg_cascade::WideKeyword::parse(declaration.value)
+                == Some(crate::style::svg_cascade::WideKeyword::RevertLayer)
+            {
+                previous.map_or_else(
+                    || ("inherit".to_owned(), false),
+                    |(value, _, substitutions)| (value.clone(), *substitutions),
+                )
+            } else {
+                (declaration.value.to_owned(), declaration.substitutions)
+            };
+        custom.insert(
+            declaration.name.to_string(),
+            (value, declaration.important, substitutions),
+        );
+    }
+    let inherited = doc
+        .variables
+        .get(&parent_id.get_usize())
+        .cloned()
+        .unwrap_or_default();
+    let variables = match inherited.child(
+        custom
+            .into_iter()
+            .map(|(name, (value, _, substitutions))| (name, (value, substitutions)))
+            .collect(),
+        custom_previous,
+    ) {
+        Ok(variables) => variables,
+        Err(error) => {
+            doc.style_error.get_or_insert(std::sync::Arc::new(error));
+            inherited
         }
     };
 
-    let mut write_declaration = |declaration: &Declaration, override_presentation: bool| {
+    let legacy_writing_default = xml_node
+        .attribute("writing-mode")
+        .filter(|value| matches!(*value, "lr" | "lr-tb" | "rl" | "rl-tb" | "tb" | "tb-rl"))
+        .and_then(|value| writing_attribute(AId::WritingMode, value).map(|(_, value)| value));
+    let inline_phase = std::cell::Cell::new(false);
+    let presentation_baseline: HashMap<_, _> = doc.attrs[attrs_start_idx..presentation_end_idx]
+        .iter()
+        .map(|attr| (attr.name.to_str(), attr.value.to_string()))
+        .collect();
+    let mut inline_baseline = HashMap::<&str, Option<String>>::new();
+    let mut insert_attribute =
+        |aid: AId, value: &str, important: bool, override_presentation: bool| {
+            use crate::style::svg_cascade::WideKeyword;
+            let normalized;
+            let (aid, value) = if is_writing_attribute(aid) {
+                let Some((mapped, value)) = writing_attribute(aid, value) else {
+                    return;
+                };
+                normalized = value;
+                (mapped, normalized.as_str())
+            } else {
+                (aid, value)
+            };
+            if inline_phase.get() {
+                inline_baseline.entry(aid.to_str()).or_insert_with(|| {
+                    doc.attrs[attrs_start_idx..]
+                        .iter()
+                        .find(|attr| attr.name == aid)
+                        .map(|attr| attr.value.to_string())
+                });
+            }
+            let fallback = if aid == AId::WritingMode {
+                legacy_writing_default.as_deref().unwrap_or("unset")
+            } else {
+                "unset"
+            };
+            let value = match WideKeyword::parse(value) {
+                Some(WideKeyword::RevertLayer) => if inline_phase.get() {
+                    inline_baseline.get(aid.to_str()).and_then(Option::as_deref)
+                } else {
+                    presentation_baseline.get(aid.to_str()).map(String::as_str)
+                }
+                .unwrap_or(fallback),
+                Some(WideKeyword::Revert) => fallback,
+                _ => value,
+            };
+            // Check that attribute already exists.
+            let idx = doc.attrs[attrs_start_idx..]
+                .iter_mut()
+                .position(|a| a.name == aid);
+            if !override_presentation
+                && idx.is_some_and(|idx| attrs_start_idx + idx < presentation_end_idx)
+            {
+                return;
+            }
+
+            // Append an attribute as usual.
+            let added = append_attribute(
+                parent_id,
+                tag_name,
+                aid,
+                roxmltree::StringStorage::new_owned(value),
+                important,
+                doc,
+            );
+
+            // Check that attribute was actually added, because it could be skipped.
+            if added {
+                if let Some(idx) = idx {
+                    let last_idx = doc.attrs.len() - 1;
+                    let existing_idx = attrs_start_idx + idx;
+
+                    let has_precedence = important || !doc.attrs[existing_idx].important;
+
+                    if has_precedence {
+                        doc.attrs.swap(existing_idx, last_idx);
+                    }
+
+                    // Remove last.
+                    doc.attrs.pop();
+                }
+            }
+        };
+
+    let mut write_declaration = |declaration: &Declaration,
+                                 override_presentation: bool|
+     -> Result<(), crate::style::StyleError> {
+        if declaration.name.starts_with("--") {
+            return Ok(());
+        }
         // TODO: perform XML attribute normalization
         let imp = declaration.important;
-        let val = declaration.value;
+        let substituted = variables.substitute(
+            &declaration.name,
+            declaration.value,
+            declaration.substitutions,
+        )?;
+        let val = match &substituted {
+            crate::style::svg_cascade::Substitution::Value(value) => value.as_ref(),
+            crate::style::svg_cascade::Substitution::Unset => "unset",
+            crate::style::svg_cascade::Substitution::Discard => return Ok(()),
+        };
 
-        if declaration.name == "marker" {
+        if declaration.name == "offset" {
+            for (property, value) in crate::style::svg_cascade::expand("offset", val)? {
+                if let Some(aid) = AId::from_str(property) {
+                    insert_attribute(aid, &value, imp, override_presentation);
+                }
+            }
+        } else if let Some(aid) = match &*declaration.name {
+            "translate" => Some(AId::CssTranslate),
+            "rotate" => Some(AId::CssRotate),
+            "scale" => Some(AId::CssScale),
+            _ => None,
+        } {
+            if !crate::style::svg_cascade::expand(&declaration.name, val)?.is_empty() {
+                insert_attribute(aid, val, imp, override_presentation);
+            }
+        } else if declaration.name == "marker" {
             insert_attribute(AId::MarkerStart, val, imp, override_presentation);
             insert_attribute(AId::MarkerMid, val, imp, override_presentation);
             insert_attribute(AId::MarkerEnd, val, imp, override_presentation);
         } else if declaration.name == "font" {
-            if let Ok(shorthand) = FontShorthand::from_str(val) {
+            if crate::style::svg_cascade::WideKeyword::parse(val).is_some() {
+                insert_attribute(AId::FontVariant, val, imp, override_presentation);
+                for (property, value) in crate::style::svg_cascade::expand("font", val)? {
+                    let aid = if property == "font-width" {
+                        Some(AId::FontStretch)
+                    } else {
+                        AId::from_str(property)
+                    };
+                    if let Some(aid) = aid {
+                        insert_attribute(aid, &value, imp, override_presentation);
+                    }
+                }
+            } else if let Ok(shorthand) = FontShorthand::from_str(val) {
                 // First we need to reset all values to their default.
                 insert_attribute(AId::FontStyle, "normal", imp, override_presentation);
                 insert_attribute(AId::FontVariant, "normal", imp, override_presentation);
@@ -493,30 +622,24 @@ pub(crate) fn parse_svg_element<'input>(
         } else if let Some(aid) = AId::from_str(&declaration.name) {
             // Parse only the presentation attributes.
             if aid.is_presentation() {
+                if declaration.name.starts_with("offset-")
+                    && crate::style::svg_cascade::expand(&declaration.name, val)?.is_empty()
+                {
+                    return Ok(());
+                }
                 insert_attribute(aid, val, imp, override_presentation);
             }
         }
+        Ok(())
     };
-
-    let host_declarations = || {
-        host_instance
-            .into_iter()
-            .flat_map(|scope| style_sheet.matching_declarations(xml_node, Some(scope)))
-    };
-    // Normal outer declarations win; important declarations reverse encapsulation order.
-    for declaration in host_declarations().filter(|declaration| !declaration.important) {
-        write_declaration(declaration, false);
-    }
-    for declaration in style_sheet.matching_declarations(xml_node, None) {
-        write_declaration(declaration, true);
-    }
-    inline_phase.set(true);
-    for declaration in &inline_declarations {
-        write_declaration(declaration, true);
-    }
-    inline_phase.set(false);
-    for declaration in host_declarations().filter(|declaration| declaration.important) {
-        write_declaration(declaration, true);
+    let styled = declarations
+        .into_iter()
+        .try_for_each(|(declaration, overrides, inline)| {
+            inline_phase.set(inline);
+            write_declaration(declaration, overrides)
+        });
+    if let Err(error) = styled {
+        doc.style_error.get_or_insert(std::sync::Arc::new(error));
     }
 
     if doc.nodes.len() > MAX_SVG_NODES {
@@ -531,6 +654,7 @@ pub(crate) fn parse_svg_element<'input>(
         },
     );
 
+    doc.variables.insert(node_id.get_usize(), variables);
     Ok(node_id)
 }
 
@@ -588,15 +712,24 @@ fn append_attribute<'input>(
         return false;
     }
 
-    if aid.allows_inherit_value() && &*value == "inherit" {
-        return resolve_inherit(parent_id, aid, doc);
-    }
-
+    let value = if aid.allows_inherit_value() {
+        use crate::style::svg_cascade::WideKeyword;
+        match WideKeyword::parse(&value) {
+            Some(WideKeyword::Inherit) => return resolve_inherit(parent_id, aid, important, doc),
+            Some(WideKeyword::Unset) if aid.is_inheritable() => {
+                return resolve_inherit(parent_id, aid, important, doc);
+            }
+            Some(WideKeyword::Unset | WideKeyword::Initial) => initial_value(aid),
+            _ => value,
+        }
+    } else {
+        value
+    };
     doc.append_attribute(aid, value, important);
     true
 }
 
-fn resolve_inherit(parent_id: NodeId, aid: AId, doc: &mut Document) -> bool {
+fn resolve_inherit(parent_id: NodeId, aid: AId, important: bool, doc: &mut Document) -> bool {
     if aid.is_inheritable() {
         // Inheritable attributes can inherit a value from an any ancestor.
         let node_id = doc
@@ -615,7 +748,7 @@ fn resolve_inherit(parent_id: NodeId, aid: AId, doc: &mut Document) -> bool {
                 doc.attrs.push(Attribute {
                     name: aid,
                     value: attr.value,
-                    important: attr.important,
+                    important,
                 });
 
                 return true;
@@ -633,14 +766,23 @@ fn resolve_inherit(parent_id: NodeId, aid: AId, doc: &mut Document) -> bool {
             doc.attrs.push(Attribute {
                 name: aid,
                 value: attr.value,
-                important: attr.important,
+                important,
             });
 
             return true;
         }
     }
 
-    // Fallback to a default value if possible.
+    let value = if aid == AId::TransformOrigin {
+        roxmltree::StringStorage::Borrowed("0 0")
+    } else {
+        initial_value(aid)
+    };
+    doc.append_attribute(aid, value, important);
+    true
+}
+
+fn initial_value(aid: AId) -> roxmltree::StringStorage<'static> {
     let value = match aid {
         AId::ImageRendering | AId::ShapeRendering | AId::TextRendering => "auto",
 
@@ -687,11 +829,20 @@ fn resolve_inherit(parent_id: NodeId, aid: AId, doc: &mut Document) -> bool {
         AId::TextOrientation => "mixed",
         AId::Visibility => "visible",
         AId::WritingMode => "lr-tb",
-        _ => return false,
+        _ => {
+            let name = match aid {
+                AId::CssTranslate => "translate",
+                AId::CssRotate => "rotate",
+                AId::CssScale => "scale",
+                _ => aid.to_str(),
+            };
+            return crate::style::svg_cascade::initial(name)
+                .map(|value| roxmltree::StringStorage::new_owned(&value))
+                .unwrap_or(roxmltree::StringStorage::Borrowed(super::CSS_INITIAL));
+        }
     };
 
-    doc.append_attribute(aid, roxmltree::StringStorage::Borrowed(value), false);
-    true
+    roxmltree::StringStorage::Borrowed(value)
 }
 
 fn resolve_href<'a, 'input: 'a>(

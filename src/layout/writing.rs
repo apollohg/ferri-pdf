@@ -207,35 +207,39 @@ pub(super) fn map_rect(matrix: [f32; 6], rect: Rect) -> Rect {
     }
 }
 pub(super) fn map_clip(matrix: [f32; 6], mut clip: Clip) -> Clip {
-    let [a, b, c, d, _, _] = matrix;
+    let [a, _, _, d, _, _] = matrix;
     let swapped = a == 0.0 && d == 0.0;
-    let center = [a + c, b + d].map(|value| value / 2.0);
-    let mut corners = [[0.0; 2]; 4];
-    for (source, [x, y]) in [[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]]
-        .into_iter()
-        .enumerate()
-    {
-        let right = a * x + c * y > center[0];
-        let bottom = b * x + d * y > center[1];
-        let target = match (right, bottom) {
-            (false, false) => 0,
-            (true, false) => 1,
-            (true, true) => 2,
-            (false, true) => 3,
-        };
-        let mut radius = clip.radii[source];
-        if swapped {
-            radius.swap(0, 1);
-        }
-        corners[target] = radius;
-    }
-    clip.radii = corners;
+    clip.radii = map_radii(matrix, &clip.radii);
     if swapped {
         clip.axes.swap(0, 1);
     }
     clip.rect = map_rect(matrix, clip.rect);
     clip.reference_box = clip.reference_box.map(|rect| map_rect(matrix, rect));
     clip
+}
+
+pub(super) fn map_radii<T: Clone>(matrix: [f32; 6], radii: &[[T; 2]; 4]) -> [[T; 2]; 4] {
+    let [a, b, c, d, _, _] = matrix;
+    let swapped = a == 0.0 && d == 0.0;
+    let center = [a + c, b + d].map(|value| value / 2.0);
+    let mut corners = radii.clone();
+    for (source, [x, y]) in [[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]]
+        .into_iter()
+        .enumerate()
+    {
+        let target = match (a * x + c * y > center[0], b * x + d * y > center[1]) {
+            (false, false) => 0,
+            (true, false) => 1,
+            (true, true) => 2,
+            (false, true) => 3,
+        };
+        let mut radius = radii[source].clone();
+        if swapped {
+            radius.swap(0, 1);
+        }
+        corners[target] = radius;
+    }
+    corners
 }
 
 pub(super) fn compose([a, b, c, d, e, f]: [f32; 6], [g, h, i, j, k, l]: [f32; 6]) -> [f32; 6] {
@@ -564,7 +568,7 @@ pub(super) fn measure<'a>(
     if block.layout_flow().writing_mode.vertical() {
         physical_size.swap(0, 1);
     }
-    if style.contains_absolute() || style.contains_fixed() {
+    {
         let containing_height = if style.display == crate::style::Display::TableCell {
             vertical.definite().unwrap_or(used_content_height)
         } else {
@@ -588,6 +592,7 @@ pub(super) fn measure<'a>(
         );
         measured.frame_owner = Some(Box::new(super::measure::FrameOwner {
             source: block,
+            paint: owner_paint(block, &geometry, padding, own, size),
             containing: map_rect(matrix, padding),
             padding: own.horizontal().sides(
                 own,
@@ -664,6 +669,42 @@ pub(super) fn measure<'a>(
     })
 }
 
+fn owner_paint(
+    source: super::measure::BlockSource<'_>,
+    geometry: &super::geometry::HorizontalBox,
+    padding: Rect,
+    own: Flow,
+    size: [f32; 2],
+) -> BoxPaint {
+    let mut paint = BoxPaint {
+        padding: geometry.padding,
+        ..BoxPaint::whole(
+            crate::paint::outset(padding, geometry.border),
+            source.style().decoration.with_image_type(),
+        )
+    };
+    Frame::physical(source.layout_flow(), size).paint(&mut paint);
+    Frame::physical(own, size).inverse().paint(&mut paint);
+    paint
+}
+
+pub(super) fn owner_decoration(
+    block: &mut super::measure::MeasuredBlock<'_>,
+    decoration: &crate::graphics::BoxDecoration,
+) {
+    let parent = block.source.layout_flow();
+    for item in &mut block.items {
+        if let super::measure::FlowItem::Frame { inner, .. } = item {
+            let own = Flow::used(inner.style);
+            let inner = std::rc::Rc::make_mut(inner);
+            if let Some(owner) = inner.frame_owner.as_mut() {
+                let physical = logical::decoration(decoration, parent.horizontal(), parent);
+                owner.paint.decoration = logical::decoration(&physical, own, own.horizontal());
+            }
+        }
+    }
+}
+
 pub(super) fn align_cell_frame(
     block: &mut super::measure::MeasuredBlock<'_>,
     offset: f32,
@@ -706,11 +747,19 @@ pub(super) fn align_cell_frame(
                 continue;
             }
             let inner = std::rc::Rc::make_mut(inner);
-            inner
+            let owner = inner
                 .frame_owner
                 .as_mut()
-                .expect("a native cell owner was retained")
-                .containing = containing;
+                .expect("a native cell owner was retained");
+            owner.containing = containing;
+            owner.paint.rect = crate::paint::outset(
+                containing,
+                owner
+                    .paint
+                    .decoration
+                    .borders
+                    .map(crate::paint::Border::used_width),
+            );
         }
     }
 }

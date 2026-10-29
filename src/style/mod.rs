@@ -64,6 +64,7 @@ pub(crate) use transform::{Parent3d, Rotation, TransformBox, TransformFunction, 
 pub(crate) use user_agent::legacy_color;
 pub(crate) use widget_values::{Appearance, FieldSizing, WidgetStyle};
 mod attribute;
+pub(crate) mod motion;
 mod properties;
 mod resolution;
 mod ruby_values;
@@ -77,6 +78,7 @@ mod source_set;
 mod string_values;
 mod stylesheet;
 mod supports;
+pub(crate) mod svg_cascade;
 pub(crate) mod svg_values;
 mod syntax;
 mod table_values;

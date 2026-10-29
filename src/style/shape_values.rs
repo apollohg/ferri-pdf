@@ -21,9 +21,6 @@ const SHAPE_SLOT: usize = 1;
 /// `clip-path` slots of `[ <basic-shape> || <geometry-box> ]`.
 const CLIP_SHAPE_SLOT: usize = 0;
 const CLIP_BOX_SLOT: usize = 1;
-/// The fraction of the way from an end point to a quadratic control point at which the
-/// equivalent cubic's control point lies.
-const QUADRATIC_TO_CUBIC: f32 = 2.0 / 3.0;
 
 pub(super) fn shape_outside(
     value: &Component,
@@ -86,7 +83,7 @@ pub(super) fn clip_path(
     }))
 }
 
-fn geometry_box(value: &Component) -> Result<GeometryBox, StyleError> {
+pub(super) fn geometry_box(value: &Component) -> Result<GeometryBox, StyleError> {
     match value.keyword() {
         Some(Keyword::FillBox) => Ok(GeometryBox::Fill),
         Some(Keyword::StrokeBox) => Ok(GeometryBox::Stroke),
@@ -110,7 +107,11 @@ fn shape_box(value: &Component) -> Result<ShapeBox, StyleError> {
 pub(super) fn valid(value: &Component) -> bool {
     value
         .find(Label::Production(Production::PathFn))
-        .is_none_or(|path| path_string(path).and_then(path_data).is_some())
+        .is_none_or(|path| {
+            path_string(path)
+                .and_then(|source| path_data(source, PathErrors::Discard))
+                .is_some()
+        })
 }
 
 fn path_string(path: &Component) -> Option<&str> {
@@ -120,7 +121,10 @@ fn path_string(path: &Component) -> Option<&str> {
     })
 }
 
-fn basic_shape(value: &Component, relative: &Relative<'_>) -> Result<BasicShape, StyleError> {
+pub(super) fn basic_shape(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<BasicShape, StyleError> {
     let function = value.unwrap();
     let Component::Function(name, _) = function else {
         return Err(unsupported(value));
@@ -225,7 +229,7 @@ fn basic_shape(value: &Component, relative: &Relative<'_>) -> Result<BasicShape,
         Keyword::Path => BasicShape::Path {
             even_odd: even_odd(),
             contours: path_string(function)
-                .and_then(path_data)
+                .and_then(|source| path_data(source, PathErrors::Discard))
                 .ok_or_else(|| StyleError::Invalid(format!("path data: {value}")))?,
         },
         _ => return Err(unsupported(value)),
@@ -296,9 +300,14 @@ fn radii(function: &Component, relative: &Relative<'_>) -> Result<CornerRadii, S
     Ok(radii)
 }
 
-/// SVG 1.1 path data as contours with absolute cubic and line segments, or `None` when the
-/// data is malformed or draws nothing.
-pub(crate) fn path_data(source: &str) -> Option<Vec<Contour>> {
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub(crate) enum PathErrors {
+    Discard,
+    Prefix,
+}
+
+/// Absolute contours; SVG references retain the valid prefix on malformed input.
+pub(crate) fn path_data(source: &str, errors: PathErrors) -> Option<Vec<Contour>> {
     use svgtypes::SimplePathSegment as Command;
     let point = |x: f64, y: f64| [x as f32, y as f32];
     let mut contours: Vec<Contour> = Vec::new();
@@ -307,8 +316,13 @@ pub(crate) fn path_data(source: &str) -> Option<Vec<Contour>> {
     let mut current = [0.0; 2];
     let mut commands = 0usize;
     for command in svgtypes::SimplifyingPathParser::from(source) {
+        let command = match command {
+            Ok(command) => command,
+            Err(_) if errors == PathErrors::Discard => return None,
+            Err(_) => break,
+        };
         commands += 1;
-        let segment = match command.ok()? {
+        let segment = match command {
             Command::MoveTo { x, y } => {
                 contours.extend(open.take());
                 subpath_start = point(x, y);
@@ -316,11 +330,14 @@ pub(crate) fn path_data(source: &str) -> Option<Vec<Contour>> {
                 open = Some(Contour {
                     start: subpath_start,
                     segments: Vec::new(),
-                    closed: true,
+                    closed: false,
                 });
                 continue;
             }
             Command::ClosePath => {
+                if let Some(contour) = &mut open {
+                    contour.closed = true;
+                }
                 contours.extend(open.take());
                 current = subpath_start;
                 continue;
@@ -335,22 +352,14 @@ pub(crate) fn path_data(source: &str) -> Option<Vec<Contour>> {
                 y,
             } => Segment::Cubic([point(x1, y1), point(x2, y2), point(x, y)]),
             Command::Quadratic { x1, y1, x, y } => {
-                let [control, end] = [point(x1, y1), point(x, y)];
-                let toward = |from: [f32; 2]| {
-                    std::array::from_fn(|axis| {
-                        from[axis] + QUADRATIC_TO_CUBIC * (control[axis] - from[axis])
-                    })
-                };
-                Segment::Cubic([toward(current), toward(end), end])
+                Segment::quadratic(current, point(x1, y1), point(x, y))
             }
         };
-        current = match segment {
-            Segment::Line(end) | Segment::Cubic([_, _, end]) => end,
-        };
+        current = segment.end();
         open.get_or_insert_with(|| Contour {
             start: subpath_start,
             segments: Vec::new(),
-            closed: true,
+            closed: false,
         })
         .segments
         .push(segment);

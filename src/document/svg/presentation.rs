@@ -15,6 +15,7 @@ use std::fmt::Write;
 /// SVG 2 §10: text content elements, which take the font and text properties.
 const TEXT_CONTENT: &[&str] = &["text", "tspan", "textPath", "tref"];
 const PERCENT: f32 = 100.0;
+const CALC_POINT_UNIT: &str = "1pt";
 /// CSS Fonts 4 §2.3: the `font-width` keywords and their percentages.
 const WIDTH_KEYWORDS: [(FontWidth, &str); 9] = [
     (FontWidth::ULTRA_CONDENSED, "ultra-condensed"),
@@ -143,6 +144,23 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
             _ => {}
         }
     }
+    if style
+        .decoration
+        .radii
+        .iter()
+        .flatten()
+        .any(|radius| *radius != LengthPercentage::ZERO)
+    {
+        push(
+            "border-radius",
+            &radii_css(&style.decoration.radii, motion_length)?,
+        );
+    }
+    if style.motion.active() {
+        for (name, value) in motion_transform(style)? {
+            push(name, &value);
+        }
+    }
     push("font-family", &families(&style.families));
     push("font-size", &pixels(style.size));
     push("letter-spacing", &pixels(style.letter_spacing));
@@ -230,6 +248,9 @@ pub(super) fn transform(
     tag: &str,
     style: &Style,
 ) -> Result<Vec<(&'static str, String)>, StyleError> {
+    if style.motion.active() {
+        return Ok(Vec::new());
+    }
     let Some([a, b, c, d, e, f]) = style.planar_transform()? else {
         return Ok(Vec::new());
     };
@@ -310,15 +331,19 @@ fn clip_path(style: &Style) -> Result<String, StyleError> {
     };
     Ok(match &clip.shape {
         None => reference.to_owned(),
-        Some(shape) => format!("{} {reference}", basic_shape(shape)?),
+        Some(shape) => format!("{} {reference}", basic_shape(shape, true, shape_length)?),
     })
 }
 
 /// A basic shape with lengths in CSS pixels and positions as edge offsets.
-fn basic_shape(shape: &BasicShape) -> Result<String, StyleError> {
+fn basic_shape(
+    shape: &BasicShape,
+    explicit_center: bool,
+    length: fn(&LengthPercentage) -> Result<String, StyleError>,
+) -> Result<String, StyleError> {
     let lengths = |values: &mut dyn Iterator<Item = &LengthPercentage>| {
         values
-            .map(shape_length)
+            .map(length)
             .collect::<Result<Vec<_>, _>>()
             .map(|values| values.join(" "))
     };
@@ -330,20 +355,14 @@ fn basic_shape(shape: &BasicShape) -> Result<String, StyleError> {
         {
             return Ok(String::new());
         }
-        Ok(format!(
-            " round {} / {}",
-            lengths(&mut radii.iter().map(|[horizontal, _]| horizontal))?,
-            lengths(&mut radii.iter().map(|[_, vertical]| vertical))?
-        ))
+        Ok(format!(" round {}", radii_css(radii, length)?))
     };
-    let at = |[x, y]: &crate::paint::Position| -> Result<String, StyleError> {
-        Ok(format!(
-            "at {} {} {} {}",
-            if x.from_end { "right" } else { "left" },
-            shape_length(&x.offset)?,
-            if y.from_end { "bottom" } else { "top" },
-            shape_length(&y.offset)?
-        ))
+    let at = |center: &crate::paint::Position| -> Result<String, StyleError> {
+        if explicit_center {
+            Ok(format!("at {}", position(center, length)?))
+        } else {
+            Ok(String::new())
+        }
     };
     let extent = |extent: RadialExtent| match extent {
         RadialExtent::ClosestSide => CLOSEST_SIDE,
@@ -354,7 +373,7 @@ fn basic_shape(shape: &BasicShape) -> Result<String, StyleError> {
     let axis = |radius: &AxisRadius| match radius {
         AxisRadius::ClosestSide => Ok(CLOSEST_SIDE.to_owned()),
         AxisRadius::FarthestSide => Ok(FARTHEST_SIDE.to_owned()),
-        AxisRadius::Length(length) => shape_length(length),
+        AxisRadius::Length(value) => length(value),
     };
     let rule = |even_odd: bool| if even_odd { "evenodd" } else { "nonzero" };
     Ok(match shape {
@@ -368,7 +387,7 @@ fn basic_shape(shape: &BasicShape) -> Result<String, StyleError> {
             "circle({} {})",
             match radius {
                 CircleRadius::Extent(radius) => extent(*radius).to_owned(),
-                CircleRadius::Length(radius) => shape_length(radius)?,
+                CircleRadius::Length(radius) => length(radius)?,
             },
             at(center)?
         ),
@@ -671,4 +690,300 @@ fn font_variant(caps: crate::style::FontVariantCaps) -> Result<&'static str, Sty
             "font-variant-caps: {other:?} on SVG text"
         ))),
     }
+}
+
+fn position(
+    [x, y]: &crate::paint::Position,
+    length: fn(&LengthPercentage) -> Result<String, StyleError>,
+) -> Result<String, StyleError> {
+    Ok(format!(
+        "{} {} {} {}",
+        if x.from_end { "right" } else { "left" },
+        length(&x.offset)?,
+        if y.from_end { "bottom" } else { "top" },
+        length(&y.offset)?
+    ))
+}
+fn motion_transform(style: &Style) -> Result<Vec<(&'static str, String)>, StyleError> {
+    use crate::style::motion::{Curve, OffsetPath, OffsetPosition, RaySize};
+    let path = match &*style.motion.path {
+        OffsetPath::None => NONE.to_owned(),
+        OffsetPath::Path { curve, .. } => match curve {
+            Curve::Box => VIEW_BOX.to_owned(),
+            Curve::Shape {
+                shape,
+                explicit_center,
+            } => basic_shape(shape, *explicit_center, motion_length)?,
+            Curve::Reference(reference) => url(reference),
+            Curve::Ray {
+                angle,
+                size,
+                contain,
+                at,
+            } => format!(
+                "ray({}deg {}{}{})",
+                angle.to_degrees(),
+                match size {
+                    RaySize::ClosestSide => CLOSEST_SIDE,
+                    RaySize::FarthestSide => FARTHEST_SIDE,
+                    RaySize::ClosestCorner => "closest-corner",
+                    RaySize::FarthestCorner => "farthest-corner",
+                    RaySize::Sides => "sides",
+                },
+                if *contain { " contain" } else { "" },
+                at.as_ref()
+                    .map(|at| position(at, motion_length).map(|at| format!(" at {at}")))
+                    .transpose()?
+                    .unwrap_or_default()
+            ),
+        },
+    };
+    let mut attributes = vec![
+        ("offset-path", path),
+        ("offset-distance", motion_length(&style.motion.distance)?),
+        (
+            "offset-position",
+            match &style.motion.position {
+                OffsetPosition::Normal => "normal".to_owned(),
+                OffsetPosition::Auto => "auto".to_owned(),
+                OffsetPosition::Position(at) => position(at, motion_length)?,
+            },
+        ),
+        (
+            "offset-anchor",
+            style
+                .motion
+                .anchor
+                .as_ref()
+                .map(|at| position(at, motion_length))
+                .transpose()?
+                .unwrap_or_else(|| "auto".to_owned()),
+        ),
+        (
+            "offset-rotate",
+            format!(
+                "{}{}deg",
+                if style.motion.rotate.tangent {
+                    "auto "
+                } else {
+                    ""
+                },
+                style.motion.rotate.angle.to_degrees()
+            ),
+        ),
+        (
+            TRANSFORM_ORIGIN,
+            style
+                .transform_origin
+                .iter()
+                .map(motion_length)
+                .collect::<Result<Vec<_>, _>>()?
+                .join(" "),
+        ),
+        (
+            TRANSFORM_BOX,
+            match style.transform_box {
+                TransformBox::ViewBox => VIEW_BOX,
+                TransformBox::ContentBox | TransformBox::FillBox => FILL_BOX,
+                TransformBox::BorderBox | TransformBox::StrokeBox => STROKE_BOX,
+            }
+            .to_owned(),
+        ),
+    ];
+    if let Some(translate) = &style.translate {
+        attributes.push((
+            "translate",
+            translate
+                .iter()
+                .map(motion_length)
+                .collect::<Result<Vec<_>, _>>()?
+                .join(" "),
+        ));
+    }
+    if let Some(rotate) = style.rotate {
+        attributes.push((
+            "rotate",
+            format!(
+                "{} {} {} {}deg",
+                rotate.axis[0],
+                rotate.axis[1],
+                rotate.axis[2],
+                rotate.angle.to_degrees()
+            ),
+        ));
+    }
+    if let Some(scale) = style.scale {
+        attributes.push(("scale", scale.map(|value| value.to_string()).join(" ")));
+    }
+    if !style.transform.is_empty() {
+        attributes.push((
+            "transform",
+            style
+                .transform
+                .iter()
+                .map(|function| function.css(motion_length))
+                .collect::<Result<Vec<_>, _>>()?
+                .join(" "),
+        ));
+    }
+    Ok(attributes)
+}
+
+/// Calculation leaves are numeric points, including scalar factors. Normalize percentages
+/// to numeric points inside the expression, then restore its length unit once at the root.
+fn motion_length(value: &LengthPercentage) -> Result<String, StyleError> {
+    Ok(match value {
+        LengthPercentage::Calc(value) => {
+            format!("calc({} * {CALC_POINT_UNIT})", calculated_number(value))
+        }
+        _ => return length_percentage(value),
+    })
+}
+fn calculated_number(value: &Calculation) -> String {
+    use crate::paint::{BinaryFunction as B, RoundingStrategy as R, UnaryFunction as U};
+    let list = |items: &[Calculation]| {
+        items
+            .iter()
+            .map(calculated_number)
+            .collect::<Vec<_>>()
+            .join(",")
+    };
+    match value {
+        Calculation::Value(value) => {
+            if value.is_nan() {
+                "NaN".to_owned()
+            } else if *value == f32::INFINITY {
+                "infinity".to_owned()
+            } else if *value == f32::NEG_INFINITY {
+                "-infinity".to_owned()
+            } else {
+                value.to_string()
+            }
+        }
+        Calculation::Percentage(value) => format!("({}% / {CALC_POINT_UNIT})", value * PERCENT),
+        Calculation::Sum(items) | Calculation::Product(items) => format!(
+            "({})",
+            items
+                .iter()
+                .map(calculated_number)
+                .collect::<Vec<_>>()
+                .join(if matches!(value, Calculation::Sum(_)) {
+                    " + "
+                } else {
+                    " * "
+                })
+        ),
+        Calculation::Invert(value) => format!("(1 / {})", calculated_number(value)),
+        Calculation::Min(items) => format!("min({})", list(items)),
+        Calculation::Max(items) => format!("max({})", list(items)),
+        Calculation::Hypot(items) => format!("hypot({})", list(items)),
+        Calculation::Unary(function, value) => {
+            let expression = format!(
+                "{}({})",
+                match function {
+                    U::Abs => "abs",
+                    U::Sign => "sign",
+                    U::Sin => "sin",
+                    U::Cos => "cos",
+                    U::Tan => "tan",
+                    U::Asin => "asin",
+                    U::Acos => "acos",
+                    U::Atan => "atan",
+                    U::Sqrt => "sqrt",
+                    U::Exp => "exp",
+                    U::Ln => "log",
+                },
+                calculated_number(value)
+            );
+            if matches!(function, U::Asin | U::Acos | U::Atan) {
+                format!("({expression} / 1rad)")
+            } else {
+                expression
+            }
+        }
+        Calculation::Binary(function, values) => {
+            let expression = match function {
+                B::Round(strategy) => format!(
+                    "round({},{})",
+                    match strategy {
+                        R::Nearest => "nearest",
+                        R::Up => "up",
+                        R::Down => "down",
+                        R::ToZero => "to-zero",
+                    },
+                    list(&**values)
+                ),
+                function => format!(
+                    "{}({})",
+                    match function {
+                        B::Mod => "mod",
+                        B::Rem => "rem",
+                        B::Atan2 => "atan2",
+                        B::Pow => "pow",
+                        B::Log => "log",
+                        B::Round(_) => unreachable!(),
+                    },
+                    list(&**values)
+                ),
+            };
+            if matches!(function, B::Atan2) {
+                format!("({expression} / 1rad)")
+            } else {
+                expression
+            }
+        }
+        Calculation::Progress(values) => format!("progress({})", list(&**values)),
+        Calculation::Mix(values) => format!(
+            "calc-mix(calc({}),{},{})",
+            calculated_number(&values[0]),
+            calculated_number(&values[1]),
+            calculated_number(&values[2])
+        ),
+        Calculation::Eased(easing, value) => format!(
+            "calc-mix(calc({}) by {},0,1)",
+            calculated_number(value),
+            easing_css(easing)
+        ),
+    }
+}
+fn easing_css(value: &crate::paint::Easing) -> String {
+    use crate::paint::{Easing, StepPosition};
+    match value {
+        Easing::Linear => "linear".to_owned(),
+        Easing::CubicBezier(values) => format!(
+            "cubic-bezier({})",
+            values.map(|value| value.to_string()).join(",")
+        ),
+        Easing::Steps { count, position } => format!(
+            "steps({count},{})",
+            match position {
+                StepPosition::Start => "jump-start",
+                StepPosition::End => "jump-end",
+                StepPosition::None => "jump-none",
+                StepPosition::Both => "jump-both",
+            }
+        ),
+        Easing::Piecewise(points) => format!(
+            "linear({})",
+            points
+                .iter()
+                .map(|point| format!("{} {}%", point.output, point.input * PERCENT))
+                .collect::<Vec<_>>()
+                .join(",")
+        ),
+    }
+}
+
+fn radii_css(
+    radii: &CornerRadii,
+    length: fn(&LengthPercentage) -> Result<String, StyleError>,
+) -> Result<String, StyleError> {
+    let axis = |axis: usize| {
+        radii
+            .iter()
+            .map(|radius| length(&radius[axis]))
+            .collect::<Result<Vec<_>, _>>()
+            .map(|values| values.join(" "))
+    };
+    Ok(format!("{} / {}", axis(0)?, axis(1)?))
 }

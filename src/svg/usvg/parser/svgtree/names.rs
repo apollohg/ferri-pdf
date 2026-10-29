@@ -353,6 +353,15 @@ pub(crate) enum AId {
     TextLength,
     Transform,
     TransformBox,
+    CssTranslate,
+    CssBorderRadius,
+    CssRotate,
+    CssScale,
+    OffsetPath,
+    OffsetPosition,
+    OffsetAnchor,
+    OffsetDistance,
+    OffsetRotate,
     TransformOrigin,
     Type,
     UnicodeBidi,
@@ -634,19 +643,39 @@ static ATTRIBUTES: Map<AId> = Map {
         ("text-indent", AId::TextIndent),
         ("marker-end", AId::MarkerEnd),
         ("transform-box", AId::TransformBox),
+
         ("orient", AId::Orient),
     ],
 };
 
 impl AId {
     pub(crate) fn from_str(text: &str) -> Option<AId> {
-        ATTRIBUTES.get(text).cloned()
+        match text {
+            "border-radius" => Some(Self::CssBorderRadius),
+            "offset-path" => Some(Self::OffsetPath),
+            "offset-position" => Some(Self::OffsetPosition),
+            "offset-anchor" => Some(Self::OffsetAnchor),
+            "offset-distance" => Some(Self::OffsetDistance),
+            "offset-rotate" => Some(Self::OffsetRotate),
+            _ => ATTRIBUTES.get(text).cloned(),
+        }
     }
 
     /// Returns the original string.
     #[inline(never)]
     pub(crate) fn to_str(self) -> &'static str {
-        ATTRIBUTES.key(&self)
+        match self {
+            Self::CssTranslate => "ferri-css-translate",
+            Self::CssRotate => "ferri-css-rotate",
+            Self::CssScale => "ferri-css-scale",
+            Self::CssBorderRadius => "border-radius",
+            Self::OffsetPath => "offset-path",
+            Self::OffsetPosition => "offset-position",
+            Self::OffsetAnchor => "offset-anchor",
+            Self::OffsetDistance => "offset-distance",
+            Self::OffsetRotate => "offset-rotate",
+            _ => ATTRIBUTES.key(&self),
+        }
     }
 }
 

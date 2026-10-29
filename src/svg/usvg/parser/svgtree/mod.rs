@@ -18,12 +18,16 @@ use crate::svg::usvg::{
 };
 pub(crate) use names::{AId, EId};
 
+pub(super) const CSS_INITIAL: &str = "initial";
+
 /// An SVG tree container.
 ///
 /// Contains only element and text nodes.
 /// Text nodes are present only inside the `text` element.
 pub(super) struct Document<'input> {
     pub(crate) css_limit: Option<usize>,
+    variables: HashMap<usize, crate::style::svg_cascade::Variables>,
+    pub(crate) style_error: Option<std::sync::Arc<crate::style::StyleError>>,
     nodes: Vec<NodeData>,
     attrs: Vec<Attribute<'input>>,
     links: HashMap<String, NodeId>,
@@ -284,6 +288,9 @@ impl<'a, 'input: 'a> SvgNode<'a, 'input> {
             .iter()
             .find(|a| a.name == aid)
             .map(|a| a.value.as_str())?;
+        if aid.allows_inherit_value() && value.eq_ignore_ascii_case(CSS_INITIAL) {
+            return None;
+        }
         // These AId have an initial value of none
         let is_possible_none = matches!(
             aid,
@@ -320,6 +327,9 @@ impl<'a, 'input: 'a> SvgNode<'a, 'input> {
             .iter()
             .find(|a| a.name == aid)
             .map(|a| a.value.as_str())?;
+        if aid.allows_inherit_value() && value.eq_ignore_ascii_case(CSS_INITIAL) {
+            return None;
+        }
         T::parse(*self, aid, value)
     }
 
@@ -749,6 +759,16 @@ impl AId {
                 | AId::Transform
                 | AId::TextOrientation
                 | AId::TransformOrigin
+                | AId::TransformBox
+                | AId::CssBorderRadius
+                | AId::CssTranslate
+                | AId::CssRotate
+                | AId::CssScale
+                | AId::OffsetPath
+                | AId::OffsetPosition
+                | AId::OffsetAnchor
+                | AId::OffsetDistance
+                | AId::OffsetRotate
                 | AId::UnicodeBidi
                 | AId::VectorEffect
                 | AId::Visibility
@@ -818,6 +838,17 @@ impl AId {
                 | AId::TextDecoration
                 | AId::TextRendering
                 | AId::Transform
+                | AId::TransformOrigin
+                | AId::TransformBox
+                | AId::CssBorderRadius
+                | AId::CssTranslate
+                | AId::CssRotate
+                | AId::CssScale
+                | AId::OffsetPath
+                | AId::OffsetPosition
+                | AId::OffsetAnchor
+                | AId::OffsetDistance
+                | AId::OffsetRotate
                 | AId::Visibility
                 | AId::WordSpacing
                 | AId::WritingMode
@@ -845,6 +876,16 @@ fn is_non_inheritable(id: AId) -> bool {
             | AId::TextDecoration
             | AId::Transform
             | AId::TransformOrigin
+            | AId::TransformBox
+            | AId::CssBorderRadius
+            | AId::CssTranslate
+            | AId::CssRotate
+            | AId::CssScale
+            | AId::OffsetPath
+            | AId::OffsetPosition
+            | AId::OffsetAnchor
+            | AId::OffsetDistance
+            | AId::OffsetRotate
     )
 }
 

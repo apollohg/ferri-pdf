@@ -2,7 +2,7 @@
 //! basic shapes trace in their reference box.
 use crate::paint::{
     BackgroundImage, BoxArea, BoxPaint, Contour, LengthPercentage, POINTS_PER_PIXEL, Position,
-    RadialExtent, Radii, Rect, Segment, Shape, rounded,
+    RadialExtent, Radii, Rect, Shape, rounded,
 };
 use serde::Serialize;
 use std::convert::Infallible;
@@ -232,6 +232,18 @@ impl AxisRadius {
 impl BasicShape {
     /// The closed outline the shape traces in `reference` and whether it fills even-odd.
     pub(crate) fn outline(&self, reference: Rect) -> Shape {
+        let (mut contours, even_odd) = self.path(reference);
+        for contour in &mut contours {
+            contour.closed = true;
+        }
+        Shape::Path {
+            contours,
+            even_odd,
+            clip: None,
+        }
+    }
+    /// Equivalent path, retaining explicit SVG subpath closure.
+    pub(crate) fn path(&self, reference: Rect) -> (Vec<Contour>, bool) {
         let size = [reference.width, reference.height];
         let origin = [reference.x, reference.y];
         let (contours, even_odd) = match self {
@@ -314,29 +326,11 @@ impl BasicShape {
                         origin[1] + y * POINTS_PER_PIXEL,
                     ]
                 };
-                let contours = contours
-                    .iter()
-                    .map(|contour| Contour {
-                        start: place(contour.start),
-                        segments: contour
-                            .segments
-                            .iter()
-                            .map(|segment| match *segment {
-                                Segment::Line(point) => Segment::Line(place(point)),
-                                Segment::Cubic(points) => Segment::Cubic(points.map(place)),
-                            })
-                            .collect(),
-                        closed: true,
-                    })
-                    .collect();
+                let contours = contours.iter().map(|contour| contour.map(place)).collect();
                 (contours, *even_odd)
             }
         };
-        Shape::Path {
-            contours,
-            even_odd,
-            clip: None,
-        }
+        (contours, even_odd)
     }
 }
 
@@ -351,7 +345,7 @@ fn rounded_inset(rect: Rect, radii: &CornerRadii, reference: [f32; 2]) -> Contou
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::paint::PositionComponent;
+    use crate::paint::{PositionComponent, Segment};
 
     const REFERENCE: Rect = Rect {
         x: 10.0,

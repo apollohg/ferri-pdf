@@ -1,7 +1,169 @@
-use super::{ActiveBox, DisplayItem, Paginator, Rect, Region};
-use crate::style::{Overflow, Style, StyleError};
+use super::{ActiveBox, DisplayItem, Effect, Paginator, Rect, Region};
+use crate::layout::LayoutError;
+use crate::paint::BoxAreas;
+use crate::style::{Overflow, Style};
+
+#[derive(Clone)]
+pub(super) struct Pending {
+    page: usize,
+    area: Rect,
+    pub(super) transforms: Vec<usize>,
+}
 
 impl<'a> Paginator<'a, '_, 'a> {
+    pub(super) fn complete_motion_reference(
+        &mut self,
+        active: &mut ActiveBox<'_>,
+        complete: bool,
+    ) -> Result<(), LayoutError> {
+        if let Some(node) = active.motion_reference_node {
+            self.clips[node].fragments.clone_from(&active.fragments);
+            if let Effect::MotionReference(current, _) = &mut self.clips[node].effect {
+                *current = complete;
+            }
+        }
+        if complete {
+            for pending in std::mem::take(&mut active.motion_overflow) {
+                let area = self.overflow_chain(pending.page, pending.area, &pending.transforms)?;
+                if area.width > 0.0
+                    && area.height > 0.0
+                    && !before_start(active, &self.display_lists, pending.page, area)
+                    && let Some(bounds) = active.overflow.as_mut().or(self.root_overflow.as_mut())
+                {
+                    bounds
+                        .entry(pending.page)
+                        .and_modify(|bounds| *bounds = bounds.union(area))
+                        .or_insert(area);
+                }
+            }
+        }
+        Ok(())
+    }
+    pub(super) fn transform_overflow(
+        &mut self,
+        active: &ActiveBox<'_>,
+        style: &Style,
+        page: usize,
+        area: Rect,
+        boxes: BoxAreas<Rect>,
+    ) -> Result<Option<Rect>, LayoutError> {
+        if let Some(transform) = active.transform_node
+            && self.unfinished_motion(transform)
+        {
+            let mut transforms = vec![transform];
+            if let Some(source) = active.geometry.as_ref().map(|geometry| geometry.source)
+                && let Some(table) = self.tables.last()
+                && let Some(cell) = table.flow.plan.cell_index(source)
+            {
+                transforms.extend(
+                    table
+                        .flow
+                        .plan
+                        .cell_parents(cell)
+                        .into_iter()
+                        .rev()
+                        .flatten()
+                        .filter_map(|source| {
+                            table.transforms.iter().find_map(|(ancestor, node)| {
+                                std::ptr::eq(ancestor.source, source).then_some(*node)
+                            })
+                        }),
+                );
+            }
+            self.defer_overflow(page, area, transforms);
+            return Ok(None);
+        }
+        let node = active.transform_node.map(|node| &self.clips[node]);
+        Ok(Some(
+            if let Some(matrix) = self.transform_on(style, &boxes, node, page)? {
+                transformed_bounds(area, matrix)
+            } else {
+                area
+            },
+        ))
+    }
+
+    fn unfinished_motion(&self, node: usize) -> bool {
+        let Effect::Transform(_, _, Some(reference)) = self.clips[node].effect else {
+            return false;
+        };
+        match self.clips[reference].effect {
+            Effect::MotionReference(false, _) => true,
+            Effect::ColumnReference => self.clips[reference].areas.is_empty(),
+            _ => false,
+        }
+    }
+    pub(super) fn complete_column_overflow(&mut self) -> Result<(), LayoutError> {
+        for pending in std::mem::take(&mut self.column_motion_overflow) {
+            let area = self.overflow_chain(pending.page, pending.area, &pending.transforms)?;
+            if area.width > 0.0 && area.height > 0.0 {
+                self.record_overflow_on(pending.page, area);
+            }
+        }
+        Ok(())
+    }
+    pub(super) fn defer_overflow(
+        &mut self,
+        page: usize,
+        area: Rect,
+        transforms: Vec<usize>,
+    ) -> bool {
+        if !transforms.iter().any(|&node| self.unfinished_motion(node)) {
+            return false;
+        }
+        let column = transforms.iter().any(|&node| matches!(self.clips[node].effect,Effect::Transform(_,_,Some(reference)) if matches!(self.clips[reference].effect,Effect::ColumnReference) && self.clips[reference].areas.is_empty()));
+        let pending = Pending {
+            page,
+            area,
+            transforms,
+        };
+        if column {
+            self.column_motion_overflow.push(pending);
+        } else {
+            self.boxes
+                .last_mut()
+                .expect("an unfinished block reference belongs to an active containing box")
+                .motion_overflow
+                .push(pending);
+        }
+        true
+    }
+    pub(super) fn overflow_chain(
+        &self,
+        page: usize,
+        mut area: Rect,
+        transforms: &[usize],
+    ) -> Result<Rect, LayoutError> {
+        for &node in transforms {
+            let effect = &self.clips[node];
+            let Effect::Transform(style, _, _) = effect.effect else {
+                unreachable!()
+            };
+            let boxes = effect
+                .fragments
+                .iter()
+                .find_map(|&(p, slot)| {
+                    if p != page {
+                        return None;
+                    }
+                    match &self.display_lists[p][slot].item {
+                        DisplayItem::Box(paint) => Some(paint.fragment_areas()),
+                        _ => None,
+                    }
+                })
+                .or_else(|| {
+                    effect
+                        .areas
+                        .iter()
+                        .find_map(|&(p, rect)| (p == page).then_some(BoxAreas::single(rect)))
+                })
+                .ok_or(LayoutError::MissingContainingFragment { page })?;
+            if let Some(matrix) = self.transform_on(style, &boxes, Some(effect), page)? {
+                area = transformed_bounds(area, matrix);
+            }
+        }
+        Ok(area)
+    }
     pub(super) fn record_overflow(&mut self, rect: Rect) {
         self.record_overflow_on(self.page, rect);
     }
@@ -24,7 +186,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         &mut self,
         active: &ActiveBox<'_>,
         style: &Style,
-    ) -> Result<(), StyleError> {
+    ) -> Result<(), LayoutError> {
         if self
             .boxes
             .last()
@@ -37,29 +199,18 @@ impl<'a> Paginator<'a, '_, 'a> {
             let DisplayItem::Box(paint) = &self.display_lists[page][slot].item else {
                 continue;
             };
-            let area = box_bounds(active, style, paint, page)?;
+            let area = box_bounds(active, style, paint, page);
+            let boxes = paint.fragment_areas();
+            let Some(area) = self.transform_overflow(active, style, page, area, boxes)? else {
+                continue;
+            };
             if area.width > 0.0 && area.height > 0.0 {
-                if let Some(parent) = self.boxes.last()
-                    && let Some((_, parent_slot)) = parent
-                        .fragments
-                        .iter()
-                        .find(|(fragment, _)| *fragment == page)
-                    && let DisplayItem::Box(parent_paint) =
-                        &self.display_lists[page][*parent_slot].item
+                if self
+                    .boxes
+                    .last()
+                    .is_some_and(|parent| before_start(parent, &self.display_lists, page, area))
                 {
-                    let padding = parent_paint.inner_clip([0.0; 4], [true; 2]).rect;
-                    let rtl = parent
-                        .geometry
-                        .as_ref()
-                        .is_some_and(|geometry| geometry.source.style().used_rtl());
-                    let before_inline_start = if rtl {
-                        area.x >= padding.x + padding.width
-                    } else {
-                        area.x + area.width <= padding.x
-                    };
-                    if before_inline_start || area.y + area.height <= padding.y {
-                        continue;
-                    }
+                    continue;
                 }
                 self.boxes
                     .last_mut()
@@ -92,7 +243,7 @@ pub(super) fn box_bounds(
     style: &Style,
     paint: &super::BoxPaint,
     page: usize,
-) -> Result<Rect, StyleError> {
+) -> Rect {
     let border = paint.rect;
     let mut area = border;
     if let Some(descendants) = active
@@ -137,9 +288,29 @@ pub(super) fn box_bounds(
         };
         area = area.union(margin);
     }
-    // Scrollable overflow ignores the parent's perspective, which only paint resolves.
-    if let Some(matrix) = style.transform_matrix(&paint.fragment_areas(), None)? {
-        area = transformed_bounds(area, matrix);
-    }
-    Ok(area)
+    area
+}
+
+fn before_start(
+    parent: &ActiveBox<'_>,
+    lists: &[Vec<super::ScopedPaint>],
+    page: usize,
+    area: Rect,
+) -> bool {
+    let Some((_, slot)) = parent.fragments.iter().find(|(p, _)| *p == page) else {
+        return false;
+    };
+    let DisplayItem::Box(paint) = &lists[page][*slot].item else {
+        return false;
+    };
+    let padding = paint.inner_clip([0.0; 4], [true; 2]).rect;
+    let rtl = parent
+        .geometry
+        .as_ref()
+        .is_some_and(|geometry| geometry.source.style().used_rtl());
+    (if rtl {
+        area.x >= padding.x + padding.width
+    } else {
+        area.x + area.width <= padding.x
+    }) || area.y + area.height <= padding.y
 }

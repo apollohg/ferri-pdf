@@ -409,9 +409,10 @@ impl<'a> Paginator<'a, '_, 'a> {
             })
             .collect();
         let effect = match source.effect {
-            Effect::Transform(style, Some(placement)) => Effect::Transform(
+            Effect::Transform(style, placement, reference) => Effect::Transform(
                 style,
-                Some(self.effect(nodes, sticky, placement, place, effects)),
+                placement.map(|node| self.effect(nodes, sticky, node, place, effects)),
+                reference.map(|node| self.effect(nodes, sticky, node, place, effects)),
             ),
             Effect::Sticky(style, index) => {
                 let constraints = &sticky[index];

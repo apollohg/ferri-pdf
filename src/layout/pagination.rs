@@ -127,6 +127,8 @@ impl<'p> InlineLayers<'p> {
 /// order, which form their containing block (CSS Position 3 §2.1).
 #[derive(Clone)]
 struct InlineContainer<'a> {
+    style: &'a crate::style::Style,
+    containing_width: f32,
     pending: Vec<Pending<'a>>,
     lines: Vec<(usize, Vec<Rect>)>,
     flow: crate::style::logical::Flow,
@@ -246,12 +248,15 @@ struct Unbroken {
 enum Containing<'a> {
     Rect {
         rect: Rect,
+        paint: BoxPaint,
+        radius: Option<&'a std::sync::Arc<crate::paint::CornerRadii>>,
         flow: crate::style::logical::Flow,
         clip: Option<usize>,
     },
     /// Padding boxes of a positioned ancestor's page fragments.
     Box {
         grid: Option<Rc<crate::layout::grid::Geometry<'a>>>,
+        radius: Option<&'a std::sync::Arc<crate::paint::CornerRadii>>,
         overflow: BTreeMap<usize, Rect>,
         fragments: Vec<(usize, usize)>,
         areas: Vec<(usize, Rect)>,
@@ -292,7 +297,9 @@ enum Effect<'a> {
     PathClip(&'a crate::style::Style),
     /// The box's transform about its fragment's reference box, placed by its parent's
     /// `Parent3d` node.
-    Transform(&'a crate::style::Style, Option<usize>),
+    Transform(&'a crate::style::Style, Option<usize>, Option<usize>),
+    MotionReference(bool, Option<&'a std::sync::Arc<crate::paint::CornerRadii>>),
+    ColumnReference,
     /// A sticky box's shift on each page, constrained by `Paginator::sticky` entry `usize`.
     Sticky(&'a crate::style::Style, usize),
     /// The perspective and 3D rendering context a box gives its transformed children, resolved
@@ -611,6 +618,8 @@ struct ActiveBox<'a> {
     /// The clip enclosing `clip_node` when the box clips at two edges.
     outer_clip_node: Option<usize>,
     transform_node: Option<usize>,
+    motion_reference_node: Option<usize>,
+    motion_overflow: Vec<overflow::Pending>,
     clip_rect_node: Option<usize>,
     clip_path_node: Option<usize>,
     parent_3d_node: Option<usize>,
@@ -876,6 +885,10 @@ pagination_state! {
     group: Option<usize>,
     /// 3D placement node of the box whose children are being laid out.
     parent_3d: Option<usize>,
+    motion_containing: Option<usize>,
+    motion_root: Option<(&'a BlockBox, usize)>,
+    motion_column: Option<usize>,
+    column_motion_overflow: Vec<overflow::Pending>,
     clips: Vec<EffectNode<'a>>,
     boxes: Vec<ActiveBox<'a>>,
     root_overflow: Option<BTreeMap<usize, Rect>>,
@@ -923,8 +936,16 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             .chain(&self.foreground)
             .map(Vec::len)
             .sum();
+        let motion_overflow: usize = self
+            .boxes
+            .iter()
+            .flat_map(|active| &active.motion_overflow)
+            .chain(&self.column_motion_overflow)
+            .map(|pending| 1 + pending.transforms.len())
+            .sum();
         self.measurer.work.spend(
             (lines + paints + self.boxes.len() + self.pages.len())
+                .saturating_add(motion_overflow)
                 .saturating_add(self.anchors.payload_work())
                 .max(1),
         )?;
@@ -1002,6 +1023,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             clip: None,
             group: None,
             parent_3d: None,
+            motion_containing: None,
+            motion_root: None,
+            motion_column: None,
+            column_motion_overflow: Vec::new(),
             clips: Vec::new(),
             boxes: Vec::new(),
             root_overflow: None,
@@ -2066,10 +2091,23 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         if sticky_node.is_some() {
             self.clip = sticky_node;
         }
-        let transform_node = (owns_wrapper_properties
-            && block.style.is_transformed()
-            && block.paint.is_some())
-        .then(|| self.effect_node(self.clip, Effect::Transform(block.style, self.parent_3d)));
+        let motion_reference = if block.style.motion.active() {
+            if block.style.position.is_out_of_flow() {
+                self.motion_containing
+            } else {
+                self.motion_block_reference()
+            }
+        } else {
+            None
+        };
+        let transform_node =
+            (owns_wrapper_properties && block.style.is_transformed() && block.paint.is_some())
+                .then(|| {
+                    self.effect_node(
+                        self.clip,
+                        Effect::Transform(block.style, self.parent_3d, motion_reference),
+                    )
+                });
         if transform_node.is_some() {
             self.clip = transform_node;
         }
@@ -2219,6 +2257,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             clip_node,
             outer_clip_node,
             transform_node,
+            motion_reference_node: None,
+            motion_overflow: Vec::new(),
             clip_rect_node,
             clip_path_node,
             parent_3d_node,
@@ -2508,6 +2548,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         {
             self.page_content = true;
         }
+        self.complete_motion_reference(&mut active, !frame.defer_positioned)?;
         if super::anchors::key(style).is_some() {
             let mut before = 0.0;
             for (index, &(page, slot)) in active.fragments.iter().enumerate() {
@@ -2805,6 +2846,155 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             group.anchor = anchor;
         }
     }
+    fn motion_block_reference(&mut self) -> Option<usize> {
+        let Some(parent) = self
+            .boxes
+            .iter()
+            .rposition(|active| active.geometry.is_some())
+        else {
+            if matches!(self.fragmentainers, Fragmentainers::Columns(_)) {
+                let node = if let Some(node) = self.motion_column {
+                    node
+                } else {
+                    let node = self.effect_node(None, Effect::ColumnReference);
+                    self.motion_column = Some(node);
+                    node
+                };
+                return Some(node);
+            }
+            return None;
+        };
+        if let Some((source, node)) = self.motion_root
+            && self.boxes[parent]
+                .geometry
+                .as_ref()
+                .is_some_and(|geometry| std::ptr::eq(geometry.source, source))
+        {
+            return Some(node);
+        }
+        if let Some(node) = self.boxes[parent].motion_reference_node {
+            return Some(node);
+        }
+        let radius = self.boxes[parent]
+            .geometry
+            .as_ref()
+            .map(|geometry| &geometry.source.style().decoration.radii);
+        let node = self.effect_node(None, Effect::MotionReference(false, radius));
+        self.clips[node]
+            .fragments
+            .clone_from(&self.boxes[parent].fragments);
+        self.boxes[parent].motion_reference_node = Some(node);
+        Some(node)
+    }
+    fn transform_on(
+        &self,
+        style: &crate::style::Style,
+        areas: &BoxAreas<Rect>,
+        node: Option<&EffectNode<'_>>,
+        page: usize,
+    ) -> Result<Option<[f32; 6]>, LayoutError> {
+        let (parent, reference) = node
+            .and_then(|node| match node.effect {
+                Effect::Transform(_, parent, reference) => Some((parent, reference)),
+                _ => None,
+            })
+            .unwrap_or((None, None));
+        let parent = parent
+            .map(|parent| self.parent_3d_on(&self.clips[parent], page))
+            .transpose()?
+            .flatten();
+        let native = node.and_then(|node| node.native);
+        let canonical = native.map_or(kurbo::Affine::IDENTITY, |space| {
+            kurbo::Affine::new(space.matrix().map(f64::from))
+        });
+        let frame = crate::layout::writing::Frame::for_style(style);
+        let parent = parent.map(|parent| {
+            parent.mapped(
+                (kurbo::Affine::new(frame.matrix.map(f64::from)) * canonical.inverse())
+                    .as_coeffs()
+                    .map(|value| value as f32),
+            )
+        });
+        Ok(style
+            .transform_matrix(
+                &frame.boxes(areas),
+                parent.as_ref(),
+                &self.motion_reference_on(reference, style, page, native)?,
+            )?
+            .map(|matrix| frame.into_logical(matrix)))
+    }
+    fn motion_reference_on(
+        &self,
+        node: Option<usize>,
+        style: &crate::style::Style,
+        page: usize,
+        native: Option<nested::NativeSpace>,
+    ) -> Result<crate::style::motion::Reference, LayoutError> {
+        use crate::style::motion::Reference;
+        let mut reference = if let Some(index) = node {
+            let node = &self.clips[index];
+            if self.motion_column == Some(index)
+                && let Fragmentainers::Columns(rows) = &self.fragmentainers
+            {
+                Reference::rect(rows.content_box(page))
+            } else if let Some((_, slot)) = node.fragments.iter().find(|(p, _)| *p == page)
+                && let DisplayItem::Box(paint) = &self.display_lists[page][*slot].item
+            {
+                Reference::paint(paint)
+            } else if let Some((_, paint)) = node.paints.iter().find(|(p, _)| *p == page) {
+                Reference::paint(paint)
+            } else if let Some((_, rect)) = node.areas.iter().find(|(p, _)| *p == page) {
+                Reference::rect(*rect)
+            } else {
+                return Err(LayoutError::MissingContainingFragment { page });
+            }
+        } else {
+            Reference::rect(match &self.fragmentainers {
+                Fragmentainers::Pages(pages) => pages.records[page].geometry.content_box(),
+                Fragmentainers::Columns(rows) => {
+                    let (x, width, _, height) = rows.containing(page);
+                    Rect {
+                        x,
+                        y: 0.0,
+                        width,
+                        height: height.unwrap_or(self.canvas_rect.height),
+                    }
+                }
+            })
+        };
+        if let Some(node) = node
+            && let Effect::MotionReference(_, Some(radius)) = self.clips[node].effect
+        {
+            reference.border_radius = Some(radius.clone());
+        }
+        let target = native.map_or(kurbo::Affine::IDENTITY, |space| {
+            kurbo::Affine::new(space.matrix().map(f64::from))
+        });
+        let source = node
+            .and_then(|node| self.clips[node].native)
+            .map_or(kurbo::Affine::IDENTITY, |space| {
+                kurbo::Affine::new(space.matrix().map(f64::from))
+            });
+        let frame = crate::layout::writing::Frame::for_style(style);
+        let mapping = (kurbo::Affine::new(frame.matrix.map(f64::from)) * target.inverse() * source)
+            .as_coeffs()
+            .map(|value| value as f32);
+        reference.areas = BoxAreas {
+            border: crate::layout::writing::map_rect(mapping, reference.areas.border),
+            padding: crate::layout::writing::map_rect(mapping, reference.areas.padding),
+            content: crate::layout::writing::map_rect(mapping, reference.areas.content),
+        };
+        reference.border_radius = reference
+            .border_radius
+            .map(|radii| std::sync::Arc::new(crate::layout::writing::map_radii(mapping, &radii)));
+        self.measurer.motion.resolve(
+            style,
+            &mut reference,
+            self.measurer.text.resolver(),
+            &self.measurer.work,
+        )?;
+        Ok(reference)
+    }
     fn effect_node(&mut self, parent: Option<usize>, effect: Effect<'a>) -> usize {
         self.clips.push(EffectNode {
             native: None,
@@ -2872,7 +3062,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 | Effect::Parent3d(_)
                 | Effect::InheritedParent3d
                 | Effect::Group(_)
-                | Effect::PathClip(_) => None,
+                | Effect::PathClip(_)
+                | Effect::MotionReference(..)
+                | Effect::ColumnReference => None,
             };
             match node.effect {
                 Effect::Clip(..)
@@ -2883,7 +3075,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                         node_regions.extend(clip(paint).map(|clip| (page, Region::Clip(clip))));
                     }
                 }
-                Effect::Transform(style, parent) => {
+                Effect::Transform(style, _, _) => {
                     let areas = node
                         .fragments
                         .iter()
@@ -2896,27 +3088,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                                 .map(|&(page, rect)| (page, BoxAreas::single(rect))),
                         );
                     for (page, areas) in areas {
-                        let parent = parent
-                            .map(|parent| self.parent_3d_on(&self.clips[parent], page))
-                            .transpose()?
-                            .flatten();
-                        let frame = crate::layout::writing::Frame::for_style(style);
-                        let canonical = node.native.map_or(kurbo::Affine::IDENTITY, |space| {
-                            kurbo::Affine::new(space.matrix().map(f64::from))
-                        });
-                        let parent = parent.map(|parent| {
-                            parent.mapped(
-                                (kurbo::Affine::new(frame.matrix.map(f64::from))
-                                    * canonical.inverse())
-                                .as_coeffs()
-                                .map(|v| v as f32),
-                            )
-                        });
-                        if let Some(matrix) =
-                            style.transform_matrix(&frame.boxes(&areas), parent.as_ref())?
-                        {
-                            node_regions
-                                .push((page, Region::Transform(frame.into_logical(matrix))));
+                        if let Some(matrix) = self.transform_on(style, &areas, Some(node), page)? {
+                            node_regions.push((page, Region::Transform(matrix)));
                         }
                     }
                 }
@@ -2950,7 +3123,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 Effect::Parent3d(_)
                 | Effect::InheritedParent3d
                 | Effect::Group(_)
-                | Effect::PathClip(_) => {}
+                | Effect::PathClip(_)
+                | Effect::MotionReference(..)
+                | Effect::ColumnReference => {}
             }
             if let Some(space) = node.native {
                 for (_, region) in &mut node_regions {
@@ -3131,6 +3306,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         let containing = Containing::Box {
             grid: active.grid.clone(),
+            radius: active
+                .geometry
+                .as_ref()
+                .map(|geometry| &geometry.source.style().decoration.radii),
             overflow: active.overflow.clone().unwrap_or_default(),
             fragments: active.fragments.clone(),
             areas,
@@ -3231,7 +3410,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     ) -> Result<(), LayoutError> {
         let page = pending.position.page;
         let (cb, flow, clip) = match containing {
-            Containing::Rect { rect, flow, clip } => (*rect, *flow, *clip),
+            Containing::Rect {
+                rect, flow, clip, ..
+            } => (*rect, *flow, *clip),
             Containing::Page => (
                 match &self.fragmentainers {
                     Fragmentainers::Pages(pages) => pages.records[page].geometry.content_box(),
@@ -3247,6 +3428,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 areas,
                 flow,
                 clip,
+                ..
             } => {
                 let (_, slot) = fragments
                     .iter()
@@ -3301,7 +3483,29 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             border,
             clip,
         );
-        self.lay_out_positioned(measured, top, page, clip, pending)
+        let reference = if pending.block.style().motion.active() {
+            match containing {
+                Containing::Page => None,
+                Containing::Rect { paint, radius, .. } => {
+                    let node = self.effect_node(None, Effect::MotionReference(true, *radius));
+                    self.clips[node].paints.push((page, paint.clone()));
+                    Some(node)
+                }
+                Containing::Box {
+                    fragments, radius, ..
+                } => {
+                    let node = self.effect_node(None, Effect::MotionReference(true, *radius));
+                    self.clips[node].fragments.clone_from(fragments);
+                    Some(node)
+                }
+            }
+        } else {
+            None
+        };
+        let previous = std::mem::replace(&mut self.motion_containing, reference);
+        let result = self.lay_out_positioned(measured, top, page, clip, pending);
+        self.motion_containing = previous;
+        result
     }
     fn lay_out_positioned(
         &mut self,
@@ -4289,7 +4493,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 Effect::PathClip(owner) if std::ptr::eq(owner, style) => {
                     self.clips[node].paints.push((page, paint.clone()));
                 }
-                Effect::Transform(owner, _)
+                Effect::Transform(owner, ..)
                     if ancestor.rows.is_empty() && std::ptr::eq(owner, style) =>
                 {
                     self.clips[node].areas.push((page, rect));
@@ -4496,25 +4700,26 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         let table = self.tables.last_mut().expect("active table");
         let cell_overflow = std::mem::take(&mut table.cell_overflow);
-        for ((cell, page), mut area) in cell_overflow {
+        for ((cell, page), area) in cell_overflow {
             let table = self.tables.last().expect("active table");
-            for source in table
+            let nodes: Vec<_> = table
                 .flow
                 .plan
                 .cell_parents(cell)
                 .into_iter()
                 .rev()
                 .flatten()
-            {
-                if let Some(rect) = rectangles.get(&(std::ptr::from_ref(source), page))
-                    && let Some(matrix) = source
-                        .style()
-                        .transform_matrix(&BoxAreas::single(*rect), None)?
-                {
-                    area = overflow::transformed_bounds(area, matrix);
-                }
+                .filter(|source| rectangles.contains_key(&(std::ptr::from_ref(*source), page)))
+                .filter_map(|source| {
+                    transform_indices
+                        .get(&std::ptr::from_ref(source))
+                        .map(|&index| transforms[index].1)
+                })
+                .collect();
+            if !self.defer_overflow(page, area, nodes.clone()) {
+                let area = self.overflow_chain(page, area, &nodes)?;
+                self.record_overflow_on(page, area);
             }
-            self.record_overflow_on(page, area);
         }
         self.paint_table_shadows(&shadows, &pages, starts)?;
         let mut geometry: Option<(usize, crate::layout::tables::TableGeometry)> = None;
@@ -4555,6 +4760,16 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     &Containing::Rect {
                         rect,
                         flow: crate::style::logical::Flow::used(ancestor.source.style()),
+                        paint: BoxPaint::whole(
+                            rect,
+                            self.tables
+                                .last()
+                                .expect("active table")
+                                .flow
+                                .plan
+                                .structural_decoration(ancestor.source),
+                        ),
+                        radius: Some(&ancestor.source.style().decoration.radii),
                         clip,
                     },
                 )?;
@@ -4885,6 +5100,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 paint.rect.height = 0.0;
             }
         }
+        active.fragments = layer_fragments
+            .iter()
+            .map(|&(page, slot, _)| (page, slot))
+            .collect();
+        self.complete_motion_reference(&mut active, true)?;
         let total = layer_fragments.iter().map(|(_, _, rect)| rect.height).sum();
         if let Some(table) = self.tables.last_mut()
             && let Some(cell) = active
@@ -4978,7 +5198,13 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 let DisplayItem::Box(paint) = &self.display_lists[page][slot].item else {
                     continue;
                 };
-                let area = overflow::box_bounds(&active, geometry.source.style(), paint, page)?;
+                let area = overflow::box_bounds(&active, geometry.source.style(), paint, page);
+                let areas = paint.fragment_areas();
+                let Some(area) =
+                    self.transform_overflow(&active, geometry.source.style(), page, area, areas)?
+                else {
+                    continue;
+                };
                 if let Some(table) = self.tables.last_mut()
                     && !table.transforms.is_empty()
                     && let Some(cell) = table.flow.plan.cell_index(geometry.source)
@@ -5625,6 +5851,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             self.inline_containers.push((
                 element,
                 InlineContainer {
+                    style,
+                    containing_width: self.containing_geometry().1,
                     pending: Vec::new(),
                     lines: Vec::new(),
                     flow: crate::style::logical::Flow::used(style),
@@ -5715,6 +5943,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     &Containing::Rect {
                         rect,
                         flow: container.flow,
+                        paint: inline_reference(&container, rect),
+                        radius: Some(&container.style.decoration.radii),
                         clip: container.clip,
                     },
                 )?;
@@ -5901,7 +6131,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     Effect::Clip(style, _)
                     | Effect::RectClip(style)
                     | Effect::PathClip(style)
-                    | Effect::Transform(style, _)
+                    | Effect::Transform(style, ..)
                     | Effect::Sticky(style, _) => super::anchors::key(style),
                     _ => None,
                 };
@@ -6384,5 +6614,23 @@ fn assemble_background(
             });
         }
         before += size;
+    }
+}
+
+fn inline_reference(container: &InlineContainer<'_>, content: Rect) -> BoxPaint {
+    let padding = container
+        .style
+        .padding
+        .each_ref()
+        .map(|value| value.resolve(container.containing_width));
+    let border = container
+        .style
+        .decoration
+        .borders
+        .map(crate::paint::Border::used_width);
+    let rect = crate::paint::outset(crate::paint::outset(content, padding), border);
+    BoxPaint {
+        padding,
+        ..BoxPaint::whole(rect, container.style.decoration.with_image_type())
     }
 }

@@ -10,14 +10,28 @@ use super::svgtree::{AId, EId, SvgNode};
 use super::{converter, units};
 use crate::svg::usvg::{ApproxEqUlps, IsValidLength, Rect};
 
-pub(crate) fn convert(node: SvgNode, state: &converter::State) -> Option<Arc<Path>> {
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub(crate) enum Purpose {
+    Paint,
+    Geometry,
+}
+impl Purpose {
+    fn valid(self, length: f32) -> bool {
+        length.is_valid_length() || (self == Self::Geometry && length == 0.0)
+    }
+}
+pub(crate) fn convert(
+    node: SvgNode,
+    state: &converter::State,
+    purpose: Purpose,
+) -> Option<Arc<Path>> {
     match node.tag_name()? {
-        EId::Rect => convert_rect(node, state),
-        EId::Circle => convert_circle(node, state),
-        EId::Ellipse => convert_ellipse(node, state),
+        EId::Rect => convert_rect(node, state, purpose),
+        EId::Circle => convert_circle(node, state, purpose),
+        EId::Ellipse => convert_ellipse(node, state, purpose),
         EId::Line => convert_line(node, state),
-        EId::Polyline => convert_polyline(node),
-        EId::Polygon => convert_polygon(node),
+        EId::Polyline => convert_polyline(node, purpose),
+        EId::Polygon => convert_polygon(node, purpose),
         EId::Path => convert_path(node),
         _ => None,
     }
@@ -67,18 +81,18 @@ pub(crate) fn path_data(value: &str) -> Option<Arc<Path>> {
     builder.finish().map(Arc::new)
 }
 
-fn convert_rect(node: SvgNode, state: &converter::State) -> Option<Arc<Path>> {
+fn convert_rect(node: SvgNode, state: &converter::State, purpose: Purpose) -> Option<Arc<Path>> {
     // 'width' and 'height' attributes must be positive and non-zero.
     let width = node.convert_user_length(AId::Width, state, Length::zero());
     let height = node.convert_user_length(AId::Height, state, Length::zero());
-    if !width.is_valid_length() {
+    if !purpose.valid(width) {
         log::warn!(
             "Rect '{}' has an invalid 'width' value. Skipped.",
             node.element_id()
         );
         return None;
     }
-    if !height.is_valid_length() {
+    if !purpose.valid(height) {
         log::warn!(
             "Rect '{}' has an invalid 'height' value. Skipped.",
             node.element_id()
@@ -175,18 +189,22 @@ fn convert_line(node: SvgNode, state: &converter::State) -> Option<Arc<Path>> {
     builder.finish().map(Arc::new)
 }
 
-fn convert_polyline(node: SvgNode) -> Option<Arc<Path>> {
-    let builder = points_to_path(node, "Polyline")?;
+fn convert_polyline(node: SvgNode, purpose: Purpose) -> Option<Arc<Path>> {
+    let builder = points_to_path(node, "Polyline", purpose)?;
     builder.finish().map(Arc::new)
 }
 
-fn convert_polygon(node: SvgNode) -> Option<Arc<Path>> {
-    let mut builder = points_to_path(node, "Polygon")?;
+fn convert_polygon(node: SvgNode, purpose: Purpose) -> Option<Arc<Path>> {
+    let mut builder = points_to_path(node, "Polygon", purpose)?;
     builder.close();
     builder.finish().map(Arc::new)
 }
 
-fn points_to_path(node: SvgNode, eid: &str) -> Option<tiny_skia_path::PathBuilder> {
+fn points_to_path(
+    node: SvgNode,
+    eid: &str,
+    purpose: Purpose,
+) -> Option<tiny_skia_path::PathBuilder> {
     use svgtypes::PointsParser;
 
     let mut builder = tiny_skia_path::PathBuilder::new();
@@ -210,7 +228,11 @@ fn points_to_path(node: SvgNode, eid: &str) -> Option<tiny_skia_path::PathBuilde
         }
     };
 
-    // 'polyline' and 'polygon' elements must contain at least 2 points.
+    if purpose == Purpose::Geometry && builder.len() == 1 {
+        let point = builder.last_point()?;
+        builder.line_to(point.x, point.y);
+    }
+    // Painting a polyline or polygon needs at least two points.
     if builder.len() < 2 {
         log::warn!(
             "{} '{}' has less than 2 points. Skipped.",
@@ -223,12 +245,12 @@ fn points_to_path(node: SvgNode, eid: &str) -> Option<tiny_skia_path::PathBuilde
     Some(builder)
 }
 
-fn convert_circle(node: SvgNode, state: &converter::State) -> Option<Arc<Path>> {
+fn convert_circle(node: SvgNode, state: &converter::State, purpose: Purpose) -> Option<Arc<Path>> {
     let cx = node.convert_user_length(AId::Cx, state, Length::zero());
     let cy = node.convert_user_length(AId::Cy, state, Length::zero());
     let r = node.convert_user_length(AId::R, state, Length::zero());
 
-    if !r.is_valid_length() {
+    if !purpose.valid(r) {
         log::warn!(
             "Circle '{}' has an invalid 'r' value. Skipped.",
             node.element_id()
@@ -239,12 +261,12 @@ fn convert_circle(node: SvgNode, state: &converter::State) -> Option<Arc<Path>> 
     ellipse_to_path(cx, cy, r, r)
 }
 
-fn convert_ellipse(node: SvgNode, state: &converter::State) -> Option<Arc<Path>> {
+fn convert_ellipse(node: SvgNode, state: &converter::State, purpose: Purpose) -> Option<Arc<Path>> {
     let cx = node.convert_user_length(AId::Cx, state, Length::zero());
     let cy = node.convert_user_length(AId::Cy, state, Length::zero());
     let (rx, ry) = resolve_rx_ry(node, state);
 
-    if !rx.is_valid_length() {
+    if !purpose.valid(rx) {
         log::warn!(
             "Ellipse '{}' has an invalid 'rx' value. Skipped.",
             node.element_id()
@@ -252,7 +274,7 @@ fn convert_ellipse(node: SvgNode, state: &converter::State) -> Option<Arc<Path>>
         return None;
     }
 
-    if !ry.is_valid_length() {
+    if !purpose.valid(ry) {
         log::warn!(
             "Ellipse '{}' has an invalid 'ry' value. Skipped.",
             node.element_id()

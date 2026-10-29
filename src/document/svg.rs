@@ -310,12 +310,17 @@ fn attribute(xml: &mut String, prefix: &str, name: &str, value: &str) {
 
 /// SVG elements that CSS `url()` references select: Filter Effects 1 §5 `filter` and CSS
 /// Masking 1 §7.1 `mask` elements.
-const REFERENCED_ELEMENTS: [&str; 2] = ["filter", "mask"];
+const REFERENCED_ELEMENTS: [&str; 9] = [
+    "filter", "mask", "path", "rect", "circle", "ellipse", "line", "polyline", "polygon",
+];
 
 /// The document's referenceable SVG resources by `id`, each with the standalone XML of the
 /// outermost `<svg>` holding it, so that references inside that SVG resolve too.
 #[derive(Clone, Default)]
-pub(crate) struct SvgDefinitions(HashMap<String, SvgDefinition>);
+pub(crate) struct SvgDefinitions {
+    entries: HashMap<String, SvgDefinition>,
+    document: Option<crate::resources::Url>,
+}
 
 #[derive(Clone)]
 pub(crate) struct SvgDefinition {
@@ -334,14 +339,18 @@ impl SvgDefinitions {
     ) -> Result<Self, DocumentError> {
         let mut roots: HashMap<ElementId, Arc<str>> = HashMap::new();
         let mut definitions = HashMap::new();
+        let mut seen = HashSet::new();
         for element in tree.elements() {
+            let Some(id) = element.attr(ID_ATTRIBUTE).filter(|id| !id.is_empty()) else {
+                continue;
+            };
+            if !seen.insert(id) {
+                continue;
+            }
             let Some(name) = REFERENCED_ELEMENTS
                 .into_iter()
                 .find(|name| element.namespace() == SVG_NAMESPACE && element.name() == *name)
             else {
-                continue;
-            };
-            let Some(id) = element.attr(ID_ATTRIBUTE).filter(|id| !id.is_empty()) else {
                 continue;
             };
             let Some(svg) = element
@@ -365,11 +374,31 @@ impl SvgDefinitions {
                 .entry(id.to_owned())
                 .or_insert(SvgDefinition { element: name, xml });
         }
-        Ok(Self(definitions))
+        Ok(Self {
+            entries: definitions,
+            document: tree.document_url.clone(),
+        })
+    }
+    pub(crate) fn motion(&self, reference: &str) -> Option<&SvgDefinition> {
+        let (document, id) = reference.rsplit_once('#')?;
+        if !document.is_empty() {
+            let mut current = self.document.clone()?;
+            current.set_fragment(None);
+            if crate::resources::Url::parse(document).ok()? != current {
+                return None;
+            }
+        }
+        self.get_decoded(id)
+    }
+    fn get_decoded(&self, id: &str) -> Option<&SvgDefinition> {
+        let id = percent_encoding::percent_decode_str(id)
+            .decode_utf8()
+            .ok()?;
+        self.entries.get(id.as_ref())
     }
     /// The definition a same-document `url(#id)` reference names.
     pub(crate) fn get(&self, reference: &str) -> Option<&SvgDefinition> {
-        self.0.get(reference.strip_prefix('#')?)
+        self.entries.get(reference.strip_prefix('#')?)
     }
 }
 

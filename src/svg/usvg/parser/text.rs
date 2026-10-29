@@ -401,7 +401,7 @@ fn collect_text_chunks_impl(
 
 fn resolve_text_flow(node: SvgNode, state: &converter::State) -> Option<TextFlow> {
     let linked_node = node.attribute::<SvgNode>(AId::Href)?;
-    let path = super::shapes::convert(linked_node, state)?;
+    let path = super::shapes::convert(linked_node, state, super::shapes::Purpose::Paint)?;
 
     // The reference path's transform needs to be applied
     let transform = linked_node.resolve_transform(AId::Transform, state);

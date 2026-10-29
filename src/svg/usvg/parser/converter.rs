@@ -35,12 +35,14 @@ pub(super) struct State<'a> {
     pub(crate) fe_image_link: bool,
     /// A viewBox of the parent SVG element.
     pub(crate) view_box: NonZeroRect,
+    pub(crate) unit_viewport: Option<[f32; 2]>,
     /// A size of the parent `use` element.
     /// Used only during nested `svg` size resolving.
     /// Width and height can be set independently.
     pub(crate) use_size: (Option<f32>, Option<f32>),
     pub(crate) opt: &'a Options<'a>,
     pub(crate) image_resolver: Option<&'a dyn Fn(&str, &Options) -> Option<ImageKind>>,
+    pub(crate) motion_path_resolver: Option<&'a dyn Fn(&str) -> Option<Arc<str>>>,
     pub(crate) font_provider: Option<&'a dyn FontProvider>,
 }
 
@@ -49,6 +51,7 @@ pub(crate) struct Cache {
     /// This fontdb is initialized from [`Options::fontdb`] and then populated
     /// over the course of conversion.
     pub fontdb: Arc<Database>,
+    pub(crate) motion_error: Option<Arc<crate::style::StyleError>>,
 
     cache_outline: HashMap<(ID, GlyphId), Option<tiny_skia_path::Path>>,
     cache_colr: HashMap<(ID, GlyphId), Option<Tree>>,
@@ -92,6 +95,7 @@ impl Cache {
     pub(crate) fn new(fontdb: Arc<Database>) -> Self {
         Self {
             fontdb,
+            motion_error: None,
 
             cache_outline: HashMap::new(),
             cache_colr: HashMap::new(),
@@ -361,7 +365,11 @@ pub(crate) fn convert_doc(
     viewport: Option<Size>,
     image_resolver: Option<&dyn Fn(&str, &Options) -> Option<ImageKind>>,
     font_provider: Option<&dyn FontProvider>,
+    motion_path_resolver: Option<&dyn Fn(&str) -> Option<Arc<str>>>,
 ) -> Result<Tree, Error> {
+    if let Some(error) = &svg_doc.style_error {
+        return Err(Error::Style(error.clone()));
+    }
     if let Some(limit) = svg_doc.css_limit {
         return Err(Error::CssComponentDepthLimit { limit });
     }
@@ -408,9 +416,11 @@ pub(crate) fn convert_doc(
         parent_markers: Vec::new(),
         fe_image_link: false,
         view_box: view_box.rect,
+        unit_viewport: None,
         use_size: (None, None),
         opt,
         image_resolver,
+        motion_path_resolver,
         font_provider,
     };
 
@@ -473,6 +483,9 @@ pub(crate) fn convert_doc(
     tree.root.collect_filters(&mut tree.filters);
     tree.root.calculate_bounding_boxes();
 
+    if let Some(error) = cache.motion_error.take() {
+        return Err(super::Error::Style(error));
+    }
     // The fontdb might have been mutated and we want to apply these changes to
     // the tree's fontdb.
     {
@@ -512,9 +525,11 @@ fn resolve_svg_size(svg: &SvgNode, opt: &Options) -> (Result<Size, Error>, bool)
         parent_markers: Vec::new(),
         fe_image_link: false,
         view_box: NonZeroRect::from_xywh(0.0, 0.0, 100.0, 100.0).unwrap(),
+        unit_viewport: None,
         use_size: (None, None),
         opt,
         image_resolver: None,
+        motion_path_resolver: None,
         font_provider: None,
     };
 
@@ -642,7 +657,7 @@ fn convert_element_impl(
         | EId::Polyline
         | EId::Polygon
         | EId::Path => {
-            if let Some(path) = super::shapes::convert(node, state) {
+            if let Some(path) = super::shapes::convert(node, state, super::shapes::Purpose::Paint) {
                 convert_path(node, path, state, cache, parent);
             }
         }
@@ -717,7 +732,7 @@ fn convert_clip_path_elements_impl(
 ) {
     match tag_name {
         EId::Rect | EId::Circle | EId::Ellipse | EId::Polyline | EId::Polygon | EId::Path => {
-            if let Some(path) = super::shapes::convert(node, state) {
+            if let Some(path) = super::shapes::convert(node, state, super::shapes::Purpose::Paint) {
                 convert_path(node, path, state, cache, parent);
             }
         }
@@ -779,7 +794,8 @@ pub(crate) fn convert_group(
         Opacity::ONE
     };
 
-    let transform = match node.attribute::<&str>(AId::TransformBox) {
+    let motion = super::motion::transform(node, state, cache, parent, collect_children);
+    let transform = motion.unwrap_or_else(|| match node.attribute::<&str>(AId::TransformBox) {
         // CSS Transforms 1 §2: the origin lies in the element's object or stroke bounding box,
         // which its content gives before the transform applies.
         Some(reference @ (FILL_BOX | STROKE_BOX)) => {
@@ -795,7 +811,7 @@ pub(crate) fn convert_group(
             node.resolve_transform_in(AId::Transform, state, Some(bounds))
         }
         _ => node.resolve_transform(AId::Transform, state),
-    };
+    });
     let blend_mode: BlendMode = node.attribute(AId::MixBlendMode).unwrap_or_default();
     let isolation: Isolation = node.attribute(AId::Isolation).unwrap_or_default();
     let isolate = isolation == Isolation::Isolate;

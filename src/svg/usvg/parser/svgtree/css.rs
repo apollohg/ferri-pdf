@@ -13,6 +13,7 @@ pub(super) struct Declaration<'i> {
     pub name: CowRcStr<'i>,
     pub value: &'i str,
     pub important: bool,
+    pub substitutions: bool,
 }
 
 pub(super) struct Rule<'i> {
@@ -147,24 +148,29 @@ fn component_limit(error: &ParseError<'_, usize>) -> Option<usize> {
     }
 }
 
-fn components<'i, 't>(input: &mut Parser<'i, 't>) -> Result<(), ParseError<'i, usize>> {
+fn components<'i, 't>(input: &mut Parser<'i, 't>) -> Result<bool, ParseError<'i, usize>> {
     nested_components(input, 0)
 }
 
 fn nested_components<'i, 't>(
     input: &mut Parser<'i, 't>,
     depth: usize,
-) -> Result<(), ParseError<'i, usize>> {
+) -> Result<bool, ParseError<'i, usize>> {
     if depth >= MAX_COMPONENT_DEPTH {
         return Err(input.new_custom_error(MAX_COMPONENT_DEPTH));
     }
+    let mut substitutions = false;
     while let Ok(token) = input.next_including_whitespace_and_comments() {
+        if let Token::Function(name) = token {
+            substitutions |= crate::style::svg_cascade::substitution_function(name);
+        }
         match token {
             Token::Function(_)
             | Token::ParenthesisBlock
             | Token::SquareBracketBlock
             | Token::CurlyBracketBlock => {
-                input.parse_nested_block(|input| nested_components(input, depth + 1))?;
+                substitutions |=
+                    input.parse_nested_block(|input| nested_components(input, depth + 1))?;
             }
             token if token.is_parse_error() => {
                 let token = token.clone();
@@ -173,7 +179,7 @@ fn nested_components<'i, 't>(
             _ => {}
         }
     }
-    Ok(())
+    Ok(substitutions)
 }
 
 struct Declarations;
@@ -187,16 +193,17 @@ impl<'i> DeclarationParser<'i> for Declarations {
         _: &ParserState,
     ) -> Result<Self::Declaration, ParseError<'i, usize>> {
         let start = input.position();
-        let value = input.parse_until_before(Delimiter::Bang, |input| {
-            components(input)?;
-            Ok::<_, ParseError<'i, usize>>(input.slice_from(start))
+        let (value, substitutions) = input.parse_until_before(Delimiter::Bang, |input| {
+            let substitutions = components(input)?;
+            Ok::<_, ParseError<'i, usize>>((input.slice_from(start), substitutions))
         })?;
         let important = input.try_parse(cssparser::parse_important).is_ok();
         input.expect_exhausted()?;
         if value.trim().is_empty() && !name.starts_with("--") {
             return Err(input.new_error(cssparser::BasicParseErrorKind::QualifiedRuleInvalid));
         }
-        let name = if name.bytes().any(|byte| byte.is_ascii_uppercase()) {
+        let name = if !name.starts_with("--") && name.bytes().any(|byte| byte.is_ascii_uppercase())
+        {
             name.to_ascii_lowercase().into()
         } else {
             name
@@ -205,6 +212,7 @@ impl<'i> DeclarationParser<'i> for Declarations {
             name,
             value: value.trim(),
             important,
+            substitutions,
         })
     }
 }

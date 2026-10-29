@@ -164,6 +164,22 @@ pub enum Segment {
     Line(Point),
     Cubic([Point; 3]),
 }
+impl Segment {
+    pub(crate) fn end(self) -> Point {
+        match self {
+            Self::Line(point) | Self::Cubic([_, _, point]) => point,
+        }
+    }
+    pub(crate) fn quadratic(from: Point, control: Point, end: Point) -> Self {
+        const QUADRATIC_TO_CUBIC: f32 = 2.0 / 3.0;
+        let toward = |from: Point| {
+            std::array::from_fn(|axis| {
+                from[axis] + QUADRATIC_TO_CUBIC * (control[axis] - from[axis])
+            })
+        };
+        Self::Cubic([toward(from), toward(end), end])
+    }
+}
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Contour {
     pub start: Point,
@@ -171,6 +187,20 @@ pub struct Contour {
     pub closed: bool,
 }
 impl Contour {
+    pub(crate) fn map(&self, place: impl Fn(Point) -> Point) -> Self {
+        Self {
+            start: place(self.start),
+            closed: self.closed,
+            segments: self
+                .segments
+                .iter()
+                .map(|segment| match *segment {
+                    Segment::Line(point) => Segment::Line(place(point)),
+                    Segment::Cubic(points) => Segment::Cubic(points.map(&place)),
+                })
+                .collect(),
+        }
+    }
     pub fn polygon(points: &[Point]) -> Self {
         Self {
             start: points[0],

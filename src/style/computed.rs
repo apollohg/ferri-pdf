@@ -179,6 +179,7 @@ pub(crate) struct Style {
     /// Inline-level before blockification; selects the inline static position.
     pub inline_level_origin: bool,
     pub transform: Vec<crate::style::TransformFunction>,
+    pub motion: Arc<crate::style::motion::Motion>,
     /// Group opacity; below one the box is a stacking context composited as one layer.
     pub opacity: f32,
     pub mix_blend_mode: crate::paint::BlendMode,
@@ -339,6 +340,7 @@ impl Default for Style {
             clip: None,
             inline_level_origin: false,
             transform: Vec::new(),
+            motion: Arc::default(),
             opacity: OPAQUE,
             mix_blend_mode: crate::paint::BlendMode::Normal,
             filter: Arc::default(),

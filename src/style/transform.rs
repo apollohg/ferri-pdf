@@ -96,6 +96,35 @@ pub(crate) enum TransformFunction {
     Translate([LengthPercentage; 3]),
 }
 
+impl TransformFunction {
+    pub(crate) fn css(
+        &self,
+        length: impl Fn(&LengthPercentage) -> Result<String, StyleError>,
+    ) -> Result<String, StyleError> {
+        Ok(match self {
+            Self::Matrix(matrix) => {
+                let mut matrix = *matrix;
+                for value in &mut matrix[TRANSLATION] {
+                    *value /= POINTS_PER_PIXEL;
+                }
+                for index in [W_FROM_X, W_FROM_Y, W_FROM_Z] {
+                    matrix[index] *= POINTS_PER_PIXEL;
+                }
+                format!(
+                    "matrix3d({})",
+                    matrix.map(|value| value.to_string()).join(",")
+                )
+            }
+            Self::Translate(offsets) => format!(
+                "translate3d({},{},{})",
+                length(&offsets[0])?,
+                length(&offsets[1])?,
+                length(&offsets[2])?
+            ),
+        })
+    }
+}
+
 fn multiply(m: &Matrix3d, n: &Matrix3d) -> Matrix3d {
     std::array::from_fn(|index| {
         let (column, row) = (index / DIMENSION, index % DIMENSION);
@@ -169,7 +198,7 @@ fn collect_values<'a>(component: &'a Component, output: &mut Vec<&'a Component>)
     }
 }
 /// A property value's components in order, without grouping.
-fn values(value: &Component) -> Vec<&Component> {
+pub(super) fn values(value: &Component) -> Vec<&Component> {
     let mut output = Vec::new();
     collect_values(value, &mut output);
     output
@@ -532,6 +561,7 @@ impl Style {
             || self.translate.is_some()
             || self.rotate.is_some()
             || self.scale.is_some()
+            || self.motion.active()
     }
     /// Transforms, perspective and `preserve-3d` establish a stacking context and a containing
     /// block for all descendants (CSS Transforms 2 §5, §7, §8).
@@ -570,7 +600,11 @@ impl Style {
     }
     /// CSS Transforms 2 §6: the page-space transformation matrix of a box with these areas, or
     /// `None` without a transform.
-    fn transformation(&self, boxes: &BoxAreas<Rect>) -> Option<Matrix3d> {
+    fn transformation(
+        &self,
+        boxes: &BoxAreas<Rect>,
+        containing: &crate::style::motion::Reference,
+    ) -> Option<Matrix3d> {
         if !self.is_transformed() {
             return None;
         }
@@ -585,8 +619,32 @@ impl Style {
         };
         let [x, y, z] = resolve(&self.transform_origin);
         let origin = [reference.x + x, reference.y + y, z];
-        let Ok(composed) =
-            self.composed(|offset| Ok::<_, std::convert::Infallible>(resolve(offset)));
+        let motion = self
+            .motion
+            .placement(boxes.border, containing)
+            .map(|(point, angle)| {
+                let anchor = self
+                    .motion
+                    .anchor
+                    .as_ref()
+                    .map_or([origin[0], origin[1]], |anchor| {
+                        [
+                            reference.x + anchor[0].resolve(reference.width),
+                            reference.y + anchor[1].resolve(reference.height),
+                        ]
+                    });
+                multiply(
+                    &multiply(
+                        &translation([point[0] - origin[0], point[1] - origin[1], 0.0]),
+                        &rotation(Z_AXIS, angle),
+                    ),
+                    &translation([origin[0] - anchor[0], origin[1] - anchor[1], 0.0]),
+                )
+            });
+        let Ok(composed) = self.composed(
+            |offset| Ok::<_, std::convert::Infallible>(resolve(offset)),
+            motion,
+        );
         Some(multiply(
             &multiply(&translation(origin), &composed),
             &translation(origin.map(|v| -v)),
@@ -597,6 +655,7 @@ impl Style {
     fn composed<E>(
         &self,
         resolve: impl Fn(&[LengthPercentage; 3]) -> Result<[f32; 3], E>,
+        motion: Option<Matrix3d>,
     ) -> Result<Matrix3d, E> {
         let mut result = IDENTITY;
         if let Some(offset) = &self.translate {
@@ -607,6 +666,9 @@ impl Style {
         }
         if let Some([x, y, z]) = self.scale {
             result = multiply(&result, &scaling(x, y, z));
+        }
+        if let Some(motion) = motion {
+            result = multiply(&result, &motion);
         }
         for function in &self.transform {
             let step = match function {
@@ -630,8 +692,10 @@ impl Style {
                 "a translation by a percentage of the reference box on SVG content".into(),
             )),
         };
-        let m =
-            self.composed(|[x, y, z]| Ok::<_, StyleError>([length(x)?, length(y)?, length(z)?]))?;
+        let m = self.composed(
+            |[x, y, z]| Ok::<_, StyleError>([length(x)?, length(y)?, length(z)?]),
+            None,
+        )?;
         if m[W_FROM_X] != 0.0 || m[W_FROM_Y] != 0.0 || m[W_CONSTANT] != 1.0 {
             return Err(StyleError::Unsupported(
                 "a perspective transform on SVG content".into(),
@@ -646,8 +710,9 @@ impl Style {
         &self,
         boxes: &BoxAreas<Rect>,
         parent: Option<&Parent3d>,
+        containing: &crate::style::motion::Reference,
     ) -> Result<Option<Matrix>, StyleError> {
-        let Some(own) = self.transformation(boxes) else {
+        let Some(own) = self.transformation(boxes, containing) else {
             return Ok(None);
         };
         let reference = self.transform_box.reference(boxes);

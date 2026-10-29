@@ -1862,7 +1862,7 @@ impl variables::Evaluation for CustomEvaluation<'_, '_> {
             .context(self.context)
             .customs
             .recascade(name, keyword)
-            .map(variables::Recascade::Source)
+            .map(|source| variables::Recascade::Source(source.map(Into::into)))
     }
 }
 

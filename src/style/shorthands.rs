@@ -128,6 +128,7 @@ const SYNTHESIS_OFF: &str = "none";
 pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands, StyleError> {
     use Property as P;
     Ok(match shorthand {
+        P::Offset => offset(&value),
         P::Size => pair(&value, [P::Width, P::Height]),
         P::MinSize => pair(&value, [P::MinWidth, P::MinHeight]),
         P::MaxSize => pair(&value, [P::MaxWidth, P::MaxHeight]),
@@ -1317,4 +1318,22 @@ fn grid(value: &Component) -> Result<Longhands, StyleError> {
         }
     }
     Ok(longhands)
+}
+
+fn offset(value: &Component) -> Longhands {
+    [
+        Property::OffsetPosition,
+        Property::OffsetPath,
+        Property::OffsetDistance,
+        Property::OffsetRotate,
+        Property::OffsetAnchor,
+    ]
+    .into_iter()
+    .map(|property| {
+        let specified = value
+            .find(Label::Property(property))
+            .map_or_else(initial, |component| longhand(property, component));
+        (property, specified)
+    })
+    .collect()
 }

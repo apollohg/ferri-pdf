@@ -679,6 +679,26 @@ fn handler(property: Property) -> Option<Handler> {
             z_index,
             Some(|v, r| crate::style::position::z_index(v, r).is_ok()),
         ),
+        P::OffsetPath => (
+            offset_path,
+            Some(|v, r| crate::style::motion::path(v, r).is_ok()),
+        ),
+        P::OffsetPosition => (
+            offset_position,
+            Some(|v, r| crate::style::motion::position(v, r).is_ok()),
+        ),
+        P::OffsetAnchor => (
+            offset_anchor,
+            Some(|v, r| crate::style::motion::anchor(v, r).is_ok()),
+        ),
+        P::OffsetDistance => (
+            offset_distance,
+            Some(|v, r| crate::style::motion::distance(v, r).is_ok()),
+        ),
+        P::OffsetRotate => (
+            offset_rotate,
+            Some(|v, r| crate::style::motion::rotate(v, r).is_ok()),
+        ),
         P::Transform => (
             transform,
             Some(|v, r| crate::style::transform::transform(v, r).is_ok()),
@@ -2245,6 +2265,28 @@ computed!(
 computed!(z_index, [z_index], |value, style, _parent, relative| {
     crate::style::position::z_index(value, relative)?
 });
+macro_rules! motion {
+    ($name:ident, $field:ident) => {
+        fn $name(
+            style: &mut Style,
+            _: &Style,
+            input: Input<'_>,
+            relative: &Relative<'_>,
+        ) -> Result<(), StyleError> {
+            let value = match input {
+                Input::Value(value) => crate::style::motion::$field(value, relative)?,
+                Input::Copy(source) => source.motion.$field.to_owned(),
+            };
+            std::sync::Arc::make_mut(&mut style.motion).$field = value;
+            Ok(())
+        }
+    };
+}
+motion!(offset_path, path);
+motion!(offset_position, position);
+motion!(offset_anchor, anchor);
+motion!(offset_distance, distance);
+motion!(offset_rotate, rotate);
 computed!(transform, [transform], |value, style, _parent, relative| {
     crate::style::transform::transform(value, relative)?
 });
