@@ -1,9 +1,7 @@
 //! `MathML` Core §3.2.4.2 and Appendix B.1.
 use super::operator_data::{ENTRIES, INLINE_AXIS};
-use crate::document::DocumentError;
-use crate::dom::Element;
-use crate::resources::ResourceResolver;
-use crate::style::{LengthPercentage, Style, Stylesheet};
+use crate::document::mathml::Attributes;
+use crate::style::{LengthPercentage, Style};
 
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, PartialEq)]
 pub(super) enum Form {
@@ -13,8 +11,8 @@ pub(super) enum Form {
     Postfix,
 }
 impl Form {
-    fn attribute(element: Element<'_>) -> Option<Self> {
-        let value = element.attr("form")?;
+    fn attribute(attributes: &Attributes) -> Option<Self> {
+        let value = attributes.get("form")?;
         if value.eq_ignore_ascii_case("infix") {
             Some(Self::Infix)
         } else if value.eq_ignore_ascii_case("prefix") {
@@ -72,15 +70,8 @@ const ASCII_PAIRS: [&str; 18] = [
 ];
 
 impl Operator {
-    pub(super) fn of(
-        element: Element<'_>,
-        text: &str,
-        style: &Style,
-        form: Form,
-        sheet: &Stylesheet,
-        resolver: &dyn ResourceResolver,
-    ) -> Result<Self, DocumentError> {
-        let explicit = Form::attribute(element);
+    pub(super) fn of(attributes: &Attributes, text: &str, style: &Style, form: Form) -> Self {
+        let explicit = Form::attribute(attributes);
         let form = explicit.unwrap_or(form);
         let mut selected = category(text, form);
         if selected == Category::Default && explicit.is_none() {
@@ -99,29 +90,22 @@ impl Operator {
             Category::M => [0.0, THIN_SPACE_EM],
             _ => [0.0; 2],
         };
-        let attribute = |name: &str| -> Result<Option<LengthPercentage>, DocumentError> {
-            element
-                .attr(name)
-                .map(|value| sheet.math_attribute_length(value, style, resolver))
-                .transpose()
-                .map(Option::flatten)
-                .map_err(Into::into)
-        };
-        let boolean = |name: &str, default: bool| match element.attr(name) {
+        let attribute = |name: &str| attributes.length(name).cloned();
+        let boolean = |name: &str, default: bool| match attributes.get(name) {
             Some(value) if value.eq_ignore_ascii_case("true") => true,
             Some(value) if value.eq_ignore_ascii_case("false") => false,
             _ => default,
         };
         let mut chars = text.chars();
         let ch = chars.next().filter(|_| chars.next().is_none());
-        Ok(Self {
+        Self {
             form,
             explicit_form: explicit.is_some(),
             space: [
-                attribute("lspace")?.map_or(spacing[0] * style.size, |value| {
+                attribute("lspace").map_or(spacing[0] * style.size, |value| {
                     value.resolve(spacing[0] * style.size)
                 }),
-                attribute("rspace")?.map_or(spacing[1] * style.size, |value| {
+                attribute("rspace").map_or(spacing[1] * style.size, |value| {
                     value.resolve(spacing[1] * style.size)
                 }),
             ],
@@ -142,9 +126,9 @@ impl Operator {
             large: boolean("largeop", matches!(selected, Category::H | Category::J)),
             movable: boolean("movablelimits", selected == Category::J),
             inline_axis: ch.is_some_and(|ch| INLINE_AXIS.binary_search(&u32::from(ch)).is_ok()),
-            min: attribute("minsize")?.unwrap_or(LengthPercentage::Percentage(1.0)),
-            max: attribute("maxsize")?,
-        })
+            min: attribute("minsize").unwrap_or(LengthPercentage::Percentage(1.0)),
+            max: attribute("maxsize"),
+        }
     }
 }
 fn category(text: &str, form: Form) -> Category {

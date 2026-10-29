@@ -242,10 +242,6 @@ impl Viewport<'_> {
 
 /// The computed line height and the font that converts `normal` to an absolute length.
 #[derive(Clone)]
-#[expect(
-    clippy::large_enum_variant,
-    reason = "font bases are stack values; boxing each line basis adds allocations during style resolution"
-)]
 pub(crate) enum Line<'a> {
     Known {
         height: LineHeight,

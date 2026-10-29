@@ -397,12 +397,6 @@ fn baseline(block: &BlockBox, measured: &MeasuredBlock<'_>) -> Option<f32> {
     if style.is_scroll_container() || style.containment().layout {
         return None;
     }
-    if let Some(image) = block.image()
-        && let crate::images::Image::Viewport(view) = image.as_ref()
-        && let Some(baseline) = view.baseline
-    {
-        return Some(measured.geometry.border[0] + measured.geometry.padding[0] + baseline);
-    }
     if block.image().is_some() {
         return None;
     }

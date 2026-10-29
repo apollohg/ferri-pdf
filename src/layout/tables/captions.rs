@@ -112,6 +112,7 @@ pub(super) fn wrap<'a>(
     Ok(MeasuredBlock {
         frame_key: None,
         frame_owner: None,
+        math: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer

@@ -2036,6 +2036,12 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let transformed = owns_wrapper_properties && block.style.has_transform_effects();
         let grouped = owns_wrapper_properties && block.style.is_grouped();
         let isolated = owns_wrapper_properties && block.style.forced_stacking_context();
+        let native_math = owns_wrapper_properties
+            && matches!(
+                block.style.display,
+                crate::style::Display::InlineMath | crate::style::Display::BlockMath
+            )
+            && block.source.math().is_some_and(|math| math.principal);
         let containing = owns_wrapper_properties && block.style.contains_absolute();
         let sticky = owns_wrapper_properties && block.style.position == Position::Sticky;
         if transformed
@@ -2055,9 +2061,23 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             .flatten()
             .or((transformed || grouped || isolated).then_some(0));
         let mut own_group = None;
-        let paint_key = if positioned || z_index.is_some() {
+        let paint_key = if positioned || z_index.is_some() || native_math {
             let order = self.reserved_order.take().unwrap_or_else(|| self.order());
-            let layer = positioned_layer(&self.context, z_index, order);
+            // Intrinsic MathML contexts stay in flow, before their parent's extra graphics.
+            let (context, z_index) = if native_math && !positioned && z_index.is_none() {
+                let level = if block.style.floating().is_some() {
+                    FLOAT_PAINT_LEVEL
+                } else {
+                    FLOW_LEVEL.0
+                };
+                (&self.key, Some(level))
+            } else {
+                (
+                    &self.context,
+                    z_index.or(native_math.then_some(FLOW_LEVEL.0)),
+                )
+            };
+            let layer = positioned_layer(context, z_index, order);
             if z_index.is_some() {
                 let group = if grouped || block.style.is_backdrop_root() {
                     Group::of(block.style)

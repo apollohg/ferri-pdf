@@ -11,6 +11,7 @@ mod inline;
 mod intrinsic;
 mod margin;
 mod markers;
+mod mathml;
 mod measure;
 mod motion;
 mod multicol;

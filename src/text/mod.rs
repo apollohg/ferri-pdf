@@ -672,6 +672,9 @@ impl<'p, 'c, 'f> IntrinsicSource<'p, 'c, 'f> {
 }
 
 impl<'a> TextContext<'a> {
+    pub(crate) fn fonts(&self) -> &'a FontBook {
+        self.fonts
+    }
     pub(crate) fn resolver(&self) -> &'a dyn ResourceResolver {
         self.resolver
     }

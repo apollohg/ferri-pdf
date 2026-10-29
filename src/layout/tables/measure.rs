@@ -1719,6 +1719,7 @@ fn measure_plan<'a>(
     let measured = MeasuredBlock {
         frame_key: None,
         frame_owner: None,
+        math: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer

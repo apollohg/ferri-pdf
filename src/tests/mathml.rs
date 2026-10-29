@@ -12,23 +12,291 @@ fn math_output(body: &str) -> crate::RenderOutput {
     .unwrap_or_else(|error| panic!("MathML fixture must render: {error}\n{body}"))
 }
 
-fn math(body: &str) -> std::sync::Arc<crate::layout::ViewportPaint> {
-    math_output(body)
-        .layout
-        .unwrap()
-        .display_lists
-        .iter()
-        .flatten()
-        .find_map(|item| {
-            let DisplayItem::Image(paint) = item else {
-                return None;
+struct MathView {
+    lines: Vec<crate::layout::TextLine>,
+    items: Vec<DisplayItem>,
+    area: crate::graphics::Rect,
+    baseline: Option<f32>,
+}
+fn math(body: &str) -> MathView {
+    const MEASURE_BACKGROUND: [u8; 3] = [253, 252, 254];
+    const BASELINE_TEXT: &str = "FERRI_BASELINE";
+    let trace = math_output(&format!("<style>math{{background:rgb(253,252,254)!important}}body{{white-space:nowrap}}</style>{body}<span>{BASELINE_TEXT}</span>")).layout.unwrap();
+    let mut lines = Vec::new();
+    let mut items = Vec::new();
+    let mut bounds = None;
+    let mut baseline = None;
+    let mut stack = vec![kurbo::Affine::IDENTITY];
+    for item in &trace.display_lists[0] {
+        let matrix = *stack.last().unwrap();
+        match item {
+            DisplayItem::PushTransform(transform) => {
+                stack.push(matrix * kurbo::Affine::new(transform.map(f64::from)))
+            }
+            DisplayItem::PushClip(_)
+            | DisplayItem::PushOpacity(_)
+            | DisplayItem::PushBlend(_)
+            | DisplayItem::PushBackdropRoot
+            | DisplayItem::PushFilter(_)
+            | DisplayItem::PushMask(_) => stack.push(matrix),
+            DisplayItem::Pop => {
+                stack.pop().expect("paint pushes and pops balance");
+            }
+            DisplayItem::Text { line } => {
+                let mut line = trace.pages[0][*line].clone();
+                let point = matrix * kurbo::Point::new(f64::from(line.x), f64::from(line.baseline));
+                line.x = point.x as f32;
+                line.baseline = point.y as f32;
+                if line.text.ends_with(BASELINE_TEXT) {
+                    baseline = Some(line.baseline);
+                } else {
+                    lines.push(line);
+                }
+            }
+            DisplayItem::Box(paint) => {
+                let mut paint = paint.clone();
+                let rect = matrix.transform_rect_bbox(kurbo::Rect::new(
+                    f64::from(paint.rect.x),
+                    f64::from(paint.rect.y),
+                    f64::from(paint.rect.x + paint.rect.width),
+                    f64::from(paint.rect.y + paint.rect.height),
+                ));
+                paint.rect = crate::graphics::Rect {
+                    x: rect.x0 as f32,
+                    y: rect.y0 as f32,
+                    width: rect.width() as f32,
+                    height: rect.height() as f32,
+                };
+                if paint.decoration.background.rgb == MEASURE_BACKGROUND {
+                    bounds = Some(paint.rect);
+                } else if paint.decoration.is_visible() {
+                    items.push(DisplayItem::Box(paint));
+                }
+            }
+            _ => {}
+        }
+    }
+    let area =
+        bounds.expect("the real MathML principal box must paint its measurable CSS background");
+    for line in &mut lines {
+        line.x -= area.x;
+        line.baseline -= area.y;
+    }
+    for item in &mut items {
+        if let DisplayItem::Box(paint) = item {
+            paint.rect.x -= area.x;
+            paint.rect.y -= area.y;
+        }
+    }
+    MathView {
+        lines,
+        items,
+        baseline: baseline.map(|baseline| baseline - area.y),
+        area: crate::graphics::Rect {
+            x: 0.0,
+            y: 0.0,
+            ..area
+        },
+    }
+}
+
+#[test]
+fn css_layout_keeps_core_operator_spacing_through_grouping_boxes() {
+    for display in ["block", "inline"] {
+        for wrapped in [false, true] {
+            let operator = |left, right| {
+                let operator = format!(
+                    "<mo lspace='{left}em' rspace='{right}em' style='display:{display};width:20pt;height:20pt;line-height:20pt'>+</mo>"
+                );
+                if wrapped {
+                    format!("<mrow style='display:block;width:20pt;height:20pt'>{operator}</mrow>")
+                } else {
+                    operator
+                }
             };
-            let crate::images::Image::Viewport(view) = paint.image.as_ref() else {
-                return None;
+            let actual = math(&format!("<math>{}<mn>Z</mn></math>", operator(2, 3)));
+            let expected = math(&format!(
+                "<math><mspace width='40pt'/>{}<mspace width='60pt'/><mn>Z</mn></math>",
+                operator(0, 0)
+            ));
+            for text in ["+", "Z"] {
+                let found = actual.lines.iter().find(|line| line.text == text).unwrap();
+                let control = expected
+                    .lines
+                    .iter()
+                    .find(|line| line.text == text)
+                    .unwrap();
+                assert!(
+                    (found.x - control.x).abs() < 0.01
+                        && (found.baseline - control.baseline).abs() < 0.01,
+                    "CSS {display}, wrapped={wrapped}: retained core spacing must match ordinary spacer controls without replacing CSS layout for {text}; actual=({},{}), expected=({},{})",
+                    found.x,
+                    found.baseline,
+                    control.x,
+                    control.baseline
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn math_padding_preserves_ink_baselines_until_a_used_border_replaces_them() {
+    let glyphs = |edges: &str| {
+        let view = math(&format!(
+            "<math style='font-family:MathTest'><mo>(</mo><mspace height='40pt' depth='10pt' style='{edges}'/></math>"
+        ));
+        view.lines
+            .iter()
+            .find(|line| line.text == "(")
+            .unwrap()
+            .runs[0]
+            .glyphs()
+            .iter()
+            .map(|glyph| glyph.id)
+            .collect::<Vec<_>>()
+    };
+    let plain = glyphs("");
+    assert_eq!(
+        glyphs("padding-top:50pt"),
+        plain,
+        "padding grows the line box but must retain content ink baselines used by neighboring stretchy operators"
+    );
+    assert!(
+        glyphs("padding-top:50pt;border-top:1pt solid black").len() > plain.len(),
+        "a positive over-side border replaces the ink baseline with its edge and must grow the fence assembly"
+    );
+}
+
+#[test]
+fn positioned_children_of_native_rows_escape_without_entering_math_arity() {
+    let normal = math("<style>body{margin:0}</style><math><mn>A</mn><mn>Z</mn></math>");
+    for position in ["fixed", "absolute"] {
+        let view = math(&format!(
+            "<style>body{{margin:0}}</style><math><mn>A</mn><mrow style='position:{position};left:100pt;top:30pt'><mn>F</mn></mrow><mn>Z</mn></math>"
+        ));
+        let fixed: Vec<_> = view.lines.iter().filter(|line| line.text == "F").collect();
+        assert_eq!(
+            fixed.len(),
+            1,
+            "native rows must retain an escaped {position} child exactly once"
+        );
+        assert!(
+            (fixed[0].x - 100.0).abs() < 0.01,
+            "escaped {position} uses its external containing block: x={}",
+            fixed[0].x
+        );
+        let z = view.lines.iter().find(|line| line.text == "Z").unwrap();
+        let expected = normal.lines.iter().find(|line| line.text == "Z").unwrap();
+        assert!(
+            (z.x - expected.x).abs() < 0.01,
+            "positioned native child must not consume an in-flow slot"
+        );
+    }
+}
+
+#[test]
+fn math_alignment_properties_do_not_move_css_fallback_tracks_or_math_grid_items() {
+    let control = math(
+        "<math><mrow style='display:grid;width:100pt;height:100pt;grid-template-columns:20pt;grid-template-rows:20pt'><mn>1</mn></mrow><mn>2</mn></math>",
+    );
+    for (parent, child) in [
+        ("align-content:end;justify-content:end", ""),
+        ("", "align-self:end;justify-self:end"),
+    ] {
+        let view = math(&format!(
+            "<math><mrow style='display:grid;width:100pt;height:100pt;grid-template-columns:20pt;grid-template-rows:20pt;{parent}'><mn style='{child}'>1</mn></mrow><mn>2</mn></math>"
+        ));
+        let expected = control.lines.iter().find(|line| line.text == "1").unwrap();
+        let found = view.lines.iter().find(|line| line.text == "1").unwrap();
+        assert!(
+            (found.x - expected.x).abs() < 0.01
+                && (found.baseline - expected.baseline).abs() < 0.01,
+            "Core ignores alignment properties on MathML, including ordinary CSS fallback: parent={parent}, child={child}, expected=({},{}), found=({},{})",
+            expected.x,
+            expected.baseline,
+            found.x,
+            found.baseline
+        );
+    }
+}
+
+#[test]
+fn floating_math_children_remain_in_flow_and_keep_fraction_arity() {
+    let normal = math("<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math>");
+    let floated = math("<math><mfrac><mn style='float:left'>1</mn><mn>2</mn></mfrac></math>");
+    for text in ["1", "2"] {
+        let expected = normal.lines.iter().find(|line| line.text == text).unwrap();
+        let found = floated
+            .lines
+            .iter()
+            .find(|line| line.text == text)
+            .unwrap_or_else(|| {
+                panic!(
+                    "float must not remove direct math child {text} from the fraction: {:?}",
+                    floated
+                        .lines
+                        .iter()
+                        .map(|line| &line.text)
+                        .collect::<Vec<_>>()
+                )
+            });
+        assert!(
+            (found.x - expected.x).abs() < 0.01
+                && (found.baseline - expected.baseline).abs() < 0.01,
+            "ignored float must preserve native fraction placement for {text}"
+        );
+    }
+}
+
+#[test]
+fn percentage_css_widths_on_native_space_and_padding_use_the_parent_content_box() {
+    const PARENT_WIDTH: f32 = 100.0;
+    for content in [
+        "<mn>1</mn><mspace style='width:50%;height:20pt'/><mn>2</mn>",
+        "<mpadded style='width:50%'><mn>1</mn></mpadded><mn>2</mn>",
+    ] {
+        let view = math(&format!(
+            "<math style='width:{PARENT_WIDTH}pt'>{content}</math>"
+        ));
+        let one = view.lines.iter().find(|line| line.text == "1").unwrap();
+        let two = view.lines.iter().find(|line| line.text == "2").unwrap();
+        let advance = two.x
+            - one.x
+            - if content.starts_with("<mn>") {
+                one.width
+            } else {
+                0.0
             };
-            Some(view.clone())
-        })
-        .expect("MathML must produce native selectable text in its atomic box")
+        assert!(
+            (advance - PARENT_WIDTH / 2.0).abs() < 0.01,
+            "CSS percentage width must reserve half the parent's content width without scaling text: {content}, advance={advance}"
+        );
+    }
+}
+
+#[test]
+fn generated_fraction_children_participate_in_native_arity_and_source_order() {
+    let view = math(
+        "<style>mfrac::before{content:'3'}</style><math><mfrac><mn>1</mn><mn>2</mn></mfrac></math>",
+    );
+    let texts: Vec<_> = view.lines.iter().map(|line| line.text.as_str()).collect();
+    assert_eq!(
+        texts,
+        ["3", "1", "2"],
+        "generated in-flow content is a real fraction child; three children recover to a row"
+    );
+    let baseline = view.lines[0].baseline;
+    assert!(
+        view.lines
+            .iter()
+            .all(|line| (line.baseline - baseline).abs() < 0.01),
+        "invalid fraction arity must use row geometry including the generated child: {:?}",
+        view.lines
+            .iter()
+            .map(|line| (&line.text, line.baseline))
+            .collect::<Vec<_>>()
+    );
 }
 
 #[test]
@@ -99,16 +367,28 @@ fn paired_scripts_are_sized_from_math_table_and_separated_from_the_base() {
 }
 
 #[test]
-fn unknown_math_content_keeps_an_explicit_error_until_its_layout_exists() {
-    let error = render_html(
-        "<math><mtable><mtr><mtd><mn>1</mn></mtd></mtr></mtable></math>",
-        &local_options(),
-    )
-    .err()
-    .expect("unimplemented table layout must fail");
+fn math_table_uses_real_table_layout_and_retains_all_selectable_cell_text() {
+    let view = math(
+        "<math><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>22</mn></mtd></mtr><mtr><mtd><mn>333</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable></math>",
+    );
+    let find = |text| {
+        view.lines
+            .iter()
+            .find(|line| line.text == text)
+            .unwrap_or_else(|| {
+                panic!(
+                    "missing real table cell text {text}: {:?}",
+                    view.lines.iter().map(|line| &line.text).collect::<Vec<_>>()
+                )
+            })
+    };
     assert!(
-        error.to_string().contains("mtable"),
-        "error must name the unsupported construct: {error}"
+        find("1").x < find("22").x && find("333").x < find("4").x,
+        "both table rows must retain real column placement"
+    );
+    assert!(
+        find("1").baseline < find("333").baseline && find("22").baseline < find("4").baseline,
+        "rows must stack through the ordinary table solver"
     );
 }
 
@@ -175,9 +455,8 @@ fn css_overrides_math_script_size_and_semantics_hides_annotations() {
 fn operator_dictionary_spacing_depends_on_form_and_stretches_fences_from_math_assemblies() {
     let infix = math("<math><mn>1</mn><mo>+</mo><mn>2</mn></math>");
     let prefix = math("<math><mn>1</mn><mo form='prefix'>+</mo><mn>2</mn></math>");
-    let position = |view: &crate::layout::ViewportPaint, text: &str| {
-        view.lines.iter().find(|line| line.text == text).unwrap().x
-    };
+    let position =
+        |view: &MathView, text: &str| view.lines.iter().find(|line| line.text == text).unwrap().x;
     const OPERATOR_MEDIUM_SPACE_EM: f32 = 4.0 / 18.0;
     assert!(
         (position(&infix, "2") - position(&prefix, "2") - 2.0 * OPERATOR_MEDIUM_SPACE_EM * 20.0)
@@ -259,14 +538,14 @@ fn movable_limits_switch_to_scripts_in_compact_math_and_accents_stretch_inline()
     let display = math(
         "<math display='block' style='font-family:MathTest'><munderover><mo>∑</mo><mn>1</mn><mn>2</mn></munderover></math>",
     );
-    let base = |view: &crate::layout::ViewportPaint| {
+    let base = |view: &MathView| {
         view.lines
             .iter()
             .find(|line| line.text == "∑")
             .unwrap()
             .clone()
     };
-    let lower = |view: &crate::layout::ViewportPaint| {
+    let lower = |view: &MathView| {
         view.lines
             .iter()
             .find(|line| line.text == "1")
@@ -435,7 +714,7 @@ fn math_direction_hints_mirror_inline_positions_scripts_and_stretched_fence_glyp
     let rtl = math(
         "<math style='font-family:MathTest;direction:rtl'><mo>(</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>)</mo></math>",
     );
-    let glyphs = |view: &crate::layout::ViewportPaint, text: &str| {
+    let glyphs = |view: &MathView, text: &str| {
         view.lines
             .iter()
             .find(|line| line.text == text)
@@ -556,9 +835,7 @@ fn specified_math_width_does_not_scale_its_height_like_a_replaced_image() {
 fn anonymous_math_text_preserves_nonbreaking_space_without_treating_it_as_indentation() {
     let ordinary = math("<math>  <mn>1</mn></math>");
     let nonbreaking = math("<math>&nbsp;<mn>1</mn></math>");
-    let position = |view: &crate::layout::ViewportPaint| {
-        view.lines.iter().find(|line| line.text == "1").unwrap().x
-    };
+    let position = |view: &MathView| view.lines.iter().find(|line| line.text == "1").unwrap().x;
     assert!(
         position(&nonbreaking) > position(&ordinary),
         "U+00A0 is a retained text advance; CSS indentation whitespace and Unicode whitespace are not interchangeable"
@@ -589,7 +866,7 @@ fn math_edges_extend_present_italic_corrections_in_each_inline_direction() {
             };
             let plain = expression(false);
             let edged = expression(true);
-            let offset = |view: &crate::layout::ViewportPaint| {
+            let offset = |view: &MathView| {
                 let sup = view.lines.iter().find(|line| line.text == "2").unwrap();
                 if direction == "ltr" {
                     sup.x
@@ -651,7 +928,7 @@ fn math_nesting_limit_returns_an_error_without_overflowing_a_library_thread() {
                 let result = render_html(&html, &local_options());
                 if allowed {
                     let output = result.expect("the inclusive MathML nesting boundary must render");
-                    assert!(output.layout.unwrap().display_lists.iter().flatten().any(|item| matches!(item, DisplayItem::Image(_))), "valid deep math must retain its native paint");
+                    assert!(output.layout.unwrap().pages.iter().flatten().any(|line| line.text == "1"), "valid deep math must retain canonical selectable native text");
                 } else {
                     let error = result.err().expect("one further native math level must return its nesting error");
                     assert!(error.to_string().contains(&format!("MathML nesting exceeds {MATH_NESTING_LIMIT}")), "native math must report its explicit resource boundary: {error}");
@@ -666,7 +943,7 @@ fn math_nesting_limit_returns_an_error_without_overflowing_a_library_thread() {
 #[test]
 fn outer_math_uses_the_shared_positioning_and_effects_pipeline() {
     let output = render_html(
-        "<style>@page{margin:0}body{margin:0}math{position:absolute;left:30pt;top:40pt;transform:translate(7pt,9pt);opacity:.4;filter:opacity(.8)}</style><math><mfrac><mn>1</mn><mn>2</mn></mfrac></math>",
+        "<style>@page{margin:0}body{margin:0}math{position:absolute;left:30pt;top:40pt;transform:translate(7pt,9pt);opacity:.4;filter:opacity(.8);background:red}</style><math><mfrac><mn>1</mn><mn>2</mn></mfrac></math>",
         &local_options(),
     ).expect("outer native math effects belong to the existing CSS box painter");
     let trace = output.layout.unwrap();
@@ -674,10 +951,12 @@ fn outer_math_uses_the_shared_positioning_and_effects_pipeline() {
     let image = items
         .iter()
         .find_map(|item| match item {
-            DisplayItem::Image(paint) => Some(paint),
+            DisplayItem::Box(paint) if paint.decoration.background.rgb == [255, 0, 0] => {
+                Some(paint)
+            }
             _ => None,
         })
-        .expect("positioned math must retain native paint");
+        .expect("positioned math must retain its real CSS principal box");
     assert!(
         (image.rect.x - 30.0).abs() < 0.01 && (image.rect.y - 40.0).abs() < 0.01,
         "absolute math content must use its containing block offsets: {:?}",
@@ -707,7 +986,7 @@ fn scroll_and_layout_containment_suppress_native_math_baseline_participation() {
         "contain:layout",
     ] {
         let html = format!(
-            "<style>@page{{margin:0}}body{{margin:0;font:20pt DejaVu Serif}}</style>L<math style='{css}'><mn>g</mn></math>R"
+            "<style>@page{{margin:0}}body{{margin:0;font:20pt DejaVu Serif}}</style>L<math style='{css};background:red'><mn>g</mn></math>R"
         );
         let trace = render_html(&html, &local_options())
             .expect("contained math must render")
@@ -725,7 +1004,9 @@ fn scroll_and_layout_containment_suppress_native_math_baseline_participation() {
             .iter()
             .flatten()
             .find_map(|item| match item {
-                DisplayItem::Image(paint) => Some(paint),
+                DisplayItem::Box(paint) if paint.decoration.background.rgb == [255, 0, 0] => {
+                    Some(paint)
+                }
                 _ => None,
             })
             .unwrap();
@@ -1036,7 +1317,7 @@ fn padded_operators_forward_their_parent_stretch_constraint() {
     let padded = math(
         "<math style='font-family:MathTest'><mpadded><mo>(</mo></mpadded><mspace height='40pt' depth='10pt'/></math>",
     );
-    let glyphs = |view: &crate::layout::ViewportPaint| {
+    let glyphs = |view: &MathView| {
         view.lines
             .iter()
             .find(|line| line.text == "(")
@@ -1063,9 +1344,7 @@ fn space_like_padding_does_not_change_neighboring_operator_form() {
     const SPACE_WIDTH: f32 = 10.0;
     let bare = math("<math><mo>+</mo><mn>1</mn></math>");
     let padded = math("<math><mpadded><mspace width='10pt'/></mpadded><mo>+</mo><mn>1</mn></math>");
-    let position = |view: &crate::layout::ViewportPaint| {
-        view.lines.iter().find(|line| line.text == "1").unwrap().x
-    };
+    let position = |view: &MathView| view.lines.iter().find(|line| line.text == "1").unwrap().x;
     let offset = position(&padded) - position(&bare);
     assert!(
         (offset - SPACE_WIDTH).abs() < 0.01,
@@ -1107,7 +1386,7 @@ fn recovered_fraction_operator_spacing_belongs_to_the_embellished_box() {
     let recovered = math(
         "<math><mn>7</mn><mfrac style='padding:0'><mo style='font-size:20pt'>+</mo><mn style='font-size:20pt'>1</mn><mn style='font-size:20pt'>2</mn></mfrac><mn>8</mn></math>",
     );
-    let gaps = |view: &crate::layout::ViewportPaint, last: &str| {
+    let gaps = |view: &MathView, last: &str| {
         let find = |text| view.lines.iter().find(|line| line.text == text).unwrap();
         let first = find("7");
         let plus = find("+");
@@ -1137,9 +1416,7 @@ fn recovered_script_children_keep_their_postfix_operator_form() {
         "<math><msub><mn>1</mn><mo style='font-size:20pt'>|</mo><mn style='font-size:20pt'>2</mn></msub></math>",
     );
     let explicit = math("<math><mrow><mn>1</mn><mo form='postfix'>|</mo><mn>2</mn></mrow></math>");
-    let position = |view: &crate::layout::ViewportPaint| {
-        view.lines.iter().find(|line| line.text == "2").unwrap().x
-    };
+    let position = |view: &MathView| view.lines.iter().find(|line| line.text == "2").unwrap().x;
     assert!(
         (position(&recovered) - position(&explicit)).abs() < 0.01,
         "Core3.2.4.2 keeps non-base scripted children postfix even when invalid arity recovers row geometry; explicit postfix digit x {}, recovered {}",
@@ -1151,7 +1428,7 @@ fn recovered_script_children_keep_their_postfix_operator_form() {
 #[test]
 fn recovered_non_grouping_schemata_of_spaces_remain_non_space_like() {
     let control = math("<math><mn>0</mn><mo>+</mo><mn>1</mn></math>");
-    let gap = |view: &crate::layout::ViewportPaint| {
+    let gap = |view: &MathView| {
         let plus = view.lines.iter().find(|line| line.text == "+").unwrap();
         let digit = view.lines.iter().find(|line| line.text == "1").unwrap();
         digit.x - plus.x - plus.width
@@ -1182,9 +1459,7 @@ fn recovered_root_children_keep_their_infix_operator_form() {
     let recovered =
         math("<math><mroot><mo>|</mo><mn style='font-size:20pt'>1</mn><mn>2</mn></mroot></math>");
     let explicit = math("<math><mrow><mo form='infix'>|</mo><mn>1</mn><mn>2</mn></mrow></math>");
-    let position = |view: &crate::layout::ViewportPaint| {
-        view.lines.iter().find(|line| line.text == "2").unwrap().x
-    };
+    let position = |view: &MathView| view.lines.iter().find(|line| line.text == "2").unwrap().x;
     assert!(
         (position(&recovered) - position(&explicit)).abs() < 0.01,
         "Core3.2.4.2 leaves children of non-grouping mroot infix despite row recovery; explicit infix digit x {}, recovered {}",

@@ -14,7 +14,7 @@ mod frameset;
 mod generated;
 mod inline;
 mod lists;
-mod mathml;
+pub(crate) mod mathml;
 mod media;
 mod metadata;
 mod navigation;

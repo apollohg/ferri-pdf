@@ -16,8 +16,6 @@ pub struct ViewportPaint {
     pub(crate) definitions: crate::document::svg::SvgDefinitions,
     /// The page area, which is the whole viewport.
     pub(crate) area: Rect,
-    pub(crate) baseline: Option<f32>,
-    pub(crate) intrinsic_widths: Option<crate::style::IntrinsicWidths>,
 }
 impl std::fmt::Debug for ViewportPaint {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -69,8 +67,6 @@ pub(super) fn view(
                 fonts,
                 definitions,
                 area: page_area,
-                baseline: None,
-                intrinsic_widths: None,
             }
         }
         FrameDocument::Svg(image) => svg_document(image, area),
@@ -100,7 +96,5 @@ fn svg_document(image: Arc<Image>, area: Rect) -> ViewportPaint {
         fonts: FontBook::default(),
         definitions: crate::document::svg::SvgDefinitions::default(),
         area,
-        baseline: None,
-        intrinsic_widths: None,
     }
 }

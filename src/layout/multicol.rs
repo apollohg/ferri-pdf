@@ -553,6 +553,7 @@ fn fragment<'a>(
     Some(MeasuredBlock {
         frame_key: None,
         frame_owner: None,
+        math: None,
         clearance_before: None,
         clearance_target: source.clearance_target,
         before: if first {

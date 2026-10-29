@@ -142,6 +142,8 @@ pub(crate) struct Style {
     pub(super) document_root: bool,
     #[serde(skip)]
     item_parent: bool,
+    #[serde(skip)]
+    math_parent: bool,
     /// The parent inlinifies its in-flow children (CSS Display 3 §2.7, §5).
     #[serde(skip)]
     inlinifying_parent: bool,
@@ -321,6 +323,7 @@ impl Default for Style {
             origin: StyleOrigin::default(),
             document_root: false,
             item_parent: false,
+            math_parent: false,
             inlinifying_parent: false,
             size: DEFAULT_FONT_SIZE,
             line_height: crate::style::LineHeight::Normal,
@@ -602,7 +605,11 @@ impl Style {
     }
 
     pub(crate) fn floating(&self) -> Option<crate::style::FloatSide> {
-        if self.document_root || self.item_parent || self.position.is_out_of_flow() {
+        if self.document_root
+            || self.item_parent
+            || self.math_parent
+            || self.position.is_out_of_flow()
+        {
             None
         } else {
             self.float.side(self.used_rtl())
@@ -1171,6 +1178,7 @@ impl Stylesheet {
                 .is_none();
         style.item_parent = parent.display.is_item_container()
             || (parent.display == Display::Contents && parent.item_parent);
+        style.math_parent = matches!(parent.display, Display::InlineMath | Display::BlockMath);
         style.inlinifying_parent = parent.inlinifies_children();
         crate::style::table_values::structure(&mut style, element);
         element.language().clone_into(&mut style.language);
@@ -1522,6 +1530,7 @@ impl Stylesheet {
         };
         style.item_parent = parent.display.is_item_container()
             || (parent.display == Display::Contents && parent.item_parent);
+        style.math_parent = matches!(parent.display, Display::InlineMath | Display::BlockMath);
         style.inlinifying_parent = parent.inlinifies_children();
         Ok((style, winners))
     }
@@ -1929,6 +1938,16 @@ impl Stylesheet {
         crate::style::overflow::compute(&mut style, parent, &mut winners, relative)?;
         for (property, value) in &winners {
             properties::apply(*property, value, &mut style, parent, relative)?;
+        }
+        if style.content_context == crate::style::generated::ContentContext::Element
+            && matches!(relative.tree, Tree::Element(element) if element.namespace() == crate::dom::MATHML_NAMESPACE)
+        {
+            style.white_space = WhiteSpace::NOWRAP;
+            style.flex.justify = crate::style::Alignment::Normal;
+            style.flex.align_content = crate::style::Alignment::Normal;
+            style.flex.align_content_unsafe = false;
+            style.flex.align_self = crate::style::Alignment::Auto;
+            style.grid.justify_self = crate::style::Alignment::Auto;
         }
         if style.content_context == crate::style::generated::ContentContext::Element
             && matches!(

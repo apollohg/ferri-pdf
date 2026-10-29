@@ -83,6 +83,8 @@ pub(crate) struct Formatted {
 pub(crate) struct BlockBox {
     style: Box<Style>,
     flow: Option<Box<BlockBox>>,
+    math: Option<Box<crate::document::mathml::Element>>,
+    math_content: Option<Box<BlockBox>>,
     layout_flow: crate::style::logical::Flow,
     decoration: BoxDecoration,
     /// A float's `shape-outside` with its image loaded.
@@ -129,6 +131,44 @@ pub(crate) enum BlockContent {
     Positioned(BlockBox),
 }
 impl BlockBox {
+    pub(crate) fn math(&self) -> Option<&crate::document::mathml::Element> {
+        self.math.as_deref()
+    }
+    pub(crate) fn math_content(&self) -> Option<&BlockBox> {
+        self.math_content.as_deref()
+    }
+    pub(crate) fn math_attributes(&self) -> Option<&crate::document::mathml::Attributes> {
+        self.math().map(|math| &math.attributes)
+    }
+    pub(super) fn set_math(&mut self, math: crate::document::mathml::Element) {
+        if matches!(self.style.display, Display::BlockMath | Display::InlineMath) {
+            let token = matches!(
+                math.name.as_ref(),
+                "mi" | "mn" | "mo" | "mtext" | "ms" | "annotation"
+            );
+            let children = std::mem::take(&mut self.children)
+                .into_iter()
+                .map(|child| {
+                    if !token && let BlockContent::Inline(paragraph) = child {
+                        let style = paragraph.style().anonymous(Display::Block);
+                        BlockContent::Block(Self::anonymous(
+                            style,
+                            vec![BlockContent::Inline(paragraph)],
+                            None,
+                        ))
+                    } else {
+                        child
+                    }
+                })
+                .collect();
+            self.math_content = Some(Box::new(Self::anonymous(
+                self.style.anonymous(Display::Block),
+                children,
+                None,
+            )));
+        }
+        self.math = Some(Box::new(math));
+    }
     pub(crate) fn flow(&self) -> Option<&BlockBox> {
         self.flow.as_deref()
     }
@@ -206,6 +246,10 @@ impl BlockBox {
                     Display::FlowRoot
                 };
             }
+            if let Some(inner) = &mut block.flow {
+                inner.math = block.math.take();
+                inner.math_content = block.math_content.take();
+            }
             if parent.writing_mode.vertical() {
                 let mut physical = (*block.style).clone();
                 physical.writing_mode = parent.writing_mode;
@@ -219,6 +263,9 @@ impl BlockBox {
             block.style.layout_writing_mode = parent.writing_mode;
             if let Some(inner) = &mut block.flow {
                 pending.push(Entry::Block(inner, own, containers));
+            }
+            if let Some(content) = &mut block.math_content {
+                pending.push(Entry::Block(content, own, containers));
             }
             for child in &mut block.children {
                 match child {
@@ -321,6 +368,8 @@ impl BlockBox {
             layout_flow: crate::style::logical::Flow::of(&style),
             style: Box::new(style),
             flow: None,
+            math: None,
+            math_content: None,
             decoration,
             shape_outside: crate::graphics::ShapeOutside::None,
             children,
@@ -1538,7 +1587,6 @@ fn validate_box(style: &Style) -> Result<(), StyleError> {
 pub(super) fn is_replaced(element: Element<'_>) -> bool {
     match element.name() {
         "svg" => true,
-        "math" => element.namespace() == crate::dom::MATHML_NAMESPACE,
         "img" | "iframe" | "embed" | "video" | "audio" => {
             element.namespace() == crate::dom::HTML_NAMESPACE
         }
@@ -1668,6 +1716,7 @@ struct Frame<'d> {
     style: Box<Style>,
     page_scope: Option<std::sync::Arc<str>>,
     depth: usize,
+    math_depth: Option<usize>,
     nodes: Option<ChildNodes<'d>>,
     /// A child laid out before `nodes`: the summary a `details` element's first slot takes.
     leading: Option<crate::dom::Node<'d>>,
@@ -1693,6 +1742,7 @@ impl<'d> Frame<'d> {
             style,
             page_scope,
             depth,
+            math_depth: None,
             nodes: None,
             leading: None,
             block: placement.map(|placement| OpenBlock {
@@ -1839,14 +1889,6 @@ fn block<'a>(
                                 block.inline.append(alt, &frame.style)?;
                             }
                             image
-                        }
-                        "math" if element.namespace() == crate::dom::MATHML_NAMESPACE => {
-                            Some(crate::document::mathml::render(
-                                element,
-                                &frame.style,
-                                sheet,
-                                resources.resolver,
-                            )?)
                         }
                         "svg" => Some(resources.cache.inline_svg_in_namespace(
                             crate::document::svg::serialize(
@@ -2137,6 +2179,16 @@ fn block<'a>(
                 child_style.containment().style,
             )?;
             let child_depth = frames[index].depth + 1;
+            let math_depth = frames[index]
+                .math_depth
+                .map(|depth| depth + 1)
+                .or_else(|| (child.namespace() == crate::dom::MATHML_NAMESPACE).then_some(0));
+            if math_depth.is_some_and(|depth| depth >= crate::document::mathml::MAX_DEPTH) {
+                return Err(DocumentError::Formatting(format!(
+                    "MathML nesting exceeds {}",
+                    crate::document::mathml::MAX_DEPTH
+                )));
+            }
             let ancestor_page = frames[index].page_scope.clone();
             let (mut builder, _) =
                 active_builder(&mut frames, block_index, sheet, traversal, resources);
@@ -2199,6 +2251,15 @@ fn block<'a>(
                     | Display::TableColumn
                     | Display::TableColumnGroup
                     | Display::TableCaption => {
+                        builder.flush()?;
+                        Some(Placement::Flow)
+                    }
+                    Display::InlineMath | Display::InlineTable
+                        if matches!(
+                            builder.style.display,
+                            Display::BlockMath | Display::InlineMath
+                        ) =>
+                    {
                         builder.flush()?;
                         Some(Placement::Flow)
                     }
@@ -2283,6 +2344,10 @@ fn block<'a>(
                 placement,
                 ancestor_page.as_ref(),
             ));
+            frames
+                .last_mut()
+                .expect("the child frame was appended")
+                .math_depth = math_depth;
             if let Some(block) = frames.last_mut().and_then(|frame| frame.block.as_mut()) {
                 block.first_line = first_line;
             }
@@ -2311,6 +2376,7 @@ fn block<'a>(
             if contents {
                 builder.inline.close_contents();
             } else {
+                builder.inline.prepare_math_inline(element, style);
                 builder.close_inline()?;
             }
             builder.traversal.navigation.leave();
@@ -2377,6 +2443,7 @@ fn block<'a>(
             .containment()
             .query_container
             .then(|| element.id());
+        crate::document::mathml::prepare(element, &mut block, sheet, resources.resolver)?;
         if matches!(state.placement, Placement::Root) {
             return Ok(block);
         }

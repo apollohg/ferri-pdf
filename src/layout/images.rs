@@ -85,16 +85,6 @@ fn edges<'a>(
     crate::layout::geometry::Edges::of(block.style(), containing_width)
 }
 
-fn math_widths(block: BlockSource<'_>) -> Option<IntrinsicWidths> {
-    if block.style().containment().size[0] {
-        return None;
-    }
-    let crate::images::Image::Viewport(view) = block.image()?.as_ref() else {
-        return None;
-    };
-    view.intrinsic_widths
-}
-
 /// Content-box width and height constraints, percentages resolved against the containing block.
 pub(super) fn constraints<'a>(
     block: impl Into<BlockSource<'a>>,
@@ -127,15 +117,10 @@ pub(super) fn constraints<'a>(
         || natural.height(natural.size[0]),
         |width| natural.height(width),
     );
-    let intrinsic = if heights.specified.is_none() || natural.ratio.is_none() {
-        math_widths(block)
-    } else {
-        None
-    }
-    .unwrap_or(IntrinsicWidths {
+    let intrinsic = IntrinsicWidths {
         min: width,
         max: width,
-    });
+    };
     [
         widths.with_intrinsic(
             [&style.width, &style.min_width, &style.max_width],
@@ -211,15 +196,6 @@ pub(super) fn size<'a>(
 /// zero and the maximum stretches into `available`, the containing block width.
 pub(super) fn intrinsic<'a>(block: impl Into<BlockSource<'a>>, available: f32) -> IntrinsicWidths {
     let block = block.into();
-    if let Some(intrinsic) = math_widths(block) {
-        let [width, height] = constraints(block, 0.0, None);
-        if height.specified.is_none() || block.style().aspect_ratio.ratio.is_none() {
-            return IntrinsicWidths {
-                min: width.constrain(width.specified.unwrap_or(intrinsic.min)),
-                max: width.constrain(width.specified.unwrap_or(intrinsic.max)),
-            };
-        }
-    }
     let max = size(block, 0.0, available, None, None, None)[0];
     let min = if block.image().unwrap().natural_size().ratio_only()
         && !block.style().containment().size[0]
@@ -280,11 +256,7 @@ pub(super) fn measure<'a>(
         block.image().unwrap().as_ref(),
         crate::images::Image::Widget(_)
     );
-    let math =
-        matches!(image.as_ref(), crate::images::Image::Viewport(view) if view.baseline.is_some());
-    let [paint_width, paint_height] = if math {
-        density_corrected(block.block, width)
-    } else if widget || image.natural_size() == Default::default() {
+    let [paint_width, paint_height] = if widget || image.natural_size() == Default::default() {
         [width, height]
     } else {
         style
@@ -309,24 +281,13 @@ pub(super) fn measure<'a>(
         )
     };
     // Images 3 §4.5 clips every fitted object to the content edge.
-    // Core §3.1.2 gives native math ordinary CSS content sizing and overflow.
-    let clip = (!math).then(|| border_box.inner_clip(geometry.padding, [true; 2]));
+    let clip = Some(border_box.inner_clip(geometry.padding, [true; 2]));
     let paint = ImagePaint {
         image,
         clip,
         rect: Rect {
-            x: bounds.x
-                + if math {
-                    0.0
-                } else {
-                    style.object_position[0].resolve(width - paint_width)
-                },
-            y: top
-                + if math {
-                    0.0
-                } else {
-                    style.object_position[1].resolve(height - paint_height)
-                },
+            x: bounds.x + style.object_position[0].resolve(width - paint_width),
+            y: top + style.object_position[1].resolve(height - paint_height),
             width: paint_width,
             height: paint_height,
         },
@@ -341,6 +302,7 @@ pub(super) fn measure<'a>(
     Ok(MeasuredBlock {
         frame_key: None,
         frame_owner: None,
+        math: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer

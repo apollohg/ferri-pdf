@@ -9,7 +9,7 @@ use crate::layout::{
 use crate::style::{BreakBetween, Display, Style};
 use crate::text::{Line, TextContext};
 
-mod frames;
+pub(super) mod frames;
 mod metrics;
 mod space;
 pub(super) use frames::{Failure, FrameKey};
@@ -81,6 +81,7 @@ impl BlockSizing {
 pub(super) struct MeasuredBlock<'a> {
     pub(super) frame_key: Option<std::rc::Rc<FrameKey>>,
     pub(super) frame_owner: Option<Box<FrameOwner<'a>>>,
+    pub(super) math: Option<Box<crate::layout::mathml::MathBox<'a>>>,
     pub grid: Option<std::rc::Rc<crate::layout::grid::Geometry<'a>>>,
     pub source: &'a BlockBox,
     pub geometry: crate::layout::geometry::HorizontalBox,
@@ -1072,6 +1073,19 @@ impl<'a> Measurer<'a> {
                     .frame(block, &geometry, containing_height, used_height)
                     .map(FlowStart::Complete);
             }
+            if block.math_content().is_some()
+                && matches!(style.display, Display::BlockMath | Display::InlineMath)
+            {
+                return self
+                    .request(
+                        block,
+                        &geometry,
+                        containing_height,
+                        used_height,
+                        frames::RequestKind::Math(Default::default()),
+                    )
+                    .map(FlowStart::Complete);
+            }
             if self.space.indefinite_inline
                 && block.image().is_none()
                 && style.display.is_block_container()
@@ -1910,6 +1924,7 @@ impl<'a> FlowFrame<'a> {
         let measured = MeasuredBlock {
         frame_key: None,
         frame_owner: None,
+        math: None,
             grid: None,
             source: block.block,
             geometry: geometry.clone(),

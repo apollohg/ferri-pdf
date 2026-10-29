@@ -2,7 +2,7 @@
 use super::{BlockSource, MeasuredBlock, Measurer, MetricsKey};
 use crate::document::BlockBox;
 use crate::layout::{LayoutError, geometry::HorizontalBox};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 #[derive(Debug)]
 pub(in crate::layout) enum Failure {
@@ -29,8 +29,41 @@ layout_failure!(
     crate::grid::GridError
 );
 
+#[derive(Clone, Copy, Hash, PartialEq, Eq)]
+pub(in crate::layout) enum RequestKind {
+    Writing,
+    Math(crate::layout::mathml::LayoutKey),
+    Css,
+}
+
+#[derive(Default)]
+pub(in crate::layout) struct Batch(bool);
+impl Batch {
+    pub(in crate::layout) fn collect<T>(
+        &mut self,
+        result: Result<T, Failure>,
+    ) -> Result<Option<T>, Failure> {
+        match result {
+            Ok(value) => Ok(Some(value)),
+            Err(Failure::FrameNeeded) => {
+                self.0 = true;
+                Ok(None)
+            }
+            Err(error) => Err(error),
+        }
+    }
+    pub(in crate::layout) fn finish(self) -> Result<(), Failure> {
+        if self.0 {
+            Err(Failure::FrameNeeded)
+        } else {
+            Ok(())
+        }
+    }
+}
+
 #[derive(Clone, Hash, PartialEq, Eq)]
 pub(in crate::layout) struct FrameKey {
+    kind: RequestKind,
     native_sizing: Option<(crate::layout::geometry::VerticalKey, bool)>,
     metrics: MetricsKey,
     native_space: super::space::SpaceKey,
@@ -55,6 +88,23 @@ impl FrameKey {
         containing: Option<f32>,
         height: Option<f32>,
     ) -> Self {
+        Self::for_kind(
+            measurer,
+            block,
+            geometry,
+            containing,
+            height,
+            RequestKind::Writing,
+        )
+    }
+    pub(in crate::layout) fn for_kind(
+        measurer: &Measurer<'_>,
+        block: BlockSource<'_>,
+        geometry: &HorizontalBox,
+        containing: Option<f32>,
+        height: Option<f32>,
+        kind: RequestKind,
+    ) -> Self {
         let mut clearance: Vec<_> = measurer
             .clearance_targets
             .iter()
@@ -62,13 +112,15 @@ impl FrameKey {
             .collect();
         clearance.sort_unstable();
         Self {
-            native_sizing: (block.layout_flow().writing_mode.vertical()
-                == block
-                    .flow()
-                    .expect("native keys have a source flow")
-                    .style()
-                    .used_writing_mode()
-                    .vertical())
+            kind,
+            native_sizing: (kind == RequestKind::Writing
+                && block.layout_flow().writing_mode.vertical()
+                    == block
+                        .flow()
+                        .expect("native keys have a source flow")
+                        .style()
+                        .used_writing_mode()
+                        .vertical())
             .then(|| {
                 (
                     crate::layout::geometry::VerticalBox::new(block.style(), geometry, containing)
@@ -79,13 +131,19 @@ impl FrameKey {
                 )
             }),
             metrics: MetricsKey::new(measurer, block.block, geometry, height, containing),
-            native_space: crate::layout::writing::native_space(
-                measurer.space,
-                block,
-                geometry,
-                containing,
-                height,
-            )
+            native_space: if kind == RequestKind::Writing {
+                crate::layout::writing::native_space(
+                    measurer.space,
+                    block,
+                    geometry,
+                    containing,
+                    height,
+                )
+            } else if matches!(kind, RequestKind::Math(_)) {
+                measurer.space.enter(block, geometry, containing, height)
+            } else {
+                measurer.space
+            }
             .key(),
             style: std::ptr::from_ref(block.style()) as usize,
             clearance,
@@ -151,7 +209,8 @@ struct Request<'a> {
 }
 #[derive(Default)]
 pub(in crate::layout) struct Measurements<'a> {
-    request: Option<Request<'a>>,
+    requests: Vec<Request<'a>>,
+    queued: HashSet<FrameKey>,
     completed: HashMap<FrameKey, MeasuredBlock<'a>>,
     read: Vec<FrameKey>,
     depth: usize,
@@ -171,13 +230,26 @@ impl<'a> Measurer<'a> {
         containing: Option<f32>,
         height: Option<f32>,
     ) -> Result<MeasuredBlock<'a>, Failure> {
-        let key = FrameKey::new(self, source, geometry, containing, height);
+        self.request(source, geometry, containing, height, RequestKind::Writing)
+    }
+    pub(in crate::layout) fn request(
+        &mut self,
+        source: BlockSource<'a>,
+        geometry: &HorizontalBox,
+        containing: Option<f32>,
+        height: Option<f32>,
+        kind: RequestKind,
+    ) -> Result<MeasuredBlock<'a>, Failure> {
+        let key = FrameKey::for_kind(self, source, geometry, containing, height, kind);
         let mut frames = self.frame_measurements.borrow_mut();
         if let Some(measured) = frames.completed.get(&key).cloned() {
             frames.read.push(key);
             return Ok(measured);
         }
-        frames.request = Some(Request {
+        if !frames.queued.insert(key.clone()) {
+            return Err(Failure::FrameNeeded);
+        }
+        frames.requests.push(Request {
             key,
             source,
             geometry: geometry.clone(),
@@ -193,7 +265,7 @@ impl<'a> Measurer<'a> {
         mut compute: impl FnMut(&mut Self) -> Result<T, Failure>,
     ) -> Result<T, LayoutError> {
         let context = Context::capture(self);
-        let (nested, outer_read) = {
+        let (nested, outer_read, outer_requests) = {
             let mut frames = self.frame_measurements.borrow_mut();
             let nested = frames.depth > 0;
             frames.depth += 1;
@@ -203,12 +275,18 @@ impl<'a> Measurer<'a> {
                     *frames.protected.entry(key.clone()).or_default() += 1;
                 }
             }
-            (nested, read)
+            frames.queued.clear();
+            (nested, read, std::mem::take(&mut frames.requests))
         };
         let result = self.drive(&context, &mut compute);
         context.restore(self);
         let mut frames = self.frame_measurements.borrow_mut();
         frames.depth -= 1;
+        frames.queued = outer_requests
+            .iter()
+            .map(|request| request.key.clone())
+            .collect();
+        frames.requests = outer_requests;
         if nested {
             for key in &outer_read {
                 let count = frames
@@ -232,19 +310,35 @@ impl<'a> Measurer<'a> {
         root_context: &Context,
         compute: &mut impl FnMut(&mut Self) -> Result<T, Failure>,
     ) -> Result<T, LayoutError> {
-        let mut current: Option<Request<'a>> = None;
-        let mut parents = Vec::new();
-        loop {
+        let mut jobs: Vec<Option<Request<'a>>> = vec![None];
+        while let Some(current) = jobs.pop() {
             self.frame_measurements.borrow_mut().read.clear();
             let result = if let Some(request) = &current {
                 request.context.restore(self);
-                crate::layout::writing::measure(
-                    self,
-                    request.source,
-                    &request.geometry,
-                    request.containing,
-                    request.height,
-                )
+                match request.key.kind {
+                    RequestKind::Writing => crate::layout::writing::measure(
+                        self,
+                        request.source,
+                        &request.geometry,
+                        request.containing,
+                        request.height,
+                    ),
+                    RequestKind::Math(layout) => crate::layout::mathml::measure(
+                        self,
+                        request.source,
+                        &request.geometry,
+                        request.containing,
+                        request.height,
+                        layout,
+                    ),
+                    RequestKind::Css => self.measure_format(
+                        request.source,
+                        request.geometry.clone(),
+                        true,
+                        request.containing,
+                        request.height,
+                    ),
+                }
                 .map(|frame| Completed::Frame(Box::new(frame)))
             } else {
                 root_context.restore(self);
@@ -252,13 +346,22 @@ impl<'a> Measurer<'a> {
             };
             match result {
                 Err(Failure::FrameNeeded) => {
-                    parents.push(current.take());
-                    current = self.frame_measurements.borrow_mut().request.take();
+                    jobs.push(current);
+                    let requests = {
+                        let mut frames = self.frame_measurements.borrow_mut();
+                        frames.queued.clear();
+                        std::mem::take(&mut frames.requests)
+                    };
+                    assert!(
+                        !requests.is_empty(),
+                        "a suspended measurement has pending dependencies"
+                    );
+                    jobs.extend(requests.into_iter().rev().map(Some));
                 }
                 Err(Failure::Layout(error)) => return Err(error),
                 Ok(Completed::Root(value)) => return Ok(value),
                 Ok(Completed::Frame(measured)) => {
-                    let request = current.take().expect("a frame request was measured");
+                    let request = current.expect("a frame request was measured");
                     let mut frames = self.frame_measurements.borrow_mut();
                     for key in std::mem::take(&mut frames.read) {
                         if !frames.protected.contains_key(&key) {
@@ -266,9 +369,9 @@ impl<'a> Measurer<'a> {
                         }
                     }
                     frames.completed.insert(request.key, *measured);
-                    current = parents.pop().expect("every frame has a waiting caller");
                 }
             }
         }
+        unreachable!("the root measurement completes the driver")
     }
 }

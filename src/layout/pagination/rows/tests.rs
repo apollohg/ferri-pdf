@@ -54,6 +54,7 @@ fn after_child_row_paints_keep_canonical_text_navigation_and_stacking() {
     let text = TextContext::new(&document.styles().fonts, &resolver);
     let area = document.page_box().geometry.content_box();
     let mut measurer = Measurer {
+        table_data: Default::default(),
         native_sizing: None,
         frame_measurements: Default::default(),
         raw_templates: Default::default(),

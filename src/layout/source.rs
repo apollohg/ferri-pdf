@@ -24,6 +24,12 @@ impl SourceIds {
                     if let Some(flow) = block.flow() {
                         pending.push(Entry::Block(flow));
                     }
+                    if let Some(content) = block.math_content() {
+                        pending.push(Entry::Block(content));
+                    }
+                    if let Some(radical) = block.math().and_then(|math| math.radical.as_ref()) {
+                        pending.push(Entry::Paragraph(radical));
+                    }
                     let index = ids.blocks.len();
                     assert!(
                         ids.blocks.insert(block, index).is_none(),

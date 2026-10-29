@@ -37,6 +37,33 @@ pub(super) fn content<'a>(
     if block.image().is_some() {
         return Ok(crate::layout::images::intrinsic(block, available));
     }
+    if block.math_content().is_some()
+        && matches!(
+            block.style().display,
+            crate::style::Display::BlockMath | crate::style::Display::InlineMath
+        )
+    {
+        let mut probe = measurer.clone();
+        let geometry = crate::layout::geometry::horizontal(
+            block.style(),
+            0.0,
+            available,
+            block.style().used_rtl(),
+            Some(available),
+        );
+        let measured = probe.request(
+            block,
+            &geometry,
+            None,
+            None,
+            crate::layout::measure::frames::RequestKind::Math(Default::default()),
+        )?;
+        return Ok(measured
+            .math
+            .as_ref()
+            .expect("native math retains its intrinsic metrics")
+            .intrinsic);
+    }
     let style = block.style();
     if style.display.is_table() {
         return crate::layout::tables::intrinsic_content(block, measurer, available);

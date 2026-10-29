@@ -24,6 +24,7 @@ pub(crate) struct TextSpan {
 }
 /// Non-replaced inline box (CSS 2.1 §9.2.2), stored in tree order.
 pub(crate) struct InlineBox {
+    pub math: Option<crate::document::mathml::Class>,
     pub range: Range<usize>,
     /// Shared by every box an element's inline box is split into, which it identifies.
     pub style: Arc<Style>,
@@ -174,6 +175,7 @@ impl Paragraph {
             .into_iter()
             .enumerate()
             .map(|(index, (style, decoration))| InlineBox {
+                math: None,
                 range: 0..end,
                 style: style.into(),
                 decoration,
@@ -189,6 +191,7 @@ impl Paragraph {
                 .iter()
                 .zip(boxes)
                 .map(|(inline_box, (style, decoration))| InlineBox {
+                    math: inline_box.math.clone(),
                     range: inline_box.range.clone(),
                     style: style.into(),
                     decoration,
@@ -259,6 +262,9 @@ impl Paragraph {
         copy.atomics = restyled(&self.atomics);
         copy.annotations = restyled(&self.annotations);
         copy
+    }
+    pub(crate) fn math_children(&self) -> Vec<crate::document::mathml::Class> {
+        math_children(&self.boxes, &self.atomics, &self.spans, None)
     }
     pub(crate) fn generated(text: &str, style: &Style) -> Result<Option<Self>, DocumentError> {
         let mut collector = InlineCollector::default();
@@ -988,6 +994,7 @@ impl InlineCollector {
         let index = self.boxes.len();
         self.mark(Mark::BoxStart(index));
         self.boxes.push(InlineBox {
+            math: None,
             range: self.text.len()..self.text.len(),
             style,
             decoration,
@@ -998,6 +1005,16 @@ impl InlineCollector {
             canvas_source,
         });
         self.open_box = Some(index);
+    }
+    pub(super) fn prepare_math_inline(&mut self, element: crate::dom::Element<'_>, style: &Style) {
+        if element.namespace() != crate::dom::MATHML_NAMESPACE {
+            return;
+        }
+        let Some(index) = self.open_box else {
+            return;
+        };
+        let children = math_children(&self.boxes, &self.atomics, &self.spans, Some(index));
+        self.boxes[index].math = crate::document::mathml::inline_class(element, style, children);
     }
     pub(crate) fn close_box(&mut self) {
         let index = self
@@ -1052,6 +1069,7 @@ impl InlineCollector {
                 inline_box.decoration.clone(),
                 inline_box.navigation,
                 inline_box.canvas_source,
+                inline_box.math.clone(),
             ));
             inline_box.continued[1] = true;
             inner = inline_box.parent;
@@ -1063,8 +1081,12 @@ impl InlineCollector {
             next_source: self.next_source,
             ..Self::default()
         };
-        for (style, decoration, navigation, canvas_source) in open.into_iter().rev() {
+        for (style, decoration, navigation, canvas_source, math) in open.into_iter().rev() {
             next.open_continued(style, decoration, navigation, true, canvas_source);
+            next.boxes
+                .last_mut()
+                .expect("a continued box was opened")
+                .math = math;
         }
         for link in links {
             next.open_contents(link);
@@ -1279,4 +1301,42 @@ pub(crate) fn collapses_character(ch: char, collapse: WhiteSpaceCollapse) -> boo
     collapse.collapses_spaces()
         && is_css_whitespace(ch)
         && !(ch == '\n' && collapse.preserves_breaks())
+}
+
+fn math_children(
+    boxes: &[InlineBox],
+    atomics: &[Anchor],
+    spans: &[TextSpan],
+    parent: Option<usize>,
+) -> Vec<crate::document::mathml::Class> {
+    use crate::document::mathml::{Class, block_class};
+    let mut children: Vec<_> = boxes
+        .iter()
+        .filter(|child| child.parent == parent)
+        .map(|child| (child.range.start, child.math.clone().unwrap_or_default()))
+        .collect();
+    children.extend(
+        atomics
+            .iter()
+            .filter(|child| child.inline_box == parent)
+            .map(|child| (child.offset, block_class(&child.block))),
+    );
+    children.extend(
+        spans
+            .iter()
+            .filter(|span| {
+                span.inline_box == parent && span.atomic.is_none() && !span.range.is_empty()
+            })
+            .map(|span| {
+                (
+                    span.range.start,
+                    Class {
+                        space_like: true,
+                        operator: None,
+                    },
+                )
+            }),
+    );
+    children.sort_by_key(|(offset, _)| *offset);
+    children.into_iter().map(|(_, class)| class).collect()
 }
