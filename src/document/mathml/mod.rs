@@ -40,12 +40,15 @@ struct MathBox {
     paint: Vec<Paint>,
 }
 impl MathBox {
-    fn place(&mut self, mut child: Self, x: f32, y: f32) {
+    fn place(&mut self, child: Self, x: f32, y: f32) {
         self.width = self.width.max(x + child.width);
         self.ascent = self.ascent.max(child.ascent - y);
         self.descent = self.descent.max(child.descent + y);
         self.ink_ascent = self.ink_ascent.max(child.ink_ascent - y);
         self.ink_descent = self.ink_descent.max(child.ink_descent + y);
+        self.position(child, x, y);
+    }
+    fn position(&mut self, mut child: Self, x: f32, y: f32) {
         for paint in &mut child.paint {
             match paint {
                 Paint::Text(line) => {
@@ -1326,12 +1329,11 @@ impl<'d> Builder<'_, 'd> {
         let base_x = -minimum - base.width / 2.0;
         let physical = |x, size| if style.rtl { width - x - size } else { x };
         let base_x = physical(base_x, base.width);
-        result.place(base, base_x, 0.0);
+        result.position(base, base_x, 0.0);
         for (child, x, y) in under_layout.into_iter().chain(over_layout) {
             let x = physical(x, child.width);
-            result.place(child, x, y);
+            result.position(child, x, y);
         }
-        result.width = width;
         result.ink_ascent = result.ascent;
         result.ink_descent = result.descent;
         Ok(result)

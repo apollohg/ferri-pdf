@@ -733,3 +733,48 @@ fn scroll_and_layout_containment_suppress_native_math_baseline_participation() {
         );
     }
 }
+
+#[test]
+fn limit_line_metrics_follow_core_equations_independently_of_script_ink_positions() {
+    const FONT_SIZE: f32 = 20.0;
+    const BASE_ASCENT: f32 = 10.0;
+    const BASE_DESCENT: f32 = 2.0;
+    const SCRIPT_ASCENT: f32 = 7.0;
+    const SCRIPT_DESCENT: f32 = 3.0;
+    let face =
+        ttf_parser::Face::parse(include_bytes!("../../assets/fonts/DejaVuSerif.ttf"), 0).unwrap();
+    let constants = face.tables().math.unwrap().constants.unwrap();
+    let scale = FONT_SIZE / f32::from(face.units_per_em());
+    let under_shift = f32::from(constants.underbar_vertical_gap().value) * scale;
+    let under_extra = f32::from(constants.underbar_extra_descender().value) * scale;
+    let over_shift = f32::from(constants.overbar_vertical_gap().value) * scale;
+    let over_extra = f32::from(constants.overbar_extra_ascender().value) * scale;
+    for (tag, under, over) in [
+        ("munder", true, false),
+        ("mover", false, true),
+        ("munderover", true, true),
+    ] {
+        let script = "<mspace width='5pt' height='7pt' depth='3pt'/>";
+        let view = math(&format!(
+            "<math><{tag}><mspace width='20pt' height='10pt' depth='2pt'/>{}{}</{tag}></math>",
+            if under { script } else { "" },
+            if over { script } else { "" }
+        ));
+        let mut ascent = BASE_ASCENT;
+        let mut descent = BASE_DESCENT;
+        if under {
+            ascent = ascent.max(SCRIPT_ASCENT - under_shift);
+            descent = descent.max(SCRIPT_DESCENT + under_shift + under_extra);
+        }
+        if over {
+            ascent = ascent.max(SCRIPT_ASCENT + over_shift + over_extra);
+            descent = descent.max(SCRIPT_DESCENT - over_shift);
+        }
+        let actual_ascent = view.baseline.unwrap();
+        let actual_descent = view.area.height - actual_ascent;
+        assert!(
+            (actual_ascent - ascent).abs() < 0.01 && (actual_descent - descent).abs() < 0.01,
+            "{tag}: Core 3.4.2 keeps the explicit line metrics separate from scripts positioned using the base ink extent; expected ascent/descent {ascent}/{descent}, got {actual_ascent}/{actual_descent}"
+        );
+    }
+}
