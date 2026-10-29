@@ -6,6 +6,7 @@ use crate::layout::measure::Measurer;
 #[derive(Clone)]
 pub(super) struct MeasuredMarker {
     pub owner: Option<crate::style::PageStyleTarget>,
+    pub frame: crate::layout::writing::Frame,
     pub fragment: TextLine,
     pub image: Option<crate::graphics::BoxPaint>,
     pub ascent: f32,
@@ -59,6 +60,7 @@ pub(super) fn measure(
     });
     Ok(MeasuredMarker {
         owner,
+        frame: crate::layout::writing::Frame::for_style(style),
         image,
         ascent: line.ascent,
         ink_bounds: line.ink_bounds,

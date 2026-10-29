@@ -63,6 +63,15 @@ pub(super) fn box_ink(paint: &crate::graphics::BoxPaint) -> Rect {
         .fold(paint.rect, Rect::union)
 }
 
+pub(super) fn box_ink_in_frame(
+    paint: &crate::graphics::BoxPaint,
+    frame: super::writing::Frame,
+) -> Rect {
+    let mut physical = paint.clone();
+    frame.paint(&mut physical);
+    frame.inverse().rect(box_ink(&physical))
+}
+
 #[derive(Clone)]
 struct Placement {
     columns: bool,
@@ -70,7 +79,7 @@ struct Placement {
     clip: Option<usize>,
     page: usize,
     containing: Rect,
-    rtl: bool,
+    flow: crate::style::logical::Flow,
     references: Vec<AnchorReference>,
     option: usize,
     overflows: bool,
@@ -155,6 +164,7 @@ impl Measurements {
         run: &crate::text::GlyphRun,
         origin: crate::graphics::Point,
         clip: Option<usize>,
+        frame: super::writing::Frame,
     ) {
         if let Some(ink) = run.ink_rect(origin) {
             self.ink(target, page, ink, clip);
@@ -163,8 +173,11 @@ impl Measurements {
                 .iter()
                 .filter(|shadow| shadow.color.used.alpha > 0.0)
             {
+                let [a, b, c, d, _, _] = frame.inverse().matrix;
+                let [x, y] = shadow.offset;
+                let offset = [a * x + c * y, b * x + d * y];
                 let cast = crate::paint::BoxShadow {
-                    offset: shadow.offset,
+                    offset,
                     blur: shadow.blur,
                     spread: 0.0,
                     color: shadow.color.used,
@@ -175,8 +188,8 @@ impl Measurements {
                     target,
                     page,
                     Rect {
-                        x: ink.x + shadow.offset[0] - extent,
-                        y: ink.y + shadow.offset[1] - extent,
+                        x: ink.x + offset[0] - extent,
+                        y: ink.y + offset[1] - extent,
                         width: ink.width + 2.0 * extent,
                         height: ink.height + 2.0 * extent,
                     },
@@ -225,7 +238,7 @@ impl Measurements {
         style: &Style,
         selected: &Style,
         containing: (usize, Rect, bool),
-        rtl: bool,
+        flow: crate::style::logical::Flow,
         border: Rect,
         clip: Option<usize>,
     ) {
@@ -236,7 +249,7 @@ impl Measurements {
         let Some(key) = key(style) else {
             return;
         };
-        let overflows = super::positioned::overflows(selected, containing, rtl, border);
+        let overflows = super::positioned::overflows(selected, containing, border);
         self.placements
             .entry(AnchorKey { target: key, page })
             .or_insert_with(|| Placement {
@@ -245,18 +258,18 @@ impl Measurements {
                 clip,
                 page,
                 containing,
-                rtl,
+                flow,
                 references: style.anchor.located_references(),
                 option: selected.anchor.option,
                 overflows,
             });
     }
 
-    pub(super) fn adopt_column(
+    pub(super) fn adopt(
         &mut self,
         other: &mut Self,
         at: (usize, usize, usize),
-        shift: [f32; 2],
+        map: impl Fn(Rect) -> Rect,
         mut clip: impl FnMut(Option<usize>) -> Option<usize>,
     ) {
         let (column, page, slots) = at;
@@ -266,11 +279,7 @@ impl Measurements {
         other.ink = remaining;
         self.ink.extend(adopted.into_iter().map(|ink| Ink {
             page,
-            rect: Rect {
-                x: ink.rect.x + shift[0],
-                y: ink.rect.y + shift[1],
-                ..ink.rect
-            },
+            rect: map(ink.rect),
             clip: clip(ink.clip),
             ..ink
         }));
@@ -283,25 +292,13 @@ impl Measurements {
                 self.boxes.entry(key).or_default().push(Fragment {
                     visible: fragment.visible,
                     page,
-                    source: Rect {
-                        x: fragment.source.x + shift[0],
-                        y: fragment.source.y + shift[1],
-                        ..fragment.source
-                    },
+                    source: map(fragment.source),
                     slot: fragment.slot.map(|slot| slots + slot),
                     columns: fragment.columns,
                     fragmentainer: fragment.fragmentainer,
                     filters: fragment.filters,
-                    ink: Rect {
-                        x: fragment.ink.x + shift[0],
-                        y: fragment.ink.y + shift[1],
-                        ..fragment.ink
-                    },
-                    rect: Rect {
-                        x: fragment.rect.x + shift[0],
-                        y: fragment.rect.y + shift[1],
-                        ..fragment.rect
-                    },
+                    ink: map(fragment.ink),
+                    rect: map(fragment.rect),
                     clip: clip(fragment.clip),
                 });
             }
@@ -317,8 +314,7 @@ impl Measurements {
                 .remove(&key)
                 .expect("the selected column has a placement");
             placement.page = page;
-            placement.containing.x += shift[0];
-            placement.containing.y += shift[1];
+            placement.containing = map(placement.containing);
             placement.clip = clip(placement.clip);
             self.placements
                 .entry(AnchorKey {
@@ -327,6 +323,55 @@ impl Measurements {
                 })
                 .or_insert(placement);
         }
+    }
+
+    pub(super) fn physical(
+        &mut self,
+        flow: crate::style::logical::Flow,
+        pages: &[std::sync::Arc<crate::document::PageBox>],
+    ) {
+        let frame = |page: usize| super::writing::Frame::physical(flow, pages[page].geometry.paper);
+        for fragment in self.boxes.values_mut().flatten() {
+            let frame = frame(fragment.page);
+            fragment.source = frame.rect(fragment.source);
+            fragment.rect = frame.rect(fragment.rect);
+            fragment.ink = frame.rect(fragment.ink);
+        }
+        for ink in &mut self.ink {
+            ink.rect = frame(ink.page).rect(ink.rect);
+        }
+        for placement in self.placements.values_mut() {
+            placement.containing = frame(placement.page).rect(placement.containing);
+        }
+        for ((page, _), chain) in &mut self.effects {
+            let frame = frame(*page);
+            for (_, effect) in chain {
+                match effect {
+                    Effect::Region(Region::Clip(clip), _) => *clip = frame.clip(*clip),
+                    Effect::Region(Region::Transform(matrix), _) => {
+                        *matrix = frame.inverse().into_logical(*matrix);
+                    }
+                    Effect::Path(polygons, _) => {
+                        for point in polygons.iter_mut().flatten() {
+                            *point = frame.point(*point);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    pub(super) fn payload_work(&self) -> usize {
+        self.boxes
+            .values()
+            .map(Vec::len)
+            .chain([self.ink.len()])
+            .chain(
+                self.placements
+                    .values()
+                    .map(|placement| placement.references.len().saturating_add(1)),
+            )
+            .fold(1, usize::saturating_add)
     }
 
     pub(super) fn frames(
@@ -361,7 +406,7 @@ impl Measurements {
                 AnchorFrame {
                     page: placement.page,
                     containing: [placement.containing.width, placement.containing.height],
-                    containing_rtl: placement.rtl,
+                    containing_flow: placement.flow,
                     anchors,
                     option: placement.option,
                     overflows: placement.overflows,

@@ -42,6 +42,7 @@ fn resumed_cells_keep_source_paint_order_when_a_later_lane_finishes_first() {
             let text = TextContext::new(&document.styles().fonts, &resolver);
             let area = document.page_box().geometry.content_box();
             let mut measurer = Measurer {
+                native_sizing: None,
                 frame_measurements: Default::default(),
                 raw_templates: Default::default(),
                 raw_pagination: false,

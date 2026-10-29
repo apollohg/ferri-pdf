@@ -97,6 +97,7 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
         let text = TextContext::new(&document.styles().fonts, &resolver);
         let area = document.page_box().geometry.content_box();
         let mut measurer = Measurer {
+            native_sizing: None,
             frame_measurements: Default::default(),
             raw_templates: Default::default(),
             raw_pagination: false,

@@ -129,7 +129,7 @@ impl<'p> InlineLayers<'p> {
 struct InlineContainer<'a> {
     pending: Vec<Pending<'a>>,
     lines: Vec<(usize, Vec<Rect>)>,
-    rtl: bool,
+    flow: crate::style::logical::Flow,
     /// The effect enclosing the box's content.
     clip: Option<usize>,
     /// Depth in `Paginator::boxes` of its block container.
@@ -246,7 +246,7 @@ struct Unbroken {
 enum Containing<'a> {
     Rect {
         rect: Rect,
-        rtl: bool,
+        flow: crate::style::logical::Flow,
         clip: Option<usize>,
     },
     /// Padding boxes of a positioned ancestor's page fragments.
@@ -255,7 +255,7 @@ enum Containing<'a> {
         overflow: BTreeMap<usize, Rect>,
         fragments: Vec<(usize, usize)>,
         areas: Vec<(usize, Rect)>,
-        rtl: bool,
+        flow: crate::style::logical::Flow,
         clip: Option<usize>,
     },
     /// The page area: the initial containing block, and every page for fixed boxes.
@@ -923,9 +923,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             .chain(&self.foreground)
             .map(Vec::len)
             .sum();
-        self.measurer
-            .work
-            .spend((lines + paints + self.boxes.len() + self.pages.len()).max(1))?;
+        self.measurer.work.spend(
+            (lines + paints + self.boxes.len() + self.pages.len())
+                .saturating_add(self.anchors.payload_work())
+                .max(1),
+        )?;
         let mut snapshot = self.copy_state();
         let mut orders = OrderSnapshots::default();
         snapshot.detach_orders(&mut orders);
@@ -2560,7 +2562,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 .map(|container| container.pending)
                 .unwrap_or_default();
             if !frame.defer_positioned {
-                self.place_box_pending(&mut active, style.used_rtl())?;
+                self.place_box_pending(&mut active)?;
             }
         }
         if !frame.defer_positioned {
@@ -3077,11 +3079,18 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             .get(&std::ptr::from_ref(block))
             .cloned()
     }
-    fn place_box_pending(
-        &mut self,
-        active: &mut ActiveBox<'a>,
-        rtl: bool,
-    ) -> Result<(), LayoutError> {
+    fn place_box_pending(&mut self, active: &mut ActiveBox<'a>) -> Result<(), LayoutError> {
+        if active.pending.is_empty() {
+            return Ok(());
+        }
+        let flow = crate::style::logical::Flow::used(
+            active
+                .geometry
+                .as_ref()
+                .expect("positioned descendants retain their real owner geometry")
+                .source
+                .style(),
+        );
         let mut areas = Vec::new();
         if !active.pending.is_empty()
             && let Some(flow) = &active.geometry
@@ -3125,7 +3134,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             overflow: active.overflow.clone().unwrap_or_default(),
             fragments: active.fragments.clone(),
             areas,
-            rtl,
+            flow,
             clip: active
                 .clip_node
                 .or(active.transform_node)
@@ -3221,14 +3230,14 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         containing: &Containing<'a>,
     ) -> Result<(), LayoutError> {
         let page = pending.position.page;
-        let (cb, rtl, clip) = match containing {
-            Containing::Rect { rect, rtl, clip } => (*rect, *rtl, *clip),
+        let (cb, flow, clip) = match containing {
+            Containing::Rect { rect, flow, clip } => (*rect, *flow, *clip),
             Containing::Page => (
                 match &self.fragmentainers {
                     Fragmentainers::Pages(pages) => pages.records[page].geometry.content_box(),
                     Fragmentainers::Columns(_) => self.canvas_rect,
                 },
-                false,
+                pending.block.layout_flow(),
                 None,
             ),
             Containing::Box {
@@ -3236,7 +3245,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 overflow,
                 fragments,
                 areas,
-                rtl,
+                flow,
                 clip,
             } => {
                 let (_, slot) = fragments
@@ -3263,7 +3272,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 } else {
                     rect
                 };
-                (rect, *rtl, *clip)
+                (rect, *flow, *clip)
             }
         };
         let (measured, top) = self.measurer.run(|measurer| {
@@ -3272,7 +3281,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 measurer,
                 pending.block,
                 cb,
-                rtl,
+                flow.rtl,
                 &pending.position,
                 matches!(self.fragmentainers, Fragmentainers::Pages(_)).then_some(page),
             )
@@ -3288,7 +3297,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 cb,
                 matches!(self.fragmentainers, Fragmentainers::Columns(_)),
             ),
-            rtl,
+            flow,
             border,
             clip,
         );
@@ -4171,7 +4180,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                         self.anchors.ink(
                             super::anchors::key(ancestor.source.style()),
                             page,
-                            super::anchors::box_ink(&BoxPaint::whole(rect, decoration.clone())),
+                            super::anchors::box_ink_in_frame(
+                                &BoxPaint::whole(rect, decoration.clone()),
+                                super::writing::Frame::for_style(ancestor.source.style()),
+                            ),
                             layer.clip,
                         );
                     }
@@ -4240,7 +4252,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                         self.anchors.ink(
                             super::anchors::key(ancestor.source.style()),
                             page,
-                            super::anchors::box_ink(paint),
+                            super::anchors::box_ink_in_frame(
+                                paint,
+                                super::writing::Frame::for_style(ancestor.source.style()),
+                            ),
                             scoped.clip,
                         );
                     }
@@ -4539,7 +4554,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     pending,
                     &Containing::Rect {
                         rect,
-                        rtl: ancestor.source.style().used_rtl(),
+                        flow: crate::style::logical::Flow::used(ancestor.source.style()),
                         clip,
                     },
                 )?;
@@ -4955,11 +4970,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 before += rect.height;
             }
         }
-        let rtl = active
-            .geometry
-            .as_ref()
-            .is_some_and(|flow| flow.source.style().used_rtl());
-        self.place_box_pending(&mut active, rtl)?;
+        self.place_box_pending(&mut active)?;
         if active.overflow.is_some()
             && let Some(geometry) = &active.geometry
         {
@@ -5151,8 +5162,14 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         let origin = [marker.fragment.x, marker.fragment.baseline];
         for run in &marker.fragment.runs {
-            self.anchors
-                .text(marker.owner, self.page, run, origin, self.clip);
+            self.anchors.text(
+                marker.owner,
+                self.page,
+                run,
+                origin,
+                self.clip,
+                marker.frame,
+            );
         }
         for decoration in &marker.decorations {
             for fill in decoration.fills() {
@@ -5408,7 +5425,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 self.anchors.ink(
                     super::anchors::key(style),
                     self.page,
-                    super::anchors::box_ink(&paint),
+                    super::anchors::box_ink_in_frame(
+                        &paint,
+                        super::writing::Frame::for_style(style),
+                    ),
                     layer.clip,
                 );
             }
@@ -5607,7 +5627,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 InlineContainer {
                     pending: Vec::new(),
                     lines: Vec::new(),
-                    rtl: style.used_rtl(),
+                    flow: crate::style::logical::Flow::used(style),
                     clip,
                     depth: self.boxes.len(),
                 },
@@ -5694,7 +5714,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     pending,
                     &Containing::Rect {
                         rect,
-                        rtl: container.rtl,
+                        flow: container.flow,
                         clip: container.clip,
                     },
                 )?;
@@ -5775,7 +5795,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     pending.block.style(),
                     measured.style,
                     (page, canvas, false),
-                    false,
+                    pending.block.layout_flow(),
                     border,
                     None,
                 );
@@ -5783,11 +5803,31 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
         }
         self.assemble_sliced_boxes();
+        let flow = match &self.fragmentainers {
+            Fragmentainers::Pages(pages) => {
+                crate::style::logical::Flow::used(pages.document.root().style())
+            }
+            Fragmentainers::Columns(_) => crate::style::logical::Flow::default(),
+        };
         let lists = &self.display_lists;
         self.anchors
             .assemble(|page, slot| match &lists[page][slot].item {
                 DisplayItem::Box(paint) => {
-                    Some((paint.background_box, super::anchors::box_ink(paint)))
+                    let native = lists[page][slot].native;
+                    Some((
+                        paint
+                            .background_box
+                            .map(|rect| native.map_or(rect, |space| space.rect(rect))),
+                        native.map_or_else(
+                            || {
+                                super::anchors::box_ink_in_frame(
+                                    paint,
+                                    super::writing::Frame::physical(flow, [0.0; 2]),
+                                )
+                            },
+                            |space| space.box_ink(paint),
+                        ),
+                    ))
                 }
                 _ => None,
             });
@@ -5831,13 +5871,23 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     })
                     .chain(node.paints.iter().map(|(page, paint)| (*page, paint)))
                 {
-                    pages
-                        .entry(page)
-                        .or_default()
-                        .extend(super::float_area::filled_polygons(
-                            &path.outline(paint),
-                            &self.measurer.work,
-                        )?);
+                    let frame = node.native.map_or_else(
+                        || super::writing::Frame::physical(flow, [0.0; 2]),
+                        |space| space.frame,
+                    );
+                    let mut physical = paint.clone();
+                    frame.paint(&mut physical);
+                    let mut polygons = super::float_area::filled_polygons(
+                        &path.outline(&physical),
+                        &self.measurer.work,
+                    )?;
+                    for point in polygons.iter_mut().flatten() {
+                        let canonical = frame.inverse().point(*point);
+                        *point = node
+                            .native
+                            .map_or(canonical, |space| space.point(canonical));
+                    }
+                    pages.entry(page).or_default().extend(polygons);
                 }
             }
             paths.push(pages);
@@ -5978,7 +6028,7 @@ fn inline_containing_rect(
         .iter()
         .copied()
         .reduce(|start, rect| {
-            let starts_before = if container.rtl {
+            let starts_before = if container.flow.rtl {
                 right(&rect) > right(&start)
             } else {
                 rect.x < start.x
@@ -5986,7 +6036,7 @@ fn inline_containing_rect(
             if starts_before { rect } else { start }
         })
         .ok_or(LayoutError::MissingContainingFragment { page })?;
-    let [left, right] = if container.rtl {
+    let [left, right] = if container.flow.rtl {
         [
             rects().map(|rect| rect.x).fold(f32::INFINITY, f32::min),
             right(&first),

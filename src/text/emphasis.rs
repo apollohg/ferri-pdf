@@ -81,6 +81,14 @@ fn mark_style(style: &Style) -> Style {
 
 /// Whether any typographic character unit of `run` takes a mark.
 fn has_marks(run: &GlyphRun, skip: EmphasisSkip) -> bool {
+    if run.combined {
+        let mut buffer = [0; 4];
+        return run.width != 0.0
+            && marked(
+                crate::document::OBJECT_REPLACEMENT_CHARACTER.encode_utf8(&mut buffer),
+                skip,
+            );
+    }
     run.text
         .graphemes(true)
         .any(|cluster| marked(cluster, skip))
@@ -153,9 +161,7 @@ pub(super) fn place(
             run.text.grapheme_indices(true).collect()
         };
         for (offset, cluster) in clusters {
-            if (run.combined && run.width == 0.0)
-                || (!run.combined && !marked(cluster, style.text_paint.emphasis_skip))
-            {
+            if !run.combined && !marked(cluster, style.text_paint.emphasis_skip) {
                 continue;
             }
             let start = run.source_range.start + offset;

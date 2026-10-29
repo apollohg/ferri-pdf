@@ -300,6 +300,7 @@ pub(super) fn measure<'a>(
     let edges = measurer.fragmentainer.edges(style);
     Ok(MeasuredBlock {
         frame_key: None,
+        frame_owner: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer

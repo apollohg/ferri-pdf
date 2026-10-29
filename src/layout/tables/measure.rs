@@ -236,6 +236,7 @@ pub(crate) struct TablePlan<'a> {
     border_owners: Option<Vec<Option<usize>>>,
     containing_height: Option<f32>,
     used_height: Option<f32>,
+    native_height: Option<crate::style::SizeConstraints>,
     pub source: &'a BlockBox,
     pub style: &'a Style,
     named_pages: bool,
@@ -539,7 +540,15 @@ impl<'a> TablePlan<'a> {
         } else {
             None
         };
+        let native_height = measurer
+            .native_vertical(block.block)
+            .map(geometry::VerticalBox::constraints);
         let has_height_constraints = used_height.is_some()
+            || native_height.is_some_and(|constraints| {
+                constraints.specified.is_some()
+                    || constraints.minimum != 0.0
+                    || constraints.maximum.is_some()
+            })
             || std::iter::once(block)
                 .chain(data.rows.iter().copied().map(BlockSource::from))
                 .chain(data.cells.iter().copied().map(BlockSource::from))
@@ -560,6 +569,7 @@ impl<'a> TablePlan<'a> {
             border_owners,
             containing_height,
             used_height,
+            native_height,
             source: block.block,
             style: block.style(),
             named_pages: measurer.named_pages && !measurer.unbroken,
@@ -813,6 +823,9 @@ impl<'a> TablePlan<'a> {
             .is_some()
             || self.style.height != crate::style::Size::Auto
             || self.used_height.is_some()
+            || self
+                .native_height
+                .is_some_and(|constraints| constraints.specified.is_some())
     }
     pub(crate) fn cell_used_height(
         &self,
@@ -1183,21 +1196,23 @@ impl<'a> TablePlan<'a> {
             cells,
             rows: &rows,
             spacing,
-            table: self.used_height.map_or_else(
-                || {
-                    crate::style::SizeConstraints::new(
-                        [&style.height, &style.min_height, &style.max_height],
-                        self.containing_height,
-                        style.box_sizing,
-                        edges,
-                    )
-                },
-                |height| crate::style::SizeConstraints {
-                    specified: Some(height),
-                    minimum: 0.0,
-                    maximum: None,
-                },
-            ),
+            table: self.native_height.unwrap_or_else(|| {
+                self.used_height.map_or_else(
+                    || {
+                        crate::style::SizeConstraints::new(
+                            [&style.height, &style.min_height, &style.max_height],
+                            self.containing_height,
+                            style.box_sizing,
+                            edges,
+                        )
+                    },
+                    |height| crate::style::SizeConstraints {
+                        specified: Some(height),
+                        minimum: 0.0,
+                        maximum: None,
+                    },
+                )
+            }),
         })?;
         Ok(RowGeometry::new(rows, spacing).project(&self.data.collapsed_rows))
     }
@@ -1494,7 +1509,7 @@ fn measure_plan<'a>(
             if let Some(used_height) = plan.cell_used_height(index, content_height, resolved) {
                 measured = plan.measure_cell(measurer, index, resolved, Some(used_height))?;
             }
-            measured.align_cell(cell_offsets[index]);
+            measured.align_cell(cell_offsets[index], rect.height);
             cell_heights.push((index, rect.height));
             if plan.cell_collapsed(index) {
                 collapsed_cells.push(crate::layout::measure::CollapsedItem {
@@ -1695,6 +1710,7 @@ fn measure_plan<'a>(
     };
     let measured = MeasuredBlock {
         frame_key: None,
+        frame_owner: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer

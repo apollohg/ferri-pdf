@@ -179,6 +179,7 @@ impl BlockBox {
                 containers[1] = own;
             }
             block.layout_flow = parent;
+            block.style.anchor.physical_areas(own, parent);
             if own.writing_mode != parent.writing_mode && block.image.is_none() {
                 let mut style = block.style.anonymous(block.style.display.clone());
                 style.flex = block.style.flex.clone();

@@ -13,7 +13,7 @@ use crate::style::{
     box_values::unsupported,
     component::Component,
     grammar::{Keyword, Label, Production, Property},
-    logical::{BOTTOM, LEFT, RIGHT, TOP},
+    logical::{BOTTOM, Flow, LEFT, RIGHT, TOP},
     units::Relative,
 };
 use std::{
@@ -107,13 +107,12 @@ impl AreaTracks {
         last: END_TRACK,
         reference: AreaReference::Physical,
     };
-    fn physical(self, horizontal: bool, own_rtl: bool, containing_rtl: bool) -> [usize; 2] {
-        let mirrored = horizontal
-            && match self.reference {
-                AreaReference::Physical => false,
-                AreaReference::Containing => containing_rtl,
-                AreaReference::Own => own_rtl,
-            };
+    fn physical(self, axis: usize, own: Flow, containing: Flow) -> [usize; 2] {
+        let mirrored = match self.reference {
+            AreaReference::Physical => false,
+            AreaReference::Containing => containing.axis_start(axis) != start_side_of(axis),
+            AreaReference::Own => own.axis_start(axis) != start_side_of(axis),
+        };
         if mirrored {
             [END_TRACK - self.last, END_TRACK - self.first]
         } else {
@@ -124,7 +123,29 @@ impl AreaTracks {
 
 /// A computed `<position-area>`: the tracks of the horizontal, then the vertical axis.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub(crate) struct PositionArea([AreaTracks; 2]);
+pub(crate) struct PositionArea([AreaTerm; 2]);
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+struct AreaTerm {
+    axis: AreaAxis,
+    tracks: AreaTracks,
+}
+impl AreaTerm {
+    fn axis(self, own: Flow, containing: Flow) -> Option<usize> {
+        let flow = if self.tracks.reference == AreaReference::Own {
+            own
+        } else {
+            containing
+        };
+        match self.axis {
+            AreaAxis::X => Some(HORIZONTAL),
+            AreaAxis::Y => Some(VERTICAL),
+            AreaAxis::Block => Some(flow.block_axis()),
+            AreaAxis::Inline => Some(1 - flow.block_axis()),
+            AreaAxis::Either => None,
+        }
+    }
+}
 
 /// The default self-alignment a position area gives one axis (§4.1), physically.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -139,9 +160,39 @@ pub(crate) enum AreaAlignment {
 
 impl PositionArea {
     /// The first and last physical track of each axis, left to right and top to bottom.
-    pub(crate) fn tracks(self, own_rtl: bool, containing_rtl: bool) -> [[usize; 2]; 2] {
-        [HORIZONTAL, VERTICAL]
-            .map(|axis| self.0[axis].physical(axis == HORIZONTAL, own_rtl, containing_rtl))
+    pub(crate) fn tracks(self, own: Flow, containing: Flow) -> [[usize; 2]; 2] {
+        let axes = match (
+            self.0[0].axis(own, containing),
+            self.0[1].axis(own, containing),
+        ) {
+            (Some(first), _) => [first, 1 - first],
+            (None, Some(second)) => [1 - second, second],
+            (None, None) => [containing.block_axis(), 1 - containing.block_axis()],
+        };
+        let mut tracks = [[START_TRACK, END_TRACK]; 2];
+        for (term, axis) in self.0.into_iter().zip(axes) {
+            tracks[axis] = term.tracks.physical(axis, own, containing);
+        }
+        tracks
+    }
+
+    fn from_physical(tracks: [[usize; 2]; 2]) -> Self {
+        Self(std::array::from_fn(|axis| AreaTerm {
+            axis: if axis == HORIZONTAL {
+                AreaAxis::X
+            } else {
+                AreaAxis::Y
+            },
+            tracks: AreaTracks {
+                first: tracks[axis][0],
+                last: tracks[axis][1],
+                reference: AreaReference::Physical,
+            },
+        }))
+    }
+
+    fn physical(self, own: Flow, containing: Flow) -> Self {
+        Self::from_physical(self.tracks(own, containing))
     }
     /// The region of the position-area grid the area selects (§3.1.1), in the coordinates of
     /// a containing block of size `containing` with the default anchor box at `anchor`.
@@ -149,10 +200,10 @@ impl PositionArea {
         self,
         containing: [f32; 2],
         anchor: Rect,
-        own_rtl: bool,
-        containing_rtl: bool,
+        own: Flow,
+        containing_flow: Flow,
     ) -> Rect {
-        let tracks = self.tracks(own_rtl, containing_rtl);
+        let tracks = self.tracks(own, containing_flow);
         let lines = |axis: usize| {
             let (start, end) = if axis == HORIZONTAL {
                 (anchor.x, anchor.x + anchor.width)
@@ -174,18 +225,17 @@ impl PositionArea {
         }
     }
     /// §4.1: the alignment `normal` resolves to in each axis.
-    pub(crate) fn alignment(self, own_rtl: bool, containing_rtl: bool) -> [AreaAlignment; 2] {
-        self.tracks(own_rtl, containing_rtl)
-            .map(|tracks| match tracks {
-                [CENTER_TRACK, CENTER_TRACK] => AreaAlignment::Center,
-                [START_TRACK, END_TRACK] => AreaAlignment::AnchorCenter,
-                [START_TRACK, _] => AreaAlignment::End,
-                _ => AreaAlignment::Start,
-            })
+    pub(crate) fn alignment(self, own: Flow, containing: Flow) -> [AreaAlignment; 2] {
+        self.tracks(own, containing).map(|tracks| match tracks {
+            [CENTER_TRACK, CENTER_TRACK] => AreaAlignment::Center,
+            [START_TRACK, END_TRACK] => AreaAlignment::AnchorCenter,
+            [START_TRACK, _] => AreaAlignment::End,
+            _ => AreaAlignment::Start,
+        })
     }
     /// The area selecting the same grid region once `tactic` moves its sides (§6.5.2).
-    fn transformed(self, tactic: Tactic, own_rtl: bool, containing_rtl: bool) -> Self {
-        let tracks = self.tracks(own_rtl, containing_rtl);
+    fn transformed(self, tactic: Tactic, own: Flow, containing: Flow) -> Self {
+        let tracks = self.tracks(own, containing);
         let mut moved = [AreaTracks::ALL; 2];
         for axis in [HORIZONTAL, VERTICAL] {
             let start_side = if axis == HORIZONTAL { LEFT } else { TOP };
@@ -203,7 +253,7 @@ impl PositionArea {
                 reference: AreaReference::Physical,
             };
         }
-        Self(moved)
+        Self::from_physical(moved.map(|tracks| [tracks.first, tracks.last]))
     }
 }
 
@@ -227,16 +277,18 @@ fn opposite(side: usize) -> usize {
 }
 
 /// The axis an ambiguous position-area keyword takes from its partner.
-#[derive(Clone, Copy, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 enum AreaAxis {
     X,
     Y,
+    Block,
+    Inline,
     Either,
 }
 
 /// One position-area keyword: its axis, tracks and reference.
 fn area_keyword(keyword: Keyword) -> Option<(AreaAxis, usize, usize, AreaReference)> {
-    use AreaAxis::{Either, X, Y};
+    use AreaAxis::{Block, Either, Inline, X, Y};
     use AreaReference::{Containing, Own, Physical};
     use Keyword as K;
     let (start, center, end, span_start, span_end) = (
@@ -255,22 +307,38 @@ fn area_keyword(keyword: Keyword) -> Option<(AreaAxis, usize, usize, AreaReferen
         K::Bottom => (end, Y, Physical),
         K::SpanTop => (span_start, Y, Physical),
         K::SpanBottom => (span_end, Y, Physical),
-        K::XStart | K::InlineStart => (start, X, Containing),
-        K::XEnd | K::InlineEnd => (end, X, Containing),
-        K::SpanXStart | K::SpanInlineStart => (span_start, X, Containing),
-        K::SpanXEnd | K::SpanInlineEnd => (span_end, X, Containing),
-        K::SelfXStart | K::SelfInlineStart => (start, X, Own),
-        K::SelfXEnd | K::SelfInlineEnd => (end, X, Own),
-        K::SpanSelfXStart | K::SpanSelfInlineStart => (span_start, X, Own),
-        K::SpanSelfXEnd | K::SpanSelfInlineEnd => (span_end, X, Own),
-        K::YStart | K::BlockStart => (start, Y, Containing),
-        K::YEnd | K::BlockEnd => (end, Y, Containing),
-        K::SpanYStart | K::SpanBlockStart => (span_start, Y, Containing),
-        K::SpanYEnd | K::SpanBlockEnd => (span_end, Y, Containing),
-        K::SelfYStart | K::SelfBlockStart => (start, Y, Own),
-        K::SelfYEnd | K::SelfBlockEnd => (end, Y, Own),
-        K::SpanSelfYStart | K::SpanSelfBlockStart => (span_start, Y, Own),
-        K::SpanSelfYEnd | K::SpanSelfBlockEnd => (span_end, Y, Own),
+        K::XStart => (start, X, Containing),
+        K::InlineStart => (start, Inline, Containing),
+        K::XEnd => (end, X, Containing),
+        K::InlineEnd => (end, Inline, Containing),
+        K::SpanXStart => (span_start, X, Containing),
+        K::SpanInlineStart => (span_start, Inline, Containing),
+        K::SpanXEnd => (span_end, X, Containing),
+        K::SpanInlineEnd => (span_end, Inline, Containing),
+        K::SelfXStart => (start, X, Own),
+        K::SelfInlineStart => (start, Inline, Own),
+        K::SelfXEnd => (end, X, Own),
+        K::SelfInlineEnd => (end, Inline, Own),
+        K::SpanSelfXStart => (span_start, X, Own),
+        K::SpanSelfInlineStart => (span_start, Inline, Own),
+        K::SpanSelfXEnd => (span_end, X, Own),
+        K::SpanSelfInlineEnd => (span_end, Inline, Own),
+        K::YStart => (start, Y, Containing),
+        K::BlockStart => (start, Block, Containing),
+        K::YEnd => (end, Y, Containing),
+        K::BlockEnd => (end, Block, Containing),
+        K::SpanYStart => (span_start, Y, Containing),
+        K::SpanBlockStart => (span_start, Block, Containing),
+        K::SpanYEnd => (span_end, Y, Containing),
+        K::SpanBlockEnd => (span_end, Block, Containing),
+        K::SelfYStart => (start, Y, Own),
+        K::SelfBlockStart => (start, Block, Own),
+        K::SelfYEnd => (end, Y, Own),
+        K::SelfBlockEnd => (end, Block, Own),
+        K::SpanSelfYStart => (span_start, Y, Own),
+        K::SpanSelfBlockStart => (span_start, Block, Own),
+        K::SpanSelfYEnd => (span_end, Y, Own),
+        K::SpanSelfBlockEnd => (span_end, Block, Own),
         K::Start => (start, Either, Containing),
         K::End => (end, Either, Containing),
         K::SpanStart => (span_start, Either, Containing),
@@ -300,46 +368,25 @@ pub(crate) fn position_area(value: &Component) -> Result<Option<PositionArea>, S
         .map(|keyword| area_keyword(*keyword))
         .collect::<Option<Vec<_>>>()
         .ok_or_else(|| unsupported(value))?;
-    let tracks =
-        |(_, first, last, reference): (AreaAxis, usize, usize, AreaReference)| AreaTracks {
+    let term = |(axis, first, last, reference)| AreaTerm {
+        axis,
+        tracks: AreaTracks {
             first,
             last,
             reference,
-        };
-    let mut axes = [None; 2];
-    let assign = |axes: &mut [Option<AreaTracks>; 2], axis: usize, keyword| {
-        axes[axis] = Some(tracks(keyword));
+        },
     };
-    match parsed.as_slice() {
-        [single] if single.0 == AreaAxis::Either => {
-            assign(&mut axes, VERTICAL, *single);
-            assign(&mut axes, HORIZONTAL, *single);
-        }
-        [single] => {
-            let axis = if single.0 == AreaAxis::X {
-                HORIZONTAL
-            } else {
-                VERTICAL
-            };
-            assign(&mut axes, axis, *single);
-            axes[1 - axis] = Some(AreaTracks::ALL);
-        }
-        [first, second] => {
-            let (first_axis, second_axis) = match (first.0, second.0) {
-                (AreaAxis::X, _) | (AreaAxis::Either, AreaAxis::Y) => (HORIZONTAL, VERTICAL),
-                (AreaAxis::Y, _) | (AreaAxis::Either, AreaAxis::X | AreaAxis::Either) => {
-                    (VERTICAL, HORIZONTAL)
-                }
-            };
-            assign(&mut axes, first_axis, *first);
-            assign(&mut axes, second_axis, *second);
-        }
+    let all = AreaTerm {
+        axis: AreaAxis::Either,
+        tracks: AreaTracks::ALL,
+    };
+    let terms = match parsed.as_slice() {
+        [single] if single.0 == AreaAxis::Either => [term(*single); 2],
+        [single] => [term(*single), all],
+        [first, second] => [term(*first), term(*second)],
         _ => return Err(unsupported(value)),
-    }
-    match axes {
-        [Some(horizontal), Some(vertical)] => Ok(Some(PositionArea([horizontal, vertical]))),
-        _ => Err(unsupported(value)),
-    }
+    };
+    Ok(Some(PositionArea(terms)))
 }
 
 /// A `<try-tactic>` keyword (§6.1).
@@ -376,7 +423,7 @@ impl Tactic {
     pub(crate) const IDENTITY: Self = Self(SIDES);
     /// The keywords composed in order, their logical directions resolved against the
     /// containing block's writing mode.
-    pub(crate) fn of(keywords: &[TacticKeyword], containing_rtl: bool) -> Self {
+    pub(crate) fn of(keywords: &[TacticKeyword], containing: Flow) -> Self {
         keywords.iter().fold(Self::IDENTITY, |tactic, keyword| {
             let swap = |pairs: &[[usize; 2]]| {
                 let mut sides = SIDES;
@@ -386,11 +433,16 @@ impl Tactic {
                 }
                 Self(sides)
             };
+            let block = containing.axis_start(containing.block_axis());
+            let inline = containing.axis_start(1 - containing.block_axis());
             let step = match keyword {
-                TacticKeyword::FlipBlock | TacticKeyword::FlipY => swap(&[[TOP, BOTTOM]]),
-                TacticKeyword::FlipInline | TacticKeyword::FlipX => swap(&[[LEFT, RIGHT]]),
-                TacticKeyword::FlipStart if containing_rtl => swap(&[[TOP, RIGHT], [BOTTOM, LEFT]]),
-                TacticKeyword::FlipStart => swap(&[[TOP, LEFT], [BOTTOM, RIGHT]]),
+                TacticKeyword::FlipBlock => swap(&[[block, opposite(block)]]),
+                TacticKeyword::FlipInline => swap(&[[inline, opposite(inline)]]),
+                TacticKeyword::FlipStart => {
+                    swap(&[[block, inline], [opposite(block), opposite(inline)]])
+                }
+                TacticKeyword::FlipX => swap(&[[LEFT, RIGHT]]),
+                TacticKeyword::FlipY => swap(&[[TOP, BOTTOM]]),
             };
             Self(tactic.0.map(|side| step.0[side]))
         })
@@ -408,6 +460,19 @@ impl Tactic {
     pub(crate) fn swaps_axes(self) -> bool {
         axis_of(self.0[LEFT]) == VERTICAL
     }
+    pub(crate) fn inherited_basis(self, parent: &Style) -> Style {
+        let mut moved = parent.clone();
+        moved.inset = std::array::from_fn(|side| parent.inset[self.source(side)].clone());
+        moved.margin = std::array::from_fn(|side| parent.margin[self.source(side)].clone());
+        if self.swaps_axes() {
+            std::mem::swap(&mut moved.width, &mut moved.height);
+            std::mem::swap(&mut moved.min_width, &mut moved.min_height);
+            std::mem::swap(&mut moved.max_width, &mut moved.max_height);
+            std::mem::swap(&mut moved.grid.justify_self, &mut moved.flex.align_self);
+        }
+        moved
+    }
+
     /// The physical longhand whose value `property` takes under the tactic, for the
     /// properties a tactic moves between sides and axes.
     pub(crate) fn source_property(self, property: Property) -> Property {
@@ -494,13 +559,14 @@ pub(crate) fn try_fallbacks(
         .collect()
 }
 
-/// `position-try-order` (§6.2): the physical axis whose inset-modified containing block size
-/// sorts the options; `None` is `normal`.
-pub(crate) fn try_order(value: &Component) -> Result<Option<usize>, StyleError> {
+/// `position-try-order` (§6.2); logical axes retain their containing-block basis.
+pub(crate) fn try_order(value: &Component) -> Result<Option<AnchorDimension>, StyleError> {
     match value.keyword() {
         Some(Keyword::Normal) => Ok(None),
-        Some(Keyword::MostWidth | Keyword::MostInlineSize) => Ok(Some(HORIZONTAL)),
-        Some(Keyword::MostHeight | Keyword::MostBlockSize) => Ok(Some(VERTICAL)),
+        Some(Keyword::MostWidth) => Ok(Some(AnchorDimension::Width)),
+        Some(Keyword::MostHeight) => Ok(Some(AnchorDimension::Height)),
+        Some(Keyword::MostBlockSize) => Ok(Some(AnchorDimension::Block)),
+        Some(Keyword::MostInlineSize) => Ok(Some(AnchorDimension::Inline)),
         _ => Err(unsupported(value)),
     }
 }
@@ -686,10 +752,7 @@ pub(crate) fn functions(property: Property) -> AnchorFunctions {
     crate::style::declaration::longhands(property).fold(
         AnchorFunctions::default(),
         |functions, longhand| {
-            let target = target(crate::style::logical::physical(
-                longhand,
-                crate::style::logical::Flow::default(),
-            ));
+            let target = target(crate::style::logical::physical(longhand, Flow::default()));
             let allowed = target.map(AnchorTarget::functions).unwrap_or_default();
             AnchorFunctions {
                 anchor: functions.anchor || allowed.anchor,
@@ -799,11 +862,14 @@ impl AnchorDimension {
             _ => return None,
         })
     }
-    /// Horizontal writing modes alone are computed, so the block axis is vertical.
-    fn axis(self) -> usize {
+    pub(crate) fn axis(self, containing: Flow, own: Flow) -> usize {
         match self {
-            Self::Width | Self::Inline | Self::SelfInline => HORIZONTAL,
-            Self::Height | Self::Block | Self::SelfBlock => VERTICAL,
+            Self::Width => HORIZONTAL,
+            Self::Height => VERTICAL,
+            Self::Block => containing.block_axis(),
+            Self::Inline => 1 - containing.block_axis(),
+            Self::SelfBlock => own.block_axis(),
+            Self::SelfInline => 1 - own.block_axis(),
         }
     }
 }
@@ -853,7 +919,7 @@ pub(crate) struct AnchorFrame {
     pub(crate) page: usize,
     /// The size of that containing block fragment, before any position area modifies it.
     pub(crate) containing: [f32; 2],
-    pub(crate) containing_rtl: bool,
+    pub(crate) containing_flow: Flow,
     /// The target anchor box of each reference the box's styles make, if any.
     pub(crate) anchors: Vec<(AnchorReference, Option<AnchorBox>)>,
     /// The position option layout chose (§6.5), an index into the box's options.
@@ -970,7 +1036,7 @@ pub(crate) struct AnchorStyle {
     pub(crate) area: Option<PositionArea>,
     pub(crate) fallbacks: Arc<[TryOption]>,
     /// `position-try-order`; `None` is `normal`.
-    pub(crate) order: Option<usize>,
+    pub(crate) order: Option<AnchorDimension>,
     pub(crate) visibility: PositionVisibility,
     /// Anchor references the box's anchor functions made, which layout locates.
     pub(crate) references: Arc<[AnchorReference]>,
@@ -983,6 +1049,77 @@ pub(crate) struct AnchorStyle {
     pub(crate) tactic: Tactic,
 }
 impl AnchorStyle {
+    pub(crate) fn physical_areas(&mut self, own: Flow, containing: Flow) {
+        self.area = self.area.map(|area| area.physical(own, containing));
+        self.order = self.order.map(|axis| {
+            if axis.axis(containing, own) == HORIZONTAL {
+                AnchorDimension::Width
+            } else {
+                AnchorDimension::Height
+            }
+        });
+        for (_, style) in Arc::make_mut(&mut self.pages) {
+            style.anchor.physical_areas(own, containing);
+        }
+        for style in Arc::make_mut(&mut self.options) {
+            style.anchor.physical_areas(own, containing);
+        }
+    }
+
+    pub(crate) fn reflowed_geometry(&mut self, from: Flow, to: Flow) {
+        let sources = to.sides(from, &SIDES);
+        let mapping = Tactic(std::array::from_fn(|side| {
+            sources
+                .iter()
+                .position(|source| *source == side)
+                .expect("flows permute all sides")
+        }));
+        let swapped = from.writing_mode.vertical() != to.writing_mode.vertical();
+        self.area = self.area.map(|area| {
+            area.transformed(
+                mapping,
+                from,
+                self.frame
+                    .as_ref()
+                    .map_or(from, |frame| frame.containing_flow),
+            )
+        });
+        if swapped {
+            self.order = self.order.map(|axis| {
+                if axis.axis(from, from) == HORIZONTAL {
+                    AnchorDimension::Height
+                } else {
+                    AnchorDimension::Width
+                }
+            });
+        }
+        if let Some(frame) = &mut self.frame {
+            let frame = Arc::make_mut(frame);
+            let containing = frame.containing;
+            if swapped {
+                frame.containing.swap(HORIZONTAL, VERTICAL);
+            }
+            for (_, anchor) in &mut frame.anchors {
+                if let Some(anchor) = anchor {
+                    let rect = anchor.rect;
+                    let distances = [
+                        rect.y,
+                        containing[HORIZONTAL] - rect.x - rect.width,
+                        containing[VERTICAL] - rect.y - rect.height,
+                        rect.x,
+                    ];
+                    let mapped = to.sides(from, &distances);
+                    anchor.rect = Rect {
+                        x: mapped[LEFT],
+                        y: mapped[TOP],
+                        width: frame.containing[HORIZONTAL] - mapped[LEFT] - mapped[RIGHT],
+                        height: frame.containing[VERTICAL] - mapped[TOP] - mapped[BOTTOM],
+                    };
+                }
+            }
+        }
+    }
+
     /// §2.4: the reference naming the default anchor element.
     pub(crate) fn default_reference(&self) -> Option<AnchorReference> {
         match &self.position_anchor {
@@ -1033,7 +1170,7 @@ pub(crate) struct AnchorContext<'a> {
     positioned: bool,
     default: Option<AnchorReference>,
     area: Option<PositionArea>,
-    own_rtl: bool,
+    own_flow: Flow,
     scope: FontNamespace,
     tactic: Tactic,
     target: AnchorTarget,
@@ -1041,9 +1178,6 @@ pub(crate) struct AnchorContext<'a> {
     unresolved: Cell<bool>,
 }
 impl AnchorContext<'_> {
-    fn containing_rtl(&self) -> bool {
-        self.frame.is_some_and(|frame| frame.containing_rtl)
-    }
     fn reference(&self, name: Option<&Arc<str>>) -> Option<AnchorReference> {
         let reference = match name {
             Some(name) => AnchorReference::Named(AnchorName {
@@ -1080,8 +1214,8 @@ impl AnchorContext<'_> {
             Some(area.rect(
                 frame.containing,
                 anchor.rect,
-                self.own_rtl,
-                frame.containing_rtl,
+                self.own_flow,
+                frame.containing_flow,
             ))
         });
         Some(area.unwrap_or(whole))
@@ -1096,16 +1230,8 @@ impl AnchorContext<'_> {
         let containing = self.containing()?;
         let written = self.tactic.source(property);
         let axis = axis_of(written);
-        let containing_start = if axis == HORIZONTAL && self.containing_rtl() {
-            RIGHT
-        } else {
-            start_side_of(axis)
-        };
-        let own_start = if axis == HORIZONTAL && self.own_rtl {
-            RIGHT
-        } else {
-            start_side_of(axis)
-        };
+        let containing_start = self.frame?.containing_flow.axis_start(axis);
+        let own_start = self.own_flow.axis_start(axis);
         let edge = |side: usize| match side {
             TOP => anchor.y,
             BOTTOM => anchor.y + anchor.height,
@@ -1145,8 +1271,8 @@ impl AnchorContext<'_> {
         let anchor = self.anchor_box(name)?;
         let axis = match dimension {
             Some(dimension) => {
-                let axis = dimension.axis();
-                if self.tactic.swaps_axes() {
+                let axis = dimension.axis(self.frame?.containing_flow, self.own_flow);
+                if self.tactic.swaps_axes() && matches!(self.target, AnchorTarget::Size(_)) {
                     1 - axis
                 } else {
                     axis
@@ -1256,7 +1382,7 @@ pub(crate) fn size(
         positioned: style.position.is_out_of_flow(),
         default: style.anchor.default_reference(),
         area: style.anchor.area,
-        own_rtl: style.rtl,
+        own_flow: Flow::used(style),
         scope: relative
             .anchoring
             .and_then(|anchoring| anchoring.scope)
@@ -1313,85 +1439,98 @@ pub(crate) fn supports(value: &Component, relative: &Relative<'_>, target: Ancho
     size(value, &mut Style::default(), relative, target).is_ok()
 }
 
-/// §6.5.2: alignment keywords keep their relationship to the sides a tactic moves them to.
-/// `horizontal` is the axis of the alignment property the value now belongs to.
+/// §6.5.2: alignment keywords follow the sides a tactic moves between their properties.
 pub(crate) fn transformed_alignment(
     alignment: Alignment,
     tactic: Tactic,
-    horizontal: bool,
-    own_rtl: bool,
-    containing_rtl: bool,
+    inline: bool,
+    own: Flow,
+    containing: Flow,
 ) -> Alignment {
-    let source_axis = if horizontal == tactic.swaps_axes() {
-        VERTICAL
+    let target_axis = if inline {
+        1 - containing.block_axis()
     } else {
-        HORIZONTAL
+        containing.block_axis()
     };
-    let target_axis = if horizontal { HORIZONTAL } else { VERTICAL };
-    let start = |axis: usize, rtl: bool| {
-        if axis == HORIZONTAL && rtl {
-            RIGHT
-        } else {
-            start_side_of(axis)
-        }
+    let source_axis = if tactic.swaps_axes() {
+        1 - target_axis
+    } else {
+        target_axis
     };
-    let moved = |side: usize| tactic.side(side);
-    let logical = |side: usize, rtl: bool, start_keyword, end_keyword| {
-        if moved(side) == start(target_axis, rtl) {
+    let logical = |side, flow: Flow, start_keyword, end_keyword| {
+        if tactic.side(side) == flow.axis_start(target_axis) {
             start_keyword
         } else {
             end_keyword
         }
     };
-    let containing = containing_rtl;
     match alignment {
         Alignment::Start => logical(
-            start(source_axis, containing),
+            containing.axis_start(source_axis),
             containing,
             Alignment::Start,
             Alignment::End,
         ),
         Alignment::End => logical(
-            opposite(start(source_axis, containing)),
+            opposite(containing.axis_start(source_axis)),
             containing,
             Alignment::Start,
             Alignment::End,
         ),
         Alignment::FlexStart => logical(
-            start(source_axis, containing),
+            containing.axis_start(source_axis),
             containing,
             Alignment::FlexStart,
             Alignment::FlexEnd,
         ),
         Alignment::FlexEnd => logical(
-            opposite(start(source_axis, containing)),
+            opposite(containing.axis_start(source_axis)),
             containing,
             Alignment::FlexStart,
             Alignment::FlexEnd,
         ),
         Alignment::SelfStart => logical(
-            start(source_axis, own_rtl),
-            own_rtl,
+            own.axis_start(source_axis),
+            own,
             Alignment::SelfStart,
             Alignment::SelfEnd,
         ),
         Alignment::SelfEnd => logical(
-            opposite(start(source_axis, own_rtl)),
-            own_rtl,
+            opposite(own.axis_start(source_axis)),
+            own,
             Alignment::SelfStart,
             Alignment::SelfEnd,
         ),
         Alignment::Left | Alignment::Right => {
-            let side = if alignment == Alignment::Left {
+            let line_flow = Flow {
+                rtl: false,
+                ..containing
+            };
+            let left = if source_axis == HORIZONTAL {
                 LEFT
             } else {
-                RIGHT
+                line_flow.axis_start(source_axis)
             };
-            match moved(side) {
-                LEFT => Alignment::Left,
-                RIGHT => Alignment::Right,
-                TOP => Alignment::Start,
-                _ => Alignment::End,
+            let moved = tactic.side(if alignment == Alignment::Left {
+                left
+            } else {
+                opposite(left)
+            });
+            if inline {
+                let left = if target_axis == HORIZONTAL {
+                    LEFT
+                } else {
+                    line_flow.axis_start(target_axis)
+                };
+                if moved == left {
+                    Alignment::Left
+                } else {
+                    Alignment::Right
+                }
+            } else if moved == containing.axis_start(target_axis) {
+                Alignment::Start
+            } else {
+                Alignment::End
             }
         }
         other => other,
@@ -1400,30 +1539,20 @@ pub(crate) fn transformed_alignment(
 
 /// Applies a tactic's computed-value effects that a moved specified value cannot express:
 /// alignment keywords and the position area (§6.5.2).
-pub(crate) fn transform_computed(style: &mut Style, tactic: Tactic, containing_rtl: bool) {
+pub(crate) fn transform_computed(style: &mut Style, tactic: Tactic, containing: Flow) {
     if tactic == Tactic::IDENTITY {
         return;
     }
     let original = style.clone();
-    let own_rtl = style.rtl;
-    style.grid.justify_self = transformed_alignment(
-        style.grid.justify_self,
-        tactic,
-        true,
-        own_rtl,
-        containing_rtl,
-    );
-    style.flex.align_self = transformed_alignment(
-        style.flex.align_self,
-        tactic,
-        false,
-        own_rtl,
-        containing_rtl,
-    );
+    let own = Flow::used(style);
+    style.grid.justify_self =
+        transformed_alignment(style.grid.justify_self, tactic, true, own, containing);
+    style.flex.align_self =
+        transformed_alignment(style.flex.align_self, tactic, false, own, containing);
     style.anchor.area = style
         .anchor
         .area
-        .map(|area| area.transformed(tactic, own_rtl, containing_rtl));
+        .map(|area| area.transformed(tactic, own, containing));
     style.anchor.tactic = tactic;
     for property in style.anchor.protected.clone().iter() {
         crate::style::properties::copy(*property, style, &original);

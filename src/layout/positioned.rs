@@ -213,8 +213,10 @@ pub(super) fn place<'a>(
             if let Some(axis) = styles.anchor.order {
                 options.sort_by(|a, b| {
                     let extent = |style| {
-                        let rect = inset_modified(style, cb, rtl);
-                        if axis == crate::style::anchor_values::HORIZONTAL {
+                        let rect = inset_modified(style, cb);
+                        if axis.axis(block.layout_flow(), block.layout_flow())
+                            == crate::style::anchor_values::HORIZONTAL
+                        {
                             rect.width
                         } else {
                             rect.height
@@ -229,7 +231,7 @@ pub(super) fn place<'a>(
                 let mut border = measured.geometry.border_box(measured.height);
                 border.x += measured.offset[0];
                 border.y = top;
-                if !overflows(option, cb, rtl, border) {
+                if !overflows(option, cb, border) {
                     chosen = Some((measured, top));
                     break;
                 }
@@ -244,22 +246,22 @@ pub(super) fn place<'a>(
     placed
 }
 
-fn area(style: &Style, original: Rect, rtl: bool) -> Option<Rect> {
+fn area(style: &Style, original: Rect) -> Option<Rect> {
     let frame = style.anchor.frame.as_deref()?;
     let anchor = frame.anchor(&style.anchor.default_reference()?)?;
     let mut rect = style.anchor.area?.rect(
         [original.width, original.height],
         anchor.rect,
-        style.rtl,
-        rtl,
+        crate::style::logical::Flow::used(style),
+        frame.containing_flow,
     );
     rect.x += original.x;
     rect.y += original.y;
     Some(rect)
 }
 
-pub(super) fn inset_modified(style: &Style, original: Rect, rtl: bool) -> Rect {
-    let area = area(style, original, rtl).unwrap_or(original);
+pub(super) fn inset_modified(style: &Style, original: Rect) -> Rect {
+    let area = area(style, original).unwrap_or(original);
     let [top, right, bottom, left] = style
         .inset
         .each_ref()
@@ -275,8 +277,8 @@ pub(super) fn inset_modified(style: &Style, original: Rect, rtl: bool) -> Rect {
     }
 }
 
-pub(super) fn overflows(style: &Style, cb: Rect, rtl: bool, border: Rect) -> bool {
-    let bounds = inset_modified(style, cb, rtl);
+pub(super) fn overflows(style: &Style, cb: Rect, border: Rect) -> bool {
+    let bounds = inset_modified(style, cb);
     let margin = style
         .margin
         .each_ref()
@@ -309,7 +311,7 @@ fn solve<'a>(
         .as_deref()
         .and_then(|frame| frame.anchor(&style.anchor.default_reference()?))
         .map(|anchor| anchor.rect);
-    let area = area(style, original, rtl);
+    let area = area(style, original);
     let cb = area.unwrap_or(original);
     let static_position = StaticPosition {
         left: cb.x,
@@ -548,11 +550,18 @@ fn solve<'a>(
     let mut top = cb.y + placed.start;
     let mut border = measured.geometry.border_box(measured.height);
     border.y = top;
-    let defaults = style
-        .anchor
-        .area
-        .filter(|_| area.is_some())
-        .map(|area| area.alignment(style.rtl, rtl));
+    let defaults = style.anchor.area.filter(|_| area.is_some()).map(|area| {
+        area.alignment(
+            crate::style::logical::Flow::used(style),
+            style.anchor.frame.as_ref().map_or_else(
+                || crate::style::logical::Flow {
+                    rtl,
+                    ..Default::default()
+                },
+                |frame| frame.containing_flow,
+            ),
+        )
+    });
     for axis in [
         crate::style::anchor_values::HORIZONTAL,
         crate::style::anchor_values::VERTICAL,

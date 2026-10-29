@@ -92,6 +92,7 @@ pub(super) fn wrap<'a>(
     let (break_before, break_after) = breaks::boundaries(style, &items, edges);
     Ok(MeasuredBlock {
         frame_key: None,
+        frame_owner: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer

@@ -101,6 +101,7 @@ impl IntrinsicSizing {
     }
 }
 
+#[derive(Clone, Copy)]
 pub(crate) struct SizeConstraints {
     pub specified: Option<f32>,
     pub minimum: f32,

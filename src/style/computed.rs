@@ -880,7 +880,9 @@ impl Stylesheet {
             let frame = self
                 .anchor_frames
                 .frame(crate::style::anchor_values::key(element.id(), pseudo), page);
-            let containing_rtl = frame.is_some_and(|frame| frame.containing_rtl);
+            let containing = frame.map_or_else(crate::style::logical::Flow::default, |frame| {
+                frame.containing_flow
+            });
             for option in style.anchor.fallbacks.iter() {
                 let mut cascade = original.clone();
                 let (declarations, tactic) = match option {
@@ -908,7 +910,7 @@ impl Stylesheet {
                         } else {
                             Vec::new()
                         };
-                        (declarations, Tactic::of(tactic, containing_rtl))
+                        (declarations, Tactic::of(tactic, containing))
                     }
                 };
                 let declarations: Vec<_> = declarations
@@ -989,7 +991,7 @@ impl Stylesheet {
                 crate::style::anchor_values::transform_computed(
                     &mut option_style,
                     tactic,
-                    containing_rtl,
+                    containing,
                 );
                 option_style.anchor.option = options.len();
                 options.push(option_style);

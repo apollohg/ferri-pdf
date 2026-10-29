@@ -7,14 +7,22 @@ use std::{cell::RefCell, collections::HashMap, rc::Rc};
 type RawFrame<'a> = PaginationState<'a, 'a, ()>;
 
 #[derive(Clone, Hash, PartialEq, Eq)]
-pub(super) struct Key(Rc<crate::layout::measure::FrameKey>);
+pub(super) struct Key {
+    frame: Rc<crate::layout::measure::FrameKey>,
+    owner_geometry: Option<[u32; 4]>,
+}
 impl Key {
     pub(super) fn of(root: &Rc<MeasuredBlock<'_>>) -> Self {
-        Self(
-            root.frame_key
+        Self {
+            frame: root
+                .frame_key
                 .clone()
                 .expect("native frames retain their measurement key"),
-        )
+            owner_geometry: root.frame_owner.as_ref().map(|owner| {
+                let rect = owner.containing;
+                [rect.x, rect.y, rect.width, rect.height].map(f32::to_bits)
+            }),
+        }
     }
 }
 
@@ -70,13 +78,28 @@ fn render<'a>(
     root: &MeasuredBlock<'a>,
     templates: &Rc<RefCell<Templates<'a>>>,
 ) -> Result<RawOutcome<'a>, LayoutError> {
-    let previous = (measurer.raw_pagination, measurer.space);
+    let previous = (
+        measurer.raw_pagination,
+        measurer.space,
+        measurer.native_sizing.clone(),
+    );
     measurer.raw_pagination = true;
     measurer.space = root
         .frame_key
         .as_ref()
         .expect("native frames retain their measurement key")
         .native_space();
+    measurer.native_sizing = root
+        .frame_key
+        .as_ref()
+        .and_then(|key| key.native_sizing())
+        .map(|(vertical, scroll_container)| {
+            Rc::new(crate::layout::measure::NativeSizing {
+                source: std::ptr::from_ref(root.source),
+                vertical,
+                scroll_container,
+            })
+        });
     let result = (|| {
         let mut paginator = Paginator::for_frame(
             measurer,
@@ -88,13 +111,52 @@ fn render<'a>(
             },
         );
         paginator.template = true;
+        if let Some(owner) = &root.frame_owner {
+            paginator.containers[0].fixed = owner.source.style().contains_fixed();
+        }
         paginator.root_overflow = Some(Default::default());
         paginator.frame_templates = templates.clone();
         paginator.parent_3d = Some(paginator.effect_node(None, Effect::InheritedParent3d));
-        let mut root = root.clone();
-        root.independent = false;
-        paginator.pending.push(root.before.clone());
-        paginator.block(root, super::BreakTail::default())?;
+        let mut content = root.clone();
+        content.independent = false;
+        paginator.pending.push(content.before.clone());
+        paginator.block(content, super::BreakTail::default())?;
+        if let Some(owner) = &root.frame_owner {
+            loop {
+                let pending = std::mem::take(&mut paginator.containers[0].pending);
+                if pending.is_empty() {
+                    break;
+                }
+                for pending in pending {
+                    let rect = if let Some(grid) = &root.grid {
+                        let overflow = paginator
+                            .root_overflow
+                            .as_ref()
+                            .and_then(|overflow| overflow.get(&0))
+                            .copied();
+                        paginator.measurer.run(|measurer| {
+                            grid.area(
+                                owner.containing,
+                                owner.padding,
+                                overflow,
+                                &pending.block.style().grid.placement,
+                                measurer,
+                            )
+                        })?
+                    } else {
+                        owner.containing
+                    };
+                    paginator.place(
+                        pending,
+                        &super::Containing::Rect {
+                            rect,
+                            flow: crate::style::logical::Flow::used(owner.source.style()),
+                            clip: None,
+                        },
+                    )?;
+                }
+            }
+        }
         if !paginator.frame_requests.is_empty() {
             return Ok(RawOutcome::Needs(paginator.frame_requests));
         }
@@ -105,7 +167,11 @@ fn render<'a>(
         output.template = false;
         Ok(RawOutcome::Complete(Box::new(output)))
     })();
-    (measurer.raw_pagination, measurer.space) = previous;
+    (
+        measurer.raw_pagination,
+        measurer.space,
+        measurer.native_sizing,
+    ) = previous;
     result
 }
 
@@ -141,6 +207,7 @@ pub(super) fn payload_work(output: &RawFrame<'_>) -> usize {
         .chain(effects)
         .chain(lines)
         .chain(pending)
+        .chain([output.anchors.payload_work()])
         .fold(1, usize::saturating_add)
 }
 

@@ -688,6 +688,7 @@ mod tests {
             StyledDocument::parse(html, &ResourceBase::default(), &[], &resolver).unwrap();
         let text = TextContext::new(&document.styles().fonts, &resolver);
         let mut measurer = Measurer {
+            native_sizing: None,
             frame_measurements: Default::default(),
             raw_templates: Default::default(),
             raw_pagination: false,

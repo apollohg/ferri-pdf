@@ -229,7 +229,7 @@ fn layout_pass(
         canvas_rect,
     );
     let pagination::Paginated {
-        anchors,
+        mut anchors,
         mut pages,
         mut display_lists,
         mut links,
@@ -295,6 +295,7 @@ fn layout_pass(
         document.resolve_generated(pages.len(), &destination_pages, &mut |context, request| {
             strings.at_context(context, request)
         })?;
+    anchors.physical(flow, &page_boxes);
     Ok(LayoutPass {
         generated,
         container_sizes: measurer.container_sizes,

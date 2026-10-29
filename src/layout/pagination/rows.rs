@@ -667,7 +667,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                     } else {
                         natural
                     };
-                    cell.block.align_cell(rows.offsets[index]);
+                    cell.block.align_cell(rows.offsets[index], assigned);
                     cell.clipped_height = table
                         .flow
                         .plan

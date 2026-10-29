@@ -984,12 +984,21 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 self.foreground[page].push(paint);
             }
             let mut anchors = std::mem::take(&mut self.anchors);
-            anchors.adopt_column(&mut output.anchors, (column, page, slots), shift, |clip| {
-                clip.map(|clip| {
-                    self.effect(&output.clips, &output.sticky, clip, &place, &mut effects)
-                })
-                .or(self.clip)
-            });
+            anchors.adopt(
+                &mut output.anchors,
+                (column, page, slots),
+                |rect| Rect {
+                    x: rect.x + shift[0],
+                    y: rect.y + shift[1],
+                    ..rect
+                },
+                |clip| {
+                    clip.map(|clip| {
+                        self.effect(&output.clips, &output.sticky, clip, &place, &mut effects)
+                    })
+                    .or(self.clip)
+                },
+            );
             self.anchors = anchors;
             self.adopt_underlays(
                 &mut output.underlays,

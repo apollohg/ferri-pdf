@@ -31,12 +31,20 @@ layout_failure!(
 
 #[derive(Clone, Hash, PartialEq, Eq)]
 pub(in crate::layout) struct FrameKey {
+    native_sizing: Option<(crate::layout::geometry::VerticalKey, bool)>,
     metrics: MetricsKey,
     native_space: super::space::SpaceKey,
     style: usize,
     clearance: Vec<(usize, usize)>,
 }
 impl FrameKey {
+    pub(in crate::layout) fn native_sizing(
+        &self,
+    ) -> Option<(crate::layout::geometry::VerticalBox, bool)> {
+        self.native_sizing
+            .as_ref()
+            .map(|(vertical, scroll)| (vertical.vertical(), *scroll))
+    }
     pub(in crate::layout) fn native_space(&self) -> super::FlowSpace {
         self.native_space.space()
     }
@@ -54,6 +62,22 @@ impl FrameKey {
             .collect();
         clearance.sort_unstable();
         Self {
+            native_sizing: (block.layout_flow().writing_mode.vertical()
+                == block
+                    .flow()
+                    .expect("native keys have a source flow")
+                    .style()
+                    .used_writing_mode()
+                    .vertical())
+            .then(|| {
+                (
+                    crate::layout::geometry::VerticalBox::new(block.style(), geometry, containing)
+                        .with_used_height(height)
+                        .native_root()
+                        .key(),
+                    block.style().is_scroll_container(),
+                )
+            }),
             metrics: MetricsKey::new(measurer, block.block, geometry, height, containing),
             native_space: crate::layout::writing::native_space(
                 measurer.space,
@@ -71,6 +95,7 @@ impl FrameKey {
 
 #[derive(Clone)]
 struct Context {
+    native_sizing: Option<std::rc::Rc<super::NativeSizing>>,
     page_height: f32,
     grid_parent: Option<crate::layout::grid::ParentContext>,
     clearance: HashMap<*const BlockBox, usize>,
@@ -86,6 +111,7 @@ struct Context {
 impl Context {
     fn capture(measurer: &Measurer<'_>) -> Self {
         Self {
+            native_sizing: measurer.native_sizing.clone(),
             page_height: measurer.page_height,
             grid_parent: measurer.grid_parent.clone(),
             clearance: measurer.clearance_targets.clone(),
@@ -100,6 +126,7 @@ impl Context {
         }
     }
     fn restore(&self, measurer: &mut Measurer<'_>) {
+        measurer.native_sizing.clone_from(&self.native_sizing);
         measurer.page_height = self.page_height;
         measurer.grid_parent.clone_from(&self.grid_parent);
         measurer.clearance_targets.clone_from(&self.clearance);

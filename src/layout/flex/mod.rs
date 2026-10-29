@@ -149,8 +149,10 @@ pub(super) fn measure<'a>(
     let column = flex.direction.column();
     let main_reverse = flex.direction.reverse() ^ (!column && style.used_rtl());
     let cross_reverse = (column && style.used_rtl()) ^ (flex.wrap == FlexWrap::WrapReverse);
-    let vertical =
-        VerticalBox::new(style, geometry, containing_height).with_used_height(used_height);
+    let vertical = measurer.vertical_box(
+        block,
+        VerticalBox::new(style, geometry, containing_height).with_used_height(used_height),
+    );
     let content_height = vertical.definite();
     let main_size = if column {
         content_height
@@ -805,6 +807,7 @@ pub(super) fn measure<'a>(
     };
     Ok(MeasuredBlock {
         frame_key: None,
+        frame_owner: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer

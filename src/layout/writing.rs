@@ -433,6 +433,7 @@ pub(super) fn measure<'a>(
             measurer.page_height,
             measurer.orthogonal_columns,
             measurer.space,
+            measurer.native_sizing.clone(),
         );
         measurer.unbroken = true;
         measurer.column_flow = None;
@@ -443,6 +444,13 @@ pub(super) fn measure<'a>(
             containing_height.unwrap_or(measurer.page_height)
         };
         measurer.orthogonal_columns = automatic_columns;
+        measurer.native_sizing = (!perpendicular).then(|| {
+            std::rc::Rc::new(super::measure::NativeSizing {
+                source: std::ptr::from_ref(inner),
+                vertical: vertical.native_root(),
+                scroll_container: style.is_scroll_container(),
+            })
+        });
         let measured = measurer.measure_format(
             inner,
             inner_geometry,
@@ -450,12 +458,12 @@ pub(super) fn measure<'a>(
             if perpendicular {
                 Some(geometry.width)
             } else {
-                containing_height
+                vertical.definite()
             },
-            if perpendicular && matches!(style.width, crate::style::Size::Value(_)) {
-                Some(geometry.width)
+            if perpendicular {
+                matches!(style.width, crate::style::Size::Value(_)).then_some(geometry.width)
             } else {
-                None
+                vertical.definite()
             },
         );
         (
@@ -464,6 +472,7 @@ pub(super) fn measure<'a>(
             measurer.page_height,
             measurer.orthogonal_columns,
             measurer.space,
+            measurer.native_sizing,
         ) = saved;
         let measured = measured?;
         if let Some(columns) = automatic_columns {
@@ -542,14 +551,57 @@ pub(super) fn measure<'a>(
         measured.height
     };
     let height = vertical.used_height(top + content_height + bottom);
+    let used_content_height = (height - top - bottom).max(0.0);
+    if !perpendicular {
+        measured.constrained |= measured.height != used_content_height;
+        measured.height = used_content_height;
+        measured.overflow_height = measured.overflow_height.max(used_content_height);
+        if let Some(sizing) = &mut measured.sizing {
+            sizing.used_height = Some(used_content_height);
+        }
+    }
+    let mut physical_size = [geometry.width, used_content_height];
+    if block.layout_flow().writing_mode.vertical() {
+        physical_size.swap(0, 1);
+    }
+    if style.contains_absolute() || style.contains_fixed() {
+        let containing_height = if style.display == crate::style::Display::TableCell {
+            vertical.definite().unwrap_or(used_content_height)
+        } else {
+            used_content_height
+        };
+        let own = Flow::used(measured.style);
+        let size = physical_size;
+        let padding = Rect {
+            x: -geometry.padding[logical::LEFT],
+            y: -geometry.padding[logical::TOP],
+            width: geometry.width
+                + geometry.padding[logical::LEFT]
+                + geometry.padding[logical::RIGHT],
+            height: containing_height
+                + geometry.padding[logical::TOP]
+                + geometry.padding[logical::BOTTOM],
+        };
+        let matrix = compose(
+            Frame::physical(own, size).inverse().matrix,
+            Frame::physical(block.layout_flow(), size).matrix,
+        );
+        measured.frame_owner = Some(Box::new(super::measure::FrameOwner {
+            source: block,
+            containing: map_rect(matrix, padding),
+            padding: own.horizontal().sides(
+                own,
+                &block
+                    .layout_flow()
+                    .sides(block.layout_flow().horizontal(), &geometry.padding),
+            ),
+        }));
+    }
     let baselines = if perpendicular {
         [None; 2]
     } else {
         let own = Flow::used(measured.style);
-        let mut size = [measured.geometry.width, measured.height];
-        if own.writing_mode.vertical() {
-            size.swap(0, 1);
-        }
+        let size = physical_size;
         let matrix = compose(
             Frame::physical(block.layout_flow(), size).inverse().matrix,
             Frame::physical(own, size).matrix,
@@ -560,6 +612,7 @@ pub(super) fn measure<'a>(
     let edges = measurer.fragmentainer.edges(style);
     Ok(MeasuredBlock {
         frame_key: None,
+        frame_owner: None,
         grid: None,
         clearance_before: None,
         clearance_target: measurer
@@ -609,6 +662,57 @@ pub(super) fn measure<'a>(
         continues: false,
         spanner_fragment: None,
     })
+}
+
+pub(super) fn align_cell_frame(
+    block: &mut super::measure::MeasuredBlock<'_>,
+    offset: f32,
+    assigned_height: f32,
+) {
+    if block.source.flow().is_none() {
+        return;
+    }
+    let parent = block.source.layout_flow();
+    let geometry = &block.geometry;
+    let padding = Rect {
+        x: -geometry.padding[logical::LEFT],
+        y: -geometry.padding[logical::TOP] - offset,
+        width: geometry.width + geometry.padding[logical::LEFT] + geometry.padding[logical::RIGHT],
+        height: (assigned_height
+            - geometry.border[logical::TOP]
+            - geometry.border[logical::BOTTOM])
+            .max(0.0),
+    };
+    for item in &mut block.items {
+        if let super::measure::FlowItem::Frame { inner, area, .. } = item {
+            if inner.frame_owner.is_none() {
+                continue;
+            }
+            let own = Flow::used(inner.style);
+            let mut size = [area.width, area.height];
+            if parent.writing_mode.vertical() {
+                size.swap(0, 1);
+            }
+            let matrix = compose(
+                Frame::physical(own, size).inverse().matrix,
+                Frame::physical(parent, size).matrix,
+            );
+            let containing = map_rect(matrix, padding);
+            if inner
+                .frame_owner
+                .as_ref()
+                .is_some_and(|owner| owner.containing == containing)
+            {
+                continue;
+            }
+            let inner = std::rc::Rc::make_mut(inner);
+            inner
+                .frame_owner
+                .as_mut()
+                .expect("a native cell owner was retained")
+                .containing = containing;
+        }
+    }
 }
 
 #[cfg(test)]

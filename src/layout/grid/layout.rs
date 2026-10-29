@@ -32,15 +32,20 @@ pub(crate) fn measure<'a>(
             .grid_parent
             .as_ref()
             .is_some_and(|parent| parent.matches(block.block));
-    let heights =
-        super::sizing::constraints(style, ROWS, containing_height, top + bottom, inherited_rows);
+    let heights = measurer.native_vertical(block.block).map_or_else(
+        || super::sizing::constraints(style, ROWS, containing_height, top + bottom, inherited_rows),
+        VerticalBox::constraints,
+    );
     let row_bounds = SizeBounds {
         min: heights.minimum,
         max: heights.maximum,
     };
-    let vertical = VerticalBox::new(style, geometry, containing_height)
-        .with_constraints(heights)
-        .with_used_height(used_height);
+    let vertical = measurer.vertical_box(
+        block,
+        VerticalBox::new(style, geometry, containing_height)
+            .with_constraints(heights)
+            .with_used_height(used_height),
+    );
     let definite = vertical.definite();
     let plan = Plan::new(
         block,
@@ -482,6 +487,7 @@ pub(crate) fn measure<'a>(
     }));
     Ok(MeasuredBlock {
         frame_key: None,
+        frame_owner: None,
         grid,
         source: block.block,
         geometry: geometry.clone(),

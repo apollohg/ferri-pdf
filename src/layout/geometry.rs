@@ -181,6 +181,7 @@ pub(super) fn inline_horizontal(
     }
 }
 
+#[derive(Clone, Copy)]
 pub(super) struct VerticalBox {
     constraints: SizeConstraints,
     edges: f32,
@@ -194,7 +195,62 @@ pub(super) struct VerticalBox {
     /// Containment 2 §3.1, CSS Sizing 4 §5.2).
     contained: Option<f32>,
 }
+#[derive(Clone, Hash, PartialEq, Eq)]
+pub(super) struct VerticalKey {
+    specified: Option<u32>,
+    minimum: u32,
+    maximum: Option<u32>,
+    edges: u32,
+    table_cell: bool,
+    ratio_height: Option<(u32, bool)>,
+    content_minimum: bool,
+    contained: Option<u32>,
+}
+
+impl VerticalKey {
+    pub(super) fn vertical(&self) -> VerticalBox {
+        VerticalBox {
+            constraints: SizeConstraints {
+                specified: self.specified.map(f32::from_bits),
+                minimum: f32::from_bits(self.minimum),
+                maximum: self.maximum.map(f32::from_bits),
+            },
+            edges: f32::from_bits(self.edges),
+            table_cell: self.table_cell,
+            ratio_height: self
+                .ratio_height
+                .map(|(height, minimum)| (f32::from_bits(height), minimum)),
+            content_minimum: self.content_minimum,
+            contained: self.contained.map(f32::from_bits),
+        }
+    }
+}
+
 impl VerticalBox {
+    pub(super) fn native_root(mut self) -> Self {
+        self.edges = 0.0;
+        self
+    }
+
+    pub(super) fn constraints(self) -> SizeConstraints {
+        self.constraints
+    }
+
+    pub(super) fn key(self) -> VerticalKey {
+        VerticalKey {
+            specified: self.constraints.specified.map(f32::to_bits),
+            minimum: self.constraints.minimum.to_bits(),
+            maximum: self.constraints.maximum.map(f32::to_bits),
+            edges: self.edges.to_bits(),
+            table_cell: self.table_cell,
+            ratio_height: self
+                .ratio_height
+                .map(|(height, minimum)| (height.to_bits(), minimum)),
+            content_minimum: self.content_minimum,
+            contained: self.contained.map(f32::to_bits),
+        }
+    }
+
     pub(crate) fn new(
         style: &Style,
         horizontal: &HorizontalBox,

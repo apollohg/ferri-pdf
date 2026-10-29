@@ -381,6 +381,21 @@ impl Flow {
         }
     }
 
+    pub(crate) fn block_axis(self) -> usize {
+        self.dimension(Axis::Block)
+    }
+
+    pub(crate) fn axis_start(self, axis: usize) -> usize {
+        self.side(
+            if self.block_axis() == axis {
+                Axis::Block
+            } else {
+                Axis::Inline
+            },
+            Edge::Start,
+        )
+    }
+
     pub(crate) fn sides<T: Clone>(self, from: Self, values: &[T; 4]) -> [T; 4] {
         std::array::from_fn(|index| values[self.source(from, &SIDES, index)].clone())
     }
@@ -515,7 +530,10 @@ pub(crate) fn decoration<I: Clone>(
 /// `source` with its box properties arranged for `flow`: each physical property holds the
 /// value of the property corresponding to it in `source`'s own flow.
 pub(crate) fn reflowed(source: &Style, flow: Flow) -> Style {
-    let from = Flow::of(source);
+    reflowed_from(source, Flow::of(source), flow)
+}
+
+fn reflowed_from(source: &Style, from: Flow, flow: Flow) -> Style {
     let side = |index| flow.source(from, &SIDES, index);
     let dimension = |index| flow.source(from, &DIMENSIONS, index);
     let dimensions = |values: [&crate::style::Size; 2]| -> [crate::style::Size; 2] {
@@ -523,6 +541,19 @@ pub(crate) fn reflowed(source: &Style, flow: Flow) -> Style {
     };
     let mut style = source.clone();
     style.layout_writing_mode = from.writing_mode;
+    style.anchor.reflowed_geometry(from, flow);
+    style.anchor.pages = source
+        .anchor
+        .pages
+        .iter()
+        .map(|(page, style)| (*page, reflowed_from(style, from, flow)))
+        .collect();
+    style.anchor.options = source
+        .anchor
+        .options
+        .iter()
+        .map(|style| reflowed_from(style, from, flow))
+        .collect();
     style.margin = std::array::from_fn(|index| source.margin[side(index)].clone());
     style.padding = std::array::from_fn(|index| source.padding[side(index)].clone());
     style.inset = std::array::from_fn(|index| source.inset[side(index)].clone());

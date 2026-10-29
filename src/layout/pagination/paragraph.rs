@@ -810,6 +810,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                             run,
                             origin,
                             part.layer.clip,
+                            crate::layout::writing::Frame::for_style(style),
                         );
                     }
                     for decoration in &part.decorations {

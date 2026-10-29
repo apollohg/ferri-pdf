@@ -176,6 +176,7 @@ fn apply_value(
         );
     }
     let user_agent;
+    let inherited_parent;
     let input = match specified {
         Specified::Value(value) => Input::Value(value),
         Specified::Toggle(_) | Specified::FlowRelative(..) => {
@@ -188,7 +189,19 @@ fn apply_value(
             )));
         }
         Specified::Wide(keyword) => match keyword.resolve(property.inherited()) {
-            Resolved::Inherit => Input::Copy(parent),
+            Resolved::Inherit => {
+                if let Some(tactic) = relative
+                    .anchoring
+                    .as_ref()
+                    .map(|anchoring| anchoring.tactic)
+                    .filter(|tactic| tactic.source_property(property) != property)
+                {
+                    inherited_parent = tactic.inherited_basis(parent);
+                    Input::Copy(&inherited_parent)
+                } else {
+                    Input::Copy(parent)
+                }
+            }
             Resolved::Initial => {
                 if let Some(initial) = declaration::initial(property) {
                     Input::Value(initial)

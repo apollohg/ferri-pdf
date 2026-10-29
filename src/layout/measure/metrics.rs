@@ -68,6 +68,7 @@ struct OrthogonalColumnKey {
 
 #[derive(Clone, Hash, PartialEq, Eq)]
 pub(crate) struct MetricsKey {
+    native_sizing: Option<(crate::layout::geometry::VerticalKey, bool)>,
     block: usize,
     grid_parent: Option<crate::layout::grid::ParentContext>,
     x: u32,
@@ -99,6 +100,11 @@ impl MetricsKey {
         containing_height: Option<f32>,
     ) -> Self {
         Self {
+            native_sizing: measurer
+                .native_sizing
+                .as_ref()
+                .filter(|sizing| std::ptr::eq(sizing.source, block))
+                .map(|sizing| (sizing.vertical.key(), sizing.scroll_container)),
             space: measurer.space.key(),
             grid_parent: measurer
                 .grid_parent

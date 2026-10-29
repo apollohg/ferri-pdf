@@ -81,6 +81,7 @@ impl BlockSizing {
 #[derive(Clone)]
 pub(super) struct MeasuredBlock<'a> {
     pub(super) frame_key: Option<std::rc::Rc<FrameKey>>,
+    pub(super) frame_owner: Option<Box<FrameOwner<'a>>>,
     pub grid: Option<std::rc::Rc<crate::layout::grid::Geometry<'a>>>,
     pub source: &'a BlockBox,
     pub geometry: crate::layout::geometry::HorizontalBox,
@@ -117,7 +118,10 @@ pub(super) struct MeasuredBlock<'a> {
     pub spanner_fragment: Option<SpannerFragment>,
 }
 impl MeasuredBlock<'_> {
-    pub(crate) fn align_cell(&mut self, offset: f32) {
+    pub(crate) fn align_cell(&mut self, offset: f32, assigned_height: f32) {
+        if self.style.display == Display::TableCell {
+            crate::layout::writing::align_cell_frame(self, offset, assigned_height);
+        }
         if let Some(sizing) = &mut self.sizing {
             sizing.alignment = offset;
             (self.height, self.constrained) = sizing.resolve(
@@ -582,7 +586,21 @@ impl<'a> BlockSource<'a> {
 }
 
 #[derive(Clone)]
+pub(super) struct FrameOwner<'a> {
+    pub source: BlockSource<'a>,
+    pub containing: Rect,
+    pub padding: [f32; 4],
+}
+
+pub(super) struct NativeSizing {
+    pub source: *const BlockBox,
+    pub vertical: crate::layout::geometry::VerticalBox,
+    pub scroll_container: bool,
+}
+
+#[derive(Clone)]
 pub(super) struct Measurer<'a> {
+    pub(super) native_sizing: Option<std::rc::Rc<NativeSizing>>,
     pub(super) frame_measurements: std::rc::Rc<std::cell::RefCell<frames::Measurements<'a>>>,
     pub(super) raw_templates:
         std::rc::Rc<std::cell::RefCell<crate::layout::pagination::frames::Templates<'a>>>,
@@ -620,6 +638,7 @@ impl<'a> Measurer<'a> {
         work: crate::layout::work::Budget,
     ) -> Self {
         Measurer {
+            native_sizing: None,
             frame_measurements: Default::default(),
             raw_templates: Default::default(),
             raw_pagination: false,
@@ -641,6 +660,24 @@ impl<'a> Measurer<'a> {
             named_pages: true,
             container_sizes: Default::default(),
         }
+    }
+
+    pub(super) fn native_vertical(
+        &self,
+        block: &BlockBox,
+    ) -> Option<crate::layout::geometry::VerticalBox> {
+        self.native_sizing
+            .as_ref()
+            .filter(|sizing| std::ptr::eq(sizing.source, block))
+            .map(|sizing| sizing.vertical)
+    }
+
+    pub(super) fn vertical_box(
+        &self,
+        block: BlockSource<'_>,
+        vertical: crate::layout::geometry::VerticalBox,
+    ) -> crate::layout::geometry::VerticalBox {
+        self.native_vertical(block.block).unwrap_or(vertical)
     }
 
     pub(super) fn with_space<T>(
@@ -1049,9 +1086,11 @@ impl<'a> Measurer<'a> {
             {
                 self.space.indefinite_inline = false;
             }
-            self.space = self
-                .space
-                .enter(block, &geometry, containing_height, used_height);
+            if self.native_vertical(block.block).is_none() {
+                self.space = self
+                    .space
+                    .enter(block, &geometry, containing_height, used_height);
+            }
             let index = self.sources.block(block.block);
             if !geometry.width.is_finite()
                 || !geometry.x.is_finite()
@@ -1104,9 +1143,11 @@ impl<'a> Measurer<'a> {
                 )
                 .map(FlowStart::Complete);
             }
-            let vertical =
+            let vertical = self.vertical_box(
+                block,
                 crate::layout::geometry::VerticalBox::new(style, &geometry, containing_height)
-                    .with_used_height(used_height);
+                    .with_used_height(used_height),
+            );
             let marker = if let Some(paragraph) = block.marker() {
                 let index = self.sources.paragraph(paragraph);
                 Some(Box::new(crate::layout::markers::measure(
@@ -1558,6 +1599,10 @@ enum FlowFinished<'a> {
     },
 }
 
+#[expect(
+    clippy::large_enum_variant,
+    reason = "measurement results and continuations stay inline to avoid an allocation per probe"
+)]
 enum FlowStart<'a> {
     Complete(MeasuredBlock<'a>),
     Pending(FlowFrame<'a>),
@@ -1746,7 +1791,15 @@ impl<'a> FlowFrame<'a> {
             return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
         }
         let constrained = height != natural_height || vertical.definite().is_some();
-        let alignment = content_alignment(style, height - natural_height);
+        let scroll_container = measurer
+            .native_sizing
+            .as_ref()
+            .filter(|sizing| std::ptr::eq(sizing.source, block.block))
+            .map_or_else(
+                || style.is_scroll_container(),
+                |sizing| sizing.scroll_container,
+            );
+        let alignment = content_alignment(style, height - natural_height, scroll_container);
         if alignment != 0.0 {
             items.insert(1, FlowItem::Space(alignment));
             natural_height += alignment;
@@ -1773,6 +1826,7 @@ impl<'a> FlowFrame<'a> {
         }
         let measured = MeasuredBlock {
         frame_key: None,
+        frame_owner: None,
             grid: None,
             source: block.block,
             geometry: geometry.clone(),
@@ -1884,7 +1938,7 @@ fn place_legend(
 /// CSS Box Alignment 3 §5.4: the block-axis offset of a block container's content within
 /// `free` space. Without an explicit `unsafe`, overflowing content stays at the start edge
 /// of a scroll container, and distributed alignment falls back to safe centring.
-fn content_alignment(style: &Style, free: f32) -> f32 {
+fn content_alignment(style: &Style, free: f32, scroll_container: bool) -> f32 {
     use crate::style::Alignment;
     let (factor, safe) = match style.flex.align_content {
         Alignment::Center => (0.5, false),
@@ -1892,7 +1946,7 @@ fn content_alignment(style: &Style, free: f32) -> f32 {
         Alignment::SpaceAround | Alignment::SpaceEvenly => (0.5, true),
         _ => return 0.0,
     };
-    let safe = !style.flex.align_content_unsafe && (safe || style.is_scroll_container());
+    let safe = !style.flex.align_content_unsafe && (safe || scroll_container);
     if free < 0.0 && safe {
         return 0.0;
     }

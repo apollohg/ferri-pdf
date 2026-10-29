@@ -5,7 +5,7 @@ use std::collections::HashMap;
 
 #[derive(Clone, Copy)]
 pub(super) struct NativeSpace {
-    frame: crate::layout::writing::Frame,
+    pub(super) frame: crate::layout::writing::Frame,
     placement: [f32; 6],
 }
 
@@ -19,8 +19,14 @@ impl NativeSpace {
             ..self
         }
     }
+    pub(super) fn point(self, point: crate::graphics::Point) -> crate::graphics::Point {
+        crate::layout::writing::map_point(self.matrix(), point)
+    }
     pub(super) fn rect(self, rect: Rect) -> Rect {
         crate::layout::writing::map_rect(self.matrix(), rect)
+    }
+    pub(super) fn box_ink(self, paint: &crate::graphics::BoxPaint) -> Rect {
+        self.rect(crate::layout::anchors::box_ink_in_frame(paint, self.frame))
     }
     pub(super) fn region(self, region: super::Region) -> super::Region {
         use crate::layout::writing::{compose, map_clip};
@@ -139,14 +145,8 @@ impl<'a> Paginator<'a, '_, 'a> {
             .last()
             .and_then(|active| active.geometry.as_ref())
             .map_or(own, |active| active.source.layout_flow());
-        let logical_area = Rect {
-            x: 0.0,
-            y: 0.0,
-            width: inner.geometry.width,
-            height: inner.height,
-        };
-        let mut size = [logical_area.width, logical_area.height];
-        if own.writing_mode.vertical() {
+        let mut size = [area.width, area.height];
+        if parent.writing_mode.vertical() {
             size.swap(0, 1);
         }
         let mut matrix = Frame::physical(parent, size).inverse().matrix;
@@ -201,6 +201,19 @@ impl<'a> Paginator<'a, '_, 'a> {
             let paint = self.adopt(paint, &output.clips, &output.sticky, &place, &mut effects);
             self.foreground[self.page].push(paint);
         }
+        let mut anchors = std::mem::take(&mut self.anchors);
+        anchors.adopt(
+            &mut output.anchors,
+            (0, self.page, place.slots),
+            |rect| space.rect(rect),
+            |clip| {
+                clip.map(|clip| {
+                    self.effect(&output.clips, &output.sticky, clip, &place, &mut effects)
+                })
+                .or(self.clip)
+            },
+        );
+        self.anchors = anchors;
         self.adopt_underlays(
             &mut output.underlays,
             &output.clips,

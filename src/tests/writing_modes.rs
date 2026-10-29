@@ -270,3 +270,49 @@ fn implicit_columns_preserve_the_existing_unsupported_fragment_combinations() {
         );
     }
 }
+
+#[test]
+fn combined_emphasis_uses_one_object_replacement_character_for_skip_rules() {
+    for mode in ["vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"] {
+        for text in ["12", "ＡＡ"] {
+            let body = format!("<p>{text}</p>");
+            let plain = render(mode, "text-combine-upright:all", &body);
+            let plain = &plain.pages[0][0];
+            for (skip, expected) in [("spaces punctuation", 1), ("symbols", 0), ("narrow", 0)] {
+                let trace = render(
+                    mode,
+                    &format!(
+                        "text-combine-upright:all;text-emphasis:dot;text-emphasis-skip:{skip}"
+                    ),
+                    &body,
+                );
+                let line = &trace.pages[0][0];
+                assert!(
+                    line.runs.iter().any(|run| run.combined),
+                    "{mode}/{text}: fixture must combine its characters"
+                );
+                let marks: usize = line
+                    .runs
+                    .iter()
+                    .map(|run| run.marks.len() + run.mark_shapes.len())
+                    .sum();
+                assert_eq!(
+                    marks, expected,
+                    "{mode}/{text}/{skip}: one combined unit represents U+FFFC for emphasis eligibility"
+                );
+                assert!(
+                    (line.width - plain.width).abs() <= TOLERANCE,
+                    "{mode}/{text}/{skip}: emphasis leaves base advances unchanged"
+                );
+                if expected == 0 {
+                    assert!(
+                        (line.height - plain.height).abs() <= TOLERANCE,
+                        "{mode}/{text}/{skip}: skipped marks must not grow line leading: {} vs {}",
+                        line.height,
+                        plain.height
+                    );
+                }
+            }
+        }
+    }
+}
