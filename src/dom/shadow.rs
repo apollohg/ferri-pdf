@@ -60,6 +60,9 @@ pub(crate) struct ShadowState {
     pub fallback_slots: HashMap<NodeId, NodeId>,
     pub populated_slots: HashSet<NodeId>,
     pub exports: HashMap<NodeId, HashMap<String, Vec<String>>>,
+    /// Use-element shadow trees by fragment, with the tree scope root whose style sheets apply
+    /// in them: that of the referenced element (SVG 2 §5.5.3).
+    pub instance_sources: HashMap<NodeId, NodeId>,
     fragments: Vec<NodeId>,
 }
 impl ShadowState {

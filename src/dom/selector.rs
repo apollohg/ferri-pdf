@@ -59,9 +59,9 @@ impl TreeContext {
     }
     fn contains(self, element: Element<'_>) -> bool {
         match self {
-            Self::Document => element.is_in_document_tree(),
+            Self::Document => element.styled_by_document(),
             Self::Root(root) => {
-                element.tree_scope() == root
+                element.stylesheet_scope() == root
                     || self
                         .host(element)
                         .is_some_and(|host| host.id() == element.id())
@@ -350,8 +350,8 @@ impl Selector {
         let host = tree_context.host(element);
         let is_host = host.is_some_and(|host| host.id() == element.id());
         let visible = match tree_context {
-            TreeContext::Document => element.is_in_document_tree(),
-            TreeContext::Root(root) => element.tree_scope() == root || is_host,
+            TreeContext::Document => element.styled_by_document(),
+            TreeContext::Root(root) => element.stylesheet_scope() == root || is_host,
             TreeContext::All => true,
         };
         if !visible

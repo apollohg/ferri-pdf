@@ -114,7 +114,9 @@ impl DocumentTree {
         }
         tokenizer.end();
         let (html, shadow) = tokenizer.sink.0.sink.finish()?;
-        Ok(ControlFlow::Continue(Self::from_parsed(html, shadow)))
+        let mut tree = Self::from_parsed(html, shadow);
+        tree.attach_use_instances()?;
+        Ok(ControlFlow::Continue(tree))
     }
 }
 

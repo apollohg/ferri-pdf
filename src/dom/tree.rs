@@ -9,6 +9,7 @@ use std::{
     sync::atomic::{AtomicU64, Ordering},
 };
 
+mod instances;
 mod xml;
 pub(crate) use xml::XmlTree;
 
@@ -54,6 +55,8 @@ pub(crate) struct DocumentTree {
     /// fallback content (HTML §4.8.7).
     embedding_objects: HashSet<NodeId>,
     sibling_positions: RefCell<HashMap<(NodeId, TreeRelation), (usize, usize)>>,
+    /// Nodes cloned into use-element shadow trees so far.
+    instance_nodes: usize,
 }
 
 impl DocumentTree {
@@ -80,6 +83,7 @@ impl DocumentTree {
             initial_states: HashMap::new(),
             embedding_objects: HashSet::new(),
             sibling_positions: RefCell::default(),
+            instance_nodes: 0,
         };
         let connected = if tree.shadow.roots.is_empty() {
             Vec::new()
@@ -262,6 +266,23 @@ impl<'a> Element<'a> {
                 .copied()
                 .unwrap_or(self.tree.html.tree.root().id()),
         }
+    }
+    /// The tree scope whose style sheets style the element: in a use-element shadow tree, that
+    /// of the referenced element (SVG 2 §5.5.3); elsewhere its own.
+    pub(crate) fn stylesheet_scope(self) -> TreeScopeId {
+        let scope = self.tree_scope();
+        self.tree
+            .shadow
+            .instance_sources
+            .get(&scope.root)
+            .map_or(scope, |&root| TreeScopeId {
+                document: scope.document,
+                root,
+            })
+    }
+    /// The document's own style sheets style the element.
+    pub(crate) fn styled_by_document(self) -> bool {
+        self.stylesheet_scope().root == self.tree.html.tree.root().id()
     }
     pub(crate) fn shadow_root(self) -> Option<Node<'a>> {
         let root = self.tree.shadow.roots.get(&self.raw.id())?;

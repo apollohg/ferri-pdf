@@ -28,7 +28,9 @@ pub(super) fn discover(
         let style = element.name() == "style"
             && matches!(element.namespace(), HTML_NAMESPACE | SVG_NAMESPACE);
         let link = element.name() == "link" && element.namespace() == HTML_NAMESPACE;
-        if !style && !link {
+        // SVG 2 §5.5.3: a style element cloned into a use-element shadow tree is the
+        // original's style sheet, not another.
+        if (!style && !link) || element.stylesheet_scope() != element.tree_scope() {
             continue;
         }
         if style && element.namespace() == HTML_NAMESPACE {

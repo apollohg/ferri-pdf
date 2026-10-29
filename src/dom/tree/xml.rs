@@ -1,5 +1,5 @@
 use super::{DocumentTree, Element, ElementId, TreeScopeId};
-use crate::dom::{DomError, NodeData, Selector, SelectorScope, TreeContext, shadow::ShadowRoot};
+use crate::dom::{DomError, NodeData, Selector, SelectorScope, TreeContext};
 use html5ever::{Attribute, QualName};
 use roxmltree::{Document, Node, NodeType};
 use scraper::{Html, node};
@@ -9,7 +9,6 @@ use std::{cell::RefCell, collections::HashMap};
 const XMLNS_NAMESPACE: &str = "http://www.w3.org/2000/xmlns/";
 const XMLNS_PREFIX: &str = "xmlns";
 const XML_PREFIX: &str = "xml";
-const XML_INSTANCE_NODES: &str = "XML instance nodes";
 
 /// Original XML nodes viewed through the shared static selector engine.
 pub(crate) struct XmlTree<'doc, 'input> {
@@ -17,7 +16,6 @@ pub(crate) struct XmlTree<'doc, 'input> {
     tree: DocumentTree,
     nodes: Vec<Option<ego_tree::NodeId>>,
     instances: HashMap<TreeScopeId, HashMap<roxmltree::NodeId, ego_tree::NodeId>>,
-    instance_nodes: usize,
     caches: RefCell<SelectorCaches>,
 }
 
@@ -90,7 +88,6 @@ impl<'doc, 'input> XmlTree<'doc, 'input> {
             tree: DocumentTree::from_parsed_with_mode(html, Default::default(), false),
             nodes,
             instances: HashMap::new(),
-            instance_nodes: 0,
             caches: RefCell::new(SelectorCaches::default()),
         }
     }
@@ -146,66 +143,29 @@ impl<'doc, 'input> XmlTree<'doc, 'input> {
         host: ElementId,
         node_limit: usize,
     ) -> Result<Option<TreeScopeId>, DomError> {
-        if !std::ptr::eq(self.source, source.document()) || !source.is_element() {
+        if !std::ptr::eq(self.source, source.document())
+            || !source.is_element()
+            || self.tree.element(host).is_none()
+        {
             return Ok(None);
         }
-        let Some(host_element) = self.tree.element(host) else {
-            return Ok(None);
-        };
-        if host_element.shadow_root().is_some() {
-            return Ok(None);
-        }
-        let depth = host_element.shadow_host().map_or(1, |parent| {
-            self.tree.shadow.roots[&parent.raw.id()].depth + 1
-        });
-        let available = node_limit.saturating_sub(self.instance_nodes);
-        let count = source
-            .descendants()
-            .take(available.saturating_add(1))
-            .count();
-        if count > available {
-            return Err(DomError::TreeLimit {
-                resource: XML_INSTANCE_NODES,
-                limit: node_limit,
-            });
-        }
+        let original = self.nodes[source.id().get_usize()].expect("original XML node");
         // Ego-tree can relocate node storage; selector caches contain opaque pointers.
         *self.caches.get_mut() = SelectorCaches::default();
-        self.tree.sibling_positions.get_mut().clear();
-        let fragment = self.tree.html.tree.orphan(NodeData::Fragment).id();
-        let mut nodes = HashMap::with_capacity(count);
-        for node in source.descendants() {
-            let parent = if node == source {
-                fragment
-            } else {
-                nodes[&node.parent().expect("XML child has a parent").id()]
-            };
-            let original = self.nodes[node.id().get_usize()].expect("original XML node");
-            let data = self.tree.html.tree.get(original).unwrap().value().clone();
-            let cloned = self
-                .tree
-                .html
-                .tree
-                .get_mut(parent)
-                .unwrap()
-                .append(data)
-                .id();
-            self.tree.shadow.scopes.insert(cloned, fragment);
-            nodes.insert(node.id(), cloned);
-        }
-        self.tree
-            .shadow
-            .roots
-            .insert(host.node, ShadowRoot { fragment, depth });
-        self.tree.shadow.hosts.insert(fragment, host.node);
-        self.tree.shadow.order_contexts([fragment]);
-        let scope = TreeScopeId {
-            document: self.tree.identity,
-            root: fragment,
+        let Some((scope, clones)) = self
+            .tree
+            .attach_instance(original, host.node, None, node_limit)?
+        else {
+            return Ok(None);
         };
-        self.tree.cache_initial_states(nodes.values().copied());
+        let nodes = source
+            .descendants()
+            .map(|node| {
+                let original = self.nodes[node.id().get_usize()].expect("original XML node");
+                (node.id(), clones[&original])
+            })
+            .collect();
         self.instances.insert(scope, nodes);
-        self.instance_nodes += count;
         Ok(Some(scope))
     }
 }

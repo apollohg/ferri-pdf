@@ -137,8 +137,8 @@ impl<'a> ScopeCache<'a> {
                             return vec![element];
                         }
                         let visible = match scope.tree_context {
-                            TreeContext::Document => element.is_in_document_tree(),
-                            TreeContext::Root(root) => element.tree_scope() == root,
+                            TreeContext::Document => element.styled_by_document(),
+                            TreeContext::Root(root) => element.stylesheet_scope() == root,
                             TreeContext::All => true,
                         };
                         if !visible {

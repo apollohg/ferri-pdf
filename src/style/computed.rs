@@ -871,8 +871,16 @@ impl Stylesheet {
         let mut order = 0;
         let mut scopes = crate::style::scope::ScopeCache::new(element);
         let mut containers = std::collections::HashMap::new();
+        // SVG 2 §5.5.3: a use-element shadow tree's style sheets are its referenced element's,
+        // in the shadow tree's own context.
+        let instance = element.stylesheet_scope() != element.tree_scope();
         for &index in &self.rule_indices[crate::style::selector::target_index(pseudo)] {
             let rule = &self.rules[index];
+            let encapsulation_order = if instance {
+                element.encapsulation_order()
+            } else {
+                rule.encapsulation_order
+            };
             if let Some(container) = rule.container
                 && !self.container_rule_matches(container, ancestors, resolver, &mut containers)?
             {
@@ -909,7 +917,7 @@ impl Stylesheet {
                         &mut winners,
                         declaration,
                         DeclarationContext {
-                            encapsulation_order: rule.encapsulation_order,
+                            encapsulation_order,
                             origin: declaration.origin,
                             attached: false,
                             layer: declaration.layer,
