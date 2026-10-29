@@ -9,7 +9,7 @@ pub(super) struct Shape {
     pub width: f32,
     pub ascent: f32,
     pub descent: f32,
-    pub italic: f32,
+    pub italic: Option<f32>,
 }
 fn positioned(glyph: GlyphId, width: f32) -> PositionedGlyph {
     PositionedGlyph {
@@ -37,7 +37,7 @@ fn single(face: &Face<'_>, glyph: GlyphId) -> Option<Shape> {
             .and_then(|table| table.glyph_info)
             .and_then(|info| info.italic_corrections)
             .and_then(|values| values.get(glyph))
-            .map_or(0.0, |value| f32::from(value.value) / em),
+            .map(|value| f32::from(value.value) / em),
     })
 }
 pub(super) fn shape(
@@ -203,6 +203,6 @@ fn assemble(
         width: width / em,
         ascent: ascent / em,
         descent: descent / em,
-        italic: f32::from(assembly.italics_correction.value) / em,
+        italic: Some(f32::from(assembly.italics_correction.value) / em),
     }))
 }

@@ -1,0 +1,10 @@
+{
+  "derived_from": "https://raw.githubusercontent.com/stipub/stixfonts/v2.13b171/fonts/static_otf/STIXTwoMath-Regular.otf",
+  "source_sha256": "3a5f3f26f40d5698b3c62dd085d48d6663696a3f80825aab8b553d5097518e8c",
+  "license": "MathMetrics-LICENSE.txt",
+  "tool": "fontTools 4.63.0",
+  "generator": "make-math-metrics-font.py",
+  "changes": "Subset Unicode coverage and rename family. Original outlines and MATH metrics are retained.",
+  "sha256": "228087ca151d664f809d3d915fc1389913c020fbb8c7b769dd5de31684b31412",
+  "bytes": 28908
+}

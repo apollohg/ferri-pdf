@@ -4,8 +4,9 @@ use crate::{DisplayItem, render_html};
 fn math(body: &str) -> std::sync::Arc<crate::layout::ViewportPaint> {
     let font =
         std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/fonts/MathTest.ttf");
+    let metrics_font = font.with_file_name("MathMetrics.otf");
     let output = render_html(
-        &format!("<style>@font-face{{font-family:MathTest;src:url('{}')}}math{{font-family:DejaVu Serif;font-size:20pt}}</style>{body}", font.display()),
+        &format!("<style>@font-face{{font-family:MathTest;src:url('{}')}}@font-face{{font-family:MathMetrics;src:url('{}')}}math{{font-family:DejaVu Serif;font-size:20pt}}</style>{body}", font.display(), metrics_font.display()),
         &local_options(),
     )
     .unwrap_or_else(|error| panic!("MathML fixture must render: {error}\n{body}"));
@@ -515,5 +516,106 @@ fn hidden_semantic_annotations_do_not_activate_unsupported_style_or_font_work() 
             .collect::<Vec<_>>(),
         ["1", "2"],
         "Core UA display:none annotations and alternative actions must take the renderer's normal hidden-box path"
+    );
+}
+
+#[test]
+fn specified_math_width_does_not_scale_its_height_like_a_replaced_image() {
+    let rectangle = |declaration: &str| {
+        let output = render_html(&format!("<style>math{{font-family:DejaVu Serif;font-size:20pt;background:#010203;{declaration}}}</style><math><mn>8</mn></math>"), &local_options()).expect("sized math box must render");
+        output
+            .layout
+            .unwrap()
+            .display_lists
+            .into_iter()
+            .flatten()
+            .find_map(|item| match item {
+                DisplayItem::Box(paint) if paint.decoration.background.rgb == [1, 2, 3] => {
+                    Some(paint.rect)
+                }
+                _ => None,
+            })
+            .expect("math background exposes its used content dimensions")
+    };
+    let natural = rectangle("");
+    let sized = rectangle("width:100pt");
+    assert_eq!(
+        sized.width, 100.0,
+        "author width sizes the math content box"
+    );
+    assert_eq!(
+        sized.height, natural.height,
+        "Core §3.1.2 changes the requested axis independently; native math text and baseline must not inherit a replaced-image aspect ratio"
+    );
+}
+
+#[test]
+fn anonymous_math_text_preserves_nonbreaking_space_without_treating_it_as_indentation() {
+    let ordinary = math("<math>  <mn>1</mn></math>");
+    let nonbreaking = math("<math>&nbsp;<mn>1</mn></math>");
+    let position = |view: &crate::layout::ViewportPaint| {
+        view.lines.iter().find(|line| line.text == "1").unwrap().x
+    };
+    assert!(
+        position(&nonbreaking) > position(&ordinary),
+        "U+00A0 is a retained text advance; CSS indentation whitespace and Unicode whitespace are not interchangeable"
+    );
+}
+
+#[test]
+fn math_edges_extend_present_italic_corrections_in_each_inline_direction() {
+    const EDGE_WIDTH: f32 = 15.0;
+    for direction in ["ltr", "rtl"] {
+        let side = if direction == "ltr" { "right" } else { "left" };
+        for (token, expected) in [("<mi>f</mi>", 2.0 * EDGE_WIDTH), ("<mn>1</mn>", EDGE_WIDTH)] {
+            let expression = |edge: bool| {
+                let token = if edge {
+                    token.replacen(
+                        '>',
+                        &format!(
+                            " style='padding-{side}:7pt;border-{side}:3pt solid;margin-{side}:5pt'>"
+                        ),
+                        1,
+                    )
+                } else {
+                    token.to_owned()
+                };
+                math(&format!(
+                    "<math dir='{direction}' style='font-family:MathMetrics'><msup>{token}<mn>2</mn></msup></math>"
+                ))
+            };
+            let plain = expression(false);
+            let edged = expression(true);
+            let offset = |view: &crate::layout::ViewportPaint| {
+                let sup = view.lines.iter().find(|line| line.text == "2").unwrap();
+                if direction == "ltr" {
+                    sup.x
+                } else {
+                    view.area.width - sup.x - sup.width
+                }
+            };
+            let delta = offset(&edged) - offset(&plain);
+            assert!(
+                (delta - expected).abs() < 0.01,
+                "{direction} {token}: superscript offset must include the margin-box width and extend only an existing italic correction; expected {expected}, got {delta}"
+            );
+        }
+    }
+}
+
+#[test]
+fn overscript_top_accent_attachment_uses_logical_inline_start_edges() {
+    let expression = |direction: &str, side: &str| {
+        math(&format!(
+            "<math dir='{direction}' style='font-family:MathMetrics'><mover><mspace width='10pt'/><mn style='padding-{side}:20pt'>1</mn></mover></math>"
+        ))
+    };
+    let ltr = expression("ltr", "left");
+    let rtl = expression("rtl", "right");
+    assert!(
+        (ltr.area.width - rtl.area.width).abs() < 0.01,
+        "mirrored overscripts must preserve width when their MATH top accent attachment is increased by inline-start padding: LTR {}, RTL {}",
+        ltr.area.width,
+        rtl.area.width
     );
 }

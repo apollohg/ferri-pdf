@@ -255,7 +255,11 @@ pub(super) fn measure<'a>(
         block.image().unwrap().as_ref(),
         crate::images::Image::Widget(_)
     );
-    let [paint_width, paint_height] = if widget || image.natural_size() == Default::default() {
+    let math =
+        matches!(image.as_ref(), crate::images::Image::Viewport(view) if view.baseline.is_some());
+    let [paint_width, paint_height] = if math {
+        density_corrected(block.block, width)
+    } else if widget || image.natural_size() == Default::default() {
         [width, height]
     } else {
         style
@@ -280,13 +284,24 @@ pub(super) fn measure<'a>(
         )
     };
     // Images 3 §4.5 clips every fitted object to the content edge.
-    let clip = Some(border_box.inner_clip(geometry.padding, [true; 2]));
+    // Core §3.1.2 gives native math ordinary CSS content sizing and overflow.
+    let clip = (!math).then(|| border_box.inner_clip(geometry.padding, [true; 2]));
     let paint = ImagePaint {
         image,
         clip,
         rect: Rect {
-            x: bounds.x + style.object_position[0].resolve(width - paint_width),
-            y: top + style.object_position[1].resolve(height - paint_height),
+            x: bounds.x
+                + if math {
+                    0.0
+                } else {
+                    style.object_position[0].resolve(width - paint_width)
+                },
+            y: top
+                + if math {
+                    0.0
+                } else {
+                    style.object_position[1].resolve(height - paint_height)
+                },
             width: paint_width,
             height: paint_height,
         },

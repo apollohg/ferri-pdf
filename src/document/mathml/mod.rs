@@ -29,7 +29,7 @@ struct MathBox {
     descent: f32,
     ink_ascent: f32,
     ink_descent: f32,
-    italic: f32,
+    italic: Option<f32>,
     accent: Option<f32>,
     operator: Option<Operator>,
     space_like: bool,
@@ -218,7 +218,7 @@ impl Builder<'_> {
                 .and_then(|table| table.glyph_info)
                 .and_then(|info| info.italic_corrections)
                 .and_then(|values| values.get(ttf_parser::GlyphId(glyph.id as u16)))
-                .map_or(0.0, |value| {
+                .map(|value| {
                     f32::from(value.value) * run.font_size / f32::from(face.units_per_em())
                 });
             result.accent = face
@@ -256,7 +256,7 @@ impl Builder<'_> {
         let mut children = Vec::new();
         for node in element.as_node().children(TreeRelation::Formatting) {
             let child = match node.value() {
-                NodeData::Text(text) if !text.trim().is_empty() => {
+                NodeData::Text(text) if !text.chars().all(crate::document::is_css_whitespace) => {
                     let mut child = self.token(text, style)?;
                     child.space_like = true;
                     child
@@ -341,7 +341,8 @@ impl Builder<'_> {
         let mut width = 0.0;
         let mut previous_italic = 0.0;
         for (_, child) in &children {
-            let slanted = child.operator.is_none() && child.italic != 0.0;
+            let slanted =
+                child.operator.is_none() && child.italic.is_some_and(|value| value != 0.0);
             if !slanted {
                 width += previous_italic;
             }
@@ -350,7 +351,11 @@ impl Builder<'_> {
             }
             positions.push(width);
             width += child.width;
-            previous_italic = if slanted { child.italic } else { 0.0 };
+            previous_italic = if slanted {
+                child.italic.unwrap_or(0.0)
+            } else {
+                0.0
+            };
             if add_space && let Some(operator) = &child.operator {
                 width += operator.space[1];
             }
@@ -382,7 +387,7 @@ impl Builder<'_> {
             descent,
             ink_ascent,
             ink_descent,
-            italic: previous_italic,
+            italic: Some(previous_italic),
             space_like: significant.is_empty(),
             operator: embellished
                 .then(|| children[significant[0]].1.operator.clone())
@@ -610,7 +615,7 @@ impl Builder<'_> {
         normal.descent = shape.descent * size;
         normal.ink_ascent = normal.ascent;
         normal.ink_descent = normal.descent;
-        normal.italic = shape.italic * size;
+        normal.italic = shape.italic.map(|value| value * size);
         if !style.visibility.is_visible() {
             normal.paint.clear();
         }
@@ -967,8 +972,16 @@ impl Builder<'_> {
             .operator
             .as_ref()
             .is_some_and(|operator| operator.large);
-        let italic = if large { 0.0 } else { base.italic };
-        let sub_x = x - if large { base.italic } else { 0.0 };
+        let italic = if large {
+            0.0
+        } else {
+            base.italic.unwrap_or(0.0)
+        };
+        let sub_x = x - if large {
+            base.italic.unwrap_or(0.0)
+        } else {
+            0.0
+        };
         let width = base
             .width
             .max(sub.as_ref().map_or(0.0, |sub| sub_x + sub.width))
@@ -1075,8 +1088,16 @@ impl Builder<'_> {
             .operator
             .as_ref()
             .is_some_and(|operator| operator.large);
-        let sub_italic = if large { base.italic } else { 0.0 };
-        let sup_italic = if large { 0.0 } else { base.italic };
+        let sub_italic = if large {
+            base.italic.unwrap_or(0.0)
+        } else {
+            0.0
+        };
+        let sup_italic = if large {
+            0.0
+        } else {
+            base.italic.unwrap_or(0.0)
+        };
         let has_posts = !post.is_empty();
         let mut nodes = Vec::new();
         let mut offset = 0.0;
@@ -1201,7 +1222,11 @@ impl Builder<'_> {
             .operator
             .as_ref()
             .is_some_and(|operator| operator.stretchy && operator.inline_axis);
-        let italic = if large { base.italic } else { 0.0 };
+        let italic = if large {
+            base.italic.unwrap_or(0.0)
+        } else {
+            0.0
+        };
         let mut minimum = -base.width / 2.0;
         let mut maximum = base.width / 2.0;
         if let Some(under) = &under {
@@ -1290,6 +1315,7 @@ impl Builder<'_> {
             let x = physical(x, child.width);
             result.place(child, x, y);
         }
+        result.width = width;
         result.ink_ascent = result.ascent;
         result.ink_descent = result.descent;
         Ok(result)
@@ -1336,10 +1362,22 @@ impl Builder<'_> {
             } else {
                 content.ink_descent
             },
-            italic: content.italic,
-            accent: content
-                .accent
-                .map(|attachment| attachment + left + margins[3]),
+            italic: content.italic.map(|value| {
+                value
+                    + if style.rtl {
+                        left + margins[3]
+                    } else {
+                        right + margins[1]
+                    }
+            }),
+            accent: content.accent.map(|attachment| {
+                attachment
+                    + if style.rtl {
+                        right + margins[1]
+                    } else {
+                        left + margins[3]
+                    }
+            }),
             ascent: content.ascent + top + margins[0],
             descent: content.descent + bottom + margins[2],
             ..Default::default()

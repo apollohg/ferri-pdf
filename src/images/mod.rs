@@ -177,7 +177,7 @@ impl Image {
                 NaturalDimensions {
                     width: Some(width),
                     height: Some(height),
-                    ratio: (height > 0.0).then_some(width / height),
+                    ratio: (view.baseline.is_none() && height > 0.0).then_some(width / height),
                 }
             }
             Self::Transparent | Self::Frame(..) => NaturalDimensions::default(),

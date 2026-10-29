@@ -5,6 +5,7 @@ import subprocess
 import tempfile
 import unittest
 from fontTools.ttLib import TTFont
+from PIL import Image
 from oracle import pdf_content
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -150,6 +151,19 @@ class MathmlPdf(unittest.TestCase):
         for symbol in ['(', ')', '√', '1', '2', '3', '4']:
             self.assertEqual(extracted.count(symbol), 1,
                              f'each assembled symbol and token must extract once: {extracted!r}')
+
+    def test_math_css_sizes_do_not_fit_or_clip_content_with_visible_overflow(self):
+        def pixels(output):
+            target = self.root / 'sizing-ink'
+            subprocess.run(['pdftoppm', '-r', '72', '-singlefile', '-png', str(output), str(target)],
+                           check=True, capture_output=True)
+            with Image.open(target.with_suffix('.png')) as image:
+                return image.convert('RGB').tobytes()
+        normal, _ = self.render('<math><mn>1234</mn></math>')
+        expected = pixels(normal)
+        constrained, _ = self.render('<math style="width:1pt;height:1pt;object-fit:none;object-position:100% 100%"><mn>1234</mn></math>')
+        self.assertEqual(pixels(constrained), expected,
+                         'Core 3.1.2 changes math box dimensions while preserving start-aligned content and visible overflow; image fitting properties do not apply')
 
     def test_math_alphabetic_baseline_matches_surrounding_inline_text(self):
         _, content = self.render('L<math><mn>8</mn></math>R')
