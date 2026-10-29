@@ -233,6 +233,35 @@ class MathmlPdf(unittest.TestCase):
         self.assertLess(glyphs['L'].origin[0], glyphs['8'].origin[0])
         self.assertLess(glyphs['8'].origin[0], glyphs['R'].origin[0])
 
+    def test_invalid_arity_keeps_operator_semantics_during_row_recovery(self):
+        _, content = self.render(
+            "<math style='font-family:MathTest'><mfrac><mo>(</mo><mn>1</mn><mn>2</mn></mfrac><mspace height='60pt'/></math>")
+        fences = [span for span in content['replacement_text'] if span.text == '(']
+        self.assertEqual(len(fences), 1,
+                         'the first child stays a stretched core operator despite invalid fraction arity')
+        self.assertGreater(fences[0].glyph_end - fences[0].glyph_start, 1)
+        self.assertFalse(content['images'])
+        _, content = self.render(
+            "<math><mn>7</mn><mo>+</mo><mn>8</mn></math><br>"
+            "<math><mn>7</mn><mfrac style='padding:0'><mo style='font-size:20pt'>+</mo><mn style='font-size:20pt'>1</mn><mn style='font-size:20pt'>2</mn></mfrac><mn>8</mn></math>")
+        by_text = {text: [g for g in content['glyphs'] if g.text == text]
+                   for text in ['7', '+', '8', '2']}
+        self.assertEqual([len(by_text[text]) for text in ['7', '+', '8', '2']], [2, 2, 2, 1])
+        for glyphs in by_text.values():
+            for glyph in glyphs:
+                self.assertAlmostEqual(glyph.matrix[0], FONT_SIZE, delta=TOLERANCE)
+        start = [by_text['+'][index].origin[0] - by_text['7'][index].origin[0]
+                 for index in range(2)]
+        with TTFont(FONT) as font:
+            cmap = font.getBestCmap()
+            advance = {text: font['hmtx'][cmap[ord(text)]][0] * FONT_SIZE / font['head'].unitsPerEm
+                       for text in ['+', '2']}
+        end = [by_text['8'][0].origin[0] - by_text['+'][0].origin[0] - advance['+'],
+               by_text['8'][1].origin[0] - by_text['2'][0].origin[0] - advance['2']]
+        for actual, expected in [(start[1], start[0]), (end[1], end[0])]:
+            self.assertAlmostEqual(actual, expected, delta=TOLERANCE,
+                                   msg='infix spacing must surround the whole recovered embellished box')
+
     def test_math_is_an_atomic_fragment_at_a_page_boundary(self):
         _, content = self.render('<div style="height:75pt">P</div><math display="block"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>',
                                  '@page{size:300pt 100pt;margin:10pt}')

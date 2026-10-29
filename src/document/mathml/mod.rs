@@ -88,6 +88,19 @@ struct MathLayout {
     form: Option<Form>,
     stretch: Option<Stretch>,
 }
+#[derive(Clone, Copy, PartialEq)]
+enum RowKind {
+    Grouping,
+    Fraction,
+    Scripted,
+    Other,
+}
+fn is_scripted(name: &str) -> bool {
+    matches!(
+        name,
+        "msub" | "msup" | "msubsup" | "munder" | "mover" | "munderover" | "mmultiscripts"
+    )
+}
 fn script_children(
     children: Vec<MathBox>,
     below: bool,
@@ -271,6 +284,7 @@ impl<'d> Builder<'_, 'd> {
         style: &Arc<Style>,
         depth: usize,
         layout: MathLayout,
+        kind: RowKind,
     ) -> Result<MathBox, MathError<'d>> {
         let mut children = Vec::new();
         let mut requests = Requests::default();
@@ -302,22 +316,49 @@ impl<'d> Builder<'_, 'd> {
             .filter(|(_, (_, child))| !child.space_like)
             .map(|(index, _)| index)
             .collect();
-        let embellished = significant.len() == 1 && children[significant[0]].1.operator.is_some();
+        let scripted = kind == RowKind::Scripted;
+        let grouping = kind == RowKind::Grouping;
+        let first_base = scripted || kind == RowKind::Fraction;
+        let core = if first_base {
+            let first = self
+                .in_flow_children(element, style)?
+                .first()
+                .map(|child| child.id());
+            children
+                .iter()
+                .position(|(source, _)| source.is_none_or(|source| Some(source.id()) == first))
+                .filter(|&index| children[index].1.operator.is_some())
+        } else if grouping {
+            significant
+                .first()
+                .copied()
+                .filter(|_| significant.len() == 1)
+                .filter(|&index| children[index].1.operator.is_some())
+        } else {
+            None
+        };
+        let embellished = core.is_some();
         let mut requests = Requests::default();
         for (index, (source, child)) in children.iter_mut().enumerate() {
             let Some(operator) = &child.operator else {
                 continue;
             };
-            let form = if embellished {
+            let form = if core == Some(index) {
                 layout.form.unwrap_or(Form::Infix)
-            } else if significant.len() > 1 && significant.first() == Some(&index) {
+            } else if scripted {
+                Form::Postfix
+            } else if grouping && significant.len() > 1 && significant.first() == Some(&index) {
                 Form::Prefix
-            } else if significant.len() > 1 && significant.last() == Some(&index) {
+            } else if grouping && significant.len() > 1 && significant.last() == Some(&index) {
                 Form::Postfix
             } else {
                 Form::Infix
             };
-            let inherited_stretch = if embellished { layout.stretch } else { None };
+            let inherited_stretch = if core == Some(index) {
+                layout.stretch
+            } else {
+                None
+            };
             if ((!operator.explicit_form && operator.form != form) || inherited_stretch.is_some())
                 && let Some(resolved) = requests.collect(self.element(
                     source.expect("only elements are embellished"),
@@ -431,10 +472,8 @@ impl<'d> Builder<'_, 'd> {
             ink_ascent,
             ink_descent,
             italic: Some(previous_italic),
-            space_like: significant.is_empty(),
-            operator: embellished
-                .then(|| children[significant[0]].1.operator.clone())
-                .flatten(),
+            space_like: grouping && significant.is_empty(),
+            operator: core.and_then(|index| children[index].1.operator.clone()),
             ..Default::default()
         };
         for ((_, child), x) in children.into_iter().zip(positions) {
@@ -485,7 +524,7 @@ impl<'d> Builder<'_, 'd> {
         }
         let mut content = match element.name() {
             "math" | "mrow" | "mstyle" | "merror" | "mphantom" | "semantics" | "maction"
-            | "mprescripts" => self.row(element, style, depth, layout)?,
+            | "mprescripts" => self.row(element, style, depth, layout, RowKind::Grouping)?,
             "mi" | "mn" | "mtext" | "ms" | "annotation" => self.token_element(element, style)?,
             "mo" => self.operator(element, style, layout)?,
             "mspace" => self.space(element, style)?,
@@ -496,7 +535,7 @@ impl<'d> Builder<'_, 'd> {
             "munder" | "mover" | "munderover" => self.limits(element, style, depth, layout)?,
             "mmultiscripts" => self.multiscripts(element, style, depth, layout)?,
             "annotation-xml" | "mtable" | "mtr" | "mtd" => return Err(unsupported(element.name())),
-            _ => self.row(element, style, depth, layout)?,
+            _ => self.row(element, style, depth, layout, RowKind::Grouping)?,
         };
         if matches!(
             element.name(),
@@ -545,17 +584,7 @@ impl<'d> Builder<'_, 'd> {
                 layout
             } else {
                 MathLayout {
-                    form: matches!(
-                        element.name(),
-                        "msub"
-                            | "msup"
-                            | "msubsup"
-                            | "munder"
-                            | "mover"
-                            | "munderover"
-                            | "mmultiscripts"
-                    )
-                    .then_some(Form::Postfix),
+                    form: is_scripted(element.name()).then_some(Form::Postfix),
                     stretch: None,
                 }
             };
@@ -824,7 +853,7 @@ impl<'d> Builder<'_, 'd> {
         depth: usize,
         layout: MathLayout,
     ) -> Result<MathBox, MathError<'d>> {
-        let inner = self.row(element, style, depth, layout)?;
+        let inner = self.row(element, style, depth, layout, RowKind::Grouping)?;
         let width = match &style.width {
             Size::Value(LengthPercentage::Length(value)) => *value,
             Size::Auto => inner.width,
@@ -875,13 +904,19 @@ impl<'d> Builder<'_, 'd> {
         let (base, index) = if element.name() == "mroot" {
             let mut children = self.children(element, style, depth, MathLayout::default())?;
             if children.len() != 2 {
-                return self.row(element, style, depth, layout);
+                return self.row(element, style, depth, layout, RowKind::Other);
             }
             let index = children.pop().expect("root index");
             (children.pop().expect("root base"), Some(index))
         } else {
             (
-                self.row(element, style, depth, MathLayout::default())?,
+                self.row(
+                    element,
+                    style,
+                    depth,
+                    MathLayout::default(),
+                    RowKind::Grouping,
+                )?,
                 None,
             )
         };
@@ -973,7 +1008,7 @@ impl<'d> Builder<'_, 'd> {
     ) -> Result<MathBox, MathError<'d>> {
         let mut children = self.children(element, style, depth, layout)?;
         if children.len() != 2 {
-            return self.row(element, style, depth, layout);
+            return self.row(element, style, depth, layout, RowKind::Fraction);
         }
         let denominator = children.pop().expect("two fraction children");
         let numerator = children.pop().expect("two fraction children");
@@ -1049,7 +1084,7 @@ impl<'d> Builder<'_, 'd> {
         let children = self.children(element, style, depth, layout)?;
         let paired = element.name() == "msubsup";
         if children.len() != if paired { 3 } else { 2 } {
-            return self.row(element, style, depth, layout);
+            return self.row(element, style, depth, layout, RowKind::Scripted);
         }
         let (base, sub, sup) =
             script_children(children, element.name() != "msup", element.name() != "msub");
@@ -1167,7 +1202,7 @@ impl<'d> Builder<'_, 'd> {
             .first()
             .is_none_or(|child| child.name() == "mprescripts")
         {
-            return self.row(element, style, depth, layout);
+            return self.row(element, style, depth, layout, RowKind::Scripted);
         }
         let separators: Vec<_> = sources
             .iter()
@@ -1176,14 +1211,14 @@ impl<'d> Builder<'_, 'd> {
             .map(|(index, _)| index)
             .collect();
         if separators.len() > 1 {
-            return self.row(element, style, depth, layout);
+            return self.row(element, style, depth, layout, RowKind::Scripted);
         }
         let post_count = separators.first().copied().unwrap_or(sources.len()) - 1;
         let pre_count = separators
             .first()
             .map_or(0, |index| sources.len() - index - 1);
         if post_count % 2 != 0 || pre_count % 2 != 0 {
-            return self.row(element, style, depth, layout);
+            return self.row(element, style, depth, layout, RowKind::Scripted);
         }
         let mut children = self.children(element, style, depth, layout)?.into_iter();
         let base = children.next().expect("valid tensor base");
@@ -1299,7 +1334,7 @@ impl<'d> Builder<'_, 'd> {
         let mut children = self.children(element, style, depth, layout)?;
         let paired = element.name() == "munderover";
         if children.len() != if paired { 3 } else { 2 } {
-            return self.row(element, style, depth, layout);
+            return self.row(element, style, depth, layout, RowKind::Scripted);
         }
         let movable = children[0]
             .operator

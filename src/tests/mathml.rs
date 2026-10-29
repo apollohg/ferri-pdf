@@ -1072,3 +1072,158 @@ fn space_like_padding_does_not_change_neighboring_operator_form() {
         "Core3.2.5.1 keeps a padding group of spaces space-like: it reserves {SPACE_WIDTH}pt without turning prefix plus into infix; got {offset}pt"
     );
 }
+
+#[test]
+fn invalid_script_and_fraction_arity_keeps_the_first_child_core_operator() {
+    for (element, tail) in [
+        ("mfrac", "<mn>1</mn><mn>2</mn>"),
+        ("msub", "<mn>1</mn><mn>2</mn>"),
+        ("msup", "<mn>1</mn><mn>2</mn>"),
+        ("msubsup", "<mn>1</mn>"),
+        ("munder", "<mn>1</mn><mn>2</mn>"),
+        ("mover", "<mn>1</mn><mn>2</mn>"),
+        ("munderover", "<mn>1</mn>"),
+        ("mmultiscripts", "<mn>1</mn>"),
+    ] {
+        let view = math(&format!(
+            "<math style='font-family:MathTest'><{element}><mo>(</mo>{tail}</{element}><mspace height='60pt'/></math>"
+        ));
+        let fence = view.lines.iter().find(|line| line.text == "(").unwrap();
+        let glyphs: Vec<_> = fence
+            .runs
+            .iter()
+            .flat_map(|run| run.glyphs().iter().map(|glyph| glyph.id))
+            .collect();
+        assert!(
+            glyphs.len() > 1,
+            "Core3.2.4.1 keeps the first child as the core operator of an invalid-arity {element}; the outer 60pt space must stretch its fence despite row recovery: {glyphs:?}"
+        );
+    }
+}
+
+#[test]
+fn recovered_fraction_operator_spacing_belongs_to_the_embellished_box() {
+    let bare = math("<math><mn>7</mn><mo>+</mo><mn>8</mn></math>");
+    let recovered = math(
+        "<math><mn>7</mn><mfrac style='padding:0'><mo style='font-size:20pt'>+</mo><mn style='font-size:20pt'>1</mn><mn style='font-size:20pt'>2</mn></mfrac><mn>8</mn></math>",
+    );
+    let gaps = |view: &crate::layout::ViewportPaint, last: &str| {
+        let find = |text| view.lines.iter().find(|line| line.text == text).unwrap();
+        let first = find("7");
+        let plus = find("+");
+        let last = find(last);
+        let following = find("8");
+        [
+            plus.x - first.x - first.width,
+            following.x - last.x - last.width,
+        ]
+    };
+    let expected = gaps(&bare, "+");
+    let actual = gaps(&recovered, "2");
+    for (side, (actual, expected)) in ["start", "end"]
+        .into_iter()
+        .zip(actual.into_iter().zip(expected))
+    {
+        assert!(
+            (actual - expected).abs() < 0.01,
+            "invalid-arity mfrac stays embellished: infix plus {side} space must surround the whole recovered box, matching a bare core operator; expected {expected}, got {actual}"
+        );
+    }
+}
+
+#[test]
+fn recovered_script_children_keep_their_postfix_operator_form() {
+    let recovered = math(
+        "<math><msub><mn>1</mn><mo style='font-size:20pt'>|</mo><mn style='font-size:20pt'>2</mn></msub></math>",
+    );
+    let explicit = math("<math><mrow><mn>1</mn><mo form='postfix'>|</mo><mn>2</mn></mrow></math>");
+    let position = |view: &crate::layout::ViewportPaint| {
+        view.lines.iter().find(|line| line.text == "2").unwrap().x
+    };
+    assert!(
+        (position(&recovered) - position(&explicit)).abs() < 0.01,
+        "Core3.2.4.2 keeps non-base scripted children postfix even when invalid arity recovers row geometry; explicit postfix digit x {}, recovered {}",
+        position(&explicit),
+        position(&recovered)
+    );
+}
+
+#[test]
+fn recovered_non_grouping_schemata_of_spaces_remain_non_space_like() {
+    let control = math("<math><mn>0</mn><mo>+</mo><mn>1</mn></math>");
+    let gap = |view: &crate::layout::ViewportPaint| {
+        let plus = view.lines.iter().find(|line| line.text == "+").unwrap();
+        let digit = view.lines.iter().find(|line| line.text == "1").unwrap();
+        digit.x - plus.x - plus.width
+    };
+    let expected = gap(&control);
+    for element in [
+        "mroot",
+        "mfrac",
+        "msub",
+        "msup",
+        "munder",
+        "mover",
+        "mmultiscripts",
+    ] {
+        let recovered = math(&format!(
+            "<math><{element}><mspace width='10pt'/><mspace width='20pt'/><mspace width='30pt'/><mspace width='40pt'/></{element}><mo>+</mo><mn>1</mn></math>"
+        ));
+        let actual = gap(&recovered);
+        assert!(
+            (actual - expected).abs() < 0.01,
+            "Core3.2.5.1 does not classify {element} as space-like even when row recovery contains only spaces; following plus must remain infix with {expected}pt end space, got {actual}"
+        );
+    }
+}
+
+#[test]
+fn recovered_root_children_keep_their_infix_operator_form() {
+    let recovered =
+        math("<math><mroot><mo>|</mo><mn style='font-size:20pt'>1</mn><mn>2</mn></mroot></math>");
+    let explicit = math("<math><mrow><mo form='infix'>|</mo><mn>1</mn><mn>2</mn></mrow></math>");
+    let position = |view: &crate::layout::ViewportPaint| {
+        view.lines.iter().find(|line| line.text == "2").unwrap().x
+    };
+    assert!(
+        (position(&recovered) - position(&explicit)).abs() < 0.01,
+        "Core3.2.4.2 leaves children of non-grouping mroot infix despite row recovery; explicit infix digit x {}, recovered {}",
+        position(&explicit),
+        position(&recovered)
+    );
+}
+
+#[test]
+fn recovered_operator_identity_uses_the_first_visible_box_including_anonymous_text() {
+    for (leading, embellished) in [
+        ("<mtext style='display:none'>hidden</mtext>", true),
+        ("text", false),
+    ] {
+        let glyphs = |sibling| {
+            let view = math(&format!(
+                "<math style='font-family:MathTest'><mfrac>{leading}<mo>(</mo><mn>1</mn><mn>2</mn></mfrac>{sibling}</math>"
+            ));
+            view.lines
+                .iter()
+                .find(|line| line.text == "(")
+                .unwrap()
+                .runs
+                .iter()
+                .flat_map(|run| run.glyphs().iter().map(|glyph| glyph.id))
+                .collect::<Vec<_>>()
+        };
+        let natural = glyphs("");
+        let constrained = glyphs("<mspace height='60pt'/>");
+        if embellished {
+            assert!(
+                constrained.len() > natural.len(),
+                "hidden first elements have no box: the visible core operator must receive the outer stretch target; natural {natural:?}, constrained {constrained:?}"
+            );
+        } else {
+            assert_eq!(
+                constrained, natural,
+                "anonymous text is the first in-flow box, so the fraction is not embellished and must not forward an outer stretch target"
+            );
+        }
+    }
+}
