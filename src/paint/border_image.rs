@@ -163,6 +163,29 @@ fn scale_or(factor: f32, fallback: f32) -> f32 {
         .unwrap_or(1.0)
 }
 
+impl<I> BoxPaint<I> {
+    fn image_outsets(&self) -> [f32; 4] {
+        std::array::from_fn(|side| match self.decoration.border_image.outset[side] {
+            BorderImageOutset::Number(factor) => {
+                factor * self.decoration.borders[side].used_width()
+            }
+            BorderImageOutset::Length(length) => length,
+        })
+    }
+
+    /// The border image's ink, with introduced fragment edges cut as in its painting.
+    pub(crate) fn border_image_bounds(&self) -> Option<Rect> {
+        self.decoration.border_image.is_drawn().then(|| {
+            let sliced = self.sliced();
+            let outsets = self.image_outsets();
+            crate::paint::outset(
+                self.rect,
+                std::array::from_fn(|side| if sliced[side] { 0.0 } else { outsets[side] }),
+            )
+        })
+    }
+}
+
 impl<I: ImageInfo> BoxPaint<I> {
     /// The border image replacing this box's border styles, if it has one to draw.
     pub fn border_image(&self) -> Result<Option<BorderImagePaint<'_, I>>, UnresolvedImage> {
@@ -174,18 +197,9 @@ impl<I: ImageInfo> BoxPaint<I> {
             BackgroundImage::Gradient(gradient) => Source::Gradient(gradient),
         };
         // A sliced fragment draws its share of the unbroken box's image.
-        let unbroken = self.background_box.unwrap_or(self.rect);
         let borders = self.decoration.borders.map(Border::used_width);
-        let outset: [f32; 4] = std::array::from_fn(|side| match border_image.outset[side] {
-            BorderImageOutset::Number(factor) => factor * borders[side],
-            BorderImageOutset::Length(length) => length,
-        });
-        let area = Rect {
-            x: unbroken.x - outset[LEFT],
-            y: unbroken.y - outset[TOP],
-            width: unbroken.width + outset[LEFT] + outset[RIGHT],
-            height: unbroken.height + outset[TOP] + outset[BOTTOM],
-        };
+        let outset = self.image_outsets();
+        let area = crate::paint::outset(self.background_box.unwrap_or(self.rect), outset);
         if area.width <= 0.0 || area.height <= 0.0 {
             return Ok(None);
         }

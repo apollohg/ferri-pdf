@@ -1,25 +1,26 @@
 use super::children;
-use crate::document::BlockBox;
 use crate::flex::Item;
+use crate::layout::measure::BlockSource;
 use crate::layout::measure::Measurer;
 use crate::layout::{LayoutError, geometry::SizeConstraints, intrinsic};
 use crate::style::{BoxSizing, FlexBasis, FlexWrap, Size};
 use crate::text::IntrinsicWidths;
 
-pub(crate) fn measure(
-    block: &BlockBox,
+pub(crate) fn measure<'a>(
+    block: impl Into<BlockSource<'a>>,
     measurer: &Measurer<'_>,
     available: f32,
 ) -> Result<IntrinsicWidths, LayoutError> {
+    let block = block.into();
     let style = block.style();
     let mut result = IntrinsicWidths::default();
-    let children = children(block)?;
+    let children = children(block.block)?;
     let mut items = Vec::with_capacity(children.len());
     let mut minima = Vec::with_capacity(children.len());
     let mut maxima = Vec::with_capacity(children.len());
     for child in &children {
         if style.flex.direction.column() {
-            let size = intrinsic::measure(child, measurer, available)?;
+            let size = intrinsic::measure(*child, measurer, available)?;
             result.min = result.min.max(size.min);
             result.max = result.max.max(size.max);
             continue;
@@ -34,7 +35,7 @@ pub(crate) fn measure(
             child_style.margin[1].resolve(0.0),
         ];
         let outer = edges + margins.into_iter().flatten().sum::<f32>();
-        let natural = intrinsic::content(child, measurer, available)?;
+        let natural = intrinsic::content(*child, measurer, available)?;
         let size = intrinsic::outer_widths(child_style, natural);
         let constraints = SizeConstraints::new(
             [

@@ -10,7 +10,7 @@ pub(super) fn minimum(
 ) -> Result<f32, LayoutError> {
     let mut minimum: f32 = 0.0;
     for caption in captions {
-        minimum = minimum.max(intrinsic::measure(caption, measurer, available)?.min);
+        minimum = minimum.max(intrinsic::measure(*caption, measurer, available)?.min);
     }
     Ok(minimum)
 }

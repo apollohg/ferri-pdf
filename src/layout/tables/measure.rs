@@ -6,6 +6,7 @@ use super::{
 };
 use crate::document::{BlockBox, BlockContent, SemanticEvent};
 use crate::graphics::{Border, BorderStyle, BoxDecoration, Color, Rect};
+use crate::layout::measure::BlockSource;
 use crate::layout::measure::{
     BlockEdge, FlowItem, MeasuredBlock, MeasuredCell, MeasuredRow, Measurer, RowTarget, TableFlow,
 };
@@ -216,6 +217,7 @@ pub(crate) struct TablePlan<'a> {
     containing_height: Option<f32>,
     used_height: Option<f32>,
     pub source: &'a BlockBox,
+    pub style: &'a Style,
     named_pages: bool,
     data: Data<'a>,
     boundary_events: BTreeMap<usize, Vec<&'a SemanticEvent>>,
@@ -430,15 +432,16 @@ impl<'a> TablePlan<'a> {
     }
     pub(crate) fn new(
         measurer: &Measurer<'_>,
-        block: &'a BlockBox,
+        block: impl Into<BlockSource<'a>>,
         containing_height: Option<f32>,
         used_height: Option<f32>,
         place: fn(&Style, f32, f32, bool, Option<f32>, geometry::Edges) -> geometry::HorizontalBox,
     ) -> Result<Rc<Self>, LayoutError> {
+        let block = block.into();
         measurer.work.spend(1)?;
-        let index = measurer.sources.block(block);
-        let data = Data::new(block)?;
-        let boundary_events = structural_events(block, &data);
+        let index = measurer.sources.block(block.block);
+        let data = Data::new(block.block)?;
+        let boundary_events = structural_events(block.block, &data);
         if data
             .rows
             .iter()
@@ -505,8 +508,8 @@ impl<'a> TablePlan<'a> {
         };
         let has_height_constraints = used_height.is_some()
             || std::iter::once(block)
-                .chain(data.rows.iter().copied())
-                .chain(data.cells.iter().copied())
+                .chain(data.rows.iter().copied().map(BlockSource::from))
+                .chain(data.cells.iter().copied().map(BlockSource::from))
                 .any(|source| {
                     [
                         &source.style().height,
@@ -523,7 +526,8 @@ impl<'a> TablePlan<'a> {
             border_owners,
             containing_height,
             used_height,
-            source: block,
+            source: block.block,
+            style: block.style(),
             named_pages: measurer.named_pages && !measurer.unbroken,
             columns: data.column_widths(),
             layers: Layers::new(&data),
@@ -578,7 +582,7 @@ impl<'a> TablePlan<'a> {
     }
 
     pub(crate) fn edges(&self, width: f32) -> geometry::Edges {
-        self.data.table_edges(self.source.style(), width)
+        self.data.table_edges(self.style, width)
     }
 
     pub(crate) fn resolve_positioned(
@@ -603,7 +607,7 @@ impl<'a> TablePlan<'a> {
         let containing_height = resolved.containing_height;
         let (table, geometry) = measure_plan(measurer, self, resolved, None, 0)?;
         let mut table = captions::wrap(measurer, table, &self.data.captions, &geometry)?;
-        let style = self.source.style();
+        let style = self.style;
         if self.has_captions()
             && (style.contains_absolute()
                 || !style.visibility.is_visible()
@@ -614,7 +618,7 @@ impl<'a> TablePlan<'a> {
             table.retain_fragment();
         }
         table.containing_height = containing_height;
-        table.offset = self.source.style().relative_offset(
+        table.offset = self.style.relative_offset(
             geometry.containing_width,
             containing_height,
             geometry.containing_rtl,
@@ -637,7 +641,7 @@ impl<'a> TablePlan<'a> {
                 .saturating_mul(self.data.grid.columns)
                 .max(1),
         )?;
-        let style = self.source.style();
+        let style = self.style;
         let data = &self.data;
         let index = measurer.sources.block(self.source);
         let place = self.place;
@@ -773,7 +777,7 @@ impl<'a> TablePlan<'a> {
             .height
             .resolve_definite(None)
             .is_some()
-            || self.source.style().height != crate::style::Size::Auto
+            || self.style.height != crate::style::Size::Auto
             || self.used_height.is_some()
     }
     pub(crate) fn cell_used_height(
@@ -828,11 +832,7 @@ impl<'a> TablePlan<'a> {
         cell.row..cell.row + cell.rows
     }
     pub(crate) fn cell_offset(&self, index: usize, width: f32) -> [f32; 2] {
-        super::model::relative_offset(
-            &self.data.cell_ancestors(index),
-            width,
-            self.source.style().rtl,
-        )
+        super::model::relative_offset(&self.data.cell_ancestors(index), width, self.style.rtl)
     }
     pub(crate) fn scoped_borders(&self) -> bool {
         self.border_owners.is_some()
@@ -855,7 +855,7 @@ impl<'a> TablePlan<'a> {
                     Some(self.data.rows[row]),
                 ],
                 width,
-                self.source.style().rtl,
+                self.style.rtl,
             ),
         };
         (owner, offset)
@@ -1082,7 +1082,7 @@ impl<'a> TablePlan<'a> {
             )
             .project(&self.data.collapsed_rows));
         }
-        let style = self.source.style();
+        let style = self.style;
         let rows = self
             .data
             .rows
@@ -1161,7 +1161,7 @@ impl<'a> TablePlan<'a> {
     pub(crate) fn cell_span(&self, index: usize, resolved: &TableGeometry) -> (f32, f32) {
         let cell = &self.data.grid.cells[index];
         resolved
-            .columns(self.source.style().rtl)
+            .columns(self.style.rtl)
             .span(cell.column, cell.columns)
     }
     pub(crate) fn cell_geometry(
@@ -1182,13 +1182,13 @@ impl<'a> TablePlan<'a> {
             .iter()
             .sum::<f32>()
             + resolved.spacing[0] * cell.columns.saturating_sub(1) as f32;
-        if self.source.style().rtl {
+        if self.style.rtl {
             left += projected - outer;
         }
         geometry::HorizontalBox {
             containing_x: resolved.geometry.x,
             containing_width: original.table,
-            containing_rtl: self.source.style().rtl,
+            containing_rtl: self.style.rtl,
             x: left + padding[3] + border[3],
             width: (outer - padding[1] - padding[3] - border[1] - border[3]).max(0.0),
             padding,
@@ -1221,8 +1221,11 @@ fn measure_plan<'a>(
     previous: Option<&TableFlow<'a>>,
     next_body: usize,
 ) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), LayoutError> {
-    let block = plan.source;
-    let index = measurer.sources.block(block);
+    let block = BlockSource {
+        block: plan.source,
+        selected: plan.style,
+    };
+    let index = measurer.sources.block(block.block);
     let style = block.style();
     let data = &plan.data;
     measurer.work.spend(data.cells.len().max(1))?;
@@ -1580,9 +1583,9 @@ fn measure_plan<'a>(
         clearance_before: None,
         clearance_target: measurer
             .clearance_targets
-            .get(&std::ptr::from_ref::<BlockBox>(block))
+            .get(&std::ptr::from_ref::<BlockBox>(block.block))
             .copied(),
-        source: block,
+        source: block.block,
         geometry: geometry.clone(),
         containing_height: resolved.containing_height,
         offset: if data.captions.is_empty() {
@@ -1596,8 +1599,8 @@ fn measure_plan<'a>(
         },
         style,
         canvas_source: block.is_canvas_source(),
-        before: MarginStrut::edge(block, 0, geometry.containing_width),
-        after: MarginStrut::edge(block, 2, geometry.containing_width),
+        before: MarginStrut::edge(block.block, 0, geometry.containing_width),
+        after: MarginStrut::edge(block.block, 2, geometry.containing_width),
         through: false,
         height,
         sizing: None,

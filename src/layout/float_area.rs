@@ -197,6 +197,67 @@ pub(crate) fn float_area(
     Ok(Some(FloatArea { pieces, tallest }))
 }
 
+/// Convex pieces of a filled path, with the same curve tolerance and fill rules as floats.
+pub(super) fn filled_polygons(
+    shape: &Shape,
+    work: &Budget,
+) -> Result<Vec<Vec<Point>>, LayoutError> {
+    match shape {
+        Shape::Rect(rect) => Ok(vec![super::navigation::rect_corners(*rect).to_vec()]),
+        Shape::Path {
+            contours, even_odd, ..
+        } => {
+            let polygons = contours.iter().flat_map(flatten).collect::<Vec<_>>();
+            Ok(trapezoids(&polygons, *even_odd, work)?
+                .into_iter()
+                .map(|piece| piece.points)
+                .collect())
+        }
+        _ => unreachable!("a CSS clip-path outlines a rectangle or filled path"),
+    }
+}
+
+/// Intersection of convex filled polygons, keeping touching edges for zero-area anchors.
+pub(super) fn intersect(subject: &[Point], boundary: &[Point]) -> Vec<Point> {
+    if boundary.len() < 3 {
+        return Vec::new();
+    }
+    let area: f32 = boundary
+        .iter()
+        .enumerate()
+        .map(|(i, a)| {
+            let b = boundary[(i + 1) % boundary.len()];
+            a[0] * b[1] - b[0] * a[1]
+        })
+        .sum();
+    if area == 0.0 {
+        return Vec::new();
+    }
+    let mut output = subject.to_vec();
+    for (index, &a) in boundary.iter().enumerate() {
+        let b = boundary[(index + 1) % boundary.len()];
+        let side = |p: Point| {
+            ((b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0])) * area.signum()
+        };
+        let input = std::mem::take(&mut output);
+        for (index, &current) in input.iter().enumerate() {
+            let previous = input[(index + input.len() - 1) % input.len()];
+            let [before, after] = [side(previous), side(current)];
+            if (before >= 0.0) != (after >= 0.0) {
+                let t = before / (before - after);
+                output.push([
+                    previous[0] + t * (current[0] - previous[0]),
+                    previous[1] + t * (current[1] - previous[1]),
+                ]);
+            }
+            if after >= 0.0 {
+                output.push(current);
+            }
+        }
+    }
+    output
+}
+
 fn reference_box(reference: ShapeBox, boxes: &FloatBoxes<'_>) -> (Rect, crate::graphics::Radii) {
     reference.resolve(boxes.paint, boxes.margins)
 }

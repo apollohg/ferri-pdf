@@ -106,7 +106,7 @@ pub(crate) fn clip_links(areas: &mut Vec<LinkArea>, bounds: Rect) {
     });
 }
 
-fn rect_corners(rect: Rect) -> [Point; 4] {
+pub(super) fn rect_corners(rect: Rect) -> [Point; 4] {
     [
         [rect.x, rect.y],
         [rect.x, rect.y + rect.height],
@@ -121,17 +121,23 @@ fn rect_corners(rect: Rect) -> [Point; 4] {
 pub(crate) fn page_polygon(rect: Rect, regions: &[Region], clip: bool) -> Vec<Point> {
     let mut polygon = rect_corners(rect).to_vec();
     for region in regions.iter().rev() {
-        match region {
-            Region::Transform(matrix) => {
-                for point in &mut polygon {
-                    *point = apply(*matrix, *point);
-                }
-            }
-            Region::Clip(region) if clip => polygon = clip_polygon(&polygon, region.bounds()),
-            Region::Clip(_) => {}
+        if clip || matches!(region, Region::Transform(_)) {
+            polygon = map_polygon(polygon, *region);
         }
     }
     polygon
+}
+
+pub(super) fn map_polygon(mut polygon: Vec<Point>, region: Region) -> Vec<Point> {
+    match region {
+        Region::Transform(matrix) => {
+            for point in &mut polygon {
+                *point = apply(matrix, *point);
+            }
+            polygon
+        }
+        Region::Clip(region) => clip_polygon(&polygon, region.bounds()),
+    }
 }
 
 fn apply([a, b, c, d, e, f]: [f32; 6], [x, y]: Point) -> Point {

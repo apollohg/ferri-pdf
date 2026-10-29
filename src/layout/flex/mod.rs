@@ -1,3 +1,4 @@
+use crate::layout::measure::BlockSource;
 pub(super) mod intrinsic;
 use crate::document::{BlockBox, BlockContent};
 use crate::flex::{Item, spacing};
@@ -126,11 +127,12 @@ fn measure_item<'a>(
 
 pub(super) fn measure<'a>(
     measurer: &mut Measurer<'_>,
-    block: &'a BlockBox,
+    block: impl Into<BlockSource<'a>>,
     geometry: &HorizontalBox,
     containing_height: Option<f32>,
     used_height: Option<f32>,
 ) -> Result<MeasuredBlock<'a>, LayoutError> {
+    let block = block.into();
     let style = block.style();
     let flex = &style.flex;
     let column = flex.direction.column();
@@ -154,7 +156,7 @@ pub(super) fn measure<'a>(
     let main_sides = if column { [0, 2] } else { [3, 1] };
     let cross_sides = if column { [3, 1] } else { [0, 2] };
     let mut data = Vec::new();
-    for source in children(block)? {
+    for source in children(block.block)? {
         let child = source.style();
         let natural = block_intrinsic::content(source, measurer, geometry.width)?;
         let padding = child.padding.each_ref().map(|v| v.resolve(geometry.width));
@@ -535,7 +537,7 @@ pub(super) fn measure<'a>(
                 let mut event = CollapsedItem {
                     source: item.source,
                     offset: if column { y } else { 0.0 },
-                    after_events: block.following_events(item.source).collect(),
+                    after_events: block.block.following_events(item.source).collect(),
                 };
                 if column && flex.wrap == FlexWrap::NoWrap {
                     event.offset = 0.0;
@@ -642,7 +644,7 @@ pub(super) fn measure<'a>(
             }
             let cell = MeasuredCell {
                 clipped_height: None,
-                after_events: block.following_events(item.source).collect(),
+                after_events: block.block.following_events(item.source).collect(),
                 grid_cell: None,
                 backgrounds: Vec::new(),
                 paint_offset: None,
@@ -699,6 +701,7 @@ pub(super) fn measure<'a>(
     let mut items = vec![FlowItem::Edge(BlockEdge::Start, top)];
     items.extend(
         block
+            .block
             .leading_events()
             .map(|event| FlowItem::Events(std::slice::from_ref(event))),
     );
@@ -771,9 +774,9 @@ pub(super) fn measure<'a>(
         clearance_before: None,
         clearance_target: measurer
             .clearance_targets
-            .get(&std::ptr::from_ref::<BlockBox>(block))
+            .get(&std::ptr::from_ref::<BlockBox>(block.block))
             .copied(),
-        source: block,
+        source: block.block,
         geometry: geometry.clone(),
         containing_height,
         style,
@@ -783,8 +786,8 @@ pub(super) fn measure<'a>(
             containing_height,
             geometry.containing_rtl,
         ),
-        before: MarginStrut::edge(block, 0, geometry.containing_width),
-        after: MarginStrut::edge(block, 2, geometry.containing_width),
+        before: MarginStrut::edge(block.block, 0, geometry.containing_width),
+        after: MarginStrut::edge(block.block, 2, geometry.containing_width),
         through: false,
         height,
         sizing: None,

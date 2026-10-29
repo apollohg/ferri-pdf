@@ -1,3 +1,4 @@
+use crate::layout::measure::BlockSource;
 mod context;
 pub(crate) use context::ParentContext;
 mod fragmentation;
@@ -34,7 +35,7 @@ struct Plan<'a> {
 
 impl<'a> Plan<'a> {
     fn new(
-        block: &'a BlockBox,
+        block: BlockSource<'a>,
         measurer: &Measurer<'_>,
         sizes: [Option<f32>; 2],
         bounds: [SizeBounds; 2],
@@ -42,13 +43,13 @@ impl<'a> Plan<'a> {
         let parent = measurer
             .grid_parent
             .as_ref()
-            .filter(|parent| parent.matches(block))
+            .filter(|parent| parent.matches(block.block))
             .cloned();
         Self::with_parent(block, measurer, sizes, bounds, parent, false)
     }
 
     fn with_parent(
-        block: &'a BlockBox,
+        block: BlockSource<'a>,
         measurer: &Measurer<'_>,
         sizes: [Option<f32>; 2],
         bounds: [SizeBounds; 2],
@@ -84,7 +85,7 @@ impl<'a> Plan<'a> {
             topology::Topology::new(style, &placements, sizes, bounds, &measurer.work)?
         });
         Ok(Self {
-            source: block,
+            source: block.block,
             topology,
             inherited,
             children,
@@ -207,7 +208,7 @@ impl<'a> Plan<'a> {
                 .sum::<f32>();
             if sizing::shared(style, COLUMNS) {
                 let plan = Self::with_parent(
-                    child,
+                    (*child).into(),
                     measurer,
                     [None; 2],
                     [SizeBounds::default(); 2],
@@ -245,17 +246,17 @@ impl<'a> Plan<'a> {
                 continue;
             }
             let (outer, content_minimum) = if style.display.is_table() {
-                let outer = crate::layout::tables::intrinsic(child, measurer, available)?;
+                let outer = crate::layout::tables::intrinsic(*child, measurer, available)?;
                 (outer, (outer.min - edges - margins).max(0.0))
             } else {
-                let natural = crate::layout::intrinsic::content(child, measurer, available)?;
+                let natural = crate::layout::intrinsic::content(*child, measurer, available)?;
                 (
                     crate::layout::intrinsic::outer_widths(style, natural),
                     natural.min,
                 )
             };
             let constraints =
-                crate::layout::intrinsic::width_constraints(child, measurer, None, edges, None)?;
+                crate::layout::intrinsic::width_constraints(*child, measurer, None, edges, None)?;
             output.push(SizingItem {
                 tracks: area[COLUMNS].clone(),
                 min_content: outer.min,
@@ -285,17 +286,18 @@ impl<'a> Plan<'a> {
 }
 
 /// Min- and max-content widths; a size-contained grid is sized as if it had no items.
-pub(super) fn intrinsic(
-    block: &BlockBox,
+pub(super) fn intrinsic<'a>(
+    block: impl Into<BlockSource<'a>>,
     measurer: &Measurer<'_>,
     available: f32,
     contained: bool,
 ) -> Result<IntrinsicWidths, LayoutError> {
+    let block = block.into();
     let bounds = [SizeBounds::default(); 2];
     let parent = measurer
         .grid_parent
         .as_ref()
-        .filter(|parent| parent.matches(block))
+        .filter(|parent| parent.matches(block.block))
         .cloned();
     let plan = Plan::with_parent(block, measurer, [None; 2], bounds, parent, contained)?;
     let contributions = plan.column_contributions(measurer, available, plan.gap(COLUMNS, None))?;
@@ -774,7 +776,7 @@ mod tests {
             with_probe(&html, |block, measurer| {
                 let width = 240.0;
                 let plan = Plan::new(
-                    block,
+                    block.into(),
                     measurer,
                     [None, Some(width)],
                     [SizeBounds::default(); 2],
@@ -838,7 +840,7 @@ mod tests {
                     "overflow={overflow}, first={first}: two preferred-width items plus one gap, no absolute contribution"
                 );
                 let plan = Plan::new(
-                    block,
+                    block.into(),
                     measurer,
                     [None, Some(300.0)],
                     [SizeBounds::default(); 2],

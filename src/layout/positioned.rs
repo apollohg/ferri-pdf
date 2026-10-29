@@ -292,12 +292,16 @@ fn solve<'a>(
     } else {
         position
     };
+    let source = crate::layout::measure::BlockSource {
+        block,
+        selected: style,
+    };
     let width = cb.width;
     let height = cb.height;
     let table = if style.display.is_table() {
         Some(crate::layout::tables::TablePlan::new(
             measurer,
-            block,
+            source,
             Some(height),
             None,
             crate::layout::geometry::horizontal_with_edges,
@@ -325,7 +329,7 @@ fn solve<'a>(
     // preferred aspect ratio; otherwise the height's limits transfer into the width's.
     if table.is_none() {
         if let Some(used) =
-            crate::layout::ratio::width_from_height(measurer, block, width, Some(height), &edges)?
+            crate::layout::ratio::width_from_height(measurer, source, width, Some(height), &edges)?
         {
             width_constraints.specified = Some(used);
         } else {
@@ -366,7 +370,7 @@ fn solve<'a>(
             .iter()
             .any(|size| matches!(size, crate::style::Size::Intrinsic(_)))
     {
-        Some(crate::layout::intrinsic::content(block, measurer, width)?)
+        Some(crate::layout::intrinsic::content(source, measurer, width)?)
     } else {
         None
     };
@@ -463,7 +467,7 @@ fn solve<'a>(
         && height_constraints.specified.is_none()
         && crate::layout::ratio::PreferredRatio::of_box(style, &edges).is_some();
     let ratio_measured = if ratio {
-        Some(measurer.format_block(block, geometry.clone(), false, Some(height), None)?)
+        Some(measurer.format_block(source, geometry.clone(), false, Some(height), None)?)
     } else {
         None
     };
@@ -486,7 +490,7 @@ fn solve<'a>(
         ratio_measured
     } else if height_constraints.specified.is_none() && vertical.insets.iter().any(Option::is_none)
     {
-        Some(measurer.format_block(block, geometry.clone(), false, Some(height), None)?)
+        Some(measurer.format_block(source, geometry.clone(), false, Some(height), None)?)
     } else {
         None
     };
@@ -508,7 +512,7 @@ fn solve<'a>(
     };
     let mut measured = match natural {
         Some(measured) if Some(placed.size) == natural_height => measured,
-        _ => measurer.format_block(block, geometry, false, Some(height), Some(placed.size))?,
+        _ => measurer.format_block(source, geometry, false, Some(height), Some(placed.size))?,
     };
     measured.style = style;
     let mut top = cb.y + placed.start;

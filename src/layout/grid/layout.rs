@@ -4,6 +4,7 @@ use super::{
 };
 use crate::document::{BlockBox, BlockContent};
 use crate::grid::{AvailableSpace, MaxSizing, MinSizing, SizeBounds, SizingItem};
+use crate::layout::measure::BlockSource;
 use crate::layout::{
     LayoutError,
     geometry::{HorizontalBox, VerticalBox},
@@ -17,11 +18,12 @@ use crate::style::{Alignment, BreakBetween, COLUMNS, Overflow, ROWS};
 
 pub(crate) fn measure<'a>(
     measurer: &mut Measurer<'_>,
-    block: &'a BlockBox,
+    block: impl Into<BlockSource<'a>>,
     geometry: &HorizontalBox,
     containing_height: Option<f32>,
     used_height: Option<f32>,
 ) -> Result<MeasuredBlock<'a>, LayoutError> {
+    let block = block.into();
     let style = block.style();
     let top = geometry.padding[0] + geometry.border[0];
     let bottom = geometry.padding[2] + geometry.border[2];
@@ -29,7 +31,7 @@ pub(crate) fn measure<'a>(
         && measurer
             .grid_parent
             .as_ref()
-            .is_some_and(|parent| parent.matches(block));
+            .is_some_and(|parent| parent.matches(block.block));
     let heights =
         super::sizing::constraints(style, ROWS, containing_height, top + bottom, inherited_rows);
     let row_bounds = SizeBounds {
@@ -265,7 +267,7 @@ pub(crate) fn measure<'a>(
     let height = vertical.used_height(top + rows.extent() + bottom);
     if !height.is_finite() {
         return Err(LayoutError::NonFiniteBlockGeometry {
-            block: measurer.sources.block(block),
+            block: measurer.sources.block(block.block),
         });
     }
     let content = (height - top - bottom).max(0.0);
@@ -321,7 +323,7 @@ pub(crate) fn measure<'a>(
         let offset = range.start + item.top(available, measured.height);
         cells.push(MeasuredCell {
             clipped_height: None,
-            after_events: block.following_events(item.source).collect(),
+            after_events: block.block.following_events(item.source).collect(),
             grid_cell: None,
             backgrounds: Vec::new(),
             block: measured,
@@ -387,6 +389,7 @@ pub(crate) fn measure<'a>(
     let mut items = vec![FlowItem::Edge(BlockEdge::Start, top)];
     items.extend(
         block
+            .block
             .leading_events()
             .map(|event| FlowItem::Events(std::slice::from_ref(event))),
     );
@@ -472,7 +475,7 @@ pub(crate) fn measure<'a>(
     }));
     Ok(MeasuredBlock {
         grid,
-        source: block,
+        source: block.block,
         geometry: geometry.clone(),
         containing_height,
         style,
@@ -482,12 +485,12 @@ pub(crate) fn measure<'a>(
             containing_height,
             geometry.containing_rtl,
         ),
-        before: MarginStrut::edge(block, 0, geometry.containing_width),
-        after: MarginStrut::edge(block, 2, geometry.containing_width),
+        before: MarginStrut::edge(block.block, 0, geometry.containing_width),
+        after: MarginStrut::edge(block.block, 2, geometry.containing_width),
         clearance_before: None,
         clearance_target: measurer
             .clearance_targets
-            .get(&std::ptr::from_ref::<BlockBox>(block))
+            .get(&std::ptr::from_ref::<BlockBox>(block.block))
             .copied(),
         through: false,
         height,

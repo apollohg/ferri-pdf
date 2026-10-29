@@ -285,6 +285,7 @@ enum Effect<'a> {
     PaintClip(Clip),
     /// The `clip` region of an absolutely positioned box, from its fragment's border box.
     RectClip(&'a crate::style::Style),
+    PathClip(&'a crate::style::Style),
     /// The box's transform about its fragment's reference box, placed by its parent's
     /// `Parent3d` node.
     Transform(&'a crate::style::Style, Option<usize>),
@@ -605,6 +606,7 @@ struct ActiveBox<'a> {
     outer_clip_node: Option<usize>,
     transform_node: Option<usize>,
     clip_rect_node: Option<usize>,
+    clip_path_node: Option<usize>,
     parent_3d_node: Option<usize>,
     sticky_node: Option<usize>,
     /// `Paginator::sticky` entries whose containing block, and whose nearest scroll
@@ -1994,6 +1996,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         if clip_rect_node.is_some() {
             self.clip = clip_rect_node;
         }
+        let clip_path_node = (owns_wrapper_properties
+            && block.style.decoration.masks.clip_path.is_some()
+            && block.paint.is_some())
+        .then(|| self.effect_node(self.clip, Effect::PathClip(block.style)));
+        if clip_path_node.is_some() {
+            self.clip = clip_path_node;
+        }
         if let Some(node) = own_group {
             self.anchor_group(node, self.clip);
         }
@@ -2124,6 +2133,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             outer_clip_node,
             transform_node,
             clip_rect_node,
+            clip_path_node,
             parent_3d_node,
             sticky_node,
             sticky_children: Vec::new(),
@@ -2350,6 +2360,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             active.outer_clip_node,
             active.transform_node,
             active.clip_rect_node,
+            active.clip_path_node,
             active.parent_3d_node,
             active.sticky_node,
             active.group_node,
@@ -2398,7 +2409,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         {
             self.page_content = true;
         }
-        if !style.anchor.names.is_empty() || style.contains_absolute() {
+        if super::anchors::key(style).is_some() {
             let mut before = 0.0;
             for (index, &(page, slot)) in active.fragments.iter().enumerate() {
                 if let DisplayItem::Box(paint) = &self.display_lists[page][slot].item {
@@ -2766,7 +2777,8 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 Effect::Transform(..)
                 | Effect::Sticky(..)
                 | Effect::Parent3d(_)
-                | Effect::Group(_) => None,
+                | Effect::Group(_)
+                | Effect::PathClip(_) => None,
             };
             match node.effect {
                 Effect::Clip(..)
@@ -2820,7 +2832,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                         node_regions.push((page, Region::Transform([1.0, 0.0, 0.0, 1.0, x, y])));
                     }
                 }
-                Effect::Parent3d(_) | Effect::Group(_) => {}
+                Effect::Parent3d(_) | Effect::Group(_) | Effect::PathClip(_) => {}
             }
             regions.push(node_regions);
         }
@@ -4469,6 +4481,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     active.outer_clip_node,
                     active.transform_node,
                     active.clip_rect_node,
+                    active.clip_path_node,
                     active.parent_3d_node,
                     active.sticky_node,
                     active.group_node,
@@ -4673,6 +4686,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         } else {
             parent.clip
         };
+        let clip = if style.decoration.masks.clip_path.is_some() {
+            Some(self.effect_node(clip, Effect::PathClip(style)))
+        } else {
+            clip
+        };
         let group = if z_index.is_some() {
             let effect = if style.is_grouped() {
                 Group::of(style)
@@ -4765,9 +4783,36 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         parts
     }
     fn emit_marker(&mut self, mut marker: crate::layout::markers::MeasuredMarker) {
+        let origin = [marker.fragment.x, marker.fragment.baseline];
+        for run in &marker.fragment.runs {
+            self.anchors
+                .text(marker.owner, self.page, run, origin, self.clip);
+        }
+        for decoration in &marker.decorations {
+            for fill in decoration.fills() {
+                if let Some(rect) = crate::paint::shape_bounds(&fill.shape) {
+                    self.anchors.ink(
+                        marker.owner,
+                        self.page,
+                        Rect {
+                            x: rect.x + origin[0],
+                            y: rect.y + origin[1],
+                            ..rect
+                        },
+                        self.clip,
+                    );
+                }
+            }
+        }
         if let Some(mut paint) = marker.image.take() {
             paint.rect.x += marker.fragment.x;
             paint.rect.y += marker.fragment.baseline;
+            self.anchors.ink(
+                marker.owner,
+                self.page,
+                super::anchors::box_ink(&paint),
+                self.clip,
+            );
             if paint.rect.intersects(self.page_rect) {
                 let scope = self.inline_key();
                 self.foreground[self.page].push(ScopedPaint {
@@ -4946,7 +4991,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 crate::layout::inline::fragment_border_box(inline_box, fragment, width);
             border.x += origin[0] + layer.offset[0];
             border.y += origin[1] + layer.offset[1];
-            if !style.anchor.names.is_empty() {
+            if super::anchors::key(style).is_some() {
                 self.anchors.record(
                     style,
                     (
@@ -4991,6 +5036,23 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             ) else {
                 continue;
             };
+            if style.visibility.is_visible() {
+                self.anchors.ink(
+                    super::anchors::key(style),
+                    self.page,
+                    super::anchors::box_ink(&paint),
+                    layer.clip,
+                );
+            }
+            let mut clip = layer.clip;
+            while let Some(index) = clip {
+                if matches!(self.clips[index].effect, Effect::PathClip(owner) if std::ptr::eq(owner, style))
+                {
+                    self.clips[index].paints.push((self.page, paint.clone()));
+                    break;
+                }
+                clip = self.clips[index].parent;
+            }
             self.page_content |= paint.has_ink() && paint.rect.intersects(self.page_rect);
             let scope = self.layer_scope(&layer);
             // The box's own filter, mask or backdrop group is bounded by its fragments, and its
@@ -5348,11 +5410,62 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let lists = &self.display_lists;
         self.anchors
             .assemble(|page, slot| match &lists[page][slot].item {
-                DisplayItem::Box(paint) => paint.background_box,
+                DisplayItem::Box(paint) => {
+                    Some((paint.background_box, super::anchors::box_ink(paint)))
+                }
                 _ => None,
             });
         self.position_canvas_backgrounds();
         let regions = self.effect_regions()?;
+        let mut paths = Vec::with_capacity(self.clips.len());
+        for (index, node) in self.clips.iter().enumerate() {
+            let mut pages: BTreeMap<usize, Vec<Vec<crate::graphics::Point>>> = BTreeMap::new();
+            for (page, region) in &regions[index] {
+                if let Region::Clip(clip) = region
+                    && clip.axes == [true; 2]
+                    && clip.radii != crate::graphics::Radii::default()
+                {
+                    let shape = crate::graphics::Shape::Path {
+                        contours: vec![clip.contour()],
+                        even_odd: false,
+                        clip: None,
+                    };
+                    pages
+                        .entry(*page)
+                        .or_default()
+                        .extend(super::float_area::filled_polygons(
+                            &shape,
+                            &self.measurer.work,
+                        )?);
+                }
+            }
+            if let Effect::PathClip(style) = node.effect {
+                let path = style
+                    .decoration
+                    .masks
+                    .clip_path
+                    .as_ref()
+                    .expect("path clip effect owns a clip-path");
+                for (page, paint) in node
+                    .fragments
+                    .iter()
+                    .filter_map(|&(page, slot)| match &self.display_lists[page][slot].item {
+                        DisplayItem::Box(paint) => Some((page, paint)),
+                        _ => None,
+                    })
+                    .chain(node.paints.iter().map(|(page, paint)| (*page, paint)))
+                {
+                    pages
+                        .entry(page)
+                        .or_default()
+                        .extend(super::float_area::filled_polygons(
+                            &path.outline(paint),
+                            &self.measurer.work,
+                        )?);
+                }
+            }
+            paths.push(pages);
+        }
         let nodes = &self.clips;
         self.anchors.effects(|page, clip| {
             let mut chain = Vec::new();
@@ -5362,7 +5475,10 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     .iter()
                     .find(|(fragment_page, _)| *fragment_page == page)
                 {
-                    chain.push((index, *region));
+                    chain.push((index, super::anchors::Effect::Region(*region)));
+                }
+                if let Some(polygons) = paths[index].get(&page) {
+                    chain.push((index, super::anchors::Effect::Path(polygons.clone())));
                 }
                 next = nodes[index].parent;
             }
@@ -5571,6 +5687,9 @@ fn clipped(
         chain.reverse();
         let mut regions_here = Vec::with_capacity(chain.len());
         for &index in &chain {
+            if matches!(nodes[index].effect, Effect::PathClip(_)) {
+                continue;
+            }
             regions_here.push(
                 regions[index]
                     .iter()
@@ -5692,14 +5811,20 @@ fn clipped(
                     .map(|(_, _, pushes)| pushes.clone())
                     .unwrap_or_default(),
                 Frame::Clip(index) => {
-                    let position = chain
-                        .iter()
-                        .position(|&node| node == index)
-                        .expect("clip frames come from the item's chain");
-                    vec![match regions_here[position] {
-                        Region::Clip(clip) => DisplayItem::PushClip(clip),
-                        Region::Transform(matrix) => DisplayItem::PushTransform(matrix),
-                    }]
+                    if matches!(nodes[index].effect, Effect::PathClip(_)) {
+                        Vec::new()
+                    } else {
+                        let region = regions[index]
+                            .iter()
+                            .find_map(|(fragment_page, region)| {
+                                (*fragment_page == page).then_some(*region)
+                            })
+                            .ok_or(LayoutError::MissingClipFragment { page })?;
+                        vec![match region {
+                            Region::Clip(clip) => DisplayItem::PushClip(clip),
+                            Region::Transform(matrix) => DisplayItem::PushTransform(matrix),
+                        }]
+                    }
                 }
             };
             open.push((frame, pushes.len()));

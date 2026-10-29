@@ -1,6 +1,5 @@
 //! Anchor lookup and physical box measurements (CSS Anchor Positioning 1 §2, §9).
 use super::pagination::Region;
-type EffectChain = Vec<(usize, Region)>;
 use crate::graphics::Rect;
 use crate::style::anchor_values::{
     AnchorBox, AnchorFrame, AnchorFrameMap, AnchorKey, AnchorName, AnchorNode, AnchorReference,
@@ -8,11 +7,19 @@ use crate::style::anchor_values::{
 use crate::style::{PageStyleTarget, Position, Style, Stylesheet};
 use std::collections::{HashMap, HashSet};
 
+type EffectChain = Vec<(usize, Effect)>;
+#[derive(Clone, PartialEq)]
+pub(super) enum Effect {
+    Region(Region),
+    Path(Vec<Vec<crate::graphics::Point>>),
+}
+
 #[derive(Clone, Default)]
 pub(super) struct Measurements {
     boxes: HashMap<PageStyleTarget, Vec<Fragment>>,
     effects: HashMap<(usize, Option<usize>), EffectChain>,
     placements: HashMap<AnchorKey, Placement>,
+    ink: Vec<Ink>,
 }
 #[derive(Clone)]
 struct Fragment {
@@ -23,8 +30,27 @@ struct Fragment {
     fragmentainer: usize,
     page: usize,
     rect: Rect,
+    ink: Rect,
     clip: Option<usize>,
 }
+#[derive(Clone)]
+struct Ink {
+    target: PageStyleTarget,
+    page: usize,
+    rect: Rect,
+    clip: Option<usize>,
+}
+
+pub(super) fn box_ink(paint: &crate::graphics::BoxPaint) -> Rect {
+    paint
+        .shadows(false)
+        .into_iter()
+        .map(|shadow| shadow.bounds)
+        .chain(paint.outline().map(|outline| outline.rect))
+        .chain(paint.border_image_bounds())
+        .fold(paint.rect, Rect::union)
+}
+
 #[derive(Clone)]
 struct Placement {
     columns: bool,
@@ -40,6 +66,26 @@ struct Placement {
 
 pub(super) fn key(style: &Style) -> Option<PageStyleTarget> {
     let origin = style.origin.node()?;
+    Some(crate::style::anchor_values::key(
+        origin.element,
+        origin.pseudo,
+    ))
+}
+
+pub(super) fn ink_key(style: &Style) -> Option<PageStyleTarget> {
+    let mut origin = style.origin.node()?;
+    while matches!(
+        origin.pseudo,
+        Some(
+            crate::style::PseudoElement::Marker
+                | crate::style::PseudoElement::FirstLine
+                | crate::style::PseudoElement::FirstLetter
+                | crate::style::PseudoElement::FirstLetterPrefix
+                | crate::style::PseudoElement::FirstLetterSuffix
+        )
+    ) {
+        origin = origin.parent.node()?;
+    }
     Some(crate::style::anchor_values::key(
         origin.element,
         origin.pseudo,
@@ -62,6 +108,7 @@ impl Measurements {
                 visible,
                 page,
                 rect,
+                ink: rect,
                 source: source.unwrap_or(rect),
                 slot,
                 clip,
@@ -71,23 +118,83 @@ impl Measurements {
         }
     }
 
-    pub(super) fn assemble(&mut self, mut source: impl FnMut(usize, usize) -> Option<Rect>) {
-        for fragment in self.boxes.values_mut().flatten() {
-            if let Some(rect) = fragment.slot.and_then(|slot| source(fragment.page, slot)) {
-                fragment.source = rect;
+    pub(super) fn ink(
+        &mut self,
+        target: Option<PageStyleTarget>,
+        page: usize,
+        rect: Rect,
+        clip: Option<usize>,
+    ) {
+        if let Some(target) = target {
+            self.ink.push(Ink {
+                target,
+                page,
+                rect,
+                clip,
+            });
+        }
+    }
+
+    pub(super) fn text(
+        &mut self,
+        target: Option<PageStyleTarget>,
+        page: usize,
+        run: &crate::text::GlyphRun,
+        origin: crate::graphics::Point,
+        clip: Option<usize>,
+    ) {
+        if let Some(ink) = run.ink_rect(origin) {
+            self.ink(target, page, ink, clip);
+            for shadow in run
+                .shadows
+                .iter()
+                .filter(|shadow| shadow.color.used.alpha > 0.0)
+            {
+                let cast = crate::paint::BoxShadow {
+                    offset: shadow.offset,
+                    blur: shadow.blur,
+                    spread: 0.0,
+                    color: shadow.color.used,
+                    inset: false,
+                };
+                let extent = cast.extent();
+                self.ink(
+                    target,
+                    page,
+                    Rect {
+                        x: ink.x + shadow.offset[0] - extent,
+                        y: ink.y + shadow.offset[1] - extent,
+                        width: ink.width + 2.0 * extent,
+                        height: ink.height + 2.0 * extent,
+                    },
+                    clip,
+                );
             }
         }
     }
 
-    pub(super) fn effects(
+    pub(super) fn assemble(
         &mut self,
-        mut resolve: impl FnMut(usize, Option<usize>) -> Vec<(usize, Region)>,
+        mut source: impl FnMut(usize, usize) -> Option<(Option<Rect>, Rect)>,
     ) {
+        for fragment in self.boxes.values_mut().flatten() {
+            if let Some((source, ink)) = fragment.slot.and_then(|slot| source(fragment.page, slot))
+            {
+                if let Some(rect) = source {
+                    fragment.source = rect;
+                }
+                fragment.ink = ink;
+            }
+        }
+    }
+
+    pub(super) fn effects(&mut self, mut resolve: impl FnMut(usize, Option<usize>) -> EffectChain) {
         for (page, clip) in self
             .boxes
             .values()
             .flatten()
             .map(|fragment| (fragment.page, fragment.clip))
+            .chain(self.ink.iter().map(|ink| (ink.page, ink.clip)))
             .chain(
                 self.placements
                     .values()
@@ -140,6 +247,20 @@ impl Measurements {
         mut clip: impl FnMut(Option<usize>) -> Option<usize>,
     ) {
         let (column, page, slots) = at;
+        let (adopted, remaining): (Vec<_>, Vec<_>) = std::mem::take(&mut other.ink)
+            .into_iter()
+            .partition(|ink| ink.page == column);
+        other.ink = remaining;
+        self.ink.extend(adopted.into_iter().map(|ink| Ink {
+            page,
+            rect: Rect {
+                x: ink.rect.x + shift[0],
+                y: ink.rect.y + shift[1],
+                ..ink.rect
+            },
+            clip: clip(ink.clip),
+            ..ink
+        }));
         for (&key, fragments) in &mut other.boxes {
             let (adopted, remaining): (Vec<_>, Vec<_>) = std::mem::take(fragments)
                 .into_iter()
@@ -157,6 +278,11 @@ impl Measurements {
                     slot: fragment.slot.map(|slot| slots + slot),
                     columns: fragment.columns,
                     fragmentainer: fragment.fragmentainer,
+                    ink: Rect {
+                        x: fragment.ink.x + shift[0],
+                        y: fragment.ink.y + shift[1],
+                        ..fragment.ink
+                    },
                     rect: Rect {
                         x: fragment.rect.x + shift[0],
                         y: fragment.rect.y + shift[1],
@@ -189,127 +315,252 @@ impl Measurements {
         }
     }
 
-    pub(super) fn frames(self, sheet: &Stylesheet) -> AnchorFrameMap {
+    pub(super) fn frames(
+        self,
+        sheet: &Stylesheet,
+        work: &super::work::Budget,
+    ) -> Result<AnchorFrameMap, super::LayoutError> {
         let nodes = sheet.anchor_nodes.borrow();
-        self.placements
-            .iter()
-            .map(|(&query, placement)| {
-                let anchors = placement
-                    .references
-                    .iter()
-                    .map(|reference| {
-                        let target = target(
-                            &nodes,
-                            sheet,
-                            query.target,
-                            reference,
-                            &mut HashSet::new(),
-                            placement.page,
-                        );
-                        let anchor = target.and_then(|target| {
-                            let fragments = self.boxes.get(&target)?;
-                            let source = containing(&nodes, query.target).is_some_and(|cb| {
-                                fragmentation(&nodes, cb) == fragmentation(&nodes, target)
-                            });
-                            let repeated = nodes
-                                .get(&target)
-                                .is_some_and(|node| node.position == Position::Fixed)
-                                && containing(&nodes, target).is_none();
-                            let selected = fragments
-                                .iter()
-                                .position(|fragment| {
-                                    fragment.page == placement.page
-                                        && (!source
-                                            || (fragment.columns == placement.columns
-                                                && fragment.fragmentainer
-                                                    == placement.fragmentainer))
-                                })
-                                .unwrap_or_default();
-                            let cb_regions = &self.effects[&(placement.page, placement.clip)];
-                            let mut rectangle: Option<Rect> = None;
-                            let mut visible = false;
-                            for (_, fragment) in fragments
-                                .iter()
-                                .enumerate()
-                                .filter(|(index, _)| (!source && !repeated) || *index == selected)
-                            {
-                                let source_rect = if source {
-                                    fragment.source
-                                } else {
-                                    fragment.rect
-                                };
-                                let anchor_regions = &self.effects[&(fragment.page, fragment.clip)];
-                                let common = anchor_regions
-                                    .iter()
-                                    .zip(cb_regions)
-                                    .take_while(|(anchor, cb)| anchor == cb)
-                                    .count();
-                                let regions: Vec<_> = anchor_regions[common..]
-                                    .iter()
-                                    .map(|(_, region)| *region)
-                                    .collect();
-                                let mut polygon =
-                                    super::navigation::page_polygon(source_rect, &regions, false);
-                                let clipped =
-                                    super::navigation::page_polygon(fragment.rect, &regions, true);
-                                visible |= fragment.visible
-                                    && !clipped.is_empty()
-                                    && (fragment.rect.width == 0.0
-                                        || fragment.rect.height == 0.0
-                                        || bounds(&clipped).is_some_and(|rect| {
-                                            rect.width > 0.0 && rect.height > 0.0
-                                        }));
-                                for (_, region) in &cb_regions[common..] {
-                                    if let Region::Transform(matrix) = region {
-                                        let transform = kurbo::Affine::new(matrix.map(f64::from));
-                                        if transform.determinant() == 0.0 {
-                                            return None;
-                                        }
-                                        let inverse = transform.inverse();
-                                        for point in &mut polygon {
-                                            let mapped = inverse
-                                                * kurbo::Point::new(
-                                                    f64::from(point[0]),
-                                                    f64::from(point[1]),
-                                                );
-                                            *point = [mapped.x as f32, mapped.y as f32];
-                                        }
-                                    }
-                                }
-                                if let Some(rect) = bounds(&polygon) {
-                                    rectangle = Some(
-                                        rectangle.map_or(rect, |previous| previous.union(rect)),
-                                    );
-                                }
-                            }
-                            let rect = rectangle?;
-                            Some(AnchorBox {
-                                rect: Rect {
-                                    x: rect.x - placement.containing.x,
-                                    y: rect.y - placement.containing.y,
-                                    ..rect
-                                },
-                                visible: visible
-                                    && nodes.get(&target).is_some_and(|node| node.visible),
-                            })
-                        });
-                        (reference.clone(), anchor)
-                    })
-                    .collect();
-                (
-                    query,
-                    AnchorFrame {
-                        page: placement.page,
-                        containing: [placement.containing.width, placement.containing.height],
-                        containing_rtl: placement.rtl,
-                        anchors,
-                        option: placement.option,
-                        overflows: placement.overflows,
-                    },
-                )
-            })
-            .collect()
+        let mut frames = HashMap::new();
+        for (&query, placement) in &self.placements {
+            let mut anchors = Vec::new();
+            for reference in &placement.references {
+                work.spend(nodes.len().max(1))?;
+                let selected = target(
+                    &nodes,
+                    sheet,
+                    query.target,
+                    reference,
+                    &mut HashSet::new(),
+                    placement.page,
+                );
+                let anchor = if let Some(target) = selected {
+                    self.anchor_box(&nodes, query, placement, target, work)?
+                } else {
+                    None
+                };
+                anchors.push((reference.clone(), anchor));
+            }
+            frames.insert(
+                query,
+                AnchorFrame {
+                    page: placement.page,
+                    containing: [placement.containing.width, placement.containing.height],
+                    containing_rtl: placement.rtl,
+                    anchors,
+                    option: placement.option,
+                    overflows: placement.overflows,
+                },
+            );
+        }
+        Ok(frames)
     }
+
+    fn anchor_box(
+        &self,
+        nodes: &HashMap<PageStyleTarget, AnchorNode>,
+        query: AnchorKey,
+        placement: &Placement,
+        target: PageStyleTarget,
+        work: &super::work::Budget,
+    ) -> Result<Option<AnchorBox>, super::LayoutError> {
+        let Some(fragments) = self.boxes.get(&target) else {
+            return Ok(None);
+        };
+        let source = containing(nodes, query.target)
+            .is_some_and(|cb| fragmentation(nodes, cb) == fragmentation(nodes, target));
+        let repeated = nodes
+            .get(&target)
+            .is_some_and(|node| node.position == Position::Fixed)
+            && containing(nodes, target).is_none();
+        let selected = fragments
+            .iter()
+            .position(|fragment| {
+                fragment.page == placement.page
+                    && (!source
+                        || (fragment.columns == placement.columns
+                            && fragment.fragmentainer == placement.fragmentainer))
+            })
+            .unwrap_or_default();
+        let cb_regions = &self.effects[&(placement.page, placement.clip)];
+        let mut rectangle: Option<Rect> = None;
+        let mut visible = false;
+        for (_, fragment) in fragments
+            .iter()
+            .enumerate()
+            .filter(|(index, _)| (!source && !repeated) || *index == selected)
+        {
+            let source_rect = if source {
+                fragment.source
+            } else {
+                fragment.rect
+            };
+            let anchor_regions = &self.effects[&(fragment.page, fragment.clip)];
+            let common = anchor_regions
+                .iter()
+                .zip(cb_regions)
+                .take_while(|(anchor, cb)| anchor == cb)
+                .count();
+            let regions: Vec<_> = anchor_regions[common..]
+                .iter()
+                .filter_map(|(_, effect)| match effect {
+                    Effect::Region(region) => Some(*region),
+                    Effect::Path(_) => None,
+                })
+                .collect();
+            let mut polygon = super::navigation::page_polygon(source_rect, &regions, false);
+            let mut ink = fragment.ink;
+            for (owner, page, rect, clip) in self
+                .boxes
+                .iter()
+                .flat_map(|(&owner, fragments)| {
+                    fragments
+                        .iter()
+                        .filter(|fragment| fragment.visible)
+                        .map(move |fragment| (owner, fragment.page, fragment.ink, fragment.clip))
+                })
+                .chain(
+                    self.ink
+                        .iter()
+                        .map(|ink| (ink.target, ink.page, ink.rect, ink.clip)),
+                )
+            {
+                work.spend(1)?;
+                if page != fragment.page || !descendant(nodes, owner, target, work)? {
+                    continue;
+                }
+                let effects = &self.effects[&(page, clip)];
+                let common = effects
+                    .iter()
+                    .zip(anchor_regions)
+                    .take_while(|(a, b)| a == b)
+                    .count();
+                let mut pieces = clipped(rect, &effects[common..], work)?;
+                for (_, effect) in &anchor_regions[common..] {
+                    if let Effect::Region(Region::Transform(matrix)) = effect {
+                        let transform = kurbo::Affine::new(matrix.map(f64::from));
+                        if transform.determinant() == 0.0 {
+                            pieces.clear();
+                            break;
+                        }
+                        let inverse = transform.inverse();
+                        for point in pieces.iter_mut().flatten() {
+                            let mapped = inverse
+                                * kurbo::Point::new(f64::from(point[0]), f64::from(point[1]));
+                            *point = [mapped.x as f32, mapped.y as f32];
+                        }
+                    }
+                }
+                if let Some(rect) = bounds(&pieces.into_iter().flatten().collect::<Vec<_>>()) {
+                    ink = ink.union(rect);
+                }
+            }
+            let clipped = clipped(ink, &anchor_regions[common..], work)?;
+            visible |= fragment.visible
+                && clipped.iter().any(|polygon| {
+                    !polygon.is_empty()
+                        && (fragment.rect.width == 0.0
+                            || fragment.rect.height == 0.0
+                            || polygon_area(polygon) > 0.0)
+                });
+            for (_, region) in &cb_regions[common..] {
+                if let Effect::Region(Region::Transform(matrix)) = region {
+                    let transform = kurbo::Affine::new(matrix.map(f64::from));
+                    if transform.determinant() == 0.0 {
+                        return Ok(None);
+                    }
+                    let inverse = transform.inverse();
+                    for point in &mut polygon {
+                        let mapped =
+                            inverse * kurbo::Point::new(f64::from(point[0]), f64::from(point[1]));
+                        *point = [mapped.x as f32, mapped.y as f32];
+                    }
+                }
+            }
+            if let Some(rect) = bounds(&polygon) {
+                rectangle = Some(rectangle.map_or(rect, |previous| previous.union(rect)));
+            }
+        }
+        let Some(rect) = rectangle else {
+            return Ok(None);
+        };
+        Ok(Some(AnchorBox {
+            rect: Rect {
+                x: rect.x - placement.containing.x,
+                y: rect.y - placement.containing.y,
+                ..rect
+            },
+            visible: visible && nodes.get(&target).is_some_and(|node| node.visible),
+        }))
+    }
+}
+
+fn descendant(
+    nodes: &HashMap<PageStyleTarget, AnchorNode>,
+    mut node: PageStyleTarget,
+    ancestor: PageStyleTarget,
+    work: &super::work::Budget,
+) -> Result<bool, super::LayoutError> {
+    loop {
+        work.spend(1)?;
+        if node == ancestor {
+            return Ok(true);
+        }
+        let Some(parent) = nodes.get(&node).and_then(|node| node.parent) else {
+            return Ok(false);
+        };
+        node = parent;
+    }
+}
+
+fn polygon_area(polygon: &[crate::graphics::Point]) -> f32 {
+    polygon
+        .iter()
+        .enumerate()
+        .map(|(i, a)| {
+            let b = polygon[(i + 1) % polygon.len()];
+            a[0] * b[1] - a[1] * b[0]
+        })
+        .sum::<f32>()
+        .abs()
+}
+
+fn clipped(
+    rect: Rect,
+    effects: &[(usize, Effect)],
+    work: &super::work::Budget,
+) -> Result<Vec<Vec<crate::graphics::Point>>, super::LayoutError> {
+    let mut pieces = vec![super::navigation::rect_corners(rect).to_vec()];
+    for (_, effect) in effects.iter().rev() {
+        let vertices = pieces.iter().map(Vec::len).sum::<usize>().max(1);
+        work.spend(match effect {
+            Effect::Region(_) => vertices,
+            Effect::Path(polygons) => {
+                vertices.saturating_mul(polygons.iter().map(Vec::len).sum::<usize>().max(1))
+            }
+        })?;
+        match effect {
+            Effect::Region(region) => {
+                pieces = pieces
+                    .into_iter()
+                    .map(|polygon| super::navigation::map_polygon(polygon, *region))
+                    .filter(|polygon| !polygon.is_empty())
+                    .collect();
+            }
+            Effect::Path(polygons) => {
+                pieces = pieces
+                    .iter()
+                    .flat_map(|piece| {
+                        polygons
+                            .iter()
+                            .map(move |boundary| super::float_area::intersect(piece, boundary))
+                    })
+                    .filter(|polygon| !polygon.is_empty())
+                    .collect();
+            }
+        }
+    }
+    Ok(pieces)
 }
 
 fn bounds(points: &[[f32; 2]]) -> Option<Rect> {

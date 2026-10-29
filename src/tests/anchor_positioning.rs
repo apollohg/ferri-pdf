@@ -481,3 +481,167 @@ fn cross_page_effects_compare_resolved_matrices_and_clips() {
     );
     assert_rect(boxes[0].1, [10.0, 50.0, 20.0, 10.0]);
 }
+
+#[test]
+fn selected_try_styles_drive_ratio_transfer_and_natural_height_measurement() {
+    for (base, option, content, expected) in [
+        (
+            "width:auto;height:10pt;aspect-ratio:2",
+            "width:40pt",
+            "",
+            [20.0, 20.0, 40.0, 10.0],
+        ),
+        (
+            "width:auto;height:10pt;aspect-ratio:2",
+            "height:20pt",
+            "",
+            [20.0, 20.0, 40.0, 20.0],
+        ),
+        (
+            "width:20pt;height:40pt",
+            "height:auto",
+            "<div style='height:10pt'></div>",
+            [20.0, 20.0, 20.0, 10.0],
+        ),
+    ] {
+        let trace = render(
+            &format!(
+                "section{{position:relative;width:160pt;height:100pt}}@position-try --fit{{left:0;{option}}}.target{{left:145pt;top:0;{base};position-try-fallbacks:--fit}}"
+            ),
+            &format!("<section><div class=target>{content}</div></section>"),
+        );
+        assert_rect(targets(&trace)[0].1, expected);
+    }
+}
+
+#[test]
+fn selected_try_styles_drive_specialized_root_sizing() {
+    for display in ["block", "flex", "grid", "table"] {
+        let content = if display == "table" {
+            "<tbody><tr><td style='padding:0;height:10pt'></td></tr></tbody>"
+        } else {
+            "<div style='height:10pt'></div>"
+        };
+        let element = if display == "table" { "table" } else { "div" };
+        let trace = render(
+            &format!(
+                "section{{position:relative;width:160pt;height:100pt}}@position-try --fit{{left:0;height:auto;min-height:15pt;max-height:20pt}}.target{{display:{display};border-spacing:0;left:145pt;top:0;width:20pt;height:40pt;position-try-fallbacks:--fit}}"
+            ),
+            &format!("<section><{element} class=target>{content}</{element}></section>"),
+        );
+        assert_rect(targets(&trace)[0].1, [20.0, 20.0, 20.0, 15.0]);
+    }
+    let trace = render(
+        "section{position:relative;width:160pt;height:100pt}@position-try --fit{left:0;width:40pt;height:auto}.target{left:145pt;top:0;width:20pt;height:40pt;position-try-fallbacks:--fit}",
+        "<section><img class=target src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%2210%22/%3E'></section>",
+    );
+    assert_rect(targets(&trace)[0].1, [20.0, 20.0, 40.0, 40.0]);
+}
+
+#[test]
+fn position_try_variable_shorthands_expand_after_substitution() {
+    let trace = render(
+        "section{position:relative;width:160pt;height:100pt}@position-try --fit{inset:var(--edges);margin:var(--margin);size:var(--size)}.target{--edges:0 auto auto 0;--margin:5pt;--size:40pt 20pt;left:145pt;top:0;position-try-fallbacks:--fit}",
+        "<section><div class=target></div></section>",
+    );
+    assert_rect(targets(&trace)[0].1, [25.0, 25.0, 40.0, 20.0]);
+}
+
+#[test]
+fn escaped_anchor_function_names_inside_math_resolve_normally() {
+    let trace = render(
+        r".target{left:calc(\61nchor(left) + 1pt);top:calc(\61nchor(bottom) + 2pt);width:calc(\61nchor-size(width) + 3pt)}",
+        "<div class=anchor></div><div class=target></div>",
+    );
+    assert_rect(targets(&trace)[0].1, [61.0, 52.0, 63.0, 10.0]);
+}
+
+#[test]
+fn anchors_visible_uses_ink_overflow_without_changing_border_geometry() {
+    for ink in [
+        "box-shadow:-20pt 0 green",
+        "box-sizing:border-box;border:1pt solid transparent;border-image:linear-gradient(green,green) 1 / 1 / 20pt",
+        "text-indent:-25pt;white-space:nowrap;font:10pt monospace",
+    ] {
+        let trace = render(
+            &format!(
+                "section{{width:20pt;height:40pt;overflow:hidden}}.anchor{{margin-left:30pt;width:10pt;height:10pt;{ink}}}.target{{left:anchor(left);top:anchor(bottom);position-visibility:anchors-visible}}"
+            ),
+            "<section><div class=anchor>Ink</div></section><div class=target></div>",
+        );
+        assert_eq!(
+            targets(&trace).len(),
+            1,
+            "ink from {ink} intersects the intervening clip"
+        );
+        assert_rect(targets(&trace)[0].1, [50.0, 30.0, 20.0, 10.0]);
+    }
+}
+
+#[test]
+fn anchors_visible_clips_against_paths_but_ignores_alpha_masks_and_opacity() {
+    for (effect, visible) in [
+        ("clip-path:inset(100%)", false),
+        ("clip-path:circle(5pt at 0 0)", false),
+        (
+            "clip-path:path(evenodd,'M0 0H100V100H0Z M20 0H80V80H20Z')",
+            false,
+        ),
+        ("clip-path:inset(0)", true),
+        ("mask-image:linear-gradient(transparent,transparent)", true),
+        ("opacity:0", true),
+    ] {
+        let trace = render(
+            &format!(
+                "section{{width:100pt;height:100pt;{effect}}}.anchor{{margin-left:30pt;width:10pt;height:10pt}}.target{{left:anchor(left);top:anchor(bottom);position-visibility:anchors-visible}}"
+            ),
+            "<section><div class=anchor></div></section><div class=target></div>",
+        );
+        assert_eq!(
+            !targets(&trace).is_empty(),
+            visible,
+            "anchor visibility with {effect}"
+        );
+    }
+}
+
+#[test]
+fn rounded_overflow_clips_anchor_ink_at_the_corner() {
+    let trace = render(
+        "section{width:100pt;height:100pt;overflow:hidden;border-radius:50pt}.anchor{margin:0;width:10pt;height:10pt}.target{left:anchor(left);top:anchor(bottom);position-visibility:anchors-visible}",
+        "<section><div class=anchor></div></section><div class=target></div>",
+    );
+    assert!(
+        targets(&trace).is_empty(),
+        "the corner is outside the rounded overflow region"
+    );
+}
+
+#[test]
+fn outside_list_markers_and_descendant_shadows_contribute_anchor_ink() {
+    for (extra, content) in [
+        (
+            "display:list-item;list-style-type:'Ink';font:10pt monospace",
+            "",
+        ),
+        (
+            "",
+            "<div style='height:5pt;width:1pt;box-shadow:-20pt 0 green'></div>",
+        ),
+    ] {
+        let trace = render(
+            &format!(
+                "section{{width:20pt;height:40pt;overflow:hidden}}.anchor{{margin-left:30pt;width:10pt;height:10pt;{extra}}}.target{{left:anchor(left);top:anchor(bottom);position-visibility:anchors-visible}}"
+            ),
+            &format!(
+                "<section><div class=anchor>{content}</div></section><div class=target></div>"
+            ),
+        );
+        assert_eq!(
+            targets(&trace).len(),
+            1,
+            "anchor contents must contribute ink: {extra} {content}"
+        );
+        assert_rect(targets(&trace)[0].1, [50.0, 30.0, 20.0, 10.0]);
+    }
+}

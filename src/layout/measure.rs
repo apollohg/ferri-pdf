@@ -457,6 +457,38 @@ pub(super) fn overflow_height(items: &[FlowItem<'_>]) -> f32 {
     extent
 }
 
+/// A box's own selected style with its canonical content and layout identity.
+#[derive(Clone, Copy)]
+pub(crate) struct BlockSource<'a> {
+    pub block: &'a BlockBox,
+    pub selected: &'a Style,
+}
+impl<'a> From<&'a BlockBox> for BlockSource<'a> {
+    fn from(block: &'a BlockBox) -> Self {
+        Self {
+            block,
+            selected: block.style(),
+        }
+    }
+}
+impl std::ops::Deref for BlockSource<'_> {
+    type Target = BlockBox;
+    fn deref(&self) -> &Self::Target {
+        self.block
+    }
+}
+impl<'a> BlockSource<'a> {
+    pub(crate) fn style(self) -> &'a Style {
+        self.selected
+    }
+    pub(crate) fn children(self) -> &'a [BlockContent] {
+        self.block.children()
+    }
+    pub(crate) fn marker(self) -> Option<&'a crate::document::Paragraph> {
+        self.block.marker()
+    }
+}
+
 pub(super) struct Measurer<'a> {
     pub work: crate::layout::work::Budget,
     pub text: &'a TextContext<'a>,
@@ -500,11 +532,12 @@ impl Measurer<'_> {
         Ok(self.text.layout_paragraph(paragraph, width, atomics)?)
     }
 
-    pub(super) fn box_paint(
+    pub(super) fn box_paint<'a>(
         &self,
-        block: &BlockBox,
+        block: impl Into<BlockSource<'a>>,
         geometry: &crate::layout::geometry::HorizontalBox,
     ) -> Option<BoxPaint> {
+        let block = block.into();
         let style = block.style();
         let mut decoration = block.decoration().clone();
         if block.is_canvas_source() && !self.canvas_images {
@@ -517,8 +550,8 @@ impl Measurer<'_> {
             || style.decoration.masks.is_masked()
             || style.contains_absolute()
             || style.is_scroll_container()
-            || contains_sticky(block)
-            || bounds_enclosing_inline(block)
+            || contains_sticky(block.block)
+            || bounds_enclosing_inline(block.block)
             || !block.navigation().is_empty();
         let rect = geometry.border_box(0.0);
         (style.display != Display::None && (decoration.is_visible() || fragments)).then(|| {
@@ -577,20 +610,27 @@ impl Measurer<'_> {
 
     pub(super) fn format_block<'a>(
         &mut self,
-        block: &'a BlockBox,
+        block: impl Into<BlockSource<'a>>,
         geometry: crate::layout::geometry::HorizontalBox,
         root: bool,
         containing_height: Option<f32>,
         used_height: Option<f32>,
     ) -> Result<MeasuredBlock<'a>, LayoutError> {
-        self.measure_flow(block, geometry, root, containing_height, used_height, None)
+        self.measure_flow(
+            block.into(),
+            geometry,
+            root,
+            containing_height,
+            used_height,
+            None,
+        )
     }
 
     /// A block's flow; a `continue: discard` container keeps at most `budget` line boxes and
     /// the content before its block size overflows.
     fn measure_flow<'a>(
         &mut self,
-        block: &'a BlockBox,
+        block: BlockSource<'a>,
         geometry: crate::layout::geometry::HorizontalBox,
         root: bool,
         containing_height: Option<f32>,
@@ -619,7 +659,7 @@ impl Measurer<'_> {
     /// the block size, which follows the last line box that fits but never precedes the first.
     fn discarding_flow<'a>(
         &mut self,
-        block: &'a BlockBox,
+        block: BlockSource<'a>,
         geometry: crate::layout::geometry::HorizontalBox,
         root: bool,
         containing_height: Option<f32>,
@@ -723,7 +763,7 @@ impl Measurer<'_> {
 
     fn start_flow<'a>(
         &mut self,
-        block: &'a BlockBox,
+        block: BlockSource<'a>,
         geometry: crate::layout::geometry::HorizontalBox,
         root: bool,
         containing_height: Option<f32>,
@@ -734,7 +774,7 @@ impl Measurer<'_> {
         let style = block.style();
         let spanning = self
             .spanner
-            .is_some_and(|spanner| std::ptr::eq(spanner, block));
+            .is_some_and(|spanner| std::ptr::eq(spanner, block.block));
         if spanning
             || !matches!(style.display, Display::Block | Display::ListItem)
             || style.establishes_formatting_context()
@@ -742,7 +782,7 @@ impl Measurer<'_> {
             self.column_flow = None;
         }
         let started = (|| {
-            let index = self.sources.block(block);
+            let index = self.sources.block(block.block);
             if !geometry.width.is_finite()
                 || !geometry.x.is_finite()
                 || geometry
@@ -788,13 +828,14 @@ impl Measurer<'_> {
                     .with_used_height(used_height);
             let marker = if let Some(paragraph) = block.marker() {
                 let index = self.sources.paragraph(paragraph);
-                Some(crate::layout::markers::measure(
+                Some(Box::new(crate::layout::markers::measure(
                     paragraph,
                     self,
                     index,
                     geometry.x - geometry.padding[3] - geometry.border[3],
                     geometry.x + geometry.width + geometry.padding[1] + geometry.border[1],
-                )?)
+                    super::anchors::key(style),
+                )?))
             } else {
                 None
             };
@@ -829,8 +870,8 @@ impl Measurer<'_> {
                 used_height,
                 cell_percentage_chain: false,
                 vertical,
-                before: MarginStrut::edge(block, 0, geometry.containing_width),
-                after: MarginStrut::edge(block, 2, geometry.containing_width),
+                before: MarginStrut::edge(block.block, 0, geometry.containing_width),
+                after: MarginStrut::edge(block.block, 2, geometry.containing_width),
                 geometry,
                 pending: MarginStrut::default(),
                 items: if visible {
@@ -865,7 +906,7 @@ impl Measurer<'_> {
 
     fn format_flow<'a>(
         &mut self,
-        block: &'a BlockBox,
+        block: BlockSource<'a>,
         geometry: crate::layout::geometry::HorizontalBox,
         root: bool,
         containing_height: Option<f32>,
@@ -927,8 +968,14 @@ impl Measurer<'_> {
                             lines,
                             following: Self::following(&frames),
                         });
-                        let measured =
-                            self.measure_flow(child, geometry, false, containing, None, budget)?;
+                        let measured = self.measure_flow(
+                            child.into(),
+                            geometry,
+                            false,
+                            containing,
+                            None,
+                            budget,
+                        )?;
                         let mut counts = [0; 2];
                         if !measured.independent {
                             lines_within(&measured.items, 0.0, f32::INFINITY, &mut counts);
@@ -979,7 +1026,7 @@ impl Measurer<'_> {
                             .constrain(0.0)
                         });
                         match self.start_flow(
-                            child,
+                            child.into(),
                             geometry,
                             false,
                             frame.vertical.definite(),
@@ -1163,7 +1210,7 @@ enum FlowStart<'a> {
 }
 
 struct FlowFrame<'a> {
-    block: &'a BlockBox,
+    block: BlockSource<'a>,
     geometry: crate::layout::geometry::HorizontalBox,
     root: bool,
     index: usize,
@@ -1189,7 +1236,7 @@ struct FlowFrame<'a> {
     restore_column_flow: Option<ColumnFlow>,
     previous_break_after: BreakBetween,
     children: std::slice::Iter<'a, BlockContent>,
-    marker: Option<crate::layout::markers::MeasuredMarker>,
+    marker: Option<Box<crate::layout::markers::MeasuredMarker>>,
     /// The region break budget of the `continue: discard` container this frame measures.
     clamp: Option<FrameClamp>,
     /// A region break inside the box ends its first fragment, which keeps no end edge.
@@ -1205,7 +1252,8 @@ impl<'a> FlowFrame<'a> {
     fn push(&mut self, item: FlowItem<'a>) {
         let cleared = matches!(&item, FlowItem::Block(block) | FlowItem::Spanner(block) if block.clearance_target.is_some());
         if self.at_start && self.collapse_top && !cleared {
-            self.before.merge(self.pending.clone().within(self.block));
+            self.before
+                .merge(self.pending.clone().within(self.block.block));
         } else {
             let mut margin = self.pending.clone();
             if let FlowItem::Block(block) | FlowItem::Spanner(block) = &item
@@ -1281,7 +1329,7 @@ impl<'a> FlowFrame<'a> {
         }
         let clearance_target = measurer
             .clearance_targets
-            .get(&std::ptr::from_ref::<BlockBox>(block))
+            .get(&std::ptr::from_ref::<BlockBox>(block.block))
             .copied();
         let through = clearance_target.is_none()
             && !root
@@ -1291,11 +1339,11 @@ impl<'a> FlowFrame<'a> {
             && bottom_edge == 0.0
             && vertical.collapse_through();
         if through {
-            before.merge(pending.clone().within(block));
+            before.merge(pending.clone().within(block.block));
             before.merge(after);
             after = MarginStrut::default();
         } else if !root && !independent && bottom_edge == 0.0 && vertical.collapse_bottom() {
-            let mut collapsed = pending.within(block);
+            let mut collapsed = pending.within(block.block);
             collapsed.merge(after);
             after = collapsed;
         } else {
@@ -1358,7 +1406,7 @@ impl<'a> FlowFrame<'a> {
         }
         Ok(MeasuredBlock {
             grid: None,
-            source: block,
+            source: block.block,
             geometry: geometry.clone(),
             containing_height,
             offset: style.relative_offset(
@@ -1388,7 +1436,7 @@ impl<'a> FlowFrame<'a> {
             end_space: bottom_edge,
             start_space: top_edge,
             repeat_space: 0.0,
-            marker: marker.map(Box::new),
+            marker,
             table: None,
             continues: false,
             spanner_fragment: None,

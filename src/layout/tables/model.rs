@@ -310,7 +310,7 @@ impl<'a> Data<'a> {
             .iter()
             .enumerate()
             .map(|(index, cell)| {
-                let content = intrinsic::content(cell, measurer, available)?;
+                let content = intrinsic::content(*cell, measurer, available)?;
                 let style = cell.style();
                 let border = self.cell_borders(index);
                 let edges = style.padding[1].resolve(reference)

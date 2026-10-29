@@ -634,15 +634,13 @@ pub(crate) fn accepted(property: Property) -> bool {
 /// Tree-scoped names retain the namespace of their declaring rule (§2.1, §6.4).
 pub(super) fn namespaced(property: Property, value: &crate::style::declaration::Specified) -> bool {
     match value {
-        crate::style::declaration::Specified::Value(value) => {
-            matches!(
-                property,
-                Property::AnchorName
-                    | Property::AnchorScope
-                    | Property::PositionAnchor
-                    | Property::PositionTryFallbacks
-            ) || mentions_anchor(value)
-        }
+        crate::style::declaration::Specified::Value(value) => match property {
+            Property::AnchorName | Property::AnchorScope | Property::PositionTryFallbacks => {
+                value.keyword() != Some(Keyword::None)
+            }
+            Property::PositionAnchor => value.keyword().is_none(),
+            _ => mentions_anchor(value),
+        },
         crate::style::declaration::Specified::Toggle(values) => values
             .iter()
             .any(|value| namespaced(property, &value.value)),
@@ -1204,9 +1202,34 @@ fn mentions_anchor(value: &Component) -> bool {
     }
     match value.unwrap() {
         Component::Math(source, ..) => {
-            let lowercase = source.to_ascii_lowercase();
-            lowercase.contains(&format!("{ANCHOR_FUNCTION}("))
-                || lowercase.contains(&format!("{ANCHOR_SIZE_FUNCTION}("))
+            fn nested(input: &mut cssparser::Parser<'_, '_>) -> bool {
+                let mut found = false;
+                while let Ok(token) = input.next().cloned() {
+                    match token {
+                        cssparser::Token::Function(name)
+                            if name.eq_ignore_ascii_case(ANCHOR_FUNCTION)
+                                || name.eq_ignore_ascii_case(ANCHOR_SIZE_FUNCTION) =>
+                        {
+                            found = true;
+                        }
+                        cssparser::Token::Function(_)
+                        | cssparser::Token::ParenthesisBlock
+                        | cssparser::Token::SquareBracketBlock
+                        | cssparser::Token::CurlyBracketBlock => {
+                            found |= input
+                                .parse_nested_block(|input| {
+                                    Ok::<_, cssparser::ParseError<'_, ()>>(nested(input))
+                                })
+                                .unwrap_or(false);
+                        }
+                        _ => {}
+                    }
+                }
+                found
+            }
+            nested(&mut cssparser::Parser::new(
+                &mut cssparser::ParserInput::new(source),
+            ))
         }
         _ => false,
     }

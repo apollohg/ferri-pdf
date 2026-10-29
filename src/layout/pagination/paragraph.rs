@@ -788,6 +788,40 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     if grouped && part.runs.is_empty() && part.decorations.is_empty() {
                         continue;
                     }
+                    let origin = [
+                        line_x + offset + self.offset[0] + part.layer.offset[0],
+                        baseline + part.layer.offset[1],
+                    ];
+                    for run in &part.runs {
+                        let style = &paragraph.spans()[run.source_span].style;
+                        self.anchors.text(
+                            crate::layout::anchors::ink_key(style),
+                            self.page,
+                            run,
+                            origin,
+                            part.layer.clip,
+                        );
+                    }
+                    for decoration in &part.decorations {
+                        let style = decoration.owner.map_or_else(
+                            || paragraph.style(),
+                            |owner| &paragraph.boxes()[owner].style,
+                        );
+                        for fill in decoration.fills() {
+                            if let Some(rect) = crate::paint::shape_bounds(&fill.shape) {
+                                self.anchors.ink(
+                                    crate::layout::anchors::ink_key(style),
+                                    self.page,
+                                    Rect {
+                                        x: rect.x + origin[0],
+                                        y: rect.y + origin[1],
+                                        ..rect
+                                    },
+                                    part.layer.clip,
+                                );
+                            }
+                        }
+                    }
                     self.emit_line(
                         TextLine {
                             paragraph: index,

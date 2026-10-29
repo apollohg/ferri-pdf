@@ -1,16 +1,18 @@
 use crate::document::{BlockBox, BlockContent};
 use crate::layout::LayoutError;
+use crate::layout::measure::BlockSource;
 use crate::layout::measure::Measurer;
 use crate::style::{BoxSizing, LengthPercentage, Size};
 use crate::text::IntrinsicWidths;
 
 /// Content-box min- and max-content widths; replaced elements with only an aspect ratio
 /// stretch into `available`, the width of the containing block being sized into.
-pub(super) fn content(
-    block: &BlockBox,
+pub(super) fn content<'a>(
+    block: impl Into<BlockSource<'a>>,
     measurer: &Measurer<'_>,
     available: f32,
 ) -> Result<IntrinsicWidths, LayoutError> {
+    let block = block.into();
     measurer.work.spend(1)?;
     if block.image().is_some() {
         return Ok(crate::layout::images::intrinsic(block, available));
@@ -41,7 +43,7 @@ pub(super) fn content(
     } else if contained {
         IntrinsicWidths::default()
     } else {
-        flow(block, measurer, available)?
+        flow(block.block, measurer, available)?
     };
     Ok(if style.multicol.is_multicol() {
         crate::layout::multicol::intrinsic(style, sizes)
@@ -75,11 +77,12 @@ fn flow(
     Ok(sizes)
 }
 
-pub(super) fn measure(
-    block: &BlockBox,
+pub(super) fn measure<'a>(
+    block: impl Into<BlockSource<'a>>,
     measurer: &Measurer<'_>,
     available: f32,
 ) -> Result<IntrinsicWidths, LayoutError> {
+    let block = block.into();
     if block.style().display.is_table() {
         return crate::layout::tables::intrinsic(block, measurer, available);
     }
@@ -158,13 +161,14 @@ pub(super) fn outer_widths(
 }
 
 /// Width constraints with content measurements only when a keyword needs them.
-pub(super) fn width_constraints(
-    block: &BlockBox,
+pub(super) fn width_constraints<'a>(
+    block: impl Into<BlockSource<'a>>,
     measurer: &Measurer<'_>,
     basis: Option<f32>,
     edges: f32,
     available: Option<f32>,
 ) -> Result<crate::style::SizeConstraints, LayoutError> {
+    let block = block.into();
     let style = block.style();
     let sizes = [&style.width, &style.min_width, &style.max_width];
     let constraints = crate::style::SizeConstraints::new(sizes, basis, style.box_sizing, edges);

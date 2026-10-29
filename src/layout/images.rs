@@ -1,5 +1,6 @@
 use crate::document::BlockBox;
 use crate::graphics::{BoxPaint, ImagePaint, Rect};
+use crate::layout::measure::BlockSource;
 use crate::layout::{
     LayoutError,
     geometry::{HorizontalBox, SizeConstraints},
@@ -30,11 +31,11 @@ struct Natural {
     ratio: Option<PreferredRatio>,
 }
 impl Natural {
-    fn of(block: &BlockBox, available_width: f32, edges: [f32; 2]) -> Self {
+    fn of(block: BlockSource<'_>, available_width: f32, edges: [f32; 2]) -> Self {
         let image = block.image().unwrap();
         let style = block.style();
         let contained = style.containment().size;
-        let mut size = density_corrected(block, available_width);
+        let mut size = density_corrected(block.block, available_width);
         for (axis, contained) in contained.into_iter().enumerate() {
             if contained {
                 // CSS Sizing 4 §5.2: the explicit intrinsic inner size, if any.
@@ -58,16 +59,21 @@ impl Natural {
     }
 }
 
-fn edges(block: &BlockBox, containing_width: f32) -> crate::layout::geometry::Edges {
+fn edges<'a>(
+    block: impl Into<BlockSource<'a>>,
+    containing_width: f32,
+) -> crate::layout::geometry::Edges {
+    let block = block.into();
     crate::layout::geometry::Edges::of(block.style(), containing_width)
 }
 
 /// Content-box width and height constraints, percentages resolved against the containing block.
-pub(super) fn constraints(
-    block: &BlockBox,
+pub(super) fn constraints<'a>(
+    block: impl Into<BlockSource<'a>>,
     containing_width: f32,
     containing_height: Option<f32>,
 ) -> [SizeConstraints; 2] {
+    let block = block.into();
     let style = block.style();
     let edges = edges(block, containing_width);
     let [horizontal, vertical] = crate::layout::ratio::axis_edges(&edges);
@@ -117,14 +123,15 @@ pub(super) fn constraints(
 /// With both sizes automatic, the natural width and the height it gives through the ratio
 /// meet the minimum and maximum of each axis in turn, each limit transferring through the
 /// ratio (CSS 2 §10.4, CSS Sizing 4 §4.4); a size the other axis then violates is clamped.
-pub(super) fn size(
-    block: &BlockBox,
+pub(super) fn size<'a>(
+    block: impl Into<BlockSource<'a>>,
     containing_width: f32,
     stretch_width: f32,
     containing_height: Option<f32>,
     used_width: Option<f32>,
     used_height: Option<f32>,
 ) -> [f32; 2] {
+    let block = block.into();
     let edges = edges(block, containing_width);
     let natural = Natural::of(
         block,
@@ -168,7 +175,8 @@ pub(super) fn size(
 
 /// Min- and max-content widths (CSS Sizing 3 §5.1): with only an aspect ratio the minimum is
 /// zero and the maximum stretches into `available`, the containing block width.
-pub(super) fn intrinsic(block: &BlockBox, available: f32) -> IntrinsicWidths {
+pub(super) fn intrinsic<'a>(block: impl Into<BlockSource<'a>>, available: f32) -> IntrinsicWidths {
+    let block = block.into();
     let max = size(block, 0.0, available, None, None, None)[0];
     let min = if block.image().unwrap().natural_size().ratio_only()
         && !block.style().containment().size[0]
@@ -182,11 +190,12 @@ pub(super) fn intrinsic(block: &BlockBox, available: f32) -> IntrinsicWidths {
 
 pub(super) fn measure<'a>(
     measurer: &Measurer<'_>,
-    block: &'a BlockBox,
+    block: impl Into<BlockSource<'a>>,
     geometry: &HorizontalBox,
     containing_height: Option<f32>,
     used_height: Option<f32>,
 ) -> Result<MeasuredBlock<'a>, LayoutError> {
+    let block = block.into();
     let style = block.style();
     let [width, height] = size(
         block,
@@ -229,7 +238,7 @@ pub(super) fn measure<'a>(
     } else {
         style
             .object_fit
-            .size(density_corrected(block, width), [width, height])
+            .size(density_corrected(block.block, width), [width, height])
     };
     let border_box = BoxPaint {
         padding: geometry.padding,
@@ -263,7 +272,7 @@ pub(super) fn measure<'a>(
     let height = top + height + bottom;
     if !height.is_finite() {
         return Err(LayoutError::NonFiniteBlockGeometry {
-            block: measurer.sources.block(block),
+            block: measurer.sources.block(block.block),
         });
     }
     let edges = measurer.fragmentainer.edges(style);
@@ -272,9 +281,9 @@ pub(super) fn measure<'a>(
         clearance_before: None,
         clearance_target: measurer
             .clearance_targets
-            .get(&std::ptr::from_ref::<BlockBox>(block))
+            .get(&std::ptr::from_ref::<BlockBox>(block.block))
             .copied(),
-        source: block,
+        source: block.block,
         geometry: geometry.clone(),
         containing_height,
         style,
@@ -284,8 +293,8 @@ pub(super) fn measure<'a>(
             containing_height,
             geometry.containing_rtl,
         ),
-        before: MarginStrut::edge(block, 0, geometry.containing_width),
-        after: MarginStrut::edge(block, 2, geometry.containing_width),
+        before: MarginStrut::edge(block.block, 0, geometry.containing_width),
+        after: MarginStrut::edge(block.block, 2, geometry.containing_width),
         through: false,
         height,
         sizing: None,

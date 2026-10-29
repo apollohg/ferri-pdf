@@ -1,5 +1,5 @@
 //! CSS Sizing 4 §4: preferred aspect ratios and the sizes they transfer between axes.
-use crate::document::BlockBox;
+use crate::layout::measure::BlockSource;
 use crate::layout::{LayoutError, geometry::Edges, measure::Measurer};
 use crate::style::{BoxSizing, Size, SizeConstraints, Style};
 
@@ -57,13 +57,14 @@ pub(super) fn content_minimum(style: &Style, minimum: &Size) -> bool {
 /// The used content width of a non-replaced box whose width is automatic and whose height is
 /// definite: the used height converted through the ratio (§4.2), within the width's own
 /// limits and its automatic minimum (§4.3).
-pub(super) fn width_from_height(
+pub(super) fn width_from_height<'a>(
     measurer: &Measurer<'_>,
-    block: &BlockBox,
+    block: impl Into<BlockSource<'a>>,
     containing_width: f32,
     containing_height: Option<f32>,
     edges: &Edges,
 ) -> Result<Option<f32>, LayoutError> {
+    let block = block.into();
     let style = block.style();
     if block.image().is_some() || style.width != Size::Auto {
         return Ok(None);
