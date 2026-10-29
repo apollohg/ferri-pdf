@@ -91,7 +91,11 @@ enum Gap {
 }
 
 /// The advance of `ch` in the font that renders it for `style`, in points.
-fn advance(context: &TextContext<'_>, style: &Style, ch: char) -> Result<Option<f32>, TextError> {
+pub(super) fn advance(
+    context: &TextContext<'_>,
+    style: &Style,
+    ch: char,
+) -> Result<Option<f32>, TextError> {
     Ok(context
         .fonts
         .advance(

@@ -389,7 +389,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                         if atomic.is_some() {
                             let measured = crate::layout::inline::measure(
                                 self.measurer,
-                                &source.atomics()[index].block,
+                                &source.inline_block(index).block,
                                 width,
                                 height,
                                 style.rtl,
@@ -610,7 +610,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                     if atomic.is_some() {
                         next_metrics[index] = crate::layout::inline::measure(
                             self.measurer,
-                            &source.atomics()[index].block,
+                            &source.inline_block(index).block,
                             next_width,
                             next_height,
                             style.rtl,

@@ -3207,7 +3207,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                             paragraph
                                 .anchors()
                                 .iter()
-                                .chain(paragraph.atomics())
+                                .chain(paragraph.inline_blocks())
                                 .map(|anchor| &anchor.block),
                         );
                     }
@@ -4946,11 +4946,23 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 },
             });
         }
-        for fragment in &line.atomics {
-            let atomic = atomics[fragment.index]
+        let annotations = source.atomics().len()..;
+        for fragment in line.atomics.iter().chain(&line.annotations) {
+            let mut atomic = atomics[fragment.index]
                 .take()
                 .expect("each atomic inline is placed on exactly one line");
-            let inline_box = source.atomics()[fragment.index].inline_box;
+            let anchor = source.inline_block(fragment.index);
+            // A ruby column wider than its annotation gives it its width (CSS Ruby 1 §4.3).
+            if annotations.contains(&fragment.index) && fragment.width != atomic.metrics.width {
+                atomic = crate::layout::inline::measure_annotation(
+                    self.measurer,
+                    &anchor.block,
+                    fragment.width,
+                    layers.containing.height,
+                    layers.containing.rtl,
+                )?;
+            }
+            let inline_box = anchor.inline_box;
             let chain = inline_chain(source, inline_box);
             let chain_layers = self.chain_layers(&chain, layers.containing);
             let layer = chain_layers

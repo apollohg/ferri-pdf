@@ -62,8 +62,7 @@ fn flow(
             BlockContent::Block(child) => measure(child, measurer, available)?,
             BlockContent::Inline(paragraph) => {
                 let atomics = paragraph
-                    .atomics()
-                    .iter()
+                    .inline_blocks()
                     .map(|atomic| measure(&atomic.block, measurer, available))
                     .collect::<Result<Vec<_>, _>>()?;
                 measurer.intrinsic_widths(paragraph, &atomics)?

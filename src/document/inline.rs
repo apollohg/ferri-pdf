@@ -67,6 +67,9 @@ pub(crate) struct Paragraph {
     anchors: Vec<Anchor>,
     boxes: Vec<InlineBox>,
     atomics: Vec<Anchor>,
+    /// Ruby annotation boxes, each anchored at the end of its annotation in the base level.
+    annotations: Vec<Anchor>,
+    rubies: Vec<crate::document::ruby::Ruby>,
     optional_breaks: Vec<usize>,
     clearances: Vec<(usize, Clear, bool)>,
     links: Vec<InlineLink>,
@@ -111,7 +114,7 @@ impl Paragraph {
     /// A copy of this paragraph before `text-transform` for its first formatted line: the
     /// `::first-line` boxes `lines` (outermost first, styled and decorated) wrap its contents,
     /// its root inline box takes `root`, and its spans, inline boxes and atomic inlines take
-    /// `spans`, `boxes` and `atomics` in order.
+    /// `spans`, `boxes` and `atomics` (its atomic inlines, then its ruby annotations) in order.
     pub(crate) fn first_line_copy(
         &self,
         root: Style,
@@ -155,7 +158,7 @@ impl Paragraph {
                     canvas_source: inline_box.canvas_source,
                 }),
         );
-        Self {
+        let mut copy = Self {
             expanded_tabs: self.expanded_tabs.clone(),
             marker_image: None,
             first_formatted_line: self.first_formatted_line,
@@ -178,15 +181,12 @@ impl Paragraph {
                 .collect(),
             anchors: Vec::new(),
             boxes: copied,
-            atomics: self
-                .atomics
+            atomics: Vec::new(),
+            annotations: Vec::new(),
+            rubies: self
+                .rubies
                 .iter()
-                .zip(atomics)
-                .map(|(atomic, style)| Anchor {
-                    offset: atomic.offset,
-                    block: crate::document::BlockBox::anonymous(style, Vec::new(), None),
-                    inline_box: shift(atomic.inline_box),
-                })
+                .map(|ruby| ruby.shifted(count, 0))
                 .collect(),
             optional_breaks: self.optional_breaks.clone(),
             clearances: self.clearances.clone(),
@@ -200,7 +200,22 @@ impl Paragraph {
                 .collect(),
             events: Vec::new(),
             first_line: None,
-        }
+        };
+        let mut styles = atomics.into_iter();
+        let mut restyled = |anchors: &[Anchor]| -> Vec<Anchor> {
+            anchors
+                .iter()
+                .zip(styles.by_ref())
+                .map(|(anchor, style)| Anchor {
+                    offset: anchor.offset,
+                    block: crate::document::BlockBox::anonymous(style, Vec::new(), None),
+                    inline_box: shift(anchor.inline_box),
+                })
+                .collect()
+        };
+        copy.atomics = restyled(&self.atomics);
+        copy.annotations = restyled(&self.annotations);
+        copy
     }
     pub(crate) fn generated(text: &str, style: &Style) -> Result<Option<Self>, DocumentError> {
         let mut collector = InlineCollector::default();
@@ -271,6 +286,8 @@ impl Paragraph {
             anchors: Vec::new(),
             boxes: Vec::new(),
             atomics: Vec::new(),
+            annotations: Vec::new(),
+            rubies: Vec::new(),
             optional_breaks: Vec::new(),
             clearances: Vec::new(),
             links: Vec::new(),
@@ -334,13 +351,43 @@ impl Paragraph {
     pub(crate) fn atomics(&self) -> &[Anchor] {
         &self.atomics
     }
-    /// The boxes anchored in the paragraph: floats, positioned boxes and atomic inlines.
+    /// Ruby annotation boxes, which the paragraph's rubies index.
+    pub(crate) fn annotations(&self) -> &[Anchor] {
+        &self.annotations
+    }
+    pub(crate) fn rubies(&self) -> &[crate::document::ruby::Ruby] {
+        &self.rubies
+    }
+    /// The style of the annotation box that annotation box `index` lays out.
+    pub(crate) fn annotation_box_style(&self, index: usize) -> &Style {
+        self.rubies
+            .iter()
+            .flat_map(|ruby| &ruby.segments)
+            .flat_map(|segment| &segment.levels)
+            .flat_map(|level| &level.annotations)
+            .find(|annotation| annotation.block == Some(index))
+            .map(|annotation| &*annotation.style)
+            .expect("each annotation box belongs to a ruby annotation")
+    }
+    /// The boxes laid out unbroken in its lines: atomic inlines, then ruby annotations.
+    pub(crate) fn inline_blocks(&self) -> impl Iterator<Item = &Anchor> {
+        self.atomics.iter().chain(&self.annotations)
+    }
+    /// The box at `index` among `inline_blocks`.
+    pub(crate) fn inline_block(&self, index: usize) -> &Anchor {
+        self.atomics
+            .get(index)
+            .unwrap_or_else(|| &self.annotations[index - self.atomics.len()])
+    }
+    /// The boxes anchored in the paragraph: floats, positioned boxes, atomic inlines and ruby
+    /// annotations.
     pub(crate) fn anchored_blocks_mut(
         &mut self,
     ) -> impl Iterator<Item = &mut crate::document::BlockBox> {
         self.anchors
             .iter_mut()
             .chain(&mut self.atomics)
+            .chain(&mut self.annotations)
             .map(|anchor| &mut anchor.block)
     }
     pub(crate) fn optional_breaks(&self) -> &[usize] {
@@ -423,6 +470,8 @@ pub(crate) struct InlineCollector {
     anchors: Vec<Anchor>,
     boxes: Vec<InlineBox>,
     atomics: Vec<Anchor>,
+    annotations: Vec<Anchor>,
+    rubies: Vec<crate::document::ruby::Ruby>,
     optional_breaks: Vec<usize>,
     clearances: Vec<(usize, Clear, bool)>,
     open_box: Option<usize>,
@@ -526,6 +575,23 @@ impl InlineCollector {
     /// The style of the innermost open inline box, which content appended next lies in.
     pub(crate) fn open_style(&self) -> Option<&Style> {
         self.open_box.map(|index| &*self.boxes[index].style)
+    }
+    /// The innermost open inline box.
+    pub(crate) fn innermost_box(&self) -> Option<usize> {
+        self.open_box
+    }
+    /// Adds a ruby annotation box, returning its index among the annotations.
+    pub(crate) fn push_annotation(&mut self, block: crate::document::BlockBox) -> usize {
+        self.annotations.push(Anchor {
+            offset: self.text.len(),
+            block,
+            inline_box: self.open_box,
+        });
+        self.annotations.len() - 1
+    }
+    /// Records a ruby container whose boxes this collector holds.
+    pub(crate) fn push_ruby(&mut self, ruby: crate::document::ruby::Ruby) {
+        self.rubies.push(ruby);
     }
     /// Places an initial letter box as an atomic inline styled by its parent `style`; one
     /// that inside marker `marker` makes ends the marker (CSS Inline 3 §7.3.1). The inline
@@ -682,6 +748,7 @@ impl InlineCollector {
         if other.text.is_empty()
             && other.boxes.is_empty()
             && other.anchors.is_empty()
+            && other.annotations.is_empty()
             && other.events.is_empty()
         {
             return Ok(());
@@ -700,6 +767,7 @@ impl InlineCollector {
         let boxes = self.boxes.len();
         let anchors = self.anchors.len();
         let atomics = self.atomics.len();
+        let annotations = self.annotations.len();
         let breaks = self.optional_breaks.len();
         let links = self.links.len();
         let events = self.events.len();
@@ -742,6 +810,14 @@ impl InlineCollector {
         };
         self.anchors.extend(other.anchors.into_iter().map(anchor));
         self.atomics.extend(other.atomics.into_iter().map(anchor));
+        self.annotations
+            .extend(other.annotations.into_iter().map(anchor));
+        self.rubies.extend(
+            other
+                .rubies
+                .iter()
+                .map(|ruby| ruby.shifted(boxes, annotations)),
+        );
         self.boxes
             .extend(other.boxes.into_iter().map(|inner| InlineBox {
                 range: shift(inner.range),
@@ -1011,7 +1087,7 @@ impl InlineCollector {
         style: &Style,
         first_line: impl FnOnce(&Paragraph) -> Result<Option<Paragraph>, DocumentError>,
     ) -> Result<Result<Paragraph, Vec<crate::document::BlockContent>>, DocumentError> {
-        if (self.text.is_empty()
+        if ((self.text.is_empty() && self.annotations.is_empty())
             || (self.spans.iter().any(|span| span.leader)
                 && self
                     .spans
@@ -1037,6 +1113,8 @@ impl InlineCollector {
             anchors: self.anchors,
             boxes: self.boxes,
             atomics: self.atomics,
+            annotations: self.annotations,
+            rubies: self.rubies,
             optional_breaks: self.optional_breaks,
             clearances: self.clearances,
             links: self.links,

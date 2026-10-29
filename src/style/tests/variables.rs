@@ -270,7 +270,8 @@ fn substitution_preserves_display_values_and_white_space_longhands() {
             "run-in flow-root list-item",
             Display::RunIn(Box::new(Display::InlineFlowRootListItem)),
         ),
-        ("run-in ruby", Display::Unsupported("run-in ruby".into())),
+        ("run-in ruby", Display::RunIn(Box::new(Display::Ruby))),
+        ("block ruby", Display::BlockRuby),
     ] {
         let styles = computed(
             &format!("#root{{--display:{display};display:var(--display)}}"),

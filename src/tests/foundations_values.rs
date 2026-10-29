@@ -439,7 +439,7 @@ fn conditional_values_select_the_first_matching_print_and_supports_branch() {
     for value in [
         "if(media(print):17pt;else:99pt)",
         "if(media(screen):99pt;supports(display:flex):17pt;else:88pt)",
-        "if(supports(display:ruby):99pt;supports((width:12pt) and (color:red)):17pt;else:88pt)",
+        "if(supports(text-transform:math-auto):99pt;supports((width:12pt) and (color:red)):17pt;else:88pt)",
         "if((media(print) and supports(display:flex)) or media(screen):17pt;else:99pt)",
         "if(future-query():99pt;else:17pt)",
         "if(not future-query():99pt;else:17pt)",

@@ -1,8 +1,8 @@
 use crate::document::Paragraph;
 use crate::text::{
     AtomicMetrics, GlyphRun, Line, Piece, TextContext, TextError, autospace::Autospace, breaking,
-    decoration, ellipsis, hanging, hyphenation, line_boxes, paragraph_bidi, shape_line, spacing,
-    spacing_trim, whitespace,
+    decoration, ellipsis, hanging, hyphenation, line_boxes, paragraph_bidi, ruby, shape_line,
+    spacing, spacing_trim, whitespace,
 };
 use unicode_linebreak::BreakOpportunity;
 
@@ -48,6 +48,7 @@ pub(crate) struct PreparedParagraph<'p, 'context, 'font> {
     monotone: bool,
     plans: wrapping::Plans,
     clamp: Option<ParagraphClamp>,
+    ruby: Option<ruby::RubyLayout<'p, 'context, 'font>>,
     /// The `::first-line` copy, which shapes and breaks the line from the paragraph's start.
     first_line: Option<Box<Self>>,
 }
@@ -67,6 +68,16 @@ pub(crate) struct ParagraphLines<'s, 'p, 'context, 'font> {
 
 impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
     pub(crate) fn new(context: &'context TextContext<'font>, paragraph: &'p Paragraph) -> Self {
+        Self::with_source(context, paragraph, paragraph)
+    }
+
+    /// `source` holds the annotation boxes of `paragraph`, the paragraph itself or the one its
+    /// `::first-line` copies.
+    fn with_source(
+        context: &'context TextContext<'font>,
+        paragraph: &'p Paragraph,
+        source: &'p Paragraph,
+    ) -> Self {
         let bidi = paragraph_bidi(paragraph, &context.bidi_work);
         let has_rtl = bidi
             .as_ref()
@@ -94,9 +105,10 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
             }),
             plans: wrapping::Plans::default(),
             clamp: None,
+            ruby: ruby::RubyLayout::of(context, paragraph, source),
             first_line: paragraph
                 .first_line()
-                .map(|variant| Box::new(Self::new(context, variant))),
+                .map(|variant| Box::new(Self::with_source(context, variant, paragraph))),
         }
     }
 
@@ -144,9 +156,10 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
         if !std::ptr::eq(position.paragraph, self.paragraph) {
             return Err(TextError::ParagraphMismatch);
         }
-        if atomics.len() != self.paragraph.atomics().len() {
+        let expected = self.paragraph.inline_blocks().count();
+        if atomics.len() != expected {
             return Err(TextError::AtomicMetrics {
-                expected: self.paragraph.atomics().len(),
+                expected,
                 actual: atomics.len(),
             });
         }
@@ -236,7 +249,10 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             from..to,
             &self.atomic_widths,
             available,
-            self.autospace.as_ref(),
+            line_boxes::Spacers {
+                autospace: self.autospace.as_ref(),
+                ruby: prepared.ruby.as_ref(),
+            },
         )?;
         let end_trim = spacing_trim::trim(
             prepared.context,
@@ -286,6 +302,8 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             boxes: arranged.boxes,
             links: Vec::new(),
             atomics: arranged.atomics,
+            annotations: Vec::new(),
+            ruby: arranged.ruby,
             ascent: 0.0,
             height: 0.0,
             ink_bounds: None,
@@ -304,6 +322,9 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
     fn finalize(&self, mut line: Line, last: bool) -> Result<Line, TextError> {
         let prepared = self.prepared_at(line.range.start);
         let paragraph = prepared.paragraph;
+        if ruby::ends_inside_base(paragraph, line.range.end) {
+            return Err(ruby::WITHIN_BASES);
+        }
         if line.first_line_styles
             && let Some(fragment) = line.atomics.iter().find(|fragment| {
                 let [base, styled] = [self.prepared.paragraph, paragraph]
@@ -315,6 +336,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
                 index: fragment.index,
             });
         }
+
         if prepared.has_leaders {
             crate::text::leaders::expand(prepared.context, paragraph, &mut line, self.available())?;
         }
@@ -329,6 +351,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             &mut line,
             self.atomics,
             newline,
+            (prepared.ruby.as_ref(), self.containing_width),
         )?;
         line.ascent = ascent;
         line.height = ascent + descent;
@@ -363,6 +386,22 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
         }
         line.place();
         crate::text::emphasis::place(prepared.context, paragraph, &mut line)?;
+        if let Some(ruby) = &prepared.ruby {
+            ruby.place(&mut line, self.atomics, self.containing_width)?;
+        }
+        let source = self.prepared.paragraph;
+        if line.first_line_styles
+            && let Some(fragment) = line.annotations.iter().find(|fragment| {
+                let index = fragment.index - source.atomics().len();
+                !source
+                    .annotation_box_style(index)
+                    .same_text_style(paragraph.annotations()[index].block.style())
+            })
+        {
+            return Err(TextError::FirstLineAtomic {
+                index: fragment.index,
+            });
+        }
         line.ink_bounds = line
             .runs
             .iter()

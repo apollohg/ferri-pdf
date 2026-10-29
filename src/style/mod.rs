@@ -65,6 +65,7 @@ pub(crate) use widget_values::{Appearance, FieldSizing, WidgetStyle};
 mod attribute;
 mod properties;
 mod resolution;
+mod ruby_values;
 mod scope;
 mod selector;
 mod shadow_values;
@@ -145,6 +146,7 @@ pub use print::{
 };
 pub(crate) use quotes::{QuoteDepth, Quotes};
 pub(crate) use resolution::PageGeometry;
+pub(crate) use ruby_values::{RubyAlign, RubyMerge, RubyPosition, RubyStyle};
 pub(crate) use selector::{GeneratedPseudoElement, PseudoElement};
 pub(crate) use sizing::{
     AspectRatio, IntrinsicSizing, IntrinsicWidths, Overconstraint, SizeConstraints, UsedAxis,

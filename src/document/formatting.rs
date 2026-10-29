@@ -406,6 +406,7 @@ struct BlockBuilder<'a, 's, 'c> {
     run_in: &'s mut Option<RunInSequence>,
     first_line: &'s mut FirstLine,
     letter: &'s mut Option<OpenLetter>,
+    ruby: &'s mut crate::document::ruby::RubyStack,
     traversal: &'c mut Traversal<'a>,
     resources: &'c mut ImageResources<'a>,
 }
@@ -540,6 +541,9 @@ fn block_axis_edges(style: &Style) -> Result<f32, DocumentError> {
         })
 }
 
+/// A segment break in document text.
+const SEGMENT_BREAK: &str = "\n";
+
 /// A typographic pseudo-element laid out as an inline box, which takes no float or position.
 pub(super) fn inline_pseudo_style(mut style: Style) -> Style {
     style.display = Display::Inline;
@@ -552,8 +556,30 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     /// Appends inline text, wrapping the first-letter text it begins with in its
     /// `::first-letter` boxes.
     fn append_text(&mut self, text: &str, style: &Style) -> Result<(), DocumentError> {
+        if self.ruby.text(self.inline, text, style)? {
+            return Ok(());
+        }
+        if self.ruby.in_annotation() && style.white_space.preserves_breaks() {
+            for (index, part) in text.split(SEGMENT_BREAK).enumerate() {
+                if index > 0 {
+                    self.line_break(style)?;
+                }
+                self.inline.append(part, style)?;
+            }
+            return Ok(());
+        }
         let start = self.first_letter(text, style)?;
         self.inline.append(&text[start..], style)
+    }
+    /// A forced line break, which inside a ruby annotation is a collapsible segment break,
+    /// whatever its `white-space` (CSS Ruby 1 §2.2).
+    fn line_break(&mut self, style: &Style) -> Result<(), DocumentError> {
+        if self.ruby.in_annotation() {
+            let mut collapsing = style.clone();
+            collapsing.white_space.collapse = crate::style::WhiteSpaceCollapse::Collapse;
+            return self.inline.append(SEGMENT_BREAK, &collapsing);
+        }
+        self.inline.line_break(style)
     }
     /// Appends generated text, as `append_text` does.
     fn append_generated(
@@ -561,6 +587,9 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         output: &crate::style::GeneratedOutput,
         style: &Style,
     ) -> Result<(), DocumentError> {
+        if !output.text().is_empty() {
+            self.ruby.content(self.inline)?;
+        }
         let leader = output
             .leaders()
             .first()
@@ -686,14 +715,20 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         self.letter.is_none() && self.run_in.is_none() && self.inline.at_first_child()
     }
     /// Opens an inline box, which collects its contents apart as an initial letter where its
-    /// style makes it one.
+    /// style makes it one, and builds ruby structure where it is a ruby box.
     fn open_inline(
         &mut self,
         style: &Style,
         decoration: BoxDecoration,
         navigation: BoxNavigation,
         canvas_source: bool,
-    ) {
+    ) -> Result<(), DocumentError> {
+        if style.display.is_ruby() {
+            return self
+                .ruby
+                .open(self.inline, style, decoration, navigation, self.style);
+        }
+        self.ruby.inline_box(self.inline)?;
         if let Some(letter) = self.letter.as_mut() {
             letter.depth += 1;
         } else if style.initial_letter.is_some() && self.initial_letter_allowed() {
@@ -705,13 +740,17 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 navigation,
                 depth: 0,
             });
-            return;
+            return Ok(());
         }
         self.inline
             .open_box(style, decoration, navigation, canvas_source);
+        Ok(())
     }
     /// Closes the inline box `open_inline` opened last, placing an initial letter it ends.
     fn close_inline(&mut self) -> Result<(), DocumentError> {
+        if self.ruby.close(self.inline)? == crate::document::ruby::Closed::Ruby {
+            return Ok(());
+        }
         match self.letter.as_mut() {
             Some(letter) if letter.depth > 0 => letter.depth -= 1,
             Some(_) => {
@@ -726,6 +765,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     /// Places an atomic inline styled by its parent `parent`, as an initial letter where its
     /// style makes it one.
     fn atomic(&mut self, mut block: BlockBox, parent: &Style) -> Result<(), DocumentError> {
+        self.ruby.content(self.inline)?;
         if block.style.initial_letter.is_none() || !self.initial_letter_allowed() {
             return self.inline.atomic(block, parent);
         }
@@ -1003,6 +1043,13 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             )
             .into());
         }
+        if self.ruby.holds_explicit() {
+            return Err(StyleError::Unsupported(
+                "block-level content inside a ruby container".into(),
+            )
+            .into());
+        }
+        self.ruby.finish(self.inline)?;
         let collected = self.inline.split();
         let origins = self.first_line.origins.clone();
         let origins = origins.as_deref();
@@ -1104,9 +1151,13 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         }
         Ok(None)
     }
-    /// Item containers and positions outside inline boxes anchor between blocks.
+    /// Item containers and positions outside inline boxes anchor between blocks. Boxes inside
+    /// ruby annotations anchor in their base level, whose containing block they share (CSS
+    /// Ruby 1 §2.1.1).
     fn out_of_flow(&mut self, block: BlockBox) {
-        if self.style.display.is_item_container() || self.inline.is_between_blocks() {
+        if let Some(base) = self.ruby.base_level() {
+            base.anchor(block);
+        } else if self.style.display.is_item_container() || self.inline.is_between_blocks() {
             self.children.push(BlockContent::Positioned(block));
         } else {
             self.inline.anchor(block);
@@ -1222,7 +1273,12 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 }
                 self.append_generated(&output, &style)?;
             }
-            Display::Inline => {
+            Display::Inline
+            | Display::Ruby
+            | Display::RubyBase
+            | Display::RubyText
+            | Display::RubyBaseContainer
+            | Display::RubyTextContainer => {
                 if let Some(event) = event {
                     self.inline.semantic_event(event);
                 }
@@ -1231,7 +1287,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                     decoration,
                     self.traversal.navigation.descendant(),
                     false,
-                );
+                )?;
                 self.append_generated(&output, &style)?;
                 self.close_inline()?;
             }
@@ -1266,6 +1322,10 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             Display::None => unreachable!("hidden pseudo-elements are excluded by the cascade"),
             _ => {
                 self.flush()?;
+                // A block-level ruby container's text is its sole ruby base, unannotated.
+                if style.display == Display::BlockRuby {
+                    style.display = Display::Block;
+                }
                 // The pseudo-element's box comes first in flow, taking the first formatted line.
                 let first_line = std::mem::take(self.first_line);
                 let children = if style.display.is_block_level_block_container() {
@@ -1401,8 +1461,12 @@ fn list_marker(
 pub(super) fn normalize_child_display(display: &mut Display, replaced: bool, parent: &Display) {
     if replaced && let Display::RunIn(inner) = display {
         normalize_child_display(inner, true, &Display::Block);
+    } else if replaced && *display == Display::BlockRuby {
+        // CSS Ruby 1 §2.1: replaced elements with ruby displays take their outer display.
+        *display = Display::Block;
     } else if replaced
         && (display.is_table_internal()
+            || display.is_ruby()
             || display.is_atomic_inline()
             || matches!(
                 display,
@@ -1466,6 +1530,10 @@ struct OpenBlock {
     pending_run_in: Option<InlineCollector>,
     first_line: FirstLine,
     letter: Option<OpenLetter>,
+    ruby: crate::document::ruby::RubyStack,
+    /// The principal box of a block-level ruby container, whose inline-level ruby container
+    /// holds its contents (CSS Ruby 1 §2.1.2).
+    ruby_container: bool,
 }
 
 struct Frame<'d> {
@@ -1515,6 +1583,8 @@ impl<'d> Frame<'d> {
                 pending_run_in: None,
                 first_line: FirstLine::default(),
                 letter: None,
+                ruby: crate::document::ruby::RubyStack::default(),
+                ruby_container: false,
             }),
             started: false,
             quotes: None,
@@ -1549,6 +1619,7 @@ fn active_builder<'a, 's, 'c>(
             run_in: &mut block.run_in,
             first_line: &mut block.first_line,
             letter: &mut block.letter,
+            ruby: &mut block.ruby,
             traversal,
             resources,
         },
@@ -1709,6 +1780,10 @@ fn block<'a>(
                     },
                     &mut block.navigation,
                 );
+                if frame.style.display == Display::BlockRuby {
+                    frame.style.display = Display::Block;
+                    block.ruby_container = true;
+                }
                 let inside_marker = frame
                     .style
                     .has_inside_marker()
@@ -1729,6 +1804,16 @@ fn block<'a>(
                         open: false,
                         whitespace: Vec::new(),
                     });
+                }
+                if block.ruby_container {
+                    let container = crate::document::ruby::anonymous(&frame.style, Display::Ruby);
+                    block.ruby.open(
+                        &mut block.inline,
+                        &container,
+                        BoxDecoration::default(),
+                        BoxNavigation::default(),
+                        &frame.style,
+                    )?;
                 }
                 frame.generated = !skips
                     && !rendered_control
@@ -1772,7 +1857,7 @@ fn block<'a>(
                     builder.inline.open_contents(navigation.link);
                 } else {
                     let decoration = builder.resources.backgrounds(style)?;
-                    builder.open_inline(style, decoration, navigation, canvas_source);
+                    builder.open_inline(style, decoration, navigation, canvas_source)?;
                     if let Some(marker) = marker {
                         builder.place_inside_marker(&marker)?;
                     }
@@ -1789,7 +1874,7 @@ fn block<'a>(
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
                 builder.generated(element, style, GeneratedPseudoElement::Before)?;
                 if element.name() == "br" {
-                    builder.inline.line_break(style)?;
+                    builder.line_break(style)?;
                     builder.generated(element, style, GeneratedPseudoElement::After)?;
                     frames[index].generated = false;
                 } else {
@@ -1986,7 +2071,16 @@ fn block<'a>(
                     | Display::InlineFlowRootListItem => Some(Placement::Atomic),
                     Display::RunIn(_) => unreachable!("run-in boxes take their inner display"),
                     Display::Inline if replaced => Some(Placement::Atomic),
-                    Display::InlineListItem => None,
+                    Display::InlineListItem
+                    | Display::Ruby
+                    | Display::RubyBase
+                    | Display::RubyText
+                    | Display::RubyBaseContainer
+                    | Display::RubyTextContainer => None,
+                    Display::BlockRuby => {
+                        builder.flush()?;
+                        Some(Placement::Flow)
+                    }
                     Display::Inline => {
                         if child.name() == "br" {
                             builder
@@ -2007,7 +2101,7 @@ fn block<'a>(
                                 &child_style,
                                 GeneratedPseudoElement::Before,
                             )?;
-                            builder.inline.line_break(&child_style)?;
+                            builder.line_break(&child_style)?;
                             builder.generated(
                                 child,
                                 &child_style,
@@ -2086,6 +2180,17 @@ fn block<'a>(
             continue;
         }
         builder.resolve_run_in(RunInFollower::Other)?;
+        if frames[index]
+            .block
+            .as_ref()
+            .is_some_and(|block| block.ruby_container)
+        {
+            let (builder, _) =
+                active_builder(&mut frames, block_index, sheet, traversal, resources);
+            builder.ruby.close(builder.inline)?;
+        }
+        let (mut builder, _) =
+            active_builder(&mut frames, block_index, sheet, traversal, resources);
         builder.flush()?;
         let frame = &mut frames[index];
         let block = frame.block.as_mut().unwrap();

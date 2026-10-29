@@ -1263,6 +1263,22 @@ fn handler(property: Property) -> Option<Handler> {
             svg_values::d,
             Some(|v, r| svg_values::supported(svg_values::d, v, r)),
         ),
+        P::RubyPosition => (
+            ruby_position,
+            Some(|v, _| crate::style::RubyStyle::position(v).is_ok()),
+        ),
+        P::RubyMerge => (
+            ruby_merge,
+            Some(|v, _| crate::style::RubyStyle::merge(v).is_ok()),
+        ),
+        P::RubyAlign => (
+            ruby_align,
+            Some(|v, _| crate::style::RubyStyle::align(v).is_ok()),
+        ),
+        P::RubyOverhang => (
+            ruby_overhang,
+            Some(|v, _| crate::style::RubyStyle::overhang(v).is_ok()),
+        ),
         P::DominantBaseline => (
             dominant_baseline,
             Some(|v, _| crate::style::Baseline::dominant(v).is_ok()),
@@ -3041,6 +3057,26 @@ computed!(
     initial_letter_align,
     [initial_letter_align],
     |value, style, _parent, _relative| crate::style::InitialLetterAlign::from_component(value)?
+);
+computed!(
+    ruby_position,
+    [ruby.position],
+    |value, style, _parent, _relative| crate::style::RubyStyle::position(value)?
+);
+computed!(
+    ruby_merge,
+    [ruby.merge],
+    |value, style, _parent, _relative| crate::style::RubyStyle::merge(value)?
+);
+computed!(
+    ruby_align,
+    [ruby.align],
+    |value, style, _parent, _relative| crate::style::RubyStyle::align(value)?
+);
+computed!(
+    ruby_overhang,
+    [ruby.overhang],
+    |value, style, _parent, _relative| crate::style::RubyStyle::overhang(value)?
 );
 computed!(
     dominant_baseline,

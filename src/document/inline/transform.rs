@@ -74,6 +74,7 @@ pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
         .anchors
         .iter_mut()
         .chain(&mut paragraph.atomics)
+        .chain(&mut paragraph.annotations)
         .map(|anchor| &mut anchor.offset)
         .chain(paragraph.optional_breaks.iter_mut())
         .chain(paragraph.events.iter_mut().map(|event| &mut event.offset))

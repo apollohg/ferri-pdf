@@ -390,8 +390,12 @@
       "source": "https://www.w3.org/TR/2026/WD-css-text-4-20260814/#text-spacing-trim-property"
     },
     "text-justify": {
-      "syntax": "auto | none | inter-word | inter-character | distribute",
-      "source": "https://www.w3.org/TR/2026/CRD-css-text-3-20260814/#text-justify-property with the distribute keyword its prose requires"
+      "syntax": "auto | none | inter-word | inter-character | ruby | distribute",
+      "source": "https://www.w3.org/TR/2026/CRD-css-text-3-20260814/#text-justify-property with the distribute keyword its prose requires and the ruby keyword of https://www.w3.org/TR/2026/WD-css-text-4-20260814/#valdef-text-justify-ruby, which the ruby annotations of https://www.w3.org/TR/2022/WD-css-ruby-1-20221231/#default-ua-ruby take"
+    },
+    "ruby-merge": {
+      "syntax": "separate | merge | auto",
+      "source": "https://www.w3.org/TR/2022/WD-css-ruby-1-20221231/#propdef-ruby-merge, which renamed collapse to merge"
     },
     "initial-letter": {
       "syntax": "normal | <number [1,∞]> <integer [1,∞]> | <number [1,∞]> && [ drop | raise ]?",

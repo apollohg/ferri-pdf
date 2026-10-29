@@ -18,6 +18,7 @@ mod media;
 mod metadata;
 mod navigation;
 mod page;
+pub(crate) mod ruby;
 mod semantics;
 mod strings;
 mod stylesheets;

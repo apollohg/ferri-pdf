@@ -7,11 +7,18 @@ use unicode_linebreak::{BreakClass, BreakOpportunity};
 
 const NO_BREAK_SPACE: char = '\u{a0}';
 
-/// Soft wrap and mandatory break opportunities, including the `automatic` hyphenation ones.
+/// Soft wrap and mandatory break opportunities, including the `automatic` hyphenation ones,
+/// except where ruby forbids them.
 pub(super) fn opportunities(
     paragraph: &Paragraph,
     automatic: &[usize],
 ) -> Vec<(usize, BreakOpportunity)> {
+    let mut breaks = unconstrained(paragraph, automatic);
+    crate::text::ruby::constrain(paragraph, &mut breaks);
+    breaks
+}
+
+fn unconstrained(paragraph: &Paragraph, automatic: &[usize]) -> Vec<(usize, BreakOpportunity)> {
     let mut breaks: Vec<_> = crate::text::tailoring::linebreaks(paragraph)
         .into_iter()
         .filter(|&(end, opportunity)| {

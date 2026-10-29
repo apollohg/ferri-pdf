@@ -20,6 +20,16 @@ pub(crate) enum UnicodeBidi {
     Plaintext,
 }
 impl UnicodeBidi {
+    /// The value where bidi isolation is forced: `normal` and `embed` isolate, and
+    /// `bidi-override` isolates and overrides (CSS Ruby 1 §3.5).
+    #[must_use]
+    pub(crate) fn forced_isolation(self) -> Self {
+        match self {
+            Self::Normal | Self::Embed => Self::Isolate,
+            Self::BidiOverride => Self::IsolateOverride,
+            other => other,
+        }
+    }
     pub(crate) fn from_component(value: &Component) -> Result<Self, StyleError> {
         match value.keyword() {
             Some(Keyword::Normal) => Ok(Self::Normal),
@@ -265,6 +275,8 @@ pub(crate) enum TextJustify {
     None,
     InterWord,
     InterCharacter,
+    /// CSS Text 4 §7.5: between CJK characters other than Bopomofo, not at word separators.
+    Ruby,
 }
 impl TextJustify {
     pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
@@ -273,6 +285,7 @@ impl TextJustify {
             Some(Keyword::None) => Ok(Self::None),
             Some(Keyword::InterWord) => Ok(Self::InterWord),
             Some(Keyword::InterCharacter | Keyword::Distribute) => Ok(Self::InterCharacter),
+            Some(Keyword::Ruby) => Ok(Self::Ruby),
             _ => Err(unsupported(value)),
         }
     }

@@ -1040,8 +1040,7 @@ impl Measurer<'_> {
         self.work.spend(paragraph.text().len().max(1))?;
         let index = self.sources.paragraph(paragraph);
         let atomics = paragraph
-            .atomics()
-            .iter()
+            .inline_blocks()
             .map(|atomic| {
                 crate::layout::inline::measure(self, &atomic.block, width, containing_height, rtl)
             })
@@ -1483,8 +1482,7 @@ fn contains_sticky(block: &BlockBox) -> bool {
         BlockContent::Block(child) | BlockContent::Positioned(child) => sticky(child),
         BlockContent::Inline(paragraph) => {
             paragraph
-                .atomics()
-                .iter()
+                .inline_blocks()
                 .any(|atomic| sticky(&atomic.block))
                 || paragraph
                     .boxes()

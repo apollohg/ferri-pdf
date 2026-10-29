@@ -250,6 +250,7 @@ pub(crate) struct Style {
     pub text_box: crate::style::TextBox,
     pub initial_letter: Option<crate::style::InitialLetter>,
     pub initial_letter_align: crate::style::InitialLetterAlign,
+    pub ruby: crate::style::RubyStyle,
     pub flex: crate::style::FlexStyle,
     pub bookmark: crate::style::BookmarkStyle,
     pub grid: crate::style::GridStyle,
@@ -379,6 +380,7 @@ impl Default for Style {
             text_box: crate::style::TextBox::default(),
             initial_letter: None,
             initial_letter_align: crate::style::InitialLetterAlign::default(),
+            ruby: crate::style::RubyStyle::default(),
             flex: crate::style::FlexStyle::default(),
             bookmark: crate::style::BookmarkStyle::default(),
             grid: crate::style::GridStyle::default(),
@@ -491,7 +493,9 @@ impl Style {
     /// in-flow children; `display: contents` passes its parent's on.
     fn inlinifies_children(&self) -> bool {
         match &self.display {
-            Display::RunIn(inner) => inner.is_inline_box(),
+            Display::RunIn(inner) => inner.is_inline_box() || inner.is_ruby(),
+            // CSS Ruby 1 §2.2: ruby boxes hold only inline-level content.
+            display if display.is_ruby() || *display == Display::BlockRuby => true,
             display => {
                 (display.is_inline_box() || *display == Display::Contents)
                     && self.inlinifying_parent
@@ -1129,23 +1133,8 @@ impl Stylesheet {
         pseudo: crate::style::PseudoElement,
         resolver: &dyn ResourceResolver,
     ) -> Result<(Style, Cascaded), StyleError> {
-        let (mut winners, _) =
+        let (winners, _) =
             self.rule_winners(element, Some(pseudo), &parent.containers, resolver)?;
-        for declaration in crate::style::user_agent::pseudo_declarations(element, pseudo)? {
-            insert(
-                &mut winners,
-                &declaration,
-                DeclarationContext {
-                    encapsulation_order: crate::dom::DOCUMENT_CONTEXT_ORDER,
-                    origin: declaration.origin,
-                    attached: false,
-                    layer: declaration.layer,
-                    specificity: 0,
-                    scope_proximity: None,
-                    order: 0,
-                },
-            );
-        }
         let mut style = parent.anonymous(Display::Inline);
         style.element_font_namespace = self.font_namespace(Some(element.tree_scope()));
         style.content_context = if pseudo == crate::style::PseudoElement::Marker {
@@ -1530,12 +1519,18 @@ impl Stylesheet {
                 "generated content replacement on elements".into(),
             ));
         }
-        // Out-of-flow boxes and the contents of atomic inlines receive no decorations.
+        // Out-of-flow boxes and the contents of atomic inlines receive no decorations, nor
+        // do ruby annotations beyond their annotation container's own (CSS Ruby 1 §4.4).
         if style.position.is_out_of_flow()
             || style.floating().is_some()
             || (style.display.is_atomic_inline() && !parent.display.is_item_container())
+            || style.display == Display::RubyTextContainer
+            || (style.display == Display::RubyText && parent.display != Display::RubyTextContainer)
         {
             style.text_decorations.propagated.clear();
+        }
+        if style.display.is_ruby() {
+            style.unicode_bidi = style.unicode_bidi.forced_isolation();
         }
         if !style.size.is_finite()
             || style.size < 0.0

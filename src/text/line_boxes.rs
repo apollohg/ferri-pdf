@@ -104,9 +104,9 @@ pub(crate) struct AtomicFragment {
     #[serde(skip)]
     pub(crate) offset: usize,
     #[serde(skip)]
-    owner: Option<usize>,
+    pub(crate) owner: Option<usize>,
     #[serde(skip)]
-    rtl: bool,
+    pub(crate) rtl: bool,
 }
 
 /// Line content in visual order, before inline box edges are inserted.
@@ -179,9 +179,18 @@ pub(crate) struct Arranged {
     /// Inline boxes with content or edges on the line, in tree order.
     pub present: Vec<usize>,
     pub width: f32,
+    pub ruby: crate::text::ruby::RubyLine,
+}
+
+/// What spaces a line's characters and boxes once they are arranged: `text-autospace`, and
+/// the ruby columns of its ruby containers.
+#[derive(Clone, Copy)]
+pub(crate) struct Spacers<'s, 'p, 'c, 'f> {
+    pub autospace: Option<&'s crate::text::autospace::Autospace<'p, 'c, 'f>>,
+    pub ruby: Option<&'s crate::text::ruby::RubyLayout<'p, 'c, 'f>>,
 }
 impl Arranged {
-    fn owner(&self, paragraph: &Paragraph, slot: Slot) -> Option<usize> {
+    pub(super) fn owner(&self, paragraph: &Paragraph, slot: Slot) -> Option<usize> {
         match slot {
             Slot::Run(index) => paragraph.spans()[self.runs[index].source_span].inline_box,
             Slot::Atomic(index) => self.atomics[index].owner,
@@ -201,7 +210,7 @@ impl Arranged {
             Slot::Edge { .. } | Slot::Space { .. } => None,
         }
     }
-    fn insertion(&self, offset: usize) -> usize {
+    pub(super) fn insertion(&self, offset: usize) -> usize {
         insertion(
             self.order.iter().enumerate().filter_map(|(index, slot)| {
                 self.source(*slot).map(|(range, rtl)| (index, range, rtl))
@@ -271,14 +280,15 @@ fn present_boxes(paragraph: &Paragraph, line: Range<usize>) -> Vec<usize> {
 /// Orders `pieces` with the margins, borders and padding of the inline boxes they lie in.
 /// A box's left and right edges sit beside its leftmost and rightmost content on the line
 /// (CSS 2.1 §8.6); a sliced box keeps only the edges of the lines where it starts or ends.
-/// `autospace` spaces the adjoining characters it applies to.
+/// `spacers` space the adjoining characters they apply to and the ruby bases on the line,
+/// whose annotation boxes follow its atomic inlines in `atomic_widths`.
 pub(crate) fn arrange(
     paragraph: &Paragraph,
     pieces: Vec<Piece>,
     line: Range<usize>,
     atomic_widths: &[f32],
     basis: f32,
-    autospace: Option<&crate::text::autospace::Autospace<'_, '_, '_>>,
+    spacers: Spacers<'_, '_, '_, '_>,
 ) -> Result<Arranged, TextError> {
     let mut arranged = Arranged {
         runs: Vec::new(),
@@ -287,6 +297,7 @@ pub(crate) fn arrange(
         order: Vec::with_capacity(pieces.len()),
         present: present_boxes(paragraph, line.clone()),
         width: 0.0,
+        ruby: crate::text::ruby::RubyLine::default(),
     };
     for piece in pieces {
         match piece {
@@ -355,8 +366,11 @@ pub(crate) fn arrange(
             arranged.order.insert(left_at, slot);
         }
     }
-    if let Some(autospace) = autospace {
+    if let Some(autospace) = spacers.autospace {
         autospace.apply(&mut arranged)?;
+    }
+    if let Some(ruby) = spacers.ruby {
+        arranged.ruby = ruby.space(&mut arranged, atomic_widths)?;
     }
     for (position, &index) in arranged.present.iter().enumerate() {
         let belongs: Vec<bool> = arranged
@@ -648,12 +662,15 @@ impl Subtrees {
 
 /// Aligns the line's boxes vertically and returns the line box `[ascent, descent]`.
 /// `newline` is the offset of a forced break ending the line, whose strut also counts.
+/// `ruby` adds the leading its ruby containers' annotations need, with percentages against
+/// `basis`.
 pub(crate) fn align(
     context: &TextContext<'_>,
     paragraph: &Paragraph,
     line: &mut Line,
     atomics: &[AtomicMetrics],
     newline: Option<usize>,
+    (ruby, basis): (Option<&crate::text::ruby::RubyLayout<'_, '_, '_>>, f32),
 ) -> Result<[f32; 2], TextError> {
     // CSS 2.1 §9.4.2: anchors retain their inline scope without creating a line strut.
     if paragraph.text().is_empty()
@@ -695,6 +712,12 @@ pub(crate) fn align(
             None => (ROOT, (&root_metrics, root_dominant)),
         };
         let own = |baseline| metrics.baseline(baseline);
+        let mut extent = metrics.extent();
+        if let Some(ruby) = ruby {
+            let [over, under] = ruby.leading(index, &present, &metrics, basis)?;
+            extent[0] -= over;
+            extent[1] += under;
+        }
         let placed = subtrees.place(
             &Alignment {
                 vertical: &style.table.vertical_align,
@@ -702,7 +725,7 @@ pub(crate) fn align(
                 own: &own,
             },
             parent,
-            metrics.extent(),
+            extent,
             || Ok(metrics.line_height),
         )?;
         aligned.push((placed, metrics, style.baseline.dominant));

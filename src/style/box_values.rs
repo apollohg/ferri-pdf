@@ -154,6 +154,14 @@ pub(crate) enum Display {
     InlineListItem,
     /// `inline flow-root list-item`: an inline block with a marker.
     InlineFlowRootListItem,
+    /// `ruby` or `inline ruby`: an inline-level ruby container (CSS Ruby 1 §2.1).
+    Ruby,
+    /// `block ruby`: a block box holding an inline-level ruby container (CSS Ruby 1 §2.1.2).
+    BlockRuby,
+    RubyBase,
+    RubyText,
+    RubyBaseContainer,
+    RubyTextContainer,
     /// A run-in box (CSS Display 3 §5), laid out as the inline-level display it holds.
     RunIn(Box<Display>),
     Contents,
@@ -335,6 +343,15 @@ const DISPLAY_FORMS: &[(Display, &[&[Keyword]])] = &[
         Display::InlineFlowRootListItem,
         &[&[Keyword::Inline, Keyword::FlowRoot, Keyword::ListItem]],
     ),
+    (
+        Display::Ruby,
+        &[&[Keyword::Ruby], &[Keyword::Inline, Keyword::Ruby]],
+    ),
+    (Display::BlockRuby, &[&[Keyword::Block, Keyword::Ruby]]),
+    (Display::RubyBase, &[&[Keyword::RubyBase]]),
+    (Display::RubyText, &[&[Keyword::RubyText]]),
+    (Display::RubyBaseContainer, &[&[Keyword::RubyBaseContainer]]),
+    (Display::RubyTextContainer, &[&[Keyword::RubyTextContainer]]),
     (Display::Contents, &[&[Keyword::Contents]]),
     (Display::None, &[&[Keyword::None]]),
 ];
@@ -346,7 +363,11 @@ impl Display {
     pub(crate) fn is_block_level_block_container(&self) -> bool {
         matches!(
             self,
-            Self::Block | Self::FlowRoot | Self::ListItem | Self::FlowRootListItem
+            Self::Block
+                | Self::BlockRuby
+                | Self::FlowRoot
+                | Self::ListItem
+                | Self::FlowRootListItem
         )
     }
     /// A block container, which has first formatted lines.
@@ -426,9 +447,22 @@ impl Display {
                 Self::TableRow | Self::TableColumn | Self::TableColumnGroup | Self::TableCell
             )
     }
+    /// A ruby base, annotation or level container, which only a ruby container holds
+    /// (CSS Ruby 1 §2.1.1).
+    pub(crate) fn is_ruby_internal(&self) -> bool {
+        matches!(
+            self,
+            Self::RubyBase | Self::RubyText | Self::RubyBaseContainer | Self::RubyTextContainer
+        )
+    }
+    /// A ruby container or internal ruby box, whose in-flow children are inlinified (CSS
+    /// Ruby 1 §2.2).
+    pub(crate) fn is_ruby(&self) -> bool {
+        *self == Self::Ruby || self.is_ruby_internal()
+    }
     pub(crate) fn is_inline_level(&self) -> bool {
         match self {
-            Self::Inline | Self::InlineListItem | Self::RunIn(_) => true,
+            Self::Inline | Self::InlineListItem | Self::Ruby | Self::RunIn(_) => true,
             atomic if atomic.is_atomic_inline() => true,
             Self::Unsupported(value) => value.to_ascii_lowercase().starts_with("inline-"),
             _ => false,
@@ -485,7 +519,14 @@ impl Display {
             Self::InlineGrid => Self::Grid,
             Self::InlineTable => Self::Table,
             Self::RunIn(inner) => inner.blockified(),
-            internal if internal.is_table_internal() || *internal == Self::TableCaption => {
+            // CSS Ruby 1 §2.1.2: a blockified ruby container keeps its inner display, and
+            // internal ruby boxes become block boxes.
+            Self::Ruby => Self::BlockRuby,
+            internal
+                if internal.is_table_internal()
+                    || internal.is_ruby_internal()
+                    || *internal == Self::TableCaption =>
+            {
                 Self::Block
             }
             other => other.clone(),
@@ -508,6 +549,7 @@ impl Display {
             Self::Flex => Self::InlineFlex,
             Self::Grid => Self::InlineGrid,
             Self::Table => Self::InlineTable,
+            Self::BlockRuby => Self::Ruby,
             Self::RunIn(inner) => (**inner).clone(),
             other => other.clone(),
         }

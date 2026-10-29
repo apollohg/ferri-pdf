@@ -7,7 +7,7 @@ search, section, ul, listing, plaintext, xmp, legend, dialog { display: block; }
 hr { display: block; color: gray; border-style: inset; border-width: 1px;
     margin-block: .5em; margin-inline: auto; overflow: hidden; }
 area, base, basefont, datalist, head, link, meta, noembed, noframes, param,
-script, style, template, title { display: none; }
+rp, script, style, template, title { display: none; }
 slot { display: contents; }
 [hidden]:not([hidden=until-found i]):not(embed) { display: none; }
 [hidden=until-found i]:not(embed) { content-visibility: hidden; }
@@ -70,6 +70,19 @@ ins, u { text-decoration: underline; }
 del, s, strike { text-decoration: line-through; }
 abbr[title], acronym[title] { text-decoration: dotted underline; }
 mark { color: black; background-color: yellow; }
+/* HTML Standard §15.3.4 and CSS Ruby 1 Appendix A.1, whose bopomofo selector list ends
+   without a trailing comma. */
+ruby { display: ruby; }
+rbc { display: ruby-base-container; }
+rtc { display: ruby-text-container; }
+rb { display: ruby-base; white-space: nowrap; }
+rt { display: ruby-text; }
+ruby, rb, rt, rbc, rtc { unicode-bidi: isolate; }
+rtc, rt { font-variant-east-asian: ruby; text-justify: ruby; text-emphasis: none;
+    white-space: nowrap; line-height: 1; }
+rtc, :not(rtc) > rt { font-size: 50%; }
+rtc:lang(zh-TW), :not(rtc) > rt:lang(zh-TW),
+rtc:lang(zh-Hanb), :not(rtc) > rt:lang(zh-Hanb) { font-size: 30%; }
 q::before { content: open-quote; }
 q::after { content: close-quote; }
 nobr { white-space: nowrap; }

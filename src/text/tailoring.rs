@@ -31,7 +31,7 @@ const CENTERED_PUNCTUATION: [char; 10] = [
 
 /// The soft wrap opportunities of `paragraph` under each character's `word-break` and
 /// `line-break`, with UAX #14 mandatory breaks, in offset order.
-pub(super) fn linebreaks(paragraph: &Paragraph) -> Vec<(usize, BreakOpportunity)> {
+pub(crate) fn linebreaks(paragraph: &Paragraph) -> Vec<(usize, BreakOpportunity)> {
     let text = paragraph.text();
     let categories = CodePointMapData::<GeneralCategory>::new();
     let base =

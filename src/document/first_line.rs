@@ -30,10 +30,15 @@ pub(super) fn variant(
         .iter()
         .map(|inline_box| restyle.style(&inline_box.style))
         .collect::<Result<Vec<_>, _>>()?;
+    // A ruby annotation takes the style its annotation box takes on the line.
     let atomics = paragraph
         .atomics()
         .iter()
-        .map(|atomic| restyle.style(atomic.block.style()))
+        .map(|atomic| atomic.block.style())
+        .chain(
+            (0..paragraph.annotations().len()).map(|index| paragraph.annotation_box_style(index)),
+        )
+        .map(|style| restyle.style(style))
         .collect::<Result<Vec<_>, _>>()?;
     let root = restyle.root;
     let mut boxes = Vec::with_capacity(box_styles.len());

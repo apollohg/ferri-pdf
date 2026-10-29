@@ -12,6 +12,7 @@ mod initial_letter;
 mod leaders;
 mod line_boxes;
 mod paragraph;
+mod ruby;
 mod shaping;
 mod spacing;
 mod spacing_trim;
@@ -259,6 +260,9 @@ pub(crate) struct Line {
     pub boxes: Vec<BoxFragment>,
     pub links: Vec<LinkFragment>,
     pub atomics: Vec<AtomicFragment>,
+    /// Ruby annotation boxes, indexed after the paragraph's atomic inlines.
+    pub annotations: Vec<AtomicFragment>,
+    ruby: ruby::RubyLine,
     pub height: f32,
     pub ascent: f32,
     pub ink_bounds: Option<[f32; 2]>,
@@ -483,12 +487,16 @@ pub(crate) enum TextError {
     CaseExpansionLimit,
     #[error("leader expansion exceeds {limit} text bytes")]
     LeaderExpansionLimit { limit: usize },
-    #[error("paragraph has {expected} atomic inlines but {actual} were measured")]
+    #[error(
+        "paragraph has {expected} atomic inlines and ruby annotations but {actual} were measured"
+    )]
     AtomicMetrics { expected: usize, actual: usize },
     #[error("text continuation belongs to another paragraph")]
     ParagraphMismatch,
     #[error("atomic inline {index} on a ::first-line inherits first-line styles into its contents")]
     FirstLineAtomic { index: usize },
+    #[error("unsupported ruby layout: {feature}")]
+    UnsupportedRuby { feature: &'static str },
 }
 
 /// The content language, or the OpenType language system `font-language-override` names
@@ -571,21 +579,29 @@ pub(crate) struct TextContext<'a> {
     matching_work: Cell<Option<usize>>,
     bidi_work: Cell<Option<usize>>,
 }
-/// A paragraph's bidi and break context for intrinsic measurement.
-struct IntrinsicSource<'p> {
+/// A paragraph's bidi, break and ruby context for intrinsic measurement.
+struct IntrinsicSource<'p, 'c, 'f> {
     paragraph: &'p Paragraph,
     bidi: bidi::ResolvedParagraph<'p>,
     automatic: Vec<usize>,
     opportunities: Vec<(usize, BreakOpportunity)>,
+    ruby: Option<ruby::RubyLayout<'p, 'c, 'f>>,
 }
-impl<'p> IntrinsicSource<'p> {
-    fn new(context: &TextContext<'_>, paragraph: &'p Paragraph) -> Result<Self, TextError> {
+impl<'p, 'c, 'f> IntrinsicSource<'p, 'c, 'f> {
+    /// `source` holds the annotation boxes of `paragraph`, the paragraph itself or the one its
+    /// `::first-line` copies.
+    fn new(
+        context: &'c TextContext<'f>,
+        paragraph: &'p Paragraph,
+        source: &'p Paragraph,
+    ) -> Result<Self, TextError> {
         let automatic = hyphenation::automatic(paragraph);
         Ok(Self {
             paragraph,
             bidi: paragraph_bidi(paragraph, &context.bidi_work)?,
             opportunities: whitespace::opportunities(paragraph, &automatic),
             automatic,
+            ruby: ruby::RubyLayout::of(context, paragraph, source),
         })
     }
 }
@@ -600,17 +616,18 @@ impl<'a> TextContext<'a> {
         paragraph: &Paragraph,
         atomics: &[IntrinsicWidths],
     ) -> Result<IntrinsicWidths, TextError> {
-        if atomics.len() != paragraph.atomics().len() {
+        let expected = paragraph.inline_blocks().count();
+        if atomics.len() != expected {
             return Err(TextError::AtomicMetrics {
-                expected: paragraph.atomics().len(),
+                expected,
                 actual: atomics.len(),
             });
         }
         let text = paragraph.text();
-        let base = IntrinsicSource::new(self, paragraph)?;
+        let base = IntrinsicSource::new(self, paragraph, paragraph)?;
         let first_line = paragraph
             .first_line()
-            .map(|variant| IntrinsicSource::new(self, variant))
+            .map(|variant| IntrinsicSource::new(self, variant, paragraph))
             .transpose()?;
         let opportunities = &base.opportunities;
         let base_autospace = autospace::Autospace::of(self, paragraph);
@@ -624,6 +641,10 @@ impl<'a> TextContext<'a> {
             let (source, autospace) = match first_line.as_ref().filter(|_| range.start == 0) {
                 Some(source) => (source, first_line_autospace.as_ref()),
                 None => (&base, base_autospace.as_ref()),
+            };
+            let spacers = line_boxes::Spacers {
+                autospace,
+                ruby: source.ruby.as_ref(),
             };
             let paragraph = source.paragraph;
             let context_range = breaking::context_range(&source.opportunities, range.clone());
@@ -654,7 +675,7 @@ impl<'a> TextContext<'a> {
                 range.clone(),
                 atomic_widths,
                 0.0,
-                autospace,
+                spacers,
             )?;
             let end_trim = spacing_trim::trim(
                 self,

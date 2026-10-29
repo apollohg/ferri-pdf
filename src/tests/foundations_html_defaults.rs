@@ -18,41 +18,49 @@ fn text(css: &str, markup: &str) -> Vec<String> {
     .collect()
 }
 
+/// HTML §15.3.4: a UA rendering ruby lays annotations out apart from their base line, which
+/// it places them against, adds no parentheses, and hides `rp` (§15.3.1).
 #[test]
-fn ruby_fallback_inserts_parentheses_only_without_associated_rp_elements() {
+fn ruby_annotations_leave_the_base_line_and_rp_elements_are_hidden() {
     assert_eq!(
         text("", "<p>A<ruby>B<rt>C</rt><rt>D</rt></ruby>E</p>"),
-        ["AB(C)(D)E"]
+        ["C", "D", "ABE"],
+        "the second annotation pairs with an empty base"
     );
     assert_eq!(
         text("", "<p>A<ruby>B<rp>[</rp><rt>C</rt><rp>]</rp></ruby>D</p>"),
-        ["AB[C]D"]
+        ["C", "ABD"]
     );
     assert_eq!(
         text(
             "",
             "<p><ruby>B<rt>C</rt><ruby>D<rp>[</rp><rt>E</rt><rp>]</rp></ruby></ruby></p>"
         ),
-        ["B(C)D[E]"]
+        ["E", "C", "BD"]
     );
-    assert_eq!(text("", "<p>A<rt>B</rt>C</p>"), ["ABC"]);
+    assert_eq!(
+        text("", "<p>A<rt>B</rt>C</p>"),
+        ["B", "AC"],
+        "a misparented annotation is wrapped in an anonymous ruby container"
+    );
 }
 
 #[test]
-fn ruby_fallback_pseudo_elements_cascade_and_inherit_normally() {
+fn ruby_annotation_pseudo_elements_cascade_and_inherit_normally() {
     assert_eq!(
         text(
             "rt::before{content:'<'}rt::after{content:'>'}",
             "<p><ruby>A<rt>B</rt></ruby></p>"
         ),
-        ["A<B>"]
+        ["<B>", "A"]
     );
     assert_eq!(
         text(
             "rt::before,rt::after{content:revert}",
             "<p><ruby>A<rt>B</rt></ruby></p>"
         ),
-        ["A(B)"]
+        ["B", "A"],
+        "the UA sheet generates no fallback parentheses"
     );
     assert_eq!(
         text("rt{display:none}", "<p><ruby>A<rt>B</rt></ruby></p>"),

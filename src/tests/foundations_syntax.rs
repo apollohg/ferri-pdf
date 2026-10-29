@@ -105,16 +105,16 @@ fn eof_closes_valid_constructs_and_at_rule_names_are_case_insensitive() {
 #[test]
 fn unsupported_active_winner_is_still_an_error() {
     let error = render_html(
-        "<style>p{display:block;display:ruby}</style><p>grid</p>",
+        "<style>p{text-transform:none;text-transform:math-auto}</style><p>grid</p>",
         &local_options(),
     )
     .err()
-    .expect("active ruby must fail");
+    .expect("active math-auto casing must fail");
     assert!(
         matches!(error, crate::Error::Css(StyleError::Unsupported(_))),
         "active unsupported capability must retain CSS classification: {error:?}"
     );
-    let output = render_css("p{display:ruby;display:block;font-size:18pt}");
+    let output = render_css("p{text-transform:math-auto;text-transform:none;font-size:18pt}");
     assert_pt(output.layout.unwrap().pages[0][0].font_size, 18.0);
 }
 
@@ -238,11 +238,11 @@ fn invalid_page_rule_and_font_face_do_not_remove_valid_siblings() {
 #[test]
 fn unsupported_generated_winner_keeps_css_error_classification() {
     let error = render_html(
-        "<style>p::before{content:'grid';display:ruby}</style><p>body</p>",
+        "<style>p::before{content:'grid';text-transform:math-auto}</style><p>body</p>",
         &local_options(),
     )
     .err()
-    .expect("active generated ruby must fail");
+    .expect("active generated math-auto casing must fail");
     assert!(
         matches!(error, crate::Error::Css(StyleError::Unsupported(_))),
         "generated capability classification: {error:?}"

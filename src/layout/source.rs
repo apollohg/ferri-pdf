@@ -53,7 +53,7 @@ impl SourceIds {
                     let mut anchors = paragraph
                         .anchors()
                         .iter()
-                        .chain(paragraph.atomics())
+                        .chain(paragraph.inline_blocks())
                         .collect::<Vec<_>>();
                     anchors.sort_by_key(|anchor| anchor.offset);
                     pending.extend(

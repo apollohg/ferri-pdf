@@ -83,6 +83,38 @@ fn measure_atomic<'a>(
         containing_height,
         containing_rtl,
     )?;
+    Ok(measured_atomic(block, measured, &geometry))
+}
+
+/// Lays a ruby annotation box out again at the `width` its ruby column gives it, which its
+/// contents fill by its `ruby-align` (CSS Ruby 1 §4.3).
+pub(super) fn measure_annotation<'a>(
+    measurer: &mut Measurer<'_>,
+    block: &'a BlockBox,
+    width: f32,
+    containing_height: Option<f32>,
+    containing_rtl: bool,
+) -> Result<MeasuredAtomic<'a>, LayoutError> {
+    let unbroken = std::mem::replace(&mut measurer.unbroken, true);
+    let geometry = inline_horizontal(
+        block.style(),
+        0.0,
+        width,
+        containing_rtl,
+        Some(width),
+        Edges::of(block.style(), width),
+    );
+    let measured = measurer.format_block(block, geometry.clone(), false, containing_height, None);
+    measurer.unbroken = unbroken;
+    Ok(measured_atomic(block, measured?, &geometry))
+}
+
+/// An atomic inline's metrics from its layout `measured` with horizontal `geometry`.
+fn measured_atomic<'a>(
+    block: &'a BlockBox,
+    measured: MeasuredBlock<'a>,
+    geometry: &crate::layout::geometry::HorizontalBox,
+) -> MeasuredAtomic<'a> {
     let margin = geometry.margin.map(|margin| margin.unwrap_or(0.0));
     let width = margin[3]
         + geometry.border[3]
@@ -93,7 +125,7 @@ fn measure_atomic<'a>(
         + margin[1];
     let height = margin[0] + measured.height + margin[2];
     let content = baseline(block, &measured);
-    Ok(MeasuredAtomic {
+    MeasuredAtomic {
         metrics: AtomicMetrics {
             width,
             height,
@@ -103,7 +135,7 @@ fn measure_atomic<'a>(
         block: measured,
         margin_top: margin[0],
         letter: None,
-    })
+    }
 }
 
 /// Measures an initial letter box (CSS Inline 3 §§7.5.5–7.6.2). Its alignment points sit at

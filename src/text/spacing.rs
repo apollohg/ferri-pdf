@@ -27,7 +27,7 @@ const CURSIVE_SCRIPTS: [Script; 12] = [
 ];
 
 /// A glyph by its run and its index within the run.
-type GlyphIndex = (usize, usize);
+pub(super) type GlyphIndex = (usize, usize);
 
 pub(super) fn word_space_text(text: &str) -> bool {
     text == " "
@@ -80,17 +80,42 @@ fn cursive_letter(text: &str) -> bool {
     })
 }
 
-/// CSS Text 3 §7.4 `inter-character`: the gap after each typographic character unit, in
-/// visual order, except after the line's last and between two cursive letters. A gap between
-/// two spans justifies by the paragraph's value. Spaces `text-autospace` removed are not units.
-fn character_gaps(paragraph: &Paragraph, line: &Line) -> Vec<GlyphIndex> {
+/// A CJK character other than Bopomofo, between which `text-justify: ruby` justifies (CSS
+/// Text 4 §7.5, CSS Ruby 1 §4.3).
+fn ruby_justified(text: &str) -> bool {
+    use icu_properties::props::EastAsianWidth;
+    text.chars().next().is_some_and(|ch| match ch.script() {
+        Script::Han | Script::Hiragana | Script::Katakana | Script::Hangul => true,
+        Script::Common | Script::Inherited => matches!(
+            CodePointMapData::<EastAsianWidth>::new().get(ch),
+            EastAsianWidth::Wide | EastAsianWidth::Fullwidth
+        ),
+        _ => false,
+    })
+}
+
+/// Whether the gap between typographic character units `before` and `after` justifies under
+/// `value`: `inter-character` everywhere but between cursive letters (CSS Text 3 §7.4), `ruby`
+/// between CJK characters.
+pub(super) fn justifies_between(value: TextJustify, before: &str, after: &str) -> bool {
+    match value {
+        TextJustify::InterCharacter => !(cursive_letter(before) && cursive_letter(after)),
+        TextJustify::Ruby => ruby_justified(before) && ruby_justified(after),
+        TextJustify::Auto | TextJustify::None | TextJustify::InterWord => false,
+    }
+}
+
+/// The gap after each typographic character unit of `slots`, in visual order, where its
+/// `text-justify` justifies it, except after the last. A gap between two spans justifies by
+/// the paragraph's value. Spaces `text-autospace` removed are not units.
+fn character_gaps(paragraph: &Paragraph, runs: &[GlyphRun], slots: &[Slot]) -> Vec<GlyphIndex> {
     let mut gaps = Vec::new();
-    let mut previous: Option<(GlyphIndex, usize, bool)> = None;
-    for slot in &line.order {
+    let mut previous: Option<(GlyphIndex, usize, &str)> = None;
+    for slot in slots {
         let Slot::Run(run_index) = *slot else {
             continue;
         };
-        let run = &line.runs[run_index];
+        let run = &runs[run_index];
         if run.leader {
             previous = None;
             continue;
@@ -103,21 +128,46 @@ fn character_gaps(paragraph: &Paragraph, line: &Line) -> Vec<GlyphIndex> {
             if !ends_cluster || run.removed_spaces.contains(&glyph.text_range.start) {
                 continue;
             }
-            let cursive = cursive_letter(&run.text[glyph.text_range.clone()]);
-            if let Some((end, span, previous_cursive)) = previous {
+            let unit = &run.text[glyph.text_range.clone()];
+            if let Some((end, span, before)) = previous {
                 let value = if span == run.source_span {
                     justify(paragraph, run)
                 } else {
                     paragraph.style().line_breaking.justify
                 };
-                if value == TextJustify::InterCharacter && !(cursive && previous_cursive) {
+                if justifies_between(value, before, unit) {
                     gaps.push(end);
                 }
             }
-            previous = Some(((run_index, index), run.source_span, cursive));
+            previous = Some(((run_index, index), run.source_span, unit));
         }
     }
     gaps
+}
+
+/// The justification opportunities of `slots`, each the glyph whose advance expands: word
+/// separators, then the gaps between characters, in glyph order.
+pub(super) fn opportunities(
+    paragraph: &Paragraph,
+    runs: &[GlyphRun],
+    slots: &[Slot],
+) -> Vec<GlyphIndex> {
+    let mut opportunities: Vec<GlyphIndex> = slots
+        .iter()
+        .filter_map(|slot| match *slot {
+            Slot::Run(index) => Some(index),
+            _ => None,
+        })
+        .flat_map(|run_index| {
+            (0..runs[run_index].glyphs.len())
+                .filter(move |&index| word_space(paragraph, &runs[run_index], index))
+                .map(move |index| (run_index, index))
+        })
+        .collect();
+    opportunities.extend(character_gaps(paragraph, runs, slots));
+    opportunities.sort_unstable();
+    opportunities.dedup();
+    opportunities
 }
 
 fn compressible_width(paragraph: &Paragraph, runs: &[GlyphRun]) -> f32 {
@@ -140,8 +190,23 @@ fn adjust(
     glyphs: &[GlyphIndex],
     adjustment: impl Fn(f32) -> f32,
 ) -> Result<(), TextError> {
+    let extra = expand(&mut line.runs, glyphs, adjustment)?;
+    line.width += extra;
+    if !line.width.is_finite() {
+        return Err(TextError::NonFiniteGeometry);
+    }
+    Ok(())
+}
+
+/// Adds the spacing `adjustment` gives each glyph's advance to it, returning their sum.
+pub(super) fn expand(
+    runs: &mut [GlyphRun],
+    glyphs: &[GlyphIndex],
+    adjustment: impl Fn(f32) -> f32,
+) -> Result<f32, TextError> {
+    let mut total = 0.0;
     for &(run_index, index) in glyphs {
-        let run = &mut line.runs[run_index];
+        let run = &mut runs[run_index];
         let extra = adjustment(run.advance(index));
         run.glyphs[index].x_spacing += extra;
         if !run.glyphs[index].x_spacing.is_finite()
@@ -153,12 +218,12 @@ fn adjust(
             return Err(TextError::NonFiniteGeometry);
         }
         run.width += extra;
-        line.width += extra;
-        if !run.width.is_finite() || !line.width.is_finite() {
+        total += extra;
+        if !run.width.is_finite() {
             return Err(TextError::NonFiniteGeometry);
         }
     }
-    Ok(())
+    Ok(total)
 }
 
 pub(super) fn align(
@@ -202,10 +267,7 @@ pub(super) fn align(
     if line.align != TextAlign::Justify || line.width >= available {
         return Ok(());
     }
-    let mut opportunities = word_spaces(paragraph, &line.runs);
-    opportunities.extend(character_gaps(paragraph, line));
-    opportunities.sort_unstable();
-    opportunities.dedup();
+    let opportunities = opportunities(paragraph, &line.runs, &line.order);
     if opportunities.is_empty() {
         line.align = match style.align_last {
             Some(TextAlign::Justify) => TextAlign::Center,

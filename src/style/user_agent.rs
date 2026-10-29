@@ -257,35 +257,6 @@ fn aspect_ratio_hint(
     Ok(())
 }
 
-pub(super) fn pseudo_declarations(
-    element: Element<'_>,
-    pseudo: crate::style::PseudoElement,
-) -> Result<Vec<PropertyDeclaration>, StyleError> {
-    let mut output = Vec::new();
-    let parenthesis = match pseudo {
-        crate::style::PseudoElement::Before => "'('",
-        crate::style::PseudoElement::After => "')'",
-        _ => return Ok(output),
-    };
-    if element.namespace() == HTML_NAMESPACE
-        && element.name() == "rt"
-        && let Some(ruby) = element.parent(TreeRelation::Formatting)
-        && ruby.namespace() == HTML_NAMESPACE
-        && ruby.name() == "ruby"
-        && !ruby
-            .children(TreeRelation::Formatting)
-            .any(|child| child.namespace() == HTML_NAMESPACE && child.name() == "rp")
-    {
-        append(
-            &mut output,
-            Origin::UserAgent,
-            Property::Content,
-            parenthesis,
-        )?;
-    }
-    Ok(output)
-}
-
 fn ascii_trim(value: &str) -> &str {
     value.trim_matches(|ch: char| ch.is_ascii_whitespace())
 }
