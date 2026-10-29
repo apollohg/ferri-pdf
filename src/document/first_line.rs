@@ -2,7 +2,7 @@
 //! formatted line inherit through it, so their styles are computed again for that line.
 use crate::document::{DocumentError, Paragraph, formatting::ImageResources};
 use crate::dom::{DocumentTree, ElementId};
-use crate::style::{OriginNode, PseudoElement, Size, Style, StyleOrigin, Stylesheet};
+use crate::style::{Display, OriginNode, PseudoElement, Size, Style, StyleOrigin, Stylesheet};
 use std::collections::HashMap;
 
 /// The copy of `paragraph`, the untransformed first formatted line of `origins` (outermost
@@ -67,7 +67,9 @@ impl<'a> FirstLineStyles<'a> {
         document: &'a DocumentTree,
         resources: &mut ImageResources<'r>,
     ) -> Result<Option<Self>, DocumentError> {
-        if !sheet.has_pseudo_rules(PseudoElement::FirstLine) {
+        if matches!(block.display, Display::InlineMath | Display::BlockMath)
+            || !sheet.has_pseudo_rules(PseudoElement::FirstLine)
+        {
             return Ok(None);
         }
         let mut parent = block.clone();
@@ -124,6 +126,9 @@ struct Restyle<'a> {
 impl Restyle<'_> {
     /// `style` on the first line, keeping its box's display.
     fn style(&mut self, style: &Style) -> Result<Style, DocumentError> {
+        if matches!(style.display, Display::InlineMath | Display::BlockMath) {
+            return Ok(style.clone());
+        }
         Ok(match self.origin(&style.origin)? {
             Some(mut restyled) => {
                 restyled.display = style.display.clone();
@@ -187,3 +192,6 @@ impl Restyle<'_> {
         Ok(style)
     }
 }
+
+#[cfg(test)]
+mod tests;

@@ -397,8 +397,7 @@ impl Display {
         self.is_block_level_block_container()
             || matches!(
                 self,
-                Self::InlineMath
-                    | Self::InlineBlock
+                Self::InlineBlock
                     | Self::InlineFlowRootListItem
                     | Self::TableCell
                     | Self::TableCaption
