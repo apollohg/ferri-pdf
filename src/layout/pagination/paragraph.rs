@@ -193,8 +193,13 @@ impl<'a> Paginator<'a, '_, 'a> {
             let (band, met) =
                 context.line_band(self.page, y, height, bounds, &self.measurer.work)?;
             let width = (band[1] - band[0]).max(0.0);
-            let mut lines =
-                prepared.lines_in_block(position, width, bounds[1] - bounds[0], metrics)?;
+            let mut lines = prepared.lines_in_block(
+                position,
+                width,
+                bounds[1] - bounds[0],
+                [band[0] - bounds[0], bounds[1] - band[1]],
+                metrics,
+            )?;
             let Some(line) = lines.next() else {
                 return Ok(None);
             };

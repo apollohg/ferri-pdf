@@ -309,7 +309,7 @@ impl Collector {
         let whitespace = selection.styles.white_space_collapse(target)?;
         for ch in text.chars() {
             let visible = !crate::document::inline::collapses_character(ch, whitespace);
-            if visible && (ch != '\t' || selection.styles.tab_size(target)? != 0) {
+            if visible && (ch != '\t' || !selection.styles.tab_size(target)?.is_zero()) {
                 self.text = true;
                 self.whitespace &= crate::document::inline::is_css_whitespace(ch);
             }

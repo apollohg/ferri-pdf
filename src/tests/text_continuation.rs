@@ -594,7 +594,9 @@ fn indentation_keeps_first_and_forced_line_state_across_resumed_widths() {
         let prepared = context.prepare_paragraph(paragraphs(&document)[0]);
         let mut cursor = prepared.start();
         for (basis, expected) in [100.0, 150.0, 200.0, 50.0].into_iter().zip(indents) {
-            let mut stream = prepared.lines_in_block(cursor, 60.0, basis, &[]).unwrap();
+            let mut stream = prepared
+                .lines_in_block(cursor, 60.0, basis, [0.0; 2], &[])
+                .unwrap();
             let line = stream.next().unwrap().unwrap();
             assert_eq!(line.text, "MMMM", "each checkpoint must consume one word");
             assert_pt(line.indent, expected);

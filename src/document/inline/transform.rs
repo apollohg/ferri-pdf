@@ -54,7 +54,6 @@ pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
         return Ok(());
     }
     let mapper = CaseMapper::new();
-    let expanded_tabs = paragraph.expanded_tabs.clone();
     let original = std::mem::take(&mut paragraph.text);
     let capitalize = paragraph
         .spans
@@ -92,12 +91,6 @@ pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
         )
         .chain(
             paragraph
-                .expanded_tabs
-                .iter_mut()
-                .flat_map(|range| [&mut range.start, &mut range.end]),
-        )
-        .chain(
-            paragraph
                 .links
                 .iter_mut()
                 .flat_map(|link| [&mut link.range.start, &mut link.range.end]),
@@ -105,7 +98,6 @@ pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
         .collect();
     offsets.sort_by_key(|offset| **offset);
     let mut offsets = offsets.into_iter().peekable();
-    let mut tabs = expanded_tabs.iter().peekable();
     for span in &mut paragraph.spans {
         let language = language(&span.style.language);
         let start = output.0.len();
@@ -136,14 +128,10 @@ pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
                     (prefix.contains(&offset) && !ch.is_uppercase()).then_some(ContextCase::Title)
                 }
             };
-            while tabs.peek().is_some_and(|tab| tab.end <= offset) {
-                tabs.next();
-            }
-            let expanded_tab = tabs.peek().is_some_and(|tab| tab.contains(&offset));
             let mut transformed = Transformed {
                 output: &mut output,
                 transform: span.style.text_transform,
-                preserve_spaces: !span.style.white_space.collapses_spaces() && !expanded_tab,
+                preserve_spaces: !span.style.white_space.collapses_spaces(),
             };
             let result = if let Some(mapping) = mapping {
                 context.map_char(offset, &language, mapping, &mut transformed)

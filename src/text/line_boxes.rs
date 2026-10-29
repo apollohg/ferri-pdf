@@ -692,8 +692,16 @@ pub(crate) fn align(
     (ruby, basis): (Option<&crate::text::ruby::RubyLayout<'_, '_, '_>>, f32),
 ) -> Result<[f32; 2], TextError> {
     // CSS 2.1 §9.4.2: anchors retain their inline scope without creating a line strut.
+    let invisible_text = line
+        .runs
+        .iter()
+        .all(|run| run.text == "\t" && run.width == 0.0);
+    let empty_tabs = invisible_text
+        && newline.is_none()
+        && line.atomics.is_empty()
+        && line.annotations.is_empty();
     let empty_images = newline.is_none()
-        && line.runs.is_empty()
+        && invisible_text
         && line.annotations.is_empty()
         && !line.atomics.is_empty()
         && line.atomics.iter().all(|fragment| {
@@ -708,7 +716,7 @@ pub(crate) fn align(
                 && metrics.width == 0.0
                 && metrics.height == 0.0
         });
-    if (paragraph.text().is_empty() || empty_images)
+    if (paragraph.text().is_empty() || empty_images || empty_tabs)
         && paragraph
             .boxes()
             .iter()

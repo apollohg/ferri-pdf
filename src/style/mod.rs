@@ -169,9 +169,9 @@ pub(crate) use text_paint_values::{
 };
 pub(crate) use text_values::{
     DEFAULT_TAB_SIZE, HangingEnd, HangingPunctuation, HyphenateLimitChars, Hyphens, LineBreak,
-    LineBreaking, LineHeight, OverflowWrap, TextAlign, TextAutospace, TextCase, TextIndent,
-    TextJustify, TextSpacing, TextSpacingTrim, TextTransform, TextWrapStyle, WhiteSpace,
-    WhiteSpaceCollapse, WordBreak,
+    LineBreaking, LineHeight, OverflowWrap, TabSize, TextAlign, TextAutospace, TextCase,
+    TextIndent, TextJustify, TextSpacing, TextSpacingTrim, TextTransform, TextWrapStyle,
+    WhiteSpace, WhiteSpaceCollapse, WordBreak,
 };
 pub(crate) use text_values::{UnicodeBidi, has_primary_language};
 #[cfg(test)]

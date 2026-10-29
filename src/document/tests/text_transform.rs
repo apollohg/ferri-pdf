@@ -142,16 +142,14 @@ fn inherited_flags_and_initial_reset_keep_case_context_and_generated_text() {
 }
 
 #[test]
-fn full_width_does_not_widen_expanded_tabs() {
+fn full_width_preserves_tabs_until_line_layout() {
     for mode in ["pre", "break-spaces"] {
         let document = document(
             &format!("p{{white-space:{mode};text-transform:uppercase full-width;tab-size:3}}"),
             "<p>ß\t B</p>",
         );
         let paragraph = paragraphs(&document)[0];
-        assert_eq!(paragraph.text(), "ＳＳ   \u{3000}Ｂ");
-        assert_eq!(paragraph.expanded_tabs().len(), 1);
-        assert_eq!(paragraph.expanded_tabs()[0], "ＳＳ".len().."ＳＳ   ".len());
+        assert_eq!(paragraph.text(), "ＳＳ\t\u{3000}Ｂ");
     }
 }
 

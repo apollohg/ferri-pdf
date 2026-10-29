@@ -191,6 +191,10 @@
     }
   },
   "properties": {
+    "tab-size": {
+      "syntax": "<number [0,∞]> | <length [0,∞]>",
+      "source": "https://www.w3.org/TR/2026/CRD-css-text-3-20260814/#tab-size-property"
+    },
     "box-shadow": {
       "syntax": "<spread-shadow>#",
       "initial": ["box-shadow-color", "box-shadow-offset", "box-shadow-blur", "box-shadow-spread", "box-shadow-position"],

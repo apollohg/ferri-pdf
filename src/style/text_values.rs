@@ -4,7 +4,18 @@ use crate::style::{
 };
 use serde::Serialize;
 
-pub(crate) const DEFAULT_TAB_SIZE: usize = 8;
+pub(crate) const DEFAULT_TAB_SIZE: TabSize = TabSize::Number(8.0);
+
+#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
+pub(crate) enum TabSize {
+    Number(f32),
+    Length(f32),
+}
+impl TabSize {
+    pub(crate) fn is_zero(self) -> bool {
+        matches!(self, Self::Number(0.0) | Self::Length(0.0))
+    }
+}
 /// `text-transform` case slot.
 const CASE_SLOT: usize = 0;
 

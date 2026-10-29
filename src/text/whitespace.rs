@@ -1,6 +1,6 @@
 use crate::document::{OBJECT_REPLACEMENT_CHARACTER, Paragraph};
 use crate::style::TextAlign;
-use crate::text::GlyphRun;
+use crate::text::{GlyphRun, line_boxes::Slot};
 use icu_properties::{CodePointMapData, props::GeneralCategory};
 use std::ops::Range;
 use unicode_linebreak::{BreakClass, BreakOpportunity};
@@ -51,9 +51,8 @@ fn unconstrained(paragraph: &Paragraph, automatic: &[usize]) -> Vec<(usize, Brea
         let end = offset + ch.len_utf8();
         if breaks_spaces
             && ch != NO_BREAK_SPACE
-            && categories.get(ch) == GeneralCategory::SpaceSeparator
+            && (ch == '\t' || categories.get(ch) == GeneralCategory::SpaceSeparator)
             && paragraph.style_at(offset).white_space.breaks_spaces()
-            && !inside_tab(paragraph, end)
         {
             breaks.push((end, BreakOpportunity::Allowed));
         }
@@ -72,10 +71,10 @@ fn unconstrained(paragraph: &Paragraph, automatic: &[usize]) -> Vec<(usize, Brea
             }
             let mut after_space = true;
             for (offset, ch) in paragraph.text()[span.range.clone()].char_indices() {
-                if ch == ' ' && !after_space {
+                if matches!(ch, ' ' | '\t') && !after_space {
                     breaks.push((span.range.start + offset, BreakOpportunity::Allowed));
                 }
-                after_space = matches!(ch, ' ' | '\n' | '\u{2028}' | '\u{2029}');
+                after_space = matches!(ch, ' ' | '\t' | '\n' | '\u{2028}' | '\u{2029}');
             }
         }
     }
@@ -178,40 +177,44 @@ pub(super) fn wrapping_width(
     paragraph: &Paragraph,
     end: usize,
     runs: &[GlyphRun],
+    order: &[Slot],
     width: f32,
 ) -> f32 {
     if preserved_spaces_wrap_before(paragraph) {
         return width;
     }
-    let Some(last) = runs.iter().max_by_key(|run| run.source_range.end) else {
-        return width;
-    };
-    if last.leader {
-        return width;
-    }
-    let source_start = paragraph.spans()[last.source_span].range.start;
-    let mut hanging = end;
-    for (offset, ch) in paragraph.text()[source_start..end].char_indices().rev() {
-        let index = source_start + offset;
-        if ch != ' ' || !paragraph.style_at(index).white_space.hangs_spaces() {
+    let rtl = paragraph.style().used_rtl();
+    let mut hanging = 0.0;
+    'trailing: for index in 0..order.len() {
+        let index = if rtl { index } else { order.len() - 1 - index };
+        let run = match order[index] {
+            Slot::Edge { width: 0.0, .. } => continue,
+            Slot::Run(index) => &runs[index],
+            _ => break,
+        };
+        if run.leader || run.combined {
             break;
         }
-        hanging = index;
+        for index in 0..run.glyphs.len() {
+            let index = if rtl {
+                index
+            } else {
+                run.glyphs.len() - 1 - index
+            };
+            let glyph = &run.glyphs[index];
+            let offset = run.source_range.start + glyph.text_range.start;
+            if offset >= end || !run.source_range.contains(&offset) {
+                break 'trailing;
+            }
+            if !matches!(paragraph.text().as_bytes()[offset], b' ' | b'\t')
+                || !paragraph.style_at(offset).white_space.hangs_spaces()
+            {
+                break 'trailing;
+            }
+            hanging += glyph.advance(run.font_size);
+        }
     }
-    if hanging == end || hanging == source_start {
-        return width;
-    }
-    width
-        - runs
-            .iter()
-            .map(|run| {
-                run.glyphs
-                    .iter()
-                    .filter(|glyph| run.source_range.start + glyph.text_range.start >= hanging)
-                    .map(|glyph| glyph.advance(run.font_size))
-                    .sum::<f32>()
-            })
-            .sum::<f32>()
+    width - hanging
 }
 
 pub(super) fn emergency_opportunities(paragraph: &Paragraph, intrinsic: bool) -> Vec<usize> {
@@ -237,16 +240,9 @@ pub(super) fn emergency_opportunities(paragraph: &Paragraph, intrinsic: bool) ->
         .map(|(offset, _)| offset)
         .filter(|&offset| {
             !paragraph.leader_at(offset - 1)
-                && !inside_tab(paragraph, offset)
                 && (allows(paragraph.style_at(offset - 1)) || allows(paragraph.style_at(offset)))
         })
         .collect();
     crate::text::combine::constrain(paragraph, &mut opportunities, |offset| *offset);
     opportunities
-}
-
-fn inside_tab(paragraph: &Paragraph, offset: usize) -> bool {
-    let tabs = paragraph.expanded_tabs();
-    tabs.get(tabs.partition_point(|tab| tab.end <= offset))
-        .is_some_and(|tab| tab.start < offset)
 }

@@ -54,8 +54,8 @@ fn breaks_follow_unicode_separators_but_not_nbsp() {
 #[test]
 fn tabs_remain_one_break_unit_after_case_expansion() {
     let trace = render("p{tab-size:4;text-transform:uppercase}", "<p>ß\t B</p>");
-    assert_eq!(texts(&trace), ["SS    ", " B"]);
-    assert_pt(trace.pages[0][0].width, 6.0 * CELL);
+    assert_eq!(texts(&trace), ["SS\t", " B"]);
+    assert_pt(trace.pages[0][0].width, 4.0 * CELL);
 }
 
 #[test]
@@ -103,5 +103,5 @@ fn mixed_modes_capability_queries_and_page_continuations_preserve_units() {
 #[test]
 fn emergency_wrapping_does_not_split_a_preserved_tab() {
     let trace = render("p{tab-size:4;overflow-wrap:anywhere}", "<p>A\tB</p>");
-    assert_eq!(texts(&trace), ["A", "    ", "B"]);
+    assert_eq!(texts(&trace), ["A", "\t", "B"]);
 }

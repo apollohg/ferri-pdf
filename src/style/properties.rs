@@ -1918,11 +1918,17 @@ computed!(tab_size, [tab_size], |value, style, _parent, relative| {
     tab_size_value(value, relative)?
 });
 
-fn tab_size_value(value: &Component, relative: &Relative<'_>) -> Result<usize, StyleError> {
+fn tab_size_value(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<crate::style::TabSize, StyleError> {
     match value.unwrap() {
-        Component::Length(_) | Component::Math(_, Kind::Length, _) => Err(unsupported(value)),
-        _ => usize::try_from(crate::style::values::integer(value, relative)?)
-            .map_err(|_| format!("negative tab-size: {value}").into()),
+        Component::Length(_) | Component::Math(_, Kind::Length, _) => Ok(
+            crate::style::TabSize::Length(crate::style::values::length(value, relative)?),
+        ),
+        _ => Ok(crate::style::TabSize::Number(crate::style::values::number(
+            value, relative,
+        )?)),
     }
 }
 computed!(

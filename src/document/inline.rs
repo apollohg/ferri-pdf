@@ -57,7 +57,6 @@ pub(crate) struct InlineLink {
     pub link: usize,
 }
 pub(crate) struct Paragraph {
-    expanded_tabs: Vec<Range<usize>>,
     marker_image: Option<crate::graphics::BackgroundImage>,
     first_formatted_line: bool,
     /// Holds the last line box of its block container.
@@ -204,7 +203,6 @@ impl Paragraph {
         );
         let mut copy = Self {
             annotation_align: self.annotation_align,
-            expanded_tabs: self.expanded_tabs.clone(),
             marker_image: None,
             first_formatted_line: self.first_formatted_line,
             last_formatted_line: self.last_formatted_line,
@@ -325,7 +323,6 @@ impl Paragraph {
             single_character_source: true,
         };
         let mut paragraph = Self {
-            expanded_tabs: Vec::new(),
             marker_image: Some(image),
             annotation_align: None,
             first_formatted_line: false,
@@ -358,9 +355,6 @@ impl Paragraph {
     }
     pub(crate) fn marker_image(&self) -> Option<&crate::graphics::BackgroundImage> {
         self.marker_image.as_ref()
-    }
-    pub(crate) fn expanded_tabs(&self) -> &[Range<usize>] {
-        &self.expanded_tabs
     }
     /// CSS list marker default object size is one em square.
     pub(crate) fn marker_image_size(&self) -> Option<[f32; 2]> {
@@ -549,7 +543,6 @@ struct PendingSpace {
 #[derive(Default)]
 pub(crate) struct InlineCollector {
     text: String,
-    expanded_tabs: Vec<Range<usize>>,
     spans: Vec<TextSpan>,
     styles: Vec<Style>,
     pending_space: Option<PendingSpace>,
@@ -751,7 +744,7 @@ impl InlineCollector {
         for ch in text.chars() {
             if ch == '\n' && style.white_space.preserves_breaks() {
                 self.drop_pending_space();
-                self.push('\n', index, source, single_character_source, 1, inline_box)?;
+                self.push('\n', index, source, single_character_source, inline_box)?;
             } else if collapses_character(ch, style.white_space.collapse) {
                 // Collapsible white space after an inside marker is discarded, as its `pre`
                 // white space intends (CSS Lists 3 §3.1.1, issues 4448 and 4891).
@@ -770,25 +763,10 @@ impl InlineCollector {
                 }
             } else if style.white_space.collapse.converts_to_spaces() && matches!(ch, '\n' | '\t') {
                 self.emit_pending_space()?;
-                self.push(' ', index, source, single_character_source, 1, inline_box)?;
+                self.push(' ', index, source, single_character_source, inline_box)?;
             } else {
                 self.emit_pending_space()?;
-                if ch == '\t' {
-                    let start = self.text.len();
-                    self.push(
-                        ' ',
-                        index,
-                        source,
-                        single_character_source,
-                        style.tab_size,
-                        inline_box,
-                    )?;
-                    if start < self.text.len() {
-                        self.expanded_tabs.push(start..self.text.len());
-                    }
-                } else {
-                    self.push(ch, index, source, single_character_source, 1, inline_box)?;
-                }
+                self.push(ch, index, source, single_character_source, inline_box)?;
             }
         }
         if leader {
@@ -806,7 +784,6 @@ impl InlineCollector {
                 space.style,
                 space.source,
                 space.single_character_source,
-                1,
                 space.inline_box,
             )?;
             let end = self.text.len();
@@ -879,8 +856,6 @@ impl InlineCollector {
         let inline_box = |inner: Option<usize>| inner.map_or(parent, |inner| Some(inner + boxes));
         let shift = |range: Range<usize>| range.start + offset..range.end + offset;
         self.text.push_str(&other.text);
-        self.expanded_tabs
-            .extend(other.expanded_tabs.into_iter().map(shift));
         self.spans
             .extend(other.spans.into_iter().map(|span| TextSpan {
                 range: shift(span.range),
@@ -1108,7 +1083,6 @@ impl InlineCollector {
             index,
             source,
             false,
-            1,
             self.open_box,
         )?;
         let span = self
@@ -1141,7 +1115,7 @@ impl InlineCollector {
         self.drop_pending_space();
         let index = self.style_index(style);
         let source = self.next_source();
-        self.push('\n', index, source, false, 1, self.open_box)?;
+        self.push('\n', index, source, false, self.open_box)?;
         if style.clear != Clear::None {
             self.clearances
                 .push((self.text.len(), style.clear, style.rtl));
@@ -1160,15 +1134,12 @@ impl InlineCollector {
         index: usize,
         source: usize,
         single_character_source: bool,
-        count: usize,
         inline_box: Option<usize>,
     ) -> Result<(), DocumentError> {
-        if count == 0 {
-            return Ok(());
-        }
-        if count
-            .checked_mul(ch.len_utf8())
-            .and_then(|bytes| self.text.len().checked_add(bytes))
+        if self
+            .text
+            .len()
+            .checked_add(ch.len_utf8())
             .is_none_or(|length| length > MAX_INLINE_TEXT_BYTES)
         {
             return Err(DocumentError::TextExpansionLimit {
@@ -1177,7 +1148,7 @@ impl InlineCollector {
         }
         let style = &self.styles[index];
         let start = self.text.len();
-        self.text.extend(std::iter::repeat_n(ch, count));
+        self.text.push(ch);
         if let Some(last) = self.spans.last_mut()
             && last.source == source
             && last.style.same_text_style(style)
@@ -1226,7 +1197,6 @@ impl InlineCollector {
         }
         let mut paragraph = Paragraph {
             annotation_align: None,
-            expanded_tabs: self.expanded_tabs,
             marker_image: None,
             first_formatted_line: true,
             last_formatted_line: true,

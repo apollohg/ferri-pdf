@@ -164,7 +164,7 @@ pub(crate) struct Style {
     pub quotes: crate::style::Quotes,
     pub counters: crate::style::CounterProperties,
     pub string_set: Arc<[crate::style::StringAssignment]>,
-    pub tab_size: usize,
+    pub tab_size: crate::style::TabSize,
     pub list_style_image: crate::paint::BackgroundImage,
     pub list_style_type: ListStyleType,
     pub list_style_position: ListStylePosition,

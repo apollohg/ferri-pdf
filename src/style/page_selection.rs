@@ -51,7 +51,7 @@ pub(crate) trait PageSelection {
         target: PageStyleTarget,
         continued: [bool; 2],
     ) -> Result<bool, StyleError>;
-    fn tab_size(&self, target: PageStyleTarget) -> Result<usize, StyleError>;
+    fn tab_size(&self, target: PageStyleTarget) -> Result<crate::style::TabSize, StyleError>;
     fn inside_marker(&self, target: PageStyleTarget) -> Result<bool, StyleError>;
 }
 

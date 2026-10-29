@@ -695,7 +695,7 @@ mod tests {
                 true,
             ),
             ("text-transform", "math-auto", true),
-            ("tab-size", "2pt", false),
+            ("tab-size", "2pt", true),
             ("hyphens", "manual", true),
             ("hyphens", "auto", true),
             ("line-clamp", "0", false),

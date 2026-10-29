@@ -254,7 +254,7 @@ fn numeric_contexts_round_integers_and_clamp_ranges() {
     assert_eq!(style.flex.grow, 0.0, "flex factors clamp to zero");
     assert_eq!(style.flex.shrink, 1.5);
     assert_eq!(style.font_weight.value(), 700.0);
-    assert_eq!(style.tab_size, 4);
+    assert_eq!(style.tab_size, crate::style::TabSize::Number(4.0));
     assert_eq!(style.line_height.resolve(style.size), Some(15.0));
     let heavy = child("font-weight:calc(2000)");
     assert_eq!(heavy.font_weight.value(), 1000.0, "weights clamp to 1000");

@@ -16,8 +16,8 @@ const PRETTY_LINES: usize = 4;
 /// short: the last line is lengthened to at least this, and no earlier line drops below it.
 const SHORT_LINE_FRACTION: f32 = 1.0 / 3.0;
 
-/// A group start and the bits of the fitting and containing widths.
-type PlanKey = (usize, u32, u32);
+/// A group start and the fitting width, containing width and inline offset bits.
+type PlanKey = (usize, u32, u32, u32);
 
 /// Line ends planned for each group of lines; `None` keeps first-fit breaking.
 #[derive(Default)]
@@ -73,6 +73,7 @@ impl ParagraphLines<'_, '_, '_, '_> {
             group_start,
             self.width.to_bits(),
             self.containing_width.to_bits(),
+            self.inline_start.to_bits(),
         );
         let cached = prepared.plans.0.borrow().get(&key).cloned();
         let plan = if let Some(plan) = cached {

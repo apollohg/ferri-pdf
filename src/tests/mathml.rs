@@ -844,7 +844,7 @@ fn unchanged_math_depth_does_not_load_unused_font_metrics_while_formatting_a_spa
 #[test]
 fn hidden_semantic_annotations_do_not_activate_unsupported_style_or_font_work() {
     let view = math(
-        "<math><semantics><mn>1</mn><annotation style='tab-size:2pt'>hidden</annotation></semantics><maction><mn>2</mn><mrow style='tab-size:2pt'><mn>3</mn></mrow></maction></math>",
+        "<math><semantics><mn>1</mn><annotation style='background-image:element(#missing)'>hidden</annotation></semantics><maction><mn>2</mn><mrow style='background-image:element(#missing)'><mn>3</mn></mrow></maction></math>",
     );
     assert_eq!(
         view.lines

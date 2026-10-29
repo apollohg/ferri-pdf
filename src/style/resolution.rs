@@ -1439,7 +1439,10 @@ impl crate::style::PageSelection for Geometry<'_> {
         }
         Ok(false)
     }
-    fn tab_size(&self, target: crate::style::PageStyleTarget) -> Result<usize, StyleError> {
+    fn tab_size(
+        &self,
+        target: crate::style::PageStyleTarget,
+    ) -> Result<crate::style::TabSize, StyleError> {
         self.selected_value(target, Property::TabSize, |style| style.tab_size)
     }
     fn inside_marker(&self, target: crate::style::PageStyleTarget) -> Result<bool, StyleError> {

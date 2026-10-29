@@ -193,16 +193,11 @@ pub(super) fn shape(
                     scripts.reverse();
                 }
                 for range in scripts {
-                    runs.extend(context.shape(
-                        text,
-                        range,
-                        rtl,
-                        style,
-                        MissingGlyphs::Substitute,
-                    )?);
+                    runs.extend(super::tabs::shape(context, text, range, rtl, style)?);
                 }
             }
         }
+        super::tabs::resolve_composition(context, style, &mut runs)?;
         Ok(runs)
     };
     let mut runs = shape(&style)?;
@@ -213,7 +208,10 @@ pub(super) fn shape(
         style.font_features.settings = settings.into();
         // Width-specific forms must cover every typographic unit before the whole composition uses them (§9.1.3).
         let mut complete = true;
-        for cluster in text.graphemes(true) {
+        for cluster in text
+            .graphemes(true)
+            .filter(|cluster| !cluster.chars().all(char::is_whitespace))
+        {
             let plain = context.shape(
                 cluster,
                 0..cluster.len(),
@@ -233,7 +231,7 @@ pub(super) fn shape(
                     .flat_map(|run| run.glyphs.iter().map(|glyph| (run.font_id, glyph.id)))
                     .collect::<Vec<_>>()
             };
-            if !cluster.chars().all(char::is_whitespace) && ids(&plain) == ids(&variant) {
+            if ids(&plain) == ids(&variant) {
                 complete = false;
                 break;
             }

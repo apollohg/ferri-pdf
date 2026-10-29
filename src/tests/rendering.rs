@@ -526,7 +526,7 @@ fn unwrappable_justified_overflow_uses_the_full_space_compression_limit() {
 }
 
 #[test]
-fn preserved_trailing_spaces_hang_only_with_content_from_the_same_text_node() {
+fn preserved_trailing_spaces_hang_across_text_node_boundaries() {
     for align in ["start", "justify"] {
         for white_space in ["normal", "pre-wrap"] {
             for separate in [false, true] {
@@ -546,15 +546,19 @@ fn preserved_trailing_spaces_hang_only_with_content_from_the_same_text_node() {
                 let wraps_trailing_spaces = align == "justify" && white_space == "normal";
                 assert_eq!(
                     lines.len(),
-                    if separate || wraps_trailing_spaces {
-                        2
-                    } else {
-                        1
-                    },
+                    if wraps_trailing_spaces { 2 } else { 1 },
                     "{align}, {white_space}, separate:{separate}: {:?}",
                     lines.iter().map(|line| &line.text).collect::<Vec<_>>()
                 );
-                assert_eq!(lines[0].text.trim_end(), if separate { "A" } else { "A B" });
+                assert_eq!(
+                    lines[0].text.trim_end(),
+                    if separate && wraps_trailing_spaces {
+                        "A"
+                    } else {
+                        "A B"
+                    },
+                    "{align}, {white_space}, separate:{separate}"
+                );
             }
         }
     }
@@ -1001,8 +1005,8 @@ fn preformatted_content_preserves_spaces_tabs_and_empty_lines() {
             .iter()
             .map(|line| line.text.as_str())
             .collect::<Vec<_>>(),
-        ["  A    B", "", "C  ", "Next"],
-        "HTML removes the initial pre newline; CSS preserves indentation, expanded tabs, blank lines and final spaces"
+        ["  A\tB", "", "C  ", "Next"],
+        "HTML removes the initial pre newline; CSS preserves indentation, tabs, blank lines and final spaces"
     );
     assert!(
         (lines[3].baseline - lines[0].baseline - 54.0).abs() < 0.0001,
@@ -1064,13 +1068,23 @@ fn soft_line_breaks_end_arabic_joining_context() {
 }
 
 #[test]
-fn excessive_preserved_tab_expansion_is_rejected_before_allocating_the_text() {
+fn large_tab_intervals_do_not_expand_source_or_glyph_storage() {
     let html =
         format!("<style>{PROFILE}p{{white-space:pre;tab-size:1000000000}}</style><p>A\tB</p>");
-    let result = render_html(&html, &local_options());
-    assert!(
-        matches!(result, Err(crate::Error::Document(ref message)) if message.contains("formatted inline text exceeds")),
-        "a small input must not allocate a billion glyph spaces before reporting the expansion limit"
+    let output = render_html(&html, &local_options()).unwrap();
+    let trace = output.layout.unwrap();
+    let line = &trace.pages[0][0];
+    assert_eq!(
+        line.text, "A\tB",
+        "tab interval must not expand source text"
+    );
+    assert_eq!(
+        line.runs
+            .iter()
+            .map(|run| run.glyphs().len())
+            .sum::<usize>(),
+        3,
+        "a large tab interval still uses one whitespace glyph"
     );
 }
 
@@ -1094,7 +1108,7 @@ fn nowrap_inline_spans_keep_internal_spaces_without_blocking_boundary_breaks() {
 }
 
 #[test]
-fn prewrap_trailing_spaces_hang_for_wrapping_and_still_affect_alignment() {
+fn prewrap_trailing_spaces_hang_for_wrapping_and_alignment() {
     let html = format!(
         "<style>{PROFILE}p{{white-space:pre-wrap;width:70pt;text-align:center}}</style><p>  One   two    three  </p>"
     );
@@ -1109,9 +1123,23 @@ fn prewrap_trailing_spaces_hang_for_wrapping_and_still_affect_alignment() {
         lines[0].width > 70.0,
         "preserved spaces may hang beyond the available line width"
     );
-    assert_eq!(
-        lines[0].x, 36.0,
-        "the full preserved width makes the line overfull for alignment"
+    let visible_end = lines[0].text.trim_end().len();
+    let visible_width: f32 = lines[0]
+        .runs
+        .iter()
+        .flat_map(|run| {
+            run.glyphs()
+                .iter()
+                .filter(move |glyph| run.source_range.start + glyph.text_range.start < visible_end)
+                .map(|glyph| glyph.advance(run.font_size))
+        })
+        .sum();
+    const PAGE_MARGIN_PT: f32 = 36.0;
+    const LINE_WIDTH_PT: f32 = 70.0;
+    assert!(
+        (lines[0].x - (PAGE_MARGIN_PT + (LINE_WIDTH_PT - visible_width) / 2.0)).abs() < 0.001,
+        "center alignment excludes hanging spaces: x={}, visible width={visible_width}",
+        lines[0].x
     );
     assert_eq!(lines[1].text, "three  ");
 }

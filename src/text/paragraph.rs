@@ -59,6 +59,7 @@ pub(crate) struct ParagraphLines<'s, 'p, 'context, 'font> {
     position: TextPosition<'p>,
     width: f32,
     containing_width: f32,
+    inline_start: f32,
     indent: f32,
     atomics: &'s [AtomicMetrics],
     atomic_widths: Vec<f32>,
@@ -157,7 +158,7 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
         width: f32,
         atomics: &'s [AtomicMetrics],
     ) -> Result<ParagraphLines<'s, 'p, 'context, 'font>, TextError> {
-        self.lines_in_block(position, width, width, atomics)
+        self.lines_in_block(position, width, width, [0.0; 2], atomics)
     }
 
     /// Line fitting width can be narrowed by floats; percentages use the full block.
@@ -166,6 +167,7 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
         position: TextPosition<'p>,
         width: f32,
         containing_width: f32,
+        insets: [f32; 2],
         atomics: &'s [AtomicMetrics],
     ) -> Result<ParagraphLines<'s, 'p, 'context, 'font>, TextError> {
         self.bidi()?;
@@ -184,6 +186,7 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
             position,
             width,
             containing_width,
+            inline_start: insets[usize::from(self.paragraph.style().used_rtl())],
             indent: 0.0,
             atomics,
             atomic_widths: atomics.iter().map(|metrics| metrics.width).collect(),
@@ -276,6 +279,12 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             &mut arranged,
             starts_block_line(paragraph, &prepared.opportunities, from),
         )?;
+        super::tabs::resolve(
+            prepared.context,
+            paragraph,
+            &mut arranged,
+            self.inline_start + indent,
+        )?;
         let fit = |arranged: &line_boxes::Arranged| {
             let leader_width = if prepared.has_leaders {
                 crate::text::leaders::wrapping_width(paragraph, arranged, available, from)
@@ -285,7 +294,13 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             let wrap_width = spacing::wrapping_width(
                 paragraph,
                 &arranged.runs,
-                whitespace::wrapping_width(paragraph, visible.end, &arranged.runs, arranged.width),
+                whitespace::wrapping_width(
+                    paragraph,
+                    visible.end,
+                    &arranged.runs,
+                    &arranged.order,
+                    arranged.width,
+                ),
             );
             let wrap_width = leader_width.map_or(wrap_width, |width| wrap_width.max(width));
             let hangable = hanging::hangable(
@@ -394,6 +409,19 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
         line.hanging =
             line.hangable
                 .hanging(line.width, self.available(), paragraph.style().used_rtl());
+        if line.wrapped || line.width > self.available() {
+            let end = whitespace::visible(paragraph, line.range.clone()).end;
+            let trailing = line.width
+                - whitespace::wrapping_width(paragraph, end, &line.runs, &line.order, line.width);
+            let trailing = if line.wrapped {
+                trailing
+            } else {
+                (line.width - line.hanging.iter().sum::<f32>() - self.available())
+                    .clamp(0.0, trailing.max(0.0))
+            };
+            let side = usize::from(!paragraph.style().used_rtl());
+            line.hanging[side] += trailing;
+        }
         let hanging = line.hanging[0] + line.hanging[1];
         line.width -= hanging;
         spacing::align(&mut line, paragraph, self.available(), last)?;

@@ -17,6 +17,7 @@ mod ruby;
 mod shaping;
 mod spacing;
 mod spacing_trim;
+mod tabs;
 mod tailoring;
 #[cfg(test)]
 mod tests;
@@ -247,8 +248,11 @@ fn shape_line(
             }
             boundaries.sort_unstable();
             boundaries.dedup();
-            for bounds in boundaries.windows(2) {
-                let r = bounds[0]..bounds[1];
+            let mut ranges: Vec<_> = boundaries.windows(2).map(|b| b[0]..b[1]).collect();
+            if rtl {
+                ranges.reverse();
+            }
+            for r in ranges {
                 if let Some(group) = combined.iter().find(|group| group.range.contains(&r.start)) {
                     if emitted.borrow_mut().insert(group.range.start) {
                         result.extend(
@@ -262,12 +266,12 @@ fn shape_line(
                 let (style, source) = (&piece.style, piece.range.clone());
                 let shaping_context =
                     source.start.max(context_range.start)..source.end.min(context_range.end);
-                let mut runs = context.shape(
+                let mut runs = tabs::shape(
+                    context,
                     &paragraph.text()[shaping_context.clone()],
                     (r.start - shaping_context.start)..(r.end - shaping_context.start),
                     rtl,
                     style,
-                    MissingGlyphs::Substitute,
                 )?;
                 for run in &mut runs {
                     run.bidi_scoped = bidi.has_controls();
@@ -805,6 +809,7 @@ impl<'a> TextContext<'a> {
             if min_content && let Some(end_trim) = end_trim {
                 end_trim.apply(&mut arranged);
             }
+            tabs::resolve(self, paragraph, &mut arranged, indent)?;
             let hangable = hanging::hangable(
                 paragraph,
                 range.clone(),
@@ -812,10 +817,18 @@ impl<'a> TextContext<'a> {
                 &arranged.runs,
                 &arranged.order,
             );
-            let width =
-                whitespace::wrapping_width(paragraph, visible.end, &arranged.runs, arranged.width)
-                    + indent
-                    - hangable.intrinsic(min_content);
+            let width = if min_content {
+                whitespace::wrapping_width(
+                    paragraph,
+                    visible.end,
+                    &arranged.runs,
+                    &arranged.order,
+                    arranged.width,
+                )
+            } else {
+                arranged.width
+            } + indent
+                - hangable.intrinsic(min_content);
             if !width.is_finite() {
                 return Err(TextError::NonFiniteGeometry);
             }

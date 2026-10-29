@@ -60,10 +60,26 @@ fn word_space(paragraph: &Paragraph, run: &GlyphRun, index: usize) -> bool {
             .is_none_or(|next| next.text_range != glyph.text_range)
 }
 
+/// Justification after the final tab preserves all tab stops (CSS Text 3 §6.1).
+fn justification_range(paragraph: &Paragraph, runs: &[GlyphRun]) -> std::ops::Range<usize> {
+    if paragraph.style().used_rtl() {
+        0..runs
+            .iter()
+            .position(super::tabs::is_tab)
+            .unwrap_or(runs.len())
+    } else {
+        runs.iter()
+            .rposition(super::tabs::is_tab)
+            .map_or(0, |index| index + 1)..runs.len()
+    }
+}
+
 /// Word separators, which `auto` and `inter-word` justification expand and compress.
 fn word_spaces(paragraph: &Paragraph, runs: &[GlyphRun]) -> Vec<GlyphIndex> {
+    let eligible = justification_range(paragraph, runs);
     runs.iter()
         .enumerate()
+        .filter(|(index, _)| eligible.contains(index))
         .flat_map(|(run_index, run)| {
             (0..run.glyphs.len())
                 .filter(move |&index| word_space(paragraph, run, index))
@@ -116,7 +132,7 @@ fn character_gaps(paragraph: &Paragraph, runs: &[GlyphRun], slots: &[Slot]) -> V
             continue;
         };
         let run = &runs[run_index];
-        if run.leader {
+        if run.leader || super::tabs::is_tab(run) {
             previous = None;
             continue;
         }
@@ -165,6 +181,8 @@ pub(super) fn opportunities(
         })
         .collect();
     opportunities.extend(character_gaps(paragraph, runs, slots));
+    let eligible = justification_range(paragraph, runs);
+    opportunities.retain(|(run, _)| eligible.contains(run));
     opportunities.sort_unstable();
     opportunities.dedup();
     opportunities
