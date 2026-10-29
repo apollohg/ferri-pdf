@@ -1535,26 +1535,23 @@ impl<'a> Measurer<'a> {
     ) -> Result<MeasuredParagraph<'a>, Failure> {
         self.work.spend(paragraph.text().len().max(1))?;
         let index = self.sources.paragraph(paragraph);
-        let atomics = paragraph
-            .inline_blocks()
-            .enumerate()
-            .map(|(index, atomic)| {
-                let base_height = paragraph
-                    .inter_character_base_style(index)
-                    .map(|style| {
-                        crate::text::BoxMetrics::of(self.text, style)
-                            .map(|metrics| metrics.ascent + metrics.descent)
-                    })
-                    .transpose()?;
-                crate::layout::inline::measure(
-                    self,
-                    &atomic.block,
-                    width,
-                    base_height.or(containing_height),
-                    rtl,
-                )
-            })
-            .collect::<Result<Vec<_>, _>>()?;
+        let mut atomics = Vec::new();
+        for (index, atomic) in paragraph.inline_blocks().enumerate() {
+            let base_height = paragraph
+                .inter_character_base_style(index)
+                .map(|style| {
+                    crate::text::BoxMetrics::of(self.text, style)
+                        .map(|metrics| metrics.ascent + metrics.descent)
+                })
+                .transpose()?;
+            atomics.push(crate::layout::inline::measure(
+                self,
+                &atomic.block,
+                width,
+                base_height.or(containing_height),
+                rtl,
+            )?);
+        }
         let metrics: Vec<_> = atomics.iter().map(|atomic| atomic.metrics).collect();
         let text = self.text;
         let prepared = text.prepare_paragraph(paragraph);
