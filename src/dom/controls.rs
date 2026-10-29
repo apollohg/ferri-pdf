@@ -29,6 +29,8 @@ const BUTTON_TYPES: [&str; 3] = ["submit", "reset", "button"];
 const CONTENT_EDITABLE_TRUE: [&str; 2] = ["", "true"];
 const CONTENT_EDITABLE_PLAINTEXT: &str = "plaintext-only";
 const CONTENT_EDITABLE_FALSE: &str = "false";
+/// HTML §4.10.5.3.6 compiles patterns with RegExpCreate(pattern, "v").
+const PATTERN_FLAGS: &str = "v";
 
 #[derive(Clone, Copy, Debug, Default)]
 pub(crate) struct ControlAncestry {
@@ -913,26 +915,43 @@ impl<'a> Element<'a> {
                 .any(|ancestor| html_element(ancestor, "datalist"))
     }
 
-    /// Whether the static validity of the control depends on its `pattern` attribute, whose
-    /// JavaScript regular expression this engine does not evaluate.
-    pub(crate) fn validity_needs_pattern(self) -> bool {
-        self.is_validation_candidate()
-            && self.input_applies(InputAttribute::Pattern)
-            && self.attr("pattern").is_some()
-            && !(self.attr("multiple").is_some() && self.input_applies(InputAttribute::Multiple))
-            && !self.input_value().is_empty()
+    /// HTML §4.10.5.3.6: a non-empty value, or with `multiple` each of the values, that the
+    /// compiled pattern regular expression does not match. A pattern that does not compile
+    /// as a `v`-flag JavaScript regular expression imposes no constraint.
+    fn pattern_mismatch(self) -> bool {
+        let Some(pattern) = self
+            .attr("pattern")
+            .filter(|_| self.input_applies(InputAttribute::Pattern))
+        else {
+            return false;
+        };
+        let value = self.input_value();
+        if value.is_empty() || regress::Regex::with_flags(pattern, PATTERN_FLAGS).is_err() {
+            return false;
+        }
+        let anchored = regress::Regex::with_flags(&format!("^(?:{pattern})$"), PATTERN_FLAGS)
+            .expect("an anchored valid pattern stays valid");
+        if self.attr("multiple").is_some() && self.input_applies(InputAttribute::Multiple) {
+            value.split(',').any(|value| anchored.find(value).is_none())
+        } else {
+            anchored.find(&value).is_none()
+        }
     }
 
     /// Whether a validation candidate satisfies its constraints in its initial state, where
     /// nothing is too long, too short, badly input or custom-invalid.
     fn satisfies_constraints(self) -> bool {
-        !self.value_missing() && !self.type_mismatch() && self.range_flags() == [false; 2] && {
-            let mismatch = self.input_type().and_then(|kind| {
-                let range = self.numeric_range()?;
-                Some(range.mismatches_step(kind.number(&self.input_value())?))
-            });
-            mismatch != Some(true)
-        }
+        !self.value_missing()
+            && !self.type_mismatch()
+            && !self.pattern_mismatch()
+            && self.range_flags() == [false; 2]
+            && {
+                let mismatch = self.input_type().and_then(|kind| {
+                    let range = self.numeric_range()?;
+                    Some(range.mismatches_step(kind.number(&self.input_value())?))
+                });
+                mismatch != Some(true)
+            }
     }
 
     fn value_missing(self) -> bool {

@@ -669,31 +669,7 @@ impl Stylesheet {
                 namespace,
             })
             .collect();
-        if let Some(tree) = tree {
-            sheet.check_validity_patterns(tree)?;
-        }
         Ok(sheet)
-    }
-
-    /// `:valid` and `:invalid` depend on `pattern` constraints, whose JavaScript regular
-    /// expressions (HTML §4.10.5.3.6) this engine does not evaluate.
-    fn check_validity_patterns(&self, tree: &crate::dom::DocumentTree) -> Result<(), StyleError> {
-        let queried = self
-            .rules
-            .iter()
-            .flat_map(|rule| &rule.selectors)
-            .any(RuleSelector::uses_validity);
-        if queried
-            && let Some(control) = tree
-                .shadow_including_elements()
-                .find(|element| element.validity_needs_pattern())
-        {
-            return Err(StyleError::Unsupported(format!(
-                "pattern constraint validation of {}",
-                control.name()
-            )));
-        }
-        Ok(())
     }
 
     /// Defines the `@font-palette-values` palettes in the context of the root element's

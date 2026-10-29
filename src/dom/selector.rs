@@ -95,8 +95,6 @@ struct SelectorMetrics {
     parent_depth: Option<usize>,
     components: usize,
     parent_count: usize,
-    /// Matches `:valid` or `:invalid`, which need every control's constraint validation.
-    validity: bool,
 }
 impl SelectorMetrics {
     fn parsed(selectors: &SelectorList<StaticSelector>) -> Self {
@@ -119,7 +117,6 @@ impl SelectorMetrics {
                 .max(),
             components: self.components.saturating_add(other.components),
             parent_count: self.parent_count.saturating_add(other.parent_count),
-            validity: self.validity || other.validity,
         }
     }
     fn resolved(self, parent: Self) -> Self {
@@ -136,7 +133,6 @@ impl SelectorMetrics {
                 .components
                 .saturating_add(self.parent_count.saturating_mul(parent.components)),
             parent_count: self.parent_count.saturating_mul(parent.parent_count),
-            validity: self.validity || parent.validity,
         }
     }
 }
@@ -160,12 +156,6 @@ impl SelectorVisitor for MetricsVisitor {
     fn visit_simple_selector(&mut self, component: &parser::Component<StaticSelector>) -> bool {
         self.metrics.depth = self.metrics.depth.max(self.depth);
         self.metrics.components = self.metrics.components.saturating_add(1);
-        self.metrics.validity |= matches!(
-            component,
-            parser::Component::NonTSPseudoClass(StaticState::Form(
-                FormState::Valid | FormState::Invalid
-            ))
-        );
         if matches!(component, parser::Component::ParentSelector) {
             self.metrics.parent_count = self.metrics.parent_count.saturating_add(1);
             self.metrics.parent_depth = Some(
@@ -289,9 +279,6 @@ impl Selector {
 
     pub(crate) fn nesting_work(&self, parent_work: usize) -> usize {
         parent_work.saturating_mul(self.metrics.components)
-    }
-    pub(crate) fn uses_validity(&self) -> bool {
-        self.metrics.validity
     }
     pub(crate) fn depth(&self) -> usize {
         self.metrics.depth

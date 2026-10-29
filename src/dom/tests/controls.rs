@@ -362,6 +362,83 @@ fn constraint_validation_covers_missing_type_range_and_step_states() {
 }
 
 #[test]
+fn pattern_constraints_compile_anchored_v_flag_expressions() {
+    for (control, invalid, reason) in [
+        ("<input pattern='[0-9]+' value=123>", false, "digits match"),
+        (
+            "<input pattern='[0-9]+' value=12x>",
+            true,
+            "a partial match is a mismatch",
+        ),
+        (
+            "<input pattern='a|b' value=ab>",
+            true,
+            "the pattern is grouped before anchoring, so `^a|b$` semantics must not leak",
+        ),
+        (
+            "<input pattern='[\\p{L}--[a-z]]+' value=ÀB>",
+            false,
+            "v-flag set subtraction keeps non-lowercase letters",
+        ),
+        (
+            "<input pattern='[\\p{L}--[a-z]]+' value=Àb>",
+            true,
+            "v-flag set subtraction removes a-z",
+        ),
+        (
+            "<input pattern='.' value=😀>",
+            false,
+            "v-flag patterns match code points, not UTF-16 units",
+        ),
+        (
+            "<input pattern='[(]' value=x>",
+            false,
+            "`(` must be escaped in a v-flag class, so the pattern does not compile and imposes nothing",
+        ),
+        (
+            "<input pattern='(' value=x>",
+            false,
+            "an invalid pattern imposes nothing",
+        ),
+        (
+            "<input pattern='[0-9]+' value=''>",
+            false,
+            "empty values are exempt",
+        ),
+        (
+            "<input type=number pattern='x' value=1>",
+            false,
+            "pattern does not apply to number inputs",
+        ),
+        (
+            "<input type=email multiple pattern='[a-z]+@x[.]com' value='a@x.com, b@x.com'>",
+            false,
+            "each of the sanitized values matches",
+        ),
+        (
+            "<input type=email multiple pattern='[a-z]+@x[.]com' value='a@x.com,c@y.com'>",
+            true,
+            "one value of several mismatches",
+        ),
+        (
+            "<input type=email pattern='[a-z]+@x[.]com' value='a@x.com,b@x.com'>",
+            true,
+            "without multiple the whole value is matched, and is also a type mismatch",
+        ),
+    ] {
+        let html = control.replacen('>', " id=c>", 1);
+        assert_eq!(
+            (
+                ids_matching(&html, ":invalid") == ["c"],
+                ids_matching(&html, ":valid") == ["c"]
+            ),
+            (invalid, !invalid),
+            "{control}: expected invalid={invalid} because {reason}"
+        );
+    }
+}
+
+#[test]
 fn range_states_and_open_elements() {
     let html = "<input id=low type=number min=5 value=1><input id=ok type=number min=5 value=6>\
         <input id=none type=number value=6><input id=slider type=range>\

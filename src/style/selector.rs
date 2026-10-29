@@ -120,9 +120,6 @@ impl RuleSelector {
         selector_depth(self.selector.resolved_depth(parent))?;
         Self::from_parsed(self.selector.resolve_parent(parent), self.pseudo)
     }
-    pub(super) fn uses_validity(&self) -> bool {
-        self.selector.uses_validity()
-    }
     pub(super) fn target_index(&self) -> usize {
         target_index(self.pseudo)
     }

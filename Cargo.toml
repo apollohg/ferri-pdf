@@ -89,6 +89,7 @@ tiny-skia = "0.12"
 image = { version = "=0.25.10", default-features = false, features = ["png", "jpeg", "gif", "webp"] }
 cssparser = "0.37"
 roxmltree = "0.21.2"
+regress = "0.12"
 icu_normalizer = { version = "~2.3.0", default-features = false, features = ["compiled_data"] }
 icu_properties = { version = "~2.3.0", default-features = false, features = ["compiled_data"] }
 selectors = { package = "ferri-pdf-selectors", path = "vendor/selectors", version = "0.38" }
@@ -208,6 +209,7 @@ log.workspace = true
 moxcms.workspace = true
 percent-encoding.workspace = true
 png.workspace = true
+regress.workspace = true
 rgb.workspace = true
 roxmltree.workspace = true
 rustls-rustcrypto = { workspace = true, optional = true }

@@ -381,16 +381,3 @@ fn framesets_divide_the_viewport_among_their_frames() {
         "72px absolute, the rest relative; the nested rows split it in half"
     );
 }
-
-#[test]
-fn validity_selectors_over_patterns_are_unsupported_rather_than_guessed() {
-    let error = render("<style>:invalid{color:red}</style><input pattern='[0-9]+' value=x>")
-        .err()
-        .expect("pattern constraints need a JavaScript regular expression engine");
-    assert!(
-        error.to_string().contains("pattern constraint validation"),
-        "{error}"
-    );
-    render("<input pattern='[0-9]+' value=x>")
-        .expect("patterns alone render when no style rule asks for validity");
-}
