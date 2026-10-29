@@ -1,4 +1,5 @@
 mod navigation;
+mod ruby;
 mod shadow_fonts;
 mod text_transform;
 
