@@ -167,6 +167,31 @@ class AnchorPositioningPdf(unittest.TestCase):
                         if 'Flood' in primitive or 'Image' in primitive or 'drop-shadow' in function:
                             self.assertTrue(green, 'the filter must actually generate ink inside the overflow clip')
 
+    def test_drop_shadow_preserves_midtones_in_each_filter_color_space(self):
+        renderer = table_positioning_pdf.TablePositioningPdf()
+        css = ('@page{size:140pt 100pt;margin:20pt}html,body{margin:0}'
+               'div{width:12pt;height:20pt;background:red}')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-shadow-color-') as directory:
+            root = Path(directory)
+            for space in ('sRGB', 'linearRGB'):
+                with self.subTest(color_interpolation_filters=space):
+                    body = ("<svg style='display:none'><defs><filter id='shadow' "
+                            f"color-interpolation-filters='{space}' x='-100%' y='-100%' width='500%' height='300%'>"
+                            "<feDropShadow dx='40' dy='0' stdDeviation='0' flood-color='#408080'/>"
+                            "</filter></defs></svg><div style='filter:url(#shadow)'></div>")
+                    output = renderer.render(root, css, body)
+                    with renderer.raster(root, output, vector_antialias=False) as raster:
+                        actual = raster.getpixel((55, 25))
+                        for channel, expected in zip(actual, (64, 128, 128)):
+                            self.assertLessEqual(abs(channel - expected), 1,
+                                                 f'{space} must preserve the declared sRGB shadow midtone: {actual}')
+                    output = renderer.render(root, css, "<div style='filter:drop-shadow(30pt 0 #408080)'></div>")
+                    with renderer.raster(root, output, vector_antialias=False) as raster:
+                        actual = raster.getpixel((55, 25))
+                        for channel, expected in zip(actual, (64, 128, 128)):
+                            self.assertLessEqual(abs(channel - expected), 1,
+                                                 f'CSS drop-shadow must preserve its declared midtone: {actual}')
+
     def test_zero_radius_morphology_preserves_filtered_input_ink(self):
         renderer = table_positioning_pdf.TablePositioningPdf()
         css = ('section{width:20pt;height:40pt;overflow:hidden}'

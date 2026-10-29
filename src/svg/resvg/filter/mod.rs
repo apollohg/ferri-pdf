@@ -614,9 +614,8 @@ fn apply_drop_shadow(
         *p = color.premultiply().to_color_u8();
     }
 
-    match cs {
-        crate::svg::usvg::filter::ColorInterpolation::SRGB => shadow_pixmap.into_srgb(),
-        crate::svg::usvg::filter::ColorInterpolation::LinearRGB => shadow_pixmap.into_linear_rgb(),
+    if cs == crate::svg::usvg::filter::ColorInterpolation::LinearRGB {
+        shadow_pixmap.into_linear_rgb();
     }
 
     pixmap.draw_pixmap(
