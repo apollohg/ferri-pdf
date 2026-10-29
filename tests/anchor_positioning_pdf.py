@@ -167,6 +167,101 @@ class AnchorPositioningPdf(unittest.TestCase):
                         if 'Flood' in primitive or 'Image' in primitive or 'drop-shadow' in function:
                             self.assertTrue(green, 'the filter must actually generate ink inside the overflow clip')
 
+    def test_structural_table_anchor_boxes_exist_without_background_paints(self):
+        renderer = table_positioning_pdf.TablePositioningPdf()
+        css = ('.anchor{width:auto;height:auto;margin:0;background:transparent}'
+               'table{width:100pt;table-layout:fixed;border-spacing:0}'
+               'col:first-child{width:40pt}td{height:20pt;padding:0}'
+               '.target{left:anchor(left,140pt);top:anchor(bottom,100pt);'
+               'width:anchor-size(width,99pt);height:anchor-size(height,9pt);position-visibility:always}')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-table-anchors-') as directory:
+            root = Path(directory)
+            for collapse in ('separate', 'collapse'):
+                for source, (left, top, width, height) in (
+                        ('tr', (0, 20, 100, 20)), ('tbody', (0, 40, 100, 40)),
+                        ('thead', (0, 40, 100, 40)), ('tfoot', (0, 40, 100, 40)),
+                        ('col', (0, 40, 40, 40)), ('colgroup', (0, 40, 100, 40))):
+                    with self.subTest(collapse=collapse, source=source):
+                        group = source if source in ('thead', 'tfoot') else 'tbody'
+                        def attr(tag):
+                            return ' class=anchor' if source == tag else ''
+                        body = (f"<table style='border-collapse:{collapse}'><colgroup{attr('colgroup')}>"
+                                f"<col{attr('col')}><col></colgroup><{group}{attr(group)}>"
+                                f"<tr{attr('tr')}><td></td><td></td></tr><tr><td></td><td></td></tr>"
+                                f"</{group}></table><div class=target><a href='https://example.org/'>T</a></div>")
+                        output = renderer.render(root, PROFILE + css, body)
+                        glyphs = pdf_content.inspect(output)['glyphs']
+                        links = pdf_content.navigation(output)['links']
+                        with renderer.raster(root, output, vector_antialias=False) as raster:
+                            actual = raster.tobytes()
+                        explicit = (f'.target{{position-anchor:none;left:{left}pt;top:{top}pt;'
+                                    f'width:{width}pt;height:{height}pt}}')
+                        output = renderer.render(root, PROFILE + css + explicit, body)
+                        self.assertEqual(glyphs, pdf_content.inspect(output)['glyphs'])
+                        self.assertEqual(links, pdf_content.navigation(output)['links'])
+                        with renderer.raster(root, output, vector_antialias=False) as raster:
+                            self.assertEqual(actual, raster.tobytes(),
+                                             'structural anchor geometry must move pixels, glyphs and links together')
+
+    def test_table_anchor_effects_and_fragmented_source_geometry_reach_pdf(self):
+        renderer = table_positioning_pdf.TablePositioningPdf()
+        base = ('.anchor{width:auto;height:auto;margin:0;background:transparent}'
+                'table{width:100pt;border-spacing:0}td{height:20pt;padding:0}'
+                '.target{left:anchor(left);top:anchor(bottom);width:anchor-size(width);'
+                'position-visibility:anchors-visible}')
+        body = ('<section><table><tbody><tr class=anchor><td></td></tr></tbody></table></section>'
+                '<div class=target><a href="https://example.org/">T</a></div>')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-table-anchor-effects-') as directory:
+            root = Path(directory)
+            for effect, visible, expected in (
+                    ('tbody{transform:translate(30pt,5pt)}tr{position:relative;left:7pt}', True, (57, 45, 157, 55)),
+                    ('tbody{clip-path:inset(100%)}', False, None),
+                    ('tbody{border:10pt solid;clip-path:padding-box}', True, (20, 40, 120, 50)),
+                    ('section{overflow:hidden;width:20pt;height:40pt}'
+                     'table{margin-left:30pt;width:10pt}tr{box-shadow:-20pt 0 green}', True, (50, 40, 60, 50)),
+                    ('section{overflow:hidden;width:20pt;height:40pt}'
+                     'table{margin-left:30pt;width:10pt}tr{filter:drop-shadow(-20pt 0 green)}'
+                     'td{background:blue}', True, (50, 40, 60, 50)),
+                    ('section{overflow:hidden;width:20pt;height:40pt}'
+                     'table{margin-left:30pt;width:10pt}tr{filter:opacity(0)}'
+                     'td{background:blue}', False, None)):
+                with self.subTest(effect=effect):
+                    output = renderer.render(root, PROFILE + base + effect, body)
+                    self.assertEqual(bool(pdf_content.navigation(output)['links']), visible)
+                    self.assertEqual(any(g.text == 'T' for g in pdf_content.inspect(output)['glyphs']), visible)
+                    with renderer.raster(root, output, vector_antialias=False) as raster:
+                        red = [(x, y) for y in range(raster.height) for x in range(raster.width)
+                               if raster.getpixel((x, y)) == (255, 0, 0)]
+                        if 'drop-shadow' in effect:
+                            self.assertTrue(any(all(abs(a - b) <= 1 for a, b in zip(raster.getpixel((x, y)), (0, 128, 0)))
+                                                for y in range(20, 40) for x in range(20, 40)),
+                                            'the row filter must generate real green ink inside the clip')
+                    bounds = ((min(x for x, y in red), min(y for x, y in red),
+                               max(x for x, y in red)+1, max(y for x, y in red)+1) if red else None)
+                    self.assertEqual(bounds, expected)
+            output = renderer.render(root, PROFILE + base +
+                '.anchor{height:20pt;transform:translate(7pt,5pt)}.target{position-visibility:always}',
+                '<table><tbody><tr class=anchor></tr></tbody></table><div class=target></div>')
+            with renderer.raster(root, output, vector_antialias=False) as raster:
+                red = [(x, y) for y in range(raster.height) for x in range(raster.width)
+                       if raster.getpixel((x, y)) == (255, 0, 0)]
+            self.assertEqual((min(x for x, y in red), min(y for x, y in red),
+                              max(x for x, y in red)+1, max(y for x, y in red)+1), (27, 45, 127, 55))
+            body = ('<section><table><tbody class=anchor>' + '<tr><td></td></tr>' * 5 +
+                    '</tbody></table><div class=target></div></section>')
+            base += ('td{height:60pt}.target{left:0;top:0;height:anchor-size(height);'
+                     'background:linear-gradient(red,yellow)}')
+            for containing, height in (('section{position:relative}', 300), ('', 200)):
+                with self.subTest(containing=containing):
+                    output = renderer.render(root, PROFILE + base + containing, body)
+                    with renderer.raster(root, output, vector_antialias=False) as raster:
+                        actual = raster.tobytes()
+                    explicit = f'.target{{position-anchor:none;width:100pt;height:{height}pt}}'
+                    output = renderer.render(root, PROFILE + base + containing + explicit, body)
+                    with renderer.raster(root, output, vector_antialias=False) as raster:
+                        self.assertEqual(actual, raster.tobytes(),
+                                         'fragmented table anchor gradient must use the selected source or AABB height')
+
     def test_drop_shadow_preserves_midtones_in_each_filter_color_space(self):
         renderer = table_positioning_pdf.TablePositioningPdf()
         css = ('@page{size:140pt 100pt;margin:20pt}html,body{margin:0}'

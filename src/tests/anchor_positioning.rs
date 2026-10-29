@@ -803,3 +803,112 @@ fn visible_children_of_hidden_filtered_boxes_contribute_anchor_ink() {
         "a hidden empty filtered box contributes no input ink"
     );
 }
+
+#[test]
+fn structural_table_boxes_are_anchors_without_painted_backgrounds() {
+    let css = ".anchor{width:auto;height:auto;margin:0;background:transparent}table{width:100pt;table-layout:fixed;border-spacing:0}col:first-child{width:40pt}td{height:20pt;padding:0}.target{left:anchor(left,140pt);top:anchor(bottom,100pt);width:anchor-size(width,99pt);height:anchor-size(height,9pt);position-visibility:always}";
+    for collapse in ["separate", "collapse"] {
+        for (source, expected) in [
+            ("tr", [20.0, 40.0, 100.0, 20.0]),
+            ("tbody", [20.0, 60.0, 100.0, 40.0]),
+            ("thead", [20.0, 60.0, 100.0, 40.0]),
+            ("tfoot", [20.0, 60.0, 100.0, 40.0]),
+            ("col", [20.0, 60.0, 40.0, 40.0]),
+            ("colgroup", [20.0, 60.0, 100.0, 40.0]),
+        ] {
+            let group = if matches!(source, "thead" | "tfoot") {
+                source
+            } else {
+                "tbody"
+            };
+            let class = |tag| if source == tag { " class=anchor" } else { "" };
+            let body = format!(
+                "<table style='border-collapse:{collapse}'><colgroup{}><col{}><col></colgroup><{group}{}><tr{}><td></td><td></td></tr><tr><td></td><td></td></tr></{group}></table><div class=target></div>",
+                class("colgroup"),
+                class("col"),
+                class(group),
+                class("tr")
+            );
+            let boxes = targets(&render(css, &body));
+            assert_eq!(boxes.len(), 1, "{collapse} {source}: one target must paint");
+            assert_rect(boxes[0].1, expected);
+        }
+    }
+}
+
+#[test]
+fn fragmented_table_groups_use_source_geometry_inside_the_fragmentation_context() {
+    let body = "<section><table><tbody class=anchor><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></tbody></table><div class=target></div></section>";
+    let css = ".anchor{width:auto;height:auto;margin:0;background:transparent}table{width:100pt;border-spacing:0}td{height:60pt;padding:0}.target{left:0;top:0;width:anchor-size(width,99pt);height:anchor-size(height,9pt)}";
+    let trace = render(&format!("{css}section{{position:relative}}"), body);
+    assert_rect(targets(&trace)[0].1, [20.0, 20.0, 100.0, 300.0]);
+    let trace = render(css, body);
+    assert_rect(targets(&trace)[0].1, [20.0, 20.0, 100.0, 200.0]);
+}
+
+#[test]
+fn structural_table_anchor_effects_preserve_border_geometry_and_ink_visibility() {
+    let css = ".anchor{width:auto;height:auto;margin:0;background:transparent}table{width:100pt;border-spacing:0}td{height:20pt;padding:0}.target{left:anchor(left);top:anchor(bottom);width:anchor-size(width);position-visibility:anchors-visible}";
+    for (effects, expected) in [
+        (
+            "tbody{transform:translate(30pt,5pt)}tr{position:relative;left:7pt}",
+            Some([57.0, 45.0, 100.0, 10.0]),
+        ),
+        ("tbody{clip-path:inset(100%)}", None),
+        (
+            "tbody{border:10pt solid;clip-path:padding-box}",
+            Some([20.0, 40.0, 100.0, 10.0]),
+        ),
+        ("tbody{opacity:0}", Some([20.0, 40.0, 100.0, 10.0])),
+    ] {
+        let trace = render(
+            &format!("{css}{effects}"),
+            "<table><tbody><tr class=anchor><td>Ink</td></tr></tbody></table><div class=target></div>",
+        );
+        let boxes = targets(&trace);
+        assert_eq!(
+            boxes.len(),
+            usize::from(expected.is_some()),
+            "row ancestor effect {effects}"
+        );
+        if let Some(expected) = expected {
+            assert_rect(boxes[0].1, expected);
+        }
+    }
+    let trace = render(
+        &format!(
+            "{css}section{{overflow:hidden;width:20pt;height:40pt}}table{{margin-left:30pt;width:10pt}}tr{{box-shadow:-20pt 0 green}}"
+        ),
+        "<section><table><tbody><tr class=anchor><td></td></tr></tbody></table></section><div class=target></div>",
+    );
+    assert_eq!(
+        targets(&trace).len(),
+        1,
+        "row shadow ink intersects the ancestor clip"
+    );
+    assert_rect(targets(&trace)[0].1, [50.0, 40.0, 10.0, 10.0]);
+}
+
+#[test]
+fn table_group_anchors_in_columns_keep_source_and_fragment_geometries_distinct() {
+    let body = "<section><div class=wrapper><table><tbody class=anchor><tr><td></td></tr><tr><td></td></tr></tbody></table><div class=target></div></div></section>";
+    let css = "section{columns:2;column-gap:20pt;height:80pt}.anchor{width:auto;height:auto;margin:0;background:transparent}table{width:100pt;border-spacing:0}td{height:60pt;padding:0}.target{left:0;top:0;width:anchor-size(width,99pt);height:anchor-size(height,9pt)}";
+    assert_rect(targets(&render(css, body))[0].1, [20.0, 20.0, 240.0, 60.0]);
+    assert_rect(
+        targets(&render(
+            &format!("{css}.wrapper{{position:relative}}"),
+            body,
+        ))[0]
+            .1,
+        [160.0, 20.0, 100.0, 120.0],
+    );
+}
+
+#[test]
+fn empty_table_rows_keep_anchor_geometry_and_transforms() {
+    let trace = render(
+        ".anchor{width:auto;height:20pt;margin:0;background:transparent;transform:translate(7pt,5pt)}table{width:100pt;border-spacing:0}.target{left:anchor(left,140pt);top:anchor(bottom,100pt);width:anchor-size(width,99pt);position-visibility:always}",
+        "<table><tbody><tr class=anchor></tr></tbody></table><div class=target></div>",
+    );
+    assert_rect(targets(&trace)[0].1, [27.0, 45.0, 100.0, 10.0]);
+}

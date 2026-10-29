@@ -261,7 +261,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                 let grouped = source.style().is_grouped();
                 let transformed = source.style().has_transform_effects();
                 let isolated = grouped || transformed || source.style().forced_stacking_context();
-                let clip = if transformed {
+                let mut clip = if transformed {
                     let node = self.clips.len();
                     self.clips.push(EffectNode {
                         paints: Vec::new(),
@@ -275,11 +275,14 @@ impl<'a, 't> Paginator<'a, '_, 't> {
                         .last_mut()
                         .expect("active table")
                         .transforms
-                        .push((ancestor, node));
+                        .push((ancestor.clone(), node));
                     Some(node)
                 } else {
                     self.clip
                 };
+                if source.style().decoration.masks.clip_path.is_some() {
+                    clip = Some(self.effect_node(clip, Effect::PathClip(source.style())));
+                }
                 let mut paint = positioned_layer(&self.context, isolated.then_some(0), order);
                 let group = if isolated {
                     let group = if grouped || source.style().is_backdrop_root() {

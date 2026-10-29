@@ -69,11 +69,7 @@ pub enum PdfError {
     /// which composite it in pixels, may use it.
     #[error("additive compositing outside a display-list group")]
     VectorAdditive,
-    /// Table rows and row groups have no box fragment of their own to place masks and
-    /// `objectBoundingBox` filter references against.
-    #[error(
-        "masks and filter references need a box fragment, which table rows and row groups lack"
-    )]
+    #[error("mask or filter effect has no reference box")]
     UnplacedEffect,
     #[error("{0}")]
     Serialization(#[from] krilla::error::KrillaError),

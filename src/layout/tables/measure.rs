@@ -211,6 +211,7 @@ pub(crate) struct CellAlignments {
 
 pub(crate) struct TablePlan<'a> {
     pub has_containing_ancestors: bool,
+    pub has_structural_geometry: bool,
     pub has_scoped_internals: bool,
     pub has_height_constraints: bool,
     border_owners: Option<Vec<Option<usize>>>,
@@ -233,7 +234,8 @@ pub(crate) struct TablePlan<'a> {
 pub(crate) struct TableContaining<'a> {
     pub source: &'a BlockBox,
     pub rows: Range<usize>,
-    ancestors: [Option<&'a BlockBox>; 2],
+    columns: Option<Range<usize>>,
+    pub(crate) ancestors: [Option<&'a BlockBox>; 2],
 }
 impl TableContaining<'_> {
     pub(crate) fn rect(
@@ -273,7 +275,8 @@ impl TableContaining<'_> {
             return None;
         }
         let columns = geometry.columns(rtl);
-        let (x, width) = columns.span(0, columns.widths.len());
+        let span = self.columns.clone().unwrap_or(0..columns.widths.len());
+        let (x, width) = columns.span(span.start, span.len());
         let offset = super::model::relative_offset(&self.ancestors, geometry.geometry.width, rtl);
         Some(Rect {
             x: x + offset[0],
@@ -282,6 +285,9 @@ impl TableContaining<'_> {
             height: bottom - top,
         })
     }
+}
+fn structural_geometry(style: &Style) -> bool {
+    !style.anchor.names.is_empty() || style.is_grouped()
 }
 fn structural_events<'a>(
     source: &'a BlockBox,
@@ -475,7 +481,15 @@ impl<'a> TablePlan<'a> {
             .copied()
             .chain(data.groups.iter().filter_map(|group| group.source))
             .any(|source| source.style().contains_absolute());
-        let has_scoped_internals = data.collapsed_columns.iter().any(|&value| value)
+        let has_structural_geometry = data
+            .rows
+            .iter()
+            .copied()
+            .chain(data.groups.iter().filter_map(|group| group.source))
+            .chain(data.columns.iter().map(|column| column.source))
+            .any(|source| structural_geometry(source.style()));
+        let has_scoped_internals = has_structural_geometry
+            || data.collapsed_columns.iter().any(|&value| value)
             || data
                 .rows
                 .iter()
@@ -521,6 +535,7 @@ impl<'a> TablePlan<'a> {
                 });
         let mut plan = Self {
             has_containing_ancestors,
+            has_structural_geometry,
             has_scoped_internals,
             has_height_constraints,
             border_owners,
@@ -860,6 +875,16 @@ impl<'a> TablePlan<'a> {
         };
         (owner, offset)
     }
+    pub(crate) fn structural_decoration(&self, source: &BlockBox) -> BoxDecoration {
+        let mut decoration = source.decoration().clone();
+        if self.data.collapsed.is_some() {
+            decoration.radii = BoxDecoration::default().radii;
+        } else {
+            // CSS 2 §17.6.1 ignores borders on tracks and track groups.
+            decoration.borders = BoxDecoration::default().borders;
+        }
+        decoration
+    }
     pub(crate) fn structural_shadow(
         &self,
         source: &BlockBox,
@@ -868,7 +893,7 @@ impl<'a> TablePlan<'a> {
         if !inset && self.data.collapsed.is_some() {
             return None;
         }
-        let decoration = source.decoration();
+        let decoration = self.structural_decoration(source);
         let shadows = decoration
             .shadows
             .iter()
@@ -880,25 +905,17 @@ impl<'a> TablePlan<'a> {
         }
         Some(BoxDecoration {
             shadows: shadows.into(),
-            radii: if self.data.collapsed.is_some() {
-                BoxDecoration::default().radii
-            } else {
-                decoration.radii.clone()
-            },
+            radii: decoration.radii,
             ..Default::default()
         })
     }
     /// A row or row group's outline, drawn around each of its fragments; radii follow the
     /// separated borders model only, as collapsed tables have none.
     pub(crate) fn structural_outline(&self, source: &BlockBox) -> Option<BoxDecoration> {
-        let decoration = source.decoration();
-        decoration.outline.is_drawn().then(|| BoxDecoration {
+        let decoration = self.structural_decoration(source);
+        decoration.outline.is_drawn().then_some(BoxDecoration {
             outline: decoration.outline,
-            radii: if self.data.collapsed.is_some() {
-                BoxDecoration::default().radii
-            } else {
-                decoration.radii.clone()
-            },
+            radii: decoration.radii,
             ..Default::default()
         })
     }
@@ -920,14 +937,57 @@ impl<'a> TablePlan<'a> {
             group_source.map(|source| TableContaining {
                 source,
                 rows: self.layers.group_rows[group].clone(),
+                columns: None,
                 ancestors: [group_source, None],
             }),
             row_source.map(|source| TableContaining {
                 source,
                 rows: row..row + 1,
+                columns: None,
                 ancestors: [group_source, row_source],
             }),
         ]
+    }
+    pub(crate) fn structural_boxes(
+        &self,
+        work: &crate::layout::work::Budget,
+    ) -> Result<Vec<TableContaining<'a>>, LayoutError> {
+        work.spend(
+            self.data
+                .rows
+                .len()
+                .saturating_add(self.data.groups.len())
+                .saturating_add(self.data.columns.len()),
+        )?;
+        let rows = (0..self.data.rows.len()).map(|row| {
+            self.row_layers(row)[1]
+                .take()
+                .expect("a table row has a source")
+        });
+        let groups = self
+            .data
+            .groups
+            .iter()
+            .enumerate()
+            .filter_map(|(group, data)| {
+                data.source.map(|source| TableContaining {
+                    source,
+                    rows: self.layers.group_rows[group].clone(),
+                    columns: None,
+                    ancestors: [Some(source), None],
+                })
+            });
+        let columns = self.data.columns.iter().map(|column| TableContaining {
+            source: column.source,
+            rows: 0..self.data.grid.rows,
+            columns: Some(column.start..column.start + column.span),
+            ancestors: [None, None],
+        });
+        Ok(rows
+            .chain(groups)
+            .chain(columns)
+            .filter(|area| structural_geometry(area.source.style()))
+            .collect())
     }
     pub(crate) fn cell_alignments(
         &self,

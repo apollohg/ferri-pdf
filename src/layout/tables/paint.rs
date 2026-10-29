@@ -17,6 +17,9 @@ pub(crate) struct Columns<'g> {
 impl Columns<'_> {
     /// Left edge and width of `count` columns from `start`, mirrored for right-to-left tables.
     pub(super) fn span(&self, start: usize, count: usize) -> (f32, f32) {
+        if self.widths.is_empty() {
+            return (self.x, self.table);
+        }
         let visible = self.collapsed[start..start + count]
             .iter()
             .filter(|&&value| !value)

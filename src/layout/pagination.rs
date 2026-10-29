@@ -2219,7 +2219,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let float_natural_height = self.float_enclosure(frame)?;
             if frame.table {
                 let table = self.tables.last().expect("table pushed before its items");
-                let starts = if !table.backgrounds.is_empty()
+                let anchors = table.flow.plan.structural_boxes(&self.measurer.work)?;
+                let starts = if !anchors.is_empty()
+                    || !table.backgrounds.is_empty()
                     || table.flow.collapsed.is_some()
                     || !table.positioned.is_empty()
                     || !table.transforms.is_empty()
@@ -2238,7 +2240,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 } else {
                     Vec::new()
                 };
-                self.place_table_pending(&starts)?;
+                self.place_table_pending(&starts, &anchors)?;
                 let table = self
                     .tables
                     .pop()
@@ -4012,6 +4014,14 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 let layer = table.layers[&(std::ptr::from_ref(ancestor.source) as usize)].clone();
                 // The outline paints from an otherwise empty box after the group's content.
                 if let Some(decoration) = table.flow.plan.structural_outline(ancestor.source) {
+                    if ancestor.source.style().visibility.is_visible() && !self.force_hidden {
+                        self.anchors.ink(
+                            super::anchors::key(ancestor.source.style()),
+                            page,
+                            super::anchors::box_ink(&BoxPaint::whole(rect, decoration.clone())),
+                            layer.clip,
+                        );
+                    }
                     let order = self.orders.take();
                     self.display_lists[page].push(ScopedPaint {
                         visible: ancestor.source.style().visibility.is_visible(),
@@ -4058,25 +4068,42 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     .expect("active table")
                     .repeats(&ancestor.rows)
             {
-                for fragments in fragments {
+                for fragments in &fragments {
                     for (index, &(page, slot)) in fragments.iter().enumerate() {
                         if let DisplayItem::Box(paint) = &mut self.display_lists[page][slot].item {
                             paint.first_fragment = index == 0;
                             paint.last_fragment = index + 1 == fragments.len();
                         }
                     }
-                    assemble_background(&fragments, &mut self.display_lists, false, false);
+                    assemble_background(fragments, &mut self.display_lists, false, false);
+                }
+            }
+            if ancestor.source.style().visibility.is_visible() && !self.force_hidden {
+                for (page, slot) in fragments.into_iter().flatten() {
+                    let scoped = &self.display_lists[page][slot];
+                    if let DisplayItem::Box(paint) = &scoped.item {
+                        self.anchors.ink(
+                            super::anchors::key(ancestor.source.style()),
+                            page,
+                            super::anchors::box_ink(paint),
+                            scoped.clip,
+                        );
+                    }
                 }
             }
         }
         Ok(())
     }
-    fn place_table_pending(&mut self, starts: &[f32]) -> Result<(), LayoutError> {
+    fn place_table_pending(
+        &mut self,
+        starts: &[f32],
+        anchors: &[crate::layout::tables::TableContaining<'a>],
+    ) -> Result<(), LayoutError> {
         let table = self.tables.last_mut().expect("active table");
         let groups = std::mem::take(&mut table.positioned);
         let transforms = std::mem::take(&mut table.transforms);
         let shadows = std::mem::take(&mut table.shadows);
-        if groups.is_empty() && transforms.is_empty() && shadows.is_empty() {
+        if groups.is_empty() && transforms.is_empty() && shadows.is_empty() && anchors.is_empty() {
             return Ok(());
         }
         let mut pages: BTreeMap<usize, Vec<usize>> = BTreeMap::new();
@@ -4090,6 +4117,76 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 (rows.start, rows.end)
             });
         }
+        for (&page, indices) in &pages {
+            let geometry = self.table_geometry(page)?;
+            for ancestor in anchors {
+                self.measurer.work.spend(1)?;
+                let Some(rect) =
+                    self.table_fragment(ancestor, &geometry, indices, starts, false)?
+                else {
+                    continue;
+                };
+                let table = self.tables.last().expect("active table");
+                let first = indices.partition_point(|index| {
+                    table.placements[*index].1.rows.end <= ancestor.rows.start
+                });
+                let index = indices
+                    .get(first)
+                    .expect("a table anchor fragment has a placement");
+                let placement = &table.placements[*index].1;
+                let mut source = ancestor
+                    .rect(
+                        &geometry,
+                        placement,
+                        if placement.slice.is_some() {
+                            starts
+                        } else {
+                            &table.flow.row_starts
+                        },
+                        table.flow.plan.source.style().rtl,
+                        true,
+                    )
+                    .expect("a table anchor fragment has source geometry");
+                source.x += table.x_offset;
+                let layer = ancestor
+                    .ancestors
+                    .iter()
+                    .rev()
+                    .flatten()
+                    .find_map(|source| table.layers.get(&(std::ptr::from_ref(*source) as usize)));
+                let clip = layer.map_or(self.clip, |layer| layer.clip);
+                let group = layer.and_then(|layer| layer.group);
+                let style = ancestor.source.style();
+                let paint =
+                    BoxPaint::whole(rect, table.flow.plan.structural_decoration(ancestor.source));
+                let mut parent = clip;
+                while let Some(node) = parent {
+                    if matches!(self.clips[node].effect, Effect::PathClip(owner) if std::ptr::eq(owner, style))
+                    {
+                        self.clips[node].paints.push((page, paint.clone()));
+                        break;
+                    }
+                    parent = self.clips[node].parent;
+                }
+                if Group::of(style).anchored()
+                    && let Some(node) = group
+                {
+                    self.clips[node].paints.push((page, paint));
+                }
+                self.anchors.record(
+                    style,
+                    (
+                        page,
+                        None,
+                        !self.force_hidden && style.visibility.is_visible(),
+                    ),
+                    rect,
+                    Some(source),
+                    clip,
+                    matches!(self.fragmentainers, Fragmentainers::Columns(_)),
+                );
+            }
+        }
         let mut rectangles: HashMap<(*const BlockBox, usize), Rect> = HashMap::new();
         let transform_indices: HashMap<_, _> = transforms
             .iter()
@@ -4098,6 +4195,17 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             .collect();
         let mut transformed_pages: BTreeMap<usize, BTreeSet<usize>> = BTreeMap::new();
         if !transforms.is_empty() {
+            for (&page, indices) in &pages {
+                for (index, (ancestor, _)) in transforms.iter().enumerate() {
+                    self.measurer.work.spend(indices.len().max(1))?;
+                    if indices.iter().any(|&index| {
+                        let rows = &table.placements[index].1.rows;
+                        rows.start < ancestor.rows.end && rows.end > ancestor.rows.start
+                    }) {
+                        transformed_pages.entry(page).or_default().insert(index);
+                    }
+                }
+            }
             for &(cell, page) in table.cell_fragments.keys() {
                 self.measurer.work.spend(1)?;
                 for source in table.flow.plan.cell_parents(cell).into_iter().flatten() {

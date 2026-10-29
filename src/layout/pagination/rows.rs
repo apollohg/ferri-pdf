@@ -108,6 +108,22 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         tail: BreakTail,
         body_end: Option<usize>,
     ) -> RowCursor<'a, 't> {
+        if row.cells.is_empty()
+            && let Some((band, plan)) = row
+                .band
+                .as_ref()
+                .zip(self.tables.last())
+                .map(|(band, table)| (band.clone(), table.flow.plan.clone()))
+        {
+            let layer = self.current_layer();
+            for index in band {
+                self.enter_table_layers(plan.row_layers(index));
+                self.context = layer.context.clone();
+                self.key = layer.key.clone();
+                self.group = layer.group;
+                self.clip = layer.clip;
+            }
+        }
         let previous_unbroken = self.unbroken;
         if overflows(row.height, self.height) && row.indivisible() {
             self.unbroken += 1;
@@ -1066,6 +1082,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
         if let Some(band) = row.band
             && self.tables.last().is_some_and(|table| {
                 table.flow.collapsed.is_some()
+                    || table.flow.plan.has_structural_geometry
                     || table.flow.plan.has_containing_ancestors
                     || !table.shadows.is_empty()
             })
