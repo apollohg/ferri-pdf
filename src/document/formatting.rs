@@ -88,6 +88,8 @@ pub(crate) struct BlockBox {
     children: Vec<BlockContent>,
     marker: Option<Box<Paragraph>>,
     image: Option<std::sync::Arc<crate::images::Image>>,
+    /// An unavailable HTML image whose alternative text is empty (HTML §15.4.2).
+    empty_image_fallback: bool,
     /// The selected image source's pixel density, which divides its natural dimensions
     /// (HTML §4.8.4.3.7).
     density: f32,
@@ -212,6 +214,7 @@ impl BlockBox {
             children,
             marker: None,
             image: None,
+            empty_image_fallback: false,
             density: DEFAULT_DENSITY,
             navigation: BoxNavigation::default(),
             canvas_source: false,
@@ -260,6 +263,9 @@ impl BlockBox {
     }
     pub(crate) fn image(&self) -> Option<&std::sync::Arc<crate::images::Image>> {
         self.image.as_ref()
+    }
+    pub(crate) fn is_empty_image_fallback(&self) -> bool {
+        self.empty_image_fallback
     }
     pub(crate) fn image_density(&self) -> f32 {
         self.density
@@ -2225,6 +2231,10 @@ fn block<'a>(
         block.marker = state.marker.map(Box::new);
         block.shape_outside = state.shape_outside;
         block.image = state.image;
+        block.empty_image_fallback = element.namespace() == crate::dom::HTML_NAMESPACE
+            && element.name() == "img"
+            && element.attr("alt") == Some("")
+            && block.image.is_none();
         block.density = state.density;
         block.navigation = state.navigation;
         block.event = state.event;

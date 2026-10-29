@@ -7,6 +7,105 @@ use ferri_pdf::{
 
 const BROKEN_IMAGE: &str = "broken.png";
 
+#[test]
+fn empty_alternative_text_of_a_failed_inline_image_does_not_create_a_line() {
+    const LINE_HEIGHT: f32 = 28.0;
+    let render = |content: &str, image| {
+        render_with_resolver(
+            &format!(
+                "<!doctype html><style>{}body{{font-size:20pt;line-height:{LINE_HEIGHT}pt}}p{{margin:0}}</style>{content}<p>After</p>",
+                common::PROFILE
+            ),
+            &common::local_options(),
+            &ImageResolver(image),
+        )
+        .unwrap()
+        .layout
+        .unwrap()
+    };
+    let reference = render("", None);
+    let baseline = reference.pages[0].last().unwrap().baseline;
+    let cases = [
+        ("empty", "<img src='broken.png' alt=''>", 0.0),
+        ("whitespace", " \n <img src='broken.png' alt=''> \n ", 0.0),
+        ("absent", "<img src='broken.png'>", LINE_HEIGHT),
+        (
+            "text",
+            "<img src='broken.png' alt='Alternative'>",
+            LINE_HEIGHT,
+        ),
+        (
+            "block",
+            "<img src='broken.png' alt='' style='display:block'>",
+            0.0,
+        ),
+        (
+            "forced-break",
+            "<img src='broken.png' alt=''><br>",
+            LINE_HEIGHT,
+        ),
+        (
+            "preserved-space",
+            "<span style='white-space:pre'> <img src='broken.png' alt=''></span>",
+            LINE_HEIGHT,
+        ),
+    ];
+    let advances: Vec<_> = cases
+        .iter()
+        .map(|(name, content, _)| {
+            let trace = render(content, None);
+            (*name, trace.pages[0].last().unwrap().baseline - baseline)
+        })
+        .collect();
+    let expected: Vec<_> = cases
+        .iter()
+        .map(|(name, _, advance)| (*name, *advance))
+        .collect();
+    assert_eq!(
+        advances, expected,
+        "an empty-alt image fallback must not add a 28pt line"
+    );
+    for css in [
+        "width:20pt",
+        "height:40pt",
+        "width:0;height:0",
+        "padding:2pt",
+        "border:2pt solid red",
+        "margin:2pt",
+        "outline:2pt solid red",
+        "background:red",
+        "margin-top:2pt;margin-bottom:-2pt",
+        "padding:2pt;margin:-2pt",
+    ] {
+        let failed = render(
+            &format!("<img src='broken.png' alt='' style='{css}'>"),
+            None,
+        );
+        let control = render(
+            &format!("<span style='display:inline-block;{css}'></span>"),
+            None,
+        );
+        common::assert_labelled_pt(
+            &format!("explicit image geometry or paint {css} retains its inline line"),
+            failed.pages[0].last().unwrap().baseline,
+            control.pages[0].last().unwrap().baseline,
+        );
+    }
+    let valid = render(
+        "<img src='broken.png' alt='' style='width:20pt;height:20pt'>",
+        Some(include_bytes!("oracle/assets/image-pattern.png").to_vec()),
+    );
+    assert!(valid.pages[0].last().unwrap().baseline > baseline);
+    assert!(
+        valid
+            .display_lists
+            .iter()
+            .flatten()
+            .any(|item| matches!(item, ferri_pdf::DisplayItem::Image(_))),
+        "a loaded image with empty alt still paints"
+    );
+}
+
 struct ImageResolver(Option<Vec<u8>>);
 impl ResourceResolver for ImageResolver {
     fn resolve(&self, reference: &str, base: &ResourceBase) -> Result<Resource, ResourceError> {
