@@ -329,7 +329,7 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             body_end,
         }
     }
-    pub(super) fn resume_row(
+    fn enter_row(
         &mut self,
         cursor: &mut RowCursor<'a, 't>,
     ) -> Result<Option<BreakRequest>, LayoutError> {
@@ -337,14 +337,12 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             row,
             tail,
             end,
-            stretches,
             source_row_geometry,
             alignment_cache,
             plan,
             cells,
             active_cells,
             origin,
-            row_ends,
             internal_breaks,
             constrained_rows,
             source_rows,
@@ -352,394 +350,403 @@ impl<'a, 't> Paginator<'a, '_, 't> {
             entered,
             next_row,
             boundary,
-            frontier,
-            frontier_y,
             yielded,
             transition,
             repeating,
             fragment_ends,
             ..
         } = cursor;
-        if *yielded {
-            *frontier = self.page;
-            *frontier_y = self.y;
-            *yielded = false;
-        }
-        while source_rows.start < source_rows.end {
-            let source_index = source_rows.start;
-            let source_row = row.band.as_ref().map(|_| source_index);
-            if !*entered {
-                if let Some(grid) = &row.grid
-                    && transition.is_none()
+        let source_index = source_rows.start;
+        let source_row = row.band.as_ref().map(|_| source_index);
+        if let Some(grid) = &row.grid
+            && transition.is_none()
+        {
+            let track = &grid.tracks[source_index];
+            if source_index == 0 {
+                self.finish_height(origin.1, origin.2, track.area.start)?;
+            } else {
+                let previous = &grid.tracks[source_index - 1];
+                let (page, y) = grid_ends[source_index - 1];
+                self.select_page(page, y);
+                // Shared tracks may overlap local edge space when subgrid padding exceeds a track.
+                let gap = track.area.start - previous.area.end;
+                let forced = Forced::of(previous.edges[1].combine(track.edges[0]));
+                let reserve = self.continuation_reserve()?;
+                let fresh =
+                    (self.height - self.repeated_start(page, self.boxes.len()) - reserve).max(0.0);
+                let required = track.required(fresh) + reserve;
+                if self.unbroken == 0
+                    && (forced.is_some()
+                        || (overflows(y + gap + required, self.height)
+                            && !overflows(required, self.height)))
                 {
-                    let track = &grid.tracks[source_index];
-                    if source_index == 0 {
-                        self.finish_height(origin.1, origin.2, track.area.start)?;
-                    } else {
-                        let previous = &grid.tracks[source_index - 1];
-                        let (page, y) = grid_ends[source_index - 1];
-                        self.select_page(page, y);
-                        // Shared tracks may overlap local edge space when subgrid padding exceeds a track.
-                        let gap = track.area.start - previous.area.end;
-                        let forced = Forced::of(previous.edges[1].combine(track.edges[0]));
-                        let reserve = self.continuation_reserve()?;
-                        let fresh =
-                            (self.height - self.repeated_start(page, self.boxes.len()) - reserve)
-                                .max(0.0);
-                        let required = track.required(fresh) + reserve;
-                        if self.unbroken == 0
-                            && (forced.is_some()
-                                || (overflows(y + gap + required, self.height)
-                                    && !overflows(required, self.height)))
-                        {
-                            let request = BreakRequest {
-                                forced,
-                                preserve_empty: false,
-                            };
-                            *transition = Some(request);
-                            *yielded = true;
-                            return Ok(Some(request));
-                        }
-                        self.finish_height(page, y, gap)?;
-                    }
-                    *origin = (source_index, self.page, self.y);
-                }
-                if let Some(request) = transition.take() {
-                    *origin = (source_index, self.page, self.y);
-                    *internal_breaks = true;
-                    if let Some(forced) = request.forced {
-                        for (continuation, _, _, _, _, _) in active_cells.iter_mut() {
-                            continuation.force_break(forced);
-                        }
-                    }
-                } else if let (Some(source_row), Some(plan)) = (source_row, plan.as_ref())
-                    && self.unbroken == 0
-                    && source_row > row.band.as_ref().unwrap().start
-                {
-                    let before = plan.row_edges(source_row, self.measurer.fragmentainer)[0];
-                    let after = plan.row_edges(source_row - 1, self.measurer.fragmentainer)[1];
-                    let changed =
-                        self.page_name(plan.row_source(source_row).page_boundary().start.clone());
-                    if let Some(forced) = Forced::combine(
-                        Forced::of(after.combine(before)),
-                        changed.then_some(Forced::Page),
-                    ) {
-                        self.select_page(end.0, end.1);
-                        self.end_row_fragment(fragment_ends, *repeating);
-                        let request = BreakRequest {
-                            forced: Some(forced),
-                            preserve_empty: false,
-                        };
-                        *transition = Some(request);
-                        *yielded = true;
-                        return Ok(Some(request));
-                    }
-                }
-                if let (Some(source_row), Some(plan)) = (source_row, plan.as_ref()) {
-                    let context = self.context.clone();
-                    let key = self.key.clone();
-                    let group = self.group;
-                    let clip = self.clip;
-                    self.enter_table_layers(plan.row_layers(source_row));
-                    self.context = context;
-                    self.key = key;
-                    self.group = group;
-                    self.clip = clip;
-                    let position = self.flow_position();
-                    if source_row == origin.0 {
-                        self.select_page(origin.1, origin.2);
-                    } else {
-                        let table = self.tables.last().unwrap();
-                        if source_row_geometry
-                            .as_ref()
-                            .is_none_or(|(row, _)| *row != source_row)
-                        {
-                            *source_row_geometry = Some((
-                                source_row,
-                                plan.resolve_rows(
-                                    self.measurer,
-                                    &table.flow.heights,
-                                    table.flow.spacing,
-                                    &table.flow.geometry,
-                                )?,
-                            ));
-                        }
-                        let geometry = &source_row_geometry.as_ref().unwrap().1;
-                        self.finish_height(
-                            origin.1,
-                            origin.2,
-                            geometry.starts[source_row] - geometry.starts[origin.0],
-                        )?;
-                    }
-                    let keep_end = plan.row_keep_end(
-                        source_row,
-                        row.band.as_ref().unwrap().end,
-                        self.measurer.fragmentainer,
-                    );
-                    let row_kept = self
-                        .measurer
-                        .fragmentainer
-                        .keeps(plan.row_source(source_row).style());
-                    if self.unbroken == 0
-                        && row.band.as_ref().is_some_and(|band| band.len() > 1)
-                        && (row_kept || keep_end > source_row + 1)
-                    {
-                        let table = self.tables.last().unwrap();
-                        if source_row_geometry
-                            .as_ref()
-                            .is_none_or(|(cached, _)| *cached != source_row)
-                        {
-                            *source_row_geometry = Some((
-                                source_row,
-                                plan.resolve_rows(
-                                    self.measurer,
-                                    &table.flow.heights,
-                                    table.flow.spacing,
-                                    &table.flow.geometry,
-                                )?,
-                            ));
-                        }
-                        let geometry = &source_row_geometry.as_ref().unwrap().1;
-                        let mut height = geometry.starts[keep_end]
-                            - geometry.starts[source_row]
-                            - table.flow.spacing;
-                        let reserve = self.continuation_reserve()?;
-                        let available = self.height - reserve;
-                        let start = self.repeated_start(self.page, self.boxes.len());
-                        if overflows(height, available - start) && row_kept {
-                            height = geometry.starts[source_row + 1]
-                                - geometry.starts[source_row]
-                                - table.flow.spacing;
-                        }
-                        if !overflows(height, available - start)
-                            && overflows(self.y + height, available)
-                        {
-                            self.end_row_fragment(fragment_ends, *repeating);
-                            *transition = Some(BreakRequest::default());
-                            *yielded = true;
-                            return Ok(Some(BreakRequest::default()));
-                        }
-                    }
-                    while row
-                        .targets
-                        .last()
-                        .is_some_and(|target| target.row == source_row)
-                    {
-                        let target = row.targets.pop().unwrap();
-                        self.place_row_target(&target, self.y);
-                    }
-                    for event in plan.row_entry_events(source_row) {
-                        self.string_locations.record(self.page, event);
-                    }
-                    self.restore_flow_position(position)?;
-                }
-                while cells.front().is_some_and(|(cell, _)| {
-                    if let Some(grid) = &row.grid {
-                        grid.items[&std::ptr::from_ref::<BlockBox>(cell.block.source)].start
-                            == source_index
-                    } else {
-                        cell.grid_cell
-                            .map(|index| plan.as_ref().unwrap().cell_rows(index).start)
-                            == source_row
-                    }
-                }) {
-                    let (mut cell, orders) = cells.pop_front().unwrap();
-                    let grid_rows = row.grid.as_ref().map(|grid| {
-                        let range =
-                            grid.items[&std::ptr::from_ref::<BlockBox>(cell.block.source)].clone();
-                        cell.offset -= grid.tracks[range.start].area.start;
-                        range
-                    });
-                    if let Some(index) = cell.grid_cell
-                        && cell.stretch
-                        && row.band.as_ref().is_some_and(|band| band.len() > 1)
-                    {
-                        let table = self.tables.last().unwrap();
-                        let cell_row = table.flow.plan.cell_rows(index).start;
-                        // Sibling lanes share one placement decision; committed extents affect later rows.
-                        if source_row_geometry
-                            .as_ref()
-                            .is_none_or(|(source_row, _)| *source_row != cell_row)
-                        {
-                            *source_row_geometry = Some((
-                                cell_row,
-                                table.flow.plan.resolve_rows(
-                                    self.measurer,
-                                    &table.flow.heights,
-                                    table.flow.spacing,
-                                    &table.flow.geometry,
-                                )?,
-                            ));
-                        }
-                        let (_, geometry) = source_row_geometry.as_ref().unwrap();
-                        let start = geometry.starts[cell_row] - geometry.starts[origin.0];
-                        cell.paint_offset = Some(start);
-                        cell.offset = start + geometry.offsets[index];
-                    }
-                    self.select_page(origin.1, origin.2);
-                    let paint_start = if let Some(offset) = cell.paint_offset {
-                        self.finish_height(origin.1, origin.2, offset)?;
-                        Some((self.page, self.y))
-                    } else {
-                        None
+                    let request = BreakRequest {
+                        forced,
+                        preserve_empty: false,
                     };
-                    if let Some(index) = cell.grid_cell
-                        && cell.stretch
-                        && cell.block.style.table.vertical_align.cell()
-                            != crate::style::VerticalAlign::Top
-                        && let Some((page, y)) = paint_start
-                    {
-                        let band = row.band.as_ref().expect("table cells belong to a band");
-                        let plan = self.tables.last().unwrap().flow.plan.clone();
-                        let paint_page = page;
-                        self.finish_extent(page, y, |paginator, page, space| {
-                            let geometry = paginator.table_geometry(page)?;
-                            let height = paginator.fragmentainers.height(page);
-                            let key = (
-                                geometry.geometry.containing_width.to_bits(),
-                                height.to_bits(),
-                            );
-                            if !alignment_cache.contains_key(&key) {
-                                let previous_height = paginator.measurer.page_height;
-                                paginator.measurer.page_height = height;
-                                let measured = plan.cell_alignments(
-                                    paginator.measurer,
-                                    band.clone(),
-                                    &geometry,
-                                );
-                                paginator.measurer.page_height = previous_height;
-                                let alignments = measured?;
-                                if alignment_cache.len() == MAX_TABLE_ALIGNMENT_GEOMETRIES {
-                                    alignment_cache.clear();
-                                }
-                                alignment_cache.insert(key, alignments);
-                            }
-                            let start = if page == paint_page { y } else { space.start };
-                            let available = (height
-                                - space.cloned_end
-                                - paginator.band_footer_height(page)
-                                - start)
-                                .max(0.0);
-                            let fresh = (height
-                                - space.cloned_end
-                                - paginator.band_footer_height(page)
-                                - space.start)
-                                .max(0.0);
-                            Ok(plan.fragment_alignment(
-                                &alignment_cache[&key],
-                                index,
-                                available,
-                                fresh,
-                                paginator.measurer.fragmentainer,
-                            ))
-                        })?;
-                    } else {
-                        self.finish_height(origin.1, origin.2, cell.offset)?;
-                    }
-                    if let Some(index) = cell.grid_cell
-                        && cell.stretch
-                    {
-                        let geometry = self.table_geometry(self.page)?;
-                        let table = self.tables.last_mut().unwrap();
-                        if table.flow.plan.cell_geometry(index, &geometry) != cell.block.geometry {
-                            let natural = table.flow.plan.measure_cell(
-                                self.measurer,
-                                index,
-                                &geometry,
-                                None,
-                            )?;
-                            table.flow.heights[index] =
-                                crate::layout::tables::cell_height(&natural);
-                            let rows = table.flow.plan.resolve_rows(
-                                self.measurer,
-                                &table.flow.heights,
-                                table.flow.spacing,
-                                &geometry.geometry,
-                            )?;
-                            let range = table.flow.plan.cell_rows(index);
-                            let assigned = rows.starts[range.end]
-                                - rows.starts[range.start]
-                                - table.flow.spacing;
-                            let content_height = rows.content_height(range, table.flow.spacing);
-                            cell.block = if let Some(used_height) = table
-                                .flow
-                                .plan
-                                .cell_used_height(index, content_height, &geometry)
-                            {
-                                table.flow.plan.measure_cell(
-                                    self.measurer,
-                                    index,
-                                    &geometry,
-                                    Some(used_height),
-                                )?
-                            } else {
-                                natural
-                            };
-                            cell.block.align_cell(rows.offsets[index]);
-                            cell.clipped_height = table
-                                .flow
-                                .plan
-                                .cell_rows_collapsed(index)
-                                .then_some((assigned - rows.offsets[index]).max(0.0));
-                            cell.block.retain_fragment();
-                        }
-                    }
-                    self.pending_break = None;
-                    let cell_tail =
-                        if cell
-                            .grid_cell
-                            .zip(row.band.as_ref())
-                            .is_some_and(|(index, band)| {
-                                plan.as_ref().unwrap().cell_rows(index).end != band.end
-                            })
-                        {
-                            BreakTail::default()
-                        } else {
-                            *tail
-                        };
-                    let mut continuation = self.start_cell(
-                        cell.block,
-                        cell_tail,
-                        cells::CellStart {
-                            flex_item: cell.flex_item,
-                            table_cell: row.band.is_some(),
-                            preserve_empty: cell.grid_cell.is_none() && cell.offset > 0.0,
-                            orders: Some(orders),
-                            grow_after_break: grid_rows.as_ref().is_some_and(|range| {
-                                range.len() == 1
-                                    && row.grid.as_ref().unwrap().tracks[range.start].grows
-                            }),
-                            grid_rows,
-                        },
-                        None,
-                    )?;
-                    if let Some(height) = cell.clipped_height {
-                        continuation.clip_to(height);
-                    }
-                    continuation.after_events = cell.after_events;
-                    active_cells.push_back((
-                        continuation,
-                        cell.stretch,
-                        cell.after,
-                        paint_start,
-                        cell.backgrounds,
-                        cell.grid_cell,
+                    *transition = Some(request);
+                    *yielded = true;
+                    return Ok(Some(request));
+                }
+                self.finish_height(page, y, gap)?;
+            }
+            *origin = (source_index, self.page, self.y);
+        }
+        if let Some(request) = transition.take() {
+            *origin = (source_index, self.page, self.y);
+            *internal_breaks = true;
+            if let Some(forced) = request.forced {
+                for (continuation, _, _, _, _, _) in active_cells.iter_mut() {
+                    continuation.force_break(forced);
+                }
+            }
+        } else if let (Some(source_row), Some(plan)) = (source_row, plan.as_ref())
+            && self.unbroken == 0
+            && source_row > row.band.as_ref().unwrap().start
+        {
+            let before = plan.row_edges(source_row, self.measurer.fragmentainer)[0];
+            let after = plan.row_edges(source_row - 1, self.measurer.fragmentainer)[1];
+            let changed = self.page_name(plan.row_source(source_row).page_boundary().start.clone());
+            if let Some(forced) = Forced::combine(
+                Forced::of(after.combine(before)),
+                changed.then_some(Forced::Page),
+            ) {
+                self.select_page(end.0, end.1);
+                self.end_row_fragment(fragment_ends, *repeating);
+                let request = BreakRequest {
+                    forced: Some(forced),
+                    preserve_empty: false,
+                };
+                *transition = Some(request);
+                *yielded = true;
+                return Ok(Some(request));
+            }
+        }
+        if let (Some(source_row), Some(plan)) = (source_row, plan.as_ref()) {
+            let context = self.context.clone();
+            let key = self.key.clone();
+            let group = self.group;
+            let clip = self.clip;
+            self.enter_table_layers(plan.row_layers(source_row));
+            self.context = context;
+            self.key = key;
+            self.group = group;
+            self.clip = clip;
+            let position = self.flow_position();
+            if source_row == origin.0 {
+                self.select_page(origin.1, origin.2);
+            } else {
+                let table = self.tables.last().unwrap();
+                if source_row_geometry
+                    .as_ref()
+                    .is_none_or(|(row, _)| *row != source_row)
+                {
+                    *source_row_geometry = Some((
+                        source_row,
+                        plan.resolve_rows(
+                            self.measurer,
+                            &table.flow.heights,
+                            table.flow.spacing,
+                            &table.flow.geometry,
+                        )?,
                     ));
                 }
-                *next_row = row
-                    .band
-                    .as_ref()
-                    .and_then(|band| (source_index + 1 < band.end).then_some(source_index + 1))
-                    .or_else(|| {
-                        row.grid.as_ref().and_then(|grid| {
-                            (source_index + 1 < grid.tracks.len()).then_some(source_index + 1)
-                        })
-                    });
-                *boundary = next_row.is_some_and(|next| {
-                    row.grid.is_some() || constrained_rows.range(next..).next().is_some()
-                });
-                *entered = true;
+                let geometry = &source_row_geometry.as_ref().unwrap().1;
+                self.finish_height(
+                    origin.1,
+                    origin.2,
+                    geometry.starts[source_row] - geometry.starts[origin.0],
+                )?;
             }
+            let keep_end = plan.row_keep_end(
+                source_row,
+                row.band.as_ref().unwrap().end,
+                self.measurer.fragmentainer,
+            );
+            let row_kept = self
+                .measurer
+                .fragmentainer
+                .keeps(plan.row_source(source_row).style());
+            if self.unbroken == 0
+                && row.band.as_ref().is_some_and(|band| band.len() > 1)
+                && (row_kept || keep_end > source_row + 1)
+            {
+                let table = self.tables.last().unwrap();
+                if source_row_geometry
+                    .as_ref()
+                    .is_none_or(|(cached, _)| *cached != source_row)
+                {
+                    *source_row_geometry = Some((
+                        source_row,
+                        plan.resolve_rows(
+                            self.measurer,
+                            &table.flow.heights,
+                            table.flow.spacing,
+                            &table.flow.geometry,
+                        )?,
+                    ));
+                }
+                let geometry = &source_row_geometry.as_ref().unwrap().1;
+                let mut height =
+                    geometry.starts[keep_end] - geometry.starts[source_row] - table.flow.spacing;
+                let reserve = self.continuation_reserve()?;
+                let available = self.height - reserve;
+                let start = self.repeated_start(self.page, self.boxes.len());
+                if overflows(height, available - start) && row_kept {
+                    height = geometry.starts[source_row + 1]
+                        - geometry.starts[source_row]
+                        - table.flow.spacing;
+                }
+                if !overflows(height, available - start) && overflows(self.y + height, available) {
+                    self.end_row_fragment(fragment_ends, *repeating);
+                    *transition = Some(BreakRequest::default());
+                    *yielded = true;
+                    return Ok(Some(BreakRequest::default()));
+                }
+            }
+            while row
+                .targets
+                .last()
+                .is_some_and(|target| target.row == source_row)
+            {
+                let target = row.targets.pop().unwrap();
+                self.place_row_target(&target, self.y);
+            }
+            for event in plan.row_entry_events(source_row) {
+                self.string_locations.record(self.page, event);
+            }
+            self.restore_flow_position(position)?;
+        }
+        while cells.front().is_some_and(|(cell, _)| {
+            if let Some(grid) = &row.grid {
+                grid.items[&std::ptr::from_ref::<BlockBox>(cell.block.source)].start == source_index
+            } else {
+                cell.grid_cell
+                    .map(|index| plan.as_ref().unwrap().cell_rows(index).start)
+                    == source_row
+            }
+        }) {
+            let (mut cell, orders) = cells.pop_front().unwrap();
+            let grid_rows = row.grid.as_ref().map(|grid| {
+                let range = grid.items[&std::ptr::from_ref::<BlockBox>(cell.block.source)].clone();
+                cell.offset -= grid.tracks[range.start].area.start;
+                range
+            });
+            if let Some(index) = cell.grid_cell
+                && cell.stretch
+                && row.band.as_ref().is_some_and(|band| band.len() > 1)
+            {
+                let table = self.tables.last().unwrap();
+                let cell_row = table.flow.plan.cell_rows(index).start;
+                // Sibling lanes share one placement decision; committed extents affect later rows.
+                if source_row_geometry
+                    .as_ref()
+                    .is_none_or(|(source_row, _)| *source_row != cell_row)
+                {
+                    *source_row_geometry = Some((
+                        cell_row,
+                        table.flow.plan.resolve_rows(
+                            self.measurer,
+                            &table.flow.heights,
+                            table.flow.spacing,
+                            &table.flow.geometry,
+                        )?,
+                    ));
+                }
+                let (_, geometry) = source_row_geometry.as_ref().unwrap();
+                let start = geometry.starts[cell_row] - geometry.starts[origin.0];
+                cell.paint_offset = Some(start);
+                cell.offset = start + geometry.offsets[index];
+            }
+            self.select_page(origin.1, origin.2);
+            let paint_start = if let Some(offset) = cell.paint_offset {
+                self.finish_height(origin.1, origin.2, offset)?;
+                Some((self.page, self.y))
+            } else {
+                None
+            };
+            if let Some(index) = cell.grid_cell
+                && cell.stretch
+                && cell.block.style.table.vertical_align.cell() != crate::style::VerticalAlign::Top
+                && let Some((page, y)) = paint_start
+            {
+                let band = row.band.as_ref().expect("table cells belong to a band");
+                let plan = self.tables.last().unwrap().flow.plan.clone();
+                let paint_page = page;
+                self.finish_extent(page, y, |paginator, page, space| {
+                    let geometry = paginator.table_geometry(page)?;
+                    let height = paginator.fragmentainers.height(page);
+                    let key = (
+                        geometry.geometry.containing_width.to_bits(),
+                        height.to_bits(),
+                    );
+                    if !alignment_cache.contains_key(&key) {
+                        let previous_height = paginator.measurer.page_height;
+                        paginator.measurer.page_height = height;
+                        let measured =
+                            plan.cell_alignments(paginator.measurer, band.clone(), &geometry);
+                        paginator.measurer.page_height = previous_height;
+                        let alignments = measured?;
+                        if alignment_cache.len() == MAX_TABLE_ALIGNMENT_GEOMETRIES {
+                            alignment_cache.clear();
+                        }
+                        alignment_cache.insert(key, alignments);
+                    }
+                    let start = if page == paint_page { y } else { space.start };
+                    let available =
+                        (height - space.cloned_end - paginator.band_footer_height(page) - start)
+                            .max(0.0);
+                    let fresh = (height
+                        - space.cloned_end
+                        - paginator.band_footer_height(page)
+                        - space.start)
+                        .max(0.0);
+                    Ok(plan.fragment_alignment(
+                        &alignment_cache[&key],
+                        index,
+                        available,
+                        fresh,
+                        paginator.measurer.fragmentainer,
+                    ))
+                })?;
+            } else {
+                self.finish_height(origin.1, origin.2, cell.offset)?;
+            }
+            if let Some(index) = cell.grid_cell
+                && cell.stretch
+            {
+                let geometry = self.table_geometry(self.page)?;
+                let table = self.tables.last_mut().unwrap();
+                if table.flow.plan.cell_geometry(index, &geometry) != cell.block.geometry {
+                    let natural =
+                        table
+                            .flow
+                            .plan
+                            .measure_cell(self.measurer, index, &geometry, None)?;
+                    table.flow.heights[index] = crate::layout::tables::cell_height(&natural);
+                    let rows = table.flow.plan.resolve_rows(
+                        self.measurer,
+                        &table.flow.heights,
+                        table.flow.spacing,
+                        &geometry.geometry,
+                    )?;
+                    let range = table.flow.plan.cell_rows(index);
+                    let assigned =
+                        rows.starts[range.end] - rows.starts[range.start] - table.flow.spacing;
+                    let content_height = rows.content_height(range, table.flow.spacing);
+                    cell.block = if let Some(used_height) =
+                        table
+                            .flow
+                            .plan
+                            .cell_used_height(index, content_height, &geometry)
+                    {
+                        table.flow.plan.measure_cell(
+                            self.measurer,
+                            index,
+                            &geometry,
+                            Some(used_height),
+                        )?
+                    } else {
+                        natural
+                    };
+                    cell.block.align_cell(rows.offsets[index]);
+                    cell.clipped_height = table
+                        .flow
+                        .plan
+                        .cell_rows_collapsed(index)
+                        .then_some((assigned - rows.offsets[index]).max(0.0));
+                    cell.block.retain_fragment();
+                }
+            }
+            self.pending_break = None;
+            let cell_tail = if cell
+                .grid_cell
+                .zip(row.band.as_ref())
+                .is_some_and(|(index, band)| {
+                    plan.as_ref().unwrap().cell_rows(index).end != band.end
+                }) {
+                BreakTail::default()
+            } else {
+                *tail
+            };
+            let mut continuation = self.start_cell(
+                cell.block,
+                cell_tail,
+                cells::CellStart {
+                    flex_item: cell.flex_item,
+                    table_cell: row.band.is_some(),
+                    preserve_empty: cell.grid_cell.is_none() && cell.offset > 0.0,
+                    orders: Some(orders),
+                    grow_after_break: grid_rows.as_ref().is_some_and(|range| {
+                        range.len() == 1 && row.grid.as_ref().unwrap().tracks[range.start].grows
+                    }),
+                    grid_rows,
+                },
+                None,
+            )?;
+            if let Some(height) = cell.clipped_height {
+                continuation.clip_to(height);
+            }
+            continuation.after_events = cell.after_events;
+            active_cells.push_back((
+                continuation,
+                cell.stretch,
+                cell.after,
+                paint_start,
+                cell.backgrounds,
+                cell.grid_cell,
+            ));
+        }
+        *next_row = row
+            .band
+            .as_ref()
+            .and_then(|band| (source_index + 1 < band.end).then_some(source_index + 1))
+            .or_else(|| {
+                row.grid.as_ref().and_then(|grid| {
+                    (source_index + 1 < grid.tracks.len()).then_some(source_index + 1)
+                })
+            });
+        *boundary = next_row.is_some_and(|next| {
+            row.grid.is_some() || constrained_rows.range(next..).next().is_some()
+        });
+        *entered = true;
+        Ok(None)
+    }
+    pub(super) fn resume_row(
+        &mut self,
+        cursor: &mut RowCursor<'a, 't>,
+    ) -> Result<Option<BreakRequest>, LayoutError> {
+        if cursor.yielded {
+            cursor.frontier = self.page;
+            cursor.frontier_y = self.y;
+            cursor.yielded = false;
+        }
+        while cursor.source_rows.start < cursor.source_rows.end {
+            if !cursor.entered
+                && let Some(request) = self.enter_row(cursor)?
+            {
+                return Ok(Some(request));
+            }
+            let RowCursor {
+                row,
+                end,
+                stretches,
+                plan,
+                active_cells,
+                origin,
+                row_ends,
+                source_rows,
+                grid_ends,
+                entered,
+                next_row,
+                boundary,
+                frontier,
+                frontier_y,
+                yielded,
+                ..
+            } = cursor;
+            let source_index = source_rows.start;
+            let source_row = row.band.as_ref().map(|_| source_index);
             while !active_cells.is_empty() {
                 if *boundary {
                     self.measurer.work.spend(active_cells.len())?;
