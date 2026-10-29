@@ -939,6 +939,7 @@ impl<'d> Builder<'_, 'd> {
             .max(surd.ascent + surd.descent + metrics.radical_extra - ascent);
         let surd_y = -ascent + metrics.radical_extra + surd.ascent;
         let base_x = surd.width;
+        let base_width = base.width;
         let mut result = MathBox {
             width,
             intrinsic,
@@ -948,18 +949,23 @@ impl<'d> Builder<'_, 'd> {
             ink_descent: descent,
             ..Default::default()
         };
+        result.place(base, if style.rtl { 0.0 } else { base_x }, 0.0);
+        let content_end = result.paint.len();
         result.rule(
             Rect {
                 x: if style.rtl { 0.0 } else { base_x },
                 y: -ascent + metrics.radical_extra,
-                width: base.width,
+                width: base_width,
                 height: metrics.radical_rule,
             },
             style,
         );
-        result.place(base, if style.rtl { 0.0 } else { base_x }, 0.0);
         result.place(surd, if style.rtl { width - base_x } else { 0.0 }, surd_y);
         if let Some(index) = index {
+            let graphics = MathBox {
+                paint: result.paint.split_off(content_end),
+                ..Default::default()
+            };
             let before = metrics.radical_kern[0].max(0.0);
             let after = metrics.radical_kern[1].max(-index.width);
             let base_offset = before + index.width + after;
@@ -990,6 +996,7 @@ impl<'d> Builder<'_, 'd> {
                 before
             };
             with_index.place(index, index_x, index_y);
+            with_index.position(graphics, if style.rtl { 0.0 } else { base_offset }, 0.0);
             with_index.width = total_width;
             with_index.ascent = top;
             with_index.descent = bottom;

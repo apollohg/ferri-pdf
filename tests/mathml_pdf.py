@@ -14,6 +14,7 @@ FONT = ROOT / "assets/fonts/DejaVuSerif.ttf"
 MATH_FONT = ROOT / "tests/fixtures/fonts/MathTest.ttf"
 FONT_SIZE = 20
 TOLERANCE = 0.005
+PAGE_HEIGHT_PT = 200
 
 class MathInterpreter(pdf_content.Interpreter):
     """Allow cluster continuation glyphs only when an ActualText span covers them."""
@@ -62,7 +63,7 @@ class MathmlPdf(unittest.TestCase):
         source.write_text(f"""<!doctype html><style>
         @font-face{{font-family:Probe;src:url('{FONT.as_uri()}')}}
         @font-face{{font-family:MathTest;src:url('{MATH_FONT.as_uri()}')}}
-        @page{{size:300pt 200pt;margin:10pt}}
+        @page{{size:300pt {PAGE_HEIGHT_PT}pt;margin:10pt}}
         body{{margin:0;font:{FONT_SIZE}pt Probe}}math{{font-family:Probe}}
         {css}</style>{body}""")
         subprocess.run([str(RENDERER), str(source), str(output)], check=True, capture_output=True)
@@ -261,6 +262,39 @@ class MathmlPdf(unittest.TestCase):
         for actual, expected in [(start[1], start[0]), (end[1], end[0])]:
             self.assertAlmostEqual(actual, expected, delta=TOLERANCE,
                                    msg='infix spacing must surround the whole recovered embellished box')
+
+    def test_radical_extra_paint_covers_overlapping_radicand_and_degree_ink(self):
+        with TTFont(FONT) as font:
+            scale = FONT_SIZE / font['head'].unitsPerEm
+            constants = font['MATH'].table.MathConstants
+            gap = constants.RadicalVerticalGap.Value * scale
+            rule = constants.RadicalRuleThickness.Value * scale
+            advance = font['hmtx'][font.getBestCmap()[ord('M')]][0] * scale
+        pixels_per_point = 4
+        points_per_inch = 72
+        for element, children in [
+            ('msqrt', "<mpadded height='0pt' depth='0pt'><mn style='color:red'>MMMM</mn></mpadded>"),
+            ('mroot', "<mpadded height='0pt' depth='0pt'><mn>MMMM</mn></mpadded>"
+             "<mpadded width='0pt' height='0pt' depth='0pt' lspace='20pt'><mn style='font-size:20pt;color:red'>XX</mn></mpadded>"),
+        ]:
+            with self.subTest(element=element):
+                output, content = self.render(f'<math><{element}>{children}</{element}></math>')
+                base = [glyph for glyph in content['glyphs'] if glyph.text == 'M']
+                self.assertEqual(len(base), 4, 'the overlapping radicand must remain selectable')
+                centre = PAGE_HEIGHT_PT - (base[0].origin[1] + gap + rule / 2)
+                target = self.root / 'radical-paint-order'
+                subprocess.run(['pdftoppm', '-r', str(points_per_inch * pixels_per_point),
+                                '-singlefile', '-png', str(output), str(target)],
+                               check=True, capture_output=True)
+                with Image.open(target.with_suffix('.png')) as image:
+                    row = int(centre * pixels_per_point)
+                    start = int((base[0].origin[0] + rule) * pixels_per_point)
+                    end = int((base[-1].origin[0] + advance - rule) * pixels_per_point)
+                    pixels = [image.getpixel((x, row)) for x in range(start, end)]
+                self.assertTrue(pixels, 'the independently calculated bar interior must be sampled')
+                self.assertTrue(all(pixel == (0, 0, 0) for pixel in pixels),
+                                f'Core3.1.4 paints the opaque black radical bar after child ink; '
+                                f'{element} has {sum(pixel != (0, 0, 0) for pixel in pixels)} uncovered pixels')
 
     def test_math_is_an_atomic_fragment_at_a_page_boundary(self):
         _, content = self.render('<div style="height:75pt">P</div><math display="block"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>',
