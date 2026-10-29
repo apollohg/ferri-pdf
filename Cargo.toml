@@ -93,7 +93,7 @@ regress = "0.12"
 icu_normalizer = { version = "~2.3.0", default-features = false, features = ["compiled_data"] }
 icu_properties = { version = "~2.3.0", default-features = false, features = ["compiled_data"] }
 selectors = { package = "ferri-pdf-selectors", path = "vendor/selectors", version = "0.38" }
-krilla = { package = "ferri-pdf-krilla", path = "vendor/krilla", version = "=0.8.2", default-features = false, features = ["raster-images"] }
+krilla = { package = "ferri-pdf-krilla", path = "vendor/krilla", version = "=0.8.3", default-features = false, features = ["raster-images"] }
 rustybuzz = "0.20"
 scraper = { version = "0.27", default-features = false }
 serde = { version = "1", features = ["derive"] }

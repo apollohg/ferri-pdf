@@ -702,7 +702,7 @@ dependencies = [
 
 [[package]]
 name = "ferri-pdf-krilla"
-version = "0.8.2"
+version = "0.8.3"
 dependencies = [
  "base64 0.22.1",
  "bumpalo",
