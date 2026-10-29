@@ -128,6 +128,9 @@ const SYNTHESIS_OFF: &str = "none";
 pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands, StyleError> {
     use Property as P;
     Ok(match shorthand {
+        P::Size => pair(&value, [P::Width, P::Height]),
+        P::MinSize => pair(&value, [P::MinWidth, P::MinHeight]),
+        P::MaxSize => pair(&value, [P::MaxWidth, P::MaxHeight]),
         P::Margin => edges(
             &value,
             [P::MarginTop, P::MarginRight, P::MarginBottom, P::MarginLeft],

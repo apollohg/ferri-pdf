@@ -627,6 +627,27 @@
     }
   },
   "additions": {
+    "size": {
+      "syntax": "<'width'> <'height'>?",
+      "initial": ["width", "height"],
+      "inherited": false,
+      "groups": ["CSS Box Sizing"],
+      "source": "https://www.w3.org/TR/2026/WD-css-sizing-4-20260904/#propdef-size: omitted height copies width; distinct from the @page descriptor"
+    },
+    "min-size": {
+      "syntax": "<'min-width'> <'min-height'>?",
+      "initial": ["min-width", "min-height"],
+      "inherited": false,
+      "groups": ["CSS Box Sizing"],
+      "source": "https://www.w3.org/TR/2026/WD-css-sizing-4-20260904/#propdef-min-size: omitted min-height copies min-width"
+    },
+    "max-size": {
+      "syntax": "<'max-width'> <'max-height'>?",
+      "initial": ["max-width", "max-height"],
+      "inherited": false,
+      "groups": ["CSS Box Sizing"],
+      "source": "https://www.w3.org/TR/2026/WD-css-sizing-4-20260904/#propdef-max-size: omitted max-height copies max-width"
+    },
     "-webkit-appearance": {
       "syntax": "<'appearance'>",
       "initial": [

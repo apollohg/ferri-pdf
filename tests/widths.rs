@@ -103,3 +103,61 @@ fn definite_width_contributes_its_constrained_size_to_auto_tables() {
         );
     }
 }
+
+#[test]
+fn size_shorthands_copy_omitted_axes_and_share_the_longhand_cascade_and_limits() {
+    for (declarations, expected) in [
+        ("size:40pt", [40.0, 40.0]),
+        ("size:40pt 25pt", [40.0, 25.0]),
+        ("size:30pt 20pt;width:50pt", [50.0, 20.0]),
+        ("width:50pt;height:60pt;size:30pt", [30.0, 30.0]),
+        ("size:1pt;min-size:20pt", [20.0, 20.0]),
+        ("size:100pt;max-size:40pt", [40.0, 40.0]),
+        (
+            "size:200pt;min-size:45pt 20pt;max-size:35pt 30pt",
+            [45.0, 30.0],
+        ),
+        (
+            "--dimensions:40pt 25pt;size:var(--dimensions)",
+            [40.0, 25.0],
+        ),
+        ("size:30pt 20pt;size:-1pt 50pt", [30.0, 20.0]),
+    ] {
+        let css = format!(".probe{{background:rgb(1,2,3);{declarations}}}");
+        let trace = render("<div class=probe></div>", &css);
+        let rect = common::painted_box(&trace, [1, 2, 3]);
+        assert_eq!(
+            [rect.width, rect.height],
+            expected,
+            "{declarations}: {rect:?}"
+        );
+    }
+}
+
+#[test]
+fn size_shorthands_preserve_page_descriptors_and_inherit_both_element_axes() {
+    let trace = render(
+        "<section><div class=probe></div></section><p>After</p>",
+        "@page{size:220pt 140pt;margin:10pt}section{size:40pt 25pt}.probe{size:inherit;background:rgb(1,2,3)}",
+    );
+    let rect = common::painted_box(&trace, [1, 2, 3]);
+    assert_eq!(
+        [trace.page_width, trace.page_height],
+        [220.0, 140.0],
+        "@page size keeps its descriptor grammar and page dimensions"
+    );
+    assert_eq!(
+        [rect.x, rect.y, rect.width, rect.height],
+        [10.0, 10.0, 40.0, 25.0],
+        "element sizing must inherit its two longhands without altering the page descriptor"
+    );
+    let after = trace.pages[0]
+        .iter()
+        .find(|line| line.text == "After")
+        .unwrap();
+    assert!(
+        after.baseline > rect.y + rect.height,
+        "the following paragraph must flow after the sized parent: baseline={}, parent={rect:?}",
+        after.baseline
+    );
+}
