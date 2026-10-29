@@ -461,6 +461,7 @@ impl StyledDocument {
         &self,
         values: GeneratedValues,
         container_sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
+        anchor_frames: crate::style::anchor_values::AnchorFrameMap,
         resolver: &dyn ResourceResolver,
     ) -> Result<Self, DocumentError> {
         let source = self.source.clone();
@@ -468,6 +469,7 @@ impl StyledDocument {
         if !self.styles.query_sizes().settled(&container_sizes) {
             styles.query_sizes_mut().measured(container_sizes);
         }
+        styles.anchor_frames_mut().measured(anchor_frames);
         let formatting::Formatted {
             root,
             navigation,
@@ -503,6 +505,10 @@ impl StyledDocument {
         sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
     ) {
         self.styles.query_sizes_mut().measured(sizes);
+    }
+
+    pub(crate) fn measured_anchors(&mut self, frames: crate::style::anchor_values::AnchorFrameMap) {
+        self.styles.anchor_frames_mut().measured(frames);
     }
 
     pub(crate) fn reformat(

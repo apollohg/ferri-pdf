@@ -2277,6 +2277,7 @@ pub(crate) fn build(
         embedded,
         images,
     } = *input;
+    sheet.anchor_nodes.borrow_mut().clear();
     let mut generated =
         crate::document::generated::GeneratedPass::new(navigation.targets.clone(), values);
     let element = html.root_element();

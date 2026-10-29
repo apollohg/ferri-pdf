@@ -162,21 +162,136 @@ pub(super) fn place<'a>(
     cb: Rect,
     rtl: bool,
     position: &StaticPosition,
+    page: Option<usize>,
 ) -> Result<(MeasuredBlock<'a>, f32), LayoutError> {
     let unbroken = std::mem::replace(&mut measurer.unbroken, true);
-    let placed = solve(measurer, block, cb, rtl, position);
+    let base = block.style();
+    let styles = page
+        .and_then(|page| {
+            base.anchor
+                .pages
+                .iter()
+                .find(|(candidate, _)| *candidate == page)
+                .map(|(_, style)| style)
+        })
+        .unwrap_or(base);
+    let placed = (|| {
+        if styles.anchor.options.is_empty() {
+            solve(measurer, block, styles, cb, rtl, position)
+        } else {
+            let mut options: Vec<_> = styles.anchor.options.iter().collect();
+            if let Some(axis) = styles.anchor.order {
+                options.sort_by(|a, b| {
+                    let extent = |style| {
+                        let rect = inset_modified(style, cb, rtl);
+                        if axis == crate::style::anchor_values::HORIZONTAL {
+                            rect.width
+                        } else {
+                            rect.height
+                        }
+                    };
+                    extent(b).total_cmp(&extent(a))
+                });
+            }
+            let mut chosen = None;
+            for option in options {
+                let (measured, top) = solve(measurer, block, option, cb, rtl, position)?;
+                let mut border = measured.geometry.border_box(measured.height);
+                border.x += measured.offset[0];
+                border.y = top;
+                if !overflows(option, cb, rtl, border) {
+                    chosen = Some((measured, top));
+                    break;
+                }
+            }
+            match chosen {
+                Some(chosen) => Ok(chosen),
+                None => solve(measurer, block, styles, cb, rtl, position),
+            }
+        }
+    })();
     measurer.unbroken = unbroken;
     placed
+}
+
+fn area(style: &Style, original: Rect, rtl: bool) -> Option<Rect> {
+    let frame = style.anchor.frame.as_deref()?;
+    let anchor = frame.anchor(&style.anchor.default_reference()?)?;
+    let mut rect = style.anchor.area?.rect(
+        [original.width, original.height],
+        anchor.rect,
+        style.rtl,
+        rtl,
+    );
+    rect.x += original.x;
+    rect.y += original.y;
+    Some(rect)
+}
+
+pub(super) fn inset_modified(style: &Style, original: Rect, rtl: bool) -> Rect {
+    let area = area(style, original, rtl).unwrap_or(original);
+    let [top, right, bottom, left] = style
+        .inset
+        .each_ref()
+        .map(|inset| inset.resolve(area.width).unwrap_or_default());
+    // Block-axis percentages refer to the containing block height.
+    let top = style.inset[0].resolve(area.height).unwrap_or(top);
+    let bottom = style.inset[2].resolve(area.height).unwrap_or(bottom);
+    Rect {
+        x: area.x + left,
+        y: area.y + top,
+        width: area.width - left - right,
+        height: area.height - top - bottom,
+    }
+}
+
+pub(super) fn overflows(style: &Style, cb: Rect, rtl: bool, border: Rect) -> bool {
+    let bounds = inset_modified(style, cb, rtl);
+    let margin = style
+        .margin
+        .each_ref()
+        .map(|margin| margin.resolve(cb.width).unwrap_or_default());
+    bounds.width < 0.0
+        || bounds.height < 0.0
+        || super::pagination::overflows(bounds.x, border.x - margin[3])
+        || super::pagination::overflows(bounds.y, border.y - margin[0])
+        || super::pagination::overflows(
+            border.x + border.width + margin[1],
+            bounds.x + bounds.width,
+        )
+        || super::pagination::overflows(
+            border.y + border.height + margin[2],
+            bounds.y + bounds.height,
+        )
 }
 
 fn solve<'a>(
     measurer: &mut Measurer<'_>,
     block: &'a BlockBox,
-    cb: Rect,
+    style: &'a Style,
+    original: Rect,
     rtl: bool,
     position: &StaticPosition,
 ) -> Result<(MeasuredBlock<'a>, f32), LayoutError> {
-    let style: &Style = block.style();
+    let anchor = style
+        .anchor
+        .frame
+        .as_deref()
+        .and_then(|frame| frame.anchor(&style.anchor.default_reference()?))
+        .map(|anchor| anchor.rect);
+    let area = area(style, original, rtl);
+    let cb = area.unwrap_or(original);
+    let static_position = StaticPosition {
+        left: cb.x,
+        right: cb.x + cb.width,
+        y: cb.y,
+        ..*position
+    };
+    let position = if area.is_some() {
+        &static_position
+    } else {
+        position
+    };
     let width = cb.width;
     let height = cb.height;
     let table = if style.display.is_table() {
@@ -391,9 +506,91 @@ fn solve<'a>(
     } else {
         vertical.constrained(&height_constraints, &mut content_height)
     };
-    let measured = match natural {
+    let mut measured = match natural {
         Some(measured) if Some(placed.size) == natural_height => measured,
         _ => measurer.format_block(block, geometry, false, Some(height), Some(placed.size))?,
     };
-    Ok((measured, cb.y + placed.start))
+    measured.style = style;
+    let mut top = cb.y + placed.start;
+    let mut border = measured.geometry.border_box(measured.height);
+    border.y = top;
+    let defaults = style
+        .anchor
+        .area
+        .filter(|_| area.is_some())
+        .map(|area| area.alignment(style.rtl, rtl));
+    for axis in [
+        crate::style::anchor_values::HORIZONTAL,
+        crate::style::anchor_values::VERTICAL,
+    ] {
+        use crate::style::anchor_values::AreaAlignment;
+        let horizontal = axis == crate::style::anchor_values::HORIZONTAL;
+        let alignment = if horizontal {
+            style.grid.justify_self
+        } else {
+            style.flex.align_self
+        };
+        let alignment = match alignment {
+            Alignment::Normal | Alignment::Auto => match defaults.map(|defaults| defaults[axis]) {
+                Some(AreaAlignment::Start) => Alignment::Left,
+                Some(AreaAlignment::End) => Alignment::Right,
+                Some(AreaAlignment::Center) => Alignment::Center,
+                Some(AreaAlignment::AnchorCenter) => Alignment::AnchorCenter,
+                None => continue,
+            },
+            Alignment::AnchorCenter => Alignment::AnchorCenter,
+            other if area.is_some() => other,
+            _ => continue,
+        };
+        let (start, length, size, before, after, inset_start, inset_end) = if horizontal {
+            (
+                cb.x,
+                cb.width,
+                border.width,
+                margin[3].unwrap_or_default(),
+                margin[1].unwrap_or_default(),
+                left.resolve(cb.width).unwrap_or_default(),
+                right.resolve(cb.width).unwrap_or_default(),
+            )
+        } else {
+            (
+                cb.y,
+                cb.height,
+                border.height,
+                margin[0].unwrap_or_default(),
+                margin[2].unwrap_or_default(),
+                style.inset[0].resolve(cb.height).unwrap_or_default(),
+                bottom.resolve(cb.height).unwrap_or_default(),
+            )
+        };
+        let start = start + inset_start;
+        let available = length - inset_start - inset_end;
+        let outer = size + before + after;
+        let free = available - outer;
+        let target = match alignment {
+            Alignment::AnchorCenter if anchor.is_some() => {
+                let anchor = anchor.expect("anchor-center has an anchor");
+                let center = if horizontal {
+                    original.x + anchor.x + anchor.width / 2.0
+                } else {
+                    original.y + anchor.y + anchor.height / 2.0
+                };
+                (center - outer / 2.0)
+                    .max(start)
+                    .min((start + free).max(start))
+                    + before
+            }
+            Alignment::Center | Alignment::AnchorCenter => start + free / 2.0 + before,
+            Alignment::Right | Alignment::End | Alignment::SelfEnd | Alignment::FlexEnd => {
+                start + free + before
+            }
+            _ => start + before,
+        };
+        if horizontal {
+            measured.offset[0] += target - border.x;
+        } else {
+            top = target;
+        }
+    }
+    Ok((measured, top))
 }

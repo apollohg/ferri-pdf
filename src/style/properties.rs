@@ -3,18 +3,19 @@
 use crate::fonts::FontNamespace;
 use crate::paint::{BorderStyle, DEFAULT_BORDER_WIDTH, LengthPercentage, OutlineStyle};
 use crate::style::{
-    anchor_values::{self, AnchorTarget, HORIZONTAL, VERTICAL},
-    logical::{BOTTOM, LEFT, RIGHT, TOP},
     BoxSizing, BreakBetween, BreakInside, Display, HangingPunctuation, HyphenateLimitChars,
     LineBreak, ListStylePosition, ListStyleType, Style, StyleError, TextAlign, TextAutospace,
     TextJustify, TextSpacingTrim, TextWrapStyle, Visibility, WhiteSpaceCollapse, WordBreak,
+    anchor_values::{self, AnchorTarget, HORIZONTAL, VERTICAL},
     box_values::{length_percentage, unsupported},
     calc::Kind,
     component::Component,
     declaration::{self, Specified},
     flex_values::{Alignment, FlexBasis, FlexDirection, FlexWrap, factor, gap},
     grammar::{Keyword, Property},
-    grid_values, inert, svg_values,
+    grid_values, inert,
+    logical::{BOTTOM, LEFT, RIGHT, TOP},
+    svg_values,
     text_values::{self, LineHeight, OverflowWrap, TextTransform},
     units::Relative,
     wide_keywords::Resolved,
@@ -97,6 +98,22 @@ pub(crate) fn apply(
     parent: &Style,
     relative: &Relative<'_>,
 ) -> Result<(), StyleError> {
+    let protected_relative = if (style.anchor.protected.contains(&property)
+        || style.anchor.namespaces.contains_key(&property))
+        && relative.anchoring.is_some()
+    {
+        let mut protected = relative.clone();
+        if let Some(anchoring) = &mut protected.anchoring {
+            if style.anchor.protected.contains(&property) {
+                anchoring.tactic = anchor_values::Tactic::IDENTITY;
+            }
+            anchoring.scope = style.anchor.namespaces.get(&property).copied();
+        }
+        Some(protected)
+    } else {
+        None
+    };
+    let relative = protected_relative.as_ref().unwrap_or(relative);
     apply_value(
         property,
         specified,
@@ -1897,18 +1914,34 @@ computed!(
     [list_style_position],
     |value, style, _parent, _relative| { ListStylePosition::from_component(value)? }
 );
-computed!(margin_top, [margin[0]], |value, style, _parent, relative| {
-    anchor_values::size(value, style, relative, AnchorTarget::Margin(TOP))?
-});
-computed!(margin_right, [margin[1]], |value, style, _parent, relative| {
-    anchor_values::size(value, style, relative, AnchorTarget::Margin(RIGHT))?
-});
-computed!(margin_bottom, [margin[2]], |value, style, _parent, relative| {
-    anchor_values::size(value, style, relative, AnchorTarget::Margin(BOTTOM))?
-});
-computed!(margin_left, [margin[3]], |value, style, _parent, relative| {
-    anchor_values::size(value, style, relative, AnchorTarget::Margin(LEFT))?
-});
+computed!(
+    margin_top,
+    [margin[0]],
+    |value, style, _parent, relative| {
+        anchor_values::size(value, style, relative, AnchorTarget::Margin(TOP))?
+    }
+);
+computed!(
+    margin_right,
+    [margin[1]],
+    |value, style, _parent, relative| {
+        anchor_values::size(value, style, relative, AnchorTarget::Margin(RIGHT))?
+    }
+);
+computed!(
+    margin_bottom,
+    [margin[2]],
+    |value, style, _parent, relative| {
+        anchor_values::size(value, style, relative, AnchorTarget::Margin(BOTTOM))?
+    }
+);
+computed!(
+    margin_left,
+    [margin[3]],
+    |value, style, _parent, relative| {
+        anchor_values::size(value, style, relative, AnchorTarget::Margin(LEFT))?
+    }
+);
 computed!(
     padding_top,
     [padding[0]],
@@ -1953,12 +1986,20 @@ computed!(max_width, [max_width], |value, style, _parent, relative| {
 computed!(height, [height], |value, style, _parent, relative| {
     anchor_values::size(value, style, relative, AnchorTarget::Size(VERTICAL))?
 });
-computed!(min_height, [min_height], |value, style, _parent, relative| {
-    anchor_values::size(value, style, relative, AnchorTarget::Size(VERTICAL))?
-});
-computed!(max_height, [max_height], |value, style, _parent, relative| {
-    anchor_values::size(value, style, relative, AnchorTarget::Size(VERTICAL))?
-});
+computed!(
+    min_height,
+    [min_height],
+    |value, style, _parent, relative| {
+        anchor_values::size(value, style, relative, AnchorTarget::Size(VERTICAL))?
+    }
+);
+computed!(
+    max_height,
+    [max_height],
+    |value, style, _parent, relative| {
+        anchor_values::size(value, style, relative, AnchorTarget::Size(VERTICAL))?
+    }
+);
 computed!(
     box_sizing,
     [box_sizing],
@@ -2037,27 +2078,69 @@ computed!(
         crate::style::ContainIntrinsicSize::from_component(value, relative)?
     }
 );
-computed!(anchor_name, [anchor.names], |value, style, _parent, _relative| {
-    anchor_values::anchor_names(value, style.element_font_namespace())?
-});
-computed!(anchor_scope, [anchor.scope], |value, style, _parent, _relative| {
-    anchor_values::anchor_scope(value, style.element_font_namespace())?
-});
+computed!(
+    anchor_name,
+    [anchor.names],
+    |value, style, _parent, _relative| {
+        anchor_values::anchor_names(
+            value,
+            style
+                .anchor
+                .namespaces
+                .get(&Property::AnchorName)
+                .copied()
+                .unwrap_or_else(|| style.element_font_namespace()),
+        )?
+    }
+);
+computed!(
+    anchor_scope,
+    [anchor.scope],
+    |value, style, _parent, _relative| {
+        anchor_values::anchor_scope(
+            value,
+            style
+                .anchor
+                .namespaces
+                .get(&Property::AnchorScope)
+                .copied()
+                .unwrap_or_else(|| style.element_font_namespace()),
+        )?
+    }
+);
 computed!(
     position_anchor,
     [anchor.position_anchor],
     |value, style, _parent, _relative| {
-        anchor_values::position_anchor(value, style.element_font_namespace())?
+        anchor_values::position_anchor(
+            value,
+            style
+                .anchor
+                .namespaces
+                .get(&Property::PositionAnchor)
+                .copied()
+                .unwrap_or_else(|| style.element_font_namespace()),
+        )?
     }
 );
-computed!(position_area, [anchor.area], |value, style, _parent, _relative| {
-    anchor_values::position_area(value)?
-});
+computed!(
+    position_area,
+    [anchor.area],
+    |value, style, _parent, _relative| { anchor_values::position_area(value)? }
+);
 computed!(
     position_try_fallbacks,
     [anchor.fallbacks],
     |value, style, _parent, _relative| {
-        anchor_values::try_fallbacks(value, style.element_font_namespace())?
+        anchor_values::try_fallbacks(
+            value,
+            style
+                .anchor
+                .namespaces
+                .get(&Property::PositionTryFallbacks)
+                .copied()
+                .unwrap_or_else(|| style.element_font_namespace()),
+        )?
     }
 );
 computed!(

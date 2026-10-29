@@ -73,7 +73,7 @@ pub(crate) struct Stylesheet {
     pub(super) page_border: [f32; 4],
     pub fonts: FontBook,
     font_namespaces: HashMap<crate::dom::TreeScopeId, FontNamespace>,
-    pub(super) counter_styles: std::sync::Arc<crate::style::counter_style::CounterStyles>,
+    pub(super) counter_styles: Arc<crate::style::counter_style::CounterStyles>,
     /// `@font-palette-values` rules in cascade order, which resolve once the root element's
     /// style is known.
     palette_rules: Vec<PaletteRule>,
@@ -83,7 +83,35 @@ pub(crate) struct Stylesheet {
     /// (CSS Anchor Positioning 1 §6.4).
     position_try: HashMap<crate::style::anchor_values::AnchorName, Arc<[PropertyDeclaration]>>,
     /// The anchor frames the previous layout measured.
+    pub(crate) anchor_nodes:
+        RefCell<HashMap<crate::style::PageStyleTarget, crate::style::anchor_values::AnchorNode>>,
+    anchor_order: HashMap<crate::dom::ElementId, [usize; 3]>,
     pub(super) anchor_frames: crate::style::anchor_values::AnchorFrames,
+}
+
+fn anchor_order(tree: &crate::dom::DocumentTree) -> HashMap<crate::dom::ElementId, [usize; 3]> {
+    let mut order: HashMap<_, [usize; 3]> = HashMap::new();
+    let mut next = 0;
+    let mut pending = vec![(tree.root_element(), false)];
+    while let Some((element, closing)) = pending.pop() {
+        if closing {
+            order
+                .get_mut(&element.id())
+                .expect("the element's start has an order")[2] = next;
+            next += 1;
+        } else {
+            order.insert(element.id(), [next, next + 1, next + 1]);
+            next += 2;
+            pending.push((element, true));
+            pending.extend(
+                element
+                    .children(crate::dom::TreeRelation::Formatting)
+                    .rev()
+                    .map(|child| (child, false)),
+            );
+        }
+    }
+    order
 }
 
 /// An `@font-palette-values` rule awaiting its root-element context (CSS Fonts 4 §9.2).
@@ -187,8 +215,8 @@ enum FaceValue {
     Width(FontRange<FontWidth>),
     Style(FontFaceStyle),
     Sources(Vec<crate::fonts::FontSource>),
-    Features(std::sync::Arc<[crate::fonts::FontFeature]>),
-    Variations(std::sync::Arc<[crate::fonts::FontVariation]>),
+    Features(Arc<[crate::fonts::FontFeature]>),
+    Variations(Arc<[crate::fonts::FontVariation]>),
     Initial,
 }
 fn face_value(
@@ -312,6 +340,8 @@ impl Stylesheet {
             scope_parents: self.scope_parents.clone(),
             position_try: self.position_try.clone(),
             anchor_frames: self.anchor_frames.clone(),
+            anchor_nodes: self.anchor_nodes.clone(),
+            anchor_order: self.anchor_order.clone(),
         }
     }
 
@@ -511,6 +541,8 @@ impl Stylesheet {
             scope_parents: scope_parents.clone(),
             position_try: HashMap::new(),
             anchor_frames: crate::style::anchor_values::AnchorFrames::default(),
+            anchor_nodes: RefCell::default(),
+            anchor_order: tree.map(anchor_order).unwrap_or_default(),
         };
         let mut fonts = Vec::new();
         let mut feature_values = Vec::new();
@@ -652,9 +684,10 @@ impl Stylesheet {
                 }),
             }
         }
-        sheet.counter_styles = std::sync::Arc::new(
-            crate::style::counter_style::CounterStyles::new(rules, scope_parents),
-        );
+        sheet.counter_styles = Arc::new(crate::style::counter_style::CounterStyles::new(
+            rules,
+            scope_parents,
+        ));
         // CSS Anchor Positioning 1 §6.4: rules of one name cascade as `@keyframes` rules
         // do, the last in cascade order winning whole.
         position_try.sort_by_key(|(priority, ..)| *priority);
@@ -730,17 +763,12 @@ impl Stylesheet {
                 Declared::Longhand(property, _) | Declared::Pending(property, _) => Some(*property),
                 Declared::Custom(..) => None,
             };
-            if !declaration.important
-                && property.is_some_and(crate::style::anchor_values::accepted)
+            if !declaration.important && property.is_some_and(crate::style::anchor_values::accepted)
             {
                 accepted.push(declaration);
             } else {
                 self.diagnostics.borrow_mut().push(StyleDiagnostic {
-                    location: declaration
-                        .location
-                        .as_deref()
-                        .unwrap_or(location)
-                        .clone(),
+                    location: declaration.location.as_deref().unwrap_or(location).clone(),
                     kind: StyleDiagnosticKind::InvalidDeclaration,
                     context: format!(
                         "{} in @position-try",
@@ -754,7 +782,7 @@ impl Stylesheet {
 
     /// The `@position-try` rule a tree-scoped reference names: the rule of that name in its
     /// own tree scope or the nearest enclosing one.
-    pub(crate) fn position_try(
+    pub(super) fn position_try(
         &self,
         name: &crate::style::anchor_values::AnchorName,
     ) -> Option<&Arc<[PropertyDeclaration]>> {
@@ -774,17 +802,63 @@ impl Stylesheet {
     /// Whether a name in tree scope `defining` is visible to references from `referring`:
     /// the same scope or one enclosing it (CSS Scoping 1 §3.5).
     pub(crate) fn scope_includes(&self, defining: FontNamespace, referring: FontNamespace) -> bool {
-        std::iter::successors(Some(referring), |scope| self.scope_parents.get(scope).copied())
-            .any(|scope| scope == defining)
+        std::iter::successors(Some(referring), |scope| {
+            self.scope_parents.get(scope).copied()
+        })
+        .any(|scope| scope == defining)
+    }
+
+    pub(super) fn record_anchor(
+        &self,
+        element: crate::dom::Element<'_>,
+        pseudo: Option<crate::style::PseudoElement>,
+        style: &crate::style::Style,
+    ) {
+        let parent = if pseudo.is_some() {
+            Some(element)
+        } else {
+            element.parent(crate::dom::TreeRelation::Formatting)
+        };
+        self.anchor_nodes.borrow_mut().insert(
+            crate::style::anchor_values::key(element.id(), pseudo),
+            crate::style::anchor_values::AnchorNode {
+                multicol: style.multicol.is_multicol(),
+                has_box: !matches!(
+                    style.display,
+                    crate::style::Display::None | crate::style::Display::Contents
+                ),
+                visible: style.visibility.is_visible(),
+                parent: parent.map(|parent| crate::style::anchor_values::key(parent.id(), None)),
+                order: self
+                    .anchor_order
+                    .get(&element.id())
+                    .copied()
+                    .unwrap_or_default()[match pseudo {
+                    Some(crate::style::PseudoElement::Before) => 1,
+                    Some(crate::style::PseudoElement::After) => 2,
+                    _ => 0,
+                }],
+                position: style.position,
+                contains_absolute: style.contains_absolute(),
+                contains_fixed: style.contains_fixed(),
+                names: style.anchor.names.clone(),
+                scope: style.anchor.scope.clone(),
+                default: style.anchor.default_reference(),
+                page_defaults: style
+                    .anchor
+                    .pages
+                    .iter()
+                    .map(|(page, style)| (*page, style.anchor.default_reference()))
+                    .collect(),
+            },
+        );
     }
 
     /// The anchor frames this styling consulted, which a layout must reproduce.
     pub(crate) fn anchor_frames(&self) -> &crate::style::anchor_values::AnchorFrames {
         &self.anchor_frames
     }
-    pub(crate) fn anchor_frames_mut(
-        &mut self,
-    ) -> &mut crate::style::anchor_values::AnchorFrames {
+    pub(crate) fn anchor_frames_mut(&mut self) -> &mut crate::style::anchor_values::AnchorFrames {
         &mut self.anchor_frames
     }
 

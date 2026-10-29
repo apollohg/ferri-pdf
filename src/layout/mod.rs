@@ -1,4 +1,5 @@
 //! Block measurement, page fragmentation, and positioned text fragments.
+mod anchors;
 mod breaks;
 mod flex;
 mod float_area;
@@ -85,14 +86,17 @@ pub(crate) fn layout(
         trace,
         generated,
         container_sizes,
+        anchor_frames,
     } = layout_pass(document, resolver, budget.clone())?;
-    let settled = document.styles().query_sizes().settled(&container_sizes);
+    let settled = document.styles().query_sizes().settled(&container_sizes)
+        && document.styles().anchor_frames().settled(&anchor_frames);
     if generated.is_none() && settled {
         return Ok(trace);
     }
     let values = generated.unwrap_or_else(|| document.generated_values());
     budget.spend(1)?;
-    let owned = document.fork_for_layout(values.clone(), container_sizes, resolver)?;
+    let owned =
+        document.fork_for_layout(values.clone(), container_sizes, anchor_frames, resolver)?;
     stabilize(owned, resolver, &budget, vec![values]).map(|(_, trace)| trace)
 }
 
@@ -113,6 +117,7 @@ struct LayoutPass {
     generated: Option<crate::document::GeneratedValues>,
     /// The content-box size each query container measured.
     container_sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
+    anchor_frames: crate::style::anchor_values::AnchorFrameMap,
 }
 
 fn stabilize(
@@ -122,16 +127,20 @@ fn stabilize(
     mut previous: Vec<crate::document::GeneratedValues>,
 ) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
     let mut measured_sizes = Vec::new();
+    let mut measured_anchors = Vec::new();
     loop {
         let LayoutPass {
             trace,
             generated,
             container_sizes,
+            anchor_frames,
         } = layout_pass(&document, resolver, budget.clone())?;
         // CSS Conditional 5 §5: each container's descendants are styled with the size of
         // the container they query, so the styles stand once a layout reproduces every size
         // they consulted.
-        let settled = document.styles().query_sizes().settled(&container_sizes);
+        let containers_settled = document.styles().query_sizes().settled(&container_sizes);
+        let anchors_settled = document.styles().anchor_frames().settled(&anchor_frames);
+        let settled = containers_settled && anchors_settled;
         let values = match generated {
             None if settled => return Ok((document, trace)),
             None => document.generated_values(),
@@ -143,12 +152,19 @@ fn stabilize(
                 values
             }
         };
-        if !settled {
+        if !containers_settled {
             if measured_sizes.contains(&container_sizes) {
                 return Err(LayoutError::ContainerQueryCycle);
             }
             measured_sizes.push(container_sizes.clone());
             document.measured_containers(container_sizes);
+        }
+        if !anchors_settled {
+            if measured_anchors.contains(&anchor_frames) {
+                return Err(LayoutError::AnchorPositioningCycle);
+            }
+            measured_anchors.push(anchor_frames.clone());
+            document.measured_anchors(anchor_frames);
         }
         budget.spend(1)?;
         document.reformat(values, resolver)?;
@@ -215,6 +231,7 @@ fn layout_pass(
         canvas_rect,
     );
     let pagination::Paginated {
+        anchors,
         mut pages,
         mut display_lists,
         mut links,
@@ -262,6 +279,7 @@ fn layout_pass(
     Ok(LayoutPass {
         generated,
         container_sizes: measurer.container_sizes,
+        anchor_frames: anchors.frames(sheet),
         trace: LayoutTrace {
             page_width,
             page_height,
@@ -284,6 +302,8 @@ fn layout_pass(
 
 #[derive(Debug, thiserror::Error)]
 pub(crate) enum LayoutError {
+    #[error("CSS anchor positioning did not stabilize")]
+    AnchorPositioningCycle,
     #[error("generated content resolution repeats without reaching a fixed layout")]
     GeneratedContentCycle,
     #[error("container query sizes repeat without reaching a fixed layout")]

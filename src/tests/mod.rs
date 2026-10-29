@@ -3,6 +3,7 @@ mod common;
 #[path = "../../tests/common/weasy_reference.rs"]
 mod weasy_reference;
 
+mod anchor_positioning;
 mod backgrounds;
 mod baseline_alignment;
 mod body_strings;

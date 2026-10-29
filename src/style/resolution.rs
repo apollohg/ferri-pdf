@@ -596,6 +596,14 @@ impl<'a> Geometry<'a> {
             {
                 computed.style.borrow_mut().font_namespace = winner.namespace;
             }
+            if crate::style::anchor_values::namespaced(property, &winner.value) {
+                computed
+                    .style
+                    .borrow_mut()
+                    .anchor
+                    .namespaces
+                    .insert(property, winner.namespace);
+            }
             winner.value
         } else {
             Specified::Wide(WideKeyword::Unset)
@@ -979,6 +987,9 @@ impl<'a> Geometry<'a> {
             Context::Root => base.inherited_custom_properties,
         };
         base.font_namespace = computed.style.borrow().font_namespace;
+        base.anchor
+            .namespaces
+            .clone_from(&computed.style.borrow().anchor.namespaces);
         Ok((base, computed.winners.borrow().clone()))
     }
 

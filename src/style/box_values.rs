@@ -33,10 +33,10 @@ pub(super) fn anchored_length_percentage(
     anchors: crate::style::anchor_values::AnchorEvaluation<'_>,
 ) -> Result<LengthPercentage, StyleError> {
     match value.unwrap() {
-        Component::Math(source, Kind::Length, range) => {
-            Ok(crate::style::values::anchored_math(source, relative, anchors)?
-                .length_percentage(*range))
-        }
+        Component::Math(source, Kind::Length, range) => Ok(crate::style::values::anchored_math(
+            source, relative, anchors,
+        )?
+        .length_percentage(*range)),
         other => Err(unsupported(other)),
     }
 }

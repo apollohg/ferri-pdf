@@ -265,13 +265,27 @@ pub(super) fn math_function(
 ) -> Option<Result<Math, MathError>> {
     let start = input.state();
     match input.next() {
-        Ok(Token::Function(name)) if is_math_function(name) => {
+        Ok(Token::Function(name))
+            if is_math_function(name)
+                || context
+                    .anchors
+                    .is_some_and(|anchors| anchors.functions.allows(name)) =>
+        {
             let name = name.to_ascii_lowercase();
             let _work = context.relative.work.enter(context.relative.grammar_only);
             let mut parser = MathParser { context, depth: 0 };
+            let result = if parser
+                .context
+                .anchors
+                .is_some_and(|anchors| anchors.functions.allows(&name))
+            {
+                let size = name.eq_ignore_ascii_case(ANCHOR_SIZE_FUNCTION);
+                parser.nested(input, |parser, input| parser.anchor_function(size, input))
+            } else {
+                parser.function(&name, input)
+            };
             Some(
-                parser
-                    .function(&name, input)
+                result
                     .map(|(calculation, kind)| Math {
                         kind: kind.kind(),
                         calculation,
@@ -743,10 +757,29 @@ impl MathParser<'_> {
                 AnchorQuery::Anchor { name, side }
             })
         })?;
+        let context = self.context.anchors.and_then(|anchors| anchors.context);
+        let resolved = context.and_then(|context| context.resolve(&query));
+        let checkpoint = context.map(crate::style::anchor_values::AnchorContext::checkpoint);
         let fallback = if input.try_parse(Parser::expect_comma).is_ok() {
-            let (fallback, kind) = self.sum(input)?;
+            let unitless_zero = input
+                .try_parse(|input| {
+                    if input.expect_number()? != 0.0 {
+                        return Err(input.new_custom_error(()));
+                    }
+                    input.expect_exhausted()?;
+                    Ok::<_, ParseError<'_, ()>>(())
+                })
+                .is_ok();
+            let (fallback, kind) = if unitless_zero {
+                (Calculation::Value(0.0), CalcType::of(Kind::Length))
+            } else {
+                self.sum(input)?
+            };
             if kind != CalcType::of(Kind::Length) {
-                return Self::invalid(input, "an anchor function fallback is a <length-percentage>");
+                return Self::invalid(
+                    input,
+                    "an anchor function fallback is a <length-percentage>",
+                );
             }
             Some(fallback)
         } else {
@@ -754,10 +787,15 @@ impl MathParser<'_> {
         };
         input.expect_exhausted()?;
         let length = CalcType::of(Kind::Length);
-        let Some(context) = self.context.anchors.and_then(|anchors| anchors.context) else {
+        let Some(context) = context else {
             return Ok((Calculation::Value(0.0), length));
         };
-        Ok(match (context.resolve(&query), fallback) {
+        if resolved.is_some()
+            && let Some(checkpoint) = checkpoint
+        {
+            context.restore(checkpoint);
+        }
+        Ok(match (resolved, fallback) {
             (Some(value), _) => (Calculation::Value(value), length),
             (None, Some(fallback)) => (fallback, length),
             (None, None) => {

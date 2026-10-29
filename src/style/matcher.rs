@@ -989,7 +989,9 @@ impl Matcher<'_> {
     fn base(&mut self, base: Base, range: Range, item: &Item) -> Option<Component> {
         match (&item.kind, base) {
             (_, Base::Color) => self.color(item),
-            (ItemKind::Function { name, .. }, _) if calc::is_math_function(name) => {
+            (ItemKind::Function { name, .. }, _)
+                if calc::is_math_function(name) || self.anchors.allows(name) =>
+            {
                 self.math_function(base, range, item)
             }
             _ => self.single(base, range, item),

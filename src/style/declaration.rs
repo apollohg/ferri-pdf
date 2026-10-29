@@ -84,7 +84,7 @@ fn supported(expanded: &[(Property, Specified)]) -> bool {
 pub(super) const CUSTOM_PROPERTY_PREFIX: &str = "--";
 
 #[derive(Clone, Debug)]
-pub(crate) enum Specified {
+pub(super) enum Specified {
     Value(Arc<Component>),
     Wide(WideKeyword),
     Toggle(Arc<[ToggleArgument]>),
@@ -105,7 +105,7 @@ pub(crate) struct ToggleArgument {
 
 /// A declaration matched after arbitrary value substitution.
 #[derive(Debug)]
-pub(crate) struct Pending {
+pub(super) struct Pending {
     pub(crate) property: Property,
     pub(crate) value: variables::Value,
     pub(crate) location: crate::style::SourceLocation,
@@ -113,14 +113,14 @@ pub(crate) struct Pending {
 }
 
 #[derive(Clone, Debug)]
-pub(crate) enum Declared {
+pub(super) enum Declared {
     Longhand(Property, Specified),
     Pending(Property, Rc<Pending>),
     Custom(Arc<str>, Arc<str>, bool),
 }
 
 #[derive(Clone, Debug)]
-pub(crate) struct PropertyDeclaration {
+pub(super) struct PropertyDeclaration {
     pub(crate) declared: Declared,
     pub(crate) location: Option<Arc<crate::style::SourceLocation>>,
     pub(crate) important: bool,
@@ -233,7 +233,14 @@ fn expand_plain(
         return Ok(None);
     };
     Ok(Some(if property.longhands().is_empty() {
-        vec![(property, Specified::Value(Arc::new(value)))]
+        let mut values = vec![(property, Specified::Value(Arc::new(value)))];
+        if property == Property::Position {
+            values.push((
+                Property::PositionAnchor,
+                Specified::Wide(WideKeyword::Initial),
+            ));
+        }
+        values
     } else {
         crate::style::shorthands::expand(property, value)?
     }))
@@ -502,24 +509,22 @@ fn value_with_context(
     steps: &mut usize,
     context: ValueContext<'_>,
 ) -> Result<Option<Component>, StyleError> {
-    Ok(
-        crate::style::matcher::match_value_with_anchors(
-            property.data().root,
-            source,
-            steps,
-            context,
-            crate::style::anchor_values::functions(property),
-        )?
-        .filter(|value| {
-            crate::style::grid_values::valid(property, value)
-                && crate::style::inert::valid(property, value)
-                && crate::style::font_values::valid(property, value)
-                && crate::style::counter_style::valid(value)
-                && crate::style::shape_values::valid(value)
-                && crate::style::svg_values::valid(property, value)
-                && crate::style::anchor_values::valid(property, value)
-        }),
-    )
+    Ok(crate::style::matcher::match_value_with_anchors(
+        property.data().root,
+        source,
+        steps,
+        context,
+        crate::style::anchor_values::functions(property),
+    )?
+    .filter(|value| {
+        crate::style::grid_values::valid(property, value)
+            && crate::style::inert::valid(property, value)
+            && crate::style::font_values::valid(property, value)
+            && crate::style::counter_style::valid(value)
+            && crate::style::shape_values::valid(value)
+            && crate::style::svg_values::valid(property, value)
+            && crate::style::anchor_values::valid(property, value)
+    }))
 }
 
 pub(crate) fn descriptor(
@@ -556,6 +561,8 @@ pub(crate) fn longhands(property: Property) -> impl Iterator<Item = Property> {
         // CSS Logical 1 §4: shorthands covering both mappings set physical longhands last.
         properties.sort_by_key(|property| crate::style::logical::is_flow_relative(*property));
         properties
+    } else if property == Property::Position {
+        vec![Property::PositionAnchor, Property::Position]
     } else {
         vec![property]
     };

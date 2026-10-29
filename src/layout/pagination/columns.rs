@@ -473,6 +473,7 @@ impl<'a, 't> ColumnLayout<'a, 't> {
 
 /// A row segment laid out in column boxes.
 struct ColumnOutput<'a> {
+    anchors: crate::layout::anchors::Measurements,
     overflow: Option<std::collections::BTreeMap<usize, Rect>>,
     string_locations: crate::layout::strings::StringLocations,
     pages: Vec<Vec<TextLine>>,
@@ -566,6 +567,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             unreachable!("nested paginators lay out columns")
         };
         ColumnOutput {
+            anchors: self.anchors,
             overflow: self.root_overflow,
             string_locations: self.string_locations,
             pages: self.pages,
@@ -916,6 +918,14 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 let paint = self.adopt(paint, &output.clips, &output.sticky, &place, &mut effects);
                 self.foreground[page].push(paint);
             }
+            let mut anchors = std::mem::take(&mut self.anchors);
+            anchors.adopt_column(&mut output.anchors, (column, page, slots), shift, |clip| {
+                clip.map(|clip| {
+                    self.effect(&output.clips, &output.sticky, clip, &place, &mut effects)
+                })
+                .or(self.clip)
+            });
+            self.anchors = anchors;
             self.flow_content[page] |= output.flow_content[column];
             let (anchored, others): (Vec<_>, Vec<_>) = std::mem::take(&mut output.pending)
                 .into_iter()

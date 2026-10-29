@@ -20,12 +20,13 @@ pub(super) enum Origin {
     User,
     AuthorHint,
     Author,
+    PositionFallback,
 }
 
 impl Origin {
     fn rollback(self) -> Self {
         match self {
-            Self::Author | Self::AuthorHint => Self::AuthorHint,
+            Self::Author | Self::AuthorHint | Self::PositionFallback => Self::AuthorHint,
             other => other,
         }
     }
@@ -48,6 +49,7 @@ enum Level {
     NormalUser,
     PresentationalHint,
     NormalAuthor,
+    PositionFallback,
     ImportantAuthor,
     ImportantUser,
     ImportantUserAgent,
@@ -95,7 +97,10 @@ impl<T> Candidate<T> {
             (Origin::User, false) => Level::NormalUser,
             (Origin::AuthorHint, false) => Level::PresentationalHint,
             (Origin::Author, false) => Level::NormalAuthor,
-            (Origin::Author | Origin::AuthorHint, true) => Level::ImportantAuthor,
+            (Origin::PositionFallback, false) => Level::PositionFallback,
+            (Origin::Author | Origin::AuthorHint | Origin::PositionFallback, true) => {
+                Level::ImportantAuthor
+            }
             (Origin::User, true) => Level::ImportantUser,
             (Origin::UserAgent, true) => Level::ImportantUserAgent,
         };
@@ -301,6 +306,18 @@ impl Cascaded {
         }
         Ok(false)
     }
+    pub(super) fn important_properties(&self) -> Arc<[Property]> {
+        self.properties
+            .iter()
+            .filter_map(|(&property, candidates)| {
+                candidates
+                    .iter()
+                    .any(|candidate| candidate.important)
+                    .then_some(property)
+            })
+            .collect()
+    }
+
     pub(super) fn is_empty(&self) -> bool {
         self.properties.is_empty() && self.custom.is_empty()
     }
@@ -533,6 +550,9 @@ pub(super) fn resolve_located(
                 && matches!(winner.value, Specified::Value(_) | Specified::Toggle(_))
             {
                 style.font_namespace = winner.namespace;
+            }
+            if crate::style::anchor_values::namespaced(property, &winner.value) {
+                style.anchor.namespaces.insert(property, winner.namespace);
             }
             winners.insert(property, winner.value);
         }

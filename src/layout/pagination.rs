@@ -197,6 +197,7 @@ pub(super) fn overflows(extent: f32, limit: f32) -> bool {
 /// Absolutely positioned box waiting for its containing block to finish.
 #[derive(Clone)]
 struct Pending<'a> {
+    force_hidden: bool,
     block: &'a BlockBox,
     position: StaticPosition,
     context: PaintKey,
@@ -225,6 +226,7 @@ impl Container<'_> {
 
 /// Fixed position and paint context of a box laid out without page breaks.
 struct Unbroken {
+    force_hidden: bool,
     page: usize,
     /// Border-box top below the page content top.
     y: f32,
@@ -394,7 +396,7 @@ struct EffectNode<'a> {
     context: Option<PaintKey>,
 }
 /// An effect resolved for one page.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub(crate) enum Region {
     Clip(Clip),
     Transform([f32; 6]),
@@ -781,6 +783,7 @@ struct BreakRequest {
 }
 
 pub(super) struct Paginated {
+    pub anchors: crate::layout::anchors::Measurements,
     pub pages: Vec<Vec<TextLine>>,
     pub display_lists: Vec<Vec<DisplayItem>>,
     pub links: Vec<Vec<LinkArea>>,
@@ -834,6 +837,7 @@ pagination_state! {
     pending_break: Option<Forced>,
     floats: Vec<crate::layout::floats::FloatContext>,
     fragmentainers: Fragmentainers<'a, 't>,
+    anchors: crate::layout::anchors::Measurements,
     display_lists: Vec<Vec<ScopedPaint>>,
     foreground: Vec<Vec<ScopedPaint>>,
     underlays: HashMap<(usize, usize), Vec<ScopedPaint>>,
@@ -849,6 +853,7 @@ pagination_state! {
     flex_item: bool,
     /// Absolutely positioned content is laid out without page breaks.
     unbroken: usize,
+    force_hidden: bool,
     containers: Vec<Container<'a>>,
     fixed: Vec<Pending<'a>>,
     clip: Option<usize>,
@@ -955,6 +960,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             pending_break: None,
             floats: vec![crate::layout::floats::FloatContext::default()],
             fragmentainers,
+            anchors: Default::default(),
             display_lists: vec![Vec::new()],
             underlays: HashMap::new(),
             foreground: vec![Vec::new()],
@@ -966,6 +972,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             reserved_order: None,
             flex_item: false,
             unbroken: 0,
+            force_hidden: false,
             containers: Vec::new(),
             fixed: Vec::new(),
             clip: None,
@@ -1835,6 +1842,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     }
     fn start_block(&mut self, block: MeasuredBlock<'a>) -> Result<BlockFrame<'a>, LayoutError> {
         let mut block = self.refresh_block(block)?;
+        if !block.style.anchor.names.is_empty() {
+            block.retain_fragment();
+        }
         let starts_source = self.starts_source(block.source);
         if let Some(element) = block.source.query_container() {
             let vertical = block.geometry.padding[0]
@@ -2388,6 +2398,43 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         {
             self.page_content = true;
         }
+        if !style.anchor.names.is_empty() || style.contains_absolute() {
+            let mut before = 0.0;
+            for (index, &(page, slot)) in active.fragments.iter().enumerate() {
+                if let DisplayItem::Box(paint) = &self.display_lists[page][slot].item {
+                    self.anchors.record(
+                        style,
+                        (
+                            page,
+                            Some(slot),
+                            !self.force_hidden && style.visibility.is_visible(),
+                        ),
+                        paint.rect,
+                        Some(Rect {
+                            y: paint.rect.y - before
+                                + if active.clone && index > 0 {
+                                    paint.padding[0] + paint.decoration.borders[0].used_width()
+                                } else {
+                                    0.0
+                                },
+                            height,
+                            ..paint.rect
+                        }),
+                        self.display_lists[page][slot].clip,
+                        matches!(self.fragmentainers, Fragmentainers::Columns(_)),
+                    );
+                    before += paint.rect.height;
+                    if active.clone {
+                        if index > 0 {
+                            before -= paint.padding[0] + paint.decoration.borders[0].used_width();
+                        }
+                        if index + 1 < active.fragments.len() {
+                            before -= paint.padding[2] + paint.decoration.borders[2].used_width();
+                        }
+                    }
+                }
+            }
+        }
         active.record_float_fragment(self.page, self.top, !continues);
         // An in-flow box ending inside the page area occupies the page even without ink.
         self.flow_content[self.page] |= Self::normal_box_has_ink(&active, self.page_rect)
@@ -2853,6 +2900,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     ) -> Pending<'a> {
         let order = self.grid_order(block).unwrap_or_else(|| self.order());
         Pending {
+            force_hidden: self.force_hidden,
             block,
             position,
             context: layer.context.clone(),
@@ -3068,7 +3116,23 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             cb,
             rtl,
             &pending.position,
+            matches!(self.fragmentainers, Fragmentainers::Pages(_)).then_some(page),
         )?;
+        let mut border = measured.geometry.border_box(measured.height);
+        border.x += measured.offset[0];
+        border.y = top;
+        self.anchors.place(
+            pending.block.style(),
+            measured.style,
+            (
+                page,
+                cb,
+                matches!(self.fragmentainers, Fragmentainers::Columns(_)),
+            ),
+            rtl,
+            border,
+            clip,
+        );
         self.lay_out_positioned(measured, top, page, clip, pending)
     }
     fn lay_out_positioned(
@@ -3083,6 +3147,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         let result = self.unbroken_block(
             measured,
             Unbroken {
+                force_hidden: pending.force_hidden,
                 page,
                 y: top - self.fragmentainers.top(page),
                 offset: [0.0; 2],
@@ -3101,8 +3166,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
     fn unbroken_block(
         &mut self,
         measured: MeasuredBlock<'a>,
-        at: Unbroken,
+        mut at: Unbroken,
     ) -> Result<(), LayoutError> {
+        at.force_hidden |= measured.style.force_hidden;
         self.unbroken_at(at, |paginator| {
             paginator.block(measured, BreakTail::default()).map(|_| ())
         })
@@ -3112,6 +3178,14 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         at: Unbroken,
         emit: impl FnOnce(&mut Self) -> Result<(), LayoutError>,
     ) -> Result<(), LayoutError> {
+        let saved_hidden = self.force_hidden;
+        self.force_hidden |= at.force_hidden;
+        let before: Vec<_> = self
+            .display_lists
+            .iter()
+            .zip(&self.foreground)
+            .map(|(boxes, inline)| (boxes.len(), inline.len()))
+            .collect();
         let saved_page = self.page;
         let saved_y = self.y;
         let saved_pending = std::mem::take(&mut self.pending);
@@ -3139,6 +3213,24 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         self.pending_break = None;
         self.reserved_order = at.reserved_order;
         let result = emit(self);
+        if self.force_hidden {
+            for (page, (boxes, inline)) in self
+                .display_lists
+                .iter_mut()
+                .zip(&mut self.foreground)
+                .enumerate()
+            {
+                let (boxes_before, inline_before) = before.get(page).copied().unwrap_or_default();
+                for paint in boxes
+                    .iter_mut()
+                    .skip(boxes_before)
+                    .chain(inline.iter_mut().skip(inline_before))
+                {
+                    paint.visible = false;
+                }
+            }
+        }
+        self.force_hidden = saved_hidden;
         self.enter(saved_page);
         self.unbroken -= 1;
         self.y = saved_y;
@@ -3792,6 +3884,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     continue;
                 }
                 let at = Unbroken {
+                    force_hidden: false,
                     page,
                     y,
                     offset: self.offset,
@@ -4710,6 +4803,9 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         layer: &Layer,
         decorates: &dyn Fn(&crate::text::GlyphRun, &DecorationPaint) -> bool,
     ) {
+        if self.force_hidden {
+            return;
+        }
         let visible = |baseline| {
             ink_bounds.is_none_or(|[above, below]| {
                 baseline + below >= self.page_rect.y
@@ -4850,6 +4946,20 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 crate::layout::inline::fragment_border_box(inline_box, fragment, width);
             border.x += origin[0] + layer.offset[0];
             border.y += origin[1] + layer.offset[1];
+            if !style.anchor.names.is_empty() {
+                self.anchors.record(
+                    style,
+                    (
+                        self.page,
+                        None,
+                        !self.force_hidden && style.visibility.is_visible(),
+                    ),
+                    border,
+                    None,
+                    layer.clip,
+                    matches!(self.fragmentainers, Fragmentainers::Columns(_)),
+                );
+            }
             // Positioned boxes overflow where they are offset to (CSS Overflow 3 §2.2).
             if layer.offset != [0.0; 2] {
                 self.record_overflow(border);
@@ -4990,6 +5100,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             self.unbroken_block(
                 atomic.block,
                 Unbroken {
+                    force_hidden: false,
                     page: self.page,
                     y,
                     offset: [
@@ -5201,23 +5312,63 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     Fragmentainers::Pages(pages) => pages.records[page].geometry.content_box(),
                     Fragmentainers::Columns(_) => self.canvas_rect,
                 };
-                let key = [canvas.x, canvas.y, canvas.width, canvas.height].map(f32::to_bits);
+                let key = (
+                    [canvas.x, canvas.y, canvas.width, canvas.height].map(f32::to_bits),
+                    (!pending.block.style().anchor.pages.is_empty()).then_some(page),
+                );
                 if let std::collections::hash_map::Entry::Vacant(entry) = measurements.entry(key) {
                     entry.insert(crate::layout::positioned::place(
                         self.measurer,
                         pending.block,
                         canvas,
                         false,
-                        &pending.position,
+                        &StaticPosition {
+                            page,
+                            ..pending.position
+                        },
+                        Some(page),
                     )?);
                 }
                 let (measured, top) = &measurements[&key];
+                let mut border = measured.geometry.border_box(measured.height);
+                border.x += measured.offset[0];
+                border.y = *top;
+                self.anchors.place(
+                    pending.block.style(),
+                    measured.style,
+                    (page, canvas, false),
+                    false,
+                    border,
+                    None,
+                );
                 self.lay_out_positioned(measured.clone(), *top, page, None, pending.clone())?;
             }
         }
         self.assemble_sliced_boxes();
+        let lists = &self.display_lists;
+        self.anchors
+            .assemble(|page, slot| match &lists[page][slot].item {
+                DisplayItem::Box(paint) => paint.background_box,
+                _ => None,
+            });
         self.position_canvas_backgrounds();
         let regions = self.effect_regions()?;
+        let nodes = &self.clips;
+        self.anchors.effects(|page, clip| {
+            let mut chain = Vec::new();
+            let mut next = clip;
+            while let Some(index) = next {
+                if let Some((_, region)) = regions[index]
+                    .iter()
+                    .find(|(fragment_page, _)| *fragment_page == page)
+                {
+                    chain.push((index, *region));
+                }
+                next = nodes[index].parent;
+            }
+            chain.reverse();
+            chain
+        });
         let bounds = self.group_bounds();
         self.underlay_backdrops();
         let mut display_lists = Vec::with_capacity(self.display_lists.len());
@@ -5263,6 +5414,7 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         physical.records.truncate(page_count);
         self.pages.truncate(page_count);
         Ok(Paginated {
+            anchors: self.anchors,
             page_boxes: physical.boxes,
             page_records: physical.records,
             pages: self.pages,

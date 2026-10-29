@@ -283,12 +283,7 @@ fn area_keyword(keyword: Keyword) -> Option<(AreaAxis, usize, usize, AreaReferen
         K::SpanAll => ((START_TRACK, END_TRACK), Either, Physical),
         _ => return None,
     };
-    Some((
-        axis,
-        first,
-        last,
-        reference,
-    ))
+    Some((axis, first, last, reference))
 }
 
 /// `position-area`; `None` is `none`. §3.1.2: an ambiguous keyword takes the axis its
@@ -305,13 +300,12 @@ pub(crate) fn position_area(value: &Component) -> Result<Option<PositionArea>, S
         .map(|keyword| area_keyword(*keyword))
         .collect::<Option<Vec<_>>>()
         .ok_or_else(|| unsupported(value))?;
-    let tracks = |(_, first, last, reference): (AreaAxis, usize, usize, AreaReference)| {
-        AreaTracks {
+    let tracks =
+        |(_, first, last, reference): (AreaAxis, usize, usize, AreaReference)| AreaTracks {
             first,
             last,
             reference,
-        }
-    };
+        };
     let mut axes = [None; 2];
     let assign = |axes: &mut [Option<AreaTracks>; 2], axis: usize, keyword| {
         axes[axis] = Some(tracks(keyword));
@@ -395,9 +389,7 @@ impl Tactic {
             let step = match keyword {
                 TacticKeyword::FlipBlock | TacticKeyword::FlipY => swap(&[[TOP, BOTTOM]]),
                 TacticKeyword::FlipInline | TacticKeyword::FlipX => swap(&[[LEFT, RIGHT]]),
-                TacticKeyword::FlipStart if containing_rtl => {
-                    swap(&[[TOP, RIGHT], [BOTTOM, LEFT]])
-                }
+                TacticKeyword::FlipStart if containing_rtl => swap(&[[TOP, RIGHT], [BOTTOM, LEFT]]),
                 TacticKeyword::FlipStart => swap(&[[TOP, LEFT], [BOTTOM, RIGHT]]),
             };
             Self(tactic.0.map(|side| step.0[side]))
@@ -420,7 +412,12 @@ impl Tactic {
     /// properties a tactic moves between sides and axes.
     pub(crate) fn source_property(self, property: Property) -> Property {
         let groups: [[Property; 4]; 2] = [
-            [Property::Top, Property::Right, Property::Bottom, Property::Left],
+            [
+                Property::Top,
+                Property::Right,
+                Property::Bottom,
+                Property::Left,
+            ],
             [
                 Property::MarginTop,
                 Property::MarginRight,
@@ -442,7 +439,11 @@ impl Tactic {
         if self.swaps_axes()
             && let Some(pair) = pairs.iter().find(|pair| pair.contains(&property))
         {
-            return if pair[0] == property { pair[1] } else { pair[0] };
+            return if pair[0] == property {
+                pair[1]
+            } else {
+                pair[0]
+            };
         }
         property
     }
@@ -472,14 +473,13 @@ pub(crate) fn try_fallbacks(
         .items()
         .iter()
         .map(|option| {
-            if option
-                .find(Label::Production(Production::PositionArea))
-                .is_some()
-                && option.slots().is_empty()
-            {
+            if position_area(option).is_ok() {
                 return Ok(TryOption::Area(Arc::new(option.clone())));
             }
-            let rule = option.slot(0).map(|name| dashed_name(name, scope)).transpose()?;
+            let rule = option
+                .slot(0)
+                .map(|name| dashed_name(name, scope))
+                .transpose()?;
             let mut keywords = Vec::new();
             if let Some(tactic) = option.slot(1) {
                 tactic.keywords(&mut keywords);
@@ -594,16 +594,60 @@ pub(crate) fn position_anchor(
 /// CSS Anchor Positioning 1 §6.4: the properties a position option may override.
 pub(crate) fn accepted(property: Property) -> bool {
     use Property as P;
-    matches!(property,
-        P::Top | P::Right | P::Bottom | P::Left
-        | P::InsetBlockStart | P::InsetBlockEnd | P::InsetInlineStart | P::InsetInlineEnd
-        | P::MarginTop | P::MarginRight | P::MarginBottom | P::MarginLeft
-        | P::MarginBlockStart | P::MarginBlockEnd | P::MarginInlineStart | P::MarginInlineEnd
-        | P::Width | P::MinWidth | P::MaxWidth | P::Height | P::MinHeight | P::MaxHeight
-        | P::BlockSize | P::MinBlockSize | P::MaxBlockSize
-        | P::InlineSize | P::MinInlineSize | P::MaxInlineSize
-        | P::AlignSelf | P::JustifySelf | P::PositionAnchor | P::PositionArea
+    matches!(
+        property,
+        P::Top
+            | P::Right
+            | P::Bottom
+            | P::Left
+            | P::InsetBlockStart
+            | P::InsetBlockEnd
+            | P::InsetInlineStart
+            | P::InsetInlineEnd
+            | P::MarginTop
+            | P::MarginRight
+            | P::MarginBottom
+            | P::MarginLeft
+            | P::MarginBlockStart
+            | P::MarginBlockEnd
+            | P::MarginInlineStart
+            | P::MarginInlineEnd
+            | P::Width
+            | P::MinWidth
+            | P::MaxWidth
+            | P::Height
+            | P::MinHeight
+            | P::MaxHeight
+            | P::BlockSize
+            | P::MinBlockSize
+            | P::MaxBlockSize
+            | P::InlineSize
+            | P::MinInlineSize
+            | P::MaxInlineSize
+            | P::AlignSelf
+            | P::JustifySelf
+            | P::PositionAnchor
+            | P::PositionArea
     )
+}
+
+/// Tree-scoped names retain the namespace of their declaring rule (§2.1, §6.4).
+pub(super) fn namespaced(property: Property, value: &crate::style::declaration::Specified) -> bool {
+    match value {
+        crate::style::declaration::Specified::Value(value) => {
+            matches!(
+                property,
+                Property::AnchorName
+                    | Property::AnchorScope
+                    | Property::PositionAnchor
+                    | Property::PositionTryFallbacks
+            ) || mentions_anchor(value)
+        }
+        crate::style::declaration::Specified::Toggle(values) => values
+            .iter()
+            .any(|value| namespaced(property, &value.value)),
+        _ => false,
+    }
 }
 
 /// Validity the grammar cannot express: each `<try-tactic>` keyword occurs once (§6.1).
@@ -787,6 +831,23 @@ pub(crate) struct AnchorBox {
     pub(crate) visible: bool,
 }
 
+/// Static lookup data for an element, including elements that generate no principal box.
+#[derive(Clone)]
+pub(crate) struct AnchorNode {
+    pub(crate) multicol: bool,
+    pub(crate) has_box: bool,
+    pub(crate) visible: bool,
+    pub(crate) parent: Option<PageStyleTarget>,
+    pub(crate) order: usize,
+    pub(crate) position: crate::style::Position,
+    pub(crate) contains_absolute: bool,
+    pub(crate) contains_fixed: bool,
+    pub(crate) names: Arc<[AnchorName]>,
+    pub(crate) scope: AnchorScope,
+    pub(crate) default: Option<AnchorReference>,
+    pub(crate) page_defaults: Arc<[(usize, Option<AnchorReference>)]>,
+}
+
 /// What a layout pass measured for one absolutely positioned box that anchors.
 #[derive(Clone, Debug, PartialEq)]
 pub(crate) struct AnchorFrame {
@@ -811,28 +872,78 @@ impl AnchorFrame {
     }
 }
 
-/// The frames the previous layout measured, consulted by styling and layout alike.
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+pub(crate) struct AnchorKey {
+    pub(crate) target: PageStyleTarget,
+    pub(crate) page: usize,
+}
+pub(crate) type AnchorFrameMap = HashMap<AnchorKey, AnchorFrame>;
+type Consultation = (PageStyleTarget, Option<usize>);
+
+/// Frames and consultations retain the physical page of each positioned occurrence.
 #[derive(Clone, Default)]
 pub(crate) struct AnchorFrames {
-    known: HashMap<PageStyleTarget, AnchorFrame>,
-    consulted: RefCell<HashMap<PageStyleTarget, Option<AnchorFrame>>>,
+    known: AnchorFrameMap,
+    consulted: RefCell<HashMap<Consultation, Option<AnchorFrame>>>,
+    consulted_pages: RefCell<HashMap<PageStyleTarget, Vec<usize>>>,
 }
 impl AnchorFrames {
-    pub(crate) fn frame(&self, key: PageStyleTarget) -> Option<&AnchorFrame> {
-        let frame = self.known.get(&key);
-        self.consulted.borrow_mut().insert(key, frame.cloned());
+    fn find(
+        known: &AnchorFrameMap,
+        target: PageStyleTarget,
+        page: Option<usize>,
+    ) -> Option<&AnchorFrame> {
+        if let Some(page) = page {
+            known.get(&AnchorKey { target, page })
+        } else {
+            known
+                .iter()
+                .filter(|(key, _)| key.target == target)
+                .min_by_key(|(key, _)| key.page)
+                .map(|(_, frame)| frame)
+        }
+    }
+    fn page_list(known: &AnchorFrameMap, target: PageStyleTarget) -> Vec<usize> {
+        let mut pages: Vec<_> = known
+            .keys()
+            .filter_map(|key| (key.target == target).then_some(key.page))
+            .collect();
+        pages.sort_unstable();
+        pages
+    }
+    pub(crate) fn pages(&self, target: PageStyleTarget) -> Vec<usize> {
+        let pages = Self::page_list(&self.known, target);
+        self.consulted_pages
+            .borrow_mut()
+            .insert(target, pages.clone());
+        pages
+    }
+    pub(crate) fn frame(
+        &self,
+        target: PageStyleTarget,
+        page: Option<usize>,
+    ) -> Option<&AnchorFrame> {
+        let frame = Self::find(&self.known, target, page);
+        self.consulted
+            .borrow_mut()
+            .insert((target, page), frame.cloned());
         frame
     }
-    /// Whether a layout that measured `measured` reproduces every frame consulted.
-    pub(crate) fn settled(&self, measured: &HashMap<PageStyleTarget, AnchorFrame>) -> bool {
+    pub(crate) fn settled(&self, measured: &AnchorFrameMap) -> bool {
         self.consulted
             .borrow()
             .iter()
-            .all(|(key, frame)| measured.get(key) == frame.as_ref())
+            .all(|((target, page), frame)| Self::find(measured, *target, *page) == frame.as_ref())
+            && self
+                .consulted_pages
+                .borrow()
+                .iter()
+                .all(|(target, pages)| Self::page_list(measured, *target) == *pages)
     }
-    pub(crate) fn measured(&mut self, measured: HashMap<PageStyleTarget, AnchorFrame>) {
+    pub(crate) fn measured(&mut self, measured: AnchorFrameMap) {
         self.known = measured;
         self.consulted.get_mut().clear();
+        self.consulted_pages.get_mut().clear();
     }
 }
 
@@ -840,6 +951,8 @@ impl AnchorFrames {
 /// position option computing.
 #[derive(Clone, Copy)]
 pub(crate) struct Anchoring<'a> {
+    pub(crate) page: Option<usize>,
+    pub(crate) scope: Option<FontNamespace>,
     pub(crate) frames: &'a AnchorFrames,
     pub(crate) key: PageStyleTarget,
     pub(crate) tactic: Tactic,
@@ -848,6 +961,11 @@ pub(crate) struct Anchoring<'a> {
 /// The computed anchor-positioning properties and what their anchor functions consulted.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub(crate) struct AnchorStyle {
+    pub(crate) pages: Arc<[(usize, Style)]>,
+    pub(crate) namespaces: HashMap<Property, FontNamespace>,
+    pub(crate) protected: Arc<[Property]>,
+    pub(crate) option: usize,
+    pub(crate) frame: Option<Arc<AnchorFrame>>,
     pub(crate) names: Arc<[AnchorName]>,
     pub(crate) scope: AnchorScope,
     pub(crate) position_anchor: PositionAnchor,
@@ -879,11 +997,24 @@ impl AnchorStyle {
     }
     /// Every reference layout locates for the box: its default anchor and its functions'.
     pub(crate) fn located_references(&self) -> Vec<AnchorReference> {
-        let mut references: Vec<AnchorReference> =
-            self.default_reference().into_iter().collect();
+        let mut references: Vec<AnchorReference> = self.default_reference().into_iter().collect();
         for reference in self.references.iter() {
             if !references.contains(reference) {
                 references.push(reference.clone());
+            }
+        }
+        for option in self.options.iter() {
+            for reference in option.anchor.located_references() {
+                if !references.contains(&reference) {
+                    references.push(reference);
+                }
+            }
+        }
+        for (_, page) in self.pages.iter() {
+            for reference in page.anchor.located_references() {
+                if !references.contains(&reference) {
+                    references.push(reference);
+                }
             }
         }
         references
@@ -894,6 +1025,7 @@ impl AnchorStyle {
             || !self.references.is_empty()
             || !self.fallbacks.is_empty()
             || self.invalid_reference
+            || self.visibility.no_overflow
     }
 }
 
@@ -947,7 +1079,12 @@ impl AnchorContext<'_> {
         };
         let area = self.area.and_then(|area| {
             let anchor = frame.anchor(self.default.as_ref()?)?;
-            Some(area.rect(frame.containing, anchor.rect, self.own_rtl, frame.containing_rtl))
+            Some(area.rect(
+                frame.containing,
+                anchor.rect,
+                self.own_rtl,
+                frame.containing_rtl,
+            ))
         });
         Some(area.unwrap_or(whole))
     }
@@ -1002,7 +1139,11 @@ impl AnchorContext<'_> {
         })
     }
     /// `anchor-size()` (§5.1): the anchor box's size in the named axis, or the property's.
-    fn anchor_size(&self, name: Option<&Arc<str>>, dimension: Option<AnchorDimension>) -> Option<f32> {
+    fn anchor_size(
+        &self,
+        name: Option<&Arc<str>>,
+        dimension: Option<AnchorDimension>,
+    ) -> Option<f32> {
         let anchor = self.anchor_box(name)?;
         let axis = match dimension {
             Some(dimension) => {
@@ -1028,6 +1169,14 @@ impl AnchorContext<'_> {
             AnchorQuery::Size { name, dimension } => self.anchor_size(name.as_ref(), *dimension),
         }
     }
+    pub(crate) fn checkpoint(&self) -> (usize, bool) {
+        (self.references.borrow().len(), self.unresolved.get())
+    }
+    pub(crate) fn restore(&self, (references, unresolved): (usize, bool)) {
+        self.references.borrow_mut().truncate(references);
+        self.unresolved.set(unresolved);
+    }
+
     /// Records an unresolvable function without a fallback.
     pub(crate) fn fail(&self) {
         self.unresolved.set(true);
@@ -1044,8 +1193,12 @@ pub(crate) struct AnchorEvaluation<'a> {
 
 /// Whether a math source names an anchor function, which the element's anchors resolve.
 fn mentions_anchor(value: &Component) -> bool {
-    if value.find(Label::Production(Production::AnchorFn)).is_some()
-        || value.find(Label::Production(Production::AnchorSizeFn)).is_some()
+    if value
+        .find(Label::Production(Production::AnchorFn))
+        .is_some()
+        || value
+            .find(Label::Production(Production::AnchorSizeFn))
+            .is_some()
     {
         return true;
     }
@@ -1074,14 +1227,17 @@ pub(crate) fn size(
     }
     let frame = relative
         .anchoring
-        .and_then(|anchoring| anchoring.frames.frame(anchoring.key));
+        .and_then(|anchoring| anchoring.frames.frame(anchoring.key, anchoring.page));
     let context = AnchorContext {
         frame,
         positioned: style.position.is_out_of_flow(),
         default: style.anchor.default_reference(),
         area: style.anchor.area,
         own_rtl: style.rtl,
-        scope: style.element_font_namespace(),
+        scope: relative
+            .anchoring
+            .and_then(|anchoring| anchoring.scope)
+            .unwrap_or_else(|| style.element_font_namespace()),
         tactic: relative
             .anchoring
             .map_or(Tactic::IDENTITY, |anchoring| anchoring.tactic),
@@ -1094,9 +1250,9 @@ pub(crate) fn size(
         context: Some(&context),
     };
     let computed = match value.unwrap() {
-        Component::Math(..) => crate::style::box_values::anchored_length_percentage(
-            value, relative, evaluation,
-        )?,
+        Component::Math(..) => {
+            crate::style::box_values::anchored_length_percentage(value, relative, evaluation)?
+        }
         function => crate::style::values::anchored_math(
             &format!("{CALC_FUNCTION}({function})"),
             relative,
@@ -1104,6 +1260,14 @@ pub(crate) fn size(
         )?
         .length_percentage(crate::style::calc::Range::ALL),
     };
+    let missing = context.references.borrow().is_empty()
+        || frame.is_none_or(|frame| {
+            context
+                .references
+                .borrow()
+                .iter()
+                .any(|reference| frame.anchor(reference).is_none())
+        });
     let recorded = context.references.into_inner();
     if !recorded.is_empty() {
         let mut references = style.anchor.references.to_vec();
@@ -1115,7 +1279,7 @@ pub(crate) fn size(
         style.anchor.references = Arc::from(references);
     }
     if context.unresolved.get() {
-        style.anchor.invalid_reference = true;
+        style.anchor.invalid_reference |= missing;
         return Ok(target.initial());
     }
     Ok(Size::Value(computed))
@@ -1217,16 +1381,30 @@ pub(crate) fn transform_computed(style: &mut Style, tactic: Tactic, containing_r
     if tactic == Tactic::IDENTITY {
         return;
     }
+    let original = style.clone();
     let own_rtl = style.rtl;
-    style.grid.justify_self =
-        transformed_alignment(style.grid.justify_self, tactic, true, own_rtl, containing_rtl);
-    style.flex.align_self =
-        transformed_alignment(style.flex.align_self, tactic, false, own_rtl, containing_rtl);
+    style.grid.justify_self = transformed_alignment(
+        style.grid.justify_self,
+        tactic,
+        true,
+        own_rtl,
+        containing_rtl,
+    );
+    style.flex.align_self = transformed_alignment(
+        style.flex.align_self,
+        tactic,
+        false,
+        own_rtl,
+        containing_rtl,
+    );
     style.anchor.area = style
         .anchor
         .area
         .map(|area| area.transformed(tactic, own_rtl, containing_rtl));
     style.anchor.tactic = tactic;
+    for property in style.anchor.protected.clone().iter() {
+        crate::style::properties::copy(*property, style, &original);
+    }
 }
 
 /// The computed-value consequences of position-visibility (§6.6): the box's `visibility`
@@ -1257,6 +1435,9 @@ pub(crate) fn finish(style: &mut Style, frame: Option<&AnchorFrame>) {
 }
 
 /// The element and pseudo-element identity anchor frames are keyed by.
-pub(crate) fn key(element: ElementId, pseudo: Option<crate::style::PseudoElement>) -> PageStyleTarget {
+pub(crate) fn key(
+    element: ElementId,
+    pseudo: Option<crate::style::PseudoElement>,
+) -> PageStyleTarget {
     PageStyleTarget { element, pseudo }
 }

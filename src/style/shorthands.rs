@@ -299,6 +299,17 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
             &value,
             [P::ScrollPaddingInlineStart, P::ScrollPaddingInlineEnd],
         ),
+        P::PositionTry => [P::PositionTryOrder, P::PositionTryFallbacks]
+            .into_iter()
+            .map(|property| {
+                (
+                    property,
+                    value
+                        .find(Label::Property(property))
+                        .map_or_else(initial, |value| longhand(property, value)),
+                )
+            })
+            .collect(),
         P::InterestDelay => pair(&value, [P::InterestDelayStart, P::InterestDelayEnd]),
         // CSS Conditional 5 §5.3: an omitted `container-type` is its initial value.
         P::Container => {
