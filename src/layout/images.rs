@@ -85,6 +85,16 @@ fn edges<'a>(
     crate::layout::geometry::Edges::of(block.style(), containing_width)
 }
 
+fn math_widths(block: BlockSource<'_>) -> Option<IntrinsicWidths> {
+    if block.style().containment().size[0] {
+        return None;
+    }
+    let crate::images::Image::Viewport(view) = block.image()?.as_ref() else {
+        return None;
+    };
+    view.intrinsic_widths
+}
+
 /// Content-box width and height constraints, percentages resolved against the containing block.
 pub(super) fn constraints<'a>(
     block: impl Into<BlockSource<'a>>,
@@ -117,13 +127,19 @@ pub(super) fn constraints<'a>(
         || natural.height(natural.size[0]),
         |width| natural.height(width),
     );
+    let intrinsic = if heights.specified.is_none() || natural.ratio.is_none() {
+        math_widths(block)
+    } else {
+        None
+    }
+    .unwrap_or(IntrinsicWidths {
+        min: width,
+        max: width,
+    });
     [
         widths.with_intrinsic(
             [&style.width, &style.min_width, &style.max_width],
-            IntrinsicWidths {
-                min: width,
-                max: width,
-            },
+            intrinsic,
             Some(containing_width),
         ),
         heights.with_intrinsic(
@@ -195,6 +211,15 @@ pub(super) fn size<'a>(
 /// zero and the maximum stretches into `available`, the containing block width.
 pub(super) fn intrinsic<'a>(block: impl Into<BlockSource<'a>>, available: f32) -> IntrinsicWidths {
     let block = block.into();
+    if let Some(intrinsic) = math_widths(block) {
+        let [width, height] = constraints(block, 0.0, None);
+        if height.specified.is_none() || block.style().aspect_ratio.ratio.is_none() {
+            return IntrinsicWidths {
+                min: width.constrain(width.specified.unwrap_or(intrinsic.min)),
+                max: width.constrain(width.specified.unwrap_or(intrinsic.max)),
+            };
+        }
+    }
     let max = size(block, 0.0, available, None, None, None)[0];
     let min = if block.image().unwrap().natural_size().ratio_only()
         && !block.style().containment().size[0]

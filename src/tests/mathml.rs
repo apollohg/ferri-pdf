@@ -1,16 +1,19 @@
 use super::common::local_options;
 use crate::{DisplayItem, render_html};
 
-fn math(body: &str) -> std::sync::Arc<crate::layout::ViewportPaint> {
+fn math_output(body: &str) -> crate::RenderOutput {
     let font =
         std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/fonts/MathTest.ttf");
     let metrics_font = font.with_file_name("MathMetrics.otf");
-    let output = render_html(
+    render_html(
         &format!("<style>@font-face{{font-family:MathTest;src:url('{}')}}@font-face{{font-family:MathMetrics;src:url('{}')}}math{{font-family:DejaVu Serif;font-size:20pt}}</style>{body}", font.display(), metrics_font.display()),
         &local_options(),
     )
-    .unwrap_or_else(|error| panic!("MathML fixture must render: {error}\n{body}"));
-    output
+    .unwrap_or_else(|error| panic!("MathML fixture must render: {error}\n{body}"))
+}
+
+fn math(body: &str) -> std::sync::Arc<crate::layout::ViewportPaint> {
+    math_output(body)
         .layout
         .unwrap()
         .display_lists
@@ -776,5 +779,171 @@ fn limit_line_metrics_follow_core_equations_independently_of_script_ink_position
             (actual_ascent - ascent).abs() < 0.01 && (actual_descent - descent).abs() < 0.01,
             "{tag}: Core 3.4.2 keeps the explicit line metrics separate from scripts positioned using the base ink extent; expected ascent/descent {ascent}/{descent}, got {actual_ascent}/{actual_descent}"
         );
+    }
+}
+
+#[test]
+fn intrinsic_math_widths_reserve_all_block_stretch_variants_through_native_algorithms() {
+    const FONT_SIZE: f32 = 20.0;
+    const RED: [u8; 3] = [255, 0, 0];
+    let face = ttf_parser::Face::parse(
+        include_bytes!("../../tests/fixtures/fonts/MathMetrics.otf"),
+        0,
+    )
+    .unwrap();
+    let em = FONT_SIZE / f32::from(face.units_per_em());
+    let glyph = face.glyph_index('(').unwrap();
+    let table = face.tables().math.unwrap();
+    let variants = table
+        .variants
+        .unwrap()
+        .vertical_constructions
+        .get(glyph)
+        .unwrap();
+    let preferred = variants
+        .variants
+        .into_iter()
+        .map(|record| f32::from(face.glyph_hor_advance(record.variant_glyph).unwrap()) * em)
+        .fold(
+            f32::from(face.glyph_hor_advance(glyph).unwrap()) * em,
+            f32::max,
+        );
+    let constants = table.constants.unwrap();
+    let digit = f32::from(
+        face.glyph_hor_advance(face.glyph_index('1').unwrap())
+            .unwrap(),
+    ) * em;
+    let script_digit = digit * f32::from(constants.script_percent_scale_down()) / 100.0;
+    let script_space = f32::from(constants.space_after_script().value) * em;
+    let fence = "<mo lspace='0' rspace='0'>(</mo>";
+    for (expression, expected) in [
+        (fence.to_owned(), preferred),
+        (format!("<mrow>{fence}<mn>1</mn></mrow>"), preferred + digit),
+        (
+            format!("<mfrac>{fence}<mn>1</mn></mfrac>"),
+            preferred * f32::from(constants.script_percent_scale_down()) / 100.0
+                + 2.0 * crate::style::POINTS_PER_PIXEL,
+        ),
+        (
+            format!("<msup>{fence}<mn>1</mn></msup>"),
+            preferred + script_digit + script_space,
+        ),
+        (format!("<munder>{fence}<mn>1</mn></munder>"), preferred),
+        (
+            format!("<mmultiscripts>{fence}<mn>1</mn><mn>1</mn></mmultiscripts>"),
+            preferred + script_digit + script_space,
+        ),
+        (
+            format!(
+                "<mmultiscripts>{fence}<mn>1</mn><mn>1</mn><mprescripts/><mn>1</mn><mn>1</mn></mmultiscripts>"
+            ),
+            preferred + 2.0 * (script_digit + script_space),
+        ),
+        (format!("<mphantom>{fence}</mphantom>"), preferred),
+        (format!("<mpadded>{fence}</mpadded>"), preferred),
+    ] {
+        for keyword in ["min-content", "max-content"] {
+            let output = math_output(&format!(
+                "<math style='font-family:MathMetrics;width:{keyword};background:red'>{expression}</math>"
+            ));
+            let trace = output.layout.unwrap();
+            let width = trace
+                .display_lists
+                .iter()
+                .flatten()
+                .find_map(|item| match item {
+                    DisplayItem::Box(paint) if paint.decoration.background.rgb == RED => {
+                        Some(paint.rect.width)
+                    }
+                    _ => None,
+                })
+                .expect("native math's CSS content sizing must retain its outer background box");
+            assert!(
+                (width - expected).abs() < 0.01,
+                "{keyword} {expression}: Core intrinsic widths must compose the maximum advance of every vertical variant, independently of the chosen painted glyph; expected {expected}, got {width}"
+            );
+        }
+    }
+}
+
+#[test]
+fn preferred_assembly_width_and_radical_intrinsics_keep_original_font_fallback() {
+    const FONT_SIZE: f32 = 20.0;
+    const RED: [u8; 3] = [255, 0, 0];
+    for (family, data, valid_assembly) in [
+        (
+            "MathTest",
+            include_bytes!("../../tests/fixtures/fonts/MathTest.ttf").as_slice(),
+            true,
+        ),
+        (
+            "DejaVu Serif",
+            include_bytes!("../../assets/fonts/DejaVuSerif.ttf").as_slice(),
+            false,
+        ),
+    ] {
+        let face = ttf_parser::Face::parse(data, 0).unwrap();
+        let em = FONT_SIZE / f32::from(face.units_per_em());
+        let advance = |character| {
+            f32::from(
+                face.glyph_hor_advance(face.glyph_index(character).unwrap())
+                    .unwrap(),
+            ) * em
+        };
+        let table = face.tables().math.unwrap();
+        let constants = table.constants.unwrap();
+        let assembly = table
+            .variants
+            .unwrap()
+            .vertical_constructions
+            .get(face.glyph_index('(').unwrap())
+            .unwrap()
+            .assembly
+            .unwrap();
+        let assembly_width = assembly
+            .parts
+            .into_iter()
+            .map(|part| f32::from(face.glyph_hor_advance(part.glyph_id).unwrap()) * em)
+            .fold(0.0, f32::max);
+        let fence_width = if valid_assembly {
+            assembly_width.max(advance('('))
+        } else {
+            advance('(')
+        };
+        let root_width = advance('√') + fence_width;
+        let index_width =
+            advance('3') * f32::from(constants.script_script_percent_scale_down()) / 100.0;
+        let index_kerns = (f32::from(constants.radical_kern_before_degree().value) * em).max(0.0)
+            + (f32::from(constants.radical_kern_after_degree().value) * em).max(-index_width);
+        let fence = "<mo lspace='0' rspace='0'>(</mo>";
+        for (expression, expected) in [
+            (fence.to_owned(), fence_width),
+            (format!("<msqrt>{fence}</msqrt>"), root_width),
+            (
+                format!("<mroot>{fence}<mn>3</mn></mroot>"),
+                root_width + index_width + index_kerns,
+            ),
+        ] {
+            let output = math_output(&format!(
+                "<math style='font-family:{family};width:max-content;background:red'>{expression}</math>"
+            ));
+            let width = output
+                .layout
+                .unwrap()
+                .display_lists
+                .iter()
+                .flatten()
+                .find_map(|item| match item {
+                    DisplayItem::Box(paint) if paint.decoration.background.rgb == RED => {
+                        Some(paint.rect.width)
+                    }
+                    _ => None,
+                })
+                .unwrap();
+            assert!(
+                (width - expected).abs() < 0.01,
+                "{family} {expression}: intrinsic composition must use the valid assembly's width while the immutable original face retains its invalid-assembly fallback; expected {expected}, got {width}"
+            );
+        }
     }
 }

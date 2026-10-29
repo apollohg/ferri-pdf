@@ -1,7 +1,10 @@
 //! `MathML` Core §5.3.1–§5.3.2: size variants and connector-overlapped assemblies.
 use crate::document::DocumentError;
 use crate::text::PositionedGlyph;
-use ttf_parser::{Face, GlyphId, math::GlyphAssembly};
+use ttf_parser::{
+    Face, GlyphId,
+    math::{GlyphAssembly, GlyphPart},
+};
 
 const MAX_ASSEMBLY_GLYPHS: usize = 4096;
 pub(super) struct Shape {
@@ -94,6 +97,71 @@ pub(super) fn shape(
     }
     Ok(last)
 }
+struct Assembly {
+    parts: Vec<GlyphPart>,
+    extenders: usize,
+    non_extenders: usize,
+    extender_advance: f32,
+    fixed_advance: f32,
+    growth: f32,
+}
+impl Assembly {
+    fn new(assembly: GlyphAssembly<'_>, minimum_overlap: f32) -> Option<Self> {
+        let parts: Vec<_> = assembly.parts.into_iter().collect();
+        let (mut extenders, mut non_extenders, mut extender_advance, mut fixed_advance) =
+            (0usize, 0usize, 0.0, 0.0);
+        for part in &parts {
+            if f32::from(part.start_connector_length) < minimum_overlap
+                || f32::from(part.end_connector_length) < minimum_overlap
+            {
+                return None;
+            }
+            if part.part_flags.extender() {
+                extenders += 1;
+                extender_advance += f32::from(part.full_advance);
+            } else {
+                non_extenders += 1;
+                fixed_advance += f32::from(part.full_advance);
+            }
+        }
+        let growth = extender_advance - minimum_overlap * extenders as f32;
+        if extenders == 0 || growth <= 0.0 {
+            return None;
+        }
+        Some(Self {
+            parts,
+            extenders,
+            non_extenders,
+            extender_advance,
+            fixed_advance,
+            growth,
+        })
+    }
+    fn width(&self, face: &Face<'_>) -> Option<f32> {
+        self.parts.iter().try_fold(0.0f32, |width, part| {
+            Some(width.max(f32::from(face.glyph_hor_advance(part.glyph_id)?)))
+        })
+    }
+}
+
+pub(super) fn preferred_inline_size(face: &Face<'_>, glyph: GlyphId) -> Option<f32> {
+    let variants = face.tables().math?.variants?;
+    let construction = variants.vertical_constructions.get(glyph)?;
+    let mut width = f32::from(face.glyph_hor_advance(glyph)?);
+    for record in construction.variants {
+        if let Some(advance) = face.glyph_hor_advance(record.variant_glyph) {
+            width = width.max(f32::from(advance));
+        }
+    }
+    if let Some(assembly) = construction.assembly
+        && let Some(assembly) = Assembly::new(assembly, f32::from(variants.min_connector_overlap))
+        && let Some(advance) = assembly.width(face)
+    {
+        width = width.max(advance);
+    }
+    Some(width / f32::from(face.units_per_em()))
+}
+
 fn assemble(
     face: &Face<'_>,
     assembly: GlyphAssembly<'_>,
@@ -101,27 +169,20 @@ fn assemble(
     target: f32,
     horizontal: bool,
 ) -> Result<Option<Shape>, DocumentError> {
-    let parts: Vec<_> = assembly.parts.into_iter().collect();
-    let (mut extenders, mut non_extenders, mut extender_advance, mut fixed_advance) =
-        (0usize, 0usize, 0.0, 0.0);
-    for part in &parts {
-        if f32::from(part.start_connector_length) < minimum_overlap
-            || f32::from(part.end_connector_length) < minimum_overlap
-        {
-            return Ok(None);
-        }
-        if part.part_flags.extender() {
-            extenders += 1;
-            extender_advance += f32::from(part.full_advance);
-        } else {
-            non_extenders += 1;
-            fixed_advance += f32::from(part.full_advance);
-        }
-    }
-    let growth = extender_advance - minimum_overlap * extenders as f32;
-    if extenders == 0 || growth <= 0.0 {
+    let Some(parameters) = Assembly::new(assembly, minimum_overlap) else {
         return Ok(None);
-    }
+    };
+    let Some(width) = parameters.width(face) else {
+        return Ok(None);
+    };
+    let Assembly {
+        parts,
+        extenders,
+        non_extenders,
+        extender_advance,
+        fixed_advance,
+        growth,
+    } = parameters;
     let repetitions = ((target - fixed_advance + minimum_overlap * (non_extenders as f32 - 1.0))
         / growth)
         .ceil()
@@ -160,17 +221,13 @@ fn assemble(
     }
     let stretch = total - overlap * count.saturating_sub(1) as f32;
     let em = f32::from(face.units_per_em());
-    let (mut width, mut ascent, mut descent) = (0.0f32, 0.0f32, 0.0f32);
+    let (mut width, mut ascent, mut descent) = (width, 0.0f32, 0.0f32);
     let mut glyphs = Vec::with_capacity(count);
     let mut position = 0.0;
     for part in &parts {
         let Some(bounds) = face.glyph_bounding_box(part.glyph_id) else {
             return Ok(None);
         };
-        let Some(advance) = face.glyph_hor_advance(part.glyph_id) else {
-            return Ok(None);
-        };
-        width = width.max(f32::from(advance));
         ascent = ascent.max(f32::from(bounds.y_max));
         descent = descent.max(-f32::from(bounds.y_min));
         let copies = if part.part_flags.extender() {

@@ -10,7 +10,9 @@ use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, Rect};
 use crate::images::Image;
 use crate::layout::{TextLine, ViewportPaint};
 use crate::resources::ResourceResolver;
-use crate::style::{Display, LengthPercentage, Size, Style, StyleError, Stylesheet};
+use crate::style::{
+    Display, IntrinsicWidths, LengthPercentage, Size, Style, StyleError, Stylesheet,
+};
 use crate::text::TextContext;
 use metrics::Metrics;
 use operator::{Form, Operator};
@@ -29,6 +31,7 @@ enum Paint {
 #[derive(Clone, Default)]
 struct MathBox {
     width: f32,
+    intrinsic: IntrinsicWidths,
     ascent: f32,
     descent: f32,
     ink_ascent: f32,
@@ -166,6 +169,7 @@ pub(super) fn render(
             height: content.ascent + content.descent,
         },
         baseline: Some(content.ascent),
+        intrinsic_widths: Some(content.intrinsic),
     }))))
 }
 impl<'d> Builder<'_, 'd> {
@@ -208,6 +212,10 @@ impl<'d> Builder<'_, 'd> {
             bounds.map_or((0.0, 0.0), |bounds| (-bounds.y, bounds.y + bounds.height));
         let mut result = MathBox {
             width: line.width,
+            intrinsic: IntrinsicWidths {
+                min: line.width,
+                max: line.width,
+            },
             ascent,
             descent,
             ink_ascent: ascent,
@@ -362,18 +370,25 @@ impl<'d> Builder<'_, 'd> {
         let add_space = element.name() == "math" || !embellished;
         let mut positions = Vec::with_capacity(children.len());
         let mut width = 0.0;
+        let mut intrinsic = IntrinsicWidths::default();
         let mut previous_italic = 0.0;
         for (_, child) in &children {
             let slanted =
                 child.operator.is_none() && child.italic.is_some_and(|value| value != 0.0);
             if !slanted {
                 width += previous_italic;
+                intrinsic.min += previous_italic;
+                intrinsic.max += previous_italic;
             }
             if add_space && let Some(operator) = &child.operator {
                 width += operator.space[0];
+                intrinsic.min += operator.space[0];
+                intrinsic.max += operator.space[0];
             }
             positions.push(width);
             width += child.width;
+            intrinsic.min += child.intrinsic.min;
+            intrinsic.max += child.intrinsic.max;
             previous_italic = if slanted {
                 child.italic.unwrap_or(0.0)
             } else {
@@ -381,9 +396,13 @@ impl<'d> Builder<'_, 'd> {
             };
             if add_space && let Some(operator) = &child.operator {
                 width += operator.space[1];
+                intrinsic.min += operator.space[1];
+                intrinsic.max += operator.space[1];
             }
         }
         width += previous_italic;
+        intrinsic.min += previous_italic;
+        intrinsic.max += previous_italic;
         let ascent = children
             .iter()
             .map(|(_, child)| child.ascent)
@@ -406,6 +425,7 @@ impl<'d> Builder<'_, 'd> {
             .unwrap_or(0.0);
         let mut result = MathBox {
             width,
+            intrinsic,
             ascent,
             descent,
             ink_ascent,
@@ -632,6 +652,19 @@ impl<'d> Builder<'_, 'd> {
         normal.ink_ascent = normal.ascent;
         normal.ink_descent = normal.descent;
         normal.italic = shape.italic.map(|value| value * size);
+        if variants_only {
+            normal.intrinsic = IntrinsicWidths {
+                min: width,
+                max: width,
+            };
+        } else if !horizontal
+            && let Some(preferred) = stretch::preferred_inline_size(&instance.face, glyph)
+        {
+            normal.intrinsic = IntrinsicWidths {
+                min: preferred * size,
+                max: preferred * size,
+            };
+        }
         if !style.visibility.is_visible() {
             normal.paint.clear();
         }
@@ -657,6 +690,12 @@ impl<'d> Builder<'_, 'd> {
         if let Some(character) = chars.next().filter(|_| chars.next().is_none()) {
             let metrics = self.metrics(style)?;
             if operator.stretchy {
+                if !operator.inline_axis
+                    && let Some(normal) =
+                        self.stretch_character(character, style, 0.0, false, false)?
+                {
+                    result.intrinsic = normal.intrinsic;
+                }
                 match layout.stretch {
                     Some(Stretch::Inline(size)) if operator.inline_axis => {
                         if let Some(stretched) =
@@ -704,7 +743,10 @@ impl<'d> Builder<'_, 'd> {
                                 stretched.descent + delta,
                                 stretched.italic,
                             );
-                            let mut centred = MathBox::default();
+                            let mut centred = MathBox {
+                                intrinsic: stretched.intrinsic,
+                                ..Default::default()
+                            };
                             centred.place(stretched, 0.0, delta);
                             centred.width = width;
                             centred.ascent = top;
@@ -764,6 +806,10 @@ impl<'d> Builder<'_, 'd> {
         };
         Ok(MathBox {
             width,
+            intrinsic: IntrinsicWidths {
+                min: width,
+                max: width,
+            },
             ascent,
             descent: height - ascent,
             ink_ascent: ascent,
@@ -784,6 +830,14 @@ impl<'d> Builder<'_, 'd> {
             Size::Auto => inner.width,
             _ => return Err(unsupported("intrinsic or percentage mpadded width")),
         };
+        let intrinsic = if style.width == Size::Auto {
+            inner.intrinsic
+        } else {
+            IntrinsicWidths {
+                min: width,
+                max: width,
+            }
+        };
         let ascent = self
             .attribute(element, "height", style)?
             .unwrap_or(inner.ascent)
@@ -800,6 +854,7 @@ impl<'d> Builder<'_, 'd> {
         let mut result = MathBox::default();
         result.place(inner, x, -y);
         result.width = width;
+        result.intrinsic = intrinsic;
         result.ascent = ascent;
         result.descent = descent;
         result.ink_ascent = ascent;
@@ -833,6 +888,10 @@ impl<'d> Builder<'_, 'd> {
             .stretch_character('√', style, target, false, false)?
             .map_or_else(|| self.token("√", style), Ok)?;
         let width = surd.width + base.width;
+        let intrinsic = IntrinsicWidths {
+            min: surd.intrinsic.min + base.intrinsic.min,
+            max: surd.intrinsic.max + base.intrinsic.max,
+        };
         let ascent = base
             .ascent
             .max(base.ink_ascent + gap + metrics.radical_rule + metrics.radical_extra);
@@ -843,6 +902,7 @@ impl<'d> Builder<'_, 'd> {
         let base_x = surd.width;
         let mut result = MathBox {
             width,
+            intrinsic,
             ascent,
             descent,
             ink_ascent: ascent,
@@ -870,7 +930,20 @@ impl<'d> Builder<'_, 'd> {
                 ascent.max(-descent + metrics.radical_raise * (ascent + descent) + index.ascent);
             let bottom =
                 descent.max(descent - metrics.radical_raise * (ascent + descent) + index.ascent);
-            let mut with_index = MathBox::default();
+            let intrinsic = IntrinsicWidths {
+                min: result.intrinsic.min
+                    + before
+                    + index.intrinsic.min
+                    + metrics.radical_kern[1].max(-index.intrinsic.min),
+                max: result.intrinsic.max
+                    + before
+                    + index.intrinsic.max
+                    + metrics.radical_kern[1].max(-index.intrinsic.max),
+            };
+            let mut with_index = MathBox {
+                intrinsic,
+                ..Default::default()
+            };
             with_index.place(result, if style.rtl { 0.0 } else { base_offset }, 0.0);
             let index_x = if style.rtl {
                 total_width - before - index.width
@@ -934,6 +1007,10 @@ impl<'d> Builder<'_, 'd> {
         };
         let width = numerator.width.max(denominator.width);
         let mut result = MathBox {
+            intrinsic: IntrinsicWidths {
+                min: numerator.intrinsic.min.max(denominator.intrinsic.min),
+                max: numerator.intrinsic.max.max(denominator.intrinsic.max),
+            },
             operator: numerator.operator.clone(),
             ..Default::default()
         };
@@ -993,19 +1070,38 @@ impl<'d> Builder<'_, 'd> {
         } else {
             base.italic.unwrap_or(0.0)
         };
-        let sub_x = x - if large {
+        let sub_correction = if large {
             base.italic.unwrap_or(0.0)
         } else {
             0.0
         };
-        let width = base
-            .width
-            .max(sub.as_ref().map_or(0.0, |sub| sub_x + sub.width))
-            .max(sup.as_ref().map_or(0.0, |sup| x + italic + sup.width))
-            + metrics.after_script;
+        let sub_x = x - sub_correction;
+        let inline_size = |base: f32, sub: Option<f32>, sup: Option<f32>| {
+            base.max(sub.map_or(0.0, |sub| base - sub_correction + sub))
+                .max(sup.map_or(0.0, |sup| base + italic + sup))
+                + metrics.after_script
+        };
+        let width = inline_size(
+            base.width,
+            sub.as_ref().map(|child| child.width),
+            sup.as_ref().map(|child| child.width),
+        );
+        let intrinsic = IntrinsicWidths {
+            min: inline_size(
+                base.intrinsic.min,
+                sub.as_ref().map(|child| child.intrinsic.min),
+                sup.as_ref().map(|child| child.intrinsic.min),
+            ),
+            max: inline_size(
+                base.intrinsic.max,
+                sub.as_ref().map(|child| child.intrinsic.max),
+                sup.as_ref().map(|child| child.intrinsic.max),
+            ),
+        };
         let physical = |x, size| if style.rtl { width - x - size } else { x };
         let mut result = MathBox {
             width,
+            intrinsic,
             ascent: base.ascent,
             descent: base.descent,
             ink_ascent: base.ink_ascent,
@@ -1117,9 +1213,12 @@ impl<'d> Builder<'_, 'd> {
         let has_posts = !post.is_empty();
         let mut nodes = Vec::new();
         let mut offset = 0.0;
+        let mut intrinsic_offset = IntrinsicWidths::default();
         let pre_start = 1 + post_count + usize::from(marker.is_some());
         for (index, (sub, sup)) in pre.into_iter().enumerate() {
             offset += metrics.after_script;
+            intrinsic_offset.min += metrics.after_script + sub.intrinsic.min.max(sup.intrinsic.min);
+            intrinsic_offset.max += metrics.after_script + sub.intrinsic.max.max(sup.intrinsic.max);
             let width = sub.width.max(sup.width);
             let sub_x = offset + width - sub.width;
             let sup_x = offset + width - sup.width;
@@ -1134,8 +1233,21 @@ impl<'d> Builder<'_, 'd> {
         }
         let base_x = offset;
         offset += base.width;
+        intrinsic_offset.min += base.intrinsic.min;
+        intrinsic_offset.max += base.intrinsic.max;
+        let mut intrinsic = intrinsic_offset;
         nodes.push((0, base, base_x, 0.0));
         for (index, (sub, sup)) in post.into_iter().enumerate() {
+            intrinsic.min = intrinsic
+                .min
+                .max(intrinsic_offset.min - sub_italic + sub.intrinsic.min)
+                .max(intrinsic_offset.min + sup_italic + sup.intrinsic.min);
+            intrinsic.max = intrinsic
+                .max
+                .max(intrinsic_offset.max - sub_italic + sub.intrinsic.max)
+                .max(intrinsic_offset.max + sup_italic + sup.intrinsic.max);
+            intrinsic_offset.min += sub.intrinsic.min.max(sup.intrinsic.min) + metrics.after_script;
+            intrinsic_offset.max += sub.intrinsic.max.max(sup.intrinsic.max) + metrics.after_script;
             let width = sub.width.max(sup.width);
             nodes.push((1 + 2 * index, sub, offset - sub_italic, down));
             nodes.push((2 + 2 * index, sup, offset + sup_italic, -up));
@@ -1147,8 +1259,13 @@ impl<'d> Builder<'_, 'd> {
             .map(|(_, child, x, _)| x + child.width)
             .fold(0.0, f32::max)
             + if has_posts { metrics.after_script } else { 0.0 };
+        if has_posts {
+            intrinsic.min += metrics.after_script;
+            intrinsic.max += metrics.after_script;
+        }
         let mut result = MathBox {
             width,
+            intrinsic,
             ascent,
             descent,
             operator,
@@ -1246,21 +1363,46 @@ impl<'d> Builder<'_, 'd> {
         } else {
             0.0
         };
-        let mut minimum = -base.width / 2.0;
-        let mut maximum = base.width / 2.0;
-        if let Some(under) = &under {
-            minimum = minimum.min(-under.width / 2.0 - italic / 2.0);
-            maximum = maximum.max(under.width / 2.0 - italic / 2.0);
-        }
-        if let Some(over) = &over {
-            let attachment = over.accent.unwrap_or(over.width / 2.0);
-            minimum = minimum.min(-attachment + italic / 2.0);
-            maximum = maximum.max(over.width - attachment + italic / 2.0);
-        }
+        let inline_bounds = |base: f32, under: Option<f32>, over: Option<(f32, Option<f32>)>| {
+            let mut minimum = -base / 2.0;
+            let mut maximum = base / 2.0;
+            if let Some(under) = under {
+                minimum = minimum.min(-under / 2.0 - italic / 2.0);
+                maximum = maximum.max(under / 2.0 - italic / 2.0);
+            }
+            if let Some((width, attachment)) = over {
+                let attachment = attachment.unwrap_or(width / 2.0);
+                minimum = minimum.min(-attachment + italic / 2.0);
+                maximum = maximum.max(width - attachment + italic / 2.0);
+            }
+            [minimum, maximum]
+        };
+        let [minimum, maximum] = inline_bounds(
+            base.width,
+            under.as_ref().map(|child| child.width),
+            over.as_ref().map(|child| (child.width, child.accent)),
+        );
+        let [min_start, min_end] = inline_bounds(
+            base.intrinsic.min,
+            under.as_ref().map(|child| child.intrinsic.min),
+            over.as_ref()
+                .map(|child| (child.intrinsic.min, child.accent)),
+        );
+        let [max_start, max_end] = inline_bounds(
+            base.intrinsic.max,
+            under.as_ref().map(|child| child.intrinsic.max),
+            over.as_ref()
+                .map(|child| (child.intrinsic.max, child.accent)),
+        );
         let width = maximum - minimum;
+        let intrinsic = IntrinsicWidths {
+            min: min_end - min_start,
+            max: max_end - max_start,
+        };
         let metrics = self.metrics(style)?;
         let mut result = MathBox {
             width,
+            intrinsic,
             ascent: base.ascent,
             descent: base.descent,
             operator: base.operator.clone(),
@@ -1367,7 +1509,12 @@ impl<'d> Builder<'_, 'd> {
             width: left + content.width + right,
             height: top + content.ascent + content.descent + bottom,
         };
+        let inline_edges = left + right + margins[3] + margins[1];
         let mut result = MathBox {
+            intrinsic: IntrinsicWidths {
+                min: content.intrinsic.min + inline_edges,
+                max: content.intrinsic.max + inline_edges,
+            },
             operator: content.operator.clone(),
             space_like: content.space_like,
             ink_ascent: if borders[0] > 0.0 {

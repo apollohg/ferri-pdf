@@ -165,6 +165,29 @@ class MathmlPdf(unittest.TestCase):
         self.assertEqual(pixels(constrained), expected,
                          'Core 3.1.2 changes math box dimensions while preserving start-aligned content and visible overflow; image fitting properties do not apply')
 
+    def test_intrinsic_math_width_reserves_constructions_without_scaling_the_painted_glyph(self):
+        _, content = self.render(
+            "<math><mo lspace='0' rspace='0'>(</mo></math>U<br>"
+            "<math style='font-family:MathTest'><mo lspace='0' rspace='0'>(</mo></math>D",
+            'math{width:max-content}')
+        fences = [glyph for glyph in content['glyphs'] if glyph.text == '(']
+        following = {glyph.text: glyph for glyph in content['glyphs'] if glyph.text in ['U', 'D']}
+        with TTFont(FONT) as original, TTFont(MATH_FONT) as derived:
+            original_glyph = original.getBestCmap()[ord('(')]
+            expected_original = original['hmtx'][original_glyph][0] * FONT_SIZE / original['head'].unitsPerEm
+            derived_glyph = derived.getBestCmap()[ord('(')]
+            variants = derived['MATH'].table.MathVariants
+            construction = variants.VertGlyphConstruction[variants.VertGlyphCoverage.glyphs.index(derived_glyph)]
+            expected_derived = max(derived['hmtx'][part.glyph][0] for part in construction.GlyphAssembly.PartRecords) * FONT_SIZE / derived['head'].unitsPerEm
+        self.assertEqual(len(fences), 2, 'each native fence must remain one selectable base glyph')
+        for glyph in fences:
+            self.assertAlmostEqual(glyph.matrix[0], FONT_SIZE, delta=TOLERANCE,
+                                   msg='preferred width must not horizontally scale the chosen glyph')
+        self.assertAlmostEqual(following['U'].origin[0] - fences[0].origin[0], expected_original, delta=TOLERANCE,
+                               msg='the unmodified invalid assembly keeps its normal-glyph preferred width')
+        self.assertAlmostEqual(following['D'].origin[0] - fences[1].origin[0], expected_derived, delta=TOLERANCE,
+                               msg='valid assembly width must reach CSS max-content spacing in the produced PDF')
+
     def test_math_alphabetic_baseline_matches_surrounding_inline_text(self):
         _, content = self.render('L<math><mn>8</mn></math>R')
         glyphs = {glyph.text: glyph for glyph in content['glyphs']}
