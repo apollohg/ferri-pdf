@@ -12,6 +12,11 @@ TOLERANCE_PT = css.TOLERANCE_PT
 USED_WIDTH_PT = css.USED_WIDTH_PT
 OWNER_HEIGHT_PT = css.USED_HEIGHT_PT
 CHILD_WIDTH_PT = 20
+CHILD_HEIGHT_PT = 20
+CONTAINER_WIDTH_PT = 160
+CONTAINER_HEIGHT_PT = 100
+TRY_LEFT_PT = 145
+ANCHOR_SEED_PT = 1
 RELATIVE_HEIGHT_PERCENT = 50
 PERCENT_DENOMINATOR = 100
 MAX_WIDTH_PROBE_PT = 120
@@ -103,6 +108,51 @@ class MathmlSizingPdf(unittest.TestCase):
                     self.helper.one(content, "A").origin[0] - PAGE_MARGIN_PT,
                     expected, delta=TOLERANCE_PT,
                     msg="Core block math centers the formula; an author inline display cancels it")
+
+    def test_preferred_aspect_ratio_sizes_native_math_without_scaling_glyphs(self):
+        cases = (
+            ("height:40pt", 80),
+            ("height:40pt;max-width:60pt", 60),
+            ("height:40pt;min-width:100pt", 100),
+            ("height:40pt;box-sizing:border-box;padding:6pt;border:4pt solid red", 80),
+            ("min-height:40pt", 80),
+            ("height:40pt;width:30pt", 30),
+        )
+        for sizing, expected in cases:
+            with self.subTest(sizing=sizing):
+                style = f"aspect-ratio:2;{sizing};background:blue"
+                _, control = self.helper.render(f'<span style="display:inline-block;{style}">A</span>Z')
+                _, actual = self.helper.render(f'<math><mn style="{style}">A</mn><mn>Z</mn></math>')
+                self.assertAlmostEqual(self.helper.one(control, "Z").origin[0] - PAGE_MARGIN_PT,
+                                       expected, delta=TOLERANCE_PT,
+                                       msg="the ordinary CSS control must satisfy the independent ratio/constraint width")
+                self.assertAlmostEqual(self.helper.one(actual, "Z").origin[0],
+                                       self.helper.one(control, "Z").origin[0], delta=TOLERANCE_PT,
+                                       msg="native math must retain the CSS preferred-ratio width")
+                self.assertEqual(self.helper.one(actual, "A").matrix[:4],
+                                 self.helper.one(control, "A").matrix[:4],
+                                 "a preferred ratio sizes the box without scaling the math glyph")
+
+    def test_ratio_height_definiteness_and_automatic_minimum_reach_css_fallback(self):
+        for child, expected_height in (("height:50%", 20), ("height:100pt", 100)):
+            with self.subTest(child=child):
+                style = "width:80pt;aspect-ratio:2;background:red"
+                content = f'<span style="display:block;width:20pt;{child};background:blue"></span>'
+                dimensions = {}
+                for name, body in (("css", f'<span style="display:inline-block;{style}">{content}</span>Z'),
+                                   ("math", f'<math><mtext style="{style}">{content}</mtext><mn>Z</mn></math>')):
+                    output, _ = self.helper.render(body)
+                    with tables.TablePositioningPdf().raster(
+                            self.helper.root, output, vector_antialias=False) as image:
+                        bounds = colour_bounds(image, BLUE)
+                        owner = colour_bounds(image, RED)
+                    self.assertIsNotNone(bounds, f"{name}: the fallback child must paint")
+                    self.assertIsNotNone(owner, f"{name}: the ratio owner must paint its used box")
+                    dimensions[name] = (bounds[2] - bounds[0], bounds[3] - bounds[1], owner[3] - owner[1])
+                self.assertEqual(dimensions["css"], (20, expected_height, 40 if child == "height:50%" else 100),
+                                 "the independent CSS ratio control must preserve percent basis/content minimum")
+                self.assertEqual(dimensions["math"], dimensions["css"],
+                                 "native ratio sizing must preserve both definiteness and an automatic content minimum")
 
     def test_nowrap_token_spaces_do_not_replace_ink_metrics_with_a_css_strut(self):
         reference = None
@@ -205,6 +255,63 @@ class MathmlSizingPdf(unittest.TestCase):
                         self.assertIsNone(bounds["css"], "an automatic height stays indefinite under min-height")
                     self.assertEqual(bounds["math"], bounds["css"],
                                      "transparent retained content must preserve the real owner's definiteness")
+
+    def test_css_fallback_resolves_percentage_width_against_its_constrained_owner(self):
+        rules = (
+            (f"width:{USED_WIDTH_PT}pt", USED_WIDTH_PT),
+            (f"min-width:{USED_WIDTH_PT}pt", USED_WIDTH_PT),
+            (f"width:{MAX_WIDTH_PROBE_PT}pt;max-width:{USED_WIDTH_PT}pt", USED_WIDTH_PT),
+            (f"width:{USED_WIDTH_PT}pt;box-sizing:border-box;padding:{PADDING_PT}pt;"
+             f"border:{BORDER_PT}pt solid red", USED_WIDTH_PT - 2 * (PADDING_PT + BORDER_PT)),
+            ("width:auto", None),
+            (f"width:{RELATIVE_HEIGHT_PERCENT}%", CONTAINER_WIDTH_PT * RELATIVE_HEIGHT_PERCENT
+             // PERCENT_DENOMINATOR),
+        )
+        for owner, content_width in rules:
+            for mode in ("horizontal-tb", "vertical-rl"):
+                with self.subTest(owner=owner, mode=mode):
+                    child = (f'<span style="display:block;width:{RELATIVE_HEIGHT_PERCENT}%;'
+                             f'height:{CHILD_HEIGHT_PT}pt;background:blue;writing-mode:{mode}"></span>')
+                    bounds = {}
+                    for kind in ("css", "math"):
+                        body = (f'<span class="owner" style="display:inline-block">{child}</span>'
+                                if kind == "css" else f'<math><mtext class="owner">{child}</mtext></math>')
+                        output, _ = self.helper.render(
+                            f'<div class="container">{body}</div>',
+                            f'.container{{width:{CONTAINER_WIDTH_PT}pt}}'
+                            f'.container math{{width:{CONTAINER_WIDTH_PT}pt}}'
+                            f'.owner{{{owner};height:{OWNER_HEIGHT_PT}pt}}')
+                        with tables.TablePositioningPdf().raster(
+                                self.helper.root, output, vector_antialias=False) as image:
+                            bounds[kind] = colour_bounds(image, BLUE)
+                    if content_width is None and mode == "horizontal-tb":
+                        self.assertIsNone(bounds["css"], "an unconstrained cyclic percentage has no width")
+                    elif content_width is not None:
+                        self.assertIsNotNone(bounds["css"], "the constrained CSS owner resolves its child width")
+                        self.assertEqual(bounds["css"][2] - bounds["css"][0],
+                                         content_width * RELATIVE_HEIGHT_PERCENT // PERCENT_DENOMINATOR)
+                    self.assertEqual(bounds["math"], bounds["css"],
+                                     "CSS fallback must use the actual owner content width, including min/max and box-sizing")
+
+    def test_css_fallback_intrinsic_keyword_uses_the_selected_position_try_style(self):
+        body = (f'<section><math><mspace width="{ANCHOR_SEED_PT}pt" height="{ANCHOR_SEED_PT}pt"/>'
+                '<mtext class="target"><span style="white-space:normal">AB CD</span>'
+                '</mtext></math></section>')
+        rules = (f'section{{position:relative;width:{CONTAINER_WIDTH_PT}pt;height:{CONTAINER_HEIGHT_PT}pt}}'
+                 '@position-try --fit{left:0;width:max-content}'
+                 f'.target{{position:absolute;left:{TRY_LEFT_PT}pt;top:0;'
+                 'width:min-content;position-try-fallbacks:--fit;background:blue}')
+        _, expected = self.helper.render(
+            body, rules + '.target{left:0;width:max-content;position-try-fallbacks:none}')
+        self.helper.assert_same_baseline(self.helper.one(expected, "A"), self.helper.one(expected, "C"),
+                                         "the literal accepted max-content style has one line")
+        _, actual = self.helper.render(body, rules)
+        for text in "ABCD":
+            for axis in range(2):
+                self.assertAlmostEqual(
+                    self.helper.one(actual, text).origin[axis],
+                    self.helper.one(expected, text).origin[axis], delta=TOLERANCE_PT,
+                    msg="fallback content uses the selected max-content width rather than canonical min-content")
 
 
 if __name__ == "__main__":

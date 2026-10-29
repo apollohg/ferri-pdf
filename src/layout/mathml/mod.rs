@@ -25,27 +25,67 @@ pub(super) fn measure<'a>(
     layout: LayoutKey,
 ) -> Result<MeasuredBlock<'a>, Failure> {
     use super::measure::{FlowItem, FrameKey, FrameOwner, MeasuredCell, MeasuredRow};
+    let style = source.style();
+    let sizes = [&style.width, &style.min_width, &style.max_width];
     let edges = super::geometry::Edges {
         padding: geometry.padding,
         border: geometry.border,
     };
-    let preliminary = super::geometry::SizeConstraints::new(
-        [
-            &source.style().width,
-            &source.style().min_width,
-            &source.style().max_width,
-        ],
+    let mut preliminary = super::geometry::SizeConstraints::new(
+        sizes,
         Some(geometry.containing_width),
-        source.style().box_sizing,
+        style.box_sizing,
         edges.horizontal(),
     );
-    let available = preliminary.constrain(preliminary.specified.unwrap_or(geometry.width));
-    let own_height = super::geometry::VerticalBox::new(source.style(), geometry, containing)
-        .with_used_height(used_height)
-        .definite();
+    super::ratio::transfer_to_width(style, &mut preliminary, containing, &edges);
+    let heights = super::geometry::SizeConstraints::new(
+        [&style.height, &style.min_height, &style.max_height],
+        containing,
+        style.box_sizing,
+        edges.padding[0] + edges.padding[2] + edges.border[0] + edges.border[2],
+    );
+    let ratio = super::ratio::PreferredRatio::of_box(style, &edges);
+    let ratio_width =
+        (style.width == Size::Auto && !layout.fill_width)
+            .then_some(ratio.zip(
+                used_height.or_else(|| heights.specified.map(|height| heights.constrain(height))),
+            ))
+            .flatten();
+    let preferred = ratio_width.map(|(ratio, height)| {
+        super::ratio::constrained_width_from_height(ratio, height, preliminary, None)
+    });
+    let available = preliminary.constrain(
+        preliminary
+            .specified
+            .or(preferred)
+            .unwrap_or(geometry.width),
+    );
+    let mut owner_geometry = geometry.clone();
+    owner_geometry.width = available;
+    let own_height = if ratio.is_some()
+        && preliminary.specified.is_none()
+        && heights.specified.is_none()
+        && used_height.is_none()
+        && !layout.fill_width
+    {
+        None
+    } else {
+        super::geometry::VerticalBox::new(style, &owner_geometry, containing)
+            .with_used_height(used_height)
+            .definite()
+    };
+    let mut widths = preliminary;
+    if layout.fill_width && widths.specified.is_none() {
+        widths.specified = Some(geometry.width);
+    }
     let mut builder = Builder {
         measurer,
         available,
+        widths,
+        owner_style: style,
+        owner_geometry: geometry,
+        used_height,
+        ratio_width,
         containing: own_height,
         width_basis: geometry.containing_width,
         height_basis: containing,
@@ -53,19 +93,19 @@ pub(super) fn measure<'a>(
     let mut content =
         builder.layout_element(Element(source.block), source.style(), layout.into())?;
     let measurer = builder.measurer;
-    let style = source.style();
-    let sizes = [&style.width, &style.min_width, &style.max_width];
-    let constraints = super::geometry::SizeConstraints::new(
-        sizes,
-        Some(geometry.containing_width),
-        style.box_sizing,
-        edges.horizontal(),
-    )
-    .with_intrinsic(sizes, content.intrinsic, Some(geometry.width));
+    let constraints = preliminary.with_intrinsic(sizes, content.intrinsic, Some(geometry.width));
+    let preferred = ratio_width.map(|(ratio, height)| {
+        super::ratio::constrained_width_from_height(
+            ratio,
+            height,
+            constraints,
+            super::ratio::content_minimum(style, &style.min_width).then_some(content.intrinsic.min),
+        )
+    });
     let natural_width = if layout.fill_width {
         geometry.width
     } else {
-        content.width
+        preferred.unwrap_or(content.width)
     };
     let width = constraints.constrain(constraints.specified.unwrap_or(natural_width));
     if source
@@ -489,6 +529,11 @@ impl<'a> Element<'a> {
 struct Builder<'m, 'a> {
     measurer: &'m mut Measurer<'a>,
     available: f32,
+    widths: super::geometry::SizeConstraints,
+    owner_style: &'a Style,
+    owner_geometry: &'m super::geometry::HorizontalBox,
+    used_height: Option<f32>,
+    ratio_width: Option<(super::ratio::PreferredRatio, f32)>,
     containing: Option<f32>,
     width_basis: f32,
     height_basis: Option<f32>,
@@ -632,20 +677,66 @@ impl<'a> Builder<'_, 'a> {
     fn css_content(&mut self, element: Element<'a>) -> Result<MathBox<'a>, Failure> {
         let content = element.content();
         let intrinsic = super::intrinsic::measure(content, self.measurer, self.available)?;
-        let geometry = super::inline::shrink_to_fit_geometry(
-            self.measurer,
-            content,
+        let widths = self.widths.with_intrinsic(
+            [
+                &self.owner_style.width,
+                &self.owner_style.min_width,
+                &self.owner_style.max_width,
+            ],
+            intrinsic,
+            Some(self.available),
+        );
+        let natural = self.ratio_width.map_or_else(
+            || crate::style::IntrinsicSizing::FitContent.resolve(intrinsic, Some(self.available)),
+            |(ratio, height)| {
+                super::ratio::constrained_width_from_height(
+                    ratio,
+                    height,
+                    widths,
+                    super::ratio::content_minimum(self.owner_style, &self.owner_style.min_width)
+                        .then_some(intrinsic.min),
+                )
+            },
+        );
+        let width = widths.constrain(widths.specified.unwrap_or(natural));
+        let geometry = super::geometry::horizontal(
+            content.style(),
+            0.0,
             self.available,
-            self.containing,
             content.style().used_rtl(),
-        )?;
+            Some(width),
+        );
+        let mut owner_geometry = self.owner_geometry.clone();
+        owner_geometry.width = width;
+        let vertical =
+            super::geometry::VerticalBox::new(self.owner_style, &owner_geometry, self.height_basis)
+                .with_used_height(self.used_height)
+                .native_root();
+        let saved = (self.measurer.space, self.measurer.native_sizing.clone());
+        self.measurer.space.indefinite_inline = false;
+        self.measurer.space = self.measurer.space.enter(
+            BlockSource {
+                block: element.0,
+                selected: self.owner_style,
+            },
+            &owner_geometry,
+            self.height_basis,
+            self.used_height,
+        );
+        self.measurer.native_sizing = Some(Rc::new(super::measure::NativeSizing {
+            source: std::ptr::from_ref(content),
+            vertical,
+            scroll_container: self.owner_style.is_scroll_container(),
+        }));
         let measured = self.measurer.request(
             content.into(),
             &geometry,
-            self.containing,
-            self.containing,
+            self.height_basis,
+            None,
             RequestKind::Css,
-        )?;
+        );
+        (self.measurer.space, self.measurer.native_sizing) = saved;
+        let measured = measured?;
         let mut result = Self::measured_box(
             measured,
             matches!(element.name(), "mtext" | "annotation" | "annotation-xml"),
@@ -1011,7 +1102,6 @@ impl<'a> Builder<'_, 'a> {
     }
     fn stretch_character(
         &self,
-        _character: char,
         paragraph: &'a Paragraph,
         style: &Style,
         target: f32,
@@ -1118,12 +1208,11 @@ impl<'a> Builder<'_, 'a> {
         );
         let mut result = self.token_element(element)?;
         let mut chars = text.chars();
-        if let Some(character) = chars.next().filter(|_| chars.next().is_none()) {
+        if chars.next().is_some() && chars.next().is_none() {
             let metrics = self.metrics(style)?;
             if operator.stretchy {
                 if !operator.inline_axis
                     && let Some(normal) = self.stretch_character(
-                        character,
                         element.paragraph().expect("operator paragraph"),
                         style,
                         0.0,
@@ -1136,7 +1225,6 @@ impl<'a> Builder<'_, 'a> {
                 match layout.stretch {
                     Some(Stretch::Inline(size)) if operator.inline_axis => {
                         if let Some(stretched) = self.stretch_character(
-                            character,
                             element.paragraph().expect("operator paragraph"),
                             style,
                             size,
@@ -1171,7 +1259,6 @@ impl<'a> Builder<'_, 'a> {
                             descent = size - ascent;
                         }
                         if let Some(stretched) = self.stretch_character(
-                            character,
                             element.paragraph().expect("operator paragraph"),
                             style,
                             ascent + descent,
@@ -1205,7 +1292,6 @@ impl<'a> Builder<'_, 'a> {
             } else if operator.large
                 && !style.math.compact
                 && let Some(stretched) = self.stretch_character(
-                    character,
                     element.paragraph().expect("operator paragraph"),
                     style,
                     metrics.display_operator,
@@ -1313,7 +1399,6 @@ impl<'a> Builder<'_, 'a> {
         let target = metrics.radical_rule + gap + base.ink_ascent + base.ink_descent;
         let surd = self
             .stretch_character(
-                '√',
                 element
                     .0
                     .math()

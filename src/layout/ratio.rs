@@ -89,16 +89,34 @@ pub(super) fn width_from_height<'a>(
         horizontal,
         None,
     )?;
-    let mut width = ratio.width(heights.constrain(height));
-    if content_minimum(style, &style.min_width) {
-        let content = crate::layout::intrinsic::content(block, measurer, containing_width)?.min;
+    let content = if content_minimum(style, &style.min_width) {
+        Some(crate::layout::intrinsic::content(block, measurer, containing_width)?.min)
+    } else {
+        None
+    };
+    Ok(Some(constrained_width_from_height(
+        ratio,
+        heights.constrain(height),
+        widths,
+        content,
+    )))
+}
+
+pub(super) fn constrained_width_from_height(
+    ratio: PreferredRatio,
+    height: f32,
+    widths: SizeConstraints,
+    content_minimum: Option<f32>,
+) -> f32 {
+    let mut width = ratio.width(height);
+    if let Some(content) = content_minimum {
         width = width.max(
             widths
                 .maximum
                 .map_or(content, |maximum| content.min(maximum)),
         );
     }
-    Ok(Some(widths.constrain(width)))
+    widths.constrain(width)
 }
 
 /// §4.4: the height's definite minimum and maximum, converted through the ratio into the
