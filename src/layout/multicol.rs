@@ -237,6 +237,10 @@ fn forces_page(items: &[FlowItem<'_>]) -> bool {
                 || row.cells.iter().any(|cell| forces_page(&cell.block.items))
         }
         FlowItem::Columns(columns) => columns.forces_page,
+        FlowItem::TableBox(table) => table.edges.iter().any(|edge| {
+            crate::layout::breaks::Forced::of(*edge)
+                .is_some_and(crate::layout::breaks::Forced::is_page)
+        }),
         FlowItem::Image { .. }
         | FlowItem::Paragraph(_)
         | FlowItem::Margin(_)

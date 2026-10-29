@@ -912,3 +912,128 @@ fn empty_table_rows_keep_anchor_geometry_and_transforms() {
     );
     assert_rect(targets(&trace)[0].1, [27.0, 45.0, 100.0, 10.0]);
 }
+
+#[test]
+fn zero_height_table_columns_and_groups_remain_eligible_anchors() {
+    let css = ".anchor{width:auto;height:auto;margin:0;background:transparent}table{width:100pt;border-spacing:0}col:first-child{width:40pt}.target{left:anchor(left,140pt);top:anchor(bottom,100pt);width:anchor-size(width,99pt);height:calc(10pt + anchor-size(height,9pt));position-visibility:always}";
+    for layout in ["fixed", "auto"] {
+        for collapse in ["separate", "collapse"] {
+            for (source, expected) in [
+                ("col", [20.0, 20.0, 40.0, 10.0]),
+                ("second", [60.0, 20.0, 60.0, 10.0]),
+                ("colgroup", [20.0, 20.0, 100.0, 10.0]),
+                ("tbody", [20.0, 20.0, 100.0, 10.0]),
+                ("thead", [20.0, 20.0, 100.0, 10.0]),
+                ("tfoot", [20.0, 20.0, 100.0, 10.0]),
+            ] {
+                let class = |tag| if source == tag { " class=anchor" } else { "" };
+                let group = if matches!(source, "thead" | "tfoot") {
+                    source
+                } else {
+                    "tbody"
+                };
+                let body = format!(
+                    "<table style='table-layout:{layout};border-collapse:{collapse}'><colgroup{}><col{}><col{}></colgroup><{group}{}></{group}></table><div class=target></div>",
+                    class("colgroup"),
+                    class("col"),
+                    class("second"),
+                    class(group)
+                );
+                let boxes = targets(&render(css, &body));
+                assert_eq!(boxes.len(), 1, "{layout} {collapse} empty {source}");
+                eprintln!("zero {layout}/{collapse}/{source}: {:?}", boxes[0]);
+                assert_rect(boxes[0].1, expected);
+            }
+        }
+    }
+    for (body, top) in [
+        (
+            "<table><tbody class=anchor></tbody></table><div class=target></div>",
+            20.0,
+        ),
+        (
+            "<table><caption style='height:15pt;padding:0'></caption><colgroup class=anchor><col><col></colgroup></table><div class=target></div>",
+            35.0,
+        ),
+        (
+            "<table><tbody><tr><td></td></tr></tbody><tbody class=anchor></tbody><tbody><tr><td></td></tr></tbody></table><div class=target></div>",
+            40.0,
+        ),
+        (
+            "<table><tbody><tr><td></td></tr></tbody><tbody class=anchor></tbody></table><div class=target></div>",
+            40.0,
+        ),
+    ] {
+        let trace = render(&format!("{css}td{{height:20pt;padding:0}}"), body);
+        eprintln!("boundary {body}: {:?}", targets(&trace));
+        assert_rect(targets(&trace)[0].1, [20.0, top, 100.0, 10.0]);
+    }
+    for (extra, body, expected, page) in [
+        (
+            "table{height:80pt}",
+            "<table><colgroup><col class=anchor><col></colgroup></table><div class=target></div>",
+            [20.0, 20.0, 40.0, 10.0],
+            0,
+        ),
+        (
+            "table{direction:rtl}",
+            "<table><colgroup><col class=anchor><col></colgroup></table><div class=target></div>",
+            [80.0, 20.0, 40.0, 10.0],
+            0,
+        ),
+        (
+            ".anchor{transform:translate(7pt,5pt)}",
+            "<table><tbody class=anchor></tbody></table><div class=target></div>",
+            [27.0, 25.0, 100.0, 10.0],
+            0,
+        ),
+        (
+            "td{height:20pt;padding:0}.anchor{break-before:page}",
+            "<table><tbody><tr><td>A</td></tr></tbody><tbody class=anchor></tbody><tbody><tr><td>B</td></tr></tbody></table><div class=target></div>",
+            [20.0, 20.0, 100.0, 10.0],
+            1,
+        ),
+        (
+            "td{height:20pt;padding:0}.anchor{break-after:page}",
+            "<table><tbody><tr><td>A</td></tr></tbody><tbody class=anchor></tbody><tbody><tr><td>B</td></tr></tbody></table><div class=target></div>",
+            [20.0, 40.0, 100.0, 10.0],
+            1,
+        ),
+        (
+            "td{height:20pt;padding:0}.next{break-before:page}",
+            "<table><tbody><tr><td></td></tr></tbody><tbody class=anchor></tbody><tbody><tr class=next><td></td></tr></tbody></table><div class=target></div>",
+            [20.0, 40.0, 100.0, 10.0],
+            1,
+        ),
+    ] {
+        let boxes = targets(&render(&format!("{css}{extra}"), body));
+        eprintln!("extra {extra}: {boxes:?}");
+        assert_eq!(boxes[0].0, page, "zero-row box flow page: {extra}");
+        assert_rect(boxes[0].1, expected);
+    }
+}
+
+#[test]
+fn an_empty_group_forced_break_preserves_repeated_table_headers_and_footers() {
+    for following in ["<tbody><tr><td>B</td></tr></tbody>", "", "<tbody></tbody>"] {
+        let trace = render(
+            ".anchor{width:auto;height:auto;margin:0;background:transparent;break-before:page}table{width:100pt;border-spacing:0}td{height:20pt;padding:0}thead td,tfoot td{height:10pt;font:5pt/10pt monospace}.target{left:anchor(left);top:anchor(bottom);width:anchor-size(width);position-visibility:always}",
+            &format!(
+                "<table><thead><tr><td>H</td></tr></thead><tbody><tr><td>A</td></tr></tbody><tbody class=anchor></tbody>{following}<tfoot><tr><td>F</td></tr></tfoot></table><div class=target></div>"
+            ),
+        );
+        for marker in ["H", "F"] {
+            assert_eq!(
+                trace
+                    .pages
+                    .iter()
+                    .flat_map(|page| page.iter())
+                    .filter(|line| line.text == marker)
+                    .count(),
+                2,
+                "empty-group break repeats {marker}, following body {following:?}"
+            );
+        }
+        assert_rect(targets(&trace)[0].1, [20.0, 30.0, 100.0, 10.0]);
+    }
+}

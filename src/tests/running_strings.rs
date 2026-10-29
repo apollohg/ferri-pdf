@@ -400,3 +400,33 @@ fn first_letter_includes_in_flow_generated_text_and_preserves_punctuation_bounda
         );
     }
 }
+
+#[test]
+fn empty_table_group_breaks_keep_string_events_on_the_groups_page() {
+    let css = ".table{display:table;width:100pt;border-spacing:0}.group{display:table-row-group}.row{display:table-row}.cell{display:table-cell;height:20pt;padding:0}.first{string-set:heading 'First'}.empty{string-set:heading 'Empty ' counter(page)}.inside{display:none;string-set:inner 'Inner ' counter(page)}.after{display:none;string-set:following 'After ' counter(page)}@page{@top-left{content:'F[' string(heading,first) ']L[' string(heading,last) ']I[' string(inner,last) ']A[' string(following,last) ']'}}";
+    let body = "<div class=table><div class=group><div class=row><div class='cell first'>A</div></div></div><div class='group empty'><span class=inside></span></div><span class=after></span><div class=group><div class=row><div class=cell>B</div></div></div></div>";
+    for anchor in ["", "anchor-name:--empty;"] {
+        for (edge, expected) in [
+            (
+                "before",
+                [
+                    "F[First]L[First]I[]A[]",
+                    "F[Empty 2]L[Empty 2]I[Inner 2]A[After 2]",
+                ],
+            ),
+            (
+                "after",
+                [
+                    "F[First]L[Empty 1]I[Inner 1]A[After 1]",
+                    "F[Empty 1]L[Empty 1]I[Inner 1]A[After 1]",
+                ],
+            ),
+        ] {
+            assert_eq!(
+                headers(&format!("{css}.empty{{{anchor}break-{edge}:page}}"), body),
+                expected,
+                "empty group break-{edge}, anchor property {anchor:?}"
+            );
+        }
+    }
+}

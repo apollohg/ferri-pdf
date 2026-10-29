@@ -406,8 +406,16 @@ pub(super) enum BlockEdge {
 }
 
 #[derive(Clone)]
+pub(super) struct MeasuredTableBox<'a> {
+    pub area: crate::layout::tables::TableContaining<'a>,
+    pub edges: [BreakBetween; 2],
+    pub events: Vec<&'a crate::document::SemanticEvent>,
+}
+
+#[derive(Clone)]
 pub(super) enum FlowItem<'a> {
     Events(&'a [crate::document::SemanticEvent]),
+    TableBox(Box<MeasuredTableBox<'a>>),
     Image {
         paint: crate::graphics::ImagePaint,
         visible: bool,
@@ -435,7 +443,7 @@ impl FlowItem<'_> {
             Self::Row(row) => row.height,
             Self::Margin(margin) => margin.value(),
             Self::Space(value) | Self::Edge(_, value) => *value,
-            Self::Positioned(_) | Self::Events(_) => 0.0,
+            Self::Positioned(_) | Self::Events(_) | Self::TableBox(_) => 0.0,
         }
     }
 }

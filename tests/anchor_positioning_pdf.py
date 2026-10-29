@@ -262,6 +262,85 @@ class AnchorPositioningPdf(unittest.TestCase):
                         self.assertEqual(actual, raster.tobytes(),
                                          'fragmented table anchor gradient must use the selected source or AABB height')
 
+    def test_zero_height_table_columns_and_groups_keep_geometry(self):
+        renderer = table_positioning_pdf.TablePositioningPdf()
+        css = ('.anchor{width:auto;height:auto;margin:0;background:transparent}'
+               'table{width:100pt;border-spacing:0}col:first-child{width:40pt}'
+               '.target{left:anchor(left,140pt);top:anchor(bottom,100pt);'
+               'width:anchor-size(width,99pt);height:calc(10pt + anchor-size(height,9pt));'
+               'position-visibility:always}')
+        target = "<div class=target><a href='https://example.org/'>T</a></div>"
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-zero-table-anchors-') as directory:
+            root = Path(directory)
+            def compare(extra, body, left, top, width, page=1):
+                output = renderer.render(root, PROFILE + css + extra, body + target)
+                glyphs = pdf_content.inspect(output)['glyphs']
+                links = pdf_content.navigation(output)['links']
+                if '<thead>' in body:
+                    for marker in ('H', 'F'):
+                        self.assertEqual(sum(g.text == marker for g in glyphs), 2,
+                                         f'empty-group forced break must repeat table {marker}')
+                self.assertTrue(any(g.text == 'T' and g.page == page for g in glyphs),
+                                'the target must paint on its actual flow page')
+                with renderer.raster(root, output, vector_antialias=False, page=page) as raster:
+                    actual = raster.tobytes()
+                explicit = (f'.target{{position-anchor:none;left:{left}pt;top:{top}pt;'
+                            f'width:{width}pt;height:10pt}}')
+                output = renderer.render(root, PROFILE + css + extra + explicit, body + target)
+                self.assertEqual(glyphs, pdf_content.inspect(output)['glyphs'])
+                self.assertEqual(links, pdf_content.navigation(output)['links'])
+                with renderer.raster(root, output, vector_antialias=False, page=page) as raster:
+                    self.assertEqual(actual, raster.tobytes(),
+                                     'zero-height principal boxes remain valid anchor references')
+            for layout in ('fixed', 'auto'):
+                for collapse in ('separate', 'collapse'):
+                    for source, left, width in (('col', 0, 40), ('second', 40, 60),
+                            ('colgroup', 0, 100), ('tbody', 0, 100), ('thead', 0, 100), ('tfoot', 0, 100)):
+                        with self.subTest(layout=layout, collapse=collapse, source=source):
+                            group = source if source in ('thead', 'tfoot') else 'tbody'
+                            def attr(tag):
+                                return ' class=anchor' if source == tag else ''
+                            body = (f"<table style='table-layout:{layout};border-collapse:{collapse}'>"
+                                    f"<colgroup{attr('colgroup')}><col{attr('col')}><col{attr('second')}>"
+                                    f"</colgroup><{group}{attr(group)}></{group}></table>")
+                            compare('', body, left, 0, width)
+            cases = (
+                ('', '<table><tbody class=anchor></tbody></table>', 0, 0, 100, 1),
+                ('', '<table><caption style="height:15pt;padding:0"></caption>'
+                 '<colgroup class=anchor><col><col></colgroup></table>', 0, 15, 100, 1),
+                ('td{height:20pt;padding:0}', '<table><tbody><tr><td></td></tr></tbody>'
+                 '<tbody class=anchor></tbody><tbody><tr><td></td></tr></tbody></table>', 0, 20, 100, 1),
+                ('table{height:80pt}', '<table><colgroup><col class=anchor><col></colgroup></table>', 0, 0, 40, 1),
+                ('table{direction:rtl}', '<table><colgroup><col class=anchor><col></colgroup></table>', 60, 0, 40, 1),
+                ('.anchor{transform:translate(7pt,5pt)}', '<table><tbody class=anchor></tbody></table>', 7, 5, 100, 1),
+                ('td{height:20pt;padding:0}.anchor{break-before:page}',
+                 '<table><tbody><tr><td>A</td></tr></tbody><tbody class=anchor></tbody>'
+                 '<tbody><tr><td>B</td></tr></tbody></table>', 0, 0, 100, 2),
+                ('td{height:20pt;padding:0}.anchor{break-after:page}',
+                 '<table><tbody><tr><td>A</td></tr></tbody><tbody class=anchor></tbody>'
+                 '<tbody><tr><td>B</td></tr></tbody></table>', 0, 20, 100, 2),
+                ('td{height:20pt;padding:0}.anchor{break-before:page}'
+                 'thead td,tfoot td{height:10pt;font:5pt/10pt monospace}',
+                 '<table><thead><tr><td>H</td></tr></thead><tbody><tr><td>A</td></tr></tbody>'
+                 '<tbody class=anchor></tbody><tbody><tr><td>B</td></tr></tbody>'
+                 '<tfoot><tr><td>F</td></tr></tfoot></table>', 0, 10, 100, 2),
+                ('td{height:20pt;padding:0}.anchor{break-before:page}'
+                 'thead td,tfoot td{height:10pt;font:5pt/10pt monospace}',
+                 '<table><thead><tr><td>H</td></tr></thead><tbody><tr><td>A</td></tr></tbody>'
+                 '<tbody class=anchor></tbody><tfoot><tr><td>F</td></tr></tfoot></table>', 0, 10, 100, 2),
+                ('td{height:20pt;padding:0}.anchor{break-before:page}'
+                 'thead td,tfoot td{height:10pt;font:5pt/10pt monospace}',
+                 '<table><thead><tr><td>H</td></tr></thead><tbody><tr><td>A</td></tr></tbody>'
+                 '<tbody class=anchor></tbody><tbody></tbody>'
+                 '<tfoot><tr><td>F</td></tr></tfoot></table>', 0, 10, 100, 2),
+                ('td{height:20pt;padding:0}.next{break-before:page}',
+                 '<table><tbody><tr><td></td></tr></tbody><tbody class=anchor></tbody>'
+                 '<tbody><tr class=next><td></td></tr></tbody></table>', 0, 20, 100, 2),
+            )
+            for extra, body, left, top, width, page in cases:
+                with self.subTest(extra=extra, body=body):
+                    compare(extra, body, left, top, width, page)
+
     def test_drop_shadow_preserves_midtones_in_each_filter_color_space(self):
         renderer = table_positioning_pdf.TablePositioningPdf()
         css = ('@page{size:140pt 100pt;margin:20pt}html,body{margin:0}'

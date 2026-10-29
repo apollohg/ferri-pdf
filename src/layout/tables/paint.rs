@@ -182,14 +182,13 @@ impl Layers {
                 decoration,
             });
         }
-        let group_rows = (0..data.groups.len())
-            .map(|group| {
-                let first = data.row_groups.iter().position(|&g| g == group);
-                let last = data.row_groups.iter().rposition(|&g| g == group);
-                match (first, last) {
-                    (Some(first), Some(last)) => first..last + 1,
-                    _ => 0..0,
-                }
+        let group_rows = data
+            .groups
+            .iter()
+            .scan(0, |row, group| {
+                let start = *row;
+                *row += group.rows.len();
+                Some(start..*row)
             })
             .collect();
         Self {

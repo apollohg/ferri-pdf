@@ -221,7 +221,7 @@ pub(crate) struct TablePlan<'a> {
     pub style: &'a Style,
     named_pages: bool,
     data: Data<'a>,
-    boundary_events: BTreeMap<usize, Vec<&'a SemanticEvent>>,
+    entry_events: Vec<&'a SemanticEvent>,
     cell_indices: HashMap<*const BlockBox, usize>,
     row_keep_ends: [Vec<usize>; 2],
     layers: Layers,
@@ -256,7 +256,7 @@ impl TableContaining<'_> {
         } else {
             self.rows.end.min(placement.rows.end)
         };
-        if first >= end {
+        if first > end || (first == end && !self.rows.is_empty()) {
             return None;
         }
         let base = starts[placement.rows.start];
@@ -265,7 +265,11 @@ impl TableContaining<'_> {
             .clone()
             .unwrap_or(0.0..starts[placement.rows.end] - base);
         let top = starts[first] - base;
-        let bottom = starts[end] - base - geometry.spacing[1];
+        let bottom = if self.rows.is_empty() {
+            top
+        } else {
+            starts[end] - base - geometry.spacing[1]
+        };
         let (top, bottom) = if overflow {
             (top, bottom)
         } else {
@@ -289,25 +293,18 @@ impl TableContaining<'_> {
 fn structural_geometry(style: &Style) -> bool {
     !style.anchor.names.is_empty() || style.is_grouped()
 }
-fn structural_events<'a>(
-    source: &'a BlockBox,
-    data: &Data<'a>,
-) -> BTreeMap<usize, Vec<&'a SemanticEvent>> {
-    fn collect<'a>(source: &'a BlockBox, events: &mut Vec<&'a SemanticEvent>) {
-        events.extend(source.semantic_event());
-        for child in source.children() {
-            match child {
-                BlockContent::Events(pending) => events.extend(pending),
-                BlockContent::Block(child) => collect(child, events),
-                _ => {}
-            }
+fn collect_structural_events<'a>(source: &'a BlockBox, events: &mut Vec<&'a SemanticEvent>) {
+    events.extend(source.semantic_event());
+    for child in source.children() {
+        match child {
+            BlockContent::Events(pending) => events.extend(pending),
+            BlockContent::Block(child) => collect_structural_events(child, events),
+            _ => {}
         }
     }
-    let mut boundaries: BTreeMap<usize, Vec<&SemanticEvent>> = BTreeMap::new();
-    boundaries
-        .entry(0)
-        .or_default()
-        .extend(source.leading_events());
+}
+fn table_entry_events(source: &BlockBox) -> Vec<&SemanticEvent> {
+    let mut events: Vec<_> = source.leading_events().collect();
     for child in source.children() {
         if let BlockContent::Block(child) = child
             && matches!(
@@ -315,23 +312,11 @@ fn structural_events<'a>(
                 Display::TableColumn | Display::TableColumnGroup
             )
         {
-            let events = boundaries.entry(0).or_default();
-            collect(child, events);
+            collect_structural_events(child, &mut events);
             events.extend(source.following_events(child));
         }
     }
-    let mut boundary = 0;
-    for group in &data.groups {
-        if group.rows.is_empty()
-            && let Some(group) = group.source
-        {
-            let events = boundaries.entry(boundary).or_default();
-            collect(group, events);
-            events.extend(source.following_events(group));
-        }
-        boundary += group.rows.len();
-    }
-    boundaries
+    events
 }
 
 impl<'a> TablePlan<'a> {
@@ -371,6 +356,19 @@ impl<'a> TablePlan<'a> {
             }
         }
         events
+    }
+    pub(crate) fn is_body_group(&self, source: &BlockBox) -> bool {
+        let owns = |group: Option<&super::model::Group<'_>>| {
+            group
+                .and_then(|group| group.source)
+                .is_some_and(|owner| std::ptr::eq(owner, source))
+        };
+        match source.style().display {
+            Display::TableHeaderGroup => !owns(self.data.groups.first()),
+            Display::TableFooterGroup => !owns(self.data.groups.last()),
+            Display::TableRowGroup => true,
+            _ => false,
+        }
     }
     pub(crate) fn row_source(&self, index: usize) -> &'a BlockBox {
         self.data.rows[index]
@@ -447,7 +445,7 @@ impl<'a> TablePlan<'a> {
         measurer.work.spend(1)?;
         let index = measurer.sources.block(block.block);
         let data = Data::new(block.block)?;
-        let boundary_events = structural_events(block.block, &data);
+        let entry_events = table_entry_events(block.block);
         if data
             .rows
             .iter()
@@ -553,7 +551,7 @@ impl<'a> TablePlan<'a> {
                 .map(|(index, source)| (std::ptr::from_ref(*source), index))
                 .collect(),
             data,
-            boundary_events,
+            entry_events,
             row_keep_ends: [Vec::new(), Vec::new()],
             widths: RefCell::new(HashMap::new()),
             place,
@@ -984,9 +982,9 @@ impl<'a> TablePlan<'a> {
             ancestors: [None, None],
         });
         Ok(rows
-            .chain(groups)
             .chain(columns)
-            .filter(|area| structural_geometry(area.source.style()))
+            .chain(groups)
+            .filter(|area| area.rows.is_empty() || structural_geometry(area.source.style()))
             .collect())
     }
     pub(crate) fn cell_alignments(
@@ -1274,6 +1272,16 @@ pub(crate) fn resume<'a>(
     .map(|(table, _)| table)
 }
 
+fn append_table_boxes<'a>(
+    boundary: usize,
+    boxes: &mut BTreeMap<usize, Vec<FlowItem<'a>>>,
+    items: &mut Vec<FlowItem<'a>>,
+) {
+    if let Some(boxes) = boxes.remove(&boundary) {
+        items.extend(boxes);
+    }
+}
+
 fn measure_plan<'a>(
     measurer: &mut Measurer<'_>,
     plan: &Rc<TablePlan<'a>>,
@@ -1329,14 +1337,40 @@ fn measure_plan<'a>(
         .map(|rows| row_starts[rows.end] - row_starts[rows.start])
         .sum();
     let mut tallest_body: f32 = 0.0;
-    let mut items = vec![FlowItem::Edge(BlockEdge::Start, top)];
-    if let Some(events) = plan.boundary_events.get(&0) {
-        items.extend(
-            events
-                .iter()
-                .map(|event| FlowItem::Events(std::slice::from_ref(*event))),
-        );
+    let mut zero_boxes: BTreeMap<usize, Vec<FlowItem<'a>>> = BTreeMap::new();
+    for area in plan.structural_boxes(&measurer.work)? {
+        if area.rows.is_empty() {
+            let edges = if area.source.style().display.is_row_group() {
+                measurer.fragmentainer.edges(area.source.style())
+            } else {
+                [BreakBetween::Auto; 2]
+            };
+            let mut events = Vec::new();
+            if area.source.style().display.is_row_group() {
+                collect_structural_events(area.source, &mut events);
+                events.extend(plan.source.following_events(area.source));
+            }
+            measurer.work.spend(events.len().max(1))?;
+            has_forced |= edges.iter().any(|edge| edge.is_forced());
+            zero_boxes
+                .entry(area.rows.start)
+                .or_default()
+                .push(FlowItem::TableBox(Box::new(
+                    crate::layout::measure::MeasuredTableBox {
+                        area,
+                        edges,
+                        events,
+                    },
+                )));
+        }
     }
+    let mut items = vec![FlowItem::Edge(BlockEdge::Start, top)];
+    items.extend(
+        plan.entry_events
+            .iter()
+            .map(|event| FlowItem::Events(std::slice::from_ref(*event))),
+    );
+    append_table_boxes(0, &mut zero_boxes, &mut items);
     if data.grid.rows > 0 {
         items.push(FlowItem::Space(vertical));
     } else if content_height > 0.0 {
@@ -1347,18 +1381,10 @@ fn measure_plan<'a>(
         row_starts,
         vertical,
     };
-    let group_ends = data
-        .groups
-        .iter()
-        .scan(0, |end, group| {
-            *end += group.rows.len();
-            Some(*end)
-        })
-        .collect::<Vec<_>>();
     let mut row = 0;
     while row < data.grid.rows {
         let group_index = data.row_groups[row];
-        let group_end = group_ends[group_index];
+        let group_end = plan.layers.group_rows[group_index].end;
         let body_band = row >= header_rows.end && group_end <= footer_rows.start;
         let reserved_groups = if body_band { repeated_height } else { 0.0 };
         let available_height =
@@ -1567,16 +1593,10 @@ fn measure_plan<'a>(
             tallest_body = tallest_body.max(measured_row.progress_height());
         }
         items.push(FlowItem::Row(Box::new(measured_row)));
-        if let Some(events) = plan.boundary_events.get(&end) {
-            items.extend(
-                events
-                    .iter()
-                    .map(|event| FlowItem::Events(std::slice::from_ref(*event))),
-            );
-        }
         if plan.rows_visible(row..end) {
             items.push(FlowItem::Space(vertical));
         }
+        append_table_boxes(end, &mut zero_boxes, &mut items);
         row = end;
     }
     items.push(FlowItem::Edge(BlockEdge::End, bottom));
@@ -1596,14 +1616,24 @@ fn measure_plan<'a>(
     // header bands stay with the first body band unless a forced break separates them.
     if !header.is_empty() {
         for item in &mut items {
-            if let FlowItem::Row(row) = item
-                && row
-                    .band
-                    .as_ref()
-                    .is_some_and(|band| band.end <= header_rows.end)
-                && !row.break_after.is_forced()
-            {
-                row.break_after = BreakBetween::Avoid;
+            match item {
+                FlowItem::Row(row)
+                    if row
+                        .band
+                        .as_ref()
+                        .is_some_and(|band| band.end <= header_rows.end)
+                        && !row.break_after.is_forced() =>
+                {
+                    row.break_after = BreakBetween::Avoid;
+                }
+                FlowItem::TableBox(table)
+                    if table.area.rows.start <= header_rows.end
+                        && table.area.source.style().display.is_row_group()
+                        && !table.edges[1].is_forced() =>
+                {
+                    table.edges[1] = BreakBetween::Avoid;
+                }
+                _ => {}
             }
         }
     }

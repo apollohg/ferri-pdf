@@ -26,7 +26,8 @@ pub(super) fn indivisible(block: &MeasuredBlock<'_>) -> bool {
                 | FlowItem::Edge(_, _)
                 | FlowItem::Margin(_)
                 | FlowItem::Positioned(_)
-                | FlowItem::Events(_) => {}
+                | FlowItem::Events(_)
+                | FlowItem::TableBox(_) => {}
             }
             if leaves > 1 {
                 return false;
@@ -229,11 +230,22 @@ impl FlowItem<'_> {
                 end_boxes: 0,
                 end_space: 0.0,
             }),
+            Self::TableBox(table) if table.area.source.style().display.is_row_group() => {
+                Some(BreakInfo {
+                    height: 0.0,
+                    first_fragment: 0.0,
+                    before: table.edges[0],
+                    after: table.edges[1],
+                    end_boxes: 0,
+                    end_space: 0.0,
+                })
+            }
             Self::Margin(_)
             | Self::Space(_)
             | Self::Edge(_, _)
             | Self::Positioned(_)
-            | Self::Events(_) => None,
+            | Self::Events(_)
+            | Self::TableBox(_) => None,
         }
     }
 }

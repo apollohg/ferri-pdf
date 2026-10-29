@@ -2219,7 +2219,13 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
             let float_natural_height = self.float_enclosure(frame)?;
             if frame.table {
                 let table = self.tables.last().expect("table pushed before its items");
-                let anchors = table.flow.plan.structural_boxes(&self.measurer.work)?;
+                let anchors: Vec<_> = table
+                    .flow
+                    .plan
+                    .structural_boxes(&self.measurer.work)?
+                    .into_iter()
+                    .filter(|area| !area.rows.is_empty())
+                    .collect();
                 let starts = if !anchors.is_empty()
                     || !table.backgrounds.is_empty()
                     || table.flow.collapsed.is_some()
@@ -2647,6 +2653,11 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                 }
                 FlowItem::Space(value) if value != 0.0 => self.space(value),
                 FlowItem::Space(_) => {}
+                FlowItem::TableBox(table) => {
+                    if let Some(request) = self.place_table_box(&mut cursor, table, tail, ready)? {
+                        return Ok(Some((cursor, request)));
+                    }
+                }
                 FlowItem::Events(events) => {
                     for event in events {
                         self.string_locations.record(self.page, event);
@@ -4094,6 +4105,135 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
         }
         Ok(())
     }
+    fn record_table_box(
+        &mut self,
+        ancestor: &crate::layout::tables::TableContaining<'a>,
+        page: usize,
+        rect: Rect,
+        source: Rect,
+    ) -> Result<(), LayoutError> {
+        let table = self.tables.last().expect("active table");
+        let layer = ancestor
+            .ancestors
+            .iter()
+            .rev()
+            .flatten()
+            .find_map(|source| table.layers.get(&(std::ptr::from_ref(*source) as usize)));
+        let clip = layer.map_or(self.clip, |layer| layer.clip);
+        let group = layer.and_then(|layer| layer.group);
+        let style = ancestor.source.style();
+        let paint = BoxPaint::whole(rect, table.flow.plan.structural_decoration(ancestor.source));
+        let mut parent = clip;
+        while let Some(node) = parent {
+            self.measurer.work.spend(1)?;
+            match self.clips[node].effect {
+                Effect::PathClip(owner) if std::ptr::eq(owner, style) => {
+                    self.clips[node].paints.push((page, paint.clone()));
+                }
+                Effect::Transform(owner, _)
+                    if ancestor.rows.is_empty() && std::ptr::eq(owner, style) =>
+                {
+                    self.clips[node].areas.push((page, rect));
+                }
+                _ => {}
+            }
+            parent = self.clips[node].parent;
+        }
+        if Group::of(style).anchored()
+            && let Some(node) = group
+        {
+            self.clips[node].paints.push((page, paint));
+        }
+        self.anchors.record(
+            style,
+            (
+                page,
+                None,
+                !self.force_hidden && style.visibility.is_visible(),
+            ),
+            rect,
+            Some(source),
+            clip,
+            matches!(self.fragmentainers, Fragmentainers::Columns(_)),
+        );
+        Ok(())
+    }
+    fn place_table_box(
+        &mut self,
+        cursor: &mut FlowCursor<'a, 't>,
+        item: Box<crate::layout::measure::MeasuredTableBox<'a>>,
+        tail: BreakTail,
+        ready: bool,
+    ) -> Result<Option<BreakRequest>, LayoutError> {
+        let group = item.area.source.style().display.is_row_group();
+        let body = self
+            .tables
+            .last()
+            .expect("active table")
+            .flow
+            .plan
+            .is_body_group(item.area.source);
+        if group && !ready {
+            let forced = Forced::combine(self.pending_break, Forced::of(item.edges[0]));
+            if self.unbroken == 0 && self.has_flow && forced.is_some() {
+                if body {
+                    self.repeat_group(|flow| &flow.footer)?;
+                }
+                cursor.ready = Some((FlowItem::TableBox(item), tail));
+                return Ok(Some(BreakRequest {
+                    forced,
+                    preserve_empty: false,
+                }));
+            }
+        }
+        if ready && body {
+            self.refresh_table()?;
+            self.repeat_group(|flow| &flow.header)?;
+        }
+        self.measurer.work.spend(item.events.len().max(1))?;
+        for event in &item.events {
+            self.string_locations.record(self.page, event);
+        }
+        let ancestor = &item.area;
+        let geometry = self.table_geometry(self.page)?;
+        let layer = self.current_layer();
+        self.measurer.work.spend(1)?;
+        self.enter_table_layers([Some(ancestor.clone()), None]);
+        let table = self.tables.last().expect("active table");
+        let placement = BandPlacement {
+            rows: ancestor.rows.clone(),
+            y: self.top
+                + self.y
+                + self.offset[1]
+                + if ancestor.rows.start == 0 {
+                    table.flow.spacing
+                } else {
+                    0.0
+                },
+            slice: None,
+        };
+        let mut rect = ancestor
+            .rect(
+                &geometry,
+                &placement,
+                &table.flow.row_starts,
+                table.flow.plan.source.style().rtl,
+                false,
+            )
+            .expect("zero-row structural boxes have a boundary rectangle");
+        rect.x += table.x_offset;
+        self.record_table_box(ancestor, self.page, rect, rect)?;
+        self.context = layer.context.clone();
+        self.key = layer.key.clone();
+        self.group = layer.group;
+        self.clip = layer.clip;
+        if group {
+            self.pending_break = Forced::of(item.edges[1]);
+            self.has_flow = true;
+            self.at_page_start = false;
+        }
+        Ok(None)
+    }
     fn place_table_pending(
         &mut self,
         starts: &[f32],
@@ -4148,45 +4288,10 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     )
                     .expect("a table anchor fragment has source geometry");
                 source.x += table.x_offset;
-                let layer = ancestor
-                    .ancestors
-                    .iter()
-                    .rev()
-                    .flatten()
-                    .find_map(|source| table.layers.get(&(std::ptr::from_ref(*source) as usize)));
-                let clip = layer.map_or(self.clip, |layer| layer.clip);
-                let group = layer.and_then(|layer| layer.group);
-                let style = ancestor.source.style();
-                let paint =
-                    BoxPaint::whole(rect, table.flow.plan.structural_decoration(ancestor.source));
-                let mut parent = clip;
-                while let Some(node) = parent {
-                    if matches!(self.clips[node].effect, Effect::PathClip(owner) if std::ptr::eq(owner, style))
-                    {
-                        self.clips[node].paints.push((page, paint.clone()));
-                        break;
-                    }
-                    parent = self.clips[node].parent;
-                }
-                if Group::of(style).anchored()
-                    && let Some(node) = group
-                {
-                    self.clips[node].paints.push((page, paint));
-                }
-                self.anchors.record(
-                    style,
-                    (
-                        page,
-                        None,
-                        !self.force_hidden && style.visibility.is_visible(),
-                    ),
-                    rect,
-                    Some(source),
-                    clip,
-                    matches!(self.fragmentainers, Fragmentainers::Columns(_)),
-                );
+                self.record_table_box(ancestor, page, rect, source)?;
             }
         }
+        let table = self.tables.last().expect("active table");
         let mut rectangles: HashMap<(*const BlockBox, usize), Rect> = HashMap::new();
         let transform_indices: HashMap<_, _> = transforms
             .iter()
