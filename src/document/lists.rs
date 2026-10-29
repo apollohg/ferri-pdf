@@ -32,7 +32,7 @@ pub(super) fn marker(
             .load(&mut |reference| {
                 resources
                     .cache
-                    .load_marker(
+                    .load_decoded(
                         reference,
                         resources.base,
                         resources.resolver,

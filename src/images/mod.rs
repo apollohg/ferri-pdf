@@ -324,8 +324,9 @@ impl ImageCache {
             }
         }
     }
-    /// Marker fallback must be selected before line fitting, including pixel errors.
-    pub(crate) fn load_marker(
+    /// An image whose fallback is chosen before layout, as a list marker's or a float
+    /// shape's is: it fails here on corrupt pixels too, retaining a diagnostic.
+    pub(crate) fn load_decoded(
         &mut self,
         reference: &str,
         base: &crate::resources::ResourceBase,

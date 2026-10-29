@@ -487,17 +487,25 @@ impl ImageResources<'_> {
             style.element_font_namespace(),
         )
     }
-    /// Loads a float's `shape-outside` image; other boxes have no float area.
-    pub(crate) fn shape_outside(
-        &mut self,
-        style: &Style,
-    ) -> Result<crate::graphics::ShapeOutside, DocumentError> {
+    /// Loads a float's `shape-outside` image; other boxes have no float area. An image that
+    /// cannot be fetched or decoded leaves `none` (CSS Shapes 1 §6.1) and a diagnostic.
+    pub(crate) fn shape_outside(&mut self, style: &Style) -> crate::graphics::ShapeOutside {
         if style.floating().is_none() {
-            return Ok(crate::graphics::ShapeOutside::None);
+            return crate::graphics::ShapeOutside::None;
         }
-        Ok(style
+        style
             .shape_outside
-            .load_image(&mut |reference| self.load(reference, style))?)
+            .load_image(&mut |reference| {
+                self.cache
+                    .load_decoded(
+                        reference,
+                        self.base,
+                        self.resolver,
+                        style.element_font_namespace(),
+                    )
+                    .ok_or(())
+            })
+            .unwrap_or_default()
     }
     /// Loads the box's `url()` background layers and border image; inline style URLs use the
     /// document base.
@@ -1197,7 +1205,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 .into_iter()
                 .map(BlockContent::Inline)
                 .collect();
-            let shape_outside = self.resources.shape_outside(&style)?;
+            let shape_outside = self.resources.shape_outside(&style);
             let mut generated = self.generated_block(
                 style,
                 children,
@@ -1581,7 +1589,7 @@ fn block<'a>(
                 // pseudo-elements or replaced fallback for them.
                 let skips = frame.style.skips_contents() && frame.style.containment().layout;
                 block.decoration = resources.backgrounds(&frame.style)?;
-                block.shape_outside = resources.shape_outside(&frame.style)?;
+                block.shape_outside = resources.shape_outside(&frame.style);
                 if index == 0 {
                     traversal.canvas = background_only(&block.decoration);
                 }

@@ -408,6 +408,38 @@ fn raster_alpha_is_sized_to_the_content_box_and_thresholded() {
 }
 
 #[test]
+fn unavailable_or_undecodable_shape_images_leave_the_margin_box_with_a_diagnostic() {
+    // §6.1: without a valid image the effect is as if `none` had been specified.
+    let mut corrupt = half_opaque_png(0).into_bytes();
+    let samples = corrupt.len() - 8;
+    corrupt.truncate(samples);
+    let corrupt = String::from_utf8(corrupt).expect("base64 stays ASCII");
+    for (label, source) in [
+        ("missing", "missing-shape.png".to_owned()),
+        ("not an image", "data:image/png;base64,YmFk".to_owned()),
+        ("truncated samples", corrupt),
+    ] {
+        let output = ferri_pdf::render_html(
+            &format!(
+                "<style>{PROFILE}p{{margin:0}}.f{{float:left;width:100pt;height:54pt;\
+                 margin-right:8pt;shape-outside:url({source})}}</style>\
+                 <div class=f></div><p>{WORDS}</p>"
+            ),
+            &common::local_options(),
+        )
+        .unwrap_or_else(|error| panic!("{label}: a failed shape image must not abort: {error}"));
+        assert_eq!(
+            output.diagnostics.len(),
+            1,
+            "{label}: the failed image is reported once: {:?}",
+            output.diagnostics
+        );
+        let trace = output.layout.expect("layout requested");
+        assert_left_edges(label, &trace.pages[0], 0..3, 0.0, |_| 108.0);
+    }
+}
+
+#[test]
 fn split_floats_wrap_each_page_around_their_slice_of_the_shape() {
     // A 100pt float 540pt tall breaks after the 408pt page area; its triangle widens down
     // the whole box, so page two continues from 408pt into the shape.
