@@ -1129,7 +1129,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         };
         let element_page_scope =
             crate::document::page::used_name(&parent.page, self.element_page_scope.as_ref());
-        validate_display(&style.display)?;
+        validate_box(&style)?;
         normalize_child_display(&mut style.display, false, &self.style.display);
         // The block's own pseudo-elements are its first and last children; those of inline
         // descendants lie inside the content around them.
@@ -1332,8 +1332,16 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     }
 }
 
-fn validate_display(display: &Display) -> Result<(), StyleError> {
-    display.validate()
+/// Rejects computed values that boxes cannot render: only the SVG renderer clips to an SVG
+/// `clipPath` element (CSS Masking 1 §6.1).
+fn validate_box(style: &Style) -> Result<(), StyleError> {
+    style.display.validate()?;
+    if let Some(reference) = &style.svg.clip_reference {
+        return Err(StyleError::Unsupported(format!(
+            "clip-path reference to an SVG clipPath element on a box: {reference}"
+        )));
+    }
+    Ok(())
 }
 
 fn unsupported_element(tag: &str) -> bool {
@@ -1843,7 +1851,7 @@ fn block<'a>(
                     background_only(&resources.backgrounds(&child_style)?)
                 };
             }
-            validate_display(&child_style.display)?;
+            validate_box(&child_style)?;
             let replaced = is_replaced(child);
             normalize_child_display(
                 &mut child_style.display,
@@ -2199,7 +2207,7 @@ pub(crate) fn build(
     )?;
     let bindings = generated.bindings();
     let page = PageBox::load(resolved, &mut resources, &bindings)?;
-    validate_display(&style.display)?;
+    validate_box(&style)?;
     if style.display == Display::None {
         let mut strings = crate::document::strings::StringAssignments::new(html);
         let mut counters = crate::document::counters::Counters::default();

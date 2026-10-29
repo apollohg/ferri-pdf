@@ -240,7 +240,13 @@ fn collect_text_chunks_impl(
             continue;
         }
 
-        let anchor = parent.find_attribute(AId::TextAnchor).unwrap_or_default();
+        let rtl = parent.find_attribute::<&str>(AId::Direction) == Some(RIGHT_TO_LEFT);
+        // SVG 2 §11.10.1.1: in right-to-left text `start` aligns the right side, `end` the left.
+        let anchor = match parent.find_attribute(AId::TextAnchor).unwrap_or_default() {
+            TextAnchor::Start if rtl => TextAnchor::End,
+            TextAnchor::End if rtl => TextAnchor::Start,
+            anchor => anchor,
+        };
 
         // TODO: what to do when <= 0? UB?
         let font_size = super::units::resolve_font_size(parent, state);
@@ -353,6 +359,7 @@ fn collect_text_chunks_impl(
                     x: pos_list[iter_state.chars_count].x,
                     y: pos_list[iter_state.chars_count].y,
                     anchor,
+                    rtl,
                     spans: vec![span2],
                     text_flow: iter_state.text_flow.clone(),
                     text: c.to_string(),
@@ -609,6 +616,7 @@ fn conv_font_stretch(node: SvgNode) -> FontStretch {
     }
 }
 
+const RIGHT_TO_LEFT: &str = "rtl";
 const MIN_FONT_WEIGHT: usize = 1;
 const MAX_FONT_WEIGHT: usize = 1000;
 

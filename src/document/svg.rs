@@ -276,7 +276,10 @@ impl<'a, 'd> Serializer<'a, 'd> {
         if let Some(id) = reference {
             attribute(&mut self.xml, "", HREF_ATTRIBUTE, &format!("#{id}"));
         }
-        for (name, value) in presentation::geometry(tag, style)? {
+        for (name, value) in presentation::geometry(tag, style)?
+            .into_iter()
+            .chain(presentation::transform(tag, style)?)
+        {
             attribute(&mut self.xml, "", name, &value);
         }
         attribute(

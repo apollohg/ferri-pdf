@@ -116,6 +116,9 @@ pub(crate) struct SvgStyle {
     pub y: LengthPercentage,
     /// Path data; `None` is `none`.
     pub d: Option<Arc<str>>,
+    /// A same-document `clipPath` element that `clip-path` references (CSS Masking 1 §6.1);
+    /// basic shapes are the box clip in `Masks`.
+    pub clip_reference: Option<Box<str>>,
 }
 
 impl Default for SvgStyle {
@@ -157,6 +160,7 @@ impl Default for SvgStyle {
             x: LengthPercentage::ZERO,
             y: LengthPercentage::ZERO,
             d: None,
+            clip_reference: None,
         }
     }
 }
@@ -246,7 +250,8 @@ impl Paint {
     }
 }
 
-fn same_document(url: &str, value: &Component) -> Result<Box<str>, StyleError> {
+/// A same-document reference; other documents are not loaded.
+pub(super) fn same_document(url: &str, value: &Component) -> Result<Box<str>, StyleError> {
     if url.starts_with(FRAGMENT) {
         Ok(url.into())
     } else {
@@ -526,23 +531,15 @@ pub(crate) fn image_rendering_keyword(value: Keyword) -> &'static str {
 
 /// Properties applying to SVG elements that their renderer does not take from the cascade:
 /// their presentation attributes reach it directly, so only initial values are supported.
-const UNCASCADED: [Property; 12] = [
-    Property::Transform,
-    Property::Translate,
-    Property::Rotate,
-    Property::Scale,
-    Property::MaskImage,
+const UNCASCADED: [Property; 5] = [
     Property::MaskBorderSource,
-    Property::OverflowX,
-    Property::OverflowY,
     Property::BaselineShift,
     Property::AlignmentBaseline,
     Property::TextDecorationLine,
     Property::UnicodeBidi,
 ];
 /// Inherited properties of SVG text content that its renderer does not implement.
-const UNCASCADED_TEXT: [Property; 18] = [
-    Property::Direction,
+const UNCASCADED_TEXT: [Property; 17] = [
     Property::WhiteSpaceCollapse,
     Property::TextWrapMode,
     Property::TextTransform,
@@ -599,11 +596,13 @@ impl InitialOnly {
 
 /// SVG 2 §6.6 presentation attributes that the cascade takes on every SVG element. The SVG
 /// renderer reads the others directly.
-const PRESENTATION_ATTRIBUTES: [Property; 43] = [
+const PRESENTATION_ATTRIBUTES: [Property; 48] = [
+    Property::ClipPath,
     Property::ClipRule,
     Property::Color,
     Property::ColorInterpolation,
     Property::ColorInterpolationFilters,
+    Property::Direction,
     Property::Display,
     Property::DominantBaseline,
     Property::Fill,
@@ -624,8 +623,10 @@ const PRESENTATION_ATTRIBUTES: [Property; 43] = [
     Property::MarkerEnd,
     Property::MarkerMid,
     Property::MarkerStart,
+    Property::Mask,
     Property::MaskType,
     Property::Opacity,
+    Property::Overflow,
     Property::PaintOrder,
     Property::ShapeRendering,
     Property::StopColor,
@@ -640,6 +641,7 @@ const PRESENTATION_ATTRIBUTES: [Property; 43] = [
     Property::StrokeWidth,
     Property::TextAnchor,
     Property::TextRendering,
+    Property::TransformOrigin,
     Property::VectorEffect,
     Property::Visibility,
     Property::WordSpacing,
@@ -660,12 +662,23 @@ const GEOMETRY_ATTRIBUTES: [(Property, &[&str]); 10] = [
     (Property::Width, SIZED_ELEMENTS),
     (Property::Height, SIZED_ELEMENTS),
 ];
+/// §6.6: the `transform` property's presentation attributes, by element; any other element's
+/// is `transform`.
+const TRANSFORM_ATTRIBUTES: [(&str, &str); 3] = [
+    ("linearGradient", "gradientTransform"),
+    ("radialGradient", "gradientTransform"),
+    ("pattern", "patternTransform"),
+];
+const TRANSFORM_ATTRIBUTE: &str = "transform";
 /// SVG Animations elements, whose `fill` attribute is the animation's fill mode instead.
 const ANIMATION_ELEMENTS: &[&str] = &["animate", "animateMotion", "animateTransform", "set"];
 
 /// The property that the attribute `name` of the SVG element `tag` is a presentation
 /// attribute for, if the cascade takes it.
 pub(crate) fn presentation_property(tag: &str, name: &str) -> Option<Property> {
+    if name == transform_attribute(tag) {
+        return Some(Property::Transform);
+    }
     let property = Property::from_name(name)?;
     if let Some((_, elements)) = GEOMETRY_ATTRIBUTES
         .iter()
@@ -676,6 +689,54 @@ pub(crate) fn presentation_property(tag: &str, name: &str) -> Option<Property> {
     (PRESENTATION_ATTRIBUTES.contains(&property)
         && !(property == Property::Fill && ANIMATION_ELEMENTS.contains(&tag)))
     .then_some(property)
+}
+
+/// The name of the `transform` presentation attribute of the SVG element `tag`.
+pub(crate) fn transform_attribute(tag: &str) -> &'static str {
+    TRANSFORM_ATTRIBUTES
+        .iter()
+        .find(|(element, _)| *element == tag)
+        .map_or(TRANSFORM_ATTRIBUTE, |(_, name)| name)
+}
+
+/// Elements whose `overflow` the SVG 2 §6.8 user agent style sheet makes `hidden`; an `svg`
+/// element only when nested in SVG content.
+const CLIPPING_ELEMENTS: [&str; 4] = ["image", "marker", "pattern", "symbol"];
+const SVG_ELEMENT: &str = "svg";
+const FOREIGN_OBJECT_ELEMENT: &str = "foreignObject";
+
+/// Whether the SVG renderer draws `element`, rather than the document laying it out as a box:
+/// the outermost `svg` elements and those in a `foreignObject` are boxes.
+fn is_svg_content(element: crate::dom::Element<'_>) -> bool {
+    element.namespace() == crate::dom::SVG_NAMESPACE
+        && element
+            .parent(crate::dom::TreeRelation::Selector)
+            .is_some_and(|parent| {
+                parent.namespace() == crate::dom::SVG_NAMESPACE
+                    && parent.name() != FOREIGN_OBJECT_ELEMENT
+            })
+}
+
+/// The SVG 2 §6.8 user agent style sheet's declarations for an SVG element: `overflow: hidden`
+/// on viewport-establishing elements, and `transform-origin: 0 0` on all but the outermost
+/// `svg` elements and those in a `foreignObject`, which transform about their centre.
+pub(super) fn user_agent_declarations(
+    element: crate::dom::Element<'_>,
+) -> Result<Vec<PropertyDeclaration>, StyleError> {
+    let content = is_svg_content(element);
+    let mut output = Vec::new();
+    if CLIPPING_ELEMENTS.contains(&element.name()) || (element.name() == SVG_ELEMENT && content) {
+        declaration::append(&mut output, Origin::UserAgent, Property::Overflow, "hidden")?;
+    }
+    if element.name() != SVG_ELEMENT || content {
+        declaration::append(
+            &mut output,
+            Origin::UserAgent,
+            Property::TransformOrigin,
+            "0 0",
+        )?;
+    }
+    Ok(output)
 }
 
 /// The presentation attributes of an SVG element, as author-level declarations of specificity
@@ -691,7 +752,22 @@ pub(super) fn presentation_hints(
         let Some(property) = presentation_property(element.name(), &name.local) else {
             continue;
         };
-        let longhands = if property == Property::D {
+        let longhands = if property == Property::Transform {
+            // §6.6: the attribute takes the SVG 1.1 transform list syntax.
+            <svgtypes::Transform as std::str::FromStr>::from_str(value)
+                .ok()
+                .map(|matrix| {
+                    declaration::expand(
+                        property,
+                        &format!(
+                            "matrix({}, {}, {}, {}, {}, {})",
+                            matrix.a, matrix.b, matrix.c, matrix.d, matrix.e, matrix.f
+                        ),
+                    )
+                })
+                .transpose()?
+                .flatten()
+        } else if property == Property::D {
             // §9.3.2: the attribute's value is path data, which the property takes as a string.
             Some(vec![(
                 property,

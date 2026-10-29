@@ -66,7 +66,7 @@ mod resolution;
 mod scope;
 mod selector;
 mod shadow_values;
-mod shape_values;
+pub(crate) mod shape_values;
 mod shorthands;
 mod sizing;
 mod source_set;

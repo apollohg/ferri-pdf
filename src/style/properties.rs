@@ -2111,12 +2111,22 @@ fn clip_path(
     input: Input<'_>,
     relative: &Relative<'_>,
 ) -> Result<(), StyleError> {
-    style.masks_mut().clip_path = match input {
-        Input::Value(value) => {
-            crate::style::shape_values::clip_path(value, relative)?.map(std::sync::Arc::new)
-        }
-        Input::Copy(source) => source.decoration.masks.clip_path.clone(),
+    use crate::style::shape_values::ClipPathValue;
+    let (shape, reference) = match input {
+        Input::Value(value) => match crate::style::shape_values::clip_path(value, relative)? {
+            ClipPathValue::None => (None, None),
+            ClipPathValue::Reference(reference) => (None, Some(reference)),
+            ClipPathValue::Shape(shape) => (Some(std::sync::Arc::new(shape)), None),
+        },
+        Input::Copy(source) => (
+            source.decoration.masks.clip_path.clone(),
+            source.svg.clip_reference.clone(),
+        ),
     };
+    style.masks_mut().clip_path = shape;
+    if style.svg.clip_reference != reference {
+        std::sync::Arc::make_mut(&mut style.svg).clip_reference = reference;
+    }
     Ok(())
 }
 computed!(

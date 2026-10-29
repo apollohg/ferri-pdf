@@ -751,8 +751,9 @@ pub(super) fn declarations(
 ) -> Result<Vec<DefaultDeclaration>, StyleError> {
     let mut output = Vec::new();
     if element.namespace() == crate::dom::SVG_NAMESPACE {
-        return Ok(crate::style::svg_values::presentation_hints(element)?
+        return Ok(crate::style::svg_values::user_agent_declarations(element)?
             .into_iter()
+            .chain(crate::style::svg_values::presentation_hints(element)?)
             .map(|declaration| DefaultDeclaration {
                 declaration,
                 specificity: 0,

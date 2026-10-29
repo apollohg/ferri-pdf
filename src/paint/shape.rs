@@ -14,6 +14,27 @@ pub(crate) enum ShapeBox {
     Visual(BoxArea),
 }
 
+/// `<geometry-box>` (CSS Masking 1 §6.1): a `<shape-box>`, or a box of SVG content.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+pub(crate) enum GeometryBox {
+    Shape(ShapeBox),
+    Fill,
+    Stroke,
+    View,
+}
+
+impl GeometryBox {
+    /// The box of an element with a CSS layout box: the content box for `fill-box` and the
+    /// border box for `stroke-box` and `view-box`.
+    pub(crate) fn layout(self) -> ShapeBox {
+        match self {
+            Self::Shape(reference) => reference,
+            Self::Fill => ShapeBox::Visual(BoxArea::ContentBox),
+            Self::Stroke | Self::View => ShapeBox::Visual(BoxArea::BorderBox),
+        }
+    }
+}
+
 /// A `circle()` radius: an extent keyword, or a length whose percentages refer to the
 /// reference box's direction-agnostic size (CSS Images 4 §3.2.2).
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -100,13 +121,13 @@ impl ShapeBox {
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub(crate) struct ClipPath {
     pub shape: Option<BasicShape>,
-    pub reference: ShapeBox,
+    pub reference: GeometryBox,
 }
 
 impl ClipPath {
     /// The clipping region of a box fragment, whose used margins `paint` carries.
     pub(crate) fn outline<I>(&self, paint: &BoxPaint<I>) -> Shape {
-        let (rect, radii) = self.reference.resolve(paint, paint.margins);
+        let (rect, radii) = self.reference.layout().resolve(paint, paint.margins);
         match &self.shape {
             Some(shape) => shape.outline(rect),
             None => Shape::Path {

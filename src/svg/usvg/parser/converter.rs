@@ -20,6 +20,11 @@ use crate::svg::usvg::parser::paint_server::process_paint;
 use crate::svg::usvg::text::flatten::DatabaseExt;
 use crate::svg::usvg::*;
 
+/// CSS Transforms 1 §2 `transform-box` reference boxes measured from content.
+pub(super) const FILL_BOX: &str = "fill-box";
+pub(super) const STROKE_BOX: &str = "stroke-box";
+const PERCENT: f32 = 100.0;
+
 #[derive(Clone)]
 pub(super) struct State<'a> {
     pub(crate) parent_clip_path: Option<SvgNode<'a, 'a>>,
@@ -774,7 +779,23 @@ pub(crate) fn convert_group(
         Opacity::ONE
     };
 
-    let transform = node.resolve_transform(AId::Transform, state);
+    let transform = match node.attribute::<&str>(AId::TransformBox) {
+        // CSS Transforms 1 §2: the origin lies in the element's object or stroke bounding box,
+        // which its content gives before the transform applies.
+        Some(reference @ (FILL_BOX | STROKE_BOX)) => {
+            let mut probe = Group::empty();
+            probe.abs_transform = parent.abs_transform;
+            collect_children(cache, &mut probe);
+            probe.calculate_bounding_boxes();
+            let bounds = if reference == FILL_BOX {
+                probe.bounding_box
+            } else {
+                probe.stroke_bounding_box
+            };
+            node.resolve_transform_in(AId::Transform, state, Some(bounds))
+        }
+        _ => node.resolve_transform(AId::Transform, state),
+    };
     let blend_mode: BlendMode = node.attribute(AId::MixBlendMode).unwrap_or_default();
     let isolation: Isolation = node.attribute(AId::Isolation).unwrap_or_default();
     let isolate = isolation == Isolation::Isolate;
@@ -823,6 +844,19 @@ pub(crate) fn convert_group(
         if clip_path.is_none() {
             return None;
         }
+    } else if let Some(shape) = node
+        .attribute::<&str>(AId::ClipPath)
+        .and_then(|value| super::basic_shape::parse(value, node, state))
+    {
+        g.calculate_bounding_boxes();
+        // CSS Masking 1 §6.1: `view-box` places the nearest viewport's viewBox at the origin.
+        let view = state.view_box;
+        let boxes = super::basic_shape::ReferenceBoxes {
+            fill: g.bounding_box,
+            stroke: g.stroke_bounding_box,
+            view: Rect::from_xywh(0.0, 0.0, view.width(), view.height())?,
+        };
+        clip_path = Some(super::basic_shape::convert(&shape, &boxes, state, cache)?);
     }
 
     let mut mask = None;
@@ -1065,6 +1099,17 @@ pub(super) fn svg_paint_order_to_usvg(order: svgtypes::PaintOrder) -> PaintOrder
 
 impl SvgNode<'_, '_> {
     pub(crate) fn resolve_transform(&self, transform_aid: AId, state: &State) -> Transform {
+        self.resolve_transform_in(transform_aid, state, None)
+    }
+
+    /// The transform about `transform-origin`, which `reference` positions when given and the
+    /// viewport otherwise.
+    pub(crate) fn resolve_transform_in(
+        &self,
+        transform_aid: AId,
+        state: &State,
+        reference: Option<Rect>,
+    ) -> Transform {
         if transform_aid == AId::Transform && self.is_contents() {
             return Transform::default();
         }
@@ -1072,20 +1117,18 @@ impl SvgNode<'_, '_> {
         let transform_origin: Option<TransformOrigin> = self.attribute(AId::TransformOrigin);
 
         if let Some(transform_origin) = transform_origin {
-            let dx = convert_length(
-                transform_origin.x_offset,
-                *self,
-                AId::Width,
-                Units::UserSpaceOnUse,
-                state,
-            );
-            let dy = convert_length(
-                transform_origin.y_offset,
-                *self,
-                AId::Height,
-                Units::UserSpaceOnUse,
-                state,
-            );
+            let offset = |length: Length, start: f32, size: f32, aid| match reference {
+                Some(_) if length.unit == Unit::Percent => {
+                    start + size * length.number as f32 / PERCENT
+                }
+                Some(_) => start + convert_length(length, *self, aid, Units::UserSpaceOnUse, state),
+                None => convert_length(length, *self, aid, Units::UserSpaceOnUse, state),
+            };
+            let (x, y, width, height) = reference.map_or((0.0, 0.0, 0.0, 0.0), |bounds| {
+                (bounds.x(), bounds.y(), bounds.width(), bounds.height())
+            });
+            let dx = offset(transform_origin.x_offset, x, width, AId::Width);
+            let dy = offset(transform_origin.y_offset, y, height, AId::Height);
             transform = Transform::default()
                 .pre_translate(dx, dy)
                 .pre_concat(transform)

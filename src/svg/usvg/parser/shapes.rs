@@ -24,7 +24,11 @@ pub(crate) fn convert(node: SvgNode, state: &converter::State) -> Option<Arc<Pat
 }
 
 pub(crate) fn convert_path(node: SvgNode) -> Option<Arc<Path>> {
-    let value: &str = node.attribute(AId::D)?;
+    path_data(node.attribute(AId::D)?)
+}
+
+/// SVG 2 §9.3 path data, up to its first error.
+pub(crate) fn path_data(value: &str) -> Option<Arc<Path>> {
     let mut builder = tiny_skia_path::PathBuilder::new();
     for segment in svgtypes::SimplifyingPathParser::from(value) {
         let segment = match segment {
@@ -259,7 +263,7 @@ fn convert_ellipse(node: SvgNode, state: &converter::State) -> Option<Arc<Path>>
     ellipse_to_path(cx, cy, rx, ry)
 }
 
-fn ellipse_to_path(cx: f32, cy: f32, rx: f32, ry: f32) -> Option<Arc<Path>> {
+pub(crate) fn ellipse_to_path(cx: f32, cy: f32, rx: f32, ry: f32) -> Option<Arc<Path>> {
     let mut builder = tiny_skia_path::PathBuilder::new();
     builder.move_to(cx + rx, cy);
     builder.arc_to(rx, ry, 0.0, false, true, cx, cy + ry);

@@ -262,6 +262,104 @@ fn geometry_properties_override_their_attributes_on_designated_elements_only() {
 }
 
 #[test]
+fn transforms_overflow_masks_clips_and_direction_reach_the_renderer_as_computed() {
+    let xml = xml(
+        "#scaled{transform:scale(2,3);transform-origin:center;transform-box:fill-box} \
+         #shown{overflow:visible} #round{clip-path:circle(50% at right 10% top 5px) view-box} \
+         #corner{clip-path:polygon(evenodd,0 0,100% 0,0 100%)} #masked{mask:url(#m)} \
+         #referenced{clip-path:url(#c)} #inset{clip-path:inset(1px 2px 3px) fill-box} \
+         #even{clip-path:inset(4% round 2px 3px / 1px)} #box{clip-path:xywh(1px 2% 3px 4%)} \
+         #ellipse{clip-path:ellipse(farthest-corner at 10px 20%) content-box} \
+         #hebrew{direction:rtl}",
+        "<svg width=100 height=50><rect id=scaled /><rect id=moved transform='translate(5 6) scale(2)'/>\
+         <svg id=shown /><svg id=hidden /><rect id=round /><rect id=corner /><rect id=masked />\
+         <rect id=referenced /><rect id=inset /><rect id=even /><rect id=box /><rect id=ellipse />\
+         <rect id=plain /><text id=hebrew>T</text></svg>",
+    );
+    let scaled = element(&xml, "scaled");
+    assert_eq!(
+        (
+            scaled["transform"].as_str(),
+            scaled["transform-origin"].as_str(),
+            scaled["transform-box"].as_str()
+        ),
+        ("matrix(2 0 0 3 0 0)", "50% 50%", "fill-box"),
+        "CSS Transforms 1 §6: the renderer places the origin in the fill box
+{xml}"
+    );
+    let moved = element(&xml, "moved");
+    assert_eq!(
+        (
+            moved["transform"].as_str(),
+            moved["transform-origin"].as_str()
+        ),
+        ("matrix(2 0 0 2 5 6)", "0px 0px"),
+        "SVG 2 §6.8: the attribute is a presentation hint about the user agent's 0 0 origin
+{xml}"
+    );
+    assert!(
+        !moved.contains_key("transform-box"),
+        "view-box is the renderer's own reference
+{xml}"
+    );
+    assert_eq!(value(&xml, "shown", "overflow"), "visible", "{xml}");
+    assert_eq!(
+        value(&xml, "hidden", "overflow"),
+        "hidden",
+        "SVG 2 §6.8: nested svg elements clip by default
+{xml}"
+    );
+    assert_eq!(
+        value(&xml, "round", "clip-path"),
+        "circle(50% at right 10% top 5px) view-box",
+        "{xml}"
+    );
+    assert_eq!(
+        value(&xml, "corner", "clip-path"),
+        "polygon(evenodd, 0px 0px, 100% 0px, 0px 100%) stroke-box",
+        "CSS Masking 1 §6.1: border-box, the stroke box on SVG content, is the default
+{xml}"
+    );
+    assert_eq!(
+        value(&xml, "inset", "clip-path"),
+        "inset(1px 2px 3px 2px) fill-box",
+        "CSS Shapes 1 §3.1: a missing left side copies the right\n{xml}"
+    );
+    assert_eq!(
+        value(&xml, "even", "clip-path"),
+        "inset(4% 4% 4% 4% round 2px 3px 2px 3px / 1px 1px 1px 1px) stroke-box",
+        "one inset serves every side, and the corners expand like border-radius\n{xml}"
+    );
+    assert_eq!(
+        value(&xml, "box", "clip-path"),
+        "inset(2% calc(100% + -4px) 94% 1px) stroke-box",
+        "CSS Shapes 1 §3.2: xywh() computes to an inset whose far sides are sums\n{xml}"
+    );
+    assert_eq!(
+        value(&xml, "ellipse", "clip-path"),
+        "ellipse(farthest-corner at left 10px top 20%) fill-box",
+        "content-box is SVG content's fill box\n{xml}"
+    );
+    assert_eq!(
+        value(&xml, "referenced", "clip-path"),
+        "url(\"#c\")",
+        "{xml}"
+    );
+    assert_eq!(value(&xml, "masked", "mask"), "url(\"#m\")", "{xml}");
+    let plain = element(&xml, "plain");
+    assert_eq!(
+        (
+            plain["clip-path"].as_str(),
+            plain["mask"].as_str(),
+            plain.get("transform").map(String::as_str)
+        ),
+        ("none", "none", None),
+        "{xml}"
+    );
+    assert_eq!(value(&xml, "hebrew", "direction"), "rtl", "{xml}");
+}
+
+#[test]
 fn use_instances_match_their_own_tree_and_inherit_from_the_use_element() {
     // SVG 2 §5.5.3 example "Use-changed-styles".
     let xml = xml(
@@ -360,9 +458,22 @@ fn svg_style_elements_are_left_to_the_document_cascade() {
 #[test]
 fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
     for (css, expected) in [
-        ("rect{transform:rotate(45deg)}", "transform"),
-        ("rect{overflow:hidden}", "overflow-x"),
-        ("text{direction:rtl}", "direction"),
+        (
+            "rect{transform:translate(10%)}",
+            "percentage of the reference box",
+        ),
+        (
+            "rect{transform:perspective(9px) rotateY(9deg)}",
+            "perspective",
+        ),
+        (
+            "use{transform:scale(2);transform-box:fill-box}",
+            "fill-box on an SVG use",
+        ),
+        ("svg svg{overflow-y:visible}", "one axis"),
+        ("pattern{overflow:visible}", "always clips"),
+        ("rect{clip-path:url(other.svg#clip)}", "another document"),
+        ("rect{mask:url(#a),url(#b)}", "mask layers"),
         ("text{font-weight:450.5}", "font-weight: 450.5"),
         (
             "text{font-variant-caps:all-small-caps}",
@@ -377,7 +488,10 @@ fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
         ("rect{fill:url(other.svg#paint)}", "another document"),
         ("rect{cx:calc(10% + 1px)}", ""),
     ] {
-        match styled(css, "<svg><rect/><text>T</text></svg>") {
+        match styled(
+            css,
+            "<svg><rect id=r /><text>T</text><use href='#r'/><svg/><pattern/></svg>",
+        ) {
             Err(DocumentError::Style(crate::style::StyleError::Unsupported(message))) => {
                 assert!(
                     message.contains(expected),

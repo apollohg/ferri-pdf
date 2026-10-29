@@ -565,9 +565,22 @@ impl Style {
         };
         let [x, y, z] = resolve(&self.transform_origin);
         let origin = [reference.x + x, reference.y + y, z];
-        let mut result = translation(origin);
+        let Ok(composed) =
+            self.composed(|offset| Ok::<_, std::convert::Infallible>(resolve(offset)));
+        Some(multiply(
+            &multiply(&translation(origin), &composed),
+            &translation(origin.map(|v| -v)),
+        ))
+    }
+    /// `translate`, `rotate`, `scale` and `transform` composed in that order (§6), with
+    /// `resolve` placing translations.
+    fn composed<E>(
+        &self,
+        resolve: impl Fn(&[LengthPercentage; 3]) -> Result<[f32; 3], E>,
+    ) -> Result<Matrix3d, E> {
+        let mut result = IDENTITY;
         if let Some(offset) = &self.translate {
-            result = multiply(&result, &translation(resolve(offset)));
+            result = multiply(&result, &translation(resolve(offset)?));
         }
         if let Some(Rotation { axis, angle }) = self.rotate {
             result = multiply(&result, &rotation(axis, angle));
@@ -578,11 +591,33 @@ impl Style {
         for function in &self.transform {
             let step = match function {
                 TransformFunction::Matrix(m) => *m,
-                TransformFunction::Translate(offset) => translation(resolve(offset)),
+                TransformFunction::Translate(offset) => translation(resolve(offset)?),
             };
             result = multiply(&result, &step);
         }
-        Some(multiply(&result, &translation(origin.map(|v| -v))))
+        Ok(result)
+    }
+    /// The planar matrix of the transform properties without the origin, in points, for SVG
+    /// content, whose renderer places the origin in its reference box; `None` without a
+    /// transform. SVG content is flattened into its viewport plane (CSS Transforms 2 §4).
+    pub(crate) fn planar_transform(&self) -> Result<Option<Matrix>, StyleError> {
+        if !self.is_transformed() {
+            return Ok(None);
+        }
+        let length = |component: &LengthPercentage| match component {
+            LengthPercentage::Length(length) => Ok(*length),
+            _ => Err(StyleError::Unsupported(
+                "a translation by a percentage of the reference box on SVG content".into(),
+            )),
+        };
+        let m =
+            self.composed(|[x, y, z]| Ok::<_, StyleError>([length(x)?, length(y)?, length(z)?]))?;
+        if m[W_FROM_X] != 0.0 || m[W_FROM_Y] != 0.0 || m[W_CONSTANT] != 1.0 {
+            return Err(StyleError::Unsupported(
+                "a perspective transform on SVG content".into(),
+            ));
+        }
+        Ok(Some([m[0], m[1], m[4], m[5], m[12], m[13]]))
     }
     /// The affine page-space matrix drawing this box, or `None` without a transform. Its
     /// parent's perspective applies first; in a 3D rendering context the box must stay in its

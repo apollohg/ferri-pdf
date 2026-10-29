@@ -1,8 +1,8 @@
 //! CSS Shapes 1 `shape-outside` and its `<basic-shape>` functions from match trees.
 use crate::paint::{
     AbsoluteColor, AxisRadius, BasicShape, BoxArea, CircleRadius, ClipPath, Contour, CornerRadii,
-    EllipseRadii, LengthPercentage, PositionComponent, RadialExtent, Segment, ShapeBox,
-    ShapeOutside,
+    EllipseRadii, GeometryBox, LengthPercentage, PositionComponent, RadialExtent, Segment,
+    ShapeBox, ShapeOutside,
 };
 use crate::style::{
     StyleError, background_values,
@@ -52,20 +52,28 @@ pub(super) fn shape_outside(
     })
 }
 
-/// CSS Masking 1 §6.1 `clip-path`; `None` is `none`.
+/// A computed `clip-path`: `none`, a reference to a same-document `clipPath` element, or a
+/// basic shape in its reference box.
+pub(super) enum ClipPathValue {
+    None,
+    Reference(Box<str>),
+    Shape(ClipPath),
+}
+
+/// CSS Masking 1 §6.1 `clip-path`.
 pub(super) fn clip_path(
     value: &Component,
     relative: &Relative<'_>,
-) -> Result<Option<ClipPath>, StyleError> {
-    if value.keyword() == Some(Keyword::None) {
-        return Ok(None);
+) -> Result<ClipPathValue, StyleError> {
+    match value.unwrap() {
+        Component::Keyword(Keyword::None) => return Ok(ClipPathValue::None),
+        Component::Url(url) => {
+            return crate::style::svg_values::same_document(url, value)
+                .map(ClipPathValue::Reference);
+        }
+        _ => {}
     }
-    if value.slots().is_empty() {
-        return Err(StyleError::Unsupported(format!(
-            "clip-path reference to an SVG clipPath element: {value}"
-        )));
-    }
-    Ok(Some(ClipPath {
+    Ok(ClipPathValue::Shape(ClipPath {
         shape: value
             .slot(CLIP_SHAPE_SLOT)
             .map(|shape| basic_shape(shape, relative))
@@ -74,17 +82,16 @@ pub(super) fn clip_path(
             .slot(CLIP_BOX_SLOT)
             .map(geometry_box)
             .transpose()?
-            .unwrap_or(ShapeBox::Visual(BoxArea::BorderBox)),
+            .unwrap_or(GeometryBox::Shape(ShapeBox::Visual(BoxArea::BorderBox))),
     }))
 }
 
-/// `<geometry-box>`: boxes with a CSS layout box use the content box for `fill-box` and the
-/// border box for `stroke-box` and `view-box` (CSS Masking 1 §6.1).
-fn geometry_box(value: &Component) -> Result<ShapeBox, StyleError> {
+fn geometry_box(value: &Component) -> Result<GeometryBox, StyleError> {
     match value.keyword() {
-        Some(Keyword::FillBox) => Ok(ShapeBox::Visual(BoxArea::ContentBox)),
-        Some(Keyword::StrokeBox | Keyword::ViewBox) => Ok(ShapeBox::Visual(BoxArea::BorderBox)),
-        _ => shape_box(value),
+        Some(Keyword::FillBox) => Ok(GeometryBox::Fill),
+        Some(Keyword::StrokeBox) => Ok(GeometryBox::Stroke),
+        Some(Keyword::ViewBox) => Ok(GeometryBox::View),
+        _ => shape_box(value).map(GeometryBox::Shape),
     }
 }
 
@@ -142,7 +149,7 @@ fn basic_shape(value: &Component, relative: &Relative<'_>) -> Result<BasicShape,
         Keyword::Inset => {
             let insets = lengths(0)?;
             BasicShape::Inset {
-                insets: std::array::from_fn(|side| insets[edge_value(insets.len(), side)].clone()),
+                insets: sides(&insets).ok_or_else(|| unsupported(value))?,
                 radii: radii(function, relative)?,
             }
         }
@@ -167,13 +174,7 @@ fn basic_shape(value: &Component, relative: &Relative<'_>) -> Result<BasicShape,
                 .iter()
                 .enumerate()
                 .map(|(side, edge)| match edge.keyword() {
-                    Some(Keyword::Auto) => Ok(LengthPercentage::Percentage(
-                        if side == RIGHT || side == BOTTOM {
-                            1.0
-                        } else {
-                            0.0
-                        },
-                    )),
+                    Some(Keyword::Auto) => Ok(auto_edge(side)),
                     _ => length_percentage(edge, relative),
                 })
                 .collect::<Result<Vec<_>, StyleError>>()?;
@@ -231,8 +232,24 @@ fn basic_shape(value: &Component, relative: &Relative<'_>) -> Result<BasicShape,
     })
 }
 
+/// One to four values in `margin` order expanded to the four sides or corners.
+pub(crate) fn sides<T: Clone>(values: &[T]) -> Option<[T; 4]> {
+    (1..=4)
+        .contains(&values.len())
+        .then(|| std::array::from_fn(|side| values[edge_value(values.len(), side)].clone()))
+}
+
+/// A `rect()` edge of `auto`: the reference box's corresponding edge.
+pub(crate) fn auto_edge(side: usize) -> LengthPercentage {
+    LengthPercentage::Percentage(if side == RIGHT || side == BOTTOM {
+        1.0
+    } else {
+        0.0
+    })
+}
+
 /// `calc(100% - a - b)`.
-fn remainder(terms: &[&LengthPercentage]) -> LengthPercentage {
+pub(crate) fn remainder(terms: &[&LengthPercentage]) -> LengthPercentage {
     use crate::paint::Calculation;
     let mut sum = vec![Calculation::Percentage(1.0)];
     sum.extend(terms.iter().map(|term| {
@@ -281,7 +298,7 @@ fn radii(function: &Component, relative: &Relative<'_>) -> Result<CornerRadii, S
 
 /// SVG 1.1 path data as contours with absolute cubic and line segments, or `None` when the
 /// data is malformed or draws nothing.
-fn path_data(source: &str) -> Option<Vec<Contour>> {
+pub(crate) fn path_data(source: &str) -> Option<Vec<Contour>> {
     use svgtypes::SimplePathSegment as Command;
     let point = |x: f64, y: f64| [x as f32, y as f32];
     let mut contours: Vec<Contour> = Vec::new();

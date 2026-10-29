@@ -531,6 +531,8 @@ pub struct TextChunk {
     pub(crate) x: Option<f32>,
     pub(crate) y: Option<f32>,
     pub(crate) anchor: TextAnchor,
+    /// The chunk's base direction is right-to-left.
+    pub(crate) rtl: bool,
     pub(crate) spans: Vec<TextSpan>,
     pub(crate) text_flow: TextFlow,
     pub(crate) text: String,

@@ -934,6 +934,7 @@ fn process_chunk(
 
         let tmp_glyphs = shape_text(
             &chunk.text,
+            chunk.rtl,
             &span.font,
             span.start..span.end,
             font,
@@ -1322,6 +1323,7 @@ impl DatabaseExt for Database {
 /// Text shaping with font fallback.
 pub(crate) fn shape_text(
     text: &str,
+    rtl: bool,
     request: &Font,
     active: std::ops::Range<usize>,
     font: Arc<ResolvedFont>,
@@ -1336,6 +1338,7 @@ pub(crate) fn shape_text(
     let mut glyphs = shape_text_with_font(
         text,
         0..text.len(),
+        rtl,
         font.clone(),
         small_caps,
         apply_kerning,
@@ -1428,6 +1431,7 @@ pub(crate) fn shape_text(
             let candidate = shape_text_with_font(
                 text,
                 group_source.clone(),
+                rtl,
                 fallback.clone(),
                 small_caps,
                 apply_kerning,
@@ -1446,6 +1450,7 @@ pub(crate) fn shape_text(
                 let candidate = shape_text_with_font(
                     text,
                     source.value()..source_end,
+                    rtl,
                     fallback.clone(),
                     small_caps,
                     apply_kerning,
@@ -1474,6 +1479,7 @@ pub(crate) fn shape_text(
                 let merged = shape_text_with_font(
                     text,
                     combined.clone(),
+                    rtl,
                     fallback.clone(),
                     small_caps,
                     apply_kerning,
@@ -1527,6 +1533,7 @@ pub(crate) fn shape_text(
 fn shape_text_with_font(
     text: &str,
     source: std::ops::Range<usize>,
+    rtl: bool,
     font: Arc<ResolvedFont>,
     small_caps: bool,
     apply_kerning: bool,
@@ -1574,7 +1581,13 @@ fn shape_text_with_font(
             rb_font.set_variations(&final_variations);
         }
 
-        let bidi_info = unicode_bidi::BidiInfo::new(text, Some(unicode_bidi::Level::ltr()));
+        // SVG 2 §11.10.2.4: `direction` is the base direction of the text chunk's bidi paragraph.
+        let base = if rtl {
+            unicode_bidi::Level::rtl()
+        } else {
+            unicode_bidi::Level::ltr()
+        };
+        let bidi_info = unicode_bidi::BidiInfo::new(text, Some(base));
         let paragraph = &bidi_info.paragraphs[0];
         let line = paragraph.range.clone();
 

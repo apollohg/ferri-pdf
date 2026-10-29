@@ -34,3 +34,16 @@ one hundred, so font matching receives the weight the document's cascade compute
 
 `feColorMatrix type="saturate"` keeps values above one, which oversaturate (Filter Effects 1
 §9.6), instead of clamping them to one as SVG 1.1 did.
+
+`direction: rtl` gives each text chunk a right-to-left bidi base level and swaps its `start` and
+`end` anchors (SVG 2 §11.10.1.1, §11.10.2.4), so right-to-left documents place SVG text from its
+anchor leftwards.
+
+`transform-box: fill-box` and `stroke-box` on groups and shapes place `transform-origin` in the
+element's object or stroke bounding box before its transform applies (CSS Transforms 1 §2);
+other values keep the viewport as the reference.
+
+`clip-path` takes CSS Shapes 1 §3 basic shapes and bare `<geometry-box>` keywords as well as
+references (CSS Masking 1 §6.1). The document's computed basic shapes trace the outline in the
+element's fill, stroke or view box, `stroke-box` by default, so SVG content and CSS boxes clip
+alike.

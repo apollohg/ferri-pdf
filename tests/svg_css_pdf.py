@@ -1,6 +1,7 @@
 """Rendered inline SVG styled by the document's cascade (SVG 2 §6.4): class rules, presentation
-attributes, inheritance from HTML, `use` instances of a sprite, and the isolation of SVG images
-from the document's style sheets, read back through Poppler."""
+attributes, inheritance from HTML, `use` instances of a sprite, CSS transforms, clipping, masks,
+overflow and direction on SVG content, and the isolation of SVG images from the document's style
+sheets, read back through Poppler."""
 from pathlib import Path
 import subprocess
 import tempfile
@@ -13,7 +14,9 @@ ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / 'target/debug/ferri-pdf'
 RASTER_DPI = 72
 PAGE_MARGIN = 20
+PAGE = 300
 ICON = 40
+SQUARE = 20
 COLOR_TOLERANCE = 3
 RED = (255, 0, 0)
 GREEN = (0, 160, 0)
@@ -26,19 +29,31 @@ SPRITE = (f'<svg style="display:none"><symbol id="dot" viewBox="0 0 {ICON} {ICON
 
 
 class SvgCssPdf(unittest.TestCase):
-    def render(self, root, css, body):
+    def convert(self, root, css, body):
         source = root / 'input.html'
         output = root / 'output.pdf'
         source.write_text(f'''<!doctype html><style>
-@page{{size:300pt 300pt;margin:{PAGE_MARGIN}pt}}
+@page{{size:{PAGE}pt {PAGE}pt;margin:{PAGE_MARGIN}pt}}
 body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
         completed = subprocess.run([str(RENDERER), str(source), str(output)], capture_output=True,
                                    text=True)
+        return completed, output
+
+    def render(self, root, css, body):
+        completed, output = self.convert(root, css, body)
         self.assertEqual(completed.returncode, 0, f'render failed: {completed.stderr}')
         subprocess.run(['pdftoppm', '-r', str(RASTER_DPI), '-aaVector', 'no', '-singlefile', '-png',
                         str(output), str(root / 'ink')], check=True, capture_output=True)
         with Image.open(root / 'ink.png') as image:
             return image.convert('RGB')
+
+    def ink_columns(self, pixels, left, top, width, height, color):
+        """The page columns, in points from the content edge, holding `color` in the region."""
+        return [x for x in range(left, left + width)
+                if any(all(abs(a - e) <= COLOR_TOLERANCE
+                           for a, e in zip(pixels.getpixel((PAGE_MARGIN + x, PAGE_MARGIN + y)),
+                                           color))
+                       for y in range(top, top + height))]
 
     def assertPixel(self, pixels, x, y, expected, label):
         actual = pixels.getpixel((PAGE_MARGIN + x, PAGE_MARGIN + y))
@@ -84,6 +99,88 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
                 f'<div class="panel" style="width:{ICON}pt;height:{ICON}pt"></div>')
             self.assertPixel(pixels, ICON // 2, ICON // 2, BLUE,
                              'SVG 2 §6.4: an SVG style element styles HTML content too')
+
+    def test_css_transforms_clips_masks_and_normalize_overflow_reach_svg_content(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            offset = (ICON - SQUARE) // 2
+            pixels = self.render(
+                Path(directory),
+                # normalize.css: nested and inline svg elements clip their overflow.
+                'svg:not(:root){overflow:hidden}'
+                '.spin{transform:rotate(45deg);transform-origin:center;transform-box:fill-box}'
+                '.still{transform:none} .round{clip-path:circle(50%)} .half{mask:url(#left)}'
+                f'.framed{{clip-path:xywh(10px 10px {SQUARE}px {SQUARE}px round 5px)}}',
+                f'<svg width="{4 * ICON}pt" height="{2 * ICON}pt" '
+                f'viewBox="0 0 {4 * ICON} {2 * ICON}">'
+                f'<mask id="left"><rect x="{3 * ICON}" width="{SQUARE}" height="{ICON}" '
+                'fill="white"/></mask>'
+                f'<rect class="spin" x="{offset}" y="{offset}" width="{SQUARE}" height="{SQUARE}" '
+                'fill="rgb(0,160,0)"/>'
+                f'<svg x="{ICON}" width="{SQUARE}" height="{SQUARE}">'
+                f'<rect width="{ICON}" height="{ICON}" fill="blue"/></svg>'
+                f'<rect class="round" x="{2 * ICON}" width="{ICON}" height="{ICON}" '
+                'fill="rgb(0,160,0)"/>'
+                f'<rect class="half" x="{3 * ICON}" width="{ICON}" height="{ICON}" fill="blue"/>'
+                f'<rect class="still" y="{ICON}" width="{ICON}" height="{ICON}" fill="blue" '
+                f'transform="translate({2 * ICON} 0)"/>'
+                f'<rect class="framed" x="{ICON}" y="{ICON}" width="{ICON}" height="{ICON}" '
+                'fill="rgb(0,160,0)"/>'
+                '</svg>')
+            half = ICON // 2
+            self.assertPixel(pixels, half, offset - 3, GREEN,
+                             'CSS Transforms 1 §6: the square turns about its fill-box centre, '
+                             'its corner rising above its untransformed top edge')
+            self.assertPixel(pixels, offset + 1, offset + 1, WHITE,
+                             'the turned square leaves its original corner')
+            self.assertPixel(pixels, ICON + SQUARE // 2, SQUARE // 2, BLUE,
+                             'the nested svg draws its content')
+            self.assertPixel(pixels, ICON + SQUARE + 5, SQUARE + 5, WHITE,
+                             'normalize.css: the nested svg clips content past its viewport')
+            self.assertPixel(pixels, 2 * ICON + half, half, GREEN,
+                             'the circle clip keeps the centre')
+            self.assertPixel(pixels, 2 * ICON + 2, 2, WHITE,
+                             'CSS Masking 1 §6.1: circle(50%) clips the corners')
+            self.assertPixel(pixels, 3 * ICON + SQUARE // 2, half, BLUE, 'the mask shows its half')
+            self.assertPixel(pixels, 3 * ICON + SQUARE + SQUARE // 2, half, WHITE,
+                             'the mask hides the other half')
+            self.assertPixel(pixels, half, ICON + half, BLUE,
+                             'SVG 2 §6.6: transform:none beats the transform attribute')
+            self.assertPixel(pixels, 2 * ICON + half, ICON + half, WHITE,
+                             'the transform attribute no longer moves the rectangle')
+            self.assertPixel(pixels, ICON + half, ICON + half, GREEN, 'xywh() keeps its square')
+            self.assertPixel(pixels, ICON + 10, ICON + half, GREEN,
+                             'the square starts 10px into the rectangle')
+            self.assertPixel(pixels, ICON + 9, ICON + half, WHITE,
+                             'xywh() clips the rectangle outside its square')
+            self.assertPixel(pixels, ICON + 10, ICON + 10, WHITE,
+                             'CSS Shapes 1 §3.1: round 5px clips the square\'s corner')
+
+    def test_right_to_left_pages_anchor_svg_icon_text_at_its_start_on_the_right(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            anchor = ICON - 2
+            pixels = self.render(
+                Path(directory), '',
+                '<html dir="rtl" lang="he">'
+                f'<svg width="{ICON}pt" height="{ICON}pt" viewBox="0 0 {ICON} {ICON}">'
+                f'<text x="{anchor}" y="{ICON - 10}" font-size="16" fill="blue">שלום</text>'
+                '</svg>')
+            left = PAGE - 2 * PAGE_MARGIN - ICON
+            columns = self.ink_columns(pixels, left, 0, ICON, ICON, BLUE)
+            self.assertTrue(columns, 'the icon text renders inside the right-aligned svg')
+            self.assertLessEqual(max(columns), left + anchor + 1,
+                                 'SVG 2 §11.10.1.1: in right-to-left text, start anchors the '
+                                 f'right edge at x; ink reaches column {max(columns)}')
+            self.assertLess(min(columns), left + anchor - SQUARE,
+                            'the word extends leftwards from its anchor')
+
+    def test_clip_path_element_references_on_boxes_are_reported_rather_than_ignored(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            for body in ['<div style="clip-path:url(#c)">X</div>',
+                         f'<svg width="{ICON}" height="{ICON}" style="clip-path:url(#c)">'
+                         '<clipPath id="c"><rect width="9" height="9"/></clipPath></svg>']:
+                completed, _ = self.convert(Path(directory), '', body)
+                self.assertNotEqual(completed.returncode, 0, f'{body} must not render unclipped')
+                self.assertIn('clipPath element on a box', completed.stderr, body)
 
     def test_svg_images_keep_their_own_styles(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:

@@ -1,9 +1,13 @@
 //! Computed values of SVG content written as the declarations and geometry attributes that the
 //! SVG renderer reads, so that the document's cascade alone decides them (SVG 2 §6.4).
 use crate::fonts::{FontFamily, FontStyle, FontWeight, FontWidth, GenericFamily};
-use crate::paint::{BlendMode, Color, FilterFunction, LengthPercentage, POINTS_PER_PIXEL};
+use crate::paint::{
+    AxisRadius, BasicShape, BlendMode, BoxArea, Calculation, CircleRadius, Color, CornerRadii,
+    EllipseRadii, FilterFunction, GeometryBox, LengthPercentage, POINTS_PER_PIXEL, RadialExtent,
+    Segment, ShapeBox,
+};
 use crate::style::{
-    Baseline, Display, Size, Style, StyleError, Visibility,
+    Baseline, Display, Overflow, Size, Style, StyleError, TransformBox, Visibility,
     svg_values::{Paint, PaintFallback, image_rendering_keyword, svg_keyword},
 };
 use std::fmt::Write;
@@ -24,6 +28,22 @@ const WIDTH_KEYWORDS: [(FontWidth, &str); 9] = [
     (FontWidth::ULTRA_EXPANDED, "ultra-expanded"),
 ];
 const NONE: &str = "none";
+const TRANSFORM_ORIGIN: &str = "transform-origin";
+const TRANSFORM_BOX: &str = "transform-box";
+const FILL_BOX: &str = "fill-box";
+const STROKE_BOX: &str = "stroke-box";
+const VIEW_BOX: &str = "view-box";
+const CLOSEST_SIDE: &str = "closest-side";
+const FARTHEST_SIDE: &str = "farthest-side";
+/// Elements whose viewport the SVG renderer clips as `overflow` says.
+const OVERFLOW_ELEMENTS: [&str; 3] = ["marker", "svg", "symbol"];
+/// Elements whose viewport the SVG renderer clips whatever their `overflow`.
+const ALWAYS_CLIPPED_ELEMENTS: [&str; 2] = ["image", "pattern"];
+/// Elements whose renderer measures their bounding box before placing their transform.
+const BOXED_TRANSFORM_ELEMENTS: &[&str] = &[
+    "circle", "ellipse", "g", "image", "line", "path", "polygon", "polyline", "rect", "svg",
+    "switch", "text",
+];
 /// CSS Fonts 4 §2.1.3 generic families that the SVG renderer also takes as generic.
 const UNCONFIGURED_GENERICS: [&str; 2] = ["cursive", "fantasy"];
 const CALCULATED_LENGTH: &str = "a calculation mixing lengths and percentages in SVG content";
@@ -110,6 +130,11 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
         push("mix-blend-mode", blend_mode(style.mix_blend_mode)?);
         push("isolation", if style.isolate { "isolate" } else { "auto" });
         push("filter", &filters(&style.filter));
+        if let Some(overflow) = overflow(tag, style.overflow)? {
+            push("overflow", overflow);
+        }
+        push("mask", &mask(&style.decoration.masks)?);
+        push("clip-path", &clip_path(style)?);
         match style.display {
             Display::None => push("display", "none"),
             Display::Contents => push("display", "contents"),
@@ -147,6 +172,7 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
         );
     }
     if is_text_content(tag) {
+        push("direction", if style.rtl { "rtl" } else { "ltr" });
         push("font-style", font_style(style)?);
         push("font-weight", &font_weight(style.font_weight)?);
         push("font-stretch", font_width(style.font_width)?);
@@ -196,6 +222,221 @@ pub(super) fn geometry(
     Ok(attributes)
 }
 
+/// The element's `transform` attribute (or its gradient or pattern counterpart), origin and
+/// reference box (CSS Transforms 1 §2, §6), empty without a transform.
+pub(super) fn transform(
+    tag: &str,
+    style: &Style,
+) -> Result<Vec<(&'static str, String)>, StyleError> {
+    let Some([a, b, c, d, e, f]) = style.planar_transform()? else {
+        return Ok(Vec::new());
+    };
+    let [x, y, _] = &style.transform_origin;
+    let mut attributes = vec![
+        (
+            crate::style::svg_values::transform_attribute(tag),
+            format!(
+                "matrix({a} {b} {c} {d} {} {})",
+                e / POINTS_PER_PIXEL,
+                f / POINTS_PER_PIXEL
+            ),
+        ),
+        (
+            TRANSFORM_ORIGIN,
+            format!("{} {}", length_percentage(x)?, length_percentage(y)?),
+        ),
+    ];
+    let reference = match style.transform_box {
+        TransformBox::ViewBox => None,
+        TransformBox::ContentBox | TransformBox::FillBox => Some(FILL_BOX),
+        TransformBox::BorderBox | TransformBox::StrokeBox => Some(STROKE_BOX),
+    };
+    if let Some(reference) = reference {
+        if !BOXED_TRANSFORM_ELEMENTS.contains(&tag) {
+            return Err(StyleError::Unsupported(format!(
+                "transform-box: {reference} on an SVG {tag} element"
+            )));
+        }
+        attributes.push((TRANSFORM_BOX, reference.into()));
+    }
+    Ok(attributes)
+}
+
+/// SVG 2 §3.11 `overflow` on the elements whose viewport it clips: `hidden` and `scroll` clip,
+/// and without scrolling `auto` is `visible`; one clip rectangle serves both axes. Other
+/// elements have no viewport to clip.
+fn overflow(tag: &str, [x, y]: [Overflow; 2]) -> Result<Option<&'static str>, StyleError> {
+    let always_clipped = ALWAYS_CLIPPED_ELEMENTS.contains(&tag);
+    if !always_clipped && !OVERFLOW_ELEMENTS.contains(&tag) {
+        return Ok(None);
+    }
+    let clips = |overflow| {
+        matches!(
+            overflow,
+            Overflow::Hidden | Overflow::Clip | Overflow::Scroll
+        )
+    };
+    match (clips(x), clips(y)) {
+        (true, true) => Ok(Some("hidden")),
+        (false, false) if !always_clipped => Ok(Some("visible")),
+        (false, false) => Err(StyleError::Unsupported(format!(
+            "overflow: visible on an SVG {tag} element, which its renderer always clips"
+        ))),
+        _ => Err(StyleError::Unsupported(
+            "overflow clipping one axis of an SVG viewport".into(),
+        )),
+    }
+}
+
+/// CSS Masking 1 §6.1 `clip-path` as the SVG renderer reads it: a `clipPath` reference, or a
+/// basic shape in SVG content's reference box, where content and padding boxes are the fill box
+/// and border and margin boxes the stroke box.
+fn clip_path(style: &Style) -> Result<String, StyleError> {
+    if let Some(reference) = &style.svg.clip_reference {
+        return Ok(url(reference));
+    }
+    let Some(clip) = &style.decoration.masks.clip_path else {
+        return Ok(NONE.into());
+    };
+    let reference = match clip.reference {
+        GeometryBox::Fill
+        | GeometryBox::Shape(ShapeBox::Visual(BoxArea::ContentBox | BoxArea::PaddingBox)) => {
+            FILL_BOX
+        }
+        GeometryBox::View => VIEW_BOX,
+        GeometryBox::Stroke | GeometryBox::Shape(_) => STROKE_BOX,
+    };
+    Ok(match &clip.shape {
+        None => reference.to_owned(),
+        Some(shape) => format!("{} {reference}", basic_shape(shape)?),
+    })
+}
+
+/// A basic shape with lengths in CSS pixels and positions as edge offsets.
+fn basic_shape(shape: &BasicShape) -> Result<String, StyleError> {
+    let lengths = |values: &mut dyn Iterator<Item = &LengthPercentage>| {
+        values
+            .map(shape_length)
+            .collect::<Result<Vec<_>, _>>()
+            .map(|values| values.join(" "))
+    };
+    let round = |radii: &CornerRadii| -> Result<String, StyleError> {
+        if radii
+            .iter()
+            .flatten()
+            .all(|radius| *radius == LengthPercentage::ZERO)
+        {
+            return Ok(String::new());
+        }
+        Ok(format!(
+            " round {} / {}",
+            lengths(&mut radii.iter().map(|[horizontal, _]| horizontal))?,
+            lengths(&mut radii.iter().map(|[_, vertical]| vertical))?
+        ))
+    };
+    let at = |[x, y]: &crate::paint::Position| -> Result<String, StyleError> {
+        Ok(format!(
+            "at {} {} {} {}",
+            if x.from_end { "right" } else { "left" },
+            shape_length(&x.offset)?,
+            if y.from_end { "bottom" } else { "top" },
+            shape_length(&y.offset)?
+        ))
+    };
+    let extent = |extent: RadialExtent| match extent {
+        RadialExtent::ClosestSide => CLOSEST_SIDE,
+        RadialExtent::FarthestSide => FARTHEST_SIDE,
+        RadialExtent::ClosestCorner => "closest-corner",
+        RadialExtent::FarthestCorner => "farthest-corner",
+    };
+    let axis = |radius: &AxisRadius| match radius {
+        AxisRadius::ClosestSide => Ok(CLOSEST_SIDE.to_owned()),
+        AxisRadius::FarthestSide => Ok(FARTHEST_SIDE.to_owned()),
+        AxisRadius::Length(length) => shape_length(length),
+    };
+    let rule = |even_odd: bool| if even_odd { "evenodd" } else { "nonzero" };
+    Ok(match shape {
+        BasicShape::Inset { insets, radii } => {
+            format!("inset({}{})", lengths(&mut insets.iter())?, round(radii)?)
+        }
+        BasicShape::Rect { edges, radii } => {
+            format!("rect({}{})", lengths(&mut edges.iter())?, round(radii)?)
+        }
+        BasicShape::Circle { radius, center } => format!(
+            "circle({} {})",
+            match radius {
+                CircleRadius::Extent(radius) => extent(*radius).to_owned(),
+                CircleRadius::Length(radius) => shape_length(radius)?,
+            },
+            at(center)?
+        ),
+        BasicShape::Ellipse { radii, center } => format!(
+            "ellipse({} {})",
+            match radii {
+                EllipseRadii::Extent(radii) => extent(*radii).to_owned(),
+                EllipseRadii::Axes([x, y]) => format!("{} {}", axis(x)?, axis(y)?),
+            },
+            at(center)?
+        ),
+        BasicShape::Polygon { even_odd, points } => format!(
+            "polygon({}, {})",
+            rule(*even_odd),
+            points
+                .iter()
+                .map(|point| lengths(&mut point.iter()))
+                .collect::<Result<Vec<_>, _>>()?
+                .join(", ")
+        ),
+        BasicShape::Path { even_odd, contours } => {
+            let mut quoted = String::new();
+            cssparser::serialize_string(&path_data(contours), &mut quoted)
+                .expect("writing a String cannot fail");
+            format!("path({}, {quoted})", rule(*even_odd))
+        }
+    })
+}
+
+/// SVG path data for contours in CSS pixels.
+fn path_data(contours: &[crate::paint::Contour]) -> String {
+    let mut data = String::new();
+    for contour in contours {
+        let [x, y] = contour.start;
+        let _ = write!(data, "M{x} {y}");
+        for segment in &contour.segments {
+            let _ = match segment {
+                Segment::Line([x, y]) => write!(data, "L{x} {y}"),
+                Segment::Cubic([[x1, y1], [x2, y2], [x, y]]) => {
+                    write!(data, "C{x1} {y1} {x2} {y2} {x} {y}")
+                }
+            };
+        }
+        if contour.closed {
+            data.push('Z');
+        }
+    }
+    data
+}
+
+/// CSS Masking 1 §7: a single reference to an SVG `mask` element, whose `mask-type` the
+/// default `match-source` mode follows.
+fn mask(masks: &crate::paint::Masks) -> Result<String, StyleError> {
+    if !masks.has_layers() && !masks.border.is_drawn() {
+        return Ok(NONE.into());
+    }
+    match masks.sources.as_slice() {
+        [Some(reference)]
+            if !masks.layers.has_images()
+                && !masks.border.is_drawn()
+                && masks.modes == [crate::paint::MaskMode::default()] =>
+        {
+            Ok(url(reference))
+        }
+        _ => Err(StyleError::Unsupported(
+            "mask layers other than one mask element reference on SVG content".into(),
+        )),
+    }
+}
+
 fn size(size: &Size) -> Result<Option<&LengthPercentage>, StyleError> {
     match size {
         Size::Auto => Ok(None),
@@ -208,6 +449,30 @@ fn size(size: &Size) -> Result<Option<&LengthPercentage>, StyleError> {
 
 fn number(value: f32) -> String {
     value.to_string()
+}
+
+/// A basic shape length; the SVG renderer reads a sum of lengths and percentages, such as an
+/// `xywh()` inset, as `calc(P% + L)`.
+fn shape_length(value: &LengthPercentage) -> Result<String, StyleError> {
+    match value {
+        LengthPercentage::Calc(calculation) if linear(calculation) => {
+            let length = calculation.resolve(0.0);
+            Ok(format!(
+                "calc({}% + {})",
+                (calculation.resolve(1.0) - length) * PERCENT,
+                pixels(length)
+            ))
+        }
+        _ => length_percentage(value),
+    }
+}
+
+fn linear(calculation: &Calculation) -> bool {
+    match calculation {
+        Calculation::Value(_) | Calculation::Percentage(_) => true,
+        Calculation::Sum(terms) => terms.iter().all(linear),
+        _ => false,
+    }
 }
 
 fn pixels(points: f32) -> String {
