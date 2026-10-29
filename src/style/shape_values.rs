@@ -1,6 +1,6 @@
 //! CSS Shapes 1 `shape-outside` and its `<basic-shape>` functions from match trees.
 use crate::paint::{
-    AbsoluteColor, AxisRadius, BasicShape, BoxArea, CircleRadius, Contour, CornerRadii,
+    AbsoluteColor, AxisRadius, BasicShape, BoxArea, CircleRadius, ClipPath, Contour, CornerRadii,
     EllipseRadii, LengthPercentage, PositionComponent, RadialExtent, Segment, ShapeBox,
     ShapeOutside,
 };
@@ -18,6 +18,9 @@ use crate::style::{
 /// `shape-outside` slots of `[ <shape-box> || <basic-shape> ]`.
 const BOX_SLOT: usize = 0;
 const SHAPE_SLOT: usize = 1;
+/// `clip-path` slots of `[ <basic-shape> || <geometry-box> ]`.
+const CLIP_SHAPE_SLOT: usize = 0;
+const CLIP_BOX_SLOT: usize = 1;
 /// The fraction of the way from an end point to a quadratic control point at which the
 /// equivalent cubic's control point lies.
 const QUADRATIC_TO_CUBIC: f32 = 2.0 / 3.0;
@@ -47,6 +50,42 @@ pub(super) fn shape_outside(
         },
         None => ShapeOutside::Box(reference),
     })
+}
+
+/// CSS Masking 1 §6.1 `clip-path`; `None` is `none`.
+pub(super) fn clip_path(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<Option<ClipPath>, StyleError> {
+    if value.keyword() == Some(Keyword::None) {
+        return Ok(None);
+    }
+    if value.slots().is_empty() {
+        return Err(StyleError::Unsupported(format!(
+            "clip-path reference to an SVG clipPath element: {value}"
+        )));
+    }
+    Ok(Some(ClipPath {
+        shape: value
+            .slot(CLIP_SHAPE_SLOT)
+            .map(|shape| basic_shape(shape, relative))
+            .transpose()?,
+        reference: value
+            .slot(CLIP_BOX_SLOT)
+            .map(geometry_box)
+            .transpose()?
+            .unwrap_or(ShapeBox::Visual(BoxArea::BorderBox)),
+    }))
+}
+
+/// `<geometry-box>`: boxes with a CSS layout box use the content box for `fill-box` and the
+/// border box for `stroke-box` and `view-box` (CSS Masking 1 §6.1).
+fn geometry_box(value: &Component) -> Result<ShapeBox, StyleError> {
+    match value.keyword() {
+        Some(Keyword::FillBox) => Ok(ShapeBox::Visual(BoxArea::ContentBox)),
+        Some(Keyword::StrokeBox | Keyword::ViewBox) => Ok(ShapeBox::Visual(BoxArea::BorderBox)),
+        _ => shape_box(value),
+    }
 }
 
 fn shape_box(value: &Component) -> Result<ShapeBox, StyleError> {

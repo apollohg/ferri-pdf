@@ -233,6 +233,7 @@ pub(super) fn measure<'a>(
     };
     let border_box = BoxPaint {
         padding: geometry.padding,
+        margins: geometry.used_margins(),
         ..BoxPaint::whole(
             Rect {
                 x: bounds.x - geometry.padding[3] - geometry.border[3],

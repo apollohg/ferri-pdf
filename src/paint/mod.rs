@@ -61,7 +61,8 @@ use serde::Serialize;
 pub(crate) use shadow::{BoxShadow, ShadowMask, blurred_shadow, outset, outset_radii};
 pub use shadow::{ShadowPaint, ShadowShape};
 pub(crate) use shape::{
-    AxisRadius, BasicShape, CircleRadius, CornerRadii, EllipseRadii, ShapeBox, ShapeOutside,
+    AxisRadius, BasicShape, CircleRadius, ClipPath, CornerRadii, EllipseRadii, ShapeBox,
+    ShapeOutside,
 };
 
 /// CSS reference pixel in PDF points.

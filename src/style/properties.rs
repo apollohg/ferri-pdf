@@ -710,6 +710,10 @@ fn handler(property: Property) -> Option<Handler> {
                     .is_ok()
             }),
         ),
+        P::ClipPath => (
+            clip_path,
+            Some(|v, r| crate::style::shape_values::clip_path(v, r).is_ok()),
+        ),
         P::ShapeMargin => (shape_margin, Some(|v, r| length_percentage(v, r).is_ok())),
         P::ShapeImageThreshold => (
             shape_image_threshold,
@@ -1950,6 +1954,20 @@ computed!(filter, [filter], |value, style, _parent, relative| {
         &style.computed_color,
     )?)
 });
+fn clip_path(
+    style: &mut Style,
+    _: &Style,
+    input: Input<'_>,
+    relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    style.masks_mut().clip_path = match input {
+        Input::Value(value) => {
+            crate::style::shape_values::clip_path(value, relative)?.map(std::sync::Arc::new)
+        }
+        Input::Copy(source) => source.decoration.masks.clip_path.clone(),
+    };
+    Ok(())
+}
 fn mask_image(
     style: &mut Style,
     _: &Style,

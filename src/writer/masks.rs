@@ -49,6 +49,18 @@ pub(super) fn draw(
         * painting::transform_scale(surface.cur_transform());
     let mut pushes = 0;
     let masked = (|| -> Result<(), PdfError> {
+        // §6.1: the clipping path clips what the masks then mask.
+        if mask
+            .fragments
+            .iter()
+            .any(|fragment| fragment.decoration.masks.clip_path.is_some())
+        {
+            let clip = soft_mask(painter, mask, area, surface, |_, fragment, values| {
+                draw_clip_path(fragment, area, values)
+            })?;
+            surface.push_mask(clip);
+            pushes += 1;
+        }
         // §8.1: mask layers and the mask border mask one after the other.
         if mask
             .fragments
@@ -173,6 +185,30 @@ fn fill(area: Rect, color: Color, surface: &mut Surface<'_>) -> Result<(), PdfEr
         crate::graphics::Fill {
             shape: crate::graphics::Shape::Rect(area),
             color,
+        },
+        area,
+        surface,
+    )
+}
+
+/// One fragment's clipping region in white over black (§6.1), cut where the fragment is
+/// sliced from the rest of its box.
+fn draw_clip_path(
+    fragment: &BoxPaint,
+    area: Rect,
+    surface: &mut Surface<'_>,
+) -> Result<(), PdfError> {
+    fill(area, Color::BLACK, surface)?;
+    let Some(clip_path) = &fragment.decoration.masks.clip_path else {
+        return Ok(());
+    };
+    painting::draw_fill(
+        crate::graphics::Fill {
+            shape: crate::graphics::Shape::Clipped {
+                shape: Box::new(clip_path.outline(fragment)),
+                bounds: crate::graphics::ClipBounds::new(fragment.slice_bounds(area), [true; 2]),
+            },
+            color: WHITE,
         },
         area,
         surface,

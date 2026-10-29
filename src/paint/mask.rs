@@ -1,7 +1,7 @@
 //! CSS Masking 1 §7 mask layers: lists like the background ones, with a mode and a compositing
 //! operator per layer.
 use crate::paint::{
-    Backgrounds, BorderImage, BorderImageRepeat, BorderImageWidth, BoxArea, ImageSlice,
+    Backgrounds, BorderImage, BorderImageRepeat, BorderImageWidth, BoxArea, ClipPath, ImageSlice,
 };
 use serde::Serialize;
 use std::{convert::Infallible, sync::Arc};
@@ -42,6 +42,8 @@ pub struct Masks<I = Infallible> {
     pub border: Arc<BorderImage<I>>,
     /// `mask-border-mode`; `match-source` does not occur.
     pub border_mode: MaskMode,
+    /// `clip-path` (§6), which clips the same group the mask layers mask; `None` is `none`.
+    pub(crate) clip_path: Option<Arc<ClipPath>>,
 }
 impl<I> Default for Masks<I> {
     fn default() -> Self {
@@ -61,14 +63,15 @@ impl<I> Default for Masks<I> {
                 ..BorderImage::default()
             }),
             border_mode: MaskMode::Alpha,
+            clip_path: None,
         }
     }
 }
 impl<I> Masks<I> {
-    /// A `mask-image` other than `none` in any layer (§7.10), or a `mask-border-source`
-    /// other than `none` (§8.1).
+    /// A `mask-image` other than `none` in any layer (§7.10), a `mask-border-source` other
+    /// than `none` (§8.1), or a `clip-path` other than `none` (§6.1).
     pub fn is_masked(&self) -> bool {
-        self.has_layers() || self.border.is_drawn()
+        self.has_layers() || self.border.is_drawn() || self.clip_path.is_some()
     }
     pub fn has_layers(&self) -> bool {
         self.layers.has_images() || self.sources.iter().any(Option::is_some)
@@ -99,6 +102,7 @@ impl Masks<Infallible> {
             composites: self.composites.clone(),
             border: Arc::new(self.border.with_image_type()),
             border_mode: self.border_mode,
+            clip_path: self.clip_path.clone(),
         }
     }
 }

@@ -1,8 +1,8 @@
 //! CSS Shapes 1 §3 `<basic-shape>` computed values and §6.1 `shape-outside`, with the outlines
 //! basic shapes trace in their reference box.
 use crate::paint::{
-    BackgroundImage, BoxArea, Contour, LengthPercentage, POINTS_PER_PIXEL, Position, RadialExtent,
-    Rect, Segment, Shape, rounded,
+    BackgroundImage, BoxArea, BoxPaint, Contour, LengthPercentage, POINTS_PER_PIXEL, Position,
+    RadialExtent, Radii, Rect, Segment, Shape, rounded,
 };
 use serde::Serialize;
 use std::convert::Infallible;
@@ -72,6 +72,52 @@ pub(crate) enum BasicShape {
     },
 }
 
+impl ShapeBox {
+    /// The box's rectangle and corner radii in `paint`, a sliced fragment's assembled box,
+    /// with `margins` around the border box for `margin-box` (CSS Shapes 1 §5).
+    pub(crate) fn resolve<I>(self, paint: &BoxPaint<I>, margins: [f32; 4]) -> (Rect, Radii) {
+        match self {
+            Self::Margin => (
+                crate::paint::outset(paint.decoration_rect(), margins),
+                crate::paint::outset_radii(paint.radii(), margins),
+            ),
+            Self::Visual(BoxArea::BorderBox) => (paint.decoration_rect(), paint.radii()),
+            Self::Visual(area) => {
+                let padding = if area == BoxArea::ContentBox {
+                    paint.padding
+                } else {
+                    [0.0; 4]
+                };
+                let clip = paint.inner_clip(padding, [true; 2]);
+                (clip.reference_box.unwrap_or(clip.rect), clip.radii)
+            }
+        }
+    }
+}
+
+/// CSS Masking 1 §6.1 `clip-path`: a basic shape in its reference box, `border-box` unless
+/// specified, or the reference box alone with its corner curvature.
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub(crate) struct ClipPath {
+    pub shape: Option<BasicShape>,
+    pub reference: ShapeBox,
+}
+
+impl ClipPath {
+    /// The clipping region of a box fragment, whose used margins `paint` carries.
+    pub(crate) fn outline<I>(&self, paint: &BoxPaint<I>) -> Shape {
+        let (rect, radii) = self.reference.resolve(paint, paint.margins);
+        match &self.shape {
+            Some(shape) => shape.outline(rect),
+            None => Shape::Path {
+                contours: vec![rounded::rounded_rect(rect, radii)],
+                even_odd: false,
+                clip: None,
+            },
+        }
+    }
+}
+
 /// The `shape-outside` computed value; `I` is a loaded image.
 #[derive(Clone, Debug, Default, PartialEq, Serialize)]
 #[serde(bound(serialize = ""))]
@@ -115,7 +161,7 @@ fn direction_agnostic([width, height]: [f32; 2]) -> f32 {
 
 /// CSS Backgrounds 3 §4.5: radii resolved against `basis`, scaled down together until
 /// adjacent radii fit along every side of `size`.
-fn used_radii(radii: &CornerRadii, basis: [f32; 2], size: [f32; 2]) -> rounded::Radii {
+fn used_radii(radii: &CornerRadii, basis: [f32; 2], size: [f32; 2]) -> Radii {
     let resolved = std::array::from_fn(|corner| {
         let [horizontal, vertical] = &radii[corner];
         let used = [horizontal.resolve(basis[0]), vertical.resolve(basis[1])];

@@ -510,10 +510,11 @@ impl Measurer<'_> {
         if block.is_canvas_source() && !self.canvas_images {
             decoration.clear_background();
         }
-        // Clips, containing blocks, scrollports and navigation need their page fragments even
-        // without ink.
+        // Clips, containing blocks, scrollports, mask and clip-path areas and navigation need
+        // their page fragments even without ink.
         let fragments = (block.is_canvas_source() && self.canvas_images)
             || style.clipped_axes().contains(&true)
+            || style.decoration.masks.is_masked()
             || style.contains_absolute()
             || style.is_scroll_container()
             || contains_sticky(block)
@@ -524,6 +525,7 @@ impl Measurer<'_> {
             BoxPaint {
                 draw_background: !block.is_canvas_source(),
                 padding: geometry.padding,
+                margins: geometry.used_margins(),
                 ..BoxPaint::whole(rect, decoration)
             }
         })

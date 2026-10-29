@@ -426,6 +426,7 @@ pub(super) fn fragment_paint(
     inline_box: &InlineBox,
     fragment: &BoxFragment,
     (rect, padding): (Rect, [f32; 4]),
+    containing_width: f32,
 ) -> Option<BoxPaint> {
     let mut decoration = inline_box.decoration.clone();
     if inline_box.canvas_source {
@@ -439,8 +440,24 @@ pub(super) fn fragment_paint(
     {
         return None;
     }
+    // `auto` margins of inline boxes are zero; inline-axis ones belong to the edge fragments.
+    let margins = std::array::from_fn(|side| {
+        let edge = match side {
+            LEFT => fragment.edges[0],
+            RIGHT => fragment.edges[1],
+            _ => true,
+        };
+        if edge {
+            inline_box.style.margin[side]
+                .resolve(containing_width)
+                .unwrap_or(0.0)
+        } else {
+            0.0
+        }
+    });
     Some(BoxPaint {
         padding,
+        margins,
         inline_edges: fragment.edges,
         ..BoxPaint::whole(rect, decoration)
     })

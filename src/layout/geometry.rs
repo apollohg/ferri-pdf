@@ -14,6 +14,18 @@ pub(super) struct HorizontalBox {
 }
 
 impl HorizontalBox {
+    /// Used margins: `auto` horizontal margins take the containing block's remaining width
+    /// on their side and `auto` vertical ones are zero.
+    pub(crate) fn used_margins(&self) -> [f32; 4] {
+        let border = self.border_box(0.0);
+        let [top, right, bottom, left] = self.margin;
+        [
+            top.unwrap_or(0.0),
+            right.unwrap_or(self.containing_x + self.containing_width - border.x - border.width),
+            bottom.unwrap_or(0.0),
+            left.unwrap_or(border.x - self.containing_x),
+        ]
+    }
     pub(crate) fn border_box(&self, height: f32) -> crate::graphics::Rect {
         crate::graphics::Rect {
             x: self.x - self.padding[3] - self.border[3],

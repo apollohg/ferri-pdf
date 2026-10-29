@@ -197,25 +197,8 @@ pub(crate) fn float_area(
     Ok(Some(FloatArea { pieces, tallest }))
 }
 
-/// A `<shape-box>` and its corner radii (§5).
 fn reference_box(reference: ShapeBox, boxes: &FloatBoxes<'_>) -> (Rect, crate::graphics::Radii) {
-    let paint = boxes.paint;
-    match reference {
-        ShapeBox::Margin => (
-            crate::paint::outset(paint.decoration_rect(), boxes.margins),
-            crate::paint::outset_radii(paint.radii(), boxes.margins),
-        ),
-        ShapeBox::Visual(BoxArea::BorderBox) => (paint.decoration_rect(), paint.radii()),
-        ShapeBox::Visual(area) => {
-            let padding = if area == BoxArea::ContentBox {
-                paint.padding
-            } else {
-                [0.0; 4]
-            };
-            let clip = paint.inner_clip(padding, [true; 2]);
-            (clip.reference_box.unwrap_or(clip.rect), clip.radii)
-        }
-    }
+    reference.resolve(boxes.paint, boxes.margins)
 }
 
 /// The closed polygon approximating a contour within `FLATTEN_TOLERANCE_PT`.

@@ -4817,9 +4817,12 @@ impl<'a, 'm, 't> Paginator<'a, 'm, 't> {
                     None => containing.push((style, layer.clip, vec![content])),
                 }
             }
-            let Some(paint) =
-                crate::layout::inline::fragment_paint(inline_box, fragment, (border, padding))
-            else {
+            let Some(paint) = crate::layout::inline::fragment_paint(
+                inline_box,
+                fragment,
+                (border, padding),
+                width,
+            ) else {
                 continue;
             };
             self.page_content |= paint.has_ink() && paint.rect.intersects(self.page_rect);

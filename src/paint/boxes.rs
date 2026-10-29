@@ -432,6 +432,8 @@ pub struct BoxPaint<I = Infallible> {
     pub decoration: BoxDecoration<I>,
     /// Used padding widths in top/right/bottom/left order.
     pub padding: [f32; 4],
+    /// Used margins, which a `margin-box` reference box adds to the border box.
+    pub margins: [f32; 4],
     /// Assembled decoration box of a sliced fragment, or the table row, column or group
     /// whose background layer a cell paints.
     pub background_box: Option<Rect>,
@@ -464,6 +466,7 @@ impl<I> BoxPaint<I> {
             rect,
             decoration,
             padding: [0.0; 4],
+            margins: [0.0; 4],
             background_box: None,
             background_geometry: None,
             draw_background: true,
