@@ -1725,6 +1725,7 @@ impl Stylesheet {
         if let Some(value) = &accent {
             properties::apply(Property::AccentColor, value, style, parent, &inherited)?;
         }
+        let initial_page_font_size = inherited.initial_page_font_size;
         for property in [
             Property::MathDepth,
             Property::MathStyle,
@@ -1734,10 +1735,11 @@ impl Stylesheet {
         .iter()
         .chain(&FONT_SELECTION)
         {
+            inherited.initial_page_font_size =
+                initial_page_font_size && *property == Property::FontSize;
             if let Some(value) = winners.remove(property) {
                 properties::apply(*property, &value, style, parent, &inherited)?;
             }
-            inherited.initial_page_font_size = false;
         }
         style.font_candidates = self.fonts.candidates_in_namespace(
             style.font_namespace,
