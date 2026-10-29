@@ -672,12 +672,28 @@ fn handler(property: Property) -> Option<Handler> {
         P::Widows => (widows, Some(|v, r| positive_integer(v, r).is_ok())),
         P::Orphans => (orphans, Some(|v, r| positive_integer(v, r).is_ok())),
         P::BoxDecorationBreak => (box_decoration_break, Some(|_, _| true)),
-        P::BoxShadow => (
-            box_shadow,
+        P::BoxShadowColor => (
+            box_shadow_color,
             Some(|v, r| {
-                crate::style::shadow_values::shadows(v, r, &crate::paint::AbsoluteColor::BLACK)
+                crate::style::shadow_values::colors(v, r, &crate::paint::AbsoluteColor::BLACK)
                     .is_ok()
             }),
+        ),
+        P::BoxShadowOffset => (
+            box_shadow_offset,
+            Some(|v, r| crate::style::shadow_values::offsets(v, r).is_ok()),
+        ),
+        P::BoxShadowBlur => (
+            box_shadow_blur,
+            Some(|v, r| crate::style::shadow_values::lengths(v, r).is_ok()),
+        ),
+        P::BoxShadowSpread => (
+            box_shadow_spread,
+            Some(|v, r| crate::style::shadow_values::lengths(v, r).is_ok()),
+        ),
+        P::BoxShadowPosition => (
+            box_shadow_position,
+            Some(|v, _| crate::style::shadow_values::positions(v).is_ok()),
         ),
         P::TextShadow => (
             text_shadow,
@@ -2302,15 +2318,57 @@ pub(super) fn opacity_value(value: &Component, relative: &Relative<'_>) -> Resul
     }
     .clamp(0.0, 1.0))
 }
-computed!(
-    box_shadow,
-    [decoration.shadows],
-    |value, style, _parent, relative| {
-        std::sync::Arc::new(crate::style::shadow_values::shadows(
-            value,
-            relative,
-            &style.computed_color,
-        )?)
+macro_rules! shadow_list {
+    ($name:ident, $field:ident, $compute:expr) => {
+        fn $name(
+            style: &mut Style,
+            _: &Style,
+            input: Input<'_>,
+            relative: &Relative<'_>,
+        ) -> Result<(), StyleError> {
+            style.shadows.$field = match input {
+                Input::Value(value) => ($compute)(value, &*style, relative)?,
+                Input::Copy(source) => source.shadows.$field.clone(),
+            };
+            style.shadows.resolve(relative, &style.computed_color)?;
+            style.decoration.shadows = std::sync::Arc::new(style.shadows.layers());
+            Ok(())
+        }
+    };
+}
+shadow_list!(
+    box_shadow_color,
+    colors,
+    |value: &Component, style: &Style, relative: &Relative<'_>| {
+        crate::style::shadow_values::colors(value, relative, &style.computed_color)
+    }
+);
+shadow_list!(
+    box_shadow_offset,
+    offsets,
+    |value: &Component, _: &Style, relative: &Relative<'_>| {
+        crate::style::shadow_values::offsets(value, relative)
+    }
+);
+shadow_list!(
+    box_shadow_blur,
+    blurs,
+    |value: &Component, _: &Style, relative: &Relative<'_>| {
+        crate::style::shadow_values::lengths(value, relative)
+    }
+);
+shadow_list!(
+    box_shadow_spread,
+    spreads,
+    |value: &Component, _: &Style, relative: &Relative<'_>| {
+        crate::style::shadow_values::lengths(value, relative)
+    }
+);
+shadow_list!(
+    box_shadow_position,
+    positions,
+    |value: &Component, _: &Style, _: &Relative<'_>| {
+        crate::style::shadow_values::positions(value)
     }
 );
 fn color_check(value: &Component, relative: &Relative<'_>) -> bool {

@@ -932,6 +932,103 @@ fn sharp_contours(paint: &crate::ShadowPaint) -> &[crate::Contour] {
 }
 
 #[test]
+fn shadow_longhands_coordinate_lists_against_offsets_including_none_entries() {
+    let paint = first_paint(
+        "div{background:white;height:30pt;box-shadow-offset:2pt 3pt,none,7pt,11pt 13pt;box-shadow-color:red,blue;box-shadow-blur:0,4pt;box-shadow-spread:1pt;box-shadow-position:inset,outset}",
+        "<div></div>",
+    );
+    let shadows = paint.decoration.shadows.as_ref();
+    assert_eq!(
+        shadows.len(),
+        3,
+        "a none offset suppresses just its own layer"
+    );
+    for (index, (actual, (offset, colour, blur, inset))) in shadows
+        .iter()
+        .zip([
+            ([2.0, 3.0], [255, 0, 0], 0.0, true),
+            ([7.0, 7.0], [255, 0, 0], 0.0, true),
+            ([11.0, 13.0], [0, 0, 255], 4.0, false),
+        ])
+        .enumerate()
+    {
+        assert_eq!(actual.offset, offset, "shadow {index}: offsets");
+        assert_eq!(actual.color.rgb, colour, "shadow {index}: repeated colour");
+        assert_eq!(actual.blur, blur, "shadow {index}: repeated blur");
+        assert_eq!(actual.spread, 1.0, "shadow {index}: repeated spread");
+        assert_eq!(actual.inset, inset, "shadow {index}: repeated position");
+    }
+}
+
+#[test]
+fn shadow_shorthand_resets_and_longhands_override_each_component() {
+    let overridden = first_paint(
+        "div{background:white;height:30pt;box-shadow:3pt 4pt 5pt 6pt red inset,7pt 8pt navy;box-shadow-color:green;box-shadow-offset:9pt;box-shadow-position:outset}",
+        "<div></div>",
+    );
+    let shadows = overridden.decoration.shadows.as_ref();
+    assert_eq!(shadows.len(), 1, "offset list determines layer count");
+    assert_eq!(shadows[0].offset, [9.0, 9.0]);
+    assert_eq!(shadows[0].blur, 5.0);
+    assert_eq!(shadows[0].spread, 6.0);
+    assert_eq!(shadows[0].color.rgb, [0, 128, 0]);
+    assert!(!shadows[0].inset);
+    let reset = first_paint(
+        "div{background:white;height:30pt;color:navy;box-shadow:3pt 4pt 5pt 6pt red inset;box-shadow:none,2pt 3pt;box-shadow-offset:7pt,9pt}",
+        "<div></div>",
+    );
+    let shadows = reset.decoration.shadows.as_ref();
+    assert_eq!(shadows.len(), 2);
+    assert_eq!(
+        shadows[0].color.alpha, 0.0,
+        "none shorthand layer resets its colour to transparent"
+    );
+    assert_eq!(
+        shadows[1].color.rgb,
+        [0, 0, 128],
+        "omitted colour of an enabled layer is currentcolor"
+    );
+    for shadow in shadows {
+        assert_eq!(shadow.blur, 0.0, "shorthand resets blur");
+        assert_eq!(shadow.spread, 0.0, "shorthand resets spread");
+        assert!(!shadow.inset, "shorthand resets position");
+    }
+}
+
+#[test]
+fn shadow_longhands_inherit_computed_lists_and_drop_invalid_negative_blur() {
+    let html = format!(
+        "<style>{PROFILE}section{{color:red;box-shadow-offset:2pt 4pt,6pt;box-shadow-color:currentcolor,blue;box-shadow-blur:3pt;box-shadow-spread:-2pt;box-shadow-position:inset}}div{{background:white;height:30pt;color:green;box-shadow:inherit;box-shadow-blur:-1pt;box-shadow-offset:var(--offset);--offset:5pt,7pt 9pt}}</style><section><div></div></section>"
+    );
+    let trace = render_html(&html, &options())
+        .expect("inherited shadow lists must render")
+        .layout
+        .unwrap();
+    let child = boxes(&trace.display_lists[0])
+        .into_iter()
+        .find(|paint| paint.decoration.background.rgb == [255; 3])
+        .expect("white child decoration");
+    let shadows = child.decoration.shadows.as_ref();
+    assert_eq!(shadows.len(), 2);
+    assert_eq!(shadows[0].offset, [5.0, 5.0]);
+    assert_eq!(shadows[1].offset, [7.0, 9.0]);
+    assert_eq!(
+        shadows[0].color.rgb,
+        [0, 128, 0],
+        "inherited currentcolor resolves against the child's own color"
+    );
+    assert_eq!(shadows[1].color.rgb, [0, 0, 255]);
+    for shadow in shadows {
+        assert_eq!(
+            shadow.blur, 3.0,
+            "invalid literal blur preserves inherited value"
+        );
+        assert_eq!(shadow.spread, -2.0);
+        assert!(shadow.inset);
+    }
+}
+
+#[test]
 fn shadow_shapes_spread_their_radii_and_clip_around_the_box() {
     let paint = first_paint(
         "div{width:100pt;height:40pt;border:2pt solid navy;border-radius:10pt 2pt 10pt 10pt;box-shadow:6pt 4pt 0 5pt navy,inset 0 0 0 3pt red}",

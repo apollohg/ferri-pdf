@@ -132,6 +132,7 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::MinSize => pair(&value, [P::MinWidth, P::MinHeight]),
         P::MaxSize => pair(&value, [P::MaxWidth, P::MaxHeight]),
         P::TextAlign => text_align(&value),
+        P::BoxShadow => box_shadow(&value),
         P::Margin => edges(
             &value,
             [P::MarginTop, P::MarginRight, P::MarginBottom, P::MarginLeft],
@@ -750,6 +751,47 @@ fn text_spacing(value: &Component) -> Result<Longhands, StyleError> {
 /// A legacy name alias sharing the value of the property it names.
 fn alias(value: &Component, property: Property) -> Longhands {
     vec![(property, longhand(property, value))]
+}
+
+/// CSS Borders 4 §6.6: an omitted colour is transparent only for a `none` offset.
+fn box_shadow(value: &Component) -> Longhands {
+    const COLOR_SLOT: usize = 0;
+    const GEOMETRY_SLOT: usize = 1;
+    const POSITION_SLOT: usize = 2;
+    let items: Vec<_> = value.items().iter().collect();
+    fn geometry(item: &Component) -> Option<&[Component]> {
+        item.slot(GEOMETRY_SLOT).map(Component::items)
+    }
+    fn blur_spread(item: &Component) -> Option<&[Component]> {
+        geometry(item)?
+            .get(1)?
+            .items()
+            .first()
+            .map(Component::items)
+    }
+    vec![
+        coordinated(Property::BoxShadowColor, &items, &|item| {
+            item.slot(COLOR_SLOT)
+                .and_then(|color| color.items().first())
+                .cloned()
+                .or_else(|| {
+                    (geometry(item)?.first()?.keyword() == Some(Keyword::None))
+                        .then_some(Component::Color(crate::paint::AbsoluteColor::TRANSPARENT))
+                })
+        }),
+        coordinated(Property::BoxShadowOffset, &items, &|item| {
+            geometry(item)?.first().cloned()
+        }),
+        coordinated(Property::BoxShadowBlur, &items, &|item| {
+            blur_spread(item)?.first().cloned()
+        }),
+        coordinated(Property::BoxShadowSpread, &items, &|item| {
+            blur_spread(item)?.get(1)?.items().first().cloned()
+        }),
+        coordinated(Property::BoxShadowPosition, &items, &|item| {
+            item.slot(POSITION_SLOT)?.items().first().cloned()
+        }),
+    ]
 }
 
 /// Comma-separated `||` items, each slot setting one item of the longhand at its index.

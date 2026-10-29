@@ -1,6 +1,10 @@
 {
   "description": "Corrections to mdn-data from the cited specifications: productions the data references but does not define, and entries that predate the current specification. Each entry replaces only the fields it names. Additions are specification properties the data omits, defined in full.",
   "syntaxes": {
+    "spread-shadow": {
+      "syntax": "<color>? && [ [ none | <length>{2} ] [ <length [0,∞]> <length>? ]? ] && [ outset | inset ]?",
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#typedef-spread-shadow: each longhand contributes one list item to a shadow"
+    },
     "border-side-radius": {
       "syntax": "<length-percentage [0,∞]>{1,2} [ / <length-percentage [0,∞]>{1,2} ]?",
       "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-border-top-radius: shared grammar of the physical and logical side radius shorthands"
@@ -175,6 +179,11 @@
     }
   },
   "properties": {
+    "box-shadow": {
+      "syntax": "<spread-shadow>#",
+      "initial": ["box-shadow-color", "box-shadow-offset", "box-shadow-blur", "box-shadow-spread", "box-shadow-position"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-box-shadow"
+    },
     "text-align": {
       "syntax": "start | end | left | right | center | justify | justify-all | match-parent",
       "initial": ["text-align-all", "text-align-last"],
@@ -636,6 +645,41 @@
     }
   },
   "additions": {
+    "box-shadow-color": {
+      "syntax": "<color>#",
+      "initial": "currentcolor",
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-box-shadow-color"
+    },
+    "box-shadow-offset": {
+      "syntax": "[ none | <length>{1,2} ]#",
+      "initial": "none",
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-box-shadow-offset"
+    },
+    "box-shadow-blur": {
+      "syntax": "<length [0,∞]>#",
+      "initial": "0",
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-box-shadow-blur"
+    },
+    "box-shadow-spread": {
+      "syntax": "<length>#",
+      "initial": "0",
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-box-shadow-spread"
+    },
+    "box-shadow-position": {
+      "syntax": "[ outset | inset ]#",
+      "initial": "outset",
+      "inherited": false,
+      "groups": ["CSS Backgrounds and Borders"],
+      "source": "https://www.w3.org/TR/2025/WD-css-borders-4-20251216/#propdef-box-shadow-position"
+    },
     "text-align-all": {
       "syntax": "start | end | left | right | center | justify | match-parent",
       "initial": "start",

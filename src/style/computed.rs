@@ -239,6 +239,8 @@ pub(crate) struct Style {
     pub widget: crate::style::WidgetStyle,
     pub color_scheme: crate::style::color_scheme::ColorSchemes,
     pub decoration: BoxDecoration,
+    #[serde(skip)]
+    pub(super) shadows: crate::style::shadow_values::Shadows,
     pub clone_decoration: bool,
     pub text_decorations: crate::style::TextDecorations,
     pub text_paint: crate::style::TextPaint,
@@ -370,6 +372,7 @@ impl Default for Style {
             widget: crate::style::WidgetStyle::default(),
             color_scheme: Default::default(),
             decoration: initial_decoration(),
+            shadows: crate::style::shadow_values::Shadows::default(),
             clone_decoration: false,
             text_decorations: crate::style::TextDecorations::default(),
             text_paint: crate::style::TextPaint::default(),
@@ -1450,6 +1453,7 @@ impl Stylesheet {
         style.reset_current_colors();
         style.text_decorations.declared.color = style.color;
         style.text_paint.resolve(&relative, &style.computed_color)?;
+        style.shadows.resolve(&relative, &style.computed_color)?;
         crate::style::svg_values::SvgStyle::resolve(
             &mut style.svg,
             &relative,

@@ -218,6 +218,19 @@ body{{margin:0}}div{{margin:0}}{css}</style>{body}''')
                     self.assertNear(pixels.getpixel(centre), eight_bit(gamut_map(xyz)),
                                     SOLID_TOLERANCE, value)
 
+    def test_shadow_longhand_layers_keep_their_colours_after_none_offsets(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-shadow-lists-') as directory:
+            root = Path(directory)
+            css = ('div{width:40pt;height:40pt;margin:30pt;border:1pt solid black;'
+                   'box-shadow-offset:none,60pt 0,0 60pt;box-shadow-color:red,blue;'
+                   'box-shadow-blur:0;box-shadow-spread:0;box-shadow-position:outset}')
+            with self.raster(root, self.render(root, css, '<div></div>')) as pixels:
+                for point, expected in [((130, 70), (0, 0, 255)),
+                                        ((70, 130), (255, 0, 0)),
+                                        ((70, 70), (255, 255, 255))]:
+                    self.assertNear(pixels.getpixel(point), expected, SOLID_TOLERANCE,
+                                    f'coordinated shadow list at {point}')
+
     def test_conic_gradients_sweep_clockwise_from_their_start_angle(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-conic-') as directory:
             root = Path(directory)
