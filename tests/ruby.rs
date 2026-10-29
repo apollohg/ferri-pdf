@@ -312,3 +312,27 @@ fn lines_break_between_bases_but_not_within_a_spanning_annotation() {
     );
     line(&trace, "漢字水");
 }
+
+#[test]
+fn empty_bases_and_right_to_left_containers_keep_their_columns() {
+    let trace = render(
+        "",
+        "<p><ruby><rb>漢</rb><rb></rb><rb>字</rb><rt>あ</rt><rt></rt><rt>ア</rt></ruby></p>",
+    );
+    let base = line(&trace, "漢字");
+    assert_labelled_pt(
+        "an empty base between two takes no width",
+        line(&trace, "ア").x - base.x,
+        SIZE_PT + (SIZE_PT - ANNOTATION_PT) / 2.0,
+    );
+    let trace = render(
+        "rt{ruby-align:start}",
+        "<p dir=rtl><ruby>漢字<rt>あ</rt></ruby></p>",
+    );
+    let base = line(&trace, "漢字");
+    assert_labelled_pt(
+        "start alignment is the right edge in a right-to-left container",
+        line(&trace, "あ").x + ANNOTATION_PT,
+        base.x + base.width,
+    );
+}

@@ -489,6 +489,11 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
             } else {
                 (0.0, 0.0)
             };
+            let (leading, trailing) = if paragraph.boxes()[base].style.rtl {
+                (trailing, leading)
+            } else {
+                (leading, trailing)
+            };
             if leading > 0.0 {
                 insertions.push((at, LEADING_RANK, container, leading));
             }
@@ -691,16 +696,19 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         for (ruby_index, ruby) in self.rubies() {
             let mut whole: Option<[f32; 2]> = None;
             for (segment_index, segment) in ruby.segments.iter().enumerate() {
-                let Some(span) =
-                    Self::bases_on_line(&segment.bases, |base| fragments.contains_key(&base))
-                else {
+                let Some(span) = Self::bases_on_line(&segment.bases, |base| {
+                    line.present.binary_search(&base).is_ok()
+                }) else {
                     continue;
                 };
                 let [first, last] = span;
-                let mut columns = Vec::with_capacity(last - first + 1);
+                let mut columns: Vec<Option<[f32; 2]>> = Vec::with_capacity(last - first + 1);
                 let mut container = [f32::INFINITY, f32::NEG_INFINITY];
                 for &base in &segment.bases[first..=last] {
-                    let pieces = &fragments[&base];
+                    let Some(pieces) = fragments.get(&base) else {
+                        columns.push(None);
+                        continue;
+                    };
                     let style = &paragraph.boxes()[base].style;
                     let margin = |side: usize| style.margin[side].resolve(basis).unwrap_or(0.0);
                     let left = pieces
@@ -720,10 +728,10 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                             spacing.overhang[1],
                         ]
                     });
-                    columns.push([
+                    columns.push(Some([
                         left - margin(LEFT) - leading - before,
                         right + margin(RIGHT) + trailing + after,
-                    ]);
+                    ]));
                     let [top, bottom] = block_edges(style, basis);
                     for piece in pieces {
                         container[0] = container[0].min(piece.baseline - piece.ascent - top);
@@ -738,6 +746,15 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                         container[0] = container[0].min(extent[0]);
                         container[1] = container[1].max(extent[1]);
                     }
+                }
+                let columns = collapsed_columns(&columns, ruby_rtl(paragraph, ruby));
+                if !container[0].is_finite() {
+                    let [above, below] = margin_extent(
+                        self.context,
+                        &paragraph.boxes()[ruby.container].style,
+                        basis,
+                    )?;
+                    container = [-above, below];
                 }
                 let mut over = container[0];
                 let mut under = container[1];
@@ -773,15 +790,15 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                     };
                     for placement in placements {
                         let [start, end] = placement.bases.map(|base| base - first);
-                        let extent = [columns[start][0], columns[end][1]];
-                        placed.extend(self.position(
-                            level,
-                            &placement,
-                            extent,
-                            baseline,
-                            ruby.container,
-                            &widths,
-                        )?);
+                        let extent = columns[start..=end].iter().fold(
+                            [f32::INFINITY, f32::NEG_INFINITY],
+                            |[left, right], column| [left.min(column[0]), right.max(column[1])],
+                        );
+                        placed.extend(
+                            self.position(
+                                level, &placement, extent, baseline, ruby_index, &widths,
+                            )?,
+                        );
                     }
                 }
                 whole = Some(whole.map_or([over, under], |[top, bottom]| {
@@ -804,7 +821,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         placement: &Placed,
         [left, right]: [f32; 2],
         baseline: f32,
-        container: usize,
+        ruby: usize,
         widths: &[f32],
     ) -> Result<Vec<AtomicFragment>, TextError> {
         let annotations = &level.annotations[placement.annotations.clone()];
@@ -850,18 +867,20 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                 count += 1;
             }
         }
-        let (leading, _, each) = if extra > 0.0 {
+        let (start, _, each) = if extra > 0.0 {
             distribution(align, extra, count)
         } else {
             (extra * HALF, extra * HALF, 0.0)
         };
-        let mut x = left + leading;
+        // Annotations follow their base container's direction from its start edge (§3.5).
+        let rtl = ruby_rtl(self.paragraph, &self.paragraph.rubies()[ruby]);
+        let mut pen = start;
         let mut fragments = Vec::new();
         for ((annotation, (width, contents)), junction) in
             annotations.iter().zip(sizes).zip(junctions)
         {
             if junction {
-                x += each;
+                pen += each;
             }
             let opportunities = if annotation.whitespace {
                 1
@@ -872,15 +891,15 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
             if let Some(block) = annotation.block {
                 fragments.push(AtomicFragment {
                     index: self.paragraph.atomics().len() + block,
-                    x,
+                    x: if rtl { right - pen - used } else { left + pen },
                     width: used,
                     baseline,
                     offset: self.paragraph.annotations()[block].offset,
-                    owner: Some(container),
-                    rtl: false,
+                    owner: Some(self.paragraph.rubies()[ruby].container),
+                    rtl,
                 });
             }
-            x += used;
+            pen += used;
         }
         Ok(fragments)
     }
@@ -965,6 +984,34 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         }
         Ok((content, heights))
     }
+}
+
+/// Whether `ruby`'s base container, which shares its container's direction, runs right to
+/// left.
+fn ruby_rtl(paragraph: &Paragraph, ruby: &Ruby) -> bool {
+    paragraph.boxes()[ruby.container].style.rtl
+}
+
+/// The `[left, right]` extents of a line's columns, where a base without a fragment on the
+/// line takes an empty column at the end of the one before it in the direction `rtl` gives,
+/// or at the start of the one after it.
+fn collapsed_columns(columns: &[Option<[f32; 2]>], rtl: bool) -> Vec<[f32; 2]> {
+    let edge = |column: [f32; 2], end: bool| {
+        let x = if end == rtl { column[0] } else { column[1] };
+        [x, x]
+    };
+    let mut filled: Vec<Option<[f32; 2]>> = columns.to_vec();
+    for index in 1..filled.len() {
+        if filled[index].is_none() {
+            filled[index] = filled[index - 1].map(|column| edge(column, true));
+        }
+    }
+    for index in (0..filled.len().saturating_sub(1)).rev() {
+        if filled[index].is_none() {
+            filled[index] = filled[index + 1].map(|column| edge(column, false));
+        }
+    }
+    filled.into_iter().map(Option::unwrap_or_default).collect()
 }
 
 /// How `ruby-align` spreads `extra` space around content with `count` justification
