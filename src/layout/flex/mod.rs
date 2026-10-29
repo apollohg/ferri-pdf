@@ -781,6 +781,7 @@ pub(super) fn measure<'a>(
             first_fragment,
             cells,
             paints: Vec::new(),
+            after: Vec::new(),
             targets: Vec::new(),
             break_before: BreakBetween::Auto,
             break_after: BreakBetween::Auto,

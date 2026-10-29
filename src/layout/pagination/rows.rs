@@ -3,7 +3,7 @@
     reason = "pagination submodules extend the parent paginator and share its scope"
 )]
 use super::*;
-use crate::layout::measure::MeasuredCell;
+use crate::layout::measure::{MeasuredCell, RowPaint};
 use std::ops::Range;
 
 type Stretch<'a> = (
@@ -990,7 +990,7 @@ impl<'a> Paginator<'a, '_, 'a> {
 
     pub(super) fn finish_row(&mut self, cursor: RowCursor<'a, 'a>) -> Result<(), LayoutError> {
         let RowCursor {
-            row,
+            mut row,
             start,
             start_page,
             last_body,
@@ -1157,6 +1157,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         if let Some(trace) = &trace {
             self.order_grid_text(trace);
         }
+        self.paint_row_after(std::mem::take(&mut row.after), start_page, start)?;
         self.has_flow |= row.height > 0.0;
         self.at_page_start = false;
         self.pending_break = Forced::of(row.break_after);
@@ -1166,4 +1167,76 @@ impl<'a> Paginator<'a, '_, 'a> {
         }
         Ok(())
     }
+
+    fn paint_row_after(
+        &mut self,
+        paints: Vec<RowPaint<'a>>,
+        page: usize,
+        top: f32,
+    ) -> Result<(), LayoutError> {
+        if paints.is_empty() {
+            return Ok(());
+        }
+        let end = (self.page, self.y);
+        let flow = (self.has_flow, self.at_page_start, self.margin_start);
+        let pending = std::mem::take(&mut self.pending);
+        self.select_page(page, top);
+        for paint in paints {
+            self.measurer.work.spend(1)?;
+            match paint {
+                RowPaint::Text(text) => self.row_text(*text, top)?,
+                RowPaint::Box(paint) => {
+                    let mut paint = *paint;
+                    for rect in
+                        std::iter::once(&mut paint.rect).chain(paint.background_box.as_mut())
+                    {
+                        rect.x += self.offset[0];
+                        rect.y += self.top + top + self.offset[1];
+                    }
+                    self.record_overflow(paint.rect);
+                    let visible =
+                        !self.force_hidden && self.boxes.last().is_none_or(|active| active.visible);
+                    if visible && paint.has_ink() {
+                        if let Some(geometry) = self
+                            .boxes
+                            .last()
+                            .and_then(|active| active.geometry.as_ref())
+                        {
+                            self.anchors.ink(
+                                crate::layout::anchors::ink_key(geometry.source.style()),
+                                self.page,
+                                crate::layout::anchors::box_ink_in_frame(
+                                    &paint,
+                                    crate::layout::writing::Frame::for_style(
+                                        geometry.source.style(),
+                                    ),
+                                ),
+                                self.clip,
+                            );
+                        }
+                        self.page_content |= paint.rect.intersects(self.page_rect);
+                        let scope = self.layer_scope(&self.current_layer());
+                        self.foreground[self.page].push(ScopedPaint {
+                            native: None,
+                            visible,
+                            order: self.orders.take(),
+                            scope,
+                            clip: self.clip,
+                            group: self.group,
+                            ink: None,
+                            item: DisplayItem::Box(paint),
+                            navigation: BoxNavigation::default(),
+                        });
+                    }
+                }
+            }
+        }
+        self.select_page(end.0, end.1);
+        (self.has_flow, self.at_page_start, self.margin_start) = flow;
+        self.pending = pending;
+        Ok(())
+    }
 }
+
+#[cfg(test)]
+mod tests;

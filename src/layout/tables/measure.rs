@@ -1626,6 +1626,7 @@ fn measure_plan<'a>(
             height: band_height,
             first_fragment,
             paints,
+            after: Vec::new(),
             targets,
             cells: painted_cells,
             break_before,

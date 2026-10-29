@@ -451,6 +451,7 @@ pub(crate) fn measure<'a>(
         height: content,
         first_fragment,
         paints: Vec::new(),
+        after: Vec::new(),
         targets: Vec::new(),
         cells,
         break_before: row_edges[0],

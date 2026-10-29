@@ -711,7 +711,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             if take == 0 {
                 break 'fragment;
             }
-            for line in lines.by_ref().take(take) {
+            for mut line in lines.by_ref().take(take) {
                 self.measurer.work.spend(line.range.len().max(1))?;
                 position = positions
                     .next()
@@ -783,74 +783,13 @@ impl<'a> Paginator<'a, '_, 'a> {
                 )?;
                 self.record_baselines(self.page, [Some(baseline); 2]);
                 letter = None;
-                let paragraph = line_layers.paragraph;
-                // Runs inside inline boxes with their own layers paint in them.
-                let parts = self.split_line(line_layers, line.runs, &line.decorations);
-                let grouped = parts.len() > 1;
-                let decorates = |run: &crate::text::GlyphRun, decoration: &DecorationPaint| {
-                    decoration.owner.is_none_or(|owner| {
-                        paragraph.is_within(paragraph.spans()[run.source_span].inline_box, owner)
-                    })
-                };
-                for part in parts {
-                    if self.force_hidden
-                        || (grouped && part.runs.is_empty() && part.decorations.is_empty())
-                    {
-                        continue;
-                    }
-                    let origin = [
-                        line_x + offset + self.offset[0] + part.layer.offset[0],
-                        baseline + part.layer.offset[1],
-                    ];
-                    for run in &part.runs {
-                        let style = &paragraph.spans()[run.source_span].style;
-                        self.anchors.text(
-                            crate::layout::anchors::ink_key(style),
-                            self.page,
-                            run,
-                            origin,
-                            part.layer.clip,
-                            crate::layout::writing::Frame::for_style(style),
-                        );
-                    }
-                    for decoration in &part.decorations {
-                        let style = decoration.owner.map_or_else(
-                            || paragraph.style(),
-                            |owner| &paragraph.boxes()[owner].style,
-                        );
-                        for fill in decoration.fills() {
-                            if let Some(rect) = crate::paint::shape_bounds(&fill.shape) {
-                                self.anchors.ink(
-                                    crate::layout::anchors::ink_key(style),
-                                    self.page,
-                                    Rect {
-                                        x: rect.x + origin[0],
-                                        y: rect.y + origin[1],
-                                        ..rect
-                                    },
-                                    part.layer.clip,
-                                );
-                            }
-                        }
-                    }
-                    self.emit_line(
-                        TextLine {
-                            paragraph: index,
-                            text: line.text.clone(),
-                            x: line_x + offset + self.offset[0],
-                            baseline,
-                            width: line.width,
-                            height: line.height,
-                            runs: part.runs,
-                            font_size: style.size,
-                            color: style.color,
-                        },
-                        line.ink_bounds,
-                        &part.decorations,
-                        &part.layer,
-                        &decorates,
-                    );
-                }
+                self.emit_paragraph_line(
+                    index,
+                    style,
+                    &mut line,
+                    [line_x + offset + self.offset[0], baseline],
+                    line_layers,
+                );
                 self.y += line.height;
                 if line.height > 0.0 || !line.text.is_empty() {
                     self.has_flow = true;
@@ -916,6 +855,135 @@ impl<'a> Paginator<'a, '_, 'a> {
         for event in &source.semantic_events()[consumed_events..] {
             self.string_locations.record(self.page, &event.event);
         }
+        self.finish_inline_backgrounds(&layers);
+        Ok(None)
+    }
+    fn emit_paragraph_line(
+        &mut self,
+        index: usize,
+        style: &crate::style::Style,
+        line: &mut crate::text::Line,
+        origin: [f32; 2],
+        line_layers: &InlineLayers<'a>,
+    ) {
+        let paragraph = line_layers.paragraph;
+        // Runs inside inline boxes with their own layers paint in them.
+        let parts = self.split_line(
+            line_layers,
+            std::mem::take(&mut line.runs),
+            &line.decorations,
+        );
+        let grouped = parts.len() > 1;
+        let decorates = |run: &crate::text::GlyphRun, decoration: &DecorationPaint| {
+            decoration.owner.is_none_or(|owner| {
+                paragraph.is_within(paragraph.spans()[run.source_span].inline_box, owner)
+            })
+        };
+        for part in parts {
+            if self.force_hidden || (grouped && part.runs.is_empty() && part.decorations.is_empty())
+            {
+                continue;
+            }
+            let ink_origin = [
+                origin[0] + part.layer.offset[0],
+                origin[1] + part.layer.offset[1],
+            ];
+            for run in &part.runs {
+                let style = &paragraph.spans()[run.source_span].style;
+                self.anchors.text(
+                    crate::layout::anchors::ink_key(style),
+                    self.page,
+                    run,
+                    ink_origin,
+                    part.layer.clip,
+                    crate::layout::writing::Frame::for_style(style),
+                );
+            }
+            for decoration in &part.decorations {
+                let style = decoration.owner.map_or_else(
+                    || paragraph.style(),
+                    |owner| &paragraph.boxes()[owner].style,
+                );
+                for fill in decoration.fills() {
+                    if let Some(rect) = crate::paint::shape_bounds(&fill.shape) {
+                        self.anchors.ink(
+                            crate::layout::anchors::ink_key(style),
+                            self.page,
+                            Rect {
+                                x: rect.x + ink_origin[0],
+                                y: rect.y + ink_origin[1],
+                                ..rect
+                            },
+                            part.layer.clip,
+                        );
+                    }
+                }
+            }
+            self.emit_line(
+                TextLine {
+                    paragraph: index,
+                    text: line.text.clone(),
+                    x: origin[0],
+                    baseline: origin[1],
+                    width: line.width,
+                    height: line.height,
+                    runs: part.runs,
+                    font_size: style.size,
+                    color: style.color,
+                },
+                line.ink_bounds,
+                &part.decorations,
+                &part.layer,
+                &decorates,
+            );
+        }
+    }
+
+    pub(super) fn row_text(
+        &mut self,
+        mut text: crate::layout::measure::RowText<'a>,
+        row_top: f32,
+    ) -> Result<(), LayoutError> {
+        let glyphs = text
+            .line
+            .runs
+            .iter()
+            .map(|run| run.glyphs().len())
+            .sum::<usize>();
+        self.measurer.work.spend(
+            glyphs
+                .saturating_add(text.line.text.len())
+                .saturating_add(text.line.boxes.len())
+                .saturating_add(text.line.links.len())
+                .saturating_add(text.line.decorations.len())
+                .max(1),
+        )?;
+        self.y = row_top + text.baseline - text.line.ascent;
+        let baseline = self.top + row_top + text.baseline + self.offset[1];
+        self.record_baselines(self.page, [Some(baseline); 2]);
+        self.record_overflow(Rect {
+            x: text.x + self.offset[0],
+            y: self.top + self.y + self.offset[1],
+            width: text.line.width,
+            height: text.line.height,
+        });
+        let containing = InlineContaining::of(self.containing_geometry());
+        let mut layers = InlineLayers::new(text.source, containing);
+        let line_layers = layers.line(&text.line);
+        self.inline_content(&text.line, containing.width, text.x, &mut [], line_layers)?;
+        let index = self.measurer.sources.paragraph(text.source);
+        self.emit_paragraph_line(
+            index,
+            text.source.style(),
+            &mut text.line,
+            [text.x + self.offset[0], baseline],
+            line_layers,
+        );
+        self.finish_inline_backgrounds(&layers);
+        Ok(())
+    }
+
+    fn finish_inline_backgrounds(&mut self, layers: &InlineLayers<'a>) {
         for (inline_box, fragments) in layers.painted() {
             if !inline_box.style.clone_decoration {
                 assemble_background(
@@ -926,6 +994,5 @@ impl<'a> Paginator<'a, '_, 'a> {
                 );
             }
         }
-        Ok(None)
     }
 }

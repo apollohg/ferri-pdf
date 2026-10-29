@@ -373,6 +373,21 @@ pub(super) struct CollapsedItem<'a> {
 }
 
 #[derive(Clone)]
+pub(super) struct RowText<'a> {
+    pub source: &'a crate::document::Paragraph,
+    pub line: Line,
+    /// Layout x before paginator offsets; the baseline is relative to the row top.
+    pub x: f32,
+    pub baseline: f32,
+}
+
+#[derive(Clone)]
+pub(super) enum RowPaint<'a> {
+    Box(Box<BoxPaint>),
+    Text(Box<RowText<'a>>),
+}
+
+#[derive(Clone)]
 pub(super) struct MeasuredRow<'a> {
     pub grid: Option<std::rc::Rc<crate::layout::grid::Rows>>,
     pub baselines: Option<[Option<f32>; 2]>,
@@ -382,6 +397,8 @@ pub(super) struct MeasuredRow<'a> {
     pub height: f32,
     pub first_fragment: f32,
     pub paints: Vec<BoxPaint>,
+    /// Root-owned paints emitted once after child branches restore the row layer.
+    pub after: Vec<RowPaint<'a>>,
     /// Originating grid rows and border boxes of rows, groups and cells carrying navigation.
     pub targets: Vec<RowTarget>,
     pub cells: Vec<MeasuredCell<'a>>,
