@@ -1136,7 +1136,7 @@ fn auto_direction_text_input_state_rules_outrank_generic_dir_isolation() {
             "the UA state rule must remain below authored CSS"
         );
     }
-    for kind in ["checkbox", "hidden", "button", "date"] {
+    for kind in ["checkbox", "radio", "button", "date"] {
         assert_eq!(
             style("", "", &format!("<input id=target type={kind} dir=auto>")).unicode_bidi,
             UnicodeBidi::Isolate,

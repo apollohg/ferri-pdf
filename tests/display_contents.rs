@@ -203,7 +203,8 @@ fn contents_unbox_html_elements_whose_normal_principal_box_is_special() {
             .flatten()
             .map(|line| line.text.as_str())
             .collect::<Vec<_>>(),
-        ["ButtonLegendFieldDetails"]
+        ["ButtonLegendField", "\u{25be} Details", "Details"],
+        "an unboxed details element keeps its internal default summary (HTML §15.5.5)"
     );
 }
 
