@@ -240,6 +240,7 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
         P::DashWebkitLineClamp => line_clamp(&value, true)?,
         P::DashWebkitBoxOrient => box_orient(&value)?,
         P::TextBox => text_box(&value)?,
+        P::TextSpacing => text_spacing(&value)?,
         P::DashWebkitTextStroke => slots(
             &value,
             &[P::DashWebkitTextStrokeWidth, P::DashWebkitTextStrokeColor],
@@ -671,6 +672,49 @@ fn text_box(value: &Component) -> Result<Longhands, StyleError> {
             value
                 .slot(EDGE_SLOT)
                 .map_or_else(initial, |edge| longhand(Property::TextBoxEdge, edge)),
+        ),
+    ])
+}
+
+/// CSS Text 4 §8.6: `none` turns both longhands off, `auto` sets both to `auto`, and an
+/// omitted longhand is initial.
+fn text_spacing(value: &Component) -> Result<Longhands, StyleError> {
+    const TRIM_SLOT: usize = 0;
+    const AUTOSPACE_SLOT: usize = 1;
+    const TRIM_OFF: &str = "space-all";
+    const AUTOSPACE_OFF: &str = "no-autospace";
+    const AUTO: &str = "auto";
+    let both = |trim: &str, autospace: &str| -> Result<Longhands, StyleError> {
+        Ok(vec![
+            (
+                Property::TextSpacingTrim,
+                literal(Property::TextSpacingTrim, trim)?,
+            ),
+            (
+                Property::TextAutospace,
+                literal(Property::TextAutospace, autospace)?,
+            ),
+        ])
+    };
+    match value.keyword() {
+        Some(Keyword::None) => return both(TRIM_OFF, AUTOSPACE_OFF),
+        Some(Keyword::Auto) => return both(AUTO, AUTO),
+        _ => {}
+    }
+    Ok(vec![
+        (
+            Property::TextSpacingTrim,
+            value
+                .slot(TRIM_SLOT)
+                .map_or_else(initial, |trim| longhand(Property::TextSpacingTrim, trim)),
+        ),
+        (
+            Property::TextAutospace,
+            value
+                .slot(AUTOSPACE_SLOT)
+                .map_or_else(initial, |autospace| {
+                    longhand(Property::TextAutospace, autospace)
+                }),
         ),
     ])
 }

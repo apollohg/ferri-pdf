@@ -217,3 +217,36 @@ fn legacy_box_keywords_map_onto_flex_layout() {
         "a later display value replaces the legacy box"
     );
 }
+
+/// CSS Text 4 §8.6: `text-spacing` sets both character class spacing longhands, an omitted
+/// one to its initial value, and they inherit.
+#[test]
+fn text_spacing_shorthand_sets_trim_and_autospace() {
+    for (shorthand, trim, autospace) in [
+        ("none", "space-all", "no-autospace"),
+        ("auto", "auto", "auto"),
+        ("normal", "normal", "normal"),
+        ("trim-start", "trim-start", "normal"),
+        ("ideograph-alpha", "normal", "ideograph-alpha"),
+        (
+            "ideograph-numeric replace trim-both",
+            "trim-both",
+            "ideograph-numeric replace",
+        ),
+    ] {
+        let [root, child] = computed(&format!(
+            "#root{{text-spacing-trim:trim-all;text-autospace:punctuation;text-spacing:{shorthand}}}"
+        ));
+        let [expected, _] = computed(&format!(
+            "#root{{text-spacing-trim:{trim};text-autospace:{autospace}}}"
+        ));
+        assert_eq!(
+            root.text_spacing, expected.text_spacing,
+            "text-spacing:{shorthand} sets text-spacing-trim:{trim} and text-autospace:{autospace}"
+        );
+        assert_eq!(
+            child.text_spacing, root.text_spacing,
+            "text-spacing:{shorthand} inherits"
+        );
+    }
+}

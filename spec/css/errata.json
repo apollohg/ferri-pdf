@@ -658,6 +658,13 @@
       "groups": ["CSS Overflow"],
       "source": "https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#continue with the -webkit-discard value of https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#webkit-line-clamp"
     },
+    "text-spacing": {
+      "syntax": "none | auto | <spacing-trim> || <autospace>",
+      "initial": ["text-spacing-trim", "text-autospace"],
+      "inherited": true,
+      "groups": ["CSS Text"],
+      "source": "https://www.w3.org/TR/2026/WD-css-text-4-20260814/#text-spacing-property: a shorthand for text-spacing-trim and text-autospace"
+    },
     "-webkit-box-orient": {
       "syntax": "horizontal | vertical | inline-axis | block-axis",
       "initial": ["flex-direction"],
