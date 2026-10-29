@@ -19,7 +19,7 @@ pub(super) fn tree_context(
     }
 }
 
-pub(super) const SELECTOR_TARGET_COUNT: usize = 10;
+pub(super) const SELECTOR_TARGET_COUNT: usize = 11;
 pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
     match pseudo {
         None => 0,
@@ -32,6 +32,7 @@ pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
         Some(PseudoElement::FirstLetterSuffix) => 7,
         Some(PseudoElement::Placeholder) => 8,
         Some(PseudoElement::FileSelectorButton) => 9,
+        Some(PseudoElement::Absent(_)) => 10,
     }
 }
 
@@ -192,9 +193,15 @@ fn pseudo_element<'i>(
         Token::Colon => (input.next_including_whitespace()?.clone(), true),
         token => (token, false),
     };
+    let not_pseudo = || StyleError::Invalid("not a pseudo-element".into());
     match name {
-        Token::Ident(name) => PseudoElement::parse(&name, double_colon).ok_or_else(|| {
-            input.new_custom_error(StyleError::Invalid("not a pseudo-element".into()))
+        Token::Ident(name) => PseudoElement::parse(&name, double_colon)
+            .ok_or_else(|| input.new_custom_error(not_pseudo())),
+        Token::Function(name) if double_colon => input.parse_nested_block(|arguments| {
+            let pseudo = PseudoElement::parse_functional(&name, arguments)
+                .map_err(|error| error.location.new_custom_error(not_pseudo()))?;
+            arguments.expect_exhausted()?;
+            Ok(pseudo)
         }),
         token => Err(input.new_unexpected_token_error(token)),
     }

@@ -1381,6 +1381,16 @@ fn static_selector_states_match_initial_html() {
             ":blank",
             vec!["text", "unchecked", "textarea", "number"],
         ),
+        (
+            "<!doctype html><video id=video autoplay></video><audio id=audio muted></audio><p id=text muted>Text</p><svg><video id=foreign/></svg>",
+            ":paused",
+            vec!["video", "audio"],
+        ),
+        (
+            "<!doctype html><video id=video autoplay></video><audio id=audio muted></audio><p id=text muted>Text</p>",
+            ":muted",
+            vec!["audio"],
+        ),
     ] {
         assert_eq!(
             marked(selector, html),
@@ -1388,7 +1398,7 @@ fn static_selector_states_match_initial_html() {
             "initial state: {selector} in {html}"
         );
     }
-    let html = "<!doctype html><p id=target interestfor=popup autofocus>Static</p><a id=link href='#target'>Link</a>";
+    let html = "<!doctype html><p id=target interestfor=popup autofocus>Static</p><a id=link href='#target'>Link</a><video id=video autoplay controls></video><x-state id=custom></x-state>";
     for selector in [
         ":hover",
         ":active",
@@ -1401,10 +1411,68 @@ fn static_selector_states_match_initial_html() {
         ":current",
         ":past",
         ":future",
+        ":state(checked)",
+        ":playing",
+        ":buffering",
+        ":stalled",
+        ":seeking",
+        ":volume-locked",
+        ":fullscreen",
+        ":picture-in-picture",
+        ":snapped",
+        ":snapped-x",
+        ":snapped-y",
+        ":snapped-block",
+        ":snapped-inline",
     ] {
+        assert_eq!(
+            marked(&format!("{selector}, #link"), html),
+            ["link"],
+            "{selector} parses, so its selector list still applies"
+        );
         assert!(
             marked(selector, html).is_empty(),
             "no fabricated interaction/timeline state: {selector}"
+        );
+    }
+}
+
+#[test]
+fn absent_pseudo_elements_parse_but_style_nothing() {
+    const HTML: &str = "<!doctype html><p id=para>Text</p><dialog id=dialog open>Open</dialog><div id=columns style='columns:2'>Columns</div>";
+    for pseudo in [
+        "::selection",
+        "::target-text",
+        "::spelling-error",
+        "::grammar-error",
+        "::search-text",
+        "::highlight(found)",
+        "::backdrop",
+        "::column",
+        "::nth-fragment(2n+1)",
+        "::nth-fragment(odd)",
+    ] {
+        assert_eq!(
+            marked(&format!("#para, *{pseudo}"), HTML),
+            ["para"],
+            "`{pseudo}` must parse, or its whole selector list would drop"
+        );
+        assert!(
+            marked(&format!("*{pseudo}"), HTML).is_empty(),
+            "`{pseudo}` is never generated, so its rules style no element"
+        );
+    }
+    for invalid in [
+        "::highlight()",
+        "::highlight(1)",
+        "::nth-fragment()",
+        "::nth-fragment(x)",
+        ":selection",
+        "::column(1)",
+    ] {
+        assert!(
+            marked(&format!("#para, *{invalid}"), HTML).is_empty(),
+            "`{invalid}` is invalid and drops its selector list"
         );
     }
 }

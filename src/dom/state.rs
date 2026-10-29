@@ -266,6 +266,11 @@ impl<'a> Element<'a> {
         !autonomous && self.attr("is").is_none()
     }
 
+    /// HTML §4.8.11: `audio` and `video` are the media elements.
+    pub(crate) fn is_media(self) -> bool {
+        self.namespace() == HTML_NAMESPACE && matches!(self.name(), "audio" | "video")
+    }
+
     pub(crate) fn hyperlink(self) -> Option<&'a str> {
         match (self.namespace(), self.name()) {
             (HTML_NAMESPACE, "a" | "area") => self.attr("href"),

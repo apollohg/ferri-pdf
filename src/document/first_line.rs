@@ -171,7 +171,8 @@ impl Restyle<'_> {
                         PseudoElement::Marker
                         | PseudoElement::FirstLine
                         | PseudoElement::Placeholder
-                        | PseudoElement::FileSelectorButton,
+                        | PseudoElement::FileSelectorButton
+                        | PseudoElement::Absent(_),
                     ) => None,
                 }
             }

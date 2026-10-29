@@ -498,6 +498,8 @@ impl<'i> parser::Parser<'i> for StaticParser<'_> {
             "enabled" => Some(StaticState::Enabled),
             "disabled" => Some(StaticState::Disabled),
             "has-slotted" => Some(StaticState::HasSlotted),
+            "paused" => Some(StaticState::Paused),
+            "muted" => Some(StaticState::Muted),
             _ => FormState::parse(&name).map(StaticState::Form),
         };
         if let Some(state) = state {
@@ -531,6 +533,11 @@ impl<'i> parser::Parser<'i> for StaticParser<'_> {
                     }
                 })
                 .map(|levels| StaticState::Heading(Some(levels)));
+        }
+        if name.eq_ignore_ascii_case("state") {
+            return Ok(StaticState::CustomState(
+                input.expect_ident_cloned()?.to_string(),
+            ));
         }
         if name.eq_ignore_ascii_case("dir") {
             return Ok(StaticState::Direction(
@@ -588,6 +595,11 @@ impl parser::SelectorImpl for StaticSelector {
     type ExtraMatchingData<'a> = ();
 }
 
+/// States no element of a static rendering is in: nothing is hovered, focused or visited,
+/// no timeline plays, no media plays or seeks (HTML §4.16.3: `:playing`, `:buffering`,
+/// `:stalled` and `:seeking` need playback, and this user agent never locks the volume),
+/// nothing is fullscreen or in picture-in-picture without a script request, and nothing is
+/// scrolled to a snap position (CSS Scroll Snap 2 §4).
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub(crate) enum InactiveState {
     Hover,
@@ -601,38 +613,57 @@ pub(crate) enum InactiveState {
     Current,
     Past,
     Future,
+    Playing,
+    Buffering,
+    Stalled,
+    Seeking,
+    VolumeLocked,
+    Fullscreen,
+    PictureInPicture,
+    Snapped,
+    SnappedX,
+    SnappedY,
+    SnappedBlock,
+    SnappedInline,
 }
 impl InactiveState {
+    const NAMES: [(&str, Self); 23] = [
+        ("hover", Self::Hover),
+        ("active", Self::Active),
+        ("focus", Self::Focus),
+        ("focus-visible", Self::FocusVisible),
+        ("focus-within", Self::FocusWithin),
+        ("visited", Self::Visited),
+        ("interest-source", Self::InterestSource),
+        ("interest-target", Self::InterestTarget),
+        ("current", Self::Current),
+        ("past", Self::Past),
+        ("future", Self::Future),
+        ("playing", Self::Playing),
+        ("buffering", Self::Buffering),
+        ("stalled", Self::Stalled),
+        ("seeking", Self::Seeking),
+        ("volume-locked", Self::VolumeLocked),
+        ("fullscreen", Self::Fullscreen),
+        ("picture-in-picture", Self::PictureInPicture),
+        ("snapped", Self::Snapped),
+        ("snapped-x", Self::SnappedX),
+        ("snapped-y", Self::SnappedY),
+        ("snapped-block", Self::SnappedBlock),
+        ("snapped-inline", Self::SnappedInline),
+    ];
     fn parse(name: &str) -> Option<Self> {
-        match name.to_ascii_lowercase().as_str() {
-            "hover" => Some(Self::Hover),
-            "active" => Some(Self::Active),
-            "focus" => Some(Self::Focus),
-            "focus-visible" => Some(Self::FocusVisible),
-            "focus-within" => Some(Self::FocusWithin),
-            "visited" => Some(Self::Visited),
-            "interest-source" => Some(Self::InterestSource),
-            "interest-target" => Some(Self::InterestTarget),
-            "current" => Some(Self::Current),
-            "past" => Some(Self::Past),
-            "future" => Some(Self::Future),
-            _ => None,
-        }
+        Self::NAMES
+            .iter()
+            .find(|(candidate, _)| name.eq_ignore_ascii_case(candidate))
+            .map(|(_, state)| *state)
     }
     fn name(self) -> &'static str {
-        match self {
-            Self::Hover => "hover",
-            Self::Active => "active",
-            Self::Focus => "focus",
-            Self::FocusVisible => "focus-visible",
-            Self::FocusWithin => "focus-within",
-            Self::Visited => "visited",
-            Self::InterestSource => "interest-source",
-            Self::InterestTarget => "interest-target",
-            Self::Current => "current",
-            Self::Past => "past",
-            Self::Future => "future",
-        }
+        Self::NAMES
+            .iter()
+            .find(|(_, state)| *state == self)
+            .map(|(name, _)| *name)
+            .expect("every inactive state has a name")
     }
 }
 
@@ -741,6 +772,13 @@ pub(crate) enum StaticState {
     HasSlotted,
     Current(Box<SelectorList<StaticSelector>>),
     Heading(Option<Vec<i32>>),
+    /// HTML §4.16.3: media elements are paused until playback starts, which a static
+    /// rendering never does.
+    Paused,
+    /// HTML §4.8.11.13: a media element is muted from its `muted` content attribute.
+    Muted,
+    /// `:state()` (Selectors 5 §5.2): custom element states, which only script adds.
+    CustomState(String),
     Inactive(InactiveState),
     Form(FormState),
 }
@@ -797,6 +835,13 @@ impl ToCss for StaticState {
             Self::Enabled => dest.write_str(":enabled"),
             Self::Disabled => dest.write_str(":disabled"),
             Self::HasSlotted => dest.write_str(":has-slotted"),
+            Self::Paused => dest.write_str(":paused"),
+            Self::Muted => dest.write_str(":muted"),
+            Self::CustomState(name) => {
+                dest.write_str(":state(")?;
+                cssparser::serialize_identifier(name, dest)?;
+                dest.write_str(")")
+            }
             Self::Current(selectors) => {
                 dest.write_str(":current(")?;
                 selectors.to_css(dest)?;
@@ -857,6 +902,7 @@ pub(crate) enum PseudoElement {
     /// §4.3), which style parts of a control's internal content.
     Placeholder,
     FileSelectorButton,
+    Absent(AbsentPseudoElement),
 }
 impl From<GeneratedPseudoElement> for PseudoElement {
     fn from(pseudo: GeneratedPseudoElement) -> Self {
@@ -866,6 +912,53 @@ impl From<GeneratedPseudoElement> for PseudoElement {
         }
     }
 }
+/// Pseudo-elements that a static rendering never generates, so that rules for them style
+/// nothing. Highlights (CSS Pseudo-Elements 4 §3) paint only active highlights: nothing is
+/// selected or found in the page, no script registers custom highlights, no navigation
+/// applies a text directive, and this user agent checks no spelling or grammar. Without
+/// script the top layer is empty, so no element has a `::backdrop` (CSS Positioned Layout
+/// 4 §3.1). `::column` takes only scroll snap properties (CSS Multi-column Layout 2 §4.6),
+/// which static media ignore. `::nth-fragment()` styles fragment boxes, which only a
+/// `continue: fragments` element generates, and the `continue` grammar has no such value
+/// (CSS Overflow 4 §5.3).
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+pub(crate) enum AbsentPseudoElement {
+    Selection,
+    TargetText,
+    SpellingError,
+    GrammarError,
+    SearchText,
+    /// `::highlight()`: every custom highlight name is unregistered, so all are alike.
+    Highlight,
+    Backdrop,
+    Column,
+    NthFragment,
+}
+impl AbsentPseudoElement {
+    const NAMES: [(&str, Self); 7] = [
+        ("selection", Self::Selection),
+        ("target-text", Self::TargetText),
+        ("spelling-error", Self::SpellingError),
+        ("grammar-error", Self::GrammarError),
+        ("search-text", Self::SearchText),
+        ("backdrop", Self::Backdrop),
+        ("column", Self::Column),
+    ];
+    fn source(self) -> &'static str {
+        match self {
+            Self::Selection => "::selection",
+            Self::TargetText => "::target-text",
+            Self::SpellingError => "::spelling-error",
+            Self::GrammarError => "::grammar-error",
+            Self::SearchText => "::search-text",
+            Self::Highlight => "::highlight(unregistered)",
+            Self::Backdrop => "::backdrop",
+            Self::Column => "::column",
+            Self::NthFragment => "::nth-fragment(n)",
+        }
+    }
+}
+
 /// The CSS 2 pseudo-elements, which also take the single-colon syntax (Selectors 4 §16).
 const LEGACY_PSEUDO_ELEMENTS: [&str; 4] = ["before", "after", "first-line", "first-letter"];
 impl PseudoElement {
@@ -888,7 +981,27 @@ impl PseudoElement {
             ("file-selector-button", Self::FileSelectorButton),
         ]
         .into_iter()
+        .chain(
+            AbsentPseudoElement::NAMES
+                .into_iter()
+                .map(|(name, pseudo)| (name, Self::Absent(pseudo))),
+        )
         .find_map(|(known, pseudo)| name.eq_ignore_ascii_case(known).then_some(pseudo))
+    }
+    /// The functional pseudo-element `::name(arguments)`.
+    pub(crate) fn parse_functional<'i>(
+        name: &str,
+        arguments: &mut Parser<'i, '_>,
+    ) -> Result<Self, ParseError<'i, ()>> {
+        if name.eq_ignore_ascii_case("highlight") {
+            arguments.expect_ident()?;
+            return Ok(Self::Absent(AbsentPseudoElement::Highlight));
+        }
+        if name.eq_ignore_ascii_case("nth-fragment") {
+            cssparser::parse_nth(arguments)?;
+            return Ok(Self::Absent(AbsentPseudoElement::NthFragment));
+        }
+        Err(arguments.new_custom_error(()))
     }
     pub(crate) fn is_element_backed(self) -> bool {
         matches!(self, Self::Placeholder | Self::FileSelectorButton)
@@ -924,6 +1037,7 @@ impl PseudoElement {
             Self::FirstLetterSuffix => "::first-letter::suffix",
             Self::Placeholder => "::placeholder",
             Self::FileSelectorButton => "::file-selector-button",
+            Self::Absent(pseudo) => pseudo.source(),
         }
     }
 }
@@ -1123,7 +1237,11 @@ impl SelectorElement for MatchingElement<'_> {
                     .is_none_or(|levels| levels.contains(&i32::from(level)))
             }),
             StaticState::Form(state) => state.matches(element),
-            StaticState::Inactive(_) | StaticState::Current(_) => false,
+            StaticState::Paused => element.is_media(),
+            StaticState::Muted => element.is_media() && element.attr("muted").is_some(),
+            StaticState::Inactive(_) | StaticState::Current(_) | StaticState::CustomState(_) => {
+                false
+            }
         }
     }
     fn match_pseudo_element(
