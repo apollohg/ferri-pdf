@@ -7716,6 +7716,31 @@ fn clipped(
     Ok(output)
 }
 
+/// The region of effect `node` of `nodes` on `page`, from its `regions`; `None` for nodes
+/// that only mark items, such as the root of a 3D rendering context.
+fn node_region(
+    nodes: &[EffectNode<'_>],
+    regions: &[Vec<(usize, Region)>],
+    node: usize,
+    page: usize,
+) -> Result<Option<Region>, LayoutError> {
+    if matches!(
+        nodes[node].effect,
+        Effect::PathClip(_) | Effect::Subtree(_) | Effect::Scene(_)
+    ) {
+        return Ok(None);
+    }
+    let region = regions[node]
+        .iter()
+        .find_map(|(fragment_page, region)| (*fragment_page == page).then(|| region.clone()));
+    match (region, &nodes[node].effect) {
+        (Some(region), _) => Ok(Some(region)),
+        // No transform encloses it on the page.
+        (None, Effect::PageSpace) => Ok(None),
+        (None, _) => Err(LayoutError::MissingClipFragment { page }),
+    }
+}
+
 /// The effect tables of one page that `clipped` assembles items with.
 #[derive(Clone, Copy)]
 struct Assembly<'x, 'a> {
@@ -7813,25 +7838,8 @@ impl Assembly<'_, '_> {
         Some(chain)
     }
 
-    /// The region of `node` on the page; `None` for nodes that only mark items.
     fn region(&self, node: usize) -> Result<Option<Region>, LayoutError> {
-        if matches!(
-            self.nodes[node].effect,
-            Effect::PathClip(_) | Effect::Subtree(_) | Effect::Scene(_)
-        ) {
-            return Ok(None);
-        }
-        let region = self.regions[node]
-            .iter()
-            .find_map(|(fragment_page, region)| {
-                (*fragment_page == self.page).then(|| region.clone())
-            });
-        match (region, &self.nodes[node].effect) {
-            (Some(region), _) => Ok(Some(region)),
-            // No transform encloses it on the page.
-            (None, Effect::PageSpace) => Ok(None),
-            (None, _) => Err(LayoutError::MissingClipFragment { page: self.page }),
-        }
+        node_region(self.nodes, self.regions, node, self.page)
     }
 
     /// Assembles the items of the 3D rendering context rooted at scene node `scene` into one

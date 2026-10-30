@@ -128,20 +128,10 @@ impl<'a> Paginator<'a, '_, 'a> {
             {
                 continue;
             }
-            let mut pushes = Vec::with_capacity(chain.len());
-            for &index in &chain {
-                pushes.push(match self.clips[index].effect {
-                    Effect::PathClip(_) | Effect::Subtree(_) => None,
-                    _ => Some(
-                        regions[index]
-                            .iter()
-                            .find_map(|(fragment_page, region)| {
-                                (*fragment_page == page).then(|| region.clone())
-                            })
-                            .ok_or(LayoutError::MissingClipFragment { page })?,
-                    ),
-                });
-            }
+            let pushes = chain
+                .iter()
+                .map(|&index| super::node_region(&self.clips, regions, index, page))
+                .collect::<Result<Vec<_>, _>>()?;
             if pushes.iter().flatten().any(Region::collapses) {
                 continue;
             }

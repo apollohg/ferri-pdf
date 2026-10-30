@@ -556,3 +556,58 @@ fn footnote_area_perspective_projects_its_transformed_bodies() {
         }
     }
 }
+
+/// The texts among `items`, each with whether a transform or projection places it.
+fn transformed_texts(
+    items: &[DisplayItem],
+    lines: &[crate::layout::TextLine],
+    transformed: bool,
+) -> Vec<(String, bool)> {
+    let mut found = Vec::new();
+    let mut open = Vec::new();
+    for item in items {
+        let inside = transformed || open.iter().any(|transform| *transform);
+        match item {
+            DisplayItem::Pop => {
+                open.pop();
+            }
+            DisplayItem::PushProjection(_) | DisplayItem::PushTransform(_) => open.push(true),
+            item if item.is_push() => open.push(false),
+            DisplayItem::Text { line } => found.push((lines[*line].text.clone(), inside)),
+            DisplayItem::Frame(frame) => {
+                found.extend(transformed_texts(&frame.items, &frame.lines, inside));
+            }
+            _ => {}
+        }
+    }
+    found
+}
+
+#[test]
+fn preserved_3d_footnote_bodies_add_their_planes_text_to_the_area_text() {
+    // CSS Transforms 2 §4.1.2: the body establishes a 3D rendering context, which marks its
+    // items without a region of its own; its rotated child's text joins the text the area's
+    // backgrounds clip to (CSS Backgrounds 4 §2.8) through the child's plane.
+    const AREA: [u8; 3] = [0, 0, 255];
+    let trace = render(
+        "@page{@footnote{background:rgb(0,0,255);background-clip:text}}.fn{transform-style:preserve-3d}.fn b{display:block;transform:rotateX(30deg)}",
+        "<p>Call<span class=fn><b>Note</b></span></p>",
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    let area = trace.display_lists[0]
+        .iter()
+        .find_map(|item| match item {
+            DisplayItem::Box(paint) if paint.decoration.background.rgb == AREA => {
+                paint.text_area.clone()
+            }
+            _ => None,
+        })
+        .expect("the footnote area paints its text-clipped background with a text area");
+    let texts = transformed_texts(&area.items, &area.lines, false);
+    assert!(
+        texts.contains(&("Note".to_owned(), true)),
+        "the rotated child's text clips the area's background through its plane: {texts:?}"
+    );
+}
