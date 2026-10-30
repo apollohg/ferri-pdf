@@ -224,6 +224,20 @@ fn anchor_functions_in_normal_flow_use_fallbacks_and_position_resets_default_anc
 }
 
 #[test]
+fn fallback_only_anchor_size_measures_the_default_anchor_in_the_property_axis() {
+    let trace = render(
+        ".target{left:0;top:0;width:anchor-size(12pt);height:anchor-size(4pt)}",
+        "<div class=anchor></div><div class=target></div>",
+    );
+    assert_rect(targets(&trace)[0].1, [20.0, 20.0, 60.0, 30.0]);
+    let trace = render(
+        ".target{position:static;margin-left:anchor-size(12pt);width:anchor-size(35pt)}",
+        "<div class=anchor></div><div class=target></div>",
+    );
+    assert_rect(targets(&trace)[0].1, [32.0, 50.0, 35.0, 10.0]);
+}
+
+#[test]
 fn position_try_order_sorts_by_available_space_and_tactics_transform_anchor_sides() {
     let trace = render(
         ".target{position-area:left;position-try-fallbacks:right;position-try-order:most-width}",

@@ -716,11 +716,12 @@ impl MathParser<'_> {
             kind,
         ))
     }
-    /// CSS Anchor Positioning 1 §3.2 `anchor()` and §5.1 `anchor-size()`: a `<length>` that
-    /// the element's anchors resolve, else the fallback; one unresolvable without a fallback
-    /// is recorded, making the declaration invalid at computed-value time.
-    fn anchor_function<'i>(&mut self, size: bool, input: &mut Parser<'i, '_>) -> MathResult<'i> {
-        let query = input.parse_until_before(Delimiter::Comma, |input| {
+    /// The anchor name and side or size before an anchor function's fallback.
+    fn anchor_query<'i>(
+        size: bool,
+        input: &mut Parser<'i, '_>,
+    ) -> Result<AnchorQuery, ParseError<'i, MathError>> {
+        input.parse_until_before(Delimiter::Comma, |input| {
             let mut name = None;
             let mut side = None;
             let mut dimension = None;
@@ -756,11 +757,32 @@ impl MathParser<'_> {
                 };
                 AnchorQuery::Anchor { name, side }
             })
-        })?;
+        })
+    }
+    /// CSS Anchor Positioning 1 §3.2 `anchor()` and §5.1 `anchor-size()`: a `<length>` that
+    /// the element's anchors resolve, else the fallback; one unresolvable without a fallback
+    /// is recorded, making the declaration invalid at computed-value time.
+    fn anchor_function<'i>(&mut self, size: bool, input: &mut Parser<'i, '_>) -> MathResult<'i> {
+        // CSS Values 4 §2.6: omitting `anchor-size()`'s optional query also omits the comma
+        // before its fallback, as in `anchor-size(12pt)`.
+        let fallback_only = size && {
+            let start = input.state();
+            let query = matches!(input.next(), Ok(Token::Ident(_)) | Err(_));
+            input.reset(&start);
+            !query
+        };
+        let query = if fallback_only {
+            AnchorQuery::Size {
+                name: None,
+                dimension: None,
+            }
+        } else {
+            Self::anchor_query(size, input)?
+        };
         let context = self.context.anchors.and_then(|anchors| anchors.context);
         let resolved = context.and_then(|context| context.resolve(&query));
         let checkpoint = context.map(crate::style::anchor_values::AnchorContext::checkpoint);
-        let fallback = if input.try_parse(Parser::expect_comma).is_ok() {
+        let fallback = if fallback_only || input.try_parse(Parser::expect_comma).is_ok() {
             let unitless_zero = input
                 .try_parse(|input| {
                     if input.expect_number()? != 0.0 {
