@@ -20,35 +20,54 @@ const CROSSING_ITERATIONS: usize = 64;
 /// Corner radii as `[horizontal, vertical]` in top-left, top-right, bottom-right, bottom-left order.
 pub type Radii = [[f32; 2]; 4];
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Debug)]
 enum Curve {
-    Point(Point),
+    Path(Contour),
     Arc([Point; 4]),
 }
 impl Curve {
-    fn start(self) -> Point {
+    fn start(&self) -> Point {
         match self {
-            Self::Point(point) => point,
+            Self::Path(path) => path.start,
             Self::Arc(points) => points[0],
         }
     }
-    fn end(self) -> Point {
+    fn end(&self) -> Point {
         match self {
-            Self::Point(point) => point,
+            Self::Path(path) => path
+                .segments
+                .last()
+                .map_or(path.start, |segment| segment.end()),
             Self::Arc(points) => points[3],
         }
     }
-    fn forward(self) -> Option<Segment> {
-        match self {
-            Self::Point(_) => None,
-            Self::Arc(p) => Some(Segment::Cubic([p[1], p[2], p[3]])),
-        }
+    fn is_point(&self) -> bool {
+        matches!(self, Self::Path(path) if path.segments.is_empty())
     }
-    fn backward(self) -> Option<Segment> {
-        match self {
-            Self::Point(_) => None,
-            Self::Arc(p) => Some(Segment::Cubic([p[2], p[1], p[0]])),
-        }
+    fn forward(&self) -> impl Iterator<Item = Segment> + '_ {
+        let (arc, path) = match self {
+            Self::Arc(p) => (Some(Segment::Cubic([p[1], p[2], p[3]])), &[][..]),
+            Self::Path(path) => (None, path.segments.as_slice()),
+        };
+        arc.into_iter().chain(path.iter().copied())
+    }
+    fn backward(&self) -> impl Iterator<Item = Segment> + '_ {
+        let (arc, path) = match self {
+            Self::Arc(p) => (Some(Segment::Cubic([p[2], p[1], p[0]])), &[][..]),
+            Self::Path(path) => (None, path.segments.as_slice()),
+        };
+        arc.into_iter()
+            .chain(path.iter().enumerate().rev().map(|(index, segment)| {
+                let start = if index == 0 {
+                    self.start()
+                } else {
+                    path[index - 1].end()
+                };
+                match *segment {
+                    Segment::Line(_) => Segment::Line(start),
+                    Segment::Cubic([a, b, _]) => Segment::Cubic([b, a, start]),
+                }
+            }))
     }
 }
 
@@ -67,7 +86,11 @@ fn corners(rect: Rect, radii: Radii) -> [Curve; 4] {
         let [rx, ry] = radii[corner];
         let c = points[corner];
         if rx <= 0.0 || ry <= 0.0 {
-            return Curve::Point(c);
+            return Curve::Path(Contour {
+                start: c,
+                segments: Vec::new(),
+                closed: false,
+            });
         }
         let (start, end) = match corner {
             0 => ([c[0], c[1] + ry], [c[0] + rx, c[1]]),
@@ -117,9 +140,9 @@ pub(crate) fn inset(rect: Rect, radii: Radii, insets: [f32; 4]) -> (Rect, Radii)
     (inner, radii)
 }
 
-fn contour(curves: [Curve; 4]) -> Contour {
+fn contour(curves: &[Curve; 4]) -> Contour {
     let mut segments = Vec::new();
-    for (corner, curve) in curves.into_iter().enumerate() {
+    for (corner, curve) in curves.iter().enumerate() {
         if corner > 0 {
             segments.push(Segment::Line(curve.start()));
         }
@@ -154,7 +177,7 @@ pub(crate) fn constrain(mut radii: Radii, [width, height]: [f32; 2]) -> Radii {
 }
 
 pub(crate) fn rounded_rect(rect: Rect, radii: Radii) -> Contour {
-    contour(corners(rect, radii))
+    contour(&corners(rect, radii))
 }
 
 fn to64(point: Point) -> [f64; 2] {
@@ -248,6 +271,132 @@ fn offset(point: Point, direction: Point, distance: f32) -> Point {
     ]
 }
 
+fn path_length(path: &Contour) -> f64 {
+    let mut start = path.start;
+    path.segments
+        .iter()
+        .map(|segment| {
+            let measured = match *segment {
+                Segment::Line(end) => {
+                    f64::from(end[0] - start[0]).hypot(f64::from(end[1] - start[1]))
+                }
+                Segment::Cubic([a, b, end]) => length([start, a, b, end], 0.0, 1.0),
+            };
+            start = segment.end();
+            measured
+        })
+        .sum()
+}
+
+/// Open corner paths are monotone across the adjacent sides' ownership diagonal.
+fn split_path(path: &Contour, origin: Point, direction: Point) -> (Contour, Contour) {
+    if path.segments.is_empty() {
+        return (path.clone(), path.clone());
+    }
+    let side = |point: Point| {
+        (f64::from(point[0]) - f64::from(origin[0])) * f64::from(direction[1])
+            - (f64::from(point[1]) - f64::from(origin[1])) * f64::from(direction[0])
+    };
+    let mut selected = (0, 0.0);
+    let mut nearest = side(path.start).abs();
+    let mut start = path.start;
+    for (index, segment) in path.segments.iter().enumerate() {
+        let end = segment.end();
+        let (before, after) = (side(start), side(end));
+        if before == 0.0 || before.signum() != after.signum() {
+            let t = match *segment {
+                Segment::Line(_) => {
+                    if before == 0.0 {
+                        0.0
+                    } else {
+                        before / (before - after)
+                    }
+                }
+                Segment::Cubic([a, b, end]) => crossing([start, a, b, end], origin, direction),
+            };
+            selected = (index, t);
+            break;
+        }
+        if after.abs() < nearest {
+            nearest = after.abs();
+            selected = (index, 1.0);
+        }
+        start = end;
+    }
+    let (index, t) = selected;
+    let start = if index == 0 {
+        path.start
+    } else {
+        path.segments[index - 1].end()
+    };
+    let (middle, head, tail) = match path.segments[index] {
+        Segment::Line(end) => {
+            let middle = to32(lerp(to64(start), to64(end), t));
+            (middle, Segment::Line(middle), Segment::Line(end))
+        }
+        Segment::Cubic([a, b, end]) => {
+            let (head, tail) = split([start, a, b, end], t);
+            (
+                head[3],
+                Segment::Cubic([head[1], head[2], head[3]]),
+                Segment::Cubic([tail[1], tail[2], tail[3]]),
+            )
+        }
+    };
+    let mut before = path.segments[..index].to_vec();
+    before.push(head);
+    let mut after = vec![tail];
+    after.extend_from_slice(&path.segments[index + 1..]);
+    (
+        Contour {
+            start: path.start,
+            segments: before,
+            closed: false,
+        },
+        Contour {
+            start: middle,
+            segments: after,
+            closed: false,
+        },
+    )
+}
+
+fn extend_path(path: &mut Contour, distance: f32, tangent: Point) {
+    let Some(index) = path.segments.len().checked_sub(1) else {
+        path.segments
+            .push(Segment::Line(offset(path.start, tangent, distance)));
+        return;
+    };
+    let start = if index == 0 {
+        path.start
+    } else {
+        path.segments[index - 1].end()
+    };
+    match path.segments[index] {
+        Segment::Line(end) => {
+            let direction = [end[0] - start[0], end[1] - start[1]];
+            let norm = direction[0].hypot(direction[1]);
+            let direction = if norm > 0.0 {
+                direction.map(|value| value / norm)
+            } else {
+                tangent
+            };
+            path.segments[index] = Segment::Line(offset(end, direction, distance));
+        }
+        Segment::Cubic([a, b, end]) => {
+            let points = [start, a, b, end];
+            let measured = length(points, 0.0, 1.0);
+            if measured > 0.0 {
+                let (head, _) = split(points, 1.0 + f64::from(distance) / measured);
+                path.segments[index] = Segment::Cubic([head[1], head[2], head[3]]);
+            } else {
+                path.segments
+                    .push(Segment::Line(offset(end, tangent, distance)));
+            }
+        }
+    }
+}
+
 /// Rounded box layers derived from one border box and its used widths.
 struct Geometry {
     rect: Rect,
@@ -284,7 +433,7 @@ impl Geometry {
         let (a, b) = (side, (side + 1) % 4);
         let [outer_a, outer_b] = [self.outer_points[a], self.outer_points[b]];
         let [inner_a, inner_b] = [self.inner_points[a], self.inner_points[b]];
-        if matches!(self.outer[a], Curve::Point(_)) && matches!(self.outer[b], Curve::Point(_)) {
+        if self.outer[a].is_point() && self.outer[b].is_point() {
             return vec![outer_a, outer_b, inner_b, inner_a];
         }
         let da = [inner_a[0] - outer_a[0], inner_a[1] - outer_a[1]];
@@ -312,7 +461,7 @@ impl Geometry {
     }
 
     /// Band of `side` between two rings, covering both adjacent arcs: outer, then reversed inner.
-    fn side_shape(side: usize, outer: [Curve; 4], inner: [Curve; 4]) -> Contour {
+    fn side_shape(side: usize, outer: &[Curve; 4], inner: &[Curve; 4]) -> Contour {
         let (a, b) = (side, (side + 1) % 4);
         let mut segments = Vec::new();
         segments.extend(outer[a].forward());
@@ -340,36 +489,47 @@ impl Geometry {
         let (a, b) = (side, (side + 1) % 4);
         let tangent = SIDE_TANGENTS[side];
         let mut segments = Vec::new();
-        let (start, start_length) = match self.centre[a] {
-            Curve::Point(point) => (point, 0.0),
+        let (start, start_length) = match &self.centre[a] {
+            Curve::Path(path) => {
+                let (origin, direction) = self.diagonal(a);
+                let (_, tail) = split_path(path, origin, direction);
+                let measured = path_length(&tail);
+                segments.extend_from_slice(&tail.segments);
+                (tail.start, measured)
+            }
             Curve::Arc(points) => {
                 let (origin, direction) = self.diagonal(a);
-                let t = crossing(points, origin, direction);
-                let (_, tail) = split(points, t);
+                let t = crossing(*points, origin, direction);
+                let (_, tail) = split(*points, t);
                 segments.push(Segment::Cubic([tail[1], tail[2], tail[3]]));
-                (tail[0], length(points, t, 1.0))
+                (tail[0], length(*points, t, 1.0))
             }
         };
         let straight_from = self.centre[a].end();
         let straight_to = self.centre[b].start();
         let straight =
             f64::from((straight_to[0] - straight_from[0]).hypot(straight_to[1] - straight_from[1]));
-        let end_length = match self.centre[b] {
-            Curve::Point(point) => {
-                segments.push(Segment::Line(offset(point, tangent, width / 2.0)));
-                0.0
+        let end_length = match &self.centre[b] {
+            Curve::Path(path) => {
+                let (origin, direction) = self.diagonal(b);
+                let (mut head, _) = split_path(path, origin, direction);
+                let measured = path_length(&head);
+                extend_path(&mut head, width / 2.0, tangent);
+                segments.push(Segment::Line(head.start));
+                segments.extend(head.segments);
+                measured
             }
             Curve::Arc(points) => {
                 segments.push(Segment::Line(straight_to));
                 let (origin, direction) = self.diagonal(b);
-                let t = crossing(points, origin, direction);
-                let reached = length(points, 0.0, t);
+                let t = crossing(*points, origin, direction);
+                let reached = length(*points, 0.0, t);
                 let end = if reached > 0.0 {
                     t * (reached + f64::from(width) / 2.0) / reached
                 } else {
                     t
                 };
-                let (head, _) = split(points, end);
+                let (head, _) = split(*points, end);
                 segments.push(Segment::Cubic([head[1], head[2], head[3]]));
                 reached
             }
@@ -392,13 +552,19 @@ impl Geometry {
         let half = width / 2.0;
         let mut segments = Vec::new();
         let mut fitted = 0.0;
-        let start = match self.centre[a] {
-            Curve::Point(point) => {
-                fitted += f64::from(half);
-                offset(point, tangent, -half)
+        let start = match &self.centre[a] {
+            Curve::Path(path) => {
+                if path.segments.is_empty() {
+                    fitted += f64::from(half);
+                    offset(path.start, tangent, -half)
+                } else {
+                    fitted += path_length(path) / 2.0;
+                    segments.extend_from_slice(&path.segments);
+                    path.start
+                }
             }
             Curve::Arc(points) => {
-                fitted += length(points, 0.0, 1.0) / 2.0;
+                fitted += length(*points, 0.0, 1.0) / 2.0;
                 segments.extend(self.centre[a].forward());
                 points[0]
             }
@@ -407,13 +573,19 @@ impl Geometry {
         let straight_to = self.centre[b].start();
         fitted +=
             f64::from((straight_to[0] - straight_from[0]).hypot(straight_to[1] - straight_from[1]));
-        match self.centre[b] {
-            Curve::Point(point) => {
-                fitted += f64::from(half);
-                segments.push(Segment::Line(offset(point, tangent, half)));
+        match &self.centre[b] {
+            Curve::Path(path) => {
+                if path.segments.is_empty() {
+                    fitted += f64::from(half);
+                    segments.push(Segment::Line(offset(path.start, tangent, half)));
+                } else {
+                    fitted += path_length(path) / 2.0;
+                    segments.push(Segment::Line(path.start));
+                    segments.extend_from_slice(&path.segments);
+                }
             }
             Curve::Arc(points) => {
-                fitted += length(points, 0.0, 1.0) / 2.0;
+                fitted += length(*points, 0.0, 1.0) / 2.0;
                 segments.push(Segment::Line(straight_to));
                 segments.extend(self.centre[b].forward());
             }
@@ -457,7 +629,7 @@ pub(crate) fn border_fills<I>(
                 shape: Shape::Path {
                     contours: boundaries
                         .into_iter()
-                        .map(|t| contour(geometry.ring(t)))
+                        .map(|t| contour(&geometry.ring(t)))
                         .collect(),
                     even_odd: true,
                     clip: None,
@@ -472,7 +644,7 @@ pub(crate) fn border_fills<I>(
             let width = widths[0];
             fills.push(Fill {
                 shape: Shape::Pattern {
-                    contours: vec![contour(geometry.centre)],
+                    contours: vec![contour(&geometry.centre)],
                     width,
                     dash: [DASH_LENGTH_WIDTHS * width, DASH_GAP_WIDTHS * width],
                     round: false,
@@ -496,8 +668,8 @@ pub(crate) fn border_fills<I>(
                     shape: Shape::Path {
                         contours: vec![Geometry::side_shape(
                             side,
-                            geometry.ring(band.from),
-                            geometry.ring(band.to),
+                            &geometry.ring(band.from),
+                            &geometry.ring(band.to),
                         )],
                         even_odd: false,
                         clip: clip.clone(),
@@ -532,4 +704,149 @@ pub(crate) fn border_fills<I>(
         });
     }
     fills
+}
+
+#[cfg(test)]
+mod path_tests {
+    use super::*;
+
+    const GEOMETRY_TOLERANCE: f32 = 0.000_01;
+
+    #[test]
+    fn cubic_corner_cut_and_extension_preserve_the_parametric_curve() {
+        let path = Contour {
+            start: [0.0, 0.0],
+            segments: vec![
+                Segment::Cubic([[3.0, 3.0], [6.0, 6.0], [9.0, 9.0]]),
+                Segment::Line([15.0, 9.0]),
+            ],
+            closed: false,
+        };
+        let (mut head, tail) = split_path(&path, [4.5, 0.0], [0.0, 1.0]);
+        assert_eq!(
+            head.segments,
+            [Segment::Cubic([[1.5, 1.5], [3.0, 3.0], [4.5, 4.5]])]
+        );
+        assert_eq!(tail.start, [4.5, 4.5]);
+        assert_eq!(
+            tail.segments,
+            [
+                Segment::Cubic([[6.0, 6.0], [7.5, 7.5], [9.0, 9.0]]),
+                Segment::Line([15.0, 9.0]),
+            ]
+        );
+        extend_path(&mut head, 1.5 * std::f32::consts::SQRT_2, [1.0, 0.0]);
+        let Segment::Cubic(points) = head.segments[0] else {
+            panic!("extension keeps a cubic")
+        };
+        for (actual, expected) in points.into_iter().zip([[2.0, 2.0], [4.0, 4.0], [6.0, 6.0]]) {
+            for axis in 0..2 {
+                assert!(
+                    (actual[axis] - expected[axis]).abs() < GEOMETRY_TOLERANCE,
+                    "straight cubic extension: {actual:?} versus {expected:?}"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn corner_vertex_and_zero_length_segments_do_not_lose_path_length() {
+        let path = Contour {
+            start: [0.0, 0.0],
+            segments: vec![
+                Segment::Line([0.0, 0.0]),
+                Segment::Line([9.0, 0.0]),
+                Segment::Line([9.0, 9.0]),
+            ],
+            closed: false,
+        };
+        let (head, tail) = split_path(&path, [9.0, 0.0], [0.0, 1.0]);
+        assert_eq!(tail.start, [9.0, 0.0]);
+        assert_eq!([path_length(&head), path_length(&tail)], [9.0, 9.0]);
+        let (head, tail) = split_path(&path, [20.0, 0.0], [0.0, 1.0]);
+        assert_eq!(
+            [path_length(&head), path_length(&tail)],
+            [9.0, 9.0],
+            "equal-distance endpoints choose the first nearest corner vertex"
+        );
+    }
+
+    #[test]
+    fn patterned_border_splits_piecewise_corners_at_side_diagonals() {
+        let mut geometry = Geometry::new(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 100.0,
+                height: 60.0,
+            },
+            [[0.0; 2]; 4],
+            [4.0; 4],
+        );
+        for (corner, start, end) in [
+            (0, [2.0, 20.0], [20.0, 2.0]),
+            (1, [80.0, 2.0], [98.0, 20.0]),
+        ] {
+            geometry.centre[corner] = Curve::Path(Contour {
+                start,
+                segments: vec![Segment::Line(end)],
+                closed: false,
+            });
+        }
+        let (dotted, _) = geometry.dotted(0, 4.0);
+        assert_eq!(
+            dotted.start,
+            [11.0, 11.0],
+            "first side diagonal cuts the bevel halfway"
+        );
+        let end = dotted.segments.last().unwrap().end();
+        let extension = std::f32::consts::SQRT_2;
+        assert_eq!(
+            end,
+            [89.0 + extension, 11.0 + extension],
+            "last dot extends half its width along the bevel"
+        );
+        let (dashed, _) = geometry.dashed(0, 4.0);
+        assert_eq!(dashed.start, [2.0, 20.0]);
+        assert_eq!(
+            dashed.segments,
+            [
+                Segment::Line([20.0, 2.0]),
+                Segment::Line([80.0, 2.0]),
+                Segment::Line([98.0, 20.0]),
+            ],
+            "dashes cover the full adjacent corner paths"
+        );
+    }
+
+    #[test]
+    fn piecewise_corner_cut_keeps_both_sides_and_reverses_controls() {
+        let path = Contour {
+            start: [0.0, 0.0],
+            segments: vec![Segment::Line([10.0, 0.0]), Segment::Line([10.0, 10.0])],
+            closed: false,
+        };
+        let (head, tail) = split_path(&path, [5.0, 0.0], [0.0, 1.0]);
+        assert_eq!(head.start, path.start);
+        assert_eq!(head.segments, [Segment::Line([5.0, 0.0])]);
+        assert_eq!(tail.start, [5.0, 0.0]);
+        assert_eq!(tail.segments, path.segments);
+        assert_eq!(path_length(&head), 5.0);
+        assert_eq!(path_length(&tail), 15.0);
+        let curve = Curve::Path(Contour {
+            start: [2.0, 3.0],
+            segments: vec![
+                Segment::Line([4.0, 5.0]),
+                Segment::Cubic([[6.0, 7.0], [8.0, 9.0], [10.0, 11.0]]),
+            ],
+            closed: false,
+        });
+        assert_eq!(
+            curve.backward().collect::<Vec<_>>(),
+            [
+                Segment::Cubic([[8.0, 9.0], [6.0, 7.0], [4.0, 5.0]]),
+                Segment::Line([2.0, 3.0]),
+            ]
+        );
+    }
 }
