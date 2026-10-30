@@ -1039,6 +1039,39 @@ fn rows_of_hidden_empty_cells_take_no_height_and_one_border_spacing() {
 }
 
 #[test]
+fn pages_holding_only_table_track_backgrounds_are_output() {
+    // CSS Page 3 §3.2 drops only pages without ink: the 240pt row continues 90pt onto the
+    // second page, where only its background paints behind the empty rest of the cell.
+    let trace = render_html(
+        "<!doctype html><style>@page{size:300pt 200pt;margin:0}body{margin:0}table{border-spacing:0}td{height:240pt;width:100pt;padding:0}tr{background:rgb(0,0,255)}</style><div style='height:50pt'></div><table><tr><td>a</td></tr></table>",
+        &local_options(),
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    assert_eq!(
+        trace.display_lists.len(),
+        2,
+        "the row continues onto a second page"
+    );
+    let continued: Vec<_> = trace.display_lists[1]
+        .iter()
+        .filter_map(|item| match item {
+            DisplayItem::Box(paint) if paint.decoration.background.rgb == [0, 0, 255] => {
+                Some(paint.rect)
+            }
+            _ => None,
+        })
+        .collect();
+    assert_eq!(
+        continued.len(),
+        1,
+        "the row background continues: {continued:?}"
+    );
+    common::assert_labelled_pt("continued row height", continued[0].height, 90.0);
+}
+
+#[test]
 fn orthogonal_captions_keep_their_caption_role_above_the_table() {
     // CSS Writing Modes 4 §7: a vertical caption is an orthogonal flow whose inline size, its
     // line's advance, is its physical height above the table.

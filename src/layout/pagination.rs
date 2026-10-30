@@ -1555,6 +1555,14 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     | DisplayItem::PushBackdropRoot
                     | DisplayItem::Pop => false,
                 })
+            // Table track and track group backgrounds behind cells.
+            || self.underlays.iter().any(|(&(underlay_page, _), paints)| {
+                underlay_page == page
+                    && paints.iter().any(|paint| {
+                        matches!(&paint.item, DisplayItem::Box(fragment)
+                            if fragment.has_ink() && fragment.rect.intersects(page_rect))
+                    })
+            })
     }
     fn pending_value(&self) -> f32 {
         let trimmed = self.at_page_start && self.trims_repeated_start();
