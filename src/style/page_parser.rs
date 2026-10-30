@@ -106,6 +106,34 @@ pub(super) fn page_items<'i>(
     Ok(items)
 }
 
+const NTH_PSEUDO_CLASS: &str = "nth";
+const NTH_GROUP_KEYWORD: &str = "of";
+
+/// `:nth( <an+b> [of <custom-ident>]? )` (CSS GCPM 3 §3.1).
+fn nth_page<'i>(
+    input: &mut Parser<'i, '_>,
+) -> Result<crate::style::page_rules::NthPage, ParseError<'i, StyleError>> {
+    let (a, b) = cssparser::parse_nth(input)?;
+    let group = if input.is_exhausted() {
+        None
+    } else {
+        input.expect_ident_matching(NTH_GROUP_KEYWORD)?;
+        let location = input.current_source_location();
+        let name = input.expect_ident_cloned()?;
+        if !crate::style::matcher::is_custom_ident(&name) {
+            return Err(location.new_custom_error(StyleError::Invalid(format!(
+                "page group name is not a custom identifier: {name}"
+            ))));
+        }
+        Some(std::sync::Arc::from(name.as_ref()))
+    };
+    input.expect_exhausted()?;
+    Ok(crate::style::page_rules::NthPage {
+        position: selectors::parser::AnPlusB(a, b),
+        group,
+    })
+}
+
 pub(super) fn page_selectors<'i>(
     input: &mut Parser<'i, '_>,
 ) -> Result<crate::style::page_rules::PageSelectors, ParseError<'i, StyleError>> {
@@ -132,6 +160,11 @@ pub(super) fn page_selectors<'i>(
                         let token = input.next_including_whitespace()?.clone();
                         match token {
                             cssparser::Token::Ident(name) if selector.add_pseudo(&name) => {}
+                            cssparser::Token::Function(name)
+                                if name.eq_ignore_ascii_case(NTH_PSEUDO_CLASS) =>
+                            {
+                                selector.add_nth(input.parse_nested_block(nth_page)?);
+                            }
                             token => return Err(input.new_unexpected_token_error(token)),
                         }
                     }

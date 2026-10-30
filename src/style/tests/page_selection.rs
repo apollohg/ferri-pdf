@@ -1,6 +1,8 @@
 use crate::dom::{DocumentTree, Selector};
 use crate::resources::FileResolver;
-use crate::style::{Page, PageSide, PageStyleTarget, StyleError, Stylesheet, StylesheetSource};
+use crate::style::{
+    FirstPageStart, Page, PageSide, PageStyleTarget, StyleError, Stylesheet, StylesheetSource,
+};
 
 fn sheet(css: &str) -> Stylesheet {
     Stylesheet::parse(&[StylesheetSource {
@@ -22,7 +24,7 @@ fn selected_geometry_and_tree_attribute_custom_values_share_the_dependency_graph
         .resolve_document_root_with_pages(
             &tree,
             &FileResolver::default(),
-            &|styles| {
+            &|styles, _| {
                 let Page::Name(name) = styles.page(PageStyleTarget {
                     element: selected.id(),
                     pseudo: None,
@@ -30,7 +32,10 @@ fn selected_geometry_and_tree_attribute_custom_values_share_the_dependency_graph
                 else {
                     panic!("the inherited attribute value must retain its section receiver");
                 };
-                Ok(Some(name))
+                Ok(FirstPageStart {
+                    name: Some(name),
+                    groups: Vec::new(),
+                })
             },
             &|_| Ok(PageSide::Right),
         )
@@ -49,12 +54,15 @@ fn selected_page_cycle_records_the_named_property_and_viewport_request() {
         .resolve_document_root_with_pages(
             &tree,
             &FileResolver::default(),
-            &|styles| match styles.page(PageStyleTarget {
+            &|styles, _| match styles.page(PageStyleTarget {
                 element: selected.id(),
                 pseudo: None,
             })? {
-                Page::Name(name) => Ok(Some(name)),
-                Page::Auto => Ok(None),
+                Page::Name(name) => Ok(FirstPageStart {
+                    name: Some(name),
+                    groups: Vec::new(),
+                }),
+                Page::Auto => Ok(FirstPageStart::default()),
             },
             &|_| Ok(PageSide::Right),
         )
@@ -108,7 +116,7 @@ fn selecting_a_deep_target_prepares_ancestors_without_recursive_stack_growth() {
         .resolve_document_root_with_pages(
             &tree,
             &FileResolver::default(),
-            &|styles| {
+            &|styles, _| {
                 let target = PageStyleTarget {
                     element: selected.id(),
                     pseudo: None,
@@ -119,7 +127,10 @@ fn selecting_a_deep_target_prepares_ancestors_without_recursive_stack_growth() {
                     "deep inherited whitespace retains the root declaration"
                 );
                 match styles.page(target)? {
-                    Page::Name(name) => Ok(Some(name)),
+                    Page::Name(name) => Ok(FirstPageStart {
+                        name: Some(name),
+                        groups: Vec::new(),
+                    }),
                     Page::Auto => panic!("deep target lost its explicit page name"),
                 }
             },

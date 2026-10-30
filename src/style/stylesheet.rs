@@ -384,6 +384,12 @@ impl Stylesheet {
     pub(crate) fn first_page_request(&self) -> &crate::style::PageRequest {
         &self.first_page
     }
+    /// Whether a page rule selects pages by position, so that page requests carry it.
+    pub(crate) fn selects_page_positions(&self) -> bool {
+        self.page_rules
+            .iter()
+            .any(crate::style::page_rules::PageRule::selects_positions)
+    }
     pub(crate) fn page_progression_rtl(&self) -> bool {
         self.page_progression_rtl
     }
@@ -714,6 +720,9 @@ impl Stylesheet {
             }
         }
         sheet.registrations = Arc::new(registrations);
+        if sheet.selects_page_positions() {
+            sheet.first_page.sequence = Some(crate::style::PageSequence::first());
+        }
         // CSS Counter Styles 3 §3: rules of one name cascade atomically; the last in cascade
         // order wins.
         counter_styles.sort_by_key(|(priority, ..)| *priority);

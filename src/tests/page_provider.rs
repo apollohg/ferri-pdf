@@ -21,6 +21,7 @@ fn owned_page_records_freeze_viewport_and_share_loaded_images() {
         side: PageSide::Left,
         first: false,
         blank: false,
+        sequence: None,
     };
     let later = document
         .resolve_page(request.clone(), &FileResolver::default())
@@ -93,6 +94,7 @@ fn page_record_cache_distinguishes_side_first_and_blank_flags() {
             side,
             first,
             blank,
+            sequence: None,
         };
         let page = document
             .resolve_page(request.clone(), &FileResolver::default())

@@ -19,6 +19,7 @@ fn request(name: Option<&str>, side: PageSide, first: bool, blank: bool) -> Page
         side,
         first,
         blank,
+        sequence: None,
     }
 }
 
@@ -201,6 +202,72 @@ fn page_specificity_components_saturate_without_overflowing_into_the_name_compon
         )
         .unwrap();
     assert_pt(page.geometry.margin[3], 11.0);
+}
+
+#[test]
+fn nth_page_selectors_parse_an_plus_b_and_groups_and_count_as_first() {
+    let mut sheet = sheet(
+        "@page{size:200pt 300pt;margin:20pt}@page :nth( 2n + 1 ){margin-left:11pt}@page :first{margin-left:12pt}@page :nth(even of chapter){margin-left:13pt}@page chapter:nth(3){margin-left:14pt}@page :nth(1 of default){margin-left:91pt}@page :nth(2n of){margin-left:92pt}@page :nth(x){margin-left:93pt}@page : nth(1){margin-left:94pt}",
+    );
+    let diagnostics = sheet.take_diagnostics();
+    assert_eq!(
+        diagnostics.len(),
+        4,
+        "a reserved group name, a missing group, bad An+B and a space after the colon are invalid: {diagnostics:?}"
+    );
+    let resolver = FileResolver::default();
+    let sequence = |number, groups: &[(&str, usize)]| {
+        Some(crate::style::PageSequence {
+            number,
+            groups: groups
+                .iter()
+                .map(|(name, number)| crate::style::PageGroupPosition {
+                    name: (*name).into(),
+                    number: *number,
+                })
+                .collect(),
+        })
+    };
+    for (name, sequence, expected) in [
+        // `:first` follows `:nth(2n+1)` with equal specificity.
+        (None, sequence(1, &[]), 12.0),
+        (None, sequence(3, &[]), 11.0),
+        (None, sequence(4, &[]), 20.0),
+        (None, sequence(4, &[("chapter", 2)]), 13.0),
+        (None, sequence(5, &[("other", 2), ("chapter", 1)]), 11.0),
+        (Some("chapter"), sequence(3, &[]), 14.0),
+        // A named `:nth()` counts within its group once the page belongs to one.
+        (Some("chapter"), sequence(3, &[("chapter", 1)]), 11.0),
+        (Some("chapter"), sequence(8, &[("chapter", 3)]), 14.0),
+        (
+            Some("chapter"),
+            sequence(8, &[("chapter", 2), ("chapter", 3)]),
+            14.0,
+        ),
+        (None, None, 20.0),
+    ] {
+        let page = sheet
+            .resolve_page(
+                &Style::default(),
+                PageRequest {
+                    name: name.map(Into::into),
+                    side: PageSide::Right,
+                    first: sequence
+                        .as_ref()
+                        .is_some_and(|sequence| sequence.number == 1),
+                    blank: false,
+                    sequence: sequence.clone(),
+                },
+                None,
+                &resolver,
+            )
+            .unwrap();
+        assert!(
+            (page.geometry.margin[3] - expected).abs() <= TOLERANCE_PT,
+            "page {name:?} at {sequence:?}: expected {expected}pt, got {}pt",
+            page.geometry.margin[3]
+        );
+    }
 }
 
 #[test]

@@ -254,9 +254,24 @@ impl<'a> Geometry<'a> {
             return Ok(());
         }
         self.enter(Node::FirstPageStart)?;
-        let selected = self.select_first.expect("a deferred page has a selector")(self);
+        let groups = self
+            .sheet
+            .page_rules
+            .iter()
+            .any(crate::style::page_rules::PageRule::depends_on_groups);
+        let selected = self.select_first.expect("a deferred page has a selector")(self, groups);
         self.active.borrow_mut().pop();
-        self.first_request.borrow_mut().name = selected?;
+        let selected = selected?;
+        let mut request = self.first_request.borrow_mut();
+        request.name = selected.name;
+        if let Some(sequence) = &mut request.sequence {
+            sequence.groups = selected
+                .groups
+                .into_iter()
+                .map(|name| crate::style::PageGroupPosition { name, number: 1 })
+                .collect();
+        }
+        drop(request);
         self.selection_done.set(true);
         Ok(())
     }
@@ -289,6 +304,7 @@ impl<'a> Geometry<'a> {
         }
         let name_dependent = self.sheet.page_rules.iter().any(|rule| {
             rule.depends_on_name(&self.first_request.borrow(), self.side_selection_done.get())
+                || rule.depends_on_groups()
         });
         if name_dependent {
             self.select_name()?;

@@ -33,6 +33,7 @@ mod named_pages;
 mod object_position;
 mod overflow_wrap;
 mod page_boundaries;
+mod page_groups;
 mod page_provider;
 mod painting;
 mod pdf_validation;

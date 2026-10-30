@@ -2520,7 +2520,9 @@ pub(crate) fn build(
         .resolve_document_root_with_pages(
             html,
             resolver,
-            &|styles| crate::document::first_page::select_name(html, styles, &generated),
+            &|styles, groups| {
+                crate::document::first_page::select_name(html, styles, &generated, groups)
+            },
             &|styles| crate::document::first_page::select_side(html, styles, &generated),
         )
         .map_err(|error| match error {

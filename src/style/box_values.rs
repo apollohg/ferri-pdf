@@ -220,6 +220,9 @@ impl BreakBetween {
             Self::Page | Self::Column | Self::Left | Self::Right | Self::Recto | Self::Verso
         )
     }
+    pub(crate) fn forces_page(self) -> bool {
+        self.is_forced() && self != Self::Column
+    }
     pub(crate) fn page_side(self, rtl: bool) -> Option<crate::style::PageSide> {
         use crate::style::PageSide::{Left, Right};
         match self {

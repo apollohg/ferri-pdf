@@ -405,6 +405,27 @@ impl<'a> TablePlan<'a> {
             _ => false,
         }
     }
+    pub(crate) fn row_group_source(&self, index: usize) -> Option<&'a BlockBox> {
+        self.data.groups[self.data.row_groups[index]].source
+    }
+    /// The page groups a row starts: its row group's when it is the group's first row, and
+    /// its own (CSS GCPM 3 §3.2).
+    pub(crate) fn row_starting_groups(&self, index: usize) -> Vec<std::sync::Arc<str>> {
+        let row = self.data.rows[index];
+        let group = &self.data.groups[self.data.row_groups[index]];
+        group
+            .source
+            .filter(|_| {
+                group
+                    .rows
+                    .first()
+                    .is_some_and(|first| std::ptr::eq(*first, row))
+            })
+            .into_iter()
+            .chain([row])
+            .filter_map(|owner| owner.page_boundary().group.clone())
+            .collect()
+    }
     pub(crate) fn row_source(&self, index: usize) -> &'a BlockBox {
         self.data.rows[index]
     }

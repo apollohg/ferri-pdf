@@ -1,8 +1,16 @@
 use crate::document::{PageBox, StyledDocument};
 use crate::layout::{LayoutError, PageRecord};
 use crate::resources::ResourceResolver;
-use crate::style::{PageRequest, PageSide};
+use crate::style::{PageGroupPosition, PageRequest, PageSequence, PageSide};
 use std::sync::Arc;
+
+/// A page group whose box is being laid out (CSS GCPM 3 §3.2).
+#[derive(Clone)]
+pub(super) struct OpenGroup {
+    pub owner: *const crate::document::BlockBox,
+    pub name: Arc<str>,
+    pub start: usize,
+}
 
 #[derive(Clone)]
 pub(super) struct PhysicalPages<'a, 'r> {
@@ -11,6 +19,9 @@ pub(super) struct PhysicalPages<'a, 'r> {
     pub boxes: Vec<Arc<PageBox>>,
     pub records: Vec<PageRecord>,
     pub name: Option<Arc<str>>,
+    /// Groups that start at the break being taken, before their boxes are laid out.
+    pub starting: Vec<Arc<str>>,
+    pub open: Vec<OpenGroup>,
 }
 impl<'a, 'r> PhysicalPages<'a, 'r> {
     pub(crate) fn new(
@@ -22,6 +33,8 @@ impl<'a, 'r> PhysicalPages<'a, 'r> {
             document,
             resolver,
             name: first.request.name.clone(),
+            starting: Vec::new(),
+            open: Vec::new(),
             records: vec![Self::record(document, &first)?],
             boxes: vec![first],
         })
@@ -40,13 +53,40 @@ impl<'a, 'r> PhysicalPages<'a, 'r> {
             _ => PageSide::Right,
         }
     }
+    /// A blank page precedes the groups starting after it.
     fn resolve_blank(&self, index: usize, blank: bool) -> Result<Arc<PageBox>, LayoutError> {
+        let sequence = self
+            .document
+            .styles()
+            .selects_page_positions()
+            .then(|| PageSequence {
+                number: index + 1,
+                groups: self
+                    .open
+                    .iter()
+                    .map(|group| PageGroupPosition {
+                        name: group.name.clone(),
+                        number: index - group.start + 1,
+                    })
+                    .chain(
+                        (!blank)
+                            .then_some(&self.starting)
+                            .into_iter()
+                            .flatten()
+                            .map(|name| PageGroupPosition {
+                                name: name.clone(),
+                                number: 1,
+                            }),
+                    )
+                    .collect(),
+            });
         Ok(self.document.resolve_page(
             PageRequest {
                 name: self.name.clone(),
                 side: self.side(index),
                 first: index == 0,
                 blank,
+                sequence,
             },
             self.resolver,
         )?)

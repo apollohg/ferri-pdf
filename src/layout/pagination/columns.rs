@@ -532,6 +532,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 float_placement: None,
                 geometry: None,
                 page_scope: None,
+                open_groups: 0,
                 offset: start.offset,
                 scope: start.key.clone(),
                 order: PaintOrder::FIRST,

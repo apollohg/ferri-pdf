@@ -31,6 +31,32 @@ pub struct PageRequest {
     pub side: PageSide,
     pub first: bool,
     pub blank: bool,
+    /// The page's position for `:nth()`; absent when no page rule selects by position, so
+    /// that pages with equal names and flags share one resolved record.
+    pub sequence: Option<PageSequence>,
+}
+
+/// A page's document page number and its number in each page group containing it
+/// (CSS GCPM 3 §3.2), outermost group first.
+#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Serialize)]
+pub struct PageSequence {
+    pub number: usize,
+    pub groups: Vec<PageGroupPosition>,
+}
+
+impl PageSequence {
+    pub(crate) fn first() -> Self {
+        Self {
+            number: 1,
+            groups: Vec::new(),
+        }
+    }
+}
+
+#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Serialize)]
+pub struct PageGroupPosition {
+    pub name: Arc<str>,
+    pub number: usize,
 }
 
 pub(crate) struct ResolvedPage {
@@ -47,6 +73,7 @@ impl Default for PageRequest {
             side: PageSide::Right,
             first: true,
             blank: false,
+            sequence: None,
         }
     }
 }
@@ -66,6 +93,31 @@ impl PageSelectors {
     }
 }
 
+/// `:nth(An+B [of <custom-ident>]?)` (CSS GCPM 3 §3.1).
+#[derive(Clone, Debug)]
+pub(super) struct NthPage {
+    pub position: selectors::parser::AnPlusB,
+    pub group: Option<Arc<str>>,
+}
+impl NthPage {
+    /// Without `of`, a named selector counts within page groups of its name when the page
+    /// belongs to one, and every selector otherwise counts document pages.
+    fn matches(&self, name: Option<&Arc<str>>, sequence: &PageSequence) -> bool {
+        let matches = |number: usize| {
+            i32::try_from(number).is_ok_and(|number| self.position.matches_index(number))
+        };
+        let mut groups = sequence
+            .groups
+            .iter()
+            .filter(|group| Some(&group.name) == self.group.as_ref().or(name))
+            .peekable();
+        if self.group.is_none() && groups.peek().is_none() {
+            return matches(sequence.number);
+        }
+        groups.any(|group| matches(group.number))
+    }
+}
+
 #[derive(Clone, Debug)]
 pub(super) struct PageSelector {
     name: Option<Arc<str>>,
@@ -73,6 +125,7 @@ pub(super) struct PageSelector {
     right: bool,
     first: bool,
     blank: bool,
+    nth: Vec<NthPage>,
     first_blank: u32,
     left_right: u32,
 }
@@ -84,9 +137,19 @@ impl PageSelector {
             right: false,
             first: false,
             blank: false,
+            nth: Vec::new(),
             first_blank: 0,
             left_right: 0,
         }
+    }
+    /// `:nth()` selects page positions as `:first` does, so it shares its specificity
+    /// component (CSS Paged Media 3 §4.4).
+    pub(crate) fn add_nth(&mut self, nth: NthPage) {
+        self.nth.push(nth);
+        self.first_blank = self
+            .first_blank
+            .saturating_add(1)
+            .min(MAX_SPECIFICITY_COMPONENT);
     }
     pub(crate) fn add_pseudo(&mut self, name: &str) -> bool {
         let component = cssparser::match_ignore_ascii_case! {name,
@@ -100,7 +163,9 @@ impl PageSelector {
         true
     }
     pub(crate) fn is_empty(&self) -> bool {
-        self.name.is_none() && !(self.left || self.right || self.first || self.blank)
+        self.name.is_none()
+            && self.nth.is_empty()
+            && !(self.left || self.right || self.first || self.blank)
     }
     fn matching_specificity(&self, request: &PageRequest) -> Option<u32> {
         if self.name.as_ref().is_some_and(|name| {
@@ -109,6 +174,12 @@ impl PageSelector {
             || (self.right && request.side != PageSide::Right)
             || (self.first && !request.first)
             || (self.blank && !request.blank)
+            || self.nth.iter().any(|nth| {
+                request
+                    .sequence
+                    .as_ref()
+                    .is_none_or(|sequence| !nth.matches(self.name.as_ref(), sequence))
+            })
         {
             return None;
         }
@@ -188,6 +259,23 @@ impl PageRule {
         self.selectors.0.iter().any(|selector| {
             selector.name.is_some() && selector.could_match(request, false, side_known)
         })
+    }
+
+    /// Whether matching needs the page groups the first page starts.
+    pub(super) fn depends_on_groups(&self) -> bool {
+        self.selectors.0.iter().any(|selector| {
+            selector
+                .nth
+                .iter()
+                .any(|nth| nth.group.is_some() || selector.name.is_some())
+        })
+    }
+
+    pub(super) fn selects_positions(&self) -> bool {
+        self.selectors
+            .0
+            .iter()
+            .any(|selector| !selector.nth.is_empty())
     }
 
     pub(super) fn depends_on_side(&self, request: &PageRequest, name_known: bool) -> bool {

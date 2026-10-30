@@ -32,6 +32,11 @@ const DASHED_PREFIX: &str = "--";
 /// SVG 2 §4.2: presentation attributes take unitless lengths in CSS pixels.
 const PRESENTATION_LENGTH_UNIT: &str = "px";
 
+/// Whether an identifier may be a `<custom-ident>` (CSS Values 4 §4.2).
+pub(super) fn is_custom_ident(name: &str) -> bool {
+    WideKeyword::parse_ident(name).is_none() && !name.eq_ignore_ascii_case(RESERVED_IDENT)
+}
+
 #[derive(Debug)]
 struct Item {
     kind: ItemKind,
@@ -1129,10 +1134,7 @@ impl Matcher<'_> {
             (Base::Url, ItemKind::Url(url)) => Component::Url(url.clone()),
             (Base::Ident, ItemKind::Ident { name, .. }) => Component::Ident(name.clone()),
             (Base::CustomIdent, ItemKind::Ident { name, .. }) => {
-                if WideKeyword::parse_ident(name).is_some()
-                    || name.eq_ignore_ascii_case(RESERVED_IDENT)
-                    || self.excluded.contains(&item.start)
-                {
+                if !is_custom_ident(name) || self.excluded.contains(&item.start) {
                     return None;
                 }
                 Component::Ident(name.clone())

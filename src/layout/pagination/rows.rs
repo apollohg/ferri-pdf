@@ -412,7 +412,11 @@ impl<'a> Paginator<'a, '_, 'a> {
         {
             let before = plan.row_edges(source_row, self.measurer.fragmentainer)[0];
             let after = plan.row_edges(source_row - 1, self.measurer.fragmentainer)[1];
-            let changed = self.page_name(plan.row_source(source_row).page_boundary().start.clone());
+            self.close_row_page_groups(plan.row_group_source(source_row));
+            let changed = self.page_name(
+                plan.row_source(source_row).page_boundary().start.clone(),
+                &plan.row_starting_groups(source_row),
+            );
             if let Some(forced) = Forced::combine(
                 Forced::of(after.combine(before)),
                 changed.then_some(Forced::Page),
@@ -429,6 +433,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             }
         }
         if let (Some(source_row), Some(plan)) = (source_row, plan.as_ref()) {
+            self.open_row_page_groups(plan, source_row);
             let context = self.context.clone();
             let key = self.key.clone();
             let group = self.group;

@@ -143,8 +143,8 @@ pub(crate) use loader::{
 pub(crate) use multicol_values::{ColumnFill, MulticolStyle};
 pub(crate) use page_margins::{MarginLocation, PageMargin};
 pub(crate) use page_rules::ResolvedPage;
-pub(crate) use page_rules::{PageRequest, PageSide};
-pub(crate) use page_selection::{PageSelection, PageStyleTarget};
+pub(crate) use page_rules::{PageGroupPosition, PageRequest, PageSequence, PageSide};
+pub(crate) use page_selection::{FirstPageStart, PageSelection, PageStyleTarget};
 pub(crate) use page_values::{Page, PageMarks, PageProduction};
 pub(crate) use position::Position;
 pub(crate) use print::Presentation;

@@ -55,7 +55,16 @@ pub(crate) trait PageSelection {
     fn inside_marker(&self, target: PageStyleTarget) -> Result<bool, StyleError>;
 }
 
+/// The first page's used name and the page groups its content starts there (CSS GCPM 3
+/// §3.2), outermost first.
+#[derive(Debug, Default)]
+pub(crate) struct FirstPageStart {
+    pub name: Option<std::sync::Arc<str>>,
+    pub groups: Vec<std::sync::Arc<str>>,
+}
+
+/// Selects the first page's start; the page groups only when the flag requests them.
 pub(crate) type SelectFirstPageName<'a> =
-    dyn Fn(&dyn PageSelection) -> Result<Option<std::sync::Arc<str>>, StyleError> + 'a;
+    dyn Fn(&dyn PageSelection, bool) -> Result<FirstPageStart, StyleError> + 'a;
 pub(crate) type SelectFirstPageSide<'a> =
     dyn Fn(&dyn PageSelection) -> Result<crate::style::PageSide, StyleError> + 'a;

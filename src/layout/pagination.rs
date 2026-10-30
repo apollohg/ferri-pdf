@@ -535,6 +535,8 @@ struct ActiveTable<'a> {
     grids: BTreeMap<usize, crate::layout::tables::CollapsedGrid>,
     rows: HashMap<usize, MeasuredRow<'a>>,
     next_body: usize,
+    /// Page groups open outside the table's rows.
+    open_groups: usize,
 }
 
 impl ActiveTable<'_> {
@@ -608,6 +610,8 @@ struct ActiveBox<'a> {
         reason = "outer is whether the box is a page boundary, inner is its used page name"
     )]
     page_scope: Option<Option<std::sync::Arc<str>>>,
+    /// Page groups open before this box, which closes every group opened inside it.
+    open_groups: usize,
     offset: [f32; 2],
     scope: PaintKey,
     order: PaintOrder,
@@ -1612,7 +1616,12 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         Ok(())
     }
-    fn page_name(&mut self, name: Option<std::sync::Arc<str>>) -> bool {
+    /// Selects the page name and the page groups starting at a class A break point.
+    fn page_name(
+        &mut self,
+        name: Option<std::sync::Arc<str>>,
+        starting: &[std::sync::Arc<str>],
+    ) -> bool {
         if self.unbroken != 0 || self.parallel_depth != 0 {
             return false;
         }
@@ -1621,7 +1630,86 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         };
         let changed = pages.records[self.page].request.name != name;
         pages.name = name;
+        starting.clone_into(&mut pages.starting);
         changed
+    }
+    /// Opens the page group a box creates on the page where it starts (CSS GCPM 3 §3.2);
+    /// returns the number of groups open before it.
+    fn open_page_group(&mut self, owner: &BlockBox, starts: bool) -> usize {
+        let paged = self.unbroken == 0 && self.parallel_depth == 0;
+        let Fragmentainers::Pages(pages) = &mut self.fragmentainers else {
+            return 0;
+        };
+        let depth = pages.open.len();
+        if !starts {
+            return depth;
+        }
+        pages.starting.clear();
+        if let Some(name) = owner.page_boundary().group.clone().filter(|_| paged) {
+            pages.open.push(crate::layout::physical_pages::OpenGroup {
+                owner,
+                name,
+                start: self.page,
+            });
+        }
+        depth
+    }
+    /// Closes the page groups of earlier rows and of row groups other than `group`, the
+    /// next row's; returns whether `group`'s stays open.
+    pub(super) fn close_row_page_groups(&mut self, group: Option<&BlockBox>) -> bool {
+        if self.unbroken != 0 || self.parallel_depth != 0 {
+            return false;
+        }
+        let base = self
+            .tables
+            .last()
+            .expect("table rows belong to an active table")
+            .open_groups;
+        let Fragmentainers::Pages(pages) = &mut self.fragmentainers else {
+            return false;
+        };
+        let kept = group.is_some_and(|group| {
+            pages
+                .open
+                .get(base)
+                .is_some_and(|open| std::ptr::eq(open.owner, group))
+        });
+        pages.open.truncate(base + usize::from(kept));
+        kept
+    }
+    /// Opens the page groups a row starts where it starts (CSS GCPM 3 §3.2).
+    pub(super) fn open_row_page_groups(
+        &mut self,
+        plan: &crate::layout::tables::TablePlan<'a>,
+        row: usize,
+    ) {
+        if self.unbroken != 0 || self.parallel_depth != 0 {
+            return;
+        }
+        let group = plan.row_group_source(row);
+        let kept = self.close_row_page_groups(group);
+        let Fragmentainers::Pages(pages) = &mut self.fragmentainers else {
+            return;
+        };
+        pages.starting.clear();
+        for owner in group
+            .filter(|_| !kept)
+            .into_iter()
+            .chain([plan.row_source(row)])
+        {
+            if let Some(name) = owner.page_boundary().group.clone() {
+                pages.open.push(crate::layout::physical_pages::OpenGroup {
+                    owner,
+                    name,
+                    start: self.page,
+                });
+            }
+        }
+    }
+    fn close_page_groups(&mut self, depth: usize) {
+        if let Fragmentainers::Pages(pages) = &mut self.fragmentainers {
+            pages.open.truncate(depth);
+        }
     }
     fn cloned_end_space(&self) -> f32 {
         self.boxes
@@ -1884,7 +1972,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     ) -> Result<(MeasuredBlock<'a>, Option<BreakRequest>), LayoutError> {
         self.measurer.work.spend(1)?;
         let changed = if crate::document::PageBoundary::applies(&block.style.display) {
-            self.page_name(block.source.page_boundary().start.clone())
+            let boundary = block.source.page_boundary();
+            self.page_name(boundary.start.clone(), &boundary.start_groups)
         } else {
             false
         };
@@ -1951,6 +2040,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             block.retain_fragment();
         }
         let starts_source = self.starts_source(block.source);
+        let open_groups = self.open_page_group(block.source, starts_source);
         if let Some(element) = block.source.query_container() {
             let vertical = block.geometry.padding[0]
                 + block.geometry.padding[2]
@@ -2270,6 +2360,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }),
             page_scope: crate::document::PageBoundary::applies(&block.style.display)
                 .then(|| block.source.page_boundary().used.clone()),
+            open_groups,
             offset: self.offset,
             scope: paint_key,
             order: paint_order,
@@ -2327,6 +2418,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     .collect(),
                 rows: HashMap::new(),
                 next_body: flow.body.start,
+                open_groups: match &self.fragmentainers {
+                    Fragmentainers::Pages(pages) => pages.open.len(),
+                    Fragmentainers::Columns(_) => 0,
+                },
                 flow,
                 x_offset: self.offset[0],
                 placements: Vec::new(),
@@ -2515,6 +2610,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         self.place_inline_pending(self.boxes.len())?;
         let mut active = self.boxes.pop().unwrap();
+        self.close_page_groups(active.open_groups);
         for node in [
             active.clip_node,
             active.outer_clip_node,
@@ -3977,18 +4073,23 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             self.refresh_table()?;
         }
         let row = self.current_table_row(row);
-        let page_name = row.band.as_ref().map(|band| {
-            self.tables
+        let page_boundary = row.band.as_ref().map(|band| {
+            let plan = &self
+                .tables
                 .last()
                 .expect("table bands belong to an active table")
                 .flow
-                .plan
-                .row_source(band.start)
-                .page_boundary()
-                .start
-                .clone()
+                .plan;
+            (
+                plan.row_group_source(band.start),
+                plan.row_source(band.start).page_boundary().start.clone(),
+                plan.row_starting_groups(band.start),
+            )
         });
-        let changed = page_name.is_some_and(|name| self.page_name(name));
+        let changed = page_boundary.is_some_and(|(group, name, starting)| {
+            self.close_row_page_groups(group);
+            self.page_name(name, &starting)
+        });
         // Header and body bands leave room for a repeated footer; only body bands repeat groups.
         let (footer_reserve, body) = match (&row.band, self.tables.last()) {
             (Some(band), Some(table)) if band.end <= table.flow.body.end => (

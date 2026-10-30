@@ -238,7 +238,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             .iter()
             .rev()
             .find_map(|active| active.page_scope.clone());
-        let changed = scope.is_some_and(|name| self.page_name(name));
+        let changed = scope.is_some_and(|name| self.page_name(name, &[]));
         Forced::combine(self.pending_break, changed.then_some(Forced::Page))
             .filter(|_| self.unbroken == 0 && self.has_flow)
             .map(|forced| BreakRequest {

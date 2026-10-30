@@ -1,11 +1,12 @@
+use crate::document::page::page_group;
 use crate::document::{
     formatting,
     tables::{self, Content},
 };
 use crate::dom::{DocumentTree, Element, TreeRelation};
 use crate::style::{
-    BreakBetween, CaptionSide, Display, GeneratedPseudoElement, Page, PageSelection, PageSide,
-    PageStyleTarget, QuoteDepth, StyleError,
+    BreakBetween, CaptionSide, Display, FirstPageStart, GeneratedPseudoElement, Page,
+    PageSelection, PageSide, PageStyleTarget, QuoteDepth, StyleError,
 };
 use std::{
     cell::{Cell, OnceCell},
@@ -99,6 +100,8 @@ struct Selection<'a> {
     quotes: Option<Rc<QuoteEvent>>,
     quote_scan: Option<QuoteDepth>,
     counter_work: Rc<Cell<usize>>,
+    /// The boxes that start at the first page's start, outermost first.
+    chain: Vec<PageStyleTarget>,
 }
 impl Selection<'_> {
     fn record_quotes(&mut self, change: QuoteChange) {
@@ -135,6 +138,7 @@ impl Selection<'_> {
                         quotes: None,
                         quote_scan: Some(depth),
                         counter_work: self.counter_work.clone(),
+                        chain: Vec::new(),
                     };
                     let mut collector = Collector::new(*target, display.clone());
                     collector.quotes_only = true;
@@ -191,6 +195,7 @@ impl Selection<'_> {
                     ..
                 } => {
                     self.quotes = quotes;
+                    self.chain.push(target);
                     if collect_breaks {
                         before = before.combine(self.styles.break_before(target)?);
                     }
@@ -608,6 +613,7 @@ impl<'a> Selection<'a> {
             quotes: None,
             quote_scan: None,
             counter_work: Rc::default(),
+            chain: Vec::new(),
         }
     }
     fn first(
@@ -640,12 +646,25 @@ pub(super) fn select_name(
     document: &DocumentTree,
     styles: &dyn PageSelection,
     generated: &crate::document::generated::GeneratedPass,
-) -> Result<Option<Arc<str>>, StyleError> {
+    select_groups: bool,
+) -> Result<FirstPageStart, StyleError> {
     let mut selection = Selection::new(document, styles, generated);
-    match selection.first(false)? {
-        Some((target, _)) => selection.used(target),
-        None => Ok(None),
+    let Some((target, _)) = selection.first(false)? else {
+        return Ok(FirstPageStart::default());
+    };
+    let mut groups = Vec::new();
+    for target in selection.chain.iter().filter(|_| select_groups) {
+        let page = styles.page(*target)?;
+        if matches!(page, Page::Name(_))
+            && let Some(group) = page_group(&page, styles.break_before(*target)?)
+        {
+            groups.push(group);
+        }
     }
+    Ok(FirstPageStart {
+        name: selection.used(target)?,
+        groups,
+    })
 }
 
 pub(super) fn select_side(

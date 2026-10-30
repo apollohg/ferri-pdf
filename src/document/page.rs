@@ -98,6 +98,20 @@ pub(crate) struct PageBoundary {
     pub used: Option<Arc<str>>,
     pub start: Option<Arc<str>>,
     pub end: Option<Arc<str>>,
+    /// The page group this box creates.
+    pub group: Option<Arc<str>>,
+    /// The page groups that start where this box starts, outermost first: its own and those
+    /// propagated from its first in-flow child, as the start name is.
+    pub start_groups: Vec<Arc<str>>,
+}
+
+/// The page group a box creates: one with a page name and a forced page break before it
+/// (CSS GCPM 3 §3.2).
+pub(crate) fn page_group(page: &Page, before: crate::style::BreakBetween) -> Option<Arc<str>> {
+    match page {
+        Page::Name(name) if before.forces_page() => Some(name.clone()),
+        _ => None,
+    }
 }
 
 pub(crate) fn used_name(page: &Page, ancestor: Option<&Arc<str>>) -> Option<Arc<str>> {
@@ -141,6 +155,13 @@ impl PageBoundary {
             }
             _ => used.clone(),
         };
+        let group = page_group(&style.page, style.break_before);
+        let mut start_groups: Vec<_> = group.iter().cloned().collect();
+        if let Some(BlockContent::Block(child)) = children.first()
+            && Self::applies(&child.style().display)
+        {
+            start_groups.extend(child.page_boundary().start_groups.iter().cloned());
+        }
         Self {
             start: children
                 .first()
@@ -149,6 +170,8 @@ impl PageBoundary {
                 .last()
                 .map_or_else(|| used.clone(), |child| boundary(child, false)),
             used,
+            group,
+            start_groups,
         }
     }
 }
