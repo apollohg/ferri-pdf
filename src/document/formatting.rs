@@ -782,6 +782,9 @@ pub(crate) struct Traversal<'a> {
     /// Formatting a scroll container only to collect the markers of a group placed before it,
     /// whose own groups are not placed, nor copies of its subtrees formatted.
     marker_prepass: bool,
+    /// The `::scroll-marker` boxes that the prepass of a scroll container collected for the
+    /// scroll containers inside it whose groups are placed before them.
+    prepassed_markers: std::collections::HashMap<ElementId, Vec<GeneratedBox>>,
     /// The nearest scroll container around the subtree a copy formats.
     marker_scroller: Option<MarkerScroller>,
     marker_groups: crate::document::scroll_markers::ScrollMarkerGroups,
@@ -893,6 +896,7 @@ impl Traversal<'_> {
             pages: self.pages,
             scroll_markers: std::collections::HashMap::new(),
             marker_prepass: self.marker_prepass,
+            prepassed_markers: std::collections::HashMap::new(),
             marker_scroller: None,
             marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
             work: self.work.clone(),
@@ -924,6 +928,7 @@ impl Traversal<'_> {
             pages: self.pages,
             scroll_markers: std::collections::HashMap::new(),
             marker_prepass: self.marker_prepass,
+            prepassed_markers: std::collections::HashMap::new(),
             marker_scroller: None,
             marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
             work: self.work.clone(),
@@ -1102,18 +1107,23 @@ fn root_marker_group(
 }
 
 /// The `::scroll-marker` boxes of the scroll container `frame` heads, collected by formatting
-/// it ahead of its own formatting for a group placed before it (CSS Overflow 5 §3.1.3).
+/// it ahead of its own formatting for a group placed before it (CSS Overflow 5 §3.1.3), unless
+/// the prepass of a scroll container around it collected them.
 #[inline(never)]
 fn collect_scroll_markers<'a>(
     frame: Frame<'_>,
     sheet: &'a Stylesheet,
-    traversal: &Traversal<'a>,
+    traversal: &mut Traversal<'a>,
     resources: &mut ImageResources<'a>,
 ) -> Result<Vec<GeneratedBox>, DocumentError> {
     let element = frame.element.id();
+    if let Some(markers) = traversal.prepassed_markers.remove(&element) {
+        return Ok(markers);
+    }
     let mut copy = traversal.subtree_copy()?;
     copy.marker_prepass = true;
     block(frame, sheet, &mut copy, resources)?;
+    traversal.prepassed_markers.extend(copy.prepassed_markers);
     Ok(copy.scroll_markers.remove(&element).unwrap_or_default())
 }
 
@@ -4123,9 +4133,18 @@ fn block<'a>(
         if matches!(state.placement, Placement::Root) {
             return Ok(block);
         }
-        let markers = scroll_container
+        let mut markers = scroll_container
             .then(|| traversal.scroll_markers.remove(&element.id()))
             .flatten();
+        // The prepass formats the containers inside it as their own prepasses would.
+        if traversal.marker_prepass
+            && marker_group.is_some()
+            && marker_side == crate::style::ScrollMarkerGroup::Before
+        {
+            traversal
+                .prepassed_markers
+                .insert(element.id(), markers.take().unwrap_or_default());
+        }
         let (mut builder, parent) = active_builder(
             &mut frames,
             *blocks.last().unwrap(),
@@ -4380,6 +4399,7 @@ fn format_root(
         pages: &pages,
         scroll_markers: std::collections::HashMap::new(),
         marker_prepass: false,
+        prepassed_markers: std::collections::HashMap::new(),
         marker_scroller: None,
         marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
         work: crate::layout::work::Budget::new(input.work_limit),

@@ -91,14 +91,14 @@ fn nested_scrollers(count: usize) -> String {
 }
 
 #[test]
-fn scroll_marker_prepasses_of_nested_containers_charge_the_shared_budget() {
+fn one_prepass_collects_the_markers_of_nested_containers() {
     let nested = required_work(&nested_scrollers(SCROLLERS));
     let doubled = required_work(&nested_scrollers(2 * SCROLLERS));
     assert!(
-        doubled >= 3 * nested,
-        "each container is formatted ahead of itself for its markers and again in the prepass \
-         of every container around it, so doubling the nesting must about quadruple the charged \
-         work: {SCROLLERS} containers need {nested} units, {} need {doubled}",
+        doubled < 3 * nested,
+        "the prepass of the outermost container collects the markers of every container inside \
+         it, so doubling the nesting must about double the charged work, not quadruple it: \
+         {SCROLLERS} containers need {nested} units, {} need {doubled}",
         2 * SCROLLERS
     );
 }
@@ -115,9 +115,10 @@ fn scroll_marker_prepasses_make_no_first_line_copies() {
     let collected = required_work(&container("after", FIRST_LINE));
     let plain = required_work(&container("after", ""));
     assert!(
-        prepassed - collected <= plain,
+        prepassed > collected && prepassed - collected <= plain,
         "a prepass only collects the container's scroll markers, which first-line copies do not \
-         hold, so it must charge no more than formatting the container without copies: \
+         hold, so it must charge the budget, but no more than formatting the container without \
+         copies: \
          {prepassed} units with the prepass, {collected} without, {plain} without copies"
     );
 }

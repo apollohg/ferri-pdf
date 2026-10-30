@@ -248,3 +248,76 @@ fn formatting_a_first_line_copy_numbers_marker_links_and_destinations_as_the_doc
          it, and the heading destination after them as the document's formatting does"
     );
 }
+
+#[test]
+fn nested_groups_placed_before_their_containers_number_and_link_their_markers_in_place() {
+    let document = parse(
+        "<style>body{margin:0;counter-reset:n}.s{overflow:auto;scroll-marker-group:before}\
+         .s::scroll-marker-group{display:block}.m{counter-increment:n}\
+         .m::scroll-marker{content:'M' counter(n);display:block}</style>\
+         <a href='#a'>Link</a><div class=s><p class=m id=a>A</p><div class=s>\
+         <p class=m>B</p><div class=s><p class=m>C</p></div><p class=m>D</p></div>\
+         <p class=m>E</p></div>",
+    );
+    assert_eq!(
+        root_outline(&document),
+        [
+            "[]",
+            "  \"Link\"",
+            "  []",
+            "    []",
+            "      \"M1\"",
+            "    []",
+            "      \"M5\"",
+            "  []",
+            "    []",
+            "      \"A\"",
+            "    []",
+            "      []",
+            "        \"M2\"",
+            "      []",
+            "        \"M4\"",
+            "    []",
+            "      []",
+            "        \"B\"",
+            "      []",
+            "        []",
+            "          \"M3\"",
+            "      []",
+            "        []",
+            "          \"C\"",
+            "      []",
+            "        \"D\"",
+            "    []",
+            "      \"E\"",
+        ],
+        "each group placed before its container holds the markers of the elements whose \
+         nearest scroll container it is, numbered by the counters at each originating element"
+    );
+    let mut found = Vec::new();
+    navigation(document.root(), &mut found);
+    let links = &document.navigation().links;
+    for (marker, target) in [
+        ("M1", "A"),
+        ("M2", "B"),
+        ("M3", "C"),
+        ("M4", "D"),
+        ("M5", "E"),
+    ] {
+        let destination = found
+            .iter()
+            .find(|(label, navigation)| label == target && navigation.destination.is_some())
+            .and_then(|(_, navigation)| navigation.destination)
+            .unwrap_or_else(|| panic!("{target:?} has no destination: {found:#?}"));
+        let link = found
+            .iter()
+            .find(|(label, _)| label == marker)
+            .and_then(|(_, navigation)| navigation.link)
+            .unwrap_or_else(|| panic!("{marker:?} carries no hyperlink: {found:#?}"));
+        assert_eq!(
+            links[link],
+            LinkTarget::Destination(destination),
+            "{marker:?} links to {target:?}; links: {links:?}"
+        );
+    }
+}
