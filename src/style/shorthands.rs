@@ -103,6 +103,14 @@ const ANIMATION: [Property; 9] = [
 const ANIMATION_RESET: [Property; 2] = [Property::AnimationRangeStart, Property::AnimationRangeEnd];
 /// Scroll-driven Animations 1 §A: an omitted range end with a named start ends that range.
 const NAMED_RANGE_END: f32 = 1.0;
+const TIMELINE_TRIGGER: [Property; 6] = [
+    Property::TimelineTriggerName,
+    Property::TimelineTriggerSource,
+    Property::TimelineTriggerRangeStart,
+    Property::TimelineTriggerRangeEnd,
+    Property::TimelineTriggerExitRangeStart,
+    Property::TimelineTriggerExitRangeEnd,
+];
 /// CSS Text 4 §3: the `white-space` keywords and their collapse and wrap-mode longhands.
 const WHITE_SPACE_KEYWORDS: [(Keyword, &str, &str); 4] = [
     (Keyword::Normal, "collapse", "wrap"),
@@ -306,7 +314,22 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
             .collect(),
         P::ScrollTimeline => scroll_timeline(&value),
         P::ViewTimeline => view_timeline(&value),
-        P::AnimationRange => animation_range(&value),
+        P::AnimationRange => range(
+            &range_items(&value),
+            [P::AnimationRangeStart, P::AnimationRangeEnd],
+        ),
+        P::TimelineTrigger => timeline_trigger(&value),
+        P::TimelineTriggerRange => range(
+            &range_items(&value),
+            [P::TimelineTriggerRangeStart, P::TimelineTriggerRangeEnd],
+        ),
+        P::TimelineTriggerExitRange => range(
+            &range_items(&value),
+            [
+                P::TimelineTriggerExitRangeStart,
+                P::TimelineTriggerExitRangeEnd,
+            ],
+        ),
         P::ScrollMargin => edges(
             &value,
             [
@@ -912,31 +935,125 @@ fn view_timeline(value: &Component) -> Longhands {
     ]
 }
 
-/// `[ <start> <end>? ]#`; an omitted end after a named start is that name at 100%, and is
-/// otherwise initial (Scroll-driven Animations 1 §A).
-fn animation_range(value: &Component) -> Longhands {
-    let items: Vec<&Component> = value.items().iter().collect();
-    let end = |item: &Component| {
-        optional(item).cloned().or_else(|| {
-            let name = item
-                .items()
-                .first()?
-                .find(Label::Production(Production::TimelineRangeName))?;
-            Some(Component::Group(vec![
-                Component::Reference(
-                    Label::Production(Production::TimelineRangeName),
-                    Box::new(name.clone()),
-                ),
-                Component::Group(vec![Component::Percentage(NAMED_RANGE_END)]),
-            ]))
-        })
-    };
+/// The entries of a comma-list longhand that one shorthand item references.
+fn list_entries(component: &Component) -> Vec<Component> {
+    match component {
+        Component::Reference(Label::Property(_), inner) => inner.items().to_vec(),
+        other => vec![other.clone()],
+    }
+}
+
+/// `[ <start> <end>? ]#` as `(start, end)` pairs. The longhands are themselves comma lists, so
+/// a matched start or end can hold several entries; each comma between them separates items.
+fn range_items(value: &Component) -> Vec<(Component, Option<Component>)> {
+    let mut pairs = Vec::new();
+    for item in value.items() {
+        let mut starts = item.items().first().map(list_entries).unwrap_or_default();
+        let mut ends = optional(item)
+            .map(list_entries)
+            .unwrap_or_default()
+            .into_iter();
+        let Some(last) = starts.pop() else {
+            continue;
+        };
+        pairs.extend(starts.into_iter().map(|start| (start, None)));
+        pairs.push((last, ends.next()));
+        pairs.extend(ends.map(|start| (start, None)));
+    }
+    pairs
+}
+
+/// A range item's end; an omitted end after a named start is that name at 100%, and is
+/// otherwise initial (Scroll-driven Animations 1 §A, Animation Triggers 1).
+fn range_end((start, end): &(Component, Option<Component>)) -> Option<Component> {
+    end.clone().or_else(|| {
+        let name = start.find(Label::Production(Production::TimelineRangeName))?;
+        Some(Component::Group(vec![
+            Component::Reference(
+                Label::Production(Production::TimelineRangeName),
+                Box::new(name.clone()),
+            ),
+            Component::Group(vec![Component::Percentage(NAMED_RANGE_END)]),
+        ]))
+    })
+}
+
+/// `[ <start> <end>? ]#` into its start and end longhands.
+fn range(pairs: &[(Component, Option<Component>)], [start, end]: [Property; 2]) -> Longhands {
     vec![
-        coordinated(Property::AnimationRangeStart, &items, &|item| {
-            item.items().first().cloned()
-        }),
-        coordinated(Property::AnimationRangeEnd, &items, &end),
+        listed(start, pairs.iter().map(|(start, _)| Some(start.clone()))),
+        listed(end, pairs.iter().map(range_end)),
     ]
+}
+
+/// `none | [ <name> <source> <range> [ / <exit-range> ]? ]#`. Each part sets its longhands'
+/// list entries in order, as separately written longhands would; an omitted exit range is
+/// initial (Animation Triggers 1).
+fn timeline_trigger(value: &Component) -> Longhands {
+    const NAME: usize = 0;
+    const SOURCE: usize = 1;
+    const RANGE: usize = 2;
+    const EXIT: usize = 3;
+    if value.keyword() == Some(Keyword::None) {
+        return TIMELINE_TRIGGER
+            .into_iter()
+            .map(|property| (property, initial()))
+            .collect();
+    }
+    let items = value.items();
+    fn part(item: &Component, index: usize) -> Option<&Component> {
+        item.items().get(index).map(Component::unwrap)
+    }
+    let entries = |index: usize| {
+        items
+            .iter()
+            .flat_map(|item| part(item, index).map_or(&[][..], Component::items))
+            .cloned()
+            .map(Some)
+            .collect::<Vec<_>>()
+    };
+    let ranges: Vec<_> = items
+        .iter()
+        .filter_map(|item| part(item, RANGE))
+        .flat_map(range_items)
+        .collect();
+    let exits: Vec<_> = items
+        .iter()
+        .flat_map(|item| {
+            let exit = item
+                .items()
+                .get(EXIT)
+                .and_then(|exit| exit.find(Label::Property(Property::TimelineTriggerExitRange)));
+            exit.map_or_else(
+                || vec![None],
+                |exit| range_items(exit).into_iter().map(Some).collect(),
+            )
+        })
+        .collect();
+    let mut longhands = vec![
+        listed(Property::TimelineTriggerName, entries(NAME)),
+        listed(Property::TimelineTriggerSource, entries(SOURCE)),
+    ];
+    longhands.extend(range(
+        &ranges,
+        [
+            Property::TimelineTriggerRangeStart,
+            Property::TimelineTriggerRangeEnd,
+        ],
+    ));
+    longhands.extend([
+        listed(
+            Property::TimelineTriggerExitRangeStart,
+            exits
+                .iter()
+                .map(|exit| exit.as_ref().map(|(start, _)| start.clone())),
+        ),
+        listed(
+            Property::TimelineTriggerExitRangeEnd,
+            exits.iter().map(|exit| exit.as_ref().and_then(range_end)),
+        ),
+    ]);
+    longhands
 }
 
 /// Per-layer longhand lists from `[ <bg-layer> , ]* <final-bg-layer>`.
@@ -1126,12 +1243,20 @@ fn coordinated(
     entries: &[&Component],
     item: &dyn Fn(&Component) -> Option<Component>,
 ) -> (Property, Specified) {
+    listed(property, entries.iter().map(|entry| item(entry)))
+}
+
+/// A list longhand from its entries; an omitted entry is the initial value's first.
+fn listed(
+    property: Property,
+    entries: impl IntoIterator<Item = Option<Component>>,
+) -> (Property, Specified) {
     let fallback = declaration::initial(property)
         .and_then(|initial| initial.items().first())
         .cloned();
     let items = entries
-        .iter()
-        .map(|entry| item(entry).or_else(|| fallback.clone()))
+        .into_iter()
+        .map(|entry| entry.or_else(|| fallback.clone()))
         .collect::<Option<Vec<_>>>();
     match items {
         Some(items) => (property, longhand(property, &Component::Group(items))),

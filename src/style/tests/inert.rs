@@ -147,6 +147,18 @@ fn shorthands_set_the_same_values_as_their_longhands() {
             "animation-range-start:entry 10%,20%,cover;animation-range-end:entry 100%,exit,cover 100%",
         ),
         (
+            "timeline-trigger:--a view() cover 10% / contain,--b auto 5pt 6pt",
+            "timeline-trigger-name:--a,--b;timeline-trigger-source:view(),auto;\
+             timeline-trigger-range-start:cover 10%,5pt;timeline-trigger-range-end:cover 100%,6pt;\
+             timeline-trigger-exit-range-start:contain,auto;\
+             timeline-trigger-exit-range-end:contain 100%,auto",
+        ),
+        (
+            "timeline-trigger-range:entry,1pt 2pt;timeline-trigger-exit-range:exit 5%",
+            "timeline-trigger-range-start:entry,1pt;timeline-trigger-range-end:entry 100%,2pt;\
+             timeline-trigger-exit-range-start:exit 5%;timeline-trigger-exit-range-end:exit 100%",
+        ),
+        (
             "scroll-timeline:--a,--b x",
             "scroll-timeline-name:--a,--b;scroll-timeline-axis:block,x",
         ),
