@@ -239,7 +239,7 @@ fn shadow_root_host_validation_and_ascii_mode_matching() {
 
 #[test]
 fn formatting_depth_limit_covers_block_inline_atomic_and_positioned_trees() {
-    use crate::document::{BlockContent, DocumentError, StyledDocument};
+    use crate::document::{BlockContent, DocumentDiagnostic, StyledDocument};
     const FORMATTING_LIMIT: usize = 512;
     const DOCUMENT_AND_PARAGRAPH_LEVELS: usize = 2;
     for (opening, closing) in [
@@ -248,9 +248,10 @@ fn formatting_depth_limit_covers_block_inline_atomic_and_positioned_trees() {
         ("<div style='display:inline-block'>", "</div>"),
         ("<div style='position:absolute'>", "</div>"),
     ] {
-        for (levels, allowed) in [
-            (FORMATTING_LIMIT - DOCUMENT_AND_PARAGRAPH_LEVELS, true),
-            (FORMATTING_LIMIT - DOCUMENT_AND_PARAGRAPH_LEVELS + 1, false),
+        for (levels, flattened) in [
+            (FORMATTING_LIMIT - DOCUMENT_AND_PARAGRAPH_LEVELS, false),
+            (FORMATTING_LIMIT - DOCUMENT_AND_PARAGRAPH_LEVELS + 1, true),
+            (2 * FORMATTING_LIMIT, true),
         ] {
             eprintln!("checking formatting boundary: {levels} levels of {opening}");
             let html = format!(
@@ -258,48 +259,68 @@ fn formatting_depth_limit_covers_block_inline_atomic_and_positioned_trees() {
                 opening.repeat(levels),
                 closing.repeat(levels),
             );
-            let result = StyledDocument::parse(
+            let document = StyledDocument::parse(
                 &html,
                 &ResourceBase::default(),
                 &[],
                 &crate::FileResolver::default(),
-            );
-            if allowed {
-                let document = result.expect("the inclusive formatting limit remains usable");
-                let mut pending = vec![document.root()];
-                let mut text = String::new();
-                while let Some(block) = pending.pop() {
-                    for content in block.children() {
-                        match content {
-                            BlockContent::Events(_) => {}
-                            BlockContent::Block(child) | BlockContent::Positioned(child) => {
-                                pending.push(child);
-                            }
-                            BlockContent::Inline(paragraph) => {
-                                text.extend(paragraph.text().chars().filter(|ch| {
+            )
+            .unwrap_or_else(|error| panic!("{levels} levels of {opening} must format: {error}"));
+            let mut pending = vec![(document.root(), 0)];
+            let (mut text, mut deepest) = (String::new(), 0);
+            while let Some((block, depth)) = pending.pop() {
+                deepest = deepest.max(depth);
+                for content in block.children() {
+                    match content {
+                        BlockContent::Events(_) => {}
+                        BlockContent::Block(child) | BlockContent::Positioned(child) => {
+                            pending.push((child, depth + 1));
+                        }
+                        BlockContent::Inline(paragraph) => {
+                            text.extend(
+                                paragraph.text().chars().filter(|ch| {
                                     *ch != crate::document::OBJECT_REPLACEMENT_CHARACTER
-                                }));
-                                pending.extend(
-                                    paragraph
-                                        .atomics()
-                                        .iter()
-                                        .chain(paragraph.anchors())
-                                        .map(crate::document::Anchor::block),
-                                );
-                            }
+                                }),
+                            );
+                            pending.extend(
+                                paragraph
+                                    .atomics()
+                                    .iter()
+                                    .chain(paragraph.anchors())
+                                    .map(|anchor| (anchor.block(), depth + 1)),
+                            );
                         }
                     }
                 }
-                assert_eq!(
-                    text, "Boundary",
-                    "formatting {levels} levels of {opening} preserves content"
-                );
-            } else {
-                assert!(
-                    matches!(result, Err(DocumentError::Formatting(message)) if message == format!("formatting nesting exceeds {FORMATTING_LIMIT}")),
-                    "one further {opening} level must return the formatting error without overflowing"
-                );
             }
+            assert_eq!(
+                text, "Boundary",
+                "formatting {levels} levels of {opening} preserves content"
+            );
+            assert!(
+                deepest <= FORMATTING_LIMIT,
+                "{levels} levels of {opening} nest boxes {deepest} deep, past the limit"
+            );
+            let reported: Vec<String> = document
+                .into_diagnostics()
+                .iter()
+                .filter(|diagnostic| {
+                    matches!(diagnostic, DocumentDiagnostic::FormattingLimit { .. })
+                })
+                .map(ToString::to_string)
+                .collect();
+            let expected: &[String] = if flattened {
+                &[format!(
+                    "formatting nesting exceeds {FORMATTING_LIMIT}: elements nested deeper \
+                     generate no boxes of their own, their contents lying in the deepest box"
+                )]
+            } else {
+                &[]
+            };
+            assert_eq!(
+                reported, expected,
+                "{levels} levels of {opening} report whether they were flattened"
+            );
         }
     }
 }

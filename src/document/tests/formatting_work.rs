@@ -8,10 +8,21 @@ fn parse(html: &str, limit: usize) -> Result<StyledDocument, DocumentError> {
     StyledDocument::parse_with_work_limit(html, limit)
 }
 
-/// Whether `html` formats within `limit` work units.
+/// Whether formatting left out what exceeds a limit of `document`.
+fn degraded(document: &StyledDocument) -> bool {
+    document.diagnostics.iter().any(|diagnostic| {
+        matches!(
+            diagnostic,
+            crate::document::DocumentDiagnostic::FormattingLimit { .. }
+                | crate::document::DocumentDiagnostic::SkippedFormattingWork { .. }
+        )
+    })
+}
+
+/// Whether `html` formats within `limit` work units, leaving nothing out.
 fn fits(html: &str, limit: usize) -> bool {
     match parse(html, limit) {
-        Ok(_) => true,
+        Ok(document) => !degraded(&document),
         Err(DocumentError::FormattingWorkLimit { limit: reported }) => {
             assert_eq!(reported, limit, "the error must name the exhausted budget");
             false
@@ -141,6 +152,37 @@ fn scroll_marker_prepasses_make_no_first_line_copies() {
     );
 }
 
+#[test]
+fn first_line_copies_that_exhaust_the_budget_are_left_out() {
+    let html = document(FIRST_LINE, &nested_atomics(NESTING));
+    let plain = required_work(&document("", &nested_atomics(NESTING)));
+    let styled = required_work(&html);
+    let limit = usize::midpoint(plain, styled);
+    let document = parse(&html, limit).unwrap_or_else(|error| {
+        panic!(
+            "a budget of {limit} units, enough without the first-line copies that {styled} \
+             units format, must format without them: {error}"
+        )
+    });
+    let diagnostics: Vec<String> = document
+        .diagnostics
+        .iter()
+        .map(ToString::to_string)
+        .collect();
+    assert_eq!(
+        diagnostics,
+        [format!(
+            "optional restyling past the {limit}-unit formatting work budget was skipped"
+        )],
+        "the copies left out are reported once"
+    );
+    let atomic = nested_atomic(document.root(), 0).expect("the outermost atomic inline formats");
+    assert!(
+        atomic.first_line_box().is_none(),
+        "the outermost atomic inline keeps its own styles on the first line"
+    );
+}
+
 /// The atomic inline nested `depth` levels inside `block`'s first one, if there is one.
 fn nested_atomic(block: &BlockBox, depth: usize) -> Option<&BlockBox> {
     let mut atomic = block;
@@ -222,22 +264,17 @@ fn deep_first_line_nesting_formats_in_linear_work_on_a_library_thread() {
                  nesting {DEEP} levels must cost less than {DEEP}/{SHALLOW} times nesting \
                  {SHALLOW}: {shallow} units for {SHALLOW} levels, {deep} for {DEEP}"
             );
-            let deepest = document(FIRST_LINE, &nested_atomics(DEEPEST));
-            if let Err(error) = parse(&deepest, crate::document::MAX_FORMATTING_WORK) {
-                panic!("{DEEPEST} levels, the formatting depth limit, must format: {error}");
-            }
-            let deeper = document(FIRST_LINE, &nested_atomics(DEEPEST + 1));
-            match parse(&deeper, crate::document::MAX_FORMATTING_WORK) {
-                Err(DocumentError::Formatting(message)) => assert_eq!(
-                    message,
-                    format!(
-                        "formatting nesting exceeds {}",
-                        crate::document::formatting::MAX_FORMATTING_DEPTH
-                    ),
-                    "only the formatting depth limits first-line copies"
-                ),
-                Err(error) => panic!("{} levels failed with {error}", DEEPEST + 1),
-                Ok(_) => panic!("{} levels exceed the formatting depth limit", DEEPEST + 1),
+            // Past the formatting depth, the only limit on first-line copies, the deeper
+            // elements lie flattened in the deepest box.
+            for (depth, flattened) in [(DEEPEST, false), (DEEPEST + 1, true)] {
+                let html = document(FIRST_LINE, &nested_atomics(depth));
+                let document = parse(&html, crate::document::MAX_FORMATTING_WORK)
+                    .unwrap_or_else(|error| panic!("{depth} levels must format: {error}"));
+                assert_eq!(
+                    degraded(&document),
+                    flattened,
+                    "{depth} levels report whether they were flattened"
+                );
             }
         })
         .expect("the library thread must start")

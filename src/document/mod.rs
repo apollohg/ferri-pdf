@@ -113,6 +113,13 @@ pub enum DocumentDiagnostic {
     },
     #[error("optional restyling past the {limit}-unit formatting work budget was skipped")]
     SkippedFormattingWork { limit: usize },
+    /// Formatting kept within one of its limits by leaving out what exceeds it.
+    #[error("{resource} exceeds {limit}: {fallback}")]
+    FormattingLimit {
+        resource: &'static str,
+        limit: usize,
+        fallback: &'static str,
+    },
 }
 
 /// Records, once, that formatting skipped optional work past its budget's `limit`.
@@ -177,13 +184,15 @@ impl FormattingSource {
         ),
         resolver: &dyn ResourceResolver,
     ) -> Result<formatting::Formatted, DocumentError> {
-        let navigation = navigation::NavigationBuilder::new(
-            &self.html,
-            &self.base,
-            self.capture_fragment_targets,
-            self.document_url.clone(),
-            &self.source_base,
-        )?;
+        let navigation = || {
+            navigation::NavigationBuilder::new(
+                &self.html,
+                &self.base,
+                self.capture_fragment_targets,
+                self.document_url.clone(),
+                &self.source_base,
+            )
+        };
         formatting::build(
             &formatting::Input {
                 html: &self.html,
@@ -194,9 +203,8 @@ impl FormattingSource {
                 work_limit: MAX_FORMATTING_WORK,
             },
             styles,
-            &self.base,
-            resolver,
-            navigation,
+            (&self.base, resolver),
+            &navigation,
             values,
         )
     }
@@ -438,13 +446,15 @@ impl StyledDocument {
             &mut images.borrow_mut(),
         )?;
         diagnostics.extend(embedding);
-        let links = navigation::NavigationBuilder::new(
-            &html,
-            base,
-            capture_fragment_targets,
-            sources.document_url.clone(),
-            options.base,
-        )?;
+        let links = || {
+            navigation::NavigationBuilder::new(
+                &html,
+                base,
+                capture_fragment_targets,
+                sources.document_url.clone(),
+                options.base,
+            )
+        };
         let formatting::Formatted {
             root,
             footnotes,
@@ -457,6 +467,7 @@ impl StyledDocument {
             page_counters,
             scroll_markers,
             skipped_work,
+            diagnostics: formatting_diagnostics,
         } = formatting::build(
             &formatting::Input {
                 html: &html,
@@ -467,12 +478,12 @@ impl StyledDocument {
                 work_limit,
             },
             &mut styles,
-            base,
-            resolver,
-            links,
+            (base, resolver),
+            &links,
             Default::default(),
         )?;
         record_skipped_work(&mut diagnostics, skipped_work);
+        diagnostics.extend(formatting_diagnostics);
         diagnostics.extend(
             styles
                 .take_source_diagnostics()
@@ -589,6 +600,7 @@ impl StyledDocument {
             page_counters,
             scroll_markers,
             skipped_work,
+            diagnostics: formatting_diagnostics,
         } = source.build(
             &mut styles,
             values,
@@ -604,7 +616,7 @@ impl StyledDocument {
             0,
             crate::style::logical::Flow::used(root.style()),
         )?;
-        let mut diagnostics = Vec::new();
+        let mut diagnostics = formatting_diagnostics;
         record_skipped_work(&mut diagnostics, skipped_work);
         Ok(Self {
             root,
@@ -684,6 +696,7 @@ impl StyledDocument {
             page_counters,
             scroll_markers,
             skipped_work,
+            diagnostics,
         } = source.build(
             &mut self.styles,
             values,
@@ -706,6 +719,9 @@ impl StyledDocument {
         self.svg_definitions = svg_definitions;
         self.page_counters = page_counters.into_iter().collect();
         self.scroll_markers = scroll_markers;
+        for diagnostic in diagnostics {
+            self.diagnose(diagnostic);
+        }
         for diagnostic in self.styles.take_diagnostics() {
             if !self.diagnostics.iter().any(
                 |known| matches!(known, DocumentDiagnostic::Css(known) if *known == diagnostic),
@@ -716,6 +732,22 @@ impl StyledDocument {
         Ok(())
     }
 
+    /// Records `diagnostic` of a formatting, unless an earlier formatting reported the limit
+    /// it reports.
+    fn diagnose(&mut self, diagnostic: DocumentDiagnostic) {
+        let repeated = self.diagnostics.iter().any(|known| {
+            matches!(
+                (known, &diagnostic),
+                (
+                    DocumentDiagnostic::FormattingLimit { resource: known, .. },
+                    DocumentDiagnostic::FormattingLimit { resource, .. },
+                ) if known == resource
+            )
+        });
+        if !repeated {
+            self.diagnostics.push(diagnostic);
+        }
+    }
     pub(crate) fn into_diagnostics(mut self) -> Vec<DocumentDiagnostic> {
         self.diagnostics
             .extend(self.source.embedded.take_diagnostics());

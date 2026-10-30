@@ -15,6 +15,7 @@ pub(crate) const MAX_FORMATTING_WORK: usize = 100_000_000;
 pub(super) const ELEMENT_WORK: usize = 64;
 const DEFAULT_DENSITY: f32 = 1.0;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
+const FLATTENED_NESTING: &str = "elements nested deeper generate no boxes of their own, their contents lying in the deepest box";
 
 /// The background colour and images of `decoration`, without its borders, outline or shadows.
 pub(super) fn background_only<I: Clone>(
@@ -128,6 +129,8 @@ pub(crate) struct Formatted {
     pub scroll_markers: crate::document::scroll_markers::ScrollMarkerGroups,
     /// The work budget's limit, where formatting skipped optional work for want of units.
     pub skipped_work: Option<usize>,
+    /// The limits formatting kept within by leaving out what exceeds them.
+    pub diagnostics: Vec<crate::document::DocumentDiagnostic>,
 }
 
 /// The footnote elements of a document (CSS GCPM 3 §2.2), in the order their elements end,
@@ -581,7 +584,7 @@ impl BlockBox {
     /// The box laid out in place of this atomic inline when it lies on its block's first
     /// formatted line, if that line's styles change it.
     pub(crate) fn first_line_box(&self) -> Option<&BlockBox> {
-        self.first_line_box.as_deref().map(FirstLineBox::get)
+        self.first_line_box.as_deref().and_then(FirstLineBox::get)
     }
     pub(super) fn set_first_line_box(&mut self, block: BlockBox) {
         self.first_line_box = Some(FirstLineBox::staged(block));
@@ -595,7 +598,9 @@ impl BlockBox {
     }
     /// The box this atomic inline's box stands in for, or this box.
     pub(crate) fn standing_for(&self) -> &BlockBox {
-        self.moved_copy().map_or(self, |copy| copy.get())
+        self.moved_copy()
+            .and_then(|copy| copy.get())
+            .unwrap_or(self)
     }
     /// Whether this box stands in for a first-line copy, which other boxes share.
     pub(crate) fn stands_in(&self) -> bool {
@@ -866,6 +871,8 @@ pub(crate) struct Traversal<'a> {
     first_lines: std::rc::Rc<std::cell::RefCell<first_line_copies::FirstLineCopies>>,
     /// The first-line copies a first-line copy requests, formatted after it.
     requests: Vec<first_line_copies::CopyRequest<'a>>,
+    /// Elements past the nesting limit were formatted without boxes of their own.
+    flattened: bool,
 }
 
 /// What a traversal formats.
@@ -984,8 +991,11 @@ impl Traversal<'_> {
             work: self.work.clone(),
             kind: TraversalKind::Copy,
             // Its generated content shows other page counters than the document's.
-            first_lines: std::rc::Rc::default(),
+            first_lines: std::rc::Rc::new(std::cell::RefCell::new(
+                first_line_copies::FirstLineCopies::new(self.first_lines.borrow().enabled()),
+            )),
             requests: Vec::new(),
+            flattened: false,
         }
     }
     /// The state formatting a copy of the subtree starting here, of `kind`: it continues the
@@ -1021,6 +1031,7 @@ impl Traversal<'_> {
             kind,
             first_lines: self.first_lines.clone(),
             requests: Vec::new(),
+            flattened: false,
         }
     }
 }
@@ -3667,11 +3678,6 @@ fn block<'a>(
                 frames[index].generated = true;
             }
             if frames[index].generated || element.name() == "br" {
-                if frames[index].depth > MAX_FORMATTING_DEPTH {
-                    return Err(DocumentError::Formatting(format!(
-                        "{FORMATTING_NESTING_RESOURCE} exceeds {MAX_FORMATTING_DEPTH}"
-                    )));
-                }
                 let footnote = frames[index]
                     .block
                     .as_ref()
@@ -3777,6 +3783,15 @@ fn block<'a>(
             // CSS Display 3 §2.5: `display: contents` on a replaced element computes to `none`.
             if replaced && child_style.display == Display::Contents {
                 child_style.display = Display::None;
+            }
+            // Elements past the nesting limit generate no boxes of their own: their contents
+            // lie in the deepest box allowed, as `display: contents` places them.
+            if frames[index].depth >= MAX_FORMATTING_DEPTH
+                && !replaced
+                && child_style.display != Display::None
+            {
+                child_style.display = Display::Contents;
+                traversal.flattened = true;
             }
             normalize_child_display(
                 &mut child_style.display,
@@ -4277,10 +4292,49 @@ pub(crate) struct Input<'a> {
 pub(crate) fn build(
     input: &Input<'_>,
     sheet: &mut Stylesheet,
-    base: &crate::resources::ResourceBase,
-    resolver: &dyn crate::resources::ResourceResolver,
-    navigation: NavigationBuilder,
+    (base, resolver): (
+        &crate::resources::ResourceBase,
+        &dyn crate::resources::ResourceResolver,
+    ),
+    navigation: &dyn Fn() -> Result<NavigationBuilder, DocumentError>,
     values: crate::document::generated::GeneratedValues,
+) -> Result<Formatted, DocumentError> {
+    let copies = sheet.has_pseudo_rules(PseudoElement::FirstLine);
+    let formatted = format(
+        input,
+        sheet,
+        (base, resolver),
+        navigation()?,
+        (values.clone(), copies),
+    );
+    // First-line copies of atomic inlines are optional work: where formatting runs out of
+    // work with them, it formats the document again without them.
+    match formatted {
+        Err(DocumentError::FormattingWorkLimit { limit }) if copies => {
+            let mut formatted = format(
+                input,
+                sheet,
+                (base, resolver),
+                navigation()?,
+                (values, false),
+            )?;
+            formatted.skipped_work = Some(limit);
+            Ok(formatted)
+        }
+        formatted => formatted,
+    }
+}
+
+/// Formats the document, making first-line copies of atomic inlines if `first_line_copies`.
+fn format(
+    input: &Input<'_>,
+    sheet: &mut Stylesheet,
+    (base, resolver): (
+        &crate::resources::ResourceBase,
+        &dyn crate::resources::ResourceResolver,
+    ),
+    navigation: NavigationBuilder,
+    (values, first_line_copies): (crate::document::generated::GeneratedValues, bool),
 ) -> Result<Formatted, DocumentError> {
     sheet.anchor_nodes.borrow_mut().clear();
     let generated =
@@ -4309,7 +4363,13 @@ pub(crate) fn build(
         )
     } else {
         format_root(
-            input, sheet, style, &resources, navigation, generated, pages,
+            input,
+            sheet,
+            style,
+            &resources,
+            navigation,
+            (generated, first_line_copies),
+            pages,
         )
     }
 }
@@ -4338,15 +4398,7 @@ fn root_style(
             &|styles| crate::document::first_page::select_side(html, styles, generated),
         )
         .map(Box::new)
-        .map_err(|error| match error {
-            StyleError::GrammarLimit {
-                resource: FORMATTING_NESTING_RESOURCE,
-                limit,
-            } => {
-                DocumentError::Formatting(format!("{FORMATTING_NESTING_RESOURCE} exceeds {limit}"))
-            }
-            error => DocumentError::Style(error),
-        })
+        .map_err(DocumentError::Style)
 }
 
 /// The document's page boxes, starting with its first page's.
@@ -4440,6 +4492,7 @@ fn hidden_root(
         page_counters: Vec::new(),
         scroll_markers: crate::document::scroll_markers::ScrollMarkerGroups::default(),
         skipped_work: work.declined(),
+        diagnostics: Vec::new(),
     })
 }
 
@@ -4450,7 +4503,7 @@ fn format_root(
     mut style: Box<Style>,
     resources: &Resources<'_>,
     navigation: NavigationBuilder,
-    generated: crate::document::generated::GeneratedPass,
+    (generated, first_line_copies): (crate::document::generated::GeneratedPass, bool),
     pages: crate::document::page::PageProvider,
 ) -> Result<Formatted, DocumentError> {
     let Input {
@@ -4491,8 +4544,11 @@ fn format_root(
         marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
         work: crate::layout::work::Budget::new(input.work_limit),
         kind: TraversalKind::Document,
-        first_lines: std::rc::Rc::default(),
+        first_lines: std::rc::Rc::new(std::cell::RefCell::new(
+            first_line_copies::FirstLineCopies::new(first_line_copies),
+        )),
         requests: Vec::new(),
+        flattened: false,
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
         .then(|| html.body_element().map(Element::id))
@@ -4592,8 +4648,17 @@ fn format_root(
         page_counters,
         marker_groups,
         work,
+        flattened,
         ..
     } = traversal;
+    let diagnostics = flattened
+        .then_some(crate::document::DocumentDiagnostic::FormattingLimit {
+            resource: FORMATTING_NESTING_RESOURCE,
+            limit: MAX_FORMATTING_DEPTH,
+            fallback: FLATTENED_NESTING,
+        })
+        .into_iter()
+        .collect();
     Ok(Formatted {
         root,
         footnotes,
@@ -4606,6 +4671,7 @@ fn format_root(
         page_counters,
         scroll_markers: marker_groups,
         skipped_work: work.declined(),
+        diagnostics,
     })
 }
 

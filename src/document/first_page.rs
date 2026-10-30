@@ -369,12 +369,6 @@ impl Collector {
             }
             match step {
                 CollectStep::Contents(source, depth) => {
-                    if depth > formatting::MAX_FORMATTING_DEPTH {
-                        return Err(StyleError::GrammarLimit {
-                            resource: formatting::FORMATTING_NESTING_RESOURCE,
-                            limit: formatting::MAX_FORMATTING_DEPTH,
-                        });
-                    }
                     let element = selection
                         .document
                         .element(source.element)
@@ -447,6 +441,13 @@ impl Collector {
                         display = Display::None;
                     }
                     formatting::normalize_child_display(&mut display, replaced, &self.display);
+                    // Formatting lays elements past its nesting limit out without boxes.
+                    if depth >= formatting::MAX_FORMATTING_DEPTH
+                        && !replaced
+                        && display != Display::None
+                    {
+                        display = Display::Contents;
+                    }
                     if display == Display::None
                         || (self.display == Display::TableColumnGroup
                             && !matches!(display, Display::Contents | Display::TableColumn))

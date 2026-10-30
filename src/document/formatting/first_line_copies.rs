@@ -27,10 +27,9 @@ impl FirstLineBox {
         copy.stage(block);
         copy
     }
-    pub(super) fn get(&self) -> &BlockBox {
-        self.resolved
-            .get()
-            .expect("formatting resolves the first-line boxes of the boxes it keeps")
+    /// The box, unless formatting gave it up to keep within its work budget.
+    pub(super) fn get(&self) -> Option<&BlockBox> {
+        self.resolved.get()
     }
     fn formatted(&self) -> bool {
         self.staged.borrow().is_some() || self.resolved.get().is_some()
@@ -80,18 +79,33 @@ pub(super) enum OwnCopy {
     Moved(Rc<FirstLineBox>),
 }
 
-/// The first-line copies of a formatting, by what each is formatted from.
-#[derive(Default)]
-pub(super) struct FirstLineCopies(HashMap<ElementId, Vec<(CopyKey, Rc<FirstLineBox>)>>);
+/// The first-line copies of a formatting, by what each is formatted from, unless it makes
+/// none.
+pub(super) struct FirstLineCopies {
+    copies: HashMap<ElementId, Vec<(CopyKey, Rc<FirstLineBox>)>>,
+    enabled: bool,
+}
 impl FirstLineCopies {
+    pub(super) fn new(enabled: bool) -> Self {
+        Self {
+            copies: HashMap::new(),
+            enabled,
+        }
+    }
+    pub(super) fn enabled(&self) -> bool {
+        self.enabled
+    }
     fn find(&self, key: &CopyKey) -> Option<&Rc<FirstLineBox>> {
-        self.0
+        self.copies
             .get(&key.element)?
             .iter()
             .find_map(|(other, copy)| (other == key).then_some(copy))
     }
     fn insert(&mut self, key: CopyKey, copy: Rc<FirstLineBox>) {
-        self.0.entry(key.element).or_default().push((key, copy));
+        self.copies
+            .entry(key.element)
+            .or_default()
+            .push((key, copy));
     }
     /// Moves the boxes inside `root` that are first-line copies of their own into those
     /// copies, which are then not formatted again, leaving boxes that stand in for them.
@@ -247,7 +261,7 @@ fn first_line_box<'a>(
     traversal: &mut Traversal<'a>,
     resources: &mut ImageResources<'a>,
 ) -> Result<(Option<Rc<FirstLineBox>>, Option<OwnCopy>), DocumentError> {
-    if traversal.marker_prepass {
+    if traversal.marker_prepass || !traversal.first_lines.borrow().enabled {
         return Ok((None, None));
     }
     let Some(mut styles) =
@@ -287,9 +301,9 @@ fn first_line_box<'a>(
     traversal.first_lines.borrow_mut().insert(key, copy.clone());
     if traversal.kind == TraversalKind::FirstLineCopy {
         traversal.requests.push(request);
-    } else {
-        format_copies(request, sheet, resources)?;
+        return Ok((Some(copy), own));
     }
+    format_copies(request, sheet, resources)?;
     Ok((Some(copy), own))
 }
 
