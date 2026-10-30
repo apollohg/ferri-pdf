@@ -693,6 +693,44 @@ fn custom_color_spaces_without_a_profile_are_invalid_opaque_black() {
 }
 
 #[test]
+fn interpolation_in_a_custom_color_space_invalidates_the_declaration() {
+    use crate::style::{declaration, grammar::Property};
+    for (property, custom, predefined) in [
+        (
+            Property::FontPalette,
+            "palette-mix(in --sample, normal, light 30%)",
+            "palette-mix(in lch longer hue, normal, light 30%)",
+        ),
+        (
+            Property::BackgroundImage,
+            "none, linear-gradient(in --sample, red, blue)",
+            "none, linear-gradient(in oklab, red, blue)",
+        ),
+        (
+            Property::Color,
+            "color-mix(in --sample, red, blue)",
+            "color-mix(in srgb, red, blue)",
+        ),
+    ] {
+        let parsed = |source| {
+            declaration::value(property, source, &mut 0)
+                .unwrap_or_else(|error| panic!("{}: {source}: {error}", property.name()))
+        };
+        assert!(
+            parsed(custom).is_none(),
+            "{}: {custom} interpolates in a space without an @color-profile, so it must be \
+             invalid (CSS Color 5 §9.1)",
+            property.name()
+        );
+        assert!(
+            parsed(predefined).is_some(),
+            "{}: {predefined} interpolates in a predefined space and must stay valid",
+            property.name()
+        );
+    }
+}
+
+#[test]
 fn gamut_mapping_reduces_oklch_chroma_to_the_srgb_boundary() {
     for source in [
         "oklch(70% 0.4 30)",

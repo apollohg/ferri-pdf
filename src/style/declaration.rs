@@ -525,6 +525,7 @@ fn value_with_context(
             && crate::style::svg_values::valid(property, value)
             && crate::style::anchor_values::valid(property, value)
             && crate::style::logical::valid(property, value)
+            && crate::style::colors::interpolation_spaces_exist(value)
     }))
 }
 

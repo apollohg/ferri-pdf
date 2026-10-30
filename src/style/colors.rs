@@ -419,6 +419,26 @@ pub(super) fn interpolation_method(words: &[&str]) -> Option<Interpolation> {
     Some(Interpolation { space, hue })
 }
 
+/// Whether every `<color-interpolation-method>` in `value` names a colour space; a custom
+/// one names no `@color-profile` and so invalidates the declaration (CSS Color 5 §9.1).
+pub(super) fn interpolation_spaces_exist(value: &Component) -> bool {
+    match value {
+        Component::Reference(
+            crate::style::grammar::Label::Production(
+                crate::style::grammar::Production::ColorInterpolationMethod,
+            ),
+            _,
+        ) => crate::style::background_values::interpolation_method(value).is_ok(),
+        Component::Reference(_, inner) | Component::Block(_, inner) => {
+            interpolation_spaces_exist(inner)
+        }
+        Component::Function(_, body) => body.as_deref().is_none_or(interpolation_spaces_exist),
+        Component::Group(items) => items.iter().all(interpolation_spaces_exist),
+        Component::Slots(slots) => slots.iter().flatten().all(interpolation_spaces_exist),
+        _ => true,
+    }
+}
+
 /// The `Canvas` system colour in `scheme`.
 pub(super) fn canvas(scheme: ColorScheme) -> Color {
     system_color(CANVAS, scheme)
