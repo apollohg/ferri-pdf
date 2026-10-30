@@ -599,8 +599,9 @@ pub struct TextChunk {
     pub(crate) line_breaks: usize,
     /// How far along the inline axis a line of wrapped text moves from its anchor point.
     pub(crate) inline_offset: f32,
-    /// The bytes ending the chunk that hang beyond its line's end, which anchoring ignores.
-    pub(crate) hanging: usize,
+    /// The advance hanging beyond the logical start and end of a wrapped line, which anchoring
+    /// ignores (CSS Text 3 §4.1.3, CSS Text 4 §9.2).
+    pub(crate) hanging: [f32; 2],
     /// The chunk is a line that wrapping, not a forced break, starts.
     pub(crate) soft_wrapped: bool,
     /// The chunk is a wrapped line that does not otherwise fit its wrapping area.

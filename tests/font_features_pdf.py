@@ -352,10 +352,19 @@ class FontFeaturesPdf(unittest.TestCase):
             ("white-space:nowrap", "white-space:nowrap;overflow:hidden", words),
             ("white-space:nowrap;text-overflow:ellipsis",
              "white-space:nowrap;overflow:hidden;text-overflow:ellipsis", words),
+            # CSS Text 4 §9.2: hanging punctuation is not measured for fit or alignment.
+            ("hanging-punctuation:first", "hanging-punctuation:first", f"\u201c{words}"),
+            ("text-anchor:end;hanging-punctuation:last", "text-align:right;hanging-punctuation:last",
+             f"{words}\u201d"),
+            ("hanging-punctuation:force-end", "hanging-punctuation:force-end",
+             "Commas, stops. Lists, then, hang, past, each, edge, of, the, area."),
+            ("hanging-punctuation:allow-end", "hanging-punctuation:allow-end",
+             "Commas, stops. Lists, then, hang, past, each, edge, of, the, area."),
         ]
         for svg_style, html_style, text in cases:
             with self.subTest(style=svg_style):
-                x = centre if "middle" in svg_style else left
+                x = centre if "middle" in svg_style else left + width if "end" in svg_style \
+                    and "text-anchor" in svg_style else left
                 expected = self.render(
                     rules, f'<p lang="en" style="position:absolute;left:{left}px;top:0;'
                            f'width:{width}px;{html_style}">{text}</p>').glyphs
@@ -396,6 +405,31 @@ class FontFeaturesPdf(unittest.TestCase):
                     self.assertEqual(ink(range(int(edge * scale) + COLOUR_TOLERANCE,
                                                raster.width)), [],
                                      "no ink beyond the wrapping area's right edge")
+
+    def test_pre_formatted_svg_text_anchors_without_its_hanging_punctuation(self):
+        """CSS Text 4 §9.2 on SVG text without a wrapping area: punctuation that hangs is not
+        measured for `text-anchor` alignment, so a closing quote ending the last line hangs
+        past an end anchor and an opening quote starting the first line before a start one."""
+        anchor = 200
+        texts = (f'<text x="{anchor}" y="30" style="text-anchor:end">ab\u201d</text>'
+                 f'<text x="{anchor}" y="60" style="text-anchor:end;hanging-punctuation:last">'
+                 'ab\u201d</text>'
+                 f'<text x="{anchor}" y="90" style="hanging-punctuation:first">\u201cab</text>'
+                 f'<text x="{anchor}" y="120">ab</text>')
+        plain, hanging, opening, start = self.lines(self.render(
+            "svg{display:block}",
+            f"<svg width=\"300pt\" height=\"100pt\" viewBox=\"0 0 400 133\" "
+            f"style=\"font:20px 'Liberation Serif'\">{texts}</svg>").glyphs)
+        origin = start[0].origin[0]
+        quote = origin - plain[-1].origin[0]
+        self.assertAlmostEqual(hanging[-1].origin[0], origin, delta=POSITION_TOLERANCE_PT,
+                               msg="the hanging quote starts at the end anchor")
+        self.assertAlmostEqual(hanging[0].origin[0] - plain[0].origin[0], quote,
+                               delta=POSITION_TOLERANCE_PT,
+                               msg="the line moves right by the hanging advance")
+        self.assertLess(opening[0].origin[0], origin, "the opening quote hangs before the anchor")
+        self.assertAlmostEqual(opening[1].origin[0], origin, delta=POSITION_TOLERANCE_PT,
+                               msg="the letters start at the start anchor")
 
     def test_optical_size_and_presentation_select_the_embedded_glyphs(self):
         optical = reference("RobotoFlex-optical.json")

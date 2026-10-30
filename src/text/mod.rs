@@ -7,7 +7,7 @@ pub(crate) mod decoration;
 mod ellipsis;
 pub(crate) mod emphasis;
 pub(crate) mod features;
-mod hanging;
+pub(crate) mod hanging;
 pub(crate) mod hyphenation;
 mod initial_letter;
 mod leaders;

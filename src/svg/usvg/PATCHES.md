@@ -177,3 +177,8 @@ do (CSS Text 4 §8.5), with the face's `halt` feature or by trimming its blank h
 logical order of its characters: a chunk wrapping starts is not a first line, and closing
 punctuation ending a wrapped line that does not otherwise fit its area is trimmed where the
 value allows only that, before the line's overflow is decided.
+
+`hanging-punctuation` hangs punctuation outside a line's measure as the document's lines do
+(CSS Text 4 §9.2): wrapped lines exclude it from their fit and from their anchoring, an
+`allow-end` stop or comma only as far as the line overflows, and lines of pre-formatted text
+exclude it from their anchoring, where no line overflows.

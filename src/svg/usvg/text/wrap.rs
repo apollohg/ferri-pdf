@@ -31,7 +31,8 @@ pub(crate) fn wrap(
     for (index, chunk) in text.chunks.iter().enumerate() {
         paragraphs.push(match chunk.text_flow {
             TextFlow::Linear => {
-                Paragraph::of(text, chunk, index == 0, fonts, strut, resolver, fontdb)?
+                let edges = [index == 0, index + 1 == text.chunks.len()];
+                Paragraph::of(text, chunk, edges, fonts, strut, resolver, fontdb)?
             }
             TextFlow::Path(_) => Paragraph::unbroken(chunk),
         });
@@ -99,13 +100,16 @@ struct Paragraph<'a> {
     advances: Vec<(usize, f32)>,
     /// The text element's `text-indent`, where it applies to the paragraph's first line.
     indent: Option<crate::style::TextIndent>,
+    /// The paragraph holds the text's first and last formatted lines.
+    first: bool,
+    last: bool,
 }
 
 impl<'a> Paragraph<'a> {
     fn of(
         text: &Text,
         chunk: &'a TextChunk,
-        first: bool,
+        [first, last]: [bool; 2],
         fonts: &FontsCache,
         strut: Option<&ResolvedFont>,
         resolver: &dyn FontProvider,
@@ -121,6 +125,8 @@ impl<'a> Paragraph<'a> {
             breaking: Some(paragraph),
             advances,
             indent: applies.then_some(indent),
+            first,
+            last,
         })
     }
 
@@ -135,7 +141,57 @@ impl<'a> Paragraph<'a> {
             },
             advances: Vec::new(),
             indent: None,
+            first: false,
+            last: false,
         }
+    }
+
+    /// The advance hanging at the logical start and end of the line showing `visible`, which a
+    /// hyphen ends where `hyphenated`: preserved spaces ending it (CSS Text 3 §4.1.3), and the
+    /// punctuation `hanging-punctuation` hangs (CSS Text 4 §9.2). An `allow-end` stop or comma
+    /// hangs only as far as the line overflows `available`, and wholly for fit without it.
+    fn hanging(
+        &self,
+        paragraph: &crate::document::Paragraph,
+        visible: Range<usize>,
+        hyphenated: bool,
+        available: Option<f32>,
+    ) -> [f32; 2] {
+        use crate::text::hanging::{end_hang, hangs_first};
+        let text = paragraph.text();
+        let punctuation =
+            |offset: usize| paragraph.style_at(offset).line_breaking.hanging_punctuation;
+        let start = text[visible.clone()]
+            .chars()
+            .next()
+            .filter(|&ch| {
+                self.first && visible.start == 0 && hangs_first(punctuation(visible.start), ch)
+            })
+            .map_or(0.0, |ch| {
+                self.width(visible.start..visible.start + ch.len_utf8())
+            });
+        let spaces = hanging_spaces(paragraph, visible.clone());
+        if spaces > 0 {
+            return [start, self.width(visible.end - spaces..visible.end)];
+        }
+        let end = text[visible.clone()]
+            .char_indices()
+            .next_back()
+            .filter(|_| !hyphenated)
+            .and_then(|(offset, ch)| {
+                let offset = visible.start + offset;
+                let last = self.last && visible.end == text.len();
+                let conditional = end_hang(punctuation(offset), ch, last)?;
+                let width = self.width(offset..visible.end);
+                Some(match available.filter(|_| conditional) {
+                    Some(available) => {
+                        (self.width(visible.clone()) - start - available).clamp(0.0, width)
+                    }
+                    None => width,
+                })
+            })
+            .unwrap_or(0.0);
+        [start, end]
     }
 
     /// The width of the source text in `range`.
@@ -200,8 +256,13 @@ impl<'a> Paragraph<'a> {
                 crate::text::hyphenation::string(paragraph, &self.opportunities.automatic, end)
                     .filter(|_| end < text.len());
             let visible = crate::text::whitespace::visible(paragraph, start..end);
-            let hanging = hanging(paragraph, visible.clone());
-            let mut used = self.width(visible.start..visible.end - hanging)
+            let hanging = self.hanging(
+                paragraph,
+                visible.clone(),
+                hyphen.is_some(),
+                Some(available),
+            );
+            let mut used = self.width(visible.clone()) - hanging[0] - hanging[1]
                 + hyphen.map_or(0.0, |hyphen| {
                     self.extra_width(hyphen, visible.end, fonts, resolver, fontdb)
                 });
@@ -254,15 +315,16 @@ impl<'a> Paragraph<'a> {
         let text = paragraph.text();
         let fits = |end: usize, fonts: &FontsCache, fontdb: &mut Arc<Database>| {
             let visible = crate::text::whitespace::visible(paragraph, start..end);
-            let hanging = hanging(paragraph, visible.clone());
             let hyphen =
                 crate::text::hyphenation::string(paragraph, &self.opportunities.automatic, end)
-                    .filter(|_| end < text.len())
-                    .map_or(Some(0.0), |hyphen| {
-                        Some(self.extra_width(hyphen, visible.end, fonts, resolver, fontdb))
-                    });
+                    .filter(|_| end < text.len());
+            let [start_hang, end_hang] =
+                self.hanging(paragraph, visible.clone(), hyphen.is_some(), None);
+            let hyphen = hyphen.map_or(Some(0.0), |hyphen| {
+                Some(self.extra_width(hyphen, visible.end, fonts, resolver, fontdb))
+            });
             hyphen.is_some_and(|hyphen| {
-                self.width(visible.start..visible.end - hanging) + hyphen <= available
+                self.width(visible.clone()) - start_hang - end_hang + hyphen <= available
             })
         };
         let mut chosen = None;
@@ -334,7 +396,7 @@ impl<'a> Paragraph<'a> {
         &self,
         range: Range<usize>,
         hyphen: Option<&str>,
-        hanging: usize,
+        hanging: [f32; 2],
         first: bool,
     ) -> TextChunk {
         let source = &self.chunk.text;
@@ -417,7 +479,7 @@ impl<'a> Paragraph<'a> {
                 kept.start = boundaries[boundaries.partition_point(|&offset| offset <= kept.start)];
             }
         }
-        let mut shown = self.line(kept, None, 0, first);
+        let mut shown = self.line(kept, None, [0.0; 2], first);
         let style_span = shown
             .spans
             .first()
@@ -466,7 +528,7 @@ struct Fitting {
 }
 
 /// The bytes of preserved spaces ending `range` that hang (CSS Text 3 §4.1.3).
-fn hanging(paragraph: &crate::document::Paragraph, range: Range<usize>) -> usize {
+fn hanging_spaces(paragraph: &crate::document::Paragraph, range: Range<usize>) -> usize {
     let text = paragraph.text();
     text[range.clone()]
         .char_indices()

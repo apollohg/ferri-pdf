@@ -1,7 +1,7 @@
 //! CSS Text 4 §9.2 `hanging-punctuation`. A hanging glyph is not measured for fit, alignment,
 //! justification or intrinsic sizes (CSS Text 3 §8.2), so it may sit outside the line box.
 use crate::document::Paragraph;
-use crate::style::HangingEnd;
+use crate::style::{HangingEnd, HangingPunctuation};
 use crate::text::line_boxes::Slot;
 use crate::text::{GlyphRun, hyphenation::SOFT_HYPHEN};
 use icu_properties::{CodePointMapData, props::GeneralCategory};
@@ -75,6 +75,22 @@ fn closing(ch: char) -> bool {
     ) || ASCII_QUOTES.contains(&ch)
 }
 
+/// Whether `ch`, starting the first formatted line, hangs there under `hanging`.
+pub(crate) fn hangs_first(hanging: HangingPunctuation, ch: char) -> bool {
+    hanging.first && opening(ch)
+}
+
+/// How `ch`, ending a line, hangs under `hanging`: `Some(true)` only as far as it does not
+/// otherwise fit. `last` tells whether the line is the last formatted line, whose closing
+/// punctuation `last` hangs.
+pub(crate) fn end_hang(hanging: HangingPunctuation, ch: char, last: bool) -> Option<bool> {
+    if let Some(end) = hanging.end.filter(|_| STOPS_AND_COMMAS.contains(&ch)) {
+        Some(end == HangingEnd::Allow)
+    } else {
+        (hanging.last && closing(ch) && last).then_some(false)
+    }
+}
+
 /// The visual edge glyph cluster of a run: its paragraph offset, character and advance.
 fn edge_cluster(paragraph: &Paragraph, run: &GlyphRun, right: bool) -> Option<(usize, char, f32)> {
     let edge = if right {
@@ -131,30 +147,24 @@ pub(super) fn hangable(
         && range.start == 0
         && paragraph.first_formatted_line()
         && offset == visible.start
-        && opening(ch)
-        && paragraph
-            .style_at(offset)
-            .line_breaking
-            .hanging_punctuation
-            .first
+        && hangs_first(
+            paragraph.style_at(offset).line_breaking.hanging_punctuation,
+            ch,
+        )
     {
         hangable.start = width;
     }
     if let Some((offset, ch, width)) =
         edge_run(!rtl).and_then(|run| edge_cluster(paragraph, run, !rtl))
         && offset + ch.len_utf8() == visible.end
+        && let Some(conditional) = end_hang(
+            paragraph.style_at(offset).line_breaking.hanging_punctuation,
+            ch,
+            range.end == paragraph.text().len() && paragraph.last_formatted_line(),
+        )
     {
-        let hanging = paragraph.style_at(offset).line_breaking.hanging_punctuation;
-        if let Some(end) = hanging.end.filter(|_| STOPS_AND_COMMAS.contains(&ch)) {
-            hangable.end = width;
-            hangable.conditional = end == HangingEnd::Allow;
-        } else if hanging.last
-            && closing(ch)
-            && range.end == paragraph.text().len()
-            && paragraph.last_formatted_line()
-        {
-            hangable.end = width;
-        }
+        hangable.end = width;
+        hangable.conditional = conditional;
     }
     hangable
 }

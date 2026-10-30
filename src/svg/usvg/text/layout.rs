@@ -549,7 +549,7 @@ fn emphasis_marks(
         text: text.clone(),
         line_breaks: 0,
         inline_offset: 0.0,
-        hanging: 0,
+        hanging: [0.0; 2],
         soft_wrapped: false,
         overflowing: false,
     };
@@ -1346,6 +1346,42 @@ fn resolve_clusters_positions(
     }
 }
 
+/// CSS Text 4 §9.2 `hanging-punctuation` on a line of pre-formatted text, a chunk of `text`
+/// with `clusters`: the advance of the opening punctuation starting the text's first line and
+/// of the stop, comma or closing punctuation ending a line that hang at its logical start and
+/// end. Without a wrapping area no line overflows, so `allow-end` hangs nothing.
+fn hanging_punctuation(text: &Text, chunk: &TextChunk, clusters: &[GlyphCluster]) -> [f32; 2] {
+    use crate::text::hanging::{end_hang, hangs_first};
+    let hanging = |cluster: &GlyphCluster| {
+        chunk_span_at(chunk, cluster.byte_idx)
+            .map(|span| span.style.line_breaking.hanging_punctuation)
+            .unwrap_or_default()
+    };
+    let first = clusters
+        .iter()
+        .min_by_key(|cluster| cluster.byte_idx.value());
+    let last = clusters
+        .iter()
+        .max_by_key(|cluster| cluster.byte_idx.value());
+    let is_first_line = text
+        .chunks
+        .first()
+        .is_some_and(|first| std::ptr::eq(first, chunk));
+    let is_last_line = text
+        .chunks
+        .last()
+        .is_some_and(|last| std::ptr::eq(last, chunk));
+    let start = first
+        .filter(|cluster| is_first_line && hangs_first(hanging(cluster), cluster.codepoint))
+        .map_or(0.0, |cluster| cluster.advance);
+    let end = last
+        .filter(|cluster| {
+            end_hang(hanging(cluster), cluster.codepoint, is_last_line) == Some(false)
+        })
+        .map_or(0.0, |cluster| cluster.advance);
+    [start, end]
+}
+
 fn clusters_length(clusters: &[GlyphCluster]) -> f32 {
     clusters.iter().fold(0.0, |w, cluster| w + cluster.advance)
 }
@@ -1357,13 +1393,19 @@ fn resolve_clusters_positions_horizontal(
     writing_mode: WritingMode,
     clusters: &mut [GlyphCluster],
 ) -> (f32, f32) {
-    // Spaces hanging at a wrapped line's end do not count for its alignment.
-    let hanging = chunk.text.len() - chunk.hanging;
-    let aligned = clusters
-        .iter()
-        .filter(|cluster| cluster.byte_idx.value() < hanging)
-        .fold(0.0, |width, cluster| width + cluster.advance);
-    let mut x = process_anchor(chunk.anchor, aligned);
+    // What hangs at the line's edges does not count for its alignment.
+    let [start, end] = if text.wrapping.is_some() {
+        chunk.hanging
+    } else {
+        hanging_punctuation(text, chunk, clusters)
+    };
+    let [left, right] = if chunk.rtl {
+        [end, start]
+    } else {
+        [start, end]
+    };
+    let aligned = clusters_length(clusters) - left - right;
+    let mut x = process_anchor(chunk.anchor, aligned) - left;
     let mut y = 0.0;
 
     for cluster in clusters {
@@ -2010,7 +2052,7 @@ fn combined_glyphs(
             text: text.to_owned(),
             line_breaks: 0,
             inline_offset: 0.0,
-            hanging: 0,
+            hanging: [0.0; 2],
             soft_wrapped: false,
             overflowing: false,
         };

@@ -481,7 +481,7 @@ fn collect_text_chunks_impl(
                         text: String::new(),
                         line_breaks: 0,
                         inline_offset: 0.0,
-                        hanging: 0,
+                        hanging: [0.0; 2],
                         soft_wrapped: false,
                         overflowing: false,
                     });
@@ -521,7 +521,7 @@ fn collect_text_chunks_impl(
                     text: c.to_string(),
                     line_breaks: std::mem::take(&mut iter_state.line_breaks),
                     inline_offset: 0.0,
-                    hanging: 0,
+                    hanging: [0.0; 2],
                     soft_wrapped: false,
                     overflowing: false,
                 });
