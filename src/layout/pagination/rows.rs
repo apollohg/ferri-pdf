@@ -1181,6 +1181,9 @@ impl<'a> Paginator<'a, '_, 'a> {
         }
         self.paint_row_after(std::mem::take(&mut row.after), start_page, start)?;
         self.has_flow |= row.height > 0.0;
+        // A row ending inside the page area occupies it even when its cells have no ink.
+        self.flow_content[self.page] |=
+            self.unbroken == 0 && row.height > 0.0 && !overflows(self.y, self.height);
         self.at_page_start = false;
         self.pending_break = Forced::of(row.break_after);
         self.unbroken = previous_unbroken;

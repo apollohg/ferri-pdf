@@ -1730,46 +1730,63 @@ fn row_and_group_border_images_paint_their_boxes_only_in_the_separated_model() {
 }
 
 #[test]
-fn split_row_group_border_image_slices_across_pages() {
-    let html = format!(
-        "<style>{PROFILE}@page{{size:200pt 100pt;margin:10pt}}table{{width:100%;border-spacing:0}}td{{padding:0}}tr{{height:30pt;break-inside:avoid}}tbody{{border-image:linear-gradient(red,red) 1 / 2pt}}</style><table><tbody><tr><td>1</td></tr><tr><td>2</td></tr><tr><td>3</td></tr><tr><td>4</td></tr></tbody></table>"
-    );
-    let trace = render_html(&html, &local_options())
-        .unwrap()
-        .layout
-        .unwrap();
-    let fragments = trace
-        .display_lists
-        .iter()
-        .map(|page| {
-            page.iter()
-                .filter_map(|item| match item {
-                    DisplayItem::Box(paint) if paint.decoration.border_image.is_drawn() => {
-                        Some((paint.rect, paint.first_fragment, paint.last_fragment))
-                    }
-                    _ => None,
+fn split_row_group_decorations_slice_across_pages_with_or_without_cell_content() {
+    for (decoration, painted) in [
+        (
+            "border-image:linear-gradient(red,red) 1 / 2pt",
+            (|paint| paint.decoration.border_image.is_drawn()) as fn(&ferri_pdf::BoxPaint) -> bool,
+        ),
+        ("box-shadow:3pt 3pt 0 red", |paint| {
+            !paint.decoration.shadows.is_empty()
+        }),
+    ] {
+        for cells in [["1", "2", "3", "4"], [""; 4]] {
+            let rows: String = cells
+                .iter()
+                .map(|cell| format!("<tr><td>{cell}</td></tr>"))
+                .collect();
+            let case = format!("{decoration}, cells {cells:?}");
+            let html = format!(
+                "<style>{PROFILE}@page{{size:200pt 100pt;margin:10pt}}table{{width:100%;border-spacing:0}}td{{padding:0}}tr{{height:30pt;break-inside:avoid}}tbody{{{decoration}}}</style><table><tbody>{rows}</tbody></table>"
+            );
+            let trace = render_html(&html, &local_options())
+                .unwrap()
+                .layout
+                .unwrap();
+            let fragments = trace
+                .display_lists
+                .iter()
+                .map(|page| {
+                    page.iter()
+                        .filter_map(|item| match item {
+                            DisplayItem::Box(paint) if painted(paint) => {
+                                Some((paint.rect, paint.first_fragment, paint.last_fragment))
+                            }
+                            _ => None,
+                        })
+                        .collect::<Vec<_>>()
                 })
-                .collect::<Vec<_>>()
-        })
-        .collect::<Vec<_>>();
-    assert_eq!(
-        fragments.iter().map(Vec::len).collect::<Vec<_>>(),
-        [1, 1],
-        "one group fragment per page: {fragments:?}"
-    );
-    let (first, starts, ends) = fragments[0][0];
-    assert!(
-        starts && !ends,
-        "first fragment is open at its end: {fragments:?}"
-    );
-    assert_pt(first.height, 60.0);
-    let (second, starts, ends) = fragments[1][0];
-    assert!(
-        !starts && ends,
-        "second fragment is open at its start: {fragments:?}"
-    );
-    assert_pt(second.y, 10.0);
-    assert_pt(second.height, 60.0);
+                .collect::<Vec<_>>();
+            assert_eq!(
+                fragments.iter().map(Vec::len).collect::<Vec<_>>(),
+                [1, 1],
+                "{case}: one group fragment per page: {fragments:?}"
+            );
+            let (first, starts, ends) = fragments[0][0];
+            assert!(
+                starts && !ends,
+                "{case}: first fragment is open at its end: {fragments:?}"
+            );
+            assert_pt(first.height, 60.0);
+            let (second, starts, ends) = fragments[1][0];
+            assert!(
+                !starts && ends,
+                "{case}: second fragment is open at its start: {fragments:?}"
+            );
+            assert_pt(second.y, 10.0);
+            assert_pt(second.height, 60.0);
+        }
+    }
 }
 
 #[test]
