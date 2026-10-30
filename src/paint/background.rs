@@ -440,13 +440,7 @@ impl<I> BoxPaint<I> {
     /// The border, padding or content box of this fragment with its curves.
     pub fn box_area(&self, area: BoxArea) -> Clip {
         match area {
-            BoxArea::BorderBox => self.slice_clip(Clip {
-                rect: self.decoration_rect(),
-                radii: self.radii(),
-                outline: None,
-                reference_box: None,
-                axes: [true; 2],
-            }),
+            BoxArea::BorderBox => self.box_clip([0.0; 4], [true; 2]),
             BoxArea::PaddingBox => self.inner_clip([0.0; 4], [true; 2]),
             BoxArea::ContentBox => self.inner_clip(self.fragment_padding(), [true; 2]),
         }

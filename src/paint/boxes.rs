@@ -1,4 +1,4 @@
-use crate::paint::rounded::Radii;
+use crate::paint::rounded::{CornerShape, Radii};
 use crate::paint::{
     Backgrounds, BorderImage, BoxShadow, Clip, Color, Contour, Fill, LengthPercentage, Point, Rect,
     Segment, Shape,
@@ -13,6 +13,8 @@ const DOT_SPACING_WIDTHS: f32 = 2.0;
 /// Half-extent of a clip along an axis that does not clip.
 pub(crate) const DASH_LENGTH_WIDTHS: f32 = 3.0;
 pub(crate) const DASH_GAP_WIDTHS: f32 = 2.0;
+static INITIAL_CORNER_SHAPES: LazyLock<Arc<[CornerShape; 4]>> =
+    LazyLock::new(|| Arc::new([CornerShape::ROUND; 4]));
 static INITIAL_RADII: LazyLock<Arc<[[LengthPercentage; 2]; 4]>> =
     LazyLock::new(|| Arc::new(std::array::from_fn(|_| [LengthPercentage::ZERO; 2])));
 
@@ -279,6 +281,8 @@ pub struct BoxDecoration<I = Infallible> {
     pub borders: [Border; 4],
     /// `[horizontal, vertical]` radii in top-left, top-right, bottom-right, bottom-left order.
     pub radii: Arc<[[LengthPercentage; 2]; 4]>,
+    /// Dimensionless shapes in the same physical corner order as `radii`.
+    pub corner_shapes: Arc<[CornerShape; 4]>,
     /// `box-shadow` layers, the first listed on top.
     pub shadows: Arc<Vec<BoxShadow>>,
     pub border_image: Arc<BorderImage<I>>,
@@ -293,6 +297,7 @@ impl<I> Default for BoxDecoration<I> {
             backgrounds: Arc::default(),
             borders: [Border::default(); 4],
             radii: INITIAL_RADII.clone(),
+            corner_shapes: INITIAL_CORNER_SHAPES.clone(),
             shadows: Arc::default(),
             border_image: Arc::default(),
             outline: Outline::default(),
@@ -364,6 +369,7 @@ impl BoxDecoration<Infallible> {
             masks: Arc::new(self.masks.with_image_type()),
             borders: self.borders,
             radii: self.radii.clone(),
+            corner_shapes: self.corner_shapes.clone(),
             shadows: self.shadows.clone(),
             border_image: Arc::new(self.border_image.with_image_type()),
             outline: self.outline,
@@ -587,18 +593,32 @@ impl<I> BoxPaint<I> {
     /// An axis that does not clip extends without bound and drops the corner curves.
     pub fn inner_clip(&self, padding: [f32; 4], axes: [bool; 2]) -> Clip {
         let widths = self.inner_widths();
-        let (rect, mut radii) = crate::paint::rounded::inset(
-            self.decoration_rect(),
-            self.radii(),
+        self.box_clip(
             std::array::from_fn(|side| widths[side] + padding[side]),
-        );
+            axes,
+        )
+    }
+
+    pub(crate) fn box_clip(&self, insets: [f32; 4], axes: [bool; 2]) -> Clip {
+        let source = self.decoration_rect();
+        let radii = self.radii();
+        let shapes = *self.decoration.corner_shapes;
+        let outline = (axes == [true; 2] && shapes != [CornerShape::ROUND; 4]).then(|| {
+            Arc::new(crate::paint::rounded::box_contours(
+                source,
+                radii,
+                shapes.map(CornerShape::curvature),
+                insets,
+            ))
+        });
+        let (rect, mut radii) = crate::paint::rounded::inset(source, radii, insets);
         if axes != [true; 2] {
-            radii = [[0.0; 2]; 4];
+            radii = Radii::default();
         }
         self.slice_clip(Clip {
             rect,
             radii,
-            outline: None,
+            outline,
             reference_box: None,
             axes,
         })
@@ -689,6 +709,7 @@ impl<I> BoxPaint<I> {
             BoxDecoration {
                 borders: [border; 4],
                 radii: Arc::new(radii.map(|corner| corner.map(LengthPercentage::Length))),
+                corner_shapes: self.decoration.corner_shapes.clone(),
                 ..BoxDecoration::default()
             },
         ))
@@ -712,7 +733,11 @@ impl<I> BoxPaint<I> {
                 [0.0; 2]
             }
         });
-        crate::paint::rounded::constrain(radii, [rect.width, rect.height])
+        crate::paint::rounded::constrain_corners(
+            radii,
+            [rect.width, rect.height],
+            self.decoration.corner_shapes.map(CornerShape::curvature),
+        )
     }
     /// Background colour within the bottom layer's `background-clip` area.
     pub fn background_fill(&self) -> Option<Fill> {
@@ -964,5 +989,241 @@ impl<I> BoxPaint<I> {
             }
         }
         fills
+    }
+}
+
+#[cfg(test)]
+mod corner_tests {
+    use super::*;
+    use kurbo::Shape as _;
+
+    fn contains(contours: &[Contour], point: Point) -> bool {
+        contours
+            .iter()
+            .map(|contour| {
+                kurbo::BezPath::from_iter(contour.path_elements())
+                    .winding(kurbo::Point::new(f64::from(point[0]), f64::from(point[1])))
+            })
+            .sum::<i32>()
+            != 0
+    }
+
+    fn notched_box() -> BoxPaint {
+        BoxPaint::whole(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 80.0,
+                height: 60.0,
+            },
+            BoxDecoration {
+                radii: Arc::new(std::array::from_fn(|corner| {
+                    std::array::from_fn(|_| {
+                        if corner % 2 == 0 {
+                            LengthPercentage::Percentage(0.8)
+                        } else {
+                            LengthPercentage::ZERO
+                        }
+                    })
+                })),
+                corner_shapes: Arc::new([
+                    CornerShape::NOTCH,
+                    CornerShape::ROUND,
+                    CornerShape::NOTCH,
+                    CornerShape::ROUND,
+                ]),
+                borders: [Border {
+                    width: 4.0,
+                    style: BorderStyle::Solid,
+                    color: Color::BLACK,
+                }; 4],
+                ..Default::default()
+            },
+        )
+    }
+
+    #[test]
+    fn box_clips_share_concave_radius_constraints_and_disconnected_inner_edges() {
+        let paint = notched_box();
+        assert_eq!(
+            paint.radii(),
+            [[40.0, 30.0], [0.0; 2], [40.0, 30.0], [0.0; 2]],
+            "opposite notch hulls must constrain percentage radii before any consumer uses them"
+        );
+        let outer = paint.box_area(crate::paint::BoxArea::BorderBox);
+        let inner = paint.inner_clip([0.0; 4], [true; 2]);
+        assert_eq!(
+            outer.contours().len(),
+            2,
+            "the touching outer notches leave two islands"
+        );
+        assert_eq!(
+            inner.contours().len(),
+            2,
+            "inset cutouts overlap without restoring their overlap"
+        );
+        for (point, expected) in [
+            ([60.0, 15.0], true),
+            ([20.0, 45.0], true),
+            ([40.0, 30.0], false),
+            ([42.0, 15.0], false),
+            ([60.0, 2.0], false),
+        ] {
+            assert_eq!(
+                contains(&inner.contours(), point),
+                expected,
+                "padding clip coverage at {point:?}"
+            );
+        }
+        let strip = paint.inner_clip([0.0; 4], [true, false]);
+        assert!(
+            strip.outline.is_none(),
+            "open-axis overflow drops all corner cuts"
+        );
+        let fill = paint.border_fills();
+        assert_eq!(fill.len(), 1, "uniform border uses one compound ring");
+        let Shape::Path {
+            contours,
+            even_odd: true,
+            ..
+        } = &fill[0].shape
+        else {
+            panic!("expected a filled border ring")
+        };
+        let winding = |point: Point| {
+            contours
+                .iter()
+                .map(|c| {
+                    kurbo::BezPath::from_iter(c.path_elements())
+                        .winding(kurbo::Point::new(f64::from(point[0]), f64::from(point[1])))
+                })
+                .sum::<i32>()
+                .abs()
+                % 2
+                == 1
+        };
+        assert!(
+            winding([42.0, 15.0]),
+            "the concave vertical border keeps its four-point thickness"
+        );
+        assert!(
+            !winding([60.0, 15.0]),
+            "padding islands are not filled by the border"
+        );
+        assert!(
+            !winding([20.0, 15.0]),
+            "the outer notch is not filled by the border"
+        );
+    }
+
+    #[test]
+    fn sliced_corner_clips_keep_the_assembled_geometry_and_clip_only_fragment_edges() {
+        let whole = notched_box();
+        let expected = whole.inner_clip([0.0; 4], [true; 2]);
+        let mut fragment = whole.clone();
+        fragment.background_box = Some(whole.rect);
+        fragment.rect.y = 10.0;
+        fragment.rect.height = 40.0;
+        fragment.first_fragment = false;
+        fragment.last_fragment = false;
+        let clip = fragment.inner_clip([0.0; 4], [true; 2]);
+        assert_eq!(
+            clip.contours(),
+            expected.contours(),
+            "fragmentation must not recompute the corner shapes from the smaller box"
+        );
+        assert_eq!(clip.reference_box, Some(expected.rect));
+        assert_eq!(
+            clip.rect,
+            Rect {
+                x: 4.0,
+                y: 10.0,
+                width: 72.0,
+                height: 40.0
+            }
+        );
+        assert_eq!(clip.bounds().clip_rect(whole.rect), clip.rect);
+    }
+
+    #[test]
+    fn corner_identity_survives_image_resolution_zoom_and_native_flows() {
+        use crate::style::logical::{Flow, WritingMode};
+        let shapes = [
+            CornerShape::NOTCH,
+            CornerShape::BEVEL,
+            CornerShape::ROUND,
+            CornerShape::SQUARE,
+        ];
+        let mut style = crate::style::Style::default();
+        style.decoration.corner_shapes = Arc::new(shapes);
+        style.decoration.radii = Arc::new(std::array::from_fn(|_| {
+            std::array::from_fn(|_| LengthPercentage::Length(20.0))
+        }));
+        assert_eq!(
+            *style.decoration.with_image_type::<()>().corner_shapes,
+            shapes,
+            "image resolution must preserve dimensionless shapes"
+        );
+        style.effective_zoom = 3.0;
+        let used = style.used();
+        assert_eq!(
+            *used.decoration.corner_shapes, shapes,
+            "zoom scales radii but never the superellipse parameter"
+        );
+        assert_eq!(used.decoration.radii[0][0], LengthPercentage::Length(60.0));
+        for mode in [
+            WritingMode::HorizontalTb,
+            WritingMode::VerticalRl,
+            WritingMode::VerticalLr,
+            WritingMode::SidewaysRl,
+            WritingMode::SidewaysLr,
+        ] {
+            for rtl in [false, true] {
+                let from = Flow {
+                    writing_mode: mode,
+                    rtl,
+                };
+                let to = Flow::default();
+                let mapped = crate::style::logical::decoration(&used.decoration, from, to);
+                let expected = to.corners(from, &shapes);
+                assert_eq!(
+                    *mapped.corner_shapes, expected,
+                    "{mode:?}, rtl={rtl}: shape identity follows the same corner as its radii"
+                );
+                assert_eq!(
+                    *crate::style::logical::decoration(&mapped, to, from).corner_shapes,
+                    shapes
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn bevel_insets_keep_the_border_normal_offset() {
+        let paint: BoxPaint = BoxPaint::whole(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 80.0,
+                height: 60.0,
+            },
+            BoxDecoration {
+                radii: Arc::new(std::array::from_fn(|_| {
+                    std::array::from_fn(|_| LengthPercentage::Length(20.0))
+                })),
+                corner_shapes: Arc::new([CornerShape::BEVEL; 4]),
+                ..Default::default()
+            },
+        );
+        let clip = paint.inner_clip([4.0; 4], [true; 2]);
+        let sum = 20.0 + 4.0 * std::f32::consts::SQRT_2;
+        assert!(
+            !contains(&clip.contours(), [10.0, sum - 11.0]),
+            "one point outside the offset bevel stays clipped"
+        );
+        assert!(
+            contains(&clip.contours(), [10.0, sum - 9.0]),
+            "one point inside the offset bevel survives"
+        );
     }
 }

@@ -6,7 +6,7 @@ use crate::paint::{BorderStyle, BoxDecoration, Contour, Fill, Point, Rect, Segme
 
 /// Cubic control distance as a fraction of the radius.
 const KAPPA: f32 = 0.552;
-const ROUND_CURVATURE: f32 = 1.0;
+const ROUND_CURVATURE: f32 = CornerShape::ROUND.curvature();
 const CORNER_FLATNESS: f64 = 0.01;
 const SIDE_TANGENTS: [Point; 4] = [[1.0, 0.0], [0.0, 1.0], [-1.0, 0.0], [0.0, -1.0]];
 const GAUSS_LEGENDRE: [(f64, f64); 5] = [
@@ -21,6 +21,46 @@ const CROSSING_ITERATIONS: usize = 64;
 
 /// Corner radii as `[horizontal, vertical]` in top-left, top-right, bottom-right, bottom-left order.
 pub type Radii = [[f32; 2]; 4];
+
+/// CSS corner curvature: the base-two logarithm of the superellipse exponent.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct CornerShape(f32);
+
+impl CornerShape {
+    pub const ROUND: Self = Self(1.0);
+    pub const BEVEL: Self = Self(0.0);
+    pub const NOTCH: Self = Self(f32::NEG_INFINITY);
+    pub const SQUARE: Self = Self(f32::INFINITY);
+
+    /// Finite and infinite CSS parameters are supported; NaN is not a shape.
+    pub const fn superellipse(curvature: f32) -> Option<Self> {
+        if curvature.is_nan() {
+            None
+        } else {
+            Some(Self(curvature))
+        }
+    }
+
+    pub const fn curvature(self) -> f32 {
+        self.0
+    }
+}
+
+impl Default for CornerShape {
+    fn default() -> Self {
+        Self::ROUND
+    }
+}
+
+impl serde::Serialize for CornerShape {
+    fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        match *self {
+            Self::NOTCH => serializer.serialize_str("notch"),
+            Self::SQUARE => serializer.serialize_str("square"),
+            Self(value) => serializer.serialize_f32(value),
+        }
+    }
+}
 
 #[derive(Clone, Debug)]
 enum Curve {
@@ -425,7 +465,11 @@ pub(crate) fn constrain(radii: Radii, size: [f32; 2]) -> Radii {
     constrain_corners(radii, size, [ROUND_CURVATURE; 4])
 }
 
-fn constrain_corners(mut radii: Radii, [width, height]: [f32; 2], curvatures: [f32; 4]) -> Radii {
+pub(super) fn constrain_corners(
+    mut radii: Radii,
+    [width, height]: [f32; 2],
+    curvatures: [f32; 4],
+) -> Radii {
     let factor = [
         (width, radii[0][0] + radii[1][0]),
         (height, radii[1][1] + radii[2][1]),
@@ -556,7 +600,12 @@ fn hulls_overlap(hulls: [[[f64; 2]; 5]; 2], origins: [[f64; 2]; 2], scale: f64) 
     true
 }
 
-fn box_contours(rect: Rect, radii: Radii, curvatures: [f32; 4], insets: [f32; 4]) -> Vec<Contour> {
+pub(super) fn box_contours(
+    rect: Rect,
+    radii: Radii,
+    curvatures: [f32; 4],
+    insets: [f32; 4],
+) -> Vec<Contour> {
     let curves = inset_corners(rect, radii, curvatures, insets);
     if curvatures == [ROUND_CURVATURE; 4] {
         return vec![contour(&curves)];
@@ -1040,7 +1089,12 @@ pub(crate) fn border_fills<I>(
     inner_widths: [f32; 4],
     radii: Radii,
 ) -> Vec<Fill> {
-    let geometry = Geometry::new(rect, radii, inner_widths, [ROUND_CURVATURE; 4]);
+    let geometry = Geometry::new(
+        rect,
+        radii,
+        inner_widths,
+        decoration.corner_shapes.map(CornerShape::curvature),
+    );
     let mut fills = Vec::new();
     let color = decoration.borders[0].color;
     if let Some(boundaries) = ring(decoration, widths) {

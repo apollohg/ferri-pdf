@@ -185,6 +185,7 @@ pub(super) fn fieldset(
     content.text_overflow = style.text_overflow;
     content.unicode_bidi = style.unicode_bidi;
     content.decoration.radii = style.decoration.radii.clone();
+    content.decoration.corner_shapes = style.decoration.corner_shapes.clone();
     for side in [0, 2] {
         content.padding[side] = std::mem::replace(&mut style.padding[side], LengthPercentage::ZERO);
     }

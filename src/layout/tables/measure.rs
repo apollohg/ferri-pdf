@@ -59,6 +59,7 @@ fn collapsed_cell_decoration(decoration: BoxDecoration, insets: [f32; 4]) -> Box
     let mut decoration = collapsed_decoration(decoration, insets);
     let initial = BoxDecoration::default();
     decoration.radii = initial.radii;
+    decoration.corner_shapes = initial.corner_shapes;
     decoration.border_image = initial.border_image;
     if decoration.shadows.iter().any(|shadow| !shadow.inset) {
         std::sync::Arc::make_mut(&mut decoration.shadows).retain(|shadow| shadow.inset);
@@ -923,6 +924,7 @@ impl<'a> TablePlan<'a> {
         let mut decoration = source.decoration().clone();
         if self.data.collapsed.is_some() {
             decoration.radii = BoxDecoration::default().radii;
+            decoration.corner_shapes = BoxDecoration::default().corner_shapes;
         } else {
             // CSS 2 §17.6.1 ignores borders on tracks and track groups.
             decoration.borders = BoxDecoration::default().borders;
@@ -950,6 +952,7 @@ impl<'a> TablePlan<'a> {
         Some(BoxDecoration {
             shadows: shadows.into(),
             radii: decoration.radii,
+            corner_shapes: decoration.corner_shapes,
             ..Default::default()
         })
     }
@@ -960,6 +963,7 @@ impl<'a> TablePlan<'a> {
         decoration.outline.is_drawn().then_some(BoxDecoration {
             outline: decoration.outline,
             radii: decoration.radii,
+            corner_shapes: decoration.corner_shapes,
             ..Default::default()
         })
     }

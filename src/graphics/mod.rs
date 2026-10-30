@@ -5,7 +5,7 @@ pub(crate) use crate::paint::{
     ResolvedGradient, Shading, ShadowMask, UnresolvedImage, image_size,
 };
 pub use crate::paint::{
-    BlendMode, Border, BorderStyle, Clip, ClipBounds, Color, Contour, DecorationLine,
+    BlendMode, Border, BorderStyle, Clip, ClipBounds, Color, Contour, CornerShape, DecorationLine,
     DecorationPaint, DecorationStyle, Fill, FilterFunction, INLINE_EDGES, LengthPercentage,
     MaskComposite, MaskMode, Masks, Outline, OutlineStyle, Point, Radii, Rect, Segment,
     ShadowPaint, ShadowShape, Shape,

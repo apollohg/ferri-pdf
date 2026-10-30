@@ -602,6 +602,7 @@ pub(crate) fn decoration<I: Clone>(
         }
     }
     result.radii = Arc::new(radii);
+    result.corner_shapes = Arc::new(to.corners(from, &source.corner_shapes));
     result
 }
 
