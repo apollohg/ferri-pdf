@@ -149,6 +149,7 @@ impl StringAssignments {
             GeneratedPseudoElement::After => {
                 owner.after = crate::document::content::GeneratedText::capture(text, style);
             }
+            GeneratedPseudoElement::FootnoteCall | GeneratedPseudoElement::FootnoteMarker => {}
         }
     }
     pub(crate) fn finish(

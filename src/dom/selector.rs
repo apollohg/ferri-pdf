@@ -920,6 +920,10 @@ impl ToCss for StaticState {
 pub(crate) enum GeneratedPseudoElement {
     Before,
     After,
+    /// Inserted where a footnote element leaves the flow (CSS GCPM 3 §2.6).
+    FootnoteCall,
+    /// Placed at the start of a footnote element (CSS GCPM 3 §2.7).
+    FootnoteMarker,
 }
 
 /// Tree-abiding and typographic pseudo-elements (CSS Pseudo-Elements 4 §§2, 4).
@@ -941,6 +945,8 @@ pub(crate) enum PseudoElement {
     /// `::details-content` (CSS Pseudo-Elements 4 §5.2), which is the real content slot of a
     /// `details` element's shadow tree, matched as that element.
     DetailsContent,
+    FootnoteCall,
+    FootnoteMarker,
     Absent(AbsentPseudoElement),
 }
 impl From<GeneratedPseudoElement> for PseudoElement {
@@ -948,6 +954,8 @@ impl From<GeneratedPseudoElement> for PseudoElement {
         match pseudo {
             GeneratedPseudoElement::Before => Self::Before,
             GeneratedPseudoElement::After => Self::After,
+            GeneratedPseudoElement::FootnoteCall => Self::FootnoteCall,
+            GeneratedPseudoElement::FootnoteMarker => Self::FootnoteMarker,
         }
     }
 }
@@ -1019,6 +1027,8 @@ impl PseudoElement {
             ("placeholder", Self::Placeholder),
             ("file-selector-button", Self::FileSelectorButton),
             ("details-content", Self::DetailsContent),
+            ("footnote-call", Self::FootnoteCall),
+            ("footnote-marker", Self::FootnoteMarker),
         ]
         .into_iter()
         .chain(
@@ -1081,6 +1091,8 @@ impl PseudoElement {
             Self::Placeholder => "::placeholder",
             Self::FileSelectorButton => "::file-selector-button",
             Self::DetailsContent => "::details-content",
+            Self::FootnoteCall => "::footnote-call",
+            Self::FootnoteMarker => "::footnote-marker",
             Self::Absent(pseudo) => pseudo.source(),
         }
     }

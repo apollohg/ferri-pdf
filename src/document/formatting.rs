@@ -65,6 +65,12 @@ pub(crate) struct PageBox {
     pub production: crate::style::PageProduction,
     pub decoration: BoxDecoration,
     pub margins: Vec<PageMarginBox>,
+    pub footnote: PageFootnoteArea,
+}
+/// The footnote area of a page (CSS GCPM 3 §2.4).
+pub(crate) struct PageFootnoteArea {
+    pub style: Style,
+    pub decoration: BoxDecoration,
 }
 pub(crate) struct PageMarginBox {
     pub margin: crate::style::PageMargin,
@@ -72,6 +78,8 @@ pub(crate) struct PageMarginBox {
 }
 pub(crate) struct Formatted {
     pub root: BlockBox,
+    /// Footnote element boxes in document order (CSS GCPM 3 §2.2).
+    pub footnotes: Vec<BlockBox>,
     pub navigation: NavigationBuilder,
     pub strings: crate::document::strings::StringAssignments,
     pub generated: crate::document::generated::GeneratedReferences,
@@ -609,6 +617,7 @@ pub(crate) struct Traversal<'a> {
     quotes: crate::style::QuoteDepth,
     canvas: BoxDecoration,
     canvas_body: Option<ElementId>,
+    footnotes: Vec<BlockBox>,
 }
 
 struct BlockBuilder<'a, 's, 'c> {
@@ -1385,6 +1394,22 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         }
         self.traversal.strings.attach_running(element.id(), block);
     }
+    /// A footnote element leaves the flow for the footnote area; its call takes its place,
+    /// with the semantic events of the element and its contents, the element's marking the
+    /// footnote (CSS GCPM 3 §2.2).
+    fn footnote(&mut self, element: Element<'_>, block: BlockBox) -> Result<(), DocumentError> {
+        let index = self.traversal.footnotes.len();
+        for event in block.subtree_events().0 {
+            let mut event = event.clone();
+            if event.context.element == element.id() && event.context.pseudo.is_none() {
+                event.footnote = Some(index);
+            }
+            self.inline.semantic_event(event);
+        }
+        self.generated(element, block.style(), GeneratedPseudoElement::FootnoteCall)?;
+        self.traversal.footnotes.push(block);
+        Ok(())
+    }
     fn out_of_flow(&mut self, block: BlockBox) {
         if let Some(base) = self.ruby.base_level() {
             base.anchor(block);
@@ -1753,6 +1778,8 @@ enum Placement {
     Positioned,
     /// Moved to page-margin boxes by `position: running()` (CSS GCPM 3 §1.2.1).
     Running,
+    /// Moved to the footnote area by `float: footnote` (CSS GCPM 3 §2.2).
+    Footnote,
     Atomic,
 }
 
@@ -2129,8 +2156,16 @@ fn block<'a>(
                         "{FORMATTING_NESTING_RESOURCE} exceeds {MAX_FORMATTING_DEPTH}"
                     )));
                 }
+                let footnote = frames[index]
+                    .block
+                    .as_ref()
+                    .is_some_and(|block| matches!(block.placement, Placement::Footnote));
                 let (mut builder, style) =
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
+                // The marker begins the footnote element's content (CSS GCPM 3 §2.7).
+                if footnote {
+                    builder.generated(element, style, GeneratedPseudoElement::FootnoteMarker)?;
+                }
                 builder.generated(element, style, GeneratedPseudoElement::Before)?;
                 if element.name() == "br" {
                     builder.line_break(style)?;
@@ -2230,8 +2265,15 @@ fn block<'a>(
                 }
                 continue;
             }
+            let counters = if child_style.footnote() && child_style.display != Display::Contents {
+                child_style
+                    .counters
+                    .with_implicit_increment(crate::style::FOOTNOTE_COUNTER)
+            } else {
+                child_style.counters.clone()
+            };
             traversal.counters.prepare(
-                &child_style.counters,
+                &counters,
                 traversal.document,
                 sheet,
                 &traversal.root_style,
@@ -2242,7 +2284,7 @@ fn block<'a>(
                     element: child.id(),
                     pseudo: None,
                 },
-                &child_style.counters,
+                &counters,
                 &child_style.display,
                 child_style.containment().style,
             )?;
@@ -2275,6 +2317,7 @@ fn block<'a>(
                     if child_style.display == Display::Contents
                         || child_style.position.leaves_flow()
                         || child_style.floating().is_some()
+                        || child_style.footnote()
                     {
                         RunInFollower::Member
                     } else if matches!(child_style.display, Display::Block | Display::ListItem)
@@ -2303,6 +2346,21 @@ fn block<'a>(
                 None
             } else if child_style.position == crate::style::Position::Running {
                 Some(Placement::Running)
+            } else if child_style.footnote() {
+                if child_style.footnote_display == crate::style::FootnoteDisplay::Inline {
+                    return Err(StyleError::Unsupported(
+                        "footnote-display: inline footnotes sharing lines in the footnote area"
+                            .into(),
+                    )
+                    .into());
+                }
+                if builder.traversal.root_style.used_writing_mode().vertical() {
+                    return Err(StyleError::Unsupported(
+                        "footnotes in a vertical page flow".into(),
+                    )
+                    .into());
+                }
+                Some(Placement::Footnote)
             } else if child_style.position.is_out_of_flow() || child_style.floating().is_some() {
                 Some(Placement::Positioned)
             } else {
@@ -2544,6 +2602,7 @@ fn block<'a>(
             }
             Placement::Positioned => builder.out_of_flow(block),
             Placement::Running => builder.running(element, block),
+            Placement::Footnote => builder.footnote(element, block)?,
             Placement::Atomic => builder.atomic(block, parent)?,
             Placement::Root => unreachable!("root returned before attaching to a parent"),
         }
@@ -2633,6 +2692,7 @@ pub(crate) fn build(
         )?;
         return Ok(Formatted {
             root: BlockBox::anonymous(style, vec![BlockContent::Events(events)], None),
+            footnotes: Vec::new(),
             navigation,
             strings,
             generated: generated.finish(),
@@ -2657,20 +2717,25 @@ pub(crate) fn build(
         generated,
         quotes: Default::default(),
         canvas: BoxDecoration::default(),
+        footnotes: Vec::new(),
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
         .then(|| html.body_element().map(Element::id))
         .flatten(),
     };
+    // The footnote counter is predefined: the root instantiates it (CSS GCPM 3 §2.5).
+    let counters = style
+        .counters
+        .with_implicit_reset(crate::style::FOOTNOTE_COUNTER);
     traversal
         .counters
-        .prepare(&style.counters, html, sheet, &style, resolver)?;
+        .prepare(&counters, html, sheet, &style, resolver)?;
     traversal.counters.enter(
         crate::style::PageStyleTarget {
             element: element.id(),
             pseudo: None,
         },
-        &style.counters,
+        &counters,
         &style.display,
         style.containment().style,
     )?;
@@ -2695,7 +2760,11 @@ pub(crate) fn build(
         &mut resources,
     )?;
     root.trim_text_boxes([false; 2])?;
-    for block in traversal.strings.running_blocks_mut() {
+    for block in traversal
+        .strings
+        .running_blocks_mut()
+        .chain(&mut traversal.footnotes)
+    {
         block.trim_text_boxes([false; 2])?;
     }
     // Writing Modes 4 §8: HTML's first body supplies the root's used flow after style computation.
@@ -2704,12 +2773,17 @@ pub(crate) fn build(
         root.style.principal_flow = Some(crate::style::logical::Flow::of(&principal));
     }
     root.reflow(crate::style::logical::Flow::used(root.style()));
-    // A running element lays out in page-margin boxes, which take the page's flow.
-    for block in traversal.strings.running_blocks_mut() {
+    // Running elements and footnotes lay out in page areas, which take the page's flow.
+    for block in traversal
+        .strings
+        .running_blocks_mut()
+        .chain(&mut traversal.footnotes)
+    {
         block.reflow(crate::style::logical::Flow::used(root.style()));
     }
     Ok(Formatted {
         root,
+        footnotes: traversal.footnotes,
         navigation: traversal.navigation,
         strings: traversal.strings,
         generated: traversal.generated.finish(),

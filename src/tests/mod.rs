@@ -12,6 +12,7 @@ mod embedded_content;
 mod first_page_selection;
 mod floats;
 mod font_features;
+mod footnotes;
 mod form_controls;
 mod foundations_cascade;
 mod foundations_fonts;

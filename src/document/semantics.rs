@@ -8,6 +8,8 @@ pub(crate) struct SemanticEvent {
     pub context: crate::style::PageStyleTarget,
     pub assignment: Option<usize>,
     pub visible: bool,
+    /// The footnote whose call this event marks (CSS GCPM 3 §2.2).
+    pub footnote: Option<usize>,
 }
 
 pub(crate) struct SemanticTree(HashMap<ElementId, Range<usize>>);
@@ -50,6 +52,7 @@ impl SemanticTree {
             },
             assignment,
             visible,
+            footnote: None,
         }
     }
 }

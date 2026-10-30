@@ -209,10 +209,14 @@ fn layout_pass(
         [canvas_rect.width, content_height],
         budget,
     );
-    for assignment in document.running_strings() {
-        if let Some(element) = &assignment.element {
-            measurer.sources.register(&element.block);
-        }
+    for block in document
+        .running_strings()
+        .iter()
+        .filter_map(|assignment| assignment.element.as_ref())
+        .map(|element| &element.block)
+        .chain(document.footnotes())
+    {
+        measurer.sources.register(block);
     }
     measurer.canvas_images = document.canvas_background().backgrounds.has_images();
     measurer.unbroken = continuous;
@@ -249,6 +253,7 @@ fn layout_pass(
         page_boxes,
         mut page_records,
         string_locations,
+        line_boxes: _,
     } = if continuous {
         paginator.unbroken()
     } else {
@@ -296,6 +301,7 @@ fn layout_pass(
         first_margin_paragraph,
         &mut pages,
         &mut display_lists,
+        &mut links,
     )?;
     for (list, page) in display_lists.iter_mut().zip(&page_boxes) {
         list.extend(page_paint::page_outline(page));

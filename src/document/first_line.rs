@@ -162,7 +162,12 @@ impl Restyle<'_> {
                         &parent,
                         self.resolver,
                     )?),
-                    Some(pseudo @ (PseudoElement::Before | PseudoElement::After)) => self
+                    Some(
+                        pseudo @ (PseudoElement::Before
+                        | PseudoElement::After
+                        | PseudoElement::FootnoteCall
+                        | PseudoElement::FootnoteMarker),
+                    ) => self
                         .sheet
                         .pseudo_with_resolver(element, &parent, pseudo, self.resolver)?
                         .map(|(style, _)| style),

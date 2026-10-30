@@ -4,6 +4,8 @@ use crate::style::{
 use std::sync::{Arc, LazyLock};
 
 pub(crate) const LIST_ITEM_COUNTER: &str = "list-item";
+/// The predefined counter footnote elements increment (CSS GCPM 3 §2.5).
+pub(crate) const FOOTNOTE_COUNTER: &str = "footnote";
 pub(crate) const INITIAL_COUNTER_VALUE: i128 = 0;
 pub(crate) const DEFAULT_COUNTER_INCREMENT: i128 = 1;
 
@@ -35,6 +37,51 @@ impl Default for CounterProperties {
             reset: EMPTY_COUNTER_RESETS.clone(),
             increment: EMPTY_COUNTER_CHANGES.clone(),
             set: EMPTY_COUNTER_CHANGES.clone(),
+        }
+    }
+}
+impl CounterProperties {
+    /// The properties with `name` reset to its initial value unless they reset it already.
+    #[must_use]
+    pub(crate) fn with_implicit_reset(&self, name: &str) -> Self {
+        if self.reset.iter().any(|change| change.name.as_ref() == name) {
+            return self.clone();
+        }
+        Self {
+            reset: self
+                .reset
+                .iter()
+                .cloned()
+                .chain([CounterReset {
+                    name: Arc::from(name),
+                    value: Some(INITIAL_COUNTER_VALUE),
+                    reversed: false,
+                }])
+                .collect(),
+            ..self.clone()
+        }
+    }
+    /// The properties with `name` incremented by one unless they increment it already.
+    #[must_use]
+    pub(crate) fn with_implicit_increment(&self, name: &str) -> Self {
+        if self
+            .increment
+            .iter()
+            .any(|change| change.name.as_ref() == name)
+        {
+            return self.clone();
+        }
+        Self {
+            increment: self
+                .increment
+                .iter()
+                .cloned()
+                .chain([CounterChange {
+                    name: Arc::from(name),
+                    value: DEFAULT_COUNTER_INCREMENT,
+                }])
+                .collect(),
+            ..self.clone()
         }
     }
 }

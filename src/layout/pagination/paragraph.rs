@@ -58,6 +58,8 @@ pub(super) struct ParagraphCursor<'a, 't> {
     clamp: Option<crate::text::ParagraphClamp>,
     /// The atomic inline index of an initial letter on the first line, until it is placed.
     letter: Option<usize>,
+    /// Whether a line of the paragraph has been placed.
+    started: bool,
 }
 
 /// Where an initial letter on a fitted first line excludes the lines after it (CSS Inline 3
@@ -325,6 +327,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             layers,
             clamp,
             letter,
+            started: false,
         }
     }
     pub(super) fn paragraph_fragment(
@@ -357,6 +360,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             mut layers,
             clamp,
             mut letter,
+            mut started,
         } = *cursor;
         let float_anchors: Vec<_> = source
             .anchors()
@@ -574,19 +578,48 @@ impl<'a> Paginator<'a, '_, 'a> {
             });
             let remaining = lines.as_slice().len();
             let mut height = 0.0;
-            let available = lines
-                .as_slice()
-                .iter()
-                .enumerate()
-                .take_while(|(index, line)| {
-                    height = geometry
-                        .get(*index)
-                        .map_or(height + line.height, |placement| {
-                            placement.y - self.y + line.height
-                        });
-                    !overflows(self.y + height + reserve, self.height)
-                })
-                .count();
+            // The footnote area grows with the footnotes of the lines the page takes; a line
+            // whose footnotes must stay with it does not fit without them (CSS GCPM 3 §2.8).
+            let mut growth = 0.0;
+            let mut pending_footnotes = Vec::new();
+            let mut footnote_events = consumed_events;
+            let mut kept_footnotes = None;
+            let mut available = 0;
+            for (index, line) in lines.as_slice().iter().enumerate() {
+                height = geometry
+                    .get(index)
+                    .map_or(height + line.height, |placement| {
+                        placement.y - self.y + line.height
+                    });
+                if overflows(self.y + height + reserve + growth, self.height) {
+                    break;
+                }
+                let footnotes = line_footnotes(source, line, &mut footnote_events);
+                if !footnotes.is_empty() && self.places_footnotes() {
+                    match self.footnote_growth(&footnotes, &mut pending_footnotes)? {
+                        Some(added)
+                            if !overflows(
+                                self.y + height + reserve + growth + added,
+                                self.height,
+                            ) =>
+                        {
+                            growth += added;
+                        }
+                        _ => match self.strictest_policy(&footnotes) {
+                            // Its footnotes then fill the rest of the page and continue after.
+                            crate::style::FootnotePolicy::Auto => {
+                                available += 1;
+                                break;
+                            }
+                            policy => {
+                                kept_footnotes = Some(policy);
+                                break;
+                            }
+                        },
+                    }
+                }
+                available += 1;
+            }
             let mut take = if self.unbroken > 0 {
                 remaining
             } else {
@@ -658,7 +691,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             if self.unbroken == 0
                 && candidate_complete
                 && take == remaining
-                && overflows(self.y + height + closing_reserve, self.height)
+                && overflows(self.y + height + growth + closing_reserve, self.height)
             {
                 take = if remaining >= style.orphans.saturating_add(style.widows) {
                     remaining - style.widows
@@ -687,6 +720,13 @@ impl<'a> Paginator<'a, '_, 'a> {
                 if take < beside.min(remaining) || overflows(bottom, self.height) {
                     take = 0;
                 }
+            }
+            // `footnote-policy: block` breaks before the paragraph holding the call.
+            if kept_footnotes == Some(crate::style::FootnotePolicy::Block)
+                && !started
+                && self.has_flow
+            {
+                take = 0;
             }
             if take == 0 && !self.has_flow {
                 take = available.min(remaining).max(1);
@@ -734,7 +774,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                     consumed_anchors += 1;
                     self.line_anchor(&anchor, line_x, line_width, offset, line.height, &layers);
                 }
-                self.line_events(source, &line, &mut consumed_events);
+                let footnotes = self.line_events(source, &line, &mut consumed_events);
                 line_index += 1;
                 let baseline = self.top + self.y + line.ascent + self.offset[1];
                 if !line.phantom {
@@ -746,6 +786,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                     width: line.width,
                     height: line.height,
                 });
+                self.record_line_box(line.height);
                 let markers: Vec<_> = self
                     .boxes
                     .iter_mut()
@@ -784,9 +825,13 @@ impl<'a> Paginator<'a, '_, 'a> {
                     line_layers,
                 );
                 self.y += line.height;
+                started = true;
                 if !line.phantom && (line.height > 0.0 || !line.text.is_empty()) {
                     self.has_flow = true;
                     self.at_page_start = false;
+                }
+                if !footnotes.is_empty() && self.places_footnotes() {
+                    self.place_footnotes(&footnotes)?;
                 }
             }
         }
@@ -833,6 +878,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                 layers,
                 clamp,
                 letter,
+                started,
             })));
         }
         if let Some((left, destination_width, height)) = self.paragraph_geometry() {
@@ -851,12 +897,13 @@ impl<'a> Paginator<'a, '_, 'a> {
         self.finish_inline_backgrounds(&layers);
         Ok(None)
     }
+    /// Records the semantic events of a placed line; returns the footnotes it calls.
     fn line_events(
         &mut self,
         source: &crate::document::Paragraph,
         line: &crate::text::Line,
         consumed_events: &mut usize,
-    ) {
+    ) -> Vec<usize> {
         let text_start = (!line.phantom)
             .then(|| {
                 source.text()[line.range.clone()]
@@ -865,23 +912,19 @@ impl<'a> Paginator<'a, '_, 'a> {
                     .map(|(offset, _)| line.range.start + offset)
             })
             .flatten();
-        for event in source
-            .semantic_events()
-            .iter()
-            .skip(*consumed_events)
-            .take_while(|event| {
-                event.offset < line.range.end || line.range.end == source.text().len()
-            })
-        {
+        let mut footnotes = Vec::new();
+        for event in line_semantic_events(source, line, *consumed_events) {
             if text_start.is_some_and(|start| start < event.offset) {
                 self.string_locations.text(self.page);
             }
             self.string_locations.record(self.page, &event.event);
+            footnotes.extend(event.event.footnote);
             *consumed_events += 1;
         }
         if !line.phantom {
             self.string_locations.text(self.page);
         }
+        footnotes
     }
 
     fn emit_paragraph_line(
@@ -987,7 +1030,10 @@ impl<'a> Paginator<'a, '_, 'a> {
         )?;
         self.y = row_top + text.baseline - text.line.ascent;
         let mut consumed_events = 0;
-        self.line_events(text.source, &text.line, &mut consumed_events);
+        let footnotes = self.line_events(text.source, &text.line, &mut consumed_events);
+        if !footnotes.is_empty() && self.places_footnotes() {
+            self.place_footnotes(&footnotes)?;
+        }
         let baseline = self.top + row_top + text.baseline + self.offset[1];
         self.record_baselines(self.page, [Some(baseline); 2]);
         self.record_overflow(Rect {
@@ -996,6 +1042,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             width: text.line.width,
             height: text.line.height,
         });
+        self.record_line_box(text.line.height);
         let containing = InlineContaining::of(self.containing_geometry());
         let mut layers = InlineLayers::new(text.source, containing);
         let line_layers = layers.line(&text.line);
@@ -1024,4 +1071,33 @@ impl<'a> Paginator<'a, '_, 'a> {
             }
         }
     }
+}
+
+/// The semantic events of a paragraph's line from the `consumed`th on.
+fn line_semantic_events<'p>(
+    source: &'p crate::document::Paragraph,
+    line: &crate::text::Line,
+    consumed: usize,
+) -> impl Iterator<Item = &'p crate::document::InlineEvent> {
+    let end = line.range.end;
+    let last = end == source.text().len();
+    source
+        .semantic_events()
+        .iter()
+        .skip(consumed)
+        .take_while(move |event| event.offset < end || last)
+}
+
+/// The footnotes a candidate line calls, advancing `consumed` past its events.
+fn line_footnotes(
+    source: &crate::document::Paragraph,
+    line: &crate::text::Line,
+    consumed: &mut usize,
+) -> Vec<usize> {
+    let events: Vec<_> = line_semantic_events(source, line, *consumed).collect();
+    *consumed += events.len();
+    events
+        .into_iter()
+        .filter_map(|event| event.event.footnote)
+        .collect()
 }

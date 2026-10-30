@@ -191,7 +191,8 @@ impl RuleSource {
                                     crate::style::page_parser::PageItem::Margin(
                                         _,
                                         declarations,
-                                    ) => {
+                                    )
+                                    | crate::style::page_parser::PageItem::Footnote(declarations) => {
                                         for declaration in declarations {
                                             relocate(&mut declaration.location, &self.location);
                                             declaration.namespaces = Some(self.namespaces.clone());

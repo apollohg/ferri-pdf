@@ -51,6 +51,10 @@ li { display: list-item; text-align: match-parent; }
 /* CSS Lists 3 §3.1.1 */
 ::marker { unicode-bidi: isolate; font-variant-numeric: tabular-nums; white-space: pre;
     text-transform: none; }
+/* CSS GCPM 3 Appendix B, the branch for UAs supporting font-variant-position */
+::footnote-call { content: counter(footnote); vertical-align: baseline; font-size: 100%;
+    line-height: inherit; font-variant-position: super; }
+::footnote-marker { content: counter(footnote) '. '; }
 ol { list-style-type: decimal; }
 ol, ul, menu { counter-reset: list-item; }
 ol, ul { break-before: avoid; }

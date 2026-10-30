@@ -13,7 +13,15 @@ use std::cell::RefCell;
 pub(super) enum PageItem {
     Declaration(Declaration),
     Margin(MarginLocation, Vec<Declaration>),
+    /// `@footnote`, the page's footnote area (CSS GCPM 3 §2.4).
+    Footnote(Vec<Declaration>),
 }
+/// The at-rules a page context holds.
+pub(super) enum PageArea {
+    Margin(MarginLocation),
+    Footnote,
+}
+const FOOTNOTE_AT_RULE: &str = "footnote";
 struct PageParser<'a> {
     base: &'a ResourceBase,
     diagnostics: &'a RefCell<Vec<StyleDiagnostic>>,
@@ -34,34 +42,40 @@ impl<'i> DeclarationParser<'i> for PageParser<'_> {
     }
 }
 impl<'i> AtRuleParser<'i> for PageParser<'_> {
-    type Prelude = MarginLocation;
+    type Prelude = PageArea;
     type AtRule = PageItem;
     type Error = StyleError;
     fn parse_prelude<'t>(
         &mut self,
         name: CowRcStr<'i>,
         input: &mut Parser<'i, 't>,
-    ) -> Result<MarginLocation, ParseError<'i, StyleError>> {
+    ) -> Result<PageArea, ParseError<'i, StyleError>> {
         self.budget
             .rule(|| SourceLocation::new(self.base, input.current_source_location()))
             .map_err(|error| input.new_custom_error(error))?;
         input.expect_exhausted()?;
-        MarginLocation::parse(&name).ok_or_else(|| {
-            input.new_custom_error(StyleError::Invalid(format!(
-                "unknown page-margin rule: @{name}"
-            )))
-        })
+        if name.eq_ignore_ascii_case(FOOTNOTE_AT_RULE) {
+            return Ok(PageArea::Footnote);
+        }
+        MarginLocation::parse(&name)
+            .map(PageArea::Margin)
+            .ok_or_else(|| {
+                input.new_custom_error(StyleError::Invalid(format!(
+                    "unknown page-margin rule: @{name}"
+                )))
+            })
     }
     fn parse_block<'t>(
         &mut self,
-        location: MarginLocation,
+        area: PageArea,
         _: &ParserState,
         input: &mut Parser<'i, 't>,
     ) -> Result<PageItem, ParseError<'i, StyleError>> {
-        Ok(PageItem::Margin(
-            location,
-            declarations(input, self.base, self.diagnostics)?,
-        ))
+        let declarations = declarations(input, self.base, self.diagnostics)?;
+        Ok(match area {
+            PageArea::Margin(location) => PageItem::Margin(location, declarations),
+            PageArea::Footnote => PageItem::Footnote(declarations),
+        })
     }
 }
 impl QualifiedRuleParser<'_> for PageParser<'_> {

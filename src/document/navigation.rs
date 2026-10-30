@@ -358,6 +358,7 @@ impl NavigationBuilder {
                 GeneratedPseudoElement::After => {
                     label.after = crate::document::content::GeneratedText::capture(text, style);
                 }
+                GeneratedPseudoElement::FootnoteCall | GeneratedPseudoElement::FootnoteMarker => {}
             }
         }
     }

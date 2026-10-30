@@ -688,6 +688,14 @@ fn handler(property: Property) -> Option<Handler> {
             clear,
             Some(|v, _| crate::style::Clear::from_component(v).is_ok()),
         ),
+        P::FootnoteDisplay => (
+            footnote_display,
+            Some(|v, _| crate::style::FootnoteDisplay::from_component(v).is_ok()),
+        ),
+        P::FootnotePolicy => (
+            footnote_policy,
+            Some(|v, _| crate::style::FootnotePolicy::from_component(v).is_ok()),
+        ),
         P::ZIndex => (
             z_index,
             Some(|v, r| crate::style::position::z_index(v, r).is_ok()),
@@ -2500,6 +2508,16 @@ computed!(float, [float], |value, style, _parent, _relative| {
 computed!(clear, [clear], |value, style, _parent, _relative| {
     crate::style::Clear::from_component(value)?
 });
+computed!(
+    footnote_display,
+    [footnote_display],
+    |value, style, _parent, _relative| crate::style::FootnoteDisplay::from_component(value)?
+);
+computed!(
+    footnote_policy,
+    [footnote_policy],
+    |value, style, _parent, _relative| crate::style::FootnotePolicy::from_component(value)?
+);
 computed!(widows, [widows], |value, style, _parent, relative| {
     positive_integer(value, relative)?
 });

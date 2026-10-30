@@ -19,7 +19,7 @@ pub(super) fn tree_context(
     }
 }
 
-pub(super) const SELECTOR_TARGET_COUNT: usize = 11;
+pub(super) const SELECTOR_TARGET_COUNT: usize = 13;
 pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
     match pseudo {
         None => 0,
@@ -36,6 +36,8 @@ pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
         Some(PseudoElement::DetailsContent) => {
             unreachable!("::details-content rules match its backing element as their subject")
         }
+        Some(PseudoElement::FootnoteCall) => 11,
+        Some(PseudoElement::FootnoteMarker) => 12,
     }
 }
 

@@ -1,6 +1,7 @@
 mod cells;
 mod columns;
 mod floats;
+mod footnotes;
 pub(super) mod frames;
 mod nested;
 mod order;
@@ -814,6 +815,70 @@ pub(super) struct Paginated {
     pub string_locations: crate::layout::strings::StringLocations,
     pub page_boxes: Vec<std::sync::Arc<crate::document::PageBox>>,
     pub page_records: Vec<crate::layout::PageRecord>,
+    pub line_boxes: Vec<[f32; 2]>,
+}
+
+/// A box laid out alone: its text lines, display list, line box extents and navigation.
+pub(super) struct StandaloneFlow {
+    pub lines: Vec<TextLine>,
+    pub items: Vec<DisplayItem>,
+    pub line_boxes: Vec<[f32; 2]>,
+    pub navigation: StandaloneNavigation,
+}
+
+/// The link areas and destination bounds of a standalone flow, in its coordinates.
+#[derive(Clone, Default)]
+pub(super) struct StandaloneNavigation {
+    links: Vec<LinkArea>,
+    destinations: Vec<(usize, Rect)>,
+}
+impl StandaloneNavigation {
+    /// The navigation inside `window`, moved by `origin`.
+    pub(super) fn translated(&self, origin: [f32; 2], window: Rect) -> Self {
+        let mut links = self.links.clone();
+        crate::layout::navigation::clip_links(&mut links, window);
+        let shift = |rect: Rect| Rect {
+            x: rect.x + origin[0],
+            y: rect.y + origin[1],
+            ..rect
+        };
+        for area in &mut links {
+            match &mut area.shape {
+                crate::layout::LinkShape::Rect(rect) => *rect = shift(*rect),
+                crate::layout::LinkShape::Quads(quads) => {
+                    for point in quads.iter_mut().flatten() {
+                        point[0] += origin[0];
+                        point[1] += origin[1];
+                    }
+                }
+            }
+        }
+        Self {
+            links,
+            destinations: self
+                .destinations
+                .iter()
+                .filter(|(_, bounds)| bounds.intersects(window))
+                .map(|(index, bounds)| (*index, shift(*bounds)))
+                .collect(),
+        }
+    }
+    pub(super) fn into_links(self) -> Vec<LinkArea> {
+        self.links
+    }
+    /// Adds the links to `page` and the destinations no earlier box located.
+    fn locate(self, page: usize, located: &mut Located) {
+        located.links[page].extend(self.links);
+        for (index, bounds) in self.destinations {
+            if located.destinations[index].is_none() {
+                located.destinations[index] = Some(Destination {
+                    page,
+                    top: bounds.y,
+                });
+                located.destination_bounds[index] = Some(bounds);
+            }
+        }
+    }
 }
 
 pub(super) type Paginator<'a, 'm, 't> = PaginationState<'a, 't, &'m mut Measurer<'t>>;
@@ -841,6 +906,12 @@ macro_rules! pagination_state {
 }
 
 pagination_state! {
+    footnotes: footnotes::Footnotes,
+    /// The first page created after the flow ended, for footnotes alone.
+    footnote_pages: Option<usize>,
+    /// The `[top, bottom]` extent of each line box, kept where footnote bodies need their
+    /// break points.
+    line_boxes: Option<Vec<[f32; 2]>>,
     frame_templates: Rc<std::cell::RefCell<frames::Templates<'a>>>,
     template: bool,
     frame_requests: Vec<Rc<MeasuredBlock<'a>>>,
@@ -986,6 +1057,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let template = measurer.raw_pagination;
         let mut paginator = Self {
             measurer,
+            footnotes: footnotes::Footnotes::default(),
+            footnote_pages: None,
+            line_boxes: None,
             frame_templates,
             template,
             frame_requests: Vec::new(),
@@ -1244,12 +1318,13 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         if self.unbroken == 0 {
             self.furthest_page = self.furthest_page.max(page);
         }
-        self.height = self.fragmentainers.height(page);
+        self.height =
+            fragmentainer_height(self.fragmentainers.height(page) - self.footnote_reserve(page));
         self.page_rect = self.fragmentainers.rect(page);
         self.canvas_rect = self.fragmentainers.content_box(page);
         if let Fragmentainers::Pages(pages) = &self.fragmentainers {
             self.top = self.canvas_rect.y;
-            self.measurer.page_height = self.height;
+            self.measurer.page_height = self.fragmentainers.height(page);
             self.canvas = crate::layout::page_paint::PagePaint::in_flow(
                 &pages.boxes[page],
                 pages.document.canvas_background(),
@@ -1724,6 +1799,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         preserve_empty: bool,
     ) -> Result<(), LayoutError> {
         self.measurer.work.spend(1)?;
+        if self.places_footnotes() {
+            self.carry_recorded_footnotes()?;
+        }
         let forced = forced_break.is_some();
         if forced {
             self.forced_breaks += 1;
@@ -1864,6 +1942,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             MarginStart::Unforced
         };
         self.page_content = self.current_page_has_ink();
+        if self.places_footnotes() {
+            self.place_carried_footnotes()?;
+        }
         Ok(())
     }
     fn block(
@@ -6063,16 +6144,31 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         root: MeasuredBlock<'a>,
         area: Rect,
         destinations: usize,
-    ) -> Result<(Vec<TextLine>, Vec<DisplayItem>), LayoutError> {
-        let mut paginated = Self::for_frame(measurer, area).document(
-            Some(root),
-            destinations,
-            std::iter::empty(),
-        )?;
-        Ok((
-            paginated.pages.swap_remove(0),
-            paginated.display_lists.swap_remove(0),
-        ))
+    ) -> Result<StandaloneFlow, LayoutError> {
+        let mut paginator = Self::for_frame(measurer, area);
+        paginator.line_boxes = Some(Vec::new());
+        let mut paginated = paginator.document(Some(root), destinations, std::iter::empty())?;
+        Ok(StandaloneFlow {
+            lines: paginated.pages.swap_remove(0),
+            items: paginated.display_lists.swap_remove(0),
+            line_boxes: paginated.line_boxes,
+            navigation: StandaloneNavigation {
+                links: paginated.links.swap_remove(0),
+                destinations: paginated
+                    .destination_bounds
+                    .iter()
+                    .enumerate()
+                    .filter_map(|(index, bounds)| Some((index, (*bounds)?)))
+                    .collect(),
+            },
+        })
+    }
+    /// Records the extent of a line box placed at the current position.
+    pub(super) fn record_line_box(&mut self, height: f32) {
+        let top = self.top + self.y + self.offset[1];
+        if let Some(boxes) = &mut self.line_boxes {
+            boxes.push([top, top + height]);
+        }
     }
     pub(crate) fn document(
         mut self,
@@ -6098,13 +6194,25 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 self.place(pending, &Containing::Page)?;
             }
         }
+        if self.places_footnotes() {
+            self.carry_recorded_footnotes()?;
+            self.place_carried_footnotes()?;
+            // Footnote bodies left over continue on pages of their own.
+            while self.footnotes.has_carried() {
+                self.footnote_pages.get_or_insert(self.page + 1);
+                self.new_page(None, true)?;
+            }
+        }
         // Trailing unpainted height need not create physical sheets (CSS Page 3 §3.2).
         // Semantic locations retain hidden content and empty destination elements.
-        let page_count = (self.string_locations.last_page() + 1).max(
-            (0..self.pages.len())
-                .rfind(|&page| self.page_has_ink(page))
-                .map_or(1, |page| page + 1),
-        );
+        let page_count = (self.string_locations.last_page() + 1)
+            .max(
+                (0..self.pages.len())
+                    .rfind(|&page| self.page_has_ink(page))
+                    .map_or(1, |page| page + 1),
+            )
+            .max(self.footnotes.last_page().map_or(0, |page| page + 1));
+        let footnote_navigation = self.paint_footnotes(page_count)?;
         // CSS 2.1 §9.6.1 repeats fixed content in each physical page's containing block.
         let fixed = std::mem::take(&mut self.fixed);
         if fixed.len().saturating_mul(page_count) > MAX_FIXED_PLACEMENTS {
@@ -6332,6 +6440,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             Fragmentainers::Columns(_) => (Vec::new(), Vec::new()),
         };
         self.pages.truncate(page_count);
+        for (page, navigation) in footnote_navigation {
+            navigation.locate(page, &mut located);
+        }
         Ok(Paginated {
             anchors: self.anchors,
             page_boxes,
@@ -6342,6 +6453,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             destinations: located.destinations,
             destination_bounds: located.destination_bounds,
             string_locations: self.string_locations,
+            line_boxes: self.line_boxes.unwrap_or_default(),
         })
     }
 }

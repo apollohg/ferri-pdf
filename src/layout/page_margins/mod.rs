@@ -173,8 +173,7 @@ impl<'t> Prepared<'_, 't> {
         mut self,
         origin: [f32; 2],
         index: usize,
-        page: &mut Vec<TextLine>,
-        display: &mut Vec<DisplayItem>,
+        output: &mut MarginOutput<'_>,
         measurer: &mut Measurer<'t>,
         destinations: usize,
     ) -> Result<(), LayoutError> {
@@ -219,16 +218,16 @@ impl<'t> Prepared<'_, 't> {
         };
         let outline = paint.outline();
         if self.decoration.is_visible() {
-            display.push(DisplayItem::Box(paint));
+            output.display.push(DisplayItem::Box(paint));
         }
         let extent = self.block_extent();
         if let Some(measured) = self.measured.take() {
-            self.paint_element(measured, extent, rect, display, measurer, destinations)?;
+            self.paint_element(measured, extent, rect, output, measurer, destinations)?;
         } else {
-            self.paint_lines(rect, index, page, display);
+            self.paint_lines(rect, index, output.lines, output.display);
         }
         // The outline paints over the margin box's content (CSS UI 4 §3.1).
-        display.extend(outline.map(DisplayItem::Box));
+        output.display.extend(outline.map(DisplayItem::Box));
         Ok(())
     }
     fn vertical_offset(&self, physical_height: f32) -> f32 {
@@ -258,7 +257,7 @@ impl<'t> Prepared<'_, 't> {
         measured: MeasuredBlock<'t>,
         extent: f32,
         rect: Rect,
-        display: &mut Vec<DisplayItem>,
+        output: &mut MarginOutput<'_>,
         measurer: &mut Measurer<'t>,
         destinations: usize,
     ) -> Result<(), LayoutError> {
@@ -269,7 +268,7 @@ impl<'t> Prepared<'_, 't> {
         } else {
             logical
         };
-        let (lines, mut items) = crate::layout::pagination::Paginator::standalone(
+        let flow = crate::layout::pagination::Paginator::standalone(
             measurer,
             measured,
             Rect {
@@ -280,25 +279,54 @@ impl<'t> Prepared<'_, 't> {
             },
             destinations,
         )?;
+        let frame = crate::layout::writing::Frame::physical(
+            crate::style::logical::Flow::used(&self.margin.style),
+            size,
+        );
+        let mut items = flow.items;
+        let mut navigation = flow.navigation.into_links();
         if vertical {
-            crate::layout::writing::Frame::physical(
-                crate::style::logical::Flow::used(&self.margin.style),
-                size,
-            )
-            .items(&mut items);
+            frame.items(&mut items);
+            for area in &mut navigation {
+                match &mut area.shape {
+                    crate::layout::LinkShape::Rect(rect) => *rect = frame.rect(*rect),
+                    crate::layout::LinkShape::Quads(quads) => {
+                        for point in quads.iter_mut().flatten() {
+                            *point = frame.point(*point);
+                        }
+                    }
+                }
+            }
         }
         let origin = self.content_origin(rect, size[1]);
-        display.push(DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
-            matrix: [1.0, 0.0, 0.0, 1.0, origin[0], origin[1]],
-            area: Rect {
-                x: 0.0,
-                y: 0.0,
-                width: size[0],
-                height: size[1],
-            },
-            items,
-            lines,
-        })));
+        for mut area in navigation {
+            match &mut area.shape {
+                crate::layout::LinkShape::Rect(rect) => {
+                    rect.x += origin[0];
+                    rect.y += origin[1];
+                }
+                crate::layout::LinkShape::Quads(quads) => {
+                    for point in quads.iter_mut().flatten() {
+                        point[0] += origin[0];
+                        point[1] += origin[1];
+                    }
+                }
+            }
+            output.links.push(area);
+        }
+        output
+            .display
+            .push(DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
+                matrix: [1.0, 0.0, 0.0, 1.0, origin[0], origin[1]],
+                area: Rect {
+                    x: 0.0,
+                    y: 0.0,
+                    width: size[0],
+                    height: size[1],
+                },
+                items,
+                lines: flow.lines,
+            })));
         Ok(())
     }
     fn paint_lines(
@@ -370,6 +398,12 @@ impl<'t> Prepared<'_, 't> {
             })));
         }
     }
+}
+/// What one page's margin boxes paint.
+struct MarginOutput<'p> {
+    lines: &'p mut Vec<TextLine>,
+    display: &'p mut Vec<DisplayItem>,
+    links: &'p mut Vec<crate::layout::LinkArea>,
 }
 /// The page-margin boxes' shared inputs: the page count, the selected strings and running
 /// elements, and the document's destination count.
@@ -450,9 +484,15 @@ pub(super) fn render<'t>(
     first_index: usize,
     pages: &mut [Vec<TextLine>],
     display: &mut [Vec<DisplayItem>],
+    links: &mut [Vec<crate::layout::LinkArea>],
 ) -> Result<(), LayoutError> {
     let total = pages.len();
-    for (number, (page_lines, display)) in pages.iter_mut().zip(display).enumerate() {
+    for (number, ((page_lines, display), links)) in pages
+        .iter_mut()
+        .zip(display)
+        .zip(links.iter_mut())
+        .enumerate()
+    {
         let page = &page_boxes[number];
         let margins: Vec<_> = page
             .margins
@@ -528,7 +568,17 @@ pub(super) fn render<'t>(
                     prepared.variable(axis, containing[axis], sizes[position], position);
                     prepared.layout(measurer)?;
                     let index = first_index + prepared.margin.location as usize;
-                    prepared.paint(origin, index, page, display, measurer, context.destinations)?;
+                    prepared.paint(
+                        origin,
+                        index,
+                        &mut MarginOutput {
+                            lines: page,
+                            display,
+                            links,
+                        },
+                        measurer,
+                        context.destinations,
+                    )?;
                 }
             }
         }
@@ -564,8 +614,11 @@ pub(super) fn render<'t>(
                 prepared.paint(
                     origin,
                     first_index + location as usize,
-                    page,
-                    display,
+                    &mut MarginOutput {
+                        lines: page,
+                        display,
+                        links,
+                    },
                     measurer,
                     context.destinations,
                 )?;

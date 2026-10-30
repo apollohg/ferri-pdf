@@ -6,6 +6,7 @@ import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 
+from PIL import Image
 from oracle import pdf_content
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -87,6 +88,96 @@ class GcpmPdf(unittest.TestCase):
                  for glyph in pdf_content.inspect(self.pdf)["glyphs"]}
         self.assertEqual(fills[(1, "A")], (0, 0, 1), "the element keeps its own colour")
         self.assertEqual(fills[(1, "R")], (1, 0, 0), "descendants keep their formatting")
+
+    def raster(self, page):
+        """The page rendered at one pixel per point."""
+        prefix = self.output / f"page-{page}"
+        subprocess.run(["pdftoppm", "-r", "72", "-f", str(page), "-l", str(page), "-png",
+                        str(self.pdf), str(prefix)], check=True, capture_output=True, timeout=60)
+        with Image.open(next(self.output.glob(f"page-{page}*.png"))) as image:
+            return image.convert("RGB")
+
+    def colored_rows(self, image, color):
+        return sorted({y for y in range(image.height) for x in range(image.width)
+                       if image.getpixel((x, y)) == color})
+
+    def test_footnotes_leave_calls_and_stack_in_the_area_at_the_page_area_bottom(self):
+        pages = self.render(
+            "@page{size:300pt 200pt;margin:20pt;"
+            "@footnote{border-top:2pt solid rgb(255,0,0);padding-top:4pt}}"
+            ".fn{float:footnote;font:8pt/10pt Probe}p{margin-bottom:6pt}",
+            "<p>Alpha<span class=fn>One note.</span> text.</p>"
+            "<p>Beta<span class=fn>Two note.</span> text.</p>")
+        self.assertEqual(len(pages), 1)
+        words = pages[0][1]
+        self.assertEqual([word[0] for word in words],
+                         ["Alpha", "1", "text.", "Beta", "2", "text.", "1.", "One", "note.",
+                          "2.", "Two", "note."],
+                         "calls replace the footnote elements, whose bodies follow in order")
+        notes = [word for word in words if word[0] in ("1.", "2.")]
+        self.assertAlmostEqual(notes[1][2] - notes[0][2], 10, delta=POSITION_TOLERANCE,
+                               msg="block footnotes stack one line box apart")
+        self.assertTrue(all(abs(word[1] - 20) <= POSITION_TOLERANCE for word in notes),
+                        "footnote markers start at the area's content edge")
+        self.assertLessEqual(notes[1][4], 180, "the area ends at the page area's bottom")
+        separator = self.colored_rows(self.raster(1), (255, 0, 0))
+        self.assertEqual(separator, [154, 155],
+                         "the area's top border lies above 4pt padding and two 10pt lines")
+        glyphs = [glyph for glyph in pdf_content.inspect(self.pdf)["glyphs"]
+                  if glyph.page == 1 and glyph.text in ("a", "1")]
+        # PDF space rises from the page bottom: the body's first line has the highest baselines.
+        body_baseline = max(glyph.matrix[5] for glyph in glyphs if glyph.text == "a")
+        call_baseline = max(glyph.matrix[5] for glyph in glyphs if glyph.text == "1")
+        self.assertGreater(call_baseline, body_baseline,
+                           "the call is superscripted by font-variant-position: super")
+
+    def test_footnotes_beyond_max_height_continue_on_the_next_page(self):
+        lines = "<br>".join(f"A{index}" for index in range(1, 8))
+        note = "<br>".join(f"N{index}" for index in range(1, 7))
+        pages = self.render(
+            "@page{size:200pt 140pt;margin:20pt;@footnote{max-height:40pt}}"
+            "html,body,p,span{font:10pt/10pt Probe}p{widows:1;orphans:1}"
+            ".fn{float:footnote;color:rgb(255,0,0)}",
+            f"<p>{lines}<span class=fn>{note}</span><br>A8<br>A9</p>")
+        self.assertEqual(len(pages), 2)
+        first = self.colored_rows(self.raster(1), (255, 0, 0))
+        second = self.colored_rows(self.raster(2), (255, 0, 0))
+        self.assertTrue(first and 90 <= first[0] and first[-1] < 120,
+                        f"page 1 shows the footnote's first lines below A7 only: {first}")
+        self.assertTrue(second and 90 <= second[0] and second[-1] < 120,
+                        f"page 2 continues the footnote at its area's top: {second}")
+        body = [word[0] for word in pages[1][1] if word[0].startswith("A")]
+        self.assertEqual(body, ["A8", "A9"], "the flow resumes above the continued footnote")
+
+    def test_footnote_policies_move_the_call_line_or_paragraph_with_the_footnote(self):
+        lines = "<br>".join(f"A{index}" for index in range(1, 8))
+        note = "<br>".join(f"N{index}" for index in range(1, 7))
+        css = ("@page{size:200pt 140pt;margin:20pt}"
+               "html,body,p,span{font:10pt/10pt Probe}p{widows:1;orphans:1}"
+               ".fn{float:footnote}")
+        body = f"<p>P0</p><p>{lines}<span class=fn>{note}</span><br>A8</p>"
+        for policy, first in (("auto", ["P0", "A1", "A2", "A3", "A4", "A5", "A6", "A7"]),
+                              ("line", ["P0", "A1", "A2", "A3", "A4", "A5", "A6"]),
+                              ("block", ["P0"])):
+            with self.subTest(policy=policy):
+                pages = self.render(css + f".fn{{footnote-policy:{policy}}}", body)
+                self.assertEqual([word[0] for word in pages[0][1] if word[0][0] in "AP"],
+                                 first)
+
+    def test_compact_footnotes_share_a_line_when_they_fit(self):
+        pages = self.render(
+            "@page{size:300pt 200pt;margin:20pt}"
+            ".fn{float:footnote;footnote-display:compact;margin-right:6pt}",
+            "<p>Alpha<span class=fn>One.</span> and<span class=fn>Two.</span></p>"
+            "<p>Gamma<span class=fn>A footnote too long to share its line with any other "
+            "footnote at all.</span></p>")
+        words = {word[0]: word for word in pages[0][1]}
+        self.assertAlmostEqual(words["1."][2], words["2."][2], delta=POSITION_TOLERANCE,
+                               msg="short compact footnotes share a line")
+        self.assertAlmostEqual(words["2."][1], words["One."][3] + 6, delta=0.5,
+                               msg="the second follows the first's margin box")
+        self.assertGreater(words["3."][2], words["1."][2],
+                           "a footnote wider than the area's remainder starts a line")
 
     def test_running_elements_inside_fragmented_paragraphs_assign_where_their_line_falls(self):
         lines = "<br>".join(f"L{index}" for index in range(1, 10))

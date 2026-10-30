@@ -200,6 +200,8 @@ pub(crate) struct Style {
     /// The running element name of `position: running()` (CSS GCPM 3 §1.2.1).
     pub running: Option<Arc<str>>,
     pub float: crate::style::Float,
+    pub footnote_display: crate::style::FootnoteDisplay,
+    pub footnote_policy: crate::style::FootnotePolicy,
     pub clear: crate::style::Clear,
     /// CSS Shapes 1 §6: the float area's shape, the margin that expands it, and the alpha
     /// threshold that extracts it from an image.
@@ -375,6 +377,8 @@ impl Default for Style {
             position: crate::style::Position::Static,
             running: None,
             float: crate::style::Float::None,
+            footnote_display: crate::style::FootnoteDisplay::Block,
+            footnote_policy: crate::style::FootnotePolicy::Auto,
             clear: crate::style::Clear::None,
             shape_outside: Arc::default(),
             shape_margin: LengthPercentage::ZERO,
@@ -584,6 +588,7 @@ impl Style {
             || self.position.is_out_of_flow()
             || self.position == crate::style::Position::Running
             || self.floating().is_some()
+            || self.footnote()
         {
             self.display = self.display.blockified();
         } else if self.inlinifying_parent {
@@ -640,6 +645,16 @@ impl Style {
                 crate::style::logical::WritingMode::VerticalRl
                     | crate::style::logical::WritingMode::VerticalLr
             ) && self.text_orientation == crate::style::logical::TextOrientation::Upright)
+    }
+
+    /// Whether `float: footnote` moves the element to the footnote area: floating applies
+    /// to it (CSS GCPM 3 §2.2).
+    pub(crate) fn footnote(&self) -> bool {
+        self.float == crate::style::Float::Footnote
+            && !(self.document_root
+                || self.item_parent
+                || self.math_parent
+                || self.position.leaves_flow())
     }
 
     pub(crate) fn floating(&self) -> Option<crate::style::FloatSide> {

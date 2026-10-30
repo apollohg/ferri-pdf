@@ -65,6 +65,8 @@ pub(crate) struct ResolvedPage {
     pub style: crate::style::Style,
     pub production: crate::style::PageProduction,
     pub margins: Vec<crate::style::PageMargin>,
+    /// The footnote area's style (CSS GCPM 3 §2.4).
+    pub footnote: crate::style::Style,
 }
 impl Default for PageRequest {
     fn default() -> Self {
@@ -252,6 +254,7 @@ pub(super) struct PageRule {
     declarations: Vec<OrderedDeclaration>,
     descriptors: Vec<(Descriptor, Candidate<PageValue>)>,
     margins: [Vec<OrderedDeclaration>; MarginLocation::ALL.len()],
+    footnote: Vec<OrderedDeclaration>,
     contextual_descriptors: bool,
 }
 impl PageRule {
@@ -298,6 +301,7 @@ impl PageRule {
             declarations: Vec::new(),
             descriptors: Vec::new(),
             margins: std::array::from_fn(|_| Vec::new()),
+            footnote: Vec::new(),
             contextual_descriptors: false,
         };
         for item in items {
@@ -334,6 +338,16 @@ impl PageRule {
                     for declaration in declarations {
                         let base = declaration.location.base.clone();
                         rule.margins[location as usize].extend(ordered(
+                            parsed(vec![declaration], &base, diagnostics, namespace)?,
+                            context,
+                            order,
+                        ));
+                    }
+                }
+                PageItem::Footnote(declarations) => {
+                    for declaration in declarations {
+                        let base = declaration.location.base.clone();
+                        rule.footnote.extend(ordered(
                             parsed(vec![declaration], &base, diagnostics, namespace)?,
                             context,
                             order,
@@ -382,6 +396,7 @@ fn page_value(
 pub(super) struct MatchedPageRules {
     pub declarations: Cascaded,
     pub margins: [Cascaded; MarginLocation::ALL.len()],
+    pub footnote: Cascaded,
     descriptors: HashMap<Descriptor, Vec<Candidate<PageValue>>>,
     pub contextual_descriptors: bool,
 }
@@ -399,12 +414,22 @@ impl Stylesheet {
         let viewport = first_viewport.unwrap_or(geometry.area);
         let production = self.page_production_for(&style, &rules, viewport, resolver)?;
         let margins = self.page_margins_for(&style, &rules, viewport, resolver)?;
+        let footnote = self
+            .page_area_style(
+                &style,
+                rules.footnote.clone(),
+                crate::style::generated::ContentContext::Element,
+                viewport,
+                resolver,
+            )?
+            .0;
         Ok(ResolvedPage {
             request,
             geometry,
             style,
             production,
             margins,
+            footnote,
         })
     }
     pub(super) fn match_page(&self, request: &PageRequest) -> MatchedPageRules {
@@ -434,6 +459,16 @@ impl Stylesheet {
                         },
                     );
                 }
+            }
+            for declaration in &rule.footnote {
+                cascade::insert(
+                    &mut matched.footnote,
+                    &declaration.value,
+                    DeclarationContext {
+                        specificity,
+                        ..declaration.context
+                    },
+                );
             }
             for (descriptor, value) in &rule.descriptors {
                 let mut value = value.clone();

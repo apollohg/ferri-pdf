@@ -162,28 +162,16 @@ impl Stylesheet {
             )?;
             let mut winners = cascade(&declarations);
             winners.extend(declared.clone());
-            let mut style = page.anonymous(Display::Block);
-            style.content_context = crate::style::generated::ContentContext::Margin;
-            let (mut style, mut winners) = crate::style::resolution::resolve_values(
-                self,
-                style,
+            let (style, content) = self.page_area_style(
                 page,
                 winners,
+                crate::style::generated::ContentContext::Margin,
+                viewport,
                 resolver,
-                &crate::style::resolution::ValueContext {
-                    tree: crate::style::units::Tree::Root,
-                    viewport,
-                    page_font: false,
-                },
             )?;
-            let inherited = self.inherited(page, viewport, resolver);
-            let Some(content) = Self::generated(&mut winners, &mut style, page, &inherited)? else {
+            let Some(content) = content else {
                 continue;
             };
-            let relative = self.text_basis(&mut style, page, &mut winners, inherited, resolver)?;
-            // Display does not apply to page-margin boxes.
-            winners.remove(&Property::Display);
-            let style = Self::apply_properties(style, page, winners, &relative)?;
             margins.push(PageMargin {
                 location,
                 content,
@@ -191,5 +179,39 @@ impl Stylesheet {
             });
         }
         Ok(margins)
+    }
+
+    /// The style of a box of the page context, a page-margin box or the footnote area, and
+    /// its generated content. Display does not apply to either.
+    pub(super) fn page_area_style(
+        &self,
+        page: &Style,
+        winners: crate::style::cascade::Cascaded,
+        context: crate::style::generated::ContentContext,
+        viewport: [f32; 2],
+        resolver: &dyn ResourceResolver,
+    ) -> Result<(Style, Option<GeneratedContent>), StyleError> {
+        let mut style = page.anonymous(Display::Block);
+        style.content_context = context;
+        let (mut style, mut winners) = crate::style::resolution::resolve_values(
+            self,
+            style,
+            page,
+            winners,
+            resolver,
+            &crate::style::resolution::ValueContext {
+                tree: crate::style::units::Tree::Root,
+                viewport,
+                page_font: false,
+            },
+        )?;
+        let inherited = self.inherited(page, viewport, resolver);
+        let content = Self::generated(&mut winners, &mut style, page, &inherited)?;
+        let relative = self.text_basis(&mut style, page, &mut winners, inherited, resolver)?;
+        winners.remove(&Property::Display);
+        Ok((
+            Self::apply_properties(style, page, winners, &relative)?,
+            content,
+        ))
     }
 }

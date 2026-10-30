@@ -23,6 +23,10 @@ impl PageBox {
                 Ok(PageMarginBox { margin, decoration })
             })
             .collect::<Result<_, DocumentError>>()?;
+        let footnote = crate::document::PageFootnoteArea {
+            decoration: resources.backgrounds(&page.footnote)?,
+            style: page.footnote,
+        };
         Ok(Self {
             request: page.request,
             geometry: page.geometry,
@@ -31,6 +35,7 @@ impl PageBox {
             production: page.production,
             decoration,
             margins,
+            footnote,
         })
     }
 }

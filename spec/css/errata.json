@@ -215,6 +215,10 @@
       "syntax": "normal | none | [ <content-replacement> | <content-list> ] [ / [ <string> | <counter> | <attr()> ]+ ]? | <running-element()>",
       "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#element-syntax"
     },
+    "float": {
+      "syntax": "left | right | none | inline-start | inline-end | footnote",
+      "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#footnote-types"
+    },
     "corner-shape": {
       "initial": [
         "corner-top-left-shape",
@@ -1219,6 +1223,24 @@
         "CSS Basic User Interface"
       ],
       "source": "https://drafts.csswg.org/css-ui-4/#appearance-switching: a legacy name alias of appearance"
+    },
+    "footnote-display": {
+      "syntax": "block | inline | compact",
+      "initial": "block",
+      "inherited": false,
+      "groups": [
+        "CSS Generated Content for Paged Media"
+      ],
+      "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#footnote-display"
+    },
+    "footnote-policy": {
+      "syntax": "auto | line | block",
+      "initial": "auto",
+      "inherited": false,
+      "groups": [
+        "CSS Generated Content for Paged Media"
+      ],
+      "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#footnote-policy"
     },
     "string-set": {
       "syntax": "[ <custom-ident> <named-string-content> ]# | none",

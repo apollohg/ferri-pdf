@@ -23,6 +23,8 @@ pub(super) struct StringLocations {
     locations: HashMap<PageStyleTarget, usize>,
     assignments: HashMap<usize, Location>,
     starts: HashMap<usize, PageStart>,
+    /// Footnote calls in recording order (CSS GCPM 3 §2.2).
+    footnotes: Vec<usize>,
 }
 impl StringLocations {
     pub(crate) fn last_page(&self) -> usize {
@@ -66,6 +68,7 @@ impl StringLocations {
             return;
         }
         self.locations.insert(event.context, page);
+        self.footnotes.extend(event.footnote);
         self.trace(page, SemanticAction::Element(event.clone()));
         if event.context.pseudo.is_some() {
             return;
@@ -84,6 +87,9 @@ impl StringLocations {
                 .entry(assignment)
                 .or_insert(Location { page, start });
         }
+    }
+    pub(crate) fn footnote_calls(&self) -> impl Iterator<Item = usize> + '_ {
+        self.footnotes.iter().copied()
     }
     pub(crate) fn text(&mut self, page: usize) {
         let state = self.starts.entry(page).or_default();

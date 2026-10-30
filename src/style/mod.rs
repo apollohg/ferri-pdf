@@ -114,15 +114,15 @@ pub(crate) use containment::{
     Contain, ContainIntrinsicSize, ContainerType, ContainmentStyle, ContentVisibility,
 };
 pub(crate) use counter_values::{
-    CounterProperties, CounterScopes, DEFAULT_COUNTER_INCREMENT, INITIAL_COUNTER_VALUE,
-    LIST_ITEM_COUNTER,
+    CounterProperties, CounterScopes, DEFAULT_COUNTER_INCREMENT, FOOTNOTE_COUNTER,
+    INITIAL_COUNTER_VALUE, LIST_ITEM_COUNTER,
 };
 pub(crate) use decoration_values::{
     DecorationLines, TextDecoration, TextDecorations, UnderlinePosition,
 };
 pub(crate) use diagnostics::{SourceLocation, StyleDiagnostic, StyleDiagnosticKind};
 pub(crate) use flex_values::{Alignment, FlexBasis, FlexStyle, FlexWrap, Gap, OverflowPosition};
-pub(crate) use float_values::{Clear, Float, FloatSide};
+pub(crate) use float_values::{Clear, Float, FloatSide, FootnoteDisplay, FootnotePolicy};
 pub(crate) use font_values::{
     FontFeatures, FontKerning, FontVariantAlternates, FontVariantCaps, FontVariantEmoji,
     FontVariantPosition, RUBY_FEATURE, language_system_tag,

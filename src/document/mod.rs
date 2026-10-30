@@ -29,7 +29,9 @@ use crate::dom::DocumentTree;
 use crate::resources::{ResourceError, ResourceResolver};
 use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 
-pub(crate) use formatting::{BlockBox, BlockContent, InitialLetterBox, PageBox, PageMarginBox};
+pub(crate) use formatting::{
+    BlockBox, BlockContent, InitialLetterBox, PageBox, PageFootnoteArea, PageMarginBox,
+};
 pub(crate) use frames::{Frame, FrameDocument};
 pub(crate) use generated::GeneratedValues;
 pub(crate) use inline::{
@@ -92,6 +94,8 @@ pub enum DocumentDiagnostic {
 /// An owned document whose text and style ranges have been resolved together.
 pub(crate) struct StyledDocument {
     root: BlockBox,
+    /// Footnote element boxes in document order (CSS GCPM 3 §2.2).
+    footnotes: Vec<BlockBox>,
     styles: Stylesheet,
     diagnostics: Vec<DocumentDiagnostic>,
     navigation: Navigation,
@@ -359,6 +363,7 @@ impl StyledDocument {
         )?;
         let formatting::Formatted {
             root,
+            footnotes,
             navigation: links,
             strings,
             generated,
@@ -410,6 +415,7 @@ impl StyledDocument {
         );
         Ok(Self {
             root,
+            footnotes,
             styles,
             diagnostics,
             navigation: links.finish(&html, &generated)?,
@@ -472,6 +478,7 @@ impl StyledDocument {
         styles.anchor_frames_mut().measured(anchor_frames);
         let formatting::Formatted {
             root,
+            footnotes,
             navigation,
             strings,
             generated,
@@ -481,6 +488,7 @@ impl StyledDocument {
         } = source.build(&mut styles, values, &self.pages.images(), resolver)?;
         Ok(Self {
             root,
+            footnotes,
             styles,
             diagnostics: Vec::new(),
             navigation: navigation.finish(&source.html, &generated)?,
@@ -519,6 +527,7 @@ impl StyledDocument {
         let source = &self.source;
         let formatting::Formatted {
             root,
+            footnotes,
             navigation,
             strings,
             generated,
@@ -529,6 +538,7 @@ impl StyledDocument {
         self.navigation = navigation.finish(&source.html, &generated)?;
         self.running_strings = strings.finish(&source.html)?;
         self.root = root;
+        self.footnotes = footnotes;
         self.generated = generated;
         self.canvas = canvas;
         self.pages = pages;
@@ -572,6 +582,9 @@ impl StyledDocument {
 
     pub(crate) fn root(&self) -> &BlockBox {
         &self.root
+    }
+    pub(crate) fn footnotes(&self) -> &[BlockBox] {
+        &self.footnotes
     }
     pub(crate) fn styles(&self) -> &Stylesheet {
         &self.styles

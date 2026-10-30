@@ -118,6 +118,8 @@ impl GeneratedPass {
         match pseudo {
             GeneratedPseudoElement::Before => target.before = generated,
             GeneratedPseudoElement::After => target.after = generated,
+            // `content()` names only `::before` and `::after` (CSS GCPM 3 §1.1.1).
+            GeneratedPseudoElement::FootnoteCall | GeneratedPseudoElement::FootnoteMarker => {}
         }
     }
     pub(crate) fn finish(self) -> GeneratedReferences {
