@@ -458,9 +458,43 @@ pub struct Pattern {
     pub(crate) rect: NonZeroRect,
     pub(crate) view_box: Option<ViewBox>,
     pub(crate) root: Group,
+    /// The axes along which `overflow` clips each tile's content to the tile (SVG 2 §14.3.2).
+    pub(crate) clip_axes: [bool; 2],
 }
 
+/// The most tiles whose overflowing content one tile shows; content overflowing further is
+/// clipped, as SVG 2 §14.3.2 leaves rendering beyond the tile undefined.
+const MAX_OVERFLOW_TILES: usize = 1024;
+
 impl Pattern {
+    /// The offsets of the tiles whose content shows in a tile, in its content's coordinates and
+    /// painting order, rows top to bottom and tiles left to right (SVG 2 §14.3.2): the tile's
+    /// own, and along an axis `overflow` does not clip, those whose content overflows into it.
+    pub(crate) fn tile_offsets(&self) -> Vec<(f32, f32)> {
+        let bounds = self.root.layer_bounding_box();
+        let offsets = |clips: bool, start: f32, end: f32, size: f32| -> Vec<f32> {
+            if clips {
+                return vec![0.0];
+            }
+            // A copy `index` tiles away overlaps the tile where `start + index * size` lies
+            // before its end and `end + index * size` after its start.
+            let first = (-end / size).floor() as i64 + 1;
+            let last = ((size - start) / size).ceil() as i64 - 1;
+            (first.min(0)..=last.max(0))
+                .map(|index| index as f32 * size)
+                .collect()
+        };
+        let [clip_x, clip_y] = self.clip_axes;
+        let columns = offsets(clip_x, bounds.left(), bounds.right(), self.rect.width());
+        let rows = offsets(clip_y, bounds.top(), bounds.bottom(), self.rect.height());
+        if columns.len().saturating_mul(rows.len()) > MAX_OVERFLOW_TILES {
+            return vec![(0.0, 0.0)];
+        }
+        rows.iter()
+            .flat_map(|dy| columns.iter().map(move |dx| (*dx, *dy)))
+            .collect()
+    }
+
     /// Element's ID.
     ///
     /// Taken from the SVG itself.

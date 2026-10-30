@@ -95,6 +95,9 @@ breaks start line boxes stacked by the line heights of their spans and the text 
 Percentage baseline shifts of styled text refer to its used line height (CSS Inline 3 §4.2.3),
 and `alignment-baseline` aligns a box's baseline with the same baseline of its parent.
 
+`overflow` on a pattern renders each tile's overflowing content over the tiles it reaches, rows
+top to bottom and tiles left to right, and on a sliced image the parts beyond its rectangle.
+
 `width` and `height` take `calc-size()` and the intrinsic size keywords (CSS Values 5 §10.2,
 CSS Sizing 3 §3.1). Keywords, and `calc-size()` with a keyword basis, behave as `auto`; the
 latter then calculates the used size from the automatic size each element gives `auto` (SVG 2

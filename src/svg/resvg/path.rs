@@ -247,7 +247,14 @@ fn render_pattern_pixmap(
     let mut pixmap = tiny_skia::Pixmap::new(img_size.width(), img_size.height())?;
 
     let transform = tiny_skia::Transform::from_scale(sx, sy);
-    crate::svg::resvg::render::render_nodes(pattern.root(), ctx, transform, &mut pixmap.as_mut());
+    for (dx, dy) in pattern.tile_offsets() {
+        crate::svg::resvg::render::render_nodes(
+            pattern.root(),
+            ctx,
+            transform.pre_translate(dx, dy),
+            &mut pixmap.as_mut(),
+        );
+    }
 
     let mut ts = tiny_skia::Transform::default();
     ts = ts.pre_concat(pattern.transform());

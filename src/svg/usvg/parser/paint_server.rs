@@ -227,6 +227,7 @@ fn convert_pattern(
         rect,
         view_box,
         root: Group::empty(),
+        clip_axes: converter::overflow_axes(node),
     };
 
     let mut content_state = state.clone();
@@ -999,6 +1000,7 @@ fn process_context_paint(
                 rect: pat.rect,
                 view_box: pat.view_box,
                 root: pat.root.clone(),
+                clip_axes: pat.clip_axes,
             }));
         }
     }
@@ -1173,6 +1175,7 @@ impl Paint {
                         rect,
                         view_box: patt.view_box,
                         root,
+                        clip_axes: patt.clip_axes,
                     });
                 }
             }

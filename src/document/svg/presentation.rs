@@ -34,6 +34,8 @@ const PRESERVE_3D: &str = "preserve-3d";
 const FLAT: &str = "flat";
 const HIDDEN: &str = "hidden";
 const VISIBLE: &str = "visible";
+const HIDDEN_VISIBLE: &str = "hidden visible";
+const VISIBLE_HIDDEN: &str = "visible hidden";
 const BASELINE: &str = "baseline";
 const UNDERLINE: &str = "underline";
 const OVERLINE: &str = "overline";
@@ -46,10 +48,9 @@ const STROKE_BOX: &str = "stroke-box";
 const VIEW_BOX: &str = "view-box";
 const CLOSEST_SIDE: &str = "closest-side";
 const FARTHEST_SIDE: &str = "farthest-side";
-/// Elements whose viewport the SVG renderer clips as `overflow` says.
-const OVERFLOW_ELEMENTS: [&str; 3] = ["marker", "svg", "symbol"];
-/// Elements whose viewport the SVG renderer clips whatever their `overflow`.
-const ALWAYS_CLIPPED_ELEMENTS: [&str; 2] = ["image", "pattern"];
+/// Elements whose viewport, tile or image the SVG renderer clips as `overflow` says (SVG 2
+/// §3.11).
+const OVERFLOW_ELEMENTS: [&str; 5] = ["image", "marker", "pattern", "svg", "symbol"];
 /// CSS Fonts 4 §2.1.3 generic families that the SVG renderer also takes as generic.
 const UNCONFIGURED_GENERICS: [&str; 2] = ["cursive", "fantasy"];
 const CALCULATED_LENGTH: &str = "a calculation mixing lengths and percentages in SVG content";
@@ -174,7 +175,7 @@ pub(super) fn declarations(
         push("mix-blend-mode", blend_mode(style.mix_blend_mode));
         push("isolation", if style.isolate { "isolate" } else { AUTO });
         push("filter", &filters(&style.filter));
-        if let Some(overflow) = overflow(tag, style.overflow)? {
+        if let Some(overflow) = overflow(tag, style.overflow) {
             push("overflow", overflow);
         }
         if let Some(mask) = mask {
@@ -364,10 +365,9 @@ pub(super) fn transform(
 /// SVG 2 §3.11 `overflow` on the elements whose viewport it clips, per axis: `hidden` and
 /// `scroll` clip, and without scrolling `auto` is `visible`. Other elements have no viewport
 /// to clip.
-fn overflow(tag: &str, [x, y]: [Overflow; 2]) -> Result<Option<&'static str>, StyleError> {
-    let always_clipped = ALWAYS_CLIPPED_ELEMENTS.contains(&tag);
-    if !always_clipped && !OVERFLOW_ELEMENTS.contains(&tag) {
-        return Ok(None);
+fn overflow(tag: &str, [x, y]: [Overflow; 2]) -> Option<&'static str> {
+    if !OVERFLOW_ELEMENTS.contains(&tag) {
+        return None;
     }
     let clips = |overflow| {
         matches!(
@@ -375,18 +375,12 @@ fn overflow(tag: &str, [x, y]: [Overflow; 2]) -> Result<Option<&'static str>, St
             Overflow::Hidden | Overflow::Clip | Overflow::Scroll
         )
     };
-    match (clips(x), clips(y)) {
-        (true, true) => Ok(Some("hidden")),
-        (false, false) if !always_clipped => Ok(Some("visible")),
-        (false, false) => Err(StyleError::Unsupported(format!(
-            "overflow: visible on an SVG {tag} element, which its renderer always clips"
-        ))),
-        (true, false) if !always_clipped => Ok(Some("hidden visible")),
-        (false, true) if !always_clipped => Ok(Some("visible hidden")),
-        _ => Err(StyleError::Unsupported(format!(
-            "overflow: visible on an axis of an SVG {tag} element, which its renderer always clips"
-        ))),
-    }
+    Some(match (clips(x), clips(y)) {
+        (true, true) => HIDDEN,
+        (false, false) => VISIBLE,
+        (true, false) => HIDDEN_VISIBLE,
+        (false, true) => VISIBLE_HIDDEN,
+    })
 }
 
 /// CSS Masking 1 §6.1 `clip-path` as the SVG renderer reads it: a `clipPath` reference, or a

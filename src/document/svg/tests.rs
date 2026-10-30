@@ -614,7 +614,12 @@ fn mask_layers_beyond_one_mask_element_name_the_layers_the_document_draws() {
 #[test]
 fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
     for (css, expected) in [
-        ("pattern{overflow:visible}", "always clips"),
+        ("text{unicode-bidi:bidi-override}", "unicode-bidi"),
+        ("text{font-palette:dark}", "font-palette"),
+        (
+            "text{text-decoration-line:spelling-error}",
+            "spelling-error",
+        ),
         ("rect{cx:calc(10% + 1px)}", ""),
     ] {
         match styled(

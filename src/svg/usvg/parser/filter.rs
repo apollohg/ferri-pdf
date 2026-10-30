@@ -885,6 +885,8 @@ fn convert_image_inner(
         aspect,
         actual_size,
         filter_subregion.translate_to(0.0, 0.0)?,
+        // The primitive subregion clips the image; `overflow` does not apply.
+        [true; 2],
         cache,
         &mut root,
     );

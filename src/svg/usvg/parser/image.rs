@@ -8,8 +8,7 @@ use svgtypes::{AspectRatio, Length};
 use super::svgtree::{AId, SvgNode};
 use super::{OptionLog, Options, converter, units};
 use crate::svg::usvg::{
-    ClipPath, Group, Image, ImageKind, ImageRendering, Node, NonZeroRect, Path, Size, Transform,
-    Tree, Visibility,
+    Group, Image, ImageKind, ImageRendering, Node, NonZeroRect, Size, Transform, Tree, Visibility,
 };
 
 /// A shorthand for [ImageHrefResolver]'s data function.
@@ -198,6 +197,7 @@ pub(crate) fn convert(
         aspect,
         actual_size,
         rect,
+        converter::overflow_axes(node),
         cache,
         parent,
     )
@@ -211,6 +211,7 @@ pub(crate) fn convert_inner(
     aspect: AspectRatio,
     actual_size: Size,
     rect: NonZeroRect,
+    clip_axes: [bool; 2],
     cache: &mut converter::Cache,
     parent: &mut Group,
 ) -> Option<()> {
@@ -255,17 +256,12 @@ pub(crate) fn convert_inner(
     g.abs_transform = abs_transform;
     g.calculate_bounding_boxes();
 
-    if aspect.slice {
-        // Image slice acts like a rectangular clip.
-        let mut path = Path::new_simple(Arc::new(tiny_skia_path::PathBuilder::from_rect(
-            rect.to_rect(),
-        )))
-        .unwrap();
-        path.fill = Some(crate::svg::usvg::Fill::default());
-
-        let mut clip = ClipPath::empty(cache.gen_clip_path_id());
-        clip.root.children.push(Node::Path(Box::new(path)));
-
+    // SVG 2 §12.3: `overflow` clips a sliced image to its positioning rectangle per axis.
+    if let Some(clip) = aspect
+        .slice
+        .then(|| converter::viewport_clip(cache, rect, clip_axes, view_box))
+        .flatten()
+    {
         // Clip path should not be affected by the image viewbox transform.
         // The final structure should look like:
         // <g clip-path="url(#clipPath1)">
@@ -280,7 +276,7 @@ pub(crate) fn convert_inner(
         };
         std::mem::swap(&mut g.id, &mut g2.id);
         g2.abs_transform = parent.abs_transform;
-        g2.clip_path = Some(Arc::new(clip));
+        g2.clip_path = Some(clip);
         g2.children.push(Node::Group(Box::new(g)));
         g2.calculate_bounding_boxes();
 

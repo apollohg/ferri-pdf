@@ -123,6 +123,42 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
             self.assertPixel(pixels, 3 * ICON + half, half, MAGENTA,
                              'currentColor is the color inherited from HTML')
 
+    def test_overflow_shows_pattern_tiles_and_sliced_images_beyond_their_bounds(self):
+        """SVG 2 §3.11, §12.3 and §14.3.2: `overflow: visible` on a pattern renders each tile's
+        overflowing content over the following tiles, and on an image the sliced parts beyond
+        its positioning rectangle; the user agent's `hidden` clips both."""
+        stripe = Image.new('RGB', (2, 1), RED)
+        encoded = io.BytesIO()
+        stripe.save(encoded, format='PNG')
+        source = 'data:image/png;base64,' + base64.b64encode(encoded.getvalue()).decode()
+        tile = (f'width="{SQUARE}" height="{SQUARE}" patternUnits="userSpaceOnUse"><rect '
+                f'x="15" width="10" height="{SQUARE}" fill="rgb(0,0,255)"/></pattern>')
+        image = (f'width="{SQUARE}" height="{SQUARE}" preserveAspectRatio="xMidYMid slice" '
+                 f'href="{source}"/>')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-overflow-') as directory:
+            pixels = self.render(
+                Path(directory), '.shown{overflow:visible}',
+                f'<svg width="{PAGE - 2 * PAGE_MARGIN}pt" height="100pt" '
+                f'viewBox="0 0 {PAGE - 2 * PAGE_MARGIN} 100">'
+                f'<pattern id="shown" class="shown" {tile}<pattern id="clipped" {tile}'
+                f'<rect width="{4 * SQUARE}" height="{SQUARE}" fill="url(#shown)"/>'
+                f'<rect y="{2 * SQUARE}" width="{4 * SQUARE}" height="{SQUARE}" '
+                f'fill="url(#clipped)"/>'
+                f'<image class="shown" x="{6 * SQUARE}" {image}'
+                f'<image x="{6 * SQUARE}" y="{2 * SQUARE}" {image}</svg>')
+            middle = SQUARE // 2
+            self.assertPixel(pixels, SQUARE + 2, middle, BLUE,
+                             'the previous tile\'s stripe overflows into the next tile')
+            self.assertPixel(pixels, SQUARE + 2, 2 * SQUARE + middle, WHITE,
+                             'a hidden pattern clips each stripe to its own tile')
+            for row, label in ((0, 'visible'), (2 * SQUARE, 'hidden')):
+                self.assertPixel(pixels, 6 * SQUARE + middle, row + middle, RED,
+                                 f'the {label} image fills its rectangle')
+            self.assertPixel(pixels, 6 * SQUARE - 5, middle, RED,
+                             'the sliced image shows beyond its rectangle')
+            self.assertPixel(pixels, 6 * SQUARE - 5, 2 * SQUARE + middle, WHITE,
+                             'a hidden image is clipped to its rectangle')
+
     def test_sprite_instances_take_the_color_around_each_use_element(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
             icon = f'<svg width="{ICON}pt" height="{ICON}pt"><use href="#dot"/></svg>'

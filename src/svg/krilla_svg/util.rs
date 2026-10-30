@@ -79,7 +79,11 @@ pub(crate) fn convert_paint(
         .into(),
         crate::svg::usvg::Paint::Pattern(pat) => {
             let mut surface = stream_builder.surface();
-            group::render_root(pat.root(), &mut surface, process_context);
+            for (dx, dy) in pat.tile_offsets() {
+                surface.push_transform(&Transform::from_translate(dx, dy).to_krilla());
+                group::render_root(pat.root(), &mut surface, process_context);
+                surface.pop();
+            }
             surface.finish();
             let stream = stream_builder.finish();
 
