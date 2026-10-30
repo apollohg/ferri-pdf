@@ -10,6 +10,15 @@ use unicode_script::{Script, UnicodeScript};
 
 const WRAP_SPACE_COMPRESSION: f32 = 1.0 / 6.0;
 const MAX_SPACE_COMPRESSION: f32 = 1.0 / 3.0;
+const SOUTHEAST_ASIAN_SCRIPTS: [Script; 7] = [
+    Script::Thai,
+    Script::Lao,
+    Script::Khmer,
+    Script::Myanmar,
+    Script::Tai_Tham,
+    Script::Tai_Viet,
+    Script::New_Tai_Lue,
+];
 /// CSS Text 3 §7.3.4: scripts whose letters join, so justification must not separate them.
 const CURSIVE_SCRIPTS: [Script; 12] = [
     Script::Arabic,
@@ -99,9 +108,19 @@ fn cursive_letter(text: &str) -> bool {
 /// A CJK character other than Bopomofo, between which `text-justify: ruby` justifies (CSS
 /// Text 4 §7.5, CSS Ruby 1 §4.3).
 fn ruby_justified(text: &str) -> bool {
+    ideographic_unit(text)
+        || text
+            .chars()
+            .next()
+            .is_some_and(|ch| ch.script() == Script::Hangul)
+}
+
+/// A Chinese or Japanese character, or a wide or fullwidth symbol or punctuation mark, which
+/// takes the script of the CJK text around it (CSS Text 3 §7.4.2).
+fn ideographic_unit(text: &str) -> bool {
     use icu_properties::props::EastAsianWidth;
     text.chars().next().is_some_and(|ch| match ch.script() {
-        Script::Han | Script::Hiragana | Script::Katakana | Script::Hangul => true,
+        Script::Han | Script::Hiragana | Script::Katakana => true,
         Script::Common | Script::Inherited => matches!(
             CodePointMapData::<EastAsianWidth>::new().get(ch),
             EastAsianWidth::Wide | EastAsianWidth::Fullwidth
@@ -110,21 +129,41 @@ fn ruby_justified(text: &str) -> bool {
     })
 }
 
+/// A letter of a Southeast Asian script, which separates words without spaces.
+fn southeast_asian_letter(text: &str) -> bool {
+    text.chars()
+        .next()
+        .is_some_and(|ch| SOUTHEAST_ASIAN_SCRIPTS.contains(&ch.script()))
+}
+
 /// Whether the gap between typographic character units `before` and `after` justifies under
 /// `value`: `inter-character` everywhere but between cursive letters (CSS Text 3 §7.4), `ruby`
-/// between CJK characters.
+/// between CJK characters, and `auto` between Chinese and Japanese characters. This UA's
+/// `auto` expands word separators and these gaps alike; Korean separates words by spaces.
 pub(super) fn justifies_between(value: TextJustify, before: &str, after: &str) -> bool {
     match value {
         TextJustify::InterCharacter => !(cursive_letter(before) && cursive_letter(after)),
         TextJustify::Ruby => ruby_justified(before) && ruby_justified(after),
-        TextJustify::Auto | TextJustify::None | TextJustify::InterWord => false,
+        TextJustify::Auto => ideographic_unit(before) && ideographic_unit(after),
+        TextJustify::None | TextJustify::InterWord => false,
     }
 }
 
+/// The opportunities `auto` falls back to on a line without word separators or CJK gaps:
+/// between the letters of Southeast Asian scripts (CSS Text 3 §7.4).
+fn justifies_between_clusters(value: TextJustify, before: &str, after: &str) -> bool {
+    value == TextJustify::Auto && southeast_asian_letter(before) && southeast_asian_letter(after)
+}
+
 /// The gap after each typographic character unit of `slots`, in visual order, where its
-/// `text-justify` justifies it, except after the last. A gap between two spans justifies by
-/// the paragraph's value. Spaces `text-autospace` removed are not units.
-fn character_gaps(paragraph: &Paragraph, runs: &[GlyphRun], slots: &[Slot]) -> Vec<GlyphIndex> {
+/// `text-justify` value `justifies` it, except after the last. A gap between two spans
+/// justifies by the paragraph's value. Spaces `text-autospace` removed are not units.
+fn character_gaps(
+    paragraph: &Paragraph,
+    runs: &[GlyphRun],
+    slots: &[Slot],
+    justifies: fn(TextJustify, &str, &str) -> bool,
+) -> Vec<GlyphIndex> {
     let mut gaps = Vec::new();
     let mut previous: Option<(GlyphIndex, usize, &str)> = None;
     for slot in slots {
@@ -151,7 +190,7 @@ fn character_gaps(paragraph: &Paragraph, runs: &[GlyphRun], slots: &[Slot]) -> V
                 } else {
                     paragraph.style().line_breaking.justify
                 };
-                if justifies_between(value, before, unit) {
+                if justifies(value, before, unit) {
                     gaps.push(end);
                 }
             }
@@ -180,9 +219,13 @@ pub(super) fn opportunities(
                 .map(move |index| (run_index, index))
         })
         .collect();
-    opportunities.extend(character_gaps(paragraph, runs, slots));
+    opportunities.extend(character_gaps(paragraph, runs, slots, justifies_between));
     let eligible = justification_range(paragraph, runs);
     opportunities.retain(|(run, _)| eligible.contains(run));
+    if opportunities.is_empty() {
+        opportunities = character_gaps(paragraph, runs, slots, justifies_between_clusters);
+        opportunities.retain(|(run, _)| eligible.contains(run));
+    }
     opportunities.sort_unstable();
     opportunities.dedup();
     opportunities

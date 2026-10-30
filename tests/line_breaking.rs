@@ -255,6 +255,66 @@ fn text_justify_selects_the_justification_opportunities() {
 }
 
 #[test]
+fn text_justify_auto_expands_between_cjk_characters_and_falls_back_to_southeast_asian_clusters() {
+    let width = 160.0;
+    let base = format!("p{{width:{width}pt;text-align:justify;font-size:12pt}}");
+    let expanded = |line: &TextLine| -> Vec<String> {
+        line.runs
+            .iter()
+            .flat_map(|run| {
+                run.glyphs()
+                    .iter()
+                    .filter(|glyph| glyph.x_spacing > 0.0)
+                    .map(|glyph| run.text[glyph.text_range.clone()].to_owned())
+            })
+            .collect()
+    };
+    let japanese =
+        "日本語の文章は単語の間に空白を置かずに書かれるので行の中の文字の間を広げて揃える";
+    for (body, expected_gaps) in [
+        // Every character but the line's last ends an expanded gap.
+        (format!("<p>{japanese}</p>"), None),
+        // Latin letters keep their spacing; the word separator and the Japanese gaps expand.
+        (
+            format!("<p>{japanese} Latin {japanese}</p>"),
+            Some(["L", "a", "t", "i", "n"]),
+        ),
+    ] {
+        let justified = trace(&base, &body);
+        let first = lines(&justified)[0];
+        assert_labelled_pt(&format!("{body}: first line"), first.width, width);
+        let gaps = expanded(first);
+        assert!(!gaps.is_empty(), "{body}: CJK gaps must expand");
+        if let Some(latin) = expected_gaps {
+            for letter in latin.iter().take(latin.len() - 1) {
+                assert!(
+                    !gaps.iter().any(|gap| gap == letter),
+                    "{body}: no gap after the Latin letter {letter}: {gaps:?}"
+                );
+            }
+        }
+        let words = trace(&format!("{base}p{{text-justify:inter-word}}"), &body);
+        assert!(
+            expanded(lines(&words)[0])
+                .iter()
+                .all(|gap| gap.trim().is_empty()),
+            "{body}: inter-word expands word separators only"
+        );
+    }
+    let thai = "ภาษาไทยเขียนติดกันโดยไม่เว้นวรรคระหว่างคำภาษาไทยเขียนติดกันโดยไม่เว้นวรรคระหว่างคำ";
+    let justified = trace(&base, &format!("<p>{thai}</p>"));
+    let first = lines(&justified)[0];
+    assert_labelled_pt("Thai line without word separators", first.width, width);
+    let spaced = trace(&base, &format!("<p>ภาษาไทย เขียน ติดกัน {thai}</p>"));
+    assert!(
+        expanded(lines(&spaced)[0])
+            .iter()
+            .all(|gap| gap.trim().is_empty()),
+        "a Thai line with word separators expands only them"
+    );
+}
+
+#[test]
 fn hanging_punctuation_sits_outside_the_line_box() {
     let width = 150.0;
     let body = "<p>\u{201c}Quoted words hang their marks.\u{201d}</p>";
