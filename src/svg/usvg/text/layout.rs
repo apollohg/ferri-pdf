@@ -999,7 +999,8 @@ fn process_chunk(
             &span.font,
             span.start..span.end,
             font,
-            span.small_caps,
+            span.caps,
+            &span.language,
             span.apply_kerning,
             span.font_size.get(),
             span.font_optical_sizing,
@@ -1057,11 +1058,8 @@ fn process_chunk(
     let mut clusters = Vec::new();
     for (range, byte_idx) in GlyphClusters::new(&glyphs) {
         if let Some(span) = chunk_span_at(chunk, byte_idx) {
-            clusters.push(form_glyph_clusters(
-                &glyphs[range],
-                &chunk.text,
-                span.font_size.get(),
-            ));
+            let font_size = span.font_size.get() * glyphs[range.start].scale;
+            clusters.push(form_glyph_clusters(&glyphs[range], &chunk.text, font_size));
         }
     }
 
@@ -1380,7 +1378,8 @@ pub(crate) fn shape_text(
     request: &Font,
     active: std::ops::Range<usize>,
     font: Arc<ResolvedFont>,
-    small_caps: bool,
+    caps: crate::style::FontVariantCaps,
+    language: &str,
     apply_kerning: bool,
     font_size: f32,
     font_optical_sizing: crate::svg::usvg::FontOpticalSizing,
@@ -1395,7 +1394,8 @@ pub(crate) fn shape_text(
         rtl,
         orientations,
         font.clone(),
-        small_caps,
+        caps,
+        language,
         apply_kerning,
         &variations,
         font_size,
@@ -1490,7 +1490,8 @@ pub(crate) fn shape_text(
                 rtl,
                 orientations,
                 fallback.clone(),
-                small_caps,
+                caps,
+                language,
                 apply_kerning,
                 &fallback_variations,
                 font_size,
@@ -1511,7 +1512,8 @@ pub(crate) fn shape_text(
                     rtl,
                     orientations,
                     fallback.clone(),
-                    small_caps,
+                    caps,
+                    language,
                     apply_kerning,
                     &fallback_variations,
                     font_size,
@@ -1542,7 +1544,8 @@ pub(crate) fn shape_text(
                     rtl,
                     orientations,
                     fallback.clone(),
-                    small_caps,
+                    caps,
+                    language,
                     apply_kerning,
                     &variations,
                     font_size,
@@ -1598,7 +1601,8 @@ fn shape_text_with_font(
     rtl: bool,
     orientations: OrientationSpans<'_>,
     font: Arc<ResolvedFont>,
-    small_caps: bool,
+    caps: crate::style::FontVariantCaps,
+    language: &str,
     apply_kerning: bool,
     variations: &[crate::svg::usvg::FontVariation],
     font_size: f32,
@@ -1660,70 +1664,109 @@ fn shape_text_with_font(
             if levels[run.start].is_rtl() {
                 pieces.reverse();
             }
+            // CSS Fonts 4 §6.6: the face's own capitals, or capitals scaled from uppercase
+            // forms, as for the document's text.
+            let plan = crate::text::features::caps_plan(
+                caps,
+                |tag| crate::fonts::has_feature(&rb_font, tag),
+                true,
+            );
             for (run, vertical) in pieces {
-                let sub_text = &text[run.clone()];
-                if sub_text.is_empty() {
-                    continue;
-                }
-
-                let ltr = levels[run.start].is_ltr();
-                let hb_direction = if vertical {
-                    rustybuzz::Direction::TopToBottom
-                } else if ltr {
-                    rustybuzz::Direction::LeftToRight
+                let mut caps_pieces = if plan.synthetic() {
+                    plan.pieces(text, run)
                 } else {
-                    rustybuzz::Direction::RightToLeft
+                    vec![(run, false)]
                 };
-
-                let mut buffer = rustybuzz::UnicodeBuffer::new();
-                buffer.push_str(sub_text);
-                buffer.set_pre_context(&text[..run.start]);
-                buffer.set_post_context(&text[run.end..]);
-                buffer.set_direction(hb_direction);
-                buffer.guess_segment_properties();
-
-                let mut features = Vec::new();
-                if small_caps {
-                    features.push(rustybuzz::Feature::new(Tag::from_bytes(b"smcp"), 1, ..));
+                if levels[caps_pieces[0].0.start].is_rtl() {
+                    caps_pieces.reverse();
                 }
+                for (run, small) in caps_pieces {
+                    let sub_text = &text[run.clone()];
+                    if sub_text.is_empty() {
+                        continue;
+                    }
 
-                if !apply_kerning {
-                    features.push(rustybuzz::Feature::new(Tag::from_bytes(b"kern"), 0, ..));
-                }
+                    let ltr = levels[run.start].is_ltr();
+                    let hb_direction = if vertical {
+                        rustybuzz::Direction::TopToBottom
+                    } else if ltr {
+                        rustybuzz::Direction::LeftToRight
+                    } else {
+                        rustybuzz::Direction::RightToLeft
+                    };
 
-                let output = rustybuzz::shape(&rb_font, &features, buffer);
+                    let mut buffer = rustybuzz::UnicodeBuffer::new();
+                    if small {
+                        for (start, upper) in
+                            crate::text::features::uppercase_clusters(text, run.clone(), language)
+                        {
+                            for ch in upper.chars() {
+                                buffer.add(ch, start as u32);
+                            }
+                        }
+                    } else {
+                        buffer.push_str(sub_text);
+                    }
+                    buffer.set_pre_context(&text[..run.start]);
+                    buffer.set_post_context(&text[run.end..]);
+                    buffer.set_direction(hb_direction);
+                    buffer.guess_segment_properties();
 
-                let positions = output.glyph_positions();
-                let infos = output.glyph_infos();
-                let boundaries = crate::fonts::cluster_boundaries(
-                    infos.iter().map(|glyph| glyph.cluster as usize),
-                    sub_text.len(),
-                );
+                    let mut features: Vec<_> = plan
+                        .features
+                        .iter()
+                        .map(|feature| {
+                            rustybuzz::Feature::new(
+                                Tag::from_bytes(&feature.tag),
+                                feature.value,
+                                ..,
+                            )
+                        })
+                        .collect();
 
-                for i in 0..output.len() {
-                    let pos = positions[i];
-                    let info = infos[i];
-                    let idx = run.start + info.cluster as usize;
+                    if !apply_kerning {
+                        features.push(rustybuzz::Feature::new(Tag::from_bytes(b"kern"), 0, ..));
+                    }
 
-                    let start = info.cluster as usize;
+                    let output = rustybuzz::shape(&rb_font, &features, buffer);
 
-                    let end = boundaries[boundaries.binary_search(&start).unwrap() + 1];
+                    let positions = output.glyph_positions();
+                    let infos = output.glyph_infos();
+                    let boundaries = crate::fonts::cluster_boundaries(
+                        infos.iter().map(|glyph| glyph.cluster as usize),
+                        sub_text.len(),
+                    );
 
-                    glyphs.push(Glyph {
-                        byte_idx: ByteIndex::new(idx),
-                        cluster_len: end - start,
-                        text: sub_text[start..end].to_string(),
-                        id: GlyphId(info.glyph_id as u16),
-                        dx: pos.x_offset,
-                        dy: pos.y_offset,
-                        width: if vertical {
-                            -pos.y_advance
-                        } else {
-                            pos.x_advance
-                        },
-                        vertical,
-                        font: font.clone(),
-                    });
+                    for i in 0..output.len() {
+                        let pos = positions[i];
+                        let info = infos[i];
+                        let idx = run.start + info.cluster as usize;
+
+                        let start = info.cluster as usize;
+
+                        let end = boundaries[boundaries.binary_search(&start).unwrap() + 1];
+
+                        glyphs.push(Glyph {
+                            byte_idx: ByteIndex::new(idx),
+                            cluster_len: end - start,
+                            text: sub_text[start..end].to_string(),
+                            id: GlyphId(info.glyph_id as u16),
+                            dx: pos.x_offset,
+                            dy: pos.y_offset,
+                            width: if vertical {
+                                -pos.y_advance
+                            } else {
+                                pos.x_advance
+                            },
+                            vertical,
+                            scale: if small {
+                                crate::text::features::SMALL_CAPS_SCALE
+                            } else {
+                                1.0
+                            },
+                            font: font.clone(),
+                        });
+                    }
                 }
             }
         }
@@ -1826,6 +1869,8 @@ pub(crate) struct Glyph {
     /// The glyph width / X-advance in font units.
     pub(crate) width: i32,
     pub(crate) vertical: bool,
+    /// The glyph's size relative to its span's, below one for synthesized capitals.
+    pub(crate) scale: f32,
 
     /// Reference to the source font.
     ///

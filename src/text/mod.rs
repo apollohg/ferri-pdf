@@ -6,7 +6,7 @@ mod combine;
 mod decoration;
 mod ellipsis;
 mod emphasis;
-mod features;
+pub(crate) mod features;
 mod hanging;
 mod hyphenation;
 mod initial_letter;

@@ -196,7 +196,7 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
         push("font-style", &font_style(style));
         push("font-weight", &number(style.font_weight.value()));
         push("font-stretch", &font_width(style.font_width));
-        push("font-variant", font_variant(style.font_variant_caps)?);
+        push("font-variant", style.font_variant_caps.name());
         push(
             "font-kerning",
             if style.font_features.kerning == crate::style::FontKerning::None {
@@ -685,16 +685,6 @@ fn font_width(width: FontWidth) -> String {
             || format!("{}%", width.value()),
             |(_, name)| (*name).to_owned(),
         )
-}
-
-fn font_variant(caps: crate::style::FontVariantCaps) -> Result<&'static str, StyleError> {
-    match caps {
-        crate::style::FontVariantCaps::Normal => Ok("normal"),
-        crate::style::FontVariantCaps::SmallCaps => Ok("small-caps"),
-        other => Err(StyleError::Unsupported(format!(
-            "font-variant-caps: {other:?} on SVG text"
-        ))),
-    }
 }
 
 fn position(

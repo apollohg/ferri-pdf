@@ -106,6 +106,44 @@ class FontFeaturesPdf(unittest.TestCase):
         self.assertAlmostEqual(superscript.origin[1], letter.origin[1], delta=POSITION_TOLERANCE_PT,
                                msg="the whole run shares one raised baseline")
 
+    def test_svg_text_renders_caps_as_document_text_does(self):
+        """CSS Fonts 4 §6.6: a face's own capitals, or capitals synthesized from uppercase forms
+        scaled down, for SVG text exactly as for the document's lines."""
+        values = ("small-caps", "all-small-caps", "petite-caps", "all-petite-caps", "unicase",
+                  "titling-caps")
+        sample = "Ab"
+        line_pitch = 40
+        height = line_pitch * len(values)
+        for family in ("Serif4", "'Liberation Serif'"):
+            paragraphs = "".join(f"<p style=\"font-family:{family};font-variant-caps:{caps}\">"
+                                 f"{sample}</p>" for caps in values)
+            texts = "".join(f"<text y=\"{(index + 1) * line_pitch}\" style=\"font-family:{family};"
+                            f"font-variant-caps:{caps};font-size:{SIZE_PT}px\">{sample}</text>"
+                            for index, caps in enumerate(values))
+            document = self.lines(self.render("", paragraphs).glyphs)
+            svg = self.lines(self.render("svg{display:block}",
+                                         f"<svg width=\"300pt\" height=\"{height}pt\" "
+                                         f"viewBox=\"0 0 300 {height}\">{texts}</svg>").glyphs)
+            self.assertEqual((len(document), len(svg)), (len(values), len(values)),
+                             "one line per paragraph and per SVG text")
+            for expected, actual, caps in zip(document, svg, values):
+                with self.subTest(family=family, caps=caps):
+                    self.assertEqual("".join(glyph.text for glyph in actual), sample)
+                    self.assertEqual([round(glyph.matrix[0], 3) for glyph in actual],
+                                     [round(glyph.matrix[0], 3) for glyph in expected],
+                                     "SVG glyphs take the document's synthesized sizes")
+                    advances = [[right.origin[0] - left.origin[0]
+                                 for left, right in zip(line, line[1:])]
+                                for line in (expected, actual)]
+                    for wanted, got in zip(*advances):
+                        self.assertAlmostEqual(got, wanted, delta=POSITION_TOLERANCE_PT,
+                                               msg=f"SVG advances {advances[1]} match {advances[0]}")
+            if family == "'Liberation Serif'":
+                sizes = [round(glyph.matrix[0], 3) for glyph in svg[values.index("all-small-caps")]]
+                self.assertEqual(sizes, [round(SIZE_PT * 0.8, 3)] * 2,
+                                 "Liberation Serif has no c2sc or smcp, so both letters are "
+                                 "synthesized")
+
     def test_optical_size_and_presentation_select_the_embedded_glyphs(self):
         optical = reference("RobotoFlex-optical.json")
         advances = {json.dumps(sample["location"], sort_keys=True): sample["advance"]

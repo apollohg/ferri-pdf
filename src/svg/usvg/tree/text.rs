@@ -375,7 +375,10 @@ pub struct TextSpan {
     pub(crate) paint_order: PaintOrder,
     pub(crate) font: Font,
     pub(crate) font_size: NonZeroPositiveF32,
-    pub(crate) small_caps: bool,
+    /// `font-variant-caps` (CSS Fonts 4 §6.6).
+    pub(crate) caps: crate::style::FontVariantCaps,
+    /// The span's BCP 47 language, which cases synthesized capitals.
+    pub(crate) language: String,
     /// `color-interpolation: linearRGB` on the span's element (SVG 2 §13.9).
     pub(crate) linear_light: bool,
     pub(crate) text_orientation: crate::style::logical::TextOrientation,
@@ -430,13 +433,6 @@ impl TextSpan {
     /// A font size.
     pub fn font_size(&self) -> NonZeroPositiveF32 {
         self.font_size
-    }
-
-    /// Indicates that small caps should be used.
-    ///
-    /// Set by `font-variant="small-caps"`
-    pub fn small_caps(&self) -> bool {
-        self.small_caps
     }
 
     /// Indicates that a kerning should be applied.

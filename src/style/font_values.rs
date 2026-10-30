@@ -33,17 +33,40 @@ pub(crate) enum FontVariantCaps {
 }
 
 impl FontVariantCaps {
-    pub(crate) fn from_component(value: &Component) -> Result<Self, StyleError> {
-        match value.keyword() {
-            Some(Keyword::Normal) => Ok(Self::Normal),
-            Some(Keyword::SmallCaps) => Ok(Self::SmallCaps),
-            Some(Keyword::AllSmallCaps) => Ok(Self::AllSmallCaps),
-            Some(Keyword::PetiteCaps) => Ok(Self::PetiteCaps),
-            Some(Keyword::AllPetiteCaps) => Ok(Self::AllPetiteCaps),
-            Some(Keyword::Unicase) => Ok(Self::Unicase),
-            Some(Keyword::TitlingCaps) => Ok(Self::TitlingCaps),
-            _ => Err(unsupported(value)),
+    const ALL: [Self; 7] = [
+        Self::Normal,
+        Self::SmallCaps,
+        Self::AllSmallCaps,
+        Self::PetiteCaps,
+        Self::AllPetiteCaps,
+        Self::Unicase,
+        Self::TitlingCaps,
+    ];
+    fn keyword(self) -> Keyword {
+        match self {
+            Self::Normal => Keyword::Normal,
+            Self::SmallCaps => Keyword::SmallCaps,
+            Self::AllSmallCaps => Keyword::AllSmallCaps,
+            Self::PetiteCaps => Keyword::PetiteCaps,
+            Self::AllPetiteCaps => Keyword::AllPetiteCaps,
+            Self::Unicase => Keyword::Unicase,
+            Self::TitlingCaps => Keyword::TitlingCaps,
         }
+    }
+    pub(crate) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        Self::ALL
+            .into_iter()
+            .find(|caps| Some(caps.keyword()) == value.keyword())
+            .ok_or_else(|| unsupported(value))
+    }
+    /// The value a keyword names, as SVG presentation attributes spell it.
+    pub(crate) fn from_name(name: &str) -> Option<Self> {
+        Self::ALL
+            .into_iter()
+            .find(|caps| caps.keyword().name() == name)
+    }
+    pub(crate) fn name(self) -> &'static str {
+        self.keyword().name()
     }
 }
 

@@ -77,3 +77,8 @@ differs from its parent's gets its own group, and text spans carry theirs into t
 outlines. Clipping path children keep neither. The outermost `svg`, `use` elements, markers and
 clipped nested viewports, which SVG 2 §3.4.1 makes stacking contexts, are isolated where content
 in them blends or composites in linear light.
+
+`font-variant` takes its `font-variant-caps` keyword, and text shapes it as the document's text
+does (CSS Fonts 4 §6.6): with the face's own capital features, or with capitals synthesized from
+uppercase forms cased in the language of the nearest `lang` or `xml:lang`, scaled down per
+glyph cluster.

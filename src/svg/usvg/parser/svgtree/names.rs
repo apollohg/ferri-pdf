@@ -363,6 +363,8 @@ pub(crate) enum AId {
     OffsetAnchor,
     OffsetDistance,
     OffsetRotate,
+    /// `lang` and `xml:lang` (SVG 2 §2.6.2).
+    Lang,
     TransformOrigin,
     Type,
     UnicodeBidi,
@@ -659,6 +661,7 @@ impl AId {
             "offset-anchor" => Some(Self::OffsetAnchor),
             "offset-distance" => Some(Self::OffsetDistance),
             "offset-rotate" => Some(Self::OffsetRotate),
+            "lang" => Some(Self::Lang),
             _ => ATTRIBUTES.get(text).cloned(),
         }
     }
@@ -677,6 +680,7 @@ impl AId {
             Self::OffsetAnchor => "offset-anchor",
             Self::OffsetDistance => "offset-distance",
             Self::OffsetRotate => "offset-rotate",
+            Self::Lang => "lang",
             _ => ATTRIBUTES.key(&self),
         }
     }

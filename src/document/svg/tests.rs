@@ -498,14 +498,38 @@ fn svg_style_elements_are_left_to_the_document_cascade() {
 }
 
 #[test]
+fn text_carries_its_caps_and_inherited_language_to_the_renderer() {
+    let xml = xml(
+        "text{font-variant-caps:all-petite-caps}",
+        "<html lang=tr><svg><text id=t>i</text><text id=own lang=az>i</text></svg></html>",
+    );
+    let inherited = element(&xml, "t");
+    assert_eq!(
+        (
+            inherited.get("font-variant").map(String::as_str),
+            inherited.get("lang").map(String::as_str)
+        ),
+        (Some("all-petite-caps"), Some("tr")),
+        "CSS Fonts 4 §6.6 capitals are cased in the language text inherits from the document\n{xml}"
+    );
+    let own = element(&xml, "own");
+    assert_eq!(
+        own.get("lang").map(String::as_str),
+        Some("az"),
+        "an element's own lang attribute stays the only one\n{xml}"
+    );
+    assert_eq!(
+        xml.matches("lang=").count(),
+        2,
+        "one language attribute per text element\n{xml}"
+    );
+}
+
+#[test]
 fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
     for (css, expected) in [
         ("pattern{overflow:visible}", "always clips"),
         ("rect{mask:url(#a),url(#b)}", "mask layers"),
-        (
-            "text{font-variant-caps:all-small-caps}",
-            "font-variant-caps",
-        ),
         ("rect{cx:calc(10% + 1px)}", ""),
     ] {
         match styled(

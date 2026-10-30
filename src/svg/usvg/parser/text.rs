@@ -324,7 +324,17 @@ fn collect_text_chunks_impl(
             paint_order,
             font,
             font_size,
-            small_caps: parent.find_attribute::<&str>(AId::FontVariant) == Some("small-caps"),
+            caps: parent
+                .find_attribute::<&str>(AId::FontVariant)
+                .into_iter()
+                .flat_map(str::split_ascii_whitespace)
+                .find_map(crate::style::FontVariantCaps::from_name)
+                .unwrap_or_default(),
+            language: parent
+                .ancestors()
+                .find_map(|node| node.attribute::<&str>(AId::Lang))
+                .unwrap_or_default()
+                .to_owned(),
             linear_light: parent.find_attribute::<&str>(AId::ColorInterpolation)
                 == Some(converter::LINEAR_RGB),
             text_orientation,

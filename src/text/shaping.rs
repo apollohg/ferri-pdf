@@ -2,26 +2,21 @@ use crate::fonts::{FontFeature, FontId, FontSynthesis, FontVariation};
 use crate::style::{FontVariantEmoji, FontVariantPosition, POINTS_PER_PIXEL, Style};
 use crate::text::features::{self, CapsPlan, FaceFeatures};
 use crate::text::{GlyphRun, PositionedGlyph, TextError};
-use icu_casemap::{CaseMapper, ContextCase};
+
 use icu_properties::{
     CodePointMapData, CodePointSetData,
-    props::{
-        Cased, DefaultIgnorableCodePoint, EmojiPresentation, GeneralCategory, VariationSelector,
-    },
+    props::{DefaultIgnorableCodePoint, EmojiPresentation, GeneralCategory, VariationSelector},
 };
 use rustybuzz::{BufferFlags, Direction, Face, Feature, Language, UnicodeBuffer, ttf_parser::Tag};
 use std::collections::BTreeMap;
 use std::ops::Range;
 use std::sync::Arc;
 use unicode_script::{Script, UnicodeScript};
-use unicode_segmentation::UnicodeSegmentation;
 
 pub(super) const NARROW_NO_BREAK_SPACE: char = '\u{202f}';
 pub(super) const NARROW_SPACE_FACTOR: f32 = 0.5;
 const MAX_LIGATURE_TRACKING_EM: f32 = 0.025;
 const WORD_SPACE: char = ' ';
-/// UA synthesis policy; CSS Fonts leaves the reduction factor to implementations.
-const SMALL_CAPS_SCALE: f32 = 0.8;
 /// UA synthesis policy for `font-variant-position` (§6.5): sizes up to the small size keep
 /// more of their size than sizes from the large size, with linear interpolation between.
 const POSITION_SMALL_SIZE: f32 = 20.0 * POINTS_PER_PIXEL;
@@ -296,25 +291,7 @@ fn shape_variants(
         )
         .map(|run| vec![run]);
     }
-    let cased = CodePointSetData::new::<Cased>();
-    let mut pieces: Vec<(Range<usize>, bool)> = Vec::new();
-    for (offset, cluster) in paragraph[range.clone()].grapheme_indices(true) {
-        let start = range.start + offset;
-        let small = cluster.chars().any(|ch| {
-            if ch.is_lowercase() {
-                caps.synthetic_lower
-            } else {
-                caps.synthetic_upper && cased.contains(ch)
-            }
-        });
-        if let Some((previous, same)) = pieces.last_mut()
-            && *same == small
-        {
-            previous.end = start + cluster.len();
-        } else {
-            pieces.push((start..start + cluster.len(), small));
-        }
-    }
+    let mut pieces = caps.pieces(paragraph, range);
     if rtl {
         pieces.reverse();
     }
@@ -366,7 +343,7 @@ fn shape_run(
     let size = used_size
         * position_scale
         * if synthetic_caps {
-            SMALL_CAPS_SCALE
+            features::SMALL_CAPS_SCALE
         } else {
             1.0
         };
@@ -392,38 +369,19 @@ fn shape_run(
         }
     };
     if synthetic_caps {
-        let mapper = CaseMapper::new();
-        let mut context = mapper.context(paragraph);
-        let language = style
-            .language
-            .parse::<icu_locale_core::Locale>()
-            .map_or(icu_locale_core::LanguageIdentifier::UNKNOWN, |locale| {
-                locale.id
-            });
-        let mut bytes = 0;
-        let mut mapped = String::new();
-        for (start, cluster) in text.grapheme_indices(true) {
-            mapped.clear();
-            for (offset, _) in cluster.char_indices() {
-                context
-                    .map_char(
-                        range.start + start + offset,
-                        &language,
-                        ContextCase::Upper,
-                        &mut mapped,
-                    )
-                    .expect("valid source offsets and String writes cannot fail");
-                if mapped.len() > crate::document::MAX_INLINE_TEXT_BYTES {
-                    return Err(TextError::CaseExpansionLimit);
-                }
-            }
-            bytes += mapped.len();
-            if bytes > crate::document::MAX_INLINE_TEXT_BYTES {
-                return Err(TextError::CaseExpansionLimit);
-            }
-            let mut chars = mapped.chars().peekable();
+        let mapped = features::uppercase_clusters(paragraph, range.clone(), &style.language);
+        if mapped
+            .iter()
+            .map(|(_, cluster)| cluster.len())
+            .sum::<usize>()
+            > crate::document::MAX_INLINE_TEXT_BYTES
+        {
+            return Err(TextError::CaseExpansionLimit);
+        }
+        for (start, cluster) in &mapped {
+            let mut chars = cluster.chars().peekable();
             while let Some(ch) = chars.next() {
-                add(&mut buffer, ch, chars.peek().copied(), start as u32);
+                add(&mut buffer, ch, chars.peek().copied(), *start as u32);
             }
         }
     } else if missing == MissingGlyphs::Substitute || emoji != FontVariantEmoji::Normal {

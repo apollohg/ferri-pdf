@@ -4,6 +4,10 @@ use crate::fonts::{FeatureValueType, FontFeature};
 use crate::style::{
     FontKerning, FontVariantAlternates, FontVariantCaps, FontVariantPosition, Style,
 };
+use icu_casemap::{CaseMapper, ContextCase};
+use icu_properties::{CodePointSetData, props::Cased};
+use std::ops::Range;
+use unicode_segmentation::UnicodeSegmentation;
 
 pub(super) const KERNING: [u8; 4] = *b"kern";
 const LIGATURES: [u8; 4] = *b"liga";
@@ -46,10 +50,13 @@ const TRACKED_LIGATURES: [FontFeature; 2] = [
     FontFeature::off(CONTEXTUAL_LIGATURES),
 ];
 
+/// UA synthesis policy; CSS Fonts leaves the reduction factor to implementations.
+pub(crate) const SMALL_CAPS_SCALE: f32 = 0.8;
+
 /// How a face renders `font-variant-caps`: its own features, or capitals scaled from the
 /// uppercase forms of lowercase or uppercase letters (§6.6).
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub(super) struct CapsPlan {
+pub(crate) struct CapsPlan {
     pub features: &'static [FontFeature],
     pub synthetic_lower: bool,
     pub synthetic_upper: bool,
@@ -63,15 +70,73 @@ impl CapsPlan {
             synthetic_upper: false,
         }
     }
-    pub(super) fn synthetic(self) -> bool {
+    pub(crate) fn synthetic(self) -> bool {
         self.synthetic_lower || self.synthetic_upper
     }
+    /// `range` of `text` in logical order, split into the grapheme clusters this plan
+    /// synthesizes as scaled capitals (`true`) and those it shapes as they are.
+    pub(crate) fn pieces(self, text: &str, range: Range<usize>) -> Vec<(Range<usize>, bool)> {
+        let cased = CodePointSetData::new::<Cased>();
+        let mut pieces: Vec<(Range<usize>, bool)> = Vec::new();
+        for (offset, cluster) in text[range.clone()].grapheme_indices(true) {
+            let start = range.start + offset;
+            let small = cluster.chars().any(|ch| {
+                if ch.is_lowercase() {
+                    self.synthetic_lower
+                } else {
+                    self.synthetic_upper && cased.contains(ch)
+                }
+            });
+            if let Some((previous, same)) = pieces.last_mut()
+                && *same == small
+            {
+                previous.end = start + cluster.len();
+            } else {
+                pieces.push((start..start + cluster.len(), small));
+            }
+        }
+        pieces
+    }
+}
+
+/// The uppercase forms synthesized capitals are shaped from (§6.6): each grapheme cluster of
+/// `range` of `paragraph`, cased for the BCP 47 `language` in the paragraph's context, with
+/// its offset in the range.
+pub(crate) fn uppercase_clusters(
+    paragraph: &str,
+    range: Range<usize>,
+    language: &str,
+) -> Vec<(usize, String)> {
+    let language = language
+        .parse::<icu_locale_core::Locale>()
+        .map_or(icu_locale_core::LanguageIdentifier::UNKNOWN, |locale| {
+            locale.id
+        });
+    let mapper = CaseMapper::new();
+    let mut context = mapper.context(paragraph);
+    paragraph[range.clone()]
+        .grapheme_indices(true)
+        .map(|(start, cluster)| {
+            let mut mapped = String::new();
+            for (offset, _) in cluster.char_indices() {
+                context
+                    .map_char(
+                        range.start + start + offset,
+                        &language,
+                        ContextCase::Upper,
+                        &mut mapped,
+                    )
+                    .expect("valid source offsets and String writes cannot fail");
+            }
+            (start, mapped)
+        })
+        .collect()
 }
 
 /// Feature availability is decided per font, not per character (§6.6). Petite capitals fall
 /// back to small capitals, unicase to small capitals for uppercase letters, and titling
 /// capitals to nothing; small capitals are synthesized only where `synthesis` allows.
-pub(super) fn caps_plan(
+pub(crate) fn caps_plan(
     caps: FontVariantCaps,
     has: impl Fn([u8; 4]) -> bool,
     synthesis: bool,

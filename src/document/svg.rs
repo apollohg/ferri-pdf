@@ -19,6 +19,8 @@ use std::{
 };
 
 const ID_ATTRIBUTE: &str = "id";
+/// `lang` and `xml:lang` (SVG 2 §2.6.2).
+const LANG_ATTRIBUTE: &str = "lang";
 
 const HREF_ATTRIBUTE: &str = "href";
 const STYLE_ATTRIBUTE: &str = "style";
@@ -277,6 +279,17 @@ impl<'a, 'd> Serializer<'a, 'd> {
         }
         if let Some(id) = reference {
             attribute(&mut self.xml, "", HREF_ATTRIBUTE, &format!("#{id}"));
+        }
+        // Text takes the language it inherits from the document, which cases its capitals.
+        if presentation::is_text_content(tag)
+            && !style.language.is_empty()
+            && !element
+                .value()
+                .attrs
+                .iter()
+                .any(|(name, _)| &*name.local == LANG_ATTRIBUTE)
+        {
+            attribute(&mut self.xml, "xml:", LANG_ATTRIBUTE, &style.language);
         }
         for (name, value) in presentation::geometry(tag, style)?
             .into_iter()
