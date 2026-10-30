@@ -24,14 +24,24 @@ pub(super) fn stroke(color: Color, width: f32) -> Result<Stroke, PdfError> {
         ..Default::default()
     })
 }
+/// Draws a box's text area, in the box's coordinates, onto a surface.
+pub(super) type TextAreas<'d> = dyn FnMut(
+        &crate::graphics::FlowPaint,
+        &mut crate::writer::images::ImageWriter,
+        &mut Surface<'_>,
+    ) -> Result<(), PdfError>
+    + 'd;
+
 /// Outer shadows, background colour, image layers bottom-most first, inset shadows, then
-/// borders or the border image (Backgrounds 3 §6, §7.1).
+/// borders or the border image (Backgrounds 3 §6, §7.1). `text` draws the text area that
+/// `background-clip: text` layers paint within.
 pub(super) fn draw(
     paint: &BoxPaint,
     page_area: crate::graphics::Rect,
     viewport: crate::graphics::Rect,
     surface: &mut Surface<'_>,
     images: &mut crate::writer::images::ImageWriter,
+    text: &mut TextAreas<'_>,
 ) -> Result<(), PdfError> {
     let shifted;
     let paint = match paint.legend.filter(|_| paint.first_fragment) {
@@ -107,13 +117,28 @@ pub(super) fn draw(
         };
         surface.push_transform(&Transform::from_translate(origin.x, origin.y));
         surface.push_isolated();
-        let result = draw_box(&local, page_area, local_viewport, surface, images);
+        let mut local_text = |area: &crate::graphics::FlowPaint,
+                              images: &mut crate::writer::images::ImageWriter,
+                              surface: &mut Surface<'_>| {
+            surface.push_transform(&Transform::from_translate(-origin.x, -origin.y));
+            let drawn = text(area, images, surface);
+            surface.pop();
+            drawn
+        };
+        let result = draw_box(
+            &local,
+            page_area,
+            local_viewport,
+            surface,
+            images,
+            &mut local_text,
+        );
         surface.pop();
         surface.pop();
         pop_clips(clips, surface);
         return result;
     }
-    draw_box(paint, page_area, viewport, surface, images)
+    draw_box(paint, page_area, viewport, surface, images, text)
 }
 
 fn draw_box(
@@ -122,6 +147,7 @@ fn draw_box(
     viewport: crate::graphics::Rect,
     surface: &mut Surface<'_>,
     images: &mut crate::writer::images::ImageWriter,
+    text: &mut TextAreas<'_>,
 ) -> Result<(), PdfError> {
     for shadow in paint.shadows(false) {
         crate::writer::shadows::draw(&shadow, surface)?;
@@ -151,6 +177,7 @@ fn draw_box(
                 paint.decoration.backgrounds.color_clip(),
                 background_viewport,
                 surface,
+                (images, text),
             )?;
             let drawn = draw_fill(background, background_viewport, surface);
             if masked {
@@ -158,7 +185,13 @@ fn draw_box(
             }
             drawn?;
         }
-        crate::writer::backgrounds::draw(paint, page_area, background_viewport, surface, images)
+        crate::writer::backgrounds::draw(
+            paint,
+            page_area,
+            background_viewport,
+            surface,
+            (images, text),
+        )
     })();
     pop_clips(groups, surface);
     background?;

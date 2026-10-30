@@ -1,6 +1,6 @@
 mod dimensions;
 use crate::document::{BlockBox, CounterSnapshot, PageBox, Paragraph, RunningStringAssignment};
-use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, ImagePaint, Rect};
+use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, FlowPaint, ImagePaint, Rect};
 use crate::layout::measure::{MeasuredBlock, Measurer};
 use crate::layout::{LayoutError, TextLine};
 use crate::style::{BoxSizing, MarginLocation, PageMargin, Size, VerticalAlign};
@@ -280,16 +280,35 @@ impl<'t> Prepared<'_, 't> {
             .replacement
             .take()
             .map(|image| self.replaced(image, &paint));
-        if self.decoration.is_visible() {
+        // CSS Backgrounds 4 §2.8: `background-clip: text` layers paint within the text of
+        // the box's content.
+        let clips_to_text = self.decoration.backgrounds.clips_to_text();
+        let painted = self.decoration.is_visible().then(|| {
             output.display.push(DisplayItem::Box(paint));
-        }
+            output.display.len() - 1
+        });
+        let content = output.display.len();
         let extent = self.block_extent();
-        if let Some(measured) = self.measured.take() {
-            self.paint_element(measured, extent, rect, output, measurer, destinations)?;
+        let text_area = if let Some(measured) = self.measured.take() {
+            self.paint_element(
+                measured,
+                extent,
+                rect,
+                output,
+                measurer,
+                (destinations, clips_to_text),
+            )?
         } else if let Some(image) = replaced {
             output.display.push(DisplayItem::Image(image));
+            clips_to_text.then(|| text_flow(&[], &[], rect))
         } else {
             self.paint_lines(rect, index, output.lines, output.display);
+            clips_to_text.then(|| text_flow(&output.display[content..], output.lines, rect))
+        };
+        if let (Some(slot), Some(area)) = (painted, text_area)
+            && let DisplayItem::Box(paint) = &mut output.display[slot]
+        {
+            paint.text_area = Some(std::sync::Arc::new(area));
         }
         // The outline paints over the margin box's content (CSS UI 4 §3.1).
         output.display.extend(outline.map(DisplayItem::Box));
@@ -357,8 +376,8 @@ impl<'t> Prepared<'_, 't> {
         rect: Rect,
         output: &mut MarginOutput<'_>,
         measurer: &mut Measurer<'t>,
-        destinations: usize,
-    ) -> Result<(), LayoutError> {
+        (destinations, clips_to_text): (usize, bool),
+    ) -> Result<Option<FlowPaint>, LayoutError> {
         let vertical = self.inline_axis() == VERTICAL;
         let logical = [self.content[self.inline_axis()], extent];
         let size = if vertical {
@@ -376,15 +395,20 @@ impl<'t> Prepared<'_, 't> {
                 height: logical[1],
             },
             destinations,
+            clips_to_text,
         )?;
         let frame = crate::layout::writing::Frame::physical(
             crate::style::logical::Flow::used(&self.margin.style),
             size,
         );
         let mut items = flow.items;
+        let mut text_area = flow.text_area;
         let mut navigation = flow.navigation.into_links();
         if vertical {
             frame.items(&mut items);
+            if let Some(area) = &mut text_area {
+                frame.items(&mut area.items);
+            }
             for area in &mut navigation {
                 match &mut area.shape {
                     crate::layout::LinkShape::Rect(rect) => *rect = frame.rect(*rect),
@@ -412,20 +436,24 @@ impl<'t> Prepared<'_, 't> {
             }
             output.links.push(area);
         }
-        output
-            .display
-            .push(DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
-                matrix: [1.0, 0.0, 0.0, 1.0, origin[0], origin[1]],
-                area: Rect {
-                    x: 0.0,
-                    y: 0.0,
-                    width: size[0],
-                    height: size[1],
-                },
-                items,
-                lines: flow.lines,
-            })));
-        Ok(())
+        let matrix = [1.0, 0.0, 0.0, 1.0, origin[0], origin[1]];
+        let area = Rect {
+            x: 0.0,
+            y: 0.0,
+            width: size[0],
+            height: size[1],
+        };
+        output.display.push(DisplayItem::Frame(Box::new(FlowPaint {
+            matrix,
+            area,
+            items,
+            lines: flow.lines,
+        })));
+        Ok(text_area.map(|text| FlowPaint {
+            matrix,
+            area,
+            ..text
+        }))
     }
     fn paint_lines(
         self,
@@ -496,7 +524,7 @@ impl<'t> Prepared<'_, 't> {
             let size = [self.content[HORIZONTAL], inline_extent];
             crate::layout::writing::Frame::physical(crate::style::logical::Flow::used(style), size)
                 .items(&mut frame_items);
-            display.push(DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
+            display.push(DisplayItem::Frame(Box::new(FlowPaint {
                 matrix: [1.0, 0.0, 0.0, 1.0, content_origin[0], content_origin[1]],
                 area: Rect {
                     x: 0.0,
@@ -509,6 +537,50 @@ impl<'t> Prepared<'_, 't> {
             })));
         }
     }
+}
+/// The text and decorations among `items`, whose text lines are `lines`, drawn opaquely in a
+/// flow of their own over `area`: the text a margin box's lines paint.
+fn text_flow(items: &[DisplayItem], lines: &[TextLine], area: Rect) -> FlowPaint {
+    let mut flow = FlowPaint {
+        matrix: [1.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+        area,
+        items: Vec::new(),
+        lines: Vec::new(),
+    };
+    for item in items {
+        match item {
+            DisplayItem::Text { line } => {
+                flow.lines.push(lines[*line].clone().opaque());
+                flow.items.push(DisplayItem::Text {
+                    line: flow.lines.len() - 1,
+                });
+            }
+            DisplayItem::Decoration(decoration) => {
+                flow.items
+                    .push(DisplayItem::Decoration(decoration.opaque()));
+            }
+            DisplayItem::Frame(frame) => {
+                flow.items.push(DisplayItem::Frame(Box::new(FlowPaint {
+                    matrix: frame.matrix,
+                    ..text_flow(&frame.items, &frame.lines, frame.area)
+                })));
+            }
+            DisplayItem::PushTransform(_) | DisplayItem::Pop => flow.items.push(item.clone()),
+            DisplayItem::Image(_) => {}
+            DisplayItem::Box(_)
+            | DisplayItem::TextShadow(_)
+            | DisplayItem::PushClip(_)
+            | DisplayItem::PushOpacity(_)
+            | DisplayItem::PushBlend(_)
+            | DisplayItem::PushFilter(_)
+            | DisplayItem::PushMask(_)
+            | DisplayItem::PushBackdropRoot
+            | DisplayItem::Backdrop(_) => {
+                unreachable!("margin lines paint text, decorations, images and their transforms")
+            }
+        }
+    }
+    flow
 }
 /// What one page's margin boxes paint.
 struct MarginOutput<'p> {

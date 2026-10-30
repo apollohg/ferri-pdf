@@ -39,12 +39,12 @@ pub enum Repeat {
     Round,
     NoRepeat,
 }
-/// A layer's `background-clip` (CSS Backgrounds 4): a box, or the area within the border box
-/// that its border paints.
+/// A layer's `background-clip` (CSS Backgrounds 4 §2.8): a box, or within the border box the
+/// union of the area its border paints and the geometry of its text.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum BackgroundClip {
     Box(BoxArea),
-    BorderArea,
+    Painted { border_area: bool, text: bool },
 }
 impl Default for BackgroundClip {
     fn default() -> Self {
@@ -56,8 +56,12 @@ impl BackgroundClip {
     pub fn area(self) -> BoxArea {
         match self {
             Self::Box(area) => area,
-            Self::BorderArea => BoxArea::BorderBox,
+            Self::Painted { .. } => BoxArea::BorderBox,
         }
+    }
+    /// Whether the layer paints only within the glyphs of the box's text.
+    pub fn text(self) -> bool {
+        matches!(self, Self::Painted { text: true, .. })
     }
 }
 /// `local` behaves as `scroll` because paged boxes never scroll.
@@ -238,6 +242,10 @@ impl<I> Backgrounds<I> {
     /// The background colour is clipped like the bottom layer.
     pub fn color_clip(&self) -> BackgroundClip {
         *cycle(&self.clips, self.images.len() - 1)
+    }
+    /// Whether any layer, or the colour, paints only within the box's text.
+    pub fn clips_to_text(&self) -> bool {
+        self.clips.iter().any(|clip| clip.text())
     }
     /// Treats `fixed` layers as `scroll`, as in a transformed box or its descendants
     /// (CSS Transforms 1 §6).

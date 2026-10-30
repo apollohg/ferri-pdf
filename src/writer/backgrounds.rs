@@ -24,7 +24,7 @@ pub(super) fn draw(
     page_area: Rect,
     viewport: Rect,
     surface: &mut Surface<'_>,
-    images: &mut ImageWriter,
+    (images, text): (&mut ImageWriter, &mut painting::TextAreas<'_>),
 ) -> Result<(), PdfError> {
     let layers = paint
         .background_layers(page_area)
@@ -34,7 +34,7 @@ pub(super) fn draw(
         if blended {
             surface.push_blend_mode(painting::pdf_blend_mode(layer.blend)?);
         }
-        let masked = push_painted_area(paint, layer.painted, viewport, surface)?;
+        let masked = push_painted_area(paint, layer.painted, viewport, surface, (images, text))?;
         let drawn = draw_layer(layer, viewport, surface, images);
         if masked {
             surface.pop();
@@ -47,18 +47,23 @@ pub(super) fn draw(
     Ok(())
 }
 
-/// Masks what follows to the part of the painting area that `background-clip` paints: for
-/// `border-area`, what the border styles paint at full opacity (CSS Backgrounds 4). Returns
-/// whether it pushed a mask.
+/// Masks what follows to the part of the painting area that `background-clip` paints (CSS
+/// Backgrounds 4 §2.8): for `border-area`, what the border styles paint at full opacity, and
+/// for `text`, the box's text area, which `text` draws. Returns whether it pushed a mask.
 pub(super) fn push_painted_area(
     paint: &BoxPaint,
     painted: crate::graphics::BackgroundClip,
     viewport: Rect,
     surface: &mut Surface<'_>,
+    (images, text): (&mut ImageWriter, &mut painting::TextAreas<'_>),
 ) -> Result<bool, PdfError> {
-    if painted != crate::graphics::BackgroundClip::BorderArea {
+    let crate::graphics::BackgroundClip::Painted {
+        border_area,
+        text: clips_to_text,
+    } = painted
+    else {
         return Ok(false);
-    }
+    };
     // The border styles paint the same area at any opacity of their colours.
     const OPAQUE: f32 = 1.0;
     let mut opaque = paint.clone();
@@ -67,16 +72,25 @@ pub(super) fn push_painted_area(
     }
     let mut builder = surface.stream_builder();
     let mut area = builder.surface();
-    let drawn = opaque.border_fills().into_iter().try_for_each(|fill| {
-        painting::draw_fill(
-            crate::graphics::Fill {
-                color: crate::graphics::Color::BLACK,
-                ..fill
-            },
-            viewport,
-            &mut area,
-        )
-    });
+    let drawn = (|| -> Result<(), PdfError> {
+        if border_area {
+            for fill in opaque.border_fills() {
+                painting::draw_fill(
+                    crate::graphics::Fill {
+                        color: crate::graphics::Color::BLACK,
+                        ..fill
+                    },
+                    viewport,
+                    &mut area,
+                )?;
+            }
+        }
+        if clips_to_text {
+            let text_area = paint.text_area.as_ref().ok_or(PdfError::MissingTextArea)?;
+            text(text_area, images, &mut area)?;
+        }
+        Ok(())
+    })();
     area.finish();
     let stream = builder.finish();
     drawn?;

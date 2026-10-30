@@ -545,6 +545,39 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                      'background:linear-gradient(red,red) content-box}', box),
                     f'one layer of several fills a rounded {border} border')
 
+    def test_text_clips_layers_to_the_glyphs_of_in_flow_and_floated_text(self):
+        """CSS Backgrounds 4 §2.8: `background-clip: text` paints within the glyphs,
+        decorations and emphasis marks of the box and its in-flow and floated descendants,
+        whatever the text colour, through their own transforms; out-of-flow descendants and
+        hidden text keep the background out. Viewers rasterize a mask's edges unlike glyph
+        fills, so edges are not compared."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-text-clip-') as directory:
+            root = Path(directory)
+            clipped = 'background:blue;background-clip:text;color:transparent'
+            content = ('<div>Clip <b>bold</b> <span class=f>float</span> <i class=r>turn</i> '
+                       '<span class=a>away</span> <em class=h>hid</em> <u>under</u> '
+                       '<span class=e>mark</span></div>')
+            shared = ('div{font-size:20pt;line-height:30pt;position:relative}.f{float:right}'
+                      '.r{display:inline-block;transform:rotate(30deg)}.a{position:absolute;right:0;bottom:0;color:transparent}'
+                      '.h{visibility:hidden}.e{text-emphasis:filled circle}')
+            for css, expected, message in [
+                    (f'div{{{clipped}}}', 'div{color:blue}',
+                     'a block clips to its in-flow and floated text, not to out-of-flow text'),
+                    (f'div{{color:rgb(0 0 0 / 0)}}b,u,.f{{{clipped}}}',
+                     'div{color:rgb(0 0 0 / 0)}b,u,.f{color:blue}',
+                     'inline boxes and floats clip to their own text and decorations'),
+                    (f'div{{border:6pt solid transparent;{clipped};background-clip:border-area text}}',
+                     'div{border:6pt solid blue;color:blue}', 'border-area and text clip to their union'),
+                    ('div{background:linear-gradient(blue,blue) text,yellow;color:transparent}',
+                     'div{background:yellow;color:blue}',
+                     'one layer of several clips to text and the colour follows the bottom layer')]:
+                self.assertSameInterior(root, (shared + css, content), (shared + expected, content), message)
+            margin = '@page{{@top-left{{content:"Head" counter(page);font-size:16pt;{}}}}}'
+            running = '#h{{position:running(h)}}@page{{@top-left{{content:element(h);font-size:16pt;{}}}}}'
+            for page, body in [(margin, '<p>Body</p>'), (running, '<div id=h>Head <b>one</b></div><p>Body</p>')]:
+                self.assertSameInterior(root, (page.format(clipped), body), (page.format('color:blue'), body),
+                                        f'a page-margin box clips to its content\'s text: {page}')
+
     def assertInkSize(self, root, css, body, expected, message):
         """Everything not white on the first page spans `expected` CSS pixels. Resolutions that
         are not exact binary fractions, and the whole pixels per metre PNG records, leave an

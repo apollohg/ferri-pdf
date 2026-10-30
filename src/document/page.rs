@@ -13,6 +13,18 @@ impl PageBox {
         resources: &mut ImageResources<'_>,
         generated: &crate::document::generated::GeneratedBindings,
     ) -> Result<Self, DocumentError> {
+        // The text a page box's or footnote area's backgrounds would clip to is not tracked.
+        for (style, context) in [
+            (&page.style, "a page box"),
+            (&page.footnote, "a footnote area"),
+        ] {
+            if style.decoration.backgrounds.clips_to_text() {
+                return Err(crate::style::StyleError::Unsupported(format!(
+                    "background-clip: text on {context}"
+                ))
+                .into());
+            }
+        }
         let decoration = resources.backgrounds(&page.style)?;
         let margins = page
             .margins

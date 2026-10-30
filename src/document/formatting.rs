@@ -9,12 +9,28 @@ const DEFAULT_DENSITY: f32 = 1.0;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
 
 /// The background colour and images of `decoration`, without its borders, outline or shadows.
-pub(super) fn background_only<I>(
+pub(super) fn background_only<I: Clone>(
     decoration: &crate::paint::BoxDecoration<I>,
 ) -> crate::paint::BoxDecoration<I> {
+    let mut backgrounds = decoration.backgrounds.clone();
+    // CSS Backgrounds 4 §2.8: the canvas's painting area is not the root element's, so
+    // `background-clip` has no effect there; a text clip leaves the border box.
+    if backgrounds.clips_to_text() {
+        for clip in &mut std::sync::Arc::make_mut(&mut backgrounds).clips {
+            if let crate::paint::BackgroundClip::Painted {
+                border_area: false,
+                text: true,
+            } = clip
+            {
+                *clip = crate::paint::BackgroundClip::default();
+            } else if let crate::paint::BackgroundClip::Painted { text, .. } = clip {
+                *text = false;
+            }
+        }
+    }
     crate::paint::BoxDecoration {
         background: decoration.background,
-        backgrounds: decoration.backgrounds.clone(),
+        backgrounds,
         ..Default::default()
     }
 }

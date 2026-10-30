@@ -85,9 +85,12 @@ pub(super) fn clips(value: &Component) -> Result<Vec<BackgroundClip>, StyleError
     list(value, |item| {
         let mut keywords = Vec::new();
         item.keywords(&mut keywords);
-        match keywords.as_slice() {
-            [Keyword::BorderArea] => Ok(BackgroundClip::BorderArea),
-            _ => box_area(item).map(BackgroundClip::Box),
+        let border_area = keywords.contains(&Keyword::BorderArea);
+        let text = keywords.contains(&Keyword::Text);
+        if border_area || text {
+            Ok(BackgroundClip::Painted { border_area, text })
+        } else {
+            box_area(item).map(BackgroundClip::Box)
         }
     })
 }

@@ -72,6 +72,8 @@ pub enum PdfError {
     VectorAdditive,
     #[error("mask or filter effect has no reference box")]
     UnplacedEffect,
+    #[error("a background-clip: text layer has no text area")]
+    MissingTextArea,
     #[error("{0}")]
     Serialization(#[from] krilla::error::KrillaError),
 }
@@ -221,6 +223,7 @@ pub(crate) fn encode_parts_with_diagnostics(
                         record.output.media,
                         &mut surface,
                         &mut images,
+                        &mut |_, _, _| Err(PdfError::MissingTextArea),
                     )?;
                 }
             }

@@ -52,6 +52,16 @@ pub struct DecorationPaint {
     pub positioned: Option<usize>,
 }
 impl DecorationPaint {
+    /// The line drawn opaquely, so that it draws its geometry whatever its colour.
+    pub(crate) fn opaque(self) -> Self {
+        Self {
+            color: Color {
+                alpha: Color::BLACK.alpha,
+                ..self.color
+            },
+            ..self
+        }
+    }
     /// Double and wavy lines move away from the text: underlines down, overlines up, and
     /// line-throughs stay centred.
     pub fn fills(&self) -> Vec<Fill> {

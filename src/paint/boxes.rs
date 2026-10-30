@@ -455,6 +455,11 @@ pub struct BoxPaint<I = Infallible> {
     /// A fieldset's rendered legend in its block-start border.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub legend: Option<LegendCut>,
+    /// The text of the box and its in-flow and floated descendants on this fragment's page,
+    /// drawn opaquely in the box's coordinates, which `background-clip: text` layers paint
+    /// within (CSS Backgrounds 4 §2.8).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub text_area: Option<Arc<crate::graphics::FlowPaint>>,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -488,6 +493,7 @@ impl<I> BoxPaint<I> {
             last_fragment: true,
             inline_edges: INLINE_EDGES,
             legend: None,
+            text_area: None,
         }
     }
     /// Edges sliced off this fragment, top/right/bottom/left.

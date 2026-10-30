@@ -275,6 +275,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 height,
             },
             document.navigation().destinations,
+            false,
         )?;
         let monolithic: Vec<[f32; 2]> = flow
             .line_boxes

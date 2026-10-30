@@ -61,6 +61,15 @@ pub struct TextLine {
     pub color: Color,
 }
 
+impl TextLine {
+    /// The line drawn with every colour opaque, so that it draws the geometry of its text.
+    pub(crate) fn opaque(mut self) -> Self {
+        self.color.alpha = Color::BLACK.alpha;
+        self.runs = self.runs.into_iter().map(GlyphRun::opaque).collect();
+        self
+    }
+}
+
 #[derive(Serialize)]
 pub struct LayoutTrace {
     pub page_width: f32,
@@ -255,6 +264,7 @@ fn layout_pass(
         mut page_records,
         string_locations,
         line_boxes: _,
+        root_text_area: _,
     } = if continuous {
         paginator.unbroken()
     } else {

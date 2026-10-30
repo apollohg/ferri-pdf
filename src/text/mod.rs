@@ -383,6 +383,31 @@ impl GlyphRun {
     pub fn has_bidi_scopes(&self) -> bool {
         self.bidi_scoped
     }
+    /// The run with every colour it paints opaque, so that it draws the geometry of its
+    /// glyphs, strokes and emphasis marks whatever their colours.
+    pub(crate) fn opaque(mut self) -> Self {
+        const OPAQUE: f32 = 1.0;
+        self.color.alpha = OPAQUE;
+        if let Some(stroke) = &mut self.stroke {
+            stroke.color.alpha = OPAQUE;
+        }
+        if let Some(palette) = &self.palette {
+            self.palette = Some(
+                palette
+                    .iter()
+                    .map(|color| crate::graphics::Color {
+                        alpha: OPAQUE,
+                        ..*color
+                    })
+                    .collect(),
+            );
+        }
+        for shape in &mut self.mark_shapes {
+            shape.color.alpha = OPAQUE;
+        }
+        self.marks = self.marks.into_iter().map(Self::opaque).collect();
+        self
+    }
     /// Pen origins of the copies of the run drawn from its line's left edge and baseline
     /// `origin`: synthetic bold adds a second, offset copy.
     pub(crate) fn copies(&self, [x, y]: [f32; 2]) -> Vec<[f32; 2]> {

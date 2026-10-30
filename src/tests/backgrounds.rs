@@ -461,18 +461,40 @@ fn layers_paint_bottom_first_with_their_own_clip_and_the_colour_follows_the_bott
 }
 
 #[test]
-fn shorthand_border_area_sets_the_clip_and_a_border_box_origin() {
+fn shorthand_border_area_and_text_set_the_clip_and_a_border_box_origin() {
     use crate::graphics::{BackgroundClip, BoxArea};
     for (value, origin, clip) in [
         (
             "red border-area",
             BoxArea::BorderBox,
-            BackgroundClip::BorderArea,
+            BackgroundClip::Painted {
+                border_area: true,
+                text: false,
+            },
         ),
         (
             "content-box border-area red",
             BoxArea::ContentBox,
-            BackgroundClip::BorderArea,
+            BackgroundClip::Painted {
+                border_area: true,
+                text: false,
+            },
+        ),
+        (
+            "red text",
+            BoxArea::BorderBox,
+            BackgroundClip::Painted {
+                border_area: false,
+                text: true,
+            },
+        ),
+        (
+            "padding-box text border-area red",
+            BoxArea::PaddingBox,
+            BackgroundClip::Painted {
+                border_area: true,
+                text: true,
+            },
         ),
         (
             "padding-box red",

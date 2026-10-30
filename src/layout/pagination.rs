@@ -8,6 +8,7 @@ mod order;
 mod overflow;
 mod paragraph;
 mod rows;
+mod text_areas;
 use order::{OrderSnapshots, PaintOrder, PaintOrders};
 
 use paragraph::ParagraphCursor;
@@ -310,6 +311,16 @@ enum Effect<'a> {
     /// Compositing of a stacking context. Groups nest by stacking context, independently of
     /// clips and transforms, which follow containing blocks, unless anchored.
     Group(Group<'a>),
+    /// A mark on the items below it, with no region of its own.
+    Subtree(Subtree),
+}
+/// What a subtree node marks.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum Subtree {
+    /// The items of a box whose backgrounds clip to its text (CSS Backgrounds 4 §2.8).
+    TextArea,
+    /// The items of an absolutely positioned box, which are not its ancestors' in-flow text.
+    OutOfFlow,
 }
 /// How a stacking context composites; every stacking context is an isolated group, which
 /// paints as its content does unless something inside it blends (Compositing 1 §3.2).
@@ -827,14 +838,18 @@ pub(super) struct Paginated {
     pub page_boxes: Vec<std::sync::Arc<crate::document::PageBox>>,
     pub page_records: Vec<crate::layout::PageRecord>,
     pub line_boxes: Vec<[f32; 2]>,
+    /// The text area of a standalone flow's root, when requested.
+    pub root_text_area: Option<crate::graphics::FlowPaint>,
 }
 
-/// A box laid out alone: its text lines, display list, line box extents and navigation.
+/// A box laid out alone: its text lines, display list, line box extents and navigation, and
+/// the text area of its root and the root's in-flow and floated descendants when requested.
 pub(super) struct StandaloneFlow {
     pub lines: Vec<TextLine>,
     pub items: Vec<DisplayItem>,
     pub line_boxes: Vec<[f32; 2]>,
     pub navigation: StandaloneNavigation,
+    pub text_area: Option<crate::graphics::FlowPaint>,
 }
 
 /// The link areas and destination bounds of a standalone flow, in its coordinates.
@@ -923,6 +938,9 @@ pagination_state! {
     /// The `[top, bottom]` extent of each line box, kept where footnote bodies need their
     /// break points.
     line_boxes: Option<Vec<[f32; 2]>>,
+    /// The subtree node of a standalone flow's root, whose text area its box's
+    /// `background-clip: text` layers paint within.
+    root_text_area: Option<usize>,
     frame_templates: Rc<std::cell::RefCell<frames::Templates<'a>>>,
     template: bool,
     frame_requests: Vec<Rc<MeasuredBlock<'a>>>,
@@ -1074,6 +1092,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             footnotes: footnotes::Footnotes::default(),
             footnote_pages: None,
             line_boxes: None,
+            root_text_area: None,
             frame_templates,
             template,
             frame_requests: Vec::new(),
@@ -2256,6 +2275,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let previous_clip = self.clip;
         let previous_group = self.group;
         let previous_parent_3d = self.parent_3d;
+        if block.style.position.is_out_of_flow() && self.within_text_area() {
+            self.clip = Some(self.effect_node(self.clip, Effect::Subtree(Subtree::OutOfFlow)));
+        }
         let split = self.enter_split_inline(&mut block, starts_source);
         self.offset[0] += block.offset[0];
         self.offset[1] += block.offset[1];
@@ -2394,6 +2416,14 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let canvas_root = self.canvas.has_ink()
             && block.canvas_source
             && std::ptr::eq(*self.canvas_style.get_or_insert(block.style), block.style);
+        if !canvas_root
+            && block
+                .paint
+                .as_ref()
+                .is_some_and(|paint| paint.decoration.backgrounds.clips_to_text())
+        {
+            self.clip = Some(self.effect_node(self.clip, Effect::Subtree(Subtree::TextArea)));
+        }
         let paint_order = self.order();
         let paint = if let Some(mut paint) = block.paint {
             if canvas_root {
@@ -3264,6 +3294,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         )?;
         Ok(reference)
     }
+    /// Whether the current content lies below a box whose backgrounds clip to its text.
+    fn within_text_area(&self) -> bool {
+        std::iter::successors(self.clip, |&node| self.clips[node].parent)
+            .any(|node| matches!(self.clips[node].effect, Effect::Subtree(Subtree::TextArea)))
+    }
     fn effect_node(&mut self, parent: Option<usize>, effect: Effect<'a>) -> usize {
         self.clips.push(EffectNode {
             native: None,
@@ -3333,6 +3368,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 | Effect::InheritedParent3d
                 | Effect::Group(_)
                 | Effect::PathClip(_)
+                | Effect::Subtree(_)
                 | Effect::MotionReference(..)
                 | Effect::ColumnReference => None,
             };
@@ -3394,6 +3430,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 | Effect::InheritedParent3d
                 | Effect::Group(_)
                 | Effect::PathClip(_)
+                | Effect::Subtree(_)
                 | Effect::MotionReference(..)
                 | Effect::ColumnReference => {}
             }
@@ -5533,7 +5570,25 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let mut current = self.current_layer();
         let mut layers = Vec::with_capacity(chain.len());
         for &style in chain {
-            if paints_in_own_layer(style) {
+            if !paints_in_own_layer(style) && style.decoration.backgrounds.clips_to_text() {
+                // The box's text, and its in-flow descendants', lies below its own node.
+                let element = std::ptr::from_ref(style);
+                let clip = if let Some(layer) = self.inline_layers.get(&element) {
+                    layer.clip
+                } else {
+                    let clip =
+                        Some(self.effect_node(current.clip, Effect::Subtree(Subtree::TextArea)));
+                    self.inline_layers.insert(
+                        element,
+                        Layer {
+                            clip,
+                            ..current.clone()
+                        },
+                    );
+                    clip
+                };
+                current = Layer { clip, ..current };
+            } else if paints_in_own_layer(style) {
                 let element = std::ptr::from_ref(style);
                 let layer = if let Some(layer) = self.inline_layers.get(&element) {
                     layer.clone()
@@ -6265,17 +6320,24 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         Ok(())
     }
     /// Lays a box out alone and unbroken in `area`, whose origin is the coordinate origin, as
-    /// the content of a page-margin box; returns its text lines and display list.
+    /// the content of a page-margin box; returns its text lines and display list, and with
+    /// `text_area` the text area of the box holding it.
     pub(super) fn standalone(
         measurer: &'m mut Measurer<'t>,
         root: MeasuredBlock<'a>,
         area: Rect,
         destinations: usize,
+        text_area: bool,
     ) -> Result<StandaloneFlow, LayoutError> {
         let mut paginator = Self::for_frame(measurer, area);
         paginator.line_boxes = Some(Vec::new());
+        if text_area {
+            paginator.clip = Some(paginator.effect_node(None, Effect::Subtree(Subtree::TextArea)));
+            paginator.root_text_area = paginator.clip;
+        }
         let mut paginated = paginator.document(Some(root), destinations, std::iter::empty())?;
         Ok(StandaloneFlow {
+            text_area: paginated.root_text_area.take(),
             lines: paginated.pages.swap_remove(0),
             items: paginated.display_lists.swap_remove(0),
             line_boxes: paginated.line_boxes,
@@ -6506,6 +6568,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             chain.reverse();
             chain
         });
+        self.attach_text_areas(&regions)?;
+        let root_text_area = self
+            .root_text_area
+            .map(|node| self.text_area(0, node, &regions))
+            .transpose()?;
         let bounds = self.group_bounds();
         self.underlay_backdrops();
         let mut display_lists = Vec::with_capacity(self.display_lists.len());
@@ -6581,6 +6648,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             destination_bounds: located.destination_bounds,
             string_locations: self.string_locations,
             line_boxes: self.line_boxes.unwrap_or_default(),
+            root_text_area,
         })
     }
 }
@@ -6732,7 +6800,10 @@ fn clipped(
         chain.reverse();
         let mut regions_here = Vec::with_capacity(chain.len());
         for &index in &chain {
-            if matches!(nodes[index].effect, Effect::PathClip(_)) {
+            if matches!(
+                nodes[index].effect,
+                Effect::PathClip(_) | Effect::Subtree(_)
+            ) {
                 continue;
             }
             regions_here.push(
@@ -6877,7 +6948,10 @@ fn clipped(
                     .map(|(_, _, pushes)| pushes.clone())
                     .unwrap_or_default(),
                 Frame::Clip(index) => {
-                    if matches!(nodes[index].effect, Effect::PathClip(_)) {
+                    if matches!(
+                        nodes[index].effect,
+                        Effect::PathClip(_) | Effect::Subtree(_)
+                    ) {
                         Vec::new()
                     } else {
                         let region = regions[index]

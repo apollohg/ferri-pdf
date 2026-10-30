@@ -185,29 +185,32 @@ impl Painter<'_, '_, '_> {
                     _ => self.images.draw(paint, space.viewport, surface)?,
                 },
                 DisplayItem::Frame(frame) => {
-                    let [a, b, c, d, e, f] = frame.matrix;
-                    surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
-                    let result = Painter {
-                        lines: &frame.lines,
+                    let mut context = FlowContext {
                         page: self.page,
-                        page_area: frame.area,
                         text: self.text,
                         fonts: self.fonts,
-                        images: self.images,
                         raster: self.raster,
-                        prepared: Prepared::default(),
-                    }
-                    .draw(&frame.items, space, surface);
-                    surface.pop();
-                    result?;
+                    };
+                    draw_flow(frame, &mut context, self.images, space, surface)?;
                 }
-                DisplayItem::Box(box_paint) => painting::draw(
-                    box_paint,
-                    self.page_area,
-                    space.viewport,
-                    surface,
-                    self.images,
-                )?,
+                DisplayItem::Box(box_paint) => {
+                    let mut context = FlowContext {
+                        page: self.page,
+                        text: self.text,
+                        fonts: self.fonts,
+                        raster: self.raster,
+                    };
+                    painting::draw(
+                        box_paint,
+                        self.page_area,
+                        space.viewport,
+                        surface,
+                        self.images,
+                        &mut |area, images, surface| {
+                            draw_flow(area, &mut context, images, space, surface)
+                        },
+                    )?;
+                }
                 DisplayItem::Text { line } => {
                     let fragment = self
                         .lines
@@ -332,6 +335,39 @@ impl Painter<'_, '_, '_> {
         }
         Ok(())
     }
+}
+
+/// What an independent flow inside a page's display list draws its text with.
+pub(super) struct FlowContext<'c, 'f> {
+    page: usize,
+    text: &'c mut TextWriter<'f>,
+    fonts: &'f crate::fonts::FontBook,
+    raster: &'c RasterContext<'c>,
+}
+
+/// Draws a flow in its own coordinates and text lines, placed by its matrix.
+fn draw_flow(
+    flow: &crate::graphics::FlowPaint,
+    context: &mut FlowContext<'_, '_>,
+    images: &mut ImageWriter,
+    space: Space,
+    surface: &mut Surface<'_>,
+) -> Result<(), PdfError> {
+    let [a, b, c, d, e, f] = flow.matrix;
+    surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
+    let result = Painter {
+        lines: &flow.lines,
+        page: context.page,
+        page_area: flow.area,
+        text: context.text,
+        fonts: context.fonts,
+        images,
+        raster: context.raster,
+        prepared: Prepared::default(),
+    }
+    .draw(&flow.items, space, surface);
+    surface.pop();
+    result
 }
 
 impl Painter<'_, '_, '_> {
