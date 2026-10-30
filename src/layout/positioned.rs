@@ -108,6 +108,10 @@ struct Axis {
     margins: [Option<f32>; 2],
     edges: f32,
     static_start: f32,
+    /// The space a size between auto insets fills, where it is not the space from the static
+    /// position to the end edge: an inset-modified containing block derived from the
+    /// static-position rectangle (CSS Position 3 §3.5.1).
+    static_space: Option<f32>,
     /// Horizontal auto margins may not go negative (§10.3.7); vertical ones may.
     clamp_margins: bool,
 }
@@ -118,6 +122,9 @@ struct Solved {
     margins: [f32; 2],
 }
 impl Axis {
+    fn static_space(&self) -> f32 {
+        self.static_space.unwrap_or(self.length - self.static_start)
+    }
     fn solve(&self, size: Option<f32>, auto_size: &mut dyn FnMut(f32) -> f32) -> Solved {
         let [start, end] = self.insets;
         let length = self.length;
@@ -127,7 +134,7 @@ impl Axis {
             (None, None, None) => {
                 let margins = self.margins.map(zero);
                 let start = self.static_start;
-                let size = auto_size(length - start - margins[0] - margins[1] - edges);
+                let size = auto_size(self.static_space() - margins[0] - margins[1] - edges);
                 (start, size, margins)
             }
             (Some(start), Some(size), Some(end)) => {
@@ -404,12 +411,28 @@ fn solve<'a>(
             static_left,
         )
     };
+    // §3.5.1: end and center self-alignment between auto insets size the box in the
+    // inset-modified containing block its static-position rectangle derives.
+    let static_space =
+        (area.is_none() && position.alignment.is_none() && insets.iter().all(Option::is_none))
+            .then(|| static_self_alignment(style.grid.justify_self, !rtl))
+            .flatten()
+            .map(|alignment| {
+                let [low, high] = static_containing(
+                    [0.0, width],
+                    [position.left - cb.x, position.right - cb.x],
+                    alignment,
+                    !rtl,
+                );
+                high - low
+            });
     let mut horizontal = Axis {
         length: width,
         insets,
         margins,
         edges: horizontal_edges,
         static_start,
+        static_space,
         clamp_margins: true,
     };
     let shrinks = width_constraints.specified.is_none() && insets.iter().any(Option::is_none);
@@ -423,16 +446,12 @@ fn solve<'a>(
         None
     };
     if let Some(natural) = intrinsic {
-        let available = width
-            - horizontal_edges
-            - insets[0].unwrap_or(if insets[1].is_none() {
-                static_start
-            } else {
-                0.0
-            })
-            - insets[1].unwrap_or(0.0)
-            - margins[0].unwrap_or(0.0)
-            - margins[1].unwrap_or(0.0);
+        let space = match insets {
+            [None, None] => horizontal.static_space(),
+            [start, end] => width - start.unwrap_or(0.0) - end.unwrap_or(0.0),
+        };
+        let available =
+            space - horizontal_edges - margins[0].unwrap_or(0.0) - margins[1].unwrap_or(0.0);
         width_constraints = width_constraints.with_intrinsic(
             [&style.width, &style.min_width, &style.max_width],
             natural,
@@ -538,6 +557,7 @@ fn solve<'a>(
         margins: [margin[0], margin[2]],
         edges: vertical_edges,
         static_start: position.y - cb.y,
+        static_space: None,
         clamp_margins: false,
     };
     let natural = if table.is_some() {
@@ -629,16 +649,10 @@ fn solve<'a>(
             },
             Alignment::AnchorCenter => Alignment::AnchorCenter,
             other if area.is_some() || inset_aligned => other,
-            Alignment::Center if static_aligned => Alignment::Center,
-            Alignment::Right if static_aligned && end_high => Alignment::Right,
-            Alignment::Left if static_aligned && !end_high => Alignment::Left,
-            Alignment::End | Alignment::SelfEnd | Alignment::FlexEnd if static_aligned => {
-                if end_high {
-                    Alignment::Right
-                } else {
-                    Alignment::Left
-                }
-            }
+            other if static_aligned => match static_self_alignment(other, end_high) {
+                Some(alignment) => alignment,
+                None => continue,
+            },
             _ => continue,
         };
         let (start, length, size, before, after, inset_start, inset_end, original_edges) =
@@ -720,6 +734,23 @@ fn solve<'a>(
         }
     }
     Ok((measured, top))
+}
+
+/// The physical `Left`, `Right` or `Center` that `alignment` aligns a box with both insets
+/// auto to in its static-position rectangle, whose end edge is the high one when `end_high`;
+/// `None` where it aligns at the static position itself (CSS Position 3 §3.5.1).
+fn static_self_alignment(alignment: Alignment, end_high: bool) -> Option<Alignment> {
+    match alignment {
+        Alignment::Center => Some(Alignment::Center),
+        Alignment::Right if end_high => Some(Alignment::Right),
+        Alignment::Left if !end_high => Some(Alignment::Left),
+        Alignment::End | Alignment::SelfEnd | Alignment::FlexEnd => Some(if end_high {
+            Alignment::Right
+        } else {
+            Alignment::Left
+        }),
+        _ => None,
+    }
 }
 
 /// CSS Position 3 §3.5.1: the physical edges of the inset-modified containing block, inside

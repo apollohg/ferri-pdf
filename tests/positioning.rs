@@ -371,6 +371,33 @@ fn absolute_boxes_with_auto_insets_self_align_in_their_static_position_rectangle
 }
 
 #[test]
+fn absolute_boxes_with_auto_insets_shrink_to_their_static_position_containing_block() {
+    // CSS Position 3 §3.5.1, §4.3: with both insets auto, an automatic width fits the content
+    // to the inset-modified containing block the self-alignment derives from the
+    // static-position rectangle, which spans 40pt to 240pt of the 300pt containing block at
+    // the page area's 36pt origin. Two 150pt atomic inlines need 300pt on one line.
+    let body = "<div class=cb><div class=st><div class=a><i></i><i></i></div></div></div>";
+    let base = ".cb{position:relative;width:300pt;height:200pt}.st{width:200pt;height:20pt;margin-left:40pt}.a{position:absolute;background:rgb(255,0,0)}i{display:inline-block;width:150pt;height:10pt}";
+    for (css, expected_x, expected_width) in [
+        ("", 76.0, 260.0),
+        (".a{justify-self:end}", 36.0, 240.0),
+        (".a{justify-self:center}", 36.0, 280.0),
+        (
+            ".cb{direction:rtl}.st{margin:0 40pt 0 0}.a{justify-self:end}",
+            96.0,
+            240.0,
+        ),
+    ] {
+        let trace = render_flow(body, &format!("{base}{css}"));
+        let rect = common::painted_box(&trace, [255, 0, 0]);
+        assert!(
+            (rect.x - expected_x).abs() < 0.001 && (rect.width - expected_width).abs() < 0.001,
+            "{css}: expected the box at x {expected_x} with width {expected_width}, got {rect:?}"
+        );
+    }
+}
+
+#[test]
 fn stacking_contexts_paint_negative_flow_and_positive_layers_in_order() {
     let trace = render_flow(
         "<div class='c'><div class='a'>Above</div><div class='b'>Below</div><div class='n'>Negative</div><p class='flow'>Flow</p></div>",
