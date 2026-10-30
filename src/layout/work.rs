@@ -97,15 +97,37 @@ mod tests {
         crate::layout::layout_pass(&document, &resolver, measurement.clone()).unwrap();
         let first_pass_work = MAX_LAYOUT_WORK - measurement.remaining.get().unwrap();
         assert!(first_pass_work > 0);
-        let result = crate::layout::stabilize(
+        let provisional = crate::layout::stabilize(
             &mut document,
             &resolver,
             &Budget::new(first_pass_work),
             Vec::new(),
+        )
+        .expect("a budget that only fits the provisional pass keeps that pass");
+        let text: Vec<_> = provisional
+            .pages
+            .iter()
+            .flatten()
+            .map(|line| line.text.as_str())
+            .collect();
+        assert_eq!(
+            text,
+            ["See", "Destination"],
+            "the kept pass is the provisional one, whose target counter is not yet resolved"
         );
-        assert!(
-            matches!(result, Err(LayoutError::WorkLimit { limit }) if limit == first_pass_work),
-            "a budget that only fits the provisional pass must not publish that pass or reset for the next one"
+        let diagnostics: Vec<_> = document
+            .into_diagnostics()
+            .into_iter()
+            .map(|diagnostic| diagnostic.to_string())
+            .collect();
+        assert_eq!(
+            diagnostics,
+            [crate::layout::LayoutDiagnostic::WorkLimit {
+                limit: first_pass_work,
+                kept: crate::layout::WorkFallback::LastPass,
+            }
+            .to_string()],
+            "the budget is shared by every pass and its exhaustion is reported once"
         );
     }
 

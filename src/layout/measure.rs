@@ -694,6 +694,8 @@ pub(super) struct Measurer<'a> {
     pub(super) orthogonal_columns: Option<crate::layout::multicol::OrthogonalColumns>,
     pub(super) space: FlowSpace,
     pub work: crate::layout::work::Budget,
+    /// What the layout pass degraded, shared by every probe.
+    pub diagnostics: crate::layout::Diagnostics,
     pub text: &'a TextContext<'a>,
     pub canvas_images: bool,
     pub motion: std::rc::Rc<crate::layout::motion::Resources>,
@@ -745,6 +747,7 @@ impl<'a> Measurer<'a> {
             orthogonal_columns: None,
             space: FlowSpace::new(crate::style::logical::Flow::used(root.style()), size),
             work,
+            diagnostics: crate::layout::Diagnostics::default(),
             text,
             canvas_images: false,
             motion: std::rc::Rc::new(crate::layout::motion::Resources::new(

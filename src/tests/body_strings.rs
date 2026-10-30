@@ -162,20 +162,38 @@ fn string_expansion_and_target_pages_stabilize_together() {
 }
 
 #[test]
-fn body_string_reflow_cycles_fail_without_publishing_a_provisional_pdf() {
-    let resolver = crate::resources::FileResolver::default();
-    let html = format!(
-        "<style>{PROFILE}@page{{size:360pt 120pt;margin:20pt}}p,h2{{margin:0;font:12pt/18pt Spike}}h2{{string-set:heading content();break-after:auto}}p{{width:60pt}}p::after{{content:string(heading)}}</style><p>See </p><h2>A long destination heading that cannot fit in the reference width</h2>"
-    );
-    let document =
-        crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
-            .unwrap();
-    assert!(
-        matches!(
-            crate::layout::layout(&document, &resolver),
-            Err(crate::layout::LayoutError::GeneratedContentCycle)
+fn body_string_reflow_cycles_keep_the_last_layout_with_a_diagnostic() {
+    let output = render_html(
+        &format!(
+            "<style>{PROFILE}@page{{size:360pt 120pt;margin:20pt}}p,h2{{margin:0;font:12pt/18pt Spike}}h2{{string-set:heading content();break-after:auto}}p{{width:60pt}}p::after{{content:string(heading)}}</style><p>See </p><h2>A long destination heading that cannot fit in the reference width</h2>"
         ),
-        "moving the only assignment off the reference page must not freeze a guessed value"
+        &local_options(),
+    )
+    .expect("an alternating body string must keep a completed layout");
+    assert!(
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            crate::RenderDiagnostic::Layout(crate::LayoutDiagnostic::Unsettled(
+                crate::Convergence::GeneratedContent
+            ))
+        )),
+        "moving the only assignment off the reference page must be reported, got {:?}",
+        output.diagnostics
+    );
+    let trace = output.layout.unwrap();
+    let text: Vec<_> = trace
+        .pages
+        .iter()
+        .flatten()
+        .map(|line| line.text.as_str())
+        .collect();
+    assert!(
+        text.first().is_some_and(|first| first.starts_with("See")),
+        "the kept layout is a completed pass that shows the reference, got {text:?}"
+    );
+    assert!(
+        text.iter().any(|line| line.contains("destination heading")),
+        "the kept layout still shows the heading, got {text:?}"
     );
 }
 

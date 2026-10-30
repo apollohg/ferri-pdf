@@ -107,6 +107,7 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
             orthogonal_columns: None,
             space: Default::default(),
             work: crate::layout::work::Budget::new(crate::layout::MAX_LAYOUT_WORK),
+            diagnostics: Default::default(),
             text: &text,
             canvas_images: false,
             motion: Rc::new(crate::layout::motion::Resources::new(

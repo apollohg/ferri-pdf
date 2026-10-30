@@ -52,6 +52,7 @@ fn resumed_cells_keep_source_paint_order_when_a_later_lane_finishes_first() {
                 orthogonal_columns: None,
                 space: Default::default(),
                 work: crate::layout::work::Budget::new(crate::layout::MAX_LAYOUT_WORK),
+                diagnostics: Default::default(),
                 text: &text,
                 canvas_images: false,
                 motion: Rc::new(crate::layout::motion::Resources::new(

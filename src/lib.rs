@@ -59,7 +59,10 @@ pub use crate::graphics::{
     ScenePaint, Segment, ShadowPaint, ShadowShape, Shape,
 };
 pub use crate::images::ImageError;
-pub use crate::layout::{Destination, HeadingLocation, LayoutTrace, LinkArea, LinkShape, TextLine};
+pub use crate::layout::{
+    Convergence, Destination, HeadingLocation, LayoutDiagnostic, LayoutTrace, LinkArea, LinkShape,
+    TextLine, WorkFallback,
+};
 pub use crate::resources::{
     FileResolver, ResolvedResource, Resource, ResourceBase, ResourceError, ResourceMetadata,
     ResourceResolver, Url,

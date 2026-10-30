@@ -212,21 +212,36 @@ fn borrowed_layout_resolves_late_margin_targets_on_repeated_calls() {
 }
 
 #[test]
-fn cyclic_target_text_fails_without_publishing_a_provisional_layout() {
-    let resolver = crate::resources::FileResolver::default();
-    let html = format!(
-        "<style>{PROFILE}#a::before{{content:target-text('#b',first-letter)}}#b::before{{content:target-text('#a',first-letter)}}</style><p id=a>A</p><p id=b>B</p>"
+fn cyclic_target_text_keeps_the_last_layout_with_a_diagnostic() {
+    let output = render(
+        "#a::before{content:target-text('#b',first-letter)}#b::before{content:target-text('#a',first-letter)}",
+        "<p id=a>A</p><p id=b>B</p>",
     );
-    let document =
-        crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
-            .unwrap();
     assert!(
-        matches!(
-            crate::layout::layout(&document, &resolver),
-            Err(crate::layout::LayoutError::GeneratedContentCycle)
-        ),
-        "mutually swapping first letters must fail instead of returning an arbitrary pass"
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            crate::RenderDiagnostic::Layout(crate::LayoutDiagnostic::Unsettled(
+                crate::Convergence::GeneratedContent
+            ))
+        )),
+        "mutually swapping first letters must be reported, got {:?}",
+        output.diagnostics
     );
+    let text: Vec<_> = output.layout.unwrap().pages[0]
+        .iter()
+        .map(|line| line.text.clone())
+        .collect();
+    assert_eq!(
+        text.len(),
+        2,
+        "the kept pass lays out both paragraphs, got {text:?}"
+    );
+    for (line, own) in text.iter().zip(["A", "B"]) {
+        assert!(
+            line.ends_with(own) && line.len() == 2,
+            "each paragraph shows one swapped first letter before its own text, got {text:?}"
+        );
+    }
 }
 
 #[test]

@@ -1,6 +1,7 @@
 //! Block measurement, page fragmentation, and positioned text fragments.
 mod anchors;
 mod breaks;
+mod diagnostics;
 mod flex;
 mod float_area;
 mod floats;
@@ -39,6 +40,8 @@ use crate::resources::ResourceResolver;
 use crate::text::{GlyphRun, TextContext, TextError};
 use serde::Serialize;
 
+pub(crate) use diagnostics::Diagnostics;
+pub use diagnostics::{Convergence, LayoutDiagnostic, WorkFallback};
 pub use navigation::{Destination, HeadingLocation, LinkArea, LinkShape};
 pub(crate) use page_output::{PageOutput, PageRecord};
 pub(crate) use viewport::ViewportPaint;
@@ -149,6 +152,7 @@ pub(crate) fn layout(
         elements,
         pages,
         scroll_markers,
+        diagnostics: _,
     } = layout_pass(document, resolver, budget.clone())?;
     let markers_settled = document.scroll_markers_settled(&scroll_markers);
     let settled = document.styles().query_sizes().settled(&container_sizes)
@@ -201,6 +205,7 @@ struct LayoutPass {
     /// Where each scroll marker lies relative to its group's active marker (CSS Overflow 5
     /// §3.1.8).
     scroll_markers: crate::dom::ScrollMarkerStates,
+    diagnostics: Vec<LayoutDiagnostic>,
 }
 
 fn stabilize(
@@ -214,7 +219,18 @@ fn stabilize(
     let mut measured_elements = Vec::new();
     let mut measured_pages = Vec::new();
     let mut measured_markers = Vec::new();
+    let mut completed: Option<(LayoutTrace, Vec<LayoutDiagnostic>)> = None;
     loop {
+        let pass = match (layout_pass(document, resolver, budget.clone()), completed) {
+            (Err(LayoutError::WorkLimit { limit }), Some((trace, mut diagnostics))) => {
+                diagnostics.push(LayoutDiagnostic::WorkLimit {
+                    limit,
+                    kept: WorkFallback::LastPass,
+                });
+                return Ok(kept(document, trace, diagnostics));
+            }
+            (result, _) => result?,
+        };
         let LayoutPass {
             trace,
             generated,
@@ -223,7 +239,8 @@ fn stabilize(
             elements,
             pages,
             scroll_markers,
-        } = layout_pass(document, resolver, budget.clone())?;
+            mut diagnostics,
+        } = pass;
         // CSS Conditional 5 §5: each container's descendants are styled with the size of
         // the container they query, so the styles stand once a layout reproduces every size
         // they consulted.
@@ -243,60 +260,87 @@ fn stabilize(
             && elements_settled
             && pages_settled
             && markers_settled;
+        if generated.is_none() && settled {
+            return Ok(kept(document, trace, diagnostics));
+        }
+        // A measurement that repeats one an earlier layout styled with alternates without
+        // end, so the layout just completed is kept.
+        let cycle = if generated
+            .as_ref()
+            .is_some_and(|values| settled && previous.contains(values))
+        {
+            Some(Convergence::GeneratedContent)
+        } else if !containers_settled && measured_sizes.contains(&container_sizes) {
+            Some(Convergence::ContainerQueries)
+        } else if !anchors_settled && measured_anchors.contains(&anchor_frames) {
+            Some(Convergence::AnchorPositioning)
+        } else if !elements_settled && measured_elements.contains(&elements) {
+            Some(Convergence::ElementImages)
+        } else if !pages_settled
+            && (measured_pages.contains(&pages) || measured_pages.len() == MAX_PAGE_SIZE_PASSES)
+        {
+            Some(Convergence::PageSizes)
+        } else if !markers_settled && measured_markers.contains(&scroll_markers) {
+            Some(Convergence::ScrollMarkers)
+        } else {
+            None
+        };
+        if let Some(convergence) = cycle {
+            diagnostics.push(LayoutDiagnostic::Unsettled(convergence));
+            return Ok(kept(document, trace, diagnostics));
+        }
         let values = match generated {
-            None if settled => return Ok(trace),
             None => document.generated_values(),
             Some(values) => {
-                if settled && previous.contains(&values) {
-                    return Err(LayoutError::GeneratedContentCycle);
-                }
                 previous.push(values.clone());
                 values
             }
         };
         if !containers_settled {
-            if measured_sizes.contains(&container_sizes) {
-                return Err(LayoutError::ContainerQueryCycle);
-            }
             measured_sizes.push(container_sizes.clone());
             document.measured_containers(container_sizes);
         }
         if !anchors_settled {
-            if measured_anchors.contains(&anchor_frames) {
-                return Err(LayoutError::AnchorPositioningCycle);
-            }
             measured_anchors.push(anchor_frames.clone());
             document.measured_anchors(anchor_frames);
         }
         if !elements_settled {
-            if measured_elements.contains(&elements) {
-                return Err(LayoutError::ElementImageCycle);
-            }
             measured_elements.push(elements.clone());
             document.measured_elements(elements, trace.element_images.clone());
         }
         if !pages_settled {
-            if measured_pages.contains(&pages) {
-                return Err(LayoutError::PageSizeCycle);
-            }
-            if measured_pages.len() == MAX_PAGE_SIZE_PASSES {
-                return Err(LayoutError::PageSizeLimit {
-                    limit: MAX_PAGE_SIZE_PASSES,
-                });
-            }
             measured_pages.push(pages.clone());
             document.measured_pages(pages)?;
         }
         if !markers_settled {
-            if measured_markers.contains(&scroll_markers) {
-                return Err(LayoutError::ScrollMarkerCycle);
-            }
             measured_markers.push(scroll_markers.clone());
             document.measured_scroll_markers(scroll_markers);
         }
-        budget.spend(1)?;
-        document.reformat(values, resolver)?;
+        let reformatted = budget
+            .spend(1)
+            .map_err(crate::document::DocumentError::from);
+        match reformatted.and_then(|()| document.reformat(values, resolver)) {
+            Ok(()) => completed = Some((trace, diagnostics)),
+            Err(crate::document::DocumentError::FormattingWorkLimit { limit }) => {
+                diagnostics.push(LayoutDiagnostic::WorkLimit {
+                    limit,
+                    kept: WorkFallback::LastPass,
+                });
+                return Ok(kept(document, trace, diagnostics));
+            }
+            Err(error) => return Err(error.into()),
+        }
     }
+}
+
+/// The layout `stabilize` keeps, with what its pass degraded retained by `document`.
+fn kept(
+    document: &mut StyledDocument,
+    trace: LayoutTrace,
+    diagnostics: Vec<LayoutDiagnostic>,
+) -> LayoutTrace {
+    document.record_layout(diagnostics);
+    trace
 }
 
 #[cfg(test)]
@@ -404,9 +448,10 @@ fn paginate<'t>(
     let mut paginations = 1;
     while !paginated.footnote_deferrals.is_empty() {
         if paginations == MAX_FOOTNOTE_PAGINATIONS {
-            return Err(LayoutError::FootnoteDeferralLimit {
-                limit: MAX_FOOTNOTE_PAGINATIONS,
-            });
+            measurer
+                .diagnostics
+                .record(LayoutDiagnostic::Unsettled(Convergence::FootnoteDeferrals));
+            break;
         }
         paginations += 1;
         std::rc::Rc::make_mut(&mut measurer.footnote_deferrals)
@@ -530,6 +575,7 @@ fn paginate<'t>(
         container_sizes: std::mem::take(&mut measurer.container_sizes),
         anchor_frames: anchors.frames(sheet, &document.svg_definitions(), &measurer.work)?,
         scroll_markers,
+        diagnostics: measurer.diagnostics.take(),
         trace: LayoutTrace {
             page_width,
             page_height,
@@ -794,20 +840,6 @@ fn paged_content<'t>(
 
 #[derive(Debug, thiserror::Error)]
 pub(crate) enum LayoutError {
-    #[error("CSS anchor positioning did not stabilize")]
-    AnchorPositioningCycle,
-    #[error("generated content resolution repeats without reaching a fixed layout")]
-    GeneratedContentCycle,
-    #[error("container query sizes repeat without reaching a fixed layout")]
-    ContainerQueryCycle,
-    #[error("active scroll markers repeat without reaching a fixed layout")]
-    ScrollMarkerCycle,
-    #[error("element() image renderings repeat without reaching a fixed layout")]
-    ElementImageCycle,
-    #[error("intrinsically sized pages repeat their content sizes without reaching a fixed layout")]
-    PageSizeCycle,
-    #[error("intrinsically sized pages still change size after {limit} layouts")]
-    PageSizeLimit { limit: usize },
     #[error("{0}")]
     Raster(Box<crate::writer::PdfError>),
     #[error("non-finite page production geometry")]
@@ -836,8 +868,6 @@ pub(crate) enum LayoutError {
     Flex(#[from] crate::flex::FlexError),
     #[error("unsupported flex formatting: {feature}")]
     UnsupportedFlex { feature: &'static str },
-    #[error("footnote calls kept with their footnotes still move after {limit} paginations")]
-    FootnoteDeferralLimit { limit: usize },
     #[error("invalid normalized table structure")]
     InvalidTableStructure,
     #[error("{0}")]

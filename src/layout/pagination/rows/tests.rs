@@ -64,6 +64,7 @@ fn after_child_row_paints_keep_canonical_text_navigation_and_stacking() {
         orthogonal_columns: None,
         space: Default::default(),
         work: crate::layout::work::Budget::new(crate::layout::MAX_LAYOUT_WORK),
+        diagnostics: Default::default(),
         text: &text,
         canvas_images: false,
         motion: Rc::new(crate::layout::motion::Resources::new(

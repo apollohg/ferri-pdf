@@ -76,6 +76,8 @@ pub enum DocumentDiagnostic {
     Degraded(crate::style::Degradation),
     #[error("{0}; the document content past it is ignored")]
     TreeLimit(crate::dom::DomError),
+    #[error("{0}")]
+    Layout(#[from] crate::layout::LayoutDiagnostic),
     #[error("decoding {reference:?} as {encoding} replaced malformed byte sequences")]
     Decoding {
         base: crate::resources::ResourceBase,
@@ -750,6 +752,21 @@ impl StyledDocument {
             self.diagnostics.push(diagnostic);
         }
     }
+
+    /// Retains what the layout of this document degraded.
+    pub(crate) fn record_layout(
+        &mut self,
+        diagnostics: impl IntoIterator<Item = crate::layout::LayoutDiagnostic>,
+    ) {
+        for diagnostic in diagnostics.into_iter().map(DocumentDiagnostic::Layout) {
+            if !self.diagnostics.iter().any(|known| {
+                matches!((known, &diagnostic), (DocumentDiagnostic::Layout(known), DocumentDiagnostic::Layout(new)) if known == new)
+            }) {
+                self.diagnostics.push(diagnostic);
+            }
+        }
+    }
+
     pub(crate) fn into_diagnostics(mut self) -> Vec<DocumentDiagnostic> {
         self.diagnostics.extend(
             self.styles
