@@ -62,6 +62,8 @@ pub(crate) struct Data<'a> {
     pub(super) columns: Vec<Column<'a>>,
     pub(super) collapsed_columns: Rc<[bool]>,
     pub(super) collapsed_rows: Vec<bool>,
+    /// Rows whose cells all hide as empty, which take no height (CSS 2.1 §17.6.1.1).
+    pub(super) hidden_rows: Vec<bool>,
     pub(super) captions: Vec<&'a BlockBox>,
     /// Resolved segment borders in the collapsing border model.
     pub(super) collapsed: Option<Rc<CollapsedBorders>>,
@@ -225,6 +227,7 @@ impl<'a> Data<'a> {
             .collect();
         let mut data = Self {
             collapsed_rows,
+            hidden_rows: Vec::new(),
             collapsed_columns: collapsed_columns.into(),
             grid,
             groups,
@@ -243,7 +246,22 @@ impl<'a> Data<'a> {
                 &data.border_boxes(block.style()),
             )?));
         }
+        data.hidden_rows = data
+            .row_ranges
+            .iter()
+            .map(|cells| !cells.is_empty() && cells.clone().all(|index| data.hides_cell(index)))
+            .collect();
         Ok(data)
+    }
+
+    /// Whether the cell paints no borders or backgrounds because `empty-cells: hide` applies
+    /// to it and it has no visible content: no children, or `visibility: hidden` (CSS 2.1
+    /// §17.6.1.1).
+    pub(super) fn hides_cell(&self, index: usize) -> bool {
+        let cell = self.cells[index];
+        self.collapsed.is_none()
+            && !cell.style().table.empty_cells
+            && (cell.children().is_empty() || !cell.style().visibility.is_visible())
     }
 
     fn border_boxes(&self, table: &Style) -> Vec<BorderBox> {

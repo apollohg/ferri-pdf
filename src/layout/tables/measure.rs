@@ -227,11 +227,17 @@ impl RowGeometry {
         self.original_starts = Some(original);
         self
     }
-    fn new(rows: crate::table::RowHeights, spacing: f32) -> Self {
+    /// Row starts from `rows`, each followed by `spacing` unless `hidden` (CSS 2.1 §17.6.1.1).
+    fn new(rows: crate::table::RowHeights, spacing: f32, hidden: &[bool]) -> Self {
         let mut starts = Vec::with_capacity(rows.heights.len() + 1);
         starts.push(0.0);
-        for height in rows.heights {
-            starts.push(starts.last().unwrap() + height + spacing);
+        for (row, height) in rows.heights.into_iter().enumerate() {
+            let gap = if hidden.get(row).copied().unwrap_or(false) {
+                0.0
+            } else {
+                spacing
+            };
+            starts.push(starts.last().unwrap() + height + gap);
         }
         Self {
             original_starts: None,
@@ -857,8 +863,10 @@ impl<'a> TablePlan<'a> {
     pub(crate) fn has_collapsed_rows(&self) -> bool {
         self.data.collapsed_rows.iter().any(|&value| value)
     }
+    /// Whether any of `rows` takes space: neither collapsed nor hidden as empty.
     pub(crate) fn rows_visible(&self, rows: Range<usize>) -> bool {
-        self.data.collapsed_rows[rows].iter().any(|&value| !value)
+        rows.into_iter()
+            .any(|row| !self.data.collapsed_rows[row] && !self.data.hidden_rows[row])
     }
     pub(crate) fn cell_collapsed(&self, index: usize) -> bool {
         let cell = &self.data.grid.cells[index];
@@ -939,7 +947,7 @@ impl<'a> TablePlan<'a> {
         if self.data.collapsed.is_some() {
             paint.decoration =
                 collapsed_cell_decoration(paint.decoration, self.data.cell_borders(index));
-        } else if !source.style().table.empty_cells && source.children().is_empty() {
+        } else if self.data.hides_cell(index) {
             return Ok(measured);
         }
         crate::layout::writing::owner_decoration(&mut measured, &paint.decoration);
@@ -1150,9 +1158,14 @@ impl<'a> TablePlan<'a> {
         let rows = if self.has_height_constraints || self.has_collapsed_rows() {
             self.resolve_rows(measurer, &heights, geometry.spacing[1], &geometry.geometry)?
         } else {
+            let hidden = &self.data.hidden_rows[band.clone()];
             RowGeometry::new(
-                grid.row_heights(&HeightInput::natural(&heights, geometry.spacing[1]))?,
+                grid.row_heights(&HeightInput {
+                    hidden,
+                    ..HeightInput::natural(&heights, geometry.spacing[1])
+                })?,
                 geometry.spacing[1],
+                hidden,
             )
         };
         let alignments = grid
@@ -1260,10 +1273,12 @@ impl<'a> TablePlan<'a> {
         )?;
         if !self.has_height_constraints {
             return Ok(RowGeometry::new(
-                self.data
-                    .grid
-                    .row_heights(&HeightInput::natural(cells, spacing))?,
+                self.data.grid.row_heights(&HeightInput {
+                    hidden: &self.data.hidden_rows,
+                    ..HeightInput::natural(cells, spacing)
+                })?,
                 spacing,
+                &self.data.hidden_rows,
             )
             .project(&self.data.collapsed_rows));
         }
@@ -1285,6 +1300,7 @@ impl<'a> TablePlan<'a> {
             cells,
             rows: &rows,
             spacing,
+            hidden: &self.data.hidden_rows,
             table: self.native_height.clone().unwrap_or_else(|| {
                 self.used_height.map_or_else(
                     || {
@@ -1317,7 +1333,8 @@ impl<'a> TablePlan<'a> {
                 )
             }),
         })?;
-        Ok(RowGeometry::new(rows, spacing).project(&self.data.collapsed_rows))
+        Ok(RowGeometry::new(rows, spacing, &self.data.hidden_rows)
+            .project(&self.data.collapsed_rows))
     }
     pub(crate) fn used_row_starts(
         &self,
@@ -1351,10 +1368,12 @@ impl<'a> TablePlan<'a> {
                 .max(1),
         )?;
         Ok(RowGeometry::new(
-            self.data
-                .grid
-                .row_heights(&HeightInput::natural(&cells, spacing))?,
+            self.data.grid.row_heights(&HeightInput {
+                hidden: &self.data.hidden_rows,
+                ..HeightInput::natural(&cells, spacing)
+            })?,
             spacing,
+            &self.data.hidden_rows,
         )
         .project(&self.data.collapsed_rows)
         .starts)
@@ -1627,9 +1646,7 @@ fn measure_plan<'a>(
                 });
                 continue;
             }
-            let hidden = !collapsed
-                && !data.cells[index].style().table.empty_cells
-                && data.cells[index].children().is_empty();
+            let hidden = data.hides_cell(index);
             if let Some(mut paint) = measured.paint.take() {
                 paint.rect = rect;
                 if stretch {

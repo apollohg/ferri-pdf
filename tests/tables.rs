@@ -999,6 +999,46 @@ fn hidden_empty_cells_reveal_the_table_background_but_block_children_are_nonempt
 }
 
 #[test]
+fn rows_of_hidden_empty_cells_take_no_height_and_one_border_spacing() {
+    // CSS 2.1 §17.6.1.1: when every cell of a row hides as empty, by having no content or
+    // `visibility: hidden`, the row has zero height and border spacing on one side only.
+    const SPACING_PT: f32 = 10.0;
+    const ROW_PT: f32 = 20.0;
+    for hidden in ["<td></td><td></td>", "<td class=v>text</td><td></td>"] {
+        let html = format!(
+            "<!doctype html><style>{PROFILE}body{{margin:0}}table{{border-spacing:{SPACING_PT}pt;background:rgb(0,255,0)}}td{{padding:5pt;border:1pt solid;empty-cells:hide}}.v{{visibility:hidden}}.a td{{height:{ROW_PT}pt;padding:0;border:0;background:rgb(255,0,0)}}.h{{height:40pt}}</style><table><tr class=a><td rowspan=3>S</td><td>A</td></tr><tr class=h>{hidden}</tr><tr class=a><td>C</td></tr></table>"
+        );
+        let trace = render_html(&html, &local_options())
+            .unwrap()
+            .layout
+            .unwrap();
+        let table = common::painted_box(&trace, [0, 255, 0]);
+        common::assert_labelled_pt(
+            &format!("{hidden}: table height with two rows and three spacings"),
+            table.height,
+            2.0 * ROW_PT + 3.0 * SPACING_PT,
+        );
+        let mut cells = common::page_boxes(&trace, [255, 0, 0]);
+        cells.sort_by(|a, b| (a.x, a.y).partial_cmp(&(b.x, b.y)).unwrap());
+        assert_eq!(
+            cells.len(),
+            3,
+            "{hidden}: the spanning cell and two cells paint: {cells:?}"
+        );
+        common::assert_labelled_pt(
+            &format!("{hidden}: spanning cell over the hidden row"),
+            cells[0].height,
+            2.0 * ROW_PT + SPACING_PT,
+        );
+        common::assert_labelled_pt(
+            &format!("{hidden}: last row one spacing below the first"),
+            cells[2].y - cells[1].y,
+            ROW_PT + SPACING_PT,
+        );
+    }
+}
+
+#[test]
 fn orthogonal_captions_keep_their_caption_role_above_the_table() {
     // CSS Writing Modes 4 §7: a vertical caption is an orthogonal flow whose inline size, its
     // line's advance, is its physical height above the table.

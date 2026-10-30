@@ -1,5 +1,6 @@
 use crate::style::{BoxSizing, Size, SizeConstraints, VerticalAlign};
 use crate::table::{Grid, TableError, finite, grow};
+use std::ops::Range;
 
 #[derive(Clone, Debug, Default)]
 pub(crate) struct HeightConstraint {
@@ -47,6 +48,9 @@ pub(crate) struct HeightInput<'a> {
     /// Content-box constraints, including the grid's border spacing.
     pub table: SizeConstraints,
     pub spacing: f32,
+    /// Rows that take no height and border spacing on one side only (CSS 2.1 §17.6.1.1); an
+    /// empty slice hides none.
+    pub hidden: &'a [bool],
 }
 
 impl<'a> HeightInput<'a> {
@@ -55,6 +59,7 @@ impl<'a> HeightInput<'a> {
             cells,
             rows: &[],
             spacing,
+            hidden: &[],
             table: SizeConstraints::fixed(None, 0.0, None),
         }
     }
@@ -75,12 +80,19 @@ impl Grid {
                 actual: cells.len(),
             });
         }
-        if !input.rows.is_empty() && input.rows.len() != self.rows {
-            return Err(TableError::RowMeasurementCount {
-                expected: self.rows,
-                actual: input.rows.len(),
-            });
+        for count in [input.rows.len(), input.hidden.len()] {
+            if count != 0 && count != self.rows {
+                return Err(TableError::RowMeasurementCount {
+                    expected: self.rows,
+                    actual: count,
+                });
+            }
         }
+        let hidden = |row: usize| input.hidden.get(row).copied().unwrap_or(false);
+        let open_rows = |rows: Range<usize>| rows.filter(|&row| !hidden(row)).count();
+        // A hidden row keeps the spacing on one side only.
+        let span_spacing =
+            |rows: Range<usize>| input.spacing * open_rows(rows).saturating_sub(1) as f32;
         finite([input.spacing, input.table.minimum])?;
         finite(input.table.specified)?;
         finite(input.table.maximum)?;
@@ -109,10 +121,12 @@ impl Grid {
         let measure_rows = |basis: Option<f32>| -> Result<Vec<f32>, TableError> {
             let mut heights = vec![0.0f32; self.rows];
             for (row, constraint) in input.rows.iter().enumerate() {
-                heights[row] = constraint.outer(0.0, basis)?;
+                if !hidden(row) {
+                    heights[row] = constraint.outer(0.0, basis)?;
+                }
             }
             for (cell, measure) in self.cells.iter().zip(cells) {
-                if cell.rows == 1 {
+                if cell.rows == 1 && !hidden(cell.row) {
                     let baseline = if measure.align == VerticalAlign::Baseline {
                         baselines[cell.row] - measure.baseline
                     } else {
@@ -126,15 +140,22 @@ impl Grid {
                 let cell = &self.cells[index];
                 let measure = &cells[index];
                 let range = cell.row..cell.row + cell.rows;
-                let height = heights[range.clone()].iter().sum::<f32>()
-                    + input.spacing * (cell.rows - 1) as f32;
+                let open: Vec<usize> = range.clone().filter(|&row| !hidden(row)).collect();
+                if open.is_empty() {
+                    continue;
+                }
+                let height = heights[range.clone()].iter().sum::<f32>() + span_spacing(range);
                 let baseline = if measure.align == VerticalAlign::Baseline {
                     baselines[cell.row] - measure.baseline
                 } else {
                     0.0
                 };
                 let required = measure.constraint.outer(measure.height, basis)? + baseline;
-                grow(&mut heights[range], (required - height).max(0.0));
+                let mut tracks: Vec<f32> = open.iter().map(|&row| heights[row]).collect();
+                grow(&mut tracks, (required - height).max(0.0));
+                for (row, track) in open.into_iter().zip(tracks) {
+                    heights[row] = track;
+                }
             }
             finite(heights.iter().copied())?;
             Ok(heights)
@@ -143,7 +164,7 @@ impl Grid {
         let gaps = if self.rows == 0 {
             0.0
         } else {
-            input.spacing * (self.rows + 1) as f32
+            input.spacing * (open_rows(0..self.rows) + 1) as f32
         };
         let base = heights.iter().sum::<f32>();
         let natural = base + gaps;
@@ -169,10 +190,21 @@ impl Grid {
                     *height += (reference - *height) * weight;
                 }
             } else {
-                let count = auto.iter().filter(|&&auto| auto).count();
-                let increment = (target - sum) / if count == 0 { self.rows } else { count } as f32;
-                for ((height, reference), auto) in heights.iter_mut().zip(reference).zip(auto) {
-                    *height = reference + if count == 0 || auto { increment } else { 0.0 };
+                let open = |row: usize| !hidden(row);
+                let count = (0..self.rows).filter(|&row| open(row) && auto[row]).count();
+                let grown = if count == 0 {
+                    open_rows(0..self.rows)
+                } else {
+                    count
+                };
+                let increment = (target - sum) / grown.max(1) as f32;
+                for (row, (height, reference)) in heights.iter_mut().zip(reference).enumerate() {
+                    *height = reference
+                        + if open(row) && (count == 0 || auto[row]) {
+                            increment
+                        } else {
+                            0.0
+                        };
                 }
             }
         }
@@ -181,8 +213,12 @@ impl Grid {
             .iter()
             .zip(cells)
             .map(|(cell, measure)| {
-                let height = heights[cell.row..cell.row + cell.rows].iter().sum::<f32>()
-                    + input.spacing * (cell.rows - 1) as f32;
+                let rows = cell.row..cell.row + cell.rows;
+                // A cell of hidden rows only has no height to align in.
+                if open_rows(rows.clone()) == 0 {
+                    return 0.0;
+                }
+                let height = heights[rows.clone()].iter().sum::<f32>() + span_spacing(rows);
                 match measure.align {
                     VerticalAlign::Top => 0.0,
                     VerticalAlign::Middle => (height - measure.height) / 2.0,
