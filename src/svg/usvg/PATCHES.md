@@ -182,3 +182,7 @@ value allows only that, before the line's overflow is decided.
 (CSS Text 4 §9.2): wrapped lines exclude it from their fit and from their anchoring, an
 `allow-end` stop or comma only as far as the line overflows, and lines of pre-formatted text
 exclude it from their anchoring, where no line overflows.
+
+Faces load with the `ascent-override`, `descent-override` and `line-gap-override` descriptors
+their provider gives (CSS Fonts 4 §4.11), so baselines, line boxes, wrapped lines and the
+decorations of vertical text use the overridden horizontal metrics, as the document's text does.

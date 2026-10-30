@@ -579,7 +579,7 @@ fn parent_alignment(
     let provider = state.font_provider.unwrap_or(&state.opt.font_resolver);
     let Some(font) = provider
         .select_font(&convert_font(box_parent, state), &mut cache.fontdb)
-        .and_then(|id| cache.fontdb.load_font(id))
+        .and_then(|id| cache.fontdb.load_font(id, provider.metric_overrides(id)))
     else {
         return 0.0;
     };
@@ -701,7 +701,7 @@ fn box_metrics(
     let provider = state.font_provider.unwrap_or(&state.opt.font_resolver);
     let font = provider
         .select_font(&convert_font(node, state), &mut cache.fontdb)
-        .and_then(|id| cache.fontdb.load_font(id))?;
+        .and_then(|id| cache.fontdb.load_font(id, provider.metric_overrides(id)))?;
     let size = super::units::resolve_font_size(node, state);
     let metrics = font.metrics;
     let vertical = convert_writing_mode(node) == WritingMode::TopToBottom;

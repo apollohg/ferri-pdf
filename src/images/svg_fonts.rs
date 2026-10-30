@@ -313,6 +313,15 @@ impl FontProvider for Provider<'_> {
             }
         }
     }
+    fn metric_overrides(&self, mapped: fontdb::ID) -> crate::fonts::MetricOverrides {
+        self.fonts
+            .registry()
+            .originals
+            .get(&mapped)
+            .and_then(|id| self.fonts.book.face(*id))
+            .map(|face| face.settings().metric_overrides)
+            .unwrap_or_default()
+    }
     fn face_settings(
         &self,
         font: &Font,

@@ -144,6 +144,15 @@ pub trait FontProvider {
     fn face_settings(&self, _: &Font, _: ID, _: &crate::style::Style) -> FaceSettings {
         FaceSettings::default()
     }
+    /// The `ascent-override`, `descent-override` and `line-gap-override` descriptors of face
+    /// `id`'s `@font-face` rule (CSS Fonts 4 §4.11).
+    #[expect(
+        private_interfaces,
+        reason = "metric overrides are crate-private; only the document's fonts declare them"
+    )]
+    fn metric_overrides(&self, _: ID) -> crate::fonts::MetricOverrides {
+        crate::fonts::MetricOverrides::default()
+    }
     /// Selected-face axes followed by explicit variation settings.
     fn variations(&self, font: &Font, _: ID) -> Vec<crate::svg::usvg::FontVariation> {
         font.variations().to_vec()

@@ -1153,3 +1153,39 @@ fn svg_text_glyphs_scale_by_the_size_adjust_descriptor() {
         "size-adjust:50% must halve the glyph run: {half} against {whole}"
     );
 }
+
+#[test]
+fn svg_text_line_metrics_take_the_metric_override_descriptors() {
+    let height = |descriptors: &str| {
+        let sheet = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
+            text: format!(
+                "@font-face{{font-family:Overridden;src:local('DejaVu Sans');{descriptors}}}"
+            ),
+            base: ResourceBase::default(),
+        }])
+        .unwrap();
+        let image = ImageCache::with_fonts(sheet.fonts)
+            .inline_svg(
+                format!(
+                    "{SVG_OPEN}<text x='10' y='40' font-family='Overridden' font-size='20' \
+                     style='white-space:pre'>H\nH</text></svg>"
+                ),
+                &ResourceBase::default(),
+                &FileResolver::default(),
+            )
+            .unwrap();
+        let Image::Svg(svg) = image.as_ref() else {
+            panic!("inline SVG must use the vector pipeline")
+        };
+        svg.tree(SIZE).unwrap().root().abs_bounding_box().height()
+    };
+    let plain = height("");
+    let overridden = height("ascent-override:100%;descent-override:0%;line-gap-override:50%");
+    // Each line's box spans its overridden ascent and descent, one em, and lines stand one
+    // and a half em apart (CSS Fonts 4 §4.11).
+    assert!(
+        (overridden - 50.0).abs() < EPSILON,
+        "two overridden lines, 1.5em apart and 1em tall, span 50 units: {overridden} \
+         (the font's own metrics give {plain})"
+    );
+}

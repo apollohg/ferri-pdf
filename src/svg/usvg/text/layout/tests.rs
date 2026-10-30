@@ -14,7 +14,11 @@ fn svg_vertical_substitutions_origins_and_advances_match_independent_harfbuzz_sa
         .to_vec(),
     );
     let id = database.faces().next().expect("pinned fixture face").id;
-    let font = Arc::new(database.load_font(id).expect("fixture metrics"));
+    let font = Arc::new(
+        database
+            .load_font(id, crate::fonts::MetricOverrides::default())
+            .expect("fixture metrics"),
+    );
     let reference: serde_json::Value = serde_json::from_str(include_str!(concat!(
         env!("CARGO_MANIFEST_DIR"),
         "/tests/fixtures/fonts/CJKWritingTest-source.json"

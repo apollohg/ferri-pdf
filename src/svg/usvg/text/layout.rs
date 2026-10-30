@@ -252,7 +252,7 @@ pub(crate) fn layout_text(
                 if !fonts_cache.contains_key(font) {
                     if let Some(loaded) = resolver
                         .select_font(font, fontdb)
-                        .and_then(|id| fontdb.load_font(id))
+                        .and_then(|id| fontdb.load_font(id, resolver.metric_overrides(id)))
                     {
                         fonts_cache.insert(font.clone(), Arc::new(loaded));
                     }
@@ -263,7 +263,7 @@ pub(crate) fn layout_text(
 
     let strut = resolver
         .select_font(&text_node.strut.font, fontdb)
-        .and_then(|id| fontdb.load_font(id));
+        .and_then(|id| fontdb.load_font(id, resolver.metric_overrides(id)));
     let wrapped = match text_node.wrapping {
         Some(wrapping) => Some(super::wrap::wrap(
             text_node,
@@ -658,7 +658,7 @@ pub(crate) fn spaced_clusters(
     apply_letter_spacing(chunk, &mut clusters);
     apply_word_spacing(chunk, &mut clusters);
     apply_autospace(chunk, &mut clusters, fonts_cache, resolver, fontdb);
-    apply_spacing_trim(chunk, &mut clusters, fonts_cache, fontdb);
+    apply_spacing_trim(chunk, &mut clusters, fonts_cache, resolver, fontdb);
     Some(clusters)
 }
 
@@ -671,6 +671,7 @@ fn apply_spacing_trim(
     chunk: &TextChunk,
     clusters: &mut [GlyphCluster],
     fonts_cache: &FontsCache,
+    resolver: &dyn FontProvider,
     fontdb: &Database,
 ) {
     use crate::text::spacing_trim::{self, Trimming};
@@ -697,7 +698,12 @@ fn apply_spacing_trim(
                 .values()
                 .find(|font| font.id == cluster.glyphs[0].font)
                 .cloned()
-                .or_else(|| fontdb.load_font(cluster.glyphs[0].font).map(Arc::new))?;
+                .or_else(|| {
+                    let id = cluster.glyphs[0].font;
+                    fontdb
+                        .load_font(id, resolver.metric_overrides(id))
+                        .map(Arc::new)
+                })?;
             Some((font, span))
         })
         .collect();
@@ -2551,13 +2557,14 @@ fn form_glyph_clusters(glyphs: &[Glyph], text: &str, font_size: f32) -> GlyphClu
 }
 
 pub(crate) trait DatabaseExt {
-    fn load_font(&self, id: ID) -> Option<ResolvedFont>;
+    /// The face `id` with the line metrics `overrides` replace.
+    fn load_font(&self, id: ID, overrides: crate::fonts::MetricOverrides) -> Option<ResolvedFont>;
     fn has_char(&self, id: ID, c: char) -> bool;
 }
 
 impl DatabaseExt for Database {
     #[inline(never)]
-    fn load_font(&self, id: ID) -> Option<ResolvedFont> {
+    fn load_font(&self, id: ID, overrides: crate::fonts::MetricOverrides) -> Option<ResolvedFont> {
         self.with_face_data(id, |data, face_index| -> Option<ResolvedFont> {
             let font = ttf_parser::Face::parse(data, face_index).ok()?;
 
@@ -2615,9 +2622,13 @@ impl DatabaseExt for Database {
             }
 
             let metrics = crate::fonts::FaceMetrics::of(&font);
+            // CSS Fonts 4 §4.11: the overrides replace the horizontal line metrics, in em.
+            let units = |em: f32| (em * f32::from(units_per_em.get())).round() as i16;
+            let ascent = overrides.ascent.map_or(ascent, units);
+            let descent = overrides.descent.map_or(descent, |em| -units(em));
             Some(ResolvedFont {
                 id,
-                metrics,
+                metrics: metrics.overridden(overrides),
                 upright_metrics: metrics.upright(&font),
                 space_advance: crate::fonts::advance(&font, ' '),
                 zero_advance: crate::fonts::advance(&font, crate::fonts::ZERO),
@@ -2727,7 +2738,7 @@ pub(crate) fn shape_text(
                 break;
             }
             used_fonts.push(id);
-            let Some(fallback) = fontdb.load_font(id) else {
+            let Some(fallback) = fontdb.load_font(id, resolver.metric_overrides(id)) else {
                 continue;
             };
             let fallback = Arc::new(fallback);
