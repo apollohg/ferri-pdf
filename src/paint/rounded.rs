@@ -6,6 +6,8 @@ use crate::paint::{BorderStyle, BoxDecoration, Contour, Fill, Point, Rect, Segme
 
 /// Cubic control distance as a fraction of the radius.
 const KAPPA: f32 = 0.552;
+const ROUND_CURVATURE: f32 = 1.0;
+const CORNER_FLATNESS: f64 = 0.01;
 const SIDE_TANGENTS: [Point; 4] = [[1.0, 0.0], [0.0, 1.0], [-1.0, 0.0], [0.0, -1.0]];
 const GAUSS_LEGENDRE: [(f64, f64); 5] = [
     (0.0, 0.568_888_888_888_888_9),
@@ -80,7 +82,7 @@ fn corner_points(rect: Rect) -> [Point; 4] {
     ]
 }
 
-fn corners(rect: Rect, radii: Radii) -> [Curve; 4] {
+fn corners(rect: Rect, radii: Radii, curvatures: [f32; 4]) -> [Curve; 4] {
     let points = corner_points(rect);
     std::array::from_fn(|corner| {
         let [rx, ry] = radii[corner];
@@ -98,6 +100,9 @@ fn corners(rect: Rect, radii: Radii) -> [Curve; 4] {
             2 => ([c[0], c[1] - ry], [c[0] - rx, c[1]]),
             _ => ([c[0] + rx, c[1]], [c[0], c[1] - ry]),
         };
+        if curvatures[corner] != ROUND_CURVATURE {
+            return Curve::Path(superellipse(start, c, end, curvatures[corner]));
+        }
         let toward = |from: Point| {
             [
                 from[0] + KAPPA * (c[0] - from[0]),
@@ -106,6 +111,67 @@ fn corners(rect: Rect, radii: Radii) -> [Curve; 4] {
         };
         Curve::Arc([start, toward(start), toward(end), end])
     })
+}
+
+/// A convex superellipse has its greatest chord deviation where its tangent is parallel
+/// to that chord. Split there until the physical error fits the point-coordinate precision.
+fn superellipse(start: Point, corner: Point, end: Point, curvature: f32) -> Contour {
+    debug_assert!(!curvature.is_nan());
+    let power = 2.0_f64.powf(-f64::from(curvature.abs()));
+    let map = |mut point: [f64; 2]| {
+        if curvature < 0.0 {
+            point.swap(0, 1);
+        }
+        std::array::from_fn(|axis| {
+            f64::from(start[axis])
+                + point[0] * (f64::from(corner[axis]) - f64::from(start[axis]))
+                + point[1] * (f64::from(end[axis]) - f64::from(corner[axis]))
+        })
+    };
+    let scale = start
+        .into_iter()
+        .chain(corner)
+        .chain(end)
+        .map(|value| f64::from(value).abs())
+        .fold(1.0_f64, f64::max);
+    let tolerance = CORNER_FLATNESS.max(2.0 * f64::from(f32::EPSILON) * scale);
+    let mut segments = Vec::new();
+    if power == 0.0 {
+        segments.push(Segment::Line(to32(map([1.0, 0.0]))));
+        segments.push(Segment::Line(end));
+    } else if power == 1.0 {
+        segments.push(Segment::Line(end));
+    } else {
+        let mut pending = vec![([0.0, 0.0], [1.0, 1.0])];
+        while let Some((a, b)) = pending.pop() {
+            let delta: [f64; 2] = std::array::from_fn(|axis| b[axis] - a[axis]);
+            if delta[0] <= 0.0 || delta[1] <= 0.0 {
+                segments.push(Segment::Line(to32(map(b))));
+                continue;
+            }
+            let log_ratio = (delta[1].ln() - delta[0].ln()) / (1.0 - power);
+            let softplus = |value: f64| value.max(0.0) + (-value.abs()).exp().ln_1p();
+            let middle = [
+                (-power * softplus(-log_ratio)).exp(),
+                -(-power * softplus(log_ratio)).exp_m1(),
+            ];
+            let [pa, pb, pm] = [a, b, middle].map(map);
+            let chord = [pb[0] - pa[0], pb[1] - pa[1]];
+            let error = ((pm[0] - pa[0]) * chord[1] - (pm[1] - pa[1]) * chord[0]).abs()
+                / chord[0].hypot(chord[1]);
+            if error > tolerance && middle != a && middle != b {
+                pending.push((middle, b));
+                pending.push((a, middle));
+            } else {
+                segments.push(Segment::Line(to32(pb)));
+            }
+        }
+    }
+    Contour {
+        start,
+        segments,
+        closed: false,
+    }
 }
 
 /// Insets are in top/right/bottom/left order; each radius shrinks by its adjacent inset.
@@ -177,7 +243,7 @@ pub(crate) fn constrain(mut radii: Radii, [width, height]: [f32; 2]) -> Radii {
 }
 
 pub(crate) fn rounded_rect(rect: Rect, radii: Radii) -> Contour {
-    contour(&corners(rect, radii))
+    contour(&corners(rect, radii, [ROUND_CURVATURE; 4]))
 }
 
 fn to64(point: Point) -> [f64; 2] {
@@ -417,15 +483,15 @@ impl Geometry {
             widths,
             outer_points: corner_points(rect),
             inner_points: corner_points(inner_rect),
-            outer: corners(rect, radii),
-            centre: corners(centre_rect, centre_radii),
+            outer: corners(rect, radii, [ROUND_CURVATURE; 4]),
+            centre: corners(centre_rect, centre_radii, [ROUND_CURVATURE; 4]),
         }
     }
 
     /// Corner curves of the border box inset by fraction `t` of each side's width.
     fn ring(&self, t: f32) -> [Curve; 4] {
         let (rect, radii) = inset(self.rect, self.radii, self.widths.map(|width| width * t));
-        corners(rect, radii)
+        corners(rect, radii, [ROUND_CURVATURE; 4])
     }
 
     /// Region between the two corner diagonals that owns `side`.
@@ -711,6 +777,177 @@ mod path_tests {
     use super::*;
 
     const GEOMETRY_TOLERANCE: f32 = 0.000_01;
+
+    #[test]
+    fn extreme_curvatures_produce_finite_monotone_bounded_paths() {
+        for curvature in [
+            f32::MIN_POSITIVE,
+            0.000_001,
+            0.999_999,
+            1.000_001,
+            32.0,
+            128.0,
+            1023.0,
+            f32::MAX,
+        ] {
+            for sign in [-1.0, 1.0] {
+                for radius in [0.000_001, 1.0, 1000.0, 1.0e20_f32] {
+                    let rect = Rect {
+                        x: -radius,
+                        y: 0.0,
+                        width: radius,
+                        height: radius,
+                    };
+                    let curves = corners(rect, [[radius; 2]; 4], [sign * curvature; 4]);
+                    let Curve::Path(path) = &curves[1] else {
+                        panic!("non-round path expected")
+                    };
+                    assert!(
+                        path.segments.len() < 16384,
+                        "unbounded subdivision: {curvature}, {radius}: {}",
+                        path.segments.len()
+                    );
+                    let mut previous = path.start;
+                    for segment in &path.segments {
+                        let point = segment.end();
+                        assert!(
+                            point.into_iter().all(f32::is_finite),
+                            "nonfinite point: {curvature}, {radius}: {point:?}"
+                        );
+                        assert!(
+                            point[0] >= previous[0] && point[1] >= previous[1],
+                            "nonmonotone: {curvature}, {radius}: {previous:?} -> {point:?}"
+                        );
+                        assert!(
+                            point[0] <= 0.0 && point[1] <= radius,
+                            "outside corner: {point:?}"
+                        );
+                        previous = point;
+                    }
+                    assert_eq!(previous, [0.0, radius]);
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn fractional_superellipses_match_independent_parametric_samples() {
+        const SAMPLE_COUNT: usize = 2048;
+        for curvature in [0.01_f32, 0.5, 1.5, 2.3, 8.0, -0.01, -0.5, -1.0, -2.3, -8.0] {
+            for [rx, ry] in [[25.0, 15.0], [200.0, 2.0], [0.002, 150.0]] {
+                let rect = Rect {
+                    x: 10.0,
+                    y: -20.0,
+                    width: rx * 2.0,
+                    height: ry * 2.0,
+                };
+                let curves = corners(rect, [[rx, ry]; 4], [curvature; 4]);
+                let exponent = 2.0_f64.powf(f64::from(curvature.abs()));
+                let scale = f64::from(rect.width.max(rect.height) + rect.x.abs() + rect.y.abs());
+                let max_error = 0.01 + 2.0 * f64::from(f32::EPSILON) * scale;
+                for (corner, curve) in curves.iter().enumerate() {
+                    let Curve::Path(path) = curve else {
+                        panic!("fractional corner requires a piecewise contour: {curvature}")
+                    };
+                    assert!(
+                        path.segments.len() < 512,
+                        "excessive subdivision: {curvature}, {rx}x{ry}: {}",
+                        path.segments.len()
+                    );
+                    let points: Vec<_> = std::iter::once(path.start)
+                        .chain(path.segments.iter().map(|segment| segment.end()))
+                        .map(to64)
+                        .collect();
+                    // Sample both Cartesian axes so near-angular endpoint layers are covered.
+                    for sample in 0..=SAMPLE_COUNT {
+                        let t = sample as f64 / SAMPLE_COUNT as f64;
+                        for mut p in [
+                            [t, 1.0 - (1.0 - t.powf(exponent)).powf(1.0 / exponent)],
+                            [(1.0 - (1.0 - t).powf(exponent)).powf(1.0 / exponent), t],
+                        ] {
+                            if curvature < 0.0 {
+                                p.swap(0, 1);
+                            }
+                            let [x, y] = match corner {
+                                0 => [p[1], 1.0 - p[0]],
+                                1 => [1.0 + p[0], p[1]],
+                                2 => [2.0 - p[1], 1.0 + p[0]],
+                                _ => [1.0 - p[0], 2.0 - p[1]],
+                            };
+                            let p = [
+                                f64::from(rect.x) + x * f64::from(rx),
+                                f64::from(rect.y) + y * f64::from(ry),
+                            ];
+                            let distance = points
+                                .windows(2)
+                                .map(|edge| {
+                                    let [a, b] = [edge[0], edge[1]];
+                                    let d = [b[0] - a[0], b[1] - a[1]];
+                                    let norm = d[0] * d[0] + d[1] * d[1];
+                                    let t = if norm == 0.0 {
+                                        0.0
+                                    } else {
+                                        ((p[0] - a[0]) * d[0] + (p[1] - a[1]) * d[1]) / norm
+                                    }
+                                    .clamp(0.0, 1.0);
+                                    (p[0] - a[0] - t * d[0]).hypot(p[1] - a[1] - t * d[1])
+                                })
+                                .fold(f64::INFINITY, f64::min);
+                            assert!(
+                                distance <= max_error,
+                                "curvature={curvature}, corner={corner}, radii={rx}x{ry}, sample={sample}, point={p:?}, distance={distance}"
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn angular_corners_follow_box_orientation_and_keep_zero_radii_sharp() {
+        let rect = Rect {
+            x: 10.0,
+            y: 20.0,
+            width: 80.0,
+            height: 60.0,
+        };
+        let starts = [[10.0, 35.0], [65.0, 20.0], [90.0, 65.0], [35.0, 80.0]];
+        let ends = [[35.0, 20.0], [90.0, 35.0], [65.0, 80.0], [10.0, 65.0]];
+        let notches = [[35.0, 35.0], [65.0, 35.0], [65.0, 65.0], [35.0, 65.0]];
+        let squares = [[10.0, 20.0], [90.0, 20.0], [90.0, 80.0], [10.0, 80.0]];
+        for curvature in [0.0, f32::NEG_INFINITY, f32::INFINITY] {
+            let curves = corners(rect, [[25.0, 15.0]; 4], [curvature; 4]);
+            for (index, curve) in curves.iter().enumerate() {
+                assert_eq!(
+                    curve.start(),
+                    starts[index],
+                    "curvature={curvature}, corner={index}"
+                );
+                let expected = if curvature == 0.0 {
+                    vec![Segment::Line(ends[index])]
+                } else {
+                    let vertex = if curvature.is_sign_positive() {
+                        squares[index]
+                    } else {
+                        notches[index]
+                    };
+                    vec![Segment::Line(vertex), Segment::Line(ends[index])]
+                };
+                assert_eq!(
+                    curve.forward().collect::<Vec<_>>(),
+                    expected,
+                    "curvature={curvature}, corner={index}"
+                );
+            }
+            for curve in corners(rect, [[0.0, 15.0]; 4], [curvature; 4]) {
+                assert!(
+                    curve.is_point(),
+                    "zero horizontal radius must leave a sharp corner"
+                );
+            }
+        }
+    }
 
     #[test]
     fn cubic_corner_cut_and_extension_preserve_the_parametric_curve() {
