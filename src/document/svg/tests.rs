@@ -506,7 +506,10 @@ fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
             "text{font-variant-caps:all-small-caps}",
             "font-variant-caps",
         ),
-        ("rect{color-interpolation:linearRGB}", "color-interpolation"),
+        (
+            "rect{color-interpolation:linearRGB;opacity:0.5}",
+            "linearRGB compositing",
+        ),
         (
             "rect{mix-blend-mode:plus-lighter}",
             "additive mix-blend-mode",

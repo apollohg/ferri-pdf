@@ -18,10 +18,6 @@ use crate::style::{
 };
 use std::sync::Arc;
 
-/// SVG 2 §13.9 `linearRGB` interpolates gradients and composites in linear light, which the
-/// SVG renderer does not implement.
-const LINEAR_INTERPOLATION: &str = "color-interpolation: linearRGB";
-
 /// A computed `<paint>` (SVG 2 §13.2): colours computed, references kept.
 #[derive(Clone, Debug, PartialEq)]
 pub(crate) enum Paint {
@@ -453,17 +449,8 @@ svg_property!(paint_order, paint_order, |value, _style, _relative| {
         .filter_map(PaintLayer::from_keyword)
         .collect()
 });
-svg_property!(
-    color_interpolation,
-    color_interpolation,
-    |value, _style, _relative| {
-        match value.keyword() {
-            // §13.9: `auto` leaves the colour space to the user agent, which keeps sRGB.
-            Some(keyword @ (Keyword::Auto | Keyword::Srgb)) => keyword,
-            _ => return Err(StyleError::Unsupported(LINEAR_INTERPOLATION.into())),
-        }
-    }
-);
+// §13.9: `auto` leaves the colour space to the user agent, which keeps sRGB.
+svg_keyword!(color_interpolation, color_interpolation);
 svg_keyword!(fill_rule, fill_rule);
 svg_keyword!(clip_rule, clip_rule);
 svg_keyword!(stroke_linecap, stroke_linecap);

@@ -40,7 +40,7 @@ pub(crate) use calculation::{
 pub use clip::{Clip, ClipBounds};
 pub(crate) use color_space::{
     AbsoluteColor, ColorSpace, HueInterpolation, Interpolation, MixItem, distribute_mix,
-    normalize_hue, normalize_mix, quantize,
+    normalize_hue, normalize_mix, quantize, srgb_from_linear, srgb_to_linear,
 };
 pub use decoration::{DecorationLine, DecorationPaint, DecorationStyle};
 pub(crate) use easing::{Easing, LinearPoint, StepPosition};

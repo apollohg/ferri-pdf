@@ -718,7 +718,7 @@ fn multiply(matrix: &Matrix, vector: Vector) -> Vector {
 fn signed(value: f64, transfer: impl Fn(f64) -> f64) -> f64 {
     transfer(value.abs()).copysign(value)
 }
-fn srgb_to_linear(value: f64) -> f64 {
+pub(crate) fn srgb_to_linear(value: f64) -> f64 {
     signed(value, |magnitude| {
         if magnitude <= SRGB_LINEAR_LIMIT {
             magnitude / SRGB_LINEAR_SLOPE
@@ -727,7 +727,7 @@ fn srgb_to_linear(value: f64) -> f64 {
         }
     })
 }
-fn srgb_from_linear(value: f64) -> f64 {
+pub(crate) fn srgb_from_linear(value: f64) -> f64 {
     signed(value, |magnitude| {
         if magnitude > SRGB_GAMMA_LIMIT {
             (1.0 + SRGB_OFFSET) * magnitude.powf(1.0 / SRGB_GAMMA) - SRGB_OFFSET

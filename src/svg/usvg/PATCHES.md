@@ -65,3 +65,7 @@ Image `href`s of a referenced document resolve against that document's URL.
 flattened outlines of text, in the host coordinate space while their paint stays in user space,
 and `non-scaling-size`, `non-rotation` and `fixed-position` constrain the element's transform
 by the §8.13.1 formulas.
+
+`color-interpolation: linearRGB` on a gradient interpolates its stops in linear light (SVG 2
+§13.9): stops are added where the sRGB curve of that interpolation departs from a straight line
+by more than a quarter of an 8-bit step.

@@ -209,6 +209,26 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
             self.assertPixel(pixels, 35, 45, WHITE, 'overflow-x: hidden clips the left')
             self.assertPixel(pixels, 65, 45, WHITE, 'overflow-x: hidden clips the right')
 
+    def test_linear_rgb_gradients_interpolate_in_linear_light(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            pixels = self.render(
+                Path(directory), '#light{color-interpolation:linearRGB}',
+                f'<svg width="{4 * ICON}pt" height="{ICON}pt" viewBox="0 0 {4 * ICON} {ICON}">'
+                '<linearGradient id="light"><stop offset="0" stop-color="black"/>'
+                '<stop offset="1" stop-color="white"/></linearGradient>'
+                '<linearGradient id="plain"><stop offset="0" stop-color="black"/>'
+                '<stop offset="1" stop-color="white"/></linearGradient>'
+                f'<rect width="{2 * ICON}" height="{SQUARE}" fill="url(#light)"/>'
+                f'<rect y="{SQUARE}" width="{2 * ICON}" height="{SQUARE}" fill="url(#plain)"/>'
+                '</svg>')
+            # Half way, linear light 0.5 encodes to sRGB 0.735 (188); sRGB gives 0.5 (128).
+            for y, expected, space in ((SQUARE // 2, 188, 'linear light'),
+                                       (SQUARE + SQUARE // 2, 128, 'sRGB')):
+                grey = pixels.getpixel((PAGE_MARGIN + ICON, PAGE_MARGIN + y))
+                self.assertTrue(all(abs(channel - expected) <= 4 for channel in grey),
+                                f'SVG 2 §13.9: the gradient interpolates in {space}: {grey} '
+                                f'half way, expected {expected}')
+
     def test_stroke_color_paints_where_the_stroke_paint_paints_nothing(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
             pixels = self.render(

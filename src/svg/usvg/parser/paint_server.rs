@@ -64,7 +64,7 @@ fn convert_linear(
     state: &converter::State,
     id: NonEmptyString,
 ) -> Option<ServerOrColor> {
-    let stops = convert_stops(find_gradient_with_stops(node)?);
+    let stops = interpolated_stops(node, convert_stops(find_gradient_with_stops(node)?));
     if stops.len() < 2 {
         return stops_to_color(&stops);
     }
@@ -105,7 +105,7 @@ fn convert_radial(
     state: &converter::State,
     id: NonEmptyString,
 ) -> Option<ServerOrColor> {
-    let stops = convert_stops(find_gradient_with_stops(node)?);
+    let stops = interpolated_stops(node, convert_stops(find_gradient_with_stops(node)?));
     if stops.len() < 2 {
         return stops_to_color(&stops);
     }
@@ -313,6 +313,71 @@ fn find_pattern_with_children<'a, 'input: 'a>(
     }
 
     None
+}
+
+const LINEAR_RGB: &str = "linearRGB";
+const CHANNEL_MAX: f64 = 255.0;
+/// The error that linear interpolation between generated stops keeps within: a quarter of an
+/// 8-bit channel step.
+const LINEAR_LIGHT_TOLERANCE: f64 = 0.25 / CHANNEL_MAX;
+/// Halvings of a stop interval while matching linear light.
+const MAX_LINEAR_LIGHT_DEPTH: u32 = 16;
+
+/// SVG 2 §13.9: `color-interpolation: linearRGB` on the gradient interpolates its stops in
+/// linear light. PDF shadings interpolate sRGB values linearly, so stops are added where the
+/// sRGB curve of the linear-light interpolation bends past the tolerance.
+fn interpolated_stops(gradient: SvgNode, stops: Vec<Stop>) -> Vec<Stop> {
+    if gradient.find_attribute::<&str>(AId::ColorInterpolation) != Some(LINEAR_RGB) {
+        return stops;
+    }
+    let mut output: Vec<Stop> = stops.first().copied().into_iter().collect();
+    for pair in stops.windows(2) {
+        let [start, end] = [pair[0], pair[1]];
+        let channels = |stop: Stop| {
+            [stop.color.red, stop.color.green, stop.color.blue]
+                .map(|channel| crate::paint::srgb_to_linear(f64::from(channel) / CHANNEL_MAX))
+        };
+        let (from, to) = (channels(start), channels(end));
+        let at = |t: f64| {
+            [0, 1, 2].map(|index| {
+                crate::paint::srgb_from_linear(from[index] + (to[index] - from[index]) * t)
+            })
+        };
+        let mut positions = Vec::new();
+        subdivide([0.0, 1.0], &at, 0, &mut positions);
+        let [first, last] = [start.offset.get(), end.offset.get()];
+        for t in positions {
+            let [red, green, blue] =
+                at(t).map(|channel| (channel * CHANNEL_MAX).round().clamp(0.0, CHANNEL_MAX) as u8);
+            let mix = |a: f32, b: f32| a + (b - a) * t as f32;
+            output.push(Stop {
+                offset: StopOffset::new_clamped(mix(first, last)),
+                color: Color::new_rgb(red, green, blue),
+                opacity: Opacity::new_clamped(mix(start.opacity.get(), end.opacity.get())),
+            });
+        }
+    }
+    output
+}
+
+/// The ends of the pieces of `[t0, t1]` over which the sRGB curve `at` stays within the
+/// tolerance of a straight line, in order.
+fn subdivide([t0, t1]: [f64; 2], at: &dyn Fn(f64) -> [f64; 3], depth: u32, output: &mut Vec<f64>) {
+    let [start, end] = [at(t0), at(t1)];
+    let straight = [0.25, 0.5, 0.75].into_iter().all(|fraction| {
+        let sample = at(t0 + (t1 - t0) * fraction);
+        (0..3).all(|channel| {
+            let line = start[channel] + (end[channel] - start[channel]) * fraction;
+            (sample[channel] - line).abs() <= LINEAR_LIGHT_TOLERANCE
+        })
+    });
+    if straight || depth >= MAX_LINEAR_LIGHT_DEPTH {
+        output.push(t1);
+    } else {
+        let middle = (t0 + t1) / 2.0;
+        subdivide([t0, middle], at, depth + 1, output);
+        subdivide([middle, t1], at, depth + 1, output);
+    }
 }
 
 fn convert_stops(grad: SvgNode) -> Vec<Stop> {
