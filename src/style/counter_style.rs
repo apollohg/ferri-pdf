@@ -862,6 +862,7 @@ static PREDEFINED_RULES: LazyLock<Vec<CounterStyleRule>> = LazyLock::new(|| {
     let rules = crate::style::parser::rules(
         Arc::from(include_str!("counter-styles.css")),
         &base,
+        crate::style::selector::SelectorOrigin::UserAgent,
         &diagnostics,
         &mut crate::style::loader::Budget::unlimited(),
     )

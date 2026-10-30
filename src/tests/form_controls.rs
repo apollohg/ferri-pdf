@@ -288,6 +288,46 @@ fn base_list_boxes_render_their_options_with_checkmarks_and_size_rows() {
 }
 
 #[test]
+fn internal_select_pseudo_classes_select_only_in_the_user_agent_style_sheet() {
+    // Selectors 4 §3.9: author and user style sheets know no `:-ferri-*` pseudo-class, so a
+    // selector naming one is invalid and its rule is dropped; inside a forgiving list only
+    // that selector is.
+    let internal = "select:-ferri-base-select option, select:-ferri-list-box option";
+    let body = format!(
+        "<style>select{{appearance:base-select}}{internal}{{color:#123456}}\
+         select:is(:-ferri-list-box, #none) option{{color:#123456}}\
+         @supports selector(:-ferri-base-select){{option{{color:#123456}}}}</style>\
+         <select size=2><option>Alpha</option><option selected>Beta</option></select>"
+    );
+    let mut options = local_options();
+    options
+        .user_stylesheets
+        .push(format!("{internal}{{color:#123456}}"));
+    let list = render_html(
+        &format!(
+            "<!doctype html><style>{}{PAGE}</style>{body}",
+            common::PROFILE
+        ),
+        &options,
+    )
+    .unwrap_or_else(|error| panic!("rendering `{body}`: {error}"))
+    .layout
+    .unwrap();
+    assert_eq!(
+        control_texts(&list),
+        ["Alpha", CHECKMARK, "Beta"],
+        "the user-agent rules for base list boxes still apply"
+    );
+    for option in ["Alpha", "Beta"] {
+        assert_ne!(
+            line(&list, option).color.rgb,
+            PROBE,
+            "no author or user rule naming an internal pseudo-class styles {option}"
+        );
+    }
+}
+
+#[test]
 fn checkboxes_and_gauges_are_replaced_by_drawings_only_in_native_appearance() {
     let checkbox = trace("<input type=checkbox checked style='margin:0;font-size:16px'>");
     let rects = widgets(&checkbox);

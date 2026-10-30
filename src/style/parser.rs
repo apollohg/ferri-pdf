@@ -22,16 +22,23 @@ pub(super) struct Declaration {
 pub(super) struct RuleContext {
     nested: bool,
     mode: crate::style::selector::SelectorMode,
+    sheet: crate::style::selector::SelectorOrigin,
 }
 impl RuleContext {
-    const ROOT: Self = Self {
-        nested: false,
-        mode: crate::style::selector::SelectorMode::Normal,
-    };
-    const STYLE: Self = Self {
-        nested: true,
-        mode: crate::style::selector::SelectorMode::Nesting,
-    };
+    fn root(sheet: crate::style::selector::SelectorOrigin) -> Self {
+        Self {
+            nested: false,
+            mode: crate::style::selector::SelectorMode::Normal,
+            sheet,
+        }
+    }
+    fn style(self) -> Self {
+        Self {
+            nested: true,
+            mode: crate::style::selector::SelectorMode::Nesting,
+            ..self
+        }
+    }
     fn scoped(self) -> Self {
         Self {
             mode: crate::style::selector::SelectorMode::Scope,
@@ -332,6 +339,7 @@ const MAX_GROUP_DEPTH: usize = 256;
 pub(super) fn rules(
     text: Arc<str>,
     base: &ResourceBase,
+    sheet: crate::style::selector::SelectorOrigin,
     diagnostics: &RefCell<Vec<StyleDiagnostic>>,
     budget: &mut crate::style::loader::Budget,
 ) -> Result<Vec<Rule>, StyleError> {
@@ -346,7 +354,7 @@ pub(super) fn rules(
         },
         depth: 0,
         namespaces: Namespaces::default(),
-        context: RuleContext::ROOT,
+        context: RuleContext::root(sheet),
         initial_declarations: false,
     }
     .parse(diagnostics, budget)
@@ -965,7 +973,7 @@ fn at_prelude<'i>(
     chain: &mut Option<cssparser::SourcePosition>,
     base: &ResourceBase,
     namespaces: &Namespaces,
-    mode: crate::style::selector::SelectorMode,
+    context: RuleContext,
     forgiving: bool,
 ) -> Result<AtPrelude, ParseError<'i, StyleError>> {
     let previous = chain.take();
@@ -976,7 +984,8 @@ fn at_prelude<'i>(
         return crate::style::scope::ScopePrelude::parse(
             input,
             &namespaces.borrow(),
-            mode,
+            context.mode,
+            context.sheet,
             forgiving,
         )
         .map(AtPrelude::Scope);
@@ -1302,7 +1311,7 @@ impl<'i> AtRuleParser<'i> for CssParser<'_> {
             &mut self.chain,
             self.base,
             &self.namespaces,
-            self.context.mode,
+            self.context,
             true,
         )
     }
@@ -1464,7 +1473,12 @@ impl<'i> QualifiedRuleParser<'i> for CssParser<'_> {
         self.budget
             .rule(|| SourceLocation::new(self.base, input.current_source_location()))
             .map_err(|error| input.new_custom_error(error))?;
-        crate::style::selector::parse(input, &self.namespaces.borrow(), self.context.mode)
+        crate::style::selector::parse(
+            input,
+            &self.namespaces.borrow(),
+            self.context.mode,
+            self.context.sheet,
+        )
     }
 
     fn parse_block<'t>(
@@ -1476,7 +1490,7 @@ impl<'i> QualifiedRuleParser<'i> for CssParser<'_> {
         self.imports_allowed = false;
         self.namespaces_allowed = false;
         let mut source = self.group_contents(input, self.context.nested)?;
-        source.context = RuleContext::STYLE;
+        source.context = self.context.style();
         source.initial_declarations = true;
         Ok(Rule::Style(NestedRule {
             selectors,
@@ -1806,7 +1820,7 @@ impl<'i> AtRuleParser<'i> for SupportProbe<'_> {
             &mut self.chain,
             &self.start.base,
             self.namespaces,
-            rules.mode,
+            rules,
             false,
         )?;
         let context = match prelude {
@@ -1886,6 +1900,7 @@ impl<'i> QualifiedRuleParser<'i> for SupportProbe<'_> {
             source,
             &self.namespaces.borrow(),
             context.mode,
+            context.sheet,
         ))
     }
     fn parse_block<'t>(
@@ -1895,9 +1910,12 @@ impl<'i> QualifiedRuleParser<'i> for SupportProbe<'_> {
         input: &mut Parser<'i, 't>,
     ) -> Result<Self::QualifiedRule, ParseError<'i, StyleError>> {
         if supported {
+            let ProbeContext::Style(context, _) = self.context else {
+                unreachable!("qualified descriptor rules are disabled")
+            };
             let location = Self::location(self.start, input);
             Ok(ProbeItem::Body(
-                ProbeContext::Style(RuleContext::STYLE, true),
+                ProbeContext::Style(context.style(), true),
                 block_source(input),
                 location,
             ))

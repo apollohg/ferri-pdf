@@ -1,7 +1,7 @@
 use crate::dom::{Element, ElementId, ScopeRoot, SelectorScope, TreeContext, TreeRelation};
 use crate::style::{
     StyleError,
-    selector::{self, NamespaceMap, RuleSelector, SelectorMode},
+    selector::{self, NamespaceMap, RuleSelector, SelectorMode, SelectorOrigin},
 };
 use cssparser::{ParseError, Parser};
 use std::collections::HashMap;
@@ -16,11 +16,12 @@ impl ScopePrelude {
         input: &mut Parser<'i, '_>,
         namespaces: &NamespaceMap,
         mode: SelectorMode,
+        sheet: SelectorOrigin,
         forgiving: bool,
     ) -> Result<Self, ParseError<'i, StyleError>> {
         let start = if input.try_parse(Parser::expect_parenthesis_block).is_ok() {
             Some(input.parse_nested_block(|input| {
-                selector::scope_boundary(input, namespaces, mode, forgiving)
+                selector::scope_boundary(input, namespaces, mode, sheet, forgiving)
             })?)
         } else {
             None
@@ -31,7 +32,7 @@ impl ScopePrelude {
             input.expect_ident_matching("to")?;
             input.expect_parenthesis_block()?;
             input.parse_nested_block(|input| {
-                selector::scope_boundary(input, namespaces, SelectorMode::Scope, forgiving)
+                selector::scope_boundary(input, namespaces, SelectorMode::Scope, sheet, forgiving)
             })?
         };
         input.expect_exhausted()?;

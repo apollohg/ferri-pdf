@@ -445,7 +445,13 @@ impl<'a> Loader<'a> {
         } else {
             &mut self.budget
         };
-        let parsed = rules(text, &context.base, &self.prepared.diagnostics, budget)?;
+        let parsed = rules(
+            text,
+            &context.base,
+            crate::style::selector::selector_origin(context.origin),
+            &self.prepared.diagnostics,
+            budget,
+        )?;
         let mut pending: Vec<_> = parsed
             .into_iter()
             .enumerate()

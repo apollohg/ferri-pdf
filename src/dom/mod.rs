@@ -12,7 +12,7 @@ mod tree;
 pub(crate) use attributes::{integer_digits, non_negative_integer_digits};
 pub(crate) use selector::{
     GeneratedPseudoElement, NamespaceMap, PseudoElement, ScopeRoot, Selector, SelectorMode,
-    SelectorScope, TreeContext, parse_namespace,
+    SelectorOrigin, SelectorScope, TreeContext, parse_namespace,
 };
 pub(crate) use state::{Directionality, InitialState};
 

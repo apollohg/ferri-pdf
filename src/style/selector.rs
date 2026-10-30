@@ -1,6 +1,6 @@
 use crate::dom::{Element, Selector, TreeContext, TreeScopeId};
 pub(crate) use crate::dom::{GeneratedPseudoElement, PseudoElement};
-pub(super) use crate::dom::{NamespaceMap, SelectorMode};
+pub(super) use crate::dom::{NamespaceMap, SelectorMode, SelectorOrigin};
 use crate::style::{
     StyleError,
     parser::{balanced_components, consume, raw},
@@ -16,6 +16,14 @@ pub(super) fn tree_context(
         scope.map_or(TreeContext::Document, TreeContext::Root)
     } else {
         TreeContext::All
+    }
+}
+
+pub(super) fn selector_origin(origin: crate::style::cascade::Origin) -> SelectorOrigin {
+    if origin == crate::style::cascade::Origin::UserAgent {
+        SelectorOrigin::UserAgent
+    } else {
+        SelectorOrigin::Author
     }
 }
 
@@ -69,11 +77,12 @@ impl RuleSelector {
         source: &str,
         namespaces: &NamespaceMap,
         mode: SelectorMode,
+        sheet: SelectorOrigin,
     ) -> Result<Self, StyleError> {
         let mut source_input = ParserInput::new(source);
         let (origin, pseudo) = originating_selector(&mut Parser::new(&mut source_input))
             .map_err(|error| StyleError::Invalid(format!("selector {source}: {error:?}")))?;
-        let selector = Selector::parse_context(&origin, namespaces, true, mode)
+        let selector = Selector::parse_context(&origin, namespaces, true, mode, sheet)
             .map_err(|error| StyleError::Invalid(format!("selector {source}: {error:?}")))?;
         Self::from_parsed(selector, pseudo)
     }
@@ -180,11 +189,12 @@ pub(super) fn scope_boundary<'i>(
     input: &mut Parser<'i, '_>,
     namespaces: &NamespaceMap,
     mode: SelectorMode,
+    sheet: SelectorOrigin,
     forgiving: bool,
 ) -> Result<Vec<RuleSelector>, ParseError<'i, StyleError>> {
     input.parse_comma_separated(|input| {
         let source = raw(input)?;
-        let selector = Selector::parse_scope_boundary(&source, namespaces, forgiving, mode)
+        let selector = Selector::parse_scope_boundary(&source, namespaces, forgiving, mode, sheet)
             .map_err(|error| {
                 input.new_custom_error(StyleError::Invalid(format!("scope selector: {error:?}")))
             })?;
@@ -273,33 +283,43 @@ pub(super) fn parse<'i>(
     input: &mut Parser<'i, '_>,
     namespaces: &NamespaceMap,
     mode: SelectorMode,
+    sheet: SelectorOrigin,
 ) -> Result<Vec<RuleSelector>, ParseError<'i, StyleError>> {
     input.parse_comma_separated(|input| {
         let source = raw(input)?;
-        RuleSelector::parse_context(&source, namespaces, mode)
+        RuleSelector::parse_context(&source, namespaces, mode, sheet)
             .map_err(|error| input.new_custom_error(error))
     })
 }
 
+/// `selector()` (CSS Conditional 4 §5.2) tests the selector syntax author style sheets take.
 pub(super) fn supports_selectors_with_namespaces(
     source: &str,
     list: bool,
     namespaces: &NamespaceMap,
 ) -> bool {
-    supports_selectors(source, list, namespaces, SelectorMode::Normal)
+    supports_selectors(
+        source,
+        list,
+        namespaces,
+        SelectorMode::Normal,
+        SelectorOrigin::Author,
+    )
 }
 pub(super) fn supports_context_selectors(
     source: &str,
     namespaces: &NamespaceMap,
     mode: SelectorMode,
+    sheet: SelectorOrigin,
 ) -> bool {
-    supports_selectors(source, true, namespaces, mode)
+    supports_selectors(source, true, namespaces, mode, sheet)
 }
 fn supports_selectors(
     source: &str,
     list: bool,
     namespaces: &NamespaceMap,
     mode: SelectorMode,
+    sheet: SelectorOrigin,
 ) -> bool {
     if !matches!(balanced_components(source), Ok(true)) {
         return false;
@@ -307,7 +327,7 @@ fn supports_selectors(
     let mut input = ParserInput::new(source);
     let parsed = Parser::new(&mut input).parse_comma_separated(|input| {
         let (origin, _) = originating_selector(input)?;
-        Selector::parse_context(&origin, namespaces, false, mode)
+        Selector::parse_context(&origin, namespaces, false, mode, sheet)
             .map_err(|error| {
                 input.new_custom_error(StyleError::Invalid(format!("selector: {error:?}")))
             })

@@ -87,6 +87,15 @@ impl SelectorMode {
     }
 }
 
+/// The style sheet a selector comes from. Only the user-agent style sheet takes the engine's
+/// internal pseudo-classes, which express HTML rendering conditions in prose; every other
+/// selector treats them as unknown, so it is invalid (Selectors 4 §3.9).
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub(crate) enum SelectorOrigin {
+    UserAgent,
+    Author,
+}
+
 const ROOT_SELECTOR_DEPTH: usize = 1;
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
@@ -197,7 +206,13 @@ impl Selector {
         namespaces: &NamespaceMap,
         forgiving: bool,
     ) -> Result<Self, SelectorError<'i>> {
-        Self::parse_context(input, namespaces, forgiving, SelectorMode::Normal)
+        Self::parse_context(
+            input,
+            namespaces,
+            forgiving,
+            SelectorMode::Normal,
+            SelectorOrigin::Author,
+        )
     }
 
     pub(crate) fn parse_context<'i>(
@@ -205,8 +220,9 @@ impl Selector {
         namespaces: &NamespaceMap,
         forgiving: bool,
         mode: SelectorMode,
+        origin: SelectorOrigin,
     ) -> Result<Self, SelectorError<'i>> {
-        Self::parse_unresolved(input, namespaces, forgiving, mode.relative(), true)
+        Self::parse_unresolved(input, namespaces, forgiving, mode.relative(), true, origin)
             .map(|selector| selector.bind_context(mode))
     }
 
@@ -215,8 +231,9 @@ impl Selector {
         namespaces: &NamespaceMap,
         forgiving: bool,
         mode: SelectorMode,
+        origin: SelectorOrigin,
     ) -> Result<Self, SelectorError<'i>> {
-        Self::parse_unresolved(input, namespaces, forgiving, mode.relative(), false)
+        Self::parse_unresolved(input, namespaces, forgiving, mode.relative(), false, origin)
             .map(|selector| selector.bind_context(mode))
     }
 
@@ -240,10 +257,12 @@ impl Selector {
         forgiving: bool,
         relative: ParseRelative,
         allow_pseudo: bool,
+        origin: SelectorOrigin,
     ) -> Result<Self, SelectorError<'i>> {
         let parser = &StaticParser {
             namespaces,
             forgiving,
+            origin,
         };
         let mut source = ParserInput::new(input);
         let input = &mut Parser::new(&mut source);
@@ -299,9 +318,16 @@ impl Selector {
     /// `None` for the sub-pseudo-elements, which no single compound selector can follow.
     pub(crate) fn with_pseudo_element(&self, pseudo: PseudoElement) -> Option<Self> {
         let source = format!("&{}", pseudo.source());
-        Self::parse_unresolved(&source, &NamespaceMap::new(), true, ParseRelative::No, true)
-            .ok()
-            .map(|selector| selector.resolve_parent(self))
+        Self::parse_unresolved(
+            &source,
+            &NamespaceMap::new(),
+            true,
+            ParseRelative::No,
+            true,
+            SelectorOrigin::Author,
+        )
+        .ok()
+        .map(|selector| selector.resolve_parent(self))
     }
 
     pub(crate) fn single_specificity(&self) -> Option<u32> {
@@ -448,6 +474,7 @@ impl Selector {
 struct StaticParser<'a> {
     namespaces: &'a NamespaceMap,
     forgiving: bool,
+    origin: SelectorOrigin,
 }
 impl<'i> parser::Parser<'i> for StaticParser<'_> {
     type Impl = StaticSelector;
@@ -515,8 +542,12 @@ impl<'i> parser::Parser<'i> for StaticParser<'_> {
             "has-slotted" => Some(StaticState::HasSlotted),
             "paused" => Some(StaticState::Paused),
             "muted" => Some(StaticState::Muted),
-            BASE_SELECT_PSEUDO_CLASS => Some(StaticState::BaseSelect),
-            LIST_BOX_PSEUDO_CLASS => Some(StaticState::ListBox),
+            BASE_SELECT_PSEUDO_CLASS if self.origin == SelectorOrigin::UserAgent => {
+                Some(StaticState::BaseSelect)
+            }
+            LIST_BOX_PSEUDO_CLASS if self.origin == SelectorOrigin::UserAgent => {
+                Some(StaticState::ListBox)
+            }
             _ => FormState::parse(&name).map(StaticState::Form),
         };
         if let Some(state) = state {
@@ -807,8 +838,8 @@ pub(crate) enum StaticState {
     Paused,
     /// HTML §4.8.11.13: a media element is muted from its `muted` content attribute.
     Muted,
-    /// Vendor extensions selecting the `select` elements that HTML §15.5.16 styles by their
-    /// rendering: one with base appearance, and one rendered as a list box.
+    /// User-agent-only pseudo-classes selecting the `select` elements that HTML §15.5.16
+    /// styles by their rendering: one with base appearance, and one rendered as a list box.
     BaseSelect,
     ListBox,
     /// `:state()` (Selectors 5 §5.2): custom element states, which only script adds.
