@@ -75,6 +75,8 @@ a[href] { color: #0000ee; text-decoration: underline; }
 ins, u { text-decoration: underline; }
 del, s, strike { text-decoration: line-through; }
 abbr[title], acronym[title] { text-decoration: dotted underline; }
+/* CSS Text Decoration 4 §2.10 */
+ins, del { text-decoration-skip: none; }
 mark { color: black; background-color: yellow; }
 /* HTML Standard §15.3.4 and CSS Ruby 1 Appendix A.1, whose bopomofo selector list ends
    without a trailing comma. */
