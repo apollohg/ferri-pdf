@@ -4739,6 +4739,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             .find_map(|source| table.layers.get(&(std::ptr::from_ref(*source) as usize)));
         let clip = layer.map_or(self.clip, |layer| layer.clip);
         let group = layer.and_then(|layer| layer.group);
+        let scope = layer.map(|layer| layer.paint.background.clone());
         let style = ancestor.source.style();
         let paint = BoxPaint::whole(rect, table.flow.plan.structural_decoration(ancestor.source));
         let mut parent = clip;
@@ -4757,9 +4758,26 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
             parent = self.clips[node].parent;
         }
-        if Group::of(style).anchored()
+        let effect = Group::of(style);
+        if effect.anchored()
             && let Some(node) = group
         {
+            // The filtered backdrop lies behind each of the row or row group's box fragments.
+            if let Some(backdrop) = effect.backdrop(&paint)
+                && let Some(scope) = scope
+            {
+                self.display_lists[page].push(ScopedPaint {
+                    native: None,
+                    visible: style.visibility.is_visible(),
+                    scope,
+                    order: PaintOrder::FIRST,
+                    clip,
+                    group,
+                    ink: None,
+                    item: backdrop,
+                    navigation: BoxNavigation::default(),
+                });
+            }
             self.clips[node].paints.push((page, paint));
         }
         self.anchors.record(
@@ -6782,13 +6800,6 @@ fn clipped(
                 .filter(|(fragment_page, _)| *fragment_page == page)
                 .map(|(_, paint)| paint.clone())
                 .collect();
-            if !effect.backdrop.is_empty() && fragments.is_empty() {
-                return Err(LayoutError::Style(crate::style::StyleError::Unsupported(
-                    "backdrop-filter on a table row or row group, which has no border box \
-                     fragment to clip its backdrop to"
-                        .into(),
-                )));
-            }
             let mut pushes = effect.pushes(&fragments);
             let pushes = if let Some(space) = nodes[index].native {
                 physical

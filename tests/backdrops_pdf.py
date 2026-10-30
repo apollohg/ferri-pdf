@@ -232,5 +232,28 @@ height:{PANEL[3]}pt}}{css}</style>{body}''')
             self.assertNear(self.raster(root, output).getpixel((25, 20)), (10, 120, 250),
                             'white is the identity of plus-darker')
 
+    def test_table_rows_and_row_groups_filter_the_backdrop_behind_their_boxes(self):
+        # Two 50pt rows fill the panel; the cell text sits at the left, away from the probes.
+        table = ('<table class=panel><tbody><tr class=first><td>A</td></tr>'
+                 '<tr class=second><td>B</td></tr></tbody></table>')
+        layout = 'table{border-spacing:0}td{padding:0;height:50pt;vertical-align:top}'
+        top, bottom = PANEL[1] + 25, PANEL[1] + 75
+        for owner, inverted in [('.first', (top,)), ('tbody', (top, bottom))]:
+            with self.subTest(owner=owner), tempfile.TemporaryDirectory(
+                    prefix='ferri-pdf-backdrop-') as directory:
+                root = Path(directory)
+                output = self.render(root, f'{layout}{owner}{{backdrop-filter:invert(1)}}',
+                                     STRIPE_ELEMENTS + table)
+                pixels = self.raster(root, output)
+                for row in (top, bottom):
+                    for x in (145, 155):
+                        expected = stripe(x)
+                        if row in inverted:
+                            expected = WHITE if expected == BLACK else BLACK
+                        self.assertNear(pixels.getpixel((x, row)), expected,
+                                        f'{owner}: backdrop at ({x}, {row})')
+                self.assertEqual(pixels.getpixel((145, PANEL[1] - 2)), stripe(145),
+                                 f'{owner}: the backdrop stays inside the box')
+
 if __name__ == '__main__':
     unittest.main()
