@@ -197,3 +197,36 @@ fn aligned_block_level_boxes_size_automatic_widths_as_fit_content() {
     assert_labelled_pt("stretched width", rect.width, 200.0);
     assert_labelled_pt("stretched x", rect.x, ORIGIN);
 }
+
+#[test]
+fn table_cells_align_content_by_align_content_over_vertical_align() {
+    const CELL_PT: f32 = 100.0;
+    const SUBJECT_PT: f32 = 20.0;
+    for (declarations, offset) in [
+        ("align-content:end;vertical-align:top", CELL_PT - SUBJECT_PT),
+        ("align-content:start;vertical-align:bottom", 0.0),
+        (
+            "align-content:center;vertical-align:top",
+            (CELL_PT - SUBJECT_PT) / 2.0,
+        ),
+        (
+            "align-content:space-evenly;vertical-align:top",
+            (CELL_PT - SUBJECT_PT) / 2.0,
+        ),
+        ("vertical-align:bottom", CELL_PT - SUBJECT_PT),
+    ] {
+        let trace = render(
+            &format!(
+                "body{{margin:0}}table{{border-spacing:0}}\
+                 td{{height:{CELL_PT}pt;padding:0;{declarations}}}\
+                 .subject{{width:{SUBJECT_PT}pt;height:{SUBJECT_PT}pt}}"
+            ),
+            "<table><tr><td><div class=subject></div></td></tr></table>",
+        );
+        assert_labelled_pt(
+            &format!("{declarations}: content offset in the cell"),
+            painted_box(&trace, SUBJECT).y - ORIGIN,
+            offset,
+        );
+    }
+}

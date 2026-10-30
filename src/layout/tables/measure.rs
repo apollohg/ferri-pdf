@@ -71,7 +71,7 @@ pub(crate) fn cell_height(measured: &MeasuredBlock<'_>) -> CellHeight {
     CellHeight {
         height: measured.height,
         baseline: measured.first_baseline().unwrap_or(measured.height),
-        align: measured.style.table.vertical_align.cell(),
+        align: measured.style.cell_alignment(),
         constraint: HeightConstraint {
             specified: measured.style.height.clone(),
             minimum: measured.style.min_height.clone(),
@@ -1210,7 +1210,7 @@ impl<'a> TablePlan<'a> {
                         && crate::layout::pagination::overflows(extent + required, available)))
             {
                 let extra = (extent - spacing - alignment.content_height).max(0.0);
-                return match self.data.cells[index].style().table.vertical_align.cell() {
+                return match self.data.cells[index].style().cell_alignment() {
                     crate::style::VerticalAlign::Middle => extra / 2.0,
                     crate::style::VerticalAlign::Bottom => extra,
                     _ => alignment

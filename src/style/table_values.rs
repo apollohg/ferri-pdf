@@ -55,6 +55,22 @@ impl VerticalAlign {
         }
     }
 }
+impl Style {
+    /// How a table cell aligns its content: by `align-content` other than `normal`, which
+    /// otherwise takes its `vertical-align` (CSS Box Alignment 3 §5.1.1).
+    pub(crate) fn cell_alignment(&self) -> VerticalAlign {
+        use crate::style::Alignment;
+        match self.flex.align_content {
+            Alignment::Normal | Alignment::Auto => self.table.vertical_align.cell(),
+            Alignment::Center | Alignment::SpaceAround | Alignment::SpaceEvenly => {
+                VerticalAlign::Middle
+            }
+            Alignment::End | Alignment::FlexEnd => VerticalAlign::Bottom,
+            Alignment::Baseline => VerticalAlign::Baseline,
+            _ => VerticalAlign::Top,
+        }
+    }
+}
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub(crate) struct TableStyle {
