@@ -31,7 +31,8 @@ pub(crate) fn draw_glyph(font: Font, glyph: GlyphId, surface: &mut Surface) -> O
 
     match bitmap_glyph.data {
         BitmapData::Png(data) => {
-            let image = Image::from_png(data.to_vec().into(), false).ok()?;
+            // Strikes scale to any font size, smoothed as images scale by default.
+            let image = Image::from_png(data.to_vec().into(), true).ok()?;
             let size = Size::from_wh(image.size().0 as f32, image.size().1 as f32).unwrap();
 
             // Adapted from vello.
