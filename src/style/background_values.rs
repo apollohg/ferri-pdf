@@ -113,6 +113,9 @@ fn set_option_image(
                 "image-set() nested in image-set(): {value}"
             )));
         }
+        // Without script no paint worklet registers a name, so drawing the image finds no
+        // document paint definition and outputs an invalid image (CSS Painting API 1 §7).
+        Component::Function(Keyword::Paint, _) => BackgroundImage::Invalid,
         Component::Function(name, Some(arguments)) => {
             let repeating = matches!(
                 name,

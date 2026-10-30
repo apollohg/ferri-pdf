@@ -92,7 +92,7 @@ fn gradient(image: &str) -> ResolvedGradient {
     assert_eq!(layers.len(), 1, "{image} is one layer");
     match &layers[0].image {
         TileImage::Gradient(gradient) => gradient.clone(),
-        TileImage::Image(..) => panic!("{image} must resolve to a gradient"),
+        TileImage::Image(..) | TileImage::Color(_) => panic!("{image} must resolve to a gradient"),
     }
 }
 fn close(label: &str, actual: f32, expected: f32) {

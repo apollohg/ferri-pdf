@@ -206,6 +206,11 @@ fn draw_tile(
             surface.draw_path(&rect_path(rect)?);
             Ok(())
         }
+        TileImage::Color(color) => {
+            surface.set_fill(Some(painting::fill(*color)?));
+            surface.draw_path(&rect_path(rect)?);
+            Ok(())
+        }
     }
 }
 

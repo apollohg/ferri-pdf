@@ -1,5 +1,5 @@
 //! CSS Backgrounds 3 §6 border images: nine-slice regions, their sizes and tiling.
-use crate::paint::background::{Source, TileImage, UnresolvedImage, natural_points};
+use crate::paint::background::{Source, TileImage, UnresolvedImage};
 use crate::paint::{
     BackgroundImage, BackgroundSize, Border, BoxPaint, LengthPercentage, POINTS_PER_PIXEL, Rect,
     image_size,
@@ -86,9 +86,10 @@ impl BorderImage<Infallible> {
     }
 }
 impl<I> BorderImage<I> {
-    /// Whether an image replaces the border styles.
+    /// Whether an image replaces the border styles; an invalid image draws them, as `none`
+    /// does (§6.1).
     pub fn is_drawn(&self) -> bool {
-        !matches!(self.source, BackgroundImage::None)
+        self.source.is_displayable()
     }
 }
 
@@ -190,15 +191,11 @@ impl<I: ImageInfo> BoxPaint<I> {
     /// The border image replacing this box's border styles, if it has one to draw.
     pub fn border_image(&self) -> Result<Option<BorderImagePaint<'_, I>>, UnresolvedImage> {
         let border_image = &self.decoration.border_image;
-        let source = match &border_image.source {
-            BackgroundImage::None => return Ok(None),
-            BackgroundImage::Url { url, .. } => return Err(UnresolvedImage(url.clone())),
-            BackgroundImage::Image {
-                image,
-                resolution,
-                scale,
-            } => Source::Image(image, *resolution, *scale),
-            BackgroundImage::Gradient(gradient) => Source::Gradient(gradient),
+        if !border_image.is_drawn() {
+            return Ok(None);
+        }
+        let Some(source) = Source::of(&border_image.source)? else {
+            return Ok(None);
         };
         // A sliced fragment draws its share of the unbroken box's image.
         let borders = self.decoration.borders.map(Border::used_width);
@@ -207,10 +204,7 @@ impl<I: ImageInfo> BoxPaint<I> {
         if area.width <= 0.0 || area.height <= 0.0 {
             return Ok(None);
         }
-        let natural = match source {
-            Source::Image(image, resolution, scale) => natural_points(image, resolution, scale),
-            Source::Gradient(_) => NaturalDimensions::default(),
-        };
+        let natural = source.natural();
         let size = image_size(
             &BackgroundSize::default(),
             natural,
@@ -219,12 +213,8 @@ impl<I: ImageInfo> BoxPaint<I> {
         if !(size[0] > 0.0 && size[1] > 0.0 && size.iter().all(|v| v.is_finite())) {
             return Ok(None);
         }
-        let image = match source {
-            Source::Image(image, _, scale) => TileImage::Image(image, scale),
-            Source::Gradient(gradient) => match gradient.resolve(size) {
-                Some(resolved) => TileImage::Gradient(resolved),
-                None => return Ok(None),
-            },
+        let Some(image) = source.tile(size) else {
+            return Ok(None);
         };
         let slices: [f32; 4] = std::array::from_fn(|side| {
             let extent = size[usize::from(side == TOP || side == BOTTOM)];

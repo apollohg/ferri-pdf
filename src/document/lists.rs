@@ -26,8 +26,9 @@ pub(super) fn marker(
     ordinal: i128,
     resources: &mut crate::document::formatting::ImageResources<'_>,
 ) -> Result<Option<Paragraph>, DocumentError> {
+    // CSS Images 4 §2.1: an invalid image is treated as `none`.
     let mut image = item.list_style_image.with_image_type();
-    if !matches!(image, crate::graphics::BackgroundImage::None)
+    if image.is_displayable()
         && image
             .load(&mut |reference| {
                 resources

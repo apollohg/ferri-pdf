@@ -1,6 +1,6 @@
 //! CSS Backgrounds 3 layers: computed value lists, image sizing, tiling and painting areas.
 use crate::paint::gradient::{Gradient, ResolvedGradient};
-use crate::paint::{Border, BoxPaint, Clip, LengthPercentage, POINTS_PER_PIXEL, Rect};
+use crate::paint::{Border, BoxPaint, Clip, Color, LengthPercentage, POINTS_PER_PIXEL, Rect};
 use crate::paint::{ImageInfo, NaturalDimensions};
 use serde::Serialize;
 use std::convert::Infallible;
@@ -126,6 +126,9 @@ pub enum BackgroundImage<I = Infallible> {
         scale: f32,
     },
     Gradient(Gradient),
+    /// An invalid image (CSS Images 4 §2.1), which renders as a transparent image with no
+    /// natural dimensions unless its context treats it as `none`.
+    Invalid,
 }
 
 /// Computed background longhands; layer `i` uses item `i` of each list, cycling short lists.
@@ -209,6 +212,11 @@ impl<I> Backgrounds<I> {
     }
 }
 impl<I> BackgroundImage<I> {
+    /// Neither `none` nor an invalid image, which contexts with error handling treat as
+    /// `none` (CSS Images 4 §2.1).
+    pub fn is_displayable(&self) -> bool {
+        !matches!(self, Self::None | Self::Invalid)
+    }
     /// Replaces a `Url` with the image `load` returns for it.
     pub fn load<E>(&mut self, load: &mut impl FnMut(&str) -> Result<I, E>) -> Result<(), E> {
         if let Self::Url {
@@ -260,6 +268,7 @@ impl BackgroundImage<Infallible> {
                 scale: *scale,
             },
             Self::Gradient(gradient) => BackgroundImage::Gradient(gradient.clone()),
+            Self::Invalid => BackgroundImage::Invalid,
             Self::Image { image, .. } => match *image {},
         }
     }
@@ -279,6 +288,39 @@ pub(crate) enum Source<'a, I> {
     /// A loaded image, natural resolution in dots per CSS pixel, and used size scale.
     Image(&'a I, f32, f32),
     Gradient(&'a Gradient),
+    Color(Color),
+}
+
+impl<'a, I: ImageInfo> Source<'a, I> {
+    /// The source an image paints from, `None` for `none`.
+    pub(crate) fn of(image: &'a BackgroundImage<I>) -> Result<Option<Self>, UnresolvedImage> {
+        Ok(Some(match image {
+            BackgroundImage::None => return Ok(None),
+            BackgroundImage::Url { url, .. } => return Err(UnresolvedImage(url.clone())),
+            BackgroundImage::Image {
+                image,
+                resolution,
+                scale,
+            } => Self::Image(image, *resolution, *scale),
+            BackgroundImage::Gradient(gradient) => Self::Gradient(gradient),
+            BackgroundImage::Invalid => Self::Color(Color::TRANSPARENT),
+        }))
+    }
+    /// Natural dimensions in points; generated images have none.
+    pub(crate) fn natural(self) -> NaturalDimensions {
+        match self {
+            Self::Image(image, resolution, scale) => natural_points(image, resolution, scale),
+            Self::Gradient(_) | Self::Color(_) => NaturalDimensions::default(),
+        }
+    }
+    /// The image drawn into a tile of `size`, `None` when a gradient has no area.
+    pub(crate) fn tile(self, size: [f32; 2]) -> Option<TileImage<'a, I>> {
+        Some(match self {
+            Self::Image(image, _, scale) => TileImage::Image(image, scale),
+            Self::Gradient(gradient) => TileImage::Gradient(gradient.resolve(size)?),
+            Self::Color(color) => TileImage::Color(color),
+        })
+    }
 }
 
 impl<I> Copy for Source<'_, I> {}
@@ -293,6 +335,8 @@ impl<I> Clone for Source<'_, I> {
 pub enum TileImage<'a, I = Infallible> {
     Image(&'a I, f32),
     Gradient(ResolvedGradient),
+    /// A solid-color image.
+    Color(Color),
 }
 /// One background layer ready to paint.
 #[derive(Clone, Debug)]
@@ -526,22 +570,10 @@ impl<I: ImageInfo> BoxPaint<I> {
             .and_then(|geometry| geometry.viewport)
             .unwrap_or(page_area);
         for (index, image) in backgrounds.images.iter().enumerate().rev() {
-            let source = match image {
-                BackgroundImage::None => continue,
-                BackgroundImage::Url { url, .. } => {
-                    return Err(UnresolvedImage(url.clone()));
-                }
-                BackgroundImage::Image {
-                    image,
-                    resolution,
-                    scale,
-                } => Source::Image(image, *resolution, *scale),
-                BackgroundImage::Gradient(gradient) => Source::Gradient(gradient),
+            let Some(source) = Source::of(image)? else {
+                continue;
             };
-            let natural = match source {
-                Source::Image(image, resolution, scale) => natural_points(image, resolution, scale),
-                Source::Gradient(_) => NaturalDimensions::default(),
-            };
+            let natural = source.natural();
             let area = if *cycle(&backgrounds.attachments, index) == Attachment::Fixed {
                 page_area
             } else {
@@ -569,12 +601,8 @@ impl<I: ImageInfo> BoxPaint<I> {
                 extent[1],
                 tile[1],
             );
-            let image = match source {
-                Source::Image(image, _, scale) => TileImage::Image(image, scale),
-                Source::Gradient(gradient) => match gradient.resolve(tile) {
-                    Some(resolved) => TileImage::Gradient(resolved),
-                    None => continue,
-                },
+            let Some(image) = source.tile(tile) else {
+                continue;
             };
             layers.push((
                 index,

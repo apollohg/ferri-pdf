@@ -550,6 +550,8 @@ fn alpha_grid(
         BackgroundImage::None | BackgroundImage::Url { .. } => {
             unreachable!("floats load their shape-outside image")
         }
+        // An invalid image is transparent (CSS Images 4 §2.1).
+        BackgroundImage::Invalid => return Ok(None),
         BackgroundImage::Gradient(gradient) => {
             let Some(resolved) = gradient.resolve([content.width, content.height]) else {
                 return Ok(None);

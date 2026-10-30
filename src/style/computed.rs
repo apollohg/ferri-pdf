@@ -487,7 +487,7 @@ impl Style {
     pub(crate) fn has_inside_marker(&self) -> bool {
         self.list_style_position == ListStylePosition::Inside
             && (self.list_style_type != ListStyleType::None
-                || !matches!(self.list_style_image, crate::paint::BackgroundImage::None))
+                || self.list_style_image.is_displayable())
     }
 
     /// Inline padding, borders and unsplit margins retain an otherwise empty line.

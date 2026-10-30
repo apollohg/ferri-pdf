@@ -325,6 +325,7 @@ fn draw_layer(
     let luminance = mode == MaskMode::Luminance;
     let grey;
     let image = match &layer.image {
+        TileImage::Color(color) => TileImage::Color(mask_color(*color, luminance)),
         TileImage::Gradient(gradient) => TileImage::Gradient(ResolvedGradient {
             shading: gradient.shading,
             stops: gradient

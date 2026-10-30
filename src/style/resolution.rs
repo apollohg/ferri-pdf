@@ -1555,7 +1555,7 @@ impl crate::style::PageSelection for Geometry<'_> {
                     !self.selected_value(target, Property::ListStyleType, |style| {
                         style.list_style_type.is_none()
                     })? || self.selected_value(target, Property::ListStyleImage, |style| {
-                        !matches!(style.list_style_image, crate::paint::BackgroundImage::None)
+                        style.list_style_image.is_displayable()
                     })?,
                 )
             }
