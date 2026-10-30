@@ -518,19 +518,6 @@ impl<'a> TablePlan<'a> {
             .iter()
             .copied()
             .chain(data.groups.iter().filter_map(|group| group.source))
-            .any(|source| source.style().decoration.border_image.is_drawn())
-        {
-            return Err(LayoutError::UnsupportedTable {
-                block: index,
-                feature: "row and row-group border images",
-            }
-            .into());
-        }
-        if data
-            .rows
-            .iter()
-            .copied()
-            .chain(data.groups.iter().filter_map(|group| group.source))
             .any(|source| source.style().perspective.is_some() || source.style().preserves_3d())
         {
             return Err(LayoutError::UnsupportedTable {
@@ -569,6 +556,7 @@ impl<'a> TablePlan<'a> {
                         || !style.visibility.is_visible()
                         || !style.decoration.shadows.is_empty()
                         || style.decoration.outline.is_drawn()
+                        || style.decoration.border_image.is_drawn()
                         || style.is_grouped()
                         || style.forced_stacking_context()
                 });
@@ -997,6 +985,18 @@ impl<'a> TablePlan<'a> {
             outline: decoration.outline,
             radii: decoration.radii,
             corner_shapes: decoration.corner_shapes,
+            ..Default::default()
+        })
+    }
+    /// A row or row group's border image, which does not apply in the collapsing border
+    /// model (CSS Backgrounds 3 §6.1); the separated model leaves it no border widths.
+    pub(crate) fn structural_border_image(&self, source: &BlockBox) -> Option<BoxDecoration> {
+        if self.data.collapsed.is_some() {
+            return None;
+        }
+        let decoration = self.structural_decoration(source);
+        decoration.border_image.is_drawn().then_some(BoxDecoration {
+            border_image: decoration.border_image,
             ..Default::default()
         })
     }

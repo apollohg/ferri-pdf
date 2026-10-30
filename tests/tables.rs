@@ -1662,6 +1662,117 @@ fn structural_table_shadows_use_one_box_per_row_or_group_without_changing_flow()
 }
 
 #[test]
+fn row_and_group_border_images_paint_their_boxes_only_in_the_separated_model() {
+    let image = "border-image:linear-gradient(red,red) 1 / 3pt";
+    let body = "<table><tbody><tr><td>A</td><td>B</td></tr><tr><td>C</td><td>D</td></tr></tbody></table><p>After</p>";
+    for (selector, rects) in [
+        ("tr", vec![(36.0, 25.0), (61.0, 25.0)]),
+        ("tbody", vec![(36.0, 50.0)]),
+    ] {
+        for model in ["separate", "collapse"] {
+            let css = format!(
+                "{PROFILE}table{{width:100pt;table-layout:fixed;border-collapse:{model};border-spacing:0}}td{{padding:0;height:25pt}}p{{margin:0}}"
+            );
+            let control = render_html(&format!("<style>{css}</style>{body}"), &local_options())
+                .unwrap()
+                .layout
+                .unwrap();
+            let output = render_html(
+                &format!("<style>{css}{selector}{{{image}}}</style>{body}"),
+                &local_options(),
+            )
+            .unwrap_or_else(|error| panic!("{selector}/{model}: {error}"))
+            .layout
+            .unwrap();
+            let mut painted = output
+                .display_lists
+                .iter()
+                .flatten()
+                .filter_map(|item| match item {
+                    DisplayItem::Box(paint) if paint.decoration.border_image.is_drawn() => {
+                        Some(paint.rect)
+                    }
+                    _ => None,
+                })
+                .collect::<Vec<_>>();
+            painted.sort_by(|left, right| left.y.total_cmp(&right.y));
+            let expected = if model == "collapse" {
+                Vec::new()
+            } else {
+                rects.clone()
+            };
+            assert_eq!(
+                painted.len(),
+                expected.len(),
+                "{selector}/{model}: border image boxes {painted:?}"
+            );
+            for (rect, (y, height)) in painted.iter().zip(expected) {
+                assert_pt(rect.x, 36.0);
+                assert_pt(rect.width, 100.0);
+                assert_pt(rect.y, y);
+                assert_pt(rect.height, height);
+            }
+            let positions = |trace: &ferri_pdf::LayoutTrace| {
+                trace
+                    .pages
+                    .iter()
+                    .flatten()
+                    .map(|line| (line.text.clone(), line.x, line.baseline))
+                    .collect::<Vec<_>>()
+            };
+            assert_eq!(
+                positions(&output),
+                positions(&control),
+                "{selector}/{model}: a border image must not change the flow"
+            );
+        }
+    }
+}
+
+#[test]
+fn split_row_group_border_image_slices_across_pages() {
+    let html = format!(
+        "<style>{PROFILE}@page{{size:200pt 100pt;margin:10pt}}table{{width:100%;border-spacing:0}}td{{padding:0}}tr{{height:30pt;break-inside:avoid}}tbody{{border-image:linear-gradient(red,red) 1 / 2pt}}</style><table><tbody><tr><td>1</td></tr><tr><td>2</td></tr><tr><td>3</td></tr><tr><td>4</td></tr></tbody></table>"
+    );
+    let trace = render_html(&html, &local_options())
+        .unwrap()
+        .layout
+        .unwrap();
+    let fragments = trace
+        .display_lists
+        .iter()
+        .map(|page| {
+            page.iter()
+                .filter_map(|item| match item {
+                    DisplayItem::Box(paint) if paint.decoration.border_image.is_drawn() => {
+                        Some((paint.rect, paint.first_fragment, paint.last_fragment))
+                    }
+                    _ => None,
+                })
+                .collect::<Vec<_>>()
+        })
+        .collect::<Vec<_>>();
+    assert_eq!(
+        fragments.iter().map(Vec::len).collect::<Vec<_>>(),
+        [1, 1],
+        "one group fragment per page: {fragments:?}"
+    );
+    let (first, starts, ends) = fragments[0][0];
+    assert!(
+        starts && !ends,
+        "first fragment is open at its end: {fragments:?}"
+    );
+    assert_pt(first.height, 60.0);
+    let (second, starts, ends) = fragments[1][0];
+    assert!(
+        !starts && ends,
+        "second fragment is open at its start: {fragments:?}"
+    );
+    assert_pt(second.y, 10.0);
+    assert_pt(second.height, 60.0);
+}
+
+#[test]
 fn row_shadow_is_retained_when_all_its_cells_start_in_an_earlier_row() {
     let html = format!(
         "<style>{PROFILE}table{{width:100pt;border-spacing:0}}tr{{height:40pt}}td{{padding:0}}.shadow{{box-shadow:inset 0 0 0 3pt red}}</style><table><tbody><tr><td rowspan=2>Span</td></tr><tr class=shadow></tr></tbody></table>"

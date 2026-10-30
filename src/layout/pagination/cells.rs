@@ -244,6 +244,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                 || style.forced_stacking_context()
                 || !style.decoration.shadows.is_empty()
                 || style.decoration.outline.is_drawn()
+                || style.decoration.border_image.is_drawn()
         }) {
             let source = ancestor.source;
             let identity = std::ptr::from_ref(source) as usize;
@@ -257,11 +258,12 @@ impl<'a> Paginator<'a, '_, 'a> {
             } else {
                 if !source.style().decoration.shadows.is_empty()
                     || source.style().decoration.outline.is_drawn()
+                    || source.style().decoration.border_image.is_drawn()
                 {
                     self.tables
                         .last_mut()
                         .expect("active table")
-                        .shadows
+                        .decorated
                         .push(ancestor.clone());
                 }
                 let order = self.order();

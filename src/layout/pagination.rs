@@ -529,7 +529,7 @@ struct TableLayer {
 
 #[derive(Clone)]
 struct ActiveTable<'a> {
-    shadows: Vec<crate::layout::tables::TableContaining<'a>>,
+    decorated: Vec<crate::layout::tables::TableContaining<'a>>,
     transforms: Vec<(crate::layout::tables::TableContaining<'a>, usize)>,
     layers: HashMap<usize, TableLayer>,
     cell_fragments: HashMap<(usize, usize), usize>,
@@ -2543,7 +2543,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let table = block.table.is_some();
         if let Some(flow) = block.table {
             self.tables.push(ActiveTable {
-                shadows: Vec::new(),
+                decorated: Vec::new(),
                 transforms: Vec::new(),
                 layers: HashMap::new(),
                 cell_fragments: HashMap::new(),
@@ -2616,7 +2616,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     || table.flow.collapsed.is_some()
                     || !table.positioned.is_empty()
                     || !table.transforms.is_empty()
-                    || !table.shadows.is_empty()
+                    || !table.decorated.is_empty()
                 {
                     self.measurer.run(|measurer| {
                         table.flow.plan.used_row_starts(
@@ -4592,20 +4592,21 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             rect
         }))
     }
-    fn paint_table_shadows(
+    /// Paints the shadows, outlines and border images of rows and row groups.
+    fn paint_table_decorations(
         &mut self,
-        shadows: &[crate::layout::tables::TableContaining<'a>],
+        decorated: &[crate::layout::tables::TableContaining<'a>],
         pages: &BTreeMap<usize, Vec<usize>>,
         starts: &[f32],
     ) -> Result<(), LayoutError> {
         let mut owners: BTreeMap<usize, Vec<usize>> = BTreeMap::new();
-        for (index, ancestor) in shadows.iter().enumerate() {
+        for (index, ancestor) in decorated.iter().enumerate() {
             self.measurer.work.spend(ancestor.rows.len().max(1))?;
             for row in ancestor.rows.clone() {
                 owners.entry(row).or_default().push(index);
             }
         }
-        let mut fragments = vec![[Vec::new(), Vec::new()]; shadows.len()];
+        let mut fragments = vec![[Vec::new(), Vec::new(), Vec::new()]; decorated.len()];
         for (&page, indices) in pages {
             let mut active = BTreeSet::new();
             let table = self.tables.last().expect("active table");
@@ -4621,7 +4622,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
             let geometry = self.table_geometry(page)?;
             for index in active {
-                let ancestor = &shadows[index];
+                let ancestor = &decorated[index];
                 let Some(rect) =
                     self.table_fragment(ancestor, &geometry, indices, starts, false)?
                 else {
@@ -4655,19 +4656,22 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                         navigation: BoxNavigation::default(),
                     });
                 }
-                let decorations = [false, true]
-                    .map(|inset| table.flow.plan.structural_shadow(ancestor.source, inset));
-                for (inset, decoration) in [false, true].into_iter().zip(decorations) {
+                // Outer shadows, inset shadows, then the border image, as a box paints them.
+                let decorations = [
+                    table.flow.plan.structural_shadow(ancestor.source, false),
+                    table.flow.plan.structural_shadow(ancestor.source, true),
+                    table.flow.plan.structural_border_image(ancestor.source),
+                ];
+                for (layer_index, decoration) in decorations.into_iter().enumerate() {
                     let Some(decoration) = decoration else {
                         continue;
                     };
-                    let order = if inset {
-                        self.orders.take()
-                    } else {
+                    let order = if layer_index == 0 {
                         PaintOrder::FIRST
+                    } else {
+                        self.orders.take()
                     };
-                    fragments[index][usize::from(inset)]
-                        .push((page, self.display_lists[page].len()));
+                    fragments[index][layer_index].push((page, self.display_lists[page].len()));
                     self.display_lists[page].push(ScopedPaint {
                         native: None,
                         visible: ancestor.source.style().visibility.is_visible(),
@@ -4682,7 +4686,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 }
             }
         }
-        for (ancestor, fragments) in shadows.iter().zip(fragments) {
+        for (ancestor, fragments) in decorated.iter().zip(fragments) {
             if !ancestor.source.style().clone_decoration
                 && !self
                     .tables
@@ -4856,8 +4860,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let table = self.tables.last_mut().expect("active table");
         let groups = std::mem::take(&mut table.positioned);
         let transforms = std::mem::take(&mut table.transforms);
-        let shadows = std::mem::take(&mut table.shadows);
-        if groups.is_empty() && transforms.is_empty() && shadows.is_empty() && anchors.is_empty() {
+        let decorated = std::mem::take(&mut table.decorated);
+        if groups.is_empty() && transforms.is_empty() && decorated.is_empty() && anchors.is_empty()
+        {
             return Ok(());
         }
         let mut pages: BTreeMap<usize, Vec<usize>> = BTreeMap::new();
@@ -4972,7 +4977,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 self.record_overflow_on(page, area);
             }
         }
-        self.paint_table_shadows(&shadows, &pages, starts)?;
+        self.paint_table_decorations(&decorated, &pages, starts)?;
         let mut geometry: Option<(usize, crate::layout::tables::TableGeometry)> = None;
         for (ancestor, pending) in groups {
             for pending in pending {

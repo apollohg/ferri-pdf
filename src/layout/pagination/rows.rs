@@ -1118,7 +1118,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                 table.flow.collapsed.is_some()
                     || table.flow.plan.has_structural_geometry
                     || table.flow.plan.has_containing_ancestors
-                    || !table.shadows.is_empty()
+                    || !table.decorated.is_empty()
             })
         {
             if fragments.is_empty() {
