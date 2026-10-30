@@ -8,6 +8,9 @@ use super::{converter, style};
 use crate::svg::usvg::tree::ContextElement;
 use crate::svg::usvg::{Group, IsValidLength, Node, NonZeroRect, Size, Transform, ViewBox};
 
+/// The affine identity `[a, b, c, d, e, f]`.
+const IDENTITY_MATRIX: [f32; 6] = [1.0, 0.0, 0.0, 1.0, 0.0, 0.0];
+
 pub(crate) fn convert(
     node: SvgNode,
     state: &converter::State,
@@ -26,9 +29,15 @@ pub(crate) fn convert(
         return;
     }
 
-    let transform = converter::element_transform(node, state, cache, parent, &|cache, probe| {
+    let placement = converter::element_transform(node, state, cache, parent, &|cache, probe| {
         convert_instance(node, child, state, cache, probe, Transform::default());
     });
+    // The `use` element's own group carries a 3D placement.
+    let transform = match placement {
+        super::motion::Placement::Affine(transform) => transform,
+        super::motion::Placement::Matrix(_) => Transform::default(),
+        super::motion::Placement::Hidden => return,
+    };
     convert_instance(node, child, state, cache, parent, transform);
 }
 
@@ -115,6 +124,8 @@ fn convert_instance(
                 g.is_context_element = true;
                 g2.id = String::new(); // Prevent ID duplication.
                 g2.transform = Transform::default();
+                // The viewport clip lies in the plane a 3D placement projects.
+                g.matrix = g2.matrix.take();
                 g.children.push(Node::Group(Box::new(g2)));
             }
 
@@ -271,7 +282,25 @@ fn convert_children(
         })
     {
         g.is_context_element = is_context_element;
-        g.transform = transform;
+        match g.matrix {
+            // The 3D placement applies after the element's viewport transform.
+            Some(matrix) => {
+                g.matrix = Some(crate::style::transform::conjugated(
+                    &matrix,
+                    IDENTITY_MATRIX,
+                    [
+                        transform.sx,
+                        transform.ky,
+                        transform.kx,
+                        transform.sy,
+                        transform.tx,
+                        transform.ty,
+                    ],
+                ));
+                g.transform = Transform::default();
+            }
+            None => g.transform = transform,
+        }
         parent.children.push(Node::Group(Box::new(g)));
     }
 

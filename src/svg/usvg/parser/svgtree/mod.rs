@@ -227,6 +227,10 @@ impl std::fmt::Debug for Attribute<'_> {
     }
 }
 
+/// A node's identity: its document's address and its index there.
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
+pub(crate) struct NodeKey(usize, usize);
+
 /// An SVG node.
 #[derive(Clone, Copy)]
 pub(super) struct SvgNode<'a, 'input> {
@@ -256,6 +260,11 @@ impl<'a, 'input: 'a> SvgNode<'a, 'input> {
     #[inline]
     fn id(&self) -> NodeId {
         self.id
+    }
+
+    /// Identifies the node among those of every document conversion reads.
+    pub(super) fn key(&self) -> NodeKey {
+        NodeKey(std::ptr::from_ref(self.doc) as usize, self.id.get_usize())
     }
 
     /// Checks if the current node is an element.
@@ -780,6 +789,10 @@ impl AId {
                 | AId::OffsetAnchor
                 | AId::OffsetDistance
                 | AId::OffsetRotate
+                | AId::Perspective
+                | AId::PerspectiveOrigin
+                | AId::TransformStyle
+                | AId::BackfaceVisibility
                 | AId::UnicodeBidi
                 | AId::VectorEffect
                 | AId::Visibility
@@ -863,6 +876,10 @@ impl AId {
                 | AId::OffsetAnchor
                 | AId::OffsetDistance
                 | AId::OffsetRotate
+                | AId::Perspective
+                | AId::PerspectiveOrigin
+                | AId::TransformStyle
+                | AId::BackfaceVisibility
                 | AId::Visibility
                 | AId::WordSpacing
                 | AId::WritingMode
@@ -900,6 +917,10 @@ fn is_non_inheritable(id: AId) -> bool {
             | AId::OffsetAnchor
             | AId::OffsetDistance
             | AId::OffsetRotate
+            | AId::Perspective
+            | AId::PerspectiveOrigin
+            | AId::TransformStyle
+            | AId::BackfaceVisibility
     )
 }
 

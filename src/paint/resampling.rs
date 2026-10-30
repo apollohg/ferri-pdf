@@ -146,8 +146,17 @@ impl Plane {
             .iter()
             .map(|&point| projection::apply(self.projection, point))
             .collect();
-        let Some(target) = projection::bounds(&projected) else {
+        let Some(bounds) = projection::bounds(&projected) else {
             return Ok(None);
+        };
+        // Output pixels start on the grid of the drawing space's pixels.
+        let pixel = 1.0 / self.density;
+        let [x, y] = [bounds.x, bounds.y].map(|start| (start / pixel).floor() * pixel);
+        let target = Rect {
+            x,
+            y,
+            width: bounds.x + bounds.width - x,
+            height: bounds.y + bounds.height - y,
         };
         resample(
             self.projection,

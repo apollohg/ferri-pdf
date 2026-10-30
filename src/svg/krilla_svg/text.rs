@@ -22,6 +22,52 @@ pub(crate) fn render(
     surface: &mut Surface,
     process_context: &mut ProcessContext,
 ) {
+    render_through(text, None, surface, process_context);
+}
+
+/// Draws `text`, which `projection` maps into the current space, each cluster of glyphs through
+/// the projection's tangent at the centre of its ink (CSS Transforms 2 §4.2); `fits` must
+/// hold for the text.
+pub(crate) fn render_projected(
+    text: &crate::svg::usvg::Text,
+    projection: crate::paint::Projection,
+    surface: &mut Surface,
+    process_context: &mut ProcessContext,
+) {
+    render_through(text, Some(projection), surface, process_context);
+}
+
+/// Whether every cluster of `text`, which has no decorations, lies in front of the viewer and
+/// draws through the tangent of `plane`'s projection at its ink centre within the plane's
+/// tolerance.
+pub(crate) fn fits(
+    text: &crate::svg::usvg::Text,
+    plane: &crate::paint::resampling::Plane,
+    process_context: &mut ProcessContext,
+) -> bool {
+    !text.non_scaling_stroke()
+        && text.layouted().iter().all(|span| {
+            span.overline.is_none()
+                && span.underline.is_none()
+                && span.line_through.is_none()
+                && span
+                    .positioned_glyphs
+                    .chunk_by(|left, right| left.cluster == right.cluster)
+                    .all(|cluster| {
+                        process_context
+                            .fonts
+                            .cluster_ink(span, cluster)
+                            .is_some_and(|ink| plane.tangent_fits(ink))
+                    })
+        })
+}
+
+fn render_through(
+    text: &crate::svg::usvg::Text,
+    projection: Option<crate::paint::Projection>,
+    surface: &mut Surface,
+    process_context: &mut ProcessContext,
+) {
     for span in text.layouted() {
         if !span.visible {
             continue;
@@ -39,15 +85,27 @@ pub(crate) fn render(
             .positioned_glyphs
             .chunk_by(|left, right| left.cluster == right.cluster)
         {
-            if cluster.len() > 1 && render_cluster_batch(cluster, span, surface, process_context) {
-                continue;
+            let tangent = projection.and_then(|projection| {
+                let ink = process_context.fonts.cluster_ink(span, cluster)?;
+                let centre = [ink.x + ink.width / 2.0, ink.y + ink.height / 2.0];
+                Some(crate::paint::projection::tangent(projection, centre))
+            });
+            if let Some([a, b, c, d, e, f]) = tangent {
+                surface.push_transform(&krilla::geom::Transform::from_row(a, b, c, d, e, f));
             }
-            if cluster.len() > 1 && process_context.svg_settings.embed_text {
-                surface.with_actual_text(&cluster[0].text, |surface| {
-                    render_cluster(cluster, span, surface, process_context)
-                });
-            } else {
-                render_cluster(cluster, span, surface, process_context);
+            let batched =
+                cluster.len() > 1 && render_cluster_batch(cluster, span, surface, process_context);
+            if !batched {
+                if cluster.len() > 1 && process_context.svg_settings.embed_text {
+                    surface.with_actual_text(&cluster[0].text, |surface| {
+                        render_cluster(cluster, span, surface, process_context)
+                    });
+                } else {
+                    render_cluster(cluster, span, surface, process_context);
+                }
+            }
+            if tangent.is_some() {
+                surface.pop();
             }
         }
 
@@ -285,6 +343,7 @@ fn render_cluster_batch(
 pub(crate) struct Fonts<'a> {
     db: &'a Database,
     fonts: HashMap<FontInstance, Option<Font>>,
+    outlines: HashMap<FontInstance, Option<crate::fonts::Silhouettes<'a>>>,
     supported_axes: HashMap<fontdb::ID, SmallVec<[[u8; 4]; 2]>>,
 }
 
@@ -297,8 +356,53 @@ impl<'a> Fonts<'a> {
         Self {
             db,
             fonts: HashMap::new(),
+            outlines: HashMap::new(),
             supported_axes: HashMap::new(),
         }
+    }
+
+    /// A bound on the ink of `cluster`, glyphs of `span`, in the text's user space; `None`
+    /// where a glyph's outline does not bound what it paints.
+    pub(crate) fn cluster_ink(
+        &mut self,
+        span: &crate::svg::usvg::layout::Span,
+        cluster: &[crate::svg::usvg::layout::PositionedGlyph],
+    ) -> Option<crate::paint::Rect> {
+        let mut ink: Option<tiny_skia_path::Rect> = None;
+        for glyph in cluster {
+            let variations = self.resolve_variations(span, glyph.font);
+            let db = self.db;
+            let outlines = self
+                .outlines
+                .entry((glyph.font, variations))
+                .or_insert_with_key(|(id, variations)| {
+                    let face = db.face(*id)?;
+                    let fontdb::Source::Binary(data) = &face.source;
+                    crate::fonts::Silhouettes::at(
+                        data.as_ref().as_ref(),
+                        face.index,
+                        variations
+                            .iter()
+                            .map(|variation| (variation.tag, variation.value)),
+                    )
+                })
+                .as_ref()?;
+            let units = outlines.units_per_em();
+            let [left, bottom, right, top] = outlines
+                .outline_box(u32::from(glyph.id.0))?
+                .map(|value| value * units);
+            let bounds = tiny_skia_path::Rect::from_ltrb(left, bottom, right, top)
+                .or_else(|| tiny_skia_path::Rect::from_xywh(left, bottom, 0.0, 0.0))?
+                .transform(glyph.outline_transform())?;
+            ink = Some(ink.map_or(Some(bounds), |ink| ink.join(&bounds))?);
+        }
+        let ink = ink?;
+        Some(crate::paint::Rect {
+            x: ink.x(),
+            y: ink.y(),
+            width: ink.width(),
+            height: ink.height(),
+        })
     }
 
     /// Retrieves the font identified by `id` from the cache or loads it.

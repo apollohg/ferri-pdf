@@ -29,6 +29,10 @@ const WIDTH_KEYWORDS: [(FontWidth, &str); 9] = [
     (FontWidth::ULTRA_EXPANDED, "ultra-expanded"),
 ];
 const NONE: &str = "none";
+const PRESERVE_3D: &str = "preserve-3d";
+const FLAT: &str = "flat";
+const HIDDEN: &str = "hidden";
+const VISIBLE: &str = "visible";
 const AUTO: &str = "auto";
 const TRANSFORM_ORIGIN: &str = "transform-origin";
 const TRANSFORM_BOX: &str = "transform-box";
@@ -169,6 +173,36 @@ pub(super) fn declarations(
         for (name, value) in transform_declarations(style)? {
             push(name, &value);
         }
+    }
+    // CSS Transforms 2 §11: the 3D properties of SVG content. The root's own box takes its
+    // transform and backface in the document; its perspective and used `transform-style`
+    // govern its SVG children.
+    push(
+        "perspective",
+        &style.perspective.map_or_else(|| NONE.to_owned(), pixels),
+    );
+    push(
+        "perspective-origin",
+        &position(&style.perspective_origin, length_percentage)?,
+    );
+    let preserves = if root {
+        style.preserves_3d()
+    } else {
+        style.transform_style == crate::style::TransformStyle::Preserve3d
+    };
+    push(
+        "transform-style",
+        if preserves { PRESERVE_3D } else { FLAT },
+    );
+    if !root {
+        push(
+            "backface-visibility",
+            if style.backface_hidden {
+                HIDDEN
+            } else {
+                VISIBLE
+            },
+        );
     }
     push("font-family", &families(&style.families));
     push("font-size", &pixels(style.size));

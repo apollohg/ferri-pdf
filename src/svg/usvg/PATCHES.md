@@ -92,3 +92,11 @@ A `mask` value that `crate::svg::layer_mask_value` writes names the CSS mask lay
 options' `layer_masks`, of SVG content the document styles. Its group keeps them as a
 `LayerMask` with its fill, stroke and view boxes, the boxes `clip-path` basic shapes also take,
 in points.
+
+CSS Transforms 2 `perspective`, `perspective-origin`, `transform-style` and
+`backface-visibility` style SVG content (§11). A transform whose `w` varies across the element,
+or one placing a plane of a 3D rendering context, gives its group a 3D `matrix` in place of its
+affine transform; bounding boxes map through its projection. Once converted, each group whose
+used `transform-style` is `preserve-3d` outside a context becomes a scene whose children are the
+context's planes, placed by their accumulated matrices. A `clipPath` ignores a transform list
+with 3D functions, and `non-scaling-stroke` has no effect within a 3D rendering context.

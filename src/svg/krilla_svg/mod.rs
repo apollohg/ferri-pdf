@@ -30,6 +30,7 @@ mod group;
 mod image;
 mod mask;
 mod path;
+mod projected;
 mod text;
 mod util;
 pub(crate) use util::UsvgTransformExt;
@@ -100,18 +101,25 @@ impl SurfaceExt for Surface<'_> {
 struct ProcessContext<'a> {
     pub(crate) fonts: Fonts<'a>,
     svg_settings: SvgSettings<'a>,
+    /// The tree's canvas, whose area the drawing clips to.
+    viewport: crate::svg::usvg::Size,
 }
 
 impl<'a> ProcessContext<'a> {
-    fn new(tree_fontdb: &'a Database, svg_settings: SvgSettings<'a>) -> Self {
+    fn new(
+        tree_fontdb: &'a Database,
+        svg_settings: SvgSettings<'a>,
+        viewport: crate::svg::usvg::Size,
+    ) -> Self {
         Self {
             fonts: Fonts::new(tree_fontdb),
             svg_settings,
+            viewport,
         }
     }
 }
 
 pub(crate) fn render_tree(tree: &Tree, svg_settings: SvgSettings, surface: &mut Surface) {
-    let mut fc = ProcessContext::new(tree.fontdb(), svg_settings);
+    let mut fc = ProcessContext::new(tree.fontdb(), svg_settings, tree.size());
     group::render_root(tree.root(), surface, &mut fc);
 }

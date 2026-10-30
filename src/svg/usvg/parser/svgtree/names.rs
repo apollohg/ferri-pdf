@@ -363,6 +363,12 @@ pub(crate) enum AId {
     OffsetAnchor,
     OffsetDistance,
     OffsetRotate,
+    /// CSS Transforms 2 `perspective`, `perspective-origin`, `transform-style` and
+    /// `backface-visibility`.
+    Perspective,
+    PerspectiveOrigin,
+    TransformStyle,
+    BackfaceVisibility,
     /// `lang` and `xml:lang` (SVG 2 §2.6.2).
     Lang,
     TransformOrigin,
@@ -661,6 +667,10 @@ impl AId {
             "offset-anchor" => Some(Self::OffsetAnchor),
             "offset-distance" => Some(Self::OffsetDistance),
             "offset-rotate" => Some(Self::OffsetRotate),
+            "perspective" => Some(Self::Perspective),
+            "perspective-origin" => Some(Self::PerspectiveOrigin),
+            "transform-style" => Some(Self::TransformStyle),
+            "backface-visibility" => Some(Self::BackfaceVisibility),
             "lang" => Some(Self::Lang),
             _ => ATTRIBUTES.get(text).cloned(),
         }
@@ -680,6 +690,10 @@ impl AId {
             Self::OffsetAnchor => "offset-anchor",
             Self::OffsetDistance => "offset-distance",
             Self::OffsetRotate => "offset-rotate",
+            Self::Perspective => "perspective",
+            Self::PerspectiveOrigin => "perspective-origin",
+            Self::TransformStyle => "transform-style",
+            Self::BackfaceVisibility => "backface-visibility",
             Self::Lang => "lang",
             _ => ATTRIBUTES.key(&self),
         }

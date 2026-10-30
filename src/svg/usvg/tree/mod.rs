@@ -1040,6 +1040,16 @@ impl Node {
 pub struct Group {
     pub(crate) id: String,
     pub(crate) transform: Transform,
+    /// CSS Transforms 2 §4.2: the 3D matrix placing the group's content in its parent's
+    /// space, column-major in user units, where no affine `transform` does or the group is a
+    /// plane of a 3D rendering context; `transform` is then the identity.
+    pub(crate) matrix: Option<[f32; 16]>,
+    /// The group roots a 3D rendering context (§4.1.2), whose children are its planes.
+    pub(crate) scene: bool,
+    /// The element's used `transform-style` is `preserve-3d` (§7).
+    pub(crate) preserves_3d: bool,
+    /// The element's `backface-visibility` is `hidden` (§10).
+    pub(crate) backface_hidden: bool,
     pub(crate) abs_transform: Transform,
     pub(crate) opacity: Opacity,
     pub(crate) blend_mode: BlendMode,
@@ -1068,6 +1078,10 @@ impl Group {
         Group {
             id: String::new(),
             transform: Transform::default(),
+            matrix: None,
+            scene: false,
+            preserves_3d: false,
+            backface_hidden: false,
             abs_transform: Transform::default(),
             opacity: Opacity::ONE,
             blend_mode: BlendMode::Normal,
@@ -1114,6 +1128,64 @@ impl Group {
     /// This is a relative transform. The one that is set via the `transform` attribute in SVG.
     pub fn transform(&self) -> Transform {
         self.transform
+    }
+
+    /// The 3D matrix placing the group's content in its parent's space where no affine
+    /// transform does, or the group is a plane of a 3D rendering context.
+    pub fn matrix(&self) -> Option<[f32; 16]> {
+        self.matrix
+    }
+
+    /// The projection drawing the group's content in its parent's space, where no affine
+    /// transform does.
+    pub fn projection(&self) -> Option<crate::paint::Projection> {
+        self.matrix.map(crate::paint::projection::of_plane)
+    }
+
+    /// Whether the group roots a 3D rendering context whose children are its planes.
+    pub fn is_scene(&self) -> bool {
+        self.scene
+    }
+
+    /// The planes of the 3D rendering context the group roots, with their accumulated 3D
+    /// matrices.
+    pub fn scene_planes(&self) -> Vec<(&Group, [f32; 16])> {
+        self.children
+            .iter()
+            .filter_map(|node| match node {
+                Node::Group(plane) => plane.matrix.map(|matrix| (&**plane, matrix)),
+                _ => None,
+            })
+            .collect()
+    }
+
+    /// The bounds of what the group paints in its content space, `None` when it holds
+    /// nothing.
+    pub fn content_ink(&self) -> Option<crate::paint::Rect> {
+        let ink = self.layer_bounding_box;
+        (!self.children.is_empty()).then_some(crate::paint::Rect {
+            x: ink.x(),
+            y: ink.y(),
+            width: ink.width(),
+            height: ink.height(),
+        })
+    }
+
+    /// The bounds in the parent's space of `rect`, in the group's.
+    pub fn placed(&self, rect: Rect) -> Option<Rect> {
+        let Some(projection) = self.projection() else {
+            return rect.transform(self.transform);
+        };
+        let corners = crate::paint::projection::corners(crate::paint::Rect {
+            x: rect.x(),
+            y: rect.y(),
+            width: rect.width(),
+            height: rect.height(),
+        });
+        let bounds = crate::paint::projection::bounds(&crate::paint::projection::map_polygon(
+            projection, corners,
+        ))?;
+        Rect::from_xywh(bounds.x, bounds.y, bounds.width, bounds.height)
     }
 
     /// Element's absolute transform.
@@ -1909,7 +1981,7 @@ impl Group {
         for child in &self.children {
             let mut c_bbox = child.bounding_box();
             if let Node::Group(group) = child {
-                if let Some(r) = c_bbox.transform(group.transform) {
+                if let Some(r) = group.placed(c_bbox) {
                     c_bbox = r;
                 }
             }
@@ -1930,7 +2002,7 @@ impl Group {
             {
                 let mut c_bbox = child.bounding_box();
                 if let Node::Group(group) = child {
-                    if let Some(r) = c_bbox.transform(group.transform) {
+                    if let Some(r) = group.placed(c_bbox) {
                         c_bbox = r;
                     }
                 }
@@ -1943,7 +2015,7 @@ impl Group {
             {
                 let mut c_bbox = child.stroke_bounding_box();
                 if let Node::Group(group) = child {
-                    if let Some(r) = c_bbox.transform(group.transform) {
+                    if let Some(r) = group.placed(c_bbox) {
                         c_bbox = r;
                     }
                 }
@@ -1954,8 +2026,7 @@ impl Group {
             abs_stroke_bbox = abs_stroke_bbox.expand(child.abs_stroke_bounding_box());
 
             if let Node::Group(group) = child {
-                let r = group.layer_bounding_box;
-                if let Some(r) = r.transform(group.transform) {
+                if let Some(r) = group.placed(group.layer_bounding_box.to_rect()) {
                     layer_bbox = layer_bbox.expand(r);
                 }
             } else {
@@ -1971,6 +2042,12 @@ impl Group {
             self.abs_bounding_box = abs_bbox.to_rect()?;
             self.stroke_bounding_box = stroke_bbox.to_rect()?;
             self.abs_stroke_bounding_box = abs_stroke_bbox.to_rect()?;
+            // Descendants of a projected group measure their canvas boxes as if its plane
+            // were its parent's space.
+            if self.matrix.is_some() {
+                self.abs_bounding_box = self.canvas(self.bounding_box)?;
+                self.abs_stroke_bounding_box = self.canvas(self.stroke_bounding_box)?;
+            }
         }
 
         let mut support = layer_bbox.to_rect();
@@ -1987,8 +2064,19 @@ impl Group {
                     EMPTY_LAYER_EXTENT,
                 )?);
 
-        self.abs_layer_bounding_box = self.layer_bounding_box.transform(self.abs_transform)?;
+        self.abs_layer_bounding_box = self
+            .canvas(self.layer_bounding_box.to_rect())?
+            .to_non_zero_rect()?;
 
         Some(())
+    }
+
+    /// The canvas bounds of `rect`, in the group's content space.
+    fn canvas(&self, rect: Rect) -> Option<Rect> {
+        if self.matrix.is_some() {
+            self.placed(rect)?.transform(self.abs_transform)
+        } else {
+            rect.transform(self.abs_transform)
+        }
     }
 }

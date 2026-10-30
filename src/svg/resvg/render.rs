@@ -25,6 +25,23 @@ impl<'a> Context<'a> {
         }
     }
 
+    /// This context for rendering onto a pixmap `size` pixels large, before anything is
+    /// rendered in it: the pixels of one band of a projected plane.
+    fn for_band(&self, size: [u32; 2]) -> Option<Self> {
+        let [width, height] = size.map(|side| i32::try_from(side).ok());
+        Some(Self {
+            max_bbox: tiny_skia::IntRect::from_xywh(
+                -width? * 2,
+                -height? * 2,
+                size[0].checked_mul(5)?,
+                size[1].checked_mul(5)?,
+            )?,
+            until: self.until,
+            stopped: std::cell::Cell::new(false),
+            layer_masks: self.layer_masks,
+        })
+    }
+
     /// A context that renders what is painted before `node`, or with `inclusive` up to and
     /// including it.
     pub(super) fn until(
@@ -46,7 +63,19 @@ pub(super) fn render_nodes(
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
 ) {
-    for node in parent.children() {
+    render_children(parent, parent.children(), ctx, transform, pixmap);
+}
+
+/// Renders `nodes`, children of `parent`, with `transform` placing the parent's content space
+/// onto the pixmap.
+pub(super) fn render_children(
+    parent: &crate::svg::usvg::Group,
+    nodes: &[crate::svg::usvg::Node],
+    ctx: &Context,
+    transform: tiny_skia::Transform,
+    pixmap: &mut tiny_skia::PixmapMut,
+) {
+    for node in nodes {
         if ctx.stopped.get() {
             return;
         }
@@ -181,8 +210,52 @@ fn render_group(
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
 ) -> Option<()> {
-    let transform = transform.pre_concat(group.transform());
+    if group.is_scene() {
+        return render_scene(group, ctx, transform, pixmap);
+    }
+    if let Some(projection) = group.projection() {
+        let plane = canvas_plane(projection, transform, pixmap);
+        return render_projected(group, &plane, ctx, pixmap);
+    }
+    render_flat(
+        group,
+        ctx,
+        transform.pre_concat(group.transform()),
+        pixmap,
+        group.blend_mode(),
+    )
+}
 
+/// Renders `group`'s content with its effects, whatever its blend mode, with `transform`
+/// placing that content onto the pixmap.
+pub(super) fn render_layer(
+    group: &crate::svg::usvg::Group,
+    ctx: &Context,
+    transform: tiny_skia::Transform,
+    pixmap: &mut tiny_skia::PixmapMut,
+) {
+    if group.is_scene() {
+        render_scene(group, ctx, transform, pixmap);
+    } else {
+        render_flat(
+            group,
+            ctx,
+            transform,
+            pixmap,
+            crate::svg::usvg::BlendMode::Normal,
+        );
+    }
+}
+
+/// Renders `group`, whose content `transform` places onto the pixmap, composited onto it by
+/// `blend`.
+fn render_flat(
+    group: &crate::svg::usvg::Group,
+    ctx: &Context,
+    transform: tiny_skia::Transform,
+    pixmap: &mut tiny_skia::PixmapMut,
+    blend: crate::svg::usvg::BlendMode,
+) -> Option<()> {
     if !group.should_isolate() {
         render_nodes(group, ctx, transform, pixmap);
         return Some(());
@@ -258,10 +331,249 @@ fn render_group(
         ibbox.y(),
         pixmap,
         group.opacity().get(),
-        group.blend_mode(),
+        blend,
         group.linear_light(),
     );
 
+    Some(())
+}
+
+/// The plane of content that `projection` maps into the space `transform` places on
+/// `pixmap`'s pixels, visible over the whole pixmap.
+pub(super) fn canvas_plane(
+    projection: crate::paint::Projection,
+    transform: tiny_skia::Transform,
+    pixmap: &tiny_skia::PixmapMut,
+) -> crate::paint::resampling::Plane {
+    use crate::paint::projection::{compose, from_affine};
+    let to_canvas = compose(
+        from_affine([
+            transform.sx,
+            transform.ky,
+            transform.kx,
+            transform.sy,
+            transform.tx,
+            transform.ty,
+        ]),
+        projection,
+    );
+    let canvas = crate::paint::Rect {
+        x: 0.0,
+        y: 0.0,
+        width: pixmap.width() as f32,
+        height: pixmap.height() as f32,
+    };
+    crate::paint::resampling::Plane::new(to_canvas, canvas, CANVAS_DENSITY)
+}
+
+/// Pixmaps measure their own pixels.
+const CANVAS_DENSITY: f32 = 1.0;
+
+/// The pixels of what `draw` paints within `ink` of `plane`, resampled onto the pixels the
+/// plane projects to; `draw` takes the transform from the plane onto a band's pixels.
+pub(super) fn plane_pixels(
+    plane: &crate::paint::resampling::Plane,
+    ink: crate::svg::usvg::NonZeroRect,
+    ctx: &Context,
+    draw: impl Fn(&Context, tiny_skia::Transform, &mut tiny_skia::PixmapMut),
+) -> Option<crate::paint::resampling::Resampled> {
+    use crate::paint::resampling::PlaneError;
+    let ink = crate::paint::Rect {
+        x: ink.x(),
+        y: ink.y(),
+        width: ink.width(),
+        height: ink.height(),
+    };
+    let mut stopped = false;
+    let resampled = match plane.render(ink, |band| -> Result<_, PlaneError> {
+        let mut pixels =
+            tiny_skia::Pixmap::new(band.size[0], band.size[1]).ok_or(PlaneError::Pixmap)?;
+        let band_ctx = ctx.for_band(band.size).ok_or(PlaneError::Pixmap)?;
+        let [a, b, c, d, e, f] = band.to_pixels;
+        draw(
+            &band_ctx,
+            tiny_skia::Transform::from_row(a, b, c, d, e, f),
+            &mut pixels.as_mut(),
+        );
+        stopped |= band_ctx.stopped.get();
+        Ok(Some(pixels))
+    }) {
+        Ok(resampled) => resampled,
+        Err(error) => {
+            log::warn!("Failed to resample a projected plane: {error:?}.");
+            None
+        }
+    };
+    if stopped {
+        ctx.stopped.set(true);
+    }
+    resampled
+}
+
+/// Whether `group`'s content, drawn without isolation, composites with what lies below the
+/// group other than by source-over compositing.
+fn composites_below(group: &crate::svg::usvg::Group) -> bool {
+    group.linear_light()
+        || group.children().iter().any(|node| match node {
+            crate::svg::usvg::Node::Group(child) => blends(child),
+            _ => false,
+        })
+}
+
+/// Whether `group` composites with what lies below it other than by source-over compositing.
+fn blends(group: &crate::svg::usvg::Group) -> bool {
+    group.blend_mode() != crate::svg::usvg::BlendMode::Normal
+        || group.linear_light()
+        || (!group.should_isolate() && composites_below(group))
+}
+
+/// The placement of `group`'s content in its parent's space as a projection.
+pub(super) fn placement(group: &crate::svg::usvg::Group) -> crate::paint::Projection {
+    let transform = group.transform();
+    group.projection().unwrap_or_else(|| {
+        crate::paint::projection::from_affine([
+            transform.sx,
+            transform.ky,
+            transform.kx,
+            transform.sy,
+            transform.tx,
+            transform.ty,
+        ])
+    })
+}
+
+/// Renders `group`, whose content `plane` projects onto the pixmap, from pixels of the plane
+/// (CSS Transforms 2 §4.2): as one layer composited as the group composites, or, where its
+/// content composites with what lies below the group, its child groups that do so in turn and
+/// the runs of content between them each as a layer.
+fn render_projected(
+    group: &crate::svg::usvg::Group,
+    plane: &crate::paint::resampling::Plane,
+    ctx: &Context,
+    pixmap: &mut tiny_skia::PixmapMut,
+) -> Option<()> {
+    use crate::svg::usvg::BlendMode;
+    if group.should_isolate() || !composites_below(group) {
+        let layer = plane_pixels(
+            plane,
+            group.layer_bounding_box(),
+            ctx,
+            |ctx, transform, pixels| {
+                render_flat(group, ctx, transform, pixels, BlendMode::Normal);
+            },
+        )?;
+        draw_resampled(&layer, pixmap, group.blend_mode(), group.linear_light());
+        return Some(());
+    }
+    let children = group.children();
+    let mut run = 0;
+    let flush = |nodes: &[crate::svg::usvg::Node], pixmap: &mut tiny_skia::PixmapMut| {
+        if nodes.is_empty() {
+            return;
+        }
+        if let Some(layer) = plane_pixels(
+            plane,
+            group.layer_bounding_box(),
+            ctx,
+            |ctx, transform, pixels| {
+                render_children(group, nodes, ctx, transform, pixels);
+            },
+        ) {
+            draw_resampled(&layer, pixmap, BlendMode::Normal, false);
+        }
+    };
+    for (index, node) in children.iter().enumerate() {
+        if let crate::svg::usvg::Node::Group(child) = node
+            && blends(child)
+        {
+            flush(&children[run..index], pixmap);
+            render_projected(child, &plane.mapped(placement(child)), ctx, pixmap);
+            run = index + 1;
+        }
+    }
+    flush(&children[run..], pixmap);
+    Some(())
+}
+
+/// Draws `layer`, resampled onto the pixmap's pixels, composited by `blend`, in linear light
+/// with `linear`.
+fn draw_resampled(
+    layer: &crate::paint::resampling::Resampled,
+    pixmap: &mut tiny_skia::PixmapMut,
+    blend: crate::svg::usvg::BlendMode,
+    linear: bool,
+) {
+    draw_layer(
+        layer.pixmap.as_ref(),
+        layer.area.x.round() as i32,
+        layer.area.y.round() as i32,
+        pixmap,
+        1.0,
+        blend,
+        linear,
+    );
+}
+
+/// Renders the 3D rendering context whose planes are `group`'s children, placed by `transform`
+/// onto the pixmap: the pieces of the planes, depth sorted, each draw the part of their plane
+/// within them (CSS Transforms 2 §4.1.2).
+fn render_scene(
+    group: &crate::svg::usvg::Group,
+    ctx: &Context,
+    transform: tiny_skia::Transform,
+    pixmap: &mut tiny_skia::PixmapMut,
+) -> Option<()> {
+    use crate::paint::projection;
+    let planes = group.scene_planes();
+    for piece in crate::paint::depth::back_to_front(
+        &planes
+            .iter()
+            .map(|(plane, matrix)| (*matrix, plane.content_ink()))
+            .collect::<Vec<_>>(),
+    ) {
+        let (plane, matrix) = planes[piece.plane];
+        let projected = canvas_plane(projection::of_plane(matrix), transform, pixmap);
+        let mut layer = plane_pixels(
+            &projected,
+            plane.layer_bounding_box(),
+            ctx,
+            |ctx, transform, pixels| {
+                render_flat(
+                    plane,
+                    ctx,
+                    transform,
+                    pixels,
+                    crate::svg::usvg::BlendMode::Normal,
+                );
+            },
+        )?;
+        if piece.cut {
+            let outline: Vec<_> = piece
+                .polygon
+                .iter()
+                .map(|&point| projection::apply(projected.projection, point))
+                .collect();
+            let mut path = tiny_skia::PathBuilder::new();
+            for (index, [x, y]) in outline.into_iter().enumerate() {
+                let (x, y) = (x - layer.area.x, y - layer.area.y);
+                if index == 0 {
+                    path.move_to(x, y);
+                } else {
+                    path.line_to(x, y);
+                }
+            }
+            path.close();
+            let mut mask = tiny_skia::Mask::new(layer.pixmap.width(), layer.pixmap.height())?;
+            mask.fill_path(
+                &path.finish()?,
+                tiny_skia::FillRule::Winding,
+                true,
+                tiny_skia::Transform::identity(),
+            );
+            layer.pixmap.apply_mask(&mask);
+        }
+        draw_resampled(&layer, pixmap, plane.blend_mode(), plane.linear_light());
+    }
     Some(())
 }
 

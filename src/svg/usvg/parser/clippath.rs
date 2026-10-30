@@ -100,8 +100,10 @@ fn resolve_clip_path_transform(node: SvgNode, state: &converter::State) -> Optio
     let ts = match svgtypes::Transform::from_str(value) {
         Ok(v) => v,
         Err(_) => {
-            log::warn!("Failed to parse {} value: '{}'.", AId::Transform, value);
-            return None;
+            return super::motion::clip_path_transform(node, state, value).or_else(|| {
+                log::warn!("Failed to parse {} value: '{}'.", AId::Transform, value);
+                None
+            });
         }
     };
 

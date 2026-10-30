@@ -39,9 +39,23 @@ pub(crate) struct Silhouettes<'a> {
 }
 impl<'a> Silhouettes<'a> {
     pub(crate) fn new(data: &'a [u8], variations: &[FontVariation]) -> Option<Self> {
-        let mut face = ttf_parser::Face::parse(data, 0).ok()?;
-        for variation in variations {
-            face.set_variation(ttf_parser::Tag::from_bytes(&variation.tag), variation.value);
+        Self::at(
+            data,
+            0,
+            variations
+                .iter()
+                .map(|variation| (variation.tag, variation.value)),
+        )
+    }
+    /// The outlines of face `index` of `data` at the axis `variations`, tags and values.
+    pub(crate) fn at(
+        data: &'a [u8],
+        index: u32,
+        variations: impl IntoIterator<Item = ([u8; 4], f32)>,
+    ) -> Option<Self> {
+        let mut face = ttf_parser::Face::parse(data, index).ok()?;
+        for (tag, value) in variations {
+            face.set_variation(ttf_parser::Tag::from_bytes(&tag), value);
         }
         Some(Self { face })
     }

@@ -48,6 +48,9 @@ fn draw_children(
             crate::svg::usvg::Node::Text(text) => {
                 draw_children(text.flattened(), mode, transform, pixmap);
             }
+            crate::svg::usvg::Node::Group(group) if group.projection().is_some() => {
+                draw_projected(group, mode, transform, pixmap);
+            }
             crate::svg::usvg::Node::Group(group) => {
                 let transform = transform.pre_concat(group.transform());
 
@@ -63,6 +66,52 @@ fn draw_children(
             _ => {}
         }
     }
+}
+
+/// Draws the clipping shapes of `group`, whose content its projection maps into the space
+/// `transform` places on the pixmap, from pixels of its plane (CSS Transforms 2 §11): their
+/// coverage clears the clip or, with `SourceOver`, paints it.
+fn draw_projected(
+    group: &crate::svg::usvg::Group,
+    mode: tiny_skia::BlendMode,
+    transform: tiny_skia::Transform,
+    pixmap: &mut tiny_skia::PixmapMut,
+) -> Option<()> {
+    let ctx = Context::new(tiny_skia::IntRect::from_xywh(0, 0, 1, 1)?, None);
+    let plane = crate::svg::resvg::render::canvas_plane(
+        crate::svg::resvg::render::placement(group),
+        transform,
+        pixmap,
+    );
+    let coverage = crate::svg::resvg::render::plane_pixels(
+        &plane,
+        group.layer_bounding_box(),
+        &ctx,
+        |_, transform, pixels| {
+            if let Some(clip) = group.clip_path() {
+                clip_group(group, clip, transform, pixels);
+            } else {
+                draw_children(group, tiny_skia::BlendMode::SourceOver, transform, pixels);
+            }
+        },
+    )?;
+    let blend_mode = if mode == tiny_skia::BlendMode::Clear {
+        tiny_skia::BlendMode::DestinationOut
+    } else {
+        mode
+    };
+    pixmap.draw_pixmap(
+        coverage.area.x.round() as i32,
+        coverage.area.y.round() as i32,
+        coverage.pixmap.as_ref(),
+        &tiny_skia::PixmapPaint {
+            blend_mode,
+            ..tiny_skia::PixmapPaint::default()
+        },
+        tiny_skia::Transform::identity(),
+        None,
+    );
+    Some(())
 }
 
 fn clip_group(

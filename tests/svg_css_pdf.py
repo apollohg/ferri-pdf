@@ -3,6 +3,7 @@ attributes, inheritance from HTML, `use` instances of a sprite, CSS transforms, 
 overflow and direction on SVG content, and the isolation of SVG images from the document's style
 sheets, read back through Poppler."""
 import base64
+import math
 import io
 from pathlib import Path
 import subprocess
@@ -11,6 +12,8 @@ import unittest
 from urllib.parse import quote
 
 from PIL import Image
+
+from oracle import pdf_content
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / 'target/debug/ferri-pdf'
@@ -616,6 +619,156 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
                             cell + half, 'the raster renderer masks content under a filter')
             self.assertSpan(self.ink_columns(pixels, 0, 3 * cell, cell, cell, GREEN), 0, half,
                             'a mask element masks with the CSS mask layers of its content')
+
+    def assertProjectedEdges(self, pixels, project, rect, inside, label):
+        """Pixels just inside each projected corner region of `rect` show `inside`, and pixels
+        just outside it the page."""
+        left, top, right, bottom = rect
+        for (x, y), sign in (((left, top), 1), ((right, top), -1), ((right, bottom), -1),
+                             ((left, bottom), 1)):
+            vertical = 1 if y == top else -1
+            for offset, wanted, where in ((4, inside, 'inside'), (-4, WHITE, 'outside')):
+                px, py = project(x + sign * offset, y + vertical * (bottom - top) / 4)
+                self.assertPixel(pixels, int(px), int(py), wanted,
+                                 f'{label}: {where} the projected edge near corner {(x, y)}, '
+                                 f'at ({px:.1f}, {py:.1f})')
+
+    def test_perspective_projects_svg_content_through_the_homography(self):
+        # CSS Transforms 2 §4.1.1, §8, §11: a rectangle turned 40° about (100, 50), on the y axis,
+        # puts a point dx from it at depth -sin·dx; a perspective d about origin p then draws
+        # it at p + (point - p) / w with w = 1 + sin·dx / d. The first svg gives its children
+        # its 300pt perspective about its view-box centre; in the second, taller, a g
+        # gives its own about the origin. One user unit is one point.
+        width, height, depth = 200, 100, 300
+
+        def projector(origin, top):
+            sin, cos = math.sin(math.radians(40)), math.cos(math.radians(40))
+
+            def project(x, y):
+                dx = x - width / 2
+                w = 1 + sin * dx / depth
+                return (origin[0] + (width / 2 + cos * dx - origin[0]) / w,
+                        top + origin[1] + (y - origin[1]) / w)
+            return project
+
+        svg = ('<svg width="{0}pt" height="{1}pt" viewBox="0 0 {0} {1}" class="{2}">{3}</svg>')
+        rect = (f'<rect width="{width}" height="{height}" fill="blue" '
+                'style="transform:rotateY(40deg);transform-origin:100px 50px"/>')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-3d-') as directory:
+            pixels = self.render(
+                Path(directory),
+                f'.p{{perspective:{depth}px}}g{{perspective:{depth}px;perspective-origin:0 0}}',
+                svg.format(width, height, 'p', rect)
+                + svg.format(width, height * 3 // 2, '', f'<g>{rect}</g>'))
+            self.assertProjectedEdges(pixels, projector((width / 2, height / 2), 0),
+                                      (0, 0, width, height), BLUE,
+                                      'the svg element\'s perspective')
+            self.assertProjectedEdges(pixels, projector((0, 0), height),
+                                      (0, 0, width, height), BLUE,
+                                      'the g element\'s perspective about its origin')
+
+    def test_projected_svg_text_stays_text_at_its_projection(self):
+        # The text turns 25° about (100, 50) under a 600pt perspective about the same point: a
+        # glyph origin dx from it draws at x = 100 + cos·dx / w, y = 50 + dy / w, with
+        # w = 1 + sin·dx / 600, within the half pixel at 288 dpi that keeps it vector text.
+        width, height, depth, angle = 200, 100, 600, math.radians(25)
+        css = f'svg{{perspective:{depth}px}}'
+        body = (f'<svg width="{width}pt" height="{height}pt" viewBox="0 0 {width} {height}">'
+                '<text x="20" y="50" font-size="14"{}>Tilted plane</text></svg>')
+        turn = ' style="transform:rotateY(25deg);transform-origin:100px 50px"'
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-3d-') as directory:
+            root = Path(directory)
+            flat_glyphs = [(glyph.text, glyph.origin)
+                           for glyph in pdf_content.inspect(self.output(root, css, body.format('')))['glyphs']]
+            tilted = pdf_content.inspect(self.output(root, css, body.format(turn)))['glyphs']
+        self.assertEqual([glyph.text for glyph in tilted], [text for text, _ in flat_glyphs],
+                         'every glyph stays text, in order, under the perspective')
+        for (text, (x, y)), glyph in zip(flat_glyphs, tilted):
+            dx, dy = x - PAGE_MARGIN - width / 2, PAGE - y - PAGE_MARGIN - height / 2
+            w = 1 + math.sin(angle) * dx / depth
+            expected = (PAGE_MARGIN + width / 2 + math.cos(angle) * dx / w,
+                        PAGE - (PAGE_MARGIN + height / 2 + dy / w))
+            self.assertLess(math.dist(glyph.origin, expected), 0.15,
+                            f'{text!r} at {(x, y)} must draw at its projection {expected}: '
+                            f'got {glyph.origin}')
+
+    def test_svg_3d_rendering_contexts_sort_planes_by_depth_and_hide_back_faces(self):
+        # CSS Transforms 2 §4.1.2, §11: the g's preserve-3d puts both rectangles, turned ±40° about
+        # (100, 50) under the svg's 300pt perspective, in one 3D rendering context, so each
+        # point shows the nearer plane whatever the painting order. A point dx from the centre
+        # on the plane turned by θ lies at depth -sin θ·dx.
+        width, height, depth = 200, 100, 300
+        centre = (width / 2, height / 2)
+
+        def nearest(screen_x):
+            found = []
+            for angle, colour in ((40, RED), (-40, BLUE)):
+                sin, cos = math.sin(math.radians(angle)), math.cos(math.radians(angle))
+                offset = screen_x - centre[0]
+                dx = offset / (cos - sin * offset / depth)
+                w = 1 + sin * dx / depth
+                if w > 0 and abs(dx) <= width / 2:
+                    found.append((-sin * dx / w, colour))
+            return max(found)[1] if found else WHITE
+
+        rect = (f'<rect width="{width}" height="{height}" fill="{{}}" '
+                'style="transform:rotateY({}deg);transform-origin:100px 50px"/>')
+        planes = [rect.format('red', 40), rect.format('blue', -40)]
+        # The card turns its front face away, which hides it; its back, turned again inside the
+        # card's context, faces the viewer (§10). A flat rectangle turned away hides too.
+        card = ('<g style="transform-style:preserve-3d;transform:rotateY(180deg);'
+                'transform-origin:20px 20px">'
+                '<rect width="40" height="40" fill="red" style="backface-visibility:hidden"/>'
+                '<rect width="40" height="40" fill="blue" style="backface-visibility:hidden;'
+                'transform:rotateY(180deg);transform-origin:20px 20px"/></g>'
+                '<rect x="60" width="40" height="40" fill="red" style="backface-visibility:'
+                'hidden;transform:rotateY(180deg);transform-origin:80px 20px"/>')
+        svg = (f'<svg width="{width}pt" height="{height}pt" viewBox="0 0 {width} {height}">'
+               '{}</svg>')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-3d-') as directory:
+            for order in (planes, planes[::-1]):
+                pixels = self.render(
+                    Path(directory), f'svg{{perspective:{depth}px}}',
+                    svg.format(f'<g style="transform-style:preserve-3d">{"".join(order)}</g>')
+                    + svg.format(card))
+                for offset in (-70, -40, -10, 10, 40, 70):
+                    x = int(centre[0] + offset)
+                    self.assertPixel(pixels, x, int(centre[1]), nearest(x + 0.5),
+                                     f'the nearest plane shows at x = {x} whatever the order')
+                self.assertPixel(pixels, 20, height + 20, BLUE,
+                                 'only the card\'s back face, facing the viewer, paints')
+                self.assertPixel(pixels, 80, height + 20, WHITE,
+                                 'a flat rectangle facing away with a hidden back face paints '
+                                 'nothing')
+
+    def test_clip_paths_ignore_3d_transform_lists(self):
+        # CSS Transforms 2 §11: a clipPath ignores a transform list holding a 3D function, so
+        # its 20pt square clips untransformed; a 2D list still moves it.
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-3d-') as directory:
+            pixels = self.render(
+                Path(directory), '#tilt{transform:rotateY(60deg)}#moved{transform:translate(50px)}',
+                f'<svg width="{2 * ICON}pt" height="{ICON}pt" viewBox="0 0 {2 * ICON} {ICON}">'
+                f'<clipPath id="tilt"><rect width="{SQUARE}" height="{SQUARE}"/></clipPath>'
+                f'<clipPath id="moved"><rect width="{SQUARE}" height="{SQUARE}"/></clipPath>'
+                f'<rect width="{ICON}" height="{ICON}" fill="blue" clip-path="url(#tilt)"/>'
+                f'<rect x="{ICON}" width="{ICON}" height="{ICON}" fill="blue" '
+                'clip-path="url(#moved)"/></svg>')
+            self.assertPixel(pixels, SQUARE - 2, SQUARE // 2, BLUE,
+                             'the clip keeps its whole untransformed square')
+            self.assertPixel(pixels, SQUARE + 2, SQUARE // 2, WHITE,
+                             'the clip still clips past its square')
+            self.assertPixel(pixels, ICON + 5, SQUARE // 2, WHITE,
+                             'the 2D list moves its clip 50pt right, off the start of the second square')
+            self.assertPixel(pixels, ICON + SQUARE, SQUARE // 2, BLUE,
+                             'the moved clip keeps 50pt to 70pt')
+
+    def output(self, root, css, body):
+        """The PDF rendered from `css` and `body`."""
+        completed, output = self.convert(root, css, body)
+        self.assertEqual(completed.returncode, 0, f'render failed: {completed.stderr}')
+        rendered = root / f'{len(list(root.glob("*.pdf")))}.pdf'
+        output.rename(rendered)
+        return rendered
 
     def test_svg_images_keep_their_own_styles(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:

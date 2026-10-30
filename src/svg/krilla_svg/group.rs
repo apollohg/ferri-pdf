@@ -4,7 +4,9 @@ use krilla::surface::Surface;
 
 use crate::svg::krilla_svg::composite::{self, Backdrop};
 use crate::svg::krilla_svg::util::{KrillaTransformExt, UsvgTransformExt, convert_blend_mode};
-use crate::svg::krilla_svg::{ProcessContext, clip_path, filter, image, mask, path, text};
+use crate::svg::krilla_svg::{
+    ProcessContext, clip_path, filter, image, mask, path, projected, text,
+};
 
 /// Renders `group` as the root of a stacking context: of a document, a referenced image, or
 /// the content of a mask or pattern, which paint in their own streams.
@@ -23,6 +25,27 @@ pub(crate) fn render_root(
 /// Renders `group`, whose content paints onto `backdrop`, or roots its own stacking context
 /// whose content space the error maps onto the page.
 fn render(
+    group: &crate::svg::usvg::Group,
+    backdrop: Result<Backdrop<'_>, Transform>,
+    surface: &mut Surface,
+    process_context: &mut ProcessContext,
+) {
+    let filter_scale = process_context.svg_settings.filter_scale;
+    let density = backdrop.map_or_else(
+        |to_page| composite::density(to_page, filter_scale),
+        |backdrop| backdrop.density(filter_scale),
+    );
+    if group.is_scene() {
+        projected::render_scene(group, backdrop, density, surface, process_context);
+    } else if let Some(projection) = group.projection() {
+        projected::render(group, projection, density, surface, process_context);
+    } else {
+        render_affine(group, backdrop, surface, process_context);
+    }
+}
+
+/// Renders `group`, whose content its affine transform places, as `render` does.
+pub(crate) fn render_affine(
     group: &crate::svg::usvg::Group,
     backdrop: Result<Backdrop<'_>, Transform>,
     surface: &mut Surface,

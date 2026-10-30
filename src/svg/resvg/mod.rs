@@ -70,6 +70,31 @@ pub(crate) fn render_prefix(
     render::render_nodes(group, &ctx, transform, pixmap);
 }
 
+/// Renders `nodes`, children of `parent`, with `transform` placing the parent's content space
+/// onto the pixmap.
+pub(crate) fn render_children(
+    parent: &crate::svg::usvg::Group,
+    nodes: &[crate::svg::usvg::Node],
+    transform: tiny_skia::Transform,
+    pixmap: &mut tiny_skia::PixmapMut,
+    layer_masks: Option<&dyn crate::svg::LayerMasks>,
+) {
+    let ctx = context(pixmap.width(), pixmap.height(), layer_masks);
+    render::render_children(parent, nodes, &ctx, transform, pixmap);
+}
+
+/// Renders `group`'s content with its effects, whatever its blend mode, with `transform`
+/// placing that content onto the pixmap.
+pub(crate) fn render_layer(
+    group: &crate::svg::usvg::Group,
+    transform: tiny_skia::Transform,
+    pixmap: &mut tiny_skia::PixmapMut,
+    layer_masks: Option<&dyn crate::svg::LayerMasks>,
+) {
+    let ctx = context(pixmap.width(), pixmap.height(), layer_masks);
+    render::render_layer(group, &ctx, transform, pixmap);
+}
+
 fn context(
     width: u32,
     height: u32,

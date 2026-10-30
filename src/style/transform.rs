@@ -18,7 +18,7 @@ pub(crate) type Matrix = [f32; 6];
 pub(crate) type Matrix3d = [f32; 16];
 /// A box that projects behind the viewer or turns its hidden back face towards them is not
 /// rendered: it collapses to a point, which paints nothing.
-const NOT_RENDERED: Projection = [0.0; 9];
+pub(crate) const NOT_RENDERED: Projection = [0.0; 9];
 pub(crate) const IDENTITY: Matrix3d = [
     1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
 ];
@@ -27,7 +27,6 @@ const DIMENSION: usize = 4;
 const W_FROM_X: usize = 3;
 const W_FROM_Y: usize = 7;
 const W_FROM_Z: usize = 11;
-const W_CONSTANT: usize = 15;
 const Z_FROM_Z: usize = 10;
 const TRANSLATION: std::ops::Range<usize> = 12..15;
 
@@ -527,7 +526,7 @@ impl Parent3d {
 /// a hidden back face (§10) is not rendered. A `w` constant across the box divides out into
 /// an affine map.
 fn project(m: &Matrix3d, reference: Rect, backface_hidden: bool) -> Projection {
-    if backface_hidden && m[Z_FROM_Z] < 0.0 {
+    if backface_hidden && faces_away(m) {
         return NOT_RENDERED;
     }
     let projection = crate::paint::projection::of_plane(*m);
@@ -540,6 +539,12 @@ fn project(m: &Matrix3d, reference: Rect, backface_hidden: bool) -> Projection {
     }
     crate::paint::projection::affine_over(projection, &corners)
         .map_or(projection, crate::paint::projection::from_affine)
+}
+
+/// Whether a plane that accumulated matrix `m` places turns its back face to the viewer
+/// (§10).
+pub(crate) fn faces_away(m: &Matrix3d) -> bool {
+    m[Z_FROM_Z] < 0.0
 }
 
 impl Style {
@@ -666,9 +671,9 @@ impl Style {
     }
     /// The planar matrix of the transform properties without the origin, in points, for SVG
     /// content, whose renderer places the origin in its reference box. `None` without a
-    /// transform, and for a translation by a percentage of the reference box or a perspective,
-    /// which the renderer evaluates in that box. SVG content is flattened into its viewport
-    /// plane (CSS Transforms 2 §4).
+    /// transform, and for a translation by a percentage of the reference box or any 3D
+    /// transform, which the renderer evaluates in that box: its depth matters to a perspective
+    /// and a 3D rendering context (CSS Transforms 2 §4).
     pub(crate) fn planar_transform(&self) -> Option<Matrix> {
         if !self.is_transformed() {
             return None;
@@ -689,7 +694,7 @@ impl Style {
                 None,
             )
             .ok()?;
-        (m[W_FROM_X] == 0.0 && m[W_FROM_Y] == 0.0 && m[W_CONSTANT] == 1.0)
+        (m == lift([m[0], m[1], m[4], m[5], m[12], m[13]]))
             .then_some([m[0], m[1], m[4], m[5], m[12], m[13]])
     }
     /// The 3D matrix placing this box in its parent's space (CSS Transforms 2 §4.1.4): its
@@ -709,17 +714,6 @@ impl Style {
     /// The projection drawing this box's plane, which accumulated matrix `m` places (§4.2).
     pub(crate) fn projected(&self, m: &Matrix3d, boxes: &BoxAreas<Rect>) -> Projection {
         project(m, self.transform_box.reference(boxes), self.backface_hidden)
-    }
-    /// The page-space projection drawing this box in its parent's plane, or `None` without a
-    /// transform.
-    pub(crate) fn transform_matrix(
-        &self,
-        boxes: &BoxAreas<Rect>,
-        parent: Option<&Parent3d>,
-        containing: &crate::style::motion::Reference,
-    ) -> Option<Projection> {
-        self.plane(boxes, parent, containing)
-            .map(|m| self.projected(&m, boxes))
     }
 }
 

@@ -37,3 +37,9 @@ the document styles has, mask through the settings' `LayerMasks`: the document d
 layers' values as it does for its own boxes, in the group's fill, stroke and view boxes. The
 resvg calls behind compositing and filters pass it on, and resvg applies the same values in
 pixels.
+
+Groups with a 3D `matrix` draw as the document draws projected layers: text clusters through
+the projection's tangent within the resampling tolerance, groups holding such text or blending
+with what lies below them in place, and other content rendered by resvg in the plane's bands
+and resampled. Scenes draw the depth-sorted pieces of their planes. resvg renders both in
+pixels the same way.

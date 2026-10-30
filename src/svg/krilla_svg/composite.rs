@@ -53,6 +53,20 @@ impl<'r> Backdrop<'r> {
     }
 }
 
+impl Backdrop<'_> {
+    /// Raster pixels per unit of the current drawing space at `filter_scale` pixels per page
+    /// unit.
+    pub(crate) fn density(&self, filter_scale: f32) -> f32 {
+        filter_scale * self.scale * scale(self.to_root)
+    }
+}
+
+/// Raster pixels per unit of a space that `to_page` maps onto the page, at `filter_scale`
+/// pixels per page unit.
+pub(crate) fn density(to_page: Transform, filter_scale: f32) -> f32 {
+    filter_scale * scale(to_page)
+}
+
 /// The larger of the axis scales of `transform`.
 fn scale(transform: Transform) -> f32 {
     let (x, y) = transform.get_scale();
@@ -68,6 +82,8 @@ pub(crate) fn in_pixels(node: &Node, parent: &Group) -> bool {
                 group.blend_mode(),
                 BlendMode::PlusDarker | BlendMode::PlusLighter
             ) || (group.linear_light() && (group::isolates(group) || !group.filters().is_empty()))
+                // Projected content composites in the pixels of its plane.
+                || ((group.projection().is_some() || group.is_scene()) && any_in_pixels(group))
         }
         Node::Path(path) => {
             parent.linear_light()
@@ -116,7 +132,9 @@ pub(crate) fn render(
     process_context: &ProcessContext,
 ) -> Option<()> {
     let bounds = match node {
-        Node::Group(group) => group.layer_bounding_box().transform(group.transform())?,
+        Node::Group(group) => group
+            .placed(group.layer_bounding_box().to_rect())?
+            .to_non_zero_rect()?,
         _ => node.stroke_bounding_box().to_non_zero_rect()?,
     }
     .transform(backdrop.to_root)?;

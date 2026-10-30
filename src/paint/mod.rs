@@ -8,6 +8,7 @@ mod clip;
 mod color_space;
 pub(crate) mod compositing;
 mod decoration;
+pub(crate) mod depth;
 mod easing;
 mod filter;
 mod gradient;

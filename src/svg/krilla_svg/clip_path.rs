@@ -162,7 +162,11 @@ fn is_simple_clip_path(group: &crate::svg::usvg::Group) -> bool {
                 // We can only intersect one clipping path with another one, meaning that we
                 // can convert nested clip paths if a second clip path is defined on the clip
                 // path itself, but not if it is defined on a child.
-                group.clip_path().is_none() && is_simple_clip_path(group)
+                // A projected group's outlines are not those of its content.
+                group.clip_path().is_none()
+                    && group.matrix().is_none()
+                    && !group.is_scene()
+                    && is_simple_clip_path(group)
             }
             _ => true,
         }

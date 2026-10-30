@@ -12,6 +12,7 @@ use rustybuzz::ttf_parser::GlyphId;
 use svgtypes::{Length, LengthUnit as Unit, PaintOrderKind, TransformOrigin};
 use tiny_skia_path::PathBuilder;
 
+use super::motion::Placement;
 use super::svgtree::{self, AId, EId, FromValue, SvgNode};
 use super::units::{self, convert_length};
 use super::{Error, Options, marker};
@@ -124,6 +125,8 @@ pub(crate) struct Cache {
     mask_index: usize,
     filter_index: usize,
     image_index: usize,
+    /// The perspective, in points, that each converted element with one gives its children.
+    pub(crate) perspectives: HashMap<svgtree::NodeKey, crate::style::transform::Matrix3d>,
 }
 
 macro_rules! font_lookup {
@@ -167,6 +170,7 @@ impl Cache {
             mask_index: 0,
             filter_index: 0,
             image_index: 0,
+            perspectives: HashMap::new(),
         }
     }
 
@@ -520,6 +524,8 @@ pub(crate) fn convert_doc(
         tree.root.children.push(Node::Group(Box::new(g)));
     }
 
+    form_scenes(&mut tree.root);
+
     // Clear cache to make sure that all `Arc<T>` objects have a single strong reference.
     cache.clip_paths.clear();
     cache.masks.clear();
@@ -851,9 +857,14 @@ const NON_SCALING_SIZE: &str = "non-scaling-size";
 const NON_ROTATION: &str = "non-rotation";
 const FIXED_POSITION: &str = "fixed-position";
 
-/// Whether the element's `vector-effect` strokes it in the host coordinate space (SVG 2 §13.6).
-pub(super) fn non_scaling_stroke(node: SvgNode) -> bool {
+/// Whether the element's `vector-effect` strokes it in the host coordinate space (SVG 2 §13.6):
+/// not within a 3D rendering context (CSS Transforms 2 §11).
+pub(super) fn non_scaling_stroke(node: SvgNode, state: &State) -> bool {
     node.attribute::<&str>(AId::VectorEffect) == Some(NON_SCALING_STROKE)
+        && !node
+            .ancestors()
+            .skip(1)
+            .any(|ancestor| super::motion::preserves_3d(ancestor, state))
 }
 
 /// SVG 2 §8.13.1: the transform giving the element whose own transform is `own` the user
@@ -878,7 +889,7 @@ fn vector_effect(node: SvgNode, parent: Transform, own: Transform) -> Transform 
         .map_or(own, |to_parent| to_parent.pre_concat(constrained))
 }
 
-/// The transform of an element whose content `collect` converts untransformed: CSS
+/// The placement of an element whose content `collect` converts untransformed: CSS
 /// transform properties, or the `transform` attribute about an origin that, per CSS
 /// Transforms 1 §2, lies in the element's object or stroke bounding box when
 /// `transform-box` selects one, measured before the transform applies.
@@ -888,12 +899,12 @@ pub(super) fn element_transform(
     cache: &mut Cache,
     parent: &Group,
     collect: &dyn Fn(&mut Cache, &mut Group),
-) -> Transform {
-    let own =
-        super::motion::transform(node, state, cache, parent, collect).unwrap_or_else(|| match node
-            .attribute::<&str>(
-            AId::TransformBox,
-        ) {
+) -> Placement {
+    let own = match super::motion::transform(node, state, cache, parent, collect) {
+        Some(Placement::Affine(own)) => own,
+        // CSS Transforms 2 §11: no vector effect applies in 3D.
+        Some(placement) => return placement,
+        None => match node.attribute::<&str>(AId::TransformBox) {
             Some(reference @ (FILL_BOX | STROKE_BOX)) => {
                 let mut probe = Group::empty();
                 probe.abs_transform = parent.abs_transform;
@@ -907,8 +918,26 @@ pub(super) fn element_transform(
                 node.resolve_transform_in(AId::Transform, state, Some(bounds))
             }
             _ => node.resolve_transform(AId::Transform, state),
-        });
-    vector_effect(node, parent.abs_transform, own)
+        },
+    };
+    Placement::Affine(vector_effect(node, parent.abs_transform, own))
+}
+
+/// Records the perspective `node` gives its children (CSS Transforms 2 §8), measuring its
+/// content with `collect` where its reference box needs it.
+pub(super) fn record_perspective(
+    node: SvgNode,
+    state: &State,
+    cache: &mut Cache,
+    parent: &Group,
+    collect: &dyn Fn(&mut Cache, &mut Group),
+) {
+    let key = node.key();
+    // Content measured for the reference box lies flat, without the perspective it sets up.
+    cache.perspectives.remove(&key);
+    if let Some(perspective) = super::motion::perspective(node, state, cache, parent, collect) {
+        cache.perspectives.insert(key, perspective);
+    }
 }
 
 // TODO: explain
@@ -938,7 +967,14 @@ pub(crate) fn convert_group(
         Opacity::ONE
     };
 
-    let transform = element_transform(node, state, cache, parent, collect_children);
+    let (transform, matrix) = match element_transform(node, state, cache, parent, collect_children)
+    {
+        Placement::Affine(transform) => (transform, None),
+        Placement::Matrix(matrix) => (Transform::default(), Some(matrix)),
+        Placement::Hidden => return None,
+    };
+    record_perspective(node, state, cache, parent, collect_children);
+    let preserves_3d = super::motion::preserves_3d(node, state);
     // CSS Masking 1 §6.1: a clipping path's children contribute geometry only.
     let in_clip_path = state.parent_clip_path.is_some();
     let blend_mode: BlendMode = if in_clip_path {
@@ -964,6 +1000,10 @@ pub(crate) fn convert_group(
     let mut g = Group {
         id,
         transform,
+        matrix,
+        scene: false,
+        preserves_3d,
+        backface_hidden: super::motion::backface_hidden(node),
         abs_transform,
         opacity,
         blend_mode,
@@ -1062,6 +1102,8 @@ pub(crate) fn convert_group(
         || layer_mask.is_some()
         || !filters.is_empty()
         || !transform.is_identity()
+        || matrix.is_some()
+        || preserves_3d
         || blend_mode != BlendMode::Normal
         || isolate
         // The group's own children composite in its colour space.
@@ -1086,6 +1128,88 @@ pub(crate) fn convert_group(
     g.calculate_bounding_boxes();
 
     Some(g)
+}
+
+/// Replaces each group in `group`'s subtree that establishes a 3D rendering context with the
+/// context's scene (CSS Transforms 2 §4.1.2); whether any formed.
+fn form_scenes(group: &mut Group) -> bool {
+    let mut formed = false;
+    let extends = group.preserves_3d;
+    for child in &mut group.children {
+        if let Node::Group(child) = child {
+            formed |= form_scenes(child);
+            if child.preserves_3d && !extends {
+                **child = scene(std::mem::replace(&mut **child, Group::empty()));
+                formed = true;
+            }
+        }
+    }
+    if formed {
+        group.calculate_bounding_boxes();
+    }
+    formed
+}
+
+/// CSS Transforms 2 §4.1.2: the 3D rendering context that `root` establishes, as a group in
+/// its parent's space whose children are the context's planes in painting order: `root`'s
+/// and those of the 3D transformed elements participating in it, each holding its element's
+/// content outside other planes and placed by its accumulated 3D transformation matrix.
+fn scene(root: Group) -> Group {
+    let mut planes = Vec::new();
+    let matrix = root.matrix.unwrap_or(crate::style::transform::IDENTITY);
+    let abs_transform = root.abs_transform;
+    hoist(root, matrix, &mut planes);
+    Group {
+        scene: true,
+        abs_transform,
+        children: planes
+            .into_iter()
+            .map(|plane| Node::Group(Box::new(plane)))
+            .collect(),
+        ..Group::empty()
+    }
+}
+
+/// Adds the plane of `element`, which extends the context, at `accumulated` to `planes`,
+/// before the planes of the elements participating through it.
+fn hoist(
+    mut element: Group,
+    accumulated: crate::style::transform::Matrix3d,
+    planes: &mut Vec<Group>,
+) {
+    let index = planes.len();
+    planes.push(Group::empty());
+    let mut own = Vec::new();
+    for child in std::mem::take(&mut element.children) {
+        match child {
+            Node::Group(group) if group.matrix.is_some() => {
+                let placed = crate::style::transform::multiply(
+                    &accumulated,
+                    &group.matrix.unwrap_or(crate::style::transform::IDENTITY),
+                );
+                if group.preserves_3d {
+                    hoist(*group, placed, planes);
+                } else {
+                    planes.push(plane(*group, placed));
+                }
+            }
+            other => own.push(other),
+        }
+    }
+    element.children = own;
+    planes[index] = plane(element, accumulated);
+}
+
+/// `group` as a plane at `accumulated`, empty where it turns a hidden back face to the
+/// viewer (§10).
+fn plane(mut group: Group, accumulated: crate::style::transform::Matrix3d) -> Group {
+    if group.backface_hidden && crate::style::transform::faces_away(&accumulated) {
+        group.children.clear();
+    }
+    group.transform = Transform::default();
+    group.matrix = Some(accumulated);
+    group.calculate_bounding_boxes();
+    group
 }
 
 /// The fill, stroke and view boxes of the group `g`, whose bounding boxes are calculated, in
@@ -1228,7 +1352,7 @@ fn convert_path(
     );
 
     let path = match path {
-        Some(path) if non_scaling_stroke(node) => path.with_non_scaling_stroke(),
+        Some(path) if non_scaling_stroke(node, state) => path.with_non_scaling_stroke(),
         path => path,
     };
     let Some(path) = path else {
