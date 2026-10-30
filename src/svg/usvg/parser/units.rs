@@ -121,7 +121,7 @@ pub(crate) fn convert_length(
     };
     match length.unit {
         Unit::None | Unit::Px => n * zoom,
-        Unit::Em => n * resolve_font_size(node, state),
+        Unit::Em => n * (resolve_font_size(node, state) / node.effective_zoom()) * zoom,
         Unit::Ex => {
             let value = FontLengths::new(
                 Some(node),
@@ -129,7 +129,7 @@ pub(crate) fn convert_length(
                 state,
             )
             .length(FontUnit::Ex)
-                * node.effective_zoom();
+                * zoom;
             n * value
         }
         Unit::In => n * zoom * dpi,

@@ -7,6 +7,41 @@ import embedded_content_pdf
 
 
 class ZoomPdf(unittest.TestCase):
+    def test_svg_gradient_font_units_respect_the_resource_coordinate_system(self):
+        from fontTools.ttLib import TTFont
+        renderer = embedded_content_pdf.EmbeddedContentPdf()
+        renderer.setUp()
+        font_path = embedded_content_pdf.table_positioning_pdf.ROOT / 'assets/fonts/DejaVuSans.ttf'
+        with TTFont(font_path) as font:
+            x_height = font['glyf']['x'].yMax / font['head'].unitsPerEm
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-gradient-font-zoom-') as directory:
+            root = Path(directory)
+            for units in ('objectBoundingBox', 'userSpaceOnUse'):
+                for unit, metric in [('em', 1), ('ex', x_height)]:
+                    for zoom in (1, 2):
+                        for expression in (f'1{unit}', f'calc(1{unit} + 0px)'):
+                            with self.subTest(units=units, unit=unit, zoom=zoom, expression=expression):
+                                font_size = .5 if units == 'objectBoundingBox' else 40
+                                coordinate = font_size * metric * (1 if units == 'objectBoundingBox' else zoom)
+                                def ink(name, endpoint, size, style):
+                                    path = root / name
+                                    svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="120" height="100">'
+                                        f'<defs><linearGradient id="g" gradientUnits="{units}" x2="{endpoint}">'
+                                        '<stop stop-color="red"/><stop offset="1" stop-color="blue"/></linearGradient></defs>'
+                                        f'<rect style="{style}" width="{size}" height="{size}" fill="url(#g)"/></svg>')
+                                    path.write_text(svg)
+                                    return [renderer.ink(root, 'svg,img{display:block}', body)
+                                            for body in (f'<img src="{path.as_uri()}">', svg)]
+                                expected = ink('reference.svg', coordinate, 40 * zoom, '')
+                                actual = ink('actual.svg', expression, 40,
+                                             f'font-family:DejaVu Sans;font-size:{font_size}px;zoom:{zoom}')
+                                for embedding, actual_ink, expected_ink in zip(('external', 'inline'), actual, expected):
+                                    with self.subTest(embedding=embedding):
+                                        self.assertTrue(any(r > b for r, b in zip(expected_ink[::3], expected_ink[2::3])),
+                                                        'the reference gradient must paint its red end')
+                                        self.assertTrue(actual_ink == expected_ink,
+                                                        'font units must use the selected resource coordinate system exactly once')
+
     def test_zoomed_ruby_and_initial_letters_match_physical_typography(self):
         renderer = embedded_content_pdf.EmbeddedContentPdf()
         renderer.setUp()
