@@ -121,6 +121,30 @@ class TextEffectsPdf(unittest.TestCase):
                         for got, want in zip(actual, expected):
                             self.assertAlmostEqual(got, want, delta=1 / 255, msg=f"{name} {actual}")
 
+    def test_stroke_color_strokes_inline_text_at_its_stroke_width(self):
+        """Fill and Stroke 3 §4.4.1: `stroke-color` applies to inline boxes; the stroke is
+        `stroke-width` wide (initially 1px), and `-webkit-text-stroke` takes precedence."""
+        cases = [
+            ("stroke-color:red", (1.0, 0.0, 0.0, 1.0), 0.75),
+            ("stroke-color:red;stroke-width:4pt", (1.0, 0.0, 0.0, 1.0), 4.0),
+            ("stroke-color:red;-webkit-text-stroke:2pt blue", (0.0, 0.0, 1.0, 1.0), 2.0),
+        ]
+        for style, stroke, width in cases:
+            with self.subTest(style=style):
+                target = self.render(style, "H")
+                (glyph,) = pdf_content.glyphs(target)
+                self.assertEqual(glyph.render_mode, FILL_STROKE, "fill and stroke")
+                for got, want in zip(glyph.stroke, stroke):
+                    self.assertAlmostEqual(got, want, delta=1 / 255, msg=f"stroke {glyph.stroke}")
+                box = metrics("H")["box"]
+                baseline = self.baseline_pt()
+                ink = self.ink_box(self.raster(target), lambda p: min(p) < INK_THRESHOLD)
+                self.assert_box(ink, [LEFT_PT + box[0] * SIZE_PT - width / 2,
+                                      baseline - box[3] * SIZE_PT - width / 2,
+                                      LEFT_PT + box[2] * SIZE_PT + width / 2,
+                                      baseline - box[1] * SIZE_PT + width / 2],
+                                f"a {width}pt stroke centred on the H outline")
+
     def test_differently_translucent_strokes_outline_the_glyph_outside_text(self):
         target = self.render("-webkit-text-fill-color:rgb(0 128 0 / 50%);-webkit-text-stroke:4pt red", "H")
         box = metrics("H")["box"]

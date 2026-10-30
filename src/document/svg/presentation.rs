@@ -62,7 +62,7 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
     push("fill", &paint(&svg.fill));
     push("fill-opacity", &number(svg.fill_opacity));
     push("fill-rule", svg.fill_rule.name());
-    push("stroke", &paint(&svg.stroke));
+    push("stroke", &stroke(svg));
     push("stroke-opacity", &number(svg.stroke_opacity));
     push("stroke-width", &length_percentage(&svg.stroke_width)?);
     push(
@@ -541,6 +541,23 @@ fn paint(paint: &Paint) -> String {
         },
         Paint::ContextFill => "context-fill".into(),
         Paint::ContextStroke => "context-stroke".into(),
+    }
+}
+
+/// The stroke the renderer draws: `stroke`, with `stroke-color` where that paints nothing
+/// (Fill and Stroke 3 §4.4.1): for `none`, and as the fallback of a reference without one.
+fn stroke(svg: &crate::style::svg_values::SvgStyle) -> String {
+    let layer = svg.stroke_color.used;
+    if layer.alpha <= 0.0 {
+        return paint(&svg.stroke);
+    }
+    match &svg.stroke {
+        Paint::None => color(layer),
+        Paint::Server {
+            url: reference,
+            fallback: None,
+        } => format!("{} {}", url(reference), color(layer)),
+        other => paint(other),
     }
 }
 

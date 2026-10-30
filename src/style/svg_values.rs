@@ -12,7 +12,7 @@ use crate::style::{
     declaration::{self, PropertyDeclaration, Specified},
     grammar::{Keyword, Property},
     properties::Input,
-    units::Relative,
+    units::{Axis, Relative},
     values::number,
     wide_keywords::WideKeyword,
 };
@@ -74,9 +74,15 @@ pub(crate) struct SvgStyle {
     pub fill_opacity: f32,
     pub fill_rule: Keyword,
     pub stroke: Paint,
+    /// Fill and Stroke 3 §4.4.1 `stroke-color`, drawn where `stroke` paints nothing: it is
+    /// `none`, or a reference without a fallback that names no paint server.
+    pub stroke_color: InheritedColor,
     pub stroke_opacity: f32,
     /// Points, or a percentage of the normalized viewport diagonal.
     pub stroke_width: LengthPercentage,
+    /// The stroke width of CSS text in points: a percentage refers to the scaled viewport size,
+    /// the geometric mean of the viewport's width and height (Fill and Stroke 3 §4.2.1).
+    pub text_stroke_width: f32,
     /// `None` is `none`.
     pub stroke_dasharray: Option<Arc<[LengthPercentage]>>,
     pub stroke_dashoffset: LengthPercentage,
@@ -124,8 +130,10 @@ impl Default for SvgStyle {
             fill_opacity: opaque,
             fill_rule: Keyword::Nonzero,
             stroke: Paint::None,
+            stroke_color: color(crate::paint::Color::TRANSPARENT),
             stroke_opacity: opaque,
             stroke_width: LengthPercentage::Length(crate::style::POINTS_PER_PIXEL),
+            text_stroke_width: crate::style::POINTS_PER_PIXEL,
             stroke_dasharray: None,
             stroke_dashoffset: LengthPercentage::ZERO,
             stroke_linecap: Keyword::Butt,
@@ -172,9 +180,14 @@ impl SvgStyle {
         let dependent = [&style.fill, &style.stroke]
             .into_iter()
             .any(Paint::depends_on_color)
-            || [&style.stop_color, &style.flood_color, &style.lighting_color]
-                .into_iter()
-                .any(InheritedColor::depends_on_color);
+            || [
+                &style.stroke_color,
+                &style.stop_color,
+                &style.flood_color,
+                &style.lighting_color,
+            ]
+            .into_iter()
+            .any(InheritedColor::depends_on_color);
         if !dependent {
             return Ok(());
         }
@@ -182,6 +195,7 @@ impl SvgStyle {
         style.fill.resolve(relative, current)?;
         style.stroke.resolve(relative, current)?;
         for color in [
+            &mut style.stroke_color,
             &mut style.stop_color,
             &mut style.flood_color,
             &mut style.lighting_color,
@@ -357,6 +371,7 @@ macro_rules! svg_color {
 
 svg_color!(fill, fill, Paint::compute);
 svg_color!(stroke, stroke, Paint::compute);
+svg_color!(stroke_color, stroke_color, InheritedColor::compute);
 svg_color!(stop_color, stop_color, InheritedColor::compute);
 svg_color!(flood_color, flood_color, InheritedColor::compute);
 svg_color!(lighting_color, lighting_color, InheritedColor::compute);
@@ -372,9 +387,36 @@ svg_property!(stop_opacity, stop_opacity, |value, _style, relative| {
 svg_property!(flood_opacity, flood_opacity, |value, _style, relative| {
     crate::style::properties::opacity_value(value, relative)?
 });
-svg_property!(stroke_width, stroke_width, |value, _style, relative| {
-    user_length(value, relative)?
-});
+pub(super) fn stroke_width(
+    style: &mut Style,
+    _parent: &Style,
+    input: Input<'_>,
+    relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    let (width, text) = match input {
+        Input::Value(value) => {
+            let width = user_length(value, relative)?;
+            let text = if let LengthPercentage::Length(points) = width {
+                points
+            } else {
+                let size = relative.viewport.dimension(Axis::Width)?
+                    * relative.viewport.dimension(Axis::Height)?;
+                width.resolve(size.sqrt())
+            };
+            (width, text)
+        }
+        Input::Copy(source) => (
+            source.svg.stroke_width.clone(),
+            source.svg.text_stroke_width,
+        ),
+    };
+    if style.svg.stroke_width != width || style.svg.text_stroke_width != text {
+        let svg = Arc::make_mut(&mut style.svg);
+        svg.stroke_width = width;
+        svg.text_stroke_width = text;
+    }
+    Ok(())
+}
 svg_property!(
     stroke_dashoffset,
     stroke_dashoffset,

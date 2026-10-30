@@ -158,7 +158,8 @@ impl MarkShape {
     }
 }
 
-/// `-webkit-text-stroke`: a stroke of `width` centred on each glyph outline.
+/// `-webkit-text-stroke`, or else the Fill and Stroke 3 `stroke-color` stroke of inline boxes
+/// at their `stroke-width`: a stroke of `width` centred on each glyph outline.
 #[derive(Clone, Copy, Debug, PartialEq, Serialize)]
 pub(crate) struct TextStroke {
     pub width: f32,
@@ -166,9 +167,16 @@ pub(crate) struct TextStroke {
 }
 impl TextStroke {
     pub(crate) fn of(style: &Style) -> Option<Self> {
-        (style.text_paint.stroke_width > 0.0).then_some(Self {
-            width: style.text_paint.stroke_width,
-            color: style.text_paint.stroke_color.used,
+        if style.text_paint.stroke_width > 0.0 {
+            return Some(Self {
+                width: style.text_paint.stroke_width,
+                color: style.text_paint.stroke_color.used,
+            });
+        }
+        let color = style.svg.stroke_color.used;
+        (color.alpha > 0.0 && style.svg.text_stroke_width > 0.0).then_some(Self {
+            width: style.svg.text_stroke_width,
+            color,
         })
     }
 }

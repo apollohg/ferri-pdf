@@ -209,6 +209,24 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
             self.assertPixel(pixels, 35, 45, WHITE, 'overflow-x: hidden clips the left')
             self.assertPixel(pixels, 65, 45, WHITE, 'overflow-x: hidden clips the right')
 
+    def test_stroke_color_paints_where_the_stroke_paint_paints_nothing(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            pixels = self.render(
+                Path(directory), 'rect{stroke-color:blue;stroke-width:10}',
+                f'<svg width="{4 * ICON}pt" height="{ICON}pt" viewBox="0 0 {4 * ICON} {ICON}">'
+                f'<rect x="5" y="5" width="{SQUARE}" height="{SQUARE}" fill="none"/>'
+                f'<rect x="{ICON + 5}" y="5" width="{SQUARE}" height="{SQUARE}" fill="none" '
+                'stroke="yellow"/>'
+                f'<rect x="{2 * ICON + 5}" y="5" width="{SQUARE}" height="{SQUARE}" fill="none" '
+                'stroke="url(#missing)"/></svg>')
+            self.assertPixel(pixels, 5, 15, BLUE,
+                             'Fill and Stroke 3 §4.4.1: stroke-color strokes a shape whose stroke '
+                             'is none')
+            self.assertPixel(pixels, ICON + 5, 15, YELLOW,
+                             'the stroke paint wins over the stroke colour')
+            self.assertPixel(pixels, 2 * ICON + 5, 15, BLUE,
+                             'a paint server reference naming nothing falls back to the colour')
+
     def test_vector_effects_constrain_strokes_and_user_spaces_in_the_host_space(self):
         # Without a viewBox, user units are the host space's CSS pixels, three quarters of a point.
         def pt(units):

@@ -228,7 +228,7 @@ impl Viewport<'_> {
             }),
         }
     }
-    fn dimension(&self, axis: Axis) -> Result<f32, StyleError> {
+    pub(super) fn dimension(&self, axis: Axis) -> Result<f32, StyleError> {
         match self {
             Self::Deferred(source) => source.dimension(axis),
             Self::Known([width, height], _) => Ok(match axis {

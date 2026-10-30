@@ -151,6 +151,7 @@ impl Style {
             shadow.blur *= factor;
         }
         style.text_paint.stroke_width *= factor;
+        Arc::make_mut(&mut style.svg).text_stroke_width *= factor;
         style.text_decorations.declared = style.text_decorations.declared.zoomed(factor);
         if let Some(value) = &mut style.text_decorations.underline_offset {
             *value = value.zoomed(factor);
