@@ -183,6 +183,32 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
             self.assertPixel(pixels, ICON + 10, ICON + 10, WHITE,
                              'CSS Shapes 1 §3.1: round 5px clips the square\'s corner')
 
+    def test_reference_boxes_place_use_transforms_percentages_and_one_axis_overflow(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            pixels = self.render(
+                Path(directory),
+                '.turn{transform:rotate(90deg);transform-origin:center;transform-box:fill-box}'
+                '.shift{transform:translate(50%)} .wide{overflow-x:hidden;overflow-y:visible}',
+                f'<svg width="{4 * ICON}pt" height="{2 * ICON}pt" '
+                f'viewBox="0 0 {4 * ICON} {2 * ICON}">'
+                '<defs><rect id="bar" y="15" width="40" height="10" fill="blue"/></defs>'
+                '<use class="turn" href="#bar"/>'
+                '<rect class="shift" y="50" width="20" height="20" fill="rgb(0,160,0)"/>'
+                '<svg class="wide" x="40" y="40" width="20" height="10">'
+                '<rect x="-10" y="-10" width="40" height="40" fill="red"/></svg>'
+                '</svg>')
+            self.assertPixel(pixels, 20, 3, BLUE,
+                             'CSS Transforms 1 §6: the use element turns about the centre of its '
+                             'instance, whose fill box it measures')
+            self.assertPixel(pixels, 3, 20, WHITE, 'the turned bar leaves its left end')
+            self.assertPixel(pixels, 90, 60, GREEN,
+                             'translate(50%) moves by half the 160-unit view box')
+            self.assertPixel(pixels, 10, 60, WHITE, 'the translated square leaves its place')
+            self.assertPixel(pixels, 50, 65, RED,
+                             'SVG 2 §3.11: overflow-y: visible shows content below the viewport')
+            self.assertPixel(pixels, 35, 45, WHITE, 'overflow-x: hidden clips the left')
+            self.assertPixel(pixels, 65, 45, WHITE, 'overflow-x: hidden clips the right')
+
     def test_right_to_left_pages_anchor_svg_icon_text_at_its_start_on_the_right(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
             anchor = ICON - 2

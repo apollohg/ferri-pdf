@@ -500,19 +500,6 @@ fn svg_style_elements_are_left_to_the_document_cascade() {
 #[test]
 fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
     for (css, expected) in [
-        (
-            "rect{transform:translate(10%)}",
-            "percentage of the reference box",
-        ),
-        (
-            "rect{transform:perspective(9px) rotateY(9deg)}",
-            "perspective",
-        ),
-        (
-            "use{transform:scale(2);transform-box:fill-box}",
-            "fill-box on an SVG use",
-        ),
-        ("svg svg{overflow-y:visible}", "one axis"),
         ("pattern{overflow:visible}", "always clips"),
         ("rect{clip-path:url(other.svg#clip)}", "another document"),
         ("rect{mask:url(#a),url(#b)}", "mask layers"),

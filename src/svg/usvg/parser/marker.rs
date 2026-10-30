@@ -1,8 +1,6 @@
 // Copyright 2018 the Resvg Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use std::sync::Arc;
-
 use strict_num::NonZeroPositiveF32;
 use svgtypes::Length;
 use tiny_skia_path::Point;
@@ -10,8 +8,7 @@ use tiny_skia_path::Point;
 use super::converter;
 use super::svgtree::{AId, EId, SvgNode};
 use crate::svg::usvg::{
-    ApproxEqUlps, ApproxZeroUlps, ClipPath, Fill, Group, Node, NonZeroRect, Path, Size, Transform,
-    ViewBox,
+    ApproxEqUlps, ApproxZeroUlps, Group, Node, NonZeroRect, Size, Transform, ViewBox,
 };
 
 // Similar to `tiny_skia_path::PathSegment`, but without the `QuadTo`.
@@ -107,32 +104,8 @@ fn resolve(
                 .unwrap_or_default(),
         });
 
-    let has_overflow = {
-        let overflow = marker_node.attribute(AId::Overflow);
-        // `overflow` is `hidden` by default.
-        overflow.is_none() || overflow == Some("hidden") || overflow == Some("scroll")
-    };
-
-    let clip_path = if has_overflow {
-        let clip_rect = if let Some(vbox) = view_box {
-            vbox.rect
-        } else {
-            r.size().to_non_zero_rect(0.0, 0.0)
-        };
-
-        let mut clip_path = ClipPath::empty(cache.gen_clip_path_id());
-
-        let mut path = Path::new_simple(Arc::new(tiny_skia_path::PathBuilder::from_rect(
-            clip_rect.to_rect(),
-        )))?;
-        path.fill = Some(Fill::default());
-
-        clip_path.root.children.push(Node::Path(Box::new(path)));
-
-        Some(Arc::new(clip_path))
-    } else {
-        None
-    };
+    let clip_rect = view_box.map_or_else(|| r.size().to_non_zero_rect(0.0, 0.0), |vbox| vbox.rect);
+    let clip_axes = converter::overflow_axes(marker_node);
 
     // TODO: avoid allocation
     let mut segments: Vec<Segment> = Vec::with_capacity(path.len());
@@ -197,7 +170,6 @@ fn resolve(
         let mut g = Group {
             transform: ts,
             abs_transform: parent.abs_transform.pre_concat(ts),
-            clip_path: clip_path.clone(),
             ..Group::empty()
         };
 
@@ -208,6 +180,7 @@ fn resolve(
         marker_state.parent_markers.push(marker_node);
         converter::convert_children(marker_node, &marker_state, cache, &mut g);
         g.calculate_bounding_boxes();
+        g.clip_path = converter::viewport_clip(cache, clip_rect, clip_axes, g.layer_bounding_box);
 
         if g.has_children() {
             parent.children.push(Node::Group(Box::new(g)));

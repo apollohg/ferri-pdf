@@ -785,6 +785,91 @@ impl<'a, 'input: 'a> FromValue<'a, 'input> for Isolation {
     }
 }
 
+/// Whether a viewport's `overflow` clips its x and y axes (SVG 2 §3.11): `hidden`, `scroll`
+/// and `clip` do, `visible` and `auto` do not; an absent value clips both.
+pub(super) fn overflow_axes(node: SvgNode) -> [bool; 2] {
+    let clips = |keyword: &str| !matches!(keyword, "visible" | "auto");
+    let Some(value) = node.attribute::<&str>(AId::Overflow) else {
+        return [true; 2];
+    };
+    let mut keywords = value.split_ascii_whitespace();
+    let x = keywords.next().is_none_or(clips);
+    let y = keywords.next().map_or(x, clips);
+    [x, y]
+}
+
+/// The clip path of a viewport that `rect` bounds along the axes `axes` clips; along an
+/// unclipped axis it spans `content`, the extent of the viewport's content, so that only
+/// the other axis is clipped. `None` when neither axis clips.
+pub(super) fn viewport_clip(
+    cache: &mut Cache,
+    rect: NonZeroRect,
+    [x, y]: [bool; 2],
+    content: NonZeroRect,
+) -> Option<Arc<ClipPath>> {
+    if !x && !y {
+        return None;
+    }
+    let span = |clipped: bool, start: f32, end: f32, low: f32, high: f32| {
+        if clipped {
+            [start, end]
+        } else {
+            [start.min(low), end.max(high)]
+        }
+    };
+    let [left, right] = span(
+        x,
+        rect.left(),
+        rect.right(),
+        content.left(),
+        content.right(),
+    );
+    let [top, bottom] = span(
+        y,
+        rect.top(),
+        rect.bottom(),
+        content.top(),
+        content.bottom(),
+    );
+    let mut clip_path = ClipPath::empty(cache.gen_clip_path_id());
+    let mut path = Path::new_simple(Arc::new(PathBuilder::from_rect(Rect::from_ltrb(
+        left, top, right, bottom,
+    )?)))?;
+    path.fill = Some(Fill::default());
+    clip_path.root.children.push(Node::Path(Box::new(path)));
+    Some(Arc::new(clip_path))
+}
+
+/// The transform of an element whose content `collect` converts untransformed: CSS
+/// transform properties, or the `transform` attribute about an origin that, per CSS
+/// Transforms 1 §2, lies in the element's object or stroke bounding box when
+/// `transform-box` selects one, measured before the transform applies.
+pub(super) fn element_transform(
+    node: SvgNode,
+    state: &State,
+    cache: &mut Cache,
+    parent: &Group,
+    collect: &dyn Fn(&mut Cache, &mut Group),
+) -> Transform {
+    super::motion::transform(node, state, cache, parent, collect).unwrap_or_else(|| {
+        match node.attribute::<&str>(AId::TransformBox) {
+            Some(reference @ (FILL_BOX | STROKE_BOX)) => {
+                let mut probe = Group::empty();
+                probe.abs_transform = parent.abs_transform;
+                collect(cache, &mut probe);
+                probe.calculate_bounding_boxes();
+                let bounds = if reference == FILL_BOX {
+                    probe.bounding_box
+                } else {
+                    probe.stroke_bounding_box
+                };
+                node.resolve_transform_in(AId::Transform, state, Some(bounds))
+            }
+            _ => node.resolve_transform(AId::Transform, state),
+        }
+    })
+}
+
 // TODO: explain
 pub(crate) fn convert_group(
     node: SvgNode,
@@ -812,24 +897,7 @@ pub(crate) fn convert_group(
         Opacity::ONE
     };
 
-    let motion = super::motion::transform(node, state, cache, parent, collect_children);
-    let transform = motion.unwrap_or_else(|| match node.attribute::<&str>(AId::TransformBox) {
-        // CSS Transforms 1 §2: the origin lies in the element's object or stroke bounding box,
-        // which its content gives before the transform applies.
-        Some(reference @ (FILL_BOX | STROKE_BOX)) => {
-            let mut probe = Group::empty();
-            probe.abs_transform = parent.abs_transform;
-            collect_children(cache, &mut probe);
-            probe.calculate_bounding_boxes();
-            let bounds = if reference == FILL_BOX {
-                probe.bounding_box
-            } else {
-                probe.stroke_bounding_box
-            };
-            node.resolve_transform_in(AId::Transform, state, Some(bounds))
-        }
-        _ => node.resolve_transform(AId::Transform, state),
-    });
+    let transform = element_transform(node, state, cache, parent, collect_children);
     let blend_mode: BlendMode = node.attribute(AId::MixBlendMode).unwrap_or_default();
     let isolation: Isolation = node.attribute(AId::Isolation).unwrap_or_default();
     let isolate = isolation == Isolation::Isolate;

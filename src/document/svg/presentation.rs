@@ -40,11 +40,6 @@ const FARTHEST_SIDE: &str = "farthest-side";
 const OVERFLOW_ELEMENTS: [&str; 3] = ["marker", "svg", "symbol"];
 /// Elements whose viewport the SVG renderer clips whatever their `overflow`.
 const ALWAYS_CLIPPED_ELEMENTS: [&str; 2] = ["image", "pattern"];
-/// Elements whose renderer measures their bounding box before placing their transform.
-const BOXED_TRANSFORM_ELEMENTS: &[&str] = &[
-    "circle", "ellipse", "g", "image", "line", "path", "polygon", "polyline", "rect", "svg",
-    "switch", "text",
-];
 /// CSS Fonts 4 §2.1.3 generic families that the SVG renderer also takes as generic.
 const UNCONFIGURED_GENERICS: [&str; 2] = ["cursive", "fantasy"];
 const CALCULATED_LENGTH: &str = "a calculation mixing lengths and percentages in SVG content";
@@ -159,8 +154,8 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
             &radii_css(&style.decoration.radii, motion_length)?,
         );
     }
-    if style.motion.active() {
-        for (name, value) in motion_transform(style)? {
+    if css_transform(style) {
+        for (name, value) in transform_declarations(style)? {
             push(name, &value);
         }
     }
@@ -245,16 +240,25 @@ pub(super) fn geometry(
     Ok(attributes)
 }
 
+/// Whether the SVG renderer evaluates the element's transform properties as CSS in its
+/// reference box: for an offset path, a translation by a percentage of that box, or a
+/// perspective.
+fn css_transform(style: &Style) -> bool {
+    style.motion.active() || (style.is_transformed() && style.planar_transform().is_none())
+}
+
 /// The element's `transform` attribute (or its gradient or pattern counterpart), origin and
-/// reference box (CSS Transforms 1 §2, §6), empty without a transform.
+/// reference box (CSS Transforms 1 §2, §6), empty without a transform or one evaluated as CSS.
+/// Paint servers and `clipPath` elements take their reference box from their units
+/// attribute instead (§6).
 pub(super) fn transform(
     tag: &str,
     style: &Style,
 ) -> Result<Vec<(&'static str, String)>, StyleError> {
-    if style.motion.active() {
+    if css_transform(style) {
         return Ok(Vec::new());
     }
-    let Some([a, b, c, d, e, f]) = style.planar_transform()? else {
+    let Some([a, b, c, d, e, f]) = style.planar_transform() else {
         return Ok(Vec::new());
     };
     let [x, y, _] = &style.transform_origin;
@@ -278,19 +282,14 @@ pub(super) fn transform(
         TransformBox::BorderBox | TransformBox::StrokeBox => Some(STROKE_BOX),
     };
     if let Some(reference) = reference {
-        if !BOXED_TRANSFORM_ELEMENTS.contains(&tag) {
-            return Err(StyleError::Unsupported(format!(
-                "transform-box: {reference} on an SVG {tag} element"
-            )));
-        }
         attributes.push((TRANSFORM_BOX, reference.into()));
     }
     Ok(attributes)
 }
 
-/// SVG 2 §3.11 `overflow` on the elements whose viewport it clips: `hidden` and `scroll` clip,
-/// and without scrolling `auto` is `visible`; one clip rectangle serves both axes. Other
-/// elements have no viewport to clip.
+/// SVG 2 §3.11 `overflow` on the elements whose viewport it clips, per axis: `hidden` and
+/// `scroll` clip, and without scrolling `auto` is `visible`. Other elements have no viewport
+/// to clip.
 fn overflow(tag: &str, [x, y]: [Overflow; 2]) -> Result<Option<&'static str>, StyleError> {
     let always_clipped = ALWAYS_CLIPPED_ELEMENTS.contains(&tag);
     if !always_clipped && !OVERFLOW_ELEMENTS.contains(&tag) {
@@ -308,9 +307,11 @@ fn overflow(tag: &str, [x, y]: [Overflow; 2]) -> Result<Option<&'static str>, St
         (false, false) => Err(StyleError::Unsupported(format!(
             "overflow: visible on an SVG {tag} element, which its renderer always clips"
         ))),
-        _ => Err(StyleError::Unsupported(
-            "overflow clipping one axis of an SVG viewport".into(),
-        )),
+        (true, false) if !always_clipped => Ok(Some("hidden visible")),
+        (false, true) if !always_clipped => Ok(Some("visible hidden")),
+        _ => Err(StyleError::Unsupported(format!(
+            "overflow: visible on an axis of an SVG {tag} element, which its renderer always clips"
+        ))),
     }
 }
 
@@ -710,7 +711,7 @@ fn position(
         length(&y.offset)?
     ))
 }
-fn motion_transform(style: &Style) -> Result<Vec<(&'static str, String)>, StyleError> {
+fn transform_declarations(style: &Style) -> Result<Vec<(&'static str, String)>, StyleError> {
     use crate::style::motion::{Curve, OffsetPath, OffsetPosition, RaySize};
     let path = match &*style.motion.path {
         OffsetPath::None => NONE.to_owned(),
