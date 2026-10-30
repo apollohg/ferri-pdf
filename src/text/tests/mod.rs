@@ -1,6 +1,7 @@
 mod emphasis;
 mod features;
 mod hyphenation;
+mod skip_ink;
 mod tailoring;
 
 use crate::document::Paragraph;

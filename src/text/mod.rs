@@ -15,6 +15,7 @@ mod line_boxes;
 mod paragraph;
 mod ruby;
 mod shaping;
+mod skip_ink;
 mod spacing;
 mod spacing_trim;
 mod tabs;

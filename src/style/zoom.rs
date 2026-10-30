@@ -151,9 +151,7 @@ impl Style {
             shadow.blur *= factor;
         }
         style.text_paint.stroke_width *= factor;
-        if let Some(width) = &mut style.text_decorations.declared.thickness {
-            *width *= factor;
-        }
+        style.text_decorations.declared = style.text_decorations.declared.zoomed(factor);
         if let Some(value) = &mut style.text_decorations.underline_offset {
             *value = value.zoomed(factor);
         }

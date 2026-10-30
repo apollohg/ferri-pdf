@@ -949,9 +949,14 @@ fn handler(property: Property) -> Option<Handler> {
             text_underline_offset,
             Some(|v, r| crate::style::decoration_values::underline_offset(v, r).is_ok()),
         ),
-        P::TextDecorationSkipInk => (
-            text_decoration_skip_ink,
-            Some(|v, _| v.keyword() != Some(Keyword::All)),
+        P::TextDecorationSkipInk => (text_decoration_skip_ink, Some(|_, _| true)),
+        P::TextDecorationSkip => (
+            text_decoration_skip,
+            Some(|v, _| crate::style::DecorationSkip::from_component(v).is_ok()),
+        ),
+        P::TextDecorationInset => (
+            text_decoration_inset,
+            Some(|v, r| crate::style::DecorationInset::from_component(v, r).is_ok()),
         ),
         P::TextOverflow => (
             text_overflow,
@@ -2945,18 +2950,35 @@ computed!(
         value, relative
     )?
 );
-/// Glyph ink is never skipped, which `auto` permits; `all` requires skipping.
-fn text_decoration_skip_ink(
-    _: &mut Style,
+computed!(
+    text_decoration_skip_ink,
+    [text_decorations.declared.skip_ink],
+    |value, style, _parent, _relative| value.keyword() == Some(Keyword::All)
+);
+fn text_decoration_skip(
+    style: &mut Style,
     _: &Style,
     input: Input<'_>,
     _: &Relative<'_>,
 ) -> Result<(), StyleError> {
-    match input {
-        Input::Value(value) if value.keyword() == Some(Keyword::All) => Err(unsupported(value)),
-        _ => Ok(()),
-    }
+    let (skip, edges) = match input {
+        Input::Value(value) => crate::style::DecorationSkip::from_component(value)?,
+        Input::Copy(source) => (
+            source.text_decorations.skip,
+            source.text_decorations.declared.edges,
+        ),
+    };
+    style.text_decorations.skip = skip;
+    style.text_decorations.declared.edges = edges;
+    Ok(())
 }
+computed!(
+    text_decoration_inset,
+    [text_decorations.declared.inset],
+    |value, style, _parent, relative| crate::style::DecorationInset::from_component(
+        value, relative
+    )?
+);
 computed!(
     text_overflow,
     [text_overflow],

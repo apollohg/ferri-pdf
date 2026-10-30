@@ -37,7 +37,6 @@ const WITHOUT_COMPUTED_FIELD: &[Property] = &[
     Property::WillChange,
     Property::FontSynthesisPosition,
     Property::FontSynthesisSmallCaps,
-    Property::TextDecorationSkipInk,
     Property::Overlay,
 ];
 const EXTENSION_PROPERTIES: [&str; 2] = ["table-column-span", "table-row-span"];

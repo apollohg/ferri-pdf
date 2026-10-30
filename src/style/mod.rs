@@ -120,7 +120,8 @@ pub(crate) use counter_values::{
     INITIAL_COUNTER_VALUE, LIST_ITEM_COUNTER,
 };
 pub(crate) use decoration_values::{
-    DecorationLines, TextDecoration, TextDecorations, UnderlinePosition,
+    DecorationInset, DecorationLines, DecorationSkip, TextDecoration, TextDecorations,
+    UnderlinePosition,
 };
 pub(crate) use diagnostics::{SourceLocation, StyleDiagnostic, StyleDiagnosticKind};
 pub(crate) use flex_values::{Alignment, FlexBasis, FlexStyle, FlexWrap, Gap, OverflowPosition};

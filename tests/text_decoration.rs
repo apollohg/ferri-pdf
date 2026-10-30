@@ -1,5 +1,5 @@
-//! CSS Text Decoration 3: propagation to in-flow content, decorating-box font metrics and
-//! painting order. Font metrics are read from the bundled `DejaVu` Sans and STIX General files.
+//! CSS Text Decoration 3 and 4: propagation to in-flow content, decorating-box font metrics and
+//! painting order, skipping and insets. Font metrics are read from the bundled `DejaVu` Sans and STIX General files.
 mod common;
 use common::{PROFILE, local_options};
 use ferri_pdf::{
@@ -91,48 +91,41 @@ fn propagated_lines_use_the_specifying_colour_and_the_paragraph_font() {
     assert_close("spans the text", underline.rect.width, text.width);
 }
 
-#[test]
-fn lines_skip_nested_box_edges_atomic_inlines_and_out_of_flow_boxes() {
-    let trace = render(
-        ".u{text-decoration:underline}.pad{padding:0 8pt;border-left:2pt solid navy}.ib{display:inline-block;padding:0 3pt;text-decoration:overline}",
+/// A paragraph underlined across a bordered, padded span, an overlined inline-block and an
+/// absolutely positioned box; `skip` is the span's `text-decoration-skip`.
+fn skipping_fixture(skip: &str) -> LayoutTrace {
+    render(
+        &format!(
+            ".u{{text-decoration:underline}}.pad{{padding:0 8pt;border-left:2pt solid navy;text-decoration-skip:{skip}}}.ib{{display:inline-block;padding:0 3pt;text-decoration:overline}}"
+        ),
         r#"<p class="u" style="position:relative">Aa <span class="pad">bb</span> <span class="ib">ib</span> cc<span style="position:absolute;left:200pt">abs</span></p>"#,
-    );
+    )
+}
+
+#[test]
+fn lines_cross_nested_box_edges_but_skip_atomic_inlines_and_out_of_flow_boxes() {
+    let trace = skipping_fixture("objects");
     let paints = decorations(&trace);
     let outer = line(&trace, "Aa");
-    let runs: Vec<[f32; 2]> = outer
-        .runs
-        .iter()
-        .map(|run| [outer.x + run.x, outer.x + run.x + run.width])
-        .collect();
-    let bb = outer
-        .runs
-        .iter()
-        .find(|run| run.text == "bb")
-        .expect("the padded span has its own run");
     let underlines = extents(&paints, DecorationLine::Underline);
-    assert_eq!(
-        underlines.len(),
-        4,
-        "\"Aa \", the span's text, the space before the inline-block, then \" cc\": {underlines:?} over runs {runs:?}"
-    );
-    assert_close(
-        "the first line stops at the span's left border",
-        underlines[0][1],
-        outer.x + bb.x - 10.0,
-    );
-    assert_close(
-        "the span's padding and border are not underlined",
-        underlines[1][0],
-        outer.x + bb.x,
-    );
     let atomic = line(&trace, "ib");
     let atomic_box = [atomic.x - 3.0, atomic.x + atomic.width + 3.0];
-    assert!(
-        underlines
-            .iter()
-            .all(|[left, right]| *right <= atomic_box[0] + TOLERANCE_PT
-                || *left >= atomic_box[1] - TOLERANCE_PT),
-        "no underline passes under the inline-block {atomic_box:?}: {underlines:?}"
+    assert_eq!(
+        underlines.len(),
+        2,
+        "CSS Text Decoration 3 §2.1: the line crosses the span's border and padding, and \
+         breaks only around the inline-block: {underlines:?}"
+    );
+    assert_close("the line starts with the text", underlines[0][0], outer.x);
+    assert_close(
+        "the line reaches the inline-block's margin edge",
+        underlines[0][1],
+        atomic_box[0],
+    );
+    assert_close(
+        "the line resumes after the inline-block",
+        underlines[1][0],
+        atomic_box[1],
     );
     let overlines = extents(&paints, DecorationLine::Overline);
     assert_eq!(
@@ -146,6 +139,192 @@ fn lines_skip_nested_box_edges_atomic_inlines_and_out_of_flow_boxes() {
             .iter()
             .all(|paint| paint.rect.x + paint.rect.width <= absolute.x + TOLERANCE_PT),
         "the absolutely positioned box receives no decorations: {paints:?}"
+    );
+}
+
+#[test]
+fn box_decoration_skipping_leaves_a_descendant_border_and_padding_undecorated() {
+    let trace = skipping_fixture("objects box-decoration");
+    let outer = line(&trace, "Aa");
+    let bb = outer
+        .runs
+        .iter()
+        .find(|run| run.text == "bb")
+        .expect("the padded span has its own run");
+    let underlines = extents(&decorations(&trace), DecorationLine::Underline);
+    assert_eq!(
+        underlines.len(),
+        4,
+        "\"Aa \", the span's text, the space before the inline-block, then \" cc\": {underlines:?}"
+    );
+    assert_close(
+        "the first line stops at the span's left border",
+        underlines[0][1],
+        outer.x + bb.x - 10.0,
+    );
+    assert_close(
+        "the span's padding and border are not underlined",
+        underlines[1][0],
+        outer.x + bb.x,
+    );
+}
+
+#[test]
+fn without_object_skipping_the_line_crosses_an_atomic_inline() {
+    let trace = render(
+        ".u{text-decoration:underline;text-decoration-skip:none}.ib{display:inline-block;width:30pt}",
+        r#"<p class="u">Aa<span class="ib"></span>cc</p>"#,
+    );
+    let text = line(&trace, "Aa");
+    let underlines = extents(&decorations(&trace), DecorationLine::Underline);
+    assert_eq!(
+        underlines.len(),
+        1,
+        "one continuous line under the text and the inline-block: {underlines:?}"
+    );
+    assert_close("from the text's start", underlines[0][0], text.x);
+    assert_close(
+        "to its end, across the 30pt inline-block",
+        underlines[0][1],
+        text.x + text.width,
+    );
+}
+
+#[test]
+fn space_skipping_interrupts_the_line_at_spacers_only() {
+    let underlines = |skip: &str| {
+        let trace = render(
+            &format!(".u{{text-decoration:underline;white-space:pre;text-decoration-skip:{skip}}}"),
+            r#"<p class="u">  ab cd  </p>"#,
+        );
+        let text = line(&trace, "ab");
+        let mut extents = extents(&decorations(&trace), DecorationLine::Underline);
+        for extent in &mut extents {
+            *extent = extent.map(|x| x - text.x);
+        }
+        (extents, text.width)
+    };
+    let (all, width) = underlines("none");
+    assert_eq!(all.len(), 1, "nothing skipped: {all:?}");
+    assert_close("spaces are decorated", all[0][1] - all[0][0], width);
+    let (spaces, _) = underlines("spaces");
+    assert_eq!(spaces.len(), 2, "\"ab\" and \"cd\" only: {spaces:?}");
+    let (edges, _) = underlines("leading-spaces trailing-spaces");
+    assert_eq!(edges.len(), 1, "the inner space stays decorated: {edges:?}");
+    assert_close("leading spaces are skipped", edges[0][0], spaces[0][0]);
+    assert_close("trailing spaces are skipped", edges[0][1], spaces[1][1]);
+    let (leading, _) = underlines("leading-spaces");
+    assert_close("only leading spaces", leading[0][0], spaces[0][0]);
+    assert_close("trailing spaces stay", leading[0][1], width);
+}
+
+#[test]
+fn insets_move_line_ends_inside_the_decorating_box() {
+    let trace = render(
+        "u{text-decoration-thickness:2pt}.a{text-decoration-inset:3pt 5pt}.b{text-decoration-inset:auto}.c{text-decoration-skip:edges}.d{text-decoration-inset:-4pt}",
+        r#"<p><u class="a">ab</u><u class="b">cd</u><u class="c">ef</u><u class="d">gh</u></p>"#,
+    );
+    let text = line(&trace, "abcd");
+    let underlines = extents(&decorations(&trace), DecorationLine::Underline);
+    assert_eq!(underlines.len(), 4, "one line per box: {underlines:?}");
+    let boxes: Vec<[f32; 2]> = text
+        .runs
+        .iter()
+        .map(|run| [text.x + run.x, text.x + run.x + run.width])
+        .collect();
+    let expected = [[3.0, 5.0], [1.0, 1.0], [1.0, 1.0], [-4.0, -4.0]];
+    for (index, ((line, run), [start, end])) in
+        underlines.iter().zip(&boxes).zip(expected).enumerate()
+    {
+        assert_close(
+            &format!("box {index} start inset {start}pt (half the 2pt thickness for auto)"),
+            line[0] - run[0],
+            start,
+        );
+        assert_close(
+            &format!("box {index} end inset {end}pt"),
+            run[1] - line[1],
+            end,
+        );
+    }
+}
+
+#[test]
+fn a_sliced_box_insets_only_its_first_start_and_last_end() {
+    let trace = render(
+        "p{width:60pt}u{text-decoration-inset:6pt}",
+        "<p><u>aaaa bbbb cccc</u></p>",
+    );
+    let lines: Vec<&TextLine> = trace.pages[0].iter().collect();
+    assert!(lines.len() >= 2, "the box breaks across lines: {lines:?}");
+    let paints = decorations(&trace);
+    let starts_and_ends: Vec<[f32; 2]> = lines
+        .iter()
+        .map(|line| {
+            let extent = paints
+                .iter()
+                .find(|paint| {
+                    paint.rect.y > line.baseline - line.height
+                        && paint.rect.y < line.baseline + line.height
+                })
+                .map(|paint| [paint.rect.x, paint.rect.x + paint.rect.width])
+                .expect("each line is underlined");
+            let run = line.runs.first().expect("text on the line");
+            [extent[0] - (line.x + run.x), extent[1]]
+        })
+        .collect();
+    assert_close("the first line starts inset", starts_and_ends[0][0], 6.0);
+    assert_close(
+        "the last line starts at its text",
+        starts_and_ends[starts_and_ends.len() - 1][0],
+        0.0,
+    );
+}
+
+#[test]
+fn ink_skipping_interrupts_underlines_at_descenders_but_not_line_throughs() {
+    let paints = |skip: &str| {
+        let trace = render(
+            &format!(
+                "p{{font-size:40pt;text-decoration:underline line-through;text-decoration-skip-ink:{skip}}}"
+            ),
+            "<p>xgx</p>",
+        );
+        let text = line(&trace, "xgx");
+        let glyph = text.runs[0].width / 3.0;
+        (decorations(&trace), text.x, glyph)
+    };
+    let (none, _, _) = paints("none");
+    assert_eq!(
+        extents(&none, DecorationLine::Underline).len(),
+        1,
+        "`none` draws one continuous underline"
+    );
+    let (auto, _, _) = paints("auto");
+    assert_eq!(
+        extents(&auto, DecorationLine::Underline).len(),
+        1,
+        "`auto` may draw continuous lines, as here"
+    );
+    let (all, x, glyph) = paints("all");
+    let underlines = extents(&all, DecorationLine::Underline);
+    assert_eq!(
+        underlines.len(),
+        2,
+        "the g's descender interrupts the underline once: {underlines:?}"
+    );
+    let gap = [underlines[0][1] - x, underlines[1][0] - x];
+    assert!(
+        gap[0] > glyph * 0.5
+            && gap[0] < glyph * 1.5
+            && gap[1] > glyph * 1.5
+            && gap[1] < glyph * 2.5,
+        "the gap {gap:?} lies around the g, the middle {glyph}pt glyph"
+    );
+    assert_eq!(
+        extents(&all, DecorationLine::LineThrough).len(),
+        1,
+        "line-throughs never skip ink"
     );
 }
 
