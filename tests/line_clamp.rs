@@ -355,3 +355,54 @@ fn a_list_marker_is_real_following_content_after_an_ignored_line() {
         "an ignored image line does not make the list marker empty following content"
     );
 }
+
+#[test]
+fn max_lines_counts_line_boxes_across_the_columns_of_a_multi_column_container() {
+    let clamped = trace(
+        ".m{columns:2;column-gap:0;line-clamp:4}",
+        &format!("<div class=m>{TEXT}</div><p>after</p>"),
+    );
+    let kept = lines(&clamped);
+    assert_eq!(
+        kept.len(),
+        5,
+        "four lines and the next paragraph: {:?}",
+        texts(&clamped)
+    );
+    let columns: Vec<f32> = kept[..4].iter().map(|line| line.x).collect();
+    assert!(
+        columns[0] == columns[1] && columns[2] == columns[3] && columns[2] > columns[1],
+        "the kept lines balance into two columns: {columns:?}"
+    );
+    assert!(kept[3].text.ends_with(ELLIPSIS), "{:?}", texts(&clamped));
+    assert!(kept[..3].iter().all(|line| !line.text.ends_with(ELLIPSIS)));
+    assert_eq!(kept[4].text, "after");
+}
+
+#[test]
+fn continue_discard_drops_the_overflow_columns_of_a_multi_column_container() {
+    let height = 2.0 * LINE;
+    let style = format!(".m{{columns:2;column-gap:0;column-fill:auto;height:{height}pt}}");
+    let overflowing = trace(&style, &format!("<div class=m>{TEXT}</div>"));
+    assert!(
+        texts(&overflowing).len() > 4,
+        "continue: auto lays the rest out in overflow columns: {:?}",
+        texts(&overflowing)
+    );
+    let discarded = trace(
+        &format!("{style}.m{{continue:discard}}"),
+        &format!("<div class=m>{TEXT}</div>"),
+    );
+    assert_eq!(
+        texts(&discarded),
+        texts(&overflowing)[..4],
+        "the lines of the two columns that fit stay where they were"
+    );
+    let ellipsis = trace(
+        &format!("{style}.m{{continue:discard;block-ellipsis:auto}}"),
+        &format!("<div class=m>{TEXT}</div>"),
+    );
+    let kept = texts(&ellipsis);
+    assert_eq!(kept.len(), 4, "{kept:?}");
+    assert!(kept[3].ends_with(ELLIPSIS), "{kept:?}");
+}

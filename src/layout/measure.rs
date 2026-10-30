@@ -995,12 +995,6 @@ impl<'a> Measurer<'a> {
         outer: Option<LineBudget>,
     ) -> Result<MeasuredBlock<'a>, Failure> {
         let style = block.style();
-        if style.multicol.is_multicol() {
-            return Err(LayoutError::UnsupportedClamp {
-                feature: "continue: discard on a multi-column container",
-            }
-            .into());
-        }
         let budget = match (style.clamp.max_lines, outer) {
             (Some(lines), Some(outer)) => Some(LineBudget {
                 lines: lines.min(outer.lines),
@@ -1026,6 +1020,16 @@ impl<'a> Measurer<'a> {
             used_height,
             budget,
         )?;
+        if style.multicol.is_multicol() {
+            return self.discarding_columns(
+                block,
+                &geometry,
+                root,
+                [containing_height, used_height],
+                measured,
+                context,
+            );
+        }
         if measured
             .sizing
             .is_none_or(|sizing| sizing.natural_height <= measured.height)
@@ -1060,6 +1064,82 @@ impl<'a> Measurer<'a> {
                 following: true,
             }),
         )
+    }
+
+    /// CSS Overflow 4 §5.3: a multi-column container's overflow columns follow its unforced
+    /// region break, so it keeps the most line boxes whose columns fit, but never fewer than
+    /// one.
+    fn discarding_columns(
+        &mut self,
+        block: BlockSource<'a>,
+        geometry: &crate::layout::geometry::HorizontalBox,
+        root: bool,
+        [containing_height, used_height]: [Option<f32>; 2],
+        measured: MeasuredBlock<'a>,
+        context: (
+            Fragmentainer,
+            Option<ColumnFlow>,
+            FlowSpace,
+            Option<crate::layout::multicol::OrthogonalColumns>,
+        ),
+    ) -> Result<MeasuredBlock<'a>, Failure> {
+        let overflow_columns = |measured: &MeasuredBlock<'_>| {
+            measured.items.iter().any(|item| {
+                matches!(item, FlowItem::Columns(columns) if crate::layout::pagination::overflows(
+                    columns.used_inline,
+                    columns.geometry.inline_size,
+                ))
+            })
+        };
+        if !overflow_columns(&measured) {
+            return Ok(measured);
+        }
+        let mut counts = [0; 2];
+        for item in &measured.items {
+            if let FlowItem::Columns(columns) = item {
+                for segment in &columns.segments {
+                    if let crate::layout::multicol::ColumnSegment::Row(items) = segment {
+                        lines_within(items, 0.0, f32::INFINITY, &mut counts);
+                    }
+                }
+            }
+        }
+        let measure = |measurer: &mut Self, lines: usize| {
+            (
+                measurer.fragmentainer,
+                measurer.column_flow,
+                measurer.space,
+                measurer.orthogonal_columns,
+            ) = context;
+            measurer.format_flow(
+                block,
+                geometry.clone(),
+                root,
+                containing_height,
+                used_height,
+                Some(LineBudget {
+                    lines,
+                    following: true,
+                }),
+            )
+        };
+        // Bisects between line counts whose columns fit and overflow.
+        let [mut fitting, mut overflowing] = [0, counts[1]];
+        let mut kept = None;
+        while overflowing - fitting > 1 {
+            let lines = fitting.midpoint(overflowing);
+            let candidate = measure(self, lines)?;
+            if overflow_columns(&candidate) {
+                overflowing = lines;
+            } else {
+                fitting = lines;
+                kept = Some(candidate);
+            }
+        }
+        match kept {
+            Some(measured) => Ok(measured),
+            None => measure(self, 1),
+        }
     }
 
     /// Lines the discarding container of the flow still holds, unless an independent

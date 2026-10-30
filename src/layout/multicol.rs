@@ -274,12 +274,6 @@ pub(super) fn measure<'a>(
     definite: Option<f32>,
     orthogonal: bool,
 ) -> Result<MeasuredColumns<'a>, Failure> {
-    if style.clamp.continuation == crate::style::Continue::Discard {
-        return Err(super::LayoutError::UnsupportedClamp {
-            feature: "continue: discard on a multi-column container",
-        }
-        .into());
-    }
     if style.text_box.trim.contains(&true) {
         return Err(
             super::LayoutError::Style(crate::style::StyleError::Unsupported(
