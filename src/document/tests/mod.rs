@@ -3,6 +3,7 @@ mod navigation;
 mod ruby;
 mod scroll_markers;
 mod shadow_fonts;
+mod styled_paragraphs;
 mod text_transform;
 
 use super::*;

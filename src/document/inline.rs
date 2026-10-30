@@ -305,28 +305,23 @@ impl Paragraph {
         spans: impl IntoIterator<Item = (Range<usize>, Style, Option<usize>)>,
     ) -> Self {
         let boxes: Vec<_> = boxes.into_iter().collect();
-        let within = |index: usize, ancestor: usize| {
-            let mut current = Some(index);
-            while let Some(index) = current {
-                if index == ancestor {
-                    return true;
-                }
-                current = boxes[index].2;
+        // Children follow their parents, so a reverse pass totals each subtree.
+        let mut descendants = vec![0; boxes.len()];
+        for (index, (_, _, parent)) in boxes.iter().enumerate().rev() {
+            if let Some(parent) = *parent {
+                descendants[parent] += descendants[index] + 1;
             }
-            false
-        };
+        }
         let boxes = boxes
-            .iter()
-            .enumerate()
-            .map(|(index, (range, style, parent))| InlineBox {
+            .into_iter()
+            .zip(descendants)
+            .map(|((range, style, parent), descendants)| InlineBox {
                 math: None,
-                range: range.clone(),
-                style: style.clone(),
+                range,
+                style,
                 decoration: crate::graphics::BoxDecoration::default(),
-                parent: *parent,
-                descendants: (index + 1..boxes.len())
-                    .take_while(|&later| within(later, index))
-                    .count(),
+                parent,
+                descendants,
                 continued: [false; 2],
                 navigation: crate::document::BoxNavigation::default(),
                 canvas_source: false,
