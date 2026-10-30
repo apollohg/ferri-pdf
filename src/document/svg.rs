@@ -315,7 +315,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
             attribute(&mut self.xml, "", HREF_ATTRIBUTE, &format!("#{id}"));
         }
         // Text shapes, cases and paints with the document's computed values (SVG 2 §11.10).
-        if presentation::is_text_content(tag) {
+        if presentation::takes_text_style(tag, style) {
             self.text_styles.push(Arc::new(style.clone()));
             attribute(
                 &mut self.xml,

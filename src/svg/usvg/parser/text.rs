@@ -960,55 +960,66 @@ fn resolve_decoration(
     state: &converter::State,
     cache: &mut Cache,
 ) -> TextDecoration {
-    // Checks if a decoration is present in a single node.
-    fn find_decoration(node: SvgNode, value: &str) -> bool {
+    use crate::paint::DecorationLine;
+    // The decoration `node` declares: its computed one where the document styles it, else the
+    // lines of its attribute.
+    let declared = |node: SvgNode| -> Option<crate::style::TextDecoration> {
         if node.is_contents() {
-            return false;
-        }
-        if let Some(str_value) = node.attribute::<&str>(AId::TextDecoration) {
-            str_value.split(' ').any(|v| v == value)
-        } else {
-            false
-        }
-    }
-
-    // The algorithm is as follows: First, we check whether the given text decoration appears in ANY
-    // ancestor, i.e. it can also appear in ancestors outside of the <text> element. If the text
-    // decoration is declared somewhere, it means that this tspan will have it. However, we still
-    // need to find the corresponding fill/stroke for it. To do this, we iterate through all
-    // ancestors (i.e. tspans) until we find the text decoration declared. If not, we will
-    // stop at latest at the text node, and use its fill/stroke.
-    let mut gen_style = |text_decoration: &str| {
-        if !tspan
-            .ancestors()
-            .any(|n| find_decoration(n, text_decoration))
-        {
             return None;
         }
-
-        let mut fill_node = None;
-        let mut stroke_node = None;
-
-        for node in tspan.ancestors() {
-            if find_decoration(node, text_decoration) || node.tag_name() == Some(EId::Text) {
-                fill_node = fill_node.map_or(Some(node), Some);
-                stroke_node = stroke_node.map_or(Some(node), Some);
-                break;
+        if let Some(style) = own_text_style(node, state) {
+            return Some(style.text_decorations.declared);
+        }
+        let mut lines = crate::style::DecorationLines::default();
+        for name in node
+            .attribute::<&str>(AId::TextDecoration)?
+            .split_ascii_whitespace()
+        {
+            match name {
+                UNDERLINE => lines.underline = true,
+                OVERLINE => lines.overline = true,
+                LINE_THROUGH => lines.line_through = true,
+                _ => {}
             }
         }
+        Some(crate::style::TextDecoration {
+            lines,
+            ..crate::style::TextDecoration::default()
+        })
+    };
 
+    // The nearest ancestor declaring a line decorates the text with it, possibly from outside
+    // the `text` element; the fill and stroke are those of that ancestor or, nearer, of the
+    // `text` element (SVG 2 §11.11).
+    let mut gen_style = |line: DecorationLine| {
+        let (node, decoration) = tspan.ancestors().find_map(|node| {
+            declared(node)
+                .filter(|decoration| crate::text::decoration::draws(decoration, line))
+                .map(|decoration| (node, decoration))
+        })?;
+        let paint_node = tspan
+            .ancestors()
+            .find(|ancestor| *ancestor == node || ancestor.tag_name() == Some(EId::Text))
+            .unwrap_or(node);
         Some(TextDecorationStyle {
-            fill: fill_node.and_then(|node| style::resolve_fill(node, true, state, cache)),
-            stroke: stroke_node.and_then(|node| style::resolve_stroke(node, true, state, cache)),
+            fill: style::resolve_fill(paint_node, true, state, cache),
+            stroke: style::resolve_stroke(paint_node, true, state, cache),
+            declared: decoration,
+            style: text_style(node, state),
         })
     };
 
     TextDecoration {
-        underline: gen_style("underline"),
-        overline: gen_style("overline"),
-        line_through: gen_style("line-through"),
+        underline: gen_style(DecorationLine::Underline),
+        overline: gen_style(DecorationLine::Overline),
+        line_through: gen_style(DecorationLine::LineThrough),
     }
 }
+
+/// The `text-decoration-line` keywords of the `text-decoration` attribute.
+const UNDERLINE: &str = "underline";
+const OVERLINE: &str = "overline";
+const LINE_THROUGH: &str = "line-through";
 
 fn convert_baseline_shift(
     node: SvgNode,

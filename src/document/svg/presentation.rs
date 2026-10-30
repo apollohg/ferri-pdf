@@ -59,6 +59,12 @@ pub(super) fn is_text_content(tag: &str) -> bool {
     TEXT_CONTENT.contains(&tag)
 }
 
+/// Whether the renderer takes the computed style of `tag`: text content shapes and paints
+/// with it, and any element declaring decoration lines decorates the text in it as it gives.
+pub(super) fn takes_text_style(tag: &str, style: &Style) -> bool {
+    is_text_content(tag) || !style.text_decorations.declared.lines.is_empty()
+}
+
 /// The `style` attribute value carrying the element's computed presentation properties, with
 /// `mask` its `mask` value. `None` marks the root, whose own box the document paints, which
 /// its opacity, blending, display and masks govern.
@@ -147,13 +153,9 @@ pub(super) fn declarations(
         style.baseline.alignment.map_or(BASELINE, baseline),
     );
     let lines = style.text_decorations.declared.lines;
-    if lines.error.is_some() {
-        return Err(StyleError::Unsupported(
-            "text-decoration-line: spelling-error or grammar-error on SVG content".into(),
-        ));
-    }
-    // SVG 2 §11.11: the element's fill and stroke paint the lines it declares.
-    if !lines.is_empty() {
+    // SVG 2 §11.11: the element's fill and stroke paint the lines it declares. Its computed
+    // style, which `declares_decoration` gives the renderer, also carries error indications.
+    if lines.underline || lines.overline || lines.line_through {
         push(
             "text-decoration",
             &[

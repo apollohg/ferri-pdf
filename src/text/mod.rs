@@ -3,7 +3,7 @@ mod autospace;
 mod bidi;
 mod breaking;
 mod combine;
-mod decoration;
+pub(crate) mod decoration;
 mod ellipsis;
 mod emphasis;
 pub(crate) mod features;

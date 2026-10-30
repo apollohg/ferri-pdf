@@ -748,6 +748,15 @@ pub struct Fill {
 }
 
 impl Fill {
+    /// A fill in a document colour, its alpha the fill opacity.
+    pub(crate) fn color(color: crate::paint::Color) -> Self {
+        Self {
+            paint: Paint::Color(Color::new_rgb(color.rgb[0], color.rgb[1], color.rgb[2])),
+            opacity: Opacity::new_clamped(color.alpha),
+            ..Self::default()
+        }
+    }
+
     /// Fill paint.
     pub fn paint(&self) -> &Paint {
         &self.paint

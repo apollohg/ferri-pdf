@@ -14,6 +14,7 @@ use strict_num::NonZeroPositiveF32;
 use tiny_skia_path::{NonZeroRect, Transform};
 use unicode_script::UnicodeScript;
 
+use crate::paint::DecorationLine;
 use crate::svg::usvg::tree::{BBox, IsValidLength};
 use crate::svg::usvg::{
     AlignmentBaseline, ApproxZeroUlps, BaselineShift, DominantBaseline, Fill, FillRule, Font,
@@ -341,55 +342,24 @@ pub(crate) fn layout_text(
                 span_ts = span_ts.pre_translate(0.0, shift);
             }
 
-            let mut underline = None;
-            let mut overline = None;
-            let mut line_through = None;
-
-            if let Some(decoration) = span.decoration.underline.clone() {
-                // TODO: No idea what offset should be used for top-to-bottom layout.
-                // There is
-                // https://www.w3.org/TR/css-text-decor-3/#text-underline-position-property
-                // but it doesn't go into details.
-                let offset = match text_node.writing_mode {
-                    WritingMode::LeftToRight => -font.underline_position(span.font_size.get()),
-                    WritingMode::TopToBottom => font.height(span.font_size.get()) / 2.0,
-                };
-
-                if let Some(path) =
-                    convert_decoration(offset, span, font, decoration, &decoration_spans, span_ts)
-                {
-                    bbox = bbox.expand(path.data.bounds());
-                    underline = Some(path);
-                }
-            }
-
-            if let Some(decoration) = span.decoration.overline.clone() {
-                let offset = match text_node.writing_mode {
-                    WritingMode::LeftToRight => -font.ascent(span.font_size.get()),
-                    WritingMode::TopToBottom => -font.height(span.font_size.get()) / 2.0,
-                };
-
-                if let Some(path) =
-                    convert_decoration(offset, span, font, decoration, &decoration_spans, span_ts)
-                {
-                    bbox = bbox.expand(path.data.bounds());
-                    overline = Some(path);
-                }
-            }
-
-            if let Some(decoration) = span.decoration.line_through.clone() {
-                let offset = match text_node.writing_mode {
-                    WritingMode::LeftToRight => -font.line_through_position(span.font_size.get()),
-                    WritingMode::TopToBottom => 0.0,
-                };
-
-                if let Some(path) =
-                    convert_decoration(offset, span, font, decoration, &decoration_spans, span_ts)
-                {
-                    bbox = bbox.expand(path.data.bounds());
-                    line_through = Some(path);
-                }
-            }
+            let [mut underline, mut overline, mut line_through] = [
+                (DecorationLine::Underline, &span.decoration.underline),
+                (DecorationLine::Overline, &span.decoration.overline),
+                (DecorationLine::LineThrough, &span.decoration.line_through),
+            ]
+            .map(|(line, decoration)| {
+                let path = convert_decoration(
+                    line,
+                    span,
+                    font,
+                    decoration.as_ref()?,
+                    &decoration_spans,
+                    text_node.writing_mode,
+                    span_ts,
+                )?;
+                bbox = bbox.expand(path.data.bounds());
+                Some(path)
+            });
 
             let mut fill = span.fill.clone();
             if let Some(ref mut fill) = fill {
@@ -544,47 +514,85 @@ fn collect_decoration_spans(span: &TextSpan, clusters: &[GlyphCluster]) -> Vec<D
     spans
 }
 
+/// The `line` a span's decoration draws, as the HTML text's lines are placed and styled (CSS
+/// Text Decoration 4 §2.3–§2.7) from the span's font, around its central baseline in vertical
+/// text. The declaring element's fill and stroke paint it (SVG 2 §11.11), a
+/// `text-decoration-color` other than `currentcolor` filling it instead; error indications
+/// keep their user agent appearance.
 pub(crate) fn convert_decoration(
-    dy: f32,
+    line: DecorationLine,
     span: &TextSpan,
     font: &ResolvedFont,
-    mut decoration: TextDecorationStyle,
+    decoration: &TextDecorationStyle,
     decoration_spans: &[DecorationSpan],
+    writing_mode: WritingMode,
     transform: Transform,
 ) -> Option<Path> {
+    use crate::style::POINTS_PER_PIXEL;
     debug_assert!(!decoration_spans.is_empty());
 
-    let thickness = font.underline_thickness(span.font_size.get());
+    // The declaring element's style measures in points.
+    let size = span.font_size.get() * POINTS_PER_PIXEL;
+    let thickness = font.underline_thickness(size);
+    let metrics = match writing_mode {
+        WritingMode::LeftToRight => crate::text::decoration::DecoratingFont {
+            underline: [-font.underline_position(size), thickness],
+            strikeout: [-font.line_through_position(size), thickness],
+            ascent: font.ascent(size),
+            descent: -font.descent(size),
+        },
+        WritingMode::TopToBottom => {
+            let half = font.height(size) / 2.0;
+            crate::text::decoration::DecoratingFont {
+                underline: [half, thickness],
+                strikeout: [-thickness / 2.0, thickness],
+                ascent: half,
+                descent: half,
+            }
+        }
+    };
+    let [top, thickness] = metrics
+        .place(line, &decoration.declared, &decoration.style)
+        .map(|length| length / POINTS_PER_PIXEL);
+    let (style, color) = decoration.declared.paint();
 
     let mut builder = tiny_skia_path::PathBuilder::new();
     for dec_span in decoration_spans {
-        let rect = match NonZeroRect::from_xywh(0.0, -thickness / 2.0, dec_span.width, thickness) {
-            Some(v) => v,
-            None => {
-                log::warn!("a decoration span has a malformed bbox");
-                continue;
+        let paint = crate::paint::DecorationPaint {
+            line,
+            style,
+            color: crate::paint::Color::BLACK,
+            rect: crate::paint::Rect {
+                x: 0.0,
+                y: top,
+                width: dec_span.width,
+                height: thickness,
+            },
+            owner: None,
+            positioned: None,
+        };
+        for fill in paint.fills() {
+            if let Some(path) = crate::paint::shape_outline(&fill.shape)
+                .and_then(|path| path.transform(dec_span.transform))
+            {
+                builder.push_path(&path);
             }
-        };
-
-        let ts = dec_span.transform.pre_translate(0.0, dy);
-
-        let mut path = tiny_skia_path::PathBuilder::from_rect(rect.to_rect());
-        path = match path.transform(ts) {
-            Some(v) => v,
-            None => continue,
-        };
-
-        builder.push_path(&path);
+        }
     }
+    let path_data = builder.finish()?.transform(transform)?;
 
-    let mut path_data = builder.finish()?;
-    path_data = path_data.transform(transform)?;
-
+    let (fill, stroke) = if decoration.declared.lines.error.is_some() {
+        (Some(Fill::color(color)), None)
+    } else if decoration.declared.current_color {
+        (decoration.fill.clone(), decoration.stroke.clone())
+    } else {
+        (Some(Fill::color(color)), decoration.stroke.clone())
+    };
     Path::new(
         String::new(),
         span.visible,
-        decoration.fill.take(),
-        decoration.stroke.take(),
+        fill,
+        stroke,
         PaintOrder::default(),
         ShapeRendering::default(),
         Arc::new(path_data),

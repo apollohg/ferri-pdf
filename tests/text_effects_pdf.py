@@ -246,6 +246,47 @@ class TextEffectsPdf(unittest.TestCase):
         self.assertGreater(line[3] / PX_PER_PT, self.baseline_pt() + 10,
                            "the underline's shadow is offset below the baseline with it")
 
+    def test_svg_text_decorations_take_the_documents_style_thickness_and_position(self):
+        """CSS Text Decoration 4 §2.3–§2.7 on SVG text: each line has the style, thickness,
+        offset and position the document's text gives it, and error indications their user
+        agent appearance."""
+        red = lambda p: p[0] > 200 and p[1] < 80 and p[2] < 80
+        green = lambda p: p[1] > 90 and p[0] < 80 and p[2] < 80
+        cases = [
+            ("text-decoration:underline wavy red 3pt", red),
+            ("text-decoration:underline dotted red 2pt;text-underline-offset:6pt", red),
+            ("text-decoration:line-through double red 2pt", red),
+            ("text-decoration:overline dashed red 4pt", red),
+            ("text-decoration:underline red;text-underline-position:under", red),
+            ("text-decoration-line:spelling-error", red),
+            ("text-decoration-line:grammar-error", green),
+        ]
+        for style, predicate in cases:
+            with self.subTest(style=style):
+                expected = self.ink_box(self.raster(self.render(f"color:black;{style}", "HH")),
+                                        predicate)
+                actual = self.ink_box(self.raster(self.render_svg(f"color:black;{style}", "HH")),
+                                      predicate)
+                self.assert_box(actual, [edge / PX_PER_PT for edge in expected],
+                                f"SVG {style} as the paragraph draws it")
+
+    def test_svg_text_decorations_fill_with_the_declaring_fill_unless_coloured(self):
+        """SVG 2 §11.11: the declaring element's fill paints its lines, which a
+        `text-decoration-color` other than `currentcolor` replaces."""
+        baseline = self.baseline_pt()
+        below = [0, baseline + 1, 300, baseline + SIZE_PT / 2]
+        for style, predicate, name in (
+                ("color:blue;text-decoration:underline 3pt",
+                 lambda p: p[2] > 200 and p[0] < 60 and p[1] < 60, "the fill"),
+                ("color:blue;text-decoration:underline 3pt red",
+                 lambda p: p[0] > 200 and p[1] < 60 and p[2] < 60, "the decoration colour")):
+            with self.subTest(style=style):
+                image = self.raster(self.render_svg(style, "HH"))
+                line = self.ink_box(image, predicate, below)
+                self.assertGreater(line[2] - line[0], 2 * metrics("H")["advance"] * SIZE_PT
+                                   * PX_PER_PT - 2 * EDGE_TOLERANCE_PX,
+                                   f"the underline spans the text in {name}: {line}")
+
     def test_emphasis_marks_are_half_size_paths_centred_over_their_characters(self):
         target = self.render("text-emphasis:filled dot red;color:black", "H H")
         self.assertEqual("".join(glyph.text for glyph in pdf_content.glyphs(target)), "H H",

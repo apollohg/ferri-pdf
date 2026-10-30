@@ -68,7 +68,7 @@ pub use projection::Projection;
 pub(crate) use rounded::rounded_rect;
 pub use rounded::{CornerShape, Radii};
 mod image;
-pub(crate) use raster::{bounds as shape_bounds, cover, opaque, within};
+pub(crate) use raster::{bounds as shape_bounds, cover, opaque, outline as shape_outline, within};
 use serde::Serialize;
 pub(crate) use shadow::{BoxShadow, ShadowMask, blurred_shadow, outset, outset_radii};
 pub use shadow::{ShadowPaint, ShadowShape};

@@ -3041,15 +3041,25 @@ computed!(
     [text_decorations.declared.style],
     |value, style, _parent, _relative| crate::style::decoration_values::decoration_style(value)?
 );
-computed!(
-    text_decoration_color,
-    [text_decorations.declared.color],
-    |value, style, _parent, relative| crate::style::colors::color(
-        value,
-        relative,
-        &style.computed_color
-    )?
-);
+fn text_decoration_color(
+    style: &mut Style,
+    _parent: &Style,
+    input: Input<'_>,
+    relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    let declared = &mut style.text_decorations.declared;
+    match input {
+        Input::Value(value) => {
+            declared.color = crate::style::colors::color(value, relative, &style.computed_color)?;
+            declared.current_color = crate::style::colors::is_current_color(value);
+        }
+        Input::Copy(source) => {
+            declared.color = source.text_decorations.declared.color;
+            declared.current_color = source.text_decorations.declared.current_color;
+        }
+    }
+    Ok(())
+}
 computed!(
     text_decoration_thickness,
     [text_decorations.declared.thickness],

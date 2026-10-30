@@ -324,6 +324,11 @@ impl Default for FontOpticalSizing {
 pub struct TextDecorationStyle {
     pub(crate) fill: Option<Fill>,
     pub(crate) stroke: Option<Stroke>,
+    /// The lines, style, colour and thickness the declaring element gives.
+    pub(crate) declared: crate::style::TextDecoration,
+    /// The declaring element's computed style, whose underline offset and position place the
+    /// lines (CSS Text Decoration 4 §2.6–§2.7).
+    pub(crate) style: Arc<crate::style::Style>,
 }
 
 impl TextDecorationStyle {

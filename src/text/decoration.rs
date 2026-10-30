@@ -33,12 +33,12 @@ const LINES: [DecorationLine; 3] = [
 ];
 
 /// Decoration metrics of a decorating box's first available font, in points below its baseline.
-struct DecoratingFont {
+pub(crate) struct DecoratingFont {
     /// `[top, thickness]` of the font's underline and strikeout.
-    underline: [f32; 2],
-    strikeout: [f32; 2],
-    ascent: f32,
-    descent: f32,
+    pub(crate) underline: [f32; 2],
+    pub(crate) strikeout: [f32; 2],
+    pub(crate) ascent: f32,
+    pub(crate) descent: f32,
 }
 impl DecoratingFont {
     fn of(context: &TextContext<'_>, style: &Style) -> Result<Self, TextError> {
@@ -72,7 +72,12 @@ impl DecoratingFont {
     }
     /// `[top, thickness]` of `line` below the baseline. Underlines keep their top edge,
     /// overlines their bottom edge and line-throughs their centre when the thickness is given.
-    fn place(&self, line: DecorationLine, decoration: &TextDecoration, style: &Style) -> [f32; 2] {
+    pub(crate) fn place(
+        &self,
+        line: DecorationLine,
+        decoration: &TextDecoration,
+        style: &Style,
+    ) -> [f32; 2] {
         let [font_top, font_thickness] = match line {
             DecorationLine::LineThrough => self.strikeout,
             _ => self.underline,
@@ -103,7 +108,7 @@ impl DecoratingFont {
     }
 }
 
-fn draws(decoration: &TextDecoration, line: DecorationLine) -> bool {
+pub(crate) fn draws(decoration: &TextDecoration, line: DecorationLine) -> bool {
     match line {
         DecorationLine::Underline => decoration.lines.underline || decoration.lines.error.is_some(),
         DecorationLine::Overline => decoration.lines.overline,

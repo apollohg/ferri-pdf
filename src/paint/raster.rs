@@ -66,6 +66,53 @@ fn path(contours: &[Contour]) -> Option<tiny_skia::Path> {
     path.finish()
 }
 
+/// The area `shape` paints, as a path to fill with the non-zero rule: patterns and strokes
+/// become the outlines of their stroked contours. Clipped shapes have none.
+pub(crate) fn outline(shape: &Shape) -> Option<tiny_skia::Path> {
+    match shape {
+        Shape::Rect(rect) => tiny_skia::Rect::from_xywh(rect.x, rect.y, rect.width, rect.height)
+            .map(tiny_skia::PathBuilder::from_rect),
+        Shape::Path { contours, .. } => path(contours),
+        Shape::Pattern {
+            contours,
+            width,
+            dash,
+            round,
+            clip: None,
+        } => {
+            let stroke = pattern_stroke(*width, *dash, *round);
+            path(contours)?
+                .dash(stroke.dash.as_ref()?, 1.0)?
+                .stroke(&stroke, 1.0)
+        }
+        Shape::Stroke { contours, width } => path(contours)?.stroke(&plain_stroke(*width), 1.0),
+        Shape::Pattern { clip: Some(_), .. }
+        | Shape::ContourClipped { .. }
+        | Shape::Clipped { .. } => None,
+    }
+}
+
+/// A stroke `width` wide along a dash pattern, with round caps for dots.
+fn pattern_stroke(width: f32, dash: [f32; 2], round: bool) -> Stroke {
+    Stroke {
+        width,
+        line_cap: if round {
+            tiny_skia::LineCap::Round
+        } else {
+            tiny_skia::LineCap::Butt
+        },
+        dash: StrokeDash::new(dash.to_vec(), 0.0),
+        ..Stroke::default()
+    }
+}
+
+fn plain_stroke(width: f32) -> Stroke {
+    Stroke {
+        width,
+        ..Stroke::default()
+    }
+}
+
 pub(crate) fn opaque() -> Paint<'static> {
     let mut paint = Paint::default();
     paint.set_color(tiny_skia::Color::BLACK);
@@ -180,20 +227,10 @@ pub(crate) fn cover(
         } => {
             let narrowed = polygon_clip(clip, polygon.as_deref(), transform, target);
             if let Some(path) = path(contours) {
-                let stroke = Stroke {
-                    width: *width,
-                    line_cap: if *round {
-                        tiny_skia::LineCap::Round
-                    } else {
-                        tiny_skia::LineCap::Butt
-                    },
-                    dash: StrokeDash::new(dash.to_vec(), 0.0),
-                    ..Stroke::default()
-                };
                 target.stroke_path(
                     &path,
                     &opaque(),
-                    &stroke,
+                    &pattern_stroke(*width, *dash, *round),
                     transform,
                     narrowed.as_ref().or(clip),
                 );
@@ -201,11 +238,7 @@ pub(crate) fn cover(
         }
         Shape::Stroke { contours, width } => {
             if let Some(path) = path(contours) {
-                let stroke = Stroke {
-                    width: *width,
-                    ..Stroke::default()
-                };
-                target.stroke_path(&path, &opaque(), &stroke, transform, clip);
+                target.stroke_path(&path, &opaque(), &plain_stroke(*width), transform, clip);
             }
         }
     }

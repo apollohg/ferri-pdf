@@ -19,6 +19,11 @@ const IN: &str = "in";
 const HUE: &str = "hue";
 const ALPHA: &str = "alpha";
 pub(super) const CURRENT_COLOR: &str = "currentcolor";
+
+/// Whether `value` is the `currentcolor` keyword itself, not a colour computed from it.
+pub(super) fn is_current_color(value: &Component) -> bool {
+    matches!(value.unwrap(), Component::MathColor(source) if source.trim().eq_ignore_ascii_case(CURRENT_COLOR))
+}
 const ACCENT_COLOR: &str = "accentcolor";
 const CANVAS: &str = "canvas";
 const ACCENT_COLOR_TEXT: &str = "accentcolortext";

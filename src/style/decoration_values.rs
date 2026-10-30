@@ -117,6 +117,9 @@ pub(crate) struct TextDecoration {
     pub lines: DecorationLines,
     pub style: DecorationStyle,
     pub color: Color,
+    /// `text-decoration-color` is `currentcolor`, which SVG text decorations take as the fill
+    /// of the element declaring them (SVG 2 §11.11).
+    pub current_color: bool,
     pub thickness: Option<f32>,
     /// `text-decoration-inset`.
     pub inset: DecorationInset,
@@ -131,6 +134,7 @@ impl Default for TextDecoration {
             lines: DecorationLines::default(),
             style: DecorationStyle::Solid,
             color: Color::BLACK,
+            current_color: true,
             thickness: None,
             inset: DecorationInset::default(),
             edges: false,

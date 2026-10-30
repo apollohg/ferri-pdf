@@ -95,6 +95,11 @@ breaks start line boxes stacked by the line heights of their spans and the text 
 Percentage baseline shifts of styled text refer to its used line height (CSS Inline 3 §4.2.3),
 and `alignment-baseline` aligns a box's baseline with the same baseline of its parent.
 
+Decoration lines take the style, thickness, underline offset and position, and error
+indications the declaring element's computed style gives them, placed and shaped as the
+document's text places and shapes its lines; a `text-decoration-color` other than
+`currentcolor` fills them in place of the declaring element's fill.
+
 `overflow` on a pattern renders each tile's overflowing content over the tiles it reaches, rows
 top to bottom and tiles left to right, and on a sliced image the parts beyond its rectangle.
 
