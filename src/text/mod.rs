@@ -11,7 +11,7 @@ mod hanging;
 mod hyphenation;
 mod initial_letter;
 mod leaders;
-mod line_boxes;
+pub(crate) mod line_boxes;
 mod paragraph;
 mod ruby;
 pub(crate) mod shaping;

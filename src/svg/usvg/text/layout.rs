@@ -226,12 +226,15 @@ pub(crate) fn layout_text(
 
     for chunk in &text_node.chunks {
         for span in &chunk.spans {
-            if !fonts_cache.contains_key(&span.font) {
-                if let Some(font) = resolver
-                    .select_font(&span.font, fontdb)
-                    .and_then(|id| fontdb.load_font(id))
-                {
-                    fonts_cache.insert(span.font.clone(), Arc::new(font));
+            let edge = span.line_edge.as_ref().map(|edge| &edge.strut.font);
+            for font in std::iter::once(&span.font).chain(edge) {
+                if !fonts_cache.contains_key(font) {
+                    if let Some(loaded) = resolver
+                        .select_font(font, fontdb)
+                        .and_then(|id| fontdb.load_font(id))
+                    {
+                        fonts_cache.insert(font.clone(), Arc::new(loaded));
+                    }
                 }
             }
         }
@@ -252,6 +255,10 @@ pub(crate) fn layout_text(
     let mut bbox = BBox::default();
     for chunk in &text_node.chunks {
         char_offset += chunk.line_breaks;
+        for _ in 0..chunk.line_breaks {
+            block_offset += lines.advance(line);
+            line += 1;
+        }
         let (x, y) = match chunk.text_flow {
             TextFlow::Linear => {
                 let (start_x, start_y) = *line_origin
@@ -259,10 +266,6 @@ pub(crate) fn layout_text(
                 if chunk.line_breaks == 0 {
                     (chunk.x.unwrap_or(last_x), chunk.y.unwrap_or(last_y))
                 } else {
-                    for _ in 0..chunk.line_breaks {
-                        block_offset += lines.advance(line);
-                        line += 1;
-                    }
                     let (line_x, line_y) = match text_node.writing_mode {
                         WritingMode::LeftToRight => (start_x, start_y + block_offset),
                         WritingMode::TopToBottom => {
@@ -311,7 +314,7 @@ pub(crate) fn layout_text(
             text_node,
             chunk,
             char_offset,
-            text_node.writing_mode,
+            (&lines, line),
             &fonts_cache,
             &mut clusters,
         );
@@ -334,7 +337,7 @@ pub(crate) fn layout_text(
             let mut span_ts = text_ts;
             span_ts = span_ts.pre_translate(x, y);
             if let TextFlow::Linear = chunk.text_flow {
-                let shift = resolve_baseline(span, font, text_node.writing_mode);
+                let shift = lines.baseline(line, span, font, text_node.writing_mode);
 
                 // In case of a horizontal flow, shift transform and not clusters,
                 // because clusters can be rotated and an additional shift will lead
@@ -619,20 +622,24 @@ fn resolve_clusters_positions(
     text: &Text,
     chunk: &TextChunk,
     char_offset: usize,
-    writing_mode: WritingMode,
+    line: (&LineBoxes, usize),
     fonts_cache: &FontsCache,
     clusters: &mut [GlyphCluster],
 ) -> (f32, f32) {
     match chunk.text_flow {
-        TextFlow::Linear => {
-            resolve_clusters_positions_horizontal(text, chunk, char_offset, writing_mode, clusters)
-        }
+        TextFlow::Linear => resolve_clusters_positions_horizontal(
+            text,
+            chunk,
+            char_offset,
+            text.writing_mode,
+            clusters,
+        ),
         TextFlow::Path(ref path) => resolve_clusters_positions_path(
             text,
             chunk,
             char_offset,
             path,
-            writing_mode,
+            line,
             fonts_cache,
             clusters,
         ),
@@ -730,10 +737,11 @@ fn resolve_clusters_positions_path(
     chunk: &TextChunk,
     char_offset: usize,
     path: &TextPath,
-    writing_mode: WritingMode,
+    (lines, line): (&LineBoxes, usize),
     fonts_cache: &FontsCache,
     clusters: &mut [GlyphCluster],
 ) -> (f32, f32) {
+    let writing_mode = text.writing_mode;
     let mut last_x = 0.0;
     let mut last_y = 0.0;
 
@@ -780,7 +788,7 @@ fn resolve_clusters_positions_path(
                     Some(v) => v,
                     None => return 0.0,
                 };
-                -resolve_baseline(span, font, writing_mode)
+                -lines.baseline(line, span, font, writing_mode)
             })
             .unwrap_or(0.0);
 
@@ -1230,6 +1238,9 @@ fn shape_chunk(
 struct LineBoxes {
     /// Each line's extents before and after its baseline in the block direction.
     extents: Vec<[f32; 2]>,
+    /// How far below its line's baseline each subtree aligned with a line edge puts its root's
+    /// baseline, by line and root.
+    edges: HashMap<(usize, usize), f32>,
     /// The physical direction lines advance in vertical text: one leftwards, minus one
     /// rightwards.
     progression: f32,
@@ -1237,19 +1248,59 @@ struct LineBoxes {
 impl LineBoxes {
     fn new(text: &Text, strut: Option<&ResolvedFont>, fonts: &FontsCache) -> Self {
         let vertical = text.writing_mode == WritingMode::TopToBottom;
-        let strut = strut.map_or([0.0; 2], |font| {
-            line_extents(font, text.strut.font_size, &text.strut.style, vertical)
-        });
+        let extents_of = |font: Option<&ResolvedFont>, strut: &crate::svg::usvg::Strut| {
+            font.map_or([0.0; 2], |font| {
+                line_extents(font, strut.font_size, &strut.style, vertical)
+            })
+        };
+        let strut = extents_of(strut, &text.strut);
         let mut extents = vec![strut];
+        // Each line's subtrees aligned with an edge: whether the bottom edge, and their
+        // extents around their roots' baselines.
+        let mut subtrees: Vec<HashMap<usize, (bool, [f32; 2])>> = vec![HashMap::new()];
         for chunk in &text.chunks {
-            extents.extend(std::iter::repeat_n(strut, chunk.line_breaks));
-            let line = extents.last_mut().expect("the first line");
+            for _ in 0..chunk.line_breaks {
+                extents.push(strut);
+                subtrees.push(HashMap::new());
+            }
+            let line = extents.len() - 1;
             for span in &chunk.spans {
-                if let Some(font) = fonts.get(&span.font) {
-                    let [above, below] =
-                        line_extents(font, span.font_size.get(), &span.style, vertical);
-                    *line = [line[0].max(above), line[1].max(below)];
+                let Some(font) = fonts.get(&span.font) else {
+                    continue;
+                };
+                let [above, below] =
+                    line_extents(font, span.font_size.get(), &span.style, vertical);
+                match &span.line_edge {
+                    None => {
+                        let extent = &mut extents[line];
+                        *extent = [extent[0].max(above), extent[1].max(below)];
+                    }
+                    Some(edge) => {
+                        let shift = resolve_baseline(span, font, text.writing_mode);
+                        let (_, extent) = subtrees[line].entry(edge.root).or_insert_with(|| {
+                            let root = fonts.get(&edge.strut.font).map(Arc::as_ref);
+                            (edge.bottom, extents_of(root, &edge.strut))
+                        });
+                        *extent = [extent[0].max(above - shift), extent[1].max(below + shift)];
+                    }
                 }
+            }
+        }
+        // CSS 2.1 §10.8: a subtree taller than its line box grows it, and baseline-aligned
+        // content stays at the top, as the document's line boxes keep it.
+        let mut edges = HashMap::new();
+        for (line, trees) in subtrees.iter().enumerate() {
+            let extent = &mut extents[line];
+            for &(_, [above, below]) in trees.values() {
+                extent[1] = extent[1].max(above + below - extent[0]);
+            }
+            for (&root, &(bottom, [above, below])) in trees {
+                let offset = if bottom {
+                    extent[1] - below
+                } else {
+                    above - extent[0]
+                };
+                edges.insert((line, root), offset);
             }
         }
         let progression =
@@ -1260,6 +1311,7 @@ impl LineBoxes {
             };
         Self {
             extents,
+            edges,
             progression,
         }
     }
@@ -1267,12 +1319,25 @@ impl LineBoxes {
     fn advance(&self, line: usize) -> f32 {
         self.extents[line][1] + self.extents[line + 1][0]
     }
+    /// How far below line `line`'s baseline `span` puts its baseline.
+    fn baseline(
+        &self,
+        line: usize,
+        span: &TextSpan,
+        font: &ResolvedFont,
+        writing_mode: WritingMode,
+    ) -> f32 {
+        let edge = span.line_edge.as_ref().map_or(0.0, |edge| {
+            self.edges.get(&(line, edge.root)).copied().unwrap_or(0.0)
+        });
+        resolve_baseline(span, font, writing_mode) + edge
+    }
 }
 
 /// The extents of an inline box of `font` at `size` above and below its baseline, with
 /// half the leading its `line-height` adds on each side (CSS 2.1 §10.8.1); vertical text
 /// centres its em box.
-fn line_extents(
+pub(crate) fn line_extents(
     font: &ResolvedFont,
     size: f32,
     style: &crate::style::Style,
@@ -2178,7 +2243,7 @@ impl Glyph {
 pub(crate) struct ResolvedFont {
     pub(crate) id: ID,
     /// The face's metrics in em, and those of its upright vertical text.
-    metrics: crate::fonts::FaceMetrics,
+    pub(crate) metrics: crate::fonts::FaceMetrics,
     upright_metrics: crate::fonts::FaceMetrics,
     /// The advances of a space and of "0" in em, where the face has them.
     space_advance: Option<f32>,

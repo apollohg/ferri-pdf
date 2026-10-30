@@ -7,8 +7,8 @@ use serde::Serialize;
 use std::ops::Range;
 
 /// `sub` lowers by half the parent's descent and `super` raises by half its ascent.
-const SUBSCRIPT_DESCENT_FRACTION: f32 = 0.5;
-const SUPERSCRIPT_ASCENT_FRACTION: f32 = 0.5;
+pub(crate) const SUBSCRIPT_DESCENT_FRACTION: f32 = 0.5;
+pub(crate) const SUPERSCRIPT_ASCENT_FRACTION: f32 = 0.5;
 /// Line heights this close above a whole number of steps round down to it.
 const STEP_TOLERANCE_PT: f32 = 1e-3;
 const SIDE_RIGHT: usize = 1;

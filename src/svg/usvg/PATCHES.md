@@ -93,7 +93,11 @@ breaks start line boxes stacked by the line heights of their spans and the text 
 (SVG 2 §11.6.1), and preserved tabs advance to tab stops of the text element's spaces.
 
 Percentage baseline shifts of styled text refer to its used line height (CSS Inline 3 §4.2.3),
-and `alignment-baseline` aligns a box's baseline with the same baseline of its parent.
+and `alignment-baseline` aligns a box's baseline with the same baseline of its parent. `sub` and
+`super` shift by halves of the parent's descent and ascent, and the `vertical-align` longhand
+aligns boxes as the document's line boxes do: its shifts add to `baseline-shift`, its keywords
+align layout bounds, and `top` and `bottom` align a subtree with its line box's edges, growing
+the line downwards when taller.
 
 Decoration lines take the style, thickness, underline offset and position, and error
 indications the declaring element's computed style gives them, placed and shaped as the

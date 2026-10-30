@@ -321,9 +321,8 @@ fn collect_text_chunks_impl(
         }
 
         let visibility: Visibility = parent.find_attribute(AId::Visibility).unwrap_or_default();
-        let alignment_baseline = parent
-            .find_layout_attribute(AId::AlignmentBaseline)
-            .unwrap_or_default();
+        let (alignment_baseline, parent_alignment) = alignment(parent, state, cache);
+        let (baseline_shift, line_edge) = convert_baseline_shift(parent, state, cache);
 
         let span = TextSpan {
             start: 0,
@@ -343,8 +342,9 @@ fn collect_text_chunks_impl(
             visible: visibility == Visibility::Visible,
             dominant_baseline,
             alignment_baseline,
-            parent_alignment: parent_alignment(parent, alignment_baseline, state, cache),
-            baseline_shift: convert_baseline_shift(parent, state, cache),
+            parent_alignment,
+            baseline_shift,
+            line_edge,
             letter_spacing: parent.resolve_length(AId::LetterSpacing, state, 0.0),
             word_spacing: parent.resolve_length(AId::WordSpacing, state, 0.0),
             text_length,
@@ -480,18 +480,123 @@ fn own_text_style(node: SvgNode, state: &converter::State) -> Option<Arc<crate::
         .cloned()
 }
 
-/// CSS Inline 3 §4.2.3.1 `baseline-shift` of `node`, whose computed style is `style`:
-/// percentages refer to its used line height, which `normal` takes from its first available
-/// font.
-fn document_baseline_shift(
+/// The baseline of `node`'s box that aligns with the same baseline of its parent, and how far
+/// below the alignment point the parent puts it. The `vertical-align` longhand keeps its CSS
+/// 2.1 §10.8.1 meaning, as the document's does: its keywords other than `baseline` align the
+/// box by its layout bounds in place of `alignment-baseline` (CSS Inline 3 §4.2).
+fn alignment(
+    node: SvgNode,
+    state: &converter::State,
+    cache: &mut Cache,
+) -> (AlignmentBaseline, f32) {
+    let legacy = node
+        .ancestors()
+        .find(|ancestor| !ancestor.is_contents())
+        .and_then(|element| own_text_style(element, state))
+        .is_some_and(|style| style.table.vertical_align != crate::style::VerticalAlign::Baseline);
+    let alignment = if legacy {
+        AlignmentBaseline::Baseline
+    } else {
+        node.find_layout_attribute(AId::AlignmentBaseline)
+            .unwrap_or_default()
+    };
+    (alignment, parent_alignment(node, alignment, state, cache))
+}
+
+/// The layout bounds of `node`'s inline box around its baseline, and its first available
+/// font's ascent, descent and x-height, in user units.
+fn box_metrics(
+    node: SvgNode,
+    state: &converter::State,
+    cache: &mut Cache,
+) -> Option<([f32; 2], [f32; 3])> {
+    use crate::svg::usvg::text::layout::DatabaseExt;
+    let provider = state.font_provider.unwrap_or(&state.opt.font_resolver);
+    let font = provider
+        .select_font(&convert_font(node, state), &mut cache.fontdb)
+        .and_then(|id| cache.fontdb.load_font(id))?;
+    let size = super::units::resolve_font_size(node, state);
+    let metrics = font.metrics;
+    let vertical = convert_writing_mode(node) == WritingMode::TopToBottom;
+    Some((
+        layout::line_extents(&font, size, &text_style(node, state), vertical),
+        [metrics.ascent, metrics.descent, metrics.x_height].map(|metric| metric * size),
+    ))
+}
+
+/// The box `node`'s inline box aligns in.
+fn box_parent<'a, 'input>(node: SvgNode<'a, 'input>) -> Option<SvgNode<'a, 'input>> {
+    node.ancestors()
+        .skip(1)
+        .find(|ancestor| !ancestor.is_contents())
+}
+
+/// How far CSS 2.1 §10.8.1 `vertical-align` raises the baseline of `node`, whose computed
+/// style is `style`, above its parent's, as the document's line boxes align: `text-top` and
+/// `text-bottom` align its layout bounds with the parent's content area, `middle` their
+/// midpoint with the parent's x-height midpoint, and HTML's middle alignment with the parent's
+/// baseline. `top` and `bottom` align line box edges instead.
+fn legacy_shift(
     node: SvgNode,
     style: &crate::style::Style,
     state: &converter::State,
     cache: &mut Cache,
+) -> Option<crate::style::BaselineShift> {
+    use crate::style::{BaselineShift as Shift, VerticalAlign};
+    let raise = |pixels: f32| {
+        Shift::Raise(crate::paint::LengthPercentage::Length(
+            pixels * crate::style::POINTS_PER_PIXEL,
+        ))
+    };
+    Some(match &style.table.vertical_align {
+        VerticalAlign::Sub => Shift::Sub,
+        VerticalAlign::Super => Shift::Super,
+        VerticalAlign::Length(length) => Shift::Raise(length.clone()),
+        VerticalAlign::Baseline | VerticalAlign::Top | VerticalAlign::Bottom => return None,
+        VerticalAlign::TextTop => {
+            let ([above, _], _) = box_metrics(node, state, cache)?;
+            let (_, [ascent, ..]) = box_metrics(box_parent(node)?, state, cache)?;
+            raise(ascent - above)
+        }
+        VerticalAlign::TextBottom => {
+            let ([_, below], _) = box_metrics(node, state, cache)?;
+            let (_, [_, descent, _]) = box_metrics(box_parent(node)?, state, cache)?;
+            raise(below - descent)
+        }
+        VerticalAlign::Middle => {
+            let ([above, below], _) = box_metrics(node, state, cache)?;
+            let (_, [.., x_height]) = box_metrics(box_parent(node)?, state, cache)?;
+            raise(x_height / 2.0 + (below - above) / 2.0)
+        }
+        VerticalAlign::BaselineMiddle => {
+            let ([above, below], _) = box_metrics(node, state, cache)?;
+            raise((below - above) / 2.0)
+        }
+    })
+}
+
+/// CSS Inline 3 §4.2.3.1 `shift` of `node`, whose computed style is `style`, as the document's
+/// line boxes shift: `sub` and `super` by fractions of the parent's descent and ascent, and
+/// percentages of its used line height, which `normal` takes from its first available font.
+fn document_baseline_shift(
+    node: SvgNode,
+    shift: &crate::style::BaselineShift,
+    style: &crate::style::Style,
+    state: &converter::State,
+    cache: &mut Cache,
 ) -> BaselineShift {
-    match &style.baseline.shift {
-        crate::style::BaselineShift::Sub => BaselineShift::Subscript,
-        crate::style::BaselineShift::Super => BaselineShift::Superscript,
+    use crate::text::line_boxes::{SUBSCRIPT_DESCENT_FRACTION, SUPERSCRIPT_ASCENT_FRACTION};
+    let parent =
+        |cache: &mut Cache| box_parent(node).and_then(|parent| box_metrics(parent, state, cache));
+    match shift {
+        crate::style::BaselineShift::Sub => parent(cache)
+            .map_or(BaselineShift::Subscript, |(_, [_, descent, _])| {
+                BaselineShift::Number(-descent * SUBSCRIPT_DESCENT_FRACTION)
+            }),
+        crate::style::BaselineShift::Super => parent(cache)
+            .map_or(BaselineShift::Superscript, |(_, [ascent, ..])| {
+                BaselineShift::Number(ascent * SUPERSCRIPT_ASCENT_FRACTION)
+            }),
         crate::style::BaselineShift::Raise(raise) => {
             let size = super::units::resolve_font_size(node, state);
             let points = crate::style::POINTS_PER_PIXEL;
@@ -1021,19 +1126,43 @@ const UNDERLINE: &str = "underline";
 const OVERLINE: &str = "overline";
 const LINE_THROUGH: &str = "line-through";
 
+/// The baseline shifts of `node` and its ancestors in the text, innermost first, up to the
+/// nearest that aligns its subtree with a line box edge instead. Shifts of the `vertical-align`
+/// longhand add to those of `baseline-shift` (CSS Inline 3 §4.2).
 fn convert_baseline_shift(
     node: SvgNode,
     state: &converter::State,
     cache: &mut Cache,
-) -> Vec<BaselineShift> {
+) -> (Vec<BaselineShift>, Option<LineEdge>) {
+    use crate::style::VerticalAlign;
     let mut shift = Vec::new();
+    let mut edge = None;
     let nodes: Vec<_> = node
         .ancestors()
         .take_while(|n| n.tag_name() != Some(EId::Text))
         .collect();
     for n in nodes.into_iter().filter(|node| !node.is_contents()) {
         if let Some(style) = own_text_style(n, state) {
-            shift.push(document_baseline_shift(n, &style, state, cache));
+            // Edge alignment replaces the element's shifts and its ancestors'.
+            if matches!(
+                style.table.vertical_align,
+                VerticalAlign::Top | VerticalAlign::Bottom
+            ) {
+                edge = Some(LineEdge {
+                    bottom: style.table.vertical_align == VerticalAlign::Bottom,
+                    root: n.index(),
+                    strut: Strut {
+                        font: convert_font(n, state),
+                        font_size: super::units::resolve_font_size(n, state),
+                        style: style.clone(),
+                    },
+                });
+                break;
+            }
+            let legacy = legacy_shift(n, &style, state, cache);
+            for value in legacy.iter().chain([&style.baseline.shift]) {
+                shift.push(document_baseline_shift(n, value, &style, state, cache));
+            }
         } else if let Some(length) =
             super::units::computed_length(n, n, AId::BaselineShift, Units::UserSpaceOnUse, state)
         {
@@ -1057,7 +1186,7 @@ fn convert_baseline_shift(
         shift.clear();
     }
 
-    shift
+    (shift, edge)
 }
 
 fn count_chars(node: SvgNode) -> usize {

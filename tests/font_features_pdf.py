@@ -305,6 +305,30 @@ class FontFeaturesPdf(unittest.TestCase):
                                   v.origin[1] + 7),
                          (255, 0, 0), "the tspan's line-through is in its own fill")
 
+    def test_svg_text_vertical_align_shifts_as_the_documents_line_boxes_do(self):
+        """CSS 2.1 §10.8.1 `vertical-align` on SVG text content (CSS Inline 3 §4.2): each value
+        raises a smaller, taller-lined tspan above the text's baseline as it raises the same
+        inline box above a paragraph line's, `top` and `bottom` aligning with line box edges."""
+        rules = ("svg{display:block}text,p{font:20px 'Liberation Serif';line-height:30px}"
+                 "span,tspan{font-size:12px;line-height:40px}")
+
+        def rise(document):
+            origins = {glyph.text: glyph.origin[1] for glyph in document.glyphs}
+            return origins["b"] - origins["a"]
+
+        for value in ("super", "sub", "6pt", "25%", "text-top", "text-bottom", "middle", "top",
+                      "bottom"):
+            with self.subTest(value=value):
+                expected = rise(self.render(
+                    rules, f'<p>a<span style="vertical-align:{value}">b</span></p>'))
+                actual = rise(self.render(
+                    rules, f'<svg width="300pt" height="100pt"><text x="10" y="50">a<tspan '
+                           f'style="vertical-align:{value}">b</tspan></text></svg>'))
+                self.assertAlmostEqual(actual, expected, delta=POSITION_TOLERANCE_PT,
+                                       msg=f"vertical-align:{value} raises the SVG tspan by "
+                                           f"{actual:.3f}pt, the paragraph's span by "
+                                           f"{expected:.3f}pt")
+
     def test_optical_size_and_presentation_select_the_embedded_glyphs(self):
         optical = reference("RobotoFlex-optical.json")
         advances = {json.dumps(sample["location"], sort_keys=True): sample["advance"]

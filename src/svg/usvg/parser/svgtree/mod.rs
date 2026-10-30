@@ -263,6 +263,11 @@ impl<'a, 'input: 'a> SvgNode<'a, 'input> {
         self.id
     }
 
+    /// Identifies the node among those of its document.
+    pub(in crate::svg::usvg::parser) fn index(&self) -> usize {
+        self.id.get_usize()
+    }
+
     /// Identifies the node among those of every document conversion reads.
     pub(super) fn key(&self) -> NodeKey {
         NodeKey(std::ptr::from_ref(self.doc) as usize, self.id.get_usize())

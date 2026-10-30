@@ -395,7 +395,10 @@ pub struct TextSpan {
     /// How far below the alignment point the parent box puts its `alignment_baseline`, with
     /// which the span's aligns (CSS Inline 3 §4.2.2).
     pub(crate) parent_alignment: f32,
+    /// The shifts inside the subtree that `line_edge` aligns, or the whole text's without one.
     pub(crate) baseline_shift: Vec<BaselineShift>,
+    /// The box aligning the span's subtree with an edge of its line box.
+    pub(crate) line_edge: Option<LineEdge>,
     pub(crate) visible: bool,
     pub(crate) letter_spacing: f32,
     pub(crate) word_spacing: f32,
@@ -637,6 +640,18 @@ pub struct Text {
     /// `color-interpolation: linearRGB` on the text element (SVG 2 §13.9).
     pub(crate) linear_light: bool,
     /// The text element's own font, which its line boxes start from (CSS 2.1 §10.8.1).
+    pub(crate) strut: Strut,
+}
+
+/// `vertical-align: top` or `bottom` on a text content element, which aligns the line-over or
+/// line-under edge of its aligned subtree with that of the line box (CSS 2.1 §10.8.1, CSS
+/// Inline 3 §4.2.3).
+#[derive(Clone, Debug)]
+pub(crate) struct LineEdge {
+    pub(crate) bottom: bool,
+    /// Identifies the aligned element among those of the text.
+    pub(crate) root: usize,
+    /// The aligned element's own font, whose layout bounds its subtree includes.
     pub(crate) strut: Strut,
 }
 
