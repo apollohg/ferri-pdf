@@ -110,12 +110,14 @@ struct Computed {
     cyclic_properties: RefCell<HashSet<Property>>,
 }
 impl Computed {
-    fn new(style: Style, values: Cascaded) -> Result<Self, StyleError> {
+    /// Shared from the start: graphs hold computed values behind `Rc`, and moving the two
+    /// styles through the frames of recursive resolution would deepen its stack.
+    fn new(style: Style, values: Cascaded) -> Result<Rc<Self>, StyleError> {
         let (properties, custom) = values.into_parts();
         let customs = Customs::new(custom);
         let variables =
             variables::Resolver::new(&style.inherited_custom_properties, customs.sources()?)?;
-        Ok(Self {
+        Ok(Rc::new(Self {
             base: style.clone(),
             style: RefCell::new(style),
             properties,
@@ -126,9 +128,9 @@ impl Computed {
             font_pending: RefCell::default(),
             cyclic_customs: RefCell::default(),
             cyclic_properties: RefCell::default(),
-        })
+        }))
     }
-    fn provided(style: Style) -> Result<Self, StyleError> {
+    fn provided(style: Style) -> Result<Rc<Self>, StyleError> {
         Self::new(style, Cascaded::default())
     }
 }
@@ -227,26 +229,32 @@ impl<'a> Geometry<'a> {
             ancestor = parent;
         }
         for target in pending.into_iter().rev() {
-            let context = Context::Tree(target);
-            let element = self.tree_element(target);
-            if let Some(parent) = self.parent_context(context) {
+            if let Some(parent) = self.parent_context(Context::Tree(target)) {
                 self.property(parent, Property::Display)?;
             }
-            let parent = self.parent_style(context);
-            let (style, values) = match target.pseudo {
-                Some(pseudo) => {
-                    self.sheet
-                        .prepare_pseudo(element, &parent, pseudo, self.resolver)?
-                }
-                None => self
-                    .sheet
-                    .prepare_element(element, &parent, self.resolver)?,
-            };
-            self.tree_contexts
-                .borrow_mut()
-                .insert(target, Rc::new(Computed::new(style, values)?));
+            let computed = self.prepare_context(target)?;
+            self.tree_contexts.borrow_mut().insert(target, computed);
         }
         Ok(())
+    }
+
+    /// The cascaded values of `target` once its parent's are known. Kept apart from
+    /// `ensure_context`, whose frame each ancestor's resolution stacks.
+    fn prepare_context(
+        &self,
+        target: crate::style::PageStyleTarget,
+    ) -> Result<Rc<Computed>, StyleError> {
+        let element = self.tree_element(target);
+        let parent = self.parent_style(Context::Tree(target));
+        let (style, values) = match target.pseudo {
+            Some(pseudo) => self
+                .sheet
+                .prepare_pseudo(element, &parent, pseudo, self.resolver)?,
+            None => self
+                .sheet
+                .prepare_element(element, &parent, self.resolver)?,
+        };
+        Computed::new(style, values)
     }
 
     fn select_name(&self) -> Result<(), StyleError> {
@@ -319,7 +327,7 @@ impl<'a> Geometry<'a> {
         initial.text_decorations.propagated.clear();
         let page = Computed::new(initial, rules.declarations.clone())?;
         assert!(self.page_rules.set(rules).is_ok());
-        assert!(self.page.set(Rc::new(page)).is_ok());
+        assert!(self.page.set(page).is_ok());
         Ok(())
     }
 
@@ -427,7 +435,7 @@ impl<'a> Geometry<'a> {
     fn new(
         sheet: &'a Stylesheet,
         resolver: &'a dyn ResourceResolver,
-        root: Computed,
+        root: Rc<Computed>,
         provided_root: bool,
         rules: Option<crate::style::page_rules::MatchedPageRules>,
         viewport: Option<[f32; 2]>,
@@ -438,7 +446,7 @@ impl<'a> Geometry<'a> {
             let mut initial = root.base.anonymous(Display::Block);
             initial.text_decorations.propagated.clear();
             let computed = Computed::new(initial, rules.declarations.clone())?;
-            assert!(page.set(Rc::new(computed)).is_ok());
+            assert!(page.set(computed).is_ok());
             assert!(page_rules.set(rules).is_ok());
         }
         Ok(Self {
@@ -446,7 +454,7 @@ impl<'a> Geometry<'a> {
             page_rules,
             viewport,
             resolver,
-            root: Rc::new(root),
+            root,
             page,
             document: None,
             select_first: None,
@@ -1738,15 +1746,7 @@ impl Stylesheet {
         side: &crate::style::page_selection::SelectFirstPageSide<'_>,
     ) -> Result<Style, StyleError> {
         let element = document.root_element();
-        let (style, values) = self.prepare_element(element, &Style::default(), resolver)?;
-        let mut graph = Geometry::new(
-            self,
-            resolver,
-            Computed::new(style, values)?,
-            false,
-            None,
-            None,
-        )?;
+        let mut graph = self.root_geometry(element, resolver, None)?;
         graph.document = Some(document);
         graph.select_first = Some(select);
         graph.select_side = Some(side);
@@ -1761,6 +1761,37 @@ impl Stylesheet {
         self.first_page = request;
         self.page_progression_rtl = progression_rtl;
         self.set_page_geometry(&geometry);
+        self.root_values(element, style, winners, resolver)
+    }
+
+    /// The graph resolving the root element's page-dependent values, matching `rules` when
+    /// its page is known. Kept apart from the functions resolving the root, whose frames
+    /// nested navigables stack while the graph recurses.
+    fn root_geometry<'a>(
+        &'a self,
+        element: Element<'_>,
+        resolver: &'a dyn ResourceResolver,
+        rules: Option<crate::style::page_rules::MatchedPageRules>,
+    ) -> Result<Geometry<'a>, StyleError> {
+        let (style, values) = self.prepare_element(element, &Style::default(), resolver)?;
+        Geometry::new(
+            self,
+            resolver,
+            Computed::new(style, values)?,
+            false,
+            rules,
+            None,
+        )
+    }
+
+    /// The root element's computed values from its materialized page-dependent ones.
+    fn root_values(
+        &mut self,
+        element: Element<'_>,
+        style: Style,
+        winners: Winners,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Style, StyleError> {
         let root = self.computed_values(element, &Style::default(), style, winners, resolver)?;
         self.define_palettes(&root, resolver)?;
         Ok(root)
@@ -1782,24 +1813,14 @@ impl Stylesheet {
         element: Element<'_>,
         resolver: &dyn ResourceResolver,
     ) -> Result<Style, StyleError> {
-        let (style, values) = self.prepare_element(element, &Style::default(), resolver)?;
-        let root = Computed::new(style, values)?;
-        let mut graph = Geometry::new(
-            self,
-            resolver,
-            root,
-            false,
-            Some(self.match_page(&self.first_page)),
-            None,
-        )?;
+        let mut graph =
+            self.root_geometry(element, resolver, Some(self.match_page(&self.first_page)))?;
         graph.tree = Tree::Element(element);
         let geometry = graph.finish()?;
         let (style, winners) = graph.materialized(Context::Root)?;
         drop(graph);
         self.set_page_geometry(&geometry);
-        let root = self.computed_values(element, &Style::default(), style, winners, resolver)?;
-        self.define_palettes(&root, resolver)?;
-        Ok(root)
+        self.root_values(element, style, winners, resolver)
     }
 }
 
@@ -2124,9 +2145,9 @@ pub(super) fn resolve_values(
         tree_contexts: RefCell::default(),
         viewport: Some(context.viewport),
         resolver,
-        root: Rc::new(Computed::provided(Style::default())?),
-        page: OnceCell::from(Rc::new(Computed::provided(Style::default())?)),
-        element: Some(Rc::new(Computed::new(style, values)?)),
+        root: Computed::provided(Style::default())?,
+        page: OnceCell::from(Computed::provided(Style::default())?),
+        element: Some(Computed::new(style, values)?),
         parent: Some(parent),
         tree: context.tree,
         page_font: context.page_font,
@@ -2177,9 +2198,9 @@ pub(super) fn substitute_known(
         tree_contexts: RefCell::default(),
         viewport: Some(viewport),
         resolver,
-        root: Rc::new(Computed::provided(Style::default())?),
-        page: OnceCell::from(Rc::new(Computed::provided(Style::default())?)),
-        element: Some(Rc::new(Computed::provided(style.clone())?)),
+        root: Computed::provided(Style::default())?,
+        page: OnceCell::from(Computed::provided(Style::default())?),
+        element: Some(Computed::provided(style.clone())?),
         parent: Some(parent),
         tree: Tree::Root,
         page_font: true,

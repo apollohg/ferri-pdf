@@ -987,171 +987,11 @@ impl Stylesheet {
     ) -> Result<Style, StyleError> {
         let (element, pseudo, page) = target;
         if style.position.is_out_of_flow() && !style.anchor.fallbacks.is_empty() {
-            use crate::style::anchor_values::{Tactic, TryOption};
-            use crate::style::cascade::Origin;
-            use crate::style::declaration::{Declared, PropertyDeclaration};
-            let protected = original.important_properties();
-            let mut options = vec![style.clone()];
-            let frame = self
-                .anchor_frames
-                .frame(crate::style::anchor_values::key(element.id(), pseudo), page);
-            let containing = frame.map_or_else(crate::style::logical::Flow::default, |frame| {
-                frame.containing_flow
-            });
-            for option in style.anchor.fallbacks.iter() {
-                let mut cascade = original.clone();
-                let (declarations, tactic) = match option {
-                    TryOption::Area(area) => (
-                        vec![PropertyDeclaration {
-                            declared: Declared::Longhand(
-                                Property::PositionArea,
-                                Specified::Value(area.clone()),
-                            ),
-                            location: None,
-                            important: false,
-                            origin: Origin::PositionFallback,
-                            layer: crate::style::layers::LayerId::Unlayered,
-                            font_namespace: style.element_font_namespace(),
-                            namespaces: None,
-                        }],
-                        Tactic::IDENTITY,
-                    ),
-                    TryOption::Rule { rule, tactic } => {
-                        let declarations = if let Some(rule) = rule {
-                            let Some(declarations) = self.position_try(rule) else {
-                                continue;
-                            };
-                            declarations.to_vec()
-                        } else {
-                            Vec::new()
-                        };
-                        (declarations, Tactic::of(tactic, containing))
-                    }
-                };
-                let declarations: Vec<_> = declarations
-                    .into_iter()
-                    .map(|mut declaration| {
-                        declaration.origin = Origin::PositionFallback;
-                        declaration
-                    })
-                    .collect();
-                cascade.extend(crate::style::cascade::cascade(&declarations));
-                let (mut option_seed, mut winners) = crate::style::resolution::resolve_values(
-                    self,
-                    seed.clone(),
-                    parent,
-                    cascade.clone(),
-                    resolver,
-                    &crate::style::resolution::ValueContext {
-                        tree: Tree::Element(element),
-                        viewport: self.page_area(),
-                        page_font: false,
-                    },
-                )?;
-                if tactic != Tactic::IDENTITY {
-                    let transformed: Vec<_> = Property::ALL
-                        .iter()
-                        .copied()
-                        .filter(|property| {
-                            crate::style::anchor_values::accepted(*property)
-                                && !crate::style::logical::is_flow_relative(*property)
-                        })
-                        .map(|property| PropertyDeclaration {
-                            declared: Declared::Longhand(
-                                property,
-                                winners
-                                    .get(&tactic.source_property(property))
-                                    .cloned()
-                                    .unwrap_or(Specified::Wide(
-                                        crate::style::wide_keywords::WideKeyword::Unset,
-                                    )),
-                            ),
-                            location: None,
-                            important: false,
-                            origin: Origin::PositionFallback,
-                            layer: crate::style::layers::LayerId::Unlayered,
-                            font_namespace: option_seed
-                                .anchor
-                                .namespaces
-                                .get(&tactic.source_property(property))
-                                .copied()
-                                .unwrap_or_else(|| style.element_font_namespace()),
-                            namespaces: None,
-                        })
-                        .collect();
-                    cascade.extend(crate::style::cascade::cascade(&transformed));
-                    (option_seed, winners) = crate::style::resolution::resolve_values(
-                        self,
-                        seed.clone(),
-                        parent,
-                        cascade,
-                        resolver,
-                        &crate::style::resolution::ValueContext {
-                            tree: Tree::Element(element),
-                            viewport: self.page_area(),
-                            page_font: false,
-                        },
-                    )?;
-                }
-                option_seed.anchor.tactic = tactic;
-                option_seed.anchor.protected = protected.clone();
-                let mut option_style = self.finish_values(
-                    (element, pseudo, page),
-                    parent,
-                    option_seed,
-                    winners,
-                    resolver,
-                    false,
-                )?;
-                crate::style::anchor_values::transform_computed(
-                    &mut option_style,
-                    tactic,
-                    containing,
-                );
-                option_style.anchor.option = options.len();
-                options.push(option_style);
-            }
-            let chosen = frame.map_or(0, |frame| frame.option);
-            style = options.get(chosen).unwrap_or(&options[0]).clone();
-            style.anchor.options = Arc::from(options);
+            style = self.fallback_options(target, parent, seed, original, &style, resolver)?;
         }
         if page.is_none() && style.position.is_out_of_flow() && style.anchor.anchors() {
-            let mut variants = Vec::new();
-            for page in self
-                .anchor_frames
-                .pages(crate::style::anchor_values::key(element.id(), pseudo))
-            {
-                let (page_seed, winners) = crate::style::resolution::resolve_values(
-                    self,
-                    seed.clone(),
-                    parent,
-                    original.clone(),
-                    resolver,
-                    &crate::style::resolution::ValueContext {
-                        tree: Tree::Element(element),
-                        viewport: self.page_area(),
-                        page_font: false,
-                    },
-                )?;
-                let page_style = self.finish_values(
-                    (element, pseudo, Some(page)),
-                    parent,
-                    page_seed,
-                    winners,
-                    resolver,
-                    false,
-                )?;
-                let page_style = self.position_options(
-                    (element, pseudo, Some(page)),
-                    parent,
-                    seed,
-                    original,
-                    page_style,
-                    resolver,
-                )?;
-                variants.push((page, page_style));
-            }
-            style.anchor.pages = Arc::from(variants);
+            style.anchor.pages =
+                self.page_variants((element, pseudo), parent, seed, original, resolver)?;
         }
         style.origin = StyleOrigin::of(element, pseudo, parent);
         for option in Arc::make_mut(&mut style.anchor.options) {
@@ -1161,6 +1001,195 @@ impl Stylesheet {
             self.record_anchor(element, pseudo, &style);
         }
         Ok(style)
+    }
+
+    /// The style of `target` with each of its `position-try-fallbacks` options (CSS Anchor
+    /// Positioning 1 §5), as the option its anchor frame chose. Kept apart from
+    /// `position_options`, which every element's computation runs.
+    fn fallback_options(
+        &self,
+        (element, pseudo, page): (
+            Element<'_>,
+            Option<crate::style::PseudoElement>,
+            Option<usize>,
+        ),
+        parent: &Style,
+        seed: &Style,
+        original: &Cascaded,
+        style: &Style,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Style, StyleError> {
+        use crate::style::anchor_values::{Tactic, TryOption};
+        use crate::style::cascade::Origin;
+        use crate::style::declaration::{Declared, PropertyDeclaration};
+        let protected = original.important_properties();
+        let mut options = vec![style.clone()];
+        let frame = self
+            .anchor_frames
+            .frame(crate::style::anchor_values::key(element.id(), pseudo), page);
+        let containing = frame.map_or_else(crate::style::logical::Flow::default, |frame| {
+            frame.containing_flow
+        });
+        for option in style.anchor.fallbacks.iter() {
+            let mut cascade = original.clone();
+            let (declarations, tactic) = match option {
+                TryOption::Area(area) => (
+                    vec![PropertyDeclaration {
+                        declared: Declared::Longhand(
+                            Property::PositionArea,
+                            Specified::Value(area.clone()),
+                        ),
+                        location: None,
+                        important: false,
+                        origin: Origin::PositionFallback,
+                        layer: crate::style::layers::LayerId::Unlayered,
+                        font_namespace: style.element_font_namespace(),
+                        namespaces: None,
+                    }],
+                    Tactic::IDENTITY,
+                ),
+                TryOption::Rule { rule, tactic } => {
+                    let declarations = if let Some(rule) = rule {
+                        let Some(declarations) = self.position_try(rule) else {
+                            continue;
+                        };
+                        declarations.to_vec()
+                    } else {
+                        Vec::new()
+                    };
+                    (declarations, Tactic::of(tactic, containing))
+                }
+            };
+            let declarations: Vec<_> = declarations
+                .into_iter()
+                .map(|mut declaration| {
+                    declaration.origin = Origin::PositionFallback;
+                    declaration
+                })
+                .collect();
+            cascade.extend(crate::style::cascade::cascade(&declarations));
+            let (mut option_seed, mut winners) = crate::style::resolution::resolve_values(
+                self,
+                seed.clone(),
+                parent,
+                cascade.clone(),
+                resolver,
+                &crate::style::resolution::ValueContext {
+                    tree: Tree::Element(element),
+                    viewport: self.page_area(),
+                    page_font: false,
+                },
+            )?;
+            if tactic != Tactic::IDENTITY {
+                let transformed: Vec<_> = Property::ALL
+                    .iter()
+                    .copied()
+                    .filter(|property| {
+                        crate::style::anchor_values::accepted(*property)
+                            && !crate::style::logical::is_flow_relative(*property)
+                    })
+                    .map(|property| PropertyDeclaration {
+                        declared: Declared::Longhand(
+                            property,
+                            winners
+                                .get(&tactic.source_property(property))
+                                .cloned()
+                                .unwrap_or(Specified::Wide(
+                                    crate::style::wide_keywords::WideKeyword::Unset,
+                                )),
+                        ),
+                        location: None,
+                        important: false,
+                        origin: Origin::PositionFallback,
+                        layer: crate::style::layers::LayerId::Unlayered,
+                        font_namespace: option_seed
+                            .anchor
+                            .namespaces
+                            .get(&tactic.source_property(property))
+                            .copied()
+                            .unwrap_or_else(|| style.element_font_namespace()),
+                        namespaces: None,
+                    })
+                    .collect();
+                cascade.extend(crate::style::cascade::cascade(&transformed));
+                (option_seed, winners) = crate::style::resolution::resolve_values(
+                    self,
+                    seed.clone(),
+                    parent,
+                    cascade,
+                    resolver,
+                    &crate::style::resolution::ValueContext {
+                        tree: Tree::Element(element),
+                        viewport: self.page_area(),
+                        page_font: false,
+                    },
+                )?;
+            }
+            option_seed.anchor.tactic = tactic;
+            option_seed.anchor.protected = protected.clone();
+            let mut option_style = self.finish_values(
+                (element, pseudo, page),
+                parent,
+                option_seed,
+                winners,
+                resolver,
+                false,
+            )?;
+            crate::style::anchor_values::transform_computed(&mut option_style, tactic, containing);
+            option_style.anchor.option = options.len();
+            options.push(option_style);
+        }
+        let chosen = frame.map_or(0, |frame| frame.option);
+        let mut style = options.get(chosen).unwrap_or(&options[0]).clone();
+        style.anchor.options = Arc::from(options);
+        Ok(style)
+    }
+
+    /// The style of `target` on each page its anchor frames lie on.
+    fn page_variants(
+        &self,
+        (element, pseudo): (Element<'_>, Option<crate::style::PseudoElement>),
+        parent: &Style,
+        seed: &Style,
+        original: &Cascaded,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Arc<[(usize, Style)]>, StyleError> {
+        let mut variants = Vec::new();
+        for page in self
+            .anchor_frames
+            .pages(crate::style::anchor_values::key(element.id(), pseudo))
+        {
+            let (page_seed, winners) = crate::style::resolution::resolve_values(
+                self,
+                seed.clone(),
+                parent,
+                original.clone(),
+                resolver,
+                &crate::style::resolution::ValueContext {
+                    tree: Tree::Element(element),
+                    viewport: self.page_area(),
+                    page_font: false,
+                },
+            )?;
+            let page_style = self.finish_values(
+                (element, pseudo, Some(page)),
+                parent,
+                page_seed,
+                winners,
+                resolver,
+                false,
+            )?;
+            let page_style = self.position_options(
+                (element, pseudo, Some(page)),
+                parent,
+                seed,
+                original,
+                page_style,
+                resolver,
+            )?;
+            variants.push((page, page_style));
+        }
+        Ok(Arc::from(variants))
     }
 
     pub(super) fn computed_values(

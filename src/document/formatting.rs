@@ -77,7 +77,7 @@ pub(crate) struct PageBox {
     pub request: crate::style::PageRequest,
     pub geometry: crate::style::PageGeometry,
     #[cfg(test)]
-    pub style: Style,
+    pub style: Box<Style>,
     pub production: crate::style::PageProduction,
     pub decoration: BoxDecoration,
     /// The page context's counter properties (CSS Page 3 §6.1).
@@ -87,7 +87,7 @@ pub(crate) struct PageBox {
 }
 /// The footnote area of a page (CSS GCPM 3 §2.4).
 pub(crate) struct PageFootnoteArea {
-    pub style: Style,
+    pub style: Box<Style>,
     pub decoration: BoxDecoration,
 }
 pub(crate) struct PageMarginBox {
@@ -683,7 +683,7 @@ struct BlockBuilder<'a, 's, 'c> {
     inline: &'s mut InlineCollector,
     run_in: &'s mut Option<RunInSequence>,
     first_line: &'s mut FirstLine,
-    letter: &'s mut Option<OpenLetter>,
+    letter: &'s mut Option<Box<OpenLetter>>,
     ruby: &'s mut crate::document::ruby::RubyStack,
     traversal: &'c mut Traversal<'a>,
     resources: &'c mut ImageResources<'a>,
@@ -1228,14 +1228,14 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         if let Some(letter) = self.letter.as_mut() {
             letter.depth += 1;
         } else if style.initial_letter.is_some() && self.initial_letter_allowed() {
-            *self.letter = Some(OpenLetter {
+            *self.letter = Some(Box::new(OpenLetter {
                 parent: self.inline.open_style().unwrap_or(self.style).clone(),
                 outer: std::mem::take(self.inline),
                 style: style.clone(),
                 decoration,
                 navigation,
                 depth: 0,
-            });
+            }));
             return Ok(());
         }
         self.inline
@@ -1251,7 +1251,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             Some(letter) if letter.depth > 0 => letter.depth -= 1,
             Some(_) => {
                 let letter = self.letter.take().expect("an open initial letter closes");
-                return self.finish_letter(letter, false);
+                return self.finish_letter(*letter, false);
             }
             None => {}
         }
@@ -1563,7 +1563,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     }
     fn flush(&mut self) -> Result<(), DocumentError> {
         if let Some(letter) = self.letter.take() {
-            self.split_letter(letter)?;
+            self.split_letter(*letter)?;
         }
         self.ruby.finish(self.inline)?;
         let collected = self.inline.split();
@@ -2196,7 +2196,8 @@ struct OpenBlock {
     /// A run-in sequence that runs into this block, after its marker.
     pending_run_in: Option<InlineCollector>,
     first_line: FirstLine,
-    letter: Option<OpenLetter>,
+    /// Boxed: open blocks are moved through the formatting stack and rarely hold a letter.
+    letter: Option<Box<OpenLetter>>,
     ruby: crate::document::ruby::RubyStack,
     /// The principal box of a block-level ruby container, whose inline-level ruby container
     /// holds its contents (CSS Ruby 1 §2.1.2).
@@ -3066,6 +3067,9 @@ pub(crate) struct Input<'a> {
     pub definitions: &'a crate::document::svg::SvgDefinitions,
 }
 
+/// Formats the document. The root's style, its first page and its boxes are each built by a
+/// function of their own, whose locals leave the stack before the next begins: nested
+/// navigables format on the stack of their parent's layout.
 pub(crate) fn build(
     input: &Input<'_>,
     sheet: &mut Stylesheet,
@@ -3074,26 +3078,59 @@ pub(crate) fn build(
     navigation: NavigationBuilder,
     values: crate::document::generated::GeneratedValues,
 ) -> Result<Formatted, DocumentError> {
-    let Input {
-        html,
-        embedded,
-        images,
-        elements,
-        definitions,
-    } = *input;
     sheet.anchor_nodes.borrow_mut().clear();
-    let mut generated =
+    let generated =
         crate::document::generated::GeneratedPass::new(navigation.targets.clone(), values);
-    let element = html.root_element();
-    let mut style = sheet
+    let mut style = root_style(input.html, sheet, resolver, &generated)?;
+    let sheet = &*sheet;
+    let elements = std::rc::Rc::new(crate::document::element_images::ElementImages::new(
+        input.html,
+        sheet,
+        navigation.targets.clone(),
+        input.elements.clone(),
+        input.definitions,
+    ));
+    let resources = Resources {
+        base,
+        resolver,
+        elements: &elements,
+    };
+    let pages = first_pages(input, sheet, &style, &resources, generated.bindings())?;
+    *style = style.used();
+    validate_box(&style)?;
+    if style.display == Display::None {
+        hidden_root(input, sheet, &style, resolver, navigation, generated, pages)
+    } else {
+        format_root(
+            input, sheet, style, &resources, navigation, generated, pages,
+        )
+    }
+}
+
+/// What the parts of `build` load images with.
+struct Resources<'r> {
+    base: &'r crate::resources::ResourceBase,
+    resolver: &'r dyn crate::resources::ResourceResolver,
+    elements: &'r std::rc::Rc<crate::document::element_images::ElementImages>,
+}
+
+/// The root element's computed style, with the first page selected in the same graph.
+fn root_style(
+    html: &DocumentTree,
+    sheet: &mut Stylesheet,
+    resolver: &dyn crate::resources::ResourceResolver,
+    generated: &crate::document::generated::GeneratedPass,
+) -> Result<Box<Style>, DocumentError> {
+    sheet
         .resolve_document_root_with_pages(
             html,
             resolver,
             &|styles, groups| {
-                crate::document::first_page::select_name(html, styles, &generated, groups)
+                crate::document::first_page::select_name(html, styles, generated, groups)
             },
-            &|styles| crate::document::first_page::select_side(html, styles, &generated),
+            &|styles| crate::document::first_page::select_side(html, styles, generated),
         )
+        .map(Box::new)
         .map_err(|error| match error {
             StyleError::GrammarLimit {
                 resource: FORMATTING_NESTING_RESOURCE,
@@ -3102,77 +3139,116 @@ pub(crate) fn build(
                 DocumentError::Formatting(format!("{FORMATTING_NESTING_RESOURCE} exceeds {limit}"))
             }
             error => DocumentError::Style(error),
-        })?;
-    let sheet = &*sheet;
-    let elements = std::rc::Rc::new(crate::document::element_images::ElementImages::new(
-        html,
-        sheet,
-        navigation.targets.clone(),
-        elements.clone(),
-        definitions,
-    ));
-    let mut cache = images.borrow_mut();
-    let mut resources = ImageResources {
-        base,
-        resolver,
-        cache: &mut cache,
-        elements: &elements,
-    };
+        })
+}
+
+/// The document's page boxes, starting with its first page's.
+fn first_pages(
+    input: &Input<'_>,
+    sheet: &Stylesheet,
+    root: &Style,
+    resources: &Resources<'_>,
+    bindings: crate::document::generated::GeneratedBindings,
+) -> Result<crate::document::page::PageProvider, DocumentError> {
     let area = sheet.page_content_box();
     let resolved = sheet.resolve_page(
-        &style,
+        root,
         sheet.first_page_request().clone(),
         Some([area.width, area.height]),
-        resolver,
+        resources.resolver,
     )?;
-    let bindings = generated.bindings();
-    let page = PageBox::load(resolved, &mut resources, &bindings)?;
-    style = style.used();
-    validate_box(&style)?;
-    if style.display == Display::None {
-        let mut strings = crate::document::strings::StringAssignments::new(html);
-        let mut counters = crate::document::counters::Counters::default();
-        let mut events = Vec::new();
-        sheet.with_document_values(html, &style, resolver, |styles| {
-            counters.visit_hidden(element, styles, |element, assignments, counters| {
-                generated.capture(element, counters);
-                let assignment = strings.record(element, assignments, counters, None)?;
-                if assignment.is_some() {
-                    events.push(strings.event(element, assignment, false));
-                }
-                Ok(())
-            })
-        })?;
-        let canvas = canvas_surface(BoxDecoration::default(), surface_beneath(sheet, &style));
-        let svg_definitions = crate::document::svg::SvgDefinitions::collect(
-            html,
-            &style,
-            &crate::document::svg::Styling { sheet, resolver },
-            resources.cache.linked_documents(),
-        )?;
-        return Ok(Formatted {
-            root: BlockBox::anonymous(style, vec![BlockContent::Events(events)], None),
-            footnotes: Vec::new(),
-            navigation,
-            strings,
-            generated: generated.finish(),
-            canvas,
-            pages: crate::document::page::PageProvider::new(
-                page,
-                images.clone(),
-                base.clone(),
-                bindings,
-                elements.clone(),
-            ),
-            svg_definitions,
-            page_counters: Vec::new(),
-        });
-    }
+    let mut cache = input.images.borrow_mut();
+    let mut images = ImageResources {
+        base: resources.base,
+        resolver: resources.resolver,
+        cache: &mut cache,
+        elements: resources.elements,
+    };
+    let page = PageBox::load(resolved, &mut images, &bindings)?;
+    Ok(crate::document::page::PageProvider::new(
+        page,
+        input.images.clone(),
+        resources.base.clone(),
+        bindings,
+        resources.elements.clone(),
+    ))
+}
+
+/// A document whose root generates no boxes: only its named strings and counters apply.
+fn hidden_root(
+    input: &Input<'_>,
+    sheet: &Stylesheet,
+    style: &Style,
+    resolver: &dyn crate::resources::ResourceResolver,
+    navigation: NavigationBuilder,
+    mut generated: crate::document::generated::GeneratedPass,
+    pages: crate::document::page::PageProvider,
+) -> Result<Formatted, DocumentError> {
+    let html = input.html;
+    let element = html.root_element();
+    let mut strings = crate::document::strings::StringAssignments::new(html);
+    let mut counters = crate::document::counters::Counters::default();
+    let mut events = Vec::new();
+    sheet.with_document_values(html, style, resolver, |styles| {
+        counters.visit_hidden(element, styles, |element, assignments, counters| {
+            generated.capture(element, counters);
+            let assignment = strings.record(element, assignments, counters, None)?;
+            if assignment.is_some() {
+                events.push(strings.event(element, assignment, false));
+            }
+            Ok(())
+        })
+    })?;
+    let canvas = canvas_surface(BoxDecoration::default(), surface_beneath(sheet, style));
+    let svg_definitions = crate::document::svg::SvgDefinitions::collect(
+        html,
+        style,
+        &crate::document::svg::Styling { sheet, resolver },
+        input.images.borrow().linked_documents(),
+    )?;
+    Ok(Formatted {
+        root: BlockBox::anonymous(style.clone(), vec![BlockContent::Events(events)], None),
+        footnotes: Vec::new(),
+        navigation,
+        strings,
+        generated: generated.finish(),
+        canvas,
+        pages,
+        svg_definitions,
+        page_counters: Vec::new(),
+    })
+}
+
+/// The boxes of a document whose root generates them.
+fn format_root(
+    input: &Input<'_>,
+    sheet: &Stylesheet,
+    mut style: Box<Style>,
+    resources: &Resources<'_>,
+    navigation: NavigationBuilder,
+    generated: crate::document::generated::GeneratedPass,
+    pages: crate::document::page::PageProvider,
+) -> Result<Formatted, DocumentError> {
+    let Input {
+        html,
+        embedded,
+        images,
+        ..
+    } = *input;
+    let resolver = resources.resolver;
+    let element = html.root_element();
+    let mut cache = images.borrow_mut();
+    let mut resources = ImageResources {
+        base: resources.base,
+        resolver,
+        cache: &mut cache,
+        elements: resources.elements,
+    };
     normalize_root_display(&mut style.display);
     let mut traversal = Traversal {
         document: html,
         embedded,
-        root_style: style.clone(),
+        root_style: (*style).clone(),
         counters: Default::default(),
         navigation,
         strings: crate::document::strings::StringAssignments::new(html),
@@ -3222,7 +3298,7 @@ pub(crate) fn build(
     )?;
     let mut root = block(
         element,
-        Box::new(style),
+        style,
         sheet,
         0,
         ordinal,
@@ -3258,13 +3334,7 @@ pub(crate) fn build(
         strings: traversal.strings,
         generated: traversal.generated.finish(),
         canvas: canvas_surface(traversal.canvas, surface),
-        pages: crate::document::page::PageProvider::new(
-            page,
-            images.clone(),
-            base.clone(),
-            bindings,
-            elements.clone(),
-        ),
+        pages,
         svg_definitions,
         page_counters: traversal.page_counters,
     })

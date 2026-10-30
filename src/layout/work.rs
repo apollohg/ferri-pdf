@@ -40,7 +40,7 @@ mod tests {
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
-        let document = StyledDocument::parse(
+        let mut document = StyledDocument::parse(
             "<style>@font-face{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}body{font-family:Fixed}p::after{content:target-counter('#target',page)}h2{break-before:page}</style><p>See </p><h2 id=target>Destination</h2>",
             &base, &[], &resolver,
         ).unwrap();
@@ -49,7 +49,7 @@ mod tests {
         let first_pass_work = MAX_LAYOUT_WORK - measurement.remaining.get().unwrap();
         assert!(first_pass_work > 0);
         let result = crate::layout::stabilize(
-            document,
+            &mut document,
             &resolver,
             &Budget::new(first_pass_work),
             Vec::new(),

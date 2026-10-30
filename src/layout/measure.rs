@@ -1558,184 +1558,206 @@ impl<'a> Measurer<'a> {
                         alignment: None,
                     }));
                 }
-                Some(BlockContent::Block(child)) => {
-                    if let Some(flow) = self.column_flow.filter(|_| child.style().multicol.span_all)
-                    {
-                        frame.push_block(self.spanner(child, flow)?, true);
-                    } else if child.style().display.is_table() {
-                        frame.push_block(
-                            self.measure_block(
-                                child,
-                                frame.content_x,
-                                frame.content_width,
-                                frame.block.style().used_rtl(),
-                                false,
-                                frame.vertical.definite(),
-                            )?,
-                            false,
-                        );
-                    } else if discards(child.style()) {
-                        let geometry = block_geometry(
-                            self,
-                            child,
-                            frame.content_x,
-                            frame.content_width,
-                            frame.block.style().used_rtl(),
-                            frame.vertical.definite(),
-                        )?;
-                        let containing = frame.vertical.definite();
-                        let budget = Self::budget(&frames)
-                            .map(|lines| {
-                                Ok::<_, Failure>(LineBudget {
-                                    lines,
-                                    following: self.following(&frames)?,
-                                })
-                            })
-                            .transpose()?;
-                        let measured = self.measure_flow(
-                            child.into(),
-                            geometry,
-                            false,
-                            containing,
-                            None,
-                            budget,
-                        )?;
-                        let mut counts = [0; 2];
-                        if !measured.independent {
-                            lines_within(&measured.items, 0.0, f32::INFINITY, &mut counts);
-                        }
-                        let broken = budget
-                            .is_some_and(|budget| counts[1] >= budget.lines && budget.following);
-                        frames.last_mut().unwrap().push_block(measured, false);
-                        if budget.is_some() {
-                            Self::spend_lines(&mut frames, counts[1], broken);
-                        }
-                    } else {
-                        let geometry = block_geometry(
-                            self,
-                            child,
-                            frame.content_x,
-                            frame.content_width,
-                            frame.block.style().used_rtl(),
-                            frame.vertical.definite(),
-                        )?;
-                        let child_style = child.style();
-                        let cell_percentage_chain = (frame.block.style().display
-                            == Display::TableCell
-                            || frame.cell_percentage_chain)
-                            && frame.vertical.definite().is_none()
-                            && child.image().is_none()
-                            && matches!(child_style.height.basis(), crate::style::Size::Value(_))
-                            && child_style.height.resolve_definite(None).is_none();
-                        let used_height = (cell_percentage_chain
-                            && matches!(
-                                child_style.overflow[1],
-                                crate::style::Overflow::Auto | crate::style::Overflow::Scroll
-                            ))
-                        .then(|| {
-                            let edges = geometry.padding[0]
-                                + geometry.padding[2]
-                                + geometry.border[0]
-                                + geometry.border[2];
-                            crate::style::SizeConstraints::new(
-                                [
-                                    &crate::style::Size::ZERO,
-                                    &child_style.min_height,
-                                    &child_style.max_height,
-                                ],
-                                None,
-                                child_style.box_sizing,
-                                edges,
-                            )
-                            .constrain(0.0)
-                        });
-                        match self.start_flow(
-                            child.into(),
-                            geometry,
-                            false,
-                            frame.vertical.definite(),
-                            used_height,
-                        )? {
-                            FlowStart::Complete(measured) => frame.push_block(measured, false),
-                            FlowStart::Pending(mut frame) => {
-                                frame.cell_percentage_chain = cell_percentage_chain;
-                                frames.push(frame);
-                            }
-                        }
-                    }
-                }
+                Some(BlockContent::Block(child)) => self.flow_block(&mut frames, child)?,
                 Some(BlockContent::Inline(paragraph)) => {
-                    let (x, width, containing, rtl) = (
-                        frame.content_x,
-                        frame.content_width,
-                        frame.vertical.definite(),
-                        frame.block.style().used_rtl(),
-                    );
-                    let budget = Self::budget(&frames).map(|lines| LineBudget {
-                        lines,
-                        following: false,
-                    });
-                    let mut paragraph =
-                        self.paragraph(paragraph, x, width, containing, rtl, budget)?;
-                    let lines = paragraph.line_count();
-                    if lines > 0
-                        && budget.is_some_and(|budget| lines == budget.lines)
-                        && paragraph.clamp.is_none()
-                        && self.following(&frames)?
-                    {
-                        self.clamp_paragraph(&mut paragraph)?;
-                    }
-                    let broken = paragraph.clamp.is_some();
-                    let frame = frames.last_mut().unwrap();
-                    if !paragraph.is_phantom() {
-                        frame.previous_break_after = BreakBetween::Auto;
-                    }
-                    frame.push(FlowItem::Paragraph(paragraph));
-                    if budget.is_some() {
-                        Self::spend_lines(&mut frames, lines, broken);
-                    }
+                    self.flow_paragraph(&mut frames, paragraph)?;
                 }
                 None => {
-                    let frame = frames.pop().unwrap();
-                    let restore = frame.restore_column_flow;
-                    let finished = frame.finish(self)?;
-                    self.column_flow = restore;
-                    let measured = match finished {
-                        FlowFinished::Complete(measured) => measured,
-                        FlowFinished::Restart {
-                            block,
-                            columns,
-                            root,
-                        } => {
-                            self.work.spend(1)?;
-                            let previous_columns = self.orthogonal_columns;
-                            self.orthogonal_columns = Some(columns);
-                            let FlowStart::Pending(mut next) = self.start_flow(
-                                BlockSource {
-                                    block: block.source,
-                                    selected: block.style,
-                                },
-                                block.geometry,
-                                root,
-                                block.containing_height,
-                                block.sizing.and_then(|sizing| sizing.used_height),
-                            )?
-                            else {
-                                unreachable!("an automatic column block has a flow continuation")
-                            };
-                            next.outer.3 = previous_columns;
-                            frames.push(next);
-                            continue;
-                        }
-                    };
-                    if let Some(parent) = frames.last_mut() {
-                        parent.push_block(measured, false);
-                    } else {
+                    if let Some(measured) = self.close_flow(&mut frames)? {
                         return Ok(measured);
                     }
                 }
             }
         }
+    }
+
+    /// Measures a block child of the innermost frame, or opens a frame for its flow. Kept
+    /// apart from `continue_flow`, whose frame each nested flow's measurement stacks.
+    fn flow_block(
+        &mut self,
+        frames: &mut Vec<FlowFrame<'a>>,
+        child: &'a BlockBox,
+    ) -> Result<(), Failure> {
+        let frame = frames.last_mut().unwrap();
+        if let Some(flow) = self.column_flow.filter(|_| child.style().multicol.span_all) {
+            frame.push_block(self.spanner(child, flow)?, true);
+        } else if child.style().display.is_table() {
+            frame.push_block(
+                self.measure_block(
+                    child,
+                    frame.content_x,
+                    frame.content_width,
+                    frame.block.style().used_rtl(),
+                    false,
+                    frame.vertical.definite(),
+                )?,
+                false,
+            );
+        } else if discards(child.style()) {
+            let geometry = block_geometry(
+                self,
+                child,
+                frame.content_x,
+                frame.content_width,
+                frame.block.style().used_rtl(),
+                frame.vertical.definite(),
+            )?;
+            let containing = frame.vertical.definite();
+            let budget = Self::budget(frames)
+                .map(|lines| {
+                    Ok::<_, Failure>(LineBudget {
+                        lines,
+                        following: self.following(frames)?,
+                    })
+                })
+                .transpose()?;
+            let measured =
+                self.measure_flow(child.into(), geometry, false, containing, None, budget)?;
+            let mut counts = [0; 2];
+            if !measured.independent {
+                lines_within(&measured.items, 0.0, f32::INFINITY, &mut counts);
+            }
+            let broken = budget.is_some_and(|budget| counts[1] >= budget.lines && budget.following);
+            frames.last_mut().unwrap().push_block(measured, false);
+            if budget.is_some() {
+                Self::spend_lines(frames, counts[1], broken);
+            }
+        } else {
+            let geometry = block_geometry(
+                self,
+                child,
+                frame.content_x,
+                frame.content_width,
+                frame.block.style().used_rtl(),
+                frame.vertical.definite(),
+            )?;
+            let child_style = child.style();
+            let cell_percentage_chain = (frame.block.style().display == Display::TableCell
+                || frame.cell_percentage_chain)
+                && frame.vertical.definite().is_none()
+                && child.image().is_none()
+                && matches!(child_style.height.basis(), crate::style::Size::Value(_))
+                && child_style.height.resolve_definite(None).is_none();
+            let used_height = (cell_percentage_chain
+                && matches!(
+                    child_style.overflow[1],
+                    crate::style::Overflow::Auto | crate::style::Overflow::Scroll
+                ))
+            .then(|| {
+                let edges = geometry.padding[0]
+                    + geometry.padding[2]
+                    + geometry.border[0]
+                    + geometry.border[2];
+                crate::style::SizeConstraints::new(
+                    [
+                        &crate::style::Size::ZERO,
+                        &child_style.min_height,
+                        &child_style.max_height,
+                    ],
+                    None,
+                    child_style.box_sizing,
+                    edges,
+                )
+                .constrain(0.0)
+            });
+            match self.start_flow(
+                child.into(),
+                geometry,
+                false,
+                frame.vertical.definite(),
+                used_height,
+            )? {
+                FlowStart::Complete(measured) => frame.push_block(measured, false),
+                FlowStart::Pending(mut frame) => {
+                    frame.cell_percentage_chain = cell_percentage_chain;
+                    frames.push(frame);
+                }
+            }
+        }
+        Ok(())
+    }
+
+    /// Measures a paragraph of the innermost frame.
+    fn flow_paragraph(
+        &mut self,
+        frames: &mut [FlowFrame<'a>],
+        paragraph: &'a crate::document::Paragraph,
+    ) -> Result<(), Failure> {
+        let frame = frames.last().unwrap();
+        let (x, width, containing, rtl) = (
+            frame.content_x,
+            frame.content_width,
+            frame.vertical.definite(),
+            frame.block.style().used_rtl(),
+        );
+        let budget = Self::budget(frames).map(|lines| LineBudget {
+            lines,
+            following: false,
+        });
+        let mut paragraph = self.paragraph(paragraph, x, width, containing, rtl, budget)?;
+        let lines = paragraph.line_count();
+        if lines > 0
+            && budget.is_some_and(|budget| lines == budget.lines)
+            && paragraph.clamp.is_none()
+            && self.following(frames)?
+        {
+            self.clamp_paragraph(&mut paragraph)?;
+        }
+        let broken = paragraph.clamp.is_some();
+        let frame = frames.last_mut().unwrap();
+        if !paragraph.is_phantom() {
+            frame.previous_break_after = BreakBetween::Auto;
+        }
+        frame.push(FlowItem::Paragraph(paragraph));
+        if budget.is_some() {
+            Self::spend_lines(frames, lines, broken);
+        }
+        Ok(())
+    }
+
+    /// Finishes the innermost frame into its parent, or restarts it; the measured outermost
+    /// block once it finishes.
+    fn close_flow(
+        &mut self,
+        frames: &mut Vec<FlowFrame<'a>>,
+    ) -> Result<Option<MeasuredBlock<'a>>, Failure> {
+        let frame = frames.pop().unwrap();
+        let restore = frame.restore_column_flow;
+        let finished = frame.finish(self)?;
+        self.column_flow = restore;
+        let measured = match finished {
+            FlowFinished::Complete(measured) => measured,
+            FlowFinished::Restart {
+                block,
+                columns,
+                root,
+            } => {
+                self.work.spend(1)?;
+                let previous_columns = self.orthogonal_columns;
+                self.orthogonal_columns = Some(columns);
+                let FlowStart::Pending(mut next) = self.start_flow(
+                    BlockSource {
+                        block: block.source,
+                        selected: block.style,
+                    },
+                    block.geometry,
+                    root,
+                    block.containing_height,
+                    block.sizing.and_then(|sizing| sizing.used_height),
+                )?
+                else {
+                    unreachable!("an automatic column block has a flow continuation")
+                };
+                next.outer.3 = previous_columns;
+                frames.push(next);
+                return Ok(None);
+            }
+        };
+        let Some(parent) = frames.last_mut() else {
+            return Ok(Some(measured));
+        };
+        parent.push_block(measured, false);
+        Ok(None)
     }
 
     fn paragraph(

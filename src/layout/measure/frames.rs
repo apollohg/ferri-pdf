@@ -341,78 +341,20 @@ impl<'a> Measurer<'a> {
                     frames.read.clear();
                 }
                 let result = if let Some(request) = &current {
-                    request.context.restore(self);
-                    match request.key.kind {
-                        RequestKind::Writing => crate::layout::writing::measure(
-                            self,
-                            request.source,
-                            &request.geometry,
-                            request.containing,
-                            request.height,
-                        ),
-                        RequestKind::Math(layout) => crate::layout::mathml::measure(
-                            self,
-                            request.source,
-                            &request.geometry,
-                            request.containing,
-                            request.height,
-                            layout,
-                        ),
-                        RequestKind::Css => self.measure_format(
-                            request.source,
-                            request.geometry.clone(),
-                            true,
-                            request.containing,
-                            request.height,
-                        ),
-                    }
-                    .map(|frame| Completed::Frame(Box::new(frame)))
+                    self.measure_request(request)
+                        .map(|frame| Completed::Frame(Box::new(frame)))
                 } else {
                     root_context.restore(self);
                     compute(self).map(Completed::Root)
                 };
                 match result {
-                    Err(Failure::FrameNeeded) => {
-                        let (dependencies, requests) = {
-                            let mut frames = self.frame_measurements.borrow_mut();
-                            frames.queued.clear();
-                            let requests = std::mem::take(&mut frames.requests);
-                            let mut dependencies = std::mem::take(&mut frames.read);
-                            dependencies.extend(requests.iter().map(|request| request.key.clone()));
-                            frames.protect(&dependencies);
-                            (dependencies, requests)
-                        };
-                        jobs.push(Job {
-                            request: current,
-                            dependencies,
-                        });
-                        assert!(
-                            !requests.is_empty(),
-                            "a suspended measurement has pending dependencies"
-                        );
-                        jobs.extend(requests.into_iter().rev().map(|request| Job {
-                            request: Some(request),
-                            dependencies: Vec::new(),
-                        }));
-                    }
+                    Err(Failure::FrameNeeded) => self.suspend(&mut jobs, current),
                     Err(Failure::Layout(error)) => break 'drive Err(error),
                     Ok(Completed::Root(value)) => break 'drive Ok(value),
-                    Ok(Completed::Frame(measured)) => {
-                        let request = current.expect("a frame request was measured");
-                        let mut frames = self.frame_measurements.borrow_mut();
-                        frames.read.clear();
-                        if frames.completed.len()
-                            >= MAX_CACHED_FRAMES.saturating_add(frames.protected.len())
-                        {
-                            let Measurements {
-                                completed,
-                                protected,
-                                ..
-                            } = &mut *frames;
-                            completed.retain(|key, _| protected.contains_key(key));
-                        }
-                        frames.completed.insert(request.key, *measured);
-                    }
+                    Ok(Completed::Frame(measured)) => self.complete(
+                        current.expect("a frame request was measured").key,
+                        *measured,
+                    ),
                 }
             }
             unreachable!("the root measurement completes the driver")
@@ -422,5 +364,72 @@ impl<'a> Measurer<'a> {
             frames.release(&job.dependencies);
         }
         result
+    }
+    // The helpers below keep their locals off `drive`, whose frame each nested measurement
+    // stacks.
+    fn measure_request(&mut self, request: &Request<'a>) -> Result<MeasuredBlock<'a>, Failure> {
+        request.context.restore(self);
+        match request.key.kind {
+            RequestKind::Writing => crate::layout::writing::measure(
+                self,
+                request.source,
+                &request.geometry,
+                request.containing,
+                request.height,
+            ),
+            RequestKind::Math(layout) => crate::layout::mathml::measure(
+                self,
+                request.source,
+                &request.geometry,
+                request.containing,
+                request.height,
+                layout,
+            ),
+            RequestKind::Css => self.measure_format(
+                request.source,
+                request.geometry.clone(),
+                true,
+                request.containing,
+                request.height,
+            ),
+        }
+    }
+    /// Suspends the `current` measurement behind the frames it requested.
+    fn suspend(&mut self, jobs: &mut Vec<Job<'a>>, current: Option<Request<'a>>) {
+        let (dependencies, requests) = {
+            let mut frames = self.frame_measurements.borrow_mut();
+            frames.queued.clear();
+            let requests = std::mem::take(&mut frames.requests);
+            let mut dependencies = std::mem::take(&mut frames.read);
+            dependencies.extend(requests.iter().map(|request| request.key.clone()));
+            frames.protect(&dependencies);
+            (dependencies, requests)
+        };
+        jobs.push(Job {
+            request: current,
+            dependencies,
+        });
+        assert!(
+            !requests.is_empty(),
+            "a suspended measurement has pending dependencies"
+        );
+        jobs.extend(requests.into_iter().rev().map(|request| Job {
+            request: Some(request),
+            dependencies: Vec::new(),
+        }));
+    }
+    /// Caches a measured frame, evicting unprotected frames past the cache bound.
+    fn complete(&mut self, key: FrameKey, measured: MeasuredBlock<'a>) {
+        let mut frames = self.frame_measurements.borrow_mut();
+        frames.read.clear();
+        if frames.completed.len() >= MAX_CACHED_FRAMES.saturating_add(frames.protected.len()) {
+            let Measurements {
+                completed,
+                protected,
+                ..
+            } = &mut *frames;
+            completed.retain(|key, _| protected.contains_key(key));
+        }
+        frames.completed.insert(key, measured);
     }
 }

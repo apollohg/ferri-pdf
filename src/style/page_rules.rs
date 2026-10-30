@@ -62,11 +62,13 @@ pub struct PageGroupPosition {
 pub(crate) struct ResolvedPage {
     pub request: PageRequest,
     pub geometry: crate::style::PageGeometry,
-    pub style: crate::style::Style,
+    /// Boxed, as `footnote` is: documents resolve their first page on the stack of their
+    /// parent navigable's layout.
+    pub style: Box<crate::style::Style>,
     pub production: crate::style::PageProduction,
     pub margins: Vec<crate::style::PageMargin>,
     /// The footnote area's style (CSS GCPM 3 §2.4).
-    pub footnote: crate::style::Style,
+    pub footnote: Box<crate::style::Style>,
 }
 impl Default for PageRequest {
     fn default() -> Self {
@@ -428,10 +430,10 @@ impl Stylesheet {
         Ok(ResolvedPage {
             request,
             geometry,
-            style,
+            style: Box::new(style),
             production,
             margins,
-            footnote,
+            footnote: Box::new(footnote),
         })
     }
     pub(super) fn match_page(&self, request: &PageRequest) -> MatchedPageRules {

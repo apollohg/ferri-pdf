@@ -131,19 +131,20 @@ pub(crate) fn layout(
         owned.measured_elements(elements);
         owned.reformat(values.clone(), resolver)?;
     }
-    stabilize(owned, resolver, &budget, vec![values]).map(|(_, trace)| trace)
+    stabilize(&mut owned, resolver, &budget, vec![values])
 }
 
 pub(crate) fn layout_document(
-    document: StyledDocument,
+    mut document: StyledDocument,
     resolver: &dyn ResourceResolver,
 ) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
-    stabilize(
-        document,
+    let trace = stabilize(
+        &mut document,
         resolver,
         &work::Budget::new(MAX_LAYOUT_WORK),
         Vec::new(),
-    )
+    )?;
+    Ok((document, trace))
 }
 
 struct LayoutPass {
@@ -157,11 +158,11 @@ struct LayoutPass {
 }
 
 fn stabilize(
-    mut document: StyledDocument,
+    document: &mut StyledDocument,
     resolver: &dyn ResourceResolver,
     budget: &work::Budget,
     mut previous: Vec<crate::document::GeneratedValues>,
-) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
+) -> Result<LayoutTrace, LayoutError> {
     let mut measured_sizes = Vec::new();
     let mut measured_anchors = Vec::new();
     let mut measured_elements = Vec::new();
@@ -172,7 +173,7 @@ fn stabilize(
             container_sizes,
             anchor_frames,
             elements,
-        } = layout_pass(&document, resolver, budget.clone())?;
+        } = layout_pass(document, resolver, budget.clone())?;
         // CSS Conditional 5 §5: each container's descendants are styled with the size of
         // the container they query, so the styles stand once a layout reproduces every size
         // they consulted.
@@ -183,7 +184,7 @@ fn stabilize(
         let elements_settled = document.element_images().settled(&elements);
         let settled = containers_settled && anchors_settled && elements_settled;
         let values = match generated {
-            None if settled => return Ok((document, trace)),
+            None if settled => return Ok(trace),
             None => document.generated_values(),
             Some(values) => {
                 if settled && previous.contains(&values) {
@@ -236,7 +237,6 @@ fn layout_pass(
     let sheet = document.styles();
     let text = TextContext::new(&sheet.fonts, resolver);
     let page = document.page_box();
-    let [page_width, page_height] = page.geometry.paper;
     let flow = crate::style::logical::Flow::used(document.root().style());
     let mut logical_geometry = page.geometry.clone();
     writing::Frame::physical(flow, page.geometry.paper)
@@ -245,9 +245,6 @@ fn layout_pass(
     let canvas_rect = logical_geometry.content_box();
     let content_height = canvas_rect.height;
     let continuous = sheet.presentation() != crate::style::Presentation::Paged;
-    let first_record = PageRecord::new(page)?;
-    let page_output = first_record.output.clone();
-    let painting = page_paint::PagePaint::in_flow(page, document.canvas_background(), flow)?;
     let mut measurer = measure::Measurer::new(
         &text,
         document.root(),
@@ -283,8 +280,27 @@ fn layout_pass(
             )
         })
         .transpose()?;
+    paginate(document, resolver, &mut measurer, root, canvas_rect)
+}
+
+/// Fragments the measured root into pages and paints them. Kept apart from `layout_pass`,
+/// whose frame every nested navigable's layout stacks.
+fn paginate<'t>(
+    document: &'t StyledDocument,
+    resolver: &'t dyn ResourceResolver,
+    measurer: &mut measure::Measurer<'t>,
+    root: Option<measure::MeasuredBlock<'t>>,
+    canvas_rect: Rect,
+) -> Result<LayoutPass, LayoutError> {
+    let sheet = document.styles();
+    let page = document.page_box();
+    let [page_width, page_height] = page.geometry.paper;
+    let flow = crate::style::logical::Flow::used(document.root().style());
+    let continuous = sheet.presentation() != crate::style::Presentation::Paged;
+    let page_output = PageRecord::new(page)?.output;
+    let painting = page_paint::PagePaint::in_flow(page, document.canvas_background(), flow)?;
     let paginator = pagination::Paginator::for_document(
-        &mut measurer,
+        measurer,
         physical_pages::PhysicalPages::new(document, resolver)?,
         painting.canvas.clone(),
         canvas_rect,
@@ -342,7 +358,7 @@ fn layout_pass(
         string_locations,
         &destinations,
         resolver,
-        &mut measurer,
+        measurer,
         (&mut pages, &mut display_lists, &mut links),
     )?;
     for (list, page) in display_lists.iter_mut().zip(&page_boxes) {
@@ -356,7 +372,7 @@ fn layout_pass(
     Ok(LayoutPass {
         generated,
         elements,
-        container_sizes: measurer.container_sizes,
+        container_sizes: std::mem::take(&mut measurer.container_sizes),
         anchor_frames: anchors.frames(sheet, &document.svg_definitions(), &measurer.work)?,
         trace: LayoutTrace {
             page_width,
