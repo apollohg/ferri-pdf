@@ -281,8 +281,9 @@ impl<'t> Prepared<'_, 't> {
             .take()
             .map(|image| self.replaced(image, &paint));
         // CSS Backgrounds 4 §2.8: `background-clip: text` layers paint within the text of
-        // the box's content.
+        // the box's content, which a page box's text holds too.
         let clips_to_text = self.decoration.backgrounds.clips_to_text();
+        let text = clips_to_text || output.page_text.is_some();
         let painted = self.decoration.is_visible().then(|| {
             output.display.push(DisplayItem::Box(paint));
             output.display.len() - 1
@@ -296,16 +297,22 @@ impl<'t> Prepared<'_, 't> {
                 rect,
                 output,
                 measurer,
-                (destinations, clips_to_text),
+                (destinations, text),
             )?
         } else if let Some(image) = replaced {
             output.display.push(DisplayItem::Image(image));
-            clips_to_text.then(|| text_flow(&[], &[], rect))
+            text.then(|| text_flow(&[], &[], rect))
         } else {
             self.paint_lines(rect, index, output.lines, output.display);
-            clips_to_text.then(|| text_flow(&output.display[content..], output.lines, rect))
+            text.then(|| text_flow(&output.display[content..], output.lines, rect))
         };
-        if let (Some(slot), Some(area)) = (painted, text_area)
+        if let (Some(page_text), Some(area)) = (&mut output.page_text, &text_area) {
+            page_text
+                .items
+                .push(DisplayItem::Frame(Box::new(area.clone())));
+        }
+        if clips_to_text
+            && let (Some(slot), Some(area)) = (painted, text_area)
             && let DisplayItem::Box(paint) = &mut output.display[slot]
         {
             paint.text_area = Some(std::sync::Arc::new(area));
@@ -376,7 +383,7 @@ impl<'t> Prepared<'_, 't> {
         rect: Rect,
         output: &mut MarginOutput<'_>,
         measurer: &mut Measurer<'t>,
-        (destinations, clips_to_text): (usize, bool),
+        (destinations, text_area): (usize, bool),
     ) -> Result<Option<FlowPaint>, LayoutError> {
         let vertical = self.inline_axis() == VERTICAL;
         let logical = [self.content[self.inline_axis()], extent];
@@ -395,7 +402,7 @@ impl<'t> Prepared<'_, 't> {
                 height: logical[1],
             },
             destinations,
-            clips_to_text,
+            text_area,
         )?;
         let margin_flow = crate::style::logical::Flow::used(&self.margin.style);
         let frame = crate::layout::writing::Frame::physical(margin_flow, size);
@@ -587,11 +594,13 @@ fn text_flow(items: &[DisplayItem], lines: &[TextLine], area: Rect) -> FlowPaint
     }
     flow
 }
-/// What one page's margin boxes paint.
+/// What one page's margin boxes paint, and the page's text area when its page box's
+/// backgrounds clip to text, which holds their text.
 struct MarginOutput<'p> {
     lines: &'p mut Vec<TextLine>,
     display: &'p mut Vec<DisplayItem>,
     links: &'p mut Vec<crate::layout::LinkArea>,
+    page_text: Option<&'p mut FlowPaint>,
 }
 /// The page-margin boxes' shared inputs: the selected strings and running elements, the
 /// document's destination count, the page-based counters and the document's counters where
@@ -723,15 +732,14 @@ pub(super) fn render<'t>(
     context: &MarginContext<'_, 't>,
     measurer: &mut Measurer<'t>,
     first_index: usize,
-    pages: &mut [Vec<TextLine>],
-    display: &mut [Vec<DisplayItem>],
-    links: &mut [Vec<crate::layout::LinkArea>],
+    (pages, display, links, text_areas): crate::layout::PageOutputs<'_>,
 ) -> Result<(), LayoutError> {
     let total = pages.len();
-    for (number, ((page_lines, display), links)) in pages
+    for (number, (((page_lines, display), links), page_text)) in pages
         .iter_mut()
         .zip(display)
         .zip(links.iter_mut())
+        .zip(text_areas.iter_mut())
         .enumerate()
     {
         let page = &page_boxes[number];
@@ -823,6 +831,7 @@ pub(super) fn render<'t>(
                             lines: page,
                             display,
                             links,
+                            page_text: page_text.as_mut(),
                         },
                         measurer,
                         context.destinations,
@@ -865,6 +874,7 @@ pub(super) fn render<'t>(
                         lines: page,
                         display,
                         links,
+                        page_text: page_text.as_mut(),
                     },
                     measurer,
                     context.destinations,

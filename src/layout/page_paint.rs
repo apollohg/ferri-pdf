@@ -94,17 +94,27 @@ impl PagePaint {
         Ok(paint)
     }
 
-    pub(crate) fn decorate(&self, lists: &mut [Vec<DisplayItem>]) {
-        for list in lists {
-            if let Some(border) = &self.border {
-                list.insert(
-                    usize::from(self.canvas.has_ink()),
-                    DisplayItem::Box(border.clone()),
-                );
-            }
-            if let Some(background) = &self.background {
-                list.insert(0, DisplayItem::Box(background.clone()));
-            }
+    /// Puts the page box's background and border under the page's display list; text-clipped
+    /// backgrounds paint within `text_area`, the page's text.
+    pub(crate) fn decorate(
+        &self,
+        list: &mut Vec<DisplayItem>,
+        text_area: Option<crate::graphics::FlowPaint>,
+    ) {
+        if let Some(border) = &self.border {
+            list.insert(
+                usize::from(self.canvas.has_ink()),
+                DisplayItem::Box(border.clone()),
+            );
+        }
+        if let Some(background) = &self.background {
+            list.insert(
+                0,
+                DisplayItem::Box(BoxPaint {
+                    text_area: text_area.map(Arc::new),
+                    ..background.clone()
+                }),
+            );
         }
     }
 }

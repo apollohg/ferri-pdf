@@ -879,8 +879,9 @@ pub(super) struct Paginated {
     pub page_boxes: Vec<std::sync::Arc<crate::document::PageBox>>,
     pub page_records: Vec<crate::layout::PageRecord>,
     pub line_boxes: Vec<[f32; 2]>,
-    /// The text area of a standalone flow's root, when requested.
-    pub root_text_area: Option<Box<crate::graphics::FlowPaint>>,
+    /// The text area of each page whose box's backgrounds clip to text, in physical page
+    /// coordinates, or of a standalone flow's root when requested.
+    pub text_areas: Box<[Option<crate::graphics::FlowPaint>]>,
     pub renderings: Box<Renderings>,
 }
 
@@ -982,8 +983,8 @@ pagination_state! {
     /// The `[top, bottom]` extent of each line box, kept where footnote bodies need their
     /// break points.
     line_boxes: Option<Vec<[f32; 2]>>,
-    /// The subtree node of a standalone flow's root, whose text area its box's
-    /// `background-clip: text` layers paint within.
+    /// The subtree node of the document's or a standalone flow's root, whose text area the
+    /// `background-clip: text` layers of the page boxes or of the flow's box paint within.
     root_text_area: Option<usize>,
     frame_templates: Rc<std::cell::RefCell<frames::Templates<'a>>>,
     template: bool,
@@ -1113,7 +1114,15 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         canvas: BoxPaint,
         canvas_rect: Rect,
     ) -> Self {
-        Self::new(measurer, Fragmentainers::Pages(pages), canvas, canvas_rect)
+        let mut paginator = Self::new(measurer, Fragmentainers::Pages(pages), canvas, canvas_rect);
+        paginator.mark_root_text_area();
+        paginator
+    }
+    /// Marks the flow's root, whose text a page box's or the flow's own box's text-clipped
+    /// backgrounds paint within (CSS Backgrounds 4 §2.8).
+    fn mark_root_text_area(&mut self) {
+        self.clip = Some(self.effect_node(None, Effect::Subtree(Subtree::TextArea)));
+        self.root_text_area = self.clip;
     }
     /// Lays the document out on its first page without fragmenting it, as continuous media.
     pub(crate) fn unbroken(mut self) -> Self {
@@ -6523,12 +6532,15 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let mut paginator = Self::for_frame(measurer, area);
         paginator.line_boxes = Some(Vec::new());
         if text_area {
-            paginator.clip = Some(paginator.effect_node(None, Effect::Subtree(Subtree::TextArea)));
-            paginator.root_text_area = paginator.clip;
+            paginator.mark_root_text_area();
         }
         let mut paginated = paginator.document(Some(root), destinations, std::iter::empty())?;
         Ok(StandaloneFlow {
-            text_area: paginated.root_text_area.take().map(|area| *area),
+            text_area: std::mem::take(&mut paginated.text_areas)
+                .into_vec()
+                .into_iter()
+                .next()
+                .flatten(),
             renderings: std::mem::take(&mut paginated.renderings),
             lines: paginated.pages.swap_remove(0),
             items: paginated.display_lists.swap_remove(0),
@@ -6593,7 +6605,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     .map_or(1, |page| page + 1),
             )
             .max(self.footnotes.last_page().map_or(0, |page| page + 1));
-        let footnote_navigation = self.paint_footnotes(page_count)?;
+        let (footnote_navigation, mut footnote_text) = self.paint_footnotes(page_count)?;
         // CSS 2.1 §9.6.1 repeats fixed content in each physical page's containing block.
         let fixed = std::mem::take(&mut self.fixed);
         if fixed.len().saturating_mul(page_count) > MAX_FIXED_PLACEMENTS {
@@ -6762,10 +6774,33 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         });
         self.attach_text_areas(&regions)?;
         // Boxed, as is every value this frame holds across the nested navigables it lays out.
-        let root_text_area = self
-            .root_text_area
-            .map(|node| self.text_area(0, Some(node), None, &regions).map(Box::new))
-            .transpose()?;
+        let mut text_areas: Box<[Option<crate::graphics::FlowPaint>]> = match self.root_text_area {
+            Some(node) => (0..page_count)
+                .map(|page| {
+                    // A page box's text is its page's in-flow and floated content, its
+                    // footnote area's bodies and its margin boxes' content, which those add.
+                    let clips = match &self.fragmentainers {
+                        Fragmentainers::Pages(pages) => {
+                            pages.boxes[page].decoration.backgrounds.clips_to_text()
+                        }
+                        Fragmentainers::Columns(_) => true,
+                    };
+                    clips
+                        .then(|| {
+                            let mut area = self.text_area(page, Some(node), None, &regions)?;
+                            area.items.extend(
+                                footnote_text
+                                    .get_mut(page)
+                                    .map(std::mem::take)
+                                    .unwrap_or_default(),
+                            );
+                            Ok::<_, LayoutError>(area)
+                        })
+                        .transpose()
+                })
+                .collect::<Result<_, _>>()?,
+            None => Box::default(),
+        };
         let bounds = self.group_bounds();
         self.underlay_backdrops();
         let renderings = Box::new(self.renderings(&regions, &bounds, flow)?);
@@ -6809,6 +6844,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 }
                 Fragmentainers::Columns(_) => None,
             };
+            if let (Some(frame), Some(Some(area))) = (physical, text_areas.get_mut(page)) {
+                frame.items(&mut area.items);
+            }
             display_lists.push(clipped(
                 items,
                 page,
@@ -6843,7 +6881,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             destination_bounds: located.destination_bounds,
             string_locations: self.string_locations,
             line_boxes: self.line_boxes.unwrap_or_default(),
-            root_text_area,
+            text_areas,
             renderings,
         })
     }

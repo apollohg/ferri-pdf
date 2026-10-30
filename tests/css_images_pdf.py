@@ -684,6 +684,16 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                        '.n{float:footnote;color:transparent;font-size:20pt}', note),
                 ('.n{float:footnote;color:blue;font-size:20pt}', note),
                 'a footnote area clips to the in-flow text of the bodies it holds')
+            page = ('<p>Flow <span class=f>float</span> '
+                    '<span style="position:absolute;right:0;bottom:0;color:transparent">away</span>'
+                    'Call<span class=n>Note</span></p>')
+            shared = 'p{font-size:16pt}.f{float:right}.n{float:footnote}'
+            self.assertSameInterior(
+                root, (shared + '@page{background:blue;background-clip:text;'
+                                '@top-left{content:"Head";color:transparent}}p{color:transparent}', page),
+                (shared + '@page{@top-left{content:"Head";color:blue}}p{color:blue}', page),
+                'a page box clips to the in-flow and floated text of its page area, footnote area '
+                'and margin boxes')
 
     def test_text_clips_table_layers_to_the_text_of_their_cells(self):
         """CSS Backgrounds 4 §2.8 with CSS Tables 3 §5.3.2: each cell paints the backgrounds of

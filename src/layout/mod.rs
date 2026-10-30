@@ -319,7 +319,7 @@ fn paginate<'t>(
         mut page_records,
         string_locations,
         line_boxes: _,
-        root_text_area: _,
+        mut text_areas,
         mut renderings,
     } = if continuous {
         paginator.unbroken()
@@ -351,10 +351,6 @@ fn paginate<'t>(
             destination.top = frame.rect(bounds).y;
         }
     }
-    for ((list, page), record) in display_lists.iter_mut().zip(&page_boxes).zip(&page_records) {
-        page_paint::PagePaint::new(page, document.canvas_background(), record.output.bleed)
-            .decorate(std::slice::from_mut(list));
-    }
     let generated = paged_content(
         document,
         &page_boxes,
@@ -362,8 +358,17 @@ fn paginate<'t>(
         &destinations,
         resolver,
         measurer,
-        (&mut pages, &mut display_lists, &mut links),
+        (&mut pages, &mut display_lists, &mut links, &mut text_areas),
     )?;
+    for (((list, page), record), text_area) in display_lists
+        .iter_mut()
+        .zip(&page_boxes)
+        .zip(&page_records)
+        .zip(text_areas.iter_mut())
+    {
+        page_paint::PagePaint::new(page, document.canvas_background(), record.output.bleed)
+            .decorate(list, text_area.take());
+    }
     for (list, page) in display_lists.iter_mut().zip(&page_boxes) {
         list.extend(page_paint::page_outline(page));
     }
@@ -469,11 +474,13 @@ fn element_renderings(
     (Box::new(images.measured(states)), Box::new(paints))
 }
 
-/// Each page's text lines, display list and link areas.
-type PageOutputs<'p> = (
+/// Each page's text lines, display list, link areas and, when its page box's backgrounds clip
+/// to text, text area.
+pub(super) type PageOutputs<'p> = (
     &'p mut [Vec<TextLine>],
     &'p mut [Vec<DisplayItem>],
     &'p mut [Vec<LinkArea>],
+    &'p mut [Option<crate::graphics::FlowPaint>],
 );
 
 /// Paints the page-margin boxes and resolves the generated content that depends on where
@@ -486,7 +493,7 @@ fn paged_content<'t>(
     destinations: &[Option<Destination>],
     resolver: &dyn ResourceResolver,
     measurer: &mut measure::Measurer<'t>,
-    (pages, display_lists, links): PageOutputs<'_>,
+    (pages, display_lists, links, text_areas): PageOutputs<'_>,
 ) -> Result<Option<crate::document::GeneratedValues>, LayoutError> {
     let counters = page_counters::PageCounters::new(page_boxes);
     let strings = string_locations.resolve(document.running_strings(), &counters, pages.len())?;
@@ -503,9 +510,7 @@ fn paged_content<'t>(
         },
         measurer,
         first_margin_paragraph,
-        pages,
-        display_lists,
-        links,
+        (pages, display_lists, links, text_areas),
     )?;
     let destination_pages: Vec<_> = destinations
         .iter()

@@ -560,12 +560,14 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
     }
 
     /// Paints each page's footnote area at the bottom of its page area, returning the
-    /// navigation of the footnote bodies by page.
+    /// navigation of the footnote bodies by page, and the text of each page's bodies when its
+    /// page box's backgrounds clip to text.
     pub(super) fn paint_footnotes(
         &mut self,
         page_count: usize,
-    ) -> Result<Vec<(usize, StandaloneNavigation)>, LayoutError> {
+    ) -> Result<FootnotePaint, LayoutError> {
         let mut navigation = Vec::new();
+        let mut page_text: Box<[Vec<DisplayItem>]> = vec![Vec::new(); page_count].into();
         for page in 0..page_count.min(self.footnotes.pages.len()) {
             let Some(content) = self.content_height(page) else {
                 continue;
@@ -576,6 +578,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 unreachable!("footnote areas belong to pages");
             };
             let flow = crate::style::logical::Flow::used(pages.document.root().style());
+            let page_clips = pages.boxes[page].decoration.backgrounds.clips_to_text();
             let decoration = decoration.into_owned();
             let page_area = self.fragmentainers.content_box(page);
             let height = area.content_height(content, self.footnotes_only(page));
@@ -650,7 +653,9 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                         }))
                     };
                     items.push(frame(layout.flow.items.clone(), layout.flow.lines.clone()));
-                    if clips_to_text && let Some(area) = &layout.flow.text_area {
+                    if (clips_to_text || page_clips)
+                        && let Some(area) = &layout.flow.text_area
+                    {
                         text.push(frame(area.items.clone(), area.lines.clone()));
                     }
                     navigation.push((page, layout.flow.navigation.translated(origin, window)));
@@ -670,9 +675,12 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 paint.text_area = Some(std::sync::Arc::new(crate::graphics::FlowPaint {
                     matrix: [1.0, 0.0, 0.0, 1.0, 0.0, 0.0],
                     area: page_area,
-                    items: text,
+                    items: text.clone(),
                     lines: Vec::new(),
                 }));
+            }
+            if page_clips {
+                page_text[page] = text;
             }
             let scope: PaintKey = Rc::from([FLOW_LEVEL]);
             for item in items {
@@ -689,6 +697,9 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 });
             }
         }
-        Ok(navigation)
+        Ok((navigation, page_text))
     }
 }
+
+/// The navigation of the footnote bodies by page, and the text of each page's bodies.
+type FootnotePaint = (Vec<(usize, StandaloneNavigation)>, Box<[Vec<DisplayItem>]>);

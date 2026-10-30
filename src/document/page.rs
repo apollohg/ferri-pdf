@@ -13,13 +13,6 @@ impl PageBox {
         resources: &mut ImageResources<'_>,
         generated: &crate::document::generated::GeneratedBindings,
     ) -> Result<Self, DocumentError> {
-        // The text a page box's backgrounds would clip to is not tracked.
-        if page.style.decoration.backgrounds.clips_to_text() {
-            return Err(crate::style::StyleError::Unsupported(
-                "background-clip: text on a page box".into(),
-            )
-            .into());
-        }
         let decoration = resources.backgrounds(&page.style)?;
         let margins = page
             .margins
