@@ -69,6 +69,7 @@ data-url = "0.3"
 flate2 = { version = "1.1", default-features = false, features = ["rust_backend"] }
 imagesize = "0.14.0"
 kurbo = "0.13.0"
+i_overlay = "=9.1.0"
 siphasher = "1.0"
 strict-num = "0.1.1"
 tiny-skia-path = "0.12.0"
@@ -205,6 +206,7 @@ image.workspace = true
 imagesize.workspace = true
 krilla.workspace = true
 kurbo.workspace = true
+i_overlay.workspace = true
 log.workspace = true
 moxcms.workspace = true
 percent-encoding.workspace = true

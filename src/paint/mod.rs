@@ -12,6 +12,7 @@ mod filter;
 mod gradient;
 mod length;
 mod mask;
+mod polygon;
 mod raster;
 mod rounded;
 mod shadow;
@@ -53,6 +54,7 @@ pub(crate) use gradient::{
 pub(crate) use image::{ImageInfo, NaturalDimensions};
 pub use length::LengthPercentage;
 pub use mask::{MaskComposite, MaskMode, Masks};
+pub(crate) use polygon::clip_polygon;
 pub use rounded::Radii;
 pub(crate) use rounded::rounded_rect;
 mod image;
@@ -197,6 +199,21 @@ impl Contour {
                 }
             }))
             .chain(self.closed.then_some(kurbo::PathEl::ClosePath))
+    }
+
+    /// Polygon vertices approximating the filled contour, without a repeated closing point.
+    pub(crate) fn polygon_points(&self, tolerance: f64) -> Vec<[f64; 2]> {
+        let mut points = Vec::new();
+        kurbo::flatten(self.path_elements(), tolerance, |element| match element {
+            kurbo::PathEl::MoveTo(point) | kurbo::PathEl::LineTo(point) => {
+                points.push([point.x, point.y]);
+            }
+            _ => {}
+        });
+        if points.len() > 1 && points.first() == points.last() {
+            points.pop();
+        }
+        points
     }
 
     pub(crate) fn map(&self, place: impl Fn(Point) -> Point) -> Self {

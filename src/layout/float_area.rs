@@ -264,28 +264,13 @@ fn reference_box(reference: ShapeBox, boxes: &FloatBoxes<'_>) -> (Rect, crate::g
 
 /// The closed polygon approximating a contour within `FLATTEN_TOLERANCE_PT`.
 fn flatten(contour: &Contour) -> Vec<Vec<Point>> {
-    let mut polygons: Vec<Vec<Point>> = Vec::new();
-    kurbo::flatten(
+    vec![
         contour
-            .path_elements()
-            .chain((!contour.closed).then_some(kurbo::PathEl::ClosePath)),
-        f64::from(FLATTEN_TOLERANCE_PT),
-        |element| match element {
-            kurbo::PathEl::MoveTo(start) => polygons.push(vec![[start.x as f32, start.y as f32]]),
-            kurbo::PathEl::LineTo(end) => {
-                if let Some(polygon) = polygons.last_mut() {
-                    polygon.push([end.x as f32, end.y as f32]);
-                }
-            }
-            _ => {}
-        },
-    );
-    for polygon in &mut polygons {
-        if polygon.len() > 1 && polygon.first() == polygon.last() {
-            polygon.pop();
-        }
-    }
-    polygons
+            .polygon_points(f64::from(FLATTEN_TOLERANCE_PT))
+            .into_iter()
+            .map(|point| point.map(|value| value as f32))
+            .collect(),
+    ]
 }
 
 /// An edge that is not horizontal, top end first, with +1 winding when drawn downwards.
@@ -446,41 +431,19 @@ fn hull(mut points: Vec<Point>) -> Vec<Point> {
     lower
 }
 
-/// Sutherland–Hodgman clipping of a convex polygon to `bounds`.
+/// Clipping of a convex polygon to `bounds`.
 fn clip(points: &[Point], bounds: Rect) -> Vec<Point> {
-    let planes: [(usize, f32, bool); 4] = [
-        (0, bounds.x, true),
-        (0, bounds.x + bounds.width, false),
-        (1, bounds.y, true),
-        (1, bounds.y + bounds.height, false),
-    ];
-    let mut polygon = points.to_vec();
-    for (axis, limit, lower) in planes {
-        let keep = |point: Point| {
-            if lower {
-                point[axis] >= limit
-            } else {
-                point[axis] <= limit
-            }
-        };
-        let input = std::mem::take(&mut polygon);
-        for (index, &current) in input.iter().enumerate() {
-            let previous = input[(index + input.len() - 1) % input.len()];
-            if keep(current) != keep(previous) {
-                let t = (limit - previous[axis]) / (current[axis] - previous[axis]);
-                let mut crossing = [
-                    previous[0] + (current[0] - previous[0]) * t,
-                    previous[1] + (current[1] - previous[1]) * t,
-                ];
-                crossing[axis] = limit;
-                polygon.push(crossing);
-            }
-            if keep(current) {
-                polygon.push(current);
-            }
-        }
-    }
-    polygon
+    let points: Vec<_> = points.iter().map(|point| point.map(f64::from)).collect();
+    crate::paint::clip_polygon(
+        &points,
+        [
+            [f64::from(bounds.x), f64::from(bounds.x + bounds.width)],
+            [f64::from(bounds.y), f64::from(bounds.y + bounds.height)],
+        ],
+    )
+    .into_iter()
+    .map(|point| point.map(|value| value as f32))
+    .collect()
 }
 
 /// Eight-bit opacity samples covering an image's area row by row.

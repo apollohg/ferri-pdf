@@ -556,6 +556,32 @@ fn hulls_overlap(hulls: [[[f64; 2]; 5]; 2], origins: [[f64; 2]; 2], scale: f64) 
     true
 }
 
+fn box_contours(rect: Rect, radii: Radii, curvatures: [f32; 4], insets: [f32; 4]) -> Vec<Contour> {
+    let curves = inset_corners(rect, radii, curvatures, insets);
+    if curvatures == [ROUND_CURVATURE; 4] {
+        return vec![contour(&curves)];
+    }
+    let (target, _) = inset(rect, radii, insets);
+    if target.width <= 0.0 || target.height <= 0.0 {
+        return Vec::new();
+    }
+    let cutouts: Vec<_> = curves
+        .iter()
+        .zip(corner_points(target))
+        .filter(|(curve, _)| !curve.is_point())
+        .map(|(curve, corner)| {
+            let mut cutout = Contour {
+                start: curve.start(),
+                segments: curve.forward().collect(),
+                closed: true,
+            };
+            cutout.segments.push(Segment::Line(corner));
+            cutout
+        })
+        .collect();
+    super::polygon::subtract_from_rect(target, &cutouts, CORNER_FLATNESS)
+}
+
 pub(crate) fn rounded_rect(rect: Rect, radii: Radii) -> Contour {
     contour(&corners(rect, radii, [ROUND_CURVATURE; 4]))
 }
@@ -813,6 +839,15 @@ impl Geometry {
         )
     }
 
+    fn contours(&self, fraction: f32) -> Vec<Contour> {
+        box_contours(
+            self.rect,
+            self.radii,
+            self.curvatures,
+            self.widths.map(|width| width * fraction),
+        )
+    }
+
     /// Region between the two corner diagonals that owns `side`.
     fn side_clip(&self, side: usize) -> Vec<Point> {
         let (a, b) = (side, (side + 1) % 4);
@@ -1014,7 +1049,7 @@ pub(crate) fn border_fills<I>(
                 shape: Shape::Path {
                     contours: boundaries
                         .into_iter()
-                        .map(|t| contour(&geometry.ring(t)))
+                        .flat_map(|t| geometry.contours(t))
                         .collect(),
                     even_odd: true,
                     clip: None,
@@ -1096,6 +1131,222 @@ mod path_tests {
     use super::*;
 
     const GEOMETRY_TOLERANCE: f32 = 0.000_01;
+
+    fn contour_area(contours: &[Contour]) -> f64 {
+        use kurbo::Shape as _;
+        contours
+            .iter()
+            .map(|contour| kurbo::BezPath::from_iter(contour.path_elements()).area())
+            .sum::<f64>()
+            .abs()
+    }
+
+    fn contains(contours: &[Contour], point: [f64; 2]) -> bool {
+        use kurbo::Shape as _;
+        contours
+            .iter()
+            .map(|contour| {
+                kurbo::BezPath::from_iter(contour.path_elements())
+                    .winding(kurbo::Point::new(point[0], point[1]))
+            })
+            .sum::<i32>()
+            != 0
+    }
+
+    #[test]
+    fn polygon_precision_preserves_intersections_not_present_in_the_input() {
+        let contours = crate::paint::polygon::subtract_from_rect(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 1.0e20,
+                height: 128.0,
+            },
+            &[
+                Contour::polygon(&[[0.0, 0.0], [8192.0, 0.0], [0.0, 128.0]]),
+                Contour::polygon(&[[0.0, 96.0], [8192.0, 96.0], [8192.0, 128.0], [0.0, 128.0]]),
+            ],
+            CORNER_FLATNESS,
+        );
+        assert!(
+            !contains(&contours, [1024.0, 90.0]),
+            "a coarse grid must not move the diagonal intersection"
+        );
+        assert!(contains(&contours, [4096.0, 90.0]));
+        assert!(
+            contours.iter().any(|contour| std::iter::once(contour.start)
+                .chain(contour.segments.iter().map(|segment| segment.end()))
+                .any(|point| point == [2048.0, 96.0])),
+            "the two cuts intersect at exactly 2048,96 even though that vertex was not supplied"
+        );
+    }
+
+    #[test]
+    fn a_small_corner_survives_a_very_wide_box_without_moving_its_edges() {
+        let rect = Rect {
+            x: 0.0,
+            y: 0.0,
+            width: 1.0e20,
+            height: 100.0,
+        };
+        let contours = box_contours(
+            rect,
+            [[20.0; 2], [0.0; 2], [0.0; 2], [0.0; 2]],
+            [
+                f32::NEG_INFINITY,
+                ROUND_CURVATURE,
+                ROUND_CURVATURE,
+                ROUND_CURVATURE,
+            ],
+            [0.0; 4],
+        );
+        assert!(
+            !contains(&contours, [10.0, 10.0]),
+            "a locally representable notch must not disappear on a large box"
+        );
+        assert!(contains(&contours, [30.0, 10.0]) && contains(&contours, [10.0, 30.0]));
+        for contour in &contours {
+            for point in std::iter::once(contour.start)
+                .chain(contour.segments.iter().map(|segment| segment.end()))
+            {
+                assert!(
+                    (0.0..=rect.width).contains(&point[0])
+                        && (0.0..=rect.height).contains(&point[1]),
+                    "polygon adaptation must not expand the target: {point:?}"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn mixed_corner_cutouts_preserve_curved_and_angular_regions() {
+        let contours = box_contours(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 100.0,
+                height: 80.0,
+            },
+            [[10.0; 2]; 4],
+            [0.0, ROUND_CURVATURE, -1.0, f32::NEG_INFINITY],
+            [0.0; 4],
+        );
+        assert!(
+            (contour_area(&contours) - 7750.0).abs() < 0.5,
+            "bevel50 + complementary circular cutouts100 + notch100: {}",
+            contour_area(&contours)
+        );
+        for (point, expected) in [
+            ([5.0, 4.0], false),
+            ([6.0, 6.0], true),
+            ([95.0, 5.0], true),
+            ([99.0, 1.0], false),
+            ([96.0, 76.0], false),
+            ([91.0, 71.0], true),
+            ([5.0, 75.0], false),
+            ([11.0, 75.0], true),
+        ] {
+            assert_eq!(
+                contains(&contours, point),
+                expected,
+                "mixed corner coverage at {point:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn inset_bevel_contours_clip_the_offset_lines_to_the_target_box() {
+        let contours = box_contours(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 80.0,
+                height: 60.0,
+            },
+            [[20.0; 2]; 4],
+            [0.0; 4],
+            [4.0; 4],
+        );
+        let leg = 12.0 + 4.0 * std::f64::consts::SQRT_2;
+        let expected = 72.0 * 52.0 - 2.0 * leg * leg;
+        assert!(
+            (contour_area(&contours) - expected).abs() < 0.001,
+            "offset bevel cuts four right triangles: {} vs {expected}",
+            contour_area(&contours)
+        );
+        assert!(contains(&contours, [40.0, 5.0]));
+        assert!(!contains(&contours, [5.0, 5.0]));
+    }
+
+    #[test]
+    fn overlapping_inner_notches_produce_two_islands_without_restoring_the_overlap() {
+        let geometry = Geometry::new(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 80.0,
+                height: 60.0,
+            },
+            [[40.0, 30.0], [0.0; 2], [40.0, 30.0], [0.0; 2]],
+            [4.0; 4],
+            [
+                f32::NEG_INFINITY,
+                ROUND_CURVATURE,
+                f32::NEG_INFINITY,
+                ROUND_CURVATURE,
+            ],
+        );
+        let contours = geometry.contours(1.0);
+        assert_eq!(
+            contours.len(),
+            2,
+            "overlapping opposite cutouts disconnect the padding area"
+        );
+        assert_eq!(
+            contour_area(&contours),
+            1408.0,
+            "two 32x22 rectangles remain"
+        );
+        assert!(
+            !contains(&contours, [40.0, 30.0]),
+            "overlapping cutouts must not become an even-odd island"
+        );
+        assert!(contains(&contours, [60.0, 15.0]) && contains(&contours, [20.0, 45.0]));
+        for contour in &contours {
+            for point in std::iter::once(contour.start)
+                .chain(contour.segments.iter().map(|segment| segment.end()))
+            {
+                assert!(
+                    (4.0..=76.0).contains(&point[0]) && (4.0..=56.0).contains(&point[1]),
+                    "inner contour must stay inside its target rectangle: {point:?}"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn corner_cutouts_can_consume_the_entire_inner_box() {
+        let geometry = Geometry::new(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 80.0,
+                height: 60.0,
+            },
+            [[40.0, 30.0], [0.0; 2], [40.0, 30.0], [0.0; 2]],
+            [20.0; 4],
+            [
+                f32::NEG_INFINITY,
+                ROUND_CURVATURE,
+                f32::NEG_INFINITY,
+                ROUND_CURVATURE,
+            ],
+        );
+        assert!(
+            geometry.contours(1.0).is_empty(),
+            "no inverted or overlapping inner contour may remain"
+        );
+    }
 
     #[test]
     fn unequal_thin_corner_offsets_retain_small_finite_curvature() {
