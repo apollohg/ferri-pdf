@@ -2,7 +2,7 @@ use crate::style::{
     StyleError,
     box_values::unsupported,
     component::Component,
-    counter_style::{CounterStyle, Scope},
+    counter_style::{CounterStyle, Representation, Scope},
     grammar::Keyword,
 };
 use serde::Serialize;
@@ -38,13 +38,13 @@ impl ListStyleType {
     pub(crate) fn is_none(&self) -> bool {
         matches!(self, Self::None)
     }
-    /// The marker string of a list item whose `list-item` counter is `ordinal`, or `None`
-    /// when there is none.
-    pub(crate) fn marker(&self, ordinal: i128, rtl: bool) -> Result<Option<String>, StyleError> {
+    /// The marker of a list item whose `list-item` counter is `ordinal`, or `None` when
+    /// there is none.
+    pub(crate) fn marker(&self, ordinal: i128, rtl: bool) -> Option<Representation> {
         match self {
-            Self::None => Ok(None),
-            Self::String(text) => Ok(Some(text.to_string())),
-            Self::Counter(style) => style.marker(ordinal, rtl).map(Some),
+            Self::None => None,
+            Self::String(text) => Some(text.to_string().into()),
+            Self::Counter(style) => Some(style.marker(ordinal, rtl)),
         }
     }
 }

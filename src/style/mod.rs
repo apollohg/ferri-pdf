@@ -114,6 +114,7 @@ pub(crate) use container_queries::{QueryContainers, QuerySizes};
 pub(crate) use containment::{
     Contain, ContainIntrinsicSize, ContainerType, ContainmentStyle, ContentVisibility,
 };
+pub(crate) use counter_style::Representation;
 pub(crate) use counter_values::{
     CounterProperties, CounterScopes, DEFAULT_COUNTER_INCREMENT, FOOTNOTE_COUNTER,
     INITIAL_COUNTER_VALUE, LIST_ITEM_COUNTER,

@@ -30,11 +30,7 @@ fn representations(css: &str, name: &str, values: &[i128]) -> Vec<String> {
     let style = style(&sheet, name);
     values
         .iter()
-        .map(|value| {
-            style
-                .representation(*value)
-                .unwrap_or_else(|error| panic!("{name} must represent {value}: {error}"))
-        })
+        .map(|value| style.representation(*value).into_text())
         .collect()
 }
 
@@ -44,7 +40,7 @@ fn markers(css: &str, name: &str, values: &[i128]) -> Vec<String> {
     let style = style(&sheet, name);
     values
         .iter()
-        .map(|value| style.marker(*value, false).unwrap())
+        .map(|value| style.marker(*value, false).into_text())
         .collect()
 }
 
@@ -54,7 +50,7 @@ fn predefined(name: &str, values: &[i128]) -> Vec<String> {
         .map(|value| {
             CounterStyle::predefined(name)
                 .representation(*value)
-                .unwrap()
+                .into_text()
         })
         .collect()
 }
@@ -316,10 +312,10 @@ fn names_are_case_sensitive_except_predefined_ones() {
         @counter-style DISC { system: cyclic; symbols: no; }
         @counter-style none { system: cyclic; symbols: no; }";
     let sheet = sheet(css);
-    assert_eq!(style(&sheet, "decimal").representation(1).unwrap(), "1");
-    assert_eq!(style(&sheet, "disc").representation(1).unwrap(), "•");
+    assert_eq!(style(&sheet, "decimal").representation(1).into_text(), "1");
+    assert_eq!(style(&sheet, "disc").representation(1).into_text(), "•");
     assert_eq!(
-        style(&sheet, "none").representation(1).unwrap(),
+        style(&sheet, "none").representation(1).into_text(),
         "",
         "`none` represents nothing and names no rule"
     );
@@ -353,7 +349,7 @@ fn predefined_numeric_and_alphabetic_styles() {
         predefined("cjk-earthly-branch", &[1, 12, 13]),
         ["子", "亥", "13"]
     );
-    let marker = |name: &str| CounterStyle::predefined(name).marker(1, false).unwrap();
+    let marker = |name: &str| CounterStyle::predefined(name).marker(1, false).into_text();
     assert_eq!(marker("hiragana"), "あ、");
     assert_eq!(marker("disc"), "• ");
     assert_eq!(marker("upper-latin"), "A. ");
@@ -364,9 +360,9 @@ fn predefined_disclosure_styles_follow_the_inline_direction() {
     // §6.3.
     let open = CounterStyle::predefined("disclosure-open");
     let closed = CounterStyle::predefined("disclosure-closed");
-    assert_eq!(open.marker(1, false).unwrap(), "▾ ");
-    assert_eq!(closed.marker(1, false).unwrap(), "▸ ");
-    assert_eq!(closed.marker(1, true).unwrap(), "◂ ");
+    assert_eq!(open.marker(1, false).into_text(), "▾ ");
+    assert_eq!(closed.marker(1, false).into_text(), "▸ ");
+    assert_eq!(closed.marker(1, true).into_text(), "◂ ");
 }
 
 #[test]
@@ -528,7 +524,7 @@ fn longhand_east_asian_styles_match_the_specification_table() {
     assert_eq!(
         CounterStyle::predefined("korean-hangul-formal")
             .marker(-1, false)
-            .unwrap(),
+            .into_text(),
         "마이너스 일, "
     );
     let css = "@counter-style extended { system: extends simp-chinese-formal; range: auto; }";
@@ -553,7 +549,7 @@ fn ethiopic_numeric_matches_the_specification_examples() {
     assert_eq!(
         CounterStyle::predefined("ethiopic-numeric")
             .marker(2, false)
-            .unwrap(),
+            .into_text(),
         "፪/ "
     );
 }
@@ -581,7 +577,7 @@ fn symbols_function_defines_anonymous_styles() {
         };
         values
             .iter()
-            .map(|value| style.marker(*value, false).unwrap())
+            .map(|value| style.marker(*value, false).into_text())
             .collect::<Vec<_>>()
     };
     assert_eq!(
@@ -619,17 +615,47 @@ fn symbols_function_defines_anonymous_styles() {
             list_style_type("li { list-style-type: symbols(url(a.png)) }"),
             Ok(ListStyleType::Counter(_))
         ),
-        "image symbols compute; only representing them is unsupported"
+        "image symbols compute"
     );
 }
 
 #[test]
-fn image_symbols_are_unsupported_when_represented() {
-    let css = "@counter-style go { system: alphabetic; symbols: url(white.svg) url(black.svg); }";
+fn image_symbols_stand_at_their_places_in_representations() {
+    // §3.8: image symbols are symbols like strings, and count as one grapheme for `pad`.
+    let css = "@counter-style bits { system: numeric; symbols: '0' url(one.svg); \
+               prefix: url(start.svg); suffix: '.'; pad: 4 '0'; }";
     let sheet = sheet(css);
-    let error = style(&sheet, "go").representation(1).unwrap_err();
-    assert!(
-        error.to_string().contains("image symbol"),
-        "image symbols must not silently disappear: {error}"
+    let style = style(&sheet, "bits");
+    let image = |representation: &crate::style::Representation, index: usize| {
+        let (offset, image) = &representation.images()[index];
+        let crate::paint::BackgroundImage::Url { url, .. } = image.as_ref() else {
+            panic!("image symbol {index} is a URL image: {image:?}");
+        };
+        (
+            *offset,
+            url.rsplit('/').next().unwrap_or_default().to_owned(),
+        )
+    };
+    let representation = style.representation(6);
+    assert_eq!(
+        representation.text(),
+        "00",
+        "6 is one-one-zero, padded to four symbols: {representation:?}"
+    );
+    assert_eq!(
+        (0..2)
+            .map(|index| image(&representation, index))
+            .collect::<Vec<_>>(),
+        [(1, "one.svg".to_owned()), (1, "one.svg".to_owned())],
+        "the ones follow the single padding zero: {representation:?}"
+    );
+    let marker = style.marker(1, false);
+    assert_eq!(marker.text(), "000.", "{marker:?}");
+    assert_eq!(
+        (0..2)
+            .map(|index| image(&marker, index))
+            .collect::<Vec<_>>(),
+        [(0, "start.svg".to_owned()), (3, "one.svg".to_owned())],
+        "the prefix image precedes the padding and the representation: {marker:?}"
     );
 }

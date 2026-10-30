@@ -388,7 +388,10 @@ impl Counters {
                 .collect(),
         )
     }
-    pub(crate) fn text(&mut self, request: &CounterRequest) -> Result<String, StyleError> {
+    pub(crate) fn text(
+        &mut self,
+        request: &CounterRequest,
+    ) -> Result<crate::style::Representation, StyleError> {
         self.value(request.name.clone())?;
         let text = render_counter(
             request,
@@ -642,7 +645,10 @@ impl Counters {
 #[derive(Default)]
 pub(crate) struct CounterSnapshot(Vec<(Arc<str>, i128)>);
 impl CounterSnapshot {
-    pub(crate) fn text(&self, request: &CounterRequest) -> Result<String, StyleError> {
+    pub(crate) fn text(
+        &self,
+        request: &CounterRequest,
+    ) -> Result<crate::style::Representation, StyleError> {
         render_counter(
             request,
             self.0
@@ -655,35 +661,36 @@ impl CounterSnapshot {
 fn render_counter(
     request: &CounterRequest,
     mut values: impl DoubleEndedIterator<Item = i128>,
-) -> Result<String, StyleError> {
+) -> Result<crate::style::Representation, StyleError> {
     let Some(separator) = &request.separator else {
-        return request
+        return Ok(request
             .style
-            .representation(values.next_back().unwrap_or(INITIAL_COUNTER_VALUE));
+            .representation(values.next_back().unwrap_or(INITIAL_COUNTER_VALUE)));
     };
-    let mut text = String::new();
+    let mut joined = crate::style::Representation::default();
     let mut empty = true;
     for value in values {
-        let part = request.style.representation(value)?;
+        let part = request.style.representation(value);
         let separator = if empty { "" } else { separator.as_ref() };
-        if text
+        if joined
+            .text()
             .len()
             .saturating_add(separator.len())
-            .saturating_add(part.len())
+            .saturating_add(part.text().len())
             > crate::document::MAX_INLINE_TEXT_BYTES
         {
             return Err(StyleError::GeneratedContentLimit {
                 limit: crate::document::MAX_INLINE_TEXT_BYTES,
             });
         }
-        text.push_str(separator);
-        text.push_str(&part);
+        joined.push_str(separator);
+        joined.append(part);
         empty = false;
     }
     if empty {
-        text = request.style.representation(INITIAL_COUNTER_VALUE)?;
+        joined = request.style.representation(INITIAL_COUNTER_VALUE);
     }
-    Ok(text)
+    Ok(joined)
 }
 
 #[cfg(test)]

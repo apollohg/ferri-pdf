@@ -558,7 +558,7 @@ impl Collector {
                     crate::document::MAX_INLINE_TEXT_BYTES,
                     &mut |request| {
                         if let Some(text) = request.box_generation_text() {
-                            return Ok(text);
+                            return Ok(text.into());
                         }
                         if counters.is_none() {
                             counters = Some(crate::document::counters::Counters::at(

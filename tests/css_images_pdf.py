@@ -461,6 +461,41 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                     (f'ul{{padding-left:60pt}}li{{list-style:{position} url("{quadrants}")}}', items),
                     f'an {position} marker\'s content image draws as its marker image')
 
+    def test_counter_style_image_symbols_render_as_inline_images(self):
+        """CSS Counter Styles 3 §3.8: image symbols, wherever a symbol stands, are anonymous
+        inline replaced boxes in markers and in counter() and counters() content."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-counter-images-') as directory:
+            root = Path(directory)
+            red, blue, green = (blocks(root / f'{name}.png', [[color]])
+                                for name, color in [('red', RED), ('blue', BLUE), ('green', GREEN)])
+            rules = (f'@counter-style pic{{system:cyclic;symbols:url("{red}") url("{blue}");suffix:" "}}'
+                     f'@counter-style bits{{system:numeric;symbols:url("{green}") url("{blue}");'
+                     f'prefix:url("{red}");suffix:" "}}'
+                     f'@counter-style mixed{{system:fixed;symbols:"a" url("{blue}");suffix:"."}}')
+            items = '<ul><li>One</li><li>Two</li><li>Three</li></ul>'
+            for position in ('outside', 'inside'):
+                base = f'ul{{padding-left:60pt}}li{{list-style-position:{position}}}'
+                for style, markers in [
+                        ('pic', [f'url("{red}") " "', f'url("{blue}") " "', f'url("{red}") " "']),
+                        ('bits', [f'url("{red}") url("{blue}") " "',
+                                  f'url("{red}") url("{blue}") url("{green}") " "',
+                                  f'url("{red}") url("{blue}") url("{blue}") " "']),
+                        ('mixed', ['"a."', f'url("{blue}") "."', '"3."'])]:
+                    expected = ''.join(f'li:nth-child({index + 1})::marker{{content:{marker}}}'
+                                       for index, marker in enumerate(markers))
+                    self.assertSameInterior(root, (rules + base + f'li{{list-style-type:{style}}}', items),
+                                            (base + expected, items),
+                                            f'{position} {style} markers hold their image symbols')
+            headings = '<h1>A</h1><h1>B</h1>'
+            heading = 'h1{counter-increment:c;font-size:inherit;margin:0}'
+            self.assertSameInterior(
+                root, (rules + heading + 'h1::before{content:counter(c,pic) "|" counters(c,".",bits) "|"}',
+                       headings),
+                (heading + f'h1:first-child::before{{content:url("{red}") "|" url("{blue}") "|"}}'
+                           f'h1:last-child::before{{content:url("{blue}") "|" url("{blue}") url("{green}") "|"}}',
+                 headings),
+                'counter() and counters() print image symbols, without a marker\'s prefix and suffix')
+
     def assertInkSize(self, root, css, body, expected, message):
         """Everything not white on the first page spans `expected` CSS pixels. Resolutions that
         are not exact binary fractions, and the whole pixels per metre PNG records, leave an

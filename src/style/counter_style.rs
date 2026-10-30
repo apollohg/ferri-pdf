@@ -139,34 +139,124 @@ const LONGHANDS: [Longhand; 5] = [
     },
 ];
 
-#[derive(Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(Clone, Debug)]
 enum Symbol {
     Text(Arc<str>),
-    /// An `<image>` symbol (§3.8, at risk), as written.
-    Image(Arc<str>),
+    /// An `<image>` symbol (§3.8, at risk), as written and as computed.
+    Image(Arc<str>, Arc<crate::paint::BackgroundImage>),
+}
+/// Symbols compare as written.
+impl PartialEq for Symbol {
+    fn eq(&self, other: &Self) -> bool {
+        self.written() == other.written()
+    }
+}
+impl Eq for Symbol {}
+impl Hash for Symbol {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.written().hash(state);
+    }
 }
 impl Symbol {
-    fn text(&self) -> Result<&str, StyleError> {
+    fn written(&self) -> (bool, &str) {
         match self {
-            Self::Text(text) => Ok(text),
-            Self::Image(source) => Err(StyleError::Unsupported(format!(
-                "counter style image symbol {source}"
-            ))),
+            Self::Text(text) => (false, text),
+            Self::Image(written, _) => (true, written),
         }
     }
     fn codepoints(&self) -> usize {
         match self {
             Self::Text(text) => text.chars().count(),
-            Self::Image(_) => 1,
+            Self::Image(..) => 1,
+        }
+    }
+    /// Grapheme clusters, which an image counts as one of.
+    fn graphemes(&self) -> usize {
+        match self {
+            Self::Text(text) => text.graphemes(true).count(),
+            Self::Image(..) => 1,
         }
     }
     fn is_empty(&self) -> bool {
         matches!(self, Self::Text(text) if text.is_empty())
     }
-    fn from_component(value: &Component) -> Self {
-        match value.unwrap() {
+    /// A descriptor's `<symbol>`; a rule has no element, so an image computes against the
+    /// initial values.
+    fn from_component(value: &Component) -> Result<Self, StyleError> {
+        Ok(match value.unwrap() {
             Component::String(text) | Component::Ident(text) => Self::Text(Arc::from(&**text)),
-            image => Self::Image(Arc::from(image.to_string())),
+            image => Self::Image(
+                Arc::from(image.to_string()),
+                Arc::new(crate::style::background_values::image(
+                    value,
+                    &Relative::initial(),
+                    &crate::paint::AbsoluteColor::BLACK,
+                )?),
+            ),
+        })
+    }
+}
+
+/// A counter representation: its text, and the image symbols it holds at their text offsets
+/// (§3.8). Where only text can stand, as in a named string, an image contributes nothing.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub(crate) struct Representation {
+    text: String,
+    images: Vec<(usize, Arc<crate::paint::BackgroundImage>)>,
+}
+impl Representation {
+    fn of(symbol: &Symbol) -> Self {
+        let mut representation = Self::default();
+        representation.push(symbol);
+        representation
+    }
+    fn repeat(symbol: &Symbol, count: usize) -> Self {
+        let mut representation = Self::default();
+        for _ in 0..count {
+            representation.push(symbol);
+        }
+        representation
+    }
+    fn push(&mut self, symbol: &Symbol) {
+        match symbol {
+            Symbol::Text(text) => self.text.push_str(text),
+            Symbol::Image(_, image) => self.images.push((self.text.len(), image.clone())),
+        }
+    }
+    pub(crate) fn push_str(&mut self, text: &str) {
+        self.text.push_str(text);
+    }
+    pub(crate) fn append(&mut self, other: Self) {
+        let offset = self.text.len();
+        self.images.extend(
+            other
+                .images
+                .into_iter()
+                .map(|(at, image)| (offset + at, image)),
+        );
+        self.text.push_str(&other.text);
+    }
+    pub(crate) fn text(&self) -> &str {
+        &self.text
+    }
+    pub(crate) fn into_text(self) -> String {
+        self.text
+    }
+    pub(crate) fn images(&self) -> &[(usize, Arc<crate::paint::BackgroundImage>)] {
+        &self.images
+    }
+    fn graphemes(&self) -> usize {
+        self.text.graphemes(true).count() + self.images.len()
+    }
+    fn codepoints(&self) -> usize {
+        self.text.chars().count() + self.images.len()
+    }
+}
+impl From<String> for Representation {
+    fn from(text: String) -> Self {
+        Self {
+            text,
+            images: Vec::new(),
         }
     }
 }
@@ -227,88 +317,96 @@ impl Algorithm {
     }
     /// The initial representation of `value`, or `None` when the algorithm cannot represent
     /// it. Systems that use a negative sign receive the absolute value.
-    fn represent(&self, value: i128, rtl: bool) -> Result<Option<String>, StyleError> {
+    fn represent(&self, value: i128, rtl: bool) -> Option<Representation> {
         let magnitude = value.unsigned_abs();
-        Ok(match self {
+        match self {
             Self::Cyclic(symbols) => {
                 let index = (value - 1).rem_euclid(symbols.len() as i128) as usize;
-                Some(symbols[index].text()?.to_owned())
+                Some(Representation::of(&symbols[index]))
             }
             Self::Fixed(first, symbols) => value
                 .checked_sub(*first)
                 .and_then(|offset| usize::try_from(offset).ok())
                 .and_then(|index| symbols.get(index))
-                .map(|symbol| symbol.text().map(str::to_owned))
-                .transpose()?,
-            Self::Symbolic(symbols) => symbolic(symbols, magnitude)?,
-            Self::Alphabetic(symbols) => alphabetic(symbols, magnitude)?,
-            Self::Numeric(symbols) => Some(numeric(symbols, magnitude)?),
-            Self::Additive(tuples) => additive(tuples, magnitude)?,
-            Self::Disclosure(Disclosure::Open) => Some(DISCLOSURE_OPEN_SYMBOL.to_owned()),
+                .map(Representation::of),
+            Self::Symbolic(symbols) => symbolic(symbols, magnitude),
+            Self::Alphabetic(symbols) => alphabetic(symbols, magnitude),
+            Self::Numeric(symbols) => Some(numeric(symbols, magnitude)),
+            Self::Additive(tuples) => additive(tuples, magnitude),
+            Self::Disclosure(Disclosure::Open) => Some(DISCLOSURE_OPEN_SYMBOL.to_owned().into()),
             Self::Disclosure(Disclosure::Closed) => Some(
                 if rtl {
                     DISCLOSURE_CLOSED_RTL_SYMBOL
                 } else {
                     DISCLOSURE_CLOSED_LTR_SYMBOL
                 }
-                .to_owned(),
+                .to_owned()
+                .into(),
             ),
-            Self::Longhand(longhand) => longhand.represent(magnitude),
-            Self::Ethiopic => ethiopic(magnitude),
-        })
+            Self::Longhand(longhand) => longhand.represent(magnitude).map(Into::into),
+            Self::Ethiopic => ethiopic(magnitude).map(Into::into),
+        }
     }
 }
 
 /// §3.1.3.
-fn symbolic(symbols: &[Symbol], value: u128) -> Result<Option<String>, StyleError> {
+fn symbolic(symbols: &[Symbol], value: u128) -> Option<Representation> {
     if value == 0 {
-        return Ok(None);
+        return None;
     }
     let count = symbols.len() as u128;
     let symbol = &symbols[((value - 1) % count) as usize];
     let length = value.div_ceil(count);
     if length.saturating_mul(symbol.codepoints() as u128) > MAX_LINEAR_CODEPOINTS as u128 {
-        return Ok(None);
+        return None;
     }
-    Ok(Some(symbol.text()?.repeat(length as usize)))
+    Some(Representation::repeat(symbol, length as usize))
+}
+/// The digits of a positional representation, most significant first.
+fn positional<'a>(digits: impl Iterator<Item = &'a Symbol>) -> Representation {
+    let digits: Vec<_> = digits.collect();
+    let mut representation = Representation::default();
+    for digit in digits.into_iter().rev() {
+        representation.push(digit);
+    }
+    representation
 }
 /// §3.1.4.
-fn alphabetic(symbols: &[Symbol], mut value: u128) -> Result<Option<String>, StyleError> {
+fn alphabetic(symbols: &[Symbol], mut value: u128) -> Option<Representation> {
     if value == 0 {
-        return Ok(None);
+        return None;
     }
     let count = symbols.len() as u128;
     let mut digits = Vec::new();
     while value != 0 {
         value -= 1;
-        digits.push(symbols[(value % count) as usize].text()?);
+        digits.push(&symbols[(value % count) as usize]);
         value /= count;
     }
-    Ok(Some(digits.into_iter().rev().collect()))
+    Some(positional(digits.into_iter()))
 }
 /// §3.1.5.
-fn numeric(symbols: &[Symbol], mut value: u128) -> Result<String, StyleError> {
+fn numeric(symbols: &[Symbol], mut value: u128) -> Representation {
     if value == 0 {
-        return symbols[0].text().map(str::to_owned);
+        return Representation::of(&symbols[0]);
     }
     let count = symbols.len() as u128;
     let mut digits = Vec::new();
     while value != 0 {
-        digits.push(symbols[(value % count) as usize].text()?);
+        digits.push(&symbols[(value % count) as usize]);
         value /= count;
     }
-    Ok(digits.into_iter().rev().collect())
+    positional(digits.into_iter())
 }
 /// §3.1.6.
-fn additive(tuples: &[(u128, Symbol)], mut value: u128) -> Result<Option<String>, StyleError> {
+fn additive(tuples: &[(u128, Symbol)], mut value: u128) -> Option<Representation> {
     if value == 0 {
         return tuples
             .iter()
             .find(|(weight, _)| *weight == 0)
-            .map(|(_, symbol)| symbol.text().map(str::to_owned))
-            .transpose();
+            .map(|(_, symbol)| Representation::of(symbol));
     }
-    let mut text = String::new();
+    let mut representation = Representation::default();
     let mut codepoints = 0usize;
     for (weight, symbol) in tuples {
         if *weight == 0 || *weight > value {
@@ -321,15 +419,15 @@ fn additive(tuples: &[(u128, Symbol)], mut value: u128) -> Result<Option<String>
             .filter(|total| *total <= MAX_LINEAR_CODEPOINTS as u128)
             .map_or(MAX_LINEAR_CODEPOINTS + 1, |total| total as usize);
         if codepoints > MAX_LINEAR_CODEPOINTS {
-            return Ok(None);
+            return None;
         }
-        text.push_str(&symbol.text()?.repeat(repetitions as usize));
+        representation.append(Representation::repeat(symbol, repetitions as usize));
         value -= weight * repetitions;
         if value == 0 {
-            return Ok(Some(text));
+            return Some(representation);
         }
     }
-    Ok(None)
+    None
 }
 impl Longhand {
     /// §7.1.3, on the absolute value.
@@ -436,41 +534,37 @@ impl Definition {
             .any(|(lower, upper)| (*lower..=*upper).contains(&value))
     }
     /// §2 steps 2 to 6, or `None` when the fallback style must represent `value`.
-    fn generate(&self, value: i128, rtl: bool) -> Result<Option<String>, StyleError> {
+    fn generate(&self, value: i128, rtl: bool) -> Option<Representation> {
         if !self.in_range(value) {
-            return Ok(None);
+            return None;
         }
         let negative = value < 0 && self.algorithm.uses_negative();
-        let Some(initial) = self.algorithm.represent(value, rtl)? else {
-            return Ok(None);
-        };
-        let graphemes = |text: &str| text.graphemes(true).count();
+        let initial = self.algorithm.represent(value, rtl)?;
         let (length, pad) = &self.pad;
-        let mut difference = length.saturating_sub(graphemes(&initial));
+        let mut difference = length.saturating_sub(initial.graphemes());
         if negative {
             for sign in &self.negative {
-                difference = difference.saturating_sub(graphemes(sign.text()?));
+                difference = difference.saturating_sub(sign.graphemes());
             }
         }
         if difference > 0
             && difference
                 .saturating_mul(pad.codepoints())
-                .saturating_add(initial.chars().count())
+                .saturating_add(initial.codepoints())
                 > MAX_LINEAR_CODEPOINTS
         {
-            return Ok(None);
+            return None;
         }
-        let mut text = if difference == 0 {
-            String::new()
-        } else {
-            pad.text()?.repeat(difference)
-        };
-        text.push_str(&initial);
+        let mut representation = Representation::default();
         if negative {
-            text.insert_str(0, self.negative[0].text()?);
-            text.push_str(self.negative[1].text()?);
+            representation.push(&self.negative[0]);
         }
-        Ok(Some(text))
+        representation.append(Representation::repeat(pad, difference));
+        representation.append(initial);
+        if negative {
+            representation.push(&self.negative[1]);
+        }
+        Some(representation)
     }
 }
 
@@ -608,7 +702,11 @@ impl Descriptors {
         match descriptor {
             Descriptor::CounterStyleSystem => self.system = Some(system(value, &relative)?),
             Descriptor::CounterStyleSymbols => {
-                self.symbols = Some(symbol_list(value).map(Symbol::from_component).collect());
+                self.symbols = Some(
+                    symbol_list(value)
+                        .map(Symbol::from_component)
+                        .collect::<Result<_, _>>()?,
+                );
             }
             Descriptor::CounterStyleAdditiveSymbols => {
                 if let Some(tuples) = additive_symbols(value, &relative)? {
@@ -617,11 +715,11 @@ impl Descriptors {
             }
             Descriptor::CounterStyleNegative => {
                 let mut signs = symbol_list(value).map(Symbol::from_component);
-                let first = signs.next().ok_or_else(|| unsupported(value))?;
-                self.negative = Some([first, signs.next().unwrap_or(empty_symbol())]);
+                let first = signs.next().ok_or_else(|| unsupported(value))??;
+                self.negative = Some([first, signs.next().transpose()?.unwrap_or(empty_symbol())]);
             }
-            Descriptor::CounterStylePrefix => self.prefix = Some(Symbol::from_component(value)),
-            Descriptor::CounterStyleSuffix => self.suffix = Some(Symbol::from_component(value)),
+            Descriptor::CounterStylePrefix => self.prefix = Some(Symbol::from_component(value)?),
+            Descriptor::CounterStyleSuffix => self.suffix = Some(Symbol::from_component(value)?),
             Descriptor::CounterStyleRange => {
                 if let Some(range) = range(value, &relative)? {
                     self.range = Some(range);
@@ -635,7 +733,7 @@ impl Descriptors {
                 let symbol = value.slot(1).ok_or_else(|| unsupported(value))?;
                 self.pad = Some((
                     usize::try_from(length).map_err(|_| unsupported(value))?,
-                    Symbol::from_component(symbol),
+                    Symbol::from_component(symbol)?,
                 ));
             }
             Descriptor::CounterStyleFallback => self.fallback = Some(style_name(value)?),
@@ -649,7 +747,7 @@ impl Descriptors {
 }
 
 /// Whether a descriptor value that matches its grammar takes effect: weights and ranges must
-/// be ordered, and image symbols do not render.
+/// be ordered.
 pub(super) fn supported(descriptor: Descriptor, value: &Component) -> bool {
     let mut descriptors = Descriptors::default();
     descriptors.apply(descriptor, value).is_ok()
@@ -658,8 +756,6 @@ pub(super) fn supported(descriptor: Descriptor, value: &Component) -> bool {
             Descriptor::CounterStyleRange => descriptors.range.is_some(),
             _ => true,
         }
-        && symbol_list(value)
-            .all(|symbol| matches!(Symbol::from_component(symbol), Symbol::Text(_)))
 }
 
 fn empty_symbol() -> Symbol {
@@ -717,7 +813,7 @@ fn additive_symbols(
             return Ok(None);
         }
         let symbol = tuple.slot(1).ok_or_else(|| unsupported(tuple))?;
-        tuples.push((weight, Symbol::from_component(symbol)));
+        tuples.push((weight, Symbol::from_component(symbol)?));
     }
     Ok(Some(tuples.into()))
 }
@@ -974,12 +1070,12 @@ impl CounterStyles {
         }
     }
     /// §2: the representation of `value` in style `id`, through its fallbacks.
-    fn represent(&self, id: usize, value: i128, rtl: bool) -> Result<String, StyleError> {
+    fn represent(&self, id: usize, value: i128, rtl: bool) -> Representation {
         let mut visited = Vec::new();
         let mut current = id;
         loop {
-            if let Some(text) = self.definition(current).generate(value, rtl)? {
-                return Ok(text);
+            if let Some(representation) = self.definition(current).generate(value, rtl) {
+                return representation;
             }
             visited.push(current);
             let fallback = self.definition(current).fallback;
@@ -993,11 +1089,10 @@ impl CounterStyles {
             }
         }
     }
-    fn decimal(&self, value: i128) -> Result<String, StyleError> {
-        Ok(self
-            .definition(DECIMAL_ID)
-            .generate(value, false)?
-            .expect("decimal represents every value"))
+    fn decimal(&self, value: i128) -> Representation {
+        self.definition(DECIMAL_ID)
+            .generate(value, false)
+            .expect("decimal represents every value")
     }
     /// Whether some representation through style `id`'s fallbacks can be empty.
     fn may_be_empty(&self, id: usize) -> bool {
@@ -1114,19 +1209,19 @@ impl CounterStyle {
     }
     /// The counter representation of `value` (§2), without prefix or suffix, as `counter()`
     /// prints it.
-    pub(crate) fn representation(&self, value: i128) -> Result<String, StyleError> {
+    pub(crate) fn representation(&self, value: i128) -> Representation {
         self.generate(value, false)
     }
-    /// The marker string of a list item whose `list-item` counter is `value` (CSS Lists 3
-    /// §3.4): the representation between the specified style's prefix and suffix.
-    pub(crate) fn marker(&self, value: i128, rtl: bool) -> Result<String, StyleError> {
+    /// The marker of a list item whose `list-item` counter is `value` (CSS Lists 3 §3.4):
+    /// the representation between the specified style's prefix and suffix.
+    pub(crate) fn marker(&self, value: i128, rtl: bool) -> Representation {
         let Some(definition) = self.own_definition() else {
-            return Ok(String::new());
+            return Representation::default();
         };
-        let mut text = definition.prefix.text()?.to_owned();
-        text.push_str(&self.generate(value, rtl)?);
-        text.push_str(definition.suffix.text()?);
-        Ok(text)
+        let mut representation = Representation::of(&definition.prefix);
+        representation.append(self.generate(value, rtl));
+        representation.push(&definition.suffix);
+        representation
     }
     /// Whether a representation can be the empty string, so that it creates no box.
     pub(crate) fn may_be_empty(&self) -> bool {
@@ -1143,14 +1238,13 @@ impl CounterStyle {
             Self::Anonymous(definition) => Some(definition),
         }
     }
-    fn generate(&self, value: i128, rtl: bool) -> Result<String, StyleError> {
+    fn generate(&self, value: i128, rtl: bool) -> Representation {
         match self {
-            Self::None => Ok(String::new()),
+            Self::None => Representation::default(),
             Self::Named { styles, id, .. } => styles.represent(*id, value, rtl),
-            Self::Anonymous(definition) => match definition.generate(value, rtl)? {
-                Some(text) => Ok(text),
-                None => PREDEFINED.decimal(value),
-            },
+            Self::Anonymous(definition) => definition
+                .generate(value, rtl)
+                .unwrap_or_else(|| PREDEFINED.decimal(value)),
         }
     }
 }
@@ -1217,8 +1311,9 @@ impl<'a> Scope<'a> {
 /// §4: `symbols()` with too few symbols for an alphabetic or numeric system is invalid.
 pub(super) fn valid(value: &Component) -> bool {
     let mut valid = true;
+    // An image that cannot be computed is no grammar error; computing the style reports it.
     visit_functions(value, &mut |arguments| {
-        valid &= symbols_arguments(arguments).is_some();
+        valid &= !matches!(symbols_arguments(arguments), Ok(None));
     });
     valid
 }
@@ -1248,24 +1343,27 @@ fn leaves(value: &Component) -> Vec<&Component> {
     collect(value, &mut output);
     output
 }
-fn symbols_arguments(arguments: &Component) -> Option<(Option<Keyword>, Vec<Symbol>)> {
+/// The system `symbols()` names, if any, and its symbols.
+type SymbolsArguments = (Option<Keyword>, Vec<Symbol>);
+/// The arguments of `symbols()`, `None` when too few symbols make it invalid.
+fn symbols_arguments(arguments: &Component) -> Result<Option<SymbolsArguments>, StyleError> {
     let mut system = None;
     let mut symbols = Vec::new();
     for item in leaves(arguments) {
         match item.keyword() {
             Some(keyword) => system = Some(keyword),
-            None => symbols.push(Symbol::from_component(item)),
+            None => symbols.push(Symbol::from_component(item)?),
         }
     }
     let minimum = match system {
         Some(Keyword::Alphabetic | Keyword::Numeric) => MIN_POSITIONAL_SYMBOLS,
         _ => MIN_SYMBOLS,
     };
-    (symbols.len() >= minimum).then_some((system, symbols))
+    Ok((symbols.len() >= minimum).then_some((system, symbols)))
 }
 /// §4: the anonymous style `symbols()` defines.
 fn anonymous(arguments: &Component) -> Result<Definition, StyleError> {
-    let (system, symbols) = symbols_arguments(arguments).ok_or_else(|| unsupported(arguments))?;
+    let (system, symbols) = symbols_arguments(arguments)?.ok_or_else(|| unsupported(arguments))?;
     let symbols: Symbols = symbols.into();
     let algorithm = match system {
         Some(Keyword::Cyclic) => Algorithm::Cyclic(symbols),

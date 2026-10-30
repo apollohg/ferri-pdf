@@ -286,12 +286,8 @@ impl Paragraph {
         Ok(collector.finish(style)?.ok())
     }
 
-    /// The marker box holding the marker string `text` (CSS Lists 3 §3.2), after its white
-    /// space is processed; `None` where none remains.
-    pub(crate) fn marker(text: &str, style: &Style) -> Result<Option<Self>, DocumentError> {
-        Self::marker_with(style, |collector, style| collector.append(text, style))
-    }
-    /// The marker box holding the `content` of its `::marker`.
+    /// The marker box holding its marker string or the `content` of its `::marker` (CSS
+    /// Lists 3 §3.2), after its white space is processed; `None` where none remains.
     pub(crate) fn generated_marker(
         output: &crate::style::GeneratedOutput,
         images: &[GeneratedImage],

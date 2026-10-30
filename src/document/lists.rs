@@ -36,8 +36,11 @@ pub(super) fn marker(
             return Ok(Some(Paragraph::image_marker(image, style)?));
         }
     }
-    let Some(text) = item.list_style_type.marker(ordinal, style.rtl)? else {
+    let Some(representation) = item.list_style_type.marker(ordinal, style.rtl) else {
         return Ok(None);
     };
-    Paragraph::marker(&text, style)
+    // Counter Styles 3 §3.8: image symbols are anonymous inline replaced boxes.
+    let output = crate::style::GeneratedOutput::from(representation);
+    let images = resources.generated_images(&output, style);
+    Paragraph::generated_marker(&output, &images, style)
 }

@@ -118,12 +118,12 @@ mod tests {
                             "chapter" => {
                                 assert_eq!(request.style, CounterStyle::predefined("upper-roman"));
                                 assert_eq!(request.separator, None);
-                                request.style.representation(4)
+                                Ok(request.style.representation(4))
                             }
                             "section" => {
                                 assert_eq!(request.style, CounterStyle::predefined("lower-alpha"));
                                 assert_eq!(request.separator.as_deref(), Some("."));
-                                Ok("a.b".to_owned())
+                                Ok("a.b".to_owned().into())
                             }
                             name => panic!("unexpected counter request {name}"),
                         },
@@ -151,7 +151,7 @@ mod tests {
                 },
                 &mut |request| {
                     requests.push(request.name.to_string());
-                    Ok("3".into())
+                    Ok("3".to_owned().into())
                 },
             )
             .expect("document values can be bound before pagination");

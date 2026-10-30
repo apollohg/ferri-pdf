@@ -2,6 +2,7 @@ use crate::style::{
     StyleError,
     box_values::unsupported,
     component::Component,
+    counter_style::Representation,
     counter_style::{CounterStyle, Scope},
     grammar::{Keyword, Label, Production},
     quotes::{QuoteAction, QuoteDepth, Quotes},
@@ -63,6 +64,17 @@ pub(crate) struct GeneratedOutput {
     leaders: Vec<std::ops::Range<usize>>,
     /// Images with the text offsets they stand at, in text order.
     images: Vec<(usize, crate::paint::BackgroundImage)>,
+}
+impl From<Representation> for GeneratedOutput {
+    fn from(representation: Representation) -> Self {
+        let mut images = Vec::new();
+        let text = representation_text(representation, 0, &mut images);
+        Self {
+            text,
+            leaders: Vec::new(),
+            images,
+        }
+    }
 }
 impl GeneratedOutput {
     pub(crate) fn text(&self) -> &str {
@@ -187,17 +199,13 @@ impl CounterRequest {
     pub(crate) fn is_page_counter(&self) -> bool {
         matches!(self.name.as_ref(), PAGE_COUNTER | PAGES_COUNTER)
     }
-    pub(crate) fn page_text(
-        &self,
-        page: usize,
-        pages: usize,
-    ) -> Option<Result<String, StyleError>> {
+    pub(crate) fn page_text(&self, page: usize, pages: usize) -> Option<String> {
         let value = match self.name.as_ref() {
             PAGE_COUNTER => page,
             PAGES_COUNTER => pages,
             _ => return None,
         };
-        Some(self.style.representation(value as i128))
+        Some(self.style.representation(value as i128).into_text())
     }
 
     /// First-page selection needs box existence, not the numeric glyphs; `None` when only
@@ -207,9 +215,11 @@ impl CounterRequest {
             (CounterStyle::None, Some(separator)) if !separator.is_empty() => None,
             (CounterStyle::None, _) => Some(String::new()),
             (style, _) if style.may_be_empty() => None,
-            (style, _) => style
-                .representation(crate::style::INITIAL_COUNTER_VALUE)
-                .ok(),
+            (style, _) => Some(
+                style
+                    .representation(crate::style::INITIAL_COUNTER_VALUE)
+                    .into_text(),
+            ),
         }
     }
 }
@@ -237,7 +247,9 @@ pub(crate) struct TargetRequest {
 }
 pub(crate) type TargetText<'a> = dyn FnMut(&TargetRequest) -> Result<String, StyleError> + 'a;
 
-pub(crate) type CounterText<'a> = dyn FnMut(&CounterRequest) -> Result<String, StyleError> + 'a;
+/// Supplies a counter's representation, whose images only content that lays out boxes shows.
+pub(crate) type CounterText<'a> =
+    dyn FnMut(&CounterRequest) -> Result<Representation, StyleError> + 'a;
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Hash, serde::Serialize)]
 pub(crate) enum NamedStringMode {
@@ -421,7 +433,9 @@ impl GeneratedContent {
     ) -> Result<Self, StyleError> {
         self.bind_parts(limit, &mut |part| match part {
             GeneratedPart::Element(source) => content(*source).map(Some),
-            GeneratedPart::Counter(request) => counters(request).map(Some),
+            GeneratedPart::Counter(request) => {
+                counters(request).map(Representation::into_text).map(Some)
+            }
             _ => Ok(None),
         })
     }
@@ -553,10 +567,14 @@ impl GeneratedContent {
                     continue;
                 }
                 GeneratedPart::Text(value) | GeneratedPart::Leader(value) => value.as_str().into(),
-                GeneratedPart::Counter(request) => counters.as_mut().ok_or_else(|| {
-                    StyleError::Unsupported("document counters outside a counter context".into())
-                })?(request)?
-                .into(),
+                GeneratedPart::Counter(request) => {
+                    let representation = counters.as_mut().ok_or_else(|| {
+                        StyleError::Unsupported(
+                            "document counters outside a counter context".into(),
+                        )
+                    })?(request)?;
+                    representation_text(representation, text.len(), &mut images).into()
+                }
                 GeneratedPart::Target(_) => {
                     return Err(StyleError::Unsupported(
                         "target reference outside a resolved target context".into(),
@@ -581,13 +599,13 @@ impl GeneratedContent {
                     let page = page.as_ref().ok_or_else(|| {
                         StyleError::Unsupported("page counters inside document content".to_owned())
                     })?;
-                    style
-                        .representation(if matches!(part, GeneratedPart::Page(_)) {
+                    let representation =
+                        style.representation(if matches!(part, GeneratedPart::Page(_)) {
                             page.number as i128
                         } else {
                             page.total as i128
-                        })?
-                        .into()
+                        });
+                    representation_text(representation, text.len(), &mut images).into()
                 }
                 GeneratedPart::Element(source) => {
                     let content = content.as_mut().ok_or_else(|| {
@@ -617,6 +635,22 @@ impl GeneratedContent {
             images,
         })
     }
+}
+
+/// A counter representation's text, its images recorded from the text offset `at` it is
+/// appended at.
+fn representation_text(
+    representation: Representation,
+    at: usize,
+    images: &mut Vec<(usize, crate::paint::BackgroundImage)>,
+) -> String {
+    images.extend(
+        representation
+            .images()
+            .iter()
+            .map(|(offset, image)| (at + offset, (**image).clone())),
+    );
+    representation.into_text()
 }
 
 fn part(
