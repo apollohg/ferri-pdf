@@ -2351,15 +2351,7 @@ impl<'a> FlowFrame<'a> {
             return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
         }
         let constrained = height != natural_height || vertical.definite().is_some();
-        let scroll_container = measurer
-            .native_sizing
-            .as_ref()
-            .filter(|sizing| std::ptr::eq(sizing.source, block.block))
-            .map_or_else(
-                || style.is_scroll_container(),
-                |sizing| sizing.scroll_container,
-            );
-        let alignment = content_alignment(style, height - natural_height, scroll_container);
+        let alignment = content_alignment(style, height - natural_height);
         if alignment != 0.0 {
             items.insert(1, FlowItem::Space(alignment));
             natural_height += alignment;
@@ -2498,22 +2490,18 @@ fn place_legend(
 }
 
 /// CSS Box Alignment 3 §5.4: the block-axis offset of a block container's content within
-/// `free` space. Overflowing `safe` content, and content of a scroll container without an
-/// overflow position, stays at the start edge; distributed alignment falls back to safe
-/// centring.
-fn content_alignment(style: &Style, free: f32, scroll_container: bool) -> f32 {
+/// `free` space. Overflowing content stays at the start edge unless aligned `unsafe`: a block
+/// container without an overflow position aligns safely (§5.1.1), as a scroll container's
+/// overflow into its unscrollable start is biased back (§4.4.1.3); distributed alignment
+/// falls back to centring.
+fn content_alignment(style: &Style, free: f32) -> f32 {
     use crate::style::Alignment;
-    let (factor, safe) = match style.flex.align_content {
-        Alignment::Center => (0.5, false),
-        Alignment::End | Alignment::FlexEnd => (1.0, false),
-        Alignment::SpaceAround | Alignment::SpaceEvenly => (0.5, true),
+    let factor = match style.flex.align_content {
+        Alignment::Center | Alignment::SpaceAround | Alignment::SpaceEvenly => 0.5,
+        Alignment::End | Alignment::FlexEnd => 1.0,
         _ => return 0.0,
     };
-    let safe = match style.flex.align_content_overflow {
-        crate::style::OverflowPosition::Default => safe || scroll_container,
-        overflow => overflow == crate::style::OverflowPosition::Safe,
-    };
-    if free < 0.0 && safe {
+    if free < 0.0 && style.flex.align_content_overflow != crate::style::OverflowPosition::Unsafe {
         return 0.0;
     }
     free * factor

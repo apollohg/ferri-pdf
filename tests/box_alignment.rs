@@ -141,6 +141,25 @@ fn grid_safe_alignment_starts_overflowing_items_and_tracks_at_the_inline_start()
 }
 
 #[test]
+fn block_container_content_overflows_safely_without_an_overflow_position() {
+    // CSS Box Alignment 3 §5.1.1: without an <overflow-position>, a block container's content
+    // alignment is safe, whether or not the container scrolls.
+    let body = "<section><div class=subject></div></section>";
+    let base = "section{height:20pt}.subject{height:60pt}";
+    for (css, y) in [
+        ("section{align-content:center}", ORIGIN),
+        ("section{align-content:end}", ORIGIN),
+        ("section{align-content:center;overflow:hidden}", ORIGIN),
+        ("section{align-content:safe end}", ORIGIN),
+        ("section{align-content:unsafe center}", ORIGIN - 20.0),
+        ("section{align-content:unsafe end}", ORIGIN - 40.0),
+    ] {
+        let rect = subject(&format!("{base}{css}"), body);
+        assert_labelled_pt(&format!("content y for {css}"), rect.y, y);
+    }
+}
+
+#[test]
 fn block_level_boxes_align_by_their_parent_justify_items_and_overflow_position() {
     let body = "<section><div class=subject></div></section>";
     let base = "section{width:100pt}.subject{width:160pt;height:10pt}";
