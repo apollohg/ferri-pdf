@@ -331,6 +331,26 @@ enum Subtree {
     /// The items of an absolutely positioned descendant of these elements' stacked boxes
     /// whose containing block lies outside them.
     Within(Rc<[crate::dom::ElementId]>),
+    /// The items of a cell of the table `table` originating in the grid slot `[column, row]`,
+    /// when backgrounds of the table's parts clip to text.
+    TableCell { table: usize, origin: [usize; 2] },
+    /// A track or track group background that a cell paints, which clips to the text of the
+    /// cells originating in its area (CSS Tables 3 §5.3.2, CSS Backgrounds 4 §2.8).
+    TableTracks(Rc<TableTracks>),
+}
+/// A table track or track group: the table's identity and the grid columns and rows it spans.
+#[derive(PartialEq)]
+struct TableTracks {
+    table: usize,
+    columns: std::ops::Range<usize>,
+    rows: std::ops::Range<usize>,
+}
+impl TableTracks {
+    /// Whether the cell `cell` marks is one of the track's.
+    fn holds(&self, cell: &Subtree) -> bool {
+        matches!(cell, Subtree::TableCell { table, origin: [column, row] }
+            if *table == self.table && self.columns.contains(column) && self.rows.contains(row))
+    }
 }
 /// How an element that `element()` images show renders.
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -3406,10 +3426,15 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             })
             .collect()
     }
-    /// Whether the current content lies below a box whose backgrounds clip to its text.
+    /// Whether the current content lies below a box or table cell whose text backgrounds may
+    /// clip to.
     fn within_text_area(&self) -> bool {
-        std::iter::successors(self.clip, |&node| self.clips[node].parent)
-            .any(|node| matches!(self.clips[node].effect, Effect::Subtree(Subtree::TextArea)))
+        std::iter::successors(self.clip, |&node| self.clips[node].parent).any(|node| {
+            matches!(
+                self.clips[node].effect,
+                Effect::Subtree(Subtree::TextArea | Subtree::TableCell { .. })
+            )
+        })
     }
     fn effect_node(&mut self, parent: Option<usize>, effect: Effect<'a>) -> usize {
         self.clips.push(EffectNode {
@@ -5577,52 +5602,61 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     .tables
                     .last()
                     .expect("table backgrounds have an active table");
-                self.underlays.insert(
-                    (page, slot),
-                    backgrounds
-                        .iter()
-                        .map(|background| {
-                            let ancestors = background.ancestors();
-                            let own = ancestors.iter().rposition(Option::is_some);
-                            let (scope, group, clip) = ancestors
-                                .iter()
-                                .enumerate()
-                                .rev()
-                                .find_map(|(index, source)| {
-                                    source
-                                        .and_then(|source| {
-                                            table.layers.get(&(std::ptr::from_ref(source) as usize))
-                                        })
-                                        .map(|layer| {
-                                            (
-                                                if Some(index) == own {
-                                                    layer.paint.background.clone()
-                                                } else {
-                                                    layer.paint.key.clone()
-                                                },
-                                                layer.group,
-                                                layer.clip,
-                                            )
-                                        })
-                                })
-                                .unwrap_or_else(|| (self.key.clone(), self.group, self.clip));
-                            ScopedPaint {
-                                native: None,
-                                visible: true,
-                                order: self.display_lists[page][slot].order.clone(),
-                                scope,
-                                clip,
-                                group,
-                                ink: None,
-                                item: DisplayItem::Box(background.paint(
-                                    rect,
-                                    &geometry.columns(table.flow.plan.source.style().used_rtl()),
-                                )),
-                                navigation: BoxNavigation::default(),
-                            }
-                        })
-                        .collect(),
-                );
+                let identity = std::ptr::from_ref(table.flow.plan.source) as usize;
+                let mut paints: Vec<ScopedPaint> = backgrounds
+                    .iter()
+                    .map(|background| {
+                        let ancestors = background.ancestors();
+                        let own = ancestors.iter().rposition(Option::is_some);
+                        let (scope, group, clip) = ancestors
+                            .iter()
+                            .enumerate()
+                            .rev()
+                            .find_map(|(index, source)| {
+                                source
+                                    .and_then(|source| {
+                                        table.layers.get(&(std::ptr::from_ref(source) as usize))
+                                    })
+                                    .map(|layer| {
+                                        (
+                                            if Some(index) == own {
+                                                layer.paint.background.clone()
+                                            } else {
+                                                layer.paint.key.clone()
+                                            },
+                                            layer.group,
+                                            layer.clip,
+                                        )
+                                    })
+                            })
+                            .unwrap_or_else(|| (self.key.clone(), self.group, self.clip));
+                        ScopedPaint {
+                            native: None,
+                            visible: true,
+                            order: self.display_lists[page][slot].order.clone(),
+                            scope,
+                            clip,
+                            group,
+                            ink: None,
+                            item: DisplayItem::Box(background.paint(
+                                rect,
+                                &geometry.columns(table.flow.plan.source.style().used_rtl()),
+                            )),
+                            navigation: BoxNavigation::default(),
+                        }
+                    })
+                    .collect();
+                for (paint, background) in paints.iter_mut().zip(backgrounds) {
+                    if let Some([columns, rows]) = background.text_tracks() {
+                        let tracks = Subtree::TableTracks(Rc::new(TableTracks {
+                            table: identity,
+                            columns,
+                            rows,
+                        }));
+                        paint.clip = Some(self.effect_node(paint.clip, Effect::Subtree(tracks)));
+                    }
+                }
+                self.underlays.insert((page, slot), paints);
                 let table = self
                     .tables
                     .last_mut()
@@ -6730,7 +6764,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         // Boxed, as is every value this frame holds across the nested navigables it lays out.
         let root_text_area = self
             .root_text_area
-            .map(|node| self.text_area(0, node, &regions).map(Box::new))
+            .map(|node| self.text_area(0, Some(node), None, &regions).map(Box::new))
             .transpose()?;
         let bounds = self.group_bounds();
         self.underlay_backdrops();

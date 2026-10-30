@@ -258,6 +258,9 @@ pub(crate) struct TablePlan<'a> {
     pub has_containing_ancestors: bool,
     pub has_structural_geometry: bool,
     pub has_scoped_internals: bool,
+    /// Whether the backgrounds of a cell, track or track group clip to text (CSS Backgrounds
+    /// 4 §2.8), which each cell's flow then marks.
+    pub clips_to_text: bool,
     pub has_height_constraints: bool,
     border_owners: Option<Vec<Option<usize>>>,
     containing_height: Option<f32>,
@@ -539,7 +542,17 @@ impl<'a> TablePlan<'a> {
             .chain(data.groups.iter().filter_map(|group| group.source))
             .chain(data.columns.iter().map(|column| column.source))
             .any(|source| structural_geometry(source.style()));
+        let clips_to_text = data
+            .columns
+            .iter()
+            .map(|column| column.source)
+            .chain(data.rows.iter().copied())
+            .chain(data.groups.iter().filter_map(|group| group.source))
+            .chain(data.cells.iter().copied())
+            .any(|source| source.style().decoration.backgrounds.clips_to_text());
+        // Text-clipped backgrounds paint with the cells' fragments, whose text they clip to.
         let has_scoped_internals = has_structural_geometry
+            || clips_to_text
             || data.collapsed_columns.iter().any(|&value| value)
             || data
                 .rows
@@ -597,6 +610,7 @@ impl<'a> TablePlan<'a> {
             has_containing_ancestors,
             has_structural_geometry,
             has_scoped_internals,
+            clips_to_text,
             has_height_constraints,
             border_owners,
             containing_height,
@@ -847,6 +861,11 @@ impl<'a> TablePlan<'a> {
     }
     pub(crate) fn cell_index(&self, source: &BlockBox) -> Option<usize> {
         self.cell_indices.get(&std::ptr::from_ref(source)).copied()
+    }
+    /// The column and row of the grid slot the cell originates in.
+    pub(crate) fn cell_origin(&self, index: usize) -> [usize; 2] {
+        let cell = &self.data.grid.cells[index];
+        [cell.column, cell.row]
     }
     pub(crate) fn cell_has_explicit_height(&self, index: usize) -> bool {
         self.data.cells[index]

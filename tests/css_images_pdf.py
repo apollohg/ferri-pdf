@@ -678,6 +678,26 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                 self.assertSameInterior(root, (page.format(clipped), body), (page.format('color:blue'), body),
                                         f'a page-margin box clips to its content\'s text: {page}')
 
+    def test_text_clips_table_layers_to_the_text_of_their_cells(self):
+        """CSS Backgrounds 4 §2.8 with CSS Tables 3 §5.3.2: each cell paints the backgrounds of
+        its column group, column, row group and row, then its own; a text-clipped layer paints
+        within the text of the cells originating in its track or group, so the topmost layer
+        present fills each cell's text. Edges are not compared, as for every text clip."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-table-text-clip-') as directory:
+            root = Path(directory)
+            # Each cell's second class names the colour its text shows.
+            table = ('<table><colgroup class=cg><col class=k><col></colgroup><col>'
+                     '<tbody class=g><tr><td class=gr>Group<td class=gr>two<td class=gr>three</tr></tbody>'
+                     '<tbody><tr class=r><td class=b>Row<td class=b>Rows<td class=b>Rowed</tr>'
+                     '<tr><td class="c re">Cell<td class=p>none<td>last</tr>'
+                     '<tr><td class=o>Col<td class=p>Grp<td>x</tr></tbody></table>')
+            shared = 'table{font-size:16pt;border-spacing:4pt;color:transparent}'
+            clipped = ('.cg{background:purple}.k{background:orange}.g{background:green}.r{background:blue}'
+                       '.c{background:red}.cg,.k,.g,.r,.c{background-clip:text}')
+            colored = '.o{color:orange}.p{color:purple}.gr{color:green}.b{color:blue}.re{color:red}'
+            self.assertSameInterior(root, (shared + clipped, table), (shared + colored, table),
+                                    'cells fill their text with the topmost text-clipped table layer')
+
     def assertInkSize(self, root, css, body, expected, message):
         """Everything not white on the first page spans `expected` CSS pixels. Resolutions that
         are not exact binary fractions, and the whole pixels per metre PNG records, leave an

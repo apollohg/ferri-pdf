@@ -130,6 +130,15 @@ impl<'a> FragmentBackground<'a> {
     pub(crate) fn ancestors(&self) -> [Option<&'a BlockBox>; 2] {
         self.source.ancestors
     }
+    /// The columns and rows of the track or track group whose background this is, when its
+    /// background clips to the text of the cells originating there.
+    pub(crate) fn text_tracks(&self) -> Option<[Range<usize>; 2]> {
+        self.source
+            .decoration
+            .backgrounds
+            .clips_to_text()
+            .then(|| [self.source.columns.clone(), self.source.rows.clone()])
+    }
     pub(super) fn new(source: CellBackground<'a>, data: &Data<'a>) -> Self {
         let rows = source.rows(data);
         let cell = &data.grid.cells[source.cell];

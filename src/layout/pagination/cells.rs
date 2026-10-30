@@ -384,6 +384,16 @@ impl<'a> Paginator<'a, '_, 'a> {
         let mut parent = self.flow_position();
         if table_cell {
             self.enter_table_layers(layers);
+            if let Some(plan) = self.tables.last().map(|table| &table.flow.plan)
+                && plan.clips_to_text
+                && let Some(index) = plan.cell_index(block.source)
+            {
+                let cell = Subtree::TableCell {
+                    table: std::ptr::from_ref(plan.source) as usize,
+                    origin: plan.cell_origin(index),
+                };
+                self.clip = Some(self.effect_node(self.clip, Effect::Subtree(cell)));
+            }
         }
         let depths = BranchDepths {
             boxes: self.boxes.len(),
