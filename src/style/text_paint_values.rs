@@ -192,13 +192,18 @@ impl EmphasisPosition {
         }
         Ok(position)
     }
-    /// Whether marks sit under horizontal text of content language `language`.
-    pub(crate) fn under(self, language: &str) -> bool {
+    /// Whether marks sit on the line-under side of text with style `style`: `over` and
+    /// `under` place them in horizontal typographic modes, `left` and `right` in vertical
+    /// ones, whose line-under side is the left (CSS Text Decoration 4 §3.4).
+    pub(crate) fn under(self, style: &crate::style::Style) -> bool {
         const CHINESE: &str = "zh";
+        if style.vertical_typographic_mode() {
+            return self.left;
+        }
         match self.side {
             EmphasisSide::Over => false,
             EmphasisSide::Under => true,
-            EmphasisSide::Auto => crate::style::has_primary_language(language, CHINESE),
+            EmphasisSide::Auto => crate::style::has_primary_language(&style.language, CHINESE),
         }
     }
 }

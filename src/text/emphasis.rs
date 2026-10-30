@@ -108,7 +108,7 @@ pub(super) fn leading(
     let base = BoxMetrics::of(context, style)?;
     let mark = BoxMetrics::of(context, &mark_style(style))?;
     let extra = mark.ascent + mark.descent + base.ascent + base.descent - base.line_height();
-    let under = style.text_paint.emphasis_position.under(&style.language);
+    let under = style.text_paint.emphasis_position.under(style);
     Ok((extra > 0.0).then_some((extra, under)))
 }
 
@@ -148,7 +148,7 @@ pub(super) fn place(
         let base = BoxMetrics::of(context, style)?;
         let metrics = BoxMetrics::of(context, &mark_style)?;
         let baseline = run.baseline_shift
-            + if style.text_paint.emphasis_position.under(&style.language) {
+            + if style.text_paint.emphasis_position.under(style) {
                 base.descent + metrics.ascent
             } else {
                 -(base.ascent + metrics.descent)

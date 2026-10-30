@@ -334,3 +334,37 @@ fn combined_emphasis_uses_one_object_replacement_character_for_skip_rules() {
         }
     }
 }
+
+#[test]
+fn emphasis_marks_take_their_side_from_left_and_right_in_vertical_typographic_modes() {
+    for (mode, orientation, position, under) in [
+        ("vertical-rl", "mixed", "over right", false),
+        ("vertical-rl", "mixed", "over left", true),
+        ("vertical-lr", "upright", "under right", false),
+        ("vertical-lr", "upright", "under left", true),
+        ("vertical-rl", "sideways", "under left", true),
+        ("vertical-rl", "sideways", "over left", false),
+        ("sideways-rl", "mixed", "under right", true),
+        ("horizontal-tb", "mixed", "under right", true),
+    ] {
+        let trace = render(
+            mode,
+            &format!(
+                "text-orientation:{orientation};text-emphasis:'Ａ';\
+                 text-emphasis-position:{position}"
+            ),
+            "<p>ＡＡ</p>",
+        );
+        let shifts: Vec<f32> = trace.pages[0][0]
+            .runs
+            .iter()
+            .flat_map(|run| &run.marks)
+            .map(|mark| mark.baseline_shift)
+            .collect();
+        assert!(
+            !shifts.is_empty() && shifts.iter().all(|shift| (*shift > 0.0) == under),
+            "{mode}/{orientation}/{position}: marks must sit on the line-{} side, shifts {shifts:?}",
+            if under { "under" } else { "over" }
+        );
+    }
+}
