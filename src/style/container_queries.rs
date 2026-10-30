@@ -106,7 +106,8 @@ impl QueryContainer {
     }
 }
 
-/// Query containers' unzoomed content-box sizes, measured by layout and consulted by styling.
+/// The unzoomed content-box sizes of query containers and of the containing blocks of initial
+/// letters that their padding sizes, measured by layout and consulted by styling.
 #[derive(Clone, Default)]
 pub(crate) struct QuerySizes {
     /// Sizes the previous layout pass measured.
@@ -115,7 +116,8 @@ pub(crate) struct QuerySizes {
     consulted: RefCell<HashMap<ElementId, Option<[f32; 2]>>>,
 }
 impl QuerySizes {
-    fn size(&self, element: ElementId) -> Option<[f32; 2]> {
+    /// The size the previous layout pass measured for `element`, which a layout must reproduce.
+    pub(crate) fn size(&self, element: ElementId) -> Option<[f32; 2]> {
         let size = self.known.get(&element).copied();
         self.consulted.borrow_mut().insert(element, size);
         size

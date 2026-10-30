@@ -26,16 +26,6 @@ fn render(css: &str, body: &str) -> crate::LayoutTrace {
     .expect("layout requested")
 }
 
-fn render_error(css: &str, body: &str) -> String {
-    match render_html(
-        &format!("<style>{PROFILE}{css}</style>{body}"),
-        &local_options(),
-    ) {
-        Ok(_) => panic!("expected the render to fail\ncss: {css}\nbody: {body}"),
-        Err(error) => error.to_string(),
-    }
-}
-
 /// The profile face's metrics in em: cap height (the top of `H`, as it has no OS/2 cap
 /// height), ascent and descent.
 struct Font {
@@ -656,14 +646,53 @@ fn letters_too_long_for_a_line_wrap_each_line_as_a_letter() {
 }
 
 #[test]
-fn letters_needing_layout_to_size_are_unsupported() {
-    let error = render_error(
-        "p::first-letter{initial-letter:2;initial-letter-align:border-box;padding:5%}",
-        "<p>Text</p>",
+fn percentage_padding_sizes_letters_against_their_containing_block() {
+    const PARAGRAPH_WIDTH: f32 = 200.0;
+    const PERCENT: f32 = 5.0;
+    let padding = PARAGRAPH_WIDTH * PERCENT / 100.0;
+    let body = format!("<p><span></span>{TEXT}</p>");
+    // Border-box alignment fits the font inside the letter's padding (CSS Inline 3 §7.4).
+    let inline = |padding: &str| {
+        let trace = render(
+            &format!(
+                "p{{width:{PARAGRAPH_WIDTH}pt}}p::first-letter{{initial-letter:2;\
+                 initial-letter-align:border-box;padding:{padding}}}"
+            ),
+            &format!("<p>{TEXT}</p>"),
+        );
+        split(&trace, "L").0.runs[0].font_size
+    };
+    let percentage = inline(&format!("{PERCENT}%"));
+    assert_labelled_pt(
+        "a percentage of the paragraph's width sizes an inline letter like that length",
+        percentage,
+        inline(&format!("{padding}pt")),
     );
     assert!(
-        error.contains("percentage block-axis padding"),
-        "expected an error naming percentage padding, got {error:?}"
+        percentage < inline("0pt") - 1.0,
+        "the padding shrinks the letter: {percentage} pt"
+    );
+    // An atomic letter's automatic block size spans its lines with its border box (§7.5.5).
+    let atomic = |padding: &str| {
+        let trace = render(
+            &format!(
+                "p{{width:{PARAGRAPH_WIDTH}pt}}span{{display:inline-block;initial-letter:2;\
+                 background:lime;width:20pt;padding:{padding}}}"
+            ),
+            &body,
+        );
+        painted_box(&trace, LIME).height
+    };
+    let height = atomic(&format!("{PERCENT}%"));
+    assert_labelled_pt(
+        "a percentage of the paragraph's width sizes an atomic letter like that length",
+        height,
+        atomic(&format!("{padding}pt")),
+    );
+    assert_labelled_pt(
+        "its border box spans the letter's lines",
+        height,
+        LINE_HEIGHT + Font::profile().cap * FONT_SIZE,
     );
 }
 

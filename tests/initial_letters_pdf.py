@@ -148,6 +148,23 @@ class InitialLettersPdf(unittest.TestCase):
                     self.assertEqual(ink(end(last) + edge, last), LIME_INK,
                                      'the last fragment has its end padding')
 
+    def test_percentage_padding_sizes_a_border_box_letter_by_its_containing_block(self):
+        """Border-box alignment fits the letter's font inside its block-axis padding (CSS Inline
+        3 §7.4), whose percentages refer to the paragraph's width."""
+        sizes = {}
+        for padding in ('5%', '10pt', '0pt'):
+            with tempfile.TemporaryDirectory(prefix='ferri-pdf-letter-padding-') as directory:
+                glyphs = self.render(Path(directory),
+                                     'p{width:200pt;margin:0}p::first-letter{initial-letter:2;'
+                                     f'initial-letter-align:border-box;padding:{padding};color:red}}',
+                                     f'<p>{TEXT}</p>')
+            letter = [glyph for glyph in glyphs if glyph.fill == RED]
+            self.assertEqual([glyph.text for glyph in letter], ['L'])
+            sizes[padding] = letter[0].matrix[3]
+        self.assertAlmostEqual(sizes['5%'], sizes['10pt'], delta=TOLERANCE,
+                               msg='5% of the 200pt paragraph pads like 10pt')
+        self.assertLess(sizes['5%'], sizes['0pt'] - 1, 'the padding shrinks the letter')
+
     def test_first_letter_and_first_line_style_their_text(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-first-line-') as directory:
             glyphs = self.render(Path(directory),
