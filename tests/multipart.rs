@@ -96,3 +96,55 @@ fn custom_resolver_receives_each_parts_base_without_fetching_link_targets() {
         ]
     );
 }
+
+/// Boxes that overflow their part's page, as content-sized indexes with `height: 100%` do.
+#[test]
+fn parts_whose_boxes_overflow_the_page_render_like_single_documents() {
+    const INDEX: &str = "<style>@page{size:A4;margin:1.5cm}html,body{font-size:12pt;margin:0;height:100%}\
+        .row{display:flex;font-weight:bold}a{display:flex;flex:1 1 auto}\
+        a>span:last-child{display:block;flex:1 1 auto;border-bottom:1pt dotted black}</style>\
+        <h2>Index</h2><div><div class=row><a href='#alpha'><span>Alpha</span><span></span></a><span>1</span></div>\
+        <div class=row><a href='#beta'><span>Beta</span><span></span></a><span>2</span></div></div>";
+    let cases: [&[&str]; 9] = [
+        &["<style>body { height: 100vh }</style>"],
+        &["<style>body { height: calc(100vh + 1px); margin: 0 }</style>"],
+        &["<div style='height: 200vh'></div>"],
+        &["<style>html, body { height: 100% }</style>"],
+        &["<style>html, body { height: 100% }</style><p>a</p>"],
+        &[
+            "<style>html, body { height: 100% }</style><p>a</p>",
+            "<p>b</p>",
+        ],
+        &["<style>body { height: 100vh }</style><p>a</p>", "<p>b</p>"],
+        &[INDEX],
+        &[
+            "<p>cover</p>",
+            INDEX,
+            "<h1 id=alpha>Alpha</h1><h2 id=beta>Beta</h2>",
+        ],
+    ];
+    let options = ferri_pdf::RenderOptions::default();
+    for parts in cases {
+        let rendered = render_parts(
+            &parts
+                .iter()
+                .copied()
+                .map(HtmlPart::from_html)
+                .collect::<Vec<_>>(),
+            &options,
+        )
+        .unwrap_or_else(|error| panic!("{parts:?} must render: {error}"));
+        let alone: usize = parts
+            .iter()
+            .map(|html| {
+                ferri_pdf::render_html(html, &options)
+                    .unwrap_or_else(|error| panic!("{html:?} must render alone: {error}"))
+                    .page_count
+            })
+            .sum();
+        assert_eq!(
+            rendered.page_count, alone,
+            "{parts:?}: parts paginate as their documents do alone"
+        );
+    }
+}
