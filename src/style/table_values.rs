@@ -45,29 +45,41 @@ pub(crate) enum VerticalAlign {
     TextBottom,
     Length(LengthPercentage),
 }
+/// How a table cell's content aligns within its rows: first-baseline cells share their
+/// startmost row and last-baseline cells their endmost row (CSS Box Alignment 3 §5.4).
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub(crate) enum CellAlignment {
+    Top,
+    Middle,
+    Bottom,
+    Baseline,
+    LastBaseline,
+}
 impl VerticalAlign {
     /// Table cells honour only `top`, `middle` and `bottom`; other values align at the baseline.
-    #[must_use]
-    pub(crate) fn cell(&self) -> Self {
+    fn cell(&self) -> CellAlignment {
         match self {
-            Self::Top | Self::Middle | Self::Bottom => self.clone(),
-            _ => Self::Baseline,
+            Self::Top => CellAlignment::Top,
+            Self::Middle => CellAlignment::Middle,
+            Self::Bottom => CellAlignment::Bottom,
+            _ => CellAlignment::Baseline,
         }
     }
 }
 impl Style {
     /// How a table cell aligns its content: by `align-content` other than `normal`, which
     /// otherwise takes its `vertical-align` (CSS Box Alignment 3 §5.1.1).
-    pub(crate) fn cell_alignment(&self) -> VerticalAlign {
+    pub(crate) fn cell_alignment(&self) -> CellAlignment {
         use crate::style::Alignment;
         match self.flex.align_content {
             Alignment::Normal | Alignment::Auto => self.table.vertical_align.cell(),
             Alignment::Center | Alignment::SpaceAround | Alignment::SpaceEvenly => {
-                VerticalAlign::Middle
+                CellAlignment::Middle
             }
-            Alignment::End | Alignment::FlexEnd => VerticalAlign::Bottom,
-            Alignment::Baseline => VerticalAlign::Baseline,
-            _ => VerticalAlign::Top,
+            Alignment::End | Alignment::FlexEnd => CellAlignment::Bottom,
+            Alignment::Baseline => CellAlignment::Baseline,
+            Alignment::LastBaseline => CellAlignment::LastBaseline,
+            _ => CellAlignment::Top,
         }
     }
 }

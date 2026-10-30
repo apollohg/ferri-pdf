@@ -2515,7 +2515,8 @@ fn content_alignment(style: &Style, free: f32) -> f32 {
     use crate::style::Alignment;
     let factor = match style.flex.align_content {
         Alignment::Center | Alignment::SpaceAround | Alignment::SpaceEvenly => 0.5,
-        Alignment::End | Alignment::FlexEnd => 1.0,
+        // A lone box has no baseline-sharing group: last baseline falls back to safe end.
+        Alignment::End | Alignment::FlexEnd | Alignment::LastBaseline => 1.0,
         _ => return 0.0,
     };
     if free < 0.0 && style.flex.align_content_overflow != crate::style::OverflowPosition::Unsafe {

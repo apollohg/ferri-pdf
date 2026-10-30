@@ -9,6 +9,7 @@ const MAX_ITEM_METRICS: usize = 4096;
 pub(crate) struct ItemMetrics {
     pub height: f32,
     pub baseline: Option<f32>,
+    pub last_baseline: Option<f32>,
     pub grid_baselines: Option<std::rc::Rc<[crate::layout::grid::BaselineContribution]>>,
     pub grid_rows: Option<std::rc::Rc<[crate::grid::SizingItem]>>,
 }
@@ -19,6 +20,9 @@ impl ItemMetrics {
             // CSS Containment 2 §3.2: a layout containment box has no baseline.
             baseline: block
                 .first_baseline()
+                .filter(|_| !block.style.containment().layout),
+            last_baseline: block
+                .last_baseline()
                 .filter(|_| !block.style.containment().layout),
             grid_baselines: block
                 .grid
@@ -31,7 +35,15 @@ impl ItemMetrics {
         }
     }
     pub(crate) fn baseline_from_start(&self, reverse: bool) -> f32 {
-        let baseline = self.baseline.unwrap_or(self.height);
+        self.measured_from_start(self.baseline, reverse)
+    }
+    /// The last baseline, synthesized from the border box's line-under edge where the box
+    /// has none (CSS Box Alignment 3 §9.1).
+    pub(crate) fn last_baseline_from_start(&self, reverse: bool) -> f32 {
+        self.measured_from_start(self.last_baseline, reverse)
+    }
+    fn measured_from_start(&self, baseline: Option<f32>, reverse: bool) -> f32 {
+        let baseline = baseline.unwrap_or(self.height);
         if reverse {
             self.height - baseline
         } else {

@@ -112,6 +112,8 @@ pub(crate) fn spacing(
     }
     match alignment {
         Alignment::End | Alignment::FlexEnd => (free, 0.0),
+        // The safe end fallback of last-baseline alignment (CSS Box Alignment 3 §4.2).
+        Alignment::LastBaseline if free > 0.0 => (free, 0.0),
         Alignment::Center => (free / 2.0, 0.0),
         Alignment::SpaceBetween if count > 1 && free > 0.0 => (0.0, free / (count - 1) as f32),
         Alignment::SpaceAround if free > 0.0 => (free / (2 * count) as f32, free / count as f32),

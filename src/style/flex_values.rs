@@ -66,6 +66,8 @@ pub(crate) enum Alignment {
     Stretch,
     /// First-baseline alignment.
     Baseline,
+    /// Last-baseline alignment (CSS Box Alignment 3 §4.2).
+    LastBaseline,
     SpaceBetween,
     SpaceAround,
     SpaceEvenly,
@@ -75,7 +77,7 @@ pub(crate) enum Alignment {
 }
 impl Alignment {
     /// An alignment and its `<overflow-position>`; each property's grammar admits only its
-    /// own keywords, and `last` baselines are not modelled.
+    /// own keywords.
     pub(crate) fn from_component(
         value: &Component,
     ) -> Result<(Self, OverflowPosition), StyleError> {
@@ -113,6 +115,7 @@ impl Alignment {
             [Keyword::Center] => Self::Center,
             [Keyword::Stretch] => Self::Stretch,
             [Keyword::Baseline] | [Keyword::First, Keyword::Baseline] => Self::Baseline,
+            [Keyword::Last, Keyword::Baseline] => Self::LastBaseline,
             [Keyword::SpaceBetween] => Self::SpaceBetween,
             [Keyword::SpaceAround] => Self::SpaceAround,
             [Keyword::SpaceEvenly] => Self::SpaceEvenly,

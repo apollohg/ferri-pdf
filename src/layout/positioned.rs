@@ -71,6 +71,9 @@ impl StaticAlignment {
             | Alignment::SpaceEvenly => free / 2.0,
             Alignment::End | Alignment::SelfEnd | Alignment::Right => free,
             Alignment::FlexEnd => end,
+            // The safe end fallback of last-baseline alignment (CSS Box Alignment 3 §4.2).
+            Alignment::LastBaseline if free < 0.0 => start,
+            Alignment::LastBaseline => end,
             Alignment::Start | Alignment::SelfStart | Alignment::Left => 0.0,
             Alignment::Auto
             | Alignment::Normal

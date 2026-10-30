@@ -151,8 +151,11 @@ pub(crate) fn measure<'a>(
             })
         })?;
         baselines.push(
-            area[ROWS].start,
-            item.baseline(&measured, cyclic_tracks[index]),
+            &area[ROWS],
+            [
+                item.baseline(&measured, cyclic_tracks[index]),
+                item.last_descent(&measured, cyclic_tracks[index]),
+            ],
         );
         let constraints = item.height(fixed_heights[index]);
         let margins = item.margins[0].unwrap_or(0.0) + item.margins[2].unwrap_or(0.0);
@@ -226,7 +229,7 @@ pub(crate) fn measure<'a>(
     }
     let mut baseline_items = Vec::new();
     for (index, contribution) in contributions.iter_mut().enumerate() {
-        super::items::add_baseline_shim(contribution, baselines.offset(index));
+        super::items::add_baseline_shim(contribution, baselines.shim(index));
         let (row, baseline) = baselines.items[index];
         if baseline.is_some() {
             baseline_items.push(super::BaselineContribution {
@@ -308,6 +311,9 @@ pub(crate) fn measure<'a>(
     let mut cells = Vec::with_capacity(prepared.len());
     let mut final_baselines = Baselines::new(plan.topology.placement.tracks[ROWS]);
     final_baselines.groups.clone_from(&baselines.groups);
+    final_baselines
+        .last_groups
+        .clone_from(&baselines.last_groups);
     for (index, (item, area)) in prepared
         .into_iter()
         .zip(&plan.topology.placement.areas)
@@ -335,9 +341,13 @@ pub(crate) fn measure<'a>(
             [Some(rows.clone()), Some(columns.clone())],
         );
         let measured = item.measure_area(measurer, available)?;
+        let metrics = ItemMetrics::of(&measured);
         final_baselines.push(
-            area[ROWS].start,
-            item.baseline(&ItemMetrics::of(&measured), cyclic_tracks[index]),
+            &area[ROWS],
+            [
+                item.baseline(&metrics, cyclic_tracks[index]),
+                item.last_descent(&metrics, cyclic_tracks[index]),
+            ],
         );
         let offset = range.start + item.top(available, measured.height);
         cells.push(MeasuredCell {

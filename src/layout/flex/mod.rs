@@ -184,6 +184,8 @@ pub(super) fn alignment(value: Alignment, reverse: bool) -> Alignment {
         (Alignment::Start, true) => Alignment::End,
         (Alignment::End, true) => Alignment::Start,
         (Alignment::Normal | Alignment::Auto | Alignment::Stretch, _) => Alignment::Start,
+        // The safe end fallback of last-baseline alignment (CSS Box Alignment 3 §4.2).
+        (Alignment::LastBaseline, true) => Alignment::Start,
         _ => value,
     }
 }
@@ -526,6 +528,8 @@ pub(super) fn measure<'a>(
         measured: Vec<Metrics>,
         cross: f32,
         baseline: f32,
+        /// The extent below the last-baseline group's baseline, to the line's cross end.
+        last_descent: f32,
     }
     let mut struts: Option<Vec<f32>> = None;
     let trimmed = style.margin_trim.sides(style.used_rtl());
@@ -588,6 +592,7 @@ pub(super) fn measure<'a>(
             let mut cross = 0.0f32;
             let mut baseline = 0.0f32;
             let mut descent = 0.0f32;
+            let [mut last_ascent, mut last_descent] = [0.0f32; 2];
             for (local, index) in range.clone().enumerate() {
                 let item = &data[index];
                 if numeric[index].collapsed {
@@ -597,6 +602,7 @@ pub(super) fn measure<'a>(
                         grid_baselines: None,
                         height: 0.0,
                         baseline: None,
+                        last_baseline: None,
                     });
                     continue;
                 }
@@ -623,15 +629,29 @@ pub(super) fn measure<'a>(
                     baseline = baseline.max(first + margins[start]);
                     descent = descent.max(child.height - first + margins[1 - start]);
                 }
+                // CSS Box Alignment 3 §9.3: last-baseline items align their last baselines
+                // as a group at the line's cross end, their fallback alignment.
+                if !column
+                    && item.align == Alignment::LastBaseline
+                    && cross_sides.iter().all(|&side| item.margins[side].is_some())
+                {
+                    let last = child.last_baseline_from_start(cross_reverse);
+                    let start = usize::from(cross_reverse);
+                    last_ascent = last_ascent.max(last + margins[start]);
+                    last_descent = last_descent.max(child.height - last + margins[1 - start]);
+                }
                 measured.push(child);
             }
-            cross = cross.max(baseline + descent);
+            cross = cross
+                .max(baseline + descent)
+                .max(last_ascent + last_descent);
             lines.push(FlexLine {
                 range,
                 resolved,
                 measured,
                 cross,
                 baseline,
+                last_descent,
             });
         }
         let natural_cross = lines.iter().map(|line| line.cross).sum::<f32>()
@@ -756,6 +776,8 @@ pub(super) fn measure<'a>(
                 }
             } else if item.align == Alignment::Baseline && !column {
                 line.baseline - preliminary.baseline_from_start(cross_reverse)
+            } else if item.align == Alignment::LastBaseline && !column {
+                line.cross - line.last_descent - preliminary.last_baseline_from_start(cross_reverse)
             } else {
                 margin_start
                     + spacing(

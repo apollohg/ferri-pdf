@@ -1,4 +1,4 @@
-use crate::style::{BoxSizing, Size, SizeConstraints, VerticalAlign};
+use crate::style::{BoxSizing, CellAlignment, Size, SizeConstraints};
 use crate::table::{Grid, TableError, finite, grow};
 use std::ops::Range;
 
@@ -36,8 +36,10 @@ impl HeightConstraint {
 #[derive(Clone)]
 pub(crate) struct CellHeight {
     pub height: f32,
+    /// The first and last baselines, from the border-box top.
     pub baseline: f32,
-    pub align: VerticalAlign,
+    pub last_baseline: f32,
+    pub align: CellAlignment,
     pub constraint: HeightConstraint,
 }
 
@@ -97,14 +99,24 @@ impl Grid {
         finite(input.table.specified)?;
         finite(input.table.maximum)?;
         let mut baselines = vec![0.0f32; self.rows];
+        // The deepest extent below the last baselines of the cells ending in each row.
+        let mut descents = vec![0.0f32; self.rows];
         let mut auto = vec![true; self.rows];
         for (row, constraint) in input.rows.iter().enumerate() {
             auto[row] = constraint.is_auto();
         }
+        let end_row = |cell: &crate::table::Cell| cell.row + cell.rows - 1;
         for (cell, measure) in self.cells.iter().zip(cells) {
-            finite([measure.height, measure.baseline])?;
-            if measure.align == VerticalAlign::Baseline {
-                baselines[cell.row] = baselines[cell.row].max(measure.baseline);
+            finite([measure.height, measure.baseline, measure.last_baseline])?;
+            match measure.align {
+                CellAlignment::Baseline => {
+                    baselines[cell.row] = baselines[cell.row].max(measure.baseline);
+                }
+                CellAlignment::LastBaseline => {
+                    let end = end_row(cell);
+                    descents[end] = descents[end].max(measure.height - measure.last_baseline);
+                }
+                CellAlignment::Top | CellAlignment::Middle | CellAlignment::Bottom => {}
             }
             if !measure.constraint.is_auto() {
                 auto[cell.row..cell.row + cell.rows].fill(false);
@@ -118,6 +130,15 @@ impl Grid {
             .map(|(index, _)| index)
             .collect();
         spanning.sort_by_key(|&index| self.cells[index].rows);
+        // The space baseline alignment adds above and below a cell's content.
+        let shims = |cell: &crate::table::Cell, measure: &CellHeight| match measure.align {
+            CellAlignment::Baseline => [baselines[cell.row] - measure.baseline, 0.0],
+            CellAlignment::LastBaseline => [
+                0.0,
+                descents[end_row(cell)] - (measure.height - measure.last_baseline),
+            ],
+            CellAlignment::Top | CellAlignment::Middle | CellAlignment::Bottom => [0.0; 2],
+        };
         let measure_rows = |basis: Option<f32>| -> Result<Vec<f32>, TableError> {
             let mut heights = vec![0.0f32; self.rows];
             for (row, constraint) in input.rows.iter().enumerate() {
@@ -127,13 +148,9 @@ impl Grid {
             }
             for (cell, measure) in self.cells.iter().zip(cells) {
                 if cell.rows == 1 && !hidden(cell.row) {
-                    let baseline = if measure.align == VerticalAlign::Baseline {
-                        baselines[cell.row] - measure.baseline
-                    } else {
-                        0.0
-                    };
+                    let shim: f32 = shims(cell, measure).iter().sum();
                     heights[cell.row] = heights[cell.row]
-                        .max(measure.constraint.outer(measure.height, basis)? + baseline);
+                        .max(measure.constraint.outer(measure.height, basis)? + shim);
                 }
             }
             for &index in &spanning {
@@ -145,12 +162,8 @@ impl Grid {
                     continue;
                 }
                 let height = heights[range.clone()].iter().sum::<f32>() + span_spacing(range);
-                let baseline = if measure.align == VerticalAlign::Baseline {
-                    baselines[cell.row] - measure.baseline
-                } else {
-                    0.0
-                };
-                let required = measure.constraint.outer(measure.height, basis)? + baseline;
+                let shim: f32 = shims(cell, measure).iter().sum();
+                let required = measure.constraint.outer(measure.height, basis)? + shim;
                 let mut tracks: Vec<f32> = open.iter().map(|&row| heights[row]).collect();
                 grow(&mut tracks, (required - height).max(0.0));
                 for (row, track) in open.into_iter().zip(tracks) {
@@ -220,16 +233,13 @@ impl Grid {
                 }
                 let height = heights[rows.clone()].iter().sum::<f32>() + span_spacing(rows);
                 match measure.align {
-                    VerticalAlign::Top => 0.0,
-                    VerticalAlign::Middle => (height - measure.height) / 2.0,
-                    VerticalAlign::Bottom => height - measure.height,
-                    VerticalAlign::Baseline
-                    | VerticalAlign::BaselineMiddle
-                    | VerticalAlign::Sub
-                    | VerticalAlign::Super
-                    | VerticalAlign::TextTop
-                    | VerticalAlign::TextBottom
-                    | VerticalAlign::Length(_) => baselines[cell.row] - measure.baseline,
+                    CellAlignment::Top => 0.0,
+                    CellAlignment::Middle => (height - measure.height) / 2.0,
+                    CellAlignment::Bottom => height - measure.height,
+                    CellAlignment::Baseline => shims(cell, measure)[0],
+                    CellAlignment::LastBaseline => {
+                        height - measure.height - shims(cell, measure)[1]
+                    }
                 }
             })
             .collect::<Vec<_>>();
@@ -269,7 +279,8 @@ mod tests {
         let cells = [10.0, 30.0].map(|height| CellHeight {
             height,
             baseline: 0.0,
-            align: VerticalAlign::Top,
+            last_baseline: 0.0,
+            align: CellAlignment::Top,
             constraint: HeightConstraint::default(),
         });
         let length = |value| HeightConstraint {
@@ -323,7 +334,8 @@ mod tests {
         let cells = [10.0, 30.0].map(|height| CellHeight {
             height,
             baseline: 0.0,
-            align: VerticalAlign::Top,
+            last_baseline: 0.0,
+            align: CellAlignment::Top,
             constraint: HeightConstraint::default(),
         });
         for (specified, minimum, maximum, expected) in [
@@ -408,7 +420,8 @@ mod tests {
                 CellHeight {
                     height: natural,
                     baseline: 0.0,
-                    align: VerticalAlign::Bottom,
+                    last_baseline: 0.0,
+                    align: CellAlignment::Bottom,
                     constraint: HeightConstraint {
                         specified: Size::Value(LengthPercentage::Length(40.0)),
                         minimum,
@@ -420,7 +433,8 @@ mod tests {
                 CellHeight {
                     height: 30.0,
                     baseline: 0.0,
-                    align: VerticalAlign::Top,
+                    last_baseline: 0.0,
+                    align: CellAlignment::Top,
                     constraint: HeightConstraint::default(),
                 },
             ];
@@ -471,19 +485,22 @@ mod tests {
                 CellHeight {
                     height: spanning,
                     baseline: 0.0,
-                    align: VerticalAlign::Top,
+                    last_baseline: 0.0,
+                    align: CellAlignment::Top,
                     constraint: HeightConstraint::default(),
                 },
                 CellHeight {
                     height: natural[0],
                     baseline: 0.0,
-                    align: VerticalAlign::Middle,
+                    last_baseline: 0.0,
+                    align: CellAlignment::Middle,
                     constraint: HeightConstraint::default(),
                 },
                 CellHeight {
                     height: natural[1],
                     baseline: 0.0,
-                    align: VerticalAlign::Bottom,
+                    last_baseline: 0.0,
+                    align: CellAlignment::Bottom,
                     constraint: HeightConstraint::default(),
                 },
             ];

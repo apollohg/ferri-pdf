@@ -171,7 +171,7 @@ pub(crate) use stylesheet::Stylesheet;
 #[cfg(test)]
 pub(crate) use stylesheet::StylesheetSource;
 pub(crate) use table_values::{
-    BorderCollapse, CaptionSide, TableLayout, TableStyle, VerticalAlign,
+    BorderCollapse, CaptionSide, CellAlignment, TableLayout, TableStyle, VerticalAlign,
 };
 pub(crate) use text_paint_values::{
     EmphasisPosition, EmphasisShape, EmphasisSkip, EmphasisStyle, InheritedColor, TextPaint,

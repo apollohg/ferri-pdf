@@ -71,6 +71,7 @@ pub(crate) fn cell_height(measured: &MeasuredBlock<'_>) -> CellHeight {
     CellHeight {
         height: measured.height,
         baseline: measured.first_baseline().unwrap_or(measured.height),
+        last_baseline: measured.last_baseline().unwrap_or(measured.height),
         align: measured.style.cell_alignment(),
         constraint: HeightConstraint {
             specified: measured.style.height.clone(),
@@ -1244,8 +1245,8 @@ impl<'a> TablePlan<'a> {
             {
                 let extra = (extent - spacing - alignment.content_height).max(0.0);
                 return match self.data.cells[index].style().cell_alignment() {
-                    crate::style::VerticalAlign::Middle => extra / 2.0,
-                    crate::style::VerticalAlign::Bottom => extra,
+                    crate::style::CellAlignment::Middle => extra / 2.0,
+                    crate::style::CellAlignment::Bottom => extra,
                     _ => alignment
                         .offset
                         .min((extent - spacing - alignment.first_fragment).max(0.0)),
@@ -1356,7 +1357,8 @@ impl<'a> TablePlan<'a> {
                             .max(0.0)
                     }),
                 baseline: 0.0,
-                align: crate::style::VerticalAlign::Top,
+                last_baseline: 0.0,
+                align: crate::style::CellAlignment::Top,
                 constraint: HeightConstraint::default(),
             })
             .collect::<Vec<_>>();

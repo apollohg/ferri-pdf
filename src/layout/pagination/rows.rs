@@ -600,7 +600,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             };
             if let Some(index) = cell.grid_cell
                 && cell.stretch
-                && cell.block.style.cell_alignment() != crate::style::VerticalAlign::Top
+                && cell.block.style.cell_alignment() != crate::style::CellAlignment::Top
                 && let Some((page, y)) = paint_start
             {
                 let band = row.band.as_ref().expect("table cells belong to a band");

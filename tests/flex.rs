@@ -227,21 +227,31 @@ fn parallel_items_fragment_on_the_same_pages_and_stretch_to_the_same_end() {
 }
 
 #[test]
-fn variables_do_not_silently_reset_valid_unsupported_flex_values() {
-    for (property, value) in [("align-self", "last baseline")] {
-        for declaration in [
-            format!("{property}:{value}"),
-            format!("--value:{value};{property}:var(--value)"),
-        ] {
-            let html = format!(
-                "<style>{PROFILE}section{{display:flex;{declaration}}}</style><section><div>Content</div></section>"
-            );
-            assert!(
-                render_html(&html, &local_options()).is_err(),
-                "valid unsupported value must remain visible to validation: {declaration}"
-            );
-        }
-    }
+fn variables_do_not_silently_reset_flex_alignment_values() {
+    let layout = |declaration: &str| {
+        let html = format!(
+            "<style>{PROFILE}section{{display:flex}}div{{{declaration}}}</style><section><div>A<br>B</div><div style='font-size:30pt'>C</div></section>"
+        );
+        let trace = render_html(&html, &local_options())
+            .unwrap_or_else(|error| panic!("{declaration}: {error}"))
+            .layout
+            .unwrap();
+        trace.pages[0]
+            .iter()
+            .map(|line| (line.text.clone(), line.baseline))
+            .collect::<Vec<_>>()
+    };
+    let literal = layout("align-self:last baseline");
+    assert_eq!(
+        layout("--value:last baseline;align-self:var(--value)"),
+        literal,
+        "a substituted value must compute as the literal one"
+    );
+    assert_ne!(
+        layout(""),
+        literal,
+        "last-baseline alignment must move the items from their initial positions"
+    );
 }
 
 #[test]

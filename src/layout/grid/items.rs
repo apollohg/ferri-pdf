@@ -30,22 +30,36 @@ pub(super) fn add_baseline_shim(item: &mut crate::grid::SizingItem, shim: f32) {
     item.content_minimum = item.content_minimum.map(|value| value + shim);
 }
 
+/// The row baseline-sharing groups (CSS Box Alignment 3 §9.2): first-baseline items share
+/// their startmost row, aligning the extents above their first baselines, and last-baseline
+/// items share their endmost row, aligning the extents below their last baselines.
 pub(super) struct Baselines {
     pub groups: Vec<f32>,
+    pub last_groups: Vec<f32>,
     pub items: Vec<(usize, Option<f32>)>,
+    pub last_items: Vec<(usize, Option<f32>)>,
 }
 impl Baselines {
     pub(super) fn new(rows: usize) -> Self {
         Self {
             groups: vec![f32::NEG_INFINITY; rows],
+            last_groups: vec![f32::NEG_INFINITY; rows],
             items: Vec::new(),
+            last_items: Vec::new(),
         }
     }
-    pub(super) fn push(&mut self, row: usize, baseline: Option<f32>) {
+    /// Records the next item, in `rows`, by its first-baseline ascent or last-baseline
+    /// descent, where it participates in baseline alignment.
+    pub(super) fn push(&mut self, rows: &Range<usize>, [baseline, descent]: [Option<f32>; 2]) {
         if let Some(baseline) = baseline {
-            self.groups[row] = self.groups[row].max(baseline);
+            self.groups[rows.start] = self.groups[rows.start].max(baseline);
         }
-        self.items.push((row, baseline));
+        self.items.push((rows.start, baseline));
+        let end = rows.end - 1;
+        if let Some(descent) = descent {
+            self.last_groups[end] = self.last_groups[end].max(descent);
+        }
+        self.last_items.push((end, descent));
     }
     pub(super) fn container(
         &self,
@@ -62,6 +76,16 @@ impl Baselines {
                 .iter()
                 .enumerate()
                 .filter(|(_, area)| area[ROWS].contains(&row));
+            // The aligned baseline of the last row's last-baseline group gives the last
+            // baseline set (CSS Grid 1 §11.8).
+            if last
+                && let Some((index, _)) = candidates.clone().find(|(index, area)| {
+                    area[ROWS].end - 1 == row && self.last_items[*index].1.is_some()
+                })
+            {
+                let cell = &cells[index];
+                return Some(cell.offset + cell.block.last_baseline().unwrap_or(cell.block.height));
+            }
             let shared = candidates
                 .clone()
                 .find(|(index, area)| area[ROWS].start == row && self.items[*index].1.is_some());
@@ -85,9 +109,23 @@ impl Baselines {
         })
     }
 
-    pub(super) fn offset(&self, index: usize) -> f32 {
+    /// The space baseline alignment adds above and below item `index`.
+    fn shims(&self, index: usize) -> [f32; 2] {
         let (row, baseline) = self.items[index];
-        baseline.map_or(0.0, |baseline| self.groups[row] - baseline)
+        let (end, descent) = self.last_items[index];
+        [
+            baseline.map_or(0.0, |baseline| self.groups[row] - baseline),
+            descent.map_or(0.0, |descent| self.last_groups[end] - descent),
+        ]
+    }
+    /// The extra size item `index` contributes to its tracks.
+    pub(super) fn shim(&self, index: usize) -> f32 {
+        self.shims(index).iter().sum()
+    }
+    /// How far baseline alignment moves item `index` from its fallback position.
+    pub(super) fn offset(&self, index: usize) -> f32 {
+        let [above, below] = self.shims(index);
+        above - below
     }
 }
 
@@ -117,7 +155,9 @@ pub(super) fn physical_alignment(
         Alignment::Center => Alignment::Center,
         Alignment::Right => Alignment::Right,
         Alignment::Left => Alignment::Left,
-        Alignment::End | Alignment::FlexEnd if !reverse => Alignment::Right,
+        Alignment::End | Alignment::FlexEnd | Alignment::LastBaseline if !reverse => {
+            Alignment::Right
+        }
         Alignment::Start
         | Alignment::FlexStart
         | Alignment::Normal
@@ -137,7 +177,9 @@ fn offset(
     reverse: bool,
     own_reverse: bool,
 ) -> f32 {
-    let alignment = if overflow.starts(free) {
+    // Last-baseline alignment falls back to safe end (CSS Box Alignment 3 §4.2).
+    let alignment = if overflow.starts(free) || (alignment == Alignment::LastBaseline && free < 0.0)
+    {
         Alignment::Start
     } else {
         alignment
@@ -428,19 +470,43 @@ impl<'a> Item<'a> {
             + self.geometry.border[2]
     }
 
-    pub(crate) fn baseline(&self, measured: &ItemMetrics, intrinsic_tracks: bool) -> Option<f32> {
+    /// Whether a percentage height cycles through the intrinsic tracks it sizes, which keeps
+    /// the item out of baseline alignment.
+    fn cyclic_height(&self, intrinsic_tracks: bool) -> bool {
         let style = self.source.style();
-        let cyclic = intrinsic_tracks
+        intrinsic_tracks
             && [&style.height, &style.min_height, &style.max_height]
                 .into_iter()
                 .any(|size| {
                     matches!(size.basis(), Size::Value(_)) && size.resolve_definite(None).is_none()
-                });
+                })
+    }
+
+    pub(crate) fn baseline(&self, measured: &ItemMetrics, intrinsic_tracks: bool) -> Option<f32> {
+        let cyclic = self.cyclic_height(intrinsic_tracks);
         (self.align == Alignment::Baseline
             && self.margins[0].is_some()
             && self.margins[2].is_some()
             && !cyclic)
             .then(|| measured.baseline.unwrap_or(measured.height) + self.margins[0].unwrap_or(0.0))
+    }
+
+    /// The extent below a last-baseline item's last baseline, to its margin box's end
+    /// (CSS Box Alignment 3 §9.3).
+    pub(crate) fn last_descent(
+        &self,
+        measured: &ItemMetrics,
+        intrinsic_tracks: bool,
+    ) -> Option<f32> {
+        let cyclic = self.cyclic_height(intrinsic_tracks);
+        (self.align == Alignment::LastBaseline
+            && self.margins[0].is_some()
+            && self.margins[2].is_some()
+            && !cyclic)
+            .then(|| {
+                measured.height - measured.last_baseline.unwrap_or(measured.height)
+                    + self.margins[2].unwrap_or(0.0)
+            })
     }
 
     pub(crate) fn stretch(&self) -> bool {
