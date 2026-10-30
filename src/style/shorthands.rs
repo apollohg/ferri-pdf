@@ -181,6 +181,32 @@ pub(crate) fn expand(shorthand: Property, value: Component) -> Result<Longhands,
                 P::BorderLeftColor,
             ],
         ),
+        P::CornerShape
+        | P::CornerTopShape
+        | P::CornerRightShape
+        | P::CornerBottomShape
+        | P::CornerLeftShape
+        | P::CornerBlockStartShape
+        | P::CornerBlockEndShape
+        | P::CornerInlineStartShape
+        | P::CornerInlineEndShape => edges(&value, shorthand.longhands()),
+        P::Corner
+        | P::CornerTopLeft
+        | P::CornerTopRight
+        | P::CornerBottomRight
+        | P::CornerBottomLeft
+        | P::CornerStartStart
+        | P::CornerStartEnd
+        | P::CornerEndStart
+        | P::CornerEndEnd
+        | P::CornerTop
+        | P::CornerRight
+        | P::CornerBottom
+        | P::CornerLeft
+        | P::CornerBlockStart
+        | P::CornerBlockEnd
+        | P::CornerInlineStart
+        | P::CornerInlineEnd => corners(&value, shorthand.longhands()),
         P::BorderRadius
         | P::BorderTopRadius
         | P::BorderRightRadius
@@ -402,9 +428,10 @@ pub(super) fn edge_value(count: usize, side: usize) -> usize {
     }
 }
 
-fn edges(value: &Component, sides: [Property; 4]) -> Longhands {
+fn edges(value: &Component, sides: impl AsRef<[Property]>) -> Longhands {
     let items = value.items();
     sides
+        .as_ref()
         .iter()
         .enumerate()
         .map(|(side, property)| {
@@ -478,6 +505,30 @@ pub(super) fn corner_values(value: &Component) -> [Component; 4] {
         }
         Component::Group(radii)
     })
+}
+
+fn corners(value: &Component, properties: &[Property]) -> Longhands {
+    let (shapes, radii) = properties.split_at(properties.len() / 2);
+    let initial_values = |properties: &[Property]| {
+        properties
+            .iter()
+            .map(|property| (*property, initial()))
+            .collect::<Longhands>()
+    };
+    let mut result = value
+        .slot(0)
+        .map_or_else(|| initial_values(shapes), |value| edges(value, shapes));
+    result.extend(value.slot(1).map_or_else(
+        || initial_values(radii),
+        |value| {
+            if radii.len() == 1 {
+                vec![(radii[0], longhand(radii[0], value))]
+            } else {
+                radius(value, radii)
+            }
+        },
+    ));
+    result
 }
 
 fn radius(value: &Component, properties: &[Property]) -> Longhands {

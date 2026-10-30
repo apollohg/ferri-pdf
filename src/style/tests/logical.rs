@@ -725,3 +725,254 @@ fn vertical_modes_map_logical_sides_dimensions_and_inherited_pairs() {
         }
     }
 }
+
+#[test]
+fn corner_shapes_compute_keywords_math_and_four_value_order() {
+    for (value, expected) in [
+        ("round", [1.0; 4]),
+        ("scoop", [-1.0; 4]),
+        ("bevel", [0.0; 4]),
+        ("squircle", [2.0; 4]),
+        ("notch", [f32::NEG_INFINITY; 4]),
+        ("square", [f32::INFINITY; 4]),
+        ("superellipse(-0.5)", [-0.5; 4]),
+        ("superellipse(calc(3 / 2))", [1.5; 4]),
+        ("superellipse(infinity)", [f32::INFINITY; 4]),
+        ("superellipse(-infinity)", [f32::NEG_INFINITY; 4]),
+        ("round bevel scoop squircle", [1.0, 0.0, -1.0, 2.0]),
+        ("round bevel scoop", [1.0, 0.0, -1.0, 0.0]),
+        ("round bevel", [1.0, 0.0, 1.0, 0.0]),
+    ] {
+        let style = child(&format!("#child{{corner-shape:{value}}}"));
+        assert_eq!(
+            style
+                .decoration
+                .corner_shapes
+                .map(crate::paint::CornerShape::curvature),
+            expected,
+            "{value}"
+        );
+        assert!(
+            crate::style::declaration::supports_declaration("corner-shape", value),
+            "supports {value}"
+        );
+    }
+    for value in [
+        "superellipse(1px)",
+        "superellipse()",
+        "superellipse(1,2)",
+        "bevel square notch round scoop",
+        "infinity",
+    ] {
+        let style = child(&format!(
+            "#child{{corner-shape:bevel;corner-shape:{value}}}"
+        ));
+        assert_eq!(
+            style
+                .decoration
+                .corner_shapes
+                .map(crate::paint::CornerShape::curvature),
+            [0.0; 4],
+            "invalid {value}"
+        );
+        assert!(
+            !crate::style::declaration::supports_declaration("corner-shape", value),
+            "unsupported {value}"
+        );
+    }
+}
+
+#[test]
+fn combined_corner_shorthands_set_and_reset_both_families() {
+    let cases = [
+        ("corner-top-left", vec![0]),
+        ("corner-top-right", vec![1]),
+        ("corner-bottom-right", vec![2]),
+        ("corner-bottom-left", vec![3]),
+        ("corner-start-start", vec![0]),
+        ("corner-start-end", vec![1]),
+        ("corner-end-start", vec![3]),
+        ("corner-end-end", vec![2]),
+        ("corner-top", vec![0, 1]),
+        ("corner-right", vec![1, 2]),
+        ("corner-bottom", vec![3, 2]),
+        ("corner-left", vec![0, 3]),
+        ("corner-block-start", vec![0, 1]),
+        ("corner-block-end", vec![3, 2]),
+        ("corner-inline-start", vec![0, 3]),
+        ("corner-inline-end", vec![1, 2]),
+        ("corner", vec![0, 1, 2, 3]),
+    ];
+    for (name, corners) in cases {
+        for (value, shape, radius) in [
+            ("bevel 10pt", 0.0, 10.0),
+            ("10pt bevel", 0.0, 10.0),
+            ("bevel", 0.0, 0.0),
+            ("10pt", 1.0, 10.0),
+        ] {
+            let css = format!("#child{{corner-shape:scoop;border-radius:7pt;{name}:{value}}}");
+            let style = child(&css);
+            for corner in 0..4 {
+                let affected = corners.contains(&corner);
+                assert_eq!(
+                    style.decoration.corner_shapes[corner].curvature(),
+                    if affected { shape } else { -1.0 },
+                    "{css},corner={corner}"
+                );
+                assert_eq!(
+                    style.decoration.radii[corner],
+                    std::array::from_fn(|_| LengthPercentage::Length(if affected {
+                        radius
+                    } else {
+                        7.0
+                    })),
+                    "{css},corner={corner}"
+                );
+            }
+            assert!(
+                crate::style::declaration::supports_declaration(name, value),
+                "supports {name}:{value}"
+            );
+        }
+    }
+    let style = child("#child{corner:bevel scoop square notch 1pt 2pt 3pt 4pt / 5pt 6pt 7pt 8pt}");
+    assert_eq!(
+        style
+            .decoration
+            .corner_shapes
+            .map(crate::paint::CornerShape::curvature),
+        [0.0, -1.0, f32::INFINITY, f32::NEG_INFINITY]
+    );
+    assert_eq!(
+        *style.decoration.radii,
+        [[1.0, 5.0], [2.0, 6.0], [3.0, 7.0], [4.0, 8.0]].map(|r| r.map(LengthPercentage::Length))
+    );
+}
+
+#[test]
+fn corner_shapes_map_logical_longhands_and_side_shorthands_in_every_flow() {
+    for (mode, ltr, rtl) in [
+        ("horizontal-tb", [0, 1, 3, 2], [1, 0, 2, 3]),
+        ("vertical-rl", [1, 2, 0, 3], [2, 1, 3, 0]),
+        ("vertical-lr", [0, 3, 1, 2], [3, 0, 2, 1]),
+        ("sideways-rl", [1, 2, 0, 3], [2, 1, 3, 0]),
+        ("sideways-lr", [3, 0, 2, 1], [0, 3, 1, 2]),
+    ] {
+        for (direction, corners) in [("ltr", ltr), ("rtl", rtl)] {
+            let flow = format!("writing-mode:{mode};direction:{direction}");
+            for (name, indices) in [
+                ("block-start", [0, 1]),
+                ("block-end", [2, 3]),
+                ("inline-start", [0, 2]),
+                ("inline-end", [1, 3]),
+            ] {
+                for combined in [false, true] {
+                    let property = if combined {
+                        format!("corner-{name}")
+                    } else {
+                        format!("corner-{name}-shape")
+                    };
+                    let value = if combined {
+                        "bevel scoop 10pt 20pt / 30pt 40pt"
+                    } else {
+                        "bevel scoop"
+                    };
+                    let css = format!("#child{{{flow};{property}:{value}}}");
+                    let style = child(&css);
+                    let mut shapes = [1.0; 4];
+                    shapes[corners[indices[0]]] = 0.0;
+                    shapes[corners[indices[1]]] = -1.0;
+                    assert_eq!(
+                        style
+                            .decoration
+                            .corner_shapes
+                            .map(crate::paint::CornerShape::curvature),
+                        shapes,
+                        "{css}"
+                    );
+                    if combined {
+                        let mut radii = [const { [LengthPercentage::ZERO; 2] }; 4];
+                        radii[corners[indices[0]]] = [
+                            LengthPercentage::Length(10.0),
+                            LengthPercentage::Length(30.0),
+                        ];
+                        radii[corners[indices[1]]] = [
+                            LengthPercentage::Length(20.0),
+                            LengthPercentage::Length(40.0),
+                        ];
+                        assert_eq!(*style.decoration.radii, radii, "{css}");
+                    }
+                }
+            }
+            for (index, name) in ["start-start", "start-end", "end-start", "end-end"]
+                .into_iter()
+                .enumerate()
+            {
+                let css = format!("#child{{{flow};corner-{name}-shape:bevel}}");
+                let mut expected = [1.0; 4];
+                expected[corners[index]] = 0.0;
+                assert_eq!(
+                    child(&css)
+                        .decoration
+                        .corner_shapes
+                        .map(crate::paint::CornerShape::curvature),
+                    expected,
+                    "{css}"
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn corner_shapes_share_cascade_inheritance_variables_and_zoom_rules() {
+    let (parent, style) = styles(
+        "#parent{corner:bevel scoop squircle notch 10pt}#child{corner:inherit;corner-top-left:square 3pt;corner-bottom-right:unset}",
+        DOCUMENT,
+    );
+    assert_eq!(
+        parent
+            .decoration
+            .corner_shapes
+            .map(crate::paint::CornerShape::curvature),
+        [0.0, -1.0, 2.0, f32::NEG_INFINITY]
+    );
+    assert_eq!(
+        style
+            .decoration
+            .corner_shapes
+            .map(crate::paint::CornerShape::curvature),
+        [f32::INFINITY, -1.0, 1.0, f32::NEG_INFINITY]
+    );
+    assert_eq!(
+        style.decoration.radii[0],
+        [LengthPercentage::Length(3.0), LengthPercentage::Length(3.0)]
+    );
+    assert_eq!(style.decoration.radii[2], [LengthPercentage::ZERO; 2]);
+    for (declarations, expected) in [
+        ("corner-shape:bevel;all:initial", [1.0; 4]),
+        ("corner-shape:bevel;corner-shape:var(--missing)", [1.0; 4]),
+        (
+            "--shape:bevel scoop;--radius:3pt / 4pt;corner:var(--shape) var(--radius);zoom:2",
+            [0.0, -1.0, 0.0, -1.0],
+        ),
+        (
+            "corner-top-left-shape:bevel!important;corner-start-start-shape:scoop",
+            [0.0, 1.0, 1.0, 1.0],
+        ),
+        (
+            "corner-top-left-shape:bevel;corner-start-start-shape:scoop",
+            [-1.0, 1.0, 1.0, 1.0],
+        ),
+    ] {
+        let css = format!("#child{{{declarations}}}");
+        assert_eq!(
+            child(&css)
+                .decoration
+                .corner_shapes
+                .map(crate::paint::CornerShape::curvature),
+            expected,
+            "{css}"
+        );
+    }
+}

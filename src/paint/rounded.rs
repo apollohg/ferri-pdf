@@ -29,6 +29,8 @@ pub struct CornerShape(f32);
 impl CornerShape {
     pub const ROUND: Self = Self(1.0);
     pub const BEVEL: Self = Self(0.0);
+    pub const SCOOP: Self = Self(-1.0);
+    pub const SQUIRCLE: Self = Self(2.0);
     pub const NOTCH: Self = Self(f32::NEG_INFINITY);
     pub const SQUARE: Self = Self(f32::INFINITY);
 

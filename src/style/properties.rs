@@ -1112,6 +1112,22 @@ fn handler(property: Property) -> Option<Handler> {
                     .is_ok()
             }),
         ),
+        P::CornerTopLeftShape => (
+            corner_top_left_shape,
+            Some(|v, r| corner_shape(v, r).is_ok()),
+        ),
+        P::CornerTopRightShape => (
+            corner_top_right_shape,
+            Some(|v, r| corner_shape(v, r).is_ok()),
+        ),
+        P::CornerBottomRightShape => (
+            corner_bottom_right_shape,
+            Some(|v, r| corner_shape(v, r).is_ok()),
+        ),
+        P::CornerBottomLeftShape => (
+            corner_bottom_left_shape,
+            Some(|v, r| corner_shape(v, r).is_ok()),
+        ),
         P::BorderTopLeftRadius => (
             border_top_left_radius,
             Some(|v, r| corner_radius(v, r).is_ok()),
@@ -3169,6 +3185,56 @@ border_side!(
     2
 );
 border_side!(border_left_width, border_left_style, border_left_color, 3);
+
+fn corner_shape(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<crate::paint::CornerShape, StyleError> {
+    use crate::paint::CornerShape;
+    use crate::style::grammar::Keyword as K;
+    match value.unwrap() {
+        Component::Keyword(keyword) => match keyword {
+            K::Round => Ok(CornerShape::ROUND),
+            K::Bevel => Ok(CornerShape::BEVEL),
+            K::Scoop => Ok(CornerShape::SCOOP),
+            K::Squircle => Ok(CornerShape::SQUIRCLE),
+            K::Notch => Ok(CornerShape::NOTCH),
+            K::Square => Ok(CornerShape::SQUARE),
+            _ => Err(unsupported(value)),
+        },
+        Component::Function(K::Superellipse, Some(argument)) => {
+            let curvature = match argument.keyword() {
+                Some(K::Infinity) => f32::INFINITY,
+                Some(K::DashInfinity) => f32::NEG_INFINITY,
+                _ => crate::style::values::number(argument, relative)?,
+            };
+            CornerShape::superellipse(curvature).ok_or_else(|| unsupported(value))
+        }
+        _ => Err(unsupported(value)),
+    }
+}
+
+macro_rules! corner_shape {
+    ($name:ident, $corner:literal) => {
+        fn $name(
+            style: &mut Style,
+            _: &Style,
+            input: Input<'_>,
+            relative: &Relative<'_>,
+        ) -> Result<(), StyleError> {
+            let shape = match input {
+                Input::Value(value) => corner_shape(value, relative)?,
+                Input::Copy(source) => source.decoration.corner_shapes[$corner],
+            };
+            std::sync::Arc::make_mut(&mut style.decoration.corner_shapes)[$corner] = shape;
+            Ok(())
+        }
+    };
+}
+corner_shape!(corner_top_left_shape, 0);
+corner_shape!(corner_top_right_shape, 1);
+corner_shape!(corner_bottom_right_shape, 2);
+corner_shape!(corner_bottom_left_shape, 3);
 
 /// `<length-percentage [0,∞]>{1,2}`: horizontal then vertical radius.
 pub(super) fn corner_radius(

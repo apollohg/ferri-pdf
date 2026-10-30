@@ -259,7 +259,7 @@ struct Group {
     positions: &'static [Position],
 }
 
-const GROUPS: [Group; 16] = {
+const GROUPS: [Group; 17] = {
     use Property as P;
     [
         Group {
@@ -354,6 +354,21 @@ const GROUPS: [Group; 16] = {
                 P::BorderStartEndRadius,
                 P::BorderEndStartRadius,
                 P::BorderEndEndRadius,
+            ],
+            positions: &CORNERS,
+        },
+        Group {
+            physical: &[
+                P::CornerTopLeftShape,
+                P::CornerTopRightShape,
+                P::CornerBottomRightShape,
+                P::CornerBottomLeftShape,
+            ],
+            flow_relative: &[
+                P::CornerStartStartShape,
+                P::CornerStartEndShape,
+                P::CornerEndStartShape,
+                P::CornerEndEndShape,
             ],
             positions: &CORNERS,
         },
