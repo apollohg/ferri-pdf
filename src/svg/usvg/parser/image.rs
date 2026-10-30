@@ -159,30 +159,16 @@ pub(crate) fn convert(
 
     let x = node.convert_user_length(AId::X, state, Length::zero());
     let y = node.convert_user_length(AId::Y, state, Length::zero());
-    let mut width = node.convert_user_length(
-        AId::Width,
-        state,
-        Length::new_number(actual_size.width() as f64),
-    );
-    let mut height = node.convert_user_length(
-        AId::Height,
-        state,
-        Length::new_number(actual_size.height() as f64),
-    );
-
-    match (
-        node.attribute::<Length>(AId::Width),
-        node.attribute::<Length>(AId::Height),
-    ) {
-        (Some(_), None) => {
-            // Only width was defined, so we need to scale height accordingly.
-            height = actual_size.height() * (width / actual_size.width());
-        }
-        (None, Some(_)) => {
-            // Only height was defined, so we need to scale width accordingly.
-            width = actual_size.width() * (height / actual_size.height());
-        }
-        _ => {}
+    let dimension =
+        |aid| node.try_convert_length(aid, crate::svg::usvg::Units::UserSpaceOnUse, state);
+    let (width, height) = match (dimension(AId::Width), dimension(AId::Height)) {
+        (Some(width), Some(height)) => (width, height),
+        (Some(width), None) => (width, actual_size.height() * width / actual_size.width()),
+        (None, Some(height)) => (actual_size.width() * height / actual_size.height(), height),
+        (None, None) => (
+            actual_size.width() * node.effective_zoom(),
+            actual_size.height() * node.effective_zoom(),
+        ),
     };
 
     let aspect: AspectRatio = node.attribute(AId::PreserveAspectRatio).unwrap_or_default();

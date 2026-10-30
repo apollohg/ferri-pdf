@@ -448,6 +448,35 @@ fn layer_name<'i>(
 
 pub(super) use crate::dom::MAX_COMPONENT_DEPTH;
 
+/// The top-level component values of `source` as `(start, token)` byte offsets and tokens,
+/// each block consumed with its opening token.
+pub(super) fn component_values(source: &str) -> Vec<(usize, Token<'_>)> {
+    let mut input = ParserInput::new(source);
+    let input = &mut Parser::new(&mut input);
+    let mut values = Vec::new();
+    loop {
+        let start = input.position().byte_index();
+        let Ok(token) = input.next_including_whitespace().cloned() else {
+            return values;
+        };
+        if matches!(
+            token,
+            Token::Function(_)
+                | Token::ParenthesisBlock
+                | Token::SquareBracketBlock
+                | Token::CurlyBracketBlock
+        ) {
+            input
+                .parse_nested_block(|nested| {
+                    block_source(nested);
+                    Ok::<_, ParseError<'_, ()>>(())
+                })
+                .expect("consuming a block cannot fail");
+        }
+        values.push((start, token));
+    }
+}
+
 pub(super) fn balanced_components(source: &str) -> Result<bool, StyleError> {
     let mut pending = vec![(source, 0)];
     while let Some((source, depth)) = pending.pop() {

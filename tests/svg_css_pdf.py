@@ -29,6 +29,34 @@ SPRITE = (f'<svg style="display:none"><symbol id="dot" viewBox="0 0 {ICON} {ICON
 
 
 class SvgCssPdf(unittest.TestCase):
+    def test_quoted_filter_references_preserve_fragment_ids(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-filter-urls-') as directory:
+            root = Path(directory)
+            for identifier in ('f', 'f space', 'f)', 'fé'):
+                for external in (False, True):
+                    with self.subTest(identifier=identifier, external=external):
+                        reference = root / 'reference.svg'
+                        reference.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="80">'
+                            '<defs><filter id="f" x="-100%" y="-100%" width="300%" height="300%">'
+                            '<feOffset dx="10" dy="4"/></filter></defs>'
+                            '<rect x="20" y="20" width="20" height="10" fill="green" filter="url(#f)"/></svg>')
+                        with self.render(root, '', f'<img src="{reference.as_uri()}">') as expected:
+                            expected_ink = expected.tobytes()
+                            self.assertIn((0, 128, 0),
+                                          [color for _, color in expected.getcolors(PAGE * PAGE)],
+                                          'reference filter must paint')
+                        body = ('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="80">'
+                                f'<defs><filter id="{identifier}" x="-100%" y="-100%" width="300%" height="300%">'
+                                '<feOffset dx="10" dy="4"/></filter></defs>'
+                                f"""<rect x="20" y="20" width="20" height="10" fill="green" filter="url('#{identifier}')"/></svg>""")
+                        if external:
+                            source = root / 'filter.svg'
+                            source.write_text(body)
+                            body = f'<img src="{source.as_uri()}">'
+                        with self.render(root, '', body) as actual:
+                            self.assertEqual(actual.tobytes(), expected_ink,
+                                             'quoted fragment IDs must survive SVG parsing')
+
     def convert(self, root, css, body):
         source = root / 'input.html'
         output = root / 'output.pdf'

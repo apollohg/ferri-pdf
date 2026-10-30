@@ -1021,7 +1021,9 @@ fn apply_diffuse_lighting(
 ) -> Result<Image, Error> {
     let mut pixmap = tiny_skia::Pixmap::try_create(region.width(), region.height())?;
 
-    let light_source = transform_light_source(fe.light_source(), region, ts);
+    let light_source = fe
+        .light_source()
+        .transformed(ts.post_translate(-(region.x() as f32), -(region.y() as f32)));
 
     lighting::diffuse_lighting(
         fe,
@@ -1042,7 +1044,9 @@ fn apply_specular_lighting(
 ) -> Result<Image, Error> {
     let mut pixmap = tiny_skia::Pixmap::try_create(region.width(), region.height())?;
 
-    let light_source = transform_light_source(fe.light_source(), region, ts);
+    let light_source = fe
+        .light_source()
+        .transformed(ts.post_translate(-(region.x() as f32), -(region.y() as f32)));
 
     lighting::specular_lighting(
         fe,
@@ -1052,44 +1056,6 @@ fn apply_specular_lighting(
     );
 
     Ok(Image::from_image(pixmap, cs))
-}
-
-// TODO: do not modify LightSource
-fn transform_light_source(
-    mut source: crate::svg::usvg::filter::LightSource,
-    region: IntRect,
-    ts: crate::svg::usvg::Transform,
-) -> crate::svg::usvg::filter::LightSource {
-    use crate::svg::usvg::filter::LightSource;
-    use std::f32::consts::SQRT_2;
-
-    match &mut source {
-        LightSource::DistantLight(..) => {}
-        LightSource::PointLight(light) => {
-            let mut point = tiny_skia::Point::from_xy(light.x, light.y);
-            ts.map_point(&mut point);
-            light.x = point.x - region.x() as f32;
-            light.y = point.y - region.y() as f32;
-            light.z = light.z * (ts.sx * ts.sx + ts.sy * ts.sy).sqrt() / SQRT_2;
-        }
-        LightSource::SpotLight(light) => {
-            let sz = (ts.sx * ts.sx + ts.sy * ts.sy).sqrt() / SQRT_2;
-
-            let mut point = tiny_skia::Point::from_xy(light.x, light.y);
-            ts.map_point(&mut point);
-            light.x = point.x - region.x() as f32;
-            light.y = point.y - region.x() as f32;
-            light.z *= sz;
-
-            let mut point = tiny_skia::Point::from_xy(light.points_at_x, light.points_at_y);
-            ts.map_point(&mut point);
-            light.points_at_x = point.x - region.x() as f32;
-            light.points_at_y = point.y - region.x() as f32;
-            light.points_at_z *= sz;
-        }
-    }
-
-    source
 }
 
 fn apply_to_canvas(input: Image, pixmap: &mut tiny_skia::Pixmap) -> Result<(), Error> {

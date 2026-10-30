@@ -209,6 +209,7 @@ impl Paint {
             (Some(Component::Url(url)), fallback) => Ok(Self::Server {
                 url: same_document(url, value)?,
                 fallback: fallback
+                    .and_then(|fallback| fallback.items().first())
                     .map(|fallback| match fallback.keyword() {
                         Some(Keyword::None) => Ok(PaintFallback::None),
                         _ => InheritedColor::compute(fallback, relative, current)
@@ -262,7 +263,10 @@ pub(super) fn same_document(url: &str, value: &Component) -> Result<Box<str>, St
 }
 
 /// `<length-percentage> | <number>`: a number is a length in user units, which are CSS pixels.
-fn user_length(value: &Component, relative: &Relative<'_>) -> Result<LengthPercentage, StyleError> {
+pub(super) fn user_length(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<LengthPercentage, StyleError> {
     match value.unwrap() {
         Component::Number(_) | Component::Math(_, crate::style::calc::Kind::Number, _) => Ok(
             LengthPercentage::Length(number(value, relative)? * crate::style::POINTS_PER_PIXEL),

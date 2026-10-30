@@ -105,7 +105,7 @@ impl QueryContainer {
     }
 }
 
-/// Query containers' content-box sizes, measured by layout and consulted by styling.
+/// Query containers' unzoomed content-box sizes, measured by layout and consulted by styling.
 #[derive(Clone, Default)]
 pub(crate) struct QuerySizes {
     /// Sizes the previous layout pass measured.

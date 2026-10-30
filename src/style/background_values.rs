@@ -106,6 +106,7 @@ fn set_option_image(
         Component::Url(url) | Component::String(url) => BackgroundImage::Url {
             url: url.to_string(),
             resolution: DEFAULT_RESOLUTION_DPPX,
+            scale: crate::paint::INITIAL_IMAGE_SCALE,
         },
         Component::Function(Keyword::ImageSet, _) => {
             return Err(StyleError::Invalid(format!(
@@ -174,7 +175,11 @@ fn image_set(
         return Ok(BackgroundImage::None);
     };
     Ok(match set_option_image(image, relative, color)? {
-        BackgroundImage::Url { url, .. } => BackgroundImage::Url { url, resolution },
+        BackgroundImage::Url { url, scale, .. } => BackgroundImage::Url {
+            url,
+            resolution,
+            scale,
+        },
         other => other,
     })
 }

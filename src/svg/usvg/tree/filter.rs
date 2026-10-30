@@ -843,6 +843,33 @@ pub enum LightSource {
     SpotLight(SpotLight),
 }
 
+impl LightSource {
+    pub(crate) fn transformed(mut self, transform: crate::svg::usvg::Transform) -> Self {
+        let (sx, sy) = transform.get_scale();
+        let depth_scale = sx.hypot(sy) / std::f32::consts::SQRT_2;
+        let position = |x: &mut f32, y: &mut f32, z: &mut f32| {
+            let mut point = tiny_skia_path::Point::from_xy(*x, *y);
+            transform.map_point(&mut point);
+            *x = point.x;
+            *y = point.y;
+            *z *= depth_scale;
+        };
+        match &mut self {
+            Self::DistantLight(_) => {}
+            Self::PointLight(light) => position(&mut light.x, &mut light.y, &mut light.z),
+            Self::SpotLight(light) => {
+                position(&mut light.x, &mut light.y, &mut light.z);
+                position(
+                    &mut light.points_at_x,
+                    &mut light.points_at_y,
+                    &mut light.points_at_z,
+                );
+            }
+        }
+        self
+    }
+}
+
 /// A distant light source.
 ///
 /// `feDistantLight` element in the SVG.
@@ -1106,4 +1133,66 @@ impl Turbulence {
 pub enum TurbulenceKind {
     FractalNoise,
     Turbulence,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn light_positions_transform_in_three_dimensions_without_changing_angles() {
+        const TOLERANCE: f32 = 0.00001;
+        let transform = crate::svg::usvg::Transform::from_row(0.0, 2.0, -4.0, 0.0, 10.0, 20.0);
+        let source = SpotLight {
+            x: 3.0,
+            y: 5.0,
+            z: 7.0,
+            points_at_x: 1.0,
+            points_at_y: 2.0,
+            points_at_z: 3.0,
+            specular_exponent: PositiveF32::new(2.0).unwrap(),
+            limiting_cone_angle: Some(60.0),
+        };
+        let LightSource::SpotLight(light) = LightSource::SpotLight(source).transformed(transform)
+        else {
+            panic!("transform changed the light kind");
+        };
+        assert_eq!(
+            [light.x, light.y, light.points_at_x, light.points_at_y],
+            [-10.0, 26.0, 2.0, 22.0]
+        );
+        for (name, actual, expected) in [
+            ("position depth", light.z, 7.0 * 10.0_f32.sqrt()),
+            ("target depth", light.points_at_z, 3.0 * 10.0_f32.sqrt()),
+        ] {
+            assert!(
+                (actual - expected).abs() < TOLERANCE,
+                "{name}: {actual} != {expected}"
+            );
+        }
+        assert_eq!(light.specular_exponent, source.specular_exponent);
+        assert_eq!(light.limiting_cone_angle, source.limiting_cone_angle);
+        let LightSource::PointLight(point) = LightSource::PointLight(PointLight {
+            x: source.x,
+            y: source.y,
+            z: source.z,
+        })
+        .transformed(transform) else {
+            panic!("transform changed the light kind");
+        };
+        assert_eq!([point.x, point.y, point.z], [light.x, light.y, light.z]);
+        let distant = DistantLight {
+            azimuth: 30.0,
+            elevation: 45.0,
+        };
+        let LightSource::DistantLight(actual) =
+            LightSource::DistantLight(distant).transformed(transform)
+        else {
+            panic!("transform changed the light kind");
+        };
+        assert_eq!(
+            [actual.azimuth, actual.elevation],
+            [distant.azimuth, distant.elevation]
+        );
+    }
 }

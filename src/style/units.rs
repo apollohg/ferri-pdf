@@ -16,7 +16,7 @@ const QUARTERS_PER_MILLIMETRE: f32 = 4.0;
 const POINTS_PER_MILLIMETRE: f32 = POINTS_PER_INCH / MILLIMETRES_PER_INCH;
 const SECONDS_PER_MILLISECOND: f32 = 0.001;
 const HERTZ_PER_KILOHERTZ: f32 = 1000.0;
-const CSS_PIXELS_PER_INCH: f32 = 96.0;
+pub(super) const CSS_PIXELS_PER_INCH: f32 = 96.0;
 const CENTIMETRES_PER_INCH: f32 = 2.54;
 /// Viewport-percentage units are hundredths of the viewport.
 const PERCENT: f32 = 100.0;
@@ -43,6 +43,7 @@ pub(crate) enum Axis {
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub(crate) enum Scale {
+    Pixels,
     Points(f32),
     /// The element's own font, or the parent's in `font-size`.
     Font(FontUnit),
@@ -398,6 +399,8 @@ impl Tree<'_> {
 /// which in paged media is the page area (CSS Values 4 §6.1.2).
 #[derive(Clone)]
 pub(crate) struct Relative<'a> {
+    /// Native SVG may use a configured DPI for physical units, independently of px.
+    pub(crate) physical_unit_scale: f32,
     pub(crate) font: FontBasis<'a>,
     pub(crate) root: FontBasis<'a>,
     pub(crate) viewport: Viewport<'a>,
@@ -430,6 +433,7 @@ impl Relative<'_> {
     }
     pub(crate) fn with_initial_font(initial_font: Option<Arc<InitialFont>>) -> Self {
         Self {
+            physical_unit_scale: 1.0,
             font: FontBasis::with_initial_font(initial_font.clone()),
             root: FontBasis::with_initial_font(initial_font.clone()),
             viewport: Viewport::Known(DEFAULT_PAGE_AREA, false),
@@ -463,7 +467,8 @@ impl Relative<'_> {
     /// Points per unit of `scale`.
     pub(crate) fn per_unit(&self, scale: Scale) -> Result<f32, StyleError> {
         Ok(match scale {
-            Scale::Points(points) => points,
+            Scale::Pixels => POINTS_PER_PIXEL,
+            Scale::Points(points) => points * self.physical_unit_scale,
             Scale::Font(unit)
                 if self.initial_page_font_size && matches!(unit, FontUnit::Em | FontUnit::Ex) =>
             {
@@ -540,7 +545,7 @@ const fn container(name: &'static str, axis: Axis) -> (&'static str, Dimension) 
 }
 
 const DIMENSIONS: &[(&str, Dimension)] = &[
-    length("px", Scale::Points(POINTS_PER_PIXEL)),
+    length("px", Scale::Pixels),
     length("pt", Scale::Points(1.0)),
     length("pc", Scale::Points(POINTS_PER_PICA)),
     length("in", Scale::Points(POINTS_PER_INCH)),

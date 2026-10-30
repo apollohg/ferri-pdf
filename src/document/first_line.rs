@@ -75,12 +75,14 @@ impl<'a> FirstLineStyles<'a> {
         let mut parent = block.clone();
         let mut lines = Vec::with_capacity(origins.len());
         for &origin in origins {
-            let line = sheet.typographic_pseudo_with_resolver(
-                element(document, origin),
-                &parent,
-                PseudoElement::FirstLine,
-                resources.resolver,
-            )?;
+            let line = sheet
+                .typographic_pseudo_with_resolver(
+                    element(document, origin),
+                    &parent,
+                    PseudoElement::FirstLine,
+                    resources.resolver,
+                )?
+                .used();
             let mut boxed = line.clone();
             // Margins, borders and padding do not apply to `::first-line` (§2.1.2).
             boxed.margin = [Size::ZERO; 4];
@@ -188,6 +190,7 @@ impl Restyle<'_> {
             }
             None => None,
         };
+        let style = style.map(|style| style.used());
         self.styles.insert(key, style.clone());
         Ok(style)
     }

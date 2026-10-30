@@ -191,11 +191,12 @@ fn draw_tile(
     images: &mut ImageWriter,
 ) -> Result<(), PdfError> {
     match image {
-        TileImage::Image(image) => images.draw(
+        TileImage::Image(image, scale) => images.draw(
             &ImagePaint {
                 image: (*image).clone(),
                 rect,
                 clip: None,
+                source_scale: *scale,
             },
             viewport,
             surface,

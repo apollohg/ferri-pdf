@@ -61,6 +61,9 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
     let mut push = |name: &str, value: &str| {
         let _ = write!(output, "{name}:{value};");
     };
+    if !root {
+        push("zoom", &number(style.zoom));
+    }
     push("fill", &paint(&svg.fill));
     push("fill-opacity", &number(svg.fill_opacity));
     push("fill-rule", svg.fill_rule.name());

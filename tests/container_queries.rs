@@ -10,6 +10,64 @@ const RED: [u8; 3] = [255, 0, 0];
 const GREEN: [u8; 3] = [0, 128, 0];
 const BLUE: [u8; 3] = [0, 0, 255];
 
+#[test]
+fn zoomed_size_queries_use_the_containers_own_css_coordinates() {
+    for (ancestor_zoom, container_zoom, child_zoom) in [
+        (1.0, 2.0, 1.0),
+        (2.0, 1.0, 0.5),
+        (2.0, 2.0, 0.25),
+        (1.0, 0.5, 2.0),
+    ] {
+        for mode in ["horizontal-tb", "vertical-rl"] {
+            let trace = trace(
+                &format!(
+                    "section{{zoom:{ancestor_zoom}}}.c{{zoom:{container_zoom};container-type:size;width:100pt;height:60pt;font-size:10pt;writing-mode:{mode}}}.x{{zoom:{child_zoom};width:10pt;height:10pt;background:red}}@container (width:100pt) and (height:60pt) and (width:10em){{.x{{background:green}}}}"
+                ),
+                "<section><div class=c><div class=x></div></div></section>",
+            );
+            assert_eq!(
+                colors(&trace),
+                [GREEN],
+                "container coordinate query with zoom {ancestor_zoom}/{container_zoom}/{child_zoom}, {mode}"
+            );
+        }
+    }
+}
+
+#[test]
+fn container_units_use_unzoomed_container_sizes_and_the_consumers_zoom() {
+    for (ancestor_zoom, container_zoom, child_zoom) in [
+        (1.0, 2.0, 1.0),
+        (1.0, 2.0, 0.5),
+        (2.0, 0.5, 2.0),
+        (0.5, 2.0, 0.5),
+    ] {
+        for (mode, unit, basis) in [
+            ("horizontal-tb", "cqw", 100.0),
+            ("horizontal-tb", "cqh", 60.0),
+            ("horizontal-tb", "cqi", 100.0),
+            ("horizontal-tb", "cqb", 60.0),
+            ("vertical-rl", "cqi", 60.0),
+            ("vertical-rl", "cqb", 100.0),
+            ("vertical-rl", "cqmin", 60.0),
+            ("vertical-rl", "cqmax", 100.0),
+        ] {
+            let trace = trace(
+                &format!(
+                    "section{{zoom:{ancestor_zoom}}}.c{{zoom:{container_zoom};container-type:size;width:100pt;height:60pt;writing-mode:{mode}}}.x{{zoom:{child_zoom};width:50{unit};height:10pt;background:green}}"
+                ),
+                "<section><div class=c><div class=x></div></div></section>",
+            );
+            let rect = painted_box(&trace, GREEN);
+            assert_labelled_pt(
+                &format!("{unit} with zoom {ancestor_zoom}/{container_zoom}/{child_zoom}, {mode}"),
+                rect.width,
+                basis * 0.5 * ancestor_zoom * container_zoom * child_zoom,
+            );
+        }
+    }
+}
+
 fn trace(css: &str, body: &str) -> LayoutTrace {
     render_trace(&format!("<!doctype html><style>{PAGE}{css}</style>{body}"))
 }

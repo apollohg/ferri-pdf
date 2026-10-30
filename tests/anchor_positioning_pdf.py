@@ -13,6 +13,57 @@ BODY = '<div class=anchor>A</div><div class=target><a href="https://example.org/
 
 
 class AnchorPositioningPdf(unittest.TestCase):
+    def test_zoomed_anchor_functions_and_fallbacks_match_used_geometry(self):
+        cases = [
+            ('.anchor{zoom:2}.target{zoom:2;left:anchor(left);'
+             'top:calc(anchor(bottom) + 5pt);width:anchor-size(width);height:anchor-size(height)}',
+             '.target{left:40pt;top:35pt;width:60pt;height:30pt}'),
+            ('.anchor{margin-top:170pt}.target{zoom:2;position-area:bottom;position-try-fallbacks:flip-block}',
+             '.target{left:25pt;top:75pt;width:20pt;height:10pt}'),
+        ]
+        renderer = table_positioning_pdf.TablePositioningPdf()
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-anchor-zoom-') as directory:
+            root = Path(directory)
+            for css, geometry in cases:
+                with self.subTest(css=css):
+                    actual = renderer.render(root, PROFILE + css, BODY)
+                    glyphs = [(glyph.text, glyph.origin) for glyph in pdf_content.inspect(actual)['glyphs']]
+                    links = pdf_content.navigation(actual)['links']
+                    with renderer.raster(root, actual, vector_antialias=False) as raster:
+                        ink = raster.tobytes()
+                    expected = renderer.render(root, PROFILE + css +
+                        '.target{position-anchor:none;position-area:none;position-try:none}' + geometry, BODY)
+                    self.assertEqual(glyphs, [(glyph.text, glyph.origin)
+                                             for glyph in pdf_content.inspect(expected)['glyphs']])
+                    self.assertEqual(links, pdf_content.navigation(expected)['links'])
+                    with renderer.raster(root, expected, vector_antialias=False) as raster:
+                        self.assertEqual(ink, raster.tobytes(), 'zoomed option must retain its used sizing and offsets')
+
+    def test_zoomed_fixed_anchor_styles_are_projected_on_each_page(self):
+        renderer = table_positioning_pdf.TablePositioningPdf()
+        css = (PROFILE + '@page wide{size:400pt 240pt}.next{page:wide;break-before:page}'
+               '.anchor{position:fixed;left:50%;top:0;margin:0;width:50%}'
+               '.target{position:fixed;position-anchor:--a;zoom:2;left:anchor(left);'
+               'top:calc(anchor(bottom) + 5pt);width:anchor-size(width)}')
+        body = '<p>First</p>' + BODY + '<p class=next>Next</p>'
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-anchor-zoom-pages-') as directory:
+            root = Path(directory)
+            actual = renderer.render(root, css, body)
+            glyphs = [(glyph.page, glyph.text, glyph.origin) for glyph in pdf_content.inspect(actual)['glyphs']]
+            links = pdf_content.navigation(actual)['links']
+            ink = []
+            for page in (1, 2):
+                with renderer.raster(root, actual, vector_antialias=False, page=page) as raster:
+                    ink.append(raster.tobytes())
+            expected = renderer.render(root, css +
+                '.target{position-anchor:none;left:50%;top:20pt;width:50%}', body)
+            self.assertEqual(glyphs, [(glyph.page, glyph.text, glyph.origin)
+                                     for glyph in pdf_content.inspect(expected)['glyphs']])
+            self.assertEqual(links, pdf_content.navigation(expected)['links'])
+            for page in (1, 2):
+                with renderer.raster(root, expected, vector_antialias=False, page=page) as raster:
+                    self.assertEqual(ink[page - 1], raster.tobytes(), f'zoomed anchor on page {page}')
+
     def test_anchor_functions_areas_fallbacks_and_transforms_match_physical_geometry(self):
         cases = [
             ('.target{left:anchor(left);top:calc(anchor(bottom) + 5pt);'

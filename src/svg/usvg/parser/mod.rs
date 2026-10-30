@@ -5,6 +5,7 @@ mod basic_shape;
 mod clippath;
 mod converter;
 mod filter;
+mod font_units;
 mod image;
 mod marker;
 mod mask;
@@ -23,6 +24,77 @@ mod text;
 pub(crate) use converter::Cache;
 pub(crate) use image::ImageHrefResolver;
 pub(crate) use options::Options;
+
+pub(crate) struct ParsedSvg<'input>(svgtree::Document<'input>);
+
+impl<'input> ParsedSvg<'input> {
+    pub(crate) fn parse(
+        xml: &roxmltree::Document<'input>,
+        stylesheet: Option<&'input str>,
+    ) -> Result<Self, Error> {
+        let doc = svgtree::Document::parse_tree(xml, stylesheet)?;
+        if let Some(error) = &doc.style_error {
+            return Err(Error::Style(error.clone()));
+        }
+        if let Some(limit) = doc.css_limit {
+            return Err(Error::CssComponentDepthLimit { limit });
+        }
+        Ok(Self(doc))
+    }
+
+    pub(crate) fn natural_dimensions(
+        &self,
+        opt: &Options,
+        font_provider: Option<&dyn crate::svg::usvg::FontProvider>,
+    ) -> Result<crate::paint::NaturalDimensions, Error> {
+        let root = self.0.root_element();
+        let state = converter::State {
+            font_provider,
+            ..converter::State::new(opt, opt.default_size.to_non_zero_rect(0.0, 0.0))
+        };
+        let dimension = |name| {
+            let crate::paint::LengthPercentage::Length(value) = units::computed_length(
+                root,
+                root,
+                name,
+                crate::svg::usvg::Units::UserSpaceOnUse,
+                &state,
+            )?
+            else {
+                return None;
+            };
+            (value > 0.0 && value.is_finite()).then_some(value)
+        };
+        let width = dimension(svgtree::AId::Width);
+        let height = dimension(svgtree::AId::Height);
+        let ratio = width
+            .zip(height)
+            .map(|(width, height)| width / height)
+            .or_else(|| {
+                root.parse_viewbox(root.effective_zoom())
+                    .map(|view| view.width() / view.height())
+            });
+        if let Some(error) = state.length_error.borrow_mut().take() {
+            return Err(Error::Style(error));
+        }
+        Ok(crate::paint::NaturalDimensions {
+            width,
+            height,
+            ratio,
+        })
+    }
+
+    pub(crate) fn to_tree(
+        &self,
+        opt: &Options,
+        viewport: Option<crate::svg::usvg::Size>,
+        images: Option<&dyn Fn(&str, &Options) -> Option<crate::svg::usvg::ImageKind>>,
+        fonts: Option<&dyn crate::svg::usvg::FontProvider>,
+        motion: Option<&dyn Fn(&str) -> Option<std::sync::Arc<str>>>,
+    ) -> Result<crate::svg::usvg::Tree, Error> {
+        converter::convert_doc(&self.0, opt, viewport, images, fonts, motion)
+    }
+}
 
 /// List of all errors.
 #[derive(Debug)]
@@ -195,14 +267,14 @@ impl crate::svg::usvg::Tree {
         let doc =
             roxmltree::Document::parse_with_options(text, xml_opt).map_err(Error::ParsingFailed)?;
 
-        let doc = svgtree::Document::parse_tree(&doc, opt.style_sheet.as_deref())?;
-        converter::convert_doc(&doc, opt, viewport, resolver, fonts, motion)
+        let doc = ParsedSvg::parse(&doc, opt.style_sheet.as_deref())?;
+        doc.to_tree(opt, viewport, resolver, fonts, motion)
     }
 
     /// Parses `Tree` from `roxmltree::Document`.
     pub fn from_xmltree(doc: &roxmltree::Document, opt: &Options) -> Result<Self, Error> {
-        let doc = svgtree::Document::parse_tree(doc, opt.style_sheet.as_deref())?;
-        converter::convert_doc(&doc, opt, None, None, None, None)
+        let doc = ParsedSvg::parse(doc, opt.style_sheet.as_deref())?;
+        doc.to_tree(opt, None, None, None, None)
     }
 }
 

@@ -19,35 +19,51 @@ pub(crate) enum ServerOrColor {
 
 pub(crate) fn convert(
     node: SvgNode,
+    target: SvgNode,
     state: &converter::State,
     cache: &mut converter::Cache,
 ) -> Option<ServerOrColor> {
-    // Check for existing.
-    if let Some(paint) = cache.paint.get(node.element_id()) {
+    let key = converter::ResourceKey::new(node, target, state, None);
+    if let Some(paint) = cache.paint.get(&key) {
         return Some(ServerOrColor::Server(paint.clone()));
     }
 
+    let id = if cache
+        .paint
+        .keys()
+        .any(|existing| existing.source == key.source)
+    {
+        match node.tag_name()? {
+            EId::LinearGradient => cache.gen_linear_gradient_id(),
+            EId::RadialGradient => cache.gen_radial_gradient_id(),
+            EId::Pattern => cache.gen_pattern_id(),
+            _ => return None,
+        }
+    } else {
+        NonEmptyString::new(node.element_id().to_owned())?
+    };
     // Unwrap is safe, because we already checked for is_paint_server().
     let paint = match node.tag_name().unwrap() {
-        EId::LinearGradient => convert_linear(node, state),
-        EId::RadialGradient => convert_radial(node, state),
-        EId::Pattern => convert_pattern(node, state, cache),
+        EId::LinearGradient => convert_linear(node, target, state, id),
+        EId::RadialGradient => convert_radial(node, target, state, id),
+        EId::Pattern => convert_pattern(node, target, state, cache, id),
         _ => unreachable!(),
     };
 
     if let Some(ServerOrColor::Server(paint)) = &paint {
-        cache
-            .paint
-            .insert(node.element_id().to_string(), paint.clone());
+        cache.paint.insert(key, paint.clone());
     }
 
     paint
 }
 
 #[inline(never)]
-fn convert_linear(node: SvgNode, state: &converter::State) -> Option<ServerOrColor> {
-    let id = NonEmptyString::new(node.element_id().to_string())?;
-
+fn convert_linear(
+    node: SvgNode,
+    target: SvgNode,
+    state: &converter::State,
+    id: NonEmptyString,
+) -> Option<ServerOrColor> {
     let stops = convert_stops(find_gradient_with_stops(node)?);
     if stops.len() < 2 {
         return stops_to_color(&stops);
@@ -57,16 +73,17 @@ fn convert_linear(node: SvgNode, state: &converter::State) -> Option<ServerOrCol
     let transform = node.resolve_transform(AId::GradientTransform, state);
 
     let gradient = LinearGradient {
-        x1: resolve_number(node, AId::X1, units, state, Length::zero()),
-        y1: resolve_number(node, AId::Y1, units, state, Length::zero()),
+        x1: resolve_number(node, target, AId::X1, units, state, Length::zero()),
+        y1: resolve_number(node, target, AId::Y1, units, state, Length::zero()),
         x2: resolve_number(
             node,
+            target,
             AId::X2,
             units,
             state,
             Length::new(100.0, Unit::Percent),
         ),
-        y2: resolve_number(node, AId::Y2, units, state, Length::zero()),
+        y2: resolve_number(node, target, AId::Y2, units, state, Length::zero()),
         base: BaseGradient {
             id,
             units,
@@ -82,17 +99,27 @@ fn convert_linear(node: SvgNode, state: &converter::State) -> Option<ServerOrCol
 }
 
 #[inline(never)]
-fn convert_radial(node: SvgNode, state: &converter::State) -> Option<ServerOrColor> {
-    let id = NonEmptyString::new(node.element_id().to_string())?;
-
+fn convert_radial(
+    node: SvgNode,
+    target: SvgNode,
+    state: &converter::State,
+    id: NonEmptyString,
+) -> Option<ServerOrColor> {
     let stops = convert_stops(find_gradient_with_stops(node)?);
     if stops.len() < 2 {
         return stops_to_color(&stops);
     }
 
     let units = convert_units(node, AId::GradientUnits, Units::ObjectBoundingBox);
-    let r = resolve_number(node, AId::R, units, state, Length::new(50.0, Unit::Percent));
-    let fr = resolve_number(node, AId::Fr, units, state, Length::zero());
+    let r = resolve_number(
+        node,
+        target,
+        AId::R,
+        units,
+        state,
+        Length::new(50.0, Unit::Percent),
+    );
+    let fr = resolve_number(node, target, AId::Fr, units, state, Length::zero());
 
     // 'A value of zero will cause the area to be painted as a single color
     // using the color and opacity of the last gradient stop.'
@@ -109,6 +136,7 @@ fn convert_radial(node: SvgNode, state: &converter::State) -> Option<ServerOrCol
     let spread_method = convert_spread_method(node);
     let cx = resolve_number(
         node,
+        target,
         AId::Cx,
         units,
         state,
@@ -116,13 +144,21 @@ fn convert_radial(node: SvgNode, state: &converter::State) -> Option<ServerOrCol
     );
     let cy = resolve_number(
         node,
+        target,
         AId::Cy,
         units,
         state,
         Length::new(50.0, Unit::Percent),
     );
-    let fx = resolve_number(node, AId::Fx, units, state, Length::new_number(cx as f64));
-    let fy = resolve_number(node, AId::Fy, units, state, Length::new_number(cy as f64));
+    let focus = |name, default| {
+        resolve_attr(node, name)
+            .attribute(name)
+            .map_or(default, |length| {
+                super::units::convert_length(length, target, name, units, state)
+            })
+    };
+    let fx = focus(AId::Fx, cx);
+    let fy = focus(AId::Fy, cy);
     let transform = node.resolve_transform(AId::GradientTransform, state);
 
     let gradient = RadialGradient {
@@ -149,17 +185,17 @@ fn convert_radial(node: SvgNode, state: &converter::State) -> Option<ServerOrCol
 #[inline(never)]
 fn convert_pattern(
     node: SvgNode,
+    target: SvgNode,
     state: &converter::State,
     cache: &mut converter::Cache,
+    id: NonEmptyString,
 ) -> Option<ServerOrColor> {
     let node_with_children = find_pattern_with_children(node)?;
-
-    let id = NonEmptyString::new(node.element_id().to_string())?;
 
     let view_box = {
         let n1 = resolve_attr(node, AId::ViewBox);
         let n2 = resolve_attr(node, AId::PreserveAspectRatio);
-        n1.parse_viewbox().map(|vb| ViewBox {
+        n1.parse_viewbox(node.effective_zoom()).map(|vb| ViewBox {
             rect: vb,
             aspect: n2.attribute(AId::PreserveAspectRatio).unwrap_or_default(),
         })
@@ -171,10 +207,10 @@ fn convert_pattern(
     let transform = node.resolve_transform(AId::PatternTransform, state);
 
     let rect = NonZeroRect::from_xywh(
-        resolve_number(node, AId::X, units, state, Length::zero()),
-        resolve_number(node, AId::Y, units, state, Length::zero()),
-        resolve_number(node, AId::Width, units, state, Length::zero()),
-        resolve_number(node, AId::Height, units, state, Length::zero()),
+        resolve_number(node, target, AId::X, units, state, Length::zero()),
+        resolve_number(node, target, AId::Y, units, state, Length::zero()),
+        resolve_number(node, target, AId::Width, units, state, Length::zero()),
+        resolve_number(node, target, AId::Height, units, state, Length::zero()),
     );
     let rect = rect.log_none(|| {
         log::warn!(
@@ -193,6 +229,11 @@ fn convert_pattern(
         root: Group::empty(),
     };
 
+    let mut content_state = state.clone();
+    if let Some(view) = view_box {
+        content_state.view_box = view.rect;
+    }
+
     // We can apply viewbox transform only for user space coordinates.
     // Otherwise we need a bounding box, which is unknown at this point.
     if patt.view_box.is_some()
@@ -203,7 +244,7 @@ fn convert_pattern(
         g.transform = view_box.unwrap().to_transform(rect.size());
         g.abs_transform = g.transform;
 
-        converter::convert_children(node_with_children, state, cache, &mut g);
+        converter::convert_children(node_with_children, &content_state, cache, &mut g);
         if !g.has_children() {
             return None;
         }
@@ -211,7 +252,7 @@ fn convert_pattern(
         g.calculate_bounding_boxes();
         patt.root.children.push(Node::Group(Box::new(g)));
     } else {
-        converter::convert_children(node_with_children, state, cache, &mut patt.root);
+        converter::convert_children(node_with_children, &content_state, cache, &mut patt.root);
         if !patt.root.has_children() {
             return None;
         }
@@ -406,15 +447,33 @@ fn convert_stops(grad: SvgNode) -> Vec<Stop> {
 #[inline(never)]
 pub(crate) fn resolve_number(
     node: SvgNode,
+    target: SvgNode,
     name: AId,
     units: Units,
     state: &converter::State,
     def: Length,
 ) -> f32 {
-    resolve_attr(node, name).convert_length(name, units, state, def)
+    if let Some(length) =
+        super::units::computed_length(resolve_attr(node, name), target, name, units, state)
+    {
+        let basis = super::units::convert_length(
+            Length::new(100.0, Unit::Percent),
+            target,
+            name,
+            units,
+            state,
+        );
+        if let Some(value) = super::units::checked_length(length.resolve(basis), state) {
+            return value;
+        }
+    }
+    super::units::convert_length(def, target, name, units, state)
 }
 
-fn resolve_attr<'a, 'input: 'a>(node: SvgNode<'a, 'input>, name: AId) -> SvgNode<'a, 'input> {
+pub(super) fn resolve_attr<'a, 'input: 'a>(
+    node: SvgNode<'a, 'input>,
+    name: AId,
+) -> SvgNode<'a, 'input> {
     if node.has_attribute(name) {
         return node;
     }

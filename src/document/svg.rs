@@ -88,6 +88,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
     }
 
     fn document(mut self, root: Element<'d>, style: &Style) -> Result<String, DocumentError> {
+        let style = style.canonical();
         let _ = write!(
             self.xml,
             "<{} xmlns=\"{SVG_NAMESPACE}\" xmlns:xlink=\"{XLINK_NAMESPACE}\"",

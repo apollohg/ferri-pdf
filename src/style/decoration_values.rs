@@ -120,17 +120,19 @@ pub(crate) struct TextDecorations {
     /// Lines this element specifies; it decorates its own content with them.
     pub declared: TextDecoration,
     /// Lines propagated from ancestors, outermost first. A block container's root inline
-    /// box paints these; inline boxes leave them to their ancestors.
+    /// box paints these; inline boxes leave them to their ancestors. Thicknesses are used points.
     pub propagated: Vec<TextDecoration>,
     pub underline_position: UnderlinePosition,
     /// `None` is `auto`.
     pub underline_offset: Option<LengthPercentage>,
 }
 impl TextDecorations {
-    pub(super) fn propagated(&self) -> Vec<TextDecoration> {
+    pub(super) fn propagated(&self, zoom: f32) -> Vec<TextDecoration> {
         let mut propagated = self.propagated.clone();
         if !self.declared.lines.is_empty() {
-            propagated.push(self.declared);
+            let mut declared = self.declared;
+            declared.thickness = declared.thickness.map(|width| width * zoom);
+            propagated.push(declared);
         }
         propagated
     }

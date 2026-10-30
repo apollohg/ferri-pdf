@@ -11,9 +11,10 @@ mod silhouette;
 
 pub(crate) use baselines::BaselineTable;
 pub(crate) use feature_values::FeatureValueType;
+pub(crate) use loading::OPTICAL_SIZE_AXIS;
 pub(crate) use metrics::{
     FALLBACK_IDEOGRAPH_ADVANCE_EM, FALLBACK_ZERO_ADVANCE_EM, FaceMetrics, InitialFont, SizeAdjust,
-    SizeMetric, WATER_IDEOGRAPH, ZERO, advance, initial_font,
+    SizeMetric, WATER_IDEOGRAPH, ZERO, advance, advance_in_axis, initial_font,
 };
 pub(crate) use palettes::{BasePalette, FontPalette};
 pub(crate) use selection::{FaceSettings, FontAdjustments, FontFeature, FontInstance};

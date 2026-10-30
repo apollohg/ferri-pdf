@@ -4,6 +4,7 @@ mod heif;
 mod pixels;
 mod svg;
 mod svg_fonts;
+pub(crate) use svg_fonts::SvgFonts;
 pub(crate) mod widget;
 use crate::fonts::{FontBook, FontNamespace};
 pub(crate) use crate::paint::NaturalDimensions;
@@ -16,7 +17,7 @@ use std::{
     io::Cursor,
     sync::Arc,
 };
-pub(crate) use svg::SvgImage;
+pub(crate) use svg::{SvgImage, options as svg_options};
 impl crate::paint::ImageInfo for Image {
     fn natural_size(&self) -> NaturalDimensions {
         Image::natural_size(self)
@@ -274,7 +275,7 @@ pub(crate) struct ImageCache {
     validated_markers: HashSet<usize>,
     failed: HashSet<(FontNamespace, crate::resources::ResourceBase, String)>,
     failures: Vec<ImageFailure>,
-    fonts: svg_fonts::SvgFonts,
+    fonts: SvgFonts,
     svg_sources: HashMap<crate::resources::ResourceBase, HashMap<String, Arc<svg::SvgSource>>>,
     images: HashMap<
         FontNamespace,
@@ -284,7 +285,7 @@ pub(crate) struct ImageCache {
 impl ImageCache {
     pub(crate) fn with_fonts(fonts: FontBook) -> Self {
         Self {
-            fonts: svg_fonts::SvgFonts::new(Arc::new(fonts)),
+            fonts: SvgFonts::new(Arc::new(fonts)),
             validated_markers: HashSet::new(),
             failed: HashSet::new(),
             failures: Vec::new(),

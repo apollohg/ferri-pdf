@@ -1960,6 +1960,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             if block.source.layout_flow().writing_mode.vertical() {
                 size.swap(0, 1);
             }
+            let size = size.map(|extent| extent / block.style.effective_zoom);
             self.measurer.container_sizes.entry(element).or_insert(size);
         }
         let track_overflow = (block.grid.is_some() && block.style.contains_absolute())

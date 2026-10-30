@@ -137,6 +137,35 @@ fn nested_documents_evaluate_media_queries_and_viewport_units_against_their_view
 }
 
 #[test]
+fn zoomed_frames_resolve_nested_viewport_units_in_unzoomed_coordinates() {
+    let nested = "<style>body{margin:0}div{width:50vw;height:50vh;background:blue}@media(width:100pt) and (height:40pt){div{background:rgb(0,128,0)}}p{margin:0;font:10pt/12pt serif}</style><div></div><p>Nested</p>";
+    let trace = trace(&format!(
+        "<iframe style='display:block;border:0;zoom:2;width:100pt;height:40pt' srcdoc=\"{nested}\"></iframe>"
+    ));
+    let [(paint, view)] = viewports(&trace)[..] else {
+        panic!("one zoomed viewport");
+    };
+    assert_eq!([paint.rect.width, paint.rect.height], [200.0, 80.0]);
+    assert_eq!(
+        [view.area.width, view.area.height],
+        [100.0, 40.0],
+        "nested CSS viewport excludes embedding zoom"
+    );
+    let [green] = boxes(view, [0, 128, 0])[..] else {
+        panic!(
+            "nested media query must match the unzoomed viewport: {:?}",
+            view.items
+        );
+    };
+    assert_eq!([green.width, green.height], [50.0, 20.0]);
+    assert_eq!(texts(&view.lines), ["Nested"]);
+    assert_eq!(
+        view.lines[0].runs[0].font_size, 10.0,
+        "nested font metrics are zoomed when composited"
+    );
+}
+
+#[test]
 fn nested_documents_are_continuous_media_clipped_to_the_viewport() {
     let nested = "<style>body{margin:0}p{margin:0;height:40pt}h1{break-before:page;margin:0;font-size:10pt}\
         </style><p>first</p><h1>second</h1><p style='height:400pt'>tall</p><p>below</p>";

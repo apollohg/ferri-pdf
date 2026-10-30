@@ -191,6 +191,10 @@
     }
   },
   "properties": {
+    "zoom": {
+      "syntax": "normal | <number [0,∞]> | <percentage [0,∞]>",
+      "source": "https://github.com/w3c/csswg-drafts/blob/54c6c30a5501542143acc4c69980e723b8d20460/css-viewport-1/Overview.bs#L447; https://www.w3.org/2026/06/17-css-minutes.html#t03"
+    },
     "tab-size": {
       "syntax": "<number [0,∞]> | <length [0,∞]>",
       "source": "https://www.w3.org/TR/2026/CRD-css-text-3-20260814/#tab-size-property"

@@ -173,7 +173,7 @@ pub(crate) fn advance(face: &Face<'_>, ch: char) -> Option<f32> {
     advance_in_axis(face, ch, false)
 }
 
-fn advance_in_axis(face: &Face<'_>, ch: char, vertical: bool) -> Option<f32> {
+pub(crate) fn advance_in_axis(face: &Face<'_>, ch: char, vertical: bool) -> Option<f32> {
     let glyph = face.glyph_index(ch).filter(|glyph| glyph.0 != 0)?;
     let advance = if vertical {
         face.glyph_ver_advance(glyph)

@@ -727,7 +727,10 @@ impl<'a> Measurer<'a> {
             work,
             text,
             canvas_images: false,
-            motion: Default::default(),
+            motion: std::rc::Rc::new(crate::layout::motion::Resources::new(
+                Default::default(),
+                text.fonts(),
+            )),
             page_height: size[1],
             sources: crate::layout::source::SourceIds::new(root),
             item_metrics: Default::default(),

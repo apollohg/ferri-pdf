@@ -197,6 +197,7 @@ pub(crate) enum NodeKind {
 }
 
 struct NodeData {
+    effective_zoom: f32,
     parent: Option<NodeId>,
     next_sibling: Option<NodeId>,
     children: Option<(NodeId, NodeId)>,
@@ -212,6 +213,7 @@ pub(super) struct Attribute<'input> {
     pub value: roxmltree::StringStorage<'input>,
     /// Attribute's importance
     pub important: bool,
+    pub inherited: bool,
 }
 
 impl std::fmt::Debug for Attribute<'_> {
@@ -242,6 +244,14 @@ impl PartialEq for SvgNode<'_, '_> {
 }
 
 impl<'a, 'input: 'a> SvgNode<'a, 'input> {
+    /// The declaration whose computed length an explicit inheritance chain copies.
+    pub(super) fn length_owner(&self, aid: AId) -> Option<Self> {
+        self.ancestors().find(|node| {
+            node.attributes()
+                .iter()
+                .any(|attribute| attribute.name == aid && !attribute.inherited)
+        })
+    }
     #[inline]
     fn id(&self) -> NodeId {
         self.id
@@ -790,7 +800,10 @@ impl AId {
     fn allows_inherit_value(&self) -> bool {
         matches!(
             self,
-            AId::AlignmentBaseline
+            AId::CssZoom
+                | AId::Width
+                | AId::Height
+                | AId::AlignmentBaseline
                 | AId::BaselineShift
                 | AId::ClipPath
                 | AId::ClipRule
@@ -898,6 +911,12 @@ pub(super) trait FromValue<'a, 'input: 'a>: Sized {
     fn parse(node: SvgNode<'a, 'input>, aid: AId, value: &'a str) -> Option<Self>;
 }
 
+impl SvgNode<'_, '_> {
+    pub(crate) fn effective_zoom(self) -> f32 {
+        self.d.effective_zoom
+    }
+}
+
 impl<'a, 'input: 'a> FromValue<'a, 'input> for &'a str {
     fn parse(_: SvgNode<'a, 'input>, _: AId, value: &'a str) -> Option<Self> {
         Some(value)
@@ -931,19 +950,24 @@ impl<'a, 'input: 'a> FromValue<'a, 'input> for Opacity {
 }
 
 impl<'a, 'input: 'a> FromValue<'a, 'input> for Transform {
-    fn parse(_: SvgNode, _: AId, value: &str) -> Option<Self> {
+    fn parse(node: SvgNode, aid: AId, value: &str) -> Option<Self> {
         let ts = match svgtypes::Transform::from_str(value) {
             Ok(v) => v,
             Err(_) => return None,
         };
 
+        let zoom = if aid == AId::Transform {
+            node.effective_zoom()
+        } else {
+            crate::style::INITIAL_ZOOM
+        };
         let ts = Transform::from_row(
             ts.a as f32,
             ts.b as f32,
             ts.c as f32,
             ts.d as f32,
-            ts.e as f32,
-            ts.f as f32,
+            ts.e as f32 * zoom,
+            ts.f as f32 * zoom,
         );
 
         if ts.is_valid() {
@@ -1017,17 +1041,6 @@ impl<'a, 'input: 'a> FromValue<'a, 'input> for Vec<f32> {
         let mut list = Vec::new();
         for n in svgtypes::NumberListParser::from(value) {
             list.push(n.ok()? as f32);
-        }
-
-        Some(list)
-    }
-}
-
-impl<'a, 'input: 'a> FromValue<'a, 'input> for Vec<svgtypes::Length> {
-    fn parse(_: SvgNode, _: AId, value: &str) -> Option<Self> {
-        let mut list = Vec::new();
-        for n in svgtypes::LengthListParser::from(value) {
-            list.push(n.ok()?);
         }
 
         Some(list)

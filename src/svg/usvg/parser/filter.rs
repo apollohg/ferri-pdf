@@ -17,7 +17,7 @@ use crate::svg::usvg::{
 
 use super::OptionLog;
 use super::converter::{self, SvgColorExt};
-use super::paint_server::{convert_units, resolve_number};
+use super::paint_server::{convert_units, resolve_attr};
 use super::svgtree::{AId, EId, FromValue, SvgNode};
 
 impl<'a, 'input: 'a> FromValue<'a, 'input> for ColorInterpolation {
@@ -40,6 +40,16 @@ pub(crate) fn convert(
         Some(v) => v,
         None => return Ok(Vec::new()),
     };
+
+    let normalized = match crate::style::svg_cascade::filter_source(value) {
+        Ok(value) => value,
+        Err(crate::style::StyleError::Invalid(_)) => return Ok(Vec::new()),
+        Err(error) => {
+            cache.style_error.get_or_insert(Arc::new(error));
+            return Err(());
+        }
+    };
+    let value = normalized.as_deref().unwrap_or(value);
 
     let mut has_invalid_urls = false;
     let mut filters = Vec::new();
@@ -134,8 +144,11 @@ pub(crate) fn convert(
                 create_base_filter_func(convert_saturate_function(amount), &mut filters, cache);
             }
             svgtypes::FilterValue::Url(url) => {
-                if let Some(link) = node.document().element_by_id(url) {
-                    if let Ok(res) = convert_url(link, state, object_bbox, cache) {
+                let decoded = percent_encoding::percent_decode_str(url).decode_utf8();
+                if let Ok(id) = decoded
+                    && let Some(link) = node.document().element_by_id(&id)
+                {
+                    if let Ok(res) = convert_url(link, node, state, object_bbox, cache) {
                         if let Some(f) = res {
                             filters.push(f);
                         }
@@ -162,6 +175,7 @@ pub(crate) fn convert(
 
 fn convert_url(
     node: SvgNode,
+    target: SvgNode,
     state: &converter::State,
     object_bbox: Option<NonZeroRect>,
     cache: &mut converter::Cache,
@@ -169,47 +183,19 @@ fn convert_url(
     let units = convert_units(node, AId::FilterUnits, Units::ObjectBoundingBox);
     let primitive_units = convert_units(node, AId::PrimitiveUnits, Units::UserSpaceOnUse);
 
-    // Check if this element was already converted.
-    //
-    // Only `userSpaceOnUse` clipPaths can be shared,
-    // because `objectBoundingBox` one will be converted into user one
-    // and will become node-specific.
-    let cacheable = units == Units::UserSpaceOnUse && primitive_units == Units::UserSpaceOnUse;
-    if cacheable {
-        if let Some(filter) = cache.filters.get(node.element_id()) {
-            return Ok(Some(filter.clone()));
-        }
+    let key = converter::ResourceKey::new(node, target, state, object_bbox);
+    if let Some(filter) = cache.filters.get(&key) {
+        return Ok(Some(filter.clone()));
     }
-
+    let region_length = |name, default| {
+        let length = resolve_attr(node, name).attribute(name).unwrap_or(default);
+        super::units::convert_length(length, target, name, units, state)
+    };
     let rect = NonZeroRect::from_xywh(
-        resolve_number(
-            node,
-            AId::X,
-            units,
-            state,
-            Length::new(-10.0, Unit::Percent),
-        ),
-        resolve_number(
-            node,
-            AId::Y,
-            units,
-            state,
-            Length::new(-10.0, Unit::Percent),
-        ),
-        resolve_number(
-            node,
-            AId::Width,
-            units,
-            state,
-            Length::new(120.0, Unit::Percent),
-        ),
-        resolve_number(
-            node,
-            AId::Height,
-            units,
-            state,
-            Length::new(120.0, Unit::Percent),
-        ),
+        region_length(AId::X, Length::new(-10.0, Unit::Percent)),
+        region_length(AId::Y, Length::new(-10.0, Unit::Percent)),
+        region_length(AId::Width, Length::new(120.0, Unit::Percent)),
+        region_length(AId::Height, Length::new(120.0, Unit::Percent)),
     );
 
     let mut rect = rect
@@ -236,6 +222,7 @@ fn convert_url(
     };
     let primitives = collect_children(
         &node_with_primitives,
+        target,
         primitive_units,
         state,
         object_bbox,
@@ -247,11 +234,13 @@ fn convert_url(
     }
 
     let mut id = NonEmptyString::new(node.element_id().to_string()).ok_or(())?;
-    // Generate ID only when we're parsing `objectBoundingBox` filter for the second time.
-    if !cacheable && cache.filters.contains_key(id.get()) {
+    if cache
+        .filters
+        .keys()
+        .any(|existing| existing.source == key.source)
+    {
         id = cache.gen_filter_id();
     }
-    let id_copy = id.get().to_string();
 
     let filter = Arc::new(Filter {
         id,
@@ -259,7 +248,7 @@ fn convert_url(
         primitives,
     });
 
-    cache.filters.insert(id_copy, filter.clone());
+    cache.filters.insert(key, filter.clone());
 
     Ok(Some(filter))
 }
@@ -290,6 +279,7 @@ struct FilterResults {
 
 fn collect_children(
     filter: &SvgNode,
+    target: SvgNode,
     units: Units,
     state: &converter::State,
     object_bbox: Option<NonZeroRect>,
@@ -311,7 +301,19 @@ fn collect_children(
             return Vec::new();
         }
     } else {
-        Size::from_wh(1.0, 1.0).unwrap()
+        let zoom = target.effective_zoom();
+        let Some(size) = Size::from_wh(zoom, zoom) else {
+            return Vec::new();
+        };
+        size
+    };
+
+    let light_transform = if units == Units::ObjectBoundingBox {
+        crate::svg::usvg::Transform::from_bbox(
+            object_bbox.expect("object bounding box checked above"),
+        )
+    } else {
+        crate::svg::usvg::Transform::from_scale(scale.width(), scale.height())
     };
 
     for child in filter.children() {
@@ -322,6 +324,7 @@ fn collect_children(
 
         let filter_subregion = match resolve_primitive_region(
             child,
+            target,
             tag_name,
             units,
             state,
@@ -332,33 +335,35 @@ fn collect_children(
             None => break,
         };
 
-        let kind =
-            match tag_name {
-                EId::FeDropShadow => convert_drop_shadow(child, scale, &primitives),
-                EId::FeGaussianBlur => convert_gaussian_blur(child, scale, &primitives),
-                EId::FeOffset => convert_offset(child, scale, &primitives),
-                EId::FeBlend => convert_blend(child, &primitives),
-                EId::FeFlood => convert_flood(child),
-                EId::FeComposite => convert_composite(child, &primitives),
-                EId::FeMerge => convert_merge(child, &primitives),
-                EId::FeTile => convert_tile(child, &primitives),
-                EId::FeImage => convert_image(child, filter_subregion, state, cache),
-                EId::FeComponentTransfer => convert_component_transfer(child, &primitives),
-                EId::FeColorMatrix => convert_color_matrix(child, &primitives),
-                EId::FeConvolveMatrix => convert_convolve_matrix(child, &primitives)
-                    .unwrap_or_else(create_dummy_primitive),
-                EId::FeMorphology => convert_morphology(child, scale, &primitives),
-                EId::FeDisplacementMap => convert_displacement_map(child, scale, &primitives),
-                EId::FeTurbulence => convert_turbulence(child),
-                EId::FeDiffuseLighting => convert_diffuse_lighting(child, &primitives)
-                    .unwrap_or_else(create_dummy_primitive),
-                EId::FeSpecularLighting => convert_specular_lighting(child, &primitives)
-                    .unwrap_or_else(create_dummy_primitive),
-                tag_name => {
-                    log::warn!("'{}' is not a valid filter primitive. Skipped.", tag_name);
-                    continue;
-                }
-            };
+        let kind = match tag_name {
+            EId::FeDropShadow => convert_drop_shadow(child, scale, &primitives),
+            EId::FeGaussianBlur => convert_gaussian_blur(child, scale, &primitives),
+            EId::FeOffset => convert_offset(child, scale, &primitives),
+            EId::FeBlend => convert_blend(child, &primitives),
+            EId::FeFlood => convert_flood(child),
+            EId::FeComposite => convert_composite(child, &primitives),
+            EId::FeMerge => convert_merge(child, &primitives),
+            EId::FeTile => convert_tile(child, &primitives),
+            EId::FeImage => convert_image(child, filter_subregion, state, cache),
+            EId::FeComponentTransfer => convert_component_transfer(child, &primitives),
+            EId::FeColorMatrix => convert_color_matrix(child, &primitives),
+            EId::FeConvolveMatrix => {
+                convert_convolve_matrix(child, &primitives).unwrap_or_else(create_dummy_primitive)
+            }
+            EId::FeMorphology => convert_morphology(child, scale, &primitives),
+            EId::FeDisplacementMap => convert_displacement_map(child, scale, &primitives),
+            EId::FeTurbulence => convert_turbulence(child),
+            EId::FeDiffuseLighting => convert_diffuse_lighting(child, light_transform, &primitives)
+                .unwrap_or_else(create_dummy_primitive),
+            EId::FeSpecularLighting => {
+                convert_specular_lighting(child, light_transform, &primitives)
+                    .unwrap_or_else(create_dummy_primitive)
+            }
+            tag_name => {
+                log::warn!("'{}' is not a valid filter primitive. Skipped.", tag_name);
+                continue;
+            }
+        };
 
         let color_interpolation = child
             .find_attribute(AId::ColorInterpolationFilters)
@@ -380,16 +385,21 @@ fn collect_children(
 // TODO: rewrite/simplify/explain/whatever
 fn resolve_primitive_region(
     fe: SvgNode,
+    target: SvgNode,
     kind: EId,
     units: Units,
     state: &converter::State,
     bbox: Option<NonZeroRect>,
     filter_region: NonZeroRect,
 ) -> Option<NonZeroRect> {
-    let x = fe.try_convert_length(AId::X, units, state);
-    let y = fe.try_convert_length(AId::Y, units, state);
-    let width = fe.try_convert_length(AId::Width, units, state);
-    let height = fe.try_convert_length(AId::Height, units, state);
+    let length = |name| {
+        fe.attribute(name)
+            .map(|value| super::units::convert_length(value, target, name, units, state))
+    };
+    let x = length(AId::X);
+    let y = length(AId::Y);
+    let width = length(AId::Width);
+    let height = length(AId::Height);
 
     let region = match kind {
         EId::FeFlood | EId::FeImage => {
@@ -883,8 +893,12 @@ fn convert_image_inner(
     Some(Kind::Image(Image { root }))
 }
 
-fn convert_diffuse_lighting(fe: SvgNode, primitives: &[Primitive]) -> Option<Kind> {
-    let light_source = convert_light_source(fe)?;
+fn convert_diffuse_lighting(
+    fe: SvgNode,
+    transform: crate::svg::usvg::Transform,
+    primitives: &[Primitive],
+) -> Option<Kind> {
+    let light_source = convert_light_source(fe)?.transformed(transform);
     Some(Kind::DiffuseLighting(DiffuseLighting {
         input: resolve_input(fe, AId::In, primitives),
         surface_scale: fe.attribute(AId::SurfaceScale).unwrap_or(1.0),
@@ -894,8 +908,12 @@ fn convert_diffuse_lighting(fe: SvgNode, primitives: &[Primitive]) -> Option<Kin
     }))
 }
 
-fn convert_specular_lighting(fe: SvgNode, primitives: &[Primitive]) -> Option<Kind> {
-    let light_source = convert_light_source(fe)?;
+fn convert_specular_lighting(
+    fe: SvgNode,
+    transform: crate::svg::usvg::Transform,
+    primitives: &[Primitive],
+) -> Option<Kind> {
+    let light_source = convert_light_source(fe)?.transformed(transform);
 
     let specular_exponent = fe.attribute(AId::SpecularExponent).unwrap_or(1.0);
     if !(1.0..=128.0).contains(&specular_exponent) {

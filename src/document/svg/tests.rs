@@ -538,3 +538,39 @@ fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
         }
     }
 }
+
+#[test]
+fn referenced_filters_preserve_their_primitives_and_target_reference() {
+    let serialized = xml(
+        "",
+        r#"<svg><defs><filter id="f"><feOffset dx="5" dy="2"/></filter></defs><rect id="target" width="20" height="10" filter="url(#f)"/></svg>"#,
+    );
+    assert_eq!(
+        value(&serialized, "target", "filter"),
+        "url(\"#f\")",
+        "{serialized}"
+    );
+    let document = roxmltree::Document::parse(&serialized).unwrap();
+    let primitive = document
+        .descendants()
+        .find(|node| node.has_tag_name("feOffset"))
+        .expect("filter primitive");
+    assert_eq!(primitive.attribute("dx"), Some("5"));
+    assert_eq!(primitive.attribute("dy"), Some("2"));
+}
+
+#[test]
+fn paint_server_references_accept_absent_and_explicit_fallbacks() {
+    for property in ["fill", "stroke"] {
+        for fallback in ["", " none", " rgba(255,0,0,1)"] {
+            let paint = format!("url(\"#paint\"){fallback}");
+            let css = format!("rect{{{property}:{paint}}}");
+            let serialized = xml(&css, "<svg><rect id=target width=10 height=10 /></svg>");
+            assert_eq!(
+                value(&serialized, "target", property),
+                paint,
+                "{css}\n{serialized}"
+            );
+        }
+    }
+}

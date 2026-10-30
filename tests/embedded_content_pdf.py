@@ -96,6 +96,58 @@ class EmbeddedContentPdf(unittest.TestCase):
                 expected,
                 'text shadows and blend groups inside the viewport paint as they do on the page')
 
+    def test_zoomed_iframe_scales_nested_ink_and_clips_in_physical_coordinates(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-iframe-zoom-') as directory:
+            root = Path(directory)
+            reference = ('.viewport{width:200pt;height:100pt;overflow:hidden}'
+                         '.viewport div{width:160pt;height:60pt;background:rgb(0,128,0)}'
+                         '.viewport .tall{width:40pt;height:400pt;margin-left:180pt;background:rgb(255,0,0)}')
+            expected = self.ink(root, reference,
+                                '<div class=viewport><div></div><div class=tall></div></div>')
+            actual = self.ink(root,
+                              'iframe{display:block;zoom:2;width:100pt;height:50pt;border:0}',
+                              f'<iframe srcdoc="{escape(NESTED_BOXES)}"></iframe>')
+            self.assertEqual(actual, expected,
+                             'zoom must scale nested content and retain the physical viewport clip')
+
+    def test_zoomed_iframe_scales_text_shadows_and_filter_resolution(self):
+        font = table_positioning_pdf.ROOT / 'tests/oracle/assets/DejaVuSans.ttf'
+        nested = (f"<style>@font-face{{font-family:Probe;src:url('{font.as_uri()}')}}"
+                  'body{margin:0}p{margin:0;font:10pt/14pt Probe;color:blue;'
+                  'text-shadow:1pt 2pt green}'
+                  'div{width:40pt;height:10pt;background:red;filter:blur(1pt)}</style>'
+                  '<p>Zoom</p><div></div>')
+        reference = ('.viewport{width:200pt;height:100pt;overflow:hidden;isolation:isolate}'
+                     'p{margin:0;font:20pt/28pt Probe;color:blue;text-shadow:2pt 4pt green}'
+                     '.blur{width:80pt;height:20pt;background:red;filter:blur(2pt)}')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-iframe-zoom-effects-') as directory:
+            root = Path(directory)
+            expected = self.ink(root, reference,
+                                '<div class=viewport><p>Zoom</p><div class=blur></div></div>')
+            actual = self.ink(root,
+                              'iframe{display:block;zoom:2;width:100pt;height:50pt;border:0}',
+                              f'<iframe srcdoc="{escape(nested)}"></iframe>')
+            self.assertEqual(actual, expected,
+                             'nested font size, shadow offsets, and raster filter density must scale together')
+
+    def test_nested_frame_zoom_accumulates_and_scales_svg_documents(self):
+        deepest = '<style>body{margin:0}div{width:10pt;height:4pt;background:green}</style><div></div>'
+        nested = ('<style>body{margin:0}iframe{display:block;border:0;zoom:3;'
+                  'width:20pt;height:10pt}</style>'
+                  f'<iframe srcdoc="{escape(deepest)}"></iframe>')
+        outer = 'iframe{display:block;border:0;zoom:2;width:100pt;height:50pt}'
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-iframe-zoom-nesting-') as directory:
+            root = Path(directory)
+            expected = self.ink(root, 'div{width:60pt;height:24pt;background:green}', '<div></div>')
+            self.assertEqual(self.ink(root, outer, f'<iframe srcdoc="{escape(nested)}"></iframe>'),
+                             expected, 'zoom factors must accumulate through nested documents')
+            svg = root / 'nested.svg'
+            svg.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="40">'
+                           '<rect width="80" height="40" fill="green"/></svg>')
+            expected = self.ink(root, 'div{width:120pt;height:60pt;background:green}', '<div></div>')
+            self.assertEqual(self.ink(root, outer, f'<iframe src="{svg.as_uri()}"></iframe>'),
+                             expected, 'an embedded SVG document must scale with the frame zoom')
+
     def test_nested_media_queries_use_the_iframe_viewport_not_the_page(self):
         nested = ('<style>body{margin:0}div{height:20pt;background:rgb(255,0,0)}'
                   '@media (max-width:130pt) and (min-width:130pt){div{background:rgb(0,128,0)}}'

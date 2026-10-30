@@ -212,7 +212,10 @@ fn layout_pass(
     measurer.canvas_images = document.canvas_background().backgrounds.has_images();
     measurer.unbroken = continuous;
     measurer.named_pages = !continuous;
-    measurer.motion = std::rc::Rc::new(motion::Resources::new(document.svg_definitions()));
+    measurer.motion = std::rc::Rc::new(motion::Resources::new(
+        document.svg_definitions(),
+        &sheet.fonts,
+    ));
     let root = (document.root().style().display != crate::style::Display::None)
         .then(|| {
             measurer.block(

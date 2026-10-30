@@ -1605,36 +1605,8 @@ fn shape_text_with_font(
     fontdb.with_face_data(font.id, |font_data, face_index| -> Option<Vec<Glyph>> {
         let mut rb_font = rustybuzz::Face::from_slice(font_data, face_index)?;
 
-        // Build the list of variations to apply
-        let mut final_variations: Vec<rustybuzz::Variation> = variations
-            .iter()
-            .map(|v| rustybuzz::Variation {
-                tag: Tag::from_bytes(&v.tag),
-                value: v.value,
-            })
-            .collect();
-
-        // Automatic optical sizing: if font-optical-sizing is auto and the font has
-        // an 'opsz' axis that isn't explicitly set, auto-set it to match font size.
-        // This matches browser behavior (CSS font-optical-sizing: auto).
-        if font_optical_sizing == crate::svg::usvg::FontOpticalSizing::Auto {
-            let has_explicit_opsz = variations.iter().any(|v| v.tag == *b"opsz");
-            if !has_explicit_opsz {
-                // Check if font has opsz axis using the already parsed rb_font
-                if let Some(axes) = rb_font.tables().fvar {
-                    let has_opsz_axis = axes
-                        .axes
-                        .into_iter()
-                        .any(|axis| axis.tag == Tag::from_bytes(b"opsz"));
-                    if has_opsz_axis {
-                        final_variations.push(rustybuzz::Variation {
-                            tag: Tag::from_bytes(b"opsz"),
-                            value: font_size,
-                        });
-                    }
-                }
-            }
-        }
+        let final_variations =
+            super::font_variations(&rb_font, variations, font_size, font_optical_sizing);
 
         // Apply font variations for variable fonts
         if !final_variations.is_empty() {

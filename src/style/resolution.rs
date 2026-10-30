@@ -804,6 +804,7 @@ impl<'a> Geometry<'a> {
                 inherited.root
             };
             return compute(&Relative {
+                physical_unit_scale: inherited.physical_unit_scale,
                 font: if font_property {
                     inherited.font
                 } else {
@@ -826,6 +827,7 @@ impl<'a> Geometry<'a> {
             });
         }
         compute(&Relative {
+            physical_unit_scale: self.sheet.environment.relative.physical_unit_scale,
             font: if font_property {
                 if context == Context::Root {
                     self.sheet.initial_relative().font
@@ -1192,6 +1194,7 @@ impl<'a> Geometry<'a> {
                         parent_line: false,
                     };
                     let relative = Relative {
+                        physical_unit_scale: self.sheet.environment.relative.physical_unit_scale,
                         font: FontBasis::Deferred(&page_font),
                         root: FontBasis::Deferred(&root_font),
                         viewport: Viewport::Deferred(self),

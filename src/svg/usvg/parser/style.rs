@@ -203,7 +203,7 @@ fn convert_paint(
             if let Some(link) = node.document().element_by_id(func_iri) {
                 let tag_name = link.tag_name().unwrap();
                 if tag_name.is_paint_server() {
-                    match paint_server::convert(link, state, cache) {
+                    match paint_server::convert(link, node, state, cache) {
                         Some(paint_server::ServerOrColor::Server(paint)) => {
                             // We can use a paint server node with ObjectBoundingBox units
                             // for painting only when the shape itself has a bbox.
@@ -259,10 +259,8 @@ fn from_fallback(
 // Prepare the 'stroke-dasharray' according to:
 // https://www.w3.org/TR/SVG11/painting.html#StrokeDasharrayProperty
 fn conv_dasharray(node: SvgNode, state: &converter::State) -> Option<Vec<f32>> {
-    let node = node
-        .ancestors()
-        .find(|n| n.has_attribute(AId::StrokeDasharray))?;
-    let list = super::units::convert_list(node, AId::StrokeDasharray, state)?;
+    let source = node.length_owner(AId::StrokeDasharray)?;
+    let list = super::units::convert_list(source, node, AId::StrokeDasharray, state)?;
 
     // `A negative value is an error`
     if list.iter().any(|n| n.is_sign_negative()) {

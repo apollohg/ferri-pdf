@@ -118,6 +118,8 @@ pub struct ImagePaint {
     pub image: Arc<Image>,
     pub rect: Rect,
     pub clip: Option<Clip>,
+    /// Scale from the image's CSS viewport to its painted rectangle.
+    pub source_scale: f32,
 }
 impl ImagePaint {
     pub fn visible_rect(&self) -> Rect {

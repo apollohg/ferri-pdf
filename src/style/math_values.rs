@@ -107,9 +107,9 @@ impl crate::style::Stylesheet {
         let Some(value) = attribute_length(source)? else {
             return Ok(None);
         };
-        let relative = self.inherited(style, self.page_area(), resolver);
+        let relative = self.inherited(style.canonical(), self.page_area(), resolver);
         match crate::style::box_values::length_percentage(&value, &relative) {
-            Ok(value) => Ok(Some(value)),
+            Ok(value) => Ok(Some(value.zoomed(style.effective_zoom))),
             Err(StyleError::Invalid(_)) => Ok(None),
             Err(error) => Err(error),
         }

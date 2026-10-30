@@ -360,9 +360,11 @@ impl Paragraph {
     pub(crate) fn marker_image_size(&self) -> Option<[f32; 2]> {
         use crate::graphics::{BackgroundImage, NaturalDimensions};
         let natural = match self.marker_image.as_ref()? {
-            BackgroundImage::Image { image, resolution } => {
-                crate::paint::natural_points(image, *resolution)
-            }
+            BackgroundImage::Image {
+                image,
+                resolution,
+                scale,
+            } => crate::paint::natural_points(image, *resolution, *scale),
             _ => NaturalDimensions::default(),
         };
         Some(crate::graphics::image_size(

@@ -531,18 +531,12 @@ fn sample(contours: &[Contour], distance: &LengthPercentage) -> (Point, f32) {
 /// computed handlers rather than a second offset parser.
 pub(crate) fn svg_style<'a>(
     values: impl IntoIterator<Item = (&'a str, &'a str)>,
-    font_size: f32,
-    viewport: [f32; 2],
+    relative: &Relative<'_>,
 ) -> Result<Box<crate::style::Style>, StyleError> {
     use crate::style::{
         declaration::{self, Specified},
         properties,
     };
-    let mut relative = Relative::initial();
-    if let crate::style::units::FontBasis::Known { size, .. } = &mut relative.font {
-        *size = font_size;
-    }
-    relative.viewport = crate::style::units::Viewport::Known(viewport, false);
     let mut initial = Box::<crate::style::Style>::default();
     initial.transform_origin = [const { LengthPercentage::ZERO }; 3];
     let mut style = initial.clone();
@@ -557,7 +551,7 @@ pub(crate) fn svg_style<'a>(
                 crate::style::shorthands::expand(property, value)?
             };
             for (property, value) in longhands {
-                properties::apply(property, &value, &mut style, &initial, &relative)?;
+                properties::apply(property, &value, &mut style, &initial, relative)?;
             }
         }
     }

@@ -2,21 +2,15 @@ use crate::fonts::{DEFAULT_FAMILY, FontNamespace};
 use crate::images::svg_fonts::SvgFonts;
 use crate::images::{Image, ImageCache, ImageError, RasterFormat};
 use crate::resources::{Resource, ResourceBase, ResourceResolver};
-use crate::svg::usvg::{ImageKind, Tree};
+use crate::svg::usvg::{ImageKind, ParsedSvg, Tree};
 use std::{
     cell::RefCell,
     collections::{HashMap, HashSet},
     sync::Arc,
 };
-use svgtypes::{Length, LengthUnit, ViewBox};
 
 const SVG_NAMESPACE: &str = "http://www.w3.org/2000/svg";
 const XLINK_NAMESPACE: &str = "http://www.w3.org/1999/xlink";
-const PIXELS_PER_INCH: f64 = 96.0;
-const POINTS_PER_INCH: f64 = 72.0;
-const MILLIMETRES_PER_INCH: f64 = 25.4;
-const CENTIMETRES_PER_INCH: f64 = 2.54;
-const POINTS_PER_PICA: f64 = 12.0;
 const DEFAULT_FONT_SIZE: f64 = 16.0;
 const MAX_RESOURCE_DEPTH: usize = 32;
 
@@ -76,16 +70,18 @@ impl SvgImage {
         if !root.has_tag_name((SVG_NAMESPACE, "svg")) {
             return Err(ImageError::SvgRoot);
         }
-        let width = dimension(root.attribute("width"));
-        let height = dimension(root.attribute("height"));
-        let view_box = root
-            .attribute("viewBox")
-            .and_then(|v| v.parse::<ViewBox>().ok());
-        let ratio = width.zip(height).map(|(w, h)| w / h).or_else(|| {
-            view_box
-                .filter(|v| v.w > 0.0 && v.h > 0.0)
-                .map(|v| (v.w / v.h) as f32)
-        });
+        let parsed = ParsedSvg::parse(&document, None).map_err(ImageError::Svg)?;
+        let mut options = options(crate::images::DEFAULT_OBJECT_SIZE)?;
+        let fonts = cache.fonts.in_namespace(namespace);
+        let provider = fonts.provider(Some(resolver));
+        options.fontdb = fonts.database();
+        let crate::images::NaturalDimensions {
+            width,
+            height,
+            ratio,
+        } = parsed
+            .natural_dimensions(&options, Some(&provider))
+            .map_err(ImageError::Svg)?;
         for node in root
             .descendants()
             .filter(|node| node.has_tag_name((SVG_NAMESPACE, "use")))
@@ -106,8 +102,6 @@ impl SvgImage {
             },
             crate::images::DEFAULT_OBJECT_SIZE[0],
         );
-        let fonts = cache.fonts.in_namespace(namespace);
-        let provider = fonts.provider(Some(resolver));
         let resources = RefCell::new(HashMap::<String, ImageKind>::new());
         let motion_resources = RefCell::new(HashMap::<String, Option<Arc<str>>>::new());
         let jpeg_images = RefCell::new(HashSet::new());
@@ -135,8 +129,8 @@ impl SvgImage {
                 }
             }
         };
-        let mut options = options(initial_size)?;
-        options.fontdb = fonts.database();
+        options.default_size = crate::svg::usvg::Size::from_wh(initial_size[0], initial_size[1])
+            .ok_or(ImageError::SvgSize)?;
         let resolve_motion = |reference: &str| {
             if let Some(source) = motion_resources.borrow().get(reference) {
                 return source.clone();
@@ -151,13 +145,12 @@ impl SvgImage {
                 .insert(reference.to_owned(), document.clone());
             document
         };
-        let initial_tree = Tree::from_str_with_resolvers(
-            xml,
+        let initial_tree = parsed.to_tree(
             &options,
             Some(options.default_size),
-            &resolve,
-            &provider,
-            &resolve_motion,
+            Some(&resolve),
+            Some(&provider),
+            Some(&resolve_motion),
         );
         let fonts = provider.finish()?;
         if let Some(error) = failure.into_inner() {
@@ -239,7 +232,7 @@ fn pixel_size(dimensions: crate::images::NaturalDimensions, available_width: f32
     }
 }
 
-fn options(size: [f32; 2]) -> Result<crate::svg::usvg::Options<'static>, ImageError> {
+pub(crate) fn options(size: [f32; 2]) -> Result<crate::svg::usvg::Options<'static>, ImageError> {
     Ok(crate::svg::usvg::Options {
         fontdb: Arc::new(fontdb::Database::new()),
         font_family: DEFAULT_FAMILY.primary_name().into(),
@@ -275,21 +268,4 @@ fn image_kind(image: &Image, jpeg_images: &mut HashSet<usize>) -> Result<ImageKi
             unreachable!("SVG image references load only image resources")
         }
     })
-}
-
-fn dimension(value: Option<&str>) -> Option<f32> {
-    let length = value?.parse::<Length>().ok()?;
-    let factor = match length.unit {
-        LengthUnit::None | LengthUnit::Px => 1.0,
-        LengthUnit::In => PIXELS_PER_INCH,
-        LengthUnit::Cm => PIXELS_PER_INCH / CENTIMETRES_PER_INCH,
-        LengthUnit::Mm => PIXELS_PER_INCH / MILLIMETRES_PER_INCH,
-        LengthUnit::Pt => PIXELS_PER_INCH / POINTS_PER_INCH,
-        LengthUnit::Pc => PIXELS_PER_INCH * POINTS_PER_PICA / POINTS_PER_INCH,
-        LengthUnit::Em => DEFAULT_FONT_SIZE,
-        LengthUnit::Ex => DEFAULT_FONT_SIZE / 2.0,
-        LengthUnit::Percent => return None,
-    };
-    let value = (length.number * factor) as f32;
-    (value > 0.0 && value.is_finite()).then_some(value)
 }

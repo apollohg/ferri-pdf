@@ -56,6 +56,7 @@ mod parser;
 mod position;
 mod print;
 mod quotes;
+mod zoom;
 pub(crate) use colors::{parse_color_value, widget_palette};
 pub(crate) use object::ObjectFit;
 pub(crate) use overflow::{
@@ -64,6 +65,7 @@ pub(crate) use overflow::{
 pub(crate) use transform::{Parent3d, Rotation, TransformBox, TransformFunction, TransformStyle};
 pub(crate) use user_agent::legacy_color;
 pub(crate) use widget_values::{Appearance, FieldSizing, WidgetStyle};
+pub(crate) use zoom::{INITIAL_ZOOM, accumulate_zoom};
 mod attribute;
 pub(crate) mod motion;
 mod properties;

@@ -15,6 +15,35 @@ mod colr;
 /// Provides access to the layout of a text node.
 pub(crate) mod layout;
 
+pub(crate) fn font_variations(
+    face: &ttf_parser::Face<'_>,
+    variations: &[crate::svg::usvg::FontVariation],
+    font_size: f32,
+    optical_sizing: crate::svg::usvg::FontOpticalSizing,
+) -> Vec<rustybuzz::Variation> {
+    use crate::fonts::OPTICAL_SIZE_AXIS;
+    let mut values: Vec<_> = variations
+        .iter()
+        .map(|value| rustybuzz::Variation {
+            tag: ttf_parser::Tag::from_bytes(&value.tag),
+            value: value.value,
+        })
+        .collect();
+    if optical_sizing == crate::svg::usvg::FontOpticalSizing::Auto
+        && !values.iter().any(|value| value.tag == OPTICAL_SIZE_AXIS)
+        && face
+            .variation_axes()
+            .into_iter()
+            .any(|axis| axis.tag == OPTICAL_SIZE_AXIS)
+    {
+        values.push(rustybuzz::Variation {
+            tag: OPTICAL_SIZE_AXIS,
+            value: font_size,
+        });
+    }
+    values
+}
+
 /// A shorthand for [FontResolver]'s font selection function.
 ///
 /// This function receives a font specification (families + a style, weight,

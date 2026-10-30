@@ -126,6 +126,10 @@ impl std::fmt::Debug for StyleOrigin {
 
 #[derive(Clone, Debug, PartialEq, serde::Serialize)]
 pub(crate) struct Style {
+    pub zoom: f32,
+    pub effective_zoom: f32,
+    #[serde(skip)]
+    pub(super) canonical: Option<Arc<Style>>,
     #[serde(skip)]
     pub(super) custom_properties: crate::style::variables::Environment,
     #[serde(skip)]
@@ -315,6 +319,9 @@ impl Default for Style {
     fn default() -> Self {
         let custom_properties = crate::style::variables::Environment::default();
         Self {
+            zoom: crate::style::zoom::INITIAL_ZOOM,
+            effective_zoom: crate::style::zoom::INITIAL_ZOOM,
+            canonical: None,
             custom_properties: custom_properties.clone(),
             inherited_custom_properties: custom_properties,
             computed_content: crate::style::generated::INITIAL_CONTENT.clone(),
@@ -456,6 +463,9 @@ impl Style {
     /// properties come from `line`, except `writing-mode`, `direction` and `text-orientation`;
     /// all others, and custom properties, from `base`.
     pub(crate) fn through_first_line(base: &Self, line: &Self) -> Self {
+        if base.canonical.is_some() || line.canonical.is_some() {
+            return Self::through_first_line(base.canonical(), line.canonical()).used();
+        }
         let mut style = base.clone();
         properties::inherit(&mut style, line);
         // Copying leaves `currentcolor` text paint resolved for `base`; `line` resolved its own.
@@ -503,7 +513,14 @@ impl Style {
 
     #[must_use]
     pub(crate) fn anonymous(&self, display: Display) -> Self {
-        let mut style = Self::default();
+        let mut style = Self {
+            effective_zoom: self.effective_zoom,
+            ..Self::default()
+        };
+        let used = self.canonical.is_some();
+        if used {
+            style = style.used();
+        }
         properties::inherit(&mut style, self);
         style.display = display;
         style.parent_writing_mode = self.writing_mode;
@@ -519,9 +536,18 @@ impl Style {
         style.text_decorations.propagated = if self.display == Display::Contents {
             self.text_decorations.propagated.clone()
         } else {
-            self.text_decorations.propagated()
+            self.text_decorations.propagated(if used {
+                crate::style::INITIAL_ZOOM
+            } else {
+                self.effective_zoom
+            })
         };
         style.reset_current_colors();
+        // Layout-only adjustments inherit here; CSS computation keeps its original basis.
+        style.canonical = self
+            .canonical
+            .as_ref()
+            .map(|canonical| Arc::new(canonical.anonymous(style.display.clone())));
         style
     }
     pub(super) fn normalize_display(&mut self, relative: &Relative<'_>) {
@@ -859,6 +885,7 @@ impl Stylesheet {
         resolver: &dyn ResourceResolver,
         without_box: bool,
     ) -> Result<Style, StyleError> {
+        let parent = parent.canonical();
         let (seed, cascaded) = self.prepare_element(element, parent, resolver)?;
         let original = cascaded.clone();
         let (style, winners) = crate::style::resolution::resolve_values(
@@ -1364,6 +1391,7 @@ impl Stylesheet {
         pseudo: crate::style::PseudoElement,
         resolver: &dyn ResourceResolver,
     ) -> Result<Option<(Style, crate::style::GeneratedContent)>, StyleError> {
+        let parent = parent.canonical();
         let (seed, original) = self.prepare_pseudo(element, parent, pseudo, resolver)?;
         let (mut style, mut winners) = crate::style::resolution::resolve_values(
             self,
@@ -1459,6 +1487,7 @@ impl Stylesheet {
         pseudo: crate::style::PseudoElement,
         resolver: &dyn ResourceResolver,
     ) -> Result<Style, StyleError> {
+        let parent = parent.canonical();
         let (style, winners) = self.prepare_pseudo(element, parent, pseudo, resolver)?;
         let (mut style, mut winners) = crate::style::resolution::resolve_values(
             self,
@@ -1491,6 +1520,7 @@ impl Stylesheet {
         pseudo: crate::style::PseudoElement,
         resolver: &dyn ResourceResolver,
     ) -> Result<Style, StyleError> {
+        let parent = parent.canonical();
         let (style, winners) = self.prepare_pseudo(element, parent, pseudo, resolver)?;
         let (mut style, mut winners) = crate::style::resolution::resolve_values(
             self,
@@ -1656,6 +1686,7 @@ impl Stylesheet {
                 ..self.initial_relative()
             },
             Some(root) => Relative {
+                physical_unit_scale: self.environment.relative.physical_unit_scale,
                 font: self
                     .basis(
                         parent.size,
@@ -1768,6 +1799,7 @@ impl Stylesheet {
             properties::apply(*property, &value, style, parent, &measured)?;
         }
         let Relative {
+            physical_unit_scale,
             font: inherited_font,
             root: inherited_root,
             viewport,
@@ -1798,6 +1830,7 @@ impl Stylesheet {
         // On the root, root-relative units measure the root's font except that `rlh` keeps
         // the initial line height until `line-height` computes.
         let line_basis = Relative {
+            physical_unit_scale,
             font: own(inherited_font.into_line()),
             root: if root {
                 own(inherited_root.into_line())
@@ -1825,6 +1858,7 @@ impl Stylesheet {
             self.capture_root_font(style);
         }
         let mut relative = Relative {
+            physical_unit_scale,
             font: self
                 .basis(
                     style.size,
@@ -1912,6 +1946,10 @@ impl Stylesheet {
         mut winners: Winners,
         relative: &Relative<'_>,
     ) -> Result<Style, StyleError> {
+        if let Some(value) = winners.remove(&Property::Zoom) {
+            properties::apply(Property::Zoom, &value, &mut style, parent, relative)?;
+        }
+        style.effective_zoom = crate::style::accumulate_zoom(parent.effective_zoom, style.zoom)?;
         for property in Property::BorderStyle.longhands().iter().chain([
             &Property::OutlineStyle,
             &Property::Direction,

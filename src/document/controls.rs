@@ -487,12 +487,15 @@ impl<'b> Builder<'b, '_> {
         let value = element.input_value();
         let mut lines = Vec::new();
         if let Some(placeholder) = element.shown_placeholder() {
-            let mut style = self.sheet.element_backed_with_resolver(
-                element,
-                self.style,
-                PseudoElement::Placeholder,
-                self.resources.resolver,
-            )?;
+            let mut style = self
+                .sheet
+                .element_backed_with_resolver(
+                    element,
+                    self.style,
+                    PseudoElement::Placeholder,
+                    self.resources.resolver,
+                )?
+                .used();
             style.white_space = WhiteSpace::PRE;
             let placeholder = crate::dom::stripped_newlines(placeholder);
             lines.push(self.styled_line(&placeholder, &editor, &style)?);
@@ -620,12 +623,15 @@ impl<'b> Builder<'b, '_> {
             ];
         }
         let line = if let Some(placeholder) = element.shown_placeholder() {
-            let style = self.sheet.element_backed_with_resolver(
-                element,
-                self.style,
-                PseudoElement::Placeholder,
-                self.resources.resolver,
-            )?;
+            let style = self
+                .sheet
+                .element_backed_with_resolver(
+                    element,
+                    self.style,
+                    PseudoElement::Placeholder,
+                    self.resources.resolver,
+                )?
+                .used();
             self.styled_line(placeholder, &editor, &style)?
         } else {
             self.block(
@@ -739,9 +745,10 @@ impl<'b> Builder<'b, '_> {
             {
                 continue;
             }
-            let style =
-                self.sheet
-                    .computed_with_resolver(child, &parent, self.resources.resolver)?;
+            let style = self
+                .sheet
+                .computed_with_resolver(child, &parent, self.resources.resolver)?
+                .used();
             if style.display == Display::None {
                 continue;
             }
@@ -808,12 +815,15 @@ impl<'b> Builder<'b, '_> {
     /// HTML §15.5.11: no file is selected, so the control holds only its
     /// `::file-selector-button`.
     fn file_button(&mut self) -> Result<ControlContent, DocumentError> {
-        let mut style = self.sheet.element_backed_with_resolver(
-            self.element,
-            self.style,
-            PseudoElement::FileSelectorButton,
-            self.resources.resolver,
-        )?;
+        let mut style = self
+            .sheet
+            .element_backed_with_resolver(
+                self.element,
+                self.style,
+                PseudoElement::FileSelectorButton,
+                self.resources.resolver,
+            )?
+            .used();
         style.display = Display::InlineBlock;
         if style.width == Size::Auto {
             style.width = Size::Intrinsic(IntrinsicSizing::FitContent);

@@ -83,7 +83,11 @@ pub(crate) fn convert(
             new_ts = new_ts.pre_concat(ts);
         }
 
-        if let Some(clip_rect) = get_clip_rect(node, child, &use_state) {
+        let clip_rect = get_clip_rect(node, child, &use_state);
+        if let Some(view_box) = child.parse_viewbox(child.effective_zoom()) {
+            use_state.view_box = view_box;
+        }
+        if let Some(clip_rect) = clip_rect {
             let mut g = clip_element(node, clip_rect, orig_ts, &use_state, cache);
             g.abs_transform = parent.abs_transform;
 
@@ -182,7 +186,7 @@ pub(crate) fn convert_svg(
     // Note that we're not updating State::size - it's a completely different property.
     let mut new_state = state.clone();
     new_state.view_box = {
-        if let Some(vb) = node.parse_viewbox() {
+        if let Some(vb) = node.parse_viewbox(node.effective_zoom()) {
             vb
         } else {
             // No `viewBox` attribute? Then use `x`, `y`, `width` and `height` instead.
@@ -360,7 +364,7 @@ fn viewbox_transform(
     }
 
     let size = Size::from_wh(w, h)?;
-    let rect = linked.parse_viewbox()?;
+    let rect = linked.parse_viewbox(linked.effective_zoom())?;
     let aspect = linked
         .attribute(AId::PreserveAspectRatio)
         .unwrap_or_default();

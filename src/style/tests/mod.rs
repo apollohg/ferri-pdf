@@ -16,3 +16,4 @@ mod unsupported_messages;
 mod variables;
 mod visual_effects;
 mod wide_keywords;
+mod zoom;

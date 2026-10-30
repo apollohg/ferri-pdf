@@ -335,7 +335,7 @@ impl Painter<'_, '_, '_> {
 }
 
 impl Painter<'_, '_, '_> {
-    /// Paints a nested document's viewport at the paint rectangle's origin, with its own
+    /// Paints a nested document's viewport into the paint rectangle, with its own
     /// text lines, faces and SVG definitions.
     fn draw_viewport(
         &mut self,
@@ -350,13 +350,23 @@ impl Painter<'_, '_, '_> {
             .map(|clip| painting::push_clip(clip, space.viewport, surface))
             .transpose()?
             .unwrap_or(0);
-        let offset = [paint.rect.x - view.area.x, paint.rect.y - view.area.y];
-        surface.push_transform(&Transform::from_translate(offset[0], offset[1]));
+        let scale = [
+            paint.rect.width / view.area.width,
+            paint.rect.height / view.area.height,
+        ];
+        let offset = [
+            paint.rect.x - view.area.x * scale[0],
+            paint.rect.y - view.area.y * scale[1],
+        ];
+        surface.push_transform(&Transform::from_row(
+            scale[0], 0.0, 0.0, scale[1], offset[0], offset[1],
+        ));
         let local = Space {
             viewport: Rect {
-                x: space.viewport.x - offset[0],
-                y: space.viewport.y - offset[1],
-                ..space.viewport
+                x: (space.viewport.x - offset[0]) / scale[0],
+                y: (space.viewport.y - offset[1]) / scale[1],
+                width: space.viewport.width / scale[0],
+                height: space.viewport.height / scale[1],
             },
             ..space
         };

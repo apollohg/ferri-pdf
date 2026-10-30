@@ -10,6 +10,7 @@ use crate::svg::usvg::{ClipPath, Group, NonEmptyString, NonZeroRect, Transform, 
 
 pub(crate) fn convert(
     node: SvgNode,
+    target: SvgNode,
     state: &converter::State,
     object_bbox: Option<NonZeroRect>,
     cache: &mut converter::Cache,
@@ -26,16 +27,9 @@ pub(crate) fn convert(
         .attribute(AId::ClipPathUnits)
         .unwrap_or(Units::UserSpaceOnUse);
 
-    // Check if this element was already converted.
-    //
-    // Only `userSpaceOnUse` clipPaths can be shared,
-    // because `objectBoundingBox` one will be converted into user one
-    // and will become node-specific.
-    let cacheable = units == Units::UserSpaceOnUse;
-    if cacheable {
-        if let Some(clip) = cache.clip_paths.get(node.element_id()) {
-            return Some(clip.clone());
-        }
+    let key = converter::ResourceKey::new(node, target, state, object_bbox);
+    if let Some(clip) = cache.clip_paths.get(&key) {
+        return Some(clip.clone());
     }
 
     if units == Units::ObjectBoundingBox {
@@ -54,7 +48,7 @@ pub(crate) fn convert(
     // Resolve linked clip path.
     let mut clip_path = None;
     if let Some(link) = node.attribute::<SvgNode>(AId::ClipPath) {
-        clip_path = convert(link, state, object_bbox, cache);
+        clip_path = convert(link, target, state, object_bbox, cache);
 
         // Linked `clipPath` must be valid.
         if clip_path.is_none() {
@@ -62,12 +56,15 @@ pub(crate) fn convert(
         }
     }
 
-    let mut id = NonEmptyString::new(node.element_id().to_string())?;
-    // Generate ID only when we're parsing `objectBoundingBox` clip for the second time.
-    if !cacheable && cache.clip_paths.contains_key(id.get()) {
-        id = cache.gen_clip_path_id();
-    }
-    let id_copy = id.get().to_string();
+    let id = if cache
+        .clip_paths
+        .keys()
+        .any(|existing| existing.source == key.source)
+    {
+        cache.gen_clip_path_id()
+    } else {
+        NonEmptyString::new(node.element_id().to_owned())?
+    };
 
     let mut clip = ClipPath {
         id,
@@ -83,7 +80,7 @@ pub(crate) fn convert(
     if clip.root.has_children() {
         clip.root.calculate_bounding_boxes();
         let clip = Arc::new(clip);
-        cache.clip_paths.insert(id_copy, clip.clone());
+        cache.clip_paths.insert(key, clip.clone());
         Some(clip)
     } else {
         // A clip path without children is invalid.

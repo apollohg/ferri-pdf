@@ -49,6 +49,28 @@ body{{margin:0}}div{{margin:0}}.box{{width:{BOX_WIDTH}pt;height:{BOX_HEIGHT}pt}}
         with Image.open(root / 'ink.png') as image:
             return image.convert('RGB')
 
+    def test_spotlight_translation_uses_each_filter_region_axis(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-spotlight-translation-') as directory:
+            root = Path(directory)
+            def patch(dx, dy):
+                svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="100pt" height="100pt" viewBox="0 0 100 100">'
+                       '<defs><filter id="light"><feDiffuseLighting surfaceScale="3">'
+                       f'<feSpotLight x="{30 + dx}" y="{20 + dy}" z="50" pointsAtX="{20 + dx}" pointsAtY="{20 + dy}" '
+                       'pointsAtZ="0" specularExponent="2" limitingConeAngle="60"/>'
+                       '</feDiffuseLighting></filter></defs>'
+                       f'<rect x="{10 + dx}" y="{10 + dy}" width="30" height="30" fill="green" filter="url(#light)"/></svg>')
+                source = root / 'light.svg'
+                source.write_text(svg)
+                output = self.render(root, 'img{display:block}', f'<img src="{source.as_uri()}">')
+                with self.raster(root, output) as raster:
+                    return raster.crop((PAGE_MARGIN + 5 + dx, PAGE_MARGIN + 5 + dy,
+                                        PAGE_MARGIN + 45 + dx, PAGE_MARGIN + 45 + dy))
+            with patch(0, 0) as expected, patch(20, 30) as actual:
+                self.assertGreater(len(expected.getcolors(expected.width * expected.height)), 2,
+                                   'the comparison must contain visible, varying spotlight illumination')
+                self.assertEqual(actual.tobytes(), expected.tobytes(),
+                                 'moving a shape and its light together must preserve illumination when x and y translations differ')
+
     def images(self, output):
         listing = subprocess.run(['pdfimages', '-list', str(output)], check=True,
                                  capture_output=True, text=True).stdout.splitlines()[2:]

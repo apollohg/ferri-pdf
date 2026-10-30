@@ -759,3 +759,368 @@ fn svg_functional_selector_depth_uses_the_existing_source_budget() {
         }
     }
 }
+
+#[test]
+fn svg_zoom_products_reject_overflow_and_underflow_before_geometry() {
+    for zoom in ["1e30", "1e-30"] {
+        let xml = format!(
+            "{SVG_OPEN}<g style='zoom:{zoom}'><g style='zoom:{zoom}'><rect width='1' height='1'/></g></g></svg>"
+        );
+        let result = crate::svg::usvg::Tree::from_str(&xml, &crate::svg::usvg::Options::default());
+        assert!(
+            matches!(result, Err(crate::svg::usvg::Error::Style(_))),
+            "nested zoom {zoom} must report a style error, not silently drop geometry: {result:?}"
+        );
+        let result = ImageCache::default().inline_svg(
+            xml,
+            &ResourceBase::default(),
+            &FileResolver::default(),
+        );
+        assert!(
+            matches!(
+                result,
+                Err(ImageError::Svg(crate::svg::usvg::Error::Style(_)))
+            ),
+            "image loading must preserve the invalid effective zoom error: {result:?}"
+        );
+    }
+    let actual =
+        tree("<g style='zoom:1e10'><g style='zoom:1e-10'><rect width='20' height='10'/></g></g>");
+    assert_bounds(&actual, [0.0, 0.0, 20.0, 10.0]);
+}
+
+#[test]
+fn svg_font_relative_lengths_use_the_selected_face() {
+    const FONT_SIZE: f32 = 10.0;
+    const LENGTH: f32 = 8.0;
+    for (family, bytes) in [
+        (
+            "DejaVu Sans",
+            include_bytes!("../../../assets/fonts/DejaVuSans.ttf").as_slice(),
+        ),
+        (
+            "DejaVu Serif",
+            include_bytes!("../../../assets/fonts/DejaVuSerif.ttf").as_slice(),
+        ),
+    ] {
+        let face = ttf_parser::Face::parse(bytes, 0).unwrap();
+        let units = f32::from(face.units_per_em());
+        let glyph_top = |ch| {
+            f32::from(
+                face.glyph_bounding_box(face.glyph_index(ch).unwrap())
+                    .unwrap()
+                    .y_max,
+            ) / units
+        };
+        let measures = [
+            ("ex", glyph_top('x')),
+            ("cap", glyph_top('H')),
+            (
+                "ch",
+                f32::from(
+                    face.glyph_hor_advance(face.glyph_index('0').unwrap())
+                        .unwrap(),
+                ) / units,
+            ),
+            (
+                "lh",
+                (f32::from(face.ascender()) - f32::from(face.descender())
+                    + f32::from(face.line_gap()))
+                    / units,
+            ),
+        ];
+        for zoom in [1.0, 2.0] {
+            for (unit, em) in measures {
+                for width in [format!("{LENGTH}{unit}"), format!("calc({LENGTH}{unit})")] {
+                    let tree = tree(&format!(
+                        "<rect font-family='{family}' font-size='{FONT_SIZE}' style='zoom:{zoom}' width='{width}' height='10'/>"
+                    ));
+                    let actual = tree.root().abs_bounding_box().width();
+                    let expected = LENGTH * FONT_SIZE * zoom * em;
+                    assert!(
+                        (actual - expected).abs() < EPSILON,
+                        "{family}, {width}, zoom {zoom}: expected selected-face width {expected}, got {actual}"
+                    );
+                }
+            }
+        }
+    }
+}
+
+#[test]
+fn svg_font_relative_sizes_and_root_units_keep_their_font_context() {
+    const FONT_SIZE: f32 = 10.0;
+    const ZOOM: f32 = 2.0;
+    let face =
+        ttf_parser::Face::parse(include_bytes!("../../../assets/fonts/DejaVuSans.ttf"), 0).unwrap();
+    let height = f32::from(
+        face.glyph_bounding_box(face.glyph_index('x').unwrap())
+            .unwrap()
+            .y_max,
+    ) / f32::from(face.units_per_em());
+    for (size, width, expected) in [
+        ("20px", "8rex", 8.0 * FONT_SIZE * ZOOM * height),
+        ("20px", "calc(8rex)", 8.0 * FONT_SIZE * ZOOM * height),
+        ("2ex", "4em", 8.0 * FONT_SIZE * ZOOM * height),
+        ("calc(2ex)", "4em", 8.0 * FONT_SIZE * ZOOM * height),
+    ] {
+        let tree = svg(&format!(
+            "<svg xmlns='http://www.w3.org/2000/svg' width='200' height='100' font-family='DejaVu Sans' font-size='{FONT_SIZE}'><rect style='font-family:DejaVu Serif;font-size:{size};zoom:{ZOOM}' width='{width}' height='10'/></svg>"
+        ));
+        let actual = tree.root().abs_bounding_box().width();
+        assert!(
+            (actual - expected).abs() < EPSILON,
+            "font-size {size}, width {width}: parent/root Sans metrics must survive the child's Serif family; expected {expected}, got {actual}"
+        );
+    }
+}
+
+#[test]
+fn svg_natural_dimensions_use_cascaded_lengths_and_root_font_metrics() {
+    let cases = [
+        (
+            "calculated font size",
+            "width='4em' height='2em' style='font-size:calc(5px + 5px);zoom:2'",
+            "",
+            [Some(80.0), Some(40.0), Some(2.0)],
+        ),
+        (
+            "root font calculation uses initial rem",
+            "width='2em' height='1em' style='font-size:calc(1rem + 4px);zoom:2'",
+            "",
+            [Some(80.0), Some(40.0), Some(2.0)],
+        ),
+        (
+            "calculated font dimensions",
+            "style='width:calc(2em + 20px);height:calc(1em + 10px);font-size:10px;zoom:2'",
+            "",
+            [Some(80.0), Some(40.0), Some(2.0)],
+        ),
+        (
+            "calculated percentage dimensions",
+            "style='width:calc(50% + 20px);height:calc(25% + 10px);zoom:2' viewBox='0 0 40 20'",
+            "",
+            [None, None, Some(2.0)],
+        ),
+        (
+            "font-relative",
+            "width='4em' height='2em' style='font-size:10px;zoom:2'",
+            "",
+            [Some(80.0), Some(40.0), Some(2.0)],
+        ),
+        (
+            "stylesheet dimensions",
+            "width='10' height='10'",
+            "svg{width:40px;height:20px;zoom:2}",
+            [Some(80.0), Some(40.0), Some(2.0)],
+        ),
+        (
+            "variables and font",
+            "width='10' height='10'",
+            "svg{--unit:4em;width:var(--unit);height:2em;font-size:10px;zoom:200%}",
+            [Some(80.0), Some(40.0), Some(2.0)],
+        ),
+        (
+            "CSS percentages replace attributes",
+            "width='80' height='40' viewBox='0 0 40 20'",
+            "svg{width:50%;height:25%;zoom:2}",
+            [None, None, Some(2.0)],
+        ),
+        (
+            "CSS auto replaces attributes",
+            "width='80' height='40' viewBox='0 0 40 20'",
+            "svg{width:auto;height:auto;zoom:2}",
+            [None, None, Some(2.0)],
+        ),
+        (
+            "ratio only",
+            "viewBox='0 0 40 20' style='zoom:2'",
+            "",
+            [None, None, Some(2.0)],
+        ),
+        (
+            "percentage",
+            "width='50%' height='25%' viewBox='0 0 40 20' style='zoom:2'",
+            "",
+            [None, None, Some(2.0)],
+        ),
+        (
+            "one dimension",
+            "width='4em' viewBox='0 0 40 20' style='font-size:10px;zoom:2'",
+            "",
+            [Some(80.0), None, Some(2.0)],
+        ),
+    ];
+    for (name, attributes, css, expected) in cases {
+        let xml = format!(
+            "<svg xmlns='http://www.w3.org/2000/svg' {attributes}><style>{css}</style><rect width='100%' height='100%' fill='green'/></svg>"
+        );
+        let image = ImageCache::default()
+            .inline_svg(xml, &ResourceBase::default(), &FileResolver::default())
+            .unwrap_or_else(|error| panic!("{name}: {error}"));
+        let actual = image.natural_size();
+        assert_eq!(
+            [actual.width, actual.height, actual.ratio],
+            expected,
+            "{name}: intrinsic dimensions must use the same styled lengths as rendering"
+        );
+    }
+}
+
+#[test]
+fn svg_calculated_root_dimensions_resolve_against_the_used_viewport() {
+    for (attributes, expected) in [
+        (
+            "style='width:calc(2em + 20px);height:calc(1em + 10px);font-size:10px;zoom:2'",
+            [80.0, 40.0],
+        ),
+        (
+            "viewBox='0 0 40 20' style='width:calc(50% + 20px);height:calc(25% + 10px);zoom:2'",
+            [80.0, 30.0],
+        ),
+    ] {
+        let xml = format!(
+            "<svg xmlns='http://www.w3.org/2000/svg' {attributes}><rect width='100%' height='100%'/></svg>"
+        );
+        let tree = crate::svg::usvg::Tree::from_str(&xml, &crate::svg::usvg::Options::default())
+            .unwrap_or_else(|error| panic!("{attributes}: {error}"));
+        assert_eq!(
+            [tree.size().width(), tree.size().height()],
+            expected,
+            "{attributes}: native SVG conversion must use the calculated dimensions"
+        );
+    }
+}
+
+#[test]
+fn svg_calculated_length_overflow_is_reported_instead_of_dropping_geometry() {
+    for body in [
+        "<rect style='zoom:100' width='calc(1e38px)' height='10'/>",
+        "<rect style='zoom:100' width='10' height='calc(1e38px)'/>",
+    ] {
+        let xml = format!("{SVG_OPEN}{body}</svg>");
+        let result = crate::svg::usvg::Tree::from_str(&xml, &crate::svg::usvg::Options::default());
+        assert!(
+            matches!(result, Err(crate::svg::usvg::Error::Style(_))),
+            "{body}: zoomed calculation overflow must propagate a style error: {result:?}"
+        );
+    }
+}
+
+#[test]
+fn svg_calculated_physical_units_honor_custom_dpi_without_scaling_pixels() {
+    for dpi in [72.0, 96.0, 144.0] {
+        for zoom in [1.0, 2.0] {
+            for length in ["1in", "72pt", "6pc", "2.54cm", "25.4mm", "101.6q"] {
+                for (width, expected) in [
+                    (length.to_owned(), dpi * zoom),
+                    (format!("calc({length})"), dpi * zoom),
+                    (format!("calc({length} + 4px)"), (dpi + 4.0) * zoom),
+                ] {
+                    let xml = format!(
+                        "<svg xmlns='http://www.w3.org/2000/svg' width='{width}' height='10px' style='zoom:{zoom}'><rect width='100%' height='100%'/></svg>"
+                    );
+                    let options = crate::svg::usvg::Options {
+                        dpi,
+                        ..Default::default()
+                    };
+                    let tree =
+                        crate::svg::usvg::Tree::from_str(&xml, &options).unwrap_or_else(|error| {
+                            panic!("dpi={dpi}, zoom={zoom}, width={width}: {error}")
+                        });
+                    assert!(
+                        (tree.size().width() - expected).abs() < EPSILON,
+                        "dpi={dpi}, zoom={zoom}, width={width}: expected {expected}, got {}",
+                        tree.size().width()
+                    );
+                    assert_eq!(
+                        tree.size().height(),
+                        10.0 * zoom,
+                        "px must remain independent of DPI"
+                    );
+                }
+            }
+        }
+    }
+}
+
+#[test]
+fn svg_font_and_transform_calculations_share_the_custom_dpi() {
+    for dpi in [72.0, 96.0, 144.0] {
+        for zoom in [1.0, 2.0] {
+            let options = crate::svg::usvg::Options {
+                dpi,
+                ..Default::default()
+            };
+            let expected = (dpi + 4.0) * zoom;
+            let xml = format!(
+                "<svg xmlns='http://www.w3.org/2000/svg' width='1em' height='10px' style='font-size:calc(1in + 4px);zoom:{zoom}'><rect width='100%' height='100%'/></svg>"
+            );
+            let font =
+                crate::svg::usvg::Tree::from_str(&xml, &options).expect("calculated SVG font size");
+            assert!(
+                (font.size().width() - expected).abs() < EPSILON,
+                "dpi={dpi}, zoom={zoom}: font-relative width {}, expected {expected}",
+                font.size().width()
+            );
+            let xml = format!(
+                "<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000'><g style='translate:calc(1in + 4px) 0;zoom:{zoom}'><rect width='10' height='10'/></g></svg>"
+            );
+            let transformed = crate::svg::usvg::Tree::from_str(&xml, &options)
+                .expect("calculated SVG translation");
+            assert_bounds(&transformed, [expected, 0.0, 10.0 * zoom, 10.0 * zoom]);
+        }
+    }
+}
+
+#[test]
+fn svg_dash_lists_validate_the_whole_value_and_clamp_calculated_ranges() {
+    for (source, expected) in [
+        ("calc(2px + 2px), 2", Some(vec![4.0, 2.0])),
+        ("calc(-2px) 2px", Some(vec![0.0, 2.0])),
+        ("4 invalid 2", None),
+        ("4,,2", None),
+        ("4 -2", None),
+        ("none", None),
+    ] {
+        let actual = tree(&format!(
+            "<path d='M0 10H100' stroke='green' stroke-dasharray='{source}'/>"
+        ));
+        let paths = paths(&actual);
+        let stroke = paths[0]
+            .stroke()
+            .expect("invalid dashes still retain the stroke");
+        assert_eq!(
+            stroke.dasharray(),
+            expected.as_deref(),
+            "{source}: a malformed dash list must not retain a valid prefix"
+        );
+    }
+}
+
+#[test]
+fn svg_calculated_dash_lists_share_custom_dpi_and_percentage_bases() {
+    for dpi in [72.0, 96.0, 144.0] {
+        let options = crate::svg::usvg::Options {
+            dpi,
+            ..Default::default()
+        };
+        let xml = "<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><g stroke='green' stroke-dasharray='calc(.1in + 2px) 10%'><path style='zoom:2' d='M0 10H80'/></g></svg>";
+        let actual =
+            crate::svg::usvg::Tree::from_str(xml, &options).expect("calculated SVG dash list");
+        let paths = paths(&actual);
+        let dashes = paths[0]
+            .stroke()
+            .expect("stroke")
+            .dasharray()
+            .expect("dash list");
+        let expected = [(dpi * 0.1 + 2.0) * 2.0, 20.0];
+        assert_eq!(dashes.len(), expected.len());
+        for (value, expected) in dashes.iter().zip(expected) {
+            assert!(
+                (value - expected).abs() < EPSILON,
+                "dpi={dpi}: expected dash {expected}, got {value}"
+            );
+        }
+    }
+}

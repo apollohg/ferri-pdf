@@ -247,6 +247,7 @@ fn prepare_document(
                 Error::Css(StyleError::Resource(error))
             }
             LayoutError::Text(TextError::Font(error)) => Error::Css(StyleError::Font(error)),
+            LayoutError::Style(error @ StyleError::Font(_)) => Error::Css(error),
             error => Error::Layout(error.to_string()),
         })?;
     Ok((document, trace))

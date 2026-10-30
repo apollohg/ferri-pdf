@@ -9,18 +9,20 @@ use crate::style::{
 };
 use std::{cell::RefCell, collections::HashMap, sync::Arc};
 
-type PathKey = (Box<str>, [u32; 2]);
-#[derive(Default)]
+type PathKey = (Box<str>, [u32; 2], crate::fonts::FontNamespace);
 pub(super) struct Resources {
     definitions: SvgDefinitions,
+    fonts: crate::images::SvgFonts,
     documents: RefCell<HashMap<Box<str>, Option<Arc<str>>>>,
     paths: RefCell<HashMap<PathKey, Option<Arc<Vec<Contour>>>>>,
 }
 impl Resources {
-    pub(super) fn new(definitions: SvgDefinitions) -> Self {
+    pub(super) fn new(definitions: SvgDefinitions, fonts: &crate::fonts::FontBook) -> Self {
         Self {
             definitions,
-            ..Default::default()
+            fonts: crate::images::SvgFonts::new(Arc::new(fonts.clone())),
+            documents: Default::default(),
+            paths: Default::default(),
         }
     }
     pub(super) fn resolve(
@@ -53,7 +55,8 @@ impl Resources {
         };
         let rect = reference.resolve(*coordinate);
         let size = [rect.width, rect.height].map(|value| value / crate::paint::POINTS_PER_PIXEL);
-        let key = (url.clone(), size.map(f32::to_bits));
+        let namespace = style.element_font_namespace();
+        let key = (url.clone(), size.map(f32::to_bits), namespace);
         if let Some(path) = self.paths.borrow().get(&key) {
             reference.path.clone_from(path);
             if let Some(path) = path {
@@ -83,7 +86,13 @@ impl Resources {
         };
         let path = if let Some(source) = source {
             work.spend(source.len().max(1))?;
-            crate::svg::usvg::motion_path(&source, id, size).map(Arc::new)
+            let fonts = self.fonts.in_namespace(namespace);
+            let provider = fonts.provider(Some(resolver));
+            let mut options = crate::images::svg_options(crate::images::DEFAULT_OBJECT_SIZE)?;
+            options.fontdb = fonts.database();
+            let path = crate::svg::usvg::motion_path(&source, id, size, &options, Some(&provider));
+            provider.finish().map_err(crate::style::StyleError::from)?;
+            path.map(Arc::new)
         } else {
             None
         };

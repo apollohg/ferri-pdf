@@ -357,6 +357,7 @@ pub(crate) enum AId {
     CssBorderRadius,
     CssRotate,
     CssScale,
+    CssZoom,
     OffsetPath,
     OffsetPosition,
     OffsetAnchor,
@@ -652,6 +653,7 @@ impl AId {
     pub(crate) fn from_str(text: &str) -> Option<AId> {
         match text {
             "border-radius" => Some(Self::CssBorderRadius),
+            "zoom" => Some(Self::CssZoom),
             "offset-path" => Some(Self::OffsetPath),
             "offset-position" => Some(Self::OffsetPosition),
             "offset-anchor" => Some(Self::OffsetAnchor),
@@ -668,6 +670,7 @@ impl AId {
             Self::CssTranslate => "ferri-css-translate",
             Self::CssRotate => "ferri-css-rotate",
             Self::CssScale => "ferri-css-scale",
+            Self::CssZoom => "zoom",
             Self::CssBorderRadius => "border-radius",
             Self::OffsetPath => "offset-path",
             Self::OffsetPosition => "offset-position",

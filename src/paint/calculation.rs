@@ -59,6 +59,40 @@ pub enum Calculation {
     Eased(Easing, Box<Self>),
 }
 impl Calculation {
+    /// A length under zoom: scale its result while preserving the physical percentage basis.
+    pub(crate) fn zoomed_length(mut self, factor: f32) -> Self {
+        self.rebase_percentages(factor);
+        self.scale(factor)
+    }
+
+    fn rebase_percentages(&mut self, factor: f32) {
+        match self {
+            Self::Value(_) => {}
+            Self::Percentage(value) => *value /= factor,
+            Self::Sum(values)
+            | Self::Product(values)
+            | Self::Min(values)
+            | Self::Max(values)
+            | Self::Hypot(values) => {
+                for value in values {
+                    value.rebase_percentages(factor);
+                }
+            }
+            Self::Binary(_, values) => {
+                for value in &mut **values {
+                    value.rebase_percentages(factor);
+                }
+            }
+            Self::Progress(values) | Self::Mix(values) => {
+                for value in &mut **values {
+                    value.rebase_percentages(factor);
+                }
+            }
+            Self::Invert(value) | Self::Unary(_, value) | Self::Eased(_, value) => {
+                value.rebase_percentages(factor);
+            }
+        }
+    }
     /// Even zero percentages retain an indefinite percentage basis.
     pub fn percentage(fraction: f32) -> Self {
         Self::Percentage(fraction)

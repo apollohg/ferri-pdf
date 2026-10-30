@@ -97,6 +97,24 @@ pub(crate) enum TransformFunction {
 }
 
 impl TransformFunction {
+    pub(super) fn zoom(&mut self, factor: f32) {
+        match self {
+            Self::Matrix(matrix) => {
+                for value in &mut matrix[TRANSLATION] {
+                    *value *= factor;
+                }
+                for index in [W_FROM_X, W_FROM_Y, W_FROM_Z] {
+                    matrix[index] /= factor;
+                }
+            }
+            Self::Translate(offsets) => {
+                for value in offsets {
+                    *value = value.zoomed(factor);
+                }
+            }
+        }
+    }
+
     pub(crate) fn css(
         &self,
         length: impl Fn(&LengthPercentage) -> Result<String, StyleError>,

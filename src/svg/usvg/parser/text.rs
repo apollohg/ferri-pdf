@@ -4,7 +4,7 @@
 use std::sync::Arc;
 
 use kurbo::{ParamCurve, ParamCurveArclen};
-use svgtypes::{FontFamily, Length, LengthUnit, parse_font_families};
+use svgtypes::{FontFamily, parse_font_families};
 
 use super::svgtree::{AId, EId, FromValue, SvgNode};
 use super::{OptionLog, converter, style};
@@ -413,15 +413,12 @@ fn resolve_text_flow(node: SvgNode, state: &converter::State) -> Option<TextFlow
         path
     };
 
-    let start_offset: Length = node.attribute(AId::StartOffset).unwrap_or_default();
-    let start_offset = if start_offset.unit == LengthUnit::Percent {
-        // 'If a percentage is given, then the `startOffset` represents
-        // a percentage distance along the entire path.'
-        let path_len = path_length(&path);
-        (path_len * (start_offset.number / 100.0)) as f32
-    } else {
-        node.resolve_length(AId::StartOffset, state, 0.0)
-    };
+    let start_offset =
+        super::units::computed_length(node, node, AId::StartOffset, Units::UserSpaceOnUse, state)
+            .and_then(|length| {
+                super::units::checked_length(length.resolve(path_length(&path) as f32), state)
+            })
+            .unwrap_or(0.0);
 
     let id = NonEmptyString::new(linked_node.element_id().to_string())?;
     Some(TextFlow::Path(Arc::new(TextPath {
@@ -431,7 +428,7 @@ fn resolve_text_flow(node: SvgNode, state: &converter::State) -> Option<TextFlow
     })))
 }
 
-fn convert_font(node: SvgNode, state: &converter::State) -> Font {
+pub(super) fn convert_font(node: SvgNode, state: &converter::State) -> Font {
     let style: FontStyle = node.find_attribute(AId::FontStyle).unwrap_or_default();
     let stretch = conv_font_stretch(node);
     let weight = resolve_font_weight(node);
@@ -765,7 +762,7 @@ fn resolve_positions_list(text_node: SvgNode, state: &converter::State) -> Vec<C
             let child_chars = count_chars(child);
             macro_rules! push_list {
                 ($aid:expr, $field:ident) => {
-                    if let Some(num_list) = super::units::convert_list(child, $aid, state) {
+                    if let Some(num_list) = super::units::convert_list(child, child, $aid, state) {
                         // Note that we are using not the total count,
                         // but the amount of characters in the current `tspan` (with children).
                         let len = std::cmp::min(num_list.len(), child_chars);
@@ -888,19 +885,12 @@ fn convert_baseline_shift(node: SvgNode, state: &converter::State) -> Vec<Baseli
         .take_while(|n| n.tag_name() != Some(EId::Text))
         .collect();
     for n in nodes.into_iter().filter(|node| !node.is_contents()) {
-        if let Some(len) = n.try_attribute::<Length>(AId::BaselineShift) {
-            if len.unit == LengthUnit::Percent {
-                let n = super::units::resolve_font_size(n, state) * (len.number as f32 / 100.0);
-                shift.push(BaselineShift::Number(n));
-            } else {
-                let n = super::units::convert_length(
-                    len,
-                    n,
-                    AId::BaselineShift,
-                    Units::ObjectBoundingBox,
-                    state,
-                );
-                shift.push(BaselineShift::Number(n));
+        if let Some(length) =
+            super::units::computed_length(n, n, AId::BaselineShift, Units::UserSpaceOnUse, state)
+        {
+            let basis = super::units::resolve_font_size(n, state);
+            if let Some(value) = super::units::checked_length(length.resolve(basis), state) {
+                shift.push(BaselineShift::Number(value));
             }
         } else if let Some(s) = n.attribute(AId::BaselineShift) {
             match s {
@@ -950,7 +940,7 @@ fn count_chars(node: SvgNode) -> usize {
 ///
 /// [SVG 2]: https://www.w3.org/TR/SVG2/text.html#WritingModeProperty
 /// [CSS Writing Modes Level 3]: https://www.w3.org/TR/css-writing-modes-3/#svg-writing-mode-css
-fn convert_writing_mode(text_node: SvgNode) -> WritingMode {
+pub(super) fn convert_writing_mode(text_node: SvgNode) -> WritingMode {
     if let Some(n) = text_node
         .ancestors()
         .find(|n| n.has_attribute(AId::WritingMode))

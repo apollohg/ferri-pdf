@@ -33,7 +33,7 @@ fn formatting_preserves_computed_background_and_border_image_urls() {
         &FileResolver::default(),
     ).unwrap();
     let root = document.root();
-    let expected = serde_json::json!({"Url": {"url": reference, "resolution": 1.0}});
+    let expected = serde_json::json!({"Url": {"url": reference, "resolution": 1.0, "scale": crate::paint::INITIAL_IMAGE_SCALE}});
     assert_eq!(
         serde_json::to_value(&root.style().decoration.backgrounds.images).unwrap(),
         serde_json::json!([expected]),
@@ -92,7 +92,7 @@ fn gradient(image: &str) -> ResolvedGradient {
     assert_eq!(layers.len(), 1, "{image} is one layer");
     match &layers[0].image {
         TileImage::Gradient(gradient) => gradient.clone(),
-        TileImage::Image(_) => panic!("{image} must resolve to a gradient"),
+        TileImage::Image(..) => panic!("{image} must resolve to a gradient"),
     }
 }
 fn close(label: &str, actual: f32, expected: f32) {
@@ -411,7 +411,7 @@ fn layers_paint_bottom_first_with_their_own_clip_and_the_colour_follows_the_bott
     assert_eq!(layers.len(), 2);
     assert!(
         matches!(layers[0].image, TileImage::Gradient(_))
-            && matches!(layers[1].image, TileImage::Image(_)),
+            && matches!(layers[1].image, TileImage::Image(..)),
         "the last listed layer is painted first"
     );
     let padding_box = layers[0].clip;
@@ -632,7 +632,7 @@ fn page_document_and_margin_backgrounds_share_images_without_mutating_computed_u
     for (computed, materialized) in decorations {
         assert_eq!(
             serde_json::to_value(&computed.backgrounds.images).unwrap(),
-            serde_json::json!([{"Url": {"url": IMAGE, "resolution": 1.0}}]),
+            serde_json::json!([{"Url": {"url": IMAGE, "resolution": 1.0, "scale": crate::paint::INITIAL_IMAGE_SCALE}}]),
             "computed image must retain the absolute source URL"
         );
         let BackgroundImage::Image { image, .. } = &materialized.backgrounds.images[0] else {

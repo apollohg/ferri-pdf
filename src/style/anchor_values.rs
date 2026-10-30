@@ -1167,6 +1167,7 @@ impl AnchorStyle {
 /// Anchor functions resolving for one property of one element.
 pub(crate) struct AnchorContext<'a> {
     frame: Option<&'a AnchorFrame>,
+    zoom: f32,
     positioned: bool,
     default: Option<AnchorReference>,
     area: Option<PositionArea>,
@@ -1292,6 +1293,7 @@ impl AnchorContext<'_> {
             AnchorQuery::Anchor { name, side } => self.anchor(name.as_ref(), *side),
             AnchorQuery::Size { name, dimension } => self.anchor_size(name.as_ref(), *dimension),
         }
+        .map(|length| length / self.zoom)
     }
     pub(crate) fn checkpoint(&self) -> (usize, bool) {
         (self.references.borrow().len(), self.unresolved.get())
@@ -1379,6 +1381,7 @@ pub(crate) fn size(
         .and_then(|anchoring| anchoring.frames.frame(anchoring.key, anchoring.page));
     let context = AnchorContext {
         frame,
+        zoom: style.effective_zoom,
         positioned: style.position.is_out_of_flow(),
         default: style.anchor.default_reference(),
         area: style.anchor.area,

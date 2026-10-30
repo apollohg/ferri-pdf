@@ -335,7 +335,7 @@ fn draw_layer(
                 })
                 .collect(),
         }),
-        TileImage::Image(image) => {
+        TileImage::Image(image, scale) => {
             let tile = Rect {
                 x: 0.0,
                 y: 0.0,
@@ -345,6 +345,7 @@ fn draw_layer(
                 image: Arc::clone(image),
                 rect: tile,
                 clip: None,
+                source_scale: *scale,
             })];
             let Some(raster) = raster::rasterize(painter, &item, tile, density)? else {
                 return Ok(());
@@ -353,7 +354,7 @@ fn draw_layer(
                 &raster.pixmap,
                 luminance,
             ))));
-            TileImage::Image(&grey)
+            TileImage::Image(&grey, crate::paint::INITIAL_IMAGE_SCALE)
         }
     };
     crate::writer::backgrounds::draw_layer(

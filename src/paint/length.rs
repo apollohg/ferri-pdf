@@ -10,6 +10,13 @@ pub enum LengthPercentage {
     Calc(Arc<Calculation>),
 }
 impl LengthPercentage {
+    pub(crate) fn zoomed(&self, factor: f32) -> Self {
+        match self {
+            Self::Length(value) => Self::Length(value * factor),
+            Self::Percentage(_) => self.clone(),
+            Self::Calc(value) => Self::Calc(Arc::new((**value).clone().zoomed_length(factor))),
+        }
+    }
     pub const ZERO: Self = Self::Length(0.0);
     pub fn resolve(&self, basis: f32) -> f32 {
         match self {

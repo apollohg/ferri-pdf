@@ -9,7 +9,7 @@ const WEIGHT_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wght");
 const WIDTH_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wdth");
 const SLANT_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"slnt");
 const ITALIC_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"ital");
-pub(super) const OPTICAL_SIZE_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"opsz");
+pub(crate) const OPTICAL_SIZE_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"opsz");
 
 impl FontBook {
     /// The face at `size` with the axis values of CSS Fonts 4 §7.2: matching, then the

@@ -98,12 +98,14 @@ fn resolve(
 
     let r = convert_rect(marker_node, state)?;
 
-    let view_box = marker_node.parse_viewbox().map(|vb| ViewBox {
-        rect: vb,
-        aspect: marker_node
-            .attribute(AId::PreserveAspectRatio)
-            .unwrap_or_default(),
-    });
+    let view_box = marker_node
+        .parse_viewbox(marker_node.effective_zoom())
+        .map(|vb| ViewBox {
+            rect: vb,
+            aspect: marker_node
+                .attribute(AId::PreserveAspectRatio)
+                .unwrap_or_default(),
+        });
 
     let has_overflow = {
         let overflow = marker_node.attribute(AId::Overflow);
@@ -200,6 +202,9 @@ fn resolve(
         };
 
         let mut marker_state = state.clone();
+        marker_state.view_box = view_box
+            .map(|view| view.rect)
+            .unwrap_or_else(|| r.size().to_non_zero_rect(0.0, 0.0));
         marker_state.parent_markers.push(marker_node);
         converter::convert_children(marker_node, &marker_state, cache, &mut g);
         g.calculate_bounding_boxes();

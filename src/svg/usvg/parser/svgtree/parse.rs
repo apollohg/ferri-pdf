@@ -27,6 +27,7 @@ impl<'input> Document<'input> {
     pub(crate) fn append(&mut self, parent_id: NodeId, kind: NodeKind) -> NodeId {
         let new_child_id = NodeId::from(self.nodes.len());
         self.nodes.push(NodeData {
+            effective_zoom: crate::style::INITIAL_ZOOM,
             parent: Some(parent_id),
             next_sibling: None,
             children: None,
@@ -60,6 +61,7 @@ impl<'input> Document<'input> {
             name,
             value,
             important,
+            inherited: false,
         });
     }
 }
@@ -89,6 +91,7 @@ fn parse<'input>(
 
     // Add a root node.
     doc.nodes.push(NodeData {
+        effective_zoom: crate::style::INITIAL_ZOOM,
         parent: None,
         next_sibling: None,
         children: None,
@@ -133,8 +136,29 @@ fn parse<'input>(
     fix_recursive_links(EId::Mask, AId::Mask, &mut doc);
     fix_recursive_links(EId::Filter, AId::Filter, &mut doc);
     fix_recursive_fe_image(&mut doc);
+    if let Err(error) = resolve_zoom(&mut doc) {
+        doc.style_error
+            .get_or_insert_with(|| std::sync::Arc::new(error));
+    }
 
     Ok(doc)
+}
+
+fn resolve_zoom(doc: &mut Document<'_>) -> Result<(), crate::style::StyleError> {
+    // Nodes are appended after their parents, including expanded use instances.
+    for index in 1..doc.nodes.len() {
+        let parent = doc.nodes[index]
+            .parent
+            .map_or(crate::style::INITIAL_ZOOM, |parent| {
+                doc.nodes[parent.get_usize()].effective_zoom
+            });
+        let own = doc
+            .get(index.into())
+            .attribute::<f32>(AId::CssZoom)
+            .unwrap_or(crate::style::INITIAL_ZOOM);
+        doc.nodes[index].effective_zoom = crate::style::accumulate_zoom(parent, own)?;
+    }
+    Ok(())
 }
 
 pub(crate) fn parse_tag_name(node: roxmltree::Node) -> Option<EId> {
@@ -520,7 +544,11 @@ pub(crate) fn parse_svg_element<'input>(
             crate::style::svg_cascade::Substitution::Discard => return Ok(()),
         };
 
-        if declaration.name == "offset" {
+        if declaration.name == "zoom" {
+            if let Some(value) = crate::style::svg_cascade::zoom(val)? {
+                insert_attribute(AId::CssZoom, &value, imp, override_presentation);
+            }
+        } else if declaration.name == "offset" {
             for (property, value) in crate::style::svg_cascade::expand("offset", val)? {
                 if let Some(aid) = AId::from_str(property) {
                     insert_attribute(aid, &value, imp, override_presentation);
@@ -620,9 +648,14 @@ pub(crate) fn parse_svg_element<'input>(
                 );
             }
         } else if let Some(aid) = AId::from_str(&declaration.name) {
-            // Parse only the presentation attributes.
-            if aid.is_presentation() {
-                if declaration.name.starts_with("offset-")
+            let dimension = matches!(aid, AId::Width | AId::Height)
+                && crate::style::svg_values::presentation_property(
+                    tag_name.to_str(),
+                    &declaration.name,
+                )
+                .is_some();
+            if aid.is_presentation() || dimension {
+                if (dimension || declaration.name.starts_with("offset-"))
                     && crate::style::svg_cascade::expand(&declaration.name, val)?.is_empty()
                 {
                     return Ok(());
@@ -730,6 +763,11 @@ fn append_attribute<'input>(
 }
 
 fn resolve_inherit(parent_id: NodeId, aid: AId, important: bool, doc: &mut Document) -> bool {
+    if aid == AId::FontSize {
+        // Inherit the computed parent size, not its relative expression.
+        doc.append_attribute(aid, roxmltree::StringStorage::Borrowed("100%"), important);
+        return true;
+    }
     if aid.is_inheritable() {
         // Inheritable attributes can inherit a value from an any ancestor.
         let node_id = doc
@@ -749,6 +787,7 @@ fn resolve_inherit(parent_id: NodeId, aid: AId, important: bool, doc: &mut Docum
                     name: aid,
                     value: attr.value,
                     important,
+                    inherited: true,
                 });
 
                 return true;
@@ -767,6 +806,7 @@ fn resolve_inherit(parent_id: NodeId, aid: AId, important: bool, doc: &mut Docum
                 name: aid,
                 value: attr.value,
                 important,
+                inherited: true,
             });
 
             return true;

@@ -408,7 +408,10 @@ fn handler(property: Property) -> Option<Handler> {
         ),
         P::FontSize => (
             font_size,
-            Some(|v, r| v.keyword() == Some(Keyword::Math) || font_size_value(v, r).is_ok()),
+            Some(|v, r| {
+                v.keyword() == Some(Keyword::Math)
+                    || font_size_value(v, r, crate::style::DEFAULT_FONT_SIZE).is_ok()
+            }),
         ),
         P::FontFamily => (font_family, Some(|_, _| true)),
         P::FontWeight => (
@@ -530,6 +533,7 @@ fn handler(property: Property) -> Option<Handler> {
             Some(|v, _| crate::style::Continue::from_component(v).is_ok()),
         ),
         P::TabSize => (tab_size, Some(|v, r| tab_size_value(v, r).is_ok())),
+        P::Zoom => (zoom, Some(|v, r| zoom_value(v, r).is_ok())),
         P::TextCombineUpright => (
             text_combine,
             Some(|v, r| crate::style::logical::TextCombine::from_component(v, r).is_ok()),
@@ -1583,19 +1587,23 @@ fn font_size(
                     relative.font.math_scaling()?,
                 )?
         }
-        Input::Value(value) => font_size_value(value, relative)?,
+        Input::Value(value) => font_size_value(value, relative, crate::style::DEFAULT_FONT_SIZE)?,
     };
     Ok(())
 }
 
-fn font_size_value(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
+pub(super) fn font_size_value(
+    value: &Component,
+    relative: &Relative<'_>,
+    initial_size: f32,
+) -> Result<f32, StyleError> {
     let size = match value.keyword() {
         Some(Keyword::Larger) => relative.font.size()? * RELATIVE_FONT_SIZE_RATIO,
         Some(Keyword::Smaller) => relative.font.size()? / RELATIVE_FONT_SIZE_RATIO,
         Some(name) => ABSOLUTE_SIZES
             .iter()
             .find(|(size, _)| *size == name)
-            .map(|(_, factor)| factor * crate::style::DEFAULT_FONT_SIZE)
+            .map(|(_, factor)| factor * initial_size)
             .ok_or_else(|| unsupported(value))?,
         None => crate::style::box_values::font_length_percentage(value, relative)?,
     };
@@ -1917,6 +1925,25 @@ computed!(
 computed!(tab_size, [tab_size], |value, style, _parent, relative| {
     tab_size_value(value, relative)?
 });
+
+computed!(zoom, [zoom], |value, style, _parent, relative| {
+    zoom_value(value, relative)?
+});
+
+pub(super) fn zoom_value(value: &Component, relative: &Relative<'_>) -> Result<f32, StyleError> {
+    let factor = match value.unwrap() {
+        Component::Percentage(_) | Component::Math(_, Kind::Percentage, _) => {
+            crate::style::values::percentage(value, relative)?
+        }
+        _ if value.keyword() == Some(Keyword::Normal) => crate::style::zoom::INITIAL_ZOOM,
+        _ => crate::style::values::number(value, relative)?,
+    };
+    Ok(if factor == 0.0 {
+        crate::style::zoom::INITIAL_ZOOM
+    } else {
+        factor
+    })
+}
 
 fn tab_size_value(
     value: &Component,

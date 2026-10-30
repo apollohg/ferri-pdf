@@ -63,7 +63,8 @@ impl ImageWriter {
         surface: &mut Surface<'_>,
     ) -> Result<(), PdfError> {
         let key = Arc::as_ptr(&paint.image) as usize;
-        let vector_key = (key, paint.rect.width.to_bits(), paint.rect.height.to_bits());
+        let source_size = [paint.rect.width, paint.rect.height].map(|v| v / paint.source_scale);
+        let vector_key = (key, source_size[0].to_bits(), source_size[1].to_bits());
         if self.failed.contains_key(&key) {
             self.report_failure(key);
             return Ok(());
@@ -116,8 +117,7 @@ impl ImageWriter {
                 if let std::collections::hash_map::Entry::Vacant(entry) =
                     self.vectors.entry(vector_key)
                 {
-                    let size = [paint.rect.width, paint.rect.height]
-                        .map(|v| v / crate::style::POINTS_PER_PIXEL);
+                    let size = source_size.map(|v| v / crate::style::POINTS_PER_PIXEL);
                     entry.insert(svg.tree(size).map_err(PdfError::Svg)?);
                 }
                 NoTransforms

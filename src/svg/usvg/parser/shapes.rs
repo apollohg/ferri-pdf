@@ -6,8 +6,8 @@ use std::sync::Arc;
 use svgtypes::Length;
 use tiny_skia_path::Path;
 
+use super::converter;
 use super::svgtree::{AId, EId, SvgNode};
-use super::{converter, units};
 use crate::svg::usvg::{ApproxEqUlps, IsValidLength, Rect};
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -38,7 +38,16 @@ pub(crate) fn convert(
 }
 
 pub(crate) fn convert_path(node: SvgNode) -> Option<Arc<Path>> {
-    path_data(node.attribute(AId::D)?)
+    let path = path_data(node.attribute(AId::D)?)?;
+    let zoom = node.effective_zoom();
+    if zoom == crate::style::INITIAL_ZOOM {
+        Some(path)
+    } else {
+        path.as_ref()
+            .clone()
+            .transform(tiny_skia_path::Transform::from_scale(zoom, zoom))
+            .map(Arc::new)
+    }
 }
 
 /// SVG 2 §9.3 path data, up to its first error.
@@ -143,37 +152,15 @@ fn convert_rect(node: SvgNode, state: &converter::State, purpose: Purpose) -> Op
 }
 
 fn resolve_rx_ry(node: SvgNode, state: &converter::State) -> (f32, f32) {
-    let mut rx_opt = node.attribute::<Length>(AId::Rx);
-    let mut ry_opt = node.attribute::<Length>(AId::Ry);
-
-    // Remove negative values first.
-    if let Some(v) = rx_opt {
-        if v.number.is_sign_negative() {
-            rx_opt = None;
-        }
-    }
-    if let Some(v) = ry_opt {
-        if v.number.is_sign_negative() {
-            ry_opt = None;
-        }
-    }
-
-    // Resolve.
-    match (rx_opt, ry_opt) {
+    let radius = |aid| {
+        node.try_convert_length(aid, crate::svg::usvg::Units::UserSpaceOnUse, state)
+            .filter(|value| *value >= 0.0)
+    };
+    match (radius(AId::Rx), radius(AId::Ry)) {
         (None, None) => (0.0, 0.0),
-        (Some(rx), None) => {
-            let rx = units::convert_user_length(rx, node, AId::Rx, state);
-            (rx, rx)
-        }
-        (None, Some(ry)) => {
-            let ry = units::convert_user_length(ry, node, AId::Ry, state);
-            (ry, ry)
-        }
-        (Some(rx), Some(ry)) => {
-            let rx = units::convert_user_length(rx, node, AId::Rx, state);
-            let ry = units::convert_user_length(ry, node, AId::Ry, state);
-            (rx, ry)
-        }
+        (Some(rx), None) => (rx, rx),
+        (None, Some(ry)) => (ry, ry),
+        (Some(rx), Some(ry)) => (rx, ry),
     }
 }
 
@@ -210,7 +197,9 @@ fn points_to_path(
     let mut builder = tiny_skia_path::PathBuilder::new();
     match node.attribute::<&str>(AId::Points) {
         Some(text) => {
+            let zoom = f64::from(node.effective_zoom());
             for (x, y) in PointsParser::from(text) {
+                let (x, y) = (x * zoom, y * zoom);
                 if builder.is_empty() {
                     builder.move_to(x as f32, y as f32);
                 } else {

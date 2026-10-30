@@ -13,8 +13,15 @@ use crate::text::IntrinsicWidths;
 
 /// The replaced content's natural size in points, scaled by its selected source's pixel
 /// density (HTML §4.8.4.3.7); a ratio-only image takes `available_width`.
-fn density_corrected(block: &BlockBox, available_width: f32) -> [f32; 2] {
-    let scale = POINTS_PER_PIXEL / block.image_density();
+fn density_corrected(block: BlockSource<'_>, available_width: f32) -> [f32; 2] {
+    let mut scale = POINTS_PER_PIXEL / block.image_density();
+    // Widget natural sizes already use the control's projected font metrics.
+    if !matches!(
+        block.image().unwrap().as_ref(),
+        crate::images::Image::Widget(_)
+    ) {
+        scale *= block.style().effective_zoom;
+    }
     let mut size = block
         .image()
         .unwrap()
@@ -44,7 +51,7 @@ impl Natural {
         let image = block.image().unwrap();
         let style = block.style();
         let contained = style.containment().size;
-        let mut size = density_corrected(block.block, available_width);
+        let mut size = density_corrected(block, available_width);
         for (axis, contained) in contained.into_iter().enumerate() {
             if contained {
                 // CSS Sizing 4 §5.2: the explicit intrinsic inner size, if any.
@@ -239,7 +246,8 @@ pub(super) fn measure<'a>(
                 [height, width]
             } else {
                 [width, height]
-            },
+            }
+            .map(|extent| extent / style.effective_zoom),
             *color_scheme,
             measurer.text.resolver(),
             &measurer.work,
@@ -261,7 +269,7 @@ pub(super) fn measure<'a>(
     } else {
         style
             .object_fit
-            .size(density_corrected(block.block, width), [width, height])
+            .size(density_corrected(block, width), [width, height])
     };
     let border_box = BoxPaint {
         padding: geometry.padding,
@@ -285,6 +293,11 @@ pub(super) fn measure<'a>(
     let paint = ImagePaint {
         image,
         clip,
+        source_scale: if widget {
+            crate::paint::INITIAL_IMAGE_SCALE
+        } else {
+            style.effective_zoom
+        },
         rect: Rect {
             x: bounds.x + style.object_position[0].resolve(width - paint_width),
             y: top + style.object_position[1].resolve(height - paint_height),

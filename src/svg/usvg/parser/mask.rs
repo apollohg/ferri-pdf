@@ -13,6 +13,7 @@ use crate::svg::usvg::{
 
 pub(crate) fn convert(
     node: SvgNode,
+    target: SvgNode,
     state: &converter::State,
     object_bbox: Option<NonZeroRect>,
     cache: &mut converter::Cache,
@@ -30,23 +31,44 @@ pub(crate) fn convert(
         .attribute(AId::MaskContentUnits)
         .unwrap_or(Units::UserSpaceOnUse);
 
-    // Check if this element was already converted.
-    //
-    // Only `userSpaceOnUse` masks can be shared,
-    // because `objectBoundingBox` one will be converted into user one
-    // and will become node-specific.
-    let cacheable = units == Units::UserSpaceOnUse && content_units == Units::UserSpaceOnUse;
-    if cacheable {
-        if let Some(mask) = cache.masks.get(node.element_id()) {
-            return Some(mask.clone());
-        }
+    let key = converter::ResourceKey::new(node, target, state, object_bbox);
+    if let Some(mask) = cache.masks.get(&key) {
+        return Some(mask.clone());
     }
 
     let rect = NonZeroRect::from_xywh(
-        node.convert_length(AId::X, units, state, Length::new(-10.0, Unit::Percent)),
-        node.convert_length(AId::Y, units, state, Length::new(-10.0, Unit::Percent)),
-        node.convert_length(AId::Width, units, state, Length::new(120.0, Unit::Percent)),
-        node.convert_length(AId::Height, units, state, Length::new(120.0, Unit::Percent)),
+        super::paint_server::resolve_number(
+            node,
+            target,
+            AId::X,
+            units,
+            state,
+            Length::new(-10.0, Unit::Percent),
+        ),
+        super::paint_server::resolve_number(
+            node,
+            target,
+            AId::Y,
+            units,
+            state,
+            Length::new(-10.0, Unit::Percent),
+        ),
+        super::paint_server::resolve_number(
+            node,
+            target,
+            AId::Width,
+            units,
+            state,
+            Length::new(120.0, Unit::Percent),
+        ),
+        super::paint_server::resolve_number(
+            node,
+            target,
+            AId::Height,
+            units,
+            state,
+            Length::new(120.0, Unit::Percent),
+        ),
     );
     let mut rect =
         rect.log_none(|| log::warn!("Mask '{}' has an invalid size. Skipped.", node.element_id()))?;
@@ -63,12 +85,15 @@ pub(crate) fn convert(
         }
     }
 
-    let mut id = NonEmptyString::new(node.element_id().to_string())?;
-    // Generate ID only when we're parsing `objectBoundingBox` mask for the second time.
-    if !cacheable && cache.masks.contains_key(id.get()) {
-        id = cache.gen_mask_id();
-    }
-    let id_copy = id.get().to_string();
+    let id = if cache
+        .masks
+        .keys()
+        .any(|existing| existing.source == key.source)
+    {
+        cache.gen_mask_id()
+    } else {
+        NonEmptyString::new(node.element_id().to_owned())?
+    };
 
     if mask_all {
         let mask = Arc::new(Mask {
@@ -78,14 +103,14 @@ pub(crate) fn convert(
             mask: None,
             root: Group::empty(),
         });
-        cache.masks.insert(id_copy, mask.clone());
+        cache.masks.insert(key, mask.clone());
         return Some(mask);
     }
 
     // Resolve linked mask.
     let mut mask = None;
     if let Some(link) = node.attribute::<SvgNode>(AId::Mask) {
-        mask = convert(link, state, object_bbox, cache);
+        mask = convert(link, target, state, object_bbox, cache);
 
         // Linked `mask` must be valid.
         if mask.is_none() {
@@ -147,6 +172,6 @@ pub(crate) fn convert(
     mask.root.calculate_bounding_boxes();
 
     let mask = Arc::new(mask);
-    cache.masks.insert(id_copy, mask.clone());
+    cache.masks.insert(key, mask.clone());
     Some(mask)
 }

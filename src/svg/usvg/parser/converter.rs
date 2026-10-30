@@ -27,6 +27,7 @@ const PERCENT: f32 = 100.0;
 
 #[derive(Clone)]
 pub(super) struct State<'a> {
+    pub(crate) length_error: std::rc::Rc<std::cell::RefCell<Option<Arc<crate::style::StyleError>>>>,
     pub(crate) parent_clip_path: Option<SvgNode<'a, 'a>>,
     pub(crate) parent_markers: Vec<SvgNode<'a, 'a>>,
     /// Stores the resolved fill and stroke of a use node
@@ -46,12 +47,62 @@ pub(super) struct State<'a> {
     pub(crate) font_provider: Option<&'a dyn FontProvider>,
 }
 
+impl<'a> State<'a> {
+    pub(super) fn new(opt: &'a Options<'a>, view_box: NonZeroRect) -> Self {
+        Self {
+            length_error: Default::default(),
+            parent_clip_path: None,
+            context_element: None,
+            parent_markers: Vec::new(),
+            fe_image_link: false,
+            view_box,
+            unit_viewport: None,
+            use_size: (None, None),
+            opt,
+            image_resolver: None,
+            motion_path_resolver: None,
+            font_provider: None,
+        }
+    }
+}
+
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub(crate) struct ResourceKey {
+    pub(super) source: String,
+    zoom: u32,
+    font_size: u32,
+    viewport: [u32; 2],
+    bounds: Option<[u32; 4]>,
+}
+
+impl ResourceKey {
+    pub(super) fn new(
+        source: SvgNode,
+        target: SvgNode,
+        state: &State,
+        bounds: Option<NonZeroRect>,
+    ) -> Self {
+        Self {
+            source: source.element_id().to_owned(),
+            zoom: target.effective_zoom().to_bits(),
+            font_size: units::resolve_font_size(target, state).to_bits(),
+            viewport: state
+                .unit_viewport
+                .unwrap_or([state.view_box.width(), state.view_box.height()])
+                .map(f32::to_bits),
+            bounds: bounds.map(|bounds| {
+                [bounds.x(), bounds.y(), bounds.width(), bounds.height()].map(f32::to_bits)
+            }),
+        }
+    }
+}
+
 #[derive(Clone)]
 pub(crate) struct Cache {
     /// This fontdb is initialized from [`Options::fontdb`] and then populated
     /// over the course of conversion.
     pub fontdb: Arc<Database>,
-    pub(crate) motion_error: Option<Arc<crate::style::StyleError>>,
+    pub(crate) style_error: Option<Arc<crate::style::StyleError>>,
 
     cache_outline: HashMap<(ID, GlyphId), Option<tiny_skia_path::Path>>,
     cache_colr: HashMap<(ID, GlyphId), Option<Tree>>,
@@ -59,10 +110,10 @@ pub(crate) struct Cache {
     cache_raster: HashMap<(ID, GlyphId), Option<BitmapImage>>,
     cache_has_opsz: HashMap<ID, bool>,
 
-    pub clip_paths: HashMap<String, Arc<ClipPath>>,
-    pub masks: HashMap<String, Arc<Mask>>,
-    pub filters: HashMap<String, Arc<filter::Filter>>,
-    pub paint: HashMap<String, Paint>,
+    pub clip_paths: HashMap<ResourceKey, Arc<ClipPath>>,
+    pub masks: HashMap<ResourceKey, Arc<Mask>>,
+    pub filters: HashMap<ResourceKey, Arc<filter::Filter>>,
+    pub paint: HashMap<ResourceKey, Paint>,
 
     // used for ID generation
     all_ids: HashSet<u64>,
@@ -95,7 +146,7 @@ impl Cache {
     pub(crate) fn new(fontdb: Arc<Database>) -> Self {
         Self {
             fontdb,
-            motion_error: None,
+            style_error: None,
 
             cache_outline: HashMap::new(),
             cache_colr: HashMap::new(),
@@ -227,22 +278,26 @@ impl<'a, 'input: 'a> SvgNode<'a, 'input> {
         state: &State,
         def: Length,
     ) -> f32 {
-        let length =
-            if self.is_contents() && matches!(aid, AId::X | AId::Y | AId::Width | AId::Height) {
-                def
-            } else {
-                self.attribute(aid).unwrap_or(def)
-            };
-        convert_length(length, *self, aid, object_units, state)
+        if !(self.is_contents() && matches!(aid, AId::X | AId::Y | AId::Width | AId::Height))
+            && let Some(value) = self.try_convert_length(aid, object_units, state)
+        {
+            return value;
+        }
+        convert_length(def, *self, aid, object_units, state)
     }
 
     pub(super) fn convert_user_length(&self, aid: AId, state: &State, def: Length) -> f32 {
         self.convert_length(aid, Units::UserSpaceOnUse, state, def)
     }
 
-    pub(super) fn parse_viewbox(&self) -> Option<NonZeroRect> {
+    pub(super) fn parse_viewbox(&self, zoom: f32) -> Option<NonZeroRect> {
         let vb: svgtypes::ViewBox = self.attribute(AId::ViewBox)?;
-        NonZeroRect::from_xywh(vb.x as f32, vb.y as f32, vb.w as f32, vb.h as f32)
+        NonZeroRect::from_xywh(
+            vb.x as f32 * zoom,
+            vb.y as f32 * zoom,
+            vb.w as f32 * zoom,
+            vb.h as f32 * zoom,
+        )
     }
 
     pub(super) fn resolve_length(&self, aid: AId, state: &State, def: f32) -> f32 {
@@ -252,13 +307,22 @@ impl<'a, 'input: 'a> SvgNode<'a, 'input> {
             aid
         );
 
-        if let Some(n) = self.ancestors().find(|n| n.has_attribute(aid)) {
-            if let Some(length) = n.attribute(aid) {
-                return units::convert_user_length(length, n, aid, state);
+        if let Some(n) = self.length_owner(aid) {
+            if let Some(length) = units::computed_length(n, n, aid, Units::UserSpaceOnUse, state) {
+                let basis = units::convert_user_length(
+                    Length::new(100.0, Unit::Percent),
+                    *self,
+                    aid,
+                    state,
+                );
+                let value = length
+                    .zoomed(self.effective_zoom() / n.effective_zoom())
+                    .resolve(basis);
+                return units::checked_length(value, state).unwrap_or(def * self.effective_zoom());
             }
         }
 
-        def
+        def * self.effective_zoom()
     }
 
     pub(super) fn resolve_valid_length(
@@ -277,13 +341,15 @@ impl<'a, 'input: 'a> SvgNode<'a, 'input> {
         object_units: Units,
         state: &State,
     ) -> Option<f32> {
-        Some(convert_length(
-            self.attribute(aid)?,
+        let value = units::computed_length(*self, *self, aid, object_units, state)?;
+        let basis = convert_length(
+            Length::new(100.0, Unit::Percent),
             *self,
             aid,
             object_units,
             state,
-        ))
+        );
+        units::checked_length(value.resolve(basis), state)
     }
 
     pub(super) fn has_valid_transform(&self, aid: AId) -> bool {
@@ -367,21 +433,15 @@ pub(crate) fn convert_doc(
     font_provider: Option<&dyn FontProvider>,
     motion_path_resolver: Option<&dyn Fn(&str) -> Option<Arc<str>>>,
 ) -> Result<Tree, Error> {
-    if let Some(error) = &svg_doc.style_error {
-        return Err(Error::Style(error.clone()));
-    }
-    if let Some(limit) = svg_doc.css_limit {
-        return Err(Error::CssComponentDepthLimit { limit });
-    }
     let svg = svg_doc.root_element();
     let (size, restore_viewbox) = match viewport {
         Some(size) => (Ok(size), false),
-        None => resolve_svg_size(&svg, opt),
+        None => resolve_svg_size(&svg, opt, font_provider),
     };
     let size = size?;
     let view_box = ViewBox {
         rect: svg
-            .parse_viewbox()
+            .parse_viewbox(svg.effective_zoom())
             .unwrap_or_else(|| size.to_non_zero_rect(0.0, 0.0)),
         aspect: svg.attribute(AId::PreserveAspectRatio).unwrap_or_default(),
     };
@@ -411,17 +471,10 @@ pub(crate) fn convert_doc(
     }
 
     let state = State {
-        parent_clip_path: None,
-        context_element: None,
-        parent_markers: Vec::new(),
-        fe_image_link: false,
-        view_box: view_box.rect,
-        unit_viewport: None,
-        use_size: (None, None),
-        opt,
         image_resolver,
         motion_path_resolver,
         font_provider,
+        ..State::new(opt, view_box.rect)
     };
 
     let mut cache = Cache::new(opt.fontdb.clone());
@@ -483,7 +536,10 @@ pub(crate) fn convert_doc(
     tree.root.collect_filters(&mut tree.filters);
     tree.root.calculate_bounding_boxes();
 
-    if let Some(error) = cache.motion_error.take() {
+    if let Some(error) = cache.style_error.take() {
+        return Err(super::Error::Style(error));
+    }
+    if let Some(error) = state.length_error.borrow_mut().take() {
         return Err(super::Error::Style(error));
     }
     // The fontdb might have been mutated and we want to apply these changes to
@@ -518,72 +574,34 @@ fn background_path(background_color: svgtypes::Color, area: Rect) -> Option<Path
     Some(path)
 }
 
-fn resolve_svg_size(svg: &SvgNode, opt: &Options) -> (Result<Size, Error>, bool) {
-    let mut state = State {
-        parent_clip_path: None,
-        context_element: None,
-        parent_markers: Vec::new(),
-        fe_image_link: false,
-        view_box: NonZeroRect::from_xywh(0.0, 0.0, 100.0, 100.0).unwrap(),
-        unit_viewport: None,
-        use_size: (None, None),
+fn resolve_svg_size(
+    svg: &SvgNode,
+    opt: &Options,
+    font_provider: Option<&dyn FontProvider>,
+) -> (Result<Size, Error>, bool) {
+    use crate::paint::LengthPercentage;
+    let view_box = svg.parse_viewbox(svg.effective_zoom());
+    let mut state = State::new(
         opt,
-        image_resolver: None,
-        motion_path_resolver: None,
-        font_provider: None,
+        view_box.unwrap_or_else(|| opt.default_size.to_non_zero_rect(0.0, 0.0)),
+    );
+    state.font_provider = font_provider;
+    let dimension = |aid| {
+        units::computed_length(*svg, *svg, aid, Units::UserSpaceOnUse, &state)
+            .unwrap_or(LengthPercentage::Percentage(1.0))
     };
-
-    let def = Length::new(100.0, Unit::Percent);
-    let mut width: Length = svg.attribute(AId::Width).unwrap_or(def);
-    let mut height: Length = svg.attribute(AId::Height).unwrap_or(def);
-
-    let view_box = svg.parse_viewbox();
-
-    let restore_viewbox =
-        if (width.unit == Unit::Percent || height.unit == Unit::Percent) && view_box.is_none() {
-            // Apply the percentages to the fallback size.
-            if width.unit == Unit::Percent {
-                width = Length::new(
-                    (width.number / 100.0) * state.opt.default_size.width() as f64,
-                    Unit::None,
-                );
-            }
-
-            if height.unit == Unit::Percent {
-                height = Length::new(
-                    (height.number / 100.0) * state.opt.default_size.height() as f64,
-                    Unit::None,
-                );
-            }
-
-            true
-        } else {
-            false
-        };
-
-    let size = if let Some(vbox) = view_box {
-        state.view_box = vbox;
-
-        let w = if width.unit == Unit::Percent {
-            vbox.width() * (width.number as f32 / 100.0)
-        } else {
-            svg.convert_user_length(AId::Width, &state, def)
-        };
-
-        let h = if height.unit == Unit::Percent {
-            vbox.height() * (height.number as f32 / 100.0)
-        } else {
-            svg.convert_user_length(AId::Height, &state, def)
-        };
-
-        Size::from_wh(w, h)
-    } else {
-        Size::from_wh(
-            svg.convert_user_length(AId::Width, &state, def),
-            svg.convert_user_length(AId::Height, &state, def),
-        )
-    };
-
+    let width = dimension(AId::Width);
+    let height = dimension(AId::Height);
+    if let Some(error) = state.length_error.borrow_mut().take() {
+        return (Err(Error::Style(error)), false);
+    }
+    let restore_viewbox = view_box.is_none()
+        && (!matches!(width, LengthPercentage::Length(_))
+            || !matches!(height, LengthPercentage::Length(_)));
+    let size = Size::from_wh(
+        width.resolve(state.view_box.width()),
+        height.resolve(state.view_box.height()),
+    );
     (size.ok_or(Error::InvalidSize), restore_viewbox)
 }
 
@@ -856,7 +874,7 @@ pub(crate) fn convert_group(
 
     let mut clip_path = None;
     if let Some(link) = node.attribute::<SvgNode>(AId::ClipPath) {
-        clip_path = super::clippath::convert(link, state, object_bbox, cache);
+        clip_path = super::clippath::convert(link, node, state, object_bbox, cache);
         if clip_path.is_none() {
             return None;
         }
@@ -878,7 +896,7 @@ pub(crate) fn convert_group(
     let mut mask = None;
     if state.parent_clip_path.is_none() {
         if let Some(link) = node.attribute::<SvgNode>(AId::Mask) {
-            mask = super::mask::convert(link, state, object_bbox, cache);
+            mask = super::mask::convert(link, node, state, object_bbox, cache);
             if mask.is_none() {
                 return None;
             }

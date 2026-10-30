@@ -823,12 +823,15 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         let mut initial = None;
         for &origin in origins.iter() {
             let element = self.element(origin);
-            let pseudo = self.sheet.typographic_pseudo_with_resolver(
-                element,
-                &parent,
-                PseudoElement::FirstLetter,
-                self.resources.resolver,
-            )?;
+            let pseudo = self
+                .sheet
+                .typographic_pseudo_with_resolver(
+                    element,
+                    &parent,
+                    PseudoElement::FirstLetter,
+                    self.resources.resolver,
+                )?
+                .used();
             let decoration = self.resources.backgrounds(&pseudo)?;
             let outer = std::mem::replace(&mut parent, inline_pseudo_style(pseudo.clone()));
             if floated.is_none() && initial.is_none() {
@@ -1186,12 +1189,16 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         let mut parent = parent.clone();
         for &origin in origins {
             let element = self.element(origin);
-            parent = inline_pseudo_style(self.sheet.typographic_pseudo_with_resolver(
-                element,
-                &parent,
-                pseudo,
-                self.resources.resolver,
-            )?);
+            parent = inline_pseudo_style(
+                self.sheet
+                    .typographic_pseudo_with_resolver(
+                        element,
+                        &parent,
+                        pseudo,
+                        self.resources.resolver,
+                    )?
+                    .used(),
+            );
             let decoration = self.resources.backgrounds(&parent)?;
             self.inline.open_box(
                 &parent,
@@ -1371,6 +1378,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         else {
             return Ok(());
         };
+        style = style.used();
         let element_page_scope =
             crate::document::page::used_name(&parent.page, self.element_page_scope.as_ref());
         validate_box(&style)?;
@@ -1628,6 +1636,7 @@ fn list_marker(
     else {
         return Ok(None);
     };
+    let marker = marker.used();
     let used = crate::document::lists::used_style(&marker);
     let Some(content) = content else {
         return crate::document::lists::marker(style, &used, ordinal, resources);
@@ -1693,6 +1702,7 @@ fn computed_style(
 ) -> Result<Box<Style>, DocumentError> {
     sheet
         .computed_with_resolver(element, parent, resolver)
+        .map(|style| style.used())
         .map(Box::new)
         .map_err(Into::into)
 }
@@ -2552,6 +2562,7 @@ pub(crate) fn build(
     )?;
     let bindings = generated.bindings();
     let page = PageBox::load(resolved, &mut resources, &bindings)?;
+    style = style.used();
     validate_box(&style)?;
     if style.display == Display::None {
         let mut strings = crate::document::strings::StringAssignments::new(html);

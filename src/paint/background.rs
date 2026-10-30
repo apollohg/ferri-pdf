@@ -8,6 +8,7 @@ use std::sync::Arc;
 
 /// Tolerance for `space` counting tiles that fit exactly.
 const SPACE_FIT_TOLERANCE: f32 = 1.0e-4;
+pub(crate) const INITIAL_IMAGE_SCALE: f32 = 1.0;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
 #[expect(
@@ -115,11 +116,14 @@ pub enum BackgroundImage<I = Infallible> {
     Url {
         url: String,
         resolution: f32,
+        /// Accumulated zoom of the image's natural dimensions, independent of density.
+        scale: f32,
     },
     Image {
         #[serde(skip)]
         image: I,
         resolution: f32,
+        scale: f32,
     },
     Gradient(Gradient),
 }
@@ -207,10 +211,16 @@ impl<I> Backgrounds<I> {
 impl<I> BackgroundImage<I> {
     /// Replaces a `Url` with the image `load` returns for it.
     pub fn load<E>(&mut self, load: &mut impl FnMut(&str) -> Result<I, E>) -> Result<(), E> {
-        if let Self::Url { url, resolution } = self {
+        if let Self::Url {
+            url,
+            resolution,
+            scale,
+        } = self
+        {
             *self = Self::Image {
                 image: load(url)?,
                 resolution: *resolution,
+                scale: *scale,
             };
         }
         Ok(())
@@ -240,9 +250,14 @@ impl BackgroundImage<Infallible> {
     pub fn with_image_type<I>(&self) -> BackgroundImage<I> {
         match self {
             Self::None => BackgroundImage::None,
-            Self::Url { url, resolution } => BackgroundImage::Url {
+            Self::Url {
+                url,
+                resolution,
+                scale,
+            } => BackgroundImage::Url {
                 url: url.clone(),
                 resolution: *resolution,
+                scale: *scale,
             },
             Self::Gradient(gradient) => BackgroundImage::Gradient(gradient.clone()),
             Self::Image { image, .. } => match *image {},
@@ -261,8 +276,8 @@ impl std::fmt::Display for UnresolvedImage {
 impl std::error::Error for UnresolvedImage {}
 
 pub(crate) enum Source<'a, I> {
-    /// A loaded image and its natural resolution in dots per CSS pixel.
-    Image(&'a I, f32),
+    /// A loaded image, natural resolution in dots per CSS pixel, and used size scale.
+    Image(&'a I, f32, f32),
     Gradient(&'a Gradient),
 }
 
@@ -276,7 +291,7 @@ impl<I> Clone for Source<'_, I> {
 /// Content of one tile.
 #[derive(Clone, Debug)]
 pub enum TileImage<'a, I = Infallible> {
-    Image(&'a I),
+    Image(&'a I, f32),
     Gradient(ResolvedGradient),
 }
 /// One background layer ready to paint.
@@ -294,15 +309,18 @@ pub struct LayerPaint<'a, I = Infallible> {
     pub blend: crate::paint::BlendMode,
 }
 
-/// Natural dimensions converted to points.
 /// Natural dimensions in points; a raster image's pixels span `1 / resolution` CSS pixels.
-pub(crate) fn natural_points<I: ImageInfo>(image: &I, resolution: f32) -> NaturalDimensions {
+pub(crate) fn natural_points<I: ImageInfo>(
+    image: &I,
+    resolution: f32,
+    zoom: f32,
+) -> NaturalDimensions {
     let natural = image.natural_size();
     let scale = if image.is_raster() {
         POINTS_PER_PIXEL / resolution
     } else {
         POINTS_PER_PIXEL
-    };
+    } * zoom;
     NaturalDimensions {
         width: natural.width.map(|width| width * scale),
         height: natural.height.map(|height| height * scale),
@@ -518,11 +536,15 @@ impl<I: ImageInfo> BoxPaint<I> {
                 BackgroundImage::Url { url, .. } => {
                     return Err(UnresolvedImage(url.clone()));
                 }
-                BackgroundImage::Image { image, resolution } => Source::Image(image, *resolution),
+                BackgroundImage::Image {
+                    image,
+                    resolution,
+                    scale,
+                } => Source::Image(image, *resolution, *scale),
                 BackgroundImage::Gradient(gradient) => Source::Gradient(gradient),
             };
             let natural = match source {
-                Source::Image(image, resolution) => natural_points(image, resolution),
+                Source::Image(image, resolution, scale) => natural_points(image, resolution, scale),
                 Source::Gradient(_) => NaturalDimensions::default(),
             };
             let area = if *cycle(&backgrounds.attachments, index) == Attachment::Fixed {
@@ -553,7 +575,7 @@ impl<I: ImageInfo> BoxPaint<I> {
                 tile[1],
             );
             let image = match source {
-                Source::Image(image, _) => TileImage::Image(image),
+                Source::Image(image, _, scale) => TileImage::Image(image, scale),
                 Source::Gradient(gradient) => match gradient.resolve(tile) {
                     Some(resolved) => TileImage::Gradient(resolved),
                     None => continue,
