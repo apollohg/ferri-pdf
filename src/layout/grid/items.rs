@@ -331,12 +331,18 @@ impl<'a> Item<'a> {
         used_height: Option<f32>,
     ) -> Result<MeasuredBlock<'a>, Failure> {
         if self.source.style().display.is_table() {
-            crate::layout::tables::measure_format(
+            crate::layout::tables::measure_wrapper(
                 measurer,
-                self.source,
-                &self.geometry,
-                height,
                 used_height,
+                |measurer, used_height| {
+                    crate::layout::tables::measure_format(
+                        measurer,
+                        self.source,
+                        &self.geometry,
+                        height,
+                        used_height,
+                    )
+                },
             )
         } else {
             measurer.measure_format(

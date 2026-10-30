@@ -210,15 +210,22 @@ fn measure_item<'a>(
 ) -> Result<MeasuredBlock<'a>, Failure> {
     let mut space = measurer.space;
     space.indefinite_inline &= !item.inline_definite;
-    measurer.with_space(space, |measurer| {
-        measurer.measure_format(
-            item.source,
-            item_geometry(item, parent, left, width),
-            true,
-            containing_height,
-            height,
-        )
-    })
+    let measure = |measurer: &mut Measurer<'a>, height| {
+        measurer.with_space(space, |measurer| {
+            measurer.measure_format(
+                item.source,
+                item_geometry(item, parent, left, width),
+                true,
+                containing_height,
+                height,
+            )
+        })
+    };
+    if item.source.style().display.is_table() {
+        crate::layout::tables::measure_wrapper(measurer, height, measure)
+    } else {
+        measure(measurer, height)
+    }
 }
 
 pub(super) fn measure<'a>(
