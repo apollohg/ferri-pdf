@@ -286,13 +286,14 @@ pub(super) fn measure<'a>(
         block.image().unwrap().as_ref(),
         crate::images::Image::Widget(_)
     );
-    let [paint_width, paint_height] = if widget || image.natural_size() == Default::default() {
-        [width, height]
-    } else {
-        style
-            .object_fit
-            .size(density_corrected(block, width), [width, height])
-    };
+    let [paint_width, paint_height] =
+        if widget || block.image().unwrap().natural_size() == Default::default() {
+            [width, height]
+        } else {
+            style
+                .object_fit
+                .size(density_corrected(block, width), [width, height])
+        };
     let border_box = BoxPaint {
         padding: geometry.padding,
         margins: geometry.used_margins(),

@@ -113,6 +113,40 @@ fn iframes_show_their_document_in_a_default_size_inset_bordered_viewport() {
 }
 
 #[test]
+fn iframe_viewports_fill_their_content_box_whatever_the_object_fit() {
+    // CSS Images 3 §5.5: a nested navigable has no natural dimensions, so its concrete
+    // object size is the content box whatever `object-fit` asks for.
+    for fit in ["fill", "none", "contain", "cover", "scale-down"] {
+        let trace = trace(&format!(
+            "<iframe style='width:100px;height:60px;object-fit:{fit}' \
+             srcdoc='<p>Nested'></iframe>"
+        ));
+        let [(paint, view)] = viewports(&trace)[..] else {
+            panic!(
+                "object-fit {fit}: one iframe viewport, got {:?}",
+                images(&trace)
+            );
+        };
+        let clip = paint.clip.as_ref().expect("content-box clip").rect;
+        assert_eq!(
+            [
+                paint.rect.x,
+                paint.rect.y,
+                paint.rect.width,
+                paint.rect.height
+            ],
+            [clip.x, clip.y, clip.width, clip.height],
+            "object-fit {fit}: the viewport paints exactly over the content box"
+        );
+        assert_eq!(
+            [view.area.width, view.area.height],
+            [paint.rect.width, paint.rect.height],
+            "object-fit {fit}: the nested page is drawn at its own size, unscaled"
+        );
+    }
+}
+
+#[test]
 fn nested_documents_evaluate_media_queries_and_viewport_units_against_their_viewport() {
     let nested = "<style>@page{margin:50pt}body{margin:0}div{background:rgb(0,0,255)}\
         @media (width:144pt) and (height:90pt) and (overflow-block:none){div{background:rgb(0,128,0)}}\
