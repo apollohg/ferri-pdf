@@ -81,9 +81,19 @@ fn footnotes_left_over_at_the_end_take_pages_of_their_own_without_max_height() {
         Vec::<String>::new(),
         "the extra page has no flow"
     );
-    // Each page paints the whole body and clips it to the part it holds.
-    assert_eq!(pages[0].1.len(), 12);
-    assert_eq!(pages[1].1.len(), 12);
+    let shown = |page| -> Vec<String> {
+        common::visible_frame_columns(&trace, page)
+            .into_iter()
+            .flat_map(|(_, texts)| texts)
+            .collect()
+    };
+    assert_eq!(
+        shown(0),
+        texts(&["1. N1", "N2", "N3"]),
+        "the 30pt area holds three lines"
+    );
+    let rest: Vec<String> = (4..=12).map(|index| format!("N{index}")).collect();
+    assert_eq!(shown(1), rest, "the rest of the body on a page of its own");
 }
 
 #[test]

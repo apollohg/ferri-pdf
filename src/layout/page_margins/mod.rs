@@ -4,7 +4,7 @@ use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, FlowPaint, ImagePain
 use crate::layout::measure::{MeasuredBlock, Measurer};
 use crate::layout::multicol::{
     ColumnGeometry, WrapRows,
-    slices::{Distribution, Plan, Run, line_breaks, slice_clip},
+    slices::{Distribution, Plan, Run, line_breaks, slice_clip, windowed},
 };
 use crate::layout::pagination::{Group, Region, StandaloneFlow};
 use crate::layout::{LayoutError, TextLine};
@@ -626,7 +626,9 @@ impl<'t> Prepared<'_, 't> {
                 let mut navigation = Vec::new();
                 // Each slice is the flow placed in its column box and clipped to the slice.
                 let sliced =
-                    |items: &[DisplayItem], lines: &[TextLine], origin: [f32; 2], window| {
+                    |items: &[DisplayItem], lines: &[TextLine], origin: [f32; 2], window: Rect| {
+                        let (items, lines) =
+                            windowed(items, lines, [window.y, window.y + window.height]);
                         DisplayItem::Frame(Box::new(FlowPaint {
                             matrix: [1.0, 0.0, 0.0, 1.0, origin[0], origin[1]],
                             area: Rect {
@@ -635,10 +637,10 @@ impl<'t> Prepared<'_, 't> {
                                 ..window
                             },
                             items: std::iter::once(slice_clip(window))
-                                .chain(items.iter().cloned())
+                                .chain(items)
                                 .chain(std::iter::once(DisplayItem::Pop))
                                 .collect(),
-                            lines: lines.to_vec(),
+                            lines,
                         }))
                     };
                 for (slice, [x, y]) in columns.placed(*geometry) {

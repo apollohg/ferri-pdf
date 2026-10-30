@@ -3,6 +3,7 @@
 //! flow fragments (CSS Multi-column Layout 1 §7, CSS Fragmentation 3 §5.4).
 use super::{ColumnGeometry, WrapRows};
 use crate::graphics::{Border, BoxPaint, Clip, DisplayItem, Rect};
+use crate::layout::TextLine;
 use crate::layout::pagination::{FRAGMENTATION_TOLERANCE_PT, overflows};
 use crate::style::ColumnFill;
 
@@ -90,6 +91,56 @@ pub(in crate::layout) fn slice_clip(window: Rect) -> DisplayItem {
         axes: [false, true],
         reference_box: None,
     })
+}
+
+/// `items`, whose text lines are `lines`, without the untransformed text whose line lies
+/// outside the block-axis `window` that clips them, so that each slice of content laid out
+/// once copies only the lines it shows, with the lines the rest paint.
+pub(in crate::layout) fn windowed(
+    items: &[DisplayItem],
+    lines: &[TextLine],
+    [top, bottom]: [f32; 2],
+) -> (Vec<DisplayItem>, Vec<TextLine>) {
+    // The planes of a 3D scene paint lines of the flow as well.
+    if items
+        .iter()
+        .any(|item| matches!(item, DisplayItem::Scene(_)))
+    {
+        return (items.to_vec(), lines.to_vec());
+    }
+    let mut kept = vec![None; lines.len()];
+    let mut kept_lines = Vec::new();
+    let mut output = Vec::with_capacity(items.len());
+    // Whether each open push transforms what it holds.
+    let mut open = Vec::new();
+    for item in items {
+        match item {
+            DisplayItem::Pop => {
+                open.pop();
+            }
+            DisplayItem::PushTransform(_) | DisplayItem::PushProjection(_) => open.push(true),
+            item if item.is_push() => open.push(false),
+            DisplayItem::Text { line } => {
+                let source = &lines[*line];
+                // The line box lies within a line height of the baseline either way.
+                if !open.contains(&true)
+                    && (source.baseline + source.height <= top
+                        || source.baseline - source.height >= bottom)
+                {
+                    continue;
+                }
+                let index = *kept[*line].get_or_insert_with(|| {
+                    kept_lines.push(source.clone());
+                    kept_lines.len() - 1
+                });
+                output.push(DisplayItem::Text { line: index });
+                continue;
+            }
+            _ => {}
+        }
+        output.push(item.clone());
+    }
+    (output, kept_lines)
 }
 
 /// The part `[top, bottom)` of run `run` that one column box holds.

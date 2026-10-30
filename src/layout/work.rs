@@ -376,6 +376,65 @@ mod tests {
             assert_eq!(count, 256, "margin text lost on page {}", page + 1);
         }
     }
+    /// The layout work `document` needs, overestimated by at most a `1 / PRECISION` fraction:
+    /// layout charges the same units under every budget.
+    fn required_work(document: &StyledDocument, resolver: &FileResolver) -> usize {
+        const PRECISION: usize = 64;
+        let fits = |limit| match layout_with_work_limit(document, resolver, limit) {
+            Ok(_) => true,
+            Err(LayoutError::WorkLimit { .. }) => false,
+            Err(error) => panic!("layout failed with {error} instead of exhausting its budget"),
+        };
+        let (mut fails, mut fits_within) = (0, 1);
+        while !fits(fits_within) {
+            assert!(
+                fits_within < MAX_LAYOUT_WORK,
+                "the document must lay out within the layout budget"
+            );
+            fails = fits_within;
+            fits_within *= 2;
+        }
+        while (fits_within - fails) * PRECISION > fits_within {
+            let limit = fails + (fits_within - fails) / 2;
+            if fits(limit) {
+                fits_within = limit;
+            } else {
+                fails = limit;
+            }
+        }
+        fits_within
+    }
+
+    #[test]
+    fn footnote_parts_copy_only_the_lines_they_show() {
+        const FOOTNOTES: usize = 96;
+        let resolver = FileResolver::default();
+        let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        // One inline footnote body, laid out once, continues across every page; each page's
+        // part of it copies the lines it shows, not the whole body.
+        let work = |count: usize| {
+            let calls = (0..count)
+                .map(|index| format!("w{index}<span class=fn>note {index}</span> "))
+                .collect::<String>();
+            let document = StyledDocument::parse(
+                &format!("<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}@page{{size:120pt 120pt;margin:10pt}}html,body{{margin:0;font:10pt/10pt Fixed}}.fn{{float:footnote;footnote-display:inline}}</style><p>{calls}</p>"),
+                &base, &[], &resolver,
+            )
+            .unwrap();
+            required_work(&document, &resolver)
+        };
+        let (single, doubled) = (work(FOOTNOTES), work(2 * FOOTNOTES));
+        assert!(
+            doubled < 3 * single,
+            "doubling the footnotes doubles the pages and the body's lines, so copying each part \
+             whole would quadruple the charged work: {FOOTNOTES} footnotes need {single} units, \
+             {} need {doubled}",
+            2 * FOOTNOTES
+        );
+    }
+
     #[test]
     fn fixed_column_overflow_without_room_for_cloned_edges_fails_before_exhausting_work() {
         const LIMIT: usize = 4096;

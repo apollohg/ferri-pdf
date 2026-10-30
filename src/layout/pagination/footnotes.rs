@@ -7,7 +7,7 @@
 use super::*;
 use crate::layout::multicol::{
     ColumnGeometry, WrapRows,
-    slices::{Distribution, Plan, Run, slice_clip},
+    slices::{Distribution, Plan, Run, slice_clip, windowed},
 };
 use crate::style::{BoxSizing, ColumnFill, FootnoteDisplay, FootnotePolicy};
 use std::{cell::RefCell, collections::BTreeSet};
@@ -1076,11 +1076,20 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                         lines,
                     }))
                 };
-                items.push(frame(layout.flow.items.clone(), layout.flow.lines.clone()));
+                // The part copies the lines it shows, which its frame clips to it.
+                let shown = windowed(
+                    &layout.flow.items,
+                    &layout.flow.lines,
+                    [part.top, part.bottom],
+                );
+                self.measurer.work.spend(shown.1.len())?;
+                items.push(frame(shown.0, shown.1));
                 if (clips_to_text || page_clips)
                     && let Some(area) = &layout.flow.text_area
                 {
-                    text.push(frame(area.items.clone(), area.lines.clone()));
+                    let shown = windowed(&area.items, &area.lines, [part.top, part.bottom]);
+                    self.measurer.work.spend(shown.1.len())?;
+                    text.push(frame(shown.0, shown.1));
                 }
                 let placed = layout.flow.navigation.translated(origin, window);
                 navigation.push((
