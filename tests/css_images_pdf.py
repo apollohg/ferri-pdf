@@ -461,6 +461,34 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                     (f'ul{{padding-left:60pt}}li{{list-style:{position} url("{quadrants}")}}', items),
                     f'an {position} marker\'s content image draws as its marker image')
 
+    def test_page_margin_boxes_show_content_images(self):
+        """CSS Content 3 §1: a page-margin box's single `<image>` replaces the box with it, which
+        fills the box the page-margin algorithm sizes from its natural size; images in a
+        content list are anonymous inline replaced elements, as in the same content placed as
+        a running element (CSS GCPM 3 §1.2)."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-margin-images-') as directory:
+            root = Path(directory)
+            quadrants = blocks(root / 'quadrants.png', QUADRANTS)
+            font = f'font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe'
+            running = f'#h{{position:running(h);{font}}}'
+            for margin, expected, message in [
+                    (f'content:"A" url("{quadrants}") "B" counter(page)',
+                     f'<div id=h>A<img src="{quadrants}">B1</div>', 'images inline with text'),
+                    (f'content:url("{quadrants}");border:2pt solid blue',
+                     f'<img id=h src="{quadrants}" style="display:block;width:100%;height:{PAGE_MARGIN - 4}pt">',
+                     'a replaced margin box'),
+                    (f'content:url("{quadrants}");object-fit:contain;padding:2pt',
+                     f'<img id=h src="{quadrants}" style="display:block;width:100%;'
+                     f'height:{PAGE_MARGIN - 4}pt;object-fit:contain">',
+                     'object-fit fits the replacement into the content box')]:
+                border = 'border:2pt solid blue;' if 'border' in margin else ''
+                padding = 'padding:2pt;' if 'padding' in margin else ''
+                self.assertSameInk(
+                    root, (f'@page{{@top-left{{{margin};{font}}}}}', '<p>Body</p>'),
+                    (f'@page{{@top-left{{content:element(h);{border}{padding}{font}}}}}{running}',
+                     f'{expected}<p>Body</p>'),
+                    message)
+
     def test_counter_style_image_symbols_render_as_inline_images(self):
         """CSS Counter Styles 3 §3.8: image symbols, wherever a symbol stands, are anonymous
         inline replaced boxes in markers and in counter() and counters() content."""

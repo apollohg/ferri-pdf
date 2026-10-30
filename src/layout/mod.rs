@@ -294,6 +294,7 @@ fn layout_pass(
         &page_boxes,
         string_locations,
         &destinations,
+        resolver,
         &mut measurer,
         (&mut pages, &mut display_lists, &mut links),
     )?;
@@ -343,6 +344,7 @@ fn paged_content<'t>(
     page_boxes: &[std::sync::Arc<crate::document::PageBox>],
     string_locations: strings::StringLocations,
     destinations: &[Option<Destination>],
+    resolver: &dyn ResourceResolver,
     measurer: &mut measure::Measurer<'t>,
     (pages, display_lists, links): PageOutputs<'_>,
 ) -> Result<Option<crate::document::GeneratedValues>, LayoutError> {
@@ -357,6 +359,7 @@ fn paged_content<'t>(
             destinations: document.navigation().destinations,
             counters: &counters,
             document,
+            resolver,
         },
         measurer,
         first_margin_paragraph,

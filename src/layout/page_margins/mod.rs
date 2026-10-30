@@ -1,6 +1,6 @@
 mod dimensions;
 use crate::document::{BlockBox, CounterSnapshot, PageBox, Paragraph, RunningStringAssignment};
-use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, Rect};
+use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, ImagePaint, Rect};
 use crate::layout::measure::{MeasuredBlock, Measurer};
 use crate::layout::{LayoutError, TextLine};
 use crate::style::{BoxSizing, MarginLocation, PageMargin, Size, VerticalAlign};
@@ -38,6 +38,10 @@ struct Prepared<'a, 't> {
     margin: &'a PageMargin,
     decoration: &'a BoxDecoration,
     paragraph: Option<Paragraph>,
+    /// The sizes and line metrics of the paragraph's `content` images.
+    images: (Vec<[f32; 2]>, Vec<crate::text::AtomicMetrics>),
+    /// The image a `<content-replacement>` replaces the box with (CSS Content 3 §1).
+    replacement: Option<std::sync::Arc<crate::images::Image>>,
     /// The running element `element()` places (CSS GCPM 3 §1.2.2), laid out as the box's
     /// only child.
     element: Option<&'t BlockBox>,
@@ -141,7 +145,7 @@ impl<'t> Prepared<'_, 't> {
         self.lines = self
             .paragraph
             .as_ref()
-            .map(|p| measurer.text_lines(p, inline, &[]))
+            .map(|p| measurer.text_lines(p, inline, &self.images.1))
             .transpose()?
             .unwrap_or_default();
         Ok(())
@@ -157,10 +161,24 @@ impl<'t> Prepared<'_, 't> {
                 .run(|measurer| crate::layout::intrinsic::measure(element, measurer, available))?;
             return Ok([widths.min, widths.max]);
         }
+        if self.replacement.is_some() {
+            let inline = self.inline_axis();
+            let width = self.replaced_extent(inline, self.content[1 - inline]);
+            return Ok([width; 2]);
+        }
+        let atomics: Vec<_> = self
+            .images
+            .0
+            .iter()
+            .map(|&[width, _]| crate::text::IntrinsicWidths {
+                min: width,
+                max: width,
+            })
+            .collect();
         let intrinsic = self
             .paragraph
             .as_ref()
-            .map(|p| measurer.intrinsic_widths(p, &[]))
+            .map(|p| measurer.intrinsic_widths(p, &atomics))
             .transpose()?
             .unwrap_or_default();
         Ok([intrinsic.min, intrinsic.max])
@@ -177,7 +195,37 @@ impl<'t> Prepared<'_, 't> {
                 measured.before.value() + measured.height + measured.after.value()
             };
         }
+        if self.replacement.is_some() {
+            let inline = self.inline_axis();
+            return self.replaced_extent(1 - inline, self.content[inline]);
+        }
         self.lines.iter().map(|line| line.height).sum()
+    }
+    /// The replaced content's extent along physical `axis` when the other axis spans `other`:
+    /// its natural size, or the size its natural ratio transfers, as for a replaced element
+    /// whose other dimension is specified (CSS 2.1 §10.3.2, §10.6.2).
+    fn replaced_extent(&self, axis: usize, other: f32) -> f32 {
+        let image = self
+            .replacement
+            .as_ref()
+            .expect("only a replaced margin box has replaced content");
+        let natural = crate::paint::natural_points(
+            image,
+            crate::paint::INITIAL_IMAGE_SCALE,
+            self.margin.style.effective_zoom,
+        );
+        let mut size = [
+            crate::paint::SizeComponent::Auto,
+            crate::paint::SizeComponent::Auto,
+        ];
+        size[1 - axis] =
+            crate::paint::SizeComponent::Value(crate::paint::LengthPercentage::Length(other));
+        crate::paint::image_size(
+            &crate::paint::BackgroundSize::Explicit(size),
+            natural,
+            crate::images::DEFAULT_OBJECT_SIZE
+                .map(|extent| extent * crate::style::POINTS_PER_PIXEL),
+        )[axis]
     }
     /// The decoration, then the content laid out at its vertical alignment, then the outline.
     fn paint(
@@ -228,18 +276,57 @@ impl<'t> Prepared<'_, 't> {
             ..BoxPaint::whole(rect, self.decoration.clone())
         };
         let outline = paint.outline();
+        let replaced = self
+            .replacement
+            .take()
+            .map(|image| self.replaced(image, &paint));
         if self.decoration.is_visible() {
             output.display.push(DisplayItem::Box(paint));
         }
         let extent = self.block_extent();
         if let Some(measured) = self.measured.take() {
             self.paint_element(measured, extent, rect, output, measurer, destinations)?;
+        } else if let Some(image) = replaced {
+            output.display.push(DisplayItem::Image(image));
         } else {
             self.paint_lines(rect, index, output.lines, output.display);
         }
         // The outline paints over the margin box's content (CSS UI 4 §3.1).
         output.display.extend(outline.map(DisplayItem::Box));
         Ok(())
+    }
+    /// The replaced content fitted into the content box by `object-fit` and
+    /// `object-position`, clipped to the content edge (CSS Images 3 §4.5); content without
+    /// natural dimensions fills it.
+    fn replaced(
+        &self,
+        image: std::sync::Arc<crate::images::Image>,
+        paint: &BoxPaint,
+    ) -> ImagePaint {
+        let style = &self.margin.style;
+        let clip = paint.inner_clip(self.padding, [true; 2]);
+        let content = clip.rect;
+        let box_size = [content.width, content.height];
+        let [width, height] = if image.natural_size() == Default::default() {
+            box_size
+        } else {
+            let scale = crate::style::POINTS_PER_PIXEL * style.effective_zoom;
+            let natural = image
+                .pixel_size(content.width / scale)
+                .map(|extent| extent * scale);
+            style.object_fit.size(natural, box_size)
+        };
+        ImagePaint {
+            image,
+            rect: Rect {
+                x: content.x + style.object_position[0].resolve(content.width - width),
+                y: content.y + style.object_position[1].resolve(content.height - height),
+                width,
+                height,
+            },
+            clip: Some(clip),
+            source_scale: style.effective_zoom,
+        }
     }
     fn vertical_offset(&self, physical_height: f32) -> f32 {
         let extra = self.content[VERTICAL] - physical_height;
@@ -379,6 +466,19 @@ impl<'t> Prepared<'_, 't> {
                 line: text_lines.len(),
             });
             text_items.extend(above);
+            let paragraph = self
+                .paragraph
+                .as_ref()
+                .expect("a margin box's lines lay out its paragraph");
+            text_items.extend(
+                crate::layout::markers::content_image_paints(paragraph, &line, &self.images.0)
+                    .into_iter()
+                    .map(|mut image| {
+                        image.rect.x += x;
+                        image.rect.y += baseline;
+                        DisplayItem::Image(image)
+                    }),
+            );
             text_lines.push(TextLine {
                 paragraph: index,
                 text: line.text,
@@ -420,6 +520,7 @@ struct MarginOutput<'p> {
 /// document's destination count, the page-based counters and the document's counters where
 /// pages start.
 pub(super) struct MarginContext<'s, 't> {
+    pub resolver: &'s dyn crate::resources::ResourceResolver,
     pub strings: &'s crate::layout::strings::PageStrings,
     pub running: &'t [RunningStringAssignment],
     pub destinations: usize,
@@ -453,6 +554,7 @@ fn prepare<'a, 't>(
             specified[axis] = specified[axis].map(|size| (size - edges).max(0.0));
         }
     }
+    let mut replacement = None;
     let (paragraph, element) = if let Some(request) = margin.content.running_element() {
         (
             None,
@@ -462,6 +564,13 @@ fn prepare<'a, 't>(
                 .and_then(|owner| context.running[owner].element.as_ref())
                 .map(|element| &element.block),
         )
+    } else if let Some(image) = margin.content.replacement() {
+        replacement = Some(
+            context
+                .document
+                .margin_replacement(image, style, context.resolver),
+        );
+        (None, None)
     } else {
         let output = margin.content.page_output(
             context.counters.page(page, Some(margin.location)),
@@ -481,18 +590,21 @@ fn prepare<'a, 't>(
                 )
             },
         )?;
-        if !output.images().is_empty() {
-            return Err(crate::style::StyleError::Unsupported(
-                "images in page-margin box content".into(),
-            )
-            .into());
-        }
-        (Paragraph::generated_output(&output, &[], style)?, None)
+        let images = context
+            .document
+            .margin_images(&output, style, context.resolver);
+        (Paragraph::generated_output(&output, &images, style)?, None)
     };
+    let images = paragraph
+        .as_ref()
+        .map(crate::layout::markers::content_image_atomics)
+        .unwrap_or_default();
     Ok(Prepared {
         margin,
         decoration,
         paragraph,
+        images,
+        replacement,
         element,
         measured: None,
         padding,

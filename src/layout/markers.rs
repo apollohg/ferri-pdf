@@ -25,22 +25,7 @@ pub(super) fn measure(
     right: f32,
     owner: Option<crate::style::PageStyleTarget>,
 ) -> Result<MeasuredMarker, Failure> {
-    // A marker's atomic inlines are the anonymous replaced boxes of its content images, sized
-    // as replaced elements with automatic sizes; their baseline is their bottom edge.
-    let sizes: Vec<[f32; 2]> = paragraph
-        .atomics()
-        .iter()
-        .map(|atomic| crate::layout::images::size(&atomic.block, 0.0, 0.0, None, None, None))
-        .collect();
-    let metrics: Vec<_> = sizes
-        .iter()
-        .map(|&[width, height]| crate::text::AtomicMetrics {
-            width,
-            height,
-            baseline: height,
-            synthesized_baseline: false,
-        })
-        .collect();
+    let (sizes, metrics) = content_image_atomics(paragraph);
     let mut line = measurer
         .text_lines(paragraph, f32::MAX, &metrics)?
         .into_iter()
@@ -77,33 +62,13 @@ pub(super) fn measure(
             decoration,
         )
     });
-    let images = line
-        .atomics
-        .iter()
-        .map(|fragment| {
-            let atomic = &paragraph.atomics()[fragment.index];
-            let [width, height] = sizes[fragment.index];
-            let top = fragment.baseline - height;
-            line.ink_bounds = Some(line.ink_bounds.map_or([top, fragment.baseline], |bounds| {
-                [bounds[0].min(top), bounds[1].max(fragment.baseline)]
-            }));
-            crate::graphics::ImagePaint {
-                image: atomic
-                    .block
-                    .image()
-                    .expect("marker atomics are content images")
-                    .clone(),
-                rect: crate::graphics::Rect {
-                    x: fragment.x,
-                    y: top,
-                    width,
-                    height,
-                },
-                clip: None,
-                source_scale: atomic.block.style().effective_zoom,
-            }
-        })
-        .collect();
+    let images = content_image_paints(paragraph, &line, &sizes);
+    for image in &images {
+        let [top, bottom] = [image.rect.y, image.rect.y + image.rect.height];
+        line.ink_bounds = Some(line.ink_bounds.map_or([top, bottom], |bounds| {
+            [bounds[0].min(top), bounds[1].max(bottom)]
+        }));
+    }
     Ok(MeasuredMarker {
         owner,
         frame: crate::layout::writing::Frame::for_style(style),
@@ -128,4 +93,58 @@ pub(super) fn measure(
             color: style.color,
         },
     })
+}
+
+/// The sizes and line metrics of a generated paragraph's atomic inlines, which are the
+/// anonymous replaced boxes of its `content` images (CSS Content 3 §2.2): sized as replaced
+/// elements with automatic sizes, their baseline is their bottom edge.
+pub(super) fn content_image_atomics(
+    paragraph: &Paragraph,
+) -> (Vec<[f32; 2]>, Vec<crate::text::AtomicMetrics>) {
+    let sizes: Vec<[f32; 2]> = paragraph
+        .atomics()
+        .iter()
+        .map(|atomic| crate::layout::images::size(&atomic.block, 0.0, 0.0, None, None, None))
+        .collect();
+    let metrics = sizes
+        .iter()
+        .map(|&[width, height]| crate::text::AtomicMetrics {
+            width,
+            height,
+            baseline: height,
+            synthesized_baseline: false,
+        })
+        .collect();
+    (sizes, metrics)
+}
+
+/// The `content` images on `line` of a generated paragraph, sized by
+/// [`content_image_atomics`], from the line's left edge and baseline.
+pub(super) fn content_image_paints(
+    paragraph: &Paragraph,
+    line: &crate::text::Line,
+    sizes: &[[f32; 2]],
+) -> Vec<crate::graphics::ImagePaint> {
+    line.atomics
+        .iter()
+        .map(|fragment| {
+            let atomic = &paragraph.atomics()[fragment.index];
+            let [width, height] = sizes[fragment.index];
+            crate::graphics::ImagePaint {
+                image: atomic
+                    .block
+                    .image()
+                    .expect("generated atomics are content images")
+                    .clone(),
+                rect: crate::graphics::Rect {
+                    x: fragment.x,
+                    y: fragment.baseline - height,
+                    width,
+                    height,
+                },
+                clip: None,
+                source_scale: atomic.block.style().effective_zoom,
+            }
+        })
+        .collect()
 }

@@ -576,6 +576,26 @@ impl StyledDocument {
         self.pages.first()
     }
 
+    /// See [`page::PageProvider::margin_images`].
+    pub(crate) fn margin_images(
+        &self,
+        output: &crate::style::GeneratedOutput,
+        style: &crate::style::Style,
+        resolver: &dyn ResourceResolver,
+    ) -> Vec<inline::GeneratedImage> {
+        self.pages.margin_images(output, style, resolver)
+    }
+
+    /// See [`page::PageProvider::margin_replacement`].
+    pub(crate) fn margin_replacement(
+        &self,
+        image: &crate::paint::BackgroundImage,
+        style: &crate::style::Style,
+        resolver: &dyn ResourceResolver,
+    ) -> std::sync::Arc<crate::images::Image> {
+        self.pages.margin_replacement(image, style, resolver)
+    }
+
     pub(crate) fn resolve_page(
         &self,
         request: crate::style::PageRequest,

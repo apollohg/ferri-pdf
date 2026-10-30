@@ -70,6 +70,38 @@ impl PageProvider {
     pub(crate) fn first(&self) -> &PageBox {
         &self.first
     }
+    /// The images of a page-margin box's generated content on one page, each loaded as its
+    /// anonymous replaced box shows it; invalid ones generate nothing (CSS Content 3 §2.2).
+    pub(crate) fn margin_images(
+        &self,
+        output: &crate::style::GeneratedOutput,
+        style: &Style,
+        resolver: &dyn ResourceResolver,
+    ) -> Vec<crate::document::inline::GeneratedImage> {
+        let mut cache = self.images.borrow_mut();
+        ImageResources {
+            base: &self.base,
+            resolver,
+            cache: &mut cache,
+        }
+        .generated_images(output, style)
+    }
+    /// The image a page-margin box's `<content-replacement>` replaces it with (CSS Content 3
+    /// §1).
+    pub(crate) fn margin_replacement(
+        &self,
+        image: &crate::paint::BackgroundImage,
+        style: &Style,
+        resolver: &dyn ResourceResolver,
+    ) -> Arc<crate::images::Image> {
+        let mut cache = self.images.borrow_mut();
+        ImageResources {
+            base: &self.base,
+            resolver,
+            cache: &mut cache,
+        }
+        .replacement_image(image, style)
+    }
     pub(crate) fn resolve(
         &self,
         sheet: &Stylesheet,
