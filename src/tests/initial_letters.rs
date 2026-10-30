@@ -539,17 +539,55 @@ fn letter_paragraphs_move_whole_to_the_next_page_rather_than_break_beside_the_le
 }
 
 #[test]
+fn block_level_content_ends_the_letter_and_its_box_continues_after() {
+    let font = Font::profile();
+    let trace = render(
+        "span{initial-letter:2}div{margin:0}",
+        &format!("<div><span>W<div>{TEXT}</div>c</span> tail</div>"),
+    );
+    let (letter, lines) = split(&trace, "W");
+    assert_labelled_pt(
+        "the letter keeps its size",
+        letter.runs[0].font_size,
+        font.letter_size(2.0),
+    );
+    assert_eq!(
+        lines[0].text,
+        "\u{fffc}",
+        "the letter alone takes the line before the block: {:#?}",
+        describe(&lines)
+    );
+    assert_labelled_pt(
+        "the letter's baseline is the block's first line's (§7.9.2)",
+        letter.baseline,
+        lines[1].baseline,
+    );
+    assert!(
+        start(lines[1]) >= letter.x + letter.width,
+        "the block's first line starts after the letter: {:#?}",
+        describe(&lines)
+    );
+    assert_labelled_pt(
+        "the block's next line clears the letter",
+        start(lines[2]),
+        CONTENT_LEFT,
+    );
+    let rest = lines.last().expect("the box continues after the block");
+    assert_eq!(rest.text, "c tail", "{:#?}", describe(&lines));
+    assert!(
+        rest.runs.iter().all(|run| run.font_size == FONT_SIZE),
+        "the box's fragments after the block are ordinary text: {:#?}",
+        rest.runs
+    );
+}
+
+#[test]
 fn letters_needing_layout_to_size_or_wrap_are_unsupported() {
     for (css, body, expected) in [
         (
             "p::first-letter{initial-letter:2;initial-letter-align:border-box;padding:5%}",
             "<p>Text</p>",
             "percentage block-axis padding",
-        ),
-        (
-            "span{initial-letter:2}",
-            "<div><span>a<div>b</div></span></div>",
-            "block-level content inside an initial letter",
         ),
         (
             "span{initial-letter:3}",

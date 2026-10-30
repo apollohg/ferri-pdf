@@ -1306,6 +1306,20 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             }
         }
     }
+    /// Ends initial letter `letter` before the block-level content inside it, which splits its
+    /// inline box (CSS 2.1 §9.2.1.1): the letter is its fragment on the originating line, and
+    /// the fragments after the block are an ordinary inline box, whose used `initial-letter`
+    /// is `normal` as it does not start its block's first line (CSS Inline 3 §7.3.1).
+    fn split_letter(&mut self, letter: OpenLetter) -> Result<(), DocumentError> {
+        let open = self.inline.close_open();
+        let mut style = letter.style.clone();
+        style.initial_letter = None;
+        let (decoration, navigation) = (letter.decoration.clone(), letter.navigation);
+        self.finish_letter(letter, false)?;
+        self.inline.continue_box(&style, decoration, navigation);
+        self.inline.reopen(open);
+        Ok(())
+    }
     /// An inside marker is an inline box opening the list item's inline content (CSS Lists 3
     /// §3.5): an image marker holds an inline replaced box followed by a space. A marker can
     /// be an initial letter (CSS Inline 3 §7.3.1).
@@ -1469,11 +1483,8 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         })
     }
     fn flush(&mut self) -> Result<(), DocumentError> {
-        if self.letter.is_some() {
-            return Err(StyleError::Unsupported(
-                "block-level content inside an initial letter".into(),
-            )
-            .into());
+        if let Some(letter) = self.letter.take() {
+            self.split_letter(letter)?;
         }
         self.ruby.finish(self.inline)?;
         let collected = self.inline.split();

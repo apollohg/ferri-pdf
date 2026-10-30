@@ -556,6 +556,20 @@ struct PendingSpace {
     inline_box: Option<usize>,
 }
 
+/// Inline boxes, outermost first, and link scopes that block-level content interrupts,
+/// which continue after it.
+pub(crate) struct OpenContents {
+    boxes: Vec<ContinuedBox>,
+    links: Vec<Option<usize>>,
+}
+struct ContinuedBox {
+    style: Arc<Style>,
+    decoration: crate::graphics::BoxDecoration,
+    navigation: crate::document::BoxNavigation,
+    canvas_source: bool,
+    math: Option<crate::document::mathml::Class>,
+}
+
 #[derive(Default)]
 pub(crate) struct InlineCollector {
     text: String,
@@ -1073,6 +1087,16 @@ impl InlineCollector {
     /// Ends this run of inline content before block-level content, returning it for
     /// `finish`. Open inline boxes are split: they close here and reopen in the next run.
     pub(crate) fn split(&mut self) -> Self {
+        let open = self.close_open();
+        let mut next = Self {
+            next_source: self.next_source,
+            ..Self::default()
+        };
+        next.reopen(open);
+        std::mem::replace(self, next)
+    }
+    /// Closes the open inline boxes and link scopes, which continue where `reopen` takes them.
+    pub(crate) fn close_open(&mut self) -> OpenContents {
         let links: Vec<_> = self
             .open_links
             .iter()
@@ -1081,38 +1105,53 @@ impl InlineCollector {
         for _ in &links {
             self.close_contents();
         }
-        let mut open = Vec::new();
+        let mut boxes = Vec::new();
         let mut inner = self.open_box;
         while let Some(index) = inner {
             let inline_box = &mut self.boxes[index];
-            open.push((
-                inline_box.style.clone(),
-                inline_box.decoration.clone(),
-                inline_box.navigation,
-                inline_box.canvas_source,
-                inline_box.math.clone(),
-            ));
+            boxes.push(ContinuedBox {
+                style: inline_box.style.clone(),
+                decoration: inline_box.decoration.clone(),
+                navigation: inline_box.navigation,
+                canvas_source: inline_box.canvas_source,
+                math: inline_box.math.clone(),
+            });
             inline_box.continued[1] = true;
             inner = inline_box.parent;
         }
-        for _ in &open {
+        for _ in &boxes {
             self.close_box();
         }
-        let mut next = Self {
-            next_source: self.next_source,
-            ..Self::default()
-        };
-        for (style, decoration, navigation, canvas_source, math) in open.into_iter().rev() {
-            next.open_continued(style, decoration, navigation, true, canvas_source);
-            next.boxes
+        boxes.reverse();
+        OpenContents { boxes, links }
+    }
+    /// Reopens inline boxes and link scopes `close_open` closed, continuing them.
+    pub(crate) fn reopen(&mut self, open: OpenContents) {
+        for continued in open.boxes {
+            self.open_continued(
+                continued.style,
+                continued.decoration,
+                continued.navigation,
+                true,
+                continued.canvas_source,
+            );
+            self.boxes
                 .last_mut()
                 .expect("a continued box was opened")
-                .math = math;
+                .math = continued.math;
         }
-        for link in links {
-            next.open_contents(link);
+        for link in open.links {
+            self.open_contents(link);
         }
-        std::mem::replace(self, next)
+    }
+    /// Opens the continuation of an inline box styled `style` whose start lies before.
+    pub(crate) fn continue_box(
+        &mut self,
+        style: &Style,
+        decoration: crate::graphics::BoxDecoration,
+        navigation: crate::document::BoxNavigation,
+    ) {
+        self.open_continued(Arc::new(style.clone()), decoration, navigation, true, false);
     }
     /// Places an atomic inline in the line, as a placeholder styled by its parent `style`.
     pub(crate) fn atomic(
