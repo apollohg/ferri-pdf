@@ -317,7 +317,7 @@ pub(super) fn tail_heights(items: &[FlowItem<'_>], outer: BreakTails) -> Vec<Bre
 }
 
 /// Whether a break value avoids the break, which is a page break when `page_break` is set.
-fn avoids(value: BreakBetween, page_break: bool) -> bool {
+pub(super) fn avoids(value: BreakBetween, page_break: bool) -> bool {
     value == BreakBetween::Avoid || page_break && value == BreakBetween::AvoidPage
 }
 

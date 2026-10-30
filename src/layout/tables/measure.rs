@@ -269,7 +269,9 @@ pub(crate) struct TablePlan<'a> {
     data: Rc<Data<'a>>,
     entry_events: Vec<&'a SemanticEvent>,
     cell_indices: HashMap<*const BlockBox, usize>,
-    row_keep_ends: [Vec<usize>; 2],
+    /// The rows each row keeps with it at page breaks, at column breaks within a page and at
+    /// column breaks that are also page breaks.
+    row_keep_ends: [Vec<usize>; 3],
     layers: Layers,
     columns: Vec<crate::table::ColumnWidth>,
     widths: RefCell<HashMap<u32, Rc<WidthContributions>>>,
@@ -465,24 +467,31 @@ impl<'a> TablePlan<'a> {
         }
         edges
     }
+    /// The end of the rows kept with `row` at a break into `fragmentainer`, which is a page
+    /// break when `page_break` is set.
     pub(crate) fn row_keep_end(
         &self,
         row: usize,
         end: usize,
         fragmentainer: crate::layout::breaks::Fragmentainer,
+        page_break: bool,
     ) -> usize {
         let index = match fragmentainer {
             crate::layout::breaks::Fragmentainer::Page => 0,
-            crate::layout::breaks::Fragmentainer::Column => 1,
+            crate::layout::breaks::Fragmentainer::Column => 1 + usize::from(page_break),
         };
         self.row_keep_ends[index][row].min(end)
     }
-    fn resolve_row_keeps(&self, fragmentainer: crate::layout::breaks::Fragmentainer) -> Vec<usize> {
+    fn resolve_row_keeps(
+        &self,
+        fragmentainer: crate::layout::breaks::Fragmentainer,
+        page_break: bool,
+    ) -> Vec<usize> {
         // Group keeps depend on available height and belong to band measurement.
         let data = &self.data;
         let mut protected = vec![0; data.grid.rows + 1];
         for (cell, source) in data.grid.cells.iter().zip(&data.cells) {
-            if cell.rows > 1 && fragmentainer.keeps(source.style()) {
+            if cell.rows > 1 && fragmentainer.keeps_at(source.style(), page_break) {
                 protected[cell.row + 1] = protected[cell.row + 1].max(cell.row + cell.rows);
             }
         }
@@ -492,7 +501,9 @@ impl<'a> TablePlan<'a> {
             until = until.max(protected[next]);
             let edge = self.row_edges(next - 1, fragmentainer)[1]
                 .combine(self.row_edges(next, fragmentainer)[0]);
-            if edge.is_forced() || (next >= until && edge != BreakBetween::Avoid) {
+            if edge.is_forced()
+                || (next >= until && !crate::layout::breaks::avoids(edge, page_break))
+            {
                 ends[next - 1] = next;
             }
         }
@@ -604,15 +615,16 @@ impl<'a> TablePlan<'a> {
                 .collect(),
             data,
             entry_events,
-            row_keep_ends: [Vec::new(), Vec::new()],
+            row_keep_ends: [Vec::new(), Vec::new(), Vec::new()],
             widths: RefCell::new(HashMap::new()),
             place,
         };
         plan.row_keep_ends = [
-            crate::layout::breaks::Fragmentainer::Page,
-            crate::layout::breaks::Fragmentainer::Column,
+            (crate::layout::breaks::Fragmentainer::Page, true),
+            (crate::layout::breaks::Fragmentainer::Column, false),
+            (crate::layout::breaks::Fragmentainer::Column, true),
         ]
-        .map(|fragmentainer| plan.resolve_row_keeps(fragmentainer));
+        .map(|(fragmentainer, page_break)| plan.resolve_row_keeps(fragmentainer, page_break));
         Ok(Rc::new(plan))
     }
     fn contributions(
@@ -1131,6 +1143,7 @@ impl<'a> TablePlan<'a> {
         available: f32,
         fresh: f32,
         fragmentainer: crate::layout::breaks::Fragmentainer,
+        page_break: bool,
     ) -> f32 {
         let spacing = alignments.spacing;
         let alignment = alignments.cells[index - alignments.first];
@@ -1148,6 +1161,7 @@ impl<'a> TablePlan<'a> {
                 row,
                 alignments.start_row + alignments.row_starts.len() - 1,
                 fragmentainer,
+                page_break,
             );
             let prefix = alignments.row_starts[keep_end - alignments.start_row]
                 - alignments.row_starts[local]
@@ -1155,7 +1169,7 @@ impl<'a> TablePlan<'a> {
             let required =
                 if keep_end > row + 1 && !crate::layout::pagination::overflows(prefix, fresh) {
                     prefix
-                } else if fragmentainer.keeps(self.row_source(row).style())
+                } else if fragmentainer.keeps_at(self.row_source(row).style(), page_break)
                     && !crate::layout::pagination::overflows(height, fresh)
                 {
                     height
@@ -1501,7 +1515,12 @@ fn measure_plan<'a>(
                 .iter()
                 .flatten()
                 .any(|block| block.first_fragment > 0.0 && block.first_fragment < block.height);
-        let keep_end = plan.row_keep_end(row, end, measurer.fragmentainer);
+        let keep_end = plan.row_keep_end(
+            row,
+            end,
+            measurer.fragmentainer,
+            measurer.fragmentainer == crate::layout::breaks::Fragmentainer::Page,
+        );
         let row_boundaries = end > row + 1
             && !group_kept
             && (keep_end < end || band_height + top + bottom + vertical > available_height);

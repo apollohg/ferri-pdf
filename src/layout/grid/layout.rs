@@ -365,7 +365,7 @@ pub(crate) fn measure<'a>(
             .map(|(index, track)| super::fragmentation::Row {
                 area: rows.area(index..index + 1),
                 first_fragment: 0.0,
-                kept_fragment: 0.0,
+                kept_fragments: [0.0; 2],
                 grows: !matches!(track.min, MinSizing::Fixed(_))
                     || (definite.is_none() && matches!(track.max, MaxSizing::Flex(_))),
                 edges: [BreakBetween::Auto; 2],
@@ -443,7 +443,11 @@ pub(crate) fn measure<'a>(
         }
     }
     let first_fragment = grid_rows.tracks.first().map_or(0.0, |row| {
-        row.area.start + row.required((measurer.page_height - top - bottom).max(0.0))
+        row.area.start
+            + row.required(
+                (measurer.page_height - top - bottom).max(0.0),
+                measurer.fragmentainer == crate::layout::breaks::Fragmentainer::Page,
+            )
     });
     items.push(FlowItem::Row(Box::new(MeasuredRow {
         grid: Some(std::rc::Rc::new(grid_rows)),

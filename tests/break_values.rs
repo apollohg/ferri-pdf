@@ -187,3 +187,71 @@ fn region_break_values_have_no_effect_without_regions() {
     assert_eq!(places(&body("region", "auto")), reference);
     assert_eq!(places(&body("avoid-region", "avoid-region")), reference);
 }
+
+#[test]
+fn avoid_page_between_table_rows_and_grid_tracks_in_columns_applies_at_page_breaks() {
+    const ROWS: &str = "table{border-spacing:0}td{padding:0}\
+        .grid{display:grid;grid-auto-rows:10pt}";
+    let row_pair = |container: &str, filled: usize, value: &str| {
+        let rows = if container == "table" {
+            format!(
+                "<table><tr style='break-after:{value}'><td>H</td></tr><tr><td>N</td></tr></table>"
+            )
+        } else {
+            format!("<div class=grid><div style='break-after:{value}'>H</div><div>N</div></div>")
+        };
+        place_of(
+            &format!(
+                "<style>{ROWS}</style><section>{}{rows}</section>",
+                filler(filled)
+            ),
+            "H",
+        )
+    };
+    for container in ["table", "grid"] {
+        assert_eq!(
+            row_pair(container, 9, "avoid-page"),
+            Place { page: 0, column: 0 },
+            "{container}: a break into the second column of the page is not a page break"
+        );
+        assert_eq!(
+            row_pair(container, 9, "avoid"),
+            Place { page: 0, column: 1 },
+            "{container}: `avoid` keeps the rows together at any break"
+        );
+        assert_eq!(
+            row_pair(container, 19, "auto"),
+            Place { page: 0, column: 1 },
+            "{container}: the last line of the page's last column holds the first row"
+        );
+        assert_eq!(
+            row_pair(container, 19, "avoid-page"),
+            Place { page: 1, column: 0 },
+            "{container}: leaving the page's last column is a page break, which `avoid-page` avoids"
+        );
+    }
+    let kept_cell = |filled: usize, value: &str| {
+        place_of(
+            &format!(
+                "<style>{ROWS}</style><section>{}<table><tr><td rowspan=2 style='break-inside:{value}'>S</td><td>H</td></tr><tr><td>N</td></tr></table></section>",
+                filler(filled)
+            ),
+            "H",
+        )
+    };
+    assert_eq!(
+        kept_cell(9, "auto"),
+        Place { page: 0, column: 0 },
+        "a spanning cell may break between its rows"
+    );
+    assert_eq!(
+        kept_cell(9, "avoid-page"),
+        Place { page: 0, column: 0 },
+        "a spanning cell avoiding page breaks may break between the columns of one page"
+    );
+    assert_eq!(
+        kept_cell(19, "avoid-page"),
+        Place { page: 1, column: 0 },
+        "a spanning cell avoiding page breaks moves to the next page whole"
+    );
+}

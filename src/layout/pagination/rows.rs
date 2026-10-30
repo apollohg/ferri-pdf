@@ -278,6 +278,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         );
         let row_ends = BTreeMap::new();
         let internal_breaks = false;
+        let page_break = self.fragmentainers.breaks_page(self.page);
         let constrained_rows: BTreeSet<_> = row
             .band
             .as_ref()
@@ -286,14 +287,18 @@ impl<'a> Paginator<'a, '_, 'a> {
                 (band.start + 1..band.end)
                     .filter(|&next| {
                         let plan = plan.as_ref().unwrap();
-                        plan.row_edges(next - 1, self.measurer.fragmentainer)[1].is_forced()
-                            || plan.row_edges(next, self.measurer.fragmentainer)[0].is_forced()
+                        plan.row_edges(next - 1, self.fragmentainers.kind())[1].is_forced()
+                            || plan.row_edges(next, self.fragmentainers.kind())[0].is_forced()
                             || self
                                 .measurer
                                 .fragmentainer
-                                .keeps(plan.row_source(next).style())
-                            || plan.row_keep_end(next, band.end, self.measurer.fragmentainer)
-                                > next + 1
+                                .keeps_at(plan.row_source(next).style(), page_break)
+                            || plan.row_keep_end(
+                                next,
+                                band.end,
+                                self.fragmentainers.kind(),
+                                page_break,
+                            ) > next + 1
                     })
                     .collect()
             })
@@ -368,34 +373,41 @@ impl<'a> Paginator<'a, '_, 'a> {
             && transition.is_none()
         {
             let track = &grid.tracks[source_index];
-            if source_index == 0 {
-                self.finish_height(origin.1, origin.2, track.area.start)?;
+            let (page, y, gap, forced) = if source_index == 0 {
+                (origin.1, origin.2, track.area.start, None)
             } else {
                 let previous = &grid.tracks[source_index - 1];
                 let (page, y) = grid_ends[source_index - 1];
                 self.select_page(page, y);
                 // Shared tracks may overlap local edge space when subgrid padding exceeds a track.
-                let gap = track.area.start - previous.area.end;
-                let forced = Forced::of(previous.edges[1].combine(track.edges[0]));
-                let reserve = self.continuation_reserve()?;
-                let fresh =
-                    (self.height - self.repeated_start(page, self.boxes.len()) - reserve).max(0.0);
-                let required = track.required(fresh) + reserve;
-                if self.unbroken == 0
-                    && (forced.is_some()
-                        || (overflows(y + gap + required, self.height)
-                            && !overflows(required, self.height)))
-                {
-                    let request = BreakRequest {
-                        forced,
-                        preserve_empty: false,
-                    };
-                    *transition = Some(request);
-                    *yielded = true;
-                    return Ok(Some(request));
-                }
-                self.finish_height(page, y, gap)?;
+                (
+                    page,
+                    y,
+                    track.area.start - previous.area.end,
+                    Forced::of(previous.edges[1].combine(track.edges[0])),
+                )
+            };
+            let reserve = self.continuation_reserve()?;
+            let fresh =
+                (self.height - self.repeated_start(page, self.boxes.len()) - reserve).max(0.0);
+            // Measurement keeps the first track with the rows it avoids breaking from at
+            // column breaks within a page; at a column break that is a page break, `avoid-page`
+            // keeps them too (CSS Fragmentation 3 §4.2).
+            let required = track.required(fresh, self.fragmentainers.breaks_page(page)) + reserve;
+            if self.unbroken == 0
+                && (forced.is_some()
+                    || (overflows(y + gap + required, self.height)
+                        && !overflows(required, self.height)))
+            {
+                let request = BreakRequest {
+                    forced,
+                    preserve_empty: false,
+                };
+                *transition = Some(request);
+                *yielded = true;
+                return Ok(Some(request));
             }
+            self.finish_height(page, y, gap)?;
             *origin = (source_index, self.page, self.y);
         }
         if let Some(request) = transition.take() {
@@ -410,8 +422,8 @@ impl<'a> Paginator<'a, '_, 'a> {
             && self.unbroken == 0
             && source_row > row.band.as_ref().unwrap().start
         {
-            let before = plan.row_edges(source_row, self.measurer.fragmentainer)[0];
-            let after = plan.row_edges(source_row - 1, self.measurer.fragmentainer)[1];
+            let before = plan.row_edges(source_row, self.fragmentainers.kind())[0];
+            let after = plan.row_edges(source_row - 1, self.fragmentainers.kind())[1];
             self.close_row_page_groups(plan.row_group_source(source_row));
             let changed = self.page_name(
                 plan.row_source(source_row).page_boundary().start.clone(),
@@ -438,11 +450,13 @@ impl<'a> Paginator<'a, '_, 'a> {
             let key = self.key.clone();
             let group = self.group;
             let clip = self.clip;
+            let parent_3d = self.parent_3d;
             self.enter_table_layers(plan.row_layers(source_row));
             self.context = context;
             self.key = key;
             self.group = group;
             self.clip = clip;
+            self.parent_3d = parent_3d;
             let position = self.flow_position();
             if source_row == origin.0 {
                 self.select_page(origin.1, origin.2);
@@ -471,15 +485,17 @@ impl<'a> Paginator<'a, '_, 'a> {
                     geometry.starts[source_row] - geometry.starts[origin.0],
                 )?;
             }
+            let page_break = self.fragmentainers.breaks_page(self.page);
             let keep_end = plan.row_keep_end(
                 source_row,
                 row.band.as_ref().unwrap().end,
-                self.measurer.fragmentainer,
+                self.fragmentainers.kind(),
+                page_break,
             );
             let row_kept = self
                 .measurer
                 .fragmentainer
-                .keeps(plan.row_source(source_row).style());
+                .keeps_at(plan.row_source(source_row).style(), page_break);
             if self.unbroken == 0
                 && row.band.as_ref().is_some_and(|band| band.len() > 1)
                 && (row_kept || keep_end > source_row + 1)
@@ -624,7 +640,8 @@ impl<'a> Paginator<'a, '_, 'a> {
                         index,
                         available,
                         fresh,
-                        paginator.measurer.fragmentainer,
+                        paginator.fragmentainers.kind(),
+                        paginator.fragmentainers.breaks_page(paginator.page),
                     ))
                 })?;
             } else {
