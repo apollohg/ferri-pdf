@@ -79,6 +79,10 @@ pub(super) struct Footnotes {
     pages: Vec<Vec<FootnotePart>>,
     carried: VecDeque<FootnotePart>,
     placed: BTreeSet<usize>,
+    /// How many recorded calls have been taken up, and those taken up whose pages the flow
+    /// has not reached.
+    recorded: usize,
+    ahead: Vec<(usize, usize)>,
     /// Bodies by footnote and area width; laying a body out does not depend on its page.
     layouts: Rc<RefCell<FootnoteLayouts>>,
 }
@@ -431,17 +435,62 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         self.place_carried_footnotes()
     }
 
-    /// Footnotes whose calls the flow recorded without placing them, in unbroken, parallel
-    /// or nested fragmentation contexts, wait for the next page.
-    pub(super) fn carry_recorded_footnotes(&mut self) -> Result<(), LayoutError> {
-        let recorded: Vec<usize> = self.string_locations.footnote_calls().collect();
-        self.queue_footnotes(recorded)
+    /// Queues the footnotes whose calls the flow recorded on this page or an earlier one
+    /// without placing them: calls in unbroken, parallel or nested fragmentation contexts,
+    /// such as table cells, columns and positioned boxes. Returns those it queued.
+    fn queue_recorded_footnotes(&mut self) -> Result<Vec<usize>, LayoutError> {
+        let calls = self
+            .string_locations
+            .footnote_calls(self.footnotes.recorded)
+            .to_vec();
+        self.footnotes.recorded += calls.len();
+        self.footnotes.ahead.extend(calls);
+        let page = self.page;
+        let (reached, ahead) = std::mem::take(&mut self.footnotes.ahead)
+            .into_iter()
+            .partition(|(_, call)| *call <= page);
+        self.footnotes.ahead = ahead;
+        let queued: Vec<usize> = reached
+            .into_iter()
+            .map(|(footnote, _)| footnote)
+            .filter(|footnote| !self.footnotes.placed.contains(footnote))
+            .collect();
+        self.queue_footnotes(queued.iter().copied())?;
+        Ok(queued)
+    }
+
+    /// Places the footnotes of recorded calls below the content of the current page, where
+    /// they fit, before more flow follows them or the page ends. A footnote that must stay
+    /// with its call (CSS GCPM 3 §2.8) and does not fit cannot move a call inside such a
+    /// context to the next page.
+    pub(super) fn place_recorded_footnotes(&mut self) -> Result<(), LayoutError> {
+        let queued = self.queue_recorded_footnotes()?;
+        if queued.is_empty() {
+            return Ok(());
+        }
+        self.fill_footnote_area(false)?;
+        if let Some(waiting) = self.footnotes.carried.iter().find(|part| {
+            queued.contains(&part.footnote)
+                && self.footnote_policy(part.footnote) != FootnotePolicy::Auto
+        }) {
+            return Err(LayoutError::UnsupportedFootnote {
+                footnote: waiting.footnote,
+                feature: "footnote-policy line or block for a call inside a table, flex, grid, multi-column or positioned box whose footnote does not fit its page",
+            });
+        }
+        Ok(())
     }
 
     /// Fills the current page's footnote area with waiting footnote content in order, as far
     /// as the space below the flow and the area's maximum height allow; a page without flow
     /// content takes at least one break interval so that every page advances.
     pub(super) fn place_carried_footnotes(&mut self) -> Result<(), LayoutError> {
+        self.fill_footnote_area(true)
+    }
+
+    /// Fills the current page's footnote area with waiting footnote content; `advance` lets a
+    /// page without flow content take a slice that does not fit, so that pagination ends.
+    fn fill_footnote_area(&mut self, advance: bool) -> Result<(), LayoutError> {
         let page = self.page;
         let Some(area) = self.area(page) else {
             return Ok(());
@@ -473,7 +522,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 .filter(|offset| *offset > waiting.top)
                 .take_while(|offset| !overflows(*offset, end))
                 .last();
-            let forced = used.is_none() && !self.has_flow;
+            let forced = advance && used.is_none() && !self.has_flow;
             let Some(bottom) = fits.or_else(|| {
                 forced
                     .then(|| {

@@ -25,8 +25,8 @@ pub(super) struct StringLocations {
     locations: HashMap<PageStyleTarget, usize>,
     assignments: HashMap<usize, Location>,
     starts: HashMap<usize, PageStart>,
-    /// Footnote calls in recording order (CSS GCPM 3 §2.2).
-    footnotes: Vec<usize>,
+    /// Footnote calls in recording order with their pages (CSS GCPM 3 §2.2).
+    footnotes: Vec<(usize, usize)>,
     /// The first and last elements in document order recorded on each page, by their tree
     /// positions.
     bounds: HashMap<usize, [(usize, ElementId); 2]>,
@@ -73,7 +73,8 @@ impl StringLocations {
             return;
         }
         self.locations.insert(event.context, page);
-        self.footnotes.extend(event.footnote);
+        self.footnotes
+            .extend(event.footnote.map(|footnote| (footnote, page)));
         self.trace(page, SemanticAction::Element(event.clone()));
         // A pseudo-element's position matters only where it assigns a running element.
         let pseudo = event.context.pseudo.is_some();
@@ -105,8 +106,9 @@ impl StringLocations {
                 .or_insert(Location { page, start });
         }
     }
-    pub(crate) fn footnote_calls(&self) -> impl Iterator<Item = usize> + '_ {
-        self.footnotes.iter().copied()
+    /// The footnote calls recorded after the first `start`, with their pages.
+    pub(crate) fn footnote_calls(&self, start: usize) -> &[(usize, usize)] {
+        self.footnotes.get(start..).unwrap_or_default()
     }
     pub(crate) fn text(&mut self, page: usize) {
         let state = self.starts.entry(page).or_default();

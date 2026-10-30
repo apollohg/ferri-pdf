@@ -1855,7 +1855,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     ) -> Result<(), LayoutError> {
         self.measurer.work.spend(1)?;
         if self.places_footnotes() {
-            self.carry_recorded_footnotes()?;
+            self.place_recorded_footnotes()?;
         }
         let forced = forced_break.is_some();
         if forced {
@@ -2021,7 +2021,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         while let Some(request) = self.resume_block_end(&mut frame)? {
             self.new_page(request.forced, request.preserve_empty)?;
         }
-        self.finish_block(frame)
+        let finished = self.finish_block(frame)?;
+        if self.places_footnotes() {
+            self.place_recorded_footnotes()?;
+        }
+        Ok(finished)
     }
     fn refresh_block(
         &mut self,
@@ -6279,7 +6283,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
         }
         if self.places_footnotes() {
-            self.carry_recorded_footnotes()?;
+            self.place_recorded_footnotes()?;
             self.place_carried_footnotes()?;
             // Footnote bodies left over continue on pages of their own.
             while self.footnotes.has_carried() {

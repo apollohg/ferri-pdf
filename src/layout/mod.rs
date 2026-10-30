@@ -416,6 +416,11 @@ pub(crate) enum LayoutError {
     Flex(#[from] crate::flex::FlexError),
     #[error("unsupported flex formatting: {feature}")]
     UnsupportedFlex { feature: &'static str },
+    #[error("unsupported footnote {footnote}: {feature}")]
+    UnsupportedFootnote {
+        footnote: usize,
+        feature: &'static str,
+    },
     #[error("unsupported initial letter: {feature}")]
     UnsupportedInitialLetter { feature: &'static str },
     #[error("invalid normalized table structure")]

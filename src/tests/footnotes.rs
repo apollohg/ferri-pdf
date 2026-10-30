@@ -115,3 +115,57 @@ fn inline_footnote_display_is_reported() {
         "unexpected error: {error}"
     );
 }
+
+#[test]
+fn calls_inside_tables_columns_and_positioned_boxes_place_footnotes_on_their_page() {
+    let trace = render(
+        "td{padding:0}table{border-spacing:0}.cols{columns:2;column-gap:10pt}.abs{position:absolute;top:60pt}",
+        "<table><tr><td>Cell<span class=fn>CellNote</span></td></tr></table><div class=cols>Col<span class=fn>ColNote</span></div><div class=abs>Abs<span class=fn>AbsNote</span></div><p>After</p>",
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    assert_eq!(
+        pages(&trace),
+        [(
+            texts(&["Cell1", "Col2", "After", "Abs3"]),
+            texts(&["1. CellNote", "2. ColNote", "3. AbsNote"])
+        )],
+        "bodies of calls in nested layouts join the area of the page holding them"
+    );
+}
+
+#[test]
+fn calls_inside_rows_split_across_pages_keep_their_footnotes_off_earlier_pages() {
+    let lines = (1..=12)
+        .map(|index| format!("L{index}"))
+        .collect::<Vec<_>>()
+        .join("<br>");
+    let trace = render(
+        "td{padding:0}table{border-spacing:0}",
+        &format!("<table><tr><td>{lines}<span class=fn>Note</span></td></tr></table>"),
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    let notes: Vec<_> = pages(&trace).into_iter().map(|(_, notes)| notes).collect();
+    assert_eq!(
+        notes,
+        [Vec::new(), texts(&["1. Note"])],
+        "a footnote is never placed on a page before its call"
+    );
+}
+
+#[test]
+fn policies_that_cannot_move_a_call_inside_nested_layouts_are_reported() {
+    let error = render(
+        ".fn{footnote-policy:line}td{padding:0}table{border-spacing:0}p.tall{height:70pt}",
+        "<p class=tall>Top</p><table><tr><td>Cell<span class=fn>A<br>B<br>C<br>D</span></td></tr></table>",
+    )
+    .err()
+    .expect("a line policy must not silently let the footnote leave its call's page");
+    assert!(
+        error.to_string().contains("footnote-policy line or block"),
+        "unexpected error: {error}"
+    );
+}
