@@ -111,13 +111,7 @@ pub(super) fn used_style(element: Element<'_>, style: &mut Style) {
                 _ => Display::FlowRoot,
             };
         }
-        "button" | "fieldset" => {
-            if display.is_inline_level()
-                && !matches!(display, Display::InlineFlex | Display::InlineGrid)
-            {
-                *display = Display::InlineBlock;
-            }
-        }
+        "button" | "fieldset" => button_display(display),
         "marquee"
             if element.attr("direction").is_some_and(|direction| {
                 direction.eq_ignore_ascii_case("up") || direction.eq_ignore_ascii_case("down")
@@ -144,6 +138,14 @@ pub(super) fn used_style(element: Element<'_>, style: &mut Style) {
         style.width = style
             .width
             .with_automatic(Size::Intrinsic(IntrinsicSizing::FitContent));
+    }
+}
+
+/// HTML §15.5.3: a button keeps flex and grid layouts, and an inline one behaves as an
+/// inline-block.
+fn button_display(display: &mut Display) {
+    if display.is_inline_level() && !matches!(display, Display::InlineFlex | Display::InlineGrid) {
+        *display = Display::InlineBlock;
     }
 }
 
@@ -841,7 +843,16 @@ impl<'b> Builder<'b, '_> {
                 self.resources.resolver,
             )?
             .used();
-        style.display = Display::InlineBlock;
+        match style.display {
+            Display::None => return Ok(Self::empty()),
+            Display::Contents => {
+                return Ok(ControlContent {
+                    image: None,
+                    children: Self::label(FILE_BUTTON_LABEL, &style)?,
+                });
+            }
+            _ => button_display(&mut style.display),
+        }
         style.width = style
             .width
             .with_automatic(Size::Intrinsic(IntrinsicSizing::FitContent));
@@ -853,7 +864,16 @@ impl<'b> Builder<'b, '_> {
             self.page_scope.cloned(),
         );
         let mut inline = crate::document::inline::InlineCollector::default();
-        inline.atomic(button, self.style)?;
+        if style.position.is_out_of_flow() || style.floating().is_some() {
+            inline.anchor(button);
+        } else if style.display.is_inline_level() {
+            inline.atomic(button, self.style)?;
+        } else {
+            return Ok(ControlContent {
+                image: None,
+                children: vec![BlockContent::Block(button)],
+            });
+        }
         Ok(ControlContent {
             image: None,
             children: match inline.finish(self.style)? {

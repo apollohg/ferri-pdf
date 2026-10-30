@@ -426,6 +426,46 @@ fn text_field_values_paint_with_the_controls_colour_and_text_paint() {
 }
 
 #[test]
+fn file_selector_buttons_take_their_own_display_float_and_position() {
+    // CSS Pseudo 4 §5.1: no restriction on which properties apply to the button.
+    let style = "<style>input{width:200pt;border:0;padding:0;font-size:10pt}\
+                 ::file-selector-button{border:0;padding:0}";
+    let label = |css: &str| {
+        let trace = trace(&format!("{style}{css}</style><input type=file>"));
+        trace
+            .pages
+            .iter()
+            .flatten()
+            .find(|line| line.text.contains("Choose File"))
+            .map(|line| line.x)
+    };
+    let start = label("").expect("the button shows its label");
+    assert_labelled_pt("an inline button starts the control", start, 36.0);
+    assert_eq!(
+        label("::file-selector-button{display:none}"),
+        None,
+        "display:none generates no button"
+    );
+    for css in [
+        "::file-selector-button{float:right}",
+        "::file-selector-button{position:absolute;right:0}",
+        "input{position:relative}::file-selector-button{position:absolute;right:0}",
+    ] {
+        let x = label(css).unwrap_or_else(|| panic!("{css}: the button still renders"));
+        assert!(
+            x > start + 100.0,
+            "{css}: the button leaves the line for the control's right edge, at {x}pt"
+        );
+    }
+    let block = label("::file-selector-button{display:block;margin-left:auto}")
+        .expect("a block button renders");
+    assert!(
+        block > start + 100.0,
+        "a block-level fit-content button takes auto margins, at {block}pt"
+    );
+}
+
+#[test]
 fn rendered_legends_sit_centred_in_the_block_start_border_with_a_gap() {
     let output = trace(
         "<style>fieldset{margin:0;border:4pt solid #123456;padding:6pt}\
