@@ -487,19 +487,24 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
 
     fn advance(self, measurer: &mut Measurer<'t>) -> Result<Self, LayoutError> {
         let mut paginator = self.state.with_measurer(measurer);
-        if let Some(request) = self.request {
-            paginator.new_page(request.forced, request.preserve_empty)?;
-        }
-        let (cursor, request) = paginator
-            .resume_flow(
-                self.cursor
-                    .expect("completed column layouts are not resumed"),
-            )?
-            .unzip();
-        if cursor.is_none() {
-            // The columns' own inline content has no block container here.
-            paginator.place_inline_pending(0)?;
-        }
+        let (mut cursor, mut request) = (None, None);
+        // Content that needs a column past the limit ends the columns' flow.
+        paginator.within_page_limit(|paginator| {
+            if let Some(request) = self.request {
+                paginator.new_page(request.forced, request.preserve_empty)?;
+            }
+            (cursor, request) = paginator
+                .resume_flow(
+                    self.cursor
+                        .expect("completed column layouts are not resumed"),
+                )?
+                .unzip();
+            if cursor.is_none() {
+                // The columns' own inline content has no block container here.
+                paginator.place_inline_pending(0)?;
+            }
+            Ok(())
+        })?;
         Ok(Self {
             state: paginator.with_measurer(()),
             cursor,

@@ -496,20 +496,44 @@ mod tests {
     }
 
     #[test]
-    fn fixed_column_overflow_without_room_for_cloned_edges_fails_before_exhausting_work() {
+    fn fixed_column_overflow_without_room_for_cloned_edges_truncates_before_exhausting_work() {
         const LIMIT: usize = 4096;
         let resolver = FileResolver::default();
         let document = StyledDocument::parse(
             "<!doctype html><style>@page{size:200pt 200pt;margin:10pt}html,body{margin:0}section{column-count:2;column-gap:10pt;column-fill:auto;height:10pt}div{height:100pt;padding:10pt;box-decoration-break:clone;background:blue}</style><section><div></div></section>",
             &ResourceBase::default(), &[], &resolver,
         ).unwrap();
-        match layout_with_work_limit(&document, &resolver, LIMIT) {
-            Err(LayoutError::PageLimit { limit }) => assert_eq!(limit, MAX_LAYOUT_PAGES),
-            Err(error) => panic!("a fixed column cannot make progress past cloned edges: {error}"),
-            Ok(trace) => panic!(
-                "impossible fixed columns must not return {} pages",
-                trace.pages.len()
-            ),
-        }
+        let pass = crate::layout::layout_pass(&document, &resolver, Budget::new(LIMIT))
+            .unwrap_or_else(|error| {
+                panic!("a fixed column that cannot make progress past cloned edges must truncate: {error}")
+            });
+        assert_eq!(
+            pass.diagnostics,
+            [crate::layout::LayoutDiagnostic::PageLimit {
+                limit: MAX_LAYOUT_PAGES
+            }],
+            "the content no fragmentainer can hold is omitted with a diagnostic"
+        );
+        let blue: Vec<_> = pass.trace.display_lists[0]
+            .iter()
+            .filter_map(|item| match item {
+                crate::graphics::DisplayItem::Box(paint)
+                    if paint.decoration.background.rgb == [0, 0, 255] =>
+                {
+                    Some(paint.rect)
+                }
+                _ => None,
+            })
+            .collect();
+        assert_eq!(
+            pass.trace.pages.len(),
+            1,
+            "the truncated layout keeps the page the section starts on"
+        );
+        assert!(
+            !blue.is_empty(),
+            "the fragments laid out before the limit keep their paint: {:?}",
+            pass.trace.display_lists[0]
+        );
     }
 }

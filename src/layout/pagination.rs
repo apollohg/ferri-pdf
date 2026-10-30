@@ -4803,9 +4803,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             let end = self.fragmentainers.height(cursor.page)
                 - space.cloned_end
                 - self.band_footer_height(cursor.page);
-            if cursor.page + 1 >= MAX_LAYOUT_PAGES
-                || (end <= space.start
-                    && !matches!(&self.fragmentainers, Fragmentainers::Columns(rows) if rows.has_next_row(cursor.page)))
+            // Fragmentainers with no room after their repeated edges never progress, so the
+            // content would take every page up to the limit.
+            if end <= space.start
+                && !matches!(&self.fragmentainers, Fragmentainers::Columns(rows) if rows.has_next_row(cursor.page))
             {
                 return Err(LayoutError::PageLimit {
                     limit: MAX_LAYOUT_PAGES,
@@ -7217,6 +7218,26 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             boxes.push([top, top + height]);
         }
     }
+    /// Whether `lay_out` completed: content that needs a page past the page limit is omitted
+    /// with a diagnostic, and the boxes it left open, which lie past the last page, close.
+    pub(super) fn within_page_limit(
+        &mut self,
+        lay_out: impl FnOnce(&mut Self) -> Result<(), LayoutError>,
+    ) -> Result<bool, LayoutError> {
+        let open = (self.boxes.len(), self.containers.len());
+        match lay_out(self) {
+            Ok(()) => Ok(true),
+            Err(LayoutError::PageLimit { limit }) => {
+                self.measurer
+                    .diagnostics
+                    .record(crate::layout::LayoutDiagnostic::PageLimit { limit });
+                self.boxes.truncate(open.0);
+                self.containers.truncate(open.1);
+                Ok(false)
+            }
+            Err(error) => Err(error),
+        }
+    }
     pub(crate) fn document(
         mut self,
         root: Option<MeasuredBlock<'a>>,
@@ -7237,9 +7258,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 fixed: false,
             });
             self.pending.push(root.before.clone());
-            self.block(root, BreakTail::default())?;
+            self.within_page_limit(|paginator| {
+                paginator.block(root, BreakTail::default()).map(drop)
+            })?;
             for pending in self.containers.pop().map(|c| c.pending).unwrap_or_default() {
-                self.place(pending, &Containing::Page)?;
+                self.within_page_limit(|paginator| paginator.place(pending, &Containing::Page))?;
             }
         }
         let flow_end = self.y;
@@ -7247,12 +7270,15 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             self.page_extents[self.page] = Some(self.flow_extent() + self.pending_value());
         }
         if self.places_footnotes() {
-            self.place_recorded_footnotes()?;
-            self.place_carried_footnotes()?;
+            let mut within_limit = self.within_page_limit(|paginator| {
+                paginator.place_recorded_footnotes()?;
+                paginator.place_carried_footnotes()
+            })?;
             // Footnote bodies left over continue on pages of their own.
-            while self.footnotes.has_carried() {
+            while within_limit && self.footnotes.has_carried() {
                 self.footnote_pages.get_or_insert(self.page + 1);
-                self.new_page(None, true)?;
+                within_limit =
+                    self.within_page_limit(|paginator| paginator.new_page(None, true))?;
             }
         }
         // Trailing unpainted height need not create physical sheets (CSS Page 3 §3.2).
@@ -7277,14 +7303,19 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             .collect();
         // CSS 2.1 §9.6.1 repeats fixed content in each physical page's containing block.
         let fixed = std::mem::take(&mut self.fixed);
+        let mut repeated_pages = page_count;
         if fixed.len().saturating_mul(page_count) > MAX_FIXED_PLACEMENTS {
-            return Err(LayoutError::FixedPlacementLimit {
-                limit: MAX_FIXED_PLACEMENTS,
-            });
+            repeated_pages = MAX_FIXED_PLACEMENTS / fixed.len();
+            self.measurer.diagnostics.record(
+                crate::layout::LayoutDiagnostic::FixedPlacementLimit {
+                    limit: MAX_FIXED_PLACEMENTS,
+                    pages: repeated_pages,
+                },
+            );
         }
         for pending in fixed {
             let mut measurements = HashMap::new();
-            for page in 0..page_count {
+            for page in 0..repeated_pages {
                 let canvas = match &self.fragmentainers {
                     Fragmentainers::Pages(pages) => pages.records[page].geometry.content_box(),
                     Fragmentainers::Columns(_) => self.canvas_rect,

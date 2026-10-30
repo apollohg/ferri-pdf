@@ -854,6 +854,7 @@ pub(crate) enum LayoutError {
     Document(#[from] crate::document::DocumentError),
     #[error("{0}")]
     Image(#[from] crate::images::ImageError),
+    /// Content needs a page past the page limit; pagination omits it.
     #[error("layout exceeds {limit} pages")]
     PageLimit { limit: usize },
     #[error("layout exceeds {limit} work units")]
@@ -878,6 +879,4 @@ pub(crate) enum LayoutError {
     MissingClipFragment { page: usize },
     #[error("containing block has no fragment on anchor page {page}")]
     MissingContainingFragment { page: usize },
-    #[error("fixed boxes repeated on every page exceed {limit} placements")]
-    FixedPlacementLimit { limit: usize },
 }
