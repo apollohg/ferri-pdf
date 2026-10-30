@@ -39,6 +39,9 @@ pub(super) fn ink(
             DisplayItem::Backdrop(backdrop) => Some(backdrop.border.rect),
             DisplayItem::Frame(frame) => ink(&frame.items, &frame.lines, definitions, density)?
                 .and_then(|rect| mapped(projection::from_affine(frame.matrix), rect)),
+            DisplayItem::Scene(scene) => {
+                crate::writer::scene::ink(scene, lines, definitions, density)?
+            }
             DisplayItem::Pop => return Err(PdfError::InvalidGeometry),
             push => {
                 let end = index + group_length(&items[index..])?;

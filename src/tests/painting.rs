@@ -422,6 +422,7 @@ fn normal_flow_block_backgrounds_are_below_all_inline_text() {
         match item {
             DisplayItem::Text { .. } => text_seen = true,
             DisplayItem::Frame(_)
+            | DisplayItem::Scene(_)
             | DisplayItem::Image(_)
             | DisplayItem::Decoration(_)
             | DisplayItem::TextShadow(_) => {

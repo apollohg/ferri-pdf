@@ -255,6 +255,7 @@ fn recolor(
             | DisplayItem::Pop) => item.clone(),
             item @ DisplayItem::PushBackdropRoot => item.clone(),
             DisplayItem::Frame(_)
+            | DisplayItem::Scene(_)
             | DisplayItem::Image(_)
             | DisplayItem::Backdrop(_)
             | DisplayItem::PushBlend(_)

@@ -19,23 +19,18 @@ pub(crate) type Matrix3d = [f32; 16];
 /// A box that projects behind the viewer or turns its hidden back face towards them is not
 /// rendered: it collapses to a point, which paints nothing.
 const NOT_RENDERED: Projection = [0.0; 9];
-const IDENTITY: Matrix3d = [
+pub(crate) const IDENTITY: Matrix3d = [
     1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
 ];
 const DIMENSION: usize = 4;
-/// Column-major indices of the `w` row, and of the `z` row's planar terms.
+/// Column-major indices of the `w` row, and of the `z` row's term in `z`.
 const W_FROM_X: usize = 3;
 const W_FROM_Y: usize = 7;
 const W_FROM_Z: usize = 11;
 const W_CONSTANT: usize = 15;
-const Z_FROM_X: usize = 2;
-const Z_FROM_Y: usize = 6;
 const Z_FROM_Z: usize = 10;
-const Z_CONSTANT: usize = 14;
 const TRANSLATION: std::ops::Range<usize> = 12..15;
-/// Relative variation of `w` across a box, and depth a plane gains, within which a projection
-/// is affine and planar for print: far below a device dot over any page.
-const PROJECTION_TOLERANCE: f32 = 1.0e-6;
+
 /// Transforms 2 §8: perspective distances below 1px render as 1px.
 const MIN_PERSPECTIVE_PT: f32 = POINTS_PER_PIXEL;
 const X_AXIS: [f32; 3] = [1.0, 0.0, 0.0];
@@ -143,7 +138,8 @@ impl TransformFunction {
     }
 }
 
-fn multiply(m: &Matrix3d, n: &Matrix3d) -> Matrix3d {
+/// `m` after `n`.
+pub(crate) fn multiply(m: &Matrix3d, n: &Matrix3d) -> Matrix3d {
     std::array::from_fn(|index| {
         let (column, row) = (index / DIMENSION, index % DIMENSION);
         (0..DIMENSION)
@@ -151,6 +147,16 @@ fn multiply(m: &Matrix3d, n: &Matrix3d) -> Matrix3d {
             .sum()
     })
 }
+/// The 3D matrix of an affine map of the plane `[a, b, c, d, e, f]`, which leaves `z` alone.
+fn lift([a, b, c, d, x, y]: Matrix) -> Matrix3d {
+    multiply(&translation([x, y, 0.0]), &planar([a, b, c, d]))
+}
+
+/// `m` between affine maps of the plane: `inner` first and `outer` last.
+pub(crate) fn conjugated(m: &Matrix3d, outer: Matrix, inner: Matrix) -> Matrix3d {
+    multiply(&lift(outer), &multiply(m, &lift(inner)))
+}
+
 fn translation([x, y, z]: [f32; 3]) -> Matrix3d {
     let mut m = IDENTITY;
     m[TRANSLATION].copy_from_slice(&[x, y, z]);
@@ -497,31 +503,21 @@ impl TransformStyle {
     }
 }
 
-/// How a transformed box's parent places it in 3D space (CSS Transforms 2 §4.1.4).
-#[derive(Clone, Copy, Debug, Default)]
+/// The perspective a transformed box's parent places it under (CSS Transforms 2 §4.1.4).
+#[derive(Clone, Copy, Debug)]
 pub(crate) struct Parent3d {
     /// The parent's perspective matrix in page space.
-    pub(crate) perspective: Option<Matrix3d>,
-    /// Whether the parent establishes or extends a 3D rendering context.
-    pub(crate) preserves_3d: bool,
+    pub(crate) perspective: Matrix3d,
 }
 
 impl Parent3d {
     pub(crate) fn mapped(self, affine: Matrix) -> Self {
-        let lift =
-            |[a, b, c, d, x, y]: Matrix| multiply(&translation([x, y, 0.0]), &planar([a, b, c, d]));
-        let into = lift(affine);
-        let out = lift(
-            kurbo::Affine::new(affine.map(f64::from))
-                .inverse()
-                .as_coeffs()
-                .map(|value| value as f32),
-        );
+        let inverse = kurbo::Affine::new(affine.map(f64::from))
+            .inverse()
+            .as_coeffs()
+            .map(|value| value as f32);
         Self {
-            perspective: self
-                .perspective
-                .map(|matrix| multiply(&into, &multiply(&matrix, &out))),
-            ..self
+            perspective: conjugated(&self.perspective, affine, inverse),
         }
     }
 }
@@ -534,43 +530,16 @@ fn project(m: &Matrix3d, reference: Rect, backface_hidden: bool) -> Projection {
     if backface_hidden && m[Z_FROM_Z] < 0.0 {
         return NOT_RENDERED;
     }
-    let w = |[x, y]: [f32; 2]| m[W_FROM_X] * x + m[W_FROM_Y] * y + m[W_CONSTANT];
-    let corners: Vec<f32> = corners(reference).into_iter().map(w).collect();
-    if corners.iter().all(|&corner| corner <= 0.0) {
+    let projection = crate::paint::projection::of_plane(*m);
+    let corners = corners(reference);
+    if corners
+        .iter()
+        .all(|&corner| crate::paint::projection::weight(projection, corner) <= 0.0)
+    {
         return NOT_RENDERED;
     }
-    let depth = w([
-        reference.x + reference.width / 2.0,
-        reference.y + reference.height / 2.0,
-    ]);
-    if depth > 0.0
-        && corners
-            .iter()
-            .all(|corner| (corner - depth).abs() <= PROJECTION_TOLERANCE * depth)
-    {
-        return crate::paint::projection::from_affine(
-            [m[0], m[1], m[4], m[5], m[12], m[13]].map(|value| value / depth),
-        );
-    }
-    [
-        m[0],
-        m[1],
-        m[4],
-        m[5],
-        m[12],
-        m[13],
-        m[W_FROM_X],
-        m[W_FROM_Y],
-        m[W_CONSTANT],
-    ]
-}
-
-/// Whether `m` keeps the points of `reference` in the drawing plane, `z = 0`.
-fn stays_in_plane(m: &Matrix3d, reference: Rect) -> bool {
-    corners(reference).into_iter().all(|[x, y]| {
-        let depth = m[Z_FROM_X] * x + m[Z_FROM_Y] * y + m[Z_CONSTANT];
-        depth.abs() <= PROJECTION_TOLERANCE * x.abs().max(y.abs()).max(1.0)
-    })
+    crate::paint::projection::affine_over(projection, &corners)
+        .map_or(projection, crate::paint::projection::from_affine)
 }
 
 impl Style {
@@ -596,10 +565,9 @@ impl Style {
             && !self.is_grouped()
             && self.clip.is_none()
     }
-    /// The parent placement this box gives its transformed children.
+    /// The perspective this box gives its transformed children, if any.
     pub(crate) fn parent_3d(&self, boxes: &BoxAreas<Rect>) -> Option<Parent3d> {
-        let preserves_3d = self.preserves_3d();
-        let perspective = self.perspective.map(|depth| {
+        self.perspective.map(|depth| {
             let reference = self.transform_box.reference(boxes);
             let [x, y] = &self.perspective_origin;
             let origin = [
@@ -607,14 +575,12 @@ impl Style {
                 reference.y + y.resolve(reference.height),
                 0.0,
             ];
-            multiply(
-                &multiply(&translation(origin), &perspective(depth)),
-                &translation(origin.map(|v| -v)),
-            )
-        });
-        (perspective.is_some() || preserves_3d).then_some(Parent3d {
-            perspective,
-            preserves_3d,
+            Parent3d {
+                perspective: multiply(
+                    &multiply(&translation(origin), &perspective(depth)),
+                    &translation(origin.map(|v| -v)),
+                ),
+            }
         })
     }
     /// CSS Transforms 2 §6: the page-space transformation matrix of a box with these areas, or
@@ -726,31 +692,34 @@ impl Style {
         (m[W_FROM_X] == 0.0 && m[W_FROM_Y] == 0.0 && m[W_CONSTANT] == 1.0)
             .then_some([m[0], m[1], m[4], m[5], m[12], m[13]])
     }
-    /// The page-space projection drawing this box, or `None` without a transform. Its
-    /// parent's perspective applies first; in a 3D rendering context the box must stay in its
-    /// parent's plane, as planes that leave it are depth-sorted and intersected (§4.1.2).
+    /// The 3D matrix placing this box in its parent's space (CSS Transforms 2 §4.1.4): its
+    /// transformation matrix after the parent's perspective, or `None` without a transform.
+    pub(crate) fn plane(
+        &self,
+        boxes: &BoxAreas<Rect>,
+        parent: Option<&Parent3d>,
+        containing: &crate::style::motion::Reference,
+    ) -> Option<Matrix3d> {
+        let own = self.transformation(boxes, containing)?;
+        Some(match parent {
+            Some(parent) => multiply(&parent.perspective, &own),
+            None => own,
+        })
+    }
+    /// The projection drawing this box's plane, which accumulated matrix `m` places (§4.2).
+    pub(crate) fn projected(&self, m: &Matrix3d, boxes: &BoxAreas<Rect>) -> Projection {
+        project(m, self.transform_box.reference(boxes), self.backface_hidden)
+    }
+    /// The page-space projection drawing this box in its parent's plane, or `None` without a
+    /// transform.
     pub(crate) fn transform_matrix(
         &self,
         boxes: &BoxAreas<Rect>,
         parent: Option<&Parent3d>,
         containing: &crate::style::motion::Reference,
-    ) -> Result<Option<Projection>, StyleError> {
-        let Some(own) = self.transformation(boxes, containing) else {
-            return Ok(None);
-        };
-        let reference = self.transform_box.reference(boxes);
-        if parent.is_some_and(|parent| parent.preserves_3d) && !stays_in_plane(&own, reference) {
-            return Err(StyleError::Unsupported(
-                "transform-style: preserve-3d with a child leaving its plane: depth-sorting \
-                 intersecting planes is not implemented"
-                    .into(),
-            ));
-        }
-        let accumulated = match parent.and_then(|parent| parent.perspective) {
-            Some(perspective) => multiply(&perspective, &own),
-            None => own,
-        };
-        Ok(Some(project(&accumulated, reference, self.backface_hidden)))
+    ) -> Option<Projection> {
+        self.plane(boxes, parent, containing)
+            .map(|m| self.projected(&m, boxes))
     }
 }
 
@@ -765,25 +734,17 @@ mod tests {
         const ORIGIN: [f32; 3] = [7.0, 13.0, 0.0];
         const TOLERANCE: f32 = 1e-4;
         let parent = Parent3d {
-            perspective: Some(multiply(
+            perspective: multiply(
                 &multiply(&translation(ORIGIN), &perspective(DEPTH)),
                 &translation(ORIGIN.map(|value| -value)),
-            )),
-            preserves_3d: true,
+            ),
         };
         for affine @ [a, b, c, d, x, y] in [
             [0.0, 1.0, -1.0, 0.0, 200.0, 30.0],
             [0.0, 1.0, 1.0, 0.0, 20.0, 30.0],
             [0.0, -1.0, 1.0, 0.0, 20.0, 200.0],
         ] {
-            let mapped = parent.mapped(affine);
-            assert!(
-                mapped.preserves_3d,
-                "changing writing coordinates preserves the rendering context"
-            );
-            let matrix = mapped
-                .perspective
-                .expect("mapped parent retains perspective");
+            let matrix = parent.mapped(affine).perspective;
             let [px, py, pz] = POINT;
             let point = [a * px + c * py + x, b * px + d * py + y, pz, 1.0];
             let homogeneous: [f32; 4] = std::array::from_fn(|row| {

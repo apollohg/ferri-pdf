@@ -39,6 +39,9 @@ pub enum DisplayItem {
     /// Projects later items until the matching `Pop` (CSS Transforms 2 §4.2): a perspective
     /// whose `w` varies across them, which no PDF content matrix expresses.
     PushProjection(Projection),
+    /// A 3D rendering context, whose planes depth-sort and intersect (CSS Transforms 2
+    /// §4.1.2).
+    Scene(Box<ScenePaint>),
     /// Composites later items as one isolated group with this constant alpha until the
     /// matching `Pop`.
     PushOpacity(f32),
@@ -57,6 +60,21 @@ pub enum DisplayItem {
     /// in its own effects (Filter Effects 2 §2.1).
     Backdrop(BackdropPaint),
     Pop,
+}
+
+/// The planes of a 3D rendering context, in painting order.
+#[derive(Clone, Debug, Serialize)]
+pub struct ScenePaint {
+    pub planes: Vec<PlanePaint>,
+}
+
+/// One plane of a 3D rendering context: its items, in its own coordinates, and the
+/// accumulated 3D transformation matrix placing them in the context's space, column-major as
+/// `matrix3d()` orders it (CSS Transforms 2 §4.1.4).
+#[derive(Clone, Debug, Serialize)]
+pub struct PlanePaint {
+    pub matrix: [f32; 16],
+    pub items: Vec<DisplayItem>,
 }
 
 /// An independent flow in its own physical coordinates, placed inside another flow.

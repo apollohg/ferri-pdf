@@ -13,6 +13,7 @@ mod pixels;
 mod projection;
 mod raster;
 pub(crate) use raster::rendering_alpha;
+mod scene;
 mod shadows;
 #[cfg(test)]
 mod tests;

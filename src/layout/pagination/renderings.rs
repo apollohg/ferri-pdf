@@ -4,12 +4,13 @@
 //! element is displayed as if the page content areas were joined flush in the pagination
 //! direction, with their inline-start edges aligned.
 use super::{
-    Effect, EffectNode, Located, Paginator, Region, Rendered, ScopedPaint, Subtree, clipped,
-    outlines,
+    Effect, EffectNode, Located, PagePlanes, Paginator, Region, Rendered, ScopedPaint, Subtree,
+    clipped, outlines,
 };
 use crate::dom::ElementId;
 use crate::graphics::{BoxPaint, DisplayItem, FlowPaint, Rect};
 use crate::layout::LayoutError;
+
 use std::collections::{HashMap, HashSet};
 
 /// An element's rendering: its pages' items placed in its decorated bounding box, physical
@@ -116,6 +117,7 @@ impl<'a> Paginator<'a, '_, 'a> {
     pub(super) fn renderings(
         &self,
         regions: &[Vec<(usize, Region)>],
+        planes: &[PagePlanes],
         bounds: &[Vec<(usize, BoxPaint)>],
         flow: crate::style::logical::Flow,
     ) -> Result<Renderings, LayoutError> {
@@ -142,7 +144,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             };
             renderings.stacked.insert(
                 element,
-                self.rendering(&cut, &nodes, regions, bounds, flow)?,
+                self.rendering(&cut, &nodes, regions, planes, bounds, flow)?,
             );
         }
         Ok(renderings)
@@ -153,6 +155,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         cut: &Cut<'_>,
         element_nodes: &[usize],
         regions: &[Vec<(usize, Region)>],
+        planes: &[PagePlanes],
         bounds: &[Vec<(usize, BoxPaint)>],
         flow: crate::style::logical::Flow,
     ) -> Result<Rendering, LayoutError> {
@@ -207,6 +210,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                 None,
                 &self.clips,
                 regions,
+                planes,
                 bounds,
                 &mut located,
                 Some(cut),

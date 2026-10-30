@@ -256,6 +256,9 @@ impl Painter<'_, '_, '_> {
                         kind: Kind::Transform(*matrix),
                     });
                 }
+                DisplayItem::Scene(scene) => {
+                    crate::writer::scene::draw(self, scene, space, surface)?;
+                }
                 DisplayItem::PushProjection(projection) => {
                     let end = index + group_length(&items[index..])?;
                     crate::writer::projection::draw(
@@ -460,6 +463,7 @@ pub(super) fn group_length(items: &[DisplayItem]) -> Result<usize, PdfError> {
             DisplayItem::Pop if depth == 0 => return Ok(index),
             DisplayItem::Pop => depth -= 1,
             DisplayItem::Frame(_)
+            | DisplayItem::Scene(_)
             | DisplayItem::Image(_)
             | DisplayItem::Box(_)
             | DisplayItem::Text { .. }

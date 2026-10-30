@@ -18,6 +18,33 @@ const W: usize = 6;
 /// negative.
 pub(crate) type Line = [f64; 3];
 
+/// Relative variation of `w` across a region within which a projection is affine for print:
+/// far below a device dot over any page.
+const AFFINE_TOLERANCE: f64 = 1.0e-6;
+
+/// `m` as an affine map over the convex hull of `points`, when its `w` there stays positive
+/// and within `AFFINE_TOLERANCE` of its value at their centre.
+pub(crate) fn affine_over(m: Projection, points: &[Point]) -> Option<[f32; 6]> {
+    let count = points.len() as f32;
+    let centre = points.iter().fold([0.0, 0.0], |[x, y], point| {
+        [x + point[0] / count, y + point[1] / count]
+    });
+    let depth = weight(m, centre);
+    (depth > 0.0
+        && points
+            .iter()
+            .all(|&point| (weight(m, point) - depth).abs() <= AFFINE_TOLERANCE * depth))
+    .then(|| {
+        let depth = depth as f32;
+        [m[0], m[1], m[2], m[3], m[4], m[5]].map(|value| value / depth)
+    })
+}
+
+/// The projection of the plane `z = 0` that a column-major 4×4 matrix places.
+pub(crate) fn of_plane(m: [f32; 16]) -> Projection {
+    [m[0], m[1], m[4], m[5], m[12], m[13], m[3], m[7], m[15]]
+}
+
 /// The projection drawing an affine `[a, b, c, d, e, f]`.
 pub(crate) fn from_affine([a, b, c, d, e, f]: [f32; 6]) -> Projection {
     [a, b, c, d, e, f, 0.0, 0.0, 1.0]

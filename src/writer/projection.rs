@@ -121,6 +121,7 @@ impl Layer {
                 DisplayItem::Text { .. }
                 | DisplayItem::Image(_)
                 | DisplayItem::Frame(_)
+                | DisplayItem::Scene(_)
                 | DisplayItem::Box(_)
                 | DisplayItem::Decoration(_)
                 | DisplayItem::TextShadow(_)
@@ -237,6 +238,7 @@ impl Layer {
             DisplayItem::Text { .. }
             | DisplayItem::Image(_)
             | DisplayItem::Frame(_)
+            | DisplayItem::Scene(_)
             | DisplayItem::Box(_)
             | DisplayItem::Decoration(_)
             | DisplayItem::TextShadow(_)

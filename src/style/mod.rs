@@ -90,7 +90,7 @@ mod syntax;
 mod table_values;
 mod text_paint_values;
 mod text_values;
-mod transform;
+pub(crate) mod transform;
 mod units;
 mod user_agent;
 #[cfg(test)]

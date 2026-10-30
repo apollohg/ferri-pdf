@@ -283,12 +283,14 @@ impl<'a> Paginator<'a, '_, 'a> {
                     .active()
                     .then(|| self.motion_block_reference())
                     .flatten();
-                let mut clip = if source.style().is_transformed() {
+                let scene = self.scene_node(source.style(), parent_3d);
+                let outer = scene.or(self.clip);
+                let transform = source.style().is_transformed().then(|| {
                     let node = self.clips.len();
                     self.clips.push(EffectNode {
                         native: None,
                         paints: Vec::new(),
-                        parent: self.clip,
+                        parent: outer,
                         effect: Effect::Transform(source.style(), parent_3d, reference),
                         fragments: Vec::new(),
                         areas: Vec::new(),
@@ -299,10 +301,9 @@ impl<'a> Paginator<'a, '_, 'a> {
                         .expect("active table")
                         .transforms
                         .push((ancestor.clone(), node));
-                    Some(node)
-                } else {
-                    self.clip
-                };
+                    node
+                });
+                let mut clip = transform.or(outer);
                 if source.style().decoration.masks.clip_path.is_some() {
                     clip = Some(self.effect_node(clip, Effect::PathClip(source.style())));
                 }
@@ -327,9 +328,16 @@ impl<'a> Paginator<'a, '_, 'a> {
                 if !isolated {
                     paint.key = extend(&paint.key, FLOW_LEVEL);
                 }
+                if let Some(scene) = scene
+                    && let Effect::Scene(root) = &mut self.clips[scene].effect
+                {
+                    root.group = group;
+                }
                 let own_parent_3d = (transformed
                     && (source.style().perspective.is_some() || source.style().preserves_3d()))
-                .then(|| self.effect_node(clip, Effect::Parent3d(source.style())));
+                .then(|| {
+                    self.effect_node(clip, Effect::Parent3d(source.style(), transform, parent_3d))
+                });
                 let layer = TableLayer {
                     clip,
                     paint,

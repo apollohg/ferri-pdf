@@ -589,6 +589,7 @@ fn text_flow(items: &[DisplayItem], lines: &[TextLine], area: Rect) -> FlowPaint
             | DisplayItem::PushFilter(_)
             | DisplayItem::PushMask(_)
             | DisplayItem::PushBackdropRoot
+            | DisplayItem::Scene(_)
             | DisplayItem::Backdrop(_) => {
                 unreachable!("margin lines paint text, decorations, images and their transforms")
             }

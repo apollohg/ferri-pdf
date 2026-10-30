@@ -30,6 +30,7 @@ use crate::layout::{
     tables::BandPlacement,
 };
 use crate::style::Position;
+use crate::style::transform::Matrix3d;
 pub(super) use columns::measure_columns;
 pub(crate) use renderings::Renderings;
 use std::{
@@ -309,15 +310,38 @@ enum Effect<'a> {
     /// A sticky box's shift on each page, constrained by `Paginator::sticky` entry `usize`.
     Sticky(&'a crate::style::Style, usize),
     /// The perspective and 3D rendering context a box gives its transformed children, resolved
-    /// from its fragment on each page; never an enclosing effect.
-    Parent3d(&'a crate::style::Style),
+    /// from its fragment on each page, with the box's transform node and its parent's
+    /// `Parent3d` node, which place it in a 3D rendering context; never an enclosing effect.
+    Parent3d(&'a crate::style::Style, Option<usize>, Option<usize>),
     InheritedParent3d,
+    /// The items of a box establishing a 3D rendering context (CSS Transforms 2 §4.1.2), in
+    /// its parent's space.
+    Scene(SceneRoot<'a>),
     /// Compositing of a stacking context. Groups nest by stacking context, independently of
     /// clips and transforms, which follow containing blocks, unless anchored.
     Group(Group<'a>),
     /// A mark on the items below it, with no region of its own.
     Subtree(Subtree),
 }
+/// The box establishing a 3D rendering context, and the group compositing its stacking
+/// context, inside which the groups of the context's planes nest.
+#[derive(Clone, Copy)]
+struct SceneRoot<'a> {
+    style: &'a crate::style::Style,
+    group: Option<usize>,
+}
+
+/// A transform node's plane matrices by page; `None` where the plane is not rendered.
+type PagePlanes = Vec<(usize, Option<Matrix3d>)>;
+
+/// The affine maps from a native space into page space and back.
+fn native_maps(native: Option<nested::NativeSpace>) -> [[f32; 6]; 2] {
+    let into = native.map_or(kurbo::Affine::IDENTITY, |space| {
+        kurbo::Affine::new(space.matrix().map(f64::from))
+    });
+    [into, into.inverse()].map(|map| map.as_coeffs().map(|value| value as f32))
+}
+
 /// What a subtree node marks.
 #[derive(Clone, PartialEq)]
 enum Subtree {
@@ -1382,6 +1406,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         !self.pages[page].is_empty()
             || self.foreground[page].iter().any(|paint| match &paint.item {
                 DisplayItem::Frame(frame) => !frame.items.is_empty(),
+                DisplayItem::Scene(scene) => !scene.planes.is_empty(),
                 DisplayItem::Image(image) => image.visible_rect().intersects(page_rect),
                 DisplayItem::Box(fragment) => {
                     fragment.has_ink() && fragment.rect.intersects(page_rect)
@@ -1408,6 +1433,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 .any(|item| match &item.item {
                     DisplayItem::Box(paint) => paint.has_ink(),
                     DisplayItem::Frame(frame) => !frame.items.is_empty(),
+                    DisplayItem::Scene(scene) => !scene.planes.is_empty(),
                     DisplayItem::Image(paint) => paint.visible_rect().intersects(page_rect),
                     // Decorations accompany text lines, which are counted above, and backdrops
                     // their boxes.
@@ -2407,6 +2433,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     .into(),
             )));
         }
+
         // A transform, opacity, blending, isolation or forced stacking context makes a stacking
         // context like z-index 0 (CSS Transforms 1 §3, CSS Color 4 §15, Compositing 1 §3.4,
         // CSS Will Change 1 §3.1).
@@ -2474,6 +2501,12 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         } else {
             None
         };
+        let scene_node = (owns_wrapper_properties && block.paint.is_some())
+            .then(|| self.scene_node(block.style, self.parent_3d))
+            .flatten();
+        if scene_node.is_some() {
+            self.clip = scene_node;
+        }
         let transform_node =
             (owns_wrapper_properties && block.style.is_transformed() && block.paint.is_some())
                 .then(|| {
@@ -2518,7 +2551,12 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let parent_3d_node = (transformed
             && block.paint.is_some()
             && (block.style.perspective.is_some() || block.style.preserves_3d()))
-        .then(|| self.effect_node(self.clip, Effect::Parent3d(block.style)));
+        .then(|| {
+            self.effect_node(
+                self.clip,
+                Effect::Parent3d(block.style, transform_node, self.parent_3d),
+            )
+        });
         // Anonymous boxes are not their content's parent element.
         if !block.source.is_anonymous() {
             self.parent_3d = parent_3d_node;
@@ -3328,6 +3366,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         self.boxes[parent].motion_reference_node = Some(node);
         Some(node)
     }
+    /// The region drawing a transformed box with these areas in its parent's plane, in the
+    /// coordinates of its node's native space. A plane of a 3D rendering context projects by
+    /// its accumulated matrix, seen from the plane of its nearest transformed ancestor in the
+    /// context (CSS Transforms 2 §4.1.4).
     fn transform_on(
         &self,
         style: &crate::style::Style,
@@ -3335,6 +3377,163 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         node: Option<&EffectNode<'_>>,
         page: usize,
     ) -> Result<Option<Region>, LayoutError> {
+        let Some(local) = self.local_plane(style, areas, node, page)? else {
+            return Ok(None);
+        };
+        let Some((node, parent)) = node.and_then(|node| match node.effect {
+            Effect::Transform(_, Some(parent), _) if self.extends_context(parent) => {
+                Some((node, parent))
+            }
+            _ => None,
+        }) else {
+            return Ok(Some(Region::projected(style.projected(&local, areas))));
+        };
+        let [into, out] = native_maps(node.native);
+        let native_space = |m: &Matrix3d| crate::style::transform::conjugated(m, out, into);
+        let local = crate::style::transform::conjugated(&local, into, out);
+        let absolute = self.within(parent, local, page)?;
+        let own = style.projected(&native_space(&absolute), areas);
+        let anchor = self
+            .context_anchor(parent)
+            .map(|anchor| self.plane_on(anchor, page))
+            .transpose()?
+            .flatten();
+        let seen = match anchor {
+            Some(anchor) => crate::paint::projection::inverse(crate::paint::projection::of_plane(
+                native_space(&anchor),
+            ))
+            .map_or([0.0; 9], |inverse| {
+                crate::paint::projection::compose(inverse, own)
+            }),
+            None => own,
+        };
+        Ok(Some(Region::projected(seen)))
+    }
+    /// Whether the box owning the `Parent3d` node `node` establishes or extends a 3D rendering
+    /// context, so that its transformed children have planes of their own.
+    fn extends_context(&self, node: usize) -> bool {
+        matches!(self.clips[node].effect, Effect::Parent3d(style, ..) if style.preserves_3d())
+    }
+    /// The transform node of the nearest transformed box in the 3D rendering context whose
+    /// content holds the content of the box owning `Parent3d` node `node`.
+    fn context_anchor(&self, node: usize) -> Option<usize> {
+        let Effect::Parent3d(_, transform, parent) = self.clips[node].effect else {
+            unreachable!("contexts nest through parent 3D nodes")
+        };
+        transform.or_else(|| {
+            parent
+                .filter(|&parent| self.extends_context(parent))
+                .and_then(|parent| self.context_anchor(parent))
+        })
+    }
+    /// `local`, a page-space matrix placing a box in the space of its parent, whose `Parent3d`
+    /// node is `parent`, after the matrices placing that parent in its 3D rendering context's
+    /// space.
+    fn within(&self, parent: usize, local: Matrix3d, page: usize) -> Result<Matrix3d, LayoutError> {
+        Ok(match self.basis(parent, page)? {
+            Some(basis) => crate::style::transform::multiply(&basis, &local),
+            None => local,
+        })
+    }
+    /// The page-space matrix placing the content of the box owning `Parent3d` node `node` in
+    /// its 3D rendering context's space, from the context root's parent's space; `None` for
+    /// the identity.
+    fn basis(&self, node: usize, page: usize) -> Result<Option<Matrix3d>, LayoutError> {
+        let Effect::Parent3d(_, transform, parent) = self.clips[node].effect else {
+            unreachable!("contexts nest through parent 3D nodes")
+        };
+        if let Some(transform) = transform {
+            return self.plane_on(transform, page);
+        }
+        // An untransformed box lies where its parent's perspective, which keeps its plane in
+        // place, puts it.
+        let Some(parent) = parent else {
+            return Ok(None);
+        };
+        let perspective = self
+            .parent_3d_on(&self.clips[parent], page)?
+            .map(|parent| parent.perspective);
+        let outer = if self.extends_context(parent) {
+            self.basis(parent, page)?
+        } else {
+            None
+        };
+        Ok(match (outer, perspective) {
+            (Some(outer), Some(perspective)) => {
+                Some(crate::style::transform::multiply(&outer, &perspective))
+            }
+            (outer, perspective) => outer.or(perspective),
+        })
+    }
+    /// The accumulated 3D transformation matrix in page space of the plane of transform node
+    /// `index` on `page`: from its 3D rendering context's space, or its parent's outside one.
+    fn plane_on(&self, index: usize, page: usize) -> Result<Option<Matrix3d>, LayoutError> {
+        let node = &self.clips[index];
+        let Effect::Transform(style, parent, _) = node.effect else {
+            unreachable!("planes are placed by transform nodes")
+        };
+        let areas = self
+            .node_areas(node, page)
+            .ok_or(LayoutError::MissingContainingFragment { page })?;
+        let Some(local) = self.local_plane(style, &areas, Some(node), page)? else {
+            return Ok(None);
+        };
+        let [into, out] = native_maps(node.native);
+        let local = crate::style::transform::conjugated(&local, into, out);
+        match parent.filter(|&parent| self.extends_context(parent)) {
+            Some(parent) => self.within(parent, local, page).map(Some),
+            None => Ok(Some(local)),
+        }
+    }
+    /// The scene node of a box with `style` whose parent's `Parent3d` node is `parent_3d`,
+    /// inside the current clip, when the box establishes a 3D rendering context: its used
+    /// `transform-style` is `preserve-3d` and its parent's extends none (CSS Transforms 2
+    /// §4.1.2).
+    fn scene_node(
+        &mut self,
+        style: &'a crate::style::Style,
+        parent_3d: Option<usize>,
+    ) -> Option<usize> {
+        (style.preserves_3d() && !parent_3d.is_some_and(|parent| self.extends_context(parent)))
+            .then(|| {
+                self.effect_node(
+                    self.clip,
+                    Effect::Scene(SceneRoot {
+                        style,
+                        group: self.group,
+                    }),
+                )
+            })
+    }
+
+    /// The box areas of an effect node's fragment on `page`, or of the structural area
+    /// standing in for its box.
+    fn node_areas(&self, node: &EffectNode<'_>, page: usize) -> Option<BoxAreas<Rect>> {
+        node.fragments
+            .iter()
+            .find_map(|&(fragment_page, slot)| {
+                match &self.display_lists[fragment_page][slot].item {
+                    DisplayItem::Box(paint) if fragment_page == page => {
+                        Some(paint.fragment_areas())
+                    }
+                    _ => None,
+                }
+            })
+            .or_else(|| {
+                node.areas.iter().find_map(|&(area_page, rect)| {
+                    (area_page == page).then_some(BoxAreas::single(rect))
+                })
+            })
+    }
+    /// The 3D matrix placing a transformed box with these areas in its parent's space after
+    /// the parent's perspective, in the coordinates of its node's native space.
+    fn local_plane(
+        &self,
+        style: &crate::style::Style,
+        areas: &BoxAreas<Rect>,
+        node: Option<&EffectNode<'_>>,
+        page: usize,
+    ) -> Result<Option<Matrix3d>, LayoutError> {
         let (parent, reference) = node
             .and_then(|node| match node.effect {
                 Effect::Transform(_, parent, reference) => Some((parent, reference)),
@@ -3358,13 +3557,13 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             )
         });
         Ok(style
-            .transform_matrix(
+            .plane(
                 &frame.boxes(areas),
                 parent.as_ref(),
                 &self.motion_reference_on(reference, style, page, native)?,
-            )?
-            .map(|projection| {
-                Region::projected(projection).conjugated(frame.inverse().matrix, frame.matrix)
+            )
+            .map(|matrix| {
+                crate::style::transform::conjugated(&matrix, frame.inverse().matrix, frame.matrix)
             }))
     }
     fn motion_reference_on(
@@ -3535,6 +3734,43 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         self.effect_node(parent, Effect::Sticky(style, index))
     }
+    /// The accumulated matrices in page space of the planes of 3D rendering contexts, by
+    /// transform node and page; `None` where the plane is not rendered (CSS Transforms 2 §4.2,
+    /// §10).
+    fn context_planes(&self) -> Result<Vec<PagePlanes>, LayoutError> {
+        let mut planes = Vec::with_capacity(self.clips.len());
+        for (index, node) in self.clips.iter().enumerate() {
+            let mut node_planes = Vec::new();
+            if let Effect::Transform(style, parent_3d, _) = node.effect
+                && (parent_3d.is_some_and(|parent| self.extends_context(parent))
+                    || node.parent.is_some_and(|parent| {
+                        matches!(self.clips[parent].effect, Effect::Scene(root) if std::ptr::eq(root.style, style))
+                    }))
+            {
+                let pages = node
+                    .fragments
+                    .iter()
+                    .map(|&(page, _)| page)
+                    .chain(node.areas.iter().map(|&(page, _)| page));
+                for page in pages {
+                    if node_planes.iter().any(|&(done, _)| done == page) {
+                        continue;
+                    }
+                    let areas = self
+                        .node_areas(node, page)
+                        .ok_or(LayoutError::MissingContainingFragment { page })?;
+                    let plane = self.plane_on(index, page)?.filter(|matrix| {
+                        let [into, out] = native_maps(node.native);
+                        let native = crate::style::transform::conjugated(matrix, out, into);
+                        !crate::paint::projection::degenerate(style.projected(&native, &areas))
+                    });
+                    node_planes.push((page, plane));
+                }
+            }
+            planes.push(node_planes);
+        }
+        Ok(planes)
+    }
     /// Each effect's region on the pages it covers, from its box fragments and the structural
     /// areas standing in for boxes. Groups apply on every page without geometry.
     fn effect_regions(&self) -> Result<Vec<Vec<(usize, Region)>>, LayoutError> {
@@ -3558,8 +3794,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 }),
                 Effect::Transform(..)
                 | Effect::Sticky(..)
-                | Effect::Parent3d(_)
+                | Effect::Parent3d(..)
                 | Effect::InheritedParent3d
+                | Effect::Scene(_)
                 | Effect::Group(_)
                 | Effect::PathClip(_)
                 | Effect::Subtree(_)
@@ -3620,8 +3857,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                         node_regions.push((page, Region::Transform([1.0, 0.0, 0.0, 1.0, x, y])));
                     }
                 }
-                Effect::Parent3d(_)
+                Effect::Parent3d(..)
                 | Effect::InheritedParent3d
+                | Effect::Scene(_)
                 | Effect::Group(_)
                 | Effect::PathClip(_)
                 | Effect::Subtree(_)
@@ -3691,7 +3929,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         if matches!(node.effect, Effect::InheritedParent3d) {
             return Ok(None);
         }
-        let Effect::Parent3d(style) = node.effect else {
+        let Effect::Parent3d(style, ..) = node.effect else {
             unreachable!("transforms are placed by parent 3D nodes")
         };
         let paint = node
@@ -5011,7 +5249,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             parent = self.clips[node].parent;
         }
         if let Some(node) = parent_3d
-            && matches!(self.clips[node].effect, Effect::Parent3d(owner) if std::ptr::eq(owner, style))
+            && matches!(self.clips[node].effect, Effect::Parent3d(owner, ..) if std::ptr::eq(owner, style))
         {
             self.clips[node].paints.push((page, paint.clone()));
         }
@@ -6730,6 +6968,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             });
         self.position_canvas_backgrounds();
         let regions = self.effect_regions()?;
+        let planes = self.context_planes()?;
         let mut paths = Vec::with_capacity(self.clips.len());
         for (index, node) in self.clips.iter().enumerate() {
             let mut pages: BTreeMap<usize, Vec<Vec<crate::graphics::Point>>> = BTreeMap::new();
@@ -6847,7 +7086,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         };
         let bounds = self.group_bounds();
         self.underlay_backdrops();
-        let renderings = Box::new(self.renderings(&regions, &bounds, flow)?);
+        let renderings = Box::new(self.renderings(&regions, &planes, &bounds, flow)?);
         let mut display_lists = Vec::with_capacity(self.display_lists.len());
         let mut located = Located {
             links: Vec::with_capacity(self.display_lists.len()),
@@ -6897,6 +7136,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 physical,
                 &self.clips,
                 &regions,
+                &planes,
                 &bounds,
                 &mut located,
                 None,
@@ -7049,7 +7289,8 @@ enum Frame {
 
 /// Wraps runs of items sharing an effect chain in push/pop pairs, and locates the link areas
 /// and destinations of box items through that chain; with `cut`, only the effects inside an
-/// element rendered as an image apply.
+/// element rendered as an image apply. The items of a 3D rendering context become one scene
+/// of planes, each assembled from the effects inside it.
 #[expect(
     clippy::too_many_arguments,
     reason = "the page's effects resolve through every one of these tables"
@@ -7060,88 +7301,297 @@ fn clipped(
     physical: Option<crate::layout::writing::Frame>,
     nodes: &[EffectNode<'_>],
     regions: &[Vec<(usize, Region)>],
+    planes: &[PagePlanes],
     bounds: &[Vec<(usize, BoxPaint)>],
     located: &mut Located,
     cut: Option<&renderings::Cut<'_>>,
 ) -> Result<Vec<DisplayItem>, LayoutError> {
-    let mut link_polygons = Vec::new();
-    let mut output = Vec::with_capacity(items.len());
-    // Open frames and the pushes each emitted.
-    let mut open: Vec<(Frame, usize)> = Vec::new();
-    let mut groups = Vec::new();
-    let mut frames = Vec::new();
-    let mut chain = Vec::new();
-    for paint in items {
-        if !paint.visible {
-            continue;
-        }
-        chain.clear();
-        if let Some(cut) = cut {
-            let Some(inside) = cut.chain(&paint, nodes) else {
+    let assembly = Assembly {
+        page,
+        physical,
+        nodes,
+        regions,
+        planes,
+        bounds,
+        cut,
+    };
+    let mut links = Vec::new();
+    let output = assembly.assemble(items, None, located, &mut links)?;
+    located
+        .links
+        .push(crate::layout::navigation::link_areas(&links));
+    Ok(output)
+}
+
+/// The effect tables of one page that `clipped` assembles items with.
+#[derive(Clone, Copy)]
+struct Assembly<'x, 'a> {
+    page: usize,
+    physical: Option<crate::layout::writing::Frame>,
+    nodes: &'x [EffectNode<'a>],
+    regions: &'x [Vec<(usize, Region)>],
+    planes: &'x [PagePlanes],
+    bounds: &'x [Vec<(usize, BoxPaint)>],
+    cut: Option<&'x renderings::Cut<'x>>,
+}
+
+/// The plane of a 3D rendering context whose items an assembly paints: only the effects
+/// below `node` and the groups below `group` apply, and `base` places the plane on the page.
+struct Plane {
+    node: usize,
+    group: Option<usize>,
+    base: Vec<Region>,
+}
+
+/// The pushes an assembly has open, and what each emitted.
+#[derive(Default)]
+struct Opened {
+    output: Vec<DisplayItem>,
+    open: Vec<(Frame, usize)>,
+}
+
+impl Assembly<'_, '_> {
+    fn assemble(
+        &self,
+        items: Vec<ScopedPaint>,
+        plane: Option<&Plane>,
+        located: &mut Located,
+        links: &mut Vec<(usize, Vec<crate::graphics::Point>)>,
+    ) -> Result<Vec<DisplayItem>, LayoutError> {
+        let mut opened = Opened {
+            output: Vec::with_capacity(items.len()),
+            open: Vec::new(),
+        };
+        let mut scene: Option<(usize, Vec<ScopedPaint>)> = None;
+        for paint in items {
+            if !paint.visible {
+                continue;
+            }
+            let Some(chain) = self.chain(&paint, plane) else {
                 continue;
             };
-            chain.extend(inside);
+            let root = chain
+                .iter()
+                .copied()
+                .find(|&node| matches!(self.nodes[node].effect, Effect::Scene(_)));
+            if let Some((current, members)) = &mut scene
+                && Some(*current) == root
+            {
+                members.push(paint);
+                continue;
+            }
+            if let Some((node, members)) = scene.take() {
+                self.emit_scene(node, members, plane, located, links, &mut opened)?;
+            }
+            match root {
+                Some(node) => scene = Some((node, vec![paint])),
+                None => self.emit(paint, &chain, plane, located, links, &mut opened)?,
+            }
+        }
+        if let Some((node, members)) = scene {
+            self.emit_scene(node, members, plane, located, links, &mut opened)?;
+        }
+        let pops = opened.open.iter().map(|(_, pushes)| pushes).sum::<usize>();
+        opened
+            .output
+            .extend(std::iter::repeat_n(DisplayItem::Pop, pops));
+        Ok(opened.output)
+    }
+
+    /// The effect nodes enclosing `paint`, outermost first, that apply inside `plane` or the
+    /// element rendered as an image; `None` when `paint` lies outside that element.
+    fn chain(&self, paint: &ScopedPaint, plane: Option<&Plane>) -> Option<Vec<usize>> {
+        let mut chain = if let Some(cut) = self.cut {
+            cut.chain(paint, self.nodes)?
         } else {
+            let mut chain = Vec::new();
             let mut node = paint.clip;
             while let Some(index) = node {
                 chain.push(index);
-                node = nodes[index].parent;
+                node = self.nodes[index].parent;
             }
             chain.reverse();
+            chain
+        };
+        if let Some(plane) = plane {
+            let start = chain.iter().position(|&node| node == plane.node)?;
+            chain.drain(..=start);
         }
-        let mut regions_here = Vec::with_capacity(chain.len());
-        for &index in &chain {
-            if matches!(
-                nodes[index].effect,
-                Effect::PathClip(_) | Effect::Subtree(_)
-            ) {
-                continue;
+        Some(chain)
+    }
+
+    /// The region of `node` on the page; `None` for nodes that only mark items.
+    fn region(&self, node: usize) -> Result<Option<Region>, LayoutError> {
+        if matches!(
+            self.nodes[node].effect,
+            Effect::PathClip(_) | Effect::Subtree(_) | Effect::Scene(_)
+        ) {
+            return Ok(None);
+        }
+        self.regions[node]
+            .iter()
+            .find_map(|(fragment_page, region)| {
+                (*fragment_page == self.page).then(|| region.clone())
+            })
+            .map(Some)
+            .ok_or(LayoutError::MissingClipFragment { page: self.page })
+    }
+
+    /// Assembles the items of the 3D rendering context rooted at scene node `scene` into one
+    /// scene of planes, emitted where the context paints.
+    fn emit_scene(
+        &self,
+        scene: usize,
+        members: Vec<ScopedPaint>,
+        plane: Option<&Plane>,
+        located: &mut Located,
+        links: &mut Vec<(usize, Vec<crate::graphics::Point>)>,
+        opened: &mut Opened,
+    ) -> Result<(), LayoutError> {
+        let Effect::Scene(root) = self.nodes[scene].effect else {
+            unreachable!("scenes are rooted at scene nodes")
+        };
+        let Some(first) = members.first() else {
+            return Ok(());
+        };
+        let (scope, order) = (first.scope.clone(), first.order.clone());
+        let mut outer = plane.map_or_else(Vec::new, |plane| plane.base.clone());
+        let chain = self.chain(first, plane).unwrap_or_default();
+        for &node in chain.iter().take_while(|&&node| node != scene) {
+            outer.extend(self.region(node)?);
+        }
+        // Each item lies in the plane of the innermost box with a plane of its own: the root,
+        // or a transformed box whose parent establishes or extends the context.
+        let mut grouped: Vec<(usize, Vec<ScopedPaint>)> = Vec::new();
+        for paint in members {
+            let chain = self.chain(&paint, plane).unwrap_or_default();
+            let start = chain
+                .iter()
+                .position(|&node| node == scene)
+                .map_or(0, |at| at + 1);
+            let mut owner = scene;
+            for &node in &chain[start..] {
+                match self.nodes[node].effect {
+                    Effect::Scene(_) => break,
+                    Effect::Transform(style, parent, _)
+                        if parent.is_some_and(|parent| self.extends_context(parent))
+                            || std::ptr::eq(style, root.style) =>
+                    {
+                        owner = node;
+                    }
+                    _ => {}
+                }
             }
-            regions_here.push(
-                regions[index]
+            match grouped.iter_mut().find(|(node, _)| *node == owner) {
+                Some((_, paints)) => paints.push(paint),
+                None => grouped.push((owner, vec![paint])),
+            }
+        }
+        let mut scene_planes = Vec::with_capacity(grouped.len());
+        for (node, paints) in grouped {
+            let matrix = if node == scene {
+                crate::style::transform::IDENTITY
+            } else {
+                match self.planes[node]
                     .iter()
-                    .find_map(|(fragment_page, clip)| {
-                        (*fragment_page == page).then(|| clip.clone())
-                    })
-                    .ok_or(LayoutError::MissingClipFragment { page })?,
-            );
+                    .find(|(fragment_page, _)| *fragment_page == self.page)
+                {
+                    Some((_, Some(matrix))) => *matrix,
+                    // A plane behind the viewer or turning a hidden back face is not rendered.
+                    Some((_, None)) => continue,
+                    None => return Err(LayoutError::MissingClipFragment { page: self.page }),
+                }
+            };
+            let placement = Region::projected(crate::paint::projection::of_plane(matrix));
+            let mut base = outer.clone();
+            base.push(placement);
+            let inner = Plane {
+                node,
+                group: root.group,
+                base,
+            };
+            let items = Assembly {
+                physical: None,
+                ..*self
+            }
+            .assemble(paints, Some(&inner), located, links)?;
+            if !items.is_empty() {
+                scene_planes.push(crate::graphics::PlanePaint { matrix, items });
+            }
+        }
+        let paint = ScopedPaint {
+            native: None,
+            visible: true,
+            scope,
+            order,
+            clip: self.nodes[scene].parent,
+            group: root.group,
+            ink: None,
+            item: DisplayItem::Scene(Box::new(crate::graphics::ScenePaint {
+                planes: scene_planes,
+            })),
+            navigation: BoxNavigation::default(),
+        };
+        let Some(chain) = self.chain(&paint, plane) else {
+            return Ok(());
+        };
+        self.emit(paint, &chain, plane, located, links, opened)
+    }
+
+    /// Whether the box owning the `Parent3d` node `node` establishes or extends a 3D
+    /// rendering context, so that its transformed children have planes of their own.
+    fn extends_context(&self, node: usize) -> bool {
+        matches!(self.nodes[node].effect, Effect::Parent3d(style, ..) if style.preserves_3d())
+    }
+
+    /// Emits `paint` inside the pushes of its `chain` and groups.
+    #[expect(
+        clippy::too_many_lines,
+        reason = "groups, clips and transforms reopen around each item in one pass"
+    )]
+    fn emit(
+        &self,
+        paint: ScopedPaint,
+        chain: &[usize],
+        plane: Option<&Plane>,
+        located: &mut Located,
+        links: &mut Vec<(usize, Vec<crate::graphics::Point>)>,
+        opened: &mut Opened,
+    ) -> Result<(), LayoutError> {
+        let (page, nodes) = (self.page, self.nodes);
+        let mut regions_here = Vec::with_capacity(chain.len());
+        for &index in chain {
+            regions_here.extend(self.region(index)?);
         }
         if regions_here.iter().any(Region::collapses) {
-            continue;
+            return Ok(());
         }
         // A rendering shown as an image has no links or destinations of its own.
         if let DisplayItem::Box(fragment) = &paint.item
-            && cut.is_none()
+            && self.cut.is_none()
         {
+            let placed: Vec<Region> = plane
+                .map_or(&[][..], |plane| plane.base.as_slice())
+                .iter()
+                .chain(&regions_here)
+                .cloned()
+                .collect();
+            let rect = paint
+                .native
+                .map_or(fragment.rect, |space| space.rect(fragment.rect));
             if let Some(link) = paint.navigation.link {
-                let polygon = crate::layout::navigation::page_polygon(
-                    paint
-                        .native
-                        .map_or(fragment.rect, |space| space.rect(fragment.rect)),
-                    &regions_here,
-                    true,
-                );
+                let polygon = crate::layout::navigation::page_polygon(rect, &placed, true);
                 if !polygon.is_empty() {
-                    link_polygons.push((link, polygon));
+                    links.push((link, polygon));
                 }
             }
             if let Some(destination) = paint.navigation.destination
                 && located.destinations[destination].is_none()
             {
-                located.destinations[destination] = Some(crate::layout::navigation::destination(
-                    page,
-                    paint
-                        .native
-                        .map_or(fragment.rect, |space| space.rect(fragment.rect)),
-                    &regions_here,
-                ));
+                located.destinations[destination] =
+                    Some(crate::layout::navigation::destination(page, rect, &placed));
                 located.destination_bounds[destination] =
-                    Some(crate::layout::navigation::destination_rect(
-                        paint
-                            .native
-                            .map_or(fragment.rect, |space| space.rect(fragment.rect)),
-                        &regions_here,
-                    ));
+                    Some(crate::layout::navigation::destination_rect(rect, &placed));
             }
         }
         // Ink is compared only with clips in its own coordinate space.
@@ -7156,34 +7606,37 @@ fn clipped(
                 .iter()
                 .any(|region| matches!(region, Region::Clip(clip) if !clip.bounds().overlaps(ink)))
         {
-            continue;
+            return Ok(());
         }
         let mut item = paint.item;
-        if untransformed > 0
+        if (untransformed > 0 || plane.is_some())
             && let DisplayItem::Box(paint) = &mut item
         {
             Backgrounds::scroll_fixed(&mut paint.decoration.backgrounds);
         }
-        groups.clear();
+        let mut groups = Vec::new();
         let mut group = paint.group;
         while let Some(index) = group {
+            if plane.is_some_and(|plane| plane.group == Some(index)) {
+                break;
+            }
             let Effect::Group(effect) = nodes[index].effect else {
                 unreachable!("group chains hold only group nodes")
             };
             // A group without opacity, blending, isolation or filters paints as its content
             // does.
-            let fragments: Vec<BoxPaint> = bounds[index]
+            let fragments: Vec<BoxPaint> = self.bounds[index]
                 .iter()
                 .filter(|(fragment_page, _)| *fragment_page == page)
                 .map(|(_, paint)| paint.clone())
                 .collect();
             let mut pushes = effect.pushes(&fragments);
             let pushes = if let Some(space) = nodes[index].native {
-                physical
+                self.physical
                     .map_or(space, |frame| space.placed(frame.matrix))
                     .pushes(pushes)
             } else {
-                if let Some(frame) = physical {
+                if let Some(frame) = self.physical {
                     frame.items(&mut pushes);
                 }
                 pushes
@@ -7191,7 +7644,7 @@ fn clipped(
             if !pushes.is_empty() {
                 groups.push((index, effect, pushes));
             }
-            if cut.is_some_and(|cut| cut.outermost(index)) {
+            if self.cut.is_some_and(|cut| cut.outermost(index)) {
                 break;
             }
             group = nodes[index].parent;
@@ -7200,7 +7653,7 @@ fn clipped(
         // Clipping or transforming each member of a group equals doing so to the group, so
         // groups open outermost and clips and transforms reopen inside each group; anchored
         // groups open after the clips and transforms of their element's own box.
-        frames.clear();
+        let mut frames = Vec::new();
         let mut placed = 0;
         for (index, effect, _) in &groups {
             if effect.anchored() {
@@ -7208,7 +7661,7 @@ fn clipped(
                     Some(anchor) => match chain.iter().position(|&node| node == anchor) {
                         Some(depth) => depth + 1,
                         // A rendering keeps none of the effects enclosing its element's.
-                        None if cut.is_some() => 0,
+                        None if self.cut.is_some() => 0,
                         None => return Err(LayoutError::MissingClipFragment { page }),
                     },
                     None => 0,
@@ -7223,13 +7676,16 @@ fn clipped(
             frames.push(Frame::Group(*index));
         }
         frames.extend(chain[placed..].iter().map(|&node| Frame::Clip(node)));
-        let common = open
+        let common = opened
+            .open
             .iter()
             .zip(&frames)
             .take_while(|((open, _), frame)| open == *frame)
             .count();
-        for (_, pushes) in open.drain(common..).rev() {
-            output.extend(std::iter::repeat_n(DisplayItem::Pop, pushes));
+        for (_, pushes) in opened.open.drain(common..).rev() {
+            opened
+                .output
+                .extend(std::iter::repeat_n(DisplayItem::Pop, pushes));
         }
         for &frame in &frames[common..] {
             let pushes = match frame {
@@ -7238,53 +7694,38 @@ fn clipped(
                     .find(|(group, _, _)| *group == index)
                     .map(|(_, _, pushes)| pushes.clone())
                     .unwrap_or_default(),
-                Frame::Clip(index) => {
-                    if matches!(
-                        nodes[index].effect,
-                        Effect::PathClip(_) | Effect::Subtree(_)
-                    ) {
-                        Vec::new()
-                    } else {
-                        let region = regions[index]
-                            .iter()
-                            .find_map(|(fragment_page, region)| {
-                                (*fragment_page == page).then(|| region.clone())
-                            })
-                            .ok_or(LayoutError::MissingClipFragment { page })?;
+                Frame::Clip(index) => match self.region(index)? {
+                    None => Vec::new(),
+                    Some(region) => {
                         let mut pushes = vec![region.push()];
-                        if let Some(frame) = physical {
+                        if let Some(frame) = self.physical {
                             frame.items(&mut pushes);
                         }
                         pushes
                     }
-                }
+                },
             };
-            open.push((frame, pushes.len()));
-            output.extend(pushes);
+            opened.open.push((frame, pushes.len()));
+            opened.output.extend(pushes);
         }
         match paint.native {
-            Some(space) => output.extend(
-                physical
+            Some(space) => opened.output.extend(
+                self.physical
                     .map_or(space, |frame| space.placed(frame.matrix))
                     .paint(item),
             ),
             None => {
-                if let Some(frame) = physical {
+                if let Some(frame) = self.physical {
                     let mut items = vec![item];
                     frame.items(&mut items);
-                    output.extend(items);
+                    opened.output.extend(items);
                 } else {
-                    output.push(item);
+                    opened.output.push(item);
                 }
             }
         }
+        Ok(())
     }
-    let pops = open.iter().map(|(_, pushes)| pushes).sum::<usize>();
-    output.extend(std::iter::repeat_n(DisplayItem::Pop, pops));
-    located
-        .links
-        .push(crate::layout::navigation::link_areas(&link_polygons));
-    Ok(output)
 }
 
 fn assemble_background(

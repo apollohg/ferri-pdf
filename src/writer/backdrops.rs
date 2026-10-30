@@ -119,6 +119,13 @@ fn own_backdrops(items: &[DisplayItem]) -> Vec<(&DisplayItem, &BackdropPaint, Pr
         Root,
         Other,
     }
+    let current = |open: &[Open]| {
+        open.iter()
+            .fold(projection::IDENTITY, |transform, scope| match scope {
+                Open::Transform(matrix) => projection::compose(transform, *matrix),
+                Open::Root | Open::Other => transform,
+            })
+    };
     let mut open = Vec::new();
     let mut backdrops = Vec::new();
     for item in items {
@@ -139,15 +146,21 @@ fn own_backdrops(items: &[DisplayItem]) -> Vec<(&DisplayItem, &BackdropPaint, Pr
             DisplayItem::Backdrop(backdrop)
                 if !open.iter().any(|scope| matches!(scope, Open::Root)) =>
             {
-                let transform =
-                    open.iter()
-                        .fold(projection::IDENTITY, |transform, scope| match scope {
-                            Open::Transform(matrix) => projection::compose(transform, *matrix),
-                            Open::Root | Open::Other => transform,
-                        });
-                backdrops.push((item, backdrop, transform));
+                backdrops.push((item, backdrop, current(&open)));
+            }
+            DisplayItem::Scene(scene) if !open.iter().any(|scope| matches!(scope, Open::Root)) => {
+                for plane in &scene.planes {
+                    let placed =
+                        projection::compose(current(&open), projection::of_plane(plane.matrix));
+                    backdrops.extend(own_backdrops(&plane.items).into_iter().map(
+                        |(item, backdrop, transform)| {
+                            (item, backdrop, projection::compose(placed, transform))
+                        },
+                    ));
+                }
             }
             DisplayItem::Backdrop(_)
+            | DisplayItem::Scene(_)
             | DisplayItem::Frame(_)
             | DisplayItem::Image(_)
             | DisplayItem::Box(_)

@@ -136,6 +136,62 @@ class VisualEffectsPdf(unittest.TestCase):
                                     f'{where} the projected edge near corner {(x, y)}, '
                                     f'({px:.1f}, {py:.1f}) must be {wanted}, got {found}')
 
+    def test_intersecting_planes_of_a_3d_rendering_context_paint_nearest_first(self):
+        # .s (20..220 by 20..120) has a 300pt perspective about its centre (120, 70). Its
+        # preserve-3d child holds two planes turned ±40° about the same centre, so they cross
+        # at x = 120: a point dx from it on the plane turned by θ lies at depth -sin θ·dx with
+        # w = 1 + sin θ·dx / 300. Each pixel shows the plane nearest the viewer there (CSS
+        # Transforms 2 §4.1.2), whatever their painting order.
+        left, top, width, height, depth = 20, 20, 200, 100, 300
+        centre = (left + width / 2, top + height / 2)
+        css = ('.s{perspective:%dpt;width:%dpt;height:%dpt}'
+               '.c{transform-style:preserve-3d;position:relative;height:100%%}'
+               '.c div{position:absolute;inset:0}.a{transform:rotateY(40deg);background:red}'
+               '.b{transform:rotateY(-40deg);background:teal}' % (depth, width, height))
+        body = '<div class=s><div class=c><div class=a></div><div class=b></div></div></div>'
+
+        def nearest(screen_x):
+            found = []
+            for angle, colour in ((40, RED), (-40, TEAL)):
+                sin, cos = math.sin(math.radians(angle)), math.cos(math.radians(angle))
+                offset = screen_x - centre[0]
+                dx = offset / (cos - sin * offset / depth)
+                w = 1 + sin * dx / depth
+                if w > 0 and abs(dx) <= width / 2:
+                    found.append((-sin * dx / w, colour))
+            return max(found)[1] if found else WHITE
+
+        output = self.renderer.render(self.root, css, body)
+        with self.renderer.raster(self.root, output, vector_antialias=False) as pixels:
+            for offset in (-70, -40, -10, 10, 40, 70):
+                x = int(centre[0] + offset)
+                wanted = nearest(x + 0.5)
+                found = pixels.getpixel((x, int(centre[1])))
+                self.assertTrue(all(abs(a - b) <= 2 for a, b in zip(found, wanted)),
+                                f'at x = {x} the nearest plane is {wanted}, got {found}')
+        swapped = self.renderer.render(self.root, css, body.replace(
+            '<div class=a></div><div class=b></div>', '<div class=b></div><div class=a></div>'))
+        with self.renderer.raster(self.root, swapped, vector_antialias=False) as pixels:
+            for offset in (-40, 40):
+                x = int(centre[0] + offset)
+                found, wanted = pixels.getpixel((x, int(centre[1]))), nearest(x + 0.5)
+                self.assertTrue(all(abs(a - b) <= 2 for a, b in zip(found, wanted)),
+                                f'depth, not painting order, decides which plane shows at '
+                                f'x = {x}: expected {wanted}, got {found}')
+
+    def test_hidden_back_faces_follow_the_accumulated_3d_matrix(self):
+        # The card turns 180°, so its front face shows its back and hides; the back face,
+        # turned 180° again within the card's 3D rendering context, faces the viewer.
+        css = ('.p{perspective:300pt}.card{position:relative;width:80pt;height:40pt;'
+               'transform-style:preserve-3d;transform:rotateY(180deg)}'
+               '.card div{position:absolute;inset:0;backface-visibility:hidden}'
+               '.front{background:red}.back{background:teal;transform:rotateY(180deg)}')
+        body = '<div class=p><div class=card><div class=front></div><div class=back></div></div></div>'
+        output = self.renderer.render(self.root, css, body)
+        with self.renderer.raster(self.root, output, vector_antialias=False) as pixels:
+            self.assertEqual(pixels.getpixel((60, 40)), TEAL,
+                             'only the back face, facing the viewer, paints')
+
     def test_outline_paints_outside_the_offset_following_the_grown_radius(self):
         # The border box spans 80..160 by 80..120; a 4pt outline 3pt outside it spans 73..167
         # by 73..127 with 19pt outer corner radii (12pt + 3pt + 4pt).

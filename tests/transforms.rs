@@ -9,6 +9,10 @@ const BOX_WIDTH_PT: f32 = 100.0;
 const BOX_HEIGHT_PT: f32 = 40.0;
 /// Border-box height plus the 8pt bottom margin between stacked boxes.
 const BOX_PITCH_PT: f32 = 48.0;
+/// The column-major identity matrix of an untransformed plane.
+const IDENTITY_3D: [f32; 16] = [
+    1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+];
 
 fn trace(css: &str, body: &str) -> LayoutTrace {
     render_html(
@@ -130,19 +134,6 @@ fn transform_lists_compose_about_the_origin_and_flatten_3d_functions() {
         matrices[5],
         [1.0, 0.0, 0.0, cos, 0.0, oy - cos * oy + sin * 20.0],
     );
-}
-
-fn layout_error(css: &str, body: &str) -> String {
-    match render_html(
-        &format!("<style>{PROFILE}{css}</style>{body}"),
-        &local_options(),
-    ) {
-        Err(ferri_pdf::Error::Layout(message)) => message,
-        other => panic!(
-            "{css} must fail at layout, got {:?}",
-            other.map(|_| "a rendering")
-        ),
-    }
 }
 
 /// The projections that draw boxes whose perspective varies `w` across them.
@@ -418,23 +409,37 @@ fn table_rows_give_their_cells_perspective_and_row_groups_give_it_to_rows_only()
         matrices[0],
         [1.0, 0.0, 0.0, 1.0, 0.0, 0.0],
     );
-    let cells = "<table><tr><td>A</td></tr></table>";
-    let planar = |css: &str| {
-        transforms(&trace(&format!("td{{transform:rotate(20deg)}}{css}"), cells).display_lists[0])
-    };
-    assert_eq!(
-        planar("tr{transform-style:preserve-3d}"),
-        planar(""),
-        "a row's 3D rendering context renders coplanar cells in painting order"
-    );
-    let message = layout_error(
+    let output = trace(
         "tr{transform-style:preserve-3d}td{transform:rotateX(30deg)}",
-        cells,
+        "<table><tr><td>A</td><td>B</td></tr></table>",
     );
-    assert!(
-        message.contains("preserve-3d"),
-        "cells leaving the row's plane need depth sorting, as for any box: {message}"
+    let planes = scene_planes(&output.display_lists[0]);
+    assert_eq!(
+        planes.len(),
+        2,
+        "each cell tilting out of its row is a plane of the row's 3D rendering context: {planes:?}"
     );
+    let (sin, cos) = 30.0_f32.to_radians().sin_cos();
+    for (index, plane) in planes.iter().enumerate() {
+        assert!(
+            (plane[5] - cos).abs() < TOLERANCE_PT
+                && (plane[6] - sin).abs() < TOLERANCE_PT
+                && (plane[9] + sin).abs() < TOLERANCE_PT,
+            "cell {index} turns about the x axis within the row's space: {plane:?}"
+        );
+    }
+}
+
+/// The accumulated matrices of the planes of each 3D rendering context in `items`.
+fn scene_planes(items: &[DisplayItem]) -> Vec<[f32; 16]> {
+    items
+        .iter()
+        .filter_map(|item| match item {
+            DisplayItem::Scene(scene) => Some(scene.planes.iter().map(|plane| plane.matrix)),
+            _ => None,
+        })
+        .flatten()
+        .collect()
 }
 
 #[test]
@@ -463,28 +468,57 @@ fn boxes_behind_the_viewer_or_facing_away_with_hidden_backfaces_are_not_rendered
 }
 
 #[test]
-fn preserve_3d_renders_planar_children_and_rejects_depth_sorting() {
-    let message = layout_error(
-        ".s{transform-style:preserve-3d}.s div{transform:rotateX(30deg)}",
-        "<div class='s'><div>A</div></div>",
+fn preserve_3d_places_planes_by_their_accumulated_matrices() {
+    // The child spans 36..56 vertically about its centre y = 46; rotateX(30deg) about it puts
+    // y' = cos·(y - 46) + 46 and z = sin·(y - 46), with the parent's 100pt perspective about
+    // its own centre applying in the context's space (CSS Transforms 2 §4.1.4).
+    let output = trace(
+        "div{height:20pt}.p{perspective:100pt}.s{transform-style:preserve-3d}\
+         .s div{transform:rotateX(30deg)}",
+        "<div class='p'><div class='s'><div>A</div>R</div></div>",
     );
-    assert!(
-        message.contains("preserve-3d"),
-        "children leaving the plane of a 3D rendering context must fail: {message}"
+    let planes = scene_planes(&output.display_lists[0]);
+    assert_eq!(
+        planes.len(),
+        2,
+        "the root's content and its tilted child each have a plane: {planes:?}"
     );
+    let (sin, cos) = 30.0_f32.to_radians().sin_cos();
+    let child = planes[1];
+    let w = |y: f32| child[7] * y + child[15];
+    let z = |y: f32| child[6] * y + child[14];
+    for y in [36.0, 46.0, 56.0] {
+        let depth = sin * (y - 46.0);
+        let perspective = 1.0 - depth / 100.0;
+        assert!(
+            (z(y) - depth).abs() < 1e-3 && (w(y) - perspective).abs() < 1e-4,
+            "a point at y = {y} lies at depth {depth} with w = {perspective}: {child:?}"
+        );
+        let projected = (child[5] * y + child[13]) / w(y);
+        let expected = (cos * (y - 46.0) + 46.0 - 46.0) / perspective + 46.0;
+        assert!(
+            (projected - expected).abs() < 1e-3,
+            "y = {y} projects to {expected}, got {projected}"
+        );
+    }
     let planar = |css: &str| {
-        transforms(
-            &trace(
-                &format!("div{{height:20pt}}.s div{{transform:rotate(20deg)}}{css}"),
-                "<div class='s'><div>A</div></div>",
-            )
-            .display_lists[0],
-        )
+        let output = trace(
+            &format!("div{{height:20pt}}.s div{{transform:rotate(20deg)}}{css}"),
+            "<div class='s'><div>A</div></div>",
+        );
+        let mut matrices = transforms(&output.display_lists[0]);
+        matrices.extend(
+            scene_planes(&output.display_lists[0])
+                .into_iter()
+                .filter(|plane| plane != &IDENTITY_3D)
+                .map(|m| [m[0], m[1], m[4], m[5], m[12], m[13]]),
+        );
+        matrices
     };
     assert_eq!(
         planar(".s{transform-style:preserve-3d}"),
         planar(""),
-        "coplanar planes render in painting order, as when flattened"
+        "a coplanar plane projects as the flattened transform draws"
     );
     let grouped = trace(
         "div{height:20pt}.s{transform-style:preserve-3d;opacity:.5}.s div{transform:rotateX(30deg)}",

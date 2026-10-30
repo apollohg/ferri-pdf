@@ -170,6 +170,16 @@ impl Frame {
                 DisplayItem::PushTransform(matrix) => {
                     *matrix = compose(self.matrix, compose(*matrix, self.inverse().matrix));
                 }
+                DisplayItem::Scene(scene) => {
+                    for plane in &mut scene.planes {
+                        plane.matrix = crate::style::transform::conjugated(
+                            &plane.matrix,
+                            self.matrix,
+                            self.inverse().matrix,
+                        );
+                        self.items(&mut plane.items);
+                    }
+                }
                 DisplayItem::PushProjection(projection) => {
                     *projection = crate::paint::projection::compose(
                         crate::paint::projection::from_affine(self.matrix),

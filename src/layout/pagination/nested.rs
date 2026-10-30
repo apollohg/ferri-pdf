@@ -327,6 +327,9 @@ impl<'a> Paginator<'a, '_, 'a> {
                 DisplayItem::TextShadow(shadow) => shadow.translate([dx, dy]),
                 DisplayItem::Text { line } => *line += place.lines,
                 DisplayItem::Backdrop(backdrop) => backdrop.border.translate([dx, dy]),
+                DisplayItem::Scene(_) => {
+                    unreachable!("scenes are assembled after columns place their items")
+                }
                 DisplayItem::PushClip(_)
                 | DisplayItem::PushTransform(_)
                 | DisplayItem::PushProjection(_)
@@ -448,6 +451,17 @@ impl<'a> Paginator<'a, '_, 'a> {
                     None => self.clip,
                 },
                 ..group
+            }),
+            Effect::Parent3d(style, transform, parent) => Effect::Parent3d(
+                style,
+                transform.map(|node| self.effect(nodes, sticky, node, place, effects)),
+                parent.map(|node| self.effect(nodes, sticky, node, place, effects)),
+            ),
+            Effect::Scene(root) => Effect::Scene(super::SceneRoot {
+                group: root
+                    .group
+                    .map(|node| self.effect(nodes, sticky, node, place, effects)),
+                ..root
             }),
             effect => effect,
         };
