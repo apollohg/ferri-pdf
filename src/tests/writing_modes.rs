@@ -336,6 +336,44 @@ fn combined_emphasis_uses_one_object_replacement_character_for_skip_rules() {
 }
 
 #[test]
+fn underline_left_and_right_choose_the_side_in_vertical_typographic_modes() {
+    use crate::graphics::{DecorationLine, DisplayItem};
+    for (mode, position, underline_under, overline_under) in [
+        ("vertical-rl", "under left", true, false),
+        ("vertical-rl", "right", false, true),
+        ("vertical-lr", "under right", false, true),
+        ("vertical-lr", "left", true, false),
+        ("horizontal-tb", "under right", true, false),
+    ] {
+        let trace = render(
+            mode,
+            &format!("text-decoration:underline overline;text-underline-position:{position}"),
+            "<p>ＡＡ</p>",
+        );
+        let baseline = trace.pages[0][0].baseline;
+        let side = |line: DecorationLine| {
+            let tops: Vec<f32> = trace.display_lists[0]
+                .iter()
+                .filter_map(|item| match item {
+                    DisplayItem::Decoration(paint) if paint.line == line => Some(paint.rect.y),
+                    _ => None,
+                })
+                .collect();
+            assert!(!tops.is_empty(), "{mode}/{position}: {line:?} must paint");
+            tops.iter().all(|top| *top > baseline)
+        };
+        assert_eq!(
+            [
+                side(DecorationLine::Underline),
+                side(DecorationLine::Overline)
+            ],
+            [underline_under, overline_under],
+            "{mode}/{position}: [underline, overline] below the baseline (line-under side)"
+        );
+    }
+}
+
+#[test]
 fn emphasis_marks_take_their_side_from_left_and_right_in_vertical_typographic_modes() {
     for (mode, orientation, position, under) in [
         ("vertical-rl", "mixed", "over right", false),

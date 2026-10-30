@@ -239,23 +239,28 @@ impl DecorationSkip {
     }
 }
 
+/// `text-underline-position`.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
-pub(crate) enum UnderlinePosition {
-    /// The font's underline position (`auto`, `from-font`, and `left`/`right` in horizontal text).
-    #[default]
-    Font,
-    /// Below the decorating box's descent.
-    Under,
+pub(crate) struct UnderlinePosition {
+    /// `under`: below the decorating box's descent rather than at the font's position.
+    pub under: bool,
+    /// `right` (`true`) or `left`, the side underlines take in vertical typographic modes.
+    pub right: Option<bool>,
 }
 impl UnderlinePosition {
-    /// `auto | from-font | [under || [left | right]]`; left and right only affect vertical text.
+    /// `auto | [ from-font | under ] || [ left | right ]`.
     pub(super) fn from_component(value: &Component) -> Self {
         let mut keywords = Vec::new();
         value.keywords(&mut keywords);
-        if keywords.contains(&Keyword::Under) {
-            Self::Under
-        } else {
-            Self::Font
+        Self {
+            under: keywords.contains(&Keyword::Under),
+            right: if keywords.contains(&Keyword::Right) {
+                Some(true)
+            } else if keywords.contains(&Keyword::Left) {
+                Some(false)
+            } else {
+                None
+            },
         }
     }
 }

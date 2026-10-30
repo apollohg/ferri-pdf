@@ -3,7 +3,7 @@
 //! (CSS Text Decoration 4 §2.10), at a position and thickness from its own font.
 use crate::document::Paragraph;
 use crate::graphics::{DecorationLine, DecorationPaint, Rect};
-use crate::style::{DecorationInset, Style, TextDecoration, UnderlinePosition};
+use crate::style::{DecorationInset, Style, TextDecoration};
 use crate::text::line_boxes::{BoxMetrics, Slot, slot_width};
 use crate::text::{Line, TextContext, TextError};
 
@@ -83,11 +83,19 @@ impl DecoratingFont {
             .underline_offset
             .as_ref()
             .map(|offset| offset.resolve(style.size));
+        let position = style.text_decorations.underline_position;
+        // CSS Text Decoration 4 §2.7: in vertical typographic modes `left` and `right` put
+        // underlines under the text on that side; the right is the line-over side, where an
+        // overline then switches to the line-under side.
+        let side = position.right.filter(|_| style.vertical_typographic_mode());
         let top = match line {
-            DecorationLine::Underline => match style.text_decorations.underline_position {
-                UnderlinePosition::Font => offset.unwrap_or(font_top),
-                UnderlinePosition::Under => self.descent + offset.unwrap_or(0.0),
+            DecorationLine::Underline => match side {
+                Some(true) => -self.ascent - thickness - offset.unwrap_or(0.0),
+                Some(false) => self.descent + offset.unwrap_or(0.0),
+                None if position.under => self.descent + offset.unwrap_or(0.0),
+                None => offset.unwrap_or(font_top),
             },
+            DecorationLine::Overline if side == Some(true) => self.descent,
             DecorationLine::Overline => -self.ascent - thickness,
             DecorationLine::LineThrough => font_top + (font_thickness - thickness) / 2.0,
         };
