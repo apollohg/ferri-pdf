@@ -397,6 +397,30 @@ fn hanging_punctuation_sits_outside_the_line_box() {
 }
 
 #[test]
+fn allow_end_hangs_nothing_of_a_comma_with_a_negative_advance() {
+    // The letter spacing leaves the comma ending the first line a negative advance, so the
+    // line fits without hanging it.
+    let fit = natural_width("aaaa bbbb");
+    let trace = trace(
+        &format!("p{{width:{fit}pt;hanging-punctuation:allow-end}}"),
+        "<p>aaaa bbbb<span style='letter-spacing:-30pt'>,</span> cccc</p>",
+    );
+    assert_eq!(texts(&trace), ["aaaa bbbb,", "cccc"]);
+    let first = lines(&trace)[0];
+    let comma = first.runs.last().unwrap();
+    let advance = comma.glyphs().last().unwrap().advance(comma.font_size);
+    assert!(
+        advance < 0.0,
+        "the comma must end the line with a negative advance to exercise the hang: {advance}"
+    );
+    assert_labelled_pt(
+        "the line measures its comma's negative advance",
+        first.width,
+        fit + advance,
+    );
+}
+
+#[test]
 fn preserve_spaces_converts_segment_breaks_and_tabs_to_spaces() {
     let preserved = trace(
         "p{white-space-collapse:preserve-spaces}",

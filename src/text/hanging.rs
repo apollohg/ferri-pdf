@@ -44,7 +44,9 @@ impl Hangable {
     /// The hanging advance at the line's left and right edges, given its measured width.
     pub(super) fn hanging(self, width: f32, available: f32, rtl: bool) -> [f32; 2] {
         let end = if self.conditional {
-            (width - self.start - available).clamp(0.0, self.end)
+            // Spacing and trimming can leave the punctuation a negative advance, which does
+            // not add to the overflow.
+            (width - self.start - available).clamp(0.0, self.end.max(0.0))
         } else {
             self.end
         };
