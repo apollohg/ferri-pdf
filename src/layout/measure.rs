@@ -836,6 +836,86 @@ impl<'a> Measurer<'a> {
         Ok(self.text.layout_paragraph(paragraph, width, atomics)?)
     }
 
+    /// The lines of `paragraph`, the content of a `continue: discard` container whose block
+    /// size is `extent` and whose clamp is `clamp`: at most `max-lines` line boxes and those
+    /// before the content overflows `extent`, never fewer than one, the last ellipsized when
+    /// content follows it (CSS Overflow 4 §5.2–5.3, §4.4).
+    pub(crate) fn discarded_text_lines(
+        &self,
+        paragraph: &crate::document::Paragraph,
+        width: f32,
+        atomics: &[crate::text::AtomicMetrics],
+        extent: f32,
+        clamp: &crate::style::LineClamp,
+    ) -> Result<Vec<Line>, LayoutError> {
+        let lines = self.text_lines(paragraph, width, atomics)?;
+        let mut used = 0.0;
+        let fitting = lines
+            .iter()
+            .take_while(|line| {
+                used += line.height;
+                !crate::layout::pagination::overflows(used, extent)
+            })
+            .count();
+        let kept = clamp.max_lines.unwrap_or(usize::MAX).min(fitting.max(1));
+        if kept >= lines.len() {
+            return Ok(lines);
+        }
+        self.work.spend(paragraph.text().len().max(1))?;
+        let prepared =
+            self.text
+                .prepare_paragraph(paragraph)
+                .clamped(Some(crate::text::ParagraphClamp {
+                    lines: kept,
+                    ellipsis: Some(clamp.block_ellipsis.clone())
+                        .filter(|ellipsis| *ellipsis != crate::style::BlockEllipsis::None),
+                }));
+        Ok(prepared
+            .lines(prepared.start(), width, atomics)?
+            .collect::<Result<_, _>>()?)
+    }
+
+    /// `block` laid out at `width` as the only content of a `continue: discard` container
+    /// whose block size is `extent` and which keeps at most `max_lines` line boxes: the line
+    /// boxes before its content overflows `extent`, never fewer than one (CSS Overflow 4
+    /// §5.2–5.3).
+    pub(crate) fn discarded_block(
+        &mut self,
+        block: &'a BlockBox,
+        width: f32,
+        rtl: bool,
+        extent: f32,
+        max_lines: Option<usize>,
+    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+        self.run(|measurer| {
+            let measured = measurer.measure_block(block, 0.0, width, rtl, false, None)?;
+            let mut counts = [0; 2];
+            lines_within(
+                &measured.items,
+                measured.before.value(),
+                extent,
+                &mut counts,
+            );
+            let [fitting, total] = counts;
+            let lines = max_lines.unwrap_or(usize::MAX).min(fitting.max(1));
+            if lines >= total {
+                return Ok(measured);
+            }
+            let geometry = block_geometry(measurer, block, 0.0, width, rtl, None)?;
+            measurer.format_flow(
+                block.into(),
+                geometry,
+                false,
+                None,
+                None,
+                Some(LineBudget {
+                    lines,
+                    following: true,
+                }),
+            )
+        })
+    }
+
     pub(super) fn box_edges(
         &self,
         block: impl Into<BlockSource<'a>>,

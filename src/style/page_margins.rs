@@ -202,14 +202,10 @@ impl Stylesheet {
             let Some(content) = content else {
                 continue;
             };
-            // Margin boxes lay out their lines in one column, unclamped.
+            // Margin boxes lay out their lines in one column.
             crate::style::page_rules::unsupported_in(
                 &format!("@{}", location.name()),
-                &[
-                    crate::style::page_rules::multicol(&style).as_slice(),
-                    &[(Property::MaxLines, style.clamp.max_lines.is_some())],
-                ]
-                .concat(),
+                &crate::style::page_rules::multicol(&style),
             )?;
             margins.push(PageMargin {
                 location,

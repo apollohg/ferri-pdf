@@ -129,22 +129,31 @@ impl<'t> Prepared<'_, 't> {
     }
     fn layout(&mut self, measurer: &mut Measurer<'t>) -> Result<(), LayoutError> {
         self.validate()?;
-        let inline = self.content[self.inline_axis()];
+        let inline_axis = self.inline_axis();
+        let [inline, extent] = [self.content[inline_axis], self.content[1 - inline_axis]];
+        let style = &self.margin.style;
+        // CSS Overflow 4 §5.3: a margin box, a block container, discards the content after
+        // its region break.
+        let discards = style.clamp.continuation == crate::style::Continue::Discard;
         if let Some(element) = self.element {
-            self.measured = Some(measurer.block(
-                element,
-                0.0,
-                inline,
-                self.margin.style.used_rtl(),
-                false,
-                None,
-            )?);
+            let rtl = style.used_rtl();
+            self.measured = Some(if discards {
+                measurer.discarded_block(element, inline, rtl, extent, style.clamp.max_lines)?
+            } else {
+                measurer.block(element, 0.0, inline, rtl, false, None)?
+            });
             return Ok(());
         }
         self.lines = self
             .paragraph
             .as_ref()
-            .map(|p| measurer.text_lines(p, inline, &self.images.1))
+            .map(|p| {
+                if discards {
+                    measurer.discarded_text_lines(p, inline, &self.images.1, extent, &style.clamp)
+                } else {
+                    measurer.text_lines(p, inline, &self.images.1)
+                }
+            })
             .transpose()?
             .unwrap_or_default();
         Ok(())

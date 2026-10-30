@@ -125,6 +125,65 @@ fn page_margin_overflow_stays_visible_and_centres_all_content() {
 }
 
 #[test]
+fn discarding_page_margin_boxes_keep_the_lines_before_their_region_break() {
+    // CSS Overflow 4 §5.2–5.3: a `continue: discard` margin box keeps at most `max-lines`
+    // line boxes and those before its content overflows its block size, never fewer than one;
+    // `block-ellipsis` of the box holding the last line marks the break (§4.4).
+    let html = format!(
+        r#"<style>{PROFILE}html{{font-family:Spike;font-size:12pt;line-height:18pt}}
+      #h{{position:running(h)}}
+      @page {{@top-left{{content:"First\a Second\a Third";white-space:pre;line-clamp:1}}
+             @top-right{{content:"Uno\a Dos\a Tres";white-space:pre;continue:discard;padding:2pt}}
+             @bottom-left{{content:element(h);line-clamp:2}}
+             @bottom-right{{content:"Kept\a Also";white-space:pre;max-lines:1}}}}
+      </style><div id=h>One<br>Two<br>Three</div><p>Body</p>"#
+    );
+    let trace = render_html(&html, &local_options())
+        .unwrap()
+        .layout
+        .unwrap();
+    // A running element's lines lie in the flow frame placing it in its margin box.
+    fn frame_texts<'t>(items: &'t [ferri_pdf::DisplayItem], texts: &mut Vec<&'t str>) {
+        for item in items {
+            if let ferri_pdf::DisplayItem::Frame(frame) = item {
+                texts.extend(frame.lines.iter().map(|line| line.text.as_str()));
+                frame_texts(&frame.items, texts);
+            }
+        }
+    }
+    let mut texts: Vec<&str> = trace.pages[0]
+        .iter()
+        .map(|line| line.text.as_str())
+        .collect();
+    frame_texts(&trace.display_lists[0], &mut texts);
+    for (kept, reason) in [
+        (
+            "First…",
+            "line-clamp keeps one line, ellipsized as content follows it",
+        ),
+        (
+            "Uno",
+            "continue: discard keeps the one line that fits the 32pt content box",
+        ),
+        ("One", "the running element's first two lines stay"),
+        ("Two", "the running element's first two lines stay"),
+        ("Kept", "max-lines without continue: discard clamps nothing"),
+        ("Also", "max-lines without continue: discard clamps nothing"),
+    ] {
+        assert!(
+            texts.contains(&kept),
+            "{reason}: {kept:?} missing from {texts:?}"
+        );
+    }
+    for discarded in ["First", "Second", "Third", "Dos", "Tres", "Three"] {
+        assert!(
+            !texts.contains(&discarded),
+            "{discarded:?} lies after its margin box's region break: {texts:?}"
+        );
+    }
+}
+
+#[test]
 fn fixed_margin_dimensions_fill_the_margin_and_middle_boxes_force_symmetric_sides() {
     let html = format!(
         r#"<style>{PROFILE}html{{font-family:Spike;font-size:12pt;line-height:18pt}}
@@ -188,10 +247,6 @@ fn page_contexts_reject_properties_their_boxes_do_not_implement() {
         (
             "@page{@top-center{content:'a';column-width:5em}}",
             "column-width in @top-center",
-        ),
-        (
-            "@page{@bottom-left{content:'a';line-clamp:1}}",
-            "max-lines in @bottom-left",
         ),
     ] {
         let html = format!("<style>{PROFILE}{rule}</style><p>Body</p>");
