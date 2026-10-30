@@ -258,6 +258,8 @@ pub(super) fn font_style(
     match keywords.first() {
         Some(Keyword::Normal) => Ok((FontStyle::Normal, FontSlant::NORMAL)),
         Some(Keyword::Italic) => Ok((FontStyle::Italic, FontSlant::NORMAL)),
+        Some(Keyword::Left) => Ok((FontStyle::Left, FontSlant::NORMAL)),
+        Some(Keyword::Right) => Ok((FontStyle::Right, FontSlant::NORMAL)),
         Some(Keyword::Oblique) => {
             let angles = slant_angles(value, relative)?;
             Ok((
@@ -330,6 +332,8 @@ pub(super) fn face_style(
     Ok(match style {
         FontStyle::Normal => FontFaceStyle::Normal,
         FontStyle::Italic => FontFaceStyle::Italic,
+        FontStyle::Left => FontFaceStyle::Left,
+        FontStyle::Right => FontFaceStyle::Right,
         FontStyle::Oblique => {
             let angles = slant_angles(value, relative)?;
             FontFaceStyle::Oblique(match angles[..] {

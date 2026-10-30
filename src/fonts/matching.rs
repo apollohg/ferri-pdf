@@ -75,7 +75,7 @@ pub(super) fn candidates(
 }
 
 pub(super) fn style_match(face: FontFaceStyle, requested: FontSelection) -> (Rank, FontSlant) {
-    let italic = face == FontFaceStyle::Italic;
+    let italic = face.is_italic();
     let (min, max) = match face {
         FontFaceStyle::Oblique(range) => range.bounds(FontSlant::DEFAULT),
         _ => (FontSlant::NORMAL, FontSlant::NORMAL),
@@ -83,7 +83,36 @@ pub(super) fn style_match(face: FontFaceStyle, requested: FontSelection) -> (Ran
     let (mut min, mut max) = (min.value(), max.value());
     let normal = requested.style == FontStyle::Normal
         || (requested.style == FontStyle::Oblique && requested.slant == FontSlant::NORMAL);
-    let (rank, angle) = if normal {
+    let (rank, angle) = if let Some(sign) = requested.style.italic_direction() {
+        // CSS Fonts 4 §2.4: `left` and `right` match an italic of their slant direction, else
+        // an oblique slanted the same way, searched as `italic` searches obliques.
+        let face_sign = match face {
+            FontFaceStyle::Left => Some(1.0),
+            FontFaceStyle::Right => Some(-1.0),
+            _ => None,
+        };
+        if sign < 0.0 {
+            (min, max) = (-max, -min);
+        }
+        let target = FontSlant::ITALIC_MATCH.value();
+        let (rank, point) = if face_sign == Some(sign) {
+            (Rank(0, 0.0), 0.0)
+        } else if face_sign.is_some() {
+            (Rank(6, 0.0), 0.0)
+        } else if italic {
+            (Rank(3, 0.0), 0.0)
+        } else if max >= target {
+            let point = min.max(target);
+            (Rank(1, point - target), point)
+        } else if max > 0.0 {
+            (Rank(2, target - max), max)
+        } else if max == 0.0 {
+            (Rank(4, 0.0), 0.0)
+        } else {
+            (Rank(5, -max), max)
+        };
+        (rank, point * sign)
+    } else if normal {
         if italic {
             (Rank(1, 0.0), 0.0)
         } else if max >= 0.0 {

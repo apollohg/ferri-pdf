@@ -64,7 +64,9 @@ impl SvgFonts {
                         )],
                         post_script_name: descriptor.family.clone(),
                         style: match descriptor.style {
-                            FontFaceStyle::Italic => fontdb::Style::Italic,
+                            FontFaceStyle::Italic | FontFaceStyle::Left | FontFaceStyle::Right => {
+                                fontdb::Style::Italic
+                            }
                             FontFaceStyle::Oblique(_) => fontdb::Style::Oblique,
                             FontFaceStyle::Normal | FontFaceStyle::Auto => fontdb::Style::Normal,
                         },
@@ -319,6 +321,8 @@ fn selection(font: &Font) -> Result<FontSelection, FontError> {
         match font.style() {
             crate::svg::usvg::FontStyle::Normal => FontStyle::Normal,
             crate::svg::usvg::FontStyle::Italic => FontStyle::Italic,
+            crate::svg::usvg::FontStyle::Left => FontStyle::Left,
+            crate::svg::usvg::FontStyle::Right => FontStyle::Right,
             crate::svg::usvg::FontStyle::Oblique => FontStyle::Oblique,
         },
     );

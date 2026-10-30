@@ -76,6 +76,8 @@ impl<'a, 'input: 'a> FromValue<'a, 'input> for FontStyle {
         match value {
             "normal" => Some(FontStyle::Normal),
             "italic" => Some(FontStyle::Italic),
+            "left" => Some(FontStyle::Left),
+            "right" => Some(FontStyle::Right),
             "oblique" => Some(FontStyle::Oblique),
             _ => None,
         }
@@ -428,6 +430,9 @@ fn resolve_text_flow(node: SvgNode, state: &converter::State) -> Option<TextFlow
     })))
 }
 
+/// The `slnt` axis value of a default oblique.
+const CLOCKWISE_SLANT_AXIS: f32 = -12.0;
+
 pub(super) fn convert_font(node: SvgNode, state: &converter::State) -> Font {
     let style: FontStyle = node.find_attribute(AId::FontStyle).unwrap_or_default();
     let stretch = conv_font_stretch(node);
@@ -471,10 +476,18 @@ pub(super) fn convert_font(node: SvgNode, state: &converter::State) -> Font {
         variations.push(FontVariation::new(*b"ital", 1.0));
     }
 
-    // Map font-style: oblique to slnt axis (if not already set)
-    // Default oblique angle is typically 12-14 degrees
-    if !has_slnt && style == FontStyle::Oblique {
-        variations.push(FontVariation::new(*b"slnt", -12.0));
+    // Map font-style: oblique and the directional italics to the slnt axis (if not already
+    // set), which measures counter-clockwise.
+    if !has_slnt {
+        match style {
+            FontStyle::Oblique | FontStyle::Left => {
+                variations.push(FontVariation::new(*b"slnt", CLOCKWISE_SLANT_AXIS));
+            }
+            FontStyle::Right => {
+                variations.push(FontVariation::new(*b"slnt", -CLOCKWISE_SLANT_AXIS));
+            }
+            FontStyle::Normal | FontStyle::Italic => {}
+        }
     }
 
     let font_families = if let Some(n) = node.ancestors().find(|n| n.has_attribute(AId::FontFamily))

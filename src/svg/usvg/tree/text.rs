@@ -105,6 +105,10 @@ pub enum FontStyle {
     Normal,
     /// A form that is generally cursive in nature.
     Italic,
+    /// An italic slanted clockwise.
+    Left,
+    /// An italic slanted counter-clockwise.
+    Right,
     /// A typically-sloped version of the regular face.
     Oblique,
 }
@@ -130,7 +134,7 @@ impl From<FontStyle> for fontdb::Style {
     fn from(style: FontStyle) -> Self {
         match style {
             FontStyle::Normal => fontdb::Style::Normal,
-            FontStyle::Italic => fontdb::Style::Italic,
+            FontStyle::Italic | FontStyle::Left | FontStyle::Right => fontdb::Style::Italic,
             FontStyle::Oblique => fontdb::Style::Oblique,
         }
     }

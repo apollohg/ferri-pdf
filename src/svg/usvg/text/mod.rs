@@ -176,7 +176,7 @@ impl FontResolver<'_> {
 
             let style = match font.style {
                 FontStyle::Normal => fontdb::Style::Normal,
-                FontStyle::Italic => fontdb::Style::Italic,
+                FontStyle::Italic | FontStyle::Left | FontStyle::Right => fontdb::Style::Italic,
                 FontStyle::Oblique => fontdb::Style::Oblique,
             };
 

@@ -48,6 +48,10 @@ pub enum FontStyle {
     #[default]
     Normal,
     Italic,
+    /// An italic slanted clockwise (CSS Fonts 4 §2.4).
+    Left,
+    /// An italic slanted counter-clockwise.
+    Right,
     Oblique,
 }
 

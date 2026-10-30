@@ -71,8 +71,15 @@ impl FontBook {
                 FontStyle::Italic => (false, FontSlant::ITALIC_MATCH),
                 FontStyle::Normal => (false, FontSlant::NORMAL),
                 FontStyle::Oblique => (false, requested.slant),
+                // An `ital` axis gives no slant direction; `slnt` gives one.
+                style @ (FontStyle::Left | FontStyle::Right) => (
+                    false,
+                    FontSlant::ITALIC_MATCH.directed(style.italic_direction()),
+                ),
             },
-            FontFaceStyle::Italic => (true, FontSlant::NORMAL),
+            FontFaceStyle::Italic | FontFaceStyle::Left | FontFaceStyle::Right => {
+                (true, FontSlant::NORMAL)
+            }
             other => (false, matching::style_match(other, requested).1),
         };
         let mut weight = match descriptor.weight {
@@ -81,6 +88,8 @@ impl FontBook {
         };
         let mut style = match descriptor.style {
             FontFaceStyle::Italic => FontStyle::Italic,
+            FontFaceStyle::Left => FontStyle::Left,
+            FontFaceStyle::Right => FontStyle::Right,
             FontFaceStyle::Oblique(_) if angle != FontSlant::NORMAL => FontStyle::Oblique,
             _ => FontStyle::Normal,
         };

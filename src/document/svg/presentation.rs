@@ -655,6 +655,8 @@ fn font_style(style: &Style) -> Result<&'static str, StyleError> {
     match style.font_style {
         FontStyle::Normal => Ok("normal"),
         FontStyle::Italic => Ok("italic"),
+        FontStyle::Left => Ok("left"),
+        FontStyle::Right => Ok("right"),
         FontStyle::Oblique if style.font_slant == crate::fonts::FontSlant::DEFAULT => Ok("oblique"),
         FontStyle::Oblique => Err(StyleError::Unsupported(format!(
             "font-style: oblique {}deg on SVG text",

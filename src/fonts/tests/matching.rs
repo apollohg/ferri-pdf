@@ -487,3 +487,25 @@ fn cloned_books_share_lazy_results_and_original_bytes_without_acquiring_cached_f
         .unwrap();
     assert!(selected.face.glyph_index('H').is_some());
 }
+
+#[test]
+fn bundled_italic_labels_follow_the_post_table_slant_direction() {
+    for face in super::super::bundled::faces() {
+        let crate::fonts::FontData::Bundled(data) = face.data else {
+            unreachable!("bundled faces embed their data")
+        };
+        let angle = ttf_parser::Face::parse(data, 0).unwrap().italic_angle();
+        // OpenType measures italicAngle counter-clockwise, CSS measures slant clockwise.
+        let expected = match (face.descriptor.style, -angle) {
+            (FontFaceStyle::Left, slant) => slant > 0.0,
+            (FontFaceStyle::Right, slant) => slant < 0.0,
+            (FontFaceStyle::Italic, slant) => slant == 0.0,
+            _ => true,
+        };
+        assert!(
+            expected,
+            "{} {:?}: the label must give the italicAngle {angle} direction (CSS Fonts 4 §2.4)",
+            face.descriptor.family, face.descriptor.weight
+        );
+    }
+}

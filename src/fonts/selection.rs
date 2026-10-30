@@ -43,6 +43,10 @@ impl FontSlant {
     pub const fn value(self) -> f32 {
         self.0
     }
+    /// This angle slanted the way `direction`'s sign gives, if any.
+    pub(crate) fn directed(self, direction: Option<f32>) -> Self {
+        Self(self.0 * direction.unwrap_or(1.0))
+    }
     pub fn skew(self) -> f32 {
         f64::from(self.0).to_radians().tan() as f32
     }
@@ -103,15 +107,35 @@ impl<T: Serialize + PartialEq> Serialize for FontRange<T> {
 pub enum FontFaceStyle {
     Auto,
     Normal,
+    /// An italic of unspecified slant direction.
     Italic,
+    Left,
+    Right,
     Oblique(FontRange<FontSlant>),
+}
+impl FontFaceStyle {
+    pub(crate) const fn is_italic(self) -> bool {
+        matches!(self, Self::Italic | Self::Left | Self::Right)
+    }
 }
 impl From<FontStyle> for FontFaceStyle {
     fn from(style: FontStyle) -> Self {
         match style {
             FontStyle::Normal => Self::Normal,
             FontStyle::Italic => Self::Italic,
+            FontStyle::Left => Self::Left,
+            FontStyle::Right => Self::Right,
             FontStyle::Oblique => Self::Oblique(FontRange::single(FontSlant::DEFAULT)),
+        }
+    }
+}
+impl FontStyle {
+    /// The sign of the slant a directional italic requests: positive for clockwise.
+    pub(crate) const fn italic_direction(self) -> Option<f32> {
+        match self {
+            Self::Left => Some(1.0),
+            Self::Right => Some(-1.0),
+            Self::Normal | Self::Italic | Self::Oblique => None,
         }
     }
 }
@@ -132,7 +156,9 @@ impl FontSelection {
             width: FontWidth::NORMAL,
             slant: match style {
                 FontStyle::Oblique => FontSlant::DEFAULT,
-                FontStyle::Normal | FontStyle::Italic => FontSlant::NORMAL,
+                FontStyle::Normal | FontStyle::Italic | FontStyle::Left | FontStyle::Right => {
+                    FontSlant::NORMAL
+                }
             },
             synthesis: FontSynthesis::ALL,
         }
@@ -245,6 +271,9 @@ impl FontInstance<'_> {
         let angle = match requested.style {
             FontStyle::Normal => FontSlant::NORMAL,
             FontStyle::Italic => FontSlant::DEFAULT,
+            style @ (FontStyle::Left | FontStyle::Right) => {
+                FontSlant::DEFAULT.directed(style.italic_direction())
+            }
             FontStyle::Oblique => requested.slant,
         };
         let synthesis = FontSynthesis {

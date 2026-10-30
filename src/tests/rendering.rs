@@ -1986,6 +1986,64 @@ fn unavailable_italic_faces_rematch_regular_faces_with_or_without_synthesis() {
 }
 
 #[test]
+fn directional_italics_match_faces_by_slant_direction_and_synthesize_the_rest() {
+    let first_run = |html: &str| {
+        let trace = render_with_resolver(
+            html,
+            &RenderOptions {
+                base: "/document".into(),
+                include_layout: true,
+                ..Default::default()
+            },
+            &Assets(HashMap::from([(
+                PathBuf::from("/document/serif.ttf"),
+                include_bytes!("../../assets/fonts/DejaVuSerif.ttf").to_vec(),
+            )])),
+        )
+        .unwrap_or_else(|error| panic!("{html}: {error}"))
+        .layout
+        .unwrap();
+        let run = trace.pages[0][0].runs[0].clone();
+        (trace.fonts[run.font_id.index()].clone(), run)
+    };
+    let (face, run) = first_run("<p style='font-style:left'>Slant</p>");
+    assert_eq!(
+        face.style,
+        crate::fonts::FontFaceStyle::Left,
+        "Liberation Serif Italic slants clockwise, so left must select it (CSS Fonts 4 §2.4)"
+    );
+    assert!(
+        !run.synthesis.oblique,
+        "a real left italic needs no synthesis"
+    );
+    let (face, run) = first_run("<p style='font-style:right'>Slant</p>");
+    assert_eq!(
+        face.style,
+        crate::fonts::FontFaceStyle::Normal,
+        "no bundled serif italic slants counter-clockwise, so right must fall back past the \
+         clockwise italic to the regular face"
+    );
+    assert!(
+        run.synthesis.oblique && run.oblique_skew < 0.0,
+        "right must synthesize a counter-clockwise oblique, got skew {}",
+        run.oblique_skew
+    );
+    assert!(
+        (run.oblique_skew + crate::fonts::FontSlant::DEFAULT.skew()).abs() < 1e-6,
+        "the synthesized slant must be -14deg, got skew {}",
+        run.oblique_skew
+    );
+    let (face, run) = first_run(
+        "<style>@font-face{font-family:Custom;src:url(serif.ttf)}@font-face{font-family:Custom;font-style:left;src:url(serif.ttf)}@font-face{font-family:Custom;font-style:right;font-weight:300;src:url(serif.ttf)}p{font-family:Custom;font-style:right}</style><p>Slant</p>",
+    );
+    assert_eq!(
+        (face.style, run.synthesis.oblique),
+        (crate::fonts::FontFaceStyle::Right, false),
+        "a face labeled right must win over a left face of the requested weight"
+    );
+}
+
+#[test]
 fn synthesis_shorthand_participates_in_the_cascade_and_leaves_real_faces_enabled() {
     let html = format!(
         "<style>{PROFILE} p{{font-synthesis:none!important}} p{{font-synthesis-weight:auto}}</style><p><strong><em>Wide words</em></strong></p>"

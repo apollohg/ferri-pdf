@@ -214,6 +214,18 @@ fn inheritance_crosses_from_html_into_svg_and_currentcolor_follows_each_element(
         "350",
         "CSS Fonts 4 §2.2: any whole weight reaches font matching\n{light}"
     );
+    for direction in ["left", "right"] {
+        let slanted = styled(
+            &format!("p{{font-style:{direction}}}"),
+            "<p><svg><text id='slanted'>Slanted</text></svg></p>",
+        )
+        .unwrap_or_else(|error| panic!("font-style:{direction} must reach SVG text: {error}"));
+        assert_eq!(
+            value(&slanted, "slanted", "font-style"),
+            direction,
+            "CSS Fonts 4 §2.4: the directional italic reaches SVG font matching\n{slanted}"
+        );
+    }
 }
 
 #[test]
