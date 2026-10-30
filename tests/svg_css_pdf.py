@@ -249,14 +249,30 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
             self.assertLess(min(columns), left + anchor - SQUARE,
                             'the word extends leftwards from its anchor')
 
-    def test_clip_path_element_references_on_boxes_are_reported_rather_than_ignored(self):
+    def test_clip_path_element_references_clip_boxes(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
-            for body in ['<div style="clip-path:url(#c)">X</div>',
-                         f'<svg width="{ICON}" height="{ICON}" style="clip-path:url(#c)">'
-                         '<clipPath id="c"><rect width="9" height="9"/></clipPath></svg>']:
-                completed, _ = self.convert(Path(directory), '', body)
-                self.assertNotEqual(completed.returncode, 0, f'{body} must not render unclipped')
-                self.assertIn('clipPath element on a box', completed.stderr, body)
+            pixels = self.render(
+                Path(directory), 'div{height:%dpt;width:%dpt}' % (ICON, 2 * ICON),
+                '<svg width="0" height="0" style="position:absolute">'
+                f'<clipPath id="disc"><circle cx="{ICON // 2}" cy="{ICON // 2}" r="{SQUARE // 2}"/>'
+                '</clipPath><clipPath id="right" clipPathUnits="objectBoundingBox">'
+                '<rect x="0.5" width="0.5" height="1"/></clipPath></svg>'
+                '<div style="background:blue;clip-path:url(#disc)"></div>'
+                '<div style="background:rgb(0,160,0);clip-path:url(#right)"></div>'
+                '<div style="background:red;clip-path:url(#missing)"></div>')
+            half = ICON // 2
+            self.assertPixel(pixels, half, half, BLUE,
+                             'CSS Masking 1 §6.1: the clipPath circle keeps its centre')
+            self.assertPixel(pixels, half, 2, WHITE,
+                             'user space starts at the border box, so the circle clips the top')
+            self.assertPixel(pixels, ICON + half, half, WHITE,
+                             'the circle clips the rest of the box')
+            self.assertPixel(pixels, half, ICON + half, WHITE,
+                             'objectBoundingBox units: the left half of the box is clipped')
+            self.assertPixel(pixels, ICON + half, ICON + half, GREEN,
+                             'objectBoundingBox units: the right half of the box remains')
+            self.assertPixel(pixels, half, 2 * ICON + half, RED,
+                             'a reference naming no clipPath element clips nothing')
 
     def test_svg_images_keep_their_own_styles(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:

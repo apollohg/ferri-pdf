@@ -28,6 +28,8 @@ use std::sync::Arc;
 /// Filter Effects 1 §9.6 `luminanceToAlpha` coefficients, which §7.10.1 applies to sRGB.
 const LUMINANCE: [f32; 3] = [0.2125, 0.7154, 0.0721];
 const CHANNEL_MAX: f32 = 255.0;
+const CLIP_PATH_ELEMENT: &str = "clipPath";
+const CLIP_PATH_PROPERTY: &str = "clip-path";
 const WHITE: Color = Color {
     rgb: [u8::MAX; 3],
     alpha: 1.0,
@@ -53,10 +55,10 @@ pub(super) fn draw(
         if mask
             .fragments
             .iter()
-            .any(|fragment| fragment.decoration.masks.clip_path.is_some())
+            .any(|fragment| fragment.decoration.masks.is_clipped())
         {
-            let clip = soft_mask(painter, mask, area, surface, |_, fragment, values| {
-                draw_clip_path(fragment, area, values)
+            let clip = soft_mask(painter, mask, area, surface, |painter, fragment, values| {
+                draw_clip_path(painter, fragment, area, values)
             })?;
             surface.push_mask(clip);
             pushes += 1;
@@ -194,12 +196,23 @@ fn fill(area: Rect, color: Color, surface: &mut Surface<'_>) -> Result<(), PdfEr
 /// One fragment's clipping region in white over black (§6.1), cut where the fragment is
 /// sliced from the rest of its box.
 fn draw_clip_path(
+    painter: &Painter<'_, '_, '_>,
     fragment: &BoxPaint,
     area: Rect,
     surface: &mut Surface<'_>,
 ) -> Result<(), PdfError> {
     fill(area, Color::BLACK, surface)?;
-    let Some(clip_path) = &fragment.decoration.masks.clip_path else {
+    let masks = &fragment.decoration.masks;
+    if let Some(reference) = &masks.clip_reference {
+        surface.push_clip_path(
+            &painting::rect_path(fragment.slice_bounds(area))?,
+            &krilla::paint::FillRule::NonZero,
+        );
+        let drawn = draw_clip_element(painter, reference, fragment, area, surface);
+        surface.pop();
+        return drawn;
+    }
+    let Some(clip_path) = &masks.clip_path else {
         return Ok(());
     };
     painting::draw_fill(
@@ -213,6 +226,54 @@ fn draw_clip_path(
         area,
         surface,
     )
+}
+
+/// The region a `clipPath` element clips the fragment's box to, in white (§6.1). Its user
+/// space starts at the box's border-box origin, which with the border box's size is also its
+/// object bounding box. A reference naming no `clipPath` element clips nothing.
+fn draw_clip_element(
+    painter: &Painter<'_, '_, '_>,
+    reference: &str,
+    fragment: &BoxPaint,
+    area: Rect,
+    surface: &mut Surface<'_>,
+) -> Result<(), PdfError> {
+    let border = fragment.decoration_rect();
+    let Some(tree) = painter
+        .raster
+        .definitions
+        .get(reference)
+        .filter(|definition| definition.element == CLIP_PATH_ELEMENT)
+        .and_then(|definition| {
+            crate::svg::reference_tree(
+                &definition.xml,
+                CLIP_PATH_PROPERTY,
+                reference,
+                Some(Rect {
+                    x: 0.0,
+                    y: 0.0,
+                    ..border
+                }),
+            )
+        })
+    else {
+        return fill(area, WHITE, surface);
+    };
+    surface.push_transform(&krilla::geom::Transform::from_row(
+        crate::graphics::POINTS_PER_PIXEL,
+        0.0,
+        0.0,
+        crate::graphics::POINTS_PER_PIXEL,
+        border.x,
+        border.y,
+    ));
+    crate::svg::krilla_svg::render_tree(
+        &tree,
+        crate::svg::krilla_svg::SvgSettings::default(),
+        surface,
+    );
+    surface.pop();
+    Ok(())
 }
 
 /// One fragment's layers composited over black.

@@ -319,7 +319,7 @@ fn overflow(tag: &str, [x, y]: [Overflow; 2]) -> Result<Option<&'static str>, St
 /// basic shape in SVG content's reference box, where content and padding boxes are the fill box
 /// and border and margin boxes the stroke box.
 fn clip_path(style: &Style) -> Result<String, StyleError> {
-    if let Some(reference) = &style.svg.clip_reference {
+    if let Some(reference) = &style.decoration.masks.clip_reference {
         return Ok(url(reference));
     }
     let Some(clip) = &style.decoration.masks.clip_path else {

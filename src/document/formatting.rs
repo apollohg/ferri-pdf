@@ -1827,16 +1827,9 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     }
 }
 
-/// Rejects computed values that boxes cannot render: only the SVG renderer clips to an SVG
-/// `clipPath` element (CSS Masking 1 §6.1).
+/// Rejects computed values that boxes cannot render.
 fn validate_box(style: &Style) -> Result<(), StyleError> {
-    style.display.validate()?;
-    if let Some(reference) = &style.svg.clip_reference {
-        return Err(StyleError::Unsupported(format!(
-            "clip-path reference to an SVG clipPath element on a box: {reference}"
-        )));
-    }
-    Ok(())
+    style.display.validate()
 }
 
 /// Elements whose content is an image or a nested navigable rather than child boxes (HTML

@@ -44,6 +44,8 @@ pub struct Masks<I = Infallible> {
     pub border_mode: MaskMode,
     /// `clip-path` (§6), which clips the same group the mask layers mask; `None` is `none`.
     pub(crate) clip_path: Option<Arc<ClipPath>>,
+    /// A `clip-path` reference to an SVG `clipPath` element (§6.1).
+    pub(crate) clip_reference: Option<Box<str>>,
 }
 impl<I> Default for Masks<I> {
     fn default() -> Self {
@@ -64,6 +66,7 @@ impl<I> Default for Masks<I> {
             }),
             border_mode: MaskMode::Alpha,
             clip_path: None,
+            clip_reference: None,
         }
     }
 }
@@ -71,7 +74,11 @@ impl<I> Masks<I> {
     /// A `mask-image` other than `none` in any layer (§7.10), a `mask-border-source` other
     /// than `none` (§8.1), or a `clip-path` other than `none` (§6.1).
     pub fn is_masked(&self) -> bool {
-        self.has_layers() || self.border.is_drawn() || self.clip_path.is_some()
+        self.has_layers() || self.border.is_drawn() || self.is_clipped()
+    }
+    /// A `clip-path` other than `none`.
+    pub fn is_clipped(&self) -> bool {
+        self.clip_path.is_some() || self.clip_reference.is_some()
     }
     pub fn has_layers(&self) -> bool {
         self.layers.has_images() || self.sources.iter().any(Option::is_some)
@@ -103,6 +110,7 @@ impl Masks<Infallible> {
             border: Arc::new(self.border.with_image_type()),
             border_mode: self.border_mode,
             clip_path: self.clip_path.clone(),
+            clip_reference: self.clip_reference.clone(),
         }
     }
 }

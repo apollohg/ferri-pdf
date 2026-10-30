@@ -309,10 +309,11 @@ fn attribute(xml: &mut String, prefix: &str, name: &str, value: &str) {
     xml.push('"');
 }
 
-/// SVG elements that CSS `url()` references select: Filter Effects 1 §5 `filter` and CSS
-/// Masking 1 §7.1 `mask` elements.
-const REFERENCED_ELEMENTS: [&str; 9] = [
-    "filter", "mask", "path", "rect", "circle", "ellipse", "line", "polyline", "polygon",
+/// SVG elements that CSS `url()` references select: Filter Effects 1 §5 `filter`, CSS
+/// Masking 1 §6.1 `clipPath` and §7.1 `mask` elements, and motion path shapes.
+const REFERENCED_ELEMENTS: [&str; 10] = [
+    "filter", "clipPath", "mask", "path", "rect", "circle", "ellipse", "line", "polyline",
+    "polygon",
 ];
 
 /// The document's referenceable SVG resources by `id`, each with the standalone XML of the
@@ -325,7 +326,7 @@ pub(crate) struct SvgDefinitions {
 
 #[derive(Clone)]
 pub(crate) struct SvgDefinition {
-    /// `filter` or `mask`.
+    /// The element's name.
     pub(crate) element: &'static str,
     pub(crate) xml: Arc<str>,
 }

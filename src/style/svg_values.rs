@@ -116,9 +116,6 @@ pub(crate) struct SvgStyle {
     pub y: LengthPercentage,
     /// Path data; `None` is `none`.
     pub d: Option<Arc<str>>,
-    /// A same-document `clipPath` element that `clip-path` references (CSS Masking 1 §6.1);
-    /// basic shapes are the box clip in `Masks`.
-    pub clip_reference: Option<Box<str>>,
 }
 
 impl Default for SvgStyle {
@@ -160,7 +157,6 @@ impl Default for SvgStyle {
             x: LengthPercentage::ZERO,
             y: LengthPercentage::ZERO,
             d: None,
-            clip_reference: None,
         }
     }
 }

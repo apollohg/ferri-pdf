@@ -2630,13 +2630,12 @@ fn clip_path(
         },
         Input::Copy(source) => (
             source.decoration.masks.clip_path.clone(),
-            source.svg.clip_reference.clone(),
+            source.decoration.masks.clip_reference.clone(),
         ),
     };
-    style.masks_mut().clip_path = shape;
-    if style.svg.clip_reference != reference {
-        std::sync::Arc::make_mut(&mut style.svg).clip_reference = reference;
-    }
+    let masks = style.masks_mut();
+    masks.clip_path = shape;
+    masks.clip_reference = reference;
     Ok(())
 }
 computed!(
