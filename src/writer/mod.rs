@@ -46,8 +46,6 @@ pub struct ImageOptions {
 pub enum PdfError {
     #[error("a PDF rendering job requires at least one part")]
     EmptyParts,
-    #[error("{0}")]
-    Svg(#[source] crate::images::ImageError),
     #[error("image serialization: {0}")]
     Image(String),
     #[error("font is not a valid supported OpenType font")]

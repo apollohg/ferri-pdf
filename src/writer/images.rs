@@ -294,9 +294,14 @@ impl ImageWriter {
                     std::collections::hash_map::Entry::Occupied(entry) => entry.get().clone(),
                     std::collections::hash_map::Entry::Vacant(entry) => {
                         let size = source_size.map(|v| v / crate::style::POINTS_PER_PIXEL);
-                        entry
-                            .insert(Arc::new(svg.tree(size).map_err(PdfError::Svg)?))
-                            .clone()
+                        match svg.tree(size) {
+                            Ok(tree) => entry.insert(Arc::new(tree)).clone(),
+                            Err(error) => {
+                                self.failed.insert(key, error.to_string());
+                                self.report_failure(key);
+                                return Ok(None);
+                            }
+                        }
                     }
                 };
                 Decoded::Vector(tree, self.pixels_per_point)
