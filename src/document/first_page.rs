@@ -104,6 +104,15 @@ struct Selection<'a> {
     chain: Vec<PageStyleTarget>,
 }
 impl Selection<'_> {
+    /// Whether `element` is a replaced element, by its kind or its `<content-replacement>`
+    /// (CSS Content 3 §1).
+    fn replaced(&self, element: Element<'_>) -> Result<bool, StyleError> {
+        Ok(formatting::is_replaced(element)
+            || self
+                .styles
+                .content(target(element, None))?
+                .is_some_and(|content| content.replacement().is_some()))
+    }
     fn record_quotes(&mut self, change: QuoteChange) {
         self.quotes = Some(Rc::new(QuoteEvent {
             previous: self.quotes.take(),
@@ -200,7 +209,7 @@ impl Selection<'_> {
                         before = before.combine(self.styles.break_before(target)?);
                     }
                     if target.pseudo.is_some()
-                        || formatting::is_replaced(self.element(target))
+                        || self.replaced(self.element(target))?
                         || display == Display::TableRow
                         || (display.is_list_item() && self.styles.inside_marker(target)?)
                     {
@@ -370,7 +379,7 @@ impl Collector {
                         .document
                         .element(source.element)
                         .expect("generated target exists");
-                    if formatting::is_replaced(element) || self.display == Display::TableColumn {
+                    if selection.replaced(element)? || self.display == Display::TableColumn {
                         continue;
                     }
                     self.generated(
@@ -382,7 +391,15 @@ impl Collector {
                     if self.ready() {
                         continue;
                     }
-                    if element.name() == "br" {
+                    // CSS Content 3 §1: a content list replaces the element's children.
+                    if let Some(content) = selection.styles.content(source)? {
+                        if let Some(text) =
+                            self.content_text(selection, element, source, true, content)?
+                        {
+                            self.append_content(selection, source, text)?;
+                        }
+                        pending.push(CollectStep::After(element, depth + 1));
+                    } else if element.name() == "br" {
                         self.text = true;
                         self.generated(
                             selection,
@@ -416,7 +433,11 @@ impl Collector {
                     let source = target(element, None);
                     let mut display = selection.styles.display(source)?;
                     display.validate()?;
-                    let replaced = formatting::is_replaced(element);
+                    let replaced = selection.replaced(element)?;
+                    // CSS Display 3 §2.5: `display: contents` on a replaced element is `none`.
+                    if replaced && display == Display::Contents {
+                        display = Display::None;
+                    }
                     formatting::normalize_child_display(&mut display, replaced, &self.display);
                     if display == Display::None
                         || (self.display == Display::TableColumnGroup
@@ -483,10 +504,38 @@ impl Collector {
         };
         let mut display = selection.styles.display(source)?;
         display.validate()?;
-        formatting::normalize_child_display(&mut display, false, &self.display);
-        if display == Display::None {
+        let replaced = content.replacement().is_some();
+        formatting::normalize_child_display(&mut display, replaced, &self.display);
+        if display == Display::None || (replaced && display == Display::Contents) {
             return Ok(());
         }
+        let inline = !replaced && (display == Display::Contents || display.is_inline_box());
+        let Some(text) = self.content_text(selection, element, source, inline, content)? else {
+            return Ok(());
+        };
+        if display != Display::Contents && selection.styles.position(source)?.leaves_flow() {
+            return Ok(());
+        }
+        if inline {
+            self.append_content(selection, source, text)?;
+            if display.is_inline_box() {
+                self.text |= selection.styles.inline_edges(source, [false; 2])?;
+            }
+            return Ok(());
+        }
+        self.box_or_atomic(selection, source, display, depth)
+    }
+    /// The text a content list gives `source`, an element or its pseudo-element, when it lays
+    /// out inline, and whether it holds images, which are atomic inlines; `None` while only
+    /// quotes are traced. Records the quote depth it changes.
+    fn content_text(
+        &mut self,
+        selection: &mut Selection<'_>,
+        element: Element<'_>,
+        source: PageStyleTarget,
+        inline: bool,
+        content: crate::style::GeneratedContent,
+    ) -> Result<Option<(String, bool)>, StyleError> {
         if self.quotes_only {
             content.advance_quote_depth(
                 selection
@@ -494,10 +543,9 @@ impl Collector {
                     .as_mut()
                     .expect("quote-only traversal has an accumulator"),
             );
-            return Ok(());
+            return Ok(None);
         }
         let bound = selection.generated.bind(&content, source)?;
-        let inline = display == Display::Contents || display.is_inline_box();
         let text = if inline {
             let (quotes, mut depth) = if content.has_quote_actions() {
                 (selection.styles.quotes(source)?, selection.quote_depth()?)
@@ -536,20 +584,25 @@ impl Collector {
         } else {
             String::new()
         };
+        let images = content.has_images();
         if content.has_quote_actions() {
             selection.record_quotes(QuoteChange::Content(content));
         }
-        if display != Display::Contents && selection.styles.position(source)?.leaves_flow() {
-            return Ok(());
+        Ok(Some((text, images)))
+    }
+    /// Appends a content list's inline text and images.
+    fn append_content(
+        &mut self,
+        selection: &Selection<'_>,
+        source: PageStyleTarget,
+        (text, images): (String, bool),
+    ) -> Result<(), StyleError> {
+        self.append(selection, source, &text)?;
+        if images {
+            self.text = true;
+            self.whitespace = false;
         }
-        if display == Display::Contents || display.is_inline_box() {
-            self.append(selection, source, &text)?;
-            if display.is_inline_box() {
-                self.text |= selection.styles.inline_edges(source, [false; 2])?;
-            }
-            return Ok(());
-        }
-        self.box_or_atomic(selection, source, display, depth)
+        Ok(())
     }
     fn box_or_atomic(
         &mut self,

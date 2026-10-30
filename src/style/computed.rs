@@ -499,6 +499,17 @@ impl Style {
         self.font_namespace
     }
 
+    /// The content list replacing an element's contents (CSS Content 3 §1), if any.
+    pub(crate) fn content_list(&self) -> Option<&crate::style::GeneratedContent> {
+        self.computed_content.items()
+    }
+    /// The image a `<content-replacement>` fills the element with, making it a replaced
+    /// element.
+    pub(crate) fn content_replacement(&self) -> Option<&crate::paint::BackgroundImage> {
+        self.content_list()
+            .and_then(crate::style::GeneratedContent::replacement)
+    }
+
     pub(crate) fn has_inside_marker(&self) -> bool {
         self.list_style_position == ListStylePosition::Inside
             && (self.list_style_type != ListStyleType::None
@@ -1461,6 +1472,7 @@ impl Stylesheet {
             key: crate::style::anchor_values::key(element.id(), Some(pseudo)),
             tactic: crate::style::anchor_values::Tactic::IDENTITY,
         });
+        let declared = winners.get(&Property::Content).cloned();
         let Some(content) = Self::generated(&mut winners, &mut style, parent, &inherited)? else {
             return Ok(None);
         };
@@ -1470,6 +1482,7 @@ impl Stylesheet {
         }
         let relative = self.text_basis(&mut style, parent, &mut winners, inherited, resolver)?;
         let mut style = Self::apply_properties(style, parent, winners, &relative)?;
+        let content = Self::content_images(declared, content, &mut style, parent, &relative)?;
         style.anchor.frame = self
             .anchor_frames
             .frame(
@@ -1550,10 +1563,14 @@ impl Stylesheet {
         )?;
         let mut inherited = self.inherited(parent, self.page_area(), resolver);
         inherited.tree = Tree::Element(element);
-        Self::generated(&mut winners, &mut style, parent, &inherited)?;
+        let declared = winners.get(&Property::Content).cloned();
+        let content = Self::generated(&mut winners, &mut style, parent, &inherited)?;
         Self::display(&mut style, parent, &mut winners, &inherited)?;
         let relative = self.text_basis(&mut style, parent, &mut winners, inherited, resolver)?;
         let mut style = Self::apply_properties(style, parent, winners, &relative)?;
+        if let Some(content) = content {
+            Self::content_images(declared, content, &mut style, parent, &relative)?;
+        }
         style.origin = StyleOrigin::of(element, Some(pseudo), parent);
         Ok(style)
     }
@@ -1631,6 +1648,22 @@ impl Stylesheet {
             }
             _ => None,
         })
+    }
+
+    /// A pseudo-element computes `content` before its other properties, against its parent's
+    /// font and colour; the `<image>`s in it compute again against its own.
+    fn content_images(
+        declared: Option<Specified>,
+        content: crate::style::GeneratedContent,
+        style: &mut Style,
+        parent: &Style,
+        relative: &Relative<'_>,
+    ) -> Result<crate::style::GeneratedContent, StyleError> {
+        let Some(declared) = declared.filter(|_| content.has_images()) else {
+            return Ok(content);
+        };
+        properties::apply(Property::Content, &declared, style, parent, relative)?;
+        Ok(style.computed_content.items().cloned().unwrap_or(content))
     }
 
     fn display(
@@ -2039,16 +2072,6 @@ impl Stylesheet {
             style.grid.justify_self_overflow = crate::style::OverflowPosition::Default;
             style.flex.align_self = crate::style::Alignment::Auto;
             style.grid.justify_self = crate::style::Alignment::Auto;
-        }
-        if style.content_context == crate::style::generated::ContentContext::Element
-            && matches!(
-                style.computed_content.as_ref(),
-                crate::style::generated::ComputedContent::Items { .. }
-            )
-        {
-            return Err(StyleError::Unsupported(
-                "generated content replacement on elements".into(),
-            ));
         }
         // Out-of-flow boxes and the contents of atomic inlines receive no decorations, nor
         // do ruby annotations beyond their annotation container's own (CSS Ruby 1 §4.4).

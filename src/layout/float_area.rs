@@ -727,6 +727,7 @@ fn image_alpha(
             }
         }
         Image::Transparent => return Ok(None),
+        Image::Generated(image) => return alpha_grid(image, content, work),
         Image::Frame(..) | Image::Viewport(_) | Image::Widget(_) => {
             return Err(crate::style::StyleError::Unsupported(
                 "shape-outside: an image of a nested document or form control".into(),

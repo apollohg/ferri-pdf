@@ -106,13 +106,91 @@ impl ImageView {
 
 /// `image` as `request` uses it in a decorative image of the element `style` belongs to: the
 /// region its spatial media fragment selects, oriented by `image-orientation`, and flipped in
-/// the inline direction when its directionality is the element's opposite (CSS Images 4
-/// §2.5.2, §2.5.4). A `url()` ignores a fragment it cannot use; `image()` is then invalid.
+/// the inline direction when its directionality is the element's opposite.
 pub(crate) fn view(
     image: Arc<Image>,
     request: &ImageRequest<'_>,
     style: &Style,
 ) -> Result<Arc<Image>, InvalidFragment> {
+    let (region, inline_flip) = requested(&image, request, style)?;
+    let orientation = compose(
+        reorientation(&image, style.image_orientation, false),
+        inline_flip,
+    );
+    let density = if request.resolved {
+        UNIT_DENSITY
+    } else {
+        preferred_density(&image, style)
+    };
+    Ok(with_view(image, region, orientation, density))
+}
+
+/// `image` as `request` uses it in the `content` of the element `style` belongs to: as
+/// [`view`] selects and flips it, then as a content image, at the `resolution` `image-set()`
+/// chose for it, if any.
+pub(crate) fn content_view(
+    image: Arc<Image>,
+    request: &ImageRequest<'_>,
+    style: &Style,
+    resolution: Option<f32>,
+) -> Result<Arc<Image>, InvalidFragment> {
+    let (region, inline_flip) = requested(&image, request, style)?;
+    let preferred = resolution.map_or_else(|| preferred_density(&image, style), |dppx| [dppx; 2]);
+    Ok(oriented_content(
+        image,
+        region,
+        inline_flip,
+        style,
+        preferred,
+        UNIT_DENSITY[0],
+    ))
+}
+
+/// A content image of the element `style` belongs to: oriented by `image-orientation`, at the
+/// resolution `image-resolution` prefers unless its source chose a pixel `density`, then
+/// showing its `object-view-box`.
+pub(crate) fn content_image(image: Arc<Image>, style: &Style, density: Option<f32>) -> Arc<Image> {
+    let preferred = match density {
+        Some(_) => UNIT_DENSITY,
+        None => preferred_density(&image, style),
+    };
+    oriented_content(
+        image,
+        None,
+        Orientation::NoTransforms,
+        style,
+        preferred,
+        density.unwrap_or(UNIT_DENSITY[0]),
+    )
+}
+
+/// The `region` of a content image turned by `image-orientation` then `inline_flip`, at
+/// `preferred` image pixels per CSS pixel, showing its `object-view-box`; `density` is the
+/// pixel density its replaced box divides its natural size by.
+fn oriented_content(
+    image: Arc<Image>,
+    region: Option<Rect>,
+    inline_flip: Orientation,
+    style: &Style,
+    preferred: [f32; 2],
+    density: f32,
+) -> Arc<Image> {
+    let orientation = compose(
+        reorientation(&image, style.image_orientation, true),
+        inline_flip,
+    );
+    let oriented = with_view(image, region, orientation, preferred);
+    view_box(oriented, style.object_view_box.as_ref(), density)
+}
+
+/// The region a request's media fragment selects, and the inline flip `image()`'s
+/// directionality asks of the element `style` belongs to (CSS Images 4 §2.5.2, §2.5.4). A
+/// `url()` ignores a fragment it cannot use; `image()` is then invalid.
+fn requested(
+    image: &Image,
+    request: &ImageRequest<'_>,
+    style: &Style,
+) -> Result<(Option<Rect>, Orientation), InvalidFragment> {
     let region = match fragment_region(request.url, image.natural_size()) {
         Ok(region) => region,
         Err(error) if request.function.is_some() => return Err(error),
@@ -127,33 +205,7 @@ pub(crate) fn view(
         (true, false) => Orientation::FlipHorizontal,
         (true, true) => Orientation::FlipVertical,
     };
-    let orientation = compose(
-        reorientation(&image, style.image_orientation, false),
-        inline_flip,
-    );
-    let density = if request.resolved {
-        UNIT_DENSITY
-    } else {
-        preferred_density(&image, style)
-    };
-    Ok(with_view(image, region, orientation, density))
-}
-
-/// A content image of the element `style` belongs to: oriented by `image-orientation`, at the
-/// resolution `image-resolution` prefers unless its source chose a pixel `density`, then
-/// showing its `object-view-box`.
-pub(crate) fn content_image(image: Arc<Image>, style: &Style, density: Option<f32>) -> Arc<Image> {
-    let orientation = reorientation(&image, style.image_orientation, true);
-    let preferred = match density {
-        Some(_) => UNIT_DENSITY,
-        None => preferred_density(&image, style),
-    };
-    let oriented = with_view(image, None, orientation, preferred);
-    view_box(
-        oriented,
-        style.object_view_box.as_ref(),
-        density.unwrap_or(UNIT_DENSITY[0]),
-    )
+    Ok((region, inline_flip))
 }
 
 /// CSS Images 4 §6.1: `image-resolution` sets the natural resolution of raster images, from

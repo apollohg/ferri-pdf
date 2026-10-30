@@ -736,6 +736,71 @@ impl ImageResources<'_> {
     ) -> Option<std::sync::Arc<crate::images::Image>> {
         self.cache.view(image, request, self.base, style)
     }
+    /// A `content` image of the element `style` belongs to, as its replaced box shows it;
+    /// `None` for an invalid image, with a diagnostic when it cannot be loaded (CSS Content 3
+    /// §2.2). The images a generated image combines are decorative.
+    pub(crate) fn content_image(
+        &mut self,
+        image: &crate::paint::BackgroundImage,
+        style: &Style,
+    ) -> Option<std::sync::Arc<crate::images::Image>> {
+        let namespace = style.element_font_namespace();
+        // The image-set() resolution of a URL that is the content image itself.
+        let resolution = match image {
+            crate::paint::BackgroundImage::Url { resolution, .. } => Some(*resolution),
+            _ => None,
+        };
+        let mut loaded = image.with_image_type();
+        let Ok(()) = loaded.load(&mut |request| {
+            Ok::<_, std::convert::Infallible>(
+                self.cache
+                    .load_optional(request.url, self.base, self.resolver, namespace)
+                    .and_then(|image| match resolution {
+                        Some(resolution) => self
+                            .cache
+                            .content_view(image, request, self.base, style, resolution),
+                        None => self.view(image, request, style),
+                    }),
+            )
+        });
+        match loaded {
+            crate::graphics::BackgroundImage::Image { image, .. } => Some(image),
+            generated => generated
+                .is_displayable()
+                .then(|| generated_image(generated, style)),
+        }
+    }
+    /// The image a `<content-replacement>` fills its element with: an invalid image is
+    /// transparent with zero natural size (CSS Content 3 §1).
+    pub(crate) fn replacement_image(
+        &mut self,
+        image: &crate::paint::BackgroundImage,
+        style: &Style,
+    ) -> std::sync::Arc<crate::images::Image> {
+        self.content_image(image, style).unwrap_or_else(|| {
+            std::sync::Arc::new(crate::images::Image::Generated(std::sync::Arc::new(
+                crate::graphics::BackgroundImage::Invalid,
+            )))
+        })
+    }
+    /// The images of generated content, each loaded as its anonymous replaced box shows it;
+    /// invalid ones generate nothing (CSS Content 3 §2.2).
+    pub(crate) fn generated_images(
+        &mut self,
+        output: &crate::style::GeneratedOutput,
+        style: &Style,
+    ) -> Vec<crate::document::inline::GeneratedImage> {
+        output
+            .images()
+            .iter()
+            .filter_map(|(offset, image)| {
+                Some(crate::document::inline::GeneratedImage {
+                    offset: *offset,
+                    image: self.content_image(image, style)?,
+                })
+            })
+            .collect()
+    }
     /// Loads a float's `shape-outside` image; other boxes have no float area. An image that
     /// cannot be fetched or decoded leaves `none` (CSS Shapes 1 §6.1) and a diagnostic.
     pub(crate) fn shape_outside(&mut self, style: &Style) -> crate::graphics::ShapeOutside {
@@ -754,6 +819,18 @@ impl ImageResources<'_> {
             .decoration
             .load_images(|request| self.load(request, style))?)
     }
+}
+
+/// A generated image as the content image of the element `style` belongs to.
+fn generated_image(
+    image: crate::graphics::BackgroundImage,
+    style: &Style,
+) -> std::sync::Arc<crate::images::Image> {
+    crate::images::content_image(
+        std::sync::Arc::new(crate::images::Image::Generated(std::sync::Arc::new(image))),
+        style,
+        None,
+    )
 }
 
 /// Maps a font metrics failure while sizing an initial letter to the document error the
@@ -836,17 +913,24 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     fn append_generated(
         &mut self,
         output: &crate::style::GeneratedOutput,
+        images: &[crate::document::inline::GeneratedImage],
         style: &Style,
     ) -> Result<(), DocumentError> {
-        if !output.text().is_empty() {
+        if !output.text().is_empty() || !images.is_empty() {
             self.ruby.content(self.inline)?;
         }
+        // A first letter is the text before any leader or image.
         let leader = output
             .leaders()
             .first()
-            .map_or(output.text().len(), |range| range.start);
+            .map(|range| range.start)
+            .into_iter()
+            .chain(images.first().map(|image| image.offset))
+            .min()
+            .unwrap_or(output.text().len());
         let start = self.first_letter(&output.text()[..leader], style)?;
-        self.inline.append_generated_from(output, start, style)
+        self.inline
+            .append_generated_from(output, images, start, style)
     }
     /// Appends the first-letter text that `text`, the next inline content, begins with in its
     /// `::first-letter` boxes, returning the bytes consumed (CSS Pseudo-Elements 4 §2.2).
@@ -1114,8 +1198,8 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     /// An inside marker is an inline box opening the list item's inline content (CSS Lists 3
     /// §3.5): an image marker holds an inline replaced box followed by a space. A marker can
     /// be an initial letter (CSS Inline 3 §7.3.1).
-    fn place_inside_marker(&mut self, marker: &Paragraph) -> Result<(), DocumentError> {
-        let style = marker.style();
+    fn place_inside_marker(&mut self, marker: Paragraph) -> Result<(), DocumentError> {
+        let style = &marker.style().clone();
         let navigation = self.traversal.navigation.descendant();
         let letter =
             (style.initial_letter.is_some() && self.initial_letter_allowed()).then(|| OpenLetter {
@@ -1146,7 +1230,15 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             );
             self.inline.atomic(atomic, style)?;
         }
-        self.inline.append(marker.text(), style)?;
+        // Content images stand at placeholders in the marker's text.
+        let (text, atomics) = marker.into_text_and_atomics();
+        let mut from = 0;
+        for atomic in atomics {
+            self.inline.append(&text[from..atomic.offset], style)?;
+            self.inline.atomic(atomic.block, style)?;
+            from = atomic.offset + crate::document::OBJECT_REPLACEMENT_CHARACTER.len_utf8();
+        }
+        self.inline.append(&text[from..], style)?;
         if let Some(letter) = letter {
             return self.finish_letter(letter, true);
         }
@@ -1422,7 +1514,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         parent: &Style,
         pseudo: GeneratedPseudoElement,
     ) -> Result<(), DocumentError> {
-        let Some((mut style, content)) = self.sheet.pseudo_with_resolver(
+        let Some((style, content)) = self.sheet.pseudo_with_resolver(
             element,
             parent,
             pseudo.into(),
@@ -1431,6 +1523,19 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         else {
             return Ok(());
         };
+        self.place_generated(element, parent, pseudo, style, &content)
+    }
+    /// Builds the boxes of a pseudo-element with computed `style`. It is apart from
+    /// [`Self::generated`] so that its large frame is not on the stack while the style of a
+    /// pseudo-element in a nested navigable's document computes.
+    fn place_generated(
+        &mut self,
+        element: Element<'_>,
+        parent: &Style,
+        pseudo: GeneratedPseudoElement,
+        mut style: Style,
+        content: &crate::style::GeneratedContent,
+    ) -> Result<(), DocumentError> {
         style = style.used();
         if style.position == crate::style::Position::Running && style.display != Display::Contents {
             return Err(StyleError::Unsupported(format!(
@@ -1443,7 +1548,16 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         let element_page_scope =
             crate::document::page::used_name(&parent.page, self.element_page_scope.as_ref());
         validate_box(&style)?;
-        normalize_child_display(&mut style.display, false, &self.style.display);
+        let replacement = content.replacement();
+        normalize_child_display(
+            &mut style.display,
+            replacement.is_some(),
+            &self.style.display,
+        );
+        // CSS Display 3 §2.5: `display: contents` on a replaced element computes to `none`.
+        if replacement.is_some() && style.display == Display::Contents {
+            return Ok(());
+        }
         // The block's own pseudo-elements are its first and last children; those of inline
         // descendants lie inside the content around them.
         let block_child = std::ptr::eq(parent, self.style);
@@ -1491,7 +1605,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             .next()
             .is_some()
             .then(|| self.traversal.strings.generated_event(element, pseudo));
-        let bound = self.traversal.generated.bind(&content, context)?;
+        let bound = self.traversal.generated.bind(content, context)?;
         let output = bound.element_output_with_counters(
             crate::document::MAX_INLINE_TEXT_BYTES,
             &mut |request| self.traversal.counters.text(request),
@@ -1509,10 +1623,22 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         self.traversal
             .strings
             .generated(element, pseudo, text, &style);
+        if let Some(image) = replacement {
+            let image = self.resources.replacement_image(image, &style);
+            let replaced = self.generated_block(
+                style,
+                Vec::new(),
+                decoration,
+                element_page_scope.as_ref(),
+                event,
+            );
+            return self.replaced(replaced, image, parent);
+        }
+        let images = self.resources.generated_images(&output, &style);
         if style.display != Display::Contents
             && (style.position.is_out_of_flow() || style.floating().is_some())
         {
-            let children = Paragraph::generated_output(&output, &style)?
+            let children = Paragraph::generated_output(&output, &images, &style)?
                 .into_iter()
                 .map(BlockContent::Inline)
                 .collect();
@@ -1533,7 +1659,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 if let Some(event) = event {
                     self.inline.semantic_event(event);
                 }
-                self.append_generated(&output, &style)?;
+                self.append_generated(&output, &images, &style)?;
             }
             Display::Inline
             | Display::Ruby
@@ -1550,7 +1676,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                     self.traversal.navigation.descendant(),
                     false,
                 )?;
-                self.append_generated(&output, &style)?;
+                self.append_generated(&output, &images, &style)?;
                 self.close_inline()?;
             }
             Display::InlineMath
@@ -1558,7 +1684,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             | Display::InlineFlex
             | Display::InlineGrid
             | Display::InlineTable => {
-                let children = Paragraph::generated_output(&output, &style)?
+                let children = Paragraph::generated_output(&output, &images, &style)?
                     .into_iter()
                     .map(BlockContent::Inline)
                     .collect();
@@ -1592,9 +1718,9 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 // The pseudo-element's box comes first in flow, taking the first formatted line.
                 let first_line = std::mem::take(self.first_line);
                 let children = if style.display.is_block_level_block_container() {
-                    self.first_line_block(first_line, &output, &style)?
+                    self.first_line_block(first_line, &output, &images, &style)?
                 } else {
-                    Paragraph::generated_output(&output, &style)?
+                    Paragraph::generated_output(&output, &images, &style)?
                         .into_iter()
                         .map(BlockContent::Inline)
                         .collect()
@@ -1619,12 +1745,13 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         &mut self,
         first_line: FirstLine,
         output: &crate::style::GeneratedOutput,
+        images: &[crate::document::inline::GeneratedImage],
         style: &Style,
     ) -> Result<Vec<BlockContent>, DocumentError> {
         let outer = std::mem::take(self.inline);
         let origins = first_line.origins.clone();
         *self.first_line = first_line;
-        let appended = self.append_generated(output, style);
+        let appended = self.append_generated(output, images, style);
         let contents = std::mem::replace(self.inline, outer);
         *self.first_line = FirstLine::default();
         appended?;
@@ -1634,6 +1761,51 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 Err(stray) => stray,
             },
         )
+    }
+
+    /// Places `block` as a replaced box showing `image`: out of flow, as an atomic inline, or
+    /// as a block-level box.
+    fn replaced(
+        &mut self,
+        mut block: BlockBox,
+        image: std::sync::Arc<crate::images::Image>,
+        parent: &Style,
+    ) -> Result<(), DocumentError> {
+        block.image = Some(image);
+        if block.style.position.is_out_of_flow() || block.style.floating().is_some() {
+            self.out_of_flow(block);
+        } else if block.style.display.is_inline_level() {
+            self.atomic(block, parent)?;
+        } else {
+            self.flush()?;
+            block.enclosing_inline = self.inline.open_boxes();
+            self.children.push(BlockContent::Block(block));
+        }
+        Ok(())
+    }
+
+    /// The contents an element's `content` list replaces its own with (CSS Content 3 §1).
+    fn element_content(
+        &mut self,
+        element: Element<'_>,
+        style: &Style,
+        content: &crate::style::GeneratedContent,
+    ) -> Result<(), DocumentError> {
+        let bound = self.traversal.generated.bind(
+            content,
+            crate::style::PageStyleTarget {
+                element: element.id(),
+                pseudo: None,
+            },
+        )?;
+        let output = bound.element_output_with_counters(
+            crate::document::MAX_INLINE_TEXT_BYTES,
+            &mut |request| self.traversal.counters.text(request),
+            &style.quotes,
+            &mut self.traversal.quotes,
+        )?;
+        let images = self.resources.generated_images(&output, style);
+        self.append_generated(&output, &images, style)
     }
 
     /// A pseudo-element's block, part of the current element's hyperlink.
@@ -1715,7 +1887,8 @@ fn list_marker(
         &marker.quotes,
         &mut traversal.quotes,
     )?;
-    Paragraph::generated_marker(&output, &used)
+    let images = resources.generated_images(&output, &used);
+    Paragraph::generated_marker(&output, &images, &used)
 }
 
 pub(super) fn normalize_child_display(display: &mut Display, replaced: bool, parent: &Display) {
@@ -1859,6 +2032,38 @@ impl<'d> Frame<'d> {
     }
 }
 
+/// The semantic events of a subtree that generates no boxes, whose named strings and counter
+/// snapshots still record.
+fn hidden<'a>(
+    child: Element<'_>,
+    sheet: &'a Stylesheet,
+    traversal: &mut Traversal<'a>,
+    resources: &ImageResources<'a>,
+) -> Result<Vec<crate::document::SemanticEvent>, DocumentError> {
+    let mut events = Vec::new();
+    sheet.with_document_values(
+        traversal.document,
+        &traversal.root_style,
+        resources.resolver,
+        |styles| {
+            traversal
+                .counters
+                .visit_hidden(child, styles, |element, assignments, counters| {
+                    traversal.generated.capture(element, counters);
+                    let assignment =
+                        traversal
+                            .strings
+                            .record(element, assignments, counters, None)?;
+                    if assignment.is_some() {
+                        events.push(traversal.strings.event(element, assignment, false));
+                    }
+                    Ok(())
+                })
+        },
+    )?;
+    Ok(events)
+}
+
 fn active_builder<'a, 's, 'c>(
     frames: &'s mut [Frame<'_>],
     index: usize,
@@ -1935,7 +2140,17 @@ fn block<'a>(
                 if index == 0 {
                     traversal.canvas = background_only(&block.decoration);
                 }
-                let control = if skips {
+                // CSS Content 3 §1: an element's `<content-replacement>` replaces whatever it
+                // would otherwise render.
+                let replacement = if skips {
+                    None
+                } else {
+                    frame
+                        .style
+                        .content_replacement()
+                        .map(|image| resources.replacement_image(image, &frame.style))
+                };
+                let control = if skips || replacement.is_some() {
                     None
                 } else if let Some(frameset) = crate::document::frameset::content(
                     element,
@@ -1958,6 +2173,8 @@ fn block<'a>(
                 block.image = if let Some(control) = control {
                     block.children.extend(control.children);
                     control.image
+                } else if replacement.is_some() {
+                    replacement
                 } else {
                     match element.name() {
                         "img" => {
@@ -2075,7 +2292,7 @@ fn block<'a>(
                 if let Some(marker) = inside_marker {
                     let (mut builder, _) =
                         active_builder(&mut frames, index, sheet, traversal, resources);
-                    builder.place_inside_marker(&marker)?;
+                    builder.place_inside_marker(marker)?;
                 }
                 let frame = &mut frames[index];
                 let block = frame.block.as_mut().expect("a block frame builds a block");
@@ -2142,7 +2359,7 @@ fn block<'a>(
                     let decoration = builder.resources.backgrounds(style)?;
                     builder.open_inline(style, decoration, navigation, canvas_source)?;
                     if let Some(marker) = marker {
-                        builder.place_inside_marker(&marker)?;
+                        builder.place_inside_marker(marker)?;
                     }
                 }
                 frames[index].generated = true;
@@ -2173,7 +2390,19 @@ fn block<'a>(
                     {
                         builder.inline.optional_break(style);
                     }
-                    frames[index].nodes = Some(element.child_nodes(TreeRelation::Formatting));
+                    if let Some(content) = style.content_list() {
+                        // CSS Content 3 §1: the content list replaces the element's contents,
+                        // which generate no boxes, as if they were `display: none`.
+                        builder.element_content(element, style, content)?;
+                        for child in element.children(TreeRelation::Formatting) {
+                            for event in hidden(child, sheet, builder.traversal, builder.resources)?
+                            {
+                                builder.inline.semantic_event(event);
+                            }
+                        }
+                    } else {
+                        frames[index].nodes = Some(element.child_nodes(TreeRelation::Formatting));
+                    }
                 }
             }
             frames[index].started = true;
@@ -2214,7 +2443,11 @@ fn block<'a>(
                 };
             }
             validate_box(&child_style)?;
-            let replaced = is_replaced(child);
+            let replaced = is_replaced(child) || child_style.content_replacement().is_some();
+            // CSS Display 3 §2.5: `display: contents` on a replaced element computes to `none`.
+            if replaced && child_style.display == Display::Contents {
+                child_style.display = Display::None;
+            }
             normalize_child_display(
                 &mut child_style.display,
                 replaced,
@@ -2229,32 +2462,7 @@ fn block<'a>(
                 continue;
             }
             if child_style.display == Display::None {
-                let mut events = Vec::new();
-                sheet.with_document_values(
-                    traversal.document,
-                    &traversal.root_style,
-                    resources.resolver,
-                    |styles| {
-                        traversal.counters.visit_hidden(
-                            child,
-                            styles,
-                            |element, assignments, counters| {
-                                traversal.generated.capture(element, counters);
-                                let assignment = traversal.strings.record(
-                                    element,
-                                    assignments,
-                                    counters,
-                                    None,
-                                )?;
-                                if assignment.is_some() {
-                                    events
-                                        .push(traversal.strings.event(element, assignment, false));
-                                }
-                                Ok(())
-                            },
-                        )
-                    },
-                )?;
+                let events = hidden(child, sheet, traversal, resources)?;
                 let (builder, _) =
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
                 for event in events {

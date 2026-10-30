@@ -41,7 +41,7 @@ pub(crate) fn assignments(
             };
             Ok(StringAssignment {
                 name: Arc::from(name.as_ref()),
-                content: GeneratedContent::from_list(content, scope)?,
+                content: GeneratedContent::from_list(content, scope, None)?,
             })
         })
         .collect::<Result<Vec<_>, StyleError>>()?;

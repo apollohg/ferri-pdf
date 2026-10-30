@@ -7,6 +7,7 @@ mod svg;
 mod svg_fonts;
 mod view;
 pub(crate) use svg_fonts::SvgFonts;
+use view::content_view;
 pub(crate) use view::{ImageView, InvalidFragment, content_image, turns_and_flip};
 pub(crate) mod widget;
 use crate::fonts::{FontBook, FontNamespace};
@@ -30,6 +31,7 @@ impl crate::paint::ImageInfo for Image {
             Self::Raster(_) | Self::Pixels(_) => true,
             Self::View(view) => crate::paint::ImageInfo::is_raster(&*view.image),
             Self::Svg(_)
+            | Self::Generated(_)
             | Self::Transparent
             | Self::Frame(..)
             | Self::Viewport(_)
@@ -176,6 +178,10 @@ pub enum Image {
     Widget(Arc<widget::Widget>),
     /// Part of another image, re-oriented, as an `<image>` uses it.
     View(ImageView),
+    /// A generated `<image>` that `content` places, such as a gradient or `cross-fade()`;
+    /// an invalid image replacing an element's contents has zero natural size (CSS Content 3
+    /// §1).
+    Generated(Arc<crate::graphics::BackgroundImage>),
 }
 impl Image {
     pub fn natural_size(&self) -> NaturalDimensions {
@@ -201,6 +207,7 @@ impl Image {
             Self::Transparent | Self::Frame(..) => NaturalDimensions::default(),
             Self::Widget(widget) => widget.natural_size(),
             Self::View(view) => view.natural_size(),
+            Self::Generated(image) => generated_natural_size(image),
         }
     }
     /// Whether every pixel is opaque; vector images, and images that fail to decode, are not
@@ -228,6 +235,7 @@ impl Image {
                 }) && view.image.opaque()
             }
             Self::Svg(_)
+            | Self::Generated(_)
             | Self::Transparent
             | Self::Frame(..)
             | Self::Viewport(_)
@@ -244,6 +252,11 @@ impl Image {
             Self::Transparent | Self::Frame(..) => DEFAULT_OBJECT_SIZE,
             Self::Widget(widget) => widget.natural,
             Self::View(view) => view.pixel_size(available_width),
+            Self::Generated(image) => crate::paint::image_size(
+                &crate::paint::BackgroundSize::default(),
+                generated_natural_size(image),
+                DEFAULT_OBJECT_SIZE,
+            ),
         }
     }
     fn parse(
@@ -264,6 +277,33 @@ impl Image {
         } else {
             SvgImage::parse(resource, resolver, depth, cache, namespace).map(Self::Svg)
         }
+    }
+}
+
+/// The natural size in CSS pixels of a generated image, whose `cross-fade()` arguments the
+/// default object size sizes.
+fn generated_natural_size(image: &crate::graphics::BackgroundImage) -> NaturalDimensions {
+    if matches!(image, crate::graphics::BackgroundImage::Invalid) {
+        return NaturalDimensions {
+            width: Some(0.0),
+            height: Some(0.0),
+            ratio: None,
+        };
+    }
+    let area = DEFAULT_OBJECT_SIZE.map(|extent| extent * crate::paint::POINTS_PER_PIXEL);
+    let natural = crate::paint::Source::of(image)
+        .ok()
+        .flatten()
+        .map(|source| source.natural(area))
+        .unwrap_or_default();
+    NaturalDimensions {
+        width: natural
+            .width
+            .map(|width| width / crate::paint::POINTS_PER_PIXEL),
+        height: natural
+            .height
+            .map(|height| height / crate::paint::POINTS_PER_PIXEL),
+        ratio: natural.ratio,
     }
 }
 
@@ -425,17 +465,38 @@ impl ImageCache {
         base: &crate::resources::ResourceBase,
         style: &crate::style::Style,
     ) -> Option<Arc<Image>> {
-        match view::view(image, request, style) {
-            Ok(image) => Some(image),
-            Err(error) => {
+        self.viewed(view::view(image, request, style), request, base)
+    }
+    /// `image` as `request` uses it in `content` (see [`view::content_view`]), likewise.
+    pub(crate) fn content_view(
+        &mut self,
+        image: Arc<Image>,
+        request: &crate::paint::ImageRequest<'_>,
+        base: &crate::resources::ResourceBase,
+        style: &crate::style::Style,
+        resolution: Option<f32>,
+    ) -> Option<Arc<Image>> {
+        self.viewed(
+            content_view(image, request, style, resolution),
+            request,
+            base,
+        )
+    }
+    fn viewed(
+        &mut self,
+        viewed: Result<Arc<Image>, InvalidFragment>,
+        request: &crate::paint::ImageRequest<'_>,
+        base: &crate::resources::ResourceBase,
+    ) -> Option<Arc<Image>> {
+        viewed
+            .map_err(|error| {
                 self.failures.push(ImageFailure {
                     base: base.clone(),
                     reference: request.url.to_owned(),
                     error: error.into(),
                 });
-                None
-            }
-        }
+            })
+            .ok()
     }
     pub(crate) fn take_failures(&mut self) -> Vec<ImageFailure> {
         std::mem::take(&mut self.failures)
@@ -549,7 +610,8 @@ impl ImageCache {
             | Image::Frame(..)
             | Image::Viewport(_)
             | Image::Widget(_)
-            | Image::View(_) => {
+            | Image::View(_)
+            | Image::Generated(_) => {
                 unreachable!("image resources parse to decoded images")
             }
         };

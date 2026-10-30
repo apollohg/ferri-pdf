@@ -491,6 +491,9 @@ impl Counters {
         enum Event<'a> {
             Element(Element<'a>, Option<Display>),
             Pseudo(Element<'a>, GeneratedPseudoElement, Display),
+            /// The content list replacing an element's children (CSS Content 3 §1), which
+            /// generate no boxes.
+            Content(Element<'a>, crate::style::GeneratedContent),
             Leave,
         }
         let mut state = self;
@@ -505,7 +508,16 @@ impl Counters {
                         pseudo: None,
                     };
                     let mut display = styles.display(target)?;
-                    let replaced = crate::document::formatting::is_replaced(element);
+                    // CSS Content 3 §1: a content list replaces the element's contents, and a
+                    // single image makes it a replaced element.
+                    let content = styles.content(target)?;
+                    let replaced = crate::document::formatting::is_replaced(element)
+                        || content
+                            .as_ref()
+                            .is_some_and(|content| content.replacement().is_some());
+                    if replaced && display == Display::Contents {
+                        display = Display::None;
+                    }
                     if let Some(parent) = &parent_display {
                         crate::document::formatting::normalize_child_display(
                             &mut display,
@@ -554,7 +566,9 @@ impl Counters {
                             GeneratedPseudoElement::After,
                             block_display.clone(),
                         ));
-                        if element.name() != "br" {
+                        if let Some(content) = content {
+                            events.push(Event::Content(element, content));
+                        } else if element.name() != "br" {
                             for child in element.children(TreeRelation::Formatting).rev() {
                                 state.charge(1)?;
                                 events.push(Event::Element(child, Some(block_display.clone())));
@@ -565,6 +579,19 @@ impl Counters {
                             GeneratedPseudoElement::Before,
                             block_display,
                         ));
+                    }
+                }
+                Event::Content(element, content) => {
+                    for request in content.counter_requests() {
+                        state.value(request.name.clone())?;
+                    }
+                    for child in element.children(TreeRelation::Formatting) {
+                        state.visit_hidden(child, styles, |_, assignments, counters| {
+                            for assignment in assignments {
+                                counters.snapshot(&assignment.content)?;
+                            }
+                            Ok(())
+                        })?;
                     }
                 }
                 Event::Pseudo(element, pseudo, parent_display) => {

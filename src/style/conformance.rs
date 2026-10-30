@@ -1213,7 +1213,7 @@ fn supports_classification_agrees_with_real_computation_for_concrete_generated_v
 
 #[test]
 fn supports_accepts_pending_values_without_promising_computed_capability() {
-    const FIXED_VALUE: &str = "'text' url(sample.png)";
+    const FIXED_VALUE: &str = "'text' content(first-letter)";
     assert!(!declaration::supports_declaration("content", FIXED_VALUE));
     for substitution in ["attr(sample)", "var(--missing,'')", "if(else:'')"] {
         let value = format!("{FIXED_VALUE} {substitution}");

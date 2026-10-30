@@ -5686,6 +5686,27 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 self.page_content = true;
             }
         }
+        for mut paint in std::mem::take(&mut marker.images) {
+            paint.rect.x += marker.fragment.x;
+            paint.rect.y += marker.fragment.baseline;
+            self.anchors
+                .ink(marker.owner, self.page, paint.rect, self.clip);
+            if paint.rect.intersects(self.page_rect) {
+                let scope = self.inline_key();
+                self.foreground[self.page].push(ScopedPaint {
+                    native: None,
+                    visible: true,
+                    order: self.orders.take(),
+                    scope,
+                    clip: self.clip,
+                    group: self.group,
+                    ink: Some(paint.rect),
+                    item: DisplayItem::Image(paint),
+                    navigation: BoxNavigation::default(),
+                });
+                self.page_content = true;
+            }
+        }
         let layer = self.current_layer();
         self.emit_line(
             marker.fragment,

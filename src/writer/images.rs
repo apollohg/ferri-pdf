@@ -75,6 +75,7 @@ impl ImageWriter {
             }
             Asset::Transparent => Ok(()),
             Asset::View(view) => self.draw_view(view, paint, viewport, surface),
+            Asset::Generated(image) => self.draw_generated(image, paint, viewport, surface),
             Asset::Viewport(_) => unreachable!("painters draw nested viewports"),
             Asset::Frame(..) => unreachable!("layout replaces frames with their viewports"),
             Asset::Widget(_) => unreachable!("layout replaces widgets with their drawings"),
@@ -114,7 +115,8 @@ impl ImageWriter {
                 | Asset::Frame(..)
                 | Asset::Viewport(_)
                 | Asset::Widget(_)
-                | Asset::View(_) => None,
+                | Asset::View(_)
+                | Asset::Generated(_) => None,
             };
             if let Some(loaded) = loaded {
                 match loaded.and_then(|image| {
@@ -139,7 +141,8 @@ impl ImageWriter {
             | Asset::Frame(..)
             | Asset::Viewport(_)
             | Asset::Widget(_)
-            | Asset::View(_) => Orientation::NoTransforms,
+            | Asset::View(_)
+            | Asset::Generated(_) => Orientation::NoTransforms,
             Asset::Svg(svg) => {
                 if let std::collections::hash_map::Entry::Vacant(entry) =
                     self.vectors.entry(vector_key)
@@ -175,7 +178,8 @@ impl ImageWriter {
             | Asset::Frame(..)
             | Asset::Viewport(_)
             | Asset::Widget(_)
-            | Asset::View(_) => {
+            | Asset::View(_)
+            | Asset::Generated(_) => {
                 unreachable!("draw dispatches only decoded images here")
             }
             Asset::Svg(svg) => {
@@ -198,6 +202,32 @@ impl ImageWriter {
         surface.pop();
         crate::writer::painting::pop_clips(clips, surface);
         Ok(())
+    }
+
+    /// Draws a generated image filling the paint rectangle, as a background tile of its size.
+    fn draw_generated(
+        &mut self,
+        image: &crate::graphics::BackgroundImage,
+        paint: &ImagePaint,
+        viewport: crate::graphics::Rect,
+        surface: &mut Surface<'_>,
+    ) -> Result<(), PdfError> {
+        let Some(tile) = crate::paint::Source::of(image)
+            .map_err(PdfError::UnresolvedImage)?
+            .and_then(|source| source.tile([paint.rect.width, paint.rect.height]))
+        else {
+            return Ok(());
+        };
+        let clips = paint
+            .clip
+            .as_ref()
+            .map(|clip| crate::writer::painting::push_clip(clip, viewport, surface))
+            .transpose()?
+            .unwrap_or(0);
+        let drawn =
+            crate::writer::backgrounds::draw_tile(&tile, paint.rect, viewport, surface, self);
+        crate::writer::painting::pop_clips(clips, surface);
+        drawn
     }
 
     /// Draws the view's region into the paint rectangle: the whole image draws scaled so that

@@ -11,6 +11,12 @@ pub(crate) const MAX_INLINE_TEXT_BYTES: usize = 64 * 1024 * 1024;
 /// Stands for an atomic inline in paragraph text (CSS Text 3 §5.1).
 pub(crate) const OBJECT_REPLACEMENT_CHARACTER: char = '\u{fffc}';
 
+/// A generated content image, loaded, at the offset of the generated text it stands at.
+pub(crate) struct GeneratedImage {
+    pub offset: usize,
+    pub image: Arc<crate::images::Image>,
+}
+
 pub(crate) struct TextSpan {
     pub range: Range<usize>,
     pub style: Style,
@@ -272,10 +278,11 @@ impl Paragraph {
 
     pub(crate) fn generated_output(
         output: &crate::style::GeneratedOutput,
+        images: &[GeneratedImage],
         style: &Style,
     ) -> Result<Option<Self>, DocumentError> {
         let mut collector = InlineCollector::default();
-        collector.append_generated(output, style)?;
+        collector.append_generated(output, images, style)?;
         Ok(collector.finish(style)?.ok())
     }
 
@@ -287,10 +294,11 @@ impl Paragraph {
     /// The marker box holding the `content` of its `::marker`.
     pub(crate) fn generated_marker(
         output: &crate::style::GeneratedOutput,
+        images: &[GeneratedImage],
         style: &Style,
     ) -> Result<Option<Self>, DocumentError> {
         Self::marker_with(style, |collector, style| {
-            collector.append_generated(output, style)
+            collector.append_generated(output, images, style)
         })
     }
     fn marker_with(
@@ -507,6 +515,10 @@ impl Paragraph {
     pub(crate) fn into_non_text(self) -> Vec<crate::document::BlockContent> {
         non_text(self.anchors, self.events)
     }
+    /// The text and the atomic inlines whose placeholders it holds, in text order.
+    pub(crate) fn into_text_and_atomics(self) -> (String, Vec<Anchor>) {
+        (self.text, self.atomics)
+    }
     pub(crate) fn leader_at(&self, offset: usize) -> bool {
         self.spans
             .get(self.spans.partition_point(|span| span.range.end <= offset))
@@ -612,24 +624,54 @@ impl InlineCollector {
     pub(crate) fn append_generated(
         &mut self,
         output: &crate::style::GeneratedOutput,
+        images: &[GeneratedImage],
         style: &Style,
     ) -> Result<(), DocumentError> {
-        self.append_generated_from(output, 0, style)
+        self.append_generated_from(output, images, 0, style)
     }
-    /// Appends the generated text after its first `start` bytes, which hold no leader.
+    /// Appends the generated text after its first `start` bytes, which hold no leader and
+    /// precede its images, and each image as an anonymous inline replaced element (CSS
+    /// Content 3 §2.2).
     pub(crate) fn append_generated_from(
         &mut self,
         output: &crate::style::GeneratedOutput,
+        images: &[GeneratedImage],
         start: usize,
         style: &Style,
     ) -> Result<(), DocumentError> {
+        let text = output.text();
         let mut from = start;
-        for range in output.leaders() {
-            self.append(&output.text()[from..range.start], style)?;
-            self.append_inner(&output.text()[range.clone()], style, true)?;
-            from = range.end;
+        let mut leaders = output.leaders().iter().peekable();
+        let mut images = images.iter().peekable();
+        loop {
+            let leader = leaders.peek().map(|range| range.start);
+            // An image at a leader's start precedes it.
+            let image_next = match (leader, images.peek().map(|image| image.offset)) {
+                (None, None) => break,
+                (Some(leader), Some(image)) => image <= leader,
+                (Some(_), None) => false,
+                (None, Some(_)) => true,
+            };
+            if image_next {
+                let image = images.next().expect("an image is next");
+                self.append(&text[from..image.offset], style)?;
+                self.atomic(
+                    crate::document::BlockBox::anonymous_replaced(
+                        style.anonymous(crate::style::Display::Inline),
+                        image.image.clone(),
+                        None,
+                    ),
+                    style,
+                )?;
+                from = image.offset;
+            } else {
+                let range = leaders.next().expect("a leader is next");
+                self.append(&text[from..range.start], style)?;
+                self.append_inner(&text[range.clone()], style, true)?;
+                from = range.end;
+            }
         }
-        self.append(&output.text()[from..], style)
+        self.append(&text[from..], style)
     }
     /// Whether no in-flow content but an inside marker precedes the next content on the first
     /// line, where a first letter can begin (CSS Pseudo-Elements 4 §2.2.2).

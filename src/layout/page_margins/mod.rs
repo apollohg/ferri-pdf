@@ -449,28 +449,30 @@ fn prepare<'a, 't>(
             specified[axis] = specified[axis].map(|size| (size - edges).max(0.0));
         }
     }
-    let (paragraph, element) = match margin.content.running_element() {
-        Some(request) => (
+    let (paragraph, element) = if let Some(request) = margin.content.running_element() {
+        (
             None,
             context
                 .strings
                 .element(page - 1, request)
                 .and_then(|owner| context.running[owner].element.as_ref())
                 .map(|element| &element.block),
-        ),
-        None => (
-            Paragraph::generated_output(
-                &margin.content.page_output_with_strings(
-                    page,
-                    pages,
-                    crate::document::MAX_INLINE_TEXT_BYTES,
-                    &style.quotes,
-                    &mut |request| Ok(context.strings.text(page - 1, request)),
-                )?,
-                style,
-            )?,
-            None,
-        ),
+        )
+    } else {
+        let output = margin.content.page_output_with_strings(
+            page,
+            pages,
+            crate::document::MAX_INLINE_TEXT_BYTES,
+            &style.quotes,
+            &mut |request| Ok(context.strings.text(page - 1, request)),
+        )?;
+        if !output.images().is_empty() {
+            return Err(crate::style::StyleError::Unsupported(
+                "images in page-margin box content".into(),
+            )
+            .into());
+        }
+        (Paragraph::generated_output(&output, &[], style)?, None)
     };
     Ok(Prepared {
         margin,

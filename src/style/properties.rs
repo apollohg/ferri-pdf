@@ -1175,6 +1175,10 @@ fn handler(property: Property) -> Option<Handler> {
                     v,
                     crate::style::generated::ContentContext::BeforeAfter,
                     &validation_scope(r),
+                    &crate::style::generated::ImageBasis {
+                        relative: r,
+                        current: &crate::paint::AbsoluteColor::BLACK,
+                    },
                 )
                 .is_ok_and(|content| content.supported())
             }),
@@ -1519,8 +1523,15 @@ fn handler(property: Property) -> Option<Handler> {
         P::BookmarkLabel => (
             bookmark_label,
             Some(|v, r| {
-                crate::style::GeneratedContent::from_list(v, &validation_scope(r))
-                    .is_ok_and(|content| content.supported())
+                crate::style::GeneratedContent::from_list(
+                    v,
+                    &validation_scope(r),
+                    Some(&crate::style::generated::ImageBasis {
+                        relative: r,
+                        current: &crate::paint::AbsoluteColor::BLACK,
+                    }),
+                )
+                .is_ok_and(|content| content.supported())
             }),
         ),
         P::BookmarkState => (bookmark_state, Some(|_, _| true)),
@@ -3364,11 +3375,21 @@ fn content(
     relative: &Relative<'_>,
 ) -> Result<(), StyleError> {
     style.computed_content = match input {
-        Input::Value(value) => crate::style::generated::ComputedContent::from_component(
-            value,
-            style.content_context,
-            &element_scope(relative, style),
-        )?,
+        Input::Value(value) => {
+            let content = crate::style::generated::ComputedContent::from_component(
+                value,
+                style.content_context,
+                &element_scope(relative, style),
+                &crate::style::generated::ImageBasis {
+                    relative,
+                    current: &style.computed_color,
+                },
+            )?;
+            if !content.supported() {
+                return Err(unsupported(value));
+            }
+            content
+        }
         Input::Copy(source) => source.computed_content.clone(),
     };
     Ok(())
@@ -3691,7 +3712,14 @@ computed!(
     bookmark_label,
     [bookmark.label],
     |value, style, _parent, relative| {
-        crate::style::GeneratedContent::from_list(value, &element_scope(relative, style))?
+        crate::style::GeneratedContent::from_list(
+            value,
+            &element_scope(relative, style),
+            Some(&crate::style::generated::ImageBasis {
+                relative,
+                current: &style.computed_color,
+            }),
+        )?
     }
 );
 computed!(

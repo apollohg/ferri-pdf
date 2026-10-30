@@ -9,6 +9,9 @@ pub(super) struct MeasuredMarker {
     pub frame: crate::layout::writing::Frame,
     pub fragment: TextLine,
     pub image: Option<crate::graphics::BoxPaint>,
+    /// The anonymous replaced boxes of `content` images, from the line's left edge and
+    /// baseline.
+    pub images: Vec<crate::graphics::ImagePaint>,
     pub ascent: f32,
     pub ink_bounds: Option<[f32; 2]>,
     pub decorations: Vec<crate::graphics::DecorationPaint>,
@@ -22,8 +25,24 @@ pub(super) fn measure(
     right: f32,
     owner: Option<crate::style::PageStyleTarget>,
 ) -> Result<MeasuredMarker, Failure> {
+    // A marker's atomic inlines are the anonymous replaced boxes of its content images, sized
+    // as replaced elements with automatic sizes; their baseline is their bottom edge.
+    let sizes: Vec<[f32; 2]> = paragraph
+        .atomics()
+        .iter()
+        .map(|atomic| crate::layout::images::size(&atomic.block, 0.0, 0.0, None, None, None))
+        .collect();
+    let metrics: Vec<_> = sizes
+        .iter()
+        .map(|&[width, height]| crate::text::AtomicMetrics {
+            width,
+            height,
+            baseline: height,
+            synthesized_baseline: false,
+        })
+        .collect();
     let mut line = measurer
-        .text_lines(paragraph, f32::MAX, &[])?
+        .text_lines(paragraph, f32::MAX, &metrics)?
         .into_iter()
         .next()
         .expect("a generated marker contains nonempty, unwrapped text");
@@ -58,10 +77,38 @@ pub(super) fn measure(
             decoration,
         )
     });
+    let images = line
+        .atomics
+        .iter()
+        .map(|fragment| {
+            let atomic = &paragraph.atomics()[fragment.index];
+            let [width, height] = sizes[fragment.index];
+            let top = fragment.baseline - height;
+            line.ink_bounds = Some(line.ink_bounds.map_or([top, fragment.baseline], |bounds| {
+                [bounds[0].min(top), bounds[1].max(fragment.baseline)]
+            }));
+            crate::graphics::ImagePaint {
+                image: atomic
+                    .block
+                    .image()
+                    .expect("marker atomics are content images")
+                    .clone(),
+                rect: crate::graphics::Rect {
+                    x: fragment.x,
+                    y: top,
+                    width,
+                    height,
+                },
+                clip: None,
+                source_scale: atomic.block.style().effective_zoom,
+            }
+        })
+        .collect();
     Ok(MeasuredMarker {
         owner,
         frame: crate::layout::writing::Frame::for_style(style),
         image,
+        images,
         ascent: line.ascent,
         ink_bounds: line.ink_bounds,
         decorations: line.decorations,

@@ -5,6 +5,7 @@ use crate::style::{
     counter_style::{CounterStyle, Scope},
     grammar::{Keyword, Label, Production},
     quotes::{QuoteAction, QuoteDepth, Quotes},
+    units::Relative,
 };
 
 /// CSS Lists 3 §4.7: the style of `counter()` and `counters()` without one.
@@ -44,13 +45,24 @@ enum GeneratedPart {
     Pages(CounterStyle),
     Element(ElementContent),
     Quote(QuoteAction),
+    /// An anonymous inline replaced element, which text-only uses omit (CSS Content 3 §2.2).
+    Image(crate::paint::BackgroundImage),
 }
 #[derive(Clone, Debug, PartialEq, serde::Serialize)]
 pub(crate) struct GeneratedContent(Vec<GeneratedPart>);
 
+/// What the `<image>` values of a content list compute against: the element's values and its
+/// `currentcolor`.
+pub(crate) struct ImageBasis<'a, 'r> {
+    pub relative: &'a Relative<'r>,
+    pub current: &'a crate::paint::AbsoluteColor,
+}
+
 pub(crate) struct GeneratedOutput {
     text: String,
     leaders: Vec<std::ops::Range<usize>>,
+    /// Images with the text offsets they stand at, in text order.
+    images: Vec<(usize, crate::paint::BackgroundImage)>,
 }
 impl GeneratedOutput {
     pub(crate) fn text(&self) -> &str {
@@ -58,6 +70,9 @@ impl GeneratedOutput {
     }
     pub(crate) fn leaders(&self) -> &[std::ops::Range<usize>] {
         &self.leaders
+    }
+    pub(crate) fn images(&self) -> &[(usize, crate::paint::BackgroundImage)] {
+        &self.images
     }
 }
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
@@ -96,6 +111,7 @@ impl ComputedContent {
         value: &Component,
         context: ContentContext,
         scope: &Scope<'_>,
+        images: &ImageBasis<'_, '_>,
     ) -> Result<std::sync::Arc<Self>, StyleError> {
         if let Some(element) = value.find(Label::Production(Production::RunningElementFn)) {
             // CSS GCPM 3 §1.2.2: `element()` is valid only in page-margin boxes; elsewhere it
@@ -123,14 +139,21 @@ impl ComputedContent {
             }
             Some(Keyword::Normal | Keyword::None) => Self::None,
             _ => Self::Items {
-                content: GeneratedContent::from_component(value, scope)?
+                content: GeneratedContent::from_component(value, scope, Some(images))?
                     .ok_or_else(|| unsupported(value))?,
                 alternative: alternative(value)
-                    .map(|value| GeneratedContent::from_list(&value, scope))
+                    .map(|value| GeneratedContent::from_list(&value, scope, Some(images)))
                     .transpose()?,
             },
         };
         Ok(std::sync::Arc::new(value))
+    }
+    /// The content list replacing an element's or pseudo-element's contents, if any.
+    pub(crate) fn items(&self) -> Option<&GeneratedContent> {
+        match self {
+            Self::Items { content, .. } => Some(content),
+            Self::Contents | Self::None => None,
+        }
     }
 }
 fn alternative(value: &Component) -> Option<Component> {
@@ -263,6 +286,19 @@ impl GeneratedContent {
             )
         })
     }
+    /// CSS Content 3 §1: a content list of a single `<image>` is a `<content-replacement>`,
+    /// which makes its element a replaced element filled with the image.
+    pub(crate) fn replacement(&self) -> Option<&crate::paint::BackgroundImage> {
+        match self.0.as_slice() {
+            [GeneratedPart::Image(image)] => Some(image),
+            _ => None,
+        }
+    }
+    pub(crate) fn has_images(&self) -> bool {
+        self.0
+            .iter()
+            .any(|part| matches!(part, GeneratedPart::Image(_)))
+    }
     /// `content(text)`, the initial `bookmark-label` (CSS GCPM 3 §4.2).
     pub(crate) fn element_text_content() -> Self {
         Self(vec![GeneratedPart::Element(ElementContent::Text)])
@@ -272,20 +308,33 @@ impl GeneratedContent {
     pub(super) fn from_component(
         value: &Component,
         scope: &Scope<'_>,
+        images: Option<&ImageBasis<'_, '_>>,
     ) -> Result<Option<Self>, StyleError> {
         if matches!(value.keyword(), Some(Keyword::Normal | Keyword::None)) {
             return Ok(None);
         }
+        if let (Some(image), Some(images)) = (
+            value.find(Label::Production(Production::ContentReplacement)),
+            images,
+        ) {
+            return crate::style::background_values::image(image, images.relative, images.current)
+                .map(|image| Some(Self(vec![GeneratedPart::Image(image)])));
+        }
         let list = value
             .find(Label::Production(Production::ContentList))
             .ok_or_else(|| unsupported(value))?;
-        Self::from_list(list, scope).map(Some)
+        Self::from_list(list, scope, images).map(Some)
     }
-    /// A content list, such as `bookmark-label`'s (CSS GCPM 3 §1.1).
-    pub(super) fn from_list(list: &Component, scope: &Scope<'_>) -> Result<Self, StyleError> {
+    /// A content list, such as `bookmark-label`'s (CSS GCPM 3 §1.1); `images` computes its
+    /// `<image>` values where the grammar allows them.
+    pub(super) fn from_list(
+        list: &Component,
+        scope: &Scope<'_>,
+        images: Option<&ImageBasis<'_, '_>>,
+    ) -> Result<Self, StyleError> {
         list.items()
             .iter()
-            .map(|item| part(item, scope))
+            .map(|item| part(item, scope, images))
             .collect::<Result<_, _>>()
             .map(Self)
     }
@@ -496,8 +545,13 @@ impl GeneratedContent {
     ) -> Result<GeneratedOutput, StyleError> {
         let mut text = String::new();
         let mut leaders = Vec::new();
+        let mut images = Vec::new();
         for part in &self.0 {
             let fragment: std::borrow::Cow<'_, str> = match part {
+                GeneratedPart::Image(image) => {
+                    images.push((text.len(), image.clone()));
+                    continue;
+                }
                 GeneratedPart::Text(value) | GeneratedPart::Leader(value) => value.as_str().into(),
                 GeneratedPart::Counter(request) => counters.as_mut().ok_or_else(|| {
                     StyleError::Unsupported("document counters outside a counter context".into())
@@ -557,11 +611,25 @@ impl GeneratedContent {
             }
             text.push_str(&fragment);
         }
-        Ok(GeneratedOutput { text, leaders })
+        Ok(GeneratedOutput {
+            text,
+            leaders,
+            images,
+        })
     }
 }
 
-fn part(item: &Component, scope: &Scope<'_>) -> Result<GeneratedPart, StyleError> {
+fn part(
+    item: &Component,
+    scope: &Scope<'_>,
+    images: Option<&ImageBasis<'_, '_>>,
+) -> Result<GeneratedPart, StyleError> {
+    if let (Component::Reference(Label::Production(Production::Image), _), Some(images)) =
+        (item, images)
+    {
+        return crate::style::background_values::image(item, images.relative, images.current)
+            .map(GeneratedPart::Image);
+    }
     match item.unwrap() {
         Component::Keyword(Keyword::OpenQuote) => Ok(GeneratedPart::Quote(QuoteAction::Open)),
         Component::Keyword(Keyword::CloseQuote) => Ok(GeneratedPart::Quote(QuoteAction::Close)),
@@ -759,7 +827,7 @@ mod tests {
         )
         .unwrap()
         .expect("target grammar must accept all three reference forms");
-        let content = GeneratedContent::from_component(&value, &Scope::predefined())
+        let content = GeneratedContent::from_component(&value, &Scope::predefined(), None)
             .unwrap()
             .unwrap();
         let requests: Vec<_> = content.target_requests().collect();
@@ -825,7 +893,7 @@ mod tests {
         )
         .unwrap()
         .unwrap();
-        let content = GeneratedContent::from_component(&value, &Scope::predefined())
+        let content = GeneratedContent::from_component(&value, &Scope::predefined(), None)
             .unwrap()
             .unwrap();
         let mut modes = Vec::new();

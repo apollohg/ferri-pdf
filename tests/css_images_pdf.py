@@ -95,6 +95,23 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                       f'{actual_pixels.getpixel(first)} instead of {expected_pixels.getpixel(first)}\n'
                       f'actual: {actual}\nexpected: {expected}')
 
+    def assertSameInterior(self, root, actual, expected, message):
+        """Every pixel of the expected document whose neighbours all share its colour has that
+        colour in the actual one too: viewers smooth image edges differently by how an image
+        is drawn, so edges are not compared."""
+        actual_pixels = self.raster(root, self.render(root, *actual))
+        expected_pixels = self.raster(root, self.render(root, *expected))
+        width, height = expected_pixels.size
+        differing = [(x, y) for y in range(1, height - 1) for x in range(1, width - 1)
+                     if len({expected_pixels.getpixel(point) for point in
+                             ((x, y), (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1))}) == 1
+                     and actual_pixels.getpixel((x, y)) != expected_pixels.getpixel((x, y))]
+        if differing:
+            first = differing[0]
+            self.fail(f'{message}: {len(differing)} interior pixels differ, first at {first}: '
+                      f'{actual_pixels.getpixel(first)} instead of {expected_pixels.getpixel(first)}\n'
+                      f'actual: {actual}\nexpected: {expected}')
+
     def assertBlocks(self, root, css, body, rows, message):
         """The page shows an image of colour blocks `rows` at the page area's top left, one raster
         pixel per image pixel, and white just past its last row and column. Block centres are
@@ -391,6 +408,58 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                 self.assertSameInk(root, (f'{float_box}shape-outside:{shape}}}', body),
                                    (f'{float_box}shape-outside:{expected}}}', body),
                                    f'shape-outside: {shape} wraps like {expected}')
+
+    def test_content_images_replace_elements_and_fill_generated_content(self):
+        """CSS Content 3 §1: a single `<image>` makes an element or pseudo-element a replaced
+        element; images in a content list are anonymous inline replaced elements, and a list
+        on an element replaces its children."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-content-images-') as directory:
+            root = Path(directory)
+            quadrants = blocks(root / 'quadrants.png', QUADRANTS)
+            img = f'<img src="{quadrants}">'
+            for css, body, expected, message in [
+                    (f'div{{content:url("{quadrants}")}}', '<div>Text</div>',
+                     ('img{display:block}', img), 'an element shows its replacement image'),
+                    (f'div{{content:url("{quadrants}");width:40px;height:30px;border:2px solid blue}}',
+                     '<div>Text</div>',
+                     ('img{display:block;width:40px;height:30px;border:2px solid blue}', img),
+                     'a replaced element takes its box\'s sizes'),
+                    (f'span{{content:image-set(url("{quadrants}") 2x)}}', 'a<span>Text</span>b',
+                     ('', f'a<img srcset="{quadrants} 2x">b'), 'image-set() chooses the natural resolution'),
+                    (f'span{{content:url("{quadrants}");object-view-box:inset(0 10px 10px 0)}}',
+                     'a<span>Text</span>b',
+                     ('img{object-view-box:inset(0 10px 10px 0)}', f'a{img}b'),
+                     'the element\'s object-view-box applies'),
+                    ('div{content:linear-gradient(red, red)}', '<div>Text</div>',
+                     ('div{width:300px;height:150px;background:red}', '<div></div>'),
+                     'a generated image takes the default object size'),
+                    ('div{content:image("missing.png");border:2px solid}', '<div>Text</div>',
+                     ('div{width:0;height:0;border:2px solid}', '<div></div>'),
+                     'an invalid replacement has zero natural size'),
+                    (f'div{{content:"A" url("{quadrants}") "B"}}', '<div>Text <b>more</b></div>',
+                     ('', f'<div>A{img}B</div>'), 'a content list replaces an element\'s children'),
+                    ('div{content:none}', '<div>Text</div>', ('', '<div>Text</div>'),
+                     'none on an element renders it normally'),
+                    (f'p::before{{content:"x" url("{quadrants}") image("missing.png") "y"}}', '<p>Text</p>',
+                     ('', f'<p>x{img}yText</p>'), 'list images are inline and invalid ones are skipped'),
+                    (f'p::before{{content:url("{quadrants}");width:40px;height:30px}}', '<p>Text</p>',
+                     ('img{width:40px;height:30px}', f'<p>{img}Text</p>'),
+                     'a single image makes a pseudo-element a replaced element'),
+                    (f'p::after{{content:url("{quadrants}");display:block}}', '<p>Text</p>',
+                     ('img{display:block}', f'<p>Text</p>{img}'), 'a block-level replaced pseudo-element'),
+                    ('p::before{content:cross-fade(red, blue) "x"}', '<p>Text</p>',
+                     ('img{width:300px;height:150px;background:cross-fade(red, blue)}',
+                      '<p><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E">xText</p>'),
+                     'generated images in content lists')]:
+                self.assertSameInk(root, (css, body), expected, message)
+            # CSS Lists 3 §3.2: a marker image is followed by a space.
+            items = '<ul><li>One</li></ul>'
+            for position in ('outside', 'inside'):
+                self.assertSameInterior(
+                    root, (f'ul{{padding-left:60pt}}li{{list-style-position:{position}}}'
+                           f'li::marker{{content:url("{quadrants}") " "}}', items),
+                    (f'ul{{padding-left:60pt}}li{{list-style:{position} url("{quadrants}")}}', items),
+                    f'an {position} marker\'s content image draws as its marker image')
 
     def assertInkSize(self, root, css, body, expected, message):
         """Everything not white on the first page spans `expected` CSS pixels. Resolutions that
