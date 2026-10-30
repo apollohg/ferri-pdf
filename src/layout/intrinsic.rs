@@ -92,7 +92,8 @@ pub(super) fn content<'a>(
     } else {
         flow(block.block, measurer, available)?
     };
-    Ok(if style.multicol.is_multicol() {
+    // A contained multicol container's sizes are already its own, not its columns'.
+    Ok(if style.multicol.is_multicol() && !contained {
         crate::layout::multicol::intrinsic(style, sizes)
     } else {
         sizes

@@ -57,6 +57,17 @@ fn size_containment_sizes_the_box_as_if_empty() {
             0.0,
         ),
         ("float:left;contain:size;padding:5pt", 10.0, 10.0),
+        // A contained multicol container's size is its own, not that of its columns.
+        (
+            "float:left;columns:2;column-gap:10pt;contain:size;contain-intrinsic-size:60pt 20pt",
+            60.0,
+            20.0,
+        ),
+        (
+            "float:left;columns:3;column-gap:10pt;contain:size",
+            0.0,
+            0.0,
+        ),
         // Size containment has no effect on tables.
         ("display:table;contain:size", 150.0, 90.0),
     ] {
