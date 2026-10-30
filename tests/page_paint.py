@@ -17,6 +17,8 @@ CANVAS_BACKGROUND = (64, 80, 96)
 PAGE_BORDER = (204, 34, 0)
 CONTENT_BACKGROUND = (112, 128, 144)
 PIXEL_TOLERANCE = 1
+# Filtered groups paint resampled rasters, which blend edge pixels with their neighbours.
+FILTER_TOLERANCE = 3
 INK_TOLERANCE = 64
 FAR_CLIP_OFFSET_PT = 1_100_000
 
@@ -684,10 +686,10 @@ class PagePaint(unittest.TestCase):
                         f"raster sizes {[page.size for page in pages]}, expected {output_size or page_size}")
         return pages
 
-    def pixel(self, page, position, color, reason):
+    def pixel(self, page, position, color, reason, tolerance=PIXEL_TOLERANCE):
         actual = page.getpixel(position)
         self.assertTrue(
-            all(abs(got - expected) <= PIXEL_TOLERANCE
+            all(abs(got - expected) <= tolerance
                 for got, expected in zip(actual, color)),
             f"{reason}: pixel {position} is {actual}, expected {color}",
         )
@@ -1014,6 +1016,44 @@ class PagePaint(unittest.TestCase):
                 self.pixel(page, (50, 50), color, "canvas background is independent of root invertibility")
                 self.pixel(page, (92, 72), color, "collapsed document text must not cover the canvas")
                 self.pixel(page, (21, 50), PAGE_BORDER, "page paint remains independent of the root")
+
+    def test_root_element_group_composites_canvas_page_borders_and_footnotes(self):
+        # Compositing 1 §8.3: the root background is painted into the root element group before
+        # its filter, clip-path, mask and opacity apply; CSS Page 3 §3.1 paints the canvas, page
+        # borders and document contents as one element, and footnotes are document contents.
+        cyan, white = (0, 255, 255), (255, 255, 255)
+        canvas, border, content, footnote = (40, 120), (21, 100), (50, 40), (150, 163)
+        for effect, expected in [
+            ("opacity:.5", {canvas: (136, 16, 24), border: (110, 33, 24),
+                            content: (8, 16, 152), footnote: (8, 144, 24)}),
+            ("filter:invert(1)", {canvas: cyan, border: (51, 221, 255),
+                                  content: (255, 255, 0), footnote: (255, 0, 255)}),
+            ("mix-blend-mode:multiply", {canvas: (16, 0, 0), border: (13, 4, 0),
+                                         content: (0, 0, 48), footnote: (0, 32, 0)}),
+            ("height:100%;clip-path:inset(0 0 0 50%)", {canvas: PAGE_BACKGROUND,
+                                                        (150, 120): (255, 0, 0),
+                                                        border: PAGE_BACKGROUND,
+                                                        footnote: (0, 255, 0),
+                                                        (40, 163): PAGE_BACKGROUND}),
+            ("filter:invert(1);transform:rotate(90deg)", {canvas: cyan, (175, 175): cyan,
+                                                          (21, 21): (51, 221, 255),
+                                                          border: (51, 221, 255)}),
+            ("mask-image:linear-gradient(transparent,transparent)",
+             {canvas: PAGE_BACKGROUND, border: PAGE_BACKGROUND, footnote: PAGE_BACKGROUND}),
+        ]:
+            with self.subTest(effect=effect):
+                page = self.render(
+                    f"html{{background:red;{effect}}}"
+                    "p{font:12pt/14pt serif;color:transparent}.block{width:40pt;height:20pt;background:blue}"
+                    ".note{float:footnote;background:lime}",
+                    "<div class=block></div><p>Call<span class=note>Note</span></p>",
+                    page_size=(200, 200),
+                )[0]
+                self.assertNotEqual(page.getpixel((100, 5)), white, "page background paints under the root group")
+                tolerance = FILTER_TOLERANCE if "filter" in effect else PIXEL_TOLERANCE
+                for point, color in expected.items():
+                    self.pixel(page, point, color,
+                               f"html{{{effect}}} composites the canvas with its document", tolerance)
 
     def test_transformed_element_gradient_tiles_keep_their_clip_and_opacity(self):
         for opacity in (1.0, 0.5):

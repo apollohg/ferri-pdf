@@ -931,14 +931,15 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 .chain(items)
                 .chain(std::iter::repeat_n(DisplayItem::Pop, pops));
             let scope: PaintKey = Rc::from([FLOW_LEVEL]);
+            let (clip, group) = self.root_paint.unwrap_or_default();
             for item in items {
                 self.foreground[page].push(ScopedPaint {
                     native: None,
                     visible: true,
                     order: self.orders.take(),
                     scope: scope.clone(),
-                    clip: None,
-                    group: None,
+                    clip,
+                    group,
                     ink: None,
                     item,
                     navigation: BoxNavigation::default(),

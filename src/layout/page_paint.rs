@@ -5,7 +5,9 @@ use std::sync::Arc;
 pub(super) struct PagePaint {
     pub canvas: BoxPaint,
     background: Option<BoxPaint>,
-    border: Option<BoxPaint>,
+    /// The page borders, which paint between the document canvas and contents (CSS Page 3
+    /// §3.1).
+    pub border: Option<BoxPaint>,
 }
 /// The page box inside the page margins.
 fn page_box(page: &PageBox) -> BoxPaint {
@@ -91,24 +93,21 @@ impl PagePaint {
         let frame = crate::layout::writing::Frame::physical(flow, page.geometry.paper).inverse();
         let mut paint = Self::new(page, canvas, record.output.bleed);
         frame.paint(&mut paint.canvas);
+        if let Some(border) = &mut paint.border {
+            frame.paint(border);
+        }
         Ok(paint)
     }
 
-    /// Puts the page box's background and border under the page's display list, and
-    /// `underlay` between the background and the document canvas (CSS Page 3 §3.1);
-    /// text-clipped backgrounds paint within `text_area`, the page's text.
+    /// Puts the page box's background under the page's display list, and `underlay` between
+    /// the background and the document canvas (CSS Page 3 §3.1); text-clipped backgrounds
+    /// paint within `text_area`, the page's text.
     pub(crate) fn decorate(
         &self,
         list: &mut Vec<DisplayItem>,
         text_area: Option<crate::graphics::FlowPaint>,
         underlay: Vec<DisplayItem>,
     ) {
-        if let Some(border) = &self.border {
-            list.insert(
-                usize::from(self.canvas.has_ink()),
-                DisplayItem::Box(border.clone()),
-            );
-        }
         list.splice(0..0, underlay);
         if let Some(background) = &self.background {
             list.insert(

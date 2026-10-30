@@ -324,6 +324,9 @@ enum Effect<'a> {
     Group(Group<'a>),
     /// A mark on the items below it, with no region of its own.
     Subtree(Subtree),
+    /// Undoes the transforms enclosing it, so that the items below it paint in page
+    /// coordinates inside the groups those transforms enclose.
+    PageSpace,
 }
 /// The box establishing a 3D rendering context, and the group compositing its stacking
 /// context, inside which the groups of the context's planes nest.
@@ -1147,7 +1150,13 @@ pagination_state! {
     bands: Vec<BandContinuation<'a>>,
     page_content: bool,
     canvas: BoxPaint,
-    canvas_slots: Vec<Option<usize>>,
+    /// The slots of each page's document canvas and page borders.
+    page_slots: Vec<[Option<usize>; 2]>,
+    /// The clip and group painting the canvas, the page borders between it and the document
+    /// and the footnote areas' footnotes: the root element group composites them (Compositing
+    /// 1 §8.3), in page coordinates, as the canvas is drawn as the page box's background (CSS
+    /// Page 3 §3.1).
+    root_paint: Option<(Option<usize>, Option<usize>)>,
     canvas_roots: Vec<(usize, usize)>,
     canvas_style: Option<&'a crate::style::Style>,
     canvas_rect: Rect,
@@ -1300,7 +1309,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             bands: Vec::new(),
             page_content: false,
             canvas,
-            canvas_slots: vec![None],
+            page_slots: vec![[None; 2]],
+            root_paint: None,
             canvas_roots: Vec::new(),
             canvas_style: None,
             canvas_rect,
@@ -1314,38 +1324,44 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         paginator.canvas(0);
         paginator
     }
+    /// Places the document canvas and the page borders over it on `page` (CSS Page 3 §3.1).
     fn canvas(&mut self, page: usize) {
-        let canvas = if page == self.page {
-            self.canvas.clone()
-        } else {
-            match &self.fragmentainers {
-                Fragmentainers::Pages(pages) => {
-                    crate::layout::page_paint::PagePaint::in_flow(
-                        &pages.boxes[page],
-                        pages.document.canvas_background(),
-                        crate::style::logical::Flow::used(pages.document.root().style()),
-                    )
-                    .expect("resolved physical pages have valid paint geometry")
-                    .canvas
-                }
-                Fragmentainers::Columns(_) => self.canvas.clone(),
-            }
+        let painting = match &self.fragmentainers {
+            Fragmentainers::Pages(pages) => Some(
+                crate::layout::page_paint::PagePaint::in_flow(
+                    &pages.boxes[page],
+                    pages.document.canvas_background(),
+                    crate::style::logical::Flow::used(pages.document.root().style()),
+                )
+                .expect("resolved physical pages have valid paint geometry"),
+            ),
+            Fragmentainers::Columns(_) => None,
         };
-        if let Some(slot) = self.canvas_slots[page] {
-            self.display_lists[page][slot].item = DisplayItem::Box(canvas);
-        } else if canvas.has_ink() {
-            self.canvas_slots[page] = Some(self.display_lists[page].len());
-            self.display_lists[page].push(ScopedPaint {
-                native: None,
-                visible: true,
-                order: self.orders.take(),
-                scope: Rc::from([ROOT_LEVEL]),
-                clip: None,
-                group: None,
-                ink: None,
-                item: DisplayItem::Box(canvas),
-                navigation: BoxNavigation::default(),
-            });
+        let canvas = match &painting {
+            Some(painting) if page != self.page => painting.canvas.clone(),
+            _ => self.canvas.clone(),
+        };
+        let border = painting.and_then(|painting| painting.border);
+        for (index, paint) in [Some(canvas), border].into_iter().enumerate() {
+            let Some(paint) = paint else {
+                continue;
+            };
+            if let Some(slot) = self.page_slots[page][index] {
+                self.display_lists[page][slot].item = DisplayItem::Box(paint);
+            } else if paint.has_ink() {
+                self.page_slots[page][index] = Some(self.display_lists[page].len());
+                self.display_lists[page].push(ScopedPaint {
+                    native: None,
+                    visible: true,
+                    order: self.orders.take(),
+                    scope: Rc::from([ROOT_LEVEL]),
+                    clip: None,
+                    group: None,
+                    ink: None,
+                    item: DisplayItem::Box(paint),
+                    navigation: BoxNavigation::default(),
+                });
+            }
         }
     }
     fn finish_box_fragment(
@@ -1462,8 +1478,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             })
             || self.display_lists[page]
                 .iter()
-                .skip(usize::from(self.canvas.has_ink()))
-                .any(|item| match &item.item {
+                .enumerate()
+                .filter(|(slot, _)| !self.page_slots[page].contains(&Some(*slot)))
+                .any(|(_, item)| match &item.item {
                     DisplayItem::Box(paint) => paint.has_ink(),
                     DisplayItem::Frame(frame) => !frame.items.is_empty(),
                     DisplayItem::Scene(scene) => !scene.planes.is_empty(),
@@ -1583,7 +1600,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         self.display_lists.push(Vec::new());
         self.foreground.push(Vec::new());
         self.flow_content.push(false);
-        self.canvas_slots.push(None);
+        self.page_slots.push([None; 2]);
         self.canvas(self.pages.len() - 1);
     }
     fn physical_flow(&self) -> bool {
@@ -2653,6 +2670,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 .is_some_and(|paint| paint.decoration.backgrounds.clips_to_text())
         {
             self.clip = Some(self.effect_node(self.clip, Effect::Subtree(Subtree::TextArea)));
+        }
+        if let Fragmentainers::Pages(pages) = &self.fragmentainers
+            && std::ptr::eq(block.source, pages.document.root())
+        {
+            self.root_paint = Some((None, self.group));
         }
         let paint_order = self.order();
         let paint = if let Some(mut paint) = block.paint {
@@ -3890,6 +3912,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 | Effect::Group(_)
                 | Effect::PathClip(_)
                 | Effect::Subtree(_)
+                | Effect::PageSpace
                 | Effect::MotionReference(..)
                 | Effect::ColumnReference => None,
             };
@@ -3947,6 +3970,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                         node_regions.push((page, Region::Transform([1.0, 0.0, 0.0, 1.0, x, y])));
                     }
                 }
+                Effect::PageSpace => {
+                    node_regions = self.page_space_regions(node, &regions);
+                }
                 Effect::Parent3d(..)
                 | Effect::InheritedParent3d
                 | Effect::Scene(_)
@@ -3964,6 +3990,41 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             regions.push(node_regions);
         }
         Ok(regions)
+    }
+    /// The inverse of the transforms enclosing page space `node` on each page they apply to,
+    /// from the `regions` of its ancestors.
+    fn page_space_regions(
+        &self,
+        node: &EffectNode<'_>,
+        regions: &[Vec<(usize, Region)>],
+    ) -> Vec<(usize, Region)> {
+        use crate::paint::projection::{compose, from_affine, inverse};
+        let mut ancestors = Vec::new();
+        let mut next = node.parent;
+        while let Some(index) = next {
+            ancestors.push(index);
+            next = self.clips[index].parent;
+        }
+        let mut placements: BTreeMap<usize, crate::graphics::Projection> = BTreeMap::new();
+        for &index in ancestors.iter().rev() {
+            for (page, region) in &regions[index] {
+                let matrix = match region {
+                    Region::Transform(matrix) => from_affine(*matrix),
+                    Region::Projection(projection) => *projection,
+                    Region::Clip(_) => continue,
+                };
+                placements
+                    .entry(*page)
+                    .and_modify(|outer| *outer = compose(*outer, matrix))
+                    .or_insert(matrix);
+            }
+        }
+        placements
+            .into_iter()
+            .filter_map(|(page, placement)| {
+                inverse(placement).map(|undone| (page, Region::projected(undone)))
+            })
+            .collect()
     }
     /// Each anchored group's element's box fragments: its block fragments and inline boxes.
     fn group_bounds(&self) -> Vec<Vec<(usize, BoxPaint)>> {
@@ -6467,9 +6528,31 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             assemble_background(&group.fragments, &mut self.display_lists, false, false);
         }
     }
+    /// A root element group that opens inside the clips and transforms of the root element's
+    /// box paints the canvas below a node undoing those transforms.
+    fn root_page_space(&mut self) {
+        if let Some((_, Some(group))) = self.root_paint
+            && let Effect::Group(effect) = self.clips[group].effect
+            && effect.anchored()
+            && let Some(anchor) = effect.anchor
+        {
+            self.root_paint = Some((
+                Some(self.effect_node(Some(anchor), Effect::PageSpace)),
+                Some(group),
+            ));
+        }
+    }
     fn position_canvas_backgrounds(&mut self) {
+        let (clip, group) = self.root_paint.unwrap_or_default();
+        for (page, slots) in self.page_slots.iter().enumerate() {
+            for &slot in slots.iter().flatten() {
+                let paint = &mut self.display_lists[page][slot];
+                paint.clip = clip;
+                paint.group = group;
+            }
+        }
         for &(page, root_slot) in &self.canvas_roots {
-            let Some(canvas_slot) = self.canvas_slots[page] else {
+            let Some(canvas_slot) = self.page_slots[page][0] else {
                 continue;
             };
             let DisplayItem::Box(root) = &self.display_lists[page][root_slot].item else {
@@ -7011,6 +7094,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     .map_or(1, |page| page + 1),
             )
             .max(self.footnotes.last_page().map_or(0, |page| page + 1));
+        self.root_page_space();
         let (footnote_navigation, mut footnote_text) = self.paint_footnotes(page_count)?;
         let page_extents: Vec<_> = (0..page_count)
             .map(|page| {
@@ -7580,13 +7664,17 @@ impl Assembly<'_, '_> {
         ) {
             return Ok(None);
         }
-        self.regions[node]
+        let region = self.regions[node]
             .iter()
             .find_map(|(fragment_page, region)| {
                 (*fragment_page == self.page).then(|| region.clone())
-            })
-            .map(Some)
-            .ok_or(LayoutError::MissingClipFragment { page: self.page })
+            });
+        match (region, &self.nodes[node].effect) {
+            (Some(region), _) => Ok(Some(region)),
+            // No transform encloses it on the page.
+            (None, Effect::PageSpace) => Ok(None),
+            (None, _) => Err(LayoutError::MissingClipFragment { page: self.page }),
+        }
     }
 
     /// Assembles the items of the 3D rendering context rooted at scene node `scene` into one
