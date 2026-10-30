@@ -27,11 +27,18 @@ fn svg_vertical_substitutions_origins_and_advances_match_independent_harfbuzz_sa
         for character in text.chars() {
             let text = character.to_string();
             let orientations = [(0..text.len(), orientation)];
+            let paragraph = crate::document::Paragraph::styled(
+                text.clone(),
+                &crate::style::Style::default(),
+                [],
+                [(0..text.len(), crate::style::Style::default(), None)],
+            );
+            let bidi = crate::text::bidi::resolve(&paragraph, &std::cell::Cell::new(Some(1024)))
+                .expect("one character resolves");
             let glyphs = shape_text_with_font(
                 &text,
-                &text,
+                &bidi,
                 0..text.len(),
-                false,
                 Some(&orientations),
                 font.clone(),
                 SpanShaping {

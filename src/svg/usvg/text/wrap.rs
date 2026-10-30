@@ -109,14 +109,7 @@ impl<'a> Paragraph<'a> {
         resolver: &dyn FontProvider,
         fontdb: &mut Arc<Database>,
     ) -> Option<Self> {
-        let paragraph = crate::document::Paragraph::styled(
-            chunk.text.clone(),
-            &text.strut.style,
-            chunk
-                .spans
-                .iter()
-                .map(|span| (span.start..span.end, (*span.style).clone())),
-        );
+        let paragraph = layout::document_paragraph(chunk);
         let advances = measure(text, chunk, fonts, strut, resolver, fontdb)?;
         let indent = text.strut.style.text_indent.clone();
         let applies = first || (indent.each_line && chunk.line_breaks > 0);

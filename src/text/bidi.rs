@@ -20,7 +20,7 @@ const PDF_PDI: &str = "\u{202c}\u{2069}";
 type Controls = (&'static str, &'static str);
 
 #[derive(Clone, Copy, Debug)]
-pub(super) struct ExpansionLimit;
+pub(crate) struct ExpansionLimit;
 impl From<ExpansionLimit> for TextError {
     fn from(_: ExpansionLimit) -> Self {
         Self::BidiExpansionLimit {
@@ -140,11 +140,11 @@ fn events(paragraph: &Paragraph) -> Vec<Event> {
     result
 }
 
-pub(super) enum ResolvedParagraph<'p> {
+pub(crate) enum ResolvedParagraph<'p> {
     Plain(BidiInfo<'p>),
     Controlled(Controlled),
 }
-pub(super) struct Controlled {
+pub(crate) struct Controlled {
     source_levels: Vec<Level>,
     text: String,
     classes: Vec<BidiClass>,
@@ -182,7 +182,7 @@ impl ResolvedParagraph<'_> {
     pub(super) fn has_controls(&self) -> bool {
         matches!(self, Self::Controlled(_))
     }
-    pub(super) fn level(&self, offset: usize) -> Level {
+    pub(crate) fn level(&self, offset: usize) -> Level {
         match self {
             Self::Plain(source) => source.levels[offset],
             Self::Controlled(controlled) => controlled.source_levels[offset],
@@ -194,7 +194,7 @@ impl ResolvedParagraph<'_> {
             Self::Controlled(controlled) => controlled.levels.iter().any(Level::is_rtl),
         }
     }
-    pub(super) fn visual_runs(&self, range: Range<usize>) -> Vec<(Range<usize>, bool)> {
+    pub(crate) fn visual_runs(&self, range: Range<usize>) -> Vec<(Range<usize>, bool)> {
         let controlled = match self {
             Self::Plain(source) => {
                 return reorder(
@@ -376,7 +376,7 @@ impl<'budget> Stream<'budget> {
     }
 }
 
-pub(super) fn resolve<'p>(
+pub(crate) fn resolve<'p>(
     paragraph: &'p Paragraph,
     work: &Cell<Option<usize>>,
 ) -> Result<ResolvedParagraph<'p>, ExpansionLimit> {

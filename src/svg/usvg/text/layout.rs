@@ -1169,36 +1169,48 @@ fn collect_normals(
     normals
 }
 
-/// Converts a text chunk into a list of outlined clusters.
-///
-/// This function will do the BIDI reordering, text shaping and glyphs outlining,
-/// but not the text layouting. So all clusters are in the 0x0 position.
-fn directional_text(chunk: &TextChunk, writing_mode: WritingMode) -> std::borrow::Cow<'_, str> {
-    use crate::style::logical::TextOrientation;
-    if writing_mode != WritingMode::TopToBottom
-        || !chunk
-            .spans
-            .iter()
-            .any(|span| span.text_orientation == TextOrientation::Upright)
-    {
-        return std::borrow::Cow::Borrowed(&chunk.text);
-    }
-    // Strong-LTR representatives preserve source UTF-8 offsets for the shared bidi analysis.
-    const LTR_BY_WIDTH: [char; 4] = ['A', '\u{0100}', '\u{4e00}', '\u{20000}'];
-    let mut text = String::with_capacity(chunk.text.len());
-    let mut from = 0;
+/// The chunk as the document's text sees it: its spans' text and styles inside the inline
+/// boxes of their ancestors, in a paragraph of its text element whose base direction is the
+/// chunk's (SVG 2 §11.10.2.4).
+pub(crate) fn document_paragraph(chunk: &TextChunk) -> crate::document::Paragraph {
+    let mut root = chunk
+        .spans
+        .first()
+        .and_then(|span| span.ancestry.first())
+        .map_or_else(crate::style::Style::default, |(_, style)| (**style).clone());
+    root.rtl = chunk.rtl;
+    root.principal_flow = None;
+    let mut boxes: Vec<(
+        std::ops::Range<usize>,
+        Arc<crate::style::Style>,
+        Option<usize>,
+    )> = Vec::new();
+    let mut elements = Vec::new();
+    let mut open: Vec<usize> = Vec::new();
+    let mut spans = Vec::with_capacity(chunk.spans.len());
     for span in &chunk.spans {
-        text.push_str(&chunk.text[from..span.start]);
-        let source = &chunk.text[span.start..span.end];
-        if span.text_orientation == TextOrientation::Upright {
-            text.extend(source.chars().map(|ch| LTR_BY_WIDTH[ch.len_utf8() - 1]));
-        } else {
-            text.push_str(source);
+        let ancestors = span.ancestry.get(1..).unwrap_or_default();
+        let shared = open
+            .iter()
+            .zip(ancestors)
+            .take_while(|(index, (element, _))| elements[**index] == *element)
+            .count();
+        open.truncate(shared);
+        for index in &open {
+            boxes[*index].0.end = span.end;
         }
-        from = span.end;
+        for (element, style) in &ancestors[shared..] {
+            boxes.push((span.start..span.end, style.clone(), open.last().copied()));
+            elements.push(*element);
+            open.push(boxes.len() - 1);
+        }
+        spans.push((
+            span.start..span.end,
+            (*span.style).clone(),
+            open.last().copied(),
+        ));
     }
-    text.push_str(&chunk.text[from..]);
-    std::borrow::Cow::Owned(text)
+    crate::document::Paragraph::styled(chunk.text.clone(), &root, boxes, spans)
 }
 
 pub(crate) fn process_chunk(
@@ -1211,10 +1223,11 @@ pub(crate) fn process_chunk(
     // CSS Text 3 §2.1: text shapes as `text-transform` cases it, while SVG 2 §11.5 positions
     // the characters before the transform; glyphs map back to the characters they show.
     let glyphs = match CasedChunk::of(chunk) {
-        None => shape_chunk(chunk, writing_mode, fonts_cache, resolver, fontdb),
+        None => shape_chunk(chunk, writing_mode, fonts_cache, resolver, fontdb)?,
         Some(cased) => {
             let cased = cased?;
-            let mut glyphs = shape_chunk(&cased.chunk, writing_mode, fonts_cache, resolver, fontdb);
+            let mut glyphs =
+                shape_chunk(&cased.chunk, writing_mode, fonts_cache, resolver, fontdb)?;
             cased.to_source(&mut glyphs);
             glyphs
         }
@@ -1312,14 +1325,15 @@ impl CasedChunk {
     }
 }
 
-/// Shapes a chunk's spans with their fonts into glyphs in visual order.
+/// Shapes a chunk's spans with their fonts into glyphs in visual order; `None` where the
+/// bidi controls of its inline boxes exceed the inline text limit.
 fn shape_chunk(
     chunk: &TextChunk,
     writing_mode: WritingMode,
     fonts_cache: &FontsCache,
     resolver: &dyn FontProvider,
     fontdb: &mut Arc<Database>,
-) -> Vec<Glyph> {
+) -> Option<Vec<Glyph>> {
     // The way this function works is a bit tricky.
     //
     // The first problem is BIDI reordering.
@@ -1357,7 +1371,14 @@ fn shape_chunk(
     let mut positions = HashSet::new();
 
     let mut glyphs = Vec::new();
-    let directional = directional_text(chunk, writing_mode);
+    // CSS Writing Modes 4 §2.4: the embeddings, isolates and overrides of `unicode-bidi` on the
+    // text element and its inline boxes, upright typesetting and combinations take part.
+    let paragraph = document_paragraph(chunk);
+    let bidi = crate::text::bidi::resolve(
+        &paragraph,
+        &std::cell::Cell::new(Some(crate::document::MAX_INLINE_TEXT_BYTES)),
+    )
+    .ok()?;
     let orientation_spans = (writing_mode == WritingMode::TopToBottom).then(|| {
         chunk
             .spans
@@ -1374,8 +1395,7 @@ fn shape_chunk(
 
         let tmp_glyphs = shape_text(
             &chunk.text,
-            &directional,
-            chunk.rtl,
+            &bidi,
             orientations,
             span.start..span.end,
             font,
@@ -1436,7 +1456,129 @@ fn shape_chunk(
         }
     }
 
-    glyphs
+    if writing_mode == WritingMode::TopToBottom {
+        for group in crate::text::combine::groups(&paragraph) {
+            let combined = combined_glyphs(chunk, &group, fonts_cache, resolver, fontdb)?;
+            let inside = |glyph: &Glyph| group.range.contains(&glyph.byte_idx.value());
+            let Some(first) = glyphs.iter().position(inside) else {
+                continue;
+            };
+            glyphs.retain(|glyph| !inside(glyph));
+            glyphs.splice(first..first, combined);
+        }
+    }
+
+    Some(glyphs)
+}
+
+/// CSS Writing Modes 4 §9.1: the glyphs of `group`, a combination in vertical text, composed
+/// horizontally in its span's style with the width-specific forms every unit has, compressed to
+/// fit 1em and centred upright in one cell of the column, as the document composes them.
+fn combined_glyphs(
+    chunk: &TextChunk,
+    group: &crate::text::combine::Group,
+    fonts_cache: &FontsCache,
+    resolver: &dyn FontProvider,
+    fontdb: &mut Arc<Database>,
+) -> Option<Vec<Glyph>> {
+    use crate::text::combine;
+    use unicode_segmentation::UnicodeSegmentation;
+    let span = &chunk.spans[group.span];
+    let source = &chunk.text[group.range.clone()];
+    let (text, offsets) = combine::composition(source);
+    let shape = |style: &crate::style::Style, text: &str, fontdb: &mut Arc<Database>| {
+        let composed = TextChunk {
+            x: None,
+            y: None,
+            anchor: TextAnchor::Start,
+            rtl: false,
+            spans: vec![TextSpan {
+                start: 0,
+                end: text.len(),
+                style: Arc::new(style.clone()),
+                ancestry: Arc::default(),
+                letter_spacing: 0.0,
+                text_orientation: crate::style::logical::TextOrientation::Mixed,
+                ..span.clone()
+            }],
+            text_flow: TextFlow::Linear,
+            text: text.to_owned(),
+            line_breaks: 0,
+            inline_offset: 0.0,
+            hanging: 0,
+        };
+        shape_chunk(
+            &composed,
+            WritingMode::LeftToRight,
+            fonts_cache,
+            resolver,
+            fontdb,
+        )
+    };
+    let plain = combine::horizontal(&span.style);
+    let mut glyphs = shape(&plain, &text, fontdb)?;
+    if let Some(feature) = combine::width_feature(text.graphemes(true).count()) {
+        let mut variant = plain.clone();
+        let mut settings = variant.font_features.settings.to_vec();
+        settings.push(crate::fonts::FontFeature::on(feature));
+        variant.font_features.settings = settings.into();
+        let ids = |glyphs: &[Glyph]| {
+            glyphs
+                .iter()
+                .map(|glyph| (glyph.font.id, glyph.id))
+                .collect::<Vec<_>>()
+        };
+        let mut complete = true;
+        for unit in text
+            .graphemes(true)
+            .filter(|unit| !unit.chars().all(char::is_whitespace))
+        {
+            if ids(&shape(&plain, unit, fontdb)?) == ids(&shape(&variant, unit, fontdb)?) {
+                complete = false;
+                break;
+            }
+        }
+        if complete {
+            glyphs = shape(&variant, &text, fontdb)?;
+        }
+    }
+    let em = span.font_size.get();
+    // User units per font unit of `glyph`.
+    let unit = |glyph: &Glyph| em * glyph.scale / f32::from(glyph.font.units_per_em.get());
+    let width: f32 = glyphs
+        .iter()
+        .map(|glyph| glyph.width as f32 * unit(glyph))
+        .sum();
+    let compression = combine::compression(width, em);
+    // Upright glyphs place their origins across the column from its centre and down from the
+    // cell's top; each face's ascent and descent centre in the cell.
+    let mut pen = -width * compression / 2.0;
+    let last = glyphs.len().saturating_sub(1);
+    for (index, glyph) in glyphs.iter_mut().enumerate() {
+        let unit = unit(glyph);
+        let size = em * glyph.scale;
+        let baseline = (em + glyph.font.ascent(size) + glyph.font.descent(size)) / 2.0;
+        let across = pen + glyph.dx as f32 * unit * compression;
+        let down = baseline - glyph.dy as f32 * unit;
+        pen += glyph.width as f32 * unit * compression;
+        glyph.dx = (across / unit).round() as i32;
+        glyph.dy = -(down / unit).round() as i32;
+        glyph.width = if index == last {
+            (em / unit).round() as i32
+        } else {
+            0
+        };
+        glyph.vertical = true;
+        glyph.compression = compression;
+        // Each glyph keeps the source text it shows within the combination's one cluster.
+        let start = offsets[glyph.byte_idx.value()];
+        let end = offsets[glyph.byte_idx.value() + glyph.cluster_len];
+        glyph.text = source[start..end].to_owned();
+        glyph.text_offset = start;
+        glyph.byte_idx = ByteIndex::new(group.range.start);
+        glyph.cluster_len = group.range.len();
+    }
+    Some(glyphs)
 }
 
 /// The line boxes of pre-formatted text, which preserved segment breaks start (SVG 2 §11.6.1),
@@ -1795,6 +1937,7 @@ fn form_glyph_clusters(glyphs: &[Glyph], text: &str, font_size: f32) -> GlyphClu
             Transform::from_translate(x, 0.0)
                 .pre_rotate(-VERTICAL_ROTATION)
                 .pre_translate(glyph.dx as f32, -glyph.dy as f32)
+                .pre_scale(glyph.compression, 1.0)
         } else {
             Transform::from_translate(x + glyph.dx as f32, -glyph.dy as f32)
         }
@@ -1817,7 +1960,7 @@ fn form_glyph_clusters(glyphs: &[Glyph], text: &str, font_size: f32) -> GlyphClu
             units_per_em: glyph.font.units_per_em.get(),
             font_size,
             font: glyph.font.id,
-            cluster: glyph.byte_idx.value(),
+            cluster: glyph.byte_idx.value() + glyph.text_offset,
             x_advance: glyph.width as f32 / f32::from(glyph.font.units_per_em.get()),
             text: glyph.text.clone(),
             id: glyph.id,
@@ -1967,8 +2110,7 @@ pub(crate) struct SpanShaping<'a> {
 /// Text shaping with font fallback.
 pub(crate) fn shape_text(
     text: &str,
-    directional: &str,
-    rtl: bool,
+    bidi: &crate::text::bidi::ResolvedParagraph<'_>,
     orientations: OrientationSpans<'_>,
     active: std::ops::Range<usize>,
     font: Arc<ResolvedFont>,
@@ -1979,9 +2121,8 @@ pub(crate) fn shape_text(
     let shape = |fontdb: &Database, font: &Arc<ResolvedFont>, source: std::ops::Range<usize>| {
         shape_text_with_font(
             text,
-            directional,
+            bidi,
             source,
-            rtl,
             orientations,
             font.clone(),
             span,
@@ -2153,9 +2294,8 @@ pub(crate) fn shape_text(
 /// This function will do the BIDI reordering and text shaping.
 fn shape_text_with_font(
     text: &str,
-    directional: &str,
+    bidi: &crate::text::bidi::ResolvedParagraph<'_>,
     source: std::ops::Range<usize>,
-    rtl: bool,
     orientations: OrientationSpans<'_>,
     font: Arc<ResolvedFont>,
     span: SpanShaping<'_>,
@@ -2194,19 +2334,8 @@ fn shape_text_with_font(
         let used_points = used_size * crate::style::POINTS_PER_PIXEL;
         let units_per_em = f32::from(font.units_per_em.get());
 
-        // SVG 2 §11.10.2.4: `direction` is the base direction of the text chunk's bidi paragraph.
-        let base = if rtl {
-            unicode_bidi::Level::rtl()
-        } else {
-            unicode_bidi::Level::ltr()
-        };
-        let bidi_info = unicode_bidi::BidiInfo::new(directional, Some(base));
-        let paragraph = &bidi_info.paragraphs[0];
-        let line = paragraph.range.clone();
-
         let mut glyphs = Vec::new();
-
-        let (levels, runs) = bidi_info.visual_runs(paragraph, line);
+        let rtl = |offset: usize| bidi.level(offset).is_rtl();
         let vertical_forms = crate::fonts::has_feature(&rb_font, *b"vert")
             || crate::fonts::has_feature(&rb_font, *b"vrt2");
         // CSS Fonts 4 §6.6: the face's own capitals, or capitals scaled from uppercase forms,
@@ -2216,7 +2345,7 @@ fn shape_text_with_font(
             |tag| crate::fonts::has_feature(&rb_font, tag),
             style.font_synthesis.small_caps,
         );
-        for run in &runs {
+        for (run, _) in bidi.visual_runs(0..text.len()) {
             let run = run.start.max(source.start)..run.end.min(source.end);
             if run.start >= run.end {
                 continue;
@@ -2242,7 +2371,7 @@ fn shape_text_with_font(
             } else {
                 pieces.push((run.clone(), false));
             }
-            if levels[run.start].is_rtl() {
+            if rtl(run.start) {
                 pieces.reverse();
             }
             for (run, vertical) in pieces {
@@ -2253,7 +2382,7 @@ fn shape_text_with_font(
                     face_features,
                     used_points,
                     &text[run.clone()],
-                    levels[run.start].is_rtl(),
+                    rtl(run.start),
                     style,
                     plan,
                 ) {
@@ -2277,7 +2406,7 @@ fn shape_text_with_font(
                 } else {
                     vec![(run, false)]
                 };
-                if levels[caps_pieces[0].0.start].is_rtl() {
+                if rtl(caps_pieces[0].0.start) {
                     caps_pieces.reverse();
                 }
                 for (run, small) in caps_pieces {
@@ -2286,7 +2415,7 @@ fn shape_text_with_font(
                         continue;
                     }
 
-                    let ltr = levels[run.start].is_ltr();
+                    let ltr = !rtl(run.start);
                     let hb_direction = if vertical {
                         rustybuzz::Direction::TopToBottom
                     } else if ltr {
@@ -2381,6 +2510,8 @@ fn shape_text_with_font(
                             scale,
                             font: font.clone(),
                             paint: settings.paint.clone(),
+                            compression: 1.0,
+                            text_offset: 0,
                             unpresented: sequences
                                 && !shaping::supports_variations(
                                     &rb_font,
@@ -2493,6 +2624,10 @@ pub(crate) struct Glyph {
     pub(crate) vertical: bool,
     /// The glyph's size relative to its span's, below one for synthesized capitals.
     pub(crate) scale: f32,
+    /// The horizontal scale of a combination's glyph (CSS Writing Modes 4 §9.1.3).
+    pub(crate) compression: f32,
+    /// Where `text` starts in the glyph's cluster: within a combination, its own characters.
+    pub(crate) text_offset: usize,
 
     /// Reference to the source font.
     ///

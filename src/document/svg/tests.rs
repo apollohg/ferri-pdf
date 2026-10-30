@@ -612,34 +612,17 @@ fn mask_layers_beyond_one_mask_element_name_the_layers_the_document_draws() {
 }
 
 #[test]
-fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
-    for (css, expected) in [
-        ("text{unicode-bidi:bidi-override}", "unicode-bidi"),
-        (
-            "text{writing-mode:vertical-rl;text-combine-upright:all}",
-            "text-combine-upright",
-        ),
-        ("rect{cx:calc(10% + 1px)}", ""),
-    ] {
-        match styled(
-            css,
-            "<svg><rect id=r /><text>T</text><use href='#r'/><svg/><pattern/></svg>",
-        ) {
-            Err(DocumentError::Style(crate::style::StyleError::Unsupported(message))) => {
-                assert!(
-                    message.contains(expected),
-                    "`{css}` reports {message:?}, expected {expected:?}"
-                );
-            }
-            Ok(xml) if expected.is_empty() => {
-                assert!(
-                    !xml.contains("calc"),
-                    "`{css}` applies only to circles and ellipses: {xml}"
-                );
-            }
-            other => panic!("`{css}` must be unsupported on SVG content, got {other:?}"),
-        }
-    }
+fn geometry_properties_apply_only_to_their_elements() {
+    let css = "rect{cx:calc(10% + 1px)}";
+    let xml = styled(
+        css,
+        "<svg><rect id=r /><text>T</text><use href='#r'/><svg/><pattern/></svg>",
+    )
+    .unwrap_or_else(|error| panic!("`{css}` styles SVG content: {error:?}"));
+    assert!(
+        !xml.contains("calc"),
+        "`{css}` applies only to circles and ellipses: {xml}"
+    );
 }
 
 #[test]

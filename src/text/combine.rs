@@ -11,7 +11,7 @@ use unicode_segmentation::UnicodeSegmentation;
 const HALF_EM: f32 = 0.5;
 const WIDTH_FEATURES: [[u8; 4]; 3] = [*b"hwid", *b"twid", *b"qwid"];
 
-pub(super) struct Group {
+pub(crate) struct Group {
     pub range: Range<usize>,
     pub span: usize,
 }
@@ -45,7 +45,7 @@ fn common_property(
     }
 }
 
-pub(super) fn groups(paragraph: &Paragraph) -> Vec<Group> {
+pub(crate) fn groups(paragraph: &Paragraph) -> Vec<Group> {
     let text = paragraph.text();
     let mut groups = Vec::new();
     for (span_index, span) in paragraph.spans().iter().enumerate() {
@@ -130,7 +130,8 @@ pub(super) fn constrain<T>(
     });
 }
 
-fn horizontal(style: &Style) -> Style {
+/// The style a combination composes its text in: horizontal, untracked and uncombined.
+pub(crate) fn horizontal(style: &Style) -> Style {
     let mut style = style.clone();
     style.writing_mode = WritingMode::HorizontalTb;
     style.text_combine = TextCombine::None;
@@ -139,28 +140,21 @@ fn horizontal(style: &Style) -> Style {
     style
 }
 
-pub(super) fn shape(
-    context: &TextContext<'_>,
-    paragraph: &Paragraph,
-    group: &Group,
-) -> Result<Vec<GlyphRun>, TextError> {
-    let source_style = &paragraph.spans()[group.span].style;
-    let mut style = horizontal(source_style);
-    let source = &paragraph.text()[group.range.clone()];
+/// The text a combination composes: its source without segment breaks, in narrow forms where it
+/// holds more than one typographic character unit (§9.1.3), with each byte's source offset and
+/// the source's end.
+pub(crate) fn composition(source: &str) -> (String, Vec<usize>) {
+    let segment_break = |ch: char| matches!(ch, '\n' | '\r' | '\u{2028}' | '\u{2029}');
     let compressed = source
         .graphemes(true)
-        .filter(|unit| {
-            !unit
-                .chars()
-                .all(|ch| matches!(ch, '\n' | '\r' | '\u{2028}' | '\u{2029}'))
-        })
+        .filter(|unit| !unit.chars().all(segment_break))
         .take(2)
         .count()
         > 1;
     let mut text = String::new();
     let mut offsets = Vec::new();
     for (index, ch) in source.char_indices() {
-        if matches!(ch, '\n' | '\r' | '\u{2028}' | '\u{2029}') {
+        if segment_break(ch) {
             continue;
         }
         let ch = if compressed {
@@ -172,6 +166,33 @@ pub(super) fn shape(
         offsets.extend((0..ch.len_utf8()).map(|_| index));
     }
     offsets.push(source.len());
+    (text, offsets)
+}
+
+/// The width-specific forms a composition of `count` typographic character units takes where
+/// every unit has them (§9.1.3).
+pub(crate) fn width_feature(count: usize) -> Option<[u8; 4]> {
+    (count > 1).then(|| WIDTH_FEATURES[(count - 2).min(WIDTH_FEATURES.len() - 1)])
+}
+
+/// The horizontal scale fitting a composition `width` wide into `em` (§9.1.3).
+pub(crate) fn compression(width: f32, em: f32) -> f32 {
+    if width > em && width > 0.0 {
+        em / width
+    } else {
+        1.0
+    }
+}
+
+pub(super) fn shape(
+    context: &TextContext<'_>,
+    paragraph: &Paragraph,
+    group: &Group,
+) -> Result<Vec<GlyphRun>, TextError> {
+    let source_style = &paragraph.spans()[group.span].style;
+    let mut style = horizontal(source_style);
+    let source = &paragraph.text()[group.range.clone()];
+    let (text, offsets) = composition(source);
     let text = text.as_str();
     let count = text.graphemes(true).count();
     let shape = |style: &Style| -> Result<Vec<GlyphRun>, TextError> {
@@ -201,8 +222,7 @@ pub(super) fn shape(
         Ok(runs)
     };
     let mut runs = shape(&style)?;
-    if count > 1 {
-        let feature = WIDTH_FEATURES[(count - 2).min(WIDTH_FEATURES.len() - 1)];
+    if let Some(feature) = width_feature(count) {
         let mut settings = style.font_features.settings.to_vec();
         settings.push(crate::fonts::FontFeature::on(feature));
         style.font_features.settings = settings.into();
@@ -242,11 +262,7 @@ pub(super) fn shape(
     }
     let em = source_style.size;
     let width: f32 = runs.iter().map(|run| run.width).sum();
-    let scale = if width > em && width > 0.0 {
-        em / width
-    } else {
-        1.0
-    };
+    let scale = compression(width, em);
     let mut x = -(width * scale) * HALF_EM;
     let last = runs.len().saturating_sub(1);
     for (index, run) in runs.iter_mut().enumerate() {

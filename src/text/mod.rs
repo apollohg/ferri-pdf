@@ -1,8 +1,8 @@
 //! Font shaping, bidi resolution, and measured inline layout.
 mod autospace;
-mod bidi;
+pub(crate) mod bidi;
 mod breaking;
-mod combine;
+pub(crate) mod combine;
 pub(crate) mod decoration;
 mod ellipsis;
 pub(crate) mod emphasis;

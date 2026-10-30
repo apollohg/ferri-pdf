@@ -11,7 +11,7 @@ use crate::dom::{
     XML_NAMESPACE,
 };
 use crate::resources::ResourceResolver;
-use crate::style::{Style, Stylesheet, svg_values::InitialOnly};
+use crate::style::{Style, Stylesheet};
 use std::{
     collections::{HashMap, HashSet},
     fmt::Write,
@@ -77,7 +77,6 @@ struct Serializer<'a, 'd> {
     layer_masks: Vec<Arc<crate::graphics::LoadedMasks>>,
     /// The computed styles of the text content elements written so far, by index.
     text_styles: Vec<Arc<Style>>,
-    initial_only: InitialOnly,
     xml: String,
     /// Ids written so far; a clone repeating one omits it.
     written: HashSet<String>,
@@ -99,7 +98,6 @@ impl<'a, 'd> Serializer<'a, 'd> {
             load_masks,
             layer_masks: Vec::new(),
             text_styles: Vec::new(),
-            initial_only: InitialOnly::new(),
             xml: String::new(),
             written: HashSet::new(),
             taken: root
@@ -210,14 +208,11 @@ impl<'a, 'd> Serializer<'a, 'd> {
             let style = if raw {
                 None
             } else {
-                let style = self.styling.sheet.computed_without_box(
+                Some(self.styling.sheet.computed_without_box(
                     element,
                     styles.last().unwrap_or(parent),
                     self.styling.resolver,
-                )?;
-                self.initial_only
-                    .check(&style, presentation::is_text_content(element.name()))?;
-                Some(style)
+                )?)
             };
             let reference = match &style {
                 Some(style) if element.name() == USE_ELEMENT => {

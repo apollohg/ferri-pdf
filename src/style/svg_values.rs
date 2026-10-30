@@ -546,56 +546,9 @@ pub(crate) fn image_rendering_keyword(value: Keyword) -> &'static str {
     }
 }
 
-/// Properties applying to SVG elements that their renderer does not take from the cascade:
-/// their presentation attributes reach it directly, so only initial values are supported.
-const UNCASCADED: [Property; 1] = [Property::UnicodeBidi];
-
-/// The initial computed values of the properties SVG content supports only at their initial
-/// value.
-pub(crate) struct InitialOnly(Vec<(Property, Style)>);
-impl InitialOnly {
-    pub(crate) fn new() -> Self {
-        let initial = Style::default();
-        Self(
-            UNCASCADED
-                .into_iter()
-                .map(|property| {
-                    (
-                        property,
-                        crate::style::properties::projection(property, &initial),
-                    )
-                })
-                .collect(),
-        )
-    }
-    /// Fails on the first of those properties that `style` gives another value; text
-    /// combinations only matter on text content elements.
-    pub(crate) fn check(&self, style: &Style, text: bool) -> Result<(), StyleError> {
-        // CSS Writing Modes 4 §9.1: combinations exist only in vertical text.
-        if text
-            && style.text_combine != crate::style::logical::TextCombine::None
-            && style.used_writing_mode().vertical()
-        {
-            return Err(StyleError::Unsupported(format!(
-                "{} in vertical SVG text",
-                Property::TextCombineUpright.name()
-            )));
-        }
-        match self.0.iter().find(|(property, initial)| {
-            crate::style::properties::projection(*property, style) != *initial
-        }) {
-            Some((property, _)) => Err(StyleError::Unsupported(format!(
-                "{} other than its initial value on SVG content",
-                property.name()
-            ))),
-            None => Ok(()),
-        }
-    }
-}
-
 /// SVG 2 §6.6 presentation attributes that the cascade takes on every SVG element. The SVG
 /// renderer reads the others directly.
-const PRESENTATION_ATTRIBUTES: [Property; 54] = [
+const PRESENTATION_ATTRIBUTES: [Property; 55] = [
     Property::AlignmentBaseline,
     Property::BaselineShift,
     Property::ClipPath,
@@ -646,6 +599,7 @@ const PRESENTATION_ATTRIBUTES: [Property; 54] = [
     Property::TextOrientation,
     Property::TextRendering,
     Property::TransformOrigin,
+    Property::UnicodeBidi,
     Property::VectorEffect,
     Property::Visibility,
     Property::WordSpacing,

@@ -614,6 +614,91 @@ class WritingModesPdf(unittest.TestCase):
                                        advance + FONT_PT, delta=TOLERANCE_PT,
                                        msg="combined text occupies one em of inline advance")
 
+    def test_svg_text_combines_upright_as_document_text_does(self):
+        """CSS Writing Modes 4 §9.1 in vertical SVG text, which SVG 2 §11.10 lays out with the
+        document's text: a combination composes horizontally, compresses to one em and takes one
+        em of the column, and an overlong `digits` sequence stays sideways."""
+        with TTFont(ROOT / "assets/fonts/LiberationSerif-Regular.ttf") as font:
+            cmap = font.getBestCmap()
+            advance = font["hmtx"].metrics[cmap[ord("A")]][0] * FONT_PT / font["head"].unitsPerEm
+        # One user unit is one point, so the font size is FONT_PT points. Each text renders
+        # alone: a glyph extracts as the text of the first cluster drawing it.
+        def render(text):
+            return self.render(
+                "horizontal-tb",
+                f"<svg width='200pt' height='200pt' viewBox='0 0 200 200' "
+                f"style='display:block;font:{FONT_PT}px serif;writing-mode:vertical-rl'>"
+                f"{text}</svg>")["glyphs"]
+
+        combined = render("<text x='50' y='10'>A<tspan style='text-combine-upright:all'>1234"
+                          "</tspan>B</text>")
+        self.assertEqual([glyph.text for glyph in combined], list("A1234B"),
+                         "each glyph of the combination keeps its own text")
+        a, *figures, b = [glyph.matrix for glyph in combined]
+        first = figures[0]
+        self.assertAlmostEqual(first[1], 0, delta=TOLERANCE_PT, msg=f"upright: {first}")
+        self.assertAlmostEqual(first[0], FONT_PT / 2, delta=TOLERANCE_PT,
+                               msg="four half-em figures compress horizontally to one em")
+        for previous, current in zip(figures, figures[1:]):
+            self.assertAlmostEqual(current[4] - previous[4], FONT_PT / 4, delta=TOLERANCE_PT,
+                                   msg="compressed half-em figures advance a quarter em")
+            self.assertAlmostEqual(current[5], first[5], delta=TOLERANCE_PT)
+        self.assertAlmostEqual(a[5] - b[5], advance + FONT_PT,
+                               delta=TOLERANCE_PT, msg="combined text occupies one em of the column")
+        self.assertAlmostEqual(first[4] + FONT_PT / 2, 50 + MARGIN_PT, delta=TOLERANCE_PT,
+                               msg="the composition centres on the column")
+        digits = [glyph for glyph in render("<text x='50' y='10' style='text-combine-upright:digits 2'>"
+                                            "12 123 4</text>") if glyph.text != " "]
+        self.assertEqual([glyph.text for glyph in digits], list("121234"))
+        self.assertGreater(digits[0].matrix[0], 0, "two digits combine upright")
+        self.assertAlmostEqual(digits[2].matrix[0], 0, delta=TOLERANCE_PT,
+                               msg="an overlong maximal sequence must remain uncombined")
+        self.assertGreater(digits[-1].matrix[0], 0, "a lone digit is an upright combination")
+
+    def test_svg_text_orders_bidi_embeddings_isolates_and_overrides_as_document_text_does(self):
+        """CSS Writing Modes 4 §2.4 and SVG 2 §11.10.2.4: `unicode-bidi` on a text element and
+        its tspans embeds, isolates and overrides as on the document's inline boxes, so the
+        glyphs of each SVG text line take the visual order of the same paragraph."""
+        cases = [
+            ("", "abc <b style='unicode-bidi:bidi-override;direction:rtl'>def</b> ghi"),
+            ("", "abc <b style='unicode-bidi:isolate;direction:rtl'>x אבג y</b> 12"),
+            ("direction:rtl", "אב <b style='unicode-bidi:embed;direction:ltr'>1-2 c</b> גד"),
+            ("unicode-bidi:bidi-override;direction:rtl", "abc <b>de</b>"),
+            ("", "ab <b style='unicode-bidi:isolate-override;direction:rtl'>cd <i>ef</i></b> gh"),
+            ("unicode-bidi:plaintext", "אב ab"),
+            ("", "ab <b style='unicode-bidi:plaintext'>אב cd</b> ef"),
+        ]
+        line = 30
+        paragraphs = "".join(f"<p style=\"{style}\">{text}</p>" for style, text in cases)
+        texts = ""
+        for index, (style, text) in enumerate(cases):
+            for tag in ("b", "i"):
+                text = text.replace(f"<{tag}", "<tspan").replace(f"</{tag}>", "</tspan>")
+            # A right-to-left line's start is its right side.
+            start = 190 if "rtl" in style else 10
+            texts += f"<text x='{start}' y='{(index + 1) * line}' style=\"{style}\">{text}</text>"
+        rules = "b,i{font:inherit}body{font-family:'DejaVu Sans'}"
+        document = self.render("horizontal-tb", paragraphs, rules)["glyphs"]
+        svg = self.render(
+            "horizontal-tb",
+            f"<svg width='200pt' height='{line * (len(cases) + 1)}pt' "
+            f"viewBox='0 0 200 {line * (len(cases) + 1)}' style='display:block;font:{FONT_PT}px "
+            f"\"DejaVu Sans\"'>{texts}</svg>", rules)["glyphs"]
+
+        def lines(glyphs):
+            rows = {}
+            for glyph in glyphs:
+                rows.setdefault(round(glyph.matrix[5], 2), []).append(glyph)
+            # The document paints no glyphs for spaces.
+            return ["".join(glyph.text for glyph in sorted(rows[y], key=lambda glyph: glyph.matrix[4])
+                            if glyph.text != " ")
+                    for y in sorted(rows, reverse=True)]
+
+        expected = lines(document)
+        self.assertEqual(len(expected), len(cases), expected)
+        self.assertEqual(lines(svg), expected, "SVG text lines take the paragraphs' visual order")
+        self.assertEqual(expected[0], "abcfedghi", "the override reverses its box only")
+
     def test_digits_only_combination_leaves_overlong_sequences_sideways(self):
         glyphs = self.render("vertical-rl", "<p>12 123 4</p>",
                              "body{text-combine-upright:digits 2}")["glyphs"]

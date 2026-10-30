@@ -150,3 +150,12 @@ lacking a variation sequence of a cluster gives way to a later face that has it,
 cluster, and selectors no sequence takes leave no glyph. COLR glyphs convert to SVG through
 skrifa, at the span's variation coordinates, with the palette's entries and the fill colour,
 else the stroke colour, as the foreground.
+
+Each text chunk's bidi paragraph is resolved as the document's paragraphs are: its spans sit
+in the inline boxes of their ancestors, so `unicode-bidi` on the text element and its tspans
+embeds, isolates, overrides or sets a plaintext base direction (CSS Writing Modes 4 §2.4, SVG 2
+§11.10.2.4), and upright vertical text and combinations take their overrides. In vertical
+text, each `text-combine-upright` combination composes horizontally in its span's style with
+the width-specific forms every unit has, compressed to fit one em and centred upright in one
+cell of the column as a single cluster, whose glyphs keep their own characters (CSS Writing
+Modes 4 §9.1). The SVG 2 §6.6 `unicode-bidi` presentation attribute takes part in the cascade.

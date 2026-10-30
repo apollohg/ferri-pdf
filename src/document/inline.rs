@@ -285,12 +285,43 @@ impl Paragraph {
     }
 
     /// A paragraph of `text`, whose white space is already processed, in which each of
-    /// `spans` gives a range its style; it breaks into lines as the document's do, uncased.
+    /// `spans` gives a range its style and innermost inline box, and `boxes` are the inline
+    /// boxes in tree order, each with its range, style and parent; it breaks into lines as the
+    /// document's do, uncased.
     pub(crate) fn styled(
         text: String,
         style: &Style,
-        spans: impl IntoIterator<Item = (Range<usize>, Style)>,
+        boxes: impl IntoIterator<Item = (Range<usize>, Arc<Style>, Option<usize>)>,
+        spans: impl IntoIterator<Item = (Range<usize>, Style, Option<usize>)>,
     ) -> Self {
+        let boxes: Vec<_> = boxes.into_iter().collect();
+        let within = |index: usize, ancestor: usize| {
+            let mut current = Some(index);
+            while let Some(index) = current {
+                if index == ancestor {
+                    return true;
+                }
+                current = boxes[index].2;
+            }
+            false
+        };
+        let boxes = boxes
+            .iter()
+            .enumerate()
+            .map(|(index, (range, style, parent))| InlineBox {
+                math: None,
+                range: range.clone(),
+                style: style.clone(),
+                decoration: crate::graphics::BoxDecoration::default(),
+                parent: *parent,
+                descendants: (index + 1..boxes.len())
+                    .take_while(|&later| within(later, index))
+                    .count(),
+                continued: [false; 2],
+                navigation: crate::document::BoxNavigation::default(),
+                canvas_source: false,
+            })
+            .collect();
         Paragraph {
             annotation_align: None,
             marker_image: None,
@@ -302,10 +333,10 @@ impl Paragraph {
             spans: spans
                 .into_iter()
                 .enumerate()
-                .map(|(source, (range, style))| TextSpan {
+                .map(|(source, (range, style, inline_box))| TextSpan {
                     range,
                     style,
-                    inline_box: None,
+                    inline_box,
                     atomic: None,
                     leader: false,
                     source,
@@ -313,7 +344,7 @@ impl Paragraph {
                 })
                 .collect(),
             anchors: Vec::new(),
-            boxes: Vec::new(),
+            boxes,
             atomics: Vec::new(),
             annotations: Vec::new(),
             rubies: Vec::new(),

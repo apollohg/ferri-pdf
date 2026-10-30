@@ -417,6 +417,16 @@ fn collect_text_chunks_impl(
         let visibility: Visibility = parent.find_attribute(AId::Visibility).unwrap_or_default();
         let (alignment_baseline, parent_alignment) = alignment(parent, state, cache);
         let (baseline_shift, line_edge) = convert_baseline_shift(parent, state, cache);
+        let mut ancestry = Vec::new();
+        for node in parent.ancestors() {
+            if !node.is_contents() {
+                ancestry.push((node.index(), text_style(node, state)));
+            }
+            if node.tag_name() == Some(EId::Text) {
+                break;
+            }
+        }
+        ancestry.reverse();
 
         let span = TextSpan {
             start: 0,
@@ -427,6 +437,7 @@ fn collect_text_chunks_impl(
             font,
             font_size,
             style: text_style(parent, state),
+            ancestry: ancestry.into(),
             single_character: child.text().chars().nth(1).is_none(),
             linear_light: parent.find_attribute::<&str>(AId::ColorInterpolation)
                 == Some(converter::LINEAR_RGB),
@@ -587,7 +598,7 @@ fn own_text_style(node: SvgNode, state: &converter::State) -> Option<Arc<crate::
 /// The computed style of an element of a standalone document (SVG 2 §6.4): its parent's
 /// inherited values with the presentation attributes and declarations that won its cascade,
 /// with the language of `lang` and the SVG 1.1 §10.10 `kerning: 0` that disables kerning.
-/// Values the document's text cannot take on SVG content fail the conversion.
+/// Values that fail to compute fail the conversion.
 fn standalone_style(node: SvgNode, state: &converter::State) -> Arc<crate::style::Style> {
     let key = node.key();
     let parent = || {
@@ -623,7 +634,7 @@ fn standalone_style(node: SvgNode, state: &converter::State) -> Arc<crate::style
             relative,
         )
     })
-    .and_then(|mut style| {
+    .map(|mut style| {
         style.effective_zoom = zoom;
         if let Some(language) = node.attribute::<&str>(AId::Lang) {
             language.clone_into(&mut style.language);
@@ -631,9 +642,7 @@ fn standalone_style(node: SvgNode, state: &converter::State) -> Arc<crate::style
         if node.resolve_length(AId::Kerning, state, -1.0) == 0.0 {
             style.font_features.kerning = crate::style::FontKerning::None;
         }
-        crate::style::svg_values::InitialOnly::new()
-            .check(&style, TEXT_CONTENT.contains(&node.tag_name()))?;
-        Ok(style.used())
+        style.used()
     });
     let style = Arc::new(computed.unwrap_or_else(|error| {
         state
@@ -648,14 +657,6 @@ fn standalone_style(node: SvgNode, state: &converter::State) -> Arc<crate::style
         .insert(key, Some(style.clone()));
     style
 }
-
-/// SVG 2 §10: the text content elements, with `a`, which text content lays out as a `tspan`.
-const TEXT_CONTENT: [Option<EId>; 4] = [
-    Some(EId::Text),
-    Some(EId::Tspan),
-    Some(EId::TextPath),
-    Some(EId::A),
-];
 
 /// The baseline of `node`'s box that aligns with the same baseline of its parent, and how far
 /// below the alignment point the parent puts it. The `vertical-align` longhand keeps its CSS
