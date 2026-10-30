@@ -670,7 +670,10 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                      'div{border:6pt solid blue;color:blue}', 'border-area and text clip to their union'),
                     ('div{background:linear-gradient(blue,blue) text,yellow;color:transparent}',
                      'div{background:yellow;color:blue}',
-                     'one layer of several clips to text and the colour follows the bottom layer')]:
+                     'one layer of several clips to text and the colour follows the bottom layer'),
+                    (f'div{{width:150pt}}div::first-line{{{clipped}}}',
+                     'div{width:150pt}div::first-line{color:blue}',
+                     'a ::first-line box clips to the text of the first line')]:
                 self.assertSameInterior(root, (shared + css, content), (shared + expected, content), message)
             margin = '@page{{@top-left{{content:"Head" counter(page);font-size:16pt;{}}}}}'
             running = '#h{{position:running(h)}}@page{{@top-left{{content:element(h);font-size:16pt;{}}}}}'

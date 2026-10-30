@@ -12,11 +12,24 @@ pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
 pub(super) fn background_only<I: Clone>(
     decoration: &crate::paint::BoxDecoration<I>,
 ) -> crate::paint::BoxDecoration<I> {
-    let mut backgrounds = decoration.backgrounds.clone();
+    crate::paint::BoxDecoration {
+        background: decoration.background,
+        backgrounds: decoration.backgrounds.clone(),
+        ..Default::default()
+    }
+}
+
+/// The background colour and images that `decoration`, the root element's or the body's,
+/// propagates to the canvas.
+fn canvas_background<I: Clone>(
+    decoration: &crate::paint::BoxDecoration<I>,
+) -> crate::paint::BoxDecoration<I> {
+    let mut canvas = background_only(decoration);
+    let backgrounds = &mut canvas.backgrounds;
     // CSS Backgrounds 4 §2.8: the canvas's painting area is not the root element's, so
     // `background-clip` has no effect there; a text clip leaves the border box.
     if backgrounds.clips_to_text() {
-        for clip in &mut std::sync::Arc::make_mut(&mut backgrounds).clips {
+        for clip in &mut std::sync::Arc::make_mut(backgrounds).clips {
             if let crate::paint::BackgroundClip::Painted {
                 border_area: false,
                 text: true,
@@ -28,11 +41,7 @@ pub(super) fn background_only<I: Clone>(
             }
         }
     }
-    crate::paint::BoxDecoration {
-        background: decoration.background,
-        backgrounds,
-        ..Default::default()
-    }
+    canvas
 }
 
 /// PDF pages are white paper, which an opaque white canvas surface leaves unchanged.
@@ -3302,7 +3311,7 @@ fn block<'a>(
                 block.decoration = resources.backgrounds(&frame.style)?;
                 block.shape_outside = resources.shape_outside(&frame.style);
                 if index == 0 {
-                    traversal.canvas = background_only(&block.decoration);
+                    traversal.canvas = canvas_background(&block.decoration);
                 }
                 // CSS Content 3 §1: an element's `<content-replacement>` replaces whatever it
                 // would otherwise render.
@@ -3634,7 +3643,7 @@ fn block<'a>(
                 traversal.canvas = if child_style.display == Display::None {
                     BoxDecoration::default()
                 } else {
-                    background_only(&resources.backgrounds(&child_style)?)
+                    canvas_background(&resources.backgrounds(&child_style)?)
                 };
             }
             validate_box(&child_style)?;
