@@ -50,6 +50,10 @@ pub(super) struct ParagraphCursor<'a, 't> {
     anchors: std::iter::Peekable<std::vec::IntoIter<crate::layout::measure::LineAnchor<'a>>>,
     atomics: Vec<Option<crate::layout::inline::MeasuredAtomic<'a>>>,
     metrics: Vec<crate::text::AtomicMetrics>,
+    /// The atomic inlines' `::first-line` boxes, and the metrics of the measured blocks on the
+    /// first formatted line.
+    first_line_atomics: Vec<Option<crate::layout::inline::MeasuredAtomic<'a>>>,
+    first_line_metrics: Vec<crate::text::AtomicMetrics>,
     consumed_anchors: usize,
     consumed_events: usize,
     consumed_floats: usize,
@@ -134,7 +138,7 @@ impl<'a> Paginator<'a, '_, 'a> {
     fn place_letter_trial(
         &mut self,
         letter: Option<usize>,
-        atomics: &[Option<crate::layout::inline::MeasuredAtomic<'a>>],
+        (source, atomics, first_line): InlineBlocks<'_, 'a>,
         line: &crate::text::Line,
         placement: LineGeometry,
         rtl: bool,
@@ -149,8 +153,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         {
             return;
         }
-        let atomic = atomics[index]
-            .as_ref()
+        let atomic = letter_atomic(source, atomics, first_line, index)
             .expect("the initial letter is measured until its line is placed");
         let fragment = line
             .atomics
@@ -173,11 +176,52 @@ impl<'a> Paginator<'a, '_, 'a> {
         }
     }
 
+    /// Measures again, at `width` within `height`, the inline blocks of `source` and its
+    /// atomic inlines' `::first-line` boxes that are not yet placed.
+    fn remeasure_inline_blocks(
+        &mut self,
+        source: &'a crate::document::Paragraph,
+        (atomics, first_line): (
+            &mut [Option<crate::layout::inline::MeasuredAtomic<'a>>],
+            &mut [Option<crate::layout::inline::MeasuredAtomic<'a>>],
+        ),
+        width: f32,
+        height: Option<f32>,
+    ) -> Result<(), LayoutError> {
+        let rtl = source.style().used_rtl();
+        let blocks = atomics
+            .iter_mut()
+            .enumerate()
+            .map(|(index, atomic)| (atomic, &source.inline_block(index).block))
+            .chain(
+                first_line
+                    .iter_mut()
+                    .zip(source.atomics())
+                    .map(|(atomic, anchor)| {
+                        (
+                            atomic,
+                            anchor.block.first_line_box().unwrap_or(&anchor.block),
+                        )
+                    }),
+            );
+        for (atomic, block) in blocks {
+            if atomic.is_some() {
+                *atomic = Some(self.measurer.run(|measurer| {
+                    crate::layout::inline::measure(measurer, block, width, height, rtl)
+                })?);
+            }
+        }
+        Ok(())
+    }
+
     fn fit_float_line(
         &self,
         prepared: &crate::text::PreparedParagraph<'a, 'a, 'a>,
         position: crate::text::TextPosition<'a>,
-        metrics: &[crate::text::AtomicMetrics],
+        (metrics, first_line_metrics): (
+            &[crate::text::AtomicMetrics],
+            &[crate::text::AtomicMetrics],
+        ),
         bounds: [f32; 2],
         mut y: f32,
     ) -> Result<
@@ -195,13 +239,15 @@ impl<'a> Paginator<'a, '_, 'a> {
             let (band, met) =
                 context.line_band(self.page, y, height, bounds, &self.measurer.work)?;
             let width = (band[1] - band[0]).max(0.0);
-            let mut lines = prepared.lines_in_block(
-                position,
-                width,
-                bounds[1] - bounds[0],
-                [band[0] - bounds[0], bounds[1] - band[1]],
-                metrics,
-            )?;
+            let mut lines = prepared
+                .lines_in_block(
+                    position,
+                    width,
+                    bounds[1] - bounds[0],
+                    [band[0] - bounds[0], bounds[1] - band[1]],
+                    metrics,
+                )?
+                .with_first_line_atomics(first_line_metrics)?;
             let Some(line) = lines.next() else {
                 return Ok(None);
             };
@@ -272,6 +318,14 @@ impl<'a> Paginator<'a, '_, 'a> {
         let atomics = paragraph.atomics;
         let mut metrics = Vec::new();
         crate::layout::inline::paragraph_metrics(paragraph.paragraph, &atomics, &mut metrics);
+        let first_line_atomics = paragraph.first_line_atomics;
+        let mut first_line_metrics = Vec::new();
+        crate::layout::inline::first_line_metrics(
+            paragraph.paragraph,
+            &metrics,
+            &first_line_atomics,
+            &mut first_line_metrics,
+        );
         let consumed_anchors = 0;
         let consumed_events = 0;
         let line_index = 0;
@@ -313,6 +367,8 @@ impl<'a> Paginator<'a, '_, 'a> {
             anchors,
             atomics,
             metrics,
+            first_line_atomics,
+            first_line_metrics,
             consumed_anchors,
             consumed_events,
             consumed_floats: 0,
@@ -346,6 +402,8 @@ impl<'a> Paginator<'a, '_, 'a> {
             mut anchors,
             mut atomics,
             mut metrics,
+            mut first_line_atomics,
+            mut first_line_metrics,
             mut consumed_anchors,
             mut consumed_events,
             mut consumed_floats,
@@ -390,21 +448,19 @@ impl<'a> Paginator<'a, '_, 'a> {
                 {
                     width = destination_width;
                     containing_height = height;
-                    for (index, atomic) in atomics.iter_mut().enumerate() {
-                        if atomic.is_some() {
-                            let measured = self.measurer.run(|measurer| {
-                                crate::layout::inline::measure(
-                                    measurer,
-                                    &source.inline_block(index).block,
-                                    width,
-                                    height,
-                                    style.used_rtl(),
-                                )
-                            })?;
-                            *atomic = Some(measured);
-                        }
-                    }
+                    self.remeasure_inline_blocks(
+                        source,
+                        (&mut atomics, &mut first_line_atomics),
+                        width,
+                        height,
+                    )?;
                     crate::layout::inline::paragraph_metrics(source, &atomics, &mut metrics);
+                    crate::layout::inline::first_line_metrics(
+                        source,
+                        &metrics,
+                        &first_line_atomics,
+                        &mut first_line_metrics,
+                    );
                     if prepared.is_none() {
                         self.measurer.work.spend(source.text().len().max(1))?;
                     }
@@ -412,7 +468,9 @@ impl<'a> Paginator<'a, '_, 'a> {
                     let prepared = prepared.get_or_insert_with(|| {
                         Rc::new(text.prepare_paragraph(source).clamped(clamp.clone()))
                     });
-                    let mut stream = prepared.lines(position, width, &metrics)?;
+                    let mut stream = prepared
+                        .lines(position, width, &metrics)?
+                        .with_first_line_atomics(&first_line_metrics)?;
                     geometry.clear();
                     let mut float_position = position;
                     let mut remainder = Vec::new();
@@ -444,7 +502,9 @@ impl<'a> Paginator<'a, '_, 'a> {
                                 // An initial letter's line clears earlier initial letters
                                 // (CSS Inline 3 §7.9.2) and moves down for the letter to
                                 // stay below the content edge (§7.6.1).
-                                let y = match letter.and_then(|index| atomics[index].as_ref()) {
+                                let y = match letter.and_then(|index| {
+                                    letter_atomic(source, &atomics, &first_line_atomics, index)
+                                }) {
                                     Some(atomic) if remainder.is_empty() => self
                                         .floats
                                         .last()
@@ -465,7 +525,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                             let Some((line, checkpoint, placement)) = self.fit_float_line(
                                 prepared,
                                 float_position,
-                                &metrics,
+                                (&metrics, &first_line_metrics),
                                 [x, x + width],
                                 cleared_y,
                             )?
@@ -501,7 +561,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                                 if y > placement.y && remainder.is_empty() {
                                     self.place_letter_trial(
                                         letter,
-                                        &atomics,
+                                        (source, &atomics, &first_line_atomics),
                                         &line,
                                         placement,
                                         style.used_rtl(),
@@ -519,7 +579,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                             if remainder.is_empty() {
                                 self.place_letter_trial(
                                     letter,
-                                    &atomics,
+                                    (source, &atomics, &first_line_atomics),
                                     &line,
                                     placement,
                                     style.used_rtl(),
@@ -650,26 +710,22 @@ impl<'a> Paginator<'a, '_, 'a> {
                 && let Some((next_width, next_height)) = next_geometry
             {
                 let mut next_metrics = metrics.clone();
-                let mut next_atomics = Vec::with_capacity(atomics.len());
-                for (index, atomic) in atomics.iter().enumerate() {
-                    next_atomics.push(
-                        atomic
-                            .is_some()
-                            .then(|| {
-                                self.measurer.run(|measurer| {
-                                    crate::layout::inline::measure(
-                                        measurer,
-                                        &source.inline_block(index).block,
-                                        next_width,
-                                        next_height,
-                                        style.used_rtl(),
-                                    )
-                                })
-                            })
-                            .transpose()?,
-                    );
-                }
+                let mut next_first_line_metrics = first_line_metrics.clone();
+                let mut next_atomics = atomics.clone();
+                let mut next_first_line = first_line_atomics.clone();
+                self.remeasure_inline_blocks(
+                    source,
+                    (&mut next_atomics, &mut next_first_line),
+                    next_width,
+                    next_height,
+                )?;
                 crate::layout::inline::paragraph_metrics(source, &next_atomics, &mut next_metrics);
+                crate::layout::inline::first_line_metrics(
+                    source,
+                    &next_metrics,
+                    &next_first_line,
+                    &mut next_first_line_metrics,
+                );
                 if prepared.is_none() {
                     self.measurer.work.spend(source.text().len().max(1))?;
                 }
@@ -679,7 +735,9 @@ impl<'a> Paginator<'a, '_, 'a> {
                 while take > 0 {
                     self.measurer.work.spend(next_metrics.len().max(1))?;
                     let checkpoint = positions.as_slice()[take - 1];
-                    let mut next_lines = prepared.lines(checkpoint, next_width, &next_metrics)?;
+                    let mut next_lines = prepared
+                        .lines(checkpoint, next_width, &next_metrics)?
+                        .with_first_line_atomics(&next_first_line_metrics)?;
                     let mut count = 0;
                     for line in next_lines.by_ref().take(style.widows) {
                         self.measurer.work.spend(line?.range.len().max(1))?;
@@ -710,7 +768,8 @@ impl<'a> Paginator<'a, '_, 'a> {
             if take > 0
                 && self.unbroken == 0
                 && self.has_flow
-                && let Some(atomic) = letter.and_then(|index| atomics[index].as_ref())
+                && let Some(atomic) = letter
+                    .and_then(|index| letter_atomic(source, &atomics, &first_line_atomics, index))
                 && let Some(first) = geometry.front()
             {
                 let bottom = first.y
@@ -849,7 +908,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                     &line,
                     line_width,
                     line_x + offset,
-                    &mut atomics,
+                    (&mut atomics, &mut first_line_atomics),
                     line_layers,
                 )?;
                 if !line.phantom {
@@ -911,6 +970,8 @@ impl<'a> Paginator<'a, '_, 'a> {
                 anchors,
                 atomics,
                 metrics,
+                first_line_atomics,
+                first_line_metrics,
                 consumed_anchors,
                 consumed_events,
                 consumed_floats,
@@ -1104,7 +1165,13 @@ impl<'a> Paginator<'a, '_, 'a> {
         let containing = InlineContaining::of(self.containing_geometry());
         let mut layers = InlineLayers::new(text.source, containing);
         let line_layers = layers.line(&text.line);
-        self.inline_content(&text.line, containing.width, text.x, &mut [], line_layers)?;
+        self.inline_content(
+            &text.line,
+            containing.width,
+            text.x,
+            (&mut [], &mut []),
+            line_layers,
+        )?;
         let index = self.measurer.sources.paragraph(text.source);
         self.emit_paragraph_line(
             index,
@@ -1158,4 +1225,27 @@ fn line_footnotes(
         .into_iter()
         .filter_map(|event| event.event.footnote)
         .collect()
+}
+
+/// A paragraph, its measured inline blocks and its atomic inlines' measured `::first-line`
+/// boxes.
+type InlineBlocks<'s, 'a> = (
+    &'s crate::document::Paragraph,
+    &'s [Option<crate::layout::inline::MeasuredAtomic<'a>>],
+    &'s [Option<crate::layout::inline::MeasuredAtomic<'a>>],
+);
+
+/// The measured box of the initial letter `index`, which lies on the first formatted line, of
+/// `source`, until its line is placed.
+fn letter_atomic<'s, 'a>(
+    source: &crate::document::Paragraph,
+    atomics: &'s [Option<crate::layout::inline::MeasuredAtomic<'a>>],
+    first_line: &'s [Option<crate::layout::inline::MeasuredAtomic<'a>>],
+    index: usize,
+) -> Option<&'s crate::layout::inline::MeasuredAtomic<'a>> {
+    if crate::layout::inline::has_first_line_box(source, index) {
+        first_line[index].as_ref()
+    } else {
+        atomics[index].as_ref()
+    }
 }

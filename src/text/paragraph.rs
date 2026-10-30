@@ -64,6 +64,10 @@ pub(crate) struct ParagraphLines<'s, 'p, 'context, 'font> {
     indent: f32,
     atomics: &'s [AtomicMetrics],
     atomic_widths: Vec<f32>,
+    /// The metrics of the measured blocks on the first formatted line, where the atomic
+    /// inlines' `::first-line` boxes replace them (CSS Pseudo-Elements 4 §2.1.3).
+    first_line_atomics: &'s [AtomicMetrics],
+    first_line_widths: Vec<f32>,
     autospace: Option<Autospace<'p, 'context, 'font>>,
     finished: bool,
     /// Where its lines end as at a forced break: the paragraph's end, or that of the part of
@@ -203,6 +207,8 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
             indent: 0.0,
             atomics,
             atomic_widths: atomics.iter().map(|metrics| metrics.width).collect(),
+            first_line_atomics: atomics,
+            first_line_widths: atomics.iter().map(|metrics| metrics.width).collect(),
             autospace: Autospace::of(self.context, self.paragraph),
             finished: false,
             end: self.paragraph.text().len(),
@@ -250,6 +256,8 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
             inline_start: 0.0,
             indent: 0.0,
             atomics: &[],
+            first_line_atomics: &[],
+            first_line_widths: widths.clone(),
             atomic_widths: widths,
             autospace: Autospace::of(self.context, self.paragraph),
             finished: false,
@@ -279,6 +287,32 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
     /// Resume at the last successfully emitted line, including empty inline-edge progress.
     pub(crate) fn checkpoint(&self) -> TextPosition<'p> {
         self.position
+    }
+
+    /// Lays the first formatted line out with `atomics`, the metrics of the measured blocks
+    /// with those of the atomic inlines' `::first-line` boxes in their place.
+    pub(crate) fn with_first_line_atomics(
+        mut self,
+        atomics: &'s [AtomicMetrics],
+    ) -> Result<Self, TextError> {
+        if atomics.len() != self.atomics.len() {
+            return Err(TextError::AtomicMetrics {
+                expected: self.atomics.len(),
+                actual: atomics.len(),
+            });
+        }
+        self.first_line_widths = atomics.iter().map(|metrics| metrics.width).collect();
+        self.first_line_atomics = atomics;
+        Ok(self)
+    }
+
+    /// The metrics and widths of the measured blocks on the line from `start`.
+    fn atomics_at(&self, start: usize) -> (&'s [AtomicMetrics], &[f32]) {
+        if std::ptr::eq(self.prepared_at(start), self.prepared) {
+            (self.atomics, &self.atomic_widths)
+        } else {
+            (self.first_line_atomics, &self.first_line_widths)
+        }
     }
 
     /// The paragraph shaping and breaking the line from `start`: its `::first-line` copy for
@@ -362,7 +396,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             paragraph,
             pieces,
             from..to,
-            &self.atomic_widths,
+            self.atomics_at(from).1,
             available,
             line_boxes::Spacers {
                 autospace: self.autospace.as_ref(),
@@ -452,17 +486,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
         let prepared = self.prepared_at(line.range.start);
         let paragraph = prepared.paragraph;
         line.wrapped = !last && !after_forced_break(&prepared.opportunities, line.range.end);
-        if line.first_line_styles
-            && let Some(fragment) = line.atomics.iter().find(|fragment| {
-                let [base, styled] = [self.prepared.paragraph, paragraph]
-                    .map(|source| &source.atomics()[fragment.index].block);
-                base.image().is_none() && !base.style().same_text_style(styled.style())
-            })
-        {
-            return Err(TextError::FirstLineAtomic {
-                index: fragment.index,
-            });
-        }
+        let (atomics, _) = self.atomics_at(line.range.start);
 
         if prepared.has_leaders {
             crate::text::leaders::expand(prepared.context, paragraph, &mut line, self.available())?;
@@ -476,7 +500,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             prepared.context,
             paragraph,
             &mut line,
-            self.atomics,
+            atomics,
             newline,
             (prepared.ruby.as_ref(), self.containing_width),
         )?;
@@ -517,7 +541,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
         line.place();
         prepared.context.place_line_emphasis(paragraph, &mut line)?;
         if let Some(ruby) = &prepared.ruby {
-            ruby.place(&mut line, self.atomics, self.containing_width)?;
+            ruby.place(&mut line, atomics, self.containing_width)?;
         }
         let source = self.prepared.paragraph;
         if line.first_line_styles
@@ -528,8 +552,8 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
                     .same_text_style(paragraph.annotations()[index].block.style())
             })
         {
-            return Err(TextError::FirstLineAtomic {
-                index: fragment.index,
+            return Err(TextError::FirstLineAnnotation {
+                index: fragment.index - source.atomics().len(),
             });
         }
         prepared.context.finish_line_paint(paragraph, &mut line)?;

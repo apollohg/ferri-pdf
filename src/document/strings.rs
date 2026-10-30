@@ -63,17 +63,33 @@ struct PendingOwner {
     marker: Option<String>,
 }
 pub(crate) struct StringAssignments {
+    /// The index of the first of `owners`, after those of the assignments it continues.
+    first: usize,
     owners: Vec<PendingOwner>,
-    tree: crate::document::semantics::SemanticTree,
+    tree: std::rc::Rc<crate::document::semantics::SemanticTree>,
     indices: HashMap<ElementId, usize>,
 }
 impl StringAssignments {
     pub(crate) fn new(document: &DocumentTree) -> Self {
         Self {
+            first: 0,
             owners: Vec::new(),
             indices: HashMap::new(),
-            tree: crate::document::semantics::SemanticTree::new(document),
+            tree: std::rc::Rc::new(crate::document::semantics::SemanticTree::new(document)),
         }
+    }
+    /// The assignments of a copy of a subtree formatted from here: they take the indices
+    /// these would next take, and are discarded.
+    pub(crate) fn detached(&self) -> Self {
+        Self {
+            first: self.first + self.owners.len(),
+            owners: Vec::new(),
+            indices: HashMap::new(),
+            tree: self.tree.clone(),
+        }
+    }
+    fn owner(&mut self, index: usize) -> &mut PendingOwner {
+        &mut self.owners[index - self.first]
     }
     pub(crate) fn event(
         &self,
@@ -122,7 +138,7 @@ impl StringAssignments {
         values: Vec<PendingValue>,
         marker: Option<&str>,
     ) -> usize {
-        let index = self.owners.len();
+        let index = self.first + self.owners.len();
         self.indices.insert(element.id(), index);
         self.owners.push(PendingOwner {
             owner: element.id(),
@@ -144,7 +160,7 @@ impl StringAssignments {
         copies: Vec<(PageNumbers, BlockBox)>,
     ) -> usize {
         let index = assignment.unwrap_or_else(|| self.push(element, Vec::new(), None));
-        self.owners[index].running = Some(PendingRunning {
+        self.owner(index).running = Some(PendingRunning {
             name,
             target: PageStyleTarget {
                 element: element.id(),
@@ -165,7 +181,7 @@ impl StringAssignments {
         block: BlockBox,
         copies: Vec<(PageNumbers, BlockBox)>,
     ) -> crate::document::SemanticEvent {
-        let index = self.owners.len();
+        let index = self.first + self.owners.len();
         self.owners.push(PendingOwner {
             owner: element.id(),
             values: Vec::new(),
@@ -198,8 +214,8 @@ impl StringAssignments {
             })
     }
     pub(crate) fn attach_running(&mut self, element: ElementId, block: BlockBox) {
-        let owner = &mut self.owners[self.indices[&element]];
-        owner
+        let index = self.indices[&element];
+        self.owner(index)
             .running
             .as_mut()
             .expect("running boxes belong to recorded running elements")
@@ -212,10 +228,10 @@ impl StringAssignments {
         text: &str,
         style: &crate::style::Style,
     ) {
-        let Some(index) = self.indices.get(&element.id()) else {
+        let Some(&index) = self.indices.get(&element.id()) else {
             return;
         };
-        let owner = &mut self.owners[*index];
+        let owner = self.owner(index);
         match pseudo {
             GeneratedPseudoElement::Before => {
                 owner.before = crate::document::content::GeneratedText::capture(text, style);

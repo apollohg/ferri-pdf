@@ -117,6 +117,7 @@ pub(crate) struct Footnotes {
     pub elements: Vec<FootnoteElement>,
     pub bodies: Vec<FootnoteBody>,
 }
+#[derive(Clone)]
 pub(crate) struct FootnoteElement {
     pub element: ElementId,
     pub policy: crate::style::FootnotePolicy,
@@ -214,6 +215,9 @@ pub(crate) struct BlockBox {
     /// The block-start and block-end sides of every column's first and last formatted lines
     /// that a multi-column container trims (CSS Inline 3 §6.2).
     column_text_trim: [bool; 2],
+    /// An atomic inline's box as its block's first formatted line styles it, where the styles
+    /// its contents inherit through `::first-line` change it (CSS Pseudo-Elements 4 §2.1.3).
+    first_line_box: Option<Box<BlockBox>>,
 }
 
 /// An initial letter box (CSS Inline 3 §7.5): an atomic inline of its originating line that
@@ -507,10 +511,16 @@ impl BlockBox {
             initial_letter: None,
             rendered_legend: false,
             column_text_trim: [false; 2],
+            first_line_box: None,
         }
     }
     pub(crate) fn column_text_trim(&self) -> [bool; 2] {
         self.column_text_trim
+    }
+    /// The box laid out in place of this atomic inline when it lies on its block's first
+    /// formatted line, if that line's styles change it.
+    pub(crate) fn first_line_box(&self) -> Option<&BlockBox> {
+        self.first_line_box.as_deref()
     }
     pub(crate) fn leading_events(&self) -> impl Iterator<Item = &crate::document::SemanticEvent> {
         self.children
@@ -830,6 +840,64 @@ impl Traversal<'_> {
             pages: self.pages,
         }
     }
+    /// The state formatting a copy of the subtree starting here: it continues the document's
+    /// counters, navigation, string assignments and footnotes as they stand, so that the copy's
+    /// boxes take the indices the document's take, and records nothing for the document.
+    fn subtree_copy(&self) -> Self {
+        Self {
+            document: self.document,
+            embedded: self.embedded,
+            root_style: self.root_style.clone(),
+            counters: self.counters.detached(),
+            navigation: self.navigation.detached(),
+            strings: self.strings.detached(),
+            generated: self.generated.detached(),
+            quotes: self.quotes,
+            canvas: BoxDecoration::default(),
+            canvas_body: None,
+            footnotes: Footnotes {
+                elements: self.footnotes.elements.clone(),
+                bodies: Vec::new(),
+            },
+            inline_footnotes: None,
+            page_counters: Vec::new(),
+            running: self.running.clone(),
+            pages: self.pages,
+        }
+    }
+}
+
+/// The box of the atomic inline `frame` as the first formatted line of `block`, styled
+/// `style`, gives it the styles it inherits through `::first-line` (CSS Pseudo-Elements 4
+/// §2.1.3), formatted again from its start; `None` where no `::first-line` rule styles that
+/// line. Kept out of `block`, whose frame nested navigables' formatting stacks.
+#[inline(never)]
+fn first_line_box<'a>(
+    frame: &Frame<'_>,
+    (style, origins): (&Style, &[ElementId]),
+    sheet: &'a Stylesheet,
+    traversal: &Traversal<'a>,
+    resources: &mut ImageResources<'a>,
+) -> Result<Option<Box<BlockBox>>, DocumentError> {
+    let Some(mut styles) = crate::document::first_line::FirstLineStyles::of(
+        style,
+        origins,
+        sheet,
+        traversal.document,
+        resources,
+    )?
+    else {
+        return Ok(None);
+    };
+    let root = Frame::new(
+        frame.element,
+        Box::new(styles.style(&frame.style)?),
+        frame.depth,
+        frame.ordinal,
+        Some(Placement::Root),
+        frame.page_scope.as_ref(),
+    );
+    block(root, sheet, &mut traversal.subtree_copy(), resources).map(|copy| Some(Box::new(copy)))
 }
 
 /// Copies of the running element of `frame`, formatted from its start once for each set of
@@ -1486,6 +1554,19 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         if block.style.initial_letter.is_none() || !self.initial_letter_allowed() {
             return self.inline.atomic(block, parent);
         }
+        self.atomic_letter(&mut block)?;
+        // The letter lies on the first formatted line, which lays out its `::first-line` box.
+        if let Some(copy) = block
+            .first_line_box
+            .as_deref_mut()
+            .filter(|copy| copy.style.initial_letter.is_some())
+        {
+            self.atomic_letter(copy)?;
+        }
+        self.inline.initial_letter(block, parent, false)
+    }
+    /// Makes the atomic inline `block` an initial letter box of this block's lines.
+    fn atomic_letter(&mut self, block: &mut BlockBox) -> Result<(), DocumentError> {
         let context = crate::text::TextContext::new(&self.sheet.fonts, self.resources.resolver);
         let style = &mut block.style;
         let initial = style
@@ -1515,7 +1596,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             surrounding,
             atomic: true,
         });
-        self.inline.initial_letter(block, parent, false)
+        Ok(())
     }
     /// The inline size of this block, the containing block of an initial letter styled
     /// `style` that its block-axis padding sizes, against which that padding's percentages
@@ -2517,6 +2598,8 @@ struct OpenBlock {
     sizes_letter: bool,
     /// The inline footnote an `InlineFootnote` block holds.
     inline_footnote: Option<Box<InlineFootnoteMember>>,
+    /// An atomic inline's box on its block's first formatted line, if that line restyles it.
+    first_line_box: Option<Box<BlockBox>>,
 }
 
 /// An inline footnote being collected into the anonymous block of its footnote area.
@@ -2577,6 +2660,7 @@ impl<'d> Frame<'d> {
                 ruby_container: false,
                 sizes_letter: false,
                 inline_footnote: None,
+                first_line_box: None,
             }),
             started: false,
             quotes: None,
@@ -2770,7 +2854,32 @@ fn block<'a>(
         let index = frames.len() - 1;
         let mut block_index = *blocks.last().unwrap();
         if !frames[index].started {
+            // The atomic inlines of a block's first formatted line inherit through
+            // `::first-line`, but only layout finds the line each one lies on.
+            let first_line = match (blocks.len().checked_sub(2), &frames[index].block) {
+                (Some(parent), Some(block)) if matches!(block.placement, Placement::Atomic) => {
+                    let parent = &frames[blocks[parent]];
+                    let origins = parent
+                        .block
+                        .as_ref()
+                        .and_then(|block| block.first_line.origins.clone());
+                    match origins {
+                        Some(origins) => first_line_box(
+                            &frames[index],
+                            (&parent.style, &origins),
+                            sheet,
+                            traversal,
+                            resources,
+                        )?,
+                        None => None,
+                    }
+                }
+                _ => None,
+            };
             let frame = &mut frames[index];
+            if let Some(block) = &mut frame.block {
+                block.first_line_box = first_line;
+            }
             let element = frame.element;
             // CSS Containment 2 §3.3: quote depth changes are scoped to the subtree.
             frame.quotes = frame.style.containment().style.then_some(traversal.quotes);
@@ -3472,6 +3581,7 @@ fn block<'a>(
             && element.attr("alt") == Some("")
             && block.image.is_none();
         block.density = state.density;
+        block.first_line_box = state.first_line_box;
         block.navigation = state.navigation;
         block.event = state.event;
         block.canvas_source = canvas_source;

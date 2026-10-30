@@ -110,12 +110,18 @@ pub(super) fn flow<'a>(
         let child = match child {
             BlockContent::Block(child) => measure(child, measurer, available)?,
             BlockContent::Inline(paragraph) => {
-                let atomics = paragraph
-                    .measured_blocks()
-                    .into_iter()
+                let blocks = paragraph.measured_blocks();
+                let atomics = blocks
+                    .iter()
                     .map(|atomic| measure(&atomic.block, measurer, available))
                     .collect::<Result<Vec<_>, _>>()?;
-                measurer.intrinsic_widths(paragraph, &atomics)?
+                let mut first_line = atomics.clone();
+                for (widths, atomic) in first_line.iter_mut().zip(&blocks) {
+                    if let Some(block) = atomic.block.first_line_box() {
+                        *widths = measure(block, measurer, available)?;
+                    }
+                }
+                measurer.intrinsic_widths(paragraph, &atomics, &first_line)?
             }
             BlockContent::Positioned(_) | BlockContent::Events(_) => continue,
         };

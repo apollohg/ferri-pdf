@@ -547,9 +547,9 @@ fn leader_intrinsic_widths_keep_one_pattern_and_do_not_mutate_after_expansion() 
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let minimum = Paragraph::generated(".Z", source.style()).unwrap().unwrap();
     let maximum = Paragraph::generated("A", source.style()).unwrap().unwrap();
-    let expected_min = context.intrinsic_widths(&minimum, &[]).unwrap().max;
-    let expected_max = expected_min + context.intrinsic_widths(&maximum, &[]).unwrap().max;
-    let before = context.intrinsic_widths(source, &[]).unwrap();
+    let expected_min = context.intrinsic_widths(&minimum, &[], &[]).unwrap().max;
+    let expected_max = expected_min + context.intrinsic_widths(&maximum, &[], &[]).unwrap().max;
+    let before = context.intrinsic_widths(source, &[], &[]).unwrap();
     assert_pt(before.min, expected_min);
     assert_pt(before.max, expected_max);
     let prepared = context.prepare_paragraph(source);
@@ -572,7 +572,7 @@ fn leader_intrinsic_widths_keep_one_pattern_and_do_not_mutate_after_expansion() 
             .collect::<Vec<_>>(),
         ["A", ".Z"]
     );
-    let after = context.intrinsic_widths(source, &[]).unwrap();
+    let after = context.intrinsic_widths(source, &[], &[]).unwrap();
     assert_pt(after.min, before.min);
     assert_pt(after.max, before.max);
     assert_eq!(source.text(), "A.Z");
@@ -612,7 +612,7 @@ fn intrinsic_indentation_uses_zero_percentage_and_the_selected_line() {
     let resolver = FileResolver::default();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let source = paragraphs(&document)[0];
-    let baseline = context.intrinsic_widths(source, &[]).unwrap();
+    let baseline = context.intrinsic_widths(source, &[], &[]).unwrap();
     for (amount, hanging, each_line, min_extra, max_extra) in [
         (
             crate::style::LengthPercentage::Length(20.0),
@@ -652,7 +652,7 @@ fn intrinsic_indentation_uses_zero_percentage_and_the_selected_line() {
         let paragraph = Paragraph::generated(source.text(), &style)
             .unwrap()
             .unwrap();
-        let widths = context.intrinsic_widths(&paragraph, &[]).unwrap();
+        let widths = context.intrinsic_widths(&paragraph, &[], &[]).unwrap();
         assert_pt(widths.min, baseline.min + min_extra);
         assert_pt(widths.max, baseline.max + max_extra);
     }

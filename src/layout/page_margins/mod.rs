@@ -178,7 +178,7 @@ impl<'t> Prepared<'_, 't> {
         let intrinsic = self
             .paragraph
             .as_ref()
-            .map(|p| measurer.intrinsic_widths(p, &atomics))
+            .map(|p| measurer.intrinsic_widths(p, &atomics, &atomics))
             .transpose()?
             .unwrap_or_default();
         Ok([intrinsic.min, intrinsic.max])

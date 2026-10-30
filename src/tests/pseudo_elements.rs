@@ -482,32 +482,74 @@ fn first_line_needs_the_first_formatted_line_and_shrinks_to_fit_with_its_styles(
 }
 
 #[test]
-fn first_line_rejects_inheritance_it_cannot_render() {
-    let atomic = render_html(
-        &format!(
-            "<style>{PROFILE}p::first-line{{color:red}}</style><p>Lead \
-             <span style='display:inline-block'>box</span></p>"
-        ),
-        &local_options(),
+fn first_line_styles_atomic_inlines_and_their_contents_only_where_they_lie_on_it() {
+    // CSS Pseudo-Elements 4 §2.1.3: the fragment of a child on the first line inherits from
+    // `::first-line`, so an atomic inline there passes those styles to its contents.
+    let lines = styled_lines(&trace(
+        "p{width:200pt}p::first-line{color:red;font-size:20pt}",
+        "<p>Lead <span style='display:inline-block'>box <b>bold</b></span> words that wrap \
+         <span style='display:inline-block'>later</span> on</p>",
+    ));
+    let base = line_runs(&lines, "words that wrap \u{fffc} on")[0].clone();
+    assert_eq!(
+        (base.1, base.2),
+        (BLACK, 12.0),
+        "text after the first line keeps the paragraph's styles: {lines:#?}"
     );
-    let error = atomic
-        .err()
-        .expect("an inline-block inheriting first-line colour fails");
+    let inside = line_runs(&lines, "box bold");
     assert!(
-        error.to_string().contains("::first-line"),
-        "the failure names the unsupported inheritance: {error}"
+        inside.iter().all(|run| (run.1, run.2) == (RED, 20.0)),
+        "the inline-block on the first line and its descendants inherit through ::first-line: \
+         {inside:?}"
     );
-    let later = render_html(
-        &format!(
-            "<style>{PROFILE}p{{width:60pt}}p::first-line{{color:red}}</style><p>Lead words \
-             wrap <span style='display:inline-block'>box</span></p>"
-        ),
-        &local_options(),
-    );
+    let later = line_runs(&lines, "later");
     assert!(
-        later.is_ok(),
-        "an inline-block after the first line inherits nothing from it: {:?}",
-        later.err()
+        later.iter().all(|run| (run.1, run.2) == (base.1, base.2)),
+        "an inline-block on a later line inherits from its parent: {later:?}"
+    );
+    // At 20pt a 4em box is 80pt wide and no longer fits beside "Lead", although at 12pt its
+    // 48pt would: the first line breaks with the box as that line styles it.
+    let moved = styled_lines(&trace(
+        "p{width:100pt}p::first-line{color:red;font-size:20pt}",
+        "<p>Lead <span style='display:inline-block;width:4em'>wide</span></p>",
+    ));
+    assert_eq!(
+        moved[0].0.trim_end(),
+        "Lead",
+        "the restyled box does not fit on the first line: {moved:#?}"
+    );
+    let wide = line_runs(&moved, "wide");
+    assert!(
+        wide.iter().all(|run| (run.1, run.2) == (base.1, base.2)),
+        "the box moved to the second line takes the paragraph's styles: {wide:?}"
+    );
+}
+
+#[test]
+fn first_line_atomic_inlines_count_record_and_call_once() {
+    // The first line's copy of an atomic inline is formatted again from its start; only one
+    // of the two is laid out, so counters, named strings and footnotes advance once.
+    let css = "body{counter-reset:n}.c::before{counter-increment:n;content:'#' counter(n) ' '}\
+               .fn{float:footnote}h6{display:inline;string-set:t content();font-size:inherit}\
+               @page{@top-center{content:'[' string(t) ']'}}";
+    let body = "<p>A <span class='c' style='display:inline-block'><h6>Head</h6>\
+                <span class='fn'>Note</span></span> <span class='c' \
+                style='display:inline-block'>x</span></p><p class='c'>y</p>";
+    let plain = texts(&trace(css, body));
+    let styled = texts(&trace(&format!("{css}p::first-line{{color:red}}"), body));
+    assert_eq!(
+        styled, plain,
+        "a first-line colour changes no counter, footnote call or named string"
+    );
+    for expected in ["#2 x", "#3 y", "[Head]"] {
+        assert!(
+            styled.iter().any(|line| line.trim().ends_with(expected)),
+            "a line ends {expected:?} among {styled:#?}"
+        );
+    }
+    assert!(
+        styled.iter().any(|line| line.starts_with("Head1")),
+        "the footnote call is the first: {styled:#?}"
     );
 }
 

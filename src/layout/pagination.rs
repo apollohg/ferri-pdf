@@ -6489,7 +6489,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         line: &crate::text::Line,
         width: f32,
         left: f32,
-        atomics: &mut [Option<crate::layout::inline::MeasuredAtomic<'a>>],
+        (atomics, first_line): (
+            &mut [Option<crate::layout::inline::MeasuredAtomic<'a>>],
+            &mut [Option<crate::layout::inline::MeasuredAtomic<'a>>],
+        ),
         layers: &mut InlineLayers<'a>,
     ) -> Result<(), LayoutError> {
         let source = layers.paragraph;
@@ -6669,7 +6672,16 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             let atomic = if let Some(part) = &fragment.part {
                 remeasure(self, Some(part.clone()))?
             } else {
-                let atomic = atomics[fragment.index]
+                // The first formatted line lays out an atomic inline's `::first-line` box in its
+                // place (CSS Pseudo-Elements 4 §2.1.3); `source` is then the line's copy.
+                let slot = if line.first_line_styles
+                    && first_line.get(fragment.index).is_some_and(Option::is_some)
+                {
+                    &mut first_line[fragment.index]
+                } else {
+                    &mut atomics[fragment.index]
+                };
+                let atomic = slot
                     .take()
                     .expect("each atomic inline is placed on exactly one line");
                 // A ruby column wider than its annotation gives it its width (§4.3).

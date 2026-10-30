@@ -715,8 +715,10 @@ pub(crate) enum TextError {
     AtomicMetrics { expected: usize, actual: usize },
     #[error("text continuation belongs to another paragraph")]
     ParagraphMismatch,
-    #[error("atomic inline {index} on a ::first-line inherits first-line styles into its contents")]
-    FirstLineAtomic { index: usize },
+    #[error(
+        "ruby annotation {index} on a ::first-line inherits first-line styles into its contents"
+    )]
+    FirstLineAnnotation { index: usize },
 }
 
 /// The content language, or the OpenType language system `font-language-override` names
@@ -834,18 +836,20 @@ impl<'a> TextContext<'a> {
         self.resolver
     }
     /// `atomics` holds the min- and max-content margin-box widths of the paragraph's measured
-    /// blocks.
+    /// blocks, and `first_line_atomics` those its first formatted line holds, where the atomic
+    /// inlines' `::first-line` boxes replace them.
     pub(crate) fn intrinsic_widths(
         &self,
         paragraph: &Paragraph,
         atomics: &[IntrinsicWidths],
+        first_line_atomics: &[IntrinsicWidths],
     ) -> Result<IntrinsicWidths, TextError> {
         let expected = paragraph.measured_blocks().len();
-        if atomics.len() != expected {
-            return Err(TextError::AtomicMetrics {
-                expected,
-                actual: atomics.len(),
-            });
+        if let Some(actual) = [atomics.len(), first_line_atomics.len()]
+            .into_iter()
+            .find(|&actual| actual != expected)
+        {
+            return Err(TextError::AtomicMetrics { expected, actual });
         }
         let text = paragraph.text();
         let base = IntrinsicSource::new(self, paragraph, paragraph)?;
@@ -858,20 +862,27 @@ impl<'a> TextContext<'a> {
         let first_line_autospace = first_line
             .as_ref()
             .and_then(|source| autospace::Autospace::of(self, source.paragraph));
-        let minimum: Vec<f32> = atomics.iter().map(|widths| widths.min).collect();
-        let maximum: Vec<f32> = atomics.iter().map(|widths| widths.max).collect();
-        let measure = |range: Range<usize>, atomic_widths: &[f32], min_content: bool| {
+        let widths = |atomics: &[IntrinsicWidths]| -> [Vec<f32>; 2] {
+            [
+                atomics.iter().map(|widths| widths.min).collect(),
+                atomics.iter().map(|widths| widths.max).collect(),
+            ]
+        };
+        let [base_widths, first_line_widths] = [atomics, first_line_atomics].map(widths);
+        let measure = |range: Range<usize>, min_content: bool| {
             // Content from the start sets the first formatted line at either intrinsic size,
             // in the copy's offsets.
-            let (source, autospace, range) = match first_line.as_ref().filter(|_| range.start == 0)
-            {
-                Some(source) => (
-                    source,
-                    first_line_autospace.as_ref(),
-                    0..paragraph.first_line_offsets().to_copy_after(range.end),
-                ),
-                None => (&base, base_autospace.as_ref(), range),
-            };
+            let (source, autospace, range, atomic_widths) =
+                match first_line.as_ref().filter(|_| range.start == 0) {
+                    Some(source) => (
+                        source,
+                        first_line_autospace.as_ref(),
+                        0..paragraph.first_line_offsets().to_copy_after(range.end),
+                        &first_line_widths,
+                    ),
+                    None => (&base, base_autospace.as_ref(), range, &base_widths),
+                };
+            let atomic_widths = &atomic_widths[usize::from(!min_content)];
             let spacers = line_boxes::Spacers {
                 autospace,
                 ruby: source.ruby.as_ref(),
@@ -944,7 +955,7 @@ impl<'a> TextContext<'a> {
             Ok(width)
         };
         if text.is_empty() {
-            let width = measure(0..0, &maximum, false)?;
+            let width = measure(0..0, false)?;
             return Ok(IntrinsicWidths {
                 min: width,
                 max: width,
@@ -958,16 +969,16 @@ impl<'a> TextContext<'a> {
         for (end, opportunity) in opportunities.iter().copied() {
             while emergency.peek().is_some_and(|&offset| offset < end) {
                 let offset = emergency.next().unwrap();
-                widths.min = widths.min.max(measure(word_start..offset, &minimum, true)?);
+                widths.min = widths.min.max(measure(word_start..offset, true)?);
                 word_start = offset;
             }
             if emergency.peek() == Some(&end) {
                 emergency.next();
             }
-            widths.min = widths.min.max(measure(word_start..end, &minimum, true)?);
+            widths.min = widths.min.max(measure(word_start..end, true)?);
             word_start = end;
             if opportunity == BreakOpportunity::Mandatory {
-                widths.max = widths.max.max(measure(line_start..end, &maximum, false)?);
+                widths.max = widths.max.max(measure(line_start..end, false)?);
                 line_start = end;
             }
         }

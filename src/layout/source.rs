@@ -33,6 +33,9 @@ impl SourceIds {
                     if let Some(content) = block.math_content() {
                         pending.push(Entry::Block(content));
                     }
+                    if let Some(copy) = block.first_line_box() {
+                        pending.push(Entry::Block(copy));
+                    }
                     if let Some(radical) = block.math().and_then(|math| math.radical.as_ref()) {
                         pending.push(Entry::Paragraph(radical));
                     }

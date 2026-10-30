@@ -240,16 +240,20 @@ impl GeneratedPass {
             page_initials: Vec::new(),
         }
     }
-    /// The pass formatting a copy of a running element showing the page counters `numbers`.
-    pub(crate) fn running_copy(&self, numbers: PageNumbers) -> Self {
+    /// The pass formatting a copy of a subtree: it binds content as this one does and
+    /// records nothing for the document.
+    pub(crate) fn detached(&self) -> Self {
         Self {
-            bindings: GeneratedBindings {
-                copy: Some(numbers),
-                ..self.bindings.clone()
-            },
+            bindings: self.bindings.clone(),
             elements: HashMap::new(),
             page_initials: Vec::new(),
         }
+    }
+    /// The pass formatting a copy of a running element showing the page counters `numbers`.
+    pub(crate) fn running_copy(&self, numbers: PageNumbers) -> Self {
+        let mut pass = self.detached();
+        pass.bindings.copy = Some(numbers);
+        pass
     }
     /// Whether this pass formats a copy of a running element.
     pub(crate) fn formats_copy(&self) -> bool {

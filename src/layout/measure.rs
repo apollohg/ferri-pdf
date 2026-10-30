@@ -278,6 +278,9 @@ pub(super) struct MeasuredParagraph<'a> {
     pub anchors: Vec<LineAnchor<'a>>,
     /// Atomic inlines in paragraph order, taken when their line is placed.
     pub atomics: Vec<Option<crate::layout::inline::MeasuredAtomic<'a>>>,
+    /// The `::first-line` boxes of the atomic inlines that have one, taken when the first
+    /// formatted line is placed.
+    pub first_line_atomics: Vec<Option<crate::layout::inline::MeasuredAtomic<'a>>>,
     /// The region break of a `continue: discard` container that ends the paragraph.
     pub clamp: Option<crate::text::ParagraphClamp>,
 }
@@ -577,6 +580,7 @@ pub(super) fn frame_dependencies<'a>(
                     paragraph
                         .atomics
                         .iter()
+                        .chain(&paragraph.first_line_atomics)
                         .rev()
                         .flatten()
                         .map(|atomic| Entry::Block(&atomic.block)),
@@ -813,9 +817,12 @@ impl<'a> Measurer<'a> {
         &self,
         paragraph: &crate::document::Paragraph,
         atomics: &[crate::text::IntrinsicWidths],
+        first_line_atomics: &[crate::text::IntrinsicWidths],
     ) -> Result<crate::text::IntrinsicWidths, LayoutError> {
         self.work.spend(paragraph.text().len().max(1))?;
-        Ok(self.text.intrinsic_widths(paragraph, atomics)?)
+        Ok(self
+            .text
+            .intrinsic_widths(paragraph, atomics, first_line_atomics)?)
     }
 
     pub(crate) fn text_lines(
@@ -1808,6 +1815,7 @@ impl<'a> Measurer<'a> {
             .take_if(|(contents, _)| std::ptr::eq(*contents, paragraph))
             .map(|(_, part)| part);
         let mut atomics = Vec::new();
+        let mut first_line_atomics = Vec::new();
         for (index, atomic) in paragraph.inline_blocks().enumerate() {
             let base_height = paragraph
                 .inter_character_base_style(index)
@@ -1816,22 +1824,42 @@ impl<'a> Measurer<'a> {
                         .map(|metrics| metrics.ascent + metrics.descent)
                 })
                 .transpose()?;
+            let containing = base_height.or(containing_height);
             atomics.push(Some(crate::layout::inline::measure(
                 self,
                 &atomic.block,
                 width,
-                base_height.or(containing_height),
+                containing,
                 rtl,
             )?));
+            if index < paragraph.atomics().len() {
+                first_line_atomics.push(
+                    atomic
+                        .block
+                        .first_line_box()
+                        .map(|block| {
+                            crate::layout::inline::measure(self, block, width, containing, rtl)
+                        })
+                        .transpose()?,
+                );
+            }
         }
         let mut metrics = Vec::new();
         crate::layout::inline::paragraph_metrics(paragraph, &atomics, &mut metrics);
+        let mut first_line_metrics = Vec::new();
+        crate::layout::inline::first_line_metrics(
+            paragraph,
+            &metrics,
+            &first_line_atomics,
+            &mut first_line_metrics,
+        );
         let text = self.text;
         let prepared = text.prepare_paragraph(paragraph);
         let mut stream = match part {
             Some(part) => prepared.lines_between(part, width, &metrics)?,
             None => prepared.lines(prepared.start(), width, &metrics)?,
-        };
+        }
+        .with_first_line_atomics(&first_line_metrics)?;
         let mut lines = Vec::new();
         let mut positions = vec![stream.checkpoint()];
         let limit = budget.map_or(usize::MAX, |budget| budget.lines);
@@ -1872,6 +1900,7 @@ impl<'a> Measurer<'a> {
             positions,
             anchors,
             atomics,
+            first_line_atomics,
             clamp: None,
         };
         if broken {
@@ -1899,12 +1928,20 @@ impl<'a> Measurer<'a> {
                 &paragraph.atomics,
                 &mut metrics,
             );
+            let mut first_line_metrics = Vec::new();
+            crate::layout::inline::first_line_metrics(
+                paragraph.paragraph,
+                &metrics,
+                &paragraph.first_line_atomics,
+                &mut first_line_metrics,
+            );
             let prepared = self
                 .text
                 .prepare_paragraph(paragraph.paragraph)
                 .clamped(Some(clamp.clone()));
-            let mut stream =
-                prepared.lines(paragraph.positions[lines - 1], paragraph.width, &metrics)?;
+            let mut stream = prepared
+                .lines(paragraph.positions[lines - 1], paragraph.width, &metrics)?
+                .with_first_line_atomics(&first_line_metrics)?;
             if let Some(line) = stream.next() {
                 let line = line?;
                 paragraph.height += line.height - paragraph.lines[lines - 1].height;

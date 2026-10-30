@@ -165,6 +165,35 @@ pub(super) fn paragraph_metrics(
     }
 }
 
+/// Sets `metrics` to those of `paragraph`'s measured blocks on its first formatted line:
+/// `base`, those of its measured blocks, with those of its atomic inlines' `::first-line`
+/// boxes as measured, `first_line`, in their place (CSS Pseudo-Elements 4 §2.1.3). A box
+/// already placed keeps its metrics.
+pub(super) fn first_line_metrics(
+    paragraph: &crate::document::Paragraph,
+    base: &[AtomicMetrics],
+    first_line: &[Option<MeasuredAtomic<'_>>],
+    metrics: &mut Vec<AtomicMetrics>,
+) {
+    metrics.resize(base.len(), AtomicMetrics::default());
+    for (index, value) in metrics.iter_mut().enumerate() {
+        if let Some(Some(atomic)) = first_line.get(index) {
+            *value = atomic.metrics;
+        } else if !has_first_line_box(paragraph, index) {
+            *value = base[index];
+        }
+    }
+}
+
+/// Whether atomic inline `index` of `paragraph` has a `::first-line` box, which its first
+/// formatted line lays out in its place.
+pub(super) fn has_first_line_box(paragraph: &crate::document::Paragraph, index: usize) -> bool {
+    paragraph
+        .atomics()
+        .get(index)
+        .is_some_and(|atomic| atomic.block.first_line_box().is_some())
+}
+
 /// An atomic inline's metrics from its layout `measured` with horizontal `geometry`.
 fn measured_atomic<'a>(
     block: &'a BlockBox,
