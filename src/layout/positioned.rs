@@ -597,6 +597,21 @@ fn solve<'a>(
         } else {
             (style.flex.align_self, style.flex.align_self_overflow)
         };
+        let (insets, margins) = if horizontal {
+            (
+                [left.resolve(cb.width), right.resolve(cb.width)],
+                [margin[3], margin[1]],
+            )
+        } else {
+            (
+                [style.inset[0].resolve(cb.height), bottom.resolve(cb.height)],
+                [margin[0], margin[2]],
+            )
+        };
+        // CSS Position 3 §4.3: a box with an inset in the axis and no auto margin aligns in
+        // its inset-modified containing block, whose auto inset is zero (§3.5.1).
+        let inset_aligned =
+            insets.iter().any(Option::is_some) && margins.iter().all(Option::is_some);
         let alignment = match alignment {
             Alignment::Normal | Alignment::Auto => match defaults.map(|defaults| defaults[axis]) {
                 Some(AreaAlignment::Start) => Alignment::Left,
@@ -606,7 +621,7 @@ fn solve<'a>(
                 None => continue,
             },
             Alignment::AnchorCenter => Alignment::AnchorCenter,
-            other if area.is_some() => other,
+            other if area.is_some() || inset_aligned => other,
             _ => continue,
         };
         let (start, length, size, before, after, inset_start, inset_end, original_edges) =

@@ -714,3 +714,51 @@ fn relative_table_offsets_follow_named_page_width_without_double_shifting_captio
         }
     }
 }
+
+#[test]
+fn absolutely_positioned_boxes_self_align_in_their_inset_modified_containing_block() {
+    const CONTAINER_PT: f32 = 200.0;
+    const BOX_PT: f32 = 50.0;
+    for (declarations, expected, reason) in [
+        (
+            "inset:0;place-self:center",
+            [75.0, 75.0],
+            "centred in both axes",
+        ),
+        (
+            "left:20pt;top:0;justify-self:end",
+            [150.0, 0.0],
+            "the auto right inset is zero, so end alignment meets the containing block's end",
+        ),
+        (
+            "left:0;right:0;top:0;margin:0 auto;justify-self:end",
+            [75.0, 0.0],
+            "auto margins take precedence over self-alignment",
+        ),
+        (
+            "left:20pt;top:30pt",
+            [20.0, 30.0],
+            "normal alignment keeps the insets",
+        ),
+    ] {
+        let trace = render(
+            "<div class=cb><div class=a></div></div>",
+            &format!(
+                "body{{margin:0}}.cb{{position:relative;width:{CONTAINER_PT}pt;height:{CONTAINER_PT}pt}}\
+                 .a{{position:absolute;width:{BOX_PT}pt;height:{BOX_PT}pt;background:red;{declarations}}}"
+            ),
+        );
+        let placed = common::painted_box(&trace, [255, 0, 0]);
+        let origin = trace.page_area;
+        common::assert_labelled_pt(
+            &format!("{declarations} x ({reason})"),
+            placed.x - origin.x,
+            expected[0],
+        );
+        common::assert_labelled_pt(
+            &format!("{declarations} y ({reason})"),
+            placed.y - origin.y,
+            expected[1],
+        );
+    }
+}
