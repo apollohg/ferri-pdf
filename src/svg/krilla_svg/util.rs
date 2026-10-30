@@ -79,7 +79,7 @@ pub(crate) fn convert_paint(
         .into(),
         crate::svg::usvg::Paint::Pattern(pat) => {
             let mut surface = stream_builder.surface();
-            group::render(pat.root(), &mut surface, process_context);
+            group::render_root(pat.root(), &mut surface, process_context);
             surface.finish();
             let stream = stream_builder.finish();
 
@@ -190,6 +190,9 @@ pub(crate) fn convert_blend_mode(blend_mode: &crate::svg::usvg::BlendMode) -> Bl
         crate::svg::usvg::BlendMode::Saturation => BlendMode::Saturation,
         crate::svg::usvg::BlendMode::Color => BlendMode::Color,
         crate::svg::usvg::BlendMode::Luminosity => BlendMode::Luminosity,
+        crate::svg::usvg::BlendMode::PlusDarker | crate::svg::usvg::BlendMode::PlusLighter => {
+            unreachable!("additive groups composite in pixels")
+        }
     }
 }
 
@@ -199,6 +202,33 @@ pub(crate) fn convert_mask_type(mask_type: &crate::svg::usvg::MaskType) -> MaskT
         crate::svg::usvg::MaskType::Luminance => MaskType::Luminosity,
         crate::svg::usvg::MaskType::Alpha => MaskType::Alpha,
     }
+}
+
+/// Draws the premultiplied `pixmap` stretched over `area`.
+pub(crate) fn draw_pixmap(
+    pixmap: &tiny_skia::Pixmap,
+    area: Rect,
+    surface: &mut krilla::surface::Surface,
+) {
+    let demultiplied = pixmap
+        .pixels()
+        .iter()
+        .flat_map(|p| {
+            let c = p.demultiply();
+            [c.red(), c.green(), c.blue(), c.alpha()]
+        })
+        .collect::<Vec<_>>();
+    let image = krilla::image::Image::from_rgba8(demultiplied, pixmap.width(), pixmap.height());
+    surface.push_transform(&krilla::geom::Transform::from_translate(
+        area.left(),
+        area.top(),
+    ));
+    surface.draw_image(
+        image,
+        krilla::geom::Size::from_wh(area.width(), area.height())
+            .expect("a rectangle has a positive size"),
+    );
+    surface.pop();
 }
 
 pub(crate) trait RectExt {

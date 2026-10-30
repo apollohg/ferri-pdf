@@ -315,7 +315,6 @@ fn find_pattern_with_children<'a, 'input: 'a>(
     None
 }
 
-const LINEAR_RGB: &str = "linearRGB";
 const CHANNEL_MAX: f64 = 255.0;
 /// The error that linear interpolation between generated stops keeps within: a quarter of an
 /// 8-bit channel step.
@@ -327,7 +326,7 @@ const MAX_LINEAR_LIGHT_DEPTH: u32 = 16;
 /// linear light. PDF shadings interpolate sRGB values linearly, so stops are added where the
 /// sRGB curve of the linear-light interpolation bends past the tolerance.
 fn interpolated_stops(gradient: SvgNode, stops: Vec<Stop>) -> Vec<Stop> {
-    if gradient.find_attribute::<&str>(AId::ColorInterpolation) != Some(LINEAR_RGB) {
+    if gradient.find_attribute::<&str>(AId::ColorInterpolation) != Some(converter::LINEAR_RGB) {
         return stops;
     }
     let mut output: Vec<Stop> = stops.first().copied().into_iter().collect();

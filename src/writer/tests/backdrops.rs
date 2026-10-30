@@ -1,5 +1,6 @@
 use crate::graphics::BlendMode;
-use crate::writer::backdrops::{additive_color, mirror, over_color};
+use crate::paint::compositing::additive_color;
+use crate::writer::backdrops::{mirror, over_color};
 
 /// Premultiplied samples: transparent, opaque extremes, translucent and nearly opaque.
 const COLOURS: [[f32; 4]; 8] = [

@@ -29,25 +29,6 @@ const WIDTH_KEYWORDS: [(FontWidth, &str); 9] = [
     (FontWidth::ULTRA_EXPANDED, "ultra-expanded"),
 ];
 const NONE: &str = "none";
-/// Paint servers, their stops and other resources, which the elements using them composite.
-const NON_COMPOSITED_ELEMENTS: [&str; 10] = [
-    "linearGradient",
-    "radialGradient",
-    "pattern",
-    "stop",
-    "clipPath",
-    "mask",
-    "marker",
-    "filter",
-    "symbol",
-    "defs",
-];
-/// SVG 2 §1.6 graphics elements, which paint.
-const GRAPHICS_ELEMENTS: [&str; 10] = [
-    "circle", "ellipse", "image", "line", "path", "polygon", "polyline", "rect", "text", "tspan",
-];
-const IMAGE_ELEMENT: &str = "image";
-const LINEAR_RGB: &str = "linearRGB";
 const TRANSFORM_ORIGIN: &str = "transform-origin";
 const TRANSFORM_BOX: &str = "transform-box";
 const FILL_BOX: &str = "fill-box";
@@ -71,7 +52,6 @@ pub(super) fn is_text_content(tag: &str) -> bool {
 /// document paints the root's own box, which its opacity, blending and display govern.
 pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<String, StyleError> {
     let svg = &style.svg;
-    linear_light_compositing(tag, style, root)?;
     let mut output = String::new();
     let mut push = |name: &str, value: &str| {
         let _ = write!(output, "{name}:{value};");
@@ -150,7 +130,7 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
     push("visibility", visibility(style.visibility));
     if !root {
         push("opacity", &number(style.opacity));
-        push("mix-blend-mode", blend_mode(style.mix_blend_mode)?);
+        push("mix-blend-mode", blend_mode(style.mix_blend_mode));
         push("isolation", if style.isolate { "isolate" } else { "auto" });
         push("filter", &filters(&style.filter));
         if let Some(overflow) = overflow(tag, style.overflow)? {
@@ -227,39 +207,6 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
         );
     }
     Ok(output)
-}
-
-/// SVG 2 §13.9: `color-interpolation: linearRGB` composites an element with its backdrop in
-/// linear light, which PDF transparency composites in sRGB. Opaque colour paint composites to
-/// itself in either space; translucent paint and group effects do not, and paint servers and
-/// images may carry translucency. Gradients interpolate in linear light.
-fn linear_light_compositing(tag: &str, style: &Style, root: bool) -> Result<(), StyleError> {
-    let svg = &style.svg;
-    if svg_keyword(svg.color_interpolation) != LINEAR_RGB || NON_COMPOSITED_ELEMENTS.contains(&tag)
-    {
-        return Ok(());
-    }
-    let translucent = |paint: &Paint, opacity: f32| match paint {
-        Paint::None => false,
-        Paint::Color(color) => opacity < 1.0 || color.used.alpha < 1.0,
-        _ => true,
-    };
-    let group = !root
-        && (style.opacity < 1.0
-            || style.mix_blend_mode != BlendMode::Normal
-            || !style.filter.is_empty()
-            || style.decoration.masks.has_layers());
-    let painted = GRAPHICS_ELEMENTS.contains(&tag)
-        && (tag == IMAGE_ELEMENT
-            || translucent(&svg.fill, svg.fill_opacity)
-            || translucent(&svg.stroke, svg.stroke_opacity)
-            || svg.stroke_color.used.alpha > 0.0 && svg.stroke_color.used.alpha < 1.0);
-    if group || painted {
-        return Err(StyleError::Unsupported(format!(
-            "color-interpolation: linearRGB compositing of translucent SVG {tag} content"
-        )));
-    }
-    Ok(())
 }
 
 /// The geometry attributes of `tag` with their computed values (SVG 2 §7), `None` where the
@@ -638,8 +585,8 @@ fn visibility(visibility: Visibility) -> &'static str {
     }
 }
 
-fn blend_mode(mode: BlendMode) -> Result<&'static str, StyleError> {
-    Ok(match mode {
+fn blend_mode(mode: BlendMode) -> &'static str {
+    match mode {
         BlendMode::Normal => "normal",
         BlendMode::Multiply => "multiply",
         BlendMode::Screen => "screen",
@@ -656,14 +603,9 @@ fn blend_mode(mode: BlendMode) -> Result<&'static str, StyleError> {
         BlendMode::Saturation => "saturation",
         BlendMode::Color => "color",
         BlendMode::Luminosity => "luminosity",
-        // The SVG renderer draws vector groups with PDF blend modes, none of which adds, and
-        // the additive operators' raster read-back works on the document's display list only.
-        BlendMode::PlusDarker | BlendMode::PlusLighter => {
-            return Err(StyleError::Unsupported(
-                "additive mix-blend-mode on SVG content, which composites as vectors".into(),
-            ));
-        }
-    })
+        BlendMode::PlusDarker => "plus-darker",
+        BlendMode::PlusLighter => "plus-lighter",
+    }
 }
 
 /// Filter Effects 1 §6 functions in their computed form; lengths are CSS pixels.

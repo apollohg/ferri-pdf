@@ -6,6 +6,7 @@ mod boxes;
 mod calculation;
 mod clip;
 mod color_space;
+pub(crate) mod compositing;
 mod decoration;
 mod easing;
 mod filter;

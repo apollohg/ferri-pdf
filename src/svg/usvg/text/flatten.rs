@@ -73,6 +73,7 @@ pub(crate) fn flatten(text: &mut Text, cache: &mut Cache) -> Option<(Group, NonZ
     let host = text.non_scaling_stroke.then_some(text.abs_transform);
 
     for span in &text.layouted {
+        let span_start = new_children.len();
         if let Some(path) = span.overline.as_ref() {
             let mut path = path.clone();
             path.rendering_mode = rendering_mode;
@@ -210,10 +211,22 @@ pub(crate) fn flatten(text: &mut Text, cache: &mut Cache) -> Option<(Group, NonZ
                 new_children.push(Node::Path(Box::new(path)));
             }
         }
+
+        // A span composites in its own element's colour space (SVG 2 §13.9).
+        if span.linear_light != text.linear_light && new_children.len() > span_start {
+            let mut group = Group {
+                linear_light: span.linear_light,
+                ..Group::empty()
+            };
+            group.children = new_children.split_off(span_start);
+            group.calculate_bounding_boxes();
+            new_children.push(Node::Group(Box::new(group)));
+        }
     }
 
     let mut group = Group {
         id: text.id.clone(),
+        linear_light: text.linear_light,
         ..Group::empty()
     };
 

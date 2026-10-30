@@ -174,6 +174,8 @@ pub struct Span {
     pub font_optical_sizing: crate::svg::usvg::FontOpticalSizing,
     /// The visibility of the span.
     pub visible: bool,
+    /// `color-interpolation: linearRGB` on the span's element.
+    pub linear_light: bool,
     /// The glyphs that make up the span.
     pub positioned_glyphs: Vec<PositionedGlyph>,
     /// An underline text decoration of the span.
@@ -395,6 +397,7 @@ pub(crate) fn layout_text(
                         variations,
                         font_optical_sizing: span.font_optical_sizing,
                         visible: span.visible,
+                        linear_light: span.linear_light,
                         positioned_glyphs,
                         underline: if index == 0 { underline.take() } else { None },
                         overline: if index == 0 { overline.take() } else { None },

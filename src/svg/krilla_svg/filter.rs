@@ -1,10 +1,9 @@
 use krilla::geom::Size;
-use krilla::image::Image;
 use krilla::surface::Surface;
 use tiny_skia_path::Transform;
 
 use crate::svg::krilla_svg::ProcessContext;
-use crate::svg::krilla_svg::util::KrillaTransformExt;
+use crate::svg::krilla_svg::util::{KrillaTransformExt, draw_pixmap};
 
 /// Render a filter into a surface by rasterizing it with `resvg` and drawing
 /// the image.
@@ -76,24 +75,16 @@ pub(crate) fn render(
         &mut pixmap.as_mut(),
     );
 
-    let demultiplied = pixmap
-        .pixels()
-        .iter()
-        .flat_map(|p| {
-            let c = p.demultiply();
-            [c.red(), c.green(), c.blue(), c.alpha()]
-        })
-        .collect::<Vec<_>>();
-
-    let image = Image::from_rgba8(demultiplied, width, height);
-    let size = Size::from_wh(layer_bbox.width(), layer_bbox.height())?;
-
-    surface.push_transform(&krilla::geom::Transform::from_translate(
-        layer_bbox.x(),
-        layer_bbox.y(),
-    ));
-    surface.draw_image(image, size);
-    surface.pop();
+    draw_pixmap(
+        &pixmap,
+        krilla::geom::Rect::from_xywh(
+            layer_bbox.x(),
+            layer_bbox.y(),
+            layer_bbox.width(),
+            layer_bbox.height(),
+        )?,
+        surface,
+    );
 
     Some(())
 }

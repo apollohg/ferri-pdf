@@ -141,6 +141,7 @@ pub(crate) fn convert(
         flattened: Box::new(Group::empty()),
         layouted: vec![],
         non_scaling_stroke: converter::non_scaling_stroke(text_node),
+        linear_light: parent.linear_light,
     };
 
     if text::convert(
@@ -324,6 +325,8 @@ fn collect_text_chunks_impl(
             font,
             font_size,
             small_caps: parent.find_attribute::<&str>(AId::FontVariant) == Some("small-caps"),
+            linear_light: parent.find_attribute::<&str>(AId::ColorInterpolation)
+                == Some(converter::LINEAR_RGB),
             text_orientation,
             apply_kerning,
             font_optical_sizing,

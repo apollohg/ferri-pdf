@@ -69,3 +69,11 @@ by the §8.13.1 formulas.
 `color-interpolation: linearRGB` on a gradient interpolates its stops in linear light (SVG 2
 §13.9): stops are added where the sRGB curve of that interpolation departs from a straight line
 by more than a quarter of an 8-bit step.
+
+`mix-blend-mode` takes the Compositing 2 §9.1.14–§9.1.15 `plus-darker` and `plus-lighter`
+operators; `feBlend` modes do not. `color-interpolation: linearRGB` marks groups whose layer and
+direct graphics children composite in linear light (SVG 2 §13.9): an element whose colour space
+differs from its parent's gets its own group, and text spans carry theirs into the flattened
+outlines. Clipping path children keep neither. The outermost `svg`, `use` elements, markers and
+clipped nested viewports, which SVG 2 §3.4.1 makes stacking contexts, are isolated where content
+in them blends or composites in linear light.

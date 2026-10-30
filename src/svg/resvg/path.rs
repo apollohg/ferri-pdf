@@ -23,6 +23,45 @@ pub(super) fn render(
     }
 }
 
+/// Renders the fill and the stroke each as a layer composited in linear light (SVG 2 §13.9).
+pub(super) fn render_in_linear_light(
+    path: &crate::svg::usvg::Path,
+    ctx: &Context,
+    transform: tiny_skia::Transform,
+    pixmap: &mut tiny_skia::PixmapMut,
+) {
+    if !path.is_visible() {
+        return;
+    }
+    let fill = |layer: &mut tiny_skia::PixmapMut| {
+        fill_path(
+            path,
+            tiny_skia::BlendMode::SourceOver,
+            ctx,
+            transform,
+            layer,
+        );
+    };
+    let stroke = |layer: &mut tiny_skia::PixmapMut| {
+        stroke_path(
+            path,
+            tiny_skia::BlendMode::SourceOver,
+            ctx,
+            transform,
+            layer,
+        );
+    };
+    let operations: [&dyn Fn(&mut tiny_skia::PixmapMut); 2] =
+        if path.paint_order() == crate::svg::usvg::PaintOrder::FillAndStroke {
+            [&fill, &stroke]
+        } else {
+            [&stroke, &fill]
+        };
+    for operation in operations {
+        crate::svg::resvg::render::linear_layer(pixmap, operation);
+    }
+}
+
 pub(super) fn fill_path(
     path: &crate::svg::usvg::Path,
     blend_mode: tiny_skia::BlendMode,

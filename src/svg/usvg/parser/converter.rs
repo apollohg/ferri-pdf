@@ -24,6 +24,8 @@ use crate::svg::usvg::*;
 pub(super) const FILL_BOX: &str = "fill-box";
 pub(super) const STROKE_BOX: &str = "stroke-box";
 const PERCENT: f32 = 100.0;
+/// SVG 2 §13.9 `color-interpolation: linearRGB`.
+pub(super) const LINEAR_RGB: &str = "linearRGB";
 
 #[derive(Clone)]
 pub(super) struct State<'a> {
@@ -528,6 +530,7 @@ pub(crate) fn convert_doc(
         &mut cache,
     );
     tree.collect_paint_servers();
+    tree.root.isolate_stacking_context();
     tree.root.collect_clip_paths(&mut tree.clip_paths);
     tree.root.collect_masks(&mut tree.masks);
     tree.root.collect_filters(&mut tree.filters);
@@ -930,7 +933,15 @@ pub(crate) fn convert_group(
     };
 
     let transform = element_transform(node, state, cache, parent, collect_children);
-    let blend_mode: BlendMode = node.attribute(AId::MixBlendMode).unwrap_or_default();
+    // CSS Masking 1 §6.1: a clipping path's children contribute geometry only.
+    let in_clip_path = state.parent_clip_path.is_some();
+    let blend_mode: BlendMode = if in_clip_path {
+        BlendMode::Normal
+    } else {
+        node.attribute(AId::MixBlendMode).unwrap_or_default()
+    };
+    let linear_light =
+        !in_clip_path && node.find_attribute::<&str>(AId::ColorInterpolation) == Some(LINEAR_RGB);
     let isolation: Isolation = node.attribute(AId::Isolation).unwrap_or_default();
     let isolate = isolation == Isolation::Isolate;
 
@@ -951,6 +962,7 @@ pub(crate) fn convert_group(
         opacity,
         blend_mode,
         isolate,
+        linear_light,
         clip_path: None,
         mask: None,
         filters: Vec::new(),
@@ -1039,6 +1051,8 @@ pub(crate) fn convert_group(
         || !transform.is_identity()
         || blend_mode != BlendMode::Normal
         || isolate
+        // The group's own children composite in its colour space.
+        || linear_light != parent.linear_light
         || is_g_or_use
         || force;
 
@@ -1050,6 +1064,9 @@ pub(crate) fn convert_group(
     g.clip_path = clip_path;
     g.mask = mask;
     g.filters = filters;
+    if node.tag_name() == Some(EId::Use) {
+        g.isolate_stacking_context();
+    }
 
     // Must be called after we set Group::filters
     g.calculate_bounding_boxes();

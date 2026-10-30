@@ -208,7 +208,7 @@ fn render_complex(
 
     sub_surface.push_transform(&clip_path.transform().to_krilla());
     pop_count += 1;
-    group::render(clip_path.root(), &mut sub_surface, process_context);
+    group::render_root(clip_path.root(), &mut sub_surface, process_context);
 
     for _ in 0..pop_count {
         sub_surface.pop();

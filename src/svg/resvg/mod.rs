@@ -49,7 +49,24 @@ pub(crate) fn apply_mask(
     mask::apply(mask, &ctx, transform, pixmap);
 }
 
-fn context(width: u32, height: u32) -> render::Context {
+/// Renders the children of `group` that paint before `node`, or with `inclusive` up to and
+/// including it, with `transform` placing the group's content space onto the pixmap.
+pub(crate) fn render_prefix(
+    group: &crate::svg::usvg::Group,
+    node: &crate::svg::usvg::Node,
+    inclusive: bool,
+    transform: tiny_skia::Transform,
+    pixmap: &mut tiny_skia::PixmapMut,
+) {
+    let ctx = render::Context::until(
+        context(pixmap.width(), pixmap.height()).max_bbox,
+        node,
+        inclusive,
+    );
+    render::render_nodes(group, &ctx, transform, pixmap);
+}
+
+fn context(width: u32, height: u32) -> render::Context<'static> {
     let max_bbox = tiny_skia::IntRect::from_xywh(
         -(width as i32) * 2,
         -(height as i32) * 2,
@@ -57,7 +74,7 @@ fn context(width: u32, height: u32) -> render::Context {
         height * 5,
     )
     .unwrap();
-    render::Context { max_bbox }
+    render::Context::new(max_bbox)
 }
 
 /// Renders a node onto the pixmap.
@@ -88,7 +105,7 @@ pub(crate) fn render_node(
 
     transform = transform.pre_translate(-bbox.x(), -bbox.y());
 
-    let ctx = render::Context { max_bbox };
+    let ctx = render::Context::new(max_bbox);
     render::render_node(node, &ctx, transform, pixmap);
 
     Some(())

@@ -222,7 +222,11 @@ pub(crate) fn convert_inner(
     let abs_transform = parent.abs_transform.pre_concat(image_ts);
     let abs_bounding_box = view_box.transform(parent.abs_transform)?;
 
-    let mut g = Group::empty();
+    // The image composites in its element's colour space (SVG 2 §13.9).
+    let mut g = Group {
+        linear_light: parent.linear_light,
+        ..Group::empty()
+    };
     g.id = id;
     g.children.push(Node::Image(Box::new(Image {
         id: String::new(),
@@ -256,7 +260,10 @@ pub(crate) fn convert_inner(
         //     </g>
         // </g>
 
-        let mut g2 = Group::empty();
+        let mut g2 = Group {
+            linear_light: parent.linear_light,
+            ..Group::empty()
+        };
         std::mem::swap(&mut g.id, &mut g2.id);
         g2.abs_transform = parent.abs_transform;
         g2.clip_path = Some(Arc::new(clip));

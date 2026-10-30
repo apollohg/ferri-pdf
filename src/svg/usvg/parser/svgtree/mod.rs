@@ -1107,8 +1107,10 @@ impl<'a, 'input: 'a> FromValue<'a, 'input> for ImageRendering {
 }
 
 impl<'a, 'input: 'a> FromValue<'a, 'input> for BlendMode {
-    fn parse(_: SvgNode, _: AId, value: &str) -> Option<Self> {
+    fn parse(_: SvgNode, aid: AId, value: &str) -> Option<Self> {
         match value {
+            "plus-darker" if aid == AId::MixBlendMode => Some(BlendMode::PlusDarker),
+            "plus-lighter" if aid == AId::MixBlendMode => Some(BlendMode::PlusLighter),
             "normal" => Some(BlendMode::Normal),
             "multiply" => Some(BlendMode::Multiply),
             "screen" => Some(BlendMode::Screen),

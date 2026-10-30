@@ -29,7 +29,7 @@ pub(crate) fn render(
 
     sub_surface.push_clip_path(&clip_path, &FillRule::NonZero);
     pop_count += 1;
-    group::render(mask.root(), &mut sub_surface, process_context);
+    group::render_root(mask.root(), &mut sub_surface, process_context);
 
     for _ in 0..pop_count {
         sub_surface.pop();

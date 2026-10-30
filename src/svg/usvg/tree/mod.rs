@@ -201,7 +201,8 @@ impl std::str::FromStr for ImageRendering {
 
 /// A blending mode property.
 ///
-/// `mix-blend-mode` attribute in the SVG.
+/// `mix-blend-mode` attribute in the SVG, with the Compositing 2 §9.1.14–§9.1.15 additive
+/// operators, which only `mix-blend-mode` takes.
 #[allow(missing_docs)]
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub enum BlendMode {
@@ -221,6 +222,8 @@ pub enum BlendMode {
     Saturation,
     Color,
     Luminosity,
+    PlusDarker,
+    PlusLighter,
 }
 
 impl Default for BlendMode {
@@ -248,6 +251,8 @@ impl Display for BlendMode {
             BlendMode::Saturation => "saturation",
             BlendMode::Color => "color",
             BlendMode::Luminosity => "luminosity",
+            BlendMode::PlusDarker => "plus-darker",
+            BlendMode::PlusLighter => "plus-lighter",
         };
         write!(f, "{blend_mode}")
     }
@@ -1030,6 +1035,9 @@ pub struct Group {
     pub(crate) opacity: Opacity,
     pub(crate) blend_mode: BlendMode,
     pub(crate) isolate: bool,
+    /// `color-interpolation: linearRGB` (SVG 2 §13.9): the group's layer and its direct
+    /// graphics children composite into their backdrop in linear light.
+    pub(crate) linear_light: bool,
     pub(crate) clip_path: Option<Arc<ClipPath>>,
     /// Whether the group is a context element (i.e. a use node)
     pub(crate) is_context_element: bool,
@@ -1054,6 +1062,7 @@ impl Group {
             opacity: Opacity::ONE,
             blend_mode: BlendMode::Normal,
             isolate: false,
+            linear_light: false,
             clip_path: None,
             mask: None,
             filters: Vec::new(),
@@ -1126,6 +1135,11 @@ impl Group {
     /// `isolation` in SVG.
     pub fn isolate(&self) -> bool {
         self.isolate
+    }
+
+    /// Whether the group's layer and its direct graphics children composite in linear light.
+    pub fn linear_light(&self) -> bool {
+        self.linear_light
     }
 
     /// Element's clip path.
@@ -1208,6 +1222,27 @@ impl Group {
             || self.mask.is_some()
             || !self.filters.is_empty()
             || self.blend_mode != BlendMode::Normal // TODO: probably not needed?
+    }
+
+    /// Isolates the group, which roots a stacking context (SVG 2 §3.4.1, Compositing 1 §3.2),
+    /// where isolation changes what it renders: where content in it blends or composites in
+    /// linear light with what is painted below it.
+    pub(crate) fn isolate_stacking_context(&mut self) {
+        fn blends(group: &Group) -> bool {
+            group.children.iter().any(|node| match node {
+                Node::Group(child) => {
+                    child.blend_mode != BlendMode::Normal
+                        || child.linear_light
+                        || (!child.isolate
+                            && child.opacity == Opacity::ONE
+                            && child.mask.is_none()
+                            && child.filters.is_empty()
+                            && blends(child))
+                }
+                Node::Path(_) | Node::Image(_) | Node::Text(_) => false,
+            })
+        }
+        self.isolate |= self.linear_light || blends(self);
     }
 
     /// Returns `true` if the group has any children.

@@ -710,16 +710,14 @@ fn apply_blend(
         None,
     );
 
-    pixmap.draw_pixmap(
-        0,
-        0,
+    crate::svg::resvg::render::draw_layer(
         input1.as_ref().as_ref(),
-        &tiny_skia::PixmapPaint {
-            blend_mode: crate::svg::resvg::render::convert_blend_mode(fe.mode()),
-            ..tiny_skia::PixmapPaint::default()
-        },
-        tiny_skia::Transform::identity(),
-        None,
+        0,
+        0,
+        &mut pixmap.as_mut(),
+        1.0,
+        fe.mode(),
+        false,
     );
 
     Ok(Image::from_image(pixmap, cs))
@@ -873,9 +871,9 @@ fn apply_image(
         subregion.y() as f32,
     );
 
-    let ctx = crate::svg::resvg::render::Context {
-        max_bbox: IntRect::from_xywh(0, 0, region.width(), region.height()).unwrap(),
-    };
+    let ctx = crate::svg::resvg::render::Context::new(
+        IntRect::from_xywh(0, 0, region.width(), region.height()).unwrap(),
+    );
 
     crate::svg::resvg::render::render_nodes(fe.root(), &ctx, transform, &mut pixmap.as_mut());
 

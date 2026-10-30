@@ -190,6 +190,7 @@ impl ImageWriter {
                     crate::svg::krilla_svg::SvgSettings {
                         jpeg_images: Some(svg.jpeg_images()),
                         image_errors: Some(&errors),
+                        filter_scale: self.pixels_per_point,
                         ..Default::default()
                     },
                 );

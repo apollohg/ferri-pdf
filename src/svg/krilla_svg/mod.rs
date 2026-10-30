@@ -24,6 +24,7 @@ use crate::svg::krilla_svg::text::Fonts;
 use crate::svg::krilla_svg::util::RectExt;
 
 mod clip_path;
+mod composite;
 mod filter;
 mod group;
 mod image;
@@ -107,5 +108,5 @@ impl<'a> ProcessContext<'a> {
 
 pub(crate) fn render_tree(tree: &Tree, svg_settings: SvgSettings, surface: &mut Surface) {
     let mut fc = ProcessContext::new(tree.fontdb(), svg_settings);
-    group::render(tree.root(), surface, &mut fc);
+    group::render_root(tree.root(), surface, &mut fc);
 }

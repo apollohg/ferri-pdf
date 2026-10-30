@@ -25,3 +25,9 @@ The module is compiled inside `ferri-pdf`. Font bytes come from the in-memory fa
 source that `ferri-pdf` registers, so the unsafe memory-mapping accessor and the
 copy-on-write font database clone are not used. The unused SVG glyph renderer is
 removed.
+
+Groups blending by `plus-darker` or `plus-lighter`, and translucent paint composited in linear
+light, have no PDF blend mode. Their stacking context's backdrop is rendered with resvg up to
+the node and up to and including it; the difference is drawn over the vector backdrop as the
+colour that source-over compositing turns into the composite. resvg composites those operators
+and linear light per pixel. Rasters resolve at the caller's image resolution.

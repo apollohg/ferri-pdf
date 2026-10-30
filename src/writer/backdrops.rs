@@ -11,6 +11,7 @@
 //! additively with its backdrop, which no PDF blend mode computes; the result is drawn over the vector
 //! backdrop as the colour that source-over compositing turns into that sum.
 use crate::graphics::{BackdropPaint, BlendMode, DisplayItem, FilterFunction, FilterPaint, Rect};
+use crate::paint::compositing;
 use crate::writer::{
     PdfError,
     display::{Painter, Scopes, Space, group_length, matrix_transform},
@@ -19,10 +20,6 @@ use crate::writer::{
 };
 use krilla::surface::Surface;
 use std::{collections::HashMap, ops::Range};
-
-const CHANNEL_MAX: f32 = 255.0;
-const CHANNELS: usize = 4;
-const ALPHA: usize = 3;
 
 /// Pixels read back for display items, keyed by the item's address while the frame that
 /// prepared them draws; a later read-back of the same items reuses them, since a re-drawn
@@ -388,68 +385,21 @@ fn composite(
     let behind = backdrop.pixmap.pixels();
     for (index, pixel) in source.pixmap.pixels_mut().iter_mut().enumerate() {
         let below = behind[index / columns * backdrop_columns + index % columns];
-        let over = over_color(
+        *pixel = compositing::pixel(over_color(
             operator,
-            unit(*pixel),
-            [below.red(), below.green(), below.blue(), below.alpha()]
-                .map(|channel| f32::from(channel) / CHANNEL_MAX),
-        );
-        let [red, green, blue, alpha] = over.map(|channel| (channel * CHANNEL_MAX).round() as u8);
-        *pixel = tiny_skia::PremultipliedColorU8::from_rgba(
-            red.min(alpha),
-            green.min(alpha),
-            blue.min(alpha),
-            alpha,
-        )
-        .ok_or(PdfError::Raster)?;
+            compositing::sample(*pixel),
+            compositing::sample(below),
+        ));
     }
     Ok(Some(source))
 }
 
-fn unit(pixel: tiny_skia::PremultipliedColorU8) -> [f32; CHANNELS] {
-    [pixel.red(), pixel.green(), pixel.blue(), pixel.alpha()]
-        .map(|channel| f32::from(channel) / CHANNEL_MAX)
-}
-
-/// The premultiplied result of the additive `operator`, `plus-darker` or `plus-lighter`.
-pub(super) fn additive_color(
-    operator: BlendMode,
-    source: [f32; CHANNELS],
-    backdrop: [f32; CHANNELS],
-) -> [f32; CHANNELS] {
-    let alpha = (source[ALPHA] + backdrop[ALPHA]).min(1.0);
-    std::array::from_fn(|channel| match operator {
-        _ if channel == ALPHA => alpha,
-        // §9.1.14 as written leaves two opaque layers transparent; this is the premultiplied
-        // form of Core Graphics' `kCGBlendModePlusDarker`, which the operator comes from:
-        // `co = max(0, αo − ((αs − cs) + (αb − cb)))`.
-        BlendMode::PlusDarker => (alpha
-            - ((source[ALPHA] - source[channel]) + (backdrop[ALPHA] - backdrop[channel])))
-            .max(0.0),
-        // §9.1.15: `co = min(1, cs + cb)`.
-        _ => (source[channel] + backdrop[channel]).min(1.0),
-    })
-}
-
 /// The premultiplied colour that source-over compositing onto premultiplied `backdrop` turns
-/// into the additive `operator`'s result. Over an opaque backdrop that is the result itself;
-/// otherwise `αx = (αo − αb) / (1 − αb)` and `cx = co − cb·(1 − αx)`.
+/// into the additive `operator`'s result.
 pub(super) fn over_color(
     operator: BlendMode,
-    source: [f32; CHANNELS],
-    backdrop: [f32; CHANNELS],
-) -> [f32; CHANNELS] {
-    let result = additive_color(operator, source, backdrop);
-    let alpha = if backdrop[ALPHA] >= 1.0 {
-        1.0
-    } else {
-        ((result[ALPHA] - backdrop[ALPHA]) / (1.0 - backdrop[ALPHA])).clamp(0.0, 1.0)
-    };
-    std::array::from_fn(|channel| {
-        if channel == ALPHA {
-            alpha
-        } else {
-            (result[channel] - backdrop[channel] * (1.0 - alpha)).clamp(0.0, alpha)
-        }
-    })
+    source: compositing::Sample,
+    backdrop: compositing::Sample,
+) -> compositing::Sample {
+    compositing::over_color(compositing::composite(operator, source, backdrop), backdrop)
 }

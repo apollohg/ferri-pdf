@@ -69,7 +69,7 @@ pub(crate) fn render(
             let clip_path =
                 Rect::from_xywh(0.0, 0.0, t.size().width(), t.size().height())?.to_clip_path();
             surface.push_clip_path(&clip_path, &FillRule::NonZero);
-            group::render(t.root(), surface, process_context);
+            group::render_root(t.root(), surface, process_context);
             surface.pop();
         }
     }

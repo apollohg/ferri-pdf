@@ -181,6 +181,7 @@ fn resolve(
         converter::convert_children(marker_node, &marker_state, cache, &mut g);
         g.calculate_bounding_boxes();
         g.clip_path = converter::viewport_clip(cache, clip_rect, clip_axes, g.layer_bounding_box);
+        g.isolate_stacking_context();
 
         if g.has_children() {
             parent.children.push(Node::Group(Box::new(g)));

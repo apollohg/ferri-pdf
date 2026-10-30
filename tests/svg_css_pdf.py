@@ -2,6 +2,8 @@
 attributes, inheritance from HTML, `use` instances of a sprite, CSS transforms, clipping, masks,
 overflow and direction on SVG content, and the isolation of SVG images from the document's style
 sheets, read back through Poppler."""
+import base64
+import io
 from pathlib import Path
 import subprocess
 import tempfile
@@ -24,6 +26,12 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 MAGENTA = (200, 0, 200)
 WHITE = (255, 255, 255)
+PAGE_RED = (200, 0, 0)
+# Half-covering white over black: linear light 0.5 encodes to sRGB 0.735 (188); sRGB gives 128.
+LINEAR_HALF = (188, 188, 188)
+SRGB_HALF = (128, 128, 128)
+# An identity filter, which hands its group to the raster filter renderer.
+IDENTITY_FILTER = '<filter id="same"><feOffset dx="0" dy="0"/></filter>'
 SPRITE = (f'<svg style="display:none"><symbol id="dot" viewBox="0 0 {ICON} {ICON}">'
           f'<rect width="{ICON}" height="{ICON}" fill="currentColor"/></symbol></svg>')
 
@@ -228,6 +236,91 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
                 self.assertTrue(all(abs(channel - expected) <= 4 for channel in grey),
                                 f'SVG 2 §13.9: the gradient interpolates in {space}: {grey} '
                                 f'half way, expected {expected}')
+
+    def test_additive_blending_reads_back_the_svg_stacking_context(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            pixels = self.render(
+                Path(directory), f'body{{background:rgb{PAGE_RED}}}',
+                f'<svg width="{4 * ICON}pt" height="{2 * ICON}pt" '
+                f'viewBox="0 0 {4 * ICON} {2 * ICON}"><defs>{IDENTITY_FILTER}'
+                f'<rect id="add" width="{SQUARE}" height="{ICON}" fill="rgb(0,100,0)" '
+                'style="mix-blend-mode:plus-lighter"/></defs>'
+                f'<rect width="{ICON}" height="{ICON}" fill="rgb(100,50,0)"/>'
+                f'<rect x="{SQUARE}" width="{ICON}" height="{ICON}" fill="rgb(100,100,100)" '
+                'style="mix-blend-mode:plus-lighter"/>'
+                f'<rect x="{2 * ICON}" width="{ICON}" height="{ICON}" fill="rgb(200,150,100)"/>'
+                f'<rect x="{2 * ICON + SQUARE}" width="{ICON}" height="{ICON}" '
+                'fill="rgb(100,100,100)" style="mix-blend-mode:plus-darker"/>'
+                f'<rect y="{ICON}" width="{4 * ICON}" height="{ICON}" fill="rgb(0,0,100)"/>'
+                f'<g transform="translate(5 {ICON + 5}) scale(2)"><rect width="5" height="5" '
+                'fill="rgb(0,100,0)" style="mix-blend-mode:plus-lighter"/></g>'
+                f'<use href="#add" x="{ICON}" y="{ICON}"/>'
+                f'<g filter="url(#same)"><rect x="{2 * ICON}" y="{ICON}" width="{SQUARE}" '
+                f'height="{ICON}" fill="rgb(100,0,0)"/><rect x="{2 * ICON}" y="{ICON}" '
+                f'width="{SQUARE}" height="{ICON}" fill="rgb(0,100,0)" '
+                'style="mix-blend-mode:plus-lighter"/></g></svg>')
+            self.assertPixel(pixels, 30, 20, (200, 150, 100),
+                             'Compositing 2 §9.1.15: plus-lighter adds the colours it covers')
+            self.assertPixel(pixels, 50, 20, (100, 100, 100),
+                             'SVG 2 §3.4.1: the outermost svg is an isolated stacking context, so '
+                             'plus-lighter adds nothing of the page behind it')
+            self.assertPixel(pixels, 10, 20, (100, 50, 0),
+                             'the vector backdrop beside the additive rectangle is untouched')
+            self.assertPixel(pixels, 110, 20, (45, 0, 0),
+                             'Compositing 2 §9.1.14: plus-darker subtracts both complements')
+            self.assertPixel(pixels, 10, ICON + 10, (0, 100, 100),
+                             'the read-back follows the group transform onto its backdrop')
+            self.assertPixel(pixels, 20, ICON + 10, (0, 0, 100),
+                             'the scaled square ends at 15pt')
+            self.assertPixel(pixels, ICON + 10, ICON + 20, (0, 100, 0),
+                             'SVG 2 §3.4.1: a use element is an isolated stacking context')
+            self.assertPixel(pixels, 2 * ICON + 10, ICON + 20, (100, 100, 0),
+                             'the raster filter renderer adds the colours inside the group')
+
+    def test_linear_rgb_composites_translucent_paint_in_linear_light(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            translucent = io.BytesIO()
+            Image.new('RGBA', (1, 1), (255, 255, 255, 128)).save(translucent, 'PNG')
+            png = base64.b64encode(translucent.getvalue()).decode()
+            image = quote(f'<svg xmlns="http://www.w3.org/2000/svg" width="{ICON}" '
+                          f'height="{ICON}"><rect width="{ICON}" height="{ICON}"/>'
+                          f'<rect width="{ICON}" height="{ICON}" fill="white" fill-opacity="0.5" '
+                          'color-interpolation="linearRGB"/></svg>')
+            pixels = self.render(
+                Path(directory), '.light{color-interpolation:linearRGB} img{width:40pt}',
+                f'<svg width="{4 * ICON}pt" height="{2 * ICON}pt" '
+                f'viewBox="0 0 {4 * ICON} {2 * ICON}"><defs>{IDENTITY_FILTER}</defs>'
+                f'<rect width="{4 * ICON}" height="{2 * ICON}"/>'
+                f'<rect class="light" width="{ICON}" height="{ICON}" fill="white" '
+                'fill-opacity="0.5"/>'
+                f'<rect x="{ICON}" width="{ICON}" height="{ICON}" fill="white" '
+                'fill-opacity="0.5"/>'
+                f'<g class="light" opacity="0.5"><rect x="{2 * ICON}" width="{ICON}" '
+                f'height="{ICON}" fill="white"/></g>'
+                f'<image class="light" x="{3 * ICON}" width="{ICON}" height="{ICON}" '
+                f'preserveAspectRatio="none" href="data:image/png;base64,{png}"/>'
+                f'<g filter="url(#same)"><rect y="{ICON}" width="{ICON}" height="{ICON}"/>'
+                f'<rect class="light" y="{ICON}" width="{ICON}" height="{ICON}" fill="white" '
+                'fill-opacity="0.5"/></g>'
+                f'<rect class="light" x="{ICON}" y="{ICON}" width="{ICON}" height="{ICON}" '
+                'fill="white" fill-opacity="0.5" stroke="white" stroke-opacity="0.5" '
+                'stroke-width="10"/></svg>'
+                f'<img src="data:image/svg+xml,{image}">')
+            self.assertPixel(pixels, 20, 20, LINEAR_HALF,
+                             'SVG 2 §13.9: translucent fill composites in linear light')
+            self.assertPixel(pixels, ICON + 20, 20, SRGB_HALF,
+                             'the initial sRGB composites as PDF transparency does')
+            self.assertPixel(pixels, 2 * ICON + 20, 20, LINEAR_HALF,
+                             'a translucent group composites in linear light')
+            self.assertPixel(pixels, 3 * ICON + 20, 20, LINEAR_HALF,
+                             'a translucent image composites in linear light')
+            self.assertPixel(pixels, 20, ICON + 20, LINEAR_HALF,
+                             'the raster filter renderer composites in linear light')
+            # The fill, then the stroke over it, each half white in linear light: 0.75.
+            self.assertPixel(pixels, ICON + 2, ICON + 20, (225, 225, 225),
+                             'fill and stroke composite one after the other')
+            self.assertPixel(pixels, 20, 2 * ICON + 20, LINEAR_HALF,
+                             'an SVG image composites its linearRGB paint in linear light')
 
     def test_stroke_color_paints_where_the_stroke_paint_paints_nothing(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
