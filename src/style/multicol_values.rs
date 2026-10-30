@@ -3,6 +3,26 @@ use crate::paint::{Border, BorderStyle, Color, DEFAULT_BORDER_WIDTH};
 use crate::style::{StyleError, box_values::unsupported, component::Component, grammar::Keyword};
 use serde::Serialize;
 
+/// `column-wrap` (CSS Multi-column Layout 2 §4.4).
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
+pub(crate) enum ColumnWrap {
+    /// `wrap` with a `column-height`, otherwise `nowrap`.
+    #[default]
+    Auto,
+    NoWrap,
+    Wrap,
+}
+impl ColumnWrap {
+    pub(crate) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.keyword() {
+            Some(Keyword::Auto) => Ok(Self::Auto),
+            Some(Keyword::Nowrap) => Ok(Self::NoWrap),
+            Some(Keyword::Wrap) => Ok(Self::Wrap),
+            _ => Err(unsupported(value)),
+        }
+    }
+}
+
 /// `column-fill`.
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
 pub(crate) enum ColumnFill {
@@ -28,6 +48,9 @@ pub(crate) struct MulticolStyle {
     pub count: Option<u32>,
     /// `column-width` in points; `None` is `auto`.
     pub width: Option<f32>,
+    /// `column-height` in points; `None` is `auto`.
+    pub height: Option<f32>,
+    pub wrap: ColumnWrap,
     pub fill: ColumnFill,
     /// `column-span: all`.
     pub span_all: bool,
@@ -39,6 +62,8 @@ impl Default for MulticolStyle {
         Self {
             count: None,
             width: None,
+            height: None,
+            wrap: ColumnWrap::Auto,
             fill: ColumnFill::Balance,
             span_all: false,
             rule: Border {
@@ -50,10 +75,19 @@ impl Default for MulticolStyle {
     }
 }
 impl MulticolStyle {
-    /// A block container with a non-`auto` column count or width is a multi-column container
-    /// (CSS Multi-column Layout 1 §2).
+    /// A block container with a non-`auto` column count, width or height is a multi-column
+    /// container (CSS Multi-column Layout 2 §3).
     pub(crate) fn is_multicol(&self) -> bool {
-        self.count.is_some() || self.width.is_some()
+        self.count.is_some() || self.width.is_some() || self.height.is_some()
+    }
+    /// Whether overflowing content starts a new row of columns in the block direction rather
+    /// than overflow columns in the inline direction (§4.4).
+    pub(crate) fn wraps(&self) -> bool {
+        match self.wrap {
+            ColumnWrap::Auto => self.height.is_some(),
+            ColumnWrap::NoWrap => false,
+            ColumnWrap::Wrap => true,
+        }
     }
 }
 
@@ -72,8 +106,8 @@ pub(crate) fn count(
         .ok_or_else(|| format!("invalid column count: {value}").into())
 }
 
-/// `auto | <length [0,∞]>`.
-pub(crate) fn width(
+/// `column-width` and `column-height`: `auto | <length [0,∞]>`.
+pub(crate) fn length(
     value: &Component,
     relative: &crate::style::units::Relative<'_>,
 ) -> Result<Option<f32>, StyleError> {
@@ -82,7 +116,7 @@ pub(crate) fn width(
     }
     let width = crate::style::values::length(value, relative)?;
     if !width.is_finite() || width < 0.0 {
-        return Err(format!("invalid column width: {value}").into());
+        return Err(format!("invalid column length: {value}").into());
     }
     Ok(Some(width))
 }

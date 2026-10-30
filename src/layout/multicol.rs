@@ -226,6 +226,25 @@ impl SpannerFragment {
     }
 }
 
+/// The fixed rows of column boxes a multi-column container's overflowing content wraps into
+/// in the block direction (CSS Multi-column Layout 2 §4.4).
+#[derive(Clone, Copy, Debug)]
+pub(super) struct WrapRows {
+    /// The column height: `column-height`, or else the container's definite height.
+    pub height: f32,
+    /// The row gap between consecutive rows.
+    pub gap: f32,
+}
+impl WrapRows {
+    pub(super) fn of(style: &Style, definite: Option<f32>) -> Option<Self> {
+        style.multicol.wraps().then_some(())?;
+        Some(Self {
+            height: style.multicol.height.or(definite)?,
+            gap: style.flex.gap[0].resolve_normal(definite.unwrap_or(0.0), style.size),
+        })
+    }
+}
+
 /// Content between spanners, laid out in a row of columns, or a spanner with its margins.
 #[derive(Clone)]
 pub(super) enum ColumnSegment<'a> {
@@ -265,6 +284,8 @@ pub(super) struct MeasuredColumns<'a> {
     pub forces_page: bool,
     /// The sides of each column's first and last formatted lines that are trimmed.
     pub text_trim: [bool; 2],
+    /// Rows the content wraps into instead of overflow columns.
+    pub wrap: Option<WrapRows>,
 }
 
 /// Measures a multi-column container's content flow, already measured at the column width.
@@ -306,6 +327,14 @@ pub(super) fn measure<'a>(
     let first_fragment = segments.first().map_or(0.0, |segment| match segment {
         ColumnSegment::Row(items) | ColumnSegment::Spanner(items) => first_fragment(items),
     });
+    let wrap = WrapRows::of(style, definite);
+    // Without wrapping, a `column-height` fixes the one row's height as a definite height
+    // does, and later columns overflow in the inline direction (§4.2).
+    let definite = if wrap.is_some() {
+        definite
+    } else {
+        style.multicol.height.or(definite)
+    };
     let mut columns = MeasuredColumns {
         orthogonal,
         wraps,
@@ -323,6 +352,7 @@ pub(super) fn measure<'a>(
         break_after,
         forces_page,
         text_trim,
+        wrap,
     };
     let measurement = crate::layout::pagination::measure_columns(measurer, &columns)?;
     columns.height = measurement.height;

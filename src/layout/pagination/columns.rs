@@ -11,7 +11,7 @@ use crate::layout::{
     LayoutError, TextLine,
     breaks::{BreakTail, Forced, first_fragment},
     measure::{FlowItem, Measurer, first_baseline, last_baseline},
-    multicol::{ColumnGeometry, ColumnSegment, MeasuredColumns},
+    multicol::{ColumnGeometry, ColumnSegment, MeasuredColumns, WrapRows},
 };
 use crate::style::ColumnFill;
 use std::collections::HashMap;
@@ -262,6 +262,7 @@ pub(super) struct ColumnCursor<'a, 't> {
     containing_height: Option<f32>,
     segments: std::vec::IntoIter<ColumnSegment<'a>>,
     text_trim: [bool; 2],
+    wrap: Option<WrapRows>,
     tail: BreakTail,
     spanner: Option<(Box<FlowCursor<'a, 't>>, f32)>,
     row: Option<ColumnRow<'a, 't>>,
@@ -289,6 +290,7 @@ impl<'a: 't, 't: 'a> ColumnCursor<'a, 't> {
             containing_height: columns.definite,
             segments: columns.segments.into_iter(),
             text_trim: columns.text_trim,
+            wrap: columns.wrap,
             tail,
             spanner: None,
             row: None,
@@ -303,6 +305,8 @@ struct ColumnRow<'a, 't> {
     layout: ColumnLayout<'a, 't>,
     balance: Balance,
     placements: Vec<RowPlacement<'a>>,
+    /// The fragmentainer of the last row placed, which a wrapped row follows after a gap.
+    last_page: Option<usize>,
 }
 
 #[derive(Clone)]
@@ -694,9 +698,12 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     cursor.orthogonal,
                     cursor.rule,
                     &mut cursor.remaining,
+                    cursor.wrap,
                 )? {
                     cursor.row = Some(row);
-                    return Ok(Some(request));
+                    if let Some(request) = request {
+                        return Ok(Some(request));
+                    }
                 }
                 continue;
             }
@@ -788,10 +795,13 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             layout: ColumnLayout::new(self.measurer, items, rows, &start)?,
             balance,
             placements: Vec::new(),
+            last_page: None,
         })
     }
 
-    /// Reserves one physical fragment; complete segment paint is adopted once.
+    /// Reserves one physical fragment, or one wrapped row; complete segment paint is adopted
+    /// once. Returns the row to continue, with the break that precedes its next fragment, if
+    /// any.
     fn column_fragment(
         &mut self,
         mut cursor: ColumnRow<'a, 't>,
@@ -799,15 +809,29 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         orthogonal: bool,
         rule: Border,
         remaining: &mut Option<f32>,
-    ) -> Result<Option<(ColumnRow<'a, 't>, BreakRequest)>, LayoutError> {
+        wrap: Option<WrapRows>,
+    ) -> Result<Option<(ColumnRow<'a, 't>, Option<BreakRequest>)>, LayoutError> {
         let reserve = self.continuation_reserve()?;
         let closing_reserve = self.closing_reserve(cursor.tail, reserve)?;
+        let gap = match wrap {
+            Some(wrap) if cursor.last_page == Some(self.page) => wrap.gap,
+            _ => 0.0,
+        };
         let space = if self.unbroken > 0 {
             f32::INFINITY
         } else {
-            (self.height - self.y - closing_reserve).max(0.0)
+            (self.height - self.y - gap - closing_reserve).max(0.0)
         };
         let mut height = frame_height(*remaining, space, self.unbroken > 0);
+        if let Some(wrap) = wrap {
+            // A row of column boxes moves whole to the next page, where the page constrains
+            // a taller one.
+            if self.unbroken == 0 && self.has_flow && overflows(wrap.height, space) {
+                return Ok(Some((cursor, Some(BreakRequest::default()))));
+            }
+            self.y += gap;
+            height = (wrap.height.min(space), false);
+        }
         let continuing_space = if self.unbroken > 0 {
             space
         } else {
@@ -842,14 +866,19 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 y: self.page_rect.y - self.top - self.y,
                 ..self.page_rect
             },
-            breaks_page: self.fragmentainers.breaks_page(self.page),
+            breaks_page: self.fragmentainers.breaks_page(self.page)
+                && wrap.is_none_or(|wrap| {
+                    overflows(self.y + height.0 + wrap.gap + wrap.height, space + self.y)
+                }),
         };
-        let mut checkpoint = (continuing_space > space + FRAGMENTATION_TOLERANCE_PT)
+        let fixed = remaining.is_some() || wrap.is_some();
+        let mut checkpoint = (wrap.is_none()
+            && continuing_space > space + FRAGMENTATION_TOLERANCE_PT)
             .then(|| cursor.layout.snapshot(&self.measurer.work))
             .transpose()?;
         let row = cursor.layout.push_frame(frame);
         let (mut layout, mut end) = lay_out_row(self.measurer, cursor.layout, row, cursor.balance)?;
-        let used = layout.used_height(row, height.0, remaining.is_some(), cursor.balance, end);
+        let used = layout.used_height(row, height.0, fixed, cursor.balance, end);
         if end == RowEnd::Content
             && overflows(used, space)
             && self.has_flow
@@ -860,7 +889,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             && let Some(checkpoint) = checkpoint.take()
         {
             cursor.layout = checkpoint;
-            return Ok(Some((cursor, BreakRequest::default())));
+            return Ok(Some((cursor, Some(BreakRequest::default()))));
         }
         if end == RowEnd::Overflow
             && let Some(mut checkpoint) = checkpoint
@@ -888,10 +917,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
         }
         cursor.layout = layout;
-        let used =
-            cursor
-                .layout
-                .used_height(row, height.0, remaining.is_some(), cursor.balance, end);
+        let used = cursor
+            .layout
+            .used_height(row, height.0, fixed, cursor.balance, end);
         cursor.layout.rows_mut().frames[row].reference_height = used;
         cursor.placements.push(RowPlacement {
             position: self.flow_position(),
@@ -920,15 +948,19 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 self.finish_columns(output, &placements);
                 return Ok(None);
             }
+            RowEnd::Overflow if wrap.is_some() => {
+                cursor.last_page = Some(self.page);
+                return Ok(Some((cursor, None)));
+            }
             RowEnd::Overflow => None,
             RowEnd::Forced(forced) => Some(forced),
         };
         Ok(Some((
             cursor,
-            BreakRequest {
+            Some(BreakRequest {
                 forced,
                 preserve_empty: true,
-            },
+            }),
         )))
     }
 
@@ -1250,8 +1282,18 @@ pub(crate) fn measure_columns<'a>(
                     rows.containing_height = columns.definite;
                     rows.text_trim = columns.text_trim;
                     let mut layout = ColumnLayout::new(measurer, items, rows, &start)?;
+                    let mut wrapped = false;
                     loop {
-                        let frame = frame_height(remaining, available, measurer.unbroken);
+                        let frame = match columns.wrap {
+                            Some(wrap) => {
+                                if wrapped {
+                                    height += wrap.gap;
+                                }
+                                (wrap.height.min(available), false)
+                            }
+                            None => frame_height(remaining, available, measurer.unbroken),
+                        };
+                        wrapped = true;
                         let row = layout.push_frame(RowFrame {
                             geometry: columns.geometry,
                             first: 0,
@@ -1261,7 +1303,10 @@ pub(crate) fn measure_columns<'a>(
                             unbounded: frame.1,
                             page_rect: UNPLACED_PAGE,
                             breaks_page: measurer.fragmentainer
-                                == crate::layout::breaks::Fragmentainer::Page,
+                                == crate::layout::breaks::Fragmentainer::Page
+                                && columns.wrap.is_none_or(|wrap| {
+                                    overflows(height + frame.0 + wrap.gap + wrap.height, available)
+                                }),
                         });
                         let (output, end) = lay_out_row(measurer, layout, row, balance)?;
                         let pages = output.rows().pages(row, output.state.pages.len());
@@ -1281,7 +1326,7 @@ pub(crate) fn measure_columns<'a>(
                         let used = output.used_height(
                             row,
                             frame.0,
-                            columns.definite.is_some(),
+                            columns.definite.is_some() || columns.wrap.is_some(),
                             balance,
                             end,
                         );

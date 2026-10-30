@@ -404,6 +404,15 @@
       "syntax": "auto | <integer [1,∞]>",
       "source": "https://drafts.csswg.org/css-multicol-1/#propdef-column-count"
     },
+    "columns": {
+      "initial": [
+        "column-width",
+        "column-count",
+        "column-height",
+        "column-wrap"
+      ],
+      "source": "https://drafts.csswg.org/css-multicol-2/#columns: the shorthand also resets column-wrap to its initial value"
+    },
     "column-fill": {
       "syntax": "auto | balance | balance-all",
       "source": "https://drafts.csswg.org/css-multicol-1/#propdef-column-fill"

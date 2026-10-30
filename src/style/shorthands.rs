@@ -604,12 +604,14 @@ fn sliced_image(value: &Component, properties: &[Property], slots: usize) -> Lon
         .collect()
 }
 
-/// `[ <'column-width'> || <'column-count'> ] [ / <'column-height'> ]?`.
+/// `[ <'column-width'> || <'column-count'> ] [ / <'column-height'> ]?`, which also resets
+/// `column-wrap` (CSS Multi-column Layout 2 §4.5).
 fn columns(value: &Component) -> Longhands {
     [
         Property::ColumnWidth,
         Property::ColumnCount,
         Property::ColumnHeight,
+        Property::ColumnWrap,
     ]
     .iter()
     .map(|property| {

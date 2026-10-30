@@ -1264,7 +1264,15 @@ fn handler(property: Property) -> Option<Handler> {
         ),
         P::ColumnWidth => (
             column_width,
-            Some(|v, r| crate::style::multicol_values::width(v, r).is_ok()),
+            Some(|v, r| crate::style::multicol_values::length(v, r).is_ok()),
+        ),
+        P::ColumnHeight => (
+            column_height,
+            Some(|v, r| crate::style::multicol_values::length(v, r).is_ok()),
+        ),
+        P::ColumnWrap => (
+            column_wrap,
+            Some(|v, _| crate::style::multicol_values::ColumnWrap::from_component(v).is_ok()),
         ),
         P::ColumnFill => (
             column_fill,
@@ -3515,7 +3523,19 @@ computed!(
 computed!(
     column_width,
     [multicol.width],
-    |value, style, _parent, relative| { crate::style::multicol_values::width(value, relative)? }
+    |value, style, _parent, relative| { crate::style::multicol_values::length(value, relative)? }
+);
+computed!(
+    column_height,
+    [multicol.height],
+    |value, style, _parent, relative| { crate::style::multicol_values::length(value, relative)? }
+);
+computed!(
+    column_wrap,
+    [multicol.wrap],
+    |value, style, _parent, _relative| {
+        crate::style::multicol_values::ColumnWrap::from_component(value)?
+    }
 );
 computed!(
     column_fill,
