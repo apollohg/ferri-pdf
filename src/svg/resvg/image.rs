@@ -35,7 +35,7 @@ fn render_vector(
     pixmap: &mut tiny_skia::PixmapMut,
 ) -> Option<()> {
     let mut sub_pixmap = tiny_skia::Pixmap::new(pixmap.width(), pixmap.height()).unwrap();
-    crate::svg::resvg::render(tree, transform, &mut sub_pixmap.as_mut());
+    crate::svg::resvg::render(tree, transform, &mut sub_pixmap.as_mut(), None);
     pixmap.draw_pixmap(
         0,
         0,

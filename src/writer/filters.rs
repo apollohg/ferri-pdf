@@ -85,7 +85,7 @@ pub(super) fn draw(
     let Some(mut raster) = reach.and_then(|reach| raster.cropped(reach)) else {
         return Ok(());
     };
-    apply(&steps, &mut raster)?;
+    apply(painter, &steps, &mut raster)?;
     match raster
         .ink()
         .and_then(|ink| raster.cropped(ink.intersection(visible)))
@@ -95,23 +95,32 @@ pub(super) fn draw(
     }
 }
 
-/// Runs the chain on `raster`'s pixels in place.
-pub(super) fn apply(steps: &[Step<'_>], raster: &mut raster::Raster) -> Result<(), PdfError> {
+/// Runs the chain on `raster`'s pixels in place; `painter` draws the CSS mask layers of SVG
+/// content that referenced filters' images show.
+pub(super) fn apply(
+    painter: &mut Painter<'_, '_, '_>,
+    steps: &[Step<'_>],
+    raster: &mut raster::Raster,
+) -> Result<(), PdfError> {
     let transform = raster.transform();
-    for step in steps {
+    let layer_masks = crate::writer::masks::SvgLayerMasks::new(painter, raster.density, &[]);
+    let applied = steps.iter().try_for_each(|step| {
         match step {
             Step::Function(function) => {
                 let filter = function_filter(function, raster.area)?;
-                crate::svg::resvg::filter::apply(&filter, transform, &mut raster.pixmap);
+                crate::svg::resvg::filter::apply(&filter, transform, &mut raster.pixmap, None);
             }
             Step::Reference(filter) => crate::svg::resvg::filter::apply(
                 filter,
                 transform.pre_scale(POINTS_PER_PIXEL, POINTS_PER_PIXEL),
                 &mut raster.pixmap,
+                Some(&layer_masks),
             ),
         }
-    }
-    Ok(())
+        Ok(())
+    });
+    layer_masks.finish()?;
+    applied
 }
 
 pub(super) fn expand(rect: Rect, by: f32) -> Rect {

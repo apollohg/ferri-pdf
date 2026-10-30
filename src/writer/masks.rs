@@ -10,10 +10,12 @@
 //! `Exclusion`; and `subtract`, B(1 − A), is `Multiply` after `Difference` with white turns A
 //! into 1 − A.
 use crate::graphics::{
-    BlendMode, BoxPaint, Clip, Color, DisplayItem, ImagePaint, LayerPaint, MaskComposite, MaskMode,
-    MaskPaint, Radii, Rect, ResolvedGradient, TileImage,
+    BlendMode, BoxDecoration, BoxPaint, Clip, Color, DisplayItem, ImagePaint, LayerPaint,
+    LoadedMasks, MaskComposite, MaskMode, MaskPaint, POINTS_PER_PIXEL, Rect, ResolvedGradient,
+    TileImage,
 };
 use crate::images::{Image, PixelDepth, PixelImage};
+use crate::svg::krilla_svg::UsvgTransformExt;
 use crate::writer::{
     PdfError,
     display::{Painter, Space},
@@ -103,19 +105,27 @@ fn soft_mask(
     surface: &mut Surface<'_>,
     mut draw: impl FnMut(&mut Painter<'_, '_, '_>, &BoxPaint, &mut Surface<'_>) -> Result<(), PdfError>,
 ) -> Result<Mask, PdfError> {
-    let mut builder = surface.stream_builder();
-    let mut values = builder.surface();
-    let drawn = (|| -> Result<(), PdfError> {
-        fill(area, Color::BLACK, &mut values)?;
+    luminosity_mask(surface, |values| {
+        fill(area, Color::BLACK, values)?;
         // Fragments occupy disjoint areas, so their masks unite.
         for fragment in &mask.fragments {
-            let pushes = painting::push_blend(BlendMode::Screen, &mut values)?;
-            let result = draw(painter, fragment, &mut values);
-            painting::pop_clips(pushes, &mut values);
+            let pushes = painting::push_blend(BlendMode::Screen, values)?;
+            let result = draw(painter, fragment, values);
+            painting::pop_clips(pushes, values);
             result?;
         }
         Ok(())
-    })();
+    })
+}
+
+/// A luminosity soft mask whose values are the greys `draw` paints.
+fn luminosity_mask(
+    surface: &mut Surface<'_>,
+    draw: impl FnOnce(&mut Surface<'_>) -> Result<(), PdfError>,
+) -> Result<Mask, PdfError> {
+    let mut builder = surface.stream_builder();
+    let mut values = builder.surface();
+    let drawn = draw(&mut values);
     values.finish();
     let stream = builder.finish();
     drawn?;
@@ -136,7 +146,7 @@ fn draw_border(
         return Ok(());
     }
     let mut source = fragment.clone();
-    source.decoration = crate::graphics::BoxDecoration {
+    source.decoration = BoxDecoration {
         borders: fragment.decoration.borders,
         border_image: masks.border.clone(),
         ..Default::default()
@@ -254,10 +264,10 @@ fn draw_clip_element(
         return fill(area, WHITE, surface);
     };
     surface.push_transform(&krilla::geom::Transform::from_row(
-        crate::graphics::POINTS_PER_PIXEL,
+        POINTS_PER_PIXEL,
         0.0,
         0.0,
-        crate::graphics::POINTS_PER_PIXEL,
+        POINTS_PER_PIXEL,
         border.x,
         border.y,
     ));
@@ -278,10 +288,37 @@ fn draw_fragment(
     density: f32,
     surface: &mut Surface<'_>,
 ) -> Result<(), PdfError> {
-    let masks = &fragment.decoration.masks;
     let layers = fragment
         .mask_layers(painter.page_area)
         .map_err(PdfError::UnresolvedImage)?;
+    draw_layers(
+        painter,
+        &fragment.decoration.masks,
+        &layers,
+        fragment.rect,
+        area,
+        density,
+        &[],
+        surface,
+    )
+}
+
+/// `masks`'s placed `layers` composited over black; `bounds` is the object bounding box of
+/// referenced `mask` elements, and `active` holds the references already being drawn.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the layers draw in an area at a density for a chain of references"
+)]
+fn draw_layers(
+    painter: &mut Painter<'_, '_, '_>,
+    masks: &LoadedMasks,
+    layers: &[(usize, LayerPaint<'_>)],
+    bounds: Rect,
+    area: Rect,
+    density: f32,
+    active: &[&str],
+    surface: &mut Surface<'_>,
+) -> Result<(), PdfError> {
     let count = masks.layer_count();
     fill(area, Color::BLACK, surface)?;
     for index in (0..count).rev() {
@@ -309,21 +346,16 @@ fn draw_fragment(
                 draw_source(
                     painter,
                     reference,
-                    fragment.rect,
+                    bounds,
                     masks.mode(index),
                     area,
                     density,
+                    active,
                     surface,
                 )
             } else if let Some((_, layer)) = layers.iter().find(|(layer, _)| *layer == index) {
                 let clip = if masks.is_unclipped(index) {
-                    Clip {
-                        rect: area,
-                        radii: Radii::default(),
-                        outline: None,
-                        reference_box: None,
-                        axes: [true; 2],
-                    }
+                    Clip::rectangle(area)
                 } else {
                     layer.clip.clone()
                 };
@@ -483,17 +515,25 @@ fn mask_values(pixmap: &tiny_skia::Pixmap, luminance: bool) -> PixelImage {
 }
 
 /// A `mask` element: it positions, sizes and clips itself (§7.9); a reference naming no mask
-/// element is a transparent black layer. `mask-mode` other than `match-source` overrides its
-/// `mask-type`.
+/// element is a transparent black layer, as is one inside the content of the element it
+/// names. `mask-mode` other than `match-source` overrides its `mask-type`.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the element draws in an area at a density for a chain of references"
+)]
 fn draw_source(
-    painter: &Painter<'_, '_, '_>,
+    painter: &mut Painter<'_, '_, '_>,
     reference: &str,
     bounds: Rect,
     mode: MaskMode,
     area: Rect,
     density: f32,
+    active: &[&str],
     surface: &mut Surface<'_>,
 ) -> Result<(), PdfError> {
+    if active.contains(&reference) {
+        return Ok(());
+    }
     let Some(mask) = painter
         .raster
         .definitions
@@ -523,12 +563,14 @@ fn draw_source(
         },
         density,
     };
-    let transform = raster.transform().pre_scale(
-        crate::graphics::POINTS_PER_PIXEL,
-        crate::graphics::POINTS_PER_PIXEL,
-    );
+    let transform = raster
+        .transform()
+        .pre_scale(POINTS_PER_PIXEL, POINTS_PER_PIXEL);
     let mut raster = raster;
-    crate::svg::resvg::apply_mask(&mask, transform, &mut raster.pixmap);
+    let active: Vec<&str> = active.iter().copied().chain([reference]).collect();
+    let layer_masks = SvgLayerMasks::new(painter, density, &active);
+    crate::svg::resvg::apply_mask(&mask, transform, &mut raster.pixmap, Some(&layer_masks));
+    layer_masks.finish()?;
     embed_values(&mut raster, false, surface)
 }
 
@@ -550,4 +592,224 @@ fn first_mask(group: &crate::svg::usvg::Group) -> Option<crate::svg::usvg::Mask>
                 _ => None,
             })
         })
+}
+
+/// Draws an SVG image whose content has CSS mask layers, which paint through `painter`.
+pub(super) fn draw_svg(
+    painter: &mut Painter<'_, '_, '_>,
+    paint: &ImagePaint,
+    space: Space,
+    surface: &mut Surface<'_>,
+) -> Result<(), PdfError> {
+    let Some(decoded) = painter.images.decode(paint)? else {
+        return Ok(());
+    };
+    let density = painter.raster.pixels_per_point * space.scale;
+    let layer_masks = SvgLayerMasks::new(painter, density, &[]);
+    let drawn = crate::writer::images::draw_placed(
+        paint,
+        &decoded,
+        space.viewport,
+        surface,
+        Some(&layer_masks),
+    );
+    layer_masks.finish()?;
+    let errors = drawn?;
+    painter.images.report_svg_errors(paint, errors);
+    Ok(())
+}
+
+/// The CSS mask layers and mask border of SVG content, painted as those of a box whose areas
+/// are the content's fill, stroke and view boxes. Painting errors wait for [`Self::finish`].
+pub(super) struct SvgLayerMasks<'p, 'a, 'w, 'f> {
+    painter: std::cell::RefCell<&'p mut Painter<'a, 'w, 'f>>,
+    /// Raster pixels per unit of the space that drawing surfaces transform from.
+    density: f32,
+    /// The `mask` element references being drawn.
+    active: &'p [&'p str],
+    error: std::cell::RefCell<Option<PdfError>>,
+}
+
+impl<'p, 'a, 'w, 'f> SvgLayerMasks<'p, 'a, 'w, 'f> {
+    pub(super) fn new(
+        painter: &'p mut Painter<'a, 'w, 'f>,
+        density: f32,
+        active: &'p [&'p str],
+    ) -> Self {
+        Self {
+            painter: std::cell::RefCell::new(painter),
+            density,
+            active,
+            error: std::cell::RefCell::new(None),
+        }
+    }
+
+    /// The first painting error.
+    pub(super) fn finish(self) -> Result<(), PdfError> {
+        self.error.into_inner().map_or(Ok(()), Err)
+    }
+
+    fn record(&self, error: PdfError) {
+        self.error.borrow_mut().get_or_insert(error);
+    }
+
+    /// Draws the layers' values, or with `border` the mask border's, over black in `area` of a
+    /// space in points whose density is `density`, where the masked content has `boxes`.
+    fn draw_values(
+        &self,
+        mask: &crate::svg::usvg::LayerMask,
+        boxes: &crate::paint::SvgBoxes,
+        border: bool,
+        area: Rect,
+        density: f32,
+        surface: &mut Surface<'_>,
+    ) -> Result<(), PdfError> {
+        let mut painter = self.painter.borrow_mut();
+        let masks = &*mask.masks;
+        fill(area, Color::BLACK, surface)?;
+        if border {
+            // §8: the mask border image area is the border box, which is the stroke box of SVG
+            // content.
+            let fragment = BoxPaint::whole(
+                boxes.stroke,
+                BoxDecoration {
+                    masks: mask.masks.clone(),
+                    ..BoxDecoration::default()
+                },
+            );
+            return draw_border(&mut painter, &fragment, area, density, surface);
+        }
+        let layers = masks.svg_layers(boxes).map_err(PdfError::UnresolvedImage)?;
+        draw_layers(
+            &mut painter,
+            masks,
+            &layers,
+            boxes.fill,
+            area,
+            density,
+            self.active,
+            surface,
+        )
+    }
+}
+
+/// User units per point.
+const USER_UNITS_PER_POINT: f32 = 1.0 / POINTS_PER_PIXEL;
+/// The transforms into and out of the space in points the mask values draw in.
+const POINT_SPACE_PUSHES: u16 = 2;
+
+/// The rectangle of user-space `rect` in points.
+fn points(rect: crate::svg::usvg::Rect) -> Rect {
+    Rect {
+        x: rect.x() * POINTS_PER_PIXEL,
+        y: rect.y() * POINTS_PER_PIXEL,
+        width: rect.width() * POINTS_PER_PIXEL,
+        height: rect.height() * POINTS_PER_PIXEL,
+    }
+}
+
+/// Whether `masks` draws the mask layers, then whether the mask border, which mask one after
+/// the other (§8.1): `false` for the layers, `true` for the border.
+fn value_masks(masks: &LoadedMasks) -> impl Iterator<Item = bool> + '_ {
+    [false, true].into_iter().filter(|&border| {
+        if border {
+            masks.border.is_drawn()
+        } else {
+            masks.has_layers()
+        }
+    })
+}
+
+impl crate::svg::LayerMasks for SvgLayerMasks<'_, '_, '_, '_> {
+    fn push(
+        &self,
+        mask: &crate::svg::usvg::LayerMask,
+        bounds: crate::svg::usvg::Rect,
+        surface: &mut Surface<'_>,
+    ) -> u16 {
+        // The masks keep the space in points their values draw in; the content returns to user
+        // units.
+        surface.push_transform(&krilla::geom::Transform::from_scale(
+            USER_UNITS_PER_POINT,
+            USER_UNITS_PER_POINT,
+        ));
+        let area = points(bounds);
+        let density = self.density * painting::transform_scale(surface.cur_transform());
+        let mut pushes = POINT_SPACE_PUSHES;
+        for border in value_masks(&mask.masks) {
+            match luminosity_mask(surface, |values| {
+                self.draw_values(mask, &mask.boxes, border, area, density, values)
+            }) {
+                Ok(values) => {
+                    surface.push_mask(values);
+                    pushes += 1;
+                }
+                Err(error) => self.record(error),
+            }
+        }
+        surface.push_transform(&krilla::geom::Transform::from_scale(
+            POINTS_PER_PIXEL,
+            POINTS_PER_PIXEL,
+        ));
+        pushes
+    }
+
+    fn apply(
+        &self,
+        mask: &crate::svg::usvg::LayerMask,
+        transform: tiny_skia::Transform,
+        pixmap: &mut tiny_skia::Pixmap,
+    ) {
+        let to_pixels = transform.pre_scale(USER_UNITS_PER_POINT, USER_UNITS_PER_POINT);
+        let area = to_pixels.invert().and_then(|from_pixels| {
+            tiny_skia::Rect::from_xywh(0.0, 0.0, pixmap.width() as f32, pixmap.height() as f32)?
+                .transform(from_pixels)
+        });
+        let Some(area) = area else {
+            pixmap.fill(tiny_skia::Color::TRANSPARENT);
+            return;
+        };
+        let area = Rect {
+            x: area.x(),
+            y: area.y(),
+            width: area.width(),
+            height: area.height(),
+        };
+        let density = painting::transform_scale(to_pixels.to_krilla());
+        for border in value_masks(&mask.masks) {
+            let values = raster::render_surface(area, density, |viewport, surface| {
+                self.draw_values(mask, &mask.boxes, border, viewport, density, surface)
+            });
+            let values = match values {
+                Ok(values) => values,
+                Err(error) => {
+                    self.record(error);
+                    continue;
+                }
+            };
+            // The values cover the pixmap where the transform places their raster.
+            let placed = values.and_then(|values| {
+                let mut placed = tiny_skia::Pixmap::new(pixmap.width(), pixmap.height())?;
+                placed.draw_pixmap(
+                    0,
+                    0,
+                    values.pixmap.as_ref(),
+                    &tiny_skia::PixmapPaint {
+                        quality: tiny_skia::FilterQuality::Bilinear,
+                        ..tiny_skia::PixmapPaint::default()
+                    },
+                    to_pixels.pre_concat(values.transform().invert()?),
+                    None,
+                );
+                Some(placed)
+            });
+            match placed {
+                Some(placed) => pixmap.apply_mask(&tiny_skia::Mask::from_pixmap(
+                    placed.as_ref(),
+                    tiny_skia::MaskType::Luminance,
+                )),
+                None => pixmap.fill(tiny_skia::Color::TRANSPARENT),
+            }
+        }
+    }
 }

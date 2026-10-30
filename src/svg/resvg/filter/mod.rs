@@ -334,8 +334,9 @@ pub(crate) fn apply(
     filter: &crate::svg::usvg::filter::Filter,
     ts: tiny_skia::Transform,
     source: &mut tiny_skia::Pixmap,
+    layer_masks: Option<&dyn crate::svg::LayerMasks>,
 ) {
-    let result = apply_inner(filter, ts, source);
+    let result = apply_inner(filter, ts, source, layer_masks);
     let result = result.and_then(|image| apply_to_canvas(image, source));
 
     // Clear on error.
@@ -356,6 +357,7 @@ fn apply_inner(
     filter: &crate::svg::usvg::filter::Filter,
     ts: crate::svg::usvg::Transform,
     source: &mut tiny_skia::Pixmap,
+    layer_masks: Option<&dyn crate::svg::LayerMasks>,
 ) -> Result<Image, Error> {
     let region = filter
         .rect()
@@ -414,7 +416,9 @@ fn apply_inner(
                 let input = get_input(fe.input(), region, source, &results)?;
                 apply_tile(input, region)
             }
-            crate::svg::usvg::filter::Kind::Image(fe) => apply_image(fe, region, subregion, ts),
+            crate::svg::usvg::filter::Kind::Image(fe) => {
+                apply_image(fe, region, subregion, ts, layer_masks)
+            }
             crate::svg::usvg::filter::Kind::ComponentTransfer(fe) => {
                 let input = get_input(fe.input(), region, source, &results)?;
                 apply_component_transfer(fe, cs, input)
@@ -858,6 +862,7 @@ fn apply_image(
     region: IntRect,
     subregion: IntRect,
     ts: crate::svg::usvg::Transform,
+    layer_masks: Option<&dyn crate::svg::LayerMasks>,
 ) -> Result<Image, Error> {
     let mut pixmap = tiny_skia::Pixmap::try_create(region.width(), region.height())?;
 
@@ -873,6 +878,7 @@ fn apply_image(
 
     let ctx = crate::svg::resvg::render::Context::new(
         IntRect::from_xywh(0, 0, region.width(), region.height()).unwrap(),
+        layer_masks,
     );
 
     crate::svg::resvg::render::render_nodes(fe.root(), &ctx, transform, &mut pixmap.as_mut());

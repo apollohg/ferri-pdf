@@ -32,6 +32,9 @@ LINEAR_HALF = (188, 188, 188)
 SRGB_HALF = (128, 128, 128)
 # An identity filter, which hands its group to the raster filter renderer.
 IDENTITY_FILTER = '<filter id="same"><feOffset dx="0" dy="0"/></filter>'
+# Poppler's Splash rasterizer misplaces soft masks set under a transform; Cairo does not.
+SPLASH = ('pdftoppm', '-aaVector', 'no')
+CAIRO = ('pdftocairo', '-antialias', 'none')
 SPRITE = (f'<svg style="display:none"><symbol id="dot" viewBox="0 0 {ICON} {ICON}">'
           f'<rect width="{ICON}" height="{ICON}" fill="currentColor"/></symbol></svg>')
 
@@ -75,11 +78,11 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
                                    text=True)
         return completed, output
 
-    def render(self, root, css, body):
+    def render(self, root, css, body, rasterizer=SPLASH):
         completed, output = self.convert(root, css, body)
         self.assertEqual(completed.returncode, 0, f'render failed: {completed.stderr}')
-        subprocess.run(['pdftoppm', '-r', str(RASTER_DPI), '-aaVector', 'no', '-singlefile', '-png',
-                        str(output), str(root / 'ink')], check=True, capture_output=True)
+        subprocess.run([*rasterizer, '-r', str(RASTER_DPI), '-singlefile', '-png', str(output),
+                        str(root / 'ink')], check=True, capture_output=True)
         with Image.open(root / 'ink.png') as image:
             return image.convert('RGB')
 
@@ -534,6 +537,85 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
                              'max-content behaves as auto: the image height stays natural')
             self.assertEqual(self.ink_columns(pixels, 0, 3 * band, 160, band, BLUE),
                              list(range(30)), 'a standalone SVG image calculates its sizes too')
+
+    def assertSpan(self, columns, start, end, label):
+        """`columns` run from `start` up to `end`, give or take the column at either edge, which
+        the resampled soft mask may only partly cover."""
+        self.assertTrue(columns and abs(columns[0] - start) <= 1
+                        and abs(columns[-1] - (end - 1)) <= 1
+                        and columns == list(range(columns[0], columns[-1] + 1)),
+                        f'{label}: ink columns {columns}, expected {start} to {end - 1}')
+
+    def test_css_mask_layers_mask_svg_content_in_its_boxes(self):
+        """CSS Masking 1 §7, §8 on SVG content: image, gradient and mask element layers in
+        the fill, stroke and view boxes, mask-mode and mask-composite, a mask border, and the
+        raster renderer under a filter and inside a referenced mask element."""
+        cell = 30
+        half = cell // 2
+        left = 'linear-gradient(to right, black 50%, transparent 50%)'
+        top = 'linear-gradient(black 50%, transparent 50%)'
+        canvas = Image.new('RGBA', (2, 1))
+        canvas.putpixel((0, 0), (0, 0, 0, 255))
+        encoded = io.BytesIO()
+        canvas.save(encoded, 'PNG')
+        image = (f'mask-image:url(data:image/png;base64,{base64.b64encode(encoded.getvalue()).decode()});'
+                 'mask-size:100% 100%;image-rendering:pixelated')
+        layers = [
+            ('image', image),
+            ('gradient', f'mask-image:{left}'),
+            ('intersect', f'mask:linear-gradient(black,black) 0 0/50% 100% no-repeat,{left};'
+                          'mask-composite:intersect'),
+            ('element', f'mask:url(#half),{top};mask-composite:intersect'),
+            ('luminance', 'mask-image:linear-gradient(to right, white 50%, black 50%);'
+                          'mask-mode:luminance'),
+            ('subtract', 'mask-image:linear-gradient(black,black),'
+                         'linear-gradient(to right, transparent 50%, black 50%);'
+                         'mask-composite:subtract'),
+            ('border', f'mask-border:{left} 50% fill/{half}px'),
+        ]
+        rules = ''.join(f'.{name}{{{declarations}}}' for name, declarations in layers)
+        shapes = ''.join(f'<rect class="{name}" x="{index * cell}" width="{cell}" '
+                         f'height="{cell}" fill="rgb(0,160,0)"/>'
+                         for index, (name, _) in enumerate(layers))
+        width = len(layers) * cell
+        boxes = (f'<rect class="fill" x="10" y="{cell + 10}" width="{half}" height="{half}" '
+                 'fill="rgb(0,160,0)" stroke="blue" stroke-width="10"/>'
+                 f'<rect class="view" y="{2 * cell}" width="{width}" height="{cell}" '
+                 'fill="rgb(0,160,0)"/>'
+                 f'<g filter="url(#same)"><rect class="image" x="{cell}" y="{cell}" '
+                 f'width="{cell}" height="{cell}" fill="rgb(0,160,0)"/></g>')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            pixels = self.render(
+                Path(directory),
+                rules + '.fill{mask-image:linear-gradient(black,black);mask-clip:fill-box}'
+                '.view{mask:linear-gradient(black,black) 0 0/50% 100% no-repeat view-box}'
+                f'.masked{{width:{cell}pt;height:{cell}pt;background:rgb(0,160,0);'
+                'mask:url(#nested)}',
+                f'<svg width="{width}pt" height="{3 * cell}pt" viewBox="0 0 {width} {3 * cell}">'
+                f'<defs>{IDENTITY_FILTER}'
+                f'<mask id="half"><rect x="{3 * cell}" width="{half}" height="{cell}" '
+                'fill="white"/></mask>'
+                f'<mask id="nested" maskContentUnits="objectBoundingBox">'
+                '<rect class="image" width="1" height="1" fill="white"/></mask>'
+                f'</defs>{shapes}{boxes}</svg><div class="masked"></div>',
+                CAIRO)
+            for index, (name, _) in enumerate(layers):
+                with self.subTest(layer=name):
+                    self.assertSpan(self.ink_columns(pixels, index * cell, 0, cell, half, GREEN),
+                                    index * cell, index * cell + half,
+                                    f'{name}: only the left half of the square shows')
+            self.assertEqual(self.ink_columns(pixels, 3 * cell, half + 1, cell, half - 1, GREEN),
+                             [], 'intersect with the top half hides the bottom half')
+            self.assertPixel(pixels, 12, cell + 17, BLUE,
+                             'mask-clip: fill-box keeps the stroke inside the fill box')
+            self.assertPixel(pixels, 7, cell + 17, WHITE,
+                             'mask-clip: fill-box clips the stroke outside the fill box')
+            self.assertSpan(self.ink_columns(pixels, 0, 2 * cell, width, cell, GREEN), 0,
+                            width // 2, 'mask-origin: view-box sizes the layer from the viewport')
+            self.assertSpan(self.ink_columns(pixels, cell, cell, cell, cell, GREEN), cell,
+                            cell + half, 'the raster renderer masks content under a filter')
+            self.assertSpan(self.ink_columns(pixels, 0, 3 * cell, cell, cell, GREEN), 0, half,
+                            'a mask element masks with the CSS mask layers of its content')
 
     def test_svg_images_keep_their_own_styles(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:

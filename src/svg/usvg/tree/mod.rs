@@ -846,6 +846,15 @@ impl Default for MaskType {
     }
 }
 
+/// The CSS mask layers and mask border of a group (CSS Masking 1 §7, §8), which the
+/// renderers' [`LayerMasks`](crate::svg::LayerMasks) draw.
+#[derive(Debug)]
+pub struct LayerMask {
+    pub(crate) masks: Arc<crate::graphics::LoadedMasks>,
+    /// The group's fill, stroke and view boxes in its user space, in points.
+    pub(crate) boxes: crate::paint::SvgBoxes,
+}
+
 /// A mask element.
 ///
 /// `mask` element in SVG.
@@ -1042,6 +1051,7 @@ pub struct Group {
     /// Whether the group is a context element (i.e. a use node)
     pub(crate) is_context_element: bool,
     pub(crate) mask: Option<Arc<Mask>>,
+    pub(crate) layer_mask: Option<Arc<LayerMask>>,
     pub(crate) filters: Vec<Arc<filter::Filter>>,
     pub(crate) bounding_box: Rect,
     pub(crate) abs_bounding_box: Rect,
@@ -1065,6 +1075,7 @@ impl Group {
             linear_light: false,
             clip_path: None,
             mask: None,
+            layer_mask: None,
             filters: Vec::new(),
             is_context_element: false,
             bounding_box: dummy,
@@ -1152,6 +1163,11 @@ impl Group {
         self.mask.as_deref()
     }
 
+    /// Element's CSS mask layers and mask border.
+    pub fn layer_mask(&self) -> Option<&LayerMask> {
+        self.layer_mask.as_deref()
+    }
+
     /// Element's filters.
     pub fn filters(&self) -> &[Arc<filter::Filter>] {
         &self.filters
@@ -1220,6 +1236,7 @@ impl Group {
             || self.opacity != Opacity::ONE
             || self.clip_path.is_some()
             || self.mask.is_some()
+            || self.layer_mask.is_some()
             || !self.filters.is_empty()
             || self.blend_mode != BlendMode::Normal // TODO: probably not needed?
     }
@@ -1236,6 +1253,7 @@ impl Group {
                         || (!child.isolate
                             && child.opacity == Opacity::ONE
                             && child.mask.is_none()
+                            && child.layer_mask.is_none()
                             && child.filters.is_empty()
                             && blends(child))
                 }

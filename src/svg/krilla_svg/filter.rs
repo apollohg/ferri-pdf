@@ -73,6 +73,7 @@ pub(crate) fn render(
         &crate::svg::usvg::Node::Group(Box::new(group.clone())),
         initial_transform,
         &mut pixmap.as_mut(),
+        process_context.svg_settings.layer_masks,
     );
 
     draw_pixmap(

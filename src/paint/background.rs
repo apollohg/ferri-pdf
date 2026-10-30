@@ -236,7 +236,7 @@ impl<I> Default for Backgrounds<I> {
         }
     }
 }
-fn cycle<T>(values: &[T], index: usize) -> &T {
+pub(crate) fn cycle<T>(values: &[T], index: usize) -> &T {
     &values[index % values.len()]
 }
 impl<I> Backgrounds<I> {
@@ -756,65 +756,81 @@ impl<I: ImageInfo> BoxPaint<I> {
         backgrounds: &'a Backgrounds<I>,
         page_area: Rect,
     ) -> Result<Vec<(usize, LayerPaint<'a, I>)>, UnresolvedImage> {
-        let mut layers = Vec::new();
         let page_area = self
             .background_geometry
             .as_ref()
             .and_then(|geometry| geometry.viewport)
             .unwrap_or(page_area);
-        for (index, image) in backgrounds.images.iter().enumerate().rev() {
-            let Some(source) = Source::of(image)? else {
-                continue;
-            };
-            let area = if *cycle(&backgrounds.attachments, index) == Attachment::Fixed {
-                page_area
-            } else {
-                self.positioning_area(*cycle(&backgrounds.origins, index))
-            };
-            let extent = [area.width, area.height];
-            let natural = source.natural(extent);
-            let size = cycle(&backgrounds.sizes, index);
-            let repeat = *cycle(&backgrounds.repeats, index);
-            let tile = rounded_size(image_size(size, natural, extent), size, repeat, extent);
-            if !(tile[0] > 0.0 && tile[1] > 0.0 && tile.iter().all(|v| v.is_finite())) {
-                continue;
-            }
-            let [position_x, position_y] = &backgrounds.positions;
-            let (x, step_x, repeat_x) = place(
-                repeat[0],
-                cycle(position_x, index),
-                area.x,
-                extent[0],
-                tile[0],
-            );
-            let (y, step_y, repeat_y) = place(
-                repeat[1],
-                cycle(position_y, index),
-                area.y,
-                extent[1],
-                tile[1],
-            );
-            let Some(image) = source.tile(tile) else {
-                continue;
-            };
-            layers.push((
-                index,
-                LayerPaint {
-                    image,
-                    clip: self.background_clip(cycle(&backgrounds.clips, index).area()),
-                    painted: *cycle(&backgrounds.clips, index),
-                    tile: Rect {
-                        x,
-                        y,
-                        width: tile[0],
-                        height: tile[1],
-                    },
-                    step: [step_x, step_y],
-                    repeat: [repeat_x, repeat_y],
-                    blend: *cycle(&backgrounds.blend_modes, index),
-                },
-            ));
-        }
-        Ok(layers)
+        place_layers(
+            backgrounds,
+            |index| {
+                if *cycle(&backgrounds.attachments, index) == Attachment::Fixed {
+                    page_area
+                } else {
+                    self.positioning_area(*cycle(&backgrounds.origins, index))
+                }
+            },
+            |index| self.background_clip(cycle(&backgrounds.clips, index).area()),
+        )
     }
+}
+
+/// The image layers of `backgrounds` bottom-most first, by index: each placed in the
+/// positioning area `area` gives it and clipped to the painting area `clip` gives it.
+pub(crate) fn place_layers<I: ImageInfo>(
+    backgrounds: &Backgrounds<I>,
+    area: impl Fn(usize) -> Rect,
+    clip: impl Fn(usize) -> Clip,
+) -> Result<Vec<(usize, LayerPaint<'_, I>)>, UnresolvedImage> {
+    let mut layers = Vec::new();
+    for (index, image) in backgrounds.images.iter().enumerate().rev() {
+        let Some(source) = Source::of(image)? else {
+            continue;
+        };
+        let area = area(index);
+        let extent = [area.width, area.height];
+        let natural = source.natural(extent);
+        let size = cycle(&backgrounds.sizes, index);
+        let repeat = *cycle(&backgrounds.repeats, index);
+        let tile = rounded_size(image_size(size, natural, extent), size, repeat, extent);
+        if !(tile[0] > 0.0 && tile[1] > 0.0 && tile.iter().all(|v| v.is_finite())) {
+            continue;
+        }
+        let [position_x, position_y] = &backgrounds.positions;
+        let (x, step_x, repeat_x) = place(
+            repeat[0],
+            cycle(position_x, index),
+            area.x,
+            extent[0],
+            tile[0],
+        );
+        let (y, step_y, repeat_y) = place(
+            repeat[1],
+            cycle(position_y, index),
+            area.y,
+            extent[1],
+            tile[1],
+        );
+        let Some(image) = source.tile(tile) else {
+            continue;
+        };
+        layers.push((
+            index,
+            LayerPaint {
+                image,
+                clip: clip(index),
+                painted: *cycle(&backgrounds.clips, index),
+                tile: Rect {
+                    x,
+                    y,
+                    width: tile[0],
+                    height: tile[1],
+                },
+                step: [step_x, step_y],
+                repeat: [repeat_x, repeat_y],
+                blend: *cycle(&backgrounds.blend_modes, index),
+            },
+        ));
+    }
+    Ok(layers)
 }

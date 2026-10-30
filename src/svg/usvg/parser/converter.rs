@@ -971,6 +971,7 @@ pub(crate) fn convert_group(
         linear_light,
         clip_path: None,
         mask: None,
+        layer_mask: None,
         filters: Vec::new(),
         is_context_element: false,
         bounding_box: dummy,
@@ -1001,23 +1002,28 @@ pub(crate) fn convert_group(
         .and_then(|value| super::basic_shape::parse(value, node, state))
     {
         g.calculate_bounding_boxes();
-        // CSS Masking 1 §6.1: `view-box` places the nearest viewport's viewBox at the origin.
-        let view = state.view_box;
-        let boxes = super::basic_shape::ReferenceBoxes {
-            fill: g.bounding_box,
-            stroke: g.stroke_bounding_box,
-            view: Rect::from_xywh(0.0, 0.0, view.width(), view.height())?,
-        };
+        let boxes = reference_boxes(&g, state)?;
         clip_path = Some(super::basic_shape::convert(&shape, &boxes, state, cache)?);
     }
 
     let mut mask = None;
+    let mut layer_mask = None;
     if state.parent_clip_path.is_none() {
         if let Some(link) = node.attribute::<SvgNode>(AId::Mask) {
             mask = super::mask::convert(link, node, state, object_bbox, cache);
             if mask.is_none() {
                 return None;
             }
+        } else if let Some(masks) = node
+            .attribute::<&str>(AId::Mask)
+            .and_then(crate::svg::layer_mask_index)
+            .and_then(|index| state.opt.layer_masks.get(index))
+        {
+            g.calculate_bounding_boxes();
+            layer_mask = Some(Arc::new(LayerMask {
+                masks: masks.clone(),
+                boxes: reference_boxes(&g, state)?,
+            }));
         }
     }
 
@@ -1053,6 +1059,7 @@ pub(crate) fn convert_group(
     let required = opacity.get().approx_ne_ulps(&1.0, 4)
         || clip_path.is_some()
         || mask.is_some()
+        || layer_mask.is_some()
         || !filters.is_empty()
         || !transform.is_identity()
         || blend_mode != BlendMode::Normal
@@ -1069,6 +1076,7 @@ pub(crate) fn convert_group(
 
     g.clip_path = clip_path;
     g.mask = mask;
+    g.layer_mask = layer_mask;
     g.filters = filters;
     if node.tag_name() == Some(EId::Use) {
         g.isolate_stacking_context();
@@ -1078,6 +1086,24 @@ pub(crate) fn convert_group(
     g.calculate_bounding_boxes();
 
     Some(g)
+}
+
+/// The fill, stroke and view boxes of the group `g`, whose bounding boxes are calculated, in
+/// points; `None` without a nearest viewport. CSS Masking 1 §6.1: `view-box` places the
+/// nearest viewport's viewBox at the origin.
+fn reference_boxes(g: &Group, state: &State) -> Option<crate::paint::SvgBoxes> {
+    let view = state.view_box;
+    let points = |rect: Rect| crate::paint::Rect {
+        x: rect.x() * crate::paint::POINTS_PER_PIXEL,
+        y: rect.y() * crate::paint::POINTS_PER_PIXEL,
+        width: rect.width() * crate::paint::POINTS_PER_PIXEL,
+        height: rect.height() * crate::paint::POINTS_PER_PIXEL,
+    };
+    Some(crate::paint::SvgBoxes {
+        fill: points(g.bounding_box),
+        stroke: points(g.stroke_bounding_box),
+        view: points(Rect::from_xywh(0.0, 0.0, view.width(), view.height())?),
+    })
 }
 
 fn convert_path(

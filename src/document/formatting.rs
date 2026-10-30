@@ -903,11 +903,14 @@ impl ImageResources<'_> {
                         |image| crate::images::content_image(image, &Style::default(), None),
                     ),
             ),
-            Resolved::Svg(xml) => {
-                match self
-                    .cache
-                    .inline_svg_in_namespace(xml, self.base, self.resolver, namespace)
-                {
+            Resolved::Svg(xml, layer_masks) => {
+                match self.cache.inline_svg_in_namespace(
+                    xml,
+                    layer_masks,
+                    self.base,
+                    self.resolver,
+                    namespace,
+                ) {
                     Ok(image) => Some(image),
                     Err(error) => {
                         let reference = format!("element(#{id})");
@@ -1007,6 +1010,21 @@ impl ImageResources<'_> {
             .decoration
             .load_images(|request| self.load(request, style))?)
     }
+    /// Loads the CSS mask layer images of SVG content, and the other SVG documents its masks
+    /// reference.
+    pub(crate) fn masks(
+        &mut self,
+        style: &Style,
+    ) -> Result<std::sync::Arc<crate::graphics::LoadedMasks>, DocumentError> {
+        self.link_documents(style)?;
+        let masks = crate::paint::BoxDecoration {
+            masks: style.decoration.masks.clone(),
+            ..crate::paint::BoxDecoration::default()
+        };
+        Ok(masks
+            .load_images(|request| self.load(request, style))?
+            .masks)
+    }
     /// Loads the other SVG documents whose elements the box's filters, masks and clip path
     /// reference (Filter Effects 1 §5, CSS Masking 1 §6.1, §7.1), with the documents those
     /// reference in turn, for painting to find.
@@ -1036,7 +1054,14 @@ impl ImageResources<'_> {
                     })
             };
             // Linking the reference loads its documents; the box's geometry is not known yet.
-            crate::svg::reference_tree("", LINKING_PROPERTY, reference, None, &load);
+            crate::svg::reference_tree(
+                "",
+                crate::images::LayerMaskTable::default(),
+                LINKING_PROPERTY,
+                reference,
+                None,
+                &load,
+            );
             if let Some(error) = failure.into_inner() {
                 return Err(error.into());
             }
@@ -2583,19 +2608,22 @@ fn block<'a>(
                             }
                             image
                         }
-                        "svg" => Some(resources.cache.inline_svg_in_namespace(
-                            crate::document::svg::serialize(
+                        "svg" => {
+                            let resolver = resources.resolver;
+                            let svg = crate::document::svg::serialize(
                                 element,
                                 &frame.style,
-                                &crate::document::svg::Styling {
-                                    sheet,
-                                    resolver: resources.resolver,
-                                },
-                            )?,
-                            resources.base,
-                            resources.resolver,
-                            frame.style.element_font_namespace(),
-                        )?),
+                                &crate::document::svg::Styling { sheet, resolver },
+                                &mut |style| resources.masks(style),
+                            )?;
+                            Some(resources.cache.inline_svg_in_namespace(
+                                svg.xml,
+                                svg.layer_masks,
+                                resources.base,
+                                resolver,
+                                frame.style.element_font_namespace(),
+                            )?)
+                        }
                         "video" if is_replaced(element) => Some(crate::document::media::poster(
                             element,
                             &frame.style,
@@ -3252,7 +3280,9 @@ pub(crate) fn build(
     *style = style.used();
     validate_box(&style)?;
     if style.display == Display::None {
-        hidden_root(input, sheet, &style, resolver, navigation, generated, pages)
+        hidden_root(
+            input, sheet, &style, &resources, navigation, generated, pages,
+        )
     } else {
         format_root(
             input, sheet, style, &resources, navigation, generated, pages,
@@ -3332,12 +3362,13 @@ fn hidden_root(
     input: &Input<'_>,
     sheet: &Stylesheet,
     style: &Style,
-    resolver: &dyn crate::resources::ResourceResolver,
+    resources: &Resources<'_>,
     navigation: NavigationBuilder,
     mut generated: crate::document::generated::GeneratedPass,
     pages: crate::document::page::PageProvider,
 ) -> Result<Formatted, DocumentError> {
     let html = input.html;
+    let resolver = resources.resolver;
     let element = html.root_element();
     let mut strings = crate::document::strings::StringAssignments::new(html);
     let mut counters = crate::document::counters::Counters::default();
@@ -3353,11 +3384,20 @@ fn hidden_root(
         })
     })?;
     let canvas = canvas_surface(BoxDecoration::default(), surface_beneath(sheet, style));
+    let mut cache = input.images.borrow_mut();
+    let linked = cache.linked_documents();
+    let mut images = ImageResources {
+        base: resources.base,
+        resolver,
+        cache: &mut cache,
+        elements: resources.elements,
+    };
     let svg_definitions = crate::document::svg::SvgDefinitions::collect(
         html,
         style,
         &crate::document::svg::Styling { sheet, resolver },
-        input.images.borrow().linked_documents(),
+        linked,
+        &mut |style| images.masks(style),
     )?;
     Ok(Formatted {
         root: BlockBox::anonymous(style.clone(), vec![BlockContent::Events(events)], None),
@@ -3443,11 +3483,13 @@ fn format_root(
         0
     };
     let surface = surface_beneath(sheet, &style);
+    let linked = resources.cache.linked_documents();
     let svg_definitions = crate::document::svg::SvgDefinitions::collect(
         html,
         &style,
         &crate::document::svg::Styling { sheet, resolver },
-        resources.cache.linked_documents(),
+        linked,
+        &mut |style| resources.masks(style),
     )?;
     let mut root = block(
         Frame::new(element, style, 0, ordinal, Some(Placement::Root), None),

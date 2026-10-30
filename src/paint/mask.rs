@@ -1,7 +1,9 @@
 //! CSS Masking 1 §7 mask layers: lists like the background ones, with a mode and a compositing
 //! operator per layer.
 use crate::paint::{
-    Backgrounds, BorderImage, BorderImageRepeat, BorderImageWidth, BoxArea, ClipPath, ImageSlice,
+    Backgrounds, BorderImage, BorderImageRepeat, BorderImageWidth, BoxArea, Clip, ClipPath,
+    GeometryBox, ImageInfo, ImageSlice, LayerPaint, Rect, ShapeBox, UnresolvedImage,
+    background::{cycle, place_layers},
 };
 use serde::Serialize;
 use std::{convert::Infallible, sync::Arc};
@@ -25,6 +27,9 @@ pub enum MaskComposite {
     Exclude,
 }
 
+/// The initial `mask-origin` and `mask-clip`.
+const BORDER_BOX: GeometryBox = GeometryBox::Shape(ShapeBox::Visual(BoxArea::BorderBox));
+
 /// Computed `mask-*` longhands; layer `i` uses item `i` of each list, cycling short lists.
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(bound(serialize = ""))]
@@ -36,6 +41,11 @@ pub struct Masks<I = Infallible> {
     pub sources: Vec<Option<Box<str>>>,
     /// `mask-clip: no-clip`, cycling with the clip list.
     pub unclipped: Vec<bool>,
+    /// `mask-origin` and `mask-clip` boxes as computed, whose fill, stroke and view boxes SVG
+    /// content without a CSS layout box positions and clips by (§7.5, §7.6); `layers` holds
+    /// the boxes of elements with one.
+    pub(crate) origin_boxes: Vec<GeometryBox>,
+    pub(crate) clip_boxes: Vec<GeometryBox>,
     pub modes: Vec<MaskMode>,
     pub composites: Vec<MaskComposite>,
     /// `mask-border-*` (§8), sliced like a border image.
@@ -56,6 +66,8 @@ impl<I> Default for Masks<I> {
             }),
             sources: vec![None],
             unclipped: vec![false],
+            origin_boxes: vec![BORDER_BOX],
+            clip_boxes: vec![BORDER_BOX],
             modes: vec![MaskMode::default()],
             composites: vec![MaskComposite::default()],
             border: Arc::new(BorderImage {
@@ -99,12 +111,54 @@ impl<I> Masks<I> {
         self.unclipped[layer % self.unclipped.len()]
     }
 }
+/// The fill, stroke and view boxes of SVG content, which has no CSS layout box, in points.
+#[derive(Clone, Copy, Debug)]
+pub(crate) struct SvgBoxes {
+    pub(crate) fill: Rect,
+    pub(crate) stroke: Rect,
+    pub(crate) view: Rect,
+}
+impl SvgBoxes {
+    /// The box a `<geometry-box>` names on SVG content: content and padding boxes are its fill
+    /// box, and border and margin boxes its stroke box (§6.1, §7.5).
+    pub(crate) fn area(&self, reference: GeometryBox) -> Rect {
+        match reference {
+            GeometryBox::Fill
+            | GeometryBox::Shape(ShapeBox::Visual(BoxArea::ContentBox | BoxArea::PaddingBox)) => {
+                self.fill
+            }
+            GeometryBox::View => self.view,
+            GeometryBox::Stroke | GeometryBox::Shape(_) => self.stroke,
+        }
+    }
+}
+
+impl<I: ImageInfo> Masks<I> {
+    /// The image layers of SVG content with `boxes`, bottom-most first by index. Its
+    /// `mask-origin` content, padding and border boxes are its fill box (§7.6).
+    pub(crate) fn svg_layers(
+        &self,
+        boxes: &SvgBoxes,
+    ) -> Result<Vec<(usize, LayerPaint<'_, I>)>, UnresolvedImage> {
+        place_layers(
+            &self.layers,
+            |index| match cycle(&self.origin_boxes, index) {
+                GeometryBox::Shape(_) => boxes.fill,
+                reference => boxes.area(*reference),
+            },
+            |index| Clip::rectangle(boxes.area(*cycle(&self.clip_boxes, index))),
+        )
+    }
+}
+
 impl Masks<Infallible> {
     pub fn with_image_type<I>(&self) -> Masks<I> {
         Masks {
             layers: Arc::new(self.layers.with_image_type()),
             sources: self.sources.clone(),
             unclipped: self.unclipped.clone(),
+            origin_boxes: self.origin_boxes.clone(),
+            clip_boxes: self.clip_boxes.clone(),
             modes: self.modes.clone(),
             composites: self.composites.clone(),
             border: Arc::new(self.border.with_image_type()),

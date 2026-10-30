@@ -129,10 +129,25 @@ pub(crate) fn render(
     let width = ((bounds.right() * scale + EDGE_PIXELS).ceil() - left) as u32;
     let height = ((bounds.bottom() * scale + EDGE_PIXELS).ceil() - top) as u32;
     let to_pixels = Transform::from_row(scale, 0.0, 0.0, scale, -left, -top);
+    let layer_masks = process_context.svg_settings.layer_masks;
     let mut below = tiny_skia::Pixmap::new(width, height)?;
-    crate::svg::resvg::render_prefix(backdrop.root, node, false, to_pixels, &mut below.as_mut());
+    crate::svg::resvg::render_prefix(
+        backdrop.root,
+        node,
+        false,
+        to_pixels,
+        &mut below.as_mut(),
+        layer_masks,
+    );
     let mut result = tiny_skia::Pixmap::new(width, height)?;
-    crate::svg::resvg::render_prefix(backdrop.root, node, true, to_pixels, &mut result.as_mut());
+    crate::svg::resvg::render_prefix(
+        backdrop.root,
+        node,
+        true,
+        to_pixels,
+        &mut result.as_mut(),
+        layer_masks,
+    );
     for (pixel, below) in result.pixels_mut().iter_mut().zip(below.pixels()) {
         *pixel = if pixel == below {
             tiny_skia::PremultipliedColorU8::TRANSPARENT

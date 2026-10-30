@@ -88,13 +88,6 @@ pub(crate) fn outset(rect: Rect, distance: [f32; 4]) -> Rect {
         height: (rect.height + top + bottom).max(0.0),
     }
 }
-fn translate(rect: Rect, [dx, dy]: [f32; 2]) -> Rect {
-    Rect {
-        x: rect.x + dx,
-        y: rect.y + dy,
-        ..rect
-    }
-}
 fn is_empty(rect: Rect) -> bool {
     rect.width <= 0.0 || rect.height <= 0.0
 }
@@ -115,7 +108,7 @@ impl ShadowArea {
 
     fn translated(self, offset: [f32; 2]) -> Self {
         match self {
-            Self::Rounded(rect, radii) => Self::Rounded(translate(rect, offset), radii),
+            Self::Rounded(rect, radii) => Self::Rounded(rect.translated(offset), radii),
             Self::Contours(contours) => Self::Contours(
                 contours
                     .into_iter()
@@ -259,7 +252,7 @@ impl<I> BoxPaint<I> {
         })
     }
     fn outer_shadow(&self, shadow: &BoxShadow, rect: Rect, radii: Radii) -> Option<ShadowPaint> {
-        let shape = translate(outset(rect, [shadow.spread; 4]), shadow.offset);
+        let shape = outset(rect, [shadow.spread; 4]).translated(shadow.offset);
         if is_empty(shape) {
             return None;
         }

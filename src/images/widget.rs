@@ -239,6 +239,7 @@ impl Widget {
         );
         ImageCache::default().inline_svg_in_namespace(
             svg,
+            Default::default(),
             &crate::resources::ResourceBase::default(),
             &crate::resources::FileResolver::default(),
             crate::fonts::FontNamespace::ROOT,

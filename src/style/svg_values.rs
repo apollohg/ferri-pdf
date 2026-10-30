@@ -548,8 +548,7 @@ pub(crate) fn image_rendering_keyword(value: Keyword) -> &'static str {
 
 /// Properties applying to SVG elements that their renderer does not take from the cascade:
 /// their presentation attributes reach it directly, so only initial values are supported.
-const UNCASCADED: [Property; 5] = [
-    Property::MaskBorderSource,
+const UNCASCADED: [Property; 4] = [
     Property::BaselineShift,
     Property::AlignmentBaseline,
     Property::TextDecorationLine,

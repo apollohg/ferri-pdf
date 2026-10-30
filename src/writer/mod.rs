@@ -77,6 +77,9 @@ pub enum PdfError {
     MissingTextArea,
     #[error("an element() image names an element the layout did not render")]
     MissingElementRendering,
+    /// The CSS mask layers of SVG content draw through the display list that places it.
+    #[error("SVG content with CSS mask layers drawn outside a display list")]
+    DetachedSvgMasks,
     #[error("{0}")]
     Serialization(#[from] krilla::error::KrillaError),
 }

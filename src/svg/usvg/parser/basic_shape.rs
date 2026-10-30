@@ -11,8 +11,9 @@ use super::converter::{self, Cache};
 use super::svgtree::{AId, SvgNode};
 use super::units::convert_length;
 use crate::paint::{
-    AxisRadius, BasicShape, Calculation, CircleRadius, CornerRadii, EllipseRadii, LengthPercentage,
-    POINTS_PER_PIXEL, Position, PositionComponent, RadialExtent, Segment,
+    AxisRadius, BasicShape, BoxArea, Calculation, CircleRadius, CornerRadii, EllipseRadii,
+    GeometryBox, LengthPercentage, POINTS_PER_PIXEL, Position, PositionComponent, RadialExtent,
+    Segment, ShapeBox, SvgBoxes,
 };
 use crate::style::shape_values::{PathErrors, auto_edge, path_data, remainder, sides};
 use crate::svg::usvg::{ClipPath, Fill, FillRule, Group, Node, Path, Rect, Transform, Units};
@@ -22,24 +23,10 @@ const ROUND: &str = "round";
 const AT: &str = "at";
 const AUTO: &str = "auto";
 
-/// The boxes an SVG element offers as `<geometry-box>`.
-pub(crate) struct ReferenceBoxes {
-    pub(crate) fill: Rect,
-    pub(crate) stroke: Rect,
-    pub(crate) view: Rect,
-}
-
-#[derive(Clone, Copy)]
-enum Reference {
-    Fill,
-    Stroke,
-    View,
-}
-
 /// A parsed `clip-path` basic shape; without a shape it clips to the reference box itself.
 pub(crate) struct BasicShapeClip {
     shape: Option<BasicShape>,
-    reference: Reference,
+    reference: GeometryBox,
 }
 
 /// The arguments of a basic shape function, lengths in points.
@@ -69,12 +56,14 @@ pub(crate) fn parse(
                 shape = Some(self::shape(&name.to_ascii_lowercase(), &items)?);
             }
             Token::Ident(name) if reference.is_none() => {
-                // Content and padding boxes are the fill box, border and margin boxes the stroke
-                // box, of SVG content.
                 reference = Some(match &*name.to_ascii_lowercase() {
-                    converter::FILL_BOX | "content-box" | "padding-box" => Reference::Fill,
-                    converter::STROKE_BOX | "border-box" | "margin-box" => Reference::Stroke,
-                    "view-box" => Reference::View,
+                    converter::FILL_BOX => GeometryBox::Fill,
+                    converter::STROKE_BOX => GeometryBox::Stroke,
+                    "view-box" => GeometryBox::View,
+                    "content-box" => GeometryBox::Shape(ShapeBox::Visual(BoxArea::ContentBox)),
+                    "padding-box" => GeometryBox::Shape(ShapeBox::Visual(BoxArea::PaddingBox)),
+                    "border-box" => GeometryBox::Shape(ShapeBox::Visual(BoxArea::BorderBox)),
+                    "margin-box" => GeometryBox::Shape(ShapeBox::Margin),
                     _ => return None,
                 });
             }
@@ -83,7 +72,7 @@ pub(crate) fn parse(
     }
     (shape.is_some() || reference.is_some()).then_some(BasicShapeClip {
         shape,
-        reference: reference.unwrap_or(Reference::Stroke),
+        reference: reference.unwrap_or(GeometryBox::Stroke),
     })
 }
 
@@ -410,17 +399,21 @@ fn position(items: &[Item]) -> Option<Position> {
 /// The clip `clip` makes in `boxes`; `None` when it encloses nothing, which hides the element.
 pub(crate) fn convert(
     clip: &BasicShapeClip,
-    boxes: &ReferenceBoxes,
+    boxes: &SvgBoxes,
     state: &converter::State,
     cache: &mut Cache,
 ) -> Option<Arc<ClipPath>> {
-    let reference = match clip.reference {
-        Reference::Fill => boxes.fill,
-        Reference::Stroke => boxes.stroke,
-        Reference::View => boxes.view,
-    };
+    let reference = boxes.area(clip.reference);
     let (rule, data) = match &clip.shape {
-        None => (FillRule::NonZero, PathBuilder::from_rect(reference)),
+        None => (
+            FillRule::NonZero,
+            PathBuilder::from_rect(Rect::from_xywh(
+                reference.x / POINTS_PER_PIXEL,
+                reference.y / POINTS_PER_PIXEL,
+                reference.width / POINTS_PER_PIXEL,
+                reference.height / POINTS_PER_PIXEL,
+            )?),
+        ),
         Some(shape) => outline(shape, reference)?,
     };
     let fill = Fill {
@@ -449,15 +442,13 @@ pub(crate) fn convert(
 }
 
 /// The outline `shape` traces in `reference`, in user units, as boxes trace it in points.
-fn outline(shape: &BasicShape, reference: Rect) -> Option<(FillRule, tiny_skia_path::Path)> {
+fn outline(
+    shape: &BasicShape,
+    reference: crate::paint::Rect,
+) -> Option<(FillRule, tiny_skia_path::Path)> {
     let crate::paint::Shape::Path {
         contours, even_odd, ..
-    } = shape.outline(crate::paint::Rect {
-        x: reference.x() * POINTS_PER_PIXEL,
-        y: reference.y() * POINTS_PER_PIXEL,
-        width: reference.width() * POINTS_PER_PIXEL,
-        height: reference.height() * POINTS_PER_PIXEL,
-    })
+    } = shape.outline(reference)
     else {
         return None;
     };

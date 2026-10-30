@@ -148,15 +148,32 @@ fn colour_functions_match_their_svg_filter_equivalents() {
     for function in functions() {
         let mut ours = samples();
         let filter = function_filter(&function, AREA).expect("function filter");
-        crate::svg::resvg::filter::apply(&filter, tiny_skia::Transform::identity(), &mut ours);
+        crate::svg::resvg::filter::apply(
+            &filter,
+            tiny_skia::Transform::identity(),
+            &mut ours,
+            None,
+        );
         let markup = equivalent(&function);
         // The referencing rectangle is in CSS pixels; userSpaceOnUse units ignore it.
-        let tree = crate::svg::reference_tree(&markup, "filter", "#f", Some(AREA), &|_| None)
-            .unwrap_or_else(|| panic!("{function:?}: spec markup must parse: {markup}"));
+        let tree = crate::svg::reference_tree(
+            &markup,
+            crate::images::LayerMaskTable::default(),
+            "filter",
+            "#f",
+            Some(AREA),
+            &|_| None,
+        )
+        .unwrap_or_else(|| panic!("{function:?}: spec markup must parse: {markup}"));
         let spec = crate::svg::first_filter(tree.root())
             .unwrap_or_else(|| panic!("{function:?}: spec markup must give a filter: {markup}"));
         let mut theirs = samples();
-        crate::svg::resvg::filter::apply(&spec, tiny_skia::Transform::identity(), &mut theirs);
+        crate::svg::resvg::filter::apply(
+            &spec,
+            tiny_skia::Transform::identity(),
+            &mut theirs,
+            None,
+        );
         for ((input, ours), theirs) in SAMPLES
             .iter()
             .zip(demultiplied(&ours))
@@ -205,6 +222,7 @@ fn only_range_preserving_colour_chains_stay_vector_and_match_the_raster_result()
             &function_filter(&function, AREA).expect("function filter"),
             tiny_skia::Transform::identity(),
             &mut raster,
+            None,
         );
         for (input, filtered) in SAMPLES.iter().zip(demultiplied(&raster)) {
             let [red, green, blue, opacity] = *input;

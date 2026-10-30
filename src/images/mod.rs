@@ -21,7 +21,7 @@ use std::{
     io::Cursor,
     sync::Arc,
 };
-pub(crate) use svg::{SvgImage, options as svg_options};
+pub(crate) use svg::{LayerMaskTable, SvgImage, options as svg_options};
 impl crate::paint::ImageInfo for Image {
     fn natural_size(&self) -> NaturalDimensions {
         Image::natural_size(self)
@@ -599,21 +599,24 @@ impl ImageCache {
         base: &crate::resources::ResourceBase,
         resolver: &dyn ResourceResolver,
     ) -> Result<Arc<Image>, ImageError> {
-        self.inline_svg_in_namespace(xml, base, resolver, FontNamespace::ROOT)
+        self.inline_svg_in_namespace(xml, Default::default(), base, resolver, FontNamespace::ROOT)
     }
+    /// SVG content the document styles, with the CSS mask layers its `mask` values name.
     pub(crate) fn inline_svg_in_namespace(
         &mut self,
         xml: String,
+        layer_masks: LayerMaskTable,
         base: &crate::resources::ResourceBase,
         resolver: &dyn ResourceResolver,
         namespace: FontNamespace,
     ) -> Result<Arc<Image>, ImageError> {
-        let resource = crate::resources::Resource {
-            bytes: xml.into_bytes(),
-            base: base.clone(),
-        };
-        Ok(Arc::new(Image::Svg(SvgImage::parse(
-            resource, resolver, 0, self, namespace,
+        Ok(Arc::new(Image::Svg(SvgImage::parse_source(
+            Arc::new(svg::SvgSource::new(xml, base.clone())),
+            layer_masks,
+            resolver,
+            0,
+            self,
+            namespace,
         )?)))
     }
     pub(crate) fn load_nested(
@@ -649,7 +652,12 @@ impl ImageCache {
             .cloned();
         let image = if let Some(source) = source {
             Image::Svg(SvgImage::parse_source(
-                source, resolver, depth, self, namespace,
+                source,
+                Arc::new([]),
+                resolver,
+                depth,
+                self,
+                namespace,
             )?)
         } else {
             let resource = resolver.resolve(reference, base)?;

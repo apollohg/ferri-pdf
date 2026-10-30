@@ -180,7 +180,12 @@ impl Painter<'_, '_, '_> {
             match item {
                 DisplayItem::Image(paint) => {
                     self.images.scale = space.scale;
-                    self.images.draw(paint, space.viewport, surface)?;
+                    match paint.image.as_ref() {
+                        crate::images::Image::Svg(svg) if svg.has_layer_masks() => {
+                            crate::writer::masks::draw_svg(self, paint, space, surface)?;
+                        }
+                        _ => self.images.draw(paint, space.viewport, surface)?,
+                    }
                 }
                 DisplayItem::Frame(frame) => {
                     let mut context = FlowContext {

@@ -44,8 +44,9 @@ enum PaintSource {
     Video(Option<String>),
     /// A `canvas` element's bitmap, transparent black without script, of this many CSS pixels.
     Canvas([u32; 2]),
-    /// A standalone SVG document filling its viewport with an SVG paint server.
-    PaintServer(String),
+    /// A standalone SVG document filling its viewport with an SVG paint server, and the CSS
+    /// mask layers its content names.
+    PaintServer(String, crate::images::LayerMaskTable),
 }
 
 /// The `element()` images of one formatting pass: what the last pass measured, decided once
@@ -68,8 +69,9 @@ pub(crate) enum Resolved<'a> {
     Image(&'a str, Option<f32>),
     /// A `video` element's poster frame, or transparent black without one.
     Poster(Option<&'a str>),
-    /// A standalone SVG document showing a paint source.
-    Svg(String),
+    /// A standalone SVG document showing a paint source, and the CSS mask layers its content
+    /// names.
+    Svg(String, crate::images::LayerMaskTable),
 }
 
 impl ElementImages {
@@ -115,10 +117,15 @@ impl ElementImages {
             Some(ElementState::NotRendered) => match self.sources.get(&target) {
                 Some(PaintSource::Image(url, density)) => Resolved::Image(url, *density),
                 Some(PaintSource::Video(poster)) => Resolved::Poster(poster.as_deref()),
-                Some(PaintSource::Canvas([width, height])) => Resolved::Svg(format!(
-                    r#"<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}"/>"#
-                )),
-                Some(PaintSource::PaintServer(xml)) => Resolved::Svg(xml.clone()),
+                Some(PaintSource::Canvas([width, height])) => Resolved::Svg(
+                    format!(
+                        r#"<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}"/>"#
+                    ),
+                    crate::images::LayerMaskTable::default(),
+                ),
+                Some(PaintSource::PaintServer(xml, layer_masks)) => {
+                    Resolved::Svg(xml.clone(), layer_masks.clone())
+                }
                 None => Resolved::Invalid,
             },
             Some(ElementState::Unstacked) | None => Resolved::Invalid,
@@ -214,7 +221,7 @@ fn paint_source(
     if element.namespace() == SVG_NAMESPACE && PAINT_SERVERS.contains(&element.name()) {
         return definitions
             .paint_server(element.attr("id")?)
-            .map(PaintSource::PaintServer);
+            .map(|(xml, layer_masks)| PaintSource::PaintServer(xml, layer_masks));
     }
     if element.namespace() != HTML_NAMESPACE {
         return None;

@@ -32,9 +32,10 @@ mod mask;
 mod path;
 mod text;
 mod util;
+pub(crate) use util::UsvgTransformExt;
 
 /// Settings that should be applied when converting a SVG.
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone)]
 pub(crate) struct SvgSettings<'a> {
     /// Whether text should be embedded as properly selectable text. Otherwise,
     /// it will be drawn as outlined paths instead.
@@ -46,6 +47,9 @@ pub(crate) struct SvgSettings<'a> {
     pub jpeg_images: Option<&'a std::collections::HashSet<usize>>,
     /// Recoverable raster decoding failures while rendering this SVG.
     pub image_errors: Option<&'a std::cell::RefCell<std::collections::BTreeSet<String>>>,
+    /// Draws the CSS mask layers of groups, which only trees of SVG content the document
+    /// styles have.
+    pub layer_masks: Option<&'a dyn crate::svg::LayerMasks>,
 }
 
 impl Default for SvgSettings<'_> {
@@ -55,6 +59,7 @@ impl Default for SvgSettings<'_> {
             filter_scale: 4.0,
             jpeg_images: None,
             image_errors: None,
+            layer_masks: None,
         }
     }
 }

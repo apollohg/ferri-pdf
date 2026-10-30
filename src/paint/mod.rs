@@ -58,6 +58,7 @@ pub(crate) use gradient::{
 };
 pub(crate) use image::{ImageInfo, NaturalDimensions};
 pub use length::LengthPercentage;
+pub(crate) use mask::SvgBoxes;
 pub use mask::{MaskComposite, MaskMode, Masks};
 pub(crate) use polygon::clip_polygon;
 pub(crate) use rounded::rounded_rect;
@@ -129,6 +130,14 @@ pub struct Rect {
     pub height: f32,
 }
 impl Rect {
+    #[must_use]
+    pub(crate) fn translated(self, [dx, dy]: Point) -> Self {
+        Self {
+            x: self.x + dx,
+            y: self.y + dy,
+            ..self
+        }
+    }
     #[must_use]
     pub fn union(self, other: Self) -> Self {
         let x = self.x.min(other.x);

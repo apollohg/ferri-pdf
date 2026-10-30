@@ -3,8 +3,17 @@ use crate::dom::Selector;
 use crate::resources::FileResolver;
 use crate::style::StylesheetSource;
 
-/// The XML of the document's first `<svg>`, styled by `css` as the document's style sheet.
-fn styled(css: &str, html: &str) -> Result<String, DocumentError> {
+/// Mask layers as loaded without their images, which serialization does not read.
+#[expect(
+    clippy::unnecessary_wraps,
+    reason = "serialization takes a mask loader that can fail"
+)]
+fn unloaded(style: &Style) -> Result<Arc<crate::graphics::LoadedMasks>, DocumentError> {
+    Ok(Arc::new(style.decoration.masks.with_image_type()))
+}
+
+/// The document's first `<svg>` serialized, styled by `css` as the document's style sheet.
+fn serialized(css: &str, html: &str) -> Result<SerializedSvg, DocumentError> {
     let tree = DocumentTree::parse(html).expect("parse test HTML");
     let sheet = Stylesheet::parse(&[StylesheetSource {
         text: css.into(),
@@ -21,7 +30,12 @@ fn styled(css: &str, html: &str) -> Result<String, DocumentError> {
         .next()
         .expect("an svg element");
     let style = computed_in_place(svg, &root, &styling)?;
-    serialize(svg, &style, &styling)
+    serialize(svg, &style, &styling, &mut unloaded)
+}
+
+/// The XML of the document's first `<svg>`, styled by `css` as the document's style sheet.
+fn styled(css: &str, html: &str) -> Result<String, DocumentError> {
+    serialized(css, html).map(|svg| svg.xml)
 }
 
 fn xml(css: &str, html: &str) -> String {
@@ -458,7 +472,9 @@ fn sprites_in_other_svg_elements_and_nested_uses_get_instances_and_cycles_render
         .computed_with_resolver(tree.root_element(), &Style::default(), &resolver)
         .unwrap();
     let style = computed_in_place(second, &root, &styling).unwrap();
-    let xml = serialize(second, &style, &styling).unwrap();
+    let xml = serialize(second, &style, &styling, &mut unloaded)
+        .unwrap()
+        .xml;
     assert_eq!(
         value(&xml, "dot", "fill"),
         "rgba(10,20,30,1)",
@@ -526,10 +542,53 @@ fn text_carries_its_caps_and_inherited_language_to_the_renderer() {
 }
 
 #[test]
+fn mask_layers_beyond_one_mask_element_name_the_layers_the_document_draws() {
+    let svg = serialized(
+        "#two{mask:url(#a),url(#b)} #image{mask-image:linear-gradient(red,red)} \
+         #mode{mask:url(#a) luminance} #border{mask-border-source:linear-gradient(red,red)} \
+         #single{mask:url(#a)}",
+        "<svg><rect id=two /><rect id=image /><rect id=mode /><rect id=border />\
+         <rect id=single /><use id=instance href='#two'/></svg>",
+    )
+    .unwrap();
+    let xml = &svg.xml;
+    assert_eq!(
+        value(xml, "single", "mask"),
+        "url(\"#a\")",
+        "one mask element in its own mode stays the renderer's\n{xml}"
+    );
+    let named: Vec<_> = ["two", "image", "mode", "border"]
+        .into_iter()
+        .map(|id| {
+            crate::svg::layer_mask_index(&value(xml, id, "mask"))
+                .unwrap_or_else(|| panic!("#{id} names its mask layers\n{xml}"))
+        })
+        .collect();
+    assert_eq!(
+        named,
+        [0, 1, 2, 3],
+        "each element names its own layers\n{xml}"
+    );
+    assert_eq!(
+        svg.layer_masks.len(),
+        5,
+        "the use element's clone of #two names layers of its own\n{xml}"
+    );
+    assert_eq!(
+        svg.layer_masks[0].sources,
+        [Some("#a".into()), Some("#b".into())],
+        "the table keeps the computed layers"
+    );
+    assert!(
+        svg.layer_masks[3].border.is_drawn(),
+        "the table keeps the mask border"
+    );
+}
+
+#[test]
 fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
     for (css, expected) in [
         ("pattern{overflow:visible}", "always clips"),
-        ("rect{mask:url(#a),url(#b)}", "mask layers"),
         ("rect{cx:calc(10% + 1px)}", ""),
     ] {
         match styled(

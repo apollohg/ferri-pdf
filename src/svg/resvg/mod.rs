@@ -34,8 +34,9 @@ pub(crate) fn render(
     tree: &crate::svg::usvg::Tree,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
+    layer_masks: Option<&dyn crate::svg::LayerMasks>,
 ) {
-    let ctx = context(pixmap.width(), pixmap.height());
+    let ctx = context(pixmap.width(), pixmap.height(), layer_masks);
     render::render_nodes(tree.root(), &ctx, transform, pixmap);
 }
 
@@ -44,8 +45,9 @@ pub(crate) fn apply_mask(
     mask: &crate::svg::usvg::Mask,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::Pixmap,
+    layer_masks: Option<&dyn crate::svg::LayerMasks>,
 ) {
-    let ctx = context(pixmap.width(), pixmap.height());
+    let ctx = context(pixmap.width(), pixmap.height(), layer_masks);
     mask::apply(mask, &ctx, transform, pixmap);
 }
 
@@ -57,16 +59,22 @@ pub(crate) fn render_prefix(
     inclusive: bool,
     transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
+    layer_masks: Option<&dyn crate::svg::LayerMasks>,
 ) {
     let ctx = render::Context::until(
-        context(pixmap.width(), pixmap.height()).max_bbox,
+        context(pixmap.width(), pixmap.height(), layer_masks).max_bbox,
         node,
         inclusive,
+        layer_masks,
     );
     render::render_nodes(group, &ctx, transform, pixmap);
 }
 
-fn context(width: u32, height: u32) -> render::Context<'static> {
+fn context(
+    width: u32,
+    height: u32,
+    layer_masks: Option<&dyn crate::svg::LayerMasks>,
+) -> render::Context<'_> {
     let max_bbox = tiny_skia::IntRect::from_xywh(
         -(width as i32) * 2,
         -(height as i32) * 2,
@@ -74,7 +82,7 @@ fn context(width: u32, height: u32) -> render::Context<'static> {
         height * 5,
     )
     .unwrap();
-    render::Context::new(max_bbox)
+    render::Context::new(max_bbox, layer_masks)
 }
 
 /// Renders a node onto the pixmap.
@@ -91,6 +99,7 @@ pub(crate) fn render_node(
     node: &crate::svg::usvg::Node,
     mut transform: tiny_skia::Transform,
     pixmap: &mut tiny_skia::PixmapMut,
+    layer_masks: Option<&dyn crate::svg::LayerMasks>,
 ) -> Option<()> {
     let bbox = node.abs_layer_bounding_box()?;
 
@@ -105,7 +114,7 @@ pub(crate) fn render_node(
 
     transform = transform.pre_translate(-bbox.x(), -bbox.y());
 
-    let ctx = render::Context::new(max_bbox);
+    let ctx = render::Context::new(max_bbox, layer_masks);
     render::render_node(node, &ctx, transform, pixmap);
 
     Some(())

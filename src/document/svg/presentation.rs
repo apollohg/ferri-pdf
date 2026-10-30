@@ -49,9 +49,15 @@ pub(super) fn is_text_content(tag: &str) -> bool {
     TEXT_CONTENT.contains(&tag)
 }
 
-/// The `style` attribute value carrying the element's computed presentation properties. The
-/// document paints the root's own box, which its opacity, blending and display govern.
-pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<String, StyleError> {
+/// The `style` attribute value carrying the element's computed presentation properties, with
+/// `mask` its `mask` value. `None` marks the root, whose own box the document paints, which
+/// its opacity, blending, display and masks govern.
+pub(super) fn declarations(
+    tag: &str,
+    style: &Style,
+    mask: Option<&str>,
+) -> Result<String, StyleError> {
+    let root = mask.is_none();
     let svg = &style.svg;
     let mut output = String::new();
     let mut push = |name: &str, value: &str| {
@@ -137,7 +143,9 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
         if let Some(overflow) = overflow(tag, style.overflow)? {
             push("overflow", overflow);
         }
-        push("mask", &mask(&style.decoration.masks)?);
+        if let Some(mask) = mask {
+            push("mask", mask);
+        }
         push("clip-path", &clip_path(style)?);
         match style.display {
             Display::None => push("display", "none"),
@@ -450,11 +458,12 @@ fn path_data(contours: &[crate::paint::Contour]) -> String {
     data
 }
 
-/// CSS Masking 1 §7: a single reference to an SVG `mask` element, whose `mask-type` the
-/// default `match-source` mode follows.
-fn mask(masks: &crate::paint::Masks) -> Result<String, StyleError> {
+/// CSS Masking 1 §7 `mask` as the SVG renderer reads it: `none`, or a single reference to an
+/// SVG `mask` element, whose `mask-type` the default `match-source` mode follows. `None` for
+/// other mask layers and a mask border, which the document draws.
+pub(super) fn mask(masks: &crate::paint::Masks) -> Option<String> {
     if !masks.has_layers() && !masks.border.is_drawn() {
-        return Ok(NONE.into());
+        return Some(NONE.into());
     }
     match masks.sources.as_slice() {
         [Some(reference)]
@@ -462,11 +471,9 @@ fn mask(masks: &crate::paint::Masks) -> Result<String, StyleError> {
                 && !masks.border.is_drawn()
                 && masks.modes == [crate::paint::MaskMode::default()] =>
         {
-            Ok(url(reference))
+            Some(url(reference))
         }
-        _ => Err(StyleError::Unsupported(
-            "mask layers other than one mask element reference on SVG content".into(),
-        )),
+        _ => None,
     }
 }
 

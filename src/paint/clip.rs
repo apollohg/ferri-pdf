@@ -89,6 +89,16 @@ pub struct Clip {
 }
 
 impl Clip {
+    /// A sharp-cornered rectangle.
+    pub(crate) fn rectangle(rect: Rect) -> Self {
+        Self {
+            rect,
+            radii: Radii::default(),
+            outline: None,
+            reference_box: None,
+            axes: [true; 2],
+        }
+    }
     /// Only changed edges cut the outline; coincident edges retain its antialiasing.
     pub fn fragment_bounds(&self) -> Option<ClipBounds> {
         self.reference_box.and_then(|reference| {

@@ -77,6 +77,7 @@ pub(super) fn audio_controls(
     );
     Ok(resources.cache.inline_svg_in_namespace(
         svg,
+        Default::default(),
         resources.base,
         resources.resolver,
         FontNamespace::ROOT,

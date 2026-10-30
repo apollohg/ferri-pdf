@@ -42,6 +42,18 @@ pub(crate) struct Styling<'a> {
     pub(crate) resolver: &'a dyn ResourceResolver,
 }
 
+/// Loads the CSS mask layers of an SVG element with the computed style, and the documents
+/// they reference.
+pub(crate) type MaskLoader<'a> =
+    dyn FnMut(&Style) -> Result<Arc<crate::graphics::LoadedMasks>, DocumentError> + 'a;
+
+/// An SVG document written from styled SVG content, and the CSS mask layers its `mask`
+/// values name.
+pub(crate) struct SerializedSvg {
+    pub(crate) xml: String,
+    pub(crate) layer_masks: crate::images::LayerMaskTable,
+}
+
 /// Serializes the subtree of an `<svg>` element whose computed style is `style` as an SVG
 /// document with explicit namespaces. Elements and attributes with undeclared prefixes (editor
 /// metadata) are omitted.
@@ -49,8 +61,9 @@ pub(crate) fn serialize(
     element: Element<'_>,
     style: &Style,
     styling: &Styling<'_>,
-) -> Result<String, DocumentError> {
-    Serializer::new(element, styling).document(element, style)
+    load_masks: &mut MaskLoader<'_>,
+) -> Result<SerializedSvg, DocumentError> {
+    Serializer::new(element, styling, load_masks).document(element, style)
 }
 
 enum Step<'d> {
@@ -62,6 +75,9 @@ enum Step<'d> {
 
 struct Serializer<'a, 'd> {
     styling: &'a Styling<'a>,
+    load_masks: &'a mut MaskLoader<'a>,
+    /// The mask layers that `mask` values written so far name, by index.
+    layer_masks: Vec<Arc<crate::graphics::LoadedMasks>>,
     initial_only: InitialOnly,
     xml: String,
     /// Ids written so far; a clone repeating one omits it.
@@ -74,9 +90,15 @@ struct Serializer<'a, 'd> {
 }
 
 impl<'a, 'd> Serializer<'a, 'd> {
-    fn new(root: Element<'d>, styling: &'a Styling<'a>) -> Self {
+    fn new(
+        root: Element<'d>,
+        styling: &'a Styling<'a>,
+        load_masks: &'a mut MaskLoader<'a>,
+    ) -> Self {
         Self {
             styling,
+            load_masks,
+            layer_masks: Vec::new(),
             initial_only: InitialOnly::new(),
             xml: String::new(),
             written: HashSet::new(),
@@ -90,7 +112,11 @@ impl<'a, 'd> Serializer<'a, 'd> {
         }
     }
 
-    fn document(mut self, root: Element<'d>, style: &Style) -> Result<String, DocumentError> {
+    fn document(
+        mut self,
+        root: Element<'d>,
+        style: &Style,
+    ) -> Result<SerializedSvg, DocumentError> {
         let style = style.canonical();
         let _ = write!(
             self.xml,
@@ -121,7 +147,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
             &mut self.xml,
             "",
             STYLE_ATTRIBUTE,
-            &presentation::declarations(root.name(), style, true)?,
+            &presentation::declarations(root.name(), style, None)?,
         );
         self.xml.push('>');
         for child in root.as_node().children(TreeRelation::Selector) {
@@ -135,7 +161,10 @@ impl<'a, 'd> Serializer<'a, 'd> {
             let _ = write!(self.xml, "</{DEFINITIONS_ELEMENT}>");
         }
         let _ = write!(self.xml, "</{}>", root.name());
-        Ok(self.xml)
+        Ok(SerializedSvg {
+            xml: self.xml,
+            layer_masks: self.layer_masks.into(),
+        })
     }
 
     /// Writes `node` and its descendants, whose parent's style is `parent`; `instance` is the
@@ -297,11 +326,17 @@ impl<'a, 'd> Serializer<'a, 'd> {
         {
             attribute(&mut self.xml, "", name, &value);
         }
+        let mask = if let Some(mask) = presentation::mask(&style.decoration.masks) {
+            mask
+        } else {
+            self.layer_masks.push((self.load_masks)(style)?);
+            crate::svg::layer_mask_value(self.layer_masks.len() - 1)
+        };
         attribute(
             &mut self.xml,
             "",
             STYLE_ATTRIBUTE,
-            &presentation::declarations(tag, style, false)?,
+            &presentation::declarations(tag, style, Some(&mask))?,
         );
         Ok(())
     }
@@ -357,6 +392,7 @@ pub(crate) struct SvgDefinition {
     /// The element's name.
     pub(crate) element: &'static str,
     pub(crate) xml: Arc<str>,
+    pub(crate) layer_masks: crate::images::LayerMaskTable,
 }
 
 impl SvgDefinitions {
@@ -367,8 +403,10 @@ impl SvgDefinitions {
         root: &Style,
         styling: &Styling<'_>,
         linked: crate::images::LinkedDocuments,
+        load_masks: &mut MaskLoader<'_>,
     ) -> Result<Self, DocumentError> {
-        let mut roots: HashMap<ElementId, Arc<str>> = HashMap::new();
+        let mut roots: HashMap<ElementId, (Arc<str>, crate::images::LayerMaskTable)> =
+            HashMap::new();
         let mut definitions = HashMap::new();
         let mut seen = HashSet::new();
         for element in tree.elements() {
@@ -393,17 +431,20 @@ impl SvgDefinitions {
             else {
                 continue;
             };
-            let xml = if let Some(xml) = roots.get(&svg.id()) {
-                xml.clone()
+            let (xml, layer_masks) = if let Some(serialized) = roots.get(&svg.id()) {
+                serialized.clone()
             } else {
                 let style = computed_in_place(svg, root, styling)?;
-                let xml: Arc<str> = serialize(svg, &style, styling)?.into();
-                roots.insert(svg.id(), xml.clone());
-                xml
+                let serialized = serialize(svg, &style, styling, load_masks)?;
+                let serialized = (serialized.xml.into(), serialized.layer_masks);
+                roots.insert(svg.id(), serialized.clone());
+                serialized
             };
-            definitions
-                .entry(id.to_owned())
-                .or_insert(SvgDefinition { element: name, xml });
+            definitions.entry(id.to_owned()).or_insert(SvgDefinition {
+                element: name,
+                xml,
+                layer_masks,
+            });
         }
         Ok(Self {
             entries: definitions,
@@ -425,7 +466,7 @@ impl SvgDefinitions {
     /// A standalone SVG document without natural dimensions whose viewport the paint server
     /// with ID `id` fills: its `objectBoundingBox` units span the viewport, and its user
     /// units are CSS pixels (CSS Images 4 §2.7.1).
-    pub(crate) fn paint_server(&self, id: &str) -> Option<String> {
+    pub(crate) fn paint_server(&self, id: &str) -> Option<(String, crate::images::LayerMaskTable)> {
         let definition = self.entries.get(id).filter(|definition| {
             matches!(
                 definition.element,
@@ -437,10 +478,13 @@ impl SvgDefinitions {
             .expect("writing a String cannot fail");
         let mut fill = String::new();
         escape(&mut fill, &format!("url({url})"), true);
-        Some(format!(
-            "<svg xmlns=\"http://www.w3.org/2000/svg\"><defs>{}</defs>\
-             <rect width=\"100%\" height=\"100%\" fill=\"{fill}\"/></svg>",
-            definition.xml
+        Some((
+            format!(
+                "<svg xmlns=\"http://www.w3.org/2000/svg\"><defs>{}</defs>\
+                 <rect width=\"100%\" height=\"100%\" fill=\"{fill}\"/></svg>",
+                definition.xml
+            ),
+            definition.layer_masks.clone(),
         ))
     }
     fn get_decoded(&self, id: &str) -> Option<&SvgDefinition> {
@@ -482,14 +526,30 @@ impl SvgDefinitions {
             .find(|node| node.attribute(ID_ATTRIBUTE) == Some(&*id))
             .is_some_and(|node| node.has_tag_name((SVG_NAMESPACE, element)));
             return named
-                .then(|| crate::svg::reference_tree("", property, reference, bounds, &documents))
+                .then(|| {
+                    crate::svg::reference_tree(
+                        "",
+                        crate::images::LayerMaskTable::default(),
+                        property,
+                        reference,
+                        bounds,
+                        &documents,
+                    )
+                })
                 .flatten();
         };
         let definition = self
             .entries
             .get(id)
             .filter(|definition| definition.element == element)?;
-        crate::svg::reference_tree(&definition.xml, property, reference, bounds, &documents)
+        crate::svg::reference_tree(
+            &definition.xml,
+            definition.layer_masks.clone(),
+            property,
+            reference,
+            bounds,
+            &documents,
+        )
     }
 }
 

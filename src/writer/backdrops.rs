@@ -183,7 +183,7 @@ fn filtered_backdrop(
         .iter()
         .any(|function| matches!(function, FilterFunction::Blur(_)));
     let mut input = clipped_input(&image, border, to_root, spread, mirrored)?;
-    filters::apply(&steps, &mut input)?;
+    filters::apply(painter, &steps, &mut input)?;
     Ok(input.cropped(image.area))
 }
 

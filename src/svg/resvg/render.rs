@@ -8,14 +8,20 @@ pub(super) struct Context<'a> {
     /// The node rendering stops at, and whether it renders that node itself.
     until: Option<(&'a crate::svg::usvg::Node, bool)>,
     stopped: std::cell::Cell<bool>,
+    /// Draws the CSS mask layers of groups.
+    pub layer_masks: Option<&'a dyn crate::svg::LayerMasks>,
 }
 
 impl<'a> Context<'a> {
-    pub(super) fn new(max_bbox: tiny_skia::IntRect) -> Self {
+    pub(super) fn new(
+        max_bbox: tiny_skia::IntRect,
+        layer_masks: Option<&'a dyn crate::svg::LayerMasks>,
+    ) -> Self {
         Self {
             max_bbox,
             until: None,
             stopped: std::cell::Cell::new(false),
+            layer_masks,
         }
     }
 
@@ -25,10 +31,11 @@ impl<'a> Context<'a> {
         max_bbox: tiny_skia::IntRect,
         node: &'a crate::svg::usvg::Node,
         inclusive: bool,
+        layer_masks: Option<&'a dyn crate::svg::LayerMasks>,
     ) -> Self {
         Self {
             until: Some((node, inclusive)),
-            ..Self::new(max_bbox)
+            ..Self::new(max_bbox, layer_masks)
         }
     }
 }
@@ -229,7 +236,7 @@ fn render_group(
 
     if !group.filters().is_empty() {
         for filter in group.filters() {
-            crate::svg::resvg::filter::apply(filter, transform, &mut sub_pixmap);
+            crate::svg::resvg::filter::apply(filter, transform, &mut sub_pixmap, ctx.layer_masks);
         }
     }
 
@@ -239,6 +246,10 @@ fn render_group(
 
     if let Some(mask) = group.mask() {
         crate::svg::resvg::mask::apply(mask, ctx, transform, &mut sub_pixmap);
+    }
+
+    if let Some((mask, layer_masks)) = group.layer_mask().zip(ctx.layer_masks) {
+        layer_masks.apply(mask, transform, &mut sub_pixmap);
     }
 
     draw_layer(

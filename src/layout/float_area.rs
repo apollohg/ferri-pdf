@@ -721,6 +721,7 @@ fn image_alpha(
                     rows as f32 / tree_size.height(),
                 ),
                 &mut pixmap.as_mut(),
+                None,
             );
             AlphaGrid {
                 columns,

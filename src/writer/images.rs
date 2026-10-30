@@ -15,12 +15,76 @@ use std::{
 /// The orientation and scale transforms and the region clip a view draws inside.
 const VIEW_PUSHES: usize = 3;
 
+/// A decoded image: a raster in its orientation, or an SVG tree with the density its filters
+/// rasterize at.
+pub(super) enum Decoded {
+    Raster(Image, Orientation),
+    Vector(Arc<crate::svg::usvg::Tree>, f32),
+}
+
+/// Draws `decoded`, the image of `paint`, in the paint's rectangle and clip; `layer_masks`
+/// draws the CSS mask layers of its SVG content. Returns the SVG's recoverable decoding
+/// failures.
+pub(super) fn draw_placed(
+    paint: &ImagePaint,
+    decoded: &Decoded,
+    viewport: crate::graphics::Rect,
+    surface: &mut Surface<'_>,
+    layer_masks: Option<&dyn crate::svg::LayerMasks>,
+) -> Result<std::collections::BTreeSet<String>, PdfError> {
+    let rect = paint.rect;
+    if ![rect.x, rect.y, rect.width, rect.height]
+        .iter()
+        .all(|v| v.is_finite())
+        || rect.width < 0.0
+        || rect.height < 0.0
+    {
+        return Err(PdfError::InvalidGeometry);
+    }
+    let clips = paint
+        .clip
+        .as_ref()
+        .map(|clip| crate::writer::painting::push_clip(clip, viewport, surface))
+        .transpose()?
+        .unwrap_or(0);
+    let orientation = match decoded {
+        Decoded::Raster(_, orientation) => *orientation,
+        Decoded::Vector(..) => Orientation::NoTransforms,
+    };
+    surface.push_transform(&oriented(orientation, rect));
+    let unit_size = Size::from_wh(1.0, 1.0).unwrap();
+    let errors = std::cell::RefCell::new(std::collections::BTreeSet::new());
+    match decoded {
+        Decoded::Raster(image, _) => surface.draw_image(image.clone(), unit_size),
+        Decoded::Vector(tree, filter_scale) => {
+            let jpeg_images = match paint.image.as_ref() {
+                Asset::Svg(svg) => Some(svg.jpeg_images()),
+                _ => None,
+            };
+            surface.draw_svg(
+                tree,
+                unit_size,
+                crate::svg::krilla_svg::SvgSettings {
+                    jpeg_images,
+                    image_errors: Some(&errors),
+                    filter_scale: *filter_scale,
+                    layer_masks,
+                    ..Default::default()
+                },
+            );
+        }
+    }
+    surface.pop();
+    crate::writer::painting::pop_clips(clips, surface);
+    Ok(errors.into_inner())
+}
+
 pub(super) struct ImageWriter {
     failed: HashMap<usize, String>,
     reported: HashSet<usize>,
     diagnostics: Vec<String>,
     images: HashMap<usize, Image>,
-    vectors: HashMap<(usize, u32, u32), crate::svg::usvg::Tree>,
+    vectors: HashMap<(usize, u32, u32), Arc<crate::svg::usvg::Tree>>,
     opaque: HashMap<usize, bool>,
     /// The density images composited in pixels resolve at.
     pub(super) pixels_per_point: f32,
@@ -103,12 +167,28 @@ impl ImageWriter {
         viewport: crate::graphics::Rect,
         surface: &mut Surface<'_>,
     ) -> Result<(), PdfError> {
+        if let Asset::Svg(svg) = paint.image.as_ref()
+            && svg.has_layer_masks()
+        {
+            return Err(PdfError::DetachedSvgMasks);
+        }
+        let Some(decoded) = self.decode(paint)? else {
+            return Ok(());
+        };
+        let errors = draw_placed(paint, &decoded, viewport, surface, None)?;
+        self.report_svg_errors(paint, errors);
+        Ok(())
+    }
+
+    /// Decodes `paint`'s image once, or its SVG tree at the paint's size; `None` when it fails
+    /// to decode, which is reported.
+    pub(super) fn decode(&mut self, paint: &ImagePaint) -> Result<Option<Decoded>, PdfError> {
         let key = Arc::as_ptr(&paint.image) as usize;
         let source_size = [paint.rect.width, paint.rect.height].map(|v| v / paint.source_scale);
         let vector_key = (key, source_size[0].to_bits(), source_size[1].to_bits());
         if self.failed.contains_key(&key) {
             self.report_failure(key);
-            return Ok(());
+            return Ok(None);
         }
         if let std::collections::hash_map::Entry::Vacant(entry) = self.images.entry(key) {
             let loaded = match paint.image.as_ref() {
@@ -145,51 +225,27 @@ impl ImageWriter {
                     Err(error) => {
                         self.failed.insert(key, error);
                         self.report_failure(key);
-                        return Ok(());
+                        return Ok(None);
                     }
                 }
             }
         }
-        let orientation = match paint.image.as_ref() {
-            Asset::Raster(raster) => raster.orientation,
-            Asset::Pixels(_)
-            | Asset::Transparent
-            | Asset::Frame(..)
-            | Asset::Viewport(_)
-            | Asset::Widget(_)
-            | Asset::Element(_)
-            | Asset::View(_)
-            | Asset::Generated(_) => Orientation::NoTransforms,
-            Asset::Svg(svg) => {
-                if let std::collections::hash_map::Entry::Vacant(entry) =
-                    self.vectors.entry(vector_key)
-                {
-                    let size = source_size.map(|v| v / crate::style::POINTS_PER_PIXEL);
-                    entry.insert(svg.tree(size).map_err(PdfError::Svg)?);
-                }
-                Orientation::NoTransforms
+        Ok(Some(match paint.image.as_ref() {
+            Asset::Raster(raster) => Decoded::Raster(self.images[&key].clone(), raster.orientation),
+            Asset::Pixels(_) => {
+                Decoded::Raster(self.images[&key].clone(), Orientation::NoTransforms)
             }
-        };
-        let rect = paint.rect;
-        if ![rect.x, rect.y, rect.width, rect.height]
-            .iter()
-            .all(|v| v.is_finite())
-            || rect.width < 0.0
-            || rect.height < 0.0
-        {
-            return Err(PdfError::InvalidGeometry);
-        }
-        let clips = paint
-            .clip
-            .as_ref()
-            .map(|clip| crate::writer::painting::push_clip(clip, viewport, surface))
-            .transpose()?
-            .unwrap_or(0);
-        surface.push_transform(&oriented(orientation, rect));
-        let unit_size = Size::from_wh(1.0, 1.0).unwrap();
-        match paint.image.as_ref() {
-            Asset::Raster(_) | Asset::Pixels(_) => {
-                surface.draw_image(self.images[&key].clone(), unit_size);
+            Asset::Svg(svg) => {
+                let tree = match self.vectors.entry(vector_key) {
+                    std::collections::hash_map::Entry::Occupied(entry) => entry.get().clone(),
+                    std::collections::hash_map::Entry::Vacant(entry) => {
+                        let size = source_size.map(|v| v / crate::style::POINTS_PER_PIXEL);
+                        entry
+                            .insert(Arc::new(svg.tree(size).map_err(PdfError::Svg)?))
+                            .clone()
+                    }
+                };
+                Decoded::Vector(tree, self.pixels_per_point)
             }
             Asset::Transparent
             | Asset::Frame(..)
@@ -200,27 +256,18 @@ impl ImageWriter {
             | Asset::Generated(_) => {
                 unreachable!("draw dispatches only decoded images here")
             }
-            Asset::Svg(svg) => {
-                let errors = std::cell::RefCell::new(std::collections::BTreeSet::new());
-                surface.draw_svg(
-                    &self.vectors[&vector_key],
-                    unit_size,
-                    crate::svg::krilla_svg::SvgSettings {
-                        jpeg_images: Some(svg.jpeg_images()),
-                        image_errors: Some(&errors),
-                        filter_scale: self.pixels_per_point,
-                        ..Default::default()
-                    },
-                );
-                let errors = errors.into_inner();
-                if !errors.is_empty() && self.reported.insert(key) {
-                    self.diagnostics.extend(errors);
-                }
-            }
+        }))
+    }
+
+    /// Reports an SVG image's recoverable decoding failures once.
+    pub(super) fn report_svg_errors(
+        &mut self,
+        paint: &ImagePaint,
+        errors: std::collections::BTreeSet<String>,
+    ) {
+        if !errors.is_empty() && self.reported.insert(Arc::as_ptr(&paint.image) as usize) {
+            self.diagnostics.extend(errors);
         }
-        surface.pop();
-        crate::writer::painting::pop_clips(clips, surface);
-        Ok(())
     }
 
     /// Draws a laid-out rendering filling the paint rectangle.

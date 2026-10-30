@@ -225,6 +225,7 @@ impl Resolution<'_, '_> {
         }
         let image = self.cache.inline_svg_in_namespace(
             NO_PLUGIN_INDICATION.into(),
+            Default::default(),
             self.embedder.base,
             self.embedder.resolver,
             FontNamespace::ROOT,

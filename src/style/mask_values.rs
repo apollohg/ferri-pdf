@@ -1,6 +1,7 @@
 //! CSS Masking 1 §7 `mask-*` longhands from their match trees.
 use crate::paint::{
-    AbsoluteColor, BackgroundClip, BackgroundImage, BoxArea, MaskComposite, MaskMode, Position,
+    AbsoluteColor, BackgroundImage, BoxArea, GeometryBox, MaskComposite, MaskMode, Position,
+    ShapeBox,
 };
 use crate::style::{
     StyleError, background_values, box_values::unsupported, component::Component, grammar::Keyword,
@@ -45,29 +46,38 @@ pub(super) fn positions(
         .collect()
 }
 
-/// `<coord-box>`: boxes with a CSS layout box use the content box for `fill-box` and the
-/// border box for `stroke-box` and `view-box` (§7.6).
-fn coord_box(value: &Component) -> Result<BoxArea, StyleError> {
-    match value.keyword() {
-        Some(Keyword::ContentBox | Keyword::FillBox) => Ok(BoxArea::ContentBox),
-        Some(Keyword::PaddingBox) => Ok(BoxArea::PaddingBox),
-        Some(Keyword::BorderBox | Keyword::StrokeBox | Keyword::ViewBox) => Ok(BoxArea::BorderBox),
-        _ => Err(unsupported(value)),
+/// `<coord-box>`, as computed.
+fn coord_box(value: &Component) -> Result<GeometryBox, StyleError> {
+    match crate::style::shape_values::geometry_box(value)? {
+        GeometryBox::Shape(ShapeBox::Margin) => Err(unsupported(value)),
+        reference => Ok(reference),
     }
 }
 
-pub(super) fn origins(value: &Component) -> Result<Vec<BoxArea>, StyleError> {
+/// The box of an element with a CSS layout box: the content box for `fill-box` and the
+/// border box for `stroke-box` and `view-box` (§7.5, §7.6).
+pub(super) fn layout_area(reference: GeometryBox) -> BoxArea {
+    match reference.layout() {
+        ShapeBox::Visual(area) => area,
+        ShapeBox::Margin => BoxArea::BorderBox,
+    }
+}
+
+pub(super) fn origins(value: &Component) -> Result<Vec<GeometryBox>, StyleError> {
     value.items().iter().map(coord_box).collect()
 }
 
 /// `[ <coord-box> | no-clip ]#`: the clip boxes, and whether each layer is unclipped.
-pub(super) fn clips(value: &Component) -> Result<(Vec<BackgroundClip>, Vec<bool>), StyleError> {
+pub(super) fn clips(value: &Component) -> Result<(Vec<GeometryBox>, Vec<bool>), StyleError> {
     value
         .items()
         .iter()
         .map(|item| match item.keyword() {
-            Some(Keyword::NoClip) => Ok((BackgroundClip::default(), true)),
-            _ => Ok((BackgroundClip::Box(coord_box(item)?), false)),
+            Some(Keyword::NoClip) => Ok((
+                GeometryBox::Shape(ShapeBox::Visual(BoxArea::BorderBox)),
+                true,
+            )),
+            _ => Ok((coord_box(item)?, false)),
         })
         .collect::<Result<Vec<_>, StyleError>>()
         .map(|layers| layers.into_iter().unzip())

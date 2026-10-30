@@ -2731,11 +2731,16 @@ fn mask_origin(
     input: Input<'_>,
     _: &Relative<'_>,
 ) -> Result<(), StyleError> {
-    let origins = match input {
+    let boxes = match input {
         Input::Value(value) => crate::style::mask_values::origins(value)?,
-        Input::Copy(source) => source.decoration.masks.layers.origins.clone(),
+        Input::Copy(source) => source.decoration.masks.origin_boxes.clone(),
     };
-    std::sync::Arc::make_mut(&mut style.masks_mut().layers).origins = origins;
+    let masks = style.masks_mut();
+    std::sync::Arc::make_mut(&mut masks.layers).origins = boxes
+        .iter()
+        .map(|reference| crate::style::mask_values::layout_area(*reference))
+        .collect();
+    masks.origin_boxes = boxes;
     Ok(())
 }
 fn mask_clip(
@@ -2744,15 +2749,21 @@ fn mask_clip(
     input: Input<'_>,
     _: &Relative<'_>,
 ) -> Result<(), StyleError> {
-    let (clips, unclipped) = match input {
+    let (boxes, unclipped) = match input {
         Input::Value(value) => crate::style::mask_values::clips(value)?,
         Input::Copy(source) => (
-            source.decoration.masks.layers.clips.clone(),
+            source.decoration.masks.clip_boxes.clone(),
             source.decoration.masks.unclipped.clone(),
         ),
     };
     let masks = style.masks_mut();
-    std::sync::Arc::make_mut(&mut masks.layers).clips = clips;
+    std::sync::Arc::make_mut(&mut masks.layers).clips = boxes
+        .iter()
+        .map(|reference| {
+            crate::paint::BackgroundClip::Box(crate::style::mask_values::layout_area(*reference))
+        })
+        .collect();
+    masks.clip_boxes = boxes;
     masks.unclipped = unclipped;
     Ok(())
 }

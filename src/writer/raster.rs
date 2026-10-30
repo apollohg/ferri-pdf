@@ -151,10 +151,9 @@ pub(super) fn render_surface(
     }
     // The renderer truncates page sizes to whole pixels; half a pixel more keeps the count.
     const HALF_PIXEL: f32 = 0.5;
-    let page = [
-        (columns + HALF_PIXEL) / density,
-        (rows + HALF_PIXEL) / density,
-    ];
+    // The page measures pixels, as the renderer mishandles pages under a few units across; a
+    // group gives the drawing space as its own.
+    let page = [columns + HALF_PIXEL, rows + HALF_PIXEL];
     let area = Rect {
         width: columns / density,
         height: rows / density,
@@ -167,16 +166,19 @@ pub(super) fn render_surface(
     })?;
     let mut pdf_page = document.start_page_with(settings);
     let mut surface = pdf_page.surface();
+    surface.push_transform(&Transform::from_scale(density, density));
     surface.push_transform(&Transform::from_translate(-area.x, -area.y));
+    surface.push_isolated();
     let drawn = draw(
         Rect {
-            x: 0.0,
-            y: 0.0,
-            width: page[0],
-            height: page[1],
+            width: page[0] / density,
+            height: page[1] / density,
+            ..area
         },
         &mut surface,
     );
+    surface.pop();
+    surface.pop();
     surface.pop();
     surface.finish();
     pdf_page.finish();
@@ -190,8 +192,8 @@ pub(super) fn render_surface(
         &hayro::hayro_interpret::InterpreterSettings::default(),
         &hayro::RenderSettings::default(),
         &hayro::PixmapSettings {
-            x_scale: density,
-            y_scale: density,
+            x_scale: 1.0,
+            y_scale: 1.0,
             bg_color: hayro::vello_cpu::color::palette::css::TRANSPARENT,
         },
     );

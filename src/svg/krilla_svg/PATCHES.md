@@ -31,3 +31,9 @@ light, have no PDF blend mode. Their stacking context's backdrop is rendered wit
 the node and up to and including it; the difference is drawn over the vector backdrop as the
 colour that source-over compositing turns into the composite. resvg composites those operators
 and linear light per pixel. Rasters resolve at the caller's image resolution.
+
+Groups with CSS mask layers or a mask border (CSS Masking 1 §7, §8), which only SVG content
+the document styles has, mask through the settings' `LayerMasks`: the document draws the
+layers' values as it does for its own boxes, in the group's fill, stroke and view boxes. The
+resvg calls behind compositing and filters pass it on, and resvg applies the same values in
+pixels.

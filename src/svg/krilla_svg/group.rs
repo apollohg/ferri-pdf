@@ -46,6 +46,13 @@ fn render(
         pop_count += mask::render(mask, surface, process_context);
     }
 
+    if let Some((mask, layer_masks)) = group
+        .layer_mask()
+        .zip(process_context.svg_settings.layer_masks)
+    {
+        pop_count += layer_masks.push(mask, group.layer_bounding_box().to_rect(), surface);
+    }
+
     surface.push_blend_mode(convert_blend_mode(&group.blend_mode()));
     surface.push_opacity(NormalizedF32::new(group.opacity().get()).unwrap());
     pop_count += 2;
@@ -80,6 +87,7 @@ pub(crate) fn isolates(group: &crate::svg::usvg::Group) -> bool {
     group.isolate()
         || group.opacity() != Opacity::ONE
         || group.mask().is_some()
+        || group.layer_mask().is_some()
         || group.blend_mode() != BlendMode::Normal
 }
 

@@ -87,3 +87,8 @@ glyph cluster.
 CSS Sizing 3 §3.1). Keywords, and `calc-size()` with a keyword basis, behave as `auto`; the
 latter then calculates the used size from the automatic size each element gives `auto` (SVG 2
 §7.8): none for a rectangle, `100%` for a viewport and the natural size for an image.
+
+A `mask` value that `crate::svg::layer_mask_value` writes names the CSS mask layers, in the
+options' `layer_masks`, of SVG content the document styles. Its group keeps them as a
+`LayerMask` with its fill, stroke and view boxes, the boxes `clip-path` basic shapes also take,
+in points.
