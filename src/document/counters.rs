@@ -57,6 +57,42 @@ struct PageReset {
     open: bool,
 }
 impl Counters {
+    /// A copy whose counters change apart from these, for formatting a subtree again from
+    /// where these stand. It shares their work budget.
+    pub(crate) fn detached(&self) -> Self {
+        let mut cells: HashMap<*const Cell<i128>, Rc<Cell<i128>>> = HashMap::new();
+        let mut copy = |counters: &[Counter]| -> Vec<Counter> {
+            counters
+                .iter()
+                .map(|counter| Counter {
+                    value: cells
+                        .entry(Rc::as_ptr(&counter.value))
+                        .or_insert_with(|| Rc::new(Cell::new(counter.value.get())))
+                        .clone(),
+                    ..counter.clone()
+                })
+                .collect()
+        };
+        Self {
+            frames: self
+                .frames
+                .iter()
+                .map(|frame| Frame {
+                    target: frame.target,
+                    counters: copy(&frame.counters),
+                    sibling: frame.sibling.as_deref().map(&mut copy),
+                    scope: frame.scope,
+                    scoping: frame.scoping,
+                })
+                .collect(),
+            previous: copy(&self.previous),
+            work: self.work.clone(),
+            initials: self.initials.clone(),
+            collecting: false,
+            automatic: Vec::new(),
+            page_resets: Vec::new(),
+        }
+    }
     fn charge(&mut self, amount: usize) -> Result<(), StyleError> {
         self.work.set(self.work.get().saturating_add(amount));
         if self.work.get() > MAX_COUNTER_WORK {

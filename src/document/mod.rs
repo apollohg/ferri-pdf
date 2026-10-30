@@ -45,7 +45,7 @@ pub(crate) use metadata::DocumentMetadata;
 pub(crate) use navigation::{Bookmark, BoxNavigation, Heading, LinkTarget, Navigation};
 pub(crate) use page::PageBoundary;
 pub(crate) use semantics::{InlineEvent, SemanticEvent};
-pub(crate) use strings::RunningStringAssignment;
+pub(crate) use strings::{RunningElement, RunningStringAssignment};
 
 #[derive(Debug, thiserror::Error)]
 pub enum DocumentError {

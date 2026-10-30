@@ -260,6 +260,21 @@ impl NavigationBuilder {
         }
         Ok(builder)
     }
+    /// A copy for formatting a subtree again, whose boxes take the navigation the document's
+    /// do and whose records are discarded.
+    pub(crate) fn detached(&self) -> Self {
+        Self {
+            links: self.links.clone(),
+            destinations: self.destinations.clone(),
+            scopes: self.scopes.clone(),
+            navigation: Navigation {
+                destinations: self.navigation.destinations,
+                ..Navigation::default()
+            },
+            labels: HashMap::new(),
+            targets: self.targets.clone(),
+        }
+    }
     fn destination(&mut self, node: ElementId) -> usize {
         let next = self.navigation.destinations;
         *self.destinations.entry(node).or_insert_with(|| {

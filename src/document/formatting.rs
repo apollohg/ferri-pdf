@@ -652,27 +652,88 @@ pub(crate) struct Traversal<'a> {
     canvas_body: Option<ElementId>,
     footnotes: Vec<BlockBox>,
     page_counters: Vec<(usize, crate::document::CounterSnapshot)>,
-    /// The running elements open around the current element.
-    running: usize,
+    /// The running elements open around the current element, innermost last.
+    running: Vec<crate::style::PageStyleTarget>,
 }
 
 impl Traversal<'_> {
-    /// Binds generated content to the values pagination gives it.
+    /// Binds generated content to the values pagination gives it: content inside a running
+    /// element, `running` when it is one, shows the page counters of each copy of it.
     fn bind<'c>(
         &self,
         content: &'c crate::style::GeneratedContent,
         context: crate::style::PageStyleTarget,
         running: bool,
     ) -> Result<std::borrow::Cow<'c, crate::style::GeneratedContent>, DocumentError> {
-        // A running element is formatted once but lays out on each page that places it, so
-        // its content cannot show each page's counters.
-        if (running || self.running > 0) && content.has_page_counters() {
-            return Err(
-                StyleError::Unsupported("page counters inside running elements".into()).into(),
-            );
-        }
-        Ok(self.generated.bind(content, context)?)
+        let owner = if running {
+            Some(context)
+        } else {
+            self.running.last().copied()
+        };
+        Ok(match owner {
+            Some(owner) => self.generated.bind_running(content, context, owner)?,
+            None => self.generated.bind(content, context)?,
+        })
     }
+    /// The state formatting a copy of the running element `owner` showing the page counters
+    /// `numbers` from its start: it shares the document's counters and navigation as they
+    /// stand there and records nothing for the document.
+    fn running_copy(
+        &self,
+        owner: crate::style::PageStyleTarget,
+        numbers: crate::document::generated::PageNumbers,
+    ) -> Self {
+        Self {
+            document: self.document,
+            embedded: self.embedded,
+            root_style: self.root_style.clone(),
+            counters: self.counters.detached(),
+            navigation: self.navigation.detached(),
+            strings: crate::document::strings::StringAssignments::new(self.document),
+            generated: self.generated.running_copy(numbers),
+            quotes: self.quotes,
+            canvas: BoxDecoration::default(),
+            canvas_body: None,
+            footnotes: Vec::new(),
+            page_counters: Vec::new(),
+            running: vec![owner],
+        }
+    }
+}
+
+/// Copies of the running element of `frame`, formatted from its start once for each set of
+/// page counters its copies in page-margin boxes show (CSS GCPM 3 §1.2.2).
+fn running_copies<'a>(
+    frame: &Frame<'_>,
+    sheet: &'a Stylesheet,
+    traversal: &Traversal<'a>,
+    resources: &mut ImageResources<'a>,
+) -> Result<Vec<(crate::document::generated::PageNumbers, BlockBox)>, DocumentError> {
+    let owner = crate::style::PageStyleTarget {
+        element: frame.element.id(),
+        pseudo: None,
+    };
+    if traversal.generated.formats_copy() {
+        return Ok(Vec::new());
+    }
+    traversal
+        .generated
+        .running_pages(owner)
+        .iter()
+        .map(|&numbers| {
+            let mut copy = traversal.running_copy(owner, numbers);
+            // The used page name of the element is its own, or the one it inherits.
+            let root = Frame::new(
+                frame.element,
+                frame.style.clone(),
+                frame.depth,
+                frame.ordinal,
+                Some(Placement::Root),
+                frame.page_scope.as_ref(),
+            );
+            Ok((numbers, block(root, sheet, &mut copy, resources)?))
+        })
+        .collect()
 }
 
 struct BlockBuilder<'a, 's, 'c> {
@@ -1790,16 +1851,23 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             element: element.id(),
             pseudo: Some(pseudo.into()),
         };
-        let event = (content.named_string_requests().next().is_some()
-            || content.has_page_counters())
+        // A running pseudo-element's context lies where the event placing its assignment does.
+        let event = (!running
+            && (content.named_string_requests().next().is_some() || content.has_page_counters()))
         .then(|| self.traversal.strings.generated_event(element, pseudo));
         let bound = self.traversal.bind(content, context, running)?;
+        let quotes = self.traversal.quotes;
         let output = bound.element_output_with_counters(
             crate::document::MAX_INLINE_TEXT_BYTES,
             &mut |request| self.traversal.counters.text(request),
             &style.quotes,
             &mut self.traversal.quotes,
         )?;
+        let copies = if running {
+            self.generated_copies(content, context, &style.quotes, quotes)?
+        } else {
+            Vec::new()
+        };
         let text = output.text();
         self.traversal.counters.leave();
         self.traversal
@@ -1817,6 +1885,20 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 .running
                 .clone()
                 .expect("running() names the running element");
+            let copies = copies
+                .iter()
+                .map(|(numbers, output)| {
+                    Ok((
+                        *numbers,
+                        self.running_text_block(
+                            output,
+                            style.clone(),
+                            decoration.clone(),
+                            element_page_scope.as_ref(),
+                        )?,
+                    ))
+                })
+                .collect::<Result<_, DocumentError>>()?;
             let block = if let Some(image) = replacement {
                 let mut block = self.generated_block(
                     style,
@@ -1828,26 +1910,12 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 block.image = Some(image);
                 block
             } else {
-                let images = self.resources.generated_images(&output, &style);
-                let children = Paragraph::generated_output(&output, &images, &style)?
-                    .into_iter()
-                    .map(BlockContent::Inline)
-                    .collect();
-                self.generated_block(
-                    style,
-                    children,
-                    decoration,
-                    element_page_scope.as_ref(),
-                    None,
-                )
+                self.running_text_block(&output, style, decoration, element_page_scope.as_ref())?
             };
-            if let Some(event) = event {
-                self.inline.semantic_event(event);
-            }
             let event = self
                 .traversal
                 .strings
-                .record_generated_running(element, pseudo, name, block);
+                .record_generated_running(element, pseudo, name, block, copies);
             self.inline.semantic_event(event);
             return Ok(());
         }
@@ -2043,6 +2111,57 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     }
 
     /// A pseudo-element's block, part of the current element's hyperlink.
+    /// The generated content of the running pseudo-element `context` as each page that
+    /// places it shows its page counters (CSS GCPM 3 §1.2.2), from quote depth `depth`.
+    fn generated_copies(
+        &mut self,
+        content: &crate::style::GeneratedContent,
+        context: crate::style::PageStyleTarget,
+        quotes: &crate::style::Quotes,
+        depth: crate::style::QuoteDepth,
+    ) -> Result<
+        Vec<(
+            crate::document::generated::PageNumbers,
+            crate::style::GeneratedOutput,
+        )>,
+        DocumentError,
+    > {
+        if self.traversal.generated.formats_copy() {
+            return Ok(Vec::new());
+        }
+        let pages = self.traversal.generated.running_pages(context).to_vec();
+        pages
+            .into_iter()
+            .map(|numbers| {
+                let bound = self
+                    .traversal
+                    .generated
+                    .bind_copy(content, context, numbers)?;
+                let output = bound.element_output_with_counters(
+                    crate::document::MAX_INLINE_TEXT_BYTES,
+                    &mut |request| self.traversal.counters.text(request),
+                    quotes,
+                    &mut depth.clone(),
+                )?;
+                Ok((numbers, output))
+            })
+            .collect()
+    }
+    /// The box of a running pseudo-element holding generated `output`.
+    fn running_text_block(
+        &mut self,
+        output: &crate::style::GeneratedOutput,
+        style: Style,
+        decoration: BoxDecoration,
+        element_page_scope: Option<&std::sync::Arc<str>>,
+    ) -> Result<BlockBox, DocumentError> {
+        let images = self.resources.generated_images(output, &style);
+        let children = Paragraph::generated_output(output, &images, &style)?
+            .into_iter()
+            .map(BlockContent::Inline)
+            .collect();
+        Ok(self.generated_block(style, children, decoration, element_page_scope, None))
+    }
     fn generated_block(
         &self,
         style: Style,
@@ -2326,23 +2445,15 @@ fn active_builder<'a, 's, 'c>(
     )
 }
 
+/// Formats the element of the `root` frame and its subtree.
 fn block<'a>(
-    element: Element<'_>,
-    style: Box<Style>,
+    root: Frame<'_>,
     sheet: &'a Stylesheet,
-    depth: usize,
-    ordinal: i128,
     traversal: &mut Traversal<'a>,
     resources: &mut ImageResources<'a>,
 ) -> Result<BlockBox, DocumentError> {
-    let mut frames = vec![Frame::new(
-        element,
-        style,
-        depth,
-        ordinal,
-        Some(Placement::Root),
-        None,
-    )];
+    let element = root.element;
+    let mut frames = vec![root];
     if frames[0].style.display.is_block_container() {
         frames[0]
             .block
@@ -2360,6 +2471,15 @@ fn block<'a>(
             // CSS Containment 2 §3.3: quote depth changes are scoped to the subtree.
             frame.quotes = frame.style.containment().style.then_some(traversal.quotes);
             traversal.generated.capture(element, &traversal.counters);
+            let copies = if frame
+                .block
+                .as_ref()
+                .is_some_and(|block| matches!(block.placement, Placement::Running))
+            {
+                running_copies(frame, sheet, traversal, resources)?
+            } else {
+                Vec::new()
+            };
             if let Some(block) = &mut frame.block {
                 // CSS Containment 2 §4: an element skipping its contents generates no boxes,
                 // pseudo-elements or replaced fallback for them.
@@ -2493,6 +2613,7 @@ fn block<'a>(
                         element,
                         assignment,
                         name.clone(),
+                        copies,
                     ));
                 }
                 block.event = Some(traversal.strings.event(element, assignment, true));
@@ -2909,7 +3030,10 @@ fn block<'a>(
                 blocks.push(frames.len());
             }
             if matches!(placement, Some(Placement::Running)) {
-                traversal.running += 1;
+                traversal.running.push(crate::style::PageStyleTarget {
+                    element: child.id(),
+                    pseudo: None,
+                });
             }
             frames.push(Frame::new(
                 child,
@@ -3045,7 +3169,7 @@ fn block<'a>(
             }
             Placement::Positioned => builder.out_of_flow(block),
             Placement::Running => {
-                builder.traversal.running -= 1;
+                builder.traversal.running.pop();
                 builder.running(element, block);
             }
             Placement::Footnote => builder.footnote(element, block)?,
@@ -3257,7 +3381,7 @@ fn format_root(
         canvas: BoxDecoration::default(),
         footnotes: Vec::new(),
         page_counters: Vec::new(),
-        running: 0,
+        running: Vec::new(),
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
         .then(|| html.body_element().map(Element::id))
@@ -3297,11 +3421,8 @@ fn format_root(
         resources.cache.linked_documents(),
     )?;
     let mut root = block(
-        element,
-        style,
+        Frame::new(element, style, 0, ordinal, Some(Placement::Root), None),
         sheet,
-        0,
-        ordinal,
         &mut traversal,
         &mut resources,
     )?;

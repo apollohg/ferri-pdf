@@ -120,22 +120,50 @@ fn running_before_and_after_leave_the_flow_and_assign_at_their_own_positions() {
 }
 
 #[test]
-fn page_counters_inside_running_elements_are_reported() {
-    for css in [
-        "h1::before{position:running(head);content:counter(page)}",
-        "h1{position:running(head)}h1::after{content:counter(pages)}",
-    ] {
-        let error = render(
-            &format!("@page{{@top-left{{content:element(head)}}}}{css}"),
-            "<h1>Head</h1><p>Body</p>",
-        )
-        .err()
-        .unwrap_or_else(|| panic!("`{css}` must not show one page's counters on every page"));
-        assert!(
-            error
-                .to_string()
-                .contains("page counters inside running elements"),
-            "unexpected error for `{css}`: {error}"
-        );
-    }
+fn copies_of_running_elements_show_the_page_counters_of_each_page() {
+    let trace = render(
+        "@page{@top-left{content:element(head)}@bottom-left{content:element(foot)}}@page:nth(3){counter-increment:page 5;@bottom-left{counter-reset:page 40}}h1{position:running(head);font:10pt Spike;margin:0}h1::after{content:' ' counter(page) '/' counter(pages)}p.f::before{position:running(foot);content:'P' counter(page) ' of ' counter(pages,upper-roman)}",
+        "<h1>Head</h1><p class=f>One</p><p>Two</p><p>Three</p>",
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    assert_eq!(
+        frame_text(&trace),
+        [
+            vec!["Head 1/3".to_owned(), "P1 of III".to_owned()],
+            vec!["Head 2/3".to_owned(), "P2 of III".to_owned()],
+            vec!["Head 7/3".to_owned(), "P40 of III".to_owned()],
+        ],
+        "each page's copy of a running element or pseudo-element shows the page counter its margin box sees"
+    );
+}
+
+#[test]
+fn copies_of_running_elements_keep_their_counters_and_strings_once() {
+    let trace = render(
+        "@page{@top-left{content:element(head)}}body{counter-reset:n}h1{position:running(head);font:10pt Spike;margin:0;counter-increment:n}h1::before{content:counter(n) '.' counter(page) ' '}h1 span{string-set:inner content(text)}p.after::before{content:'n=' counter(n)}",
+        "<h1>Head <span>Inner</span></h1><p class=after>First</p><p>Second</p>",
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    assert_eq!(
+        frame_text(&trace),
+        [
+            vec!["1.1 Head Inner".to_owned()],
+            vec!["1.2 Head Inner".to_owned()]
+        ],
+        "copies format from the counters at the running element's start"
+    );
+    let flow: Vec<Vec<&str>> = trace
+        .pages
+        .iter()
+        .map(|page| page.iter().map(|line| line.text.as_str()).collect())
+        .collect();
+    assert_eq!(
+        flow,
+        [vec!["n=1First", "S[Inner]"], vec!["Second", "S[Inner]"]],
+        "formatting copies changes neither the document's counters nor its strings"
+    );
 }

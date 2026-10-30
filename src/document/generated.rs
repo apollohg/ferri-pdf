@@ -36,6 +36,31 @@ struct PagedValues {
     total: Option<usize>,
     /// The pages that start at or inside each element.
     starts: HashMap<ElementId, Vec<PageStart>>,
+    /// The page counters of the pages whose margin boxes place each running element that
+    /// shows them.
+    running: HashMap<PageStyleTarget, Vec<PageNumbers>>,
+}
+
+/// The page counters a copy of a running element shows: the `page` counter, the page total,
+/// or both, as its content shows them.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub(crate) struct PageNumbers {
+    pub page: Option<i128>,
+    pub total: Option<usize>,
+}
+impl PageNumbers {
+    /// Whether these are the page counters of a page whose `page` counter is `page` of
+    /// `total` pages, as far as they show them.
+    pub(crate) fn matches(self, page: i128, total: usize) -> bool {
+        self.page.is_none_or(|value| value == page) && self.total.is_none_or(|value| value == total)
+    }
+}
+
+/// The page counters a running element's content shows.
+#[derive(Clone, Copy, Default)]
+struct ShownCounters {
+    page: bool,
+    total: bool,
 }
 
 /// A page's start in the document, where page-context changes reach document counters.
@@ -62,6 +87,8 @@ pub(crate) struct Paginated<'a> {
     pub strings:
         &'a mut dyn FnMut(PageStyleTarget, &NamedStringRequest) -> Result<String, StyleError>,
     pub starts: Vec<(ElementId, PageStart)>,
+    /// The running element each page-margin box places, with the `page` counter it shows.
+    pub running: Vec<(PageStyleTarget, i128)>,
 }
 
 #[derive(Default)]
@@ -78,9 +105,69 @@ pub(crate) struct GeneratedBindings {
     strings: Rc<RefCell<HashSet<(PageStyleTarget, NamedStringRequest)>>>,
     pages: Rc<RefCell<HashSet<PageStyleTarget>>>,
     requests: Rc<RefCell<HashMap<TargetRequest, ElementId>>>,
+    running: Rc<RefCell<HashMap<PageStyleTarget, ShownCounters>>>,
+    /// The page counters content shows when it formats a copy of a running element.
+    copy: Option<PageNumbers>,
 }
 impl GeneratedBindings {
     pub(crate) fn bind<'a>(
+        &self,
+        content: &'a GeneratedContent,
+        context: Option<PageStyleTarget>,
+    ) -> Result<std::borrow::Cow<'a, GeneratedContent>, StyleError> {
+        let bound = self.bind_references(content, context)?;
+        // Document content shows the page counters of the page it lies on (CSS Page 3 §6.1);
+        // page-margin content, without a context, renders them on its page.
+        if let Some(context) = context
+            && content.has_page_counters()
+        {
+            self.pages.borrow_mut().insert(context);
+            return Self::bind_page(
+                bound,
+                PageNumbers {
+                    page: self.values.paged.pages.get(&context).copied(),
+                    total: self.values.paged.total,
+                },
+            );
+        }
+        Ok(bound)
+    }
+    /// Binds content inside the running element `owner`, whose copies show the page counters
+    /// of the pages that place them (CSS GCPM 3 §1.2.2).
+    fn bind_running<'a>(
+        &self,
+        content: &'a GeneratedContent,
+        context: PageStyleTarget,
+        owner: PageStyleTarget,
+    ) -> Result<std::borrow::Cow<'a, GeneratedContent>, StyleError> {
+        let bound = self.bind_references(content, Some(context))?;
+        if !content.has_page_counters() {
+            return Ok(bound);
+        }
+        let numbers = self.copy.unwrap_or_else(|| {
+            let mut running = self.running.borrow_mut();
+            let shown = running.entry(owner).or_default();
+            shown.page |= content.shows_page();
+            shown.total |= content.shows_pages();
+            PageNumbers::default()
+        });
+        Self::bind_page(bound, numbers)
+    }
+    fn bind_page(
+        content: std::borrow::Cow<'_, GeneratedContent>,
+        numbers: PageNumbers,
+    ) -> Result<std::borrow::Cow<'_, GeneratedContent>, StyleError> {
+        if !content.has_page_counters() {
+            return Ok(content);
+        }
+        Ok(std::borrow::Cow::Owned(content.bind_page_counters(
+            MAX_INLINE_TEXT_BYTES,
+            numbers.page.unwrap_or(UNPAGINATED_PAGE),
+            numbers.total.unwrap_or(UNPAGINATED_TOTAL),
+        )?))
+    }
+    /// Binds target references and named strings.
+    fn bind_references<'a>(
         &self,
         content: &'a GeneratedContent,
         context: Option<PageStyleTarget>,
@@ -113,25 +200,6 @@ impl GeneratedBindings {
                 },
             )?);
         }
-        // Document content shows the page counters of the page it lies on (CSS Page 3 §6.1);
-        // page-margin content, without a context, renders them on its page.
-        if let Some(context) = context
-            && content.has_page_counters()
-        {
-            self.pages.borrow_mut().insert(context);
-            bound = std::borrow::Cow::Owned(
-                bound.bind_page_counters(
-                    MAX_INLINE_TEXT_BYTES,
-                    self.values
-                        .paged
-                        .pages
-                        .get(&context)
-                        .copied()
-                        .unwrap_or(UNPAGINATED_PAGE),
-                    self.values.paged.total.unwrap_or(UNPAGINATED_TOTAL),
-                )?,
-            );
-        }
         Ok(bound)
     }
 }
@@ -150,10 +218,58 @@ impl GeneratedPass {
                 strings: Rc::default(),
                 pages: Rc::default(),
                 requests: Rc::default(),
+                running: Rc::default(),
+                copy: None,
             },
             elements: HashMap::new(),
             page_initials: Vec::new(),
         }
+    }
+    /// The pass formatting a copy of a running element showing the page counters `numbers`.
+    pub(crate) fn running_copy(&self, numbers: PageNumbers) -> Self {
+        Self {
+            bindings: GeneratedBindings {
+                copy: Some(numbers),
+                ..self.bindings.clone()
+            },
+            elements: HashMap::new(),
+            page_initials: Vec::new(),
+        }
+    }
+    /// Whether this pass formats a copy of a running element.
+    pub(crate) fn formats_copy(&self) -> bool {
+        self.bindings.copy.is_some()
+    }
+    /// The page counters of the pages whose margin boxes place the running element `owner`,
+    /// as far as its content shows them.
+    pub(crate) fn running_pages(&self, owner: PageStyleTarget) -> &[PageNumbers] {
+        self.bindings
+            .values
+            .paged
+            .running
+            .get(&owner)
+            .map_or(&[], Vec::as_slice)
+    }
+    /// Binds content inside the running element `owner`.
+    pub(crate) fn bind_running<'a>(
+        &self,
+        content: &'a GeneratedContent,
+        context: PageStyleTarget,
+        owner: PageStyleTarget,
+    ) -> Result<std::borrow::Cow<'a, GeneratedContent>, StyleError> {
+        self.bindings.bind_running(content, context, owner)
+    }
+    /// Binds content inside a running element as its copy showing `numbers` does.
+    pub(crate) fn bind_copy<'a>(
+        &self,
+        content: &'a GeneratedContent,
+        context: PageStyleTarget,
+        numbers: PageNumbers,
+    ) -> Result<std::borrow::Cow<'a, GeneratedContent>, StyleError> {
+        GeneratedBindings::bind_page(
+            self.bindings.bind_references(content, Some(context))?,
+            numbers,
+        )
     }
     /// Records the initial values page contexts' resets without one gave the counters they
     /// reset, by page.
@@ -237,6 +353,7 @@ impl GeneratedReferences {
             context_page,
             strings,
             starts,
+            running,
         } = paginated;
         let mut values = HashMap::new();
         for (request, owner) in self.bindings.requests.borrow().iter() {
@@ -294,6 +411,21 @@ impl GeneratedReferences {
                 .collect();
             page_starts.entry(element).or_default().push(start);
         }
+        let shown = self.bindings.running.borrow();
+        let mut running_pages: HashMap<_, Vec<_>> = HashMap::new();
+        for (owner, page) in running {
+            let Some(shown) = shown.get(&owner) else {
+                continue;
+            };
+            let numbers = PageNumbers {
+                page: shown.page.then_some(page),
+                total: shown.total.then_some(pages),
+            };
+            let keys = running_pages.entry(owner).or_default();
+            if !keys.contains(&numbers) {
+                keys.push(numbers);
+            }
+        }
         Ok(GeneratedValues {
             targets: values,
             strings: named,
@@ -301,6 +433,7 @@ impl GeneratedReferences {
                 pages: page_numbers,
                 total: (!contexts.is_empty()).then_some(pages),
                 starts: page_starts,
+                running: running_pages,
             }),
         })
     }

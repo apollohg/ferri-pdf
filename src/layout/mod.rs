@@ -255,7 +255,7 @@ fn layout_pass(
         .running_strings()
         .iter()
         .filter_map(|assignment| assignment.element.as_ref())
-        .map(|element| &element.block)
+        .flat_map(crate::document::RunningElement::blocks)
         .chain(document.footnotes())
     {
         measurer.sources.register(block);
@@ -514,6 +514,12 @@ fn paged_content<'t>(
             context_page: &|context| strings.page_of(context),
             strings: &mut |context, request| strings.at_context(context, request),
             starts: counters.starts(page_boxes, strings.page_starts(pages.len())),
+            running: page_margins::running(
+                page_boxes,
+                document.running_strings(),
+                &strings,
+                &counters,
+            ),
         },
     )?)
 }

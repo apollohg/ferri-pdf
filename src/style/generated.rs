@@ -454,9 +454,17 @@ impl GeneratedContent {
     }
     /// Whether the content shows the `page` or `pages` counter.
     pub(crate) fn has_page_counters(&self) -> bool {
+        self.shows_page() || self.shows_pages()
+    }
+    pub(crate) fn shows_page(&self) -> bool {
         self.0
             .iter()
-            .any(|part| matches!(part, GeneratedPart::Page(_) | GeneratedPart::Pages(_)))
+            .any(|part| matches!(part, GeneratedPart::Page(_)))
+    }
+    pub(crate) fn shows_pages(&self) -> bool {
+        self.0
+            .iter()
+            .any(|part| matches!(part, GeneratedPart::Pages(_)))
     }
     /// Binds the page counters of document content to those of the page it lies on, keeping
     /// the image symbols of their representations.

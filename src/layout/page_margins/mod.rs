@@ -599,6 +599,28 @@ pub(super) struct MarginContext<'s, 't> {
     pub counters: &'s crate::layout::page_counters::PageCounters,
     pub document: &'s crate::document::StyledDocument,
 }
+/// The running element each page-margin box places, with the `page` counter it shows.
+pub(super) fn running(
+    page_boxes: &[std::sync::Arc<PageBox>],
+    running: &[RunningStringAssignment],
+    strings: &crate::layout::strings::PageStrings,
+    counters: &crate::layout::page_counters::PageCounters,
+) -> Vec<(crate::style::PageStyleTarget, i128)> {
+    page_boxes
+        .iter()
+        .enumerate()
+        .flat_map(|(page, page_box)| {
+            page_box.margins.iter().filter_map(move |margin| {
+                let request = margin.margin.content.running_element()?;
+                let element = running[strings.element(page, request)?].element.as_ref()?;
+                Some((
+                    element.target,
+                    counters.page(page, Some(margin.margin.location)),
+                ))
+            })
+        })
+        .collect()
+}
 /// Prepares a page-margin box of the page at index `page` of `pages`.
 fn prepare<'a, 't>(
     margin: &'a PageMargin,
@@ -634,7 +656,9 @@ fn prepare<'a, 't>(
                 .strings
                 .element(page, request)
                 .and_then(|owner| context.running[owner].element.as_ref())
-                .map(|element| &element.block),
+                .map(|element| {
+                    element.block(context.counters.page(page, Some(margin.location)), pages)
+                }),
         )
     } else if let Some(image) = margin.content.replacement() {
         replacement = Some(

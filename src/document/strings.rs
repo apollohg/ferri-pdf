@@ -1,10 +1,13 @@
 use crate::document::{
-    DocumentError, MAX_INLINE_TEXT_BYTES,
+    BlockBox, DocumentError, MAX_INLINE_TEXT_BYTES,
     content::ElementText,
     counters::{CounterSnapshot, Counters},
+    generated::PageNumbers,
 };
 use crate::dom::{DocumentTree, Element, ElementId};
-use crate::style::{GeneratedContent, GeneratedPseudoElement, StringAssignment, StyleError};
+use crate::style::{
+    GeneratedContent, GeneratedPseudoElement, PageStyleTarget, StringAssignment, StyleError,
+};
 use std::{collections::HashMap, sync::Arc};
 
 /// Assignments at one element's semantic position, before their page is known.
@@ -17,7 +20,33 @@ pub(crate) struct RunningStringAssignment {
 
 pub(crate) struct RunningElement {
     pub name: Arc<str>,
-    pub block: crate::document::BlockBox,
+    /// The running element or pseudo-element.
+    pub target: PageStyleTarget,
+    block: BlockBox,
+    /// Copies showing the page counters of the pages that place them, where its content
+    /// shows page counters (CSS GCPM 3 §1.2.2).
+    copies: Vec<(PageNumbers, BlockBox)>,
+}
+impl RunningElement {
+    /// The copy a page-margin box places on a page whose `page` counter is `page` of
+    /// `total` pages.
+    pub(crate) fn block(&self, page: i128, total: usize) -> &BlockBox {
+        self.copies
+            .iter()
+            .find(|(numbers, _)| numbers.matches(page, total))
+            .map_or(&self.block, |(_, block)| block)
+    }
+    pub(crate) fn blocks(&self) -> impl Iterator<Item = &BlockBox> {
+        std::iter::once(&self.block).chain(self.copies.iter().map(|(_, block)| block))
+    }
+}
+
+/// A running element whose box formatting completes after its position records it.
+struct PendingRunning {
+    name: Arc<str>,
+    target: PageStyleTarget,
+    block: Option<BlockBox>,
+    copies: Vec<(PageNumbers, BlockBox)>,
 }
 
 struct PendingValue {
@@ -28,7 +57,7 @@ struct PendingValue {
 struct PendingOwner {
     owner: ElementId,
     values: Vec<PendingValue>,
-    running: Option<(Arc<str>, Option<crate::document::BlockBox>)>,
+    running: Option<PendingRunning>,
     before: crate::document::content::GeneratedText,
     after: crate::document::content::GeneratedText,
     marker: Option<String>,
@@ -105,15 +134,25 @@ impl StringAssignments {
         });
         index
     }
-    /// Records a running element at the position of its string assignments, if any.
+    /// Records a running element at the position of its string assignments, if any, with its
+    /// copies showing page counters.
     pub(crate) fn record_running(
         &mut self,
         element: Element<'_>,
         assignment: Option<usize>,
         name: Arc<str>,
+        copies: Vec<(PageNumbers, BlockBox)>,
     ) -> usize {
         let index = assignment.unwrap_or_else(|| self.push(element, Vec::new(), None));
-        self.owners[index].running = Some((name, None));
+        self.owners[index].running = Some(PendingRunning {
+            name,
+            target: PageStyleTarget {
+                element: element.id(),
+                pseudo: None,
+            },
+            block: None,
+            copies,
+        });
         index
     }
     /// Records a running `::before` or `::after`, which assigns no strings, and returns the
@@ -123,13 +162,22 @@ impl StringAssignments {
         element: Element<'_>,
         pseudo: GeneratedPseudoElement,
         name: Arc<str>,
-        block: crate::document::BlockBox,
+        block: BlockBox,
+        copies: Vec<(PageNumbers, BlockBox)>,
     ) -> crate::document::SemanticEvent {
         let index = self.owners.len();
         self.owners.push(PendingOwner {
             owner: element.id(),
             values: Vec::new(),
-            running: Some((name, Some(block))),
+            running: Some(PendingRunning {
+                name,
+                target: PageStyleTarget {
+                    element: element.id(),
+                    pseudo: Some(pseudo.into()),
+                },
+                block: Some(block),
+                copies,
+            }),
             before: Default::default(),
             after: Default::default(),
             marker: None,
@@ -138,20 +186,24 @@ impl StringAssignments {
         event.context.pseudo = Some(pseudo.into());
         event
     }
-    pub(crate) fn running_blocks_mut(
-        &mut self,
-    ) -> impl Iterator<Item = &mut crate::document::BlockBox> {
+    pub(crate) fn running_blocks_mut(&mut self) -> impl Iterator<Item = &mut BlockBox> {
         self.owners
             .iter_mut()
-            .filter_map(|owner| owner.running.as_mut()?.1.as_mut())
+            .filter_map(|owner| owner.running.as_mut())
+            .flat_map(|running| {
+                running
+                    .block
+                    .iter_mut()
+                    .chain(running.copies.iter_mut().map(|(_, block)| block))
+            })
     }
-    pub(crate) fn attach_running(&mut self, element: ElementId, block: crate::document::BlockBox) {
+    pub(crate) fn attach_running(&mut self, element: ElementId, block: BlockBox) {
         let owner = &mut self.owners[self.indices[&element]];
         owner
             .running
             .as_mut()
             .expect("running boxes belong to recorded running elements")
-            .1 = Some(block);
+            .block = Some(block);
     }
     pub(crate) fn generated(
         &mut self,
@@ -207,9 +259,13 @@ impl StringAssignments {
                     .collect::<Result<_, DocumentError>>()?;
                 Ok(RunningStringAssignment {
                     values,
-                    element: owner.running.map(|(name, block)| RunningElement {
-                        name,
-                        block: block.expect("running element boxes complete with formatting"),
+                    element: owner.running.map(|running| RunningElement {
+                        name: running.name,
+                        target: running.target,
+                        block: running
+                            .block
+                            .expect("running element boxes complete with formatting"),
+                        copies: running.copies,
                     }),
                 })
             })
