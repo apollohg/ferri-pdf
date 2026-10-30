@@ -219,6 +219,10 @@
     }
   },
   "properties": {
+    "margin-trim": {
+      "syntax": "none | [ block || inline ] | [ block-start || inline-start || block-end || inline-end ]",
+      "source": "https://www.w3.org/TR/2024/WD-css-box-4-20240804/#propdef-margin-trim"
+    },
     "text-box-edge": {
       "inherited": true,
       "source": "https://www.w3.org/TR/2024/WD-css-inline-3-20241218/#propdef-text-box-edge"

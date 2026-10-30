@@ -130,9 +130,9 @@ pub(crate) fn measure<'a>(
             &parent,
             style,
             fixed_heights[index],
+            plan.trimmed_sides(index),
             measurer,
         )?;
-        item.trim_block_margins(plan.trimmed_rows(index));
         item.inline_definite = plan.definite_columns(index, geometry.width, measurer);
         item.inherit(plan.child_context(index), [None, Some(columns.clone())]);
         let mut space = measurer.space;
@@ -316,16 +316,15 @@ pub(crate) fn measure<'a>(
         let range = rows.area(area[ROWS].clone());
         let available = range.end - range.start;
         let mut item = if item.source.image().is_some() {
-            let mut item = Item::new(
+            Item::new(
                 item.source,
                 columns.area(area[COLUMNS].clone()),
                 &parent,
                 style,
                 Some(available),
+                plan.trimmed_sides(index),
                 measurer,
-            )?;
-            item.trim_block_margins(plan.trimmed_rows(index));
-            item
+            )?
         } else {
             item
         };

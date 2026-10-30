@@ -34,20 +34,30 @@ struct Plan<'a> {
 }
 
 impl<'a> Plan<'a> {
-    /// CSS Box 4 §3.3.3: whether `margin-trim` discards item `index`'s block-start and
-    /// block-end margins, which adjoin the first and last row tracks that are not collapsed.
-    fn trimmed_rows(&self, index: usize) -> [bool; 2] {
-        if !self.source.style().margin_trim.in_flow() {
-            return [false; 2];
+    /// CSS Box 4 §3.3.3: the sides, in `top, right, bottom, left` order, at which
+    /// `margin-trim` discards item `index`'s margins, as they adjoin the first and last row
+    /// and column tracks that are not collapsed.
+    fn trimmed_sides(&self, index: usize) -> [bool; 4] {
+        let trim = self.source.style().margin_trim;
+        let adjoins = |axis: usize| {
+            let collapsed = &self.topology.axes[axis].collapsed;
+            let first = collapsed.iter().position(|collapsed| !collapsed);
+            let last = collapsed.iter().rposition(|collapsed| !collapsed);
+            let area = &self.topology.placement.areas[index][axis];
+            [
+                first == Some(area.start),
+                last.map(|last| last + 1) == Some(area.end),
+            ]
+        };
+        let [block_start, block_end] = adjoins(ROWS);
+        let [inline_start, inline_end] = adjoins(COLUMNS);
+        crate::style::MarginTrim {
+            block_start: trim.block_start && block_start,
+            inline_start: trim.inline_start && inline_start,
+            block_end: trim.block_end && block_end,
+            inline_end: trim.inline_end && inline_end,
         }
-        let collapsed = &self.topology.axes[ROWS].collapsed;
-        let first = collapsed.iter().position(|collapsed| !collapsed);
-        let last = collapsed.iter().rposition(|collapsed| !collapsed);
-        let area = &self.topology.placement.areas[index][ROWS];
-        [
-            first == Some(area.start),
-            last.map(|last| last + 1) == Some(area.end),
-        ]
+        .sides(self.rtl)
     }
     fn definite_columns(&self, index: usize, width: f32, measurer: &Measurer<'_>) -> bool {
         if !measurer.space.indefinite_inline {
@@ -235,9 +245,20 @@ impl<'a> Plan<'a> {
             let style = child.style();
             let box_edges = measurer.box_edges(*child, 0.0)?;
             let edges = box_edges.horizontal();
-            let margins = [style.margin[1].resolve(0.0), style.margin[3].resolve(0.0)]
+            let trimmed = self.trimmed_sides(index);
+            let margin = |side: usize| {
+                if trimmed[side] {
+                    0.0
+                } else {
+                    style.margin[side].resolve(0.0).unwrap_or(0.0)
+                }
+            };
+            let margins = margin(1) + margin(3);
+            // The outer sizes below include the margins `margin-trim` discards.
+            let discarded = [1, 3]
                 .into_iter()
-                .flatten()
+                .filter(|&side| trimmed[side])
+                .map(|side| style.margin[side].resolve(0.0).unwrap_or(0.0))
                 .sum::<f32>();
             if sizing::shared(style, COLUMNS) {
                 let plan = Self::with_parent(
@@ -250,11 +271,8 @@ impl<'a> Plan<'a> {
                 )?;
                 let child_gap = style.flex.gap[COLUMNS].resolve_normal(0.0, parent_gap);
                 let contributions = plan.column_contributions(measurer, available, child_gap)?;
-                let mut sides = [3, 1].map(|side| {
-                    box_edges.padding[side]
-                        + box_edges.border[side]
-                        + style.margin[side].resolve(0.0).unwrap_or(0.0)
-                });
+                let mut sides = [3, 1]
+                    .map(|side| box_edges.padding[side] + box_edges.border[side] + margin(side));
                 if style.used_rtl() {
                     sides.reverse();
                 }
@@ -277,9 +295,9 @@ impl<'a> Plan<'a> {
                 });
                 continue;
             }
-            let (outer, content_minimum) = if style.display.is_table() {
+            let (mut outer, content_minimum) = if style.display.is_table() {
                 let outer = crate::layout::tables::intrinsic(*child, measurer, available)?;
-                (outer, (outer.min - edges - margins).max(0.0))
+                (outer, (outer.min - edges - margins - discarded).max(0.0))
             } else {
                 let natural = crate::layout::intrinsic::content(*child, measurer, available)?;
                 (
@@ -287,6 +305,8 @@ impl<'a> Plan<'a> {
                     natural.min,
                 )
             };
+            outer.min -= discarded;
+            outer.max -= discarded;
             let constraints =
                 crate::layout::intrinsic::width_constraints(*child, measurer, None, edges, None)?;
             output.push(SizingItem {
@@ -445,9 +465,9 @@ impl<'a> Geometry<'a> {
             &parent,
             style,
             Some(row.end - row.start),
+            self.plan.trimmed_sides(index),
             measurer,
         )?;
-        item.trim_block_margins(self.plan.trimmed_rows(index));
         item.inline_definite = self.plan.definite_columns(index, parent.width, measurer);
         item.inherit(
             self.plan

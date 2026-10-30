@@ -1609,7 +1609,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             .rev()
             .filter(|active| active.clone)
             .find_map(|active| active.geometry.as_ref())
-            .is_some_and(|parent| parent.source.style().margin_trim.in_flow())
+            .is_some_and(|parent| parent.source.style().margin_trim.block_start)
     }
     fn flush_margin(&mut self) {
         self.y += self.pending_value();

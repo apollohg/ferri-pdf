@@ -354,6 +354,7 @@ impl BlockBox {
                 style.multicol = block.style.multicol.clone();
                 style.clamp = block.style.clamp.clone();
                 style.text_box = block.style.text_box;
+                style.margin_trim = block.style.margin_trim;
                 let mut inner = Self::anonymous(style, Vec::new(), None);
                 if block.style.display.is_table()
                     && block.style.table.collapse == crate::style::BorderCollapse::Collapse

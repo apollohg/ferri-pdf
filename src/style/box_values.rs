@@ -381,33 +381,43 @@ impl BreakBetween {
     }
 }
 
-/// `margin-trim` with the `none | in-flow | all` grammar of CSS Box 4 (2020 WD §3.3).
+/// `margin-trim` (CSS Box 4 §3.3): the container edges, in its writing mode, at which the
+/// margins of in-flow children adjoining them are truncated to zero.
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
-pub(crate) enum MarginTrim {
-    #[default]
-    None,
-    /// The block-axis margins of in-flow children that adjoin the container's edges, and the
-    /// margins collapsed with them, are truncated to zero.
-    InFlow,
-    /// As `in-flow`, and also the margins of floats that adjoin the container's edges.
-    All,
+pub(crate) struct MarginTrim {
+    pub block_start: bool,
+    pub inline_start: bool,
+    pub block_end: bool,
+    pub inline_end: bool,
 }
 impl MarginTrim {
     pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
-        match value.keyword() {
-            Some(Keyword::None) => Ok(Self::None),
-            Some(Keyword::InFlow) => Ok(Self::InFlow),
-            Some(Keyword::All) => Ok(Self::All),
-            _ => Err(unsupported(value)),
+        let mut keywords = Vec::new();
+        value.keywords(&mut keywords);
+        let mut trim = Self::default();
+        for keyword in keywords {
+            match keyword {
+                Keyword::None => {}
+                Keyword::Block => [trim.block_start, trim.block_end] = [true; 2],
+                Keyword::Inline => [trim.inline_start, trim.inline_end] = [true; 2],
+                Keyword::BlockStart => trim.block_start = true,
+                Keyword::InlineStart => trim.inline_start = true,
+                Keyword::BlockEnd => trim.block_end = true,
+                Keyword::InlineEnd => trim.inline_end = true,
+                _ => return Err(unsupported(value)),
+            }
         }
+        Ok(trim)
     }
-    /// Whether in-flow children's margins at the container's edges are trimmed.
-    pub(crate) fn in_flow(self) -> bool {
-        self != Self::None
-    }
-    /// Whether floats' margins at the container's edges are trimmed.
-    pub(crate) fn floats(self) -> bool {
-        self == Self::All
+    /// The trimmed sides as `[top, right, bottom, left]` of a layout frame whose block axis
+    /// runs downwards and whose inline axis runs leftwards when `rtl`.
+    pub(crate) fn sides(self, rtl: bool) -> [bool; 4] {
+        let [left, right] = if rtl {
+            [self.inline_end, self.inline_start]
+        } else {
+            [self.inline_start, self.inline_end]
+        };
+        [self.block_start, right, self.block_end, left]
     }
 }
 

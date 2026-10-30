@@ -22,8 +22,6 @@ struct Exclusion {
     letter: bool,
     /// The float area line boxes wrap around; the margin box when `None`.
     area: Option<Arc<FloatArea>>,
-    /// The block-end margin inside `margin`.
-    end_margin: f32,
 }
 
 impl Exclusion {
@@ -39,8 +37,6 @@ pub(crate) struct FloatFragment {
     pub page: usize,
     pub margin: Rect,
     pub area: Option<FloatArea>,
-    /// The block-end margin inside `margin`.
-    pub end_margin: f32,
 }
 
 #[derive(Clone, Default)]
@@ -61,7 +57,6 @@ impl FloatContext {
                 margin: fragment.margin,
                 letter: false,
                 area: fragment.area.map(Arc::new),
-                end_margin: fragment.end_margin,
             }));
     }
 
@@ -74,7 +69,6 @@ impl FloatContext {
             margin,
             letter: true,
             area: None,
-            end_margin: 0.0,
         });
     }
 
@@ -125,19 +119,6 @@ impl FloatContext {
 
     pub(crate) fn end(&self, work: &Budget) -> Result<Option<(usize, f32)>, LayoutError> {
         self.clearance_end(0, Clear::Both, false, work)
-    }
-
-    /// Where the floats' border boxes end, without their block-end margins.
-    pub(crate) fn border_end(&self, work: &Budget) -> Result<Option<(usize, f32)>, LayoutError> {
-        let mut end: Option<(usize, f32)> = None;
-        for float in self.exclusions.iter().filter(|exclusion| !exclusion.letter) {
-            work.spend(1)?;
-            let bottom = float.margin.y + float.margin.height - float.end_margin;
-            if end.is_none_or(|(page, y)| float.page > page || (float.page == page && bottom > y)) {
-                end = Some((float.page, bottom));
-            }
-        }
-        Ok(end)
     }
 
     pub(crate) fn clearance_end(

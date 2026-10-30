@@ -17,20 +17,30 @@ pub(crate) fn measure<'a>(
     let mut items = Vec::with_capacity(children.len());
     let mut minima = Vec::with_capacity(children.len());
     let mut maxima = Vec::with_capacity(children.len());
+    // CSS Box 4 §3.3.2: `margin-trim` at the inline sides, as `[left, right]`.
+    let [_, right, _, left] = style.margin_trim.sides(style.used_rtl());
+    let trimmed = [left, right];
     for child in &children {
-        if style.flex.direction.column() {
-            let size = intrinsic::measure(*child, measurer, available)?;
-            result.min = result.min.max(size.min);
-            result.max = result.max.max(size.max);
-            continue;
-        }
         let child_style = child.style();
-        let box_edges = measurer.box_edges(*child, 0.0)?;
-        let edges = box_edges.horizontal();
         let margins = [
             child_style.margin[3].resolve(0.0),
             child_style.margin[1].resolve(0.0),
         ];
+        // The margins discarded where the item adjoins both inline sides: in a column
+        // container, every item of a single line; in a row, an item alone on its line.
+        let discarded = margins
+            .into_iter()
+            .zip(trimmed)
+            .filter_map(|(margin, trimmed)| margin.filter(|_| trimmed))
+            .sum::<f32>();
+        if style.flex.direction.column() {
+            let size = intrinsic::measure(*child, measurer, available)?;
+            result.min = result.min.max(size.min - discarded);
+            result.max = result.max.max(size.max - discarded);
+            continue;
+        }
+        let box_edges = measurer.box_edges(*child, 0.0)?;
+        let edges = box_edges.horizontal();
         let outer = edges + margins.into_iter().flatten().sum::<f32>();
         let natural = intrinsic::content(*child, measurer, available)?;
         let size = intrinsic::outer_widths(child_style, natural, box_edges);
@@ -96,13 +106,31 @@ pub(crate) fn measure<'a>(
         };
         let min = contribution(size.min);
         if style.flex.wrap != FlexWrap::NoWrap && !item.collapsed {
-            result.min = result.min.max(min + outer);
+            result.min = result.min.max(min + outer - discarded);
         }
         minima.push(min);
         maxima.push(contribution(size.max));
         items.push(item);
     }
     if !style.flex.direction.column() {
+        // A single line's first and last items adjoin the main-start and main-end sides.
+        let visible: Vec<usize> = (0..items.len())
+            .filter(|&index| !items[index].collapsed)
+            .collect();
+        let reverse = style.flex.direction.reverse() ^ style.used_rtl();
+        let [first, last] = [visible.first(), visible.last()];
+        let [at_left, at_right] = if reverse {
+            [last, first]
+        } else {
+            [first, last]
+        };
+        for (side, item) in [at_left, at_right].into_iter().enumerate() {
+            if let Some(&index) = item
+                && trimmed[side]
+            {
+                items[index].margins[side] = Some(0.0);
+            }
+        }
         let gap = style.flex.gap[1].resolve(0.0);
         if style.flex.wrap == FlexWrap::NoWrap {
             measurer.work.spend(items.len().max(1))?;

@@ -2205,7 +2205,7 @@ impl<'a> FlowFrame<'a> {
         // child and every margin collapsed with it.
         if self.at_start
             && matches!(&item, FlowItem::Block(_) | FlowItem::Spanner(_))
-            && self.block.style().margin_trim.in_flow()
+            && self.block.style().margin_trim.block_start
         {
             self.pending = MarginStrut::default();
         }
@@ -2287,7 +2287,7 @@ impl<'a> FlowFrame<'a> {
         }
         // CSS Box 4 §3.3: margin-trim discards the block-end margin of a block-level last child
         // and every margin collapsed with it.
-        if style.margin_trim.in_flow() {
+        if style.margin_trim.block_end {
             pending = MarginStrut::default();
         }
         let clearance_target = measurer

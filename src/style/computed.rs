@@ -455,7 +455,7 @@ impl Default for Style {
             decoration: initial_decoration(),
             shadows: crate::style::shadow_values::Shadows::default(),
             clone_decoration: false,
-            margin_trim: crate::style::MarginTrim::None,
+            margin_trim: crate::style::MarginTrim::default(),
             text_decorations: crate::style::TextDecorations::default(),
             text_paint: crate::style::TextPaint::default(),
             text_overflow: [crate::style::TextOverflow::Clip; 2],

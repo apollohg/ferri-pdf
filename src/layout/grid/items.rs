@@ -150,23 +150,16 @@ fn offset(
 }
 
 impl<'a> Item<'a> {
-    /// Truncates the block-start and block-end margins that `margin-trim` discards.
-    pub(crate) fn trim_block_margins(&mut self, trimmed: [bool; 2]) {
-        for (side, trimmed) in [0, 2].into_iter().zip(trimmed) {
-            if trimmed {
-                self.margins[side] = Some(0.0);
-                self.geometry.margin[side] = Some(0.0);
-            }
-        }
-    }
     /// The item in its grid `area`, self-aligned by default as the grid `container`'s
-    /// `align-items` and `justify-items`.
+    /// `align-items` and `justify-items`, without the margins `margin-trim` discards at the
+    /// `trimmed` sides.
     pub(crate) fn new(
         source: &'a BlockBox,
         area: Range<f32>,
         parent: &HorizontalBox,
         container: &Style,
         height: Option<f32>,
+        trimmed: [bool; 4],
         measurer: &Measurer<'a>,
     ) -> Result<Self, Failure> {
         let style = source.style();
@@ -176,6 +169,11 @@ impl<'a> Item<'a> {
             .margin
             .each_ref()
             .map(|value| value.resolve(available));
+        for (margin, trimmed) in margins.iter_mut().zip(trimmed) {
+            if trimmed {
+                *margin = Some(0.0);
+            }
+        }
         let shared = [ROWS, COLUMNS].map(|axis| super::sizing::shared(style, axis));
         for (axis, sides) in [(ROWS, [0, 2]), (COLUMNS, [3, 1])] {
             if shared[axis] {

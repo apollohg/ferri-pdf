@@ -4,10 +4,6 @@
 )]
 use super::*;
 
-/// The indices of the left and right margins in `top, right, bottom, left` order.
-const LEFT: usize = 3;
-const RIGHT: usize = 1;
-
 pub(super) struct MeasuredFloat<'a> {
     block: MeasuredBlock<'a>,
     margins: [f32; 4],
@@ -158,7 +154,6 @@ impl FloatPlacement {
                 page: fragment.page,
                 margin: fragment.margin,
                 area,
-                end_margin: margins[2],
             });
         }
         Ok(exclusions)
@@ -358,14 +353,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             return Ok(None);
         }
         let floats = self.floats.last().expect("flow has a float context");
-        // CSS Box 4 §3.3 (2020): `margin-trim: all` keeps floats' block-end margins from
-        // extending the formatting context root.
-        let end = if frame.style.margin_trim.floats() {
-            floats.border_end(&self.measurer.work)?
-        } else {
-            floats.end(&self.measurer.work)?
-        };
-        let Some((mut page, mut bottom)) = end else {
+        let Some((mut page, mut bottom)) = floats.end(&self.measurer.work)? else {
             return Ok(None);
         };
         let active = self.boxes.last().expect("enclosing block is active");
@@ -586,21 +574,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             style.used_rtl(),
             &self.measurer.work,
         )?;
-        let container = self
-            .boxes
-            .last()
-            .and_then(|active| active.geometry.as_ref())
-            .filter(|parent| parent.source.style().margin_trim.floats());
-        // CSS Box 4 §3.3 (2020): `margin-trim: all` discards the margins of a float whose
-        // outer edges coincide with the container's content edges.
-        if let Some(parent) = container
-            && parent.content_top.0 == self.page
-            && (y - parent.content_top.1).abs() <= FRAGMENTATION_TOLERANCE_PT
-        {
-            size[1] -= margins[0];
-            margins[0] = 0.0;
-        }
-        let mut placed = context.place(
+        let placed = context.place(
             self.page,
             y,
             [left, left + width],
@@ -608,38 +582,6 @@ impl<'a> Paginator<'a, '_, 'a> {
             side,
             &self.measurer.work,
         )?;
-        // The measured box sits inside its untrimmed left margin.
-        let mut trimmed_left = 0.0;
-        if let Some(parent) = container {
-            let content = [
-                parent.horizontal.x,
-                parent.horizontal.x + parent.horizontal.width,
-            ];
-            let edges = [placed.x, placed.x + placed.width];
-            let mut trimmed = false;
-            for (edge, side) in [(0, LEFT), (1, RIGHT)] {
-                if (edges[edge] - content[edge]).abs() <= FRAGMENTATION_TOLERANCE_PT
-                    && margins[side] != 0.0
-                {
-                    size[0] -= margins[side];
-                    if side == LEFT {
-                        trimmed_left = margins[side];
-                    }
-                    margins[side] = 0.0;
-                    trimmed = true;
-                }
-            }
-            if trimmed {
-                placed = context.place(
-                    self.page,
-                    y,
-                    [left, left + width],
-                    size,
-                    side,
-                    &self.measurer.work,
-                )?;
-            }
-        }
         let placement = FloatPlacement {
             fragments: Vec::new(),
             reflow,
@@ -651,7 +593,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         };
         measured.retain_fragment();
         self.y = placed.y + margins[0];
-        self.offset[0] += placed.x - trimmed_left;
+        self.offset[0] += placed.x;
         self.pending.clear();
         self.pending_break = None;
         Ok((measured, placement))
