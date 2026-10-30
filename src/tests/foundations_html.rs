@@ -284,7 +284,7 @@ fn formatting_depth_limit_covers_block_inline_atomic_and_positioned_trees() {
                                         .atomics()
                                         .iter()
                                         .chain(paragraph.anchors())
-                                        .map(|anchor| &anchor.block),
+                                        .map(crate::document::Anchor::block),
                                 );
                             }
                         }

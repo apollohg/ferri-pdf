@@ -526,6 +526,39 @@ fn first_line_styles_atomic_inlines_and_their_contents_only_where_they_lie_on_it
 }
 
 #[test]
+fn first_line_styles_deeply_nested_atomic_inlines_at_every_level() {
+    // CSS Pseudo-Elements 4 §2.1.3: each inline-block, on the first line of the block around
+    // it, inherits through that line, and so passes the outermost line's size and its own
+    // line's colour to the next level, through every level.
+    const LEVELS: usize = 8;
+    const COLOURS: [[u8; 3]; 3] = [RED, GREEN, BLUE];
+    let body = (0..LEVELS).fold("x".to_owned(), |inner, level| {
+        let level = LEVELS - 1 - level;
+        format!(
+            "<div class='c{} l{level}'>L{level} <span class=ib>{inner}</span></div>",
+            level % COLOURS.len()
+        )
+    });
+    let runs = runs(&trace(
+        ".ib{display:inline-block}.l0::first-line{font-size:20pt}\
+         .c0::first-line{color:red}.c1::first-line{color:green}.c2::first-line{color:blue}",
+        &body,
+    ));
+    for level in 0..LEVELS {
+        let label = format!("L{level}");
+        let run = runs
+            .iter()
+            .find(|run| run.0.trim() == label)
+            .unwrap_or_else(|| panic!("no run {label:?} among {runs:#?}"));
+        assert_eq!(
+            (run.1, run.2),
+            (COLOURS[level % COLOURS.len()], 20.0),
+            "{label} takes its own first line's colour and the outermost line's size: {runs:#?}"
+        );
+    }
+}
+
+#[test]
 fn first_line_copies_of_atomic_inlines_paint_their_own_backgrounds() {
     // CSS Backgrounds 3 §2.11.2: only the root element and the body give their backgrounds to
     // the canvas; the copy of an inline-block on the first line paints its own.
@@ -543,6 +576,32 @@ fn first_line_copies_of_atomic_inlines_paint_their_own_backgrounds() {
     assert!(
         background.width > 0.0 && background.height > 0.0,
         "the inline-block's background is painted: {background:?}"
+    );
+}
+
+#[test]
+fn first_line_copies_of_atomic_inlines_lay_out_in_their_own_writing_modes() {
+    // CSS Writing Modes 4 §3.1: an inline-block in another writing mode than its parent's
+    // establishes an orthogonal flow, as its copy on the first line does.
+    let body = "<p><span style='display:inline-block;writing-mode:vertical-rl;background:lime'>\
+                abc def</span> text</p>";
+    let plain = common::painted_box(&trace("", body), [0, 255, 0]);
+    let trace = trace("p::first-line{color:red}", body);
+    let restyled = common::painted_box(&trace, [0, 255, 0]);
+    assert!(
+        plain.height > plain.width,
+        "the vertical inline-block is taller than wide: {plain:?}"
+    );
+    assert_eq!(
+        (restyled.width, restyled.height),
+        (plain.width, plain.height),
+        "a first-line colour leaves the vertical inline-block's size alone"
+    );
+    let runs = runs(&trace);
+    assert_eq!(
+        run(&runs, "abc def").1,
+        RED,
+        "the inline-block's text inherits the first line's colour: {runs:#?}"
     );
 }
 

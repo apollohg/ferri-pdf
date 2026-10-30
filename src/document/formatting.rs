@@ -3,6 +3,9 @@ use crate::document::{DocumentError, Paragraph, inline::InlineCollector};
 use crate::dom::{ChildNodes, DocumentTree, Element, ElementId, TreeRelation};
 use crate::graphics::BoxDecoration;
 use crate::style::{Display, GeneratedPseudoElement, PseudoElement, Style, StyleError, Stylesheet};
+use first_line_copies::FirstLineBox;
+
+mod first_line_copies;
 
 pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
 /// Formatting-work units per formatting of a document, shared by the subtree copies it formats
@@ -10,10 +13,6 @@ pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
 pub(crate) const MAX_FORMATTING_WORK: usize = 100_000_000;
 /// The work units of formatting an element, whose styling costs far more than a text byte.
 pub(super) const ELEMENT_WORK: usize = 64;
-/// Nesting of subtree copies, each formatted on the stack of the formatting it copies, beyond
-/// which formatting fails rather than overflow a 2 MiB library thread.
-pub(super) const MAX_COPY_NESTING: usize = 4;
-const COPY_NESTING_RESOURCE: &str = "formatting copy nesting";
 const DEFAULT_DENSITY: f32 = 1.0;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
 
@@ -239,7 +238,9 @@ pub(crate) struct BlockBox {
     /// An atomic inline's or ruby annotation's box as its block's first formatted line styles
     /// it, where the styles its contents inherit through `::first-line` change it (CSS
     /// Pseudo-Elements 4 §2.1.3).
-    first_line_box: Option<Box<BlockBox>>,
+    first_line_box: Option<std::rc::Rc<FirstLineBox>>,
+    /// The first-line copy that an atomic inline's box inside a first-line copy also is.
+    own_copy: Option<first_line_copies::OwnCopy>,
     /// A ruby annotation box's contents before `text-transform`, kept until its paragraph's
     /// first formatted line styles a copy of them.
     annotation_source: Option<Box<Paragraph>>,
@@ -308,15 +309,43 @@ impl BlockBox {
         self.layout_flow
     }
     pub(super) fn reflow(&mut self, parent: crate::style::logical::Flow) {
+        let mut copies = Vec::new();
+        self.reflow_in(parent, [parent; 2], &mut copies);
+        // A first-line box takes the flows of the box it replaces on the line.
+        while let Some((copy, parent, containers)) = copies.pop() {
+            copy.resolve(|block| block.reflow_in(parent, containers, &mut copies));
+        }
+    }
+    /// Reflows this box, in the flow `parent` with absolutely and fixed positioned boxes in
+    /// the flows `containers`, and its subtree, adding the first-line boxes it holds to
+    /// `copies` with their flows.
+    fn reflow_in(
+        &mut self,
+        parent: crate::style::logical::Flow,
+        containers: [crate::style::logical::Flow; 2],
+        copies: &mut Vec<(
+            std::rc::Rc<FirstLineBox>,
+            crate::style::logical::Flow,
+            [crate::style::logical::Flow; 2],
+        )>,
+    ) {
         use crate::style::logical::{self, Flow};
         enum Entry<'a> {
             Block(&'a mut BlockBox, Flow, [Flow; 2]),
             Paragraph(&'a mut Paragraph, Flow, [Flow; 2]),
         }
-        let mut pending = vec![Entry::Block(self, parent, [parent; 2])];
+        let mut pending = vec![Entry::Block(self, parent, containers)];
         while let Some(entry) = pending.pop() {
             let (block, parent, mut containers) = match entry {
-                Entry::Block(block, parent, containers) => (block, parent, containers),
+                Entry::Block(block, parent, containers) => {
+                    if let Some(copy) = block.first_line_box.as_ref().or(block.moved_copy()) {
+                        copies.push((copy.clone(), parent, containers));
+                    }
+                    if block.stands_in() {
+                        continue;
+                    }
+                    (block, parent, containers)
+                }
                 Entry::Paragraph(paragraph, flow, containers) => {
                     pending.extend(
                         paragraph
@@ -542,6 +571,7 @@ impl BlockBox {
             rendered_legend: false,
             column_text_trim: [false; 2],
             first_line_box: None,
+            own_copy: None,
             annotation_source: None,
         }
     }
@@ -551,10 +581,25 @@ impl BlockBox {
     /// The box laid out in place of this atomic inline when it lies on its block's first
     /// formatted line, if that line's styles change it.
     pub(crate) fn first_line_box(&self) -> Option<&BlockBox> {
-        self.first_line_box.as_deref()
+        self.first_line_box.as_deref().map(FirstLineBox::get)
     }
     pub(super) fn set_first_line_box(&mut self, block: BlockBox) {
-        self.first_line_box = Some(Box::new(block));
+        self.first_line_box = Some(FirstLineBox::staged(block));
+    }
+    /// The first-line copy this box moved into, if it stands in for one.
+    fn moved_copy(&self) -> Option<&std::rc::Rc<FirstLineBox>> {
+        match &self.own_copy {
+            Some(first_line_copies::OwnCopy::Moved(copy)) => Some(copy),
+            _ => None,
+        }
+    }
+    /// The box this atomic inline's box stands in for, or this box.
+    pub(crate) fn standing_for(&self) -> &BlockBox {
+        self.moved_copy().map_or(self, |copy| copy.get())
+    }
+    /// Whether this box stands in for a first-line copy, which other boxes share.
+    pub(crate) fn stands_in(&self) -> bool {
+        self.moved_copy().is_some()
     }
     /// Keeps a ruby annotation box's untransformed `contents` for its first-line copy.
     pub(super) fn keep_annotation_source(&mut self, contents: Paragraph) {
@@ -760,7 +805,7 @@ fn content_events<'a>(
                         .anchors()
                         .iter()
                         .chain(paragraph.inline_blocks())
-                        .map(|anchor| &anchor.block)
+                        .map(crate::document::Anchor::block)
                         .collect()
                 }
             };
@@ -808,8 +853,22 @@ pub(crate) struct Traversal<'a> {
     marker_groups: crate::document::scroll_markers::ScrollMarkerGroups,
     /// The document's formatting work, which every copy charges.
     work: crate::layout::work::Budget,
-    /// The copies of subtrees this traversal formats inside.
-    copies: usize,
+    kind: TraversalKind,
+    /// The first-line copies of atomic inlines that this traversal and the subtree copies it
+    /// makes share.
+    first_lines: std::rc::Rc<std::cell::RefCell<first_line_copies::FirstLineCopies>>,
+    /// The first-line copies a first-line copy requests, formatted after it.
+    requests: Vec<first_line_copies::CopyRequest<'a>>,
+}
+
+/// What a traversal formats.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum TraversalKind {
+    Document,
+    /// A copy of a running element, or a scroll marker prepass.
+    Copy,
+    /// An atomic inline's box as its block's first formatted line styles it.
+    FirstLineCopy,
 }
 
 /// A scroll container, and the display of the `::scroll-marker-group` its scroll markers go
@@ -845,7 +904,8 @@ impl Traversal<'_> {
     /// the root element or the body (CSS Backgrounds 3 §2.11.2), rather than its own; the
     /// roots of copies are other elements' boxes.
     fn canvas_source(&self, index: usize, element: Element<'_>) -> bool {
-        (index == 0 && self.copies == 0) || self.canvas_body == Some(element.id())
+        (index == 0 && self.kind == TraversalKind::Document)
+            || self.canvas_body == Some(element.id())
     }
     /// Ends the inline footnotes waiting for the next to join them.
     fn finish_inline_footnotes(&mut self) -> Result<(), DocumentError> {
@@ -885,15 +945,6 @@ impl Traversal<'_> {
             None => self.generated.bind(content, context)?,
         })
     }
-    /// The copy nesting of a copy this traversal makes.
-    fn nested_copy(&self) -> Result<usize, DocumentError> {
-        if self.copies == MAX_COPY_NESTING {
-            return Err(DocumentError::Formatting(format!(
-                "{COPY_NESTING_RESOURCE} exceeds {MAX_COPY_NESTING}"
-            )));
-        }
-        Ok(self.copies + 1)
-    }
     /// The state formatting a copy of the running element `owner` showing the page counters
     /// `numbers` from its start: it shares the document's counters and navigation as they
     /// stand there and records nothing for the document.
@@ -901,8 +952,8 @@ impl Traversal<'_> {
         &self,
         owner: crate::style::PageStyleTarget,
         numbers: crate::document::generated::PageNumbers,
-    ) -> Result<Self, DocumentError> {
-        Ok(Self {
+    ) -> Self {
+        Self {
             document: self.document,
             embedded: self.embedded,
             root_style: self.root_style.clone(),
@@ -924,14 +975,18 @@ impl Traversal<'_> {
             marker_scroller: None,
             marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
             work: self.work.clone(),
-            copies: self.nested_copy()?,
-        })
+            kind: TraversalKind::Copy,
+            // Its generated content shows other page counters than the document's.
+            first_lines: std::rc::Rc::default(),
+            requests: Vec::new(),
+        }
     }
-    /// The state formatting a copy of the subtree starting here: it continues the document's
-    /// counters, navigation, string assignments and footnotes as they stand, so that the copy's
-    /// boxes take the indices the document's take, and records nothing for the document.
-    fn subtree_copy(&self) -> Result<Self, DocumentError> {
-        Ok(Self {
+    /// The state formatting a copy of the subtree starting here, of `kind`: it continues the
+    /// document's counters, navigation, string assignments and footnotes as they stand, so that
+    /// the copy's boxes take the indices the document's take, and records nothing for the
+    /// document.
+    fn subtree_copy(&self, kind: TraversalKind) -> Self {
+        Self {
             document: self.document,
             embedded: self.embedded,
             root_style: self.root_style.clone(),
@@ -956,41 +1011,11 @@ impl Traversal<'_> {
             marker_scroller: None,
             marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
             work: self.work.clone(),
-            copies: self.nested_copy()?,
-        })
+            kind,
+            first_lines: self.first_lines.clone(),
+            requests: Vec::new(),
+        }
     }
-}
-
-/// The box of the atomic inline `frame` as the first formatted line of `block`, styled
-/// `style`, gives it the styles it inherits through `::first-line` (CSS Pseudo-Elements 4
-/// §2.1.3), formatted again from its start; `None` where no `::first-line` rule styles that
-/// line, or in a scroll marker prepass, which keeps only the markers. Kept out of `block`,
-/// whose frame nested navigables' formatting stacks.
-#[inline(never)]
-fn first_line_box<'a>(
-    (frame, scroller): (&Frame<'_>, Option<MarkerScroller>),
-    (style, origins): (&Style, &[ElementId]),
-    sheet: &'a Stylesheet,
-    traversal: &Traversal<'a>,
-    resources: &mut ImageResources<'a>,
-) -> Result<Option<Box<BlockBox>>, DocumentError> {
-    if traversal.marker_prepass {
-        return Ok(None);
-    }
-    let Some(mut styles) = crate::document::first_line::FirstLineStyles::of(
-        style,
-        origins,
-        sheet,
-        traversal.document,
-        resources,
-    )?
-    else {
-        return Ok(None);
-    };
-    let root = frame.copy_root(Box::new(styles.style(&frame.style)?));
-    let mut copy = traversal.subtree_copy()?;
-    copy.marker_scroller = scroller;
-    block(root, sheet, &mut copy, resources).map(|copy| Some(Box::new(copy)))
 }
 
 /// The nearest scroll container among `frames`, or around the subtree `traversal` formats.
@@ -1135,7 +1160,7 @@ fn root_marker_group(
 /// the prepass of a scroll container around it collected them.
 #[inline(never)]
 fn collect_scroll_markers<'a>(
-    frame: Frame<'_>,
+    frame: Frame<'a>,
     sheet: &'a Stylesheet,
     traversal: &mut Traversal<'a>,
     resources: &mut ImageResources<'a>,
@@ -1144,7 +1169,7 @@ fn collect_scroll_markers<'a>(
     if let Some(markers) = traversal.prepassed_markers.remove(&element) {
         return Ok(markers);
     }
-    let mut copy = traversal.subtree_copy()?;
+    let mut copy = traversal.subtree_copy(TraversalKind::Copy);
     copy.marker_prepass = true;
     block(frame, sheet, &mut copy, resources)?;
     traversal.prepassed_markers.extend(copy.prepassed_markers);
@@ -1155,7 +1180,7 @@ fn collect_scroll_markers<'a>(
 /// page counters its copies in page-margin boxes show (CSS GCPM 3 §1.2.2); none in a scroll
 /// marker prepass, which keeps only the markers.
 fn running_copies<'a>(
-    (frame, scroller): (&Frame<'_>, Option<MarkerScroller>),
+    (frame, scroller): (&Frame<'a>, Option<MarkerScroller>),
     sheet: &'a Stylesheet,
     traversal: &Traversal<'a>,
     resources: &mut ImageResources<'a>,
@@ -1172,7 +1197,7 @@ fn running_copies<'a>(
         .running_pages(owner)
         .iter()
         .map(|&numbers| {
-            let mut copy = traversal.running_copy(owner, numbers)?;
+            let mut copy = traversal.running_copy(owner, numbers);
             copy.marker_scroller.clone_from(&scroller);
             Ok((
                 numbers,
@@ -1578,6 +1603,69 @@ fn block_axis_edges(style: &Style, basis: f32) -> f32 {
         .sum()
 }
 
+/// The inline size of the block `element`, styled `block`, the containing block of an initial
+/// letter styled `style` that its block-axis padding sizes, against which that padding's
+/// percentages resolve (CSS Box 4 §4.1); `None` where that padding is fixed. Layout measures
+/// it, so the document is formatted again until it reproduces the size used; before it has,
+/// they resolve against zero, as cyclic percentages do (CSS Sizing 3 §5.2.1).
+fn letter_basis(
+    sheet: &Stylesheet,
+    (element, block): (ElementId, &Style),
+    style: &Style,
+) -> Option<f32> {
+    if BLOCK_AXIS_SIDES.iter().all(|&side| {
+        matches!(
+            style.padding[side],
+            crate::style::LengthPercentage::Length(_)
+        )
+    }) {
+        return None;
+    }
+    Some(sheet.query_sizes().size(element).map_or(0.0, |size| {
+        size[usize::from(block.used_writing_mode().vertical())] * block.effective_zoom
+    }))
+}
+
+/// Makes the atomic inline `letter` an initial letter box of the lines of the block `element`,
+/// styled `block`; returns whether its size depends on that block's inline size.
+fn letter_atomic(
+    sheet: &Stylesheet,
+    resolver: &dyn crate::resources::ResourceResolver,
+    (element, block): (ElementId, &Style),
+    letter: &mut BlockBox,
+) -> Result<bool, DocumentError> {
+    let context = crate::text::TextContext::new(&sheet.fonts, resolver);
+    let style = &mut letter.style;
+    let initial = style
+        .initial_letter
+        .expect("an initial letter has a size and sink");
+    let surrounding =
+        crate::text::LetterSurrounding::of(&context, block, style.initial_letter_align.alignment)
+            .map_err(letter_text_error)?;
+    let mut sized = false;
+    // §7.5.5: an automatic block size spans the letter's lines as border-box alignment
+    // would, and is definite.
+    if *style.height.basis() == crate::style::Size::Auto {
+        let span = surrounding.span(initial.size);
+        let height = match style.box_sizing {
+            crate::style::BoxSizing::BorderBox => span,
+            crate::style::BoxSizing::ContentBox => {
+                let basis = letter_basis(sheet, (element, block), style);
+                sized = basis.is_some();
+                span - block_axis_edges(style, basis.unwrap_or_default())
+            }
+        };
+        style.height = style.height.with_automatic(crate::style::Size::Value(
+            crate::style::LengthPercentage::Length(height.max(0.0)),
+        ));
+    }
+    letter.initial_letter = Some(InitialLetterBox {
+        surrounding,
+        atomic: true,
+    });
+    Ok(sized)
+}
+
 /// A segment break in document text.
 const SEGMENT_BREAK: &str = "\n";
 
@@ -1829,70 +1917,19 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         if block.style.initial_letter.is_none() || !self.initial_letter_allowed() {
             return self.inline.atomic(block, parent);
         }
-        self.atomic_letter(&mut block)?;
-        // The letter lies on the first formatted line, which lays out its `::first-line` box.
-        if let Some(copy) = block
-            .first_line_box
-            .as_deref_mut()
-            .filter(|copy| copy.style.initial_letter.is_some())
-        {
-            self.atomic_letter(copy)?;
-        }
+        *self.sized |= letter_atomic(
+            self.sheet,
+            self.resources.resolver,
+            (self.element, self.style),
+            &mut block,
+        )?;
         self.inline.initial_letter(block, parent, false)
     }
-    /// Makes the atomic inline `block` an initial letter box of this block's lines.
-    fn atomic_letter(&mut self, block: &mut BlockBox) -> Result<(), DocumentError> {
-        let context = crate::text::TextContext::new(&self.sheet.fonts, self.resources.resolver);
-        let style = &mut block.style;
-        let initial = style
-            .initial_letter
-            .expect("an initial letter has a size and sink");
-        let surrounding = crate::text::LetterSurrounding::of(
-            &context,
-            self.style,
-            style.initial_letter_align.alignment,
-        )
-        .map_err(letter_text_error)?;
-        // §7.5.5: an automatic block size spans the letter's lines as border-box alignment
-        // would, and is definite.
-        if *style.height.basis() == crate::style::Size::Auto {
-            let span = surrounding.span(initial.size);
-            let height = match style.box_sizing {
-                crate::style::BoxSizing::BorderBox => span,
-                crate::style::BoxSizing::ContentBox => {
-                    span - block_axis_edges(style, self.letter_basis(style))
-                }
-            };
-            style.height = style.height.with_automatic(crate::style::Size::Value(
-                crate::style::LengthPercentage::Length(height.max(0.0)),
-            ));
-        }
-        block.initial_letter = Some(InitialLetterBox {
-            surrounding,
-            atomic: true,
-        });
-        Ok(())
-    }
-    /// The inline size of this block, the containing block of an initial letter styled
-    /// `style` that its block-axis padding sizes, against which that padding's percentages
-    /// resolve (CSS Box 4 §4.1). Layout measures it, so the document is formatted again
-    /// until it reproduces the size used; before it has, they resolve against zero, as
-    /// cyclic percentages do (CSS Sizing 3 §5.2.1).
+    /// See `letter_basis`; layout measures this block's size where it sizes the letter.
     fn letter_basis(&mut self, style: &Style) -> f32 {
-        if BLOCK_AXIS_SIDES.iter().all(|&side| {
-            matches!(
-                style.padding[side],
-                crate::style::LengthPercentage::Length(_)
-            )
-        }) {
-            return 0.0;
-        }
-        *self.sized = true;
-        let Some(size) = self.sheet.query_sizes().size(self.element) else {
-            return 0.0;
-        };
-        let inline = size[usize::from(self.style.used_writing_mode().vertical())];
-        inline * self.style.effective_zoom
+        let basis = letter_basis(self.sheet, (self.element, self.style), style);
+        *self.sized |= basis.is_some();
+        basis.unwrap_or_default()
     }
     /// Places table part `part`, whose parent is an inline box, in the anonymous inline table
     /// of the parts just before it, or in a new one (CSS 2.1 §17.2.1).
@@ -2034,10 +2071,10 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         // Content images stand at placeholders in the marker's text.
         let (text, atomics) = marker.into_text_and_atomics();
         let mut from = 0;
-        for atomic in atomics {
-            self.inline.append(&text[from..atomic.offset], style)?;
-            self.inline.atomic(atomic.block, style)?;
-            from = atomic.offset + crate::document::OBJECT_REPLACEMENT_CHARACTER.len_utf8();
+        for (offset, atomic) in atomics {
+            self.inline.append(&text[from..offset], style)?;
+            self.inline.atomic(atomic, style)?;
+            from = offset + crate::document::OBJECT_REPLACEMENT_CHARACTER.len_utf8();
         }
         self.inline.append(&text[from..], style)?;
         if let Some(letter) = letter {
@@ -3053,7 +3090,9 @@ struct OpenBlock {
     /// The inline footnote an `InlineFootnote` block holds.
     inline_footnote: Option<Box<InlineFootnoteMember>>,
     /// An atomic inline's box on its block's first formatted line, if that line restyles it.
-    first_line_box: Option<Box<BlockBox>>,
+    first_line_box: Option<std::rc::Rc<FirstLineBox>>,
+    /// The first-line copy that an atomic inline's box in a first-line copy also is.
+    own_copy: Option<first_line_copies::OwnCopy>,
 }
 
 /// An inline footnote being collected into the anonymous block of its footnote area.
@@ -3123,6 +3162,7 @@ impl<'d> Frame<'d> {
                 sizes_letter: false,
                 inline_footnote: None,
                 first_line_box: None,
+                own_copy: None,
             }),
             started: false,
             quotes: None,
@@ -3325,7 +3365,7 @@ fn end_inline_footnote<'a>(
 
 /// Formats the element of the `root` frame and its subtree.
 fn block<'a>(
-    root: Frame<'_>,
+    root: Frame<'a>,
     sheet: &'a Stylesheet,
     traversal: &mut Traversal<'a>,
     resources: &mut ImageResources<'a>,
@@ -3347,30 +3387,23 @@ fn block<'a>(
             traversal.work.spend(ELEMENT_WORK)?;
             // The atomic inlines of a block's first formatted line inherit through
             // `::first-line`, but only layout finds the line each one lies on.
-            let first_line = match (blocks.len().checked_sub(2), &frames[index].block) {
+            let (first_line, own_copy) = match (blocks.len().checked_sub(2), &frames[index].block) {
                 (Some(parent), Some(block)) if matches!(block.placement, Placement::Atomic) => {
-                    let parent = &frames[blocks[parent]];
-                    let origins = parent
-                        .block
-                        .as_ref()
-                        .and_then(|block| block.first_line.origins.clone());
-                    match origins {
-                        Some(origins) => first_line_box(
-                            (&frames[index], marker_scroller(&frames[..index], traversal)),
-                            (&parent.style, &origins),
-                            sheet,
-                            traversal,
-                            resources,
-                        )?,
-                        None => None,
-                    }
+                    first_line_copies::atomic_first_line(
+                        &mut frames,
+                        blocks[parent],
+                        sheet,
+                        traversal,
+                        resources,
+                    )?
                 }
-                _ => None,
+                _ => (None, None),
             };
             let scroller = marker_scroller(&frames[..index], traversal);
             let frame = &mut frames[index];
             if let Some(block) = &mut frame.block {
                 block.first_line_box = first_line;
+                block.own_copy = own_copy;
             }
             let element = frame.element;
             // CSS Containment 2 §3.3: quote depth changes are scoped to the subtree.
@@ -4151,6 +4184,7 @@ fn block<'a>(
             && block.image.is_none();
         block.density = state.density;
         block.first_line_box = state.first_line_box;
+        block.own_copy = state.own_copy;
         block.navigation = state.navigation;
         block.event = state.event;
         block.canvas_source = canvas_source;
@@ -4449,7 +4483,9 @@ fn format_root(
         marker_scroller: None,
         marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
         work: crate::layout::work::Budget::new(input.work_limit),
-        copies: 0,
+        kind: TraversalKind::Document,
+        first_lines: std::rc::Rc::default(),
+        requests: Vec::new(),
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
         .then(|| html.body_element().map(Element::id))

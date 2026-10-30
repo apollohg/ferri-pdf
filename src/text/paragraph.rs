@@ -570,10 +570,13 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
         if line.first_line_styles
             && let Some(fragment) = line.annotations.iter().find(|fragment| {
                 let index = fragment.index - source.atomics().len();
-                source.annotations()[index].block.first_line_box().is_none()
+                source.annotations()[index]
+                    .block()
+                    .first_line_box()
+                    .is_none()
                     && !source
                         .annotation_box_style(index)
-                        .same_text_style(paragraph.annotations()[index].block.style())
+                        .same_text_style(paragraph.annotations()[index].block().style())
             })
         {
             return Err(TextError::FirstLineAnnotation {

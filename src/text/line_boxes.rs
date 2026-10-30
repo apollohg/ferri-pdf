@@ -710,7 +710,7 @@ pub(crate) fn align(
         && line.annotations.is_empty()
         && !line.atomics.is_empty()
         && line.atomics.iter().all(|fragment| {
-            let block = &paragraph.atomics()[fragment.index].block;
+            let block = &paragraph.atomics()[fragment.index].block();
             let metrics = atomics[fragment.index];
             block.is_unadorned_image_fallback() && metrics.width == 0.0 && metrics.height == 0.0
         });
@@ -821,7 +821,7 @@ pub(crate) fn align(
     let mut atomic_placements = Vec::with_capacity(line.atomics.len());
     for fragment in &line.atomics {
         let metrics = atomics[fragment.index];
-        let style = paragraph.atomics()[fragment.index].block.style();
+        let style = paragraph.atomics()[fragment.index].block().style();
         let (placed, parent, dominant) = owner(fragment.owner);
         let font = BoxMetrics::of(context, style)?;
         // Without a content baseline the margin box gives the baselines (CSS Inline 3 §A.3).

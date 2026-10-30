@@ -193,12 +193,12 @@ impl<'a> Paginator<'a, '_, 'a> {
             atomics
                 .iter_mut()
                 .enumerate()
-                .map(|(index, atomic)| (atomic, &source.inline_block(index).block))
+                .map(|(index, atomic)| (atomic, source.inline_block(index).block()))
                 .chain(first_line.iter_mut().zip(source.inline_blocks()).map(
                     |(atomic, anchor)| {
                         (
                             atomic,
-                            anchor.block.first_line_box().unwrap_or(&anchor.block),
+                            anchor.block().first_line_box().unwrap_or(anchor.block()),
                         )
                     },
                 ));
@@ -346,7 +346,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         let letter = source
             .atomics()
             .first()
-            .filter(|atomic| atomic.offset == 0 && atomic.block.initial_letter().is_some())
+            .filter(|atomic| atomic.offset == 0 && atomic.block().initial_letter().is_some())
             .map(|_| 0);
         ParagraphCursor {
             index,
@@ -414,7 +414,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         let float_anchors: Vec<_> = source
             .anchors()
             .iter()
-            .filter(|anchor| anchor.block.style().floating().is_some())
+            .filter(|anchor| anchor.block().style().floating().is_some())
             .collect();
         let has_inline_floats = consumed_floats < float_anchors.len() || letter.is_some();
         let mut snapshot = has_inline_floats.then(|| self.snapshot()).transpose()?;
@@ -542,7 +542,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                                             .ends_with(['\n', '\u{2028}', '\u{2029}']))
                             }) {
                                 let measured =
-                                    self.measure_float(&anchor.block, width, containing_height)?;
+                                    self.measure_float(anchor.block(), width, containing_height)?;
                                 let prefix = (line.x_at(source, anchor.offset, style.used_rtl())
                                     - line.x_at(source, line.range.start, style.used_rtl()))
                                 .abs();
@@ -818,7 +818,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                         FloatTrial::Float { anchor, y, .. } => {
                             let anchor = float_anchors[anchor];
                             let measured =
-                                self.measure_float(&anchor.block, width, containing_height)?;
+                                self.measure_float(anchor.block(), width, containing_height)?;
                             self.place_inline_float(measured, anchor, [x, width, y], &layers)?;
                         }
                         FloatTrial::Letter { side, margin } => self
@@ -988,7 +988,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         }
         for anchor in &float_anchors[consumed_floats..] {
             self.measurer.work.spend(1)?;
-            let measured = self.measure_float(&anchor.block, width, containing_height)?;
+            let measured = self.measure_float(anchor.block(), width, containing_height)?;
             self.place_inline_float(measured, anchor, [x, width, self.y], &layers)?;
         }
         for event in &source.semantic_events()[consumed_events..] {
@@ -1015,7 +1015,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         let mut footnotes = Vec::new();
         for fragment in &line.atomics {
             let anchor = source.inline_block(fragment.index);
-            if let Some(event) = anchor.block.semantic_event() {
+            if let Some(event) = anchor.block().semantic_event() {
                 self.record_event_line(
                     event.context.element,
                     line.height,

@@ -176,7 +176,7 @@ fn navigation(block: &BlockBox, output: &mut Vec<(String, BoxNavigation)>) {
                     }
                 }
                 for atomic in paragraph.atomics() {
-                    navigation(&atomic.block, output);
+                    navigation(atomic.block(), output);
                 }
             }
         }
@@ -232,11 +232,11 @@ fn formatting_a_first_line_copy_numbers_marker_links_and_destinations_as_the_doc
         .next()
         .expect("the inline-block is an atomic inline");
     let copy = atomic
-        .block
+        .block()
         .first_line_box()
         .expect("the first line restyles the inline-block");
     let (mut source, mut copied) = (Vec::new(), Vec::new());
-    navigation(&atomic.block, &mut source);
+    navigation(atomic.block(), &mut source);
     navigation(copy, &mut copied);
     assert!(
         source.iter().any(|(label, _)| label == "*"),

@@ -25,8 +25,18 @@ fn containing<'a>(block: &'a BlockBox, text: &str) -> &'a BlockBox {
                     if paragraph.text() == text {
                         return block;
                     }
-                    pending.extend(paragraph.atomics().iter().map(|anchor| &anchor.block));
-                    pending.extend(paragraph.anchors().iter().map(|anchor| &anchor.block));
+                    pending.extend(
+                        paragraph
+                            .atomics()
+                            .iter()
+                            .map(crate::document::Anchor::block),
+                    );
+                    pending.extend(
+                        paragraph
+                            .anchors()
+                            .iter()
+                            .map(crate::document::Anchor::block),
+                    );
                 }
                 BlockContent::Block(child) | BlockContent::Positioned(child) => pending.push(child),
             }

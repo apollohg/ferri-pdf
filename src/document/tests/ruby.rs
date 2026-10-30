@@ -29,7 +29,7 @@ fn paragraph(document: &StyledDocument) -> &Paragraph {
 }
 
 fn annotation_text(paragraph: &Paragraph, block: usize) -> String {
-    match paragraph.annotations()[block].block.children() {
+    match paragraph.annotations()[block].block().children() {
         [BlockContent::Inline(contents)] => contents.text().to_owned(),
         children => panic!(
             "an annotation box holds one paragraph, not {}",
@@ -271,7 +271,7 @@ fn ruby_boxes_isolate_inlinify_and_stop_decorations() {
         "anonymous bases are isolated as the internal boxes are (§3.5)"
     );
     assert_eq!(
-        paragraph.atomics()[0].block.style().display,
+        paragraph.atomics()[0].block().style().display,
         Display::InlineBlock,
         "a block inside a ruby base is inlinified (§2.2)"
     );
@@ -283,7 +283,7 @@ fn ruby_boxes_isolate_inlinify_and_stop_decorations() {
     );
     let wrapper = |annotation: &crate::document::ruby::Annotation| {
         paragraph.annotations()[annotation.block.unwrap()]
-            .block
+            .block()
             .style()
             .text_decorations
             .propagated

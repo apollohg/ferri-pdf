@@ -36,7 +36,7 @@ pub(super) fn variant(
     let atomics = paragraph
         .atomics()
         .iter()
-        .map(|atomic| atomic.block.style())
+        .map(|atomic| atomic.block().style())
         .chain(
             (0..paragraph.annotations().len()).map(|index| paragraph.annotation_box_style(index)),
         )

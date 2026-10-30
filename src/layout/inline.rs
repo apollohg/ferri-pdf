@@ -191,7 +191,7 @@ pub(super) fn has_first_line_box(paragraph: &crate::document::Paragraph, index: 
     paragraph
         .inline_blocks()
         .nth(index)
-        .is_some_and(|block| block.block.first_line_box().is_some())
+        .is_some_and(|block| block.block().first_line_box().is_some())
 }
 
 /// An atomic inline's metrics from its layout `measured` with horizontal `geometry`.

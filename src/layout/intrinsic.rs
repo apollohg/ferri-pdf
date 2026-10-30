@@ -114,11 +114,11 @@ pub(super) fn flow<'a>(
                 let blocks = paragraph.measured_blocks();
                 let atomics = blocks
                     .iter()
-                    .map(|atomic| measure(&atomic.block, measurer, available))
+                    .map(|atomic| measure(atomic.block(), measurer, available))
                     .collect::<Result<Vec<_>, _>>()?;
                 let mut first_line = atomics.clone();
                 for (widths, atomic) in first_line.iter_mut().zip(&blocks) {
-                    if let Some(block) = atomic.block.first_line_box() {
+                    if let Some(block) = atomic.block().first_line_box() {
                         *widths = measure(block, measurer, available)?;
                     }
                 }

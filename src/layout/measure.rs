@@ -1910,14 +1910,14 @@ impl<'a> Measurer<'a> {
             let containing = base_height.or(containing_height);
             atomics.push(Some(crate::layout::inline::measure(
                 self,
-                &atomic.block,
+                atomic.block(),
                 width,
                 containing,
                 rtl,
             )?));
             first_line_atomics.push(
                 atomic
-                    .block
+                    .block()
                     .first_line_box()
                     .map(|block| {
                         crate::layout::inline::measure(self, block, width, containing, rtl)
@@ -2537,7 +2537,7 @@ fn contains_child(block: &BlockBox, check: impl Fn(&Style) -> bool) -> bool {
         BlockContent::Inline(paragraph) => {
             paragraph
                 .inline_blocks()
-                .any(|atomic| sticky(&atomic.block))
+                .any(|atomic| sticky(atomic.block()))
                 || paragraph.boxes().iter().any(|inline| check(&inline.style))
         }
         BlockContent::Events(_) => false,
@@ -2563,11 +2563,11 @@ pub(super) fn line_anchors<'a>(
     paragraph
         .anchors()
         .iter()
-        .filter(|anchor| anchor.block.style().floating().is_none())
+        .filter(|anchor| anchor.block().style().floating().is_none())
         .filter(|anchor| {
             complete
                 || lines.last().is_some_and(|line| {
-                    if anchor.block.style().inline_level_origin {
+                    if anchor.block().style().inline_level_origin {
                         anchor.offset < line.range.end
                     } else {
                         anchor.offset <= line.range.end
@@ -2575,7 +2575,7 @@ pub(super) fn line_anchors<'a>(
                 })
         })
         .map(|anchor| {
-            let block = &anchor.block;
+            let block = anchor.block();
             let last = lines.len().saturating_sub(1);
             if block.style().inline_level_origin {
                 let line = lines

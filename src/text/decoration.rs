@@ -361,7 +361,7 @@ fn stretches(paragraph: &Paragraph, line: &Line) -> Vec<Stretch> {
             Slot::Atomic(index) => {
                 let atomic = &line.atomics[index];
                 let skip = paragraph.atomics()[atomic.index]
-                    .block
+                    .block()
                     .style()
                     .text_decorations
                     .skip;

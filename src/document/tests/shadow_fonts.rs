@@ -40,7 +40,12 @@ fn assert_faces(html: &str, expected: &[(&str, &[u8])]) {
                             }
                         }
                     }
-                    pending.extend(paragraph.atomics().iter().map(|anchor| &anchor.block));
+                    pending.extend(
+                        paragraph
+                            .atomics()
+                            .iter()
+                            .map(crate::document::Anchor::block),
+                    );
                 }
             }
         }

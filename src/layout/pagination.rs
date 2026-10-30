@@ -6908,10 +6908,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             // The first formatted line lays out the part of an annotation's `::first-line`
             // box (CSS Pseudo-Elements 4 §2.1.3).
             let block = anchor
-                .block
+                .block()
                 .first_line_box()
                 .filter(|_| line.first_line_styles)
-                .unwrap_or(&anchor.block);
+                .unwrap_or(anchor.block());
             let remeasure = |paginator: &mut Self, part: Option<std::ops::Range<usize>>| {
                 paginator.measurer.run(|measurer| {
                     crate::layout::inline::measure_annotation(

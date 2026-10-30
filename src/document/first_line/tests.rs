@@ -44,7 +44,7 @@ fn host_first_line_keeps_math_atomic_styles_canonical() {
         .iter()
         .find(|paragraph| !paragraph.atomics().is_empty())
         .expect("host paragraph must contain the real Math atomic");
-    let canonical = paragraph.atomics()[0].block.style();
+    let canonical = paragraph.atomics()[0].block().style();
     assert_eq!(canonical.display, Display::InlineMath);
     assert_eq!(canonical.size, CANONICAL_SIZE);
     assert_eq!(canonical.color.rgb, CANONICAL_COLOR);
@@ -56,7 +56,7 @@ fn host_first_line_keeps_math_atomic_styles_canonical() {
         FIRST_LINE_SIZE,
         "host line strut still inherits first-line size"
     );
-    let selected = line.atomics()[0].block.style();
+    let selected = line.atomics()[0].block().style();
     assert_eq!(
         selected.size, canonical.size,
         "Math content and font-relative native attributes must not be remeasured from a host line fragment's font"
@@ -89,7 +89,12 @@ fn math_boxes_do_not_generate_their_own_first_line_styles() {
                         blocks.push(child);
                     }
                     BlockContent::Inline(paragraph) => {
-                        blocks.extend(paragraph.atomics().iter().map(|atomic| &atomic.block));
+                        blocks.extend(
+                            paragraph
+                                .atomics()
+                                .iter()
+                                .map(crate::document::Anchor::block),
+                        );
                     }
                     BlockContent::Events(_) => {}
                 }

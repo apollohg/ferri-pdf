@@ -1,5 +1,5 @@
 //! Formatting a document charges every subtree it formats, copies included, to one budget.
-use crate::document::{DocumentError, StyledDocument};
+use crate::document::{BlockBox, BlockContent, DocumentError, StyledDocument};
 
 const NESTING: usize = 3;
 const SCROLLERS: usize = 16;
@@ -60,25 +60,15 @@ fn document(rules: &str, body: &str) -> String {
 const FIRST_LINE: &str = "div::first-line{color:red}";
 
 #[test]
-fn first_line_copies_of_nested_atomic_inlines_charge_the_shared_budget() {
-    let copies = |depth| {
-        let plain = required_work(&document("", &nested_atomics(depth)));
-        let styled = required_work(&document(FIRST_LINE, &nested_atomics(depth)));
-        assert!(
-            styled > 2 * plain,
-            "the first-line copies of {depth} nested atomic inlines format the innermost one \
-             {} times and must charge the budget: {styled} units, {plain} without the rule",
-            1 << depth
-        );
-        styled - plain
-    };
-    let (shallow, deep) = (copies(NESTING), copies(NESTING + 1));
+fn first_line_copies_of_nested_atomic_inlines_charge_the_shared_budget_once() {
+    let plain = required_work(&document("", &nested_atomics(NESTING)));
+    let nested = plain - required_work(&document("", &nested_atomics(0)));
+    let copies = required_work(&document(FIRST_LINE, &nested_atomics(NESTING))) - plain;
     assert!(
-        deep >= 2 * shallow,
-        "an atomic inline on a styled first line is formatted again inside every copy of its \
-         ancestors, so each level of nesting must double the work the copies charge: {shallow} \
-         units for {NESTING} levels, {deep} for {}",
-        NESTING + 1
+        2 * copies > nested && copies <= nested,
+        "the first line restyles every nested atomic inline alike, so the copy of the outermost \
+         one, which holds the others, is the copy each of them shares: the copies must charge \
+         the budget for formatting that subtree once, {copies} units for a subtree of {nested}"
     );
 }
 
@@ -151,35 +141,106 @@ fn scroll_marker_prepasses_make_no_first_line_copies() {
     );
 }
 
+/// The atomic inline nested `depth` levels inside `block`'s first one, if there is one.
+fn nested_atomic(block: &BlockBox, depth: usize) -> Option<&BlockBox> {
+    let mut atomic = block;
+    for _ in 0..=depth {
+        atomic = first_atomic(atomic)?;
+    }
+    Some(atomic)
+}
+
+/// The first atomic inline of the paragraphs inside `block`, outside other atomic inlines.
+fn first_atomic(block: &BlockBox) -> Option<&BlockBox> {
+    block.children().iter().find_map(|child| match child {
+        BlockContent::Block(child) => first_atomic(child),
+        BlockContent::Inline(paragraph) => paragraph
+            .atomics()
+            .first()
+            .map(crate::document::Anchor::block),
+        BlockContent::Events(_) | BlockContent::Positioned(_) => None,
+    })
+}
+
+/// Checks that each of the `depth` nested atomic inlines of `document` keeps its parent's
+/// colour and, on its block's first line, takes the colour of `FIRST_LINE` into its copy and
+/// every atomic inline the copy holds, which the line leaves alone.
+fn assert_restyled_at_every_level(document: &StyledDocument, depth: usize) {
+    const RED: [u8; 3] = [255, 0, 0];
+    for level in 0..depth {
+        let atomic = nested_atomic(document.root(), level)
+            .unwrap_or_else(|| panic!("level {level} of {depth} holds an atomic inline"));
+        assert_eq!(
+            atomic.style().color,
+            crate::paint::Color::BLACK,
+            "level {level} keeps its parent's colour off the first line"
+        );
+        let copy = atomic
+            .first_line_box()
+            .unwrap_or_else(|| panic!("the first line restyles level {level} of {depth}"));
+        for inner in 0..depth - level {
+            let nested = match inner.checked_sub(1) {
+                Some(below) => nested_atomic(copy, below)
+                    .unwrap_or_else(|| panic!("the copy of level {level} holds {inner} levels")),
+                None => copy,
+            };
+            assert_eq!(
+                nested.style().color.rgb,
+                RED,
+                "level {} inside the first-line copy of level {level} inherits the line's colour",
+                level + inner
+            );
+            assert!(
+                nested.first_line_box().is_none(),
+                "the first line of level {} inside a copy leaves it alone, so it needs no copy",
+                level + inner
+            );
+        }
+    }
+}
+
 #[test]
-fn nested_copies_fail_before_overflowing_a_library_thread() {
+fn deep_first_line_nesting_formats_in_linear_work_on_a_library_thread() {
     const LIBRARY_STACK_BYTES: usize = 2 * 1024 * 1024;
-    const RUNAWAY_NESTING: usize = 512;
-    let limit = crate::document::formatting::MAX_COPY_NESTING;
+    const SHALLOW: usize = 16;
+    const DEEP: usize = 64;
+    // Each level nests a block and an atomic inline in it, below the root and the body.
+    const DEEPEST: usize = (crate::document::formatting::MAX_FORMATTING_DEPTH - 1) / 2;
     std::thread::Builder::new()
         .stack_size(LIBRARY_STACK_BYTES)
-        .spawn(move || {
-            let html = document(FIRST_LINE, &nested_atomics(limit));
-            if let Err(error) = parse(&html, crate::document::MAX_FORMATTING_WORK) {
-                panic!("{limit} nested first-line copies must format: {error}");
+        .spawn(|| {
+            let [shallow, deep] = [SHALLOW, DEEP].map(|depth| {
+                let html = document(FIRST_LINE, &nested_atomics(depth));
+                let document = parse(&html, crate::document::MAX_FORMATTING_WORK)
+                    .unwrap_or_else(|error| panic!("{depth} levels must format: {error}"));
+                assert_restyled_at_every_level(&document, depth);
+                required_work(&html)
+            });
+            assert!(
+                deep * SHALLOW < shallow * DEEP,
+                "formatting a level and its first-line copy is formatting work of its own, so \
+                 nesting {DEEP} levels must cost less than {DEEP}/{SHALLOW} times nesting \
+                 {SHALLOW}: {shallow} units for {SHALLOW} levels, {deep} for {DEEP}"
+            );
+            let deepest = document(FIRST_LINE, &nested_atomics(DEEPEST));
+            if let Err(error) = parse(&deepest, crate::document::MAX_FORMATTING_WORK) {
+                panic!("{DEEPEST} levels, the formatting depth limit, must format: {error}");
             }
-            for nesting in [limit + 1, RUNAWAY_NESTING] {
-                let html = document(FIRST_LINE, &nested_atomics(nesting));
-                match parse(&html, crate::document::MAX_FORMATTING_WORK) {
-                    Err(DocumentError::Formatting(message)) => assert_eq!(
-                        message,
-                        format!("formatting copy nesting exceeds {limit}"),
-                        "{nesting} nested first-line copies"
+            let deeper = document(FIRST_LINE, &nested_atomics(DEEPEST + 1));
+            match parse(&deeper, crate::document::MAX_FORMATTING_WORK) {
+                Err(DocumentError::Formatting(message)) => assert_eq!(
+                    message,
+                    format!(
+                        "formatting nesting exceeds {}",
+                        crate::document::formatting::MAX_FORMATTING_DEPTH
                     ),
-                    Err(error) => panic!("{nesting} nested first-line copies failed with {error}"),
-                    Ok(_) => panic!(
-                        "{nesting} nested first-line copies must fail on a \
-                         {LIBRARY_STACK_BYTES}-byte stack"
-                    ),
-                }
+                    "only the formatting depth limits first-line copies"
+                ),
+                Err(error) => panic!("{} levels failed with {error}", DEEPEST + 1),
+                Ok(_) => panic!("{} levels exceed the formatting depth limit", DEEPEST + 1),
             }
         })
         .expect("the library thread must start")
         .join()
-        .expect("nested copies must fail without panicking");
+        .expect("deep first-line nesting must format without overflowing the stack");
 }

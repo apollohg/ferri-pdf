@@ -33,7 +33,7 @@ fn boxes(block: &BlockBox, output: &mut Vec<(String, BoxNavigation)>) {
                     }
                 }
                 for atomic in paragraph.atomics() {
-                    boxes(&atomic.block, output);
+                    boxes(atomic.block(), output);
                 }
             }
         }

@@ -20,13 +20,16 @@ impl SourceIds {
     pub(crate) fn register(&mut self, root: &BlockBox) {
         enum Entry<'a> {
             Block(&'a BlockBox),
+            /// A first-line box, which the boxes it restyles alike share.
+            Shared(&'a BlockBox),
             Paragraph(&'a Paragraph),
         }
         let ids = self;
         let mut pending = vec![Entry::Block(root)];
         while let Some(entry) = pending.pop() {
             match entry {
-                Entry::Block(block) => {
+                Entry::Shared(block) if ids.blocks.contains_key(&std::ptr::from_ref(block)) => {}
+                Entry::Block(block) | Entry::Shared(block) => {
                     if let Some(flow) = block.flow() {
                         pending.push(Entry::Block(flow));
                     }
@@ -34,7 +37,7 @@ impl SourceIds {
                         pending.push(Entry::Block(content));
                     }
                     if let Some(copy) = block.first_line_box() {
-                        pending.push(Entry::Block(copy));
+                        pending.push(Entry::Shared(copy));
                     }
                     if let Some(radical) = block.math().and_then(|math| math.radical.as_ref()) {
                         pending.push(Entry::Paragraph(radical));
@@ -75,12 +78,13 @@ impl SourceIds {
                         .chain(paragraph.inline_blocks())
                         .collect::<Vec<_>>();
                     anchors.sort_by_key(|anchor| anchor.offset);
-                    pending.extend(
-                        anchors
-                            .into_iter()
-                            .rev()
-                            .map(|anchor| Entry::Block(&anchor.block)),
-                    );
+                    pending.extend(anchors.into_iter().rev().map(|anchor| {
+                        if anchor.shared() {
+                            Entry::Shared(anchor.block())
+                        } else {
+                            Entry::Block(anchor.block())
+                        }
+                    }));
                 }
             }
         }

@@ -669,7 +669,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         };
         let mut calls = Vec::new();
         for fragment in line.atomics.iter().chain(&line.annotations) {
-            let (events, visited) = source.inline_block(fragment.index).block.subtree_events();
+            let (events, visited) = source.inline_block(fragment.index).block().subtree_events();
             self.measurer.work.spend(visited)?;
             calls.extend(events.into_iter().filter_map(|event| event.footnote));
         }

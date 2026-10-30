@@ -55,9 +55,19 @@ impl InlineBox {
 /// A float, absolute-position anchor, or atomic-inline placeholder at a source offset.
 pub(crate) struct Anchor {
     pub offset: usize,
-    pub block: crate::document::BlockBox,
+    block: crate::document::BlockBox,
     /// Innermost inline box containing the anchor; `None` is the paragraph's root inline box.
     pub inline_box: Option<usize>,
+}
+impl Anchor {
+    /// The anchored box, which a first-line copy that other boxes share may hold.
+    pub(crate) fn block(&self) -> &crate::document::BlockBox {
+        self.block.standing_for()
+    }
+    /// Whether the anchored box is a first-line copy that other boxes share.
+    pub(crate) fn shared(&self) -> bool {
+        self.block.stands_in()
+    }
 }
 pub(crate) struct InlineLink {
     pub range: Range<usize>,
@@ -662,9 +672,15 @@ impl Paragraph {
     pub(crate) fn into_non_text(self) -> Vec<crate::document::BlockContent> {
         non_text(self.anchors, self.events)
     }
-    /// The text and the atomic inlines whose placeholders it holds, in text order.
-    pub(crate) fn into_text_and_atomics(self) -> (String, Vec<Anchor>) {
-        (self.text, self.atomics)
+    /// The text and the atomic inlines whose placeholders it holds, in text order, with
+    /// their offsets.
+    pub(crate) fn into_text_and_atomics(self) -> (String, Vec<(usize, crate::document::BlockBox)>) {
+        let atomics = self
+            .atomics
+            .into_iter()
+            .map(|atomic| (atomic.offset, atomic.block))
+            .collect();
+        (self.text, atomics)
     }
     pub(crate) fn leader_at(&self, offset: usize) -> bool {
         self.spans

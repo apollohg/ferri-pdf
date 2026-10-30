@@ -104,7 +104,7 @@ pub(super) fn content_image_atomics(
     let sizes: Vec<[f32; 2]> = paragraph
         .atomics()
         .iter()
-        .map(|atomic| crate::layout::images::size(&atomic.block, 0.0, 0.0, None, None, None))
+        .map(|atomic| crate::layout::images::size(atomic.block(), 0.0, 0.0, None, None, None))
         .collect();
     let metrics = sizes
         .iter()
@@ -132,7 +132,7 @@ pub(super) fn content_image_paints(
             let [width, height] = sizes[fragment.index];
             crate::graphics::ImagePaint {
                 image: atomic
-                    .block
+                    .block()
                     .image()
                     .expect("generated atomics are content images")
                     .clone(),
@@ -143,8 +143,8 @@ pub(super) fn content_image_paints(
                     height,
                 },
                 clip: None,
-                source_scale: atomic.block.style().effective_zoom,
-                rendering: atomic.block.style().image_rendering(),
+                source_scale: atomic.block().style().effective_zoom,
+                rendering: atomic.block().style().image_rendering(),
             }
         })
         .collect()
