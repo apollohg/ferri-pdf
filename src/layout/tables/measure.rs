@@ -594,6 +594,7 @@ impl<'a> TablePlan<'a> {
             .native_vertical(block.block)
             .map(|vertical| vertical.constraints());
         let has_height_constraints = used_height.is_some()
+            || crate::layout::ratio::PreferredRatio::of(block.style(), None, [0.0; 2]).is_some()
             || native_height.as_ref().is_some_and(|constraints| {
                 constraints.specified.is_some()
                     || constraints.minimum != 0.0
@@ -764,6 +765,25 @@ impl<'a> TablePlan<'a> {
         )?;
         if let Some(geometry) = positioned {
             constraints.specified = Some(geometry.width);
+        }
+        // CSS Sizing 4 §4.2: a definite height gives an automatic width through the preferred
+        // aspect ratio, which the columns still grow past.
+        let vertical_edges = provisional.padding[0]
+            + provisional.padding[2]
+            + provisional.border[0]
+            + provisional.border[2];
+        if constraints.specified.is_none()
+            && let Some(ratio) =
+                crate::layout::ratio::PreferredRatio::of(style, None, [edges, vertical_edges])
+            && let Some(height) = crate::style::SizeConstraints::new(
+                [&style.height, &style.min_height, &style.max_height],
+                self.containing_height,
+                style.box_sizing,
+                vertical_edges,
+            )
+            .specified
+        {
+            constraints.specified = Some(constraints.constrain(ratio.width(height)));
         }
         let contributions = self.contributions(measurer, width)?;
         let [horizontal, vertical] = if collapsed {
@@ -1268,12 +1288,30 @@ impl<'a> TablePlan<'a> {
             table: self.native_height.clone().unwrap_or_else(|| {
                 self.used_height.map_or_else(
                     || {
-                        crate::style::SizeConstraints::new(
+                        let mut constraints = crate::style::SizeConstraints::new(
                             [&style.height, &style.min_height, &style.max_height],
                             self.containing_height,
                             style.box_sizing,
                             edges,
-                        )
+                        );
+                        // CSS Sizing 4 §4.1: a table box is no internal table box, so its
+                        // preferred aspect ratio gives an automatic height, which its rows
+                        // still grow past.
+                        if constraints.specified.is_none() {
+                            constraints.specified = crate::layout::ratio::PreferredRatio::of(
+                                style,
+                                None,
+                                [
+                                    geometry.padding[1]
+                                        + geometry.padding[3]
+                                        + geometry.border[1]
+                                        + geometry.border[3],
+                                    edges,
+                                ],
+                            )
+                            .map(|ratio| ratio.height(geometry.width));
+                        }
+                        constraints
                     },
                     |height| crate::style::SizeConstraints::fixed(Some(height), 0.0, None),
                 )

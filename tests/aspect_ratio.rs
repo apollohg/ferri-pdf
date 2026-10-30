@@ -55,6 +55,43 @@ fn block_ratios_transfer_definite_sizes_between_axes() {
 /// §4.3: the ratio-dependent height grows to fit the content unless `min-height` is set or
 /// the box is a scroll container.
 #[test]
+fn table_ratios_transfer_definite_sizes_but_rows_and_columns_still_grow() {
+    // CSS Sizing 4 §4.1: aspect-ratio applies to table boxes, which are no internal table
+    // boxes; like a specified size, the derived one is a minimum for the table's content.
+    let body = "<table class=t><tr><td><div class=c></div></td></tr></table>";
+    let base = ".t{border-spacing:0;background:rgb(255,0,0)}td{padding:0}";
+    for (css, width, height) in [
+        (
+            ".t{width:200pt;aspect-ratio:2}.c{width:10pt;height:10pt}",
+            200.0,
+            100.0,
+        ),
+        (
+            ".t{height:50pt;aspect-ratio:3}.c{width:10pt;height:10pt}",
+            150.0,
+            50.0,
+        ),
+        (
+            ".t{width:200pt;aspect-ratio:2}.c{width:10pt;height:150pt}",
+            200.0,
+            150.0,
+        ),
+        (
+            ".t{height:50pt;aspect-ratio:1}.c{width:120pt;height:10pt}",
+            120.0,
+            50.0,
+        ),
+    ] {
+        assert_size(
+            css,
+            boxed(&format!("{base}{css}"), body, RED),
+            width,
+            height,
+        );
+    }
+}
+
+#[test]
 fn automatic_minimum_follows_the_content() {
     let tall = "<div class=a><div style='height:180pt'></div></div>";
     for (css, height) in [
