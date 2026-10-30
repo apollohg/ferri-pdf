@@ -189,6 +189,18 @@
       "syntax": "[ <image> | <color> ] && <percentage [0,100]>?",
       "source": "https://www.w3.org/TR/2025/WD-css-images-4-20250930/#typedef-cf-image"
     },
+    "bg-clip": {
+      "syntax": "<visual-box> | [ border-area || text ]",
+      "source": "https://www.w3.org/TR/2025/WD-css-backgrounds-4-20251125/#typedef-bg-clip"
+    },
+    "bg-layer": {
+      "syntax": "<bg-image> || <bg-position> [ / <bg-size> ]? || <repeat-style> || <attachment> || <visual-box> || <bg-clip>",
+      "source": "https://www.w3.org/TR/2025/WD-css-backgrounds-4-20251125/#typedef-bg-layer: the <bg-clip> and <visual-box> alternatives of the || list swapped, so that a lone box keyword is the <visual-box> that sets both background-origin and background-clip"
+    },
+    "final-bg-layer": {
+      "syntax": "<bg-image> || <bg-position> [ / <bg-size> ]? || <repeat-style> || <attachment> || <visual-box> || <bg-clip> || <'background-color'>",
+      "source": "https://www.w3.org/TR/2025/WD-css-backgrounds-4-20251125/#typedef-final-bg-layer, with <bg-layer>'s order of the box alternatives"
+    },
     "display-legacy": {
       "syntax": "inline-block | inline-list-item | inline-table | inline-flex | inline-grid | -webkit-box | -webkit-inline-box",
       "source": "https://compat.spec.whatwg.org/commit-snapshots/159624eff7222f84fbdaae006e998e65bf60daa0/#css-keyword-mappings: -webkit-box and -webkit-inline-box, which https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#webkit-line-clamp requires to compute as themselves"

@@ -461,6 +461,44 @@ fn layers_paint_bottom_first_with_their_own_clip_and_the_colour_follows_the_bott
 }
 
 #[test]
+fn shorthand_border_area_sets_the_clip_and_a_border_box_origin() {
+    use crate::graphics::{BackgroundClip, BoxArea};
+    for (value, origin, clip) in [
+        (
+            "red border-area",
+            BoxArea::BorderBox,
+            BackgroundClip::BorderArea,
+        ),
+        (
+            "content-box border-area red",
+            BoxArea::ContentBox,
+            BackgroundClip::BorderArea,
+        ),
+        (
+            "padding-box red",
+            BoxArea::PaddingBox,
+            BackgroundClip::Box(BoxArea::PaddingBox),
+        ),
+        (
+            "content-box padding-box red",
+            BoxArea::ContentBox,
+            BackgroundClip::Box(BoxArea::PaddingBox),
+        ),
+    ] {
+        let paint = first(
+            "div{width:100pt;height:40pt;border:4pt solid}",
+            &format!("<div style=\"background:{value}\">A</div>"),
+        );
+        let backgrounds = &paint.decoration.backgrounds;
+        assert_eq!(
+            (backgrounds.origins[0], backgrounds.clips[0]),
+            (origin, clip),
+            "background: {value} (CSS Backgrounds 4 §2.12)"
+        );
+    }
+}
+
+#[test]
 fn shorthand_layers_reset_omitted_longhands_and_split_position_size_and_boxes() {
     let paint = first(
         "div{width:100pt;height:40pt;background-size:50%;background-repeat:space}",

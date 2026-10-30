@@ -82,9 +82,13 @@ pub(super) fn boxes(value: &Component) -> Result<Vec<BoxArea>, StyleError> {
     list(value, box_area)
 }
 pub(super) fn clips(value: &Component) -> Result<Vec<BackgroundClip>, StyleError> {
-    list(value, |item| match item.keyword() {
-        Some(Keyword::BorderArea) => Ok(BackgroundClip::BorderArea),
-        _ => box_area(item).map(BackgroundClip::Box),
+    list(value, |item| {
+        let mut keywords = Vec::new();
+        item.keywords(&mut keywords);
+        match keywords.as_slice() {
+            [Keyword::BorderArea] => Ok(BackgroundClip::BorderArea),
+            _ => box_area(item).map(BackgroundClip::Box),
+        }
     })
 }
 pub(super) fn attachments(value: &Component) -> Result<Vec<Attachment>, StyleError> {

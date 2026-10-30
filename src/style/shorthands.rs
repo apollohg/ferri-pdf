@@ -1103,6 +1103,15 @@ fn background(value: &Component) -> Result<Longhands, StyleError> {
                 )
             })
     };
+    // CSS Backgrounds 4 §2.12: a value valid only in `background-clip` sets the origin to
+    // `border-box`.
+    let origin = |layer: &Component| {
+        layer.slot(LAYER_ORIGIN).cloned().or_else(|| {
+            layer
+                .slot(LAYER_CLIP)
+                .map(|_| Component::Keyword(Keyword::BorderBox))
+        })
+    };
     let mut longhands = vec![
         layered(Property::BackgroundImage, &layers, &slot(LAYER_IMAGE)),
         layered(Property::BackgroundSize, &layers, &size),
@@ -1112,7 +1121,7 @@ fn background(value: &Component) -> Result<Longhands, StyleError> {
             &layers,
             &slot(LAYER_ATTACHMENT),
         ),
-        layered(Property::BackgroundOrigin, &layers, &slot(LAYER_ORIGIN)),
+        layered(Property::BackgroundOrigin, &layers, &origin),
         layered(Property::BackgroundClip, &layers, &clip),
     ];
     let color = layers
