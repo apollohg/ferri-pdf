@@ -16,6 +16,7 @@ mod mask;
 mod polygon;
 pub(crate) mod projection;
 mod raster;
+pub(crate) mod resampling;
 mod rounded;
 mod shadow;
 mod shape;

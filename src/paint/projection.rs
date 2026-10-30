@@ -262,20 +262,6 @@ pub(crate) fn stretch_along(m: Projection, p: Point, [x, y]: [f64; 2]) -> f64 {
     (a * x + c * y).hypot(b * x + d * y)
 }
 
-/// How far the linear map `[a, b, c, d]` from local points stretches lengths in the space
-/// `m` projects them into, near the projection of local point `p`, at most.
-pub(crate) fn reach(m: Projection, p: Point, [a, b, c, d]: [f64; 4]) -> f64 {
-    let [ja, jb, jc, jd] = jacobian(m, p);
-    let determinant = ja * jd - jb * jc;
-    let [ia, ib, ic, id] = [jd, -jb, -jc, ja].map(|value| value / determinant);
-    largest_singular_value([
-        a * ia + c * ib,
-        b * ia + d * ib,
-        a * ic + c * id,
-        b * ic + d * id,
-    ])
-}
-
 /// A bound on how far the tangent of `m` at `p` strays from `m` over the convex hull of
 /// `points`, which must all have a positive `w`: at `p + δ` the two differ by exactly
 /// `|J·δ| · |∇w·δ| / w(p + δ)`, where `J` is the Jacobian at `p`, and each factor is extreme

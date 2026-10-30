@@ -404,15 +404,24 @@ fn composite(
         drawn
     })?
     .ok_or(PdfError::Raster)?;
-    let (columns, backdrop_columns) = (
-        source.pixmap.width() as usize,
-        backdrop.pixmap.width() as usize,
-    );
-    if backdrop_columns < columns || backdrop.pixmap.height() < source.pixmap.height() {
+    composite_onto(operator, &mut source.pixmap, &backdrop.pixmap)?;
+    Ok(Some(source))
+}
+
+/// Replaces each pixel of `source` with the colour that source-over compositing onto the
+/// pixel of `backdrop` at the same place turns into their additive `operator` composite;
+/// `backdrop` must cover `source`.
+pub(super) fn composite_onto(
+    operator: BlendMode,
+    source: &mut tiny_skia::Pixmap,
+    backdrop: &tiny_skia::Pixmap,
+) -> Result<(), PdfError> {
+    let (columns, backdrop_columns) = (source.width() as usize, backdrop.width() as usize);
+    if backdrop_columns < columns || backdrop.height() < source.height() {
         return Err(PdfError::Raster);
     }
-    let behind = backdrop.pixmap.pixels();
-    for (index, pixel) in source.pixmap.pixels_mut().iter_mut().enumerate() {
+    let behind = backdrop.pixels();
+    for (index, pixel) in source.pixels_mut().iter_mut().enumerate() {
         let below = behind[index / columns * backdrop_columns + index % columns];
         *pixel = compositing::pixel(over_color(
             operator,
@@ -420,7 +429,7 @@ fn composite(
             compositing::sample(below),
         ));
     }
-    Ok(Some(source))
+    Ok(())
 }
 
 /// The premultiplied colour that source-over compositing onto premultiplied `backdrop` turns

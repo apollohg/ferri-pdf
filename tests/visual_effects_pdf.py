@@ -192,6 +192,37 @@ class VisualEffectsPdf(unittest.TestCase):
             self.assertEqual(pixels.getpixel((60, 40)), TEAL,
                              'only the back face, facing the viewer, paints')
 
+    def test_additive_groups_in_a_projected_plane_composite_with_the_plane_content(self):
+        # .s (20..220 by 20..120) has a 300pt perspective about its centre (120, 70); its
+        # preserve-3d child holds one plane turned 40° about that centre, as in the tests above.
+        # The plane's background, #600000, is the backdrop of its plus-lighter child (#006000,
+        # 20..120 by 20..60, its text drawn far from the sampled point), so Compositing 2
+        # §9.1.15 adds them to #606000 in the plane; the white page behind the plane, outside
+        # its group, does not join the sum.
+        left, top, width, height, depth, angle = 20, 20, 200, 100, 300, math.radians(40)
+        centre = (left + width / 2, top + height / 2)
+
+        def project(x, y):
+            dx, dy = x - centre[0], y - centre[1]
+            w = 1 + math.sin(angle) * dx / depth
+            return centre[0] + math.cos(angle) * dx / w, centre[1] + dy / w
+
+        css = ('.s{perspective:%dpt;width:%dpt;height:%dpt}'
+               '.c{transform-style:preserve-3d;position:relative;height:100%%}'
+               '.a{position:absolute;inset:0;transform:rotateY(40deg);background:#600000}'
+               '.add{width:100pt;height:40pt;mix-blend-mode:plus-lighter;background:#006000;'
+               'color:#0000c0;font-size:8pt}' % (depth, width, height))
+        body = '<div class=s><div class=c><div class=a><div class=add>Add</div></div></div></div>'
+        output = self.renderer.render(self.root, css, body)
+        with self.renderer.raster(self.root, output, vector_antialias=False) as pixels:
+            for (x, y), wanted, where in (((100, 50), (96, 96, 0), 'inside the additive child'),
+                                         ((180, 100), (96, 0, 0), 'beside it, on the plane')):
+                px, py = project(x, y)
+                found = pixels.getpixel((int(px), int(py)))
+                self.assertTrue(all(abs(a - b) <= 2 for a, b in zip(found, wanted)),
+                                f'{where}, plane point {(x, y)} at ({px:.1f}, {py:.1f}) must '
+                                f'be {wanted}, got {found}')
+
     def test_outline_paints_outside_the_offset_following_the_grown_radius(self):
         # The border box spans 80..160 by 80..120; a 4pt outline 3pt outside it spans 73..167
         # by 73..127 with 19pt outer corner radii (12pt + 3pt + 4pt).
