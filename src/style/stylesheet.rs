@@ -219,7 +219,19 @@ enum FaceValue {
     Sources(Vec<crate::fonts::FontSource>),
     Features(Arc<[crate::fonts::FontFeature]>),
     Variations(Arc<[crate::fonts::FontVariation]>),
+    UnicodeRange(Arc<[(u32, u32)]>),
+    SizeAdjust(f32),
+    AscentOverride(Option<f32>),
+    DescentOverride(Option<f32>),
+    LineGapOverride(Option<f32>),
     Initial,
+}
+/// `normal | <percentage [0,∞]>` of the metric override descriptors (CSS Fonts 4 §4.11).
+fn metric_override(value: &Component, relative: &Relative<'_>) -> Result<Option<f32>, StyleError> {
+    if value.keyword() == Some(Keyword::Normal) {
+        return Ok(None);
+    }
+    crate::style::values::percentage(value, relative).map(Some)
 }
 fn face_value(
     descriptor: Descriptor,
@@ -240,6 +252,31 @@ fn face_value(
         Descriptor::FontFaceFontVariationSettings => FaceValue::Variations(
             crate::style::font_values::variation_settings(value, relative)?,
         ),
+        Descriptor::FontFaceUnicodeRange => FaceValue::UnicodeRange(
+            value
+                .items()
+                .iter()
+                .map(|range| match range.unwrap() {
+                    Component::UnicodeRange(start, end) => Ok((*start, *end)),
+                    other => Err(crate::style::box_values::unsupported(other)),
+                })
+                .collect::<Result<_, StyleError>>()?,
+        ),
+        Descriptor::FontFaceSizeAdjust => {
+            FaceValue::SizeAdjust(crate::style::values::percentage(value, relative)?)
+        }
+        Descriptor::FontFaceAscentOverride => {
+            FaceValue::AscentOverride(metric_override(value, relative)?)
+        }
+        Descriptor::FontFaceDescentOverride => {
+            FaceValue::DescentOverride(metric_override(value, relative)?)
+        }
+        Descriptor::FontFaceLineGapOverride => {
+            FaceValue::LineGapOverride(metric_override(value, relative)?)
+        }
+        // Fonts load before layout, so every face is ready at the one paint and no display
+        // timeline period applies (CSS Fonts 4 §4.9).
+        Descriptor::FontFaceFontDisplay => FaceValue::Initial,
         _ => {
             unimplemented_descriptor(descriptor, value, FONT_FACE_AT_RULE)?;
             FaceValue::Initial
@@ -1060,6 +1097,11 @@ impl Stylesheet {
                 FaceValue::Sources(_) | FaceValue::Initial => {}
                 FaceValue::Features(value) => settings.features = value,
                 FaceValue::Variations(value) => settings.variations = value,
+                FaceValue::UnicodeRange(value) => settings.unicode_range = Some(value),
+                FaceValue::SizeAdjust(value) => settings.size_adjust = value,
+                FaceValue::AscentOverride(value) => settings.metric_overrides.ascent = value,
+                FaceValue::DescentOverride(value) => settings.metric_overrides.descent = value,
+                FaceValue::LineGapOverride(value) => settings.metric_overrides.line_gap = value,
             }
         }
         let family = family.ok_or("font-face missing family")?;

@@ -1128,11 +1128,9 @@ impl<'a> Builder<'_, 'a> {
             return Ok(Some(normal));
         }
         let mut selected = None;
-        for &id in style.font_candidates() {
-            if let Some((instance, _)) = self
-                .measurer
-                .text
-                .fonts()
+        let fonts = self.measurer.text.fonts();
+        for id in fonts.first_available_candidates(style.font_candidates()) {
+            if let Some((instance, _)) = fonts
                 .sized_instance(
                     id,
                     style.font_selection(),

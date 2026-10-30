@@ -1124,3 +1124,32 @@ fn svg_calculated_dash_lists_share_custom_dpi_and_percentage_bases() {
         }
     }
 }
+
+#[test]
+fn svg_text_glyphs_scale_by_the_size_adjust_descriptor() {
+    let width = |descriptors: &str| {
+        let sheet = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
+            text: format!(
+                "@font-face{{font-family:Adjusted;src:local('DejaVu Sans');{descriptors}}}"
+            ),
+            base: ResourceBase::default(),
+        }])
+        .unwrap();
+        let image = ImageCache::with_fonts(sheet.fonts)
+            .inline_svg(
+                format!("{SVG_OPEN}<text x='10' y='60' font-family='Adjusted' font-size='20'>HHH</text></svg>"),
+                &ResourceBase::default(),
+                &FileResolver::default(),
+            )
+            .unwrap();
+        let Image::Svg(svg) = image.as_ref() else {
+            panic!("inline SVG must use the vector pipeline")
+        };
+        svg.tree(SIZE).unwrap().root().abs_bounding_box().width()
+    };
+    let (whole, half) = (width(""), width("size-adjust:50%"));
+    assert!(
+        (half - whole / 2.0).abs() < EPSILON,
+        "size-adjust:50% must halve the glyph run: {half} against {whole}"
+    );
+}

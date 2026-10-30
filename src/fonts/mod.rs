@@ -17,7 +17,9 @@ pub(crate) use metrics::{
     SizeMetric, WATER_IDEOGRAPH, ZERO, advance, advance_in_axis, initial_font,
 };
 pub(crate) use palettes::{BasePalette, FontPalette};
-pub(crate) use selection::{FaceSettings, FontAdjustments, FontFeature, FontInstance};
+pub(crate) use selection::{
+    FaceSettings, FontAdjustments, FontFeature, FontInstance, MetricOverrides,
+};
 pub use selection::{FontFaceStyle, FontRange, FontSelection, FontSlant, FontVariation, FontWidth};
 pub(crate) use silhouette::Silhouettes;
 
@@ -26,6 +28,8 @@ use std::sync::{Arc, OnceLock};
 
 /// The initial `font-family`, resolved to `serif`.
 pub(crate) const DEFAULT_FAMILY: GenericFamily = GenericFamily::Serif;
+/// The character whose `unicode-range` coverage makes a face the first available font.
+const FIRST_AVAILABLE_CHARACTER: char = ' ';
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize)]
 pub struct FontId(usize);
@@ -278,18 +282,32 @@ impl FontBook {
             .map(String::as_str)
             .chain(generic.bundled_names().iter().copied())
     }
+    /// The candidates that can be the first available font: those whose `unicode-range`
+    /// includes U+0020 (CSS Fonts 4 §5).
+    pub(crate) fn first_available_candidates<'c>(
+        &'c self,
+        candidates: &'c [FontId],
+    ) -> impl Iterator<Item = FontId> + 'c {
+        candidates.iter().copied().filter(|&id| {
+            self.face(id)
+                .is_none_or(|face| face.settings.covers(FIRST_AVAILABLE_CHARACTER))
+        })
+    }
     /// A family's first available face fixes its descriptor before glyph fallback proceeds.
+    /// Faces whose `unicode-range` excludes part of `text` are skipped unloaded (§4.5).
     pub(crate) fn find_glyph<T, E: From<FontError>>(
         &self,
         candidates: &[FontId],
+        text: &str,
         mut probe: impl FnMut(FontId) -> Result<GlyphMatch<T>, E>,
     ) -> Result<Option<(FontId, T)>, E> {
         let mut matched: Vec<&FontDescriptor> = Vec::new();
         for &id in candidates {
-            let descriptor = self
-                .face(id)
-                .ok_or(FontError::UnknownFont(id))?
-                .descriptor();
+            let face = self.face(id).ok_or(FontError::UnknownFont(id))?;
+            if !face.settings.covers_text(text) {
+                continue;
+            }
+            let descriptor = face.descriptor();
             let previous = matched
                 .iter()
                 .find(|previous| matching::names_match(&previous.family, &descriptor.family));

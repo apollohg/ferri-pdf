@@ -274,15 +274,16 @@ fn caseless_family_aliases_do_not_switch_descriptors_after_missing_glyphs() {
         )
         .unwrap();
     let mut probed = Vec::new();
-    let found: Result<_, FontError> = book.find_glyph(&[selected, alternate, fallback], |id| {
-        probed.push(id);
-        let face = ttf_parser::Face::parse(book.face(id).unwrap().data().unwrap(), 0).unwrap();
-        Ok(if face.glyph_index('H').is_some() {
-            GlyphMatch::Found(())
-        } else {
-            GlyphMatch::Missing
-        })
-    });
+    let found: Result<_, FontError> =
+        book.find_glyph(&[selected, alternate, fallback], "H", |id| {
+            probed.push(id);
+            let face = ttf_parser::Face::parse(book.face(id).unwrap().data().unwrap(), 0).unwrap();
+            Ok(if face.glyph_index('H').is_some() {
+                GlyphMatch::Found(())
+            } else {
+                GlyphMatch::Missing
+            })
+        });
     assert_eq!(
         found.unwrap().map(|(id, ())| id),
         Some(fallback),

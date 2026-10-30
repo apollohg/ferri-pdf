@@ -106,6 +106,14 @@ impl FaceMetrics {
             baselines: crate::fonts::BaselineTable::of(face, ascent, descent, x_height),
         }
     }
+    /// The horizontal line metrics `overrides` replace; upright typesetting keeps the font's
+    /// vertical metrics (CSS Fonts 5 §4.5).
+    pub(crate) fn overridden(mut self, overrides: crate::fonts::MetricOverrides) -> Self {
+        self.ascent = overrides.ascent.unwrap_or(self.ascent);
+        self.descent = overrides.descent.unwrap_or(self.descent);
+        self.line_gap = overrides.line_gap.unwrap_or(self.line_gap);
+        self
+    }
     pub(crate) fn upright(mut self, face: &Face<'_>) -> Self {
         let units = f32::from(face.units_per_em());
         self.ascent = face
@@ -185,8 +193,9 @@ pub(crate) fn advance_in_axis(face: &Face<'_>, ch: char, vertical: bool) -> Opti
 }
 
 impl FontBook {
-    /// The face that renders text at computed `size`, and its used size: `font-size-adjust`
-    /// scales the size and optical sizing follows the adjusted size (CSS Fonts 4 §8.1).
+    /// The face that renders text at computed `size`, and its used size: the `size-adjust`
+    /// descriptor scales the size, `font-size-adjust` then normalizes it (CSS Fonts 5 §4.4),
+    /// and optical sizing follows the adjusted size (CSS Fonts 4 §8.1).
     pub(crate) fn sized_instance(
         &self,
         id: FontId,
@@ -198,10 +207,19 @@ impl FontBook {
         let Some(instance) = self.instance(id, selection, adjustments, size, resolver)? else {
             return Ok(None);
         };
-        let Some(adjust) = adjustments.size_adjust else {
+        let descriptor = self
+            .face(id)
+            .ok_or(FontError::UnknownFont(id))?
+            .settings
+            .size_adjust;
+        // `size-adjust` scales the metric `font-size-adjust` reads as much as the size, so
+        // the normalized size does not depend on it.
+        let used = adjustments.size_adjust.map_or(size * descriptor, |adjust| {
+            size * adjust.scale(&FaceMetrics::of(&instance.face))
+        });
+        if used == size {
             return Ok(Some((instance, size)));
-        };
-        let used = size * adjust.scale(&FaceMetrics::of(&instance.face));
+        }
         if !used.is_finite() {
             return Err(FontError::InvalidSize(used));
         }
@@ -211,7 +229,7 @@ impl FontBook {
                 .variation_axes()
                 .into_iter()
                 .any(|axis| axis.tag == super::loading::OPTICAL_SIZE_AXIS);
-        if optical && used != size {
+        if optical {
             return Ok(self
                 .instance(id, selection, adjustments, used, resolver)?
                 .map(|instance| (instance, used)));
@@ -229,11 +247,11 @@ impl FontBook {
         size: f32,
         resolver: &dyn ResourceResolver,
     ) -> Result<(FaceMetrics, f32), FontError> {
-        for &id in candidates {
+        for id in self.first_available_candidates(candidates) {
             if let Some((instance, used)) =
                 self.sized_instance(id, selection, adjustments, size, resolver)?
             {
-                return Ok((FaceMetrics::of(&instance.face), scale(used, size)));
+                return Ok((instance.metrics(), scale(used, size)));
             }
         }
         Err(FontError::NoAvailableFace)
@@ -249,17 +267,22 @@ impl FontBook {
         (ch, vertical): (char, bool),
         resolver: &dyn ResourceResolver,
     ) -> Result<Option<(f32, f32)>, FontError> {
-        self.find_glyph(candidates, |id| -> Result<_, FontError> {
-            let Some((instance, used)) =
-                self.sized_instance(id, selection, adjustments, size, resolver)?
-            else {
-                return Ok(GlyphMatch::Unavailable);
-            };
-            Ok(advance_in_axis(&instance.face, ch, vertical)
-                .map_or(GlyphMatch::Missing, |advance| {
-                    GlyphMatch::Found((advance, scale(used, size)))
-                }))
-        })
+        let mut buffer = [0; 4];
+        self.find_glyph(
+            candidates,
+            ch.encode_utf8(&mut buffer),
+            |id| -> Result<_, FontError> {
+                let Some((instance, used)) =
+                    self.sized_instance(id, selection, adjustments, size, resolver)?
+                else {
+                    return Ok(GlyphMatch::Unavailable);
+                };
+                Ok(advance_in_axis(&instance.face, ch, vertical)
+                    .map_or(GlyphMatch::Missing, |advance| {
+                        GlyphMatch::Found((advance, scale(used, size)))
+                    }))
+            },
+        )
         .map(|found| found.map(|(_, advance)| advance))
     }
 }

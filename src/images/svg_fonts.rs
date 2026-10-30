@@ -218,7 +218,13 @@ impl Provider<'_> {
                 .insert(font.clone(), candidates.clone());
             candidates
         };
-        book.find_glyph(&candidates, |id| {
+        // Without a character, the request selects the first available font (CSS Fonts 4 §5).
+        let mut buffer = [0; 4];
+        let text = match character {
+            Some(character) => &*character.encode_utf8(&mut buffer),
+            None => " ",
+        };
+        book.find_glyph(&candidates, text, |id| {
             let Some(mapped) = fonts.load(id, self.resolver)? else {
                 return Ok::<_, FontError>(GlyphMatch::Unavailable);
             };
@@ -320,6 +326,7 @@ impl FontProvider for Provider<'_> {
         let family = &face.descriptor().family;
         crate::svg::usvg::FaceSettings {
             descriptor: face.settings().features.clone(),
+            size_adjust: face.settings().size_adjust,
             alternates: crate::text::features::alternate_features(
                 &style.font_features.alternates,
                 |kind, name| book.feature_value(self.fonts.namespace, family, kind, name),

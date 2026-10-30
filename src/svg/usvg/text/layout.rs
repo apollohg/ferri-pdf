@@ -2131,10 +2131,13 @@ fn shape_text_with_font(
         let mut rb_font = rustybuzz::Face::from_slice(font_data, face_index)?;
 
         // CSS Fonts 5 §2.5: the used size gives the face the aspect value `font-size-adjust`
-        // specifies.
-        let size_scale = style.font_adjustments.size_adjust.map_or(1.0, |adjust| {
-            adjust.scale(&crate::fonts::FaceMetrics::of(&rb_font))
-        });
+        // specifies, which `size-adjust` does not change (§4.4).
+        let size_scale = style
+            .font_adjustments
+            .size_adjust
+            .map_or(settings.size_adjust, |adjust| {
+                adjust.scale(&crate::fonts::FaceMetrics::of(&rb_font))
+            });
         let used_size = span.font_size * size_scale;
         let final_variations =
             super::font_variations(&rb_font, variations, used_size, span.optical_sizing);

@@ -764,6 +764,22 @@
       "src": {
         "syntax": "[ <url> <font-source-format>? <font-source-tech>? | local( <family-name> ) ]#",
         "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-face-src-parsing"
+      },
+      "ascent-override": {
+        "syntax": "normal | <percentage [0,∞]>",
+        "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#descdef-font-face-ascent-override"
+      },
+      "descent-override": {
+        "syntax": "normal | <percentage [0,∞]>",
+        "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#descdef-font-face-descent-override"
+      },
+      "line-gap-override": {
+        "syntax": "normal | <percentage [0,∞]>",
+        "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#descdef-font-face-line-gap-override"
+      },
+      "size-adjust": {
+        "syntax": "<percentage [0,∞]>",
+        "source": "https://www.w3.org/TR/2026/WD-css-fonts-5-20260913/#descdef-font-face-size-adjust"
       }
     }
   },

@@ -42,7 +42,7 @@ impl Metrics {
         style: &Style,
         resolver: &dyn ResourceResolver,
     ) -> Result<Self, FontError> {
-        for &id in style.font_candidates() {
+        for id in fonts.first_available_candidates(style.font_candidates()) {
             let Some((instance, size)) = fonts.sized_instance(
                 id,
                 style.font_selection(),

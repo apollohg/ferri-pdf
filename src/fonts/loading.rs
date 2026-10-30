@@ -154,6 +154,7 @@ impl FontBook {
         Ok(Some(FontInstance {
             face,
             variations: variations.into(),
+            metric_overrides: face_entry.settings.metric_overrides,
             weight,
             style,
         }))

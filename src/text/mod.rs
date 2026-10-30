@@ -776,8 +776,14 @@ struct ShapingInstance<'a> {
     variations: Arc<[FontVariation]>,
     synthesis: FontSynthesis,
     oblique_skew: f32,
-    /// Used font size per computed size, from `font-size-adjust`.
+    metric_overrides: crate::fonts::MetricOverrides,
+    /// Used font size per computed size, from `size-adjust` and `font-size-adjust`.
     scale: f32,
+}
+impl ShapingInstance<'_> {
+    fn metrics(&self) -> crate::fonts::FaceMetrics {
+        crate::fonts::FaceMetrics::of(&self.face).overridden(self.metric_overrides)
+    }
 }
 impl ShapingInstance<'_> {
     fn used_size(&self, style: &Style) -> f32 {
@@ -1025,6 +1031,7 @@ impl<'a> TextContext<'a> {
                     variations: instance.variations,
                     synthesis,
                     oblique_skew,
+                    metric_overrides: instance.metric_overrides,
                     scale: if style.size == 0.0 {
                         1.0
                     } else {
@@ -1044,12 +1051,44 @@ impl<'a> TextContext<'a> {
         Ok(optical)
     }
     fn primary(&self, style: &Style) -> Result<FontId, TextError> {
-        for &id in style.font_candidates() {
+        for id in self
+            .fonts
+            .first_available_candidates(style.font_candidates())
+        {
             if self.face(id, style)?.is_some() {
                 return Ok(id);
             }
         }
         Err(TextError::NoFontCandidates)
+    }
+    /// Whether matching selects `primary` for all of `text`: it covers the text, and no
+    /// earlier candidate, passed over as the first available font for its `unicode-range`,
+    /// covers any of it (CSS Fonts 4 §4.5).
+    fn primary_renders(
+        &self,
+        primary: FontId,
+        style: &Style,
+        text: &str,
+    ) -> Result<bool, TextError> {
+        let settings = |id| {
+            self.fonts
+                .face(id)
+                .map(crate::fonts::FontFace::settings)
+                .ok_or(FontError::UnknownFont(id))
+        };
+        if !settings(primary)?.covers_text(text) {
+            return Ok(false);
+        }
+        for &id in style.font_candidates() {
+            if id == primary {
+                break;
+            }
+            let earlier = settings(id)?;
+            if earlier.unicode_range.is_some() && earlier.covers_any(text) {
+                return Ok(false);
+            }
+        }
+        Ok(true)
     }
     fn shape_run(
         &self,
@@ -1100,6 +1139,7 @@ impl<'a> TextContext<'a> {
                 font_id: id,
                 synthesis: instance.synthesis,
                 oblique_skew: instance.oblique_skew,
+                metric_overrides: instance.metric_overrides,
                 variations: &instance.variations,
                 narrow_space_advance,
                 missing,
@@ -1146,35 +1186,37 @@ impl<'a> TextContext<'a> {
         } else {
             style.font_candidates()
         };
-        let matched = self.fonts.find_glyph(candidates, |id| {
-            self.spend_matching_work(
-                range
-                    .len()
-                    .saturating_mul(paragraph[range.clone()].chars().count()),
-            )?;
-            let Some(instance) = self.face(id, style)? else {
-                return Ok(GlyphMatch::Unavailable);
-            };
-            if !shaping::supports_variations(
-                &instance.face,
-                &paragraph[range.clone()],
-                presentation.then_some(style.font_features.emoji),
-            ) {
-                return Ok(GlyphMatch::Missing);
-            }
-            match self.shape_run(
-                id,
-                paragraph,
-                range.clone(),
-                rtl,
-                style,
-                MissingGlyphs::Reject,
-            ) {
-                Ok(_) => Ok(GlyphMatch::Found(())),
-                Err(TextError::MissingGlyph { .. }) => Ok(GlyphMatch::Missing),
-                Err(error) => Err(error),
-            }
-        })?;
+        let matched = self
+            .fonts
+            .find_glyph(candidates, &paragraph[range.clone()], |id| {
+                self.spend_matching_work(
+                    range
+                        .len()
+                        .saturating_mul(paragraph[range.clone()].chars().count()),
+                )?;
+                let Some(instance) = self.face(id, style)? else {
+                    return Ok(GlyphMatch::Unavailable);
+                };
+                if !shaping::supports_variations(
+                    &instance.face,
+                    &paragraph[range.clone()],
+                    presentation.then_some(style.font_features.emoji),
+                ) {
+                    return Ok(GlyphMatch::Missing);
+                }
+                match self.shape_run(
+                    id,
+                    paragraph,
+                    range.clone(),
+                    rtl,
+                    style,
+                    MissingGlyphs::Reject,
+                ) {
+                    Ok(_) => Ok(GlyphMatch::Found(())),
+                    Err(TextError::MissingGlyph { .. }) => Ok(GlyphMatch::Missing),
+                    Err(error) => Err(error),
+                }
+            })?;
         Ok(matched.map(|(id, ())| id))
     }
 
@@ -1227,7 +1269,7 @@ impl<'a> TextContext<'a> {
         has_variation |= implies_presentation(style, text);
         let primary = self.primary(style)?;
         let named = has_private.then(|| style.named_font_candidates(self.fonts));
-        if named.is_none() && !has_variation {
+        if named.is_none() && !has_variation && self.primary_renders(primary, style, text)? {
             match self.shape_run(
                 primary,
                 paragraph,

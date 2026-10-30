@@ -120,6 +120,7 @@ pub(super) struct ShapingFont<'f, 'data> {
     pub font_id: FontId,
     pub synthesis: FontSynthesis,
     pub oblique_skew: f32,
+    pub metric_overrides: crate::fonts::MetricOverrides,
     pub variations: &'f [FontVariation],
     pub narrow_space_advance: Option<f32>,
     pub missing: MissingGlyphs,
@@ -342,6 +343,7 @@ fn shape_run(
         font_id,
         mut synthesis,
         oblique_skew,
+        metric_overrides,
         variations,
         narrow_space_advance,
         missing,
@@ -570,7 +572,7 @@ fn shape_run(
         }
         glyphs.push(glyph);
     }
-    let mut metrics = crate::fonts::FaceMetrics::of(face);
+    let mut metrics = crate::fonts::FaceMetrics::of(face).overridden(metric_overrides);
     if upright {
         metrics = metrics.upright(face);
     }

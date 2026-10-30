@@ -98,12 +98,23 @@ pub struct FontResolver<'a> {
 }
 
 /// What the document's fonts give a face rendering a span's text (CSS Fonts 4 §7.2, §9.5).
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct FaceSettings {
     /// The `font-feature-settings` descriptor of the face's `@font-face` rule.
     pub(crate) descriptor: Arc<[crate::fonts::FontFeature]>,
     /// `font-variant-alternates` as the face's family defines it.
     pub(crate) alternates: Vec<crate::fonts::FontFeature>,
+    /// The `size-adjust` descriptor of the face's `@font-face` rule (CSS Fonts 5 §4.4).
+    pub(crate) size_adjust: f32,
+}
+impl Default for FaceSettings {
+    fn default() -> Self {
+        Self {
+            descriptor: Arc::from([]),
+            alternates: Vec::new(),
+            size_adjust: crate::fonts::FaceSettings::default().size_adjust,
+        }
+    }
 }
 
 /// Synchronous caller-owned font resolution, including the original fallback request.

@@ -209,12 +209,56 @@ impl FontFeature {
     }
 }
 
-/// The `font-feature-settings` and `font-variation-settings` descriptors of a face's
-/// `@font-face` rule (CSS Fonts 4 §4.6).
-#[derive(Clone, Debug, Default, PartialEq)]
+/// The descriptors of a face's `@font-face` rule that apply once it is matched: features and
+/// variations (CSS Fonts 4 §4.6), character coverage (§4.5), metric overrides (§4.11) and
+/// the glyph size multiplier (CSS Fonts 5 §4.4).
+#[derive(Clone, Debug, PartialEq)]
 pub(crate) struct FaceSettings {
     pub features: Arc<[FontFeature]>,
     pub variations: Arc<[FontVariation]>,
+    /// Inclusive code point intervals; `None` is the initial `U+0-10FFFF`.
+    pub unicode_range: Option<Arc<[(u32, u32)]>>,
+    /// `size-adjust`, as a fraction.
+    pub size_adjust: f32,
+    pub metric_overrides: MetricOverrides,
+}
+impl Default for FaceSettings {
+    fn default() -> Self {
+        Self {
+            features: Arc::from([]),
+            variations: Arc::from([]),
+            unicode_range: None,
+            size_adjust: 1.0,
+            metric_overrides: MetricOverrides::default(),
+        }
+    }
+}
+impl FaceSettings {
+    /// Whether `unicode-range` lets the face render `ch`; the face is neither used nor
+    /// loaded for code points outside it (CSS Fonts 4 §4.5).
+    pub(crate) fn covers(&self, ch: char) -> bool {
+        let point = u32::from(ch);
+        self.unicode_range.as_ref().is_none_or(|ranges| {
+            ranges
+                .iter()
+                .any(|&(start, end)| (start..=end).contains(&point))
+        })
+    }
+    pub(crate) fn covers_text(&self, text: &str) -> bool {
+        self.unicode_range.is_none() || text.chars().all(|ch| self.covers(ch))
+    }
+    pub(crate) fn covers_any(&self, text: &str) -> bool {
+        text.chars().any(|ch| self.covers(ch))
+    }
+}
+
+/// `ascent-override`, `descent-override` and `line-gap-override` in em of the used size;
+/// `None` is `normal`, the font's own metric (CSS Fonts 4 §4.11).
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub(crate) struct MetricOverrides {
+    pub ascent: Option<f32>,
+    pub descent: Option<f32>,
+    pub line_gap: Option<f32>,
 }
 
 /// What properties apply to a matched face (CSS Fonts 4 §7.2): `font-optical-sizing`, then
@@ -263,10 +307,15 @@ impl Hash for FontAdjustments {
 pub(crate) struct FontInstance<'a> {
     pub face: ttf_parser::Face<'a>,
     pub variations: Arc<[FontVariation]>,
+    pub metric_overrides: MetricOverrides,
     pub(super) weight: f32,
     pub(super) style: FontStyle,
 }
 impl FontInstance<'_> {
+    /// The face's metrics with its `@font-face` metric overrides.
+    pub(crate) fn metrics(&self) -> crate::fonts::FaceMetrics {
+        crate::fonts::FaceMetrics::of(&self.face).overridden(self.metric_overrides)
+    }
     pub(crate) fn synthesis(&self, requested: FontSelection) -> (FontSynthesis, f32) {
         let angle = match requested.style {
             FontStyle::Normal => FontSlant::NORMAL,
