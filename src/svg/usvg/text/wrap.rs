@@ -515,14 +515,7 @@ fn measure(
 ) -> Option<Vec<(usize, f32)>> {
     let mut clusters = layout::spaced_clusters(text, chunk, fonts, resolver, fontdb)?;
     if let Some(strut) = strut {
-        layout::apply_tab_stops(
-            chunk,
-            &text.strut,
-            strut,
-            text.writing_mode,
-            0.0,
-            &mut clusters,
-        );
+        layout::apply_tab_stops(chunk, &text.strut, strut, fonts, 0.0, &mut clusters);
     }
     let mut advances: Vec<_> = clusters
         .iter()

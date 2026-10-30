@@ -616,6 +616,10 @@ fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
     for (css, expected) in [
         ("text{unicode-bidi:bidi-override}", "unicode-bidi"),
         ("text{font-palette:dark}", "font-palette"),
+        (
+            "text{writing-mode:vertical-rl;text-combine-upright:all}",
+            "text-combine-upright",
+        ),
         ("rect{cx:calc(10% + 1px)}", ""),
     ] {
         match styled(

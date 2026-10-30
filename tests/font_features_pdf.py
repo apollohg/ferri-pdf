@@ -238,7 +238,8 @@ class FontFeaturesPdf(unittest.TestCase):
         pixels = PDF_POINTS_PER_INCH / CSS_PIXELS_PER_INCH
         size, line_height, tab_size = 20, 30, 4
         space = 0.6 * size
-        texts = (f'<text x="10" y="30" style="white-space:pre;tab-size:{tab_size}">a\tb\n  c\n\nd</text>'
+        texts = (f'<text x="10" y="30" style="white-space:pre;tab-size:{tab_size}">a\tb\n  c\n\nd'
+                 '<tspan style="tab-size:1">\te</tspan></text>'
                  '<text x="300" y="30" style="white-space:pre-line">x   y \n   z</text>'
                  '<text x="10" y="180" xml:space="preserve">p  q</text>'
                  '<text x="300" y="180" xml:space="preserve" style="white-space:normal">p  q</text>')
@@ -251,6 +252,10 @@ class FontFeaturesPdf(unittest.TestCase):
                 (round(glyph.origin[0] / pixels, 2), round(-glyph.origin[1] / pixels, 2)))
         (a,), (b,), (c,), (d,) = origin["a"], origin["b"], origin["c"], origin["d"]
         self.assertEqual(b[0] - a[0], tab_size * space, "the tab reaches the first stop")
+        (e,) = origin["e"]
+        self.assertEqual(e[0] - d[0], 2 * space,
+                         "a tab takes its own tab-size in the text's spaces (CSS Text 3 §4.2), "
+                         "skipping a stop nearer than half a '0'")
         self.assertEqual((c[0] - a[0], c[1] - a[1]), (2 * space, line_height),
                          "the next line starts at the text's x, its leading spaces kept")
         self.assertEqual((d[0] - a[0], d[1] - a[1]), (0, 3 * line_height),

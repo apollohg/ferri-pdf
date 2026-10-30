@@ -314,7 +314,7 @@ pub(crate) fn layout_text(
                 chunk,
                 &text_node.strut,
                 strut,
-                text_node.writing_mode,
+                &fonts_cache,
                 inline_start,
                 &mut clusters,
             );
@@ -1558,7 +1558,7 @@ pub(crate) fn apply_tab_stops(
     chunk: &TextChunk,
     strut: &crate::svg::usvg::Strut,
     font: &ResolvedFont,
-    writing_mode: WritingMode,
+    fonts: &FontsCache,
     inline_start: f32,
     clusters: &mut [GlyphCluster],
 ) {
@@ -1575,20 +1575,29 @@ pub(crate) fn apply_tab_stops(
                 .word_spacing
                 .resolve(size * crate::style::POINTS_PER_PIXEL),
         );
-    let interval = match style.tab_size {
-        crate::style::TabSize::Number(count) => count * space,
-        crate::style::TabSize::Length(length) => points(length),
-    };
-    let ch = if writing_mode == WritingMode::TopToBottom {
-        size
-    } else {
-        font.zero_advance
-            .unwrap_or(crate::fonts::FALLBACK_ZERO_ADVANCE_EM)
-            * size
+    // Each tab takes its own `tab-size`, and measures half a stop by its own font's "0".
+    let stops = |span: &TextSpan| {
+        let interval = match span.style.tab_size {
+            crate::style::TabSize::Number(count) => count * space,
+            crate::style::TabSize::Length(length) => points(length),
+        };
+        let size = span.font_size.get();
+        let ch = match fonts.get(&span.font) {
+            Some(font) if !span.style.vertical_font_units()[0] => {
+                font.zero_advance
+                    .unwrap_or(crate::fonts::FALLBACK_ZERO_ADVANCE_EM)
+                    * size
+            }
+            _ => size,
+        };
+        (interval, ch)
     };
     let mut position = inline_start;
     let mut visit = |cluster: &mut GlyphCluster| {
-        if cluster.codepoint == TAB {
+        if cluster.codepoint == TAB
+            && let Some(span) = chunk_span_at(chunk, cluster.byte_idx)
+        {
+            let (interval, ch) = stops(span);
             let width = if interval > 0.0 {
                 crate::text::tabs::tab_width(interval, position, ch)
             } else {
