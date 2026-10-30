@@ -153,6 +153,16 @@ impl Rect {
             height: (self.y + self.height).max(other.y + other.height) - y,
         }
     }
+    /// The rectangle with its top, right, bottom and left edges moved inward by `insets`.
+    #[must_use]
+    pub(crate) fn inset(self, [top, right, bottom, left]: [f32; 4]) -> Self {
+        Self {
+            x: self.x + left,
+            y: self.y + top,
+            width: (self.width - left - right).max(0.0),
+            height: (self.height - top - bottom).max(0.0),
+        }
+    }
     /// The overlap of two rectangles, with zero width or height when they do not overlap.
     #[must_use]
     pub fn intersection(self, other: Self) -> Self {

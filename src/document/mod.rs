@@ -20,6 +20,7 @@ mod metadata;
 mod navigation;
 mod page;
 pub(crate) mod ruby;
+pub(crate) mod scroll_markers;
 mod semantics;
 mod strings;
 mod stylesheets;
@@ -111,6 +112,9 @@ pub(crate) struct StyledDocument {
     svg_definitions: svg::SvgDefinitions,
     /// The document's counters where each page starts (CSS Page 3 §6.1).
     page_counters: std::collections::HashMap<usize, CounterSnapshot>,
+    /// The scroll marker groups whose active markers layout determines (CSS Overflow 5
+    /// §3.1.8).
+    scroll_markers: scroll_markers::ScrollMarkerGroups,
     /// What the last layout measured of the content of intrinsically sized pages, and the
     /// first page sized to it.
     page_content: PageContent,
@@ -390,6 +394,7 @@ impl StyledDocument {
             pages,
             svg_definitions,
             page_counters,
+            scroll_markers,
         } = formatting::build(
             &formatting::Input {
                 html: &html,
@@ -453,6 +458,7 @@ impl StyledDocument {
             pages,
             svg_definitions,
             page_counters: page_counters.into_iter().collect(),
+            scroll_markers,
             element_measurements: Box::default(),
             element_renderings: Box::default(),
             first_page,
@@ -517,6 +523,7 @@ impl StyledDocument {
             pages,
             svg_definitions,
             page_counters,
+            scroll_markers,
         } = source.build(
             &mut styles,
             values,
@@ -545,6 +552,7 @@ impl StyledDocument {
             pages,
             svg_definitions,
             page_counters: page_counters.into_iter().collect(),
+            scroll_markers,
             element_measurements: self.element_measurements.clone(),
             element_renderings: self.element_renderings.clone(),
             first_page,
@@ -607,6 +615,7 @@ impl StyledDocument {
             pages,
             svg_definitions,
             page_counters,
+            scroll_markers,
         } = source.build(
             &mut self.styles,
             values,
@@ -627,6 +636,7 @@ impl StyledDocument {
         self.size_first_page()?;
         self.svg_definitions = svg_definitions;
         self.page_counters = page_counters.into_iter().collect();
+        self.scroll_markers = scroll_markers;
         for diagnostic in self.styles.take_diagnostics() {
             if !self.diagnostics.iter().any(
                 |known| matches!(known, DocumentDiagnostic::Css(known) if *known == diagnostic),
@@ -718,6 +728,17 @@ impl StyledDocument {
     }
     pub(crate) fn root_element(&self) -> crate::dom::ElementId {
         self.source.html.root_element().id()
+    }
+    pub(crate) fn scroll_marker_groups(&self) -> &scroll_markers::ScrollMarkerGroups {
+        &self.scroll_markers
+    }
+    /// Whether the scroll markers' positions styling took are `states`.
+    pub(crate) fn scroll_markers_settled(&self, states: &crate::dom::ScrollMarkerStates) -> bool {
+        *self.source.html.scroll_markers.borrow() == *states
+    }
+    /// Restyling takes the scroll markers' positions a layout determined.
+    pub(crate) fn measured_scroll_markers(&self, states: crate::dom::ScrollMarkerStates) {
+        *self.source.html.scroll_markers.borrow_mut() = states;
     }
     pub(crate) fn footnotes(&self) -> &Footnotes {
         &self.footnotes

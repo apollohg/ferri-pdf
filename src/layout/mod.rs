@@ -24,6 +24,7 @@ mod pagination;
 mod physical_pages;
 mod positioned;
 mod ratio;
+mod scroll_markers;
 mod source;
 mod sticky;
 mod strings;
@@ -147,13 +148,19 @@ pub(crate) fn layout(
         anchor_frames,
         elements,
         pages,
+        scroll_markers,
     } = layout_pass(document, resolver, budget.clone())?;
+    let markers_settled = document.scroll_markers_settled(&scroll_markers);
     let settled = document.styles().query_sizes().settled(&container_sizes)
         && document.styles().anchor_frames().settled(&anchor_frames)
         && document.element_images().settled(&elements)
-        && *document.page_content() == pages;
+        && *document.page_content() == pages
+        && markers_settled;
     if generated.is_none() && settled {
         return Ok(trace);
+    }
+    if !markers_settled {
+        document.measured_scroll_markers(scroll_markers);
     }
     let values = generated.unwrap_or_else(|| document.generated_values());
     budget.spend(1)?;
@@ -191,6 +198,9 @@ struct LayoutPass {
     elements: Box<crate::document::ElementMeasurements>,
     /// What the layout measured of the content of intrinsically sized pages.
     pages: crate::document::PageContent,
+    /// Where each scroll marker lies relative to its group's active marker (CSS Overflow 5
+    /// §3.1.8).
+    scroll_markers: crate::dom::ScrollMarkerStates,
 }
 
 fn stabilize(
@@ -203,6 +213,7 @@ fn stabilize(
     let mut measured_anchors = Vec::new();
     let mut measured_elements = Vec::new();
     let mut measured_pages = Vec::new();
+    let mut measured_markers = Vec::new();
     loop {
         let LayoutPass {
             trace,
@@ -211,6 +222,7 @@ fn stabilize(
             anchor_frames,
             elements,
             pages,
+            scroll_markers,
         } = layout_pass(document, resolver, budget.clone())?;
         // CSS Conditional 5 §5: each container's descendants are styled with the size of
         // the container they query, so the styles stand once a layout reproduces every size
@@ -223,7 +235,14 @@ fn stabilize(
         // CSS Page 3 §3: pages sized to their content stand once a layout reproduces the
         // content each holds.
         let pages_settled = *document.page_content() == pages;
-        let settled = containers_settled && anchors_settled && elements_settled && pages_settled;
+        // CSS Overflow 5 §3.1.8: the active markers follow from where layout places their
+        // targets, so their styles stand once a layout reproduces the markers they styled.
+        let markers_settled = document.scroll_markers_settled(&scroll_markers);
+        let settled = containers_settled
+            && anchors_settled
+            && elements_settled
+            && pages_settled
+            && markers_settled;
         let values = match generated {
             None if settled => return Ok(trace),
             None => document.generated_values(),
@@ -267,6 +286,13 @@ fn stabilize(
             }
             measured_pages.push(pages.clone());
             document.measured_pages(pages)?;
+        }
+        if !markers_settled {
+            if measured_markers.contains(&scroll_markers) {
+                return Err(LayoutError::ScrollMarkerCycle);
+            }
+            measured_markers.push(scroll_markers.clone());
+            document.measured_scroll_markers(scroll_markers);
         }
         budget.spend(1)?;
         document.reformat(values, resolver)?;
@@ -469,6 +495,7 @@ fn paginate<'t>(
         navigation::clip_links(areas, record.output.bleed);
     }
     anchors.physical(flow, &page_boxes);
+    let scroll_markers = scroll_marker_states(document, &anchors, &page_boxes, flow);
     renderings.adopt(measurer.element_targets.displayed.take());
     let (elements, element_images) = element_renderings(
         document,
@@ -482,6 +509,7 @@ fn paginate<'t>(
         elements,
         container_sizes: std::mem::take(&mut measurer.container_sizes),
         anchor_frames: anchors.frames(sheet, &document.svg_definitions(), &measurer.work)?,
+        scroll_markers,
         trace: LayoutTrace {
             page_width,
             page_height,
@@ -501,6 +529,32 @@ fn paginate<'t>(
             element_images,
         },
     })
+}
+
+/// Where each scroll marker lies relative to its group's active marker, as the layout
+/// measured in `anchors` on `pages` placed scroll targets (CSS Overflow 5 §3.1.8).
+fn scroll_marker_states(
+    document: &StyledDocument,
+    anchors: &anchors::Measurements,
+    pages: &[std::sync::Arc<crate::document::PageBox>],
+    flow: crate::style::logical::Flow,
+) -> crate::dom::ScrollMarkerStates {
+    let groups = document.scroll_marker_groups();
+    if groups.is_empty() {
+        return crate::dom::ScrollMarkerStates::new();
+    }
+    let areas = pages
+        .iter()
+        .map(|page| page.geometry.content_box())
+        .collect();
+    scroll_markers::Calculation::new(
+        groups,
+        &anchors.placed_boxes(),
+        anchors.ink_areas(),
+        (areas, flow),
+        document.root_element(),
+    )
+    .states()
 }
 
 /// What a layout measured of the content of pages whose size properties take intrinsic size
@@ -726,6 +780,8 @@ pub(crate) enum LayoutError {
     GeneratedContentCycle,
     #[error("container query sizes repeat without reaching a fixed layout")]
     ContainerQueryCycle,
+    #[error("active scroll markers repeat without reaching a fixed layout")]
+    ScrollMarkerCycle,
     #[error("element() image renderings repeat without reaching a fixed layout")]
     ElementImageCycle,
     #[error("intrinsically sized pages repeat their content sizes without reaching a fixed layout")]

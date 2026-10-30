@@ -43,6 +43,7 @@ mod pseudo_elements;
 mod rendering;
 mod running_elements;
 mod running_strings;
+mod scroll_markers;
 mod svg_fonts;
 mod target_content;
 mod text_continuation;

@@ -5,7 +5,7 @@ use crate::dom::{DocumentTree, Element, ElementId};
 use crate::resources::{ResourceBase, Url};
 use crate::style::{GeneratedContent, GeneratedPseudoElement, QuoteDepth, Quotes, Style};
 
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeMap, HashMap, HashSet};
 
 const LINK_ELEMENT: &str = "a";
 const HREF_ATTRIBUTE: &str = "href";
@@ -98,7 +98,7 @@ pub(crate) struct Navigation {
 
 pub(crate) struct FragmentIndex {
     ids: BTreeMap<String, ElementId>,
-    owners: std::collections::HashSet<ElementId>,
+    owners: HashSet<ElementId>,
     names: BTreeMap<String, ElementId>,
     base: ResourceBase,
     document: Url,
@@ -168,6 +168,9 @@ pub(crate) struct NavigationBuilder {
     navigation: Navigation,
     labels: HashMap<ElementId, PendingLabel>,
     pub targets: std::rc::Rc<FragmentIndex>,
+    /// The scroll target of each hyperlink to an element of this document, a scroll marker
+    /// (CSS Overflow 5 §3.1), and the set of those targets.
+    scroll_targets: std::rc::Rc<(HashMap<ElementId, ElementId>, HashSet<ElementId>)>,
 }
 
 struct PendingLabel {
@@ -197,7 +200,9 @@ impl NavigationBuilder {
             navigation: Navigation::default(),
             labels: HashMap::new(),
             targets: targets.clone(),
+            scroll_targets: std::rc::Rc::default(),
         };
+        let mut scroll_targets = (HashMap::new(), HashSet::new());
         let root = html.root_element();
         for element in html.shadow_including_elements() {
             let Some(href) = element
@@ -223,7 +228,11 @@ impl NavigationBuilder {
                     },
                     root.id(),
                 ) {
-                    Some(node) => LinkTarget::Destination(builder.destination(node)),
+                    Some(node) => {
+                        scroll_targets.0.insert(element.id(), node);
+                        scroll_targets.1.insert(node);
+                        LinkTarget::Destination(builder.destination(node))
+                    }
                     None if capture => {
                         LinkTarget::Fragment(url.fragment().unwrap_or_default().to_owned())
                     }
@@ -258,6 +267,7 @@ impl NavigationBuilder {
         for owner in targets.ids.values() {
             builder.destination(*owner);
         }
+        builder.scroll_targets = std::rc::Rc::new(scroll_targets);
         Ok(builder)
     }
     /// A copy for formatting a subtree again, whose boxes take the navigation the document's
@@ -274,7 +284,16 @@ impl NavigationBuilder {
             },
             labels: HashMap::new(),
             targets: self.targets.clone(),
+            scroll_targets: self.scroll_targets.clone(),
         }
+    }
+    /// The scroll target of the hyperlink `element`, if it targets an element of this
+    /// document.
+    pub(crate) fn scroll_target(&self, element: ElementId) -> Option<ElementId> {
+        self.scroll_targets.0.get(&element).copied()
+    }
+    pub(crate) fn is_scroll_target(&self, element: ElementId) -> bool {
+        self.scroll_targets.1.contains(&element)
     }
     fn destination(&mut self, node: ElementId) -> usize {
         let next = self.navigation.destinations;

@@ -108,6 +108,7 @@ pub(crate) struct Formatted {
     pub svg_definitions: crate::document::svg::SvgDefinitions,
     /// The document's counters where each page starts (CSS Page 3 §6.1).
     pub page_counters: Vec<(usize, crate::document::CounterSnapshot)>,
+    pub scroll_markers: crate::document::scroll_markers::ScrollMarkerGroups,
 }
 
 /// The footnote elements of a document (CSS GCPM 3 §2.2), in the order their elements end,
@@ -761,6 +762,7 @@ pub(crate) struct Traversal<'a> {
     marker_prepass: bool,
     /// The nearest scroll container around the subtree a copy formats.
     marker_scroller: Option<MarkerScroller>,
+    marker_groups: crate::document::scroll_markers::ScrollMarkerGroups,
 }
 
 /// A scroll container, and the display of the `::scroll-marker-group` its scroll markers go
@@ -857,6 +859,7 @@ impl Traversal<'_> {
             scroll_markers: std::collections::HashMap::new(),
             marker_prepass: false,
             marker_scroller: None,
+            marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
         }
     }
     /// The state formatting a copy of the subtree starting here: it continues the document's
@@ -885,6 +888,7 @@ impl Traversal<'_> {
             scroll_markers: std::collections::HashMap::new(),
             marker_prepass: false,
             marker_scroller: None,
+            marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
         }
     }
 }
@@ -933,6 +937,38 @@ fn marker_scroller(frames: &[Frame<'_>], traversal: &Traversal<'_>) -> Option<Ma
         .or_else(|| traversal.marker_scroller.clone())
 }
 
+/// Records what the active marker calculation reads of `element`, styled `style` and a scroll
+/// container if `scroll_container`, whose ancestors' frames are `frames` (CSS Overflow 5
+/// §3.1.8): its nearest ancestor scroll container, its scroll margins if it is a scroll target,
+/// and itself as a scroll marker of its nearest `scroll-target-group` container if it links to
+/// an element of the document (§3.1.2).
+fn record_scroll_marker_box(
+    frames: &[Frame<'_>],
+    (element, style): (Element<'_>, &Style),
+    scroll_container: bool,
+    traversal: &mut Traversal<'_>,
+) {
+    let scroller = marker_scroller(frames, traversal);
+    let groups = &mut traversal.marker_groups;
+    if let Some(scroller) = scroller {
+        groups.element(element.id(), scroller.element);
+        if scroll_container {
+            groups.scroller(element.id(), Some(scroller.element), style);
+        }
+    }
+    if traversal.navigation.is_scroll_target(element.id()) {
+        groups.target(element.id(), style);
+    }
+    if let Some(target) = traversal.navigation.scroll_target(element.id())
+        && let Some(container) = frames
+            .iter()
+            .rev()
+            .find(|frame| frame.style.scroll_markers.target_group)
+    {
+        groups.anchor(container.element.id(), element.id(), target);
+    }
+}
+
 /// The style of the `::scroll-marker-group` that the scroll container `element`, styled
 /// `style`, generates (CSS Overflow 5 §3.1.4); `None` where it generates no box.
 #[inline(never)]
@@ -977,6 +1013,10 @@ fn scroll_marker<'a>(
     else {
         return Ok(());
     };
+    traversal
+        .marker_groups
+        .scroll_marker(scroller, element.id());
+    traversal.marker_groups.target(element.id(), style);
     let navigation = traversal.navigation.scroll_marker(element.id());
     let detached = traversal.counters.detached();
     let counters = std::mem::replace(&mut traversal.counters, detached);
@@ -3697,6 +3737,7 @@ fn block<'a>(
                 resources,
             )?;
             let scroll_container = child_style.scroll_container_box(replaced);
+            record_scroll_marker_box(&frames, (child, &child_style), scroll_container, traversal);
             let marker_group = if scroll_container {
                 marker_group_style(child, &child_style, sheet, resources.resolver)?
             } else {
@@ -4245,6 +4286,7 @@ fn hidden_root(
         pages,
         svg_definitions,
         page_counters: Vec::new(),
+        scroll_markers: crate::document::scroll_markers::ScrollMarkerGroups::default(),
     })
 }
 
@@ -4292,6 +4334,7 @@ fn format_root(
         scroll_markers: std::collections::HashMap::new(),
         marker_prepass: false,
         marker_scroller: None,
+        marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
         .then(|| html.body_element().map(Element::id))
@@ -4334,6 +4377,11 @@ fn format_root(
     )?;
     // The viewport scrolls the root element's overflow (CSS Overflow 3 §3.3).
     let marker_group = marker_group_style(element, &style, sheet, resolver)?;
+    traversal.marker_groups.scroller(element.id(), None, &style);
+    traversal.marker_groups.element(element.id(), element.id());
+    if traversal.navigation.is_scroll_target(element.id()) {
+        traversal.marker_groups.target(element.id(), &style);
+    }
     let mut root = block(
         Frame {
             scroll_container: true,
@@ -4380,6 +4428,7 @@ fn format_root(
         generated,
         canvas,
         page_counters,
+        marker_groups,
         ..
     } = traversal;
     Ok(Formatted {
@@ -4392,6 +4441,7 @@ fn format_root(
         pages,
         svg_definitions,
         page_counters,
+        scroll_markers: marker_groups,
     })
 }
 

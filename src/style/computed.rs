@@ -1679,8 +1679,9 @@ impl Stylesheet {
         Ok(style)
     }
 
-    /// The style of an element-backed pseudo-element of `element`, to which `content` does
-    /// not apply (CSS Pseudo 4 §4).
+    /// The style of an element-backed pseudo-element of `element` (CSS Pseudo 4 §4), or of
+    /// its `::scroll-marker-group`, whose contents are its scroll markers (CSS Overflow 5
+    /// §3.1.4): `content` does not apply to them.
     pub(crate) fn element_backed_with_resolver(
         &self,
         element: Element<'_>,

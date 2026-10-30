@@ -8,6 +8,9 @@ use crate::style::{PageStyleTarget, Position, Style, Stylesheet};
 use std::collections::{HashMap, HashSet};
 
 type EffectChain = Vec<(usize, Effect)>;
+/// The border and padding widths recorded for boxes that are never scroll containers, whose
+/// padding and content boxes nothing reads.
+pub(super) const NO_INSETS: [[f32; 4]; 2] = [[0.0; 4]; 2];
 #[derive(Clone, PartialEq)]
 pub(super) enum Effect {
     Region(Region, Option<PageStyleTarget>),
@@ -44,6 +47,9 @@ struct Fragment {
     ink: Rect,
     filters: std::sync::Arc<Vec<crate::graphics::FilterFunction>>,
     clip: Option<usize>,
+    /// The padding and content boxes of `source`.
+    padding: Rect,
+    content: Rect,
 }
 #[derive(Clone)]
 struct Ink {
@@ -104,30 +110,63 @@ pub(super) fn ink_key(style: &Style) -> Option<PageStyleTarget> {
 }
 
 impl Measurements {
+    /// Records a fragment `rect` of the box styled `style`, which unfragmented is `source`
+    /// with the border and padding widths `insets`.
     pub(super) fn record(
         &mut self,
         style: &Style,
         at: (usize, Option<usize>, bool),
-        rect: Rect,
-        source: Option<Rect>,
+        (rect, source, insets): (Rect, Option<Rect>, [[f32; 4]; 2]),
         clip: Option<usize>,
         columns: bool,
     ) {
         let (page, slot, visible) = at;
         if let Some(key) = key(style) {
+            let source = source.unwrap_or(rect);
+            let [border, padding] = insets;
+            let padding_box = source.inset(border);
             self.boxes.entry(key).or_default().push(Fragment {
                 visible,
                 page,
                 rect,
                 ink: rect,
                 filters: style.filter.clone(),
-                source: source.unwrap_or(rect),
+                source,
                 slot,
                 clip,
                 columns,
                 fragmentainer: page,
+                padding: padding_box,
+                content: padding_box.inset(padding),
             });
         }
+    }
+
+    /// The fragments of each box: its page and, as if unfragmented, its border, padding and
+    /// content boxes.
+    pub(super) fn placed_boxes(
+        &self,
+    ) -> HashMap<PageStyleTarget, Vec<super::scroll_markers::PlacedBox>> {
+        self.boxes
+            .iter()
+            .map(|(&target, fragments)| {
+                let placed = fragments
+                    .iter()
+                    .map(|fragment| super::scroll_markers::PlacedBox {
+                        page: fragment.page,
+                        border: fragment.source,
+                        padding: fragment.padding,
+                        content: fragment.content,
+                    })
+                    .collect();
+                (target, placed)
+            })
+            .collect()
+    }
+
+    /// The ink of the text and decorations each box holds.
+    pub(super) fn ink_areas(&self) -> impl Iterator<Item = (PageStyleTarget, usize, Rect)> + '_ {
+        self.ink.iter().map(|ink| (ink.target, ink.page, ink.rect))
     }
 
     pub(super) fn ink(
@@ -290,6 +329,8 @@ impl Measurements {
                     ink: map(fragment.ink),
                     rect: map(fragment.rect),
                     clip: clip(fragment.clip),
+                    padding: map(fragment.padding),
+                    content: map(fragment.content),
                 });
             }
         }
@@ -325,6 +366,8 @@ impl Measurements {
             let frame = frame(fragment.page);
             fragment.source = frame.rect(fragment.source);
             fragment.rect = frame.rect(fragment.rect);
+            fragment.padding = frame.rect(fragment.padding);
+            fragment.content = frame.rect(fragment.content);
             fragment.ink = frame.rect(fragment.ink);
         }
         for ink in &mut self.ink {

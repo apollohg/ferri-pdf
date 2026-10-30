@@ -3114,17 +3114,20 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                             Some(slot),
                             !self.force_hidden && style.visibility.is_visible(),
                         ),
-                        paint.rect,
-                        Some(Rect {
-                            y: paint.rect.y - before
-                                + if active.clone && index > 0 {
-                                    paint.padding[0] + paint.decoration.borders[0].used_width()
-                                } else {
-                                    0.0
-                                },
-                            height,
-                            ..paint.rect
-                        }),
+                        (
+                            paint.rect,
+                            Some(Rect {
+                                y: paint.rect.y - before
+                                    + if active.clone && index > 0 {
+                                        paint.padding[0] + paint.decoration.borders[0].used_width()
+                                    } else {
+                                        0.0
+                                    },
+                                height,
+                                ..paint.rect
+                            }),
+                            [paint.inner_widths(), paint.padding],
+                        ),
                         self.display_lists[page][slot].clip,
                         matches!(self.fragmentainers, Fragmentainers::Columns(_)),
                     );
@@ -5369,8 +5372,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 None,
                 !self.force_hidden && style.visibility.is_visible(),
             ),
-            rect,
-            Some(source),
+            (rect, Some(source), super::anchors::NO_INSETS),
             clip,
             matches!(self.fragmentainers, Fragmentainers::Columns(_)),
         );
@@ -6526,8 +6528,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                         None,
                         !self.force_hidden && style.visibility.is_visible(),
                     ),
-                    border,
-                    None,
+                    (border, None, super::anchors::NO_INSETS),
                     layer.clip,
                     matches!(self.fragmentainers, Fragmentainers::Columns(_)),
                 );

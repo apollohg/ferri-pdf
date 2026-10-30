@@ -14,7 +14,9 @@ pub(crate) use selector::{
     GeneratedPseudoElement, NamespaceMap, PseudoElement, ScopeRoot, Selector, SelectorMode,
     SelectorOrigin, SelectorScope, TreeContext, parse_namespace,
 };
-pub(crate) use state::{Directionality, InitialState, ScrollMarkerStates, TargetPosition};
+pub(crate) use state::{
+    Directionality, InitialState, ScrollMarker, ScrollMarkerStates, TargetPosition,
+};
 
 #[derive(Debug, thiserror::Error)]
 pub enum DomError {
