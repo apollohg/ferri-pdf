@@ -2888,30 +2888,7 @@ where
     input.skip_whitespace();
 
     if parse_relative != ParseRelative::No {
-        let combinator = try_parse_combinator(input);
-        match parse_relative {
-            ParseRelative::ForHas => {
-                builder.push_simple_selector(Component::RelativeSelectorAnchor);
-                // Do we see a combinator? If so, push that. Otherwise, push a descendant
-                // combinator.
-                builder.push_combinator(combinator.unwrap_or(Combinator::Descendant));
-            },
-            ParseRelative::ForNesting | ParseRelative::ForScope => {
-                if let Ok(combinator) = combinator {
-                    let selector = match parse_relative {
-                        ParseRelative::ForHas | ParseRelative::No => unreachable!(),
-                        ParseRelative::ForNesting => Component::ParentSelector,
-                        // See https://github.com/w3c/csswg-drafts/issues/10196
-                        // Implicitly added `:scope` does not add specificity
-                        // for non-relative selectors, so do the same.
-                        ParseRelative::ForScope => Component::ImplicitScope,
-                    };
-                    builder.push_simple_selector(selector);
-                    builder.push_combinator(combinator);
-                }
-            },
-            ParseRelative::No => unreachable!(),
-        }
+        push_relative_anchor(input, &mut builder, parse_relative);
     }
     loop {
         // Parse a sequence of simple selectors.
@@ -2947,6 +2924,40 @@ where
         builder.push_combinator(combinator);
     }
     return Ok(finish_selector(builder, parse_relative));
+}
+
+/// Starts a relative selector with its anchor and leading combinator. Kept out of
+/// `parse_selector`, whose frame every nested selector argument stacks.
+#[inline(never)]
+fn push_relative_anchor<Impl: SelectorImpl>(
+    input: &mut CssParser<'_, '_>,
+    builder: &mut SelectorBuilder<Impl>,
+    parse_relative: ParseRelative,
+) {
+    let combinator = try_parse_combinator(input);
+    match parse_relative {
+        ParseRelative::ForHas => {
+            builder.push_simple_selector(Component::RelativeSelectorAnchor);
+            // Do we see a combinator? If so, push that. Otherwise, push a descendant
+            // combinator.
+            builder.push_combinator(combinator.unwrap_or(Combinator::Descendant));
+        },
+        ParseRelative::ForNesting | ParseRelative::ForScope => {
+            if let Ok(combinator) = combinator {
+                let selector = match parse_relative {
+                    ParseRelative::ForHas | ParseRelative::No => unreachable!(),
+                    ParseRelative::ForNesting => Component::ParentSelector,
+                    // See https://github.com/w3c/csswg-drafts/issues/10196
+                    // Implicitly added `:scope` does not add specificity
+                    // for non-relative selectors, so do the same.
+                    ParseRelative::ForScope => Component::ImplicitScope,
+                };
+                builder.push_simple_selector(selector);
+                builder.push_combinator(combinator);
+            }
+        },
+        ParseRelative::No => unreachable!(),
+    }
 }
 
 fn try_parse_combinator<'i, 't>(input: &mut CssParser<'i, 't>) -> Result<Combinator, ()> {
@@ -3432,96 +3443,109 @@ where
             None => break,
             Some(SimpleSelectorStart::Ready(result)) => result,
             Some(SimpleSelectorStart::FunctionalPseudoClass(name)) => {
-                let component = input.parse_nested_block(|input| {
+                SimpleSelectorParseResult::SimpleSelector(input.parse_nested_block(|input| {
                     parse_functional_pseudo_class(parser, input, name, *state)
-                })?;
-                SimpleSelectorParseResult::SimpleSelector(component)
+                })?)
             },
         };
-
-        if empty {
-            if let Some(url) = parser.default_namespace() {
-                // If there was no explicit type selector, but there is a
-                // default namespace, there is an implicit "<defaultns>|*" type
-                // selector. Except for :host() or :not() / :is() / :where(),
-                // where we ignore it.
-                //
-                // https://drafts.csswg.org/css-scoping/#host-element-in-tree:
-                //
-                //     When considered within its own shadow trees, the shadow
-                //     host is featureless. Only the :host, :host(), and
-                //     :host-context() pseudo-classes are allowed to match it.
-                //
-                // https://drafts.csswg.org/selectors-4/#featureless:
-                //
-                //     A featureless element does not match any selector at all,
-                //     except those it is explicitly defined to match. If a
-                //     given selector is allowed to match a featureless element,
-                //     it must do so while ignoring the default namespace.
-                //
-                // https://drafts.csswg.org/selectors-4/#matches
-                //
-                //     Default namespace declarations do not affect the compound
-                //     selector representing the subject of any selector within
-                //     a :is() pseudo-class, unless that compound selector
-                //     contains an explicit universal selector or type selector.
-                //
-                //     (Similar quotes for :where() / :not())
-                //
-                let ignore_default_ns = state
-                    .intersects(SelectorParsingState::SKIP_DEFAULT_NAMESPACE)
-                    || matches!(
-                        result,
-                        SimpleSelectorParseResult::SimpleSelector(
-                            Component::Host(..) | Component::HostContext(..)
-                        )
-                    );
-                if !ignore_default_ns {
-                    builder.push_simple_selector(Component::DefaultNamespace(url));
-                }
-            }
-        }
-
+        push_simple_selector_result(parser, state, builder, result, empty);
         empty = false;
-
-        match result {
-            SimpleSelectorParseResult::SimpleSelector(s) => {
-                builder.push_simple_selector(s);
-            },
-            SimpleSelectorParseResult::PartPseudo(part_names) => {
-                state.insert(SelectorParsingState::AFTER_PART_LIKE);
-                builder.push_combinator(Combinator::Part);
-                builder.push_simple_selector(Component::Part(part_names));
-            },
-            SimpleSelectorParseResult::SlottedPseudo(selector) => {
-                state.insert(SelectorParsingState::AFTER_SLOTTED);
-                builder.push_combinator(Combinator::SlotAssignment);
-                builder.push_simple_selector(Component::Slotted(selector));
-            },
-            SimpleSelectorParseResult::PseudoElement(p) => {
-                if p.parses_as_element_backed() {
-                    state.insert(
-                        SelectorParsingState::AFTER_PART_LIKE
-                            | SelectorParsingState::AFTER_ELEMENT_BACKED_PSEUDO,
-                    );
-                } else {
-                    state.insert(SelectorParsingState::AFTER_NON_ELEMENT_BACKED_PSEUDO);
-                    if p.is_before_or_after() {
-                        state.insert(SelectorParsingState::AFTER_BEFORE_OR_AFTER_PSEUDO);
-                    }
-                }
-                if !p.accepts_state_pseudo_classes() {
-                    state.insert(SelectorParsingState::AFTER_NON_STATEFUL_PSEUDO_ELEMENT);
-                }
-                if p.is_in_pseudo_element_tree() {
-                    state.insert(SelectorParsingState::IN_PSEUDO_ELEMENT_TREE);
-                }
-                builder.push_combinator(Combinator::PseudoElement);
-                builder.push_simple_selector(Component::PseudoElement(p));
-            },
-        }
     }
     Ok(empty)
+}
+
+/// Adds a parsed simple selector or pseudo-element to the compound. Kept out of
+/// `parse_compound_selector`, whose frame every nested selector argument stacks.
+#[inline(never)]
+fn push_simple_selector_result<'i, P, Impl>(
+    parser: &P,
+    state: &mut SelectorParsingState,
+    builder: &mut SelectorBuilder<Impl>,
+    result: SimpleSelectorParseResult<Impl>,
+    empty: bool,
+) where
+    P: Parser<'i, Impl = Impl>,
+    Impl: SelectorImpl,
+{
+    if empty {
+        if let Some(url) = parser.default_namespace() {
+            // If there was no explicit type selector, but there is a
+            // default namespace, there is an implicit "<defaultns>|*" type
+            // selector. Except for :host() or :not() / :is() / :where(),
+            // where we ignore it.
+            //
+            // https://drafts.csswg.org/css-scoping/#host-element-in-tree:
+            //
+            //     When considered within its own shadow trees, the shadow
+            //     host is featureless. Only the :host, :host(), and
+            //     :host-context() pseudo-classes are allowed to match it.
+            //
+            // https://drafts.csswg.org/selectors-4/#featureless:
+            //
+            //     A featureless element does not match any selector at all,
+            //     except those it is explicitly defined to match. If a
+            //     given selector is allowed to match a featureless element,
+            //     it must do so while ignoring the default namespace.
+            //
+            // https://drafts.csswg.org/selectors-4/#matches
+            //
+            //     Default namespace declarations do not affect the compound
+            //     selector representing the subject of any selector within
+            //     a :is() pseudo-class, unless that compound selector
+            //     contains an explicit universal selector or type selector.
+            //
+            //     (Similar quotes for :where() / :not())
+            //
+            let ignore_default_ns = state
+                .intersects(SelectorParsingState::SKIP_DEFAULT_NAMESPACE)
+                || matches!(
+                    result,
+                    SimpleSelectorParseResult::SimpleSelector(
+                        Component::Host(..) | Component::HostContext(..)
+                    )
+                );
+            if !ignore_default_ns {
+                builder.push_simple_selector(Component::DefaultNamespace(url));
+            }
+        }
+    }
+
+    match result {
+        SimpleSelectorParseResult::SimpleSelector(s) => {
+            builder.push_simple_selector(s);
+        },
+        SimpleSelectorParseResult::PartPseudo(part_names) => {
+            state.insert(SelectorParsingState::AFTER_PART_LIKE);
+            builder.push_combinator(Combinator::Part);
+            builder.push_simple_selector(Component::Part(part_names));
+        },
+        SimpleSelectorParseResult::SlottedPseudo(selector) => {
+            state.insert(SelectorParsingState::AFTER_SLOTTED);
+            builder.push_combinator(Combinator::SlotAssignment);
+            builder.push_simple_selector(Component::Slotted(selector));
+        },
+        SimpleSelectorParseResult::PseudoElement(p) => {
+            if p.parses_as_element_backed() {
+                state.insert(
+                    SelectorParsingState::AFTER_PART_LIKE
+                        | SelectorParsingState::AFTER_ELEMENT_BACKED_PSEUDO,
+                );
+            } else {
+                state.insert(SelectorParsingState::AFTER_NON_ELEMENT_BACKED_PSEUDO);
+                if p.is_before_or_after() {
+                    state.insert(SelectorParsingState::AFTER_BEFORE_OR_AFTER_PSEUDO);
+                }
+            }
+            if !p.accepts_state_pseudo_classes() {
+                state.insert(SelectorParsingState::AFTER_NON_STATEFUL_PSEUDO_ELEMENT);
+            }
+            if p.is_in_pseudo_element_tree() {
+                state.insert(SelectorParsingState::IN_PSEUDO_ELEMENT_TREE);
+            }
+            builder.push_combinator(Combinator::PseudoElement);
+            builder.push_simple_selector(Component::PseudoElement(p));
+        },
+    }
 }
 
 fn parse_is_where<'i, 't, P, Impl>(
