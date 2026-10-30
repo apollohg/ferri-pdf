@@ -111,6 +111,21 @@ impl Frame {
                 points[0][axis].max(points[1][axis]) - origin,
             ];
         }
+        if let Some(geometry) = &mut paint.border_geometry {
+            let geometry = Arc::make_mut(geometry);
+            let source = self.rect(Rect {
+                x: paint.rect.x + geometry.rect.x,
+                y: paint.rect.y + geometry.rect.y,
+                ..geometry.rect
+            });
+            let target = self.rect(paint.rect);
+            geometry.rect = Rect {
+                x: source.x - target.x,
+                y: source.y - target.y,
+                ..source
+            };
+            geometry.radii = map_radii(self.matrix, &geometry.radii);
+        }
         paint.rect = self.rect(paint.rect);
         paint.background_box = paint.background_box.map(|rect| self.rect(rect));
         paint.padding = self.to.sides(self.from, &paint.padding);
@@ -983,6 +998,82 @@ mod tests {
             ["A"],
             "the leaf text survives all suspended frame dependencies"
         );
+    }
+
+    #[test]
+    fn native_writing_keeps_the_original_shaped_outline_reference() {
+        use crate::paint::{
+            BorderStyle, BoxDecoration, Color, CornerShape, LengthPercentage, Outline, OutlineStyle,
+        };
+        let paint = BoxPaint::whole(
+            Rect {
+                x: 10.0,
+                y: 20.0,
+                width: 60.0,
+                height: 80.0,
+            },
+            BoxDecoration {
+                radii: Arc::new(std::array::from_fn(|corner| {
+                    [
+                        LengthPercentage::Length(10.0 + corner as f32),
+                        LengthPercentage::Length(20.0 + corner as f32),
+                    ]
+                })),
+                corner_shapes: Arc::new([
+                    CornerShape::BEVEL,
+                    CornerShape::NOTCH,
+                    CornerShape::ROUND,
+                    CornerShape::SQUARE,
+                ]),
+                outline: Outline {
+                    width: 4.0,
+                    offset: 6.0,
+                    style: OutlineStyle::Line(BorderStyle::Solid),
+                    color: Color::BLACK,
+                },
+                ..Default::default()
+            },
+        );
+        for mode in [
+            WritingMode::HorizontalTb,
+            WritingMode::VerticalRl,
+            WritingMode::VerticalLr,
+            WritingMode::SidewaysRl,
+            WritingMode::SidewaysLr,
+        ] {
+            for rtl in [false, true] {
+                let frame = Frame::physical(
+                    Flow {
+                        writing_mode: mode,
+                        rtl,
+                    },
+                    [120.0, 140.0],
+                );
+                let mut actual = paint.outline().unwrap();
+                frame.paint(&mut actual);
+                let mut original = paint.clone();
+                frame.paint(&mut original);
+                let expected = original.outline().unwrap();
+                let source = actual
+                    .border_geometry
+                    .as_ref()
+                    .expect("shaped outlines retain their reference");
+                let reference = expected.border_geometry.as_ref().unwrap();
+                assert_eq!(
+                    source.rect, reference.rect,
+                    "mode={mode:?},rtl={rtl}: reference position"
+                );
+                assert_eq!(
+                    source.radii, reference.radii,
+                    "mode={mode:?},rtl={rtl}: original radii"
+                );
+                assert_eq!(actual.rect, expected.rect);
+                assert_eq!(
+                    actual.decoration.corner_shapes,
+                    expected.decoration.corner_shapes
+                );
+            }
+        }
     }
 
     #[test]

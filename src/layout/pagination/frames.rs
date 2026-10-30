@@ -167,7 +167,7 @@ fn render<'a>(
                         pending,
                         &super::Containing::Rect {
                             rect,
-                            paint: owner.paint.clone(),
+                            paint: Box::new(owner.paint.clone()),
                             radius: None,
                             flow: crate::style::logical::Flow::used(owner.source.style()),
                             clip: None,

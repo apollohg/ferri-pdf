@@ -248,7 +248,7 @@ struct Unbroken {
 enum Containing<'a> {
     Rect {
         rect: Rect,
-        paint: BoxPaint,
+        paint: Box<BoxPaint>,
         radius: Option<&'a std::sync::Arc<crate::paint::CornerRadii>>,
         flow: crate::style::logical::Flow,
         clip: Option<usize>,
@@ -3513,7 +3513,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 Containing::Page => None,
                 Containing::Rect { paint, radius, .. } => {
                     let node = self.effect_node(None, Effect::MotionReference(true, *radius));
-                    self.clips[node].paints.push((page, paint.clone()));
+                    self.clips[node].paints.push((page, (**paint).clone()));
                     Some(node)
                 }
                 Containing::Box {
@@ -4785,7 +4785,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     &Containing::Rect {
                         rect,
                         flow: crate::style::logical::Flow::used(ancestor.source.style()),
-                        paint: BoxPaint::whole(
+                        paint: Box::new(BoxPaint::whole(
                             rect,
                             self.tables
                                 .last()
@@ -4793,7 +4793,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                                 .flow
                                 .plan
                                 .structural_decoration(ancestor.source),
-                        ),
+                        )),
                         radius: Some(&ancestor.source.style().decoration.radii),
                         clip,
                     },
@@ -5968,7 +5968,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     &Containing::Rect {
                         rect,
                         flow: container.flow,
-                        paint: inline_reference(&container, rect),
+                        paint: Box::new(inline_reference(&container, rect)),
                         radius: Some(&container.style.decoration.radii),
                         clip: container.clip,
                     },

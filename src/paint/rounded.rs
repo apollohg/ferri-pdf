@@ -858,23 +858,37 @@ struct Geometry {
     radii: Radii,
     widths: [f32; 4],
     curvatures: [f32; 4],
+    insets: [f32; 4],
     outer_points: [Point; 4],
     inner_points: [Point; 4],
     outer: [Curve; 4],
     centre: [Curve; 4],
 }
 impl Geometry {
-    fn new(rect: Rect, radii: Radii, widths: [f32; 4], curvatures: [f32; 4]) -> Self {
-        let (inner_rect, _) = inset(rect, radii, widths);
+    fn new(
+        rect: Rect,
+        radii: Radii,
+        widths: [f32; 4],
+        curvatures: [f32; 4],
+        insets: [f32; 4],
+    ) -> Self {
+        let (outer_rect, _) = inset(rect, radii, insets);
+        let (inner_rect, _) = inset(outer_rect, radii, widths);
         Self {
             rect,
             radii,
             widths,
             curvatures,
-            outer_points: corner_points(rect),
+            insets,
+            outer_points: corner_points(outer_rect),
             inner_points: corner_points(inner_rect),
-            outer: inset_corners(rect, radii, curvatures, [0.0; 4]),
-            centre: inset_corners(rect, radii, curvatures, widths.map(|width| width / 2.0)),
+            outer: inset_corners(rect, radii, curvatures, insets),
+            centre: inset_corners(
+                rect,
+                radii,
+                curvatures,
+                std::array::from_fn(|side| insets[side] + widths[side] / 2.0),
+            ),
         }
     }
 
@@ -884,7 +898,7 @@ impl Geometry {
             self.rect,
             self.radii,
             self.curvatures,
-            self.widths.map(|width| width * t),
+            std::array::from_fn(|side| self.insets[side] + self.widths[side] * t),
         )
     }
 
@@ -893,7 +907,7 @@ impl Geometry {
             self.rect,
             self.radii,
             self.curvatures,
-            self.widths.map(|width| width * fraction),
+            std::array::from_fn(|side| self.insets[side] + self.widths[side] * fraction),
         )
     }
 
@@ -1088,12 +1102,14 @@ pub(crate) fn border_fills<I>(
     widths: [f32; 4],
     inner_widths: [f32; 4],
     radii: Radii,
+    insets: [f32; 4],
 ) -> Vec<Fill> {
     let geometry = Geometry::new(
         rect,
         radii,
         inner_widths,
         decoration.corner_shapes.map(CornerShape::curvature),
+        insets,
     );
     let shaped = geometry.curvatures != [ROUND_CURVATURE; 4];
     let clip_border = |shape| {
@@ -1370,6 +1386,7 @@ mod path_tests {
                 f32::NEG_INFINITY,
                 ROUND_CURVATURE,
             ],
+            [0.0; 4],
         );
         let contours = geometry.contours(1.0);
         assert_eq!(
@@ -1416,6 +1433,7 @@ mod path_tests {
                 f32::NEG_INFINITY,
                 ROUND_CURVATURE,
             ],
+            [0.0; 4],
         );
         assert!(
             geometry.contours(1.0).is_empty(),
@@ -1716,7 +1734,13 @@ mod path_tests {
             width: 80.0,
             height: 60.0,
         };
-        let geometry = Geometry::new(rect, [[20.0; 2]; 4], [4.0; 4], [f32::NEG_INFINITY; 4]);
+        let geometry = Geometry::new(
+            rect,
+            [[20.0; 2]; 4],
+            [4.0; 4],
+            [f32::NEG_INFINITY; 4],
+            [0.0; 4],
+        );
         let corners = geometry.ring(1.0);
         let expected = [
             ([0.0, 24.0], [24.0, 24.0], [24.0, 0.0]),
@@ -2089,6 +2113,7 @@ mod path_tests {
             [[0.0; 2]; 4],
             [4.0; 4],
             [ROUND_CURVATURE; 4],
+            [0.0; 4],
         );
         for (corner, start, end) in [
             (0, [2.0, 20.0], [20.0, 2.0]),

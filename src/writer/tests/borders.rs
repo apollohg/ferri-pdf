@@ -137,3 +137,100 @@ fn completely_consumed_corner_regions_emit_no_border_ink() {
         "four half-box notches leave no border region"
     );
 }
+
+#[test]
+fn shaped_outlines_offset_the_original_border_contour() {
+    use crate::paint::{BoxPaint, Color, LengthPercentage, Outline, OutlineStyle};
+    use std::sync::Arc;
+    let rect = Rect {
+        x: 20.0,
+        y: 20.0,
+        width: 100.0,
+        height: 80.0,
+    };
+    for style in [
+        BorderStyle::Solid,
+        BorderStyle::Double,
+        BorderStyle::Groove,
+        BorderStyle::Ridge,
+        BorderStyle::Dotted,
+        BorderStyle::Dashed,
+    ] {
+        for offset in [6.0, -6.0, -100.0] {
+            let paint = BoxPaint::<std::convert::Infallible>::whole(
+                rect,
+                BoxDecoration {
+                    radii: Arc::new(std::array::from_fn(|_| {
+                        std::array::from_fn(|_| LengthPercentage::Percentage(0.5))
+                    })),
+                    corner_shapes: Arc::new([
+                        CornerShape::NOTCH,
+                        CornerShape::SQUARE,
+                        CornerShape::NOTCH,
+                        CornerShape::SQUARE,
+                    ]),
+                    outline: Outline {
+                        width: 4.0,
+                        offset,
+                        style: OutlineStyle::Line(style),
+                        color: Color::BLACK,
+                    },
+                    ..Default::default()
+                },
+            );
+            let outline = paint.outline().unwrap();
+            let pixels = super::render([140, 120], |surface| {
+                for fill in outline.border_fills() {
+                    crate::writer::painting::draw_fill(
+                        fill,
+                        Rect {
+                            x: 0.0,
+                            y: 0.0,
+                            width: 140.0,
+                            height: 120.0,
+                        },
+                        surface,
+                    )
+                    .unwrap();
+                }
+            });
+            let horizontal = (-offset - 4.0_f32).min(46.0);
+            let vertical = (-offset - 4.0_f32).min(36.0);
+            let contains = |x: f32, y: f32, depth: f32| {
+                let h = horizontal + depth;
+                let v = vertical + depth;
+                x >= 20.0 + h
+                    && x < 120.0 - h
+                    && y >= 20.0 + v
+                    && y < 100.0 - v
+                    && !(x < 70.0 + v && y < 60.0 + h)
+                    && !(x >= 70.0 - v && y >= 60.0 - h)
+            };
+            let mut ink = 0;
+            for y in 0..120 {
+                for x in 0..140 {
+                    let px = x as f32 + 0.5;
+                    let py = y as f32 + 0.5;
+                    let expected = if contains(px, py, 0.0) && !contains(px, py, 4.0) {
+                        u8::MAX
+                    } else {
+                        0
+                    };
+                    let alpha = pixels[(y * 140 + x) * 4 + 3];
+                    assert!(
+                        alpha == 0 || expected > 0,
+                        "style={style:?},offset={offset},pixel=({x},{y}) escaped the outline region"
+                    );
+                    if style == BorderStyle::Solid {
+                        assert_eq!(alpha, expected, "offset={offset},pixel=({x},{y})");
+                    }
+                    ink += usize::from(alpha > 0);
+                }
+            }
+            assert!(
+                offset == -100.0 || ink > 0,
+                "style={style:?},offset={offset}: outline vanished"
+            );
+        }
+    }
+}

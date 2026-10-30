@@ -435,6 +435,9 @@ fn background_enabled(enabled: &bool) -> bool {
 #[serde(bound(serialize = ""))]
 pub struct BoxPaint<I = Infallible> {
     pub rect: Rect,
+    /// Original corner geometry for an offset border, relative to `rect`'s origin.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub border_geometry: Option<Arc<BorderGeometry>>,
     pub decoration: BoxDecoration<I>,
     /// Used padding widths in top/right/bottom/left order.
     pub padding: [f32; 4],
@@ -457,6 +460,12 @@ pub struct BoxPaint<I = Infallible> {
     pub legend: Option<LegendCut>,
 }
 
+#[derive(Clone, Debug, Serialize)]
+pub struct BorderGeometry {
+    pub rect: Rect,
+    pub radii: Radii,
+}
+
 /// Where a fieldset with a rendered legend paints (HTML §15.3.12): its background and border
 /// start `inset` below its border box's top, and its block-start border skips the legend's
 /// border box, `gap` from the box's left edge.
@@ -471,6 +480,7 @@ impl<I> BoxPaint<I> {
     pub fn whole(rect: Rect, decoration: BoxDecoration<I>) -> Self {
         Self {
             rect,
+            border_geometry: None,
             decoration,
             padding: [0.0; 4],
             margins: [0.0; 4],
@@ -671,7 +681,7 @@ impl<I> BoxPaint<I> {
     }
     /// This fragment's outline as a box whose uniform border is the outline (CSS UI 4 §3):
     /// outside the border box by `outline-offset`, around each fragment on its own, and
-    /// following the fragment's corner radii grown like a shadow spread. A negative offset
+    /// following the fragment's corner contour like a shadow spread. A negative offset
     /// keeps each outer dimension at least twice the width (§3.5).
     pub fn outline(&self) -> Option<Self>
     where
@@ -693,13 +703,14 @@ impl<I> BoxPaint<I> {
             background_box: None,
             ..self.clone()
         };
-        let radii = crate::paint::shadow::spread_radii(fragment.radii(), growth);
+        let source_radii = fragment.radii();
+        let radii = crate::paint::shadow::spread_radii(source_radii, growth);
         let border = Border {
             width,
             style: outline.line_style(),
             color: outline.color,
         };
-        Some(Self::whole(
+        let mut result = Self::whole(
             Rect {
                 x,
                 y,
@@ -712,7 +723,18 @@ impl<I> BoxPaint<I> {
                 corner_shapes: self.decoration.corner_shapes.clone(),
                 ..BoxDecoration::default()
             },
-        ))
+        );
+        if *self.decoration.corner_shapes != [CornerShape::ROUND; 4] {
+            result.border_geometry = Some(Arc::new(BorderGeometry {
+                rect: Rect {
+                    x: self.rect.x - x,
+                    y: self.rect.y - y,
+                    ..self.rect
+                },
+                radii: source_radii,
+            }));
+        }
+        Some(result)
     }
     /// Used corner radii of the assembled box, before cutting its fragments.
     pub fn radii(&self) -> Radii {
@@ -810,6 +832,26 @@ impl<I> BoxPaint<I> {
         let widths = self.decoration_widths();
         let inner_widths = self.inner_widths();
         let radii = self.radii();
+        if let Some(geometry) = &self.border_geometry {
+            let source = Rect {
+                x: rect.x + geometry.rect.x,
+                y: rect.y + geometry.rect.y,
+                ..geometry.rect
+            };
+            return crate::paint::rounded::border_fills(
+                source,
+                &self.decoration,
+                widths,
+                inner_widths,
+                geometry.radii,
+                [
+                    rect.y - source.y,
+                    source.x + source.width - rect.x - rect.width,
+                    source.y + source.height - rect.y - rect.height,
+                    rect.x - source.x,
+                ],
+            );
+        }
         if radii.iter().any(|corner| corner[0] > 0.0) {
             return crate::paint::rounded::border_fills(
                 rect,
@@ -817,6 +859,7 @@ impl<I> BoxPaint<I> {
                 widths,
                 inner_widths,
                 radii,
+                [0.0; 4],
             );
         }
         let outer = ring_corners(rect, inner_widths, 0.0);
