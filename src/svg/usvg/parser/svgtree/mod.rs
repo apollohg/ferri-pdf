@@ -29,6 +29,9 @@ pub(super) const CSS_INITIAL: &str = "initial";
 pub(super) struct Document<'input> {
     pub(crate) css_limit: Option<usize>,
     variables: HashMap<usize, crate::style::svg_cascade::Variables>,
+    /// The declarations of properties without attributes that won each element's cascade,
+    /// as longhands, by node.
+    declared: HashMap<usize, Vec<(&'static str, String)>>,
     pub(crate) style_error: Option<std::sync::Arc<crate::style::StyleError>>,
     nodes: Vec<NodeData>,
     attrs: Vec<Attribute<'input>>,
@@ -266,6 +269,14 @@ impl<'a, 'input: 'a> SvgNode<'a, 'input> {
     /// Identifies the node among those of its document.
     pub(in crate::svg::usvg::parser) fn index(&self) -> usize {
         self.id.get_usize()
+    }
+
+    /// The declarations of properties without attributes that won the element's cascade.
+    pub(in crate::svg::usvg::parser) fn declared(&self) -> &'a [(&'static str, String)] {
+        self.doc
+            .declared
+            .get(&self.id.get_usize())
+            .map_or(&[], Vec::as_slice)
     }
 
     /// Identifies the node among those of every document conversion reads.

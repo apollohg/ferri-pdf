@@ -236,6 +236,10 @@ impl Document<'_> {
         for (id, node) in &other.links {
             self.links.insert(format!("{local}{id}"), map(*node));
         }
+        for (node, declared) in &other.declared {
+            self.declared
+                .insert(map(NodeId::from(*node)).get_usize(), declared.clone());
+        }
     }
 }
 

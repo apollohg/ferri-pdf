@@ -29,13 +29,12 @@ pub(crate) fn wrap(
 ) -> Option<Text> {
     let mut paragraphs = Vec::new();
     for (index, chunk) in text.chunks.iter().enumerate() {
-        let lines = match chunk.text_flow {
+        paragraphs.push(match chunk.text_flow {
             TextFlow::Linear => {
                 Paragraph::of(text, chunk, index == 0, fonts, strut, resolver, fontdb)?
             }
             TextFlow::Path(_) => Paragraph::unbroken(chunk),
-        };
-        paragraphs.push(lines);
+        });
     }
     let width = match wrapping.width {
         WrapWidth::Length(width) => width,
@@ -96,8 +95,7 @@ struct Paragraph<'a> {
     opportunities: crate::text::BreakOpportunities,
     /// Each cluster's source start and advance, in source order.
     advances: Vec<(usize, f32)>,
-    /// The text element's `text-indent` resolved against the area's width at layout time, and
-    /// whether it applies to the paragraph's first line.
+    /// The text element's `text-indent`, where it applies to the paragraph's first line.
     indent: Option<crate::style::TextIndent>,
 }
 

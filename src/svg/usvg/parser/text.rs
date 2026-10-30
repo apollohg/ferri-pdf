@@ -572,11 +572,79 @@ fn parent_alignment(
 
 /// The computed style the document gives `node`, for content it styles.
 fn own_text_style(node: SvgNode, state: &converter::State) -> Option<Arc<crate::style::Style>> {
-    node.attribute::<&str>(AId::TextStyle)
-        .and_then(|index| index.parse::<usize>().ok())
-        .and_then(|index| state.opt.styling.text_styles.get(index))
-        .cloned()
+    if let Some(index) = node.attribute::<&str>(AId::TextStyle) {
+        return index
+            .parse::<usize>()
+            .ok()
+            .and_then(|index| state.opt.styling.text_styles.get(index))
+            .cloned();
+    }
+    // A standalone document's own cascade styles every element of it.
+    (state.opt.styling.text_styles.is_empty() && node.is_element())
+        .then(|| standalone_style(node, state))
 }
+
+/// The computed style of an element of a standalone document (SVG 2 §6.4): its parent's
+/// inherited values with the presentation attributes and declarations that won its cascade,
+/// with the language of `lang` and the SVG 1.1 §10.10 `kerning: 0` that disables kerning.
+/// Values the document's text cannot take on SVG content fail the conversion.
+fn standalone_style(node: SvgNode, state: &converter::State) -> Arc<crate::style::Style> {
+    let key = node.key();
+    if let Some(style) = state.standalone_styles.borrow().get(&key) {
+        return style.clone();
+    }
+    let parent = node
+        .parent_element()
+        .map_or_else(Arc::default, |parent| standalone_style(parent, state));
+    let tag = node.tag_name().map_or("", |tag| tag.to_str());
+    let attributes: Vec<(&str, &str)> = node
+        .attributes()
+        .iter()
+        .map(|attribute| (attribute.name.to_str(), attribute.value.as_str()))
+        .collect();
+    let size = super::units::resolve_font_size(node, state) * crate::style::POINTS_PER_PIXEL;
+    let computed = super::units::with_relative(node, state, |relative| {
+        crate::style::svg_cascade::computed_style(
+            tag,
+            &parent,
+            &attributes,
+            node.declared(),
+            size,
+            relative,
+        )
+    })
+    .and_then(|mut style| {
+        if let Some(language) = node.attribute::<&str>(AId::Lang) {
+            language.clone_into(&mut style.language);
+        }
+        if node.resolve_length(AId::Kerning, state, -1.0) == 0.0 {
+            style.font_features.kerning = crate::style::FontKerning::None;
+        }
+        crate::style::svg_values::InitialOnly::new()
+            .check(&style, TEXT_CONTENT.contains(&node.tag_name()))?;
+        Ok(style)
+    });
+    let style = Arc::new(computed.unwrap_or_else(|error| {
+        state
+            .length_error
+            .borrow_mut()
+            .get_or_insert_with(|| Arc::new(error));
+        (*parent).clone()
+    }));
+    state
+        .standalone_styles
+        .borrow_mut()
+        .insert(key, style.clone());
+    style
+}
+
+/// SVG 2 §10: the text content elements, with `a`, which text content lays out as a `tspan`.
+const TEXT_CONTENT: [Option<EId>; 4] = [
+    Some(EId::Text),
+    Some(EId::Tspan),
+    Some(EId::TextPath),
+    Some(EId::A),
+];
 
 /// The baseline of `node`'s box that aligns with the same baseline of its parent, and how far
 /// below the alignment point the parent puts it. The `vertical-align` longhand keeps its CSS
@@ -720,34 +788,12 @@ fn document_baseline_shift(
     }
 }
 
-/// The computed style of the text in `node`: the document's, for content the document styles,
-/// else the initial values with those the `font-variant`, `font-kerning`, `kerning` and `lang`
-/// attributes give.
+/// The computed style of the text in `node`: the embedding document's, for content it styles,
+/// else the standalone document's own.
 fn text_style(node: SvgNode, state: &converter::State) -> Arc<crate::style::Style> {
-    if let Some(style) = node
-        .ancestors()
-        .find_map(|node| own_text_style(node, state))
-    {
-        return style;
-    }
-    let mut style = crate::style::Style::default();
-    style.font_variant_caps = node
-        .find_attribute::<&str>(AId::FontVariant)
-        .into_iter()
-        .flat_map(str::split_ascii_whitespace)
-        .find_map(crate::style::FontVariantCaps::from_name)
-        .unwrap_or_default();
     node.ancestors()
-        .find_map(|node| node.attribute::<&str>(AId::Lang))
+        .find_map(|node| own_text_style(node, state))
         .unwrap_or_default()
-        .clone_into(&mut style.language);
-    // `kerning: 0` (SVG 1.1 §10.10) and `font-kerning: none` disable kerning.
-    if node.resolve_length(AId::Kerning, state, -1.0) == 0.0
-        || node.find_attribute::<&str>(AId::FontKerning) == Some("none")
-    {
-        style.font_features.kerning = crate::style::FontKerning::None;
-    }
-    Arc::new(style)
 }
 
 fn resolve_text_flow(node: SvgNode, state: &converter::State) -> Option<TextFlow> {

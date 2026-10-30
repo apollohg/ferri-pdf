@@ -59,12 +59,6 @@ impl FontVariantCaps {
             .find(|caps| Some(caps.keyword()) == value.keyword())
             .ok_or_else(|| unsupported(value))
     }
-    /// The value a keyword names, as SVG presentation attributes spell it.
-    pub(crate) fn from_name(name: &str) -> Option<Self> {
-        Self::ALL
-            .into_iter()
-            .find(|caps| caps.keyword().name() == name)
-    }
 }
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, serde::Serialize)]

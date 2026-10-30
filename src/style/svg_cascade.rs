@@ -231,6 +231,71 @@ impl Variables {
     }
 }
 
+/// SVG 2 §6.6: attributes of these properties are presentation attributes only on some
+/// elements, which `presentation_property` names.
+const ELEMENT_GEOMETRY: [Property; 11] = [
+    Property::Cx,
+    Property::Cy,
+    Property::R,
+    Property::Rx,
+    Property::Ry,
+    Property::D,
+    Property::X,
+    Property::Y,
+    Property::Width,
+    Property::Height,
+    Property::Transform,
+];
+/// Flow-relative properties map to physical ones by the writing mode and direction.
+const FLOW: [Property; 2] = [Property::WritingMode, Property::Direction];
+
+/// The computed style of an element of a standalone SVG document `tag`, whose parent's is
+/// `parent`, as the document computes its own (SVG 2 §6.4): its own attributes as
+/// presentation attributes, overridden by the longhand `declarations` that won its cascade.
+/// Its font size is `size` points, as the SVG renderer resolves it, and `relative` measures
+/// its lengths.
+pub(crate) fn computed_style(
+    tag: &str,
+    parent: &crate::style::Style,
+    attributes: &[(&str, &str)],
+    declarations: &[(&str, String)],
+    size: f32,
+    relative: &Relative<'_>,
+) -> Result<crate::style::Style, StyleError> {
+    use crate::style::logical;
+    let mut style = crate::style::Style::default();
+    crate::style::properties::inherit(&mut style, parent);
+    style.size = size;
+    let mut longhands = Vec::new();
+    for &(name, value) in attributes {
+        let Some(property) = Property::from_name(name).filter(|property| {
+            !ELEMENT_GEOMETRY.contains(property)
+                || crate::style::svg_values::presentation_property(tag, name).is_some()
+        }) else {
+            continue;
+        };
+        longhands.extend(declaration::expand_presentation(property, value)?.unwrap_or_default());
+    }
+    for (name, value) in declarations {
+        if let Some(property) = Property::from_name(name) {
+            longhands.extend(declaration::expand(property, value)?.unwrap_or_default());
+        }
+    }
+    longhands.sort_by_key(|(property, _)| !FLOW.contains(property));
+    for (property, value) in &longhands {
+        if *property == Property::FontSize {
+            continue;
+        }
+        let property = if logical::is_flow_relative(*property) {
+            logical::physical(*property, logical::Flow::of(&style))
+        } else {
+            *property
+        };
+        crate::style::properties::apply(property, value, &mut style, parent, relative)?;
+    }
+    Ok(style)
+}
+
 pub(crate) fn expand(name: &str, source: &str) -> Result<Vec<(&'static str, String)>, StyleError> {
     use declaration::Specified;
     let Some(property) = Property::from_name(name) else {

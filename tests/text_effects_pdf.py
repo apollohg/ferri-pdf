@@ -234,6 +234,45 @@ class TextEffectsPdf(unittest.TestCase):
                                        f"Gaussian of deviation {sigma}pt gives {expected:.3f}")
             self.assertEqual(red, 255, "the shadow is red over white")
 
+    def svg_document(self, style, text, sheet):
+        """`text` as the text of an SVG document whose user units are CSS pixels, styled by
+        `style` in the document's style sheet when `sheet`, else in its `style` attribute."""
+        rule = f"font:{SIZE_PT}pt 'Liberation Serif';{style}"
+        return (f"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"300pt\" height=\"200pt\" "
+                f"viewBox=\"0 0 {300 / PT_PER_CSS_PX} {200 / PT_PER_CSS_PX}\">"
+                + (f"<style>text{{{rule}}}</style>" if sheet else "")
+                + f"<text x=\"{LEFT_PT / PT_PER_CSS_PX}\" y=\"{self.baseline_pt() / PT_PER_CSS_PX}\""
+                + ("" if sheet else f" style=\"{rule}\"") + f">{text}</text></svg>")
+
+    def render_page(self, body):
+        source, target = self.output / "input.html", self.output / "output.pdf"
+        source.write_text(f"<!doctype html><style>{PAGE}svg,img{{position:absolute;left:0;"
+                          f"top:0}}</style>{body}")
+        rendered = subprocess.run([str(RENDERER), str(source), str(target)],
+                                  capture_output=True, text=True, timeout=60)
+        self.assertEqual(rendered.returncode, 0, rendered.stderr)
+        return target
+
+    def test_standalone_svg_text_takes_its_own_style_sheets_text_properties(self):
+        """SVG 2 §6.4: an SVG image's own style sheet styles its text as the embedding
+        document's cascade styles inline SVG text."""
+        red = lambda p: p[0] > 200 and p[1] < 80 and p[2] < 80
+        for style in ("text-decoration:underline wavy red 3pt",
+                      "text-emphasis:filled dot red",
+                      "text-shadow:6pt 4pt red;fill:black",
+                      "text-transform:uppercase;fill:red",
+                      "letter-spacing:4pt;font-variant-caps:small-caps;fill:red"):
+            with self.subTest(style=style):
+                inline = self.render_page(self.svg_document(style, "Hx", sheet=False))
+                expected = self.ink_box(self.raster(inline), red)
+                image = self.output / "image.svg"
+                image.write_text(self.svg_document(style, "Hx", sheet=True))
+                standalone = self.render_page(
+                    f"<img src=\"{image.as_uri()}\" style=\"width:300pt;height:200pt\">")
+                actual = self.ink_box(self.raster(standalone), red)
+                self.assert_box(actual, [edge / PX_PER_PT for edge in expected],
+                                f"the image's {style} as inline SVG text takes it")
+
     def test_shadows_cover_decorations_over_the_shadowed_text(self):
         target = self.render("color:transparent;text-decoration:underline 4pt black;"
                              "text-decoration-color:transparent;text-shadow:0 10pt red", "HH")

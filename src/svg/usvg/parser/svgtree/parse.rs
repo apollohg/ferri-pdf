@@ -73,6 +73,7 @@ fn parse<'input>(
     let mut doc = Document {
         nodes: Vec::new(),
         variables: HashMap::new(),
+        declared: HashMap::new(),
         style_error: None,
         attrs: Vec::new(),
         links: HashMap::new(),
@@ -521,6 +522,11 @@ pub(crate) fn parse_svg_element<'input>(
             }
         };
 
+    let dimension = |aid: AId, name: &str| {
+        matches!(aid, AId::Width | AId::Height)
+            && crate::style::svg_values::presentation_property(tag_name.to_str(), name).is_some()
+    };
+    let mut declared: HashMap<&'static str, (String, bool)> = HashMap::new();
     let mut write_declaration = |declaration: &Declaration,
                                  override_presentation: bool|
      -> Result<(), crate::style::StyleError> {
@@ -643,20 +649,25 @@ pub(crate) fn parse_svg_element<'input>(
                     declaration.value
                 );
             }
-        } else if let Some(aid) = AId::from_str(&declaration.name) {
-            let dimension = matches!(aid, AId::Width | AId::Height)
-                && crate::style::svg_values::presentation_property(
-                    tag_name.to_str(),
-                    &declaration.name,
-                )
-                .is_some();
-            if aid.is_presentation() || dimension {
-                if (dimension || declaration.name.starts_with("offset-"))
-                    && crate::style::svg_cascade::expand(&declaration.name, val)?.is_empty()
+        } else if let Some(aid) = AId::from_str(&declaration.name)
+            .filter(|&aid| aid.is_presentation() || dimension(aid, &declaration.name))
+        {
+            if (dimension(aid, &declaration.name) || declaration.name.starts_with("offset-"))
+                && crate::style::svg_cascade::expand(&declaration.name, val)?.is_empty()
+            {
+                return Ok(());
+            }
+            insert_attribute(aid, val, imp, override_presentation);
+        } else {
+            // Other properties reach the text's computed style; an important declaration
+            // keeps its place against later normal ones.
+            for (longhand, value) in crate::style::svg_cascade::expand(&declaration.name, val)? {
+                if declared
+                    .get(longhand)
+                    .is_none_or(|(_, important)| imp || !important)
                 {
-                    return Ok(());
+                    declared.insert(longhand, (value, imp));
                 }
-                insert_attribute(aid, val, imp, override_presentation);
             }
         }
         Ok(())
@@ -684,6 +695,15 @@ pub(crate) fn parse_svg_element<'input>(
     );
 
     doc.variables.insert(node_id.get_usize(), variables);
+    if !declared.is_empty() {
+        doc.declared.insert(
+            node_id.get_usize(),
+            declared
+                .into_iter()
+                .map(|(property, (value, _))| (property, value))
+                .collect(),
+        );
+    }
     Ok(node_id)
 }
 

@@ -79,8 +79,11 @@ clipped nested viewports, which SVG 2 §3.4.1 makes stacking contexts, are isola
 in them blends or composites in linear light.
 
 Text content elements the document styles name their computed style, in the options'
-`styling`, through `ferri-pdf-text-style`; other text takes the initial values with the
-`font-variant`, `font-kerning`, `kerning` and `lang` attributes. Text shapes with that style as
+`styling`, through `ferri-pdf-text-style`. A standalone document's elements compute theirs as
+the document computes its own, from their presentation attributes and the declarations of
+properties without attributes that won their own cascade, which the tree keeps per element,
+with `lang` and the SVG 1.1 `kerning` attribute; a value SVG content cannot take fails the
+conversion. Text shapes with that style as
 the document's text does: the CSS Fonts 4 §6–§7 feature settings in precedence, with each face's
 `@font-face` features and `@font-feature-values` alternates, capitals and positions native or
 synthesized, the language system of `font-language-override` or the language, and the used size

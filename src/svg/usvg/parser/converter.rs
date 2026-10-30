@@ -31,6 +31,9 @@ pub(super) const LINEAR_RGB: &str = "linearRGB";
 #[derive(Clone)]
 pub(super) struct State<'a> {
     pub(crate) length_error: std::rc::Rc<std::cell::RefCell<Option<Arc<crate::style::StyleError>>>>,
+    /// The computed styles of a standalone document's elements, as text computes them.
+    pub(crate) standalone_styles:
+        std::rc::Rc<std::cell::RefCell<HashMap<svgtree::NodeKey, Arc<crate::style::Style>>>>,
     pub(crate) parent_clip_path: Option<SvgNode<'a, 'a>>,
     pub(crate) parent_markers: Vec<SvgNode<'a, 'a>>,
     /// Stores the resolved fill and stroke of a use node
@@ -53,6 +56,7 @@ impl<'a> State<'a> {
     pub(super) fn new(opt: &'a Options<'a>, view_box: NonZeroRect) -> Self {
         Self {
             length_error: Default::default(),
+            standalone_styles: Default::default(),
             parent_clip_path: None,
             context_element: None,
             parent_markers: Vec::new(),
