@@ -354,7 +354,9 @@ class ZoomPdf(unittest.TestCase):
                     source = root / 'text.svg'
                     source.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="160" height="100">'
                         f'<style>@font-face{{font-family:Probe;src:url("{font.as_uri()}")}}</style>'
-                        '<text x="5" y="40" font-family="Probe" style="font-size:calc(5px + 5px);zoom:2">'
+                        # CSS Inline 3 §4.2.3: percentage shifts refer to the line height.
+                        '<text x="5" y="40" font-family="Probe" '
+                        'style="font-size:calc(5px + 5px);line-height:10px;zoom:2">'
                         f'<tspan baseline-shift="{shift}">AB</tspan></text></svg>')
                     actual = renderer.ink(root, 'img{display:block}', f'<img src="{source.as_uri()}">')
                     self.assertTrue(actual == expected,

@@ -602,11 +602,13 @@ fn standalone_style(node: SvgNode, state: &converter::State) -> Arc<crate::style
         .iter()
         .map(|attribute| (attribute.name.to_str(), attribute.value.as_str()))
         .collect();
-    let size = super::units::resolve_font_size(node, state) * crate::style::POINTS_PER_PIXEL;
+    // Values compute unzoomed, as their lengths measure, and are used at the effective zoom.
+    let zoom = node.effective_zoom();
+    let size = super::units::resolve_font_size(node, state) / zoom * crate::style::POINTS_PER_PIXEL;
     let computed = super::units::with_relative(node, state, |relative| {
         crate::style::svg_cascade::computed_style(
             tag,
-            &parent,
+            parent.canonical(),
             &attributes,
             node.declared(),
             size,
@@ -614,6 +616,7 @@ fn standalone_style(node: SvgNode, state: &converter::State) -> Arc<crate::style
         )
     })
     .and_then(|mut style| {
+        style.effective_zoom = zoom;
         if let Some(language) = node.attribute::<&str>(AId::Lang) {
             language.clone_into(&mut style.language);
         }
@@ -622,7 +625,7 @@ fn standalone_style(node: SvgNode, state: &converter::State) -> Arc<crate::style
         }
         crate::style::svg_values::InitialOnly::new()
             .check(&style, TEXT_CONTENT.contains(&node.tag_name()))?;
-        Ok(style)
+        Ok(style.used())
     });
     let style = Arc::new(computed.unwrap_or_else(|error| {
         state
