@@ -441,3 +441,51 @@ fn footnote_bodies_contain_their_floats_as_formatting_context_roots() {
         PAGE_AREA_BOTTOM_PT,
     );
 }
+
+#[test]
+fn cloned_footnote_bodies_wrap_each_part_in_their_border_and_padding() {
+    // CSS Fragmentation 3 §5.4: a cloned body split across footnote areas repeats its 3pt
+    // border and 5pt padding around each part; a sliced one is cut at the break. Eight 10pt
+    // lines do not fit the 100pt page area below the 40pt spacer, so the body breaks.
+    const EDGE_PT: f32 = 8.0;
+    const LINE_PT: f32 = 10.0;
+    const PAGE_AREA_BOTTOM_PT: f32 = 110.0;
+    let body = "<div style='height:40pt'></div><p>Call<span class=fn>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</span></p>";
+    let boxes = |decoration: &str| {
+        let trace = render(
+            &format!(
+                ".fn{{border:3pt solid;padding:5pt;background:rgb(0,255,0);box-decoration-break:{decoration}}}"
+            ),
+            body,
+        )
+        .unwrap()
+        .layout
+        .unwrap();
+        common::page_boxes(&trace, [0, 255, 0])
+    };
+    let cloned = boxes("clone");
+    assert_eq!(cloned.len(), 2, "one box per part: {cloned:?}");
+    let mut lines = 0.0;
+    for (page, rect) in cloned.iter().enumerate() {
+        let content = rect.height - 2.0 * EDGE_PT;
+        assert!(
+            content > 0.0 && (content / LINE_PT).fract() == 0.0,
+            "part {page} wraps whole lines in both edges: {rect:?}"
+        );
+        lines += content / LINE_PT;
+        common::assert_labelled_pt(
+            &format!("part {page} bottom"),
+            rect.y + rect.height,
+            PAGE_AREA_BOTTOM_PT,
+        );
+    }
+    common::assert_labelled_pt("lines across the parts", lines, 8.0);
+    let sliced = boxes("slice");
+    let whole = 2.0 * EDGE_PT + 8.0 * LINE_PT;
+    assert!(
+        sliced
+            .iter()
+            .all(|rect| (rect.height - whole).abs() < 0.001),
+        "a sliced body keeps its whole box: {sliced:?}"
+    );
+}

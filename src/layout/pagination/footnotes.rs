@@ -22,6 +22,16 @@ pub(super) struct FootnoteLayout {
     /// it starts on to the bottom of the line the next one starts on when they share it, or
     /// else to that line's top.
     members: Vec<[f32; 2]>,
+    cloned: Option<ClonedBody>,
+}
+
+/// A footnote body that clones its decoration at breaks (CSS Fragmentation 3 §5.4): its
+/// border box in the layout, and its block-start and block-end border and padding, which
+/// wrap each of its parts.
+#[derive(Clone, Copy)]
+struct ClonedBody {
+    rect: Rect,
+    edges: [f32; 2],
 }
 
 /// The slice `[top, bottom)` of a footnote body that one page's footnote area holds.
@@ -33,10 +43,12 @@ pub(super) struct FootnotePart {
     width: f32,
     /// A whole `compact` body, which shares a line with the next when both fit.
     inline: bool,
+    /// The cloned block-start and block-end edges of its body that wrap this part.
+    repeated: [f32; 2],
 }
 impl FootnotePart {
     fn height(self) -> f32 {
-        self.bottom - self.top
+        self.bottom - self.top + self.repeated[0] + self.repeated[1]
     }
 }
 
@@ -302,6 +314,23 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             measured.before.value() + measured.height + measured.after.value()
         };
         let measured_after = measured.after.value();
+        let cloned = (!inline && body.style().clone_decoration && !measured.through)
+            .then_some(measured.paint.as_ref())
+            .flatten()
+            .map(|paint| {
+                let geometry = &measured.geometry;
+                ClonedBody {
+                    rect: Rect {
+                        y: measured.before.value(),
+                        height: measured.height,
+                        ..paint.rect
+                    },
+                    edges: [
+                        geometry.padding[0] + geometry.border[0],
+                        geometry.padding[2] + geometry.border[2],
+                    ],
+                }
+            });
         let flow = Paginator::standalone(
             &mut *self.measurer,
             measured,
@@ -379,6 +408,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             compact,
             breaks,
             members,
+            cloned,
         });
         self.footnotes
             .layouts
@@ -419,6 +449,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 bottom: layout.height,
                 width: layout.width,
                 inline: layout.compact,
+                repeated: [0.0; 2],
             }));
         };
         let end = layout.members[position][1];
@@ -428,6 +459,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             bottom: end,
             width: layout.width,
             inline: false,
+            repeated: [0.0; 2],
         }))
     }
 
@@ -747,7 +779,10 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             }
             let layout = self.footnote_layout(waiting.body, area.width)?;
             let used = rows_height(&self.footnotes.pages[page], area.width);
-            let end = waiting.top + (limit - used.unwrap_or(0.0)).max(0.0);
+            let edges = layout.cloned.map_or([0.0; 2], |cloned| cloned.edges);
+            // A cloned body's slice ends with its block-end edges as well.
+            let end = waiting.top
+                + (limit - used.unwrap_or(0.0) - waiting.repeated[0] - edges[1]).max(0.0);
             let fits = layout
                 .breaks
                 .iter()
@@ -773,6 +808,14 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             let slice = FootnotePart {
                 bottom,
                 inline: false,
+                repeated: [
+                    waiting.repeated[0],
+                    if bottom < layout.height {
+                        edges[1]
+                    } else {
+                        0.0
+                    },
+                ],
                 ..waiting
             };
             self.record_inline_pages(slice, page, area.width)?;
@@ -780,11 +823,13 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             if bottom >= waiting.bottom {
                 self.footnotes.carried.pop_front();
             } else {
-                self.footnotes
+                let rest = self
+                    .footnotes
                     .carried
                     .front_mut()
-                    .expect("the waiting footnote continues")
-                    .top = bottom;
+                    .expect("the waiting footnote continues");
+                rest.top = bottom;
+                rest.repeated[0] = edges[0];
                 break;
             }
         }
@@ -874,23 +919,43 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                         x: 0.0,
                         y: part.top,
                         width: layout.width,
-                        height: part.height(),
+                        height: part.bottom - part.top,
                     };
-                    let origin = [x + offset, y - part.top];
+                    let origin = [x + offset, y + part.repeated[0] - part.top];
                     let sliced = part.top > 0.0 || part.bottom < layout.height;
-                    // The part's slice of the body's items, placed in the area.
+                    let clip = DisplayItem::PushClip(Clip {
+                        rect: window,
+                        radii: crate::graphics::Radii::default(),
+                        outline: None,
+                        axes: [false, true],
+                        reference_box: None,
+                    });
+                    // The part's slice of the body's items, placed in the area; a cloned
+                    // body's box wraps the slice whole, outside its clip.
                     let frame = |mut items: Vec<DisplayItem>, lines: Vec<TextLine>| {
-                        if sliced {
-                            items.insert(
-                                0,
-                                DisplayItem::PushClip(Clip {
-                                    rect: window,
-                                    radii: crate::graphics::Radii::default(),
-                                    outline: None,
-                                    axes: [false, true],
-                                    reference_box: None,
-                                }),
-                            );
+                        let cloned = layout.cloned.filter(|_| sliced).and_then(|cloned| {
+                            cloned_box(&items, cloned.rect).map(|index| (index, cloned))
+                        });
+                        if let Some((index, cloned)) = cloned {
+                            let DisplayItem::Box(paint) = &mut items[index] else {
+                                unreachable!("the cloned body's box is a box paint");
+                            };
+                            let top = cloned.rect.y.max(part.top) - part.repeated[0];
+                            let bottom = (cloned.rect.y + cloned.rect.height).min(part.bottom)
+                                + part.repeated[1];
+                            paint.rect = Rect {
+                                y: top,
+                                height: bottom - top,
+                                ..paint.rect
+                            };
+                            paint.background_box = None;
+                            paint.first_fragment = true;
+                            paint.last_fragment = true;
+                            let end = content_end(&items, index);
+                            items.insert(end, DisplayItem::Pop);
+                            items.insert(index + 1, clip.clone());
+                        } else if sliced {
+                            items.insert(0, clip.clone());
                             items.push(DisplayItem::Pop);
                         }
                         DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
@@ -974,6 +1039,32 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         }
         Ok((navigation, page_text))
     }
+}
+
+/// The index in a footnote body's display list of its own box, whose border box is `rect`.
+fn cloned_box(items: &[DisplayItem], rect: Rect) -> Option<usize> {
+    items
+        .iter()
+        .position(|item| matches!(item, DisplayItem::Box(paint) if paint.rect == rect))
+}
+
+/// Where the content after the box at `index` ends: before the pop closing the first group
+/// still open at the box, or at the end.
+fn content_end(items: &[DisplayItem], index: usize) -> usize {
+    let depth = |item: &DisplayItem| match item {
+        DisplayItem::Pop => -1,
+        item if item.is_push() => 1,
+        _ => 0,
+    };
+    let open: i32 = items[..index].iter().map(depth).sum();
+    let mut level = open;
+    for (offset, item) in items[index + 1..].iter().enumerate() {
+        level += depth(item);
+        if level < open {
+            return index + 1 + offset;
+        }
+    }
+    items.len()
 }
 
 /// The navigation of the footnote bodies by page, and the text of each page's bodies.

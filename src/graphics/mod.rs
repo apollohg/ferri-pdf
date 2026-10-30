@@ -61,6 +61,22 @@ pub enum DisplayItem {
     Backdrop(BackdropPaint),
     Pop,
 }
+impl DisplayItem {
+    /// Whether the item opens a group that a later `Pop` closes.
+    pub(crate) fn is_push(&self) -> bool {
+        matches!(
+            self,
+            Self::PushClip(_)
+                | Self::PushTransform(_)
+                | Self::PushProjection(_)
+                | Self::PushOpacity(_)
+                | Self::PushBlend(_)
+                | Self::PushFilter(_)
+                | Self::PushMask(_)
+                | Self::PushBackdropRoot
+        )
+    }
+}
 
 /// The planes of a 3D rendering context, in painting order.
 #[derive(Clone, Debug, Serialize)]
