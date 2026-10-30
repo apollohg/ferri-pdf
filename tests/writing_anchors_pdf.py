@@ -62,7 +62,10 @@ class WritingAnchorsPdf(unittest.TestCase):
                 self.assertIsNotNone(anchor, "the reference anchor must paint")
                 left, _, right, bottom = anchor
                 centre = (left + right) // 2
-                self.assertEqual(colour_bounds(image, RED), (centre - 10, bottom, centre + 10, bottom + 10),
+                # A target overflowing the page area shifts back into it (CSS Box Alignment 3
+                # §4.4.1.2), as when the anchor ends at the page area's bottom edge.
+                top = min(bottom, writing.PAGE_PT - writing.MARGIN_PT - 10)
+                self.assertEqual(colour_bounds(image, RED), (centre - 10, top, centre + 10, top + 10),
                                  f"{mode}: physical bottom area must centre the target below {anchor}")
 
 
