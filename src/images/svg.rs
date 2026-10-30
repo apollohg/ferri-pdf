@@ -38,14 +38,11 @@ pub struct SvgImage {
     ratio: Option<f32>,
     initial_size: [f32; 2],
     initial_tree: Box<Tree>,
-    /// The CSS mask layers that the document attaches to SVG content it styles.
-    layer_masks: LayerMaskTable,
+    /// What the document attaches to SVG content it styles.
+    styling: Box<crate::svg::DocumentStyling>,
     /// The document styles the content: an `svg` element in it, not an image it references.
     styled: bool,
 }
-
-/// CSS mask layers by the index their `mask` values name.
-pub(crate) type LayerMaskTable = Arc<[Arc<crate::graphics::LoadedMasks>]>;
 
 impl SvgImage {
     pub(crate) fn parse(
@@ -62,7 +59,7 @@ impl SvgImage {
                 xml,
                 base: resource.base,
             }),
-            Arc::new([]),
+            crate::svg::DocumentStyling::default(),
             false,
             resolver,
             depth,
@@ -71,11 +68,11 @@ impl SvgImage {
         )
     }
 
-    /// `layer_masks` are the CSS mask layers of SVG content the document styles, which
-    /// `styled` tells it is.
+    /// `styling` is what the document attaches to SVG content it styles, which `styled`
+    /// tells it is.
     pub(crate) fn parse_source(
         source: Arc<SvgSource>,
-        layer_masks: LayerMaskTable,
+        styling: crate::svg::DocumentStyling,
         styled: bool,
         resolver: &dyn ResourceResolver,
         depth: usize,
@@ -91,7 +88,7 @@ impl SvgImage {
         }
         let mut parsed = ParsedSvg::parse(&document, None).map_err(ImageError::Svg)?;
         let mut options = options(crate::images::DEFAULT_OBJECT_SIZE)?;
-        options.layer_masks = layer_masks.clone();
+        options.styling = styling.clone();
         let fonts = cache.fonts.in_namespace(namespace);
         let provider = fonts.provider(Some(resolver));
         options.fontdb = fonts.database();
@@ -193,7 +190,7 @@ impl SvgImage {
             ratio,
             initial_size,
             initial_tree: Box::new(initial_tree),
-            layer_masks,
+            styling: Box::new(styling),
             styled,
         })
     }
@@ -206,7 +203,7 @@ impl SvgImage {
 
     /// Whether its SVG content has CSS mask layers, which paint through the display list.
     pub(crate) fn has_layer_masks(&self) -> bool {
-        !self.layer_masks.is_empty()
+        !self.styling.layer_masks.is_empty()
     }
 
     pub(crate) fn source(&self) -> Arc<SvgSource> {
@@ -235,7 +232,7 @@ impl SvgImage {
         }
         let mut options = options(size)?;
         options.fontdb = self.initial_tree.fontdb().clone();
-        options.layer_masks = self.layer_masks.clone();
+        options.styling = (*self.styling).clone();
         let provider = self.fonts.provider(None);
         let result = Tree::from_str_with_resolvers(
             &self.source.xml,

@@ -132,7 +132,7 @@ pub(super) struct ShapingFont<'f, 'data> {
 
 /// How a run renders `font-variant-position` (§6.5).
 #[derive(Clone, Copy, Debug, PartialEq)]
-enum Position {
+pub(crate) enum Position {
     Normal,
     Native(FontFeature),
     /// Reduced glyphs shifted by the offset below the baseline, in points.
@@ -175,17 +175,26 @@ fn clusters(
     clusters
 }
 
-fn shaper_features(features: &[FontFeature]) -> Vec<Feature> {
+/// Whether `letter_spacing` tracks text of `size` so far apart that common ligatures do not
+/// apply (CSS Text 3 §8.2).
+pub(crate) fn tracked(letter_spacing: f32, size: f32) -> bool {
+    letter_spacing.abs() > size * MAX_LIGATURE_TRACKING_EM
+}
+
+pub(crate) fn shaper_features(features: &[FontFeature]) -> Vec<Feature> {
     features
         .iter()
         .map(|feature| Feature::new(Tag::from_bytes(&feature.tag), feature.value, ..))
         .collect()
 }
 
-/// Native variants apply only where the face has them for every character of the run other
-/// than spaces; otherwise the whole run is synthesized, if synthesis is allowed (§6.5, §2.8.4).
-fn position_form(
-    font: ShapingFont<'_, '_>,
+/// Native variants apply only where `face`, contributing `face_features`, has them for every
+/// character of the run other than spaces; otherwise the whole run is synthesized at the used
+/// size `size`, if synthesis is allowed (§6.5, §2.8.4).
+pub(crate) fn position_form(
+    face: &Face<'_>,
+    face_features: FaceFeatures<'_>,
+    size: f32,
     text: &str,
     rtl: bool,
     style: &Style,
@@ -200,16 +209,16 @@ fn position_form(
     }
     let face_features = FaceFeatures {
         caps: caps.features,
-        ..font.features
+        ..face_features
     };
     let plain = clusters(
-        font.face,
+        face,
         text,
         rtl,
         &shaper_features(&features::run_features(style, face_features, false)),
     );
     let variant = clusters(
-        font.face,
+        face,
         text,
         rtl,
         &shaper_features(&features::run_features(
@@ -235,7 +244,7 @@ fn position_form(
     if complete {
         return Position::Native(feature);
     }
-    let em = font.size;
+    let em = size;
     Position::Synthetic {
         scale: position_scale(em),
         offset: match position {
@@ -284,7 +293,15 @@ fn shape_variants(
         |tag| crate::fonts::has_feature(font.face, tag),
         style.font_synthesis.small_caps,
     );
-    let position = position_form(font, &paragraph[range.clone()], rtl, style, caps);
+    let position = position_form(
+        font.face,
+        font.features,
+        font.size,
+        &paragraph[range.clone()],
+        rtl,
+        style,
+        caps,
+    );
     if !caps.synthetic() {
         return shape_run(
             font, paragraph, range, rtl, style, caps, position, false, upright,
@@ -429,7 +446,7 @@ fn shape_run(
             position: position_feature,
             ..face_features
         },
-        style.letter_spacing.abs() > size * MAX_LIGATURE_TRACKING_EM,
+        tracked(style.letter_spacing, size),
     )));
     let shaped = rustybuzz::shape(face, &shaper, buffer);
     let boundaries = crate::fonts::cluster_boundaries(

@@ -8,7 +8,7 @@ use std::sync::Arc;
 use fontdb::{Database, ID};
 use kurbo::{ParamCurve, ParamCurveArclen, ParamCurveDeriv};
 use rustybuzz::ttf_parser;
-use rustybuzz::ttf_parser::{GlyphId, Tag};
+use rustybuzz::ttf_parser::GlyphId;
 
 use strict_num::NonZeroPositiveF32;
 use tiny_skia_path::{NonZeroRect, Transform};
@@ -996,14 +996,15 @@ fn process_chunk(
             &directional,
             chunk.rtl,
             orientations,
-            &span.font,
             span.start..span.end,
             font,
-            span.caps,
-            &span.language,
-            span.apply_kerning,
-            span.font_size.get(),
-            span.font_optical_sizing,
+            SpanShaping {
+                request: &span.font,
+                style: &span.style,
+                font_size: span.font_size.get(),
+                optical_sizing: span.font_optical_sizing,
+                tracked: crate::text::shaping::tracked(span.letter_spacing, span.font_size.get()),
+            },
             resolver,
             fontdb,
         );
@@ -1369,41 +1370,44 @@ impl DatabaseExt for Database {
     }
 }
 
+/// A span's text as it shapes with each face (SVG 2 §11.10, CSS Fonts 4 §6–§7).
+#[derive(Clone, Copy)]
+pub(crate) struct SpanShaping<'a> {
+    pub(crate) request: &'a Font,
+    pub(crate) style: &'a crate::style::Style,
+    pub(crate) font_size: f32,
+    pub(crate) optical_sizing: crate::svg::usvg::FontOpticalSizing,
+    /// Letter spacing tracks the text too far apart for common ligatures (CSS Text 3 §8.2).
+    pub(crate) tracked: bool,
+}
+
 /// Text shaping with font fallback.
 pub(crate) fn shape_text(
     text: &str,
     directional: &str,
     rtl: bool,
     orientations: OrientationSpans<'_>,
-    request: &Font,
     active: std::ops::Range<usize>,
     font: Arc<ResolvedFont>,
-    caps: crate::style::FontVariantCaps,
-    language: &str,
-    apply_kerning: bool,
-    font_size: f32,
-    font_optical_sizing: crate::svg::usvg::FontOpticalSizing,
+    span: SpanShaping<'_>,
     resolver: &dyn FontProvider,
     fontdb: &mut Arc<Database>,
 ) -> Vec<Glyph> {
-    let variations = resolver.variations(request, font.id);
-    let mut glyphs = shape_text_with_font(
-        text,
-        directional,
-        0..text.len(),
-        rtl,
-        orientations,
-        font.clone(),
-        caps,
-        language,
-        apply_kerning,
-        &variations,
-        font_size,
-        font_optical_sizing,
-        fontdb,
-    )
-    .unwrap_or_default();
-
+    let shape = |fontdb: &Database, font: &Arc<ResolvedFont>, source: std::ops::Range<usize>| {
+        shape_text_with_font(
+            text,
+            directional,
+            source,
+            rtl,
+            orientations,
+            font.clone(),
+            span,
+            &resolver.face_settings(span.request, font.id, span.style),
+            &resolver.variations(span.request, font.id),
+            fontdb,
+        )
+    };
+    let mut glyphs = shape(fontdb, &font, 0..text.len()).unwrap_or_default();
     struct FallbackRun {
         start: usize,
         end: usize,
@@ -1437,7 +1441,8 @@ pub(crate) fn shape_text(
         let mut used_fonts = vec![font.id];
         let mut replacement = None;
         loop {
-            let Some(id) = resolver.select_fallback(request, character, &used_fonts, fontdb) else {
+            let Some(id) = resolver.select_fallback(span.request, character, &used_fonts, fontdb)
+            else {
                 break;
             };
             if used_fonts.contains(&id) {
@@ -1448,7 +1453,6 @@ pub(crate) fn shape_text(
                 continue;
             };
             let fallback = Arc::new(fallback);
-            let fallback_variations = resolver.variations(request, id);
             let mut group_end = end;
             let mut group_source = source.value()..source_end;
             while group_end < glyphs.len() {
@@ -1476,28 +1480,15 @@ pub(crate) fn shape_text(
                 {
                     break;
                 }
-                if resolver.select_fallback(request, character, &[font.id], fontdb) != Some(id) {
+                if resolver.select_fallback(span.request, character, &[font.id], fontdb) != Some(id)
+                {
                     break;
                 }
                 group_source.start = group_source.start.min(next_source.value());
                 group_source.end = group_source.end.max(next_source_end);
                 group_end = next_end;
             }
-            let candidate = shape_text_with_font(
-                text,
-                directional,
-                group_source.clone(),
-                rtl,
-                orientations,
-                fallback.clone(),
-                caps,
-                language,
-                apply_kerning,
-                &fallback_variations,
-                font_size,
-                font_optical_sizing,
-                fontdb,
-            );
+            let candidate = shape(fontdb, &fallback, group_source.clone());
             if let Some(candidate) =
                 candidate.filter(|glyphs| glyphs.iter().all(|glyph| !glyph.is_missing()))
             {
@@ -1505,21 +1496,7 @@ pub(crate) fn shape_text(
                 break;
             }
             if group_end != end {
-                let candidate = shape_text_with_font(
-                    text,
-                    directional,
-                    source.value()..source_end,
-                    rtl,
-                    orientations,
-                    fallback.clone(),
-                    caps,
-                    language,
-                    apply_kerning,
-                    &fallback_variations,
-                    font_size,
-                    font_optical_sizing,
-                    fontdb,
-                );
+                let candidate = shape(fontdb, &fallback, source.value()..source_end);
                 if let Some(candidate) =
                     candidate.filter(|glyphs| glyphs.iter().all(|glyph| !glyph.is_missing()))
                 {
@@ -1536,22 +1513,7 @@ pub(crate) fn shape_text(
                 && (run.source.end == source.start || source.end == run.source.start)
             {
                 let combined = run.source.start.min(source.start)..run.source.end.max(source.end);
-                let variations = resolver.variations(request, fallback.id);
-                let merged = shape_text_with_font(
-                    text,
-                    directional,
-                    combined.clone(),
-                    rtl,
-                    orientations,
-                    fallback.clone(),
-                    caps,
-                    language,
-                    apply_kerning,
-                    &variations,
-                    font_size,
-                    font_optical_sizing,
-                    fontdb,
-                );
+                let merged = shape(fontdb, &fallback, combined.clone());
                 if let Some(merged) =
                     merged.filter(|glyphs| glyphs.iter().all(|glyph| !glyph.is_missing()))
                 {
@@ -1601,24 +1563,38 @@ fn shape_text_with_font(
     rtl: bool,
     orientations: OrientationSpans<'_>,
     font: Arc<ResolvedFont>,
-    caps: crate::style::FontVariantCaps,
-    language: &str,
-    apply_kerning: bool,
+    span: SpanShaping<'_>,
+    settings: &crate::svg::usvg::FaceSettings,
     variations: &[crate::svg::usvg::FontVariation],
-    font_size: f32,
-    font_optical_sizing: crate::svg::usvg::FontOpticalSizing,
     fontdb: &Database,
 ) -> Option<Vec<Glyph>> {
+    use crate::text::{features, shaping};
+    let style = span.style;
     fontdb.with_face_data(font.id, |font_data, face_index| -> Option<Vec<Glyph>> {
         let mut rb_font = rustybuzz::Face::from_slice(font_data, face_index)?;
 
+        // CSS Fonts 5 §2.5: the used size gives the face the aspect value `font-size-adjust`
+        // specifies.
+        let size_scale = style.font_adjustments.size_adjust.map_or(1.0, |adjust| {
+            adjust.scale(&crate::fonts::FaceMetrics::of(&rb_font))
+        });
+        let used_size = span.font_size * size_scale;
         let final_variations =
-            super::font_variations(&rb_font, variations, font_size, font_optical_sizing);
+            super::font_variations(&rb_font, variations, used_size, span.optical_sizing);
 
         // Apply font variations for variable fonts
         if !final_variations.is_empty() {
             rb_font.set_variations(&final_variations);
         }
+        let language = crate::text::shaping_language(&rb_font, style);
+        let face_features = features::FaceFeatures {
+            descriptor: &settings.descriptor,
+            alternates: &settings.alternates,
+            ..features::FaceFeatures::default()
+        };
+        // §6.5's synthesis sizes are absolute; user units are CSS pixels.
+        let used_points = used_size * crate::style::POINTS_PER_PIXEL;
+        let units_per_em = f32::from(font.units_per_em.get());
 
         // SVG 2 §11.10.2.4: `direction` is the base direction of the text chunk's bidi paragraph.
         let base = if rtl {
@@ -1635,6 +1611,13 @@ fn shape_text_with_font(
         let (levels, runs) = bidi_info.visual_runs(paragraph, line);
         let vertical_forms = crate::fonts::has_feature(&rb_font, *b"vert")
             || crate::fonts::has_feature(&rb_font, *b"vrt2");
+        // CSS Fonts 4 §6.6: the face's own capitals, or capitals scaled from uppercase forms,
+        // as for the document's text.
+        let plan = features::caps_plan(
+            style.font_variant_caps,
+            |tag| crate::fonts::has_feature(&rb_font, tag),
+            style.font_synthesis.small_caps,
+        );
         for run in &runs {
             let run = run.start.max(source.start)..run.end.min(source.end);
             if run.start >= run.end {
@@ -1664,14 +1647,33 @@ fn shape_text_with_font(
             if levels[run.start].is_rtl() {
                 pieces.reverse();
             }
-            // CSS Fonts 4 §6.6: the face's own capitals, or capitals scaled from uppercase
-            // forms, as for the document's text.
-            let plan = crate::text::features::caps_plan(
-                caps,
-                |tag| crate::fonts::has_feature(&rb_font, tag),
-                true,
-            );
             for (run, vertical) in pieces {
+                // CSS Fonts 4 §6.5: the face's position variants, else reduced glyphs shifted
+                // from the baseline.
+                let (position_feature, position_scale, rise) = match shaping::position_form(
+                    &rb_font,
+                    face_features,
+                    used_points,
+                    &text[run.clone()],
+                    levels[run.start].is_rtl(),
+                    style,
+                    plan,
+                ) {
+                    shaping::Position::Normal => (None, 1.0, 0.0),
+                    shaping::Position::Native(feature) => (Some(feature), 1.0, 0.0),
+                    shaping::Position::Synthetic { scale, offset } => {
+                        (None, scale, -offset / used_points * used_size)
+                    }
+                };
+                let shaper_features = shaping::shaper_features(&features::run_features(
+                    style,
+                    features::FaceFeatures {
+                        caps: plan.features,
+                        position: position_feature,
+                        ..face_features
+                    },
+                    span.tracked,
+                ));
                 let mut caps_pieces = if plan.synthetic() {
                     plan.pieces(text, run)
                 } else {
@@ -1698,7 +1700,7 @@ fn shape_text_with_font(
                     let mut buffer = rustybuzz::UnicodeBuffer::new();
                     if small {
                         for (start, upper) in
-                            crate::text::features::uppercase_clusters(text, run.clone(), language)
+                            features::uppercase_clusters(text, run.clone(), &style.language)
                         {
                             for ch in upper.chars() {
                                 buffer.add(ch, start as u32);
@@ -1710,25 +1712,12 @@ fn shape_text_with_font(
                     buffer.set_pre_context(&text[..run.start]);
                     buffer.set_post_context(&text[run.end..]);
                     buffer.set_direction(hb_direction);
+                    if let Some(language) = &language {
+                        buffer.set_language(language.clone());
+                    }
                     buffer.guess_segment_properties();
 
-                    let mut features: Vec<_> = plan
-                        .features
-                        .iter()
-                        .map(|feature| {
-                            rustybuzz::Feature::new(
-                                Tag::from_bytes(&feature.tag),
-                                feature.value,
-                                ..,
-                            )
-                        })
-                        .collect();
-
-                    if !apply_kerning {
-                        features.push(rustybuzz::Feature::new(Tag::from_bytes(b"kern"), 0, ..));
-                    }
-
-                    let output = rustybuzz::shape(&rb_font, &features, buffer);
+                    let output = rustybuzz::shape(&rb_font, &shaper_features, buffer);
 
                     let positions = output.glyph_positions();
                     let infos = output.glyph_infos();
@@ -1736,6 +1725,19 @@ fn shape_text_with_font(
                         infos.iter().map(|glyph| glyph.cluster as usize),
                         sub_text.len(),
                     );
+                    let scale = size_scale
+                        * position_scale
+                        * if small {
+                            features::SMALL_CAPS_SCALE
+                        } else {
+                            1.0
+                        };
+                    // Synthesized positions shift horizontal glyphs only, as in the document.
+                    let rise = if vertical {
+                        0
+                    } else {
+                        (rise / (span.font_size * scale) * units_per_em).round() as i32
+                    };
 
                     for i in 0..output.len() {
                         let pos = positions[i];
@@ -1752,18 +1754,14 @@ fn shape_text_with_font(
                             text: sub_text[start..end].to_string(),
                             id: GlyphId(info.glyph_id as u16),
                             dx: pos.x_offset,
-                            dy: pos.y_offset,
+                            dy: pos.y_offset + rise,
                             width: if vertical {
                                 -pos.y_advance
                             } else {
                                 pos.x_advance
                             },
                             vertical,
-                            scale: if small {
-                                crate::text::features::SMALL_CAPS_SCALE
-                            } else {
-                                1.0
-                            },
+                            scale,
                             font: font.clone(),
                         });
                     }

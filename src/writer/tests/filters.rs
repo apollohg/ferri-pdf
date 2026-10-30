@@ -158,7 +158,7 @@ fn colour_functions_match_their_svg_filter_equivalents() {
         // The referencing rectangle is in CSS pixels; userSpaceOnUse units ignore it.
         let tree = crate::svg::reference_tree(
             &markup,
-            crate::images::LayerMaskTable::default(),
+            crate::svg::DocumentStyling::default(),
             "filter",
             "#f",
             Some(AREA),

@@ -514,30 +514,56 @@ fn svg_style_elements_are_left_to_the_document_cascade() {
 }
 
 #[test]
-fn text_carries_its_caps_and_inherited_language_to_the_renderer() {
-    let xml = xml(
-        "text{font-variant-caps:all-petite-caps}",
-        "<html lang=tr><svg><text id=t>i</text><text id=own lang=az>i</text></svg></html>",
+fn text_content_names_its_computed_style_and_authors_cannot_name_another() {
+    let svg = serialized(
+        "text{font-variant-caps:all-petite-caps;font-variant-position:super} \
+         tspan{font-feature-settings:'liga' 0}",
+        "<html lang=tr><svg><g id=g ferri-pdf-text-style=0><text id=t ferri-pdf-text-style=5>i\
+         <tspan id=own lang=az>i</tspan></text></g></svg></html>",
+    )
+    .expect("serialize text");
+    let index = |id: &str| -> usize {
+        element(&svg.xml, id)
+            .get(crate::svg::TEXT_STYLE_ATTRIBUTE)
+            .unwrap_or_else(|| panic!("#{id} names no text style in\n{}", svg.xml))
+            .parse()
+            .expect("a style index")
+    };
+    assert!(
+        !element(&svg.xml, "g").contains_key(crate::svg::TEXT_STYLE_ATTRIBUTE),
+        "only text content elements name a style; an author's attribute is dropped\n{}",
+        svg.xml
     );
-    let inherited = element(&xml, "t");
+    let text = &svg.styling.text_styles[index("t")];
+    let own = &svg.styling.text_styles[index("own")];
+    assert_eq!(
+        svg.styling.text_styles.len(),
+        2,
+        "one style per text content element; the author's index is replaced\n{}",
+        svg.xml
+    );
     assert_eq!(
         (
-            inherited.get("font-variant").map(String::as_str),
-            inherited.get("lang").map(String::as_str)
+            text.font_variant_caps,
+            text.font_features.position,
+            text.language.as_str()
         ),
-        (Some("all-petite-caps"), Some("tr")),
-        "CSS Fonts 4 §6.6 capitals are cased in the language text inherits from the document\n{xml}"
+        (
+            crate::style::FontVariantCaps::AllPetiteCaps,
+            crate::style::FontVariantPosition::Super,
+            "tr"
+        ),
+        "SVG 2 §11.10: text shapes with the values it computes, in the language it \
+         inherits from the document"
     );
-    let own = element(&xml, "own");
     assert_eq!(
-        own.get("lang").map(String::as_str),
-        Some("az"),
-        "an element's own lang attribute stays the only one\n{xml}"
-    );
-    assert_eq!(
-        xml.matches("lang=").count(),
-        2,
-        "one language attribute per text element\n{xml}"
+        (
+            own.font_variant_caps,
+            own.language.as_str(),
+            own.font_features.settings.len()
+        ),
+        (crate::style::FontVariantCaps::AllPetiteCaps, "az", 1),
+        "a tspan inherits the text's values and adds its own language and feature settings"
     );
 }
 
@@ -570,17 +596,17 @@ fn mask_layers_beyond_one_mask_element_name_the_layers_the_document_draws() {
         "each element names its own layers\n{xml}"
     );
     assert_eq!(
-        svg.layer_masks.len(),
+        svg.styling.layer_masks.len(),
         5,
         "the use element's clone of #two names layers of its own\n{xml}"
     );
     assert_eq!(
-        svg.layer_masks[0].sources,
+        svg.styling.layer_masks[0].sources,
         [Some("#a".into()), Some("#b".into())],
         "the table keeps the computed layers"
     );
     assert!(
-        svg.layer_masks[3].border.is_drawn(),
+        svg.styling.layer_masks[3].border.is_drawn(),
         "the table keeps the mask border"
     );
 }

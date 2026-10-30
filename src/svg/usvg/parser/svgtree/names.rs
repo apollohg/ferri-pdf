@@ -371,6 +371,8 @@ pub(crate) enum AId {
     BackfaceVisibility,
     /// `lang` and `xml:lang` (SVG 2 §2.6.2).
     Lang,
+    /// [`crate::svg::TEXT_STYLE_ATTRIBUTE`].
+    TextStyle,
     TransformOrigin,
     Type,
     UnicodeBidi,
@@ -659,6 +661,9 @@ static ATTRIBUTES: Map<AId> = Map {
 
 impl AId {
     pub(crate) fn from_str(text: &str) -> Option<AId> {
+        if text == crate::svg::TEXT_STYLE_ATTRIBUTE {
+            return Some(Self::TextStyle);
+        }
         match text {
             "border-radius" => Some(Self::CssBorderRadius),
             "zoom" => Some(Self::CssZoom),
@@ -695,6 +700,7 @@ impl AId {
             Self::TransformStyle => "transform-style",
             Self::BackfaceVisibility => "backface-visibility",
             Self::Lang => "lang",
+            Self::TextStyle => crate::svg::TEXT_STYLE_ATTRIBUTE,
             _ => ATTRIBUTES.key(&self),
         }
     }

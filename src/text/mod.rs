@@ -14,7 +14,7 @@ mod leaders;
 mod line_boxes;
 mod paragraph;
 mod ruby;
-mod shaping;
+pub(crate) mod shaping;
 mod skip_ink;
 mod spacing;
 mod spacing_trim;
@@ -725,7 +725,7 @@ pub(crate) enum TextError {
 /// where the face defines it; other tags do not affect glyph selection (CSS Fonts 4 §6.13).
 /// The shaper takes an explicit system as a `-x-hbot` private-use subtag, which has
 /// uppercase letters and digits followed by padding.
-fn shaping_language(face: &Face<'_>, style: &Style) -> Option<rustybuzz::Language> {
+pub(crate) fn shaping_language(face: &Face<'_>, style: &Style) -> Option<rustybuzz::Language> {
     const PRIVATE_SYSTEM_SUBTAG: &str = "x-hbot";
     const PADDING: char = ' ';
     let content = || style.language.parse().ok();

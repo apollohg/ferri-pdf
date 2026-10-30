@@ -240,15 +240,6 @@ pub(super) fn declarations(
         push("font-style", &font_style(style));
         push("font-weight", &number(style.font_weight.value()));
         push("font-stretch", &font_width(style.font_width));
-        push("font-variant", style.font_variant_caps.name());
-        push(
-            "font-kerning",
-            if style.font_features.kerning == crate::style::FontKerning::None {
-                "none"
-            } else {
-                AUTO
-            },
-        );
     }
     Ok(output)
 }

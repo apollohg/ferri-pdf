@@ -168,7 +168,7 @@ pub(crate) fn caps_plan(
 }
 
 /// The feature that renders `position` natively.
-pub(super) fn position_feature(position: FontVariantPosition) -> Option<FontFeature> {
+pub(crate) fn position_feature(position: FontVariantPosition) -> Option<FontFeature> {
     match position {
         FontVariantPosition::Normal => None,
         FontVariantPosition::Sub => Some(FontFeature::on(SUBSCRIPT)),
@@ -178,7 +178,7 @@ pub(super) fn position_feature(position: FontVariantPosition) -> Option<FontFeat
 
 /// `font-variant-alternates` with indices that `lookup` defines for the face's family; names
 /// it does not define select nothing (§6.8).
-pub(super) fn alternate_features<'a>(
+pub(crate) fn alternate_features<'a>(
     alternates: &FontVariantAlternates,
     lookup: impl Fn(FeatureValueType, &str) -> Option<&'a [u32]>,
 ) -> Vec<FontFeature> {
@@ -254,7 +254,7 @@ fn numbered(prefix: [u8; 2], index: u32) -> Option<[u8; 4]> {
 
 /// What the face contributes to a run's features.
 #[derive(Clone, Copy, Debug, Default)]
-pub(super) struct FaceFeatures<'a> {
+pub(crate) struct FaceFeatures<'a> {
     /// The `font-feature-settings` descriptor of the face's `@font-face` rule.
     pub descriptor: &'a [FontFeature],
     /// `font-variant-alternates` as the face's family defines it.
@@ -267,7 +267,7 @@ pub(super) struct FaceFeatures<'a> {
 /// The run's features in ascending precedence (§7.2): the `@font-face` descriptor, the
 /// `font-variant` subproperties with `font-kerning`, ligature suppression for tracked text,
 /// then `font-feature-settings`. Default features (§7.1) are the shaper's.
-pub(super) fn run_features(
+pub(crate) fn run_features(
     style: &Style,
     face: FaceFeatures<'_>,
     tracked: bool,

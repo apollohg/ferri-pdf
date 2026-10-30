@@ -288,14 +288,6 @@ fn collect_text_chunks_impl(
                 .unwrap_or_default();
         }
 
-        let mut apply_kerning = true;
-        #[allow(clippy::if_same_then_else)]
-        if parent.resolve_length(AId::Kerning, state, -1.0) == 0.0 {
-            apply_kerning = false;
-        } else if parent.find_attribute::<&str>(AId::FontKerning) == Some("none") {
-            apply_kerning = false;
-        }
-
         let font_optical_sizing = match parent.find_attribute::<&str>(AId::FontOpticalSizing) {
             Some("none") => FontOpticalSizing::None,
             _ => FontOpticalSizing::Auto, // "auto" or missing (browser default)
@@ -324,21 +316,10 @@ fn collect_text_chunks_impl(
             paint_order,
             font,
             font_size,
-            caps: parent
-                .find_attribute::<&str>(AId::FontVariant)
-                .into_iter()
-                .flat_map(str::split_ascii_whitespace)
-                .find_map(crate::style::FontVariantCaps::from_name)
-                .unwrap_or_default(),
-            language: parent
-                .ancestors()
-                .find_map(|node| node.attribute::<&str>(AId::Lang))
-                .unwrap_or_default()
-                .to_owned(),
+            style: text_style(parent, state),
             linear_light: parent.find_attribute::<&str>(AId::ColorInterpolation)
                 == Some(converter::LINEAR_RGB),
             text_orientation,
-            apply_kerning,
             font_optical_sizing,
             decoration: resolve_decoration(parent, state, cache),
             visible: visibility == Visibility::Visible,
@@ -413,6 +394,38 @@ fn collect_text_chunks_impl(
             iter_state.chunk_bytes_count += char_len;
         }
     }
+}
+
+/// The computed style of the text in `node`: the document's, for content the document styles,
+/// else the initial values with those the `font-variant`, `font-kerning`, `kerning` and `lang`
+/// attributes give.
+fn text_style(node: SvgNode, state: &converter::State) -> Arc<crate::style::Style> {
+    if let Some(style) = node
+        .ancestors()
+        .find_map(|node| node.attribute::<&str>(AId::TextStyle))
+        .and_then(|index| index.parse::<usize>().ok())
+        .and_then(|index| state.opt.styling.text_styles.get(index))
+    {
+        return style.clone();
+    }
+    let mut style = crate::style::Style::default();
+    style.font_variant_caps = node
+        .find_attribute::<&str>(AId::FontVariant)
+        .into_iter()
+        .flat_map(str::split_ascii_whitespace)
+        .find_map(crate::style::FontVariantCaps::from_name)
+        .unwrap_or_default();
+    node.ancestors()
+        .find_map(|node| node.attribute::<&str>(AId::Lang))
+        .unwrap_or_default()
+        .clone_into(&mut style.language);
+    // `kerning: 0` (SVG 1.1 §10.10) and `font-kerning: none` disable kerning.
+    if node.resolve_length(AId::Kerning, state, -1.0) == 0.0
+        || node.find_attribute::<&str>(AId::FontKerning) == Some("none")
+    {
+        style.font_features.kerning = crate::style::FontKerning::None;
+    }
+    Arc::new(style)
 }
 
 fn resolve_text_flow(node: SvgNode, state: &converter::State) -> Option<TextFlow> {

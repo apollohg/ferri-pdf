@@ -96,9 +96,27 @@ pub struct FontResolver<'a> {
     pub select_fallback: FallbackSelectionFn<'a>,
 }
 
+/// What the document's fonts give a face rendering a span's text (CSS Fonts 4 §7.2, §9.5).
+#[derive(Clone, Debug, Default)]
+pub struct FaceSettings {
+    /// The `font-feature-settings` descriptor of the face's `@font-face` rule.
+    pub(crate) descriptor: Arc<[crate::fonts::FontFeature]>,
+    /// `font-variant-alternates` as the face's family defines it.
+    pub(crate) alternates: Vec<crate::fonts::FontFeature>,
+}
+
 /// Synchronous caller-owned font resolution, including the original fallback request.
 /// Borrowed providers need not be thread-safe.
 pub trait FontProvider {
+    /// What the document's fonts give face `id`, matched for `font`, rendering text whose
+    /// computed style is `style`.
+    #[expect(
+        private_interfaces,
+        reason = "the document's computed style is crate-private; only it provides faces"
+    )]
+    fn face_settings(&self, _: &Font, _: ID, _: &crate::style::Style) -> FaceSettings {
+        FaceSettings::default()
+    }
     /// Selected-face axes followed by explicit variation settings.
     fn variations(&self, font: &Font, _: ID) -> Vec<crate::svg::usvg::FontVariation> {
         font.variations().to_vec()

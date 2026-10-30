@@ -65,9 +65,6 @@ impl FontVariantCaps {
             .into_iter()
             .find(|caps| caps.keyword().name() == name)
     }
-    pub(crate) fn name(self) -> &'static str {
-        self.keyword().name()
-    }
 }
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, serde::Serialize)]

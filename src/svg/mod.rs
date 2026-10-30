@@ -12,6 +12,19 @@ pub(crate) fn layer_mask_value(index: usize) -> String {
     format!("{LAYER_MASK_FUNCTION}({index})")
 }
 
+/// The attribute naming, by index, the computed style the document gives a text content element
+/// it writes.
+pub(crate) const TEXT_STYLE_ATTRIBUTE: &str = "ferri-pdf-text-style";
+
+/// What the document attaches to the SVG content it styles, by the indices its written XML
+/// names: the CSS mask layers that [`layer_mask_value`] values name, and the computed styles
+/// of text content elements that [`TEXT_STYLE_ATTRIBUTE`] values name.
+#[derive(Clone, Debug, Default)]
+pub(crate) struct DocumentStyling {
+    pub(crate) layer_masks: std::sync::Arc<[std::sync::Arc<crate::graphics::LoadedMasks>]>,
+    pub(crate) text_styles: std::sync::Arc<[std::sync::Arc<crate::style::Style>]>,
+}
+
 /// The index a `mask` value written by [`layer_mask_value`] names.
 pub(crate) fn layer_mask_index(value: &str) -> Option<usize> {
     value
@@ -46,11 +59,11 @@ pub(crate) trait LayerMasks {
 /// A tree in which a white rectangle spanning `bounds` (points), or no area without them,
 /// references SVG resource `reference` of document `xml` through presentation attribute
 /// `property`, so the SVG parser resolves the resource's units against that box. Tree units
-/// are CSS pixels. `layer_masks` are the CSS mask layers `xml`'s content names, and
+/// are CSS pixels. `styling` is what the document attaches to `xml`'s content, and
 /// `documents` supplies the other documents that references name.
 pub(crate) fn reference_tree(
     xml: &str,
-    layer_masks: crate::images::LayerMaskTable,
+    styling: DocumentStyling,
     property: &str,
     reference: &str,
     bounds: Option<crate::graphics::Rect>,
@@ -72,7 +85,7 @@ pub(crate) fn reference_tree(
          <rect x=\"{x}\" y=\"{y}\" width=\"{width}\" height=\"{height}\" fill=\"white\" {property}=\"{attribute}\"/></svg>"
     );
     let options = usvg::Options {
-        layer_masks,
+        styling,
         ..usvg::Options::default()
     };
     usvg::Tree::from_str_with_documents(&document, &options, documents).ok()

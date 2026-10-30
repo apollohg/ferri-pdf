@@ -94,9 +94,8 @@ pub struct Options<'a> {
     /// A CSS stylesheet that should be injected into the SVG. Can be used to overwrite
     /// certain attributes.
     pub style_sheet: Option<String>,
-    /// The CSS mask layers that `mask` values written by
-    /// [`layer_mask_value`](crate::svg::layer_mask_value) name, by index.
-    pub layer_masks: Arc<[Arc<crate::graphics::LoadedMasks>]>,
+    /// What the document attaches to the SVG content it styles.
+    pub(crate) styling: crate::svg::DocumentStyling,
 }
 
 impl Default for Options<'_> {
@@ -116,7 +115,7 @@ impl Default for Options<'_> {
             font_resolver: FontResolver::default(),
             fontdb: Arc::new(fontdb::Database::new()),
             style_sheet: None,
-            layer_masks: Arc::new([]),
+            styling: crate::svg::DocumentStyling::default(),
         }
     }
 }

@@ -44,9 +44,9 @@ enum PaintSource {
     Video(Option<String>),
     /// A `canvas` element's bitmap, transparent black without script, of this many CSS pixels.
     Canvas([u32; 2]),
-    /// A standalone SVG document filling its viewport with an SVG paint server, and the CSS
-    /// mask layers its content names.
-    PaintServer(String, crate::images::LayerMaskTable),
+    /// A standalone SVG document filling its viewport with an SVG paint server, and what the
+    /// document attaches to its content.
+    PaintServer(String, crate::svg::DocumentStyling),
 }
 
 /// The `element()` images of one formatting pass: what the last pass measured, decided once
@@ -69,9 +69,9 @@ pub(crate) enum Resolved<'a> {
     Image(&'a str, Option<f32>),
     /// A `video` element's poster frame, or transparent black without one.
     Poster(Option<&'a str>),
-    /// A standalone SVG document showing a paint source, and the CSS mask layers its content
-    /// names.
-    Svg(String, crate::images::LayerMaskTable),
+    /// A standalone SVG document showing a paint source, and what the document attaches to
+    /// its content.
+    Svg(String, crate::svg::DocumentStyling),
 }
 
 impl ElementImages {
@@ -121,10 +121,10 @@ impl ElementImages {
                     format!(
                         r#"<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}"/>"#
                     ),
-                    crate::images::LayerMaskTable::default(),
+                    crate::svg::DocumentStyling::default(),
                 ),
-                Some(PaintSource::PaintServer(xml, layer_masks)) => {
-                    Resolved::Svg(xml.clone(), layer_masks.clone())
+                Some(PaintSource::PaintServer(xml, styling)) => {
+                    Resolved::Svg(xml.clone(), styling.clone())
                 }
                 None => Resolved::Invalid,
             },
@@ -221,7 +221,7 @@ fn paint_source(
     if element.namespace() == SVG_NAMESPACE && PAINT_SERVERS.contains(&element.name()) {
         return definitions
             .paint_server(element.attr("id")?)
-            .map(|(xml, layer_masks)| PaintSource::PaintServer(xml, layer_masks));
+            .map(|(xml, styling)| PaintSource::PaintServer(xml, styling));
     }
     if element.namespace() != HTML_NAMESPACE {
         return None;

@@ -1101,10 +1101,10 @@ impl ImageResources<'_> {
                         |image| crate::images::content_image(image, &Style::default(), None),
                     ),
             ),
-            Resolved::Svg(xml, layer_masks) => {
+            Resolved::Svg(xml, styling) => {
                 match self.cache.inline_svg_in_namespace(
                     xml,
-                    layer_masks,
+                    styling,
                     self.base,
                     self.resolver,
                     namespace,
@@ -1254,7 +1254,7 @@ impl ImageResources<'_> {
             // Linking the reference loads its documents; the box's geometry is not known yet.
             crate::svg::reference_tree(
                 "",
-                crate::images::LayerMaskTable::default(),
+                crate::svg::DocumentStyling::default(),
                 LINKING_PROPERTY,
                 reference,
                 None,
@@ -2976,7 +2976,7 @@ fn block<'a>(
                             )?;
                             Some(resources.cache.inline_svg_in_namespace(
                                 svg.xml,
-                                svg.layer_masks,
+                                svg.styling,
                                 resources.base,
                                 resolver,
                                 frame.style.element_font_namespace(),

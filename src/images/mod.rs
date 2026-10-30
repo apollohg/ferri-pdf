@@ -21,7 +21,7 @@ use std::{
     io::Cursor,
     sync::Arc,
 };
-pub(crate) use svg::{LayerMaskTable, SvgImage, options as svg_options};
+pub(crate) use svg::{SvgImage, options as svg_options};
 impl crate::paint::ImageInfo for Image {
     fn natural_size(&self) -> NaturalDimensions {
         Image::natural_size(self)
@@ -601,18 +601,18 @@ impl ImageCache {
     ) -> Result<Arc<Image>, ImageError> {
         self.inline_svg_in_namespace(xml, Default::default(), base, resolver, FontNamespace::ROOT)
     }
-    /// SVG content the document styles, with the CSS mask layers its `mask` values name.
+    /// SVG content the document styles, with what the document attaches to it.
     pub(crate) fn inline_svg_in_namespace(
         &mut self,
         xml: String,
-        layer_masks: LayerMaskTable,
+        styling: crate::svg::DocumentStyling,
         base: &crate::resources::ResourceBase,
         resolver: &dyn ResourceResolver,
         namespace: FontNamespace,
     ) -> Result<Arc<Image>, ImageError> {
         Ok(Arc::new(Image::Svg(SvgImage::parse_source(
             Arc::new(svg::SvgSource::new(xml, base.clone())),
-            layer_masks,
+            styling,
             true,
             resolver,
             0,
@@ -654,7 +654,7 @@ impl ImageCache {
         let image = if let Some(source) = source {
             Image::Svg(SvgImage::parse_source(
                 source,
-                Arc::new([]),
+                crate::svg::DocumentStyling::default(),
                 false,
                 resolver,
                 depth,

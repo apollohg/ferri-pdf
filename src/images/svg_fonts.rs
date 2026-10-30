@@ -301,6 +301,31 @@ impl FontProvider for Provider<'_> {
             }
         }
     }
+    fn face_settings(
+        &self,
+        _: &Font,
+        mapped: fontdb::ID,
+        style: &crate::style::Style,
+    ) -> crate::svg::usvg::FaceSettings {
+        let book = &self.fonts.book;
+        let Some(face) = self
+            .fonts
+            .registry()
+            .originals
+            .get(&mapped)
+            .and_then(|id| book.face(*id))
+        else {
+            return crate::svg::usvg::FaceSettings::default();
+        };
+        let family = &face.descriptor().family;
+        crate::svg::usvg::FaceSettings {
+            descriptor: face.settings().features.clone(),
+            alternates: crate::text::features::alternate_features(
+                &style.font_features.alternates,
+                |kind, name| book.feature_value(self.fonts.namespace, family, kind, name),
+            ),
+        }
+    }
     fn select_font(&self, font: &Font, database: &mut Arc<fontdb::Database>) -> Option<fontdb::ID> {
         self.select(font, None, &[], database)
     }

@@ -19,8 +19,6 @@ use std::{
 };
 
 const ID_ATTRIBUTE: &str = "id";
-/// `lang` and `xml:lang` (SVG 2 §2.6.2).
-const LANG_ATTRIBUTE: &str = "lang";
 
 const HREF_ATTRIBUTE: &str = "href";
 const STYLE_ATTRIBUTE: &str = "style";
@@ -47,11 +45,10 @@ pub(crate) struct Styling<'a> {
 pub(crate) type MaskLoader<'a> =
     dyn FnMut(&Style) -> Result<Arc<crate::graphics::LoadedMasks>, DocumentError> + 'a;
 
-/// An SVG document written from styled SVG content, and the CSS mask layers its `mask`
-/// values name.
+/// An SVG document written from styled SVG content, and what the document attaches to it.
 pub(crate) struct SerializedSvg {
     pub(crate) xml: String,
-    pub(crate) layer_masks: crate::images::LayerMaskTable,
+    pub(crate) styling: crate::svg::DocumentStyling,
 }
 
 /// Serializes the subtree of an `<svg>` element whose computed style is `style` as an SVG
@@ -78,6 +75,8 @@ struct Serializer<'a, 'd> {
     load_masks: &'a mut MaskLoader<'a>,
     /// The mask layers that `mask` values written so far name, by index.
     layer_masks: Vec<Arc<crate::graphics::LoadedMasks>>,
+    /// The computed styles of the text content elements written so far, by index.
+    text_styles: Vec<Arc<Style>>,
     initial_only: InitialOnly,
     xml: String,
     /// Ids written so far; a clone repeating one omits it.
@@ -99,6 +98,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
             styling,
             load_masks,
             layer_masks: Vec::new(),
+            text_styles: Vec::new(),
             initial_only: InitialOnly::new(),
             xml: String::new(),
             written: HashSet::new(),
@@ -131,6 +131,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
             if prefix.is_empty() {
                 if local == STYLE_ATTRIBUTE
                     || local == CLASS_ATTRIBUTE
+                    || local == crate::svg::TEXT_STYLE_ATTRIBUTE
                     || (crate::style::svg_values::presentation_property(root.name(), local)
                         .is_some()
                         && !ROOT_GEOMETRY.contains(&local))
@@ -163,7 +164,10 @@ impl<'a, 'd> Serializer<'a, 'd> {
         let _ = write!(self.xml, "</{}>", root.name());
         Ok(SerializedSvg {
             xml: self.xml,
-            layer_masks: self.layer_masks.into(),
+            styling: crate::svg::DocumentStyling {
+                layer_masks: self.layer_masks.into(),
+                text_styles: self.text_styles.into(),
+            },
         })
     }
 
@@ -290,6 +294,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
             if prefix.is_empty() {
                 if local == STYLE_ATTRIBUTE
                     || local == CLASS_ATTRIBUTE
+                    || local == crate::svg::TEXT_STYLE_ATTRIBUTE
                     || crate::style::svg_values::presentation_property(tag, local).is_some()
                 {
                     continue;
@@ -309,16 +314,15 @@ impl<'a, 'd> Serializer<'a, 'd> {
         if let Some(id) = reference {
             attribute(&mut self.xml, "", HREF_ATTRIBUTE, &format!("#{id}"));
         }
-        // Text takes the language it inherits from the document, which cases its capitals.
-        if presentation::is_text_content(tag)
-            && !style.language.is_empty()
-            && !element
-                .value()
-                .attrs
-                .iter()
-                .any(|(name, _)| &*name.local == LANG_ATTRIBUTE)
-        {
-            attribute(&mut self.xml, "xml:", LANG_ATTRIBUTE, &style.language);
+        // Text shapes, cases and paints with the document's computed values (SVG 2 §11.10).
+        if presentation::is_text_content(tag) {
+            self.text_styles.push(Arc::new(style.clone()));
+            attribute(
+                &mut self.xml,
+                "",
+                crate::svg::TEXT_STYLE_ATTRIBUTE,
+                &(self.text_styles.len() - 1).to_string(),
+            );
         }
         for (name, value) in presentation::geometry(tag, style)?
             .into_iter()
@@ -392,7 +396,7 @@ pub(crate) struct SvgDefinition {
     /// The element's name.
     pub(crate) element: &'static str,
     pub(crate) xml: Arc<str>,
-    pub(crate) layer_masks: crate::images::LayerMaskTable,
+    pub(crate) styling: crate::svg::DocumentStyling,
 }
 
 impl SvgDefinitions {
@@ -405,8 +409,7 @@ impl SvgDefinitions {
         linked: crate::images::LinkedDocuments,
         load_masks: &mut MaskLoader<'_>,
     ) -> Result<Self, DocumentError> {
-        let mut roots: HashMap<ElementId, (Arc<str>, crate::images::LayerMaskTable)> =
-            HashMap::new();
+        let mut roots: HashMap<ElementId, (Arc<str>, crate::svg::DocumentStyling)> = HashMap::new();
         let mut definitions = HashMap::new();
         let mut seen = HashSet::new();
         for element in tree.elements() {
@@ -431,19 +434,19 @@ impl SvgDefinitions {
             else {
                 continue;
             };
-            let (xml, layer_masks) = if let Some(serialized) = roots.get(&svg.id()) {
+            let (xml, styling) = if let Some(serialized) = roots.get(&svg.id()) {
                 serialized.clone()
             } else {
                 let style = computed_in_place(svg, root, styling)?;
                 let serialized = serialize(svg, &style, styling, load_masks)?;
-                let serialized = (serialized.xml.into(), serialized.layer_masks);
+                let serialized = (serialized.xml.into(), serialized.styling);
                 roots.insert(svg.id(), serialized.clone());
                 serialized
             };
             definitions.entry(id.to_owned()).or_insert(SvgDefinition {
                 element: name,
                 xml,
-                layer_masks,
+                styling,
             });
         }
         Ok(Self {
@@ -466,7 +469,7 @@ impl SvgDefinitions {
     /// A standalone SVG document without natural dimensions whose viewport the paint server
     /// with ID `id` fills: its `objectBoundingBox` units span the viewport, and its user
     /// units are CSS pixels (CSS Images 4 §2.7.1).
-    pub(crate) fn paint_server(&self, id: &str) -> Option<(String, crate::images::LayerMaskTable)> {
+    pub(crate) fn paint_server(&self, id: &str) -> Option<(String, crate::svg::DocumentStyling)> {
         let definition = self.entries.get(id).filter(|definition| {
             matches!(
                 definition.element,
@@ -484,7 +487,7 @@ impl SvgDefinitions {
                  <rect width=\"100%\" height=\"100%\" fill=\"{fill}\"/></svg>",
                 definition.xml
             ),
-            definition.layer_masks.clone(),
+            definition.styling.clone(),
         ))
     }
     fn get_decoded(&self, id: &str) -> Option<&SvgDefinition> {
@@ -529,7 +532,7 @@ impl SvgDefinitions {
                 .then(|| {
                     crate::svg::reference_tree(
                         "",
-                        crate::images::LayerMaskTable::default(),
+                        crate::svg::DocumentStyling::default(),
                         property,
                         reference,
                         bounds,
@@ -544,7 +547,7 @@ impl SvgDefinitions {
             .filter(|definition| definition.element == element)?;
         crate::svg::reference_tree(
             &definition.xml,
-            definition.layer_masks.clone(),
+            definition.styling.clone(),
             property,
             reference,
             bounds,

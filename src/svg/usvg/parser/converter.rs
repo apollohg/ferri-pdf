@@ -1057,7 +1057,7 @@ pub(crate) fn convert_group(
         } else if let Some(masks) = node
             .attribute::<&str>(AId::Mask)
             .and_then(crate::svg::layer_mask_index)
-            .and_then(|index| state.opt.layer_masks.get(index))
+            .and_then(|index| state.opt.styling.layer_masks.get(index))
         {
             g.calculate_bounding_boxes();
             layer_mask = Some(Arc::new(LayerMask {

@@ -78,10 +78,13 @@ outlines. Clipping path children keep neither. The outermost `svg`, `use` elemen
 clipped nested viewports, which SVG 2 §3.4.1 makes stacking contexts, are isolated where content
 in them blends or composites in linear light.
 
-`font-variant` takes its `font-variant-caps` keyword, and text shapes it as the document's text
-does (CSS Fonts 4 §6.6): with the face's own capital features, or with capitals synthesized from
-uppercase forms cased in the language of the nearest `lang` or `xml:lang`, scaled down per
-glyph cluster.
+Text content elements the document styles name their computed style, in the options'
+`styling`, through `ferri-pdf-text-style`; other text takes the initial values with the
+`font-variant`, `font-kerning`, `kerning` and `lang` attributes. Text shapes with that style as
+the document's text does: the CSS Fonts 4 §6–§7 feature settings in precedence, with each face's
+`@font-face` features and `@font-feature-values` alternates, capitals and positions native or
+synthesized, the language system of `font-language-override` or the language, and the used size
+of `font-size-adjust`.
 
 `width` and `height` take `calc-size()` and the intrinsic size keywords (CSS Values 5 §10.2,
 CSS Sizing 3 §3.1). Keywords, and `calc-size()` with a keyword basis, behave as `auto`; the
@@ -89,7 +92,7 @@ latter then calculates the used size from the automatic size each element gives 
 §7.8): none for a rectangle, `100%` for a viewport and the natural size for an image.
 
 A `mask` value that `crate::svg::layer_mask_value` writes names the CSS mask layers, in the
-options' `layer_masks`, of SVG content the document styles. Its group keeps them as a
+options' `styling`, of SVG content the document styles. Its group keeps them as a
 `LayerMask` with its fill, stroke and view boxes, the boxes `clip-path` basic shapes also take,
 in points.
 
