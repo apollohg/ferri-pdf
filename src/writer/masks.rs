@@ -534,6 +534,12 @@ fn draw_source(
     if active.contains(&reference) {
         return Ok(());
     }
+    painter.images.mask_element_draws += 1;
+    if painter.images.mask_element_draws > MAX_MASK_ELEMENT_DRAWS_PER_PAGE {
+        return Err(PdfError::MaskElementDrawLimit {
+            limit: MAX_MASK_ELEMENT_DRAWS_PER_PAGE,
+        });
+    }
     let Some(mask) = painter
         .raster
         .definitions
@@ -693,6 +699,9 @@ impl<'p, 'a, 'w, 'f> SvgLayerMasks<'p, 'a, 'w, 'f> {
     }
 }
 
+/// Each drawn `mask` element is a raster of its area, and references shared at each level of
+/// nesting multiply, so a page's draws are bounded.
+const MAX_MASK_ELEMENT_DRAWS_PER_PAGE: usize = 1024;
 /// User units per point.
 const USER_UNITS_PER_POINT: f32 = 1.0 / POINTS_PER_PIXEL;
 /// The transforms into and out of the space in points the mask values draw in.

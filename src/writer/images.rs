@@ -93,6 +93,8 @@ pub(super) struct ImageWriter {
     pub(super) scale: f32,
     /// The renderings of the elements `element()` images show, from the layout being written.
     pub(super) elements: HashMap<crate::dom::ElementId, Arc<crate::layout::ViewportPaint>>,
+    /// The `mask` elements drawn on the current page, at every level of nesting.
+    pub(super) mask_element_draws: usize,
 }
 impl ImageWriter {
     pub(super) fn new(pixels_per_point: f32) -> Self {
@@ -105,6 +107,7 @@ impl ImageWriter {
             opaque: HashMap::new(),
             pixels_per_point,
             scale: 1.0,
+            mask_element_draws: 0,
             elements: HashMap::new(),
         }
     }

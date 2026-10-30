@@ -80,6 +80,9 @@ pub enum PdfError {
     /// The CSS mask layers of SVG content draw through the display list that places it.
     #[error("SVG content with CSS mask layers drawn outside a display list")]
     DetachedSvgMasks,
+    /// Shared `mask` references can multiply with each level of nesting.
+    #[error("a page draws more than {limit} mask elements")]
+    MaskElementDrawLimit { limit: usize },
     #[error("{0}")]
     Serialization(#[from] krilla::error::KrillaError),
 }
@@ -204,6 +207,7 @@ pub(crate) fn encode_parts_with_diagnostics(
                 .with_media_box(Some(production_rect(record.output.media)?))
                 .with_trim_box(Some(production_rect(record.output.trim)?))
                 .with_bleed_box(Some(production_rect(record.output.bleed)?));
+            images.mask_element_draws = 0;
             let mut page = document.start_page_with(settings);
             let mut surface = page.surface();
             let bleed_clip = painting::rect_path(record.output.bleed)?;
