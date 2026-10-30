@@ -4,6 +4,7 @@ use crate::paint::{
 };
 use crate::style::StyleError;
 use crate::style::anchor_values::{AnchorDimension, AnchorEvaluation, AnchorQuery, AnchorSide};
+use crate::style::grammar::Keyword;
 use crate::style::parser::MAX_COMPONENT_DEPTH;
 use crate::style::units::{self, Dimension, Relative};
 use cssparser::{BasicParseError, Delimiter, ParseError, ParseErrorKind, Parser, Token};
@@ -85,6 +86,10 @@ impl Drop for WorkGuard<'_> {
 }
 
 const CLAMP_ARGUMENTS: usize = 3;
+pub(super) const CALC_SIZE_FUNCTION: &str = "calc-size";
+/// Bounds the calculation that substituting nested `calc-size()` bases produces (CSS Values 5
+/// §10.1), as variable substitution is bounded.
+const MAX_CALC_SIZE_NODES: usize = 4096;
 const ANCHOR_SIZE_FUNCTION: &str = "anchor-size";
 const NONE: &str = "none";
 /// Integers round half towards positive infinity.
@@ -273,7 +278,11 @@ pub(super) fn math_function(
         {
             let name = name.to_ascii_lowercase();
             let _work = context.relative.work.enter(context.relative.grammar_only);
-            let mut parser = MathParser { context, depth: 0 };
+            let mut parser = MathParser {
+                context,
+                depth: 0,
+                size: false,
+            };
             let result = if parser
                 .context
                 .anchors
@@ -309,6 +318,8 @@ type MathResult<'i> = Result<Typed, ParseError<'i, MathError>>;
 struct MathParser<'r> {
     context: Context<'r>,
     depth: usize,
+    /// The `calc-size()` calculation being parsed allows the `size` keyword.
+    size: bool,
 }
 impl MathParser<'_> {
     fn invalid<'i, T>(
@@ -433,13 +444,7 @@ impl MathParser<'_> {
                         let [value] = value.items() else {
                             return Self::invalid(input, "one timeline is required");
                         };
-                        if matches!(
-                            value.keyword(),
-                            Some(
-                                crate::style::grammar::Keyword::None
-                                    | crate::style::grammar::Keyword::Auto
-                            )
-                        ) {
+                        if matches!(value.keyword(), Some(Keyword::None | Keyword::Auto)) {
                             return Self::invalid(
                                 input,
                                 "auto and none cannot supply interpolation progress",
@@ -496,6 +501,7 @@ impl MathParser<'_> {
                 anchors: None,
             },
             depth: self.depth,
+            size: false,
         };
         let mut endpoint = |input: &mut Parser<'i, '_>| {
             let zero = input
@@ -922,6 +928,11 @@ impl MathParser<'_> {
                     };
                 Ok((Calculation::Value(canonical), CalcType::base(base)))
             }
+            Token::Ident(name)
+                if self.size && name.eq_ignore_ascii_case(crate::paint::SIZE_KEYWORD) =>
+            {
+                Ok((Calculation::Size, CalcType::of(Kind::Length)))
+            }
             Token::Ident(name) => {
                 if let Some((_, value)) = self
                     .context
@@ -956,6 +967,129 @@ impl MathParser<'_> {
             }
             token => Err(input.new_unexpected_token_error(token)),
         }
+    }
+}
+
+/// A `calc-size()` basis after canonicalization (CSS Values 5 §10.1): an
+/// `<intrinsic-size-keyword>`, `any`, or the `100%` that replaces a basis with percentages.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum CalcSizeBasis {
+    Any,
+    Percentage,
+    Auto,
+    MinContent,
+    MaxContent,
+    FitContent,
+    Stretch,
+}
+
+/// A canonical `calc-size()`: its basis and its calculation in points, where `size` is the
+/// basis's size.
+#[derive(Clone, Debug)]
+pub(crate) struct CalcSize {
+    pub basis: CalcSizeBasis,
+    pub calculation: Calculation,
+}
+
+/// Parses a whole `calc-size()` function, whose basis may be any `<intrinsic-size-keyword>`.
+pub(super) fn calc_size(
+    input: &mut Parser<'_, '_>,
+    context: Context<'_>,
+) -> Result<CalcSize, MathError> {
+    let _work = context.relative.work.enter(context.relative.grammar_only);
+    let mut parser = MathParser {
+        context,
+        depth: 0,
+        size: false,
+    };
+    input
+        .parse_entirely(|input| parser.calc_size(input))
+        .map_err(|error| match error.kind {
+            ParseErrorKind::Custom(error) => error,
+            ParseErrorKind::Basic(error) => MathError::Invalid(format!("{error:?}")),
+        })
+}
+
+/// A `calc-size()` basis as written.
+enum GivenBasis {
+    Keyword(CalcSizeBasis),
+    Nested(CalcSize),
+    Sum(Calculation),
+}
+
+impl MathParser<'_> {
+    fn calc_size<'i>(
+        &mut self,
+        input: &mut Parser<'i, '_>,
+    ) -> Result<CalcSize, ParseError<'i, MathError>> {
+        input.expect_function_matching(CALC_SIZE_FUNCTION)?;
+        self.nested(input, |parser, input| {
+            let outer = parser.size;
+            parser.size = false;
+            let result = parser.calc_size_arguments(input);
+            parser.size = outer;
+            result
+        })
+    }
+    fn calc_size_arguments<'i>(
+        &mut self,
+        input: &mut Parser<'i, '_>,
+    ) -> Result<CalcSize, ParseError<'i, MathError>> {
+        let basis = self.calc_size_basis(input)?;
+        input.expect_comma()?;
+        self.size = !matches!(basis, GivenBasis::Keyword(CalcSizeBasis::Any));
+        let (calculation, kind) = self.sum(input)?;
+        if kind != CalcType::of(Kind::Length) {
+            return Self::invalid(input, "a calc-size() calculation must be a length");
+        }
+        let canonical = match basis {
+            GivenBasis::Keyword(basis) => CalcSize { basis, calculation },
+            GivenBasis::Nested(inner) => CalcSize {
+                basis: inner.basis,
+                calculation: calculation.substitute_size(&inner.calculation),
+            },
+            GivenBasis::Sum(sum)
+                if sum.any_leaf(&|leaf| matches!(leaf, Calculation::Percentage(_))) =>
+            {
+                CalcSize {
+                    basis: CalcSizeBasis::Percentage,
+                    calculation: calculation.substitute_size(&sum.depercentify()),
+                }
+            }
+            GivenBasis::Sum(sum) => CalcSize {
+                basis: CalcSizeBasis::Any,
+                calculation: calculation.substitute_size(&sum),
+            },
+        };
+        if canonical.calculation.node_count() > MAX_CALC_SIZE_NODES {
+            return Self::invalid(input, "calc-size() substitution exceeds its limit");
+        }
+        Ok(canonical)
+    }
+    fn calc_size_basis<'i>(
+        &mut self,
+        input: &mut Parser<'i, '_>,
+    ) -> Result<GivenBasis, ParseError<'i, MathError>> {
+        if let Ok(name) = input.try_parse(Parser::expect_ident_cloned) {
+            let basis = match Keyword::from_ident(&name) {
+                Some(Keyword::Any) => CalcSizeBasis::Any,
+                Some(Keyword::Auto) => CalcSizeBasis::Auto,
+                Some(Keyword::MinContent) => CalcSizeBasis::MinContent,
+                Some(Keyword::MaxContent) => CalcSizeBasis::MaxContent,
+                Some(Keyword::FitContent) => CalcSizeBasis::FitContent,
+                Some(Keyword::Stretch) => CalcSizeBasis::Stretch,
+                _ => return Self::invalid(input, format!("invalid calc-size() basis: {name}")),
+            };
+            return Ok(GivenBasis::Keyword(basis));
+        }
+        if let Ok(inner) = input.try_parse(|input| self.calc_size(input)) {
+            return Ok(GivenBasis::Nested(inner));
+        }
+        let (sum, kind) = self.sum(input)?;
+        if kind != CalcType::of(Kind::Length) {
+            return Self::invalid(input, "a calc-size() basis must be a length-percentage");
+        }
+        Ok(GivenBasis::Sum(sum))
     }
 }
 

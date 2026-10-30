@@ -3,7 +3,7 @@ use crate::dom::{DocumentTree, Element, TreeRelation};
 use crate::fonts::SizeMetric;
 use crate::resources::ResourceResolver;
 use crate::style::{
-    Display, LineHeight, Size, SourceLocation, Style, StyleError, Stylesheet,
+    Display, LineHeight, SourceLocation, Style, StyleError, Stylesheet,
     cascade::{Cascaded, Customs, Properties, Winners},
     component::Component,
     computed::{FONT_ADJUSTMENT, FONT_SELECTION},
@@ -1254,7 +1254,7 @@ impl<'a> Geometry<'a> {
         if let Some(property) = properties
             .iter()
             .zip(sizes)
-            .find_map(|(property, size)| matches!(size, Size::Intrinsic(_)).then_some(property))
+            .find_map(|(property, size)| size.intrinsic().is_some().then_some(property))
         {
             return Err(StyleError::Unsupported(format!(
                 "@page {}: intrinsic size keyword",

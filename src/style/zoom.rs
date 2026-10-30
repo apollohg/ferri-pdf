@@ -1,6 +1,6 @@
 use crate::paint::{self, BackgroundImage, BasicShape, LengthPercentage};
 use crate::style::grid_values::{TrackBreadth, TrackSize};
-use crate::style::{LineHeight, Size, Style, TabSize};
+use crate::style::{LineHeight, Style, TabSize};
 use std::sync::Arc;
 
 pub(crate) const INITIAL_ZOOM: f32 = 1.0;
@@ -46,9 +46,7 @@ impl Style {
             &mut style.min_height,
             &mut style.max_height,
         ]) {
-            if let Size::Value(value) = value {
-                *value = value.zoomed(factor);
-            }
+            *value = value.zoomed(factor);
         }
         for value in &mut style.padding {
             *value = value.zoomed(factor);
@@ -75,7 +73,7 @@ impl Style {
                 *value = value.zoomed(factor);
             }
         }
-        if let crate::style::FlexBasis::Value(value) = &mut style.flex.basis {
+        if let crate::style::FlexBasis::Size(value) = &mut style.flex.basis {
             *value = value.zoomed(factor);
         }
         for template in &mut style.grid.templates {

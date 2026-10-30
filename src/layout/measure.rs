@@ -752,7 +752,7 @@ impl<'a> Measurer<'a> {
         self.native_sizing
             .as_ref()
             .filter(|sizing| std::ptr::eq(sizing.source, block))
-            .map(|sizing| sizing.vertical)
+            .map(|sizing| sizing.vertical.clone())
     }
 
     pub(super) fn vertical_box(
@@ -1207,7 +1207,7 @@ impl<'a> Measurer<'a> {
             if self.space.indefinite_inline
                 && block.image().is_none()
                 && style.display.is_block_container()
-                && style.width == crate::style::Size::Auto
+                && *style.width.basis() == crate::style::Size::Auto
                 && !self
                     .orthogonal_columns
                     .is_some_and(|columns| columns.matches(block.block))
@@ -1542,7 +1542,7 @@ impl<'a> Measurer<'a> {
                             || frame.cell_percentage_chain)
                             && frame.vertical.definite().is_none()
                             && child.image().is_none()
-                            && matches!(child_style.height, crate::style::Size::Value(_))
+                            && matches!(child_style.height.basis(), crate::style::Size::Value(_))
                             && child_style.height.resolve_definite(None).is_none();
                         let used_height = (cell_percentage_chain
                             && matches!(
@@ -1839,7 +1839,7 @@ pub(super) fn block_geometry<'a>(
         || (!transfers
             && ![&style.width, &style.min_width, &style.max_width]
                 .iter()
-                .any(|size| matches!(size, crate::style::Size::Intrinsic(_))))
+                .any(|size| size.intrinsic().is_some()))
     {
         return Ok(geometry);
     }

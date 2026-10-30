@@ -51,7 +51,7 @@ pub(super) fn axis_edges(edges: &Edges) -> [f32; 2] {
 /// §4.3: the automatic minimum size in the ratio-dependent axis of a non-replaced box that
 /// is not a scroll container is its min-content size.
 pub(super) fn content_minimum(style: &Style, minimum: &Size) -> bool {
-    matches!(minimum, Size::Auto) && !style.is_scroll_container()
+    *minimum.basis() == Size::Auto && !style.is_scroll_container()
 }
 
 /// The used content width of a non-replaced box whose width is automatic and whose height is
@@ -66,7 +66,7 @@ pub(super) fn width_from_height<'a>(
 ) -> Result<Option<f32>, Failure> {
     let block = block.into();
     let style = block.style();
-    if block.image().is_some() || style.width != Size::Auto {
+    if block.image().is_some() || *style.width.basis() != Size::Auto {
         return Ok(None);
     }
     let Some(ratio) = PreferredRatio::of_box(style, edges) else {
@@ -97,7 +97,7 @@ pub(super) fn width_from_height<'a>(
     Ok(Some(constrained_width_from_height(
         ratio,
         heights.constrain(height),
-        widths,
+        &widths,
         content,
     )))
 }
@@ -105,11 +105,12 @@ pub(super) fn width_from_height<'a>(
 pub(super) fn constrained_width_from_height(
     ratio: PreferredRatio,
     height: f32,
-    widths: SizeConstraints,
+    widths: &SizeConstraints,
     content_minimum: Option<f32>,
 ) -> f32 {
-    let mut width = ratio.width(height);
+    let mut width = widths.preferred(ratio.width(height));
     if let Some(content) = content_minimum {
+        let content = widths.automatic_minimum(content);
         width = width.max(
             widths
                 .maximum
@@ -138,7 +139,7 @@ pub(super) fn transfer_to_width(
         style.box_sizing,
         vertical,
     );
-    let definite_minimum = style.min_width != Size::Auto;
+    let definite_minimum = *style.min_width.basis() != Size::Auto;
     let minimum = style
         .min_height
         .resolve_definite(containing_height)

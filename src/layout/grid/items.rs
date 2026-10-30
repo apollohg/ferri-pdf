@@ -226,21 +226,25 @@ impl<'a> Item<'a> {
             width
         } else if let Some(width) = ratio_width {
             width
-        } else if auto == 0
-            && (justify == Alignment::Stretch
-                || (matches!(justify, Alignment::Normal | Alignment::Auto)
-                    && source.image().is_none()))
-        {
-            space
-        } else if source.image().is_some() {
-            crate::layout::images::size(source, available, available, height, None, None)[0]
         } else {
-            let natural = crate::layout::intrinsic::measure(source, measurer, available)?;
-            (natural.max.min(available).max(natural.min)
-                - edges.horizontal()
-                - margins[1].unwrap_or(0.0)
-                - margins[3].unwrap_or(0.0))
-            .max(0.0)
+            constraints.preferred(
+                if auto == 0
+                    && (justify == Alignment::Stretch
+                        || (matches!(justify, Alignment::Normal | Alignment::Auto)
+                            && source.image().is_none()))
+                {
+                    space
+                } else if source.image().is_some() {
+                    crate::layout::images::size(source, available, available, height, None, None)[0]
+                } else {
+                    let natural = crate::layout::intrinsic::measure(source, measurer, available)?;
+                    (natural.max.min(available).max(natural.min)
+                        - edges.horizontal()
+                        - margins[1].unwrap_or(0.0)
+                        - margins[3].unwrap_or(0.0))
+                    .max(0.0)
+                },
+            )
         });
         let free = available
             - width
@@ -342,12 +346,15 @@ impl<'a> Item<'a> {
         available: f32,
     ) -> Result<MeasuredBlock<'a>, Failure> {
         let used = self.stretch().then(|| {
-            self.height(Some(available)).constrain(
-                (available
-                    - self.vertical_edges()
-                    - self.margins[0].unwrap_or(0.0)
-                    - self.margins[2].unwrap_or(0.0))
-                .max(0.0),
+            let heights = self.height(Some(available));
+            heights.constrain(
+                heights.preferred(
+                    (available
+                        - self.vertical_edges()
+                        - self.margins[0].unwrap_or(0.0)
+                        - self.margins[2].unwrap_or(0.0))
+                    .max(0.0),
+                ),
             )
         });
         self.measure(measurer, Some(available), used)
@@ -403,7 +410,7 @@ impl<'a> Item<'a> {
             && [&style.height, &style.min_height, &style.max_height]
                 .into_iter()
                 .any(|size| {
-                    matches!(size, Size::Value(_)) && size.resolve_definite(None).is_none()
+                    matches!(size.basis(), Size::Value(_)) && size.resolve_definite(None).is_none()
                 });
         (self.align == Alignment::Baseline
             && self.margins[0].is_some()

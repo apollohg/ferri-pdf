@@ -1040,14 +1040,15 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         .map_err(letter_text_error)?;
         // §7.5.5: an automatic block size spans the letter's lines as border-box alignment
         // would, and is definite.
-        if style.height == crate::style::Size::Auto {
+        if *style.height.basis() == crate::style::Size::Auto {
             let span = surrounding.span(initial.size);
             let height = match style.box_sizing {
                 crate::style::BoxSizing::BorderBox => span,
                 crate::style::BoxSizing::ContentBox => span - block_axis_edges(style)?,
             };
-            style.height =
-                crate::style::Size::Value(crate::style::LengthPercentage::Length(height.max(0.0)));
+            style.height = style.height.with_automatic(crate::style::Size::Value(
+                crate::style::LengthPercentage::Length(height.max(0.0)),
+            ));
         }
         block.initial_letter = Some(InitialLetterBox {
             surrounding,

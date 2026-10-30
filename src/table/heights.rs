@@ -23,8 +23,7 @@ impl HeightConstraint {
             self.edges,
         );
         let content = (natural - self.edges).max(0.0);
-        Ok(natural
-            .max(constraints.constrain(constraints.specified.unwrap_or(content)) + self.edges))
+        Ok(natural.max(constraints.constrain(constraints.preferred(content)) + self.edges))
     }
     fn is_auto(&self) -> bool {
         [&self.specified, &self.minimum, &self.maximum]
@@ -56,11 +55,7 @@ impl<'a> HeightInput<'a> {
             cells,
             rows: &[],
             spacing,
-            table: SizeConstraints {
-                specified: None,
-                minimum: 0.0,
-                maximum: None,
-            },
+            table: SizeConstraints::fixed(None, 0.0, None),
         }
     }
 }
@@ -152,11 +147,7 @@ impl Grid {
         };
         let base = heights.iter().sum::<f32>();
         let natural = base + gaps;
-        let table = natural.max(
-            input
-                .table
-                .constrain(input.table.specified.unwrap_or(natural)),
-        );
+        let table = natural.max(input.table.constrain(input.table.preferred(natural)));
         finite([table])?;
         if self.rows > 0 && table > natural {
             let target = table - gaps;
@@ -266,11 +257,7 @@ mod tests {
             let result = grid
                 .row_heights(&HeightInput {
                     rows: &rows,
-                    table: SizeConstraints {
-                        specified: Some(100.0),
-                        minimum: 0.0,
-                        maximum: None,
-                    },
+                    table: SizeConstraints::fixed(Some(100.0), 0.0, None),
                     ..HeightInput::natural(&cells, 0.0)
                 })
                 .unwrap();
@@ -311,11 +298,7 @@ mod tests {
         ] {
             let result = grid
                 .row_heights(&HeightInput {
-                    table: SizeConstraints {
-                        specified,
-                        minimum,
-                        maximum,
-                    },
+                    table: SizeConstraints::fixed(specified, minimum, maximum),
                     ..HeightInput::natural(&cells, 4.0)
                 })
                 .unwrap();
@@ -328,11 +311,7 @@ mod tests {
         let empty = Grid::new(&[], 0).unwrap();
         let result = empty
             .row_heights(&HeightInput {
-                table: SizeConstraints {
-                    specified: Some(100.0),
-                    minimum: 0.0,
-                    maximum: None,
-                },
+                table: SizeConstraints::fixed(Some(100.0), 0.0, None),
                 ..HeightInput::natural(&[], 4.0)
             })
             .unwrap();
@@ -411,11 +390,7 @@ mod tests {
             ];
             let result = grid
                 .row_heights(&HeightInput {
-                    table: SizeConstraints {
-                        specified: Some(100.0),
-                        minimum: 0.0,
-                        maximum: None,
-                    },
+                    table: SizeConstraints::fixed(Some(100.0), 0.0, None),
                     ..HeightInput::natural(&cells, 0.0)
                 })
                 .unwrap();

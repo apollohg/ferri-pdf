@@ -190,7 +190,7 @@ pub(super) fn inline_horizontal(
     }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone)]
 pub(super) struct VerticalBox {
     constraints: SizeConstraints,
     edges: f32,
@@ -206,9 +206,7 @@ pub(super) struct VerticalBox {
 }
 #[derive(Clone, Hash, PartialEq, Eq)]
 pub(super) struct VerticalKey {
-    specified: Option<u32>,
-    minimum: u32,
-    maximum: Option<u32>,
+    constraints: crate::style::ConstraintsKey,
     edges: u32,
     table_cell: bool,
     ratio_height: Option<(u32, bool)>,
@@ -219,11 +217,7 @@ pub(super) struct VerticalKey {
 impl VerticalKey {
     pub(super) fn vertical(&self) -> VerticalBox {
         VerticalBox {
-            constraints: SizeConstraints {
-                specified: self.specified.map(f32::from_bits),
-                minimum: f32::from_bits(self.minimum),
-                maximum: self.maximum.map(f32::from_bits),
-            },
+            constraints: self.constraints.constraints(),
             edges: f32::from_bits(self.edges),
             table_cell: self.table_cell,
             ratio_height: self
@@ -241,15 +235,13 @@ impl VerticalBox {
         self
     }
 
-    pub(super) fn constraints(self) -> SizeConstraints {
-        self.constraints
+    pub(super) fn constraints(&self) -> SizeConstraints {
+        self.constraints.clone()
     }
 
-    pub(super) fn key(self) -> VerticalKey {
+    pub(super) fn key(&self) -> VerticalKey {
         VerticalKey {
-            specified: self.constraints.specified.map(f32::to_bits),
-            minimum: self.constraints.minimum.to_bits(),
-            maximum: self.constraints.maximum.map(f32::to_bits),
+            constraints: self.constraints.key(),
             edges: self.edges.to_bits(),
             table_cell: self.table_cell,
             ratio_height: self
@@ -271,17 +263,13 @@ impl VerticalBox {
             + horizontal.border[2];
         let table_cell = style.display == crate::style::Display::TableCell;
         let constraints = if table_cell {
-            SizeConstraints {
-                specified: None,
-                minimum: 0.0,
-                maximum: None,
-            }
+            SizeConstraints::default()
         } else {
-            SizeConstraints::new(
-                [&style.height, &style.min_height, &style.max_height],
-                containing_height,
-                style.box_sizing,
-                edges,
+            let sizes = [&style.height, &style.min_height, &style.max_height];
+            let margins = horizontal.margin[0].unwrap_or(0.0) + horizontal.margin[2].unwrap_or(0.0);
+            SizeConstraints::new(sizes, containing_height, style.box_sizing, edges).with_stretch(
+                sizes,
+                containing_height.map(|height| (height - margins - edges).max(0.0)),
             )
         };
         let horizontal_edges = horizontal.padding[1]
@@ -304,11 +292,7 @@ impl VerticalBox {
             content_minimum: false,
             contained: style.containment().size[1]
                 .then(|| style.containment.intrinsic[1].explicit().unwrap_or(0.0)),
-            constraints: SizeConstraints {
-                specified: None,
-                minimum: 0.0,
-                maximum: None,
-            },
+            constraints: SizeConstraints::default(),
         }
         .with_constraints(constraints)
     }
@@ -328,11 +312,7 @@ impl VerticalBox {
     pub(crate) fn with_used_height(mut self, height: Option<f32>) -> Self {
         if let Some(height) = height {
             self.content_minimum = false;
-            self.constraints = SizeConstraints {
-                specified: Some(height),
-                minimum: 0.0,
-                maximum: None,
-            };
+            self.constraints = SizeConstraints::fixed(Some(height), 0.0, None);
         }
         self
     }
@@ -345,8 +325,7 @@ impl VerticalBox {
         self.constraints.specified.is_none()
     }
     pub(crate) fn collapse_through(&self) -> bool {
-        self.constraints.minimum == 0.0
-            && self.constraints.specified.is_none_or(|value| value == 0.0)
+        self.constraints.minimum == 0.0 && self.constraints.preferred(0.0) == 0.0
     }
     pub(crate) fn used_height(&self, natural: f32) -> f32 {
         if self.table_cell {
@@ -362,7 +341,7 @@ impl VerticalBox {
             .constrain(match self.constraints.specified {
                 Some(height) if self.content_minimum => height.max(content),
                 Some(height) => height,
-                None => content,
+                None => self.constraints.preferred(content),
             })
             + self.edges
     }

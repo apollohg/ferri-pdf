@@ -34,7 +34,9 @@ pub(crate) use boxes::{
 pub use boxes::{Border, BorderStyle, INLINE_EDGES, Outline, OutlineStyle};
 #[cfg(test)]
 pub(crate) use calculation::MAX_CALC_MAGNITUDE;
-pub(crate) use calculation::{BinaryFunction, Calculation, RoundingStrategy, UnaryFunction};
+pub(crate) use calculation::{
+    BinaryFunction, Calculation, RoundingStrategy, SIZE_KEYWORD, UnaryFunction,
+};
 pub use clip::{Clip, ClipBounds};
 pub(crate) use color_space::{
     AbsoluteColor, ColorSpace, HueInterpolation, Interpolation, MixItem, normalize_hue, quantize,

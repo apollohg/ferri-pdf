@@ -85,6 +85,17 @@ impl<'t> Prepared<'_, 't> {
     }
     fn variable(&mut self, axis: usize, available: f32, outer: f32, position: usize) {
         self.content[axis] = (outer - self.outer_edges(axis)).max(0.0);
+        let style = &self.margin.style;
+        if axis == HORIZONTAL && *style.width.basis() == Size::Auto {
+            // CSS Values 5 §10.2: a `calc-size()` adjusts the automatic width once resolved.
+            self.content[axis] = crate::style::SizeConstraints::new(
+                [&style.width, &Size::Auto, &Size::Auto],
+                Some(available),
+                style.box_sizing,
+                self.edges(axis),
+            )
+            .preferred(self.content[axis]);
+        }
         let offset = match position {
             START => 0.0,
             CENTER => (available - outer) / 2.0,
@@ -541,17 +552,25 @@ pub(super) fn render<'t>(
                     prepared.layout(measurer)?;
                     [prepared.block_extent(); 2]
                 };
-                if axis == HORIZONTAL
-                    && let Size::Intrinsic(keyword) = prepared.margin.style.width
-                {
+                if axis == HORIZONTAL && prepared.margin.style.width.intrinsic().is_some() {
                     let available = containing[axis] - prepared.outer_edges(axis);
-                    prepared.specified[axis] = Some(keyword.resolve(
+                    let style = &prepared.margin.style;
+                    let sizes = [&style.width, &Size::Auto, &Size::Auto];
+                    prepared.specified[axis] = crate::style::SizeConstraints::new(
+                        sizes,
+                        Some(containing[axis]),
+                        style.box_sizing,
+                        prepared.edges(axis),
+                    )
+                    .with_intrinsic(
+                        sizes,
                         crate::style::IntrinsicWidths {
                             min: bounds[0],
                             max: bounds[1],
                         },
                         Some(available.max(0.0)),
-                    ));
+                    )
+                    .specified;
                 }
                 let edges = prepared.outer_edges(axis);
                 dimensions[position] = Variable {

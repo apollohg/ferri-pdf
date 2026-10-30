@@ -86,21 +86,90 @@ pub(crate) enum Size {
     Auto,
     Value(LengthPercentage),
     Intrinsic(crate::style::IntrinsicSizing),
+    /// `calc-size()`: sized as its basis, then adjusted by its calculation (CSS Values 5
+    /// §10.2).
+    Calculated(std::sync::Arc<CalculatedSize>),
 }
+
+/// A canonical `calc-size()` (CSS Values 5 §10.1).
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub(crate) struct CalculatedSize {
+    /// What the size behaves as: `auto`, an intrinsic keyword, `100%` for a basis with
+    /// percentages, or a zero length for `any`.
+    pub basis: Size,
+    /// Points, where `size` is the basis's size in the box `box-sizing` names.
+    pub calculation: crate::paint::Calculation,
+}
+impl CalculatedSize {
+    /// The used size from the basis's `size`; percentages in the calculation resolve
+    /// against `percentage_basis`, or to zero when it is indefinite (§10.2).
+    pub(crate) fn resolve(&self, size: f32, percentage_basis: Option<f32>) -> f32 {
+        self.calculation
+            .resolve_sized(percentage_basis.unwrap_or(0.0), size)
+    }
+}
+
 impl Size {
+    /// What the size is treated as wherever layout asks which kind of size it is (CSS
+    /// Values 5 §10.2).
+    pub(crate) fn basis(&self) -> &Self {
+        match self {
+            Self::Calculated(calculated) => &calculated.basis,
+            other => other,
+        }
+    }
+    /// An intrinsic keyword, directly or as a `calc-size()` basis.
+    pub(crate) fn intrinsic(&self) -> Option<&crate::style::IntrinsicSizing> {
+        match self.basis() {
+            Self::Intrinsic(keyword) => Some(keyword),
+            _ => None,
+        }
+    }
     /// Percentages, including inside calculations, need a definite basis.
     pub(crate) fn resolve_definite(&self, containing_size: Option<f32>) -> Option<f32> {
         match self {
             Self::Auto | Self::Intrinsic(_) => None,
             Self::Value(LengthPercentage::Length(value)) => Some(*value),
             Self::Value(value) => containing_size.map(|basis| value.resolve(basis)),
+            Self::Calculated(calculated) => calculated
+                .basis
+                .resolve_definite(containing_size)
+                .map(|size| calculated.resolve(size, containing_size)),
         }
     }
     pub(crate) const ZERO: Self = Self::Value(LengthPercentage::ZERO);
-    pub(crate) fn resolve(&self, containing_width: f32) -> Option<f32> {
+    /// The size under `zoom`, whose lengths scale and whose percentage bases are used sizes.
+    #[must_use]
+    pub(crate) fn zoomed(&self, factor: f32) -> Self {
+        use crate::style::IntrinsicSizing;
         match self {
-            Self::Auto | Self::Intrinsic(_) => None,
-            Self::Value(value) => Some(value.resolve(containing_width)),
+            Self::Value(value) => Self::Value(value.zoomed(factor)),
+            Self::Intrinsic(IntrinsicSizing::FitContentLimit(limit)) => {
+                Self::Intrinsic(IntrinsicSizing::FitContentLimit(limit.zoomed(factor)))
+            }
+            Self::Calculated(calculated) => Self::Calculated(std::sync::Arc::new(CalculatedSize {
+                basis: calculated.basis.zoomed(factor),
+                calculation: calculated.calculation.clone().zoomed_length(factor),
+            })),
+            Self::Auto | Self::Intrinsic(_) => self.clone(),
+        }
+    }
+    pub(crate) fn resolve(&self, containing_width: f32) -> Option<f32> {
+        self.resolve_definite(Some(containing_width))
+    }
+    /// The size with `automatic` in place of an `auto` basis, for boxes whose automatic size
+    /// a host language defines.
+    #[must_use]
+    pub(crate) fn with_automatic(&self, automatic: Self) -> Self {
+        match self {
+            Self::Auto => automatic,
+            Self::Calculated(calculated) if calculated.basis == Self::Auto => {
+                Self::Calculated(std::sync::Arc::new(CalculatedSize {
+                    basis: automatic,
+                    calculation: calculated.calculation.clone(),
+                }))
+            }
+            _ => self.clone(),
         }
     }
     pub(crate) fn is_zero(&self) -> bool {
@@ -108,10 +177,10 @@ impl Size {
     }
     /// CSS Sizing 3 §3.2: intrinsic keywords give a non-replaced box its automatic block size.
     pub(crate) fn is_auto_block_size(&self, replaced: bool) -> bool {
-        match self {
+        match self.basis() {
             Self::Auto => true,
             Self::Intrinsic(_) => !replaced,
-            Self::Value(_) => false,
+            Self::Value(_) | Self::Calculated(_) => false,
         }
     }
     /// `auto`, and `none` for maximum sizes, are unconstrained.
@@ -119,20 +188,48 @@ impl Size {
         value: &Component,
         relative: &Relative<'_>,
     ) -> Result<Self, StyleError> {
+        use crate::style::IntrinsicSizing;
+        match value.unwrap() {
+            Component::Function(Keyword::FitContent, Some(limit)) => {
+                return Ok(Self::Intrinsic(IntrinsicSizing::FitContentLimit(
+                    length_percentage(limit, relative)?,
+                )));
+            }
+            Component::Function(Keyword::CalcSize, Some(source)) => {
+                return calculated(source, relative);
+            }
+            _ => {}
+        }
         match value.keyword() {
             Some(Keyword::Auto | Keyword::None) => Ok(Self::Auto),
-            Some(Keyword::MinContent) => {
-                Ok(Self::Intrinsic(crate::style::IntrinsicSizing::MinContent))
-            }
-            Some(Keyword::MaxContent) => {
-                Ok(Self::Intrinsic(crate::style::IntrinsicSizing::MaxContent))
-            }
-            Some(Keyword::FitContent) => {
-                Ok(Self::Intrinsic(crate::style::IntrinsicSizing::FitContent))
-            }
+            Some(Keyword::MinContent) => Ok(Self::Intrinsic(IntrinsicSizing::MinContent)),
+            Some(Keyword::MaxContent) => Ok(Self::Intrinsic(IntrinsicSizing::MaxContent)),
+            Some(Keyword::FitContent) => Ok(Self::Intrinsic(IntrinsicSizing::FitContent)),
             _ => length_percentage(value, relative).map(Self::Value),
         }
     }
+}
+
+/// A matched `calc-size()`, whose source the matcher keeps whole.
+fn calculated(source: &Component, relative: &Relative<'_>) -> Result<Size, StyleError> {
+    use crate::style::{IntrinsicSizing, calc::CalcSizeBasis};
+    let Component::Tokens(source) = source else {
+        return Err(unsupported(source));
+    };
+    let calc_size = crate::style::values::calc_size(source, relative)?;
+    let basis = match calc_size.basis {
+        CalcSizeBasis::Any => Size::ZERO,
+        CalcSizeBasis::Percentage => Size::Value(LengthPercentage::Percentage(1.0)),
+        CalcSizeBasis::Auto => Size::Auto,
+        CalcSizeBasis::MinContent => Size::Intrinsic(IntrinsicSizing::MinContent),
+        CalcSizeBasis::MaxContent => Size::Intrinsic(IntrinsicSizing::MaxContent),
+        CalcSizeBasis::FitContent => Size::Intrinsic(IntrinsicSizing::FitContent),
+        CalcSizeBasis::Stretch => Size::Intrinsic(IntrinsicSizing::Stretch),
+    };
+    Ok(Size::Calculated(std::sync::Arc::new(CalculatedSize {
+        basis,
+        calculation: calc_size.calculation,
+    })))
 }
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]

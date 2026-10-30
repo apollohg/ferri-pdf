@@ -1,6 +1,6 @@
 use crate::document::{BlockBox, BlockContent};
 use crate::layout::measure::{BlockSource, Failure, Measurer};
-use crate::style::{BoxSizing, LengthPercentage, Size};
+use crate::style::Size;
 use crate::text::IntrinsicWidths;
 
 /// Content-box min- and max-content widths; replaced elements with only an aspect ratio
@@ -146,20 +146,35 @@ pub(super) fn outer_widths(
     box_edges: crate::layout::geometry::Edges,
 ) -> IntrinsicWidths {
     let edges = box_edges.horizontal();
-    if let Size::Value(LengthPercentage::Length(width)) = style.width {
-        let content = if style.box_sizing == BoxSizing::BorderBox {
-            (width - edges).max(0.0)
-        } else {
-            width
-        };
-        sizes.min = content;
-        sizes.max = content;
-    }
     let natural = sizes;
-    match style.width {
-        Size::Intrinsic(crate::style::IntrinsicSizing::MinContent) => sizes.max = sizes.min,
-        Size::Intrinsic(crate::style::IntrinsicSizing::MaxContent) => sizes.min = sizes.max,
-        _ => {}
+    // CSS Sizing 3 §5.2: a definite preferred size is the contribution, and a percentage or
+    // `fit-content()` percentage behaves as `auto`; a `calc-size()` adjusts each contribution
+    // of its basis (CSS Values 5 §10.2).
+    let preferred = crate::layout::geometry::SizeConstraints::new(
+        [&style.width, &Size::Auto, &Size::Auto],
+        None,
+        style.box_sizing,
+        edges,
+    );
+    if let Some(width) = preferred.specified {
+        sizes.min = width;
+        sizes.max = width;
+    } else {
+        use crate::style::IntrinsicSizing;
+        match style.width.intrinsic() {
+            Some(IntrinsicSizing::MinContent) => sizes.max = sizes.min,
+            Some(IntrinsicSizing::MaxContent) => sizes.min = sizes.max,
+            Some(keyword @ IntrinsicSizing::FitContentLimit(limit))
+                if Size::Value(limit.clone()).resolve_definite(None).is_some() =>
+            {
+                let width = keyword.resolve(natural, None, None, preferred.sizing_edges());
+                sizes.min = width;
+                sizes.max = width;
+            }
+            _ => {}
+        }
+        sizes.min = preferred.adjust(&style.width, sizes.min);
+        sizes.max = preferred.adjust(&style.width, sizes.max);
     }
     let mut constraints = crate::layout::geometry::SizeConstraints::new(
         [&Size::Auto, &style.min_width, &style.max_width],
@@ -174,7 +189,7 @@ pub(super) fn outer_widths(
     );
     // CSS Sizing 4 §4.2–4.4: an automatic width contributes a definite height through the
     // preferred aspect ratio, and otherwise the height's limits transfer into the width's.
-    if style.width == Size::Auto
+    if *style.width.basis() == Size::Auto
         && let Some(ratio) = crate::layout::ratio::PreferredRatio::of_box(style, &box_edges)
     {
         let [_, vertical] = crate::layout::ratio::axis_edges(&box_edges);
@@ -220,7 +235,7 @@ pub(super) fn width_constraints<'a>(
     let style = block.style();
     let sizes = [&style.width, &style.min_width, &style.max_width];
     let constraints = crate::style::SizeConstraints::new(sizes, basis, style.box_sizing, edges);
-    if sizes.iter().any(|size| matches!(size, Size::Intrinsic(_))) {
+    if sizes.iter().any(|size| size.intrinsic().is_some()) {
         let natural = content(block, measurer, basis.unwrap_or(0.0))?;
         Ok(constraints.with_intrinsic(sizes, natural, available))
     } else {

@@ -106,7 +106,8 @@ pub(crate) use baseline_values::{
 };
 pub(crate) use bookmark_values::BookmarkStyle;
 pub(crate) use box_values::{
-    BoxSizing, BreakBetween, BreakInside, Display, LengthPercentage, Size, Visibility,
+    BoxSizing, BreakBetween, BreakInside, CalculatedSize, Display, LengthPercentage, Size,
+    Visibility,
 };
 pub(crate) use computed::{OriginNode, Style, StyleOrigin};
 pub(crate) use container_queries::{QueryContainers, QuerySizes};
@@ -156,7 +157,8 @@ pub(crate) use resolution::PageGeometry;
 pub(crate) use ruby_values::{RubyAlign, RubyMerge, RubyPosition, RubyStyle};
 pub(crate) use selector::{GeneratedPseudoElement, PseudoElement};
 pub(crate) use sizing::{
-    AspectRatio, IntrinsicSizing, IntrinsicWidths, Overconstraint, SizeConstraints, UsedAxis,
+    AspectRatio, ConstraintsKey, IntrinsicSizing, IntrinsicWidths, Overconstraint, SizeConstraints,
+    UsedAxis,
 };
 pub(crate) use source_set::ImageSource;
 pub(crate) use string_values::StringAssignment;

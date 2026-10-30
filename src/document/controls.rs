@@ -117,14 +117,15 @@ pub(super) fn used_style(element: Element<'_>, style: &mut Style) {
             }
         }
         "marquee"
-            if style.height == Size::Auto
-                && element.attr("direction").is_some_and(|direction| {
-                    direction.eq_ignore_ascii_case("up") || direction.eq_ignore_ascii_case("down")
-                }) =>
+            if element.attr("direction").is_some_and(|direction| {
+                direction.eq_ignore_ascii_case("up") || direction.eq_ignore_ascii_case("down")
+            }) =>
         {
-            style.height = Size::Value(LengthPercentage::Length(
-                VERTICAL_MARQUEE_HEIGHT_PX * POINTS_PER_PIXEL,
-            ));
+            style.height = style
+                .height
+                .with_automatic(Size::Value(LengthPercentage::Length(
+                    VERTICAL_MARQUEE_HEIGHT_PX * POINTS_PER_PIXEL,
+                )));
         }
         _ => {}
     }
@@ -137,8 +138,10 @@ pub(super) fn used_style(element: Element<'_>, style: &mut Style) {
             Some(InputType::Submit | InputType::Reset | InputType::Button | InputType::Color)
         )
         || is_rendered_legend(element, style);
-    if button_layout && style.width == Size::Auto {
-        style.width = Size::Intrinsic(IntrinsicSizing::FitContent);
+    if button_layout {
+        style.width = style
+            .width
+            .with_automatic(Size::Intrinsic(IntrinsicSizing::FitContent));
     }
 }
 
@@ -827,9 +830,9 @@ impl<'b> Builder<'b, '_> {
             )?
             .used();
         style.display = Display::InlineBlock;
-        if style.width == Size::Auto {
-            style.width = Size::Intrinsic(IntrinsicSizing::FitContent);
-        }
+        style.width = style
+            .width
+            .with_automatic(Size::Intrinsic(IntrinsicSizing::FitContent));
         let decoration = self.resources.backgrounds(&style)?;
         let button = BlockBox::with_decoration(
             style.clone(),

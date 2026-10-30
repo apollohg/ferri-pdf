@@ -48,9 +48,11 @@ fn measure_inner<'a>(
         + spacing * (data.grid.columns + 1) as f32
         + caption_min;
     // Cyclic minima resolve percentages to zero; preferred and maximum sizes stay auto.
-    let minimum = style.min_width.resolve(0.0).map_or(Size::Auto, |value| {
-        Size::Value(LengthPercentage::Length(value))
-    });
+    let minimum = match style.min_width.resolve(0.0) {
+        Some(value) => Size::Value(LengthPercentage::Length(value)),
+        None if matches!(style.min_width, Size::Calculated(_)) => style.min_width.clone(),
+        None => Size::Auto,
+    };
     let sizes = if content_only {
         [&Size::Auto; 3]
     } else {
@@ -60,7 +62,7 @@ fn measure_inner<'a>(
     let constraints = if !content_only
         && [&style.width, &style.min_width, &style.max_width]
             .iter()
-            .any(|size| matches!(size, Size::Intrinsic(_)))
+            .any(|size| size.intrinsic().is_some())
     {
         constraints.with_intrinsic(
             [&style.width, &style.min_width, &style.max_width],

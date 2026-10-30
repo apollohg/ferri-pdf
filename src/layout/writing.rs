@@ -347,8 +347,8 @@ pub(super) fn measure<'a>(
         geometry.width
     };
     let available_inline = inner_width;
-    let auto_inline = style.height == crate::style::Size::Auto
-        || (matches!(style.height, crate::style::Size::Value(_))
+    let auto_inline = *style.height.basis() == crate::style::Size::Auto
+        || (matches!(style.height.basis(), crate::style::Size::Value(_))
             && style.height.resolve_definite(containing_height).is_none());
     let automatic = perpendicular
         && vertical.definite().is_none()
@@ -371,7 +371,7 @@ pub(super) fn measure<'a>(
             || style.display == crate::style::Display::TableCell
             || [&style.height, &style.min_height, &style.max_height]
                 .iter()
-                .any(|size| matches!(size, crate::style::Size::Intrinsic(_))))
+                .any(|size| size.intrinsic().is_some()))
     {
         let sizes = if automatic {
             super::intrinsic::flow(inner, measurer, inner_width)?
@@ -402,13 +402,16 @@ pub(super) fn measure<'a>(
             sizes,
             Some(available),
         );
-        let preferred = constraints.specified.map_or(inner_width, |specified| {
-            if style.display == crate::style::Display::TableCell {
-                inner_width.max(specified)
-            } else {
-                specified
-            }
-        });
+        let preferred = constraints.specified.map_or_else(
+            || constraints.preferred(inner_width),
+            |specified| {
+                if style.display == crate::style::Display::TableCell {
+                    inner_width.max(specified)
+                } else {
+                    specified
+                }
+            },
+        );
         inner_width = constraints.constrain(preferred);
         if style.display != crate::style::Display::TableCell {
             vertical = vertical.with_constraints(constraints);
@@ -435,7 +438,7 @@ pub(super) fn measure<'a>(
         let mut columns = super::multicol::OrthogonalColumns {
             source: std::ptr::from_ref(inner),
             principal: true,
-            block_auto: matches!(style.width, crate::style::Size::Auto),
+            block_auto: matches!(style.width.basis(), crate::style::Size::Auto),
             content_max: widths.max,
             minimum: limits.minimum,
             maximum: limits.maximum,
@@ -447,8 +450,8 @@ pub(super) fn measure<'a>(
                 x: 0.0,
                 rtl: inner.style().used_rtl(),
             },
-            length: (matches!(style.width, crate::style::Size::Value(_))
-                || (matches!(style.width, crate::style::Size::Auto)
+            length: (matches!(style.width.basis(), crate::style::Size::Value(_))
+                || (matches!(style.width.basis(), crate::style::Size::Auto)
                     && (style.multicol.count.is_none() || style.multicol.width.is_none())))
             .then_some(geometry.width),
         };
@@ -500,7 +503,7 @@ pub(super) fn measure<'a>(
         measurer.native_sizing = (!perpendicular).then(|| {
             std::rc::Rc::new(super::measure::NativeSizing {
                 source: std::ptr::from_ref(inner),
-                vertical: vertical.native_root(),
+                vertical: vertical.clone().native_root(),
                 scroll_container: style.is_scroll_container(),
             })
         });
@@ -514,7 +517,8 @@ pub(super) fn measure<'a>(
                 vertical.definite()
             },
             if perpendicular {
-                matches!(style.width, crate::style::Size::Value(_)).then_some(geometry.width)
+                matches!(style.width.basis(), crate::style::Size::Value(_))
+                    .then_some(geometry.width)
             } else {
                 vertical.definite()
             },
@@ -575,7 +579,7 @@ pub(super) fn measure<'a>(
                 border: geometry.border,
             },
         )
-    } else if perpendicular && !matches!(style.width, crate::style::Size::Value(_)) {
+    } else if perpendicular && !matches!(style.width.basis(), crate::style::Size::Value(_)) {
         let edges = geometry::Edges {
             padding: geometry.padding,
             border: geometry.border,
@@ -595,20 +599,21 @@ pub(super) fn measure<'a>(
             Some(geometry.containing_width),
         );
         super::ratio::transfer_to_width(style, &mut constraints, containing_height, &edges);
-        let preferred = if style.width == crate::style::Size::Auto {
-            super::ratio::PreferredRatio::of_box(style, &edges)
-                .zip(vertical.definite())
-                .map_or(inner_height, |(ratio, height)| {
-                    let width = ratio.width(height);
-                    if super::ratio::content_minimum(style, &style.min_width) {
-                        width.max(inner_height)
-                    } else {
-                        width
-                    }
-                })
-        } else {
-            constraints.specified.unwrap_or(inner_height)
-        };
+        let preferred =
+            constraints.preferred(if *style.width.basis() == crate::style::Size::Auto {
+                super::ratio::PreferredRatio::of_box(style, &edges)
+                    .zip(vertical.definite())
+                    .map_or(inner_height, |(ratio, height)| {
+                        let width = ratio.width(height);
+                        if super::ratio::content_minimum(style, &style.min_width) {
+                            width.max(constraints.automatic_minimum(inner_height))
+                        } else {
+                            width
+                        }
+                    })
+            } else {
+                inner_height
+            });
         geometry::horizontal_with_edges(
             style,
             geometry.containing_x,

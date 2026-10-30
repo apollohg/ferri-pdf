@@ -424,7 +424,7 @@ fn serialize_calculation(calculation: &Calculation) -> String {
 fn is_length(node: &Calculation) -> bool {
     match node {
         Calculation::Value(_) | Calculation::Invert(_) | Calculation::Eased(..) => false,
-        Calculation::Percentage(_) => true,
+        Calculation::Percentage(_) | Calculation::Size => true,
         Calculation::Sum(items)
         | Calculation::Product(items)
         | Calculation::Min(items)
@@ -491,6 +491,7 @@ fn write_calculation(output: &mut String, node: &Calculation, length: bool) {
         Calculation::Percentage(fraction) => {
             write!(output, "{}%", fraction * PERCENT).expect("writing to a string cannot fail");
         }
+        Calculation::Size => output.push_str(crate::paint::SIZE_KEYWORD),
         Calculation::Sum(terms) => {
             output.push('(');
             write_list(output, terms, " + ", length);

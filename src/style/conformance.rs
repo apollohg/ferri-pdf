@@ -48,6 +48,13 @@ const FRAGMENT_REFERENCES: [Property; 3] = [
     Property::MarkerEnd,
 ];
 const FRAGMENT_SAMPLE: &str = "url(#sample)";
+/// `calc-size()` arguments are `<calc-sum>`s that must resolve to lengths, which the grammar
+/// leaves to CSS Values 5 §10; every sizing property accepts these bases.
+const CALC_SIZE_SAMPLES: [&str; 3] = [
+    "calc-size(min-content, size * 2)",
+    "calc-size(any, 12pt)",
+    "calc-size(50%, size + 1pt)",
+];
 
 type Tokens = Vec<String>;
 
@@ -72,6 +79,10 @@ impl Sampler {
             Node::Base(base, range) => base_samples(*base, *range)
                 .into_iter()
                 .map(|sample| vec![sample])
+                .collect(),
+            Node::Function(Keyword::CalcSize, _) => CALC_SIZE_SAMPLES
+                .iter()
+                .map(|sample| vec![(*sample).to_owned()])
                 .collect(),
             Node::Function(name, body) => match body {
                 None => vec![vec![format!("{}()", name.name())]],

@@ -128,11 +128,18 @@ pub(super) fn constraints<'a>(
         min: width,
         max: width,
     };
+    // The stretch-fit sizes fill the containing block with the margin boxes.
+    let margins = |sides: [usize; 2]| {
+        sides
+            .map(|side| style.margin[side].resolve(containing_width).unwrap_or(0.0))
+            .iter()
+            .sum::<f32>()
+    };
     [
         widths.with_intrinsic(
             [&style.width, &style.min_width, &style.max_width],
             intrinsic,
-            Some(containing_width),
+            Some((containing_width - horizontal - margins([1, 3])).max(0.0)),
         ),
         heights.with_intrinsic(
             [&style.height, &style.min_height, &style.max_height],
@@ -140,7 +147,7 @@ pub(super) fn constraints<'a>(
                 min: height,
                 max: height,
             },
-            containing_height,
+            containing_height.map(|containing| (containing - vertical - margins([0, 2])).max(0.0)),
         ),
     ]
 }
@@ -165,11 +172,9 @@ pub(super) fn size<'a>(
         crate::layout::ratio::axis_edges(&edges),
     );
     let [width, height] = constraints(block, containing_width, containing_height);
-    let specified_width = used_width.or(width.specified);
-    let specified_height = used_height.or(height.specified);
     let constrain_width = |v| used_width.unwrap_or_else(|| width.constrain(v));
     let constrain_height = |v| used_height.unwrap_or_else(|| height.constrain(v));
-    match (specified_width, specified_height) {
+    let sized = |specified: [Option<f32>; 2]| match (specified[0], specified[1]) {
         (Some(w), Some(h)) => [constrain_width(w), constrain_height(h)],
         (Some(w), None) => {
             let w = constrain_width(w);
@@ -196,6 +201,25 @@ pub(super) fn size<'a>(
             }
             [width.constrain(w), height.constrain(h)]
         }
+    };
+    let specified = [
+        used_width.or(width.specified),
+        used_height.or(height.specified),
+    ];
+    let automatic = sized(specified);
+    // CSS Values 5 §10.2: a `calc-size()` adjusts an automatic size, which the other axis
+    // then follows as it follows a specified one.
+    let adjusted = [(&width, 0), (&height, 1)].map(|(constraints, axis)| {
+        specified[axis].or_else(|| {
+            constraints
+                .calculates_automatic()
+                .then(|| constraints.preferred(automatic[axis]))
+        })
+    });
+    if adjusted == specified {
+        automatic
+    } else {
+        sized(adjusted)
     }
 }
 

@@ -45,19 +45,22 @@ impl CellWidth {
         let limits = limits.with_intrinsic([&Size::Auto, minimum, maximum], natural, None);
         let constrain = |outer: f32| limits.constrain((outer - self.edges).max(0.0)) + self.edges;
         let min = constrain(self.min);
-        let preferred = if let Size::Intrinsic(value) = self.specified {
-            value.resolve(natural, None) + self.edges
-        } else {
-            match track_size(&self.specified) {
-                Some(LengthPercentage::Length(width)) => self.outer(*width),
-                _ => self.max,
+        let preferred = match track_size(&self.specified) {
+            Some(LengthPercentage::Length(width)) => self.outer(width),
+            _ if matches!(self.specified.basis(), Size::Auto | Size::Intrinsic(_)) => {
+                let sizes = [&self.specified, &Size::Auto, &Size::Auto];
+                SizeConstraints::new(sizes, None, BoxSizing::ContentBox, 0.0)
+                    .with_intrinsic(sizes, natural, None)
+                    .preferred(natural.max)
+                    + self.edges
             }
+            _ => self.max,
         };
         (min, constrain(preferred).max(min))
     }
     fn percentage(&self) -> f32 {
         let percent = |size: &Size| match track_size(size) {
-            Some(LengthPercentage::Percentage(value)) if *value != 0.0 => Some(*value),
+            Some(LengthPercentage::Percentage(value)) if value != 0.0 => Some(value),
             _ => None,
         };
         percent(&self.minimum).unwrap_or(0.0).max(
@@ -81,7 +84,7 @@ pub(crate) struct ColumnWidth {
 impl ColumnWidth {
     fn percentage(&self) -> f32 {
         let percentage = |size: &Size| match track_size(size) {
-            Some(LengthPercentage::Percentage(value)) => Some(*value),
+            Some(LengthPercentage::Percentage(value)) => Some(value),
             _ => None,
         };
         percentage(&self.specified)
@@ -90,11 +93,14 @@ impl ColumnWidth {
     }
 }
 
-/// CSS Values 3 §8.1 lets table cells and columns treat percentage calculations as `auto`.
-fn track_size(size: &Size) -> Option<&LengthPercentage> {
+/// CSS Values 3 §8.1 lets table cells and columns treat percentage calculations as `auto`;
+/// a `calc-size()` is a length where it is definite without the table's width (CSS Values 5
+/// §10.2).
+fn track_size(size: &Size) -> Option<LengthPercentage> {
     match size {
         Size::Value(LengthPercentage::Calc(_)) | Size::Auto | Size::Intrinsic(_) => None,
-        Size::Value(value) => Some(value),
+        Size::Value(value) => Some(value.clone()),
+        Size::Calculated(_) => size.resolve_definite(None).map(LengthPercentage::Length),
     }
 }
 
@@ -158,7 +164,7 @@ impl Grid {
                 widths: Vec::new(),
                 table: input
                     .table
-                    .constrain(input.table.specified.unwrap_or(0.0))
+                    .constrain(input.table.preferred(0.0))
                     .max(input.caption_min),
             });
         }
@@ -264,7 +270,7 @@ impl Grid {
         for column in input.columns {
             let minimum = column.minimum.resolve_definite(None).unwrap_or(0.0);
             let specified = match track_size(&column.specified) {
-                Some(LengthPercentage::Length(width)) => *width,
+                Some(LengthPercentage::Length(width)) => width,
                 _ => 0.0,
             };
             let maximum = column
@@ -303,12 +309,7 @@ impl Grid {
         }
         let target = input
             .table
-            .constrain(
-                input
-                    .table
-                    .specified
-                    .unwrap_or(input.available.min(max + gaps)),
-            )
+            .constrain(input.table.preferred(input.available.min(max + gaps)))
             .max(min + gaps)
             .max(input.caption_min);
         let available = (target - gaps).max(0.0);

@@ -95,7 +95,7 @@ impl FlowSpace {
             if widths.specified.is_some()
                 || (!self.indefinite_inline
                     && block.flow().is_none()
-                    && style.width == crate::style::Size::Auto)
+                    && *style.width.basis() == crate::style::Size::Auto)
             {
                 Some(geometry.width)
             } else {

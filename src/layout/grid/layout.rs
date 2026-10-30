@@ -34,7 +34,7 @@ pub(crate) fn measure<'a>(
             .is_some_and(|parent| parent.matches(block.block));
     let heights = measurer.native_vertical(block.block).map_or_else(
         || super::sizing::constraints(style, ROWS, containing_height, top + bottom, inherited_rows),
-        VerticalBox::constraints,
+        |vertical| vertical.constraints(),
     );
     let row_bounds = SizeBounds {
         min: heights.minimum,
@@ -214,7 +214,10 @@ pub(crate) fn measure<'a>(
                     source.style().overflow[1],
                     Overflow::Visible | Overflow::Clip
                 ))
-            .then_some(outer),
+            .then(|| {
+                let edges = item.vertical_edges() + margins;
+                constraints.automatic_minimum((outer - edges).max(0.0)) + edges
+            }),
         });
         prepared.push(item);
     }

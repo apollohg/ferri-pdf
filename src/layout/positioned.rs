@@ -190,7 +190,7 @@ impl Axis {
         auto_size: &mut dyn FnMut(f32) -> f32,
     ) -> Solved {
         let tentative = self.solve(constraints.specified, auto_size);
-        let size = constraints.constrain(tentative.size);
+        let size = constraints.constrain(constraints.preferred(tentative.size));
         if size == tentative.size {
             tentative
         } else {
@@ -416,7 +416,7 @@ fn solve<'a>(
     let intrinsic = if shrinks
         || [&style.width, &style.min_width, &style.max_width]
             .iter()
-            .any(|size| matches!(size, crate::style::Size::Intrinsic(_)))
+            .any(|size| size.intrinsic().is_some())
     {
         Some(crate::layout::intrinsic::content(source, measurer, width)?)
     } else {
@@ -503,12 +503,20 @@ fn solve<'a>(
         None
     };
     let is_table = table.is_some();
-    let mut height_constraints = SizeConstraints::new(
-        [&style.height, &style.min_height, &style.max_height],
-        Some(height),
-        style.box_sizing,
-        vertical_edges,
-    );
+    let heights = [&style.height, &style.min_height, &style.max_height];
+    let mut height_constraints =
+        SizeConstraints::new(heights, Some(height), style.box_sizing, vertical_edges).with_stretch(
+            heights,
+            Some(
+                (height
+                    - top.resolve(height).unwrap_or(0.0)
+                    - bottom.resolve(height).unwrap_or(0.0)
+                    - margin[0].unwrap_or(0.0)
+                    - margin[2].unwrap_or(0.0)
+                    - vertical_edges)
+                    .max(0.0),
+            ),
+        );
     // An automatic height takes the ratio-derived height, grown to the content (CSS Sizing 4
     // §4.2–4.3), over the inset-modified containing block's.
     let ratio = !is_table

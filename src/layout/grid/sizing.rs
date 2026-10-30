@@ -48,11 +48,7 @@ pub(super) fn constraints(
         [&style.height, &style.min_height, &style.max_height]
     };
     if inherited {
-        return SizeConstraints {
-            specified: None,
-            minimum: 0.0,
-            maximum: None,
-        };
+        return SizeConstraints::default();
     }
     SizeConstraints::new(sizes, basis, style.box_sizing, edges)
 }

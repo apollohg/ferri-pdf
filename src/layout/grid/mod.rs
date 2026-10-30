@@ -283,17 +283,18 @@ impl<'a> Plan<'a> {
                 } else {
                     constraints.minimum + edges + margins
                 },
-                content_minimum: (style.min_width == crate::style::Size::Auto
+                content_minimum: (*style.min_width.basis() == crate::style::Size::Auto
                     && matches!(
                         style.overflow[0],
                         crate::style::Overflow::Visible | crate::style::Overflow::Clip
                     ))
                 .then_some(
-                    constraints
-                        .specified
-                        .unwrap_or(content_minimum)
-                        .min(constraints.maximum.unwrap_or(f32::INFINITY))
-                        + edges
+                    constraints.automatic_minimum(
+                        constraints
+                            .specified
+                            .unwrap_or(content_minimum)
+                            .min(constraints.maximum.unwrap_or(f32::INFINITY)),
+                    ) + edges
                         + margins,
                 ),
             });

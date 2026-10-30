@@ -1,8 +1,9 @@
 //! Shared used-size constraints and CSS normal-flow axis equations.
 use crate::style::{
-    BoxSizing, Size, StyleError, box_values::unsupported, component::Component, grammar::Keyword,
-    units::Relative,
+    BoxSizing, CalculatedSize, LengthPercentage, Size, StyleError, box_values::unsupported,
+    component::Component, grammar::Keyword, units::Relative,
 };
+use std::sync::Arc;
 
 /// `aspect-ratio` (CSS Sizing 4 §4.1).
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize)]
@@ -79,35 +80,170 @@ pub(crate) struct IntrinsicWidths {
     pub max: f32,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, serde::Serialize)]
-#[expect(
-    clippy::enum_variant_names,
-    reason = "variants name the CSS min-content, max-content and fit-content keywords"
-)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize)]
 pub(crate) enum IntrinsicSizing {
     MinContent,
     MaxContent,
     FitContent,
+    /// `fit-content(<length-percentage>)`: the fit-content formula with the argument in place
+    /// of the available space (CSS Sizing 4 §3.2).
+    FitContentLimit(LengthPercentage),
+    /// `stretch`, which the grammar admits only as a `calc-size()` basis: the stretch-fit
+    /// size, the available space (CSS Sizing 4 §3.2, CSS Values 5 §10).
+    Stretch,
 }
 impl IntrinsicSizing {
-    pub(crate) fn resolve(self, widths: IntrinsicWidths, available: Option<f32>) -> f32 {
+    /// `available` is the stretch-fit content size, when the context has one; a limit
+    /// resolves against `basis` in the box `box-sizing` names, whose edges are `sizing_edges`.
+    pub(crate) fn resolve(
+        &self,
+        widths: IntrinsicWidths,
+        available: Option<f32>,
+        basis: Option<f32>,
+        sizing_edges: f32,
+    ) -> f32 {
+        let fit = |space: Option<f32>| widths.max.min(widths.min.max(space.unwrap_or(widths.max)));
         match self {
             Self::MinContent => widths.min,
             Self::MaxContent => widths.max,
-            Self::FitContent => widths
-                .max
-                .min(widths.min.max(available.unwrap_or(widths.max))),
+            Self::FitContent => fit(available),
+            // An unresolvable percentage behaves as `auto` would standing alone (§3.2).
+            Self::FitContentLimit(limit) => fit(Size::Value(limit.clone())
+                .resolve_definite(basis)
+                .map(|limit| (limit - sizing_edges).max(0.0))
+                .or(available)),
+            Self::Stretch => available.unwrap_or(widths.max),
         }
     }
 }
 
-#[derive(Clone, Copy)]
+/// What resolving `fit-content()` and `calc-size()` sizes needs, which most constraints lack.
+#[derive(Debug)]
+struct Resolution {
+    /// The percentage basis, and the edges `box-sizing: border-box` includes.
+    basis: Option<f32>,
+    sizing_edges: f32,
+    /// The `calc-size()` of an automatic preferred and minimum size, which applies once the
+    /// context determines that size (CSS Values 5 §10.2).
+    automatic: [Option<Arc<CalculatedSize>>; 2],
+}
+
+/// A [`Resolution`] shared by copies of one set of constraints; equal when it is the same one.
+#[derive(Clone, Debug)]
+pub(crate) struct SharedResolution(Arc<Resolution>);
+impl PartialEq for SharedResolution {
+    fn eq(&self, other: &Self) -> bool {
+        Arc::ptr_eq(&self.0, &other.0)
+    }
+}
+impl Eq for SharedResolution {}
+impl std::hash::Hash for SharedResolution {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        Arc::as_ptr(&self.0).hash(state);
+    }
+}
+
+#[derive(Clone, Default)]
 pub(crate) struct SizeConstraints {
     pub specified: Option<f32>,
     pub minimum: f32,
     pub maximum: Option<f32>,
+    /// Present only where a size is a `fit-content()` or `calc-size()`, which keeps the
+    /// constraints small on deeply recursive layout paths.
+    resolution: Option<SharedResolution>,
 }
+
+/// [`SizeConstraints`] as a hashable key.
+#[derive(Clone, Hash, PartialEq, Eq)]
+pub(crate) struct ConstraintsKey {
+    specified: Option<u32>,
+    minimum: u32,
+    maximum: Option<u32>,
+    resolution: Option<SharedResolution>,
+}
+impl ConstraintsKey {
+    pub(crate) fn constraints(&self) -> SizeConstraints {
+        SizeConstraints {
+            specified: self.specified.map(f32::from_bits),
+            minimum: f32::from_bits(self.minimum),
+            maximum: self.maximum.map(f32::from_bits),
+            resolution: self.resolution.clone(),
+        }
+    }
+}
+
 impl SizeConstraints {
+    /// Constraints already resolved to content-box sizes.
+    pub(crate) fn fixed(specified: Option<f32>, minimum: f32, maximum: Option<f32>) -> Self {
+        Self {
+            specified,
+            minimum,
+            maximum,
+            resolution: None,
+        }
+    }
+    pub(crate) fn key(&self) -> ConstraintsKey {
+        ConstraintsKey {
+            specified: self.specified.map(f32::to_bits),
+            minimum: self.minimum.to_bits(),
+            maximum: self.maximum.map(f32::to_bits),
+            resolution: self.resolution.clone(),
+        }
+    }
+    fn resolution(&self) -> Option<&Resolution> {
+        self.resolution.as_ref().map(|shared| &*shared.0)
+    }
+    /// The percentage basis of `fit-content()` and `calc-size()` sizes.
+    fn basis(&self) -> Option<f32> {
+        self.resolution().and_then(|resolution| resolution.basis)
+    }
+    /// The edges `box-sizing: border-box` includes in `fit-content()` and `calc-size()`
+    /// sizes.
+    pub(crate) fn sizing_edges(&self) -> f32 {
+        self.resolution()
+            .map_or(0.0, |resolution| resolution.sizing_edges)
+    }
+    /// The content-box size `calculated` gives a basis whose content-box size is `value`:
+    /// the calculation sees and gives sizes in the box `box-sizing` names.
+    fn calculate(&self, calculated: &CalculatedSize, value: f32) -> f32 {
+        let edges = self.sizing_edges();
+        (calculated.resolve(value + edges, self.basis()) - edges).max(0.0)
+    }
+    /// `index`'s `calc-size()` of an automatic size applied to the automatic size `value`.
+    fn automatic(&self, index: usize, value: f32) -> f32 {
+        match self
+            .resolution()
+            .and_then(|resolution| resolution.automatic[index].as_deref())
+        {
+            Some(calculated) => self.calculate(calculated, value),
+            None => value,
+        }
+    }
+    /// The preferred size, given the context's automatic size `automatic` for a box whose
+    /// preferred size is automatic.
+    pub(crate) fn preferred(&self, automatic: f32) -> f32 {
+        self.specified
+            .unwrap_or_else(|| self.automatic(0, automatic))
+    }
+    /// `size`'s content-box value where its basis's is `value`.
+    pub(crate) fn adjust(&self, size: &Size, value: f32) -> f32 {
+        match size {
+            Size::Calculated(calculated) => self.calculate(calculated, value),
+            _ => value,
+        }
+    }
+    /// Whether the preferred size is automatic and a `calc-size()` adjusts it.
+    pub(crate) fn calculates_automatic(&self) -> bool {
+        self.specified.is_none()
+            && self
+                .resolution()
+                .is_some_and(|resolution| resolution.automatic[0].is_some())
+    }
+    /// The minimum size where the context gives an automatic minimum size `automatic`, such
+    /// as a flex item's content-based minimum.
+    pub(crate) fn automatic_minimum(&self, automatic: f32) -> f32 {
+        self.automatic(1, automatic)
+    }
     /// Intrinsic sizes describe the content box, regardless of box-sizing.
     #[must_use]
     pub(crate) fn with_intrinsic(
@@ -117,8 +253,11 @@ impl SizeConstraints {
         available: Option<f32>,
     ) -> Self {
         for (index, size) in sizes.into_iter().enumerate() {
-            if let Size::Intrinsic(value) = size {
-                let value = value.resolve(widths, available).max(0.0);
+            if let Some(keyword) = size.intrinsic() {
+                let value = keyword
+                    .resolve(widths, available, self.basis(), self.sizing_edges())
+                    .max(0.0);
+                let value = self.adjust(size, value);
                 match index {
                     0 => self.specified = Some(value),
                     1 => self.minimum = value,
@@ -128,31 +267,117 @@ impl SizeConstraints {
         }
         self
     }
+    /// Resolves `stretch` bases against the stretch-fit content size `available` (CSS Sizing 4
+    /// §3.2), where the axis does not otherwise resolve intrinsic keywords.
+    #[must_use]
+    pub(crate) fn with_stretch(self, sizes: [&Size; 3], available: Option<f32>) -> Self {
+        let stretched = sizes.map(|size| size.intrinsic() == Some(&IntrinsicSizing::Stretch));
+        match available {
+            Some(available) if stretched.contains(&true) => self.with_intrinsic(
+                sizes.map(|size| {
+                    if size.intrinsic() == Some(&IntrinsicSizing::Stretch) {
+                        size
+                    } else {
+                        &Size::Auto
+                    }
+                }),
+                IntrinsicWidths {
+                    min: available,
+                    max: available,
+                },
+                Some(available),
+            ),
+            _ => self,
+        }
+    }
     pub(crate) fn new(
         sizes: [&Size; 3],
         basis: Option<f32>,
         sizing: BoxSizing,
         edges: f32,
     ) -> Self {
+        let sizing_edges = if sizing == BoxSizing::BorderBox {
+            edges
+        } else {
+            0.0
+        };
         let [specified, minimum, maximum] = sizes.map(|size| {
-            size.resolve_definite(basis).map(|value| {
-                if sizing == BoxSizing::BorderBox {
-                    (value - edges).max(0.0)
-                } else {
-                    value
-                }
-            })
+            size.resolve_definite(basis)
+                .map(|value| (value - sizing_edges).max(0.0))
         });
-        Self {
+        let automatic = |size: &Size, value: Option<f32>| match size {
+            // An intrinsic basis the axis resolves as automatic adjusts the automatic size.
+            Size::Calculated(calculated) if value.is_none() => Some(calculated.clone()),
+            _ => None,
+        };
+        let resolved = sizes.iter().any(|size| {
+            matches!(
+                size,
+                Size::Calculated(_) | Size::Intrinsic(IntrinsicSizing::FitContentLimit(_))
+            )
+        });
+        let mut constraints = Self {
             specified,
-            minimum: minimum.unwrap_or(0.0),
+            minimum: 0.0,
             maximum,
-        }
+            resolution: resolved.then(|| {
+                SharedResolution(Arc::new(Resolution {
+                    basis,
+                    sizing_edges,
+                    automatic: [automatic(sizes[0], specified), automatic(sizes[1], minimum)],
+                }))
+            }),
+        };
+        constraints.minimum = minimum.unwrap_or_else(|| constraints.automatic_minimum(0.0));
+        constraints
     }
     pub(crate) fn constrain(&self, value: f32) -> f32 {
         self.maximum
             .map_or(value, |maximum| value.min(maximum))
             .max(self.minimum)
+    }
+}
+
+/// CSS Values 5 §10: a `calc-size()` basis is an intrinsic size keyword its property accepts,
+/// and maximum sizes accept `none` rather than `auto`.
+pub(super) fn valid(property: crate::style::grammar::Property, value: &Component) -> bool {
+    use crate::style::grammar::Property as P;
+    !matches!(
+        property,
+        P::MaxWidth | P::MaxHeight | P::MaxInlineSize | P::MaxBlockSize | P::MaxSize
+    ) || !has_auto_basis(value)
+}
+
+/// Whether a `calc-size()` in `value` has an `auto` basis, directly or through nesting.
+fn has_auto_basis(value: &Component) -> bool {
+    match value {
+        Component::Function(Keyword::CalcSize, Some(arguments)) => match &**arguments {
+            Component::Tokens(arguments) => {
+                let mut input = cssparser::ParserInput::new(arguments);
+                auto_basis(&mut cssparser::Parser::new(&mut input))
+            }
+            _ => false,
+        },
+        Component::Reference(_, inner) | Component::Block(_, inner) => has_auto_basis(inner),
+        Component::Group(items) => items.iter().any(has_auto_basis),
+        Component::Slots(slots) => slots.iter().flatten().any(has_auto_basis),
+        _ => false,
+    }
+}
+
+fn auto_basis(input: &mut cssparser::Parser<'_, '_>) -> bool {
+    match input.next() {
+        Ok(cssparser::Token::Ident(name)) => Keyword::from_ident(name) == Some(Keyword::Auto),
+        Ok(cssparser::Token::Function(name))
+            if Keyword::from_ident(name) == Some(Keyword::CalcSize) =>
+        {
+            input
+                .parse_nested_block(|nested| {
+                    Ok::<_, cssparser::ParseError<'_, ()>>(auto_basis(nested))
+                })
+                .unwrap_or(false)
+        }
+        _ => false,
     }
 }
 
@@ -182,8 +407,10 @@ impl SizeConstraints {
         overconstraint: Overconstraint,
     ) -> UsedAxis {
         let [start, end] = margins;
-        let natural = used_size.or(self.specified).unwrap_or_else(|| {
-            (containing - edges - start.unwrap_or(0.0) - end.unwrap_or(0.0)).max(0.0)
+        let natural = used_size.unwrap_or_else(|| {
+            self.preferred(
+                (containing - edges - start.unwrap_or(0.0) - end.unwrap_or(0.0)).max(0.0),
+            )
         });
         let size = used_size.unwrap_or_else(|| self.constrain(natural));
         let specified = used_size.is_some() || self.specified.is_some() || size != natural;

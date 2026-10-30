@@ -3,6 +3,8 @@ use crate::paint::Easing;
 use serde::Serialize;
 use std::cmp::Ordering;
 
+/// The `calc-size()` keyword for the size its calculation adjusts (CSS Values 5 §10).
+pub(crate) const SIZE_KEYWORD: &str = "size";
 /// Finite boundary shared with the representation of authored numeric values.
 pub(crate) const MAX_CALC_MAGNITUDE: f32 = f32::MAX;
 
@@ -46,6 +48,8 @@ pub enum Calculation {
     Value(f32),
     /// Fraction of the percentage basis.
     Percentage(f32),
+    /// The `size` keyword of a `calc-size()` calculation (CSS Values 5 §10).
+    Size,
     Sum(Vec<Self>),
     Product(Vec<Self>),
     Invert(Box<Self>),
@@ -69,6 +73,8 @@ impl Calculation {
         match self {
             Self::Value(_) => {}
             Self::Percentage(value) => *value /= factor,
+            // The size is already a used length under zoom, as the percentage basis is.
+            Self::Size => *self = Self::Product(vec![Self::Value(1.0 / factor), Self::Size]),
             Self::Sum(values)
             | Self::Product(values)
             | Self::Min(values)
@@ -133,7 +139,7 @@ impl Calculation {
     #[must_use]
     pub fn simplify(self) -> Self {
         let constant = match &self {
-            Self::Value(_) | Self::Percentage(_) => return self,
+            Self::Value(_) | Self::Percentage(_) | Self::Size => return self,
             Self::Sum(items)
             | Self::Product(items)
             | Self::Min(items)
@@ -199,46 +205,130 @@ impl Calculation {
     fn is_value(&self) -> bool {
         matches!(self, Self::Value(_))
     }
-    /// IEEE-754 evaluation; NaN and infinities propagate as CSS Values 4 specifies.
+    /// IEEE-754 evaluation; NaN and infinities propagate as CSS Values 4 specifies. Only a
+    /// `calc-size()` calculation has a `size`, which is NaN elsewhere.
     pub fn evaluate(&self, basis: f32) -> f32 {
+        self.evaluate_sized(basis, f32::NAN)
+    }
+    fn evaluate_sized(&self, basis: f32, size: f32) -> f32 {
+        let evaluate = |item: &Self| item.evaluate_sized(basis, size);
         match self {
             Self::Value(value) => *value,
             Self::Percentage(fraction) => fraction * basis,
-            Self::Sum(terms) => terms.iter().map(|term| term.evaluate(basis)).sum(),
-            Self::Product(factors) => factors.iter().map(|f| f.evaluate(basis)).product(),
-            Self::Invert(value) => 1.0 / value.evaluate(basis),
-            Self::Min(items) => extreme(items, basis, f32::INFINITY, Ordering::Greater),
-            Self::Max(items) => extreme(items, basis, f32::NEG_INFINITY, Ordering::Less),
-            Self::Hypot(items) => items.iter().fold(0.0, |length, item| {
-                let value = item.evaluate(basis);
+            Self::Size => size,
+            Self::Sum(terms) => terms.iter().map(evaluate).sum(),
+            Self::Product(factors) => factors.iter().map(evaluate).product(),
+            Self::Invert(value) => 1.0 / evaluate(value),
+            Self::Min(items) => {
+                extreme(items.iter().map(evaluate), f32::INFINITY, Ordering::Greater)
+            }
+            Self::Max(items) => extreme(
+                items.iter().map(evaluate),
+                f32::NEG_INFINITY,
+                Ordering::Less,
+            ),
+            Self::Hypot(items) => items.iter().map(evaluate).fold(0.0, |length, value| {
                 if length.is_nan() || value.is_nan() {
                     f32::NAN
                 } else {
                     length.hypot(value)
                 }
             }),
-            Self::Unary(function, argument) => unary(*function, argument.evaluate(basis)),
-            Self::Binary(function, operands) => binary(
-                *function,
-                operands[0].evaluate(basis),
-                operands[1].evaluate(basis),
-            ),
-            Self::Eased(easing, input) => easing.sample(input.evaluate(basis), false),
+            Self::Unary(function, argument) => unary(*function, evaluate(argument)),
+            Self::Binary(function, operands) => {
+                binary(*function, evaluate(&operands[0]), evaluate(&operands[1]))
+            }
+            Self::Eased(easing, input) => easing.sample(evaluate(input), false),
             Self::Mix(operands) => {
-                let progress = operands[0].evaluate(basis);
-                operands[1].evaluate(basis) * (1.0 - progress)
-                    + operands[2].evaluate(basis) * progress
+                let progress = evaluate(&operands[0]);
+                evaluate(&operands[1]) * (1.0 - progress) + evaluate(&operands[2]) * progress
             }
             Self::Progress(operands) => progress(
-                operands[0].evaluate(basis),
-                operands[1].evaluate(basis),
-                operands[2].evaluate(basis),
+                evaluate(&operands[0]),
+                evaluate(&operands[1]),
+                evaluate(&operands[2]),
             ),
         }
     }
     /// Top-level used value.
     pub fn resolve(&self, basis: f32) -> f32 {
         censor(self.evaluate(basis))
+    }
+    /// Top-level used value of a `calc-size()` calculation whose `size` is `size`.
+    pub(crate) fn resolve_sized(&self, basis: f32, size: f32) -> f32 {
+        censor(self.evaluate_sized(basis, size))
+    }
+    /// Replaces every `size` with `value` (CSS Values 5 §10.1).
+    #[must_use]
+    pub(crate) fn substitute_size(self, value: &Self) -> Self {
+        self.map_leaves(&|leaf| match leaf {
+            Self::Size => value.clone(),
+            leaf => leaf,
+        })
+    }
+    /// Replaces every percentage with that fraction of `size` (CSS Values 5 §10.1).
+    #[must_use]
+    pub(crate) fn depercentify(self) -> Self {
+        self.map_leaves(&|leaf| match leaf {
+            Self::Percentage(fraction) => Self::Product(vec![Self::Value(fraction), Self::Size]),
+            leaf => leaf,
+        })
+    }
+    /// Whether any leaf satisfies `test`.
+    pub(crate) fn any_leaf(&self, test: &impl Fn(&Self) -> bool) -> bool {
+        match self {
+            Self::Value(_) | Self::Percentage(_) | Self::Size => test(self),
+            Self::Sum(items)
+            | Self::Product(items)
+            | Self::Min(items)
+            | Self::Max(items)
+            | Self::Hypot(items) => items.iter().any(|item| item.any_leaf(test)),
+            Self::Binary(_, pair) => pair.iter().any(|item| item.any_leaf(test)),
+            Self::Progress(values) | Self::Mix(values) => {
+                values.iter().any(|item| item.any_leaf(test))
+            }
+            Self::Invert(item) | Self::Unary(_, item) | Self::Eased(_, item) => item.any_leaf(test),
+        }
+    }
+    /// The number of nodes in the tree.
+    pub(crate) fn node_count(&self) -> usize {
+        1 + match self {
+            Self::Value(_) | Self::Percentage(_) | Self::Size => 0,
+            Self::Sum(items)
+            | Self::Product(items)
+            | Self::Min(items)
+            | Self::Max(items)
+            | Self::Hypot(items) => items.iter().map(Self::node_count).sum(),
+            Self::Binary(_, pair) => pair.iter().map(Self::node_count).sum(),
+            Self::Progress(values) | Self::Mix(values) => values.iter().map(Self::node_count).sum(),
+            Self::Invert(item) | Self::Unary(_, item) | Self::Eased(_, item) => item.node_count(),
+        }
+    }
+    fn map_leaves(self, map: &impl Fn(Self) -> Self) -> Self {
+        let each = |items: Vec<Self>| items.into_iter().map(|item| item.map_leaves(map)).collect();
+        match self {
+            Self::Value(_) | Self::Percentage(_) | Self::Size => map(self),
+            Self::Sum(items) => Self::Sum(each(items)),
+            Self::Product(items) => Self::Product(each(items)),
+            Self::Min(items) => Self::Min(each(items)),
+            Self::Max(items) => Self::Max(each(items)),
+            Self::Hypot(items) => Self::Hypot(each(items)),
+            Self::Binary(function, pair) => {
+                let [first, second] = *pair;
+                Self::Binary(
+                    function,
+                    Box::new([first.map_leaves(map), second.map_leaves(map)]),
+                )
+            }
+            Self::Progress(values) => {
+                Self::Progress(Box::new(values.map(|value| value.map_leaves(map))))
+            }
+            Self::Mix(values) => Self::Mix(Box::new(values.map(|value| value.map_leaves(map)))),
+            Self::Invert(item) => Self::Invert(Box::new(item.map_leaves(map))),
+            Self::Unary(function, item) => Self::Unary(function, Box::new(item.map_leaves(map))),
+            Self::Eased(easing, item) => Self::Eased(easing, Box::new(item.map_leaves(map))),
+        }
+        .simplify()
     }
 }
 
@@ -278,9 +368,8 @@ fn single_or(
     }
 }
 
-fn extreme(items: &[Calculation], basis: f32, start: f32, replace_when: Ordering) -> f32 {
-    items.iter().fold(start, |best, item| {
-        let value = item.evaluate(basis);
+fn extreme(values: impl Iterator<Item = f32>, start: f32, replace_when: Ordering) -> f32 {
+    values.fold(start, |best, value| {
         if best.is_nan() || value.is_nan() {
             f32::NAN
         } else if best.total_cmp(&value) == replace_when {

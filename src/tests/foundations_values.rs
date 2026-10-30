@@ -2012,12 +2012,19 @@ fn argument_wrappers_follow_variable_substitution_and_keep_nested_block_data() {
 #[test]
 fn first_valid_selects_the_first_usable_whole_property_value() {
     let style = computed(
-        "#target{width:first-valid(fit-content(10pt), calc(40pt + 2pt), 99pt);margin:first-valid(red, 1pt 2pt 3pt 4pt);margin-left:9pt;border:first-valid(12pt invalid,2pt solid rgb(20 40 60));color:FiRsT-VaLiD(17pt,rgb(30,60,90))}",
+        "#target{width:first-valid(none, calc(40pt + 2pt), 99pt);height:first-valid(fit-content(10pt), 99pt);margin:first-valid(red, 1pt 2pt 3pt 4pt);margin-left:9pt;border:first-valid(12pt invalid,2pt solid rgb(20 40 60));color:FiRsT-VaLiD(17pt,rgb(30,60,90))}",
     );
     assert_eq!(
         points(&style.width),
         42.0,
-        "recognizing fit-content() syntax must not select an unsupported active value"
+        "a value the property's grammar rejects is skipped"
+    );
+    assert_eq!(
+        style.height,
+        Size::Intrinsic(crate::style::IntrinsicSizing::FitContentLimit(
+            LengthPercentage::Length(10.0)
+        )),
+        "the first valid value is selected"
     );
     assert_eq!(
         style.margin.each_ref().map(points),

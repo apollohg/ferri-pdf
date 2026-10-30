@@ -526,6 +526,7 @@ fn value_with_context(
             && crate::style::anchor_values::valid(property, value)
             && crate::style::logical::valid(property, value)
             && crate::style::colors::interpolation_spaces_exist(value)
+            && crate::style::sizing::valid(property, value)
     }))
 }
 
@@ -666,7 +667,12 @@ mod tests {
             ("width", "12pt", true),
             ("width", "-1pt", false),
             ("width", "min-content", true),
-            ("width", "fit-content(10pt)", false),
+            ("width", "fit-content(10pt)", true),
+            ("width", "fit-content(-1pt)", false),
+            ("width", "calc-size(auto, size * 2)", true),
+            ("width", "calc-size(any, size)", false),
+            ("max-width", "calc-size(auto, size)", false),
+            ("max-width", "calc-size(min-content, size)", true),
             ("width", "calc(2pt * 3)", true),
             ("width", "var(--size)", true),
             ("unknown", "var(--size)", false),

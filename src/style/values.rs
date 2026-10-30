@@ -6,7 +6,7 @@ use crate::style::{
     StyleError,
     anchor_values::AnchorEvaluation,
     box_values::unsupported,
-    calc::{Context, Kind, Math, MathError, math_function},
+    calc::{CALC_SIZE_FUNCTION, CalcSize, Context, Kind, Math, MathError, math_function},
     component::Component,
     grammar::{Keyword, Label, Production},
     units::Relative,
@@ -18,6 +18,24 @@ pub(super) fn supports_font_format(name: &str) -> bool {
     SUPPORTED_FONT_FORMATS
         .iter()
         .any(|supported| name.eq_ignore_ascii_case(supported))
+}
+
+/// The arguments of a matched `calc-size()`, resolved against the element's relative lengths.
+pub(super) fn calc_size(arguments: &str, relative: &Relative<'_>) -> Result<CalcSize, StyleError> {
+    let source = format!("{CALC_SIZE_FUNCTION}({arguments})");
+    let mut input = ParserInput::new(&source);
+    let context = Context {
+        relative,
+        percentage: Some(Kind::Length),
+        channels: &[],
+        anchors: None,
+    };
+    crate::style::calc::calc_size(&mut Parser::new(&mut input), context).map_err(
+        |error| match error {
+            MathError::Resolution(error) => error,
+            error @ MathError::Invalid(_) => error.to_string().into(),
+        },
+    )
 }
 
 /// A matched math function, resolved against the element's relative lengths.

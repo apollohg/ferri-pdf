@@ -46,19 +46,19 @@ pub(super) fn measure<'a>(
     );
     let ratio = super::ratio::PreferredRatio::of_box(style, &edges);
     let ratio_width =
-        (style.width == Size::Auto && !layout.fill_width)
+        (*style.width.basis() == Size::Auto && !layout.fill_width)
             .then_some(ratio.zip(
                 used_height.or_else(|| heights.specified.map(|height| heights.constrain(height))),
             ))
             .flatten();
     let preferred = ratio_width.map(|(ratio, height)| {
-        super::ratio::constrained_width_from_height(ratio, height, preliminary, None)
+        super::ratio::constrained_width_from_height(ratio, height, &preliminary, None)
     });
     let available = preliminary.constrain(
         preliminary
             .specified
             .or(preferred)
-            .unwrap_or(geometry.width),
+            .unwrap_or_else(|| preliminary.preferred(geometry.width)),
     );
     let mut owner_geometry = geometry.clone();
     owner_geometry.width = available;
@@ -74,7 +74,7 @@ pub(super) fn measure<'a>(
             .with_used_height(used_height)
             .definite()
     };
-    let mut widths = preliminary;
+    let mut widths = preliminary.clone();
     if layout.fill_width && widths.specified.is_none() {
         widths.specified = Some(geometry.width);
     }
@@ -98,7 +98,7 @@ pub(super) fn measure<'a>(
         super::ratio::constrained_width_from_height(
             ratio,
             height,
-            constraints,
+            &constraints,
             super::ratio::content_minimum(style, &style.min_width).then_some(content.intrinsic.min),
         )
     });
@@ -107,7 +107,7 @@ pub(super) fn measure<'a>(
     } else {
         preferred.unwrap_or(content.width)
     };
-    let width = constraints.constrain(constraints.specified.unwrap_or(natural_width));
+    let width = constraints.constrain(constraints.preferred(natural_width));
     if source
         .math()
         .is_some_and(|math| math.name.as_ref() == "math")
@@ -677,7 +677,7 @@ impl<'a> Builder<'_, 'a> {
     fn css_content(&mut self, element: Element<'a>) -> Result<MathBox<'a>, Failure> {
         let content = element.content();
         let intrinsic = super::intrinsic::measure(content, self.measurer, self.available)?;
-        let widths = self.widths.with_intrinsic(
+        let widths = self.widths.clone().with_intrinsic(
             [
                 &self.owner_style.width,
                 &self.owner_style.min_width,
@@ -687,18 +687,25 @@ impl<'a> Builder<'_, 'a> {
             Some(self.available),
         );
         let natural = self.ratio_width.map_or_else(
-            || crate::style::IntrinsicSizing::FitContent.resolve(intrinsic, Some(self.available)),
+            || {
+                crate::style::IntrinsicSizing::FitContent.resolve(
+                    intrinsic,
+                    Some(self.available),
+                    None,
+                    0.0,
+                )
+            },
             |(ratio, height)| {
                 super::ratio::constrained_width_from_height(
                     ratio,
                     height,
-                    widths,
+                    &widths,
                     super::ratio::content_minimum(self.owner_style, &self.owner_style.min_width)
                         .then_some(intrinsic.min),
                 )
             },
         );
-        let width = widths.constrain(widths.specified.unwrap_or(natural));
+        let width = widths.constrain(widths.preferred(natural));
         let geometry = super::geometry::horizontal(
             content.style(),
             0.0,
@@ -1343,11 +1350,14 @@ impl<'a> Builder<'_, 'a> {
         layout: MathLayout,
     ) -> Result<MathBox<'a>, Failure> {
         let inner = self.row(element, style, layout, RowKind::Grouping)?;
-        let width = style
-            .width
-            .resolve_definite(Some(self.width_basis))
-            .unwrap_or(inner.width);
-        let intrinsic = if style.width == Size::Auto {
+        let width = super::geometry::SizeConstraints::new(
+            [&style.width, &Size::Auto, &Size::Auto],
+            Some(self.width_basis),
+            style.box_sizing,
+            0.0,
+        )
+        .preferred(inner.width);
+        let intrinsic = if *style.width.basis() == Size::Auto {
             inner.intrinsic
         } else {
             IntrinsicWidths {

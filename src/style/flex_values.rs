@@ -138,13 +138,16 @@ impl OverflowPosition {
         self == Self::Safe && free < 0.0
     }
 }
-#[derive(Clone, Debug, Default, PartialEq, Serialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub(crate) enum FlexBasis {
-    #[default]
-    Auto,
     Content,
-    Value(LengthPercentage),
-    Intrinsic(crate::style::IntrinsicSizing),
+    /// `auto`, which defers to the main size property, or a `<'width'>` value.
+    Size(Size),
+}
+impl Default for FlexBasis {
+    fn default() -> Self {
+        Self::Size(Size::Auto)
+    }
 }
 impl FlexBasis {
     pub(crate) fn from_component(
@@ -154,18 +157,7 @@ impl FlexBasis {
         if value.keyword() == Some(Keyword::Content) {
             return Ok(Self::Content);
         }
-        Ok(match Size::from_component(value, relative)? {
-            Size::Auto => Self::Auto,
-            Size::Value(basis) => Self::Value(basis),
-            Size::Intrinsic(basis) => Self::Intrinsic(basis),
-        })
-    }
-    pub(crate) fn resolve(&self, basis: Option<f32>) -> Option<f32> {
-        match self {
-            Self::Value(LengthPercentage::Length(value)) => Some(*value),
-            Self::Value(value) => basis.map(|basis| value.resolve(basis)),
-            _ => None,
-        }
+        Size::from_component(value, relative).map(Self::Size)
     }
 }
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -204,7 +196,7 @@ impl Default for FlexStyle {
             gap: [const { Gap::Normal }; 2],
             grow: 0.0,
             shrink: 1.0,
-            basis: FlexBasis::Auto,
+            basis: FlexBasis::Size(Size::Auto),
             order: 0,
             legacy_box: false,
         }

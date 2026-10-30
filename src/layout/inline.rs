@@ -196,7 +196,7 @@ fn measure_initial_letter<'a>(
             [rect.y + line.ascent, rect.y + rect.height + line.ascent]
         });
         let ink_bottom = ink_bottom.max(line.height);
-        let automatic = style.height == crate::style::Size::Auto;
+        let automatic = *style.height.basis() == crate::style::Size::Auto;
         // The content box's extent above the line box top: glyphs above the over point,
         // which only padding or borders bring into it, or `align-content`'s free space.
         let lead = if automatic {
@@ -227,7 +227,7 @@ fn measure_initial_letter<'a>(
             let line_top = surrounding.over_position(initial, line.height);
             (line_top - lead - start, fitted(line_top))
         };
-        if style.width == crate::style::Size::Auto
+        if *style.width.basis() == crate::style::Size::Auto
             && (0..4).all(|side| {
                 style.padding[side].is_zero() && style.decoration.borders[side].used_width() == 0.0
             })
@@ -383,7 +383,7 @@ pub(super) fn shrink_to_fit<'a>(
         width
     } else {
         let sizes = crate::layout::intrinsic::content(block, measurer, containing_width)?;
-        sizes.max.min(sizes.min.max(available))
+        constraints.preferred(sizes.max.min(sizes.min.max(available)))
     };
     Ok(constraints.constrain(width))
 }

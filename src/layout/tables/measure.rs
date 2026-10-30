@@ -578,9 +578,9 @@ impl<'a> TablePlan<'a> {
         };
         let native_height = measurer
             .native_vertical(block.block)
-            .map(geometry::VerticalBox::constraints);
+            .map(|vertical| vertical.constraints());
         let has_height_constraints = used_height.is_some()
-            || native_height.is_some_and(|constraints| {
+            || native_height.as_ref().is_some_and(|constraints| {
                 constraints.specified.is_some()
                     || constraints.minimum != 0.0
                     || constraints.maximum.is_some()
@@ -857,10 +857,11 @@ impl<'a> TablePlan<'a> {
             .height
             .resolve_definite(None)
             .is_some()
-            || self.style.height != crate::style::Size::Auto
+            || *self.style.height.basis() != crate::style::Size::Auto
             || self.used_height.is_some()
             || self
                 .native_height
+                .as_ref()
                 .is_some_and(|constraints| constraints.specified.is_some())
     }
     pub(crate) fn cell_used_height(
@@ -1229,7 +1230,7 @@ impl<'a> TablePlan<'a> {
             cells,
             rows: &rows,
             spacing,
-            table: self.native_height.unwrap_or_else(|| {
+            table: self.native_height.clone().unwrap_or_else(|| {
                 self.used_height.map_or_else(
                     || {
                         crate::style::SizeConstraints::new(
@@ -1239,11 +1240,7 @@ impl<'a> TablePlan<'a> {
                             edges,
                         )
                     },
-                    |height| crate::style::SizeConstraints {
-                        specified: Some(height),
-                        minimum: 0.0,
-                        maximum: None,
-                    },
+                    |height| crate::style::SizeConstraints::fixed(Some(height), 0.0, None),
                 )
             }),
         })?;

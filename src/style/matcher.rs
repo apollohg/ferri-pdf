@@ -752,6 +752,16 @@ impl Matcher<'_> {
                 }
                 self.base(*base, *range, item?)?
             }
+            Node::Function(Keyword::CalcSize, _) => {
+                let ItemKind::Function { arguments, .. } = &item?.kind else {
+                    return None;
+                };
+                let source = &self.source[arguments.first()?.start..arguments.last()?.end];
+                Component::Function(
+                    Keyword::CalcSize,
+                    Some(Box::new(Component::Tokens(source.into()))),
+                )
+            }
             Node::Function(name, body) => {
                 let ItemKind::Function { arguments, .. } = &item?.kind else {
                     return None;
@@ -989,6 +999,9 @@ impl Matcher<'_> {
     }
 
     fn function(&mut self, name: Keyword, body: Option<NodeId>, item: &Item) -> bool {
+        if name == Keyword::CalcSize {
+            return self.calc_size(item);
+        }
         match &item.kind {
             ItemKind::Function {
                 keyword: Some(found),
@@ -1011,6 +1024,36 @@ impl Matcher<'_> {
                 self.math_function(base, range, item)
             }
             _ => self.single(base, range, item),
+        }
+    }
+
+    /// `calc-size()`, whose calculation may name `size` (CSS Values 5 §10): `calc` checks the
+    /// whole function, which resolves at computed-value time.
+    fn calc_size(&self, item: &Item) -> bool {
+        if !matches!(
+            &item.kind,
+            ItemKind::Function {
+                keyword: Some(Keyword::CalcSize),
+                ..
+            }
+        ) {
+            return false;
+        }
+        let mut input = ParserInput::new(&self.source[item.start..item.end]);
+        let relative = self.context.relative();
+        let context = Context {
+            relative: &relative,
+            percentage: Some(Kind::Length),
+            channels: &[],
+            anchors: None,
+        };
+        match calc::calc_size(&mut Parser::new(&mut input), context) {
+            Ok(_) => true,
+            Err(calc::MathError::Resolution(error @ StyleError::GrammarLimit { .. })) => {
+                *self.failure.borrow_mut() = Some(error);
+                false
+            }
+            Err(_) => false,
         }
     }
 

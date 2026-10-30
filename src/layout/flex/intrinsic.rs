@@ -2,7 +2,7 @@ use super::children;
 use crate::flex::Item;
 use crate::layout::measure::{BlockSource, Failure, Measurer};
 use crate::layout::{geometry::SizeConstraints, intrinsic};
-use crate::style::{BoxSizing, FlexBasis, FlexWrap, Size};
+use crate::style::{FlexWrap, Size};
 use crate::text::IntrinsicWidths;
 
 pub(crate) fn measure<'a>(
@@ -53,23 +53,22 @@ pub(crate) fn measure<'a>(
             natural,
             None,
         );
-        let basis = match &child_style.flex.basis {
-            FlexBasis::Auto => constraints.specified.unwrap_or(natural.max),
-            FlexBasis::Content => natural.max,
-            FlexBasis::Intrinsic(value) => value.resolve(natural, None),
-            value @ FlexBasis::Value(_) => value.resolve(None).map_or(natural.max, |v| {
-                if child_style.box_sizing == BoxSizing::BorderBox {
-                    (v - edges).max(0.0)
-                } else {
-                    v
-                }
-            }),
-        };
-        let minimum = if child_style.min_width == Size::Auto {
-            natural
-                .min
-                .min(constraints.specified.unwrap_or(f32::INFINITY))
-                .min(constraints.maximum.unwrap_or(f32::INFINITY))
+        let basis = super::base_size(
+            &child_style.flex.basis,
+            &constraints,
+            None,
+            child_style.box_sizing,
+            edges,
+            natural,
+            natural.max,
+        );
+        let minimum = if *child_style.min_width.basis() == Size::Auto {
+            constraints.automatic_minimum(
+                natural
+                    .min
+                    .min(constraints.specified.unwrap_or(f32::INFINITY))
+                    .min(constraints.maximum.unwrap_or(f32::INFINITY)),
+            )
         } else {
             constraints.minimum
         };

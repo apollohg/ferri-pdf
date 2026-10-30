@@ -465,8 +465,8 @@ fn size(size: &Size) -> Result<Option<&LengthPercentage>, StyleError> {
     match size {
         Size::Auto => Ok(None),
         Size::Value(value) => Ok(Some(value)),
-        Size::Intrinsic(_) => Err(StyleError::Unsupported(
-            "an intrinsic size keyword on SVG content".into(),
+        Size::Intrinsic(_) | Size::Calculated(_) => Err(StyleError::Unsupported(
+            "an intrinsic size or calc-size() on SVG content".into(),
         )),
     }
 }
@@ -867,6 +867,7 @@ fn calculated_number(value: &Calculation) -> String {
             }
         }
         Calculation::Percentage(value) => format!("({}% / {CALC_POINT_UNIT})", value * PERCENT),
+        Calculation::Size => crate::paint::SIZE_KEYWORD.to_owned(),
         Calculation::Sum(items) | Calculation::Product(items) => format!(
             "({})",
             items

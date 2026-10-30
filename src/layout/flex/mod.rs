@@ -17,6 +17,35 @@ use crate::style::{
     Alignment, BoxSizing, BreakBetween, Display, FlexBasis, FlexWrap, OverflowPosition, Size,
 };
 
+/// The flex base size (CSS Flexbox 1 §9.2.3): `content` and unresolvable sizes use the
+/// content size `content`, and `auto` the main size property's `constraints`.
+pub(super) fn base_size(
+    basis: &FlexBasis,
+    constraints: &SizeConstraints,
+    main_size: Option<f32>,
+    box_sizing: BoxSizing,
+    edges: f32,
+    natural: crate::style::IntrinsicWidths,
+    content: f32,
+) -> f32 {
+    let FlexBasis::Size(size) = basis else {
+        return content;
+    };
+    if *size.basis() == Size::Auto {
+        return SizeConstraints::new(
+            [size, &Size::Auto, &Size::Auto],
+            main_size,
+            box_sizing,
+            edges,
+        )
+        .preferred(constraints.preferred(content));
+    }
+    let sizes = [size, &Size::Auto, &Size::Auto];
+    SizeConstraints::new(sizes, main_size, box_sizing, edges)
+        .with_intrinsic(sizes, natural, main_size.map(|v| (v - edges).max(0.0)))
+        .preferred(content)
+}
+
 fn item_metrics<'a>(
     measurer: &mut Measurer<'a>,
     item: &FlexItem<'a>,
@@ -208,13 +237,13 @@ pub(super) fn measure<'a>(
             ]
         };
         let (align, align_overflow) = child.flex.used_align_self(flex);
-        let preliminary_width = widths.constrain(widths.specified.unwrap_or_else(|| {
+        let preliminary_width = widths.constrain(widths.preferred(
             if matches!(align, Alignment::Normal | Alignment::Stretch) {
                 available_width
             } else {
                 natural.max.min(available_width).max(natural.min)
-            }
-        }));
+            },
+        ));
         let mut item = FlexItem {
             source,
             containing_rtl: style.used_rtl(),
@@ -328,7 +357,7 @@ pub(super) fn measure<'a>(
                     .cross
                     .maximum
                     .map_or(natural.min, |maximum| natural.min.min(ratio.width(maximum)));
-                let content = if child.min_height == Size::Auto {
+                let content = if *child.min_height.basis() == Size::Auto {
                     content
                 } else {
                     content.max(ratio.width(item.cross.minimum))
@@ -340,44 +369,38 @@ pub(super) fn measure<'a>(
             _ if column => natural_main,
             _ => natural.min,
         };
-        let minimum = if matches!(
-            if column {
-                &child.min_height
-            } else {
-                &child.min_width
-            },
-            Size::Auto
-        ) {
-            constraints
-                .maximum
-                .map_or(auto_min, |v| auto_min.min(v))
-                .min(constraints.specified.unwrap_or(f32::INFINITY))
+        let min_main = if column {
+            &child.min_height
+        } else {
+            &child.min_width
+        };
+        let minimum = if *min_main.basis() == Size::Auto {
+            constraints.automatic_minimum(
+                constraints
+                    .maximum
+                    .map_or(auto_min, |v| auto_min.min(v))
+                    .min(constraints.specified.unwrap_or(f32::INFINITY)),
+            )
         } else {
             constraints.minimum
         };
-        let basis = match &child.flex.basis {
-            FlexBasis::Auto => constraints.specified.unwrap_or(natural_main),
-            FlexBasis::Content => natural_main,
-            FlexBasis::Intrinsic(value) => value.resolve(
-                main_natural,
-                main_size.map(|v| (v - item.main.edges).max(0.0)),
-            ),
-            value @ FlexBasis::Value(_) => value.resolve(main_size).map_or(natural_main, |v| {
-                if child.box_sizing == BoxSizing::BorderBox {
-                    (v - item.main.edges).max(0.0)
-                } else {
-                    v
-                }
-            }),
-        };
+        let basis = base_size(
+            &child.flex.basis,
+            &constraints,
+            main_size,
+            child.box_sizing,
+            item.main.edges,
+            main_natural,
+            natural_main,
+        );
         let basis_definite = match &child.flex.basis {
-            FlexBasis::Auto => {
+            FlexBasis::Size(size) if *size.basis() == Size::Auto => {
                 let preferred = if column { &child.height } else { &child.width };
                 preferred.resolve_definite(main_size).is_some()
                     || (ratio.is_some() && definite_cross.is_some())
             }
-            value @ FlexBasis::Value(_) => value.resolve(main_size).is_some(),
-            FlexBasis::Content | FlexBasis::Intrinsic(_) => false,
+            FlexBasis::Size(size) => size.resolve_definite(main_size).is_some(),
+            FlexBasis::Content => false,
         };
         item.inline_definite = !measurer.space.indefinite_inline
             || if column {
@@ -598,9 +621,9 @@ pub(super) fn measure<'a>(
                 && item.cross.specified.is_none()
                 && auto == 0
             {
-                cross = item.cross.constrain(
+                cross = item.cross.constrain(item.cross.preferred(
                     (line.cross - edges - margins.into_iter().flatten().sum::<f32>()).max(0.0),
-                );
+                ));
             }
             let free = line.cross - cross - edges - margins.into_iter().flatten().sum::<f32>();
             let physical_start = usize::from(cross_reverse);
