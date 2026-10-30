@@ -83,7 +83,7 @@ impl DecoratingFont {
 
 fn draws(decoration: &TextDecoration, line: DecorationLine) -> bool {
     match line {
-        DecorationLine::Underline => decoration.lines.underline,
+        DecorationLine::Underline => decoration.lines.underline || decoration.lines.error.is_some(),
         DecorationLine::Overline => decoration.lines.overline,
         DecorationLine::LineThrough => decoration.lines.line_through,
     }
@@ -144,11 +144,12 @@ pub(crate) fn paint(
                 .filter(|decoration| draws(decoration, kind))
             {
                 let [top, thickness] = font.place(kind, decoration, decorating.style);
+                let (style, color) = decoration.paint();
                 paints.extend(segments.iter().map(|&([left, right], positioned)| {
                     DecorationPaint {
                         line: kind,
-                        style: decoration.style,
-                        color: decoration.color,
+                        style,
+                        color,
                         rect: Rect {
                             x: left,
                             y: decorating.baseline + top,

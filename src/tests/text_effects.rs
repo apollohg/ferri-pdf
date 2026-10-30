@@ -316,3 +316,47 @@ fn strokes_and_fills_reach_the_glyph_runs() {
         "a zero width paints no stroke"
     );
 }
+
+#[test]
+fn error_indications_paint_wavy_underlines_in_their_ua_colours() {
+    for (line, color) in [("spelling-error", RED), ("grammar-error", GREEN)] {
+        let trace = render(
+            &format!(
+                "p{{text-decoration:{line} blue dotted;text-decoration-thickness:3pt}}span{{text-decoration-line:underline;text-decoration-color:blue}}"
+            ),
+            "<p>Wrod <span>here</span></p>",
+        );
+        let decorations: Vec<_> = trace.display_lists[0]
+            .iter()
+            .filter_map(|item| match item {
+                DisplayItem::Decoration(paint) => Some(paint),
+                _ => None,
+            })
+            .collect();
+        let errors: Vec<_> = decorations
+            .iter()
+            .filter(|paint| paint.color == color)
+            .collect();
+        assert!(
+            !errors.is_empty()
+                && errors
+                    .iter()
+                    .all(|paint| paint.line == DecorationLine::Underline
+                        && paint.style == crate::graphics::DecorationStyle::Wavy),
+            "{line} must paint a wavy underline in its UA colour, disregarding the authored \
+             colour and style (CSS Text Decoration 4 §2.1): {decorations:?}"
+        );
+        assert_pt(
+            errors[0].rect.height,
+            3.0,
+            &format!("{line} honours the authored thickness"),
+        );
+        assert!(
+            decorations
+                .iter()
+                .any(|paint| paint.color.rgb == [0, 0, 255]
+                    && paint.style == crate::graphics::DecorationStyle::Solid),
+            "{line} leaves a descendant authored underline its own colour and style: {decorations:?}"
+        );
+    }
+}

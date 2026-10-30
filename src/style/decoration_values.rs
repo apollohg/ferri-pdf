@@ -9,18 +9,38 @@ use crate::style::{
 };
 use serde::Serialize;
 
+/// The UA-defined appearance of an error indication (CSS Text Decoration 4 §2.1): a wavy
+/// underline in red for spelling and green for grammar.
+const SPELLING_ERROR_COLOR: Color = Color {
+    rgb: [255, 0, 0],
+    alpha: 1.0,
+};
+const GRAMMAR_ERROR_COLOR: Color = Color {
+    rgb: [0, 128, 0],
+    alpha: 1.0,
+};
+const ERROR_STYLE: DecorationStyle = DecorationStyle::Wavy;
+
+/// `spelling-error` or `grammar-error`.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+pub(crate) enum ErrorIndication {
+    Spelling,
+    Grammar,
+}
+
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
 pub(crate) struct DecorationLines {
     pub underline: bool,
     pub overline: bool,
     pub line_through: bool,
+    pub error: Option<ErrorIndication>,
 }
 impl DecorationLines {
     pub(crate) fn is_empty(self) -> bool {
-        !(self.underline || self.overline || self.line_through)
+        !(self.underline || self.overline || self.line_through || self.error.is_some())
     }
-    /// `none | [underline || overline || line-through || blink]`; UAs need not blink.
-    /// The spelling and grammar error indications are unsupported.
+    /// `none | [underline || overline || line-through || blink] | spelling-error |
+    /// grammar-error`; UAs need not blink.
     pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
         let mut keywords = Vec::new();
         value.keywords(&mut keywords);
@@ -30,11 +50,26 @@ impl DecorationLines {
                 Keyword::Underline => lines.underline = true,
                 Keyword::Overline => lines.overline = true,
                 Keyword::LineThrough => lines.line_through = true,
+                Keyword::SpellingError => lines.error = Some(ErrorIndication::Spelling),
+                Keyword::GrammarError => lines.error = Some(ErrorIndication::Grammar),
                 Keyword::None | Keyword::Blink => {}
                 _ => return Err(unsupported(value)),
             }
         }
         Ok(lines)
+    }
+}
+
+impl TextDecoration {
+    /// The style and colour of this decoration's lines: an error indication disregards
+    /// `text-decoration-style` and `text-decoration-color`, as CSS Text Decoration 4 §2.1
+    /// permits, so it stays distinguishable from authored underlines.
+    pub(crate) fn paint(&self) -> (DecorationStyle, Color) {
+        match self.lines.error {
+            Some(ErrorIndication::Spelling) => (ERROR_STYLE, SPELLING_ERROR_COLOR),
+            Some(ErrorIndication::Grammar) => (ERROR_STYLE, GRAMMAR_ERROR_COLOR),
+            None => (self.style, self.color),
+        }
     }
 }
 
