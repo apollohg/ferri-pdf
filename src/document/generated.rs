@@ -47,6 +47,9 @@ pub(crate) struct PageStart {
     pub inside: bool,
     /// The page context's changes to the footnote counter (CSS GCPM 3 §2.5.2).
     pub footnote: CounterProperties,
+    /// The initial values of the page context's resets without one, which the previous
+    /// formatting found as reversed counters' (CSS Lists 3 §4.4.2).
+    pub automatic: Vec<(std::sync::Arc<str>, i128)>,
 }
 
 /// Where pagination placed the document, as generated content reads it.
@@ -136,6 +139,7 @@ impl GeneratedBindings {
 pub(crate) struct GeneratedPass {
     bindings: GeneratedBindings,
     elements: HashMap<ElementId, TargetElement>,
+    page_initials: Vec<(usize, std::sync::Arc<str>, i128)>,
 }
 impl GeneratedPass {
     pub(crate) fn new(index: Rc<FragmentIndex>, values: GeneratedValues) -> Self {
@@ -148,7 +152,13 @@ impl GeneratedPass {
                 requests: Rc::default(),
             },
             elements: HashMap::new(),
+            page_initials: Vec::new(),
         }
+    }
+    /// Records the initial values page contexts' resets without one gave the counters they
+    /// reset, by page.
+    pub(crate) fn page_initials(&mut self, initials: Vec<(usize, std::sync::Arc<str>, i128)>) {
+        self.page_initials = initials;
     }
     pub(crate) fn bindings(&self) -> GeneratedBindings {
         self.bindings.clone()
@@ -196,6 +206,7 @@ impl GeneratedPass {
         GeneratedReferences {
             bindings: self.bindings,
             elements: self.elements,
+            page_initials: self.page_initials,
         }
     }
 }
@@ -203,6 +214,7 @@ impl GeneratedPass {
 pub(crate) struct GeneratedReferences {
     bindings: GeneratedBindings,
     elements: HashMap<ElementId, TargetElement>,
+    page_initials: Vec<(usize, std::sync::Arc<str>, i128)>,
 }
 impl GeneratedReferences {
     pub(crate) fn bind<'a>(
@@ -273,7 +285,13 @@ impl GeneratedReferences {
             page_numbers.insert(*context, numbers(page));
         }
         let mut page_starts: HashMap<_, Vec<_>> = HashMap::new();
-        for (element, start) in starts {
+        for (element, mut start) in starts {
+            start.automatic = self
+                .page_initials
+                .iter()
+                .filter(|(page, ..)| *page == start.page)
+                .map(|(_, name, value)| (name.clone(), *value))
+                .collect();
             page_starts.entry(element).or_default().push(start);
         }
         Ok(GeneratedValues {

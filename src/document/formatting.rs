@@ -3332,7 +3332,11 @@ fn format_root(
         footnotes: traversal.footnotes,
         navigation: traversal.navigation,
         strings: traversal.strings,
-        generated: traversal.generated.finish(),
+        generated: {
+            let initials = traversal.counters.page_initials();
+            traversal.generated.page_initials(initials);
+            traversal.generated.finish()
+        },
         canvas: canvas_surface(traversal.canvas, surface),
         pages,
         svg_definitions,

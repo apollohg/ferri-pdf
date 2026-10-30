@@ -127,18 +127,15 @@ fn bookmark_labels_show_the_page_counter_of_their_element() {
     );
 }
 
-#[test]
-fn page_context_footnote_counter_resets_renumber_footnotes_by_call_page() {
-    let trace = trace(
-        "@page{size:300pt 80pt;counter-reset:footnote}.fn{float:footnote}",
-        "<p>x<span class=fn>N1</span> y<span class=fn>N2</span></p><p class=next>z<span class=fn>N3</span></p>",
-    );
-    let calls: Vec<Vec<&str>> = trace
+/// Each page's flow lines and the lines its footnote area paints.
+fn calls_and_notes(css: &str, body: &str) -> (Vec<Vec<String>>, Vec<Vec<String>>) {
+    let trace = trace(css, body);
+    let calls = trace
         .pages
         .iter()
-        .map(|lines| lines.iter().map(|line| line.text.as_str()).collect())
+        .map(|lines| lines.iter().map(|line| line.text.clone()).collect())
         .collect();
-    let notes: Vec<Vec<&str>> = trace
+    let notes = trace
         .display_lists
         .iter()
         .map(|items| {
@@ -146,7 +143,7 @@ fn page_context_footnote_counter_resets_renumber_footnotes_by_call_page() {
                 .iter()
                 .filter_map(|item| match item {
                     DisplayItem::Frame(frame) => {
-                        Some(frame.lines.iter().map(|line| line.text.as_str()))
+                        Some(frame.lines.iter().map(|line| line.text.clone()))
                     }
                     _ => None,
                 })
@@ -154,10 +151,40 @@ fn page_context_footnote_counter_resets_renumber_footnotes_by_call_page() {
                 .collect()
         })
         .collect();
-    assert_eq!(calls, [vec!["x1 y2"], vec!["z1"]]);
+    (calls, notes)
+}
+
+#[test]
+fn page_context_footnote_counter_resets_renumber_footnotes_by_call_page() {
+    let (calls, notes) = calls_and_notes(
+        "@page{size:300pt 80pt;counter-reset:footnote}.fn{float:footnote}",
+        "<p>x<span class=fn>N1</span> y<span class=fn>N2</span></p><p class=next>z<span class=fn>N3</span></p>",
+    );
+    assert_eq!(calls, expected(&[&["x1 y2"], &["z1"]]));
     assert_eq!(
         notes,
-        [vec!["1. N1", "2. N2"], vec!["1. N3"]],
+        expected(&[&["1. N1", "2. N2"], &["1. N3"]]),
         "calls and markers share the value the page start resets"
+    );
+}
+
+#[test]
+fn reversed_page_context_footnote_resets_count_down_the_calls_of_each_page() {
+    let (calls, notes) = calls_and_notes(
+        "@page{size:300pt 100pt;counter-reset:reversed(footnote)}.fn{float:footnote;counter-increment:footnote -1}",
+        "<p>x<span class=fn>N1</span> y<span class=fn>N2</span></p><p class=next>z<span class=fn>N3</span></p><p class=next>w<span class=fn>N4</span> v<span class=fn>N5</span> u<span class=fn>N6</span></p>",
+    );
+    assert_eq!(
+        calls,
+        expected(&[&["x2 y1"], &["z1"], &["w3 v2 u1"]]),
+        "each page's reset takes the automatic initial value of a reversed counter over the updates up to the next page's reset"
+    );
+    assert_eq!(
+        notes,
+        expected(&[
+            &["2. N1", "1. N2"],
+            &["1. N3"],
+            &["3. N4", "2. N5", "1. N6"]
+        ])
     );
 }

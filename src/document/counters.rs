@@ -43,6 +43,18 @@ pub(crate) struct Counters {
     initials: Option<HashMap<CounterKey, i128>>,
     collecting: bool,
     automatic: Vec<(CounterKey, Rc<RefCell<AutomaticInitial>>)>,
+    page_resets: Vec<PageReset>,
+}
+
+/// A page context's reset of a counter without a value, whose initial value as a reversed
+/// counter follows from the updates of the counter it resets up to its next reset (CSS Lists 3
+/// §4.4.2).
+struct PageReset {
+    page: usize,
+    name: Arc<str>,
+    counter: Rc<Cell<i128>>,
+    initial: AutomaticInitial,
+    open: bool,
 }
 impl Counters {
     fn charge(&mut self, amount: usize) -> Result<(), StyleError> {
@@ -91,23 +103,78 @@ impl Counters {
     ) -> Result<(), StyleError> {
         for start in starts {
             for reset in start.footnote.reset.iter() {
-                let value = reset.value.ok_or_else(|| {
-                    StyleError::Unsupported(
-                        "reversed() footnote counter resets in the page context".into(),
-                    )
-                })?;
-                self.updated(reset.name.clone())?.set(value);
+                let counter = self.updated(reset.name.clone())?;
+                for open in self
+                    .page_resets
+                    .iter_mut()
+                    .filter(|reset| Rc::ptr_eq(&reset.counter, &counter))
+                {
+                    open.open = false;
+                }
+                // The previous formatting found the initial value of a reset without one.
+                let value = reset.value.unwrap_or_else(|| {
+                    self.page_resets.push(PageReset {
+                        page: start.page,
+                        name: reset.name.clone(),
+                        counter: counter.clone(),
+                        initial: AutomaticInitial::default(),
+                        open: true,
+                    });
+                    start
+                        .automatic
+                        .iter()
+                        .find(|(name, _)| *name == reset.name)
+                        .map_or(INITIAL_COUNTER_VALUE, |(_, value)| *value)
+                });
+                counter.set(value);
             }
-            for change in start.footnote.increment.iter() {
-                let value = self.updated(change.name.clone())?;
-                value.set(value.get().saturating_add(change.value));
-            }
-            for change in start.footnote.set.iter() {
-                self.updated(change.name.clone())?.set(change.value);
-            }
+            self.update(&start.footnote)?;
             snapshots.push((start.page, self.capture()));
         }
         self.update_previous()
+    }
+    /// Applies the increments, then the sets, of `properties` to the counters they update,
+    /// which the page resets of those counters accumulate.
+    fn update(&mut self, properties: &CounterProperties) -> Result<(), StyleError> {
+        let mut increments = Vec::new();
+        for change in properties.increment.iter() {
+            let value = self.updated(change.name.clone())?;
+            value.set(value.get().saturating_add(change.value));
+            increments.push((value, change.value));
+        }
+        let mut sets = Vec::new();
+        for change in properties.set.iter() {
+            let value = self.updated(change.name.clone())?;
+            value.set(change.value);
+            sets.push((value, change.value));
+        }
+        for reset in self.page_resets.iter_mut().filter(|reset| reset.open) {
+            let updates = |changes: &[(Rc<Cell<i128>>, i128)]| {
+                changes
+                    .iter()
+                    .filter(|(counter, _)| Rc::ptr_eq(counter, &reset.counter))
+                    .map(|(_, value)| *value)
+                    .collect::<Vec<_>>()
+            };
+            let (increment, set) = (updates(&increments), updates(&sets));
+            if !increment.is_empty() || !set.is_empty() {
+                reset.initial.update(
+                    increment
+                        .into_iter()
+                        .fold(INITIAL_COUNTER_VALUE, i128::saturating_add),
+                    set.last().copied(),
+                );
+            }
+        }
+        Ok(())
+    }
+    /// The initial value each page context's reset without one gives the counter it resets, as
+    /// a reversed counter, by page.
+    pub(crate) fn page_initials(&self) -> Vec<(usize, Arc<str>, i128)> {
+        self.page_resets
+            .iter()
+            .map(|reset| (reset.page, reset.name.clone(), reset.initial.value()))
+            .collect()
     }
     fn apply(
         &mut self,
@@ -166,17 +233,11 @@ impl Counters {
             if self.collecting {
                 self.track_updates(properties, implicit)?;
             }
-            for change in properties.increment.iter() {
-                let value = self.updated(change.name.clone())?;
-                value.set(value.get().saturating_add(change.value));
-            }
             if let Some(increment) = implicit {
                 let value = self.updated(Arc::from(LIST_ITEM_COUNTER))?;
                 value.set(value.get().saturating_add(increment));
             }
-            for change in properties.set.iter() {
-                self.updated(change.name.clone())?.set(change.value);
-            }
+            self.update(properties)?;
         }
         self.update_previous()?;
         Ok(())
