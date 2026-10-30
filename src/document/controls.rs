@@ -616,6 +616,7 @@ impl<'b> Builder<'b, '_> {
         let [average, _, normal] = self.character_metrics()?;
         let mut editor = self.style.anonymous(Display::Block);
         editor.overflow = [Overflow::Clip; 2];
+        editor.text_overflow = self.style.text_overflow;
         let dimension = |name: &str, default: u32| {
             element
                 .attr(name)

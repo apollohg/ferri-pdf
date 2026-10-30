@@ -9,6 +9,7 @@ const PAGE: &str = "@page{size:360pt 480pt;margin:36pt}body{margin:0}";
 const PIXEL: f32 = 0.75;
 const PROBE: [u8; 3] = [0x12, 0x34, 0x56];
 const OTHER: [u8; 3] = [0x65, 0x43, 0x21];
+const ELLIPSIS: &str = "\u{2026}";
 
 fn render(body: &str) -> Result<crate::RenderOutput, crate::Error> {
     render_html(
@@ -421,6 +422,37 @@ fn text_field_values_paint_with_the_controls_colour_and_text_paint() {
                 .collect::<Vec<_>>(),
             vec![PROBE],
             "{text:?} casts its currentcolor shadow in the control's colour: {run:?}"
+        );
+    }
+}
+
+#[test]
+fn placeholders_and_textareas_ellipse_lines_that_overflow_their_inline_end() {
+    // CSS Overflow 3 §3.1: the controls clip, so their lines take `text-overflow`.
+    let long = "a value far longer than the control is wide";
+    for body in [
+        format!("<input size=6 placeholder='{long}'>"),
+        format!("<textarea cols=6 style='white-space:pre'>{long}</textarea>"),
+    ] {
+        let last_run = |css: &str| {
+            let trace = trace(&format!("<style>input,textarea{{{css}}}</style>{body}"));
+            let line = trace
+                .pages
+                .iter()
+                .flatten()
+                .find(|line| line.text.starts_with('a'))
+                .unwrap_or_else(|| panic!("{body}: the value renders: {:?}", texts(&trace)));
+            line.runs.last().expect("the value has runs").text.clone()
+        };
+        let clipped = last_run("");
+        assert_ne!(
+            clipped, ELLIPSIS,
+            "{body}: a clipped line ends in its own text"
+        );
+        assert_eq!(
+            last_run("text-overflow:ellipsis"),
+            ELLIPSIS,
+            "{body}: the overflowing line ends in an ellipsis"
         );
     }
 }
