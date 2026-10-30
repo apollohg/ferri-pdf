@@ -15,7 +15,7 @@ use icu_properties::{
 use unicode_segmentation::UnicodeSegmentation;
 
 /// Marks are drawn at half the element's font size (§3.1).
-const MARK_SCALE: f32 = 0.5;
+pub(crate) const MARK_SCALE: f32 = 0.5;
 /// Punctuation classified as symbols, including NFKD equivalents (§3.5).
 const PUNCTUATION_SYMBOLS: [char; 15] = [
     '#', '%', '\u{2030}', '\u{2031}', '\u{066A}', '\u{0609}', '\u{060A}', '&', '\u{204A}', '@',
@@ -23,7 +23,7 @@ const PUNCTUATION_SYMBOLS: [char; 15] = [
 ];
 
 /// Eligibility of one typographic character unit (CSS Text Decoration 4 §3.5).
-pub(super) fn marked(cluster: &str, skip: EmphasisSkip) -> bool {
+pub(crate) fn marked(cluster: &str, skip: EmphasisSkip) -> bool {
     let categories = CodePointMapData::<GeneralCategory>::new();
     let mut chars = cluster.chars();
     let Some(first) = chars.next() else {
@@ -65,7 +65,7 @@ pub(super) fn marked(cluster: &str, skip: EmphasisSkip) -> bool {
 
 /// The style marks are drawn in: the element's font at half size with the `ruby` feature,
 /// in the emphasis colour, without spacing, strokes or shadows of their own.
-fn mark_style(style: &Style) -> Style {
+pub(crate) fn mark_style(style: &Style) -> Style {
     let mut mark = style.clone();
     mark.size *= MARK_SCALE;
     let mut east_asian = mark.font_features.east_asian.to_vec();
@@ -250,7 +250,12 @@ fn transformed(contour: &Contour, [cx, cy]: Point, factor: f32, angle: f32) -> C
 
 /// A mark the UA synthesizes (§3.1), centred on `centre`, filled even-odd: an open shape is
 /// its outline less a copy shrunk by the open line width.
-fn synthesized(shape: EmphasisShape, filled: bool, centre: Point, em: f32) -> Vec<Contour> {
+pub(crate) fn synthesized(
+    shape: EmphasisShape,
+    filled: bool,
+    centre: Point,
+    em: f32,
+) -> Vec<Contour> {
     let [x, y] = centre;
     let outline = match shape {
         EmphasisShape::Dot => circle(centre, DOT_RADIUS_EM * em),

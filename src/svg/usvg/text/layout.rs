@@ -190,6 +190,8 @@ pub struct Span {
     pub line_through: Option<Path>,
     /// `text-shadow`, in points.
     pub(crate) shadows: Arc<[crate::style::TextShadow]>,
+    /// The span's emphasis marks, painted after its glyphs; they are not text.
+    pub(crate) emphasis: Option<Path>,
 }
 
 #[derive(Clone, Debug)]
@@ -373,6 +375,18 @@ pub(crate) fn layout_text(
                 Some(path)
             });
 
+            let mut emphasis = emphasis_marks(
+                span,
+                &clusters,
+                font,
+                text_node.writing_mode,
+                span_ts,
+                (&fonts_cache, resolver, fontdb),
+            );
+            if let Some(path) = &emphasis {
+                bbox = bbox.expand(path.data.bounds());
+            }
+
             let mut fill = span.fill.clone();
             if let Some(ref mut fill) = fill {
                 // The `fill-rule` should be ignored.
@@ -433,6 +447,11 @@ pub(crate) fn layout_text(
                             None
                         },
                         shadows: span.style.text_paint.shadows.clone(),
+                        emphasis: if index + 1 == count {
+                            emphasis.take()
+                        } else {
+                            None
+                        },
                     });
                 }
             }
@@ -453,6 +472,147 @@ pub(crate) fn layout_text(
     let bbox = bbox.to_non_zero_rect()?;
 
     Some((spans, bbox, text_node.clip))
+}
+
+/// CSS Text Decoration 3 §3: the emphasis marks of `span`, one centred over or under each of
+/// its marked typographic character units with its content area abutting the span's, as the
+/// document's text places them: the mark string in the span's font at half size with the
+/// `ruby` feature, or the synthesized shape no font has, filled in `text-emphasis-color`.
+/// Vertical text keeps marks upright beside its column.
+fn emphasis_marks(
+    span: &TextSpan,
+    clusters: &[GlyphCluster],
+    font: &ResolvedFont,
+    writing_mode: WritingMode,
+    span_ts: Transform,
+    (fonts_cache, resolver, fontdb): (&FontsCache, &dyn FontProvider, &mut Arc<Database>),
+) -> Option<Path> {
+    use crate::svg::usvg::text::flatten::DatabaseExt as _;
+    use crate::text::emphasis;
+    let style = &span.style;
+    let text = style.text_paint.emphasis.mark()?;
+    let marked: Vec<&GlyphCluster> = clusters
+        .iter()
+        .filter(|cluster| {
+            cluster.visible
+                && span_contains(span, cluster.byte_idx)
+                && cluster.glyphs.first().is_some_and(|glyph| {
+                    emphasis::marked(&glyph.text, style.text_paint.emphasis_skip)
+                })
+        })
+        .collect();
+    if marked.is_empty() {
+        return None;
+    }
+    let size = span.font_size.get();
+    let mark_size = size * emphasis::MARK_SCALE;
+    let mark_chunk = TextChunk {
+        x: None,
+        y: None,
+        anchor: TextAnchor::Start,
+        rtl: false,
+        spans: vec![TextSpan {
+            start: 0,
+            end: text.len(),
+            font_size: NonZeroPositiveF32::new(mark_size)?,
+            style: Arc::new(emphasis::mark_style(style)),
+            letter_spacing: 0.0,
+            word_spacing: 0.0,
+            ..span.clone()
+        }],
+        text_flow: TextFlow::Linear,
+        text: text.clone(),
+        line_breaks: 0,
+        inline_offset: 0.0,
+        hanging: 0,
+    };
+    let shaped = process_chunk(
+        &mark_chunk,
+        WritingMode::LeftToRight,
+        fonts_cache,
+        resolver,
+        fontdb,
+    )?;
+    let missing = shaped
+        .iter()
+        .flat_map(|cluster| &cluster.glyphs)
+        .any(|glyph| glyph.id.0 == 0);
+    let synthesized = style.text_paint.emphasis.shape().filter(|_| missing);
+    let vertical = writing_mode == WritingMode::TopToBottom;
+    let (base, mark) = if vertical {
+        (font.upright_metrics, font.upright_metrics)
+    } else {
+        (font.metrics, font.metrics)
+    };
+    let [ascent, descent] = [base.ascent * size, base.descent * size];
+    let [mark_ascent, mark_descent] = [mark.ascent * mark_size, mark.descent * mark_size];
+    let baseline = if style.text_paint.emphasis_position.under(style) {
+        descent + mark_ascent
+    } else {
+        -(ascent + mark_descent)
+    };
+    let middle = baseline - f32::midpoint(mark_ascent, -mark_descent);
+    let width: f32 = shaped.iter().map(|cluster| cluster.advance).sum();
+    let mut builder = tiny_skia_path::PathBuilder::new();
+    for cluster in marked {
+        let centre = cluster.advance / 2.0;
+        // Marks stay upright beside a vertical column.
+        let place = |transform: Transform| {
+            let upright = if vertical {
+                Transform::from_rotate_at(-VERTICAL_ROTATION, centre, middle)
+            } else {
+                Transform::default()
+            };
+            span_ts
+                .pre_concat(cluster.transform)
+                .pre_concat(upright)
+                .pre_concat(transform)
+        };
+        if let Some((shape, filled)) = synthesized {
+            let contours = emphasis::synthesized(shape, filled, [centre, middle], mark_size);
+            if let Some(path) = crate::paint::shape_outline(&crate::paint::Shape::Path {
+                contours,
+                even_odd: true,
+                clip: None,
+            })
+            .and_then(|path| path.transform(place(Transform::default())))
+            {
+                builder.push_path(&path);
+            }
+            continue;
+        }
+        let mut pen = centre - width / 2.0;
+        for mark_cluster in &shaped {
+            for glyph in &mark_cluster.glyphs {
+                let positioned = PositionedGlyph {
+                    span_ts: place(Transform::from_translate(pen, baseline)),
+                    cluster_ts: mark_cluster.transform,
+                    ..glyph.clone()
+                };
+                if let Some(path) = fontdb
+                    .outline(glyph.font, glyph.id)
+                    .and_then(|path| path.transform(positioned.outline_transform()))
+                {
+                    builder.push_path(&path);
+                }
+            }
+            pen += mark_cluster.advance;
+        }
+    }
+    let fill = Fill {
+        rule: FillRule::EvenOdd,
+        ..Fill::color(style.text_paint.emphasis_color.used)
+    };
+    Path::new(
+        String::new(),
+        span.visible,
+        Some(fill),
+        None,
+        PaintOrder::default(),
+        ShapeRendering::default(),
+        Arc::new(builder.finish()?),
+        Transform::default(),
+    )
 }
 
 /// The clusters of `chunk`, shaped, oriented and spaced by `letter-spacing` and

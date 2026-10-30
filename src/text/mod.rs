@@ -5,7 +5,7 @@ mod breaking;
 mod combine;
 pub(crate) mod decoration;
 mod ellipsis;
-mod emphasis;
+pub(crate) mod emphasis;
 pub(crate) mod features;
 mod hanging;
 pub(crate) mod hyphenation;

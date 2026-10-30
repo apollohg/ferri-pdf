@@ -210,7 +210,7 @@ pub(crate) fn flatten(
             host,
         );
 
-        if let Some(path) = span.line_through.as_ref() {
+        for path in [&span.line_through, &span.emphasis].into_iter().flatten() {
             let mut path = path.clone();
             path.rendering_mode = rendering_mode;
             if let Some(path) = host_stroked(path, host) {

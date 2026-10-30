@@ -106,6 +106,11 @@ starts a line box anchored by `text-anchor` in the area. Positioning attributes 
 the initial position, `textLength` does not apply, and `text-overflow` clips or ellipsizes
 overflowing lines at the area's edges (§11.10.2.10).
 
+`text-emphasis` marks each marked character of styled text as the document's text does: the
+mark string in the span's font at half size with the `ruby` feature, or the shape no font has
+synthesized, filled in `text-emphasis-color` over or under the content area, upright beside
+vertical columns. Both renderers paint the marks as outlines, not text.
+
 Decoration lines take the style, thickness, underline offset and position, and error
 indications the declaring element's computed style gives them, placed and shaped as the
 document's text places and shapes its lines; a `text-decoration-color` other than

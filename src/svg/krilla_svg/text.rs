@@ -50,6 +50,7 @@ pub(crate) fn fits(
             span.overline.is_none()
                 && span.underline.is_none()
                 && span.line_through.is_none()
+                && span.emphasis.is_none()
                 && span
                     .positioned_glyphs
                     .chunk_by(|left, right| left.cluster == right.cluster)
@@ -111,6 +112,10 @@ fn render_through(
 
         if let Some(line_through) = &span.line_through {
             path::render(line_through, surface, process_context);
+        }
+
+        if let Some(emphasis) = &span.emphasis {
+            path::render(emphasis, surface, process_context);
         }
     }
 }

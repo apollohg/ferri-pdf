@@ -288,7 +288,13 @@ class TextEffectsPdf(unittest.TestCase):
                                    f"the underline spans the text in {name}: {line}")
 
     def test_emphasis_marks_are_half_size_paths_centred_over_their_characters(self):
-        target = self.render("text-emphasis:filled dot red;color:black", "H H")
+        """CSS Text Decoration 3 §3, for the document's text and SVG text alike."""
+        for render in (self.render, self.render_svg):
+            with self.subTest(render=render.__name__):
+                self.assert_centred_marks(render("text-emphasis:filled dot red;color:black",
+                                                 "H H"))
+
+    def assert_centred_marks(self, target):
         self.assertEqual("".join(glyph.text for glyph in pdf_content.glyphs(target)), "H H",
                          "marks are not text content")
         base = metrics("H")
@@ -309,6 +315,12 @@ class TextEffectsPdf(unittest.TestCase):
             self.assert_box(mark, expected, f"mark over character {index}")
 
     def test_emphasis_skip_marks_only_the_requested_character_categories(self):
+        """CSS Text Decoration 4 §3.5, for the document's text and SVG text alike."""
+        for render in (self.render, self.render_svg):
+            with self.subTest(render=render.__name__):
+                self.assert_skipped_marks(render)
+
+    def assert_skipped_marks(self, render):
         dot = metrics("•")
         mark_size = SIZE_PT / 2
         ink_offset = ((dot["box"][0] + dot["box"][2]) / 2 - dot["advance"] / 2) * mark_size
@@ -321,8 +333,8 @@ class TextEffectsPdf(unittest.TestCase):
                     advance = metrics(character)["advance"] * SIZE_PT
                     centres.append((pen + advance / 2 + ink_offset) * PX_PER_PT)
                     pen += advance
-                target = self.render("white-space:pre;text-emphasis:filled dot red;color:black;"
-                                     f"text-emphasis-skip:{skip}", text)
+                target = render("white-space:pre;text-emphasis:filled dot red;color:black;"
+                                f"text-emphasis-skip:{skip}", text)
                 self.assertEqual("".join(g.text for g in pdf_content.glyphs(target)), text,
                                  "mark exclusions must not change extracted text")
                 image = self.raster(target)
