@@ -51,6 +51,28 @@ struct Event {
     rank: u8,
 }
 
+/// Strong left-to-right characters of each UTF-8 width, which stand for upright text so that its
+/// source offsets carry over.
+const STRONG_LTR_BY_WIDTH: [char; 4] = ['A', '\u{0100}', '\u{4e00}', '\u{20000}'];
+
+/// The ranges of `paragraph` set upright in vertical text, whose characters bidi reordering
+/// treats as strong left-to-right (CSS Writing Modes 4 §5.1).
+fn upright_ranges(paragraph: &Paragraph) -> Vec<Range<usize>> {
+    paragraph
+        .spans()
+        .iter()
+        .filter(|span| {
+            matches!(
+                span.style.used_writing_mode(),
+                crate::style::logical::WritingMode::VerticalRl
+                    | crate::style::logical::WritingMode::VerticalLr
+            ) && span.style.text_orientation == crate::style::logical::TextOrientation::Upright
+                && span.atomic.is_none()
+        })
+        .map(|span| span.range.clone())
+        .collect()
+}
+
 fn events(paragraph: &Paragraph) -> Vec<Event> {
     let mut result = Vec::new();
     let mut stack: Vec<usize> = Vec::new();
@@ -88,28 +110,6 @@ fn events(paragraph: &Paragraph) -> Vec<Event> {
     for index in stack.into_iter().rev() {
         close(index, &mut result);
     }
-    for span in paragraph.spans() {
-        if matches!(
-            span.style.used_writing_mode(),
-            crate::style::logical::WritingMode::VerticalRl
-                | crate::style::logical::WritingMode::VerticalLr
-        ) && span.style.text_orientation == crate::style::logical::TextOrientation::Upright
-            && span.atomic.is_none()
-        {
-            result.push(Event {
-                offset: span.range.start,
-                controls: (LRO, PDF),
-                opening: true,
-                rank: 1,
-            });
-            result.push(Event {
-                offset: span.range.end,
-                controls: (LRO, PDF),
-                opening: false,
-                rank: 1,
-            });
-        }
-    }
     for group in crate::text::combine::groups(paragraph) {
         let pair = (FSI_LRO, PDF_PDI);
         result.push(Event {
@@ -129,11 +129,9 @@ fn events(paragraph: &Paragraph) -> Vec<Event> {
         (
             event.offset,
             match (event.rank, event.opening) {
-                (0, _) => 2,
-                (1, false) => 1,
-                (1, true) => 3,
+                (0, _) => 1,
                 (_, false) => 0,
-                (_, true) => 4,
+                (_, true) => 2,
             },
         )
     });
@@ -260,15 +258,17 @@ struct SourceChunk {
 
 struct Stream<'budget> {
     work: &'budget Cell<Option<usize>>,
+    upright: Vec<Range<usize>>,
     text: String,
     chunks: Vec<SourceChunk>,
     active: Vec<Controls>,
     opened: bool,
 }
 impl<'budget> Stream<'budget> {
-    fn new(work: &'budget Cell<Option<usize>>) -> Self {
+    fn new(work: &'budget Cell<Option<usize>>, upright: Vec<Range<usize>>) -> Self {
         Self {
             work,
+            upright,
             text: String::new(),
             chunks: Vec::new(),
             active: Vec::new(),
@@ -317,7 +317,19 @@ impl<'budget> Stream<'budget> {
             return Ok(());
         }
         let virtual_start = self.text.len();
-        self.push(&text[range.clone()])?;
+        let mut source = text[range.clone()].to_owned();
+        for upright in &self.upright {
+            let start = upright.start.max(range.start);
+            let end = upright.end.min(range.end);
+            if start < end {
+                let strong: String = text[start..end]
+                    .chars()
+                    .map(|ch| STRONG_LTR_BY_WIDTH[ch.len_utf8() - 1])
+                    .collect();
+                source.replace_range(start - range.start..end - range.start, &strong);
+            }
+        }
+        self.push(&source)?;
         if let Some(last) = self.chunks.last_mut()
             && last.source.end == range.start
             && last.virtual_start + last.source.len() == virtual_start
@@ -396,13 +408,7 @@ pub(crate) fn resolve<'p>(
     if text.is_empty()
         || (root.0.is_empty()
             && crate::text::combine::groups(paragraph).is_empty()
-            && !paragraph.spans().iter().any(|span| {
-                matches!(
-                    span.style.used_writing_mode(),
-                    crate::style::logical::WritingMode::VerticalRl
-                        | crate::style::logical::WritingMode::VerticalLr
-                ) && span.style.text_orientation == crate::style::logical::TextOrientation::Upright
-            })
+            && upright_ranges(paragraph).is_empty()
             && paragraph
                 .boxes()
                 .iter()
@@ -411,7 +417,7 @@ pub(crate) fn resolve<'p>(
         return Ok(ResolvedParagraph::Plain(BidiInfo::new(text, base)));
     }
     let events = events(paragraph);
-    let mut stream = Stream::new(work);
+    let mut stream = Stream::new(work, upright_ranges(paragraph));
     if !root.0.is_empty() {
         stream.active.push(root);
     }
