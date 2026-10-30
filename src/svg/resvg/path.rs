@@ -110,7 +110,21 @@ fn stroke_path(
     paint.anti_alias = path.rendering_mode().use_shape_antialiasing();
     paint.blend_mode = blend_mode;
 
-    pixmap.stroke_path(path.data(), &paint, &stroke.to_tiny_skia(), transform, None);
+    if path.non_scaling_stroke() {
+        // SVG 2 §13.6: stroked in the host coordinate space, painted in user space.
+        let user = path.abs_transform();
+        paint.shader.transform(user);
+        let host = path.host_data()?;
+        pixmap.stroke_path(
+            &host,
+            &paint,
+            &stroke.to_tiny_skia(),
+            transform.pre_concat(user.invert()?),
+            None,
+        );
+    } else {
+        pixmap.stroke_path(path.data(), &paint, &stroke.to_tiny_skia(), transform, None);
+    }
 
     Some(())
 }

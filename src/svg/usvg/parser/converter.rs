@@ -837,6 +837,38 @@ pub(super) fn viewport_clip(
     Some(Arc::new(clip_path))
 }
 
+const NON_SCALING_STROKE: &str = "non-scaling-stroke";
+const NON_SCALING_SIZE: &str = "non-scaling-size";
+const NON_ROTATION: &str = "non-rotation";
+const FIXED_POSITION: &str = "fixed-position";
+
+/// Whether the element's `vector-effect` strokes it in the host coordinate space (SVG 2 §13.6).
+pub(super) fn non_scaling_stroke(node: SvgNode) -> bool {
+    node.attribute::<&str>(AId::VectorEffect) == Some(NON_SCALING_STROKE)
+}
+
+/// SVG 2 §8.13.1: the transform giving the element whose own transform is `own` the user
+/// coordinate system that its `vector-effect` constrains in the host coordinate space, the
+/// canvas, given its parent's absolute transform. A singular CTM leaves `non-scaling-size`
+/// without effect.
+fn vector_effect(node: SvgNode, parent: Transform, own: Transform) -> Transform {
+    let ctm = parent.pre_concat(own);
+    let [a, b, c, d] = [ctm.sx, ctm.ky, ctm.kx, ctm.sy];
+    let scale = (a * d - b * c).abs().sqrt();
+    let constrained = match node.attribute::<&str>(AId::VectorEffect) {
+        Some(NON_SCALING_SIZE) if scale > 0.0 => {
+            Transform::from_row(a / scale, b / scale, c / scale, d / scale, ctm.tx, ctm.ty)
+        }
+        Some(NON_ROTATION) => Transform::from_row(scale, 0.0, 0.0, scale, ctm.tx, ctm.ty),
+        // The element's own translation places its origin in the host space.
+        Some(FIXED_POSITION) => Transform::from_row(a, b, c, d, own.tx, own.ty),
+        _ => return own,
+    };
+    parent
+        .invert()
+        .map_or(own, |to_parent| to_parent.pre_concat(constrained))
+}
+
 /// The transform of an element whose content `collect` converts untransformed: CSS
 /// transform properties, or the `transform` attribute about an origin that, per CSS
 /// Transforms 1 §2, lies in the element's object or stroke bounding box when
@@ -848,8 +880,11 @@ pub(super) fn element_transform(
     parent: &Group,
     collect: &dyn Fn(&mut Cache, &mut Group),
 ) -> Transform {
-    super::motion::transform(node, state, cache, parent, collect).unwrap_or_else(|| {
-        match node.attribute::<&str>(AId::TransformBox) {
+    let own =
+        super::motion::transform(node, state, cache, parent, collect).unwrap_or_else(|| match node
+            .attribute::<&str>(
+            AId::TransformBox,
+        ) {
             Some(reference @ (FILL_BOX | STROKE_BOX)) => {
                 let mut probe = Group::empty();
                 probe.abs_transform = parent.abs_transform;
@@ -863,8 +898,8 @@ pub(super) fn element_transform(
                 node.resolve_transform_in(AId::Transform, state, Some(bounds))
             }
             _ => node.resolve_transform(AId::Transform, state),
-        }
-    })
+        });
+    vector_effect(node, parent.abs_transform, own)
 }
 
 // TODO: explain
@@ -1144,8 +1179,11 @@ fn convert_path(
     );
 
     let path = match path {
-        Some(v) => v,
-        None => return,
+        Some(path) if non_scaling_stroke(node) => path.with_non_scaling_stroke(),
+        path => path,
+    };
+    let Some(path) = path else {
+        return;
     };
 
     match (raw_paint_order.order, marker) {

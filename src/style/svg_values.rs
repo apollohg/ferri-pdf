@@ -99,6 +99,8 @@ pub(crate) struct SvgStyle {
     pub color_interpolation_filters: Keyword,
     pub text_anchor: Keyword,
     pub shape_rendering: Keyword,
+    /// SVG 2 §8.13 `vector-effect`.
+    pub vector_effect: Keyword,
     pub text_rendering: Keyword,
     pub image_rendering: Keyword,
     pub cx: LengthPercentage,
@@ -142,6 +144,7 @@ impl Default for SvgStyle {
             color_interpolation_filters: Keyword::Linearrgb,
             text_anchor: Keyword::Start,
             shape_rendering: Keyword::Auto,
+            vector_effect: Keyword::None,
             text_rendering: Keyword::Auto,
             image_rendering: Keyword::Auto,
             cx: LengthPercentage::ZERO,
@@ -426,6 +429,7 @@ svg_keyword!(stroke_linejoin, stroke_linejoin);
 svg_keyword!(mask_type, mask_type);
 svg_keyword!(color_interpolation_filters, color_interpolation_filters);
 svg_keyword!(text_anchor, text_anchor);
+svg_keyword!(vector_effect, vector_effect);
 // SVG 2 §13.10 rendering hints: vector output carries no anti-aliasing or legibility trade-off,
 // which the PDF consumer makes.
 svg_keyword!(shape_rendering, shape_rendering);

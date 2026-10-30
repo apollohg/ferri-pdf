@@ -1437,6 +1437,10 @@ fn handler(property: Property) -> Option<Handler> {
             svg_values::text_anchor,
             Some(|v, r| svg_values::supported(svg_values::text_anchor, v, r)),
         ),
+        P::VectorEffect => (
+            svg_values::vector_effect,
+            Some(|v, r| svg_values::supported(svg_values::vector_effect, v, r)),
+        ),
         P::ShapeRendering => (
             svg_values::shape_rendering,
             Some(|v, r| svg_values::supported(svg_values::shape_rendering, v, r)),

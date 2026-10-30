@@ -60,3 +60,8 @@ prefixed apart from the referencing document's, so paint servers, markers, clip 
 filters and offset paths resolve in the merged tree. A document that does not load or parse
 leaves its references naming no element, so each property's invalid-reference fallback applies.
 Image `href`s of a referenced document resolve against that document's URL.
+
+`vector-effect` (SVG 2 §8.13, §13.6) takes effect: `non-scaling-stroke` strokes paths, and the
+flattened outlines of text, in the host coordinate space while their paint stays in user space,
+and `non-scaling-size`, `non-rotation` and `fixed-position` constrain the element's transform
+by the §8.13.1 formulas.

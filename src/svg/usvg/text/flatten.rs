@@ -26,6 +26,7 @@ fn push_outline_paths(
     builder: &mut tiny_skia_path::PathBuilder,
     new_children: &mut Vec<Node>,
     rendering_mode: ShapeRendering,
+    host: Option<Transform>,
 ) {
     let builder = mem::replace(builder, tiny_skia_path::PathBuilder::new());
 
@@ -40,27 +41,52 @@ fn push_outline_paths(
             Arc::new(p),
             Transform::default(),
         )
-    }) {
+    }) && let Some(path) = host_stroked(path, host)
+    {
         new_children.push(Node::Path(Box::new(path)));
     }
+}
+
+/// `path`, stroked in the host coordinate space when `host`, the text's absolute transform,
+/// is given for `vector-effect: non-scaling-stroke` (SVG 2 §13.6).
+fn host_stroked(path: Path, host: Option<Transform>) -> Option<Path> {
+    let Some(host) = host else {
+        return Some(path);
+    };
+    Path::new(
+        path.id,
+        path.visible,
+        path.fill,
+        path.stroke,
+        path.paint_order,
+        path.rendering_mode,
+        path.data,
+        host,
+    )?
+    .with_non_scaling_stroke()
 }
 
 pub(crate) fn flatten(text: &mut Text, cache: &mut Cache) -> Option<(Group, NonZeroRect)> {
     let mut new_children = vec![];
 
     let rendering_mode = resolve_rendering_mode(text);
+    let host = text.non_scaling_stroke.then_some(text.abs_transform);
 
     for span in &text.layouted {
         if let Some(path) = span.overline.as_ref() {
             let mut path = path.clone();
             path.rendering_mode = rendering_mode;
-            new_children.push(Node::Path(Box::new(path)));
+            if let Some(path) = host_stroked(path, host) {
+                new_children.push(Node::Path(Box::new(path)));
+            }
         }
 
         if let Some(path) = span.underline.as_ref() {
             let mut path = path.clone();
             path.rendering_mode = rendering_mode;
-            new_children.push(Node::Path(Box::new(path)));
+            if let Some(path) = host_stroked(path, host) {
+                new_children.push(Node::Path(Box::new(path)));
+            }
         }
 
         // Instead of always processing each glyph separately, we always collect
@@ -90,7 +116,13 @@ pub(crate) fn flatten(text: &mut Text, cache: &mut Cache) -> Option<(Group, NonZ
             }
             // An SVG glyph. Will return the usvg node containing the glyph descriptions.
             else if let Some(node) = cache.fontdb_svg(glyph.font, glyph.id) {
-                push_outline_paths(span, &mut span_builder, &mut new_children, rendering_mode);
+                push_outline_paths(
+                    span,
+                    &mut span_builder,
+                    &mut new_children,
+                    rendering_mode,
+                    host,
+                );
 
                 let mut group = Group {
                     transform: glyph.svg_transform(),
@@ -104,7 +136,13 @@ pub(crate) fn flatten(text: &mut Text, cache: &mut Cache) -> Option<(Group, NonZ
             }
             // A bitmap glyph.
             else if let Some(img) = cache.fontdb_raster(glyph.font, glyph.id) {
-                push_outline_paths(span, &mut span_builder, &mut new_children, rendering_mode);
+                push_outline_paths(
+                    span,
+                    &mut span_builder,
+                    &mut new_children,
+                    rendering_mode,
+                    host,
+                );
 
                 let transform = if img.is_sbix {
                     glyph.sbix_transform(
@@ -157,12 +195,20 @@ pub(crate) fn flatten(text: &mut Text, cache: &mut Cache) -> Option<(Group, NonZ
             }
         }
 
-        push_outline_paths(span, &mut span_builder, &mut new_children, rendering_mode);
+        push_outline_paths(
+            span,
+            &mut span_builder,
+            &mut new_children,
+            rendering_mode,
+            host,
+        );
 
         if let Some(path) = span.line_through.as_ref() {
             let mut path = path.clone();
             path.rendering_mode = rendering_mode;
-            new_children.push(Node::Path(Box::new(path)));
+            if let Some(path) = host_stroked(path, host) {
+                new_children.push(Node::Path(Box::new(path)));
+            }
         }
     }
 

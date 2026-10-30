@@ -80,8 +80,8 @@ fn unsupported_values_name_their_declaration_once() {
             "scroll-snap-type: x mandatory",
         ),
         (
-            "#target{vector-effect:non-scaling-stroke}",
-            "vector-effect: non-scaling-stroke",
+            "#target{scroll-initial-target:nearest}",
+            "scroll-initial-target: nearest",
         ),
         (
             "#target{width:calc-mix(--clock,10pt,30pt)}",

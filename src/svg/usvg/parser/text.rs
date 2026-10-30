@@ -140,6 +140,7 @@ pub(crate) fn convert(
         abs_stroke_bounding_box: dummy,
         flattened: Box::new(Group::empty()),
         layouted: vec![],
+        non_scaling_stroke: converter::non_scaling_stroke(text_node),
     };
 
     if text::convert(

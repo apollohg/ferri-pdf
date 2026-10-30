@@ -22,6 +22,11 @@ pub(crate) fn render(
     surface: &mut Surface,
     process_context: &mut ProcessContext,
 ) {
+    // Glyph runs stroke in their own space; the outlines stroke in the host space.
+    if text.non_scaling_stroke() {
+        crate::svg::krilla_svg::group::render(text.flattened(), surface, process_context);
+        return;
+    }
     for span in text.layouted() {
         if !span.visible {
             continue;

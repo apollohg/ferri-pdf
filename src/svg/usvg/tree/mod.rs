@@ -1276,6 +1276,8 @@ pub struct Path {
     pub(crate) abs_bounding_box: Rect,
     pub(crate) stroke_bounding_box: Rect,
     pub(crate) abs_stroke_bounding_box: Rect,
+    /// `vector-effect: non-scaling-stroke`.
+    pub(crate) non_scaling_stroke: bool,
 }
 
 impl Path {
@@ -1334,7 +1336,32 @@ impl Path {
             abs_bounding_box,
             stroke_bounding_box,
             abs_stroke_bounding_box,
+            non_scaling_stroke: false,
         })
+    }
+
+    /// The path with SVG 2 §13.6 `vector-effect: non-scaling-stroke`: its stroke is computed
+    /// in the host coordinate space, the canvas, whatever transforms apply to the path.
+    pub(crate) fn with_non_scaling_stroke(mut self) -> Option<Self> {
+        let host = self.host_data()?;
+        let bounds = host.compute_tight_bounds()?;
+        self.abs_stroke_bounding_box =
+            Path::calculate_stroke_bbox(self.stroke.as_ref(), &host).unwrap_or(bounds);
+        self.stroke_bounding_box = self
+            .abs_stroke_bounding_box
+            .transform(self.abs_transform.invert()?)?;
+        self.non_scaling_stroke = true;
+        Some(self)
+    }
+
+    /// Whether the stroke is computed in the host coordinate space.
+    pub fn non_scaling_stroke(&self) -> bool {
+        self.non_scaling_stroke
+    }
+
+    /// The path data in the host coordinate space, the canvas.
+    pub(crate) fn host_data(&self) -> Option<tiny_skia_path::Path> {
+        self.data.as_ref().clone().transform(self.abs_transform)
     }
 
     /// Element's ID.

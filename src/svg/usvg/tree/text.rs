@@ -630,6 +630,8 @@ pub struct Text {
     pub(crate) abs_stroke_bounding_box: Rect,
     pub(crate) flattened: Box<Group>,
     pub(crate) layouted: Vec<Span>,
+    /// `vector-effect: non-scaling-stroke`, which strokes the flattened outlines.
+    pub(crate) non_scaling_stroke: bool,
 }
 
 impl Text {
@@ -744,6 +746,11 @@ impl Text {
     ///    glyph rendering logic based on the layouted glyphs (see the `layouted` method).
     pub fn flattened(&self) -> &Group {
         &self.flattened
+    }
+
+    /// Whether the stroke is computed in the host coordinate space (SVG 2 §13.6).
+    pub fn non_scaling_stroke(&self) -> bool {
+        self.non_scaling_stroke
     }
 
     /// The positioned glyphs and decoration spans of the text.

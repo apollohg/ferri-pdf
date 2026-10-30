@@ -209,6 +209,37 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
             self.assertPixel(pixels, 35, 45, WHITE, 'overflow-x: hidden clips the left')
             self.assertPixel(pixels, 65, 45, WHITE, 'overflow-x: hidden clips the right')
 
+    def test_vector_effects_constrain_strokes_and_user_spaces_in_the_host_space(self):
+        # Without a viewBox, user units are the host space's CSS pixels, three quarters of a point.
+        def pt(units):
+            return round(units * 0.75)
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            pixels = self.render(
+                Path(directory), '.nss{vector-effect:non-scaling-stroke}',
+                '<svg width="200pt" height="200pt">'
+                '<g transform="scale(4 1)"><rect class="nss" x="5" y="10" width="20" height="40" '
+                'fill="none" stroke="blue" stroke-width="4"/></g>'
+                '<g transform="translate(100 0) scale(3)"><rect x="0" y="0" width="20" '
+                'height="20" fill="rgb(0,160,0)" style="vector-effect:non-scaling-size"/></g>'
+                '<g transform="translate(150 100) rotate(45)"><rect width="30" height="30" '
+                'fill="yellow" vector-effect="non-rotation"/></g>'
+                '<g transform="translate(100 150) scale(2)"><rect transform="translate(10 120)" '
+                'width="20" height="20" fill="rgb(200,0,200)" vector-effect="fixed-position"/></g>'
+                '</svg>')
+            self.assertPixel(pixels, pt(20), pt(30), BLUE,
+                             'SVG 2 §13.6: the stroke stays centred on the scaled outline')
+            self.assertPixel(pixels, pt(14), pt(30), WHITE,
+                             'non-scaling-stroke: the horizontally scaled side keeps a 4-unit width')
+            self.assertPixel(pixels, pt(104), pt(4), GREEN,
+                             'SVG 2 §8.13.1: non-scaling-size keeps the origin the CTM gives')
+            self.assertPixel(pixels, pt(126), pt(26), WHITE,
+                             'non-scaling-size: the square keeps its 20-unit size, unscaled')
+            self.assertPixel(pixels, pt(178), pt(102), YELLOW,
+                             'non-rotation: the square stays axis-aligned at its origin')
+            self.assertPixel(pixels, pt(30), pt(140), MAGENTA,
+                             'fixed-position: the element\'s translation places it in the host '
+                             'space, at the size the CTM gives')
+
     def test_svg_text_matches_fractional_weights_widths_and_oblique_angles(self):
         def ink_width(style):
             with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:

@@ -250,9 +250,15 @@ pub(crate) trait PathExt {
 
 impl PathExt for crate::svg::usvg::Path {
     fn to_krilla(&self) -> Path {
+        self.data().to_krilla()
+    }
+}
+
+impl PathExt for tiny_skia_path::Path {
+    fn to_krilla(&self) -> Path {
         let mut pb = PathBuilder::new();
 
-        for seg in self.data().segments() {
+        for seg in self.segments() {
             match seg {
                 PathSegment::MoveTo(p) => pb.move_to(p.x, p.y),
                 PathSegment::LineTo(p) => pb.line_to(p.x, p.y),

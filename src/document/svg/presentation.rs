@@ -117,6 +117,7 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
     );
     push("text-anchor", svg.text_anchor.name());
     push("shape-rendering", svg_keyword(svg.shape_rendering));
+    push("vector-effect", svg.vector_effect.name());
     push("text-rendering", svg_keyword(svg.text_rendering));
     push(
         "image-rendering",
