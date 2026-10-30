@@ -6,12 +6,15 @@ const TOLERANCE_PT: f32 = 0.001;
 
 #[test]
 fn zoom_rejects_shadow_lengths_that_overflow_used_coordinates() {
-    for shadow in [
-        "1e30pt 0 blue",
-        "0 1e30pt blue",
-        "0 0 1e30pt blue",
-        "0 0 0 1e30pt blue",
-        "0 0 0 -1e30pt blue inset",
+    for (property, shadow) in [
+        ("box-shadow", "1e30pt 0 blue"),
+        ("box-shadow", "0 1e30pt blue"),
+        ("box-shadow", "0 0 1e30pt blue"),
+        ("box-shadow", "0 0 0 1e30pt blue"),
+        ("box-shadow", "0 0 0 -1e30pt blue inset"),
+        ("text-shadow", "1e30pt 0 blue"),
+        ("text-shadow", "0 1e30pt blue"),
+        ("text-shadow", "0 0 1e30pt blue"),
     ] {
         for selector in ["div", "span", "div::before"] {
             let content = if selector.ends_with("::before") {
@@ -21,13 +24,13 @@ fn zoom_rejects_shadow_lengths_that_overflow_used_coordinates() {
             };
             let result = render_html(
                 &format!(
-                    "<style>{PROFILE}{selector}{{{content}zoom:1e20;font-size:0;width:1e-19pt;height:1e-19pt;box-shadow:{shadow}}}</style><div><span></span></div>"
+                    "<style>{PROFILE}{selector}{{{content}zoom:1e20;font-size:1e-19pt;line-height:1e-19pt;width:1e-19pt;height:1e-19pt;{property}:{shadow}}}</style><div><span>X</span></div>"
                 ),
                 &local_options(),
             );
             assert!(
-                matches!(&result, Err(ferri_pdf::Error::Css(error)) if error.to_string().contains("non-finite zoomed box-shadow")),
-                "{selector}, {shadow}: overflowing paint lengths must report a CSS error, got {}",
+                matches!(&result, Err(ferri_pdf::Error::Css(error)) if error.to_string().contains(&format!("non-finite zoomed {property}"))),
+                "{selector}, {property}:{shadow}: overflowing paint lengths must report a CSS error, got {}",
                 result
                     .as_ref()
                     .err()
@@ -38,14 +41,16 @@ fn zoom_rejects_shadow_lengths_that_overflow_used_coordinates() {
         let physical = shadow.replace("1e30pt", "10pt");
         same_layout(
             &render(
-                "<div></div>",
+                "<div>X</div>",
                 &format!(
-                    "div{{zoom:1e20;font-size:0;width:1e-19pt;height:1e-19pt;box-shadow:{finite}}}"
+                    "div{{zoom:1e20;font-size:1e-19pt;line-height:1e-19pt;width:1e-19pt;height:1e-19pt;{property}:{finite}}}"
                 ),
             ),
             &render(
-                "<div></div>",
-                &format!("div{{font-size:0;width:10pt;height:10pt;box-shadow:{physical}}}"),
+                "<div>X</div>",
+                &format!(
+                    "div{{font-size:10pt;line-height:10pt;width:10pt;height:10pt;{property}:{physical}}}"
+                ),
             ),
         );
     }

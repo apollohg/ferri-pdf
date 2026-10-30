@@ -2012,6 +2012,7 @@ impl Stylesheet {
         if style.display.is_ruby() {
             style.unicode_bidi = style.unicode_bidi.forced_isolation();
         }
+        let finite_zoomed_length = |length: f32| (length * style.effective_zoom).is_finite();
         if style.decoration.shadows.iter().any(|shadow| {
             [
                 shadow.offset[0],
@@ -2020,9 +2021,16 @@ impl Stylesheet {
                 shadow.spread,
             ]
             .into_iter()
-            .any(|length| !(length * style.effective_zoom).is_finite())
+            .any(|length| !finite_zoomed_length(length))
         }) {
             return Err("non-finite zoomed box-shadow dimensions".into());
+        }
+        if style.text_paint.shadows.iter().any(|shadow| {
+            [shadow.offset[0], shadow.offset[1], shadow.blur]
+                .into_iter()
+                .any(|length| !finite_zoomed_length(length))
+        }) {
+            return Err("non-finite zoomed text-shadow dimensions".into());
         }
         if !style.size.is_finite()
             || style.size < 0.0
