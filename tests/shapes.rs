@@ -475,3 +475,40 @@ fn clearance_uses_the_margin_box_not_the_float_area() {
          40pt: {cleared}"
     );
 }
+
+#[test]
+fn invisible_float_keeps_the_corner_geometry_used_for_wrapping() {
+    for (corners, expected) in [
+        ("border-radius:20pt", "inset(0 round 20pt)"),
+        (
+            "corner:notch 20pt",
+            "polygon(20pt 0,60pt 0,60pt 20pt,80pt 20pt,80pt 40pt,60pt 40pt,60pt 60pt,20pt 60pt,20pt 40pt,0 40pt,0 20pt,20pt 20pt)",
+        ),
+    ] {
+        let body = format!("<div class=f></div><p>{WORDS}</p>");
+        let common = ".f{width:80pt;height:60pt}p{line-height:10pt}";
+        let reference = trace(&format!("{common}.f{{shape-outside:{expected}}}"), &body);
+        let actual = trace(
+            &format!("{common}.f{{{corners};shape-outside:border-box}}"),
+            &body,
+        );
+        assert_eq!(
+            actual.pages[0].len(),
+            reference.pages[0].len(),
+            "{corners}: line count"
+        );
+        for (actual, expected) in actual.pages[0].iter().zip(&reference.pages[0]) {
+            assert_eq!(actual.text, expected.text, "{corners}: wrapping text");
+            assert!(
+                (actual.x - expected.x).abs() <= CURVE_TOLERANCE,
+                "{corners}: line starts {} vs {}",
+                actual.x,
+                expected.x
+            );
+            assert!(
+                (actual.baseline - expected.baseline).abs() <= CURVE_TOLERANCE,
+                "{corners}: line baseline"
+            );
+        }
+    }
+}

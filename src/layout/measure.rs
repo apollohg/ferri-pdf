@@ -836,8 +836,9 @@ impl<'a> Measurer<'a> {
             decoration.clear_background();
         }
         // Clips, containing blocks, scrollports, mask and clip-path areas and navigation need
-        // their page fragments even without ink.
+        // their page fragments even without ink, as do float exclusion contours.
         let fragments = (block.is_canvas_source() && self.canvas_images)
+            || style.floating().is_some()
             || style.clipped_axes().contains(&true)
             || style.decoration.masks.is_masked()
             || style.contains_absolute()
