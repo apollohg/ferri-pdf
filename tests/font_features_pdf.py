@@ -329,6 +329,68 @@ class FontFeaturesPdf(unittest.TestCase):
                                            f"{actual:.3f}pt, the paragraph's span by "
                                            f"{expected:.3f}pt")
 
+    def test_svg_text_wraps_in_its_inline_size_as_paragraphs_wrap(self):
+        """SVG 2 §11.4, §11.7: a text element's `inline-size` makes a wrapping area in which
+        its text breaks into lines where, and as far apart as, a paragraph that wide breaks
+        and stacks them, each line anchored by `text-anchor`; hyphenation, `text-indent` and
+        `text-overflow` apply as to the paragraph."""
+        width, left, centre = 150, 30, 105
+        words = "Wrapped words fill each line of the area before breaking, hyphenating extraordinarily"
+        rules = ("svg,p{display:block;margin:0}text,p{font:20px 'Liberation Serif';"
+                 "line-height:30px}")
+        cases = [
+            ("", "", words),
+            ("text-indent:25px", "text-indent:25px", words),
+            ("hyphens:auto", "hyphens:auto", words),
+            ("text-anchor:middle", "text-align:center", words),
+            ("white-space:nowrap", "white-space:nowrap;overflow:hidden", words),
+            ("white-space:nowrap;text-overflow:ellipsis",
+             "white-space:nowrap;overflow:hidden;text-overflow:ellipsis", words),
+        ]
+        for svg_style, html_style, text in cases:
+            with self.subTest(style=svg_style):
+                x = centre if "middle" in svg_style else left
+                expected = self.render(
+                    rules, f'<p lang="en" style="position:absolute;left:{left}px;top:0;'
+                           f'width:{width}px;{html_style}">{text}</p>').glyphs
+                actual = self.render(
+                    rules, f'<svg width="300pt" height="300pt" style="position:absolute;left:0;'
+                           f'top:0" lang="en"><text x="{x}" y="30" style="inline-size:{width}px;'
+                           f'{svg_style}">{text}</text></svg>').glyphs
+                lines = lambda glyphs: ["".join(glyph.text for glyph in line)
+                                        for line in self.lines(glyphs)]
+                self.assertEqual(lines(actual), lines(expected),
+                                 "the SVG text breaks into the paragraph's lines")
+                for got, want in zip(self.lines(actual), self.lines(expected)):
+                    self.assertAlmostEqual(
+                        got[0].origin[0], want[0].origin[0], delta=POSITION_TOLERANCE_PT,
+                        msg=f"line {''.join(g.text for g in want)!r} starts where the "
+                            f"paragraph's does")
+                baselines = lambda glyphs: [line[0].origin[1] for line in self.lines(glyphs)]
+                steps = lambda values: [b - a for a, b in zip(values, values[1:])]
+                self.assertEqual([round(step, 2) for step in steps(baselines(actual))],
+                                 [round(step, 2) for step in steps(baselines(expected))],
+                                 "lines stack as the paragraph's line boxes do")
+                if svg_style == "white-space:nowrap":
+                    # SVG 2 §11.10.2.10: the initial `clip` hides what overflows the area.
+                    raster = self.raster()
+                    scale = RASTER_DPI / PDF_POINTS_PER_INCH
+                    pixels = PDF_POINTS_PER_INCH / CSS_PIXELS_PER_INCH
+                    origin = actual[0].origin
+                    edge = origin[0] + width * pixels
+                    rows = range(int((raster.height / scale - origin[1] - SIZE_PT) * scale),
+                                 int((raster.height / scale - origin[1] + SIZE_PT / 4) * scale))
+
+                    def ink(columns):
+                        return [x for x in columns for y in rows
+                                if max(raster.getpixel((x, y))) < 128]
+
+                    self.assertTrue(ink(range(int(origin[0] * scale), int(edge * scale))),
+                                    "the line's kept text is inked")
+                    self.assertEqual(ink(range(int(edge * scale) + COLOUR_TOLERANCE,
+                                               raster.width)), [],
+                                     "no ink beyond the wrapping area's right edge")
+
     def test_optical_size_and_presentation_select_the_embedded_glyphs(self):
         optical = reference("RobotoFlex-optical.json")
         advances = {json.dumps(sample["location"], sort_keys=True): sample["advance"]

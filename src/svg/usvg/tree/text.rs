@@ -8,7 +8,7 @@ pub(crate) use svgtypes::FontFamily;
 
 use crate::svg::usvg::layout::Span;
 use crate::svg::usvg::{
-    Fill, Group, NonEmptyString, PaintOrder, Rect, Stroke, TextRendering, Transform,
+    Fill, Group, NonEmptyString, NonZeroRect, PaintOrder, Rect, Stroke, TextRendering, Transform,
 };
 
 /// The `font-stretch` keyword of each CSS Fonts 4 §2.3 width, for the database's own query.
@@ -574,6 +574,10 @@ pub struct TextChunk {
     /// The preserved segment breaks before the chunk, each of which starts a line (SVG 2
     /// §11.6.1).
     pub(crate) line_breaks: usize,
+    /// How far along the inline axis a line of wrapped text moves from its anchor point.
+    pub(crate) inline_offset: f32,
+    /// The bytes ending the chunk that hang beyond its line's end, which anchoring ignores.
+    pub(crate) hanging: usize,
 }
 
 impl TextChunk {
@@ -641,6 +645,28 @@ pub struct Text {
     pub(crate) linear_light: bool,
     /// The text element's own font, which its line boxes start from (CSS 2.1 §10.8.1).
     pub(crate) strut: Strut,
+    /// The wrapping area `inline-size` gives the text (SVG 2 §11.4).
+    pub(crate) wrapping: Option<Wrapping>,
+    /// What `text-overflow: clip` keeps of wrapped text, in its user space.
+    pub(crate) clip: Option<NonZeroRect>,
+}
+
+/// The inline size of a text element's wrapping area (SVG 2 §11.4.1), whose other dimension is
+/// infinite.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub(crate) enum WrapWidth {
+    Length(f32),
+    /// The text's min-content inline size (CSS Sizing 3 §5.1): lines break at every
+    /// opportunity.
+    MinContent,
+}
+
+/// How a text element wraps its lines in its wrapping area.
+#[derive(Clone, Copy, Debug)]
+pub(crate) struct Wrapping {
+    pub(crate) width: WrapWidth,
+    /// `text-overflow` at the line-left and line-right edges (SVG 2 §11.10.2.10).
+    pub(crate) overflow: [crate::style::TextOverflow; 2],
 }
 
 /// `vertical-align: top` or `bottom` on a text content element, which aligns the line-over or

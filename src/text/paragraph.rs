@@ -34,6 +34,25 @@ impl TextPosition<'_> {
     }
 }
 
+/// Where the document's line breaking may end a line of a paragraph (CSS Text 3 §5, CSS Text 4
+/// §6): its soft wrap and forced opportunities in offset order, the automatic hyphenation ones
+/// among them, and the emergency ones `overflow-wrap` adds.
+pub(crate) struct BreakOpportunities {
+    pub(crate) automatic: Vec<usize>,
+    pub(crate) opportunities: Vec<(usize, BreakOpportunity)>,
+    pub(crate) emergency: Vec<usize>,
+}
+impl BreakOpportunities {
+    pub(crate) fn of(paragraph: &Paragraph) -> Self {
+        let automatic = hyphenation::automatic(paragraph);
+        Self {
+            opportunities: whitespace::opportunities(paragraph, &automatic),
+            emergency: whitespace::emergency_opportunities(paragraph, false),
+            automatic,
+        }
+    }
+}
+
 /// Paragraph-wide bidi and break context, shared across fragmentainer widths.
 pub(crate) struct PreparedParagraph<'p, 'context, 'font> {
     context: &'context TextContext<'font>,
@@ -91,21 +110,23 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
         let has_rtl = bidi
             .as_ref()
             .is_ok_and(super::bidi::ResolvedParagraph::has_rtl);
-        let automatic = hyphenation::automatic(paragraph);
+        let BreakOpportunities {
+            automatic,
+            mut opportunities,
+            mut emergency,
+        } = BreakOpportunities::of(paragraph);
         // The `::first-line` copy cannot end its line inside a character that it and the
         // paragraph encode differently, where the paragraph could not resume.
         let resumable = |offset: usize| {
             std::ptr::eq(paragraph, source)
                 || source.first_line_offsets().to_paragraph(offset).is_some()
         };
-        let mut opportunities = whitespace::opportunities(paragraph, &automatic);
         opportunities.retain(|&(end, _)| resumable(end));
         let ordinary = opportunities
             .iter()
             .map(|&(end, _)| end)
             .filter(|&end| !hyphenation::is_soft_break(paragraph, &automatic, end))
             .collect();
-        let mut emergency = whitespace::emergency_opportunities(paragraph, false);
         emergency.retain(|&offset| resumable(offset));
         Self {
             context,

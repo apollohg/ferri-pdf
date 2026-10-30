@@ -269,7 +269,7 @@ pub(super) fn declarations(
         );
     }
     if is_text_content(tag) {
-        // SVG 2 §11.6: pre-formatted text never wraps, so `text-wrap-mode` has no effect.
+        // The renderer collapses white space by this; the computed style wraps lines.
         push("white-space", style.white_space.collapse.name());
         push("direction", if style.rtl { "rtl" } else { "ltr" });
         push("font-style", &font_style(style));

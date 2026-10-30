@@ -11,7 +11,7 @@ use icu_properties::{
 };
 use unicode_segmentation::UnicodeSegmentation;
 
-pub(super) const SOFT_HYPHEN: char = '\u{00ad}';
+pub(crate) const SOFT_HYPHEN: char = '\u{00ad}';
 const HYPHEN: &str = "\u{2010}";
 const ARMENIAN_HYPHEN: &str = "\u{058a}";
 const ARMENIAN: &str = "hy";
@@ -143,6 +143,38 @@ fn character(style: &Style) -> &str {
     }
 }
 
+/// Where a hyphenating break at `end` takes its hyphenation string's style, and the source the
+/// string stands for: a conditional hyphen itself, or the end of the character before an
+/// automatic break. `None` where the break does not hyphenate.
+fn hyphenating(
+    paragraph: &Paragraph,
+    automatic: &[usize],
+    end: usize,
+) -> Option<(usize, std::ops::Range<usize>)> {
+    if !is_soft_break(paragraph, automatic, end) || !allowed(paragraph, end) {
+        return None;
+    }
+    if paragraph.text()[..end].ends_with(SOFT_HYPHEN) {
+        let offset = end - SOFT_HYPHEN.len_utf8();
+        return Some((offset, offset..end));
+    }
+    let previous = paragraph.text()[..end]
+        .char_indices()
+        .next_back()
+        .map_or(0, |(offset, _)| offset);
+    Some((previous, end..end))
+}
+
+/// The hyphenation string a line ending with a break at `end` shows, where it hyphenates.
+pub(crate) fn string<'p>(
+    paragraph: &'p Paragraph,
+    automatic: &[usize],
+    end: usize,
+) -> Option<&'p str> {
+    let (offset, _) = hyphenating(paragraph, automatic, end)?;
+    Some(character(paragraph.style_at(offset)))
+}
+
 /// Inserts the hyphenation string of a hyphenating break at `end`. A conditional hyphen's
 /// string belongs to its own span, including its bidi level; an automatic one belongs to
 /// the character before the break.
@@ -154,19 +186,8 @@ pub(super) fn decorate<'p>(
     end: usize,
     pieces: &mut Vec<Piece>,
 ) -> Result<Option<&'p str>, TextError> {
-    if !is_soft_break(paragraph, automatic, end) || !allowed(paragraph, end) {
+    let Some((offset, source)) = hyphenating(paragraph, automatic, end) else {
         return Ok(None);
-    }
-    let conditional = paragraph.text()[..end].ends_with(SOFT_HYPHEN);
-    let (offset, source) = if conditional {
-        let offset = end - SOFT_HYPHEN.len_utf8();
-        (offset, offset..end)
-    } else {
-        let previous = paragraph.text()[..end]
-            .char_indices()
-            .next_back()
-            .map_or(0, |(offset, _)| offset);
-        (previous, end..end)
     };
     let span_index = paragraph
         .spans()
@@ -219,7 +240,7 @@ pub(super) fn decorate<'p>(
     Ok(Some(text))
 }
 
-pub(super) fn text(source: &str, hyphen: Option<&str>) -> String {
+pub(crate) fn text(source: &str, hyphen: Option<&str>) -> String {
     if !source.contains(SOFT_HYPHEN) && hyphen.is_none_or(str::is_empty) {
         return source.to_owned();
     }

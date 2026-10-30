@@ -193,12 +193,12 @@ pub struct Span {
 }
 
 #[derive(Clone, Debug)]
-struct GlyphCluster {
-    byte_idx: ByteIndex,
+pub(crate) struct GlyphCluster {
+    pub(crate) byte_idx: ByteIndex,
     codepoint: char,
     vertical: bool,
     width: f32,
-    advance: f32,
+    pub(crate) advance: f32,
     ascent: f32,
     descent: f32,
     has_relative_shift: bool,
@@ -217,11 +217,13 @@ impl GlyphCluster {
     }
 }
 
+/// The text's laid out spans, its bounding box, and the area `text-overflow: clip` keeps of
+/// it.
 pub(crate) fn layout_text(
     text_node: &Text,
     resolver: &dyn FontProvider,
     fontdb: &mut Arc<Database>,
-) -> Option<(Vec<Span>, NonZeroRect)> {
+) -> Option<(Vec<Span>, NonZeroRect, Option<NonZeroRect>)> {
     let mut fonts_cache: FontsCache = HashMap::new();
 
     for chunk in &text_node.chunks {
@@ -243,6 +245,18 @@ pub(crate) fn layout_text(
     let strut = resolver
         .select_font(&text_node.strut.font, fontdb)
         .and_then(|id| fontdb.load_font(id));
+    let wrapped = match text_node.wrapping {
+        Some(wrapping) => Some(super::wrap::wrap(
+            text_node,
+            wrapping,
+            &fonts_cache,
+            strut.as_ref(),
+            resolver,
+            fontdb,
+        )?),
+        None => None,
+    };
+    let text_node = wrapped.as_ref().unwrap_or(text_node);
     let lines = LineBoxes::new(text_node, strut.as_ref(), &fonts_cache);
 
     let mut spans = vec![];
@@ -277,22 +291,17 @@ pub(crate) fn layout_text(
             }
             TextFlow::Path(_) => (0.0, 0.0),
         };
+        let (x, y) = match text_node.writing_mode {
+            WritingMode::LeftToRight => (x + chunk.inline_offset, y),
+            WritingMode::TopToBottom => (x, y + chunk.inline_offset),
+        };
 
-        let mut clusters = process_chunk(
-            chunk,
-            text_node.writing_mode,
-            &fonts_cache,
-            resolver,
-            fontdb,
-        )?;
+        let mut clusters = spaced_clusters(text_node, chunk, &fonts_cache, resolver, fontdb)?;
         if clusters.is_empty() {
             char_offset += chunk.text.chars().count();
             continue;
         }
 
-        apply_writing_mode(text_node.writing_mode, &mut clusters);
-        apply_letter_spacing(chunk, &mut clusters);
-        apply_word_spacing(chunk, &mut clusters);
         if let (Some(strut), TextFlow::Linear) = (&strut, &chunk.text_flow) {
             let (start_x, start_y) = line_origin.unwrap_or((x, y));
             let inline_start = match text_node.writing_mode {
@@ -443,7 +452,23 @@ pub(crate) fn layout_text(
 
     let bbox = bbox.to_non_zero_rect()?;
 
-    Some((spans, bbox))
+    Some((spans, bbox, text_node.clip))
+}
+
+/// The clusters of `chunk`, shaped, oriented and spaced by `letter-spacing` and
+/// `word-spacing`, but not yet positioned.
+pub(crate) fn spaced_clusters(
+    text: &Text,
+    chunk: &TextChunk,
+    fonts_cache: &FontsCache,
+    resolver: &dyn FontProvider,
+    fontdb: &mut Arc<Database>,
+) -> Option<Vec<GlyphCluster>> {
+    let mut clusters = process_chunk(chunk, text.writing_mode, fonts_cache, resolver, fontdb)?;
+    apply_writing_mode(text.writing_mode, &mut clusters);
+    apply_letter_spacing(chunk, &mut clusters);
+    apply_word_spacing(chunk, &mut clusters);
+    Some(clusters)
 }
 
 fn convert_span(
@@ -657,7 +682,13 @@ fn resolve_clusters_positions_horizontal(
     writing_mode: WritingMode,
     clusters: &mut [GlyphCluster],
 ) -> (f32, f32) {
-    let mut x = process_anchor(chunk.anchor, clusters_length(clusters));
+    // Spaces hanging at a wrapped line's end do not count for its alignment.
+    let hanging = chunk.text.len() - chunk.hanging;
+    let aligned = clusters
+        .iter()
+        .filter(|cluster| cluster.byte_idx.value() < hanging)
+        .fold(0.0, |width, cluster| width + cluster.advance);
+    let mut x = process_anchor(chunk.anchor, aligned);
     let mut y = 0.0;
 
     for cluster in clusters {
@@ -994,7 +1025,7 @@ fn directional_text(chunk: &TextChunk, writing_mode: WritingMode) -> std::borrow
     std::borrow::Cow::Owned(text)
 }
 
-fn process_chunk(
+pub(crate) fn process_chunk(
     chunk: &TextChunk,
     writing_mode: WritingMode,
     fonts_cache: &FontsCache,
@@ -1363,7 +1394,7 @@ pub(crate) fn line_extents(
 /// Gives preserved tabs the width to the next tab stop from the line's start, `inline_start`
 /// before the chunk (CSS Text 3 §4.2); stops are `tab-size` spaces of the text element apart,
 /// with its letter and word spacing. Tabs paint nothing.
-fn apply_tab_stops(
+pub(crate) fn apply_tab_stops(
     chunk: &TextChunk,
     strut: &crate::svg::usvg::Strut,
     font: &ResolvedFont,

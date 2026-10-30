@@ -284,6 +284,48 @@ impl Paragraph {
         Ok(collector.finish(style)?.ok())
     }
 
+    /// A paragraph of `text`, whose white space is already processed, in which each of
+    /// `spans` gives a range its style; it breaks into lines as the document's do, uncased.
+    pub(crate) fn styled(
+        text: String,
+        style: &Style,
+        spans: impl IntoIterator<Item = (Range<usize>, Style)>,
+    ) -> Self {
+        Paragraph {
+            annotation_align: None,
+            marker_image: None,
+            first_formatted_line: true,
+            last_formatted_line: true,
+            text_box_trim: [false; 2],
+            text,
+            style: Box::new(style.clone()),
+            spans: spans
+                .into_iter()
+                .enumerate()
+                .map(|(source, (range, style))| TextSpan {
+                    range,
+                    style,
+                    inline_box: None,
+                    atomic: None,
+                    leader: false,
+                    source,
+                    single_character_source: false,
+                })
+                .collect(),
+            anchors: Vec::new(),
+            boxes: Vec::new(),
+            atomics: Vec::new(),
+            annotations: Vec::new(),
+            rubies: Vec::new(),
+            optional_breaks: Vec::new(),
+            clearances: Vec::new(),
+            links: Vec::new(),
+            events: Vec::new(),
+            first_line: None,
+            first_line_offsets: OffsetMap::default(),
+        }
+    }
+
     pub(crate) fn generated_output(
         output: &crate::style::GeneratedOutput,
         images: &[GeneratedImage],

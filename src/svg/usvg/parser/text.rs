@@ -105,11 +105,23 @@ pub(crate) fn convert(
     cache: &mut Cache,
     parent: &mut Group,
 ) {
-    let pos_list = resolve_positions_list(text_node, state);
-    let rotate_list = resolve_rotate_list(text_node);
     let writing_mode = convert_writing_mode(text_node);
+    let wrapping = wrapping(text_node, writing_mode, state);
+    let mut pos_list = resolve_positions_list(text_node, state);
+    let mut rotate_list = resolve_rotate_list(text_node);
+    // SVG 2 §11.7: wrapped text takes only its initial current text position from the
+    // positioning attributes.
+    if wrapping.is_some() {
+        for position in pos_list.iter_mut().skip(1) {
+            (position.x, position.y) = (None, None);
+        }
+        for position in &mut pos_list {
+            (position.dx, position.dy) = (None, None);
+        }
+        rotate_list.fill(0.0);
+    }
 
-    let chunks = collect_text_chunks(text_node, &pos_list, state, cache);
+    let chunks = collect_text_chunks(text_node, &pos_list, wrapping.is_some(), state, cache);
 
     let rendering_mode: TextRendering = text_node
         .find_attribute(AId::TextRendering)
@@ -147,6 +159,8 @@ pub(crate) fn convert(
             font_size: super::units::resolve_font_size(text_node, state),
             style: text_style(text_node, state),
         },
+        wrapping,
+        clip: None,
     };
 
     let Some(shadows) = text::convert(
@@ -157,18 +171,95 @@ pub(crate) fn convert(
         return;
     };
 
+    // `text-overflow: clip` clips the text and its shadows to the wrapping area.
+    let mut clipped = text.clip.map(|area| Group {
+        clip_path: clip_path(area, cache),
+        abs_transform: parent.abs_transform,
+        ..Group::empty()
+    });
+    let target = clipped.as_mut().unwrap_or(parent);
     // CSS Text Decoration 3 §4: shadows paint beneath the text, in its user space.
     for mut shadow in shadows {
         if let Node::Group(group) = &mut shadow {
-            group.abs_transform = parent.abs_transform.pre_concat(group.transform);
+            group.abs_transform = target.abs_transform.pre_concat(group.transform);
             group.calculate_bounding_boxes();
         }
-        parent.children.push(shadow);
+        target.children.push(shadow);
     }
-    parent.children.push(Node::Text(Box::new(text)));
+    target.children.push(Node::Text(Box::new(text)));
+    if let Some(mut group) = clipped {
+        group.calculate_bounding_boxes();
+        parent.children.push(Node::Group(Box::new(group)));
+    }
+}
+
+/// A clip path keeping `area` of its user space.
+fn clip_path(area: NonZeroRect, cache: &mut Cache) -> Option<Arc<ClipPath>> {
+    let path = Path::new(
+        String::new(),
+        true,
+        Some(Fill::default()),
+        None,
+        PaintOrder::default(),
+        ShapeRendering::default(),
+        Arc::new(tiny_skia_path::PathBuilder::from_rect(area.to_rect())),
+        Transform::default(),
+    )?;
+    let mut root = Group::empty();
+    root.children.push(Node::Path(Box::new(path)));
+    root.calculate_bounding_boxes();
+    Some(Arc::new(ClipPath {
+        id: cache.gen_clip_path_id(),
+        transform: Transform::default(),
+        clip_path: None,
+        root,
+    }))
+}
+
+/// The wrapping area of `text_node` (SVG 2 §11.4.1): its computed `inline-size`, which CSS
+/// Logical 1 §4.1 shares with `width` in horizontal text and `height` in vertical text, with
+/// percentages of the viewport's. Zero, `auto` and the sizes of an unconstrained box create none.
+fn wrapping(
+    text_node: SvgNode,
+    writing_mode: WritingMode,
+    state: &converter::State,
+) -> Option<Wrapping> {
+    use crate::style::{IntrinsicSizing, Size};
+    let style = own_text_style(text_node, state)?;
+    let vertical = writing_mode == WritingMode::TopToBottom;
+    let (size, basis) = if vertical {
+        (&style.height, state.view_box.height())
+    } else {
+        (&style.width, state.view_box.width())
+    };
+    let basis = state
+        .unit_viewport
+        .map_or(basis, |viewport| viewport[usize::from(vertical)]);
+    let length = |length: &crate::paint::LengthPercentage| {
+        let points = crate::style::POINTS_PER_PIXEL;
+        Some(WrapWidth::Length(length.resolve(basis * points) / points))
+            .filter(|width| *width != WrapWidth::Length(0.0))
+    };
+    let width = match size {
+        Size::Value(value) | Size::Intrinsic(IntrinsicSizing::FitContentLimit(value)) => {
+            length(value)?
+        }
+        Size::Intrinsic(IntrinsicSizing::MinContent) => WrapWidth::MinContent,
+        Size::Calculated(calculated) => length(&calculated.definite()?)?,
+        Size::Auto
+        | Size::Intrinsic(
+            IntrinsicSizing::MaxContent | IntrinsicSizing::FitContent | IntrinsicSizing::Stretch,
+        ) => return None,
+    };
+    Some(Wrapping {
+        width,
+        overflow: style.text_overflow,
+    })
 }
 
 struct IterState {
+    /// The text has a wrapping area, which `textLength` does not apply to (SVG 2 §11.2.1).
+    wrapped: bool,
     chars_count: usize,
     chunk_bytes_count: usize,
     split_chunk: bool,
@@ -181,10 +272,12 @@ struct IterState {
 fn collect_text_chunks(
     text_node: SvgNode,
     pos_list: &[CharacterPosition],
+    wrapped: bool,
     state: &converter::State,
     cache: &mut Cache,
 ) -> Vec<TextChunk> {
     let mut iter_state = IterState {
+        wrapped,
         chars_count: 0,
         chunk_bytes_count: 0,
         split_chunk: false,
@@ -311,8 +404,9 @@ fn collect_text_chunks_impl(
             .ancestors()
             .find(|node| !node.is_contents())
             .unwrap_or(parent);
-        let mut text_length =
-            layout_parent.try_convert_length(AId::TextLength, Units::UserSpaceOnUse, state);
+        let mut text_length = layout_parent
+            .try_convert_length(AId::TextLength, Units::UserSpaceOnUse, state)
+            .filter(|_| !iter_state.wrapped);
         // Negative values should be ignored.
         if let Some(n) = text_length {
             if n < 0.0 {
@@ -370,6 +464,8 @@ fn collect_text_chunks_impl(
                         text_flow: iter_state.text_flow.clone(),
                         text: String::new(),
                         line_breaks: 0,
+                        inline_offset: 0.0,
+                        hanging: 0,
                     });
                 }
                 iter_state.line_breaks += 1;
@@ -406,6 +502,8 @@ fn collect_text_chunks_impl(
                     text_flow: iter_state.text_flow.clone(),
                     text: c.to_string(),
                     line_breaks: std::mem::take(&mut iter_state.line_breaks),
+                    inline_offset: 0.0,
+                    hanging: 0,
                 });
             } else if is_new_span {
                 // Add this span to the last text chunk.

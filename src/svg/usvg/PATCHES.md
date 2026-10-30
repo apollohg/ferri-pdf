@@ -99,6 +99,13 @@ aligns boxes as the document's line boxes do: its shifts add to `baseline-shift`
 align layout bounds, and `top` and `bottom` align a subtree with its line box's edges, growing
 the line downwards when taller.
 
+`inline-size`, the computed `width` or `height` of styled text along its inline axis, gives it
+a wrapping area (SVG 2 §11.4): each paragraph breaks into lines where the document's line
+breaking allows, with its hyphenation, emergency wrapping and `text-indent`, and each line
+starts a line box anchored by `text-anchor` in the area. Positioning attributes then give only
+the initial position, `textLength` does not apply, and `text-overflow` clips or ellipsizes
+overflowing lines at the area's edges (§11.10.2.10).
+
 Decoration lines take the style, thickness, underline offset and position, and error
 indications the declaring element's computed style gives them, placed and shaped as the
 document's text places and shapes its lines; a `text-decoration-color` other than

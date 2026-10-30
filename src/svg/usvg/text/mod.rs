@@ -14,6 +14,7 @@ pub(crate) mod flatten;
 mod colr;
 /// Provides access to the layout of a text node.
 pub(crate) mod layout;
+mod wrap;
 
 pub(crate) fn font_variations(
     face: &ttf_parser::Face<'_>,
@@ -279,8 +280,9 @@ pub(crate) fn convert(
     resolver: &dyn FontProvider,
     cache: &mut Cache,
 ) -> Option<Vec<crate::svg::usvg::Node>> {
-    let (text_fragments, bbox) = layout::layout_text(text, resolver, &mut cache.fontdb)?;
+    let (text_fragments, bbox, clip) = layout::layout_text(text, resolver, &mut cache.fontdb)?;
     text.layouted = text_fragments;
+    text.clip = clip;
     text.bounding_box = bbox.to_rect();
     text.abs_bounding_box = bbox.transform(text.abs_transform)?.to_rect();
 

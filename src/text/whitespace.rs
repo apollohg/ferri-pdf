@@ -144,7 +144,7 @@ fn wraps(paragraph: &Paragraph, end: usize) -> bool {
     left.white_space.wraps() || paragraph.style_at(end).white_space.wraps()
 }
 
-pub(super) fn visible(paragraph: &Paragraph, range: Range<usize>) -> Range<usize> {
+pub(crate) fn visible(paragraph: &Paragraph, range: Range<usize>) -> Range<usize> {
     let text = paragraph.text();
     let mut start = range.start;
     let mut end = range.end;

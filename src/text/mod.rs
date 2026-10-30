@@ -8,7 +8,7 @@ mod ellipsis;
 mod emphasis;
 pub(crate) mod features;
 mod hanging;
-mod hyphenation;
+pub(crate) mod hyphenation;
 mod initial_letter;
 mod leaders;
 pub(crate) mod line_boxes;
@@ -22,7 +22,7 @@ pub(crate) mod tabs;
 mod tailoring;
 #[cfg(test)]
 mod tests;
-mod whitespace;
+pub(crate) mod whitespace;
 use crate::document::Paragraph;
 use crate::fonts::{
     FontBook, FontError, FontId, FontSelection, FontSynthesis, FontVariation, GlyphMatch,
@@ -54,7 +54,9 @@ const SYNTHETIC_BOLD_OFFSET_EM: f32 = 0.02;
 /// Maximum conservative cluster-shaping and fallback-probe work in one text context.
 pub(crate) const MAX_GLYPH_MATCH_WORK: usize = 100_000_000;
 use line_boxes::{Piece, Slot};
-pub(crate) use paragraph::{ParagraphClamp, PreparedParagraph, TextPosition, trim_line};
+pub(crate) use paragraph::{
+    BreakOpportunities, ParagraphClamp, PreparedParagraph, TextPosition, trim_line,
+};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
 pub(crate) enum GlyphOrientation {
