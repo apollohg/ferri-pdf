@@ -139,3 +139,14 @@ affine transform; bounding boxes map through its projection. Once converted, eac
 used `transform-style` is `preserve-3d` outside a context becomes a scene whose children are the
 context's planes, placed by their accumulated matrices. A `clipPath` ignores a transform list
 with 3D functions, and `non-scaling-stroke` has no effect within a 3D rendering context.
+
+Each face the provider gives styled text paints its glyphs as the document's text paints them:
+COLR glyphs take the palette `font-palette` and `@font-palette-values` select (CSS Fonts 4
+§9.1), and a face lacking the requested weight or slant, where `font-synthesis` allows, draws
+each glyph a second time 0.02em along its inline axis and shears it about its baseline (§5.2,
+§5.4). The face's synthesis also ranks faces as the document ranks them. `font-variant-emoji`
+appends a presentation selector to each emoji its text does not select one for (§9.3); a face
+lacking a variation sequence of a cluster gives way to a later face that has it, else keeps the
+cluster, and selectors no sequence takes leave no glyph. COLR glyphs convert to SVG through
+skrifa, at the span's variation coordinates, with the palette's entries and the fill colour,
+else the stroke colour, as the foreground.

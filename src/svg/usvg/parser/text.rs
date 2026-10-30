@@ -590,12 +590,20 @@ fn own_text_style(node: SvgNode, state: &converter::State) -> Option<Arc<crate::
 /// Values the document's text cannot take on SVG content fail the conversion.
 fn standalone_style(node: SvgNode, state: &converter::State) -> Arc<crate::style::Style> {
     let key = node.key();
-    if let Some(style) = state.standalone_styles.borrow().get(&key) {
-        return style.clone();
+    let parent = || {
+        node.parent_element()
+            .map_or_else(Arc::default, |parent| standalone_style(parent, state))
+    };
+    let cached = state.standalone_styles.borrow().get(&key).cloned();
+    match cached {
+        Some(Some(style)) => return style,
+        // The element's font-relative lengths select its face before its own font properties
+        // compute, so they take the inherited ones.
+        Some(None) => return parent(),
+        None => {}
     }
-    let parent = node
-        .parent_element()
-        .map_or_else(Arc::default, |parent| standalone_style(parent, state));
+    let parent = parent();
+    state.standalone_styles.borrow_mut().insert(key, None);
     let tag = node.tag_name().map_or("", |tag| tag.to_str());
     let attributes: Vec<(&str, &str)> = node
         .attributes()
@@ -637,7 +645,7 @@ fn standalone_style(node: SvgNode, state: &converter::State) -> Arc<crate::style
     state
         .standalone_styles
         .borrow_mut()
-        .insert(key, style.clone());
+        .insert(key, Some(style.clone()));
     style
 }
 
@@ -911,6 +919,7 @@ pub(super) fn convert_font(node: SvgNode, state: &converter::State) -> Font {
         weight,
         variations,
         explicit_variations,
+        synthesis: text_style(node, state).font_synthesis,
     }
 }
 

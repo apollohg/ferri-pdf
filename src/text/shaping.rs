@@ -41,13 +41,13 @@ pub(super) fn private_use(ch: char) -> bool {
         && CodePointMapData::<GeneralCategory>::new().get(ch) == GeneralCategory::PrivateUse
 }
 
-pub(super) fn variation_selector(ch: char) -> bool {
+pub(crate) fn variation_selector(ch: char) -> bool {
     !ch.is_ascii() && CodePointSetData::new::<VariationSelector>().contains(ch)
 }
 
 /// The presentation selector `font-variant-emoji` appends after `ch`, which text supplies
 /// itself when a presentation selector follows (§9.3).
-pub(super) fn implied_presentation(
+pub(crate) fn implied_presentation(
     emoji: FontVariantEmoji,
     ch: char,
     next: Option<char>,
@@ -72,7 +72,7 @@ pub(super) fn implied_presentation(
 
 /// Whether the face has every variation sequence in `text`, including the presentation
 /// selectors `emoji` implies.
-pub(super) fn supports_variations(
+pub(crate) fn supports_variations(
     face: &Face<'_>,
     text: &str,
     emoji: Option<FontVariantEmoji>,

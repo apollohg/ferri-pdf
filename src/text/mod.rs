@@ -50,7 +50,7 @@ pub(crate) use initial_letter::{
 pub(crate) use line_boxes::{AtomicFragment, AtomicMetrics, BoxFragment, BoxMetrics, LinkFragment};
 
 /// Synthetic bold draws a second copy of a run this far to the right.
-const SYNTHETIC_BOLD_OFFSET_EM: f32 = 0.02;
+pub(crate) const SYNTHETIC_BOLD_OFFSET_EM: f32 = 0.02;
 /// Maximum conservative cluster-shaping and fallback-probe work in one text context.
 pub(crate) const MAX_GLYPH_MATCH_WORK: usize = 100_000_000;
 use line_boxes::{Piece, Slot};
@@ -758,7 +758,7 @@ pub(crate) fn shaping_language(face: &Face<'_>, style: &Style) -> Option<rustybu
 }
 
 /// Whether `font-variant-emoji` appends a presentation selector anywhere in `text`.
-fn implies_presentation(style: &Style, text: &str) -> bool {
+pub(crate) fn implies_presentation(style: &Style, text: &str) -> bool {
     let mut chars = text.chars().peekable();
     while let Some(ch) = chars.next() {
         if shaping::implied_presentation(style.font_features.emoji, ch, chars.peek().copied())

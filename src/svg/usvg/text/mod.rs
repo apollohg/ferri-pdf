@@ -106,6 +106,8 @@ pub struct FaceSettings {
     pub(crate) alternates: Vec<crate::fonts::FontFeature>,
     /// The `size-adjust` descriptor of the face's `@font-face` rule (CSS Fonts 5 §4.4).
     pub(crate) size_adjust: f32,
+    /// How the face paints its glyphs.
+    pub(crate) paint: Arc<GlyphPaint>,
 }
 impl Default for FaceSettings {
     fn default() -> Self {
@@ -113,8 +115,21 @@ impl Default for FaceSettings {
             descriptor: Arc::from([]),
             alternates: Vec::new(),
             size_adjust: crate::fonts::FaceSettings::default().size_adjust,
+            paint: Arc::default(),
         }
     }
+}
+
+/// What a face paints its glyphs with beyond their outlines: the COLR palette `font-palette`
+/// selects (CSS Fonts 4 §9.1), and the bold and oblique it synthesizes for a requested weight
+/// or style the face lacks (§5.2, §5.4).
+#[derive(Clone, Debug, Default, PartialEq)]
+pub(crate) struct GlyphPaint {
+    /// The palette's entries, or `None` for the face's default palette.
+    pub(crate) palette: Option<Arc<[crate::paint::Color]>>,
+    pub(crate) bold: bool,
+    /// The synthetic oblique's horizontal shear per unit of height; zero without one.
+    pub(crate) oblique_skew: f32,
 }
 
 /// Synchronous caller-owned font resolution, including the original fallback request.

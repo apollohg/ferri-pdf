@@ -6,11 +6,9 @@ use std::sync::Arc;
 
 use fontdb::{Database, ID};
 use rustybuzz::ttf_parser;
-use rustybuzz::ttf_parser::{GlyphId, RasterImageFormat, RgbaColor};
+use rustybuzz::ttf_parser::{GlyphId, RasterImageFormat};
 use tiny_skia_path::{NonZeroRect, Size, Transform};
-use xmlwriter::XmlWriter;
 
-use crate::svg::usvg::text::colr::GlyphPainter;
 use crate::svg::usvg::*;
 
 fn resolve_rendering_mode(text: &Text) -> ShapeRendering {
@@ -107,10 +105,25 @@ pub(crate) fn flatten(
         // For variable fonts, we need to extract the outline with variations applied.
         // We can't use the cache here since the outline depends on variation values.
         let has_explicit_variations = !span.variations.is_empty();
+        let foreground = colr_foreground(span);
 
-        for glyph in &span.positioned_glyphs {
+        for glyph in span
+            .positioned_glyphs
+            .iter()
+            .flat_map(layout::PositionedGlyph::copies)
+        {
             // A (best-effort conversion of a) COLR glyph.
-            if let Some(tree) = cache.fontdb_colr(glyph.font, glyph.id) {
+            if let Some(tree) = cache.fontdb_colr(
+                glyph.font,
+                glyph.id,
+                &ColrPaint {
+                    variations: &span.variations,
+                    font_size: glyph.font_size(),
+                    optical_sizing: span.font_optical_sizing,
+                    palette: glyph.paint.palette.as_deref(),
+                    foreground,
+                },
+            ) {
                 let mut group = Group {
                     transform: glyph.colr_transform(),
                     ..Group::empty()
@@ -429,7 +442,73 @@ pub(crate) trait DatabaseExt {
     fn has_opsz_axis(&self, id: ID) -> bool;
     fn raster(&self, id: ID, glyph_id: GlyphId) -> Option<BitmapImage>;
     fn svg(&self, id: ID, glyph_id: GlyphId) -> Option<Node>;
-    fn colr(&self, id: ID, glyph_id: GlyphId) -> Option<Tree>;
+    fn colr(&self, id: ID, glyph_id: GlyphId, paint: &ColrPaint<'_>) -> Option<Tree>;
+}
+
+/// How a COLR glyph paints: at its span's variation coordinates, with its palette, or the
+/// face's default, and its foreground colour.
+pub(crate) struct ColrPaint<'a> {
+    variations: &'a [FontVariation],
+    font_size: f32,
+    optical_sizing: FontOpticalSizing,
+    palette: Option<&'a [crate::paint::Color]>,
+    foreground: crate::paint::Color,
+}
+impl ColrPaint<'_> {
+    /// The bits identifying the painting.
+    pub(crate) fn key(&self) -> Vec<u32> {
+        let mut key = vec![
+            self.font_size.to_bits(),
+            u32::from(self.optical_sizing == FontOpticalSizing::Auto),
+        ];
+        for variation in self.variations {
+            key.extend([u32::from_be_bytes(variation.tag), variation.value.to_bits()]);
+        }
+        for color in self.palette.into_iter().flatten().chain([&self.foreground]) {
+            let [red, green, blue] = color.rgb;
+            key.extend([
+                u32::from_be_bytes([0, red, green, blue]),
+                color.alpha.to_bits(),
+            ]);
+        }
+        key
+    }
+    /// The variation settings, with the font size on an `opsz` axis that `font-optical-sizing:
+    /// auto` sets where they do not.
+    fn settings(&self) -> Vec<(skrifa::Tag, f32)> {
+        const OPSZ: [u8; 4] = *b"opsz";
+        let mut settings: Vec<_> = self
+            .variations
+            .iter()
+            .map(|variation| (skrifa::Tag::new(&variation.tag), variation.value))
+            .collect();
+        if self.optical_sizing == FontOpticalSizing::Auto
+            && !self
+                .variations
+                .iter()
+                .any(|variation| variation.tag == OPSZ)
+        {
+            settings.push((skrifa::Tag::new(&OPSZ), self.font_size));
+        }
+        settings
+    }
+}
+
+/// The colour COLR glyphs take as the foreground, as the vector renderer takes it: the span's
+/// fill colour, else its stroke's, else black.
+fn colr_foreground(span: &layout::Span) -> crate::paint::Color {
+    let color = |paint: &Paint| match paint {
+        Paint::Color(color) => Some(crate::paint::Color {
+            rgb: [color.red, color.green, color.blue],
+            alpha: 1.0,
+        }),
+        _ => None,
+    };
+    span.fill
+        .as_ref()
+        .and_then(|fill| color(&fill.paint))
+        .or_else(|| span.stroke.as_ref().and_then(|stroke| color(&stroke.paint)))
+        .unwrap_or(crate::paint::Color::BLACK)
 }
 
 #[derive(Clone)]
@@ -585,43 +664,27 @@ impl DatabaseExt for Database {
         })?
     }
 
-    fn colr(&self, id: ID, glyph_id: GlyphId) -> Option<Tree> {
+    fn colr(&self, id: ID, glyph_id: GlyphId, paint: &ColrPaint<'_>) -> Option<Tree> {
+        use skrifa::MetadataProvider;
         self.with_face_data(id, |data, face_index| -> Option<Tree> {
-            let face = ttf_parser::Face::parse(data, face_index).ok()?;
-
-            let mut svg = XmlWriter::new(xmlwriter::Options::default());
-
-            svg.start_element("svg");
-            svg.write_attribute("xmlns", "http://www.w3.org/2000/svg");
-            svg.write_attribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
-
-            let mut path_buf = String::with_capacity(256);
-            let gradient_index = 1;
-            let clip_path_index = 1;
-
-            svg.start_element("g");
-
-            let mut glyph_painter = GlyphPainter {
-                face: &face,
-                svg: &mut svg,
-                path_buf: &mut path_buf,
-                gradient_index,
-                clip_path_index,
-                palette_index: 0,
-                transform: ttf_parser::Transform::default(),
-                outline_transform: ttf_parser::Transform::default(),
-                transforms_stack: vec![ttf_parser::Transform::default()],
+            let font = skrifa::FontRef::from_index(data, face_index).ok()?;
+            let location = font.axes().location(paint.settings());
+            let default;
+            let palette = match paint.palette {
+                Some(palette) => palette,
+                None => {
+                    default = crate::fonts::default_palette(&font);
+                    &default
+                }
             };
-
-            face.paint_color_glyph(
-                glyph_id,
-                0,
-                RgbaColor::new(0, 0, 0, 255),
-                &mut glyph_painter,
+            let document = super::colr::document(
+                &font,
+                (&location).into(),
+                palette,
+                paint.foreground,
+                skrifa::GlyphId::new(u32::from(glyph_id.0)),
             )?;
-            svg.end_element();
-
-            Tree::from_data(svg.end_document().as_bytes(), &Options::default()).ok()
+            Tree::from_data(document.as_bytes(), &Options::default()).ok()
         })?
     }
 }

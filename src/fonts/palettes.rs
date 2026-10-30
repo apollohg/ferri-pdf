@@ -123,7 +123,25 @@ impl<'a> Palettes<'a> {
     }
 }
 
+/// The entries of the default palette of the face `font`, empty without a CPAL table.
+pub(crate) fn default_palette(font: &FontRef<'_>) -> Vec<Color> {
+    Palettes::of(font)
+        .and_then(|palettes| palettes.colors(DEFAULT_PALETTE))
+        .map(|colors| colors.iter().map(AbsoluteColor::used).collect())
+        .unwrap_or_default()
+}
+
 impl FontBook {
+    /// Whether any `@font-palette-values` rule defines a palette.
+    pub(crate) fn has_palettes(&self) -> bool {
+        !self.palettes.is_empty()
+    }
+
+    /// Takes the palettes `book`, a copy of this book, has defined since.
+    pub(crate) fn adopt_palettes(&mut self, book: &Self) {
+        self.palettes.clone_from(&book.palettes);
+    }
+
     /// Registered in document order; a later rule with the same name replaces an earlier one
     /// for the families both name.
     pub(crate) fn define_palette(

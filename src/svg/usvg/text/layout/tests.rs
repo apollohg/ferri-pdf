@@ -44,6 +44,7 @@ fn svg_vertical_substitutions_origins_and_advances_match_independent_harfbuzz_sa
                         weight: crate::fonts::FontWeight::NORMAL,
                         variations: Vec::new(),
                         explicit_variations: Vec::new(),
+                        synthesis: crate::fonts::FontSynthesis::ALL,
                     },
                     style: &crate::style::Style::default(),
                     font_size: FONT_SIZE,

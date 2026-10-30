@@ -8,13 +8,14 @@ use krilla::geom::Point;
 use krilla::num::NormalizedF32;
 use krilla::paint::{Fill, Stroke};
 use krilla::surface::Surface;
-use krilla::text::{Font, Glyph, GlyphId, KrillaGlyph};
+use krilla::text::{Font, Glyph, GlyphId, KrillaGlyph, PaletteColor};
 use skrifa::{FontRef, MetadataProvider};
 use smallvec::SmallVec;
 use tiny_skia_path::Transform;
 
 use crate::svg::krilla_svg::util::{UsvgTransformExt, convert_fill, convert_stroke};
 use crate::svg::krilla_svg::{ProcessContext, path};
+use crate::svg::usvg::layout::PositionedGlyph;
 
 /// Render a text into a surface.
 pub(crate) fn render(
@@ -94,15 +95,25 @@ fn render_through(
             if let Some([a, b, c, d, e, f]) = tangent {
                 surface.push_transform(&krilla::geom::Transform::from_row(a, b, c, d, e, f));
             }
-            let batched =
-                cluster.len() > 1 && render_cluster_batch(cluster, span, surface, process_context);
-            if !batched {
-                if cluster.len() > 1 && process_context.svg_settings.embed_text {
-                    surface.with_actual_text(&cluster[0].text, |surface| {
-                        render_cluster(cluster, span, surface, process_context)
-                    });
-                } else {
-                    render_cluster(cluster, span, surface, process_context);
+            let bold: Vec<_> = cluster
+                .iter()
+                .flat_map(|glyph| glyph.copies().skip(1))
+                .map(std::borrow::Cow::into_owned)
+                .collect();
+            for glyphs in [cluster, &bold] {
+                if glyphs.is_empty() {
+                    continue;
+                }
+                let batched = glyphs.len() > 1
+                    && render_cluster_batch(glyphs, span, surface, process_context);
+                if !batched {
+                    if glyphs.len() > 1 && process_context.svg_settings.embed_text {
+                        surface.with_actual_text(&glyphs[0].text, |surface| {
+                            render_cluster(glyphs, span, surface, process_context)
+                        });
+                    } else {
+                        render_cluster(glyphs, span, surface, process_context);
+                    }
                 }
             }
             if tangent.is_some() {
@@ -121,14 +132,14 @@ fn render_through(
 }
 
 fn render_cluster(
-    glyphs: &[crate::svg::usvg::layout::PositionedGlyph],
+    glyphs: &[PositionedGlyph],
     span: &crate::svg::usvg::layout::Span,
     surface: &mut Surface,
     process_context: &mut ProcessContext,
 ) {
     for glyph in glyphs {
         // Ignore glyph if font can't be fetched.
-        let Some(font) = process_context.fonts.retrieve(span, glyph.font) else {
+        let Some(font) = process_context.fonts.retrieve(span, glyph) else {
             continue;
         };
 
@@ -286,16 +297,19 @@ impl Glyph for ClusterGlyph {
 }
 
 fn render_cluster_batch(
-    glyphs: &[crate::svg::usvg::layout::PositionedGlyph],
+    glyphs: &[PositionedGlyph],
     span: &crate::svg::usvg::layout::Span,
     surface: &mut Surface,
     context: &mut ProcessContext,
 ) -> bool {
     let first = &glyphs[0];
-    if glyphs.iter().any(|glyph| glyph.font != first.font) {
+    if glyphs
+        .iter()
+        .any(|glyph| glyph.font != first.font || glyph.paint.palette != first.paint.palette)
+    {
         return false;
     }
-    let Some(font) = context.fonts.retrieve(span, first.font) else {
+    let Some(font) = context.fonts.retrieve(span, first) else {
         return false;
     };
     let size = span.font_size.get();
@@ -348,12 +362,12 @@ fn render_cluster_batch(
 pub(crate) struct Fonts<'a> {
     db: &'a Database,
     fonts: HashMap<FontInstance, Option<Font>>,
-    outlines: HashMap<FontInstance, Option<crate::fonts::Silhouettes<'a>>>,
+    outlines: HashMap<(fontdb::ID, FontVariations), Option<crate::fonts::Silhouettes<'a>>>,
     supported_axes: HashMap<fontdb::ID, SmallVec<[[u8; 4]; 2]>>,
 }
 
-/// Identifies a font at specific variation coordinates.
-type FontInstance = (fontdb::ID, FontVariations);
+/// Identifies a font at specific variation coordinates, with its COLR palette entries.
+type FontInstance = (fontdb::ID, FontVariations, Option<Vec<PaletteColor>>);
 type FontVariations = SmallVec<[FontVariation; 2]>;
 
 impl<'a> Fonts<'a> {
@@ -371,10 +385,10 @@ impl<'a> Fonts<'a> {
     pub(crate) fn cluster_ink(
         &mut self,
         span: &crate::svg::usvg::layout::Span,
-        cluster: &[crate::svg::usvg::layout::PositionedGlyph],
+        cluster: &[PositionedGlyph],
     ) -> Option<crate::paint::Rect> {
         let mut ink: Option<tiny_skia_path::Rect> = None;
-        for glyph in cluster {
+        for glyph in cluster.iter().flat_map(PositionedGlyph::copies) {
             let variations = self.resolve_variations(span, glyph.font);
             let db = self.db;
             let outlines = self
@@ -410,21 +424,41 @@ impl<'a> Fonts<'a> {
         })
     }
 
-    /// Retrieves the font identified by `id` from the cache or loads it.
-    fn retrieve(&mut self, span: &crate::svg::usvg::layout::Span, id: fontdb::ID) -> Option<Font> {
+    /// Retrieves the font `glyph` is drawn from, with its palette, from the cache or loads it.
+    fn retrieve(
+        &mut self,
+        span: &crate::svg::usvg::layout::Span,
+        glyph: &PositionedGlyph,
+    ) -> Option<Font> {
+        let id = glyph.font;
         let variations = self.resolve_variations(span, id);
-        match self.fonts.entry((id, variations)) {
+        let palette = match &glyph.paint.palette {
+            Some(colors) => Some(
+                colors
+                    .iter()
+                    .map(|color| crate::writer::text::palette_color(*color))
+                    .collect::<Result<Vec<_>, _>>()
+                    .ok()?,
+            ),
+            None => None,
+        };
+        match self.fonts.entry((id, variations, palette)) {
             Entry::Occupied(entry) => entry.get().clone(),
             Entry::Vacant(entry) => {
                 // Every face is registered from memory, so its shared bytes are borrowed directly.
                 let font = self.db.face(id).and_then(|face| {
                     let fontdb::Source::Binary(font_data) = &face.source;
-                    let variations = &entry.key().1;
+                    let (_, variations, palette) = entry.key();
                     let coords: SmallVec<[_; 2]> = variations
                         .iter()
                         .map(|var| (krilla::text::Tag::new(&var.tag), var.value))
                         .collect();
-                    Font::new_variable(font_data.clone().into(), face.index, &coords)
+                    Font::new_variable_with_palette(
+                        font_data.clone().into(),
+                        face.index,
+                        &coords,
+                        palette.clone(),
+                    )
                 });
 
                 entry.insert(font.clone());

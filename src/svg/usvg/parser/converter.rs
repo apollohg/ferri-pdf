@@ -31,9 +31,11 @@ pub(super) const LINEAR_RGB: &str = "linearRGB";
 #[derive(Clone)]
 pub(super) struct State<'a> {
     pub(crate) length_error: std::rc::Rc<std::cell::RefCell<Option<Arc<crate::style::StyleError>>>>,
-    /// The computed styles of a standalone document's elements, as text computes them.
-    pub(crate) standalone_styles:
-        std::rc::Rc<std::cell::RefCell<HashMap<svgtree::NodeKey, Arc<crate::style::Style>>>>,
+    /// The computed styles of a standalone document's elements, as text computes them; `None`
+    /// while an element's own is computing.
+    pub(crate) standalone_styles: std::rc::Rc<
+        std::cell::RefCell<HashMap<svgtree::NodeKey, Option<Arc<crate::style::Style>>>>,
+    >,
     pub(crate) parent_clip_path: Option<SvgNode<'a, 'a>>,
     pub(crate) parent_markers: Vec<SvgNode<'a, 'a>>,
     /// Stores the resolved fill and stroke of a use node
@@ -110,7 +112,8 @@ pub(crate) struct Cache {
     pub(crate) style_error: Option<Arc<crate::style::StyleError>>,
 
     cache_outline: HashMap<(ID, GlyphId), Option<tiny_skia_path::Path>>,
-    cache_colr: HashMap<(ID, GlyphId), Option<Tree>>,
+    /// Keyed by the bits of each painting's location, palette and foreground as well.
+    cache_colr: HashMap<(ID, GlyphId, Vec<u32>), Option<Tree>>,
     cache_svg: HashMap<(ID, GlyphId), Option<Node>>,
     cache_raster: HashMap<(ID, GlyphId), Option<BitmapImage>>,
     cache_has_opsz: HashMap<ID, bool>,
@@ -257,7 +260,21 @@ impl Cache {
     }
 
     font_lookup!(fontdb_outline, cache_outline, outline, tiny_skia_path::Path);
-    font_lookup!(fontdb_colr, cache_colr, colr, Tree);
+
+    pub(crate) fn fontdb_colr(
+        &mut self,
+        font: ID,
+        glyph: GlyphId,
+        paint: &flatten::ColrPaint<'_>,
+    ) -> Option<Tree> {
+        let key = (font, glyph, paint.key());
+        if let Some(cached) = self.cache_colr.get(&key) {
+            return cached.clone();
+        }
+        let lookup = self.fontdb.colr(font, glyph, paint);
+        self.cache_colr.insert(key, lookup.clone());
+        lookup
+    }
     font_lookup!(fontdb_svg, cache_svg, svg, Node);
     font_lookup!(fontdb_raster, cache_raster, raster, BitmapImage);
 

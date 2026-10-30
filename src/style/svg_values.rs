@@ -549,13 +549,6 @@ pub(crate) fn image_rendering_keyword(value: Keyword) -> &'static str {
 /// Properties applying to SVG elements that their renderer does not take from the cascade:
 /// their presentation attributes reach it directly, so only initial values are supported.
 const UNCASCADED: [Property; 1] = [Property::UnicodeBidi];
-/// Properties of SVG text content that its renderer does not implement.
-const UNCASCADED_TEXT: [Property; 4] = [
-    Property::FontVariantEmoji,
-    Property::FontPalette,
-    Property::FontSynthesisWeight,
-    Property::FontSynthesisStyle,
-];
 
 /// The initial computed values of the properties SVG content supports only at their initial
 /// value.
@@ -566,7 +559,6 @@ impl InitialOnly {
         Self(
             UNCASCADED
                 .into_iter()
-                .chain(UNCASCADED_TEXT)
                 .map(|property| {
                     (
                         property,
@@ -577,7 +569,7 @@ impl InitialOnly {
         )
     }
     /// Fails on the first of those properties that `style` gives another value; text
-    /// properties only matter on text content elements.
+    /// combinations only matter on text content elements.
     pub(crate) fn check(&self, style: &Style, text: bool) -> Result<(), StyleError> {
         // CSS Writing Modes 4 §9.1: combinations exist only in vertical text.
         if text
@@ -589,8 +581,7 @@ impl InitialOnly {
                 Property::TextCombineUpright.name()
             )));
         }
-        let count = if text { self.0.len() } else { UNCASCADED.len() };
-        match self.0[..count].iter().find(|(property, initial)| {
+        match self.0.iter().find(|(property, initial)| {
             crate::style::properties::projection(*property, style) != *initial
         }) {
             Some((property, _)) => Err(StyleError::Unsupported(format!(

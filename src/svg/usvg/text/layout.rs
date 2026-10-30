@@ -62,9 +62,23 @@ pub struct PositionedGlyph {
     pub cluster: usize,
     /// Horizontal advance in font em units before cluster positioning.
     pub x_advance: f32,
+    /// The palette and synthesis of the glyph's face.
+    pub(crate) paint: Arc<crate::svg::usvg::GlyphPaint>,
 }
 
 impl PositionedGlyph {
+    /// The glyph and the copy synthetic bold draws offset along its inline axis.
+    pub(crate) fn copies(&self) -> impl Iterator<Item = std::borrow::Cow<'_, Self>> {
+        let bold = self.paint.bold.then(|| {
+            let offset = crate::text::SYNTHETIC_BOLD_OFFSET_EM * f32::from(self.units_per_em);
+            std::borrow::Cow::Owned(Self {
+                glyph_ts: self.glyph_ts.pre_translate(offset, 0.0),
+                ..self.clone()
+            })
+        });
+        std::iter::once(std::borrow::Cow::Borrowed(self)).chain(bold)
+    }
+
     /// Returns the font size for this glyph.
     pub fn font_size(&self) -> f32 {
         self.font_size
@@ -589,11 +603,13 @@ fn emphasis_marks(
                     cluster_ts: mark_cluster.transform,
                     ..glyph.clone()
                 };
-                if let Some(path) = fontdb
-                    .outline(glyph.font, glyph.id)
-                    .and_then(|path| path.transform(positioned.outline_transform()))
-                {
-                    builder.push_path(&path);
+                for copy in positioned.copies() {
+                    if let Some(path) = fontdb
+                        .outline(glyph.font, glyph.id)
+                        .and_then(|path| path.transform(copy.outline_transform()))
+                    {
+                        builder.push_path(&path);
+                    }
                 }
             }
             pen += mark_cluster.advance;
@@ -1781,7 +1797,16 @@ fn form_glyph_clusters(glyphs: &[Glyph], text: &str, font_size: f32) -> GlyphClu
                 .pre_translate(glyph.dx as f32, -glyph.dy as f32)
         } else {
             Transform::from_translate(x + glyph.dx as f32, -glyph.dy as f32)
-        };
+        }
+        // The synthetic oblique shears the glyph about its baseline, y being downwards.
+        .pre_concat(Transform::from_row(
+            1.0,
+            0.0,
+            -glyph.paint.oblique_skew,
+            1.0,
+            0.0,
+            0.0,
+        ));
 
         positioned_glyphs.push(PositionedGlyph {
             glyph_ts: ts,
@@ -1796,6 +1821,7 @@ fn form_glyph_clusters(glyphs: &[Glyph], text: &str, font_size: f32) -> GlyphClu
             x_advance: glyph.width as f32 / f32::from(glyph.font.units_per_em.get()),
             text: glyph.text.clone(),
             id: glyph.id,
+            paint: glyph.paint.clone(),
         });
 
         x += glyph.width as f32;
@@ -1981,7 +2007,7 @@ pub(crate) fn shape_text(
             .map_or(glyphs.len(), |count| index + count);
         let Some(missing) = glyphs[index..end]
             .iter()
-            .find(|glyph| glyph.is_missing() && active.contains(&glyph.byte_idx.value()))
+            .find(|glyph| glyph.wants_fallback() && active.contains(&glyph.byte_idx.value()))
         else {
             previous = None;
             index = end;
@@ -1995,6 +2021,10 @@ pub(crate) fn shape_text(
                 .max()
                 .unwrap_or(0);
         let source_end = source_end.max(source.value() + character.len_utf8());
+        // A face showing the cluster without the sequences it lacks replaces a missing glyph
+        // where none has them; the unsupported selectors are ignored (CSS Fonts 4 §9.3).
+        let shown = !glyphs[index..end].iter().any(Glyph::is_missing);
+        let mut unpresented = None;
         let mut used_fonts = vec![font.id];
         let mut replacement = None;
         loop {
@@ -2020,7 +2050,7 @@ pub(crate) fn shape_text(
                     .map_or(glyphs.len(), |count| group_end + count);
                 if !glyphs[group_end..next_end]
                     .iter()
-                    .any(|glyph| glyph.is_missing())
+                    .any(Glyph::wants_fallback)
                     || !active.contains(&next_source.value())
                 {
                     break;
@@ -2046,23 +2076,29 @@ pub(crate) fn shape_text(
                 group_end = next_end;
             }
             let candidate = shape(fontdb, &fallback, group_source.clone());
-            if let Some(candidate) =
-                candidate.filter(|glyphs| glyphs.iter().all(|glyph| !glyph.is_missing()))
+            if let Some(candidate) = &candidate
+                && !candidate.iter().any(Glyph::wants_fallback)
             {
-                replacement = Some((group_end, group_source, fallback.clone(), candidate));
+                replacement = Some((group_end, group_source, fallback.clone(), candidate.clone()));
                 break;
             }
-            if group_end != end {
-                let candidate = shape(fontdb, &fallback, source.value()..source_end);
-                if let Some(candidate) =
-                    candidate.filter(|glyphs| glyphs.iter().all(|glyph| !glyph.is_missing()))
-                {
+            let candidate = if group_end == end {
+                candidate
+            } else {
+                shape(fontdb, &fallback, source.value()..source_end)
+            };
+            if let Some(candidate) = candidate {
+                if !candidate.iter().any(Glyph::wants_fallback) {
                     replacement = Some((end, source.value()..source_end, fallback, candidate));
                     break;
                 }
+                if !shown && unpresented.is_none() && !candidate.iter().any(Glyph::is_missing) {
+                    unpresented = Some((end, source.value()..source_end, fallback, candidate));
+                }
             }
         }
-        if let Some((end, mut source, fallback, mut replacement)) = replacement {
+        let complete = replacement.is_some();
+        if let Some((end, mut source, fallback, mut replacement)) = replacement.or(unpresented) {
             let mut start = index;
             if let Some(run) = &previous
                 && run.end == index
@@ -2071,9 +2107,11 @@ pub(crate) fn shape_text(
             {
                 let combined = run.source.start.min(source.start)..run.source.end.max(source.end);
                 let merged = shape(fontdb, &fallback, combined.clone());
-                if let Some(merged) =
-                    merged.filter(|glyphs| glyphs.iter().all(|glyph| !glyph.is_missing()))
-                {
+                if let Some(merged) = merged.filter(|glyphs| {
+                    !glyphs
+                        .iter()
+                        .any(|glyph| glyph.is_missing() || (complete && glyph.wants_fallback()))
+                }) {
                     start = run.start;
                     source = combined;
                     replacement = merged;
@@ -2258,17 +2296,36 @@ fn shape_text_with_font(
                     };
 
                     let mut buffer = rustybuzz::UnicodeBuffer::new();
+                    // CSS Fonts 4 §9.3: `font-variant-emoji` appends a presentation selector
+                    // to each emoji its text does not select one for.
+                    let emoji = style.font_features.emoji;
+                    let add = |buffer: &mut rustybuzz::UnicodeBuffer,
+                               characters: &mut dyn Iterator<Item = (usize, char)>| {
+                        let mut characters = characters.peekable();
+                        while let Some((cluster, ch)) = characters.next() {
+                            buffer.add(ch, cluster as u32);
+                            let next = characters.peek().map(|(_, next)| *next);
+                            if let Some(selector) = shaping::implied_presentation(emoji, ch, next) {
+                                buffer.add(selector, cluster as u32);
+                            }
+                        }
+                    };
+                    let presenting = crate::text::implies_presentation(style, sub_text);
                     if small {
                         for (start, upper) in
                             features::uppercase_clusters(text, run.clone(), &style.language)
                         {
-                            for ch in upper.chars() {
-                                buffer.add(ch, start as u32);
-                            }
+                            add(&mut buffer, &mut upper.chars().map(|ch| (start, ch)));
                         }
+                    } else if presenting {
+                        add(&mut buffer, &mut sub_text.char_indices());
                     } else {
                         buffer.push_str(sub_text);
                     }
+                    let sequences = presenting || sub_text.chars().any(shaping::variation_selector);
+                    // A selector no sequence of the face takes leaves no glyph, as in the
+                    // document's text.
+                    buffer.set_flags(rustybuzz::BufferFlags::REMOVE_DEFAULT_IGNORABLES);
                     buffer.set_pre_context(&text[..run.start]);
                     buffer.set_post_context(&text[run.end..]);
                     buffer.set_direction(hb_direction);
@@ -2323,6 +2380,13 @@ fn shape_text_with_font(
                             vertical,
                             scale,
                             font: font.clone(),
+                            paint: settings.paint.clone(),
+                            unpresented: sequences
+                                && !shaping::supports_variations(
+                                    &rb_font,
+                                    &sub_text[start..end],
+                                    Some(emoji),
+                                ),
                         });
                     }
                 }
@@ -2434,11 +2498,19 @@ pub(crate) struct Glyph {
     ///
     /// Each glyph can have it's own source font.
     pub(crate) font: Arc<ResolvedFont>,
+    pub(crate) paint: Arc<crate::svg::usvg::GlyphPaint>,
+    /// The face lacks a variation sequence of the glyph's cluster, including a presentation
+    /// `font-variant-emoji` implies, which another face may have (CSS Fonts 4 §9.3).
+    pub(crate) unpresented: bool,
 }
 
 impl Glyph {
     fn is_missing(&self) -> bool {
         self.id.0 == 0
+    }
+    /// Whether another face may show the glyph's cluster better.
+    fn wants_fallback(&self) -> bool {
+        self.is_missing() || self.unpresented
     }
 }
 

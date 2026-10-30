@@ -4222,6 +4222,7 @@ pub(crate) fn build(
     let generated =
         crate::document::generated::GeneratedPass::new(navigation.targets.clone(), values);
     let mut style = root_style(input.html, sheet, resolver, &generated)?;
+    input.images.borrow_mut().adopt_palettes(&sheet.fonts);
     let sheet = &*sheet;
     let elements = std::rc::Rc::new(crate::document::element_images::ElementImages::new(
         input.html,

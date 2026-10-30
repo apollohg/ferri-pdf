@@ -403,6 +403,11 @@ pub(crate) struct ImageCache {
     >,
 }
 impl ImageCache {
+    /// Takes the `@font-palette-values` palettes the document's fonts, of which the cache's
+    /// are a copy, define once its root's style computes (CSS Fonts 4 §9.2).
+    pub(crate) fn adopt_palettes(&mut self, fonts: &FontBook) {
+        self.fonts.adopt_palettes(fonts);
+    }
     pub(crate) fn with_fonts(fonts: FontBook) -> Self {
         Self {
             fonts: SvgFonts::new(Arc::new(fonts)),

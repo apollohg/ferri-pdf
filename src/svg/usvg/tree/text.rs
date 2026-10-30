@@ -144,6 +144,8 @@ pub struct Font {
     pub(crate) weight: crate::fonts::FontWeight,
     pub(crate) variations: Vec<FontVariation>,
     pub(crate) explicit_variations: Vec<FontVariation>,
+    /// The bold and oblique `font-synthesis` allows, which also rank faces (CSS Fonts 4 §5.2).
+    pub(crate) synthesis: crate::fonts::FontSynthesis,
 }
 
 impl PartialEq for Font {
@@ -154,6 +156,7 @@ impl PartialEq for Font {
             && self.numbers() == other.numbers()
             && self.variations == other.variations
             && self.explicit_variations == other.explicit_variations
+            && self.synthesis == other.synthesis
     }
 }
 
@@ -167,6 +170,7 @@ impl std::hash::Hash for Font {
         self.numbers().hash(state);
         self.variations.hash(state);
         self.explicit_variations.hash(state);
+        self.synthesis.hash(state);
     }
 }
 
@@ -214,6 +218,10 @@ impl Font {
     /// Axis settings supplied explicitly, before standard font-property mappings.
     pub fn explicit_variations(&self) -> &[FontVariation] {
         &self.explicit_variations
+    }
+    /// The synthesis `font-synthesis` allows.
+    pub(crate) fn synthesis(&self) -> crate::fonts::FontSynthesis {
+        self.synthesis
     }
 }
 

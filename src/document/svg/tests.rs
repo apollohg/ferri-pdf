@@ -615,7 +615,6 @@ fn mask_layers_beyond_one_mask_element_name_the_layers_the_document_draws() {
 fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
     for (css, expected) in [
         ("text{unicode-bidi:bidi-override}", "unicode-bidi"),
-        ("text{font-palette:dark}", "font-palette"),
         (
             "text{writing-mode:vertical-rl;text-combine-upright:all}",
             "text-combine-upright",

@@ -17,7 +17,7 @@ mod scene;
 mod shadows;
 #[cfg(test)]
 mod tests;
-mod text;
+pub(crate) mod text;
 mod text_shadows;
 use crate::document::{DocumentMetadata, Navigation};
 use crate::fonts::{FontBook, FontId};

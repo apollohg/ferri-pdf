@@ -1,6 +1,7 @@
 """Check CSS font feature, variation and palette effects in the serialized PDF."""
 import argparse
 import json
+import math
 from pathlib import Path
 import subprocess
 import tempfile
@@ -435,22 +436,132 @@ class FontFeaturesPdf(unittest.TestCase):
                        for value, _ in cases)
         interpreted = self.render(rules, body)
         raster = self.raster()
-        scale = RASTER_DPI / PDF_POINTS_PER_INCH
         for line, (value, colours) in zip(self.lines(interpreted.glyphs), cases):
             for glyph, expected in zip(line, [*colours, foreground]):
                 with self.subTest(palette=value, glyph=glyph.text):
-                    x, y = glyph.origin
-                    painted = {}
-                    # Sample a box above the baseline that the glyph's stems cross.
-                    for dx in range(int(2 * scale), int(10 * scale)):
-                        for dy in range(int(2 * scale), int(12 * scale)):
-                            pixel = raster.getpixel((int(x * scale) + dx, raster.height - int(y * scale) - dy))
-                            if pixel != (255, 255, 255):
-                                painted[pixel] = painted.get(pixel, 0) + 1
-                    self.assertTrue(painted, "the glyph paints")
-                    dominant = max(painted, key=painted.get)
-                    for actual, wanted in zip(dominant, expected):
-                        self.assertLessEqual(abs(actual - wanted), COLOUR_TOLERANCE, f"{dominant} != {expected}")
+                    self.assert_glyph_colour(raster, glyph.origin, expected)
+
+    def assert_glyph_colour(self, raster, origin, expected):
+        """The dominant colour of a box above the baseline at `origin`, which the stems of a
+        glyph drawn there cross, is `expected`."""
+        scale = RASTER_DPI / PDF_POINTS_PER_INCH
+        x, y = origin
+        painted = {}
+        for dx in range(int(2 * scale), int(10 * scale)):
+            for dy in range(int(2 * scale), int(12 * scale)):
+                pixel = raster.getpixel((int(x * scale) + dx, raster.height - int(y * scale) - dy))
+                if pixel != (255, 255, 255):
+                    painted[pixel] = painted.get(pixel, 0) + 1
+        self.assertTrue(painted, f"the glyph at {origin} paints")
+        dominant = max(painted, key=painted.get)
+        for actual, wanted in zip(dominant, expected):
+            self.assertLessEqual(abs(actual - wanted), COLOUR_TOLERANCE, f"{dominant} != {expected}")
+
+    def test_svg_text_paints_the_selected_palettes_in_both_renderers(self):
+        """CSS Fonts 4 §9 on SVG text: `font-palette` and `@font-palette-values` colour COLR
+        glyphs, whose foreground entry takes the fill, whether the text is drawn as vector text or
+        rasterized beneath a filter."""
+        fixture = reference("PaletteTest-source.json")
+        palettes = [[tuple(colour[:3]) for colour in palette] for palette in fixture["palettes"]]
+        foreground = (0, 0, 255)
+        rules = ("@font-palette-values --custom{font-family:Palette;base-palette:dark;"
+                 "override-colors:1 rgb(255,0,255)}svg{display:block}")
+        cases = [
+            ("normal", palettes[0]),
+            ("light", palettes[1]),
+            ("dark", palettes[2]),
+            ("--custom", [palettes[2][0], (255, 0, 255)]),
+        ]
+        pixels = PDF_POINTS_PER_INCH / CSS_PIXELS_PER_INCH
+        # The filter's identity offset rasterizes the second column, which paints no glyphs;
+        # the doubled size keeps a pixel of each stem unblended at the raster's resolution.
+        raster_offset, line_pitch, width = 180, 60, 360
+        height = line_pitch * (len(cases) + 1)
+        texts = ""
+        for index, (value, _) in enumerate(cases):
+            y = (index + 1) * line_pitch / pixels
+            texts += (f"<text y=\"{y}\" style=\"font-palette:{value}\">AHI</text>"
+                      f"<text x=\"{raster_offset / pixels}\" y=\"{y}\" filter=\"url(#raster)\" "
+                      f"style=\"font-palette:{value}\">AHI</text>")
+        body = (f"<svg width=\"{width}pt\" height=\"{height}pt\" "
+                f"viewBox=\"0 0 {width / pixels} {height / pixels}\" "
+                f"style=\"font:{2 * SIZE_PT}pt Palette;fill:rgb{foreground}\">"
+                f"<filter id=\"raster\"><feOffset dx=\"0\"/></filter>{texts}</svg>")
+        interpreted = self.render(rules, body)
+        raster = self.raster()
+        lines = self.lines(interpreted.glyphs)
+        self.assertEqual(len(lines), len(cases), "only the unfiltered column paints glyphs")
+        for line, (value, colours) in zip(lines, cases):
+            self.assertEqual("".join(glyph.text for glyph in line), "AHI")
+            for glyph, expected in zip(line, [*colours, foreground]):
+                for renderer, dx in (("vector", 0), ("raster", raster_offset)):
+                    with self.subTest(palette=value, glyph=glyph.text, renderer=renderer):
+                        self.assert_glyph_colour(
+                            raster, (glyph.origin[0] + dx, glyph.origin[1]), expected)
+
+    def test_svg_text_presents_emoji_as_document_text_does(self):
+        """CSS Fonts 4 §9.3 on SVG text: `font-variant-emoji` selects the presentation
+        sequence of the first face having it, a later family's where the first lacks it, and is
+        ignored where no face has it."""
+        self.assert_svg_matches_document([
+            ("font-family:Presentation;font-variant-emoji:emoji", "❤"),
+            ("font-family:Presentation;font-variant-emoji:text", "☕"),
+            ("font-family:Presentation;font-variant-emoji:unicode", "❤"),
+            ("font-family:'DejaVu Sans',Presentation;font-variant-emoji:emoji", "❤"),
+            ("font-family:'DejaVu Sans';font-variant-emoji:emoji", "❤"),
+        ])
+
+    def test_svg_text_synthesizes_bold_and_oblique_as_document_text_does(self):
+        """CSS Fonts 4 §5.2 and §5.4 on SVG text: a face lacking the requested weight or
+        slant is emboldened by a second, offset copy of each glyph and slanted by a shear, both
+        as the document's text draws them, unless `font-synthesis` forbids it."""
+        face = (ROOT / "assets/fonts/LiberationSerif-Regular.ttf").as_uri()
+        rules = f"@font-face{{font-family:Regular;src:url('{face}')}}svg{{display:block}}"
+        cases = [
+            ("font-weight:bold", True, 0.0),
+            ("font-style:oblique 20deg", False, math.tan(math.radians(20))),
+            ("font-weight:bold;font-style:oblique -10deg", True, math.tan(math.radians(-10))),
+            ("font-weight:bold;font-synthesis-weight:none", False, 0.0),
+            ("font-style:oblique 20deg;font-synthesis-style:none", False, 0.0),
+            ("font-style:italic", False, None),
+        ]
+        pixels = PDF_POINTS_PER_INCH / CSS_PIXELS_PER_INCH
+        paragraphs = "".join(f"<p style=\"font-family:Regular;{style}\">Hb</p>" for style, _, _ in cases)
+        texts = "".join(
+            f"<text y=\"{(index + 1) * 40 / pixels}\" style=\"font:{SIZE_PT}pt Regular;{style}\">Hb</text>"
+            for index, (style, _, _) in enumerate(cases))
+        height = 40 * len(cases)
+        documents = self.lines(self.render(rules, paragraphs).glyphs)
+        svgs = self.lines(self.render(rules, f"<svg width=\"300pt\" height=\"{height}pt\" "
+                                             f"viewBox=\"0 0 {300 / pixels} {height / pixels}\">"
+                                             f"{texts}</svg>").glyphs)
+        self.assertEqual((len(documents), len(svgs)), (len(cases), len(cases)))
+        for (style, bold, shear), document, svg in zip(cases, documents, svgs):
+            with self.subTest(style=style):
+                document = sorted(document, key=lambda glyph: glyph.origin[0])
+                svg = sorted(svg, key=lambda glyph: glyph.origin[0])
+                copies = 2 if bold else 1
+                self.assertEqual([glyph.text for glyph in svg],
+                                 [character for character in "Hb" for _ in range(copies)],
+                                 "synthetic bold draws each glyph twice")
+                self.assertEqual([glyph.text for glyph in svg], [glyph.text for glyph in document])
+                for actual, expected in zip(svg, document):
+                    self.assertAlmostEqual(actual.matrix[2] / actual.matrix[3],
+                                           expected.matrix[2] / expected.matrix[3],
+                                           delta=POSITION_TOLERANCE_PT, msg="the document's shear")
+                    self.assertAlmostEqual(actual.origin[0] - svg[0].origin[0],
+                                           expected.origin[0] - document[0].origin[0],
+                                           delta=POSITION_TOLERANCE_PT, msg="the document's copies")
+                if shear is None:
+                    self.assertGreater(svg[0].matrix[2] / svg[0].matrix[3], 0,
+                                       "italic synthesizes a forward slant")
+                else:
+                    self.assertAlmostEqual(svg[0].matrix[2] / svg[0].matrix[3], shear,
+                                           delta=POSITION_TOLERANCE_PT, msg="the oblique's shear")
+                if bold:
+                    self.assertAlmostEqual(svg[1].origin[0] - svg[0].origin[0], 0.02 * SIZE_PT,
+                                           delta=POSITION_TOLERANCE_PT,
+                                           msg="the bold copy is offset by 0.02em")
 
 
 if __name__ == "__main__":

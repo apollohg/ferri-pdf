@@ -97,6 +97,12 @@ impl SvgFonts {
             ..self.clone()
         }
     }
+    /// Takes the palettes `book`, of which the SVG fonts are a copy, has defined since.
+    pub(crate) fn adopt_palettes(&mut self, book: &FontBook) {
+        if book.has_palettes() {
+            Arc::make_mut(&mut self.book).adopt_palettes(book);
+        }
+    }
     pub(crate) fn database(&self) -> Arc<fontdb::Database> {
         self.registry().database.clone()
     }
@@ -309,21 +315,31 @@ impl FontProvider for Provider<'_> {
     }
     fn face_settings(
         &self,
-        _: &Font,
+        font: &Font,
         mapped: fontdb::ID,
         style: &crate::style::Style,
     ) -> crate::svg::usvg::FaceSettings {
         let book = &self.fonts.book;
-        let Some(face) = self
+        let Some((id, face)) = self
             .fonts
             .registry()
             .originals
             .get(&mapped)
-            .and_then(|id| book.face(*id))
+            .and_then(|id| Some((*id, book.face(*id)?)))
         else {
             return crate::svg::usvg::FaceSettings::default();
         };
         let family = &face.descriptor().family;
+        let selection = selection(font);
+        let (synthesis, oblique_skew) = match book.cached_instance(id, selection) {
+            Ok(instance) => {
+                instance.map_or_else(Default::default, |instance| instance.synthesis(selection))
+            }
+            Err(error) => {
+                *self.failure.borrow_mut() = Some(error);
+                Default::default()
+            }
+        };
         crate::svg::usvg::FaceSettings {
             descriptor: face.settings().features.clone(),
             size_adjust: face.settings().size_adjust,
@@ -331,6 +347,18 @@ impl FontProvider for Provider<'_> {
                 &style.font_features.alternates,
                 |kind, name| book.feature_value(self.fonts.namespace, family, kind, name),
             ),
+            paint: Arc::new(crate::svg::usvg::GlyphPaint {
+                palette: face.data().and_then(|data| {
+                    book.palette(
+                        self.fonts.namespace,
+                        &style.font_features.palette,
+                        family,
+                        data,
+                    )
+                }),
+                bold: synthesis.bold,
+                oblique_skew,
+            }),
         }
     }
     fn select_font(&self, font: &Font, database: &mut Arc<fontdb::Database>) -> Option<fontdb::ID> {
@@ -359,6 +387,7 @@ fn selection(font: &Font) -> FontSelection {
         },
     );
     selection.width = font.width();
+    selection.synthesis = font.synthesis();
     if font.style() == crate::svg::usvg::FontStyle::Oblique {
         selection.slant = font.slant();
     }

@@ -64,7 +64,7 @@ const CHANNEL_MAX: f32 = 255.0;
 const FIXED_COLOR_TABLES: [&[u8; 4]; 3] = [b"sbix", b"CBDT", b"SVG "];
 
 /// A `font-palette` colour as a krilla palette entry; colours are already sRGB.
-fn palette_color(color: crate::graphics::Color) -> Result<PaletteColor, PdfError> {
+pub(crate) fn palette_color(color: crate::graphics::Color) -> Result<PaletteColor, PdfError> {
     let alpha = (color.alpha * CHANNEL_MAX).round();
     if !(0.0..=CHANNEL_MAX).contains(&alpha) {
         return Err(PdfError::InvalidAlpha(color.alpha));

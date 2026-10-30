@@ -43,3 +43,6 @@ the projection's tangent within the resampling tolerance, groups holding such te
 with what lies below them in place, and other content rendered by resvg in the plane's bands
 and resampled. Scenes draw the depth-sorted pieces of their planes. resvg renders both in
 pixels the same way.
+
+Glyphs draw from a font instance with the COLR palette the face's `font-palette` selects, and
+the copy synthetic bold adds draws after each cluster.
