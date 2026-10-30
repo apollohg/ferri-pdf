@@ -137,13 +137,13 @@ pub(crate) struct FloatBoxes<'a> {
 }
 
 /// The float area `shape` defines for one float fragment; `none` defines none, which leaves
-/// the margin box.
+/// the margin box. `element()` images sample the renderings `elements` hold.
 pub(crate) fn float_area(
     shape: &ShapeOutside<Arc<Image>>,
     margin: f32,
     threshold: f32,
     boxes: &FloatBoxes<'_>,
-    work: &Budget,
+    (work, elements): (&Budget, &crate::layout::ElementTargets),
 ) -> Result<Option<FloatArea>, LayoutError> {
     let mut pieces = match shape {
         ShapeOutside::None => return Ok(None),
@@ -173,7 +173,7 @@ pub(crate) fn float_area(
         }
         ShapeOutside::Image(image) => {
             let (content, _) = reference_box(ShapeBox::Visual(BoxArea::ContentBox), boxes);
-            image_pieces(image, content, threshold, work)?
+            image_pieces(image, content, threshold, (work, elements))?
         }
     };
     if margin > 0.0 {
@@ -533,9 +533,9 @@ fn image_pieces(
     image: &BackgroundImage,
     content: Rect,
     threshold: f32,
-    work: &Budget,
+    (work, elements): (&Budget, &crate::layout::ElementTargets),
 ) -> Result<Vec<Piece>, LayoutError> {
-    let Some(grid) = alpha_grid(image, content, work)? else {
+    let Some(grid) = alpha_grid(image, content, (work, elements))? else {
         return Ok(Vec::new());
     };
     let opaque = |sample: u8| f32::from(sample) > threshold * MAX_SAMPLE;
@@ -592,7 +592,7 @@ fn image_pieces(
 fn alpha_grid(
     image: &BackgroundImage,
     content: Rect,
-    work: &Budget,
+    (work, elements): (&Budget, &crate::layout::ElementTargets),
 ) -> Result<Option<AlphaGrid>, LayoutError> {
     if content.width <= 0.0 || content.height <= 0.0 {
         return Ok(None);
@@ -631,7 +631,9 @@ fn alpha_grid(
                 alpha,
             }
         }
-        BackgroundImage::Image { image, .. } => return image_alpha(image, content, work),
+        BackgroundImage::Image { image, .. } => {
+            return image_alpha(image, content, (work, elements));
+        }
         // CSS Images 4 §2.6.2: each argument fills the image, and alpha averages by weight.
         BackgroundImage::CrossFade(layers) => {
             let percentages: Vec<f32> = layers.iter().map(|layer| layer.percentage).collect();
@@ -639,7 +641,7 @@ fn alpha_grid(
             let [columns, rows] = [samples(content.width), samples(content.height)];
             let mut sums = vec![0.0_f32; columns * rows];
             for (layer, weight) in layers.iter().zip(weights) {
-                let Some(grid) = alpha_grid(&layer.image, content, work)? else {
+                let Some(grid) = alpha_grid(&layer.image, content, (work, elements))? else {
                     continue;
                 };
                 work.spend(sums.len())?;
@@ -672,7 +674,7 @@ fn rendered_samples(content: Rect) -> impl Fn(f32) -> usize {
 fn image_alpha(
     image: &Image,
     content: Rect,
-    work: &Budget,
+    (work, elements): (&Budget, &crate::layout::ElementTargets),
 ) -> Result<Option<AlphaGrid>, LayoutError> {
     let samples = rendered_samples(content);
     let grid = match image {
@@ -727,12 +729,20 @@ fn image_alpha(
             }
         }
         Image::Transparent => return Ok(None),
-        Image::Generated(image) => return alpha_grid(image, content, work),
-        Image::Frame(..) | Image::Viewport(_) | Image::Widget(_) | Image::Element(_) => {
-            return Err(crate::style::StyleError::Unsupported(
-                "shape-outside: an image of an element, a nested document or a form control".into(),
-            )
-            .into());
+        Image::Generated(image) => return alpha_grid(image, content, (work, elements)),
+        // CSS Images 4 §2.7: the last layout's rendering, whose nested documents and form
+        // controls it draws; layout repeats until the rendering it samples stands.
+        Image::Element(element) => {
+            let [columns, rows] = [samples(content.width), samples(content.height)];
+            work.spend(columns.saturating_mul(rows))?;
+            AlphaGrid {
+                columns,
+                rows,
+                alpha: elements.alpha(element.element, [columns, rows])?.to_vec(),
+            }
+        }
+        Image::Frame(..) | Image::Viewport(_) | Image::Widget(_) => {
+            unreachable!("shape-outside loads URL and element() images, never replaced content")
         }
         Image::View(view) => {
             let region = view.region_size([content.width, content.height]);
@@ -745,7 +755,7 @@ fn image_alpha(
                     width: whole.width,
                     height: whole.height,
                 },
-                work,
+                (work, elements),
             )?
             else {
                 return Ok(None);
@@ -765,6 +775,7 @@ fn image_alpha(
 #[cfg(test)]
 mod corner_tests {
     use super::*;
+    use crate::layout::ElementTargets;
     use crate::paint::{Border, BorderStyle, BoxDecoration, Color, CornerShape, LengthPercentage};
 
     #[test]
@@ -827,9 +838,15 @@ mod corner_tests {
             ];
             for margin in [0.0_f32, 2.0] {
                 let work = Budget::new(crate::layout::MAX_LAYOUT_WORK);
-                let area = float_area(&ShapeOutside::Box(reference), margin, 0.0, &boxes, &work)
-                    .unwrap()
-                    .unwrap();
+                let area = float_area(
+                    &ShapeOutside::Box(reference),
+                    margin,
+                    0.0,
+                    &boxes,
+                    (&work, &ElementTargets::default()),
+                )
+                .unwrap()
+                .unwrap();
                 for row in -9..89 {
                     let y = row as f32 + 0.25;
                     for side in [FloatSide::Left, FloatSide::Right] {
@@ -879,7 +896,7 @@ mod corner_tests {
                     paint: &consumed,
                     ..boxes
                 },
-                &work,
+                (&work, &ElementTargets::default()),
             )
             .unwrap()
             .unwrap();
@@ -893,7 +910,7 @@ mod corner_tests {
             0.0,
             0.0,
             &boxes,
-            &Budget::new(0),
+            (&Budget::new(0), &ElementTargets::default()),
         );
         assert!(
             exhausted.is_err(),

@@ -10,6 +10,7 @@ mod navigation;
 mod painting;
 mod pixels;
 mod raster;
+pub(crate) use raster::rendering_alpha;
 mod shadows;
 #[cfg(test)]
 mod tests;

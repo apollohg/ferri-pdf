@@ -108,7 +108,7 @@ impl FloatPlacement {
     fn exclusions(
         self,
         source: &BlockBox,
-        work: &crate::layout::work::Budget,
+        sampling: (&crate::layout::work::Budget, &crate::layout::ElementTargets),
     ) -> Result<Vec<crate::layout::floats::FloatFragment>, LayoutError> {
         let style = source.style();
         let margin = style.shape_margin.resolve(self.containing_width);
@@ -152,7 +152,7 @@ impl FloatPlacement {
                     margins,
                     bounds: fragment.margin,
                 },
-                work,
+                sampling,
             )?;
             exclusions.push(crate::layout::floats::FloatFragment {
                 page: fragment.page,
@@ -549,7 +549,10 @@ impl<'a> Paginator<'a, '_, 'a> {
         let exclusions = active
             .float_placement
             .expect("floating boxes retain fragment geometry")
-            .exclusions(source, &self.measurer.work)?;
+            .exclusions(
+                source,
+                (&self.measurer.work, &self.measurer.element_targets),
+            )?;
         self.restore_flow_position(parent)?;
         let context = self.floats.last_mut().expect("flow has a float context");
         context.insert(side, exclusions);

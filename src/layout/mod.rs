@@ -63,12 +63,35 @@ pub struct TextLine {
 
 /// The elements whose renderings `element()` images show, the document's root element, and
 /// the renderings of those shown outside the document's flow, in footnote areas and
-/// page-margin boxes.
+/// page-margin boxes; the last layout's renderings and the alpha its floats sampled of them,
+/// and the alpha this layout's floats sample.
 #[derive(Default)]
 pub(crate) struct ElementTargets {
     pub targets: std::collections::HashSet<crate::dom::ElementId>,
     pub root: Option<crate::dom::ElementId>,
     pub displayed: std::cell::RefCell<pagination::Renderings>,
+    pub previous: ElementRenderings,
+    pub shapes: crate::document::ShapeSamples,
+    pub sampled: std::cell::RefCell<crate::document::ShapeSamples>,
+}
+impl ElementTargets {
+    /// The alpha of the last layout's rendering of `element` stretched over `samples` pixels,
+    /// which a float's `shape-outside` reads (CSS Shapes 1 §6.1).
+    pub(crate) fn alpha(
+        &self,
+        element: crate::dom::ElementId,
+        samples: [usize; 2],
+    ) -> Result<std::sync::Arc<[u8]>, LayoutError> {
+        let key = (element, samples);
+        let alpha = match self.shapes.get(&key) {
+            Some(alpha) => alpha.clone(),
+            None => crate::writer::rendering_alpha(element, samples, &self.previous)
+                .map_err(|error| LayoutError::Raster(Box::new(error)))?
+                .into(),
+        };
+        self.sampled.borrow_mut().insert(key, alpha.clone());
+        Ok(alpha)
+    }
 }
 
 impl TextLine {
@@ -131,7 +154,7 @@ pub(crate) fn layout(
     let mut owned =
         document.fork_for_layout(values.clone(), container_sizes, anchor_frames, resolver)?;
     if !document.element_images().settled(&elements) {
-        owned.measured_elements(elements);
+        owned.measured_elements(elements, trace.element_images.clone());
         owned.reformat(values.clone(), resolver)?;
     }
     stabilize(&mut owned, resolver, &budget, vec![values])
@@ -216,7 +239,7 @@ fn stabilize(
                 return Err(LayoutError::ElementImageCycle);
             }
             measured_elements.push(elements.clone());
-            document.measured_elements(elements);
+            document.measured_elements(elements, trace.element_images.clone());
         }
         budget.spend(1)?;
         document.reformat(values, resolver)?;
@@ -377,7 +400,12 @@ fn paginate<'t>(
     }
     anchors.physical(flow, &page_boxes);
     renderings.adopt(measurer.element_targets.displayed.take());
-    let (elements, element_images) = element_renderings(document, &sheet.fonts, renderings);
+    let (elements, element_images) = element_renderings(
+        document,
+        &sheet.fonts,
+        renderings,
+        &measurer.element_targets.sampled.take(),
+    )?;
     Ok(LayoutPass {
         generated,
         elements,
@@ -410,11 +438,15 @@ fn element_targets(document: &StyledDocument) -> std::rc::Rc<ElementTargets> {
         targets: document.element_images().targets(),
         root: Some(document.root_element()),
         displayed: std::cell::RefCell::default(),
+        previous: document.element_renderings().clone(),
+        shapes: document.element_images().shapes().clone(),
+        sampled: std::cell::RefCell::default(),
     })
 }
 
-/// The states of the elements that `element()` images show, and the renderings of those
-/// that generate stacking contexts, drawn with the document's faces and SVG definitions.
+/// The states of the elements that `element()` images show, the renderings of those that
+/// generate stacking contexts, drawn with the document's faces and SVG definitions, and the
+/// alpha of these renderings where the layout's floats `sampled` the last layout's.
 #[expect(
     clippy::boxed_local,
     reason = "layouts of nested navigables stack, so the layout frame holds the renderings boxed"
@@ -423,10 +455,14 @@ fn element_renderings(
     document: &StyledDocument,
     fonts: &crate::fonts::FontBook,
     renderings: Box<pagination::Renderings>,
-) -> (
-    Box<crate::document::ElementMeasurements>,
-    Box<ElementRenderings>,
-) {
+    sampled: &crate::document::ShapeSamples,
+) -> Result<
+    (
+        Box<crate::document::ElementMeasurements>,
+        Box<ElementRenderings>,
+    ),
+    LayoutError,
+> {
     use crate::document::ElementState;
     let images = document.element_images();
     let states = images
@@ -448,7 +484,7 @@ fn element_renderings(
         })
         .collect();
     let definitions = document.svg_definitions();
-    let paints = renderings
+    let paints: ElementRenderings = renderings
         .stacked
         .into_iter()
         .map(|(element, rendering)| {
@@ -471,7 +507,18 @@ fn element_renderings(
             )
         })
         .collect();
-    (Box::new(images.measured(states)), Box::new(paints))
+    // CSS Shapes 1 §6.1: a float's shape stands once the rendering it sampled stops changing;
+    // an element no longer rendered changes its state instead.
+    let shapes = sampled
+        .keys()
+        .filter(|(element, _)| paints.contains_key(element))
+        .map(|&(element, samples)| {
+            crate::writer::rendering_alpha(element, samples, &paints)
+                .map(|alpha| ((element, samples), alpha.into()))
+                .map_err(|error| LayoutError::Raster(Box::new(error)))
+        })
+        .collect::<Result<_, LayoutError>>()?;
+    Ok((Box::new(images.measured(states, shapes)), Box::new(paints)))
 }
 
 /// Each page's text lines, display list, link areas and, when its page box's backgrounds clip
@@ -544,6 +591,8 @@ pub(crate) enum LayoutError {
     ContainerQueryCycle,
     #[error("element() image renderings repeat without reaching a fixed layout")]
     ElementImageCycle,
+    #[error("{0}")]
+    Raster(Box<crate::writer::PdfError>),
     #[error("non-finite page production geometry")]
     NonFinitePageOutputGeometry,
     #[error("non-finite page-margin geometry at {location:?}")]

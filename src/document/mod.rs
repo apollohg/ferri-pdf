@@ -31,7 +31,7 @@ use crate::resources::{ResourceError, ResourceResolver};
 use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 
 pub(crate) use counters::CounterSnapshot;
-pub(crate) use element_images::{ElementMeasurements, ElementState};
+pub(crate) use element_images::{ElementMeasurements, ElementState, ShapeSamples};
 pub(crate) use formatting::{
     BlockBox, BlockContent, InitialLetterBox, PageBox, PageFootnoteArea, PageMarginBox,
 };
@@ -111,8 +111,10 @@ pub(crate) struct StyledDocument {
     svg_definitions: svg::SvgDefinitions,
     /// The document's counters where each page starts (CSS Page 3 §6.1).
     page_counters: std::collections::HashMap<usize, CounterSnapshot>,
-    /// What the last layout measured of the `element()` images the next formatting resolves.
+    /// What the last layout measured of the `element()` images the next formatting resolves,
+    /// and the renderings it measured, which floats' shapes sample.
     element_measurements: Box<ElementMeasurements>,
+    element_renderings: Box<crate::layout::ElementRenderings>,
 }
 
 struct FormattingSource {
@@ -443,6 +445,7 @@ impl StyledDocument {
             svg_definitions,
             page_counters: page_counters.into_iter().collect(),
             element_measurements: Box::default(),
+            element_renderings: Box::default(),
             source: std::rc::Rc::new(FormattingSource {
                 html,
                 embedded,
@@ -524,6 +527,7 @@ impl StyledDocument {
             svg_definitions,
             page_counters: page_counters.into_iter().collect(),
             element_measurements: self.element_measurements.clone(),
+            element_renderings: self.element_renderings.clone(),
             source,
         })
     }
@@ -545,9 +549,20 @@ impl StyledDocument {
         self.styles.anchor_frames_mut().measured(frames);
     }
 
-    /// Reformatting resolves `element()` images against what a layout measured of them.
-    pub(crate) fn measured_elements(&mut self, measurements: Box<ElementMeasurements>) {
+    /// Reformatting resolves `element()` images against what a layout measured of them, and
+    /// the next layout's floats sample the `renderings` it measured.
+    pub(crate) fn measured_elements(
+        &mut self,
+        measurements: Box<ElementMeasurements>,
+        renderings: Box<crate::layout::ElementRenderings>,
+    ) {
         self.element_measurements = measurements;
+        self.element_renderings = renderings;
+    }
+
+    /// The renderings the last layout measured.
+    pub(crate) fn element_renderings(&self) -> &crate::layout::ElementRenderings {
+        &self.element_renderings
     }
 
     /// The `element()` images of the current formatting.

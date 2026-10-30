@@ -206,6 +206,48 @@ pub(super) fn render_surface(
     }))
 }
 
+/// The alpha of the rendering of `element` among `elements`, stretched over `[columns, rows]`
+/// pixels, which layout samples for a float's `shape-outside` (CSS Shapes 1 §6.1).
+pub(crate) fn rendering_alpha(
+    element: crate::dom::ElementId,
+    [columns, rows]: [usize; 2],
+    elements: &crate::layout::ElementRenderings,
+) -> Result<Vec<u8>, PdfError> {
+    // One unit of the drawing space per sample.
+    const SAMPLE_DENSITY: f32 = 1.0;
+    let rendering = elements
+        .get(&element)
+        .ok_or(PdfError::MissingElementRendering)?;
+    let mut images = super::images::ImageWriter::new(pixels_per_point(None));
+    images.elements.extend(
+        elements
+            .iter()
+            .map(|(element, rendering)| (*element, rendering.clone())),
+    );
+    let area = Rect {
+        x: 0.0,
+        y: 0.0,
+        width: columns as f32,
+        height: rows as f32,
+    };
+    let paint = crate::graphics::ImagePaint {
+        image: std::sync::Arc::new(crate::images::Image::Viewport(rendering.clone())),
+        rect: area,
+        clip: None,
+        source_scale: crate::paint::INITIAL_IMAGE_SCALE,
+    };
+    let raster = render_surface(area, SAMPLE_DENSITY, |viewport, surface| {
+        images.draw(&paint, viewport, surface)
+    })?
+    .ok_or(PdfError::InvalidGeometry)?;
+    Ok(raster
+        .pixmap
+        .pixels()
+        .iter()
+        .map(|pixel| pixel.alpha())
+        .collect())
+}
+
 /// Draws `raster` in place.
 pub(super) fn embed(raster: &Raster, surface: &mut Surface<'_>) -> Result<(), PdfError> {
     let (width, height) = (raster.pixmap.width(), raster.pixmap.height());

@@ -512,3 +512,49 @@ fn invisible_float_keeps_the_corner_geometry_used_for_wrapping() {
         }
     }
 }
+
+#[test]
+fn element_renderings_shape_floats_by_their_alpha() {
+    // CSS Images 4 §2.7: the rendering of `#e` fills the 80pt content box, opaque on its left
+    // half, where its child, or a nested document whose canvas is painted, lies.
+    for (label, content) in [
+        ("box", "<div class=half style=background:red></div>"),
+        (
+            "nested document",
+            "<iframe class=half srcdoc=\"<style>html{background:red}</style>\"></iframe>",
+        ),
+    ] {
+        let trace = trace(
+            ".f{width:80pt;height:36pt;shape-outside:element(#e)}\
+             #e{position:relative;z-index:0;width:120pt;height:20pt}\
+             .half{display:block;width:50%;height:100%;border:0}",
+            &format!("<div class=f></div><p>{WORDS}</p><div id=e>{content}</div>"),
+        );
+        assert_left_edges(label, &trace.pages[0], 0..2, SAMPLE_TOLERANCE, |_| 40.0);
+        assert_left_edges(label, &trace.pages[0], 2..3, 0.0, |_| 0.0);
+    }
+}
+
+#[test]
+fn shapes_whose_element_rendering_never_stands_are_a_layout_cycle() {
+    // The float's shape is the rendering of `#e`, which wraps around it: an empty shape puts
+    // the inline block at the left of `#e`, which makes the shape the left half; that puts
+    // the block at the right, which makes the shape the right half; that pushes the block
+    // below the float, out of `#e`'s 20pt box, which empties the shape again.
+    let error = ferri_pdf::render_html(
+        &format!(
+            "<style>{PROFILE}.f{{float:left;width:100pt;height:20pt;shape-outside:element(#e)}}\
+             #e{{position:relative;z-index:0;width:100pt;height:20pt;line-height:20pt}}\
+             #e i{{display:inline-block;width:50pt;height:20pt;background:red}}</style>\
+             <div class=f></div><div id=e><i></i></div>"
+        ),
+        &common::local_options(),
+    )
+    .err()
+    .expect("a shape whose rendering changes on every layout has no fixed layout");
+    assert_eq!(
+        error.to_string(),
+        "layout: element() image renderings repeat without reaching a fixed layout",
+        "the cycle is reported as such: {error:?}"
+    );
+}

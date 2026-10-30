@@ -21,13 +21,19 @@ pub(crate) enum ElementState {
     Stacked([f32; 2]),
 }
 
+/// The alpha of elements' renderings that floats' `shape-outside` sampled, by element and
+/// samples per axis.
+pub(crate) type ShapeSamples = HashMap<(ElementId, [usize; 2]), std::sync::Arc<[u8]>>;
+
 /// What one formatting and layout of the document found of its `element()` images: the
-/// state of each element they name, and each reference, from the element whose style made it
-/// (none for a page context) to the element it names.
+/// state of each element they name, each reference, from the element whose style made it
+/// (none for a page context) to the element it names, and the alpha of the renderings that
+/// floats' shapes sampled.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub(crate) struct ElementMeasurements {
     pub(crate) states: HashMap<ElementId, ElementState>,
     pub(crate) references: HashSet<(Option<ElementId>, ElementId)>,
+    pub(crate) shapes: ShapeSamples,
 }
 
 /// A paint source (§2.7.1) of an element without a box.
@@ -131,12 +137,23 @@ impl ElementImages {
     }
 
     /// The measurements a layout of this pass makes, with `states` its states of
-    /// [`Self::targets`]; equal to the last pass's when its references and measurements stand.
-    pub(crate) fn measured(&self, states: HashMap<ElementId, ElementState>) -> ElementMeasurements {
+    /// [`Self::targets`] and `shapes` the alpha its floats sampled of its renderings; equal to
+    /// the last pass's when its references, measurements and the renderings shapes read stand.
+    pub(crate) fn measured(
+        &self,
+        states: HashMap<ElementId, ElementState>,
+        shapes: ShapeSamples,
+    ) -> ElementMeasurements {
         ElementMeasurements {
             states,
             references: self.references.borrow().clone(),
+            shapes,
         }
+    }
+
+    /// The alpha the last pass's floats sampled of its renderings.
+    pub(crate) fn shapes(&self) -> &ShapeSamples {
+        &self.measured.shapes
     }
 
     /// Whether `measurements` are those this pass resolved its references against.
