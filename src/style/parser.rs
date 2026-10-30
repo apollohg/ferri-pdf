@@ -57,6 +57,8 @@ pub(super) enum Rule {
     SupportDefinition(String, RuleSource),
     CustomMedia(String, crate::style::media::MediaQuery),
     Import(ImportRule, SourceLocation),
+    /// A valid rule whose specification gives it no effect on a static rendering.
+    Inert,
 }
 pub(super) struct NestedRule {
     pub selectors: Vec<RuleSelector>,
@@ -204,7 +206,10 @@ impl RuleSource {
                             relocate(&mut source.location, &self.location);
                         }
                         Rule::Import(_, location) => relocate(location, &self.location),
-                        Rule::Namespace | Rule::LayerStatement(_) | Rule::CustomMedia(..) => {}
+                        Rule::Namespace
+                        | Rule::LayerStatement(_)
+                        | Rule::CustomMedia(..)
+                        | Rule::Inert => {}
                         Rule::Content(ContentRule::FeatureValues { .. }) => {}
                     }
                 }
@@ -252,6 +257,9 @@ pub(super) enum AtRuleName {
     Else,
     Import,
     Namespace,
+    Keyframes,
+    StartingStyle,
+    ViewTransition,
 }
 impl AtRuleName {
     fn can_nest_in_style(self) -> bool {
@@ -265,6 +273,7 @@ impl AtRuleName {
                 | Self::SupportsCondition
                 | Self::When
                 | Self::Else
+                | Self::StartingStyle
         )
     }
     pub(crate) fn parse(name: &str) -> Option<Self> {
@@ -286,6 +295,9 @@ impl AtRuleName {
             "else" => Some(Self::Else),
             "import" => Some(Self::Import),
             "namespace" => Some(Self::Namespace),
+            "keyframes" => Some(Self::Keyframes),
+            "starting-style" => Some(Self::StartingStyle),
+            "view-transition" => Some(Self::ViewTransition),
             _ => None,
         }
     }
@@ -306,6 +318,7 @@ enum AtPrelude {
     CustomMedia(String, crate::style::media::MediaQuery),
     Import(ImportRule),
     Namespace(String, String),
+    Inert,
 }
 
 const MAX_GROUP_DEPTH: usize = 256;
@@ -1043,6 +1056,17 @@ fn at_prelude<'i>(
         input.expect_exhausted()?;
         return Ok(AtPrelude::PositionTry(name.to_string()));
     }
+    if matches!(kind, AtRuleName::Keyframes) {
+        return keyframes_name(input).map(|()| AtPrelude::Inert);
+    }
+    // CSS Transitions 2 §3.1: starting styles only supply the before-change style a
+    // transition starts from, never the after-change style a static rendering shows; CSS View
+    // Transitions 2 §3: `@view-transition` opts navigations into view transitions, and a
+    // static rendering has no navigation.
+    if matches!(kind, AtRuleName::StartingStyle | AtRuleName::ViewTransition) {
+        input.expect_exhausted()?;
+        return Ok(AtPrelude::Inert);
+    }
     if matches!(kind, AtRuleName::CounterStyle) {
         let source = block_source(input);
         return match crate::style::matcher::match_value(
@@ -1065,6 +1089,33 @@ fn at_prelude<'i>(
     input.expect_exhausted()?;
     Ok(AtPrelude::Font)
 }
+
+/// A `@keyframes` prelude: `<keyframes-name>`, whose `<custom-ident>` excludes `none`
+/// (CSS Animations 1 §3). The rule itself only defines animations, which a static rendering
+/// does not run (CSS Animations 1 §2).
+fn keyframes_name<'i>(input: &mut Parser<'i, '_>) -> Result<(), ParseError<'i, StyleError>> {
+    let source = block_source(input);
+    let name = crate::style::matcher::match_value(
+        crate::style::grammar::Production::KeyframesName.root(),
+        source,
+        &mut 0,
+        crate::style::matcher::ValueContext::Independent,
+    )
+    .map_err(|error| input.new_custom_error(error))?;
+    match name
+        .as_ref()
+        .map(crate::style::component::Component::unwrap)
+    {
+        Some(crate::style::component::Component::Ident(name))
+            if !name.eq_ignore_ascii_case(KEYFRAMES_NONE) =>
+        {
+            Ok(())
+        }
+        Some(crate::style::component::Component::String(_)) => Ok(()),
+        _ => Err(input.new_custom_error(StyleError::Invalid(format!("keyframes name: {source}")))),
+    }
+}
+const KEYFRAMES_NONE: &str = "none";
 
 /// The named families of an `@font-feature-values` prelude; a generic family invalidates the
 /// rule (CSS Fonts 4 §6.9.1).
@@ -1284,6 +1335,10 @@ impl<'i> AtRuleParser<'i> for CssParser<'_> {
                 let source = self.group(input)?;
                 self.chain = Some(input.position());
                 Rule::SupportDefinition(name, source)
+            }
+            AtPrelude::Inert => {
+                block_source(input);
+                Rule::Inert
             }
             AtPrelude::Import(_) | AtPrelude::CustomMedia(..) | AtPrelude::Namespace(..) => {
                 return Err(input.new_custom_error(StyleError::Invalid(

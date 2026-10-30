@@ -479,7 +479,7 @@ impl<'a> Loader<'a> {
         {
             let previous = chains[list].take();
             let kind = match rule {
-                Rule::Namespace => continue,
+                Rule::Namespace | Rule::Inert => continue,
                 Rule::Scope(scope, source) => {
                     let budget = if context.origin == Origin::UserAgent {
                         &mut self.trusted_budget

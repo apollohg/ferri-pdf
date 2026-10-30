@@ -99,3 +99,57 @@ fn properties_without_static_media_effect_leave_the_pdf_unchanged() {
         baseline.len()
     );
 }
+
+/// At-rules whose specifications give them no effect on a static rendering, including
+/// `@starting-style` nested in a style rule and a `@keyframes` name only a string may spell.
+const RULES_WITHOUT_STATIC_EFFECT: &str = "\
+    @keyframes fade { from { opacity: 0 } 50%, to { opacity: 1; color: red } }\
+    @keyframes \"none\" { to { margin-left: 2in } }\
+    p { animation: fade 2s both; animation-delay: -1s }\
+    @starting-style { p { color: red; font-size: 40pt } }\
+    li { transition: color 1s; @starting-style { margin-top: 1in; color: blue } }\
+    @view-transition { navigation: auto; types: slide forward }\
+";
+
+fn diagnostics(output: &ferri_pdf::RenderOutput) -> Vec<String> {
+    output.diagnostics.iter().map(ToString::to_string).collect()
+}
+
+#[test]
+fn at_rules_without_static_media_effect_are_accepted_and_change_nothing() {
+    let baseline = render(&page("", ""));
+    let with = render(&page("", RULES_WITHOUT_STATIC_EFFECT));
+    assert!(
+        with.diagnostics.is_empty(),
+        "valid rules must not be reported: {:#?}",
+        diagnostics(&with)
+    );
+    assert!(
+        with.pdf == baseline.pdf,
+        "keyframes, starting styles and view-transition rules must not change a static \
+         rendering; {} PDF bytes with them, {} without",
+        with.pdf.len(),
+        baseline.pdf.len()
+    );
+}
+
+#[test]
+fn inert_at_rules_with_invalid_preludes_are_reported() {
+    for (rule, name) in [
+        ("@keyframes none { to { color: red } }", "@keyframes"),
+        ("@keyframes initial { to { color: red } }", "@keyframes"),
+        ("@keyframes two names { to { color: red } }", "@keyframes"),
+        ("@keyframes 12 { to { color: red } }", "@keyframes"),
+        ("@starting-style p { p { color: red } }", "@starting-style"),
+        (
+            "@view-transition auto { navigation: auto }",
+            "@view-transition",
+        ),
+    ] {
+        let reported = diagnostics(&render(&page("", rule)));
+        assert!(
+            reported.len() == 1 && reported[0].contains(name),
+            "`{rule}` has an invalid prelude and must be reported once: {reported:#?}"
+        );
+    }
+}
