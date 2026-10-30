@@ -403,6 +403,30 @@ fn every_column_trims_its_first_and_last_formatted_lines() {
         trimmed[0] + descent + ascent + trimmed[1],
         "balanced columns end at their trimmed last lines",
     );
+    // A column's last line fits by its trimmed size, and the last column ends at its own
+    // trimmed last line whether or not that line ends the container's content. A tall line
+    // gives the trimmed block-end side positive half-leading.
+    const TALL_LINE_PT: f32 = 40.0;
+    let half_leading = (TALL_LINE_PT - (DEJAVU_ASCENT + DEJAVU_DESCENT) * PARENT_PT) / 2.0;
+    let tall_ascent = DEJAVU_ASCENT * PARENT_PT + half_leading;
+    for content in ["a<br>b<br>c", "a<br>b<br>c<br>d"] {
+        let trace = render(
+            &format!(
+                "div{{font-size:{PARENT_PT}pt;line-height:{TALL_LINE_PT}pt;columns:2;column-gap:0;text-box-trim:trim-end;background:red}}"
+            ),
+            &format!("<div>{content}</div>"),
+        );
+        assert_eq!(
+            trace.pages[0].len(),
+            content.matches("<br>").count() + 1,
+            "{content}: every line is laid out"
+        );
+        assert_pt(
+            red_box(&trace).rect.height,
+            TALL_LINE_PT + tall_ascent + trimmed[1],
+            &format!("{content}: the first column's two lines, the second trimmed"),
+        );
+    }
 }
 
 #[test]

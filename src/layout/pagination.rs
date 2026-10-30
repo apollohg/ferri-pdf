@@ -1218,6 +1218,14 @@ pagination_state! {
     inline_containers: Vec<(InlineElement, InlineContainer<'a>)>,
 }
 impl<M> PaginationState<'_, '_, M> {
+    /// How far the flow reaches in the current fragmentainer, without the block-end side its
+    /// last line box trims there when nothing follows it.
+    fn trimmed_flow_end(&self) -> f32 {
+        match self.trailing_line {
+            Some((y, trim)) if (self.y - y).abs() <= FRAGMENTATION_TOLERANCE_PT => y - trim,
+            _ => self.y,
+        }
+    }
     fn detach_orders(&mut self, snapshots: &mut OrderSnapshots) {
         snapshots.detach(&mut self.orders);
         for container in &mut self.containers {
@@ -1601,14 +1609,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     }
     /// Moves to fragmentainer `page`, recording how far the flow reached in the one left.
     fn enter(&mut self, page: usize) {
-        if self.unbroken == 0
-            && let Fragmentainers::Columns(rows) = &mut self.fragmentainers
-        {
-            let end = match self.trailing_line {
-                Some((y, trim)) if (self.y - y).abs() <= FRAGMENTATION_TOLERANCE_PT => y - trim,
-                _ => self.y,
-            };
-            rows.leave(self.page, end);
+        if self.unbroken == 0 {
+            let end = self.trimmed_flow_end();
+            if let Fragmentainers::Columns(rows) = &mut self.fragmentainers {
+                rows.leave(self.page, end);
+            }
         }
         self.trailing_line = None;
         self.page = page;

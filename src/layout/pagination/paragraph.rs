@@ -642,13 +642,21 @@ impl<'a> Paginator<'a, '_, 'a> {
             // moved off this page.
             let mut deferred_line = None;
             let mut available = 0;
+            let fragment_trim = self.fragment_text_trim();
             for (index, line) in lines.as_slice().iter().enumerate() {
                 height = geometry
                     .get(index)
                     .map_or(height + line.height, |placement| {
                         placement.y - self.y + line.height
                     });
-                if overflows(self.y + height + reserve + growth, self.height) {
+                // A line that fits only with its block-end side trimmed ends the fragment as
+                // its last formatted line, which trims (CSS Inline 3 §6.2).
+                let end_trim = if overflows(self.y + height + reserve + growth, self.height) {
+                    fragment_end_trim(text, style, source, line, fragment_trim)?
+                } else {
+                    0.0
+                };
+                if overflows(self.y + height - end_trim + reserve + growth, self.height) {
                     break;
                 }
                 let footnotes = line_footnotes(source, line, &mut footnote_events);
@@ -681,6 +689,9 @@ impl<'a> Paginator<'a, '_, 'a> {
                     }
                 }
                 available += 1;
+                if end_trim > 0.0 {
+                    break;
+                }
             }
             let mut take = if self.unbroken > 0 {
                 remaining
@@ -834,30 +845,19 @@ impl<'a> Paginator<'a, '_, 'a> {
             if take == 0 {
                 break 'fragment;
             }
-            let fragment_trim = self.fragment_text_trim();
             for mut line in lines.by_ref().take(take) {
                 self.measurer.work.spend(line.range.len().max(1))?;
                 // CSS Inline 3 §6.2: the first and last formatted lines of each column, and of
                 // each fragment of a cloned box, trim unless the paragraph already trims them.
-                let trimmed = [
-                    source.text_box_trim[0] && line.range.start == 0,
-                    source.text_box_trim[1] && line.range.end == source.text().len(),
-                ];
                 if !line.phantom
                     && fragment_trim[0]
-                    && !trimmed[0]
+                    && (!source.text_box_trim[0] || line.range.start != 0)
                     && !self.has_flow
                     && self.y <= FRAGMENTATION_TOLERANCE_PT
                 {
                     crate::text::trim_line(text, style, &mut line, [true, false])?;
                 }
-                let end_trim = if !line.phantom && fragment_trim[1] && !trimmed[1] {
-                    let mut trimmed_line = line.clone();
-                    crate::text::trim_line(text, style, &mut trimmed_line, [false, true])?;
-                    line.height - trimmed_line.height
-                } else {
-                    0.0
-                };
+                let end_trim = fragment_end_trim(text, style, source, &line, fragment_trim)?;
                 position = positions
                     .next()
                     .expect("each measured line has its source checkpoint");
@@ -1221,6 +1221,26 @@ fn line_semantic_events<'p>(
         .iter()
         .skip(consumed)
         .take_while(move |event| event.offset < end || last)
+}
+
+/// How much block size `line` of `source` loses as the last formatted line of a fragment
+/// trimming the `fragment_trim` sides (CSS Inline 3 §6.2), unless its paragraph trims it.
+fn fragment_end_trim(
+    text: &crate::text::TextContext<'_>,
+    style: &crate::style::Style,
+    source: &crate::document::Paragraph,
+    line: &crate::text::Line,
+    fragment_trim: [bool; 2],
+) -> Result<f32, LayoutError> {
+    if line.phantom
+        || !fragment_trim[1]
+        || (source.text_box_trim[1] && line.range.end == source.text().len())
+    {
+        return Ok(0.0);
+    }
+    let mut trimmed = line.clone();
+    crate::text::trim_line(text, style, &mut trimmed, [false, true])?;
+    Ok(line.height - trimmed.height)
 }
 
 /// The footnotes a candidate line calls, advancing `consumed` past its events.

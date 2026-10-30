@@ -450,8 +450,9 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
                 }
             }
             self = self.advance(measurer)?;
+            let end = self.state.trimmed_flow_end();
             if let Fragmentainers::Columns(rows) = &mut self.state.fragmentainers {
-                rows.leave(self.state.page, self.state.y);
+                rows.leave(self.state.page, end);
             }
         }
     }
