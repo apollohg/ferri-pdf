@@ -63,6 +63,9 @@ pub(crate) struct ShadowState {
     /// Use-element shadow trees by fragment, with the tree scope root whose style sheets apply
     /// in them: that of the referenced element (SVG 2 §5.5.3).
     pub instance_sources: HashMap<NodeId, NodeId>,
+    /// Each `details` element's content slot, the element `::details-content` represents,
+    /// with that `details` element.
+    pub details_content: HashMap<NodeId, NodeId>,
     fragments: Vec<NodeId>,
 }
 impl ShadowState {

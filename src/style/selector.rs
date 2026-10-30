@@ -33,6 +33,9 @@ pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
         Some(PseudoElement::Placeholder) => 8,
         Some(PseudoElement::FileSelectorButton) => 9,
         Some(PseudoElement::Absent(_)) => 10,
+        Some(PseudoElement::DetailsContent) => {
+            unreachable!("::details-content rules match its backing element as their subject")
+        }
     }
 }
 
@@ -217,6 +220,11 @@ fn originating_selector<'i>(
         match input.next_including_whitespace()?.clone() {
             Token::Colon => {
                 if let Ok(mut pseudo) = input.try_parse(pseudo_element) {
+                    // A real backing element is the subject of `::details-content`.
+                    if pseudo == PseudoElement::DetailsContent {
+                        universal = false;
+                        continue;
+                    }
                     if let Ok(name) = input.try_parse(|p| {
                         p.expect_colon()?;
                         p.expect_colon()?;

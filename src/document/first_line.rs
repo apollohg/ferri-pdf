@@ -178,12 +178,14 @@ impl Restyle<'_> {
                             self.resolver,
                         )?,
                     )),
-                    // Control internals are atomic inlines, which no first line reaches.
+                    // Control internals are atomic inlines, which no first line reaches, and
+                    // it reaches `::details-content` as its backing element.
                     Some(
                         PseudoElement::Marker
                         | PseudoElement::FirstLine
                         | PseudoElement::Placeholder
                         | PseudoElement::FileSelectorButton
+                        | PseudoElement::DetailsContent
                         | PseudoElement::Absent(_),
                     ) => None,
                 }

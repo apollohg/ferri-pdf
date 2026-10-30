@@ -680,6 +680,10 @@ fn match_relative_selectors<E: Element>(
     context: &mut MatchingContext<E::Impl>,
     rightmost: SubjectOrPseudoElement,
 ) -> KleeneValue {
+    // CSS Pseudo-Elements 4 §5: `:has()` never matches an element-backed pseudo-element.
+    if element.is_pseudo_element() {
+        return KleeneValue::False;
+    }
     if context.relative_selector_anchor().is_some() {
         // FIXME(emilio): This currently can happen with nesting, and it's not fully
         // correct, arguably. But the ideal solution isn't super-clear either. For now,

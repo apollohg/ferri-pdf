@@ -9,6 +9,7 @@ use std::{
     sync::atomic::{AtomicU64, Ordering},
 };
 
+mod details;
 mod instances;
 pub(crate) mod table;
 mod xml;

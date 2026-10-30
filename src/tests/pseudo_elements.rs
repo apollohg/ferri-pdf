@@ -521,3 +521,136 @@ fn first_line_rejects_inheritance_it_cannot_render() {
         "{error}"
     );
 }
+
+/// The page area's top edge in the shared profile, and its line height.
+const PAGE_TOP: f32 = 36.0;
+const LINE: f32 = 18.0;
+const SLOT_PADDING: f32 = 6.0;
+const DETAILS_CONTENT: &str =
+    "details{color:green}details::details-content{background:blue;padding:6pt;color:red}";
+
+#[test]
+fn details_content_boxes_the_slotted_children_which_inherit_from_it() {
+    let open = trace(
+        DETAILS_CONTENT,
+        "<details open><summary>Sum</summary>Body</details>",
+    );
+    let runs = runs(&open);
+    assert_eq!(
+        run(&runs, "Sum").1,
+        GREEN,
+        "the summary slot passes on the details colour"
+    );
+    assert_eq!(
+        run(&runs, "Body").1,
+        RED,
+        "slotted children inherit from ::details-content (HTML §15.5.5)"
+    );
+    let slot = common::painted_box(&open, BLUE);
+    assert_labelled_pt("content slot top", slot.y, PAGE_TOP + LINE);
+    assert_labelled_pt(
+        "content slot height",
+        slot.height,
+        LINE + 2.0 * SLOT_PADDING,
+    );
+    let closed = trace(
+        DETAILS_CONTENT,
+        "<details><summary>Sum</summary>Body</details>",
+    );
+    assert_eq!(
+        texts(&closed),
+        ["\u{25b8} Sum"],
+        "a closed slot skips its contents"
+    );
+    let slot = common::painted_box(&closed, BLUE);
+    assert_labelled_pt(
+        "closed slot height: content-visibility: hidden adds size containment",
+        slot.height,
+        2.0 * SLOT_PADDING,
+    );
+    let generated = trace(
+        "details::details-content::before{content:'Lead '}",
+        "<details open>Body</details><details>Hidden</details>",
+    );
+    assert_eq!(
+        texts(&generated),
+        ["\u{25be} Details", "Lead Body", "\u{25b8} Details"],
+        "the content slot generates ::before like an element, inside its skipped contents"
+    );
+}
+
+#[test]
+fn details_content_author_rules_override_the_slot_style_attribute() {
+    for (css, expected) in [
+        (
+            "details::details-content{content-visibility:visible}",
+            &["\u{25b8} Sum", "Closed"][..],
+        ),
+        (
+            "details::details-content{display:contents}",
+            &["\u{25b8} Sum", "Closed"],
+        ),
+        ("details::details-content{display:none}", &["\u{25b8} Sum"]),
+    ] {
+        assert_eq!(
+            texts(&trace(
+                css,
+                "<details><summary>Sum</summary>Closed</details>"
+            )),
+            expected,
+            "{css}: the outer context wins over the shadow tree's style attribute"
+        );
+    }
+}
+
+#[test]
+fn details_content_matches_as_its_backing_element() {
+    for (css, color) in [
+        ("details::details-content{color:blue}", BLUE),
+        ("::details-content{color:blue}", BLUE),
+        ("div::details-content{color:blue}", BLACK),
+        ("details::details-content:first-child{color:blue}", BLACK),
+        (
+            "details::details-content:nth-last-child(1){color:blue}",
+            BLACK,
+        ),
+        ("details::details-content:empty{color:blue}", BLACK),
+        ("details::details-content:has(*){color:blue}", BLACK),
+        (
+            "details::details-content:not(:first-child){color:blue}",
+            BLUE,
+        ),
+        (
+            "details::details-content:not(:empty, :only-child){color:blue}",
+            BLUE,
+        ),
+        ("details::details-content:not(.x){color:blue}", BLUE),
+        ("details::details-content:is(.x){color:blue}", BLACK),
+        (
+            "details::details-content:not(:has(*), :has(~ *)){color:blue}",
+            BLUE,
+        ),
+        ("details::details-content:hover{color:blue}", BLACK),
+        ("details{&::details-content{color:blue}}", BLUE),
+        (
+            "@scope (details) to (summary) {:scope::details-content{color:blue}}",
+            BLUE,
+        ),
+        (
+            "details::details-content{color:blue}details{color:green}",
+            BLUE,
+        ),
+        (
+            "details::details-content{color:blue}.x::details-content{color:green}",
+            GREEN,
+        ),
+        ("slot{color:blue}", BLACK),
+        (
+            "details>*{color:green}details::details-content{color:blue}",
+            GREEN,
+        ),
+    ] {
+        let trace = trace(css, "<details class=x open><p>Body</p></details>");
+        assert_eq!(run(&runs(&trace), "Body").1, color, "{css}");
+    }
+}

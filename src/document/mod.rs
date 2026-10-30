@@ -2,7 +2,6 @@
 mod content;
 mod controls;
 mod counters;
-mod details;
 mod embedded;
 pub(crate) mod encoding;
 mod first_letter;

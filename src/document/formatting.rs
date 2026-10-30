@@ -1052,36 +1052,6 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             }
         }
     }
-    /// HTML §15.5.5: a `details` element's default summary, a list item with an inside
-    /// disclosure marker.
-    fn default_summary(&mut self, details: Element<'_>, style: Style) -> Result<(), DocumentError> {
-        let marker = list_marker(
-            self.sheet,
-            details,
-            &style,
-            0,
-            self.traversal,
-            self.resources,
-        )?;
-        self.flush()?;
-        let outer = std::mem::take(self.inline);
-        if let Some(marker) = &marker {
-            self.place_inside_marker(marker)?;
-        }
-        self.inline
-            .append(crate::document::details::DEFAULT_SUMMARY, &style)?;
-        let content = std::mem::replace(self.inline, outer);
-        let children = match content.finish(&style)? {
-            Ok(paragraph) => vec![BlockContent::Inline(paragraph)],
-            Err(stray) => stray,
-        };
-        self.children.push(BlockContent::Block(BlockBox::anonymous(
-            style,
-            children,
-            self.element_page_scope.clone(),
-        )));
-        Ok(())
-    }
     /// An inside marker is an inline box opening the list item's inline content (CSS Lists 3
     /// §3.5): an image marker holds an inline replaced box followed by a space. A marker can
     /// be an initial letter (CSS Inline 3 §7.3.1).
@@ -1744,8 +1714,6 @@ struct Frame<'d> {
     depth: usize,
     math_depth: Option<usize>,
     nodes: Option<ChildNodes<'d>>,
-    /// A child laid out before `nodes`: the summary a `details` element's first slot takes.
-    leading: Option<crate::dom::Node<'d>>,
     block: Option<OpenBlock>,
     started: bool,
     /// The quote depth before a style-contained element's subtree, restored after it.
@@ -1770,7 +1738,6 @@ impl<'d> Frame<'d> {
             depth,
             math_depth: None,
             nodes: None,
-            leading: None,
             block: placement.map(|placement| OpenBlock {
                 decoration: BoxDecoration::default(),
                 shape_outside: crate::graphics::ShapeOutside::None,
@@ -2085,27 +2052,13 @@ fn block<'a>(
                     {
                         builder.inline.optional_break(style);
                     }
-                    if let Some(summary) =
-                        crate::document::details::default_summary_style(element, style)
-                    {
-                        builder.default_summary(element, summary)?;
-                    }
                     frames[index].nodes = Some(element.child_nodes(TreeRelation::Formatting));
-                    frames[index].leading = crate::document::details::summary(element);
                 }
             }
             frames[index].started = true;
             continue;
         }
-        let leading = frames[index].leading.take();
-        if let Some(node) =
-            leading.or_else(|| frames[index].nodes.as_mut().and_then(Iterator::next))
-        {
-            if leading.is_none()
-                && !crate::document::details::renders_child(frames[index].element, node)
-            {
-                continue;
-            }
+        if let Some(node) = frames[index].nodes.as_mut().and_then(Iterator::next) {
             // Children of the block and of its boxless descendants are the block's children.
             let block_child = frames[block_index + 1..=index]
                 .iter()

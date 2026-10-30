@@ -9,8 +9,6 @@ use serde::Serialize;
 use std::sync::Arc;
 
 const INITIAL_LIST_STYLE_TYPE: &str = "disc";
-const DISCLOSURE_OPEN: &str = "disclosure-open";
-const DISCLOSURE_CLOSED: &str = "disclosure-closed";
 
 /// The computed `list-style-type` (CSS Lists 3 §3.4).
 #[derive(Clone, Debug, Eq, PartialEq, Serialize)]
@@ -36,15 +34,6 @@ impl ListStyleType {
             CounterStyle::None => Self::None,
             style => Self::Counter(style),
         })
-    }
-    /// The `disclosure-open` or `disclosure-closed` style, which authors cannot redefine
-    /// (CSS Counter Styles 3 §6.4).
-    pub(crate) fn disclosure(open: bool) -> Self {
-        Self::Counter(CounterStyle::predefined(if open {
-            DISCLOSURE_OPEN
-        } else {
-            DISCLOSURE_CLOSED
-        }))
     }
     pub(crate) fn is_none(&self) -> bool {
         matches!(self, Self::None)

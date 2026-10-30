@@ -341,7 +341,11 @@ impl Selector {
             TreeContext::Root(root) => element.stylesheet_scope() == root || is_host,
             TreeContext::All => true,
         };
+        // An element-backed pseudo-element is visible where its originating element is.
+        let pseudo_host = element.details_content_host();
+        let pseudo_visible = pseudo_host.is_some_and(|host| tree_context.contains(host));
         if !visible
+            && !pseudo_visible
             && !self
                 .selectors
                 .slice()
@@ -382,8 +386,13 @@ impl Selector {
         let element = MatchingElement::new(element, virtual_root);
         context.with_featureless(is_host, |context| {
             self.selectors.slice().iter().any(|selector| {
+                let (subject, subject_visible) =
+                    match pseudo_host.filter(|_| selector.pseudo_element().is_some()) {
+                        Some(host) => (element.with_element(host), pseudo_visible),
+                        None => (element, visible),
+                    };
                 if selector.is_part() || selector.is_slotted() {
-                    matching::originating_elements(selector, &element, context.current_host)
+                    matching::originating_elements(selector, &subject, context.current_host)
                         .filter(|origin| {
                             tree_context.contains(origin.element)
                                 && scope.origin.is_none_or(|id| origin.element.id() == id)
@@ -394,8 +403,8 @@ impl Selector {
                             )
                         })
                 } else {
-                    visible
-                        && scope.origin.is_none_or(|id| element.element.id() == id)
+                    subject_visible
+                        && scope.origin.is_none_or(|id| subject.element.id() == id)
                         && matching::matches_selector(selector, 0, None, &element, context)
                 }
             })
@@ -416,11 +425,17 @@ impl Selector {
             .slice()
             .first()
             .filter(|_| self.selectors.slice().len() == 1);
+        // An element-backed pseudo-element is scoped from its originating element, one hop
+        // further, as a generated one is.
+        let pseudo_host = element
+            .details_content_host()
+            .filter(|_| selector.is_some_and(|selector| selector.pseudo_element().is_some()));
         let hops = usize::from(
             selector.is_some_and(|selector| selector.is_part() || selector.is_slotted()),
-        );
+        ) + usize::from(pseudo_host.is_some());
+        let subject = pseudo_host.unwrap_or(element);
         let origins = selector.map(|selector| {
-            matching::originating_elements(selector, &MatchingElement::new(element, false), host)
+            matching::originating_elements(selector, &MatchingElement::new(subject, false), host)
         });
         origins.into_iter().flatten().filter_map(move |origin| {
             tree_context
@@ -923,6 +938,9 @@ pub(crate) enum PseudoElement {
     /// §4.3), which style parts of a control's internal content.
     Placeholder,
     FileSelectorButton,
+    /// `::details-content` (CSS Pseudo-Elements 4 §5.2), which is the real content slot of a
+    /// `details` element's shadow tree, matched as that element.
+    DetailsContent,
     Absent(AbsentPseudoElement),
 }
 impl From<GeneratedPseudoElement> for PseudoElement {
@@ -1000,6 +1018,7 @@ impl PseudoElement {
             ("first-letter", Self::FirstLetter),
             ("placeholder", Self::Placeholder),
             ("file-selector-button", Self::FileSelectorButton),
+            ("details-content", Self::DetailsContent),
         ]
         .into_iter()
         .chain(
@@ -1025,7 +1044,10 @@ impl PseudoElement {
         Err(arguments.new_custom_error(()))
     }
     pub(crate) fn is_element_backed(self) -> bool {
-        matches!(self, Self::Placeholder | Self::FileSelectorButton)
+        matches!(
+            self,
+            Self::Placeholder | Self::FileSelectorButton | Self::DetailsContent
+        )
     }
     /// The sub-pseudo-element `::name` of this one, which only `::first-letter` has (CSS
     /// Pseudo-Elements 4 §2.2).
@@ -1058,6 +1080,7 @@ impl PseudoElement {
             Self::FirstLetterSuffix => "::first-letter::suffix",
             Self::Placeholder => "::placeholder",
             Self::FileSelectorButton => "::file-selector-button",
+            Self::DetailsContent => "::details-content",
             Self::Absent(pseudo) => pseudo.source(),
         }
     }
@@ -1071,6 +1094,10 @@ impl parser::PseudoElement for PseudoElement {
         !self.is_element_backed()
     }
     fn parses_as_element_backed(&self) -> bool {
+        self.is_element_backed()
+    }
+    /// CSS Pseudo-Elements 4 §5: any pseudo-class may follow an element-backed one.
+    fn accepts_state_pseudo_classes(&self) -> bool {
         self.is_element_backed()
     }
 }
@@ -1097,6 +1124,9 @@ impl<'a> MatchingElement<'a> {
     }
     fn with_element(&self, element: Element<'a>) -> Self {
         Self::new(element, self.virtual_root)
+    }
+    fn backs_pseudo_element(&self) -> bool {
+        !self.document && self.element.details_content_host().is_some()
     }
 }
 impl SelectorElement for MatchingElement<'_> {
@@ -1152,11 +1182,21 @@ impl SelectorElement for MatchingElement<'_> {
             .flatten()
             .map(|host| self.with_element(host))
     }
+    /// CSS Pseudo-Elements 4 §5: the element backing `::details-content` is matched as that
+    /// pseudo-element, which no structural pseudo-class matches; it has no siblings to them.
     fn is_pseudo_element(&self) -> bool {
-        false
+        self.backs_pseudo_element()
+    }
+    fn pseudo_element_originating_element(&self) -> Option<Self> {
+        self.element
+            .details_content_host()
+            .map(|host| self.with_element(host))
+    }
+    fn ignores_nth_child_selectors(&self) -> bool {
+        self.backs_pseudo_element()
     }
     fn prev_sibling_element(&self) -> Option<Self> {
-        if self.document {
+        if self.document || self.backs_pseudo_element() {
             return None;
         }
         self.element
@@ -1171,7 +1211,7 @@ impl SelectorElement for MatchingElement<'_> {
             })
     }
     fn next_sibling_element(&self) -> Option<Self> {
-        if self.document {
+        if self.document || self.backs_pseudo_element() {
             return None;
         }
         self.element
@@ -1289,10 +1329,10 @@ impl SelectorElement for MatchingElement<'_> {
     }
     fn match_pseudo_element(
         &self,
-        _: &PseudoElement,
+        pseudo: &PseudoElement,
         _: &mut MatchingContext<'_, StaticSelector>,
     ) -> bool {
-        false
+        *pseudo == PseudoElement::DetailsContent && self.backs_pseudo_element()
     }
     fn apply_selector_flags(&self, _: matching::ElementSelectorFlags) {}
     fn is_link(&self) -> bool {
@@ -1360,6 +1400,7 @@ impl SelectorElement for MatchingElement<'_> {
     }
     fn is_empty(&self) -> bool {
         !self.document
+            && !self.backs_pseudo_element()
             && !self
                 .element
                 .child_nodes(TreeRelation::Selector)

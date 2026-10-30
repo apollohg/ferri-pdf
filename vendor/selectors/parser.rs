@@ -176,6 +176,10 @@ bitflags! {
         /// Whether we've parsed a pseudo-element which is in a pseudo-element tree (i.e. it is a
         /// descendant pseudo of a pseudo-element root).
         const IN_PSEUDO_ELEMENT_TREE = 1 << 9;
+
+        /// Whether we've parsed an element-backed pseudo-element, after which every
+        /// pseudo-class is syntactically allowed (CSS Pseudo-Elements 4 §5).
+        const AFTER_ELEMENT_BACKED_PSEUDO = 1 << 10;
     }
 }
 
@@ -197,7 +201,17 @@ impl SelectorParsingState {
 
     #[inline]
     fn allows_tree_structural_pseudo_classes(self) -> bool {
-        !self.intersects(Self::AFTER_PSEUDO) || self.intersects(Self::IN_PSEUDO_ELEMENT_TREE)
+        !self.intersects(Self::AFTER_PSEUDO)
+            || self.intersects(Self::IN_PSEUDO_ELEMENT_TREE)
+            || self.only_after_element_backed_pseudo()
+    }
+
+    /// Whether the last pseudo-element-like thing is an element-backed pseudo-element, on
+    /// which the structural pseudo-classes and `:has()` parse but never match.
+    #[inline]
+    fn only_after_element_backed_pseudo(self) -> bool {
+        self.intersects(Self::AFTER_ELEMENT_BACKED_PSEUDO)
+            && !self.intersects(Self::AFTER_PSEUDO.difference(Self::AFTER_PART_LIKE))
     }
 
     #[inline]
@@ -593,7 +607,14 @@ impl<Impl: SelectorImpl> SelectorList<Impl> {
         P: Parser<'i, Impl = Impl>,
     {
         // A compound-only restriction does not constrain nested selector lists.
-        let state = state - SelectorParsingState::DISALLOW_COMBINATORS;
+        let mut state = state - SelectorParsingState::DISALLOW_COMBINATORS;
+        // Nested lists match an element-backed pseudo-element as the element it is.
+        if state.only_after_element_backed_pseudo() {
+            state.remove(
+                SelectorParsingState::AFTER_PART_LIKE
+                    | SelectorParsingState::AFTER_ELEMENT_BACKED_PSEUDO,
+            );
+        }
         let mut values = SmallVec::<[_; 4]>::new();
         let forgiving = recovery == ForgivingParsing::Yes && parser.allow_forgiving_selectors();
         loop {
@@ -3479,7 +3500,10 @@ where
             },
             SimpleSelectorParseResult::PseudoElement(p) => {
                 if p.parses_as_element_backed() {
-                    state.insert(SelectorParsingState::AFTER_PART_LIKE);
+                    state.insert(
+                        SelectorParsingState::AFTER_PART_LIKE
+                            | SelectorParsingState::AFTER_ELEMENT_BACKED_PSEUDO,
+                    );
                 } else {
                     state.insert(SelectorParsingState::AFTER_NON_ELEMENT_BACKED_PSEUDO);
                     if p.is_before_or_after() {
@@ -3538,9 +3562,10 @@ where
     Impl: SelectorImpl,
 {
     debug_assert!(parser.parse_has());
-    if state.intersects(
-        SelectorParsingState::DISALLOW_RELATIVE_SELECTOR | SelectorParsingState::AFTER_PSEUDO,
-    ) {
+    if state.intersects(SelectorParsingState::DISALLOW_RELATIVE_SELECTOR)
+        || (state.intersects(SelectorParsingState::AFTER_PSEUDO)
+            && !state.only_after_element_backed_pseudo())
+    {
         return Err(input.new_custom_error(SelectorParseErrorKind::InvalidState));
     }
     // Nested `:has()` is disallowed, mark it as such.
