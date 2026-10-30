@@ -433,10 +433,22 @@ fn page_effects(style: &crate::style::Style) -> Vec<(Property, bool)> {
     .chain(transforms(style))
     .collect()
 }
+/// The multi-column properties of `style` and whether each is other than `auto`.
+pub(super) fn multicol(style: &crate::style::Style) -> [(Property, bool); 3] {
+    let multicol = &style.multicol;
+    [
+        (Property::ColumnCount, multicol.count.is_some()),
+        (Property::ColumnWidth, multicol.width.is_some()),
+        (Property::ColumnHeight, multicol.height.is_some()),
+    ]
+}
 /// CSS Page 3 §6 leaves properties beyond CSS 2.1 undefined in the page context, so a box of
-/// `at_rule` that does not paint one of `effects` rejects it rather than ignore it.
-fn unpainted_effects(at_rule: &str, effects: &[(Property, bool)]) -> Result<(), StyleError> {
-    match effects.iter().find(|(_, effective)| *effective) {
+/// `at_rule` that does not implement one of `properties` rejects it rather than ignore it.
+pub(super) fn unsupported_in(
+    at_rule: &str,
+    properties: &[(Property, bool)],
+) -> Result<(), StyleError> {
+    match properties.iter().find(|(_, effective)| *effective) {
         Some((property, _)) => Err(StyleError::Unsupported(format!(
             "{} in {at_rule}",
             property.name()
@@ -470,10 +482,10 @@ impl Stylesheet {
                 resolver,
             )?
             .0;
-        unpainted_effects(PAGE_AT_RULE, &page_effects(&style))?;
-        unpainted_effects(
+        unsupported_in(PAGE_AT_RULE, &page_effects(&style))?;
+        unsupported_in(
             &format!("@{}", crate::style::page_parser::FOOTNOTE_AT_RULE),
-            &transforms(&footnote),
+            &[transforms(&footnote).as_slice(), &multicol(&footnote)].concat(),
         )?;
         Ok(ResolvedPage {
             request,

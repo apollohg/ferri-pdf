@@ -169,7 +169,7 @@ fn nonfinite_page_margin_geometry_is_rejected_even_without_text() {
 }
 
 #[test]
-fn page_box_and_footnote_area_reject_effects_they_cannot_paint() {
+fn page_contexts_reject_properties_their_boxes_do_not_implement() {
     for (rule, expected) in [
         ("@page{opacity:.5}", "opacity in @page"),
         ("@page{filter:blur(1pt)}", "filter in @page"),
@@ -187,6 +187,15 @@ fn page_box_and_footnote_area_reject_effects_they_cannot_paint() {
         (
             "@page{@footnote{perspective:100pt}}",
             "perspective in @footnote",
+        ),
+        ("@page{@footnote{columns:2}}", "column-count in @footnote"),
+        (
+            "@page{@top-center{content:'a';column-width:5em}}",
+            "column-width in @top-center",
+        ),
+        (
+            "@page{@bottom-left{content:'a';line-clamp:1}}",
+            "max-lines in @bottom-left",
         ),
     ] {
         let html = format!("<style>{PROFILE}{rule}</style><p>Body</p>");

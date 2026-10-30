@@ -43,29 +43,33 @@ impl MarginLocation {
         Self::BottomLeftCorner,
         Self::BottomRightCorner,
     ];
+    /// The at-rule names of `ALL`, in order.
+    const NAMES: [&'static str; 16] = [
+        "top-left",
+        "top-center",
+        "top-right",
+        "bottom-left",
+        "bottom-center",
+        "bottom-right",
+        "left-top",
+        "left-middle",
+        "left-bottom",
+        "right-top",
+        "right-middle",
+        "right-bottom",
+        "top-left-corner",
+        "top-right-corner",
+        "bottom-left-corner",
+        "bottom-right-corner",
+    ];
     pub(super) fn parse(name: &str) -> Option<Self> {
-        let names = [
-            "top-left",
-            "top-center",
-            "top-right",
-            "bottom-left",
-            "bottom-center",
-            "bottom-right",
-            "left-top",
-            "left-middle",
-            "left-bottom",
-            "right-top",
-            "right-middle",
-            "right-bottom",
-            "top-left-corner",
-            "top-right-corner",
-            "bottom-left-corner",
-            "bottom-right-corner",
-        ];
-        names
+        Self::NAMES
             .iter()
             .position(|candidate| name.eq_ignore_ascii_case(candidate))
             .map(|i| Self::ALL[i])
+    }
+    fn name(self) -> &'static str {
+        Self::NAMES[self as usize]
     }
     /// The default painting order: from the top-left corner clockwise (CSS Page 3 §3.1).
     pub(crate) fn painting_order(self) -> usize {
@@ -198,6 +202,15 @@ impl Stylesheet {
             let Some(content) = content else {
                 continue;
             };
+            // Margin boxes lay out their lines in one column, unclamped.
+            crate::style::page_rules::unsupported_in(
+                &format!("@{}", location.name()),
+                &[
+                    crate::style::page_rules::multicol(&style).as_slice(),
+                    &[(Property::MaxLines, style.clamp.max_lines.is_some())],
+                ]
+                .concat(),
+            )?;
             margins.push(PageMargin {
                 location,
                 content,
