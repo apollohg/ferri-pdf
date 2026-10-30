@@ -34,6 +34,21 @@ struct Plan<'a> {
 }
 
 impl<'a> Plan<'a> {
+    /// CSS Box 4 §3.3.3: whether `margin-trim` discards item `index`'s block-start and
+    /// block-end margins, which adjoin the first and last row tracks that are not collapsed.
+    fn trimmed_rows(&self, index: usize) -> [bool; 2] {
+        if !self.source.style().margin_trim.in_flow() {
+            return [false; 2];
+        }
+        let collapsed = &self.topology.axes[ROWS].collapsed;
+        let first = collapsed.iter().position(|collapsed| !collapsed);
+        let last = collapsed.iter().rposition(|collapsed| !collapsed);
+        let area = &self.topology.placement.areas[index][ROWS];
+        [
+            first == Some(area.start),
+            last.map(|last| last + 1) == Some(area.end),
+        ]
+    }
     fn definite_columns(&self, index: usize, width: f32, measurer: &Measurer<'_>) -> bool {
         if !measurer.space.indefinite_inline {
             return true;
@@ -432,6 +447,7 @@ impl<'a> Geometry<'a> {
             Some(row.end - row.start),
             measurer,
         )?;
+        item.trim_block_margins(self.plan.trimmed_rows(index));
         item.inline_definite = self.plan.definite_columns(index, parent.width, measurer);
         item.inherit(
             self.plan

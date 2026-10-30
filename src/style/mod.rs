@@ -106,8 +106,8 @@ pub(crate) use baseline_values::{
 };
 pub(crate) use bookmark_values::BookmarkStyle;
 pub(crate) use box_values::{
-    BoxSizing, BreakBetween, BreakInside, CalculatedSize, Display, LengthPercentage, Size,
-    Visibility,
+    BoxSizing, BreakBetween, BreakInside, CalculatedSize, Display, LengthPercentage, MarginTrim,
+    Size, Visibility,
 };
 pub(crate) use computed::{OriginNode, Style, StyleOrigin};
 pub(crate) use container_queries::{QueryContainers, QuerySizes};

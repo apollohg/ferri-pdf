@@ -1942,6 +1942,14 @@ impl<'a> FlowFrame<'a> {
             return;
         }
         let cleared = matches!(&item, FlowItem::Block(block) | FlowItem::Spanner(block) if block.clearance_target.is_some());
+        // CSS Box 4 §3.3: margin-trim discards the block-start margin of a block-level first
+        // child and every margin collapsed with it.
+        if self.at_start
+            && matches!(&item, FlowItem::Block(_) | FlowItem::Spanner(_))
+            && self.block.style().margin_trim.in_flow()
+        {
+            self.pending = MarginStrut::default();
+        }
         if self.at_start && self.collapse_top && !cleared {
             self.before
                 .merge(self.pending.clone().within(self.block.block));
@@ -2017,6 +2025,11 @@ impl<'a> FlowFrame<'a> {
             if !style.clone_decoration {
                 bottom_edge = 0.0;
             }
+        }
+        // CSS Box 4 §3.3: margin-trim discards the block-end margin of a block-level last child
+        // and every margin collapsed with it.
+        if style.margin_trim.in_flow() {
+            pending = MarginStrut::default();
         }
         let clearance_target = measurer
             .clearance_targets

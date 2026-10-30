@@ -288,6 +288,7 @@ pub(crate) struct Style {
     #[serde(skip)]
     pub(super) shadows: crate::style::shadow_values::Shadows,
     pub clone_decoration: bool,
+    pub margin_trim: crate::style::MarginTrim,
     pub text_decorations: crate::style::TextDecorations,
     pub text_paint: crate::style::TextPaint,
     /// Line-left and line-right `text-overflow`.
@@ -444,6 +445,7 @@ impl Default for Style {
             decoration: initial_decoration(),
             shadows: crate::style::shadow_values::Shadows::default(),
             clone_decoration: false,
+            margin_trim: crate::style::MarginTrim::None,
             text_decorations: crate::style::TextDecorations::default(),
             text_paint: crate::style::TextPaint::default(),
             text_overflow: [crate::style::TextOverflow::Clip; 2],

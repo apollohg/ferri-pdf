@@ -46,6 +46,65 @@ pub(super) fn base_size(
         .preferred(content)
 }
 
+/// CSS Box 4 §3.3.2: trims the block-start and block-end margins that adjoin the container:
+/// each item's on the line nearest an edge parallel to the main axis, or the first and last
+/// item's on every line at an edge parallel to the cross axis, ignoring collapsed items.
+/// `reverse` runs lines (rows) or items (columns) from the block-end edge.
+fn trim_margins(
+    data: &mut [FlexItem<'_>],
+    numeric: &mut [Item],
+    ranges: &[std::ops::Range<usize>],
+    column: bool,
+    reverse: bool,
+) {
+    const TOP: usize = 0;
+    const BOTTOM: usize = 2;
+    let ends = |range: &std::ops::Range<usize>| {
+        let visible: Vec<usize> = range
+            .clone()
+            .filter(|&index| !numeric[index].collapsed)
+            .collect();
+        [visible.first().copied(), visible.last().copied()]
+    };
+    let mut targets = Vec::new();
+    if column {
+        for range in ranges {
+            let [first, last] = ends(range);
+            let [start, end] = if reverse {
+                [last, first]
+            } else {
+                [first, last]
+            };
+            targets.extend(start.map(|index| (index, TOP)));
+            targets.extend(end.map(|index| (index, BOTTOM)));
+        }
+    } else {
+        let [first, last] = [ranges.first(), ranges.last()];
+        let [start, end] = if reverse {
+            [last, first]
+        } else {
+            [first, last]
+        };
+        for (range, side) in [(start, TOP), (end, BOTTOM)] {
+            targets.extend(
+                range
+                    .into_iter()
+                    .flat_map(Clone::clone)
+                    .map(|index| (index, side)),
+            );
+        }
+    }
+    for (index, side) in targets {
+        data[index].margins[side] = Some(0.0);
+        if column {
+            // The main-axis margins run in item order, from the block-end edge in reverse.
+            let main = usize::from((side == BOTTOM) != reverse);
+            data[index].main.margins[main] = Some(0.0);
+            numeric[index].margins[main] = Some(0.0);
+        }
+    }
+}
+
 fn item_metrics<'a>(
     measurer: &mut Measurer<'a>,
     item: &FlexItem<'a>,
@@ -436,6 +495,15 @@ pub(super) fn measure<'a>(
         measurer.work.spend(numeric.len().max(1))?;
         let ranges =
             crate::flex::line_ranges(&numeric, main_size, main_gap, flex.wrap != FlexWrap::NoWrap)?;
+        if style.margin_trim.in_flow() {
+            trim_margins(
+                &mut data,
+                &mut numeric,
+                &ranges,
+                column,
+                if column { main_reverse } else { cross_reverse },
+            );
+        }
         let mut lines = Vec::new();
         let mut used_main = main_size.unwrap_or(0.0);
         for range in ranges {

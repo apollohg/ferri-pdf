@@ -824,6 +824,10 @@ fn handler(property: Property) -> Option<Handler> {
         P::Widows => (widows, Some(|v, r| positive_integer(v, r).is_ok())),
         P::Orphans => (orphans, Some(|v, r| positive_integer(v, r).is_ok())),
         P::BoxDecorationBreak => (box_decoration_break, Some(|_, _| true)),
+        P::MarginTrim => (
+            margin_trim,
+            Some(|v, _| crate::style::MarginTrim::from_component(v).is_ok()),
+        ),
         P::BoxShadowColor => (
             box_shadow_color,
             Some(|v, r| {
@@ -2531,6 +2535,11 @@ fn positive_integer(value: &Component, relative: &Relative<'_>) -> Result<usize,
         .filter(|count| *count > 0)
         .ok_or_else(|| format!("invalid positive integer: {value}").into())
 }
+computed!(
+    margin_trim,
+    [margin_trim],
+    |value, style, _parent, _relative| { crate::style::MarginTrim::from_component(value)? }
+);
 computed!(
     box_decoration_break,
     [clone_decoration],

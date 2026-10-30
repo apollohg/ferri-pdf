@@ -368,6 +368,36 @@ impl BreakBetween {
     }
 }
 
+/// `margin-trim` with the `none | in-flow | all` grammar of CSS Box 4 (2020 WD §3.3).
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
+pub(crate) enum MarginTrim {
+    #[default]
+    None,
+    /// The block-axis margins of in-flow children that adjoin the container's edges, and the
+    /// margins collapsed with them, are truncated to zero.
+    InFlow,
+    /// As `in-flow`, and also the margins of floats that adjoin the container's edges.
+    All,
+}
+impl MarginTrim {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.keyword() {
+            Some(Keyword::None) => Ok(Self::None),
+            Some(Keyword::InFlow) => Ok(Self::InFlow),
+            Some(Keyword::All) => Ok(Self::All),
+            _ => Err(unsupported(value)),
+        }
+    }
+    /// Whether in-flow children's margins at the container's edges are trimmed.
+    pub(crate) fn in_flow(self) -> bool {
+        self != Self::None
+    }
+    /// Whether floats' margins at the container's edges are trimmed.
+    pub(crate) fn floats(self) -> bool {
+        self == Self::All
+    }
+}
+
 /// `break-inside`.
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
 pub(crate) enum BreakInside {

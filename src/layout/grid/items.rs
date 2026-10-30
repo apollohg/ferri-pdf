@@ -150,6 +150,15 @@ fn offset(
 }
 
 impl<'a> Item<'a> {
+    /// Truncates the block-start and block-end margins that `margin-trim` discards.
+    pub(crate) fn trim_block_margins(&mut self, trimmed: [bool; 2]) {
+        for (side, trimmed) in [0, 2].into_iter().zip(trimmed) {
+            if trimmed {
+                self.margins[side] = Some(0.0);
+                self.geometry.margin[side] = Some(0.0);
+            }
+        }
+    }
     /// The item in its grid `area`, self-aligned by default as the grid `container`'s
     /// `align-items` and `justify-items`.
     pub(crate) fn new(

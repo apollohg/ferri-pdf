@@ -577,6 +577,8 @@ struct ActiveGeometry<'a> {
     height: f32,
     constrained: bool,
     spanner_fragment: Option<crate::layout::multicol::SpannerFragment>,
+    /// The fragmentainer and flow position of the content box's block-start edge.
+    content_top: (usize, f32),
 }
 impl ActiveGeometry<'_> {
     fn definite_height(&self) -> Option<f32> {
@@ -1301,14 +1303,27 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 })
     }
     fn pending_value(&self) -> f32 {
+        let trimmed = self.at_page_start && self.trims_repeated_start();
         self.pending
             .iter()
             .map(|margin| match (self.at_page_start, self.margin_start) {
                 (false, _) | (_, MarginStart::Initial) => margin.value(),
                 (true, MarginStart::Unforced) => 0.0,
+                (true, MarginStart::Forced) if trimmed => 0.0,
                 (true, MarginStart::Forced) => margin.after_break().unwrap_or(margin.value()),
             })
             .sum()
+    }
+    /// Whether the innermost box whose decoration repeats at the fragment start trims the
+    /// margins adjoining that edge (CSS Box 4 §3.3, CSS Fragmentation 3 §5.4): a cloned edge
+    /// is the box's edge again, so margins kept after a forced break still adjoin it.
+    fn trims_repeated_start(&self) -> bool {
+        self.boxes
+            .iter()
+            .rev()
+            .filter(|active| active.clone)
+            .find_map(|active| active.geometry.as_ref())
+            .is_some_and(|parent| parent.source.style().margin_trim.in_flow())
     }
     fn flush_margin(&mut self) {
         self.y += self.pending_value();
@@ -2449,6 +2464,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 height: block.height,
                 constrained: block.constrained,
                 spanner_fragment: block.spanner_fragment,
+                content_top: (start_page, start_y + block.start_space),
             }),
             page_scope: crate::document::PageBoundary::applies(&block.style.display)
                 .then(|| block.source.page_boundary().used.clone()),
