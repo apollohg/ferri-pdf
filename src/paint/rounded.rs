@@ -223,7 +223,11 @@ fn contour(curves: &[Curve; 4]) -> Contour {
 
 /// CSS Backgrounds 3 §4.5: all radii scaled down together until adjacent radii fit along
 /// every side of a box of `[width, height]`.
-pub(crate) fn constrain(mut radii: Radii, [width, height]: [f32; 2]) -> Radii {
+pub(crate) fn constrain(radii: Radii, size: [f32; 2]) -> Radii {
+    constrain_corners(radii, size, [ROUND_CURVATURE; 4])
+}
+
+fn constrain_corners(mut radii: Radii, [width, height]: [f32; 2], curvatures: [f32; 4]) -> Radii {
     let factor = [
         (width, radii[0][0] + radii[1][0]),
         (height, radii[1][1] + radii[2][1]),
@@ -235,11 +239,123 @@ pub(crate) fn constrain(mut radii: Radii, [width, height]: [f32; 2]) -> Radii {
     .map(|(length, sum)| length / sum)
     .fold(1.0_f32, f32::min);
     if factor < 1.0 {
-        for corner in &mut radii {
-            *corner = corner.map(|radius| radius * factor);
+        radii = radii.map(|corner| corner.map(|radius| radius * factor));
+    }
+    if curvatures.iter().all(|curvature| *curvature >= 0.0) {
+        return radii;
+    }
+    let origins = [
+        [0.0, 0.0],
+        [f64::from(width), 0.0],
+        [f64::from(width), f64::from(height)],
+        [0.0, f64::from(height)],
+    ];
+    let mut reduction = 1.0_f64;
+    for first in 0..2 {
+        let opposite = first + 2;
+        if [first, opposite]
+            .into_iter()
+            .any(|corner| radii[corner].iter().any(|radius| *radius <= 0.0))
+            || [first, opposite]
+                .into_iter()
+                .all(|corner| curvatures[corner] >= 0.0)
+        {
+            continue;
+        }
+        let hulls =
+            [first, opposite].map(|corner| corner_hull(corner, radii[corner], curvatures[corner]));
+        let origins = [origins[first], origins[opposite]];
+        if !hulls_overlap(hulls, origins, reduction) {
+            continue;
+        }
+        let (mut lower, mut upper) = (0.0, reduction);
+        for _ in 0..CROSSING_ITERATIONS {
+            let middle = f64::midpoint(lower, upper);
+            if hulls_overlap(hulls, origins, middle) {
+                upper = middle;
+            } else {
+                lower = middle;
+            }
+        }
+        reduction = lower;
+    }
+    if reduction == 1.0 {
+        return radii;
+    }
+    let mut factor = reduction as f32;
+    loop {
+        let reduced = radii.map(|corner| corner.map(|radius| radius * factor));
+        let overlaps = (0..2).any(|first| {
+            let opposite = first + 2;
+            if [first, opposite]
+                .into_iter()
+                .any(|corner| reduced[corner].iter().any(|radius| *radius <= 0.0))
+            {
+                return false;
+            }
+            let hulls = [first, opposite]
+                .map(|corner| corner_hull(corner, reduced[corner], curvatures[corner]));
+            hulls_overlap(hulls, [origins[first], origins[opposite]], 1.0)
+        });
+        if !overlaps {
+            return reduced;
+        }
+        // Rounding the factor or its products outward must not restore an overlap.
+        factor = factor.next_down();
+    }
+}
+
+/// Inner hull relative to the outer corner. Concave corners use the tangent at their
+/// diagonal midpoint; the corrected Borders 4 hull intersects the x=0 and y=0 axes.
+fn corner_hull(corner: usize, radii: [f32; 2], curvature: f32) -> [[f64; 2]; 5] {
+    let half = if curvature < 0.0 {
+        -(-std::f64::consts::LN_2 * 2.0_f64.powf(f64::from(curvature))).exp_m1()
+    } else {
+        0.5
+    };
+    let [rx, ry] = radii.map(f64::from);
+    [
+        [1.0, 1.0],
+        [1.0, 0.0],
+        [2.0 * half, 0.0],
+        [0.0, 2.0 * half],
+        [0.0, 1.0],
+    ]
+    .map(|[u, v]| match corner {
+        0 => [(1.0 - v) * rx, (1.0 - u) * ry],
+        1 => [-(1.0 - u) * rx, (1.0 - v) * ry],
+        2 => [-(1.0 - v) * rx, -(1.0 - u) * ry],
+        _ => [(1.0 - u) * rx, -(1.0 - v) * ry],
+    })
+}
+
+fn hulls_overlap(hulls: [[[f64; 2]; 5]; 2], origins: [[f64; 2]; 2], scale: f64) -> bool {
+    let [a, b] = std::array::from_fn(|corner| {
+        hulls[corner]
+            .map(|point| std::array::from_fn(|axis| origins[corner][axis] + scale * point[axis]))
+    });
+    for polygon in [&a, &b] {
+        for edge in 0..polygon.len() {
+            let [start, end] = [polygon[edge], polygon[(edge + 1) % polygon.len()]];
+            let normal = [end[1] - start[1], start[0] - end[0]];
+            if normal == [0.0; 2] {
+                continue;
+            }
+            let project = |polygon: [[f64; 2]; 5]| {
+                polygon
+                    .into_iter()
+                    .map(|point| point[0] * normal[0] + point[1] * normal[1])
+                    .fold([f64::INFINITY, f64::NEG_INFINITY], |[min, max], value| {
+                        [min.min(value), max.max(value)]
+                    })
+            };
+            let [arange, brange] = [a, b].map(project);
+            if arange[1] <= brange[0] || brange[1] <= arange[0] {
+                return false;
+            }
         }
     }
-    radii
+    true
 }
 
 pub(crate) fn rounded_rect(rect: Rect, radii: Radii) -> Contour {
@@ -777,6 +893,93 @@ mod path_tests {
     use super::*;
 
     const GEOMETRY_TOLERANCE: f32 = 0.000_01;
+
+    #[test]
+    fn asymmetric_notch_reduction_remains_disjoint_after_float_rounding() {
+        let radii = [[40.127_224; 2], [0.0; 2], [54.841_87; 2], [0.0; 2]];
+        let actual = constrain_corners(radii, [80.0; 2], [f32::NEG_INFINITY; 4]);
+        let combined = f64::from(actual[0][0]) + f64::from(actual[2][0]);
+        assert!(
+            combined <= 80.0,
+            "rounded opposite notch widths overlap: {actual:?}, sum={combined}"
+        );
+        assert_eq!(
+            constrain_corners(actual, [80.0; 2], [f32::NEG_INFINITY; 4]),
+            actual,
+            "used radii must be stable on a second constraint pass"
+        );
+    }
+
+    #[test]
+    fn opposite_hulls_use_each_corners_curvature() {
+        for first in 0..4 {
+            let opposite = (first + 2) % 4;
+            let mut radii = [[0.0; 2]; 4];
+            radii[first] = [64.0, 48.0];
+            radii[opposite] = [64.0, 48.0];
+            for (shapes, expected) in [
+                ([f32::NEG_INFINITY, 0.0], [160.0 / 3.0, 40.0]),
+                (
+                    [-1.0; 2],
+                    [
+                        40.0 * std::f32::consts::SQRT_2,
+                        30.0 * std::f32::consts::SQRT_2,
+                    ],
+                ),
+            ] {
+                let mut curvatures = [ROUND_CURVATURE; 4];
+                curvatures[first] = shapes[0];
+                curvatures[opposite] = shapes[1];
+                let actual = constrain_corners(radii, [80.0, 60.0], curvatures);
+                for corner in [first, opposite] {
+                    for (value, expected) in actual[corner].into_iter().zip(expected) {
+                        assert!(
+                            (value - expected).abs() < GEOMETRY_TOLERANCE,
+                            "corner={corner}, shapes={shapes:?}, actual={actual:?}, expected={expected}"
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn opposite_notches_reduce_every_radius_by_one_common_factor() {
+        for first in 0..2 {
+            let mut radii = [[4.0, 3.0]; 4];
+            radii[first] = [64.0, 48.0];
+            radii[first + 2] = [64.0, 48.0];
+            let mut curvatures = [ROUND_CURVATURE; 4];
+            curvatures[first] = f32::NEG_INFINITY;
+            curvatures[first + 2] = f32::NEG_INFINITY;
+            let actual = constrain_corners(radii, [80.0, 60.0], curvatures);
+            let expected = radii.map(|radii| radii.map(|radius| radius * 0.625));
+            assert_eq!(
+                actual,
+                expected,
+                "opposite corners {first}/{} must meet without overlap",
+                first + 2
+            );
+            let touching = constrain_corners(actual, [80.0, 60.0], curvatures);
+            assert_eq!(touching, actual, "touching hulls must not shrink again");
+        }
+    }
+
+    #[test]
+    fn concave_radius_constraints_preserve_axis_separated_and_sharp_corners() {
+        let separated = [[70.0, 10.0], [0.0; 2], [70.0, 10.0], [0.0; 2]];
+        assert_eq!(
+            constrain_corners(separated, [80.0, 60.0], [f32::NEG_INFINITY; 4]),
+            separated,
+            "opposite notches separated vertically may overlap horizontally"
+        );
+        let sharp = [[70.0, 50.0], [0.0; 2], [0.0, 50.0], [0.0; 2]];
+        assert_eq!(
+            constrain_corners(sharp, [80.0, 60.0], [f32::NEG_INFINITY; 4]),
+            sharp,
+            "zero-radius corners have no concave hull"
+        );
+    }
 
     #[test]
     fn extreme_curvatures_produce_finite_monotone_bounded_paths() {
