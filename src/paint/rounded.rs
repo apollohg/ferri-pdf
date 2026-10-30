@@ -113,6 +113,204 @@ fn corners(rect: Rect, radii: Radii, curvatures: [f32; 4]) -> [Curve; 4] {
     })
 }
 
+/// Untrimmed corner boundaries. Callers must clip these to the target box.
+fn inset_corners(rect: Rect, radii: Radii, curvatures: [f32; 4], insets: [f32; 4]) -> [Curve; 4] {
+    if insets == [0.0; 4]
+        && curvatures
+            .iter()
+            .all(|value| *value <= -1.0 || *value >= 0.0)
+    {
+        return corners(rect, radii, curvatures);
+    }
+    let (target, adjusted) = inset(rect, radii, insets);
+    let mut curves = corners(target, adjusted, [ROUND_CURVATURE; 4]);
+    let points = corner_points(target);
+    for corner in 0..4 {
+        if curvatures[corner] == ROUND_CURVATURE {
+            continue;
+        }
+        let start_axis = corner % 2;
+        let axes = [start_axis, 1 - start_axis];
+        let radius = axes.map(|axis| f64::from(radii[corner][axis]));
+        let coverage = 2.0
+            * (f64::from(radii[corner][0]) / f64::from(rect.width))
+                .min(f64::from(radii[corner][1]) / f64::from(rect.height));
+        let distances = [insets[(corner + 3) % 4], insets[corner]].map(f64::from);
+        let inset = std::array::from_fn(|side| {
+            let distance = distances[side];
+            if distance >= 0.0 || radius[side] > -distance || coverage > 1.0 {
+                distance
+            } else {
+                distance
+                    * (1.0 - (1.0 + radius[side] / distance).powi(3) * (1.0 - coverage.powi(3)))
+            }
+        });
+        let v3 = SIDE_TANGENTS[(corner + 1) % 4];
+        let v2 = SIDE_TANGENTS[corner];
+        let map = |point: [f64; 2]| {
+            to32(std::array::from_fn(|axis| {
+                f64::from(points[corner][axis])
+                    + f64::from(v3[axis]) * point[0]
+                    + f64::from(v2[axis]) * point[1]
+            }))
+        };
+        curves[corner] = aligned_corner(radius, inset, curvatures[corner], map);
+    }
+    curves
+}
+
+/// CSS Borders 4 border-aligned corner clip-out curve in its inward-pointing side basis.
+fn aligned_corner(
+    radius: [f64; 2],
+    inset: [f64; 2],
+    curvature: f32,
+    map: impl Fn([f64; 2]) -> Point,
+) -> Curve {
+    let point = || {
+        Curve::Path(Contour {
+            start: map([0.0; 2]),
+            segments: Vec::new(),
+            closed: false,
+        })
+    };
+    let [start_radius, end_radius] = radius;
+    let [start_inset, end_inset] = inset;
+    if radius.into_iter().any(|radius| radius <= 0.0) || curvature == f32::INFINITY {
+        return point();
+    }
+    let power = 2.0_f64.powf(-f64::from(curvature.abs()));
+    let half = if curvature < 0.0 {
+        -(-std::f64::consts::LN_2 * power).exp_m1()
+    } else {
+        (-std::f64::consts::LN_2 * power).exp()
+    };
+    let control =
+        (half / (std::f64::consts::SQRT_2 - 1.0) - std::f64::consts::FRAC_1_SQRT_2).clamp(0.0, 1.0);
+    let difference = (end_inset - start_inset).clamp(-start_radius, end_radius);
+    if curvature <= 0.0 && (difference == -start_radius || difference == end_radius) {
+        return point();
+    }
+    let start_control = if difference == 0.0 {
+        control
+    } else {
+        let root = (start_radius * start_radius + end_radius * end_radius
+            - difference * difference)
+            .max(0.0)
+            .sqrt();
+        let normal_x = end_radius * difference + start_radius * root;
+        let normal_y = -start_radius * difference + end_radius * root;
+        let bevel = start_radius * normal_y / (start_radius * normal_y + end_radius * normal_x);
+        if curvature < 0.0 {
+            bevel * (2.0 * control)
+        } else {
+            1.0 - (1.0 - bevel) * (2.0 * (1.0 - control))
+        }
+    };
+    let end_control = 2.0 * control - start_control;
+    let normalize = |vector: [f64; 2]| {
+        let length = vector[0].hypot(vector[1]);
+        if length == 0.0 {
+            vector
+        } else {
+            vector.map(|component| component / length)
+        }
+    };
+    let start_normal = normalize([
+        (1.0 - start_control) * start_radius,
+        start_control * end_radius,
+    ]);
+    let end_normal = normalize([end_control * start_radius, (1.0 - end_control) * end_radius]);
+    let mut start = [
+        end_radius - end_inset + start_normal[0] * start_inset,
+        -start_inset + start_normal[1] * start_inset,
+    ];
+    let mut end = [
+        -end_inset + end_normal[0] * end_inset,
+        start_radius - start_inset + end_normal[1] * end_inset,
+    ];
+    let start_tangent = [-start_normal[1], start_normal[0]];
+    let end_tangent = [end_normal[1], -end_normal[0]];
+    let miter_start = if start_inset < 0.0 && start_tangent[1] != 0.0 {
+        [
+            start[0] - start[1] * start_tangent[0] / start_tangent[1],
+            0.0,
+        ]
+    } else {
+        start
+    };
+    let miter_end = if end_inset < 0.0 && end_tangent[0] != 0.0 {
+        [0.0, end[1] - end[0] * end_tangent[1] / end_tangent[0]]
+    } else {
+        end
+    };
+    if curvature >= 0.0 {
+        start = miter_start;
+        end = miter_end;
+    }
+    let segment_intersection = |a: [f64; 2], b: [f64; 2], c: [f64; 2], d: [f64; 2]| {
+        let v = [b[0] - a[0], b[1] - a[1]];
+        let w = [d[0] - c[0], d[1] - c[1]];
+        line_intersection(a, v, c, w).and_then(|(t, p)| (0.0..=1.0).contains(&t).then_some(p))
+    };
+    let mut intersection = None;
+    if curvature < 0.0 && start_inset < 0.0 && end_inset < 0.0 {
+        if -end_inset >= start_radius {
+            intersection = segment_intersection(miter_start, start, miter_end, end);
+        }
+        if intersection.is_none() && -start_inset >= end_radius {
+            intersection = segment_intersection(miter_end, end, miter_start, start);
+        }
+    }
+    let mut path = Contour {
+        start: map(miter_start),
+        segments: Vec::new(),
+        closed: false,
+    };
+    if let Some(intersection) = intersection {
+        path.segments.push(Segment::Line(map(intersection)));
+    } else if curvature != 0.0 {
+        let mut outer = [end[0], start[1]];
+        let mut exponent = curvature;
+        if curvature > -1.0 && curvature < 0.0 {
+            let tangent =
+                line_intersection(start, start_tangent, end, end_tangent).map_or(start, |(_, p)| p);
+            outer = [
+                start[0] + end[0] - tangent[0],
+                start[1] + end[1] - tangent[1],
+            ];
+            exponent = -1.0;
+        }
+        let curve = superellipse(map(start), map(outer), map(end), exponent);
+        if curve.start != path.start {
+            path.segments.push(Segment::Line(curve.start));
+        }
+        path.segments.extend(curve.segments);
+    }
+    let last = path
+        .segments
+        .last()
+        .map_or(path.start, |segment| segment.end());
+    let end = map(miter_end);
+    if last != end {
+        path.segments.push(Segment::Line(end));
+    }
+    Curve::Path(path)
+}
+
+fn line_intersection(
+    a: [f64; 2],
+    v: [f64; 2],
+    b: [f64; 2],
+    w: [f64; 2],
+) -> Option<(f64, [f64; 2])> {
+    let determinant = v[0] * w[1] - v[1] * w[0];
+    if determinant == 0.0 {
+        return None;
+    }
+    let t = ((b[0] - a[0]) * w[1] - (b[1] - a[1]) * w[0]) / determinant;
+    Some((t, [a[0] + t * v[0], a[1] + t * v[1]]))
+}
+
 /// A convex superellipse has its greatest chord deviation where its tangent is parallel
 /// to that chord. Split there until the physical error fits the point-coordinate precision.
 fn superellipse(start: Point, corner: Point, end: Point, curvature: f32) -> Contour {
@@ -584,30 +782,35 @@ struct Geometry {
     rect: Rect,
     radii: Radii,
     widths: [f32; 4],
+    curvatures: [f32; 4],
     outer_points: [Point; 4],
     inner_points: [Point; 4],
     outer: [Curve; 4],
     centre: [Curve; 4],
 }
 impl Geometry {
-    fn new(rect: Rect, radii: Radii, widths: [f32; 4]) -> Self {
+    fn new(rect: Rect, radii: Radii, widths: [f32; 4], curvatures: [f32; 4]) -> Self {
         let (inner_rect, _) = inset(rect, radii, widths);
-        let (centre_rect, centre_radii) = inset(rect, radii, widths.map(|width| width / 2.0));
         Self {
             rect,
             radii,
             widths,
+            curvatures,
             outer_points: corner_points(rect),
             inner_points: corner_points(inner_rect),
-            outer: corners(rect, radii, [ROUND_CURVATURE; 4]),
-            centre: corners(centre_rect, centre_radii, [ROUND_CURVATURE; 4]),
+            outer: inset_corners(rect, radii, curvatures, [0.0; 4]),
+            centre: inset_corners(rect, radii, curvatures, widths.map(|width| width / 2.0)),
         }
     }
 
     /// Corner curves of the border box inset by fraction `t` of each side's width.
     fn ring(&self, t: f32) -> [Curve; 4] {
-        let (rect, radii) = inset(self.rect, self.radii, self.widths.map(|width| width * t));
-        corners(rect, radii, [ROUND_CURVATURE; 4])
+        inset_corners(
+            self.rect,
+            self.radii,
+            self.curvatures,
+            self.widths.map(|width| width * t),
+        )
     }
 
     /// Region between the two corner diagonals that owns `side`.
@@ -802,7 +1005,7 @@ pub(crate) fn border_fills<I>(
     inner_widths: [f32; 4],
     radii: Radii,
 ) -> Vec<Fill> {
-    let geometry = Geometry::new(rect, radii, inner_widths);
+    let geometry = Geometry::new(rect, radii, inner_widths, [ROUND_CURVATURE; 4]);
     let mut fills = Vec::new();
     let color = decoration.borders[0].color;
     if let Some(boundaries) = ring(decoration, widths) {
@@ -893,6 +1096,343 @@ mod path_tests {
     use super::*;
 
     const GEOMETRY_TOLERANCE: f32 = 0.000_01;
+
+    #[test]
+    fn unequal_thin_corner_offsets_retain_small_finite_curvature() {
+        // High-precision evaluation of the border-aligned normals at curvature -1e-6.
+        const EXPECTED: [f64; 2] = [0.044_877_496_983_655_67, 7.999_974_124_648_716];
+        const ENDPOINT_ERROR: f64 = 0.000_001;
+        let curves = inset_corners(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 2000.0,
+                height: 2000.0,
+            },
+            [[1000.0, 0.000_1]; 4],
+            [-0.000_001; 4],
+            [2.0, 4.0, 6.0, 8.0],
+        );
+        for (actual, expected) in curves[0].start().into_iter().map(f64::from).zip(EXPECTED) {
+            assert!(
+                (actual - expected).abs() < ENDPOINT_ERROR,
+                "finite curvature must retain its amplified normal change: {actual} vs {expected}"
+            );
+        }
+    }
+
+    #[test]
+    fn machine_small_negative_curvatures_converge_to_the_bevel_offset() {
+        const LIMIT_ERROR: f64 = 0.001;
+        let rect = Rect {
+            x: 0.0,
+            y: 0.0,
+            width: 2000.0,
+            height: 2000.0,
+        };
+        for radius in [[20.0; 2], [0.000_1, 1000.0], [1000.0, 0.000_1]] {
+            for insets in [[0.0; 4], [4.0; 4], [-4.0; 4], [2.0, 4.0, 6.0, 8.0]] {
+                let bevels = inset_corners(rect, [radius; 4], [0.0; 4], insets);
+                for curvature in [-f32::MIN_POSITIVE, -f32::EPSILON] {
+                    let curves = inset_corners(rect, [radius; 4], [curvature; 4], insets);
+                    for (curve, bevel) in curves.iter().zip(&bevels) {
+                        if bevel.is_point() {
+                            assert!(curve.is_point());
+                            continue;
+                        }
+                        let [a, b] = [bevel.start(), bevel.end()].map(to64);
+                        let d = [b[0] - a[0], b[1] - a[1]];
+                        let length = d[0].hypot(d[1]);
+                        for point in
+                            std::iter::once(curve.start()).chain(curve.forward().map(Segment::end))
+                        {
+                            let point = to64(point);
+                            let v = [point[0] - a[0], point[1] - a[1]];
+                            let distance = (v[0] * d[1] - v[1] * d[0]).abs() / length;
+                            let along = (v[0] * d[0] + v[1] * d[1]) / length;
+                            assert!(
+                                distance <= LIMIT_ERROR
+                                    && along >= -LIMIT_ERROR
+                                    && along <= length + LIMIT_ERROR,
+                                "bevel limit: curvature={curvature}, radius={radius:?}, insets={insets:?}, point={point:?}, distance={distance}, along={along}, length={length}"
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn near_bevel_and_extreme_offset_curves_stay_finite_and_bounded() {
+        for curvature in [
+            -f32::MIN_POSITIVE,
+            -0.000_001,
+            -0.01,
+            -0.5,
+            0.000_001,
+            0.5,
+            2.0,
+            -128.0,
+            128.0,
+        ] {
+            for radii in [[0.000_1, 1000.0], [1000.0, 0.000_1], [20.0, 20.0]] {
+                for insets in [[0.0; 4], [4.0; 4], [-40.0; 4], [25.0, 30.0, 4.0, 0.0]] {
+                    let curves = inset_corners(
+                        Rect {
+                            x: -10.0,
+                            y: 20.0,
+                            width: 2000.0,
+                            height: 2000.0,
+                        },
+                        [radii; 4],
+                        [curvature; 4],
+                        insets,
+                    );
+                    for (corner, curve) in curves.iter().enumerate() {
+                        let points: Vec<_> = std::iter::once(curve.start())
+                            .chain(curve.forward().map(Segment::end))
+                            .collect();
+                        assert!(
+                            points.len() < 16384,
+                            "unbounded offset path: {curvature}, {radii:?}, {insets:?}"
+                        );
+                        for point in points {
+                            assert!(
+                                point
+                                    .into_iter()
+                                    .all(|value| value.is_finite() && value.abs() < 4000.0),
+                                "offset excursion: curvature={curvature}, corner={corner}, radii={radii:?}, insets={insets:?}, point={point:?}"
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn unequal_insets_beyond_the_radius_keep_the_full_border_thickness() {
+        let curves = inset_corners(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 200.0,
+                height: 200.0,
+            },
+            [[20.0; 2]; 4],
+            [f32::NEG_INFINITY; 4],
+            [25.0, 30.0, 0.0, 0.0],
+        );
+        assert_eq!(
+            curves[1].forward().next(),
+            Some(Segment::Line([155.0, 50.0])),
+            "signed adjusted radii must not discard inset distances beyond the radius"
+        );
+    }
+
+    #[test]
+    fn shaped_outsets_include_the_corners_box_coverage() {
+        for (size, expected) in [
+            ([40.0, 40.0], [[20.0, -40.0], [80.0, 20.0]]),
+            ([80.0, 60.0], [[64.375, -40.0], [120.0, 15.625]]),
+        ] {
+            let curves = inset_corners(
+                Rect {
+                    x: 0.0,
+                    y: 0.0,
+                    width: size[0],
+                    height: size[1],
+                },
+                [[20.0; 2]; 4],
+                [2.0; 4],
+                [-40.0; 4],
+            );
+            assert_eq!(
+                [curves[1].start(), curves[1].end()],
+                expected,
+                "large outset uses both the radius and its coverage of the border box"
+            );
+        }
+    }
+
+    #[test]
+    fn scoop_offsets_preserve_the_circle_and_outset_tangent_extensions() {
+        let rect = Rect {
+            x: 0.0,
+            y: 0.0,
+            width: 80.0,
+            height: 60.0,
+        };
+        for inset in [4.0, -4.0] {
+            let curves = inset_corners(rect, [[20.0; 2]; 4], [-1.0; 4], [inset; 4]);
+            let Curve::Path(path) = &curves[1] else {
+                panic!("scoop path expected")
+            };
+            let radius = f64::from(20.0 + inset);
+            let mut points: Vec<_> = std::iter::once(path.start)
+                .chain(path.segments.iter().map(|segment| segment.end()))
+                .collect();
+            if inset < 0.0 {
+                assert_eq!(
+                    points.remove(0),
+                    [64.0, -4.0],
+                    "outset starts on the extended top edge"
+                );
+                assert_eq!(
+                    points.pop(),
+                    Some([84.0, 16.0]),
+                    "outset ends on the extended right edge"
+                );
+            }
+            for point in points {
+                let distance = (f64::from(point[0]) - 80.0).hypot(f64::from(point[1]));
+                assert!(
+                    (distance - radius).abs() < f64::from(GEOMETRY_TOLERANCE),
+                    "scoop inset={inset}, point={point:?}, radius={distance}, expected={radius}"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn unequal_notch_insets_follow_each_adjacent_border() {
+        let curves = inset_corners(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 80.0,
+                height: 60.0,
+            },
+            [[20.0; 2]; 4],
+            [f32::NEG_INFINITY; 4],
+            [2.0, 4.0, 6.0, 8.0],
+        );
+        let expected = [[22.0, 28.0], [58.0, 24.0], [54.0, 36.0], [26.0, 32.0]];
+        for (curve, expected) in curves.iter().zip(expected) {
+            assert_eq!(
+                curve.forward().next(),
+                Some(Segment::Line(expected)),
+                "the indentation carries the adjacent border's thickness"
+            );
+        }
+    }
+
+    #[test]
+    fn large_concave_outsets_remove_the_self_intersecting_tails() {
+        let curves = inset_corners(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 80.0,
+                height: 60.0,
+            },
+            [[20.0; 2]; 4],
+            [f32::NEG_INFINITY; 4],
+            [-30.0; 4],
+        );
+        let curve = &curves[1];
+        assert_eq!(curve.start(), [90.0, -30.0]);
+        assert_eq!(
+            curve.forward().collect::<Vec<_>>(),
+            [Segment::Line([90.0, -10.0]), Segment::Line([110.0, -10.0])]
+        );
+        for curvature in [-0.5, -1.0, -2.0] {
+            let curves = inset_corners(
+                Rect {
+                    x: 0.0,
+                    y: 0.0,
+                    width: 80.0,
+                    height: 60.0,
+                },
+                [[20.0; 2]; 4],
+                [curvature; 4],
+                [-40.0; 4],
+            );
+            let Curve::Path(path) = &curves[1] else {
+                panic!("concave clip-out expected")
+            };
+            assert_eq!(
+                path.segments.len(),
+                2,
+                "outset={curvature} must cut intersecting miter tails"
+            );
+        }
+    }
+
+    #[test]
+    fn consumed_concave_corners_leave_no_cutout() {
+        for curvature in [f32::NEG_INFINITY, -1.0, -0.5, 0.0] {
+            let curves = inset_corners(
+                Rect {
+                    x: 0.0,
+                    y: 0.0,
+                    width: 80.0,
+                    height: 60.0,
+                },
+                [[20.0; 2]; 4],
+                [curvature; 4],
+                [25.0, 0.0, 0.0, 0.0],
+            );
+            assert!(
+                curves[1].is_point(),
+                "top inset consumes the entire corner: {curvature}"
+            );
+            assert_eq!(curves[1].start(), [80.0, 25.0]);
+        }
+    }
+
+    #[test]
+    fn concave_inner_corners_expand_the_cutout_by_the_border_width() {
+        let rect = Rect {
+            x: 0.0,
+            y: 0.0,
+            width: 80.0,
+            height: 60.0,
+        };
+        let geometry = Geometry::new(rect, [[20.0; 2]; 4], [4.0; 4], [f32::NEG_INFINITY; 4]);
+        let corners = geometry.ring(1.0);
+        let expected = [
+            ([0.0, 24.0], [24.0, 24.0], [24.0, 0.0]),
+            ([56.0, 0.0], [56.0, 24.0], [80.0, 24.0]),
+            ([80.0, 36.0], [56.0, 36.0], [56.0, 60.0]),
+            ([24.0, 60.0], [24.0, 36.0], [0.0, 36.0]),
+        ];
+        for (corner, (start, middle, end)) in corners.iter().zip(expected) {
+            assert_eq!(corner.start(), start);
+            assert_eq!(
+                corner.forward().collect::<Vec<_>>(),
+                [Segment::Line(middle), Segment::Line(end)],
+                "notch inner boundary must retain border thickness along the concavity"
+            );
+        }
+    }
+
+    #[test]
+    fn bevel_inner_edge_has_the_requested_perpendicular_distance() {
+        let curves = inset_corners(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 80.0,
+                height: 60.0,
+            },
+            [[20.0; 2]; 4],
+            [0.0; 4],
+            [4.0; 4],
+        );
+        let curve = &curves[1];
+        let shift = 4.0 / std::f32::consts::SQRT_2;
+        let expected = [[60.0 - shift, shift], [80.0 - shift, 20.0 + shift]];
+        for (actual, expected) in [curve.start(), curve.end()].into_iter().zip(expected) {
+            for axis in 0..2 {
+                assert!(
+                    (actual[axis] - expected[axis]).abs() < GEOMETRY_TOLERANCE,
+                    "bevel normal offset: {actual:?} vs {expected:?}"
+                );
+            }
+        }
+    }
 
     #[test]
     fn asymmetric_notch_reduction_remains_disjoint_after_float_rounding() {
@@ -1222,6 +1762,7 @@ mod path_tests {
             },
             [[0.0; 2]; 4],
             [4.0; 4],
+            [ROUND_CURVATURE; 4],
         );
         for (corner, start, end) in [
             (0, [2.0, 20.0], [20.0, 2.0]),
