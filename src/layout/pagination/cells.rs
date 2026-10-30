@@ -477,6 +477,42 @@ impl<'a> Paginator<'a, '_, 'a> {
         })
     }
 
+    /// Lays out an absolutely positioned box from its start as a flow of its own, which
+    /// breaks across the pages after it (CSS Position 3 §3.5.3) apart from the boxes, tables
+    /// and floats of the flow that placed it.
+    pub(super) fn positioned_flow(&mut self, block: MeasuredBlock<'a>) -> Result<(), LayoutError> {
+        let style = block.style;
+        let outer = self.suspend_branch(BranchDepths {
+            boxes: 0,
+            containers: self.containers.len(),
+            tables: 0,
+            bands: 0,
+        });
+        // The box's overflow reaches the boxes and root it was detached from once it ends.
+        let root_overflow = self.root_overflow.take();
+        self.floats = vec![crate::layout::floats::FloatContext::default()];
+        let result = (|| -> Result<ActiveBox<'a>, LayoutError> {
+            let mut flow = self.start_cell(
+                block,
+                BreakTail::default(),
+                CellStart {
+                    preserve_empty: true,
+                    ..CellStart::default()
+                },
+                None,
+            )?;
+            loop {
+                if let Some(active) = self.advance_cell(&mut flow)? {
+                    break Ok(active);
+                }
+                self.measurer.work.spend(1)?;
+            }
+        })();
+        self.root_overflow = root_overflow;
+        self.resume_branch(outer)?;
+        self.propagate_overflow(&result?, style)
+    }
+
     pub(super) fn advance_cell(
         &mut self,
         cell: &mut CellContinuation<'a, 'a>,

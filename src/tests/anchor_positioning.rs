@@ -43,6 +43,20 @@ fn assert_rect(actual: Rect, expected: [f32; 4]) {
     }
 }
 
+/// A 300pt target sized from its anchor's source geometry breaks across the 200pt page areas
+/// after its start (CSS Position 3 §3.5.3), on the page of its static position after the
+/// anchor.
+fn assert_fragments(trace: &LayoutTrace, width: f32) {
+    let boxes = targets(trace);
+    assert_eq!(
+        boxes.iter().map(|(page, _)| *page).collect::<Vec<_>>(),
+        [1, 2],
+        "the target breaks onto a second page: {boxes:?}"
+    );
+    assert_rect(boxes[0].1, [20.0, 20.0, width, 200.0]);
+    assert_rect(boxes[1].1, [20.0, 20.0, width, 100.0]);
+}
+
 #[test]
 fn named_anchor_functions_resolve_insets_sizes_and_calc_against_the_border_box() {
     let trace = render(
@@ -432,7 +446,7 @@ fn fragmented_anchors_use_source_geometry_inside_and_fragment_bounds_outside() {
     let body = "<section><div class=anchor><p></p><p></p><p></p><p></p><p></p></div><div class=target></div></section>";
     let css = ".anchor{height:auto}.anchor p{height:60pt;margin:0}.target{left:0;top:0;width:anchor-size(width);height:anchor-size(height)}";
     let trace = render(&format!("{css}section{{position:relative}}"), body);
-    assert_rect(targets(&trace)[0].1, [20.0, 20.0, 60.0, 300.0]);
+    assert_fragments(&trace, 60.0);
     let trace = render(css, body);
     assert_rect(targets(&trace)[0].1, [20.0, 20.0, 60.0, 200.0]);
     let css = ".columns{columns:2;column-gap:20pt;height:80pt}.anchor{height:auto}.anchor p{height:60pt;margin:0}.target{left:0;top:0;width:anchor-size(width);height:anchor-size(height)}";
@@ -922,7 +936,7 @@ fn fragmented_table_groups_use_source_geometry_inside_the_fragmentation_context(
     let body = "<section><table><tbody class=anchor><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></tbody></table><div class=target></div></section>";
     let css = ".anchor{width:auto;height:auto;margin:0;background:transparent}table{width:100pt;border-spacing:0}td{height:60pt;padding:0}.target{left:0;top:0;width:anchor-size(width,99pt);height:anchor-size(height,9pt)}";
     let trace = render(&format!("{css}section{{position:relative}}"), body);
-    assert_rect(targets(&trace)[0].1, [20.0, 20.0, 100.0, 300.0]);
+    assert_fragments(&trace, 100.0);
     let trace = render(css, body);
     assert_rect(targets(&trace)[0].1, [20.0, 20.0, 100.0, 200.0]);
 }

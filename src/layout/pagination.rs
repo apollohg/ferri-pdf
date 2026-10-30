@@ -259,8 +259,11 @@ impl Container<'_> {
     }
 }
 
-/// Fixed position and paint context of a box laid out without page breaks.
-struct Unbroken {
+/// Fixed start and paint context of a box laid out from it.
+struct FixedStart {
+    /// Whether the box breaks across the fragmentainers after its start, as an absolutely
+    /// positioned box does (CSS Position 3 §3.5.3), instead of overflowing its own.
+    breaks: bool,
     force_hidden: bool,
     page: usize,
     /// Border-box top below the page content top.
@@ -4472,12 +4475,24 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 Effect::Subtree(Subtree::Within(pending.within.clone())),
             ))
         };
-        let result = self.unbroken_block(
+        let y = top - self.fragmentainers.top(page);
+        // Only a box crossing the end of its page has a break to make.
+        let breaks = self.unbroken == 0
+            && matches!(self.fragmentainers, Fragmentainers::Pages(_))
+            && measured.style.position == Position::Absolute
+            // CSS Containment 2 §3.1: a size containment box is monolithic.
+            && !measured.style.containment().size[1]
+            && overflows(
+                y + measured.overflow_height,
+                self.fragmentainers.height(page) - self.footnote_reserve(page),
+            );
+        let result = self.block_at(
             measured,
-            Unbroken {
+            FixedStart {
+                breaks,
                 force_hidden: pending.force_hidden,
                 page,
-                y: top - self.fragmentainers.top(page),
+                y,
                 offset: [0.0; 2],
                 clip,
                 context: pending.context,
@@ -4491,23 +4506,30 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         self.measurer.space = previous_space;
         result
     }
-    /// Lays out `measured` at a fixed position without page breaks, then restores the flow.
-    fn unbroken_block(
+    /// Lays out `measured` from a fixed start, then restores the flow.
+    fn block_at(
         &mut self,
         measured: MeasuredBlock<'a>,
-        mut at: Unbroken,
+        mut at: FixedStart,
     ) -> Result<(), LayoutError> {
         at.force_hidden |= measured.style.force_hidden;
-        self.unbroken_at(at, |paginator| {
-            paginator.block(measured, BreakTail::default()).map(|_| ())
-        })
+        if at.breaks {
+            self.lay_out_at(at, |paginator| paginator.positioned_flow(measured))
+        } else {
+            self.lay_out_at(at, |paginator| {
+                paginator.block(measured, BreakTail::default()).map(|_| ())
+            })
+        }
     }
-    fn unbroken_at(
+    /// Lays out `emit` from a fixed start, without page breaks unless it `breaks`, then
+    /// restores the flow.
+    fn lay_out_at(
         &mut self,
-        at: Unbroken,
+        at: FixedStart,
         emit: impl FnOnce(&mut Self) -> Result<(), LayoutError>,
     ) -> Result<(), LayoutError> {
         let saved_hidden = self.force_hidden;
+        let at_breaks = at.breaks;
         self.force_hidden |= at.force_hidden;
         let before: Vec<_> = self
             .display_lists
@@ -4532,12 +4554,13 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let saved_parent_3d = std::mem::replace(&mut self.parent_3d, at.parent_3d);
         let saved_break = self.pending_break;
         let saved_reserve = std::mem::take(&mut self.bottom_reserve);
-        self.unbroken += 1;
+        self.unbroken += usize::from(!at.breaks);
         self.enter(at.page);
         self.y = at.y;
         self.offset = at.offset;
         self.clip = at.clip;
-        self.has_flow = true;
+        // A box breaking from its start places its first content there whatever follows.
+        self.has_flow = !at.breaks;
         self.at_page_start = false;
         self.pending_break = None;
         self.reserved_order = at.reserved_order;
@@ -4561,7 +4584,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         self.force_hidden = saved_hidden;
         self.enter(saved_page);
-        self.unbroken -= 1;
+        self.unbroken -= usize::from(!at_breaks);
         self.y = saved_y;
         self.pending = saved_pending;
         (
@@ -5219,7 +5242,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 if !emit || rows.is_empty() {
                     continue;
                 }
-                let at = Unbroken {
+                let at = FixedStart {
+                    breaks: false,
                     force_hidden: false,
                     page,
                     y,
@@ -5231,7 +5255,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     key: self.key.clone(),
                     reserved_order: None,
                 };
-                self.unbroken_at(at, |paginator| {
+                self.lay_out_at(at, |paginator| {
                     for row in rows {
                         paginator.place_row(row)?;
                         paginator.space(groups.spacing);
@@ -6882,9 +6906,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     fragment.x,
                 ),
             };
-            self.unbroken_block(
+            self.block_at(
                 atomic.block,
-                Unbroken {
+                FixedStart {
+                    breaks: false,
                     force_hidden: false,
                     page: self.page,
                     y,

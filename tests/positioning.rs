@@ -285,6 +285,57 @@ fn absolute_content_beyond_the_page_is_dropped_without_new_pages() {
 }
 
 #[test]
+fn absolute_boxes_taller_than_the_page_break_across_the_pages_after_their_position() {
+    // CSS Position 3 §3.5.3: the box is positioned as if the flow were continuous, then
+    // broken over fragmentainers. 20pt + 21 lines of 18pt fill the profile's 408pt page area.
+    const LINES: usize = 30;
+    const TOP_PT: f32 = 20.0;
+    const LINE_PT: f32 = 18.0;
+    const FIRST_PAGE_LINES: usize = 21;
+    let lines = (0..LINES)
+        .map(|line| format!("<div>Abs {line}</div>"))
+        .collect::<String>();
+    let trace = render_flow(
+        &format!("<div class='c'><p>Flow</p><div class='a'>{lines}</div></div>"),
+        &format!(".c{{position:relative}}.a{{position:absolute;top:{TOP_PT}pt;left:0}}"),
+    );
+    let pages: Vec<Vec<&str>> = trace
+        .pages
+        .iter()
+        .map(|page| page.iter().map(|line| line.text.as_str()).collect())
+        .collect();
+    let expected: Vec<String> = (0..LINES).map(|line| format!("Abs {line}")).collect();
+    assert_eq!(
+        pages.len(),
+        2,
+        "the box continues on one more page: {pages:?}"
+    );
+    assert_eq!(
+        pages[0][1..],
+        expected[..FIRST_PAGE_LINES],
+        "the first page holds the flow and the lines that fit below the box's top"
+    );
+    assert_eq!(
+        pages[1],
+        expected[FIRST_PAGE_LINES..],
+        "the rest continues at the top of the next page"
+    );
+    let first = trace.pages[0][1].baseline;
+    let continued = trace.pages[1][0].baseline;
+    assert!(
+        (continued - (first - TOP_PT)).abs() < 0.001,
+        "the continuation starts at the page area's top: first baseline {first}, continued {continued}"
+    );
+    for (index, line) in trace.pages[0][1..].iter().enumerate() {
+        assert!(
+            (line.baseline - (first + LINE_PT * index as f32)).abs() < 0.001,
+            "{} sits {LINE_PT}pt below the line before it",
+            line.text
+        );
+    }
+}
+
+#[test]
 fn stacking_contexts_paint_negative_flow_and_positive_layers_in_order() {
     let trace = render_flow(
         "<div class='c'><div class='a'>Above</div><div class='b'>Below</div><div class='n'>Negative</div><p class='flow'>Flow</p></div>",
