@@ -456,10 +456,23 @@ fn paginate<'t>(
         }
         page_records[index] = PageRecord::new(page)?;
     }
+    let page_transforms: Vec<_> = page_boxes
+        .iter()
+        .map(|page| page_paint::page_transform(page))
+        .collect();
     for (destination, bounds) in destinations.iter_mut().zip(destination_bounds) {
         if let (Some(destination), Some(bounds)) = (destination, bounds) {
             let frame = writing::Frame::physical(flow, page_boxes[destination.page].geometry.paper);
-            destination.top = frame.rect(bounds).y;
+            let bounds = frame.rect(bounds);
+            destination.top =
+                page_transforms[destination.page]
+                    .as_ref()
+                    .map_or(bounds.y, |region| {
+                        navigation::map_region(navigation::rect_corners(bounds).to_vec(), region)
+                            .into_iter()
+                            .map(|[_, y]| y)
+                            .fold(f32::INFINITY, f32::min)
+                    });
         }
     }
     let mut underlays = vec![Vec::new(); page_boxes.len()];
@@ -488,8 +501,14 @@ fn paginate<'t>(
         page_paint::PagePaint::new(page, document.canvas_background(), record.output.bleed)
             .decorate(list, text_area.take(), underlay);
     }
-    for (list, page) in display_lists.iter_mut().zip(&page_boxes) {
+    for (((list, page), areas), transform) in display_lists
+        .iter_mut()
+        .zip(&page_boxes)
+        .zip(links.iter_mut())
+        .zip(&page_transforms)
+    {
         list.extend(page_paint::page_outline(page));
+        page_paint::composite(page, transform.as_ref(), list, areas);
     }
     for (areas, record) in links.iter_mut().zip(&page_records) {
         navigation::clip_links(areas, record.output.bleed);

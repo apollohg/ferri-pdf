@@ -1,5 +1,6 @@
 use crate::document::PageBox;
 use crate::graphics::{BackgroundGeometry, BoxAreas, BoxPaint, Clip, DisplayItem, Rect};
+use crate::layout::pagination::{Group, Region};
 use std::sync::Arc;
 
 pub(super) struct PagePaint {
@@ -29,6 +30,60 @@ fn page_box(page: &PageBox) -> BoxPaint {
 /// (CSS Page 3 Appendix A applies the outline properties to the page context).
 pub(super) fn page_outline(page: &PageBox) -> Option<DisplayItem> {
     page_box(page).outline().map(DisplayItem::Box)
+}
+
+/// The page box's transform on the sheet, about its own reference box; its margin box stands
+/// for its containing block (CSS Transforms 2 §6).
+pub(super) fn page_transform(page: &PageBox) -> Option<Region> {
+    let areas = page_box(page).fragment_areas();
+    let style = &page.style;
+    style
+        .plane(
+            &areas,
+            None,
+            &crate::style::motion::Reference::rect(page.geometry.margin_box()),
+        )
+        .map(|plane| Region::projected(style.projected(&plane, &areas)))
+}
+
+/// The perspective the page box gives its transformed page-margin boxes (CSS Transforms 2
+/// §4.1.4).
+pub(super) fn page_perspective(page: &PageBox) -> Option<crate::style::transform::Parent3d> {
+    page.style.parent_3d(&page_box(page).fragment_areas())
+}
+
+/// Composites `list`, everything the page paints, as the page box's stacking context: inside
+/// its `transform` and its group's opacity, blending, mask, clip path and filters, over its
+/// filtered backdrop. CSS Page 3 §6 leaves these properties undefined in the page context;
+/// they apply to the page box as to any box. `links` follow the transform.
+pub(super) fn composite(
+    page: &PageBox,
+    transform: Option<&Region>,
+    list: &mut Vec<DisplayItem>,
+    links: &mut Vec<crate::layout::LinkArea>,
+) {
+    if transform.is_some_and(Region::collapses) {
+        list.clear();
+        links.clear();
+        return;
+    }
+    let paint = page_box(page);
+    let group = Group::of(&page.style);
+    let opening: Vec<_> = transform
+        .cloned()
+        .map(Region::push)
+        .into_iter()
+        .chain(group.pushes(std::slice::from_ref(&paint)))
+        .collect();
+    let pops = opening.len();
+    let backdrop = group
+        .backdrop(&paint)
+        .filter(|_| page.style.visibility.is_visible());
+    list.splice(0..0, opening.into_iter().chain(backdrop));
+    list.extend(std::iter::repeat_n(DisplayItem::Pop, pops));
+    if let Some(region) = transform {
+        *links = crate::layout::page_margins::transformed_links(std::mem::take(links), region);
+    }
 }
 
 impl PagePaint {

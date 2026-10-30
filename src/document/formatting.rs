@@ -77,7 +77,7 @@ fn surface_beneath(sheet: &Stylesheet, root: &Style) -> Option<crate::graphics::
 pub(crate) struct PageBox {
     pub request: crate::style::PageRequest,
     pub geometry: crate::style::PageGeometry,
-    #[cfg(test)]
+    /// The page context's style, whose effects composite the whole page.
     pub style: Box<Style>,
     pub production: crate::style::PageProduction,
     pub decoration: BoxDecoration,

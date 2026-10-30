@@ -283,7 +283,7 @@ impl<'t> Prepared<'_, 't> {
         let transform = style
             .plane(
                 &areas,
-                None,
+                output.perspective.as_ref(),
                 &crate::style::motion::Reference::rect(output.page),
             )
             .map(|plane| Region::projected(style.projected(&plane, &areas)));
@@ -686,8 +686,8 @@ fn wrapped_flow(area: FlowPaint, pushes: Vec<DisplayItem>, bounds: Rect) -> Flow
         lines: Vec::new(),
     }
 }
-/// `areas`, the link areas of a margin box's content, mapped through the box's transform.
-fn transformed_links(
+/// `areas`, the link areas of a box's content, mapped through the box's transform.
+pub(super) fn transformed_links(
     areas: Vec<crate::layout::LinkArea>,
     region: &Region,
 ) -> Vec<crate::layout::LinkArea> {
@@ -717,6 +717,8 @@ fn transformed_links(
 struct MarginOutput<'p> {
     /// The page box, the containing block of its margin boxes.
     page: Rect,
+    /// The perspective the page box gives them.
+    perspective: Option<crate::style::transform::Parent3d>,
     lines: &'p mut Vec<TextLine>,
     display: &'p mut Vec<DisplayItem>,
     links: &'p mut Vec<crate::layout::LinkArea>,
@@ -869,6 +871,7 @@ pub(super) fn render<'t>(
         .enumerate()
     {
         let page = &page_boxes[number];
+        let perspective = crate::layout::page_paint::page_perspective(page);
         let margins: Vec<_> = page
             .margins
             .iter()
@@ -957,6 +960,7 @@ pub(super) fn render<'t>(
                         first_index + margin.location as usize,
                         &mut MarginOutput {
                             page: page_box,
+                            perspective,
                             lines: page,
                             display: &mut items,
                             links,
@@ -1003,6 +1007,7 @@ pub(super) fn render<'t>(
                     first_index + location as usize,
                     &mut MarginOutput {
                         page: page_box,
+                        perspective,
                         lines: page,
                         display: &mut items,
                         links,

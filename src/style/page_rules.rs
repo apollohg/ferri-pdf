@@ -413,26 +413,6 @@ fn transforms(style: &crate::style::Style) -> [(Property, bool); 6] {
         (Property::Perspective, style.perspective.is_some()),
     ]
 }
-/// The compositing, clipping and transform properties of the page box and whether each has
-/// an effect.
-fn page_effects(style: &crate::style::Style) -> Vec<(Property, bool)> {
-    let masks = &style.decoration.masks;
-    [
-        (Property::Opacity, style.is_translucent()),
-        (Property::Filter, style.is_filtered()),
-        (Property::BackdropFilter, style.has_backdrop_filter()),
-        (
-            Property::MixBlendMode,
-            style.mix_blend_mode != crate::paint::BlendMode::Normal,
-        ),
-        (Property::ClipPath, masks.is_clipped()),
-        (Property::MaskImage, masks.has_layers()),
-        (Property::MaskBorderSource, masks.border.is_drawn()),
-    ]
-    .into_iter()
-    .chain(transforms(style))
-    .collect()
-}
 /// The multi-column properties of `style` and whether each is other than `auto`.
 pub(super) fn multicol(style: &crate::style::Style) -> [(Property, bool); 3] {
     let multicol = &style.multicol;
@@ -482,7 +462,6 @@ impl Stylesheet {
                 resolver,
             )?
             .0;
-        unsupported_in(PAGE_AT_RULE, &page_effects(&style))?;
         unsupported_in(
             &format!("@{}", crate::style::page_parser::FOOTNOTE_AT_RULE),
             &[transforms(&footnote).as_slice(), &multicol(&footnote)].concat(),

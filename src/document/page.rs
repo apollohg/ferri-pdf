@@ -28,11 +28,14 @@ impl PageBox {
         generated: &crate::document::generated::GeneratedBindings,
     ) -> Result<Self, DocumentError> {
         // CSS Page 3 Appendix A: `visibility` applies to the page box, which hidden paints
-        // nothing of its own.
+        // nothing of its own but still masks what it holds.
         let decoration = if page.style.visibility.is_visible() {
             resources.backgrounds(&page.style)?
         } else {
-            crate::graphics::BoxDecoration::default()
+            crate::graphics::BoxDecoration {
+                masks: resources.masks(&page.style)?,
+                ..crate::graphics::BoxDecoration::default()
+            }
         };
         let margins = page
             .margins
@@ -51,7 +54,6 @@ impl PageBox {
             request: page.request,
             geometry: page.geometry,
             counters: page.style.counters.clone(),
-            #[cfg(test)]
             style: page.style,
             production: page.production,
             decoration,

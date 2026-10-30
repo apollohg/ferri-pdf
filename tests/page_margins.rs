@@ -171,15 +171,6 @@ fn nonfinite_page_margin_geometry_is_rejected_even_without_text() {
 #[test]
 fn page_contexts_reject_properties_their_boxes_do_not_implement() {
     for (rule, expected) in [
-        ("@page{opacity:.5}", "opacity in @page"),
-        ("@page{filter:blur(1pt)}", "filter in @page"),
-        ("@page{mix-blend-mode:multiply}", "mix-blend-mode in @page"),
-        ("@page{clip-path:inset(10%)}", "clip-path in @page"),
-        (
-            "@page{mask-image:linear-gradient(red,red)}",
-            "mask-image in @page",
-        ),
-        ("@page{rotate:10deg}", "rotate in @page"),
         (
             "@page{@footnote{transform:scale(2)}}",
             "transform in @footnote",

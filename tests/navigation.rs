@@ -170,6 +170,54 @@ fn page_margin_box_transforms_move_and_rotate_their_running_links() {
 }
 
 #[test]
+fn page_box_transforms_move_the_links_and_destinations_of_their_pages() {
+    const SHIFT_PT: f32 = 100.0;
+    let page = |transform: &str| {
+        trace(
+            &format!("@page{{transform:{transform}}}"),
+            "<p><a href='#target'>Link</a></p><div id=target>Target</div>",
+        )
+    };
+    let plain = page("none");
+    let shifted = page(&format!("translateY({SHIFT_PT}pt)"));
+    let ([plain_link], [shifted_link]) = (
+        &rects(&plain.links[0], 0)[..],
+        &rects(&shifted.links[0], 0)[..],
+    ) else {
+        panic!(
+            "one link area per page: {:?} / {:?}",
+            plain.links, shifted.links
+        )
+    };
+    assert!(
+        close(shifted_link.x, plain_link.x) && close(shifted_link.y, plain_link.y + SHIFT_PT),
+        "the page box's translation moves its links: {plain_link:?} -> {shifted_link:?}"
+    );
+    let (Some(target), Some(moved)) = (plain.destinations[0], shifted.destinations[0]) else {
+        panic!(
+            "the target has a box: {:?} / {:?}",
+            plain.destinations, shifted.destinations
+        )
+    };
+    assert!(
+        moved.page == target.page && close(moved.top, target.top + SHIFT_PT),
+        "the page box's translation moves its destinations: {target:?} -> {moved:?}"
+    );
+    let rotated = page("rotate(30deg)");
+    assert!(
+        matches!(
+            &rotated.links[0][..],
+            [LinkArea {
+                link: 0,
+                shape: LinkShape::Quads(_)
+            }]
+        ),
+        "a rotated page box's link becomes a quadrilateral: {:?}",
+        rotated.links
+    );
+}
+
+#[test]
 fn transformed_links_become_quadrilaterals_and_clips_trim_link_areas() {
     let trace = trace(
         ".rot{transform:rotate(30deg);width:150pt;margin:40pt 0}\

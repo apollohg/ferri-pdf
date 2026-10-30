@@ -812,6 +812,49 @@ class PagePaint(unittest.TestCase):
                 for position, color, reason in probes:
                     self.pixel(page, position, color, reason)
 
+    def test_page_box_effects_composite_everything_the_page_paints(self):
+        # CSS Page 3 §6 leaves these properties undefined in the page context; they apply to
+        # the page box as to a block box: to its background, borders, page area and
+        # page-margin boxes, as one stacking context about the page box's border box.
+        red, blue, lime, white = (255, 0, 0), (0, 0, 255), (0, 255, 0), (255, 255, 255)
+        margin, page_background, border, canvas, block = (100, 5), (5, 5), (21, 100), (100, 100), (50, 40)
+        for effect, expected in [
+            ("opacity:.5", {page_background: (136, 144, 152), margin: (128, 255, 128),
+                            border: (230, 145, 128), canvas: (255, 128, 128), block: (128, 128, 255)}),
+            ("filter:invert(1)", {page_background: (239, 223, 207), margin: (255, 0, 255),
+                                  border: (51, 221, 255), canvas: (0, 255, 255), block: (255, 255, 0)}),
+            ("clip-path:inset(0 0 50% 0)", {page_background: white, margin: white, (100, 60): red,
+                                            (100, 150): white, (21, 60): PAGE_BORDER}),
+            ("mask-image:linear-gradient(black 50%,transparent 50%);mask-repeat:no-repeat",
+             {page_background: white, (100, 60): red, (100, 150): white}),
+            ("transform:rotate(180deg)", {(150, 160): blue, block: red, (100, 195): lime,
+                                          margin: PAGE_BACKGROUND}),
+            ("visibility:hidden;opacity:.5", {page_background: white, canvas: (255, 128, 128),
+                                              border: (255, 128, 128), margin: white}),
+        ]:
+            with self.subTest(effect=effect):
+                page = self.render(
+                    f"@page{{{effect};@top-center{{content:'';width:40pt;background:lime}}}}"
+                    "html{background:red}.block{width:40pt;height:20pt;background:blue}",
+                    "<div class=block></div>", page_size=(200, 200),
+                )[0]
+                tolerance = FILTER_TOLERANCE if "filter" in effect else PIXEL_TOLERANCE
+                for point, color in expected.items():
+                    self.pixel(page, point, color, f"@page{{{effect}}} composites the whole page", tolerance)
+
+    def test_page_box_perspective_projects_transformed_margin_boxes(self):
+        spreads = []
+        for perspective in ("", "perspective:30pt;"):
+            page = self.render(f"@page{{{perspective}@top-center{{content:'';width:40pt;background:lime;"
+                               "transform:rotateX(60deg)}}", "", page_size=(200, 200))[0]
+            widths = [sum(1 for x in range(200) if page.getpixel((x, y)) == (0, 255, 0)) for y in range(20)]
+            painted = [width for width in widths if width]
+            self.assertTrue(painted, f"{perspective}: the rotated margin box paints")
+            spreads.append(max(painted) - min(painted))
+        self.assertEqual(spreads[0], 0, f"without perspective the rotated box stays a rectangle: {spreads}")
+        self.assertGreaterEqual(spreads[1], 5,
+                                f"the page box's perspective makes the rotated box a trapezoid: {spreads}")
+
     def test_footnote_area_visibility_and_effects_reach_native_ink(self):
         white, red, blue = (255, 255, 255), (255, 0, 0), (0, 0, 255)
         for declarations, page_background, probes in [
