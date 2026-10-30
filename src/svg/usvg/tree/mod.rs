@@ -464,35 +464,48 @@ pub struct Pattern {
 
 /// The most tiles whose overflowing content one tile shows; content overflowing further is
 /// clipped, as SVG 2 §14.3.2 leaves rendering beyond the tile undefined.
-const MAX_OVERFLOW_TILES: usize = 1024;
+const MAX_OVERFLOW_TILES: u64 = 1024;
 
 impl Pattern {
     /// The offsets of the tiles whose content shows in a tile, in its content's coordinates and
     /// painting order, rows top to bottom and tiles left to right (SVG 2 §14.3.2): the tile's
     /// own, and along an axis `overflow` does not clip, those whose content overflows into it.
     pub(crate) fn tile_offsets(&self) -> Vec<(f32, f32)> {
+        const OWN_TILE: (f32, f32) = (0.0, 0.0);
         let bounds = self.root.layer_bounding_box();
-        let offsets = |clips: bool, start: f32, end: f32, size: f32| -> Vec<f32> {
+        // The indices of the copies overlapping the tile along an axis, or `None` when the
+        // bounds give no finite range.
+        let indices = |clips: bool, start: f32, end: f32, size: f32| {
             if clips {
-                return vec![0.0];
+                return Some(0..=0);
             }
             // A copy `index` tiles away overlaps the tile where `start + index * size` lies
             // before its end and `end + index * size` after its start.
-            let first = (-end / size).floor() as i64 + 1;
-            let last = ((size - start) / size).ceil() as i64 - 1;
-            (first.min(0)..=last.max(0))
-                .map(|index| index as f32 * size)
-                .collect()
+            let first = (-end / size).floor() + 1.0;
+            let last = ((size - start) / size).ceil() - 1.0;
+            (first.is_finite() && last.is_finite())
+                .then(|| (first as i64).min(0)..=(last as i64).max(0))
         };
         let [clip_x, clip_y] = self.clip_axes;
-        let columns = offsets(clip_x, bounds.left(), bounds.right(), self.rect.width());
-        let rows = offsets(clip_y, bounds.top(), bounds.bottom(), self.rect.height());
-        if columns.len().saturating_mul(rows.len()) > MAX_OVERFLOW_TILES {
-            return vec![(0.0, 0.0)];
+        let (Some(columns), Some(rows)) = (
+            indices(clip_x, bounds.left(), bounds.right(), self.rect.width()),
+            indices(clip_y, bounds.top(), bounds.bottom(), self.rect.height()),
+        ) else {
+            return vec![OWN_TILE];
+        };
+        let count = |range: &std::ops::RangeInclusive<i64>| {
+            range.end().abs_diff(*range.start()).saturating_add(1)
+        };
+        if count(&columns).saturating_mul(count(&rows)) > MAX_OVERFLOW_TILES {
+            return vec![OWN_TILE];
         }
-        rows.iter()
-            .flat_map(|dy| columns.iter().map(move |dx| (*dx, *dy)))
-            .collect()
+        let [width, height] = [self.rect.width(), self.rect.height()];
+        rows.flat_map(|row| {
+            columns
+                .clone()
+                .map(move |column| (column as f32 * width, row as f32 * height))
+        })
+        .collect()
     }
 
     /// Element's ID.
