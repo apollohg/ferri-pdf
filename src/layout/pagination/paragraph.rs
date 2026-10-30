@@ -578,7 +578,8 @@ impl<'a> Paginator<'a, '_, 'a> {
             let mut pending_footnotes = Vec::new();
             let mut footnote_events = consumed_events;
             let mut kept_footnotes = None;
-            // The line of a nested layout that an earlier pagination moved off this page.
+            // The line calling a footnote in a nested layout that an earlier pagination
+            // moved off this page.
             let mut deferred_line = None;
             let mut available = 0;
             for (index, line) in lines.as_slice().iter().enumerate() {
@@ -591,7 +592,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                     break;
                 }
                 let footnotes = line_footnotes(source, line, &mut footnote_events);
-                if let Some(policy) = self.deferred_policy(&footnotes) {
+                if let Some(policy) = self.deferred_policy(source, line, &footnotes)? {
                     kept_footnotes = Some(policy);
                     deferred_line = Some(index);
                     break;

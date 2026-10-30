@@ -171,27 +171,39 @@ fn nested_pages(css: &str, body: &str) -> Vec<(Vec<String>, Vec<String>)> {
 
 #[test]
 fn line_policies_move_calls_inside_nested_layouts_to_the_page_their_footnotes_fit() {
-    let moved = (texts(&["Top"]), Vec::new(), texts(&["1. A", "B", "C", "D"]));
-    for (layout, body) in [
+    // The inline block's own line, then the paragraph line holding it.
+    const ATOMIC_LINES: &[&str] = &["Cell1", "\u{fffc}"];
+    for (layout, body, lines) in [
         (
             "table cell",
             format!("<table><tr><td>Cell<span class=fn>{TALL_NOTE}</span></td></tr></table>"),
+            &["Cell1"][..],
         ),
         (
             "multi-column container",
             format!("<div class=cols>Cell<span class=fn>{TALL_NOTE}</span></div>"),
+            &["Cell1"],
         ),
         (
             "flex item",
             format!(
                 "<div style=display:flex><div>Cell<span class=fn>{TALL_NOTE}</span></div></div>"
             ),
+            &["Cell1"],
         ),
         (
             "grid item",
             format!(
                 "<div style=display:grid><div>Cell<span class=fn>{TALL_NOTE}</span></div></div>"
             ),
+            &["Cell1"],
+        ),
+        (
+            "inline block",
+            format!(
+                "<p><span style=display:inline-block>Cell<span class=fn>{TALL_NOTE}</span></span></p>"
+            ),
+            ATOMIC_LINES,
         ),
     ] {
         let pages = nested_pages(
@@ -201,8 +213,8 @@ fn line_policies_move_calls_inside_nested_layouts_to_the_page_their_footnotes_fi
         assert_eq!(
             pages,
             [
-                (moved.0.clone(), moved.1.clone()),
-                (texts(&["Cell1"]), moved.2.clone())
+                (texts(&["Top"]), Vec::new()),
+                (texts(lines), texts(&["1. A", "B", "C", "D"]))
             ],
             "the {layout}'s call line moves to the next page with its whole footnote"
         );

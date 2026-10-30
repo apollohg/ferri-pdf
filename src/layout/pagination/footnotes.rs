@@ -430,20 +430,38 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         )
     }
 
-    /// The policy that moves a line of a nested layout calling `footnotes` off the physical
-    /// page it is on, which an earlier pagination found their footnotes do not fit.
-    pub(super) fn deferred_policy(&self, footnotes: &[usize]) -> Option<FootnotePolicy> {
-        if footnotes.is_empty() || self.places_footnotes() {
-            return None;
-        }
-        let page = self.physical_page()?;
+    /// The policy that moves `line` of `source` off the physical page it is on, because an
+    /// earlier pagination found that a footnote called in a nested layout on the line does
+    /// not fit there: the line calls it inside its atomic inlines or, in a nested layout,
+    /// among the `footnotes` it calls directly.
+    pub(super) fn deferred_policy(
+        &self,
+        source: &crate::document::Paragraph,
+        line: &crate::text::Line,
+        footnotes: &[usize],
+    ) -> Result<Option<FootnotePolicy>, LayoutError> {
         let deferrals = &self.measurer.footnote_deferrals;
+        if deferrals.is_empty() {
+            return Ok(None);
+        }
+        let Some(page) = self.physical_page() else {
+            return Ok(None);
+        };
+        let mut calls = Vec::new();
+        for fragment in line.atomics.iter().chain(&line.annotations) {
+            let (events, visited) = source.inline_block(fragment.index).block.subtree_events();
+            self.measurer.work.spend(visited)?;
+            calls.extend(events.into_iter().filter_map(|event| event.footnote));
+        }
+        if !self.places_footnotes() {
+            calls.extend_from_slice(footnotes);
+        }
         let policy = strictest(
-            footnotes
-                .iter()
-                .filter_map(|&footnote| deferrals.get(&(footnote, page)).copied()),
+            calls
+                .into_iter()
+                .filter_map(|footnote| deferrals.get(&(footnote, page)).copied()),
         );
-        (policy != FootnotePolicy::Auto).then_some(policy)
+        Ok((policy != FootnotePolicy::Auto).then_some(policy))
     }
 
     /// Queues footnotes not yet placed after those waiting, then fills the current page's
