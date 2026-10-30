@@ -112,7 +112,7 @@ pub(crate) use box_values::{
     Size, Visibility,
 };
 pub(crate) use computed::{OriginNode, Style, StyleOrigin};
-pub(crate) use container_queries::{QueryContainers, QuerySizes};
+pub(crate) use container_queries::{ContainerMeasurement, QueryContainers, QuerySizes};
 pub(crate) use containment::{
     Contain, ContainIntrinsicSize, ContainerType, ContainmentStyle, ContentVisibility,
 };

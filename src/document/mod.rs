@@ -494,7 +494,10 @@ impl StyledDocument {
     pub(crate) fn fork_for_layout(
         &self,
         values: GeneratedValues,
-        container_sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
+        container_sizes: std::collections::HashMap<
+            crate::dom::ElementId,
+            crate::style::ContainerMeasurement,
+        >,
         anchor_frames: crate::style::anchor_values::AnchorFrameMap,
         resolver: &dyn ResourceResolver,
     ) -> Result<Self, DocumentError> {
@@ -558,7 +561,7 @@ impl StyledDocument {
     /// Restyling uses the query container sizes a layout measured.
     pub(crate) fn measured_containers(
         &mut self,
-        sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
+        sizes: std::collections::HashMap<crate::dom::ElementId, crate::style::ContainerMeasurement>,
     ) {
         self.styles.query_sizes_mut().measured(sizes);
     }

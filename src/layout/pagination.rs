@@ -799,6 +799,9 @@ impl ActiveBox<'_> {
 /// scrollports; without one the page area is.
 #[derive(Clone, Default)]
 pub(super) struct StickyConstraints {
+    /// The box's element, where it is a scroll-state query container, whose shift layout
+    /// measures.
+    container: Option<crate::dom::ElementId>,
     margins: [f32; 4],
     containing_rtl: bool,
     containing: Vec<(usize, usize)>,
@@ -2420,7 +2423,12 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 size.swap(0, 1);
             }
             let size = size.map(|extent| extent / block.style.effective_zoom);
-            self.measurer.container_sizes.entry(element).or_insert(size);
+            self.measurer
+                .container_sizes
+                .entry(element)
+                .or_default()
+                .size
+                .get_or_insert(size);
         }
         let track_overflow = (block.grid.is_some() && block.style.contains_absolute())
             || self
@@ -3799,6 +3807,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 .is_some_and(|geometry| geometry.source.style().is_scroll_container())
         });
         self.sticky.push(StickyConstraints {
+            container: style.scroll_state_container(),
             margins,
             containing_rtl,
             containing: Vec::new(),
@@ -7091,6 +7100,21 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             });
         self.position_canvas_backgrounds();
         let regions = self.effect_regions()?;
+        // CSS Conditional 5 §6.3.2: a sticky query container's first fragment reports whether
+        // it is stuck.
+        for (node, node_regions) in self.clips.iter().zip(&regions) {
+            if let Effect::Sticky(_, index) = node.effect
+                && let Some(container) = self.sticky[index].container
+                && let Some((_, Region::Transform([.., x, y]))) = node_regions.first()
+            {
+                self.measurer
+                    .container_sizes
+                    .entry(container)
+                    .or_default()
+                    .sticky_shift
+                    .get_or_insert([*x, *y]);
+            }
+        }
         let planes = self.context_planes()?;
         let mut paths = Vec::with_capacity(self.clips.len());
         for (index, node) in self.clips.iter().enumerate() {

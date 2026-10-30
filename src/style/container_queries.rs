@@ -110,29 +110,57 @@ impl QueryContainer {
 /// letters that their padding sizes, measured by layout and consulted by styling.
 #[derive(Clone, Default)]
 pub(crate) struct QuerySizes {
-    /// Sizes the previous layout pass measured.
-    known: HashMap<ElementId, [f32; 2]>,
+    /// What the previous layout pass measured.
+    known: HashMap<ElementId, ContainerMeasurement>,
     /// Sizes this styling pass consulted; `None` for a container not yet measured.
     consulted: RefCell<HashMap<ElementId, Option<[f32; 2]>>>,
+    /// Sticky shifts this styling pass consulted; `None` for a container not yet measured.
+    consulted_shifts: RefCell<HashMap<ElementId, Option<[f32; 2]>>>,
 }
+
+/// What a layout measures of a query container: its content-box size, and the shift its
+/// sticky positioning applies at the initial scroll position, on its first fragment.
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub(crate) struct ContainerMeasurement {
+    pub size: Option<[f32; 2]>,
+    pub sticky_shift: Option<[f32; 2]>,
+}
+
 impl QuerySizes {
     /// The size the previous layout pass measured for `element`, which a layout must reproduce.
     pub(crate) fn size(&self, element: ElementId) -> Option<[f32; 2]> {
-        let size = self.known.get(&element).copied();
+        let size = self.known.get(&element).and_then(|known| known.size);
         self.consulted.borrow_mut().insert(element, size);
         size
     }
-    /// Whether a layout that measured `measured` reproduces every size the styles consulted.
-    pub(crate) fn settled(&self, measured: &HashMap<ElementId, [f32; 2]>) -> bool {
-        self.consulted
-            .borrow()
-            .iter()
-            .all(|(element, size)| measured.get(element) == size.as_ref())
+    /// The sticky shift the previous layout pass measured for `element`, which a layout must
+    /// reproduce.
+    fn sticky_shift(&self, element: ElementId) -> Option<[f32; 2]> {
+        let shift = self
+            .known
+            .get(&element)
+            .and_then(|known| known.sticky_shift);
+        self.consulted_shifts.borrow_mut().insert(element, shift);
+        shift
     }
-    /// Restyling starts from the sizes a layout measured.
-    pub(crate) fn measured(&mut self, measured: HashMap<ElementId, [f32; 2]>) {
+    /// Whether a layout that measured `measured` reproduces everything the styles consulted.
+    pub(crate) fn settled(&self, measured: &HashMap<ElementId, ContainerMeasurement>) -> bool {
+        let reproduces =
+            |consulted: &RefCell<HashMap<ElementId, Option<[f32; 2]>>>,
+             value: fn(&ContainerMeasurement) -> Option<[f32; 2]>| {
+                consulted
+                    .borrow()
+                    .iter()
+                    .all(|(element, consulted)| measured.get(element).and_then(value) == *consulted)
+            };
+        reproduces(&self.consulted, |measured| measured.size)
+            && reproduces(&self.consulted_shifts, |measured| measured.sticky_shift)
+    }
+    /// Restyling starts from what a layout measured.
+    pub(crate) fn measured(&mut self, measured: HashMap<ElementId, ContainerMeasurement>) {
         self.known = measured;
         self.consulted.get_mut().clear();
+        self.consulted_shifts.get_mut().clear();
     }
 }
 
@@ -169,11 +197,12 @@ enum ScrollState {
     Scrolled,
 }
 
-/// A `<scroll-state-feature>`: a name and, outside a boolean context, one of its keywords.
+/// A `<scroll-state-feature>`: a name and, outside a boolean context, one of its keywords,
+/// lowercased.
 #[derive(Clone)]
 struct ScrollStateFeature {
     state: ScrollState,
-    none: Option<bool>,
+    value: Option<Box<str>>,
 }
 impl ScrollStateFeature {
     fn parse(source: &str) -> Option<Self> {
@@ -188,40 +217,73 @@ impl ScrollStateFeature {
             _ => return None,
         };
         if input.is_exhausted() {
-            return Some(Self { state, none: None });
+            return Some(Self { state, value: None });
         }
         input.expect_colon().ok()?;
-        let value = input.expect_ident_cloned().ok()?;
+        let value = input.expect_ident_cloned().ok()?.to_ascii_lowercase();
         input.expect_exhausted().ok()?;
-        let none = value.eq_ignore_ascii_case(NONE);
-        (none
+        (value == NONE
             || values
                 .iter()
                 .flat_map(|values| values.iter())
-                .any(|known| value.eq_ignore_ascii_case(known)))
+                .any(|known| value == *known))
         .then_some(Self {
             state,
-            none: Some(none),
+            value: Some(value.into()),
         })
     }
 
     /// Static media never scroll (CSS Overflow 3 §3.1.3): no scroll container has overflow
     /// a user can reach by scrolling or has been scrolled, and nothing snaps, so only `none`
-    /// holds, and only for the boxes each feature describes. A boolean context is true for
-    /// any value but `none`.
-    fn evaluate(&self, style: &Style) -> Result<Truth, StyleError> {
+    /// holds, and only for the boxes each feature describes. A sticky container is stuck to
+    /// the edges whose insets shift it at the initial scroll position (§6.3.2, CSS Position 3
+    /// §3.4). A boolean context is true for any value but `none`.
+    fn evaluate(&self, values: &ContainerValues<'_>) -> Truth {
+        let style = &values.container.style;
+        let none = self.value.as_deref() == Some(NONE);
         let described = match self.state {
             ScrollState::Scrollable | ScrollState::Scrolled => style.is_scroll_container(),
             ScrollState::Snapped => true,
             ScrollState::Stuck if style.position == crate::style::Position::Sticky => {
-                return Err(StyleError::Unsupported(
-                    "@container scroll-state(stuck) of a sticky query container".into(),
-                ));
+                let Some([x, y]) = values
+                    .sheet
+                    .query_sizes
+                    .sticky_shift(values.container.element)
+                else {
+                    return Truth::Unknown;
+                };
+                // Top, right, bottom and left: a positive shift keeps the box inside the top or
+                // left edge of the sticky view rectangle.
+                let stuck = [y > 0.0, x < 0.0, y < 0.0, x > 0.0];
+                return match self.value.as_deref() {
+                    None => stuck.contains(&true),
+                    Some(NONE) => !stuck.contains(&true),
+                    Some(edge) => stuck_edge(edge, crate::style::logical::Flow::of(style))
+                        .is_some_and(|side| stuck[side]),
+                }
+                .into();
             }
             ScrollState::Stuck => false,
         };
-        Ok((described && self.none == Some(true)).into())
+        (described && none).into()
     }
+}
+
+/// The physical side, `TOP` to `LEFT`, of a `stuck` edge keyword in the container's `flow`
+/// (CSS Conditional 5 §6.3.2).
+fn stuck_edge(edge: &str, flow: crate::style::logical::Flow) -> Option<usize> {
+    use crate::style::logical::{BOTTOM, LEFT, RIGHT, TOP};
+    Some(match edge {
+        "top" => TOP,
+        "right" => RIGHT,
+        "bottom" => BOTTOM,
+        "left" => LEFT,
+        "block-start" => flow.physical_side(true, false),
+        "block-end" => flow.physical_side(true, true),
+        "inline-start" => flow.physical_side(false, false),
+        "inline-end" => flow.physical_side(false, true),
+        _ => return None,
+    })
 }
 
 impl ContainerQuery {
@@ -406,9 +468,7 @@ impl Test {
                 None => Ok(Truth::Unknown),
             },
             Self::Style(query) => query.evaluate(values),
-            Self::ScrollState(query) => {
-                query.try_evaluate(|feature| feature.evaluate(&values.container.style))
-            }
+            Self::ScrollState(query) => Ok(query.evaluate(|feature| feature.evaluate(values))),
         }
     }
 }
@@ -567,6 +627,23 @@ impl QueryValues for ContainerValues<'_> {
     }
     fn registrations(&self) -> &Registrations {
         &self.sheet.registrations
+    }
+}
+
+impl Style {
+    /// The element with this style, where it is a scroll-state query container: such an
+    /// element is its own nearest container.
+    pub(crate) fn scroll_state_container(&self) -> Option<ElementId> {
+        self.containment
+            .container_type
+            .scroll_state
+            .then(|| {
+                self.containers
+                    .0
+                    .as_ref()
+                    .map(|container| container.element)
+            })
+            .flatten()
     }
 }
 

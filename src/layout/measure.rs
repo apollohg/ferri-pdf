@@ -717,7 +717,8 @@ pub(super) struct Measurer<'a> {
     /// Named-page boundaries are excluded beneath table cells.
     pub named_pages: bool,
     /// The content-box size of each query container's first box fragment.
-    pub container_sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
+    pub container_sizes:
+        std::collections::HashMap<crate::dom::ElementId, crate::style::ContainerMeasurement>,
     /// The part of its contents' paragraph that the ruby annotation box being measured lays
     /// out, on a line breaking inside its bases (CSS Ruby 1 §3.4.2).
     pub annotation_part: Option<(*const crate::document::Paragraph, std::ops::Range<usize>)>,

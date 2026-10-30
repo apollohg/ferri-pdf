@@ -474,6 +474,15 @@ impl Flow {
         }
     }
 
+    /// The physical side, `TOP` to `LEFT`, of the start or `end` edge of the block or inline
+    /// axis.
+    pub(crate) fn physical_side(self, block: bool, end: bool) -> usize {
+        self.side(
+            if block { Axis::Block } else { Axis::Inline },
+            if end { Edge::End } else { Edge::Start },
+        )
+    }
+
     pub(crate) fn block_axis(self) -> usize {
         self.dimension(Axis::Block)
     }

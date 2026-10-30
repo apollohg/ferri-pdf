@@ -184,7 +184,8 @@ struct LayoutPass {
     trace: LayoutTrace,
     generated: Option<crate::document::GeneratedValues>,
     /// The content-box size each query container measured.
-    container_sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
+    container_sizes:
+        std::collections::HashMap<crate::dom::ElementId, crate::style::ContainerMeasurement>,
     anchor_frames: crate::style::anchor_values::AnchorFrameMap,
     /// What the layout measured of the elements that `element()` images show.
     elements: Box<crate::document::ElementMeasurements>,

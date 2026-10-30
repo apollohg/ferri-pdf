@@ -356,20 +356,80 @@ fn scroll_state_queries_see_an_unscrolled_document() {
     }
 }
 
-/// A sticky container's stuck state depends on its shift, which differs on each page a
-/// static rendering fragments it across.
+/// CSS Conditional 5 §6.3.2: a sticky container is stuck to the edges whose insets shift it
+/// at the initial scroll position (CSS Position 3 §3.4), which layout measures on its first
+/// fragment; logical edges map through the container's own writing mode and direction.
 #[test]
-fn stuck_queries_on_sticky_containers_are_unsupported() {
-    let error = ferri_pdf::render_html(
-        "<style>.c{container-type:scroll-state;position:sticky;top:0}@container scroll-state(stuck: top){p{color:red}}</style><div class=c><p>x</p></div>",
-        &ferri_pdf::RenderOptions::default(),
-    )
-    .err()
-    .expect("a sticky query container's stuck state aborts the document");
-    assert!(
-        error.to_string().contains("scroll-state(stuck)"),
-        "the error names the query: {error}"
-    );
+fn stuck_queries_answer_the_shift_sticky_positioning_applies() {
+    const TOP: &str = "position:sticky;top:10pt";
+    const LEFT: &str = "position:sticky;left:10pt;width:50pt";
+    const VERTICAL: &str = "position:sticky;top:10pt;writing-mode:vertical-rl;height:50pt";
+    // Containers starting at the page's top-left edge, which their insets keep them inside,
+    // or further in, where nothing shifts them; one pressed against the page's bottom edge.
+    let at_start = "<div class=c><div class=x></div></div><div style=height:200pt></div>";
+    let inside = "<div style=height:50pt></div><div class=c><div class=x></div></div><div style=height:200pt></div>";
+    let at_end = "<div style=height:290pt></div><div class=c><div class=x></div></div>";
+    for (container, body, query, matches) in [
+        (TOP, at_start, "scroll-state(stuck: top)", true),
+        (TOP, at_start, "scroll-state(stuck: block-start)", true),
+        (TOP, at_start, "scroll-state(stuck)", true),
+        (TOP, at_start, "scroll-state(stuck: bottom)", false),
+        (TOP, at_start, "scroll-state(stuck: inline-start)", false),
+        (TOP, at_start, "scroll-state(stuck: none)", false),
+        (TOP, inside, "scroll-state(stuck: none)", true),
+        (TOP, inside, "scroll-state(stuck)", false),
+        (
+            "position:sticky;bottom:10pt",
+            at_end,
+            "scroll-state(stuck: bottom)",
+            true,
+        ),
+        (
+            "position:sticky;bottom:10pt",
+            at_end,
+            "scroll-state(stuck: block-end)",
+            true,
+        ),
+        (LEFT, at_start, "scroll-state(stuck: left)", true),
+        (LEFT, at_start, "scroll-state(stuck: inline-start)", true),
+        (
+            LEFT,
+            at_start,
+            "scroll-state((stuck: left) and (stuck: right))",
+            false,
+        ),
+        (
+            VERTICAL,
+            at_start,
+            "scroll-state(stuck: inline-start)",
+            true,
+        ),
+        (
+            VERTICAL,
+            at_start,
+            "scroll-state(stuck: block-start)",
+            false,
+        ),
+        (
+            "position:relative;top:10pt",
+            at_start,
+            "scroll-state(stuck: none)",
+            false,
+        ),
+    ] {
+        let trace = trace(
+            &format!(
+                ".c{{container-type:scroll-state;{container}}}.x{{height:10pt;width:10pt;background:red}}@container {query}{{.x{{background:green}}}}"
+            ),
+            body,
+        );
+        let expected = if matches { GREEN } else { RED };
+        assert_eq!(
+            colors(&trace),
+            [expected],
+            "`{container}` placed by {body} with {query}"
+        );
+    }
 }
 
 /// `attr()` and `if()` in a query substitute from the query container, not the element
