@@ -453,11 +453,7 @@ impl Stylesheet {
             .0;
         unsupported_in(
             &format!("@{}", crate::style::page_parser::FOOTNOTE_AT_RULE),
-            &[
-                [(Property::Perspective, footnote.perspective.is_some())].as_slice(),
-                &multicol(&footnote),
-            ]
-            .concat(),
+            &multicol(&footnote),
         )?;
         Ok(ResolvedPage {
             request,

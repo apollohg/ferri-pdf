@@ -22,16 +22,11 @@ pub(super) struct FootnoteLayout {
     /// it starts on to the bottom of the line the next one starts on when they share it, or
     /// else to that line's top.
     members: Vec<[f32; 2]>,
-    cloned: Option<ClonedBody>,
-}
-
-/// A footnote body that clones its decoration at breaks (CSS Fragmentation 3 §5.4): its
-/// border box in the layout, and its block-start and block-end border and padding, which
-/// wrap each of its parts.
-#[derive(Clone, Copy)]
-struct ClonedBody {
-    rect: Rect,
-    edges: [f32; 2],
+    /// The body's own border box in the layout, where its box paints.
+    body_box: Option<Rect>,
+    /// The block-start and block-end border and padding of a body that clones its decoration
+    /// at breaks (CSS Fragmentation 3 §5.4), which wrap each of its parts.
+    cloned: Option<[f32; 2]>,
 }
 
 /// The slice `[top, bottom)` of a footnote body that one page's footnote area holds.
@@ -314,23 +309,21 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             measured.before.value() + measured.height + measured.after.value()
         };
         let measured_after = measured.after.value();
-        let cloned = (!inline && body.style().clone_decoration && !measured.through)
+        let body_box = (!inline && !measured.through)
             .then_some(measured.paint.as_ref())
             .flatten()
-            .map(|paint| {
-                let geometry = &measured.geometry;
-                ClonedBody {
-                    rect: Rect {
-                        y: measured.before.value(),
-                        height: measured.height,
-                        ..paint.rect
-                    },
-                    edges: [
-                        geometry.padding[0] + geometry.border[0],
-                        geometry.padding[2] + geometry.border[2],
-                    ],
-                }
+            .map(|paint| Rect {
+                y: measured.before.value(),
+                height: measured.height,
+                ..paint.rect
             });
+        let cloned = body_box.filter(|_| body.style().clone_decoration).map(|_| {
+            let geometry = &measured.geometry;
+            [
+                geometry.padding[0] + geometry.border[0],
+                geometry.padding[2] + geometry.border[2],
+            ]
+        });
         let flow = Paginator::standalone(
             &mut *self.measurer,
             measured,
@@ -408,6 +401,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             compact,
             breaks,
             members,
+            body_box,
             cloned,
         });
         self.footnotes
@@ -779,7 +773,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             }
             let layout = self.footnote_layout(waiting.body, area.width)?;
             let used = rows_height(&self.footnotes.pages[page], area.width);
-            let edges = layout.cloned.map_or([0.0; 2], |cloned| cloned.edges);
+            let edges = layout.cloned.unwrap_or_default();
             // A cloned body's slice ends with its block-end edges as well.
             let end = waiting.top
                 + (limit - used.unwrap_or(0.0) - waiting.repeated[0] - edges[1]).max(0.0);
@@ -894,6 +888,13 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             if transform.as_ref().is_some_and(Region::collapses) {
                 continue;
             }
+            // CSS Transforms 2 §4.1.4: the area's perspective projects its transformed bodies.
+            let perspective = {
+                let frame = crate::layout::writing::Frame::for_style(&style);
+                style
+                    .parent_3d(&frame.boxes(&paint.fragment_areas()))
+                    .map(|parent| parent.mapped(frame.inverse().matrix))
+            };
             let group = Group::of(&style);
             let pushes: Vec<_> = transform
                 .clone()
@@ -915,6 +916,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             for row in rows(self.footnotes.parts(page), area.width) {
                 for (part, offset) in row.parts {
                     let layout = self.footnote_layout(part.body, area.width)?;
+                    let body_style = self.document_footnotes().bodies[part.body].block.style();
                     let window = Rect {
                         x: 0.0,
                         y: part.top,
@@ -933,16 +935,26 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                     // The part's slice of the body's items, placed in the area; a cloned
                     // body's box wraps the slice whole, outside its clip.
                     let frame = |mut items: Vec<DisplayItem>, lines: Vec<TextLine>| {
-                        let cloned = layout.cloned.filter(|_| sliced).and_then(|cloned| {
-                            cloned_box(&items, cloned.rect).map(|index| (index, cloned))
-                        });
-                        if let Some((index, cloned)) = cloned {
+                        let body = layout
+                            .body_box
+                            .and_then(|rect| body_box(&items, rect).map(|index| (index, rect)));
+                        if let (Some(perspective), Some((index, _))) = (perspective, body) {
+                            project_body(
+                                &mut items,
+                                index,
+                                body_style,
+                                perspective,
+                                [origin[0], origin[1], layout.width, layout.height],
+                            );
+                        }
+                        if let Some((index, rect)) =
+                            body.filter(|_| sliced && layout.cloned.is_some())
+                        {
                             let DisplayItem::Box(paint) = &mut items[index] else {
-                                unreachable!("the cloned body's box is a box paint");
+                                unreachable!("the body's box is a box paint");
                             };
-                            let top = cloned.rect.y.max(part.top) - part.repeated[0];
-                            let bottom = (cloned.rect.y + cloned.rect.height).min(part.bottom)
-                                + part.repeated[1];
+                            let top = rect.y.max(part.top) - part.repeated[0];
+                            let bottom = (rect.y + rect.height).min(part.bottom) + part.repeated[1];
                             paint.rect = Rect {
                                 y: top,
                                 height: bottom - top,
@@ -1041,8 +1053,47 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
     }
 }
 
+/// Replaces the transform of the footnote body whose box paints at `index` of its display
+/// list by its plane under the footnote area's `perspective`, given in page space; the body's
+/// layout of `[width, height]` is placed at `[x, y]` (CSS Transforms 2 §4.1.4).
+fn project_body(
+    items: &mut [DisplayItem],
+    index: usize,
+    style: &crate::style::Style,
+    perspective: crate::style::Parent3d,
+    [x, y, width, height]: [f32; 4],
+) {
+    let DisplayItem::Box(paint) = &items[index] else {
+        unreachable!("the body's box is a box paint");
+    };
+    let areas = paint.fragment_areas();
+    let Some(push) = items[..index].iter().rposition(|item| {
+        matches!(
+            item,
+            DisplayItem::PushTransform(_) | DisplayItem::PushProjection(_)
+        )
+    }) else {
+        return;
+    };
+    let frame = crate::layout::writing::Frame::for_style(style);
+    let parent = perspective
+        .mapped([1.0, 0.0, 0.0, 1.0, -x, -y])
+        .mapped(frame.matrix);
+    let reference = crate::style::motion::Reference::rect(Rect {
+        x: 0.0,
+        y: 0.0,
+        width,
+        height,
+    });
+    if let Some(plane) = style.plane(&frame.boxes(&areas), Some(&parent), &reference) {
+        let plane =
+            crate::style::transform::conjugated(&plane, frame.inverse().matrix, frame.matrix);
+        items[push] = Region::projected(style.projected(&plane, &areas)).push();
+    }
+}
+
 /// The index in a footnote body's display list of its own box, whose border box is `rect`.
-fn cloned_box(items: &[DisplayItem], rect: Rect) -> Option<usize> {
+fn body_box(items: &[DisplayItem], rect: Rect) -> Option<usize> {
     items
         .iter()
         .position(|item| matches!(item, DisplayItem::Box(paint) if paint.rect == rect))

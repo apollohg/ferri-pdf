@@ -489,3 +489,70 @@ fn cloned_footnote_bodies_wrap_each_part_in_their_border_and_padding() {
         "a sliced body keeps its whole box: {sliced:?}"
     );
 }
+
+#[test]
+fn footnote_area_perspective_projects_its_transformed_bodies() {
+    // CSS Transforms 2 §4.1.4: the area's perspective places its transformed child, the
+    // body, as a box with the same perspective places a child in the flow. The one-line area
+    // spans the 280pt by 10pt bottom of the page area, which the reference box occupies.
+    const BODY: [u8; 3] = [0, 255, 0];
+    let corners = |trace: &crate::LayoutTrace| -> Vec<[f32; 2]> {
+        let mut found = None;
+        let mut search = |items: &[DisplayItem], origin: [f32; 2]| {
+            let mut projection = None;
+            for item in items {
+                match item {
+                    DisplayItem::PushProjection(matrix) => projection = Some(*matrix),
+                    DisplayItem::Box(paint) if paint.decoration.background.rgb == BODY => {
+                        found = Some((projection, paint.rect, origin));
+                    }
+                    _ => {}
+                }
+            }
+        };
+        let page = &trace.display_lists[0];
+        search(page, [0.0; 2]);
+        for item in page {
+            if let DisplayItem::Frame(frame) = item {
+                search(&frame.items, [frame.matrix[4], frame.matrix[5]]);
+            }
+        }
+        let (projection, rect, origin) = found.expect("the body paints");
+        let projection = projection.expect("the body is projected");
+        [
+            [rect.x, rect.y],
+            [rect.x + rect.width, rect.y],
+            [rect.x, rect.y + rect.height],
+            [rect.x + rect.width, rect.y + rect.height],
+        ]
+        .map(|corner| {
+            let [x, y] = crate::paint::projection::apply(projection, corner);
+            [x + origin[0], y + origin[1]]
+        })
+        .to_vec()
+    };
+    let footnote = render(
+        "@page{@footnote{perspective:100pt}}.fn{background:rgb(0,255,0);transform:rotateX(45deg)}",
+        "<p>Call<span class=fn>Note</span></p>",
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    let reference = render(
+        ".area{position:absolute;left:0;top:90pt;width:280pt;height:10pt;perspective:100pt}.body{height:10pt;background:rgb(0,255,0);transform:rotateX(45deg)}",
+        "<div class=area><div class=body></div></div>",
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    let [projected, expected] = [corners(&footnote), corners(&reference)];
+    for (corner, (actual, expected)) in projected.iter().zip(&expected).enumerate() {
+        for axis in 0..2 {
+            common::assert_labelled_pt(
+                &format!("corner {corner} axis {axis}: {projected:?} against {expected:?}"),
+                actual[axis],
+                expected[axis],
+            );
+        }
+    }
+}

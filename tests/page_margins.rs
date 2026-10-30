@@ -239,10 +239,6 @@ fn nonfinite_page_margin_geometry_is_rejected_even_without_text() {
 #[test]
 fn page_contexts_reject_properties_their_boxes_do_not_implement() {
     for (rule, expected) in [
-        (
-            "@page{@footnote{perspective:100pt}}",
-            "perspective in @footnote",
-        ),
         ("@page{@footnote{columns:2}}", "column-count in @footnote"),
         (
             "@page{@top-center{content:'a';column-width:5em}}",
