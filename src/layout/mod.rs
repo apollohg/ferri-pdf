@@ -441,6 +441,7 @@ fn paginate<'t>(
         event_lines: _,
         inline_footnotes,
         page_extents,
+        flow_end: _,
     } = paginated;
     for (index, page) in page_boxes.iter().enumerate() {
         let frame = writing::Frame::physical(flow, page.geometry.paper);

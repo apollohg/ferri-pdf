@@ -301,6 +301,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         } else {
             measured.before.value() + measured.height + measured.after.value()
         };
+        let measured_after = measured.after.value();
         let flow = Paginator::standalone(
             &mut *self.measurer,
             measured,
@@ -314,6 +315,8 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             // A footnote area's backgrounds may clip to the text of the bodies it holds.
             true,
         )?;
+        // The body is a formatting context root whose floats extend it (CSS 2.1 §10.6.7).
+        let height = height.max(flow.extent + measured_after);
         let monolithic: Vec<[f32; 2]> = flow
             .line_boxes
             .iter()

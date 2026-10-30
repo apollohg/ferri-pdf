@@ -416,3 +416,28 @@ fn calls_that_no_break_can_move_let_their_footnotes_continue_after_them() {
     );
     assert_eq!(first.len(), 2, "the footnote continues on the next page");
 }
+
+#[test]
+fn footnote_bodies_contain_their_floats_as_formatting_context_roots() {
+    // A footnote element floats (CSS GCPM 3 §2.2), so it establishes a block formatting
+    // context whose automatic height includes its floats (CSS 2.1 §9.4.1, §10.6.7); the area
+    // grows to hold the 50pt float above the page area's bottom at 110pt.
+    const PAGE_AREA_BOTTOM_PT: f32 = 110.0;
+    const FLOAT_PT: f32 = 50.0;
+    let trace = render(
+        ".f{float:left;width:20pt;height:50pt;background:rgb(255,0,0)}",
+        "<p>Text<span class=fn><span class=f></span>Note</span></p>",
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    let floats = common::page_boxes(&trace, [255, 0, 0]);
+    assert_eq!(floats.len(), 1, "one float paints: {floats:?}");
+    let float = floats[0];
+    common::assert_labelled_pt("float height", float.height, FLOAT_PT);
+    common::assert_labelled_pt(
+        "float bottom at the footnote area's bottom",
+        float.y + float.height,
+        PAGE_AREA_BOTTOM_PT,
+    );
+}

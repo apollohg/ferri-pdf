@@ -484,6 +484,8 @@ impl Style {
             || self.is_scroll_container()
             || self.position.is_out_of_flow()
             || self.floating().is_some()
+            // CSS GCPM 3 §2.2: a footnote element floats to the footnote area.
+            || (self.footnote() && !self.display.is_inline_level())
             || self.display.is_atomic_inline()
             || self.multicol.is_multicol()
             // CSS Box Alignment 3 §5.4: content alignment makes a block container independent.

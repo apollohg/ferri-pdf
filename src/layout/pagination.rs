@@ -993,6 +993,8 @@ pub(super) struct Paginated {
     /// The block size of the content each page holds, with its footnote area, where a forced
     /// break or the flow's end ended the page; `None` where content continued past its end.
     pub page_extents: Vec<Option<f32>>,
+    /// Where the root's flow ends in its last fragmentainer.
+    pub flow_end: f32,
 }
 
 /// Where an element starts in a standalone flow: the line box its start lies on, or the
@@ -1008,6 +1010,8 @@ pub(super) struct EventLine {
 /// A box laid out alone: its text lines, display list, line box extents and navigation, and
 /// the text area of its root and the root's in-flow and floated descendants when requested.
 pub(super) struct StandaloneFlow {
+    /// Where the root's flow ends, below the floats its formatting context encloses.
+    pub extent: f32,
     pub lines: Vec<TextLine>,
     pub items: Vec<DisplayItem>,
     pub line_boxes: Vec<[f32; 2]>,
@@ -7099,6 +7103,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         let mut paginated = paginator.document(Some(root), destinations, std::iter::empty())?;
         Ok(StandaloneFlow {
+            extent: paginated.flow_end,
             text_area: std::mem::take(&mut paginated.text_areas)
                 .into_vec()
                 .into_iter()
@@ -7157,9 +7162,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 self.string_locations.record(self.page, event);
             }
         }
-        // Page breaks fall inside the root's formatting context.
+        // Page breaks fall inside the root's formatting context; an unbroken flow keeps the
+        // root's own, which encloses its floats.
         if let Some(mut root) = root {
-            root.independent = false;
+            root.independent &= self.unbroken > 0;
             self.containers.push(Container {
                 pending: Vec::new(),
                 fixed: false,
@@ -7170,6 +7176,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 self.place(pending, &Containing::Page)?;
             }
         }
+        let flow_end = self.y;
         if self.physical_flow() {
             self.page_extents[self.page] = Some(self.flow_extent() + self.pending_value());
         }
@@ -7501,6 +7508,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             footnote_deferrals: self.footnotes.take_deferred(),
             inline_footnotes: self.footnotes.take_inline_placement(),
             page_extents,
+            flow_end,
         })
     }
 }
