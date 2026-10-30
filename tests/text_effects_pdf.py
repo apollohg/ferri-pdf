@@ -20,6 +20,7 @@ TOP_PT = 20
 LINE_HEIGHT_PT = 100
 DPI = 144
 PX_PER_PT = DPI / 72
+PT_PER_CSS_PX = 0.75
 # Antialiased edges and the PDF rasterizer place ink within this many pixels.
 EDGE_TOLERANCE_PX = 2
 # A Gaussian sampled on the shadow mask grid, then rasterized, stays this close to erf.
@@ -57,6 +58,23 @@ class TextEffectsPdf(unittest.TestCase):
             f"<!doctype html><style>@font-face{{font-family:Probe;src:url('{FONT.as_uri()}')}}"
             f"{PAGE}p{{position:absolute;left:{LEFT_PT}pt;top:{TOP_PT}pt;margin:0;"
             f"font:{SIZE_PT}pt/{LINE_HEIGHT_PT}pt Probe;{style}}}</style><p>{text}</p>")
+        rendered = subprocess.run([str(RENDERER), str(source), str(target)],
+                                  capture_output=True, text=True, timeout=60)
+        self.assertEqual(rendered.returncode, 0, rendered.stderr)
+        return target
+
+    def render_svg(self, style, text):
+        """`text` as SVG text whose baseline and left edge are the paragraph's, in an SVG whose
+        user units are CSS pixels; `style` paints with `fill` where the paragraph's uses
+        `color`."""
+        source, target = self.output / "input.html", self.output / "output.pdf"
+        source.write_text(
+            f"<!doctype html><style>@font-face{{font-family:Probe;src:url('{FONT.as_uri()}')}}"
+            f"{PAGE}svg{{position:absolute;left:0;top:0}}</style>"
+            f"<svg width=\"300pt\" height=\"200pt\" viewBox=\"0 0 {300 / PT_PER_CSS_PX} "
+            f"{200 / PT_PER_CSS_PX}\"><text x=\"{LEFT_PT / PT_PER_CSS_PX}\" "
+            f"y=\"{self.baseline_pt() / PT_PER_CSS_PX}\" style=\"font:{SIZE_PT}pt Probe;"
+            f"{style.replace('color:', 'fill:')}\">{text}</text></svg>")
         rendered = subprocess.run([str(RENDERER), str(source), str(target)],
                                   capture_output=True, text=True, timeout=60)
         self.assertEqual(rendered.returncode, 0, rendered.stderr)
@@ -157,7 +175,13 @@ class TextEffectsPdf(unittest.TestCase):
                         "a 4pt stroke centred on the H outline")
 
     def test_sharp_shadows_offset_the_glyph_beneath_the_text_in_reverse_order(self):
-        target = self.render("color:black;text-shadow:6pt 4pt red,12pt 8pt blue", "H")
+        """CSS Text Decoration 3 §4, for the document's text and SVG text alike."""
+        for render in (self.render, self.render_svg):
+            with self.subTest(render=render.__name__):
+                self.assert_sharp_shadows(
+                    render("color:black;text-shadow:6pt 4pt red,12pt 8pt blue", "H"))
+
+    def assert_sharp_shadows(self, target):
         self.assertEqual([glyph.text for glyph in pdf_content.glyphs(target)], ["H"],
                          "shadows are not text")
         box = metrics("H")["box"]
@@ -185,9 +209,15 @@ class TextEffectsPdf(unittest.TestCase):
                              expected, reason)
 
     def test_blurred_shadows_follow_a_gaussian_of_half_the_blur_radius(self):
+        """CSS Text Decoration 3 §4, for the document's text and SVG text alike."""
+        for render in (self.render, self.render_svg):
+            with self.subTest(render=render.__name__):
+                self.assert_blurred_shadow(render)
+
+    def assert_blurred_shadow(self, render):
         blur = 16
         sigma = blur / 2
-        target = self.render(f"color:transparent;text-shadow:0 0 {blur}pt red", "█")
+        target = render(f"color:transparent;text-shadow:0 0 {blur}pt red", "█")
         box = metrics("█")["box"]
         baseline = self.baseline_pt()
         edge = LEFT_PT + box[0] * SIZE_PT

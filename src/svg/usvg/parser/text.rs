@@ -144,16 +144,22 @@ pub(crate) fn convert(
         linear_light: parent.linear_light,
     };
 
-    if text::convert(
+    let Some(shadows) = text::convert(
         &mut text,
         state.font_provider.unwrap_or(&state.opt.font_resolver),
         cache,
-    )
-    .is_none()
-    {
+    ) else {
         return;
-    }
+    };
 
+    // CSS Text Decoration 3 §4: shadows paint beneath the text, in its user space.
+    for mut shadow in shadows {
+        if let Node::Group(group) = &mut shadow {
+            group.abs_transform = parent.abs_transform.pre_concat(group.transform);
+            group.calculate_bounding_boxes();
+        }
+        parent.children.push(shadow);
+    }
     parent.children.push(Node::Text(Box::new(text)));
 }
 

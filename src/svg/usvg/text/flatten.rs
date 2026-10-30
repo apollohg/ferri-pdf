@@ -66,8 +66,14 @@ fn host_stroked(path: Path, host: Option<Transform>) -> Option<Path> {
     .with_non_scaling_stroke()
 }
 
-pub(crate) fn flatten(text: &mut Text, cache: &mut Cache) -> Option<(Group, NonZeroRect)> {
+/// The text's outlines, their stroke bounding box, and the layers its spans' `text-shadow`
+/// casts beneath them.
+pub(crate) fn flatten(
+    text: &mut Text,
+    cache: &mut Cache,
+) -> Option<(Group, NonZeroRect, Vec<Node>)> {
     let mut new_children = vec![];
+    let mut shadows = vec![];
 
     let rendering_mode = resolve_rendering_mode(text);
     let host = text.non_scaling_stroke.then_some(text.abs_transform);
@@ -212,6 +218,12 @@ pub(crate) fn flatten(text: &mut Text, cache: &mut Cache) -> Option<(Group, NonZ
             }
         }
 
+        shadows.extend(shadow_layers(
+            &span.shadows,
+            &new_children[span_start..],
+            cache,
+        ));
+
         // A span composites in its own element's colour space (SVG 2 §13.9).
         if span.linear_light != text.linear_light && new_children.len() > span_start {
             let mut group = Group {
@@ -236,7 +248,146 @@ pub(crate) fn flatten(text: &mut Text, cache: &mut Cache) -> Option<(Group, NonZ
 
     group.calculate_bounding_boxes();
     let stroke_bbox = group.stroke_bounding_box().to_non_zero_rect()?;
-    Some((group, stroke_bbox))
+    Some((group, stroke_bbox, shadows))
+}
+
+/// The layers `shadows` cast from `ink`, a span's flattened glyphs and decorations (CSS Text
+/// Decoration 3 §4): each fills them opaquely in its colour, offset and blurred, with the
+/// colour's alpha as the layer's opacity, so overlapping shapes composite together. The first
+/// shadow is on top.
+fn shadow_layers(
+    shadows: &[crate::style::TextShadow],
+    ink: &[Node],
+    cache: &mut Cache,
+) -> Vec<Node> {
+    let mut layers = Vec::new();
+    for shadow in shadows.iter().rev() {
+        let color = shadow.color.used;
+        let paint = Paint::Color(Color::new_rgb(color.rgb[0], color.rgb[1], color.rgb[2]));
+        let [dx, dy] = shadow
+            .offset
+            .map(|length| length / crate::style::POINTS_PER_PIXEL);
+        let transform = Transform::from_translate(dx, dy);
+        let mut layer = Group {
+            transform,
+            abs_transform: transform,
+            opacity: Opacity::new_clamped(color.alpha),
+            children: ink
+                .iter()
+                .map(|node| silhouette(node, &paint, cache))
+                .collect(),
+            ..Group::empty()
+        };
+        layer.calculate_bounding_boxes();
+        if shadow.blur > 0.0 {
+            let cast = crate::paint::BoxShadow {
+                offset: shadow.offset,
+                blur: shadow.blur,
+                spread: 0.0,
+                color,
+                inset: false,
+            };
+            let extent = cast.extent() / crate::style::POINTS_PER_PIXEL;
+            let deviation = PositiveF32::new(cast.sigma() / crate::style::POINTS_PER_PIXEL)
+                .unwrap_or(PositiveF32::ZERO);
+            // The layer's bounding box is in its own coordinates, before its offset.
+            let Some(region) = outset(layer.layer_bounding_box(), extent) else {
+                continue;
+            };
+            layer.filters = vec![Arc::new(filter::Filter {
+                id: cache.gen_filter_id(),
+                rect: region,
+                primitives: vec![filter::Primitive {
+                    rect: region,
+                    color_interpolation: filter::ColorInterpolation::SRGB,
+                    result: SHADOW_RESULT.to_owned(),
+                    kind: filter::Kind::GaussianBlur(filter::GaussianBlur {
+                        input: filter::Input::SourceGraphic,
+                        std_dev_x: deviation,
+                        std_dev_y: deviation,
+                    }),
+                }],
+            })];
+            layer.calculate_bounding_boxes();
+        }
+        layers.push(Node::Group(Box::new(layer)));
+    }
+    layers
+}
+
+/// The filter result naming a blurred shadow.
+const SHADOW_RESULT: &str = "shadow";
+
+fn outset(rect: NonZeroRect, by: f32) -> Option<NonZeroRect> {
+    NonZeroRect::from_ltrb(
+        rect.left() - by,
+        rect.top() - by,
+        rect.right() + by,
+        rect.bottom() + by,
+    )
+}
+
+/// `node` with every fill and stroke opaque `paint`, and images recoloured to it, keeping their
+/// coverage.
+fn silhouette(node: &Node, paint: &Paint, cache: &mut Cache) -> Node {
+    match node {
+        Node::Path(path) => {
+            let mut path = path.clone();
+            if let Some(fill) = &mut path.fill {
+                fill.paint = paint.clone();
+                fill.opacity = Opacity::ONE;
+                fill.context_element = None;
+            }
+            if let Some(stroke) = &mut path.stroke {
+                stroke.paint = paint.clone();
+                stroke.opacity = Opacity::ONE;
+                stroke.context_element = None;
+            }
+            Node::Path(path)
+        }
+        Node::Group(group) => {
+            let mut group = group.clone();
+            group.children = group
+                .children
+                .iter()
+                .map(|child| silhouette(child, paint, cache))
+                .collect();
+            Node::Group(group)
+        }
+        Node::Image(image) => {
+            let Paint::Color(color) = paint else {
+                unreachable!("silhouettes are painted in a shadow colour")
+            };
+            let channel = |value: u8| f32::from(value) / f32::from(u8::MAX);
+            let [red, green, blue] = [color.red, color.green, color.blue].map(channel);
+            let region = image.abs_bounding_box;
+            let mut group = Group {
+                filters: vec![Arc::new(filter::Filter {
+                    id: cache.gen_filter_id(),
+                    rect: region,
+                    primitives: vec![filter::Primitive {
+                        rect: region,
+                        color_interpolation: filter::ColorInterpolation::SRGB,
+                        result: SHADOW_RESULT.to_owned(),
+                        kind: filter::Kind::ColorMatrix(filter::ColorMatrix {
+                            input: filter::Input::SourceGraphic,
+                            kind: filter::ColorMatrixKind::Matrix(vec![
+                                0.0, 0.0, 0.0, 0.0, red, //
+                                0.0, 0.0, 0.0, 0.0, green, //
+                                0.0, 0.0, 0.0, 0.0, blue, //
+                                0.0, 0.0, 0.0, 1.0, 0.0,
+                            ]),
+                        }),
+                    }],
+                })],
+                children: vec![Node::Image(image.clone())],
+                ..Group::empty()
+            };
+            group.calculate_bounding_boxes();
+            Node::Group(Box::new(group))
+        }
+        Node::Text(_) => node.clone(),
+    }
 }
 
 struct PathBuilder {

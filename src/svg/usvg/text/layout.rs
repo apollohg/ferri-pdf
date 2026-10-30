@@ -187,6 +187,8 @@ pub struct Span {
     /// A line-through text decoration of the span.
     /// Needs to be rendered after all glyphs.
     pub line_through: Option<Path>,
+    /// `text-shadow`, in points.
+    pub(crate) shadows: Arc<[crate::style::TextShadow]>,
 }
 
 #[derive(Clone, Debug)]
@@ -406,6 +408,7 @@ pub(crate) fn layout_text(
                         } else {
                             None
                         },
+                        shadows: span.style.text_paint.shadows.clone(),
                     });
                 }
             }
