@@ -105,7 +105,10 @@ fn draw_pattern(
     let mut builder = surface.stream_builder();
     let mut tile_surface = builder.surface();
     // A form gives nested shading patterns the tile's default user space.
-    let isolated = matches!(layer.image, TileImage::Gradient(_));
+    let isolated = matches!(
+        layer.image,
+        TileImage::Gradient(_) | TileImage::CrossFade(..)
+    );
     if isolated {
         tile_surface.push_isolated();
     }
@@ -183,7 +186,7 @@ pub(super) fn draw_border_image(
     result
 }
 
-fn draw_tile(
+pub(super) fn draw_tile(
     image: &TileImage<'_>,
     rect: Rect,
     viewport: Rect,
@@ -210,6 +213,9 @@ fn draw_tile(
             surface.set_fill(Some(painting::fill(*color)?));
             surface.draw_path(&rect_path(rect)?);
             Ok(())
+        }
+        TileImage::CrossFade(arguments, _) => {
+            crate::writer::cross_fade::draw(arguments, rect, viewport, surface, images)
         }
     }
 }

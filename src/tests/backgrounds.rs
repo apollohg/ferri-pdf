@@ -1,7 +1,6 @@
 use super::common;
-use crate::graphics::{
-    BackgroundImage, Color, NaturalDimensions, ResolvedGradient, Shading, TileImage, image_size,
-};
+use crate::graphics::{BackgroundImage, Color, ResolvedGradient, Shading, TileImage, image_size};
+use crate::paint::NaturalDimensions;
 use crate::paint::{BackgroundSize, GradientStop, Repeat, SizeComponent, rounded_size};
 use crate::{BoxPaint, DisplayItem, Rect, render_html};
 use common::{PROFILE, local_options as options};
@@ -92,7 +91,9 @@ fn gradient(image: &str) -> ResolvedGradient {
     assert_eq!(layers.len(), 1, "{image} is one layer");
     match &layers[0].image {
         TileImage::Gradient(gradient) => gradient.clone(),
-        TileImage::Image(..) | TileImage::Color(_) => panic!("{image} must resolve to a gradient"),
+        TileImage::Image(..) | TileImage::Color(_) | TileImage::CrossFade(..) => {
+            panic!("{image} must resolve to a gradient")
+        }
     }
 }
 fn close(label: &str, actual: f32, expected: f32) {

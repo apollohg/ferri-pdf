@@ -265,6 +265,11 @@ fn zoom_image(image: &mut BackgroundImage, factor: f32) {
     if let BackgroundImage::Url { scale, .. } | BackgroundImage::Image { scale, .. } = image {
         *scale *= factor;
     }
+    if let BackgroundImage::CrossFade(layers) = image {
+        for layer in layers {
+            zoom_image(&mut layer.image, factor);
+        }
+    }
     if let BackgroundImage::Gradient(gradient) = image {
         let conic = matches!(gradient.shape, paint::GradientShape::Conic { .. });
         match &mut gradient.shape {

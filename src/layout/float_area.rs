@@ -470,6 +470,12 @@ impl AlphaGrid {
     fn at(&self, column: usize, row: usize) -> u8 {
         self.alpha[row * self.columns + column]
     }
+    /// The sample covering a point given as fractions of the grid's extent.
+    fn sample(&self, [x, y]: [f32; 2]) -> u8 {
+        let index =
+            |fraction: f32, count: usize| ((fraction * count as f32) as usize).min(count - 1);
+        self.at(index(x, self.columns), index(y, self.rows))
+    }
     /// The samples covering `part`, given as fractions of the grid's extent.
     fn cropped(&self, part: Rect) -> Self {
         let span = |start: f32, length: f32, count: usize| {
@@ -626,6 +632,32 @@ fn alpha_grid(
             }
         }
         BackgroundImage::Image { image, .. } => return image_alpha(image, content, work),
+        // CSS Images 4 §2.6.2: each argument fills the image, and alpha averages by weight.
+        BackgroundImage::CrossFade(layers) => {
+            let percentages: Vec<f32> = layers.iter().map(|layer| layer.percentage).collect();
+            let (weights, _) = crate::paint::normalize_mix(&percentages, false);
+            let [columns, rows] = [samples(content.width), samples(content.height)];
+            let mut sums = vec![0.0_f32; columns * rows];
+            for (layer, weight) in layers.iter().zip(weights) {
+                let Some(grid) = alpha_grid(&layer.image, content, work)? else {
+                    continue;
+                };
+                work.spend(sums.len())?;
+                for (index, sum) in sums.iter_mut().enumerate() {
+                    let [column, row] = [index % columns, index / columns];
+                    *sum += weight
+                        * f32::from(grid.sample([
+                            (column as f32 + 0.5) / columns as f32,
+                            (row as f32 + 0.5) / rows as f32,
+                        ]));
+                }
+            }
+            AlphaGrid {
+                columns,
+                rows,
+                alpha: sums.into_iter().map(|sum| sum.round() as u8).collect(),
+            }
+        }
     }))
 }
 

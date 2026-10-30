@@ -203,6 +203,37 @@ impl Image {
             Self::View(view) => view.natural_size(),
         }
     }
+    /// Whether every pixel is opaque; vector images, and images that fail to decode, are not
+    /// known to be.
+    pub(crate) fn opaque(&self) -> bool {
+        match self {
+            Self::Raster(raster) => {
+                raster_reader(&raster.bytes, raster.image_format())
+                    .into_decoder()
+                    .is_ok_and(|decoder| !decoder.color_type().has_alpha())
+                    || raster
+                        .alpha()
+                        .is_ok_and(|(_, alpha)| alpha.iter().all(|sample| *sample == u8::MAX))
+            }
+            Self::Pixels(pixels) => pixels
+                .alpha()
+                .is_none_or(|alpha| alpha.iter().all(|sample| *sample == u8::MAX)),
+            Self::View(view) => {
+                let [width, height] = view.image.pixel_size(0.0);
+                view.region.is_none_or(|region| {
+                    region.x >= 0.0
+                        && region.y >= 0.0
+                        && region.x + region.width <= width
+                        && region.y + region.height <= height
+                }) && view.image.opaque()
+            }
+            Self::Svg(_)
+            | Self::Transparent
+            | Self::Frame(..)
+            | Self::Viewport(_)
+            | Self::Widget(_) => false,
+        }
+    }
     pub fn pixel_size(&self, available_width: f32) -> [f32; 2] {
         match self {
             Self::Raster(image) => image.pixel_size(),

@@ -313,6 +313,85 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
             self.assertEqual(pixels.getpixel((corner, corner)), RED,
                              'a rounded view box does not clip its corners')
 
+    def assertCentre(self, root, css, expected, message, tolerance=COLOR_TOLERANCE):
+        """The centre of an 80pt box styled by `css` shows `expected` over the white page."""
+        pixels = self.raster(root, self.render(root, f'.box{{{css}}}', '<div class=box></div>'))
+        centre = (PAGE_MARGIN + BOX // 2) * RASTER_DPI // POINTS_PER_INCH
+        actual = pixels.getpixel((centre, centre))
+        self.assertTrue(all(abs(a - b) <= tolerance for a, b in zip(actual, expected)),
+                        f'{message}: {actual} instead of {expected}; {css}')
+
+    def test_cross_fade_averages_premultiplied_arguments(self):
+        """CSS Images 4 §2.6.2: the weighted average, in premultiplied sRGB, of the arguments and
+        of transparent black for the share they leave below 100%; shares summing past 100%
+        scale down to it. One translucent argument composes in PDF, more are rasterized."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-cross-fade-') as directory:
+            root = Path(directory)
+            for image, expected, message in [
+                    ('cross-fade(red 30%, blue)', (77, 0, 179), 'an omitted percentage takes the rest'),
+                    ('cross-fade(red 100%, blue 100%)', (128, 0, 128), 'shares past 100% scale down'),
+                    ('cross-fade(blue 50%)', (128, 128, 255), 'the leftover share is transparent'),
+                    ('cross-fade(rgb(0 0 255 / 50%) 50%, red 50%)', (191, 64, 128),
+                     'a translucent argument under an opaque one'),
+                    ('cross-fade(red 50%, rgb(0 0 255 / 50%) 50%)', (191, 64, 128),
+                     'argument order does not matter'),
+                    ('cross-fade(rgb(255 0 0 / 50%), rgb(0 0 255 / 50%))', (191, 128, 191),
+                     'two translucent arguments average without compounding'),
+                    ('cross-fade(rgb(255 0 0) 40%, rgb(0 255 0 / .5) 20%, rgb(0 0 255 / 0) 40%)',
+                     (230, 153, 128), 'the specification example is rgb(204 51 0 / .5)'),
+                    ('cross-fade(linear-gradient(red, red) 25%, cross-fade(blue, lime) 75%)',
+                     (64, 96, 96), 'gradients and nested cross-fades are images'),
+                    ('cross-fade(image(red) 50%, image("missing.png") 50%)', (255, 128, 128),
+                     'an invalid argument is transparent')]:
+                self.assertCentre(root, f'background:{image}', expected, message)
+            self.assertCentre(root, 'background:cross-fade(rgb(255 0 0 / 50%), rgb(0 0 255 / 50%));'
+                                    'transform:scale(0.5)', (191, 128, 191),
+                              'a rasterized cross-fade follows the drawing transform')
+            self.assertCentre(root, 'background:cross-fade(black 50%) blue', (0, 0, 128),
+                              'the result composites over the layers below')
+            self.assertCentre(root, 'background:blue;mask-image:cross-fade(black 50%)', (128, 128, 255),
+                              'a mask layer keeps half of the box')
+            self.assertCentre(root, 'background:blue;mask-image:cross-fade(black 50%, white 25%)',
+                              (64, 64, 255), 'an alpha mask layer averages the arguments\' alpha')
+            self.assertCentre(root, 'background:blue;mask-image:cross-fade(black 50%, white 25%);'
+                                    'mask-mode:luminance', (191, 191, 255),
+                              'a luminance mask layer averages the arguments\' luminance')
+
+    def test_cross_fade_sizes_by_its_images_in_every_context(self):
+        """CSS Images 4 §2.6.1: the natural size is the weighted average of the arguments with
+        natural dimensions; colours do not take part. Each argument fills the result."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-cross-fade-size-') as directory:
+            root = Path(directory)
+            small = root / 'small.png'
+            Image.new('RGB', (10, 10), RED).save(small)
+            large = root / 'large.png'
+            Image.new('RGB', (30, 50), BLUE).save(large)
+            for image, expected in [
+                    (f'cross-fade(url("{small.as_uri()}"), url("{large.as_uri()}"))', (20, 30)),
+                    (f'cross-fade(url("{small.as_uri()}") 75%, url("{large.as_uri()}") 25%)', (15, 20)),
+                    (f'cross-fade(url("{small.as_uri()}") 25%, lime)', (10, 10)),
+                    (f'cross-fade(url("{small.as_uri()}") 50%, linear-gradient(red, blue))', (10, 10))]:
+                self.assertInkSize(root, f'.box{{background:{image} no-repeat}}', '<div class=box></div>',
+                                   expected, f'background {image}')
+            quadrants = blocks(root / 'quadrants.png', QUADRANTS)
+            self.assertBlocks(root, f'.box{{background:cross-fade(url("{quadrants}") 100%) 0 0 no-repeat}}',
+                              '<div class=box></div>', QUADRANTS, 'a whole share draws the image itself')
+            box = '<div class=box></div>'
+            self.assertSameInk(root, (f'.box{{border:7.5pt solid;border-image:cross-fade(url("{quadrants}")) 10}}', box),
+                               (f'.box{{border:7.5pt solid;border-image:url("{quadrants}") 10}}', box),
+                               'border images slice the cross-fade')
+            items = '<ul><li>One</li><li>Two</li></ul>'
+            self.assertSameInk(root, (f'ul{{padding:0 40pt}}li{{list-style-image:cross-fade(url("{quadrants}"))}}', items),
+                               (f'ul{{padding:0 40pt}}li{{list-style-image:url("{quadrants}")}}', items),
+                               'list markers size and draw the cross-fade')
+            body = f'<div class=f></div><p>{TEXT}</p>'
+            float_box = '.f{float:left;width:80pt;height:40pt;shape-image-threshold:0.5;'
+            for shape, expected in [('cross-fade(red 60%)', 'content-box'), ('cross-fade(red 40%)', 'inset(50%)'),
+                                    ('cross-fade(rgb(0 0 0 / 50%), red)', 'content-box')]:
+                self.assertSameInk(root, (f'{float_box}shape-outside:{shape}}}', body),
+                                   (f'{float_box}shape-outside:{expected}}}', body),
+                                   f'shape-outside: {shape} wraps like {expected}')
+
     def assertInkSize(self, root, css, body, expected, message):
         """Everything not white on the first page spans `expected` CSS pixels. Resolutions that
         are not exact binary fractions, and the whole pixels per metre PNG records, leave an

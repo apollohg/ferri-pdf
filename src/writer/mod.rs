@@ -1,6 +1,7 @@
 //! PDF serialization of ordered display lists; no document parsing or layout.
 mod backdrops;
 mod backgrounds;
+mod cross_fade;
 mod display;
 mod filters;
 mod images;
@@ -167,7 +168,7 @@ pub(crate) fn encode_parts_with_diagnostics(
         })
         .collect();
     let links = navigation::resolve_links(parts, &destinations);
-    let mut images = images::ImageWriter::default();
+    let mut images = images::ImageWriter::new(raster::pixels_per_point(settings_dpi));
     let mut image_diagnostics = Vec::with_capacity(parts.len());
     let mut outline = krilla::outline::Outline::new();
     for (part_index, part) in parts.iter().enumerate() {

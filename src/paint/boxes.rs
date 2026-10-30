@@ -334,22 +334,16 @@ impl<I> BoxDecoration<I> {
             .layers
             .images
             .iter()
-            .any(|image| matches!(image, crate::paint::BackgroundImage::Url { .. }))
+            .any(crate::paint::BackgroundImage::needs_loading)
         {
             Backgrounds::resolve_images(&mut Arc::make_mut(&mut self.masks).layers, &mut load)?;
         }
-        if matches!(
-            self.masks.border.source,
-            crate::paint::BackgroundImage::Url { .. }
-        ) {
+        if self.masks.border.source.needs_loading() {
             Arc::make_mut(&mut Arc::make_mut(&mut self.masks).border)
                 .source
                 .load(&mut load)?;
         }
-        if matches!(
-            self.border_image.source,
-            crate::paint::BackgroundImage::Url { .. }
-        ) {
+        if self.border_image.source.needs_loading() {
             Arc::make_mut(&mut self.border_image)
                 .source
                 .load(&mut load)?;

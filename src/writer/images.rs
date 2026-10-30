@@ -15,15 +15,35 @@ use std::{
 /// The orientation and scale transforms and the region clip a view draws inside.
 const VIEW_PUSHES: usize = 3;
 
-#[derive(Default)]
 pub(super) struct ImageWriter {
     failed: HashMap<usize, String>,
     reported: HashSet<usize>,
     diagnostics: Vec<String>,
     images: HashMap<usize, Image>,
     vectors: HashMap<(usize, u32, u32), crate::svg::usvg::Tree>,
+    opaque: HashMap<usize, bool>,
+    /// The density images composited in pixels resolve at.
+    pub(super) pixels_per_point: f32,
 }
 impl ImageWriter {
+    pub(super) fn new(pixels_per_point: f32) -> Self {
+        Self {
+            failed: HashMap::new(),
+            reported: HashSet::new(),
+            diagnostics: Vec::new(),
+            images: HashMap::new(),
+            vectors: HashMap::new(),
+            opaque: HashMap::new(),
+            pixels_per_point,
+        }
+    }
+    /// Whether every pixel of `image` is opaque, decoding it once.
+    pub(super) fn opaque(&mut self, image: &Arc<Asset>) -> bool {
+        *self
+            .opaque
+            .entry(Arc::as_ptr(image) as usize)
+            .or_insert_with(|| image.opaque())
+    }
     pub(crate) fn take_diagnostics(&mut self) -> Vec<String> {
         self.reported.clear();
         std::mem::take(&mut self.diagnostics)

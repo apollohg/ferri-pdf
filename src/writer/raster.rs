@@ -27,15 +27,20 @@ impl<'a> RasterContext<'a> {
         dpi: Option<krilla::image::ImageDpi>,
         definitions: &'a crate::document::svg::SvgDefinitions,
     ) -> Self {
-        const POINTS_PER_INCH: f32 = 72.0;
         Self {
-            pixels_per_point: dpi.map_or_else(
-                || crate::svg::krilla_svg::SvgSettings::default().filter_scale,
-                |dpi| dpi.get() / POINTS_PER_INCH,
-            ),
+            pixels_per_point: pixels_per_point(dpi),
             definitions,
         }
     }
+}
+
+/// The density raster effects resolve at for the image DPI the caller requested.
+pub(super) fn pixels_per_point(dpi: Option<krilla::image::ImageDpi>) -> f32 {
+    const POINTS_PER_INCH: f32 = 72.0;
+    dpi.map_or_else(
+        || crate::svg::krilla_svg::SvgSettings::default().filter_scale,
+        |dpi| dpi.get() / POINTS_PER_INCH,
+    )
 }
 
 /// A premultiplied raster of `area`, at `density` pixels per unit of the drawing space.
@@ -119,6 +124,19 @@ pub(super) fn render(
     density: f32,
     draw: impl FnOnce(&mut Painter<'_, '_, '_>, Space, &mut Surface<'_>) -> Result<(), PdfError>,
 ) -> Result<Option<Raster>, PdfError> {
+    let scale = density / painter.raster.pixels_per_point;
+    render_surface(area, density, |viewport, surface| {
+        draw(painter, Space { viewport, scale }, surface)
+    })
+}
+
+/// Renders what `draw` paints at `area` of a drawing space whose visible area it is given, or
+/// `None` when the area covers no pixel.
+pub(super) fn render_surface(
+    area: Rect,
+    density: f32,
+    draw: impl FnOnce(Rect, &mut Surface<'_>) -> Result<(), PdfError>,
+) -> Result<Option<Raster>, PdfError> {
     let columns = (area.width * density).ceil();
     let rows = (area.height * density).ceil();
     if !(columns >= 1.0 && rows >= 1.0) {
@@ -151,15 +169,11 @@ pub(super) fn render(
     let mut surface = pdf_page.surface();
     surface.push_transform(&Transform::from_translate(-area.x, -area.y));
     let drawn = draw(
-        painter,
-        Space {
-            viewport: Rect {
-                x: 0.0,
-                y: 0.0,
-                width: page[0],
-                height: page[1],
-            },
-            scale: density / painter.raster.pixels_per_point,
+        Rect {
+            x: 0.0,
+            y: 0.0,
+            width: page[0],
+            height: page[1],
         },
         &mut surface,
     );

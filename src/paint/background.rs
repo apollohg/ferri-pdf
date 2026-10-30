@@ -13,6 +13,8 @@ const SPACE_FIT_TOLERANCE: f32 = 1.0e-4;
 pub(crate) const INITIAL_IMAGE_SCALE: f32 = 1.0;
 /// One image pixel per CSS pixel.
 const INITIAL_RESOLUTION: f32 = 1.0;
+/// Mix weights are fractions of the whole.
+const WHOLE: f32 = 1.0;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
 #[expect(
@@ -139,6 +141,17 @@ pub enum BackgroundImage<I = Infallible> {
     /// An invalid image (CSS Images 4 §2.1), which renders as a transparent image with no
     /// natural dimensions unless its context treats it as `none`.
     Invalid,
+    /// `cross-fade()`: the weighted average of images and solid colours (CSS Images 4 §2.6).
+    CrossFade(Vec<FadeLayer<I>>),
+}
+
+/// One `<cf-image>` of `cross-fade()`: an image, a colour as a solid-colour image, and the
+/// fraction of it the result retains, with omitted percentages already distributed.
+#[derive(Clone, Debug, PartialEq, Serialize)]
+#[serde(bound(serialize = ""))]
+pub struct FadeLayer<I = Infallible> {
+    pub image: BackgroundImage<I>,
+    pub percentage: f32,
 }
 
 /// The annotations `image()` adds to a URL (CSS Images 4 §2.5).
@@ -231,7 +244,7 @@ impl<I> Backgrounds<I> {
         if !backgrounds
             .images
             .iter()
-            .any(|image| matches!(image, BackgroundImage::Url { .. }))
+            .any(BackgroundImage::needs_loading)
         {
             return Ok(());
         }
@@ -247,6 +260,18 @@ impl<I> BackgroundImage<I> {
     pub fn is_displayable(&self) -> bool {
         !matches!(self, Self::None | Self::Invalid)
     }
+    /// Whether the image is, or combines, a `url()` that the document builder loads.
+    pub fn needs_loading(&self) -> bool {
+        match self {
+            Self::Url { .. } => true,
+            Self::CrossFade(layers) => layers.iter().any(|layer| layer.image.needs_loading()),
+            Self::None
+            | Self::Image { .. }
+            | Self::Gradient(_)
+            | Self::Color(_)
+            | Self::Invalid => false,
+        }
+    }
     /// Replaces a `Url` with the image `load` returns for it, which is `None` when it could
     /// not be loaded without aborting the document: an `image()` URL then renders its
     /// fallback color, else the image is invalid (CSS Images 4 §2.5.1).
@@ -254,6 +279,11 @@ impl<I> BackgroundImage<I> {
         &mut self,
         load: &mut impl FnMut(&ImageRequest<'_>) -> Result<Option<I>, E>,
     ) -> Result<(), E> {
+        if let Self::CrossFade(layers) = self {
+            for layer in layers {
+                layer.image.load(load)?;
+            }
+        }
         if let Self::Url {
             url,
             resolution,
@@ -318,6 +348,15 @@ impl BackgroundImage<Infallible> {
             Self::Gradient(gradient) => BackgroundImage::Gradient(gradient.clone()),
             Self::Color(color) => BackgroundImage::Color(*color),
             Self::Invalid => BackgroundImage::Invalid,
+            Self::CrossFade(layers) => BackgroundImage::CrossFade(
+                layers
+                    .iter()
+                    .map(|layer| FadeLayer {
+                        image: layer.image.with_image_type(),
+                        percentage: layer.percentage,
+                    })
+                    .collect(),
+            ),
             Self::Image { image, .. } => match *image {},
         }
     }
@@ -338,6 +377,9 @@ pub(crate) enum Source<'a, I> {
     Image(&'a I, f32, f32),
     Gradient(&'a Gradient),
     Color(Color),
+    /// `cross-fade()` arguments with their normalized weights, and the weight of the
+    /// transparent black that makes the weights sum to one (CSS Images 4 §2.6).
+    CrossFade(Vec<(Self, f32)>, f32),
 }
 
 impl<'a, I: ImageInfo> Source<'a, I> {
@@ -354,29 +396,74 @@ impl<'a, I: ImageInfo> Source<'a, I> {
             BackgroundImage::Gradient(gradient) => Self::Gradient(gradient),
             BackgroundImage::Color(color) => Self::Color(color.used()),
             BackgroundImage::Invalid => Self::Color(Color::TRANSPARENT),
+            BackgroundImage::CrossFade(layers) => {
+                let percentages: Vec<f32> = layers.iter().map(|layer| layer.percentage).collect();
+                let (weights, leftover) = crate::paint::normalize_mix(&percentages, false);
+                let mut sources = Vec::with_capacity(layers.len());
+                for (layer, weight) in layers.iter().zip(weights) {
+                    sources.extend(Self::of(&layer.image)?.map(|source| (source, weight)));
+                }
+                Self::CrossFade(sources, leftover)
+            }
         }))
     }
-    /// Natural dimensions in points; generated images have none.
-    pub(crate) fn natural(self) -> NaturalDimensions {
+    /// Natural dimensions in points; generated images have none. `area` is the default object
+    /// size of the image's context, which sizes the images a `cross-fade()` averages.
+    pub(crate) fn natural(&self, area: [f32; 2]) -> NaturalDimensions {
         match self {
-            Self::Image(image, resolution, scale) => natural_points(image, resolution, scale),
+            Self::Image(image, resolution, scale) => natural_points(*image, *resolution, *scale),
             Self::Gradient(_) | Self::Color(_) => NaturalDimensions::default(),
+            Self::CrossFade(sources, leftover) => cross_fade_natural(sources, *leftover, area),
         }
     }
     /// The image drawn into a tile of `size`, `None` when a gradient has no area.
-    pub(crate) fn tile(self, size: [f32; 2]) -> Option<TileImage<'a, I>> {
+    pub(crate) fn tile(&self, size: [f32; 2]) -> Option<TileImage<'a, I>> {
         Some(match self {
-            Self::Image(image, _, scale) => TileImage::Image(image, scale),
+            Self::Image(image, _, scale) => TileImage::Image(image, *scale),
             Self::Gradient(gradient) => TileImage::Gradient(gradient.resolve(size)?),
-            Self::Color(color) => TileImage::Color(color),
+            Self::Color(color) => TileImage::Color(*color),
+            // Every argument is rescaled to the result's size (CSS Images 4 §2.6.2).
+            Self::CrossFade(sources, leftover) => TileImage::CrossFade(
+                sources
+                    .iter()
+                    .map(|(source, weight)| Some((source.tile(size)?, *weight)))
+                    .collect::<Option<_>>()?,
+                *leftover,
+            ),
         })
     }
 }
 
-impl<I> Copy for Source<'_, I> {}
-impl<I> Clone for Source<'_, I> {
-    fn clone(&self) -> Self {
-        *self
+/// CSS Images 4 §2.6.1: the average, weighted by their percentages, of the concrete object
+/// sizes in `area` of the arguments with natural dimensions; none when no argument has them
+/// or the arguments retain nothing.
+fn cross_fade_natural<I: ImageInfo>(
+    sources: &[(Source<'_, I>, f32)],
+    leftover: f32,
+    area: [f32; 2],
+) -> NaturalDimensions {
+    if leftover >= WHOLE {
+        return NaturalDimensions::default();
+    }
+    let mut total = 0.0;
+    let mut sum = [0.0; 2];
+    for (source, weight) in sources {
+        let natural = source.natural(area);
+        if natural.width.is_none() && natural.height.is_none() {
+            continue;
+        }
+        let size = image_size(&BackgroundSize::default(), natural, area);
+        total += weight;
+        sum = [sum[0] + weight * size[0], sum[1] + weight * size[1]];
+    }
+    if total <= 0.0 {
+        return NaturalDimensions::default();
+    }
+    let [width, height] = sum.map(|value| value / total);
+    NaturalDimensions {
+        width: Some(width),
+        height: Some(height),
+        ratio: (height > 0.0).then_some(width / height),
     }
 }
 
@@ -387,6 +474,9 @@ pub enum TileImage<'a, I = Infallible> {
     Gradient(ResolvedGradient),
     /// A solid-color image.
     Color(Color),
+    /// `cross-fade()` arguments filling the tile, each weighted, and the weight of transparent
+    /// black; the weights sum to one.
+    CrossFade(Vec<(Self, f32)>, f32),
 }
 /// One background layer ready to paint.
 #[derive(Clone, Debug)]
@@ -623,13 +713,13 @@ impl<I: ImageInfo> BoxPaint<I> {
             let Some(source) = Source::of(image)? else {
                 continue;
             };
-            let natural = source.natural();
             let area = if *cycle(&backgrounds.attachments, index) == Attachment::Fixed {
                 page_area
             } else {
                 self.positioning_area(*cycle(&backgrounds.origins, index))
             };
             let extent = [area.width, area.height];
+            let natural = source.natural(extent);
             let size = cycle(&backgrounds.sizes, index);
             let repeat = *cycle(&backgrounds.repeats, index);
             let tile = rounded_size(image_size(size, natural, extent), size, repeat, extent);

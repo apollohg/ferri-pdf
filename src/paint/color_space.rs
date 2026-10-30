@@ -507,38 +507,43 @@ pub(crate) struct MixItem {
     pub percentage: Option<f32>,
 }
 
-/// Normalizes mix percentages with forced normalization: omitted percentages share what the
-/// specified ones leave, and the shortfall below 100% becomes the alpha multiplier's
-/// complement (CSS Color 5 §3.2).
-fn normalize(items: &[MixItem]) -> (Vec<f32>, f32) {
-    let specified: f32 = items.iter().filter_map(|item| item.percentage).sum();
-    let omitted = items
-        .iter()
-        .filter(|item| item.percentage.is_none())
-        .count();
+/// Mix percentages with the omitted ones sharing what the specified ones leave below 100%,
+/// floored at 0% (CSS Color 5 §3.2, CSS Images 4 §2.6).
+pub(crate) fn distribute_mix(percentages: &[Option<f32>]) -> Vec<f32> {
+    let specified: f32 = percentages.iter().flatten().sum();
+    let omitted = percentages.iter().filter(|value| value.is_none()).count();
     let share = if omitted == 0 {
         0.0
     } else {
         ((WHOLE - specified) / omitted as f32).max(0.0)
     };
-    let mut percentages: Vec<f32> = items
+    percentages
         .iter()
-        .map(|item| item.percentage.unwrap_or(share))
-        .collect();
+        .map(|value| value.unwrap_or(share))
+        .collect()
+}
+
+/// Mix percentages scaled to sum to 100% when they sum past it or, under forced
+/// normalization, to any positive total, with the leftover they leave below 100%.
+pub(crate) fn normalize_mix(percentages: &[f32], forced: bool) -> (Vec<f32>, f32) {
     let total: f32 = percentages.iter().sum();
     let leftover = (WHOLE - total).max(0.0);
-    if total > 0.0 {
-        for percentage in &mut percentages {
-            *percentage /= total;
-        }
-    }
-    (percentages, leftover)
+    let scale = if total > WHOLE || (forced && total > 0.0) {
+        total.recip()
+    } else {
+        WHOLE
+    };
+    (
+        percentages.iter().map(|value| value * scale).collect(),
+        leftover,
+    )
 }
 
 impl Interpolation {
     /// Mixes `items` as `color-mix()` does (CSS Color 5 §3.3).
     pub(crate) fn mix(self, items: &[MixItem]) -> AbsoluteColor {
-        let (percentages, leftover) = normalize(items);
+        let percentages: Vec<_> = items.iter().map(|item| item.percentage).collect();
+        let (percentages, leftover) = normalize_mix(&distribute_mix(&percentages), true);
         let mut stack: Vec<(AbsoluteColor, f32)> = items
             .iter()
             .zip(percentages)

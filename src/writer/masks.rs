@@ -358,6 +358,31 @@ fn draw_layer(
             ))));
             TileImage::Image(&grey, crate::paint::INITIAL_IMAGE_SCALE)
         }
+        TileImage::CrossFade(..) => {
+            let tile = Rect {
+                x: 0.0,
+                y: 0.0,
+                ..layer.tile
+            };
+            let Some(raster) =
+                raster::render(painter, tile, density, |painter, space, surface| {
+                    crate::writer::backgrounds::draw_tile(
+                        &layer.image,
+                        tile,
+                        space.viewport,
+                        surface,
+                        painter.images,
+                    )
+                })?
+            else {
+                return Ok(());
+            };
+            grey = Arc::new(Image::Pixels(Arc::new(mask_values(
+                &raster.pixmap,
+                luminance,
+            ))));
+            TileImage::Image(&grey, crate::paint::INITIAL_IMAGE_SCALE)
+        }
     };
     crate::writer::backgrounds::draw_layer(
         &LayerPaint {

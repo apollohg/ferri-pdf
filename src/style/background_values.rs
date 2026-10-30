@@ -1,8 +1,9 @@
 //! CSS Backgrounds 3 longhands and CSS Images 4 images and gradients from match trees.
 use crate::paint::{
     AbsoluteColor, Attachment, BackgroundImage, BackgroundSize, BoxArea, CircleSize, EllipseSize,
-    Gradient, GradientItem, GradientShape, ImageFunction, Interpolation, LengthPercentage,
-    LineDirection, Position, PositionComponent, RadialEnding, RadialExtent, Repeat, SizeComponent,
+    FadeLayer, Gradient, GradientItem, GradientShape, ImageFunction, Interpolation,
+    LengthPercentage, LineDirection, Position, PositionComponent, RadialEnding, RadialExtent,
+    Repeat, SizeComponent,
 };
 use crate::style::{
     StyleError,
@@ -34,6 +35,9 @@ const FULL_TURN_DEG: f32 = 360.0;
 /// `<resolution> || type(<string>)` slots of an `<image-set-option>`.
 const RESOLUTION_SLOT: usize = 0;
 const TYPE_SLOT: usize = 1;
+/// `[ <image> | <color> ] && <percentage [0,100]>?` slots of a `<cf-image>`.
+const CF_IMAGE_SLOT: usize = 0;
+const CF_PERCENTAGE_SLOT: usize = 1;
 /// An `<image-set-option>` without a `<resolution>` selects as `1x` (CSS Images 4 §2.4).
 const DEFAULT_RESOLUTION_DPPX: f32 = 1.0;
 /// `type()` MIME type essences of the image formats the engine decodes.
@@ -81,25 +85,22 @@ pub(super) fn attachments(value: &Component) -> Result<Vec<Attachment>, StyleErr
     list(value, attachment)
 }
 
-/// `<bg-image>`: `none`, a URL, `image-set()`, or a gradient.
+/// `<bg-image>`: `none` or an `<image>`.
 pub(super) fn image(
     value: &Component,
     relative: &Relative<'_>,
     color: &AbsoluteColor,
 ) -> Result<BackgroundImage, StyleError> {
-    match value.unwrap() {
-        Component::Function(Keyword::ImageSet, Some(options)) => {
-            image_set(options, relative, color)
-        }
-        _ => set_option_image(value, relative, color),
-    }
+    any_image(value, relative, color, false)
 }
 
-/// An `<image>` other than `image-set()`, which cannot nest inside itself.
-fn set_option_image(
+/// An `<image>`; `in_set` inside `image-set()`, which cannot nest inside itself directly or
+/// through another image's arguments (CSS Images 4 §2.4).
+fn any_image(
     value: &Component,
     relative: &Relative<'_>,
     color: &AbsoluteColor,
+    in_set: bool,
 ) -> Result<BackgroundImage, StyleError> {
     Ok(match value.unwrap() {
         Component::Keyword(Keyword::None) => BackgroundImage::None,
@@ -107,10 +108,16 @@ fn set_option_image(
         Component::Function(Keyword::Image, Some(arguments)) => {
             image_function(arguments, relative, color)?
         }
+        Component::Function(Keyword::ImageSet, Some(options)) if !in_set => {
+            image_set(options, relative, color)?
+        }
         Component::Function(Keyword::ImageSet, _) => {
             return Err(StyleError::Invalid(format!(
                 "image-set() nested in image-set(): {value}"
             )));
+        }
+        Component::Function(Keyword::CrossFade, Some(arguments)) => {
+            cross_fade(arguments, relative, color, in_set)?
         }
         // Without script no paint worklet registers a name, so drawing the image finds no
         // document paint definition and outputs an invalid image (CSS Painting API 1 §7).
@@ -189,6 +196,46 @@ fn image_function(
     )
 }
 
+/// CSS Images 4 §2.6 `cross-fade()`: images and colours, each with the fraction of it the
+/// result retains, omitted percentages sharing what the specified ones leave below 100%.
+fn cross_fade(
+    arguments: &Component,
+    relative: &Relative<'_>,
+    current: &AbsoluteColor,
+    in_set: bool,
+) -> Result<BackgroundImage, StyleError> {
+    let mut images = Vec::new();
+    let mut percentages = Vec::new();
+    for argument in arguments.items() {
+        let image = argument
+            .slot(CF_IMAGE_SLOT)
+            .ok_or_else(|| unsupported(argument))?;
+        images.push(match image {
+            Component::Reference(Label::Production(Production::Image), _) => {
+                any_image(image, relative, current, in_set)?
+            }
+            color => {
+                BackgroundImage::Color(crate::style::colors::absolute(color, relative, current)?)
+            }
+        });
+        // The optional percentage matches as a group of at most one.
+        percentages.push(
+            argument
+                .slot(CF_PERCENTAGE_SLOT)
+                .and_then(|optional| optional.items().first())
+                .map(|percentage| crate::style::values::percentage(percentage, relative))
+                .transpose()?,
+        );
+    }
+    Ok(BackgroundImage::CrossFade(
+        images
+            .into_iter()
+            .zip(crate::paint::distribute_mix(&percentages))
+            .map(|(image, percentage)| FadeLayer { image, percentage })
+            .collect(),
+    ))
+}
+
 /// CSS Images 4 §2.4: options with an unsupported `type()` or an already listed resolution
 /// drop out; for resolution-independent PDF output the highest resolution is chosen, and it
 /// becomes a raster image's natural resolution. No remaining option is an invalid image,
@@ -226,7 +273,7 @@ fn image_set(
     else {
         return Ok(BackgroundImage::None);
     };
-    Ok(match set_option_image(image, relative, color)? {
+    Ok(match any_image(image, relative, color, true)? {
         BackgroundImage::Url {
             url,
             scale,

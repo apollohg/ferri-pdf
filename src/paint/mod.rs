@@ -20,9 +20,9 @@ mod shape;
 #[cfg(test)]
 pub(crate) use background::rounded_size;
 pub(crate) use background::{
-    Attachment, BackgroundImage, BackgroundSize, Backgrounds, BoxArea, INITIAL_IMAGE_SCALE,
-    ImageFunction, ImageRequest, LayerPaint, Position, PositionComponent, Repeat, SizeComponent,
-    TileImage, UnresolvedImage, image_size, natural_points,
+    Attachment, BackgroundImage, BackgroundSize, Backgrounds, BoxArea, FadeLayer,
+    INITIAL_IMAGE_SCALE, ImageFunction, ImageRequest, LayerPaint, Position, PositionComponent,
+    Repeat, SizeComponent, Source, TileImage, UnresolvedImage, image_size,
 };
 pub(crate) use border_image::{
     BorderImage, BorderImageOutset, BorderImagePaint, BorderImageRepeat, BorderImageWidth,
@@ -39,7 +39,8 @@ pub(crate) use calculation::{
 };
 pub use clip::{Clip, ClipBounds};
 pub(crate) use color_space::{
-    AbsoluteColor, ColorSpace, HueInterpolation, Interpolation, MixItem, normalize_hue, quantize,
+    AbsoluteColor, ColorSpace, HueInterpolation, Interpolation, MixItem, distribute_mix,
+    normalize_hue, normalize_mix, quantize,
 };
 pub use decoration::{DecorationLine, DecorationPaint, DecorationStyle};
 pub(crate) use easing::{Easing, LinearPoint, StepPosition};

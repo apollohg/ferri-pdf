@@ -204,7 +204,7 @@ impl<I: ImageInfo> BoxPaint<I> {
         if area.width <= 0.0 || area.height <= 0.0 {
             return Ok(None);
         }
-        let natural = source.natural();
+        let natural = source.natural([area.width, area.height]);
         let size = image_size(
             &BackgroundSize::default(),
             natural,
