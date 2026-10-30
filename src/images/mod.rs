@@ -4,7 +4,9 @@ mod heif;
 mod pixels;
 mod svg;
 mod svg_fonts;
+mod view;
 pub(crate) use svg_fonts::SvgFonts;
+pub(crate) use view::{ImageView, InvalidFragment, turns_and_flip};
 pub(crate) mod widget;
 use crate::fonts::{FontBook, FontNamespace};
 pub(crate) use crate::paint::NaturalDimensions;
@@ -23,7 +25,15 @@ impl crate::paint::ImageInfo for Image {
         Image::natural_size(self)
     }
     fn is_raster(&self) -> bool {
-        matches!(self, Self::Raster(_) | Self::Pixels(_))
+        match self {
+            Self::Raster(_) | Self::Pixels(_) => true,
+            Self::View(view) => crate::paint::ImageInfo::is_raster(&*view.image),
+            Self::Svg(_)
+            | Self::Transparent
+            | Self::Frame(..)
+            | Self::Viewport(_)
+            | Self::Widget(_) => false,
+        }
     }
 }
 
@@ -110,12 +120,10 @@ impl RasterImage {
     }
 
     pub fn pixel_size(&self) -> [f32; 2] {
-        use Orientation::{Rotate90, Rotate90FlipH, Rotate270, Rotate270FlipH};
-        match self.orientation {
-            Rotate90 | Rotate270 | Rotate90FlipH | Rotate270FlipH => {
-                [self.height as f32, self.width as f32]
-            }
-            _ => [self.width as f32, self.height as f32],
+        if view::transposes(self.orientation) {
+            [self.height as f32, self.width as f32]
+        } else {
+            [self.width as f32, self.height as f32]
         }
     }
     fn parse(bytes: Vec<u8>) -> Result<Self, ImageError> {
@@ -159,6 +167,8 @@ pub enum Image {
     Viewport(Arc<crate::layout::ViewportPaint>),
     /// A widget's native appearance, drawn once its box's used size is known.
     Widget(Arc<widget::Widget>),
+    /// Part of another image, re-oriented, as an `<image>` uses it.
+    View(ImageView),
 }
 impl Image {
     pub fn natural_size(&self) -> NaturalDimensions {
@@ -183,6 +193,7 @@ impl Image {
             }
             Self::Transparent | Self::Frame(..) => NaturalDimensions::default(),
             Self::Widget(widget) => widget.natural_size(),
+            Self::View(view) => view.natural_size(),
         }
     }
     pub fn pixel_size(&self, available_width: f32) -> [f32; 2] {
@@ -194,6 +205,7 @@ impl Image {
                 .map(|value| value / crate::style::POINTS_PER_PIXEL),
             Self::Transparent | Self::Frame(..) => DEFAULT_OBJECT_SIZE,
             Self::Widget(widget) => widget.natural,
+            Self::View(view) => view.pixel_size(available_width),
         }
     }
     fn parse(
@@ -259,6 +271,8 @@ pub enum ImageError {
     UnsupportedFormat(ImageFormat),
     #[error("image dimensions exceed the decoding budget: {width} by {height}")]
     Dimensions { width: u32, height: u32 },
+    #[error("{0}")]
+    Fragment(#[from] InvalidFragment),
 }
 
 #[derive(Debug, thiserror::Error)]
@@ -363,6 +377,28 @@ impl ImageCache {
             self.validated_markers.insert(key);
         }
         Some(image)
+    }
+    /// `image` as `request` uses it on an element (see [`view::view`]), or `None` with a
+    /// diagnostic when `image()` names a fragment it cannot use.
+    pub(crate) fn view(
+        &mut self,
+        image: Arc<Image>,
+        request: &crate::paint::ImageRequest<'_>,
+        base: &crate::resources::ResourceBase,
+        rtl: bool,
+        vertical: bool,
+    ) -> Option<Arc<Image>> {
+        match view::view(image, request, rtl, vertical) {
+            Ok(image) => Some(image),
+            Err(error) => {
+                self.failures.push(ImageFailure {
+                    base: base.clone(),
+                    reference: request.url.to_owned(),
+                    error: error.into(),
+                });
+                None
+            }
+        }
     }
     pub(crate) fn take_failures(&mut self) -> Vec<ImageFailure> {
         std::mem::take(&mut self.failures)
@@ -472,7 +508,11 @@ impl ImageCache {
                 namespace
             }
             Image::Raster(_) | Image::Pixels(_) => FontNamespace::ROOT,
-            Image::Transparent | Image::Frame(..) | Image::Viewport(_) | Image::Widget(_) => {
+            Image::Transparent
+            | Image::Frame(..)
+            | Image::Viewport(_)
+            | Image::Widget(_)
+            | Image::View(_) => {
                 unreachable!("image resources parse to decoded images")
             }
         };

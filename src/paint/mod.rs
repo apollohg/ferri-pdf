@@ -21,8 +21,8 @@ mod shape;
 pub(crate) use background::rounded_size;
 pub(crate) use background::{
     Attachment, BackgroundImage, BackgroundSize, Backgrounds, BoxArea, INITIAL_IMAGE_SCALE,
-    LayerPaint, Position, PositionComponent, Repeat, SizeComponent, TileImage, UnresolvedImage,
-    image_size, natural_points,
+    ImageFunction, ImageRequest, LayerPaint, Position, PositionComponent, Repeat, SizeComponent,
+    TileImage, UnresolvedImage, image_size, natural_points,
 };
 pub(crate) use border_image::{
     BorderImage, BorderImageOutset, BorderImagePaint, BorderImageRepeat, BorderImageWidth,

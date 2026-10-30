@@ -1,6 +1,8 @@
 //! CSS Backgrounds 3 layers: computed value lists, image sizing, tiling and painting areas.
 use crate::paint::gradient::{Gradient, ResolvedGradient};
-use crate::paint::{Border, BoxPaint, Clip, Color, LengthPercentage, POINTS_PER_PIXEL, Rect};
+use crate::paint::{
+    AbsoluteColor, Border, BoxPaint, Clip, Color, LengthPercentage, POINTS_PER_PIXEL, Rect,
+};
 use crate::paint::{ImageInfo, NaturalDimensions};
 use serde::Serialize;
 use std::convert::Infallible;
@@ -118,6 +120,9 @@ pub enum BackgroundImage<I = Infallible> {
         resolution: f32,
         /// Accumulated zoom of the image's natural dimensions, independent of density.
         scale: f32,
+        /// The `image()` notation that wrote the URL, if any.
+        #[serde(skip_serializing_if = "Option::is_none")]
+        function: Option<ImageFunction>,
     },
     Image {
         #[serde(skip)]
@@ -126,9 +131,29 @@ pub enum BackgroundImage<I = Infallible> {
         scale: f32,
     },
     Gradient(Gradient),
+    /// A solid-color image with no natural dimensions (CSS Images 4 §2.5.3).
+    Color(AbsoluteColor),
     /// An invalid image (CSS Images 4 §2.1), which renders as a transparent image with no
     /// natural dimensions unless its context treats it as `none`.
     Invalid,
+}
+
+/// The annotations `image()` adds to a URL (CSS Images 4 §2.5).
+#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
+pub struct ImageFunction {
+    /// `rtl` or `ltr`: the image's directionality, if it has one (§2.5.4).
+    pub rtl: Option<bool>,
+    /// The solid color rendered when the URL is an invalid image (§2.5.1).
+    pub fallback: Option<AbsoluteColor>,
+}
+
+/// An image URL to load for a box.
+#[derive(Clone, Copy, Debug)]
+pub struct ImageRequest<'a> {
+    pub url: &'a str,
+    /// Written in `image()`: the image is optional, and a fragment it does not understand
+    /// makes it invalid (CSS Images 4 §2.5.2).
+    pub function: Option<&'a ImageFunction>,
 }
 
 /// Computed background longhands; layer `i` uses item `i` of each list, cycling short lists.
@@ -193,7 +218,7 @@ impl<I> Backgrounds<I> {
     /// only when one is present.
     pub(crate) fn resolve_images<E>(
         backgrounds: &mut Arc<Self>,
-        mut load: impl FnMut(&str) -> Result<I, E>,
+        mut load: impl FnMut(&ImageRequest<'_>) -> Result<Option<I>, E>,
     ) -> Result<(), E>
     where
         I: Clone,
@@ -217,18 +242,33 @@ impl<I> BackgroundImage<I> {
     pub fn is_displayable(&self) -> bool {
         !matches!(self, Self::None | Self::Invalid)
     }
-    /// Replaces a `Url` with the image `load` returns for it.
-    pub fn load<E>(&mut self, load: &mut impl FnMut(&str) -> Result<I, E>) -> Result<(), E> {
+    /// Replaces a `Url` with the image `load` returns for it, which is `None` when it could
+    /// not be loaded without aborting the document: an `image()` URL then renders its
+    /// fallback color, else the image is invalid (CSS Images 4 §2.5.1).
+    pub(crate) fn load<E>(
+        &mut self,
+        load: &mut impl FnMut(&ImageRequest<'_>) -> Result<Option<I>, E>,
+    ) -> Result<(), E> {
         if let Self::Url {
             url,
             resolution,
             scale,
+            function,
         } = self
         {
-            *self = Self::Image {
-                image: load(url)?,
-                resolution: *resolution,
-                scale: *scale,
+            let request = ImageRequest {
+                url,
+                function: function.as_ref(),
+            };
+            *self = match load(&request)? {
+                Some(image) => Self::Image {
+                    image,
+                    resolution: *resolution,
+                    scale: *scale,
+                },
+                None => function
+                    .and_then(|function| function.fallback)
+                    .map_or(Self::Invalid, Self::Color),
             };
         }
         Ok(())
@@ -262,12 +302,15 @@ impl BackgroundImage<Infallible> {
                 url,
                 resolution,
                 scale,
+                function,
             } => BackgroundImage::Url {
                 url: url.clone(),
                 resolution: *resolution,
                 scale: *scale,
+                function: *function,
             },
             Self::Gradient(gradient) => BackgroundImage::Gradient(gradient.clone()),
+            Self::Color(color) => BackgroundImage::Color(*color),
             Self::Invalid => BackgroundImage::Invalid,
             Self::Image { image, .. } => match *image {},
         }
@@ -303,6 +346,7 @@ impl<'a, I: ImageInfo> Source<'a, I> {
                 scale,
             } => Self::Image(image, *resolution, *scale),
             BackgroundImage::Gradient(gradient) => Self::Gradient(gradient),
+            BackgroundImage::Color(color) => Self::Color(color.used()),
             BackgroundImage::Invalid => Self::Color(Color::TRANSPARENT),
         }))
     }

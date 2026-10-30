@@ -1,8 +1,8 @@
 //! CSS Backgrounds 3 longhands and CSS Images 4 images and gradients from match trees.
 use crate::paint::{
     AbsoluteColor, Attachment, BackgroundImage, BackgroundSize, BoxArea, CircleSize, EllipseSize,
-    Gradient, GradientItem, GradientShape, Interpolation, LengthPercentage, LineDirection,
-    Position, PositionComponent, RadialEnding, RadialExtent, Repeat, SizeComponent,
+    Gradient, GradientItem, GradientShape, ImageFunction, Interpolation, LengthPercentage,
+    LineDirection, Position, PositionComponent, RadialEnding, RadialExtent, Repeat, SizeComponent,
 };
 use crate::style::{
     StyleError,
@@ -103,11 +103,10 @@ fn set_option_image(
 ) -> Result<BackgroundImage, StyleError> {
     Ok(match value.unwrap() {
         Component::Keyword(Keyword::None) => BackgroundImage::None,
-        Component::Url(url) | Component::String(url) => BackgroundImage::Url {
-            url: url.to_string(),
-            resolution: DEFAULT_RESOLUTION_DPPX,
-            scale: crate::paint::INITIAL_IMAGE_SCALE,
-        },
+        Component::Url(url) | Component::String(url) => url_image(url, None),
+        Component::Function(Keyword::Image, Some(arguments)) => {
+            image_function(arguments, relative, color)?
+        }
         Component::Function(Keyword::ImageSet, _) => {
             return Err(StyleError::Invalid(format!(
                 "image-set() nested in image-set(): {value}"
@@ -138,6 +137,56 @@ fn set_option_image(
         }
         other => return Err(unsupported(other)),
     })
+}
+
+fn url_image(url: &str, function: Option<ImageFunction>) -> BackgroundImage {
+    BackgroundImage::Url {
+        url: url.to_owned(),
+        resolution: DEFAULT_RESOLUTION_DPPX,
+        scale: crate::paint::INITIAL_IMAGE_SCALE,
+        function,
+    }
+}
+
+/// CSS Images 4 §2.5 `image()`: a URL, which a string also writes, with its directionality
+/// and fallback color; or a solid-color image.
+fn image_function(
+    arguments: &Component,
+    relative: &Relative<'_>,
+    current: &AbsoluteColor,
+) -> Result<BackgroundImage, StyleError> {
+    let rtl = arguments
+        .find(Label::Production(Production::ImageTags))
+        .and_then(Component::keyword)
+        .map(|tag| tag == Keyword::Rtl);
+    // `[ <image-src>? , <color>? ]!`: the color is the member that is not the source.
+    let fallback = arguments
+        .items()
+        .last()
+        .into_iter()
+        .flat_map(Component::items)
+        .flat_map(Component::items)
+        .find(|item| {
+            !matches!(
+                item,
+                Component::Delim(_)
+                    | Component::Reference(Label::Production(Production::ImageSrc), _)
+            )
+        })
+        .map(|color| crate::style::colors::absolute(color, relative, current))
+        .transpose()?;
+    Ok(
+        match arguments
+            .find(Label::Production(Production::ImageSrc))
+            .map(Component::unwrap)
+        {
+            Some(Component::Url(url) | Component::String(url)) => {
+                url_image(url, Some(ImageFunction { rtl, fallback }))
+            }
+            Some(other) => return Err(unsupported(other)),
+            None => BackgroundImage::Color(fallback.ok_or_else(|| unsupported(arguments))?),
+        },
+    )
 }
 
 /// CSS Images 4 §2.4: options with an unsupported `type()` or an already listed resolution
@@ -178,10 +227,16 @@ fn image_set(
         return Ok(BackgroundImage::None);
     };
     Ok(match set_option_image(image, relative, color)? {
-        BackgroundImage::Url { url, scale, .. } => BackgroundImage::Url {
+        BackgroundImage::Url {
+            url,
+            scale,
+            function,
+            ..
+        } => BackgroundImage::Url {
             url,
             resolution,
             scale,
+            function,
         },
         other => other,
     })

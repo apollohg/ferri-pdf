@@ -466,6 +466,55 @@ struct AlphaGrid {
     rows: usize,
     alpha: Vec<u8>,
 }
+impl AlphaGrid {
+    fn at(&self, column: usize, row: usize) -> u8 {
+        self.alpha[row * self.columns + column]
+    }
+    /// The samples covering `part`, given as fractions of the grid's extent.
+    fn cropped(&self, part: Rect) -> Self {
+        let span = |start: f32, length: f32, count: usize| {
+            let first = ((start * count as f32).floor().max(0.0) as usize).min(count - 1);
+            let end = (((start + length) * count as f32).ceil() as usize).clamp(first + 1, count);
+            (first, end - first)
+        };
+        let (left, columns) = span(part.x, part.width, self.columns);
+        let (top, rows) = span(part.y, part.height, self.rows);
+        Self {
+            columns,
+            rows,
+            alpha: (top..top + rows)
+                .flat_map(|row| (left..left + columns).map(move |column| self.at(column, row)))
+                .collect(),
+        }
+    }
+    /// The samples turned clockwise in quarter turns, then flipped horizontally, as
+    /// `orientation` turns an image.
+    fn oriented(self, orientation: crate::images::Orientation) -> Self {
+        let (turns, flip) = crate::images::turns_and_flip(orientation);
+        let mut grid = self;
+        for _ in 0..turns {
+            grid = Self {
+                columns: grid.rows,
+                rows: grid.columns,
+                alpha: (0..grid.columns)
+                    .flat_map(|row| {
+                        let grid = &grid;
+                        (0..grid.rows).map(move |column| grid.at(row, grid.rows - 1 - column))
+                    })
+                    .collect(),
+            };
+        }
+        if flip {
+            grid.alpha = (0..grid.rows)
+                .flat_map(|row| {
+                    let grid = &grid;
+                    (0..grid.columns).map(move |column| grid.at(grid.columns - 1 - column, row))
+                })
+                .collect();
+        }
+        grid
+    }
+}
 
 const MAX_SAMPLE: f32 = u8::MAX as f32;
 /// Gradients and SVG images are rendered at the SVG filter resolution, coarser where that
@@ -542,16 +591,18 @@ fn alpha_grid(
     if content.width <= 0.0 || content.height <= 0.0 {
         return Ok(None);
     }
-    let density = crate::svg::krilla_svg::SvgSettings::default()
-        .filter_scale
-        .min((MAX_RENDERED_SAMPLES / (content.width * content.height)).sqrt());
-    let samples = |extent: f32| ((extent * density).ceil() as usize).max(1);
-    let grid = match image {
+    let samples = rendered_samples(content);
+    Ok(Some(match image {
         BackgroundImage::None | BackgroundImage::Url { .. } => {
             unreachable!("floats load their shape-outside image")
         }
         // An invalid image is transparent (CSS Images 4 §2.1).
         BackgroundImage::Invalid => return Ok(None),
+        BackgroundImage::Color(color) => AlphaGrid {
+            columns: 1,
+            rows: 1,
+            alpha: vec![(color.used().alpha * MAX_SAMPLE).round() as u8],
+        },
         BackgroundImage::Gradient(gradient) => {
             let Some(resolved) = gradient.resolve([content.width, content.height]) else {
                 return Ok(None);
@@ -574,65 +625,106 @@ fn alpha_grid(
                 alpha,
             }
         }
-        BackgroundImage::Image { image, .. } => match &**image {
-            Image::Raster(raster) => {
-                let (columns, samples) = raster.alpha()?;
-                work.spend(samples.len())?;
-                AlphaGrid {
-                    columns: columns as usize,
-                    rows: samples.len() / columns as usize,
-                    alpha: samples,
-                }
+        BackgroundImage::Image { image, .. } => return image_alpha(image, content, work),
+    }))
+}
+
+/// Samples per axis of an image rendered to fill `content`.
+fn rendered_samples(content: Rect) -> impl Fn(f32) -> usize {
+    let density = crate::svg::krilla_svg::SvgSettings::default()
+        .filter_scale
+        .min((MAX_RENDERED_SAMPLES / (content.width * content.height)).sqrt());
+    move |extent: f32| ((extent * density).ceil() as usize).max(1)
+}
+
+fn image_alpha(
+    image: &Image,
+    content: Rect,
+    work: &Budget,
+) -> Result<Option<AlphaGrid>, LayoutError> {
+    let samples = rendered_samples(content);
+    let grid = match image {
+        Image::Raster(raster) => {
+            let (columns, samples) = raster.alpha()?;
+            work.spend(samples.len())?;
+            AlphaGrid {
+                columns: columns as usize,
+                rows: samples.len() / columns as usize,
+                alpha: samples,
             }
-            Image::Pixels(pixels) => {
-                let (columns, rows) = pixels.size();
-                let count = columns as usize * rows as usize;
-                work.spend(count)?;
-                let alpha = match pixels.alpha() {
-                    // Sixteen-bit samples are big-endian; the high byte orders them.
-                    Some(alpha) => alpha
-                        .chunks_exact(pixels.depth().bytes())
-                        .map(|sample| sample[0])
-                        .collect(),
-                    None => vec![u8::MAX; count],
-                };
-                AlphaGrid {
-                    columns: columns as usize,
-                    rows: rows as usize,
-                    alpha,
-                }
+        }
+        Image::Pixels(pixels) => {
+            let (columns, rows) = pixels.size();
+            let count = columns as usize * rows as usize;
+            work.spend(count)?;
+            let alpha = match pixels.alpha() {
+                // Sixteen-bit samples are big-endian; the high byte orders them.
+                Some(alpha) => alpha
+                    .chunks_exact(pixels.depth().bytes())
+                    .map(|sample| sample[0])
+                    .collect(),
+                None => vec![u8::MAX; count],
+            };
+            AlphaGrid {
+                columns: columns as usize,
+                rows: rows as usize,
+                alpha,
             }
-            Image::Svg(svg) => {
-                let [columns, rows] = [samples(content.width), samples(content.height)];
-                work.spend(columns.saturating_mul(rows))?;
-                let size = [content.width, content.height]
-                    .map(|extent| extent / crate::paint::POINTS_PER_PIXEL);
-                let tree = svg.tree(size)?;
-                let mut pixmap = tiny_skia::Pixmap::new(columns as u32, rows as u32)
-                    .ok_or(crate::images::ImageError::SvgSize)?;
-                let tree_size = tree.size();
-                crate::svg::resvg::render(
-                    &tree,
-                    tiny_skia::Transform::from_scale(
-                        columns as f32 / tree_size.width(),
-                        rows as f32 / tree_size.height(),
-                    ),
-                    &mut pixmap.as_mut(),
-                );
-                AlphaGrid {
-                    columns,
-                    rows,
-                    alpha: pixmap.pixels().iter().map(|pixel| pixel.alpha()).collect(),
-                }
+        }
+        Image::Svg(svg) => {
+            let [columns, rows] = [samples(content.width), samples(content.height)];
+            work.spend(columns.saturating_mul(rows))?;
+            let size = [content.width, content.height]
+                .map(|extent| extent / crate::paint::POINTS_PER_PIXEL);
+            let tree = svg.tree(size)?;
+            let mut pixmap = tiny_skia::Pixmap::new(columns as u32, rows as u32)
+                .ok_or(crate::images::ImageError::SvgSize)?;
+            let tree_size = tree.size();
+            crate::svg::resvg::render(
+                &tree,
+                tiny_skia::Transform::from_scale(
+                    columns as f32 / tree_size.width(),
+                    rows as f32 / tree_size.height(),
+                ),
+                &mut pixmap.as_mut(),
+            );
+            AlphaGrid {
+                columns,
+                rows,
+                alpha: pixmap.pixels().iter().map(|pixel| pixel.alpha()).collect(),
             }
-            Image::Transparent => return Ok(None),
-            Image::Frame(..) | Image::Viewport(_) | Image::Widget(_) => {
-                return Err(crate::style::StyleError::Unsupported(
-                    "shape-outside: an image of a nested document or form control".into(),
-                )
-                .into());
-            }
-        },
+        }
+        Image::Transparent => return Ok(None),
+        Image::Frame(..) | Image::Viewport(_) | Image::Widget(_) => {
+            return Err(crate::style::StyleError::Unsupported(
+                "shape-outside: an image of a nested document or form control".into(),
+            )
+            .into());
+        }
+        Image::View(view) => {
+            let region = view.region_size([content.width, content.height]);
+            let whole = view.image_rect(region);
+            let Some(grid) = image_alpha(
+                &view.image,
+                Rect {
+                    x: 0.0,
+                    y: 0.0,
+                    width: whole.width,
+                    height: whole.height,
+                },
+                work,
+            )?
+            else {
+                return Ok(None);
+            };
+            grid.cropped(Rect {
+                x: -whole.x / whole.width,
+                y: -whole.y / whole.height,
+                width: region[0] / whole.width,
+                height: region[1] / whole.height,
+            })
+            .oriented(view.orientation)
+        }
     };
     Ok(Some(grid))
 }

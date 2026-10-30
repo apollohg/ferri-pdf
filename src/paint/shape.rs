@@ -176,9 +176,10 @@ pub(crate) enum ShapeOutside<I = Infallible> {
 }
 
 impl ShapeOutside<Infallible> {
+    /// An image that cannot be loaded and has no fallback color leaves `none` (§6.1).
     pub(crate) fn load_image<I, E>(
         &self,
-        load: &mut impl FnMut(&str) -> Result<I, E>,
+        load: &mut impl FnMut(&crate::paint::ImageRequest<'_>) -> Result<Option<I>, E>,
     ) -> Result<ShapeOutside<I>, E> {
         Ok(match self {
             Self::None => ShapeOutside::None,
@@ -188,9 +189,15 @@ impl ShapeOutside<Infallible> {
                 reference: *reference,
             },
             Self::Image(image) => {
-                let mut image = image.with_image_type();
-                image.load(load)?;
-                ShapeOutside::Image(image)
+                let mut loaded = image.with_image_type();
+                loaded.load(load)?;
+                if matches!(image, BackgroundImage::Url { .. })
+                    && matches!(loaded, BackgroundImage::Invalid)
+                {
+                    ShapeOutside::None
+                } else {
+                    ShapeOutside::Image(loaded)
+                }
             }
         })
     }

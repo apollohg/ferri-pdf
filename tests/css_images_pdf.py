@@ -13,13 +13,35 @@ from oracle import pdf_content
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / 'target/debug/ferri-pdf'
 FONT = ROOT / 'tests/oracle/assets/DejaVuSans.ttf'
-RASTER_DPI = 72
+# One CSS pixel per raster pixel, so images at their natural size are not resampled.
+RASTER_DPI = 96
 PAGE_SIZE = 300
-PAGE_MARGIN = 20
+PAGE_MARGIN = 24
 BOX = 80
 FONT_SIZE = 10
 LINE_HEIGHT = 14
 WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
+GREEN = (0, 128, 0)
+YELLOW = (255, 255, 0)
+TRANSPARENT = (0, 0, 0, 0)
+QUADRANTS = [[RED, BLUE], [GREEN, YELLOW]]
+POINTS_PER_INCH = 72
+# Pixel width of the colour blocks in test images.
+QUADRANT = 10
+TEXT = ' '.join(['aa bb cc dd ee ff gg hh ii jj kk ll mm nn oo pp qq rr ss tt'] * 3)
+
+
+def blocks(path, rows):
+    """A PNG of QUADRANT-pixel colour blocks, one row of blocks per item of `rows`."""
+    image = Image.new('RGBA', (QUADRANT * len(rows[0]), QUADRANT * len(rows)))
+    for row, colors in enumerate(rows):
+        for column, color in enumerate(colors):
+            image.paste(color, (column * QUADRANT, row * QUADRANT,
+                                (column + 1) * QUADRANT, (row + 1) * QUADRANT))
+    image.save(path)
+    return path.as_uri()
 
 
 class CssImagesPdf(unittest.TestCase):
@@ -52,6 +74,23 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
             self.fail(f'{message}: {len(differing)} pixels differ, first at {first}: '
                       f'{actual_pixels.getpixel(first)} instead of {expected_pixels.getpixel(first)}\n'
                       f'actual: {actual}\nexpected: {expected}')
+
+    def assertBlocks(self, root, css, body, rows, message):
+        """The page shows an image of colour blocks `rows` at the page area's top left, one raster
+        pixel per image pixel, and white just past its last row and column. Block centres are
+        sampled because viewers smooth image pixels along block edges differently when an
+        image is flipped or clipped."""
+        pixels = self.raster(root, self.render(root, '.box{background-color:white}' + css, body))
+        origin = PAGE_MARGIN * RASTER_DPI // POINTS_PER_INCH
+        centre = QUADRANT // 2
+        expected = {(column, row): color for row, colors in enumerate(rows)
+                    for column, color in enumerate(colors)}
+        expected[(len(rows[0]), 0)] = WHITE
+        expected[(0, len(rows))] = WHITE
+        for (column, row), color in expected.items():
+            point = (origin + column * QUADRANT + centre, origin + row * QUADRANT + centre)
+            self.assertEqual(pixels.getpixel(point), color[:3],
+                             f'{message}: block {column},{row} at {point}; {css}')
 
     def test_unregistered_paint_images_are_invalid_in_every_image_context(self):
         """CSS Painting API 1 §7: no worklet registers a name, so paint() is an invalid image
@@ -88,6 +127,100 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                                       f'<div class=f></div><p>{text}</p>'),
                                ('', f'<p>{text}</p>'),
                                'a transparent invalid shape image leaves an empty float area')
+
+    def test_image_function_colors_fallbacks_and_fragments(self):
+        """CSS Images 4 §2.5: solid colors, fallback colors for unavailable URLs, and the
+        regions xywh media fragments select."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-image-function-') as directory:
+            root = Path(directory)
+            quadrants = blocks(root / 'quadrants.png', QUADRANTS)
+            box = '<div class=box></div>'
+            translucent = 'rgb(0 0 255 / 50%)'
+            self.assertSameInk(
+                root, (f'.box{{background:image({translucent}) 10pt 15pt / 30pt 20pt no-repeat,'
+                       'linear-gradient(red,red)}', box),
+                (f'.box{{background:linear-gradient({translucent},{translucent}) 10pt 15pt / 30pt 20pt '
+                 'no-repeat,linear-gradient(red,red)}', box),
+                'a solid-color image is a layer with no natural dimensions over the layers below')
+            self.assertSameInk(root, ('.box{background-image:image("missing.png", blue)}', box),
+                               ('.box{background-image:image(blue)}', box),
+                               'an unavailable URL renders the fallback color')
+            self.assertSameInk(root, ('.box{background:image("missing.png") red}', box),
+                               ('.box{background:red}', box),
+                               'an unavailable URL without a fallback is an invalid image')
+            for fragment, rows, message in [
+                    ('#xywh=10,0,10,10', [[BLUE]], 'a pixel fragment selects one block'),
+                    ('#xywh=pixel:0,10,10,10', [[GREEN]], 'the pixel unit is explicit'),
+                    ('#xywh=percent:0,50,100,50', [[GREEN, YELLOW]], 'a percent fragment selects a row'),
+                    ('#t=5&xywh=10,10,50,50', [[YELLOW]], 'a region past the image is clipped to it')]:
+                self.assertBlocks(root, f'.box{{background:image("{quadrants}{fragment}") 0 0 no-repeat}}',
+                                  box, rows, message)
+            for fragment in ('#foo', '#xywh=0,0,0,5', '#xywh=20,0,5,5', '#xywh=em:0,0,5,5',
+                             '#xywh=1,2,3'):
+                self.assertSameInk(root, (f'.box{{background:image("{quadrants}{fragment}") red}}', box),
+                                   ('.box{background:red}', box),
+                                   f'image() with fragment {fragment} is an invalid image')
+                self.assertSameInk(root, (f'.box{{background:image("{quadrants}{fragment}", blue) red}}', box),
+                                   ('.box{background:image(blue) red}', box),
+                                   f'image() with fragment {fragment} renders its fallback')
+                self.assertSameInk(root, (f'.box{{background:url("{quadrants}{fragment}") 0 0 no-repeat}}', box),
+                                   (f'.box{{background:url("{quadrants}") 0 0 no-repeat}}', box),
+                                   f'url() ignores fragment {fragment}')
+            self.assertBlocks(root, f'.box{{background:url("{quadrants}#xywh=10,0,10,10") 0 0 no-repeat}}',
+                              box, [[BLUE]], 'url() applies a fragment it understands')
+            # A ten-pixel slice of the ten-pixel region fills the corner of a ten-pixel border.
+            self.assertBlocks(root, f'.box{{border:7.5pt solid;border-image:image("{quadrants}#xywh=0,10,10,10") 10}}',
+                              box, [[GREEN]], 'border images slice the selected region')
+
+    def test_directional_images_flip_against_the_element_direction(self):
+        """CSS Images 4 §2.5.4: an image tagged ltr or rtl flips in the inline direction on an
+        element of the opposite direction, horizontally or, in vertical writing, vertically."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-image-direction-') as directory:
+            root = Path(directory)
+            quadrants = blocks(root / 'quadrants.png', QUADRANTS)
+            box = '<div class=box></div>'
+            mirrored = [[BLUE, RED], [YELLOW, GREEN]]
+            for tag, direction, rows in [('ltr', 'ltr', QUADRANTS), ('rtl', 'ltr', mirrored),
+                                         ('ltr', 'rtl', mirrored), ('rtl', 'rtl', QUADRANTS)]:
+                self.assertBlocks(root, f'.box{{direction:{direction};background:image({tag} "{quadrants}") 0 0 no-repeat}}',
+                                  box, rows, f'image({tag}) on a {direction} element')
+            self.assertBlocks(root, f'.box{{direction:rtl;background:url("{quadrants}") 0 0 no-repeat}}',
+                              box, QUADRANTS, 'url() has no directionality')
+            self.assertBlocks(root, f'.box{{writing-mode:vertical-rl;direction:rtl;'
+                                    f'background:image(ltr "{quadrants}") 0 0 no-repeat}}',
+                              box, [[GREEN, YELLOW], [RED, BLUE]],
+                              'a vertical inline axis flips the image vertically')
+            self.assertBlocks(root, f'.box{{direction:rtl;background:image(ltr "{quadrants}#xywh=0,0,20,10") 0 0 no-repeat}}',
+                              box, [[BLUE, RED]], 'the selected region flips as a whole')
+            for direction, order in [('ltr', [RED, BLUE]), ('rtl', [BLUE, RED])]:
+                output = self.render(root, f'ul{{padding:0 40pt}}li{{direction:{direction};'
+                                           f'list-style-image:image(ltr "{quadrants}")}}',
+                                     '<ul><li>Item</li></ul>')
+                pixels = self.raster(root, output)
+                columns = {color: min(x for y in range(pixels.height) for x in range(pixels.width)
+                                      if pixels.getpixel((x, y)) == color) for color in order}
+                self.assertLess(columns[order[0]], columns[order[1]],
+                                f'the {direction} list item marker shows {order} from left to right: {columns}')
+
+    def test_shape_images_use_fragments_direction_and_fallbacks(self):
+        """CSS Shapes 1 §4 float areas from image() alpha: the selected region, its flip, and
+        `none` for an unavailable URL without a fallback color (§6.1)."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-image-shapes-') as directory:
+            root = Path(directory)
+            half = blocks(root / 'half.png', [[RED, TRANSPARENT]])
+            body = f'<div class=f></div><p>{TEXT}</p>'
+            float_box = '.f{float:left;width:80pt;height:40pt;'
+            for shape, expected in [
+                    (f'image("{half}")', 'inset(0 50% 0 0)'),
+                    (f'image(rtl "{half}")', 'inset(0 0 0 50%)'),
+                    (f'image("{half}#xywh=10,0,10,10")', 'inset(50%)'),
+                    (f'image("{half}#xywh=0,0,10,10")', 'content-box'),
+                    ('image("missing.png")', 'none'),
+                    ('image("missing.png", red)', 'content-box'),
+                    ('image(transparent)', 'inset(50%)')]:
+                self.assertSameInk(root, (f'{float_box}shape-outside:{shape}}}', body),
+                                   (f'{float_box}shape-outside:{expected}}}', body),
+                                   f'shape-outside: {shape} wraps like {expected}')
 
 
 if __name__ == '__main__':

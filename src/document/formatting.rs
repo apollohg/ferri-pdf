@@ -657,16 +657,53 @@ pub(crate) struct ImageResources<'a> {
     pub cache: &'a mut crate::images::ImageCache,
 }
 impl ImageResources<'_> {
+    /// The image `request` names as the element `style` uses it (CSS Images 4 §2.5). A
+    /// `url()` that cannot be loaded aborts the document; an `image()` is then invalid, with
+    /// a diagnostic.
     fn load(
         &mut self,
-        reference: &str,
+        request: &crate::paint::ImageRequest<'_>,
         style: &Style,
-    ) -> Result<std::sync::Arc<crate::images::Image>, crate::images::ImageError> {
-        self.cache.load_in_namespace(
-            reference,
+    ) -> Result<Option<std::sync::Arc<crate::images::Image>>, crate::images::ImageError> {
+        let namespace = style.element_font_namespace();
+        let image = if request.function.is_some() {
+            self.cache
+                .load_optional(request.url, self.base, self.resolver, namespace)
+        } else {
+            Some(
+                self.cache
+                    .load_in_namespace(request.url, self.base, self.resolver, namespace)?,
+            )
+        };
+        Ok(image.and_then(|image| self.view(image, request, style)))
+    }
+    /// An image whose fallback is chosen before layout, as a list marker's or a float shape's
+    /// is: `None` when it cannot be loaded or decoded, with a diagnostic.
+    pub(crate) fn load_decoded(
+        &mut self,
+        request: &crate::paint::ImageRequest<'_>,
+        style: &Style,
+    ) -> Option<std::sync::Arc<crate::images::Image>> {
+        let image = self.cache.load_decoded(
+            request.url,
             self.base,
             self.resolver,
             style.element_font_namespace(),
+        )?;
+        self.view(image, request, style)
+    }
+    fn view(
+        &mut self,
+        image: std::sync::Arc<crate::images::Image>,
+        request: &crate::paint::ImageRequest<'_>,
+        style: &Style,
+    ) -> Option<std::sync::Arc<crate::images::Image>> {
+        self.cache.view(
+            image,
+            request,
+            self.base,
+            style.rtl,
+            style.used_writing_mode().vertical(),
         )
     }
     /// Loads a float's `shape-outside` image; other boxes have no float area. An image that
@@ -675,26 +712,17 @@ impl ImageResources<'_> {
         if style.floating().is_none() {
             return crate::graphics::ShapeOutside::None;
         }
-        style
-            .shape_outside
-            .load_image(&mut |reference| {
-                self.cache
-                    .load_decoded(
-                        reference,
-                        self.base,
-                        self.resolver,
-                        style.element_font_namespace(),
-                    )
-                    .ok_or(())
-            })
-            .unwrap_or_default()
+        let Ok(shape) = style.shape_outside.load_image(&mut |request| {
+            Ok::<_, std::convert::Infallible>(self.load_decoded(request, style))
+        });
+        shape
     }
     /// Loads the box's `url()` background layers and border image; inline style URLs use the
     /// document base.
     pub(crate) fn backgrounds(&mut self, style: &Style) -> Result<BoxDecoration, DocumentError> {
         Ok(style
             .decoration
-            .load_images(|reference| self.load(reference, style))?)
+            .load_images(|request| self.load(request, style))?)
     }
 }
 

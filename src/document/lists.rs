@@ -26,24 +26,15 @@ pub(super) fn marker(
     ordinal: i128,
     resources: &mut crate::document::formatting::ImageResources<'_>,
 ) -> Result<Option<Paragraph>, DocumentError> {
-    // CSS Images 4 §2.1: an invalid image is treated as `none`.
+    // CSS Images 4 §2.1: an invalid image, or one that cannot be loaded, is treated as `none`.
     let mut image = item.list_style_image.with_image_type();
-    if image.is_displayable()
-        && image
-            .load(&mut |reference| {
-                resources
-                    .cache
-                    .load_decoded(
-                        reference,
-                        resources.base,
-                        resources.resolver,
-                        item.element_font_namespace(),
-                    )
-                    .ok_or(())
-            })
-            .is_ok()
-    {
-        return Ok(Some(Paragraph::image_marker(image, style)?));
+    if image.is_displayable() {
+        let Ok(()) = image.load(&mut |request| {
+            Ok::<_, std::convert::Infallible>(resources.load_decoded(request, item))
+        });
+        if image.is_displayable() {
+            return Ok(Some(Paragraph::image_marker(image, style)?));
+        }
     }
     let Some(text) = item.list_style_type.marker(ordinal, style.rtl)? else {
         return Ok(None);
