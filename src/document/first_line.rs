@@ -9,14 +9,16 @@ use std::collections::HashMap;
 /// first, ending with its own block), that their `::first-line` pseudo-elements style; `None`
 /// where no rule selects one.
 pub(super) fn variant(
-    paragraph: &Paragraph,
+    paragraph: &mut Paragraph,
     origins: &[ElementId],
     sheet: &Stylesheet,
     document: &DocumentTree,
     resources: &mut ImageResources<'_>,
 ) -> Result<Option<Paragraph>, DocumentError> {
+    // The annotation boxes take their first-line boxes while the block's style restyles.
+    let block_style = paragraph.style().clone();
     let Some(FirstLineStyles { mut restyle, lines }) =
-        FirstLineStyles::of(paragraph.style(), origins, sheet, document, resources)?
+        FirstLineStyles::of(&block_style, origins, sheet, document, resources)?
     else {
         return Ok(None);
     };
@@ -40,14 +42,90 @@ pub(super) fn variant(
         )
         .map(|style| restyle.style(style))
         .collect::<Result<Vec<_>, _>>()?;
-    let root = restyle.root;
     let mut boxes = Vec::with_capacity(box_styles.len());
     for style in box_styles {
         let decoration = resources.backgrounds(&style)?;
         boxes.push((style, decoration));
     }
-    Ok(Some(
-        paragraph.first_line_copy(root, lines, spans, boxes, atomics),
+    // Each ruby annotation box's contents inherit through the box from `::first-line`.
+    for index in 0..paragraph.annotations().len() {
+        let Some(source) = paragraph
+            .annotation_block_mut(index)
+            .take_annotation_source()
+        else {
+            continue;
+        };
+        let root = annotation_root(paragraph, index, &boxes, &mut restyle)?;
+        let contents_spans = source
+            .spans()
+            .iter()
+            .map(|span| restyle.style(&span.style))
+            .collect::<Result<Vec<_>, _>>()?;
+        let mut contents_boxes = Vec::with_capacity(source.boxes().len());
+        for inline_box in source.boxes() {
+            let style = restyle.style(&inline_box.style)?;
+            let decoration = resources.backgrounds(&style)?;
+            contents_boxes.push((style, decoration));
+        }
+        let contents = source.restyled(root.clone(), contents_spans, contents_boxes)?;
+        paragraph.annotation_block_mut(index).set_first_line_box(
+            crate::document::BlockBox::anonymous(
+                root,
+                vec![crate::document::BlockContent::Inline(contents)],
+                None,
+            ),
+        );
+    }
+    Ok(Some(paragraph.first_line_copy(
+        restyle.root,
+        lines,
+        spans,
+        boxes,
+        atomics,
+    )))
+}
+
+/// The style of the block laying out ruby annotation box `index`'s contents on the first
+/// line, from its annotation container and box there; anonymous ones inherit from the boxes
+/// around them, whose first-line styles are `boxes` (CSS Ruby 1 §2.1.1).
+fn annotation_root(
+    paragraph: &Paragraph,
+    index: usize,
+    boxes: &[(Style, crate::graphics::BoxDecoration)],
+    restyle: &mut Restyle<'_>,
+) -> Result<Style, DocumentError> {
+    use crate::document::ruby;
+    let (container, level, annotation) = paragraph
+        .rubies()
+        .iter()
+        .flat_map(|ruby| {
+            ruby.segments
+                .iter()
+                .flat_map(|segment| &segment.levels)
+                .map(move |level| (ruby.container, level))
+        })
+        .find_map(|(container, level)| {
+            level
+                .annotations
+                .iter()
+                .find(|annotation| annotation.block == Some(index))
+                .map(|annotation| (container, level, annotation))
+        })
+        .expect("each annotation box belongs to a ruby annotation");
+    let level_style = if level.style.origin.node().is_some() {
+        restyle.style(&level.style)?
+    } else {
+        ruby::level_style(&boxes[container].0)
+    };
+    let annotation_style = if annotation.style.origin.node().is_some() {
+        restyle.style(&annotation.style)?
+    } else {
+        ruby::anonymous(&level_style, Display::RubyText)
+    };
+    Ok(ruby::annotation_wrapper(
+        &level_style,
+        &annotation_style,
+        level.inter_character,
     ))
 }
 

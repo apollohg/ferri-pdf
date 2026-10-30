@@ -484,7 +484,7 @@ pub(super) fn anonymous(parent: &Style, display: Display) -> Style {
 
 /// The anonymous annotation container of `container`, which receives no decorations beyond
 /// its own (§4.4).
-fn level_style(container: &Style) -> Style {
+pub(super) fn level_style(container: &Style) -> Style {
     let mut style = anonymous(container, Display::RubyTextContainer);
     style.text_decorations.propagated.clear();
     style
@@ -660,26 +660,34 @@ impl OpenRuby {
                 if explicit {
                     inline.close_box();
                 }
-                let mut wrapper = wrapper_style(&self.level_style());
-                if style.ruby.position == RubyPosition::InterCharacter
-                    && !self.style.used_writing_mode().vertical()
-                {
-                    wrapper = wrapper_style(&style);
-                    wrapper.writing_mode = crate::style::logical::WritingMode::VerticalRl;
-                }
+                let inter_character = style.ruby.position == RubyPosition::InterCharacter
+                    && !self.style.used_writing_mode().vertical();
+                let wrapper = annotation_wrapper(&self.level_style(), &style, inter_character);
                 let contents = std::mem::replace(inline, outer);
-                let block = match contents.finish(&wrapper)? {
+                // The first formatted line holding the annotation restyles its contents
+                // before `text-transform` (CSS Pseudo-Elements 4 §2.1.3).
+                let mut source = None;
+                let finished = contents.finish_with_first_line(&wrapper, |contents| {
+                    source = contents.untransformed_copy();
+                    Ok(None)
+                })?;
+                let block = match finished {
                     Ok(mut paragraph) => {
-                        if style.ruby.position == RubyPosition::InterCharacter
-                            && !self.style.used_writing_mode().vertical()
-                        {
+                        if inter_character {
                             paragraph.align_annotation(style.ruby.align);
                         }
-                        Some(inline.push_annotation(BlockBox::anonymous(
+                        let mut block = BlockBox::anonymous(
                             wrapper,
                             vec![BlockContent::Inline(paragraph)],
                             None,
-                        )))
+                        );
+                        if let Some(mut source) = source {
+                            if inter_character {
+                                source.align_annotation(style.ruby.align);
+                            }
+                            block.keep_annotation_source(source);
+                        }
+                        Some(inline.push_annotation(block))
                     }
                     Err(stray) => {
                         for content in stray {
@@ -841,6 +849,23 @@ fn pairing(level: &PendingLevel) -> Pairing {
 /// The anonymous box an annotation of the level styled `level` is laid out in: its
 /// annotation-level formatting context, which keeps its contents on one line at their
 /// max-content width and distributes any extra width it is given (§§3.1, 4.3).
+/// The style of the block that lays out the contents of an annotation box styled `annotation`
+/// in an annotation container styled `level`; an inter-character annotation's is the box's,
+/// vertical (§2.1.1, §4.1).
+pub(super) fn annotation_wrapper(
+    level: &Style,
+    annotation: &Style,
+    inter_character: bool,
+) -> Style {
+    if inter_character {
+        let mut wrapper = wrapper_style(annotation);
+        wrapper.writing_mode = crate::style::logical::WritingMode::VerticalRl;
+        wrapper
+    } else {
+        wrapper_style(level)
+    }
+}
+
 fn wrapper_style(level: &Style) -> Style {
     let mut style = level.anonymous(Display::InlineBlock);
     style.width = crate::style::Size::Intrinsic(crate::style::IntrinsicSizing::MaxContent);

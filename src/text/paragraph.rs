@@ -564,13 +564,15 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
         if let Some(ruby) = &prepared.ruby {
             ruby.place(&mut line, atomics, self.containing_width)?;
         }
+        // Annotation boxes whose contents hold boxes laid out apart have no first-line copy.
         let source = self.prepared.paragraph;
         if line.first_line_styles
             && let Some(fragment) = line.annotations.iter().find(|fragment| {
                 let index = fragment.index - source.atomics().len();
-                !source
-                    .annotation_box_style(index)
-                    .same_text_style(paragraph.annotations()[index].block.style())
+                source.annotations()[index].block.first_line_box().is_none()
+                    && !source
+                        .annotation_box_style(index)
+                        .same_text_style(paragraph.annotations()[index].block.style())
             })
         {
             return Err(TextError::FirstLineAnnotation {

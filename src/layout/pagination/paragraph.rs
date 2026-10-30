@@ -189,21 +189,19 @@ impl<'a> Paginator<'a, '_, 'a> {
         height: Option<f32>,
     ) -> Result<(), LayoutError> {
         let rtl = source.style().used_rtl();
-        let blocks = atomics
-            .iter_mut()
-            .enumerate()
-            .map(|(index, atomic)| (atomic, &source.inline_block(index).block))
-            .chain(
-                first_line
-                    .iter_mut()
-                    .zip(source.atomics())
-                    .map(|(atomic, anchor)| {
+        let blocks =
+            atomics
+                .iter_mut()
+                .enumerate()
+                .map(|(index, atomic)| (atomic, &source.inline_block(index).block))
+                .chain(first_line.iter_mut().zip(source.inline_blocks()).map(
+                    |(atomic, anchor)| {
                         (
                             atomic,
                             anchor.block.first_line_box().unwrap_or(&anchor.block),
                         )
-                    }),
-            );
+                    },
+                ));
         for (atomic, block) in blocks {
             if atomic.is_some() {
                 *atomic = Some(self.measurer.run(|measurer| {

@@ -234,9 +234,13 @@ pub(crate) struct BlockBox {
     /// The block-start and block-end sides of every column's first and last formatted lines
     /// that a multi-column container trims (CSS Inline 3 §6.2).
     column_text_trim: [bool; 2],
-    /// An atomic inline's box as its block's first formatted line styles it, where the styles
-    /// its contents inherit through `::first-line` change it (CSS Pseudo-Elements 4 §2.1.3).
+    /// An atomic inline's or ruby annotation's box as its block's first formatted line styles
+    /// it, where the styles its contents inherit through `::first-line` change it (CSS
+    /// Pseudo-Elements 4 §2.1.3).
     first_line_box: Option<Box<BlockBox>>,
+    /// A ruby annotation box's contents before `text-transform`, kept until its paragraph's
+    /// first formatted line styles a copy of them.
+    annotation_source: Option<Box<Paragraph>>,
 }
 
 /// An initial letter box (CSS Inline 3 §7.5): an atomic inline of its originating line that
@@ -536,6 +540,7 @@ impl BlockBox {
             rendered_legend: false,
             column_text_trim: [false; 2],
             first_line_box: None,
+            annotation_source: None,
         }
     }
     pub(crate) fn column_text_trim(&self) -> [bool; 2] {
@@ -545,6 +550,16 @@ impl BlockBox {
     /// formatted line, if that line's styles change it.
     pub(crate) fn first_line_box(&self) -> Option<&BlockBox> {
         self.first_line_box.as_deref()
+    }
+    pub(super) fn set_first_line_box(&mut self, block: BlockBox) {
+        self.first_line_box = Some(Box::new(block));
+    }
+    /// Keeps a ruby annotation box's untransformed `contents` for its first-line copy.
+    pub(super) fn keep_annotation_source(&mut self, contents: Paragraph) {
+        self.annotation_source = Some(Box::new(contents));
+    }
+    pub(super) fn take_annotation_source(&mut self) -> Option<Paragraph> {
+        self.annotation_source.take().map(|contents| *contents)
     }
     pub(crate) fn leading_events(&self) -> impl Iterator<Item = &crate::document::SemanticEvent> {
         self.children
@@ -2129,7 +2144,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     ) -> Result<Result<Paragraph, Vec<BlockContent>>, DocumentError> {
         let (sheet, document) = (self.sheet, self.traversal.document);
         let resources = &mut *self.resources;
-        collected.finish_with_first_line(style, |paragraph| match origins {
+        collected.finish_with_first_line(style, |paragraph: &mut Paragraph| match origins {
             Some(origins) => {
                 crate::document::first_line::variant(paragraph, origins, sheet, document, resources)
             }

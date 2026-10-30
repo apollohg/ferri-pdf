@@ -1916,17 +1916,15 @@ impl<'a> Measurer<'a> {
                 containing,
                 rtl,
             )?));
-            if index < paragraph.atomics().len() {
-                first_line_atomics.push(
-                    atomic
-                        .block
-                        .first_line_box()
-                        .map(|block| {
-                            crate::layout::inline::measure(self, block, width, containing, rtl)
-                        })
-                        .transpose()?,
-                );
-            }
+            first_line_atomics.push(
+                atomic
+                    .block
+                    .first_line_box()
+                    .map(|block| {
+                        crate::layout::inline::measure(self, block, width, containing, rtl)
+                    })
+                    .transpose()?,
+            );
         }
         let mut metrics = Vec::new();
         crate::layout::inline::paragraph_metrics(paragraph, &atomics, &mut metrics);

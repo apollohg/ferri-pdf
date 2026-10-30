@@ -526,6 +526,40 @@ fn first_line_styles_atomic_inlines_and_their_contents_only_where_they_lie_on_it
 }
 
 #[test]
+fn first_line_styles_ruby_annotations_and_their_contents_only_where_they_lie_on_it() {
+    // CSS Pseudo-Elements 4 §2.1.3 and CSS Ruby 1 §2.1.1: an annotation box of a base on the
+    // first line inherits from `::first-line`, its contents from it, cased by the line.
+    let css = "p{width:200pt;font-size:12pt}rt{font-size:50%}\
+               p::first-line{color:red;font-size:20pt;text-transform:uppercase}";
+    let lines = styled_lines(&trace(
+        css,
+        "<p><ruby>漢<rt>stra\u{df}e</rt></ruby> lead words that wrap onto later lines \
+         <ruby>字<rt>ji</rt></ruby> end</p>",
+    ));
+    let first = line_runs(&lines, "STRASSE");
+    assert!(
+        first.iter().all(|run| (run.1, run.2) == (RED, 10.0)),
+        "the annotation on the first line inherits the first line's colour, size and casing, \
+         re-encoding its text: {first:?}"
+    );
+    let later = line_runs(&lines, "ji");
+    assert!(
+        later.iter().all(|run| (run.1, run.2) == (BLACK, 6.0)),
+        "an annotation on a later line keeps the paragraph's styles: {later:?}"
+    );
+    // An anonymous annotation shares the first-line inheritance of its annotation container.
+    let anonymous = styled_lines(&trace(
+        css,
+        "<p><ruby>漢<rtc><span>kan</span></rtc></ruby> lead</p>",
+    ));
+    let contents = line_runs(&anonymous, "KAN");
+    assert!(
+        contents.iter().all(|run| run.1 == RED),
+        "the span inside an anonymous annotation inherits from ::first-line: {contents:?}"
+    );
+}
+
+#[test]
 fn first_line_atomic_inlines_count_record_and_call_once() {
     // The first line's copy of an atomic inline is formatted again from its start; only one
     // of the two is laid out, so counters, named strings and footnotes advance once.

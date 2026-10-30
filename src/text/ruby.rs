@@ -209,8 +209,12 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
     /// The text of annotation box `block`'s contents, which a line breaking inside its bases
     /// breaks; `None` where it has none in this writing mode.
     fn breakable(&self, block: usize) -> Option<&'p Paragraph> {
-        self.source
-            .annotation_contents(block)
+        // The first formatted line holds the contents of the box's `::first-line` copy.
+        let first_line = (!std::ptr::eq(self.paragraph, self.source))
+            .then(|| self.source.first_line_annotation_contents(block))
+            .flatten();
+        first_line
+            .or_else(|| self.source.annotation_contents(block))
             .filter(|contents| !contents.text().is_empty())
     }
 

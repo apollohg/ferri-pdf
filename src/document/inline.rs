@@ -513,12 +513,51 @@ impl Paragraph {
             .get(index)
             .unwrap_or_else(|| &self.annotations[index - self.atomics.len()])
     }
+    /// Ruby annotation box `index`, to which its first-line box is attached.
+    pub(super) fn annotation_block_mut(&mut self, index: usize) -> &mut crate::document::BlockBox {
+        &mut self.annotations[index].block
+    }
+    /// A copy of this paragraph of a ruby annotation box's contents before `text-transform`,
+    /// to style for its paragraph's first formatted line; `None` where it holds boxes laid out
+    /// apart, which are not copied.
+    pub(super) fn untransformed_copy(&self) -> Option<Self> {
+        (self.anchors.is_empty() && self.atomics.is_empty() && self.annotations.is_empty()).then(
+            || {
+                self.first_line_copy(
+                    (*self.style).clone(),
+                    Vec::new(),
+                    self.spans.iter().map(|span| span.style.clone()).collect(),
+                    self.boxes
+                        .iter()
+                        .map(|inline_box| {
+                            ((*inline_box.style).clone(), inline_box.decoration.clone())
+                        })
+                        .collect(),
+                    Vec::new(),
+                )
+            },
+        )
+    }
+    /// This untransformed copy with its root inline box, spans and inline boxes styled `root`,
+    /// `spans` and `boxes`, transformed.
+    pub(super) fn restyled(
+        &self,
+        root: Style,
+        spans: Vec<Style>,
+        boxes: Vec<(Style, crate::graphics::BoxDecoration)>,
+    ) -> Result<Self, DocumentError> {
+        let mut copy = self.first_line_copy(root, Vec::new(), spans, boxes, Vec::new());
+        transform::apply(&mut copy, false)?;
+        Ok(copy)
+    }
     /// The paragraph of ruby annotation box `index`'s contents, if it has any.
     pub(crate) fn annotation_contents(&self, index: usize) -> Option<&Self> {
-        match self.annotations[index].block.children().first() {
-            Some(crate::document::BlockContent::Inline(contents)) => Some(contents),
-            _ => None,
-        }
+        contents(&self.annotations[index].block)
+    }
+    /// The paragraph of the contents of ruby annotation box `index` as the first formatted
+    /// line styles them, if that line restyles them.
+    pub(crate) fn first_line_annotation_contents(&self, index: usize) -> Option<&Self> {
+        contents(self.annotations[index].block.first_line_box()?)
     }
     /// The boxes whose metrics lay out its lines: its `inline_blocks`, then in turn those of
     /// each annotation box's contents, which a line breaking inside a ruby base lays out in
@@ -1373,11 +1412,12 @@ impl InlineCollector {
         self.finish_with_first_line(style, |_| Ok(None))
     }
     /// As `finish`, attaching the copy of the paragraph that `first_line` styles for its first
-    /// formatted line, given the paragraph before `text-transform` (CSS Pseudo-Elements 4 §2.1).
+    /// formatted line, given the paragraph before `text-transform`, whose ruby annotation boxes
+    /// it may give first-line boxes (CSS Pseudo-Elements 4 §2.1).
     pub(crate) fn finish_with_first_line(
         self,
         style: &Style,
-        first_line: impl FnOnce(&Paragraph) -> Result<Option<Paragraph>, DocumentError>,
+        first_line: impl FnOnce(&mut Paragraph) -> Result<Option<Paragraph>, DocumentError>,
     ) -> Result<Result<Paragraph, Vec<crate::document::BlockContent>>, DocumentError> {
         if ((self.text.is_empty() && self.annotations.is_empty())
             || (self.spans.iter().any(|span| span.leader)
@@ -1414,7 +1454,10 @@ impl InlineCollector {
             first_line: None,
             first_line_offsets: OffsetMap::default(),
         };
-        let variant = first_line(&paragraph)?;
+        let variant = first_line(&mut paragraph)?;
+        for annotation in &mut paragraph.annotations {
+            annotation.block.take_annotation_source();
+        }
         let units = transform::apply(&mut paragraph, variant.is_some())?;
         if let Some(mut variant) = variant {
             let copy = transform::apply(&mut variant, true)?;
@@ -1495,4 +1538,12 @@ fn math_children(
     );
     children.sort_by_key(|(offset, _)| *offset);
     children.into_iter().map(|(_, class)| class).collect()
+}
+
+/// The paragraph of an annotation box's contents, if it has any.
+fn contents(block: &crate::document::BlockBox) -> Option<&Paragraph> {
+    match block.children().first() {
+        Some(crate::document::BlockContent::Inline(contents)) => Some(contents),
+        _ => None,
+    }
 }

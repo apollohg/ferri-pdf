@@ -185,13 +185,13 @@ pub(super) fn first_line_metrics(
     }
 }
 
-/// Whether atomic inline `index` of `paragraph` has a `::first-line` box, which its first
-/// formatted line lays out in its place.
+/// Whether inline block `index` of `paragraph`, an atomic inline or ruby annotation box, has
+/// a `::first-line` box, which its first formatted line lays out in its place.
 pub(super) fn has_first_line_box(paragraph: &crate::document::Paragraph, index: usize) -> bool {
     paragraph
-        .atomics()
-        .get(index)
-        .is_some_and(|atomic| atomic.block.first_line_box().is_some())
+        .inline_blocks()
+        .nth(index)
+        .is_some_and(|block| block.block.first_line_box().is_some())
 }
 
 /// An atomic inline's metrics from its layout `measured` with horizontal `geometry`.
