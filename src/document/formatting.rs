@@ -2628,16 +2628,18 @@ fn active_builder<'a, 's, 'c>(
     )
 }
 
-/// The anonymous block of the footnote area holding the inline footnote `element`, styled
-/// `style` and a child of `parent`: the block the inline footnotes before it are collected
-/// in, which it joins, or a new one.
-fn inline_footnote_frame<'d>(
+/// Opens on `frames` the anonymous block of the footnote area holding the inline footnote
+/// `element`, styled `style` and a child of the frame `parent`: the block the inline
+/// footnotes before it are collected in, which it joins, or a new one. Kept out of `block`,
+/// whose frame nested navigables' formatting stacks.
+#[inline(never)]
+fn open_inline_footnote<'d>(
+    frames: &mut Vec<Frame<'d>>,
     element: Element<'d>,
-    parent: &Style,
+    parent: usize,
     style: &Style,
-    depth: usize,
     traversal: &mut Traversal<'_>,
-) -> Frame<'d> {
+) {
     let (block_style, children, inline, members) = match traversal.inline_footnotes.take() {
         Some(open) => {
             let InlineFootnotes {
@@ -2649,7 +2651,7 @@ fn inline_footnote_frame<'d>(
             (style, children, inline, members)
         }
         None => (
-            Box::new(parent.anonymous(Display::Block)),
+            Box::new(frames[parent].style.anonymous(Display::Block)),
             Vec::new(),
             InlineCollector::default(),
             Vec::new(),
@@ -2658,7 +2660,7 @@ fn inline_footnote_frame<'d>(
     let mut frame = Frame::new(
         element,
         block_style,
-        depth,
+        frames[parent].depth + 1,
         0,
         Some(Placement::InlineFootnote),
         None,
@@ -2674,19 +2676,21 @@ fn inline_footnote_frame<'d>(
         style: style.clone(),
         members,
     }));
-    frame
+    frames.push(frame);
 }
 
-/// Ends the inline footnote of the anonymous block `wrapper`: its call takes its place in the
-/// block `parent` of `frames`, and the block waits for the next inline footnote to join it.
+/// Ends the inline footnote of the anonymous block that tops `frames`: its call takes its
+/// place in the block `parent` of `frames`, and the block waits for the next inline footnote
+/// to join it. Kept out of `block`, whose frame nested navigables' formatting stacks.
+#[inline(never)]
 fn end_inline_footnote<'a>(
-    wrapper: Frame<'_>,
-    frames: &mut [Frame<'_>],
+    frames: &mut Vec<Frame<'_>>,
     parent: usize,
     sheet: &'a Stylesheet,
     traversal: &mut Traversal<'a>,
     resources: &mut ImageResources<'a>,
 ) -> Result<(), DocumentError> {
+    let wrapper = frames.pop().expect("the inline footnote's block is open");
     let element = wrapper.element;
     let mut block = wrapper
         .block
@@ -3149,14 +3153,7 @@ fn block<'a>(
                     traversal.finish_inline_footnotes()?;
                 }
                 if inline {
-                    let wrapper = inline_footnote_frame(
-                        child,
-                        &frames[index].style,
-                        &child_style,
-                        child_depth,
-                        traversal,
-                    );
-                    frames.push(wrapper);
+                    open_inline_footnote(&mut frames, child, index, &child_style, traversal);
                     block_index = frames.len() - 1;
                     blocks.push(block_index);
                     // The anonymous block holds the footnote as an inline-level box.
@@ -3360,12 +3357,11 @@ fn block<'a>(
             .as_ref()
             .is_some_and(|block| block.inline_footnote.is_some())
         {
-            let wrapper = frames.pop().expect("the inline footnote's block is open");
             blocks.pop();
             let parent = *blocks
                 .last()
                 .expect("an inline footnote has a containing block");
-            end_inline_footnote(wrapper, &mut frames, parent, sheet, traversal, resources)?;
+            end_inline_footnote(&mut frames, parent, sheet, traversal, resources)?;
             continue;
         }
         let generated = frames[index].generated;
