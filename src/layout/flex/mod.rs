@@ -232,6 +232,24 @@ fn measure_item<'a>(
     }
 }
 
+/// The break avoidance that the items of a flex line or column item carry at one edge, which
+/// applies between it and its neighbours (CSS Flexbox 1 §12); the items carry forced breaks
+/// themselves.
+fn avoided_break(
+    cells: &[MeasuredCell<'_>],
+    edge: impl Fn(&MeasuredBlock<'_>) -> BreakBetween,
+) -> BreakBetween {
+    let combined = cells
+        .iter()
+        .map(|cell| edge(&cell.block))
+        .fold(BreakBetween::Auto, BreakBetween::combine);
+    if combined.is_forced() {
+        BreakBetween::Auto
+    } else {
+        combined
+    }
+}
+
 pub(super) fn measure<'a>(
     measurer: &mut Measurer<'a>,
     block: impl Into<BlockSource<'a>>,
@@ -865,6 +883,8 @@ pub(super) fn measure<'a>(
         if start != cursor {
             items.push(FlowItem::Space(start - cursor));
         }
+        let break_before = avoided_break(&cells, |block| block.break_before);
+        let break_after = avoided_break(&cells, |block| block.break_after);
         let first_fragment = cells
             .iter()
             .map(|item| item.offset + item.block.first_fragment)
@@ -882,8 +902,8 @@ pub(super) fn measure<'a>(
             paints: Vec::new(),
             after: Vec::new(),
             targets: Vec::new(),
-            break_before: BreakBetween::Auto,
-            break_after: BreakBetween::Auto,
+            break_before,
+            break_after,
             band: None,
         })));
         cursor = start + extent;

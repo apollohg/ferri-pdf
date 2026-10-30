@@ -390,3 +390,42 @@ fn orthogonal_items_take_their_flexed_and_stretched_widths_as_block_sizes() {
     common::assert_labelled_pt("stretched vertical block width", stretched.width, 200.0);
     common::assert_labelled_pt("stretched vertical block height", stretched.height, 30.0);
 }
+
+#[test]
+fn break_avoidance_on_flex_items_keeps_their_lines_together() {
+    let pages = |container: &str, css: &str| {
+        render(
+            &format!(
+                "<section class={container}><div class=spacer></div><p class=head>Head</p>\
+                 <p class=body>Body</p><p>More</p></section>"
+            ),
+            &format!(
+                "@page{{size:200pt 200pt;margin:20pt}}body{{margin:0}}\
+                 .column{{display:flex;flex-direction:column}}\
+                 .wrap{{display:flex;flex-wrap:wrap}}.wrap>*{{width:100%}}\
+                 .spacer{{height:130pt}}section p{{height:20pt}}{css}"
+            ),
+        )
+        .pages
+        .iter()
+        .map(|page| page.iter().map(|line| line.text.clone()).collect())
+        .collect::<Vec<Vec<String>>>()
+    };
+    for container in ["column", "wrap"] {
+        assert_eq!(
+            pages(container, ""),
+            [vec!["Head"], vec!["Body", "More"]],
+            "{container}: without avoidance the heading fits on the first page"
+        );
+        for css in [".head{break-after:avoid}", ".body{break-before:avoid}"] {
+            assert_eq!(
+                pages(container, css),
+                [
+                    Vec::<String>::new(),
+                    vec!["Head".into(), "Body".into(), "More".into()]
+                ],
+                "{container} with {css}: the heading moves to the next page with its body"
+            );
+        }
+    }
+}
