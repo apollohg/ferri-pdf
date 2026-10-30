@@ -173,6 +173,14 @@
       "syntax": "[ <image> | <string> ] [ <resolution> || type(<string>) ]?",
       "source": "https://www.w3.org/TR/2025/WD-css-images-4-20250930/#image-set-notation"
     },
+    "cross-fade()": {
+      "syntax": "cross-fade( <cf-image># )",
+      "source": "https://www.w3.org/TR/2025/WD-css-images-4-20250930/#cross-fade-function"
+    },
+    "cf-image": {
+      "syntax": "[ <image> | <color> ] && <percentage [0,100]>?",
+      "source": "https://www.w3.org/TR/2025/WD-css-images-4-20250930/#typedef-cf-image"
+    },
     "display-legacy": {
       "syntax": "inline-block | inline-list-item | inline-table | inline-flex | inline-grid | -webkit-box | -webkit-inline-box",
       "source": "https://compat.spec.whatwg.org/commit-snapshots/159624eff7222f84fbdaae006e998e65bf60daa0/#css-keyword-mappings: -webkit-box and -webkit-inline-box, which https://www.w3.org/TR/2023/WD-css-overflow-4-20230321/#webkit-line-clamp requires to compute as themselves"
