@@ -1074,7 +1074,17 @@ impl InlineCollector {
         block: crate::document::BlockBox,
         style: &Style,
     ) -> Result<(), DocumentError> {
-        self.emit_pending_space()?;
+        let collapses_spaces = block.is_unadorned_image_fallback()
+            && block.children().is_empty()
+            && [&block.style().min_width, &block.style().min_height]
+                .into_iter()
+                .all(|size| *size == crate::style::Size::Auto || size.is_zero())
+            && block.style().initial_letter.is_none();
+        // Keep the pending space across an invisible replacement, while retaining its
+        // placeholder for destinations, semantic events and phantom-line handling.
+        if !collapses_spaces {
+            self.emit_pending_space()?;
+        }
         let index = self.style_index(style);
         let source = self.next_source();
         let offset = self.text.len();

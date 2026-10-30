@@ -707,14 +707,7 @@ pub(crate) fn align(
         && line.atomics.iter().all(|fragment| {
             let block = &paragraph.atomics()[fragment.index].block;
             let metrics = atomics[fragment.index];
-            block.is_empty_image_fallback()
-                && block.style().width == crate::style::Size::Auto
-                && block.style().height == crate::style::Size::Auto
-                && !block.style().has_inline_edges([false; 2])
-                && block.style().margin.iter().all(crate::style::Size::is_zero)
-                && !block.decoration().is_visible()
-                && metrics.width == 0.0
-                && metrics.height == 0.0
+            block.is_unadorned_image_fallback() && metrics.width == 0.0 && metrics.height == 0.0
         });
     if (paragraph.text().is_empty() || empty_images || empty_tabs)
         && paragraph

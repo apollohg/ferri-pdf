@@ -425,8 +425,13 @@ impl BlockBox {
     pub(crate) fn image(&self) -> Option<&std::sync::Arc<crate::images::Image>> {
         self.image.as_ref()
     }
-    pub(crate) fn is_empty_image_fallback(&self) -> bool {
+    pub(crate) fn is_unadorned_image_fallback(&self) -> bool {
         self.empty_image_fallback
+            && self.style.width == crate::style::Size::Auto
+            && self.style.height == crate::style::Size::Auto
+            && !self.style.has_inline_edges([false; 2])
+            && self.style.margin.iter().all(crate::style::Size::is_zero)
+            && !self.decoration.is_visible()
     }
     pub(crate) fn image_density(&self) -> f32 {
         self.density

@@ -30,6 +30,38 @@ class EmbeddedContentPdf(unittest.TestCase):
         with self.renderer.raster(root, output, vector_antialias=False) as raster:
             return raster.getpixel(point)
 
+    def test_failed_empty_alt_image_preserves_surrounding_space_collapsing(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-empty-alt-space-') as directory:
+            root = Path(directory)
+            css = 'p{margin:0;font:12pt/18pt Probe}'
+            expected = self.ink(root, css, '<p>mid text</p>')
+            for body in [
+                '<p>mid <img src=missing.png alt=""> text</p>',
+                '<p>mid <span><img src=missing.png alt=""></span> text</p>',
+                '<p>mid <img src=missing.png alt=""><img src=missing.png alt=""> text</p>',
+            ]:
+                with self.subTest(body=body):
+                    self.assertTrue(self.ink(root, css, body) == expected,
+                                    'a failed empty-alt inline image must not separate '
+                                    'two collapsible spaces')
+            for whitespace in ('normal', 'pre', 'pre-wrap', 'break-spaces'):
+                with self.subTest(whitespace=whitespace):
+                    rules = css + f'p{{white-space:{whitespace}}}'
+                    expected = self.ink(root, rules, '<p>mid  text</p>')
+                    actual = self.ink(root, rules,
+                                      '<p>mid <img src=missing.png alt=""> text</p>')
+                    self.assertTrue(actual == expected,
+                                    'preserved spaces must survive the failed image unchanged')
+            for geometry in ('width:0;height:0', 'min-width:12pt', 'min-height:20pt',
+                             'padding:2pt', 'border:2pt solid red', 'margin:2pt'):
+                with self.subTest(geometry=geometry):
+                    expected = self.ink(root, css,
+                                        f'<p>mid <span style="display:inline-block;{geometry}"></span> text</p>')
+                    actual = self.ink(root, css,
+                                      f'<p>mid <img src=missing.png alt="" style="{geometry}"> text</p>')
+                    self.assertTrue(actual == expected,
+                                    'explicit image geometry must still separate surrounding spaces')
+
     def test_iframe_content_is_placed_in_the_content_box_and_clipped_to_it(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-iframe-clip-') as directory:
             root = Path(directory)
