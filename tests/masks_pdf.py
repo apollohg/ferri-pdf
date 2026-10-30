@@ -164,6 +164,28 @@ body{{margin:0}}div{{margin:0}}.box{{width:{BOX}pt;height:{BOX}pt;background:red
             self.assertNear(self.pixel(pixels, BOX - 10, BOX // 2), WHITE,
                             'the mask layer removes the right half the mask border keeps')
 
+    def test_sliced_inline_boxes_mask_and_clip_their_unbroken_box(self):
+        # CSS Masking 1 §7.6: box-decoration-break decides the boxes the mask positioning area
+        # covers; a sliced inline box is masked and clipped as if laid out unbroken, its two
+        # 60pt fragments end to end, while a cloned one masks each fragment on its own.
+        first_right, second_left = (45, 16), (15, 46)
+        for effect in ('mask-image:linear-gradient(to right,black 50%,transparent 50%);'
+                       'mask-repeat:no-repeat', 'clip-path:inset(0 50% 0 0)'):
+            for breaking, first, second in (('slice', RED, WHITE), ('clone', WHITE, RED)):
+                with self.subTest(effect=effect, breaking=breaking), \
+                        tempfile.TemporaryDirectory(prefix='ferri-pdf-masks-') as directory:
+                    root = Path(directory)
+                    output = self.render(
+                        root,
+                        'div{font:20pt/30pt serif}i{display:inline-block;width:60pt;height:10pt;'
+                        f'background:red}}span{{box-decoration-break:{breaking};{effect}}}',
+                        '<div><span><i></i><br><i></i></span></div>')
+                    pixels = self.raster(root, output)
+                    self.assertNear(self.pixel(pixels, *first_right), first,
+                                    f'{breaking} {effect}: right half of the first fragment')
+                    self.assertNear(self.pixel(pixels, *second_left), second,
+                                    f'{breaking} {effect}: left half of the second fragment')
+
     def test_svg_mask_reference_positions_itself_against_the_border_box(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-masks-') as directory:
             root = Path(directory)

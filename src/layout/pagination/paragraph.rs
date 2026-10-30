@@ -1184,15 +1184,25 @@ impl<'a> Paginator<'a, '_, 'a> {
         Ok(())
     }
 
+    /// Lays a sliced inline box's fragments end to end as its unbroken box, which its
+    /// backgrounds, clip path and masks then take (CSS Fragmentation 3 §5.4, CSS Masking 1
+    /// §7.6).
     fn finish_inline_backgrounds(&mut self, layers: &InlineLayers<'a>) {
-        for (inline_box, fragments) in layers.painted() {
-            if !inline_box.style.clone_decoration {
-                assemble_background(
-                    fragments,
-                    &mut self.foreground,
-                    true,
-                    inline_box.style.used_rtl(),
-                );
+        for (inline_box, fragments, effects) in layers.painted() {
+            if inline_box.style.clone_decoration {
+                continue;
+            }
+            assemble_background(
+                fragments,
+                &mut self.foreground,
+                true,
+                inline_box.style.used_rtl(),
+            );
+            for &[node, copy, number] in effects {
+                let (page, slot) = fragments[number];
+                if let DisplayItem::Box(assembled) = &self.foreground[page][slot].item {
+                    self.clips[node].paints[copy].1.background_box = assembled.background_box;
+                }
             }
         }
     }

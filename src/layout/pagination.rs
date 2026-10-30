@@ -77,11 +77,20 @@ impl InlineContaining {
     }
 }
 /// A paragraph being painted: its containing block and its inline boxes' painted fragments.
+/// An inline box, its fragments' slots and the effect copies of its fragments.
+type PaintedInline<'l> = (
+    &'l crate::document::InlineBox,
+    &'l [(usize, usize)],
+    &'l [[usize; 3]],
+);
 #[derive(Clone)]
 struct InlineLayers<'p> {
     paragraph: &'p crate::document::Paragraph,
     containing: InlineContaining,
     fragments: Vec<Vec<(usize, usize)>>,
+    /// Each box's fragments that effect nodes bound their clip path, mask or filter with: the
+    /// node, the copy's index among its paints and the fragment's among the box's fragments.
+    effects: Vec<Vec<[usize; 3]>>,
     /// The layers of the paragraph's `::first-line` copy, which paints its first line.
     first_line: Option<Box<InlineLayers<'p>>>,
 }
@@ -91,6 +100,7 @@ impl<'p> InlineLayers<'p> {
             paragraph,
             containing,
             fragments: vec![Vec::new(); paragraph.boxes().len()],
+            effects: vec![Vec::new(); paragraph.boxes().len()],
             first_line: paragraph
                 .first_line()
                 .map(|copy| Box::new(Self::new(copy, containing))),
@@ -114,18 +124,24 @@ impl<'p> InlineLayers<'p> {
         self
     }
     /// Each inline box painted with the fragments it painted, in this paragraph and its copy.
-    fn painted(&self) -> impl Iterator<Item = (&crate::document::InlineBox, &[(usize, usize)])> {
+    /// The paragraph's and its `::first-line` copy's boxes, with their fragments and the
+    /// effect copies of those fragments.
+    fn painted(&self) -> impl Iterator<Item = PaintedInline<'_>> {
+        self.own_painted().chain(
+            self.first_line
+                .iter()
+                .flat_map(|first_line| first_line.own_painted()),
+        )
+    }
+    fn own_painted(&self) -> impl Iterator<Item = PaintedInline<'_>> {
         self.paragraph
             .boxes()
             .iter()
-            .zip(self.fragments.iter().map(Vec::as_slice))
-            .chain(self.first_line.iter().flat_map(|first_line| {
-                first_line
-                    .paragraph
-                    .boxes()
-                    .iter()
-                    .zip(first_line.fragments.iter().map(Vec::as_slice))
-            }))
+            .zip(&self.fragments)
+            .zip(&self.effects)
+            .map(|((inline_box, fragments), effects)| {
+                (inline_box, fragments.as_slice(), effects.as_slice())
+            })
     }
 }
 /// Absolutely positioned descendants of a non-atomic inline box waiting for the end of its
@@ -6676,10 +6692,16 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     layer.clip,
                 );
             }
+            let number = layers.fragments[fragment.index].len();
             let mut clip = layer.clip;
             while let Some(index) = clip {
                 if matches!(self.clips[index].effect, Effect::PathClip(owner) if std::ptr::eq(owner, style))
                 {
+                    layers.effects[fragment.index].push([
+                        index,
+                        self.clips[index].paints.len(),
+                        number,
+                    ]);
                     self.clips[index].paints.push((self.page, paint.clone()));
                     break;
                 }
@@ -6705,6 +6727,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             if group.anchored()
                 && let Some(node) = layer.group
             {
+                layers.effects[fragment.index].push([node, self.clips[node].paints.len(), number]);
                 self.clips[node].paints.push((self.page, paint.clone()));
                 if let Some(backdrop) = group.backdrop(&paint) {
                     self.foreground[self.page].push(ScopedPaint {
