@@ -82,6 +82,15 @@ pub(super) fn defined(property: Property) -> bool {
             | P::ScrollSnapAlign
             | P::ScrollSnapStop
             | P::ScrollSnapType
+            // The obsolete CSS Scroll Snap Points 1 draft: coordinates, destinations and
+            // repeating points only give the positions a `scroll-snap-type-x` or `-y`
+            // container snaps to, which proximity snapping only permits.
+            | P::ScrollSnapCoordinate
+            | P::ScrollSnapDestination
+            | P::ScrollSnapPointsX
+            | P::ScrollSnapPointsY
+            | P::ScrollSnapTypeX
+            | P::ScrollSnapTypeY
             // CSS Position 4 §3.4: the user agent's `overlay: none !important` rule always
             // wins, and only scripted APIs place elements in the top layer.
             | P::Overlay
@@ -228,7 +237,10 @@ pub(super) fn compute(
 ) -> Result<Computed, StyleError> {
     // CSS Scroll Snap 1 §4.1.2: a mandatory snap container must rest on a snap position,
     // which can move its initial scroll position and so what static media show.
-    if property == Property::ScrollSnapType {
+    if matches!(
+        property,
+        Property::ScrollSnapType | Property::ScrollSnapTypeX | Property::ScrollSnapTypeY
+    ) {
         let mut keywords = Vec::new();
         value.keywords(&mut keywords);
         if keywords.contains(&Keyword::Mandatory) {

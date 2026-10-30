@@ -55,6 +55,26 @@ fn values_inherit_as_their_specifications_define() {
             false,
         ),
         ("scroll-margin-top:1pt", Property::ScrollMarginTop, false),
+        (
+            "scroll-snap-points-x:repeat(10%)",
+            Property::ScrollSnapPointsX,
+            false,
+        ),
+        (
+            "scroll-snap-coordinate:left top,50% 1pt",
+            Property::ScrollSnapCoordinate,
+            false,
+        ),
+        (
+            "scroll-snap-destination:right",
+            Property::ScrollSnapDestination,
+            false,
+        ),
+        (
+            "scroll-snap-type-y:proximity",
+            Property::ScrollSnapTypeY,
+            false,
+        ),
     ] {
         let (parent, child) = styles(&format!("#parent{{{declaration}}}"))
             .unwrap_or_else(|error| panic!("`{declaration}` must compute: {error}"));
@@ -237,11 +257,26 @@ fn mandatory_scroll_snapping_remains_unsupported() {
             .is_some(),
         "proximity snapping only permits snapping, so it computes without effect"
     );
-    match styles("#parent{scroll-snap-type:x mandatory}") {
-        Err(StyleError::Unsupported(message)) => assert_eq!(
-            message, "scroll-snap-type: x mandatory",
-            "mandatory snapping can move the printed scroll position"
+    for (declaration, expected) in [
+        (
+            "scroll-snap-type:x mandatory",
+            "scroll-snap-type: x mandatory",
         ),
-        other => panic!("mandatory snapping must stay unsupported, got {other:?}"),
+        (
+            "scroll-snap-type-x:mandatory",
+            "scroll-snap-type-x: mandatory",
+        ),
+        (
+            "scroll-snap-type-y:mandatory",
+            "scroll-snap-type-y: mandatory",
+        ),
+    ] {
+        match styles(&format!("#parent{{{declaration}}}")) {
+            Err(StyleError::Unsupported(message)) => assert_eq!(
+                message, expected,
+                "mandatory snapping can move the printed scroll position"
+            ),
+            other => panic!("`{declaration}` must stay unsupported, got {other:?}"),
+        }
     }
 }
