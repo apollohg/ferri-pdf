@@ -227,8 +227,10 @@ impl<'a> Paragraph<'a> {
                 let conditional = end_hang(punctuation(offset), ch, last)?;
                 let width = self.width(offset..visible.end);
                 Some(match available.filter(|_| conditional) {
+                    // Spacing and trimming can leave the punctuation a negative advance, which
+                    // does not add to the overflow.
                     Some(available) => {
-                        (self.width(visible.clone()) - start - available).clamp(0.0, width)
+                        (self.width(visible.clone()) - start - available).clamp(0.0, width.max(0.0))
                     }
                     None => width,
                 })

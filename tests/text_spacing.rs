@@ -624,3 +624,22 @@ fn min_content_trims_line_end_punctuation_that_max_content_keeps() {
         );
     }
 }
+
+#[test]
+fn svg_text_wraps_after_trimmed_punctuation_with_a_negative_advance() {
+    // Letter spacing leaves 。 less than half its advance, which trim-all then removes, so
+    // the stop ending the first line of the wrapped SVG text has a negative advance under
+    // its conditional hang.
+    let html = format!(
+        "<!doctype html><style>{FACES}</style><svg width='200' height='100'>\
+         <text x='0' y='40' style='font:20px Halt;inline-size:10px;\
+         hanging-punctuation:allow-end;text-spacing-trim:trim-all;letter-spacing:-15px'>\
+         水水。水</text></svg>"
+    );
+    let output = ferri_pdf::render_html(&html, &common::local_options());
+    assert!(
+        output.is_ok(),
+        "wrapped SVG text must render its negative-advance stop: {:?}",
+        output.err()
+    );
+}
