@@ -356,6 +356,19 @@ impl Measurements {
         }
     }
 
+    /// Drops what was measured on pages from `page_count` on, which pagination does not
+    /// output (CSS Page 3 §3.2).
+    pub(super) fn truncate(&mut self, page_count: usize) {
+        self.boxes.retain(|_, fragments| {
+            fragments.retain(|fragment| fragment.page < page_count);
+            !fragments.is_empty()
+        });
+        self.ink.retain(|ink| ink.page < page_count);
+        self.placements
+            .retain(|_, placement| placement.page < page_count);
+        self.effects.retain(|(page, _), _| *page < page_count);
+    }
+
     pub(super) fn physical(
         &mut self,
         flow: crate::style::logical::Flow,

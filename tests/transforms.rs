@@ -67,6 +67,23 @@ fn background_rect(trace: &LayoutTrace, page: usize, rgb: [u8; 3]) -> Option<Rec
 }
 
 #[test]
+fn transformed_roots_ending_on_inkless_trailing_pages_render_their_painted_pages() {
+    // CSS Page 3 §3.2: the transformed root's fragment on the inkless third page creates no
+    // sheet, so nothing measured on that page may outlive it.
+    for root in ["html", "body"] {
+        let html = format!(
+            "<style>@page{{size:400pt 400pt;margin:20pt}}{root}{{transform:scale(.9)}}</style><p>x</p><div style='height:900pt'></div>"
+        );
+        let output = render_html(&html, &local_options())
+            .unwrap_or_else(|error| panic!("a transformed {root} must render: {error}"));
+        assert_eq!(
+            output.page_count, 1,
+            "{root}: only the page holding ink is output"
+        );
+    }
+}
+
+#[test]
 fn transform_lists_compose_about_the_origin_and_flatten_3d_functions() {
     let trace = trace(
         "div{width:100pt;height:40pt;margin-bottom:8pt}\

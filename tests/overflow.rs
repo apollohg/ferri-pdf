@@ -35,6 +35,16 @@ fn assert_rect(label: &str, actual: Rect, expected: Rect) {
 }
 
 #[test]
+fn scroll_containers_on_trailing_inkless_pages_leave_no_fragments_behind() {
+    // CSS Page 3 §3.2: the third page holds only the end of an unpainted scroll container,
+    // so no sheet is created for it, and nothing measured there may outlive it.
+    let html = "<style>@page{size:400pt 400pt;margin:20pt}div{height:300pt;overflow:hidden}</style><ul><li>One</li><li>Two</li></ul><div></div><div></div><div></div>";
+    let output = render_html(html, &options())
+        .unwrap_or_else(|error| panic!("trailing scroll containers must render: {error}"));
+    assert_eq!(output.page_count, 2, "the inkless third page is not output");
+}
+
+#[test]
 fn hidden_overflow_clips_descendants_to_the_rounded_padding_box() {
     const EXPECTED_PADDING_BOX: Rect = Rect {
         x: 39.0,

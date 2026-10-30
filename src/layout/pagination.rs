@@ -7480,6 +7480,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             Fragmentainers::Columns(_) => (Vec::new(), Vec::new()),
         };
         self.pages.truncate(page_count);
+        self.anchors.truncate(page_count);
         for (page, navigation) in footnote_navigation {
             navigation.locate(page, &mut located);
         }
