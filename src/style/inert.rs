@@ -82,6 +82,9 @@ pub(super) fn defined(property: Property) -> bool {
             | P::ScrollSnapAlign
             | P::ScrollSnapStop
             | P::ScrollSnapType
+            // CSS Position 4 §3.4: the user agent's `overlay: none !important` rule always
+            // wins, and only scripted APIs place elements in the top layer.
+            | P::Overlay
             // CSS Overflow 3 §3.1.3: static media need not display scrollbars, and this
             // engine displays none, so their colour and thickness never render.
             | P::ScrollbarColor

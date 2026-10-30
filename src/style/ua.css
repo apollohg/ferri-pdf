@@ -1,6 +1,8 @@
 /* HTML rendering defaults (HTML Standard §15.3). */
 @namespace url("http://www.w3.org/1999/xhtml");
 @page { size: auto; margin: 72pt; }
+/* CSS Position 4 §3.4: only the user agent sets overlay. */
+*|* { overlay: none !important; }
 html, body, address, article, aside, blockquote, center, div, dl, dt, dd, dir,
 figure, figcaption, footer, form, header, hgroup, main, menu, nav, ol, p, pre,
 search, section, ul, listing, plaintext, xmp, legend, dialog { display: block; }

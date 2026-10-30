@@ -202,6 +202,17 @@ fn shorthands_set_the_same_values_as_their_longhands() {
 }
 
 #[test]
+fn authored_overlay_loses_to_the_user_agent_rule() {
+    for declaration in ["overlay:auto", "overlay:auto !important"] {
+        assert_eq!(
+            inert(&format!("#parent{{{declaration}}}")).get(Property::Overlay),
+            None,
+            "CSS Position 4 §3.4: `* {{ overlay: none !important }}` must override `{declaration}`"
+        );
+    }
+}
+
+#[test]
 fn transition_lists_exclude_none_beside_other_items() {
     for invalid in ["transition:none,color 1s", "transition-property:color,none"] {
         assert_eq!(
