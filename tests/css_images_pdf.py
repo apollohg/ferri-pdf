@@ -592,6 +592,13 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                     ('.box{background:element(#missing),green}', '<div class=box></div>',
                      ('.box{background:green}', '<div class=box></div>'), 'an unknown ID is an invalid image')]:
                 self.assertSameInterior(root, (css, body), expected, message)
+            # A page context's element() depends on no element, so it may show any of them.
+            blue = blocks(root / 'blue.png', [[BLUE, BLUE]])
+            stacked = '#t{position:relative;z-index:0;width:20px;height:10px;background:blue}'
+            self.assertSameInterior(
+                root, (stacked + '@page{@top-left{content:element(#t)}}', '<div id=t></div>'),
+                (stacked + f'@page{{@top-left{{content:url("{blue}")}}}}', '<div id=t></div>'),
+                'a page-margin box shows an element rendering')
             # The page area is 252pt tall: the gradient's element starts 100pt down page one and
             # continues on page two, and the rendering joins its fragments flush.
             fragmented = ('#d{height:100pt;background-repeat:no-repeat;background-position:0 -100pt}'
