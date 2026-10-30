@@ -49,6 +49,8 @@ pub(crate) const MAX_LAYOUT_PAGES: usize = 10_000;
 pub(crate) const MAX_LAYOUT_WORK: usize = 100_000_000;
 /// Paginations of a layout pass that move calls off pages their footnotes do not fit.
 const MAX_FOOTNOTE_PAGINATIONS: usize = 64;
+/// Layout passes that size pages to the content the pass before measured.
+const MAX_PAGE_SIZE_PASSES: usize = 16;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct TextLine {
@@ -144,10 +146,12 @@ pub(crate) fn layout(
         container_sizes,
         anchor_frames,
         elements,
+        pages,
     } = layout_pass(document, resolver, budget.clone())?;
     let settled = document.styles().query_sizes().settled(&container_sizes)
         && document.styles().anchor_frames().settled(&anchor_frames)
-        && document.element_images().settled(&elements);
+        && document.element_images().settled(&elements)
+        && *document.page_content() == pages;
     if generated.is_none() && settled {
         return Ok(trace);
     }
@@ -159,6 +163,7 @@ pub(crate) fn layout(
         owned.measured_elements(elements, trace.element_images.clone());
         owned.reformat(values.clone(), resolver)?;
     }
+    owned.measured_pages(pages)?;
     stabilize(&mut owned, resolver, &budget, vec![values])
 }
 
@@ -183,6 +188,8 @@ struct LayoutPass {
     anchor_frames: crate::style::anchor_values::AnchorFrameMap,
     /// What the layout measured of the elements that `element()` images show.
     elements: Box<crate::document::ElementMeasurements>,
+    /// What the layout measured of the content of intrinsically sized pages.
+    pages: crate::document::PageContent,
 }
 
 fn stabilize(
@@ -194,6 +201,7 @@ fn stabilize(
     let mut measured_sizes = Vec::new();
     let mut measured_anchors = Vec::new();
     let mut measured_elements = Vec::new();
+    let mut measured_pages = Vec::new();
     loop {
         let LayoutPass {
             trace,
@@ -201,6 +209,7 @@ fn stabilize(
             container_sizes,
             anchor_frames,
             elements,
+            pages,
         } = layout_pass(document, resolver, budget.clone())?;
         // CSS Conditional 5 §5: each container's descendants are styled with the size of
         // the container they query, so the styles stand once a layout reproduces every size
@@ -210,7 +219,10 @@ fn stabilize(
         // CSS Images 4 §2.7: `element()` images resolve against the elements a layout
         // rendered, so they stand once a layout reproduces every rendering they consulted.
         let elements_settled = document.element_images().settled(&elements);
-        let settled = containers_settled && anchors_settled && elements_settled;
+        // CSS Page 3 §3: pages sized to their content stand once a layout reproduces the
+        // content each holds.
+        let pages_settled = *document.page_content() == pages;
+        let settled = containers_settled && anchors_settled && elements_settled && pages_settled;
         let values = match generated {
             None if settled => return Ok(trace),
             None => document.generated_values(),
@@ -243,6 +255,18 @@ fn stabilize(
             measured_elements.push(elements.clone());
             document.measured_elements(elements, trace.element_images.clone());
         }
+        if !pages_settled {
+            if measured_pages.contains(&pages) {
+                return Err(LayoutError::PageSizeCycle);
+            }
+            if measured_pages.len() == MAX_PAGE_SIZE_PASSES {
+                return Err(LayoutError::PageSizeLimit {
+                    limit: MAX_PAGE_SIZE_PASSES,
+                });
+            }
+            measured_pages.push(pages.clone());
+            document.measured_pages(pages)?;
+        }
         budget.spend(1)?;
         document.reformat(values, resolver)?;
     }
@@ -273,12 +297,18 @@ fn layout_pass(
     let canvas_rect = logical_geometry.content_box();
     let content_height = canvas_rect.height;
     let continuous = sheet.presentation() != crate::style::Presentation::Paged;
+    let [inline_axis, block_axis] = crate::document::page_axes(flow);
+    // The initial containing block the document's styles took, which takes page sizes that
+    // depend on content as automatic: orthogonal flows find their available space in it
+    // (CSS Writing Modes 3 §7.3).
+    let initial = sheet.page_area();
     let mut measurer = measure::Measurer::new(
         &text,
         document.root(),
-        [canvas_rect.width, content_height],
+        [initial[inline_axis], initial[block_axis]],
         budget,
     );
+    measurer.page_height = content_height;
     for block in document
         .running_strings()
         .iter()
@@ -304,7 +334,7 @@ fn layout_pass(
                 canvas_rect.width,
                 document.root().style().used_rtl(),
                 true,
-                Some(content_height),
+                page.containing_block_size(flow, content_height),
             )
         })
         .transpose()?;
@@ -383,6 +413,7 @@ fn paginate<'t>(
         footnote_deferrals: _,
         event_lines: _,
         inline_footnotes,
+        page_extents,
     } = paginated;
     for (index, page) in page_boxes.iter().enumerate() {
         let frame = writing::Frame::physical(flow, page.geometry.paper);
@@ -437,6 +468,7 @@ fn paginate<'t>(
         &measurer.element_targets.sampled.take(),
     )?;
     Ok(LayoutPass {
+        pages: page_content(document, &page_boxes, page_extents, measurer)?,
         generated,
         elements,
         container_sizes: std::mem::take(&mut measurer.container_sizes),
@@ -458,6 +490,39 @@ fn paginate<'t>(
                 .map(|font| font.descriptor().clone())
                 .collect(),
             element_images,
+        },
+    })
+}
+
+/// What a layout measured of the content of pages whose size properties take intrinsic size
+/// keywords (CSS Page 3 §3), where its pages have them: the root's contributions in the
+/// inline axis, and the content each page holds in the block axis.
+fn page_content<'t>(
+    document: &'t StyledDocument,
+    page_boxes: &[std::sync::Arc<crate::document::PageBox>],
+    page_extents: Vec<Option<f32>>,
+    measurer: &mut measure::Measurer<'t>,
+) -> Result<crate::document::PageContent, LayoutError> {
+    let [inline_axis, block_axis] =
+        crate::document::page_axes(crate::style::logical::Flow::used(document.root().style()));
+    let content_sized = |axis: usize| {
+        page_boxes
+            .iter()
+            .any(|page| page.geometry.intrinsic[axis].is_some())
+    };
+    // CSS Sizing 3 §5.2.1: the root's percentages, cyclic as the page area sizes to the root,
+    // contribute as automatic sizes, measured in the initial containing block.
+    let available = document.styles().page_area()[inline_axis];
+    Ok(crate::document::PageContent {
+        inline: content_sized(inline_axis)
+            .then(|| {
+                measurer.run(|measurer| intrinsic::measure(document.root(), measurer, available))
+            })
+            .transpose()?,
+        blocks: if content_sized(block_axis) {
+            page_extents
+        } else {
+            Vec::new()
         },
     })
 }
@@ -653,6 +718,10 @@ pub(crate) enum LayoutError {
     ContainerQueryCycle,
     #[error("element() image renderings repeat without reaching a fixed layout")]
     ElementImageCycle,
+    #[error("intrinsically sized pages repeat their content sizes without reaching a fixed layout")]
+    PageSizeCycle,
+    #[error("intrinsically sized pages still change size after {limit} layouts")]
+    PageSizeLimit { limit: usize },
     #[error("{0}")]
     Raster(Box<crate::writer::PdfError>),
     #[error("non-finite page production geometry")]

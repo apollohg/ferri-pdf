@@ -1447,6 +1447,7 @@ impl Stylesheet {
             margin: self.margin,
             padding: self.page_padding,
             border: self.page_border,
+            intrinsic: [None, None],
         }
     }
 

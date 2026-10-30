@@ -206,16 +206,149 @@ fn non_replaced_block_axis_keywords_behave_as_auto_in_grid_and_tables() {
     }
 }
 
+const PAGE: &str = "@page{size:200pt 100pt;margin:10pt}";
+
+/// A page's area and sheet, each `[width, height]`.
+type PageSizes = ([f32; 2], [f32; 2]);
+
+/// The sizes of each page of a rendering with the probe's font.
+fn pages(css: &str, body: &str) -> Result<Vec<PageSizes>, ferri_pdf::Error> {
+    let trace = render_html(&format!("<style>{}body{{margin:0;font:10pt/12pt 'Liberation Mono'}}p{{margin:0}}{PAGE}{css}</style>{body}", common::PROFILE), &local_options())?
+        .layout
+        .unwrap();
+    Ok(trace
+        .page_records
+        .iter()
+        .map(|record| (record.geometry.area, record.geometry.paper))
+        .collect())
+}
+
+fn assert_page_areas(css: &str, body: &str, expected: &[[f32; 2]]) {
+    let pages = pages(css, body).unwrap_or_else(|error| panic!("{css}: {error}"));
+    assert_eq!(
+        pages.len(),
+        expected.len(),
+        "{css}: page areas {pages:?}, expected {expected:?}"
+    );
+    for (index, ((area, _), expected)) in pages.iter().zip(expected).enumerate() {
+        for axis in 0..2 {
+            assert_labelled_pt(
+                &format!("{css}: page {index} area {pages:?}"),
+                area[axis],
+                expected[axis],
+            );
+        }
+    }
+}
+
+/// CSS Page 3 §3 sizes the page box as a block box in normal flow whose content is the root:
+/// its inline size takes the root's contributions.
 #[test]
-fn page_box_intrinsic_sizes_are_rejected_instead_of_treated_as_auto() {
-    for declaration in ["width:min-content", "min-height:max-content"] {
-        let html = format!("<style>@page{{{declaration}}}</style><p>x</p>");
-        let Err(error) = render_html(&html, &local_options()) else {
-            panic!("{declaration}: page box keyword must stay visible as unsupported");
-        };
-        assert!(
-            error.to_string().contains("intrinsic size keyword"),
-            "{declaration}: {error}"
+fn page_widths_take_the_root_contributions() {
+    for (sizes, width) in [
+        ("width:min-content", 4.0 * CELL),
+        ("width:max-content", 7.0 * CELL),
+        ("width:fit-content", 7.0 * CELL),
+        ("width:fit-content(30pt)", 30.0),
+        ("width:10pt;min-width:max-content", 7.0 * CELL),
+        ("max-width:min-content", 4.0 * CELL),
+        (
+            "width:calc-size(min-content,size + 10pt)",
+            4.0 * CELL + 10.0,
+        ),
+    ] {
+        assert_page_areas(
+            &format!("@page{{{sizes}}}"),
+            "<p>AAAA BB</p>",
+            &[[width, 80.0]],
         );
     }
+}
+
+/// A block container's min-content and max-content block sizes are its content's (CSS Sizing
+/// 3 §5.1): each page takes the block size of the content it holds up to its forced break.
+#[test]
+fn page_heights_take_the_content_each_page_holds() {
+    assert_page_areas(
+        "@page{height:max-content}",
+        "<p>A</p><p style=break-before:page>B</p><p>C</p><p>D</p>",
+        &[[180.0, 12.0], [180.0, 36.0]],
+    );
+    assert_page_areas(
+        "@page{height:min-content}",
+        "<p>A<span style=float:footnote>Note</span></p>",
+        &[[180.0, 24.0]],
+    );
+    // Lines that continue on later pages find the width of a page not yet reached.
+    assert_page_areas(
+        "@page{block-size:max-content;max-inline-size:min-content}",
+        "<p>AAAA BB</p>",
+        &[[4.0 * CELL, 24.0]],
+    );
+    // In vertical writing modes the height is the inline axis and the width the block axis.
+    assert_page_areas(
+        "@page{height:fit-content}html{writing-mode:vertical-rl}",
+        "<p>A</p><p>B</p>",
+        &[[180.0, CELL]],
+    );
+    assert_page_areas(
+        "@page{width:max-content}html{writing-mode:vertical-rl}",
+        "<p>A</p><p>B</p>",
+        &[[24.0, 80.0]],
+    );
+}
+
+/// Content larger than a page's limit continues on the next page, whose own content sizes it.
+#[test]
+fn content_sized_pages_fragment_at_their_limits() {
+    let lines: String = (0..10).map(|line| format!("<p>L{line}</p>")).collect();
+    assert_page_areas(
+        "@page{max-height:max-content}",
+        &lines,
+        &[[180.0, 80.0], [180.0, 48.0]],
+    );
+    let css = "@page{height:50pt;min-height:max-content}";
+    assert_page_areas(css, &lines, &[[180.0, 120.0]]);
+    let pages = pages(css, &lines).unwrap();
+    assert_eq!(
+        pages[0].1,
+        [200.0, 140.0],
+        "the sheet grows to the page box: {pages:?}"
+    );
+}
+
+/// The page area's block size depends on its content, so percentage heights against it
+/// compute to `auto` (CSS 2.1 §10.5); viewport units take the page area the styles saw, with
+/// content-sized page sizes as `auto`, which the page cannot depend on.
+#[test]
+fn content_sized_pages_break_cycles_through_their_content() {
+    assert_page_areas(
+        "@page{height:max-content}html{height:100%}",
+        "<p>A</p>",
+        &[[180.0, 12.0]],
+    );
+    assert_page_areas(
+        "@page{height:max-content}div{height:50vh}",
+        "<div></div>",
+        &[[180.0, 40.0]],
+    );
+    assert_page_areas(
+        "@page{width:max-content}div{width:50vw}",
+        "<div></div>",
+        &[[90.0, 80.0]],
+    );
+}
+
+/// A footnote area limited to half the page area its own height sizes has no settled layout.
+#[test]
+fn content_sized_pages_report_layouts_that_do_not_settle() {
+    let error = pages(
+        "@page{height:max-content;@footnote{max-height:50%}}",
+        "<p>A<span style=float:footnote>B<br>C<br>D<br>E</span></p>",
+    )
+    .expect_err("the footnote area never fits the page it sizes");
+    assert!(
+        error.to_string().contains("intrinsically sized pages"),
+        "{error}"
+    );
 }

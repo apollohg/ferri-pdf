@@ -73,6 +73,7 @@ fn surface_beneath(sheet: &Stylesheet, root: &Style) -> Option<crate::graphics::
     }
 }
 
+#[derive(Clone)]
 pub(crate) struct PageBox {
     pub request: crate::style::PageRequest,
     pub geometry: crate::style::PageGeometry,
@@ -86,10 +87,12 @@ pub(crate) struct PageBox {
     pub footnote: PageFootnoteArea,
 }
 /// The footnote area of a page (CSS GCPM 3 §2.4).
+#[derive(Clone)]
 pub(crate) struct PageFootnoteArea {
     pub style: Box<Style>,
     pub decoration: BoxDecoration,
 }
+#[derive(Clone)]
 pub(crate) struct PageMarginBox {
     pub margin: crate::style::PageMargin,
     pub decoration: BoxDecoration,

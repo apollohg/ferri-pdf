@@ -31,6 +31,9 @@ const PADDING: [Property; 4] = [
     Property::PaddingBottom,
     Property::PaddingLeft,
 ];
+/// The start and end sides of the page box in each physical axis.
+const AXIS_SIDES: [[usize; 2]; 2] = [[3, 1], [0, 2]];
+
 #[derive(Clone, Debug, PartialEq, serde::Serialize)]
 pub struct PageGeometry {
     pub paper: [f32; 2],
@@ -39,8 +42,114 @@ pub struct PageGeometry {
     pub margin: [f32; 4],
     pub padding: [f32; 4],
     pub border: [f32; 4],
+    /// The physical axes whose size properties take intrinsic size keywords, which the
+    /// content of each page resolves.
+    #[serde(skip)]
+    pub(crate) intrinsic: [Option<Arc<IntrinsicPageAxis>>; 2],
 }
+
+/// A page axis solved with the keywords as automatic sizes, and what its intrinsic size
+/// keywords need to resolve once the content is measured.
+type PageAxis = (crate::style::UsedAxis, Option<Arc<IntrinsicPageAxis>>);
+
+/// A physical page axis whose size properties take intrinsic size keywords. CSS Page 3 §3
+/// sizes the page box as a block box in normal flow, whose content is what its page area
+/// holds.
+#[derive(Debug, PartialEq)]
+pub(crate) struct IntrinsicPageAxis {
+    sizes: [crate::style::Size; 3],
+    /// The page box's containing block size, which `size` specifies, and the sheet size
+    /// without one.
+    containing: f32,
+    default_sheet: f32,
+    box_sizing: crate::style::BoxSizing,
+    edges: f32,
+    margins: [Option<f32>; 2],
+}
+impl IntrinsicPageAxis {
+    /// The axis solved for content with min-content and max-content sizes `content`, or with
+    /// the intrinsic keywords as automatic sizes while the content is unmeasured.
+    fn used(&self, content: Option<crate::style::IntrinsicWidths>) -> crate::style::UsedAxis {
+        let sizes = self.sizes.each_ref();
+        let available =
+            (self.containing - self.edges - self.margins.iter().flatten().sum::<f32>()).max(0.0);
+        let mut constraints = crate::style::SizeConstraints::new(
+            sizes,
+            Some(self.containing),
+            self.box_sizing,
+            self.edges,
+        )
+        .with_stretch(sizes, Some(available));
+        if let Some(content) = content {
+            constraints = constraints.with_intrinsic(sizes, content, Some(available));
+        }
+        constraints.normal_flow(
+            self.containing,
+            self.edges,
+            self.margins,
+            None,
+            false,
+            crate::style::Overconstraint::ResizeContaining,
+        )
+    }
+}
+
+/// The page sheet's dimension: the `size` dimension `specified`, or the default sheet's
+/// without one, grown to the page box's margin box `extent`.
+fn sheet_dimension(specified: f32, extent: f32, default: f32) -> f32 {
+    let dimension = specified.max(extent);
+    if dimension == 0.0 { default } else { dimension }
+}
+
 impl PageGeometry {
+    /// The geometry once the content of the page resolves the intrinsic size keywords of its
+    /// axes: `content` holds, per physical axis, the min-content and max-content sizes of what
+    /// the page area holds, or `None` where the keywords act as automatic sizes.
+    pub(crate) fn sized(
+        &self,
+        content: [Option<crate::style::IntrinsicWidths>; 2],
+    ) -> Result<Self, StyleError> {
+        let mut sized = self.clone();
+        for (axis, (intrinsic, content)) in self.intrinsic.iter().zip(content).enumerate() {
+            let Some(intrinsic) = intrinsic else {
+                continue;
+            };
+            let used = intrinsic.used(content);
+            let [start, end] = AXIS_SIDES[axis];
+            sized.area[axis] = used.size;
+            sized.extent[axis] = used.containing;
+            sized.margin[start] = used.margins[0];
+            sized.margin[end] = used.margins[1];
+            sized.paper[axis] = sheet_dimension(
+                intrinsic.containing,
+                used.containing,
+                intrinsic.default_sheet,
+            );
+        }
+        sized.validate()?;
+        Ok(sized)
+    }
+    fn validate(&self) -> Result<(), StyleError> {
+        if self
+            .paper
+            .iter()
+            .any(|value| !value.is_finite() || *value <= 0.0)
+            || self
+                .area
+                .iter()
+                .any(|value| !value.is_finite() || *value < 0.0)
+            || self.extent.iter().any(|value| !value.is_finite())
+            || self
+                .margin
+                .iter()
+                .chain(self.padding.iter())
+                .chain(self.border.iter())
+                .any(|value| !value.is_finite())
+        {
+            return Err("invalid page content area".into());
+        }
+        Ok(())
+    }
     pub fn margin_box(&self) -> crate::paint::Rect {
         crate::paint::Rect {
             x: 0.0,
@@ -161,7 +270,7 @@ struct Geometry<'a> {
     complete: RefCell<HashSet<Node>>,
     dimensions: RefCell<HashMap<Node, f32>>,
     active: RefCell<Vec<Node>>,
-    axes: RefCell<[Option<crate::style::UsedAxis>; 2]>,
+    axes: RefCell<[Option<PageAxis>; 2]>,
 }
 
 impl<'a> Geometry<'a> {
@@ -1225,7 +1334,7 @@ impl<'a> Geometry<'a> {
     fn page_axis(&self, axis: Axis) -> Result<f32, StyleError> {
         let basis = self.dimension(Node::Paper(axis))?;
         let index = usize::from(axis != Axis::Width);
-        let sides = if axis == Axis::Width { [3, 1] } else { [0, 2] };
+        let sides = AXIS_SIDES[index];
         for side in sides {
             for property in [
                 PAGE_MARGINS[side],
@@ -1259,27 +1368,23 @@ impl<'a> Geometry<'a> {
         } else {
             [&style.height, &style.min_height, &style.max_height]
         };
-        if let Some(property) = properties
-            .iter()
-            .zip(sizes)
-            .find_map(|(property, size)| size.intrinsic().is_some().then_some(property))
-        {
-            return Err(StyleError::Unsupported(format!(
-                "@page {}: intrinsic size keyword",
-                property.name()
-            )));
-        }
-        let constraints =
-            crate::style::SizeConstraints::new(sizes, Some(basis), style.box_sizing, edges);
-        let used = constraints.normal_flow(
-            basis,
+        let page_axis = IntrinsicPageAxis {
+            sizes: sizes.map(Clone::clone),
+            containing: basis,
+            default_sheet: self.sheet.paper[index],
+            box_sizing: style.box_sizing,
             edges,
             margins,
-            None,
-            false,
-            crate::style::Overconstraint::ResizeContaining,
-        );
-        self.axes.borrow_mut()[index] = Some(used);
+        };
+        // Viewport units resolve against the initial containing block (CSS Values 4 §6.1.2),
+        // which a content-sized page makes cyclic. The specs are silent; as for cyclic
+        // percentages (CSS Sizing 3 §5.2.1), the keywords act as automatic sizes there.
+        let used = page_axis.used(None);
+        let content_sized = sizes.iter().any(|size| {
+            size.intrinsic()
+                .is_some_and(|keyword| *keyword != crate::style::IntrinsicSizing::Stretch)
+        });
+        self.axes.borrow_mut()[index] = Some((used, content_sized.then(|| Arc::new(page_axis))));
         Ok(used.size)
     }
 
@@ -1341,8 +1446,9 @@ impl<'a> Geometry<'a> {
             self.dimension(Node::Area(Axis::Height))?,
         ];
         let axes = self.axes.borrow();
-        let [width, height] =
-            axes.map(|axis| axis.expect("resolved page area has an axis solution"));
+        let [(width, intrinsic_width), (height, intrinsic_height)] = axes
+            .clone()
+            .map(|axis| axis.expect("resolved page area has an axis solution"));
         let extent = [width.containing, height.containing];
         let margin = [
             height.margins[0],
@@ -1355,12 +1461,7 @@ impl<'a> Geometry<'a> {
             self.dimension(Node::Paper(Axis::Height))?,
         ];
         let paper = std::array::from_fn(|axis| {
-            let dimension = specified[axis].max(extent[axis]);
-            if dimension == 0.0 {
-                self.sheet.paper[axis]
-            } else {
-                dimension
-            }
+            sheet_dimension(specified[axis], extent[axis], self.sheet.paper[axis])
         });
         let computed = self.context(Context::Page);
         let style = computed.style.borrow();
@@ -1371,27 +1472,17 @@ impl<'a> Geometry<'a> {
             .decoration
             .borders
             .map(crate::paint::Border::used_width);
-        if paper
-            .iter()
-            .any(|value| !value.is_finite() || *value <= 0.0)
-            || area.iter().any(|value| !value.is_finite() || *value < 0.0)
-            || extent.iter().any(|value| !value.is_finite())
-            || margin
-                .iter()
-                .chain(padding.iter())
-                .chain(border.iter())
-                .any(|value| !value.is_finite())
-        {
-            return Err("invalid page content area".into());
-        }
-        Ok(PageGeometry {
+        let geometry = PageGeometry {
             paper,
             extent,
             area,
             margin,
             padding,
             border,
-        })
+            intrinsic: [intrinsic_width, intrinsic_height],
+        };
+        geometry.validate()?;
+        Ok(geometry)
     }
 }
 

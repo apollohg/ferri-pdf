@@ -151,6 +151,7 @@ impl Frame {
             geometry.paper.swap(0, 1);
             geometry.extent.swap(0, 1);
             geometry.area.swap(0, 1);
+            geometry.intrinsic.swap(0, 1);
         }
     }
     pub(super) fn items(self, items: &mut Vec<DisplayItem>) {

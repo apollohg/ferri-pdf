@@ -8,6 +8,20 @@ use crate::style::{PageRequest, ResolvedPage, Stylesheet};
 use std::{cell::RefCell, collections::HashMap};
 
 impl PageBox {
+    /// The page area's block size `block_size` as the containing block size of the content of
+    /// a document whose root flows in `flow`: indefinite where the page's block size depends
+    /// on that content, so that percentage heights against it compute to `auto` (CSS 2.1
+    /// §10.5).
+    pub(crate) fn containing_block_size(
+        &self,
+        flow: crate::style::logical::Flow,
+        block_size: f32,
+    ) -> Option<f32> {
+        let [_, block_axis] = page_axes(flow);
+        self.geometry.intrinsic[block_axis]
+            .is_none()
+            .then_some(block_size)
+    }
     pub(crate) fn load(
         page: ResolvedPage,
         resources: &mut ImageResources<'_>,
@@ -38,6 +52,66 @@ impl PageBox {
             margins,
             footnote,
         })
+    }
+}
+
+/// The block size of a page area whose content-sized block axis has no measure: the largest
+/// page dimension a PDF describes, in points (ISO 32000-1 Annex C.2). Content beyond it
+/// continues on the next page.
+const UNBOUNDED_PAGE_EXTENT: f32 = 14_400.0;
+
+/// The physical axes, horizontal 0 and vertical 1, that are inline and block on the pages of
+/// a document whose root flows in `flow`.
+pub(crate) fn page_axes(flow: crate::style::logical::Flow) -> [usize; 2] {
+    if flow.writing_mode.vertical() {
+        [1, 0]
+    } else {
+        [0, 1]
+    }
+}
+
+/// What a layout measured of the content of pages whose size properties take intrinsic size
+/// keywords (CSS Page 3 §3).
+#[derive(Clone, Debug, Default, PartialEq)]
+pub(crate) struct PageContent {
+    /// The root's min-content and max-content contributions, which a page area holds in its
+    /// inline axis (CSS Sizing 3 §5.1).
+    pub inline: Option<crate::style::IntrinsicWidths>,
+    /// The block size of the content each page holds: the flow up to the forced break or end
+    /// that ends the page, with its footnote area. `None` where the content continues past
+    /// the page's end, so that unfragmented it would be larger.
+    pub blocks: Vec<Option<f32>>,
+}
+impl PageContent {
+    /// `page`, the page at `index` of a document whose root flows in `flow`, sized to the
+    /// content it holds. A block container's min-content and max-content block sizes are the
+    /// size of its content (CSS Sizing 3 §5.1); a page whose content is unmeasured or
+    /// continues past its end takes the largest page.
+    pub(crate) fn size(
+        &self,
+        page: &Arc<PageBox>,
+        index: usize,
+        flow: crate::style::logical::Flow,
+    ) -> Result<Arc<PageBox>, DocumentError> {
+        if page.geometry.intrinsic.iter().all(Option::is_none) {
+            return Ok(page.clone());
+        }
+        let extent = self
+            .blocks
+            .get(index)
+            .copied()
+            .flatten()
+            .unwrap_or(UNBOUNDED_PAGE_EXTENT);
+        let [inline_axis, block_axis] = page_axes(flow);
+        let mut content = [None; 2];
+        content[inline_axis] = self.inline;
+        content[block_axis] = Some(crate::style::IntrinsicWidths {
+            min: extent,
+            max: extent,
+        });
+        let mut sized = PageBox::clone(page);
+        sized.geometry = page.geometry.sized(content)?;
+        Ok(Arc::new(sized))
     }
 }
 
@@ -74,7 +148,7 @@ impl PageProvider {
     pub(crate) fn elements(&self) -> &crate::document::element_images::ElementImages {
         &self.elements
     }
-    pub(crate) fn first(&self) -> &PageBox {
+    pub(crate) fn first(&self) -> &Arc<PageBox> {
         &self.first
     }
     /// The images of a page-margin box's generated content on one page, each loaded as its

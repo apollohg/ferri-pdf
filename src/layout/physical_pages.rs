@@ -28,7 +28,10 @@ impl<'a, 'r> PhysicalPages<'a, 'r> {
         document: &'a StyledDocument,
         resolver: &'r dyn ResourceResolver,
     ) -> Result<Self, LayoutError> {
-        let first = document.resolve_page(document.page_box().request.clone(), resolver)?;
+        let first = document.sized_page(
+            &document.resolve_page(document.page_box().request.clone(), resolver)?,
+            0,
+        )?;
         Ok(Self {
             document,
             resolver,
@@ -80,7 +83,7 @@ impl<'a, 'r> PhysicalPages<'a, 'r> {
                     )
                     .collect(),
             });
-        Ok(self.document.resolve_page(
+        let page = self.document.resolve_page(
             PageRequest {
                 name: self.name.clone(),
                 side: self.side(index),
@@ -89,7 +92,8 @@ impl<'a, 'r> PhysicalPages<'a, 'r> {
                 sequence,
             },
             self.resolver,
-        )?)
+        )?;
+        Ok(self.document.sized_page(&page, index)?)
     }
     pub(crate) fn ensure(&mut self, index: usize) -> Result<(), LayoutError> {
         while self.records.len() <= index {

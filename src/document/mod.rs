@@ -43,7 +43,7 @@ pub(crate) use inline::{
 };
 pub(crate) use metadata::DocumentMetadata;
 pub(crate) use navigation::{Bookmark, BoxNavigation, Heading, LinkTarget, Navigation};
-pub(crate) use page::PageBoundary;
+pub(crate) use page::{PageBoundary, PageContent, page_axes};
 pub(crate) use semantics::{InlineEvent, SemanticEvent};
 pub(crate) use strings::{RunningElement, RunningStringAssignment};
 
@@ -111,6 +111,10 @@ pub(crate) struct StyledDocument {
     svg_definitions: svg::SvgDefinitions,
     /// The document's counters where each page starts (CSS Page 3 §6.1).
     page_counters: std::collections::HashMap<usize, CounterSnapshot>,
+    /// What the last layout measured of the content of intrinsically sized pages, and the
+    /// first page sized to it.
+    page_content: PageContent,
+    first_page: std::sync::Arc<PageBox>,
     /// What the last layout measured of the `element()` images the next formatting resolves,
     /// and the renderings it measured, which floats' shapes sample.
     element_measurements: Box<ElementMeasurements>,
@@ -431,6 +435,11 @@ impl StyledDocument {
                 .into_iter()
                 .map(DocumentDiagnostic::Css),
         );
+        let first_page = PageContent::default().size(
+            pages.first(),
+            0,
+            crate::style::logical::Flow::used(root.style()),
+        )?;
         Ok(Self {
             root,
             footnotes,
@@ -446,6 +455,8 @@ impl StyledDocument {
             page_counters: page_counters.into_iter().collect(),
             element_measurements: Box::default(),
             element_renderings: Box::default(),
+            first_page,
+            page_content: PageContent::default(),
             source: std::rc::Rc::new(FormattingSource {
                 html,
                 embedded,
@@ -513,6 +524,11 @@ impl StyledDocument {
             ),
             resolver,
         )?;
+        let first_page = self.page_content.size(
+            pages.first(),
+            0,
+            crate::style::logical::Flow::used(root.style()),
+        )?;
         Ok(Self {
             root,
             footnotes,
@@ -528,6 +544,8 @@ impl StyledDocument {
             page_counters: page_counters.into_iter().collect(),
             element_measurements: self.element_measurements.clone(),
             element_renderings: self.element_renderings.clone(),
+            first_page,
+            page_content: self.page_content.clone(),
             source,
         })
     }
@@ -603,6 +621,7 @@ impl StyledDocument {
         self.generated = generated;
         self.canvas = canvas;
         self.pages = pages;
+        self.size_first_page()?;
         self.svg_definitions = svg_definitions;
         self.page_counters = page_counters.into_iter().collect();
         for diagnostic in self.styles.take_diagnostics() {
@@ -629,8 +648,37 @@ impl StyledDocument {
         self.diagnostics
     }
 
+    /// The first page, sized to the content the last layout measured.
     pub(crate) fn page_box(&self) -> &PageBox {
-        self.pages.first()
+        &self.first_page
+    }
+
+    /// The page at `index`, sized to the content the last layout measured.
+    pub(crate) fn sized_page(
+        &self,
+        page: &std::sync::Arc<PageBox>,
+        index: usize,
+    ) -> Result<std::sync::Arc<PageBox>, DocumentError> {
+        self.page_content.size(
+            page,
+            index,
+            crate::style::logical::Flow::used(self.root.style()),
+        )
+    }
+
+    pub(crate) fn page_content(&self) -> &PageContent {
+        &self.page_content
+    }
+
+    /// Later layouts size pages to the content a layout measured.
+    pub(crate) fn measured_pages(&mut self, content: PageContent) -> Result<(), DocumentError> {
+        self.page_content = content;
+        self.size_first_page()
+    }
+
+    fn size_first_page(&mut self) -> Result<(), DocumentError> {
+        self.first_page = self.sized_page(self.pages.first(), 0)?;
+        Ok(())
     }
 
     /// See [`page::PageProvider::margin_images`].

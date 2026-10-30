@@ -74,7 +74,7 @@ fn ratio_numbers<'a>(value: &'a Component, output: &mut Vec<&'a Component>) {
     }
 }
 
-#[derive(Clone, Copy, Debug, Default)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub(crate) struct IntrinsicWidths {
     pub min: f32,
     pub max: f32,

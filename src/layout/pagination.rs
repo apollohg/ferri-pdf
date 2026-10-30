@@ -959,6 +959,9 @@ pub(super) struct Paginated {
     pub footnote_deferrals: FootnoteDeferrals,
     /// Where this pagination placed the inline formatting contexts of footnote areas.
     pub inline_footnotes: crate::document::InlineFootnotePlacement,
+    /// The block size of the content each page holds, with its footnote area, where a forced
+    /// break or the flow's end ended the page; `None` where content continued past its end.
+    pub page_extents: Vec<Option<f32>>,
 }
 
 /// Where an element starts in a standalone flow: the line box its start lies on, or the
@@ -1081,6 +1084,9 @@ pagination_state! {
     frame_reads: Vec<frames::Key>,
     string_locations: crate::layout::strings::StringLocations,
     pages: Vec<Vec<TextLine>>,
+    /// How far the flow reached on each page that a forced break or the flow's end ended;
+    /// `None` where content continued past the page's end.
+    page_extents: Vec<Option<f32>>,
     geometric_baselines: Vec<[Option<f32>; 2]>,
     page: usize,
     furthest_page: usize,
@@ -1242,6 +1248,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             frame_reads: Vec::new(),
             string_locations: Default::default(),
             pages: vec![Vec::new()],
+            page_extents: vec![None],
             geometric_baselines: vec![[None; 2]],
             page: 0,
             furthest_page: 0,
@@ -1567,6 +1574,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     }
     fn push_page(&mut self) {
         self.pages.push(Vec::new());
+        self.page_extents.push(None);
         self.geometric_baselines.push([None; 2]);
         self.display_lists.push(Vec::new());
         self.foreground.push(Vec::new());
@@ -1637,9 +1645,22 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 self.canvas_rect.x,
                 self.canvas_rect.width,
                 false,
-                Some(self.canvas_rect.height),
+                self.page_containing_height(self.page, self.canvas_rect.height)
+                    .expect("the current page is resolved"),
             ),
         }
+    }
+    /// The page area's height `height` on `page` as its content's containing block's.
+    fn page_containing_height(&self, page: usize, height: f32) -> Result<Option<f32>, LayoutError> {
+        let Fragmentainers::Pages(pages) = &self.fragmentainers else {
+            return Ok(Some(height));
+        };
+        let flow = crate::style::logical::Flow::used(pages.document.root().style());
+        Ok(match pages.boxes.get(page) {
+            Some(page) => page.containing_block_size(flow, height),
+            // A page that pagination has yet to reach.
+            None => pages.resolve(page)?.containing_block_size(flow, height),
+        })
     }
     fn flow_geometry(
         &mut self,
@@ -1648,7 +1669,12 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         extra: Option<&ActiveGeometry<'a>>,
     ) -> Result<Vec<Option<ActiveGeometry<'a>>>, LayoutError> {
         let mut containing = match &self.fragmentainers {
-            Fragmentainers::Pages(_) => (area.x, area.width, false, Some(area.height)),
+            Fragmentainers::Pages(_) => (
+                area.x,
+                area.width,
+                false,
+                self.page_containing_height(page, area.height)?,
+            ),
             Fragmentainers::Columns(rows) => {
                 let (_, _, rtl, height) = rows.containing(self.page);
                 (area.x, area.width, rtl, height)
@@ -2028,6 +2054,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             pages.open.truncate(depth);
         }
     }
+    /// How far the flow reaches on the current page, with the end edges of boxes that its
+    /// end repeats.
+    fn flow_extent(&self) -> f32 {
+        self.y + self.cloned_end_space() + self.band_footer_height(self.page)
+    }
     fn cloned_end_space(&self) -> f32 {
         self.boxes
             .iter()
@@ -2047,6 +2078,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let forced = forced_break.is_some();
         if forced {
             self.forced_breaks += 1;
+        }
+        let left = self.page;
+        if self.physical_flow() {
+            self.page_extents[left] = forced.then(|| self.flow_extent());
         }
         // CSS Break 3 §5.3 fills the fragmentainer, reserving cloned end edges.
         let mut end =
@@ -2103,6 +2138,12 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             self.enter(next);
             while self.pages.len() <= self.page {
                 self.push_page();
+            }
+            if forced && self.physical_flow() {
+                // Blank pages a forced break inserts hold no content.
+                for extent in &mut self.page_extents[left + 1..next] {
+                    *extent = Some(0.0);
+                }
             }
         }
         self.reflow_open_boxes()?;
@@ -6926,6 +6967,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 self.place(pending, &Containing::Page)?;
             }
         }
+        if self.physical_flow() {
+            self.page_extents[self.page] = Some(self.flow_extent() + self.pending_value());
+        }
         if self.places_footnotes() {
             self.place_recorded_footnotes()?;
             self.place_carried_footnotes()?;
@@ -6945,6 +6989,15 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             )
             .max(self.footnotes.last_page().map_or(0, |page| page + 1));
         let (footnote_navigation, mut footnote_text) = self.paint_footnotes(page_count)?;
+        let page_extents: Vec<_> = (0..page_count)
+            .map(|page| {
+                self.page_extents
+                    .get(page)
+                    .copied()
+                    .flatten()
+                    .map(|extent| extent + self.footnote_reserve(page))
+            })
+            .collect();
         // CSS 2.1 §9.6.1 repeats fixed content in each physical page's containing block.
         let fixed = std::mem::take(&mut self.fixed);
         if fixed.len().saturating_mul(page_count) > MAX_FIXED_PLACEMENTS {
@@ -7227,6 +7280,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             renderings,
             footnote_deferrals: self.footnotes.take_deferred(),
             inline_footnotes: self.footnotes.take_inline_placement(),
+            page_extents,
         })
     }
 }

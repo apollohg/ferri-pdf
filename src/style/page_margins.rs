@@ -86,6 +86,7 @@ impl MarginLocation {
         }
     }
 }
+#[derive(Clone)]
 pub(crate) struct PageMargin {
     pub location: MarginLocation,
     pub content: GeneratedContent,
