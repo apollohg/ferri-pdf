@@ -6,7 +6,7 @@
 //! out again until a layout reproduces every consulted size, so each container's descendants
 //! are styled with the size of the container they query.
 use crate::dom::{Element, ElementId};
-use crate::resources::ResourceResolver;
+use crate::resources::{ResourceBase, ResourceResolver};
 use crate::style::{
     Style, StyleError, Stylesheet,
     conditional::{QueryValues, Scalar, StyleQuery},
@@ -15,6 +15,7 @@ use crate::style::{
     grammar::Property,
     media::Feature,
     properties,
+    registration::{Registration, Registrations},
     selector::Namespaces,
     units::{Axis, Relative},
     variables,
@@ -139,6 +140,8 @@ impl QuerySizes {
 pub(super) struct ContainerQuery {
     conditions: Vec<ContainerCondition>,
     namespaces: Namespaces,
+    /// The declaring stylesheet's location, which relative URLs in queried values take.
+    base: ResourceBase,
 }
 
 #[derive(Clone)]
@@ -220,7 +223,11 @@ impl ScrollStateFeature {
 }
 
 impl ContainerQuery {
-    pub(super) fn parse(source: &str, namespaces: Namespaces) -> Result<Self, StyleError> {
+    pub(super) fn parse(
+        source: &str,
+        namespaces: Namespaces,
+        base: ResourceBase,
+    ) -> Result<Self, StyleError> {
         let mut input = ParserInput::new(source);
         let input = &mut Parser::new(&mut input);
         let conditions = input
@@ -232,6 +239,7 @@ impl ContainerQuery {
         Ok(Self {
             conditions,
             namespaces,
+            base,
         })
     }
 
@@ -252,6 +260,7 @@ impl ContainerQuery {
                     .element(container.element)
                     .expect("a query container is an element of the queried element's tree"),
                 namespaces: &self.namespaces,
+                base: &self.base,
                 sheet,
                 resolver,
             };
@@ -407,6 +416,7 @@ struct ContainerValues<'a> {
     container: &'a QueryContainer,
     element: Element<'a>,
     namespaces: &'a Namespaces,
+    base: &'a ResourceBase,
     sheet: &'a Stylesheet,
     resolver: &'a dyn ResourceResolver,
 }
@@ -447,6 +457,7 @@ impl ContainerValues<'_> {
     fn expand(&self, value: &variables::Value) -> Result<Option<variables::Expanded>, StyleError> {
         let style = &self.container.style;
         value.substitute_context(
+            style.custom_properties.registrations(),
             &mut |reference, name| {
                 let source = match reference {
                     variables::Reference::Local => &style.custom_properties,
@@ -537,6 +548,23 @@ impl QueryValues for ContainerValues<'_> {
     }
     fn scalar(&self, source: &str) -> Result<Option<Scalar>, StyleError> {
         Scalar::parse(source, &self.relative())
+    }
+    fn registered(
+        &self,
+        name: &str,
+        registration: &Registration,
+        value: &variables::Expanded,
+    ) -> Result<Option<variables::Expanded>, StyleError> {
+        crate::style::registration::compute(
+            &registration.syntax,
+            value,
+            &self.relative(),
+            Some(self.base),
+            name,
+        )
+    }
+    fn registrations(&self) -> &Registrations {
+        &self.sheet.registrations
     }
 }
 

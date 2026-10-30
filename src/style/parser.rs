@@ -100,6 +100,7 @@ pub(super) enum ContentRule {
     Palette(String, Vec<Declaration>, SourceLocation),
     CounterStyle(String, Vec<Declaration>, SourceLocation),
     PositionTry(String, Vec<Declaration>, SourceLocation),
+    Property(String, Vec<Declaration>, SourceLocation),
 }
 
 #[derive(Clone)]
@@ -169,7 +170,8 @@ impl RuleSource {
                             ContentRule::Font(declarations, location)
                             | ContentRule::Palette(_, declarations, location)
                             | ContentRule::CounterStyle(_, declarations, location)
-                            | ContentRule::PositionTry(_, declarations, location),
+                            | ContentRule::PositionTry(_, declarations, location)
+                            | ContentRule::Property(_, declarations, location),
                         ) => {
                             relocate(location, &self.location);
                             for declaration in declarations {
@@ -260,6 +262,7 @@ pub(super) enum AtRuleName {
     Keyframes,
     StartingStyle,
     ViewTransition,
+    Property,
 }
 impl AtRuleName {
     fn can_nest_in_style(self) -> bool {
@@ -298,6 +301,7 @@ impl AtRuleName {
             "keyframes" => Some(Self::Keyframes),
             "starting-style" => Some(Self::StartingStyle),
             "view-transition" => Some(Self::ViewTransition),
+            "property" => Some(Self::Property),
             _ => None,
         }
     }
@@ -319,6 +323,7 @@ enum AtPrelude {
     Import(ImportRule),
     Namespace(String, String),
     Inert,
+    Property(String),
 }
 
 const MAX_GROUP_DEPTH: usize = 256;
@@ -723,21 +728,29 @@ pub(super) fn absolute_urls(
     declaration: &mut Declaration,
     base: &ResourceBase,
 ) -> Result<(), StyleError> {
-    if !declaration.value.contains('\\')
-        && !declaration
-            .value
-            .to_ascii_lowercase()
-            .contains(URL_FUNCTION)
-    {
-        return Ok(());
+    if let Some(value) = absolute_url_text(&declaration.value, base, &declaration.name)? {
+        declaration.value = value;
+    }
+    Ok(())
+}
+
+/// `value`, declared for `name`, with its relative `url()` references resolved against `base`;
+/// `None` when it has none to resolve.
+pub(super) fn absolute_url_text(
+    value: &str,
+    base: &ResourceBase,
+    name: &str,
+) -> Result<Option<String>, StyleError> {
+    if !value.contains('\\') && !value.to_ascii_lowercase().contains(URL_FUNCTION) {
+        return Ok(None);
     }
     let mut found = Vec::new();
-    let mut value = declaration.value.clone();
     {
-        let mut input = ParserInput::new(&declaration.value);
+        let mut input = ParserInput::new(value);
         url_references(&mut Parser::new(&mut input), &mut found)
-            .map_err(|e| format!("url() in {}: {e:?}", declaration.name))?;
+            .map_err(|error| format!("url() in {name}: {error:?}"))?;
     }
+    let mut resolved = value.to_owned();
     for UrlReference {
         range,
         reference,
@@ -757,10 +770,9 @@ pub(super) fn absolute_urls(
         if matches!(part, UrlPart::Token) {
             serialized = format!("url({serialized})");
         }
-        value.replace_range(range, &serialized);
+        resolved.replace_range(range, &serialized);
     }
-    declaration.value = value;
-    Ok(())
+    Ok(Some(resolved))
 }
 
 pub(super) fn raw<'i>(input: &mut Parser<'i, '_>) -> Result<String, ParseError<'i, StyleError>> {
@@ -915,6 +927,7 @@ fn at_prelude<'i>(
     name: &str,
     input: &mut Parser<'i, '_>,
     chain: &mut Option<cssparser::SourcePosition>,
+    base: &ResourceBase,
     namespaces: &Namespaces,
     mode: crate::style::selector::SelectorMode,
     forgiving: bool,
@@ -939,6 +952,7 @@ fn at_prelude<'i>(
         return crate::style::container_queries::ContainerQuery::parse(
             block_source(input),
             namespaces.clone(),
+            base.clone(),
         )
         .map(AtPrelude::Container)
         .map_err(|error| input.new_custom_error(error));
@@ -1044,6 +1058,17 @@ fn at_prelude<'i>(
         }
         input.expect_exhausted()?;
         return Ok(AtPrelude::Palette(name.to_string()));
+    }
+    // CSS Properties and Values API 1 §3: the prelude is a `<custom-property-name>`.
+    if matches!(kind, AtRuleName::Property) {
+        let name = input.expect_ident_cloned()?;
+        if !name.starts_with(CUSTOM_PROPERTY_PREFIX) || *name == *CUSTOM_PROPERTY_PREFIX {
+            return Err(input.new_custom_error(StyleError::Invalid(
+                "@property names are custom property names".into(),
+            )));
+        }
+        input.expect_exhausted()?;
+        return Ok(AtPrelude::Property(name.to_string()));
     }
     // CSS Anchor Positioning 1 §6.4: the prelude is the rule's `<dashed-ident>` name.
     if matches!(kind, AtRuleName::PositionTry) {
@@ -1239,6 +1264,7 @@ impl<'i> AtRuleParser<'i> for CssParser<'_> {
             &name,
             input,
             &mut self.chain,
+            self.base,
             &self.namespaces,
             self.context.mode,
             true,
@@ -1336,6 +1362,11 @@ impl<'i> AtRuleParser<'i> for CssParser<'_> {
                 self.chain = Some(input.position());
                 Rule::SupportDefinition(name, source)
             }
+            AtPrelude::Property(name) => Rule::Content(ContentRule::Property(
+                name,
+                declarations(input, self.base, self.diagnostics)?,
+                SourceLocation::new(self.base, state.source_location()),
+            )),
             AtPrelude::Inert => {
                 block_source(input);
                 Rule::Inert
@@ -1737,6 +1768,7 @@ impl<'i> AtRuleParser<'i> for SupportProbe<'_> {
             &name,
             input,
             &mut self.chain,
+            &self.start.base,
             self.namespaces,
             rules.mode,
             false,

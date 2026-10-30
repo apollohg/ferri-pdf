@@ -7,6 +7,7 @@ use crate::style::{
     parser::{failure, substitution_argument},
     print::PrintEnvironment,
     properties,
+    registration::{Registration, Registrations},
     selector::Namespaces,
     supports::SupportsCondition,
     units::{self, Dimension, Relative},
@@ -209,6 +210,15 @@ pub(super) trait QueryValues {
         property_syntax: bool,
     ) -> Result<Option<variables::Expanded>, StyleError>;
     fn scalar(&self, value: &str) -> Result<Option<Scalar>, StyleError>;
+    /// `value` as the computed value of `name`, which `registration` types (CSS Properties
+    /// and Values API 1 §2.4); `None` when it does not parse by the registered syntax.
+    fn registered(
+        &self,
+        name: &str,
+        registration: &Registration,
+        value: &variables::Expanded,
+    ) -> Result<Option<variables::Expanded>, StyleError>;
+    fn registrations(&self) -> &Registrations;
 }
 
 #[derive(Clone)]
@@ -279,18 +289,40 @@ impl Feature {
 
     fn evaluate(&self, values: &impl QueryValues) -> Result<bool, StyleError> {
         match self {
-            Self::Boolean(Name::Custom(name)) => Ok(values.custom(name)?.is_some()),
+            // CSS Conditional 5 §6.2: a custom property holds when it is not its initial
+            // value, which a registration gives.
+            Self::Boolean(Name::Custom(name)) => Ok(values.custom(name)?
+                != values
+                    .registrations()
+                    .get(name)
+                    .and_then(|registration| registration.initial.clone())),
             Self::Plain(Name::Custom(name), source) => {
                 let Some(source) = values.substitute(source, false)? else {
                     return Ok(false);
                 };
+                let registration = values.registrations().get(name);
+                let initial = || registration.and_then(|registration| registration.initial.clone());
                 let expected = match WideKeyword::parse(source.as_str()) {
-                    Some(WideKeyword::Initial) => None,
+                    Some(WideKeyword::Initial) => initial(),
+                    Some(WideKeyword::Unset)
+                        if registration.is_some_and(|registration| !registration.inherits) =>
+                    {
+                        initial()
+                    }
                     Some(WideKeyword::Inherit | WideKeyword::Unset) => {
                         values.inherited_custom(name)?
                     }
                     Some(WideKeyword::Revert | WideKeyword::RevertLayer) => return Ok(false),
-                    None => Some(source),
+                    None => match registration.filter(|registration| registration.typed()) {
+                        Some(registration) => {
+                            let Some(computed) = values.registered(name, registration, &source)?
+                            else {
+                                return Ok(false);
+                            };
+                            Some(computed)
+                        }
+                        None => Some(source),
+                    },
                 };
                 Ok(match (values.custom(name)?, expected) {
                     (None, None) => true,

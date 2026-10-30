@@ -56,6 +56,7 @@ mod parser;
 mod position;
 mod print;
 mod quotes;
+mod registration;
 mod zoom;
 pub(crate) use colors::{parse_color_value, widget_palette};
 pub(crate) use object::ObjectFit;

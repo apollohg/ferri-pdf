@@ -12,6 +12,7 @@ use crate::style::{
     grammar::{Descriptor, Keyword, Property},
     logical::{self, Flow, Flows},
     properties,
+    registration::{FontDependencies, Registration},
     stylesheet::PAGE_MARGINS,
     units::{Axis, FontBasis, FontUnit, FontUnits, Relative, Tree, Viewport, ViewportUnits},
     variables::{self, Reference},
@@ -101,6 +102,12 @@ struct Computed {
     variables: variables::Resolver,
     winners: RefCell<Winners>,
     sources: RefCell<HashMap<Property, SourceLocation>>,
+    /// Registered custom properties resolving font-relative lengths, and the font properties
+    /// they depend on (CSS Properties and Values API 1 §2.7.2).
+    font_pending: RefCell<HashMap<String, FontDependencies>>,
+    /// Members of font-relative dependency cycles, which are invalid at computed-value time.
+    cyclic_customs: RefCell<HashSet<String>>,
+    cyclic_properties: RefCell<HashSet<Property>>,
 }
 impl Computed {
     fn new(style: Style, values: Cascaded) -> Result<Self, StyleError> {
@@ -116,6 +123,9 @@ impl Computed {
             variables,
             winners: RefCell::default(),
             sources: RefCell::default(),
+            font_pending: RefCell::default(),
+            cyclic_customs: RefCell::default(),
+            cyclic_properties: RefCell::default(),
         })
     }
     fn provided(style: Style) -> Result<Self, StyleError> {
@@ -577,10 +587,14 @@ impl<'a> Geometry<'a> {
                     context,
                     namespace,
                     namespaces: pending.namespaces.clone(),
+                    base: Some(pending.location.base.clone()),
                 };
                 let Some(value) = self.substitute(context, &pending.value, &query)? else {
                     return Ok(None);
                 };
+                if computed.cyclic_properties.borrow().contains(&property) {
+                    return Ok(None);
+                }
                 crate::style::declaration::expand_substitution(pending, &value)
             },
         )?;
@@ -877,6 +891,29 @@ impl<'a> Geometry<'a> {
                     .and_then(Clone::clone));
             }
             let computed = self.context(context);
+            if let Some(dependencies) = computed.font_pending.borrow().get(name).copied()
+                && let Some(property) =
+                    self.active
+                        .borrow()
+                        .iter()
+                        .rev()
+                        .find_map(|node| match *node {
+                            Node::Property(active, property)
+                                if active == context
+                                    && ((property == Property::FontSize
+                                        && dependencies.font_size)
+                                        || (property == Property::LineHeight
+                                            && dependencies.line_height)) =>
+                            {
+                                Some(property)
+                            }
+                            _ => None,
+                        })
+            {
+                computed.cyclic_properties.borrow_mut().insert(property);
+                computed.cyclic_customs.borrow_mut().insert(name.to_owned());
+                return Ok(None);
+            }
             self.work.charge(1)?;
             if let Some((name, keyword)) = computed.variables.compute(
                 name,
@@ -900,6 +937,58 @@ impl<'a> Geometry<'a> {
         }
     }
 
+    /// The computed value of the registered custom property `name` from its substituted
+    /// `value` (CSS Properties and Values API 1 §2.4); `None` when invalid at computed-value
+    /// time, which includes closing a font-relative dependency cycle (§2.7.2).
+    fn registered(
+        &self,
+        context: Context,
+        name: &str,
+        registration: &Registration,
+        value: &variables::Expanded,
+        base: Option<&crate::resources::ResourceBase>,
+    ) -> Result<Option<variables::Expanded>, StyleError> {
+        let computed = self.context(context);
+        let dependencies =
+            crate::style::registration::font_dependencies(value.as_str(), self.is_root(context));
+        for (dependent, property) in [
+            (dependencies.font_size, Property::FontSize),
+            (dependencies.line_height, Property::LineHeight),
+        ] {
+            if dependent
+                && self
+                    .active
+                    .borrow()
+                    .contains(&Node::Property(context, property))
+            {
+                computed.cyclic_properties.borrow_mut().insert(property);
+                return Ok(None);
+            }
+        }
+        computed
+            .font_pending
+            .borrow_mut()
+            .insert(name.to_owned(), dependencies);
+        // Lengths resolve against the element's own font, as in a non-font property.
+        let result = self.with_relative(context, Property::Width, |relative| {
+            crate::style::registration::compute(&registration.syntax, value, relative, base, name)
+        });
+        computed.font_pending.borrow_mut().remove(name);
+        if computed.cyclic_customs.borrow().contains(name) {
+            return Ok(None);
+        }
+        result
+    }
+
+    /// Whether `context` is the root element, whose root-relative units name its own font.
+    fn is_root(&self, context: Context) -> bool {
+        match context {
+            Context::Root => true,
+            Context::Element => self.parent.is_some_and(|parent| parent.root_font.is_none()),
+            Context::Page | Context::Tree(_) => false,
+        }
+    }
+
     fn parent_custom(
         &self,
         context: Context,
@@ -911,10 +1000,12 @@ impl<'a> Geometry<'a> {
                 Some(parent) => self.custom(parent, name),
                 None => Ok(None),
             },
+            // The element's inherited environment is its parent's, carrying the document's
+            // registrations even for the root.
             Context::Element => Ok(self
-                .parent
-                .expect("element inheritance has a parent style")
-                .custom_properties
+                .context(Context::Element)
+                .base
+                .inherited_custom_properties
                 .get(name)
                 .and_then(Clone::clone)),
             Context::Root => Ok(self
@@ -936,6 +1027,7 @@ impl<'a> Geometry<'a> {
         let _work = self.work.enter(false);
         self.work.charge(1)?;
         value.substitute_context(
+            &self.sheet.registrations,
             &mut |reference, name| match reference {
                 Reference::Local => self.custom(context, name),
                 Reference::Inherited => self.parent_custom(context, name),
@@ -962,12 +1054,7 @@ impl<'a> Geometry<'a> {
                 Some(parent) => self.custom_environment(parent)?,
                 None => Default::default(),
             },
-            Context::Element => self
-                .parent
-                .expect("element inheritance has a parent style")
-                .custom_properties
-                .clone(),
-            Context::Root => self.root.base.inherited_custom_properties.clone(),
+            Context::Element | Context::Root => computed.base.inherited_custom_properties.clone(),
         };
         let environment = computed.variables.environment(&parent)?;
         computed.style.borrow_mut().custom_properties = environment.clone();
@@ -988,12 +1075,7 @@ impl<'a> Geometry<'a> {
                 Some(parent) => self.custom_environment(parent)?,
                 None => Default::default(),
             },
-            Context::Element => self
-                .parent
-                .expect("element inheritance has a parent style")
-                .custom_properties
-                .clone(),
-            Context::Root => base.inherited_custom_properties,
+            Context::Element | Context::Root => base.inherited_custom_properties,
         };
         base.font_namespace = computed.style.borrow().font_namespace;
         base.anchor
@@ -1022,6 +1104,7 @@ impl<'a> Geometry<'a> {
                             context: Context::Page,
                             namespace,
                             namespaces: namespaces.cloned(),
+                            base: location.map(|location| location.base.clone()),
                         },
                     )
                 },
@@ -1709,6 +1792,8 @@ struct Query<'g, 'a> {
     context: Context,
     namespace: crate::fonts::FontNamespace,
     namespaces: Option<crate::style::selector::Namespaces>,
+    /// The declaring stylesheet's location, which relative URLs in queried values take.
+    base: Option<crate::resources::ResourceBase>,
 }
 impl crate::style::attribute::Context for Query<'_, '_> {
     fn attribute_data(&self, prefix: Option<&str>, name: &str) -> Option<&str> {
@@ -1814,6 +1899,26 @@ impl QueryValues for Query<'_, '_> {
                 conditional::Scalar::parse(source, relative)
             })
     }
+    fn registered(
+        &self,
+        name: &str,
+        registration: &Registration,
+        value: &variables::Expanded,
+    ) -> Result<Option<variables::Expanded>, StyleError> {
+        self.geometry
+            .with_relative(self.context, Property::Width, |relative| {
+                crate::style::registration::compute(
+                    &registration.syntax,
+                    value,
+                    relative,
+                    self.base.as_ref(),
+                    name,
+                )
+            })
+    }
+    fn registrations(&self) -> &crate::style::registration::Registrations {
+        &self.geometry.sheet.registrations
+    }
 }
 
 struct CustomEvaluation<'g, 'a> {
@@ -1851,13 +1956,24 @@ impl variables::Evaluation for CustomEvaluation<'_, '_> {
             .customs
             .current(name)
             .expect("a computed custom value has a selected source");
+        let base = owner.location.as_deref().map(|location| &location.base);
         let query = Query {
             geometry: self.geometry,
             context: self.context,
             namespace: owner.value.namespace,
             namespaces: owner.value.namespaces,
+            base: base.cloned(),
         };
-        self.geometry.substitute(self.context, value, &query)
+        let substituted = self.geometry.substitute(self.context, value, &query)?;
+        match (self.geometry.sheet.registrations.typed(name), substituted) {
+            (Some(registration), Some(substituted))
+                if WideKeyword::parse(substituted.as_str()).is_none() =>
+            {
+                self.geometry
+                    .registered(self.context, name, registration, &substituted, base)
+            }
+            (_, substituted) => Ok(substituted),
+        }
     }
     fn recascade(
         &self,
@@ -1976,7 +2092,7 @@ pub(super) fn resolve_values(
     resolver: &dyn ResourceResolver,
     context: &ValueContext<'_>,
 ) -> Result<(Style, Winners), StyleError> {
-    if !values.contextual() {
+    if !values.contextual(&sheet.registrations) {
         let winners = crate::style::cascade::resolve(values, &mut style, parent)?;
         return Ok((style, winners));
     }
@@ -2011,12 +2127,17 @@ pub(super) fn resolve_values(
     graph.materialized(Context::Element)
 }
 
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the declaration's namespaces and base, the page context and its resources are independent inputs"
+)]
 pub(super) fn substitute_known(
     sheet: &Stylesheet,
     style: &Style,
     value: &variables::Value,
     namespace: crate::fonts::FontNamespace,
     namespaces: Option<&crate::style::selector::Namespaces>,
+    base: Option<&crate::resources::ResourceBase>,
     viewport: [f32; 2],
     resolver: &dyn ResourceResolver,
 ) -> Result<Option<variables::Expanded>, StyleError> {
@@ -2064,6 +2185,7 @@ pub(super) fn substitute_known(
             context: Context::Element,
             namespace,
             namespaces: namespaces.cloned(),
+            base: base.cloned(),
         },
     )
 }

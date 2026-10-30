@@ -1,4 +1,8 @@
-use crate::style::{StyleError, wide_keywords::WideKeyword};
+use crate::style::{
+    StyleError,
+    registration::{Registration, Registrations},
+    wide_keywords::WideKeyword,
+};
 use cssparser::{ParseError, ParseErrorKind, Parser, ParserInput, Token, TokenSerializationType};
 use std::{
     cell::{Cell, RefCell},
@@ -32,7 +36,7 @@ impl Expanded {
     pub(super) fn as_str(&self) -> &str {
         &self.source
     }
-    fn literal(source: String) -> Result<Self, StyleError> {
+    pub(super) fn literal(source: String) -> Result<Self, StyleError> {
         if source.len() > MAX_VALUE_BYTES {
             return Err(StyleError::VariableLimit {
                 resource: "specified value bytes",
@@ -98,16 +102,99 @@ pub(super) struct Variables {
     values: HashMap<String, Option<Expanded>>,
     bytes: usize,
     entries: usize,
+    registrations: Arc<Registrations>,
 }
 impl Variables {
+    /// The computed value of `name`; a registered property no ancestor sets has its initial
+    /// value (CSS Properties and Values API 1 §2.1).
     pub(super) fn get(&self, name: &str) -> Option<&Option<Expanded>> {
         let mut current = self;
         loop {
             if let Some(value) = current.values.get(name) {
                 return Some(value);
             }
-            current = current.parent.as_deref()?;
+            match current.parent.as_deref() {
+                Some(parent) => current = parent,
+                None => {
+                    return self
+                        .registrations
+                        .get(name)
+                        .map(|registration| &registration.initial);
+                }
+            }
         }
+    }
+    pub(super) fn registrations(&self) -> &Registrations {
+        &self.registrations
+    }
+    /// `parent`, carrying the document's `registrations` when it does not yet.
+    pub(super) fn registered(
+        parent: &Environment,
+        registrations: &Arc<Registrations>,
+    ) -> Environment {
+        if Arc::ptr_eq(&parent.registrations, registrations)
+            || (parent.registrations.is_empty() && registrations.is_empty())
+        {
+            return parent.clone();
+        }
+        Arc::new(Self {
+            parent: Some(parent.clone()),
+            values: HashMap::new(),
+            bytes: parent.bytes,
+            entries: parent.entries,
+            registrations: registrations.clone(),
+        })
+    }
+    /// The local value `name` takes for a CSS-wide `keyword` (CSS Cascade 4 §7.3), with the
+    /// inheritance its registration gives; `None` leaves it to inheritance.
+    #[expect(
+        clippy::option_option,
+        reason = "outer is whether the name has a local value, inner is its value or guaranteed-invalid"
+    )]
+    fn defaulted(&self, name: &str, keyword: WideKeyword) -> Option<Option<Expanded>> {
+        let inherited = || {
+            self.parent
+                .as_deref()
+                .and_then(|parent| parent.get(name).cloned().flatten())
+        };
+        match (self.registrations.get(name), keyword) {
+            (None, WideKeyword::Initial) => Some(None),
+            (None, _) => None,
+            (Some(registration), WideKeyword::Initial) => Some(registration.initial.clone()),
+            (Some(Registration { inherits: true, .. }), _) => None,
+            (Some(_), WideKeyword::Inherit) => Some(inherited()),
+            (Some(registration), _) => Some(registration.initial.clone()),
+        }
+    }
+    /// The value of `name` when invalid at computed-value time: guaranteed-invalid, or for a
+    /// registered property the value `unset` gives (CSS Properties and Values API 1 §2.4).
+    fn invalid(&self, name: &str) -> Option<Expanded> {
+        self.registrations.get(name)?;
+        self.defaulted(name, WideKeyword::Unset).unwrap_or_else(|| {
+            self.parent
+                .as_deref()
+                .and_then(|parent| parent.get(name).cloned().flatten())
+        })
+    }
+    /// Gives `name` the local `value`.
+    fn set(&mut self, name: &str, value: Option<Expanded>) -> Result<(), StyleError> {
+        if let Some(value) = &value {
+            self.charge_bytes(value.storage_len())?;
+        }
+        if let Some(Some(previous)) = self.values.insert(name.to_owned(), value) {
+            self.bytes -= previous.storage_len();
+        }
+        Ok(())
+    }
+    fn add_entry(&mut self, name: &str) -> Result<(), StyleError> {
+        self.entries += 1;
+        if self.entries > MAX_ENVIRONMENT_ENTRIES {
+            return Err(StyleError::VariableLimit {
+                resource: "environment entries",
+                limit: MAX_ENVIRONMENT_ENTRIES,
+            });
+        }
+        self.charge_bytes(name.len())
     }
     fn charge_bytes(&mut self, bytes: usize) -> Result<(), StyleError> {
         self.bytes = self
@@ -394,7 +481,7 @@ impl Value {
         environment: &Variables,
         inherited: &Variables,
     ) -> Result<Option<Expanded>, StyleError> {
-        self.substitute_with(&mut |reference, name| {
+        self.substitute_with(&environment.registrations, &mut |reference, name| {
             let source = if reference == Reference::Inherited {
                 inherited
             } else {
@@ -405,9 +492,11 @@ impl Value {
     }
     pub(super) fn substitute_with(
         &self,
+        registrations: &Registrations,
         lookup: &mut impl FnMut(Reference, &str) -> Result<Option<Expanded>, StyleError>,
     ) -> Result<Option<Expanded>, StyleError> {
         self.substitute_context(
+            registrations,
             lookup,
             &mut |_| {
                 Err(StyleError::Invalid(
@@ -423,6 +512,7 @@ impl Value {
     }
     pub(super) fn substitute_context(
         &self,
+        registrations: &Registrations,
         lookup: &mut impl FnMut(Reference, &str) -> Result<Option<Expanded>, StyleError>,
         test: &mut impl FnMut(
             &crate::style::conditional::Test,
@@ -432,7 +522,7 @@ impl Value {
         ) -> Result<Option<Expanded>, StyleError>,
     ) -> Result<Option<Expanded>, StyleError> {
         let mut output = Output::default();
-        if self.append(lookup, test, attribute, &mut output)? {
+        if self.append(registrations, lookup, test, attribute, &mut output)? {
             Ok(Some(Expanded {
                 source: output.value.into(),
                 taint: if output.taint.is_empty() {
@@ -447,6 +537,7 @@ impl Value {
     }
     fn append(
         &self,
+        registrations: &Registrations,
         lookup: &mut impl FnMut(Reference, &str) -> Result<Option<Expanded>, StyleError>,
         test: &mut impl FnMut(
             &crate::style::conditional::Test,
@@ -477,7 +568,7 @@ impl Value {
                     if function {
                         output.functions.push(output.value.len() - open.len());
                     }
-                    let valid = value.append(lookup, test, attribute, output)?;
+                    let valid = value.append(registrations, lookup, test, attribute, output)?;
                     if function {
                         output.functions.pop();
                     }
@@ -488,16 +579,43 @@ impl Value {
                 }
                 Part::Conditional(expression) => {
                     if let Some(value) = expression.select(test)?
-                        && !value.append(lookup, test, attribute, output)?
+                        && !value.append(registrations, lookup, test, attribute, output)?
                     {
                         return Ok(false);
                     }
                 }
                 Part::Reference(reference, name, fallback) => {
+                    let checked = match (fallback, registrations.typed(name)) {
+                        // CSS Properties and Values API 1 §2.7.1: a fallback for a registered
+                        // property must match its syntax, whether or not it is used.
+                        (Some(fallback), Some(registration)) => {
+                            let Some(fallback) = fallback.substitute_context(
+                                registrations,
+                                lookup,
+                                test,
+                                attribute,
+                            )?
+                            else {
+                                return Ok(false);
+                            };
+                            if !crate::style::matcher::match_syntax(
+                                &registration.syntax,
+                                fallback.as_str(),
+                                &mut 0,
+                                crate::style::matcher::ValueContext::Element,
+                            )? {
+                                return Ok(false);
+                            }
+                            Some(fallback)
+                        }
+                        _ => None,
+                    };
                     let value = if let Some(value) = lookup(*reference, name)? {
                         Some(value)
+                    } else if checked.is_some() {
+                        checked
                     } else if let Some(fallback) = fallback {
-                        fallback.substitute_context(lookup, test, attribute)?
+                        fallback.substitute_context(registrations, lookup, test, attribute)?
                     } else {
                         None
                     };
@@ -699,7 +817,7 @@ pub(super) fn resolve(
     declarations: HashMap<String, impl Into<Source>>,
     wide: WideHandling<'_>,
 ) -> Result<Resolution, StyleError> {
-    if declarations.is_empty() {
+    if declarations.is_empty() && parent.registrations.non_inherited().next().is_none() {
         return Ok(Resolution::Complete(parent.clone()));
     }
     let resolver = Resolver::new(parent, declarations)?;
@@ -745,6 +863,7 @@ impl Resolver {
             bytes: parent.bytes,
             entries: parent.entries,
             values: HashMap::new(),
+            registrations: parent.registrations.clone(),
         };
         let mut values = Values::new();
         for (name, source) in declarations {
@@ -753,38 +872,43 @@ impl Resolver {
                 Source::Css(source) => (source, false),
                 Source::Literal(source) => (source, true),
             };
-            let wide = WideKeyword::parse(&source);
-            if matches!(
-                wide,
-                Some(
-                    WideKeyword::Inherit
-                        | WideKeyword::Unset
-                        | WideKeyword::Revert
-                        | WideKeyword::RevertLayer
-                )
-            ) {
-                continue;
-            }
-            computed.entries += 1;
-            if computed.entries > MAX_ENVIRONMENT_ENTRIES {
-                return Err(StyleError::VariableLimit {
-                    resource: "environment entries",
-                    limit: MAX_ENVIRONMENT_ENTRIES,
-                });
-            }
-            computed.charge_bytes(name.len())?;
-            if literal && wide.is_none() {
-                let value = Expanded::literal(source)?;
-                computed.charge_bytes(value.storage_len())?;
-                computed.values.insert(name, Some(value));
-                continue;
-            }
-            computed.values.insert(name.clone(), None);
-            if !matches!(wide, Some(WideKeyword::Initial)) {
+            let defaulted = match WideKeyword::parse(&source) {
+                Some(keyword) => match computed.defaulted(&name, keyword) {
+                    Some(value) => Some(value),
+                    None => continue,
+                },
+                None => None,
+            };
+            computed.add_entry(&name)?;
+            if let Some(value) = defaulted {
+                computed.set(&name, value)?;
+            } else if literal {
+                computed.set(&name, Some(Expanded::literal(source)?))?;
+            } else {
+                computed.values.insert(name.clone(), None);
                 values.insert(name, Value::parse(&source)?.map(Rc::new));
             }
         }
         let finished = cycles::members(&values);
+        for name in &finished {
+            let invalid = computed.invalid(name);
+            computed.set(name, invalid)?;
+        }
+        // CSS Properties and Values API 1 §2.1: a registered property that does not inherit
+        // takes its initial value wherever it is not declared.
+        let resets: Vec<_> = computed
+            .registrations
+            .non_inherited()
+            .filter(|(name, registration)| {
+                !computed.values.contains_key(*name)
+                    && parent.get(name) != Some(&registration.initial)
+            })
+            .map(|(name, registration)| (name.to_owned(), registration.initial.clone()))
+            .collect();
+        for (name, initial) in resets {
+            computed.add_entry(&name)?;
+            computed.set(&name, initial)?;
+        }
         Ok(Self {
             values: RefCell::new(values),
             computed: RefCell::new(computed),
@@ -822,6 +946,7 @@ impl Resolver {
             values,
             entries,
             bytes: parent.bytes,
+            registrations: parent.registrations.clone(),
         };
         let bytes = computed
             .values
@@ -873,7 +998,7 @@ impl Resolver {
             if self.finished.borrow().contains(name) {
                 return Ok(None);
             }
-            let result: Option<Expanded> = match value {
+            let result = match value {
                 Some(value) => evaluation.substitute(name, &value)?,
                 None => None,
             };
@@ -891,15 +1016,12 @@ impl Resolver {
             if self.finished.borrow().contains(name) {
                 return Ok(None);
             }
-            if let Some(value) = &result {
-                self.computed
-                    .borrow_mut()
-                    .charge_bytes(value.storage_len())?;
-            }
-            self.computed
-                .borrow_mut()
-                .values
-                .insert(name.to_owned(), result);
+            let mut computed = self.computed.borrow_mut();
+            let result = match result {
+                Some(value) => Some(value),
+                None => computed.invalid(name),
+            };
+            computed.set(name, result)?;
             self.finished.borrow_mut().insert(name.to_owned());
             return Ok(None);
         }
@@ -912,31 +1034,30 @@ impl Resolver {
             None => (None, false),
         };
         let keyword = source.as_deref().and_then(WideKeyword::parse);
-        if source.is_none() || matches!(keyword, Some(WideKeyword::Inherit | WideKeyword::Unset)) {
+        if source.is_none()
+            || matches!(
+                keyword,
+                Some(WideKeyword::Inherit | WideKeyword::Unset | WideKeyword::Initial)
+            )
+        {
             self.values.borrow_mut().remove(name);
             let mut computed = self.computed.borrow_mut();
-            if let Some(value) = computed.values.remove(name) {
-                computed.entries -= 1;
-                computed.bytes -= name.len() + value.map_or(0, |value| value.storage_len());
+            match computed.defaulted(name, keyword.unwrap_or(WideKeyword::Unset)) {
+                Some(value) => computed.set(name, value)?,
+                None => {
+                    if let Some(value) = computed.values.remove(name) {
+                        computed.entries -= 1;
+                        computed.bytes -= name.len() + value.map_or(0, |value| value.storage_len());
+                    }
+                }
             }
-            self.finished.borrow_mut().insert(name.to_owned());
-            return Ok(());
-        }
-        if keyword == Some(WideKeyword::Initial) {
-            self.values.borrow_mut().remove(name);
-            self.computed
-                .borrow_mut()
-                .values
-                .insert(name.to_owned(), None);
             self.finished.borrow_mut().insert(name.to_owned());
             return Ok(());
         }
         if literal && keyword.is_none() {
             let value = Expanded::literal(source.expect("literal custom source exists"))?;
             self.values.borrow_mut().remove(name);
-            let mut computed = self.computed.borrow_mut();
-            computed.charge_bytes(value.storage_len())?;
-            computed.values.insert(name.to_owned(), Some(value));
+            self.computed.borrow_mut().set(name, Some(value))?;
             self.finished.borrow_mut().insert(name.to_owned());
             return Ok(());
         }
@@ -946,9 +1067,8 @@ impl Resolver {
         let cyclic = cycles::members(&self.values.borrow());
         let mut computed = self.computed.borrow_mut();
         for name in &cyclic {
-            if let Some(Some(value)) = computed.values.insert(name.clone(), None) {
-                computed.bytes -= value.storage_len();
-            }
+            let invalid = computed.invalid(name);
+            computed.set(name, invalid)?;
         }
         self.finished.borrow_mut().extend(cyclic);
         Ok(())
@@ -975,7 +1095,8 @@ impl Evaluation for ReferencesOnly<'_> {
         Ok(None)
     }
     fn substitute(&self, _name: &str, value: &Value) -> Result<Option<Expanded>, StyleError> {
-        value.substitute_with(&mut |reference, name| {
+        let registrations = self.0.computed.borrow().registrations.clone();
+        value.substitute_with(&registrations, &mut |reference, name| {
             let computed = self.0.computed.borrow();
             let source = if reference == Reference::Inherited {
                 computed

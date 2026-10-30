@@ -10,6 +10,7 @@ mod logical;
 mod named_page_rules;
 mod page_selection;
 mod page_size;
+mod registered_properties;
 mod relative_units;
 mod source_set;
 mod unsupported_messages;

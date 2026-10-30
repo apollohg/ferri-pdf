@@ -1198,6 +1198,14 @@ impl Stylesheet {
         resolver: &dyn ResourceResolver,
     ) -> Result<(Style, Cascaded), StyleError> {
         let mut style = parent.anonymous(Display::Inline);
+        // The root's parent carries no registrations; its descendants inherit them.
+        for environment in [
+            &mut style.custom_properties,
+            &mut style.inherited_custom_properties,
+        ] {
+            *environment =
+                crate::style::variables::Variables::registered(environment, &self.registrations);
+        }
         style.element_font_namespace = self.font_namespace(Some(element.tree_scope()));
         style.document_root = element.is_in_document_tree()
             && element

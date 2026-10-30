@@ -6,17 +6,19 @@ use crate::style::{
 };
 use cssparser::{Parser, ParserInput, Token};
 
-#[derive(Clone, Debug)]
+const RESERVED_IDENT: &str = "default";
+
+#[derive(Clone, Debug, PartialEq)]
 pub(super) enum Syntax {
     Universal,
     Alternatives(Vec<Clause>),
 }
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub(super) struct Clause {
     pub atom: Atom,
     pub list: List,
 }
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub(super) enum Atom {
     Base(Base),
     Production(Production),
@@ -56,7 +58,15 @@ impl Syntax {
             let mut clauses = Vec::new();
             loop {
                 let (atom, transform_list) = match input.next()?.clone() {
-                    Token::Ident(name) => (Atom::Literal(name.to_string()), false),
+                    // A syntax component name that is an identifier must be a `<custom-ident>`
+                    // (CSS Values 4 §4.2).
+                    Token::Ident(name)
+                        if crate::style::wide_keywords::WideKeyword::parse_ident(&name)
+                            .is_none()
+                            && !name.eq_ignore_ascii_case(RESERVED_IDENT) =>
+                    {
+                        (Atom::Literal(name.to_string()), false)
+                    }
                     Token::Delim('<') => {
                         let name = match input.next_including_whitespace()?.clone() {
                             Token::Ident(name) => name,

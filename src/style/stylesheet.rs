@@ -87,6 +87,8 @@ pub(crate) struct Stylesheet {
         RefCell<HashMap<crate::style::PageStyleTarget, crate::style::anchor_values::AnchorNode>>,
     anchor_order: HashMap<crate::dom::ElementId, [usize; 3]>,
     pub(super) anchor_frames: crate::style::anchor_values::AnchorFrames,
+    /// Custom property registrations from `@property` rules.
+    pub(super) registrations: Arc<crate::style::registration::Registrations>,
 }
 
 fn anchor_order(tree: &crate::dom::DocumentTree) -> HashMap<crate::dom::ElementId, [usize; 3]> {
@@ -342,7 +344,41 @@ impl Stylesheet {
             anchor_frames: self.anchor_frames.clone(),
             anchor_nodes: self.anchor_nodes.clone(),
             anchor_order: self.anchor_order.clone(),
+            registrations: self.registrations.clone(),
         }
+    }
+
+    /// Registers the custom property an `@property` rule names; rules apply in document
+    /// order, so the last valid one wins (CSS Properties and Values API 1 §2.1).
+    fn register(
+        &self,
+        registrations: &mut crate::style::registration::Registrations,
+        name: String,
+        declarations: &[Declaration],
+        location: &crate::style::SourceLocation,
+        base: &ResourceBase,
+    ) -> Result<(), StyleError> {
+        let (registration, invalid) = crate::style::registration::parse(declarations, base, &name)?;
+        let mut diagnostics = self.diagnostics.borrow_mut();
+        for declaration in invalid {
+            diagnostics.push(StyleDiagnostic {
+                location: declaration.location.clone(),
+                kind: StyleDiagnosticKind::InvalidDeclaration,
+                context: format!(
+                    "@property {name}: {}: {}",
+                    declaration.name, declaration.value
+                ),
+            });
+        }
+        match registration {
+            Some(registration) => registrations.insert(name, registration),
+            None => diagnostics.push(StyleDiagnostic {
+                location: location.clone(),
+                kind: StyleDiagnosticKind::InvalidRule,
+                context: format!("@property {name}"),
+            }),
+        }
+        Ok(())
     }
 
     pub(crate) fn first_page_request(&self) -> &crate::style::PageRequest {
@@ -543,12 +579,14 @@ impl Stylesheet {
             anchor_frames: crate::style::anchor_values::AnchorFrames::default(),
             anchor_nodes: RefCell::default(),
             anchor_order: tree.map(anchor_order).unwrap_or_default(),
+            registrations: Arc::default(),
         };
         let mut fonts = Vec::new();
         let mut feature_values = Vec::new();
         let mut palettes = Vec::new();
         let mut counter_styles = Vec::new();
         let mut position_try = Vec::new();
+        let mut registrations = crate::style::registration::Registrations::default();
         let mut page_order = 0;
         for (
             order,
@@ -654,6 +692,15 @@ impl Stylesheet {
                         namespace,
                     ));
                 }
+                ContentRule::Property(name, declarations, location) => {
+                    sheet.register(
+                        &mut registrations,
+                        name,
+                        &declarations,
+                        &location,
+                        &source_base,
+                    )?;
+                }
                 ContentRule::PositionTry(name, declarations, location) => {
                     position_try.push((
                         (origin, layer, order),
@@ -666,6 +713,7 @@ impl Stylesheet {
                 }
             }
         }
+        sheet.registrations = Arc::new(registrations);
         // CSS Counter Styles 3 §3: rules of one name cascade atomically; the last in cascade
         // order wins.
         counter_styles.sort_by_key(|(priority, ..)| *priority);

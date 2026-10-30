@@ -397,9 +397,16 @@ impl MatchedPageRules {
         viewport: [f32; 2],
         resolver: &dyn crate::resources::ResourceResolver,
     ) -> Result<(Option<Arc<Component>>, Option<SourceLocation>), StyleError> {
-        self.descriptor_with(descriptor, |pending, namespace, namespaces, _| {
+        self.descriptor_with(descriptor, |pending, namespace, namespaces, location| {
             crate::style::resolution::substitute_known(
-                sheet, context, pending, namespace, namespaces, viewport, resolver,
+                sheet,
+                context,
+                pending,
+                namespace,
+                namespaces,
+                location.map(|location| &location.base),
+                viewport,
+                resolver,
             )
         })
     }

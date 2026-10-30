@@ -172,12 +172,23 @@ pub(super) fn match_syntax(
     steps: &mut usize,
     context: ValueContext<'_>,
 ) -> Result<bool, StyleError> {
-    let mut raw = ParserInput::new(source);
-    let Ok(items) = tokenize(&mut Parser::new(&mut raw), 0) else {
-        return Ok(false);
-    };
     let crate::style::syntax::Syntax::Alternatives(clauses) = syntax else {
         return Ok(crate::style::variables::Value::parse(source)?.is_some());
+    };
+    Ok(match_clause(clauses, source, steps, context)?.is_some())
+}
+
+/// The first of `clauses` that `source` matches, in order (CSS Properties and Values API 1
+/// §5.3), and its match.
+pub(super) fn match_clause<'c>(
+    clauses: &'c [crate::style::syntax::Clause],
+    source: &str,
+    steps: &mut usize,
+    context: ValueContext<'_>,
+) -> Result<Option<(&'c crate::style::syntax::Clause, Component)>, StyleError> {
+    let mut raw = ParserInput::new(source);
+    let Ok(items) = tokenize(&mut Parser::new(&mut raw), 0) else {
+        return Ok(None);
     };
     for clause in clauses {
         let atom = match &clause.atom {
@@ -196,20 +207,18 @@ pub(super) fn match_syntax(
                 comma: list == crate::style::syntax::List::Comma,
             }),
         };
-        if match_items(
+        if let Some(matched) = match_items(
             &pattern,
             source,
             &items,
             steps,
             context,
             AnchorFunctions::default(),
-        )?
-        .is_some()
-        {
-            return Ok(true);
+        )? {
+            return Ok(Some((clause, matched)));
         }
     }
-    Ok(false)
+    Ok(None)
 }
 
 pub(crate) fn match_comma_list(
@@ -509,8 +518,10 @@ impl Matcher<'_> {
         match atom {
             Operand::Static(_) => unreachable!("static nodes use their grammar matcher"),
             Operand::Base(base) => self.base(base, Range::ALL, item),
+            // Syntax-string identifiers match codepoint-wise (CSS Properties and Values API 1
+            // §5.1).
             Operand::Literal(literal) => match &item.kind {
-                ItemKind::Ident { name, .. } if name.eq_ignore_ascii_case(literal) => {
+                ItemKind::Ident { name, .. } if **name == *literal => {
                     self.claimed.insert(item.start);
                     Some(Component::Ident(name.clone()))
                 }

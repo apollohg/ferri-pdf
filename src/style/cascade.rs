@@ -329,8 +329,15 @@ impl Cascaded {
             self.custom.entry(name).or_default().extend(values);
         }
     }
-    pub(super) fn contextual(&self) -> bool {
-        self.custom.values().flatten().any(|candidate| candidate.value.contextual)
+    /// Whether values need the element's computed properties: those with conditional or
+    /// attribute substitutions, and registered custom properties computing by a typed syntax
+    /// (CSS Properties and Values API 1 §2.4).
+    pub(super) fn contextual(
+        &self,
+        registrations: &crate::style::registration::Registrations,
+    ) -> bool {
+        self.custom.keys().any(|name| registrations.typed(name).is_some())
+            || self.custom.values().flatten().any(|candidate| candidate.value.contextual)
             || self.properties.values().flatten().any(|candidate| matches!(&candidate.value.0, Value::Pending(pending) if pending.value.requires_context()))
     }
 
