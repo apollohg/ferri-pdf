@@ -611,3 +611,197 @@ fn preserved_3d_footnote_bodies_add_their_planes_text_to_the_area_text() {
         "the rotated child's text clips the area's background through its plane: {texts:?}"
     );
 }
+
+/// The footnote lines visible on `page`, inside the clips of the parts holding them, by the
+/// left edge of their column box, each column top to bottom.
+fn footnote_columns(trace: &crate::LayoutTrace, page: usize) -> Vec<(f32, Vec<String>)> {
+    fn visit(
+        items: &[DisplayItem],
+        lines: Option<&[crate::layout::TextLine]>,
+        origin: [f32; 2],
+        clips: &mut Vec<[f32; 2]>,
+        found: &mut Vec<(f32, f32, String)>,
+    ) {
+        let depth = clips.len();
+        let mut opened = Vec::new();
+        for item in items {
+            match item {
+                DisplayItem::PushClip(clip) if clip.axes == [false, true] => {
+                    clips.push([
+                        origin[1] + clip.rect.y,
+                        origin[1] + clip.rect.y + clip.rect.height,
+                    ]);
+                    opened.push(true);
+                }
+                DisplayItem::Pop => {
+                    if opened.pop() == Some(true) {
+                        clips.pop();
+                    }
+                }
+                item if item.is_push() => opened.push(false),
+                DisplayItem::Text { line } => {
+                    let Some(lines) = lines else { continue };
+                    let line = &lines[*line];
+                    let baseline = origin[1] + line.baseline;
+                    if clips
+                        .iter()
+                        .all(|[top, bottom]| (*top..*bottom).contains(&baseline))
+                    {
+                        found.push((origin[0] + line.x, baseline, line.text.clone()));
+                    }
+                }
+                DisplayItem::Frame(frame) => visit(
+                    &frame.items,
+                    Some(&frame.lines),
+                    [origin[0] + frame.matrix[4], origin[1] + frame.matrix[5]],
+                    clips,
+                    found,
+                ),
+                _ => {}
+            }
+        }
+        clips.truncate(depth);
+    }
+    let mut found = Vec::new();
+    visit(
+        &trace.display_lists[page],
+        None,
+        [0.0; 2],
+        &mut Vec::new(),
+        &mut found,
+    );
+    found.sort_by(|a, b| a.0.total_cmp(&b.0).then(a.1.total_cmp(&b.1)));
+    let mut columns: Vec<(f32, Vec<String>)> = Vec::new();
+    for (x, _, text) in found {
+        match columns.last_mut() {
+            Some((left, texts)) if (*left - x).abs() < 1.0 => texts.push(text),
+            _ => columns.push((x, vec![text])),
+        }
+    }
+    columns
+}
+
+/// The rects of the column rules, painted red, on `page`.
+fn column_rules(trace: &crate::LayoutTrace, page: usize) -> Vec<crate::Rect> {
+    trace.display_lists[page]
+        .iter()
+        .filter_map(|item| match item {
+            DisplayItem::Box(paint) if paint.decoration.borders[3].color.rgb == [255, 0, 0] => {
+                Some(paint.rect)
+            }
+            _ => None,
+        })
+        .collect()
+}
+
+#[test]
+fn footnote_area_columns_balance_the_bodies_and_rule_their_gaps() {
+    // CSS GCPM 3 §2.4: the footnote area is a block container, so `columns: 3` makes it a
+    // multi-column container whose bodies balance (CSS Multi-column Layout 1 §7.1). Seven
+    // lines take three 10pt lines a column; orphans and widows of 2 allow the first body to
+    // break after its third line. The 280pt area with 10pt gaps has 86.67pt columns.
+    const COLUMN_PITCH_PT: f32 = 280.0 / 3.0 + 10.0 / 3.0;
+    let trace = render(
+        "@page{@footnote{columns:3;column-gap:10pt;column-rule:2pt solid rgb(255,0,0)}}",
+        "<p>A<span class=fn>A1<br>A2<br>A3<br>A4<br>A5</span> B<span class=fn>B</span> C<span class=fn>C</span></p>",
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    let columns = footnote_columns(&trace, 0);
+    let held: Vec<_> = columns.iter().map(|(_, texts)| texts.clone()).collect();
+    assert_eq!(
+        held,
+        [
+            texts(&["1. A1", "A2", "A3"]),
+            texts(&["A4", "A5", "2. B"]),
+            texts(&["3. C"])
+        ],
+        "{columns:?}"
+    );
+    for (index, (left, _)) in columns.iter().enumerate() {
+        common::assert_labelled_pt(
+            &format!("column {index} left"),
+            *left,
+            10.0 + index as f32 * COLUMN_PITCH_PT,
+        );
+    }
+    let rules = column_rules(&trace, 0);
+    assert_eq!(
+        rules.len(),
+        2,
+        "a rule in each gap between filled columns: {rules:?}"
+    );
+    for (index, rule) in rules.iter().enumerate() {
+        common::assert_labelled_pt(
+            &format!("rule {index} centre"),
+            rule.x + rule.width / 2.0,
+            10.0 + (index + 1) as f32 * COLUMN_PITCH_PT - 5.0,
+        );
+        common::assert_labelled_pt(&format!("rule {index} top"), rule.y, 80.0);
+        common::assert_labelled_pt(&format!("rule {index} height"), rule.height, 30.0);
+    }
+}
+
+#[test]
+fn footnote_area_columns_fill_to_max_height_and_continue_on_the_next_page() {
+    // CSS GCPM 3 §2.4.2: `max-height` bounds the area, whose two columns then hold eight
+    // lines; the rest of the body continues in the next page's area, which a page holding
+    // only footnotes does not bound, balanced there.
+    let note = (1..=13)
+        .map(|index| format!("N{index}"))
+        .collect::<Vec<_>>()
+        .join("<br>");
+    let trace = render(
+        "@page{@footnote{columns:2;max-height:40pt}}",
+        &format!("<p>Body<span class=fn>{note}</span></p>"),
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    let pages: Vec<Vec<Vec<String>>> = (0..trace.display_lists.len())
+        .map(|page| {
+            footnote_columns(&trace, page)
+                .into_iter()
+                .map(|(_, texts)| texts)
+                .collect()
+        })
+        .collect();
+    assert_eq!(
+        pages,
+        [
+            vec![
+                texts(&["1. N1", "N2", "N3", "N4"]),
+                texts(&["N5", "N6", "N7", "N8"])
+            ],
+            vec![texts(&["N9", "N10", "N11"]), texts(&["N12", "N13"])],
+        ]
+    );
+}
+
+#[test]
+fn auto_column_fill_fills_footnote_columns_in_order_up_to_the_area_height() {
+    // CSS Multi-column Layout 1 §7.1: `column-fill: auto` fills the first column to the
+    // area's 40pt maximum height before the next; `balance` splits the three lines.
+    let columns = |fill: &str| -> Vec<Vec<String>> {
+        let trace = render(
+            &format!(
+                "@page{{@footnote{{columns:2;column-fill:{fill};max-height:40pt}}}}.fn{{orphans:1;widows:1}}"
+            ),
+            "<p>A<span class=fn>A1<br>A2<br>A3</span></p>",
+        )
+        .unwrap()
+        .layout
+        .unwrap();
+        footnote_columns(&trace, 0)
+            .into_iter()
+            .map(|(_, texts)| texts)
+            .collect()
+    };
+    assert_eq!(columns("auto"), [texts(&["1. A1", "A2", "A3"])]);
+    assert_eq!(
+        columns("balance"),
+        [texts(&["1. A1", "A2"]), texts(&["A3"])],
+        "balancing breaks after the second line, which orphans and widows of 1 allow"
+    );
+}

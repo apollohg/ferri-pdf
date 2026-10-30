@@ -1,6 +1,6 @@
 //! CSS Multi-column Layout 1: column geometry, spanners and measured column flows. Columns
 //! are laid out as fragmentainers by the paginator (`pagination::columns`).
-use crate::graphics::Border;
+use crate::graphics::{Border, BoxDecoration, BoxPaint, Rect};
 use crate::layout::measure::Failure;
 use crate::layout::{
     breaks::{Fragmentainer, first_fragment},
@@ -9,6 +9,8 @@ use crate::layout::{
 };
 use crate::style::{BreakBetween, ColumnFill, Style};
 use crate::text::IntrinsicWidths;
+
+pub(super) mod slices;
 
 /// Bounds the column boxes of one row, as a zero column width and gap would otherwise
 /// request unboundedly many.
@@ -141,6 +143,28 @@ impl OrthogonalColumns {
         }
         None
     }
+}
+
+/// A column rule paints as the left border of a box as wide as the rule.
+const RULE_SIDE: usize = 3;
+
+/// A vertical rule in the middle of a column gap, drawn as in the collapsing border model.
+pub(super) fn rule_paint(rule: Border, x: f32, y: f32, height: f32) -> BoxPaint {
+    let width = rule.used_width();
+    let mut decoration = BoxDecoration::default();
+    decoration.borders[RULE_SIDE] = Border {
+        style: rule.style.collapsed(),
+        ..rule
+    };
+    BoxPaint::whole(
+        Rect {
+            x: x - width / 2.0,
+            y,
+            width,
+            height,
+        },
+        decoration,
+    )
 }
 
 pub(super) fn specified_count(style: &Style) -> Option<usize> {

@@ -5,7 +5,11 @@
     reason = "pagination submodules extend the parent paginator and share its scope"
 )]
 use super::*;
-use crate::style::{BoxSizing, FootnoteDisplay, FootnotePolicy};
+use crate::layout::multicol::{
+    ColumnGeometry, WrapRows,
+    slices::{Distribution, Plan, Run},
+};
+use crate::style::{BoxSizing, ColumnFill, FootnoteDisplay, FootnotePolicy};
 use std::{cell::RefCell, collections::BTreeSet};
 
 /// A footnote body laid out alone in its footnote area.
@@ -76,8 +80,48 @@ fn rows(parts: &[FootnotePart], width: f32) -> Vec<Row> {
     rows
 }
 
-fn rows_height(parts: &[FootnotePart], width: f32) -> Option<f32> {
-    (!parts.is_empty()).then(|| rows(parts, width).iter().map(|row| row.height).sum())
+/// A page's footnote parts in the lines of its footnote area and their slices in its column
+/// boxes.
+struct AreaContent {
+    rows: Vec<Row>,
+    columns: Distribution,
+}
+impl AreaContent {
+    fn height(&self) -> f32 {
+        self.columns.height()
+    }
+    /// Whether the area's columns hold the content, which then fits a content height of
+    /// `limit`.
+    fn fits(&self, limit: f32) -> bool {
+        !self.columns.overflows && !overflows(self.height(), limit)
+    }
+    /// Each part as the column boxes slice it, with its offset in the area's content box.
+    fn placed(&self, geometry: &ColumnGeometry) -> Vec<(FootnotePart, [f32; 2])> {
+        let mut placed = Vec::new();
+        for column in &self.columns.columns {
+            let x = geometry.left(column.index);
+            let y = self.columns.row_offset(column.row);
+            for slice in &column.slices {
+                let row = &self.rows[slice.run];
+                if let [(part, _)] = row.parts.as_slice() {
+                    let part = FootnotePart {
+                        top: slice.top,
+                        bottom: slice.bottom,
+                        repeated: slice.repeated,
+                        ..*part
+                    };
+                    placed.push((part, [x, y + slice.y]));
+                } else {
+                    placed.extend(
+                        row.parts
+                            .iter()
+                            .map(|&(part, offset)| (part, [x + offset, y + slice.y])),
+                    );
+                }
+            }
+        }
+        placed
+    }
 }
 
 /// Footnote bodies by body and the bits of their area's width.
@@ -144,6 +188,15 @@ fn strictest(policies: impl Iterator<Item = FootnotePolicy>) -> FootnotePolicy {
 struct Area {
     x: f32,
     width: f32,
+    /// The column boxes of its content box, from its left edge: the area is a block
+    /// container (CSS GCPM 3 §2.4), so its column properties make it a multi-column one.
+    columns: ColumnGeometry,
+    /// How its content fills its columns: as the multi-column properties of a multi-column
+    /// area set, and else whole in one column.
+    fill: ColumnFill,
+    column_height: Option<f32>,
+    wrap: Option<WrapRows>,
+    rule: crate::graphics::Border,
     padding: [f32; 4],
     borders: [f32; 4],
     margins: [f32; 4],
@@ -167,6 +220,20 @@ impl Area {
         parts.map_or(0.0, |parts| {
             self.edges(TOP) + self.content_height(parts, unbounded) + self.edges(BOTTOM)
         })
+    }
+    /// How the content fills the columns: `column-fill: auto` fills them to the area's
+    /// maximum height where that applies (CSS Multi-column Layout 1 §7.1).
+    fn plan(&self, unbounded: bool) -> Plan {
+        let filled = self
+            .maximum
+            .filter(|_| !unbounded && self.fill == ColumnFill::Auto);
+        Plan {
+            count: self.columns.count,
+            height: self.column_height.or(filled),
+            definite: self.column_height.is_some(),
+            fill: self.fill,
+            wrap: self.wrap,
+        }
     }
 }
 const TOP: usize = 0;
@@ -244,9 +311,20 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             (Some(height), Some(maximum)) => Some(height.min(maximum)),
             (height, maximum) => height.or(maximum),
         };
+        let width = width.max(0.0);
+        let multicol = style.multicol.is_multicol();
         Some(Area {
             x: content.x + margins[LEFT],
-            width: width.max(0.0),
+            width,
+            columns: ColumnGeometry::resolve(&style, 0.0, width),
+            fill: if multicol {
+                style.multicol.fill
+            } else {
+                ColumnFill::Balance
+            },
+            column_height: style.multicol.height,
+            wrap: WrapRows::of(&style, height).filter(|_| multicol),
+            rule: style.multicol.rule,
             padding,
             borders,
             margins,
@@ -261,9 +339,60 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         self.footnote_pages.is_some_and(|first| page >= first)
     }
 
+    /// `parts` laid out in the lines and column boxes of `area`; `None` without parts.
+    fn area_content(
+        &self,
+        parts: &[FootnotePart],
+        area: &Area,
+        unbounded: bool,
+    ) -> Option<AreaContent> {
+        if parts.is_empty() {
+            return None;
+        }
+        let width = area.columns.width;
+        let rows = rows(parts, width);
+        let layouts: Vec<_> = rows
+            .iter()
+            .map(|row| match row.parts.as_slice() {
+                [(part, _)] => Some(self.laid_out(part.body, width)),
+                _ => None,
+            })
+            .collect();
+        let runs: Vec<Run<'_>> = rows
+            .iter()
+            .zip(&layouts)
+            .map(|(row, layout)| match layout {
+                Some(layout) => {
+                    let (part, _) = row.parts[0];
+                    Run {
+                        top: part.top,
+                        bottom: part.bottom,
+                        breaks: &layout.breaks,
+                        cloned: layout.cloned.unwrap_or_default(),
+                        repeated: part.repeated,
+                    }
+                }
+                None => Run::whole(row.height),
+            })
+            .collect();
+        let columns = Distribution::of(&runs, area.plan(unbounded));
+        Some(AreaContent { rows, columns })
+    }
+
+    /// The layout of body `body` at `width`, which laying out its parts cached.
+    fn laid_out(&self, body: usize, width: f32) -> Rc<FootnoteLayout> {
+        self.footnotes
+            .layouts
+            .borrow()
+            .get(&(body, width.to_bits()))
+            .cloned()
+            .expect("laying out a body's parts caches its layout")
+    }
+
     fn content_height(&self, page: usize) -> Option<f32> {
         let area = self.area(page)?;
-        rows_height(self.footnotes.parts(page), area.width)
+        self.area_content(self.footnotes.parts(page), &area, self.footnotes_only(page))
+            .map(|content| content.height())
     }
 
     /// The height the page's footnote area takes from the page area.
@@ -514,7 +643,9 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             .chain(pending.iter())
             .copied()
             .collect();
-        let before = rows_height(&parts, area.width);
+        let before = self
+            .area_content(&parts, &area, false)
+            .map(|content| content.height());
         let start = parts.len();
         for &footnote in footnotes {
             let body = self.document_footnotes().elements[footnote].body;
@@ -526,18 +657,19 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                     self.footnotes.queued.get(&body).copied().unwrap_or(0.0),
                     f32::max,
                 );
-            parts.extend(self.footnote_part(footnote, area.width, queued)?);
+            parts.extend(self.footnote_part(footnote, area.columns.width, queued)?);
         }
-        let after = rows_height(&parts, area.width);
-        if area
-            .maximum
-            .is_some_and(|maximum| after.is_some_and(|after| overflows(after, maximum)))
+        let after = self.area_content(&parts, &area, false);
+        if after
+            .as_ref()
+            .is_some_and(|after| !after.fits(area.maximum.unwrap_or(f32::INFINITY)))
         {
             return Ok(None);
         }
         pending.extend_from_slice(&parts[start..]);
         Ok(Some(
-            area.outer_height(after, false) - area.outer_height(before, false),
+            area.outer_height(after.map(|after| after.height()), false)
+                - area.outer_height(before, false),
         ))
     }
 
@@ -607,7 +739,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             {
                 // An inline footnote continues the inline formatting context of the one
                 // before it only right after its lines, at the end of the area.
-                let layout = self.footnote_layout(body, area.width)?;
+                let layout = self.footnote_layout(body, area.columns.width)?;
                 let last = self
                     .footnotes
                     .carried
@@ -625,7 +757,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                     queued = queued.min(layout.members[position][0]);
                 }
             }
-            let Some(part) = self.footnote_part(footnote, area.width, queued)? else {
+            let Some(part) = self.footnote_part(footnote, area.columns.width, queued)? else {
                 continue;
             };
             self.footnotes.queued.insert(body, part.bottom);
@@ -727,7 +859,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         for (footnote, page) in queued {
             let policy = self.footnote_policy(footnote);
             if policy != FootnotePolicy::Auto
-                && self.footnote_waits(footnote, area.width)?
+                && self.footnote_waits(footnote, area.columns.width)?
                 && !self
                     .measurer
                     .footnote_deferrals
@@ -762,44 +894,28 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         if self.footnotes.pages.len() <= page {
             self.footnotes.pages.resize_with(page + 1, Vec::new);
         }
+        let unbounded = self.footnotes_only(page);
+        let width = area.columns.width;
         while let Some(&waiting) = self.footnotes.carried.front() {
-            let mut parts = self.footnotes.pages[page].clone();
-            parts.push(waiting);
-            if rows_height(&parts, area.width).is_some_and(|height| !overflows(height, limit)) {
-                self.record_inline_pages(waiting, page, area.width)?;
+            let used = self.footnotes.pages[page].clone();
+            let holds = |paginator: &Self, part: FootnotePart| {
+                let mut parts = used.clone();
+                parts.push(part);
+                paginator
+                    .area_content(&parts, &area, unbounded)
+                    .is_some_and(|content| content.fits(limit))
+            };
+            if holds(self, waiting) {
+                self.record_inline_pages(waiting, page, width)?;
                 self.footnotes.pages[page].push(waiting);
                 self.footnotes.carried.pop_front();
                 continue;
             }
-            let layout = self.footnote_layout(waiting.body, area.width)?;
-            let used = rows_height(&self.footnotes.pages[page], area.width);
+            let layout = self.footnote_layout(waiting.body, width)?;
             let edges = layout.cloned.unwrap_or_default();
-            // A cloned body's slice ends with its block-end edges as well.
-            let end = waiting.top
-                + (limit - used.unwrap_or(0.0) - waiting.repeated[0] - edges[1]).max(0.0);
-            let fits = layout
-                .breaks
-                .iter()
-                .copied()
-                .filter(|offset| *offset > waiting.top)
-                .take_while(|offset| !overflows(*offset, end))
-                .last();
-            let forced = advance && used.is_none() && !self.has_flow;
-            let Some(bottom) = fits.or_else(|| {
-                forced
-                    .then(|| {
-                        layout
-                            .breaks
-                            .iter()
-                            .copied()
-                            .find(|offset| *offset > waiting.top)
-                    })
-                    .flatten()
-            }) else {
-                break;
-            };
-            // A slice of a body takes a line of its own.
-            let slice = FootnotePart {
+            // A slice of a body takes a line of its own; a cloned body's slice ends with its
+            // block-end edges as well.
+            let slice = |bottom: f32| FootnotePart {
                 bottom,
                 inline: false,
                 repeated: [
@@ -812,7 +928,20 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 ],
                 ..waiting
             };
-            self.record_inline_pages(slice, page, area.width)?;
+            let breaks = &layout.breaks;
+            let candidates = &breaks[breaks.partition_point(|&offset| offset <= waiting.top)
+                ..breaks.partition_point(|&offset| offset < waiting.bottom)];
+            let fitting = candidates.partition_point(|&offset| holds(self, slice(offset)));
+            let forced = advance && used.is_empty() && !self.has_flow;
+            let Some(bottom) = fitting
+                .checked_sub(1)
+                .map(|last| candidates[last])
+                .or_else(|| forced.then(|| candidates.first().copied().unwrap_or(waiting.bottom)))
+            else {
+                break;
+            };
+            let slice = slice(bottom);
+            self.record_inline_pages(slice, page, width)?;
             self.footnotes.pages[page].push(slice);
             if bottom >= waiting.bottom {
                 self.footnotes.carried.pop_front();
@@ -841,10 +970,12 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         let mut navigation = Vec::new();
         let mut page_text: Box<[Vec<DisplayItem>]> = vec![Vec::new(); page_count].into();
         for page in 0..page_count.min(self.footnotes.pages.len()) {
-            let Some(content) = self.content_height(page) else {
+            let area = self.area(page).expect("footnote areas belong to pages");
+            let unbounded = self.footnotes_only(page);
+            let Some(content) = self.area_content(self.footnotes.parts(page), &area, unbounded)
+            else {
                 continue;
             };
-            let area = self.area(page).expect("footnote areas belong to pages");
             let (style, decoration) = self.area_box(page).expect("footnote areas belong to pages");
             let Fragmentainers::Pages(pages) = &self.fragmentainers else {
                 unreachable!("footnote areas belong to pages");
@@ -853,7 +984,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             let page_clips = pages.boxes[page].decoration.backgrounds.clips_to_text();
             let decoration = decoration.into_owned();
             let page_area = self.fragmentainers.content_box(page);
-            let height = area.content_height(content, self.footnotes_only(page));
+            let height = area.content_height(content.height(), unbounded);
             let border_box = Rect {
                 x: area.x,
                 y: page_area.y + page_area.height
@@ -912,100 +1043,105 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             }
             let mut text = Vec::new();
             let x = border_box.x + area.borders[LEFT] + area.padding[LEFT];
-            let mut y = border_box.y + area.borders[TOP] + area.padding[TOP];
-            for row in rows(self.footnotes.parts(page), area.width) {
-                for (part, offset) in row.parts {
-                    let layout = self.footnote_layout(part.body, area.width)?;
-                    let body_style = self.document_footnotes().bodies[part.body].block.style();
-                    let window = Rect {
-                        x: 0.0,
-                        y: part.top,
-                        width: layout.width,
-                        height: part.bottom - part.top,
-                    };
-                    let origin = [x + offset, y + part.repeated[0] - part.top];
-                    let sliced = part.top > 0.0 || part.bottom < layout.height;
-                    let clip = DisplayItem::PushClip(Clip {
-                        rect: window,
-                        radii: crate::graphics::Radii::default(),
-                        outline: None,
-                        axes: [false, true],
-                        reference_box: None,
-                    });
-                    // The part's slice of the body's items, placed in the area; a cloned
-                    // body's box wraps the slice whole, outside its clip.
-                    let frame = |mut items: Vec<DisplayItem>, lines: Vec<TextLine>| {
-                        let body = layout
-                            .body_box
-                            .and_then(|rect| body_box(&items, rect).map(|index| (index, rect)));
-                        if let (Some(perspective), Some((index, _))) = (perspective, body) {
-                            project_body(
-                                &mut items,
-                                index,
-                                body_style,
-                                perspective,
-                                [origin[0], origin[1], layout.width, layout.height],
-                            );
-                        }
-                        if let Some((index, rect)) =
-                            body.filter(|_| sliced && layout.cloned.is_some())
-                        {
-                            let DisplayItem::Box(paint) = &mut items[index] else {
-                                unreachable!("the body's box is a box paint");
-                            };
-                            let top = rect.y.max(part.top) - part.repeated[0];
-                            let bottom = (rect.y + rect.height).min(part.bottom) + part.repeated[1];
-                            paint.rect = Rect {
-                                y: top,
-                                height: bottom - top,
-                                ..paint.rect
-                            };
-                            paint.background_box = None;
-                            paint.first_fragment = true;
-                            paint.last_fragment = true;
-                            let end = content_end(&items, index);
-                            items.insert(end, DisplayItem::Pop);
-                            items.insert(index + 1, clip.clone());
-                        } else if sliced {
-                            items.insert(0, clip.clone());
-                            items.push(DisplayItem::Pop);
-                        }
-                        DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
-                            matrix: [1.0, 0.0, 0.0, 1.0, origin[0], origin[1]],
-                            area: Rect {
-                                height: layout.height,
-                                y: 0.0,
-                                ..window
-                            },
-                            items,
-                            lines,
-                        }))
-                    };
-                    items.push(frame(layout.flow.items.clone(), layout.flow.lines.clone()));
-                    if (clips_to_text || page_clips)
-                        && let Some(area) = &layout.flow.text_area
+            let y = border_box.y + area.borders[TOP] + area.padding[TOP];
+            if visible {
+                items.extend(
+                    content
+                        .columns
+                        .rules(&area.columns, area.rule, [x, y])
+                        .into_iter()
+                        .map(DisplayItem::Box),
+                );
+            }
+            for (part, offset) in content.placed(&area.columns) {
+                let layout = self.footnote_layout(part.body, area.columns.width)?;
+                let body_style = self.document_footnotes().bodies[part.body].block.style();
+                let window = Rect {
+                    x: 0.0,
+                    y: part.top,
+                    width: layout.width,
+                    height: part.bottom - part.top,
+                };
+                let origin = [x + offset[0], y + offset[1] + part.repeated[0] - part.top];
+                let sliced = part.top > 0.0 || part.bottom < layout.height;
+                let clip = DisplayItem::PushClip(Clip {
+                    rect: window,
+                    radii: crate::graphics::Radii::default(),
+                    outline: None,
+                    axes: [false, true],
+                    reference_box: None,
+                });
+                // The part's slice of the body's items, placed in the area; a cloned
+                // body's box wraps the slice whole, outside its clip.
+                let frame = |mut items: Vec<DisplayItem>, lines: Vec<TextLine>| {
+                    let body = layout
+                        .body_box
+                        .and_then(|rect| body_box(&items, rect).map(|index| (index, rect)));
+                    if let (Some(perspective), Some((index, _))) = (perspective, body) {
+                        project_body(
+                            &mut items,
+                            index,
+                            body_style,
+                            perspective,
+                            [origin[0], origin[1], layout.width, layout.height],
+                        );
+                    }
+                    if let Some((index, rect)) = body.filter(|_| sliced && layout.cloned.is_some())
                     {
-                        text.push(frame(area.items.clone(), area.lines.clone()));
+                        let DisplayItem::Box(paint) = &mut items[index] else {
+                            unreachable!("the body's box is a box paint");
+                        };
+                        let top = rect.y.max(part.top) - part.repeated[0];
+                        let bottom = (rect.y + rect.height).min(part.bottom) + part.repeated[1];
+                        paint.rect = Rect {
+                            y: top,
+                            height: bottom - top,
+                            ..paint.rect
+                        };
+                        paint.background_box = None;
+                        paint.first_fragment = true;
+                        paint.last_fragment = true;
+                        let end = content_end(&items, index);
+                        items.insert(end, DisplayItem::Pop);
+                        items.insert(index + 1, clip.clone());
+                    } else if sliced {
+                        items.insert(0, clip.clone());
+                        items.push(DisplayItem::Pop);
                     }
-                    let placed = layout.flow.navigation.translated(origin, window);
-                    navigation.push((
-                        page,
-                        match &transform {
-                            Some(region) => placed.transformed(region),
-                            None => placed,
+                    DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
+                        matrix: [1.0, 0.0, 0.0, 1.0, origin[0], origin[1]],
+                        area: Rect {
+                            height: layout.height,
+                            y: 0.0,
+                            ..window
                         },
-                    ));
-                    // CSS Images 4 §2.7: a body broken across footnote areas is imaged as laid
-                    // out whole, which its first part starts.
-                    if part.top == 0.0 {
-                        self.measurer
-                            .element_targets
-                            .displayed
-                            .borrow_mut()
-                            .adopt((*layout.flow.renderings).clone().physical(flow));
-                    }
+                        items,
+                        lines,
+                    }))
+                };
+                items.push(frame(layout.flow.items.clone(), layout.flow.lines.clone()));
+                if (clips_to_text || page_clips)
+                    && let Some(area) = &layout.flow.text_area
+                {
+                    text.push(frame(area.items.clone(), area.lines.clone()));
                 }
-                y += row.height;
+                let placed = layout.flow.navigation.translated(origin, window);
+                navigation.push((
+                    page,
+                    match &transform {
+                        Some(region) => placed.transformed(region),
+                        None => placed,
+                    },
+                ));
+                // CSS Images 4 §2.7: a body broken across footnote areas is imaged as laid
+                // out whole, which its first part starts.
+                if part.top == 0.0 {
+                    self.measurer
+                        .element_targets
+                        .displayed
+                        .borrow_mut()
+                        .adopt((*layout.flow.renderings).clone().physical(flow));
+                }
             }
             if clips_to_text
                 && let Some(DisplayItem::Box(paint)) = items

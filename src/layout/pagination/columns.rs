@@ -11,7 +11,7 @@ use crate::layout::{
     LayoutError, TextLine,
     breaks::{BreakTail, Forced, first_fragment},
     measure::{FlowItem, Measurer, first_baseline, last_baseline},
-    multicol::{ColumnGeometry, ColumnSegment, MeasuredColumns, WrapRows},
+    multicol::{ColumnGeometry, ColumnSegment, MeasuredColumns, WrapRows, rule_paint},
 };
 use crate::style::ColumnFill;
 use std::collections::HashMap;
@@ -28,8 +28,6 @@ const UNPLACED_PAGE: Rect = Rect {
     width: 2.0 * UNPLACED_EXTENT_PT,
     height: 2.0 * UNPLACED_EXTENT_PT,
 };
-/// A column rule paints as the left border of a box as wide as the rule.
-const RULE_SIDE: usize = 3;
 
 /// How a row of columns ended.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -1176,25 +1174,6 @@ fn frame_height(remaining: Option<f32>, space: f32, unbroken: bool) -> (f32, boo
         Some(_) => (space, false),
         None => (space, unbroken),
     }
-}
-
-/// A vertical rule in the middle of a column gap, drawn as in the collapsing border model.
-fn rule_paint(rule: Border, x: f32, y: f32, height: f32) -> BoxPaint {
-    let width = rule.used_width();
-    let mut decoration = BoxDecoration::default();
-    decoration.borders[RULE_SIDE] = Border {
-        style: rule.style.collapsed(),
-        ..rule
-    };
-    BoxPaint::whole(
-        Rect {
-            x: x - width / 2.0,
-            y,
-            width,
-            height,
-        },
-        decoration,
-    )
 }
 
 /// Balances only the uncommitted row, retaining its resulting source checkpoint.

@@ -213,7 +213,7 @@ const MAX_FIXED_PLACEMENTS: usize = 100_000;
 /// Retain common page geometries without keeping one alignment vector per physical page.
 const MAX_TABLE_ALIGNMENT_GEOMETRIES: usize = 8;
 /// Rounding noise in summed `f32` geometry, so that `(H - edges) + edges` still fits `H`.
-const FRAGMENTATION_TOLERANCE_PT: f32 = 0.01;
+pub(super) const FRAGMENTATION_TOLERANCE_PT: f32 = 0.01;
 /// A break inside block-axis space keeps the fragmentainer it fills even without ink.
 const SPACE_BREAK: BreakRequest = BreakRequest {
     forced: None,

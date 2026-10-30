@@ -451,10 +451,6 @@ impl Stylesheet {
                 resolver,
             )?
             .0;
-        unsupported_in(
-            &format!("@{}", crate::style::page_parser::FOOTNOTE_AT_RULE),
-            &multicol(&footnote),
-        )?;
         Ok(ResolvedPage {
             request,
             geometry,

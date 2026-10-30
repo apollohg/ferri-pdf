@@ -237,23 +237,17 @@ fn nonfinite_page_margin_geometry_is_rejected_even_without_text() {
 }
 
 #[test]
-fn page_contexts_reject_properties_their_boxes_do_not_implement() {
-    for (rule, expected) in [
-        ("@page{@footnote{columns:2}}", "column-count in @footnote"),
-        (
-            "@page{@top-center{content:'a';column-width:5em}}",
-            "column-width in @top-center",
-        ),
-    ] {
-        let html = format!("<style>{PROFILE}{rule}</style><p>Body</p>");
-        let error = render_html(&html, &local_options())
-            .err()
-            .unwrap_or_else(|| panic!("{rule} must not be accepted and ignored"));
-        assert!(
-            error.to_string().contains(expected),
-            "{rule}: expected an unsupported {expected:?} error, got {error}"
-        );
-    }
+fn page_margin_boxes_reject_columns_they_do_not_lay_out() {
+    let html = format!(
+        "<style>{PROFILE}@page{{@top-center{{content:'a';column-width:5em}}}}</style><p>Body</p>"
+    );
+    let error = render_html(&html, &local_options())
+        .err()
+        .expect("columns in a margin box must not be accepted and ignored");
+    assert!(
+        error.to_string().contains("column-width in @top-center"),
+        "expected an unsupported column-width error, got {error}"
+    );
 }
 
 #[test]
