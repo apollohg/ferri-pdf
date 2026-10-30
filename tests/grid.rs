@@ -1,5 +1,5 @@
 mod common;
-use common::{PROFILE, assert_pt, local_options, painted_box};
+use common::{PROFILE, assert_labelled_pt, assert_pt, local_options, painted_box};
 use ferri_pdf::{LayoutTrace, render_html};
 
 fn render(css: &str, body: &str) -> LayoutTrace {
@@ -1117,4 +1117,41 @@ fn percentage_height_images_share_their_final_baseline_in_fixed_rows() {
         .find(|line| line.text == "Peer")
         .unwrap();
     assert_pt(peer.baseline, 96.0);
+}
+
+#[test]
+fn stretched_orthogonal_items_take_their_grid_area_width_as_block_size() {
+    // CSS Box Alignment 3 §6.1: `normal` stretches non-replaced grid items, whose stretched
+    // width is definite; a vertical item lays out its block axis at that physical width and a
+    // table item's captions take their share of it (CSS Flexbox 1 §4, CSS Grid 2 §6).
+    let trace = render(
+        ".grid{width:200pt;grid-template-columns:1fr;grid-template-rows:30pt 40pt}\
+         .v{writing-mode:vertical-rl}div.v{background:rgb(255,0,0)}\
+         table{border-spacing:0}td{padding:0;background:rgb(255,0,255)}\
+         caption{width:20pt;background:rgb(255,255,0)}",
+        "<div class=grid><div class=v>A</div><table class=v><caption>C</caption><tr><td>B</td></tr></table></div>",
+    );
+    let stretched = painted_box(&trace, [255, 0, 0]);
+    assert_labelled_pt("stretched vertical block width", stretched.width, 200.0);
+    assert_labelled_pt("stretched vertical block height", stretched.height, 30.0);
+    let cells = common::page_boxes(&trace, [255, 0, 255]);
+    let captions = common::page_boxes(&trace, [255, 255, 0]);
+    assert_eq!(
+        (cells.len(), captions.len()),
+        (1, 1),
+        "one cell and one caption: {cells:?} {captions:?}"
+    );
+    let caption_width = 20.0;
+    assert_labelled_pt("table cell left edge", cells[0].x, 36.0);
+    assert_labelled_pt(
+        "table cell fills the table box beside the caption",
+        cells[0].width,
+        200.0 - caption_width,
+    );
+    assert_labelled_pt("cell stretched to the row height", cells[0].height, 40.0);
+    assert_labelled_pt(
+        "block-start caption at the right of the grid area",
+        captions[0].x,
+        36.0 + 200.0 - caption_width,
+    );
 }

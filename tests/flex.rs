@@ -345,3 +345,48 @@ fn table_items_flex_their_table_box_and_count_captions_as_its_edges() {
         filled.y
     );
 }
+
+#[test]
+fn orthogonal_items_take_their_flexed_and_stretched_widths_as_block_sizes() {
+    // CSS Flexbox 1 §9.8: the flexed main size and the stretched cross size are definite, so
+    // a vertical item lays out its block axis at that physical width, as with a fixed width;
+    // a table item's captions count as edges of its table box (§4).
+    let trace = render(
+        "<section class=row><div class='v grow'>A</div><div class=fixed></div></section>\
+         <section class=row><table class='v grow'><caption>C</caption><tr><td>B</td></tr></table><div class=fixed></div></section>\
+         <section class=column><div class='v stretch'>D</div></section>",
+        "td{padding:0;background:rgb(255,0,255)}table{border-spacing:0}\
+         caption{width:20pt;background:rgb(255,255,0)}.v{writing-mode:vertical-rl}\
+         .row{display:flex;width:200pt;height:40pt}.fixed{width:50pt}\
+         .grow{flex:1}div.grow{background:rgb(255,0,0)}\
+         .column{display:flex;flex-direction:column;width:200pt}\
+         .stretch{height:30pt;background:rgb(0,0,255)}",
+    );
+    let grown = common::painted_box(&trace, [255, 0, 0]);
+    common::assert_labelled_pt("flexed vertical block width", grown.width, 150.0);
+    let cells = common::page_boxes(&trace, [255, 0, 255]);
+    let captions = common::page_boxes(&trace, [255, 255, 0]);
+    assert_eq!(
+        (cells.len(), captions.len()),
+        (1, 1),
+        "one cell and one caption: {cells:?} {captions:?}"
+    );
+    let (cell, caption) = (cells[0], captions[0]);
+    let caption_width = 20.0;
+    common::assert_labelled_pt("flexed table cell left edge", cell.x, 36.0);
+    common::assert_labelled_pt(
+        "flexed table cell fills the table box beside the caption",
+        cell.width,
+        150.0 - caption_width,
+    );
+    common::assert_labelled_pt("cell stretched to the row height", cell.height, 40.0);
+    common::assert_labelled_pt(
+        "block-start caption at the right of the flexed item",
+        caption.x,
+        36.0 + 150.0 - caption_width,
+    );
+    common::assert_labelled_pt("caption width", caption.width, caption_width);
+    let stretched = common::painted_box(&trace, [0, 0, 255]);
+    common::assert_labelled_pt("stretched vertical block width", stretched.width, 200.0);
+    common::assert_labelled_pt("stretched vertical block height", stretched.height, 30.0);
+}

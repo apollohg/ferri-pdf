@@ -85,6 +85,7 @@ pub(crate) struct MetricsKey {
     column_fragment: bool,
     column: Option<ColumnKey>,
     spanner: Option<usize>,
+    sized: bool,
     unbroken: bool,
     named_pages: bool,
     orthogonal_columns: Option<OrthogonalColumnKey>,
@@ -132,6 +133,7 @@ impl MetricsKey {
                 column_fragment: flow.fragmentainer == Fragmentainer::Column,
             }),
             spanner: measurer.spanner.map(|block| block as usize),
+            sized: measurer.sized_by_container(block),
             unbroken: measurer.unbroken,
             named_pages: measurer.named_pages,
             orthogonal_columns: measurer

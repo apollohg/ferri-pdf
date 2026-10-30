@@ -327,6 +327,10 @@ pub(super) fn measure<'a>(
         super::measure::FrameKey::new(measurer, block, geometry, containing_height, used_height);
     let inner = block.flow().expect("a flow frame has content");
     let style = block.style();
+    // CSS Flexbox 1 §9.8, CSS Box Alignment 3 §6.1: a flexed or stretched item's width is
+    // definite, so an orthogonal flow takes it as its used block size like a fixed `width`.
+    let container_sized = measurer.sized_by_container(block.block);
+    let used_width = container_sized || matches!(style.width.basis(), crate::style::Size::Value(_));
     let table_edges = if block.collapsed_table().is_some() {
         Some(
             measurer
@@ -454,7 +458,7 @@ pub(super) fn measure<'a>(
         let mut columns = super::multicol::OrthogonalColumns {
             source: std::ptr::from_ref(inner),
             principal: true,
-            block_auto: matches!(style.width.basis(), crate::style::Size::Auto),
+            block_auto: !used_width && matches!(style.width.basis(), crate::style::Size::Auto),
             content_max: widths.max,
             minimum: limits.minimum,
             maximum: limits.maximum,
@@ -466,7 +470,7 @@ pub(super) fn measure<'a>(
                 x: 0.0,
                 rtl: inner.style().used_rtl(),
             },
-            length: (matches!(style.width.basis(), crate::style::Size::Value(_))
+            length: (used_width
                 || (matches!(style.width.basis(), crate::style::Size::Auto)
                     && (style.multicol.count.is_none() || style.multicol.width.is_none())))
             .then_some(geometry.width),
@@ -523,22 +527,24 @@ pub(super) fn measure<'a>(
                 scroll_container: style.is_scroll_container(),
             })
         });
-        let measured = measurer.measure_format(
-            inner,
-            inner_geometry,
-            true,
-            if perpendicular {
-                Some(geometry.width)
+        let containing = if perpendicular {
+            Some(geometry.width)
+        } else {
+            vertical.definite()
+        };
+        let measure = |measurer: &mut super::measure::Measurer<'a>, used| {
+            measurer.measure_format(inner, inner_geometry.clone(), true, containing, used)
+        };
+        let measured = if perpendicular {
+            let used = used_width.then_some(geometry.width);
+            if container_sized && inner.style().display.is_table() {
+                super::tables::measure_wrapper(measurer, used, measure)
             } else {
-                vertical.definite()
-            },
-            if perpendicular {
-                matches!(style.width.basis(), crate::style::Size::Value(_))
-                    .then_some(geometry.width)
-            } else {
-                vertical.definite()
-            },
-        );
+                measure(measurer, used)
+            }
+        } else {
+            measure(measurer, vertical.definite())
+        };
         (
             measurer.unbroken,
             measurer.column_flow,
@@ -595,7 +601,7 @@ pub(super) fn measure<'a>(
                 border: geometry.border,
             },
         )
-    } else if perpendicular && !matches!(style.width.basis(), crate::style::Size::Value(_)) {
+    } else if perpendicular && !used_width {
         let edges = geometry::Edges {
             padding: geometry.padding,
             border: geometry.border,

@@ -705,6 +705,8 @@ pub(super) struct Measurer<'a> {
     pub column_flow: Option<ColumnFlow>,
     /// The spanner being measured, which establishes a formatting context (§6.1).
     pub spanner: Option<*const BlockBox>,
+    /// The flex or grid item being measured at the border-box width its container resolved.
+    pub sized_item: Option<*const BlockBox>,
     /// The flow is laid out without page breaks: inside an atomic inline or an absolutely
     /// positioned box.
     pub unbroken: bool,
@@ -750,6 +752,7 @@ impl<'a> Measurer<'a> {
             fragmentainer: Fragmentainer::Page,
             column_flow: None,
             spanner: None,
+            sized_item: None,
             unbroken: false,
             named_pages: true,
             container_sizes: Default::default(),
@@ -785,6 +788,25 @@ impl<'a> Measurer<'a> {
         let result = compute(self);
         self.space = previous;
         result
+    }
+
+    /// Measures `item`, a flex or grid item, at the width its container resolved for it.
+    pub(super) fn with_sized_item<T>(
+        &mut self,
+        item: &BlockBox,
+        compute: impl FnOnce(&mut Self) -> T,
+    ) -> T {
+        let previous = self.sized_item.replace(std::ptr::from_ref(item));
+        let result = compute(self);
+        self.sized_item = previous;
+        result
+    }
+
+    /// Whether `block`'s container resolved its width: its flexed, stretched or fit-content
+    /// size as a flex or grid item.
+    pub(super) fn sized_by_container(&self, block: &BlockBox) -> bool {
+        self.sized_item
+            .is_some_and(|item| std::ptr::eq(item, block))
     }
 
     pub(crate) fn intrinsic_widths(

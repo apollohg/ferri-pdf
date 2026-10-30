@@ -319,7 +319,9 @@ impl<'a> Item<'a> {
         space.indefinite_inline &= !self.inline_definite;
         measurer.with_space(space, |measurer| {
             measurer.with_grid_parent(self.parent.clone(), |measurer| {
-                self.measure_contents(measurer, height, used_height)
+                measurer.with_sized_item(self.source, |measurer| {
+                    self.measure_contents(measurer, height, used_height)
+                })
             })
         })
     }

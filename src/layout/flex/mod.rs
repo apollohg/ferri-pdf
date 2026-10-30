@@ -117,23 +117,25 @@ fn item_metrics<'a>(
     let mut space = measurer.space;
     space.indefinite_inline &= !item.inline_definite;
     measurer.with_space(space, |measurer| {
-        measurer.item_metrics(
-            item.source,
-            &geometry,
-            height,
-            containing_height,
-            |measurer| {
-                measure_item(
-                    measurer,
-                    item,
-                    parent,
-                    0.0,
-                    width,
-                    height,
-                    containing_height,
-                )
-            },
-        )
+        measurer.with_sized_item(item.source, |measurer| {
+            measurer.item_metrics(
+                item.source,
+                &geometry,
+                height,
+                containing_height,
+                |measurer| {
+                    measure_item(
+                        measurer,
+                        item,
+                        parent,
+                        0.0,
+                        width,
+                        height,
+                        containing_height,
+                    )
+                },
+            )
+        })
     })
 }
 
@@ -212,13 +214,15 @@ fn measure_item<'a>(
     space.indefinite_inline &= !item.inline_definite;
     let measure = |measurer: &mut Measurer<'a>, height| {
         measurer.with_space(space, |measurer| {
-            measurer.measure_format(
-                item.source,
-                item_geometry(item, parent, left, width),
-                true,
-                containing_height,
-                height,
-            )
+            measurer.with_sized_item(item.source, |measurer| {
+                measurer.measure_format(
+                    item.source,
+                    item_geometry(item, parent, left, width),
+                    true,
+                    containing_height,
+                    height,
+                )
+            })
         })
     };
     if item.source.style().display.is_table() {

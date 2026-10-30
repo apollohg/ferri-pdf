@@ -78,6 +78,7 @@ fn after_child_row_paints_keep_canonical_text_navigation_and_stacking() {
         fragmentainer: Fragmentainer::Page,
         column_flow: None,
         spanner: None,
+        sized_item: None,
         unbroken: false,
         named_pages: true,
         container_sizes: Default::default(),

@@ -162,6 +162,7 @@ struct Context {
     fragmentainer: crate::layout::breaks::Fragmentainer,
     column_flow: Option<crate::layout::multicol::ColumnFlow>,
     spanner: Option<*const BlockBox>,
+    sized_item: Option<*const BlockBox>,
     unbroken: bool,
     named_pages: bool,
     column_measurement: bool,
@@ -178,6 +179,7 @@ impl Context {
             fragmentainer: measurer.fragmentainer,
             column_flow: measurer.column_flow,
             spanner: measurer.spanner,
+            sized_item: measurer.sized_item,
             unbroken: measurer.unbroken,
             named_pages: measurer.named_pages,
             column_measurement: measurer.column_measurement,
@@ -193,6 +195,7 @@ impl Context {
         measurer.fragmentainer = self.fragmentainer;
         measurer.column_flow = self.column_flow;
         measurer.spanner = self.spanner;
+        measurer.sized_item = self.sized_item;
         measurer.unbroken = self.unbroken;
         measurer.named_pages = self.named_pages;
         measurer.column_measurement = self.column_measurement;

@@ -139,13 +139,15 @@ pub(crate) fn measure<'a>(
         space.indefinite_inline &= !item.inline_definite;
         let measured = measurer.with_space(space, |measurer| {
             measurer.with_grid_parent(item.parent.clone(), |measurer| {
-                measurer.item_metrics(
-                    source,
-                    &item.geometry,
-                    None,
-                    fixed_heights[index],
-                    |measurer| item.measure(measurer, fixed_heights[index], None),
-                )
+                measurer.with_sized_item(source, |measurer| {
+                    measurer.item_metrics(
+                        source,
+                        &item.geometry,
+                        None,
+                        fixed_heights[index],
+                        |measurer| item.measure(measurer, fixed_heights[index], None),
+                    )
+                })
             })
         })?;
         baselines.push(
