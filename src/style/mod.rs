@@ -117,8 +117,8 @@ pub(crate) use containment::{
 };
 pub(crate) use counter_style::Representation;
 pub(crate) use counter_values::{
-    CounterProperties, CounterScopes, DEFAULT_COUNTER_INCREMENT, FOOTNOTE_COUNTER,
-    INITIAL_COUNTER_VALUE, LIST_ITEM_COUNTER,
+    AutomaticInitial, CounterProperties, CounterScopes, DEFAULT_COUNTER_INCREMENT,
+    FOOTNOTE_COUNTER, INITIAL_COUNTER_VALUE, LIST_ITEM_COUNTER, PAGE_COUNTER, PAGES_COUNTER,
 };
 pub(crate) use decoration_values::{
     DecorationInset, DecorationLines, DecorationSkip, TextDecoration, TextDecorations,

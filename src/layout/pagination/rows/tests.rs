@@ -163,7 +163,11 @@ fn after_child_row_paints_keep_canonical_text_navigation_and_stacking() {
         .unwrap();
     let strings = output
         .string_locations
-        .resolve(document.running_strings(), output.pages.len())
+        .resolve(
+            document.running_strings(),
+            &crate::layout::page_counters::PageCounters::new(&output.page_boxes),
+            output.pages.len(),
+        )
         .expect("arranged source events must have committed page locations");
     let request = |mode| crate::style::NamedStringRequest {
         name: "heading".into(),

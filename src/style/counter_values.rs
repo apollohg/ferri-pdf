@@ -6,6 +6,10 @@ use std::sync::{Arc, LazyLock};
 pub(crate) const LIST_ITEM_COUNTER: &str = "list-item";
 /// The predefined counter footnote elements increment (CSS GCPM 3 §2.5).
 pub(crate) const FOOTNOTE_COUNTER: &str = "footnote";
+/// The counter of each page box's number (CSS Page 3 §6.1).
+pub(crate) const PAGE_COUNTER: &str = "page";
+/// The document's page total, which counter properties cannot change (CSS Page 3 §6.1).
+pub(crate) const PAGES_COUNTER: &str = "pages";
 pub(crate) const INITIAL_COUNTER_VALUE: i128 = 0;
 pub(crate) const DEFAULT_COUNTER_INCREMENT: i128 = 1;
 
@@ -41,6 +45,33 @@ impl Default for CounterProperties {
     }
 }
 impl CounterProperties {
+    pub(crate) fn is_empty(&self) -> bool {
+        self.reset.is_empty() && self.increment.is_empty() && self.set.is_empty()
+    }
+    /// The changes these properties make to the counter `name`.
+    #[must_use]
+    pub(crate) fn named(&self, name: &str) -> Self {
+        Self {
+            reset: self
+                .reset
+                .iter()
+                .filter(|change| change.name.as_ref() == name)
+                .cloned()
+                .collect(),
+            increment: self
+                .increment
+                .iter()
+                .filter(|change| change.name.as_ref() == name)
+                .cloned()
+                .collect(),
+            set: self
+                .set
+                .iter()
+                .filter(|change| change.name.as_ref() == name)
+                .cloned()
+                .collect(),
+        }
+    }
     /// The properties with `name` reset to its initial value unless they reset it already.
     #[must_use]
     pub(crate) fn with_implicit_reset(&self, name: &str) -> Self {
@@ -83,6 +114,37 @@ impl CounterProperties {
                 .collect(),
             ..self.clone()
         }
+    }
+}
+
+/// The initial value of a reversed counter instantiated without one, accumulated from the
+/// increments and sets in its scope (CSS Lists 3 §4.4.2).
+#[derive(Default)]
+pub(crate) struct AutomaticInitial {
+    sum: i128,
+    last_increment_negated: i128,
+    set: Option<i128>,
+}
+impl AutomaticInitial {
+    pub(crate) fn update(&mut self, increment: i128, set: Option<i128>) {
+        if self.set.is_some() {
+            return;
+        }
+        let negated = increment.saturating_neg();
+        if negated != 0 {
+            self.last_increment_negated = negated;
+        }
+        if let Some(value) = set {
+            self.set = Some(value);
+        } else {
+            self.sum = self.sum.saturating_add(negated);
+        }
+    }
+    pub(crate) fn value(&self) -> i128 {
+        // Cancel the bounded CSS increments before adding a potentially maximal HTML value.
+        self.set
+            .unwrap_or(INITIAL_COUNTER_VALUE)
+            .saturating_add(self.sum.saturating_add(self.last_increment_negated))
     }
 }
 

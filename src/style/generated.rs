@@ -1,5 +1,5 @@
 use crate::style::{
-    StyleError,
+    PAGE_COUNTER, PAGES_COUNTER, StyleError,
     box_values::unsupported,
     component::Component,
     counter_style::Representation,
@@ -186,9 +186,6 @@ fn alternative(value: &Component) -> Option<Component> {
         _ => None,
     }
 }
-const PAGE_COUNTER: &str = "page";
-const PAGES_COUNTER: &str = "pages";
-
 #[derive(Clone, Debug, PartialEq, Eq, Hash, serde::Serialize)]
 pub(crate) struct CounterRequest {
     pub name: std::sync::Arc<str>,
@@ -199,13 +196,13 @@ impl CounterRequest {
     pub(crate) fn is_page_counter(&self) -> bool {
         matches!(self.name.as_ref(), PAGE_COUNTER | PAGES_COUNTER)
     }
-    pub(crate) fn page_text(&self, page: usize, pages: usize) -> Option<String> {
+    pub(crate) fn page_text(&self, page: i128, pages: usize) -> Option<String> {
         let value = match self.name.as_ref() {
             PAGE_COUNTER => page,
-            PAGES_COUNTER => pages,
+            PAGES_COUNTER => pages as i128,
             _ => return None,
         };
-        Some(self.style.representation(value as i128).into_text())
+        Some(self.style.representation(value).into_text())
     }
 
     /// First-page selection needs box existence, not the numeric glyphs; `None` when only
@@ -266,8 +263,10 @@ pub(crate) struct NamedStringRequest {
 }
 pub(crate) type NamedStringText<'a> =
     dyn FnMut(&NamedStringRequest) -> Result<String, StyleError> + 'a;
+/// The page a page-context box renders on: its `page` counter value as the box sees it, the
+/// page total, and the named strings it selects.
 struct PageContent<'a, 's> {
-    number: usize,
+    number: i128,
     total: usize,
     strings: Option<&'a mut NamedStringText<'s>>,
 }
@@ -352,7 +351,7 @@ impl GeneratedContent {
     }
     pub(crate) fn page_text(
         &self,
-        page: usize,
+        page: i128,
         pages: usize,
         limit: usize,
     ) -> Result<String, StyleError> {
@@ -360,7 +359,7 @@ impl GeneratedContent {
     }
     pub(crate) fn page_text_with_quotes(
         &self,
-        page: usize,
+        page: i128,
         pages: usize,
         limit: usize,
         quotes: &Quotes,
@@ -382,7 +381,7 @@ impl GeneratedContent {
     #[cfg(test)]
     pub(crate) fn page_text_with_strings(
         &self,
-        page: usize,
+        page: i128,
         pages: usize,
         limit: usize,
         quotes: &Quotes,
@@ -452,6 +451,51 @@ impl GeneratedContent {
             [GeneratedPart::RunningElement(request)] => Some(request),
             _ => None,
         }
+    }
+    /// Whether the content shows the `page` or `pages` counter.
+    pub(crate) fn has_page_counters(&self) -> bool {
+        self.0
+            .iter()
+            .any(|part| matches!(part, GeneratedPart::Page(_) | GeneratedPart::Pages(_)))
+    }
+    /// Binds the page counters of document content to those of the page it lies on, keeping
+    /// the image symbols of their representations.
+    pub(crate) fn bind_page_counters(
+        &self,
+        limit: usize,
+        page: i128,
+        pages: usize,
+    ) -> Result<Self, StyleError> {
+        let mut parts = Vec::with_capacity(self.0.len());
+        for part in &self.0 {
+            let representation = match part {
+                GeneratedPart::Page(style) => style.representation(page),
+                GeneratedPart::Pages(style) => style.representation(pages as i128),
+                part => {
+                    parts.push(part.clone());
+                    continue;
+                }
+            };
+            let mut start = 0;
+            let text = representation.text();
+            for (offset, image) in representation.images() {
+                parts.push(GeneratedPart::Text(text[start..*offset].to_owned()));
+                parts.push(GeneratedPart::Image((**image).clone()));
+                start = *offset;
+            }
+            parts.push(GeneratedPart::Text(text[start..].to_owned()));
+        }
+        let bytes: usize = parts
+            .iter()
+            .map(|part| match part {
+                GeneratedPart::Text(text) | GeneratedPart::Leader(text) => text.len(),
+                _ => 0,
+            })
+            .sum();
+        if bytes > limit {
+            return Err(StyleError::GeneratedContentLimit { limit });
+        }
+        Ok(Self(parts))
     }
     pub(crate) fn named_string_requests(&self) -> impl Iterator<Item = &NamedStringRequest> {
         self.0.iter().filter_map(|part| match part {
@@ -527,13 +571,16 @@ impl GeneratedContent {
     ) -> Result<GeneratedOutput, StyleError> {
         self.render(None, limit, None, Some(counters), quotes, depth)
     }
-    pub(crate) fn page_output_with_strings(
+    /// The content of a page-margin box, whose counters are those of its margin and page
+    /// contexts (CSS Page 3 §6.1).
+    pub(crate) fn page_output(
         &self,
-        page: usize,
+        page: i128,
         pages: usize,
         limit: usize,
         quotes: &Quotes,
         strings: &mut NamedStringText<'_>,
+        counters: &mut CounterText<'_>,
     ) -> Result<GeneratedOutput, StyleError> {
         self.render(
             Some(PageContent {
@@ -543,7 +590,7 @@ impl GeneratedContent {
             }),
             limit,
             None,
-            None,
+            Some(counters),
             quotes,
             &mut QuoteDepth::default(),
         )
@@ -601,7 +648,7 @@ impl GeneratedContent {
                     })?;
                     let representation =
                         style.representation(if matches!(part, GeneratedPart::Page(_)) {
-                            page.number as i128
+                            page.number
                         } else {
                             page.total as i128
                         });

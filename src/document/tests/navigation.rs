@@ -298,22 +298,6 @@ fn bookmark_first_letter_keeps_composed_graphemes_separate_from_after_content() 
 }
 
 #[test]
-fn unsupported_counters_in_bookmark_labels_are_errors() {
-    let error = StyledDocument::parse(
-        "<style>h1{bookmark-label:counter(page)}</style><h1>A</h1>",
-        &url_base(),
-        &[],
-        &FileResolver::default(),
-    )
-    .err()
-    .expect("page counters have no value in document content");
-    assert!(
-        error.to_string().contains("unsupported CSS: page counters"),
-        "{error}"
-    );
-}
-
-#[test]
 fn multipart_capture_keeps_unreferenced_targets_and_html_fragment_precedence() {
     use crate::document::ParseOptions;
     use crate::style::PrintSettings;

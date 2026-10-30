@@ -64,6 +64,8 @@ pub(crate) struct PageBox {
     pub style: Style,
     pub production: crate::style::PageProduction,
     pub decoration: BoxDecoration,
+    /// The page context's counter properties (CSS Page 3 §6.1).
+    pub counters: crate::style::CounterProperties,
     pub margins: Vec<PageMarginBox>,
     pub footnote: PageFootnoteArea,
 }
@@ -86,6 +88,8 @@ pub(crate) struct Formatted {
     pub canvas: BoxDecoration,
     pub pages: crate::document::page::PageProvider,
     pub svg_definitions: crate::document::svg::SvgDefinitions,
+    /// The document's counters where each page starts (CSS Page 3 §6.1).
+    pub page_counters: Vec<(usize, crate::document::CounterSnapshot)>,
 }
 
 pub(crate) struct BlockBox {
@@ -614,6 +618,28 @@ pub(crate) struct Traversal<'a> {
     canvas: BoxDecoration,
     canvas_body: Option<ElementId>,
     footnotes: Vec<BlockBox>,
+    page_counters: Vec<(usize, crate::document::CounterSnapshot)>,
+    /// The running elements open around the current element.
+    running: usize,
+}
+
+impl Traversal<'_> {
+    /// Binds generated content to the values pagination gives it.
+    fn bind<'c>(
+        &self,
+        content: &'c crate::style::GeneratedContent,
+        context: crate::style::PageStyleTarget,
+        running: bool,
+    ) -> Result<std::borrow::Cow<'c, crate::style::GeneratedContent>, DocumentError> {
+        // A running element is formatted once but lays out on each page that places it, so
+        // its content cannot show each page's counters.
+        if (running || self.running > 0) && content.has_page_counters() {
+            return Err(
+                StyleError::Unsupported("page counters inside running elements".into()).into(),
+            );
+        }
+        Ok(self.generated.bind(content, context)?)
+    }
 }
 
 struct BlockBuilder<'a, 's, 'c> {
@@ -1579,14 +1605,9 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         content: &crate::style::GeneratedContent,
     ) -> Result<(), DocumentError> {
         style = style.used();
-        if style.position == crate::style::Position::Running && style.display != Display::Contents {
-            return Err(StyleError::Unsupported(format!(
-                "position: running() on {}::{:?}",
-                element.name(),
-                pseudo
-            ))
-            .into());
-        }
+        // `running()` moves the pseudo-element to page-margin boxes (CSS GCPM 3 §1.2.1).
+        let running =
+            style.display != Display::Contents && style.position == crate::style::Position::Running;
         let element_page_scope =
             crate::document::page::used_name(&parent.page, self.element_page_scope.as_ref());
         validate_box(&style)?;
@@ -1610,7 +1631,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             style.display = inner;
         } else if block_child {
             self.resolve_run_in(
-                if style.position.is_out_of_flow() || style.floating().is_some() {
+                if style.position.leaves_flow() || style.floating().is_some() {
                     RunInFollower::Member
                 } else {
                     RunInFollower::Other
@@ -1642,12 +1663,10 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             element: element.id(),
             pseudo: Some(pseudo.into()),
         };
-        let event = content
-            .named_string_requests()
-            .next()
-            .is_some()
-            .then(|| self.traversal.strings.generated_event(element, pseudo));
-        let bound = self.traversal.generated.bind(content, context)?;
+        let event = (content.named_string_requests().next().is_some()
+            || content.has_page_counters())
+        .then(|| self.traversal.strings.generated_event(element, pseudo));
+        let bound = self.traversal.bind(content, context, running)?;
         let output = bound.element_output_with_counters(
             crate::document::MAX_INLINE_TEXT_BYTES,
             &mut |request| self.traversal.counters.text(request),
@@ -1665,8 +1684,47 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         self.traversal
             .strings
             .generated(element, pseudo, text, &style);
+        let replacement = replacement.map(|image| self.resources.replacement_image(image, &style));
+        if running {
+            let name = style
+                .running
+                .clone()
+                .expect("running() names the running element");
+            let block = if let Some(image) = replacement {
+                let mut block = self.generated_block(
+                    style,
+                    Vec::new(),
+                    decoration,
+                    element_page_scope.as_ref(),
+                    None,
+                );
+                block.image = Some(image);
+                block
+            } else {
+                let images = self.resources.generated_images(&output, &style);
+                let children = Paragraph::generated_output(&output, &images, &style)?
+                    .into_iter()
+                    .map(BlockContent::Inline)
+                    .collect();
+                self.generated_block(
+                    style,
+                    children,
+                    decoration,
+                    element_page_scope.as_ref(),
+                    None,
+                )
+            };
+            if let Some(event) = event {
+                self.inline.semantic_event(event);
+            }
+            let event = self
+                .traversal
+                .strings
+                .record_generated_running(element, pseudo, name, block);
+            self.inline.semantic_event(event);
+            return Ok(());
+        }
         if let Some(image) = replacement {
-            let image = self.resources.replacement_image(image, &style);
             let replaced = self.generated_block(
                 style,
                 Vec::new(),
@@ -1833,12 +1891,13 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         style: &Style,
         content: &crate::style::GeneratedContent,
     ) -> Result<(), DocumentError> {
-        let bound = self.traversal.generated.bind(
+        let bound = self.traversal.bind(
             content,
             crate::style::PageStyleTarget {
                 element: element.id(),
                 pseudo: None,
             },
+            false,
         )?;
         let output = bound.element_output_with_counters(
             crate::document::MAX_INLINE_TEXT_BYTES,
@@ -1909,12 +1968,13 @@ fn list_marker(
     let Some(content) = content else {
         return crate::document::lists::marker(style, &used, ordinal, resources);
     };
-    let bound = traversal.generated.bind(
+    let bound = traversal.bind(
         &content,
         crate::style::PageStyleTarget {
             element: element.id(),
             pseudo: Some(PseudoElement::Marker),
         },
+        false,
     )?;
     let output = bound.element_output_with_counters(
         crate::document::MAX_INLINE_TEXT_BYTES,
@@ -2519,7 +2579,7 @@ fn block<'a>(
                 &traversal.root_style,
                 resources.resolver,
             )?;
-            traversal.counters.enter(
+            traversal.counters.enter_at_pages(
                 crate::style::PageStyleTarget {
                     element: child.id(),
                     pseudo: None,
@@ -2527,6 +2587,8 @@ fn block<'a>(
                 &counters,
                 &child_style.display,
                 child_style.containment().style,
+                traversal.generated.page_starts(child.id()),
+                &mut traversal.page_counters,
             )?;
             let child_depth = frames[index].depth + 1;
             let math_depth = frames[index]
@@ -2708,6 +2770,9 @@ fn block<'a>(
             if placement.is_some() {
                 blocks.push(frames.len());
             }
+            if matches!(placement, Some(Placement::Running)) {
+                traversal.running += 1;
+            }
             frames.push(Frame::new(
                 child,
                 child_style,
@@ -2841,7 +2906,10 @@ fn block<'a>(
                 builder.children.push(BlockContent::Block(block));
             }
             Placement::Positioned => builder.out_of_flow(block),
-            Placement::Running => builder.running(element, block),
+            Placement::Running => {
+                builder.traversal.running -= 1;
+                builder.running(element, block);
+            }
             Placement::Footnote => builder.footnote(element, block)?,
             Placement::Atomic => builder.atomic(block, parent)?,
             Placement::Root => unreachable!("root returned before attaching to a parent"),
@@ -2945,6 +3013,7 @@ pub(crate) fn build(
                 bindings,
             ),
             svg_definitions,
+            page_counters: Vec::new(),
         });
     }
     normalize_root_display(&mut style.display);
@@ -2959,6 +3028,8 @@ pub(crate) fn build(
         quotes: Default::default(),
         canvas: BoxDecoration::default(),
         footnotes: Vec::new(),
+        page_counters: Vec::new(),
+        running: 0,
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
         .then(|| html.body_element().map(Element::id))
@@ -2979,6 +3050,11 @@ pub(crate) fn build(
         &counters,
         &style.display,
         style.containment().style,
+    )?;
+    // Pages start inside the root, after it instantiates the predefined footnote counter.
+    traversal.counters.start_pages(
+        traversal.generated.page_starts(element.id()).iter(),
+        &mut traversal.page_counters,
     )?;
     let ordinal = if style.display.is_list_item() {
         traversal.counters.ordinal()?
@@ -3037,6 +3113,7 @@ pub(crate) fn build(
             bindings,
         ),
         svg_definitions,
+        page_counters: traversal.page_counters,
     })
 }
 

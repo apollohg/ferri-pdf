@@ -30,6 +30,7 @@ impl PageBox {
         Ok(Self {
             request: page.request,
             geometry: page.geometry,
+            counters: page.style.counters.clone(),
             #[cfg(test)]
             style: page.style,
             production: page.production,

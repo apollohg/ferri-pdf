@@ -1,5 +1,5 @@
 mod dimensions;
-use crate::document::{BlockBox, PageBox, Paragraph, RunningStringAssignment};
+use crate::document::{BlockBox, CounterSnapshot, PageBox, Paragraph, RunningStringAssignment};
 use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, Rect};
 use crate::layout::measure::{MeasuredBlock, Measurer};
 use crate::layout::{LayoutError, TextLine};
@@ -416,13 +416,17 @@ struct MarginOutput<'p> {
     display: &'p mut Vec<DisplayItem>,
     links: &'p mut Vec<crate::layout::LinkArea>,
 }
-/// The page-margin boxes' shared inputs: the page count, the selected strings and running
-/// elements, and the document's destination count.
+/// The page-margin boxes' shared inputs: the selected strings and running elements, the
+/// document's destination count, the page-based counters and the document's counters where
+/// pages start.
 pub(super) struct MarginContext<'s, 't> {
     pub strings: &'s crate::layout::strings::PageStrings,
     pub running: &'t [RunningStringAssignment],
     pub destinations: usize,
+    pub counters: &'s crate::layout::page_counters::PageCounters,
+    pub document: &'s crate::document::StyledDocument,
 }
+/// Prepares a page-margin box of the page at index `page` of `pages`.
 fn prepare<'a, 't>(
     margin: &'a PageMargin,
     decoration: &'a BoxDecoration,
@@ -454,17 +458,28 @@ fn prepare<'a, 't>(
             None,
             context
                 .strings
-                .element(page - 1, request)
+                .element(page, request)
                 .and_then(|owner| context.running[owner].element.as_ref())
                 .map(|element| &element.block),
         )
     } else {
-        let output = margin.content.page_output_with_strings(
-            page,
+        let output = margin.content.page_output(
+            context.counters.page(page, Some(margin.location)),
             pages,
             crate::document::MAX_INLINE_TEXT_BYTES,
             &style.quotes,
-            &mut |request| Ok(context.strings.text(page - 1, request)),
+            &mut |request| Ok(context.strings.text(page, request)),
+            &mut |request| {
+                context.counters.text(
+                    page,
+                    margin.location,
+                    request,
+                    context
+                        .document
+                        .page_counters(page)
+                        .unwrap_or(&CounterSnapshot::default()),
+                )
+            },
         )?;
         if !output.images().is_empty() {
             return Err(crate::style::StyleError::Unsupported(
@@ -543,8 +558,7 @@ pub(super) fn render<'t>(
                 else {
                     continue;
                 };
-                let mut prepared =
-                    prepare(margin, decoration, containing, number + 1, total, context)?;
+                let mut prepared = prepare(margin, decoration, containing, number, total, context)?;
                 prepared.validate()?;
                 let fixed_axis = 1 - axis;
                 prepared.fixed(fixed_axis, containing[fixed_axis]);
@@ -625,8 +639,7 @@ pub(super) fn render<'t>(
                 .iter()
                 .find(|(margin, _)| margin.location == location)
             {
-                let mut prepared =
-                    prepare(margin, decoration, containing, number + 1, total, context)?;
+                let mut prepared = prepare(margin, decoration, containing, number, total, context)?;
                 prepared.validate()?;
                 for axis in [HORIZONTAL, VERTICAL] {
                     prepared.fixed(axis, containing[axis]);

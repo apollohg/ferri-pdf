@@ -1,4 +1,6 @@
 use crate::document::{RunningStringAssignment, SemanticEvent};
+use crate::dom::ElementId;
+use crate::layout::page_counters::PageCounters;
 use crate::style::{NamedStringMode, NamedStringRequest, PageStyleTarget, StyleError};
 use std::{collections::HashMap, ops::Range};
 
@@ -25,6 +27,9 @@ pub(super) struct StringLocations {
     starts: HashMap<usize, PageStart>,
     /// Footnote calls in recording order (CSS GCPM 3 §2.2).
     footnotes: Vec<usize>,
+    /// The first and last elements in document order recorded on each page, by their tree
+    /// positions.
+    bounds: HashMap<usize, [(usize, ElementId); 2]>,
 }
 impl StringLocations {
     pub(crate) fn last_page(&self) -> usize {
@@ -70,8 +75,20 @@ impl StringLocations {
         self.locations.insert(event.context, page);
         self.footnotes.extend(event.footnote);
         self.trace(page, SemanticAction::Element(event.clone()));
-        if event.context.pseudo.is_some() {
+        // A pseudo-element's position matters only where it assigns a running element.
+        let pseudo = event.context.pseudo.is_some();
+        if pseudo && event.assignment.is_none() {
             return;
+        }
+        if !pseudo {
+            let position = (event.order.start, event.context.element);
+            let [first, last] = self.bounds.entry(page).or_insert([position; 2]);
+            if position.0 < first.0 {
+                *first = position;
+            }
+            if position.0 > last.0 {
+                *last = position;
+            }
         }
         let state = self.starts.entry(page).or_default();
         let start = event.visible
@@ -101,6 +118,7 @@ impl StringLocations {
     pub(crate) fn resolve(
         self,
         assignments: &[RunningStringAssignment],
+        numbers: &PageCounters,
         pages: usize,
     ) -> Result<PageStrings, StyleError> {
         if self.assignments.len() != assignments.len() {
@@ -112,6 +130,7 @@ impl StringLocations {
             names: HashMap::new(),
             elements: HashMap::new(),
             locations: self.locations,
+            bounds: self.bounds,
         };
         for (index, location) in self.assignments {
             if location.page >= pages {
@@ -133,7 +152,7 @@ impl StringLocations {
             }
             for assignment in &assignments[index].values {
                 let text = assignment.content.page_text(
-                    location.page + 1,
+                    numbers.page(location.page, None),
                     pages,
                     crate::document::MAX_INLINE_TEXT_BYTES,
                 )?;
@@ -185,8 +204,41 @@ pub(super) struct PageStrings {
     /// Running elements by name, with their owners' assignment indices.
     elements: HashMap<std::sync::Arc<str>, Vec<PageValue<()>>>,
     locations: HashMap<PageStyleTarget, usize>,
+    bounds: HashMap<usize, [(usize, ElementId); 2]>,
 }
 impl PageStrings {
+    /// The page a context lies on; a pseudo-element without a recorded position, such as
+    /// `::marker`, lies where its element starts.
+    pub(crate) fn page_of(&self, context: PageStyleTarget) -> Option<usize> {
+        self.locations.get(&context).copied().or_else(|| {
+            self.locations
+                .get(&PageStyleTarget {
+                    pseudo: None,
+                    ..context
+                })
+                .copied()
+        })
+    }
+    /// Where each page starts in the document: at the first element in document order laid
+    /// out on it, or else inside the last element to start on an earlier page (`true`).
+    pub(crate) fn page_starts(&self, pages: usize) -> Vec<Option<(ElementId, bool)>> {
+        let mut last: Option<(usize, ElementId)> = None;
+        (0..pages)
+            .map(|page| {
+                let bounds = self.bounds.get(&page);
+                let start = match bounds {
+                    Some([(_, first), _]) => Some((*first, false)),
+                    None => last.map(|(_, element)| (element, true)),
+                };
+                if let Some([_, page_last]) = bounds
+                    && last.is_none_or(|(order, _)| page_last.0 > order)
+                {
+                    last = Some(*page_last);
+                }
+                start
+            })
+            .collect()
+    }
     pub(crate) fn at_context(
         &self,
         context: PageStyleTarget,

@@ -116,6 +116,28 @@ impl StringAssignments {
         self.owners[index].running = Some((name, None));
         index
     }
+    /// Records a running `::before` or `::after`, which assigns no strings, and returns the
+    /// event that places its assignment where the pseudo-element leaves the flow.
+    pub(crate) fn record_generated_running(
+        &mut self,
+        element: Element<'_>,
+        pseudo: GeneratedPseudoElement,
+        name: Arc<str>,
+        block: crate::document::BlockBox,
+    ) -> crate::document::SemanticEvent {
+        let index = self.owners.len();
+        self.owners.push(PendingOwner {
+            owner: element.id(),
+            values: Vec::new(),
+            running: Some((name, Some(block))),
+            before: Default::default(),
+            after: Default::default(),
+            marker: None,
+        });
+        let mut event = self.tree.event(element, Some(index), true);
+        event.context.pseudo = Some(pseudo.into());
+        event
+    }
     pub(crate) fn running_blocks_mut(
         &mut self,
     ) -> impl Iterator<Item = &mut crate::document::BlockBox> {

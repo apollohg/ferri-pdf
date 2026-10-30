@@ -16,6 +16,7 @@ mod measure;
 mod motion;
 mod multicol;
 mod navigation;
+mod page_counters;
 mod page_margins;
 mod page_output;
 mod page_paint;
@@ -288,20 +289,13 @@ fn layout_pass(
         page_paint::PagePaint::new(page, document.canvas_background(), record.output.bleed)
             .decorate(std::slice::from_mut(list));
     }
-    let strings = string_locations.resolve(document.running_strings(), pages.len())?;
-    let first_margin_paragraph = measurer.sources.paragraph_count();
-    page_margins::render(
+    let generated = paged_content(
+        document,
         &page_boxes,
-        &page_margins::MarginContext {
-            strings: &strings,
-            running: document.running_strings(),
-            destinations: document.navigation().destinations,
-        },
+        string_locations,
+        &destinations,
         &mut measurer,
-        first_margin_paragraph,
-        &mut pages,
-        &mut display_lists,
-        &mut links,
+        (&mut pages, &mut display_lists, &mut links),
     )?;
     for (list, page) in display_lists.iter_mut().zip(&page_boxes) {
         list.extend(page_paint::page_outline(page));
@@ -309,14 +303,6 @@ fn layout_pass(
     for (areas, record) in links.iter_mut().zip(&page_records) {
         navigation::clip_links(areas, record.output.bleed);
     }
-    let destination_pages: Vec<_> = destinations
-        .iter()
-        .map(|destination| destination.as_ref().map(|destination| destination.page + 1))
-        .collect();
-    let generated =
-        document.resolve_generated(pages.len(), &destination_pages, &mut |context, request| {
-            strings.at_context(context, request)
-        })?;
     anchors.physical(flow, &page_boxes);
     Ok(LayoutPass {
         generated,
@@ -340,6 +326,58 @@ fn layout_pass(
                 .collect(),
         },
     })
+}
+
+/// Each page's text lines, display list and link areas.
+type PageOutputs<'p> = (
+    &'p mut [Vec<TextLine>],
+    &'p mut [Vec<DisplayItem>],
+    &'p mut [Vec<LinkArea>],
+);
+
+/// Paints the page-margin boxes and resolves the generated content that depends on where
+/// pagination placed the document. Kept apart from `layout_pass`, whose frame every nested
+/// navigable's layout stacks.
+fn paged_content<'t>(
+    document: &'t StyledDocument,
+    page_boxes: &[std::sync::Arc<crate::document::PageBox>],
+    string_locations: strings::StringLocations,
+    destinations: &[Option<Destination>],
+    measurer: &mut measure::Measurer<'t>,
+    (pages, display_lists, links): PageOutputs<'_>,
+) -> Result<Option<crate::document::GeneratedValues>, LayoutError> {
+    let counters = page_counters::PageCounters::new(page_boxes);
+    let strings = string_locations.resolve(document.running_strings(), &counters, pages.len())?;
+    let first_margin_paragraph = measurer.sources.paragraph_count();
+    page_margins::render(
+        page_boxes,
+        &page_margins::MarginContext {
+            strings: &strings,
+            running: document.running_strings(),
+            destinations: document.navigation().destinations,
+            counters: &counters,
+            document,
+        },
+        measurer,
+        first_margin_paragraph,
+        pages,
+        display_lists,
+        links,
+    )?;
+    let destination_pages: Vec<_> = destinations
+        .iter()
+        .map(|destination| destination.as_ref().map(|destination| destination.page))
+        .collect();
+    Ok(document.resolve_generated(
+        &destination_pages,
+        crate::document::Paginated {
+            pages: pages.len(),
+            numbers: &|page| counters.page(page, None),
+            context_page: &|context| strings.page_of(context),
+            strings: &mut |context, request| strings.at_context(context, request),
+            starts: counters.starts(page_boxes, strings.page_starts(pages.len())),
+        },
+    )?)
 }
 
 #[derive(Debug, thiserror::Error)]

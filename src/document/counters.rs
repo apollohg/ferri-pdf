@@ -1,6 +1,6 @@
 use crate::style::{
-    CounterProperties, CounterRequest, DEFAULT_COUNTER_INCREMENT, Display, INITIAL_COUNTER_VALUE,
-    LIST_ITEM_COUNTER, PageStyleTarget, StyleError,
+    AutomaticInitial, CounterProperties, CounterRequest, DEFAULT_COUNTER_INCREMENT, Display,
+    INITIAL_COUNTER_VALUE, LIST_ITEM_COUNTER, PageStyleTarget, StyleError,
 };
 use std::{
     cell::{Cell, RefCell},
@@ -36,35 +36,6 @@ struct Frame {
 
 type CounterKey = (PageStyleTarget, Arc<str>);
 #[derive(Default)]
-struct AutomaticInitial {
-    sum: i128,
-    last_increment_negated: i128,
-    set: Option<i128>,
-}
-impl AutomaticInitial {
-    fn update(&mut self, increment: i128, set: Option<i128>) {
-        if self.set.is_some() {
-            return;
-        }
-        let negated = increment.saturating_neg();
-        if negated != 0 {
-            self.last_increment_negated = negated;
-        }
-        if let Some(value) = set {
-            self.set = Some(value);
-        } else {
-            self.sum = self.sum.saturating_add(negated);
-        }
-    }
-    fn value(&self) -> i128 {
-        // Cancel the bounded CSS increments before adding a potentially maximal HTML value.
-        self.set
-            .unwrap_or(INITIAL_COUNTER_VALUE)
-            .saturating_add(self.sum.saturating_add(self.last_increment_negated))
-    }
-}
-
-#[derive(Default)]
 pub(crate) struct Counters {
     frames: Vec<Frame>,
     previous: Vec<Counter>,
@@ -92,6 +63,58 @@ impl Counters {
         scoping: bool,
     ) -> Result<(), StyleError> {
         self.inherit(target, scoping)?;
+        self.apply(target, properties, display)
+    }
+    /// Enters an element where pages start: pages starting at it start with the counters it
+    /// inherits, and pages starting inside it with those it has after its own changes.
+    pub(crate) fn enter_at_pages(
+        &mut self,
+        target: PageStyleTarget,
+        properties: &CounterProperties,
+        display: &Display,
+        scoping: bool,
+        starts: &[crate::document::PageStart],
+        snapshots: &mut Vec<(usize, CounterSnapshot)>,
+    ) -> Result<(), StyleError> {
+        self.inherit(target, scoping)?;
+        self.start_pages(starts.iter().filter(|start| !start.inside), snapshots)?;
+        self.apply(target, properties, display)?;
+        self.start_pages(starts.iter().filter(|start| start.inside), snapshots)
+    }
+    /// Applies each page context's changes to the footnote counter where its page starts (CSS
+    /// GCPM 3 §2.5.2) and records the document's counters there, which page-margin boxes see
+    /// (CSS Page 3 §6.1).
+    pub(crate) fn start_pages<'s>(
+        &mut self,
+        starts: impl Iterator<Item = &'s crate::document::PageStart>,
+        snapshots: &mut Vec<(usize, CounterSnapshot)>,
+    ) -> Result<(), StyleError> {
+        for start in starts {
+            for reset in start.footnote.reset.iter() {
+                let value = reset.value.ok_or_else(|| {
+                    StyleError::Unsupported(
+                        "reversed() footnote counter resets in the page context".into(),
+                    )
+                })?;
+                self.updated(reset.name.clone())?.set(value);
+            }
+            for change in start.footnote.increment.iter() {
+                let value = self.updated(change.name.clone())?;
+                value.set(value.get().saturating_add(change.value));
+            }
+            for change in start.footnote.set.iter() {
+                self.updated(change.name.clone())?.set(change.value);
+            }
+            snapshots.push((start.page, self.capture()));
+        }
+        self.update_previous()
+    }
+    fn apply(
+        &mut self,
+        target: PageStyleTarget,
+        properties: &CounterProperties,
+        display: &Display,
+    ) -> Result<(), StyleError> {
         if !matches!(display, Display::None | Display::Contents) {
             for change in properties.reset.iter() {
                 let key = (target, change.name.clone());
@@ -642,9 +665,21 @@ impl Counters {
     }
 }
 
-#[derive(Default)]
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub(crate) struct CounterSnapshot(Vec<(Arc<str>, i128)>);
 impl CounterSnapshot {
+    /// Counters outermost first, as `counters()` lists them.
+    pub(crate) fn new(counters: Vec<(Arc<str>, i128)>) -> Self {
+        Self(counters)
+    }
+    /// The value of the innermost counter named `name`.
+    pub(crate) fn value(&self, name: &str) -> Option<i128> {
+        self.0
+            .iter()
+            .rev()
+            .find(|(counter, _)| counter.as_ref() == name)
+            .map(|(_, value)| *value)
+    }
     pub(crate) fn text(
         &self,
         request: &CounterRequest,

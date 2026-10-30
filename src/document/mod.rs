@@ -29,11 +29,12 @@ use crate::dom::DocumentTree;
 use crate::resources::{ResourceError, ResourceResolver};
 use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 
+pub(crate) use counters::CounterSnapshot;
 pub(crate) use formatting::{
     BlockBox, BlockContent, InitialLetterBox, PageBox, PageFootnoteArea, PageMarginBox,
 };
 pub(crate) use frames::{Frame, FrameDocument};
-pub(crate) use generated::GeneratedValues;
+pub(crate) use generated::{GeneratedValues, PageStart, Paginated};
 pub(crate) use inline::{
     Anchor, InlineBox, MAX_INLINE_TEXT_BYTES, OBJECT_REPLACEMENT_CHARACTER, Paragraph,
     is_css_whitespace, narrow_width,
@@ -106,6 +107,8 @@ pub(crate) struct StyledDocument {
     canvas: crate::graphics::BoxDecoration,
     pages: page::PageProvider,
     svg_definitions: svg::SvgDefinitions,
+    /// The document's counters where each page starts (CSS Page 3 §6.1).
+    page_counters: std::collections::HashMap<usize, CounterSnapshot>,
 }
 
 struct FormattingSource {
@@ -370,6 +373,7 @@ impl StyledDocument {
             canvas,
             pages,
             svg_definitions,
+            page_counters,
         } = formatting::build(
             &formatting::Input {
                 html: &html,
@@ -425,6 +429,7 @@ impl StyledDocument {
             canvas,
             pages,
             svg_definitions,
+            page_counters: page_counters.into_iter().collect(),
             source: std::rc::Rc::new(FormattingSource {
                 html,
                 embedded,
@@ -436,18 +441,14 @@ impl StyledDocument {
         })
     }
 
+    /// `destinations` holds the page index of each destination.
     pub(crate) fn resolve_generated(
         &self,
-        pages: usize,
         destinations: &[Option<usize>],
-        strings: &mut dyn FnMut(
-            crate::style::PageStyleTarget,
-            &crate::style::NamedStringRequest,
-        ) -> Result<String, StyleError>,
+        paginated: Paginated<'_>,
     ) -> Result<Option<GeneratedValues>, DocumentError> {
         let values = self.generated.resolve(
             &self.source.html,
-            pages,
             &mut |owner| {
                 self.navigation
                     .element_destinations
@@ -456,7 +457,7 @@ impl StyledDocument {
                     .copied()
                     .flatten()
             },
-            strings,
+            paginated,
         )?;
         Ok((!self.generated.matches(&values)).then_some(values))
     }
@@ -485,6 +486,7 @@ impl StyledDocument {
             canvas,
             pages,
             svg_definitions,
+            page_counters,
         } = source.build(&mut styles, values, &self.pages.images(), resolver)?;
         Ok(Self {
             root,
@@ -498,6 +500,7 @@ impl StyledDocument {
             canvas,
             pages,
             svg_definitions,
+            page_counters: page_counters.into_iter().collect(),
             source,
         })
     }
@@ -534,6 +537,7 @@ impl StyledDocument {
             canvas,
             pages,
             svg_definitions,
+            page_counters,
         } = source.build(&mut self.styles, values, &self.pages.images(), resolver)?;
         self.navigation = navigation.finish(&source.html, &generated)?;
         self.running_strings = strings.finish(&source.html)?;
@@ -543,6 +547,7 @@ impl StyledDocument {
         self.canvas = canvas;
         self.pages = pages;
         self.svg_definitions = svg_definitions;
+        self.page_counters = page_counters.into_iter().collect();
         for diagnostic in self.styles.take_diagnostics() {
             if !self.diagnostics.iter().any(
                 |known| matches!(known, DocumentDiagnostic::Css(known) if *known == diagnostic),
@@ -598,6 +603,11 @@ impl StyledDocument {
     }
     pub(crate) fn metadata(&self) -> &DocumentMetadata {
         &self.metadata
+    }
+    /// The document's counters where `page` starts, as its page-margin boxes see them (CSS
+    /// Page 3 §6.1); none before pagination tells where pages start.
+    pub(crate) fn page_counters(&self, page: usize) -> Option<&CounterSnapshot> {
+        self.page_counters.get(&page)
     }
     /// The SVG filters and masks that `url()` references in the document can name.
     pub(crate) fn svg_definitions(&self) -> svg::SvgDefinitions {
