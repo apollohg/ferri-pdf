@@ -102,3 +102,36 @@ fn scroll_marker_prepasses_of_nested_containers_charge_the_shared_budget() {
         2 * SCROLLERS
     );
 }
+
+#[test]
+fn nested_copies_fail_before_overflowing_a_library_thread() {
+    const LIBRARY_STACK_BYTES: usize = 2 * 1024 * 1024;
+    const RUNAWAY_NESTING: usize = 512;
+    let limit = crate::document::formatting::MAX_COPY_NESTING;
+    std::thread::Builder::new()
+        .stack_size(LIBRARY_STACK_BYTES)
+        .spawn(move || {
+            let html = document(FIRST_LINE, &nested_atomics(limit));
+            if let Err(error) = parse(&html, crate::document::MAX_FORMATTING_WORK) {
+                panic!("{limit} nested first-line copies must format: {error}");
+            }
+            for nesting in [limit + 1, RUNAWAY_NESTING] {
+                let html = document(FIRST_LINE, &nested_atomics(nesting));
+                match parse(&html, crate::document::MAX_FORMATTING_WORK) {
+                    Err(DocumentError::Formatting(message)) => assert_eq!(
+                        message,
+                        format!("formatting copy nesting exceeds {limit}"),
+                        "{nesting} nested first-line copies"
+                    ),
+                    Err(error) => panic!("{nesting} nested first-line copies failed with {error}"),
+                    Ok(_) => panic!(
+                        "{nesting} nested first-line copies must fail on a \
+                         {LIBRARY_STACK_BYTES}-byte stack"
+                    ),
+                }
+            }
+        })
+        .expect("the library thread must start")
+        .join()
+        .expect("nested copies must fail without panicking");
+}

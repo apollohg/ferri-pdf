@@ -10,6 +10,10 @@ pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
 pub(crate) const MAX_FORMATTING_WORK: usize = 100_000_000;
 /// The work units of formatting an element, whose styling costs far more than a text byte.
 const ELEMENT_WORK: usize = 64;
+/// Nesting of subtree copies, each formatted on the stack of the formatting it copies, beyond
+/// which formatting fails rather than overflow a 2 MiB library thread.
+pub(super) const MAX_COPY_NESTING: usize = 4;
+const COPY_NESTING_RESOURCE: &str = "formatting copy nesting";
 const DEFAULT_DENSITY: f32 = 1.0;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
 
@@ -783,6 +787,8 @@ pub(crate) struct Traversal<'a> {
     marker_groups: crate::document::scroll_markers::ScrollMarkerGroups,
     /// The document's formatting work, which every copy charges.
     work: crate::layout::work::Budget,
+    /// The copies of subtrees this traversal formats inside.
+    copies: usize,
 }
 
 /// A scroll container, and the display of the `::scroll-marker-group` its scroll markers go
@@ -852,6 +858,15 @@ impl Traversal<'_> {
             None => self.generated.bind(content, context)?,
         })
     }
+    /// The copy nesting of a copy this traversal makes.
+    fn nested_copy(&self) -> Result<usize, DocumentError> {
+        if self.copies == MAX_COPY_NESTING {
+            return Err(DocumentError::Formatting(format!(
+                "{COPY_NESTING_RESOURCE} exceeds {MAX_COPY_NESTING}"
+            )));
+        }
+        Ok(self.copies + 1)
+    }
     /// The state formatting a copy of the running element `owner` showing the page counters
     /// `numbers` from its start: it shares the document's counters and navigation as they
     /// stand there and records nothing for the document.
@@ -859,8 +874,8 @@ impl Traversal<'_> {
         &self,
         owner: crate::style::PageStyleTarget,
         numbers: crate::document::generated::PageNumbers,
-    ) -> Self {
-        Self {
+    ) -> Result<Self, DocumentError> {
+        Ok(Self {
             document: self.document,
             embedded: self.embedded,
             root_style: self.root_style.clone(),
@@ -881,13 +896,14 @@ impl Traversal<'_> {
             marker_scroller: None,
             marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
             work: self.work.clone(),
-        }
+            copies: self.nested_copy()?,
+        })
     }
     /// The state formatting a copy of the subtree starting here: it continues the document's
     /// counters, navigation, string assignments and footnotes as they stand, so that the copy's
     /// boxes take the indices the document's take, and records nothing for the document.
-    fn subtree_copy(&self) -> Self {
-        Self {
+    fn subtree_copy(&self) -> Result<Self, DocumentError> {
+        Ok(Self {
             document: self.document,
             embedded: self.embedded,
             root_style: self.root_style.clone(),
@@ -911,7 +927,8 @@ impl Traversal<'_> {
             marker_scroller: None,
             marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
             work: self.work.clone(),
-        }
+            copies: self.nested_copy()?,
+        })
     }
 }
 
@@ -938,7 +955,7 @@ fn first_line_box<'a>(
         return Ok(None);
     };
     let root = frame.copy_root(Box::new(styles.style(&frame.style)?));
-    let mut copy = traversal.subtree_copy();
+    let mut copy = traversal.subtree_copy()?;
     copy.marker_scroller = scroller;
     block(root, sheet, &mut copy, resources).map(|copy| Some(Box::new(copy)))
 }
@@ -1090,7 +1107,7 @@ fn collect_scroll_markers<'a>(
     resources: &mut ImageResources<'a>,
 ) -> Result<Vec<GeneratedBox>, DocumentError> {
     let element = frame.element.id();
-    let mut copy = traversal.subtree_copy();
+    let mut copy = traversal.subtree_copy()?;
     copy.marker_prepass = true;
     block(frame, sheet, &mut copy, resources)?;
     Ok(copy.scroll_markers.remove(&element).unwrap_or_default())
@@ -1116,7 +1133,7 @@ fn running_copies<'a>(
         .running_pages(owner)
         .iter()
         .map(|&numbers| {
-            let mut copy = traversal.running_copy(owner, numbers);
+            let mut copy = traversal.running_copy(owner, numbers)?;
             copy.marker_scroller.clone_from(&scroller);
             Ok((
                 numbers,
@@ -4361,6 +4378,7 @@ fn format_root(
         marker_scroller: None,
         marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
         work: crate::layout::work::Budget::new(input.work_limit),
+        copies: 0,
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
         .then(|| html.body_element().map(Element::id))
