@@ -1189,3 +1189,27 @@ fn svg_text_line_metrics_take_the_metric_override_descriptors() {
          (the font's own metrics give {plain})"
     );
 }
+
+#[test]
+fn standalone_typographic_pseudo_elements_of_svg_text_are_unsupported() {
+    let load = |css: &str| {
+        ImageCache::default().inline_svg(
+            format!("{SVG_OPEN}<style>{css}</style><text x='10' y='60'>T</text><g/></svg>"),
+            &ResourceBase::default(),
+            &FileResolver::default(),
+        )
+    };
+    for css in ["text::first-line{fill:red}", ":first-letter{fill:red}"] {
+        let error = load(css).expect_err("SVG 2 §11.10 requires the pseudo-element on text");
+        assert!(
+            error.to_string().contains("::first-line or ::first-letter"),
+            "`{css}` reports {error}"
+        );
+    }
+    for css in ["g::first-line{fill:red}", "text::first-line{}"] {
+        assert!(
+            load(css).is_ok(),
+            "`{css}` styles no SVG text element's first line"
+        );
+    }
+}

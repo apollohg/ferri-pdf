@@ -660,3 +660,28 @@ fn paint_server_references_accept_absent_and_explicit_fallbacks() {
         }
     }
 }
+
+#[test]
+fn typographic_pseudo_elements_of_svg_text_are_unsupported() {
+    let html = "<svg><text>T</text><g><text>U</text></g></svg><p>P</p>";
+    for (css, expected) in [
+        ("text::first-letter{fill:red}", Some("::first-letter")),
+        ("::first-line{color:red}", Some("::first-line")),
+        ("p::first-line{color:red}", None),
+        ("g::first-line{color:red}", None),
+    ] {
+        match (styled(css, html), expected) {
+            (Err(DocumentError::Style(StyleError::Unsupported(message))), Some(name)) => {
+                assert!(
+                    message.contains(name),
+                    "`{css}` reports {message:?}, expected {name:?}"
+                );
+            }
+            (Ok(_), None) => {}
+            (other, _) => panic!(
+                "`{css}` must fail only where it styles an SVG text element's first line or \
+                 letter, which SVG 2 §11.10 requires: {other:?}"
+            ),
+        }
+    }
+}

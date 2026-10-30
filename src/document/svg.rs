@@ -11,7 +11,7 @@ use crate::dom::{
     XML_NAMESPACE,
 };
 use crate::resources::ResourceResolver;
-use crate::style::{Style, Stylesheet};
+use crate::style::{PseudoElement, Style, StyleError, Stylesheet};
 use std::{
     collections::{HashMap, HashSet},
     fmt::Write,
@@ -33,6 +33,11 @@ const DEFINITIONS_ELEMENT: &str = "defs";
 const ROOT_GEOMETRY: [&str; 4] = ["x", "y", "width", "height"];
 /// Ids naming the styled clones that `use` elements reference in the written XML.
 const INSTANCE_ID_PREFIX: &str = "ferri-pdf-instance-";
+const TEXT_ELEMENT: &str = "text";
+const TYPOGRAPHIC_PSEUDO_ELEMENTS: [(PseudoElement, &str); 2] = [
+    (PseudoElement::FirstLine, "::first-line"),
+    (PseudoElement::FirstLetter, "::first-letter"),
+];
 
 /// The style sheets and fonts that style inline SVG content.
 pub(crate) struct Styling<'a> {
@@ -108,6 +113,26 @@ impl<'a, 'd> Serializer<'a, 'd> {
             next_instance: 0,
             instances: Vec::new(),
         }
+    }
+
+    /// SVG 2 §11.10 requires `::first-line` and `::first-letter` on `text` elements, which the
+    /// SVG renderer does not lay out: a rule styling them fails the document.
+    fn typographic_pseudo(&self, element: Element<'_>, parent: &Style) -> Result<(), StyleError> {
+        if element.name() != TEXT_ELEMENT {
+            return Ok(());
+        }
+        for (pseudo, name) in TYPOGRAPHIC_PSEUDO_ELEMENTS {
+            if self
+                .styling
+                .sheet
+                .declares_pseudo(element, parent, pseudo, self.styling.resolver)?
+            {
+                return Err(StyleError::Unsupported(format!(
+                    "{name} on an SVG text element"
+                )));
+            }
+        }
+        Ok(())
     }
 
     fn document(
@@ -208,9 +233,11 @@ impl<'a, 'd> Serializer<'a, 'd> {
             let style = if raw {
                 None
             } else {
+                let parent = styles.last().unwrap_or(parent);
+                self.typographic_pseudo(element, parent)?;
                 Some(self.styling.sheet.computed_without_box(
                     element,
-                    styles.last().unwrap_or(parent),
+                    parent,
                     self.styling.resolver,
                 )?)
             };

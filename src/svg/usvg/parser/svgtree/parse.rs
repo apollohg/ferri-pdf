@@ -242,6 +242,15 @@ fn parse_xml_node<'input>(
         doc,
     )?;
     if tag_name == EId::Text {
+        // SVG 2 §11.10 requires `::first-line` and `::first-letter` on `text` elements, which
+        // the renderer does not lay out.
+        if style_sheet.styles_typographic_pseudo(node, None) {
+            doc.style_error.get_or_insert(std::sync::Arc::new(
+                crate::style::StyleError::Unsupported(
+                    "::first-line or ::first-letter on an SVG text element".into(),
+                ),
+            ));
+        }
         super::text::parse_svg_text_element(node, node_id, style_sheet, doc)?;
     } else if tag_name == EId::Use {
         if let Some(link) = referenced {

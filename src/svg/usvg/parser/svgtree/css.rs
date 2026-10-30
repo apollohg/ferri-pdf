@@ -17,8 +17,36 @@ pub(super) struct Declaration<'i> {
 }
 
 pub(super) struct Rule<'i> {
+    /// The selector, or the originating element's of a `::first-line` or `::first-letter`
+    /// selector.
     pub selector: Selector,
+    /// The rule styles the first line or letter of the elements its selector matches.
+    pub typographic: bool,
     pub declarations: Vec<Declaration<'i>>,
+}
+
+/// The pseudo-elements, with their CSS 2.1 single-colon spellings, that style the first line
+/// and letter of a block, which SVG 2 §11.10 requires on `text` elements.
+const TYPOGRAPHIC_PSEUDO_ELEMENTS: [&str; 4] = [
+    "::first-line",
+    "::first-letter",
+    ":first-line",
+    ":first-letter",
+];
+
+const UNIVERSAL: &str = "*";
+
+/// `selector` without the typographic pseudo-element ending it, and whether it had one.
+fn originating(selector: &str) -> (&str, bool) {
+    for pseudo in TYPOGRAPHIC_PSEUDO_ELEMENTS {
+        let split = selector.len().checked_sub(pseudo.len());
+        if let Some(split) = split.filter(|&split| selector.is_char_boundary(split))
+            && selector[split..].eq_ignore_ascii_case(pseudo)
+        {
+            return (selector[..split].trim_end(), true);
+        }
+    }
+    (selector, false)
 }
 
 pub(super) struct StyleSheet<'i> {
@@ -94,8 +122,20 @@ impl<'i> StyleSheet<'i> {
     ) -> impl Iterator<Item = &'a Declaration<'i>> + 'a {
         self.rules
             .iter()
-            .filter(move |rule| self.matches_context(rule, node, context))
+            .filter(move |rule| !rule.typographic && self.matches_context(rule, node, context))
             .flat_map(|rule| &rule.declarations)
+    }
+    /// Whether a rule styles the first line or letter of `node`.
+    pub(super) fn styles_typographic_pseudo(
+        &self,
+        node: roxmltree::Node<'_, '_>,
+        context: Option<TreeScopeId>,
+    ) -> bool {
+        self.rules.iter().any(|rule| {
+            rule.typographic
+                && !rule.declarations.is_empty()
+                && self.matches_context(rule, node, context)
+        })
     }
     pub(super) fn create_instance(
         &self,
@@ -264,7 +304,7 @@ impl<'i> AtRuleParser<'i> for Rules {
     }
 }
 impl<'i> QualifiedRuleParser<'i> for Rules {
-    type Prelude = Vec<Selector>;
+    type Prelude = Vec<(Selector, bool)>;
     type QualifiedRule = Vec<Rule<'i>>;
     type Error = usize;
     fn parse_prelude<'t>(
@@ -274,7 +314,10 @@ impl<'i> QualifiedRuleParser<'i> for Rules {
         input.parse_comma_separated(|input| {
             let start = input.position();
             components(input)?;
-            Selector::parse_with_namespaces(input.slice_from(start).trim(), &self.namespaces, true)
+            let (source, typographic) = originating(input.slice_from(start).trim());
+            let source = if source.is_empty() { UNIVERSAL } else { source };
+            Selector::parse_with_namespaces(source, &self.namespaces, true)
+                .map(|selector| (selector, typographic))
                 .map_err(|_| input.new_error(cssparser::BasicParseErrorKind::QualifiedRuleInvalid))
         })
     }
@@ -288,8 +331,9 @@ impl<'i> QualifiedRuleParser<'i> for Rules {
         let declarations = declarations(input).map_err(|limit| input.new_custom_error(limit))?;
         Ok(selectors
             .into_iter()
-            .map(|selector| Rule {
+            .map(|(selector, typographic)| Rule {
                 selector,
+                typographic,
                 declarations: declarations.clone(),
             })
             .collect())

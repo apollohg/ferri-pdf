@@ -1709,6 +1709,23 @@ impl Stylesheet {
         Self::apply_properties(style, parent, winners, &relative)
     }
 
+    /// Whether a rule declares a property of `pseudo` on `element`, whose parent's style is
+    /// `parent`.
+    pub(crate) fn declares_pseudo(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
+        pseudo: crate::style::PseudoElement,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<bool, StyleError> {
+        if !self.has_pseudo_rules(pseudo) {
+            return Ok(false);
+        }
+        let (winners, _) =
+            self.rule_winners(element, Some(pseudo), &parent.containers, resolver)?;
+        Ok(!winners.is_empty())
+    }
+
     pub(super) fn prepare_pseudo(
         &self,
         element: Element<'_>,
