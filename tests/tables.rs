@@ -999,6 +999,38 @@ fn hidden_empty_cells_reveal_the_table_background_but_block_children_are_nonempt
 }
 
 #[test]
+fn orthogonal_captions_keep_their_caption_role_above_the_table() {
+    // CSS Writing Modes 4 §7: a vertical caption is an orthogonal flow whose inline size, its
+    // line's advance, is its physical height above the table.
+    let render = |caption: &str| {
+        let html = format!(
+            "<!doctype html><style>{PROFILE}table{{border-spacing:0}}td{{padding:0}}caption{{writing-mode:vertical-rl}}</style><table>{caption}<tr><td>A</td></tr></table>"
+        );
+        render_html(&html, &local_options())
+            .unwrap_or_else(|error| panic!("table with caption {caption:?} must render: {error}"))
+            .layout
+            .unwrap()
+    };
+    let baseline = |lines: &[TextLine], text: &str| {
+        lines
+            .iter()
+            .find(|line| line.text == text)
+            .unwrap_or_else(|| panic!("{text} must be laid out: {lines:?}"))
+            .baseline
+    };
+    let plain = render("");
+    let captioned = render("<caption>Cap</caption>");
+    let caption = captioned.pages[0]
+        .iter()
+        .find(|line| line.text == "Cap")
+        .expect("the vertical caption's line is laid out");
+    assert_pt(
+        baseline(&captioned.pages[0], "A") - baseline(&plain.pages[0], "A"),
+        caption.width,
+    );
+}
+
+#[test]
 fn caption_margins_are_retained_at_the_start_of_a_page() {
     let result = render_html(
         include_str!("oracle/fixtures/table-caption-margins.html"),

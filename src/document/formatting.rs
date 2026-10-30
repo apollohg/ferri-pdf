@@ -355,8 +355,12 @@ impl BlockBox {
                 inner.children = std::mem::take(&mut block.children);
                 inner.marker = block.marker.take();
                 block.flow = Some(Box::new(inner));
-                block.style.display = if block.style.display == Display::TableCell {
-                    Display::TableCell
+                // Cells and captions keep their table roles around their orthogonal flows.
+                block.style.display = if matches!(
+                    block.style.display,
+                    Display::TableCell | Display::TableCaption
+                ) {
+                    block.style.display.clone()
                 } else if block.style.display.is_inline_level() {
                     Display::InlineBlock
                 } else {
