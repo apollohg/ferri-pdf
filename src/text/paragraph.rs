@@ -58,7 +58,7 @@ pub(crate) struct PreparedParagraph<'p, 'context, 'font> {
     context: &'context TextContext<'font>,
     paragraph: &'p Paragraph,
     bidi: Result<crate::text::bidi::ResolvedParagraph<'p>, crate::text::bidi::ExpansionLimit>,
-    has_rtl: bool,
+    traits: super::LineTraits,
     has_leaders: bool,
     /// Automatic hyphenation opportunities, which are also among `opportunities`.
     automatic: Vec<usize>,
@@ -132,7 +132,7 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
             context,
             paragraph,
             bidi,
-            has_rtl,
+            traits: super::LineTraits::of(paragraph, has_rtl),
             has_leaders: paragraph.spans().iter().any(|span| span.leader),
             automatic,
             opportunities,
@@ -388,7 +388,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             visible.clone(),
             breaking::context_range(&prepared.opportunities, from..to),
             paragraph,
-            prepared.has_rtl,
+            &prepared.traits,
         )?;
         let hyphen = if visible.end == to {
             hyphenation::decorate(
@@ -456,6 +456,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             let wrap_width = leader_width.map_or(wrap_width, |width| wrap_width.max(width));
             let hangable = hanging::hangable(
                 paragraph,
+                prepared.traits.hangs,
                 from..to,
                 visible.clone(),
                 &arranged.runs,

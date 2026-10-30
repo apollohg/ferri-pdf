@@ -111,20 +111,26 @@ fn edge_cluster(paragraph: &Paragraph, run: &GlyphRun, right: bool) -> Option<(u
     (ch != SOFT_HYPHEN).then_some((offset, ch, width))
 }
 
-/// The punctuation at the edges of the line `range`, whose content is `visible`.
+/// Whether any of the paragraph's text hangs punctuation, which its lines then look for.
+pub(super) fn hangs(paragraph: &Paragraph) -> bool {
+    paragraph
+        .spans()
+        .iter()
+        .any(|span| span.style.line_breaking.hanging_punctuation != Default::default())
+}
+
+/// The punctuation at the edges of the line `range`, whose content is `visible`, of a
+/// paragraph that `hangs` punctuation.
 pub(super) fn hangable(
     paragraph: &Paragraph,
+    hangs: bool,
     range: Range<usize>,
     visible: Range<usize>,
     runs: &[GlyphRun],
     order: &[Slot],
 ) -> Hangable {
     let mut hangable = Hangable::default();
-    if !paragraph
-        .spans()
-        .iter()
-        .any(|span| span.style.line_breaking.hanging_punctuation != Default::default())
-    {
+    if !hangs {
         return hangable;
     }
     let rtl = paragraph.style().used_rtl();

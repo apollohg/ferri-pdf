@@ -202,6 +202,24 @@ fn script_ranges(text: &str, range: Range<usize>) -> Vec<Range<usize>> {
     ranges
 }
 
+/// What shaping and fitting each line of a paragraph consult, found once for the paragraph:
+/// whether it holds right-to-left text, its `text-combine-upright` groups and whether it
+/// hangs punctuation.
+struct LineTraits {
+    has_rtl: bool,
+    combined: Vec<combine::Group>,
+    hangs: bool,
+}
+impl LineTraits {
+    fn of(paragraph: &Paragraph, has_rtl: bool) -> Self {
+        Self {
+            has_rtl,
+            combined: combine::groups(paragraph),
+            hangs: hanging::hangs(paragraph),
+        }
+    }
+}
+
 fn shape_line(
     context: &TextContext<'_>,
     text: &str,
@@ -209,14 +227,14 @@ fn shape_line(
     range: Range<usize>,
     context_range: Range<usize>,
     paragraph: &Paragraph,
-    has_rtl: bool,
+    traits: &LineTraits,
 ) -> Result<Vec<Piece>, TextError> {
     if range.is_empty() {
         return Ok(Vec::new());
     }
     let start = range.start;
     let text = &text[range.clone()];
-    let combined = combine::groups(paragraph);
+    let combined = &traits.combined;
     let emitted = RefCell::new(std::collections::HashSet::new());
     let shape_range = |range: Range<usize>, rtl: bool| -> Result<Vec<Piece>, TextError> {
         let absolute = (start + range.start)..(start + range.end);
@@ -250,7 +268,7 @@ fn shape_line(
                 continue;
             }
             let mut boundaries = vec![r.start, r.end];
-            for group in &combined {
+            for group in combined {
                 boundaries.extend(
                     [group.range.start, group.range.end]
                         .into_iter()
@@ -296,7 +314,7 @@ fn shape_line(
         }
         Ok(result)
     };
-    if !has_rtl {
+    if !traits.has_rtl {
         let mut result = Vec::new();
         for range in script_ranges(text, 0..text.len()) {
             result.extend(shape_range(range, false)?);
@@ -816,6 +834,7 @@ struct IntrinsicSource<'p, 'c, 'f> {
     automatic: Vec<usize>,
     opportunities: Vec<(usize, BreakOpportunity)>,
     ruby: Option<ruby::RubyLayout<'p, 'c, 'f>>,
+    traits: LineTraits,
 }
 impl<'p, 'c, 'f> IntrinsicSource<'p, 'c, 'f> {
     /// `source` holds the annotation boxes of `paragraph`, the paragraph itself or the one its
@@ -826,9 +845,11 @@ impl<'p, 'c, 'f> IntrinsicSource<'p, 'c, 'f> {
         source: &'p Paragraph,
     ) -> Result<Self, TextError> {
         let automatic = hyphenation::automatic(paragraph);
+        let bidi = paragraph_bidi(paragraph, &context.bidi_work)?;
         Ok(Self {
             paragraph,
-            bidi: paragraph_bidi(paragraph, &context.bidi_work)?,
+            traits: LineTraits::of(paragraph, bidi.has_rtl()),
+            bidi,
             opportunities: whitespace::opportunities(paragraph, &automatic),
             automatic,
             ruby: ruby::RubyLayout::of(context, paragraph, source),
@@ -906,7 +927,7 @@ impl<'a> TextContext<'a> {
                 visible.clone(),
                 context_range,
                 paragraph,
-                source.bidi.has_rtl(),
+                &source.traits,
             )?;
             if visible.end == range.end {
                 hyphenation::decorate(
@@ -940,6 +961,7 @@ impl<'a> TextContext<'a> {
             tabs::resolve(self, paragraph, &mut arranged, indent)?;
             let hangable = hanging::hangable(
                 paragraph,
+                source.traits.hangs,
                 range.clone(),
                 visible.clone(),
                 &arranged.runs,
