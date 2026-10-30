@@ -841,6 +841,12 @@ impl Traversal<'_> {
             None => self.pages.first().footnote.style.anonymous(Display::Block),
         })
     }
+    /// Whether the element of `frames[index]` paints the canvas background, propagated from
+    /// the root element or the body (CSS Backgrounds 3 §2.11.2), rather than its own; the
+    /// roots of copies are other elements' boxes.
+    fn canvas_source(&self, index: usize, element: Element<'_>) -> bool {
+        (index == 0 && self.copies == 0) || self.canvas_body == Some(element.id())
+    }
     /// Ends the inline footnotes waiting for the next to join them.
     fn finish_inline_footnotes(&mut self) -> Result<(), DocumentError> {
         if let Some(open) = self.inline_footnotes.take() {
@@ -3605,7 +3611,7 @@ fn block<'a>(
                     },
                     &mut navigation,
                 );
-                let canvas_source = index == 0 || traversal.canvas_body == Some(element.id());
+                let canvas_source = traversal.canvas_source(index, element);
                 let (mut builder, style) =
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
                 builder.inline.semantic_event(event);
@@ -4125,7 +4131,7 @@ fn block<'a>(
         let scroll_container = frame.scroll_container;
         let mut state = frame.block.unwrap();
         mark_last_formatted_line(&mut state.children);
-        let canvas_source = index == 0 || traversal.canvas_body == Some(element.id());
+        let canvas_source = traversal.canvas_source(index, element);
         let rendered_legend = crate::document::controls::is_rendered_legend(element, &frame.style);
         let (style, children) = crate::document::controls::fieldset(
             element,

@@ -167,3 +167,51 @@ fn copies_of_running_elements_keep_their_counters_and_strings_once() {
         "formatting copies changes neither the document's counters nor its strings"
     );
 }
+
+/// The background colours of the boxes each page paints inside display frames.
+fn frame_backgrounds(trace: &crate::LayoutTrace) -> Vec<Vec<[u8; 3]>> {
+    trace
+        .display_lists
+        .iter()
+        .map(|items| {
+            items
+                .iter()
+                .filter_map(|item| match item {
+                    DisplayItem::Frame(frame) => Some(frame.items.iter()),
+                    _ => None,
+                })
+                .flatten()
+                .filter_map(|item| match item {
+                    DisplayItem::Box(paint) if paint.decoration.background.alpha > 0.0 => {
+                        Some(paint.decoration.background.rgb)
+                    }
+                    _ => None,
+                })
+                .collect()
+        })
+        .collect()
+}
+
+#[test]
+fn copies_of_running_elements_paint_their_own_backgrounds() {
+    // CSS Backgrounds 3 §2.11.2: only the root element and the body give their backgrounds to
+    // the canvas; a running element shown with each page's counters paints its own.
+    const AQUA: [u8; 3] = [0, 255, 255];
+    let trace = render(
+        "@page{@top-left{content:element(head)}}h1{position:running(head);font:10pt Spike;margin:0;background:aqua}h1::after{content:' ' counter(page)}",
+        "<h1>Head</h1><p>First</p><p>Second</p>",
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    assert_eq!(
+        frame_text(&trace),
+        [vec!["Head 1".to_owned()], vec!["Head 2".to_owned()]],
+        "each page shows a copy with its own page number"
+    );
+    assert_eq!(
+        frame_backgrounds(&trace),
+        [vec![AQUA], vec![AQUA]],
+        "each copy paints the running element's background"
+    );
+}

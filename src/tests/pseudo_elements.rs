@@ -526,6 +526,27 @@ fn first_line_styles_atomic_inlines_and_their_contents_only_where_they_lie_on_it
 }
 
 #[test]
+fn first_line_copies_of_atomic_inlines_paint_their_own_backgrounds() {
+    // CSS Backgrounds 3 §2.11.2: only the root element and the body give their backgrounds to
+    // the canvas; the copy of an inline-block on the first line paints its own.
+    let trace = trace(
+        "p::first-line{color:red}.ib{display:inline-block;background:yellow}",
+        "<p><span class=ib>box</span> text</p>",
+    );
+    let background = common::painted_box(&trace, [255, 255, 0]);
+    let runs = runs(&trace);
+    let text = run(&runs, "box");
+    assert_eq!(
+        text.1, RED,
+        "the inline-block lies on the first line: {runs:#?}"
+    );
+    assert!(
+        background.width > 0.0 && background.height > 0.0,
+        "the inline-block's background is painted: {background:?}"
+    );
+}
+
+#[test]
 fn first_line_styles_ruby_annotations_and_their_contents_only_where_they_lie_on_it() {
     // CSS Pseudo-Elements 4 §2.1.3 and CSS Ruby 1 §2.1.1: an annotation box of a base on the
     // first line inherits from `::first-line`, its contents from it, cased by the line.
