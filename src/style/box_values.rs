@@ -624,6 +624,10 @@ impl Display {
                 Self::TableRow | Self::TableColumn | Self::TableColumnGroup | Self::TableCell
             )
     }
+    /// An internal table box or a caption, which a table wraps (CSS 2.1 §17.2.1).
+    pub(crate) fn is_table_part(&self) -> bool {
+        self.is_table_internal() || *self == Self::TableCaption
+    }
     /// A ruby base, annotation or level container, which only a ruby container holds
     /// (CSS Ruby 1 §2.1.1).
     pub(crate) fn is_ruby_internal(&self) -> bool {

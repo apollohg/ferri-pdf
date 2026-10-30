@@ -157,10 +157,8 @@ pub(super) fn normalize_with<T: Content>(
                 && ((tabular
                     && proper_descendant(parent, before)
                     && proper_descendant(parent, after))
-                    || before
-                        .is_some_and(|d| d.is_table_internal() || *d == Display::TableCaption)
-                        && after
-                            .is_some_and(|d| d.is_table_internal() || *d == Display::TableCaption)))
+                    || before.is_some_and(Display::is_table_part)
+                        && after.is_some_and(Display::is_table_part)))
         })
         .collect::<Vec<_>>()
         .into_iter()

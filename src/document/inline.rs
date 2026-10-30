@@ -838,7 +838,7 @@ impl InlineCollector {
         }
         Ok(())
     }
-    fn drop_pending_space(&mut self) {
+    pub(crate) fn drop_pending_space(&mut self) {
         self.pending_space = None;
         self.after_space.clear();
     }
@@ -1153,6 +1153,22 @@ impl InlineCollector {
                 .collect();
         open.reverse();
         open
+    }
+    /// Content appended now lies in an inline box.
+    pub(crate) fn inside_inline_box(&self) -> bool {
+        self.open_box.is_some()
+    }
+    /// The atomic inline last appended, if it lies in the open inline box and nothing but
+    /// collapsible white space follows it.
+    pub(crate) fn trailing_atomic(&mut self) -> Option<&mut crate::document::BlockBox> {
+        let (open_box, end) = (self.open_box, self.text.len());
+        self.atomics
+            .last_mut()
+            .filter(|anchor| {
+                anchor.inline_box == open_box
+                    && anchor.offset + OBJECT_REPLACEMENT_CHARACTER.len_utf8() == end
+            })
+            .map(|anchor| &mut anchor.block)
     }
     /// An anchor can sit between blocks only outside an open inline box.
     pub(crate) fn is_between_blocks(&self) -> bool {

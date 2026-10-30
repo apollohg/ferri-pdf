@@ -336,3 +336,41 @@ fn empty_bases_and_right_to_left_containers_keep_their_columns() {
         base.x + base.width,
     );
 }
+
+#[test]
+fn table_parts_in_ruby_boxes_share_one_anonymous_inline_table() {
+    let trace = render(
+        ".c{display:table-cell}rt .c{font-size:inherit}",
+        "<p><ruby>漢<span class=c>字</span> <span class=c>水</span><rt>あ<span class=c>ア</span></rt></ruby></p>",
+    );
+    let [first, second] = ["字", "水"].map(|text| line(&trace, text));
+    assert_labelled_pt(
+        "consecutive cells share a row, the white space between them removed",
+        second.x - first.x,
+        SIZE_PT,
+    );
+    assert_labelled_pt(
+        "the cells' inline table sits on the base line",
+        first.baseline,
+        second.baseline,
+    );
+    let base = line(&trace, "漢\u{fffc}");
+    assert_labelled_pt(
+        "the inline table follows the base text in the ruby base",
+        first.x,
+        base.x + SIZE_PT,
+    );
+    let annotation = line(&trace, "あ\u{fffc}");
+    let cell = line(&trace, "ア");
+    assert_labelled_pt(
+        "an annotation's table part follows its text on the annotation's line",
+        cell.x,
+        annotation.x + ANNOTATION_PT,
+    );
+    assert!(
+        cell.baseline < base.baseline,
+        "the annotation and its table lie over the base: {} vs {}",
+        cell.baseline,
+        base.baseline
+    );
+}

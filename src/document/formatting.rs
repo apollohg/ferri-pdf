@@ -324,6 +324,23 @@ impl BlockBox {
     pub(crate) fn is_anonymous(&self) -> bool {
         self.anonymous
     }
+    /// Adds `part` to the sequence of table parts this anonymous table wraps, whose cells
+    /// share the anonymous row ending it (CSS 2.1 §17.2.1).
+    fn join_table_part(&mut self, part: BlockBox, page_scope: Option<std::sync::Arc<str>>) {
+        let mut parts = Vec::new();
+        for child in std::mem::take(&mut self.children) {
+            match child {
+                BlockContent::Block(row)
+                    if row.anonymous && row.style.display == Display::TableRow =>
+                {
+                    parts.extend(row.children);
+                }
+                child => parts.push(child),
+            }
+        }
+        parts.push(BlockContent::Block(part));
+        *self = Self::anonymous((*self.style).clone(), parts, page_scope);
+    }
     pub(super) fn with_decoration(
         style: Style,
         children: Vec<BlockContent>,
@@ -1172,6 +1189,9 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     /// style makes it one.
     fn atomic(&mut self, mut block: BlockBox, parent: &Style) -> Result<(), DocumentError> {
         self.ruby.content(self.inline)?;
+        if block.style.display.is_table_part() {
+            return self.table_part(block, parent);
+        }
         if block.style.initial_letter.is_none() || !self.initial_letter_allowed() {
             return self.inline.atomic(block, parent);
         }
@@ -1203,6 +1223,29 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             atomic: true,
         });
         self.inline.initial_letter(block, parent, false)
+    }
+    /// Places table part `part`, whose parent is an inline box, in the anonymous inline table
+    /// of the parts just before it, or in a new one (CSS 2.1 §17.2.1).
+    fn table_part(&mut self, part: BlockBox, parent: &Style) -> Result<(), DocumentError> {
+        let page_scope = self.element_page_scope.clone();
+        if let Some(table) = self
+            .inline
+            .trailing_atomic()
+            .filter(|table| table.anonymous && table.style.display == Display::InlineTable)
+        {
+            table.join_table_part(part, page_scope);
+            // White space between table parts is removed.
+            self.inline.drop_pending_space();
+            return Ok(());
+        }
+        self.inline.atomic(
+            BlockBox::anonymous(
+                parent.anonymous(Display::InlineTable),
+                vec![BlockContent::Block(part)],
+                page_scope,
+            ),
+            parent,
+        )
     }
     /// Places the inline initial letter `letter`, whose contents the collector holds, in the
     /// content before it; one that inside marker `marker` makes ends the marker.
@@ -1779,11 +1822,17 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 self.append_generated(&output, &images, &style)?;
                 self.close_inline()?;
             }
-            Display::InlineMath
-            | Display::InlineBlock
-            | Display::InlineFlex
-            | Display::InlineGrid
-            | Display::InlineTable => {
+            // An inline box's table parts lie in an anonymous inline table (CSS 2.1 §17.2.1).
+            display
+                if matches!(
+                    display,
+                    Display::InlineMath
+                        | Display::InlineBlock
+                        | Display::InlineFlex
+                        | Display::InlineGrid
+                        | Display::InlineTable
+                ) || (display.is_table_part() && self.inline.inside_inline_box()) =>
+            {
                 let children = Paragraph::generated_output(&output, &images, &style)?
                     .into_iter()
                     .map(BlockContent::Inline)
@@ -2679,8 +2728,15 @@ fn block<'a>(
                     | Display::TableColumn
                     | Display::TableColumnGroup
                     | Display::TableCaption => {
-                        builder.flush()?;
-                        Some(Placement::Flow)
+                        // CSS 2.1 §17.2.1: the anonymous table wrapping table parts whose
+                        // parent is an inline box is an inline table.
+                        if child_style.display.is_table_part() && builder.inline.inside_inline_box()
+                        {
+                            Some(Placement::Atomic)
+                        } else {
+                            builder.flush()?;
+                            Some(Placement::Flow)
+                        }
                     }
                     Display::InlineMath | Display::InlineTable
                         if matches!(
