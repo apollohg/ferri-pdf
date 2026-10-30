@@ -275,7 +275,8 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 height,
             },
             document.navigation().destinations,
-            false,
+            // A footnote area's backgrounds may clip to the text of the bodies it holds.
+            true,
         )?;
         let monolithic: Vec<[f32; 2]> = flow
             .line_boxes
@@ -598,6 +599,9 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                     + area.borders[TOP]
                     + area.borders[BOTTOM],
             };
+            // CSS Backgrounds 4 §2.8: the area's text-clipped backgrounds paint within the
+            // text of the footnote bodies it holds.
+            let clips_to_text = decoration.backgrounds.clips_to_text();
             let mut items = Vec::new();
             if decoration.is_visible() {
                 items.push(DisplayItem::Box(BoxPaint {
@@ -605,6 +609,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                     ..BoxPaint::whole(border_box, decoration)
                 }));
             }
+            let mut text = Vec::new();
             let x = border_box.x + area.borders[LEFT] + area.padding[LEFT];
             let mut y = border_box.y + area.borders[TOP] + area.padding[TOP];
             for row in rows(self.footnotes.parts(page), area.width) {
@@ -616,31 +621,38 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                         width: layout.width,
                         height: part.height(),
                     };
-                    let mut frame_items = layout.flow.items.clone();
-                    if part.top > 0.0 || part.bottom < layout.height {
-                        frame_items.insert(
-                            0,
-                            DisplayItem::PushClip(Clip {
-                                rect: window,
-                                radii: crate::graphics::Radii::default(),
-                                outline: None,
-                                axes: [false, true],
-                                reference_box: None,
-                            }),
-                        );
-                        frame_items.push(DisplayItem::Pop);
-                    }
                     let origin = [x + offset, y - part.top];
-                    items.push(DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
-                        matrix: [1.0, 0.0, 0.0, 1.0, origin[0], origin[1]],
-                        area: Rect {
-                            height: layout.height,
-                            y: 0.0,
-                            ..window
-                        },
-                        items: frame_items,
-                        lines: layout.flow.lines.clone(),
-                    })));
+                    let sliced = part.top > 0.0 || part.bottom < layout.height;
+                    // The part's slice of the body's items, placed in the area.
+                    let frame = |mut items: Vec<DisplayItem>, lines: Vec<TextLine>| {
+                        if sliced {
+                            items.insert(
+                                0,
+                                DisplayItem::PushClip(Clip {
+                                    rect: window,
+                                    radii: crate::graphics::Radii::default(),
+                                    outline: None,
+                                    axes: [false, true],
+                                    reference_box: None,
+                                }),
+                            );
+                            items.push(DisplayItem::Pop);
+                        }
+                        DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
+                            matrix: [1.0, 0.0, 0.0, 1.0, origin[0], origin[1]],
+                            area: Rect {
+                                height: layout.height,
+                                y: 0.0,
+                                ..window
+                            },
+                            items,
+                            lines,
+                        }))
+                    };
+                    items.push(frame(layout.flow.items.clone(), layout.flow.lines.clone()));
+                    if clips_to_text && let Some(area) = &layout.flow.text_area {
+                        text.push(frame(area.items.clone(), area.lines.clone()));
+                    }
                     navigation.push((page, layout.flow.navigation.translated(origin, window)));
                     // CSS Images 4 §2.7: a body broken across footnote areas is imaged as laid
                     // out whole, which its first part starts.
@@ -653,6 +665,14 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                     }
                 }
                 y += row.height;
+            }
+            if clips_to_text && let Some(DisplayItem::Box(paint)) = items.first_mut() {
+                paint.text_area = Some(std::sync::Arc::new(crate::graphics::FlowPaint {
+                    matrix: [1.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+                    area: page_area,
+                    items: text,
+                    lines: Vec::new(),
+                }));
             }
             let scope: PaintKey = Rc::from([FLOW_LEVEL]);
             for item in items {
