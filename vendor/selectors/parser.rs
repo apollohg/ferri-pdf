@@ -1674,6 +1674,8 @@ pub enum Combinator {
     /// Another combinator used for `::part()`, which represents the jump from
     /// the part to the containing shadow host.
     Part,
+    /// `||`, from a table cell to the column elements of its columns (Selectors 5 §8.1).
+    Column,
 }
 
 impl Combinator {
@@ -1908,6 +1910,9 @@ pub enum RelativeSelectorMatchHint {
     InSibling,
     /// Across this element's subsequent siblings and their subtrees.
     InSiblingSubtree,
+    /// Anywhere in this element's tree: a column combinator relates table cells to column
+    /// elements outside any subtree or sibling range of the anchor.
+    InTree,
 }
 
 impl RelativeSelectorMatchHint {
@@ -1916,7 +1921,11 @@ impl RelativeSelectorMatchHint {
         relative_combinator: Combinator,
         has_child_or_descendants: bool,
         has_adjacent_or_next_siblings: bool,
+        has_columns: bool,
     ) -> Self {
+        if has_columns {
+            return RelativeSelectorMatchHint::InTree;
+        }
         match relative_combinator {
             Combinator::Descendant => RelativeSelectorMatchHint::InSubtree,
             Combinator::Child => {
@@ -1949,6 +1958,7 @@ impl RelativeSelectorMatchHint {
                     RelativeSelectorMatchHint::InSiblingSubtree
                 }
             },
+            Combinator::Column => RelativeSelectorMatchHint::InTree,
             Combinator::Part | Combinator::PseudoElement | Combinator::SlotAssignment => {
                 debug_assert!(false, "Unexpected relative combinator");
                 RelativeSelectorMatchHint::InSubtree
@@ -1981,6 +1991,7 @@ pub struct RelativeSelectorCombinatorCount {
     relative_combinator: Combinator,
     pub child_or_descendants: usize,
     pub adjacent_or_next_siblings: usize,
+    pub columns: usize,
 }
 
 impl RelativeSelectorCombinatorCount {
@@ -1990,6 +2001,7 @@ impl RelativeSelectorCombinatorCount {
             relative_combinator: relative_selector.selector.combinator_at_parse_order(1),
             child_or_descendants: 0,
             adjacent_or_next_siblings: 0,
+            columns: 0,
         };
 
         for combinator in CombinatorIter::new(
@@ -2003,6 +2015,9 @@ impl RelativeSelectorCombinatorCount {
                 },
                 Combinator::NextSibling | Combinator::LaterSibling => {
                     result.adjacent_or_next_siblings += 1;
+                },
+                Combinator::Column => {
+                    result.columns += 1;
                 },
                 Combinator::Part | Combinator::PseudoElement | Combinator::SlotAssignment => {
                     continue;
@@ -2018,6 +2033,7 @@ impl RelativeSelectorCombinatorCount {
             self.relative_combinator,
             self.child_or_descendants != 0,
             self.adjacent_or_next_siblings != 0,
+            self.columns != 0,
         )
     }
 }
@@ -2040,6 +2056,7 @@ bitflags! {
     struct CombinatorComposition: u8 {
         const DESCENDANTS = 1 << 0;
         const SIBLINGS = 1 << 1;
+        const COLUMNS = 1 << 2;
     }
 }
 
@@ -2053,6 +2070,9 @@ impl CombinatorComposition {
                 },
                 Combinator::NextSibling | Combinator::LaterSibling => {
                     result.insert(Self::SIBLINGS);
+                },
+                Combinator::Column => {
+                    result.insert(Self::COLUMNS);
                 },
                 Combinator::Part | Combinator::PseudoElement | Combinator::SlotAssignment => {
                     continue;
@@ -2094,6 +2114,7 @@ impl<Impl: SelectorImpl> RelativeSelector<Impl> {
                     selector.combinator_at_parse_order(1),
                     composition.intersects(CombinatorComposition::DESCENDANTS),
                     composition.intersects(CombinatorComposition::SIBLINGS),
+                    composition.intersects(CombinatorComposition::COLUMNS),
                 );
                 RelativeSelector {
                     match_hint,
@@ -2602,6 +2623,7 @@ impl Combinator {
             Combinator::Descendant => Ok(()),
             Combinator::NextSibling => dest.write_str("+ "),
             Combinator::LaterSibling => dest.write_str("~ "),
+            Combinator::Column => dest.write_str("|| "),
             Combinator::PseudoElement | Combinator::Part | Combinator::SlotAssignment => unsafe {
                 debug_unreachable!("Already handled")
             },
@@ -2923,6 +2945,9 @@ fn try_parse_combinator<'i, 't>(input: &mut CssParser<'i, 't>) -> Result<Combina
                 return Ok(Combinator::LaterSibling);
             },
             Ok(_) => {
+                if column_combinator(input, &before_this_token) {
+                    return Ok(Combinator::Column);
+                }
                 input.reset(&before_this_token);
                 if any_whitespace {
                     return Ok(Combinator::Descendant);
@@ -2932,6 +2957,29 @@ fn try_parse_combinator<'i, 't>(input: &mut CssParser<'i, 't>) -> Result<Combina
             },
         }
     }
+}
+
+/// Consumes `||` from `start`, the column combinator, which is never a namespace separator.
+fn column_combinator(input: &mut CssParser<'_, '_>, start: &cssparser::ParserState) -> bool {
+    input.reset(start);
+    let column = matches!(input.next_including_whitespace(), Ok(&Token::Delim('|')))
+        && matches!(input.next_including_whitespace(), Ok(&Token::Delim('|')));
+    if !column {
+        input.reset(start);
+    }
+    column
+}
+
+/// Consumes a namespace separator: a `|` that does not start a column combinator.
+fn namespace_separator(input: &mut CssParser<'_, '_>, in_attr_selector: bool) -> bool {
+    let start = input.state();
+    let separator = matches!(input.next_including_whitespace(), Ok(&Token::Delim('|')));
+    let after = input.state();
+    let column = separator
+        && !in_attr_selector
+        && matches!(input.next_including_whitespace(), Ok(&Token::Delim('|')));
+    input.reset(if separator && !column { &after } else { &start });
+    separator && !column
 }
 
 /// * `Err(())`: Invalid selector, abort
@@ -3078,36 +3126,30 @@ where
         Ok(Token::Ident(value)) => {
             let value = value.clone();
             let after_ident = input.state();
-            match input.next_including_whitespace() {
-                Ok(&Token::Delim('|')) => {
-                    let prefix = value.as_ref().into();
-                    let result = parser.namespace_for_prefix(&prefix);
-                    let url = result.ok_or(
-                        after_ident
-                            .source_location()
-                            .new_custom_error(SelectorParseErrorKind::ExpectedNamespace(value)),
-                    )?;
-                    explicit_namespace(input, QNamePrefix::ExplicitNamespace(prefix, url))
-                },
-                _ => {
-                    input.reset(&after_ident);
-                    if in_attr_selector {
-                        Ok(OptionalQName::Some(
-                            QNamePrefix::ImplicitNoNamespace,
-                            Some(value),
-                        ))
-                    } else {
-                        default_namespace(Some(value))
-                    }
-                },
+            if namespace_separator(input, in_attr_selector) {
+                let prefix = value.as_ref().into();
+                let result = parser.namespace_for_prefix(&prefix);
+                let url = result.ok_or(
+                    after_ident
+                        .source_location()
+                        .new_custom_error(SelectorParseErrorKind::ExpectedNamespace(value)),
+                )?;
+                explicit_namespace(input, QNamePrefix::ExplicitNamespace(prefix, url))
+            } else if in_attr_selector {
+                Ok(OptionalQName::Some(
+                    QNamePrefix::ImplicitNoNamespace,
+                    Some(value),
+                ))
+            } else {
+                default_namespace(Some(value))
             }
         },
         Ok(Token::Delim('*')) => {
             let after_star = input.state();
+            if namespace_separator(input, in_attr_selector) {
+                return explicit_namespace(input, QNamePrefix::ExplicitAnyNamespace);
+            }
             match input.next_including_whitespace() {
-                Ok(&Token::Delim('|')) => {
-                    explicit_namespace(input, QNamePrefix::ExplicitAnyNamespace)
-                },
                 _ if !in_attr_selector => {
                     input.reset(&after_star);
                     default_namespace(None)

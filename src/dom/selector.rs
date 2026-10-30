@@ -562,6 +562,16 @@ impl<'i> parser::Parser<'i> for StaticParser<'_> {
             }
             return Ok(StaticState::Current(Box::new(selectors)));
         }
+        if let Some(last) = [("nth-col", false), ("nth-last-col", true)]
+            .into_iter()
+            .find_map(|(column, last)| name.eq_ignore_ascii_case(column).then_some(last))
+        {
+            let (a, b) = cssparser::parse_nth(input)?;
+            return Ok(StaticState::NthColumn {
+                position: parser::AnPlusB(a, b),
+                last,
+            });
+        }
         if name.eq_ignore_ascii_case("local-link") {
             let token = input.next()?.clone();
             return match token {
@@ -779,6 +789,12 @@ pub(crate) enum StaticState {
     Muted,
     /// `:state()` (Selectors 5 §5.2): custom element states, which only script adds.
     CustomState(String),
+    /// `:nth-col()` and `:nth-last-col()` (Selectors 5 §8.2–§8.3): a table cell in a column
+    /// at an `An+B` position, counted from the last column when `last`.
+    NthColumn {
+        position: parser::AnPlusB,
+        last: bool,
+    },
     Inactive(InactiveState),
     Form(FormState),
 }
@@ -860,6 +876,11 @@ impl ToCss for StaticState {
                     }
                     cssparser::serialize_string(range, dest)?;
                 }
+                dest.write_str(")")
+            }
+            Self::NthColumn { position, last } => {
+                dest.write_str(if *last { ":nth-last-col(" } else { ":nth-col(" })?;
+                position.to_css(dest)?;
                 dest.write_str(")")
             }
             Self::Inactive(state) => write!(dest, ":{}", state.name()),
@@ -1164,6 +1185,16 @@ impl SelectorElement for MatchingElement<'_> {
                 })
             })
     }
+    fn column_elements(&self) -> Vec<Self> {
+        if self.document {
+            return Vec::new();
+        }
+        self.element
+            .column_elements()
+            .into_iter()
+            .map(|column| self.with_element(column))
+            .collect()
+    }
     fn first_element_child(&self) -> Option<Self> {
         if self.document {
             return Some(self.with_element(self.element));
@@ -1237,6 +1268,18 @@ impl SelectorElement for MatchingElement<'_> {
                     .is_none_or(|levels| levels.contains(&i32::from(level)))
             }),
             StaticState::Form(state) => state.matches(element),
+            StaticState::NthColumn { position, last } => {
+                element.cell_columns().is_some_and(|columns| {
+                    columns.range.clone().any(|column| {
+                        let index = if *last {
+                            columns.count - column
+                        } else {
+                            column + 1
+                        };
+                        i32::try_from(index).is_ok_and(|index| position.matches_index(index))
+                    })
+                })
+            }
             StaticState::Paused => element.is_media(),
             StaticState::Muted => element.is_media() && element.attr("muted").is_some(),
             StaticState::Inactive(_) | StaticState::Current(_) | StaticState::CustomState(_) => {

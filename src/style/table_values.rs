@@ -8,9 +8,6 @@ use crate::style::{
 };
 use serde::Serialize;
 
-const MAX_HTML_COLUMN_SPAN: usize = 1000;
-const MAX_HTML_ROW_SPAN: usize = 65534;
-
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
 pub(crate) enum TableLayout {
     #[default]
@@ -168,29 +165,14 @@ pub(super) fn span(value: &Component, relative: &Relative<'_>) -> Result<usize, 
 
 /// HTML and `MathML` Core table structure, independently of CSS presentation.
 pub(super) fn structure(style: &mut Style, element: Element<'_>) {
-    let column_span = match (element.namespace(), element.name()) {
-        (crate::dom::HTML_NAMESPACE, "td" | "th") => Some("colspan"),
-        (crate::dom::MATHML_NAMESPACE, "mtd") => Some("columnspan"),
-        _ => None,
-    };
-    if let Some(attribute) = column_span {
-        style.table.column_span = element
-            .attr(attribute)
-            .and_then(crate::style::user_agent::non_negative)
-            .unwrap_or(1.0)
-            .clamp(1.0, MAX_HTML_COLUMN_SPAN as f64) as usize;
-        style.table.row_span = element
-            .attr("rowspan")
-            .and_then(crate::style::user_agent::non_negative)
-            .unwrap_or(1.0)
-            .min(MAX_HTML_ROW_SPAN as f64) as usize;
-    } else if element.namespace() == crate::dom::HTML_NAMESPACE
-        && matches!(element.name(), "col" | "colgroup")
-    {
-        style.table.column_span = element
-            .attr("span")
-            .and_then(crate::style::user_agent::non_negative)
-            .unwrap_or(1.0)
-            .clamp(1.0, MAX_HTML_COLUMN_SPAN as f64) as usize;
+    match (element.namespace(), element.name()) {
+        (crate::dom::HTML_NAMESPACE, "td" | "th") | (crate::dom::MATHML_NAMESPACE, "mtd") => {
+            style.table.column_span = crate::dom::column_span(element);
+            style.table.row_span = crate::dom::row_span(element);
+        }
+        (crate::dom::HTML_NAMESPACE, "col" | "colgroup") => {
+            style.table.column_span = crate::dom::column_span(element);
+        }
+        _ => {}
     }
 }

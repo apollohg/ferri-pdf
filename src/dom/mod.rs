@@ -33,6 +33,7 @@ use html5ever::{
 };
 pub(crate) use scraper::Node as NodeData;
 use std::ops::ControlFlow;
+pub(crate) use tree::table::{column_span, row_span};
 pub(crate) use tree::{
     ChildNodes, DOCUMENT_CONTEXT_ORDER, DocumentTree, Element, ElementId, Node, TreeRelation,
     TreeScopeId, XmlTree,

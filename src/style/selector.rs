@@ -238,6 +238,16 @@ fn originating_selector<'i>(
                 universal = false;
             }
             Token::WhiteSpace(_) | Token::Delim('>' | '+' | '~') => universal = true,
+            // A column combinator, unlike a lone namespace separator, ends a compound.
+            Token::Delim('|') => {
+                universal = input
+                    .try_parse(|input| {
+                        matches!(input.next_including_whitespace(), Ok(Token::Delim('|')))
+                            .then_some(())
+                            .ok_or(())
+                    })
+                    .is_ok();
+            }
             Token::Function(_) | Token::ParenthesisBlock | Token::SquareBracketBlock => {
                 input.parse_nested_block(consume)?;
                 universal = false;

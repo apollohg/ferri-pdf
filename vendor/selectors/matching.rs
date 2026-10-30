@@ -535,6 +535,31 @@ fn matches_relative_selector<E: Element>(
     context: &mut MatchingContext<E::Impl>,
     rightmost: SubjectOrPseudoElement,
 ) -> bool {
+    if relative_selector.match_hint == RelativeSelectorMatchHint::InTree {
+        let mut root = element.clone();
+        while let Some(parent) = root.parent_element() {
+            root = parent;
+        }
+        while let Some(previous) = root.prev_sibling_element() {
+            root = previous;
+        }
+        let mut next_element = Some(root);
+        while let Some(el) = next_element {
+            if matches_complex_selector(relative_selector.selector.iter(), &el, context, rightmost)
+                .to_bool(true)
+                || matches_relative_selector_subtree(
+                    &relative_selector.selector,
+                    &el,
+                    context,
+                    rightmost,
+                )
+            {
+                return true;
+            }
+            next_element = el.next_sibling_element();
+        }
+        return false;
+    }
     // Overall, we want to mark the path that we've traversed so that when an element
     // is invalidated, we early-reject unnecessary relative selector invalidations.
     if relative_selector.match_hint.is_descendant_direction() {
@@ -919,6 +944,49 @@ where
         Combinator::PseudoElement => {
             NextElement::new(element.pseudo_element_originating_element(), false)
         },
+        Combinator::Column => unreachable!("column candidates are matched as a set"),
+    }
+}
+
+/// Matches the compounds left of a column combinator against each column element of
+/// `cell`'s columns. Failing for every one says nothing about other cells, so the caller's
+/// candidate search continues.
+fn matches_column_elements<E>(
+    selector_iter: &SelectorIter<E::Impl>,
+    cell: &E,
+    context: &mut MatchingContext<E::Impl>,
+    rightmost: SubjectOrPseudoElement,
+    first_subject_compound: SubjectOrPseudoElement,
+) -> SelectorMatchingResult
+where
+    E: Element,
+{
+    let mut unknown = false;
+    for column in cell.column_elements() {
+        let result = context.with_visited_handling_mode(
+            VisitedHandlingMode::AllLinksUnvisited,
+            |context| {
+                context.with_featureless(false, |context| {
+                    matches_complex_selector_internal(
+                        selector_iter.clone(),
+                        &column,
+                        context,
+                        rightmost,
+                        first_subject_compound,
+                    )
+                })
+            },
+        );
+        match result {
+            SelectorMatchingResult::Matched => return result,
+            SelectorMatchingResult::Unknown => unknown = true,
+            _ => {},
+        }
+    }
+    if unknown {
+        SelectorMatchingResult::Unknown
+    } else {
+        SelectorMatchingResult::NotMatchedAndRestartFromClosestLaterSibling
     }
 }
 
@@ -972,6 +1040,22 @@ where
     if !is_pseudo_combinator {
         rightmost = SubjectOrPseudoElement::No;
         first_subject_compound = SubjectOrPseudoElement::No;
+    }
+
+    if combinator == Combinator::Column {
+        let result = matches_column_elements(
+            &selector_iter,
+            element,
+            context,
+            rightmost,
+            first_subject_compound,
+        );
+        return match result {
+            SelectorMatchingResult::Matched if !matches_compound_selector.to_bool(false) => {
+                SelectorMatchingResult::Unknown
+            },
+            result => result,
+        };
     }
 
     // Stop matching :visited as soon as we find a link, or a combinator for
@@ -1059,7 +1143,8 @@ where
             Combinator::NextSibling
             | Combinator::PseudoElement
             | Combinator::Part
-            | Combinator::SlotAssignment => {
+            | Combinator::SlotAssignment
+            | Combinator::Column => {
                 // NOTE(emilio): Conceptually, PseudoElement / Part / SlotAssignment should return
                 // `candidate_not_found`, but it doesn't matter in practice since they don't have
                 // sibling / descendant combinators to the right of them. This hopefully saves one

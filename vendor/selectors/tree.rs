@@ -80,6 +80,12 @@ pub trait Element: Sized + Clone + Debug {
     /// Skips non-element nodes
     fn next_sibling_element(&self) -> Option<Self>;
 
+    /// The column elements whose columns this table cell element belongs to, which the
+    /// column combinator relates it to (Selectors 5 §8.1).
+    fn column_elements(&self) -> Vec<Self> {
+        Vec::new()
+    }
+
     /// Skips non-element nodes
     fn first_element_child(&self) -> Option<Self>;
 

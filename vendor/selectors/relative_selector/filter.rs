@@ -121,9 +121,9 @@ impl RelativeSelectorFilterMap {
     ) -> bool {
         if matches!(
             selector.match_hint,
-            RelativeSelectorMatchHint::InNextSibling
+            RelativeSelectorMatchHint::InNextSibling | RelativeSelectorMatchHint::InTree
         ) {
-            // Don't bother.
+            // Don't bother; a tree-wide search has no filter to consult.
             return false;
         }
         let is_sibling = matches!(
