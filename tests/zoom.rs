@@ -5,6 +5,53 @@ use ferri_pdf::{DisplayItem, LayoutTrace, render_html};
 const TOLERANCE_PT: f32 = 0.001;
 
 #[test]
+fn zoom_rejects_shadow_lengths_that_overflow_used_coordinates() {
+    for shadow in [
+        "1e30pt 0 blue",
+        "0 1e30pt blue",
+        "0 0 1e30pt blue",
+        "0 0 0 1e30pt blue",
+        "0 0 0 -1e30pt blue inset",
+    ] {
+        for selector in ["div", "span", "div::before"] {
+            let content = if selector.ends_with("::before") {
+                "content:'X';"
+            } else {
+                ""
+            };
+            let result = render_html(
+                &format!(
+                    "<style>{PROFILE}{selector}{{{content}zoom:1e20;font-size:0;width:1e-19pt;height:1e-19pt;box-shadow:{shadow}}}</style><div><span></span></div>"
+                ),
+                &local_options(),
+            );
+            assert!(
+                matches!(&result, Err(ferri_pdf::Error::Css(error)) if error.to_string().contains("non-finite zoomed box-shadow")),
+                "{selector}, {shadow}: overflowing paint lengths must report a CSS error, got {}",
+                result
+                    .as_ref()
+                    .err()
+                    .map_or_else(|| "successful render".into(), ToString::to_string)
+            );
+        }
+        let finite = shadow.replace("1e30pt", "1e-19pt");
+        let physical = shadow.replace("1e30pt", "10pt");
+        same_layout(
+            &render(
+                "<div></div>",
+                &format!(
+                    "div{{zoom:1e20;font-size:0;width:1e-19pt;height:1e-19pt;box-shadow:{finite}}}"
+                ),
+            ),
+            &render(
+                "<div></div>",
+                &format!("div{{font-size:0;width:10pt;height:10pt;box-shadow:{physical}}}"),
+            ),
+        );
+    }
+}
+
+#[test]
 fn anchor_functions_use_the_consumers_unzoomed_coordinates() {
     let body = "<section><div class=anchor></div><div class=target>T</div></section>";
     for anchor_zoom in [0.5, 2.0] {

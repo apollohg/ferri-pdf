@@ -2012,6 +2012,18 @@ impl Stylesheet {
         if style.display.is_ruby() {
             style.unicode_bidi = style.unicode_bidi.forced_isolation();
         }
+        if style.decoration.shadows.iter().any(|shadow| {
+            [
+                shadow.offset[0],
+                shadow.offset[1],
+                shadow.blur,
+                shadow.spread,
+            ]
+            .into_iter()
+            .any(|length| !(length * style.effective_zoom).is_finite())
+        }) {
+            return Err("non-finite zoomed box-shadow dimensions".into());
+        }
         if !style.size.is_finite()
             || style.size < 0.0
             || style
