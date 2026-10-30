@@ -6080,7 +6080,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 Some(letter) => (
                     self.y + letter.top + atomic.margin_top,
                     if source.style().used_rtl() {
-                        fragment.x
+                        fragment.x + fragment.width + letter.kerning - letter.width
                     } else {
                         fragment.x - letter.kerning
                     },

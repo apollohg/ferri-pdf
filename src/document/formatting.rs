@@ -1280,6 +1280,12 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         }
         // `text-indent` applies to block containers, which the letter is not (CSS Text 3 §8.1).
         style.text_indent = crate::style::TextIndent::default();
+        // An automatically sized letter fits its contents, which `text-align` does not align
+        // (CSS Inline 3 §7.5.6); its lines start at its start edge.
+        if *style.width.basis() == crate::style::Size::Auto {
+            style.align = crate::style::TextAlign::Start;
+            style.align_last = None;
+        }
         match contents.finish(&style)? {
             Ok(paragraph) => {
                 let block = self.inline_letter_box(style, decoration, navigation, paragraph)?;

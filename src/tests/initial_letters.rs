@@ -582,6 +582,80 @@ fn block_level_content_ends_the_letter_and_its_box_continues_after() {
 }
 
 #[test]
+fn letters_too_long_for_a_line_wrap_each_line_as_a_letter() {
+    let font = Font::profile();
+    let trace = render(
+        "span{initial-letter:3}",
+        &format!("<p><span>Once more</span> {TEXT}</p>"),
+    );
+    let (first, rest) = split(&trace, "Once");
+    let last = rest[0];
+    let lines = &rest[1..];
+    let size = font.letter_size(3.0);
+    assert_eq!(last.text, "more", "{:#?}", describe(&rest));
+    for row in [first, last] {
+        assert_labelled_pt("each letter line's size", row.runs[0].font_size, size);
+    }
+    assert_labelled_pt(
+        "the first letter line drops from the paragraph's first line",
+        first.baseline - font.cap * size,
+        CONTENT_TOP + font.baseline() - font.cap * FONT_SIZE,
+    );
+    let top = lines[0].baseline - font.baseline();
+    assert!(
+        top >= first.baseline && top <= first.baseline + font.descent * size,
+        "the last letter line originates on the first line box below the first letter \
+         line's glyphs, at {top}: {:#?}",
+        describe(&rest)
+    );
+    assert_labelled_pt(
+        "the last letter line sinks three lines from there",
+        last.baseline,
+        lines[2].baseline,
+    );
+    assert_labelled_pt(
+        "the last letter line starts at the line's start",
+        last.x,
+        CONTENT_LEFT,
+    );
+    for line in &lines[..3] {
+        assert_labelled_pt(
+            "normal text follows the last letter line",
+            start(line),
+            last.x + last.width,
+        );
+    }
+    assert_labelled_pt(
+        "the line after the sink clears the letter",
+        start(lines[3]),
+        CONTENT_LEFT,
+    );
+    let rtl = render(
+        "p{direction:rtl}span{initial-letter:3}",
+        &format!("<p><span>Once more</span> {TEXT}</p>"),
+    );
+    let (_, rest) = split(&rtl, "Once");
+    let last = rest[0];
+    assert_labelled_pt(
+        "a right-to-left letter's last line ends at the line's right start",
+        last.x + last.width,
+        CONTENT_LEFT + CONTENT_WIDTH,
+    );
+    let text_end = rest[1].x
+        + rest[1]
+            .runs
+            .iter()
+            .map(|run| run.x + run.width)
+            .fold(0.0, f32::max);
+    assert!(
+        text_end <= last.x + 0.001,
+        "right-to-left text ends before the last letter line at {}: {:#?}",
+        last.x,
+        describe(&rest)
+    );
+}
+
+#[test]
 fn letters_needing_layout_to_size_or_wrap_are_unsupported() {
     for (css, body, expected) in [
         (
@@ -590,9 +664,9 @@ fn letters_needing_layout_to_size_or_wrap_are_unsupported() {
             "percentage block-axis padding",
         ),
         (
-            "span{initial-letter:3}",
+            "span{initial-letter:3;background:lime}",
             "<p><span>many words that cannot fit on one line at this size</span></p>",
-            "contents wrapping onto several lines",
+            "box decorations of contents wrapping onto several lines",
         ),
     ] {
         let error = render_error(css, body);

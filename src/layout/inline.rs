@@ -22,22 +22,37 @@ pub(super) struct MeasuredAtomic<'a> {
     pub letter: Option<LetterExtent>,
 }
 
-/// An initial letter's margin box against its originating line box (CSS Inline 3 §7.6).
+/// An initial letter's margin box against its originating line box (CSS Inline 3 §7.6):
+/// that of its last line where its contents wrap (§7.8.4).
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub(super) struct LetterExtent {
     /// Its top and bottom below the line box's top.
     pub top: f32,
     pub bottom: f32,
     /// How far its inline-start edge is inset to kern its glyphs to the line's start
-    /// (§7.6.2); the advance it takes on the line is its width less this.
+    /// (§7.6.2).
     pub kerning: f32,
+    /// Its margin box's width, which its advance on the line and its kerning may not span.
+    pub width: f32,
+    /// How far above the originating line box lies that of its first line.
+    pub lift: f32,
 }
 impl LetterExtent {
     /// How far the originating line moves down so that the letter stays below the
-    /// containing block's block-start content edge (§7.6.1).
+    /// containing block's block-start content edge (§7.6.1), and the line boxes of its
+    /// earlier lines fit above it.
     pub(super) fn rise(&self) -> f32 {
-        (-self.top).max(0.0)
+        (-self.top).max(self.lift)
     }
+}
+
+/// One line of an inline initial letter's contents, placed as the letter's only line would
+/// be (§7.8.4): its border box's top below the top of the line box it originates on, the
+/// content box's extent above its line, and the content box's height from there.
+struct LetterRow {
+    top: f32,
+    lead: f32,
+    content: f32,
 }
 
 /// Measures an atomic inline, which is laid out unbroken.
@@ -169,6 +184,8 @@ fn measure_initial_letter<'a>(
     let start = geometry.padding[0] + geometry.border[0];
     let end = geometry.padding[2] + geometry.border[2];
     let mut kerning = 0.0;
+    // Where the line box of each line of an inline letter's contents lies below the first's.
+    let mut origins: Vec<f32> = Vec::new();
     // The border box top below the line box top.
     let top = if letter.atomic {
         if border_box {
@@ -177,6 +194,7 @@ fn measure_initial_letter<'a>(
             surrounding.over_position(initial, measured.height - start - end) - start
         }
     } else {
+        trim_letter_lines(measurer.text, &mut measured)?;
         let Some(FlowItem::Paragraph(paragraph)) = measured
             .items
             .iter()
@@ -184,77 +202,77 @@ fn measure_initial_letter<'a>(
         else {
             unreachable!("an inline initial letter holds its contents' paragraph")
         };
-        let [line] = paragraph.lines.as_slice() else {
+        let automatic = *style.height.basis() == crate::style::Size::Auto;
+        let sizing = LetterSizing {
+            border_box,
+            automatic,
+            content: measured.height - start - end,
+            edges: [start, end],
+        };
+        let mut rows = Vec::with_capacity(paragraph.lines.len());
+        for (index, line) in paragraph.lines.iter().enumerate() {
+            let outline = measurer.text.outline_bounds(paragraph.paragraph, line)?;
+            rows.push(letter_row(letter, &sizing, style, line, outline));
+            if index == 0
+                && *style.width.basis() == crate::style::Size::Auto
+                && (0..4).all(|side| {
+                    style.padding[side].is_zero()
+                        && style.decoration.borders[side].used_width() == 0.0
+                })
+                && let Some(rect) = outline
+            {
+                kerning = if style.used_rtl() {
+                    line.width - (rect.x + rect.width)
+                } else {
+                    rect.x
+                };
+            }
+        }
+        if rows.len() > 1 && block.decoration().is_visible() {
             return Err(LayoutError::UnsupportedInitialLetter {
-                feature: "contents wrapping onto several lines",
+                feature: "box decorations of contents wrapping onto several lines",
             }
             .into());
-        };
-        let outline = measurer.text.outline_bounds(paragraph.paragraph, line)?;
-        // The outlines' extent below the line box top, which is the over alignment point.
-        let [ink_top, ink_bottom] = outline.map_or([0.0, line.height], |rect| {
-            [rect.y + line.ascent, rect.y + rect.height + line.ascent]
-        });
-        let ink_bottom = ink_bottom.max(line.height);
-        let automatic = *style.height.basis() == crate::style::Size::Auto;
-        // The content box's extent above the line box top: glyphs above the over point,
-        // which only padding or borders bring into it, or `align-content`'s free space.
-        let lead = if automatic {
-            if start > 0.0 {
-                (-ink_top).max(0.0)
-            } else {
-                0.0
-            }
-        } else {
-            let content = measured.height - start - end;
-            crate::flex::spacing(
-                super::flex::alignment(style.flex.align_content, false),
-                style.flex.align_content_overflow,
-                content - line.height,
-                1,
-            )
-            .0
-        };
-        // The content box's extent below the line box top that reaches the sink's under
-        // point from a line box top at `line_top`, and covers the glyphs.
-        let fitted =
-            |line_top: f32| (surrounding.under_of(initial.sink) - line_top).max(ink_bottom);
-        let (top, below) = if border_box {
-            let natural = start + lead + ink_bottom + end;
-            let top = surrounding.over_position(initial, natural);
-            (top, fitted(top + start + lead + end))
-        } else {
-            let line_top = surrounding.over_position(initial, line.height);
-            (line_top - lead - start, fitted(line_top))
-        };
-        if *style.width.basis() == crate::style::Size::Auto
-            && (0..4).all(|side| {
-                style.padding[side].is_zero() && style.decoration.borders[side].used_width() == 0.0
-            })
-            && let Some(rect) = outline
-        {
-            kerning = if style.used_rtl() {
-                line.width - (rect.x + rect.width)
-            } else {
-                rect.x
-            };
         }
-        if automatic || lead != 0.0 {
-            let content = if automatic {
-                below
-            } else {
-                measured.height - start - end - lead
+        // Each line's line box follows the margin box of the line before, moved down for
+        // its letter line to stay below it (§§7.6.1, 7.8.4).
+        let bottom = |row: &LetterRow| row.top + start + row.lead + row.content + end + margin[2];
+        for (index, row) in rows.iter().enumerate() {
+            let origin = match index.checked_sub(1) {
+                Some(previous) => {
+                    origins[previous] + bottom(&rows[previous]) + (margin[0] - row.top).max(0.0)
+                }
+                None => 0.0,
             };
-            geometry.padding[0] += lead;
+            origins.push(origin);
+        }
+        let first = &rows[0];
+        let last = &rows[rows.len() - 1];
+        // The lines' tops below the first's.
+        let line_tops: Vec<f32> = rows
+            .iter()
+            .zip(&origins)
+            .map(|(row, origin)| origin + row.top + row.lead - first.top - first.lead)
+            .collect();
+        if automatic || first.lead != 0.0 || rows.len() > 1 {
+            geometry.padding[0] += first.lead;
             measured = measurer.measure_format(
                 block,
                 geometry.clone(),
                 false,
                 containing_height,
-                Some(content),
+                Some(line_tops[line_tops.len() - 1] + last.content),
             )?;
         }
-        top
+        if rows.len() > 1 {
+            trim_letter_lines(measurer.text, &mut measured)?;
+            space_letter_lines(
+                &mut measured,
+                &line_tops,
+                kerning - inline_start_edges(&geometry, style),
+            );
+        }
+        first.top - origins[origins.len() - 1]
     };
     let width = margin[3]
         + geometry.border[3]
@@ -263,9 +281,23 @@ fn measure_initial_letter<'a>(
         + geometry.padding[1]
         + geometry.border[1]
         + margin[1];
+    // Normal text follows the last line, which starts at the line's start (§7.8.4).
+    let advance = if origins.len() > 1 {
+        let end_side = if style.used_rtl() { LEFT } else { RIGHT };
+        let extent = if *style.width.basis() == crate::style::Size::Auto {
+            letter_lines(&mut measured)
+                .last()
+                .map_or(0.0, |line| line.width)
+        } else {
+            geometry.width
+        };
+        extent + geometry.padding[end_side] + geometry.border[end_side] + margin[end_side]
+    } else {
+        width - kerning
+    };
     Ok(MeasuredAtomic {
         metrics: AtomicMetrics {
-            width: width - kerning,
+            width: advance,
             height: 0.0,
             baseline: 0.0,
             synthesized_baseline: false,
@@ -274,10 +306,150 @@ fn measure_initial_letter<'a>(
             top: top - margin[0],
             bottom: top + measured.height + margin[2],
             kerning,
+            width,
+            lift: origins.last().copied().unwrap_or(0.0),
         }),
         block: measured,
         margin_top: margin[0],
     })
+}
+
+/// How an inline initial letter's lines size its content box: whether its alignment is
+/// `border-box`, whether its block size is automatic, its content box height otherwise, and
+/// its block-start and block-end padding and borders.
+struct LetterSizing {
+    border_box: bool,
+    automatic: bool,
+    content: f32,
+    edges: [f32; 2],
+}
+
+/// Places one line of an inline letter's contents, whose glyph outlines are `outline`, as the
+/// letter's only line would be (§§7.5.5–7.6.1).
+fn letter_row(
+    letter: &crate::document::InitialLetterBox,
+    sizing: &LetterSizing,
+    style: &crate::style::Style,
+    line: &crate::text::Line,
+    outline: Option<Rect>,
+) -> LetterRow {
+    let initial = style
+        .initial_letter
+        .expect("an initial letter has a size and sink");
+    let surrounding = letter.surrounding;
+    let [start, end] = sizing.edges;
+    // The outlines' extent below the line box top, which is the over alignment point.
+    let [ink_top, ink_bottom] = outline.map_or([0.0, line.height], |rect| {
+        [rect.y + line.ascent, rect.y + rect.height + line.ascent]
+    });
+    let ink_bottom = ink_bottom.max(line.height);
+    // The content box's extent above the line box top: glyphs above the over point,
+    // which only padding or borders bring into it, or `align-content`'s free space.
+    let lead = if sizing.automatic {
+        if start > 0.0 {
+            (-ink_top).max(0.0)
+        } else {
+            0.0
+        }
+    } else {
+        crate::flex::spacing(
+            super::flex::alignment(style.flex.align_content, false),
+            style.flex.align_content_overflow,
+            sizing.content - line.height,
+            1,
+        )
+        .0
+    };
+    // The content box's extent below the line box top that reaches the sink's under
+    // point from a line box top at `line_top`, and covers the glyphs.
+    let fitted = |line_top: f32| (surrounding.under_of(initial.sink) - line_top).max(ink_bottom);
+    let (top, below) = if sizing.border_box {
+        let natural = start + lead + ink_bottom + end;
+        let top = surrounding.over_position(initial, natural);
+        (top, fitted(top + start + lead + end))
+    } else {
+        let line_top = surrounding.over_position(initial, line.height);
+        (line_top - lead - start, fitted(line_top))
+    };
+    LetterRow {
+        top,
+        lead,
+        content: if sizing.automatic {
+            below
+        } else {
+            sizing.content - lead
+        },
+    }
+}
+
+/// The inline-start margin, border and padding of a box with horizontal `geometry`.
+fn inline_start_edges(
+    geometry: &crate::layout::geometry::HorizontalBox,
+    style: &crate::style::Style,
+) -> f32 {
+    let side = if style.used_rtl() { RIGHT } else { LEFT };
+    geometry.margin[side].unwrap_or(0.0) + geometry.border[side] + geometry.padding[side]
+}
+
+/// The lines of an inline letter's `measured` contents.
+fn letter_lines<'m>(measured: &'m mut MeasuredBlock<'_>) -> &'m mut Vec<crate::text::Line> {
+    measured
+        .items
+        .iter_mut()
+        .find_map(|item| match item {
+            FlowItem::Paragraph(paragraph) => Some(&mut paragraph.lines),
+            _ => None,
+        })
+        .expect("an inline initial letter holds its contents' paragraph")
+}
+
+/// Trims each line of an inline letter's `measured` contents at the ends its paragraph trims
+/// only its first and last lines at, as the letter's only line would be (§7.8.4).
+fn trim_letter_lines(
+    text: &crate::text::TextContext<'_>,
+    measured: &mut MeasuredBlock<'_>,
+) -> Result<(), Failure> {
+    let Some(FlowItem::Paragraph(paragraph)) = measured
+        .items
+        .iter_mut()
+        .find(|item| matches!(item, FlowItem::Paragraph(_)))
+    else {
+        unreachable!("an inline initial letter holds its contents' paragraph")
+    };
+    let trim = paragraph.paragraph.text_box_trim;
+    let last = paragraph.lines.len().saturating_sub(1);
+    for (index, line) in paragraph.lines.iter_mut().enumerate() {
+        crate::text::trim_line(
+            text,
+            paragraph.paragraph.style(),
+            line,
+            [trim[0] && index > 0, trim[1] && index < last],
+        )?;
+    }
+    Ok(())
+}
+
+/// Spaces the lines of an inline letter's `measured` contents to their tops `line_tops`, and
+/// moves those after the first `indent` from their start: as fragments of the letter after
+/// its first, they lack its inline-start edges and kerning.
+fn space_letter_lines(measured: &mut MeasuredBlock<'_>, line_tops: &[f32], indent: f32) {
+    let lines = letter_lines(measured);
+    for (index, line) in lines.iter_mut().enumerate() {
+        if let Some(next) = line_tops.get(index + 1) {
+            line.height = next - line_tops[index];
+        }
+        if index > 0 {
+            line.indent = indent;
+        }
+    }
+    let height = lines.iter().map(|line| line.height).sum();
+    if let Some(FlowItem::Paragraph(paragraph)) = measured
+        .items
+        .iter_mut()
+        .find(|item| matches!(item, FlowItem::Paragraph(_)))
+    {
+        paragraph.height = height;
+    }
 }
 
 /// Shared shrink-to-fit geometry for atomic inlines and floating boxes.
