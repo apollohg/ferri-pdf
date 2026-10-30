@@ -1095,6 +1095,21 @@ pub(crate) fn border_fills<I>(
         inner_widths,
         decoration.corner_shapes.map(CornerShape::curvature),
     );
+    let shaped = geometry.curvatures != [ROUND_CURVATURE; 4];
+    let clip_border = |shape| {
+        if shaped {
+            Shape::ContourClipped {
+                shape: Box::new(shape),
+                contours: [0.0, 1.0]
+                    .into_iter()
+                    .flat_map(|t| geometry.contours(t))
+                    .collect(),
+                even_odd: true,
+            }
+        } else {
+            shape
+        }
+    };
     let mut fills = Vec::new();
     let color = decoration.borders[0].color;
     if let Some(boundaries) = ring(decoration, widths) {
@@ -1117,13 +1132,13 @@ pub(crate) fn border_fills<I>(
         if color.alpha > 0.0 {
             let width = widths[0];
             fills.push(Fill {
-                shape: Shape::Pattern {
+                shape: clip_border(Shape::Pattern {
                     contours: vec![contour(&geometry.centre)],
                     width,
                     dash: [DASH_LENGTH_WIDTHS * width, DASH_GAP_WIDTHS * width],
                     round: false,
                     clip: None,
-                },
+                }),
                 color,
             });
         }
@@ -1140,12 +1155,19 @@ pub(crate) fn border_fills<I>(
             for band in border.bands(side) {
                 fills.push(Fill {
                     shape: Shape::Path {
-                        contours: vec![Geometry::side_shape(
-                            side,
-                            &geometry.ring(band.from),
-                            &geometry.ring(band.to),
-                        )],
-                        even_odd: false,
+                        contours: if shaped {
+                            [band.from, band.to]
+                                .into_iter()
+                                .flat_map(|t| geometry.contours(t))
+                                .collect()
+                        } else {
+                            vec![Geometry::side_shape(
+                                side,
+                                &geometry.ring(band.from),
+                                &geometry.ring(band.to),
+                            )]
+                        },
+                        even_odd: shaped,
                         clip: clip.clone(),
                     },
                     color: band.color,
@@ -1160,7 +1182,7 @@ pub(crate) fn border_fills<I>(
             geometry.dashed(side, width)
         };
         fills.push(Fill {
-            shape: Shape::Pattern {
+            shape: clip_border(Shape::Pattern {
                 contours: vec![stroke],
                 width,
                 dash: [
@@ -1173,7 +1195,7 @@ pub(crate) fn border_fills<I>(
                 ],
                 round: dotted,
                 clip,
-            },
+            }),
             color: border.color,
         });
     }
@@ -1185,7 +1207,6 @@ mod path_tests {
     use super::*;
 
     const GEOMETRY_TOLERANCE: f32 = 0.000_01;
-
     fn contour_area(contours: &[Contour]) -> f64 {
         use kurbo::Shape as _;
         contours

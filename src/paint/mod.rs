@@ -247,6 +247,11 @@ pub enum Shape {
         shape: Box<Shape>,
         bounds: ClipBounds,
     },
+    ContourClipped {
+        shape: Box<Shape>,
+        contours: Vec<Contour>,
+        even_odd: bool,
+    },
     Path {
         contours: Vec<Contour>,
         even_odd: bool,

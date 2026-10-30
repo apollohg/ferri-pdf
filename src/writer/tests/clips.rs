@@ -10,31 +10,12 @@ const SURFACE: Rect = Rect {
 };
 
 fn render(clip: &Clip) -> Vec<u8> {
-    let mut document = krilla::Document::new();
-    let mut page = document.start_page_with(
-        krilla::page::PageSettings::from_wh(SURFACE.width, SURFACE.height).unwrap(),
-    );
-    let mut surface = page.surface();
-    let count = painting::push_clip(clip, SURFACE, &mut surface)
-        .expect("a valid disconnected or empty outline must serialize");
-    surface.draw_path(&painting::rect_path(SURFACE).unwrap());
-    painting::pop_clips(count, &mut surface);
-    surface.finish();
-    page.finish();
-    let pdf = hayro::hayro_syntax::Pdf::new(document.finish().unwrap()).unwrap();
-    let pixels = hayro::render(
-        &pdf.pages()[0],
-        &hayro::RenderCache::new(),
-        &hayro::hayro_interpret::InterpreterSettings::default(),
-        &hayro::RenderSettings::default(),
-        &hayro::PixmapSettings {
-            x_scale: 1.0,
-            y_scale: 1.0,
-            bg_color: hayro::vello_cpu::color::palette::css::TRANSPARENT,
-        },
-    );
-    assert_eq!([pixels.width(), pixels.height()], [80, 60]);
-    pixels.data_as_u8_slice().to_vec()
+    super::render([80, 60], |surface| {
+        let count = painting::push_clip(clip, SURFACE, surface)
+            .expect("a valid disconnected or empty outline must serialize");
+        surface.draw_path(&painting::rect_path(SURFACE).unwrap());
+        painting::pop_clips(count, surface);
+    })
 }
 
 #[test]
@@ -143,6 +124,90 @@ fn pdf_clip_preserves_a_hole_when_all_contours_are_reflected() {
                     "pixel ({x},{y}), reflected={reflected}: the inner contour remains a hole"
                 );
             }
+        }
+    }
+}
+
+#[test]
+fn compound_fill_clips_preserve_holes_empty_regions_and_nested_bounds() {
+    use crate::graphics::{ClipBounds, Color, Fill, Shape};
+    let outer = Contour::polygon(&[[10.0, 10.0], [70.0, 10.0], [70.0, 50.0], [10.0, 50.0]]);
+    let hole = Contour::polygon(&[[30.0, 20.0], [50.0, 20.0], [50.0, 40.0], [30.0, 40.0]]);
+    for (empty, even_odd) in [(false, true), (false, false), (true, true), (true, false)] {
+        let shape = Shape::Clipped {
+            shape: Box::new(Shape::ContourClipped {
+                shape: Box::new(Shape::Rect(SURFACE)),
+                contours: if empty {
+                    Vec::new()
+                } else {
+                    vec![outer.clone(), hole.clone()]
+                },
+                even_odd,
+            }),
+            bounds: ClipBounds::new(
+                Rect {
+                    x: 20.0,
+                    width: 40.0,
+                    ..SURFACE
+                },
+                [true; 2],
+            ),
+        };
+        let pdf = super::render([80, 60], |surface| {
+            painting::draw_fill(
+                Fill {
+                    shape: shape.clone(),
+                    color: Color::BLACK,
+                },
+                SURFACE,
+                surface,
+            )
+            .unwrap();
+        });
+        let mut raster = tiny_skia::Pixmap::new(80, 60).unwrap();
+        crate::paint::cover(
+            &shape,
+            SURFACE,
+            tiny_skia::Transform::identity(),
+            &mut raster,
+            None,
+        );
+        for y in 0..60 {
+            for x in 0..80 {
+                let expected = if !empty
+                    && (20..60).contains(&x)
+                    && (10..50).contains(&y)
+                    && !(even_odd && (30..50).contains(&x) && (20..40).contains(&y))
+                {
+                    u8::MAX
+                } else {
+                    0
+                };
+                let index = y * 80 + x;
+                assert_eq!(
+                    pdf[index * 4 + 3],
+                    expected,
+                    "PDF ({x},{y}), empty={empty}, even_odd={even_odd}"
+                );
+                assert_eq!(
+                    raster.pixels()[index].alpha(),
+                    expected,
+                    "raster ({x},{y}), empty={empty}, even_odd={even_odd}"
+                );
+            }
+        }
+        if empty {
+            assert!(crate::paint::shape_bounds(&shape).is_none());
+        } else {
+            assert_eq!(
+                crate::paint::shape_bounds(&shape),
+                Some(Rect {
+                    x: 20.0,
+                    y: 10.0,
+                    width: 40.0,
+                    height: 40.0
+                })
+            );
         }
     }
 }

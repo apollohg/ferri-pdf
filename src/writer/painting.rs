@@ -347,6 +347,33 @@ pub(super) fn draw_fill(
 ) -> Result<(), PdfError> {
     let color = fill(item.color)?;
     match item.shape {
+        Shape::ContourClipped {
+            shape,
+            contours,
+            even_odd,
+        } => {
+            if !contours.is_empty() {
+                let path = contour_path(&contours)?;
+                surface.push_clip_path(
+                    &path,
+                    if even_odd {
+                        &FillRule::EvenOdd
+                    } else {
+                        &FillRule::NonZero
+                    },
+                );
+                let result = draw_fill(
+                    crate::graphics::Fill {
+                        shape: *shape,
+                        color: item.color,
+                    },
+                    viewport,
+                    surface,
+                );
+                surface.pop();
+                result?;
+            }
+        }
         Shape::Clipped { shape, bounds } => {
             let bounds = bounds.clip_rect(local_bounds(viewport, surface)?);
             if bounds.width > 0.0 && bounds.height > 0.0 {
@@ -372,6 +399,9 @@ pub(super) fn draw_fill(
             even_odd,
             clip,
         } => {
+            if contours.is_empty() {
+                return Ok(());
+            }
             let path = contour_path(&contours)?;
             clipped(surface, clip.as_deref(), |surface| {
                 surface.set_fill(Some(Fill {

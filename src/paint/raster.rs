@@ -30,6 +30,11 @@ pub(crate) fn bounds(shape: &Shape) -> Option<Rect> {
     };
     match shape {
         Shape::Rect(rect) => Some(*rect),
+        Shape::ContourClipped {
+            shape, contours, ..
+        } => bounds(shape)
+            .zip(points(contours, 0.0))
+            .map(|(rect, clip)| rect.intersection(clip)),
         Shape::Clipped {
             shape,
             bounds: clip,
@@ -100,6 +105,27 @@ pub(crate) fn cover(
     clip: Option<&Mask>,
 ) {
     match shape {
+        Shape::ContourClipped {
+            shape,
+            contours,
+            even_odd,
+        } => {
+            if let Some(path) = path(contours)
+                && let Some(mut mask) = within(clip, target)
+            {
+                mask.intersect_path(
+                    &path,
+                    if *even_odd {
+                        FillRule::EvenOdd
+                    } else {
+                        FillRule::Winding
+                    },
+                    true,
+                    transform,
+                );
+                cover(shape, region, transform, target, Some(&mask));
+            }
+        }
         Shape::Rect(rect) => {
             if let Some(rect) = tiny_skia::Rect::from_xywh(rect.x, rect.y, rect.width, rect.height)
             {
