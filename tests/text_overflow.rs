@@ -245,3 +245,41 @@ fn two_values_ellipse_only_at_the_edge_where_each_direction_ends() {
         rtl.runs.iter().map(painted).collect::<Vec<_>>()
     );
 }
+
+#[test]
+fn single_line_text_inputs_ellipse_their_value_regardless_of_overflow() {
+    const VALUE: &str = "an overflowing value";
+    for (input, ellipsed) in [
+        (format!("<input value='{VALUE}'>"), true),
+        (format!("<input type=search value='{VALUE}'>"), true),
+        (format!("<input placeholder='{VALUE}'>"), true),
+        (
+            format!("<input style='overflow:visible' value='{VALUE}'>"),
+            true,
+        ),
+        (
+            format!("<input style='text-overflow:clip' value='{VALUE}'>"),
+            false,
+        ),
+    ] {
+        let trace = render(
+            "input{width:50pt;text-overflow:ellipsis;font-size:10pt}",
+            &input,
+        );
+        // The body's line holds the control as an atomic inline; the value is its own line.
+        let line = trace.pages[0]
+            .iter()
+            .find(|line| line.text.starts_with(&VALUE[..1]))
+            .unwrap_or_else(|| panic!("{input}: the value's line"));
+        let runs: Vec<_> = line.runs.iter().map(painted).collect();
+        let last = line.runs.last().expect("the value has runs");
+        assert_eq!(last.text == ELLIPSIS, ellipsed, "{input}: {runs:?}");
+        if ellipsed {
+            let kept: String = runs[..runs.len() - 1].concat();
+            assert!(
+                VALUE.starts_with(&kept) && kept.len() < VALUE.len(),
+                "{input}: whole clusters are hidden from the value's end: {kept:?}"
+            );
+        }
+    }
+}

@@ -490,6 +490,10 @@ impl<'b> Builder<'b, '_> {
         let [average, maximum, normal] = self.character_metrics()?;
         let mut editor = self.style.anonymous(Display::Block);
         editor.white_space = WhiteSpace::PRE;
+        // CSS UI 4 §7.3.1: `text-overflow` applies to the line regardless of `overflow`, as
+        // the control clips its content.
+        editor.text_overflow = self.style.text_overflow;
+        editor.overflow[0] = Overflow::Clip;
         Self::at_least_normal(&mut editor, normal);
         let value = element.input_value();
         let mut lines = Vec::new();
