@@ -715,6 +715,8 @@ pub(super) struct Measurer<'a> {
     /// The part of its contents' paragraph that the ruby annotation box being measured lays
     /// out, on a line breaking inside its bases (CSS Ruby 1 §3.4.2).
     pub annotation_part: Option<(*const crate::document::Paragraph, std::ops::Range<usize>)>,
+    /// The pages that calls in nested layouts must leave for their footnotes to fit.
+    pub footnote_deferrals: std::rc::Rc<crate::layout::pagination::FootnoteDeferrals>,
 }
 impl<'a> Measurer<'a> {
     pub(super) fn new(
@@ -752,6 +754,7 @@ impl<'a> Measurer<'a> {
             named_pages: true,
             container_sizes: Default::default(),
             annotation_part: None,
+            footnote_deferrals: std::rc::Rc::default(),
         }
     }
 

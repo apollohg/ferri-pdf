@@ -82,6 +82,7 @@ fn after_child_row_paints_keep_canonical_text_navigation_and_stacking() {
         named_pages: true,
         container_sizes: Default::default(),
         annotation_part: None,
+        footnote_deferrals: Default::default(),
     };
     let mut measured = measurer
         .block(

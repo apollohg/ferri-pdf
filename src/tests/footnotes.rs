@@ -156,16 +156,133 @@ fn calls_inside_rows_split_across_pages_keep_their_footnotes_off_earlier_pages()
     );
 }
 
+/// A four-line footnote that does not fit below a call 70pt down the page area.
+const TALL_NOTE: &str = "A<br>B<br>C<br>D";
+const NESTED_CSS: &str =
+    "td{padding:0}table{border-spacing:0}p.tall{height:70pt}.cols{columns:2;column-gap:10pt}";
+
+fn nested_pages(css: &str, body: &str) -> Vec<(Vec<String>, Vec<String>)> {
+    let trace = render(&format!("{NESTED_CSS}{css}"), body)
+        .unwrap_or_else(|error| panic!("{body}: {error}"))
+        .layout
+        .unwrap();
+    pages(&trace)
+}
+
 #[test]
-fn policies_that_cannot_move_a_call_inside_nested_layouts_are_reported() {
-    let error = render(
-        ".fn{footnote-policy:line}td{padding:0}table{border-spacing:0}p.tall{height:70pt}",
-        "<p class=tall>Top</p><table><tr><td>Cell<span class=fn>A<br>B<br>C<br>D</span></td></tr></table>",
-    )
-    .err()
-    .expect("a line policy must not silently let the footnote leave its call's page");
-    assert!(
-        error.to_string().contains("footnote-policy line or block"),
-        "unexpected error: {error}"
+fn line_policies_move_calls_inside_nested_layouts_to_the_page_their_footnotes_fit() {
+    let moved = (texts(&["Top"]), Vec::new(), texts(&["1. A", "B", "C", "D"]));
+    for (layout, body) in [
+        (
+            "table cell",
+            format!("<table><tr><td>Cell<span class=fn>{TALL_NOTE}</span></td></tr></table>"),
+        ),
+        (
+            "multi-column container",
+            format!("<div class=cols>Cell<span class=fn>{TALL_NOTE}</span></div>"),
+        ),
+        (
+            "flex item",
+            format!(
+                "<div style=display:flex><div>Cell<span class=fn>{TALL_NOTE}</span></div></div>"
+            ),
+        ),
+        (
+            "grid item",
+            format!(
+                "<div style=display:grid><div>Cell<span class=fn>{TALL_NOTE}</span></div></div>"
+            ),
+        ),
+    ] {
+        let pages = nested_pages(
+            ".fn{footnote-policy:line}",
+            &format!("<p class=tall>Top</p>{body}"),
+        );
+        assert_eq!(
+            pages,
+            [
+                (moved.0.clone(), moved.1.clone()),
+                (texts(&["Cell1"]), moved.2.clone())
+            ],
+            "the {layout}'s call line moves to the next page with its whole footnote"
+        );
+    }
+}
+
+#[test]
+fn nested_line_and_block_policies_break_before_the_call_line_or_its_paragraph() {
+    let body = format!(
+        "<p class=tall style=height:60pt>Top</p><table><tr><td>First<br>Second<span class=fn>{TALL_NOTE}</span></td></tr></table>"
     );
+    let line = nested_pages(".fn{footnote-policy:line}td{orphans:1;widows:1}", &body);
+    assert_eq!(
+        line,
+        [
+            (texts(&["Top", "First"]), Vec::new()),
+            (texts(&["Second1"]), texts(&["1. A", "B", "C", "D"]))
+        ],
+        "line moves only the line holding the call"
+    );
+    let block = nested_pages(".fn{footnote-policy:block}td{orphans:1;widows:1}", &body);
+    assert_eq!(
+        block,
+        [
+            (texts(&["Top"]), Vec::new()),
+            (
+                texts(&["First", "Second1"]),
+                texts(&["1. A", "B", "C", "D"])
+            )
+        ],
+        "block moves the whole paragraph holding the call"
+    );
+}
+
+#[test]
+fn a_deferred_call_in_a_later_column_ends_its_row_of_columns() {
+    let pages = nested_pages(
+        ".fn{footnote-policy:line}",
+        &format!(
+            "<p class=tall>Top</p><div class=cols><p>Lead</p><p>Cell<span class=fn>{TALL_NOTE}</span></p></div>"
+        ),
+    );
+    assert_eq!(
+        pages,
+        [
+            (texts(&["Top", "Lead"]), Vec::new()),
+            (texts(&["Cell1"]), texts(&["1. A", "B", "C", "D"]))
+        ],
+        "the forced page break before the call's line leaves the row on the first page"
+    );
+}
+
+#[test]
+fn calls_that_no_break_can_move_let_their_footnotes_continue_after_them() {
+    // CSS Fragmentation 3 §4.1: forced breaks inside monolithic content are ignored; an
+    // absolutely positioned box is laid out unbroken, and a cell line at the top of its page
+    // has no earlier break.
+    let positioned = nested_pages(
+        ".fn{footnote-policy:line}.abs{position:absolute;top:76pt}",
+        &format!("<p class=tall>Top</p><div class=abs>Abs<span class=fn>{TALL_NOTE}</span></div>"),
+    );
+    assert_eq!(positioned.len(), 2, "{positioned:?}");
+    assert_eq!(positioned[0].0, texts(&["Top", "Abs1"]));
+    assert_eq!(
+        positioned[1].0,
+        Vec::<String>::new(),
+        "the footnote continues on a page of its own: {positioned:?}"
+    );
+    let tall = (1..=12)
+        .map(|index| format!("N{index}"))
+        .collect::<Vec<_>>()
+        .join("<br>");
+    let first = nested_pages(
+        ".fn{footnote-policy:line}",
+        &format!("<table><tr><td>Cell<span class=fn>{tall}</span></td></tr></table>"),
+    );
+    assert_eq!(
+        first[0].0,
+        texts(&["Cell1"]),
+        "a call that starts its page stays on it: {first:?}"
+    );
+    assert_eq!(first.len(), 2, "the footnote continues on the next page");
 }

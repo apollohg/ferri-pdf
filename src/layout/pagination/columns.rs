@@ -56,6 +56,10 @@ struct RowFrame {
     page_rect: Rect,
     /// Leaving the row is a page break as well as a column break.
     breaks_page: bool,
+    /// The physical page the row is placed on, when the enclosing flow breaks into pages.
+    physical_page: Option<usize>,
+    /// Content precedes the row on its physical page.
+    follows_flow: bool,
 }
 
 /// The rows of column boxes a row segment is laid out in, and how far its flow reached.
@@ -149,6 +153,19 @@ impl ColumnRows {
         self.frames.get(row).is_some_and(|frame| {
             frame.breaks_page && !frame.unbounded && page + 1 == frame.first + frame.geometry.count
         })
+    }
+    /// The physical page holding column `page`, once its row is placed.
+    pub(super) fn physical_page(&self, page: usize) -> Option<usize> {
+        self.frames
+            .get(self.row(page))
+            .and_then(|frame| frame.physical_page)
+    }
+    /// Whether content precedes column `page` on its physical page: earlier columns of its
+    /// row, or the flow before the row.
+    pub(super) fn follows_flow(&self, page: usize) -> bool {
+        self.frames
+            .get(self.row(page))
+            .is_some_and(|frame| frame.follows_flow || page > frame.first)
     }
     pub(super) fn has_next_row(&self, page: usize) -> bool {
         self.frames
@@ -874,6 +891,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 && wrap.is_none_or(|wrap| {
                     overflows(self.y + height.0 + wrap.gap + wrap.height, space + self.y)
                 }),
+            physical_page: self.physical_page(),
+            follows_flow: self.has_page_flow(),
         };
         let fixed = remaining.is_some() || wrap.is_some();
         let mut checkpoint = (wrap.is_none()
@@ -1311,6 +1330,9 @@ pub(crate) fn measure_columns<'a>(
                                 && columns.wrap.is_none_or(|wrap| {
                                     overflows(height + frame.0 + wrap.gap + wrap.height, available)
                                 }),
+                            // Measurement places columns on no page.
+                            physical_page: None,
+                            follows_flow: false,
                         });
                         let (output, end) = lay_out_row(measurer, layout, row, balance)?;
                         let pages = output.rows().pages(row, output.state.pages.len());

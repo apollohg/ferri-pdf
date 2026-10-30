@@ -47,6 +47,8 @@ pub(crate) const MAX_LAYOUT_PAGES: usize = 10_000;
 /// Units count source visits, text bytes, grid slots and solver candidate items.
 /// Exhaustion returns [`LayoutError::WorkLimit`]; this is not a time or memory limit.
 pub(crate) const MAX_LAYOUT_WORK: usize = 100_000_000;
+/// Paginations of a layout pass that move calls off pages their footnotes do not fit.
+const MAX_FOOTNOTE_PAGINATIONS: usize = 64;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct TextLine {
@@ -325,12 +327,44 @@ fn paginate<'t>(
     let continuous = sheet.presentation() != crate::style::Presentation::Paged;
     let page_output = PageRecord::new(page)?.output;
     let painting = page_paint::PagePaint::in_flow(page, document.canvas_background(), flow)?;
-    let paginator = pagination::Paginator::for_document(
+    // CSS GCPM 3 §2.8: calls in nested layouts whose footnotes must stay with them and do
+    // not fit move off their pages in a new pagination, until no call needs to move.
+    let retained = (!continuous
+        && document.footnotes().iter().any(|footnote| {
+            footnote.style().footnote_policy != crate::style::FootnotePolicy::Auto
+        }))
+    .then(|| Box::new(root.clone()));
+    let mut paginated = paginate_flow(
+        document,
+        resolver,
         measurer,
-        physical_pages::PhysicalPages::new(document, resolver)?,
-        painting.canvas.clone(),
+        root,
+        &painting.canvas,
         canvas_rect,
-    );
+    )?;
+    let mut paginations = 1;
+    while !paginated.footnote_deferrals.is_empty() {
+        if paginations == MAX_FOOTNOTE_PAGINATIONS {
+            return Err(LayoutError::FootnoteDeferralLimit {
+                limit: MAX_FOOTNOTE_PAGINATIONS,
+            });
+        }
+        paginations += 1;
+        std::rc::Rc::make_mut(&mut measurer.footnote_deferrals)
+            .append(&mut paginated.footnote_deferrals);
+        let root = retained
+            .as_deref()
+            .expect("only footnotes kept with their calls defer them")
+            .clone();
+        paginated = paginate_flow(
+            document,
+            resolver,
+            measurer,
+            root,
+            &painting.canvas,
+            canvas_rect,
+        )?;
+    }
     let pagination::Paginated {
         mut anchors,
         mut pages,
@@ -344,16 +378,8 @@ fn paginate<'t>(
         line_boxes: _,
         mut text_areas,
         mut renderings,
-    } = if continuous {
-        paginator.unbroken()
-    } else {
-        paginator
-    }
-    .document(
-        root,
-        document.navigation().destinations,
-        document.root().leading_events(),
-    )?;
+        footnote_deferrals: _,
+    } = paginated;
     for (index, page) in page_boxes.iter().enumerate() {
         let frame = writing::Frame::physical(flow, page.geometry.paper);
         for area in &mut links[index] {
@@ -430,6 +456,33 @@ fn paginate<'t>(
             element_images,
         },
     })
+}
+
+/// Paginates the measured root once, with the footnote deferrals `measurer` holds.
+fn paginate_flow<'t>(
+    document: &'t StyledDocument,
+    resolver: &'t dyn ResourceResolver,
+    measurer: &mut measure::Measurer<'t>,
+    root: Option<measure::MeasuredBlock<'t>>,
+    canvas: &crate::graphics::BoxPaint,
+    canvas_rect: Rect,
+) -> Result<pagination::Paginated, LayoutError> {
+    let paginator = pagination::Paginator::for_document(
+        measurer,
+        physical_pages::PhysicalPages::new(document, resolver)?,
+        canvas.clone(),
+        canvas_rect,
+    );
+    if document.styles().presentation() == crate::style::Presentation::Paged {
+        paginator
+    } else {
+        paginator.unbroken()
+    }
+    .document(
+        root,
+        document.navigation().destinations,
+        document.root().leading_events(),
+    )
 }
 
 /// The elements whose renderings a layout of `document` records.
@@ -619,11 +672,8 @@ pub(crate) enum LayoutError {
     Flex(#[from] crate::flex::FlexError),
     #[error("unsupported flex formatting: {feature}")]
     UnsupportedFlex { feature: &'static str },
-    #[error("unsupported footnote {footnote}: {feature}")]
-    UnsupportedFootnote {
-        footnote: usize,
-        feature: &'static str,
-    },
+    #[error("footnote calls kept with their footnotes still move after {limit} paginations")]
+    FootnoteDeferralLimit { limit: usize },
     #[error("invalid normalized table structure")]
     InvalidTableStructure,
     #[error("{0}")]

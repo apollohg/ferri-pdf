@@ -72,6 +72,11 @@ fn rows_height(parts: &[FootnotePart], width: f32) -> Option<f32> {
 /// Footnote bodies by footnote and the bits of their area's width.
 type FootnoteLayouts = HashMap<(usize, u32), Rc<FootnoteLayout>>;
 
+/// Pages that the calls of footnotes whose policy keeps them with their calls (CSS GCPM 3
+/// §2.8) cannot lie on, by footnote and page: the footnote did not fit there, and the call is
+/// in a nested layout, which learns that only once its content is placed.
+pub(in crate::layout) type FootnoteDeferrals = BTreeMap<(usize, usize), FootnotePolicy>;
+
 /// The footnotes each page's area holds, the remainders waiting for the next page, and the
 /// footnotes already placed or waiting.
 #[derive(Clone, Default)]
@@ -83,6 +88,8 @@ pub(super) struct Footnotes {
     /// has not reached.
     recorded: usize,
     ahead: Vec<(usize, usize)>,
+    /// Calls in nested layouts that pagination must move off their pages.
+    deferred: FootnoteDeferrals,
     /// Bodies by footnote and area width; laying a body out does not depend on its page.
     layouts: Rc<RefCell<FootnoteLayouts>>,
 }
@@ -97,6 +104,21 @@ impl Footnotes {
     pub(super) fn has_carried(&self) -> bool {
         !self.carried.is_empty()
     }
+    /// The calls this pagination found on pages that their footnotes do not fit.
+    pub(super) fn take_deferred(&mut self) -> FootnoteDeferrals {
+        std::mem::take(&mut self.deferred)
+    }
+}
+
+/// The policy among `policies` that moves most: `block`, then `line`, then `auto`.
+fn strictest(policies: impl Iterator<Item = FootnotePolicy>) -> FootnotePolicy {
+    policies
+        .max_by_key(|policy| match policy {
+            FootnotePolicy::Auto => 0,
+            FootnotePolicy::Line => 1,
+            FootnotePolicy::Block => 2,
+        })
+        .unwrap_or_default()
 }
 
 /// A page's footnote area box in the page's flow coordinates.
@@ -401,15 +423,27 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
     /// The policy that keeps a footnote with its call when it does not fit: `line` or
     /// `block`, whichever moves more.
     pub(super) fn strictest_policy(&self, footnotes: &[usize]) -> FootnotePolicy {
-        footnotes
-            .iter()
-            .map(|&footnote| self.footnote_policy(footnote))
-            .max_by_key(|policy| match policy {
-                FootnotePolicy::Auto => 0,
-                FootnotePolicy::Line => 1,
-                FootnotePolicy::Block => 2,
-            })
-            .unwrap_or_default()
+        strictest(
+            footnotes
+                .iter()
+                .map(|&footnote| self.footnote_policy(footnote)),
+        )
+    }
+
+    /// The policy that moves a line of a nested layout calling `footnotes` off the physical
+    /// page it is on, which an earlier pagination found their footnotes do not fit.
+    pub(super) fn deferred_policy(&self, footnotes: &[usize]) -> Option<FootnotePolicy> {
+        if footnotes.is_empty() || self.places_footnotes() {
+            return None;
+        }
+        let page = self.physical_page()?;
+        let deferrals = &self.measurer.footnote_deferrals;
+        let policy = strictest(
+            footnotes
+                .iter()
+                .filter_map(|&footnote| deferrals.get(&(footnote, page)).copied()),
+        );
+        (policy != FootnotePolicy::Auto).then_some(policy)
     }
 
     /// Queues footnotes not yet placed after those waiting, then fills the current page's
@@ -439,8 +473,9 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
 
     /// Queues the footnotes whose calls the flow recorded on this page or an earlier one
     /// without placing them: calls in unbroken, parallel or nested fragmentation contexts,
-    /// such as table cells, columns and positioned boxes. Returns those it queued.
-    fn queue_recorded_footnotes(&mut self) -> Result<Vec<usize>, LayoutError> {
+    /// such as table cells, columns and positioned boxes. Returns those it queued, with the
+    /// pages of their calls.
+    fn queue_recorded_footnotes(&mut self) -> Result<Vec<(usize, usize)>, LayoutError> {
         let calls = self
             .string_locations
             .footnote_calls(self.footnotes.recorded)
@@ -452,33 +487,40 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             .into_iter()
             .partition(|(_, call)| *call <= page);
         self.footnotes.ahead = ahead;
-        let queued: Vec<usize> = reached
+        let queued: Vec<(usize, usize)> = reached
             .into_iter()
-            .map(|(footnote, _)| footnote)
-            .filter(|footnote| !self.footnotes.placed.contains(footnote))
+            .filter(|(footnote, _)| !self.footnotes.placed.contains(footnote))
             .collect();
-        self.queue_footnotes(queued.iter().copied())?;
+        self.queue_footnotes(queued.iter().map(|&(footnote, _)| footnote))?;
         Ok(queued)
     }
 
     /// Places the footnotes of recorded calls below the content of the current page, where
     /// they fit, before more flow follows them or the page ends. A footnote that must stay
-    /// with its call (CSS GCPM 3 §2.8) and does not fit cannot move a call inside such a
-    /// context to the next page.
+    /// with its call (CSS GCPM 3 §2.8) and does not fit defers its call to a later page,
+    /// which a new pagination settles; a call that was already deferred from its page and
+    /// stays on it lies where no break can move it, and its footnote continues after it.
     pub(super) fn place_recorded_footnotes(&mut self) -> Result<(), LayoutError> {
         let queued = self.queue_recorded_footnotes()?;
         if queued.is_empty() {
             return Ok(());
         }
         self.fill_footnote_area(false)?;
-        if let Some(waiting) = self.footnotes.carried.iter().find(|part| {
-            queued.contains(&part.footnote)
-                && self.footnote_policy(part.footnote) != FootnotePolicy::Auto
-        }) {
-            return Err(LayoutError::UnsupportedFootnote {
-                footnote: waiting.footnote,
-                feature: "footnote-policy line or block for a call inside a table, flex, grid, multi-column or positioned box whose footnote does not fit its page",
-            });
+        for (footnote, page) in queued {
+            let policy = self.footnote_policy(footnote);
+            if policy != FootnotePolicy::Auto
+                && self
+                    .footnotes
+                    .carried
+                    .iter()
+                    .any(|part| part.footnote == footnote)
+                && !self
+                    .measurer
+                    .footnote_deferrals
+                    .contains_key(&(footnote, page))
+            {
+                self.footnotes.deferred.insert((footnote, page), policy);
+            }
         }
         Ok(())
     }

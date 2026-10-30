@@ -125,6 +125,7 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
             named_pages: true,
             container_sizes: Default::default(),
             annotation_part: None,
+            footnote_deferrals: Default::default(),
         };
         let measured = measurer
             .block(
@@ -151,6 +152,8 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
             unbounded: false,
             page_rect: UNPLACED_PAGE,
             breaks_page: true,
+            physical_page: None,
+            follows_flow: false,
         });
         let start = FlowStart {
             track_overflow: false,

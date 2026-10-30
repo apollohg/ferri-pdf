@@ -327,7 +327,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         &mut self,
         cursor: Box<ParagraphCursor<'a, 'a>>,
         tail: BreakTail,
-    ) -> Result<Option<Box<ParagraphCursor<'a, 'a>>>, LayoutError> {
+    ) -> Result<Option<(Box<ParagraphCursor<'a, 'a>>, BreakRequest)>, LayoutError> {
         let text = self.measurer.text;
         let ParagraphCursor {
             index,
@@ -364,6 +364,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         let mut snapshot = has_inline_floats.then(|| self.snapshot()).transpose()?;
         let saved_layers = has_inline_floats.then(|| layers.clone());
         let mut trials: Vec<FloatTrial> = Vec::new();
+        let mut request = BreakRequest::default();
         'fragment: {
             if lines.as_slice().is_empty() && candidate_complete {
                 break 'fragment;
@@ -577,6 +578,8 @@ impl<'a> Paginator<'a, '_, 'a> {
             let mut pending_footnotes = Vec::new();
             let mut footnote_events = consumed_events;
             let mut kept_footnotes = None;
+            // The line of a nested layout that an earlier pagination moved off this page.
+            let mut deferred_line = None;
             let mut available = 0;
             for (index, line) in lines.as_slice().iter().enumerate() {
                 height = geometry
@@ -588,6 +591,11 @@ impl<'a> Paginator<'a, '_, 'a> {
                     break;
                 }
                 let footnotes = line_footnotes(source, line, &mut footnote_events);
+                if let Some(policy) = self.deferred_policy(&footnotes) {
+                    kept_footnotes = Some(policy);
+                    deferred_line = Some(index);
+                    break;
+                }
                 if !footnotes.is_empty() && self.places_footnotes() {
                     match self.footnote_growth(&footnotes, &mut pending_footnotes)? {
                         Some(added)
@@ -718,14 +726,18 @@ impl<'a> Paginator<'a, '_, 'a> {
                     take = 0;
                 }
             }
+            // A deferred line may also break before the content of its nested layout, when
+            // content precedes it on its physical page.
+            let has_flow = if deferred_line.is_some() {
+                self.has_page_flow()
+            } else {
+                self.has_flow
+            };
             // `footnote-policy: block` breaks before the paragraph holding the call.
-            if kept_footnotes == Some(crate::style::FootnotePolicy::Block)
-                && !started
-                && self.has_flow
-            {
+            if kept_footnotes == Some(crate::style::FootnotePolicy::Block) && !started && has_flow {
                 take = 0;
             }
-            if take == 0 && !self.has_flow {
+            if take == 0 && !has_flow {
                 take = available.min(remaining).max(1);
             }
             let accepted = trials.partition_point(|trial| trial.line() < take);
@@ -752,6 +764,13 @@ impl<'a> Paginator<'a, '_, 'a> {
                 .iter()
                 .filter(|trial| matches!(trial, FloatTrial::Float { .. }))
                 .count();
+            // The break before a deferred line is a forced page break (CSS GCPM 3 §2.8),
+            // which in columns leaves their row.
+            if deferred_line.is_some_and(|line| take <= line)
+                && matches!(self.fragmentainers, Fragmentainers::Columns(_))
+            {
+                request.forced = Some(Forced::Page);
+            }
             if take == 0 {
                 break 'fragment;
             }
@@ -874,7 +893,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             }
         }
         if !lines.as_slice().is_empty() || !candidate_complete || trailing_clearance {
-            return Ok(Some(Box::new(ParagraphCursor {
+            let cursor = Box::new(ParagraphCursor {
                 index,
                 source,
                 style,
@@ -899,7 +918,8 @@ impl<'a> Paginator<'a, '_, 'a> {
                 clamp,
                 letter,
                 started,
-            })));
+            });
+            return Ok(Some((cursor, request)));
         }
         if let Some((left, destination_width, height)) = self.paragraph_geometry() {
             x = left;

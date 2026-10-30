@@ -32,6 +32,7 @@ use crate::layout::{
 use crate::style::Position;
 use crate::style::transform::Matrix3d;
 pub(super) use columns::measure_columns;
+pub(super) use footnotes::FootnoteDeferrals;
 pub(crate) use renderings::Renderings;
 use std::{
     collections::{BTreeMap, BTreeSet, HashMap, VecDeque},
@@ -953,6 +954,8 @@ pub(super) struct Paginated {
     /// coordinates, or of a standalone flow's root when requested.
     pub text_areas: Box<[Option<crate::graphics::FlowPaint>]>,
     pub renderings: Box<Renderings>,
+    /// Calls this pagination placed on pages that their footnotes do not fit.
+    pub footnote_deferrals: FootnoteDeferrals,
 }
 
 /// A box laid out alone: its text lines, display list, line box extents and navigation, and
@@ -1558,6 +1561,25 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         self.unbroken == 0
             && self.parallel_depth == 0
             && matches!(self.fragmentainers, Fragmentainers::Pages(_))
+    }
+    /// The physical page the current position lies on, unless the flow is laid out without
+    /// breaks or its columns are not yet placed on a page.
+    fn physical_page(&self) -> Option<usize> {
+        if self.unbroken > 0 {
+            return None;
+        }
+        match &self.fragmentainers {
+            Fragmentainers::Pages(_) => Some(self.page),
+            Fragmentainers::Columns(rows) => rows.physical_page(self.page),
+        }
+    }
+    /// Whether content precedes the current position on its physical page.
+    fn has_page_flow(&self) -> bool {
+        self.has_flow
+            || match &self.fragmentainers {
+                Fragmentainers::Pages(_) => false,
+                Fragmentainers::Columns(rows) => rows.follows_flow(self.page),
+            }
     }
     fn continuation_flow(&self) -> bool {
         self.unbroken == 0 && (self.parallel_depth == 0 || self.reflow_lanes == self.parallel_depth)
@@ -3140,9 +3162,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 continue;
             }
             if let Some((paragraph, tail)) = cursor.paragraph.take() {
-                if let Some(next) = self.paragraph_fragment(paragraph, tail)? {
+                if let Some((next, request)) = self.paragraph_fragment(paragraph, tail)? {
                     cursor.paragraph = Some((next, tail));
-                    return Ok(Some((cursor, BreakRequest::default())));
+                    return Ok(Some((cursor, request)));
                 }
                 continue;
             }
@@ -7161,6 +7183,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             line_boxes: self.line_boxes.unwrap_or_default(),
             text_areas,
             renderings,
+            footnote_deferrals: self.footnotes.take_deferred(),
         })
     }
 }
