@@ -187,6 +187,18 @@ pub struct Contour {
     pub closed: bool,
 }
 impl Contour {
+    pub(crate) fn path_elements(&self) -> impl Iterator<Item = kurbo::PathEl> + Clone + '_ {
+        let point = |[x, y]: Point| kurbo::Point::new(f64::from(x), f64::from(y));
+        std::iter::once(kurbo::PathEl::MoveTo(point(self.start)))
+            .chain(self.segments.iter().map(move |segment| match *segment {
+                Segment::Line(end) => kurbo::PathEl::LineTo(point(end)),
+                Segment::Cubic([a, b, end]) => {
+                    kurbo::PathEl::CurveTo(point(a), point(b), point(end))
+                }
+            }))
+            .chain(self.closed.then_some(kurbo::PathEl::ClosePath))
+    }
+
     pub(crate) fn map(&self, place: impl Fn(Point) -> Point) -> Self {
         Self {
             start: place(self.start),

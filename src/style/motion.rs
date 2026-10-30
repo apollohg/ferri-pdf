@@ -436,25 +436,9 @@ fn box_path(reference: Rect, radii: Option<&CornerRadii>) -> Contour {
     path
 }
 fn sample(contours: &[Contour], distance: &LengthPercentage) -> (Point, f32) {
-    let point = |[x, y]: Point| kurbo::Point::new(f64::from(x), f64::from(y));
     let mut curves = Vec::new();
     for contour in contours {
-        let mut current = point(contour.start);
-        for segment in &contour.segments {
-            let curve = match *segment {
-                Segment::Line(to) => kurbo::PathSeg::Line(kurbo::Line::new(current, point(to))),
-                Segment::Cubic([a, b, to]) => kurbo::PathSeg::Cubic(kurbo::CubicBez::new(
-                    current,
-                    point(a),
-                    point(b),
-                    point(to),
-                )),
-            };
-            current = curve.end();
-            curves.push((curve, curve.arclen(PATH_ACCURACY)));
-        }
-        if contour.closed {
-            let curve = kurbo::PathSeg::Line(kurbo::Line::new(current, point(contour.start)));
+        for curve in kurbo::segments(contour.path_elements()) {
             curves.push((curve, curve.arclen(PATH_ACCURACY)));
         }
     }

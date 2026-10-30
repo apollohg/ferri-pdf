@@ -1,7 +1,7 @@
 //! CSS Shapes 1 float areas: a float's `shape-outside`, expanded by `shape-margin` and clipped
 //! to its margin box (§2, §6), kept as convex pieces. A line box beside the float is shortened
 //! by the area's extent over the line box's whole block range.
-use crate::graphics::{BackgroundImage, BoxArea, BoxPaint, Contour, Point, Rect, Segment, Shape};
+use crate::graphics::{BackgroundImage, BoxArea, BoxPaint, Contour, Point, Rect, Shape};
 use crate::images::Image;
 use crate::layout::{LayoutError, work::Budget};
 use crate::paint::{ShapeBox, ShapeOutside};
@@ -264,19 +264,11 @@ fn reference_box(reference: ShapeBox, boxes: &FloatBoxes<'_>) -> (Rect, crate::g
 
 /// The closed polygon approximating a contour within `FLATTEN_TOLERANCE_PT`.
 fn flatten(contour: &Contour) -> Vec<Vec<Point>> {
-    let mut path = kurbo::BezPath::new();
-    let point = |[x, y]: Point| kurbo::Point::new(f64::from(x), f64::from(y));
-    path.move_to(point(contour.start));
-    for segment in &contour.segments {
-        match *segment {
-            Segment::Line(end) => path.line_to(point(end)),
-            Segment::Cubic([a, b, end]) => path.curve_to(point(a), point(b), point(end)),
-        }
-    }
-    path.close_path();
     let mut polygons: Vec<Vec<Point>> = Vec::new();
     kurbo::flatten(
-        &path,
+        contour
+            .path_elements()
+            .chain((!contour.closed).then_some(kurbo::PathEl::ClosePath)),
         f64::from(FLATTEN_TOLERANCE_PT),
         |element| match element {
             kurbo::PathEl::MoveTo(start) => polygons.push(vec![[start.x as f32, start.y as f32]]),
