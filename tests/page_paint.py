@@ -838,6 +838,29 @@ class PagePaint(unittest.TestCase):
                     self.assertGreater(self.ink(page, (20, 160, 100, 180), blue), 0,
                                        "footnote bodies keep their own visibility")
 
+    def test_table_cells_clip_overflowing_contents_at_their_edges(self):
+        red, white = (255, 0, 0), (255, 255, 255)
+        for borders, overflow, edge in [
+            ("separate", "hidden", 120),
+            ("collapse", "hidden", 120),
+            ("separate", "clip;overflow-clip-margin:10pt", 130),
+            ("separate", "visible", None),
+        ]:
+            with self.subTest(borders=borders, overflow=overflow):
+                page = self.render(
+                    "@page{margin:20pt;padding:0;border:0;background:white}"
+                    f"table{{table-layout:fixed;width:100pt;border-spacing:0;border-collapse:{borders}}}"
+                    f"td{{padding:0;overflow:{overflow}}}"
+                    "div{width:200pt;height:20pt;background:red}",
+                    "<table><tr><td><div></div></td></tr></table>", page_size=(300, 100),
+                )[0]
+                self.pixel(page, (110, 30), red, "contents paint inside the cell")
+                if edge is None:
+                    self.pixel(page, (200, 30), red, "visible overflow paints past the cell")
+                else:
+                    self.pixel(page, (edge - 2, 30), red, "contents paint up to the clip edge")
+                    self.pixel(page, (edge + 2, 30), white, "contents past the clip edge are clipped")
+
     def test_hidden_page_box_paints_neither_itself_nor_inheriting_margin_boxes(self):
         page = self.render(
             "@page{visibility:hidden;background:blue;border:4pt solid red;outline:4pt solid red;"

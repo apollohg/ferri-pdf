@@ -462,6 +462,28 @@ pub struct BoxPaint<I = Infallible> {
     pub text_area: Option<Arc<crate::graphics::FlowPaint>>,
 }
 
+impl<I: Clone> BoxPaint<I> {
+    /// This fragment's geometry, which its clips derive from, painting nothing: the box
+    /// itself paints elsewhere.
+    pub(crate) fn unpainted(&self) -> Self {
+        let mut decoration = BoxDecoration {
+            radii: self.decoration.radii.clone(),
+            corner_shapes: self.decoration.corner_shapes.clone(),
+            borders: self.decoration.borders,
+            ..BoxDecoration::default()
+        };
+        for border in &mut decoration.borders {
+            border.color = Color::TRANSPARENT;
+        }
+        Self {
+            decoration,
+            draw_background: false,
+            text_area: None,
+            ..self.clone()
+        }
+    }
+}
+
 #[derive(Clone, Debug, Serialize)]
 pub struct BorderGeometry {
     pub rect: Rect,

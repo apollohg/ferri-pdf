@@ -1597,6 +1597,11 @@ fn measure_plan<'a>(
                 if stretch {
                     measured.paint = Some(paint);
                 } else {
+                    // The row paints the cell's box, at whose edges the cell still clips its
+                    // contents (CSS Overflow 3 §3.1).
+                    if measured.style.clip_edges().next().is_some() {
+                        measured.paint = Some(paint.unpainted());
+                    }
                     own_paints.push(paint);
                 }
             }
