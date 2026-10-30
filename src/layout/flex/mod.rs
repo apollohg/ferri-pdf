@@ -14,7 +14,7 @@ use crate::layout::{
     positioned::StaticAlignment,
 };
 use crate::style::{
-    Alignment, BoxSizing, BreakBetween, Display, FlexBasis, FlexWrap, OverflowPosition, Size,
+    Alignment, BoxSizing, BreakBetween, FlexBasis, FlexWrap, OverflowPosition, Size,
 };
 
 /// The flex base size (CSS Flexbox 1 §9.2.3): `content` and unresolvable sizes use the
@@ -208,12 +208,6 @@ fn measure_item<'a>(
     height: Option<f32>,
     containing_height: Option<f32>,
 ) -> Result<MeasuredBlock<'a>, Failure> {
-    if item.source.style().display == Display::Table {
-        return Err(LayoutError::UnsupportedFlex {
-            feature: "table flex item sizing",
-        }
-        .into());
-    }
     let mut space = measurer.space;
     space.indefinite_inline &= !item.inline_definite;
     measurer.with_space(space, |measurer| {

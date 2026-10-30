@@ -307,3 +307,41 @@ fn wrapped_column_offsets_keep_their_pages_before_sibling_ink_is_painted() {
         common::assert_pt(first.baseline, second.baseline);
     }
 }
+
+#[test]
+fn table_items_flex_their_table_box_and_count_captions_as_its_edges() {
+    let trace = render(
+        "<section class=row><table class=grow><tr><td>A</td></tr></table><div class=tall></div></section>\
+         <section class=column><table class=fill><caption>Caption</caption><tr><td>B</td></tr></table></section>",
+        "td{padding:0}table{border-spacing:0}caption{height:20pt}.row{display:flex;width:200pt}\
+         .grow{flex:1;background:rgb(255,0,0)}.tall{width:50pt;height:40pt;background:rgb(0,0,255)}\
+         .column{display:flex;flex-direction:column;width:100pt;height:120pt}\
+         .fill{flex:1;background:rgb(0,255,0)}",
+    );
+    let grown = common::painted_box(&trace, [255, 0, 0]);
+    common::assert_labelled_pt("grown table width", grown.width, 150.0);
+    common::assert_labelled_pt("stretched table height", grown.height, 40.0);
+    let caption = trace.pages[0]
+        .iter()
+        .find(|line| line.text == "Caption")
+        .expect("caption line");
+    let filled = common::painted_box(&trace, [0, 255, 0]);
+    let column_top = 36.0 + 40.0;
+    let caption_height = 20.0;
+    common::assert_labelled_pt(
+        "table box below its caption",
+        filled.y,
+        column_top + caption_height,
+    );
+    common::assert_labelled_pt(
+        "table box leaves the caption its share of the flexed item",
+        filled.height,
+        120.0 - caption_height,
+    );
+    assert!(
+        caption.baseline < filled.y,
+        "caption baseline {} must sit above the table box at {}",
+        caption.baseline,
+        filled.y
+    );
+}

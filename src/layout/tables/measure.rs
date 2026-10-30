@@ -138,16 +138,27 @@ pub(crate) fn measure_format<'a>(
     containing_height: Option<f32>,
     used_height: Option<f32>,
 ) -> Result<MeasuredBlock<'a>, Failure> {
-    let plan = TablePlan::new(
-        measurer,
-        block,
-        containing_height,
-        used_height,
-        geometry::horizontal_with_edges,
-    )?;
-    let resolved = plan.resolve_positioned(measurer, geometry)?;
-    plan.measure_wrapped(measurer, &resolved)
-        .map(|(block, _)| block)
+    let block = block.into();
+    let measure = |measurer: &mut Measurer<'a>, used_height| {
+        let plan = TablePlan::new(
+            measurer,
+            block,
+            containing_height,
+            used_height,
+            geometry::horizontal_with_edges,
+        )?;
+        let resolved = plan.resolve_positioned(measurer, geometry)?;
+        plan.measure_wrapped(measurer, &resolved)
+            .map(|(block, _)| block)
+    };
+    let mut wrapper = measure(measurer, used_height)?;
+    // CSS Flexbox 1 §4: a used block size sizes the table wrapper box as if the captions
+    // were part of the table box's border and padding.
+    let captions = wrapper.height - captions::principal(&mut wrapper).height;
+    match used_height {
+        Some(used) if captions > 0.0 => measure(measurer, Some((used - captions).max(0.0))),
+        _ => Ok(wrapper),
+    }
 }
 
 struct WidthContributions {
