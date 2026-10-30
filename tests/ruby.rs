@@ -374,3 +374,27 @@ fn table_parts_in_ruby_boxes_share_one_anonymous_inline_table() {
         base.baseline
     );
 }
+
+#[test]
+fn math_children_of_ruby_in_math_stay_atomic_inlines_of_its_bases() {
+    // §2.2: the ruby inlinifies the `<mi>`s, so they are annotated inline math boxes, not
+    // math children splitting the ruby.
+    let trace = render(
+        "",
+        "<math display=block><mrow style=display:ruby><mi>a</mi><mi>b</mi>\
+         <mi style=display:ruby-text>c</mi></mrow><mi>d</mi></math>",
+    );
+    let base = line(&trace, "\u{fffc}\u{fffc}");
+    let annotation = line(&trace, "𝑐");
+    assert_labelled_pt(
+        "the annotation is centred over the base holding both math boxes",
+        annotation.x + annotation.width / 2.0,
+        base.x + base.width / 2.0,
+    );
+    assert!(
+        annotation.baseline < base.baseline,
+        "the annotation lies over its base: {} vs {}",
+        annotation.baseline,
+        base.baseline
+    );
+}

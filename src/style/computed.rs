@@ -623,6 +623,11 @@ impl Style {
         }
     }
 
+    /// Its parent holds only inline-level content, having inlinified it.
+    pub(crate) fn inlinified(&self) -> bool {
+        self.inlinifying_parent
+    }
+
     pub(super) fn independent_box(&self) -> bool {
         self.document_root || self.item_parent
     }

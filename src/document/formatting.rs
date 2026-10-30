@@ -1475,12 +1475,6 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             )
             .into());
         }
-        if self.ruby.holds_explicit() {
-            return Err(StyleError::Unsupported(
-                "block-level content inside a ruby container".into(),
-            )
-            .into());
-        }
         self.ruby.finish(self.inline)?;
         let collected = self.inline.split();
         let origins = self.first_line.origins.clone();
@@ -2738,11 +2732,14 @@ fn block<'a>(
                             Some(Placement::Flow)
                         }
                     }
+                    // A ruby holds only inline-level content (CSS Ruby 1 §2.2), so a math
+                    // child it inlinified stays an atomic inline in it.
                     Display::InlineMath | Display::InlineTable
-                        if matches!(
+                        if (matches!(
                             builder.style.display,
                             Display::BlockMath | Display::InlineMath
-                        ) || math_cell =>
+                        ) || math_cell)
+                            && !child_style.inlinified() =>
                     {
                         builder.flush()?;
                         Some(Placement::Flow)

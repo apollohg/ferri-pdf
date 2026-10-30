@@ -208,11 +208,6 @@ impl RubyStack {
             .any(|part| matches!(part, Part::Annotation(_)))
     }
 
-    /// Whether an explicit ruby container is open, inside which block-level content cannot lie.
-    pub(super) fn holds_explicit(&self) -> bool {
-        self.open.iter().any(|ruby| ruby.explicit)
-    }
-
     /// The innermost open annotation's base level among `self.open`, outermost first: where
     /// out-of-flow boxes inside annotations anchor, since their containing block is the ruby
     /// container's (§2.1.1).
