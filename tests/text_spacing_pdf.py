@@ -71,6 +71,15 @@ class TextSpacingPdf(unittest.TestCase):
             rows.setdefault(round(glyph.matrix[5], 3), []).append(glyph)
         return [sorted(rows[y], key=lambda glyph: glyph.matrix[4]) for y in sorted(rows, reverse=True)]
 
+    def line(self, style, text, svg):
+        """The glyphs of `text` set in `style` as a paragraph or, where `svg`, as SVG text whose
+        user units are points, which SVG 2 §11.10 lays out with the document's text."""
+        body = (f"<svg width='260pt' height='40pt' viewBox='0 0 260 40' style='display:block'>"
+                f"<text y='20' style=\"font:{SIZE_PT}px Halt;{style}\">{text}</text></svg>"
+                if svg else f"<p style=\"{style}\">{text}</p>")
+        [line] = self.lines("", body)
+        return line
+
     def assert_origins(self, label, glyphs, expected):
         self.assertEqual("".join(glyph.text for glyph in glyphs), "".join(ch for ch, _ in expected), label)
         for index, (glyph, (ch, x)) in enumerate(zip(glyphs, expected)):
@@ -81,9 +90,11 @@ class TextSpacingPdf(unittest.TestCase):
         face = Face(HALT)
         text = "漢字abc漢字123漢"
         gap = face.advance(WATER) * INTER_SCRIPT_IC
-        for value, spaced in (("normal", True), ("no-autospace", False)):
-            with self.subTest(value=value):
-                [line] = self.lines(f"p{{text-autospace:{value}}}", f"<p>{text}</p>")
+        for value, spaced, svg in ((value, spaced, svg)
+                                   for value, spaced in (("normal", True), ("no-autospace", False))
+                                   for svg in (False, True)):
+            with self.subTest(value=value, svg=svg):
+                line = self.line(f"text-autospace:{value}", text, svg)
                 expected, pen = [], 0
                 for index, ch in enumerate(text):
                     if index and spaced and len({text[index - 1], ch} & IDEOGRAPHS) == 1 \
@@ -96,11 +107,27 @@ class TextSpacingPdf(unittest.TestCase):
     def test_replaced_space_leaves_layout_but_not_the_text(self):
         face = Face(HALT)
         gap = face.advance(WATER) * INTER_SCRIPT_IC
-        [line] = self.lines("p{text-autospace:ideograph-alpha replace}", "<p>漢 abc</p>")
         start = face.advance("漢") + gap
-        self.assert_origins("replace", line, [
-            ("漢", 0), (" ", start), ("a", start), ("b", start + face.advance("a")),
-            ("c", start + face.advance("a") + face.advance("b")),
+        for svg in (False, True):
+            with self.subTest(svg=svg):
+                line = self.line("text-autospace:ideograph-alpha replace", "漢 abc", svg)
+                self.assert_origins("replace", line, [
+                    ("漢", 0), (" ", start), ("a", start), ("b", start + face.advance("a")),
+                    ("c", start + face.advance("a") + face.advance("b")),
+                ])
+
+    def test_svg_text_spaces_boundaries_by_the_element_containing_them(self):
+        """CSS Text 4 §8.4.2 on SVG text: the innermost element containing a boundary between
+        tspans decides its spacing, and a tspan's own value spaces the boundaries inside it."""
+        face = Face(HALT)
+        gap = face.advance(WATER) * INTER_SCRIPT_IC
+        line = self.line("text-autospace:no-autospace",
+                         "漢<tspan style='text-autospace:normal'>a</tspan>"
+                         "<tspan style='text-autospace:normal'>字b</tspan>", True)
+        pen = face.advance("漢") + face.advance("a")
+        self.assert_origins("ancestor spacing", line, [
+            ("漢", 0), ("a", face.advance("漢")), ("字", pen),
+            ("b", pen + face.advance("字") + gap),
         ])
 
     def test_trimmed_punctuation_origins_with_and_without_halt(self):

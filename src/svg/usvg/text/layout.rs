@@ -245,7 +245,8 @@ pub(crate) fn layout_text(
     for chunk in &text_node.chunks {
         for span in &chunk.spans {
             let edge = span.line_edge.as_ref().map(|edge| &edge.strut.font);
-            for font in std::iter::once(&span.font).chain(edge) {
+            let ancestors = span.ancestry.iter().map(|ancestor| &ancestor.font);
+            for font in std::iter::once(&span.font).chain(edge).chain(ancestors) {
                 if !fonts_cache.contains_key(font) {
                     if let Some(loaded) = resolver
                         .select_font(font, fontdb)
@@ -652,7 +653,160 @@ pub(crate) fn spaced_clusters(
     apply_writing_mode(text.writing_mode, &mut clusters);
     apply_letter_spacing(chunk, &mut clusters);
     apply_word_spacing(chunk, &mut clusters);
+    apply_autospace(chunk, &mut clusters, fonts_cache, resolver, fontdb);
     Some(clusters)
+}
+
+/// The clusters of `text` set alone in `span`'s style, horizontally, in `chunk`.
+pub(crate) fn styled_clusters(
+    chunk: &TextChunk,
+    span: &TextSpan,
+    text: &str,
+    fonts_cache: &FontsCache,
+    resolver: &dyn FontProvider,
+    fontdb: &mut Arc<Database>,
+) -> Option<Vec<GlyphCluster>> {
+    let chunk = TextChunk {
+        text: text.to_owned(),
+        spans: vec![TextSpan {
+            start: 0,
+            end: text.len(),
+            ..span.clone()
+        }],
+        ..chunk.clone()
+    };
+    process_chunk(
+        &chunk,
+        WritingMode::LeftToRight,
+        fonts_cache,
+        resolver,
+        fontdb,
+    )
+}
+
+/// The element whose `text-autospace` spaces a boundary: a span's own, or an ancestor's.
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
+enum Owner {
+    Span(usize),
+    Element(usize),
+}
+
+/// CSS Text 4 §8.4 `text-autospace`: the spacing the innermost element containing the boundary
+/// of two visually adjacent clusters of `chunk` inserts after the first, measured in that
+/// element's font (§8.4.2); a single space between them is removed where the spacing replaces
+/// it. SVG text has no box edges or atomic inlines that keep characters apart.
+fn apply_autospace(
+    chunk: &TextChunk,
+    clusters: &mut [GlyphCluster],
+    fonts_cache: &FontsCache,
+    resolver: &dyn FontProvider,
+    fontdb: &mut Arc<Database>,
+) {
+    use crate::text::autospace::{Spacing, replaceable};
+    let span_index = |cluster: &GlyphCluster| {
+        chunk
+            .spans
+            .iter()
+            .position(|span| span_contains(span, cluster.byte_idx))
+    };
+    let replaceable_at = |cluster: Option<&GlyphCluster>| {
+        cluster
+            .and_then(|cluster| cluster.glyphs.first())
+            .is_some_and(|glyph| replaceable(&glyph.text))
+    };
+    let mut spacings: HashMap<Owner, (Spacing<'_>, TextSpan)> = HashMap::new();
+    let mut insertions = Vec::new();
+    for left in 0..clusters.len() {
+        let (right, removed) = if replaceable_at(clusters.get(left + 1)) {
+            (left + 2, Some(left + 1))
+        } else {
+            (left + 1, None)
+        };
+        let (Some(first), Some(second)) = (clusters.get(left), clusters.get(right)) else {
+            continue;
+        };
+        let (Some(first_span), Some(second_span)) = (span_index(first), span_index(second)) else {
+            continue;
+        };
+        let owner = if first_span == second_span {
+            Owner::Span(first_span)
+        } else {
+            let [before, after] =
+                [first_span, second_span].map(|index| &chunk.spans[index].ancestry);
+            match before
+                .iter()
+                .zip(after.iter())
+                .take_while(|(before, after)| before.element == after.element)
+                .last()
+            {
+                Some((ancestor, _)) => Owner::Element(ancestor.element),
+                None => continue,
+            }
+        };
+        let (spacing, measuring) = spacings.entry(owner).or_insert_with(|| {
+            let span = &chunk.spans[first_span];
+            match owner {
+                Owner::Span(_) => (Spacing::new(&span.style), span.clone()),
+                Owner::Element(element) => {
+                    let ancestor = span
+                        .ancestry
+                        .iter()
+                        .find(|ancestor| ancestor.element == element)
+                        .expect("the owner is an ancestor of the span");
+                    (
+                        Spacing::new(&ancestor.style),
+                        TextSpan {
+                            style: ancestor.style.clone(),
+                            font: ancestor.font.clone(),
+                            font_size: NonZeroPositiveF32::new(ancestor.font_size)
+                                .unwrap_or(span.font_size),
+                            letter_spacing: 0.0,
+                            word_spacing: 0.0,
+                            ..span.clone()
+                        },
+                    )
+                }
+            }
+        });
+        if removed.is_some() && !spacing.replaces() {
+            continue;
+        }
+        let (before, after) = if first.byte_idx.value() <= second.byte_idx.value() {
+            (first.codepoint, second.codepoint)
+        } else {
+            (second.codepoint, first.codepoint)
+        };
+        let Some(gap) = spacing.gap(before, after) else {
+            continue;
+        };
+        let size = measuring.font_size.get();
+        let Ok(width) = spacing.width(gap, size, |character| {
+            Ok::<_, std::convert::Infallible>(
+                styled_clusters(
+                    chunk,
+                    measuring,
+                    character.encode_utf8(&mut [0; 4]),
+                    fonts_cache,
+                    resolver,
+                    fontdb,
+                )
+                .filter(|clusters| {
+                    clusters
+                        .iter()
+                        .flat_map(|cluster| &cluster.glyphs)
+                        .all(|glyph| glyph.id.0 != 0)
+                })
+                .map(|clusters| clusters.iter().map(|cluster| cluster.advance).sum()),
+            )
+        });
+        insertions.push((left, removed, width));
+    }
+    for (left, removed, width) in insertions {
+        clusters[left].advance += width;
+        if let Some(removed) = removed {
+            clusters[removed].advance = 0.0;
+        }
+    }
 }
 
 fn convert_span(
@@ -786,9 +940,9 @@ impl ElementSpans {
         for (chunk_index, chunk) in text.chunks.iter().enumerate() {
             for (span_index, span) in chunk.spans.iter().enumerate() {
                 let at = (chunk_index, span_index);
-                for (element, _) in span.ancestry.iter() {
+                for ancestor in span.ancestry.iter() {
                     extents
-                        .entry(*element)
+                        .entry(ancestor.element)
                         .and_modify(|extent: &mut [(usize, usize); 2]| extent[1] = at)
                         .or_insert([at; 2]);
                 }
@@ -1371,7 +1525,9 @@ pub(crate) fn document_paragraph(chunk: &TextChunk) -> crate::document::Paragrap
         .spans
         .first()
         .and_then(|span| span.ancestry.first())
-        .map_or_else(crate::style::Style::default, |(_, style)| (**style).clone());
+        .map_or_else(crate::style::Style::default, |ancestor| {
+            (*ancestor.style).clone()
+        });
     root.rtl = chunk.rtl;
     root.principal_flow = None;
     let mut boxes: Vec<(
@@ -1387,15 +1543,19 @@ pub(crate) fn document_paragraph(chunk: &TextChunk) -> crate::document::Paragrap
         let shared = open
             .iter()
             .zip(ancestors)
-            .take_while(|(index, (element, _))| elements[**index] == *element)
+            .take_while(|(index, ancestor)| elements[**index] == ancestor.element)
             .count();
         open.truncate(shared);
         for index in &open {
             boxes[*index].0.end = span.end;
         }
-        for (element, style) in &ancestors[shared..] {
-            boxes.push((span.start..span.end, style.clone(), open.last().copied()));
-            elements.push(*element);
+        for ancestor in &ancestors[shared..] {
+            boxes.push((
+                span.start..span.end,
+                ancestor.style.clone(),
+                open.last().copied(),
+            ));
+            elements.push(ancestor.element);
             open.push(boxes.len() - 1);
         }
         spans.push((

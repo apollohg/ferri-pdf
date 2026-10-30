@@ -306,16 +306,7 @@ impl<'a> Paragraph<'a> {
         else {
             return 0.0;
         };
-        let chunk = TextChunk {
-            text: extra.to_owned(),
-            spans: vec![crate::svg::usvg::TextSpan {
-                start: 0,
-                end: extra.len(),
-                ..span.clone()
-            }],
-            ..self.chunk.clone()
-        };
-        layout::process_chunk(&chunk, WritingMode::LeftToRight, fonts, resolver, fontdb)
+        layout::styled_clusters(self.chunk, span, extra, fonts, resolver, fontdb)
             .map_or(0.0, |clusters| {
                 clusters.iter().map(|cluster| cluster.advance).sum()
             })

@@ -166,3 +166,8 @@ keeps them from spacers, or from those starting or ending a chunk, with the spac
 element's content edges, where its first and last characters lie; and
 `text-decoration-skip-ink: all` interrupts underlines and overlines where glyph outlines cross
 their band, with the document's clearance.
+
+`text-autospace` spaces each boundary between visually adjacent clusters of a chunk as the
+document's lines do (CSS Text 4 §8.4): by the value of the innermost element containing it,
+measured in that element's font, removing a single space between them where it replaces one.
+Spans keep the font and size of each element containing them for this.

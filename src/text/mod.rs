@@ -1,5 +1,5 @@
 //! Font shaping, bidi resolution, and measured inline layout.
-mod autospace;
+pub(crate) mod autospace;
 pub(crate) mod bidi;
 mod breaking;
 pub(crate) mod combine;

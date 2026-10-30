@@ -84,7 +84,7 @@ fn french_punctuation(ch: char) -> bool {
 
 /// The spacing between two characters.
 #[derive(Clone, Copy)]
-enum Gap {
+pub(crate) enum Gap {
     InterScript,
     Narrow,
     NoBreak,
@@ -110,10 +110,10 @@ pub(super) fn advance(
 }
 
 /// The value in `cell`, measured on first use.
-fn measured<T: Copy>(
+fn measured<T: Copy, E>(
     cell: &OnceCell<T>,
-    measure: impl FnOnce() -> Result<T, TextError>,
-) -> Result<T, TextError> {
+    measure: impl FnOnce() -> Result<T, E>,
+) -> Result<T, E> {
     if let Some(value) = cell.get() {
         return Ok(*value);
     }
@@ -123,7 +123,7 @@ fn measured<T: Copy>(
 
 /// What an element's `text-autospace` inserts at the boundaries it contains. Gap widths are
 /// measured on first use, so that no font is loaded for lines that are never laid out.
-struct Spacing<'p> {
+pub(crate) struct Spacing<'p> {
     style: &'p Style,
     value: TextAutospace,
     /// `punctuation` spacing applies: the content language is French.
@@ -133,7 +133,7 @@ struct Spacing<'p> {
     spaces: OnceCell<[f32; 2]>,
 }
 impl<'p> Spacing<'p> {
-    fn new(style: &'p Style) -> Self {
+    pub(crate) fn new(style: &'p Style) -> Self {
         let value = style.text_spacing.autospace;
         Self {
             style,
@@ -151,8 +151,13 @@ impl<'p> Spacing<'p> {
             || (punctuation && self.french)
     }
 
+    /// Whether the spacing replaces a single space between the characters it separates.
+    pub(crate) fn replaces(&self) -> bool {
+        self.value.replace
+    }
+
     /// The gap between `first` and `second`, in logical order.
-    fn gap(&self, first: char, second: char) -> Option<Gap> {
+    pub(crate) fn gap(&self, first: char, second: char) -> Option<Gap> {
         let classes = [class(first), class(second)];
         if (self.value.ideograph_alpha
             && matches!(
@@ -178,20 +183,27 @@ impl<'p> Spacing<'p> {
         }
     }
 
-    fn width(&self, context: &TextContext<'_>, gap: Gap) -> Result<f32, TextError> {
-        let style = self.style;
+    /// The width of `gap` in units where the element's font size is `size`, `advance`
+    /// measuring a character in the element's font where it has one.
+    pub(crate) fn width<E>(
+        &self,
+        gap: Gap,
+        size: f32,
+        mut advance: impl FnMut(char) -> Result<Option<f32>, E>,
+    ) -> Result<f32, E> {
         if let Gap::InterScript = gap {
             return measured(&self.inter_script, || {
-                Ok(advance(context, style, WATER_IDEOGRAPH)?
-                    .unwrap_or(FALLBACK_IDEOGRAPH_ADVANCE_EM * style.size)
-                    * INTER_SCRIPT_IC)
+                Ok(
+                    advance(WATER_IDEOGRAPH)?.unwrap_or(FALLBACK_IDEOGRAPH_ADVANCE_EM * size)
+                        * INTER_SCRIPT_IC,
+                )
             });
         }
         let [narrow, no_break] = measured(&self.spaces, || {
-            let space = advance(context, style, SPACE)?.unwrap_or_default();
+            let space = advance(SPACE)?.unwrap_or_default();
             Ok([
                 space * NARROW_SPACE_FACTOR,
-                advance(context, style, NO_BREAK_SPACE)?.unwrap_or(space),
+                advance(NO_BREAK_SPACE)?.unwrap_or(space),
             ])
         })?;
         Ok(if let Gap::Narrow = gap {
@@ -200,6 +212,12 @@ impl<'p> Spacing<'p> {
             no_break
         })
     }
+}
+
+/// Whether `text` is a single space, which `replace` spacing removes.
+pub(crate) fn replaceable(text: &str) -> bool {
+    let mut characters = text.chars();
+    characters.next() == Some(SPACE) && characters.next().is_none()
 }
 
 /// The last glyph of a typographic character unit on a line, in visual order.
@@ -304,7 +322,7 @@ impl<'p, 'c, 'f> Autospace<'p, 'c, 'f> {
                     offset: run.source_range.start + range.start,
                     base,
                     span: run.source_span,
-                    space: text.len() == SPACE.len_utf8() && base == SPACE,
+                    space: replaceable(text),
                 }));
             }
         }
@@ -330,7 +348,7 @@ impl<'p, 'c, 'f> Autospace<'p, 'c, 'f> {
             );
             (owner, owner.map_or(&self.root, |index| &self.boxes[index]))
         };
-        if removed.is_some() && !spacing.value.replace {
+        if removed.is_some() && !spacing.replaces() {
             return Ok(None);
         }
         let (first, second) = if left.offset <= right.offset {
@@ -341,7 +359,9 @@ impl<'p, 'c, 'f> Autospace<'p, 'c, 'f> {
         let Some(gap) = spacing.gap(first, second) else {
             return Ok(None);
         };
-        let width = spacing.width(self.context, gap)?;
+        let width = spacing.width(gap, spacing.style.size, |ch| {
+            advance(self.context, spacing.style, ch)
+        })?;
         Ok((width != 0.0).then_some(Insertion {
             unit: left,
             removed,

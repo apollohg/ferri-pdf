@@ -420,7 +420,12 @@ fn collect_text_chunks_impl(
         let mut ancestry = Vec::new();
         for node in parent.ancestors() {
             if !node.is_contents() {
-                ancestry.push((node.index(), text_style(node, state)));
+                ancestry.push(Ancestor {
+                    element: node.index(),
+                    style: text_style(node, state),
+                    font: convert_font(node, state),
+                    font_size: super::units::resolve_font_size(node, state),
+                });
             }
             if node.tag_name() == Some(EId::Text) {
                 break;
