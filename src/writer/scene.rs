@@ -146,14 +146,7 @@ fn joined_svg(
     for (index, item) in items.iter().enumerate() {
         match item {
             DisplayItem::Pop => depth = depth.saturating_sub(1),
-            DisplayItem::PushClip(_)
-            | DisplayItem::PushTransform(_)
-            | DisplayItem::PushProjection(_)
-            | DisplayItem::PushOpacity(_)
-            | DisplayItem::PushBlend(_)
-            | DisplayItem::PushFilter(_)
-            | DisplayItem::PushMask(_)
-            | DisplayItem::PushBackdropRoot => depth += 1,
+            push if push.is_push() => depth += 1,
             DisplayItem::Image(paint) if depth == 0 => {
                 let crate::images::Image::Svg(svg) = paint.image.as_ref() else {
                     continue;

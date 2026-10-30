@@ -452,24 +452,10 @@ pub(super) fn group_length(items: &[DisplayItem]) -> Result<usize, PdfError> {
     let mut depth = 0_usize;
     for (index, item) in items.iter().enumerate() {
         match item {
-            DisplayItem::PushClip(_)
-            | DisplayItem::PushTransform(_)
-            | DisplayItem::PushProjection(_)
-            | DisplayItem::PushOpacity(_)
-            | DisplayItem::PushBlend(_)
-            | DisplayItem::PushFilter(_)
-            | DisplayItem::PushMask(_)
-            | DisplayItem::PushBackdropRoot => depth += 1,
             DisplayItem::Pop if depth == 0 => return Ok(index),
             DisplayItem::Pop => depth -= 1,
-            DisplayItem::Frame(_)
-            | DisplayItem::Scene(_)
-            | DisplayItem::Image(_)
-            | DisplayItem::Box(_)
-            | DisplayItem::Text { .. }
-            | DisplayItem::TextShadow(_)
-            | DisplayItem::Decoration(_)
-            | DisplayItem::Backdrop(_) => {}
+            push if push.is_push() => depth += 1,
+            _ => {}
         }
     }
     Err(PdfError::InvalidGeometry)
