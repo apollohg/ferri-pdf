@@ -206,6 +206,31 @@ class FontFeaturesPdf(unittest.TestCase):
             ("font-family:'Liberation Serif'", "AVA"),
         ], rules)
 
+    def test_svg_text_cases_characters_where_their_sources_are_positioned(self):
+        """CSS Text 3 §2.1 on SVG text: casing is language-sensitive and may expand characters,
+        while SVG 2 §11.5 positions the characters as they were before the transform."""
+        pixels = PDF_POINTS_PER_INCH / CSS_PIXELS_PER_INCH
+        texts = ('<text x="10 110 210" y="40" style="text-transform:uppercase">ßab</text>'
+                 '<text x="10" y="80" lang="tr" style="text-transform:uppercase">iı</text>'
+                 '<text x="10" y="120" style="text-transform:capitalize">ab <tspan>cd</tspan></text>'
+                 '<text x="10" y="160" style="text-transform:lowercase">AB<tspan '
+                 'style="text-transform:none">C</tspan></text>')
+        lines = self.lines(self.render(
+            "svg{display:block}",
+            f"<svg width=\"300pt\" height=\"150pt\" viewBox=\"0 0 400 200\" "
+            f"style=\"font:20px 'Liberation Serif'\">{texts}</svg>").glyphs)
+        self.assertEqual(["".join(glyph.text for glyph in line) for line in lines],
+                         ["SSAB", "İI", "Ab Cd", "abC"],
+                         "uppercase expands ß, Turkish dots i, capitalize starts each word and "
+                         "a span's own value replaces the inherited one")
+        sharp, second, capital_a, capital_b = lines[0]
+        for glyph, position in ((capital_a, 110), (capital_b, 210)):
+            self.assertAlmostEqual(glyph.origin[0] - sharp.origin[0], (position - 10) * pixels,
+                                   delta=POSITION_TOLERANCE_PT,
+                                   msg=f"{glyph.text} stays at its source character's x")
+        self.assertTrue(sharp.origin[0] < second.origin[0] < capital_a.origin[0],
+                        "the second S of ß follows the first instead of taking a position")
+
     def test_optical_size_and_presentation_select_the_embedded_glyphs(self):
         optical = reference("RobotoFlex-optical.json")
         advances = {json.dumps(sample["location"], sort_keys=True): sample["advance"]

@@ -109,6 +109,89 @@ impl OffsetMap {
     }
 }
 
+/// A run of source text and the `text-transform` it takes (CSS Text 3 §2.1, CSS Text 4 §2.1).
+pub(crate) struct CaseRun<'a> {
+    pub range: Range<usize>,
+    pub transform: TextTransform,
+    pub language: &'a str,
+    /// Spaces are preserved, so `full-width` widens them too.
+    pub preserve_spaces: bool,
+    /// The run's source text is a single character, which `math-auto` italicizes.
+    pub single_character: bool,
+}
+
+/// `text` with each run's `text-transform` applied, and the output range of each source
+/// character of the runs, in run order; `None` when the output would exceed the inline text
+/// limit.
+pub(crate) fn transform_text(
+    text: &str,
+    runs: &[CaseRun<'_>],
+) -> Option<(String, Vec<Range<usize>>)> {
+    let mapper = CaseMapper::new();
+    let capitalize = runs
+        .iter()
+        .any(|run| run.transform.case == TextCase::Capitalize);
+    let mut words = text
+        .unicode_word_indices()
+        .filter_map(|(start, word)| {
+            let (lead, _) = word.char_indices().find(|(_, ch)| ch.is_alphanumeric())?;
+            Some(start + lead)
+        })
+        .peekable();
+    let mut prefix = 0..0;
+    let mut context = mapper.context(text);
+    let mut output = BoundedText(String::with_capacity(text.len()));
+    let mut units = Vec::new();
+    for run in runs {
+        let language = language(run.language);
+        for (relative, ch) in text[run.range.clone()].char_indices() {
+            let offset = run.range.start + relative;
+            let unit = output.0.len();
+            if capitalize && words.peek().is_some_and(|&start| start == offset) {
+                words.next();
+                let count = mapper.titlecase_prefix_len(&text[offset..], &language);
+                let minimum_end = text[offset..]
+                    .char_indices()
+                    .nth(count)
+                    .map_or(text.len(), |(relative, _)| offset + relative);
+                let end = text[offset..]
+                    .grapheme_indices(true)
+                    .map(|(relative, cluster)| offset + relative + cluster.len())
+                    .find(|&end| end >= minimum_end)
+                    .unwrap_or(text.len());
+                prefix = offset..end;
+            }
+            let mapping = match run.transform.case {
+                TextCase::None | TextCase::MathAuto => None,
+                TextCase::Uppercase => Some(ContextCase::Upper),
+                TextCase::Lowercase => Some(ContextCase::Lower),
+                TextCase::Capitalize => {
+                    (prefix.contains(&offset) && !ch.is_uppercase()).then_some(ContextCase::Title)
+                }
+            };
+            let mut transformed = Transformed {
+                output: &mut output,
+                transform: run.transform,
+                preserve_spaces: run.preserve_spaces,
+            };
+            if let Some(mapping) = mapping {
+                context.map_char(offset, &language, mapping, &mut transformed)
+            } else {
+                transformed.write_char(
+                    if run.transform.case == TextCase::MathAuto && run.single_character {
+                        super::transform_math::italic(ch)
+                    } else {
+                        ch
+                    },
+                )
+            }
+            .ok()?;
+            units.push(unit..output.0.len());
+        }
+    }
+    Some((output.0, units))
+}
+
 /// Applies the spans' `text-transform`, returning the output range of each source character
 /// where `record` asks for it.
 pub(super) fn apply(
@@ -133,23 +216,42 @@ pub(super) fn apply(
         }
         return Ok(units);
     }
-    let mapper = CaseMapper::new();
-    let original = std::mem::take(&mut paragraph.text);
-    let capitalize = paragraph
+    let runs: Vec<CaseRun<'_>> = paragraph
         .spans
         .iter()
-        .any(|span| span.style.text_transform.case == TextCase::Capitalize);
-    let mut words = original
-        .unicode_word_indices()
-        .filter_map(|(start, word)| {
-            let (lead, _) = word.char_indices().find(|(_, ch)| ch.is_alphanumeric())?;
-            Some(start + lead)
+        .map(|span| CaseRun {
+            range: span.range.clone(),
+            transform: span.style.text_transform,
+            language: &span.style.language,
+            preserve_spaces: !span.style.white_space.collapses_spaces(),
+            single_character: span.single_character_source,
         })
-        .peekable();
-    let mut prefix = 0..0;
-    let mut context = mapper.context(&original);
-    let mut output = BoundedText(String::with_capacity(original.len()));
-    let mut offsets: Vec<&mut usize> = paragraph
+        .collect();
+    let (output, units) =
+        transform_text(&paragraph.text, &runs).ok_or(DocumentError::TextExpansionLimit {
+            limit: MAX_INLINE_TEXT_BYTES,
+        })?;
+    // The source offset of each unit, ascending as the spans are.
+    let sources: Vec<usize> = runs
+        .iter()
+        .flat_map(|run| {
+            paragraph.text[run.range.clone()]
+                .char_indices()
+                .map(move |(relative, _)| run.range.start + relative)
+        })
+        .collect();
+    let counts: Vec<usize> = runs
+        .iter()
+        .map(|run| paragraph.text[run.range.clone()].chars().count())
+        .collect();
+    drop(runs);
+    // An offset moves to where the first character at or after it is written.
+    let mapped = |offset: usize| {
+        units
+            .get(sources.partition_point(|&source| source < offset))
+            .map_or(output.len(), |unit| unit.start)
+    };
+    for offset in paragraph
         .anchors
         .iter_mut()
         .chain(&mut paragraph.atomics)
@@ -175,73 +277,24 @@ pub(super) fn apply(
                 .iter_mut()
                 .flat_map(|link| [&mut link.range.start, &mut link.range.end]),
         )
-        .collect();
-    offsets.sort_by_key(|offset| **offset);
-    let mut offsets = offsets.into_iter().peekable();
-    for span in &mut paragraph.spans {
-        let language = language(&span.style.language);
-        let start = output.0.len();
-        for (relative, ch) in original[span.range.clone()].char_indices() {
-            let offset = span.range.start + relative;
-            let unit = output.0.len();
-            while let Some(mapped) = offsets.next_if(|mapped| **mapped <= offset) {
-                *mapped = output.0.len();
-            }
-            if capitalize && words.peek().is_some_and(|&start| start == offset) {
-                words.next();
-                let count = mapper.titlecase_prefix_len(&original[offset..], &language);
-                let minimum_end = original[offset..]
-                    .char_indices()
-                    .nth(count)
-                    .map_or(original.len(), |(relative, _)| offset + relative);
-                let end = original[offset..]
-                    .grapheme_indices(true)
-                    .map(|(relative, cluster)| offset + relative + cluster.len())
-                    .find(|&end| end >= minimum_end)
-                    .unwrap_or(original.len());
-                prefix = offset..end;
-            }
-            let mapping = match span.style.text_transform.case {
-                TextCase::None | TextCase::MathAuto => None,
-                TextCase::Uppercase => Some(ContextCase::Upper),
-                TextCase::Lowercase => Some(ContextCase::Lower),
-                TextCase::Capitalize => {
-                    (prefix.contains(&offset) && !ch.is_uppercase()).then_some(ContextCase::Title)
-                }
-            };
-            let mut transformed = Transformed {
-                output: &mut output,
-                transform: span.style.text_transform,
-                preserve_spaces: !span.style.white_space.collapses_spaces(),
-            };
-            let result = if let Some(mapping) = mapping {
-                context.map_char(offset, &language, mapping, &mut transformed)
-            } else {
-                transformed.write_char(
-                    if span.style.text_transform.case == TextCase::MathAuto
-                        && span.single_character_source
-                    {
-                        super::transform_math::italic(ch)
-                    } else {
-                        ch
-                    },
-                )
-            };
-            result.map_err(|_| DocumentError::TextExpansionLimit {
-                limit: MAX_INLINE_TEXT_BYTES,
-            })?;
-            if record {
-                units.push(unit..output.0.len());
-            }
-        }
-        span.range = start..output.0.len();
+    {
+        *offset = mapped(*offset);
     }
-    for mapped in offsets {
-        *mapped = output.0.len();
+    let mut position = 0;
+    let mut unit = 0;
+    for (span, count) in paragraph.spans.iter_mut().zip(counts) {
+        let end = if count == 0 {
+            position
+        } else {
+            units[unit + count - 1].end
+        };
+        span.range = position..end;
+        position = end;
+        unit += count;
     }
     paragraph.spans.retain(|span| !span.range.is_empty());
-    paragraph.text = output.0;
-    Ok(units)
+    paragraph.text = output;
+    Ok(if record { units } else { Vec::new() })
 }
 
 fn language(value: &str) -> LanguageIdentifier {

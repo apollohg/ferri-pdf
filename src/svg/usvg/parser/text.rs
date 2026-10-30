@@ -317,6 +317,7 @@ fn collect_text_chunks_impl(
             font,
             font_size,
             style: text_style(parent, state),
+            single_character: child.text().chars().nth(1).is_none(),
             linear_light: parent.find_attribute::<&str>(AId::ColorInterpolation)
                 == Some(converter::LINEAR_RGB),
             text_orientation,

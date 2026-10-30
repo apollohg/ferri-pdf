@@ -38,8 +38,8 @@ pub(crate) use formatting::{
 pub(crate) use frames::{Frame, FrameDocument};
 pub(crate) use generated::{GeneratedValues, InlineFootnotePlacement, PageStart, Paginated};
 pub(crate) use inline::{
-    Anchor, InlineBox, MAX_INLINE_TEXT_BYTES, OBJECT_REPLACEMENT_CHARACTER, OffsetMap, Paragraph,
-    is_css_whitespace, narrow_width,
+    Anchor, CaseRun, InlineBox, MAX_INLINE_TEXT_BYTES, OBJECT_REPLACEMENT_CHARACTER, OffsetMap,
+    Paragraph, is_css_whitespace, narrow_width, transform_text,
 };
 pub(crate) use metadata::DocumentMetadata;
 pub(crate) use navigation::{Bookmark, BoxNavigation, Heading, LinkTarget, Navigation};

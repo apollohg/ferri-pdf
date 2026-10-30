@@ -377,6 +377,9 @@ pub struct TextSpan {
     pub(crate) font_size: NonZeroPositiveF32,
     /// The computed style the span's text shapes, cases and paints with (SVG 2 §11.10).
     pub(crate) style: Arc<crate::style::Style>,
+    /// The span's text node is a single character, which `text-transform: math-auto`
+    /// italicizes (CSS Text 4 §2.1).
+    pub(crate) single_character: bool,
     /// `color-interpolation: linearRGB` on the span's element (SVG 2 §13.9).
     pub(crate) linear_light: bool,
     pub(crate) text_orientation: crate::style::logical::TextOrientation,

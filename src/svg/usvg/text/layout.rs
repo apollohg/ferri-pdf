@@ -251,7 +251,7 @@ pub(crate) fn layout_text(
             &fonts_cache,
             resolver,
             fontdb,
-        );
+        )?;
         if clusters.is_empty() {
             char_offset += chunk.text.chars().count();
             continue;
@@ -938,7 +938,119 @@ fn process_chunk(
     fonts_cache: &FontsCache,
     resolver: &dyn FontProvider,
     fontdb: &mut Arc<Database>,
-) -> Vec<GlyphCluster> {
+) -> Option<Vec<GlyphCluster>> {
+    // CSS Text 3 §2.1: text shapes as `text-transform` cases it, while SVG 2 §11.5 positions
+    // the characters before the transform; glyphs map back to the characters they show.
+    let glyphs = match CasedChunk::of(chunk) {
+        None => shape_chunk(chunk, writing_mode, fonts_cache, resolver, fontdb),
+        Some(cased) => {
+            let cased = cased?;
+            let mut glyphs = shape_chunk(&cased.chunk, writing_mode, fonts_cache, resolver, fontdb);
+            cased.to_source(&mut glyphs);
+            glyphs
+        }
+    };
+
+    // Convert glyphs to clusters.
+    let mut clusters = Vec::new();
+    for (range, byte_idx) in GlyphClusters::new(&glyphs) {
+        if let Some(span) = chunk_span_at(chunk, byte_idx) {
+            let font_size = span.font_size.get() * glyphs[range.start].scale;
+            clusters.push(form_glyph_clusters(&glyphs[range], &chunk.text, font_size));
+        }
+    }
+
+    Some(clusters)
+}
+
+/// A text chunk as `text-transform` cases it, with the source characters each part shows.
+struct CasedChunk {
+    chunk: TextChunk,
+    /// Each source character's byte range, and the range of its cased form.
+    units: Vec<(std::ops::Range<usize>, std::ops::Range<usize>)>,
+}
+impl CasedChunk {
+    /// `None` when no span transforms its text; `Some(None)` when casing exceeds the inline
+    /// text limit.
+    fn of(chunk: &TextChunk) -> Option<Option<Self>> {
+        if chunk
+            .spans
+            .iter()
+            .all(|span| span.style.text_transform == crate::style::TextTransform::default())
+        {
+            return None;
+        }
+        let runs: Vec<_> = chunk
+            .spans
+            .iter()
+            .map(|span| crate::document::CaseRun {
+                range: span.start..span.end,
+                transform: span.style.text_transform,
+                language: &span.style.language,
+                preserve_spaces: !span.style.white_space.collapses_spaces(),
+                single_character: span.single_character,
+            })
+            .collect();
+        let Some((text, cased)) = crate::document::transform_text(&chunk.text, &runs) else {
+            return Some(None);
+        };
+        let sources = chunk.spans.iter().flat_map(|span| {
+            chunk.text[span.start..span.end]
+                .char_indices()
+                .map(move |(offset, ch)| span.start + offset..span.start + offset + ch.len_utf8())
+        });
+        let units: Vec<_> = sources.zip(cased).collect();
+        let mut spans = chunk.spans.clone();
+        let mut unit = 0;
+        let mut position = 0;
+        for span in &mut spans {
+            let count = chunk.text[span.start..span.end].chars().count();
+            span.start = position;
+            if count > 0 {
+                position = units[unit + count - 1].1.end;
+            }
+            span.end = position;
+            unit += count;
+        }
+        spans.retain(|span| span.start < span.end);
+        Some(Some(Self {
+            chunk: TextChunk {
+                spans,
+                text,
+                ..chunk.clone()
+            },
+            units,
+        }))
+    }
+    /// Moves glyphs shaped from the cased text to the source characters they show.
+    fn to_source(&self, glyphs: &mut [Glyph]) {
+        for glyph in glyphs {
+            let start = glyph.byte_idx.value();
+            let end = start + glyph.cluster_len;
+            let first = self.units.partition_point(|(_, cased)| cased.end <= start);
+            let last = self
+                .units
+                .partition_point(|(_, cased)| cased.end < end)
+                .max(first);
+            let Some(((source, _), (last_source, _))) =
+                self.units.get(first).zip(self.units.get(last))
+            else {
+                continue;
+            };
+            glyph.byte_idx = ByteIndex::new(source.start);
+            glyph.cluster_len = last_source.end - source.start;
+        }
+    }
+}
+
+/// Shapes a chunk's spans with their fonts into glyphs in visual order.
+fn shape_chunk(
+    chunk: &TextChunk,
+    writing_mode: WritingMode,
+    fonts_cache: &FontsCache,
+    resolver: &dyn FontProvider,
+    fontdb: &mut Arc<Database>,
+) -> Vec<Glyph> {
     // The way this function works is a bit tricky.
     //
     // The first problem is BIDI reordering.
@@ -1055,16 +1167,7 @@ fn process_chunk(
         }
     }
 
-    // Convert glyphs to clusters.
-    let mut clusters = Vec::new();
-    for (range, byte_idx) in GlyphClusters::new(&glyphs) {
-        if let Some(span) = chunk_span_at(chunk, byte_idx) {
-            let font_size = span.font_size.get() * glyphs[range.start].scale;
-            clusters.push(form_glyph_clusters(&glyphs[range], &chunk.text, font_size));
-        }
-    }
-
-    clusters
+    glyphs
 }
 
 fn apply_length_adjust(chunk: &TextChunk, clusters: &mut [GlyphCluster]) {

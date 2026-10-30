@@ -84,7 +84,8 @@ Text content elements the document styles name their computed style, in the opti
 the document's text does: the CSS Fonts 4 §6–§7 feature settings in precedence, with each face's
 `@font-face` features and `@font-feature-values` alternates, capitals and positions native or
 synthesized, the language system of `font-language-override` or the language, and the used size
-of `font-size-adjust`.
+of `font-size-adjust`. `text-transform` cases each chunk's text before shaping, and the glyphs map
+back to the characters SVG 2 §11.5 positions.
 
 `width` and `height` take `calc-size()` and the intrinsic size keywords (CSS Values 5 §10.2,
 CSS Sizing 3 §3.1). Keywords, and `calc-size()` with a keyword basis, behave as `auto`; the

@@ -5,7 +5,7 @@ use crate::document::DocumentError;
 use crate::style::{Clear, Style, TextAlign, WhiteSpaceCollapse};
 use std::ops::Range;
 use std::sync::Arc;
-pub(crate) use transform::OffsetMap;
+pub(crate) use transform::{CaseRun, OffsetMap, transform_text};
 pub(crate) use transform_maps::narrow_width;
 
 pub(crate) const MAX_INLINE_TEXT_BYTES: usize = 64 * 1024 * 1024;

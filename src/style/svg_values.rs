@@ -555,10 +555,9 @@ const UNCASCADED: [Property; 4] = [
     Property::UnicodeBidi,
 ];
 /// Inherited properties of SVG text content that its renderer does not implement.
-const UNCASCADED_TEXT: [Property; 8] = [
+const UNCASCADED_TEXT: [Property; 7] = [
     Property::WhiteSpaceCollapse,
     Property::TextWrapMode,
-    Property::TextTransform,
     Property::TextShadow,
     Property::FontVariantEmoji,
     Property::FontPalette,
