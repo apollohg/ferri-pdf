@@ -284,6 +284,7 @@ impl<'a> Item<'a> {
                 padding: edges.padding,
                 border: edges.border,
                 margin: [Some(0.0); 4],
+                stretch_margins: [0, 2].map(|side| margins[side].unwrap_or(0.0)),
             },
             margins,
             align,
@@ -375,14 +376,22 @@ impl<'a> Item<'a> {
         self.measure(measurer, Some(available), used)
     }
 
+    /// The height constraints in a grid area `available` tall, which a `stretch` size fills
+    /// with the item's margin box (CSS Sizing 3 §4.2).
     pub(crate) fn height(&self, available: Option<f32>) -> SizeConstraints {
         let style = self.source.style();
+        let edges = self.vertical_edges();
+        let margins = self.margins[0].unwrap_or(0.0) + self.margins[2].unwrap_or(0.0);
         super::sizing::constraints(
             style,
             ROWS,
             available,
-            self.vertical_edges(),
+            edges,
             super::sizing::shared(style, ROWS),
+        )
+        .with_stretch(
+            [&style.height, &style.min_height, &style.max_height],
+            available.map(|area| (area - margins - edges).max(0.0)),
         )
     }
 

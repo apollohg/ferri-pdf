@@ -197,7 +197,9 @@ fn calc_size_of_an_automatic_height_adjusts_the_content_height() {
 fn calc_size_stretch_basis_fills_the_available_space() {
     let css = ".probe{float:left;width:calc-size(stretch, size - 8pt);margin-left:2pt}";
     assert_labelled_pt(css, probe_text(css).width, PAGE_WIDTH - 2.0 - 8.0);
-    let css = "section{height:200pt}.probe{height:calc-size(stretch, size - 20pt);margin-top:5pt}";
+    // The section is an independent formatting context, so the margin cannot collapse
+    // through it and stays outside the stretch-fit size (CSS Sizing 3 §4.2).
+    let css = "section{height:200pt;display:flow-root}.probe{height:calc-size(stretch, size - 20pt);margin-top:5pt}";
     let rect = probe(
         css,
         &format!("<section><div class=probe>{TEXT}</div></section>"),

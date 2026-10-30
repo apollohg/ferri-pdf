@@ -188,10 +188,12 @@ impl Size {
     pub(crate) fn is_zero(&self) -> bool {
         matches!(self, Self::Value(value) if value.is_zero())
     }
-    /// CSS Sizing 3 §3.2: intrinsic keywords give a non-replaced box its automatic block size.
+    /// CSS Sizing 3 §3.2: intrinsic keywords give a non-replaced box its automatic block size;
+    /// `stretch` is extrinsic.
     pub(crate) fn is_auto_block_size(&self, replaced: bool) -> bool {
         match self.basis() {
             Self::Auto => true,
+            Self::Intrinsic(crate::style::IntrinsicSizing::Stretch) => false,
             Self::Intrinsic(_) => !replaced,
             Self::Value(_) | Self::Calculated(_) => false,
         }
@@ -218,6 +220,7 @@ impl Size {
             Some(Keyword::MinContent) => Ok(Self::Intrinsic(IntrinsicSizing::MinContent)),
             Some(Keyword::MaxContent) => Ok(Self::Intrinsic(IntrinsicSizing::MaxContent)),
             Some(Keyword::FitContent) => Ok(Self::Intrinsic(IntrinsicSizing::FitContent)),
+            Some(Keyword::Stretch) => Ok(Self::Intrinsic(IntrinsicSizing::Stretch)),
             _ => length_percentage(value, relative).map(Self::Value),
         }
     }

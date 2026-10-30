@@ -88,31 +88,32 @@ pub(crate) enum IntrinsicSizing {
     /// `fit-content(<length-percentage>)`: the fit-content formula with the argument in place
     /// of the available space (CSS Sizing 4 §3.2).
     FitContentLimit(LengthPercentage),
-    /// `stretch`, which the grammar admits only as a `calc-size()` basis: the stretch-fit
-    /// size, the available space (CSS Sizing 4 §3.2, CSS Values 5 §10).
+    /// `stretch`: the stretch-fit size, the available space (CSS Sizing 3 §4.2).
     Stretch,
 }
 impl IntrinsicSizing {
     /// `available` is the stretch-fit content size, when the context has one; a limit
     /// resolves against `basis` in the box `box-sizing` names, whose edges are `sizing_edges`.
+    /// `None` where `stretch` has no stretch-fit size: it then behaves as `auto` in a
+    /// preferred size, `0` in a minimum and `none` in a maximum (CSS Sizing 3 §4.2).
     pub(crate) fn resolve(
         &self,
         widths: IntrinsicWidths,
         available: Option<f32>,
         basis: Option<f32>,
         sizing_edges: f32,
-    ) -> f32 {
+    ) -> Option<f32> {
         let fit = |space: Option<f32>| widths.max.min(widths.min.max(space.unwrap_or(widths.max)));
         match self {
-            Self::MinContent => widths.min,
-            Self::MaxContent => widths.max,
-            Self::FitContent => fit(available),
+            Self::MinContent => Some(widths.min),
+            Self::MaxContent => Some(widths.max),
+            Self::FitContent => Some(fit(available)),
             // An unresolvable percentage behaves as `auto` would standing alone (§3.2).
-            Self::FitContentLimit(limit) => fit(Size::Value(limit.clone())
+            Self::FitContentLimit(limit) => Some(fit(Size::Value(limit.clone())
                 .resolve_definite(basis)
                 .map(|limit| (limit - sizing_edges).max(0.0))
-                .or(available)),
-            Self::Stretch => available.unwrap_or(widths.max),
+                .or(available))),
+            Self::Stretch => available,
         }
     }
 }
@@ -253,11 +254,10 @@ impl SizeConstraints {
         available: Option<f32>,
     ) -> Self {
         for (index, size) in sizes.into_iter().enumerate() {
-            if let Some(keyword) = size.intrinsic() {
-                let value = keyword
-                    .resolve(widths, available, self.basis(), self.sizing_edges())
-                    .max(0.0);
-                let value = self.adjust(size, value);
+            if let Some(value) = size.intrinsic().and_then(|keyword| {
+                keyword.resolve(widths, available, self.basis(), self.sizing_edges())
+            }) {
+                let value = self.adjust(size, value.max(0.0));
                 match index {
                     0 => self.specified = Some(value),
                     1 => self.minimum = value,

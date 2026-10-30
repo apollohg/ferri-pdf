@@ -1867,6 +1867,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 flow.containing_height = containing.3;
                 self.reflow_float_geometry(page, &mut flow)?;
             } else if flow.normal {
+                let collapsed = flow.horizontal.stretch_margins.map(|margin| margin == 0.0);
                 flow.horizontal = self.measurer.run(|measurer| {
                     crate::layout::measure::block_geometry(
                         measurer,
@@ -1877,6 +1878,12 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                         containing.3,
                     )
                 })?;
+                for (margin, collapsed) in flow.horizontal.stretch_margins.iter_mut().zip(collapsed)
+                {
+                    if collapsed {
+                        *margin = 0.0;
+                    }
+                }
                 flow.containing_height = containing.3;
             }
             if flow.normal

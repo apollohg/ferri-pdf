@@ -11,6 +11,10 @@ pub(super) struct HorizontalBox {
     pub padding: [f32; 4],
     pub border: [f32; 4],
     pub margin: [Option<f32>; 4],
+    /// The block-start and block-end margins a `stretch` block size leaves outside the box:
+    /// zero where they collapse through the containing block's edges, `auto` as zero (CSS
+    /// Sizing 3 §4.2).
+    pub stretch_margins: [f32; 2],
 }
 
 impl HorizontalBox {
@@ -121,6 +125,7 @@ pub(super) fn horizontal_with_edges(
         x: containing_x + start + padding[3] + border[3],
         width: used.size,
         padding,
+        stretch_margins: [margin[0], margin[2]].map(|margin| margin.unwrap_or(0.0)),
         margin,
         border,
     }
@@ -186,6 +191,7 @@ pub(super) fn inline_horizontal(
         width,
         padding,
         border,
+        stretch_margins: [margin[0], margin[2]].map(|margin| margin.unwrap_or(0.0)),
         margin,
     }
 }
@@ -266,7 +272,7 @@ impl VerticalBox {
             SizeConstraints::default()
         } else {
             let sizes = [&style.height, &style.min_height, &style.max_height];
-            let margins = horizontal.margin[0].unwrap_or(0.0) + horizontal.margin[2].unwrap_or(0.0);
+            let margins = horizontal.stretch_margins.iter().sum::<f32>();
             SizeConstraints::new(sizes, containing_height, style.box_sizing, edges).with_stretch(
                 sizes,
                 containing_height.map(|height| (height - margins - edges).max(0.0)),

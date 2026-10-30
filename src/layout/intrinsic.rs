@@ -175,7 +175,9 @@ pub(super) fn outer_widths(
             Some(keyword @ IntrinsicSizing::FitContentLimit(limit))
                 if Size::Value(limit.clone()).resolve_definite(None).is_some() =>
             {
-                let width = keyword.resolve(natural, None, None, preferred.sizing_edges());
+                let width = keyword
+                    .resolve(natural, None, None, preferred.sizing_edges())
+                    .expect("a definite fit-content() limit resolves");
                 sizes.min = width;
                 sizes.max = width;
             }

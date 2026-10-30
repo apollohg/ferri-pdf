@@ -202,6 +202,7 @@ fn item_geometry(
         padding: item.padding,
         border: item.border,
         margin: [Some(0.0); 4],
+        stretch_margins: [0, 2].map(|side| item.margins[side].unwrap_or(0.0)),
     }
 }
 fn measure_item<'a>(
@@ -318,6 +319,16 @@ pub(super) fn measure<'a>(
                     content_height,
                     child.box_sizing,
                     height_edges,
+                )
+                .with_stretch(
+                    [&child.height, &child.min_height, &child.max_height],
+                    content_height.map(|height| {
+                        (height
+                            - height_edges
+                            - margins[0].unwrap_or(0.0)
+                            - margins[2].unwrap_or(0.0))
+                        .max(0.0)
+                    }),
                 ),
             ]
         };

@@ -689,12 +689,9 @@ impl<'a> Builder<'_, 'a> {
         );
         let natural = self.ratio_width.map_or_else(
             || {
-                crate::style::IntrinsicSizing::FitContent.resolve(
-                    intrinsic,
-                    Some(self.available),
-                    None,
-                    0.0,
-                )
+                crate::style::IntrinsicSizing::FitContent
+                    .resolve(intrinsic, Some(self.available), None, 0.0)
+                    .expect("fit-content always resolves")
             },
             |(ratio, height)| {
                 super::ratio::constrained_width_from_height(

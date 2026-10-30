@@ -1313,7 +1313,7 @@ impl<'a> Measurer<'a> {
                         {
                             return Ok(true);
                         }
-                        let geometry = block_geometry(
+                        let mut geometry = block_geometry(
                             &probe,
                             child,
                             frame.content_x,
@@ -1321,6 +1321,7 @@ impl<'a> Measurer<'a> {
                             frame.block.style().used_rtl(),
                             frame.vertical.definite(),
                         )?;
+                        frame.collapse_stretch_margins(&mut geometry);
                         let measured = probe.measure_flow(
                             child.into(),
                             geometry,
@@ -1714,7 +1715,7 @@ impl<'a> Measurer<'a> {
                 false,
             );
         } else if discards(child.style()) {
-            let geometry = block_geometry(
+            let mut geometry = block_geometry(
                 self,
                 child,
                 frame.content_x,
@@ -1722,6 +1723,7 @@ impl<'a> Measurer<'a> {
                 frame.block.style().used_rtl(),
                 frame.vertical.definite(),
             )?;
+            frame.collapse_stretch_margins(&mut geometry);
             let containing = frame.vertical.definite();
             let budget = Self::budget(frames)
                 .map(|lines| {
@@ -1743,7 +1745,7 @@ impl<'a> Measurer<'a> {
                 Self::spend_lines(frames, counts[1], broken);
             }
         } else {
-            let geometry = block_geometry(
+            let mut geometry = block_geometry(
                 self,
                 child,
                 frame.content_x,
@@ -1751,6 +1753,7 @@ impl<'a> Measurer<'a> {
                 frame.block.style().used_rtl(),
                 frame.vertical.definite(),
             )?;
+            frame.collapse_stretch_margins(&mut geometry);
             let child_style = child.style();
             let cell_percentage_chain = (frame.block.style().display == Display::TableCell
                 || frame.cell_percentage_chain)
@@ -2195,6 +2198,20 @@ struct FrameClamp {
     following: bool,
 }
 impl<'a> FlowFrame<'a> {
+    /// Treats as zero the margins of a block child's `geometry` that can collapse through
+    /// this frame's edges (CSS Sizing 3 §4.2).
+    fn collapse_stretch_margins(&self, geometry: &mut crate::layout::geometry::HorizontalBox) {
+        let collapsing = !self.root && !self.independent;
+        for (margin, edge) in geometry
+            .stretch_margins
+            .iter_mut()
+            .zip([self.top_edge, self.bottom_edge])
+        {
+            if collapsing && edge == 0.0 {
+                *margin = 0.0;
+            }
+        }
+    }
     fn push(&mut self, item: FlowItem<'a>) {
         if matches!(&item, FlowItem::Paragraph(paragraph) if paragraph.is_phantom()) {
             self.items.push(item);

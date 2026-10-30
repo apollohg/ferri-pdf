@@ -1414,6 +1414,7 @@ impl<'a> TablePlan<'a> {
             padding,
             border,
             margin: [Some(0.0); 4],
+            stretch_margins: [0.0; 2],
         }
     }
 }

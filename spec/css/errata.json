@@ -219,6 +219,30 @@
     }
   },
   "properties": {
+    "height": {
+      "syntax": "auto | <length-percentage [0,∞]> | stretch | min-content | max-content | fit-content | fit-content(<length-percentage [0,∞]>) | <calc-size()> | <anchor-size()>",
+      "source": "https://www.w3.org/TR/2026/WD-css-sizing-3-20260904/#sizing-values"
+    },
+    "max-height": {
+      "syntax": "none | <length-percentage [0,∞]> | stretch | min-content | max-content | fit-content | fit-content(<length-percentage [0,∞]>) | <calc-size()> | <anchor-size()>",
+      "source": "https://www.w3.org/TR/2026/WD-css-sizing-3-20260904/#sizing-values"
+    },
+    "max-width": {
+      "syntax": "none | <length-percentage [0,∞]> | stretch | min-content | max-content | fit-content | fit-content(<length-percentage [0,∞]>) | <calc-size()> | <anchor-size()>",
+      "source": "https://www.w3.org/TR/2026/WD-css-sizing-3-20260904/#sizing-values"
+    },
+    "min-height": {
+      "syntax": "auto | <length-percentage [0,∞]> | stretch | min-content | max-content | fit-content | fit-content(<length-percentage [0,∞]>) | <calc-size()> | <anchor-size()>",
+      "source": "https://www.w3.org/TR/2026/WD-css-sizing-3-20260904/#sizing-values"
+    },
+    "min-width": {
+      "syntax": "auto | <length-percentage [0,∞]> | stretch | min-content | max-content | fit-content | fit-content(<length-percentage [0,∞]>) | <calc-size()> | <anchor-size()>",
+      "source": "https://www.w3.org/TR/2026/WD-css-sizing-3-20260904/#sizing-values"
+    },
+    "width": {
+      "syntax": "auto | <length-percentage [0,∞]> | stretch | min-content | max-content | fit-content | fit-content(<length-percentage [0,∞]>) | <calc-size()> | <anchor-size()>",
+      "source": "https://www.w3.org/TR/2026/WD-css-sizing-3-20260904/#sizing-values"
+    },
     "margin-trim": {
       "syntax": "none | [ block || inline ] | [ block-start || inline-start || block-end || inline-end ]",
       "source": "https://www.w3.org/TR/2024/WD-css-box-4-20240804/#propdef-margin-trim"
