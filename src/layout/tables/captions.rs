@@ -154,5 +154,6 @@ pub(super) fn wrap<'a>(
         table: None,
         continues: false,
         spanner_fragment: None,
+        line_fragments: Vec::new(),
     })
 }

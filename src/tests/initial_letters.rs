@@ -656,23 +656,188 @@ fn letters_too_long_for_a_line_wrap_each_line_as_a_letter() {
 }
 
 #[test]
-fn letters_needing_layout_to_size_or_wrap_are_unsupported() {
-    for (css, body, expected) in [
-        (
-            "p::first-letter{initial-letter:2;initial-letter-align:border-box;padding:5%}",
-            "<p>Text</p>",
-            "percentage block-axis padding",
-        ),
-        (
-            "span{initial-letter:3;background:lime}",
-            "<p><span>many words that cannot fit on one line at this size</span></p>",
-            "box decorations of contents wrapping onto several lines",
-        ),
-    ] {
-        let error = render_error(css, body);
+fn letters_needing_layout_to_size_are_unsupported() {
+    let error = render_error(
+        "p::first-letter{initial-letter:2;initial-letter-align:border-box;padding:5%}",
+        "<p>Text</p>",
+    );
+    assert!(
+        error.contains("percentage block-axis padding"),
+        "expected an error naming percentage padding, got {error:?}"
+    );
+}
+
+/// The lime box paints of a trace, in painting order.
+fn lime_boxes(trace: &crate::LayoutTrace) -> Vec<&crate::graphics::BoxPaint> {
+    trace
+        .display_lists
+        .iter()
+        .flatten()
+        .filter_map(|item| match item {
+            crate::DisplayItem::Box(paint) if paint.decoration.background.rgb == LIME => {
+                Some(paint)
+            }
+            _ => None,
+        })
+        .collect()
+}
+
+/// The `[left, right]` extent of a letter line's text.
+fn text_extent(line: &crate::TextLine) -> [f32; 2] {
+    [start(line), start(line) + line.width]
+}
+
+#[test]
+fn wrapped_letters_paint_a_box_fragment_per_line() {
+    const PADDING: f32 = 2.0;
+    let body = format!("<p><span>Once more</span> {TEXT}</p>");
+    let sliced = render(
+        &format!("span{{initial-letter:3;background:lime;padding:{PADDING}pt}}"),
+        &body,
+    );
+    let (first, rest) = split(&sliced, "Once");
+    let last = rest[0];
+    let boxes = lime_boxes(&sliced);
+    assert_eq!(boxes.len(), 2, "one fragment per letter line: {boxes:#?}");
+    let [head, tail] = [boxes[0], boxes[1]];
+    let describe_boxes = || format!("{:#?}\n{:#?}", boxes, describe(&rest));
+    assert_eq!(
+        head.inline_edges,
+        [true, false],
+        "the first fragment keeps only its start edge: {}",
+        describe_boxes()
+    );
+    assert_eq!(
+        tail.inline_edges,
+        [false, true],
+        "the last fragment keeps only its end edge: {}",
+        describe_boxes()
+    );
+    let [first_left, first_right] = text_extent(first);
+    assert_labelled_pt(
+        "the first fragment starts at the line start",
+        head.rect.x,
+        CONTENT_LEFT,
+    );
+    assert_labelled_pt(
+        "the first fragment's start padding precedes its text",
+        head.rect.x + PADDING,
+        first_left,
+    );
+    assert_labelled_pt(
+        "the first fragment ends with its text",
+        head.rect.x + head.rect.width,
+        first_right,
+    );
+    let [last_left, last_right] = text_extent(last);
+    assert_labelled_pt(
+        "the last fragment starts with its text",
+        tail.rect.x,
+        last_left,
+    );
+    assert_labelled_pt(
+        "a sliced last fragment starts at the line start",
+        tail.rect.x,
+        CONTENT_LEFT,
+    );
+    assert_labelled_pt(
+        "the last fragment's end padding follows its text",
+        tail.rect.x + tail.rect.width,
+        last_right + PADDING,
+    );
+    assert_labelled_pt(
+        "normal text follows the last fragment",
+        start(rest[1]),
+        tail.rect.x + tail.rect.width,
+    );
+    assert!(
+        head.rect.y + head.rect.height <= tail.rect.y + 0.001,
+        "the fragments stack without overlapping: {}",
+        describe_boxes()
+    );
+    for (fragment, line) in [(head, first), (tail, last)] {
         assert!(
-            error.contains(expected),
-            "{css} {body}: expected an error naming {expected:?}, got {error:?}"
+            fragment.rect.y + PADDING <= line.baseline - Font::profile().cap * line.font_size
+                && line.baseline <= fragment.rect.y + fragment.rect.height,
+            "each fragment's box holds its line's glyphs, from its cap height to its \
+             baseline: {fragment:#?} {:?}",
+            (&line.text, line.baseline)
+        );
+    }
+    // CSS Fragmentation 3 §5.4: a sliced box's background is drawn as if unbroken.
+    let total = head.rect.width + tail.rect.width;
+    for (fragment, before) in [(head, 0.0), (tail, head.rect.width)] {
+        let assembled = fragment
+            .background_box
+            .unwrap_or_else(|| panic!("a sliced fragment has its assembled box: {fragment:#?}"));
+        assert_labelled_pt(
+            "the assembled box spans both fragments",
+            assembled.width,
+            total,
+        );
+        assert_labelled_pt(
+            "each fragment takes its share of the assembled box",
+            fragment.rect.x - assembled.x,
+            before,
+        );
+    }
+
+    let cloned = render(
+        &format!(
+            "span{{initial-letter:3;background:lime;padding:{PADDING}pt;\
+             box-decoration-break:clone}}"
+        ),
+        &body,
+    );
+    let (_, rest) = split(&cloned, "Once");
+    let last = rest[0];
+    let boxes = lime_boxes(&cloned);
+    assert_eq!(
+        boxes.len(),
+        2,
+        "one cloned fragment per letter line: {boxes:#?}"
+    );
+    for fragment in &boxes {
+        assert_eq!(
+            fragment.inline_edges,
+            [true, true],
+            "cloned fragments keep both edges: {boxes:#?}"
+        );
+    }
+    let tail = boxes[1];
+    assert_labelled_pt(
+        "a cloned last fragment starts at the line start",
+        tail.rect.x,
+        CONTENT_LEFT,
+    );
+    let [last_left, last_right] = text_extent(last);
+    assert_labelled_pt(
+        "its start padding precedes its text",
+        tail.rect.x + PADDING,
+        last_left,
+    );
+    assert_labelled_pt(
+        "normal text follows its end padding",
+        start(rest[1]),
+        last_right + PADDING,
+    );
+
+    let rtl = render(
+        &format!("p{{direction:rtl}}span{{initial-letter:3;background:lime;padding:{PADDING}pt}}"),
+        &body,
+    );
+    let boxes = lime_boxes(&rtl);
+    assert_eq!(boxes.len(), 2, "{boxes:#?}");
+    assert_eq!(
+        [boxes[0].inline_edges, boxes[1].inline_edges],
+        [[false, true], [true, false]],
+        "right-to-left fragments keep their start edge on the right: {boxes:#?}"
+    );
+    for fragment in &boxes {
+        assert_labelled_pt(
+            "right-to-left fragments start at the line's right start",
+            fragment.rect.x + fragment.rect.width,
+            CONTENT_LEFT + CONTENT_WIDTH,
         );
     }
 }

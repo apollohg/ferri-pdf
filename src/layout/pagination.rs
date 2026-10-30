@@ -2466,9 +2466,24 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             self.flush_margin();
             paint.rect.x += self.offset[0];
             paint.rect.y = self.top + self.y + self.offset[1];
+            // Line fragments carry the box's link areas, and the whole box its destination.
+            let (navigation, fragment_navigation) = if block.line_fragments.is_empty() {
+                (block.navigation, BoxNavigation::default())
+            } else {
+                (
+                    BoxNavigation {
+                        link: None,
+                        ..block.navigation
+                    },
+                    BoxNavigation {
+                        destination: None,
+                        ..block.navigation
+                    },
+                )
+            };
             let page = &mut self.display_lists[self.page];
             let slot = page.len();
-            page.push(ScopedPaint {
+            let item = |paint: BoxPaint, navigation: BoxNavigation| ScopedPaint {
                 native: None,
                 visible: block.style.visibility.is_visible(),
                 order: paint_order.clone(),
@@ -2476,9 +2491,25 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 clip: self.clip,
                 group: self.group,
                 ink: None,
-                item: DisplayItem::Box(paint.clone()),
-                navigation: block.navigation,
-            });
+                item: DisplayItem::Box(paint),
+                navigation,
+            };
+            page.push(item(paint.clone(), navigation));
+            let mut fragments = Vec::with_capacity(block.line_fragments.len());
+            for mut fragment in block.line_fragments {
+                fragment.rect.x += self.offset[0];
+                fragment.rect.y += paint.rect.y;
+                fragments.push((self.page, page.len()));
+                page.push(item(fragment, fragment_navigation));
+            }
+            if !block.style.clone_decoration {
+                assemble_background(
+                    &fragments,
+                    &mut self.display_lists,
+                    true,
+                    block.style.used_rtl(),
+                );
+            }
             Some((paint, slot))
         } else {
             None

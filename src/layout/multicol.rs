@@ -611,6 +611,7 @@ fn fragment<'a>(
         },
         continues: !last,
         spanner_fragment: Some(fragment),
+        line_fragments: Vec::new(),
         marker: if first { source.marker.clone() } else { None },
         ..source.clone()
     })

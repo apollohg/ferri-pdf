@@ -565,8 +565,6 @@ pub(crate) enum LayoutError {
         footnote: usize,
         feature: &'static str,
     },
-    #[error("unsupported initial letter: {feature}")]
-    UnsupportedInitialLetter { feature: &'static str },
     #[error("invalid normalized table structure")]
     InvalidTableStructure,
     #[error("{0}")]

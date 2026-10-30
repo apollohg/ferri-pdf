@@ -323,6 +323,7 @@ fn measured_block<'a>(
         table: None,
         continues: false,
         spanner_fragment: None,
+        line_fragments: Vec::new(),
     }
 }
 

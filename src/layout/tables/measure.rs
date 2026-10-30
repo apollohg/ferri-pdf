@@ -1811,6 +1811,7 @@ fn measure_plan<'a>(
         table,
         continues: false,
         spanner_fragment: None,
+        line_fragments: Vec::new(),
     };
     Ok((measured, geometry))
 }

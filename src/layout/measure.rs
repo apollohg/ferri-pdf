@@ -107,6 +107,9 @@ pub(super) struct MeasuredBlock<'a> {
     pub break_after: BreakBetween,
     pub items: Vec<FlowItem<'a>>,
     pub paint: Option<BoxPaint>,
+    /// The line fragments a box laid out as one paints in place of `paint`'s ink: an inline
+    /// initial letter whose contents wrap (CSS Inline 3 §7.8.4).
+    pub line_fragments: Vec<BoxPaint>,
     pub navigation: BoxNavigation,
     pub end_space: f32,
     pub start_space: f32,
@@ -2269,6 +2272,7 @@ impl<'a> FlowFrame<'a> {
             table: None,
             continues: false,
             spanner_fragment: None,
+            line_fragments: Vec::new(),
         };
         if let Some(columns) = orthogonal.filter(|columns| !columns.principal) {
             let content = measured

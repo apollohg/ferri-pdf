@@ -4,7 +4,6 @@ use crate::document::{BlockBox, InlineBox};
 use crate::graphics::{
     BoxPaint, DecorationLine, DecorationPaint, DisplayItem, Point, Rect, TextShadowPaint,
 };
-use crate::layout::LayoutError;
 use crate::layout::geometry::inline_horizontal;
 use crate::layout::measure::Failure;
 use crate::layout::measure::{FlowItem, MeasuredBlock, Measurer};
@@ -228,12 +227,6 @@ fn measure_initial_letter<'a>(
                 };
             }
         }
-        if rows.len() > 1 && block.decoration().is_visible() {
-            return Err(LayoutError::UnsupportedInitialLetter {
-                feature: "box decorations of contents wrapping onto several lines",
-            }
-            .into());
-        }
         // Each line's line box follows the margin box of the line before, moved down for
         // its letter line to stay below it (§§7.6.1, 7.8.4).
         let bottom = |row: &LetterRow| row.top + start + row.lead + row.content + end + margin[2];
@@ -266,11 +259,32 @@ fn measure_initial_letter<'a>(
         }
         if rows.len() > 1 {
             trim_letter_lines(measurer.text, &mut measured)?;
-            space_letter_lines(
-                &mut measured,
-                &line_tops,
-                kerning - inline_start_edges(&geometry, style),
-            );
+            // Later fragments of a sliced letter lack its inline-start edges and kerning; cloned
+            // ones keep its edges (CSS Fragmentation 3 §5.4).
+            let indent = if style.clone_decoration {
+                0.0
+            } else {
+                kerning - inline_start_edges(&geometry, style)
+            };
+            space_letter_lines(&mut measured, &line_tops, indent);
+            let extents = row_extents(style, &geometry, letter_lines(&mut measured));
+            let fragments: Vec<RowFragment> = rows
+                .iter()
+                .zip(&origins)
+                .zip(&extents)
+                .map(|((row, origin), &extent)| RowFragment {
+                    top: origin + row.top - first.top,
+                    height: start + row.lead + row.content + end,
+                    lead: row.lead - first.lead,
+                    extent,
+                })
+                .collect();
+            if let Some(paint) = measured.paint.take() {
+                let (carrier, pieces) =
+                    letter_fragments(paint, &geometry, style, &fragments, indent);
+                measured.paint = Some(carrier);
+                measured.line_fragments = pieces;
+            }
         }
         first.top - origins[origins.len() - 1]
     };
@@ -284,14 +298,17 @@ fn measure_initial_letter<'a>(
     // Normal text follows the last line, which starts at the line's start (§7.8.4).
     let advance = if origins.len() > 1 {
         let end_side = if style.used_rtl() { LEFT } else { RIGHT };
-        let extent = if *style.width.basis() == crate::style::Size::Auto {
-            letter_lines(&mut measured)
-                .last()
-                .map_or(0.0, |line| line.width)
+        let extent = row_extents(style, &geometry, letter_lines(&mut measured))
+            .last()
+            .copied()
+            .unwrap_or(0.0);
+        // A cloned last fragment keeps the letter's inline-start edges.
+        let start = if style.clone_decoration {
+            inline_start_edges(&geometry, style) - kerning
         } else {
-            geometry.width
+            0.0
         };
-        extent + geometry.padding[end_side] + geometry.border[end_side] + margin[end_side]
+        start + extent + geometry.padding[end_side] + geometry.border[end_side] + margin[end_side]
     } else {
         width - kerning
     };
@@ -450,6 +467,111 @@ fn space_letter_lines(measured: &mut MeasuredBlock<'_>, line_tops: &[f32], inden
     {
         paragraph.height = height;
     }
+}
+
+/// The content extent of each line fragment of an inline letter with `lines`: its line's
+/// width, or under a definite inline size the content box's (§7.5.5).
+fn row_extents(
+    style: &crate::style::Style,
+    geometry: &crate::layout::geometry::HorizontalBox,
+    lines: &[crate::text::Line],
+) -> Vec<f32> {
+    let automatic = *style.width.basis() == crate::style::Size::Auto;
+    lines
+        .iter()
+        .map(|line| {
+            if automatic {
+                line.width
+            } else {
+                geometry.width
+            }
+        })
+        .collect()
+}
+
+/// One line fragment of an inline letter, in its whole box's coordinates.
+struct RowFragment {
+    /// Its border box's top below the whole box's.
+    top: f32,
+    height: f32,
+    /// How much more of its content box than of the first fragment's lies above its line.
+    lead: f32,
+    extent: f32,
+}
+
+/// Splits the paint of an inline letter whose contents wrap into one per line fragment
+/// (§7.8.4), sliced at the line breaks or cloned as `box-decoration-break` says (CSS
+/// Fragmentation 3 §5.4); fragments after the first are moved `indent` from the content
+/// box's start. The whole box keeps an inkless paint, which carries its masks, clips and
+/// the effects of its stacking context.
+fn letter_fragments(
+    paint: BoxPaint,
+    geometry: &crate::layout::geometry::HorizontalBox,
+    style: &crate::style::Style,
+    rows: &[RowFragment],
+    indent: f32,
+) -> (BoxPaint, Vec<BoxPaint>) {
+    let rtl = style.used_rtl();
+    let last = rows.len() - 1;
+    let edge = |side: usize| geometry.padding[side] + geometry.border[side];
+    let mut decoration = paint.decoration.clone();
+    decoration.masks = std::sync::Arc::default();
+    let fragments = rows
+        .iter()
+        .enumerate()
+        .map(|(index, row)| {
+            let start = index == 0 || style.clone_decoration;
+            let end = index == last || style.clone_decoration;
+            let inline_edges = if rtl { [end, start] } else { [start, end] };
+            let offset = if index == 0 { 0.0 } else { indent };
+            let left = if rtl {
+                geometry.x + geometry.width - offset - row.extent
+            } else {
+                geometry.x + offset
+            };
+            let x = left - if inline_edges[0] { edge(LEFT) } else { 0.0 };
+            let right = left + row.extent + if inline_edges[1] { edge(RIGHT) } else { 0.0 };
+            let mut padding = paint.padding;
+            padding[TOP] += row.lead;
+            let mut margins = paint.margins;
+            for (side, kept) in [LEFT, RIGHT].into_iter().zip(inline_edges) {
+                if !kept {
+                    margins[side] = 0.0;
+                }
+            }
+            BoxPaint {
+                rect: Rect {
+                    x,
+                    y: row.top,
+                    width: right - x,
+                    height: row.height,
+                },
+                decoration: decoration.clone(),
+                padding,
+                margins,
+                inline_edges,
+                ..paint.clone()
+            }
+        })
+        .collect();
+    let borders = paint
+        .decoration
+        .borders
+        .map(|border| crate::graphics::Border {
+            color: crate::graphics::Color::TRANSPARENT,
+            ..border
+        });
+    let carrier = BoxPaint {
+        decoration: crate::graphics::BoxDecoration {
+            borders,
+            radii: paint.decoration.radii.clone(),
+            corner_shapes: paint.decoration.corner_shapes.clone(),
+            masks: paint.decoration.masks.clone(),
+            ..crate::graphics::BoxDecoration::default()
+        },
+        ..paint
+    };
+    (carrier, fragments)
 }
 
 /// Shared shrink-to-fit geometry for atomic inlines and floating boxes.

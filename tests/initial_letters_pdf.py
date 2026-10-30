@@ -18,6 +18,9 @@ TOLERANCE = 0.01
 RED = (1.0, 0.0, 0.0, 1.0)
 BLUE = (0.0, 0.0, 1.0, 1.0)
 BLACK = (0.0, 0.0, 0.0, 1.0)
+LIME_INK = (0, 255, 0)
+WHITE_INK = (255, 255, 255)
+FRAGMENT_PADDING = 4
 TEXT = ('Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor '
         'incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud')
 
@@ -102,6 +105,48 @@ class InitialLettersPdf(unittest.TestCase):
         for line in text[3:]:
             self.assertAlmostEqual(line[0].matrix[4], MARGIN, delta=TOLERANCE,
                                    msg='lines below the letter return to the start edge')
+
+    def test_wrapped_letter_paints_a_box_fragment_per_line(self):
+        """Each line of a wrapped letter is a box fragment (§7.8.4) that `box-decoration-break`
+        slices or clones at the line break (CSS Fragmentation 3 §5.4)."""
+        (_, _, _, h_top), em = outline('H')
+        cap = h_top / em
+        size = (2 * LINE_HEIGHT + cap * FONT_SIZE) / cap
+        with TTFont(FONT) as font:
+            cmap, metrics = font.getBestCmap(), font['hmtx'].metrics
+        def end(row):
+            return row[-1].matrix[4] + metrics[cmap[ord(row[-1].text)]][0] / em * size
+        for decoration, cloned in (('slice', False), ('clone', True)):
+            with self.subTest(decoration=decoration), \
+                    tempfile.TemporaryDirectory(prefix='ferri-pdf-letter-boxes-') as directory:
+                root = Path(directory)
+                renderer = table_positioning_pdf.TablePositioningPdf()
+                output = renderer.render(
+                    root,
+                    'p{width:200pt;margin:0}span{initial-letter:3;color:red;background:lime;'
+                    f'padding:{FRAGMENT_PADDING}pt;box-decoration-break:{decoration}}}',
+                    f'<p><span>Once more</span> {TEXT}</p>')
+                rows = lines([glyph for glyph in pdf_content.inspect(output)['glyphs']
+                              if glyph.fill == RED])
+                self.assertEqual([''.join(glyph.text for glyph in row) for row in rows],
+                                 ['Once', 'more'])
+                with renderer.raster(root, output, vector_antialias=False) as raster:
+                    def ink(x, row):
+                        """The ink beside a row, halfway up its cap height."""
+                        y = table_positioning_pdf.PAGE_HEIGHT - row[0].matrix[5] - cap * size / 2
+                        return raster.getpixel((round(x), round(y)))
+                    edge = FRAGMENT_PADDING / 2
+                    first, last = rows
+                    self.assertEqual(ink(first[0].matrix[4] - edge, first), LIME_INK,
+                                     'the first fragment has its start padding')
+                    self.assertEqual(ink(end(first) + edge, first),
+                                     LIME_INK if cloned else WHITE_INK,
+                                     'only a cloned first fragment has end padding')
+                    self.assertEqual(ink(last[0].matrix[4] - edge, last),
+                                     LIME_INK if cloned else WHITE_INK,
+                                     'only a cloned last fragment has start padding')
+                    self.assertEqual(ink(end(last) + edge, last), LIME_INK,
+                                     'the last fragment has its end padding')
 
     def test_first_letter_and_first_line_style_their_text(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-first-line-') as directory:

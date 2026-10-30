@@ -535,5 +535,6 @@ pub(crate) fn measure<'a>(
         table: None,
         continues: false,
         spanner_fragment: None,
+        line_fragments: Vec::new(),
     })
 }
