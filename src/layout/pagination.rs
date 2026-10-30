@@ -665,6 +665,8 @@ struct ActiveTable<'a> {
     next_body: usize,
     /// Page groups open outside the table's rows.
     open_groups: usize,
+    /// The `Parent3d` node of the table box, which places its rows and row groups.
+    parent_3d: Option<usize>,
 }
 
 impl ActiveTable<'_> {
@@ -2424,15 +2426,6 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             && block.source.math().is_some_and(|math| math.principal);
         let containing = owns_wrapper_properties && block.style.contains_absolute();
         let sticky = owns_wrapper_properties && block.style.position == Position::Sticky;
-        if transformed
-            && (block.style.perspective.is_some() || block.style.preserves_3d())
-            && (block.style.multicol.is_multicol() || block.style.display.is_table())
-        {
-            return Err(LayoutError::Style(crate::style::StyleError::Unsupported(
-                "perspective or transform-style: preserve-3d on a multi-column container or table"
-                    .into(),
-            )));
-        }
 
         // A transform, opacity, blending, isolation or forced stacking context makes a stacking
         // context like z-index 0 (CSS Transforms 1 §3, CSS Color 4 §15, Compositing 1 §3.4,
@@ -2775,6 +2768,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     Fragmentainers::Pages(pages) => pages.open.len(),
                     Fragmentainers::Columns(_) => 0,
                 },
+                parent_3d: self.parent_3d,
                 flow,
                 x_offset: self.offset[0],
                 placements: Vec::new(),

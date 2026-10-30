@@ -541,6 +541,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         paginator.key = start.key.clone();
         paginator.context = start.context.clone();
         paginator.orders = start.orders.snapshot();
+        // Column content takes the multi-column container's perspective and 3D rendering
+        // context when its effects are placed in the container's flow.
+        paginator.parent_3d = Some(paginator.effect_node(None, super::Effect::InheritedParent3d));
         paginator.containers.push(Container {
             pending: Vec::new(),
             fixed: false,

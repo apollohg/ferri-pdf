@@ -237,9 +237,9 @@ impl<'a> Paginator<'a, '_, 'a> {
         &mut self,
         layers: [Option<crate::layout::tables::TableContaining<'a>>; 2],
     ) {
-        // The perspective and 3D rendering context the cell's row gives it; the table, whose
-        // children are rows and row groups, gives none.
-        let mut parent_3d = None;
+        // The perspective and 3D rendering context each box gives its children: the table its
+        // rows and row groups, a row group its rows, and a row its cells.
+        let mut parent_3d = self.tables.last().and_then(|table| table.parent_3d);
         for ancestor in layers.into_iter().flatten() {
             let style = ancestor.source.style();
             if !(style.contains_absolute()

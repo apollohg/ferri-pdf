@@ -430,6 +430,49 @@ fn table_rows_give_their_cells_perspective_and_row_groups_give_it_to_rows_only()
     }
 }
 
+#[test]
+fn multi_column_containers_and_tables_give_their_children_perspective() {
+    // Each 200pt by 40pt container starts at the page margin, so its perspective origin is
+    // its centre (136, 56); translateZ(50pt) under perspective(100pt) scales by 100 / 50.
+    const SCALE: f32 = 2.0;
+    let [ox, oy] = [PAGE_MARGIN_PT + 100.0, PAGE_MARGIN_PT + 20.0];
+    let expected = [SCALE, 0.0, 0.0, SCALE, ox - SCALE * ox, oy - SCALE * oy];
+    for (label, css, body) in [
+        (
+            "a multi-column container's perspective reaches the boxes in its columns",
+            ".m{columns:2;column-gap:0;width:200pt;perspective:100pt}\
+             .m div{height:40pt;transform:translateZ(50pt)}",
+            "<div class=m><div>A</div><div>B</div></div>",
+        ),
+        (
+            "a table's perspective reaches its row groups",
+            "table{border-spacing:0;width:200pt;table-layout:fixed;perspective:100pt}\
+             td{padding:0;height:40pt}tbody{transform:translateZ(50pt)}",
+            "<table><tbody><tr><td>A</td></tr></tbody></table>",
+        ),
+    ] {
+        let matrices = transforms(&trace(css, body).display_lists[0]);
+        assert!(!matrices.is_empty(), "{label}: a transform must draw");
+        for matrix in matrices {
+            assert_matrix(label, matrix, expected);
+        }
+    }
+    let output = trace(
+        "table,tbody{transform-style:preserve-3d}table{border-spacing:0}td{padding:0}\
+         tr{transform:rotateX(30deg)}",
+        "<table><tr><td>A</td></tr><tr><td>B</td></tr></table>",
+    );
+    let tilted = scene_planes(&output.display_lists[0])
+        .into_iter()
+        .filter(|plane| plane != &IDENTITY_3D)
+        .count();
+    assert_eq!(
+        tilted, 2,
+        "rows tilting out of a preserve-3d table's row group are planes of its 3D rendering \
+         context"
+    );
+}
+
 /// The accumulated matrices of the planes of each 3D rendering context in `items`.
 fn scene_planes(items: &[DisplayItem]) -> Vec<[f32; 16]> {
     items
