@@ -219,6 +219,10 @@
     }
   },
   "properties": {
+    "text-box-edge": {
+      "inherited": true,
+      "source": "https://www.w3.org/TR/2024/WD-css-inline-3-20241218/#propdef-text-box-edge"
+    },
     "position": {
       "syntax": "static | relative | absolute | sticky | fixed | <running()>",
       "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#running-syntax"

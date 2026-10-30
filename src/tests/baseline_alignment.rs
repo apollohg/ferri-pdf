@@ -287,9 +287,14 @@ fn trimmed_block_lines_end_at_their_text_box_edges() {
             "p{text-box:ex}",
             [DEJAVU_X_HEIGHT * PARENT_PT, DEJAVU_DESCENT * PARENT_PT],
         ),
-        // The edges are those of the line's containing block, the paragraph: `auto`.
+        // The edges are those of the line's containing block, the paragraph, which inherits
+        // them (CSS Inline 3 §6.3).
         (
             "div{text-box:trim-both cap alphabetic}",
+            [DEJAVU_CAP_HEIGHT * PARENT_PT, 0.0],
+        ),
+        (
+            "div{text-box:trim-both cap alphabetic}p{text-box-edge:auto}",
             [DEJAVU_ASCENT * PARENT_PT, DEJAVU_DESCENT * PARENT_PT],
         ),
         (
