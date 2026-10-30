@@ -365,6 +365,9 @@ pub(crate) fn inherit(style: &mut Style, parent: &Style) {
             copy(property, style, parent);
         }
     }
+    // Copies resolve `currentcolor` text paint before `color` arrives; every text paint
+    // property inherits, so the parent's, resolved for the same colour, is exact.
+    style.text_paint.clone_from(&parent.text_paint);
 }
 
 /// Computed-field coverage is separate from usable value support.

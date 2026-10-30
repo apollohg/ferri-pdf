@@ -391,6 +391,41 @@ fn buttons_and_placeholders_show_their_labels_and_hints() {
 }
 
 #[test]
+fn text_field_values_paint_with_the_controls_colour_and_text_paint() {
+    let trace = trace(
+        "<style>input,textarea{color:#123456;text-shadow:1px 1px;\
+         -webkit-text-stroke:1px currentcolor}</style>\
+         <input value=Field><input type=date value=2020-01-02><textarea>Area</textarea>",
+    );
+    for text in ["Field", "2020-01-02", "Area"] {
+        let line = trace
+            .pages
+            .iter()
+            .flatten()
+            .find(|line| line.text.contains(text))
+            .unwrap_or_else(|| panic!("{text:?} must render: {:?}", texts(&trace)));
+        let run = &line.runs[0];
+        assert_eq!(
+            run.color.rgb, PROBE,
+            "{text:?} fills with the control's colour (HTML §15.5): {run:?}"
+        );
+        assert_eq!(
+            run.stroke.map(|stroke| stroke.color.rgb),
+            Some(PROBE),
+            "{text:?} strokes with currentcolor resolved for the control: {run:?}"
+        );
+        assert_eq!(
+            run.shadows
+                .iter()
+                .map(|shadow| shadow.color.used.rgb)
+                .collect::<Vec<_>>(),
+            vec![PROBE],
+            "{text:?} casts its currentcolor shadow in the control's colour: {run:?}"
+        );
+    }
+}
+
+#[test]
 fn rendered_legends_sit_centred_in_the_block_start_border_with_a_gap() {
     let output = trace(
         "<style>fieldset{margin:0;border:4pt solid #123456;padding:6pt}\

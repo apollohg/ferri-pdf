@@ -6,8 +6,6 @@ use crate::style::{Display, Style};
 /// while the inherited properties it computes take effect on its text.
 pub(super) fn used_style(marker: &Style) -> Style {
     let mut used = marker.anonymous(Display::Inline);
-    // Inheritance copies `currentcolor` text paint unresolved; the marker resolved its own.
-    used.text_paint.clone_from(&marker.text_paint);
     used.text_decorations
         .propagated
         .clone_from(&marker.text_decorations.propagated);

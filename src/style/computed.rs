@@ -493,8 +493,6 @@ impl Style {
         }
         let mut style = base.clone();
         properties::inherit(&mut style, line);
-        // Copying leaves `currentcolor` text paint resolved for `base`; `line` resolved its own.
-        style.text_paint.clone_from(&line.text_paint);
         style.rtl = base.rtl;
         style.writing_mode = base.writing_mode;
         style.text_orientation = base.text_orientation;
