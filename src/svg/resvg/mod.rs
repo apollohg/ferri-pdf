@@ -23,6 +23,8 @@ mod image;
 mod mask;
 mod path;
 mod render;
+#[cfg(test)]
+mod tests;
 
 /// Renders a tree onto the pixmap.
 ///

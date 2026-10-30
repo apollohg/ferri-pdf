@@ -36,6 +36,7 @@ pub(crate) fn convert(
         match node.tag_name()? {
             EId::LinearGradient => cache.gen_linear_gradient_id(),
             EId::RadialGradient => cache.gen_radial_gradient_id(),
+            EId::SweepGradient => cache.gen_sweep_gradient_id(),
             EId::Pattern => cache.gen_pattern_id(),
             _ => return None,
         }
@@ -46,6 +47,7 @@ pub(crate) fn convert(
     let paint = match node.tag_name().unwrap() {
         EId::LinearGradient => convert_linear(node, target, state, id),
         EId::RadialGradient => convert_radial(node, target, state, id),
+        EId::SweepGradient => convert_sweep(node, target, state, id),
         EId::Pattern => convert_pattern(node, target, state, cache, id),
         _ => unreachable!(),
     };
@@ -178,6 +180,62 @@ fn convert_radial(
     };
 
     Some(ServerOrColor::Server(Paint::RadialGradient(Arc::new(
+        gradient,
+    ))))
+}
+
+#[inline(never)]
+fn convert_sweep(
+    node: SvgNode,
+    target: SvgNode,
+    state: &converter::State,
+    id: NonEmptyString,
+) -> Option<ServerOrColor> {
+    let mut stops = interpolated_stops(node, convert_stops(find_gradient_with_stops(node)?));
+    if stops.len() < 2 {
+        return stops_to_color(&stops);
+    }
+    let units = convert_units(node, AId::GradientUnits, Units::ObjectBoundingBox);
+    let center = |name| {
+        resolve_number(
+            node,
+            target,
+            name,
+            units,
+            state,
+            Length::new(50.0, Unit::Percent),
+        )
+    };
+    let angle = |name, default| {
+        resolve_attr(node, name)
+            .attribute::<f32>(name)
+            .filter(|angle| angle.is_finite())
+            .unwrap_or(default)
+    };
+    let mut start_angle = angle(AId::StartAngle, 0.0);
+    let mut end_angle = angle(AId::EndAngle, FULL_TURN_DEGREES);
+    // A colour line running backwards is the reversed line running forwards.
+    if start_angle > end_angle {
+        std::mem::swap(&mut start_angle, &mut end_angle);
+        stops.reverse();
+        for stop in &mut stops {
+            stop.offset = StopOffset::new_clamped(1.0 - stop.offset.get());
+        }
+    }
+    let gradient = SweepGradient {
+        cx: center(AId::Cx),
+        cy: center(AId::Cy),
+        start_angle,
+        end_angle,
+        base: BaseGradient {
+            id,
+            units,
+            transform: node.resolve_transform(AId::GradientTransform, state),
+            spread_method: convert_spread_method(node),
+            stops,
+        },
+    };
+    Some(ServerOrColor::Server(Paint::SweepGradient(Arc::new(
         gradient,
     ))))
 }
@@ -991,6 +1049,22 @@ fn process_context_paint(
                 },
             }));
         }
+        Paint::SweepGradient(sg) => {
+            let transform = sg.transform.post_concat(rev_transform);
+            *paint = Paint::SweepGradient(Arc::new(SweepGradient {
+                cx: sg.cx,
+                cy: sg.cy,
+                start_angle: sg.start_angle,
+                end_angle: sg.end_angle,
+                base: BaseGradient {
+                    id: cache.gen_sweep_gradient_id(),
+                    units: sg.units,
+                    transform,
+                    spread_method: sg.spread_method,
+                    stops: sg.stops.clone(),
+                },
+            }));
+        }
         Paint::Pattern(pat) => {
             let transform = pat.transform.post_concat(rev_transform);
             *paint = Paint::Pattern(Arc::new(Pattern {
@@ -1128,6 +1202,27 @@ impl Paint {
                     });
                 }
             }
+            Paint::SweepGradient(sg) => {
+                let transform = sg.transform.post_concat(Transform::from_bbox(bbox));
+                if let Some(sg) = Arc::get_mut(sg) {
+                    sg.base.transform = transform;
+                    sg.base.units = Units::UserSpaceOnUse;
+                } else {
+                    *sg = Arc::new(SweepGradient {
+                        cx: sg.cx,
+                        cy: sg.cy,
+                        start_angle: sg.start_angle,
+                        end_angle: sg.end_angle,
+                        base: BaseGradient {
+                            id: cache.gen_sweep_gradient_id(),
+                            units: Units::UserSpaceOnUse,
+                            transform,
+                            spread_method: sg.spread_method,
+                            stops: sg.stops.clone(),
+                        },
+                    });
+                }
+            }
             Paint::Pattern(patt) => {
                 let rect = if patt.units == Units::ObjectBoundingBox {
                     patt.rect.bbox_transform(bbox)
@@ -1203,6 +1298,7 @@ impl Paint {
             Self::Color(_) => Units::UserSpaceOnUse,
             Self::LinearGradient(lg) => lg.units,
             Self::RadialGradient(rg) => rg.units,
+            Self::SweepGradient(sg) => sg.units,
             Self::Pattern(patt) => patt.units,
         }
     }

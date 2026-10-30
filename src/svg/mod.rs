@@ -31,6 +31,14 @@ pub(crate) fn layer_mask_value(index: usize) -> String {
 /// it writes.
 pub(crate) const TEXT_STYLE_ATTRIBUTE: &str = "ferri-pdf-text-style";
 
+/// The paint server element drawing a sweep gradient (OpenType COLR `PaintSweepGradient`), which
+/// SVG lacks: around its centre `cx`, `cy`, its colour line runs from the angle
+/// [`SWEEP_START_ANGLE_ATTRIBUTE`] to [`SWEEP_END_ANGLE_ATTRIBUTE`], in degrees from the
+/// positive x axis towards the positive y axis.
+pub(crate) const SWEEP_GRADIENT_ELEMENT: &str = "ferri-pdf-sweep-gradient";
+pub(crate) const SWEEP_START_ANGLE_ATTRIBUTE: &str = "ferri-pdf-start-angle";
+pub(crate) const SWEEP_END_ANGLE_ATTRIBUTE: &str = "ferri-pdf-end-angle";
+
 /// The attribute marking the `tspan` that stands for a `text` element's `::first-line`
 /// (CSS Pseudo-Elements 4 §2.1), around the contents of its first formatted line. The last
 /// such child of a written `text` element holds those contents as the first line styles them.

@@ -55,6 +55,8 @@ pub(crate) enum EId {
     Style,
     Svg,
     Switch,
+    /// [`crate::svg::SWEEP_GRADIENT_ELEMENT`].
+    SweepGradient,
     Symbol,
     Text,
     TextPath,
@@ -137,13 +139,19 @@ static ELEMENTS: Map<EId> = Map {
 
 impl EId {
     pub(crate) fn from_str(text: &str) -> Option<EId> {
+        if text == crate::svg::SWEEP_GRADIENT_ELEMENT {
+            return Some(Self::SweepGradient);
+        }
         ELEMENTS.get(text).cloned()
     }
 
     /// Returns the original string.
     #[inline(never)]
     pub(crate) fn to_str(self) -> &'static str {
-        ELEMENTS.key(&self)
+        match self {
+            Self::SweepGradient => crate::svg::SWEEP_GRADIENT_ELEMENT,
+            _ => ELEMENTS.key(&self),
+        }
     }
 }
 
@@ -375,6 +383,9 @@ pub(crate) enum AId {
     TextStyle,
     /// [`crate::svg::FIRST_LINE_ATTRIBUTE`].
     FirstLine,
+    /// [`crate::svg::SWEEP_START_ANGLE_ATTRIBUTE`] and [`crate::svg::SWEEP_END_ANGLE_ATTRIBUTE`].
+    StartAngle,
+    EndAngle,
     TransformOrigin,
     Type,
     UnicodeBidi,
@@ -663,13 +674,11 @@ static ATTRIBUTES: Map<AId> = Map {
 
 impl AId {
     pub(crate) fn from_str(text: &str) -> Option<AId> {
-        if text == crate::svg::TEXT_STYLE_ATTRIBUTE {
-            return Some(Self::TextStyle);
-        }
-        if text == crate::svg::FIRST_LINE_ATTRIBUTE {
-            return Some(Self::FirstLine);
-        }
         match text {
+            crate::svg::TEXT_STYLE_ATTRIBUTE => Some(Self::TextStyle),
+            crate::svg::FIRST_LINE_ATTRIBUTE => Some(Self::FirstLine),
+            crate::svg::SWEEP_START_ANGLE_ATTRIBUTE => Some(Self::StartAngle),
+            crate::svg::SWEEP_END_ANGLE_ATTRIBUTE => Some(Self::EndAngle),
             "border-radius" => Some(Self::CssBorderRadius),
             "zoom" => Some(Self::CssZoom),
             "offset-path" => Some(Self::OffsetPath),
@@ -707,6 +716,8 @@ impl AId {
             Self::Lang => "lang",
             Self::TextStyle => crate::svg::TEXT_STYLE_ATTRIBUTE,
             Self::FirstLine => crate::svg::FIRST_LINE_ATTRIBUTE,
+            Self::StartAngle => crate::svg::SWEEP_START_ANGLE_ATTRIBUTE,
+            Self::EndAngle => crate::svg::SWEEP_END_ANGLE_ATTRIBUTE,
             _ => ATTRIBUTES.key(&self),
         }
     }

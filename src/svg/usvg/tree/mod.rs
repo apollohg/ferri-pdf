@@ -410,6 +410,53 @@ impl std::ops::Deref for RadialGradient {
     }
 }
 
+/// The degrees of a whole turn, which a sweep gradient spans by default.
+pub(crate) const FULL_TURN_DEGREES: f32 = 360.0;
+
+/// A sweep gradient: around its centre, the colour line runs from the start angle to the end
+/// angle, in degrees from the positive x axis towards the positive y axis (OpenType COLR
+/// `PaintSweepGradient`).
+///
+/// [`crate::svg::SWEEP_GRADIENT_ELEMENT`] in SVG.
+#[derive(Debug)]
+pub struct SweepGradient {
+    pub(crate) base: BaseGradient,
+    pub(crate) cx: f32,
+    pub(crate) cy: f32,
+    pub(crate) start_angle: f32,
+    pub(crate) end_angle: f32,
+}
+
+impl SweepGradient {
+    /// The centre's x coordinate.
+    pub fn cx(&self) -> f32 {
+        self.cx
+    }
+
+    /// The centre's y coordinate.
+    pub fn cy(&self) -> f32 {
+        self.cy
+    }
+
+    /// The angle where the colour line starts, no greater than the end angle.
+    pub fn start_angle(&self) -> f32 {
+        self.start_angle
+    }
+
+    /// The angle where the colour line ends.
+    pub fn end_angle(&self) -> f32 {
+        self.end_angle
+    }
+}
+
+impl std::ops::Deref for SweepGradient {
+    type Target = BaseGradient;
+
+    fn deref(&self) -> &Self::Target {
+        &self.base
+    }
+}
+
 /// An alias to `NormalizedF32`.
 pub(crate) type StopOffset = NormalizedF32;
 
@@ -822,6 +869,7 @@ pub enum Paint {
     Color(Color),
     LinearGradient(Arc<LinearGradient>),
     RadialGradient(Arc<RadialGradient>),
+    SweepGradient(Arc<SweepGradient>),
     Pattern(Arc<Pattern>),
 }
 
@@ -832,6 +880,7 @@ impl PartialEq for Paint {
             (Self::Color(lc), Self::Color(rc)) => lc == rc,
             (Self::LinearGradient(lg1), Self::LinearGradient(lg2)) => Arc::ptr_eq(lg1, lg2),
             (Self::RadialGradient(rg1), Self::RadialGradient(rg2)) => Arc::ptr_eq(rg1, rg2),
+            (Self::SweepGradient(sg1), Self::SweepGradient(sg2)) => Arc::ptr_eq(sg1, sg2),
             (Self::Pattern(p1), Self::Pattern(p2)) => Arc::ptr_eq(p1, p2),
             _ => false,
         }
@@ -1787,6 +1836,7 @@ pub struct Tree {
     pub(crate) root: Group,
     pub(crate) linear_gradients: Vec<Arc<LinearGradient>>,
     pub(crate) radial_gradients: Vec<Arc<RadialGradient>>,
+    pub(crate) sweep_gradients: Vec<Arc<SweepGradient>>,
     pub(crate) patterns: Vec<Arc<Pattern>>,
     pub(crate) clip_paths: Vec<Arc<ClipPath>>,
     pub(crate) masks: Vec<Arc<Mask>>,
@@ -1849,6 +1899,7 @@ impl Tree {
     pub fn has_defs_nodes(&self) -> bool {
         !self.linear_gradients().is_empty()
             || !self.radial_gradients().is_empty()
+            || !self.sweep_gradients.is_empty()
             || !self.patterns().is_empty()
             || !self.filters().is_empty()
             || !self.clip_paths().is_empty()
@@ -1909,6 +1960,15 @@ impl Tree {
                     .any(|other| Arc::ptr_eq(rg, other))
                 {
                     self.radial_gradients.push(rg.clone());
+                }
+            }
+            Paint::SweepGradient(sg) => {
+                if !self
+                    .sweep_gradients
+                    .iter()
+                    .any(|other| Arc::ptr_eq(sg, other))
+                {
+                    self.sweep_gradients.push(sg.clone());
                 }
             }
             Paint::Pattern(patt) => {

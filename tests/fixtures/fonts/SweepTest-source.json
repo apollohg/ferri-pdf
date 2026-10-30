@@ -1,0 +1,39 @@
+{
+  "derived_from": "assets/fonts/LiberationSans-Regular.ttf",
+  "source_sha256": "76d04c18ea243f426b7de1f3ad208e927008f961dc5945e5aad352d0dfde8ee8",
+  "license": "../../../assets/fonts/LIBERATION-LICENSE.txt",
+  "generator": "make-sweep-font.py",
+  "tool": "FontTools 4.63.0",
+  "changes": "Subset to space, renamed family; adds one-em squares for U+25A0 and U+25A1 that COLRv1 fills with padded sweep gradients from palette entry 0 to entry 1 about the square's centre, over 0 to 90 and 90 to 0 degrees.",
+  "sha256": "4cb964728d8d66a8e08343ecfa1309d486ee53e77e4988764989e092ed7a10aa",
+  "bytes": 4828,
+  "units_per_em": 2048,
+  "center": [
+    1024,
+    1024
+  ],
+  "palette": [
+    [
+      255,
+      0,
+      0,
+      255
+    ],
+    [
+      0,
+      0,
+      255,
+      255
+    ]
+  ],
+  "sweeps": {
+    "\u25a0": [
+      0,
+      90
+    ],
+    "\u25a1": [
+      90,
+      0
+    ]
+  }
+}

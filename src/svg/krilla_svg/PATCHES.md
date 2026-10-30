@@ -46,3 +46,5 @@ pixels the same way.
 
 Glyphs draw from a font instance with the COLR palette the face's `font-palette` selects, and
 the copy synthetic bold adds draws after each cluster.
+
+usvg sweep gradients convert to krilla sweep gradients.

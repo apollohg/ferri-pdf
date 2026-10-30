@@ -533,6 +533,49 @@ class FontFeaturesPdf(unittest.TestCase):
                         self.assert_glyph_colour(
                             raster, (glyph.origin[0] + dx, glyph.origin[1]), expected)
 
+    def test_svg_text_paints_colr_sweep_gradients_in_both_renderers(self):
+        """OpenType COLRv1 `PaintSweepGradient` on SVG text: around its centre the colour line
+        runs counter-clockwise from the start angle to the end angle, padded beyond them, and a
+        line from a larger start angle to a smaller end angle runs clockwise; vector text and
+        text rasterized beneath a filter paint the same colours."""
+        fixture = reference("SweepTest-source.json")
+        red, blue = (tuple(colour[:3]) for colour in fixture["palette"])
+        size_pt, sample_radius, tolerance = 72, 0.35, 12
+        pixels = PDF_POINTS_PER_INCH / CSS_PIXELS_PER_INCH
+        raster_offset, width, height = 200, 360, 120
+        text = "".join(fixture["sweeps"])
+        rules = (f"@font-face{{font-family:Sweep;src:url('{FIXTURES.as_uri()}/SweepTest.ttf')}}"
+                 "svg{display:block}")
+        body = (f"<svg width=\"{width}pt\" height=\"{height}pt\" "
+                f"viewBox=\"0 0 {width / pixels} {height / pixels}\" "
+                f"style=\"font:{size_pt}pt Sweep\"><filter id=\"raster\"><feOffset dx=\"0\"/>"
+                f"</filter><text y=\"{100 / pixels}\">{text}</text>"
+                f"<text x=\"{raster_offset / pixels}\" y=\"{100 / pixels}\" "
+                f"filter=\"url(#raster)\">{text}</text></svg>")
+        interpreted = self.render(rules, body)
+        raster = self.raster()
+        glyphs = [glyph for glyph in interpreted.glyphs if glyph.text.strip()]
+        self.assertEqual("".join(glyph.text for glyph in glyphs), text,
+                         "only the unfiltered text paints glyphs")
+        scale = RASTER_DPI / PDF_POINTS_PER_INCH
+        centre = fixture["center"][0] / fixture["units_per_em"] * size_pt
+
+        def mix(start, end, t):
+            return tuple(round(a + (b - a) * min(max(t, 0.0), 1.0)) for a, b in zip(start, end))
+
+        for glyph, (start, end) in zip(glyphs, fixture["sweeps"].values()):
+            for angle in (10, 45, 80, 135, 225, 315):
+                t = (angle - start) / (end - start)
+                expected = mix(red, blue, t)
+                x = glyph.origin[0] + centre + math.cos(math.radians(angle)) * sample_radius * size_pt
+                y = glyph.origin[1] + centre + math.sin(math.radians(angle)) * sample_radius * size_pt
+                for renderer, dx in (("vector", 0), ("raster", raster_offset)):
+                    pixel = raster.getpixel((round((x + dx) * scale),
+                                             raster.height - round(y * scale)))
+                    with self.subTest(sweep=(start, end), angle=angle, renderer=renderer):
+                        self.assertTrue(all(abs(a - e) <= tolerance for a, e in zip(pixel, expected)),
+                                        f"{renderer} paints {pixel} at {angle}°, expected {expected}")
+
     def test_svg_text_presents_emoji_as_document_text_does(self):
         """CSS Fonts 4 §9.3 on SVG text: `font-variant-emoji` selects the presentation
         sequence of the first face having it, a later family's where the first lacks it, and is

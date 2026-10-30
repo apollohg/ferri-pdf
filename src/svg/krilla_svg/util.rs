@@ -5,7 +5,7 @@ use krilla::mask::MaskType;
 use krilla::num::NormalizedF32;
 use krilla::paint::{
     Fill, FillRule, LineCap, LineJoin, LinearGradient, Paint, Pattern, RadialGradient,
-    SpreadMethod, Stop, Stroke, StrokeDash,
+    SpreadMethod, Stop, Stroke, StrokeDash, SweepGradient,
 };
 use krilla::stream::StreamBuilder;
 use tiny_skia::PathSegment;
@@ -74,6 +74,17 @@ pub(crate) fn convert_paint(
             transform: additional_transform.pre_concat(rg.transform()).to_krilla(),
             spread_method: convert_spread_method(&rg.spread_method()),
             stops: rg.stops().iter().map(convert_stop).collect::<Vec<_>>(),
+            anti_alias: false,
+        }
+        .into(),
+        crate::svg::usvg::Paint::SweepGradient(sg) => SweepGradient {
+            cx: sg.cx(),
+            cy: sg.cy(),
+            start_angle: sg.start_angle(),
+            end_angle: sg.end_angle(),
+            transform: additional_transform.pre_concat(sg.transform()).to_krilla(),
+            spread_method: convert_spread_method(&sg.spread_method()),
+            stops: sg.stops().iter().map(convert_stop).collect::<Vec<_>>(),
             anti_alias: false,
         }
         .into(),

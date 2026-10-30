@@ -767,7 +767,10 @@ impl EId {
     /// Checks if this is a
     /// [gradient element](https://www.w3.org/TR/SVG11/intro.html#TermGradientElement).
     pub(crate) fn is_gradient(&self) -> bool {
-        matches!(self, EId::LinearGradient | EId::RadialGradient)
+        matches!(
+            self,
+            EId::LinearGradient | EId::RadialGradient | EId::SweepGradient
+        )
     }
 
     /// Checks if this is a
@@ -775,7 +778,7 @@ impl EId {
     pub(crate) fn is_paint_server(&self) -> bool {
         matches!(
             self,
-            EId::LinearGradient | EId::RadialGradient | EId::Pattern
+            EId::LinearGradient | EId::RadialGradient | EId::SweepGradient | EId::Pattern
         )
     }
 }

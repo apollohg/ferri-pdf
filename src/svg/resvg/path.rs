@@ -93,6 +93,9 @@ pub(super) fn fill_path(
         crate::svg::usvg::Paint::RadialGradient(rg) => {
             paint.shader = convert_radial_gradient(rg, fill.opacity())?;
         }
+        crate::svg::usvg::Paint::SweepGradient(sg) => {
+            paint.shader = convert_sweep_gradient(sg, fill.opacity())?;
+        }
         crate::svg::usvg::Paint::Pattern(pattern) => {
             let (patt_pix, patt_ts) = render_pattern_pixmap(pattern, ctx, transform)?;
 
@@ -132,6 +135,9 @@ fn stroke_path(
         }
         crate::svg::usvg::Paint::RadialGradient(rg) => {
             paint.shader = convert_radial_gradient(rg, stroke.opacity())?;
+        }
+        crate::svg::usvg::Paint::SweepGradient(sg) => {
+            paint.shader = convert_sweep_gradient(sg, stroke.opacity())?;
         }
         crate::svg::usvg::Paint::Pattern(pattern) => {
             let (patt_pix, patt_ts) = render_pattern_pixmap(pattern, ctx, transform)?;
@@ -202,6 +208,35 @@ fn convert_radial_gradient(
     )?;
 
     Some(shader)
+}
+
+/// How far an end of a sweep moves where tiny-skia would map it wrongly, a few units in the
+/// last place of its unit angles: `SweepGradient::push_stages` scales and biases the unit
+/// angle only where the scale is not one and the bias not zero, when a sweep needs either.
+/// The move stays far below a pixel at any size a glyph renders.
+const SWEEP_NUDGE_DEGREES: f32 = 4.0 * f32::EPSILON * crate::svg::usvg::FULL_TURN_DEGREES;
+
+fn convert_sweep_gradient(
+    gradient: &crate::svg::usvg::SweepGradient,
+    opacity: crate::svg::usvg::Opacity,
+) -> Option<tiny_skia::Shader<'_>> {
+    let (mode, points) = convert_base_gradient(gradient, opacity)?;
+    let (mut start, mut end) = (gradient.start_angle(), gradient.end_angle());
+    let whole_turn =
+        (end - start - crate::svg::usvg::FULL_TURN_DEGREES).abs() < SWEEP_NUDGE_DEGREES;
+    if start == 0.0 && !whole_turn {
+        start = SWEEP_NUDGE_DEGREES;
+    } else if start != 0.0 && whole_turn {
+        end += SWEEP_NUDGE_DEGREES;
+    }
+    tiny_skia::SweepGradient::new(
+        (gradient.cx(), gradient.cy()).into(),
+        start,
+        end,
+        points,
+        mode,
+        gradient.transform(),
+    )
 }
 
 fn convert_base_gradient(

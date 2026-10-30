@@ -127,6 +127,7 @@ pub(crate) struct Cache {
     all_ids: HashSet<u64>,
     linear_gradient_index: usize,
     radial_gradient_index: usize,
+    sweep_gradient_index: usize,
     pattern_index: usize,
     clip_path_index: usize,
     mask_index: usize,
@@ -172,6 +173,7 @@ impl Cache {
             all_ids: HashSet::new(),
             linear_gradient_index: 0,
             radial_gradient_index: 0,
+            sweep_gradient_index: 0,
             pattern_index: 0,
             clip_path_index: 0,
             mask_index: 0,
@@ -197,6 +199,17 @@ impl Cache {
         loop {
             self.radial_gradient_index += 1;
             let new_id = format!("radialGradient{}", self.radial_gradient_index);
+            let new_hash = string_hash(&new_id);
+            if !self.all_ids.contains(&new_hash) {
+                return NonEmptyString::new(new_id).unwrap();
+            }
+        }
+    }
+
+    pub(crate) fn gen_sweep_gradient_id(&mut self) -> NonEmptyString {
+        loop {
+            self.sweep_gradient_index += 1;
+            let new_id = format!("sweepGradient{}", self.sweep_gradient_index);
             let new_hash = string_hash(&new_id);
             if !self.all_ids.contains(&new_hash) {
                 return NonEmptyString::new(new_id).unwrap();
@@ -487,6 +500,7 @@ pub(crate) fn convert_doc(
         root: Group::empty(),
         linear_gradients: Vec::new(),
         radial_gradients: Vec::new(),
+        sweep_gradients: Vec::new(),
         patterns: Vec::new(),
         clip_paths: Vec::new(),
         masks: Vec::new(),

@@ -26,8 +26,8 @@ explicitly named family, including names that coincide with the UA default.
 
 The module is compiled inside `ferri-pdf` with the `text` feature always enabled. The
 command-line binary, the SVG writer (`Tree::to_string` and `WriteOptions`) and the
-system-font and memory-mapping features are removed. COLR painting reports unsupported
-sweep gradients and blend modes through `log` instead of printing to standard output.
+system-font and memory-mapping features are removed. COLR painting reports unsupported blend
+modes through `log` instead of printing to standard output.
 
 `font-weight` takes any number from 1 to 1000 and the CSS Fonts 4 §2.2.1 relative weights,
 `font-stretch` any percentage (§2.3) and `font-style: oblique` an angle (§2.4), so font
@@ -193,3 +193,8 @@ punctuation in `::first-letter` and its `::prefix` and `::suffix` (CSS Pseudo-El
 §2.2); a written document gives that copy as the `text` element's last first-line child. The
 first formatted line, the first wrapped line or the chunks before the first preserved break, is
 laid out from the copy, with the root inline box's strut taking the line's font.
+
+COLRv1 sweep gradients convert to the private `ferri-pdf-sweep-gradient` paint server, whose
+centre and start and end angles turn from the positive x axis towards the positive y axis; a
+colour line running from a larger to a smaller angle is stored reversed. resvg fills it with a
+tiny-skia sweep shader and the krilla converter with a krilla sweep gradient.

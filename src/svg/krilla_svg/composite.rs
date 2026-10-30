@@ -119,6 +119,10 @@ fn translucent(paint: &Paint, opacity: f32) -> bool {
                 .stops()
                 .iter()
                 .any(|stop| stop.opacity().get() < 1.0),
+            Paint::SweepGradient(gradient) => gradient
+                .stops()
+                .iter()
+                .any(|stop| stop.opacity().get() < 1.0),
             Paint::Pattern(_) => true,
         }
 }

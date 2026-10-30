@@ -276,7 +276,34 @@ impl ColorPainter for GlyphPainter<'_> {
                 self.svg.end_element();
                 self.write_path(&format!("url(#{id})"), None);
             }
-            Brush::SweepGradient { .. } => log::warn!("Sweep gradients are not supported."),
+            // skrifa turns the angles, which COLR measures counter-clockwise in font units,
+            // towards their negative y axis, so the gradient lies in their mirror image.
+            Brush::SweepGradient {
+                c0,
+                start_angle,
+                end_angle,
+                color_stops,
+                extend,
+            } => {
+                let id = self.gradient_id();
+                let transform = self
+                    .gradient_transform()
+                    .pre_concat(Transform::from_scale(1.0, -1.0));
+                self.svg.start_element(crate::svg::SWEEP_GRADIENT_ELEMENT);
+                self.svg.write_attribute("id", &id);
+                self.svg.write_attribute("cx", &c0.x);
+                self.svg.write_attribute("cy", &-c0.y);
+                self.svg
+                    .write_attribute(crate::svg::SWEEP_START_ANGLE_ATTRIBUTE, &start_angle);
+                self.svg
+                    .write_attribute(crate::svg::SWEEP_END_ANGLE_ATTRIBUTE, &end_angle);
+                self.svg.write_attribute("gradientUnits", "userSpaceOnUse");
+                self.write_extend(extend);
+                self.write_transform("gradientTransform", transform);
+                self.write_stops(color_stops);
+                self.svg.end_element();
+                self.write_path(&format!("url(#{id})"), None);
+            }
         }
     }
 
