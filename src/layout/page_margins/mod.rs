@@ -64,9 +64,6 @@ impl<'t> Prepared<'_, 't> {
             HORIZONTAL
         }
     }
-    fn block_axis(&self) -> usize {
-        1 - self.inline_axis()
-    }
     fn sides(axis: usize) -> [usize; 2] {
         if axis == HORIZONTAL { [3, 1] } else { [0, 2] }
     }
@@ -239,19 +236,6 @@ impl<'t> Prepared<'_, 't> {
         destinations: usize,
     ) -> Result<(), LayoutError> {
         self.validate()?;
-        let block_axis = self.block_axis();
-        let mut used = 0.0;
-        let mut retained = 0;
-        for line in &self.lines {
-            if self.content[block_axis] < 0.0
-                || (retained > 0 && used + line.height > self.content[block_axis])
-            {
-                break;
-            }
-            used += line.height;
-            retained += 1;
-        }
-        self.lines.truncate(retained);
         let rect = Rect {
             x: origin[0] + self.start[0],
             y: origin[1] + self.start[1],

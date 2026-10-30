@@ -82,7 +82,11 @@ fn later_none_removes_generated_boxes_without_evaluating_their_fonts() {
 }
 
 #[test]
-fn page_margin_overflow_keeps_only_fitting_lines_and_centres_retained_content() {
+fn page_margin_overflow_stays_visible_and_centres_all_content() {
+    // CSS Overflow 3 §3: `overflow: visible` does not clip the content overflowing a
+    // page-margin box, which stays centred in it (CSS Page 3 §5.3) and overflows both edges.
+    const LINE_PT: f32 = 18.0;
+    const SINGLE_LINE_BASELINE_PT: f32 = 22.1543;
     let html = format!(
         r#"<style>{PROFILE}html{{font-family:Spike;font-size:12pt;line-height:18pt}}
       @page {{@top-left{{content:"First\a Second\a Third";white-space:pre;padding:2pt}}
@@ -96,17 +100,22 @@ fn page_margin_overflow_keeps_only_fitting_lines_and_centres_retained_content() 
         .layout
         .unwrap();
     let page = &trace.pages[0];
-    assert!(
-        !page
-            .iter()
-            .any(|line| line.text.contains("Second") || line.text.contains("Third")),
-        "overflow lines must not leak into the body"
-    );
-    let first = page.iter().find(|line| line.text == "First").unwrap();
-    assert!(
-        (first.baseline - 22.1543).abs() < 0.001,
-        "the retained line, not all source lines, is vertically centred"
-    );
+    let baselines: Vec<f32> = ["First", "Second", "Third"]
+        .iter()
+        .map(|text| {
+            page.iter()
+                .find(|line| line.text == *text)
+                .unwrap_or_else(|| panic!("the overflowing line {text} must paint: {page:?}"))
+                .baseline
+        })
+        .collect();
+    for (index, baseline) in baselines.iter().enumerate() {
+        let expected = SINGLE_LINE_BASELINE_PT + (index as f32 - 1.0) * LINE_PT;
+        assert!(
+            (baseline - expected).abs() < 0.001,
+            "line {index} of three centred lines has baseline {baseline}, expected {expected}: {baselines:?}"
+        );
+    }
     let middle = page
         .iter()
         .find(|line| line.text == "Middle footer words")
