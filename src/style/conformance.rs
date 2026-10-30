@@ -30,13 +30,15 @@ const DOCUMENT: &str = "<div id=parent><span id=child>X</span></div>";
 const USER_AGENT_INITIAL: &[Property] = &[Property::FontFamily];
 const INITIAL_GAPS: &[(Property, &str)] = &[];
 /// Supported properties whose values no computed field records, because every accepted value
-/// renders alike, or, for `will-change`, only the boxes its named properties generate count.
+/// renders alike, or, for `will-change`, only the boxes its named properties generate count;
+/// a user agent `!important` rule fixes `overlay` (CSS Position 4 §3.4).
 const WITHOUT_COMPUTED_FIELD: &[Property] = &[
     Property::Content,
     Property::WillChange,
     Property::FontSynthesisPosition,
     Property::FontSynthesisSmallCaps,
     Property::TextDecorationSkipInk,
+    Property::Overlay,
 ];
 const EXTENSION_PROPERTIES: [&str; 2] = ["table-column-span", "table-row-span"];
 /// Properties that compute only same-document references, which generated samples are not.
@@ -533,6 +535,7 @@ fn property_grammars_accept_generated_values_and_reject_mutations() {
                             || !crate::style::logical::valid(property, &matched)
                             || !crate::style::inert::valid(property, &matched)
                             || !crate::style::counter_style::valid(&matched)
+                            || !crate::style::colors::interpolation_spaces_exist(&matched)
                     }))
             },
             &mut failures,
