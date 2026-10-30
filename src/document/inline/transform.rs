@@ -4,6 +4,7 @@ use crate::style::{TextCase, TextTransform};
 use icu_casemap::{CaseMapper, ContextCase};
 use icu_locale_core::LanguageIdentifier;
 use std::fmt::{self, Write};
+use std::ops::Range;
 use unicode_segmentation::UnicodeSegmentation;
 
 struct BoundedText(String);
@@ -45,13 +46,92 @@ impl Write for Transformed<'_> {
     }
 }
 
-pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
+/// Where two transformed copies of one text, a paragraph's `::first-line` copy and the
+/// paragraph, place the same offsets: the `[copy, paragraph]` ranges of each source character
+/// whose encodings differ in length or character boundaries, in order. Offsets inside those
+/// have no counterpart.
+#[derive(Clone, Debug, Default)]
+pub(crate) struct OffsetMap(Box<[[Range<usize>; 2]]>);
+
+const COPY: usize = 0;
+const PARAGRAPH: usize = 1;
+
+impl OffsetMap {
+    /// From each source character's output `[copy, paragraph]` ranges in texts `texts`.
+    pub(super) fn between(units: [&[Range<usize>]; 2], texts: [&str; 2]) -> Self {
+        fn lengths<'t>(text: &'t str, range: &Range<usize>) -> impl Iterator<Item = usize> + 't {
+            text[range.clone()].chars().map(char::len_utf8)
+        }
+        Self(
+            units[COPY]
+                .iter()
+                .zip(units[PARAGRAPH])
+                .filter(|(copy, paragraph)| {
+                    !lengths(texts[COPY], copy).eq(lengths(texts[PARAGRAPH], paragraph))
+                })
+                .map(|(copy, paragraph)| [copy.clone(), paragraph.clone()])
+                .collect(),
+        )
+    }
+    /// Offset `offset` of side `from` on the other side.
+    fn map(&self, offset: usize, from: usize) -> Option<usize> {
+        let to = 1 - from;
+        let next = self.0.partition_point(|entry| entry[from].end <= offset);
+        if self
+            .0
+            .get(next)
+            .is_some_and(|entry| entry[from].start < offset)
+        {
+            return None;
+        }
+        Some(next.checked_sub(1).map_or(offset, |previous| {
+            let entry = &self.0[previous];
+            offset - entry[from].end + entry[to].end
+        }))
+    }
+    /// The paragraph offset of copy offset `offset`.
+    pub(crate) fn to_paragraph(&self, offset: usize) -> Option<usize> {
+        self.map(offset, COPY)
+    }
+    /// The copy offset of paragraph offset `offset`.
+    pub(crate) fn to_copy(&self, offset: usize) -> Option<usize> {
+        self.map(offset, PARAGRAPH)
+    }
+    /// The copy offset of the first paragraph offset from `offset` on that has one: the end
+    /// of the character whose encoding holds `offset`.
+    pub(crate) fn to_copy_after(&self, offset: usize) -> usize {
+        self.to_copy(offset).unwrap_or_else(|| {
+            let entry = self
+                .0
+                .partition_point(|entry| entry[PARAGRAPH].end <= offset);
+            self.0[entry][COPY].end
+        })
+    }
+}
+
+/// Applies the spans' `text-transform`, returning the output range of each source character
+/// where `record` asks for it.
+pub(super) fn apply(
+    paragraph: &mut Paragraph,
+    record: bool,
+) -> Result<Vec<Range<usize>>, DocumentError> {
+    let mut units = Vec::new();
     if paragraph
         .spans
         .iter()
         .all(|span| span.style.text_transform == TextTransform::default())
     {
-        return Ok(());
+        if record {
+            for span in &paragraph.spans {
+                units.extend(paragraph.text[span.range.clone()].char_indices().map(
+                    |(relative, ch)| {
+                        let start = span.range.start + relative;
+                        start..start + ch.len_utf8()
+                    },
+                ));
+            }
+        }
+        return Ok(units);
     }
     let mapper = CaseMapper::new();
     let original = std::mem::take(&mut paragraph.text);
@@ -103,6 +183,7 @@ pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
         let start = output.0.len();
         for (relative, ch) in original[span.range.clone()].char_indices() {
             let offset = span.range.start + relative;
+            let unit = output.0.len();
             while let Some(mapped) = offsets.next_if(|mapped| **mapped <= offset) {
                 *mapped = output.0.len();
             }
@@ -149,6 +230,9 @@ pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
             result.map_err(|_| DocumentError::TextExpansionLimit {
                 limit: MAX_INLINE_TEXT_BYTES,
             })?;
+            if record {
+                units.push(unit..output.0.len());
+            }
         }
         span.range = start..output.0.len();
     }
@@ -157,7 +241,7 @@ pub(super) fn apply(paragraph: &mut Paragraph) -> Result<(), DocumentError> {
     }
     paragraph.spans.retain(|span| !span.range.is_empty());
     paragraph.text = output.0;
-    Ok(())
+    Ok(units)
 }
 
 fn language(value: &str) -> LanguageIdentifier {

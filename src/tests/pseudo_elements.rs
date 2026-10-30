@@ -509,16 +509,139 @@ fn first_line_rejects_inheritance_it_cannot_render() {
         "an inline-block after the first line inherits nothing from it: {:?}",
         later.err()
     );
-    let casing = render_html(
-        &format!("<style>{PROFILE}p::first-line{{text-transform:uppercase}}</style><p>straße</p>"),
-        &local_options(),
+}
+
+/// Words that uppercasing re-encodes: `ß` and `ﬁ` become two letters, `ΐ` three characters.
+const REENCODED: &str = "straße ﬁne ΐ ﬃx ß ﬁ straße ﬁne ΐ ﬃx ß ﬁ straße ﬁne ΐ ﬃx ß ﬁ";
+
+fn words(lines: &[String]) -> Vec<Vec<String>> {
+    lines
+        .iter()
+        .map(|line| line.split_whitespace().map(str::to_owned).collect())
+        .collect()
+}
+
+#[test]
+fn first_line_casing_that_reencodes_characters_resumes_the_paragraph_after_it() {
+    let styled = texts(&trace(
+        "p{width:120pt}p::first-line{text-transform:uppercase}",
+        &format!("<p>{REENCODED}</p>"),
+    ));
+    let upper = texts(&trace(
+        "p{width:120pt;text-transform:uppercase}",
+        &format!("<p>{REENCODED}</p>"),
+    ));
+    assert_eq!(
+        styled[0], upper[0],
+        "the first line breaks where its uppercased words fit: {styled:#?} {upper:#?}"
     );
-    let error = casing
-        .err()
-        .expect("uppercasing ß changes the source offsets");
-    assert!(
-        error.to_string().contains("::first-line text-transform"),
-        "{error}"
+    let source: Vec<&str> = REENCODED.split_whitespace().collect();
+    let taken = words(&styled[..1])[0].len();
+    let rest = source[taken..].join(" ");
+    let following = texts(&trace("p{width:120pt}", &format!("<p>{rest}</p>")));
+    assert_eq!(
+        styled[1..],
+        following[..],
+        "later lines resume after the source words the first line holds, uncased: \
+         {styled:#?}"
+    );
+    let reverse = texts(&trace(
+        "p{width:120pt;text-transform:uppercase}p::first-line{text-transform:none}",
+        &format!("<p>{REENCODED}</p>"),
+    ));
+    let first = words(&reverse[..1])[0].clone();
+    assert_eq!(
+        first,
+        source[..first.len()],
+        "an uncased first line shows the source words: {reverse:#?}"
+    );
+    let resumed: Vec<String> = words(&reverse[1..]).concat();
+    let expected: Vec<String> = source[first.len()..]
+        .iter()
+        .map(|word| word.to_uppercase())
+        .collect();
+    assert_eq!(
+        resumed, expected,
+        "the uppercased paragraph resumes after the first line: {reverse:#?}"
+    );
+}
+
+#[test]
+fn first_line_casing_that_reencodes_characters_keeps_breaking_whole_words() {
+    // Three of the uppercase letters fit in 30pt, which would split the second `ß`.
+    for (css, text) in [
+        ("p{width:120pt;text-wrap:balance}", REENCODED),
+        ("p{width:120pt;text-wrap:pretty}", REENCODED),
+        ("p{width:30pt;word-break:break-all}", "ßßßß ﬃ"),
+        ("p{width:30pt;overflow-wrap:anywhere}", "ßßßß ﬃ"),
+    ] {
+        let styled = texts(&trace(
+            &format!("{css}p::first-line{{text-transform:uppercase}}"),
+            &format!("<p>{text}</p>"),
+        ));
+        let joined: String = styled.concat().split_whitespace().collect();
+        let first: String = styled[0].split_whitespace().collect();
+        let rest: String = text.split_whitespace().collect();
+        let remainder = rest
+            .char_indices()
+            .map(|(offset, _)| offset)
+            .find(|&offset| rest[..offset].to_uppercase() == first)
+            .map(|offset| &rest[offset..]);
+        assert!(
+            remainder.is_some_and(|remainder| joined == format!("{first}{remainder}")),
+            "{css}: the first line holds whole source characters, uppercased, and later \
+             lines the rest: {styled:#?}"
+        );
+    }
+}
+
+#[test]
+fn first_line_casing_that_reencodes_characters_places_links_and_static_positions() {
+    // Uppercasing shortens `ﬁ` from three bytes to two.
+    let body = "<p>ﬁﬁ ﬁ<span style=position:absolute>X</span> <a href=#p>ﬁ ß</a> and \
+                then some more words that wrap</p><p id=p>end</p>";
+    let styled = trace(
+        "p{width:200pt}p::first-line{text-transform:uppercase}",
+        body,
+    );
+    let upper = trace(
+        "p{width:200pt}p:first-of-type{text-transform:uppercase}",
+        body,
+    );
+    let x = |trace: &crate::LayoutTrace| {
+        trace.pages[0]
+            .iter()
+            .find(|line| line.text == "X")
+            .map(|line| line.x)
+            .expect("the positioned box has a line")
+    };
+    assert_labelled_pt(
+        "the static position follows the uppercased first-line text",
+        x(&styled),
+        x(&upper),
+    );
+    assert_eq!(
+        styled.links, upper.links,
+        "the link covers its uppercased text on the first line"
+    );
+}
+
+#[test]
+fn first_line_casing_that_reencodes_characters_sizes_shrink_to_fit_boxes() {
+    let width = |css: &str| {
+        let trace = trace(
+            &format!("div{{float:left}}{css}"),
+            "<div><p>ﬁ ΐ ﬁ ﬁ<br>ﬁ</p></div>",
+        );
+        trace.pages[0]
+            .iter()
+            .map(|line| line.width)
+            .fold(0.0f32, f32::max)
+    };
+    assert_labelled_pt(
+        "the float shrinks to its uppercased first line",
+        width("p::first-line{text-transform:uppercase}"),
+        width("p{text-transform:uppercase}"),
     );
 }
 

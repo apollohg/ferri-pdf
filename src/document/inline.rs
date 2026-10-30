@@ -5,6 +5,7 @@ use crate::document::DocumentError;
 use crate::style::{Clear, Style, TextAlign, WhiteSpaceCollapse};
 use std::ops::Range;
 use std::sync::Arc;
+pub(crate) use transform::OffsetMap;
 pub(crate) use transform_maps::narrow_width;
 
 pub(crate) const MAX_INLINE_TEXT_BYTES: usize = 64 * 1024 * 1024;
@@ -85,8 +86,11 @@ pub(crate) struct Paragraph {
     links: Vec<InlineLink>,
     events: Vec<crate::document::InlineEvent>,
     /// The paragraph as `::first-line` styles its first formatted line, which shares its
-    /// source offsets, atomic inlines and line breaks (CSS Pseudo-Elements 4 §2.1).
+    /// atomic inlines and line breaks (CSS Pseudo-Elements 4 §2.1).
     first_line: Option<Box<Paragraph>>,
+    /// Where `first_line`, whose `text-transform` may encode characters differently, places
+    /// this paragraph's offsets.
+    first_line_offsets: OffsetMap,
 }
 impl Paragraph {
     pub(super) fn reflow(&mut self) -> Vec<&mut crate::document::BlockBox> {
@@ -128,6 +132,9 @@ impl Paragraph {
 
     pub(crate) fn first_line(&self) -> Option<&Self> {
         self.first_line.as_deref()
+    }
+    pub(crate) fn first_line_offsets(&self) -> &OffsetMap {
+        &self.first_line_offsets
     }
     pub(crate) fn set_text_box_trim(&mut self, trim: [bool; 2]) {
         self.text_box_trim = trim;
@@ -250,6 +257,7 @@ impl Paragraph {
                 .collect(),
             events: Vec::new(),
             first_line: None,
+            first_line_offsets: OffsetMap::default(),
         };
         let mut styles = atomics.into_iter();
         let mut restyled = |anchors: &[Anchor]| -> Vec<Anchor> {
@@ -345,8 +353,9 @@ impl Paragraph {
             links: Vec::new(),
             events: Vec::new(),
             first_line: None,
+            first_line_offsets: OffsetMap::default(),
         };
-        transform::apply(&mut paragraph)?;
+        transform::apply(&mut paragraph, false)?;
         Ok(paragraph)
     }
     /// The marker box is a block container whose lone line starts at its start edge.
@@ -1277,26 +1286,14 @@ impl InlineCollector {
             links: self.links,
             events: self.events,
             first_line: None,
+            first_line_offsets: OffsetMap::default(),
         };
         let variant = first_line(&paragraph)?;
-        transform::apply(&mut paragraph)?;
+        let units = transform::apply(&mut paragraph, variant.is_some())?;
         if let Some(mut variant) = variant {
-            transform::apply(&mut variant)?;
-            // Both copies share source offsets, so casing must map each character alike.
-            if !variant
-                .text
-                .char_indices()
-                .map(|(offset, ch)| (offset, ch.len_utf8()))
-                .eq(paragraph
-                    .text
-                    .char_indices()
-                    .map(|(offset, ch)| (offset, ch.len_utf8())))
-            {
-                return Err(crate::style::StyleError::Unsupported(
-                    "::first-line text-transform that changes the encoded text length".into(),
-                )
-                .into());
-            }
+            let copy = transform::apply(&mut variant, true)?;
+            paragraph.first_line_offsets =
+                OffsetMap::between([&copy, &units], [&variant.text, &paragraph.text]);
             paragraph.first_line = Some(Box::new(variant));
         }
         Ok(Ok(paragraph))

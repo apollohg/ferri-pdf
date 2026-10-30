@@ -2402,7 +2402,9 @@ pub(super) fn line_anchors<'a>(
                 LineAnchor {
                     block,
                     line,
-                    x: lines.get(line).map(|line| line.x_at(anchor.offset, rtl)),
+                    x: lines
+                        .get(line)
+                        .map(|line| line.x_at(paragraph, anchor.offset, rtl)),
                     below: false,
                     inline_box: anchor.inline_box,
                 }

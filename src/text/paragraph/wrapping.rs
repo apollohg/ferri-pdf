@@ -35,7 +35,8 @@ struct Fitted {
 #[derive(Clone, Copy)]
 enum Segment {
     Overflows,
-    /// A line holding only a leader cannot end at an unforced break.
+    /// A line holding only a leader cannot end at an unforced break, nor the first line
+    /// inside a character its `::first-line` copy encodes differently.
     Excluded,
     Fits {
         remaining: f32,
@@ -91,12 +92,17 @@ impl ParagraphLines<'_, '_, '_, '_> {
         if start != group_start && plan.binary_search(&start).is_err() {
             return Ok(None);
         }
-        Ok(plan.iter().find(|&&end| end > start).map(|&end| {
-            let forced = opportunities
-                .binary_search_by_key(&end, |&(end, _)| end)
-                .is_ok_and(|index| opportunities[index].1 == BreakOpportunity::Mandatory);
-            (end, forced)
-        }))
+        let Some(&end) = plan.iter().find(|&&end| end > start) else {
+            return Ok(None);
+        };
+        let forced = opportunities
+            .binary_search_by_key(&end, |&(end, _)| end)
+            .is_ok_and(|index| opportunities[index].1 == BreakOpportunity::Mandatory);
+        // The `::first-line` copy lays out its line in its own offsets.
+        Ok(match self.copy_offsets(start) {
+            Some(offsets) => offsets.to_copy(end).map(|end| (end, forced)),
+            None => Some((end, forced)),
+        })
     }
 
     /// Line ends for the group of lines from `group_start`, which the current position starts.
@@ -122,16 +128,18 @@ impl ParagraphLines<'_, '_, '_, '_> {
                 return Ok(None);
             };
             let available = self.width - indent;
+            let own = self.prepared_at(start);
             let end = line.range.end;
             if line.wrap_width > available
-                || prepared
+                || own
                     .opportunities
                     .binary_search_by_key(&end, |&(end, _)| end)
                     .is_err()
             {
                 return Ok(None);
             }
-            hyphenated |= hyphenation::is_soft_break(paragraph, &prepared.automatic, end);
+            hyphenated |= hyphenation::is_soft_break(own.paragraph, &own.automatic, end);
+            let end = self.source_offset(start, end);
             fitted.push(Fitted {
                 end,
                 remaining: available - line.width,
@@ -290,7 +298,14 @@ impl ParagraphLines<'_, '_, '_, '_> {
             from,
             self.containing_width,
         );
-        let line = self.emit(from, to, indent, Vec::new())?;
+        let end = match self.copy_offsets(from) {
+            Some(offsets) => match offsets.to_copy(to) {
+                Some(end) => end,
+                None => return Ok(Segment::Excluded),
+            },
+            None => to,
+        };
+        let line = self.emit(from, end, indent, Vec::new())?;
         let available = self.width - indent;
         let forced = prepared
             .opportunities

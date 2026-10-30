@@ -491,8 +491,8 @@ impl<'a> Paginator<'a, '_, 'a> {
                             }) {
                                 let measured =
                                     self.measure_float(&anchor.block, width, containing_height)?;
-                                let prefix = (line.x_at(anchor.offset, style.used_rtl())
-                                    - line.x_at(line.range.start, style.used_rtl()))
+                                let prefix = (line.x_at(source, anchor.offset, style.used_rtl())
+                                    - line.x_at(source, line.range.start, style.used_rtl()))
                                 .abs();
                                 let occupied =
                                     prefix + if prefix > 0.0 { line.indent } else { 0.0 };

@@ -569,9 +569,19 @@ impl Line {
                 .offset(available - self.indent, self.width - left - right, rtl)
             - left
     }
-    /// Distance from the line's left edge to paragraph `offset`. Offsets outside the
-    /// line's runs resolve to its logical start or end in the paragraph direction.
-    pub(crate) fn x_at(&self, offset: usize, rtl: bool) -> f32 {
+    /// Distance from the line's left edge to offset `offset` of `paragraph`, which the line
+    /// lays out. Offsets outside the line's runs resolve to its logical start or end in the
+    /// paragraph direction.
+    pub(crate) fn x_at(&self, paragraph: &Paragraph, offset: usize, rtl: bool) -> f32 {
+        // The runs of a `::first-line` copy's line hold the copy's offsets.
+        let offset = if self.first_line_styles {
+            paragraph
+                .first_line_offsets()
+                .to_copy(offset)
+                .expect("every source character boundary has a first-line offset")
+        } else {
+            offset
+        };
         if let Some(run) = self
             .runs
             .iter()
@@ -768,16 +778,23 @@ impl<'a> TextContext<'a> {
         let minimum: Vec<f32> = atomics.iter().map(|widths| widths.min).collect();
         let maximum: Vec<f32> = atomics.iter().map(|widths| widths.max).collect();
         let measure = |range: Range<usize>, atomic_widths: &[f32], min_content: bool| {
-            // Content from the start sets the first formatted line at either intrinsic size.
-            let (source, autospace) = match first_line.as_ref().filter(|_| range.start == 0) {
-                Some(source) => (source, first_line_autospace.as_ref()),
-                None => (&base, base_autospace.as_ref()),
+            // Content from the start sets the first formatted line at either intrinsic size,
+            // in the copy's offsets.
+            let (source, autospace, range) = match first_line.as_ref().filter(|_| range.start == 0)
+            {
+                Some(source) => (
+                    source,
+                    first_line_autospace.as_ref(),
+                    0..paragraph.first_line_offsets().to_copy_after(range.end),
+                ),
+                None => (&base, base_autospace.as_ref(), range),
             };
             let spacers = line_boxes::Spacers {
                 autospace,
                 ruby: source.ruby.as_ref(),
             };
             let paragraph = source.paragraph;
+            let text = paragraph.text();
             let context_range = breaking::context_range(&source.opportunities, range.clone());
             let visible = whitespace::visible(paragraph, range.clone());
             let mut pieces = shape_line(

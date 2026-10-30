@@ -36,7 +36,7 @@ pub(crate) use formatting::{
 pub(crate) use frames::{Frame, FrameDocument};
 pub(crate) use generated::{GeneratedValues, PageStart, Paginated};
 pub(crate) use inline::{
-    Anchor, InlineBox, MAX_INLINE_TEXT_BYTES, OBJECT_REPLACEMENT_CHARACTER, Paragraph,
+    Anchor, InlineBox, MAX_INLINE_TEXT_BYTES, OBJECT_REPLACEMENT_CHARACTER, OffsetMap, Paragraph,
     is_css_whitespace, narrow_width,
 };
 pub(crate) use metadata::DocumentMetadata;

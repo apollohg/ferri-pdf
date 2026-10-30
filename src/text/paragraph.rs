@@ -84,12 +84,21 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
             .as_ref()
             .is_ok_and(super::bidi::ResolvedParagraph::has_rtl);
         let automatic = hyphenation::automatic(paragraph);
-        let opportunities = whitespace::opportunities(paragraph, &automatic);
+        // The `::first-line` copy cannot end its line inside a character that it and the
+        // paragraph encode differently, where the paragraph could not resume.
+        let resumable = |offset: usize| {
+            std::ptr::eq(paragraph, source)
+                || source.first_line_offsets().to_paragraph(offset).is_some()
+        };
+        let mut opportunities = whitespace::opportunities(paragraph, &automatic);
+        opportunities.retain(|&(end, _)| resumable(end));
         let ordinary = opportunities
             .iter()
             .map(|&(end, _)| end)
             .filter(|&end| !hyphenation::is_soft_break(paragraph, &automatic, end))
             .collect();
+        let mut emergency = whitespace::emergency_opportunities(paragraph, false);
+        emergency.retain(|&offset| resumable(offset));
         Self {
             context,
             paragraph,
@@ -99,7 +108,7 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
             automatic,
             opportunities,
             ordinary,
-            emergency: whitespace::emergency_opportunities(paragraph, false),
+            emergency,
             monotone: paragraph.spans().iter().all(|span| {
                 span.style.letter_spacing >= 0.0
                     && span.style.word_spacing.resolve(span.style.size) >= 0.0
@@ -203,12 +212,29 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
     }
 
     /// The paragraph shaping and breaking the line from `start`: its `::first-line` copy for
-    /// the first formatted line (CSS Pseudo-Elements 4 §2.1).
+    /// the first formatted line (CSS Pseudo-Elements 4 §2.1). Offsets on that line are the
+    /// copy's, and source positions the paragraph's.
     fn prepared_at(&self, start: usize) -> &'s PreparedParagraph<'p, 'context, 'font> {
         match &self.prepared.first_line {
             Some(first_line) if start == 0 => first_line,
             _ => self.prepared,
         }
+    }
+
+    /// Where the `::first-line` copy laying out the line from `start`, if any, places the
+    /// paragraph's offsets.
+    fn copy_offsets(&self, start: usize) -> Option<&'p crate::document::OffsetMap> {
+        (!std::ptr::eq(self.prepared_at(start), self.prepared))
+            .then(|| self.prepared.paragraph.first_line_offsets())
+    }
+
+    /// The paragraph offset of `offset` on the line from `start`.
+    fn source_offset(&self, start: usize, offset: usize) -> usize {
+        self.copy_offsets(start).map_or(offset, |offsets| {
+            offsets
+                .to_paragraph(offset)
+                .expect("the first-line copy breaks only where the paragraph resumes")
+        })
     }
 
     fn available(&self) -> f32 {
@@ -440,6 +466,8 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             });
         }
         prepared.context.finish_line_paint(paragraph, &mut line)?;
+        line.range = self.source_offset(line.range.start, line.range.start)
+            ..self.source_offset(line.range.start, line.range.end);
         Ok(line)
     }
 
