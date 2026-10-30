@@ -216,8 +216,8 @@ impl FontFeature {
 pub(crate) struct FaceSettings {
     pub features: Arc<[FontFeature]>,
     pub variations: Arc<[FontVariation]>,
-    /// Inclusive code point intervals; `None` is the initial `U+0-10FFFF`.
-    pub unicode_range: Option<Arc<[(u32, u32)]>>,
+    /// `None` is the initial `U+0-10FFFF`.
+    pub unicode_range: Option<UnicodeRanges>,
     /// `size-adjust`, as a fraction.
     pub size_adjust: f32,
     pub metric_overrides: MetricOverrides,
@@ -237,18 +237,43 @@ impl FaceSettings {
     /// Whether `unicode-range` lets the face render `ch`; the face is neither used nor
     /// loaded for code points outside it (CSS Fonts 4 §4.5).
     pub(crate) fn covers(&self, ch: char) -> bool {
-        let point = u32::from(ch);
-        self.unicode_range.as_ref().is_none_or(|ranges| {
-            ranges
-                .iter()
-                .any(|&(start, end)| (start..=end).contains(&point))
-        })
+        self.unicode_range
+            .as_ref()
+            .is_none_or(|ranges| ranges.contains(ch))
     }
     pub(crate) fn covers_text(&self, text: &str) -> bool {
         self.unicode_range.is_none() || text.chars().all(|ch| self.covers(ch))
     }
     pub(crate) fn covers_any(&self, text: &str) -> bool {
         text.chars().any(|ch| self.covers(ch))
+    }
+}
+
+/// A `unicode-range` as sorted, disjoint, non-adjacent inclusive code point intervals, so a
+/// lookup is a binary search however many ranges the descriptor lists.
+#[derive(Clone, Debug, PartialEq)]
+pub(crate) struct UnicodeRanges(Arc<[(u32, u32)]>);
+impl UnicodeRanges {
+    pub(crate) fn new(intervals: impl IntoIterator<Item = (u32, u32)>) -> Self {
+        let mut sorted: Vec<(u32, u32)> = intervals.into_iter().collect();
+        sorted.sort_unstable();
+        let mut merged: Vec<(u32, u32)> = Vec::with_capacity(sorted.len());
+        for (start, end) in sorted {
+            match merged.last_mut() {
+                Some(last) if start <= last.1.saturating_add(1) => last.1 = last.1.max(end),
+                _ => merged.push((start, end)),
+            }
+        }
+        Self(merged.into())
+    }
+    pub(crate) fn contains(&self, ch: char) -> bool {
+        let point = u32::from(ch);
+        let after = self.0.partition_point(|&(start, _)| start <= point);
+        after > 0 && point <= self.0[after - 1].1
+    }
+    #[cfg(test)]
+    pub(crate) fn intervals(&self) -> &[(u32, u32)] {
+        &self.0
     }
 }
 

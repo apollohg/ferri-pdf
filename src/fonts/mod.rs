@@ -18,7 +18,7 @@ pub(crate) use metrics::{
 };
 pub(crate) use palettes::{BasePalette, FontPalette};
 pub(crate) use selection::{
-    FaceSettings, FontAdjustments, FontFeature, FontInstance, MetricOverrides,
+    FaceSettings, FontAdjustments, FontFeature, FontInstance, MetricOverrides, UnicodeRanges,
 };
 pub use selection::{FontFaceStyle, FontRange, FontSelection, FontSlant, FontVariation, FontWidth};
 pub(crate) use silhouette::Silhouettes;

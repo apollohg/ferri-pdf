@@ -219,7 +219,7 @@ enum FaceValue {
     Sources(Vec<crate::fonts::FontSource>),
     Features(Arc<[crate::fonts::FontFeature]>),
     Variations(Arc<[crate::fonts::FontVariation]>),
-    UnicodeRange(Arc<[(u32, u32)]>),
+    UnicodeRange(crate::fonts::UnicodeRanges),
     SizeAdjust(f32),
     AscentOverride(Option<f32>),
     DescentOverride(Option<f32>),
@@ -252,16 +252,18 @@ fn face_value(
         Descriptor::FontFaceFontVariationSettings => FaceValue::Variations(
             crate::style::font_values::variation_settings(value, relative)?,
         ),
-        Descriptor::FontFaceUnicodeRange => FaceValue::UnicodeRange(
-            value
-                .items()
-                .iter()
-                .map(|range| match range.unwrap() {
-                    Component::UnicodeRange(start, end) => Ok((*start, *end)),
-                    other => Err(crate::style::box_values::unsupported(other)),
-                })
-                .collect::<Result<_, StyleError>>()?,
-        ),
+        Descriptor::FontFaceUnicodeRange => {
+            FaceValue::UnicodeRange(crate::fonts::UnicodeRanges::new(
+                value
+                    .items()
+                    .iter()
+                    .map(|range| match range.unwrap() {
+                        Component::UnicodeRange(start, end) => Ok((*start, *end)),
+                        other => Err(crate::style::box_values::unsupported(other)),
+                    })
+                    .collect::<Result<Vec<_>, StyleError>>()?,
+            ))
+        }
         Descriptor::FontFaceSizeAdjust => {
             FaceValue::SizeAdjust(crate::style::values::percentage(value, relative)?)
         }
