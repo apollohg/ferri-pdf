@@ -7,11 +7,10 @@ use crate::resources::{ResolvedResource, ResourceBase, ResourceResolver, Url, sn
 use crate::style::PrintSettings;
 use std::sync::{Arc, Mutex, PoisonError};
 
-/// Nesting beyond this aborts rendering. A navigable never loads a URL one of its ancestors
+/// Navigables nested beyond this show nothing. A navigable never loads a URL one of its ancestors
 /// shows (HTML §4.8.5), so only finite `srcdoc` nesting reaches it; each level lays a whole
 /// document out on the stack.
 pub(crate) const MAX_NAVIGABLE_DEPTH: usize = 8;
-const NAVIGABLE_DEPTH_RESOURCE: &str = "nested navigables";
 const UTF8: &str = "UTF-8";
 const ABOUT_SCHEME: &str = "about";
 const BLANK_PATH: &str = "blank";
@@ -28,13 +27,8 @@ pub(crate) struct Navigable {
 }
 impl Navigable {
     /// A child navigable's inheritance, unless nesting exceeds [`MAX_NAVIGABLE_DEPTH`].
-    pub(crate) fn child(&self) -> Result<Self, DocumentError> {
-        if self.ancestors.len() > MAX_NAVIGABLE_DEPTH {
-            return Err(DocumentError::Formatting(format!(
-                "{NAVIGABLE_DEPTH_RESOURCE} exceed {MAX_NAVIGABLE_DEPTH}"
-            )));
-        }
-        Ok(self.clone())
+    pub(crate) fn child(&self) -> Option<Self> {
+        (self.ancestors.len() <= MAX_NAVIGABLE_DEPTH).then(|| self.clone())
     }
     /// HTML §4.8.5 shared attribute processing: a navigable never loads a URL an inclusive
     /// ancestor shows, fragments aside.
@@ -238,9 +232,14 @@ pub(crate) fn load_document(
             None => Frame::blank(&base, navigable),
         }
     } else if sniffing::is_xml(&computed) {
-        return Err(DocumentError::Formatting(format!(
-            "unsupported nested document type: {computed}"
-        )));
+        // HTML §7.5.3: without processing for this XML vocabulary there is nothing to render,
+        // as for a type handed off to external software.
+        let frame = Frame::blank(&base, navigable);
+        frame.record_diagnostics(vec![DocumentDiagnostic::UnrenderedDocument {
+            reference: url.to_string(),
+            media_type: computed,
+        }]);
+        frame
     } else if sniffing::is_javascript(&computed)
         || sniffing::is_json(&computed)
         || is_text(&computed)

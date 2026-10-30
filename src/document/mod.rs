@@ -95,6 +95,13 @@ pub enum DocumentDiagnostic {
         #[source]
         error: ResourceError,
     },
+    #[error("nested navigables beyond {limit} levels show nothing")]
+    NavigableDepth { limit: usize },
+    #[error("nested document {reference} of type {media_type} has no renderer and shows nothing")]
+    UnrenderedDocument {
+        reference: String,
+        media_type: String,
+    },
     #[error("stylesheet {reference} is unavailable: {error}")]
     UnavailableSource {
         base: crate::resources::ResourceBase,

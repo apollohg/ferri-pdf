@@ -275,15 +275,20 @@ fn srcdoc_nesting_is_bounded() {
         crate::document::frames::MAX_NAVIGABLE_DEPTH,
         "every permitted level lays out"
     );
-    let error = render_html(
-        &nest(crate::document::frames::MAX_NAVIGABLE_DEPTH + 1),
-        &local_options(),
-    )
-    .err()
-    .expect("nesting beyond the limit must not render silently");
+    let output = render(&nest(crate::document::frames::MAX_NAVIGABLE_DEPTH + 1));
+    assert_eq!(
+        trace_depth(&output),
+        crate::document::frames::MAX_NAVIGABLE_DEPTH,
+        "the iframe beyond the limit represents nothing; every permitted level still lays out"
+    );
     assert!(
-        error.to_string().contains("nested navigables exceed"),
-        "unexpected error: {error}"
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            RenderDiagnostic::NavigableDepth { limit }
+                if *limit == crate::document::frames::MAX_NAVIGABLE_DEPTH
+        )),
+        "nesting beyond the limit is reported: {:?}",
+        output.diagnostics
     );
 }
 
@@ -387,17 +392,22 @@ fn objects_and_iframes_render_html_svg_text_and_image_documents() {
         pdf_view.items.is_empty() && pdf_view.lines.is_empty(),
         "types with no viewer are handed off, leaving about:blank"
     );
-    let error = render_html(
-        "<iframe src='data:text/xml,<root/>'></iframe>",
-        &local_options(),
-    )
-    .err()
-    .expect("XML documents without dedicated processing are unsupported");
+    let output = render("<iframe src='data:text/xml,<root/>'></iframe>");
+    let trace = output.layout.as_ref().unwrap();
+    let [(_, xml_view)] = viewports(trace)[..] else {
+        panic!("the iframe keeps its viewport: {:?}", images(trace));
+    };
     assert!(
-        error
-            .to_string()
-            .contains("unsupported nested document type: text/xml"),
-        "{error}"
+        xml_view.items.is_empty() && xml_view.lines.is_empty(),
+        "an XML document without dedicated processing shows nothing"
+    );
+    assert!(
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            RenderDiagnostic::UnrenderedDocument { media_type, .. } if media_type == "text/xml"
+        )),
+        "the unrendered document is reported: {:?}",
+        output.diagnostics
     );
 }
 
