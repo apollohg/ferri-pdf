@@ -1,7 +1,7 @@
 //! The raw SVG cascade's custom properties use the same bounded substitution as document CSS.
 pub(crate) use crate::style::units::{FontUnit, FontUnits, Relative};
 pub(crate) use crate::style::wide_keywords::WideKeyword;
-use crate::style::{StyleError, declaration, grammar::Property, variables};
+use crate::style::{Size, StyleError, declaration, grammar::Property, variables};
 use std::{borrow::Cow, collections::HashMap};
 
 pub(crate) fn relative<'a>(
@@ -20,24 +20,68 @@ pub(crate) fn relative<'a>(
     }
 }
 
+/// `None` is `auto`, which a `width` or `height` whose basis is a keyword behaves as.
 pub(crate) fn length(
     source: &str,
     property: &str,
     relative: &Relative<'_>,
 ) -> Result<Option<crate::paint::LengthPercentage>, StyleError> {
     use crate::style::{box_values, grammar::Keyword};
-    let property = match property {
-        "width" => Property::Width,
-        "height" => Property::Height,
-        _ => Property::MarginLeft,
+    let Some(property) = sized_property(property) else {
+        let Some(value) = declaration::value(Property::MarginLeft, source, &mut 0)? else {
+            return Ok(None);
+        };
+        if value.keyword() == Some(Keyword::Auto) {
+            return Ok(None);
+        }
+        return box_values::length_percentage(&value, relative).map(Some);
     };
+    Ok(match size(property, source, relative)? {
+        Some(Size::Value(value)) => Some(value),
+        Some(Size::Calculated(calculated)) => calculated.definite(),
+        Some(Size::Auto | Size::Intrinsic(_)) | None => None,
+    })
+}
+
+/// The `calc-size()` calculation of a `width` or `height` whose basis is a keyword, which
+/// gives the used size from the automatic size the element gives that basis (CSS Values 5
+/// §10.2).
+pub(crate) fn automatic_size(
+    source: &str,
+    property: &str,
+    relative: &Relative<'_>,
+) -> Result<Option<crate::paint::Calculation>, StyleError> {
+    let Some(property) = sized_property(property) else {
+        return Ok(None);
+    };
+    Ok(match size(property, source, relative)? {
+        Some(Size::Calculated(calculated)) if calculated.definite().is_none() => {
+            Some(calculated.calculation.clone())
+        }
+        _ => None,
+    })
+}
+
+fn sized_property(property: &str) -> Option<Property> {
+    match property {
+        "width" => Some(Property::Width),
+        "height" => Some(Property::Height),
+        _ => None,
+    }
+}
+
+/// SVG content sizes no box from its contents: `auto` gives an image or a viewport its
+/// natural size or `100%` and other elements none (SVG 2 §7.8), so the CSS Sizing 3 §3.1 intrinsic
+/// keywords, also as a `calc-size()` basis, behave as `auto`.
+fn size(
+    property: Property,
+    source: &str,
+    relative: &Relative<'_>,
+) -> Result<Option<Size>, StyleError> {
     let Some(value) = declaration::value(property, source, &mut 0)? else {
         return Ok(None);
     };
-    if value.keyword() == Some(Keyword::Auto) {
-        return Ok(None);
-    }
-    box_values::length_percentage(&value, relative).map(Some)
+    Size::from_component(&value, relative).map(Some)
 }
 
 pub(crate) fn font_size(

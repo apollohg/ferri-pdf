@@ -6,7 +6,7 @@ use crate::resources::ResourceBase;
 use crate::style::{
     POINTS_PER_PIXEL, StyleError,
     box_values::length_percentage,
-    calc::Kind,
+    calc::{CALC_SIZE_FUNCTION, Kind},
     component::Component,
     grammar::Base,
     matcher::{self, ValueContext},
@@ -414,6 +414,15 @@ fn pixels(points: f32) -> Component {
 /// functions take and return radians.
 fn serialize_calculation(calculation: &Calculation) -> String {
     let mut output = String::from("calc(");
+    write_calculation(&mut output, calculation, true);
+    output.push(')');
+    output
+}
+
+/// A `calc-size()` of the serialized `basis` and a length `calculation`, whose `size` terms
+/// stand for the basis's size.
+pub(crate) fn serialize_calc_size(basis: &str, calculation: &Calculation) -> String {
+    let mut output = format!("{CALC_SIZE_FUNCTION}({basis}, ");
     write_calculation(&mut output, calculation, true);
     output.push(')');
     output

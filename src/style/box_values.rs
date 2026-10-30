@@ -107,6 +107,19 @@ impl CalculatedSize {
         self.calculation
             .resolve_sized(percentage_basis.unwrap_or(0.0), size)
     }
+    /// The size as a length-percentage where its basis is one, `any` or `100%`, so it needs
+    /// no size from the context; `None` for a keyword basis.
+    pub(crate) fn definite(&self) -> Option<LengthPercentage> {
+        let Size::Value(basis) = &self.basis else {
+            return None;
+        };
+        Some(
+            self.calculation
+                .clone()
+                .substitute_size(&basis.into())
+                .into(),
+        )
+    }
 }
 
 impl Size {

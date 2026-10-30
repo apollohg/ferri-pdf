@@ -104,6 +104,43 @@ pub(crate) fn computed_length(
     }
 }
 
+/// The used `width` or `height` of an element whose value behaves as `auto` and to which that
+/// gives the size `automatic`: a `calc-size()` with a keyword basis calculates the used size
+/// from it (CSS Values 5 §10.2).
+pub(crate) fn automatic_size(
+    node: SvgNode,
+    aid: AId,
+    automatic: f32,
+    state: &converter::State,
+) -> f32 {
+    use crate::paint::POINTS_PER_PIXEL;
+    let sized = node.tag_name().is_some_and(|tag| {
+        crate::style::svg_values::presentation_property(tag.to_str(), aid.to_str()).is_some()
+    });
+    let Some(source) = node.attribute::<&str>(aid).filter(|_| sized) else {
+        return automatic;
+    };
+    match with_relative(node, state, |relative| {
+        crate::style::svg_cascade::automatic_size(source, aid.to_str(), relative)
+    }) {
+        Ok(Some(calculation)) => {
+            let basis = convert_user_length(Length::new(100.0, Unit::Percent), node, aid, state);
+            let used = calculation
+                .zoomed_length(node.effective_zoom() / POINTS_PER_PIXEL)
+                .resolve_sized(basis, automatic);
+            checked_length(used, state).unwrap_or(automatic)
+        }
+        Ok(None) => automatic,
+        Err(error) => {
+            state
+                .length_error
+                .borrow_mut()
+                .get_or_insert_with(|| std::sync::Arc::new(error));
+            automatic
+        }
+    }
+}
+
 #[inline(never)]
 pub(crate) fn convert_length(
     length: Length,

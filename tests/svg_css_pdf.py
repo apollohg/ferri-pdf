@@ -500,6 +500,41 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
             self.assertPixel(pixels, half, 3 * ICON + half, GREEN,
                              'Filter Effects 1 §5: the referenced filter floods the box')
 
+    def test_calc_size_calculates_svg_geometry_from_its_basis(self):
+        """CSS Values 5 §10.2: a calc-size() behaves as its basis, whose size the calculation
+        then adjusts: auto is no width on a rect and the natural size on an image (SVG 2 §7.8),
+        and a percentage basis is the viewport's."""
+        band = 20
+        square = quote(f'<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10">'
+                       f'<rect width="10" height="10" fill="rgb(0,160,0)"/></svg>')
+        standalone = quote('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 20">'
+                           '<rect style="width:calc-size(auto, size + 30px);height:20px" '
+                           'fill="blue"/></svg>')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            pixels = self.render(
+                Path(directory),
+                '.auto{width:calc-size(auto, size + 20px);height:calc-size(any, 20px)}'
+                '.share{width:calc-size(50%, size - 10px)}'
+                '.doubled{width:calc-size(min-content, size * 2);height:max-content}'
+                'img{width:160pt;height:20pt}',
+                f'<svg width="160pt" height="{3 * band}pt" viewBox="0 0 160 {3 * band}">'
+                '<rect class="auto" fill="blue"/>'
+                f'<rect class="share" y="{band}" height="{band}" fill="blue"/>'
+                f'<image class="doubled" y="{2 * band}" preserveAspectRatio="none" '
+                f'href="data:image/svg+xml,{square}"/></svg>'
+                f'<img src="data:image/svg+xml,{standalone}">')
+            self.assertEqual(self.ink_columns(pixels, 0, 0, 160, band, BLUE), list(range(20)),
+                             'an auto basis gives a rect no width, which the calculation adds to')
+            self.assertEqual(self.ink_columns(pixels, 0, band, 160, band, BLUE), list(range(70)),
+                             'a 50% basis is half the viewport before the calculation')
+            self.assertEqual(self.ink_columns(pixels, 0, 2 * band, 160, 10, GREEN),
+                             list(range(20)),
+                             'an intrinsic basis behaves as auto: the natural width, doubled')
+            self.assertEqual(self.ink_columns(pixels, 0, 2 * band + 10, 160, 5, GREEN), [],
+                             'max-content behaves as auto: the image height stays natural')
+            self.assertEqual(self.ink_columns(pixels, 0, 3 * band, 160, band, BLUE),
+                             list(range(30)), 'a standalone SVG image calculates its sizes too')
+
     def test_svg_images_keep_their_own_styles(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
             image = quote(f'<svg xmlns="http://www.w3.org/2000/svg" width="{ICON}" height="{ICON}">'

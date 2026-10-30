@@ -30,6 +30,15 @@ impl LengthPercentage {
         matches!(self, Self::Length(value) | Self::Percentage(value) if *value == 0.0)
     }
 }
+impl From<&LengthPercentage> for Calculation {
+    fn from(value: &LengthPercentage) -> Self {
+        match value {
+            LengthPercentage::Length(value) => Self::Value(*value),
+            LengthPercentage::Percentage(fraction) => Self::Percentage(*fraction),
+            LengthPercentage::Calc(calculation) => (**calculation).clone(),
+        }
+    }
+}
 impl From<Calculation> for LengthPercentage {
     fn from(calculation: Calculation) -> Self {
         match calculation.simplify() {

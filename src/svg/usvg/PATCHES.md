@@ -82,3 +82,8 @@ in them blends or composites in linear light.
 does (CSS Fonts 4 §6.6): with the face's own capital features, or with capitals synthesized from
 uppercase forms cased in the language of the nearest `lang` or `xml:lang`, scaled down per
 glyph cluster.
+
+`width` and `height` take `calc-size()` and the intrinsic size keywords (CSS Values 5 §10.2,
+CSS Sizing 3 §3.1). Keywords, and `calc-size()` with a keyword basis, behave as `auto`; the
+latter then calculates the used size from the automatic size each element gives `auto` (SVG 2
+§7.8): none for a rectangle, `100%` for a viewport and the natural size for an image.

@@ -6,7 +6,7 @@ use std::sync::Arc;
 use svgtypes::{AspectRatio, Length};
 
 use super::svgtree::{AId, SvgNode};
-use super::{OptionLog, Options, converter};
+use super::{OptionLog, Options, converter, units};
 use crate::svg::usvg::{
     ClipPath, Group, Image, ImageKind, ImageRendering, Node, NonZeroRect, Path, Size, Transform,
     Tree, Visibility,
@@ -161,7 +161,8 @@ pub(crate) fn convert(
     let y = node.convert_user_length(AId::Y, state, Length::zero());
     let dimension =
         |aid| node.try_convert_length(aid, crate::svg::usvg::Units::UserSpaceOnUse, state);
-    let (width, height) = match (dimension(AId::Width), dimension(AId::Height)) {
+    let sizes = (dimension(AId::Width), dimension(AId::Height));
+    let (width, height) = match sizes {
         (Some(width), Some(height)) => (width, height),
         (Some(width), None) => (width, actual_size.height() * width / actual_size.width()),
         (None, Some(height)) => (actual_size.width() * height / actual_size.height(), height),
@@ -170,6 +171,19 @@ pub(crate) fn convert(
             actual_size.height() * node.effective_zoom(),
         ),
     };
+    // An automatic size is the natural one, or that the other size gives through the
+    // natural ratio, before a `calc-size()` calculates the used size from it.
+    let used = |aid, specified: bool, size| {
+        if specified {
+            size
+        } else {
+            units::automatic_size(node, aid, size, state)
+        }
+    };
+    let (width, height) = (
+        used(AId::Width, sizes.0.is_some(), width),
+        used(AId::Height, sizes.1.is_some(), height),
+    );
 
     let aspect: AspectRatio = node.attribute(AId::PreserveAspectRatio).unwrap_or_default();
 

@@ -109,11 +109,7 @@ impl PositionComponent {
     #[must_use]
     pub fn canonical(&self) -> Self {
         use crate::paint::Calculation;
-        let offset = match &self.offset {
-            LengthPercentage::Length(value) => Calculation::Value(*value),
-            LengthPercentage::Percentage(value) => Calculation::Percentage(*value),
-            LengthPercentage::Calc(value) => (**value).clone(),
-        };
+        let offset = Calculation::from(&self.offset);
         let offset = if self.from_end {
             Calculation::Sum(vec![Calculation::Percentage(1.0), offset.negate()]).simplify()
         } else {

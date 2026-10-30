@@ -265,14 +265,7 @@ pub(crate) fn auto_edge(side: usize) -> LengthPercentage {
 pub(crate) fn remainder(terms: &[&LengthPercentage]) -> LengthPercentage {
     use crate::paint::Calculation;
     let mut sum = vec![Calculation::Percentage(1.0)];
-    sum.extend(terms.iter().map(|term| {
-        match term {
-            LengthPercentage::Length(value) => Calculation::Value(*value),
-            LengthPercentage::Percentage(fraction) => Calculation::Percentage(*fraction),
-            LengthPercentage::Calc(calculation) => (**calculation).clone(),
-        }
-        .negate()
-    }));
+    sum.extend(terms.iter().map(|term| Calculation::from(*term).negate()));
     Calculation::Sum(sum).into()
 }
 

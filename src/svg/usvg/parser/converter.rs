@@ -278,12 +278,16 @@ impl<'a, 'input: 'a> SvgNode<'a, 'input> {
         state: &State,
         def: Length,
     ) -> f32 {
-        if !(self.is_contents() && matches!(aid, AId::X | AId::Y | AId::Width | AId::Height))
-            && let Some(value) = self.try_convert_length(aid, object_units, state)
-        {
+        let positioned =
+            !(self.is_contents() && matches!(aid, AId::X | AId::Y | AId::Width | AId::Height));
+        if positioned && let Some(value) = self.try_convert_length(aid, object_units, state) {
             return value;
         }
-        convert_length(def, *self, aid, object_units, state)
+        let automatic = convert_length(def, *self, aid, object_units, state);
+        if positioned && matches!(aid, AId::Width | AId::Height) {
+            return units::automatic_size(*self, aid, automatic, state);
+        }
+        automatic
     }
 
     pub(super) fn convert_user_length(&self, aid: AId, state: &State, def: Length) -> f32 {
@@ -586,22 +590,24 @@ fn resolve_svg_size(
         view_box.unwrap_or_else(|| opt.default_size.to_non_zero_rect(0.0, 0.0)),
     );
     state.font_provider = font_provider;
-    let dimension = |aid| {
-        units::computed_length(*svg, *svg, aid, Units::UserSpaceOnUse, &state)
-            .unwrap_or(LengthPercentage::Percentage(1.0))
-    };
+    let dimension = |aid| units::computed_length(*svg, *svg, aid, Units::UserSpaceOnUse, &state);
     let width = dimension(AId::Width);
     let height = dimension(AId::Height);
+    let restore_viewbox = view_box.is_none()
+        && (!matches!(width, Some(LengthPercentage::Length(_)))
+            || !matches!(height, Some(LengthPercentage::Length(_))));
+    // `auto` is `100%` (SVG 2 §7.8), which a `calc-size()` can then calculate from.
+    let used = |aid, size: Option<LengthPercentage>, basis| match size {
+        Some(size) => size.resolve(basis),
+        None => units::automatic_size(*svg, aid, basis, &state),
+    };
+    let size = Size::from_wh(
+        used(AId::Width, width, state.view_box.width()),
+        used(AId::Height, height, state.view_box.height()),
+    );
     if let Some(error) = state.length_error.borrow_mut().take() {
         return (Err(Error::Style(error)), false);
     }
-    let restore_viewbox = view_box.is_none()
-        && (!matches!(width, LengthPercentage::Length(_))
-            || !matches!(height, LengthPercentage::Length(_)));
-    let size = Size::from_wh(
-        width.resolve(state.view_box.width()),
-        height.resolve(state.view_box.height()),
-    );
     (size.ok_or(Error::InvalidSize), restore_viewbox)
 }
 

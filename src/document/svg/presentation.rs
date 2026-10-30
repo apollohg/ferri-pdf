@@ -29,6 +29,7 @@ const WIDTH_KEYWORDS: [(FontWidth, &str); 9] = [
     (FontWidth::ULTRA_EXPANDED, "ultra-expanded"),
 ];
 const NONE: &str = "none";
+const AUTO: &str = "auto";
 const TRANSFORM_ORIGIN: &str = "transform-origin";
 const TRANSFORM_BOX: &str = "transform-box";
 const FILL_BOX: &str = "fill-box";
@@ -131,7 +132,7 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
     if !root {
         push("opacity", &number(style.opacity));
         push("mix-blend-mode", blend_mode(style.mix_blend_mode));
-        push("isolation", if style.isolate { "isolate" } else { "auto" });
+        push("isolation", if style.isolate { "isolate" } else { AUTO });
         push("filter", &filters(&style.filter));
         if let Some(overflow) = overflow(tag, style.overflow)? {
             push("overflow", overflow);
@@ -168,7 +169,7 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
     push(
         "font-optical-sizing",
         if style.font_adjustments.optical_sizing {
-            "auto"
+            AUTO
         } else {
             "none"
         },
@@ -202,7 +203,7 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
             if style.font_features.kerning == crate::style::FontKerning::None {
                 "none"
             } else {
-                "auto"
+                AUTO
             },
         );
     }
@@ -225,13 +226,18 @@ pub(super) fn geometry(
         ("ry", svg.ry.as_ref()),
         ("x", Some(&svg.x)),
         ("y", Some(&svg.y)),
-        ("width", size(&style.width)?),
-        ("height", size(&style.height)?),
     ] {
         if let Some(value) = value
             && crate::style::svg_values::presentation_property(tag, name).is_some()
         {
             attributes.push((name, length_percentage(value)?));
+        }
+    }
+    for (name, value) in [("width", &style.width), ("height", &style.height)] {
+        if crate::style::svg_values::presentation_property(tag, name).is_some()
+            && let Some(value) = size(value)?
+        {
+            attributes.push((name, value));
         }
     }
     if crate::style::svg_values::presentation_property(tag, "d").is_some()
@@ -465,13 +471,23 @@ fn mask(masks: &crate::paint::Masks) -> Result<String, StyleError> {
 }
 
 /// `None` is `auto`. SVG content sizes no box from its contents: `auto` already gives an
-/// image or nested viewport its natural size (SVG 2 geometry properties), and shapes have
-/// none, so the CSS Sizing 3 §3.1 intrinsic keywords behave as `auto`.
-fn size(size: &Size) -> Result<Option<&LengthPercentage>, StyleError> {
+/// image or nested viewport its natural size or `100%`, and other elements none (SVG 2 §7.8),
+/// so the CSS Sizing 3 §3.1 intrinsic keywords, also as a `calc-size()` basis, behave as
+/// `auto`.
+fn size(size: &Size) -> Result<Option<String>, StyleError> {
     match size {
         Size::Auto | Size::Intrinsic(_) => Ok(None),
-        Size::Value(value) => Ok(Some(value)),
-        Size::Calculated(_) => Err(StyleError::Unsupported("calc-size() on SVG content".into())),
+        Size::Value(value) => length_percentage(value).map(Some),
+        Size::Calculated(calculated) => {
+            let basis = match &calculated.basis {
+                Size::Value(basis) => length_percentage(basis)?,
+                _ => AUTO.to_owned(),
+            };
+            Ok(Some(crate::style::serialize_calc_size(
+                &basis,
+                &calculated.calculation,
+            )))
+        }
     }
 }
 
@@ -565,7 +581,7 @@ fn stroke(svg: &crate::style::svg_values::SvgStyle) -> String {
 /// CSS Inline 3 §4.1 baselines as SVG `dominant-baseline` keywords.
 fn baseline(baseline: Baseline) -> &'static str {
     match baseline {
-        Baseline::Auto => "auto",
+        Baseline::Auto => AUTO,
         Baseline::Alphabetic => "alphabetic",
         Baseline::TextBottom => "text-after-edge",
         Baseline::TextTop => "text-before-edge",
@@ -740,7 +756,7 @@ fn transform_declarations(style: &Style) -> Result<Vec<(&'static str, String)>, 
             "offset-position",
             match &style.motion.position {
                 OffsetPosition::Normal => "normal".to_owned(),
-                OffsetPosition::Auto => "auto".to_owned(),
+                OffsetPosition::Auto => AUTO.to_owned(),
                 OffsetPosition::Position(at) => position(at, motion_length)?,
             },
         ),
@@ -752,7 +768,7 @@ fn transform_declarations(style: &Style) -> Result<Vec<(&'static str, String)>, 
                 .as_ref()
                 .map(|at| position(at, motion_length))
                 .transpose()?
-                .unwrap_or_else(|| "auto".to_owned()),
+                .unwrap_or_else(|| AUTO.to_owned()),
         ),
         (
             "offset-rotate",
