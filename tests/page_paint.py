@@ -869,6 +869,10 @@ class PagePaint(unittest.TestCase):
             ("mix-blend-mode:multiply", "lime", [((150, 172), (0, 0, 0), "the area blends with the page")]),
             ("backdrop-filter:invert(1);background:transparent", "lime",
              [((150, 172), (255, 0, 255), "the backdrop filter inverts the page behind the area")]),
+            ("transform:translateY(-100pt)", "white",
+             [((150, 72), red, "the transform moves the area with its bodies"),
+              ((150, 172), white, "nothing paints where the untransformed area lay")]),
+            ("transform:scale(0)", "white", [((150, 172), white, "a collapsed area paints nothing")]),
         ]:
             with self.subTest(declarations=declarations):
                 page = self.render(

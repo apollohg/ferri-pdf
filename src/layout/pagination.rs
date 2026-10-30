@@ -1031,6 +1031,24 @@ impl StandaloneNavigation {
                 .collect(),
         }
     }
+    /// The navigation mapped through `region`, a transform of the box holding it.
+    pub(super) fn transformed(self, region: &Region) -> Self {
+        Self {
+            links: crate::layout::page_margins::transformed_links(self.links, region),
+            destinations: self
+                .destinations
+                .into_iter()
+                .map(|(index, bounds)| {
+                    let corners = crate::layout::navigation::rect_corners(bounds).to_vec();
+                    let mapped = crate::layout::navigation::map_region(corners, region);
+                    (
+                        index,
+                        crate::paint::projection::bounds(&mapped).unwrap_or(bounds),
+                    )
+                })
+                .collect(),
+        }
+    }
     pub(super) fn into_links(self) -> Vec<LinkArea> {
         self.links
     }

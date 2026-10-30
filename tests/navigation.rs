@@ -218,6 +218,28 @@ fn page_box_transforms_move_the_links_and_destinations_of_their_pages() {
 }
 
 #[test]
+fn footnote_area_transforms_move_the_links_of_their_bodies() {
+    const SHIFT_PT: f32 = 50.0;
+    let note = |transform: &str| {
+        trace(
+            &format!(".note{{float:footnote}}@page{{@footnote{{transform:{transform}}}}}"),
+            "<p>Call<span class=note><a href='https://note.example/'>Note</a></span></p>",
+        )
+        .links[0]
+            .clone()
+    };
+    let plain_areas = note("none");
+    let shifted_areas = note(&format!("translateY(-{SHIFT_PT}pt)"));
+    let ([plain], [shifted]) = (&rects(&plain_areas, 0)[..], &rects(&shifted_areas, 0)[..]) else {
+        panic!("one footnote link area: {plain_areas:?} / {shifted_areas:?}")
+    };
+    assert!(
+        close(shifted.x, plain.x) && close(shifted.y, plain.y - SHIFT_PT),
+        "the footnote area's translation moves its bodies' links: {plain:?} -> {shifted:?}"
+    );
+}
+
+#[test]
 fn transformed_links_become_quadrilaterals_and_clips_trim_link_areas() {
     let trace = trace(
         ".rot{transform:rotate(30deg);width:150pt;margin:40pt 0}\

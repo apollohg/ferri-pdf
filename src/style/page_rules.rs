@@ -402,17 +402,6 @@ pub(super) struct MatchedPageRules {
     descriptors: HashMap<Descriptor, Vec<Candidate<PageValue>>>,
     pub contextual_descriptors: bool,
 }
-/// The transform properties of `style` and whether each is other than `none`.
-fn transforms(style: &crate::style::Style) -> [(Property, bool); 6] {
-    [
-        (Property::Transform, !style.transform.is_empty()),
-        (Property::Translate, style.translate.is_some()),
-        (Property::Rotate, style.rotate.is_some()),
-        (Property::Scale, style.scale.is_some()),
-        (Property::OffsetPath, style.motion.active()),
-        (Property::Perspective, style.perspective.is_some()),
-    ]
-}
 /// The multi-column properties of `style` and whether each is other than `auto`.
 pub(super) fn multicol(style: &crate::style::Style) -> [(Property, bool); 3] {
     let multicol = &style.multicol;
@@ -464,7 +453,11 @@ impl Stylesheet {
             .0;
         unsupported_in(
             &format!("@{}", crate::style::page_parser::FOOTNOTE_AT_RULE),
-            &[transforms(&footnote).as_slice(), &multicol(&footnote)].concat(),
+            &[
+                [(Property::Perspective, footnote.perspective.is_some())].as_slice(),
+                &multicol(&footnote),
+            ]
+            .concat(),
         )?;
         Ok(ResolvedPage {
             request,

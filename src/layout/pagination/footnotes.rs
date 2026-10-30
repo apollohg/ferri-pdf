@@ -840,9 +840,19 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 padding: area.padding,
                 ..BoxPaint::whole(border_box, decoration)
             };
-            // The area composites as one group, which its bodies' boxes join.
+            // The area transforms about its border box like a block box, and composites as one
+            // group, which its bodies' boxes join.
+            let transform = self.transform_on(&style, &paint.fragment_areas(), None, page)?;
+            if transform.as_ref().is_some_and(Region::collapses) {
+                continue;
+            }
             let group = Group::of(&style);
-            let pushes = group.pushes(std::slice::from_ref(&paint));
+            let pushes: Vec<_> = transform
+                .clone()
+                .map(Region::push)
+                .into_iter()
+                .chain(group.pushes(std::slice::from_ref(&paint)))
+                .collect();
             let backdrop = group.backdrop(&paint);
             let mut items = Vec::new();
             if visible {
@@ -897,7 +907,14 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                     {
                         text.push(frame(area.items.clone(), area.lines.clone()));
                     }
-                    navigation.push((page, layout.flow.navigation.translated(origin, window)));
+                    let placed = layout.flow.navigation.translated(origin, window);
+                    navigation.push((
+                        page,
+                        match &transform {
+                            Some(region) => placed.transformed(region),
+                            None => placed,
+                        },
+                    ));
                     // CSS Images 4 §2.7: a body broken across footnote areas is imaged as laid
                     // out whole, which its first part starts.
                     if part.top == 0.0 {
@@ -923,7 +940,13 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 }));
             }
             if page_clips {
-                page_text[page] = text;
+                page_text[page] = match &transform {
+                    Some(region) => std::iter::once(region.clone().push())
+                        .chain(text)
+                        .chain(std::iter::once(DisplayItem::Pop))
+                        .collect(),
+                    None => text,
+                };
             }
             let pops = pushes.len();
             let items = pushes

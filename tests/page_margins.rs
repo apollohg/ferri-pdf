@@ -172,10 +172,6 @@ fn nonfinite_page_margin_geometry_is_rejected_even_without_text() {
 fn page_contexts_reject_properties_their_boxes_do_not_implement() {
     for (rule, expected) in [
         (
-            "@page{@footnote{transform:scale(2)}}",
-            "transform in @footnote",
-        ),
-        (
             "@page{@footnote{perspective:100pt}}",
             "perspective in @footnote",
         ),
