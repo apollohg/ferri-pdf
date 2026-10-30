@@ -730,7 +730,7 @@ dependencies = [
 
 [[package]]
 name = "ferri-pdf-selectors"
-version = "0.38.0"
+version = "0.38.1"
 dependencies = [
  "bitflags",
  "cssparser",
