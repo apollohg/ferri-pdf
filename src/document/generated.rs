@@ -39,10 +39,20 @@ struct PagedValues {
     /// The page counters of the pages whose margin boxes place each running element that
     /// shows them.
     running: HashMap<PageStyleTarget, Vec<PageNumbers>>,
-    /// The inline footnotes that start an inline formatting context of their own in the
-    /// footnote area rather than continue the one of the inline footnote before them (CSS
-    /// GCPM 3 §2.3). Pagination only adds to them, so that they settle.
-    inline_footnote_starts: HashSet<ElementId>,
+    inline_footnotes: InlineFootnotePlacement,
+}
+
+/// Where pagination placed the inline formatting contexts of footnote areas that hold inline
+/// footnotes (CSS GCPM 3 §2.3).
+#[derive(Clone, Default, PartialEq, Eq)]
+pub(crate) struct InlineFootnotePlacement {
+    /// The inline footnotes that start an inline formatting context of their own rather than
+    /// continue the one of the inline footnote before them. Pagination only adds to them, so
+    /// that they settle.
+    pub starts: HashSet<ElementId>,
+    /// The page each inline formatting context starts on, by its first footnote, unless that
+    /// page is the first page's.
+    pub pages: HashMap<ElementId, crate::style::PageRequest>,
 }
 
 /// The page counters a copy of a running element shows: the `page` counter, the page total,
@@ -93,9 +103,7 @@ pub(crate) struct Paginated<'a> {
     pub starts: Vec<(ElementId, PageStart)>,
     /// The running element each page-margin box places, with the `page` counter it shows.
     pub running: Vec<(PageStyleTarget, i128)>,
-    /// The inline footnotes whose content pagination could not continue on the line of the
-    /// inline footnote before them.
-    pub inline_footnote_starts: HashSet<ElementId>,
+    pub inline_footnotes: InlineFootnotePlacement,
 }
 
 #[derive(Default)]
@@ -291,8 +299,22 @@ impl GeneratedPass {
         self.bindings
             .values
             .paged
-            .inline_footnote_starts
+            .inline_footnotes
+            .starts
             .contains(&element)
+    }
+    /// The page the inline formatting context that the inline footnote `element` starts lies
+    /// on, once a pagination placed it.
+    pub(crate) fn inline_footnote_page(
+        &self,
+        element: ElementId,
+    ) -> Option<&crate::style::PageRequest> {
+        self.bindings
+            .values
+            .paged
+            .inline_footnotes
+            .pages
+            .get(&element)
     }
     /// The pages starting at or inside `element`.
     pub(crate) fn page_starts(&self, element: ElementId) -> &[PageStart] {
@@ -372,7 +394,7 @@ impl GeneratedReferences {
             strings,
             starts,
             running,
-            mut inline_footnote_starts,
+            mut inline_footnotes,
         } = paginated;
         let mut values = HashMap::new();
         for (request, owner) in self.bindings.requests.borrow().iter() {
@@ -453,10 +475,11 @@ impl GeneratedReferences {
                 total: (!contexts.is_empty()).then_some(pages),
                 starts: page_starts,
                 running: running_pages,
-                inline_footnote_starts: {
-                    inline_footnote_starts
-                        .extend(&self.bindings.values.paged.inline_footnote_starts);
-                    inline_footnote_starts
+                inline_footnotes: {
+                    inline_footnotes
+                        .starts
+                        .extend(&self.bindings.values.paged.inline_footnotes.starts);
+                    inline_footnotes
                 },
             }),
         })

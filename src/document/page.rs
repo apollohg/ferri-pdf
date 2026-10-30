@@ -121,20 +121,47 @@ impl PageProvider {
         if let Some(page) = self.records.borrow().get(&request) {
             return Ok(page.clone());
         }
+        let mut cache = self.images.borrow_mut();
+        self.load(
+            sheet,
+            root,
+            request,
+            &mut ImageResources {
+                base: &self.base,
+                resolver,
+                cache: &mut cache,
+                elements: &self.elements,
+            },
+        )
+    }
+    /// As `resolve`, loading the page's images with `resources` while formatting holds the
+    /// image cache.
+    pub(crate) fn resolve_with(
+        &self,
+        sheet: &Stylesheet,
+        root: &Style,
+        request: PageRequest,
+        resources: &mut ImageResources<'_>,
+    ) -> Result<Arc<PageBox>, DocumentError> {
+        if let Some(page) = self.records.borrow().get(&request) {
+            return Ok(page.clone());
+        }
+        self.load(sheet, root, request, resources)
+    }
+    fn load(
+        &self,
+        sheet: &Stylesheet,
+        root: &Style,
+        request: PageRequest,
+        resources: &mut ImageResources<'_>,
+    ) -> Result<Arc<PageBox>, DocumentError> {
         let resolved = sheet.resolve_page(
             root,
             request.clone(),
             Some(self.first.geometry.area),
-            resolver,
+            resources.resolver,
         )?;
-        let mut cache = self.images.borrow_mut();
-        let mut resources = ImageResources {
-            base: &self.base,
-            resolver,
-            cache: &mut cache,
-            elements: &self.elements,
-        };
-        let page = Arc::new(PageBox::load(resolved, &mut resources, &self.generated)?);
+        let page = Arc::new(PageBox::load(resolved, resources, &self.generated)?);
         self.records.borrow_mut().insert(request, page.clone());
         Ok(page)
     }

@@ -6,10 +6,7 @@
 )]
 use super::*;
 use crate::style::{BoxSizing, FootnoteDisplay, FootnotePolicy};
-use std::{
-    cell::RefCell,
-    collections::{BTreeSet, HashSet},
-};
+use std::{cell::RefCell, collections::BTreeSet};
 
 /// A footnote body laid out alone in its footnote area.
 pub(super) struct FootnoteLayout {
@@ -99,9 +96,8 @@ pub(super) struct Footnotes {
     deferred: FootnoteDeferrals,
     /// How far the content of each inline body is queued.
     queued: HashMap<usize, f32>,
-    /// Inline footnotes that this pagination found cannot continue the inline formatting
-    /// context of the footnote before them.
-    inline_starts: HashSet<crate::dom::ElementId>,
+    /// Where this pagination placed the inline formatting contexts of footnote areas.
+    inline: crate::document::InlineFootnotePlacement,
     /// Bodies by body and area width; laying a body out does not depend on its page.
     layouts: Rc<RefCell<FootnoteLayouts>>,
 }
@@ -120,9 +116,9 @@ impl Footnotes {
     pub(super) fn take_deferred(&mut self) -> FootnoteDeferrals {
         std::mem::take(&mut self.deferred)
     }
-    /// The inline footnotes this pagination found must start inline formatting contexts.
-    pub(super) fn take_inline_starts(&mut self) -> HashSet<crate::dom::ElementId> {
-        std::mem::take(&mut self.inline_starts)
+    /// Where this pagination placed the inline formatting contexts of footnote areas.
+    pub(super) fn take_inline_placement(&mut self) -> crate::document::InlineFootnotePlacement {
+        std::mem::take(&mut self.inline)
     }
 }
 
@@ -592,7 +588,8 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                     || last.is_none_or(|part| part.body != body)
                 {
                     self.footnotes
-                        .inline_starts
+                        .inline
+                        .starts
                         .insert(footnotes.elements[footnote].element);
                     // The rest of this pagination approximates the footnote starting its own
                     // inline formatting context with its lines from the one it starts on.
@@ -608,6 +605,46 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                     last.bottom = part.bottom;
                 }
                 _ => self.footnotes.carried.push_back(part),
+            }
+        }
+        Ok(())
+    }
+
+    /// Records `page` as the page of the inline formatting contexts that start in `part` of an
+    /// inline body placed there, those of its first footnote and of the footnotes that start
+    /// their own, whose anonymous blocks inherit from its footnote area.
+    fn record_inline_pages(
+        &mut self,
+        part: FootnotePart,
+        page: usize,
+        area_width: f32,
+    ) -> Result<(), LayoutError> {
+        let footnotes = self.document_footnotes();
+        let body = &footnotes.bodies[part.body];
+        if !body.inline {
+            return Ok(());
+        }
+        let layout = self.footnote_layout(part.body, area_width)?;
+        let Fragmentainers::Pages(pages) = &self.fragmentainers else {
+            unreachable!("footnote areas belong to pages");
+        };
+        let request = &pages.boxes[page].request;
+        // Formatting takes the first page's area until a pagination places a context.
+        if *request == pages.document.page_box().request {
+            return Ok(());
+        }
+        for (position, &member) in body.members.iter().enumerate() {
+            let element = footnotes.elements[member].element;
+            let start = layout.members[position][0];
+            if (position == 0 || self.footnotes.inline.starts.contains(&element))
+                && part.top <= start
+                && (start < part.bottom || part.top == part.bottom)
+            {
+                self.footnotes
+                    .inline
+                    .pages
+                    .entry(element)
+                    .or_insert_with(|| request.clone());
             }
         }
         Ok(())
@@ -700,6 +737,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             let mut parts = self.footnotes.pages[page].clone();
             parts.push(waiting);
             if rows_height(&parts, area.width).is_some_and(|height| !overflows(height, limit)) {
+                self.record_inline_pages(waiting, page, area.width)?;
                 self.footnotes.pages[page].push(waiting);
                 self.footnotes.carried.pop_front();
                 continue;
@@ -729,11 +767,13 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 break;
             };
             // A slice of a body takes a line of its own.
-            self.footnotes.pages[page].push(FootnotePart {
+            let slice = FootnotePart {
                 bottom,
                 inline: false,
                 ..waiting
-            });
+            };
+            self.record_inline_pages(slice, page, area.width)?;
+            self.footnotes.pages[page].push(slice);
             if bottom >= waiting.bottom {
                 self.footnotes.carried.pop_front();
             } else {

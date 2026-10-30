@@ -382,7 +382,7 @@ fn paginate<'t>(
         mut renderings,
         footnote_deferrals: _,
         event_lines: _,
-        inline_footnote_starts,
+        inline_footnotes,
     } = paginated;
     for (index, page) in page_boxes.iter().enumerate() {
         let frame = writing::Frame::physical(flow, page.geometry.paper);
@@ -407,7 +407,7 @@ fn paginate<'t>(
     let generated = paged_content(
         document,
         &page_boxes,
-        (string_locations, inline_footnote_starts),
+        (string_locations, inline_footnotes),
         &destinations,
         resolver,
         measurer,
@@ -588,15 +588,15 @@ pub(super) type PageOutputs<'p> = (
 );
 
 /// Paints the page-margin boxes and resolves the generated content that depends on where
-/// pagination placed the document: its semantic events, and the inline footnotes it found
-/// must start inline formatting contexts. Kept apart from `layout_pass`, whose frame every
+/// pagination placed the document: its semantic events, and the inline formatting contexts of
+/// its footnote areas. Kept apart from `layout_pass`, whose frame every
 /// nested navigable's layout stacks.
 fn paged_content<'t>(
     document: &'t StyledDocument,
     page_boxes: &[std::sync::Arc<crate::document::PageBox>],
-    (string_locations, inline_footnote_starts): (
+    (string_locations, inline_footnotes): (
         strings::StringLocations,
-        std::collections::HashSet<crate::dom::ElementId>,
+        crate::document::InlineFootnotePlacement,
     ),
     destinations: &[Option<Destination>],
     resolver: &dyn ResourceResolver,
@@ -638,7 +638,7 @@ fn paged_content<'t>(
                 &strings,
                 &counters,
             ),
-            inline_footnote_starts,
+            inline_footnotes,
         },
     )?)
 }

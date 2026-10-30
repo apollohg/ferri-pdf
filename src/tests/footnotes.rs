@@ -120,6 +120,45 @@ fn inline_footnotes_share_the_lines_of_one_inline_formatting_context() {
     );
 }
 
+/// CSS 2.1 §9.2.1.1: the anonymous block holding inline footnotes inherits from the footnote
+/// area enclosing it, which each page styles, not from the footnotes' parent element.
+#[test]
+fn inline_footnote_lines_inherit_from_the_footnote_area_of_their_page() {
+    const AREA_WIDTH: f32 = 280.0;
+    let trace = render(
+        &format!(
+            "{INLINE_CSS}p{{text-align:center;line-height:10pt}}\
+             @page{{@footnote{{line-height:20pt}}}}\
+             @page:first{{@footnote{{text-align:right;line-height:30pt}}}}"
+        ),
+        "<p>A<span class=fn>One</span></p><p style=break-before:page>B<span class=fn>Two</span></p>",
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    let line = |page: usize| {
+        let lines: Vec<_> = trace.display_lists[page]
+            .iter()
+            .filter_map(|item| match item {
+                DisplayItem::Frame(frame) => Some(&frame.lines),
+                _ => None,
+            })
+            .flatten()
+            .collect();
+        assert_eq!(lines.len(), 1, "page {page} footnote area lines: {lines:?}");
+        lines[0]
+    };
+    let (first, second) = (line(0), line(1));
+    assert!(
+        (first.x + first.width - AREA_WIDTH).abs() < 0.01 && (first.height - 30.0).abs() < 0.01,
+        "the first page's area aligns its line right on a 30pt strut: {first:?}"
+    );
+    assert!(
+        second.x.abs() < 0.01 && (second.height - 20.0).abs() < 0.01,
+        "the second page's area aligns its line to the start on a 20pt strut: {second:?}"
+    );
+}
+
 #[test]
 fn a_block_footnote_between_inline_footnotes_ends_their_line() {
     let trace = render(

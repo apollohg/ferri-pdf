@@ -957,9 +957,8 @@ pub(super) struct Paginated {
     pub renderings: Box<Renderings>,
     /// Calls this pagination placed on pages that their footnotes do not fit.
     pub footnote_deferrals: FootnoteDeferrals,
-    /// Inline footnotes that this pagination found cannot continue the line of the inline
-    /// footnote before them.
-    pub inline_footnote_starts: std::collections::HashSet<crate::dom::ElementId>,
+    /// Where this pagination placed the inline formatting contexts of footnote areas.
+    pub inline_footnotes: crate::document::InlineFootnotePlacement,
 }
 
 /// Where an element starts in a standalone flow: the line box its start lies on, or the
@@ -7227,7 +7226,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             text_areas,
             renderings,
             footnote_deferrals: self.footnotes.take_deferred(),
-            inline_footnote_starts: self.footnotes.take_inline_starts(),
+            inline_footnotes: self.footnotes.take_inline_placement(),
         })
     }
 }

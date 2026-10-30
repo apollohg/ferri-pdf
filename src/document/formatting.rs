@@ -739,9 +739,30 @@ pub(crate) struct Traversal<'a> {
     page_counters: Vec<(usize, crate::document::CounterSnapshot)>,
     /// The running elements open around the current element, innermost last.
     running: Vec<crate::style::PageStyleTarget>,
+    pages: &'a crate::document::page::PageProvider,
 }
 
 impl Traversal<'_> {
+    /// The style of the anonymous block holding the inline formatting context that the inline
+    /// footnote `element` starts in a footnote area. It inherits from the area (CSS 2.1
+    /// §9.2.1.1) of the page pagination placed it on, or until then the first page's; its
+    /// slices on later pages keep the style of the box they fragment.
+    fn inline_footnotes_style(
+        &self,
+        element: ElementId,
+        sheet: &Stylesheet,
+        resources: &mut ImageResources<'_>,
+    ) -> Result<Style, DocumentError> {
+        Ok(match self.generated.inline_footnote_page(element) {
+            Some(request) => self
+                .pages
+                .resolve_with(sheet, &self.root_style, request.clone(), resources)?
+                .footnote
+                .style
+                .anonymous(Display::Block),
+            None => self.pages.first().footnote.style.anonymous(Display::Block),
+        })
+    }
     /// Ends the inline footnotes waiting for the next to join them.
     fn finish_inline_footnotes(&mut self) -> Result<(), DocumentError> {
         if let Some(open) = self.inline_footnotes.take() {
@@ -803,6 +824,7 @@ impl Traversal<'_> {
             inline_footnotes: None,
             page_counters: Vec::new(),
             running: vec![owner],
+            pages: self.pages,
         }
     }
 }
@@ -2635,11 +2657,12 @@ fn active_builder<'a, 's, 'c>(
 #[inline(never)]
 fn open_inline_footnote<'d>(
     frames: &mut Vec<Frame<'d>>,
-    element: Element<'d>,
+    (element, style): (Element<'d>, &Style),
     parent: usize,
-    style: &Style,
+    sheet: &Stylesheet,
     traversal: &mut Traversal<'_>,
-) {
+    resources: &mut ImageResources<'_>,
+) -> Result<(), DocumentError> {
     let (block_style, children, inline, members) = match traversal.inline_footnotes.take() {
         Some(open) => {
             let InlineFootnotes {
@@ -2651,7 +2674,7 @@ fn open_inline_footnote<'d>(
             (style, children, inline, members)
         }
         None => (
-            Box::new(frames[parent].style.anonymous(Display::Block)),
+            Box::new(traversal.inline_footnotes_style(element.id(), sheet, resources)?),
             Vec::new(),
             InlineCollector::default(),
             Vec::new(),
@@ -2677,6 +2700,7 @@ fn open_inline_footnote<'d>(
         members,
     }));
     frames.push(frame);
+    Ok(())
 }
 
 /// Ends the inline footnote of the anonymous block that tops `frames`: its call takes its
@@ -3156,7 +3180,14 @@ fn block<'a>(
                     traversal.finish_inline_footnotes()?;
                 }
                 if inline {
-                    open_inline_footnote(&mut frames, child, index, &child_style, traversal);
+                    open_inline_footnote(
+                        &mut frames,
+                        (child, &child_style),
+                        index,
+                        sheet,
+                        traversal,
+                        resources,
+                    )?;
                     block_index = frames.len() - 1;
                     blocks.push(block_index);
                     // The anonymous block holds the footnote as an inline-level box.
@@ -3701,6 +3732,7 @@ fn format_root(
         inline_footnotes: None,
         page_counters: Vec::new(),
         running: Vec::new(),
+        pages: &pages,
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
         .then(|| html.body_element().map(Element::id))
@@ -3774,20 +3806,27 @@ fn format_root(
     ) {
         block.reflow(crate::style::logical::Flow::used(root.style()));
     }
+    let initials = traversal.counters.page_initials();
+    traversal.generated.page_initials(initials);
+    let Traversal {
+        footnotes,
+        navigation,
+        strings,
+        generated,
+        canvas,
+        page_counters,
+        ..
+    } = traversal;
     Ok(Formatted {
         root,
-        footnotes: traversal.footnotes,
-        navigation: traversal.navigation,
-        strings: traversal.strings,
-        generated: {
-            let initials = traversal.counters.page_initials();
-            traversal.generated.page_initials(initials);
-            traversal.generated.finish()
-        },
-        canvas: canvas_surface(traversal.canvas, surface),
+        footnotes,
+        navigation,
+        strings,
+        generated: generated.finish(),
+        canvas: canvas_surface(canvas, surface),
         pages,
         svg_definitions,
-        page_counters: traversal.page_counters,
+        page_counters,
     })
 }
 

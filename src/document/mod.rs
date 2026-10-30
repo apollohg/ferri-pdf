@@ -36,7 +36,7 @@ pub(crate) use formatting::{
     BlockBox, BlockContent, Footnotes, InitialLetterBox, PageBox, PageFootnoteArea, PageMarginBox,
 };
 pub(crate) use frames::{Frame, FrameDocument};
-pub(crate) use generated::{GeneratedValues, PageStart, Paginated};
+pub(crate) use generated::{GeneratedValues, InlineFootnotePlacement, PageStart, Paginated};
 pub(crate) use inline::{
     Anchor, InlineBox, MAX_INLINE_TEXT_BYTES, OBJECT_REPLACEMENT_CHARACTER, OffsetMap, Paragraph,
     is_css_whitespace, narrow_width,
