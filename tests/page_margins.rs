@@ -256,3 +256,40 @@ fn page_counters_share_predefined_styles_without_marker_punctuation() {
         "Latin aliases must share alphabetic formatting: {text:?}"
     );
 }
+
+#[test]
+fn page_margin_text_box_trim_matches_a_trimmed_block_in_the_page_area() {
+    const MARGIN_PT: f32 = 60.0;
+    const FONT: &str = "font:20pt/40pt Spike";
+    let baselines = |trim: &str| {
+        let html = format!(
+            "<style>{PROFILE}body{{margin:0}}@page{{margin:{MARGIN_PT}pt;\
+             @top-left{{content:'Margin';vertical-align:top;{FONT};{trim}}}}}\
+             div{{{FONT};{trim}}}</style><div>Body</div>"
+        );
+        let trace = render_html(&html, &local_options())
+            .unwrap()
+            .layout
+            .unwrap();
+        let baseline = |text: &str| {
+            trace.pages[0]
+                .iter()
+                .find(|line| line.text == text)
+                .unwrap_or_else(|| panic!("{text} line: {:?}", trace.pages[0]))
+                .baseline
+        };
+        (baseline("Margin"), baseline("Body") - MARGIN_PT)
+    };
+    let (untrimmed_margin, untrimmed_body) = baselines("");
+    let (trimmed_margin, trimmed_body) = baselines("text-box:trim-both cap alphabetic");
+    assert!(
+        trimmed_body < untrimmed_body,
+        "the block's trim raises its first line: {untrimmed_body} -> {trimmed_body}"
+    );
+    common::assert_labelled_pt(
+        "untrimmed margin baseline",
+        untrimmed_margin,
+        untrimmed_body,
+    );
+    common::assert_labelled_pt("trimmed margin baseline", trimmed_margin, trimmed_body);
+}

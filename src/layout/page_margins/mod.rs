@@ -825,6 +825,11 @@ fn prepare<'a, 't>(
             .margin_images(&output, style, context.resolver);
         (Paragraph::generated_output(&output, &images, style)?, None)
     };
+    // The paragraph holds the box's first and last formatted lines (CSS Inline 3 §6.1).
+    let paragraph = paragraph.map(|mut paragraph| {
+        paragraph.set_text_box_trim(style.text_box.trim);
+        paragraph
+    });
     let images = paragraph
         .as_ref()
         .map(crate::layout::markers::content_image_atomics)
