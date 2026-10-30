@@ -331,6 +331,9 @@ pub(super) fn supports_page_value(descriptor: Descriptor, value: &Component) -> 
                 || crate::style::values::length(value, &Relative::validation()).is_ok()
         }
         Descriptor::PageMarks => crate::style::PageMarks::from_component(value).is_ok(),
+        Descriptor::PagePageOrientation => {
+            crate::style::PageOrientation::from_component(value).is_ok()
+        }
         _ => false,
     }
 }
@@ -338,7 +341,10 @@ pub(super) fn supports_page_value(descriptor: Descriptor, value: &Component) -> 
 pub(super) fn implemented_page_descriptor(descriptor: Descriptor) -> bool {
     matches!(
         descriptor,
-        Descriptor::PageSize | Descriptor::PageBleed | Descriptor::PageMarks
+        Descriptor::PageSize
+            | Descriptor::PageBleed
+            | Descriptor::PageMarks
+            | Descriptor::PagePageOrientation
     )
 }
 

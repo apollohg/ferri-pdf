@@ -151,7 +151,7 @@ pub(crate) use page_margins::{MarginLocation, PageMargin};
 pub(crate) use page_rules::ResolvedPage;
 pub(crate) use page_rules::{PageGroupPosition, PageRequest, PageSequence, PageSide};
 pub(crate) use page_selection::{FirstPageStart, PageSelection, PageStyleTarget};
-pub(crate) use page_values::{Page, PageMarks, PageProduction};
+pub(crate) use page_values::{Page, PageMarks, PageOrientation, PageProduction};
 pub(crate) use position::Position;
 pub(crate) use print::Presentation;
 pub use print::{

@@ -63,10 +63,32 @@ impl PageMarks {
     }
 }
 
+/// `page-orientation` (CSS Paged Media 3 §7.1.2): the quarter turn applied to the laid-out
+/// page when the output medium displays it.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum PageOrientation {
+    #[default]
+    Upright,
+    RotateLeft,
+    RotateRight,
+}
+impl PageOrientation {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.keyword() {
+            Some(Keyword::Upright) => Ok(Self::Upright),
+            Some(Keyword::RotateLeft) => Ok(Self::RotateLeft),
+            Some(Keyword::RotateRight) => Ok(Self::RotateRight),
+            _ => Err(unsupported(value)),
+        }
+    }
+}
+
 #[derive(Clone, Copy, Debug, Default, PartialEq, serde::Serialize)]
 pub(crate) struct PageProduction {
     pub bleed: f32,
     pub marks: PageMarks,
+    pub orientation: PageOrientation,
 }
 
 impl crate::style::Stylesheet {
@@ -95,7 +117,24 @@ impl crate::style::Stylesheet {
             _ if marks.crop => AUTOMATIC_CROP_BLEED_PT,
             _ => 0.0,
         };
-        Ok(PageProduction { bleed, marks })
+        let orientation = rules
+            .descriptor_value(
+                self,
+                Descriptor::PagePageOrientation,
+                page,
+                viewport,
+                resolver,
+            )?
+            .0
+            .as_deref()
+            .map(PageOrientation::from_component)
+            .transpose()?
+            .unwrap_or_default();
+        Ok(PageProduction {
+            bleed,
+            marks,
+            orientation,
+        })
     }
 }
 

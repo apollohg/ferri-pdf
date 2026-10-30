@@ -1212,6 +1212,41 @@ class NamedPages(unittest.TestCase):
                         self.assertEqual(red_width, (first_width - 20) / 10,
                                          "10vw retains the first selected content width on later pages")
 
+    def test_page_orientation_turns_the_laid_out_page_for_display(self):
+        # CSS Paged Media 3 §7.1.2: pages are laid out unrotated, then displayed a quarter
+        # turn left or right; margin boxes turn with the page.
+        source = self.output / "page-orientation.html"
+        source.write_text(
+            "<!doctype html><style>"
+            "@page{size:300pt 200pt;margin:20pt 0 0;page-orientation:rotate-left;"
+            "@top-left{content:'';background:blue;width:40pt;height:20pt}}"
+            "@page:first{page-orientation:rotate-right}"
+            "@page upright{page-orientation:upright}"
+            "html,body{margin:0}section+section{break-before:page}"
+            "i{display:block;width:40pt;height:20pt;margin-left:260pt;background:red}"
+            "</style><section><i></i></section><section><i></i></section>"
+            "<section style='page:upright'><i></i></section>"
+        )
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                                capture_output=True, text=True, timeout=60)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        document = pdf_content.Document(self.pdf)
+        rotations = [document.resolve(page.get("Rotate", 0)) for page in document.pages()]
+        self.assertEqual(rotations, [90, 270, 0], "rotate-right, rotate-left, upright")
+        # The red box sits at the laid-out top-right corner, the blue margin box at the top-left.
+        corners = [((170, 280), (190, 20)), ((30, 20), (10, 280)), ((280, 30), (20, 10))]
+        for number, (red, blue) in enumerate(corners, 1):
+            prefix = self.output / f"page-orientation-{number}"
+            subprocess.run(["pdftoppm", "-f", str(number), "-l", str(number), "-singlefile",
+                            "-r", "72", "-png", str(self.pdf), str(prefix)],
+                           check=True, capture_output=True, timeout=60)
+            with Image.open(prefix.with_suffix(".png")) as rendered:
+                page = rendered.convert("RGB")
+                with self.subTest(page=number):
+                    self.assertEqual(page.size, (300, 200) if number == 3 else (200, 300))
+                    self.assertEqual(page.getpixel(red), (255, 0, 0))
+                    self.assertEqual(page.getpixel(blue), (0, 0, 255))
+
     def test_forced_right_break_inserts_a_styled_blank_pdf_page(self):
         source = self.output / "forced-side.html"
         source.write_text(

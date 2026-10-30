@@ -16,6 +16,7 @@ pub struct PageOutput {
     pub trim: Rect,
     pub bleed: Rect,
     pub marks: Vec<BoxPaint>,
+    pub orientation: crate::style::PageOrientation,
 }
 
 #[derive(Clone, Serialize)]
@@ -87,6 +88,7 @@ impl PageOutput {
             trim,
             bleed,
             marks: Vec::new(),
+            orientation: production.orientation,
         };
         let gap = used_bleed.max(0.0) + MARK_GAP_PT;
         if production.marks.crop {

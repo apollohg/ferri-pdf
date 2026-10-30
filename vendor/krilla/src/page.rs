@@ -40,6 +40,31 @@ pub struct PageSettings {
     trim_box: Option<Rect>,
     /// The actual content boundaries
     art_box: Option<Rect>,
+    /// The clockwise quarter turns applied when the page is displayed.
+    rotation: PageRotation,
+}
+
+/// How a page is turned for display, after its contents are drawn (PDF 2.0 §7.7.3.3).
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub enum PageRotation {
+    /// Displayed as drawn.
+    #[default]
+    Upright,
+    /// Displayed a quarter turn clockwise.
+    Clockwise,
+    /// Displayed a quarter turn counter-clockwise.
+    CounterClockwise,
+}
+
+impl PageRotation {
+    /// The /Rotate value: clockwise degrees, a multiple of 90.
+    fn degrees(self) -> i32 {
+        match self {
+            Self::Upright => 0,
+            Self::Clockwise => 90,
+            Self::CounterClockwise => 270,
+        }
+    }
 }
 
 impl PageSettings {
@@ -158,6 +183,19 @@ impl PageSettings {
     pub(crate) fn art_box(&self) -> Option<Rect> {
         self.art_box
     }
+
+    /// Change how the page is turned when displayed.
+    ///
+    /// If upright, no /Rotate attribute will be written to the page.
+    pub fn with_rotation(mut self, rotation: PageRotation) -> PageSettings {
+        self.rotation = rotation;
+        self
+    }
+
+    /// The current rotation.
+    pub(crate) fn rotation(&self) -> PageRotation {
+        self.rotation
+    }
 }
 
 impl Default for PageSettings {
@@ -174,6 +212,7 @@ impl Default for PageSettings {
             bleed_box: None,
             trim_box: None,
             art_box: None,
+            rotation: PageRotation::Upright,
         }
     }
 }
@@ -443,6 +482,11 @@ impl InternalPage {
         if let Some(art_box) = self.page_settings.art_box() {
             let art_box = transform_rect(art_box);
             page.art_box(art_box.to_pdf_rect());
+        }
+
+        let rotation = self.page_settings.rotation();
+        if rotation != PageRotation::Upright {
+            page.rotate(rotation.degrees());
         }
 
         if let Some(struct_parent) = self.struct_parent {

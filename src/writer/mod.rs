@@ -23,7 +23,11 @@ use crate::document::{DocumentMetadata, Navigation};
 use crate::fonts::{FontBook, FontId};
 
 use crate::layout::LayoutTrace;
-use krilla::{Document, page::PageSettings};
+use crate::style::PageOrientation;
+use krilla::{
+    Document,
+    page::{PageRotation, PageSettings},
+};
 
 pub use krilla::image::{ImageDpi, InvalidImageDpi, InvalidJpegQuality, JpegQuality};
 
@@ -209,7 +213,12 @@ pub(crate) fn encode_parts_with_diagnostics(
             let settings = settings
                 .with_media_box(Some(production_rect(record.output.media)?))
                 .with_trim_box(Some(production_rect(record.output.trim)?))
-                .with_bleed_box(Some(production_rect(record.output.bleed)?));
+                .with_bleed_box(Some(production_rect(record.output.bleed)?))
+                .with_rotation(match record.output.orientation {
+                    PageOrientation::Upright => PageRotation::Upright,
+                    PageOrientation::RotateLeft => PageRotation::CounterClockwise,
+                    PageOrientation::RotateRight => PageRotation::Clockwise,
+                });
             images.mask_element_draws = 0;
             let mut page = document.start_page_with(settings);
             let mut surface = page.surface();
