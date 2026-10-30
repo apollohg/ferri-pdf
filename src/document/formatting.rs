@@ -780,7 +780,7 @@ pub(crate) struct Traversal<'a> {
     /// `::scroll-marker-group`, in tree order (CSS Overflow 5 §3.1.5).
     scroll_markers: std::collections::HashMap<ElementId, Vec<GeneratedBox>>,
     /// Formatting a scroll container only to collect the markers of a group placed before it,
-    /// whose own groups are not placed.
+    /// whose own groups are not placed, nor copies of its subtrees formatted.
     marker_prepass: bool,
     /// The nearest scroll container around the subtree a copy formats.
     marker_scroller: Option<MarkerScroller>,
@@ -892,7 +892,7 @@ impl Traversal<'_> {
             running: vec![owner],
             pages: self.pages,
             scroll_markers: std::collections::HashMap::new(),
-            marker_prepass: false,
+            marker_prepass: self.marker_prepass,
             marker_scroller: None,
             marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
             work: self.work.clone(),
@@ -923,7 +923,7 @@ impl Traversal<'_> {
             running: self.running.clone(),
             pages: self.pages,
             scroll_markers: std::collections::HashMap::new(),
-            marker_prepass: false,
+            marker_prepass: self.marker_prepass,
             marker_scroller: None,
             marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
             work: self.work.clone(),
@@ -935,7 +935,8 @@ impl Traversal<'_> {
 /// The box of the atomic inline `frame` as the first formatted line of `block`, styled
 /// `style`, gives it the styles it inherits through `::first-line` (CSS Pseudo-Elements 4
 /// §2.1.3), formatted again from its start; `None` where no `::first-line` rule styles that
-/// line. Kept out of `block`, whose frame nested navigables' formatting stacks.
+/// line, or in a scroll marker prepass, which keeps only the markers. Kept out of `block`,
+/// whose frame nested navigables' formatting stacks.
 #[inline(never)]
 fn first_line_box<'a>(
     (frame, scroller): (&Frame<'_>, Option<MarkerScroller>),
@@ -944,6 +945,9 @@ fn first_line_box<'a>(
     traversal: &Traversal<'a>,
     resources: &mut ImageResources<'a>,
 ) -> Result<Option<Box<BlockBox>>, DocumentError> {
+    if traversal.marker_prepass {
+        return Ok(None);
+    }
     let Some(mut styles) = crate::document::first_line::FirstLineStyles::of(
         style,
         origins,
@@ -1114,7 +1118,8 @@ fn collect_scroll_markers<'a>(
 }
 
 /// Copies of the running element of `frame`, formatted from its start once for each set of
-/// page counters its copies in page-margin boxes show (CSS GCPM 3 §1.2.2).
+/// page counters its copies in page-margin boxes show (CSS GCPM 3 §1.2.2); none in a scroll
+/// marker prepass, which keeps only the markers.
 fn running_copies<'a>(
     (frame, scroller): (&Frame<'_>, Option<MarkerScroller>),
     sheet: &'a Stylesheet,
@@ -1125,7 +1130,7 @@ fn running_copies<'a>(
         element: frame.element.id(),
         pseudo: None,
     };
-    if traversal.generated.formats_copy() {
+    if traversal.generated.formats_copy() || traversal.marker_prepass {
         return Ok(Vec::new());
     }
     traversal

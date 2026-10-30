@@ -104,6 +104,25 @@ fn scroll_marker_prepasses_of_nested_containers_charge_the_shared_budget() {
 }
 
 #[test]
+fn scroll_marker_prepasses_make_no_first_line_copies() {
+    let container = |group, rules| {
+        document(
+            &format!(".s{{overflow:auto;scroll-marker-group:{group}}}{rules}"),
+            &format!("<section class=s>{}</section>", nested_atomics(NESTING)),
+        )
+    };
+    let prepassed = required_work(&container("before", FIRST_LINE));
+    let collected = required_work(&container("after", FIRST_LINE));
+    let plain = required_work(&container("after", ""));
+    assert!(
+        prepassed - collected <= plain,
+        "a prepass only collects the container's scroll markers, which first-line copies do not \
+         hold, so it must charge no more than formatting the container without copies: \
+         {prepassed} units with the prepass, {collected} without, {plain} without copies"
+    );
+}
+
+#[test]
 fn nested_copies_fail_before_overflowing_a_library_thread() {
     const LIBRARY_STACK_BYTES: usize = 2 * 1024 * 1024;
     const RUNAWAY_NESTING: usize = 512;
