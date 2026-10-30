@@ -385,6 +385,49 @@ fn zoom_scales_dimensions_edges_text_and_following_flow() {
 }
 
 #[test]
+fn font_relative_lengths_keep_canonical_current_and_root_metrics() {
+    for (width, physical) in [
+        ("10em", "160pt"),
+        ("10rem", "200pt"),
+        ("10lh", "200pt"),
+        ("10rlh", "240pt"),
+    ] {
+        let body = "<section><div>Relative text</div></section><p>After</p>";
+        let common = "html{font-size:10pt;line-height:12pt}div{font-size:calc(1em + 2pt);width:2em;background:blue}";
+        eprintln!("zoom font-relative width: {width}");
+        same_layout(
+            &render(
+                body,
+                &format!(
+                    "{common}section{{zoom:2;font-size:8pt;line-height:10pt;width:{width};border:1pt solid}}"
+                ),
+            ),
+            &render(
+                body,
+                &format!(
+                    "{common}section{{font-size:16pt;line-height:20pt;width:{physical};border:2pt solid}}div{{font-size:20pt}}"
+                ),
+            ),
+        );
+    }
+}
+
+#[test]
+fn deeply_nested_zoom_cancels_without_reprojecting_inherited_lengths() {
+    const PAIRS: usize = 32;
+    let body = format!(
+        "{}<div>Nested</div>{}<p>After</p>",
+        "<section style='zoom:2'><section style='zoom:.5'>".repeat(PAIRS),
+        "</section></section>".repeat(PAIRS)
+    );
+    let css = "section{display:contents;font-size:inherit;line-height:inherit}body{font-size:10pt;line-height:12pt}div{width:10em;border:1pt solid}";
+    same_layout(
+        &render(&body, css),
+        &render("<div>Nested</div><p>After</p>", css),
+    );
+}
+
+#[test]
 fn nested_zoom_uses_unscaled_inherited_lengths() {
     let body = "<section><p>Outer</p><div>Inner</div></section><p>After</p>";
     same_layout(
