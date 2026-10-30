@@ -341,6 +341,60 @@ fn parent_perspective_scales_depth_translations_about_its_origin() {
 }
 
 #[test]
+fn table_rows_give_their_cells_perspective_and_row_groups_give_it_to_rows_only() {
+    const DEPTH_PT: f32 = 100.0;
+    const LIFT_PT: f32 = 50.0;
+    const ROW_WIDTH_PT: f32 = 200.0;
+    const ROW_HEIGHT_PT: f32 = 60.0;
+    let table = |owner: &str| {
+        trace(
+            &format!(
+                "table{{border-spacing:0;width:{ROW_WIDTH_PT}pt;table-layout:fixed}}\
+                 td{{padding:0;height:{ROW_HEIGHT_PT}pt}}{owner}{{perspective:{DEPTH_PT}pt}}\
+                 .lift{{transform:translateZ({LIFT_PT}pt)}}"
+            ),
+            "<table><tbody><tr><td class=lift>A</td><td>B</td></tr></tbody></table>",
+        )
+    };
+    let matrices = transforms(&table("tr").display_lists[0]);
+    assert_eq!(matrices.len(), 1, "one transformed cell: {matrices:?}");
+    let scale = DEPTH_PT / (DEPTH_PT - LIFT_PT);
+    let [ox, oy] = [
+        PAGE_MARGIN_PT + ROW_WIDTH_PT / 2.0,
+        PAGE_MARGIN_PT + ROW_HEIGHT_PT / 2.0,
+    ];
+    assert_matrix(
+        "the vanishing point is the centre of the row's box, not the cell's",
+        matrices[0],
+        [scale, 0.0, 0.0, scale, ox - scale * ox, oy - scale * oy],
+    );
+    let matrices = transforms(&table("tbody").display_lists[0]);
+    assert_eq!(matrices.len(), 1, "one transformed cell: {matrices:?}");
+    assert_matrix(
+        "a row group's perspective applies to its rows, not to their cells",
+        matrices[0],
+        [1.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+    );
+    let cells = "<table><tr><td>A</td></tr></table>";
+    let planar = |css: &str| {
+        transforms(&trace(&format!("td{{transform:rotate(20deg)}}{css}"), cells).display_lists[0])
+    };
+    assert_eq!(
+        planar("tr{transform-style:preserve-3d}"),
+        planar(""),
+        "a row's 3D rendering context renders coplanar cells in painting order"
+    );
+    let message = layout_error(
+        "tr{transform-style:preserve-3d}td{transform:rotateX(30deg)}",
+        cells,
+    );
+    assert!(
+        message.contains("preserve-3d"),
+        "cells leaving the row's plane need depth sorting, as for any box: {message}"
+    );
+}
+
+#[test]
 fn boxes_behind_the_viewer_or_facing_away_with_hidden_backfaces_are_not_rendered() {
     let output = trace(
         "div{height:20pt}.behind{transform:perspective(50pt) translateZ(100pt);background:red}\

@@ -510,22 +510,8 @@ impl<'a> TablePlan<'a> {
     ) -> Result<Rc<Self>, Failure> {
         let block = block.into();
         measurer.work.spend(1)?;
-        let index = measurer.sources.block(block.block);
         let data = measurer.table_data.get(block)?;
         let entry_events = table_entry_events(block.block);
-        if data
-            .rows
-            .iter()
-            .copied()
-            .chain(data.groups.iter().filter_map(|group| group.source))
-            .any(|source| source.style().perspective.is_some() || source.style().preserves_3d())
-        {
-            return Err(LayoutError::UnsupportedTable {
-                block: index,
-                feature: "row and row-group perspective and transform-style: preserve-3d",
-            }
-            .into());
-        }
         measurer
             .work
             .spend(data.grid.rows.saturating_add(data.grid.cells.len()).max(1))?;

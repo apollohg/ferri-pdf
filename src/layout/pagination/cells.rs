@@ -237,15 +237,21 @@ impl<'a> Paginator<'a, '_, 'a> {
         &mut self,
         layers: [Option<crate::layout::tables::TableContaining<'a>>; 2],
     ) {
-        for ancestor in layers.into_iter().flatten().filter(|layer| {
-            let style = layer.source.style();
-            style.contains_absolute()
+        // The perspective and 3D rendering context the cell's row gives it; the table, whose
+        // children are rows and row groups, gives none.
+        let mut parent_3d = None;
+        for ancestor in layers.into_iter().flatten() {
+            let style = ancestor.source.style();
+            if !(style.contains_absolute()
                 || style.is_grouped()
                 || style.forced_stacking_context()
                 || !style.decoration.shadows.is_empty()
                 || style.decoration.outline.is_drawn()
-                || style.decoration.border_image.is_drawn()
-        }) {
+                || style.decoration.border_image.is_drawn())
+            {
+                parent_3d = None;
+                continue;
+            }
             let source = ancestor.source;
             let identity = std::ptr::from_ref(source) as usize;
             let layer = if let Some(layer) = self
@@ -277,13 +283,13 @@ impl<'a> Paginator<'a, '_, 'a> {
                     .active()
                     .then(|| self.motion_block_reference())
                     .flatten();
-                let mut clip = if transformed {
+                let mut clip = if source.style().is_transformed() {
                     let node = self.clips.len();
                     self.clips.push(EffectNode {
                         native: None,
                         paints: Vec::new(),
                         parent: self.clip,
-                        effect: Effect::Transform(source.style(), None, reference),
+                        effect: Effect::Transform(source.style(), parent_3d, reference),
                         fragments: Vec::new(),
                         areas: Vec::new(),
                         context: None,
@@ -321,7 +327,15 @@ impl<'a> Paginator<'a, '_, 'a> {
                 if !isolated {
                     paint.key = extend(&paint.key, FLOW_LEVEL);
                 }
-                let layer = TableLayer { clip, paint, group };
+                let own_parent_3d = (transformed
+                    && (source.style().perspective.is_some() || source.style().preserves_3d()))
+                .then(|| self.effect_node(clip, Effect::Parent3d(source.style())));
+                let layer = TableLayer {
+                    clip,
+                    paint,
+                    group,
+                    parent_3d: own_parent_3d,
+                };
                 self.tables
                     .last_mut()
                     .expect("table cell has an active table")
@@ -333,7 +347,9 @@ impl<'a> Paginator<'a, '_, 'a> {
             self.key = layer.paint.key;
             self.group = layer.group;
             self.clip = layer.clip;
+            parent_3d = layer.parent_3d;
         }
+        self.parent_3d = parent_3d;
     }
 
     pub(super) fn start_cell(

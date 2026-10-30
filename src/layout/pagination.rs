@@ -525,6 +525,8 @@ struct TableLayer {
     clip: Option<usize>,
     paint: PositionedLayer,
     group: Option<usize>,
+    /// The `Parent3d` node of a row or row group with perspective or `preserve-3d`.
+    parent_3d: Option<usize>,
 }
 
 #[derive(Clone)]
@@ -3448,7 +3450,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
         }
     }
-    /// The placement a `Parent3d` node gives its children on `page`, from its fragment there.
+    /// The placement a `Parent3d` node gives its children on `page`, from its fragment there:
+    /// a painted box fragment, or the box of a row or row group, which paints none.
     fn parent_3d_on(
         &self,
         node: &EffectNode<'_>,
@@ -3460,12 +3463,20 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let Effect::Parent3d(style) = node.effect else {
             unreachable!("transforms are placed by parent 3D nodes")
         };
-        let paint = node.fragments.iter().find_map(|&(fragment_page, slot)| {
-            match &self.display_lists[fragment_page][slot].item {
-                DisplayItem::Box(paint) if fragment_page == page => Some(paint),
-                _ => None,
-            }
-        });
+        let paint = node
+            .fragments
+            .iter()
+            .find_map(|&(fragment_page, slot)| {
+                match &self.display_lists[fragment_page][slot].item {
+                    DisplayItem::Box(paint) if fragment_page == page => Some(paint),
+                    _ => None,
+                }
+            })
+            .or_else(|| {
+                node.paints
+                    .iter()
+                    .find_map(|(fragment_page, paint)| (*fragment_page == page).then_some(paint))
+            });
         match paint {
             Some(paint) => {
                 let frame = crate::layout::writing::Frame::for_style(style);
@@ -4739,6 +4750,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             .find_map(|source| table.layers.get(&(std::ptr::from_ref(*source) as usize)));
         let clip = layer.map_or(self.clip, |layer| layer.clip);
         let group = layer.and_then(|layer| layer.group);
+        let parent_3d = layer.and_then(|layer| layer.parent_3d);
         let scope = layer.map(|layer| layer.paint.background.clone());
         let style = ancestor.source.style();
         let paint = BoxPaint::whole(rect, table.flow.plan.structural_decoration(ancestor.source));
@@ -4757,6 +4769,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 _ => {}
             }
             parent = self.clips[node].parent;
+        }
+        if let Some(node) = parent_3d
+            && matches!(self.clips[node].effect, Effect::Parent3d(owner) if std::ptr::eq(owner, style))
+        {
+            self.clips[node].paints.push((page, paint.clone()));
         }
         let effect = Group::of(style);
         if effect.anchored()

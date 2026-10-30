@@ -410,8 +410,6 @@ pub(crate) enum LayoutError {
     Text(#[from] TextError),
     #[error("{0}")]
     Table(#[from] crate::table::TableError),
-    #[error("unsupported table formatting at block {block}: {feature}")]
-    UnsupportedTable { block: usize, feature: &'static str },
     #[error("{0}")]
     Flex(#[from] crate::flex::FlexError),
     #[error("unsupported flex formatting: {feature}")]
