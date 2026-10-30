@@ -2,6 +2,7 @@
 //! element (CSS Images 4 §2.5).
 use crate::images::{Image, NaturalDimensions, Orientation};
 use crate::paint::{ImageRequest, Rect};
+use crate::style::{ImageOrientation, Style};
 use std::sync::Arc;
 
 const FRAGMENT: char = '#';
@@ -16,6 +17,7 @@ const PERCENT_UNIT: &str = "percent";
 const COORDINATE_SEPARATOR: char = ',';
 const COORDINATES: usize = 4;
 const PERCENT: f32 = 100.0;
+const QUARTER_TURNS: u8 = 4;
 
 /// A fragment identifier `image()` cannot use (CSS Images 4 §2.5.2).
 #[derive(Debug, thiserror::Error)]
@@ -92,15 +94,14 @@ impl ImageView {
     }
 }
 
-/// `image` as `request` uses it on an element whose direction is `rtl`, with a vertical inline
-/// axis when `vertical`: the region its spatial media fragment selects, flipped in the inline
-/// direction when its directionality is the element's opposite (CSS Images 4 §2.5.2, §2.5.4).
-/// A `url()` ignores a fragment it cannot use; `image()` is then invalid.
+/// `image` as `request` uses it in a decorative image of the element `style` belongs to: the
+/// region its spatial media fragment selects, oriented by `image-orientation`, and flipped in
+/// the inline direction when its directionality is the element's opposite (CSS Images 4
+/// §2.5.2, §2.5.4). A `url()` ignores a fragment it cannot use; `image()` is then invalid.
 pub(crate) fn view(
     image: Arc<Image>,
     request: &ImageRequest<'_>,
-    rtl: bool,
-    vertical: bool,
+    style: &Style,
 ) -> Result<Arc<Image>, InvalidFragment> {
     let region = match fragment_region(request.url, image.natural_size()) {
         Ok(region) => region,
@@ -110,20 +111,51 @@ pub(crate) fn view(
     let flipped = request
         .function
         .and_then(|function| function.rtl)
-        .is_some_and(|image_rtl| image_rtl != rtl);
-    let orientation = match (flipped, vertical) {
+        .is_some_and(|image_rtl| image_rtl != style.rtl);
+    let inline_flip = match (flipped, style.used_writing_mode().vertical()) {
         (false, _) => Orientation::NoTransforms,
         (true, false) => Orientation::FlipHorizontal,
         (true, true) => Orientation::FlipVertical,
     };
+    let orientation = compose(
+        reorientation(&image, style.image_orientation, false),
+        inline_flip,
+    );
+    Ok(with_view(image, region, orientation))
+}
+
+/// A content image of the element `style` belongs to, oriented by `image-orientation`.
+pub(crate) fn oriented_content(image: Arc<Image>, style: &Style) -> Arc<Image> {
+    let orientation = reorientation(&image, style.image_orientation, true);
+    with_view(image, None, orientation)
+}
+
+fn with_view(image: Arc<Image>, region: Option<Rect>, orientation: Orientation) -> Arc<Image> {
     if region.is_none() && orientation == Orientation::NoTransforms {
-        return Ok(image);
+        return image;
     }
-    Ok(Arc::new(Image::View(ImageView {
+    Arc::new(Image::View(ImageView {
         image,
         region,
         orientation,
-    })))
+    }))
+}
+
+/// What turns `image`, as its metadata orients it, to the orientation `property` gives it
+/// (CSS Images 3 §5.1): `none` undoes the metadata's orientation, and an angle or `flip`
+/// replaces it in content images only. Images without orientation metadata are oriented as
+/// encoded.
+fn reorientation(image: &Image, property: ImageOrientation, content: bool) -> Orientation {
+    let metadata = match image {
+        Image::Raster(raster) => raster.orientation,
+        _ => Orientation::NoTransforms,
+    };
+    let target = match property {
+        ImageOrientation::None => Orientation::NoTransforms,
+        ImageOrientation::Turned { turns, flip } if content => from_turns_and_flip(turns, flip),
+        ImageOrientation::FromImage | ImageOrientation::Turned { .. } => metadata,
+    };
+    compose(inverse(metadata), target)
 }
 
 /// The region a URL's `xywh` media fragment selects from an image of `natural` size, clipped
@@ -213,7 +245,90 @@ pub(crate) fn turns_and_flip(orientation: Orientation) -> (u8, bool) {
         Orientation::Rotate270FlipH => (3, true),
     }
 }
+fn from_turns_and_flip(turns: u8, flip: bool) -> Orientation {
+    match (turns % QUARTER_TURNS, flip) {
+        (0, false) => Orientation::NoTransforms,
+        (1, false) => Orientation::Rotate90,
+        (2, false) => Orientation::Rotate180,
+        (3, false) => Orientation::Rotate270,
+        (0, true) => Orientation::FlipHorizontal,
+        (1, true) => Orientation::Rotate90FlipH,
+        (2, true) => Orientation::FlipVertical,
+        _ => Orientation::Rotate270FlipH,
+    }
+}
 /// Whether `orientation` swaps width and height.
 pub(crate) fn transposes(orientation: Orientation) -> bool {
     turns_and_flip(orientation).0 % 2 == 1
+}
+/// `first` followed by `then`: a flip reverses the sense of the turns after it.
+fn compose(first: Orientation, then: Orientation) -> Orientation {
+    let (first_turns, first_flip) = turns_and_flip(first);
+    let (then_turns, then_flip) = turns_and_flip(then);
+    let then_turns = if first_flip {
+        QUARTER_TURNS - then_turns
+    } else {
+        then_turns
+    };
+    from_turns_and_flip(first_turns + then_turns, first_flip != then_flip)
+}
+/// The orientation that undoes `orientation`; a turn followed by a flip undoes itself.
+fn inverse(orientation: Orientation) -> Orientation {
+    match turns_and_flip(orientation) {
+        (turns, false) => from_turns_and_flip(QUARTER_TURNS - turns, false),
+        (turns, true) => from_turns_and_flip(turns, true),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const ALL: [Orientation; 8] = [
+        Orientation::NoTransforms,
+        Orientation::Rotate90,
+        Orientation::Rotate180,
+        Orientation::Rotate270,
+        Orientation::FlipHorizontal,
+        Orientation::FlipVertical,
+        Orientation::Rotate90FlipH,
+        Orientation::Rotate270FlipH,
+    ];
+
+    /// A 3×2 grid of distinct cells after each orientation in turn, with its size.
+    fn applied(orientations: &[Orientation]) -> (Vec<u8>, [u32; 2]) {
+        let mut grid = image::DynamicImage::ImageLuma8(
+            image::GrayImage::from_raw(3, 2, vec![1, 2, 3, 4, 5, 6]).expect("six cells"),
+        );
+        for orientation in orientations {
+            grid.apply_orientation(*orientation);
+        }
+        let size = [grid.width(), grid.height()];
+        (grid.into_luma8().into_raw(), size)
+    }
+
+    #[test]
+    fn composition_and_inversion_match_applying_orientations_in_turn() {
+        for first in ALL {
+            for then in ALL {
+                assert_eq!(
+                    applied(&[compose(first, then)]),
+                    applied(&[first, then]),
+                    "{first:?} then {then:?} composed to {:?}",
+                    compose(first, then)
+                );
+            }
+            assert_eq!(
+                applied(&[first, inverse(first)]),
+                applied(&[]),
+                "{first:?} is not undone by {:?}",
+                inverse(first)
+            );
+            assert_eq!(
+                transposes(first),
+                applied(&[first]).1 == [2, 3],
+                "{first:?} transposition"
+            );
+        }
+    }
 }

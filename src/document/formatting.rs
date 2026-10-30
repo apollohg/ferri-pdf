@@ -698,13 +698,7 @@ impl ImageResources<'_> {
         request: &crate::paint::ImageRequest<'_>,
         style: &Style,
     ) -> Option<std::sync::Arc<crate::images::Image>> {
-        self.cache.view(
-            image,
-            request,
-            self.base,
-            style.rtl,
-            style.used_writing_mode().vertical(),
-        )
+        self.cache.view(image, request, self.base, style)
     }
     /// Loads a float's `shape-outside` image; other boxes have no float area. An image that
     /// cannot be fetched or decoded leaves `none` (CSS Shapes 1 §6.1) and a diagnostic.
@@ -1903,6 +1897,8 @@ fn block<'a>(
                                     frame.style.element_font_namespace(),
                                 )
                             });
+                            let image = image
+                                .map(|image| crate::images::oriented_content(image, &frame.style));
                             if image.is_none()
                                 && !skips
                                 && let Some(alt) = element.attr("alt")
@@ -1934,7 +1930,9 @@ fn block<'a>(
                         ),
                         _ if is_replaced(element) => traversal.embedded.content(element.id()).map(
                             |embedded| match embedded {
-                                crate::document::embedded::Embedded::Image(image) => image.clone(),
+                                crate::document::embedded::Embedded::Image(image) => {
+                                    crate::images::oriented_content(image.clone(), &frame.style)
+                                }
                                 crate::document::embedded::Embedded::Navigable(navigable) => {
                                     std::sync::Arc::new(crate::images::Image::Frame(
                                         navigable.clone(),

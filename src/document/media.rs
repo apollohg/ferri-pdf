@@ -48,7 +48,10 @@ pub(super) fn poster(
                 style.element_font_namespace(),
             )
         })
-        .unwrap_or_else(|| Arc::new(Image::Transparent))
+        .map_or_else(
+            || Arc::new(Image::Transparent),
+            |image| crate::images::oriented_content(image, style),
+        )
 }
 
 /// HTML §15.4.1: an `audio` element exposing its user interface is a replaced element about

@@ -630,6 +630,10 @@
       "inherited": true,
       "source": "https://www.w3.org/TR/2026/CR-SVG2-20261006/painting.html#ShapeRenderingProperty"
     },
+    "image-orientation": {
+      "syntax": "from-image | none | [ <angle> || flip ]",
+      "source": "https://www.w3.org/TR/2023/CRD-css-images-3-20231218/#the-image-orientation"
+    },
     "image-rendering": {
       "syntax": "auto | smooth | high-quality | pixelated | crisp-edges | optimizeSpeed | optimizeQuality",
       "source": "https://www.w3.org/TR/2023/CRD-css-images-3-20231218/#the-image-rendering: optimizeSpeed and optimizeQuality are valid deprecated values"

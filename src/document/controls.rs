@@ -797,7 +797,8 @@ impl<'b> Builder<'b, '_> {
                     self.resources.resolver,
                     self.style.element_font_namespace(),
                 )
-            });
+            })
+            .map(|image| crate::images::oriented_content(image, self.style));
         Ok(match image {
             Some(image) => ControlContent {
                 image: Some(image),

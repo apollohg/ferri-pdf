@@ -6,7 +6,7 @@ mod svg;
 mod svg_fonts;
 mod view;
 pub(crate) use svg_fonts::SvgFonts;
-pub(crate) use view::{ImageView, InvalidFragment, turns_and_flip};
+pub(crate) use view::{ImageView, InvalidFragment, oriented_content, turns_and_flip};
 pub(crate) mod widget;
 use crate::fonts::{FontBook, FontNamespace};
 pub(crate) use crate::paint::NaturalDimensions;
@@ -378,17 +378,16 @@ impl ImageCache {
         }
         Some(image)
     }
-    /// `image` as `request` uses it on an element (see [`view::view`]), or `None` with a
+    /// `image` as `request` uses it on the element `style` belongs to (see [`view::view`]), or `None` with a
     /// diagnostic when `image()` names a fragment it cannot use.
     pub(crate) fn view(
         &mut self,
         image: Arc<Image>,
         request: &crate::paint::ImageRequest<'_>,
         base: &crate::resources::ResourceBase,
-        rtl: bool,
-        vertical: bool,
+        style: &crate::style::Style,
     ) -> Option<Arc<Image>> {
-        match view::view(image, request, rtl, vertical) {
+        match view::view(image, request, style) {
             Ok(image) => Some(image),
             Err(error) => {
                 self.failures.push(ImageFailure {

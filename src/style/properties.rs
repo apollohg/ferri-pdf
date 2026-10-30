@@ -761,6 +761,10 @@ fn handler(property: Property) -> Option<Handler> {
             page,
             Some(|v, _| crate::style::Page::from_component(v).is_ok()),
         ),
+        P::ImageOrientation => (
+            image_orientation,
+            Some(|v, r| crate::style::ImageOrientation::from_component(v, r).is_ok()),
+        ),
         P::ObjectPosition => (
             object_position,
             Some(|v, r| crate::style::background_values::position(v, r).is_ok()),
@@ -2420,6 +2424,13 @@ computed!(
     object_fit,
     [object_fit],
     |value, style, _parent, _relative| { crate::style::ObjectFit::from_component(value)? }
+);
+computed!(
+    image_orientation,
+    [image_orientation],
+    |value, style, _parent, relative| {
+        crate::style::ImageOrientation::from_component(value, relative)?
+    }
 );
 computed!(page, [page], |value, style, _parent, _relative| {
     crate::style::Page::from_component(value)?

@@ -28,9 +28,24 @@ YELLOW = (255, 255, 0)
 TRANSPARENT = (0, 0, 0, 0)
 QUADRANTS = [[RED, BLUE], [GREEN, YELLOW]]
 POINTS_PER_INCH = 72
+# JPEG blocks decode within a few levels of their colour.
+COLOR_TOLERANCE = 4
+# EXIF orientation tag and its value for an image to turn a quarter turn clockwise.
+EXIF_ORIENTATION = 0x0112
+EXIF_ROTATE_90 = 6
 # Pixel width of the colour blocks in test images.
 QUADRANT = 10
 TEXT = ' '.join(['aa bb cc dd ee ff gg hh ii jj kk ll mm nn oo pp qq rr ss tt'] * 3)
+
+
+def turned(rows):
+    """Colour blocks turned a quarter turn clockwise."""
+    return [list(row) for row in zip(*rows[::-1])]
+
+
+def flipped(rows):
+    """Colour blocks flipped horizontally."""
+    return [row[::-1] for row in rows]
 
 
 def blocks(path, rows):
@@ -89,8 +104,9 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
         expected[(0, len(rows))] = WHITE
         for (column, row), color in expected.items():
             point = (origin + column * QUADRANT + centre, origin + row * QUADRANT + centre)
-            self.assertEqual(pixels.getpixel(point), color[:3],
-                             f'{message}: block {column},{row} at {point}; {css}')
+            actual = pixels.getpixel(point)
+            self.assertTrue(all(abs(a - b) <= COLOR_TOLERANCE for a, b in zip(actual, color)),
+                            f'{message}: block {column},{row} at {point} is {actual}, not {color[:3]}; {css}')
 
     def test_unregistered_paint_images_are_invalid_in_every_image_context(self):
         """CSS Painting API 1 §7: no worklet registers a name, so paint() is an invalid image
@@ -221,6 +237,48 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                 self.assertSameInk(root, (f'{float_box}shape-outside:{shape}}}', body),
                                    (f'{float_box}shape-outside:{expected}}}', body),
                                    f'shape-outside: {shape} wraps like {expected}')
+
+    def test_image_orientation_turns_content_images_and_unrotates_decorative_ones(self):
+        """CSS Images 3 §5.1: angles round to quarter turns, flip follows the turn, both apply
+        to content images only; none ignores EXIF orientation in content and decorative images."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-image-orientation-') as directory:
+            root = Path(directory)
+            grid = [[RED, BLUE], [GREEN, YELLOW], [BLUE, BLUE]]
+            stored = blocks(root / 'grid.png', grid)
+            body = f'<img src="{stored}">'
+            for value, rows in [('from-image', grid), ('none', grid), ('0deg', grid),
+                                ('90deg', turned(grid)), ('45deg', turned(grid)),
+                                ('-45deg', grid), ('-90deg', turned(turned(turned(grid)))),
+                                ('450deg', turned(grid)), ('0.5turn', turned(turned(grid))),
+                                ('flip', flipped(grid)), ('90deg flip', flipped(turned(grid))),
+                                ('flip 270deg', flipped(turned(turned(turned(grid)))))]:
+                self.assertBlocks(root, f'img{{display:block;image-orientation:{value}}}', body, rows,
+                                  f'image-orientation: {value}')
+            self.assertBlocks(root, '.box{image-orientation:90deg flip;'
+                                    f'background:url("{stored}") 0 0 no-repeat}}',
+                              '<div class=box></div>', grid, 'angles do not turn decorative images')
+            self.assertBlocks(root, 'div{image-orientation:90deg}img{display:block}', f'<div>{body}</div>',
+                              turned(grid), 'the property inherits')
+
+            exif = Image.new('RGB', (2 * QUADRANT, 3 * QUADRANT))
+            for row, colors in enumerate(grid):
+                for column, color in enumerate(colors):
+                    exif.paste(color, (column * QUADRANT, row * QUADRANT,
+                                       (column + 1) * QUADRANT, (row + 1) * QUADRANT))
+            metadata = exif.getexif()
+            metadata[EXIF_ORIENTATION] = EXIF_ROTATE_90
+            exif.save(root / 'exif.jpg', quality=100, exif=metadata)
+            photo = (root / 'exif.jpg').as_uri()
+            for value, rows in [('from-image', turned(grid)), ('none', grid),
+                                ('flip', flipped(grid)), ('180deg', turned(turned(grid)))]:
+                self.assertBlocks(root, f'img{{display:block;image-orientation:{value}}}',
+                                  f'<img src="{photo}">', rows, f'EXIF photo with image-orientation: {value}')
+            for value, rows in [('from-image', turned(grid)), ('none', grid), ('flip', turned(grid))]:
+                self.assertBlocks(root, f'.box{{image-orientation:{value};background:url("{photo}") 0 0 no-repeat}}',
+                                  '<div class=box></div>', rows, f'EXIF background with image-orientation: {value}')
+            self.assertBlocks(root, '.box{direction:rtl;background:image(ltr "' + photo +
+                              '#xywh=0,0,30,10") 0 0 no-repeat}', '<div class=box></div>',
+                              [[RED, GREEN, BLUE]], 'fragments select from the EXIF-oriented image, then flip')
 
 
 if __name__ == '__main__':
