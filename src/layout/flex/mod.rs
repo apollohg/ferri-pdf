@@ -778,18 +778,22 @@ pub(super) fn measure<'a>(
                     border: item.border,
                 },
             );
-            if (!column
-                && item.cross.specified.is_none()
-                && item.cross.maximum.is_none()
-                && (ratio.is_none() || stretch))
-                || (column
-                    && item
-                        .source
-                        .style()
-                        .height
-                        .is_auto_block_size(item.source.image().is_some())
-                    && main == item.natural_main
-                    && ratio.is_none())
+            // CSS Containment 2 §3.2: a size-contained item's content never sizes it, so
+            // fragmentation does not grow it to that content either.
+            let contained = item.source.style().containment().size[1];
+            if !contained
+                && ((!column
+                    && item.cross.specified.is_none()
+                    && item.cross.maximum.is_none()
+                    && (ratio.is_none() || stretch))
+                    || (column
+                        && item
+                            .source
+                            .style()
+                            .height
+                            .is_auto_block_size(item.source.image().is_some())
+                        && main == item.natural_main
+                        && ratio.is_none()))
             {
                 measured.constrained = false;
             }

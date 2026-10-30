@@ -77,6 +77,38 @@ fn size_containment_sizes_the_box_as_if_empty() {
     }
 }
 
+/// §3.2: a size-contained flex item's content does not size it; its block size is the
+/// explicit intrinsic one in either flex direction, while inline-size containment keeps the
+/// content's block size.
+#[test]
+fn size_contained_flex_items_take_their_intrinsic_block_size() {
+    let content =
+        "<div class=f><div class=i><div style='width:10pt;height:100pt'></div></div></div>";
+    for (css, width, height) in [
+        (".f{display:flex}.i{contain:size}", 50.0, 20.0),
+        (
+            ".f{display:flex;flex-direction:column}.i{contain:size}",
+            400.0,
+            20.0,
+        ),
+        (
+            ".f{display:flex;align-items:start}.i{contain:inline-size}",
+            50.0,
+            100.0,
+        ),
+    ] {
+        let rect = painted_box(
+            &trace(
+                &format!(".i{{contain-intrinsic-size:50pt 20pt;background:red}}{css}"),
+                content,
+            ),
+            RED,
+        );
+        assert_labelled_pt(&format!("`{css}` item width"), rect.width, width);
+        assert_labelled_pt(&format!("`{css}` item height"), rect.height, height);
+    }
+}
+
 /// §3.1: a size containment box is monolithic, so it moves whole to the next page.
 #[test]
 fn size_containment_boxes_are_monolithic() {
