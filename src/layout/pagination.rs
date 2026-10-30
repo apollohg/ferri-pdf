@@ -2021,11 +2021,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         while let Some(request) = self.resume_block_end(&mut frame)? {
             self.new_page(request.forced, request.preserve_empty)?;
         }
-        let finished = self.finish_block(frame)?;
-        if self.places_footnotes() {
-            self.place_recorded_footnotes()?;
-        }
-        Ok(finished)
+        self.finish_block(frame)
     }
     fn refresh_block(
         &mut self,
@@ -2897,6 +2893,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         if let Some(forced) = Forced::of(break_after) {
             self.pending_break = Some(forced);
+        }
+        if self.places_footnotes() {
+            self.place_recorded_footnotes()?;
         }
         Ok(active)
     }

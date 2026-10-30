@@ -23,6 +23,13 @@ const UNPAGINATED_TOTAL: usize = 1;
 pub(crate) struct GeneratedValues {
     targets: HashMap<TargetRequest, String>,
     strings: HashMap<(PageStyleTarget, NamedStringRequest), String>,
+    /// Boxed: layouts of nested navigables stack the values of each enclosing layout.
+    paged: Box<PagedValues>,
+}
+
+/// What pagination gives document content.
+#[derive(Clone, Default, PartialEq, Eq)]
+struct PagedValues {
     /// The `page` counter of the page holding each context that shows it (CSS Page 3 §6.1).
     pages: HashMap<PageStyleTarget, i128>,
     /// The page total, once document content shows a page counter.
@@ -113,11 +120,12 @@ impl GeneratedBindings {
                 bound.bind_page_counters(
                     MAX_INLINE_TEXT_BYTES,
                     self.values
+                        .paged
                         .pages
                         .get(&context)
                         .copied()
                         .unwrap_or(UNPAGINATED_PAGE),
-                    self.values.total.unwrap_or(UNPAGINATED_TOTAL),
+                    self.values.paged.total.unwrap_or(UNPAGINATED_TOTAL),
                 )?,
             );
         }
@@ -149,6 +157,7 @@ impl GeneratedPass {
     pub(crate) fn page_starts(&self, element: ElementId) -> &[PageStart] {
         self.bindings
             .values
+            .paged
             .starts
             .get(&element)
             .map_or(&[], Vec::as_slice)
@@ -270,9 +279,11 @@ impl GeneratedReferences {
         Ok(GeneratedValues {
             targets: values,
             strings: named,
-            pages: page_numbers,
-            total: (!contexts.is_empty()).then_some(pages),
-            starts: page_starts,
+            paged: Box::new(PagedValues {
+                pages: page_numbers,
+                total: (!contexts.is_empty()).then_some(pages),
+                starts: page_starts,
+            }),
         })
     }
     pub(crate) fn matches(&self, values: &GeneratedValues) -> bool {
