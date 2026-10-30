@@ -2,7 +2,11 @@ mod dimensions;
 use crate::document::{BlockBox, CounterSnapshot, PageBox, Paragraph, RunningStringAssignment};
 use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, FlowPaint, ImagePaint, Rect};
 use crate::layout::measure::{MeasuredBlock, Measurer};
-use crate::layout::pagination::{Group, Region};
+use crate::layout::multicol::{
+    ColumnGeometry, WrapRows,
+    slices::{Distribution, Plan, Run, line_breaks, slice_clip},
+};
+use crate::layout::pagination::{Group, Region, StandaloneFlow};
 use crate::layout::{LayoutError, TextLine};
 use crate::style::{BoxSizing, MarginLocation, PageMargin, Size, VerticalAlign};
 use crate::text::Line;
@@ -47,7 +51,15 @@ struct Prepared<'a, 't> {
     /// The running element `element()` places (CSS GCPM 3 §1.2.2), laid out as the box's
     /// only child.
     element: Option<&'t BlockBox>,
-    measured: Option<MeasuredBlock<'t>>,
+    /// The running element laid out alone, and the block size it takes.
+    flow: Option<(StandaloneFlow, f32)>,
+    /// The box's block size once fixed or resolved, which its columns fill.
+    block_size: Option<f32>,
+    /// The column boxes of a multi-column margin box, a block container of its generated
+    /// content (CSS Page 3 §5.2), and the content laid out in them.
+    columns: Option<(ColumnGeometry, Distribution)>,
+    /// Text areas collect the box's text: its own backgrounds or its page box's clip to text.
+    text_area: bool,
     padding: [f32; 4],
     borders: [f32; 4],
     margins: [Option<f32>; 4],
@@ -85,6 +97,13 @@ impl<'t> Prepared<'_, 't> {
         self.start[axis] = start;
         // The fixed dimension fills the margin area regardless of width/height declarations.
         self.content[axis] = available - self.edges(axis) - start - end;
+        self.resolved(axis);
+    }
+    /// Records the content size along `axis` as resolved, which fixes the block size.
+    fn resolved(&mut self, axis: usize) {
+        if axis != self.inline_axis() {
+            self.block_size = Some(self.content[axis]);
+        }
     }
     fn variable(&mut self, axis: usize, available: f32, outer: f32, position: usize) {
         self.content[axis] = (outer - self.outer_edges(axis)).max(0.0);
@@ -99,6 +118,7 @@ impl<'t> Prepared<'_, 't> {
             )
             .preferred(self.content[axis]);
         }
+        self.resolved(axis);
         let offset = match position {
             START => 0.0,
             CENTER => (available - outer) / 2.0,
@@ -127,52 +147,197 @@ impl<'t> Prepared<'_, 't> {
         }
         Ok(())
     }
-    fn layout(&mut self, measurer: &mut Measurer<'t>) -> Result<(), LayoutError> {
+    /// Whether the box is a multi-column container: a block container, which a box that an
+    /// image replaces is not, whose column count or width is not `auto` (CSS Multi-column
+    /// Layout 1 §2).
+    fn multicol(&self) -> bool {
+        self.margin.style.multicol.is_multicol() && self.replacement.is_none()
+    }
+    /// How the content fills the columns of `geometry`: those of the box's block size once
+    /// that is resolved, else balanced (CSS Multi-column Layout 1 §7.1).
+    fn plan(&self, geometry: &ColumnGeometry) -> Plan {
+        let multicol = &self.margin.style.multicol;
+        Plan {
+            count: geometry.count,
+            height: multicol.height.or(self.block_size),
+            definite: multicol.height.is_some(),
+            fill: multicol.fill,
+            wrap: WrapRows::of(&self.margin.style, self.block_size),
+        }
+    }
+    /// The content, `extent` tall with column breaks allowed at `breaks`, in the columns of
+    /// `geometry`.
+    fn distribute(&self, geometry: &ColumnGeometry, breaks: &[f32], extent: f32) -> Distribution {
+        Distribution::of(
+            &[Run {
+                breaks,
+                ..Run::whole(extent)
+            }],
+            self.plan(geometry),
+        )
+    }
+    /// The generated lines in the columns of `geometry`.
+    fn line_columns(&self, geometry: &ColumnGeometry) -> Distribution {
+        let mut top = 0.0;
+        let boxes: Vec<[f32; 2]> = self
+            .lines
+            .iter()
+            .map(|line| {
+                top += line.height;
+                [top - line.height, top]
+            })
+            .collect();
+        let style = &self.margin.style;
+        let breaks = line_breaks(&boxes, [], [style.orphans, style.widows], top);
+        self.distribute(geometry, &breaks, top)
+    }
+    /// Where each line's box starts in the content box, in the box's logical coordinates:
+    /// stacked, or in the slice of the column box holding it.
+    fn line_offsets(&self) -> Vec<[f32; 2]> {
+        let mut top = 0.0;
+        let tops = self.lines.iter().map(|line| {
+            top += line.height;
+            top - line.height
+        });
+        let Some((geometry, columns)) = &self.columns else {
+            return tops.map(|y| [0.0, y]).collect();
+        };
+        let placed: Vec<_> = columns.placed(*geometry).collect();
+        let mut slice = 0;
+        tops.map(|y| {
+            while slice + 1 < placed.len() && y >= placed[slice].0.bottom {
+                slice += 1;
+            }
+            let (held, [x, top]) = placed[slice];
+            [x, top + y - held.top]
+        })
+        .collect()
+    }
+    /// The running element laid out alone at `width` from its measurement.
+    fn element_flow(
+        &self,
+        measurer: &mut Measurer<'t>,
+        measured: MeasuredBlock<'t>,
+        width: f32,
+        destinations: usize,
+    ) -> Result<(StandaloneFlow, f32), LayoutError> {
+        // The margin box is a block formatting context root, so the element's margins stay
+        // inside it.
+        let extent = if measured.through {
+            let mut margins = measured.before.clone();
+            margins.merge(measured.after.clone());
+            margins.value()
+        } else {
+            measured.before.value() + measured.height + measured.after.value()
+        };
+        let flow = crate::layout::pagination::Paginator::standalone(
+            measurer,
+            measured,
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width,
+                height: extent,
+            },
+            destinations,
+            self.text_area,
+        )?;
+        Ok((flow, extent))
+    }
+    fn layout(
+        &mut self,
+        measurer: &mut Measurer<'t>,
+        destinations: usize,
+    ) -> Result<(), LayoutError> {
         self.validate()?;
         let inline_axis = self.inline_axis();
         let [inline, extent] = [self.content[inline_axis], self.content[1 - inline_axis]];
-        let style = &self.margin.style;
+        let margin = self.margin;
+        let style = &margin.style;
         // CSS Overflow 4 §5.3: a margin box, a block container, discards the content after
-        // its region break.
+        // its region break, which follows its columns inside its block size.
         let discards = style.clamp.continuation == crate::style::Continue::Discard;
+        let geometry = self
+            .multicol()
+            .then(|| ColumnGeometry::resolve(style, 0.0, inline));
+        let width = geometry.map_or(inline, |geometry| geometry.width);
+        self.columns = None;
         if let Some(element) = self.element {
             let rtl = style.used_rtl();
-            self.measured = Some(if discards {
-                measurer.discarded_block(element, inline, rtl, extent, style.clamp.max_lines)?
+            let orphans_widows = [element.style().orphans, element.style().widows];
+            let clipped = |measurer: &mut Measurer<'t>, extent: f32| {
+                measurer.discarded_block(element, width, rtl, extent, style.clamp.max_lines)
+            };
+            let measured = if discards && geometry.is_none() {
+                clipped(measurer, extent)?
             } else {
-                measurer.block(element, 0.0, inline, rtl, false, None)?
-            });
+                measurer.block(element, 0.0, width, rtl, false, None)?
+            };
+            let mut flow = self.element_flow(measurer, measured, width, destinations)?;
+            if let Some(geometry) = geometry {
+                let mut columns =
+                    self.distribute(&geometry, &flow.0.breaks(orphans_widows, flow.1), flow.1);
+                if discards {
+                    let held = clipped(measurer, columns.held(geometry.count, extent))?;
+                    flow = self.element_flow(measurer, held, width, destinations)?;
+                    columns =
+                        self.distribute(&geometry, &flow.0.breaks(orphans_widows, flow.1), flow.1);
+                }
+                self.columns = Some((geometry, columns));
+            }
+            self.flow = Some(flow);
             return Ok(());
         }
-        self.lines = self
-            .paragraph
-            .as_ref()
-            .map(|p| {
-                if discards {
-                    measurer.discarded_text_lines(p, inline, &self.images.1, extent, &style.clamp)
-                } else {
-                    measurer.text_lines(p, inline, &self.images.1)
-                }
-            })
-            .transpose()?
-            .unwrap_or_default();
+        let Some(paragraph) = &self.paragraph else {
+            self.lines = Vec::new();
+            return Ok(());
+        };
+        let atomics = &self.images.1;
+        self.lines = if discards && geometry.is_none() {
+            measurer.discarded_text_lines(paragraph, width, atomics, extent, &style.clamp)?
+        } else {
+            measurer.text_lines(paragraph, width, atomics)?
+        };
+        if let Some(geometry) = geometry {
+            let mut columns = self.line_columns(&geometry);
+            if discards {
+                let held = columns.held(geometry.count, extent);
+                self.lines =
+                    measurer.discarded_text_lines(paragraph, width, atomics, held, &style.clamp)?;
+                columns = self.line_columns(&geometry);
+            }
+            self.columns = Some((geometry, columns));
+        }
         Ok(())
     }
-    /// The content's min-content and max-content contributions in the inline axis.
+    /// The content's min-content and max-content contributions in the inline axis, which a
+    /// multi-column box repeats in each column (CSS Multi-column Layout 1 §3.4).
     fn intrinsic(
         &self,
         measurer: &mut Measurer<'t>,
         available: f32,
     ) -> Result<[f32; 2], LayoutError> {
-        if let Some(element) = self.element {
-            let widths = measurer
-                .run(|measurer| crate::layout::intrinsic::measure(element, measurer, available))?;
-            return Ok([widths.min, widths.max]);
-        }
         if self.replacement.is_some() {
             let inline = self.inline_axis();
             let width = self.replaced_extent(inline, self.content[1 - inline]);
             return Ok([width; 2]);
+        }
+        let widths = self.content_intrinsic(measurer, available)?;
+        let widths = if self.multicol() {
+            crate::layout::multicol::intrinsic(&self.margin.style, widths)
+        } else {
+            widths
+        };
+        Ok([widths.min, widths.max])
+    }
+    fn content_intrinsic(
+        &self,
+        measurer: &mut Measurer<'t>,
+        available: f32,
+    ) -> Result<crate::text::IntrinsicWidths, LayoutError> {
+        if let Some(element) = self.element {
+            return measurer
+                .run(|measurer| crate::layout::intrinsic::measure(element, measurer, available));
         }
         let atomics: Vec<_> = self
             .images
@@ -183,25 +348,19 @@ impl<'t> Prepared<'_, 't> {
                 max: width,
             })
             .collect();
-        let intrinsic = self
+        Ok(self
             .paragraph
             .as_ref()
             .map(|p| measurer.intrinsic_widths(p, &atomics, &atomics))
             .transpose()?
-            .unwrap_or_default();
-        Ok([intrinsic.min, intrinsic.max])
+            .unwrap_or_default())
     }
     fn block_extent(&self) -> f32 {
-        if let Some(measured) = &self.measured {
-            // The margin box is a block formatting context root, so the element's margins
-            // stay inside it.
-            return if measured.through {
-                let mut margins = measured.before.clone();
-                margins.merge(measured.after.clone());
-                margins.value()
-            } else {
-                measured.before.value() + measured.height + measured.after.value()
-            };
+        if let Some((_, columns)) = &self.columns {
+            return columns.height();
+        }
+        if let Some((_, extent)) = &self.flow {
+            return *extent;
         }
         if self.replacement.is_some() {
             let inline = self.inline_axis();
@@ -242,7 +401,6 @@ impl<'t> Prepared<'_, 't> {
         index: usize,
         output: &mut MarginOutput<'_>,
         measurer: &mut Measurer<'t>,
-        destinations: usize,
     ) -> Result<(), LayoutError> {
         self.validate()?;
         let rect = Rect {
@@ -312,7 +470,7 @@ impl<'t> Prepared<'_, 't> {
         // CSS Backgrounds 4 §2.8: `background-clip: text` layers paint within the text of
         // the box's content, which a page box's text holds too.
         let clips_to_text = self.decoration.backgrounds.clips_to_text();
-        let text = clips_to_text || output.page_text.is_some();
+        let text = self.text_area;
         if visible {
             output.display.extend(group.backdrop(&paint));
         }
@@ -325,15 +483,8 @@ impl<'t> Prepared<'_, 't> {
             .extend(clips.iter().cloned().map(DisplayItem::PushClip));
         let content = output.display.len();
         let extent = self.block_extent();
-        let text_area = if let Some(measured) = self.measured.take() {
-            self.paint_element(
-                measured,
-                extent,
-                rect,
-                output,
-                measurer,
-                (destinations, text),
-            )?
+        let text_area = if let Some((flow, _)) = self.flow.take() {
+            self.paint_element(flow, extent, rect, output, measurer)
         } else if let Some(image) = replaced {
             output.display.push(DisplayItem::Image(image));
             text.then(|| text_flow(&[], &[], rect))
@@ -432,16 +583,16 @@ impl<'t> Prepared<'_, 't> {
             rect.y + self.padding[0] + self.borders[0] + self.vertical_offset(physical_height),
         ]
     }
-    /// A running element lays out unbroken in the content box, in the margin box's flow.
+    /// A running element lays out unbroken in the content box, in the margin box's flow, or
+    /// sliced into the box's column boxes; `extent` is the block size it takes there.
     fn paint_element(
         &self,
-        measured: MeasuredBlock<'t>,
+        flow: StandaloneFlow,
         extent: f32,
         rect: Rect,
         output: &mut MarginOutput<'_>,
         measurer: &mut Measurer<'t>,
-        (destinations, text_area): (usize, bool),
-    ) -> Result<Option<FlowPaint>, LayoutError> {
+    ) -> Option<FlowPaint> {
         let vertical = self.inline_axis() == VERTICAL;
         let logical = [self.content[self.inline_axis()], extent];
         let size = if vertical {
@@ -449,18 +600,6 @@ impl<'t> Prepared<'_, 't> {
         } else {
             logical
         };
-        let flow = crate::layout::pagination::Paginator::standalone(
-            measurer,
-            measured,
-            Rect {
-                x: 0.0,
-                y: 0.0,
-                width: logical[0],
-                height: logical[1],
-            },
-            destinations,
-            text_area,
-        )?;
         let margin_flow = crate::style::logical::Flow::used(&self.margin.style);
         let frame = crate::layout::writing::Frame::physical(margin_flow, size);
         // CSS Images 4 §2.7: a running element is copied into each page that places it
@@ -470,9 +609,60 @@ impl<'t> Prepared<'_, 't> {
             .displayed
             .borrow_mut()
             .adopt(flow.renderings.physical(margin_flow));
-        let mut items = flow.items;
-        let mut text_area = flow.text_area;
-        let mut navigation = flow.navigation.into_links();
+        let (mut items, mut text_area, lines, mut navigation) = match &self.columns {
+            None => (
+                flow.items,
+                flow.text_area,
+                flow.lines,
+                flow.navigation.into_links(),
+            ),
+            Some((geometry, columns)) => {
+                let mut items: Vec<DisplayItem> = columns
+                    .rules(geometry, self.margin.style.multicol.rule, [0.0; 2])
+                    .into_iter()
+                    .map(DisplayItem::Box)
+                    .collect();
+                let mut text = Vec::new();
+                let mut navigation = Vec::new();
+                // Each slice is the flow placed in its column box and clipped to the slice.
+                let sliced =
+                    |items: &[DisplayItem], lines: &[TextLine], origin: [f32; 2], window| {
+                        DisplayItem::Frame(Box::new(FlowPaint {
+                            matrix: [1.0, 0.0, 0.0, 1.0, origin[0], origin[1]],
+                            area: Rect {
+                                y: 0.0,
+                                height: extent,
+                                ..window
+                            },
+                            items: std::iter::once(slice_clip(window))
+                                .chain(items.iter().cloned())
+                                .chain(std::iter::once(DisplayItem::Pop))
+                                .collect(),
+                            lines: lines.to_vec(),
+                        }))
+                    };
+                for (slice, [x, y]) in columns.placed(*geometry) {
+                    let origin = [x, y - slice.top];
+                    let window = Rect {
+                        x: 0.0,
+                        y: slice.top,
+                        width: geometry.width,
+                        height: slice.bottom - slice.top,
+                    };
+                    items.push(sliced(&flow.items, &flow.lines, origin, window));
+                    if let Some(area) = &flow.text_area {
+                        text.push(sliced(&area.items, &area.lines, origin, window));
+                    }
+                    navigation.extend(flow.navigation.translated(origin, window).into_links());
+                }
+                let text_area = flow.text_area.map(|area| FlowPaint {
+                    items: text,
+                    lines: Vec::new(),
+                    ..area
+                });
+                (items, text_area, Vec::new(), navigation)
+            }
+        };
         if vertical {
             frame.items(&mut items);
             if let Some(area) = &mut text_area {
@@ -516,13 +706,13 @@ impl<'t> Prepared<'_, 't> {
             matrix,
             area,
             items,
-            lines: flow.lines,
+            lines,
         })));
-        Ok(text_area.map(|text| FlowPaint {
+        text_area.map(|text| FlowPaint {
             matrix,
             area,
             ..text
-        }))
+        })
     }
     fn paint_lines(
         self,
@@ -533,13 +723,17 @@ impl<'t> Prepared<'_, 't> {
     ) {
         let style = &self.margin.style;
         let vertical = self.inline_axis() == VERTICAL;
-        let inline_extent = if vertical {
-            self.lines.iter().map(|line| line.width).fold(0.0, f32::max)
-        } else {
-            self.content[HORIZONTAL]
+        // Lines align in their column; the columns span the content box's inline size.
+        let (inline_extent, frame_extent) = match &self.columns {
+            Some((geometry, _)) => (geometry.width, self.content[self.inline_axis()]),
+            None if vertical => {
+                let widest = self.lines.iter().map(|line| line.width).fold(0.0, f32::max);
+                (widest, widest)
+            }
+            None => (self.content[HORIZONTAL], self.content[HORIZONTAL]),
         };
         let physical_height = if vertical {
-            inline_extent
+            frame_extent
         } else {
             self.block_extent()
         };
@@ -551,11 +745,19 @@ impl<'t> Prepared<'_, 't> {
         } else {
             (&mut *page, &mut *display)
         };
-        let mut y = if vertical { 0.0 } else { content_origin[1] };
-        for line in self.lines {
-            let x = if vertical { 0.0 } else { content_origin[0] }
-                + line.alignment_offset(inline_extent, style.used_rtl());
-            let baseline = y + line.ascent;
+        let origin = if vertical { [0.0; 2] } else { content_origin };
+        if let Some((geometry, columns)) = &self.columns {
+            text_items.extend(
+                columns
+                    .rules(geometry, style.multicol.rule, origin)
+                    .into_iter()
+                    .map(DisplayItem::Box),
+            );
+        }
+        let offsets = self.line_offsets();
+        for (line, offset) in self.lines.into_iter().zip(offsets) {
+            let x = origin[0] + offset[0] + line.alignment_offset(inline_extent, style.used_rtl());
+            let baseline = origin[1] + offset[1] + line.ascent;
             text_items.extend(crate::layout::inline::shadow_items(
                 &line.runs,
                 &line.decorations,
@@ -593,10 +795,9 @@ impl<'t> Prepared<'_, 't> {
                 font_size: style.size,
                 color: style.color,
             });
-            y += line.height;
         }
         if vertical {
-            let size = [self.content[HORIZONTAL], inline_extent];
+            let size = [self.content[HORIZONTAL], frame_extent];
             crate::layout::writing::Frame::physical(crate::style::logical::Flow::used(style), size)
                 .items(&mut frame_items);
             display.push(DisplayItem::Frame(Box::new(FlowPaint {
@@ -643,10 +844,9 @@ fn text_flow(items: &[DisplayItem], lines: &[TextLine], area: Rect) -> FlowPaint
             DisplayItem::PushTransform(_) | DisplayItem::PushProjection(_) | DisplayItem::Pop => {
                 flow.items.push(item.clone());
             }
-            // Text areas hold text and decorations only.
-            DisplayItem::Image(_) | DisplayItem::TextShadow(_) => {}
-            DisplayItem::Box(_)
-            | DisplayItem::PushClip(_)
+            // Text areas hold text and decorations only, not images or column rules.
+            DisplayItem::Image(_) | DisplayItem::TextShadow(_) | DisplayItem::Box(_) => {}
+            DisplayItem::PushClip(_)
             | DisplayItem::PushOpacity(_)
             | DisplayItem::PushBlend(_)
             | DisplayItem::PushFilter(_)
@@ -655,7 +855,7 @@ fn text_flow(items: &[DisplayItem], lines: &[TextLine], area: Rect) -> FlowPaint
             | DisplayItem::Scene(_)
             | DisplayItem::Backdrop(_) => {
                 unreachable!(
-                    "margin lines paint text, shadows, decorations, images and their transforms"
+                    "margin lines paint text, shadows, decorations, images, column rules and their transforms"
                 )
             }
         }
@@ -750,7 +950,8 @@ pub(super) fn running(
         })
         .collect()
 }
-/// Prepares a page-margin box of the page at index `page` of `pages`.
+/// Prepares a page-margin box of the page at index `page` of `pages`, whose text the page
+/// box collects when `page_text`.
 fn prepare<'a, 't>(
     margin: &'a PageMargin,
     decoration: &'a BoxDecoration,
@@ -758,6 +959,7 @@ fn prepare<'a, 't>(
     page: usize,
     pages: usize,
     context: &MarginContext<'_, 't>,
+    page_text: bool,
 ) -> Result<Prepared<'a, 't>, LayoutError> {
     let style = &margin.style;
     let bases = [containing[1], containing[0], containing[1], containing[0]];
@@ -836,7 +1038,10 @@ fn prepare<'a, 't>(
         images,
         replacement,
         element,
-        measured: None,
+        flow: None,
+        block_size: None,
+        columns: None,
+        text_area: decoration.backgrounds.clips_to_text() || page_text,
         padding,
         borders,
         margins,
@@ -902,14 +1107,22 @@ pub(super) fn render<'t>(
                 else {
                     continue;
                 };
-                let mut prepared = prepare(margin, decoration, containing, number, total, context)?;
+                let mut prepared = prepare(
+                    margin,
+                    decoration,
+                    containing,
+                    number,
+                    total,
+                    context,
+                    page_text.is_some(),
+                )?;
                 prepared.validate()?;
                 let fixed_axis = 1 - axis;
                 prepared.fixed(fixed_axis, containing[fixed_axis]);
                 let bounds = if axis == prepared.inline_axis() {
                     prepared.intrinsic(measurer, containing[axis])?
                 } else {
-                    prepared.layout(measurer)?;
+                    prepared.layout(measurer, context.destinations)?;
                     [prepared.block_extent(); 2]
                 };
                 if axis == HORIZONTAL && prepared.margin.style.width.intrinsic().is_some() {
@@ -945,7 +1158,7 @@ pub(super) fn render<'t>(
             for (position, prepared) in boxes.into_iter().enumerate() {
                 if let Some(mut prepared) = prepared {
                     prepared.variable(axis, containing[axis], sizes[position], position);
-                    prepared.layout(measurer)?;
+                    prepared.layout(measurer, context.destinations)?;
                     let margin = prepared.margin;
                     let mut items = Vec::new();
                     prepared.paint(
@@ -960,7 +1173,6 @@ pub(super) fn render<'t>(
                             page_text: page_text.as_mut(),
                         },
                         measurer,
-                        context.destinations,
                     )?;
                     stacked.push((margin, items));
                 }
@@ -988,12 +1200,20 @@ pub(super) fn render<'t>(
                 .iter()
                 .find(|(margin, _)| margin.location == location)
             {
-                let mut prepared = prepare(margin, decoration, containing, number, total, context)?;
+                let mut prepared = prepare(
+                    margin,
+                    decoration,
+                    containing,
+                    number,
+                    total,
+                    context,
+                    page_text.is_some(),
+                )?;
                 prepared.validate()?;
                 for axis in [HORIZONTAL, VERTICAL] {
                     prepared.fixed(axis, containing[axis]);
                 }
-                prepared.layout(measurer)?;
+                prepared.layout(measurer, context.destinations)?;
                 let mut items = Vec::new();
                 prepared.paint(
                     origin,
@@ -1007,7 +1227,6 @@ pub(super) fn render<'t>(
                         page_text: page_text.as_mut(),
                     },
                     measurer,
-                    context.destinations,
                 )?;
                 stacked.push((*margin, items));
             }

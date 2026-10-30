@@ -237,16 +237,104 @@ fn nonfinite_page_margin_geometry_is_rejected_even_without_text() {
 }
 
 #[test]
-fn page_margin_boxes_reject_columns_they_do_not_lay_out() {
+fn page_margin_boxes_balance_their_lines_in_columns_and_rule_their_gaps() {
+    // A margin box is a block container of its generated content (CSS Page 3 §5.2), so
+    // `columns: 3` makes it a multi-column container whose five 10pt lines balance two to a
+    // column (CSS Multi-column Layout 1 §7.1). The 200pt box centred in the 280pt wide top
+    // margin starts at 100pt; 10pt gaps leave 60pt columns.
+    const LINE_PT: f32 = 10.0;
     let html = format!(
-        "<style>{PROFILE}@page{{@top-center{{content:'a';column-width:5em}}}}</style><p>Body</p>"
+        r#"<style>{PROFILE}@page{{size:400pt 300pt;margin:60pt;
+          @top-center{{content:"One\a Two\a Three\a Four\a Five";white-space:pre;font:10pt/10pt Spike;
+            width:200pt;columns:3;column-gap:10pt;column-rule:2pt solid rgb(255,0,0);
+            orphans:1;widows:1;text-align:left;vertical-align:top}}}}</style><p>Body</p>"#
     );
-    let error = render_html(&html, &local_options())
-        .err()
-        .expect("columns in a margin box must not be accepted and ignored");
-    assert!(
-        error.to_string().contains("column-width in @top-center"),
-        "expected an unsupported column-width error, got {error}"
+    let trace = render_html(&html, &local_options())
+        .unwrap()
+        .layout
+        .unwrap();
+    let lines: Vec<_> = trace.pages[0]
+        .iter()
+        .filter(|line| line.text != "Body")
+        .collect();
+    let expected = [
+        ("One", 100.0, 0.0),
+        ("Two", 100.0, LINE_PT),
+        ("Three", 170.0, 0.0),
+        ("Four", 170.0, LINE_PT),
+        ("Five", 240.0, 0.0),
+    ];
+    assert_eq!(
+        lines
+            .iter()
+            .map(|line| line.text.as_str())
+            .collect::<Vec<_>>(),
+        expected.map(|(text, _, _)| text),
+    );
+    let first = lines[0].baseline;
+    for (line, (text, left, below)) in lines.iter().zip(expected) {
+        common::assert_labelled_pt(&format!("{text} left"), line.x, left);
+        common::assert_labelled_pt(&format!("{text} line offset"), line.baseline - first, below);
+    }
+    let rules = common::column_rules(&trace, 0, [255, 0, 0]);
+    assert_eq!(
+        rules.len(),
+        2,
+        "a rule in each gap between filled columns: {rules:?}"
+    );
+    for (rule, centre) in rules.iter().zip([165.0, 235.0]) {
+        common::assert_labelled_pt("rule centre", rule.x + rule.width / 2.0, centre);
+        common::assert_labelled_pt("rule top", rule.y, 0.0);
+        common::assert_labelled_pt("rule height", rule.height, 2.0 * LINE_PT);
+    }
+}
+
+#[test]
+fn multi_column_margin_boxes_overflow_into_inline_columns_unless_they_discard_them() {
+    // A running element's fourteen 10pt lines fill the 60pt bottom margin box's two 95pt
+    // columns six lines each; the last two overflow into a third column past the box's
+    // inline end (CSS Multi-column Layout 1 §8.2), which `continue: discard` drops with the
+    // rest of the content after the box's region break (CSS Overflow 4 §5.3).
+    let lines = (1..=14)
+        .map(|index| format!("L{index}"))
+        .collect::<Vec<_>>()
+        .join("<br>");
+    let columns = |continuation: &str| -> Vec<(f32, Vec<String>)> {
+        let html = format!(
+            r"<style>{PROFILE}@page{{size:400pt 300pt;margin:60pt;
+              @bottom-center{{content:element(f);width:200pt;columns:2;column-gap:10pt;continue:{continuation}}}}}
+              #f{{position:running(f);font:10pt/10pt Spike;orphans:1;widows:1}}</style>
+              <div id=f>{lines}</div><p>Body</p>"
+        );
+        let trace = render_html(&html, &local_options())
+            .unwrap()
+            .layout
+            .unwrap();
+        common::visible_frame_columns(&trace, 0)
+    };
+    let texts = |range: std::ops::RangeInclusive<usize>| -> Vec<String> {
+        range.map(|index| format!("L{index}")).collect()
+    };
+    let overflowing = columns("auto");
+    assert_eq!(
+        overflowing
+            .iter()
+            .map(|(_, texts)| texts.clone())
+            .collect::<Vec<_>>(),
+        [texts(1..=6), texts(7..=12), texts(13..=14)],
+        "{overflowing:?}"
+    );
+    for ((left, _), expected) in overflowing.iter().zip([100.0, 205.0, 310.0]) {
+        common::assert_labelled_pt("column left", *left, expected);
+    }
+    let discarding = columns("discard");
+    assert_eq!(
+        discarding
+            .iter()
+            .map(|(_, texts)| texts.clone())
+            .collect::<Vec<_>>(),
+        [texts(1..=6), texts(7..=12)],
+        "{discarding:?}"
     );
 }
 

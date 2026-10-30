@@ -2,7 +2,7 @@
 //! offsets: the bodies a footnote area holds and the content of a page-margin box, which no
 //! flow fragments (CSS Multi-column Layout 1 §7, CSS Fragmentation 3 §5.4).
 use super::{ColumnGeometry, WrapRows};
-use crate::graphics::{Border, BoxPaint};
+use crate::graphics::{Border, BoxPaint, Clip, DisplayItem, Rect};
 use crate::layout::pagination::{FRAGMENTATION_TOLERANCE_PT, overflows};
 use crate::style::ColumnFill;
 
@@ -37,6 +37,59 @@ impl Run<'_> {
     fn height(&self) -> f32 {
         self.bottom - self.top + self.repeated[0] + self.repeated[1]
     }
+}
+
+/// The offsets in content ending at `end` where a break may fall: the bottoms of its
+/// `line_boxes` that leave at least `orphans` lines before them and `widows` after them (CSS
+/// Fragmentation 3 §3.3) and lie inside no line box or `monolithic` extent, then `end`;
+/// ascending.
+pub(in crate::layout) fn line_breaks(
+    line_boxes: &[[f32; 2]],
+    monolithic: impl IntoIterator<Item = [f32; 2]>,
+    [orphans, widows]: [usize; 2],
+    end: f32,
+) -> Vec<f32> {
+    let mut bottoms: Vec<f32> = line_boxes.iter().map(|[_, bottom]| *bottom).collect();
+    bottoms.sort_by(f32::total_cmp);
+    let mut extents: Vec<[f32; 2]> = line_boxes.iter().copied().chain(monolithic).collect();
+    extents.sort_by(|a, b| a[0].total_cmp(&b[0]));
+    // Overlapping extents merge into disjoint spans, which a break may touch but not cut.
+    let mut spans: Vec<[f32; 2]> = Vec::with_capacity(extents.len());
+    for [top, bottom] in extents {
+        match spans.last_mut() {
+            Some(span) if top < span[1] => span[1] = span[1].max(bottom),
+            _ => spans.push([top, bottom]),
+        }
+    }
+    let cuts = |offset: f32| {
+        let after = spans.partition_point(|span| span[0] < offset);
+        after > 0 && offset < spans[after - 1][1]
+    };
+    let total = bottoms.len();
+    let mut breaks: Vec<f32> = bottoms
+        .iter()
+        .copied()
+        .filter(|&offset| {
+            let before = bottoms.partition_point(|&bottom| bottom <= offset);
+            before >= orphans && total - before >= widows && !cuts(offset)
+        })
+        .chain([end])
+        .collect();
+    breaks.sort_by(f32::total_cmp);
+    breaks.dedup();
+    breaks
+}
+
+/// The clip of content laid out once to its slice `window`, open in the inline axis, whose
+/// content overflows a column box visibly there (§8.1).
+pub(in crate::layout) fn slice_clip(window: Rect) -> DisplayItem {
+    DisplayItem::PushClip(Clip {
+        rect: window,
+        radii: crate::graphics::Radii::default(),
+        outline: None,
+        axes: [false, true],
+        reference_box: None,
+    })
 }
 
 /// The part `[top, bottom)` of run `run` that one column box holds.
@@ -154,6 +207,33 @@ impl Distribution {
     /// The offset of row `row` from the top of the first.
     pub(in crate::layout) fn row_offset(&self, row: usize) -> f32 {
         self.rows[..row].iter().sum::<f32>() + self.row_gap * row as f32
+    }
+    /// Each slice with the top left of its place in its column box, from the content box's.
+    pub(in crate::layout) fn placed(
+        &self,
+        geometry: ColumnGeometry,
+    ) -> impl Iterator<Item = (Slice, [f32; 2])> + '_ {
+        self.columns.iter().flat_map(move |column| {
+            let [x, y] = [geometry.left(column.index), self.row_offset(column.row)];
+            column
+                .slices
+                .iter()
+                .map(move |slice| (*slice, [x, y + slice.y]))
+        })
+    }
+    /// Where the content that the first `count` columns of the rows inside a block size of
+    /// `extent` hold ends: a container that discards the content after its region break
+    /// keeps that (CSS Overflow 4 §5.3).
+    pub(in crate::layout) fn held(&self, count: usize, extent: f32) -> f32 {
+        self.columns
+            .iter()
+            .filter(|column| {
+                column.index < count
+                    && !overflows(self.row_offset(column.row) + self.rows[column.row], extent)
+            })
+            .filter_map(|column| column.slices.last())
+            .map(|slice| slice.bottom)
+            .fold(0.0, f32::max)
     }
     /// The rules of `geometry`'s gaps between adjacent columns of a row that both hold
     /// content (§4), as tall as the row, from `origin`, the top left of the content box.

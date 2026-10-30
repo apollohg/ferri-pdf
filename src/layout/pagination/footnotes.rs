@@ -7,7 +7,7 @@
 use super::*;
 use crate::layout::multicol::{
     ColumnGeometry, WrapRows,
-    slices::{Distribution, Plan, Run},
+    slices::{Distribution, Plan, Run, slice_clip},
 };
 use crate::style::{BoxSizing, ColumnFill, FootnoteDisplay, FootnotePolicy};
 use std::{cell::RefCell, collections::BTreeSet};
@@ -96,28 +96,24 @@ impl AreaContent {
         !self.columns.overflows && !overflows(self.height(), limit)
     }
     /// Each part as the column boxes slice it, with its offset in the area's content box.
-    fn placed(&self, geometry: &ColumnGeometry) -> Vec<(FootnotePart, [f32; 2])> {
+    fn placed(&self, geometry: ColumnGeometry) -> Vec<(FootnotePart, [f32; 2])> {
         let mut placed = Vec::new();
-        for column in &self.columns.columns {
-            let x = geometry.left(column.index);
-            let y = self.columns.row_offset(column.row);
-            for slice in &column.slices {
-                let row = &self.rows[slice.run];
-                if let [(part, _)] = row.parts.as_slice() {
-                    let part = FootnotePart {
-                        top: slice.top,
-                        bottom: slice.bottom,
-                        repeated: slice.repeated,
-                        ..*part
-                    };
-                    placed.push((part, [x, y + slice.y]));
-                } else {
-                    placed.extend(
-                        row.parts
-                            .iter()
-                            .map(|&(part, offset)| (part, [x + offset, y + slice.y])),
-                    );
-                }
+        for (slice, [x, y]) in self.columns.placed(geometry) {
+            let row = &self.rows[slice.run];
+            if let [(part, _)] = row.parts.as_slice() {
+                let part = FootnotePart {
+                    top: slice.top,
+                    bottom: slice.bottom,
+                    repeated: slice.repeated,
+                    ..*part
+                };
+                placed.push((part, [x, y]));
+            } else {
+                placed.extend(
+                    row.parts
+                        .iter()
+                        .map(|&(part, offset)| (part, [x + offset, y])),
+                );
             }
         }
         placed
@@ -468,40 +464,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         )?;
         // The body is a formatting context root whose floats extend it (CSS 2.1 §10.6.7).
         let height = height.max(flow.extent + measured_after);
-        let monolithic: Vec<[f32; 2]> = flow
-            .line_boxes
-            .iter()
-            .copied()
-            .chain(flow.items.iter().filter_map(|item| match item {
-                DisplayItem::Image(image) => Some([image.rect.y, image.rect.y + image.rect.height]),
-                _ => None,
-            }))
-            .collect();
-        let total = flow.line_boxes.len();
-        let lines_before = |offset: f32| {
-            flow.line_boxes
-                .iter()
-                .filter(|[_, bottom]| *bottom <= offset)
-                .count()
-        };
-        let (orphans, widows) = (body.style().orphans, body.style().widows);
-        let mut breaks: Vec<f32> = flow
-            .line_boxes
-            .iter()
-            .map(|[_, bottom]| *bottom)
-            .filter(|&offset| {
-                // A break leaves at least `orphans` lines before it and `widows` after it.
-                let before = lines_before(offset);
-                before >= orphans
-                    && total - before >= widows
-                    && monolithic
-                        .iter()
-                        .all(|[top, bottom]| offset <= *top || offset >= *bottom)
-            })
-            .chain([height])
-            .collect();
-        breaks.sort_by(f32::total_cmp);
-        breaks.dedup();
+        let breaks = flow.breaks([body.style().orphans, body.style().widows], height);
         let mut members = Vec::new();
         if inline {
             let elements = &footnotes.bodies[index].members;
@@ -1053,7 +1016,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                         .map(DisplayItem::Box),
                 );
             }
-            for (part, offset) in content.placed(&area.columns) {
+            for (part, offset) in content.placed(area.columns) {
                 let layout = self.footnote_layout(part.body, area.columns.width)?;
                 let body_style = self.document_footnotes().bodies[part.body].block.style();
                 let window = Rect {
@@ -1064,13 +1027,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 };
                 let origin = [x + offset[0], y + offset[1] + part.repeated[0] - part.top];
                 let sliced = part.top > 0.0 || part.bottom < layout.height;
-                let clip = DisplayItem::PushClip(Clip {
-                    rect: window,
-                    radii: crate::graphics::Radii::default(),
-                    outline: None,
-                    axes: [false, true],
-                    reference_box: None,
-                });
+                let clip = slice_clip(window);
                 // The part's slice of the body's items, placed in the area; a cloned
                 // body's box wraps the slice whole, outside its clip.
                 let frame = |mut items: Vec<DisplayItem>, lines: Vec<TextLine>| {

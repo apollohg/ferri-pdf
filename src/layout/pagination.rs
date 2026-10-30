@@ -1021,6 +1021,17 @@ pub(super) struct StandaloneFlow {
     /// The renderings of the elements inside the flow that `element()` images show.
     pub renderings: Box<Renderings>,
 }
+impl StandaloneFlow {
+    /// The offsets in the flow, laid out `end` tall, between which no line box or image lies
+    /// and that leave `orphans` and `widows` lines around them, then `end`; ascending.
+    pub(super) fn breaks(&self, orphans_widows: [usize; 2], end: f32) -> Vec<f32> {
+        let images = self.items.iter().filter_map(|item| match item {
+            DisplayItem::Image(image) => Some([image.rect.y, image.rect.y + image.rect.height]),
+            _ => None,
+        });
+        crate::layout::multicol::slices::line_breaks(&self.line_boxes, images, orphans_widows, end)
+    }
+}
 
 /// The link areas and destination bounds of a standalone flow, in its coordinates.
 #[derive(Clone, Default)]

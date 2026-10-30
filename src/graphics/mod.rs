@@ -63,7 +63,7 @@ pub enum DisplayItem {
 }
 impl DisplayItem {
     /// Whether the item opens a group that a later `Pop` closes.
-    pub(crate) fn is_push(&self) -> bool {
+    pub fn is_push(&self) -> bool {
         matches!(
             self,
             Self::PushClip(_)

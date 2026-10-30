@@ -148,3 +148,119 @@ pub(crate) fn page_boxes(trace: &ferri_pdf::LayoutTrace, rgb: [u8; 3]) -> Vec<fe
     }
     found
 }
+
+/// The texts of the lines painted inside the frames of `page`, such as footnote bodies and
+/// running elements, that the block-axis clips of the slices holding them leave visible, by
+/// their left edge, each such column top to bottom.
+#[allow(
+    dead_code,
+    reason = "each test binary uses a subset of the shared helpers"
+)]
+pub(crate) fn visible_frame_columns(
+    trace: &ferri_pdf::LayoutTrace,
+    page: usize,
+) -> Vec<(f32, Vec<String>)> {
+    use ferri_pdf::DisplayItem;
+    fn visit(
+        items: &[DisplayItem],
+        lines: Option<&[ferri_pdf::TextLine]>,
+        origin: [f32; 2],
+        clips: &mut Vec<[f32; 2]>,
+        found: &mut Vec<(f32, f32, String)>,
+    ) {
+        let depth = clips.len();
+        let mut opened = Vec::new();
+        for item in items {
+            match item {
+                DisplayItem::PushClip(clip) if clip.axes == [false, true] => {
+                    clips.push([
+                        origin[1] + clip.rect.y,
+                        origin[1] + clip.rect.y + clip.rect.height,
+                    ]);
+                    opened.push(true);
+                }
+                DisplayItem::Pop => {
+                    if opened.pop() == Some(true) {
+                        clips.pop();
+                    }
+                }
+                item if item.is_push() => opened.push(false),
+                DisplayItem::Text { line } => {
+                    let Some(lines) = lines else { continue };
+                    let line = &lines[*line];
+                    let baseline = origin[1] + line.baseline;
+                    if clips
+                        .iter()
+                        .all(|[top, bottom]| (*top..*bottom).contains(&baseline))
+                    {
+                        found.push((origin[0] + line.x, baseline, line.text.clone()));
+                    }
+                }
+                DisplayItem::Frame(frame) => visit(
+                    &frame.items,
+                    Some(&frame.lines),
+                    [origin[0] + frame.matrix[4], origin[1] + frame.matrix[5]],
+                    clips,
+                    found,
+                ),
+                _ => {}
+            }
+        }
+        clips.truncate(depth);
+    }
+    let mut found = Vec::new();
+    visit(
+        &trace.display_lists[page],
+        None,
+        [0.0; 2],
+        &mut Vec::new(),
+        &mut found,
+    );
+    found.sort_by(|a, b| a.0.total_cmp(&b.0).then(a.1.total_cmp(&b.1)));
+    let mut columns: Vec<(f32, Vec<String>)> = Vec::new();
+    for (x, _, text) in found {
+        match columns.last_mut() {
+            Some((left, texts)) if (*left - x).abs() < 1.0 => texts.push(text),
+            _ => columns.push((x, vec![text])),
+        }
+    }
+    columns
+}
+
+/// The column rules of `page` whose color is `rgb`, painted as left borders.
+#[allow(
+    dead_code,
+    reason = "each test binary uses a subset of the shared helpers"
+)]
+pub(crate) fn column_rules(
+    trace: &ferri_pdf::LayoutTrace,
+    page: usize,
+    rgb: [u8; 3],
+) -> Vec<ferri_pdf::Rect> {
+    const LEFT: usize = 3;
+    fn collect(items: &[ferri_pdf::DisplayItem], rgb: [u8; 3], found: &mut Vec<ferri_pdf::Rect>) {
+        for item in items {
+            match item {
+                ferri_pdf::DisplayItem::Box(paint)
+                    if paint.decoration.borders[LEFT].color.rgb == rgb
+                        && paint.decoration.borders[LEFT].width > 0.0 =>
+                {
+                    found.push(paint.rect);
+                }
+                ferri_pdf::DisplayItem::Frame(frame) => {
+                    let mut nested = Vec::new();
+                    collect(&frame.items, rgb, &mut nested);
+                    found.extend(nested.into_iter().map(|rect| ferri_pdf::Rect {
+                        x: rect.x + frame.matrix[4],
+                        y: rect.y + frame.matrix[5],
+                        ..rect
+                    }));
+                }
+                _ => {}
+            }
+        }
+    }
+    let mut found = Vec::new();
+    collect(&trace.display_lists[page], rgb, &mut found);
+    found
+}

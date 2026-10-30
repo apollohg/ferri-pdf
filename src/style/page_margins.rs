@@ -68,9 +68,6 @@ impl MarginLocation {
             .position(|candidate| name.eq_ignore_ascii_case(candidate))
             .map(|i| Self::ALL[i])
     }
-    fn name(self) -> &'static str {
-        Self::NAMES[self as usize]
-    }
     /// The default painting order: from the top-left corner clockwise (CSS Page 3 §3.1).
     pub(crate) fn painting_order(self) -> usize {
         const ORDER: [MarginLocation; 16] = [
@@ -202,11 +199,6 @@ impl Stylesheet {
             let Some(content) = content else {
                 continue;
             };
-            // Margin boxes lay out their lines in one column.
-            crate::style::page_rules::unsupported_in(
-                &format!("@{}", location.name()),
-                &crate::style::page_rules::multicol(&style),
-            )?;
             margins.push(PageMargin {
                 location,
                 content,
