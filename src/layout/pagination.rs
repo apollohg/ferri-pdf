@@ -1231,6 +1231,29 @@ pagination_state! {
 impl<M> PaginationState<'_, '_, M> {
     /// How far the flow reaches in the current fragmentainer, without the block-end side its
     /// last line box trims there when nothing follows it.
+    fn pending_value(&self) -> f32 {
+        let trimmed = self.at_page_start && self.trims_repeated_start();
+        self.pending
+            .iter()
+            .map(|margin| match (self.at_page_start, self.margin_start) {
+                (false, _) | (_, MarginStart::Initial) => margin.value(),
+                (true, MarginStart::Unforced) => 0.0,
+                (true, MarginStart::Forced) if trimmed => 0.0,
+                (true, MarginStart::Forced) => margin.after_break().unwrap_or(margin.value()),
+            })
+            .sum()
+    }
+    /// Whether the innermost box whose decoration repeats at the fragment start trims the
+    /// margins adjoining that edge (CSS Box 4 §3.3, CSS Fragmentation 3 §5.4): a cloned edge
+    /// is the box's edge again, so margins kept after a forced break still adjoin it.
+    fn trims_repeated_start(&self) -> bool {
+        self.boxes
+            .iter()
+            .rev()
+            .filter(|active| active.clone)
+            .find_map(|active| active.geometry.as_ref())
+            .is_some_and(|parent| parent.source.style().margin_trim.block_start)
+    }
     fn trimmed_flow_end(&self) -> f32 {
         match self.trailing_line {
             Some((y, trim)) if (self.y - y).abs() <= FRAGMENTATION_TOLERANCE_PT => y - trim,
@@ -1575,18 +1598,6 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     })
             })
     }
-    fn pending_value(&self) -> f32 {
-        let trimmed = self.at_page_start && self.trims_repeated_start();
-        self.pending
-            .iter()
-            .map(|margin| match (self.at_page_start, self.margin_start) {
-                (false, _) | (_, MarginStart::Initial) => margin.value(),
-                (true, MarginStart::Unforced) => 0.0,
-                (true, MarginStart::Forced) if trimmed => 0.0,
-                (true, MarginStart::Forced) => margin.after_break().unwrap_or(margin.value()),
-            })
-            .sum()
-    }
     /// The sides of the current fragment's first and last formatted lines that trim: those of
     /// a cloned box continuing from an earlier fragment, or else of every column (CSS
     /// Inline 3 §6.2). Trimming does not reach through flex, grid or table layout.
@@ -1610,17 +1621,6 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             Fragmentainers::Columns(rows) => rows.text_trim(),
             Fragmentainers::Pages(_) => [false; 2],
         }
-    }
-    /// Whether the innermost box whose decoration repeats at the fragment start trims the
-    /// margins adjoining that edge (CSS Box 4 §3.3, CSS Fragmentation 3 §5.4): a cloned edge
-    /// is the box's edge again, so margins kept after a forced break still adjoin it.
-    fn trims_repeated_start(&self) -> bool {
-        self.boxes
-            .iter()
-            .rev()
-            .filter(|active| active.clone)
-            .find_map(|active| active.geometry.as_ref())
-            .is_some_and(|parent| parent.source.style().margin_trim.block_start)
     }
     fn flush_margin(&mut self) {
         self.y += self.pending_value();

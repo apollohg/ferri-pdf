@@ -448,7 +448,12 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
                 }
             }
             self = self.advance(measurer)?;
-            let end = self.state.trimmed_flow_end();
+            let mut end = self.state.trimmed_flow_end();
+            // The content's last block-end margin adjoins no break, so it stays in the
+            // column it ends (CSS Break 3 §5.2), as in any formatting context root.
+            if self.cursor.is_none() {
+                end += self.state.pending_value();
+            }
             if let Fragmentainers::Columns(rows) = &mut self.state.fragmentainers {
                 rows.leave(self.state.page, end);
             }
