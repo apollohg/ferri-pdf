@@ -2656,12 +2656,6 @@ fn block<'a>(
                     )
                     .into());
                 }
-                if builder.traversal.root_style.used_writing_mode().vertical() {
-                    return Err(StyleError::Unsupported(
-                        "footnotes in a vertical page flow".into(),
-                    )
-                    .into());
-                }
                 Some(Placement::Footnote)
             } else if child_style.position.is_out_of_flow() || child_style.floating().is_some() {
                 Some(Placement::Positioned)

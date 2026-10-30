@@ -627,7 +627,8 @@ pub(crate) fn reflowed(source: &Style, flow: Flow) -> Style {
     reflowed_from(source, Flow::of(source), flow)
 }
 
-fn reflowed_from(source: &Style, from: Flow, flow: Flow) -> Style {
+/// The style with the box edges and sizes it gives in `from`'s frame given in `flow`'s.
+pub(crate) fn reflowed_from(source: &Style, from: Flow, flow: Flow) -> Style {
     let side = |index| flow.source(from, &SIDES, index);
     let dimension = |index| flow.source(from, &DIMENSIONS, index);
     let dimensions = |values: [&crate::style::Size; 2]| -> [crate::style::Size; 2] {

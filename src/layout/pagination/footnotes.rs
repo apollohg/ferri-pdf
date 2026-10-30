@@ -130,11 +130,43 @@ const BOTTOM: usize = 2;
 const LEFT: usize = 3;
 
 impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
-    fn area(&self, page: usize) -> Option<Area> {
+    /// The page's footnote area box and decoration in the paginator's frame: the page flow's,
+    /// given as horizontal, in which the area lies at the block end of the page area.
+    fn area_box(
+        &self,
+        page: usize,
+    ) -> Option<(
+        std::borrow::Cow<'_, crate::style::Style>,
+        std::borrow::Cow<'_, BoxDecoration>,
+    )> {
         let Fragmentainers::Pages(pages) = &self.fragmentainers else {
             return None;
         };
-        let style = &pages.boxes[page].footnote.style;
+        let footnote = &pages.boxes[page].footnote;
+        let flow = crate::style::logical::Flow::used(pages.document.root().style());
+        if !flow.writing_mode.vertical() {
+            return Some((
+                std::borrow::Cow::Borrowed(&footnote.style),
+                std::borrow::Cow::Borrowed(&footnote.decoration),
+            ));
+        }
+        let logical = flow.horizontal();
+        Some((
+            std::borrow::Cow::Owned(crate::style::logical::reflowed_from(
+                &footnote.style,
+                flow,
+                logical,
+            )),
+            std::borrow::Cow::Owned(crate::style::logical::decoration(
+                &footnote.decoration,
+                flow,
+                logical,
+            )),
+        ))
+    }
+
+    fn area(&self, page: usize) -> Option<Area> {
+        let (style, _) = self.area_box(page)?;
         let content = self.fragmentainers.content_box(page);
         let padding = std::array::from_fn(|side| style.padding[side].resolve(content.width));
         let borders = style
@@ -488,10 +520,8 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 continue;
             };
             let area = self.area(page).expect("footnote areas belong to pages");
-            let Fragmentainers::Pages(pages) = &self.fragmentainers else {
-                unreachable!("footnote areas belong to pages");
-            };
-            let decoration = pages.boxes[page].footnote.decoration.clone();
+            let (_, decoration) = self.area_box(page).expect("footnote areas belong to pages");
+            let decoration = decoration.into_owned();
             let page_area = self.fragmentainers.content_box(page);
             let height = area.content_height(content, self.footnotes_only(page));
             let border_box = Rect {

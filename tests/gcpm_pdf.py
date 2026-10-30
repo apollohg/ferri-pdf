@@ -179,6 +179,30 @@ class GcpmPdf(unittest.TestCase):
         self.assertGreater(words["3."][2], words["1."][2],
                            "a footnote wider than the area's remainder starts a line")
 
+    def columns(self, image, matches):
+        return sorted({x for y in range(image.height) for x in range(image.width)
+                       if matches(image.getpixel((x, y)))})
+
+    def test_vertical_footnotes_lie_at_the_block_end_with_physical_area_edges(self):
+        self.render(
+            "@page{size:200pt 150pt;margin:20pt;@footnote{border-top:2pt solid rgb(0,255,0);"
+            "border-right:2pt solid rgb(255,0,0);padding-right:4pt}}"
+            "html{writing-mode:vertical-rl}.fn{float:footnote;color:rgb(0,0,255)}",
+            "<p>Body<span class=fn>Note</span> text</p>")
+        image = self.raster(1)
+        # Antialiased glyph edges blend with the white page; their cores keep the blue hue.
+        blue = self.columns(image, lambda pixel: pixel[2] > 200 and max(pixel[:2]) < 120)
+        note = [x for x in blue if x < 100]
+        call = [x for x in blue if x >= 100]
+        self.assertTrue(note and note[0] >= 20 and note[-1] < 30,
+                        f"the note's 10pt line lies at the page area's left, its block end: {blue}")
+        self.assertTrue(call and call[-1] <= 180,
+                        f"the call, which inherits the note's colour, stays in the first line: {blue}")
+        self.assertEqual(self.columns(image, lambda pixel: pixel == (255, 0, 0)), [34, 35],
+                         "border-right is the area's physical right edge after 4pt padding")
+        self.assertEqual(self.colored_rows(image, (0, 255, 0)), [20, 21],
+                         "border-top is the area's physical top edge at the page area's top")
+
     def test_running_elements_inside_fragmented_paragraphs_assign_where_their_line_falls(self):
         lines = "<br>".join(f"L{index}" for index in range(1, 10))
         pages = self.render(
