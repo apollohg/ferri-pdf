@@ -414,6 +414,8 @@ impl Stylesheet {
         let viewport = first_viewport.unwrap_or(geometry.area);
         let production = self.page_production_for(&style, &rules, viewport, resolver)?;
         let margins = self.page_margins_for(&style, &rules, viewport, resolver)?;
+        // Counters the footnote area resets or increments are in scope for its own box only
+        // (CSS Page 3 §6.1), which generates no content to show them.
         let footnote = self
             .page_area_style(
                 &style,
