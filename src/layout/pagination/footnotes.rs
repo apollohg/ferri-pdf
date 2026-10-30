@@ -803,7 +803,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 continue;
             };
             let area = self.area(page).expect("footnote areas belong to pages");
-            let (_, decoration) = self.area_box(page).expect("footnote areas belong to pages");
+            let (style, decoration) = self.area_box(page).expect("footnote areas belong to pages");
             let Fragmentainers::Pages(pages) = &self.fragmentainers else {
                 unreachable!("footnote areas belong to pages");
             };
@@ -835,12 +835,21 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             // CSS Backgrounds 4 §2.8: the area's text-clipped backgrounds paint within the
             // text of the footnote bodies it holds.
             let clips_to_text = decoration.backgrounds.clips_to_text();
+            let visible = style.visibility.is_visible();
+            let paint = BoxPaint {
+                padding: area.padding,
+                ..BoxPaint::whole(border_box, decoration)
+            };
+            // The area composites as one group, which its bodies' boxes join.
+            let group = Group::of(&style);
+            let pushes = group.pushes(std::slice::from_ref(&paint));
+            let backdrop = group.backdrop(&paint);
             let mut items = Vec::new();
-            if decoration.is_visible() {
-                items.push(DisplayItem::Box(BoxPaint {
-                    padding: area.padding,
-                    ..BoxPaint::whole(border_box, decoration)
-                }));
+            if visible {
+                items.extend(backdrop);
+                if paint.decoration.is_visible() {
+                    items.push(DisplayItem::Box(paint.clone()));
+                }
             }
             let mut text = Vec::new();
             let x = border_box.x + area.borders[LEFT] + area.padding[LEFT];
@@ -901,9 +910,13 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 }
                 y += row.height;
             }
-            if clips_to_text && let Some(DisplayItem::Box(paint)) = items.first_mut() {
+            if clips_to_text
+                && let Some(DisplayItem::Box(paint)) = items
+                    .iter_mut()
+                    .find(|item| matches!(item, DisplayItem::Box(_)))
+            {
                 paint.text_area = Some(std::sync::Arc::new(crate::graphics::FlowPaint {
-                    matrix: [1.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+                    matrix: IDENTITY,
                     area: page_area,
                     items: text.clone(),
                     lines: Vec::new(),
@@ -912,6 +925,11 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             if page_clips {
                 page_text[page] = text;
             }
+            let pops = pushes.len();
+            let items = pushes
+                .into_iter()
+                .chain(items)
+                .chain(std::iter::repeat_n(DisplayItem::Pop, pops));
             let scope: PaintKey = Rc::from([FLOW_LEVEL]);
             for item in items {
                 self.foreground[page].push(ScopedPaint {

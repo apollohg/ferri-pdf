@@ -810,6 +810,34 @@ class PagePaint(unittest.TestCase):
                 for position, color, reason in probes:
                     self.pixel(page, position, color, reason)
 
+    def test_footnote_area_visibility_and_effects_reach_native_ink(self):
+        white, red, blue = (255, 255, 255), (255, 0, 0), (0, 0, 255)
+        for declarations, page_background, probes in [
+            ("visibility:hidden", "white", [((150, 172), white, "a hidden area paints no background")]),
+            ("opacity:.5", "white", [((150, 172), (255, 128, 128), "opacity composites the area")]),
+            ("filter:grayscale(1)", "white", [((150, 172), (54, 54, 54), "filters apply to the area")]),
+            ("clip-path:inset(0 50% 0 0)", "white",
+             [((60, 172), red, "the clip path keeps the left half"),
+              ((150, 172), white, "the clip path removes the right half")]),
+            ("mask-image:linear-gradient(transparent,transparent)", "white",
+             [((150, 172), white, "a transparent mask hides the area")]),
+            ("mix-blend-mode:multiply", "lime", [((150, 172), (0, 0, 0), "the area blends with the page")]),
+            ("backdrop-filter:invert(1);background:transparent", "lime",
+             [((150, 172), (255, 0, 255), "the backdrop filter inverts the page behind the area")]),
+        ]:
+            with self.subTest(declarations=declarations):
+                page = self.render(
+                    f"@page{{margin:20pt;padding:0;border:0;background:{page_background};"
+                    f"@footnote{{background:red;{declarations}}}}}"
+                    ".note{float:footnote;color:blue}",
+                    "<p>Text<span class=note>Note</span></p>", page_size=(200, 200),
+                )[0]
+                for position, color, reason in probes:
+                    self.pixel(page, position, color, reason)
+                if declarations == "visibility:hidden":
+                    self.assertGreater(self.ink(page, (20, 160, 100, 180), blue), 0,
+                                       "footnote bodies keep their own visibility")
+
     def test_hidden_page_box_paints_neither_itself_nor_inheriting_margin_boxes(self):
         page = self.render(
             "@page{visibility:hidden;background:blue;border:4pt solid red;outline:4pt solid red;"

@@ -1,11 +1,9 @@
 //! The text that `background-clip: text` layers paint within (CSS Backgrounds 4 §2.8): the
 //! glyphs, decorations and emphasis marks of a box and its in-flow and floated descendants.
-use super::{Effect, Paginator, Region, ScopedPaint, Subtree, TableTracks};
+use super::{Effect, IDENTITY, Paginator, Region, ScopedPaint, Subtree, TableTracks};
 use crate::graphics::{DisplayItem, FlowPaint};
 use crate::layout::LayoutError;
 use std::{rc::Rc, sync::Arc};
-
-const IDENTITY: [f32; 6] = [1.0, 0.0, 0.0, 1.0, 0.0, 0.0];
 
 /// Whose text a box fragment's backgrounds clip to.
 enum Owner {

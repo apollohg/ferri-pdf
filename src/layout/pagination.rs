@@ -198,6 +198,7 @@ const MAX_FIXED_PLACEMENTS: usize = 100_000;
 const MAX_TABLE_ALIGNMENT_GEOMETRIES: usize = 8;
 /// Rounding noise in summed `f32` geometry, so that `(H - edges) + edges` still fits `H`.
 const FRAGMENTATION_TOLERANCE_PT: f32 = 0.01;
+const IDENTITY: [f32; 6] = [1.0, 0.0, 0.0, 1.0, 0.0, 0.0];
 
 /// Whether content reaching `extent` overflows a fragmentainer ending at `limit`.
 pub(super) fn overflows(extent: f32, limit: f32) -> bool {
