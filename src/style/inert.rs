@@ -64,21 +64,12 @@ pub(super) fn defined(property: Property) -> bool {
             // which exist during a view transition.
             | P::ViewTransitionClass
             // CSS Overflow 3 §3.1.3: static media cannot scroll. Snapping, anchoring and
-            // overscroll adjust scroll positions; proximity snapping only permits a snap
-            // (CSS Scroll Snap 1 §4.1.2), and margins and padding only shape snap areas and
-            // snapports.
+            // overscroll adjust scroll positions, and proximity snapping only permits a snap
+            // (CSS Scroll Snap 1 §4.1.2).
             | P::OverflowAnchor
             | P::OverscrollBehaviorX
             | P::OverscrollBehaviorY
             | P::ScrollBehavior
-            | P::ScrollMarginBottom
-            | P::ScrollMarginLeft
-            | P::ScrollMarginRight
-            | P::ScrollMarginTop
-            | P::ScrollPaddingBottom
-            | P::ScrollPaddingLeft
-            | P::ScrollPaddingRight
-            | P::ScrollPaddingTop
             | P::ScrollSnapAlign
             | P::ScrollSnapStop
             | P::ScrollSnapType

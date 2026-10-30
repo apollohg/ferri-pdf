@@ -260,6 +260,13 @@ pub(crate) struct Style {
     /// Horizontal and vertical overflow after axis pairing.
     pub overflow: [crate::style::Overflow; 2],
     pub overflow_clip_margin: [crate::style::OverflowClipMargin; 4],
+    pub scroll_markers: crate::style::ScrollMarkers,
+    /// `scroll-margin` (CSS Scroll Snap 1 §6.1): how far the box's scroll snap area, and the
+    /// area a scroll into view aligns, extends past its border box.
+    pub scroll_margin: [f32; 4],
+    /// `scroll-padding` (CSS Scroll Snap 1 §6.2): the insets of a scroll container's
+    /// optimal viewing region from its scrollport; `None` is `auto`.
+    pub scroll_padding: [Option<LengthPercentage>; 4],
     pub rtl: bool,
     pub writing_mode: crate::style::logical::WritingMode,
     pub(crate) principal_flow: Option<crate::style::logical::Flow>,
@@ -421,6 +428,9 @@ impl Default for Style {
             page: crate::style::Page::default(),
             overflow: [crate::style::Overflow::Visible; 2],
             overflow_clip_margin: [crate::style::OverflowClipMargin::default(); 4],
+            scroll_markers: crate::style::ScrollMarkers::default(),
+            scroll_margin: [0.0; 4],
+            scroll_padding: [None, None, None, None],
             rtl: false,
             writing_mode: crate::style::logical::WritingMode::default(),
             principal_flow: None,

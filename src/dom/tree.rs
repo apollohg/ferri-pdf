@@ -64,6 +64,9 @@ pub(crate) struct DocumentTree {
     /// The `select` elements whose computed `appearance` gives them base appearance, which
     /// style computation records before their user-agent styles match (HTML §15.5.16).
     base_selects: RefCell<HashSet<NodeId>>,
+    /// The positions of scroll markers relative to their groups' active markers, which the
+    /// last layout determined (CSS Overflow 5 §3.1.8).
+    pub(crate) scroll_markers: RefCell<crate::dom::ScrollMarkerStates>,
     /// Nodes cloned into use-element shadow trees so far.
     instance_nodes: usize,
 }
@@ -94,6 +97,7 @@ impl DocumentTree {
             sibling_positions: RefCell::default(),
             tables: RefCell::default(),
             base_selects: RefCell::default(),
+            scroll_markers: RefCell::default(),
             instance_nodes: 0,
         };
         let connected = if tree.shadow.roots.is_empty() {

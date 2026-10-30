@@ -55,6 +55,8 @@ li { display: list-item; text-align: match-parent; }
 ::footnote-call { content: counter(footnote); vertical-align: baseline; font-size: 100%;
     line-height: inherit; font-variant-position: super; }
 ::footnote-marker { content: counter(footnote) '. '; }
+/* CSS Overflow 5 §3.1.5: scroll markers are styled like the HTML a element. */
+::scroll-marker { color: #0000ee; text-decoration: underline; }
 ol { list-style-type: decimal; }
 ol, ul, menu { counter-reset: list-item; }
 ol, ul { break-before: avoid; }

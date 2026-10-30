@@ -45,6 +45,35 @@ impl Overflow {
 }
 const AXIS_PROPERTIES: [Property; 2] = [Property::OverflowX, Property::OverflowY];
 
+/// `scroll-marker-group` (CSS Overflow 5 §3.1.3): where a scroll container generates its
+/// `::scroll-marker-group` box, if it does.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize)]
+pub(crate) enum ScrollMarkerGroup {
+    #[default]
+    None,
+    Before,
+    After,
+}
+impl ScrollMarkerGroup {
+    pub(crate) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        match value.keyword() {
+            Some(Keyword::None) => Ok(Self::None),
+            Some(Keyword::Before) => Ok(Self::Before),
+            Some(Keyword::After) => Ok(Self::After),
+            _ => Err(unsupported(value)),
+        }
+    }
+}
+
+/// The scroll marker properties (CSS Overflow 5 §3.1).
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize)]
+pub(crate) struct ScrollMarkers {
+    pub group: ScrollMarkerGroup,
+    /// `scroll-target-group: auto` (§3.1.2): the element is the scroll marker group
+    /// container of the scroll markers it contains.
+    pub target_group: bool,
+}
+
 /// Where a box clips its overflowing contents.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) enum ClipEdge {
@@ -424,6 +453,14 @@ impl Style {
     /// Overflow other than `visible` and `clip`, after axis pairing.
     pub(crate) fn is_scroll_container(&self) -> bool {
         self.overflow[0].scroll_container()
+    }
+    /// Whether the box is a scroll container: overflow applies only to block containers, flex
+    /// containers and grid containers (CSS Overflow 3 §3.1), not to replaced elements.
+    pub(crate) fn scroll_container_box(&self, replaced: bool) -> bool {
+        let display = self.display.run_in().unwrap_or(&self.display);
+        self.is_scroll_container()
+            && !replaced
+            && (display.is_block_container() || display.is_item_container())
     }
     /// Whether lines overflowing the inline end are ellipsed (CSS Overflow 3 §3.1): only in
     /// block containers whose inline axis does not overflow visibly. Overflowing lines are

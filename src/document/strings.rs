@@ -242,7 +242,9 @@ impl StringAssignments {
             GeneratedPseudoElement::FootnoteCall
             | GeneratedPseudoElement::FootnoteMarker
             | GeneratedPseudoElement::Checkmark
-            | GeneratedPseudoElement::PickerIcon => {}
+            | GeneratedPseudoElement::PickerIcon
+            | GeneratedPseudoElement::ScrollMarkerGroup
+            | GeneratedPseudoElement::ScrollMarker => {}
         }
     }
     pub(crate) fn finish(

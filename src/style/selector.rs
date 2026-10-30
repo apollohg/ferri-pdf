@@ -27,7 +27,7 @@ pub(super) fn selector_origin(origin: crate::style::cascade::Origin) -> Selector
     }
 }
 
-pub(super) const SELECTOR_TARGET_COUNT: usize = 15;
+pub(super) const SELECTOR_TARGET_COUNT: usize = 17;
 pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
     match pseudo {
         None => 0,
@@ -48,10 +48,14 @@ pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
         Some(PseudoElement::FootnoteMarker) => 12,
         Some(PseudoElement::Checkmark) => 13,
         Some(PseudoElement::PickerIcon) => 14,
+        Some(PseudoElement::ScrollMarkerGroup) => 15,
+        Some(PseudoElement::ScrollMarker) => 16,
     }
 }
 
 const TYPE_SPECIFICITY_MASK: u32 = (1 << 10) - 1;
+/// The bit offsets of the ID, class and type counts packed in a specificity.
+const SPECIFICITY_SHIFTS: [u32; 3] = [20, 10, 0];
 const MAX_RESOLVED_SELECTOR_DEPTH: usize = crate::style::parser::MAX_COMPONENT_DEPTH + 1;
 const RESOLVED_SELECTOR_NESTING: &str = "resolved selector nesting";
 const PSEUDO_PARENT_COMPONENTS: usize = 2; // The Is wrapper and generated pseudo node.
@@ -66,11 +70,33 @@ fn selector_depth(depth: usize) -> Result<(), StyleError> {
     Ok(())
 }
 
+/// Each count of `a` and `b`, saturating.
+fn add_specificity(a: u32, b: u32) -> u32 {
+    SPECIFICITY_SHIFTS
+        .iter()
+        .map(|shift| {
+            (((a >> shift) & TYPE_SPECIFICITY_MASK) + ((b >> shift) & TYPE_SPECIFICITY_MASK))
+                .min(TYPE_SPECIFICITY_MASK)
+                << shift
+        })
+        .sum()
+}
+
+/// A pseudo-element selector followed by pseudo-classes (Selectors 4 §3.6.3).
+#[derive(Clone)]
+struct PseudoStates {
+    /// The pseudo-element selector and its pseudo-classes as written.
+    source: Box<str>,
+    /// `*` with them, whose subject is the pseudo-element of any element.
+    selector: Selector,
+}
+
 #[derive(Clone)]
 pub(super) struct RuleSelector {
     selector: Selector,
     specificity: u32,
     pseudo: Option<PseudoElement>,
+    states: Option<PseudoStates>,
 }
 impl RuleSelector {
     fn parse_context(
@@ -80,26 +106,42 @@ impl RuleSelector {
         sheet: SelectorOrigin,
     ) -> Result<Self, StyleError> {
         let mut source_input = ParserInput::new(source);
-        let (origin, pseudo) = originating_selector(&mut Parser::new(&mut source_input))
+        let Originating {
+            origin,
+            pseudo,
+            states,
+        } = originating_selector(&mut Parser::new(&mut source_input))
             .map_err(|error| StyleError::Invalid(format!("selector {source}: {error:?}")))?;
-        let selector = Selector::parse_context(&origin, namespaces, true, mode, sheet)
-            .map_err(|error| StyleError::Invalid(format!("selector {source}: {error:?}")))?;
-        Self::from_parsed(selector, pseudo)
+        let invalid = |error| StyleError::Invalid(format!("selector {source}: {error:?}"));
+        let selector =
+            Selector::parse_context(&origin, namespaces, true, mode, sheet).map_err(invalid)?;
+        let states = states
+            .map(|states| PseudoStates::parse(states, sheet))
+            .transpose()?;
+        Self::from_parsed(selector, pseudo, states)
     }
-    fn from_parsed(selector: Selector, pseudo: Option<PseudoElement>) -> Result<Self, StyleError> {
+    fn from_parsed(
+        selector: Selector,
+        pseudo: Option<PseudoElement>,
+        states: Option<PseudoStates>,
+    ) -> Result<Self, StyleError> {
         selector_depth(selector.depth())?;
-        let mut specificity = selector
-            .single_specificity()
-            .ok_or_else(|| StyleError::Invalid("expected one selector".into()))?;
-        if let Some(pseudo) = pseudo {
-            specificity = (specificity & !TYPE_SPECIFICITY_MASK)
-                | ((specificity & TYPE_SPECIFICITY_MASK) + pseudo.compounds())
-                    .min(TYPE_SPECIFICITY_MASK);
+        let single = |selector: &Selector| {
+            selector
+                .single_specificity()
+                .ok_or_else(|| StyleError::Invalid("expected one selector".into()))
+        };
+        let mut specificity = single(&selector)?;
+        if let Some(states) = &states {
+            specificity = add_specificity(specificity, single(&states.selector)?);
+        } else if let Some(pseudo) = pseudo {
+            specificity = add_specificity(specificity, pseudo.compounds());
         }
         Ok(Self {
             selector,
             specificity,
             pseudo,
+            states,
         })
     }
     pub(super) fn parent_list(selectors: &[Self]) -> Result<Selector, StyleError> {
@@ -108,11 +150,15 @@ impl RuleSelector {
                 .iter()
                 .map(|selector| match selector.pseudo {
                     Some(pseudo) => {
+                        let source = selector
+                            .states
+                            .as_ref()
+                            .map_or_else(|| pseudo.source(), |states| &states.source);
                         selector
                             .selector
-                            .with_pseudo_element(pseudo)
+                            .with_pseudo_element(source)
                             .ok_or_else(|| {
-                                StyleError::Invalid(format!("nesting selector for {pseudo:?}"))
+                                StyleError::Invalid(format!("nesting selector for {source}"))
                             })
                     }
                     None => Ok(selector.selector.clone()),
@@ -135,7 +181,11 @@ impl RuleSelector {
     }
     pub(super) fn resolve_parent(&self, parent: &Selector) -> Result<Self, StyleError> {
         selector_depth(self.selector.resolved_depth(parent))?;
-        Self::from_parsed(self.selector.resolve_parent(parent), self.pseudo)
+        Self::from_parsed(
+            self.selector.resolve_parent(parent),
+            self.pseudo,
+            self.states.clone(),
+        )
     }
     pub(super) fn target_index(&self) -> usize {
         target_index(self.pseudo)
@@ -157,8 +207,13 @@ impl RuleSelector {
         scope: crate::dom::SelectorScope,
         tree: TreeContext,
     ) -> Option<u32> {
-        (self.pseudo == pseudo && element.matches_in_selector_scope(&self.selector, tree, scope))
-            .then_some(self.specificity)
+        (self.pseudo == pseudo
+            && element.matches_in_selector_scope(&self.selector, tree, scope)
+            && self
+                .states
+                .as_ref()
+                .is_none_or(|states| states.selector.matches_pseudo_element_states(*element)))
+        .then_some(self.specificity)
     }
 }
 
@@ -198,7 +253,8 @@ pub(super) fn scope_boundary<'i>(
             .map_err(|error| {
                 input.new_custom_error(StyleError::Invalid(format!("scope selector: {error:?}")))
             })?;
-        RuleSelector::from_parsed(selector, None).map_err(|error| input.new_custom_error(error))
+        RuleSelector::from_parsed(selector, None, None)
+            .map_err(|error| input.new_custom_error(error))
     })
 }
 
@@ -224,9 +280,38 @@ fn pseudo_element<'i>(
     }
 }
 
+impl PseudoStates {
+    /// The pseudo-element selector and pseudo-classes `source`, which the selector grammar
+    /// admits only where they may follow it.
+    fn parse(source: &str, sheet: SelectorOrigin) -> Result<Self, StyleError> {
+        let subject = format!("*{source}");
+        let selector = Selector::parse_context(
+            &subject,
+            &NamespaceMap::new(),
+            false,
+            SelectorMode::Normal,
+            sheet,
+        )
+        .map_err(|error| StyleError::Invalid(format!("selector {source}: {error:?}")))?;
+        Ok(Self {
+            selector,
+            source: source.into(),
+        })
+    }
+}
+
+/// A selector split at its pseudo-element: the compound selectors of its originating element,
+/// the pseudo-element, and the pseudo-element selector with the pseudo-classes after it, if
+/// any follow.
+struct Originating<'i> {
+    origin: String,
+    pseudo: Option<PseudoElement>,
+    states: Option<&'i str>,
+}
+
 fn originating_selector<'i>(
     input: &mut Parser<'i, '_>,
-) -> Result<(String, Option<PseudoElement>), ParseError<'i, StyleError>> {
+) -> Result<Originating<'i>, ParseError<'i, StyleError>> {
     let start = input.position();
     let mut universal = true;
     while !input.is_exhausted() {
@@ -250,12 +335,26 @@ fn originating_selector<'i>(
                             )))
                         })?;
                     }
-                    let mut source = input.slice(start..state.position()).to_owned();
+                    let mut origin = input.slice(start..state.position()).to_owned();
                     if universal {
-                        source.push('*');
+                        origin.push('*');
                     }
-                    input.expect_exhausted()?;
-                    return Ok((source, Some(pseudo)));
+                    let classes = input.position();
+                    while !input.is_exhausted() {
+                        if let Token::Function(_)
+                        | Token::ParenthesisBlock
+                        | Token::SquareBracketBlock = input.next_including_whitespace()?
+                        {
+                            input.parse_nested_block(consume)?;
+                        }
+                    }
+                    let states =
+                        (input.position() != classes).then(|| input.slice_from(state.position()));
+                    return Ok(Originating {
+                        origin,
+                        pseudo: Some(pseudo),
+                        states,
+                    });
                 }
                 universal = false;
             }
@@ -277,7 +376,11 @@ fn originating_selector<'i>(
             _ => universal = false,
         }
     }
-    Ok((input.slice_from(start).to_owned(), None))
+    Ok(Originating {
+        origin: input.slice_from(start).to_owned(),
+        pseudo: None,
+        states: None,
+    })
 }
 pub(super) fn parse<'i>(
     input: &mut Parser<'i, '_>,
@@ -326,11 +429,14 @@ fn supports_selectors(
     }
     let mut input = ParserInput::new(source);
     let parsed = Parser::new(&mut input).parse_comma_separated(|input| {
-        let (origin, _) = originating_selector(input)?;
+        let Originating { origin, states, .. } = originating_selector(input)?;
+        let invalid =
+            |error| input.new_custom_error(StyleError::Invalid(format!("selector: {error:?}")));
+        if let Some(states) = states {
+            PseudoStates::parse(states, sheet).map_err(|error| input.new_custom_error(error))?;
+        }
         Selector::parse_context(&origin, namespaces, false, mode, sheet)
-            .map_err(|error| {
-                input.new_custom_error(StyleError::Invalid(format!("selector: {error:?}")))
-            })
+            .map_err(invalid)
             .and_then(|selector| {
                 selector_depth(selector.depth()).map_err(|error| input.new_custom_error(error))
             })

@@ -61,7 +61,8 @@ mod zoom;
 pub(crate) use colors::{parse_color_value, widget_palette};
 pub(crate) use object::{ImageOrientation, ImageResolution, ObjectFit};
 pub(crate) use overflow::{
-    BlockEllipsis, ClipEdge, Continue, LineClamp, Overflow, OverflowClipMargin, TextOverflow,
+    BlockEllipsis, ClipEdge, Continue, LineClamp, Overflow, OverflowClipMargin, ScrollMarkerGroup,
+    ScrollMarkers, TextOverflow,
 };
 pub(crate) use parser::rewrite_urls;
 pub(crate) use registration::serialize_calc_size;

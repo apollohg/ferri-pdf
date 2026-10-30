@@ -54,7 +54,6 @@ fn values_inherit_as_their_specifications_define() {
             Property::TransitionDuration,
             false,
         ),
-        ("scroll-margin-top:1pt", Property::ScrollMarginTop, false),
         (
             "scroll-snap-points-x:repeat(10%)",
             Property::ScrollSnapPointsX,
@@ -96,18 +95,20 @@ fn values_inherit_as_their_specifications_define() {
 #[test]
 fn computed_values_resolve_lengths_and_math_on_the_declaring_element() {
     let (parent, child) = styles(
-        "#parent{font-size:10pt;scroll-margin-top:2em;transition-duration:calc(1s + 500ms),2s;reading-order:calc(2.6)}\
-         #child{font-size:20pt;scroll-margin-top:inherit;transition-duration:inherit;reading-order:inherit}",
+        "#parent{font-size:10pt;view-timeline-inset:2em;transition-duration:calc(1s + 500ms),2s;reading-order:calc(2.6)}\
+         #child{font-size:20pt;view-timeline-inset:inherit;transition-duration:inherit;reading-order:inherit}",
     )
     .unwrap();
     assert_eq!(
-        parent.inert.get(Property::ScrollMarginTop),
-        Some(&Computed::LengthPercentage(LengthPercentage::Length(20.0))),
+        parent.inert.get(Property::ViewTimelineInset),
+        Some(&Computed::Group(vec![Computed::Group(vec![
+            Computed::LengthPercentage(LengthPercentage::Length(20.0))
+        ])])),
         "2em against the parent's 10pt font is 20pt"
     );
     assert_eq!(
-        child.inert.get(Property::ScrollMarginTop),
-        parent.inert.get(Property::ScrollMarginTop),
+        child.inert.get(Property::ViewTimelineInset),
+        parent.inert.get(Property::ViewTimelineInset),
         "`inherit` copies the computed 20pt instead of resolving 2em against the child's font"
     );
     assert_eq!(
@@ -193,14 +194,6 @@ fn shorthands_set_the_same_values_as_their_longhands() {
         (
             "interest-delay:2s",
             "interest-delay-start:2s;interest-delay-end:2s",
-        ),
-        (
-            "scroll-margin:1pt 2pt",
-            "scroll-margin-top:1pt;scroll-margin-right:2pt;scroll-margin-bottom:1pt;scroll-margin-left:2pt",
-        ),
-        (
-            "scroll-padding:1pt 10% auto",
-            "scroll-padding-top:1pt;scroll-padding-right:10%;scroll-padding-bottom:auto;scroll-padding-left:10%",
         ),
         (
             "caret:red block",

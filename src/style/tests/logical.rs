@@ -606,11 +606,27 @@ fn user_agent_indents_sit_on_the_inline_start_side() {
 
 #[test]
 fn scroll_and_overscroll_logical_properties_cascade_with_their_physical_pairs() {
-    use crate::style::{grammar::Property as P, inert::Computed};
-    let length = |style: &Style, property| match style.inert.get(property) {
-        Some(Computed::LengthPercentage(LengthPercentage::Length(value))) => Some(*value),
-        None => None,
-        other => panic!("{property:?} must compute to a length, got {other:?}"),
+    use crate::style::grammar::Property as P;
+    let length = |style: &Style, property| match property {
+        P::ScrollMarginLeft => Some(style.scroll_margin[LEFT]),
+        P::ScrollMarginRight => Some(style.scroll_margin[RIGHT]),
+        P::ScrollPaddingTop
+        | P::ScrollPaddingBottom
+        | P::ScrollPaddingLeft
+        | P::ScrollPaddingRight => {
+            let side = match property {
+                P::ScrollPaddingTop => TOP,
+                P::ScrollPaddingBottom => BOTTOM,
+                P::ScrollPaddingLeft => LEFT,
+                _ => RIGHT,
+            };
+            match &style.scroll_padding[side] {
+                Some(LengthPercentage::Length(value)) => Some(*value),
+                None => None,
+                other => panic!("{property:?} must compute to a length, got {other:?}"),
+            }
+        }
+        other => panic!("{other:?} is not a scroll margin or padding side"),
     };
     let declarations = "scroll-margin-inline-start:1pt;scroll-margin-left:2pt;\
         scroll-margin-inline-end:3pt;scroll-padding-block:4pt 5pt";

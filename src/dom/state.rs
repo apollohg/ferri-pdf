@@ -37,6 +37,25 @@ pub(crate) fn is_custom_element_name(name: &str) -> bool {
         })
 }
 
+/// Where a scroll marker lies in its scroll marker group relative to the group's active
+/// marker, in flat tree order (CSS Overflow 5 §3.1.7).
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+pub(crate) enum TargetPosition {
+    Before,
+    Current,
+    After,
+}
+
+/// A scroll marker (CSS Overflow 5 §3.1): an element, or the `::scroll-marker` of `element`.
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+pub(crate) struct ScrollMarker {
+    pub element: crate::dom::ElementId,
+    pub pseudo: bool,
+}
+
+/// The position of every scroll marker in a scroll marker group.
+pub(crate) type ScrollMarkerStates = HashMap<ScrollMarker, TargetPosition>;
+
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub(crate) enum Directionality {
     Ltr,
@@ -285,6 +304,19 @@ impl<'a> Element<'a> {
             }),
             _ => None,
         }
+    }
+
+    /// Where this element, or its `::scroll-marker` when `pseudo`, lies relative to the active
+    /// marker of its scroll marker group, as the last layout placed the group's targets.
+    pub(crate) fn scroll_marker_position(self, pseudo: bool) -> Option<TargetPosition> {
+        self.tree
+            .scroll_markers
+            .borrow()
+            .get(&ScrollMarker {
+                element: self.id(),
+                pseudo,
+            })
+            .copied()
     }
 
     pub(crate) fn is_target(self) -> bool {

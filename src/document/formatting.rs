@@ -753,6 +753,22 @@ pub(crate) struct Traversal<'a> {
     /// The running elements open around the current element, innermost last.
     running: Vec<crate::style::PageStyleTarget>,
     pages: &'a crate::document::page::PageProvider,
+    /// The `::scroll-marker` boxes collected for each scroll container's
+    /// `::scroll-marker-group`, in tree order (CSS Overflow 5 §3.1.5).
+    scroll_markers: std::collections::HashMap<ElementId, Vec<GeneratedBox>>,
+    /// Formatting a scroll container only to collect the markers of a group placed before it,
+    /// whose own groups are not placed.
+    marker_prepass: bool,
+    /// The nearest scroll container around the subtree a copy formats.
+    marker_scroller: Option<MarkerScroller>,
+}
+
+/// A scroll container, and the display of the `::scroll-marker-group` its scroll markers go
+/// in, if it generates one.
+#[derive(Clone)]
+struct MarkerScroller {
+    element: ElementId,
+    group: Option<Display>,
 }
 
 impl Traversal<'_> {
@@ -838,6 +854,9 @@ impl Traversal<'_> {
             page_counters: Vec::new(),
             running: vec![owner],
             pages: self.pages,
+            scroll_markers: std::collections::HashMap::new(),
+            marker_prepass: false,
+            marker_scroller: None,
         }
     }
     /// The state formatting a copy of the subtree starting here: it continues the document's
@@ -863,6 +882,9 @@ impl Traversal<'_> {
             page_counters: Vec::new(),
             running: self.running.clone(),
             pages: self.pages,
+            scroll_markers: std::collections::HashMap::new(),
+            marker_prepass: false,
+            marker_scroller: None,
         }
     }
 }
@@ -873,7 +895,7 @@ impl Traversal<'_> {
 /// line. Kept out of `block`, whose frame nested navigables' formatting stacks.
 #[inline(never)]
 fn first_line_box<'a>(
-    frame: &Frame<'_>,
+    (frame, scroller): (&Frame<'_>, Option<MarkerScroller>),
     (style, origins): (&Style, &[ElementId]),
     sheet: &'a Stylesheet,
     traversal: &Traversal<'a>,
@@ -889,21 +911,133 @@ fn first_line_box<'a>(
     else {
         return Ok(None);
     };
-    let root = Frame::new(
-        frame.element,
-        Box::new(styles.style(&frame.style)?),
-        frame.depth,
-        frame.ordinal,
-        Some(Placement::Root),
-        frame.page_scope.as_ref(),
+    let root = frame.copy_root(Box::new(styles.style(&frame.style)?));
+    let mut copy = traversal.subtree_copy();
+    copy.marker_scroller = scroller;
+    block(root, sheet, &mut copy, resources).map(|copy| Some(Box::new(copy)))
+}
+
+/// The nearest scroll container among `frames`, or around the subtree `traversal` formats.
+fn marker_scroller(frames: &[Frame<'_>], traversal: &Traversal<'_>) -> Option<MarkerScroller> {
+    frames
+        .iter()
+        .rev()
+        .find(|frame| frame.scroll_container)
+        .map(|frame| MarkerScroller {
+            element: frame.element.id(),
+            group: frame
+                .marker_group
+                .as_ref()
+                .map(|group| group.display.clone()),
+        })
+        .or_else(|| traversal.marker_scroller.clone())
+}
+
+/// The style of the `::scroll-marker-group` that the scroll container `element`, styled
+/// `style`, generates (CSS Overflow 5 §3.1.4); `None` where it generates no box.
+#[inline(never)]
+fn marker_group_style(
+    element: Element<'_>,
+    style: &Style,
+    sheet: &Stylesheet,
+    resolver: &dyn crate::resources::ResourceResolver,
+) -> Result<Option<Box<Style>>, DocumentError> {
+    if style.scroll_markers.group == crate::style::ScrollMarkerGroup::None {
+        return Ok(None);
+    }
+    let group = sheet
+        .element_backed_with_resolver(element, style, PseudoElement::ScrollMarkerGroup, resolver)?
+        .used();
+    Ok((group.display != Display::None).then(|| Box::new(group)))
+}
+
+/// Builds the `::scroll-marker` of `element`, styled `style`, for the group of its nearest
+/// ancestor scroll container, if that generates one (CSS Overflow 5 §3.1.5). It takes the
+/// counters and quotes of its originating element; changes it makes to them stay in it.
+#[inline(never)]
+fn scroll_marker<'a>(
+    frames: &mut [Frame<'_>],
+    block_index: usize,
+    (element, style): (Element<'_>, &Style),
+    sheet: &'a Stylesheet,
+    traversal: &mut Traversal<'a>,
+    resources: &mut ImageResources<'a>,
+) -> Result<(), DocumentError> {
+    let Some((scroller, group)) = marker_scroller(frames, traversal)
+        .and_then(|scroller| Some((scroller.element, scroller.group?)))
+    else {
+        return Ok(());
+    };
+    let Some((marker, content)) = sheet.pseudo_with_resolver(
+        element,
+        style,
+        PseudoElement::ScrollMarker,
+        resources.resolver,
+    )?
+    else {
+        return Ok(());
+    };
+    let navigation = traversal.navigation.scroll_marker(element.id());
+    let detached = traversal.counters.detached();
+    let counters = std::mem::replace(&mut traversal.counters, detached);
+    let quotes = traversal.quotes;
+    let (mut builder, _) = active_builder(frames, block_index, sheet, traversal, resources);
+    let generated = builder.generated_box(
+        (element, style, &group),
+        GeneratedPseudoElement::ScrollMarker,
+        marker,
+        &content,
+        navigation,
     );
-    block(root, sheet, &mut traversal.subtree_copy(), resources).map(|copy| Some(Box::new(copy)))
+    traversal.counters = counters;
+    traversal.quotes = quotes;
+    if let Some(generated) = generated? {
+        traversal
+            .scroll_markers
+            .entry(scroller)
+            .or_default()
+            .push(generated);
+    }
+    Ok(())
+}
+
+/// The style of the `::scroll-marker-group` placed on `side` of the root element, a child of
+/// it (CSS Overflow 5 §3.1.3), if `frames[index]` is the root element's frame.
+fn root_marker_group(
+    frames: &[Frame<'_>],
+    index: usize,
+    traversal: &Traversal<'_>,
+    side: crate::style::ScrollMarkerGroup,
+) -> Option<Style> {
+    let root = &frames[index];
+    (index == 0
+        && !traversal.marker_prepass
+        && root.element.id() == traversal.document.root_element().id()
+        && root.style.scroll_markers.group == side)
+        .then(|| root.marker_group.as_deref().cloned())
+        .flatten()
+}
+
+/// The `::scroll-marker` boxes of the scroll container `frame` heads, collected by formatting
+/// it ahead of its own formatting for a group placed before it (CSS Overflow 5 §3.1.3).
+#[inline(never)]
+fn collect_scroll_markers<'a>(
+    frame: Frame<'_>,
+    sheet: &'a Stylesheet,
+    traversal: &Traversal<'a>,
+    resources: &mut ImageResources<'a>,
+) -> Result<Vec<GeneratedBox>, DocumentError> {
+    let element = frame.element.id();
+    let mut copy = traversal.subtree_copy();
+    copy.marker_prepass = true;
+    block(frame, sheet, &mut copy, resources)?;
+    Ok(copy.scroll_markers.remove(&element).unwrap_or_default())
 }
 
 /// Copies of the running element of `frame`, formatted from its start once for each set of
 /// page counters its copies in page-margin boxes show (CSS GCPM 3 §1.2.2).
 fn running_copies<'a>(
-    frame: &Frame<'_>,
+    (frame, scroller): (&Frame<'_>, Option<MarkerScroller>),
     sheet: &'a Stylesheet,
     traversal: &Traversal<'a>,
     resources: &mut ImageResources<'a>,
@@ -921,16 +1055,16 @@ fn running_copies<'a>(
         .iter()
         .map(|&numbers| {
             let mut copy = traversal.running_copy(owner, numbers);
-            // The used page name of the element is its own, or the one it inherits.
-            let root = Frame::new(
-                frame.element,
-                frame.style.clone(),
-                frame.depth,
-                frame.ordinal,
-                Some(Placement::Root),
-                frame.page_scope.as_ref(),
-            );
-            Ok((numbers, block(root, sheet, &mut copy, resources)?))
+            copy.marker_scroller.clone_from(&scroller);
+            Ok((
+                numbers,
+                block(
+                    frame.copy_root(frame.style.clone()),
+                    sheet,
+                    &mut copy,
+                    resources,
+                )?,
+            ))
         })
         .collect()
 }
@@ -951,6 +1085,30 @@ struct BlockBuilder<'a, 's, 'c> {
     ruby: &'s mut crate::document::ruby::RubyStack,
     traversal: &'c mut Traversal<'a>,
     resources: &'c mut ImageResources<'a>,
+}
+
+/// A pseudo-element's box, styled and with its contents generated where its originating
+/// element lies, placed then or, for a `::scroll-marker`, in its group later.
+struct GeneratedBox {
+    style: Style,
+    decoration: BoxDecoration,
+    contents: GeneratedContents,
+    replacement: Option<std::sync::Arc<crate::images::Image>>,
+    event: Option<crate::document::SemanticEvent>,
+    navigation: BoxNavigation,
+    element_page_scope: Option<std::sync::Arc<str>>,
+    /// A run-in box (CSS Display 3 §2.4), whose `style` holds its inner display.
+    run_in: bool,
+}
+
+enum GeneratedContents {
+    Output {
+        output: crate::style::GeneratedOutput,
+        images: Vec<crate::document::inline::GeneratedImage>,
+    },
+    /// The `::scroll-marker` boxes of a `::scroll-marker-group`, in tree order (CSS Overflow 5
+    /// §3.1.5).
+    Markers(Vec<GeneratedBox>),
 }
 
 /// An inline initial letter whose contents are collected apart from the line it originates
@@ -2059,9 +2217,34 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         element: Element<'_>,
         parent: &Style,
         pseudo: GeneratedPseudoElement,
-        mut style: Style,
+        style: Style,
         content: &crate::style::GeneratedContent,
     ) -> Result<(), DocumentError> {
+        let parent_display = self.style.display.clone();
+        let navigation = self.traversal.navigation.descendant();
+        if let Some(generated) = self.generated_box(
+            (element, parent, &parent_display),
+            pseudo,
+            style,
+            content,
+            navigation,
+        )? {
+            self.place_generated_box(parent, generated)?;
+        }
+        Ok(())
+    }
+
+    /// The box of a pseudo-element of `element`, styled `style` and inheriting from `parent`,
+    /// a child of a box displayed `parent_display`, with the contents its `content` generates
+    /// here, which link to `navigation`; `None` where it generates no box in the flow.
+    fn generated_box(
+        &mut self,
+        (element, parent, parent_display): (Element<'_>, &Style, &Display),
+        pseudo: GeneratedPseudoElement,
+        mut style: Style,
+        content: &crate::style::GeneratedContent,
+        navigation: BoxNavigation,
+    ) -> Result<Option<GeneratedBox>, DocumentError> {
         style = style.used();
         // `running()` moves the pseudo-element to page-margin boxes (CSS GCPM 3 §1.2.1).
         let running =
@@ -2070,31 +2253,14 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             crate::document::page::used_name(&parent.page, self.element_page_scope.as_ref());
         validate_box(&style)?;
         let replacement = content.replacement();
-        normalize_child_display(
-            &mut style.display,
-            replacement.is_some(),
-            &self.style.display,
-        );
+        normalize_child_display(&mut style.display, replacement.is_some(), parent_display);
         // CSS Display 3 §2.5: `display: contents` on a replaced element computes to `none`.
         if replacement.is_some() && style.display == Display::Contents {
-            return Ok(());
+            return Ok(None);
         }
-        // The block's own pseudo-elements are its first and last children; those of inline
-        // descendants lie inside the content around them.
-        let block_child = std::ptr::eq(parent, self.style);
-        if let Some(inner) = style.display.run_in().cloned() {
-            if block_child {
-                self.begin_run_in()?;
-            }
+        let run_in = style.display.run_in().cloned();
+        if let Some(inner) = run_in.clone() {
             style.display = inner;
-        } else if block_child {
-            self.resolve_run_in(
-                if style.position.leaves_flow() || style.floating().is_some() {
-                    RunInFollower::Member
-                } else {
-                    RunInFollower::Other
-                },
-            )?;
         }
         let decoration = if style.display == Display::Contents {
             BoxDecoration::default()
@@ -2170,12 +2336,12 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 })
                 .collect::<Result<_, DocumentError>>()?;
             let block = if let Some(image) = replacement {
-                let mut block = self.generated_block(
+                let mut block = Self::generated_block(
                     style,
                     Vec::new(),
                     decoration,
                     element_page_scope.as_ref(),
-                    None,
+                    (None, navigation),
                 );
                 block.image = Some(image);
                 block
@@ -2187,34 +2353,71 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 .strings
                 .record_generated_running(element, pseudo, name, block, copies);
             self.inline.semantic_event(event);
-            return Ok(());
+            return Ok(None);
         }
+        let images = self.resources.generated_images(&output, &style);
+        Ok(Some(GeneratedBox {
+            style,
+            decoration,
+            contents: GeneratedContents::Output { output, images },
+            replacement,
+            event,
+            navigation,
+            element_page_scope,
+            run_in: run_in.is_some(),
+        }))
+    }
+
+    /// Places the pseudo-element box `generated`, whose style inherits from `parent`. The
+    /// block's own pseudo-elements are its first and last children; those of inline
+    /// descendants lie inside the content around them.
+    fn place_generated_box(
+        &mut self,
+        parent: &Style,
+        generated: GeneratedBox,
+    ) -> Result<(), DocumentError> {
+        let GeneratedBox {
+            mut style,
+            decoration,
+            contents,
+            replacement,
+            event,
+            navigation,
+            element_page_scope,
+            run_in,
+        } = generated;
+        let block_child = std::ptr::eq(parent, self.style);
+        if run_in {
+            if block_child {
+                self.begin_run_in()?;
+            }
+        } else if block_child {
+            self.resolve_run_in(
+                if style.position.leaves_flow() || style.floating().is_some() {
+                    RunInFollower::Member
+                } else {
+                    RunInFollower::Other
+                },
+            )?;
+        }
+        let page_scope = element_page_scope.as_ref();
         if let Some(image) = replacement {
-            let replaced = self.generated_block(
+            let replaced = Self::generated_block(
                 style,
                 Vec::new(),
                 decoration,
-                element_page_scope.as_ref(),
-                event,
+                page_scope,
+                (event, navigation),
             );
             return self.replaced(replaced, image, parent);
         }
-        let images = self.resources.generated_images(&output, &style);
         if style.display != Display::Contents
             && (style.position.is_out_of_flow() || style.floating().is_some())
         {
-            let children = Paragraph::generated_output(&output, &images, &style)?
-                .into_iter()
-                .map(BlockContent::Inline)
-                .collect();
+            let children = self.generated_children(&style, contents, FirstLine::default())?;
             let shape_outside = self.resources.shape_outside(&style);
-            let mut generated = self.generated_block(
-                style,
-                children,
-                decoration,
-                element_page_scope.as_ref(),
-                event,
-            );
+            let mut generated =
+                Self::generated_block(style, children, decoration, page_scope, (event, navigation));
             generated.shape_outside = shape_outside;
             self.out_of_flow(generated);
             return Ok(());
@@ -2224,7 +2427,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 if let Some(event) = event {
                     self.inline.semantic_event(event);
                 }
-                self.append_generated(&output, &images, &style)?;
+                self.append_contents(&style, contents)?;
             }
             Display::Inline
             | Display::Ruby
@@ -2235,13 +2438,8 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 if let Some(event) = event {
                     self.inline.semantic_event(event);
                 }
-                self.open_inline(
-                    &style,
-                    decoration,
-                    self.traversal.navigation.descendant(),
-                    false,
-                )?;
-                self.append_generated(&output, &images, &style)?;
+                self.open_inline(&style, decoration, navigation, false)?;
+                self.append_contents(&style, contents)?;
                 self.close_inline()?;
             }
             // An inline box's table parts lie in an anonymous inline table (CSS 2.1 §17.2.1).
@@ -2255,16 +2453,13 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                         | Display::InlineTable
                 ) || (display.is_table_part() && self.inline.inside_inline_box()) =>
             {
-                let children = Paragraph::generated_output(&output, &images, &style)?
-                    .into_iter()
-                    .map(BlockContent::Inline)
-                    .collect();
-                let atomic = self.generated_block(
+                let children = self.generated_children(&style, contents, FirstLine::default())?;
+                let atomic = Self::generated_block(
                     style.clone(),
                     children,
                     decoration,
-                    element_page_scope.as_ref(),
-                    event,
+                    page_scope,
+                    (event, navigation),
                 );
                 self.atomic(atomic, parent)?;
             }
@@ -2288,26 +2483,163 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 }
                 // The pseudo-element's box comes first in flow, taking the first formatted line.
                 let first_line = std::mem::take(self.first_line);
-                let children = if style.display.is_block_level_block_container() {
-                    self.first_line_block(first_line, &output, &images, &style)?
-                } else {
-                    Paragraph::generated_output(&output, &images, &style)?
-                        .into_iter()
-                        .map(BlockContent::Inline)
-                        .collect()
-                };
-                let mut generated = self.generated_block(
+                let children = self.generated_children(&style, contents, first_line)?;
+                let mut generated = Self::generated_block(
                     style,
                     children,
                     decoration,
-                    element_page_scope.as_ref(),
-                    event,
+                    page_scope,
+                    (event, navigation),
                 );
                 generated.enclosing_inline = self.inline.open_boxes();
                 self.children.push(BlockContent::Block(generated));
             }
         }
         Ok(())
+    }
+
+    /// Appends `contents` of a box styled `style` to the inline content.
+    fn append_contents(
+        &mut self,
+        style: &Style,
+        contents: GeneratedContents,
+    ) -> Result<(), DocumentError> {
+        match contents {
+            GeneratedContents::Output { output, images } => {
+                self.append_generated(&output, &images, style)
+            }
+            GeneratedContents::Markers(markers) => {
+                for marker in markers {
+                    self.place_generated_box(style, marker)?;
+                }
+                Ok(())
+            }
+        }
+    }
+
+    /// The child boxes of a box styled `style` holding `contents`, whose block container
+    /// holds the first formatted line `first_line` passes to it.
+    fn generated_children(
+        &mut self,
+        style: &Style,
+        contents: GeneratedContents,
+        first_line: FirstLine,
+    ) -> Result<Vec<BlockContent>, DocumentError> {
+        match contents {
+            GeneratedContents::Output { output, images } => {
+                if style.display.is_block_level_block_container() {
+                    self.first_line_block(first_line, &output, &images, style)
+                } else {
+                    Ok(Paragraph::generated_output(&output, &images, style)?
+                        .into_iter()
+                        .map(BlockContent::Inline)
+                        .collect())
+                }
+            }
+            GeneratedContents::Markers(markers) => self.marker_children(style, markers, first_line),
+        }
+    }
+
+    /// The child boxes of a `::scroll-marker-group` styled `style` holding `markers`, which
+    /// its own block container lays out (CSS Overflow 5 §3.1.5).
+    fn marker_children(
+        &mut self,
+        style: &Style,
+        markers: Vec<GeneratedBox>,
+        mut first_line: FirstLine,
+    ) -> Result<Vec<BlockContent>, DocumentError> {
+        let page_scope =
+            crate::document::page::used_name(&style.page, self.element_page_scope.as_ref());
+        let mut children = Vec::new();
+        let mut inline = InlineCollector::default();
+        let mut run_in = None;
+        let mut letter = None;
+        let mut ruby = crate::document::ruby::RubyStack::default();
+        let mut sized = false;
+        let mut builder = BlockBuilder {
+            sheet: self.sheet,
+            element: self.element,
+            style,
+            sized: &mut sized,
+            element_page_scope: &page_scope,
+            children: &mut children,
+            inline: &mut inline,
+            run_in: &mut run_in,
+            first_line: &mut first_line,
+            letter: &mut letter,
+            ruby: &mut ruby,
+            traversal: &mut *self.traversal,
+            resources: &mut *self.resources,
+        };
+        for marker in markers {
+            builder.place_generated_box(style, marker)?;
+        }
+        builder.resolve_run_in(RunInFollower::Other)?;
+        builder.flush()?;
+        mark_last_formatted_line(&mut children);
+        Ok(children)
+    }
+
+    /// Places the `::scroll-marker-group` of the scroll container `element`, styled `style`
+    /// and holding `markers`, as a child of a box styled `parent` (CSS Overflow 5 §3.1.4).
+    fn place_marker_group(
+        &mut self,
+        element: Element<'_>,
+        parent: &Style,
+        mut style: Style,
+        markers: Vec<GeneratedBox>,
+    ) -> Result<(), DocumentError> {
+        validate_box(&style)?;
+        normalize_child_display(&mut style.display, false, &self.style.display);
+        let run_in = style.display.run_in().cloned();
+        if let Some(inner) = run_in.clone() {
+            style.display = inner;
+        }
+        let element_page_scope =
+            crate::document::page::used_name(&parent.page, self.element_page_scope.as_ref());
+        let decoration = if style.display == Display::Contents {
+            BoxDecoration::default()
+        } else {
+            self.resources.backgrounds(&style)?
+        };
+        let navigation = self.traversal.navigation.descendant();
+        // `running()` moves the group to page-margin boxes (CSS GCPM 3 §1.2.1).
+        if style.display != Display::Contents && style.position == crate::style::Position::Running {
+            let name = style
+                .running
+                .clone()
+                .expect("running() names the running element");
+            let children = self.marker_children(&style, markers, FirstLine::default())?;
+            let block = Self::generated_block(
+                style,
+                children,
+                decoration,
+                element_page_scope.as_ref(),
+                (None, navigation),
+            );
+            let event = self.traversal.strings.record_generated_running(
+                element,
+                GeneratedPseudoElement::ScrollMarkerGroup,
+                name,
+                block,
+                Vec::new(),
+            );
+            self.inline.semantic_event(event);
+            return Ok(());
+        }
+        self.place_generated_box(
+            parent,
+            GeneratedBox {
+                style,
+                decoration,
+                contents: GeneratedContents::Markers(markers),
+                replacement: None,
+                event: None,
+                navigation,
+                element_page_scope,
+                run_in: run_in.is_some(),
+            },
+        )
     }
 
     /// The contents of a block-level generated box holding `output`, which holds the first
@@ -2430,19 +2762,24 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             .into_iter()
             .map(BlockContent::Inline)
             .collect();
-        Ok(self.generated_block(style, children, decoration, element_page_scope, None))
+        Ok(Self::generated_block(
+            style,
+            children,
+            decoration,
+            element_page_scope,
+            (None, self.traversal.navigation.descendant()),
+        ))
     }
     fn generated_block(
-        &self,
         style: Style,
         children: Vec<BlockContent>,
         decoration: BoxDecoration,
         element_page_scope: Option<&std::sync::Arc<str>>,
-        event: Option<crate::document::SemanticEvent>,
+        (event, navigation): (Option<crate::document::SemanticEvent>, BoxNavigation),
     ) -> BlockBox {
         let page_scope = crate::document::page::used_name(&style.page, element_page_scope);
         BlockBox {
-            navigation: self.traversal.navigation.descendant(),
+            navigation,
             canvas_source: false,
             event,
             ..BlockBox::with_decoration(style, children, decoration, page_scope)
@@ -2623,6 +2960,12 @@ struct Frame<'d> {
     quotes: Option<crate::style::QuoteDepth>,
     generated: bool,
     ordinal: i128,
+    /// The element's box is a scroll container, or it is the root element, whose overflow the
+    /// viewport scrolls.
+    scroll_container: bool,
+    /// The style of the `::scroll-marker-group` the scroll container generates (CSS Overflow 5
+    /// §3.1.4).
+    marker_group: Option<Box<Style>>,
 }
 impl<'d> Frame<'d> {
     fn new(
@@ -2666,6 +3009,24 @@ impl<'d> Frame<'d> {
             quotes: None,
             generated: false,
             ordinal,
+            scroll_container: false,
+            marker_group: None,
+        }
+    }
+    /// The root of a copy of this frame's subtree, styled `style`. Its used page name is its
+    /// own, or the one it inherits.
+    fn copy_root(&self, style: Box<Style>) -> Self {
+        Self {
+            scroll_container: self.scroll_container,
+            marker_group: self.marker_group.clone(),
+            ..Self::new(
+                self.element,
+                style,
+                self.depth,
+                self.ordinal,
+                Some(Placement::Root),
+                self.page_scope.as_ref(),
+            )
         }
     }
 }
@@ -2865,7 +3226,7 @@ fn block<'a>(
                         .and_then(|block| block.first_line.origins.clone());
                     match origins {
                         Some(origins) => first_line_box(
-                            &frames[index],
+                            (&frames[index], marker_scroller(&frames[..index], traversal)),
                             (&parent.style, &origins),
                             sheet,
                             traversal,
@@ -2876,6 +3237,7 @@ fn block<'a>(
                 }
                 _ => None,
             };
+            let scroller = marker_scroller(&frames[..index], traversal);
             let frame = &mut frames[index];
             if let Some(block) = &mut frame.block {
                 block.first_line_box = first_line;
@@ -2889,7 +3251,7 @@ fn block<'a>(
                 .as_ref()
                 .is_some_and(|block| matches!(block.placement, Placement::Running))
             {
-                running_copies(frame, sheet, traversal, resources)?
+                running_copies((frame, scroller), sheet, traversal, resources)?
             } else {
                 Vec::new()
             };
@@ -3144,8 +3506,28 @@ fn block<'a>(
                         .checked_sub(1)
                         .and_then(|wrapper| frames[wrapper].block.as_ref())
                         .is_some_and(|block| block.inline_footnote.is_some());
+                // The root element's group placed before it is its first child (CSS Overflow 5
+                // §3.1.3).
+                let root_group = root_marker_group(
+                    &frames,
+                    index,
+                    traversal,
+                    crate::style::ScrollMarkerGroup::Before,
+                );
+                let root_markers = match root_group {
+                    Some(_) => Some(collect_scroll_markers(
+                        frames[0].copy_root(frames[0].style.clone()),
+                        sheet,
+                        traversal,
+                        resources,
+                    )?),
+                    None => None,
+                };
                 let (mut builder, style) =
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
+                if let (Some(group), Some(markers)) = (root_group, root_markers) {
+                    builder.place_marker_group(element, style, group, markers)?;
+                }
                 // The marker begins the footnote element's content (CSS GCPM 3 §2.7).
                 if footnote {
                     builder.generated(element, style, GeneratedPseudoElement::FootnoteMarker)?;
@@ -3305,6 +3687,39 @@ fn block<'a>(
                     // The anonymous block holds the footnote as an inline-level box.
                     child_style.float = crate::style::Float::None;
                 }
+            }
+            scroll_marker(
+                &mut frames,
+                block_index,
+                (child, &child_style),
+                sheet,
+                traversal,
+                resources,
+            )?;
+            let scroll_container = child_style.scroll_container_box(replaced);
+            let marker_group = if scroll_container {
+                marker_group_style(child, &child_style, sheet, resources.resolver)?
+            } else {
+                None
+            };
+            if let Some(group) = marker_group.as_deref().filter(|_| {
+                child_style.scroll_markers.group == crate::style::ScrollMarkerGroup::Before
+                    && !traversal.marker_prepass
+            }) {
+                let mut frame = Frame::new(
+                    child,
+                    child_style.clone(),
+                    child_depth,
+                    0,
+                    Some(Placement::Root),
+                    ancestor_page.as_ref(),
+                );
+                frame.scroll_container = true;
+                frame.marker_group = Some(Box::new(group.clone()));
+                let markers = collect_scroll_markers(frame, sheet, traversal, resources)?;
+                let (mut builder, parent) =
+                    active_builder(&mut frames, block_index, sheet, traversal, resources);
+                builder.place_marker_group(child, parent, group.clone(), markers)?;
             }
             let (mut builder, _) =
                 active_builder(&mut frames, block_index, sheet, traversal, resources);
@@ -3481,10 +3896,10 @@ fn block<'a>(
                 placement,
                 ancestor_page.as_ref(),
             ));
-            frames
-                .last_mut()
-                .expect("the child frame was appended")
-                .math_depth = math_depth;
+            let frame = frames.last_mut().expect("the child frame was appended");
+            frame.math_depth = math_depth;
+            frame.scroll_container = scroll_container;
+            frame.marker_group = marker_group;
             if let Some(block) = frames.last_mut().and_then(|frame| frame.block.as_mut()) {
                 block.first_line = first_line;
             }
@@ -3513,6 +3928,13 @@ fn block<'a>(
         let generated = frames[index].generated;
         let contents = frames[index].style.display == Display::Contents;
         let quotes = frames[index].quotes;
+        // The root element's group placed after it is its last child (CSS Overflow 5 §3.1.3).
+        let root_group = root_marker_group(
+            &frames,
+            index,
+            traversal,
+            crate::style::ScrollMarkerGroup::After,
+        );
         let (mut builder, style) =
             active_builder(&mut frames, block_index, sheet, traversal, resources);
         if generated {
@@ -3520,6 +3942,14 @@ fn block<'a>(
             if element.generates_picker_icon() {
                 builder.generated(element, style, GeneratedPseudoElement::PickerIcon)?;
             }
+        }
+        if let Some(group) = root_group {
+            let markers = builder
+                .traversal
+                .scroll_markers
+                .remove(&element.id())
+                .unwrap_or_default();
+            builder.place_marker_group(element, style, group, markers)?;
         }
         if let Some(depth) = quotes {
             builder.traversal.quotes = depth;
@@ -3558,8 +3988,11 @@ fn block<'a>(
             builder.flush()?;
         }
         traversal.navigation.leave();
-        let frame = frames.pop().unwrap();
+        let mut frame = frames.pop().unwrap();
         blocks.pop();
+        let marker_group = frame.marker_group.take();
+        let marker_side = frame.style.scroll_markers.group;
+        let scroll_container = frame.scroll_container;
         let mut state = frame.block.unwrap();
         mark_last_formatted_line(&mut state.children);
         let canvas_source = index == 0 || traversal.canvas_body == Some(element.id());
@@ -3599,9 +4032,13 @@ fn block<'a>(
             )?;
         }
         crate::document::mathml::prepare(element, &mut block, sheet, resources.resolver)?;
+        // A copy's root leaves the markers collected for it to the formatting it copies for.
         if matches!(state.placement, Placement::Root) {
             return Ok(block);
         }
+        let markers = scroll_container
+            .then(|| traversal.scroll_markers.remove(&element.id()))
+            .flatten();
         let (mut builder, parent) = active_builder(
             &mut frames,
             *blocks.last().unwrap(),
@@ -3625,6 +4062,12 @@ fn block<'a>(
             }
             Placement::Atomic => builder.atomic(block, parent)?,
             Placement::Root => unreachable!("root returned before attaching to a parent"),
+        }
+        if let Some(group) = marker_group.filter(|_| {
+            marker_side == crate::style::ScrollMarkerGroup::After
+                && !builder.traversal.marker_prepass
+        }) {
+            builder.place_marker_group(element, parent, *group, markers.unwrap_or_default())?;
         }
         traversal.counters.leave();
     }
@@ -3846,6 +4289,9 @@ fn format_root(
         page_counters: Vec::new(),
         running: Vec::new(),
         pages: &pages,
+        scroll_markers: std::collections::HashMap::new(),
+        marker_prepass: false,
+        marker_scroller: None,
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
         .then(|| html.body_element().map(Element::id))
@@ -3886,8 +4332,14 @@ fn format_root(
         linked,
         &mut |style| resources.masks(style),
     )?;
+    // The viewport scrolls the root element's overflow (CSS Overflow 3 §3.3).
+    let marker_group = marker_group_style(element, &style, sheet, resolver)?;
     let mut root = block(
-        Frame::new(element, style, 0, ordinal, Some(Placement::Root), None),
+        Frame {
+            scroll_container: true,
+            marker_group,
+            ..Frame::new(element, style, 0, ordinal, Some(Placement::Root), None)
+        },
         sheet,
         &mut traversal,
         &mut resources,

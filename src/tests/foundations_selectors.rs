@@ -784,7 +784,7 @@ fn invalid_scope_boundaries_recover_and_support_probes_are_honest() {
         (".outer{@scope (&>.inner){&>p{color:red}}}", true),
         ("@scope (.outer::before){p{color:red}}", false),
         ("@scope (.outer) to (::after){p{color:red}}", false),
-        ("@scope (.outer){p{scroll-marker-group:before}}", false),
+        ("@scope (.outer){p{scroll-initial-target:nearest}}", false),
         ("@scope (.outer){@import 'unfetched.css';}", false),
         ("@scope (.outer){color:red}", false),
     ] {
@@ -940,7 +940,7 @@ fn named_support_blocks_validate_the_actual_nested_rule_context() {
         ),
         ("article{@layer child;color:red}", true),
         ("article{&bad{color:red}}", false),
-        ("article{p{scroll-marker-group:before}}", false),
+        ("article{p{scroll-initial-target:nearest}}", false),
     ] {
         let html = format!(
             "<!doctype html><style>{}@supports-condition --nested{{{probe}}}p{{font-size:12pt}}@supports (--nested){{p{{font-size:19pt}}}}</style><p>Probe</p>",

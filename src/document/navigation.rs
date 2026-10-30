@@ -269,6 +269,7 @@ impl NavigationBuilder {
             scopes: self.scopes.clone(),
             navigation: Navigation {
                 destinations: self.navigation.destinations,
+                links: self.navigation.links.clone(),
                 ..Navigation::default()
             },
             labels: HashMap::new(),
@@ -300,6 +301,20 @@ impl NavigationBuilder {
     }
     fn current(&self) -> Option<usize> {
         self.scopes.last().copied().flatten()
+    }
+    /// The navigation of a `::scroll-marker`: a hyperlink to its scroll target, its
+    /// originating element `target` (CSS Overflow 5 §3.1.5), which takes a destination its
+    /// boxes enter with.
+    pub(crate) fn scroll_marker(&mut self, target: ElementId) -> BoxNavigation {
+        let destination = self.destination(target);
+        let link = self.navigation.links.len();
+        self.navigation
+            .links
+            .push(LinkTarget::Destination(destination));
+        BoxNavigation {
+            link: Some(link),
+            destination: None,
+        }
     }
     /// Navigation of anonymous and generated boxes inside the current element.
     pub(crate) fn descendant(&self) -> BoxNavigation {
@@ -380,7 +395,9 @@ impl NavigationBuilder {
                 GeneratedPseudoElement::FootnoteCall
                 | GeneratedPseudoElement::FootnoteMarker
                 | GeneratedPseudoElement::Checkmark
-                | GeneratedPseudoElement::PickerIcon => {}
+                | GeneratedPseudoElement::PickerIcon
+                | GeneratedPseudoElement::ScrollMarkerGroup
+                | GeneratedPseudoElement::ScrollMarker => {}
             }
         }
     }

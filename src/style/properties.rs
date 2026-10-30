@@ -793,6 +793,43 @@ fn handler(property: Property) -> Option<Handler> {
             overflow_y,
             Some(|v, _| crate::style::Overflow::from_component(v).is_ok()),
         ),
+        P::ScrollMarkerGroup => (
+            scroll_marker_group,
+            Some(|v, _| crate::style::ScrollMarkerGroup::from_component(v).is_ok()),
+        ),
+        P::ScrollTargetGroup => (scroll_target_group, Some(|_, _| true)),
+        P::ScrollMarginTop => (
+            scroll_margin_top,
+            Some(|v, r| crate::style::values::length(v, r).is_ok()),
+        ),
+        P::ScrollMarginRight => (
+            scroll_margin_right,
+            Some(|v, r| crate::style::values::length(v, r).is_ok()),
+        ),
+        P::ScrollMarginBottom => (
+            scroll_margin_bottom,
+            Some(|v, r| crate::style::values::length(v, r).is_ok()),
+        ),
+        P::ScrollMarginLeft => (
+            scroll_margin_left,
+            Some(|v, r| crate::style::values::length(v, r).is_ok()),
+        ),
+        P::ScrollPaddingTop => (
+            scroll_padding_top,
+            Some(|v, r| scroll_padding(v, r).is_ok()),
+        ),
+        P::ScrollPaddingRight => (
+            scroll_padding_right,
+            Some(|v, r| scroll_padding(v, r).is_ok()),
+        ),
+        P::ScrollPaddingBottom => (
+            scroll_padding_bottom,
+            Some(|v, r| scroll_padding(v, r).is_ok()),
+        ),
+        P::ScrollPaddingLeft => (
+            scroll_padding_left,
+            Some(|v, r| scroll_padding(v, r).is_ok()),
+        ),
         P::OverflowClipMarginTop => (
             overflow_clip_margin_top,
             Some(|v, r| crate::style::OverflowClipMargin::from_component(v, r).is_ok()),
@@ -1728,6 +1765,68 @@ fn font_style(
     };
     Ok(())
 }
+computed!(
+    scroll_marker_group,
+    [scroll_markers.group],
+    |value, style, _parent, _relative| { crate::style::ScrollMarkerGroup::from_component(value)? }
+);
+computed!(
+    scroll_target_group,
+    [scroll_markers.target_group],
+    |value, style, _parent, _relative| {
+        flag(value, &[(Keyword::None, false), (Keyword::Auto, true)])?
+    }
+);
+computed!(
+    scroll_margin_top,
+    [scroll_margin[TOP]],
+    |value, style, _parent, relative| { crate::style::values::length(value, relative)? }
+);
+computed!(
+    scroll_margin_right,
+    [scroll_margin[RIGHT]],
+    |value, style, _parent, relative| { crate::style::values::length(value, relative)? }
+);
+computed!(
+    scroll_margin_bottom,
+    [scroll_margin[BOTTOM]],
+    |value, style, _parent, relative| { crate::style::values::length(value, relative)? }
+);
+computed!(
+    scroll_margin_left,
+    [scroll_margin[LEFT]],
+    |value, style, _parent, relative| { crate::style::values::length(value, relative)? }
+);
+/// A `scroll-padding` side: `auto` or a length-percentage.
+fn scroll_padding(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<Option<LengthPercentage>, StyleError> {
+    if value.keyword() == Some(Keyword::Auto) {
+        return Ok(None);
+    }
+    length_percentage(value, relative).map(Some)
+}
+computed!(
+    scroll_padding_top,
+    [scroll_padding[TOP]],
+    |value, style, _parent, relative| { scroll_padding(value, relative)? }
+);
+computed!(
+    scroll_padding_right,
+    [scroll_padding[RIGHT]],
+    |value, style, _parent, relative| { scroll_padding(value, relative)? }
+);
+computed!(
+    scroll_padding_bottom,
+    [scroll_padding[BOTTOM]],
+    |value, style, _parent, relative| { scroll_padding(value, relative)? }
+);
+computed!(
+    scroll_padding_left,
+    [scroll_padding[LEFT]],
+    |value, style, _parent, relative| { scroll_padding(value, relative)? }
+);
 computed!(
     overflow_clip_margin_top,
     [overflow_clip_margin[TOP]],

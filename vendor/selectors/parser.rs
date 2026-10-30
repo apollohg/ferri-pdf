@@ -42,6 +42,13 @@ pub trait PseudoElement: Sized + ToCss {
         false
     }
 
+    /// Whether the pseudo-classes that other specifications attach to particular
+    /// pseudo-elements (`NonTSPseudoClass::is_pseudo_element_state`) may follow this one, in
+    /// addition to the user action pseudo-classes (Selectors 4 §3.6.3).
+    fn accepts_pseudo_element_state_pseudo_classes(&self) -> bool {
+        false
+    }
+
     /// Whether this pseudo-element is valid after a ::slotted(..) pseudo.
     fn valid_after_slotted(&self) -> bool {
         false
@@ -90,6 +97,12 @@ pub trait NonTSPseudoClass: Sized + ToCss {
     ///
     /// https://drafts.csswg.org/selectors-4/#useraction-pseudos
     fn is_user_action_state(&self) -> bool;
+
+    /// Whether this pseudo-class is one that another specification allows to follow the
+    /// pseudo-elements accepting it (`PseudoElement::accepts_pseudo_element_state_pseudo_classes`).
+    fn is_pseudo_element_state(&self) -> bool {
+        false
+    }
 
     /// Whether selector-valued arguments contain a nesting selector.
     fn has_parent_selector(&self) -> bool {
@@ -180,6 +193,10 @@ bitflags! {
         /// Whether we've parsed an element-backed pseudo-element, after which every
         /// pseudo-class is syntactically allowed (CSS Pseudo-Elements 4 §5).
         const AFTER_ELEMENT_BACKED_PSEUDO = 1 << 10;
+
+        /// Whether we've parsed a pseudo-element that pseudo-element state pseudo-classes may
+        /// follow, which also holds within the logical combinations after it.
+        const AFTER_PSEUDO_ACCEPTING_ELEMENT_STATES = 1 << 11;
     }
 }
 
@@ -3539,6 +3556,9 @@ fn push_simple_selector_result<'i, P, Impl>(
             if !p.accepts_state_pseudo_classes() {
                 state.insert(SelectorParsingState::AFTER_NON_STATEFUL_PSEUDO_ELEMENT);
             }
+            if p.accepts_pseudo_element_state_pseudo_classes() {
+                state.insert(SelectorParsingState::AFTER_PSEUDO_ACCEPTING_ELEMENT_STATES);
+            }
             if p.is_in_pseudo_element_tree() {
                 state.insert(SelectorParsingState::IN_PSEUDO_ELEMENT_TREE);
             }
@@ -3928,6 +3948,8 @@ where
     let pseudo_class = P::parse_non_ts_pseudo_class(parser, location, name)?;
     if state.intersects(SelectorParsingState::AFTER_NON_ELEMENT_BACKED_PSEUDO)
         && !pseudo_class.is_user_action_state()
+        && !(state.intersects(SelectorParsingState::AFTER_PSEUDO_ACCEPTING_ELEMENT_STATES)
+            && pseudo_class.is_pseudo_element_state())
     {
         return Err(location.new_custom_error(SelectorParseErrorKind::InvalidState));
     }

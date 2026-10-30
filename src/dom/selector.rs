@@ -1,4 +1,6 @@
-use crate::dom::{Directionality, Element, ElementId, QuirksMode, TreeRelation, TreeScopeId};
+use crate::dom::{
+    Directionality, Element, ElementId, QuirksMode, TargetPosition, TreeRelation, TreeScopeId,
+};
 use cssparser::{CowRcStr, ParseError, Parser, ParserInput, SourceLocation, ToCss, Token};
 use html5ever::Namespace;
 use scraper::{
@@ -314,10 +316,11 @@ impl Selector {
         }
     }
 
-    /// `pseudo` of the elements this selector matches, as a nested rule's `&` represents it;
-    /// `None` for the sub-pseudo-elements, which no single compound selector can follow.
-    pub(crate) fn with_pseudo_element(&self, pseudo: PseudoElement) -> Option<Self> {
-        let source = format!("&{}", pseudo.source());
+    /// The pseudo-element selector `pseudo`, with the pseudo-classes following it, of the
+    /// elements this selector matches, as a nested rule's `&` represents it; `None` for the
+    /// sub-pseudo-elements, which no single compound selector can follow.
+    pub(crate) fn with_pseudo_element(&self, pseudo: &str) -> Option<Self> {
+        let source = format!("&{pseudo}");
         Self::parse_unresolved(
             &source,
             &NamespaceMap::new(),
@@ -380,11 +383,7 @@ impl Selector {
         {
             return false;
         }
-        let quirks = match element.tree.quirks_mode() {
-            QuirksMode::Quirks => matching::QuirksMode::Quirks,
-            QuirksMode::LimitedQuirks => matching::QuirksMode::LimitedQuirks,
-            QuirksMode::NoQuirks => matching::QuirksMode::NoQuirks,
-        };
+        let quirks = matching_quirks(element);
         let mut context = MatchingContext::new(
             matching::MatchingMode::Normal,
             None,
@@ -405,6 +404,7 @@ impl Selector {
                     element: element.tree.root_element(),
                     virtual_root: true,
                     document: true,
+                    scroll_marker: false,
                 }
                 .opaque(),
             ),
@@ -435,6 +435,30 @@ impl Selector {
                 }
             })
         })
+    }
+
+    /// Whether this selector, whose subject is a pseudo-element in the states that follow it,
+    /// matches that pseudo-element of `element`. Only a `::scroll-marker` is in a state a
+    /// static rendering puts pseudo-elements in (CSS Overflow 5 §3.1.7).
+    pub(crate) fn matches_pseudo_element_states(&self, element: Element<'_>) -> bool {
+        let quirks = matching_quirks(element);
+        let mut caches = SelectorCaches::default();
+        let mut context = MatchingContext::new(
+            matching::MatchingMode::Normal,
+            None,
+            &mut caches,
+            quirks,
+            matching::NeedsSelectorFlags::No,
+            matching::MatchingForInvalidation::No,
+        );
+        let marker = MatchingElement {
+            scroll_marker: true,
+            ..MatchingElement::new(element, false)
+        };
+        self.selectors
+            .slice()
+            .iter()
+            .any(|selector| matching::matches_selector(selector, 0, None, &marker, &mut context))
     }
 
     /// Origins and extra alias hops for a single selector's scope proximity.
@@ -468,6 +492,14 @@ impl Selector {
                 .contains(origin.element)
                 .then_some((origin.element, hops))
         })
+    }
+}
+
+fn matching_quirks(element: Element<'_>) -> matching::QuirksMode {
+    match element.tree.quirks_mode() {
+        QuirksMode::Quirks => matching::QuirksMode::Quirks,
+        QuirksMode::LimitedQuirks => matching::QuirksMode::LimitedQuirks,
+        QuirksMode::NoQuirks => matching::QuirksMode::NoQuirks,
     }
 }
 
@@ -542,6 +574,9 @@ impl<'i> parser::Parser<'i> for StaticParser<'_> {
             "has-slotted" => Some(StaticState::HasSlotted),
             "paused" => Some(StaticState::Paused),
             "muted" => Some(StaticState::Muted),
+            "target-current" => Some(StaticState::ScrollTarget(TargetPosition::Current)),
+            "target-before" => Some(StaticState::ScrollTarget(TargetPosition::Before)),
+            "target-after" => Some(StaticState::ScrollTarget(TargetPosition::After)),
             BASE_SELECT_PSEUDO_CLASS if self.origin == SelectorOrigin::UserAgent => {
                 Some(StaticState::BaseSelect)
             }
@@ -852,6 +887,9 @@ pub(crate) enum StaticState {
     },
     Inactive(InactiveState),
     Form(FormState),
+    /// `:target-current`, `:target-before` and `:target-after` (CSS Overflow 5 §3.1.7): a
+    /// scroll marker at that position relative to its group's active marker.
+    ScrollTarget(TargetPosition),
 }
 impl parser::NonTSPseudoClass for StaticState {
     type Impl = StaticSelector;
@@ -882,6 +920,10 @@ impl parser::NonTSPseudoClass for StaticState {
             self,
             Self::Inactive(InactiveState::Active | InactiveState::Hover)
         )
+    }
+    /// CSS Overflow 5 §3.1.7: `::scroll-marker` takes the scroll marker pseudo-classes.
+    fn is_pseudo_element_state(&self) -> bool {
+        matches!(self, Self::ScrollTarget(_))
     }
     fn is_user_action_state(&self) -> bool {
         matches!(
@@ -942,6 +984,9 @@ impl ToCss for StaticState {
             }
             Self::Inactive(state) => write!(dest, ":{}", state.name()),
             Self::Form(state) => write!(dest, ":{}", state.name()),
+            Self::ScrollTarget(TargetPosition::Current) => dest.write_str(":target-current"),
+            Self::ScrollTarget(TargetPosition::Before) => dest.write_str(":target-before"),
+            Self::ScrollTarget(TargetPosition::After) => dest.write_str(":target-after"),
             Self::Heading(None) => dest.write_str(":heading"),
             Self::Heading(Some(levels)) => {
                 dest.write_str(":heading(")?;
@@ -971,6 +1016,11 @@ pub(crate) enum GeneratedPseudoElement {
     FootnoteCall,
     /// Placed at the start of a footnote element (CSS GCPM 3 §2.7).
     FootnoteMarker,
+    /// A scroll container's sibling holding the scroll markers of its contents (CSS Overflow
+    /// 5 §3.1.4).
+    ScrollMarkerGroup,
+    /// Placed in the `::scroll-marker-group` of its nearest scroll container (§3.1.5).
+    ScrollMarker,
 }
 
 /// Tree-abiding and typographic pseudo-elements (CSS Pseudo-Elements 4 §§2, 4).
@@ -996,6 +1046,10 @@ pub(crate) enum PseudoElement {
     FootnoteMarker,
     Checkmark,
     PickerIcon,
+    /// CSS Overflow 5 §3.1.4–§3.1.5: the box a scroll container generates beside itself,
+    /// and the scroll marker boxes its descendants generate in it.
+    ScrollMarkerGroup,
+    ScrollMarker,
     Absent(AbsentPseudoElement),
 }
 impl From<GeneratedPseudoElement> for PseudoElement {
@@ -1007,6 +1061,8 @@ impl From<GeneratedPseudoElement> for PseudoElement {
             GeneratedPseudoElement::PickerIcon => Self::PickerIcon,
             GeneratedPseudoElement::FootnoteCall => Self::FootnoteCall,
             GeneratedPseudoElement::FootnoteMarker => Self::FootnoteMarker,
+            GeneratedPseudoElement::ScrollMarkerGroup => Self::ScrollMarkerGroup,
+            GeneratedPseudoElement::ScrollMarker => Self::ScrollMarker,
         }
     }
 }
@@ -1085,6 +1141,8 @@ impl PseudoElement {
             ("footnote-marker", Self::FootnoteMarker),
             ("checkmark", Self::Checkmark),
             ("picker-icon", Self::PickerIcon),
+            ("scroll-marker-group", Self::ScrollMarkerGroup),
+            ("scroll-marker", Self::ScrollMarker),
         ]
         .into_iter()
         .chain(
@@ -1143,7 +1201,7 @@ impl PseudoElement {
             _ => 1,
         }
     }
-    fn source(self) -> &'static str {
+    pub(crate) fn source(self) -> &'static str {
         match self {
             Self::Before => "::before",
             Self::After => "::after",
@@ -1159,6 +1217,8 @@ impl PseudoElement {
             Self::FootnoteMarker => "::footnote-marker",
             Self::Checkmark => "::checkmark",
             Self::PickerIcon => "::picker-icon",
+            Self::ScrollMarkerGroup => "::scroll-marker-group",
+            Self::ScrollMarker => "::scroll-marker",
             Self::Absent(pseudo) => pseudo.source(),
         }
     }
@@ -1174,9 +1234,13 @@ impl parser::PseudoElement for PseudoElement {
     fn parses_as_element_backed(&self) -> bool {
         self.is_element_backed()
     }
-    /// CSS Pseudo-Elements 4 §5: any pseudo-class may follow an element-backed one.
+    /// CSS Pseudo-Elements 4 §5: any pseudo-class may follow an element-backed one. The
+    /// scroll marker pseudo-elements are focusable (CSS Overflow 5 §3.3).
     fn accepts_state_pseudo_classes(&self) -> bool {
-        self.is_element_backed()
+        self.is_element_backed() || matches!(self, Self::ScrollMarkerGroup | Self::ScrollMarker)
+    }
+    fn accepts_pseudo_element_state_pseudo_classes(&self) -> bool {
+        *self == Self::ScrollMarker
     }
 }
 impl ToCss for PseudoElement {
@@ -1191,6 +1255,8 @@ struct MatchingElement<'a> {
     element: Element<'a>,
     virtual_root: bool,
     document: bool,
+    /// Matched as the `::scroll-marker` of `element`.
+    scroll_marker: bool,
 }
 impl<'a> MatchingElement<'a> {
     fn new(element: Element<'a>, virtual_root: bool) -> Self {
@@ -1198,6 +1264,7 @@ impl<'a> MatchingElement<'a> {
             element,
             virtual_root,
             document: false,
+            scroll_marker: false,
         }
     }
     fn with_element(&self, element: Element<'a>) -> Self {
@@ -1238,6 +1305,7 @@ impl SelectorElement for MatchingElement<'_> {
                         .is_some_and(|parent| parent.value().is_document()))
                 .then_some(Self {
                     document: true,
+                    scroll_marker: false,
                     ..*self
                 })
             })
@@ -1263,9 +1331,12 @@ impl SelectorElement for MatchingElement<'_> {
     /// CSS Pseudo-Elements 4 §5: the element backing `::details-content` is matched as that
     /// pseudo-element, which no structural pseudo-class matches; it has no siblings to them.
     fn is_pseudo_element(&self) -> bool {
-        self.backs_pseudo_element()
+        self.scroll_marker || self.backs_pseudo_element()
     }
     fn pseudo_element_originating_element(&self) -> Option<Self> {
+        if self.scroll_marker {
+            return Some(self.with_element(self.element));
+        }
         self.element
             .details_content_host()
             .map(|host| self.with_element(host))
@@ -1406,6 +1477,9 @@ impl SelectorElement for MatchingElement<'_> {
                     && element.name() == "select"
                     && element.is_list_box()
             }
+            StaticState::ScrollTarget(position) => {
+                element.scroll_marker_position(self.scroll_marker) == Some(*position)
+            }
             StaticState::Inactive(_) | StaticState::Current(_) | StaticState::CustomState(_) => {
                 false
             }
@@ -1416,7 +1490,11 @@ impl SelectorElement for MatchingElement<'_> {
         pseudo: &PseudoElement,
         _: &mut MatchingContext<'_, StaticSelector>,
     ) -> bool {
-        *pseudo == PseudoElement::DetailsContent && self.backs_pseudo_element()
+        match pseudo {
+            PseudoElement::ScrollMarker => self.scroll_marker,
+            PseudoElement::DetailsContent => self.backs_pseudo_element(),
+            _ => false,
+        }
     }
     fn apply_selector_flags(&self, _: matching::ElementSelectorFlags) {}
     fn is_link(&self) -> bool {

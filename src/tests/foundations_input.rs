@@ -398,7 +398,7 @@ fn repeated_imports_keep_distinct_encoding_and_layer_context() {
 #[test]
 fn false_import_conditions_do_not_fetch() {
     let resolver = GraphResolver::default();
-    let html = "<!doctype html><style>@import 'grid.css' layer(first) supports(scroll-marker-group:before);@import 'screen.css' screen;@import 'unknown.css' supports(future-function());@layer second,first;@layer second{p{font-size:23pt}}@layer first{p{font-size:19pt}}</style><p>Inactive</p>";
+    let html = "<!doctype html><style>@import 'grid.css' layer(first) supports(scroll-initial-target:nearest);@import 'screen.css' screen;@import 'unknown.css' supports(future-function());@layer second,first;@layer second{p{font-size:23pt}}@layer first{p{font-size:19pt}}</style><p>Inactive</p>";
     let trace = crate::render_with_resolver(html, &graph_options(), &resolver)
         .unwrap()
         .layout
@@ -475,7 +475,7 @@ fn html_style_link_applicability_matches_initial_document() {
         )]),
         ..Default::default()
     };
-    let html = "<!doctype html><style type='text/css; charset=utf-8'>p{scroll-marker-group:before}</style><style type=text/plain>p{scroll-marker-group:before}</style><style media=screen>p{scroll-marker-group:before}</style><link rel='preload StyleSheet' href=active.css media=print type='Text/CSS; charset=utf-8'><link rel=stylesheet disabled href=disabled.css><link rel='alternate stylesheet' title=Unselected href=alternate.css><link rel=stylesheet type=text/plain href=wrong-type.css><link rel=stylesheet media=screen href=screen.css><link rel=stylesheet><p>Applicable</p>";
+    let html = "<!doctype html><style type='text/css; charset=utf-8'>p{scroll-initial-target:nearest}</style><style type=text/plain>p{scroll-initial-target:nearest}</style><style media=screen>p{scroll-initial-target:nearest}</style><link rel='preload StyleSheet' href=active.css media=print type='Text/CSS; charset=utf-8'><link rel=stylesheet disabled href=disabled.css><link rel='alternate stylesheet' title=Unselected href=alternate.css><link rel=stylesheet type=text/plain href=wrong-type.css><link rel=stylesheet media=screen href=screen.css><link rel=stylesheet><p>Applicable</p>";
     let mut options = graph_options();
     options.stylesheets.push("p{font-size:23pt}".into());
     let trace = crate::render_with_resolver(html, &options, &resolver)

@@ -1,5 +1,6 @@
 mod navigation;
 mod ruby;
+mod scroll_markers;
 mod shadow_fonts;
 mod text_transform;
 

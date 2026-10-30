@@ -450,7 +450,7 @@ const GROUPS: [Group; 17] = {
     ]
 };
 /// The groups of properties without print effect, whose values live in `Style::inert`.
-const INERT_GROUPS: std::ops::Range<usize> = 12..15;
+const INERT_GROUPS: std::ops::Range<usize> = 14..15;
 
 impl Flow {
     pub(crate) fn of(style: &Style) -> Self {
@@ -668,6 +668,8 @@ pub(crate) fn reflowed_from(source: &Style, from: Flow, flow: Flow) -> Style {
     style.overflow = std::array::from_fn(|index| source.overflow[dimension(index)]);
     style.overflow_clip_margin =
         std::array::from_fn(|index| source.overflow_clip_margin[side(index)]);
+    style.scroll_margin = std::array::from_fn(|index| source.scroll_margin[side(index)]);
+    style.scroll_padding = std::array::from_fn(|index| source.scroll_padding[side(index)].clone());
     style.object_position = std::array::from_fn(|axis| {
         let edge = if axis == HORIZONTAL { LEFT } else { TOP };
         let source_edge = flow.source(from, &SIDES, edge);

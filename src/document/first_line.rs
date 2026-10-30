@@ -186,9 +186,13 @@ impl Restyle<'_> {
                         )?,
                     )),
                     // Control internals are atomic inlines, which no first line reaches, and
-                    // it reaches `::details-content` as its backing element.
+                    // it reaches `::details-content` as its backing element. The scroll
+                    // marker pseudo-elements inherit from originating elements outside the
+                    // line their boxes may lie on.
                     Some(
-                        PseudoElement::Marker
+                        PseudoElement::ScrollMarkerGroup
+                        | PseudoElement::ScrollMarker
+                        | PseudoElement::Marker
                         | PseudoElement::FirstLine
                         | PseudoElement::Placeholder
                         | PseudoElement::FileSelectorButton
