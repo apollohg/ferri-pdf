@@ -102,15 +102,22 @@ fn measure_atomic<'a>(
 }
 
 /// Lays a ruby annotation box out again at the `width` its ruby column gives it, which its
-/// contents fill by its `ruby-align` (CSS Ruby 1 §4.3).
+/// contents fill by its `ruby-align` (CSS Ruby 1 §4.3): all of its contents, or the `part` of
+/// them a line breaking inside its bases holds (§3.4.2).
 pub(super) fn measure_annotation<'a>(
     measurer: &mut Measurer<'a>,
-    block: &'a BlockBox,
+    (block, part): (&'a BlockBox, Option<std::ops::Range<usize>>),
     width: f32,
     containing_height: Option<f32>,
     containing_rtl: bool,
 ) -> Result<MeasuredAtomic<'a>, Failure> {
     let unbroken = std::mem::replace(&mut measurer.unbroken, true);
+    measurer.annotation_part = part.and_then(|part| match block.children().first() {
+        Some(crate::document::BlockContent::Inline(contents)) => {
+            Some((std::ptr::from_ref(contents), part))
+        }
+        _ => None,
+    });
     let geometry = inline_horizontal(
         block.style(),
         0.0,
@@ -121,7 +128,41 @@ pub(super) fn measure_annotation<'a>(
     );
     let measured = measurer.measure_format(block, geometry.clone(), false, containing_height, None);
     measurer.unbroken = unbroken;
+    measurer.annotation_part = None;
     Ok(measured_atomic(block, measured?, &geometry))
+}
+
+/// Sets `metrics` to those of `paragraph`'s measured blocks (`Paragraph::measured_blocks`)
+/// from its inline blocks as measured, `atomics`: those inside an annotation box as laying the
+/// box out measured them. A block already placed keeps its own and its contents' metrics.
+pub(super) fn paragraph_metrics(
+    paragraph: &crate::document::Paragraph,
+    atomics: &[Option<MeasuredAtomic<'_>>],
+    metrics: &mut Vec<AtomicMetrics>,
+) {
+    metrics.resize(paragraph.measured_blocks().len(), AtomicMetrics::default());
+    for (index, atomic) in atomics.iter().enumerate() {
+        let Some(atomic) = atomic else {
+            continue;
+        };
+        metrics[index] = atomic.metrics;
+        let Some(annotation) = index.checked_sub(paragraph.atomics().len()) else {
+            continue;
+        };
+        let nested = paragraph.annotation_metrics(annotation);
+        if nested.is_empty() {
+            continue;
+        }
+        let Some(contents) = atomic.block.items.iter().find_map(|item| match item {
+            FlowItem::Paragraph(contents) => Some(contents),
+            _ => None,
+        }) else {
+            unreachable!("an annotation box with measured blocks lays out its contents")
+        };
+        let mut inner = metrics[nested.clone()].to_vec();
+        paragraph_metrics(contents.paragraph, &contents.atomics, &mut inner);
+        metrics[nested].copy_from_slice(&inner);
+    }
 }
 
 /// An atomic inline's metrics from its layout `measured` with horizontal `geometry`.

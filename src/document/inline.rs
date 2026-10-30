@@ -471,6 +471,36 @@ impl Paragraph {
             .get(index)
             .unwrap_or_else(|| &self.annotations[index - self.atomics.len()])
     }
+    /// The paragraph of ruby annotation box `index`'s contents, if it has any.
+    pub(crate) fn annotation_contents(&self, index: usize) -> Option<&Self> {
+        match self.annotations[index].block.children().first() {
+            Some(crate::document::BlockContent::Inline(contents)) => Some(contents),
+            _ => None,
+        }
+    }
+    /// The boxes whose metrics lay out its lines: its `inline_blocks`, then in turn those of
+    /// each annotation box's contents, which a line breaking inside a ruby base lays out in
+    /// part (CSS Ruby 1 §3.4.2).
+    pub(crate) fn measured_blocks(&self) -> Vec<&Anchor> {
+        let mut blocks: Vec<&Anchor> = self.inline_blocks().collect();
+        for index in 0..self.annotations.len() {
+            if let Some(contents) = self.annotation_contents(index) {
+                blocks.extend(contents.measured_blocks());
+            }
+        }
+        blocks
+    }
+    /// Where the metrics of annotation box `index`'s contents' `measured_blocks` lie among
+    /// this paragraph's.
+    pub(crate) fn annotation_metrics(&self, index: usize) -> Range<usize> {
+        let count = |index: usize| {
+            self.annotation_contents(index)
+                .map_or(0, |contents| contents.measured_blocks().len())
+        };
+        let start =
+            self.atomics.len() + self.annotations.len() + (0..index).map(count).sum::<usize>();
+        start..start + count(index)
+    }
     /// The boxes anchored in the paragraph: floats, positioned boxes, atomic inlines and ruby
     /// annotations.
     pub(crate) fn anchored_blocks_mut(

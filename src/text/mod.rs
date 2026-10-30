@@ -658,8 +658,6 @@ pub(crate) enum TextError {
     ParagraphMismatch,
     #[error("atomic inline {index} on a ::first-line inherits first-line styles into its contents")]
     FirstLineAtomic { index: usize },
-    #[error("unsupported ruby layout: {feature}")]
-    UnsupportedRuby { feature: &'static str },
 }
 
 /// The content language, or the OpenType language system `font-language-override` names
@@ -776,13 +774,14 @@ impl<'a> TextContext<'a> {
     pub(crate) fn resolver(&self) -> &'a dyn ResourceResolver {
         self.resolver
     }
-    /// `atomics` holds the min- and max-content margin-box widths of the paragraph's atomic inlines.
+    /// `atomics` holds the min- and max-content margin-box widths of the paragraph's measured
+    /// blocks.
     pub(crate) fn intrinsic_widths(
         &self,
         paragraph: &Paragraph,
         atomics: &[IntrinsicWidths],
     ) -> Result<IntrinsicWidths, TextError> {
-        let expected = paragraph.inline_blocks().count();
+        let expected = paragraph.measured_blocks().len();
         if atomics.len() != expected {
             return Err(TextError::AtomicMetrics {
                 expected,

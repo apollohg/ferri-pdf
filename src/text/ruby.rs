@@ -1,23 +1,31 @@
 //! Ruby layout (CSS Ruby 1 §§3–5). A ruby container's bases lie on the line as inline boxes;
 //! each line's columns are sized to their widest content, the bases distributing the extra
 //! space by `ruby-align` before the line is fitted, and its annotation boxes are then placed
-//! over or under them, stacked level by level against the base container.
+//! over or under them, stacked level by level against the base container. A line breaking
+//! inside a base breaks its annotations in parallel, each line holding a fragment of each.
 use crate::document::{
     Paragraph,
-    ruby::{Annotation, Level, Ruby},
+    ruby::{Annotation, Level, Ruby, Segment},
 };
 use crate::fonts::{FALLBACK_IDEOGRAPH_ADVANCE_EM, WATER_IDEOGRAPH};
 use crate::style::{RubyAlign, RubyMerge, Style};
 use crate::text::line_boxes::{
     Arranged, AtomicFragment, BoxFragment, BoxMetrics, Slot, slot_width,
 };
-use crate::text::{GlyphRun, Line, TextContext, TextError, autospace, spacing};
+use crate::text::{
+    GlyphRun, Line, PreparedParagraph, TextContext, TextError, autospace, hyphenation, spacing,
+};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::ops::Range;
+use std::rc::Rc;
 use unicode_linebreak::BreakOpportunity;
 use unicode_script::{Script, UnicodeScript};
 
+/// The one unit an annotation box's contents count as where they hold no text to break, and
+/// its breaks: a line holds it whole or not at all.
+const WHOLE_UNIT: Range<usize> = 0..1;
+const WHOLE_BREAKS: [(usize, f32); 2] = [(WHOLE_UNIT.start, 0.0), (WHOLE_UNIT.end, 1.0)];
 /// JIS X 4051's maximum overhang, which §5.1 suggests: half an ideographic advance in the
 /// annotation's font.
 const MAX_OVERHANG_IC: f32 = 0.5;
@@ -59,15 +67,20 @@ struct Placed {
     merged: bool,
 }
 
-/// What laying out an annotation box's contents shows about it: its justification
-/// opportunities, and its first and last characters, which adjoin the next and previous
-/// annotation of a merged run.
+/// What laying out part of an annotation box's contents at its max-content width shows about
+/// it: its width, its justification opportunities, and its first and last characters, which
+/// adjoin the next and previous annotation of a merged run.
 #[derive(Clone)]
 struct Contents {
+    width: f32,
     opportunities: usize,
     first: String,
     last: String,
 }
+
+/// An annotation box's contents laid out in part: the box, the part, and the bits of the
+/// widths of the box and of its contents' measured blocks.
+type ContentsKey = (usize, Range<usize>, Vec<u32>);
 
 /// The ruby containers of a paragraph and what laying them out measures once.
 pub(crate) struct RubyLayout<'p, 'c, 'f> {
@@ -78,8 +91,17 @@ pub(crate) struct RubyLayout<'p, 'c, 'f> {
     source: &'p Paragraph,
     /// Rubies nested in another's bases come before it.
     order: Vec<usize>,
-    contents: RefCell<HashMap<usize, Contents>>,
+    contents: RefCell<HashMap<ContentsKey, Contents>>,
+    /// Each annotation box's contents, prepared to lay out in part, with their breaks.
+    annotations: RefCell<HashMap<usize, Rc<AnnotationText<'p, 'c, 'f>>>>,
     spaces: RefCell<HashMap<*const Style, f32>>,
+}
+
+/// An annotation box's contents and where they can break, with the share of their text before
+/// each break.
+struct AnnotationText<'p, 'c, 'f> {
+    prepared: PreparedParagraph<'p, 'c, 'f>,
+    breaks: Vec<(usize, f32)>,
 }
 
 /// The `[first, last]` positions in `order` of the slots inside inline box `owner`.
@@ -120,11 +142,6 @@ fn margin_extent(
     Ok([metrics.ascent + top, metrics.descent + bottom])
 }
 
-/// Breaking a ruby base, with its annotations, across lines (§3.4.2).
-pub(super) const WITHIN_BASES: TextError = TextError::UnsupportedRuby {
-    feature: "line breaking inside a ruby base",
-};
-
 impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
     /// `None` where the paragraph holds no ruby.
     pub(super) fn of(
@@ -144,6 +161,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
             source,
             order,
             contents: RefCell::new(HashMap::new()),
+            annotations: RefCell::new(HashMap::new()),
             spaces: RefCell::new(HashMap::new()),
         })
     }
@@ -166,52 +184,177 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         Ok(width)
     }
 
-    /// The width an annotation takes on a line, from the measured widths of the paragraph's
-    /// atomic inlines followed by its annotation boxes.
-    fn width(&self, annotation: &Annotation, widths: &[f32]) -> Result<f32, TextError> {
+    /// The width an annotation of `segment` takes on a line holding the paragraph's part
+    /// `line`, from the widths of the paragraph's measured blocks.
+    fn width(
+        &self,
+        segment: &Segment,
+        annotation: &Annotation,
+        line: &Range<usize>,
+        widths: &[f32],
+    ) -> Result<f32, TextError> {
         if annotation.whitespace {
             return self.space_width(&annotation.style);
         }
-        Ok(annotation
-            .block
-            .map_or(0.0, |block| widths[self.paragraph.atomics().len() + block]))
+        let Some(block) = annotation.block else {
+            return Ok(0.0);
+        };
+        let part = self.part(segment, annotation, line);
+        if part == self.whole(block) {
+            return Ok(widths[self.paragraph.atomics().len() + block]);
+        }
+        Ok(self.contents(block, part, widths)?.width)
     }
 
-    /// The justification opportunities and edge characters of annotation box `block`, from
-    /// its contents laid out at their measured `width`.
-    fn contents(&self, block: usize, width: f32) -> Result<Contents, TextError> {
-        if let Some(contents) = self.contents.borrow().get(&block) {
+    /// The text of annotation box `block`'s contents, which a line breaking inside its bases
+    /// breaks; `None` where it has none in this writing mode.
+    fn breakable(&self, block: usize) -> Option<&'p Paragraph> {
+        self.source
+            .annotation_contents(block)
+            .filter(|contents| !contents.text().is_empty())
+    }
+
+    /// The whole of annotation box `block`'s contents: their text, or one unit that a line
+    /// holds whole where there is none to break.
+    fn whole(&self, block: usize) -> Range<usize> {
+        0..self
+            .breakable(block)
+            .map_or(WHOLE_UNIT.end, |contents| contents.text().len())
+    }
+
+    /// The contents of annotation box `block` and where they break, prepared once.
+    fn annotation_text(&self, block: usize) -> Option<Rc<AnnotationText<'p, 'c, 'f>>> {
+        if let Some(text) = self.annotations.borrow().get(&block) {
+            return Some(text.clone());
+        }
+        let contents = self.breakable(block)?;
+        let text = Rc::new(AnnotationText {
+            prepared: self.context.prepare_paragraph(contents),
+            breaks: contents_breaks(contents),
+        });
+        self.annotations.borrow_mut().insert(block, text.clone());
+        Some(text)
+    }
+
+    /// The part of an annotation of `segment` on a line holding the paragraph's part `line`:
+    /// where a line breaks strictly inside the bases it spans, its contents break at the break
+    /// nearest in the proportion of content before it (§3.4.2), and contents without text go
+    /// whole to one line. Inter-character annotations hold no breaks: they lie whole beside
+    /// their base.
+    fn part(
+        &self,
+        segment: &Segment,
+        annotation: &Annotation,
+        line: &Range<usize>,
+    ) -> Range<usize> {
+        let Some(block) = annotation.block else {
+            return 0..0;
+        };
+        let whole = self.whole(block);
+        let inter_character = segment.levels.iter().any(|level| {
+            level.inter_character
+                && level
+                    .annotations
+                    .iter()
+                    .any(|other| std::ptr::eq(other, annotation))
+        });
+        if annotation.bases.is_empty() || inter_character {
+            return whole;
+        }
+        let bases = [
+            segment.bases[annotation.bases.start],
+            segment.bases[annotation.bases.end - 1],
+        ];
+        let boxes = self.paragraph.boxes();
+        let span = boxes[bases[0]].range.start..boxes[bases[1]].range.end;
+        let text = self.annotation_text(block);
+        let breaks = text.as_ref().map_or(&WHOLE_BREAKS[..], |text| &text.breaks);
+        let at = |offset: usize| {
+            if offset <= span.start {
+                whole.start
+            } else if offset >= span.end {
+                whole.end
+            } else {
+                nearest(breaks, self.base_share(bases, offset)).0
+            }
+        };
+        at(line.start)..at(line.end)
+    }
+
+    /// The share of the text of the bases from box `bases[0]` to box `bases[1]` before
+    /// `offset`, measured in the source paragraph's offsets where its `::first-line` copy and
+    /// it encode the text alike, so that a line of either and the next agree.
+    fn base_share(&self, [first, last]: [usize; 2], offset: usize) -> f32 {
+        let span = |paragraph: &Paragraph, shift: usize| {
+            let boxes = paragraph.boxes();
+            boxes[first - shift].range.start..boxes[last - shift].range.end
+        };
+        if !std::ptr::eq(self.paragraph, self.source)
+            && let Some(source) = self.source.first_line_offsets().to_paragraph(offset)
+        {
+            let shift = self.paragraph.boxes().len() - self.source.boxes().len();
+            return share(self.source.text(), span(self.source, shift), source);
+        }
+        share(self.paragraph.text(), span(self.paragraph, 0), offset)
+    }
+
+    /// The width, justification opportunities and edge characters of the part `part` of
+    /// annotation box `block`'s contents at its max-content width, from the widths of the
+    /// paragraph's measured blocks.
+    fn contents(
+        &self,
+        block: usize,
+        part: Range<usize>,
+        widths: &[f32],
+    ) -> Result<Contents, TextError> {
+        let width = widths[self.paragraph.atomics().len() + block];
+        let nested = &widths[self.source.annotation_metrics(block)];
+        let key = (
+            block,
+            part.clone(),
+            std::iter::once(width)
+                .chain(nested.iter().copied())
+                .map(f32::to_bits)
+                .collect(),
+        );
+        if let Some(contents) = self.contents.borrow().get(&key) {
             return Ok(contents.clone());
         }
-        let anchor = &self.source.annotations()[block];
-        let mut contents = Contents {
-            opportunities: 0,
-            first: String::new(),
-            last: String::new(),
+        // Contents without text in this writing mode are whole, without opportunities.
+        let (Some(paragraph), Some(text)) = (self.breakable(block), self.annotation_text(block))
+        else {
+            return Ok(Contents {
+                width,
+                opportunities: 0,
+                first: String::new(),
+                last: String::new(),
+            });
         };
-        if let Some(crate::document::BlockContent::Inline(paragraph)) =
-            anchor.block.children().first()
-        {
-            let atomics = vec![super::AtomicMetrics::default(); paragraph.inline_blocks().count()];
-            let lines = self.context.layout_paragraph(paragraph, width, &atomics)?;
-            for line in &lines {
-                contents.opportunities +=
-                    spacing::opportunities(paragraph, &line.runs, &line.order).len();
-            }
-            let units = |run: &GlyphRun| -> Vec<String> {
-                run.glyphs
-                    .iter()
-                    .map(|glyph| run.text[glyph.text_range.clone()].to_owned())
-                    .collect()
-            };
-            let mut all = lines
+        let lines = text
+            .prepared
+            .max_content_lines(part, width, nested.to_vec())?;
+        let units = |run: &GlyphRun| -> Vec<String> {
+            run.glyphs
                 .iter()
-                .flat_map(|line| line.runs.iter())
-                .flat_map(units);
-            contents.first = all.next().unwrap_or_default();
-            contents.last = all.last().unwrap_or_else(|| contents.first.clone());
-        }
-        self.contents.borrow_mut().insert(block, contents.clone());
+                .map(|glyph| run.text[glyph.text_range.clone()].to_owned())
+                .collect()
+        };
+        let mut all = lines
+            .iter()
+            .flat_map(|line| line.runs.iter())
+            .flat_map(units);
+        let first = all.next().unwrap_or_default();
+        let last = all.last().unwrap_or_else(|| first.clone());
+        let contents = Contents {
+            width: lines.iter().map(|line| line.wrap_width).fold(0.0, f32::max),
+            opportunities: lines
+                .iter()
+                .map(|line| spacing::opportunities(paragraph, &line.runs, &line.order).len())
+                .sum(),
+            first,
+            last,
+        };
+        self.contents.borrow_mut().insert(key, contents.clone());
         Ok(contents)
     }
 
@@ -224,16 +367,28 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         ])
     }
 
-    /// How `level` places its annotations over the line's bases `[first, last]`, given each
-    /// base's content width and the widths of the gaps before them; `merge` decides whether
-    /// `ruby-merge: auto` merges them.
-    fn placed(level: &Level, [first, last]: [usize; 2], merged: bool) -> Vec<Placed> {
+    /// How `level` of `segment` places its annotations over the bases `[first, last]` of a
+    /// line holding the paragraph's part `line`, merged or not: those holding a part of their
+    /// contents there.
+    fn placed(
+        &self,
+        segment: &Segment,
+        level: &Level,
+        [first, last]: [usize; 2],
+        line: &Range<usize>,
+        merged: bool,
+    ) -> Vec<Placed> {
         let on_line = |annotation: &Annotation| {
             !annotation.hidden
                 && if annotation.whitespace {
                     first < annotation.bases.start && annotation.bases.start <= last
                 } else {
-                    annotation.bases.start <= last && annotation.bases.end > first
+                    annotation.bases.start <= last
+                        && annotation.bases.end > first
+                        && annotation.block.is_none_or(|block| {
+                            let part = self.part(segment, annotation, line);
+                            !part.is_empty() || part == self.whole(block)
+                        })
                 }
         };
         let mut placed = Vec::new();
@@ -271,7 +426,10 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
             } else if !annotation.whitespace {
                 placed.push(Placed {
                     annotations: index..index + 1,
-                    bases: [annotation.bases.start, annotation.bases.end - 1],
+                    bases: [
+                        annotation.bases.start.max(first),
+                        (annotation.bases.end - 1).min(last),
+                    ],
                     merged: false,
                 });
             }
@@ -280,15 +438,22 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         placed
     }
 
-    /// Whether `level` merges its annotations on a line where the bases `[first, last]` have
-    /// content widths `bases` and the gaps before them widths `gaps`: always under `merge`,
-    /// and under `auto` where some annotation is wider than its bases (§4.2).
+    /// Whether `level` of `segment` merges its annotations on a line holding the paragraph's
+    /// part `line`, where the bases `[first, last]` have content widths `bases` and the gaps
+    /// before them widths `gaps`: always under `merge`, and under `auto` where some annotation
+    /// is wider than its bases (§4.2).
+    #[expect(
+        clippy::too_many_arguments,
+        reason = "one segment's line geometry, which is computed together"
+    )]
     fn merges(
         &self,
+        segment: &Segment,
         level: &Level,
         bases: &[f32],
         gaps: &[f32],
         span: [usize; 2],
+        line: &Range<usize>,
         widths: &[f32],
     ) -> Result<bool, TextError> {
         Ok(match level.style.ruby.merge {
@@ -296,23 +461,36 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
             RubyMerge::Merge => true,
             RubyMerge::Auto => {
                 let mut overflows = false;
-                for placed in Self::placed(level, span, false) {
+                for placed in self.placed(segment, level, span, line, false) {
                     let annotation = &level.annotations[placed.annotations.start];
                     let [start, end] = placed.bases.map(|base| base - span[0]);
                     let available: f32 = bases[start..=end].iter().sum::<f32>()
                         + gaps[start + 1..=end].iter().sum::<f32>();
-                    overflows |= self.width(annotation, widths)? > available;
+                    overflows |= self.width(segment, annotation, line, widths)? > available;
                 }
                 overflows
             }
         })
     }
 
-    /// Sizes the ruby columns of an arranged line and spaces its bases to fill them, before
-    /// its inline box fragments are formed.
+    /// Whether an inter-character annotation of `segment` over its base `base` lies on a line
+    /// holding the paragraph's part `line`: with the base's fragment on its right, which
+    /// holds the base's end, or its start in a right-to-left container.
+    fn holds_inter_character(&self, ruby: &Ruby, base: usize, line: &Range<usize>) -> bool {
+        let range = &self.paragraph.boxes()[base].range;
+        if ruby_rtl(self.paragraph, ruby) {
+            line.start <= range.start
+        } else {
+            line.end >= range.end
+        }
+    }
+
+    /// Sizes the ruby columns of a line arranged from the paragraph's part `line`, and spaces
+    /// its bases to fill them, before its inline box fragments are formed.
     pub(super) fn space(
         &self,
         arranged: &mut Arranged,
+        line: &Range<usize>,
         widths: &[f32],
     ) -> Result<RubyLine, TextError> {
         let paragraph = self.paragraph;
@@ -369,16 +547,16 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                     if level.inter_character {
                         continue;
                     }
-                    let merged = self.merges(level, &bases, &gaps, span, widths)?;
+                    let merged = self.merges(segment, level, &bases, &gaps, span, line, widths)?;
                     if merged && level.style.ruby.merge == RubyMerge::Auto {
                         ruby_line
                             .merged
                             .push([ruby_index, segment_index, level_index]);
                     }
-                    for placed in Self::placed(level, span, merged) {
+                    for placed in self.placed(segment, level, span, line, merged) {
                         let mut total = 0.0;
                         for annotation in &level.annotations[placed.annotations.clone()] {
-                            total += self.width(annotation, widths)?;
+                            total += self.width(segment, annotation, line, widths)?;
                         }
                         let [start, end] = placed.bases.map(|base| 2 * (base - first));
                         if start == end && !placed.merged {
@@ -396,7 +574,8 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                                 && annotation.bases.start <= last
                             {
                                 let cell = 2 * (annotation.bases.start - first) - 1;
-                                cells[cell] = cells[cell].max(self.width(annotation, widths)?);
+                                cells[cell] =
+                                    cells[cell].max(self.width(segment, annotation, line, widths)?);
                             }
                         }
                     }
@@ -441,11 +620,14 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                             continue;
                         }
                         let base = segment.bases[base_index];
+                        if !self.holds_inter_character(ruby, base, line) {
+                            continue;
+                        }
                         let at = slot_span(paragraph, arranged, base).map_or_else(
                             || arranged.insertion(paragraph.boxes()[base].range.end),
                             |[_, end]| end + 1,
                         );
-                        reservations.push((at, self.width(annotation, widths)?));
+                        reservations.push((at, self.width(segment, annotation, line, widths)?));
                     }
                 }
                 reservations.sort_by_key(|(at, _)| std::cmp::Reverse(*at));
@@ -460,7 +642,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                 }
             }
         }
-        self.overhang(arranged, &mut ruby_line, widths)?;
+        self.overhang(arranged, &mut ruby_line, line, widths)?;
         Ok(ruby_line)
     }
 
@@ -472,7 +654,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
     fn distribute(
         &self,
         arranged: &mut Arranged,
-        segment: &crate::document::ruby::Segment,
+        segment: &Segment,
         [first, _]: [usize; 2],
         slots: &[Option<[usize; 2]>],
         cells: &[f32],
@@ -582,6 +764,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         &self,
         arranged: &mut Arranged,
         ruby_line: &mut RubyLine,
+        line: &Range<usize>,
         widths: &[f32],
     ) -> Result<(), TextError> {
         let paragraph = self.paragraph;
@@ -645,7 +828,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                     continue;
                 };
                 let Some(limit) =
-                    self.overhang_limit(ruby, ruby_line.columns[column].base, widths)?
+                    self.overhang_limit(ruby, ruby_line.columns[column].base, line, widths)?
                 else {
                     continue;
                 };
@@ -680,12 +863,14 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         }
     }
 
-    /// How far annotations over `base` may overhang: half an ideograph in the smallest of
-    /// their fonts; `None` where a level over it forbids overhang.
+    /// How far annotations over `base` may overhang on a line holding the paragraph's part
+    /// `line`: half an ideograph in the smallest of their fonts; `None` where a level over it
+    /// forbids overhang.
     fn overhang_limit(
         &self,
         ruby: &Ruby,
         base: usize,
+        line: &Range<usize>,
         widths: &[f32],
     ) -> Result<Option<f32>, TextError> {
         let mut limit: Option<f32> = None;
@@ -702,7 +887,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                     if annotation.hidden
                         || annotation.whitespace
                         || !annotation.bases.contains(&index)
-                        || self.width(annotation, widths)? == 0.0
+                        || self.width(segment, annotation, line, widths)? == 0.0
                     {
                         continue;
                     }
@@ -731,6 +916,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
     ) -> Result<(), TextError> {
         let paragraph = self.paragraph;
         let widths: Vec<f32> = metrics.iter().map(|metrics| metrics.width).collect();
+        let range = line.range.clone();
         let fragments: HashMap<usize, Vec<&BoxFragment>> =
             line.boxes.iter().fold(HashMap::new(), |mut map, fragment| {
                 map.entry(fragment.index)
@@ -758,7 +944,15 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                         continue;
                     };
                     let style = &paragraph.boxes()[base].style;
-                    let margin = |side: usize| style.margin[side].resolve(basis).unwrap_or(0.0);
+                    // A base broken across lines has its margins only where it starts and ends.
+                    let margin = |side: usize| {
+                        let edge = usize::from(side == RIGHT);
+                        if pieces.iter().any(|piece| piece.edges[edge]) {
+                            style.margin[side].resolve(basis).unwrap_or(0.0)
+                        } else {
+                            0.0
+                        }
+                    };
                     let left = pieces
                         .iter()
                         .map(|piece| piece.x)
@@ -826,6 +1020,9 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                                 continue;
                             }
                             let base = segment.bases[base_index];
+                            if !self.holds_inter_character(ruby, base, &range) {
+                                continue;
+                            }
                             let Some(pieces) = fragments.get(&base) else {
                                 continue;
                             };
@@ -860,6 +1057,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                                 offset: paragraph.annotations()[block].offset,
                                 owner: Some(ruby.container),
                                 rtl: false,
+                                part: None,
                             });
                             *offset += metric.width;
                             over = over.min(y);
@@ -872,7 +1070,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                             .ruby
                             .merged
                             .contains(&[ruby_index, segment_index, level_index]);
-                    let placements = Self::placed(level, span, merged);
+                    let placements = self.placed(segment, level, span, &range, merged);
                     if placements.is_empty() {
                         continue;
                     }
@@ -902,11 +1100,13 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                             [f32::INFINITY, f32::NEG_INFINITY],
                             |[left, right], column| [left.min(column[0]), right.max(column[1])],
                         );
-                        placed.extend(
-                            self.position(
-                                level, &placement, extent, baseline, ruby_index, &widths,
-                            )?,
-                        );
+                        placed.extend(self.position(
+                            (segment, level, &placement),
+                            extent,
+                            baseline,
+                            (ruby_index, &range),
+                            &widths,
+                        )?);
                     }
                 }
                 whole = Some(whole.map_or([over, under], |[top, bottom]| {
@@ -921,28 +1121,31 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         Ok(())
     }
 
-    /// The annotation fragments of `placement` over its columns' `[left, right]` extent, on
-    /// its level's `baseline`.
+    /// The annotation fragments of `placement` of `level` of `segment` over its columns'
+    /// `[left, right]` extent, on its level's `baseline`, on a line of ruby `ruby` holding the
+    /// paragraph's part `line`.
     fn position(
         &self,
-        level: &Level,
-        placement: &Placed,
+        (segment, level, placement): (&Segment, &Level, &Placed),
         [left, right]: [f32; 2],
         baseline: f32,
-        ruby: usize,
+        (ruby, line): (usize, &Range<usize>),
         widths: &[f32],
     ) -> Result<Vec<AtomicFragment>, TextError> {
         let annotations = &level.annotations[placement.annotations.clone()];
         let mut sizes = Vec::with_capacity(annotations.len());
+        let mut parts = Vec::with_capacity(annotations.len());
         let mut total = 0.0;
         for annotation in annotations {
-            let width = self.width(annotation, widths)?;
+            let width = self.width(segment, annotation, line, widths)?;
+            let part = self.part(segment, annotation, line);
             let contents = match annotation.block {
-                Some(block) => Some(self.contents(block, width)?),
+                Some(block) => Some(self.contents(block, part.clone(), widths)?),
                 None => None,
             };
             total += width;
             sizes.push((width, contents));
+            parts.push(part);
         }
         let extra = right - left - total;
         // A merged run distributes by its container's `ruby-align`, a lone annotation by its
@@ -984,8 +1187,8 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         let rtl = ruby_rtl(self.paragraph, &self.paragraph.rubies()[ruby]);
         let mut pen = start;
         let mut fragments = Vec::new();
-        for ((annotation, (width, contents)), junction) in
-            annotations.iter().zip(sizes).zip(junctions)
+        for (((annotation, (width, contents)), junction), part) in
+            annotations.iter().zip(sizes).zip(junctions).zip(parts)
         {
             if junction {
                 pen += each;
@@ -1005,6 +1208,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                     offset: self.paragraph.annotations()[block].offset,
                     owner: Some(self.paragraph.rubies()[ruby].container),
                     rtl,
+                    part: (part != self.whole(block)).then_some(part),
                 });
             }
             pen += used;
@@ -1012,13 +1216,14 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         Ok(fragments)
     }
 
-    /// The extra leading a ruby container `container` on a line, whose present inline boxes
-    /// are `present`, needs over and under its base container so that identical lines would
-    /// not overlap (§3.6). `container_metrics` are the container's own.
+    /// The extra leading a ruby container `container` on a line holding the paragraph's part
+    /// `line`, whose present inline boxes are `present`, needs over and under its base
+    /// container so that identical lines would not overlap (§3.6). `container_metrics` are
+    /// the container's own.
     pub(super) fn leading(
         &self,
         container: usize,
-        present: &[usize],
+        (present, line): (&[usize], &Range<usize>),
         container_metrics: &BoxMetrics,
         metrics: &[super::AtomicMetrics],
         basis: f32,
@@ -1031,7 +1236,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         else {
             return Ok([0.0; 2]);
         };
-        let ([above, below], heights) = self.stack(ruby, present, metrics, basis)?;
+        let ([above, below], heights) = self.stack(ruby, (present, line), metrics, basis)?;
         if ruby
             .segments
             .iter()
@@ -1057,7 +1262,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
     fn stack(
         &self,
         ruby: &Ruby,
-        present: &[usize],
+        (present, line): (&[usize], &Range<usize>),
         metrics: &[super::AtomicMetrics],
         basis: f32,
     ) -> Result<([f32; 2], [f32; 2]), TextError> {
@@ -1080,7 +1285,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                     .filter(|nested| paragraph.is_within(Some(nested.container), base))
                 {
                     let ([above, below], [over, under]) =
-                        self.stack(nested, present, metrics, basis)?;
+                        self.stack(nested, (present, line), metrics, basis)?;
                     content = [content[0].max(above + over), content[1].max(below + under)];
                 }
             }
@@ -1096,6 +1301,17 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                         let Some(block) = annotation.block else {
                             continue;
                         };
+                        let base_index = if ruby_rtl(paragraph, ruby) {
+                            annotation.bases.start
+                        } else {
+                            annotation.bases.end - 1
+                        };
+                        if base_index < span[0]
+                            || base_index > span[1]
+                            || !self.holds_inter_character(ruby, segment.bases[base_index], line)
+                        {
+                            continue;
+                        }
                         let height = metrics[paragraph.atomics().len() + block].height;
                         let top = if annotation.style.ruby.align == RubyAlign::Start {
                             -base_content[0]
@@ -1109,7 +1325,7 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                 }
                 let mut extent = [0.0f32; 2];
                 let mut any = false;
-                for placement in Self::placed(level, span, false) {
+                for placement in self.placed(segment, level, span, line, false) {
                     for annotation in &level.annotations[placement.annotations] {
                         if annotation.whitespace {
                             continue;
@@ -1178,12 +1394,12 @@ pub(super) fn distribution(align: RubyAlign, extra: f32, count: usize) -> (f32, 
 /// between adjacent bases, the line breaking rules of the base text apply as between inline
 /// boxes, so that the ruby container, their nearest common ancestor, decides whether they wrap
 /// (CSS Text 3 §5.1); between the bases an annotation spans there is none, nor inside a base,
-/// except where §3.4.2 lets it break with its annotations because they too wrap and have soft
-/// wrap opportunities of their own.
+/// except where `joints` lets a line break it with its annotations.
 pub(super) fn constrain(paragraph: &Paragraph, breaks: &mut Vec<(usize, BreakOpportunity)>) {
     if paragraph.rubies().is_empty() {
         return;
     }
+    let joints = joints(paragraph, breaks);
     let linebreaks = crate::text::tailoring::linebreaks(paragraph);
     for ruby in paragraph.rubies() {
         if !paragraph.boxes()[ruby.container].style.white_space.wraps() {
@@ -1212,64 +1428,205 @@ pub(super) fn constrain(paragraph: &Paragraph, breaks: &mut Vec<(usize, BreakOpp
         (offset, opportunity == BreakOpportunity::Allowed)
     });
     breaks.dedup_by_key(|entry| entry.0);
-    let mut forbidden: Vec<Range<usize>> = Vec::new();
+    let enclosed = enclosed(paragraph);
+    breaks.retain(|&(offset, opportunity)| {
+        opportunity == BreakOpportunity::Mandatory
+            || joints.binary_search(&offset).is_ok()
+            || !encloses(&enclosed, offset)
+    });
+}
+
+/// Removes the emergency wrap opportunities inside ruby bases and the bases annotations span,
+/// where only the soft wrap opportunities that `joints` chooses break lines (§3.4).
+pub(super) fn constrain_emergency(paragraph: &Paragraph, offsets: &mut Vec<usize>) {
+    if paragraph.rubies().is_empty() {
+        return;
+    }
+    let enclosed = enclosed(paragraph);
+    offsets.retain(|&offset| !encloses(&enclosed, offset));
+}
+
+/// The parts of the paragraph that a line breaks only with ruby annotations: each base, and
+/// the bases each spanning annotation spans.
+fn enclosed(paragraph: &Paragraph) -> Vec<Range<usize>> {
+    let range = |base: usize| paragraph.boxes()[base].range.clone();
+    let mut enclosed = Vec::new();
     for segment in paragraph.rubies().iter().flat_map(|ruby| &ruby.segments) {
-        let range = |base: usize| paragraph.boxes()[base].range.clone();
-        for (index, &base) in segment.bases.iter().enumerate() {
-            let breakable = segment.levels.iter().all(|level| {
-                level
-                    .annotations
-                    .iter()
-                    .find(|annotation| !annotation.whitespace && annotation.bases.contains(&index))
-                    .and_then(|annotation| annotation.block)
-                    .is_some_and(|block| annotation_wraps(paragraph, block))
-            });
-            if !breakable {
-                forbidden.push(range(base));
-            }
-        }
+        enclosed.extend(segment.bases.iter().map(|&base| range(base)));
         for annotation in segment.levels.iter().flat_map(|level| &level.annotations) {
             if annotation.hidden || annotation.whitespace || annotation.bases.len() < 2 {
                 continue;
             }
-            forbidden.push(
+            enclosed.push(
                 range(segment.bases[annotation.bases.start]).start
                     ..range(segment.bases[annotation.bases.end - 1]).end,
             );
         }
     }
-    breaks.retain(|&(offset, opportunity)| {
-        opportunity == BreakOpportunity::Mandatory
-            || !forbidden
+    enclosed
+}
+
+/// Whether `offset` lies strictly inside one of the `enclosed` parts.
+fn encloses(enclosed: &[Range<usize>], offset: usize) -> bool {
+    enclosed
+        .iter()
+        .any(|range| range.start < offset && offset < range.end)
+}
+
+/// One of a ruby base's break opportunities: where it lies, where each annotation paired
+/// with the base breaks there, how far those breaks lie from it in proportion, and whether it
+/// is forced.
+struct BaseBreak {
+    offset: usize,
+    splits: Vec<usize>,
+    distance: f32,
+    forced: bool,
+}
+
+/// The soft wrap opportunities of `breaks` inside ruby bases where a line may break a base
+/// with its annotations (§3.4.2). The base and every annotation paired with it alone must
+/// allow wrapping, and each annotation must hold a break opportunity; there each annotation
+/// breaks at its break nearest in the proportion of content before it. Of the base's
+/// opportunities that break the annotations alike, the one nearest in proportion is chosen;
+/// nearest first, each is kept only where every annotation breaks strictly inside its
+/// contents, after where it breaks at the kept and forced breaks before and before where it
+/// does at those after, so that no annotation fragment is empty.
+fn joints(paragraph: &Paragraph, breaks: &[(usize, BreakOpportunity)]) -> Vec<usize> {
+    let text = paragraph.text();
+    let mut joints = Vec::new();
+    for segment in paragraph.rubies().iter().flat_map(|ruby| &ruby.segments) {
+        for (index, &base) in segment.bases.iter().enumerate() {
+            let Some(annotations) = parallel(paragraph, segment, index) else {
+                continue;
+            };
+            let range = paragraph.boxes()[base].range.clone();
+            let mut events: Vec<BaseBreak> = Vec::new();
+            for &(offset, opportunity) in breaks
                 .iter()
-                .any(|range| range.start < offset && offset < range.end)
-    });
+                .filter(|&&(offset, _)| range.start < offset && offset < range.end)
+            {
+                let share = share(text, range.clone(), offset);
+                let nearest: Vec<(usize, f32)> = annotations
+                    .iter()
+                    .map(|breaks| nearest(breaks, share))
+                    .collect();
+                let event = BaseBreak {
+                    offset,
+                    splits: nearest.iter().map(|&(split, _)| split).collect(),
+                    distance: nearest.iter().map(|&(_, at)| (at - share).abs()).sum(),
+                    forced: opportunity == BreakOpportunity::Mandatory,
+                };
+                match events.last_mut() {
+                    Some(last)
+                        if !event.forced
+                            && !last.forced
+                            && !event.splits.is_empty()
+                            && last.splits == event.splits =>
+                    {
+                        if event.distance < last.distance {
+                            *last = event;
+                        }
+                    }
+                    _ => events.push(event),
+                }
+            }
+            let ends: Vec<usize> = annotations
+                .iter()
+                .map(|breaks| breaks.last().map_or(0, |&(end, _)| end))
+                .collect();
+            let mut chosen: Vec<&BaseBreak> = events.iter().filter(|event| event.forced).collect();
+            let mut soft: Vec<&BaseBreak> = events.iter().filter(|event| !event.forced).collect();
+            soft.sort_by(|a, b| a.distance.total_cmp(&b.distance));
+            for event in soft {
+                let inside = event
+                    .splits
+                    .iter()
+                    .zip(&ends)
+                    .all(|(&split, &end)| 0 < split && split < end);
+                let ordered = chosen.iter().all(|other| {
+                    let (before, after) = if other.offset < event.offset {
+                        (&other.splits, &event.splits)
+                    } else {
+                        (&event.splits, &other.splits)
+                    };
+                    before
+                        .iter()
+                        .zip(after)
+                        .all(|(before, after)| before < after)
+                });
+                if inside && ordered {
+                    chosen.push(event);
+                    joints.push(event.offset);
+                }
+            }
+        }
+    }
+    joints.sort_unstable();
+    joints
 }
 
-/// Whether a line ending at `end` breaks inside a ruby base: at a forced break, or where
-/// §3.4.2 lets its annotations break with it, which is not supported.
-pub(super) fn ends_inside_base(paragraph: &Paragraph, end: usize) -> bool {
-    paragraph
-        .rubies()
+/// The breaks of the contents of each annotation paired with base `index` of `segment`
+/// alone, where the base and they all allow wrapping and each holds a break opportunity, so
+/// that a line may break inside the base (§3.4.2); inter-character annotations hold none.
+fn parallel(
+    paragraph: &Paragraph,
+    segment: &Segment,
+    index: usize,
+) -> Option<Vec<Vec<(usize, f32)>>> {
+    if !paragraph.boxes()[segment.bases[index]]
+        .style
+        .white_space
+        .wraps()
+    {
+        return None;
+    }
+    segment
+        .levels
         .iter()
-        .flat_map(|ruby| &ruby.segments)
-        .flat_map(|segment| &segment.bases)
-        .any(|&base| {
-            let range = &paragraph.boxes()[base].range;
-            range.start < end && end < range.end
+        .map(|level| {
+            let annotation = level.annotations.iter().find(|annotation| {
+                !annotation.whitespace && annotation.bases == (index..index + 1)
+            })?;
+            let contents = paragraph.annotation_contents(annotation.block?)?;
+            if level.inter_character || !annotation.style.white_space.wraps() {
+                return None;
+            }
+            Some(contents_breaks(contents)).filter(|breaks| breaks.len() > WHOLE_BREAKS.len())
         })
+        .collect()
 }
 
-/// Whether annotation box `block` allows wrapping and has a soft wrap opportunity inside.
-fn annotation_wraps(paragraph: &Paragraph, block: usize) -> bool {
-    let Some(crate::document::BlockContent::Inline(contents)) =
-        paragraph.annotations()[block].block.children().first()
-    else {
-        return false;
-    };
-    let automatic = crate::text::hyphenation::automatic(contents);
-    let end = contents.text().len();
-    super::whitespace::opportunities(contents, &automatic)
+/// Where an annotation box's contents can break: their start, each break opportunity inside
+/// them, and their end, with the share of their text before each.
+fn contents_breaks(contents: &Paragraph) -> Vec<(usize, f32)> {
+    let text = contents.text();
+    let whole = 0..text.len();
+    let mut breaks = vec![(0, 0.0)];
+    breaks.extend(
+        super::whitespace::opportunities(contents, &hyphenation::automatic(contents))
+            .into_iter()
+            .filter(|&(offset, _)| 0 < offset && offset < text.len())
+            .map(|(offset, _)| (offset, share(text, whole.clone(), offset))),
+    );
+    breaks.push((text.len(), 1.0));
+    breaks
+}
+
+/// The share of the characters of the part `range` of `text` that lie before `offset`.
+fn share(text: &str, range: Range<usize>, offset: usize) -> f32 {
+    let total = text[range.clone()].chars().count();
+    if total == 0 {
+        return 0.0;
+    }
+    text[range.start..offset].chars().count() as f32 / total as f32
+}
+
+/// The break of `breaks` whose share lies nearest `share`, the first of equally near ones,
+/// with its share.
+fn nearest(breaks: &[(usize, f32)], share: f32) -> (usize, f32) {
+    breaks
         .iter()
-        .any(|&(offset, _)| offset > 0 && offset < end)
+        .copied()
+        .min_by(|a, b| (a.1 - share).abs().total_cmp(&(b.1 - share).abs()))
+        .unwrap_or_default()
 }

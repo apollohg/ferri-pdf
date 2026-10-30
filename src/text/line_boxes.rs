@@ -107,6 +107,10 @@ pub(crate) struct AtomicFragment {
     pub(crate) owner: Option<usize>,
     #[serde(skip)]
     pub(crate) rtl: bool,
+    /// The part of a ruby annotation box's contents the line holds, where it breaks inside
+    /// the annotation's bases (CSS Ruby 1 §3.4.2).
+    #[serde(skip)]
+    pub(crate) part: Option<Range<usize>>,
 }
 
 /// Line content in visual order, before inline box edges are inserted.
@@ -320,6 +324,7 @@ pub(crate) fn arrange(
                     offset,
                     owner,
                     rtl,
+                    part: None,
                 });
             }
         }
@@ -370,7 +375,7 @@ pub(crate) fn arrange(
         autospace.apply(&mut arranged)?;
     }
     if let Some(ruby) = spacers.ruby {
-        arranged.ruby = ruby.space(&mut arranged, atomic_widths)?;
+        arranged.ruby = ruby.space(&mut arranged, &line, atomic_widths)?;
     }
     for (position, &index) in arranged.present.iter().enumerate() {
         let belongs: Vec<bool> = arranged
@@ -751,7 +756,8 @@ pub(crate) fn align(
         let own = |baseline| metrics.baseline(baseline);
         let mut extent = metrics.extent();
         if let Some(ruby) = ruby {
-            let [over, under] = ruby.leading(index, &present, &metrics, atomics, basis)?;
+            let [over, under] =
+                ruby.leading(index, (&present, &line.range), &metrics, atomics, basis)?;
             extent[0] -= over;
             extent[1] += under;
         }

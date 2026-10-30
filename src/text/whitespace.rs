@@ -243,6 +243,7 @@ pub(super) fn emergency_opportunities(paragraph: &Paragraph, intrinsic: bool) ->
                 && (allows(paragraph.style_at(offset - 1)) || allows(paragraph.style_at(offset)))
         })
         .collect();
+    crate::text::ruby::constrain_emergency(paragraph, &mut opportunities);
     crate::text::combine::constrain(paragraph, &mut opportunities, |offset| *offset);
     opportunities
 }

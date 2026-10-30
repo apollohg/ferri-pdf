@@ -81,6 +81,7 @@ fn after_child_row_paints_keep_canonical_text_navigation_and_stacking() {
         unbroken: false,
         named_pages: true,
         container_sizes: Default::default(),
+        annotation_part: None,
     };
     let mut measured = measurer
         .block(

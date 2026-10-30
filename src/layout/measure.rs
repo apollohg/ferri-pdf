@@ -712,6 +712,9 @@ pub(super) struct Measurer<'a> {
     pub named_pages: bool,
     /// The content-box size of each query container's first box fragment.
     pub container_sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
+    /// The part of its contents' paragraph that the ruby annotation box being measured lays
+    /// out, on a line breaking inside its bases (CSS Ruby 1 §3.4.2).
+    pub annotation_part: Option<(*const crate::document::Paragraph, std::ops::Range<usize>)>,
 }
 impl<'a> Measurer<'a> {
     pub(super) fn new(
@@ -748,6 +751,7 @@ impl<'a> Measurer<'a> {
             unbroken: false,
             named_pages: true,
             container_sizes: Default::default(),
+            annotation_part: None,
         }
     }
 
@@ -1774,6 +1778,10 @@ impl<'a> Measurer<'a> {
     ) -> Result<MeasuredParagraph<'a>, Failure> {
         self.work.spend(paragraph.text().len().max(1))?;
         let index = self.sources.paragraph(paragraph);
+        let part = self
+            .annotation_part
+            .take_if(|(contents, _)| std::ptr::eq(*contents, paragraph))
+            .map(|(_, part)| part);
         let mut atomics = Vec::new();
         for (index, atomic) in paragraph.inline_blocks().enumerate() {
             let base_height = paragraph
@@ -1783,18 +1791,22 @@ impl<'a> Measurer<'a> {
                         .map(|metrics| metrics.ascent + metrics.descent)
                 })
                 .transpose()?;
-            atomics.push(crate::layout::inline::measure(
+            atomics.push(Some(crate::layout::inline::measure(
                 self,
                 &atomic.block,
                 width,
                 base_height.or(containing_height),
                 rtl,
-            )?);
+            )?));
         }
-        let metrics: Vec<_> = atomics.iter().map(|atomic| atomic.metrics).collect();
+        let mut metrics = Vec::new();
+        crate::layout::inline::paragraph_metrics(paragraph, &atomics, &mut metrics);
         let text = self.text;
         let prepared = text.prepare_paragraph(paragraph);
-        let mut stream = prepared.lines(prepared.start(), width, &metrics)?;
+        let mut stream = match part {
+            Some(part) => prepared.lines_between(part, width, &metrics)?,
+            None => prepared.lines(prepared.start(), width, &metrics)?,
+        };
         let mut lines = Vec::new();
         let mut positions = vec![stream.checkpoint()];
         let limit = budget.map_or(usize::MAX, |budget| budget.lines);
@@ -1819,7 +1831,7 @@ impl<'a> Measurer<'a> {
         // §7.6.1).
         let rise = atomics
             .first()
-            .and_then(|atomic| atomic.letter)
+            .and_then(|atomic| atomic.as_ref()?.letter)
             .map_or(0.0, |letter| letter.rise());
         let height = lines.iter().map(|line| line.height).sum::<f32>() + rise;
         let anchors = line_anchors(paragraph, &lines, true);
@@ -1834,7 +1846,7 @@ impl<'a> Measurer<'a> {
             lines,
             positions,
             anchors,
-            atomics: atomics.into_iter().map(Some).collect(),
+            atomics,
             clamp: None,
         };
         if broken {
@@ -1856,16 +1868,12 @@ impl<'a> Measurer<'a> {
                 .filter(|ellipsis| *ellipsis != crate::style::BlockEllipsis::None),
         };
         if clamp.ellipsis.is_some() {
-            let metrics: Vec<_> = paragraph
-                .atomics
-                .iter()
-                .map(|atomic| {
-                    atomic
-                        .as_ref()
-                        .expect("paragraph atomics are not yet placed")
-                        .metrics
-                })
-                .collect();
+            let mut metrics = Vec::new();
+            crate::layout::inline::paragraph_metrics(
+                paragraph.paragraph,
+                &paragraph.atomics,
+                &mut metrics,
+            );
             let prepared = self
                 .text
                 .prepare_paragraph(paragraph.paragraph)

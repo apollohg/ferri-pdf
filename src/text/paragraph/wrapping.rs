@@ -59,8 +59,10 @@ impl ParagraphLines<'_, '_, '_, '_> {
         let prepared = self.prepared;
         let style = prepared.paragraph.style();
         let wrap = style.line_breaking.wrap_style;
+        // A part laid out alone holds one annotation fragment's lines, which it ends itself.
         if !matches!(wrap, TextWrapStyle::Balance | TextWrapStyle::Pretty)
             || !style.white_space.wraps()
+            || self.end != prepared.paragraph.text().len()
         {
             return Ok(None);
         }

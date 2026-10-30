@@ -69,6 +69,7 @@ fn resumed_cells_keep_source_paint_order_when_a_later_lane_finishes_first() {
                 unbroken: false,
                 named_pages: true,
                 container_sizes: Default::default(),
+                annotation_part: None,
             };
             let measured = measurer
                 .block(

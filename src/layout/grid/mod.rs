@@ -738,6 +738,7 @@ mod tests {
             unbroken: false,
             named_pages: true,
             container_sizes: Default::default(),
+            annotation_part: None,
         };
         let mut pending = vec![document.root()];
         let block = loop {

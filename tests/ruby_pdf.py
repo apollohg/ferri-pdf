@@ -103,6 +103,31 @@ class RubyPdf(unittest.TestCase):
         self.assertAlmostEqual(annotations[-1][2] + small, base[2][2] + overhang, delta=TOLERANCE_PT,
                                msg="and over the following kana")
 
+    def test_base_breaking_across_lines_breaks_its_annotation_in_proportion(self):
+        """CSS Ruby 1 §3.4.2: six tenths of the base on the first line hold three fifths of the
+        annotation, and each fragment spreads by `space-around` over its own base fragment."""
+        kanji = self.face.advance("漢", SIZE_PT)
+        base, annotations = self.split(self.glyphs(
+            f"p{{width:{6 * kanji}pt}}rb,rt{{white-space:normal}}",
+            "<p><ruby><rb>漢字漢字漢字漢字漢字</rb><rt>あああああ</rt></ruby></p>"))
+        rows = {}
+        for glyph in base + annotations:
+            rows.setdefault(round(glyph[3], 2), []).append(glyph)
+        lines = [sorted(rows[y], key=lambda glyph: glyph[2]) for y in sorted(rows)]
+        self.assertEqual(["".join(glyph[0] for glyph in line) for line in lines],
+                         ["あああ", "漢字漢字漢字", "ああ", "漢字漢字"],
+                         "each annotation fragment lies over its base fragment")
+        kana = self.face.advance("あ", ANNOTATION_PT)
+        for annotation, fragment in ((lines[0], lines[1]), (lines[2], lines[3])):
+            self.assertAlmostEqual(fragment[0][2], 0, delta=TOLERANCE_PT,
+                                   msg="each base fragment starts its line")
+            column = len(fragment) * kanji
+            each = (column - len(annotation) * kana) / len(annotation)
+            for index, glyph in enumerate(annotation):
+                self.assertAlmostEqual(glyph[2], each / 2 + index * (kana + each),
+                                       delta=TOLERANCE_PT,
+                                       msg=f"kana {index} of {len(annotation)} in a {column}pt column")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)

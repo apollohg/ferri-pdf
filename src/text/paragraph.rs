@@ -4,6 +4,7 @@ use crate::text::{
     ellipsis, hanging, hyphenation, line_boxes, paragraph_bidi, ruby, shape_line, spacing,
     spacing_trim, whitespace,
 };
+use std::ops::Range;
 use unicode_linebreak::{BreakClass, BreakOpportunity, break_property};
 
 mod wrapping;
@@ -65,6 +66,9 @@ pub(crate) struct ParagraphLines<'s, 'p, 'context, 'font> {
     atomic_widths: Vec<f32>,
     autospace: Option<Autospace<'p, 'context, 'font>>,
     finished: bool,
+    /// Where its lines end as at a forced break: the paragraph's end, or that of the part of
+    /// it laid out alone.
+    end: usize,
 }
 
 impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
@@ -183,7 +187,7 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
         if !std::ptr::eq(position.paragraph, self.paragraph) {
             return Err(TextError::ParagraphMismatch);
         }
-        let expected = self.paragraph.inline_blocks().count();
+        let expected = self.paragraph.measured_blocks().len();
         if atomics.len() != expected {
             return Err(TextError::AtomicMetrics {
                 expected,
@@ -201,7 +205,73 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
             atomic_widths: atomics.iter().map(|metrics| metrics.width).collect(),
             autospace: Autospace::of(self.context, self.paragraph),
             finished: false,
+            end: self.paragraph.text().len(),
         })
+    }
+
+    /// Lines of the part `range` of the paragraph, which ends as at a forced break: the
+    /// fragment of a ruby annotation over a fragment of its base (CSS Ruby 1 §3.4.2).
+    pub(crate) fn lines_between<'s>(
+        &'s self,
+        range: Range<usize>,
+        width: f32,
+        atomics: &'s [AtomicMetrics],
+    ) -> Result<ParagraphLines<'s, 'p, 'context, 'font>, TextError> {
+        let mut lines = self.lines(self.position_at(range.start), width, atomics)?;
+        lines.end = range.end;
+        Ok(lines)
+    }
+
+    /// Where the part of the paragraph from `offset` starts.
+    fn position_at(&self, offset: usize) -> TextPosition<'p> {
+        TextPosition {
+            paragraph: self.paragraph,
+            offset,
+            empty_consumed: true,
+            line: 0,
+        }
+    }
+
+    /// The lines of the part `range` of the paragraph at its max-content width, each ending at
+    /// a forced break or the part's end, before vertical alignment and justification, whose
+    /// percentages resolve against `basis`; `widths` are those of its measured blocks.
+    pub(super) fn max_content_lines(
+        &self,
+        range: Range<usize>,
+        basis: f32,
+        widths: Vec<f32>,
+    ) -> Result<Vec<Line>, TextError> {
+        self.bidi()?;
+        let lines = ParagraphLines {
+            prepared: self,
+            position: self.position_at(range.start),
+            width: basis,
+            containing_width: basis,
+            inline_start: 0.0,
+            indent: 0.0,
+            atomics: &[],
+            atomic_widths: widths,
+            autospace: Autospace::of(self.context, self.paragraph),
+            finished: false,
+            end: range.end,
+        };
+        let mut from = range.start;
+        let mut ends: Vec<usize> = self
+            .opportunities
+            .iter()
+            .filter(|&&(end, opportunity)| {
+                opportunity == BreakOpportunity::Mandatory && from < end && end < range.end
+            })
+            .map(|&(end, _)| end)
+            .collect();
+        ends.push(range.end);
+        ends.into_iter()
+            .map(|to| {
+                let line = lines.emit(from, to, 0.0, Vec::new());
+                from = to;
+                line
+            })
+            .collect()
     }
 }
 
@@ -382,9 +452,6 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
         let prepared = self.prepared_at(line.range.start);
         let paragraph = prepared.paragraph;
         line.wrapped = !last && !after_forced_break(&prepared.opportunities, line.range.end);
-        if ruby::ends_inside_base(paragraph, line.range.end) {
-            return Err(ruby::WITHIN_BASES);
-        }
         if line.first_line_styles
             && let Some(fragment) = line.atomics.iter().find(|fragment| {
                 let [base, styled] = [self.prepared.paragraph, paragraph]
@@ -484,7 +551,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
                 Ok(None)
             };
         }
-        if start == text.len() {
+        if start == self.end {
             return Ok(None);
         }
         if let Some((end, last)) = self.planned_end(start)? {
@@ -574,6 +641,15 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             .opportunities
             .partition_point(|&(end, _)| end <= start);
         for &(end, opportunity) in &prepared.opportunities[first..] {
+            if end > self.end {
+                break;
+            }
+            // The end of a part laid out alone breaks its last line.
+            let opportunity = if end == self.end {
+                BreakOpportunity::Mandatory
+            } else {
+                opportunity
+            };
             let mut candidate = self.emit(start, end, indent, Vec::new())?;
             if opportunity == BreakOpportunity::Allowed
                 && prepared.has_leaders

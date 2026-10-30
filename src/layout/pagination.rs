@@ -6248,22 +6248,33 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         let annotations = source.atomics().len()..;
         for fragment in line.atomics.iter().chain(&line.annotations) {
-            let mut atomic = atomics[fragment.index]
-                .take()
-                .expect("each atomic inline is placed on exactly one line");
             let anchor = source.inline_block(fragment.index);
-            // A ruby column wider than its annotation gives it its width (CSS Ruby 1 §4.3).
-            if annotations.contains(&fragment.index) && fragment.width != atomic.metrics.width {
-                atomic = self.measurer.run(|measurer| {
+            let remeasure = |paginator: &mut Self, part: Option<std::ops::Range<usize>>| {
+                paginator.measurer.run(|measurer| {
                     crate::layout::inline::measure_annotation(
                         measurer,
-                        &anchor.block,
+                        (&anchor.block, part.clone()),
                         fragment.width,
                         layers.containing.height,
                         layers.containing.rtl,
                     )
-                })?;
-            }
+                })
+            };
+            // An annotation whose bases break across lines lays out the part of its contents
+            // each line holds (CSS Ruby 1 §3.4.2).
+            let atomic = if let Some(part) = &fragment.part {
+                remeasure(self, Some(part.clone()))?
+            } else {
+                let atomic = atomics[fragment.index]
+                    .take()
+                    .expect("each atomic inline is placed on exactly one line");
+                // A ruby column wider than its annotation gives it its width (§4.3).
+                if annotations.contains(&fragment.index) && fragment.width != atomic.metrics.width {
+                    remeasure(self, None)?
+                } else {
+                    atomic
+                }
+            };
             let inline_box = anchor.inline_box;
             let chain = inline_chain(source, inline_box);
             let chain_layers = self.chain_layers(&chain, layers.containing);

@@ -270,15 +270,8 @@ impl<'a> Paginator<'a, '_, 'a> {
         let style = paragraph.style;
         let mut anchors = paragraph.anchors.into_iter().peekable();
         let atomics = paragraph.atomics;
-        let metrics = atomics
-            .iter()
-            .map(|atomic| {
-                atomic
-                    .as_ref()
-                    .expect("measured atomics have not been placed")
-                    .metrics
-            })
-            .collect::<Vec<_>>();
+        let mut metrics = Vec::new();
+        crate::layout::inline::paragraph_metrics(paragraph.paragraph, &atomics, &mut metrics);
         let consumed_anchors = 0;
         let consumed_events = 0;
         let line_index = 0;
@@ -407,10 +400,10 @@ impl<'a> Paginator<'a, '_, 'a> {
                                     style.used_rtl(),
                                 )
                             })?;
-                            metrics[index] = measured.metrics;
                             *atomic = Some(measured);
                         }
                     }
+                    crate::layout::inline::paragraph_metrics(source, &atomics, &mut metrics);
                     if prepared.is_none() {
                         self.measurer.work.spend(source.text().len().max(1))?;
                     }
@@ -648,22 +641,26 @@ impl<'a> Paginator<'a, '_, 'a> {
                 && let Some((next_width, next_height)) = next_geometry
             {
                 let mut next_metrics = metrics.clone();
+                let mut next_atomics = Vec::with_capacity(atomics.len());
                 for (index, atomic) in atomics.iter().enumerate() {
-                    if atomic.is_some() {
-                        next_metrics[index] = self
-                            .measurer
-                            .run(|measurer| {
-                                crate::layout::inline::measure(
-                                    measurer,
-                                    &source.inline_block(index).block,
-                                    next_width,
-                                    next_height,
-                                    style.used_rtl(),
-                                )
-                            })?
-                            .metrics;
-                    }
+                    next_atomics.push(
+                        atomic
+                            .is_some()
+                            .then(|| {
+                                self.measurer.run(|measurer| {
+                                    crate::layout::inline::measure(
+                                        measurer,
+                                        &source.inline_block(index).block,
+                                        next_width,
+                                        next_height,
+                                        style.used_rtl(),
+                                    )
+                                })
+                            })
+                            .transpose()?,
+                    );
                 }
+                crate::layout::inline::paragraph_metrics(source, &next_atomics, &mut next_metrics);
                 if prepared.is_none() {
                     self.measurer.work.spend(source.text().len().max(1))?;
                 }

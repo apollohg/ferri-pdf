@@ -398,3 +398,180 @@ fn math_children_of_ruby_in_math_stay_atomic_inlines_of_its_bases() {
         base.baseline
     );
 }
+
+/// Where `space-around` puts each of `count` kana of an annotation `ANNOTATION_PT` wide each
+/// in a column `column` wide, from its start: `text-justify: ruby` has an opportunity between
+/// each pair, and half of another at either end (§4.3).
+fn spread(count: usize, column: f32) -> Vec<f32> {
+    let gaps = count as f32;
+    let each = (column - gaps * ANNOTATION_PT) / gaps;
+    (0..count)
+        .map(|index| each / 2.0 + index as f32 * (ANNOTATION_PT + each))
+        .collect()
+}
+
+/// A base of ten ideographs and an annotation of five kana that both wrap.
+const LONG_RUBY: &str = "<p><ruby><rb>漢字漢字漢字漢字漢字</rb><rt>あああああ</rt></ruby></p>";
+const WRAPPING: &str = "rb,rt{white-space:normal}";
+
+#[test]
+fn breaking_inside_a_base_breaks_its_annotation_in_proportion() {
+    let trace = render(
+        &format!("p{{width:{}pt}}{WRAPPING}", 6.0 * SIZE_PT),
+        LONG_RUBY,
+    );
+    let first = line(&trace, "漢字漢字漢字");
+    let second = line(&trace, "漢字漢字");
+    // Six tenths of the base hold three fifths of the annotation (§3.4.2).
+    let over_first = line(&trace, "あああ");
+    let over_second = line(&trace, "ああ");
+    assert!(
+        over_first.baseline < first.baseline
+            && first.baseline < over_second.baseline
+            && over_second.baseline < second.baseline,
+        "each annotation fragment lies over its base fragment: {:?}",
+        [over_first, first, over_second, second].map(|line| (&line.text, line.baseline))
+    );
+    // Each fragment is aligned in its own column (§3.4).
+    for (label, annotation, base, count) in [
+        ("first fragment", over_first, first, 3),
+        ("second fragment", over_second, second, 2),
+    ] {
+        let expected: Vec<(&str, f32)> = spread(count, base.width)
+            .into_iter()
+            .map(|x| ("あ", x))
+            .collect();
+        assert_glyphs(label, annotation, base.x, &expected);
+    }
+
+    let rtl = render(
+        &format!("p{{width:{}pt;direction:rtl}}{WRAPPING}", 6.0 * SIZE_PT),
+        LONG_RUBY,
+    );
+    let second = line(&rtl, "漢字漢字");
+    assert_labelled_pt(
+        "a right-to-left base fragment starts at the right",
+        second.x + second.width,
+        line(&rtl, "漢字漢字漢字").x + 6.0 * SIZE_PT,
+    );
+    let expected: Vec<(&str, f32)> = spread(2, second.width)
+        .into_iter()
+        .map(|x| ("あ", x))
+        .collect();
+    assert_glyphs(
+        "right-to-left second fragment",
+        line(&rtl, "ああ"),
+        second.x,
+        &expected,
+    );
+
+    let narrowest = render(&format!("p{{width:min-content}}{WRAPPING}"), LONG_RUBY);
+    let lines: Vec<(&str, usize)> = narrowest
+        .pages
+        .iter()
+        .flatten()
+        .map(|line| (line.text.as_str(), line.text.chars().count()))
+        .collect();
+    assert_eq!(
+        lines,
+        [("あ", 1), ("漢字", 2)].repeat(5),
+        "at its min-content width each fifth of the base holds a fifth of the annotation"
+    );
+}
+
+#[test]
+fn bases_break_only_where_their_annotations_wrap() {
+    for css in ["rb{white-space:normal}", "rt{white-space:normal}"] {
+        let trace = render(&format!("p{{width:{}pt}}{css}", 6.0 * SIZE_PT), LONG_RUBY);
+        line(&trace, "漢字漢字漢字漢字漢字");
+        line(&trace, "あああああ");
+    }
+}
+
+#[test]
+fn annotation_levels_break_together_where_each_can() {
+    let trace = render(
+        &format!("p{{width:{}pt}}{WRAPPING}", 9.0 * SIZE_PT),
+        "<p><ruby><rb>漢字漢字漢字漢字漢字</rb><rt>あああああ</rt>\
+         <rtc style='ruby-position:under'><rt>ababab ab</rt></rtc></ruby></p>",
+    );
+    // The under annotation breaks only after seven ninths of its text, so the base breaks
+    // at its opportunity nearest that, eight tenths, and the over annotation at four fifths.
+    let first = line(&trace, "漢字漢字漢字漢字");
+    let second = line(&trace, "漢字");
+    for (text, base) in [("ああああ", first), ("あ", second)] {
+        assert!(
+            line(&trace, text).baseline < base.baseline,
+            "{text} lies over {}",
+            base.text
+        );
+    }
+    for (text, base) in [("ababab", first), ("ab", second)] {
+        let annotation = line(&trace, text);
+        assert!(
+            annotation.baseline > base.baseline,
+            "{text} lies under {}",
+            base.text
+        );
+        assert_labelled_pt(
+            &format!("{text} centres in its fragment's column"),
+            annotation.x + annotation.width / 2.0 - base.x,
+            base.width / 2.0,
+        );
+    }
+}
+
+#[test]
+fn merged_annotations_break_with_the_base_they_pair_with() {
+    let trace = render(
+        &format!(
+            "p{{width:{}pt}}{WRAPPING}ruby{{ruby-merge:merge}}",
+            5.0 * SIZE_PT
+        ),
+        "<p><ruby><rb>漢字</rb><rb>水水水水水</rb><rt>ああ</rt><rt>アアア</rt></ruby></p>",
+    );
+    let first = line(&trace, "漢字水水水");
+    let second = line(&trace, "水水");
+    // Three fifths of the second base hold two thirds of its annotation.
+    for (text, base) in [("ああ", first), ("アア", first), ("ア", second)] {
+        let annotation = line(&trace, text);
+        assert!(
+            annotation.baseline < base.baseline
+                && annotation.x >= base.x
+                && annotation.x + annotation.width <= base.x + base.width + 0.001,
+            "{text} lies over {}: {:?}",
+            base.text,
+            (annotation.x, annotation.width, base.x, base.width)
+        );
+    }
+}
+
+#[test]
+fn forced_breaks_inside_bases_keep_inter_character_annotations_beside_its_end() {
+    let trace = render(
+        "ruby{ruby-position:inter-character}",
+        "<p><ruby><rb>漢字<br>漢字</rb><rt>あああ</rt></ruby></p>",
+    );
+    let lines: Vec<(&str, f32)> = trace
+        .pages
+        .iter()
+        .flatten()
+        .filter(|line| line.text == "漢字")
+        .map(|line| (line.text.as_str(), line.width))
+        .collect();
+    assert_eq!(
+        lines,
+        [
+            ("漢字", 2.0 * SIZE_PT),
+            ("漢字", 2.0 * SIZE_PT + ANNOTATION_PT)
+        ],
+        "the annotation takes its place after the base's last fragment"
+    );
+    let annotations = trace
+        .pages
+        .iter()
+        .flatten()
+        .filter(|line| line.text == "あああ")
+        .count();
+    assert_eq!(annotations, 1, "the annotation is laid out once");
+}
