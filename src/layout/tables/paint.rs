@@ -83,6 +83,7 @@ pub(super) struct CellBackground<'a> {
     columns: Range<usize>,
     rows: Range<usize>,
     decoration: BoxDecoration,
+    clone: bool,
 }
 impl CellBackground<'_> {
     pub(super) fn paint(&self, data: &Data<'_>, areas: &Areas<'_>, band: usize) -> BoxPaint {
@@ -109,12 +110,16 @@ impl CellBackground<'_> {
 pub(crate) struct BackgroundRows {
     pub rows: Range<usize>,
     pub cell_row: usize,
+    /// The layer's box clones its decoration at breaks, so each of its fragments positions
+    /// its backgrounds in its own area (CSS Fragmentation 3 §5.4).
+    pub clone: bool,
 }
 impl CellBackground<'_> {
     pub(super) fn rows(&self, data: &Data<'_>) -> BackgroundRows {
         BackgroundRows {
             rows: self.rows.clone(),
             cell_row: data.grid.cells[self.cell].row,
+            clone: self.clone,
         }
     }
 }
@@ -171,6 +176,7 @@ impl<'a> FragmentBackground<'a> {
 struct ColumnLayer {
     columns: Range<usize>,
     decoration: BoxDecoration,
+    clone: bool,
 }
 
 pub(super) struct Layers {
@@ -189,6 +195,7 @@ impl Layers {
             columns[layer].push(ColumnLayer {
                 columns: column.start..column.start + column.span,
                 decoration,
+                clone: column.source.style().clone_decoration,
             });
         }
         let group_rows = data
@@ -226,6 +233,7 @@ impl Layers {
                         columns: layer.columns.clone(),
                         rows: all_rows.clone(),
                         decoration: layer.decoration.clone(),
+                        clone: layer.clone,
                     });
                 }
             }
@@ -243,6 +251,7 @@ impl Layers {
                     columns: all_columns.clone(),
                     rows: self.group_rows[group].clone(),
                     decoration,
+                    clone: source.style().clone_decoration,
                 });
             }
         }
@@ -258,6 +267,7 @@ impl Layers {
                     columns: all_columns.clone(),
                     rows: cell.row..cell.row + 1,
                     decoration,
+                    clone: data.rows[cell.row].style().clone_decoration,
                 });
             }
         }

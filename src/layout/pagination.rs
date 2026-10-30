@@ -5803,33 +5803,58 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         Ok(())
     }
     fn table_backgrounds(&mut self, table: &ActiveTable<'a>, starts: &[f32]) {
+        // The block extent of each cloned layer's fragment on each page: that of the cells
+        // it paints behind there.
+        let mut fragments: HashMap<(usize, std::ops::Range<usize>), [f32; 2]> = HashMap::new();
+        for layer in table.backgrounds.iter().filter(|layer| layer.rows.clone) {
+            let rect = self.table_background(layer).rect;
+            let extent = fragments
+                .entry((layer.page, layer.rows.rows.clone()))
+                .or_insert([rect.y, rect.y + rect.height]);
+            *extent = [extent[0].min(rect.y), extent[1].max(rect.y + rect.height)];
+        }
         for layer in &table.backgrounds {
             if layer.repeated {
                 continue;
             }
-            let item = match layer.underlay {
-                Some(index) => {
-                    &mut self
-                        .underlays
-                        .get_mut(&(layer.page, layer.slot))
-                        .expect("registered table underlay")[index]
-                        .item
-                }
-                None => &mut self.display_lists[layer.page][layer.slot].item,
-            };
-            let DisplayItem::Box(paint) = item else {
-                unreachable!("table backgrounds are box paints")
-            };
+            let fragment = fragments
+                .get(&(layer.page, layer.rows.rows.clone()))
+                .copied();
+            let paint = self.table_background(layer);
+            let rect = paint.rect;
             let area = paint
                 .background_box
                 .as_mut()
                 .expect("table background positioning area");
-            area.y = paint.rect.y + starts[layer.rows.rows.start]
-                - starts[layer.rows.cell_row]
-                - layer.before;
-            area.height =
-                starts[layer.rows.rows.end] - starts[layer.rows.rows.start] - table.flow.spacing;
+            if let Some([top, bottom]) = fragment {
+                area.y = top;
+                area.height = bottom - top;
+            } else {
+                area.y = rect.y + starts[layer.rows.rows.start]
+                    - starts[layer.rows.cell_row]
+                    - layer.before;
+                area.height = starts[layer.rows.rows.end]
+                    - starts[layer.rows.rows.start]
+                    - table.flow.spacing;
+            }
         }
+    }
+    /// The paint of a table layer's background behind one cell fragment.
+    fn table_background(&mut self, layer: &TableBackground) -> &mut BoxPaint {
+        let item = match layer.underlay {
+            Some(index) => {
+                &mut self
+                    .underlays
+                    .get_mut(&(layer.page, layer.slot))
+                    .expect("registered table underlay")[index]
+                    .item
+            }
+            None => &mut self.display_lists[layer.page][layer.slot].item,
+        };
+        let DisplayItem::Box(paint) = item else {
+            unreachable!("table backgrounds are box paints")
+        };
+        paint
     }
     /// Paints a collapsed table's borders for the bands placed on each page.
     fn collapsed_borders(

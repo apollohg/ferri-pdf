@@ -1072,6 +1072,63 @@ fn pages_holding_only_table_track_backgrounds_are_output() {
 }
 
 #[test]
+fn cloned_row_groups_and_rows_position_backgrounds_in_each_fragment() {
+    // CSS Fragmentation 3 §5.4: a cloned track or track group is wrapped independently in
+    // each fragment, so its background positioning area is that fragment's: the rows on the
+    // 200pt page below the 50pt spacer, then the rest. A sliced one keeps its whole area.
+    const ROWS_PT: f32 = 240.0;
+    for (decoration, page_areas) in [
+        ("clone", [[50.0, 150.0], [0.0, 90.0]]),
+        ("slice", [[50.0, ROWS_PT], [-150.0, ROWS_PT]]),
+    ] {
+        for (layer, rows) in [
+            (
+                "tbody",
+                "<tr><td>a</td></tr><tr><td>b</td></tr><tr><td>c</td></tr><tr><td>d</td></tr>",
+            ),
+            ("tr", "<tr><td style='height:240pt'>a</td></tr>"),
+        ] {
+            let html = format!(
+                "<!doctype html><style>@page{{size:300pt 200pt;margin:0}}body{{margin:0}}table{{border-spacing:0}}td{{height:60pt;width:100pt;padding:0}}{layer}{{background:rgb(0,0,255);box-decoration-break:{decoration}}}</style><div style='height:50pt'></div><table><tbody>{rows}</tbody></table>"
+            );
+            let trace = render_html(&html, &local_options())
+                .unwrap()
+                .layout
+                .unwrap();
+            for (page, [y, height]) in page_areas.into_iter().enumerate() {
+                let areas: Vec<_> = trace.display_lists[page]
+                    .iter()
+                    .filter_map(|item| match item {
+                        DisplayItem::Box(paint)
+                            if paint.decoration.background.rgb == [0, 0, 255] =>
+                        {
+                            paint.background_box
+                        }
+                        _ => None,
+                    })
+                    .collect();
+                assert!(
+                    !areas.is_empty(),
+                    "{decoration} {layer}: page {page} paints the layer"
+                );
+                for area in areas {
+                    common::assert_labelled_pt(
+                        &format!("{decoration} {layer}: page {page} area top"),
+                        area.y,
+                        y,
+                    );
+                    common::assert_labelled_pt(
+                        &format!("{decoration} {layer}: page {page} area height"),
+                        area.height,
+                        height,
+                    );
+                }
+            }
+        }
+    }
+}
+
+#[test]
 fn orthogonal_captions_keep_their_caption_role_above_the_table() {
     // CSS Writing Modes 4 §7: a vertical caption is an orthogonal flow whose inline size, its
     // line's advance, is its physical height above the table.
