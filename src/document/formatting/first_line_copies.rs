@@ -161,6 +161,26 @@ impl BlockBox {
         stand_in.own_copy = Some(OwnCopy::Moved(copy));
         stand_in
     }
+    /// A box standing in for this atomic inline's box on its block's first formatted line:
+    /// for its first-line box, or for itself where the line leaves it alone.
+    pub(crate) fn first_line_stand_in(&mut self) -> Self {
+        match &self.first_line_box {
+            Some(copy) => self.stand_in(copy.clone()),
+            None => self.shared_stand_in(),
+        }
+    }
+    /// A box standing in for this box, which it shares with the box left in its place.
+    pub(crate) fn shared_stand_in(&mut self) -> Self {
+        let copy = if let Some(copy) = self.moved_copy() {
+            copy.clone()
+        } else {
+            let placeholder = Self::anonymous(self.style().clone(), Vec::new(), None);
+            let copy = FirstLineBox::staged(std::mem::replace(self, placeholder));
+            *self = self.stand_in(copy.clone());
+            copy
+        };
+        self.stand_in(copy)
+    }
 }
 
 /// A copy waiting to be formatted from `root`, with the document's state at its start.

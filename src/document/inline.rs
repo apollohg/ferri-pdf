@@ -559,35 +559,83 @@ impl Paragraph {
         &mut self.annotations[index].block
     }
     /// A copy of this paragraph of a ruby annotation box's contents before `text-transform`,
-    /// to style for its paragraph's first formatted line; `None` where it holds boxes laid out
-    /// apart, which are not copied.
-    pub(super) fn untransformed_copy(&self) -> Option<Self> {
-        (self.anchors.is_empty() && self.atomics.is_empty() && self.annotations.is_empty()).then(
-            || {
-                self.first_line_copy(
-                    (*self.style).clone(),
+    /// to style for its paragraph's first formatted line, anchoring placeholders where it
+    /// anchors boxes. The placeholders of the ruby annotation boxes it holds take their
+    /// untransformed contents.
+    pub(super) fn untransformed_copy(&mut self) -> Self {
+        let mut copy = self.first_line_copy(
+            (*self.style).clone(),
+            Vec::new(),
+            self.spans.iter().map(|span| span.style.clone()).collect(),
+            self.boxes
+                .iter()
+                .map(|inline_box| ((*inline_box.style).clone(), inline_box.decoration.clone()))
+                .collect(),
+            self.atomics
+                .iter()
+                .chain(&self.annotations)
+                .map(|anchored| anchored.block.style().clone())
+                .collect(),
+        );
+        for (placeholder, annotation) in copy.annotations.iter_mut().zip(&mut self.annotations) {
+            if let Some(source) = annotation.block.take_annotation_source() {
+                placeholder.block.keep_annotation_source(source);
+            }
+        }
+        copy.anchors = self
+            .anchors
+            .iter()
+            .map(|anchor| Anchor {
+                offset: anchor.offset,
+                block: crate::document::BlockBox::anonymous(
+                    anchor.block.style().clone(),
                     Vec::new(),
-                    self.spans.iter().map(|span| span.style.clone()).collect(),
-                    self.boxes
-                        .iter()
-                        .map(|inline_box| {
-                            ((*inline_box.style).clone(), inline_box.decoration.clone())
-                        })
-                        .collect(),
-                    Vec::new(),
-                )
-            },
-        )
+                    None,
+                ),
+                inline_box: anchor.inline_box,
+            })
+            .collect();
+        copy
     }
-    /// This untransformed copy with its root inline box, spans and inline boxes styled `root`,
-    /// `spans` and `boxes`, transformed.
+    /// This untransformed copy of `contents` with its root inline box, spans and inline boxes
+    /// styled `root`, `spans` and `boxes`, transformed. It anchors where `contents` does the
+    /// boxes the first line lays out there, which it shares with `contents`: the first-line
+    /// boxes of atomic inlines that the line restyles, and the others as they are, as a float
+    /// or positioned box lies on no line. Its ruby annotation boxes are still the placeholders
+    /// holding their untransformed contents.
     pub(super) fn restyled(
-        &self,
-        root: Style,
-        spans: Vec<Style>,
-        boxes: Vec<(Style, crate::graphics::BoxDecoration)>,
+        self,
+        (root, spans, boxes): (
+            Style,
+            Vec<Style>,
+            Vec<(Style, crate::graphics::BoxDecoration)>,
+        ),
+        contents: &mut Self,
     ) -> Result<Self, DocumentError> {
         let mut copy = self.first_line_copy(root, Vec::new(), spans, boxes, Vec::new());
+        let share = |placeholders: Vec<Anchor>,
+                     anchored: &mut [Anchor],
+                     stand_in: fn(&mut crate::document::BlockBox) -> crate::document::BlockBox| {
+            placeholders
+                .into_iter()
+                .zip(anchored)
+                .map(|(placeholder, anchor)| Anchor {
+                    block: stand_in(&mut anchor.block),
+                    ..placeholder
+                })
+                .collect()
+        };
+        copy.atomics = share(
+            self.atomics,
+            &mut contents.atomics,
+            crate::document::BlockBox::first_line_stand_in,
+        );
+        copy.anchors = share(
+            self.anchors,
+            &mut contents.anchors,
+            crate::document::BlockBox::shared_stand_in,
+        );
+        copy.annotations = self.annotations;
         transform::apply(&mut copy, false)?;
         Ok(copy)
     }

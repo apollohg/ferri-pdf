@@ -668,7 +668,7 @@ impl OpenRuby {
                 // before `text-transform` (CSS Pseudo-Elements 4 §2.1.3).
                 let mut source = None;
                 let finished = contents.finish_with_first_line(&wrapper, |contents| {
-                    source = contents.untransformed_copy();
+                    source = Some(contents.untransformed_copy());
                     Ok(None)
                 })?;
                 let block = match finished {

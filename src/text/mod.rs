@@ -735,10 +735,6 @@ pub(crate) enum TextError {
     AtomicMetrics { expected: usize, actual: usize },
     #[error("text continuation belongs to another paragraph")]
     ParagraphMismatch,
-    #[error(
-        "ruby annotation {index} on a ::first-line inherits first-line styles into its contents"
-    )]
-    FirstLineAnnotation { index: usize },
 }
 
 /// The content language, or the OpenType language system `font-language-override` names

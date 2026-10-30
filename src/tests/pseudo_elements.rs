@@ -640,6 +640,52 @@ fn first_line_styles_ruby_annotations_and_their_contents_only_where_they_lie_on_
 }
 
 #[test]
+fn first_line_styles_boxes_inside_ruby_annotations_only_where_they_lie_on_it() {
+    // CSS Pseudo-Elements 4 §2.1.3: an inline-block in an annotation on the first line is a
+    // fragment of the line, so it and its contents inherit through ::first-line; a float lies
+    // on no line and keeps the annotation's styles. Both lay out beside the annotation text.
+    let css = "p{width:200pt;font-size:12pt}rt{font-size:50%}.ib{display:inline-block}\
+               .f{float:left}p::first-line{color:red;font-size:20pt;text-transform:uppercase}";
+    let lines = styled_lines(&trace(
+        css,
+        "<p><ruby>漢<rt>kan <span class=ib>box <b>bold</b></span><span class=f>flt</span>\
+         </rt></ruby> lead words that wrap onto later lines \
+         <ruby>字<rt>ji <span class=ib>later</span></rt></ruby> end</p>",
+    ));
+    for text in ["KAN \u{fffc}", "BOX BOLD"] {
+        let runs = line_runs(&lines, text);
+        assert!(
+            runs.iter().all(|run| (run.1, run.2) == (RED, 10.0)),
+            "the annotation text and the inline-block in it on the first line inherit the \
+             line's colour, size and casing: {text:?} {runs:?} in {lines:#?}"
+        );
+    }
+    let float = line_runs(&lines, "flt");
+    assert!(
+        float.iter().all(|run| (run.1, run.2) == (BLACK, 6.0)),
+        "the float in the annotation keeps the annotation's own styles: {float:?}"
+    );
+    let later = line_runs(&lines, "later");
+    assert!(
+        later.iter().all(|run| (run.1, run.2) == (BLACK, 6.0)),
+        "an inline-block in an annotation on a later line keeps the paragraph's styles: \
+         {later:?}"
+    );
+    // A ruby inside an annotation on the first line passes the line's styles to its own
+    // annotation, whose size halves again.
+    let nested = styled_lines(&trace(
+        css,
+        "<p><ruby>漢<rt>kan <ruby>a<rt>inner</rt></ruby></rt></ruby> lead</p>",
+    ));
+    let inner = line_runs(&nested, "INNER");
+    assert!(
+        inner.iter().all(|run| (run.1, run.2) == (RED, 5.0)),
+        "the nested annotation inherits through the outer one from ::first-line: {inner:?} in \
+         {nested:#?}"
+    );
+}
+
+#[test]
 fn first_line_atomic_inlines_count_record_and_call_once() {
     // The first line's copy of an atomic inline is formatted again from its start; only one
     // of the two is laid out, so counters, named strings and footnotes advance once.

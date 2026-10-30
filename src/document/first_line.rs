@@ -55,26 +55,10 @@ pub(super) fn variant(
         else {
             continue;
         };
-        let root = annotation_root(paragraph, index, &boxes, &mut restyle)?;
-        let contents_spans = source
-            .spans()
-            .iter()
-            .map(|span| restyle.style(&span.style))
-            .collect::<Result<Vec<_>, _>>()?;
-        let mut contents_boxes = Vec::with_capacity(source.boxes().len());
-        for inline_box in source.boxes() {
-            let style = restyle.style(&inline_box.style)?;
-            let decoration = resources.backgrounds(&style);
-            contents_boxes.push((style, decoration));
-        }
-        let contents = source.restyled(root.clone(), contents_spans, contents_boxes)?;
-        paragraph.annotation_block_mut(index).set_first_line_box(
-            crate::document::BlockBox::anonymous(
-                root,
-                vec![crate::document::BlockContent::Inline(contents)],
-                None,
-            ),
-        );
+        let copy = annotation_copy((paragraph, index), source, &boxes, &mut restyle, resources)?;
+        paragraph
+            .annotation_block_mut(index)
+            .set_first_line_box(copy);
     }
     Ok(Some(paragraph.first_line_copy(
         restyle.root,
@@ -83,6 +67,52 @@ pub(super) fn variant(
         boxes,
         atomics,
     )))
+}
+
+/// Ruby annotation box `index` of `paragraph` as the first line lays it out: its contents,
+/// untransformed in `source`, inherit through it from the line, whose inline boxes of
+/// `paragraph` are styled `boxes`, and so do those of the annotation boxes they hold.
+fn annotation_copy(
+    (paragraph, index): (&mut Paragraph, usize),
+    source: Paragraph,
+    boxes: &[(Style, crate::graphics::BoxDecoration)],
+    restyle: &mut Restyle<'_>,
+    resources: &mut ImageResources<'_>,
+) -> Result<crate::document::BlockBox, DocumentError> {
+    let root = annotation_root(paragraph, index, boxes, restyle)?;
+    let spans = source
+        .spans()
+        .iter()
+        .map(|span| restyle.style(&span.style))
+        .collect::<Result<Vec<_>, _>>()?;
+    let mut contents_boxes = Vec::with_capacity(source.boxes().len());
+    for inline_box in source.boxes() {
+        let style = restyle.style(&inline_box.style)?;
+        let decoration = resources.backgrounds(&style);
+        contents_boxes.push((style, decoration));
+    }
+    let contents = paragraph
+        .annotation_block_mut(index)
+        .annotation_contents_mut()
+        .expect("an annotation box with a first-line source has contents");
+    let mut copy = source.restyled((root.clone(), spans, contents_boxes.clone()), contents)?;
+    for nested in 0..copy.annotations().len() {
+        let Some(source) = copy.annotation_block_mut(nested).take_annotation_source() else {
+            continue;
+        };
+        *copy.annotation_block_mut(nested) = annotation_copy(
+            (contents, nested),
+            source,
+            &contents_boxes,
+            restyle,
+            resources,
+        )?;
+    }
+    Ok(crate::document::BlockBox::anonymous(
+        root,
+        vec![crate::document::BlockContent::Inline(copy)],
+        None,
+    ))
 }
 
 /// The style of the block laying out ruby annotation box `index`'s contents on the first

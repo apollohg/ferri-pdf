@@ -601,6 +601,13 @@ impl BlockBox {
     pub(crate) fn stands_in(&self) -> bool {
         self.moved_copy().is_some()
     }
+    /// The paragraph of a ruby annotation box's contents, if it has any.
+    pub(super) fn annotation_contents_mut(&mut self) -> Option<&mut Paragraph> {
+        match self.children.first_mut() {
+            Some(BlockContent::Inline(contents)) => Some(contents),
+            _ => None,
+        }
+    }
     /// Keeps a ruby annotation box's untransformed `contents` for its first-line copy.
     pub(super) fn keep_annotation_source(&mut self, contents: Paragraph) {
         self.annotation_source = Some(Box::new(contents));
