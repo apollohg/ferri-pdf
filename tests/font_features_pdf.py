@@ -231,6 +231,37 @@ class FontFeaturesPdf(unittest.TestCase):
         self.assertTrue(sharp.origin[0] < second.origin[0] < capital_a.origin[0],
                         "the second S of ß follows the first instead of taking a position")
 
+    def test_svg_text_preserves_white_space_as_the_cascade_computes_it(self):
+        """SVG 2 §11.6.1 and §11.10.3 with CSS Text 3 §4: preserved segment breaks start line
+        boxes stacked by line-height, preserved tabs advance to tab stops, `pre-line` collapses
+        spaces, and `xml:space="preserve"` maps to `white-space-collapse: preserve-spaces`."""
+        pixels = PDF_POINTS_PER_INCH / CSS_PIXELS_PER_INCH
+        size, line_height, tab_size = 20, 30, 4
+        space = 0.6 * size
+        texts = (f'<text x="10" y="30" style="white-space:pre;tab-size:{tab_size}">a\tb\n  c\n\nd</text>'
+                 '<text x="300" y="30" style="white-space:pre-line">x   y \n   z</text>'
+                 '<text x="10" y="180" xml:space="preserve">p  q</text>'
+                 '<text x="300" y="180" xml:space="preserve" style="white-space:normal">p  q</text>')
+        glyphs = self.render(
+            f"svg{{display:block}}text{{font:{size}px 'Liberation Mono';line-height:{line_height}px}}",
+            f"<svg width=\"300pt\" height=\"150pt\" viewBox=\"0 0 400 200\">{texts}</svg>").glyphs
+        origin = {}
+        for glyph in glyphs:
+            origin.setdefault(glyph.text, []).append(
+                (round(glyph.origin[0] / pixels, 2), round(-glyph.origin[1] / pixels, 2)))
+        (a,), (b,), (c,), (d,) = origin["a"], origin["b"], origin["c"], origin["d"]
+        self.assertEqual(b[0] - a[0], tab_size * space, "the tab reaches the first stop")
+        self.assertEqual((c[0] - a[0], c[1] - a[1]), (2 * space, line_height),
+                         "the next line starts at the text's x, its leading spaces kept")
+        self.assertEqual((d[0] - a[0], d[1] - a[1]), (0, 3 * line_height),
+                         "an empty line box takes the strut's line-height")
+        (x,), (y,), (z,) = origin["x"], origin["y"], origin["z"]
+        self.assertEqual((y[0] - x[0], z[0] - x[0], z[1] - x[1]), (2 * space, 0, line_height),
+                         "pre-line collapses spaces, including those beside the break")
+        p, q = origin["p"], origin["q"]
+        self.assertEqual([q[0] - p[0] for p, q in zip(p, q)], [3 * space, 2 * space],
+                         "xml:space keeps both spaces unless white-space overrides it")
+
     def test_optical_size_and_presentation_select_the_embedded_glyphs(self):
         optical = reference("RobotoFlex-optical.json")
         advances = {json.dumps(sample["location"], sort_keys=True): sample["advance"]

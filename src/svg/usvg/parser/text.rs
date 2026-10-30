@@ -142,6 +142,11 @@ pub(crate) fn convert(
         layouted: vec![],
         non_scaling_stroke: converter::non_scaling_stroke(text_node, state),
         linear_light: parent.linear_light,
+        strut: Strut {
+            font: convert_font(text_node, state),
+            font_size: super::units::resolve_font_size(text_node, state),
+            style: text_style(text_node, state),
+        },
     };
 
     let Some(shadows) = text::convert(
@@ -167,6 +172,8 @@ struct IterState {
     chars_count: usize,
     chunk_bytes_count: usize,
     split_chunk: bool,
+    /// Preserved segment breaks since the last chunk started.
+    line_breaks: usize,
     text_flow: TextFlow,
     chunks: Vec<TextChunk>,
 }
@@ -181,6 +188,7 @@ fn collect_text_chunks(
         chars_count: 0,
         chunk_bytes_count: 0,
         split_chunk: false,
+        line_breaks: 0,
         text_flow: TextFlow::Linear,
         chunks: Vec::new(),
     };
@@ -347,6 +355,27 @@ fn collect_text_chunks_impl(
         for c in child.text().chars() {
             let char_len = c.len_utf8();
 
+            // SVG 2 §11.6.1: a preserved segment break is an addressable character that
+            // starts a new line box; text before any other starts at the break's position.
+            if c == super::svgtree::SEGMENT_BREAK {
+                if iter_state.chunks.is_empty() {
+                    iter_state.chunks.push(TextChunk {
+                        x: pos_list[iter_state.chars_count].x,
+                        y: pos_list[iter_state.chars_count].y,
+                        anchor,
+                        rtl,
+                        spans: Vec::new(),
+                        text_flow: iter_state.text_flow.clone(),
+                        text: String::new(),
+                        line_breaks: 0,
+                    });
+                }
+                iter_state.line_breaks += 1;
+                iter_state.split_chunk = true;
+                iter_state.chars_count += 1;
+                continue;
+            }
+
             // Create a new chunk if:
             // - this is the first span (yes, position can be None)
             // - text character has an absolute coordinate assigned to it (via x/y attribute)
@@ -374,6 +403,7 @@ fn collect_text_chunks_impl(
                     spans: vec![span2],
                     text_flow: iter_state.text_flow.clone(),
                     text: c.to_string(),
+                    line_breaks: std::mem::take(&mut iter_state.line_breaks),
                 });
             } else if is_new_span {
                 // Add this span to the last text chunk.

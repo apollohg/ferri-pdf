@@ -5,7 +5,7 @@
 //! "Applies to"), so they have no effect on boxes of other namespaces.
 use crate::paint::{AbsoluteColor, LengthPercentage};
 use crate::style::{
-    InheritedColor, Style, StyleError,
+    InheritedColor, Style, StyleError, WhiteSpaceCollapse,
     box_values::{length_percentage, unsupported},
     cascade::Origin,
     component::Component,
@@ -555,9 +555,7 @@ const UNCASCADED: [Property; 4] = [
     Property::UnicodeBidi,
 ];
 /// Inherited properties of SVG text content that its renderer does not implement.
-const UNCASCADED_TEXT: [Property; 6] = [
-    Property::WhiteSpaceCollapse,
-    Property::TextWrapMode,
+const UNCASCADED_TEXT: [Property; 4] = [
     Property::FontVariantEmoji,
     Property::FontPalette,
     Property::FontSynthesisWeight,
@@ -765,9 +763,32 @@ fn is_svg_content(element: crate::dom::Element<'_>) -> bool {
             })
 }
 
+/// `xml:space` (SVG 2 §11.10.3.2) and its value that preserves spaces.
+const XML_SPACE: &str = "space";
+const PRESERVE: &str = "preserve";
+
+/// The `white-space-collapse` a `white-space` value sets, for standalone SVG text too; `None`
+/// for `inherit` or an invalid value.
+pub(crate) fn white_space_collapse(source: &str) -> Option<WhiteSpaceCollapse> {
+    use crate::style::wide_keywords::Resolved;
+    declaration::expand(Property::WhiteSpace, source)
+        .ok()??
+        .into_iter()
+        .find(|(property, _)| *property == Property::WhiteSpaceCollapse)
+        .and_then(|(_, value)| match value {
+            Specified::Value(value) => WhiteSpaceCollapse::from_component(&value).ok(),
+            Specified::Wide(wide) => match wide.resolve(true) {
+                Resolved::Initial => Some(WhiteSpaceCollapse::default()),
+                Resolved::Inherit => None,
+            },
+            _ => None,
+        })
+}
+
 /// The SVG 2 §6.8 user agent style sheet's declarations for an SVG element: `overflow: hidden`
-/// on viewport-establishing elements, and `transform-origin: 0 0` on all but the outermost
-/// `svg` elements and those in a `foreignObject`, which transform about their centre.
+/// on viewport-establishing elements, `white-space-collapse: preserve-spaces` where
+/// `xml:space="preserve"`, and `transform-origin: 0 0` on all but the outermost `svg` elements
+/// and those in a `foreignObject`, which transform about their centre.
 pub(super) fn user_agent_declarations(
     element: crate::dom::Element<'_>,
 ) -> Result<Vec<PropertyDeclaration>, StyleError> {
@@ -778,6 +799,16 @@ pub(super) fn user_agent_declarations(
         && matches!(value, "lr" | "lr-tb" | "rl" | "rl-tb" | "tb" | "tb-rl")
     {
         declaration::append(&mut output, Origin::UserAgent, Property::WritingMode, value)?;
+    }
+    if element.value().attrs.iter().any(|(name, value)| {
+        &*name.ns == crate::dom::XML_NAMESPACE && &*name.local == XML_SPACE && &**value == PRESERVE
+    }) {
+        declaration::append(
+            &mut output,
+            Origin::UserAgent,
+            Property::WhiteSpaceCollapse,
+            WhiteSpaceCollapse::PreserveSpaces.name(),
+        )?;
     }
     if CLIPPING_ELEMENTS.contains(&element.name()) || (element.name() == SVG_ELEMENT && content) {
         declaration::append(&mut output, Origin::UserAgent, Property::Overflow, "hidden")?;

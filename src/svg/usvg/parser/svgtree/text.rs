@@ -6,6 +6,7 @@
 use roxmltree::Error;
 
 use super::{AId, Document, EId, NodeId, NodeKind, SvgNode};
+use crate::style::WhiteSpaceCollapse;
 
 const XLINK_NS: &str = "http://www.w3.org/1999/xlink";
 
@@ -17,19 +18,11 @@ pub(crate) fn parse_svg_text_element<'input>(
 ) -> Result<(), Error> {
     debug_assert_eq!(parent.tag_name().name(), "text");
 
-    let space = if doc.get(parent_id).has_attribute(AId::Space) {
-        get_xmlspace(doc, parent_id, XmlSpace::Default)
-    } else {
-        if let Some(node) = doc
-            .get(parent_id)
-            .ancestors()
-            .find(|n| n.has_attribute(AId::Space))
-        {
-            get_xmlspace(doc, node.id, XmlSpace::Default)
-        } else {
-            XmlSpace::Default
-        }
-    };
+    let space = doc
+        .get(parent_id)
+        .ancestors()
+        .find_map(own_space)
+        .unwrap_or_default();
 
     parse_svg_text_element_impl(parent, parent_id, style_sheet, space, doc)?;
 
@@ -41,7 +34,7 @@ fn parse_svg_text_element_impl<'input>(
     parent: roxmltree::Node<'_, 'input>,
     parent_id: NodeId,
     style_sheet: &super::css::StyleSheet,
-    space: XmlSpace,
+    space: WhiteSpaceCollapse,
     doc: &mut Document<'input>,
 ) -> Result<(), Error> {
     for node in parent.children() {
@@ -138,18 +131,29 @@ fn resolve_tref_text(xml: &roxmltree::Document, href: &str) -> Option<String> {
     if text.is_empty() { None } else { Some(text) }
 }
 
-#[derive(Clone, Copy, PartialEq, Debug)]
-enum XmlSpace {
-    Default,
-    Preserve,
+/// The `white-space-collapse` an element sets: its `white-space` property, else its legacy
+/// `xml:space` attribute (SVG 2 §11.10.3); `None` where it inherits.
+fn own_space(node: SvgNode) -> Option<WhiteSpaceCollapse> {
+    if let Some(value) = node.attribute::<&str>(AId::WhiteSpace) {
+        return crate::style::svg_values::white_space_collapse(value);
+    }
+    node.attribute::<&str>(AId::Space).map(|value| {
+        if value == XML_SPACE_PRESERVE {
+            WhiteSpaceCollapse::PreserveSpaces
+        } else {
+            WhiteSpaceCollapse::Collapse
+        }
+    })
 }
 
-fn get_xmlspace(doc: &Document, node_id: NodeId, default: XmlSpace) -> XmlSpace {
-    match doc.get(node_id).attribute(AId::Space) {
-        Some("preserve") => XmlSpace::Preserve,
-        Some(_) => XmlSpace::Default,
-        _ => default,
-    }
+const XML_SPACE_PRESERVE: &str = "preserve";
+
+fn get_xmlspace(
+    doc: &Document,
+    node_id: NodeId,
+    default: WhiteSpaceCollapse,
+) -> WhiteSpaceCollapse {
+    own_space(doc.get(node_id)).unwrap_or(default)
 }
 
 trait StrTrim {
@@ -175,7 +179,7 @@ impl StrTrim for String {
 /// - 'xml:space' processing
 /// - tabs and newlines removing/replacing
 /// - spaces trimming
-fn trim_text_nodes(text_elem_id: NodeId, xmlspace: XmlSpace, doc: &mut Document) {
+fn trim_text_nodes(text_elem_id: NodeId, xmlspace: WhiteSpaceCollapse, doc: &mut Document) {
     let mut nodes = Vec::new(); // TODO: allocate only once
     collect_text_nodes(doc.get(text_elem_id), 0, &mut nodes);
 
@@ -187,7 +191,7 @@ fn trim_text_nodes(text_elem_id: NodeId, xmlspace: XmlSpace, doc: &mut Document)
 
         let node_id = nodes[0].0;
 
-        if xmlspace == XmlSpace::Default {
+        if xmlspace.collapses_spaces() {
             if let NodeKind::Text(ref mut text) = doc.nodes[node_id.get_usize()].kind {
                 match text.len() {
                     0 => {} // An empty string. Do nothing.
@@ -271,7 +275,7 @@ fn trim_text_nodes(text_elem_id: NodeId, xmlspace: XmlSpace, doc: &mut Document)
             // See text-tspan-02-b.svg for details.
             if depth1 < depth2 {
                 if c3 == Some(b' ') {
-                    if xmlspace2 == XmlSpace::Default {
+                    if xmlspace2.collapses_spaces() {
                         if let NodeKind::Text(ref mut text) = doc.nodes[node2_id.get_usize()].kind {
                             text.remove_first_space();
                         }
@@ -279,12 +283,12 @@ fn trim_text_nodes(text_elem_id: NodeId, xmlspace: XmlSpace, doc: &mut Document)
                 }
             } else {
                 if c2 == Some(b' ') && c2 == c3 {
-                    if xmlspace1 == XmlSpace::Default && xmlspace2 == XmlSpace::Default {
+                    if xmlspace1.collapses_spaces() && xmlspace2.collapses_spaces() {
                         if let NodeKind::Text(ref mut text) = doc.nodes[node1_id.get_usize()].kind {
                             text.remove_last_space();
                         }
                     } else {
-                        if xmlspace1 == XmlSpace::Preserve && xmlspace2 == XmlSpace::Default {
+                        if !xmlspace1.collapses_spaces() && xmlspace2.collapses_spaces() {
                             if let NodeKind::Text(ref mut text) =
                                 doc.nodes[node2_id.get_usize()].kind
                             {
@@ -300,7 +304,7 @@ fn trim_text_nodes(text_elem_id: NodeId, xmlspace: XmlSpace, doc: &mut Document)
 
             if is_first
                 && c1 == Some(b' ')
-                && xmlspace1 == XmlSpace::Default
+                && xmlspace1.collapses_spaces()
                 && !doc.get(node1_id).text().is_empty()
             {
                 // Remove a leading space from a first text node.
@@ -310,7 +314,7 @@ fn trim_text_nodes(text_elem_id: NodeId, xmlspace: XmlSpace, doc: &mut Document)
             } else if is_last
                 && c4 == Some(b' ')
                 && !doc.get(node2_id).text().is_empty()
-                && xmlspace2 == XmlSpace::Default
+                && xmlspace2.collapses_spaces()
             {
                 // Remove a trailing space from a last text node.
                 // Also check that 'text2' is not empty already.
@@ -351,20 +355,29 @@ fn collect_text_nodes(parent: SvgNode, depth: usize, nodes: &mut Vec<(NodeId, us
     }
 }
 
-fn trim_text(text: &str, space: XmlSpace) -> String {
+/// CSS Text 4 §4.1.1: segment breaks are kept where `space` preserves them, tabs where it
+/// preserves spaces without converting them; other white space becomes spaces, which collapse
+/// and vanish beside a kept segment break where `space` collapses them. A carriage return is a
+/// space (CSS Text 3 §4.1).
+fn trim_text(text: &str, space: WhiteSpaceCollapse) -> String {
     let mut s = String::with_capacity(text.len());
 
     let mut prev = '0';
     for c in text.chars() {
-        // \r, \n and \t should be converted into spaces.
         let c = match c {
-            '\r' | '\n' | '\t' => ' ',
+            SEGMENT_BREAK if space.preserves_breaks() => SEGMENT_BREAK,
+            TAB if !space.collapses_spaces() && !space.converts_to_spaces() => TAB,
+            '\r' | SEGMENT_BREAK | TAB => ' ',
             _ => c,
         };
 
-        // Skip continuous spaces.
-        if space == XmlSpace::Default && c == ' ' && c == prev {
-            continue;
+        if space.collapses_spaces() {
+            if c == ' ' && (prev == ' ' || prev == SEGMENT_BREAK) {
+                continue;
+            }
+            if c == SEGMENT_BREAK && prev == ' ' {
+                s.pop();
+            }
         }
 
         prev = c;
@@ -374,3 +387,7 @@ fn trim_text(text: &str, space: XmlSpace) -> String {
 
     s
 }
+
+/// The segment break that a preserved line feed forces (CSS Text 3 §4.1.2).
+pub(crate) const SEGMENT_BREAK: char = '\n';
+const TAB: char = '\t';

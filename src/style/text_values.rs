@@ -85,15 +85,30 @@ pub enum WhiteSpaceCollapse {
     BreakSpaces,
 }
 impl WhiteSpaceCollapse {
-    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
-        match value.keyword() {
-            Some(Keyword::Collapse) => Ok(Self::Collapse),
-            Some(Keyword::Preserve) => Ok(Self::Preserve),
-            Some(Keyword::PreserveBreaks) => Ok(Self::PreserveBreaks),
-            Some(Keyword::PreserveSpaces) => Ok(Self::PreserveSpaces),
-            Some(Keyword::BreakSpaces) => Ok(Self::BreakSpaces),
-            _ => Err(unsupported(value)),
+    const ALL: [Self; 5] = [
+        Self::Collapse,
+        Self::Preserve,
+        Self::PreserveBreaks,
+        Self::PreserveSpaces,
+        Self::BreakSpaces,
+    ];
+    fn keyword(self) -> Keyword {
+        match self {
+            Self::Collapse => Keyword::Collapse,
+            Self::Preserve => Keyword::Preserve,
+            Self::PreserveBreaks => Keyword::PreserveBreaks,
+            Self::PreserveSpaces => Keyword::PreserveSpaces,
+            Self::BreakSpaces => Keyword::BreakSpaces,
         }
+    }
+    pub(crate) fn from_component(value: &Component) -> Result<Self, StyleError> {
+        Self::ALL
+            .into_iter()
+            .find(|collapse| Some(collapse.keyword()) == value.keyword())
+            .ok_or_else(|| unsupported(value))
+    }
+    pub(crate) fn name(self) -> &'static str {
+        self.keyword().name()
     }
 }
 

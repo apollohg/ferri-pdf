@@ -18,7 +18,7 @@ pub(crate) mod shaping;
 mod skip_ink;
 mod spacing;
 mod spacing_trim;
-mod tabs;
+pub(crate) mod tabs;
 mod tailoring;
 #[cfg(test)]
 mod tests;

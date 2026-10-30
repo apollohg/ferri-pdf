@@ -44,6 +44,16 @@ pub(super) fn resolve(
     Ok(())
 }
 
+/// The width of a tab `position` from its line's start: to the next stop `interval` apart, past
+/// any stop nearer than half of `ch`, the advance of "0" (CSS Text 3 §4.2).
+pub(crate) fn tab_width(interval: f32, position: f32, ch: f32) -> f32 {
+    let mut width = interval - position.rem_euclid(interval);
+    if width < MINIMUM_TAB_CH * ch {
+        width += interval;
+    }
+    width
+}
+
 pub(super) fn is_tab(run: &GlyphRun) -> bool {
     !run.combined && run.text == "\t"
 }
@@ -95,11 +105,7 @@ impl<'c, 'f> Stops<'c, 'f> {
                     },
                     |(advance, scale)| advance * scale * style.size,
                 );
-            let mut width = interval - position.rem_euclid(interval);
-            if width < MINIMUM_TAB_CH * ch {
-                width += interval;
-            }
-            width
+            tab_width(interval, position, ch)
         };
         if !width.is_finite() {
             return Err(TextError::NonFiniteGeometry);

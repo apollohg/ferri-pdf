@@ -88,6 +88,10 @@ of `font-size-adjust`. `text-transform` cases each chunk's text before shaping, 
 back to the characters SVG 2 §11.5 positions. `text-shadow` layers paint each span's outlines and decorations opaquely in
 the shadow's colour beneath the text, offset and blurred.
 
+`white-space` sets the `white-space-collapse` of text, else `xml:space` does: preserved segment
+breaks start line boxes stacked by the line heights of their spans and the text element's strut
+(SVG 2 §11.6.1), and preserved tabs advance to tab stops of the text element's spaces.
+
 `width` and `height` take `calc-size()` and the intrinsic size keywords (CSS Values 5 §10.2,
 CSS Sizing 3 §3.1). Keywords, and `calc-size()` with a keyword basis, behave as `auto`; the
 latter then calculates the used size from the automatic size each element gives `auto` (SVG 2

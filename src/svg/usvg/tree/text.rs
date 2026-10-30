@@ -560,6 +560,9 @@ pub struct TextChunk {
     pub(crate) spans: Vec<TextSpan>,
     pub(crate) text_flow: TextFlow,
     pub(crate) text: String,
+    /// The preserved segment breaks before the chunk, each of which starts a line (SVG 2
+    /// §11.6.1).
+    pub(crate) line_breaks: usize,
 }
 
 impl TextChunk {
@@ -625,6 +628,17 @@ pub struct Text {
     pub(crate) non_scaling_stroke: bool,
     /// `color-interpolation: linearRGB` on the text element (SVG 2 §13.9).
     pub(crate) linear_light: bool,
+    /// The text element's own font, which its line boxes start from (CSS 2.1 §10.8.1).
+    pub(crate) strut: Strut,
+}
+
+/// The font and computed style of a text element, whose strut every line box contains and
+/// whose space measures its tab stops.
+#[derive(Clone, Debug)]
+pub(crate) struct Strut {
+    pub(crate) font: Font,
+    pub(crate) font_size: f32,
+    pub(crate) style: Arc<crate::style::Style>,
 }
 
 impl Text {

@@ -10,6 +10,7 @@ mod css;
 mod documents;
 mod parse;
 mod text;
+pub(crate) use text::SEGMENT_BREAK;
 
 use tiny_skia_path::Transform;
 

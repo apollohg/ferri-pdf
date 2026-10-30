@@ -236,14 +236,41 @@ pub(crate) fn layout_text(
         }
     }
 
+    let strut = resolver
+        .select_font(&text_node.strut.font, fontdb)
+        .and_then(|id| fontdb.load_font(id));
+    let lines = LineBoxes::new(text_node, strut.as_ref(), &fonts_cache);
+
     let mut spans = vec![];
     let mut char_offset = 0;
     let mut last_x = 0.0;
     let mut last_y = 0.0;
+    let mut line_origin = None;
+    let mut line = 0;
+    let mut block_offset = 0.0;
     let mut bbox = BBox::default();
     for chunk in &text_node.chunks {
+        char_offset += chunk.line_breaks;
         let (x, y) = match chunk.text_flow {
-            TextFlow::Linear => (chunk.x.unwrap_or(last_x), chunk.y.unwrap_or(last_y)),
+            TextFlow::Linear => {
+                let (start_x, start_y) = *line_origin
+                    .get_or_insert((chunk.x.unwrap_or(last_x), chunk.y.unwrap_or(last_y)));
+                if chunk.line_breaks == 0 {
+                    (chunk.x.unwrap_or(last_x), chunk.y.unwrap_or(last_y))
+                } else {
+                    for _ in 0..chunk.line_breaks {
+                        block_offset += lines.advance(line);
+                        line += 1;
+                    }
+                    let (line_x, line_y) = match text_node.writing_mode {
+                        WritingMode::LeftToRight => (start_x, start_y + block_offset),
+                        WritingMode::TopToBottom => {
+                            (start_x - lines.progression * block_offset, start_y)
+                        }
+                    };
+                    (chunk.x.unwrap_or(line_x), chunk.y.unwrap_or(line_y))
+                }
+            }
             TextFlow::Path(_) => (0.0, 0.0),
         };
 
@@ -262,6 +289,21 @@ pub(crate) fn layout_text(
         apply_writing_mode(text_node.writing_mode, &mut clusters);
         apply_letter_spacing(chunk, &mut clusters);
         apply_word_spacing(chunk, &mut clusters);
+        if let (Some(strut), TextFlow::Linear) = (&strut, &chunk.text_flow) {
+            let (start_x, start_y) = line_origin.unwrap_or((x, y));
+            let inline_start = match text_node.writing_mode {
+                WritingMode::LeftToRight => x - start_x,
+                WritingMode::TopToBottom => y - start_y,
+            };
+            apply_tab_stops(
+                chunk,
+                &text_node.strut,
+                strut,
+                text_node.writing_mode,
+                inline_start,
+                &mut clusters,
+            );
+        }
 
         apply_length_adjust(chunk, &mut clusters);
         let mut curr_pos = resolve_clusters_positions(
@@ -1173,6 +1215,136 @@ fn shape_chunk(
     glyphs
 }
 
+/// The line boxes of pre-formatted text, which preserved segment breaks start (SVG 2 §11.6.1),
+/// stacked as CSS stacks them (CSS 2.1 §10.8): each spans the half-leading extents of its
+/// inline boxes and of the text element's strut above and below the baseline.
+struct LineBoxes {
+    /// Each line's extents before and after its baseline in the block direction.
+    extents: Vec<[f32; 2]>,
+    /// The physical direction lines advance in vertical text: one leftwards, minus one
+    /// rightwards.
+    progression: f32,
+}
+impl LineBoxes {
+    fn new(text: &Text, strut: Option<&ResolvedFont>, fonts: &FontsCache) -> Self {
+        let vertical = text.writing_mode == WritingMode::TopToBottom;
+        let strut = strut.map_or([0.0; 2], |font| {
+            line_extents(font, text.strut.font_size, &text.strut.style, vertical)
+        });
+        let mut extents = vec![strut];
+        for chunk in &text.chunks {
+            extents.extend(std::iter::repeat_n(strut, chunk.line_breaks));
+            let line = extents.last_mut().expect("the first line");
+            for span in &chunk.spans {
+                if let Some(font) = fonts.get(&span.font) {
+                    let [above, below] =
+                        line_extents(font, span.font_size.get(), &span.style, vertical);
+                    *line = [line[0].max(above), line[1].max(below)];
+                }
+            }
+        }
+        let progression =
+            if text.strut.style.writing_mode == crate::style::logical::WritingMode::VerticalLr {
+                -1.0
+            } else {
+                1.0
+            };
+        Self {
+            extents,
+            progression,
+        }
+    }
+    /// The distance from line `line`'s baseline to the next line's.
+    fn advance(&self, line: usize) -> f32 {
+        self.extents[line][1] + self.extents[line + 1][0]
+    }
+}
+
+/// The extents of an inline box of `font` at `size` above and below its baseline, with
+/// half the leading its `line-height` adds on each side (CSS 2.1 §10.8.1); vertical text
+/// centres its em box.
+fn line_extents(
+    font: &ResolvedFont,
+    size: f32,
+    style: &crate::style::Style,
+    vertical: bool,
+) -> [f32; 2] {
+    let metrics = if vertical {
+        font.upright_metrics
+    } else {
+        font.metrics
+    };
+    let content = [metrics.ascent * size, metrics.descent * size];
+    // `line-height` resolves in points; user units are CSS pixels.
+    let height = style
+        .line_height
+        .resolve(size * crate::style::POINTS_PER_PIXEL)
+        .map_or(metrics.normal_line_height() * size, |points| {
+            points / crate::style::POINTS_PER_PIXEL
+        });
+    let half_leading = (height - content[0] - content[1]) / 2.0;
+    content.map(|extent| extent + half_leading)
+}
+
+/// Gives preserved tabs the width to the next tab stop from the line's start, `inline_start`
+/// before the chunk (CSS Text 3 §4.2); stops are `tab-size` spaces of the text element apart,
+/// with its letter and word spacing. Tabs paint nothing.
+fn apply_tab_stops(
+    chunk: &TextChunk,
+    strut: &crate::svg::usvg::Strut,
+    font: &ResolvedFont,
+    writing_mode: WritingMode,
+    inline_start: f32,
+    clusters: &mut [GlyphCluster],
+) {
+    if !clusters.iter().any(|cluster| cluster.codepoint == TAB) {
+        return;
+    }
+    let style = &strut.style;
+    let size = strut.font_size;
+    let points = |length: f32| length / crate::style::POINTS_PER_PIXEL;
+    let space = font.space_advance.unwrap_or_default() * size
+        + points(style.letter_spacing)
+        + points(
+            style
+                .word_spacing
+                .resolve(size * crate::style::POINTS_PER_PIXEL),
+        );
+    let interval = match style.tab_size {
+        crate::style::TabSize::Number(count) => count * space,
+        crate::style::TabSize::Length(length) => points(length),
+    };
+    let ch = if writing_mode == WritingMode::TopToBottom {
+        size
+    } else {
+        font.zero_advance
+            .unwrap_or(crate::fonts::FALLBACK_ZERO_ADVANCE_EM)
+            * size
+    };
+    let mut position = inline_start;
+    let mut visit = |cluster: &mut GlyphCluster| {
+        if cluster.codepoint == TAB {
+            let width = if interval > 0.0 {
+                crate::text::tabs::tab_width(interval, position, ch)
+            } else {
+                0.0
+            };
+            cluster.width = width;
+            cluster.advance = width;
+            cluster.glyphs.clear();
+        }
+        position += cluster.advance;
+    };
+    if chunk.rtl {
+        clusters.iter_mut().rev().for_each(&mut visit);
+    } else {
+        clusters.iter_mut().for_each(&mut visit);
+    }
+}
+
+/// A preserved tab (CSS Text 3 §4.1.1).
+const TAB: char = '\t';
+
 fn apply_length_adjust(chunk: &TextChunk, clusters: &mut [GlyphCluster]) {
     let is_horizontal = matches!(chunk.text_flow, TextFlow::Linear);
 
@@ -1449,8 +1621,13 @@ impl DatabaseExt for Database {
                 superscript_offset = metrics.y_offset;
             }
 
+            let metrics = crate::fonts::FaceMetrics::of(&font);
             Some(ResolvedFont {
                 id,
+                metrics,
+                upright_metrics: metrics.upright(&font),
+                space_advance: crate::fonts::advance(&font, ' '),
+                zero_advance: crate::fonts::advance(&font, crate::fonts::ZERO),
                 units_per_em,
                 ascent,
                 descent,
@@ -1991,6 +2168,12 @@ impl Glyph {
 #[derive(Clone, Copy, Debug)]
 pub(crate) struct ResolvedFont {
     pub(crate) id: ID,
+    /// The face's metrics in em, and those of its upright vertical text.
+    metrics: crate::fonts::FaceMetrics,
+    upright_metrics: crate::fonts::FaceMetrics,
+    /// The advances of a space and of "0" in em, where the face has them.
+    space_advance: Option<f32>,
+    zero_advance: Option<f32>,
 
     units_per_em: NonZeroU16,
 
