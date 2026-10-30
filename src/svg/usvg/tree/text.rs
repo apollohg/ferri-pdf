@@ -11,58 +11,50 @@ use crate::svg::usvg::{
     Fill, Group, NonEmptyString, PaintOrder, Rect, Stroke, TextRendering, Transform,
 };
 
-/// A font stretch property.
-#[allow(missing_docs)]
-#[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Debug, Hash)]
-pub enum FontStretch {
-    UltraCondensed,
-    ExtraCondensed,
-    Condensed,
-    SemiCondensed,
-    Normal,
-    SemiExpanded,
-    Expanded,
-    ExtraExpanded,
-    UltraExpanded,
-}
+/// The `font-stretch` keyword of each CSS Fonts 4 §2.3 width, for the database's own query.
+const STRETCH_KEYWORDS: [(crate::fonts::FontWidth, fontdb::Stretch); 9] = [
+    (
+        crate::fonts::FontWidth::ULTRA_CONDENSED,
+        fontdb::Stretch::UltraCondensed,
+    ),
+    (
+        crate::fonts::FontWidth::EXTRA_CONDENSED,
+        fontdb::Stretch::ExtraCondensed,
+    ),
+    (
+        crate::fonts::FontWidth::CONDENSED,
+        fontdb::Stretch::Condensed,
+    ),
+    (
+        crate::fonts::FontWidth::SEMI_CONDENSED,
+        fontdb::Stretch::SemiCondensed,
+    ),
+    (crate::fonts::FontWidth::NORMAL, fontdb::Stretch::Normal),
+    (
+        crate::fonts::FontWidth::SEMI_EXPANDED,
+        fontdb::Stretch::SemiExpanded,
+    ),
+    (crate::fonts::FontWidth::EXPANDED, fontdb::Stretch::Expanded),
+    (
+        crate::fonts::FontWidth::EXTRA_EXPANDED,
+        fontdb::Stretch::ExtraExpanded,
+    ),
+    (
+        crate::fonts::FontWidth::ULTRA_EXPANDED,
+        fontdb::Stretch::UltraExpanded,
+    ),
+];
 
-impl Default for FontStretch {
-    #[inline]
-    fn default() -> Self {
-        Self::Normal
-    }
-}
-
-impl From<fontdb::Stretch> for FontStretch {
-    fn from(stretch: fontdb::Stretch) -> Self {
-        match stretch {
-            fontdb::Stretch::UltraCondensed => FontStretch::UltraCondensed,
-            fontdb::Stretch::ExtraCondensed => FontStretch::ExtraCondensed,
-            fontdb::Stretch::Condensed => FontStretch::Condensed,
-            fontdb::Stretch::SemiCondensed => FontStretch::SemiCondensed,
-            fontdb::Stretch::Normal => FontStretch::Normal,
-            fontdb::Stretch::SemiExpanded => FontStretch::SemiExpanded,
-            fontdb::Stretch::Expanded => FontStretch::Expanded,
-            fontdb::Stretch::ExtraExpanded => FontStretch::ExtraExpanded,
-            fontdb::Stretch::UltraExpanded => FontStretch::UltraExpanded,
-        }
-    }
-}
-
-impl From<FontStretch> for fontdb::Stretch {
-    fn from(stretch: FontStretch) -> Self {
-        match stretch {
-            FontStretch::UltraCondensed => fontdb::Stretch::UltraCondensed,
-            FontStretch::ExtraCondensed => fontdb::Stretch::ExtraCondensed,
-            FontStretch::Condensed => fontdb::Stretch::Condensed,
-            FontStretch::SemiCondensed => fontdb::Stretch::SemiCondensed,
-            FontStretch::Normal => fontdb::Stretch::Normal,
-            FontStretch::SemiExpanded => fontdb::Stretch::SemiExpanded,
-            FontStretch::Expanded => fontdb::Stretch::Expanded,
-            FontStretch::ExtraExpanded => fontdb::Stretch::ExtraExpanded,
-            FontStretch::UltraExpanded => fontdb::Stretch::UltraExpanded,
-        }
-    }
+/// The keyword width nearest `width`.
+pub(crate) fn nearest_stretch(width: crate::fonts::FontWidth) -> fontdb::Stretch {
+    STRETCH_KEYWORDS
+        .iter()
+        .min_by(|a, b| {
+            (a.0.value() - width.value())
+                .abs()
+                .total_cmp(&(b.0.value() - width.value()).abs())
+        })
+        .map_or(fontdb::Stretch::Normal, |(_, stretch)| *stretch)
 }
 
 /// A font variation axis setting.
@@ -141,15 +133,41 @@ impl From<FontStyle> for fontdb::Style {
 }
 
 /// Text font properties.
-#[derive(Clone, Eq, PartialEq, Hash, Debug)]
+#[derive(Clone, Debug)]
 pub struct Font {
     pub(crate) families: Vec<FontFamily>,
     pub(crate) default_family: bool,
     pub(crate) style: FontStyle,
-    pub(crate) stretch: FontStretch,
-    pub(crate) weight: u16,
+    /// The angle of an `oblique` style.
+    pub(crate) slant: crate::fonts::FontSlant,
+    pub(crate) width: crate::fonts::FontWidth,
+    pub(crate) weight: crate::fonts::FontWeight,
     pub(crate) variations: Vec<FontVariation>,
     pub(crate) explicit_variations: Vec<FontVariation>,
+}
+
+impl PartialEq for Font {
+    fn eq(&self, other: &Self) -> bool {
+        self.families == other.families
+            && self.default_family == other.default_family
+            && self.style == other.style
+            && self.numbers() == other.numbers()
+            && self.variations == other.variations
+            && self.explicit_variations == other.explicit_variations
+    }
+}
+
+impl Eq for Font {}
+
+impl std::hash::Hash for Font {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.families.hash(state);
+        self.default_family.hash(state);
+        self.style.hash(state);
+        self.numbers().hash(state);
+        self.variations.hash(state);
+        self.explicit_variations.hash(state);
+    }
 }
 
 impl Font {
@@ -169,14 +187,24 @@ impl Font {
         self.style
     }
 
-    /// A font stretch.
-    pub fn stretch(&self) -> FontStretch {
-        self.stretch
+    /// The angle of an `oblique` style.
+    pub fn slant(&self) -> crate::fonts::FontSlant {
+        self.slant
     }
 
     /// A font width.
-    pub fn weight(&self) -> u16 {
+    pub fn width(&self) -> crate::fonts::FontWidth {
+        self.width
+    }
+
+    /// A font weight.
+    pub fn weight(&self) -> crate::fonts::FontWeight {
         self.weight
+    }
+
+    /// The bits of the slant, width and weight, which identify them exactly.
+    fn numbers(&self) -> [u32; 3] {
+        [self.slant.value(), self.width.value(), self.weight.value()].map(f32::to_bits)
     }
 
     /// Font variation settings for variable fonts.

@@ -503,7 +503,6 @@ fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
         ("pattern{overflow:visible}", "always clips"),
         ("rect{clip-path:url(other.svg#clip)}", "another document"),
         ("rect{mask:url(#a),url(#b)}", "mask layers"),
-        ("text{font-weight:450.5}", "font-weight: 450.5"),
         (
             "text{font-variant-caps:all-small-caps}",
             "font-variant-caps",

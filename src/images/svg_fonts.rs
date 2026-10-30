@@ -1,6 +1,6 @@
 use crate::fonts::{
     DEFAULT_FAMILY, FontBook, FontError, FontFaceStyle, FontFamily, FontId, FontNamespace,
-    FontSelection, FontStyle, FontWeight, FontWidth, GenericFamily, GlyphMatch,
+    FontSelection, FontStyle, FontWeight, GenericFamily, GlyphMatch,
 };
 use crate::resources::ResourceResolver;
 use crate::svg::usvg::{Font, FontProvider};
@@ -184,7 +184,7 @@ impl Provider<'_> {
         let fonts = &self.fonts;
         let book = &fonts.book;
         *database = fonts.database();
-        let selection = selection(font)?;
+        let selection = selection(font);
         let cached = self.candidates.borrow().get(font).cloned();
         let candidates = if let Some(candidates) = cached {
             candidates
@@ -270,7 +270,7 @@ impl FontProvider for Provider<'_> {
             let instance = self
                 .fonts
                 .book
-                .cached_instance(id, selection(font)?)?
+                .cached_instance(id, selection(font))?
                 .ok_or(FontError::NoAvailableFace)?;
             let mut values = instance
                 .variations
@@ -315,9 +315,9 @@ impl FontProvider for Provider<'_> {
     }
 }
 
-fn selection(font: &Font) -> Result<FontSelection, FontError> {
+fn selection(font: &Font) -> FontSelection {
     let mut selection = FontSelection::new(
-        FontWeight::new(f32::from(font.weight()))?,
+        font.weight(),
         match font.style() {
             crate::svg::usvg::FontStyle::Normal => FontStyle::Normal,
             crate::svg::usvg::FontStyle::Italic => FontStyle::Italic,
@@ -326,16 +326,9 @@ fn selection(font: &Font) -> Result<FontSelection, FontError> {
             crate::svg::usvg::FontStyle::Oblique => FontStyle::Oblique,
         },
     );
-    selection.width = match font.stretch() {
-        crate::svg::usvg::FontStretch::UltraCondensed => FontWidth::ULTRA_CONDENSED,
-        crate::svg::usvg::FontStretch::ExtraCondensed => FontWidth::EXTRA_CONDENSED,
-        crate::svg::usvg::FontStretch::Condensed => FontWidth::CONDENSED,
-        crate::svg::usvg::FontStretch::SemiCondensed => FontWidth::SEMI_CONDENSED,
-        crate::svg::usvg::FontStretch::Normal => FontWidth::NORMAL,
-        crate::svg::usvg::FontStretch::SemiExpanded => FontWidth::SEMI_EXPANDED,
-        crate::svg::usvg::FontStretch::Expanded => FontWidth::EXPANDED,
-        crate::svg::usvg::FontStretch::ExtraExpanded => FontWidth::EXTRA_EXPANDED,
-        crate::svg::usvg::FontStretch::UltraExpanded => FontWidth::ULTRA_EXPANDED,
-    };
-    Ok(selection)
+    selection.width = font.width();
+    if font.style() == crate::svg::usvg::FontStyle::Oblique {
+        selection.slant = font.slant();
+    }
+    selection
 }

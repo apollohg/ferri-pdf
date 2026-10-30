@@ -7,7 +7,7 @@ use fontdb::{Database, ID};
 use svgtypes::FontFamily;
 
 use self::layout::DatabaseExt;
-use crate::svg::usvg::{Cache, Font, FontStretch, FontStyle, Text};
+use crate::svg::usvg::{Cache, Font, FontStyle, Text};
 
 pub(crate) mod flatten;
 
@@ -162,17 +162,7 @@ impl FontResolver<'_> {
             // Use the default font as fallback.
             name_list.push(fontdb::Family::Serif);
 
-            let stretch = match font.stretch {
-                FontStretch::UltraCondensed => fontdb::Stretch::UltraCondensed,
-                FontStretch::ExtraCondensed => fontdb::Stretch::ExtraCondensed,
-                FontStretch::Condensed => fontdb::Stretch::Condensed,
-                FontStretch::SemiCondensed => fontdb::Stretch::SemiCondensed,
-                FontStretch::Normal => fontdb::Stretch::Normal,
-                FontStretch::SemiExpanded => fontdb::Stretch::SemiExpanded,
-                FontStretch::Expanded => fontdb::Stretch::Expanded,
-                FontStretch::ExtraExpanded => fontdb::Stretch::ExtraExpanded,
-                FontStretch::UltraExpanded => fontdb::Stretch::UltraExpanded,
-            };
+            let stretch = crate::svg::usvg::nearest_stretch(font.width);
 
             let style = match font.style {
                 FontStyle::Normal => fontdb::Style::Normal,
@@ -182,7 +172,7 @@ impl FontResolver<'_> {
 
             let query = fontdb::Query {
                 families: &name_list,
-                weight: fontdb::Weight(font.weight),
+                weight: fontdb::Weight(font.weight.value().round() as u16),
                 stretch,
                 style,
             };

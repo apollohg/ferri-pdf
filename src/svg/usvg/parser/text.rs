@@ -73,7 +73,7 @@ impl<'a, 'input: 'a> FromValue<'a, 'input> for LengthAdjust {
 
 impl<'a, 'input: 'a> FromValue<'a, 'input> for FontStyle {
     fn parse(_: SvgNode, _: AId, value: &str) -> Option<Self> {
-        match value {
+        match value.split_ascii_whitespace().next()? {
             "normal" => Some(FontStyle::Normal),
             "italic" => Some(FontStyle::Italic),
             "left" => Some(FontStyle::Left),
@@ -435,8 +435,9 @@ const CLOCKWISE_SLANT_AXIS: f32 = -12.0;
 
 pub(super) fn convert_font(node: SvgNode, state: &converter::State) -> Font {
     let style: FontStyle = node.find_attribute(AId::FontStyle).unwrap_or_default();
-    let stretch = conv_font_stretch(node);
+    let width = resolve_font_width(node);
     let weight = resolve_font_weight(node);
+    let slant = resolve_font_slant(node);
     let mut variations = parse_font_variation_settings(node);
     let explicit_variations = variations.clone();
 
@@ -448,27 +449,13 @@ pub(super) fn convert_font(node: SvgNode, state: &converter::State) -> Font {
     let has_slnt = variations.iter().any(|v| &v.tag == b"slnt");
 
     // Map font-weight to wght axis (if not already set)
-    if !has_wght && weight != 400 {
-        variations.push(FontVariation::new(*b"wght", weight as f32));
+    if !has_wght && weight != crate::fonts::FontWeight::NORMAL {
+        variations.push(FontVariation::new(*b"wght", weight.value()));
     }
 
     // Map font-stretch to wdth axis (if not already set)
-    // CSS font-stretch percentages: ultra-condensed=50%, condensed=75%, normal=100%, expanded=125%, ultra-expanded=200%
-    if !has_wdth {
-        let wdth = match stretch {
-            FontStretch::UltraCondensed => 50.0,
-            FontStretch::ExtraCondensed => 62.5,
-            FontStretch::Condensed => 75.0,
-            FontStretch::SemiCondensed => 87.5,
-            FontStretch::Normal => 100.0,
-            FontStretch::SemiExpanded => 112.5,
-            FontStretch::Expanded => 125.0,
-            FontStretch::ExtraExpanded => 150.0,
-            FontStretch::UltraExpanded => 200.0,
-        };
-        if wdth != 100.0 {
-            variations.push(FontVariation::new(*b"wdth", wdth));
-        }
+    if !has_wdth && width != crate::fonts::FontWidth::NORMAL {
+        variations.push(FontVariation::new(*b"wdth", width.value()));
     }
 
     // Map font-style: italic to ital axis (if not already set)
@@ -480,7 +467,10 @@ pub(super) fn convert_font(node: SvgNode, state: &converter::State) -> Font {
     // set), which measures counter-clockwise.
     if !has_slnt {
         match style {
-            FontStyle::Oblique | FontStyle::Left => {
+            FontStyle::Oblique => {
+                variations.push(FontVariation::new(*b"slnt", -slant.value()));
+            }
+            FontStyle::Left => {
                 variations.push(FontVariation::new(*b"slnt", CLOCKWISE_SLANT_AXIS));
             }
             FontStyle::Right => {
@@ -518,7 +508,8 @@ pub(super) fn convert_font(node: SvgNode, state: &converter::State) -> Font {
         families,
         default_family,
         style,
-        stretch,
+        slant,
+        width,
         weight,
         variations,
         explicit_variations,
@@ -614,80 +605,62 @@ fn parse_font_variation_settings(node: SvgNode) -> Vec<FontVariation> {
     variations
 }
 
-// TODO: properly resolve narrower/wider
-fn conv_font_stretch(node: SvgNode) -> FontStretch {
-    if let Some(n) = node.ancestors().find(|n| n.has_attribute(AId::FontStretch)) {
-        match n.attribute(AId::FontStretch).unwrap_or("") {
-            "narrower" | "condensed" => FontStretch::Condensed,
-            "ultra-condensed" => FontStretch::UltraCondensed,
-            "extra-condensed" => FontStretch::ExtraCondensed,
-            "semi-condensed" => FontStretch::SemiCondensed,
-            "semi-expanded" => FontStretch::SemiExpanded,
-            "wider" | "expanded" => FontStretch::Expanded,
-            "extra-expanded" => FontStretch::ExtraExpanded,
-            "ultra-expanded" => FontStretch::UltraExpanded,
-            _ => FontStretch::Normal,
-        }
-    } else {
-        FontStretch::Normal
+/// CSS Fonts 4 §2.3 `font-width` (`font-stretch`): a keyword or a percentage.
+fn resolve_font_width(node: SvgNode) -> crate::fonts::FontWidth {
+    use crate::fonts::FontWidth;
+    let Some(n) = node.ancestors().find(|n| n.has_attribute(AId::FontStretch)) else {
+        return FontWidth::NORMAL;
+    };
+    match n.attribute(AId::FontStretch).unwrap_or("") {
+        "narrower" | "condensed" => FontWidth::CONDENSED,
+        "ultra-condensed" => FontWidth::ULTRA_CONDENSED,
+        "extra-condensed" => FontWidth::EXTRA_CONDENSED,
+        "semi-condensed" => FontWidth::SEMI_CONDENSED,
+        "semi-expanded" => FontWidth::SEMI_EXPANDED,
+        "wider" | "expanded" => FontWidth::EXPANDED,
+        "extra-expanded" => FontWidth::EXTRA_EXPANDED,
+        "ultra-expanded" => FontWidth::ULTRA_EXPANDED,
+        value => value
+            .strip_suffix('%')
+            .and_then(|number| number.parse::<f32>().ok())
+            .and_then(|percentage| FontWidth::new(percentage).ok())
+            .unwrap_or(FontWidth::NORMAL),
     }
 }
 
+/// The angle of `font-style: oblique <angle>` (CSS Fonts 4 §2.4), 14deg when omitted.
+fn resolve_font_slant(node: SvgNode) -> crate::fonts::FontSlant {
+    node.ancestors()
+        .find(|n| n.has_attribute(AId::FontStyle))
+        .and_then(|n| n.attribute::<&str>(AId::FontStyle))
+        .and_then(|value| value.split_ascii_whitespace().nth(1))
+        .and_then(|angle| <svgtypes::Angle as std::str::FromStr>::from_str(angle).ok())
+        .and_then(|angle| crate::fonts::FontSlant::new(angle.to_degrees() as f32).ok())
+        .unwrap_or(crate::fonts::FontSlant::DEFAULT)
+}
+
 const RIGHT_TO_LEFT: &str = "rtl";
-const MIN_FONT_WEIGHT: usize = 1;
-const MAX_FONT_WEIGHT: usize = 1000;
-
-fn resolve_font_weight(node: SvgNode) -> u16 {
-    fn bound(min: usize, val: usize, max: usize) -> usize {
-        std::cmp::max(min, std::cmp::min(max, val))
-    }
-
+/// CSS Fonts 4 §2.2 font weights, resolved from the root down: keywords, any number from 1 to
+/// 1000, and the relative weights of the §2.2.1 table.
+fn resolve_font_weight(node: SvgNode) -> crate::fonts::FontWeight {
+    use crate::fonts::FontWeight;
     let nodes: Vec<_> = node.ancestors().collect();
-    let mut weight = 400;
+    let mut weight = FontWeight::NORMAL;
     for n in nodes.iter().rev().skip(1) {
         // skip Root
         weight = match n.attribute(AId::FontWeight).unwrap_or("") {
-            "normal" => 400,
-            "bold" => 700,
-            "100" => 100,
-            "200" => 200,
-            "300" => 300,
-            "400" => 400,
-            "500" => 500,
-            "600" => 600,
-            "700" => 700,
-            "800" => 800,
-            "900" => 900,
-            "bolder" => {
-                // By the CSS2 spec the default value should be 400
-                // so `bolder` will result in 500.
-                // But Chrome and Inkscape will give us 700.
-                // Have no idea is it a bug or something, but
-                // we will follow such behavior for now.
-                let step = if weight == 400 { 300 } else { 100 };
-
-                bound(100, weight + step, 900)
-            }
-            "lighter" => {
-                // By the CSS2 spec the default value should be 400
-                // so `lighter` will result in 300.
-                // But Chrome and Inkscape will give us 200.
-                // Have no idea is it a bug or something, but
-                // we will follow such behavior for now.
-                let step = if weight == 400 { 200 } else { 100 };
-
-                bound(100, weight - step, 900)
-            }
-            // CSS Fonts 4 §2.2: any number from 1 to 1000.
+            "normal" => FontWeight::NORMAL,
+            "bold" => FontWeight::BOLD,
+            "bolder" => weight.bolder(),
+            "lighter" => weight.lighter(),
             number => number
-                .parse::<usize>()
+                .parse::<f32>()
                 .ok()
-                .filter(|number| (MIN_FONT_WEIGHT..=MAX_FONT_WEIGHT).contains(number))
+                .and_then(|number| FontWeight::new(number).ok())
                 .unwrap_or(weight),
         };
     }
-
-    weight as u16
+    weight
 }
 
 /// Resolves text's character positions.

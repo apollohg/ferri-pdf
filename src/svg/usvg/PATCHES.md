@@ -29,8 +29,9 @@ command-line binary, the SVG writer (`Tree::to_string` and `WriteOptions`) and t
 system-font and memory-mapping features are removed. COLR painting reports unsupported
 sweep gradients and blend modes through `log` instead of printing to standard output.
 
-`font-weight` takes any whole number from 1 to 1000 (CSS Fonts 4 §2.2), not only multiples of
-one hundred, so font matching receives the weight the document's cascade computed.
+`font-weight` takes any number from 1 to 1000 and the CSS Fonts 4 §2.2.1 relative weights,
+`font-stretch` any percentage (§2.3) and `font-style: oblique` an angle (§2.4), so font
+matching receives the weight, width and slant the document's cascade computed.
 
 `feColorMatrix type="saturate"` keeps values above one, which oversaturate (Filter Effects 1
 §9.6), instead of clamping them to one as SVG 1.1 did.
@@ -39,9 +40,12 @@ one hundred, so font matching receives the weight the document's cascade compute
 `end` anchors (SVG 2 §11.10.1.1, §11.10.2.4), so right-to-left documents place SVG text from its
 anchor leftwards.
 
-`transform-box: fill-box` and `stroke-box` on groups and shapes place `transform-origin` in the
-element's object or stroke bounding box before its transform applies (CSS Transforms 1 §2);
-other values keep the viewport as the reference.
+`transform-box: fill-box` and `stroke-box` on groups, shapes and `use` elements place
+`transform-origin` in the element's object or stroke bounding box before its transform applies
+(CSS Transforms 1 §2); other values keep the viewport as the reference.
+
+`overflow` takes one keyword per axis, and a viewport clipped along one axis only spans its
+content's extent along the other (SVG 2 §3.11).
 
 `clip-path` takes CSS Shapes 1 §3 basic shapes and bare `<geometry-box>` keywords as well as
 references (CSS Masking 1 §6.1). The document's computed basic shapes trace the outline in the

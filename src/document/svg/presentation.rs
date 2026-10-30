@@ -1,6 +1,6 @@
 //! Computed values of SVG content written as the declarations and geometry attributes that the
 //! SVG renderer reads, so that the document's cascade alone decides them (SVG 2 §6.4).
-use crate::fonts::{FontFamily, FontStyle, FontWeight, FontWidth, GenericFamily};
+use crate::fonts::{FontFamily, FontStyle, FontWidth, GenericFamily};
 use crate::paint::{
     AxisRadius, BasicShape, BlendMode, BoxArea, Calculation, CircleRadius, Color, CornerRadii,
     EllipseRadii, FilterFunction, GeometryBox, LengthPercentage, POINTS_PER_PIXEL, RadialExtent,
@@ -191,9 +191,9 @@ pub(super) fn declarations(tag: &str, style: &Style, root: bool) -> Result<Strin
     }
     if is_text_content(tag) {
         push("direction", if style.rtl { "rtl" } else { "ltr" });
-        push("font-style", font_style(style)?);
-        push("font-weight", &font_weight(style.font_weight)?);
-        push("font-stretch", font_width(style.font_width)?);
+        push("font-style", &font_style(style));
+        push("font-weight", &number(style.font_weight.value()));
+        push("font-stretch", &font_width(style.font_width));
         push("font-variant", font_variant(style.font_variant_caps)?);
         push(
             "font-kerning",
@@ -462,13 +462,14 @@ fn mask(masks: &crate::paint::Masks) -> Result<String, StyleError> {
     }
 }
 
+/// `None` is `auto`. SVG content sizes no box from its contents: `auto` already gives an
+/// image or nested viewport its natural size (SVG 2 geometry properties), and shapes have
+/// none, so the CSS Sizing 3 §3.1 intrinsic keywords behave as `auto`.
 fn size(size: &Size) -> Result<Option<&LengthPercentage>, StyleError> {
     match size {
-        Size::Auto => Ok(None),
+        Size::Auto | Size::Intrinsic(_) => Ok(None),
         Size::Value(value) => Ok(Some(value)),
-        Size::Intrinsic(_) | Size::Calculated(_) => Err(StyleError::Unsupported(
-            "an intrinsic size or calc-size() on SVG content".into(),
-        )),
+        Size::Calculated(_) => Err(StyleError::Unsupported("calc-size() on SVG content".into())),
     }
 }
 
@@ -651,42 +652,25 @@ fn families(families: &[FontFamily]) -> String {
         .join(",")
 }
 
-/// The renderer takes `oblique` at its default angle only.
-fn font_style(style: &Style) -> Result<&'static str, StyleError> {
+fn font_style(style: &Style) -> String {
     match style.font_style {
-        FontStyle::Normal => Ok("normal"),
-        FontStyle::Italic => Ok("italic"),
-        FontStyle::Left => Ok("left"),
-        FontStyle::Right => Ok("right"),
-        FontStyle::Oblique if style.font_slant == crate::fonts::FontSlant::DEFAULT => Ok("oblique"),
-        FontStyle::Oblique => Err(StyleError::Unsupported(format!(
-            "font-style: oblique {}deg on SVG text",
-            style.font_slant.value()
-        ))),
+        FontStyle::Normal => "normal".into(),
+        FontStyle::Italic => "italic".into(),
+        FontStyle::Left => "left".into(),
+        FontStyle::Right => "right".into(),
+        FontStyle::Oblique => format!("oblique {}deg", style.font_slant.value()),
     }
 }
 
-/// The renderer's font matching takes whole weights, which covers every weight but a
-/// fractional one.
-fn font_weight(weight: FontWeight) -> Result<String, StyleError> {
-    let value = weight.value();
-    if value.fract() == 0.0 {
-        Ok(number(value))
-    } else {
-        Err(StyleError::Unsupported(format!(
-            "font-weight: {value} on SVG text"
-        )))
-    }
-}
-
-fn font_width(width: FontWidth) -> Result<&'static str, StyleError> {
+/// A keyword where one names the width, otherwise its percentage.
+fn font_width(width: FontWidth) -> String {
     WIDTH_KEYWORDS
         .iter()
         .find(|(keyword, _)| *keyword == width)
-        .map(|(_, name)| *name)
-        .ok_or_else(|| {
-            StyleError::Unsupported(format!("font-width: {}% on SVG text", width.value()))
-        })
+        .map_or_else(
+            || format!("{}%", width.value()),
+            |(_, name)| (*name).to_owned(),
+        )
 }
 
 fn font_variant(caps: crate::style::FontVariantCaps) -> Result<&'static str, StyleError> {

@@ -209,6 +209,28 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
             self.assertPixel(pixels, 35, 45, WHITE, 'overflow-x: hidden clips the left')
             self.assertPixel(pixels, 65, 45, WHITE, 'overflow-x: hidden clips the right')
 
+    def test_svg_text_matches_fractional_weights_widths_and_oblique_angles(self):
+        def ink_width(style):
+            with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+                pixels = self.render(
+                    Path(directory), f'text{{{style}}}',
+                    f'<svg width="{4 * ICON}pt" height="{2 * ICON}pt" '
+                    f'viewBox="0 0 {4 * ICON} {2 * ICON}">'
+                    '<text x="10" y="60" font-family="DejaVu Sans" font-size="60" '
+                    'fill="blue">I</text></svg>')
+                columns = self.ink_columns(pixels, 0, 0, 4 * ICON, 2 * ICON, BLUE)
+                self.assertTrue(columns, f'{style}: the I renders')
+                return max(columns) - min(columns) + 1
+        upright = ink_width('font-style:oblique 0deg')
+        self.assertGreater(ink_width('font-style:oblique 20deg'), upright + 3,
+                           'CSS Fonts 4 §5.2: a 20deg oblique matches the sloped face, which '
+                           '0deg does not')
+        self.assertGreater(ink_width('font-weight:650.5'), upright + 3,
+                           'a fractional weight above 600 matches the bold face')
+        self.assertEqual(ink_width('font-weight:450.5;font-stretch:87.5%'), upright,
+                         'a weight below 500 and a narrower width keep the regular face, the '
+                         'only width the family has')
+
     def test_right_to_left_pages_anchor_svg_icon_text_at_its_start_on_the_right(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
             anchor = ICON - 2
