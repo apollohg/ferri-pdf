@@ -96,8 +96,7 @@ pub(crate) struct PageMarginBox {
 }
 pub(crate) struct Formatted {
     pub root: BlockBox,
-    /// Footnote element boxes in document order (CSS GCPM 3 §2.2).
-    pub footnotes: Vec<BlockBox>,
+    pub footnotes: Footnotes,
     pub navigation: NavigationBuilder,
     pub strings: crate::document::strings::StringAssignments,
     pub generated: crate::document::generated::GeneratedReferences,
@@ -106,6 +105,75 @@ pub(crate) struct Formatted {
     pub svg_definitions: crate::document::svg::SvgDefinitions,
     /// The document's counters where each page starts (CSS Page 3 §6.1).
     pub page_counters: Vec<(usize, crate::document::CounterSnapshot)>,
+}
+
+/// The footnote elements of a document (CSS GCPM 3 §2.2), in the order their elements end,
+/// and the boxes the footnote area places them in.
+#[derive(Default)]
+pub(crate) struct Footnotes {
+    pub elements: Vec<FootnoteElement>,
+    pub bodies: Vec<FootnoteBody>,
+}
+pub(crate) struct FootnoteElement {
+    pub element: ElementId,
+    pub policy: crate::style::FootnotePolicy,
+    /// The body holding the footnote.
+    pub body: usize,
+}
+/// A box of the footnote area: a block footnote's box, or an anonymous block whose inline
+/// formatting context holds consecutive inline footnotes (CSS GCPM 3 §2.3).
+pub(crate) struct FootnoteBody {
+    pub block: BlockBox,
+    /// The footnotes the body holds, in order.
+    pub members: Vec<usize>,
+    pub inline: bool,
+}
+
+/// Consecutive inline footnotes collected into an anonymous block while the next may join
+/// its inline formatting context.
+struct InlineFootnotes {
+    style: Box<Style>,
+    children: Vec<BlockContent>,
+    inline: InlineCollector,
+    members: Vec<usize>,
+}
+impl InlineFootnotes {
+    /// The anonymous block holding the footnotes.
+    fn finish(mut self) -> Result<FootnoteBody, DocumentError> {
+        push_inline(&mut self.children, self.inline.finish(&self.style)?);
+        mark_last_formatted_line(&mut self.children);
+        Ok(FootnoteBody {
+            block: BlockBox::anonymous(*self.style, self.children, None),
+            members: self.members,
+            inline: true,
+        })
+    }
+}
+
+/// Appends finished inline content to the `children` of a block: a paragraph, which holds the
+/// block's first formatted line when nothing in flow precedes it, or the boxes and events of
+/// content that forms no line.
+fn push_inline(children: &mut Vec<BlockContent>, finished: Result<Paragraph, Vec<BlockContent>>) {
+    match finished {
+        Ok(mut paragraph) => {
+            let first = !children
+                .iter()
+                .any(|child| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)));
+            paragraph.set_formatted_lines(first, false);
+            children.push(BlockContent::Inline(paragraph));
+        }
+        Err(stray) => children.extend(stray),
+    }
+}
+/// Marks the paragraph that ends a block's in-flow `children`, if one does, as holding its
+/// last formatted line.
+fn mark_last_formatted_line(children: &mut [BlockContent]) {
+    if let Some(BlockContent::Inline(paragraph)) = children
+        .iter_mut()
+        .rfind(|child| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)))
+    {
+        paragraph.set_formatted_lines(paragraph.first_formatted_line(), true);
+    }
 }
 
 pub(crate) struct BlockBox {
@@ -478,31 +546,8 @@ impl BlockBox {
     /// The semantic events of the box and its contents in document order, with the number of
     /// boxes visited.
     pub(crate) fn subtree_events(&self) -> (Vec<&crate::document::SemanticEvent>, usize) {
-        let mut blocks = vec![self];
-        let mut visited = 0;
-        let mut events = Vec::new();
-        while let Some(source) = blocks.pop() {
-            visited += 1;
-            events.extend(source.semantic_event());
-            for child in source.children() {
-                match child {
-                    BlockContent::Events(values) => events.extend(values),
-                    BlockContent::Block(child) | BlockContent::Positioned(child) => {
-                        blocks.push(child);
-                    }
-                    BlockContent::Inline(paragraph) => {
-                        events.extend(paragraph.semantic_events().iter().map(|event| &event.event));
-                        blocks.extend(
-                            paragraph
-                                .anchors()
-                                .iter()
-                                .chain(paragraph.inline_blocks())
-                                .map(|anchor| &anchor.block),
-                        );
-                    }
-                }
-            }
-        }
+        let mut events = self.semantic_event().into_iter().collect();
+        let visited = 1 + content_events(&self.children, &mut events);
         events.sort_by_key(|event| event.order.start);
         (events, visited)
     }
@@ -639,6 +684,42 @@ impl BlockBox {
     }
 }
 
+/// Adds the semantic events of `children` and their contents to `events`, returning the
+/// number of boxes visited.
+fn content_events<'a>(
+    children: &'a [BlockContent],
+    events: &mut Vec<&'a crate::document::SemanticEvent>,
+) -> usize {
+    let mut pending = vec![children];
+    let mut visited = 0;
+    while let Some(children) = pending.pop() {
+        for child in children {
+            let blocks: Vec<&BlockBox> = match child {
+                BlockContent::Events(values) => {
+                    events.extend(values);
+                    Vec::new()
+                }
+                BlockContent::Block(child) | BlockContent::Positioned(child) => vec![child],
+                BlockContent::Inline(paragraph) => {
+                    events.extend(paragraph.semantic_events().iter().map(|event| &event.event));
+                    paragraph
+                        .anchors()
+                        .iter()
+                        .chain(paragraph.inline_blocks())
+                        .map(|anchor| &anchor.block)
+                        .collect()
+                }
+            };
+            for block in blocks {
+                visited += 1;
+                events.extend(block.semantic_event());
+                pending.push(&block.children);
+            }
+        }
+    }
+    visited
+}
+
 /// Document-order state of the boxes being built: list counter scopes and hyperlinks.
 pub(crate) struct Traversal<'a> {
     document: &'a DocumentTree,
@@ -651,13 +732,36 @@ pub(crate) struct Traversal<'a> {
     quotes: crate::style::QuoteDepth,
     canvas: BoxDecoration,
     canvas_body: Option<ElementId>,
-    footnotes: Vec<BlockBox>,
+    footnotes: Footnotes,
+    /// Inline footnotes that the next inline footnote may join, boxed as the traversal is
+    /// held across nested formatting.
+    inline_footnotes: Option<Box<InlineFootnotes>>,
     page_counters: Vec<(usize, crate::document::CounterSnapshot)>,
     /// The running elements open around the current element, innermost last.
     running: Vec<crate::style::PageStyleTarget>,
 }
 
 impl Traversal<'_> {
+    /// Ends the inline footnotes waiting for the next to join them.
+    fn finish_inline_footnotes(&mut self) -> Result<(), DocumentError> {
+        if let Some(open) = self.inline_footnotes.take() {
+            for &member in &open.members {
+                self.footnotes.elements[member].body = self.footnotes.bodies.len();
+            }
+            self.footnotes.bodies.push(open.finish()?);
+        }
+        Ok(())
+    }
+    /// Records the footnote `element` held by the body that the footnote area places next,
+    /// returning its index.
+    fn add_footnote(&mut self, element: ElementId, style: &Style) -> usize {
+        self.footnotes.elements.push(FootnoteElement {
+            element,
+            policy: style.footnote_policy,
+            body: self.footnotes.bodies.len(),
+        });
+        self.footnotes.elements.len() - 1
+    }
     /// Binds generated content to the values pagination gives it: content inside a running
     /// element, `running` when it is one, shows the page counters of each copy of it.
     fn bind<'c>(
@@ -695,7 +799,8 @@ impl Traversal<'_> {
             quotes: self.quotes,
             canvas: BoxDecoration::default(),
             canvas_body: None,
-            footnotes: Vec::new(),
+            footnotes: Footnotes::default(),
+            inline_footnotes: None,
             page_counters: Vec::new(),
             running: vec![owner],
         }
@@ -1680,18 +1785,11 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         let collected = self.inline.split();
         let origins = self.first_line.origins.clone();
         let origins = origins.as_deref();
-        match self.finish_inline(collected, self.style, origins)? {
-            Ok(mut paragraph) => {
-                let first = !self
-                    .children
-                    .iter()
-                    .any(|child| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)));
-                paragraph.set_formatted_lines(first, false);
-                *self.first_line = FirstLine::default();
-                self.children.push(BlockContent::Inline(paragraph));
-            }
-            Err(stray) => self.children.extend(stray),
+        let finished = self.finish_inline(collected, self.style, origins)?;
+        if finished.is_ok() {
+            *self.first_line = FirstLine::default();
         }
+        push_inline(self.children, finished);
         Ok(())
     }
     /// The first line of a block-level child box `display` passes to it, which then holds
@@ -1793,17 +1891,33 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     /// with the semantic events of the element and its contents, the element's marking the
     /// footnote (CSS GCPM 3 §2.2).
     fn footnote(&mut self, element: Element<'_>, block: BlockBox) -> Result<(), DocumentError> {
-        let index = self.traversal.footnotes.len();
-        for event in block.subtree_events().0 {
+        let index = self.traversal.add_footnote(element.id(), block.style());
+        self.footnote_call(element, block.style(), block.subtree_events().0, index)?;
+        self.traversal.footnotes.bodies.push(FootnoteBody {
+            block,
+            members: vec![index],
+            inline: false,
+        });
+        Ok(())
+    }
+    /// The call of the footnote `index`, styled `style`, takes the footnote element's place
+    /// with the semantic events of the element and its contents, the element's marking the
+    /// footnote.
+    fn footnote_call(
+        &mut self,
+        element: Element<'_>,
+        style: &Style,
+        events: Vec<&crate::document::SemanticEvent>,
+        index: usize,
+    ) -> Result<(), DocumentError> {
+        for event in events {
             let mut event = event.clone();
             if event.context.element == element.id() && event.context.pseudo.is_none() {
                 event.footnote = Some(index);
             }
             self.inline.semantic_event(event);
         }
-        self.generated(element, block.style(), GeneratedPseudoElement::FootnoteCall)?;
-        self.traversal.footnotes.push(block);
-        Ok(())
+        self.generated(element, style, GeneratedPseudoElement::FootnoteCall)
     }
     fn out_of_flow(&mut self, block: BlockBox) {
         if let Some(base) = self.ruby.base_level() {
@@ -2347,6 +2461,9 @@ enum Placement {
     Running,
     /// Moved to the footnote area by `float: footnote` (CSS GCPM 3 §2.2).
     Footnote,
+    /// The anonymous block whose inline formatting context in the footnote area holds an
+    /// inline footnote (CSS GCPM 3 §2.3).
+    InlineFootnote,
     Atomic,
 }
 
@@ -2373,6 +2490,16 @@ struct OpenBlock {
     ruby_container: bool,
     /// An initial letter in its contents is sized by its inline size.
     sizes_letter: bool,
+    /// The inline footnote an `InlineFootnote` block holds.
+    inline_footnote: Option<Box<InlineFootnoteMember>>,
+}
+
+/// An inline footnote being collected into the anonymous block of its footnote area.
+struct InlineFootnoteMember {
+    /// The footnote element's style, which its call inherits.
+    style: Style,
+    /// The footnotes the block holds before it.
+    members: Vec<usize>,
 }
 
 struct Frame<'d> {
@@ -2424,6 +2551,7 @@ impl<'d> Frame<'d> {
                 ruby: crate::document::ruby::RubyStack::default(),
                 ruby_container: false,
                 sizes_letter: false,
+                inline_footnote: None,
             }),
             started: false,
             quotes: None,
@@ -2500,6 +2628,96 @@ fn active_builder<'a, 's, 'c>(
     )
 }
 
+/// The anonymous block of the footnote area holding the inline footnote `element`, styled
+/// `style` and a child of `parent`: the block the inline footnotes before it are collected
+/// in, which it joins, or a new one.
+fn inline_footnote_frame<'d>(
+    element: Element<'d>,
+    parent: &Style,
+    style: &Style,
+    depth: usize,
+    traversal: &mut Traversal<'_>,
+) -> Frame<'d> {
+    let (block_style, children, inline, members) = match traversal.inline_footnotes.take() {
+        Some(open) => {
+            let InlineFootnotes {
+                style,
+                children,
+                inline,
+                members,
+            } = *open;
+            (style, children, inline, members)
+        }
+        None => (
+            Box::new(parent.anonymous(Display::Block)),
+            Vec::new(),
+            InlineCollector::default(),
+            Vec::new(),
+        ),
+    };
+    let mut frame = Frame::new(
+        element,
+        block_style,
+        depth,
+        0,
+        Some(Placement::InlineFootnote),
+        None,
+    );
+    frame.started = true;
+    let block = frame
+        .block
+        .as_mut()
+        .expect("an inline footnote frame builds a block");
+    block.children = children;
+    block.inline = inline;
+    block.inline_footnote = Some(Box::new(InlineFootnoteMember {
+        style: style.clone(),
+        members,
+    }));
+    frame
+}
+
+/// Ends the inline footnote of the anonymous block `wrapper`: its call takes its place in the
+/// block `parent` of `frames`, and the block waits for the next inline footnote to join it.
+fn end_inline_footnote<'a>(
+    wrapper: Frame<'_>,
+    frames: &mut [Frame<'_>],
+    parent: usize,
+    sheet: &'a Stylesheet,
+    traversal: &mut Traversal<'a>,
+    resources: &mut ImageResources<'a>,
+) -> Result<(), DocumentError> {
+    let element = wrapper.element;
+    let mut block = wrapper
+        .block
+        .expect("an inline footnote frame builds a block");
+    let member = block
+        .inline_footnote
+        .take()
+        .expect("an inline footnote block holds its footnote");
+    let index = traversal.add_footnote(element.id(), &member.style);
+    let order = traversal.strings.event(element, None, false).order;
+    let mut events = Vec::new();
+    content_events(&block.children, &mut events);
+    block.inline.content_events(&mut events);
+    events.retain(|event| order.contains(&event.order.start));
+    events.sort_by_key(|event| event.order.start);
+    let events: Vec<_> = events.into_iter().cloned().collect();
+    let (mut builder, _) = active_builder(frames, parent, sheet, traversal, resources);
+    builder.footnote_call(element, &member.style, events.iter().collect(), index)?;
+    // Inline footnotes inside this one end apart from it.
+    traversal.finish_inline_footnotes()?;
+    let mut members = member.members;
+    members.push(index);
+    traversal.inline_footnotes = Some(Box::new(InlineFootnotes {
+        style: wrapper.style,
+        children: block.children,
+        inline: block.inline,
+        members,
+    }));
+    Ok(())
+}
+
 /// Formats the element of the `root` frame and its subtree.
 fn block<'a>(
     root: Frame<'_>,
@@ -2519,7 +2737,7 @@ fn block<'a>(
     let mut blocks = vec![0];
     loop {
         let index = frames.len() - 1;
-        let block_index = *blocks.last().unwrap();
+        let mut block_index = *blocks.last().unwrap();
         if !frames[index].started {
             let frame = &mut frames[index];
             let element = frame.element;
@@ -2781,7 +2999,11 @@ fn block<'a>(
                 let footnote = frames[index]
                     .block
                     .as_ref()
-                    .is_some_and(|block| matches!(block.placement, Placement::Footnote));
+                    .is_some_and(|block| matches!(block.placement, Placement::Footnote))
+                    || index
+                        .checked_sub(1)
+                        .and_then(|wrapper| frames[wrapper].block.as_ref())
+                        .is_some_and(|block| block.inline_footnote.is_some());
                 let (mut builder, style) =
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
                 // The marker begins the footnote element's content (CSS GCPM 3 §2.7).
@@ -2919,6 +3141,28 @@ fn block<'a>(
                 frames[block_index].element,
                 &frames[block_index].style.display,
             );
+            if child_style.footnote() && child_style.display != Display::Contents {
+                let inline = child_style.footnote_display == crate::style::FootnoteDisplay::Inline;
+                // Consecutive inline footnotes share an inline formatting context, unless
+                // pagination found that this one cannot continue the line before it.
+                if !inline || traversal.generated.starts_inline_footnotes(child.id()) {
+                    traversal.finish_inline_footnotes()?;
+                }
+                if inline {
+                    let wrapper = inline_footnote_frame(
+                        child,
+                        &frames[index].style,
+                        &child_style,
+                        child_depth,
+                        traversal,
+                    );
+                    frames.push(wrapper);
+                    block_index = frames.len() - 1;
+                    blocks.push(block_index);
+                    // The anonymous block holds the footnote as an inline-level box.
+                    child_style.float = crate::style::Float::None;
+                }
+            }
             let (mut builder, _) =
                 active_builder(&mut frames, block_index, sheet, traversal, resources);
             let run_in = child_style.display.run_in().cloned();
@@ -2962,13 +3206,6 @@ fn block<'a>(
             } else if child_style.position == crate::style::Position::Running {
                 Some(Placement::Running)
             } else if child_style.footnote() {
-                if child_style.footnote_display == crate::style::FootnoteDisplay::Inline {
-                    return Err(StyleError::Unsupported(
-                        "footnote-display: inline footnotes sharing lines in the footnote area"
-                            .into(),
-                    )
-                    .into());
-                }
                 Some(Placement::Footnote)
             } else if child_style.position.is_out_of_flow() || child_style.floating().is_some() {
                 Some(Placement::Positioned)
@@ -3118,6 +3355,19 @@ fn block<'a>(
             continue;
         }
         let element = frames[index].element;
+        if frames[index]
+            .block
+            .as_ref()
+            .is_some_and(|block| block.inline_footnote.is_some())
+        {
+            let wrapper = frames.pop().expect("the inline footnote's block is open");
+            blocks.pop();
+            let parent = *blocks
+                .last()
+                .expect("an inline footnote has a containing block");
+            end_inline_footnote(wrapper, &mut frames, parent, sheet, traversal, resources)?;
+            continue;
+        }
         let generated = frames[index].generated;
         let contents = frames[index].style.display == Display::Contents;
         let quotes = frames[index].quotes;
@@ -3166,13 +3416,7 @@ fn block<'a>(
         let frame = frames.pop().unwrap();
         blocks.pop();
         let mut state = frame.block.unwrap();
-        if let Some(BlockContent::Inline(paragraph)) = state
-            .children
-            .iter_mut()
-            .rfind(|child| matches!(child, BlockContent::Block(_) | BlockContent::Inline(_)))
-        {
-            paragraph.set_formatted_lines(paragraph.first_formatted_line(), true);
-        }
+        mark_last_formatted_line(&mut state.children);
         let canvas_source = index == 0 || traversal.canvas_body == Some(element.id());
         let rendered_legend = crate::document::controls::is_rendered_legend(element, &frame.style);
         let (style, children) = crate::document::controls::fieldset(
@@ -3230,6 +3474,9 @@ fn block<'a>(
                 builder.running(element, block);
             }
             Placement::Footnote => builder.footnote(element, block)?,
+            Placement::InlineFootnote => {
+                unreachable!("inline footnote blocks finish as their footnotes end")
+            }
             Placement::Atomic => builder.atomic(block, parent)?,
             Placement::Root => unreachable!("root returned before attaching to a parent"),
         }
@@ -3401,7 +3648,7 @@ fn hidden_root(
     )?;
     Ok(Formatted {
         root: BlockBox::anonymous(style.clone(), vec![BlockContent::Events(events)], None),
-        footnotes: Vec::new(),
+        footnotes: Footnotes::default(),
         navigation,
         strings,
         generated: generated.finish(),
@@ -3448,7 +3695,8 @@ fn format_root(
         generated,
         quotes: Default::default(),
         canvas: BoxDecoration::default(),
-        footnotes: Vec::new(),
+        footnotes: Footnotes::default(),
+        inline_footnotes: None,
         page_counters: Vec::new(),
         running: Vec::new(),
         canvas_body: (style.decoration.background.alpha == 0.0
@@ -3497,12 +3745,15 @@ fn format_root(
         &mut traversal,
         &mut resources,
     )?;
+    traversal.finish_inline_footnotes()?;
     root.trim_text_boxes([false; 2]);
-    for block in traversal
-        .strings
-        .running_blocks_mut()
-        .chain(&mut traversal.footnotes)
-    {
+    for block in traversal.strings.running_blocks_mut().chain(
+        traversal
+            .footnotes
+            .bodies
+            .iter_mut()
+            .map(|body| &mut body.block),
+    ) {
         block.trim_text_boxes([false; 2]);
     }
     // Writing Modes 4 §8: HTML's first body supplies the root's used flow after style computation.
@@ -3512,11 +3763,13 @@ fn format_root(
     }
     root.reflow(crate::style::logical::Flow::used(root.style()));
     // Running elements and footnotes lay out in page areas, which take the page's flow.
-    for block in traversal
-        .strings
-        .running_blocks_mut()
-        .chain(&mut traversal.footnotes)
-    {
+    for block in traversal.strings.running_blocks_mut().chain(
+        traversal
+            .footnotes
+            .bodies
+            .iter_mut()
+            .map(|body| &mut body.block),
+    ) {
         block.reflow(crate::style::logical::Flow::used(root.style()));
     }
     Ok(Formatted {

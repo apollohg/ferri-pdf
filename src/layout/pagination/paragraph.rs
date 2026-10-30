@@ -954,9 +954,26 @@ impl<'a> Paginator<'a, '_, 'a> {
             })
             .flatten();
         let mut footnotes = Vec::new();
+        for fragment in &line.atomics {
+            let anchor = source.inline_block(fragment.index);
+            if let Some(event) = anchor.block.semantic_event() {
+                self.record_event_line(
+                    event.context.element,
+                    line.height,
+                    text_start.is_some_and(|start| start < anchor.offset),
+                );
+            }
+        }
         for event in line_semantic_events(source, line, *consumed_events) {
             if text_start.is_some_and(|start| start < event.offset) {
                 self.string_locations.text(self.page);
+            }
+            if event.event.context.pseudo.is_none() {
+                self.record_event_line(
+                    event.event.context.element,
+                    line.height,
+                    text_start.is_some_and(|start| start < event.offset),
+                );
             }
             self.string_locations.record(self.page, &event.event);
             footnotes.extend(event.event.footnote);

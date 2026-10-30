@@ -284,7 +284,7 @@ fn layout_pass(
         .iter()
         .filter_map(|assignment| assignment.element.as_ref())
         .flat_map(crate::document::RunningElement::blocks)
-        .chain(document.footnotes())
+        .chain(document.footnotes().bodies.iter().map(|body| &body.block))
     {
         measurer.sources.register(block);
     }
@@ -330,9 +330,11 @@ fn paginate<'t>(
     // CSS GCPM 3 §2.8: calls in nested layouts whose footnotes must stay with them and do
     // not fit move off their pages in a new pagination, until no call needs to move.
     let retained = (!continuous
-        && document.footnotes().iter().any(|footnote| {
-            footnote.style().footnote_policy != crate::style::FootnotePolicy::Auto
-        }))
+        && document
+            .footnotes()
+            .elements
+            .iter()
+            .any(|footnote| footnote.policy != crate::style::FootnotePolicy::Auto))
     .then(|| Box::new(root.clone()));
     let mut paginated = paginate_flow(
         document,
@@ -379,6 +381,8 @@ fn paginate<'t>(
         mut text_areas,
         mut renderings,
         footnote_deferrals: _,
+        event_lines: _,
+        inline_footnote_starts,
     } = paginated;
     for (index, page) in page_boxes.iter().enumerate() {
         let frame = writing::Frame::physical(flow, page.geometry.paper);
@@ -403,7 +407,7 @@ fn paginate<'t>(
     let generated = paged_content(
         document,
         &page_boxes,
-        string_locations,
+        (string_locations, inline_footnote_starts),
         &destinations,
         resolver,
         measurer,
@@ -584,12 +588,16 @@ pub(super) type PageOutputs<'p> = (
 );
 
 /// Paints the page-margin boxes and resolves the generated content that depends on where
-/// pagination placed the document. Kept apart from `layout_pass`, whose frame every nested
-/// navigable's layout stacks.
+/// pagination placed the document: its semantic events, and the inline footnotes it found
+/// must start inline formatting contexts. Kept apart from `layout_pass`, whose frame every
+/// nested navigable's layout stacks.
 fn paged_content<'t>(
     document: &'t StyledDocument,
     page_boxes: &[std::sync::Arc<crate::document::PageBox>],
-    string_locations: strings::StringLocations,
+    (string_locations, inline_footnote_starts): (
+        strings::StringLocations,
+        std::collections::HashSet<crate::dom::ElementId>,
+    ),
     destinations: &[Option<Destination>],
     resolver: &dyn ResourceResolver,
     measurer: &mut measure::Measurer<'t>,
@@ -630,6 +638,7 @@ fn paged_content<'t>(
                 &strings,
                 &counters,
             ),
+            inline_footnote_starts,
         },
     )?)
 }

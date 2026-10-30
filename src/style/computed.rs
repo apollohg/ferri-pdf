@@ -596,7 +596,15 @@ impl Style {
         }
         // Running elements leave the flow as absolutely positioned boxes do (CSS GCPM 3
         // §1.2.1) and are laid out as block boxes in page-margin boxes.
-        if self.document_root
+        if self.footnote() && self.footnote_display == crate::style::FootnoteDisplay::Inline {
+            // CSS GCPM 3 §2.3: the footnote is placed in the footnote area as an inline
+            // element, of its inner display type.
+            self.display = match self.display.blockified() {
+                Display::Block => Display::Inline,
+                Display::ListItem => Display::InlineListItem,
+                display => display.inlinified(),
+            };
+        } else if self.document_root
             || self.item_parent
             || self.position.is_out_of_flow()
             || self.position == crate::style::Position::Running
@@ -1717,6 +1725,9 @@ impl Stylesheet {
         }
         if let Some(value) = winners.remove(&Property::Float) {
             properties::apply(Property::Float, &value, style, parent, relative)?;
+        }
+        if let Some(value) = winners.remove(&Property::FootnoteDisplay) {
+            properties::apply(Property::FootnoteDisplay, &value, style, parent, relative)?;
         }
         if let Some(value) = winners.remove(&Property::Display) {
             properties::apply(Property::Display, &value, style, parent, relative)?;

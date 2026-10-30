@@ -102,17 +102,96 @@ fn float_footnote_applies_only_where_floats_do() {
     );
 }
 
+const INLINE_CSS: &str = ".fn{footnote-display:inline}.fn::after{content:' '}";
+
 #[test]
-fn inline_footnote_display_is_reported() {
-    let error = render(
-        ".fn{footnote-display:inline}",
-        "<p>Text<span class=fn>Note</span></p>",
+fn inline_footnotes_share_the_lines_of_one_inline_formatting_context() {
+    let trace = render(
+        INLINE_CSS,
+        "<div>A<span class=fn>One</span> B<div class=fn>Two</div> C<span class=fn>Three</span></div>",
     )
-    .err()
-    .expect("inline footnotes must not render as block footnotes");
-    assert!(
-        error.to_string().contains("footnote-display: inline"),
-        "unexpected error: {error}"
+    .unwrap()
+    .layout
+    .unwrap();
+    assert_eq!(
+        pages(&trace),
+        [(texts(&["A1 B2 C3"]), texts(&["1. One 2. Two 3. Three"]))],
+        "consecutive inline footnotes, block elements among them, flow on one line"
+    );
+}
+
+#[test]
+fn a_block_footnote_between_inline_footnotes_ends_their_line() {
+    let trace = render(
+        &format!("{INLINE_CSS}.block{{footnote-display:block}}"),
+        "<p>A<span class=fn>One</span> B<span class='fn block'>Two</span> C<span class=fn>Three</span> D<span class=fn>Four</span></p>",
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    assert_eq!(
+        pages(&trace)[0].1,
+        texts(&["1. One", "2. Two", "3. Three 4. Four"]),
+        "only inline footnotes adjacent in the area share lines"
+    );
+}
+
+#[test]
+fn inline_footnotes_on_later_pages_start_their_own_lines_after_their_calls() {
+    let body: String = (1..=14)
+        .map(|index| format!("<p>P{index}<span class=fn>N{index}</span></p>"))
+        .collect();
+    let trace = render(INLINE_CSS, &body).unwrap().layout.unwrap();
+    let pages = pages(&trace);
+    let page_of = |text: &str, notes: bool| {
+        pages
+            .iter()
+            .position(|(lines, area)| {
+                (if notes { area } else { lines })
+                    .iter()
+                    .any(|line| line.split(' ').any(|word| word == text))
+            })
+            .unwrap_or_else(|| panic!("{text} is not rendered: {pages:?}"))
+    };
+    for index in 1..=14 {
+        let call = page_of(&format!("P{index}{index}"), false);
+        let note = page_of(&format!("N{index}"), true);
+        assert!(
+            note >= call,
+            "footnote {index} lies on page {note} before its call on page {call}: {pages:?}"
+        );
+    }
+    for (page, (_, area)) in pages.iter().enumerate() {
+        let notes = area
+            .iter()
+            .flat_map(|line| line.split(' '))
+            .filter(|word| word.starts_with('N'))
+            .count();
+        assert!(
+            notes < 2 || area.len() < notes,
+            "the {notes} footnotes of page {page} share lines: {pages:?}"
+        );
+    }
+}
+
+#[test]
+fn inline_footnotes_keep_their_policies() {
+    let trace = render(
+        &format!("{INLINE_CSS}.fn{{footnote-policy:line}}p{{widows:1;orphans:1}}"),
+        &format!(
+            "<p style=height:70pt>Top</p><p>First<br>Second<span class=fn>{TALL_NOTE}</span></p>"
+        ),
+    )
+    .unwrap()
+    .layout
+    .unwrap();
+    assert_eq!(
+        pages(&trace),
+        [
+            (texts(&["Top", "First"]), Vec::new()),
+            (texts(&["Second1"]), texts(&["1. A", "B", "C", "D"]))
+        ],
+        "the call line moves with its whole inline footnote"
     );
 }
 

@@ -627,6 +627,21 @@ pub(crate) struct InlineCollector {
     sunken_letter_end: Option<usize>,
 }
 impl InlineCollector {
+    /// Adds the semantic events of the collected content to `events`.
+    pub(crate) fn content_events<'a>(
+        &'a self,
+        events: &mut Vec<&'a crate::document::SemanticEvent>,
+    ) {
+        events.extend(self.events.iter().map(|event| &event.event));
+        for anchor in self
+            .anchors
+            .iter()
+            .chain(&self.atomics)
+            .chain(&self.annotations)
+        {
+            events.extend(anchor.block.subtree_events().0);
+        }
+    }
     /// Opens the inline marker box of a list item (CSS Lists 3 §3.5).
     pub(crate) fn open_marker(
         &mut self,

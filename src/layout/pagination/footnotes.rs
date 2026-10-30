@@ -6,7 +6,10 @@
 )]
 use super::*;
 use crate::style::{BoxSizing, FootnoteDisplay, FootnotePolicy};
-use std::{cell::RefCell, collections::BTreeSet};
+use std::{
+    cell::RefCell,
+    collections::{BTreeSet, HashSet},
+};
 
 /// A footnote body laid out alone in its footnote area.
 pub(super) struct FootnoteLayout {
@@ -18,12 +21,16 @@ pub(super) struct FootnoteLayout {
     compact: bool,
     /// Offsets in the body between which no line box or image lies, ascending.
     breaks: Vec<f32>,
+    /// The extent of each footnote of an inline body, in its order: from the top of the line
+    /// it starts on to the bottom of the line the next one starts on when they share it, or
+    /// else to that line's top.
+    members: Vec<[f32; 2]>,
 }
 
 /// The slice `[top, bottom)` of a footnote body that one page's footnote area holds.
 #[derive(Clone, Copy)]
 pub(super) struct FootnotePart {
-    footnote: usize,
+    body: usize,
     top: f32,
     bottom: f32,
     width: f32,
@@ -69,7 +76,7 @@ fn rows_height(parts: &[FootnotePart], width: f32) -> Option<f32> {
     (!parts.is_empty()).then(|| rows(parts, width).iter().map(|row| row.height).sum())
 }
 
-/// Footnote bodies by footnote and the bits of their area's width.
+/// Footnote bodies by body and the bits of their area's width.
 type FootnoteLayouts = HashMap<(usize, u32), Rc<FootnoteLayout>>;
 
 /// Pages that the calls of footnotes whose policy keeps them with their calls (CSS GCPM 3
@@ -90,7 +97,12 @@ pub(super) struct Footnotes {
     ahead: Vec<(usize, usize)>,
     /// Calls in nested layouts that pagination must move off their pages.
     deferred: FootnoteDeferrals,
-    /// Bodies by footnote and area width; laying a body out does not depend on its page.
+    /// How far the content of each inline body is queued.
+    queued: HashMap<usize, f32>,
+    /// Inline footnotes that this pagination found cannot continue the inline formatting
+    /// context of the footnote before them.
+    inline_starts: HashSet<crate::dom::ElementId>,
+    /// Bodies by body and area width; laying a body out does not depend on its page.
     layouts: Rc<RefCell<FootnoteLayouts>>,
 }
 impl Footnotes {
@@ -107,6 +119,10 @@ impl Footnotes {
     /// The calls this pagination found on pages that their footnotes do not fit.
     pub(super) fn take_deferred(&mut self) -> FootnoteDeferrals {
         std::mem::take(&mut self.deferred)
+    }
+    /// The inline footnotes this pagination found must start inline formatting contexts.
+    pub(super) fn take_inline_starts(&mut self) -> HashSet<crate::dom::ElementId> {
+        std::mem::take(&mut self.inline_starts)
     }
 }
 
@@ -256,10 +272,10 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
 
     fn footnote_layout(
         &mut self,
-        footnote: usize,
+        index: usize,
         area_width: f32,
     ) -> Result<Rc<FootnoteLayout>, LayoutError> {
-        let key = (footnote, area_width.to_bits());
+        let key = (index, area_width.to_bits());
         if let Some(layout) = self.footnotes.layouts.borrow().get(&key) {
             return Ok(layout.clone());
         }
@@ -267,8 +283,10 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             unreachable!("footnote areas belong to pages");
         };
         let document = pages.document;
-        let body = &document.footnotes()[footnote];
-        let compact = body.style().footnote_display == FootnoteDisplay::Compact;
+        let footnotes = document.footnotes();
+        let body = &footnotes.bodies[index].block;
+        let inline = footnotes.bodies[index].inline;
+        let compact = !inline && body.style().footnote_display == FootnoteDisplay::Compact;
         let width = if compact {
             self.measurer
                 .run(|measurer| crate::layout::intrinsic::measure(body, measurer, area_width))?
@@ -334,12 +352,34 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             .collect();
         breaks.sort_by(f32::total_cmp);
         breaks.dedup();
+        let mut members = Vec::new();
+        if inline {
+            let elements = &footnotes.bodies[index].members;
+            members.resize(elements.len(), [0.0, height]);
+            let mut end = height;
+            for (position, &member) in elements.iter().enumerate().skip(1).rev() {
+                let element = footnotes.elements[member].element;
+                // A footnote that starts on no line starts where the one after it does.
+                if let Some(start) = flow.event_lines.iter().find(|line| line.element == element) {
+                    members[position][0] = start.extent[0];
+                    end = if start.shared {
+                        start.extent[1]
+                    } else {
+                        start.extent[0]
+                    };
+                } else {
+                    members[position][0] = end;
+                }
+                members[position - 1][1] = end;
+            }
+        }
         let layout = Rc::new(FootnoteLayout {
             flow,
             width,
             height,
             compact,
             breaks,
+            members,
         });
         self.footnotes
             .layouts
@@ -348,27 +388,74 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         Ok(layout)
     }
 
-    /// The whole body of `footnote` as one part of the area of `area_width`.
-    fn whole_part(
+    fn document_footnotes(&self) -> &'t crate::document::Footnotes {
+        let Fragmentainers::Pages(pages) = &self.fragmentainers else {
+            unreachable!("footnote areas belong to pages");
+        };
+        pages.document.footnotes()
+    }
+
+    /// The part of its body that `footnote` adds to the area of `area_width`: a block
+    /// footnote's whole body, or the lines of an inline body after those queued through
+    /// `queued` up to the end of the footnote's content, if any.
+    fn footnote_part(
         &mut self,
         footnote: usize,
         area_width: f32,
-    ) -> Result<FootnotePart, LayoutError> {
-        let layout = self.footnote_layout(footnote, area_width)?;
-        Ok(FootnotePart {
-            footnote,
-            top: 0.0,
-            bottom: layout.height,
+        queued: f32,
+    ) -> Result<Option<FootnotePart>, LayoutError> {
+        let footnotes = self.document_footnotes();
+        let body = footnotes.elements[footnote].body;
+        let layout = self.footnote_layout(body, area_width)?;
+        let Some(position) = footnotes.bodies[body].inline.then(|| {
+            footnotes.bodies[body]
+                .members
+                .iter()
+                .position(|&member| member == footnote)
+                .expect("an inline body holds its footnotes")
+        }) else {
+            return Ok(Some(FootnotePart {
+                body,
+                top: 0.0,
+                bottom: layout.height,
+                width: layout.width,
+                inline: layout.compact,
+            }));
+        };
+        let end = layout.members[position][1];
+        Ok((end > queued).then_some(FootnotePart {
+            body,
+            top: queued,
+            bottom: end,
             width: layout.width,
-            inline: layout.compact,
-        })
+            inline: false,
+        }))
+    }
+
+    /// Whether the content of `footnote` still waits for a later page.
+    fn footnote_waits(&mut self, footnote: usize, area_width: f32) -> Result<bool, LayoutError> {
+        let footnotes = self.document_footnotes();
+        let body = footnotes.elements[footnote].body;
+        let end = match footnotes.bodies[body]
+            .members
+            .iter()
+            .position(|&member| member == footnote)
+        {
+            Some(position) if footnotes.bodies[body].inline => {
+                self.footnote_layout(body, area_width)?.members[position][1]
+            }
+            _ => f32::INFINITY,
+        };
+        Ok(self
+            .footnotes
+            .carried
+            .iter()
+            .any(|part| part.body == body && part.top < end))
     }
 
     fn footnote_policy(&self, footnote: usize) -> FootnotePolicy {
         match &self.fragmentainers {
-            Fragmentainers::Pages(pages) => {
-                pages.document.footnotes()[footnote].style().footnote_policy
-            }
+            Fragmentainers::Pages(pages) => pages.document.footnotes().elements[footnote].policy,
             Fragmentainers::Columns(_) => FootnotePolicy::Auto,
         }
     }
@@ -403,8 +490,18 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             .copied()
             .collect();
         let before = rows_height(&parts, area.width);
+        let start = parts.len();
         for &footnote in footnotes {
-            parts.push(self.whole_part(footnote, area.width)?);
+            let body = self.document_footnotes().elements[footnote].body;
+            let queued = parts
+                .iter()
+                .filter(|part| part.body == body)
+                .map(|part| part.bottom)
+                .fold(
+                    self.footnotes.queued.get(&body).copied().unwrap_or(0.0),
+                    f32::max,
+                );
+            parts.extend(self.footnote_part(footnote, area.width, queued)?);
         }
         let after = rows_height(&parts, area.width);
         if area
@@ -413,7 +510,6 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         {
             return Ok(None);
         }
-        let start = parts.len() - footnotes.len();
         pending.extend_from_slice(&parts[start..]);
         Ok(Some(
             area.outer_height(after, false) - area.outer_height(before, false),
@@ -474,9 +570,44 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             return Ok(());
         };
         for footnote in footnotes {
-            if self.footnotes.placed.insert(footnote) {
-                let part = self.whole_part(footnote, area.width)?;
-                self.footnotes.carried.push_back(part);
+            if !self.footnotes.placed.insert(footnote) {
+                continue;
+            }
+            let footnotes = self.document_footnotes();
+            let body = footnotes.elements[footnote].body;
+            let mut queued = self.footnotes.queued.get(&body).copied().unwrap_or(0.0);
+            let members = &footnotes.bodies[body].members;
+            if let Some(position) = members.iter().position(|&member| member == footnote)
+                && position > 0
+            {
+                // An inline footnote continues the inline formatting context of the one
+                // before it only right after its lines, at the end of the area.
+                let layout = self.footnote_layout(body, area.width)?;
+                let last = self
+                    .footnotes
+                    .carried
+                    .back()
+                    .or_else(|| self.footnotes.parts(self.page).last());
+                if queued != layout.members[position - 1][1]
+                    || last.is_none_or(|part| part.body != body)
+                {
+                    self.footnotes
+                        .inline_starts
+                        .insert(footnotes.elements[footnote].element);
+                    // The rest of this pagination approximates the footnote starting its own
+                    // inline formatting context with its lines from the one it starts on.
+                    queued = queued.min(layout.members[position][0]);
+                }
+            }
+            let Some(part) = self.footnote_part(footnote, area.width, queued)? else {
+                continue;
+            };
+            self.footnotes.queued.insert(body, part.bottom);
+            match self.footnotes.carried.back_mut() {
+                Some(last) if last.body == body && last.bottom == part.top => {
+                    last.bottom = part.bottom;
+                }
+                _ => self.footnotes.carried.push_back(part),
             }
         }
         Ok(())
@@ -524,14 +655,13 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             return Ok(());
         }
         self.fill_footnote_area(false)?;
+        let Some(area) = self.area(self.page) else {
+            return Ok(());
+        };
         for (footnote, page) in queued {
             let policy = self.footnote_policy(footnote);
             if policy != FootnotePolicy::Auto
-                && self
-                    .footnotes
-                    .carried
-                    .iter()
-                    .any(|part| part.footnote == footnote)
+                && self.footnote_waits(footnote, area.width)?
                 && !self
                     .measurer
                     .footnote_deferrals
@@ -574,7 +704,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 self.footnotes.carried.pop_front();
                 continue;
             }
-            let layout = self.footnote_layout(waiting.footnote, area.width)?;
+            let layout = self.footnote_layout(waiting.body, area.width)?;
             let used = rows_height(&self.footnotes.pages[page], area.width);
             let end = waiting.top + (limit - used.unwrap_or(0.0)).max(0.0);
             let fits = layout
@@ -677,7 +807,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             let mut y = border_box.y + area.borders[TOP] + area.padding[TOP];
             for row in rows(self.footnotes.parts(page), area.width) {
                 for (part, offset) in row.parts {
-                    let layout = self.footnote_layout(part.footnote, area.width)?;
+                    let layout = self.footnote_layout(part.body, area.width)?;
                     let window = Rect {
                         x: 0.0,
                         y: part.top,

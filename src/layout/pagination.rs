@@ -950,12 +950,26 @@ pub(super) struct Paginated {
     pub page_boxes: Vec<std::sync::Arc<crate::document::PageBox>>,
     pub page_records: Vec<crate::layout::PageRecord>,
     pub line_boxes: Vec<[f32; 2]>,
+    pub event_lines: Vec<EventLine>,
     /// The text area of each page whose box's backgrounds clip to text, in physical page
     /// coordinates, or of a standalone flow's root when requested.
     pub text_areas: Box<[Option<crate::graphics::FlowPaint>]>,
     pub renderings: Box<Renderings>,
     /// Calls this pagination placed on pages that their footnotes do not fit.
     pub footnote_deferrals: FootnoteDeferrals,
+    /// Inline footnotes that this pagination found cannot continue the line of the inline
+    /// footnote before them.
+    pub inline_footnote_starts: std::collections::HashSet<crate::dom::ElementId>,
+}
+
+/// Where an element starts in a standalone flow: the line box its start lies on, or the
+/// empty extent between blocks.
+#[derive(Clone)]
+pub(super) struct EventLine {
+    pub element: crate::dom::ElementId,
+    pub extent: [f32; 2],
+    /// Content precedes the element's start on its line.
+    pub shared: bool,
 }
 
 /// A box laid out alone: its text lines, display list, line box extents and navigation, and
@@ -964,6 +978,7 @@ pub(super) struct StandaloneFlow {
     pub lines: Vec<TextLine>,
     pub items: Vec<DisplayItem>,
     pub line_boxes: Vec<[f32; 2]>,
+    pub event_lines: Vec<EventLine>,
     pub navigation: StandaloneNavigation,
     pub text_area: Option<crate::graphics::FlowPaint>,
     /// The renderings of the elements inside the flow that `element()` images show.
@@ -1056,6 +1071,8 @@ pagination_state! {
     /// The `[top, bottom]` extent of each line box, kept where footnote bodies need their
     /// break points.
     line_boxes: Option<Vec<[f32; 2]>>,
+    /// Where the elements of a standalone flow start, kept with `line_boxes`.
+    event_lines: Option<Vec<EventLine>>,
     /// The subtree node of the document's or a standalone flow's root, whose text area the
     /// `background-clip: text` layers of the page boxes or of the flow's box paint within.
     root_text_area: Option<usize>,
@@ -1218,6 +1235,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             footnotes: footnotes::Footnotes::default(),
             footnote_pages: None,
             line_boxes: None,
+            event_lines: None,
             root_text_area: None,
             frame_templates,
             template,
@@ -3270,6 +3288,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 FlowItem::Events(events) => {
                     for event in events {
                         self.string_locations.record(self.page, event);
+                        if event.context.pseudo.is_none() {
+                            self.record_event_line(event.context.element, 0.0, false);
+                        }
                     }
                 }
                 FlowItem::Positioned(item) => {
@@ -6829,6 +6850,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     ) -> Result<StandaloneFlow, LayoutError> {
         let mut paginator = Self::for_frame(measurer, area);
         paginator.line_boxes = Some(Vec::new());
+        paginator.event_lines = Some(Vec::new());
         if text_area {
             paginator.mark_root_text_area();
         }
@@ -6843,6 +6865,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             lines: paginated.pages.swap_remove(0),
             items: paginated.display_lists.swap_remove(0),
             line_boxes: paginated.line_boxes,
+            event_lines: paginated.event_lines,
             navigation: StandaloneNavigation {
                 links: paginated.links.swap_remove(0),
                 destinations: paginated
@@ -6853,6 +6876,25 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     .collect(),
             },
         })
+    }
+    /// Records that `element` starts at the current position, on a line box `height` tall
+    /// after other content of the line when `shared`.
+    pub(super) fn record_event_line(
+        &mut self,
+        element: crate::dom::ElementId,
+        height: f32,
+        shared: bool,
+    ) {
+        let top = self.top + self.y + self.offset[1];
+        if let Some(lines) = &mut self.event_lines
+            && lines.iter().all(|line| line.element != element)
+        {
+            lines.push(EventLine {
+                element,
+                extent: [top, top + height],
+                shared,
+            });
+        }
     }
     /// Records the extent of a line box placed at the current position.
     pub(super) fn record_line_box(&mut self, height: f32) {
@@ -7181,9 +7223,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             destination_bounds: located.destination_bounds,
             string_locations: self.string_locations,
             line_boxes: self.line_boxes.unwrap_or_default(),
+            event_lines: self.event_lines.unwrap_or_default(),
             text_areas,
             renderings,
             footnote_deferrals: self.footnotes.take_deferred(),
+            inline_footnote_starts: self.footnotes.take_inline_starts(),
         })
     }
 }

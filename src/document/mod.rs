@@ -33,7 +33,7 @@ use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 pub(crate) use counters::CounterSnapshot;
 pub(crate) use element_images::{ElementMeasurements, ElementState, ShapeSamples};
 pub(crate) use formatting::{
-    BlockBox, BlockContent, InitialLetterBox, PageBox, PageFootnoteArea, PageMarginBox,
+    BlockBox, BlockContent, Footnotes, InitialLetterBox, PageBox, PageFootnoteArea, PageMarginBox,
 };
 pub(crate) use frames::{Frame, FrameDocument};
 pub(crate) use generated::{GeneratedValues, PageStart, Paginated};
@@ -98,7 +98,7 @@ pub enum DocumentDiagnostic {
 pub(crate) struct StyledDocument {
     root: BlockBox,
     /// Footnote element boxes in document order (CSS GCPM 3 §2.2).
-    footnotes: Vec<BlockBox>,
+    footnotes: Footnotes,
     styles: Stylesheet,
     diagnostics: Vec<DocumentDiagnostic>,
     navigation: Navigation,
@@ -668,7 +668,7 @@ impl StyledDocument {
     pub(crate) fn root_element(&self) -> crate::dom::ElementId {
         self.source.html.root_element().id()
     }
-    pub(crate) fn footnotes(&self) -> &[BlockBox] {
+    pub(crate) fn footnotes(&self) -> &Footnotes {
         &self.footnotes
     }
     pub(crate) fn styles(&self) -> &Stylesheet {

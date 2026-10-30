@@ -179,6 +179,23 @@ class GcpmPdf(unittest.TestCase):
         self.assertGreater(words["3."][2], words["1."][2],
                            "a footnote wider than the area's remainder starts a line")
 
+    def test_inline_footnotes_flow_in_one_inline_formatting_context(self):
+        pages = self.render(
+            "@page{size:300pt 200pt;margin:20pt}"
+            ".fn{float:footnote;footnote-display:inline;margin-right:6pt}",
+            "<p>Alpha<span class=fn>One.</span> and<span class=fn>Two words that run on "
+            "past the end of the area's first line into its next.</span></p>")
+        words = {word[0]: word for word in pages[0][1]}
+        self.assertAlmostEqual(words["1."][2], words["2."][2], delta=POSITION_TOLERANCE,
+                               msg="the second footnote continues the first's line")
+        self.assertAlmostEqual(words["2."][1], words["One."][3] + 6, delta=0.5,
+                               msg="the second follows the first's margin box")
+        self.assertGreater(words["next."][2], words["1."][2],
+                           "the second footnote wraps onto the area's next line")
+        continuation = min(word[1] for word in pages[0][1] if word[2] == words["next."][2])
+        self.assertAlmostEqual(continuation, words["1."][1], delta=POSITION_TOLERANCE,
+                               msg="its next line starts at the area's content edge")
+
     def columns(self, image, matches):
         return sorted({x for y in range(image.height) for x in range(image.width)
                        if matches(image.getpixel((x, y)))})

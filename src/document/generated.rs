@@ -39,6 +39,10 @@ struct PagedValues {
     /// The page counters of the pages whose margin boxes place each running element that
     /// shows them.
     running: HashMap<PageStyleTarget, Vec<PageNumbers>>,
+    /// The inline footnotes that start an inline formatting context of their own in the
+    /// footnote area rather than continue the one of the inline footnote before them (CSS
+    /// GCPM 3 §2.3). Pagination only adds to them, so that they settle.
+    inline_footnote_starts: HashSet<ElementId>,
 }
 
 /// The page counters a copy of a running element shows: the `page` counter, the page total,
@@ -89,6 +93,9 @@ pub(crate) struct Paginated<'a> {
     pub starts: Vec<(ElementId, PageStart)>,
     /// The running element each page-margin box places, with the `page` counter it shows.
     pub running: Vec<(PageStyleTarget, i128)>,
+    /// The inline footnotes whose content pagination could not continue on the line of the
+    /// inline footnote before them.
+    pub inline_footnote_starts: HashSet<ElementId>,
 }
 
 #[derive(Default)]
@@ -279,6 +286,14 @@ impl GeneratedPass {
     pub(crate) fn bindings(&self) -> GeneratedBindings {
         self.bindings.clone()
     }
+    /// Whether the inline footnote `element` starts an inline formatting context of its own.
+    pub(crate) fn starts_inline_footnotes(&self, element: ElementId) -> bool {
+        self.bindings
+            .values
+            .paged
+            .inline_footnote_starts
+            .contains(&element)
+    }
     /// The pages starting at or inside `element`.
     pub(crate) fn page_starts(&self, element: ElementId) -> &[PageStart] {
         self.bindings
@@ -354,6 +369,7 @@ impl GeneratedReferences {
             strings,
             starts,
             running,
+            mut inline_footnote_starts,
         } = paginated;
         let mut values = HashMap::new();
         for (request, owner) in self.bindings.requests.borrow().iter() {
@@ -434,6 +450,11 @@ impl GeneratedReferences {
                 total: (!contexts.is_empty()).then_some(pages),
                 starts: page_starts,
                 running: running_pages,
+                inline_footnote_starts: {
+                    inline_footnote_starts
+                        .extend(&self.bindings.values.paged.inline_footnote_starts);
+                    inline_footnote_starts
+                },
             }),
         })
     }
