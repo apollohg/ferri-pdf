@@ -402,26 +402,99 @@ fn objects_and_iframes_render_html_svg_text_and_image_documents() {
 }
 
 #[test]
-fn embeds_without_a_plugin_display_an_indication_and_represent_nothing() {
+fn embeds_of_image_types_show_the_image_in_their_content_navigable() {
+    let svg = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 1'><rect width='2' height='1'/></svg>";
+    // HTML §4.8.6: the type attribute is consulted first, then the resource's Content-Type.
     let trace = trace(&format!(
-        "<embed src='{IMAGE}'><embed type=application/x-plugin style='width:40pt;height:20pt'><embed><embed src=missing.swf>"
+        "<embed src='{IMAGE}'>\
+         <embed src='{IMAGE}' type=application/x-plugin style='width:120pt;height:60pt'>\
+         <embed src=\"{svg}\" style='width:100pt;height:80pt'>"
     ));
+    let views = viewports(&trace);
+    let [(default, image_view), (sized, typed_view), (_, svg_view)] = views[..] else {
+        panic!(
+            "three embed viewports, got {:?}",
+            images(&trace)
+                .iter()
+                .map(|paint| paint.image.as_ref())
+                .collect::<Vec<_>>()
+        );
+    };
+    assert_eq!(
+        [default.rect.width, default.rect.height],
+        [300.0 * PIXEL, 150.0 * PIXEL],
+        "the navigable has the default object size"
+    );
+    assert_eq!(
+        [sized.rect.width, sized.rect.height],
+        [120.0, 60.0],
+        "the navigable takes the embed's dimensions"
+    );
+    for (view, label) in [(image_view, "untyped"), (typed_view, "unsupported type")] {
+        let rasters: Vec<_> = view
+            .items
+            .iter()
+            .filter_map(|item| match item {
+                DisplayItem::Image(paint) if matches!(paint.image.as_ref(), Image::Raster(_)) => {
+                    Some(paint.rect)
+                }
+                _ => None,
+            })
+            .collect();
+        let [rect] = rasters[..] else {
+            panic!("{label}: the image document shows the image once: {rasters:?}");
+        };
+        assert_eq!(
+            [rect.x, rect.y, rect.width, rect.height],
+            [
+                8.0 * PIXEL,
+                8.0 * PIXEL,
+                IMAGE_PIXELS[0] * PIXEL,
+                IMAGE_PIXELS[1] * PIXEL
+            ],
+            "{label}: the image document's body margin places the image at its natural size"
+        );
+    }
+    let [DisplayItem::Image(root)] = &svg_view.items[..] else {
+        panic!("an SVG document paints its root: {:?}", svg_view.items);
+    };
+    assert_eq!([root.rect.width, root.rect.height], [100.0, 80.0]);
+}
+
+#[test]
+fn embeds_without_a_plugin_display_an_indication_and_represent_nothing() {
+    let trace = trace(
+        "<embed type=application/x-plugin style='width:40pt;height:20pt'>\
+         <embed src='data:text/html,<p>page'>\
+         <embed src='data:text/plain,text'>\
+         <embed><embed src=''><embed src=missing.swf>",
+    );
     let embeds = images(&trace);
     let kinds: Vec<_> = embeds
         .iter()
         .map(|paint| match paint.image.as_ref() {
             Image::Svg(_) => "indication",
             Image::Transparent => "nothing",
-            _ => "other",
+            other => panic!("an embed without a plugin shows {other:?}"),
         })
         .collect();
-    assert_eq!(kinds, ["indication", "indication", "nothing", "nothing"]);
     assert_eq!(
-        [embeds[0].rect.width, embeds[0].rect.height],
+        kinds,
+        [
+            "indication",
+            "indication",
+            "indication",
+            "nothing",
+            "nothing",
+            "nothing"
+        ]
+    );
+    assert_eq!([embeds[0].rect.width, embeds[0].rect.height], [40.0, 20.0]);
+    assert_eq!(
+        [embeds[1].rect.width, embeds[1].rect.height],
         [300.0 * PIXEL, 150.0 * PIXEL],
         "embedded content has the default object size"
     );
-    assert_eq!([embeds[1].rect.width, embeds[1].rect.height], [40.0, 20.0]);
 }
 
 #[test]

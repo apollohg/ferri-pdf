@@ -97,7 +97,7 @@ pub(crate) fn resolve(
                 .map(|_| resolution.frame(element))
                 .transpose()?
                 .map(Embedded::Navigable),
-            "embed" => Some(Embedded::Image(resolution.embed(element)?)),
+            "embed" => Some(resolution.embed(element)?),
             _ => {
                 let represented = resolution.object(element)?;
                 if represented.is_some() {
@@ -125,6 +125,13 @@ fn hides_descendants(ancestor: Element<'_>, objects: &HashSet<ElementId>) -> boo
 /// A MIME type attribute's essence, or `None` when it is no valid MIME type.
 fn essence(value: &str) -> Option<String> {
     ResourceMetadata::from_content_type(value).media_type
+}
+
+/// HTML §4.8.6 "a type that a plugin supports": §2.1.6 lets built-in content handlers be
+/// plugins, and the image decoders are designated as such, so the navigable shows the image
+/// as it shows any image it is navigated to (§7.5.6).
+fn plugin_type(essence: &str) -> bool {
+    crate::images::SUPPORTED_TYPES.contains(&essence)
 }
 
 /// Types a nested navigable or image renders.
@@ -196,30 +203,52 @@ impl Resolution<'_, '_> {
         }
     }
 
-    /// HTML §4.8.6 embed element setup steps. No plugin handles any type, so a fetched or
-    /// typed embed displays the no-plugin indication and represents nothing.
-    fn embed(&mut self, element: Element<'_>) -> Result<Arc<Image>, DocumentError> {
-        let indication = match (element.attr("src"), element.attr("type")) {
-            (None, None) | (Some(""), _) => false,
-            (Some(reference), _) => match self.embedder.base.resolve(reference) {
-                Err(_) => false,
-                Ok(url) => match self
-                    .embedder
-                    .resolver
-                    .resolve_with_metadata(url.as_str(), self.embedder.base)
-                {
-                    Ok(_) => true,
-                    Err(error) => {
-                        self.unavailable(reference, error);
-                        false
-                    }
-                },
-            },
-            (None, Some(_)) => true,
+    /// HTML §4.8.6 embed element setup steps: a fetched resource of a plugin type navigates
+    /// the element's content navigable, which it then represents; any other displays the
+    /// no-plugin indication and represents nothing.
+    fn embed(&mut self, element: Element<'_>) -> Result<Embedded, DocumentError> {
+        let nothing = || Ok(Embedded::Image(Arc::new(Image::Transparent)));
+        let reference = match (element.attr("src"), element.attr("type")) {
+            (None, None) | (Some(""), _) => return nothing(),
+            (None, Some(_)) => return self.no_plugin().map(Embedded::Image),
+            (Some(reference), _) => reference,
         };
-        if !indication {
-            return Ok(Arc::new(Image::Transparent));
+        let Ok(url) = self.embedder.base.resolve(reference) else {
+            return nothing();
+        };
+        let resolved = match self
+            .embedder
+            .resolver
+            .resolve_with_metadata(url.as_str(), self.embedder.base)
+        {
+            Ok(resolved) => resolved,
+            Err(error) => {
+                self.unavailable(reference, error);
+                return nothing();
+            }
+        };
+        let declared = element.attr("type").and_then(essence);
+        if !declared.as_deref().is_some_and(plugin_type)
+            && !sniffing::supplied_type(&url, &resolved.metadata)
+                .as_deref()
+                .is_some_and(plugin_type)
+        {
+            return self.no_plugin().map(Embedded::Image);
         }
+        let navigable = self.child()?;
+        frames::load_document(
+            &url,
+            resolved,
+            navigable,
+            self.cache,
+            self.embedder.resolver,
+        )
+        .map(Embedded::Navigable)
+    }
+
+    /// HTML §4.8.6 "display an indication that no plugin could be found", shared by every
+    /// embed showing it.
+    fn no_plugin(&mut self) -> Result<Arc<Image>, DocumentError> {
         if let Some(image) = &self.no_plugin {
             return Ok(image.clone());
         }
