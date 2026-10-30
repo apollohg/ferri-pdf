@@ -4,7 +4,7 @@ use crate::style::{
     cascade::{self, Candidate, Cascaded, DeclarationContext, choose, sort},
     component::Component,
     declaration::{self, PropertyDeclaration, Specified},
-    grammar::{Descriptor, Keyword},
+    grammar::{Descriptor, Keyword, Property},
     page_parser::PageItem,
     parser::Declaration,
     stylesheet::{PAGE_AT_RULE, implemented_page_descriptor, parsed, unimplemented_descriptor},
@@ -402,6 +402,49 @@ pub(super) struct MatchedPageRules {
     descriptors: HashMap<Descriptor, Vec<Candidate<PageValue>>>,
     pub contextual_descriptors: bool,
 }
+/// The transform properties of `style` and whether each is other than `none`.
+fn transforms(style: &crate::style::Style) -> [(Property, bool); 6] {
+    [
+        (Property::Transform, !style.transform.is_empty()),
+        (Property::Translate, style.translate.is_some()),
+        (Property::Rotate, style.rotate.is_some()),
+        (Property::Scale, style.scale.is_some()),
+        (Property::OffsetPath, style.motion.active()),
+        (Property::Perspective, style.perspective.is_some()),
+    ]
+}
+/// The compositing, clipping and transform properties of the page box and whether each has
+/// an effect.
+fn page_effects(style: &crate::style::Style) -> Vec<(Property, bool)> {
+    let masks = &style.decoration.masks;
+    [
+        (Property::Opacity, style.is_translucent()),
+        (Property::Filter, style.is_filtered()),
+        (Property::BackdropFilter, style.has_backdrop_filter()),
+        (
+            Property::MixBlendMode,
+            style.mix_blend_mode != crate::paint::BlendMode::Normal,
+        ),
+        (Property::ClipPath, masks.is_clipped()),
+        (Property::MaskImage, masks.has_layers()),
+        (Property::MaskBorderSource, masks.border.is_drawn()),
+    ]
+    .into_iter()
+    .chain(transforms(style))
+    .collect()
+}
+/// CSS Page 3 §6 leaves properties beyond CSS 2.1 undefined in the page context, so a box of
+/// `at_rule` that does not paint one of `effects` rejects it rather than ignore it.
+fn unpainted_effects(at_rule: &str, effects: &[(Property, bool)]) -> Result<(), StyleError> {
+    match effects.iter().find(|(_, effective)| *effective) {
+        Some((property, _)) => Err(StyleError::Unsupported(format!(
+            "{} in {at_rule}",
+            property.name()
+        ))),
+        None => Ok(()),
+    }
+}
+
 impl Stylesheet {
     pub(crate) fn resolve_page(
         &self,
@@ -427,6 +470,11 @@ impl Stylesheet {
                 resolver,
             )?
             .0;
+        unpainted_effects(PAGE_AT_RULE, &page_effects(&style))?;
+        unpainted_effects(
+            &format!("@{}", crate::style::page_parser::FOOTNOTE_AT_RULE),
+            &transforms(&footnote),
+        )?;
         Ok(ResolvedPage {
             request,
             geometry,

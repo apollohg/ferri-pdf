@@ -169,6 +169,38 @@ fn nonfinite_page_margin_geometry_is_rejected_even_without_text() {
 }
 
 #[test]
+fn page_box_and_footnote_area_reject_effects_they_cannot_paint() {
+    for (rule, expected) in [
+        ("@page{opacity:.5}", "opacity in @page"),
+        ("@page{filter:blur(1pt)}", "filter in @page"),
+        ("@page{mix-blend-mode:multiply}", "mix-blend-mode in @page"),
+        ("@page{clip-path:inset(10%)}", "clip-path in @page"),
+        (
+            "@page{mask-image:linear-gradient(red,red)}",
+            "mask-image in @page",
+        ),
+        ("@page{rotate:10deg}", "rotate in @page"),
+        (
+            "@page{@footnote{transform:scale(2)}}",
+            "transform in @footnote",
+        ),
+        (
+            "@page{@footnote{perspective:100pt}}",
+            "perspective in @footnote",
+        ),
+    ] {
+        let html = format!("<style>{PROFILE}{rule}</style><p>Body</p>");
+        let error = render_html(&html, &local_options())
+            .err()
+            .unwrap_or_else(|| panic!("{rule} must not be accepted and ignored"));
+        assert!(
+            error.to_string().contains(expected),
+            "{rule}: expected an unsupported {expected:?} error, got {error}"
+        );
+    }
+}
+
+#[test]
 fn page_counters_share_predefined_styles_without_marker_punctuation() {
     const PAGE_COUNT: usize = 28;
     let body = (0..PAGE_COUNT).map(|_| "<p>Body</p>").collect::<String>();

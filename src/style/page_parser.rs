@@ -21,7 +21,7 @@ pub(super) enum PageArea {
     Margin(MarginLocation),
     Footnote,
 }
-const FOOTNOTE_AT_RULE: &str = "footnote";
+pub(super) const FOOTNOTE_AT_RULE: &str = "footnote";
 struct PageParser<'a> {
     base: &'a ResourceBase,
     diagnostics: &'a RefCell<Vec<StyleDiagnostic>>,
