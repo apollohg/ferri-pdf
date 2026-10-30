@@ -243,6 +243,35 @@ fn signed_oblique_ranges_respect_the_eleven_degree_preference_boundary() {
 }
 
 #[test]
+fn subnormal_oblique_ranges_match_an_oblique_request() {
+    const SUBNORMAL_ANGLE: f32 = 1e-40;
+    let mut book = FontBook::default();
+    let families = [FontFamily::Named("Subnormal slant".into())];
+    let id = book
+        .register(
+            FontDescriptor {
+                family: "Subnormal slant".into(),
+                weight: FontRange::single(FontWeight::NORMAL),
+                width: FontRange::single(FontWidth::NORMAL),
+                style: FontFaceStyle::Oblique(FontRange::single(
+                    FontSlant::new(SUBNORMAL_ANGLE).unwrap(),
+                )),
+            },
+            FONT.to_vec(),
+        )
+        .unwrap();
+    let selection = FontSelection {
+        slant: FontSlant::new(10.0).unwrap(),
+        ..FontSelection::new(FontWeight::NORMAL, FontStyle::Oblique)
+    };
+    assert_eq!(
+        book.candidates(&families, selection).first(),
+        Some(&id),
+        "a face whose oblique angle is below the smallest normal float must stay a candidate"
+    );
+}
+
+#[test]
 fn caseless_family_aliases_do_not_switch_descriptors_after_missing_glyphs() {
     use crate::fonts::{FontError, GlyphMatch};
     const LIMITED: &[u8] = include_bytes!("../../../tests/fixtures/fonts/MetricGlyphTest.ttf");

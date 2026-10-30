@@ -144,7 +144,8 @@ pub(super) fn style_match(face: FontFaceStyle, requested: FontSelection) -> (Ran
         let (rank, point) = if italic {
             (Rank(4, 0.0), 0.0)
         } else if max > 0.0 {
-            let point = target.clamp(min.max(f32::MIN_POSITIVE), max);
+            // A subnormal maximum bounds the positive slants below the smallest normal one.
+            let point = target.clamp(min.max(f32::MIN_POSITIVE).min(max), max);
             let group = if point == target {
                 0
             } else if (target >= FontSlant::ITALIC_MATCH.value()) == (point > target) {
