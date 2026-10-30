@@ -59,6 +59,28 @@ class FormControlsPdf(unittest.TestCase):
                        (ORIGIN + 30, ORIGIN + 10)),
             (BLUE, WHITE), 'a value two regions from the optimum is drawn in another colour')
 
+    def test_controls_with_their_own_vertical_writing_mode_run_top_to_bottom(self):
+        # HTML §15.5.14–15: a 1em by 10em bar, its start at the top unless direction is rtl.
+        css = ('progress,meter{display:block;margin:0;font-size:10pt;accent-color:rgb(0,0,255);'
+               'writing-mode:vertical-lr}')
+        cases = (('<progress value=0.2></progress>', 'progress', 100),
+                 ('<meter value=0.2></meter>', 'meter', 50))
+        for body, name, length in cases:
+            near_start, near_end = (ORIGIN + 5, ORIGIN + 3), (ORIGIN + 5, ORIGIN + length - 3)
+            self.assertEqual(self.pixel(css, body, near_start), BLUE,
+                             f'a vertical {name} fills from its top')
+            self.assertEqual(self.pixel(css, body, (ORIGIN + 5, ORIGIN + length + 3)), WHITE,
+                             f'a vertical {name} is {length}pt tall and no taller')
+            self.assertEqual(self.pixel(css, body, (ORIGIN + 13, ORIGIN + 3)), WHITE,
+                             f'a vertical {name} is 10pt wide')
+            self.assertNotEqual(self.pixel(css, body, near_end), BLUE,
+                                f'a vertical {name} at 20% leaves its bottom unfilled')
+            rtl = css + f'{name}{{direction:rtl}}'
+            self.assertEqual(self.pixel(rtl, body, near_end), BLUE,
+                             f'a right-to-left vertical {name} fills from its bottom')
+            self.assertNotEqual(self.pixel(rtl, body, near_start), BLUE,
+                                f'a right-to-left vertical {name} leaves its top unfilled')
+
     def test_fieldset_border_leaves_a_gap_behind_the_rendered_legend(self):
         css = ('fieldset{margin:0;padding:0 20pt;border:4pt solid rgb(255,0,0)}'
                'legend{padding:0;margin:0;font-size:20pt;line-height:20pt;color:white}')

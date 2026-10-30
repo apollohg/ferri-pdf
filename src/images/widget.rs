@@ -78,6 +78,15 @@ pub(crate) enum WidgetDrawing {
     /// The button of a drop-down box (HTML §15.5.16).
     DropDownArrow,
 }
+impl WidgetDrawing {
+    /// Sliders, gauges and progress bars run along the control's inline axis.
+    pub(crate) fn runs_inline(&self) -> bool {
+        matches!(
+            self,
+            Self::Range { .. } | Self::Meter { .. } | Self::Progress { .. }
+        )
+    }
+}
 
 /// A widget's native drawing and its natural size in CSS pixels.
 #[derive(Clone, Debug, PartialEq)]
@@ -85,8 +94,12 @@ pub struct Widget {
     pub(crate) natural: [f32; 2],
     pub(crate) drawing: WidgetDrawing,
     pub(crate) palette: WidgetPalette,
-    /// The lowest value is on the right (HTML §15.5.8, §15.5.14, §15.5.15).
+    /// The lowest value is on the right, or at the bottom of a vertical control (HTML
+    /// §15.5.8, §15.5.14, §15.5.15).
     pub(crate) rtl: bool,
+    /// The control has a vertical writing mode, so a slider, gauge or progress bar runs from
+    /// top to bottom and `natural` is its physical, transposed size.
+    pub(crate) vertical: bool,
     pub(crate) disabled: bool,
 }
 
@@ -107,6 +120,11 @@ impl Widget {
 
     /// The drawing at a `size` box in CSS pixels, as an SVG image filling it.
     pub(crate) fn render(&self, size: [f32; 2]) -> Result<Arc<Image>, ImageError> {
+        let transposed = self.vertical && self.drawing.runs_inline();
+        let physical = size;
+        // A vertical control draws along its inline axis, then turns it clockwise to run
+        // down the box.
+        let size = if transposed { [size[1], size[0]] } else { size };
         let [width, height] = size;
         let mut body = String::new();
         let palette = &self.palette;
@@ -233,7 +251,11 @@ impl Widget {
                 body = Self::centred_glyph(&body, ARROW_BOX);
             }
         }
+        if transposed {
+            body = format!(r#"<g transform="matrix(0 1 -1 0 {height} 0)">{body}</g>"#);
+        }
         let opacity = if self.disabled { DISABLED_OPACITY } else { 1.0 };
+        let [width, height] = physical;
         let svg = format!(
             r#"<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}"><g opacity="{opacity}">{body}</g></svg>"#
         );

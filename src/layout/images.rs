@@ -27,12 +27,7 @@ fn density_corrected(block: BlockSource<'_>, available_width: f32) -> [f32; 2] {
         .unwrap()
         .pixel_size(available_width / scale)
         .map(|value| value * scale);
-    if block.layout_flow().writing_mode.vertical()
-        && !matches!(
-            block.image().unwrap().as_ref(),
-            crate::images::Image::Widget(_)
-        )
-    {
+    if block.layout_flow().writing_mode.vertical() {
         size.swap(0, 1);
     }
     size
@@ -63,9 +58,7 @@ impl Natural {
             .flatten()
             .filter(|ratio| ratio.is_finite() && *ratio > 0.0)
             .map(|ratio| {
-                if block.layout_flow().writing_mode.vertical()
-                    && !matches!(image.as_ref(), crate::images::Image::Widget(_))
-                {
+                if block.layout_flow().writing_mode.vertical() {
                     ratio.recip()
                 } else {
                     ratio
@@ -276,9 +269,14 @@ pub(super) fn measure<'a>(
             measurer.text.resolver(),
             &measurer.work,
         )?,
-        crate::images::Image::Widget(widget) => {
-            widget.render([width, height].map(|side| side / POINTS_PER_PIXEL))?
-        }
+        crate::images::Image::Widget(widget) => widget.render(
+            if block.layout_flow().writing_mode.vertical() {
+                [height, width]
+            } else {
+                [width, height]
+            }
+            .map(|side| side / POINTS_PER_PIXEL),
+        )?,
         _ => block.image().unwrap().clone(),
     };
     // A nested navigable's viewport and other content without natural dimensions fill the
@@ -373,7 +371,6 @@ pub(super) fn measure<'a>(
             paint,
             height,
             visible: style.visibility.is_visible() && !style.skips_contents(),
-            rotate: widget && block.layout_flow().writing_mode.vertical(),
         }],
         paint: measurer.box_paint(block, geometry),
         navigation: block.navigation(),

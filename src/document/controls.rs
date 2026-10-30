@@ -292,11 +292,17 @@ pub(super) fn content<'a>(
 impl<'b> Builder<'b, '_> {
     fn widget(&self, size_em: [f32; 2], drawing: WidgetDrawing) -> Arc<Image> {
         let scheme = self.sheet.used_color_scheme(&self.style.color_scheme);
+        let vertical = self.style.writing_mode.vertical();
+        let mut natural = size_em.map(|em| em * self.style.size / POINTS_PER_PIXEL);
+        if vertical && drawing.runs_inline() {
+            natural.reverse();
+        }
         Arc::new(Image::Widget(Arc::new(Widget {
-            natural: size_em.map(|em| em * self.style.size / POINTS_PER_PIXEL),
+            natural,
             drawing,
             palette: crate::style::widget_palette(self.style.accent_color, scheme),
             rtl: self.style.rtl,
+            vertical,
             disabled: self.element.initial_state().disabled == Some(true),
         })))
     }

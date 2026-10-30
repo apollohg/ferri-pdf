@@ -3357,8 +3357,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     paint,
                     height,
                     visible,
-                    rotate,
-                } => self.place_image(paint, height, visible, rotate),
+                } => self.place_image(paint, height, visible),
                 FlowItem::Block(child) | FlowItem::Spanner(child) => {
                     let child = if ready {
                         *child

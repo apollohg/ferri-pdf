@@ -511,7 +511,6 @@ pub(super) enum FlowItem<'a> {
         paint: crate::graphics::ImagePaint,
         visible: bool,
         height: f32,
-        rotate: bool,
     },
     Block(Box<MeasuredBlock<'a>>),
     Paragraph(MeasuredParagraph<'a>),

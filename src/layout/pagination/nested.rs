@@ -68,7 +68,6 @@ impl<'a> Paginator<'a, '_, 'a> {
         mut paint: crate::graphics::ImagePaint,
         height: f32,
         visible: bool,
-        rotate: bool,
     ) {
         self.flush_margin();
         let mut normal_rect = paint.visible_rect();
@@ -83,16 +82,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             && paint.rect.intersects(paint.visible_rect())
         {
             let scope = self.inline_key();
-            let item = if rotate {
-                DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
-                    matrix: [1.0, 0.0, 0.0, 1.0, 0.0, 0.0],
-                    area: paint.rect,
-                    items: vec![DisplayItem::Image(paint)],
-                    lines: Vec::new(),
-                }))
-            } else {
-                DisplayItem::Image(paint)
-            };
+            let item = DisplayItem::Image(paint);
             self.foreground[self.page].push(ScopedPaint {
                 native: None,
                 visible,
