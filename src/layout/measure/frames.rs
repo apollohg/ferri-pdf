@@ -28,7 +28,8 @@ layout_failure!(
     crate::text::TextError,
     crate::table::TableError,
     crate::flex::FlexError,
-    crate::grid::GridError
+    crate::grid::GridError,
+    crate::layout::work::Exhausted,
 );
 
 #[derive(Clone, Copy, Hash, PartialEq, Eq)]

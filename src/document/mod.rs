@@ -34,7 +34,8 @@ use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 pub(crate) use counters::CounterSnapshot;
 pub(crate) use element_images::{ElementMeasurements, ElementState, ShapeSamples};
 pub(crate) use formatting::{
-    BlockBox, BlockContent, Footnotes, InitialLetterBox, PageBox, PageFootnoteArea, PageMarginBox,
+    BlockBox, BlockContent, Footnotes, InitialLetterBox, MAX_FORMATTING_WORK, PageBox,
+    PageFootnoteArea, PageMarginBox,
 };
 pub(crate) use frames::{Frame, FrameDocument};
 pub(crate) use generated::{GeneratedValues, InlineFootnotePlacement, PageStart, Paginated};
@@ -62,6 +63,14 @@ pub enum DocumentError {
     Formatting(String),
     #[error("formatted inline text exceeds {limit} bytes")]
     TextExpansionLimit { limit: usize },
+    #[error("formatting exceeds {limit} work units")]
+    FormattingWorkLimit { limit: usize },
+}
+
+impl From<crate::layout::work::Exhausted> for DocumentError {
+    fn from(crate::layout::work::Exhausted { limit }: crate::layout::work::Exhausted) -> Self {
+        Self::FormattingWorkLimit { limit }
+    }
 }
 
 /// Recoverable input/source diagnostics retained with the rendering result.
@@ -160,6 +169,7 @@ impl FormattingSource {
                 images,
                 elements,
                 definitions,
+                work_limit: MAX_FORMATTING_WORK,
             },
             styles,
             &self.base,
@@ -200,6 +210,31 @@ impl StyledDocument {
         resolver: &dyn ResourceResolver,
     ) -> Result<Self, DocumentError> {
         Self::parse_with_origins(html, base, additional, &[], resolver)
+    }
+
+    #[cfg(test)]
+    pub(crate) fn parse_with_work_limit(
+        html: &str,
+        work_limit: usize,
+    ) -> Result<Self, DocumentError> {
+        Self::from_input(
+            HtmlInput {
+                tree: DocumentTree::parse(html)?,
+                encoding: "UTF-8".into(),
+                diagnostics: Vec::new(),
+            },
+            &ParseOptions {
+                base: &crate::resources::ResourceBase::default(),
+                additional: &[],
+                user: &[],
+                settings: &PrintSettings::default(),
+                capture_fragment_targets: false,
+                presentation: crate::style::Presentation::Paged,
+                ancestors: &[],
+            },
+            &crate::resources::FileResolver::default(),
+            work_limit,
+        )
     }
 
     #[cfg(test)]
@@ -257,6 +292,7 @@ impl StyledDocument {
             },
             options,
             resolver,
+            MAX_FORMATTING_WORK,
         )
     }
 
@@ -276,6 +312,7 @@ impl StyledDocument {
             },
             options,
             resolver,
+            MAX_FORMATTING_WORK,
         )
     }
 
@@ -325,6 +362,7 @@ impl StyledDocument {
             },
             options,
             resolver,
+            MAX_FORMATTING_WORK,
         )
     }
 
@@ -332,6 +370,7 @@ impl StyledDocument {
         input: HtmlInput,
         options: &ParseOptions<'_>,
         resolver: &dyn ResourceResolver,
+        work_limit: usize,
     ) -> Result<Self, DocumentError> {
         let ParseOptions {
             base,
@@ -402,6 +441,7 @@ impl StyledDocument {
                 images: &images,
                 elements: &ElementMeasurements::default(),
                 definitions: &svg::SvgDefinitions::default(),
+                work_limit,
             },
             &mut styles,
             base,

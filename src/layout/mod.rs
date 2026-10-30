@@ -30,7 +30,7 @@ mod sticky;
 mod strings;
 mod tables;
 mod viewport;
-mod work;
+pub(crate) mod work;
 mod writing;
 use crate::document::StyledDocument;
 use crate::fonts::FontDescriptor;

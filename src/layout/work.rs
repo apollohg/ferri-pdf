@@ -1,10 +1,23 @@
 use crate::layout::LayoutError;
 use std::{cell::Cell, rc::Rc};
 
+/// A work budget shared by every clone, each charging the units of work it does.
 #[derive(Clone)]
-pub(super) struct Budget {
+pub(crate) struct Budget {
     limit: usize,
     remaining: Rc<Cell<Option<usize>>>,
+}
+
+/// A budget of `limit` units ran out.
+#[derive(Debug)]
+pub(crate) struct Exhausted {
+    pub(crate) limit: usize,
+}
+
+impl From<Exhausted> for LayoutError {
+    fn from(Exhausted { limit }: Exhausted) -> Self {
+        Self::WorkLimit { limit }
+    }
 }
 
 impl Budget {
@@ -15,15 +28,13 @@ impl Budget {
         }
     }
 
-    pub(crate) fn spend(&self, units: usize) -> Result<(), LayoutError> {
+    pub(crate) fn spend(&self, units: usize) -> Result<(), Exhausted> {
         let remaining = self
             .remaining
             .get()
             .and_then(|left| left.checked_sub(units));
         self.remaining.set(remaining);
-        remaining
-            .map(|_| ())
-            .ok_or(LayoutError::WorkLimit { limit: self.limit })
+        remaining.map(|_| ()).ok_or(Exhausted { limit: self.limit })
     }
 }
 
@@ -65,19 +76,10 @@ mod tests {
         let budget = Budget::new(8);
         budget.spend(3).unwrap();
         budget.spend(5).unwrap();
-        assert!(matches!(
-            budget.spend(1),
-            Err(LayoutError::WorkLimit { limit: 8 })
-        ));
-        assert!(matches!(
-            budget.spend(0),
-            Err(LayoutError::WorkLimit { limit: 8 })
-        ));
+        assert!(matches!(budget.spend(1), Err(Exhausted { limit: 8 })));
+        assert!(matches!(budget.spend(0), Err(Exhausted { limit: 8 })));
         let budget = Budget::new(usize::MAX - 1);
-        assert!(matches!(
-            budget.spend(usize::MAX),
-            Err(LayoutError::WorkLimit { .. })
-        ));
+        assert!(matches!(budget.spend(usize::MAX), Err(Exhausted { .. })));
         assert!(budget.spend(1).is_err());
     }
 

@@ -5,6 +5,11 @@ use crate::graphics::BoxDecoration;
 use crate::style::{Display, GeneratedPseudoElement, PseudoElement, Style, StyleError, Stylesheet};
 
 pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
+/// Formatting-work units per formatting of a document, shared by the subtree copies it formats
+/// again. Units count formatted text bytes and, `ELEMENT_WORK` each, formatted elements.
+pub(crate) const MAX_FORMATTING_WORK: usize = 100_000_000;
+/// The work units of formatting an element, whose styling costs far more than a text byte.
+const ELEMENT_WORK: usize = 64;
 const DEFAULT_DENSITY: f32 = 1.0;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
 
@@ -776,6 +781,8 @@ pub(crate) struct Traversal<'a> {
     /// The nearest scroll container around the subtree a copy formats.
     marker_scroller: Option<MarkerScroller>,
     marker_groups: crate::document::scroll_markers::ScrollMarkerGroups,
+    /// The document's formatting work, which every copy charges.
+    work: crate::layout::work::Budget,
 }
 
 /// A scroll container, and the display of the `::scroll-marker-group` its scroll markers go
@@ -873,6 +880,7 @@ impl Traversal<'_> {
             marker_prepass: false,
             marker_scroller: None,
             marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
+            work: self.work.clone(),
         }
     }
     /// The state formatting a copy of the subtree starting here: it continues the document's
@@ -902,6 +910,7 @@ impl Traversal<'_> {
             marker_prepass: false,
             marker_scroller: None,
             marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
+            work: self.work.clone(),
         }
     }
 }
@@ -3268,6 +3277,7 @@ fn block<'a>(
         let index = frames.len() - 1;
         let mut block_index = *blocks.last().unwrap();
         if !frames[index].started {
+            traversal.work.spend(ELEMENT_WORK)?;
             // The atomic inlines of a block's first formatted line inherit through
             // `::first-line`, but only layout finds the line each one lies on.
             let first_line = match (blocks.len().checked_sub(2), &frames[index].block) {
@@ -3622,6 +3632,7 @@ fn block<'a>(
                 .iter()
                 .all(|frame| frame.style.display == Display::Contents);
             if let Some(text) = node.value().as_text() {
+                traversal.work.spend(text.len().max(1))?;
                 let (mut builder, style) =
                     active_builder(&mut frames, block_index, sheet, traversal, resources);
                 if block_child {
@@ -4136,6 +4147,7 @@ pub(crate) struct Input<'a> {
     /// the SVG content that formatting serialized.
     pub elements: &'a crate::document::element_images::ElementMeasurements,
     pub definitions: &'a crate::document::svg::SvgDefinitions,
+    pub work_limit: usize,
 }
 
 /// Formats the document. The root's style, its first page and its boxes are each built by a
@@ -4348,6 +4360,7 @@ fn format_root(
         marker_prepass: false,
         marker_scroller: None,
         marker_groups: crate::document::scroll_markers::ScrollMarkerGroups::default(),
+        work: crate::layout::work::Budget::new(input.work_limit),
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
         .then(|| html.body_element().map(Element::id))

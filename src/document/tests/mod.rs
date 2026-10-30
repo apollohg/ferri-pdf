@@ -1,3 +1,4 @@
+mod formatting_work;
 mod navigation;
 mod ruby;
 mod scroll_markers;
