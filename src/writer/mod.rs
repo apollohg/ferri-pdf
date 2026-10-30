@@ -1,6 +1,7 @@
 //! PDF serialization of ordered display lists; no document parsing or layout.
 mod backdrops;
 mod backgrounds;
+mod bounds;
 mod cross_fade;
 mod display;
 mod filters;
@@ -9,6 +10,7 @@ mod masks;
 mod navigation;
 mod painting;
 mod pixels;
+mod projection;
 mod raster;
 pub(crate) use raster::rendering_alpha;
 mod shadows;
@@ -71,6 +73,10 @@ pub enum PdfError {
     /// which composite it in pixels, may use it.
     #[error("additive compositing outside a display-list group")]
     VectorAdditive,
+    /// The backdrop that additive compositing reads lies outside the plane of a perspective
+    /// projection, which its group renders in.
+    #[error("plus-darker or plus-lighter compositing inside a perspective projection")]
+    ProjectedAdditive,
     #[error("mask or filter effect has no reference box")]
     UnplacedEffect,
     #[error("a background-clip: text layer has no text area")]

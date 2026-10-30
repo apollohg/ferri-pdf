@@ -317,7 +317,7 @@ impl<I> BoxDecoration<I> {
                 .iter()
                 .any(|b| b.used_width() > 0.0 && b.color.alpha > 0.0)
     }
-    fn has_shadows(&self) -> bool {
+    pub(crate) fn has_shadows(&self) -> bool {
         self.shadows.iter().any(|shadow| shadow.color.alpha > 0.0)
     }
     /// Replaces the `url()` background layers and border image source with loaded images.
@@ -681,6 +681,19 @@ impl<I> BoxPaint<I> {
                     .iter()
                     .zip(self.decoration.borders)
                     .any(|(width, border)| *width > 0.0 && border.color.alpha > 0.0))
+    }
+    /// A bound on what the fragment paints: its border box, outer shadows, outline and border
+    /// image.
+    pub(crate) fn ink(&self) -> Rect
+    where
+        I: Clone,
+    {
+        self.shadows(false)
+            .into_iter()
+            .map(|shadow| shadow.bounds)
+            .chain(self.outline().map(|outline| outline.rect))
+            .chain(self.border_image_bounds())
+            .fold(self.rect, Rect::union)
     }
     /// This fragment's outline as a box whose uniform border is the outline (CSS UI 4 §3):
     /// outside the border box by `outline-offset`, around each fragment on its own, and

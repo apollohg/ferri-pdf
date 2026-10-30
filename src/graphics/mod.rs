@@ -7,7 +7,7 @@ pub(crate) use crate::paint::{
 pub use crate::paint::{
     BlendMode, Border, BorderStyle, Clip, ClipBounds, Color, Contour, CornerShape, DecorationLine,
     DecorationPaint, DecorationStyle, Fill, FilterFunction, INLINE_EDGES, LengthPercentage,
-    MaskComposite, MaskMode, Masks, Outline, OutlineStyle, Point, Radii, Rect, Segment,
+    MaskComposite, MaskMode, Masks, Outline, OutlineStyle, Point, Projection, Radii, Rect, Segment,
     ShadowPaint, ShadowShape, Shape,
 };
 use serde::Serialize;
@@ -36,6 +36,9 @@ pub enum DisplayItem {
     PushClip(Clip),
     /// Transforms later items by affine `[a, b, c, d, e, f]` until the matching `Pop`.
     PushTransform([f32; 6]),
+    /// Projects later items until the matching `Pop` (CSS Transforms 2 §4.2): a perspective
+    /// whose `w` varies across them, which no PDF content matrix expresses.
+    PushProjection(Projection),
     /// Composites later items as one isolated group with this constant alpha until the
     /// matching `Pop`.
     PushOpacity(f32),

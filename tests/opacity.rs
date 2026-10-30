@@ -34,6 +34,7 @@ fn effect_stacks(trace: &LayoutTrace, page: usize) -> Vec<(String, Vec<String>)>
             DisplayItem::PushMask(mask) => stack.push(format!("M{}", mask.fragments.len())),
             DisplayItem::PushClip(_) => stack.push("C".into()),
             DisplayItem::PushTransform(_) => stack.push("T".into()),
+            DisplayItem::PushProjection(_) => stack.push("P".into()),
             DisplayItem::Pop => {
                 stack.pop().expect("every pop closes a push");
             }

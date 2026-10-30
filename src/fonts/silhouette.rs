@@ -45,6 +45,28 @@ impl<'a> Silhouettes<'a> {
         }
         Some(Self { face })
     }
+    /// The box `glyph`'s outline covers, in em with y up, or `None` where colour layers,
+    /// bitmaps or SVG documents may paint beyond it. An empty outline covers its origin.
+    pub(crate) fn outline_box(&self, glyph: u32) -> Option<[f32; 4]> {
+        let tables = self.face.tables();
+        if tables.colr.is_some()
+            || tables.sbix.is_some()
+            || tables.cbdt.is_some()
+            || tables.svg.is_some()
+        {
+            return None;
+        }
+        let units = self.units_per_em();
+        let id = GlyphId(u16::try_from(glyph).ok()?);
+        Some(
+            self.face
+                .outline_glyph(id, &mut PathBuilder::default())
+                .map_or([0.0; 4], |bounds| {
+                    [bounds.x_min, bounds.y_min, bounds.x_max, bounds.y_max]
+                        .map(|value| f32::from(value) / units)
+                }),
+        )
+    }
     pub(crate) fn units_per_em(&self) -> f32 {
         f32::from(self.face.units_per_em())
     }

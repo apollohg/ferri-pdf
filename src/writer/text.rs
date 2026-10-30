@@ -1,4 +1,5 @@
 use crate::fonts::{FontBook, FontId};
+use crate::graphics::Projection;
 use crate::layout::TextLine;
 use crate::text::{GlyphRun, PositionedGlyph};
 use crate::writer::PdfError;
@@ -110,13 +111,31 @@ impl<'a> TextWriter<'a> {
         line: &TextLine,
         surface: &mut Surface<'_>,
     ) -> Result<(), PdfError> {
+        self.draw_line(line, Plane::Flat, surface)
+    }
+    /// Draws `line` under `projection`, each cluster of glyphs through the projection's tangent
+    /// at the cluster's ink centre; the line's runs must all have clusters.
+    pub(crate) fn draw_projected(
+        &mut self,
+        line: &TextLine,
+        projection: &Projection,
+        surface: &mut Surface<'_>,
+    ) -> Result<(), PdfError> {
+        self.draw_line(line, Plane::Projected(projection), surface)
+    }
+    fn draw_line(
+        &mut self,
+        line: &TextLine,
+        plane: Plane<'_>,
+        surface: &mut Surface<'_>,
+    ) -> Result<(), PdfError> {
         let origin = [line.x, line.baseline];
         if line.runs.iter().any(|run| run.rtl || run.has_bidi_scopes()) {
             surface.with_actual_text(&line.text, |surface| {
-                self.draw_runs(&line.runs, origin, Paint::Text, surface)
+                self.draw_runs(&line.runs, origin, Paint::Text, plane, surface)
             })
         } else {
-            self.draw_runs(&line.runs, origin, Paint::Text, surface)
+            self.draw_runs(&line.runs, origin, Paint::Text, plane, surface)
         }
     }
     /// The outlines of `runs` placed from their line's left edge and baseline `origin`, with
@@ -127,7 +146,24 @@ impl<'a> TextWriter<'a> {
         origin: [f32; 2],
         surface: &mut Surface<'_>,
     ) -> Result<(), PdfError> {
-        self.draw_runs(runs, origin, Paint::Silhouette, surface)
+        self.draw_runs(runs, origin, Paint::Silhouette, Plane::Flat, surface)
+    }
+    /// The clusters of `run` drawn from `pen` on a line from `origin`, bounded by their glyphs'
+    /// outlines where the face has no colour glyphs.
+    pub(crate) fn clusters(
+        &self,
+        run: &GlyphRun,
+        origin: [f32; 2],
+        pen: [f32; 2],
+    ) -> Result<Option<Vec<crate::text::Cluster>>, PdfError> {
+        let face = self
+            .fonts
+            .face(run.font_id)
+            .ok_or(PdfError::InvalidFontId(run.font_id))?;
+        let data = face.data().ok_or(PdfError::InvalidFont)?;
+        let outlines =
+            crate::fonts::Silhouettes::new(data, &run.variations).ok_or(PdfError::InvalidFont)?;
+        Ok(run.clusters(origin, pen, |glyph| outlines.outline_box(glyph)))
     }
     fn font(&mut self, run: &GlyphRun) -> Result<Font, PdfError> {
         let palette = run
@@ -177,6 +213,7 @@ impl<'a> TextWriter<'a> {
         runs: &[GlyphRun],
         origin: [f32; 2],
         paint: Paint,
+        plane: Plane<'_>,
         surface: &mut Surface<'_>,
     ) -> Result<(), PdfError> {
         let mut glyphs = Vec::new();
@@ -212,13 +249,41 @@ impl<'a> TextWriter<'a> {
                     ));
                 }
                 let shear = run.shear(y);
-                if let Some([a, b, c, d, e, f]) = shear {
-                    surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
-                }
-                let pen = Point::from_xy(x, y);
-                paint_glyphs(surface, run, pen, &glyphs, &font, paint)?;
-                if shear.is_some() {
-                    surface.pop();
+                let sheared =
+                    |surface: &mut Surface<'_>, pen: [f32; 2], glyphs: &[PdfGlyph<'_>]| {
+                        if let Some([a, b, c, d, e, f]) = shear {
+                            surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
+                        }
+                        let drawn = paint_glyphs(
+                            surface,
+                            run,
+                            Point::from_xy(pen[0], pen[1]),
+                            glyphs,
+                            &font,
+                            paint,
+                        );
+                        if shear.is_some() {
+                            surface.pop();
+                        }
+                        drawn
+                    };
+                match plane {
+                    Plane::Flat => sheared(surface, [x, y], &glyphs)?,
+                    Plane::Projected(projection) => {
+                        for cluster in self
+                            .clusters(run, origin, [x, y])?
+                            .ok_or(PdfError::InvalidGeometry)?
+                        {
+                            let ink = cluster.ink;
+                            let centre = [ink.x + ink.width / 2.0, ink.y + ink.height / 2.0];
+                            let [a, b, c, d, e, f] =
+                                crate::paint::projection::tangent(*projection, centre);
+                            surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
+                            let drawn = sheared(surface, cluster.pen, &glyphs[cluster.glyphs]);
+                            surface.pop();
+                            drawn?;
+                        }
+                    }
                 }
                 if oriented {
                     surface.pop();
@@ -230,7 +295,10 @@ impl<'a> TextWriter<'a> {
                 } else {
                     Paint::Annotation
                 };
-                self.draw_runs(&run.marks, origin, marks, surface)?;
+                self.draw_runs(&run.marks, origin, marks, plane, surface)?;
+            }
+            if matches!(plane, Plane::Projected(_)) && !run.mark_shapes.is_empty() {
+                return Err(PdfError::InvalidGeometry);
             }
             for mark in &run.mark_shapes {
                 let color = if paint == Paint::Silhouette {
@@ -249,6 +317,13 @@ impl<'a> TextWriter<'a> {
         }
         Ok(())
     }
+}
+
+/// Where glyphs draw: in the surface's plane, or projected onto it cluster by cluster.
+#[derive(Clone, Copy)]
+enum Plane<'p> {
+    Flat,
+    Projected(&'p Projection),
 }
 
 #[derive(Clone, Copy, PartialEq, Eq)]

@@ -314,6 +314,15 @@ fn shape_line(
     Ok(result)
 }
 
+/// Consecutive glyphs of a run that map to one stretch of its text, drawn as a unit.
+pub(crate) struct Cluster {
+    pub glyphs: Range<usize>,
+    /// The pen position of the first glyph.
+    pub pen: [f32; 2],
+    /// A bound on the cluster's ink, within the face's global glyph box.
+    pub ink: crate::graphics::Rect,
+}
+
 #[derive(Clone)]
 pub(crate) struct Line {
     /// An ignored empty line box under CSS 2.1 §9.4.2.
@@ -503,6 +512,56 @@ impl GlyphRun {
             width: right - left,
             height: bottom - top,
         }
+    }
+    /// The clusters of glyphs sharing one stretch of the run's text, drawn from `pen`, one of
+    /// its `copies` on a line whose left edge and baseline are `origin`. `outline` gives the
+    /// box a glyph's outline covers, in em with y up, or `None` where only the face's global
+    /// glyph box bounds its ink. `None` for runs whose glyphs are turned or scaled, or have no
+    /// ink bounds.
+    pub(crate) fn clusters(
+        &self,
+        origin: [f32; 2],
+        pen: [f32; 2],
+        outline: impl Fn(u32) -> Option<[f32; 4]>,
+    ) -> Option<Vec<Cluster>> {
+        if self.orientation != GlyphOrientation::Horizontal || self.inline_scale != 1.0 {
+            return None;
+        }
+        let global = self.ink_bounds?;
+        let size = self.font_size;
+        let [low, high] = self.ink_sides.map(|side| side * size);
+        let mut clusters: Vec<Cluster> = Vec::new();
+        let mut advance = pen[0];
+        for (index, glyph) in self.glyphs.iter().enumerate() {
+            let left = advance + glyph.x_offset * size;
+            let width = glyph.advance(size);
+            let (horizontal, vertical) = match outline(glyph.id) {
+                Some([x_min, y_min, x_max, y_max]) => (
+                    [left + x_min * size, left + x_max * size],
+                    [
+                        (glyph.y_offset - y_max) * size,
+                        (glyph.y_offset - y_min) * size,
+                    ],
+                ),
+                None => ([left + low.min(0.0), left + high.max(width)], global),
+            };
+            let ink = self.synthesized_ink(horizontal.map(|x| x - origin[0]), vertical, origin);
+            match clusters.last_mut() {
+                Some(cluster)
+                    if self.glyphs[cluster.glyphs.start].text_range == glyph.text_range =>
+                {
+                    cluster.glyphs.end = index + 1;
+                    cluster.ink = cluster.ink.union(ink);
+                }
+                _ => clusters.push(Cluster {
+                    glyphs: index..index + 1,
+                    pen: [advance, pen[1]],
+                    ink,
+                }),
+            }
+            advance += width;
+        }
+        Some(clusters)
     }
     /// The run followed by its emphasis marks.
     pub(crate) fn with_marks(&self) -> impl Iterator<Item = &Self> {

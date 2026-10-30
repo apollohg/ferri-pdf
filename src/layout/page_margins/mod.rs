@@ -577,7 +577,9 @@ fn text_flow(items: &[DisplayItem], lines: &[TextLine], area: Rect) -> FlowPaint
                     ..text_flow(&frame.items, &frame.lines, frame.area)
                 })));
             }
-            DisplayItem::PushTransform(_) | DisplayItem::Pop => flow.items.push(item.clone()),
+            DisplayItem::PushTransform(_) | DisplayItem::PushProjection(_) | DisplayItem::Pop => {
+                flow.items.push(item.clone());
+            }
             DisplayItem::Image(_) => {}
             DisplayItem::Box(_)
             | DisplayItem::TextShadow(_)

@@ -1,6 +1,6 @@
 //! CSS Transforms 1/2 functions and properties, composed in 3D and projected to 2D affine
 //! matrices for print.
-use crate::paint::{BoxAreas, Position, PositionComponent, Rect};
+use crate::paint::{BoxAreas, Position, PositionComponent, Projection, Rect, projection::corners};
 use crate::style::{
     LengthPercentage, POINTS_PER_PIXEL, Style, StyleError,
     box_values::{length_percentage, unsupported},
@@ -18,7 +18,7 @@ pub(crate) type Matrix = [f32; 6];
 pub(crate) type Matrix3d = [f32; 16];
 /// A box that projects behind the viewer or turns its hidden back face towards them is not
 /// rendered: it collapses to a point, which paints nothing.
-pub(crate) const NOT_RENDERED: Matrix = [0.0; 6];
+const NOT_RENDERED: Projection = [0.0; 9];
 const IDENTITY: Matrix3d = [
     1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
 ];
@@ -526,42 +526,43 @@ impl Parent3d {
     }
 }
 
-fn corners(rect: Rect) -> [[f32; 2]; 4] {
-    let [right, bottom] = [rect.x + rect.width, rect.y + rect.height];
-    [
-        [rect.x, rect.y],
-        [right, rect.y],
-        [right, bottom],
-        [rect.x, bottom],
-    ]
-}
-
 /// CSS Transforms 2 §4.2: the page-space matrix applied to points `(x, y, 0, 1)` of `reference`,
-/// divided by their `w`. A box with `w ≤ 0` throughout is behind the viewer and a hidden back
-/// face (§10) is not rendered. A `w` that varies across the box is a projective map, which
-/// PDF content matrices cannot express.
-fn project(m: &Matrix3d, reference: Rect, backface_hidden: bool) -> Result<Matrix, StyleError> {
+/// as a projection of the plane. A box with `w ≤ 0` at every corner is behind the viewer and
+/// a hidden back face (§10) is not rendered. A `w` constant across the box divides out into
+/// an affine map.
+fn project(m: &Matrix3d, reference: Rect, backface_hidden: bool) -> Projection {
     if backface_hidden && m[Z_FROM_Z] < 0.0 {
-        return Ok(NOT_RENDERED);
+        return NOT_RENDERED;
     }
     let w = |[x, y]: [f32; 2]| m[W_FROM_X] * x + m[W_FROM_Y] * y + m[W_CONSTANT];
+    let corners: Vec<f32> = corners(reference).into_iter().map(w).collect();
+    if corners.iter().all(|&corner| corner <= 0.0) {
+        return NOT_RENDERED;
+    }
     let depth = w([
         reference.x + reference.width / 2.0,
         reference.y + reference.height / 2.0,
     ]);
-    if corners(reference)
-        .into_iter()
-        .any(|corner| (w(corner) - depth).abs() > PROJECTION_TOLERANCE * depth.abs())
+    if depth > 0.0
+        && corners
+            .iter()
+            .all(|corner| (corner - depth).abs() <= PROJECTION_TOLERANCE * depth)
     {
-        return Err(StyleError::Unsupported(format!(
-            "perspective projection varying across a {}pt by {}pt box: PDF content matrices are affine",
-            reference.width, reference.height
-        )));
+        return crate::paint::projection::from_affine(
+            [m[0], m[1], m[4], m[5], m[12], m[13]].map(|value| value / depth),
+        );
     }
-    if depth <= 0.0 {
-        return Ok(NOT_RENDERED);
-    }
-    Ok([m[0], m[1], m[4], m[5], m[12], m[13]].map(|value| value / depth))
+    [
+        m[0],
+        m[1],
+        m[4],
+        m[5],
+        m[12],
+        m[13],
+        m[W_FROM_X],
+        m[W_FROM_Y],
+        m[W_CONSTANT],
+    ]
 }
 
 /// Whether `m` keeps the points of `reference` in the drawing plane, `z = 0`.
@@ -725,7 +726,7 @@ impl Style {
         (m[W_FROM_X] == 0.0 && m[W_FROM_Y] == 0.0 && m[W_CONSTANT] == 1.0)
             .then_some([m[0], m[1], m[4], m[5], m[12], m[13]])
     }
-    /// The affine page-space matrix drawing this box, or `None` without a transform. Its
+    /// The page-space projection drawing this box, or `None` without a transform. Its
     /// parent's perspective applies first; in a 3D rendering context the box must stay in its
     /// parent's plane, as planes that leave it are depth-sorted and intersected (§4.1.2).
     pub(crate) fn transform_matrix(
@@ -733,7 +734,7 @@ impl Style {
         boxes: &BoxAreas<Rect>,
         parent: Option<&Parent3d>,
         containing: &crate::style::motion::Reference,
-    ) -> Result<Option<Matrix>, StyleError> {
+    ) -> Result<Option<Projection>, StyleError> {
         let Some(own) = self.transformation(boxes, containing) else {
             return Ok(None);
         };
@@ -749,7 +750,7 @@ impl Style {
             Some(perspective) => multiply(&perspective, &own),
             None => own,
         };
-        project(&accumulated, reference, self.backface_hidden).map(Some)
+        Ok(Some(project(&accumulated, reference, self.backface_hidden)))
     }
 }
 

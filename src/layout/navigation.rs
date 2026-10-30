@@ -124,11 +124,29 @@ pub(crate) fn page_polygon(rect: Rect, regions: &[Region], clip: bool) -> Vec<Po
 
 pub(crate) fn map_polygon(mut polygon: Vec<Point>, regions: &[Region], clip: bool) -> Vec<Point> {
     for region in regions.iter().rev() {
-        if clip || matches!(region, Region::Transform(_)) {
+        if clip || region.transforms() {
             polygon = map_region(polygon, region);
         }
     }
     polygon
+}
+
+/// Maps `polygon` back from page space through `region`'s transform or projection; `false`
+/// when the region collapses the plane, so that no point maps back.
+pub(crate) fn unmap(polygon: &mut [Point], region: &Region) -> bool {
+    use crate::paint::projection;
+    let inverse = match region {
+        Region::Transform(matrix) => projection::inverse(projection::from_affine(*matrix)),
+        Region::Projection(matrix) => projection::inverse(*matrix),
+        Region::Clip(_) => return true,
+    };
+    let Some(inverse) = inverse else {
+        return false;
+    };
+    for point in polygon {
+        *point = projection::apply(inverse, *point);
+    }
+    true
 }
 
 pub(super) fn map_region(mut polygon: Vec<Point>, region: &Region) -> Vec<Point> {
@@ -138,6 +156,9 @@ pub(super) fn map_region(mut polygon: Vec<Point>, region: &Region) -> Vec<Point>
                 *point = apply(*matrix, *point);
             }
             polygon
+        }
+        Region::Projection(projection) => {
+            crate::paint::projection::map_polygon(*projection, polygon)
         }
         Region::Clip(region) => clip_polygon(&polygon, region.bounds()),
     }

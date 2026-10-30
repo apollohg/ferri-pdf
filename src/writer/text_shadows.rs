@@ -61,6 +61,23 @@ fn ink(shadow: &TextShadowPaint, cut: Option<Rect>) -> Option<Rect> {
         .reduce(Rect::union)
 }
 
+/// A bound on what `shadow` paints: the ink it casts, offset and grown by its blur.
+pub(super) fn bounds(shadow: &TextShadowPaint) -> Option<Rect> {
+    let (_, cut) = decoration_fills(shadow);
+    let extent = cast(shadow).extent();
+    ink(shadow, cut).map(|ink| crate::paint::outset(translate(ink, shadow.offset), [extent; 4]))
+}
+
+fn cast(shadow: &TextShadowPaint) -> crate::paint::BoxShadow {
+    crate::paint::BoxShadow {
+        offset: shadow.offset,
+        blur: shadow.blur,
+        spread: 0.0,
+        color: shadow.color,
+        inset: false,
+    }
+}
+
 pub(super) fn draw(
     shadow: &TextShadowPaint,
     text: &mut TextWriter<'_>,
@@ -72,13 +89,7 @@ pub(super) fn draw(
     let Some(ink) = ink(shadow, cut) else {
         return Ok(());
     };
-    let cast = crate::paint::BoxShadow {
-        offset: shadow.offset,
-        blur: shadow.blur,
-        spread: 0.0,
-        color: shadow.color,
-        inset: false,
-    };
+    let cast = cast(shadow);
     if shadow.blur > 0.0 {
         return draw_blurred(shadow, &cast, (&fills, cut), ink, fonts, surface);
     }

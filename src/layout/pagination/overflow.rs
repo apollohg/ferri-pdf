@@ -75,8 +75,8 @@ impl<'a> Paginator<'a, '_, 'a> {
         }
         let node = active.transform_node.map(|node| &self.clips[node]);
         Ok(Some(
-            if let Some(matrix) = self.transform_on(style, &boxes, node, page)? {
-                transformed_bounds(area, matrix)
+            if let Some(region) = self.transform_on(style, &boxes, node, page)? {
+                transformed_bounds(area, region)
             } else {
                 area
             },
@@ -158,8 +158,8 @@ impl<'a> Paginator<'a, '_, 'a> {
                         .find_map(|&(p, rect)| (p == page).then_some(BoxAreas::single(rect)))
                 })
                 .ok_or(LayoutError::MissingContainingFragment { page })?;
-            if let Some(matrix) = self.transform_on(style, &boxes, Some(effect), page)? {
-                area = transformed_bounds(area, matrix);
+            if let Some(region) = self.transform_on(style, &boxes, Some(effect), page)? {
+                area = transformed_bounds(area, region);
             }
         }
         Ok(area)
@@ -226,8 +226,8 @@ impl<'a> Paginator<'a, '_, 'a> {
     }
 }
 
-pub(super) fn transformed_bounds(area: Rect, matrix: [f32; 6]) -> Rect {
-    crate::layout::navigation::page_polygon(area, &[Region::Transform(matrix)], false)
+pub(super) fn transformed_bounds(area: Rect, region: Region) -> Rect {
+    crate::layout::navigation::page_polygon(area, &[region], false)
         .into_iter()
         .map(|[x, y]| Rect {
             x,

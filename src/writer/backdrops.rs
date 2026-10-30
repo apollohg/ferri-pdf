@@ -10,11 +10,13 @@
 //! Compositing 2 §9.1.14 `plus-darker` and §9.1.15 `plus-lighter`: the group composites
 //! additively with its backdrop, which no PDF blend mode computes; the result is drawn over the vector
 //! backdrop as the colour that source-over compositing turns into that sum.
-use crate::graphics::{BackdropPaint, BlendMode, DisplayItem, FilterFunction, FilterPaint, Rect};
-use crate::paint::compositing;
+use crate::graphics::{
+    BackdropPaint, BlendMode, DisplayItem, FilterFunction, FilterPaint, Projection, Rect,
+};
+use crate::paint::{compositing, projection};
 use crate::writer::{
     PdfError,
-    display::{Painter, Scopes, Space, group_length, matrix_transform},
+    display::{Painter, Scopes, Space, group_length},
     filters, painting,
     raster::{self, Raster},
 };
@@ -55,11 +57,23 @@ fn address(item: &DisplayItem) -> usize {
     std::ptr::from_ref(item) as usize
 }
 
-/// A raster and the transform from the drawing space of the item it belongs to into the
+/// A raster and the projection from the drawing space of the item it belongs to into the
 /// raster's space.
 struct Readback {
     raster: Raster,
-    to_raster: tiny_skia::Transform,
+    to_raster: Projection,
+}
+
+/// A drawing-space transform as a projection.
+fn projected(transform: tiny_skia::Transform) -> Projection {
+    projection::from_affine([
+        transform.sx,
+        transform.ky,
+        transform.kx,
+        transform.sy,
+        transform.tx,
+        transform.ty,
+    ])
 }
 
 /// Prepares the backdrops of the element whose Backdrop Root opens at `root`, before anything
@@ -78,7 +92,7 @@ pub(super) fn prepare(
         if painter.prepared.get(item).is_some() {
             continue;
         }
-        let to_root = to_origin.pre_concat(to_current);
+        let to_root = projection::compose(projected(to_origin), to_current);
         let raster = filtered_backdrop(
             painter,
             &items[origin.index..root],
@@ -98,12 +112,10 @@ pub(super) fn prepare(
 }
 
 /// The element's own backdrop items, outside the Backdrop Roots of its descendants, each
-/// with the transform from its drawing space to the space `items` start in.
-fn own_backdrops(
-    items: &[DisplayItem],
-) -> Vec<(&DisplayItem, &BackdropPaint, tiny_skia::Transform)> {
+/// with the projection from its drawing space to the space `items` start in.
+fn own_backdrops(items: &[DisplayItem]) -> Vec<(&DisplayItem, &BackdropPaint, Projection)> {
     enum Open {
-        Transform([f32; 6]),
+        Transform(Projection),
         Root,
         Other,
     }
@@ -111,7 +123,10 @@ fn own_backdrops(
     let mut backdrops = Vec::new();
     for item in items {
         match item {
-            DisplayItem::PushTransform(matrix) => open.push(Open::Transform(*matrix)),
+            DisplayItem::PushTransform(matrix) => {
+                open.push(Open::Transform(projection::from_affine(*matrix)));
+            }
+            DisplayItem::PushProjection(matrix) => open.push(Open::Transform(*matrix)),
             DisplayItem::PushBackdropRoot => open.push(Open::Root),
             DisplayItem::PushClip(_)
             | DisplayItem::PushOpacity(_)
@@ -126,15 +141,10 @@ fn own_backdrops(
             {
                 let transform =
                     open.iter()
-                        .fold(
-                            tiny_skia::Transform::identity(),
-                            |transform, scope| match scope {
-                                Open::Transform(matrix) => {
-                                    transform.pre_concat(matrix_transform(*matrix))
-                                }
-                                Open::Root | Open::Other => transform,
-                            },
-                        );
+                        .fold(projection::IDENTITY, |transform, scope| match scope {
+                            Open::Transform(matrix) => projection::compose(transform, *matrix),
+                            Open::Root | Open::Other => transform,
+                        });
                 backdrops.push((item, backdrop, transform));
             }
             DisplayItem::Backdrop(_)
@@ -156,13 +166,15 @@ fn filtered_backdrop(
     prefix: &[DisplayItem],
     density: f32,
     backdrop: &BackdropPaint,
-    to_root: tiny_skia::Transform,
+    to_root: Projection,
 ) -> Result<Option<Raster>, PdfError> {
     let border = backdrop.border.rect;
     if !(border.width > 0.0 && border.height > 0.0) {
         return Ok(None);
     }
-    let area = transformed_bounds(border, to_root)?;
+    let Some(area) = crate::writer::bounds::mapped(to_root, border) else {
+        return Ok(None);
+    };
     let filter = FilterPaint {
         functions: backdrop.functions.clone(),
         bounds: Some(area),
@@ -187,26 +199,13 @@ fn filtered_backdrop(
     Ok(input.cropped(image.area))
 }
 
-/// The bounds of `rect` mapped by `transform`.
-fn transformed_bounds(rect: Rect, transform: tiny_skia::Transform) -> Result<Rect, PdfError> {
-    tiny_skia::Rect::from_xywh(rect.x, rect.y, rect.width, rect.height)
-        .and_then(|rect| rect.transform(transform))
-        .map(|rect| Rect {
-            x: rect.left(),
-            y: rect.top(),
-            width: rect.width(),
-            height: rect.height(),
-        })
-        .ok_or(PdfError::InvalidGeometry)
-}
-
 /// `image` within the border quad, which `to_root` maps `border` onto, over an area grown by
 /// `spread` for the filter to read: transparent outside the quad (§3), or with `mirrored`
 /// the quad's content reflected across its edges, as `edgeMode="mirror"` extends it (§2.1).
 fn clipped_input(
     image: &Raster,
     border: Rect,
-    to_root: tiny_skia::Transform,
+    to_root: Projection,
     spread: f32,
     mirrored: bool,
 ) -> Result<Raster, PdfError> {
@@ -226,7 +225,8 @@ fn clipped_input(
         width: width / density,
         height: height / density,
     };
-    let to_box = to_root.invert().ok_or(PdfError::InvalidGeometry)?;
+    let to_box = projection::inverse(to_root).ok_or(PdfError::InvalidGeometry)?;
+    let front = projection::front(to_root);
     let source = image.pixmap.pixels();
     let pixel = |value: f32, start: f32, count: u32| {
         (((value - start) * density).floor().max(0.0) as u32).min(count - 1)
@@ -235,26 +235,29 @@ fn clipped_input(
     for (index, target) in output.iter_mut().enumerate() {
         let column = (index % width as usize) as f32;
         let row = (index / width as usize) as f32;
-        let mut center = tiny_skia::Point::from_xy(
+        let mut center = [
             area.x + (column + 0.5) / density,
             area.y + (row + 0.5) / density,
-        );
-        let mut local = center;
-        to_box.map_point(&mut local);
-        let inside = (border.x..=border.x + border.width).contains(&local.x)
-            && (border.y..=border.y + border.height).contains(&local.y);
+        ];
+        let local = projection::apply(to_box, center);
+        let ahead = projection::side(front, local) > 0.0;
+        let inside = ahead
+            && (border.x..=border.x + border.width).contains(&local[0])
+            && (border.y..=border.y + border.height).contains(&local[1]);
         if !inside {
-            if !mirrored {
+            if !mirrored || !ahead {
                 continue;
             }
-            center = tiny_skia::Point::from_xy(
-                mirror(local.x, border.x, border.width),
-                mirror(local.y, border.y, border.height),
+            center = projection::apply(
+                to_root,
+                [
+                    mirror(local[0], border.x, border.width),
+                    mirror(local[1], border.y, border.height),
+                ],
             );
-            to_root.map_point(&mut center);
         }
-        let x = pixel(center.x, image.area.x, columns);
-        let y = pixel(center.y, image.area.y, rows);
+        let x = pixel(center[0], image.area.x, columns);
+        let y = pixel(center[1], image.area.y, rows);
         *target = source[(y * columns + x) as usize];
     }
     Ok(Raster {
@@ -293,19 +296,29 @@ pub(super) fn draw(
         return Ok(());
     };
     let clips = painting::push_clip(&backdrop.border, space.viewport, surface)?;
-    let drawn = embed(readback, surface);
+    let drawn = embed(
+        readback,
+        backdrop.border.rect,
+        painter.density(space, surface),
+        surface,
+    );
     painting::pop_clips(clips, surface);
     drawn
 }
 
-fn embed(readback: &Readback, surface: &mut Surface<'_>) -> Result<(), PdfError> {
-    let to_item = readback
-        .to_raster
-        .invert()
-        .ok_or(PdfError::InvalidGeometry)?;
-    surface.push_transform(&krilla::geom::Transform::from_row(
-        to_item.sx, to_item.ky, to_item.kx, to_item.sy, to_item.tx, to_item.ty,
-    ));
+/// Draws `readback` in the item's drawing space over `area`, resampled at `density` pixels
+/// per unit where the space is a perspective projection of the raster's.
+fn embed(
+    readback: &Readback,
+    area: Rect,
+    density: f32,
+    surface: &mut Surface<'_>,
+) -> Result<(), PdfError> {
+    let to_item = projection::inverse(readback.to_raster).ok_or(PdfError::InvalidGeometry)?;
+    let Some([a, b, c, d, e, f]) = projection::affine(to_item) else {
+        return crate::writer::projection::embed(&readback.raster, to_item, area, density, surface);
+    };
+    surface.push_transform(&krilla::geom::Transform::from_row(a, b, c, d, e, f));
     let drawn = raster::embed(&readback.raster, surface);
     surface.pop();
     drawn
@@ -328,12 +341,15 @@ pub(super) fn additive(
             push,
             composite.map(|raster| Readback {
                 raster,
-                to_raster: tiny_skia::Transform::identity(),
+                to_raster: projection::IDENTITY,
             }),
         );
     }
     match painter.prepared.get(push) {
-        Some(Some(readback)) => embed(readback, surface),
+        Some(Some(readback)) => {
+            let area = readback.raster.area;
+            embed(readback, area, readback.raster.density, surface)
+        }
         _ => Ok(()),
     }
 }

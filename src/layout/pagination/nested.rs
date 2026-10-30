@@ -29,15 +29,12 @@ impl NativeSpace {
         self.rect(crate::layout::anchors::box_ink_in_frame(paint, self.frame))
     }
     pub(super) fn region(self, region: super::Region) -> super::Region {
-        use crate::layout::writing::{compose, map_clip};
+        use crate::layout::writing::map_clip;
         match region {
             super::Region::Clip(clip) => super::Region::Clip(map_clip(self.matrix(), clip)),
-            super::Region::Transform(matrix) => {
+            region @ (super::Region::Transform(_) | super::Region::Projection(_)) => {
                 let space = kurbo::Affine::new(self.matrix().map(f64::from));
-                super::Region::Transform(compose(
-                    self.matrix(),
-                    compose(matrix, space.inverse().as_coeffs().map(|v| v as f32)),
-                ))
+                region.conjugated(self.matrix(), space.inverse().as_coeffs().map(|v| v as f32))
             }
         }
     }
@@ -332,6 +329,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                 DisplayItem::Backdrop(backdrop) => backdrop.border.translate([dx, dy]),
                 DisplayItem::PushClip(_)
                 | DisplayItem::PushTransform(_)
+                | DisplayItem::PushProjection(_)
                 | DisplayItem::PushOpacity(_)
                 | DisplayItem::PushBlend(_)
                 | DisplayItem::PushFilter(_)

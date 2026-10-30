@@ -41,9 +41,6 @@ impl Frame {
             content: self.rect(areas.content),
         }
     }
-    pub(super) fn into_logical(self, matrix: [f32; 6]) -> [f32; 6] {
-        compose(self.inverse().matrix, compose(matrix, self.matrix))
-    }
     pub(super) fn inverse(self) -> Self {
         let [a, b, c, d, e, f] = self.matrix;
         let determinant = a * d - b * c;
@@ -172,6 +169,15 @@ impl Frame {
                 DisplayItem::PushClip(clip) => *clip = self.clip(clip.clone()),
                 DisplayItem::PushTransform(matrix) => {
                     *matrix = compose(self.matrix, compose(*matrix, self.inverse().matrix));
+                }
+                DisplayItem::PushProjection(projection) => {
+                    *projection = crate::paint::projection::compose(
+                        crate::paint::projection::from_affine(self.matrix),
+                        crate::paint::projection::compose(
+                            *projection,
+                            crate::paint::projection::from_affine(self.inverse().matrix),
+                        ),
+                    );
                 }
                 DisplayItem::PushFilter(filter) => {
                     filter.bounds = filter.bounds.map(|rect| self.rect(rect));

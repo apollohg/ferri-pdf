@@ -465,6 +465,50 @@ struct EffectNode<'a> {
 pub(crate) enum Region {
     Clip(Clip),
     Transform([f32; 6]),
+    /// A perspective whose `w` varies across the box (CSS Transforms 2 §4.2).
+    Projection(crate::graphics::Projection),
+}
+impl Region {
+    /// The region drawing `projection`: an affine transform when its `w` is constant.
+    pub(crate) fn projected(projection: crate::graphics::Projection) -> Self {
+        crate::paint::projection::affine(projection)
+            .map_or(Self::Projection(projection), Self::Transform)
+    }
+    /// Whether the region maps the plane through a transform or projection.
+    pub(crate) fn transforms(&self) -> bool {
+        matches!(self, Self::Transform(_) | Self::Projection(_))
+    }
+    /// Whether the region maps the plane onto no area, which paints nothing.
+    pub(crate) fn collapses(&self) -> bool {
+        match self {
+            Self::Transform([a, b, c, d, _, _]) => {
+                f64::from(*a) * f64::from(*d) - f64::from(*b) * f64::from(*c) == 0.0
+            }
+            Self::Projection(projection) => crate::paint::projection::degenerate(*projection),
+            Self::Clip(_) => false,
+        }
+    }
+    /// The region's mapping applied after `inner` and before `outer`; clips are unchanged.
+    pub(crate) fn conjugated(self, outer: [f32; 6], inner: [f32; 6]) -> Self {
+        use crate::layout::writing::compose;
+        use crate::paint::projection::{compose as project, from_affine};
+        match self {
+            Self::Transform(matrix) => Self::Transform(compose(outer, compose(matrix, inner))),
+            Self::Projection(projection) => Self::Projection(project(
+                from_affine(outer),
+                project(projection, from_affine(inner)),
+            )),
+            Self::Clip(clip) => Self::Clip(clip),
+        }
+    }
+    /// The display item opening the region.
+    pub(crate) fn push(self) -> DisplayItem {
+        match self {
+            Self::Clip(clip) => DisplayItem::PushClip(clip),
+            Self::Transform(matrix) => DisplayItem::PushTransform(matrix),
+            Self::Projection(projection) => DisplayItem::PushProjection(projection),
+        }
+    }
 }
 
 /// The fragmentainers that page indices address.
@@ -1350,6 +1394,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 | DisplayItem::Backdrop(_)
                 | DisplayItem::PushClip(_)
                 | DisplayItem::PushTransform(_)
+                | DisplayItem::PushProjection(_)
                 | DisplayItem::PushOpacity(_)
                 | DisplayItem::PushBlend(_)
                 | DisplayItem::PushFilter(_)
@@ -1372,6 +1417,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     | DisplayItem::Backdrop(_)
                     | DisplayItem::PushClip(_)
                     | DisplayItem::PushTransform(_)
+                    | DisplayItem::PushProjection(_)
                     | DisplayItem::PushOpacity(_)
                     | DisplayItem::PushBlend(_)
                     | DisplayItem::PushFilter(_)
@@ -3288,7 +3334,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         areas: &BoxAreas<Rect>,
         node: Option<&EffectNode<'_>>,
         page: usize,
-    ) -> Result<Option<[f32; 6]>, LayoutError> {
+    ) -> Result<Option<Region>, LayoutError> {
         let (parent, reference) = node
             .and_then(|node| match node.effect {
                 Effect::Transform(_, parent, reference) => Some((parent, reference)),
@@ -3317,7 +3363,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 parent.as_ref(),
                 &self.motion_reference_on(reference, style, page, native)?,
             )?
-            .map(|matrix| frame.into_logical(matrix)))
+            .map(|projection| {
+                Region::projected(projection).conjugated(frame.inverse().matrix, frame.matrix)
+            }))
     }
     fn motion_reference_on(
         &self,
@@ -3540,8 +3588,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                                 .map(|&(page, rect)| (page, BoxAreas::single(rect))),
                         );
                     for (page, areas) in areas {
-                        if let Some(matrix) = self.transform_on(style, &areas, Some(node), page)? {
-                            node_regions.push((page, Region::Transform(matrix)));
+                        if let Some(region) = self.transform_on(style, &areas, Some(node), page)? {
+                            node_regions.push((page, region));
                         }
                     }
                 }
@@ -5939,12 +5987,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         if let Some(mut paint) = marker.image.take() {
             paint.rect.x += marker.fragment.x;
             paint.rect.y += marker.fragment.baseline;
-            self.anchors.ink(
-                marker.owner,
-                self.page,
-                super::anchors::box_ink(&paint),
-                self.clip,
-            );
+            self.anchors
+                .ink(marker.owner, self.page, paint.ink(), self.clip);
             if paint.rect.intersects(self.page_rect) {
                 let scope = self.inline_key();
                 self.foreground[self.page].push(ScopedPaint {
@@ -7062,12 +7106,7 @@ fn clipped(
                     .ok_or(LayoutError::MissingClipFragment { page })?,
             );
         }
-        if regions_here.iter().any(|region| match region {
-            Region::Transform([a, b, c, d, _, _]) => {
-                f64::from(*a) * f64::from(*d) - f64::from(*b) * f64::from(*c) == 0.0
-            }
-            Region::Clip(_) => false,
-        }) {
+        if regions_here.iter().any(Region::collapses) {
             continue;
         }
         // A rendering shown as an image has no links or destinations of its own.
@@ -7108,7 +7147,7 @@ fn clipped(
         // Ink is compared only with clips in its own coordinate space.
         let untransformed = regions_here
             .iter()
-            .rposition(|region| matches!(region, Region::Transform(_)))
+            .rposition(Region::transforms)
             .map_or(0, |index| index + 1);
         if let Some(ink) = paint
             .ink
@@ -7212,10 +7251,7 @@ fn clipped(
                                 (*fragment_page == page).then(|| region.clone())
                             })
                             .ok_or(LayoutError::MissingClipFragment { page })?;
-                        let mut pushes = vec![match region {
-                            Region::Clip(clip) => DisplayItem::PushClip(clip),
-                            Region::Transform(matrix) => DisplayItem::PushTransform(matrix),
-                        }];
+                        let mut pushes = vec![region.push()];
                         if let Some(frame) = physical {
                             frame.items(&mut pushes);
                         }

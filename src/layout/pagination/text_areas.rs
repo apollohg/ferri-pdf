@@ -144,12 +144,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                     ),
                 });
             }
-            if pushes.iter().flatten().any(|region| match region {
-                Region::Transform([a, b, c, d, _, _]) => {
-                    f64::from(*a) * f64::from(*d) - f64::from(*b) * f64::from(*c) == 0.0
-                }
-                Region::Clip(_) => false,
-            }) {
+            if pushes.iter().flatten().any(Region::collapses) {
                 continue;
             }
             let common = open
@@ -164,10 +159,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             }
             for (&index, region) in chain.iter().zip(pushes).skip(common) {
                 open.push((index, region.is_some()));
-                items.extend(region.map(|region| match region {
-                    Region::Clip(clip) => DisplayItem::PushClip(clip),
-                    Region::Transform(matrix) => DisplayItem::PushTransform(matrix),
-                }));
+                items.extend(region.map(Region::push));
             }
             let item = match &paint.item {
                 DisplayItem::Text { line } => {

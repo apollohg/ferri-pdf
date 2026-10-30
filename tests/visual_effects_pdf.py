@@ -1,4 +1,5 @@
 """Rendered checks for outlines, blending and individual transform properties."""
+import math
 from pathlib import Path
 import tempfile
 import unittest
@@ -82,6 +83,58 @@ class VisualEffectsPdf(unittest.TestCase):
                 self.assertNotEqual(expected, untransformed, f'{transform} must move ink')
                 self.assertEqual(self.pixels(BOX + f'.box{{{individual}}}').tobytes(), expected,
                                  f'{individual} must paint exactly as {transform}')
+
+    def test_perspective_projects_ink_text_and_links_through_the_homography(self):
+        # The page content starts at (20, 20); .p is 200pt by 100pt with a 300pt perspective
+        # about its centre (120, 70), and .t turns 40° about the same centre. A point dx, dy
+        # from it goes to depth z = -sin·dx, so w = 1 + sin·dx / 300 (CSS Transforms 2 §4.2).
+        left, top, width, height, depth, angle = 20, 20, 200, 100, 300, math.radians(40)
+        centre = (left + width / 2, top + height / 2)
+
+        def project(x, y):
+            dx, dy = x - centre[0], y - centre[1]
+            w = 1 + math.sin(angle) * dx / depth
+            return centre[0] + math.cos(angle) * dx / w, centre[1] + dy / w
+
+        css = ('.p{perspective:%dpt;width:%dpt;height:%dpt}'
+               '.t{height:100%%;background:teal;color:white}a{color:white}'
+               % (depth, width, height))
+        body = '<div class=p><div class=t>Tilt <a href="https://example.com/">far</a> away</div></div>'
+        flat = self.renderer.render(self.root, css, body)
+        flat_glyphs = [(g.text, g.origin) for g in pdf_content.inspect(flat)['glyphs']]
+        flat_link = pdf_content.navigation(flat)['links'][0]['rect']
+        tilted = self.renderer.render(self.root, css + '.t{transform:rotateY(40deg)}', body)
+        page_height = table_positioning_pdf.PAGE_HEIGHT
+        glyphs = [(g.text, g.origin) for g in pdf_content.inspect(tilted)['glyphs']]
+        self.assertEqual([text for text, _ in glyphs], [text for text, _ in flat_glyphs],
+                         'every glyph stays text, in order, under the perspective')
+        for (text, (x, y)), (_, actual) in zip(flat_glyphs, glyphs):
+            expected_x, expected_y = project(x, page_height - y)
+            expected = (expected_x, page_height - expected_y)
+            self.assertLess(math.dist(actual, expected), 0.15,
+                            f'{text!r} at {(x, y)} must draw at its projection {expected}, '
+                            f'within half a 288 dpi pixel: got {actual}')
+        x0, y1, x1, y0 = flat_link
+        corners = [project(x, page_height - y) for x, y in ((x0, y0), (x1, y0), (x1, y1), (x0, y1))]
+        quads = pdf_content.navigation(tilted)['links'][0]['quads']
+        self.assertIsNotNone(quads, 'a projected link area is a quadrilateral')
+        actual = sorted(zip(quads[0::2], quads[1::2]))
+        expected = sorted((x, page_height - y) for x, y in corners)
+        for point, wanted in zip(actual, expected):
+            self.assertLess(math.dist(point, wanted), 0.05,
+                            f'link corners {actual} must be the projected corners {expected}')
+        with self.renderer.raster(self.root, tilted, vector_antialias=False) as pixels:
+            inset, outset = 4, 4
+            for (x, y), sign in (((left, top), 1), ((left + width, top), -1),
+                                 ((left + width, top + height), -1), ((left, top + height), 1)):
+                vertical = 1 if y == top else -1
+                for (px, py), wanted, where in (
+                        (project(x + sign * inset, y + vertical * 30), TEAL, 'inside'),
+                        (project(x - sign * outset, y + vertical * 30), WHITE, 'outside')):
+                    found = pixels.getpixel((int(px), int(py)))
+                    self.assertTrue(all(abs(a - b) <= 2 for a, b in zip(found, wanted)),
+                                    f'{where} the projected edge near corner {(x, y)}, '
+                                    f'({px:.1f}, {py:.1f}) must be {wanted}, got {found}')
 
     def test_outline_paints_outside_the_offset_following_the_grown_radius(self):
         # The border box spans 80..160 by 80..120; a 4pt outline 3pt outside it spans 73..167

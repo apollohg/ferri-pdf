@@ -20,7 +20,7 @@ impl Effect {
             Self::Region(Region::Clip(_), owner) | Self::Path(_, owner) => {
                 own.is_none() || *owner != own
             }
-            Self::Region(Region::Transform(_), _) => false,
+            Self::Region(Region::Transform(_) | Region::Projection(_), _) => false,
         }
     }
 }
@@ -53,23 +53,13 @@ struct Ink {
     clip: Option<usize>,
 }
 
-pub(super) fn box_ink(paint: &crate::graphics::BoxPaint) -> Rect {
-    paint
-        .shadows(false)
-        .into_iter()
-        .map(|shadow| shadow.bounds)
-        .chain(paint.outline().map(|outline| outline.rect))
-        .chain(paint.border_image_bounds())
-        .fold(paint.rect, Rect::union)
-}
-
 pub(super) fn box_ink_in_frame(
     paint: &crate::graphics::BoxPaint,
     frame: super::writing::Frame,
 ) -> Rect {
     let mut physical = paint.clone();
     frame.paint(&mut physical);
-    frame.inverse().rect(box_ink(&physical))
+    frame.inverse().rect(physical.ink())
 }
 
 #[derive(Clone)]
@@ -348,8 +338,10 @@ impl Measurements {
             for (_, effect) in chain {
                 match effect {
                     Effect::Region(Region::Clip(clip), _) => *clip = frame.clip(clip.clone()),
-                    Effect::Region(Region::Transform(matrix), _) => {
-                        *matrix = frame.inverse().into_logical(*matrix);
+                    Effect::Region(region, _) => {
+                        *region = region
+                            .clone()
+                            .conjugated(frame.matrix, frame.inverse().matrix);
                     }
                     Effect::Path(polygons, _) => {
                         for point in polygons.iter_mut().flatten() {
@@ -486,17 +478,10 @@ impl Measurements {
                     });
             }
             for (_, region) in &cb_regions[common..] {
-                if let Effect::Region(Region::Transform(matrix), _) = region {
-                    let transform = kurbo::Affine::new(matrix.map(f64::from));
-                    if transform.determinant() == 0.0 {
-                        return Ok(None);
-                    }
-                    let inverse = transform.inverse();
-                    for point in &mut polygon {
-                        let mapped =
-                            inverse * kurbo::Point::new(f64::from(point[0]), f64::from(point[1]));
-                        *point = [mapped.x as f32, mapped.y as f32];
-                    }
+                if let Effect::Region(region, _) = region
+                    && !super::navigation::unmap(&mut polygon, region)
+                {
+                    return Ok(None);
                 }
             }
             if let Some(rect) = bounds(&polygon) {
@@ -615,17 +600,12 @@ impl Measurements {
             .count();
         let mut pieces = clipped(rect, &effects[common..], None, work)?;
         for (_, effect) in &anchor_regions[common..] {
-            if let Effect::Region(Region::Transform(matrix), _) = effect {
-                let transform = kurbo::Affine::new(matrix.map(f64::from));
-                if transform.determinant() == 0.0 {
-                    return Ok(None);
-                }
-                let inverse = transform.inverse();
-                for point in pieces.iter_mut().flatten() {
-                    let mapped =
-                        inverse * kurbo::Point::new(f64::from(point[0]), f64::from(point[1]));
-                    *point = [mapped.x as f32, mapped.y as f32];
-                }
+            if let Effect::Region(region, _) = effect
+                && !pieces
+                    .iter_mut()
+                    .all(|piece| super::navigation::unmap(piece, region))
+            {
+                return Ok(None);
             }
         }
         Ok(bounds(&pieces.into_iter().flatten().collect::<Vec<_>>()))
@@ -747,7 +727,8 @@ fn clipped(
 ) -> Result<Vec<Vec<crate::graphics::Point>>, super::LayoutError> {
     let mut pieces = vec![super::navigation::rect_corners(rect).to_vec()];
     for (_, effect) in effects.iter().rev() {
-        if !matches!(effect, Effect::Region(Region::Transform(_), _)) && !effect.clips(own) {
+        if !matches!(effect, Effect::Region(region, _) if region.transforms()) && !effect.clips(own)
+        {
             continue;
         }
         let vertices = pieces.iter().map(Vec::len).sum::<usize>().max(1);

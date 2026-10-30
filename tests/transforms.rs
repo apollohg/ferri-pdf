@@ -1,6 +1,6 @@
 mod common;
 use common::{PROFILE, local_options};
-use ferri_pdf::{DisplayItem, LayoutTrace, Rect, render_html};
+use ferri_pdf::{DisplayItem, LayoutTrace, Projection, Rect, render_html};
 
 const TOLERANCE_PT: f32 = 0.001;
 /// Profile page margin: the first box's border box starts here.
@@ -132,9 +132,6 @@ fn transform_lists_compose_about_the_origin_and_flatten_3d_functions() {
     );
 }
 
-/// Layout failure of a transform whose projection varies across its box.
-const PROJECTIVE: &str = "perspective projection varying across";
-
 fn layout_error(css: &str, body: &str) -> String {
     match render_html(
         &format!("<style>{PROFILE}{css}</style>{body}"),
@@ -148,17 +145,62 @@ fn layout_error(css: &str, body: &str) -> String {
     }
 }
 
+/// The projections that draw boxes whose perspective varies `w` across them.
+fn projections(items: &[DisplayItem]) -> Vec<Projection> {
+    items
+        .iter()
+        .filter_map(|item| match item {
+            DisplayItem::PushProjection(projection) => Some(*projection),
+            _ => None,
+        })
+        .collect()
+}
+
 #[test]
-fn projective_and_malformed_transforms_are_errors_not_flat_drawings() {
+fn projective_transforms_draw_through_projections_and_malformed_ones_are_dropped() {
+    // The box spans 36..136 by 36..76 about its centre (86, 56). rotateY(30deg) takes a point
+    // dx right of the centre to depth -sin·dx, which perspective(100pt) divides by
+    // w = 1 + sin·dx / 100 (CSS Transforms 2 §4.2).
+    let output = trace(
+        "div{width:100pt;height:40pt;transform:perspective(100pt) rotateY(30deg)}",
+        "<div>X</div>",
+    );
+    let [projection] = projections(&output.display_lists[0])[..] else {
+        panic!(
+            "one projection must draw the box: {:?}",
+            output.display_lists[0]
+        );
+    };
+    let [a, b, c, d, e, f, g, h, i] = projection;
+    let (sin, cos) = 30.0_f32.to_radians().sin_cos();
+    for (x, y) in [
+        (36.0, 36.0),
+        (136.0, 36.0),
+        (136.0, 76.0),
+        (36.0, 76.0),
+        (86.0, 50.0),
+    ] {
+        let w = g * x + h * y + i;
+        let actual = [(a * x + c * y + e) / w, (b * x + d * y + f) / w];
+        let (dx, dy) = (x - 86.0, y - 56.0);
+        let depth = 1.0 + sin * dx / 100.0;
+        let expected = [86.0 + cos * dx / depth, 56.0 + dy / depth];
+        assert!(
+            actual
+                .iter()
+                .zip(expected)
+                .all(|(actual, expected)| (actual - expected).abs() < 1e-3),
+            "({x}, {y}) must project to {expected:?}, got {actual:?} from {projection:?}"
+        );
+    }
     for css in [
-        "div{transform:perspective(100pt) rotateY(30deg)}",
         "div{transform:matrix3d(1,0,0,0.01,0,1,0,0,0,0,1,0,0,0,0,1)}",
         "div{perspective:100pt}div div{transform:rotateX(20deg)}",
     ] {
-        let message = layout_error(css, "<div>X<div>Y</div></div>");
+        let output = trace(css, "<div>X<div>Y</div></div>");
         assert!(
-            message.contains("unsupported CSS") && message.contains(PROJECTIVE),
-            "{css} must fail as a non-affine projection: {message}"
+            !projections(&output.display_lists[0]).is_empty(),
+            "{css} varies w across a box, so a projection draws it"
         );
     }
     // CSS Transforms 1 orders lengths horizontal then vertical and keeps keywords on their own
@@ -187,13 +229,14 @@ fn projective_and_malformed_transforms_are_errors_not_flat_drawings() {
         transforms(&trace.display_lists[0]).is_empty(),
         "a transform invalid at computed time is unset rather than the earlier declaration"
     );
-    let substituted = layout_error(
-        "div{--t:perspective(1pt) rotateY(10deg);transform:rotate(90deg);transform:var(--t)}",
+    let substituted = crate::trace(
+        "div{--t:perspective(10pt) rotateY(10deg);transform:rotate(90deg);transform:var(--t)}",
         "<div>X</div>",
     );
     assert!(
-        substituted.contains(PROJECTIVE),
-        "a valid substituted transform the engine cannot draw is an error: {substituted}"
+        transforms(&substituted.display_lists[0]).is_empty()
+            && projections(&substituted.display_lists[0]).len() == 1,
+        "a valid substituted perspective replaces the earlier declaration"
     );
 }
 

@@ -238,9 +238,14 @@ fn transform_impl(
                 .map(Arc::new);
         }
     }
-    let Some([a, b, c, d, e, f]) = style.transform_matrix(&boxes, None, &reference)? else {
+    let Some(projection) = style.transform_matrix(&boxes, None, &reference)? else {
         return Ok(None);
     };
+    let [a, b, c, d, e, f] = crate::paint::projection::affine(projection).ok_or_else(|| {
+        crate::style::StyleError::Unsupported(
+            "perspective projection of SVG content: SVG transforms are affine".into(),
+        )
+    })?;
     // All geometry supplied to the shared transform is in points; SVG uses user units.
     Ok(Some(crate::svg::usvg::Transform::from_row(
         a,

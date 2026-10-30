@@ -75,10 +75,7 @@ pub(super) fn draw(
     let reach = raster.ink().map(|ink| expand(ink, spread));
     let reach = steps
         .iter()
-        .filter_map(|step| match step {
-            Step::Reference(filter) => Some(scaled(filter.rect(), POINTS_PER_PIXEL)),
-            Step::Function(_) => None,
-        })
+        .filter_map(Step::region)
         .fold(reach, |reach, region| {
             Some(reach.map_or(region, |reach| reach.union(region)))
         });
@@ -253,6 +250,7 @@ fn recolor(
             }
             item @ (DisplayItem::PushClip(_)
             | DisplayItem::PushTransform(_)
+            | DisplayItem::PushProjection(_)
             | DisplayItem::PushOpacity(_)
             | DisplayItem::Pop) => item.clone(),
             item @ DisplayItem::PushBackdropRoot => item.clone(),
@@ -363,6 +361,13 @@ pub(super) fn steps<'f>(
 
 impl Step<'_> {
     /// How far the step moves ink, in drawing units, at `density` pixels per unit.
+    /// The region of a referenced filter element, where its primitives may generate content.
+    pub(super) fn region(&self) -> Option<Rect> {
+        match self {
+            Self::Reference(filter) => Some(scaled(filter.rect(), POINTS_PER_PIXEL)),
+            Self::Function(_) => None,
+        }
+    }
     pub(super) fn spread(&self, density: f32) -> f32 {
         match self {
             Self::Function(function) => function.spread(),

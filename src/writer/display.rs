@@ -256,6 +256,17 @@ impl Painter<'_, '_, '_> {
                         kind: Kind::Transform(*matrix),
                     });
                 }
+                DisplayItem::PushProjection(projection) => {
+                    let end = index + group_length(&items[index..])?;
+                    crate::writer::projection::draw(
+                        self,
+                        *projection,
+                        &items[index..end],
+                        space,
+                        surface,
+                    )?;
+                    index = end + 1;
+                }
                 DisplayItem::PushOpacity(alpha) => {
                     let opacity =
                         NormalizedF32::new(*alpha).ok_or(PdfError::InvalidAlpha(*alpha))?;
@@ -440,6 +451,7 @@ pub(super) fn group_length(items: &[DisplayItem]) -> Result<usize, PdfError> {
         match item {
             DisplayItem::PushClip(_)
             | DisplayItem::PushTransform(_)
+            | DisplayItem::PushProjection(_)
             | DisplayItem::PushOpacity(_)
             | DisplayItem::PushBlend(_)
             | DisplayItem::PushFilter(_)
