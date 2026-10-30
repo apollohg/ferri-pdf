@@ -130,6 +130,46 @@ fn destinations_locate_the_first_fragment_of_their_element() {
 }
 
 #[test]
+fn page_margin_box_transforms_move_and_rotate_their_running_links() {
+    const SHIFT_PT: f32 = 100.0;
+    let margin = |transform: &str| {
+        trace(
+            &format!(
+                ".head{{position:running(head)}}\
+                 @page{{@top-left{{content:element(head);transform:{transform}}}}}"
+            ),
+            "<div class=head><a href='https://head.example/'>Head</a></div><p>Body</p>",
+        )
+        .links[0]
+            .clone()
+    };
+    let [plain] = rects(&margin("none"), 0)[..] else {
+        panic!("one untransformed margin link: {:?}", margin("none"))
+    };
+    let shifted_areas = margin(&format!("translateY({SHIFT_PT}pt)"));
+    let [shifted] = rects(&shifted_areas, 0)[..] else {
+        panic!("one translated margin link: {shifted_areas:?}")
+    };
+    assert!(
+        close(shifted.x, plain.x)
+            && close(shifted.y, plain.y + SHIFT_PT)
+            && close(shifted.width, plain.width),
+        "the margin box's translation moves its link: {plain:?} -> {shifted:?}"
+    );
+    let rotated = margin("rotate(30deg);transform-origin:0 0");
+    assert!(
+        matches!(
+            &rotated[..],
+            [LinkArea {
+                link: 0,
+                shape: LinkShape::Quads(_)
+            }]
+        ),
+        "a rotated margin box's link becomes a quadrilateral: {rotated:?}"
+    );
+}
+
+#[test]
 fn transformed_links_become_quadrilaterals_and_clips_trim_link_areas() {
     let trace = trace(
         ".rot{transform:rotate(30deg);width:150pt;margin:40pt 0}\

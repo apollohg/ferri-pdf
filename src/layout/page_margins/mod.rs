@@ -2,6 +2,7 @@ mod dimensions;
 use crate::document::{BlockBox, CounterSnapshot, PageBox, Paragraph, RunningStringAssignment};
 use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, FlowPaint, ImagePaint, Rect};
 use crate::layout::measure::{MeasuredBlock, Measurer};
+use crate::layout::pagination::{Group, Region};
 use crate::layout::{LayoutError, TextLine};
 use crate::style::{BoxSizing, MarginLocation, PageMargin, Size, VerticalAlign};
 use crate::text::Line;
@@ -12,6 +13,7 @@ const VERTICAL: usize = 1;
 const START: usize = 0;
 const CENTER: usize = 1;
 const END: usize = 2;
+const IDENTITY: [f32; 6] = [1.0, 0.0, 0.0, 1.0, 0.0, 0.0];
 const GROUPS: [[MarginLocation; 3]; 4] = [
     [
         MarginLocation::TopLeft,
@@ -271,23 +273,63 @@ impl<'t> Prepared<'_, 't> {
                 location: self.margin.location,
             });
         }
+        let margin = self.margin;
+        let style = &margin.style;
         let paint = BoxPaint {
             padding: self.padding,
             ..BoxPaint::whole(rect, self.decoration.clone())
         };
-        let outline = paint.outline();
+        let areas = paint.fragment_areas();
+        let transform = style
+            .plane(
+                &areas,
+                None,
+                &crate::style::motion::Reference::rect(output.page),
+            )
+            .map(|plane| Region::projected(style.projected(&plane, &areas)));
+        if transform.as_ref().is_some_and(Region::collapses) {
+            return Ok(());
+        }
+        // CSS Page 3 §3.1: every page-margin box establishes a stacking context, which
+        // composites as one group.
+        let group = Group::of(style);
+        let opening: Vec<_> = transform
+            .clone()
+            .map(Region::push)
+            .into_iter()
+            .chain(group.pushes(std::slice::from_ref(&paint)))
+            .collect();
+        output.display.extend(opening.iter().cloned());
+        let links = output.links.len();
+        // Generated content takes the margin box's style, so its visibility hides the box and
+        // all of that content; a running element keeps its own (CSS GCPM 3 §1.2.1).
+        let visible = style.visibility.is_visible();
+        let outline = paint.outline().filter(|_| visible);
         let replaced = self
             .replacement
             .take()
-            .map(|image| self.replaced(image, &paint));
+            .map(|image| self.replaced(image, &paint))
+            .filter(|_| visible);
+        // CSS Overflow 3 §3.1: the overflow clips the box's content at its padding or overflow
+        // clip edge, and the box's outline paints over them.
+        let clips: Vec<_> = style
+            .clip_edges()
+            .map(|edge| style.overflow_clip(&paint, edge))
+            .collect();
         // CSS Backgrounds 4 §2.8: `background-clip: text` layers paint within the text of
         // the box's content, which a page box's text holds too.
         let clips_to_text = self.decoration.backgrounds.clips_to_text();
         let text = clips_to_text || output.page_text.is_some();
-        let painted = self.decoration.is_visible().then(|| {
+        if visible {
+            output.display.extend(group.backdrop(&paint));
+        }
+        let painted = (visible && self.decoration.is_visible()).then(|| {
             output.display.push(DisplayItem::Box(paint));
             output.display.len() - 1
         });
+        output
+            .display
+            .extend(clips.iter().cloned().map(DisplayItem::PushClip));
         let content = output.display.len();
         let extent = self.block_extent();
         let text_area = if let Some(measured) = self.measured.take() {
@@ -302,14 +344,29 @@ impl<'t> Prepared<'_, 't> {
         } else if let Some(image) = replaced {
             output.display.push(DisplayItem::Image(image));
             text.then(|| text_flow(&[], &[], rect))
-        } else {
+        } else if visible {
             self.paint_lines(rect, index, output.lines, output.display);
             text.then(|| text_flow(&output.display[content..], output.lines, rect))
-        };
+        } else {
+            text.then(|| text_flow(&[], &[], rect))
+        }
+        .map(|area| {
+            wrapped_flow(
+                area,
+                clips.iter().cloned().map(DisplayItem::PushClip).collect(),
+                rect,
+            )
+        });
+        output
+            .display
+            .extend(clips.iter().map(|_| DisplayItem::Pop));
         if let (Some(page_text), Some(area)) = (&mut output.page_text, &text_area) {
-            page_text
-                .items
-                .push(DisplayItem::Frame(Box::new(area.clone())));
+            let area = wrapped_flow(
+                area.clone(),
+                transform.iter().cloned().map(Region::push).collect(),
+                output.page,
+            );
+            page_text.items.push(DisplayItem::Frame(Box::new(area)));
         }
         if clips_to_text
             && let (Some(slot), Some(area)) = (painted, text_area)
@@ -319,6 +376,13 @@ impl<'t> Prepared<'_, 't> {
         }
         // The outline paints over the margin box's content (CSS UI 4 §3.1).
         output.display.extend(outline.map(DisplayItem::Box));
+        output
+            .display
+            .extend(opening.iter().map(|_| DisplayItem::Pop));
+        if let Some(region) = transform {
+            let areas = output.links.split_off(links);
+            output.links.extend(transformed_links(areas, &region));
+        }
         Ok(())
     }
     /// The replaced content fitted into the content box by `object-fit` and
@@ -499,6 +563,12 @@ impl<'t> Prepared<'_, 't> {
             let x = if vertical { 0.0 } else { content_origin[0] }
                 + line.alignment_offset(inline_extent, style.used_rtl());
             let baseline = y + line.ascent;
+            text_items.extend(crate::layout::inline::shadow_items(
+                &line.runs,
+                &line.decorations,
+                [x, baseline],
+                &|_, _| true,
+            ));
             let [below, above] =
                 crate::layout::inline::decoration_items(&line.decorations, x, baseline);
             text_items.extend(below);
@@ -554,7 +624,7 @@ impl<'t> Prepared<'_, 't> {
 /// flow of their own over `area`: the text a margin box's lines paint.
 fn text_flow(items: &[DisplayItem], lines: &[TextLine], area: Rect) -> FlowPaint {
     let mut flow = FlowPaint {
-        matrix: [1.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+        matrix: IDENTITY,
         area,
         items: Vec::new(),
         lines: Vec::new(),
@@ -580,9 +650,9 @@ fn text_flow(items: &[DisplayItem], lines: &[TextLine], area: Rect) -> FlowPaint
             DisplayItem::PushTransform(_) | DisplayItem::PushProjection(_) | DisplayItem::Pop => {
                 flow.items.push(item.clone());
             }
-            DisplayItem::Image(_) => {}
+            // Text areas hold text and decorations only.
+            DisplayItem::Image(_) | DisplayItem::TextShadow(_) => {}
             DisplayItem::Box(_)
-            | DisplayItem::TextShadow(_)
             | DisplayItem::PushClip(_)
             | DisplayItem::PushOpacity(_)
             | DisplayItem::PushBlend(_)
@@ -591,15 +661,62 @@ fn text_flow(items: &[DisplayItem], lines: &[TextLine], area: Rect) -> FlowPaint
             | DisplayItem::PushBackdropRoot
             | DisplayItem::Scene(_)
             | DisplayItem::Backdrop(_) => {
-                unreachable!("margin lines paint text, decorations, images and their transforms")
+                unreachable!(
+                    "margin lines paint text, shadows, decorations, images and their transforms"
+                )
             }
         }
     }
     flow
 }
+/// `area`, a margin box's text, inside the regions `pushes` open; `bounds` holds them.
+fn wrapped_flow(area: FlowPaint, pushes: Vec<DisplayItem>, bounds: Rect) -> FlowPaint {
+    if pushes.is_empty() {
+        return area;
+    }
+    let pops = pushes.len();
+    FlowPaint {
+        matrix: IDENTITY,
+        area: bounds,
+        items: pushes
+            .into_iter()
+            .chain(std::iter::once(DisplayItem::Frame(Box::new(area))))
+            .chain(std::iter::repeat_n(DisplayItem::Pop, pops))
+            .collect(),
+        lines: Vec::new(),
+    }
+}
+/// `areas`, the link areas of a margin box's content, mapped through the box's transform.
+fn transformed_links(
+    areas: Vec<crate::layout::LinkArea>,
+    region: &Region,
+) -> Vec<crate::layout::LinkArea> {
+    let polygons: Vec<_> = areas
+        .into_iter()
+        .flat_map(|area| {
+            let polygons = match area.shape {
+                crate::layout::LinkShape::Rect(rect) => {
+                    vec![crate::layout::navigation::rect_corners(rect).to_vec()]
+                }
+                crate::layout::LinkShape::Quads(quads) => {
+                    quads.into_iter().map(|quad| quad.to_vec()).collect()
+                }
+            };
+            polygons.into_iter().map(move |polygon| {
+                (
+                    area.link,
+                    crate::layout::navigation::map_region(polygon, region),
+                )
+            })
+        })
+        .collect();
+    crate::layout::navigation::link_areas(&polygons)
+}
 /// What one page's margin boxes paint, and the page's text area when its page box's
 /// backgrounds clip to text, which holds their text.
 struct MarginOutput<'p> {
+    /// The page box, the containing block of its margin boxes.
+    page: Rect,
     lines: &'p mut Vec<TextLine>,
     display: &'p mut Vec<DisplayItem>,
     links: &'p mut Vec<crate::layout::LinkArea>,
@@ -735,14 +852,15 @@ pub(super) fn render<'t>(
     context: &MarginContext<'_, 't>,
     measurer: &mut Measurer<'t>,
     first_index: usize,
-    (pages, display, links, text_areas): crate::layout::PageOutputs<'_>,
+    (pages, display, links, text_areas, underlays): crate::layout::PageOutputs<'_>,
 ) -> Result<(), LayoutError> {
     let total = pages.len();
-    for (number, (((page_lines, display), links), page_text)) in pages
+    for (number, ((((page_lines, display), links), page_text), underlay)) in pages
         .iter_mut()
         .zip(display)
         .zip(links.iter_mut())
         .zip(text_areas.iter_mut())
+        .zip(underlays.iter_mut())
         .enumerate()
     {
         let page = &page_boxes[number];
@@ -772,6 +890,7 @@ pub(super) fn render<'t>(
             ),
         ];
         let page = page_lines;
+        let mut stacked = Vec::with_capacity(margins.len());
         for (locations, (origin, containing, axis)) in GROUPS.iter().zip(groups) {
             let mut boxes: [Option<Prepared<'_, '_>>; 3] = [None, None, None];
             let mut dimensions = [Variable::default(); 3];
@@ -826,19 +945,22 @@ pub(super) fn render<'t>(
                 if let Some(mut prepared) = prepared {
                     prepared.variable(axis, containing[axis], sizes[position], position);
                     prepared.layout(measurer)?;
-                    let index = first_index + prepared.margin.location as usize;
+                    let margin = prepared.margin;
+                    let mut items = Vec::new();
                     prepared.paint(
                         origin,
-                        index,
+                        first_index + margin.location as usize,
                         &mut MarginOutput {
+                            page: page_box,
                             lines: page,
-                            display,
+                            display: &mut items,
                             links,
                             page_text: page_text.as_mut(),
                         },
                         measurer,
                         context.destinations,
                     )?;
+                    stacked.push((margin, items));
                 }
             }
         }
@@ -870,18 +992,36 @@ pub(super) fn render<'t>(
                     prepared.fixed(axis, containing[axis]);
                 }
                 prepared.layout(measurer)?;
+                let mut items = Vec::new();
                 prepared.paint(
                     origin,
                     first_index + location as usize,
                     &mut MarginOutput {
+                        page: page_box,
                         lines: page,
-                        display,
+                        display: &mut items,
                         links,
                         page_text: page_text.as_mut(),
                     },
                     measurer,
                     context.destinations,
                 )?;
+                stacked.push((*margin, items));
+            }
+        }
+        // CSS Page 3 §3.1: margin boxes stack by `z-index`, then in their default painting
+        // order, before the document's canvas when negative and over its content otherwise.
+        stacked.sort_by_key(|(margin, _)| {
+            (
+                margin.style.z_index.unwrap_or_default(),
+                margin.location.painting_order(),
+            )
+        });
+        for (margin, items) in stacked {
+            if margin.style.z_index.unwrap_or_default() < 0 {
+                underlay.extend(items);
+            } else {
+                display.extend(items);
             }
         }
     }

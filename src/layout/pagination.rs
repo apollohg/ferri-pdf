@@ -389,7 +389,7 @@ enum Rendered {
 /// How a stacking context composites; every stacking context is an isolated group, which
 /// paints as its content does unless something inside it blends (Compositing 1 §3.2).
 #[derive(Clone, Copy)]
-struct Group<'a> {
+pub(super) struct Group<'a> {
     opacity: f32,
     blend: crate::graphics::BlendMode,
     isolated: bool,
@@ -413,7 +413,7 @@ impl<'a> Group<'a> {
         root: false,
         anchor: None,
     };
-    fn of(style: &'a crate::style::Style) -> Self {
+    pub(super) fn of(style: &'a crate::style::Style) -> Self {
         Self {
             opacity: style.opacity,
             blend: style.mix_blend_mode,
@@ -437,7 +437,7 @@ impl<'a> Group<'a> {
     /// blend group, an opacity group, which is isolated itself, the mask, then the filter,
     /// which applies before the others (Filter Effects 1 §5). `fragments` are the element's
     /// box fragments on the page.
-    fn pushes(self, fragments: &[BoxPaint]) -> Vec<DisplayItem> {
+    pub(super) fn pushes(self, fragments: &[BoxPaint]) -> Vec<DisplayItem> {
         let bounds = fragments.iter().map(|paint| paint.rect).reduce(Rect::union);
         let translucent = self.opacity < 1.0;
         let blend =
@@ -461,7 +461,7 @@ impl<'a> Group<'a> {
             .collect()
     }
     /// The filtered backdrop behind `fragment`, one of the element's own box fragments.
-    fn backdrop(&self, fragment: &BoxPaint) -> Option<DisplayItem> {
+    pub(super) fn backdrop(&self, fragment: &BoxPaint) -> Option<DisplayItem> {
         (!self.backdrop.is_empty()).then(|| {
             DisplayItem::Backdrop(crate::graphics::BackdropPaint {
                 functions: self.backdrop.to_vec(),

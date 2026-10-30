@@ -17,6 +17,7 @@ CANVAS_BACKGROUND = (64, 80, 96)
 PAGE_BORDER = (204, 34, 0)
 CONTENT_BACKGROUND = (112, 128, 144)
 PIXEL_TOLERANCE = 1
+INK_TOLERANCE = 64
 FAR_CLIP_OFFSET_PT = 1_100_000
 
 
@@ -723,6 +724,91 @@ class PagePaint(unittest.TestCase):
             ((40, 40), CONTENT_BACKGROUND, "content paints above page layers"),
         ]:
             self.pixel(page, position, color, reason)
+
+    def margin_box(self, declarations, extra="", body=""):
+        return self.render(
+            "@page{margin:40pt;padding:0;border:0;background:white;"
+            f"@top-left{{{declarations}}}{extra}}}",
+            body,
+            page_size=(200, 200),
+        )[0]
+
+    def ink(self, page, box, color):
+        """Pixels within `box` (left, top, right, bottom) near `color`."""
+        region = page.crop(box)
+        return sum(
+            count
+            for count, pixel in region.getcolors(region.width * region.height)
+            if all(abs(got - expected) <= INK_TOLERANCE for got, expected in zip(pixel, color))
+        )
+
+    def test_page_margin_box_visibility_overflow_shadow_and_stacking_reach_native_ink(self):
+        red, blue, lime, white = (255, 0, 0), (0, 0, 255), (0, 255, 0), (255, 255, 255)
+        hidden = self.margin_box(
+            "content:'WWW';font:20pt serif;color:red;background:blue;visibility:hidden",
+            "@top-right{content:'';width:40pt;background:lime}",
+        )
+        self.pixel(hidden, (45, 5), white, "a hidden margin box paints no background")
+        self.assertEqual(self.ink(hidden, (40, 0, 100, 40), red), 0,
+                         "a hidden margin box paints none of its generated text")
+        self.pixel(hidden, (155, 5), lime, "a visible sibling margin box still paints")
+        for overflow, expected in [("visible", True), ("hidden", False), ("clip", False)]:
+            with self.subTest(overflow=overflow):
+                page = self.margin_box(
+                    "content:'WWWWWWWWWW';white-space:nowrap;width:30pt;font:30pt serif;"
+                    f"color:blue;overflow:{overflow}"
+                )
+                self.assertGreater(self.ink(page, (40, 0, 70, 40), blue), 0,
+                                   "text inside the margin box paints")
+                self.assertEqual(self.ink(page, (75, 0, 160, 40), blue) > 0, expected,
+                                 f"overflow:{overflow} decides whether text past the box paints")
+        shadowed = self.margin_box("content:'W';font:30pt serif;color:red;"
+                                   "text-shadow:60pt 0 blue")
+        self.assertGreater(self.ink(shadowed, (100, 0, 160, 40), blue), 0,
+                           "margin box text paints its text shadow")
+        for z_index, overlap, reason in [
+            ("auto", blue, "top-center paints after top-left in the default order"),
+            ("2", red, "a higher z-index paints top-left over top-center"),
+        ]:
+            with self.subTest(z_index=z_index):
+                page = self.margin_box(
+                    f"content:'';background:red;margin-right:-60pt;z-index:{z_index}",
+                    "@top-center{content:'';width:60pt;background:blue}",
+                )
+                self.pixel(page, (85, 20), overlap, reason)
+        behind = self.margin_box(
+            "content:'';background:red;margin-bottom:-60pt;z-index:-1",
+            body="<div style='height:120pt;background:blue'></div>",
+        )
+        self.pixel(behind, (50, 20), red, "a negative z-index margin box paints in its margin")
+        self.pixel(behind, (60, 80), blue, "document content paints over a negative z-index margin box")
+
+    def test_page_margin_box_effects_reach_native_ink(self):
+        white, red = (255, 255, 255), (255, 0, 0)
+        for declarations, extra, probes in [
+            ("opacity:.5", "", [((60, 20), (255, 128, 128), "opacity composites the box")]),
+            ("filter:grayscale(1)", "", [((60, 20), (54, 54, 54), "filters apply to the box")]),
+            ("mix-blend-mode:multiply", "background:lime;",
+             [((60, 20), (0, 0, 0), "the box blends with the page background")]),
+            ("clip-path:inset(0 50% 0 0)", "",
+             [((50, 20), red, "the clip path keeps the left half"),
+              ((140, 20), white, "the clip path removes the right half")]),
+            ("mask-image:linear-gradient(transparent,transparent)", "",
+             [((60, 20), white, "a transparent mask hides the box")]),
+            ("transform:translate(20pt,60pt)", "",
+             [((60, 20), white, "the transform moves the box off its margin"),
+              ((70, 80), red, "the transform places the box over the page area")]),
+            ("backdrop-filter:invert(1);background:transparent", "background:lime;",
+             [((60, 20), (255, 0, 255), "the backdrop filter inverts the page behind the box")]),
+        ]:
+            with self.subTest(declarations=declarations):
+                page = self.render(
+                    f"@page{{margin:40pt;padding:0;border:0;{extra or 'background:white;'}"
+                    f"@top-left{{content:'';background:red;{declarations}}}}}",
+                    "", page_size=(200, 200),
+                )[0]
+                for position, color, reason in probes:
+                    self.pixel(page, position, color, reason)
 
     def test_propagated_image_uses_actual_root_content_origin(self):
         for source in ("html", "body"):

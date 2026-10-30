@@ -94,12 +94,14 @@ impl PagePaint {
         Ok(paint)
     }
 
-    /// Puts the page box's background and border under the page's display list; text-clipped
-    /// backgrounds paint within `text_area`, the page's text.
+    /// Puts the page box's background and border under the page's display list, and
+    /// `underlay` between the background and the document canvas (CSS Page 3 §3.1);
+    /// text-clipped backgrounds paint within `text_area`, the page's text.
     pub(crate) fn decorate(
         &self,
         list: &mut Vec<DisplayItem>,
         text_area: Option<crate::graphics::FlowPaint>,
+        underlay: Vec<DisplayItem>,
     ) {
         if let Some(border) = &self.border {
             list.insert(
@@ -107,6 +109,7 @@ impl PagePaint {
                 DisplayItem::Box(border.clone()),
             );
         }
+        list.splice(0..0, underlay);
         if let Some(background) = &self.background {
             list.insert(
                 0,

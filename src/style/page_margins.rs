@@ -67,6 +67,31 @@ impl MarginLocation {
             .position(|candidate| name.eq_ignore_ascii_case(candidate))
             .map(|i| Self::ALL[i])
     }
+    /// The default painting order: from the top-left corner clockwise (CSS Page 3 §3.1).
+    pub(crate) fn painting_order(self) -> usize {
+        const ORDER: [MarginLocation; 16] = [
+            MarginLocation::TopLeftCorner,
+            MarginLocation::TopLeft,
+            MarginLocation::TopCenter,
+            MarginLocation::TopRight,
+            MarginLocation::TopRightCorner,
+            MarginLocation::RightTop,
+            MarginLocation::RightMiddle,
+            MarginLocation::RightBottom,
+            MarginLocation::BottomRightCorner,
+            MarginLocation::BottomRight,
+            MarginLocation::BottomCenter,
+            MarginLocation::BottomLeft,
+            MarginLocation::BottomLeftCorner,
+            MarginLocation::LeftBottom,
+            MarginLocation::LeftMiddle,
+            MarginLocation::LeftTop,
+        ];
+        ORDER
+            .iter()
+            .position(|location| *location == self)
+            .expect("every margin location has a painting order")
+    }
     fn align(self) -> &'static str {
         match self {
             Self::TopLeft | Self::BottomLeft | Self::TopRightCorner | Self::BottomRightCorner => {
