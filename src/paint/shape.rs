@@ -127,14 +127,38 @@ pub(crate) struct ClipPath {
 impl ClipPath {
     /// The clipping region of a box fragment, whose used margins `paint` carries.
     pub(crate) fn outline<I>(&self, paint: &BoxPaint<I>) -> Shape {
-        let (rect, radii) = self.reference.layout().resolve(paint, paint.margins);
+        let reference = self.reference.layout();
         match &self.shape {
-            Some(shape) => shape.outline(rect),
-            None => Shape::Path {
-                contours: vec![rounded::rounded_rect(rect, radii)],
-                even_odd: false,
-                clip: None,
-            },
+            Some(shape) => shape.outline(reference.resolve(paint, paint.margins).0),
+            None if *paint.decoration.corner_shapes != [crate::paint::CornerShape::ROUND; 4] => {
+                let clip = match reference {
+                    ShapeBox::Margin => {
+                        paint.box_clip(paint.margins.map(|margin| -margin), [true; 2])
+                    }
+                    ShapeBox::Visual(BoxArea::BorderBox) => paint.box_clip([0.0; 4], [true; 2]),
+                    ShapeBox::Visual(area) => paint.inner_clip(
+                        if area == BoxArea::ContentBox {
+                            paint.padding
+                        } else {
+                            [0.0; 4]
+                        },
+                        [true; 2],
+                    ),
+                };
+                Shape::Path {
+                    contours: clip.contours().into_owned(),
+                    even_odd: false,
+                    clip: None,
+                }
+            }
+            None => {
+                let (rect, radii) = reference.resolve(paint, paint.margins);
+                Shape::Path {
+                    contours: vec![rounded::rounded_rect(rect, radii)],
+                    even_odd: false,
+                    clip: None,
+                }
+            }
         }
     }
 }

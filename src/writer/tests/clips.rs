@@ -211,3 +211,148 @@ fn compound_fill_clips_preserve_holes_empty_regions_and_nested_bounds() {
         }
     }
 }
+
+#[test]
+fn geometry_box_clips_keep_concave_corners_and_signed_box_offsets() {
+    use crate::paint::{
+        BasicShape, Border, BorderStyle, BoxArea, BoxDecoration, BoxPaint, ClipPath, Color,
+        CornerShape, Fill, GeometryBox, LengthPercentage, ShapeBox,
+    };
+    let rect = Rect {
+        x: 20.0,
+        y: 20.0,
+        width: 100.0,
+        height: 80.0,
+    };
+    let mut paint = BoxPaint::<std::convert::Infallible>::whole(
+        rect,
+        BoxDecoration {
+            radii: Arc::new(std::array::from_fn(|_| {
+                std::array::from_fn(|_| LengthPercentage::Percentage(0.5))
+            })),
+            corner_shapes: Arc::new([
+                CornerShape::NOTCH,
+                CornerShape::SQUARE,
+                CornerShape::NOTCH,
+                CornerShape::SQUARE,
+            ]),
+            borders: [4.0, 8.0, 12.0, 16.0].map(|width| Border {
+                width,
+                style: BorderStyle::Solid,
+                color: Color::BLACK,
+            }),
+            ..Default::default()
+        },
+    );
+    paint.padding = [3.0; 4];
+    paint.margins = [6.0; 4];
+    for (reference, insets) in [
+        (
+            GeometryBox::Shape(ShapeBox::Visual(BoxArea::BorderBox)),
+            [0.0; 4],
+        ),
+        (
+            GeometryBox::Shape(ShapeBox::Visual(BoxArea::PaddingBox)),
+            [4.0, 8.0, 12.0, 16.0],
+        ),
+        (
+            GeometryBox::Shape(ShapeBox::Visual(BoxArea::ContentBox)),
+            [7.0, 11.0, 15.0, 19.0],
+        ),
+        (GeometryBox::Shape(ShapeBox::Margin), [-6.0; 4]),
+        (GeometryBox::Shape(ShapeBox::Margin), [30.0; 4]),
+        (GeometryBox::Fill, [7.0, 11.0, 15.0, 19.0]),
+        (GeometryBox::Stroke, [0.0; 4]),
+        (GeometryBox::View, [0.0; 4]),
+    ] {
+        if reference == GeometryBox::Shape(ShapeBox::Margin) {
+            paint.margins = insets.map(|inset| -inset);
+        }
+        for basic in [false, true] {
+            let clip_path = ClipPath {
+                reference,
+                shape: basic.then_some(BasicShape::Inset {
+                    insets: [LengthPercentage::ZERO; 4],
+                    radii: std::array::from_fn(|_| [LengthPercentage::ZERO; 2]),
+                }),
+            };
+            let shape = clip_path.outline(&paint);
+            let mut fragment = paint.clone();
+            fragment.background_box = Some(rect);
+            fragment.rect.y += rect.height / 2.0;
+            fragment.rect.height /= 2.0;
+            fragment.first_fragment = false;
+            let crate::paint::Shape::Path {
+                contours: whole, ..
+            } = &shape
+            else {
+                panic!("geometry boxes produce filled paths");
+            };
+            let crate::paint::Shape::Path {
+                contours: sliced, ..
+            } = clip_path.outline(&fragment)
+            else {
+                panic!("sliced geometry boxes produce filled paths");
+            };
+            assert_eq!(
+                *whole, sliced,
+                "{reference:?}: a fragment retains the assembled path"
+            );
+            let viewport = Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 140.0,
+                height: 120.0,
+            };
+            let pdf = super::render([140, 120], |surface| {
+                painting::draw_fill(
+                    Fill {
+                        shape: shape.clone(),
+                        color: Color::BLACK,
+                    },
+                    viewport,
+                    surface,
+                )
+                .unwrap();
+            });
+            let mut raster = tiny_skia::Pixmap::new(140, 120).unwrap();
+            crate::paint::cover(
+                &shape,
+                viewport,
+                tiny_skia::Transform::identity(),
+                &mut raster,
+                None,
+            );
+            let [top, right, bottom, left] = insets;
+            for y in 0..120 {
+                for x in 0..140 {
+                    let px = x as f32 + 0.5;
+                    let py = y as f32 + 0.5;
+                    let inside = px >= 20.0 + left
+                        && px < 120.0 - right
+                        && py >= 20.0 + top
+                        && py < 100.0 - bottom;
+                    let cut = (px < 70.0 + top && py < 60.0 + left)
+                        || (px >= 70.0 - bottom && py >= 60.0 - right);
+                    let expected = if inside && (basic || !cut) {
+                        u8::MAX
+                    } else {
+                        0
+                    };
+                    for (backend, alpha) in [
+                        pdf[(y * 140 + x) * 4 + 3],
+                        raster.pixels()[y * 140 + x].alpha(),
+                    ]
+                    .into_iter()
+                    .enumerate()
+                    {
+                        assert_eq!(
+                            alpha, expected,
+                            "reference={reference:?}, basic={basic}, backend={backend}, pixel=({x},{y})"
+                        );
+                    }
+                }
+            }
+        }
+    }
+}
