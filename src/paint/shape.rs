@@ -94,6 +94,27 @@ pub(crate) enum BasicShape {
 }
 
 impl ShapeBox {
+    /// The assembled box contour, including its corner shape and signed margin offsets.
+    pub(crate) fn contours<I>(self, paint: &BoxPaint<I>, margins: [f32; 4]) -> Vec<Contour> {
+        if *paint.decoration.corner_shapes == [crate::paint::CornerShape::ROUND; 4] {
+            let (rect, radii) = self.resolve(paint, margins);
+            return vec![rounded::rounded_rect(rect, radii)];
+        }
+        let clip = match self {
+            Self::Margin => paint.box_clip(margins.map(|margin| -margin), [true; 2]),
+            Self::Visual(BoxArea::BorderBox) => paint.box_clip([0.0; 4], [true; 2]),
+            Self::Visual(area) => paint.inner_clip(
+                if area == BoxArea::ContentBox {
+                    paint.padding
+                } else {
+                    [0.0; 4]
+                },
+                [true; 2],
+            ),
+        };
+        clip.contours().into_owned()
+    }
+
     /// The box's rectangle and corner radii in `paint`, a sliced fragment's assembled box,
     /// with `margins` around the border box for `margin-box` (CSS Shapes 1 §5).
     pub(crate) fn resolve<I>(self, paint: &BoxPaint<I>, margins: [f32; 4]) -> (Rect, Radii) {
@@ -130,35 +151,11 @@ impl ClipPath {
         let reference = self.reference.layout();
         match &self.shape {
             Some(shape) => shape.outline(reference.resolve(paint, paint.margins).0),
-            None if *paint.decoration.corner_shapes != [crate::paint::CornerShape::ROUND; 4] => {
-                let clip = match reference {
-                    ShapeBox::Margin => {
-                        paint.box_clip(paint.margins.map(|margin| -margin), [true; 2])
-                    }
-                    ShapeBox::Visual(BoxArea::BorderBox) => paint.box_clip([0.0; 4], [true; 2]),
-                    ShapeBox::Visual(area) => paint.inner_clip(
-                        if area == BoxArea::ContentBox {
-                            paint.padding
-                        } else {
-                            [0.0; 4]
-                        },
-                        [true; 2],
-                    ),
-                };
-                Shape::Path {
-                    contours: clip.contours().into_owned(),
-                    even_odd: false,
-                    clip: None,
-                }
-            }
-            None => {
-                let (rect, radii) = reference.resolve(paint, paint.margins);
-                Shape::Path {
-                    contours: vec![rounded::rounded_rect(rect, radii)],
-                    even_odd: false,
-                    clip: None,
-                }
-            }
+            None => Shape::Path {
+                contours: reference.contours(paint, paint.margins),
+                even_odd: false,
+                clip: None,
+            },
         }
     }
 }

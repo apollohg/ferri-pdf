@@ -147,13 +147,21 @@ pub(crate) fn float_area(
 ) -> Result<Option<FloatArea>, LayoutError> {
     let mut pieces = match shape {
         ShapeOutside::None => return Ok(None),
-        ShapeOutside::Box(reference) => {
+        ShapeOutside::Box(reference)
+            if *boxes.paint.decoration.corner_shapes == [crate::paint::CornerShape::ROUND; 4] =>
+        {
             let (rect, radii) = reference_box(*reference, boxes);
             flatten(&crate::paint::rounded_rect(rect, radii))
                 .into_iter()
                 .filter_map(Piece::new)
                 .collect()
         }
+        ShapeOutside::Box(reference) => path_pieces(
+            &reference.contours(boxes.paint, boxes.margins),
+            false,
+            margin,
+            work,
+        )?,
         ShapeOutside::Shape { shape, reference } => {
             let Shape::Path {
                 contours, even_odd, ..
@@ -161,16 +169,7 @@ pub(crate) fn float_area(
             else {
                 unreachable!("basic shapes outline as paths")
             };
-            let polygons = contours.iter().flat_map(flatten).collect::<Vec<_>>();
-            let mut pieces = trapezoids(&polygons, even_odd, work)?;
-            if margin > 0.0 {
-                pieces.extend(polygons.iter().flat_map(|polygon| {
-                    polygon.iter().enumerate().filter_map(|(index, point)| {
-                        Piece::new(vec![*point, polygon[(index + 1) % polygon.len()]])
-                    })
-                }));
-            }
-            pieces
+            path_pieces(&contours, even_odd, margin, work)?
         }
         ShapeOutside::Image(image) => {
             let (content, _) = reference_box(ShapeBox::Visual(BoxArea::ContentBox), boxes);
@@ -197,6 +196,24 @@ pub(crate) fn float_area(
     Ok(Some(FloatArea { pieces, tallest }))
 }
 
+fn path_pieces(
+    contours: &[Contour],
+    even_odd: bool,
+    margin: f32,
+    work: &Budget,
+) -> Result<Vec<Piece>, LayoutError> {
+    let polygons = contours.iter().flat_map(flatten).collect::<Vec<_>>();
+    let mut pieces = trapezoids(&polygons, even_odd, work)?;
+    if margin > 0.0 {
+        pieces.extend(polygons.iter().flat_map(|polygon| {
+            polygon.iter().enumerate().filter_map(|(index, point)| {
+                Piece::new(vec![*point, polygon[(index + 1) % polygon.len()]])
+            })
+        }));
+    }
+    Ok(pieces)
+}
+
 /// Convex pieces of a filled path, with the same curve tolerance and fill rules as floats.
 pub(super) fn filled_polygons(
     shape: &Shape,
@@ -206,13 +223,10 @@ pub(super) fn filled_polygons(
         Shape::Rect(rect) => Ok(vec![super::navigation::rect_corners(*rect).to_vec()]),
         Shape::Path {
             contours, even_odd, ..
-        } => {
-            let polygons = contours.iter().flat_map(flatten).collect::<Vec<_>>();
-            Ok(trapezoids(&polygons, *even_odd, work)?
-                .into_iter()
-                .map(|piece| piece.points)
-                .collect())
-        }
+        } => Ok(path_pieces(contours, *even_odd, 0.0, work)?
+            .into_iter()
+            .map(|piece| piece.points)
+            .collect()),
         _ => unreachable!("a CSS clip-path outlines a rectangle or filled path"),
     }
 }
@@ -619,4 +633,144 @@ fn alpha_grid(
         },
     };
     Ok(Some(grid))
+}
+
+#[cfg(test)]
+mod corner_tests {
+    use super::*;
+    use crate::paint::{Border, BorderStyle, BoxDecoration, Color, CornerShape, LengthPercentage};
+
+    #[test]
+    fn box_float_areas_wrap_around_disconnected_notches_and_their_margin() {
+        let paint = BoxPaint::whole(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 100.0,
+                height: 80.0,
+            },
+            BoxDecoration {
+                radii: Arc::new(std::array::from_fn(|_| {
+                    std::array::from_fn(|_| LengthPercentage::Percentage(0.5))
+                })),
+                corner_shapes: Arc::new([
+                    CornerShape::NOTCH,
+                    CornerShape::SQUARE,
+                    CornerShape::NOTCH,
+                    CornerShape::SQUARE,
+                ]),
+                borders: [4.0, 8.0, 12.0, 16.0].map(|width| Border {
+                    width,
+                    style: BorderStyle::Solid,
+                    color: Color::BLACK,
+                }),
+                ..Default::default()
+            },
+        );
+        let paint = BoxPaint {
+            padding: [3.0; 4],
+            ..paint
+        };
+        let bounds = Rect {
+            x: -10.0,
+            y: -10.0,
+            width: 120.0,
+            height: 100.0,
+        };
+        let boxes = FloatBoxes {
+            paint: &paint,
+            margins: [6.0; 4],
+            bounds,
+        };
+        for (reference, [top, right, bottom, left]) in [
+            (ShapeBox::Visual(BoxArea::BorderBox), [0.0; 4]),
+            (
+                ShapeBox::Visual(BoxArea::PaddingBox),
+                [4.0, 8.0, 12.0, 16.0],
+            ),
+            (
+                ShapeBox::Visual(BoxArea::ContentBox),
+                [7.0, 11.0, 15.0, 19.0],
+            ),
+            (ShapeBox::Margin, [-6.0; 4]),
+        ] {
+            let rectangles = [
+                [50.0 + top, top, 100.0 - right, 40.0 - right],
+                [left, 40.0 + left, 50.0 - bottom, 80.0 - bottom],
+            ];
+            for margin in [0.0_f32, 2.0] {
+                let work = Budget::new(crate::layout::MAX_LAYOUT_WORK);
+                let area = float_area(&ShapeOutside::Box(reference), margin, 0.0, &boxes, &work)
+                    .unwrap()
+                    .unwrap();
+                for row in -9..89 {
+                    let y = row as f32 + 0.25;
+                    for side in [FloatSide::Left, FloatSide::Right] {
+                        let mut expected: Option<f32> = None;
+                        for [x0, y0, x1, y1] in rectangles {
+                            if x0 >= x1 || y0 >= y1 {
+                                continue;
+                            }
+                            let dy = (y0 - y - 0.5).max(y - y1).max(0.0);
+                            if dy > margin || (margin == 0.0 && !meets(y0, y1, y, 0.5)) {
+                                continue;
+                            }
+                            let dx = (margin * margin - dy * dy).sqrt();
+                            let edge = match side {
+                                FloatSide::Left => (x1 + dx).min(110.0),
+                                FloatSide::Right => (x0 - dx).max(-10.0),
+                            };
+                            expected = Some(expected.map_or(edge, |old| match side {
+                                FloatSide::Left => old.max(edge),
+                                FloatSide::Right => old.min(edge),
+                            }));
+                        }
+                        let actual = area.edge(y, 0.5, side, &work).unwrap();
+                        assert!(
+                            match (actual, expected) {
+                                (Some(a), Some(b)) => (a - b).abs() <= FLATTEN_TOLERANCE_PT * 2.0,
+                                (None, None) => true,
+                                _ => false,
+                            },
+                            "reference={reference:?},margin={margin},side={side:?},y={y}: actual={actual:?},expected={expected:?}"
+                        );
+                    }
+                }
+            }
+        }
+        let consumed = BoxPaint {
+            padding: [40.0; 4],
+            ..paint.clone()
+        };
+        for margin in [0.0, 2.0] {
+            let work = Budget::new(crate::layout::MAX_LAYOUT_WORK);
+            let empty = float_area(
+                &ShapeOutside::Box(ShapeBox::Visual(BoxArea::ContentBox)),
+                margin,
+                0.0,
+                &FloatBoxes {
+                    paint: &consumed,
+                    ..boxes
+                },
+                &work,
+            )
+            .unwrap()
+            .unwrap();
+            assert!(
+                empty.pieces.is_empty(),
+                "shape-margin must not resurrect an empty content shape"
+            );
+        }
+        let exhausted = float_area(
+            &ShapeOutside::Box(ShapeBox::Visual(BoxArea::BorderBox)),
+            0.0,
+            0.0,
+            &boxes,
+            &Budget::new(0),
+        );
+        assert!(
+            exhausted.is_err(),
+            "corner decomposition must obey the layout work budget"
+        );
+    }
 }
