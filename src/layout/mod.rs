@@ -61,11 +61,14 @@ pub struct TextLine {
     pub color: Color,
 }
 
-/// The elements whose renderings `element()` images show, and the document's root element.
+/// The elements whose renderings `element()` images show, the document's root element, and
+/// the renderings of those shown outside the document's flow, in footnote areas and
+/// page-margin boxes.
 #[derive(Default)]
 pub(crate) struct ElementTargets {
     pub targets: std::collections::HashSet<crate::dom::ElementId>,
     pub root: Option<crate::dom::ElementId>,
+    pub displayed: std::cell::RefCell<pagination::Renderings>,
 }
 
 impl TextLine {
@@ -317,7 +320,7 @@ fn paginate<'t>(
         string_locations,
         line_boxes: _,
         root_text_area: _,
-        renderings,
+        mut renderings,
     } = if continuous {
         paginator.unbroken()
     } else {
@@ -368,6 +371,7 @@ fn paginate<'t>(
         navigation::clip_links(areas, record.output.bleed);
     }
     anchors.physical(flow, &page_boxes);
+    renderings.adopt(measurer.element_targets.displayed.take());
     let (elements, element_images) = element_renderings(document, &sheet.fonts, renderings);
     Ok(LayoutPass {
         generated,
@@ -400,6 +404,7 @@ fn element_targets(document: &StyledDocument) -> std::rc::Rc<ElementTargets> {
     std::rc::Rc::new(ElementTargets {
         targets: document.element_images().targets(),
         root: Some(document.root_element()),
+        displayed: std::cell::RefCell::default(),
     })
 }
 

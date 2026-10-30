@@ -571,6 +571,10 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             };
             let area = self.area(page).expect("footnote areas belong to pages");
             let (_, decoration) = self.area_box(page).expect("footnote areas belong to pages");
+            let Fragmentainers::Pages(pages) = &self.fragmentainers else {
+                unreachable!("footnote areas belong to pages");
+            };
+            let flow = crate::style::logical::Flow::used(pages.document.root().style());
             let decoration = decoration.into_owned();
             let page_area = self.fragmentainers.content_box(page);
             let height = area.content_height(content, self.footnotes_only(page));
@@ -638,6 +642,15 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                         lines: layout.flow.lines.clone(),
                     })));
                     navigation.push((page, layout.flow.navigation.translated(origin, window)));
+                    // CSS Images 4 §2.7: a body broken across footnote areas is imaged as laid
+                    // out whole, which its first part starts.
+                    if part.top == 0.0 {
+                        self.measurer
+                            .element_targets
+                            .displayed
+                            .borrow_mut()
+                            .adopt((*layout.flow.renderings).clone().physical(flow));
+                    }
                 }
                 y += row.height;
             }

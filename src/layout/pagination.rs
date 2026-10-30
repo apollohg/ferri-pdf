@@ -872,6 +872,8 @@ pub(super) struct StandaloneFlow {
     pub line_boxes: Vec<[f32; 2]>,
     pub navigation: StandaloneNavigation,
     pub text_area: Option<crate::graphics::FlowPaint>,
+    /// The renderings of the elements inside the flow that `element()` images show.
+    pub renderings: Box<Renderings>,
 }
 
 /// The link areas and destination bounds of a standalone flow, in its coordinates.
@@ -6493,6 +6495,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let mut paginated = paginator.document(Some(root), destinations, std::iter::empty())?;
         Ok(StandaloneFlow {
             text_area: paginated.root_text_area.take().map(|area| *area),
+            renderings: std::mem::take(&mut paginated.renderings),
             lines: paginated.pages.swap_remove(0),
             items: paginated.display_lists.swap_remove(0),
             line_boxes: paginated.line_boxes,

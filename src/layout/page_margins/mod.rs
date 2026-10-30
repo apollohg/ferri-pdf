@@ -397,10 +397,15 @@ impl<'t> Prepared<'_, 't> {
             destinations,
             clips_to_text,
         )?;
-        let frame = crate::layout::writing::Frame::physical(
-            crate::style::logical::Flow::used(&self.margin.style),
-            size,
-        );
+        let margin_flow = crate::style::logical::Flow::used(&self.margin.style);
+        let frame = crate::layout::writing::Frame::physical(margin_flow, size);
+        // CSS Images 4 §2.7: a running element is copied into each page that places it
+        // (CSS GCPM 3 §1.2.2); `element()` images the copy on the first page showing it.
+        measurer
+            .element_targets
+            .displayed
+            .borrow_mut()
+            .adopt(flow.renderings.physical(margin_flow));
         let mut items = flow.items;
         let mut text_area = flow.text_area;
         let mut navigation = flow.navigation.into_links();

@@ -14,17 +14,60 @@ use std::collections::{HashMap, HashSet};
 
 /// An element's rendering: its pages' items placed in its decorated bounding box, physical
 /// and starting at the origin, which spans `size` points.
+#[derive(Clone)]
 pub(crate) struct Rendering {
     pub items: Vec<DisplayItem>,
     pub size: [f32; 2],
 }
+impl Rendering {
+    /// The rendering of an element laid out in the horizontal space of `flow`, drawn in
+    /// physical space.
+    pub(crate) fn physical(mut self, flow: crate::style::logical::Flow) -> Self {
+        let [width, height] = self.size;
+        let size = if flow.writing_mode.vertical() {
+            [height, width]
+        } else {
+            self.size
+        };
+        crate::layout::writing::Frame::physical(flow, size).items(&mut self.items);
+        Self {
+            items: self.items,
+            size,
+        }
+    }
+}
 
 /// What a layout found of the elements that `element()` images show: the renderings of those
 /// that generate a stacking context, and those whose boxes generate none.
-#[derive(Default)]
+#[derive(Clone, Default)]
 pub(crate) struct Renderings {
     pub stacked: HashMap<ElementId, Rendering>,
     pub unstacked: HashSet<ElementId>,
+}
+impl Renderings {
+    /// Adds what a flow laid out apart from these found, keeping the renderings these hold:
+    /// an element shown in several places is imaged where it is first shown.
+    pub(crate) fn adopt(&mut self, other: Self) {
+        for (element, rendering) in other.stacked {
+            self.unstacked.remove(&element);
+            self.stacked.entry(element).or_insert(rendering);
+        }
+        self.unstacked.extend(
+            other
+                .unstacked
+                .into_iter()
+                .filter(|element| !self.stacked.contains_key(element)),
+        );
+    }
+    /// These renderings, laid out in the horizontal space of `flow`, drawn in physical space.
+    pub(crate) fn physical(mut self, flow: crate::style::logical::Flow) -> Self {
+        self.stacked = self
+            .stacked
+            .into_iter()
+            .map(|(element, rendering)| (element, rendering.physical(flow)))
+            .collect();
+        self
+    }
 }
 
 /// Which items an element's rendering paints, and how much of their effects.
@@ -177,7 +220,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             width: 0.0,
             height: 0.0,
         });
-        let mut items: Vec<DisplayItem> = pages
+        let items: Vec<DisplayItem> = pages
             .into_iter()
             .map(|([x, y], area, items, lines)| {
                 DisplayItem::Frame(Box::new(FlowPaint {
@@ -188,19 +231,11 @@ impl<'a> Paginator<'a, '_, 'a> {
                 }))
             })
             .collect();
-        let logical = [decorated.width, decorated.height];
-        let frame = crate::layout::writing::Frame::physical(flow, logical);
-        frame.items(&mut items);
-        let physical = frame.rect(Rect {
-            x: 0.0,
-            y: 0.0,
-            width: logical[0],
-            height: logical[1],
-        });
         Ok(Rendering {
             items,
-            size: [physical.width, physical.height],
-        })
+            size: [decorated.width, decorated.height],
+        }
+        .physical(flow))
     }
 
     /// The border image areas of the element's principal box fragments on `page`, which its

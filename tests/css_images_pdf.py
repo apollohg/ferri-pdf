@@ -610,6 +610,40 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                 (fragmented + '#d{background-image:linear-gradient(red,blue);background-size:100px 400pt}',
                  body),
                 'a fragmented element renders as one box across the joined page areas')
+            # In vertical-rl the element's block axis is horizontal: its 40px width is block size.
+            wide = blocks(root / 'wide.png', [[BLUE] * 4])
+            vertical = ('html{writing-mode:vertical-rl}'
+                        '#t{position:relative;z-index:0;width:40px;height:10px;background:blue}')
+            body = '<div id=t></div><div class=box></div>'
+            self.assertSameInterior(
+                root, (vertical + '.box{background:element(#t) no-repeat}', body),
+                (vertical + f'.box{{background:url("{wide}") no-repeat}}', body),
+                'a vertical flow\'s rendering keeps its physical extent')
+
+    def test_element_images_render_elements_shown_outside_the_flow(self):
+        """CSS Images 4 §2.7: an element rendered in a footnote area or, as a running element,
+        in a page-margin box has a box, so element() renders it there. A running element is
+        copied into every page that places it (CSS GCPM 3 §1.2.2); the copy on the first page
+        showing it is the one imaged."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-element-outside-') as directory:
+            root = Path(directory)
+            blue = blocks(root / 'blue.png', [[BLUE, BLUE]])
+            footnote = ('.fn{float:footnote}'
+                        '#t{display:inline-block;position:relative;z-index:0;width:20px;height:10px;background:blue}')
+            body = '<p>Text<span class=fn>Note <span id=t></span></span></p><div class=box></div>'
+            self.assertSameInterior(
+                root, (footnote + '.box{background:element(#t) no-repeat}', body),
+                (footnote + f'.box{{background:url("{blue}") no-repeat}}', body),
+                'an element in a footnote body renders where the footnote area shows it')
+            wide = blocks(root / 'wide.png', [[BLUE] * 4])
+            running = ('@page{@top-left{content:element(h);width:80px}}@page:first{@top-left{width:40px}}'
+                       '#h{position:running(h)}#t{position:relative;z-index:0;height:10px;background:blue}')
+            body = '<div id=h><div id=t></div></div><div class=box></div><p style="break-before:page">Two</p>'
+            self.assertSameInterior(
+                root, (running + '.box{background:element(#t) no-repeat}', body),
+                (running + f'.box{{background:url("{wide}") no-repeat}}', body),
+                'an element in a running element renders as the first page\'s margin box shows it, '
+                'not as the wider box of page two')
 
     def test_text_clips_layers_to_the_glyphs_of_in_flow_and_floated_text(self):
         """CSS Backgrounds 4 §2.8: `background-clip: text` paints within the glyphs,
