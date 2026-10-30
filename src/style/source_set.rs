@@ -16,7 +16,8 @@ const FULL_VIEWPORT_WIDTH: f32 = 1.0;
 #[derive(Clone, Debug, PartialEq)]
 pub(crate) struct ImageSource {
     pub url: String,
-    pub density: f32,
+    /// The candidate's density, `None` when it has no descriptor and is `1x` by default.
+    pub density: Option<f32>,
 }
 
 #[derive(Debug, PartialEq)]
@@ -24,6 +25,8 @@ struct Candidate {
     url: String,
     width: Option<u32>,
     density: Option<f32>,
+    /// It has a density or width descriptor.
+    described: bool,
 }
 
 struct SourceSet {
@@ -103,6 +106,7 @@ fn create(default: &str, srcset: &str, sizes: &str, environment: &PrintEnvironme
             url: default.into(),
             width: None,
             density: None,
+            described: false,
         });
     }
     normalize(SourceSet {
@@ -114,6 +118,7 @@ fn create(default: &str, srcset: &str, sizes: &str, environment: &PrintEnvironme
 /// HTML §4.8.4.3.12 "normalize the source densities".
 fn normalize(mut set: SourceSet) -> SourceSet {
     for candidate in &mut set.candidates {
+        candidate.described = candidate.density.is_some() || candidate.width.is_some();
         if candidate.density.is_none() {
             candidate.density = Some(
                 candidate
@@ -156,8 +161,10 @@ pub(super) fn select(img: Element<'_>, environment: &PrintEnvironment) -> Option
             }
         })
         .map(|candidate| ImageSource {
+            density: candidate
+                .described
+                .then_some(candidate.density.unwrap_or(DEFAULT_DENSITY)),
             url: candidate.url,
-            density: candidate.density.unwrap_or(DEFAULT_DENSITY),
         })
 }
 
@@ -306,6 +313,7 @@ fn parse_descriptors(url: String, descriptors: &[String]) -> Option<Candidate> {
         url,
         width,
         density,
+        described: false,
     })
 }
 

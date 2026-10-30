@@ -33,7 +33,7 @@ fn formatting_preserves_computed_background_and_border_image_urls() {
         &FileResolver::default(),
     ).unwrap();
     let root = document.root();
-    let expected = serde_json::json!({"Url": {"url": reference, "resolution": 1.0, "scale": crate::paint::INITIAL_IMAGE_SCALE}});
+    let expected = serde_json::json!({"Url": {"url": reference, "resolution": null, "scale": crate::paint::INITIAL_IMAGE_SCALE}});
     assert_eq!(
         serde_json::to_value(&root.style().decoration.backgrounds.images).unwrap(),
         serde_json::json!([expected]),
@@ -632,7 +632,7 @@ fn page_document_and_margin_backgrounds_share_images_without_mutating_computed_u
     for (computed, materialized) in decorations {
         assert_eq!(
             serde_json::to_value(&computed.backgrounds.images).unwrap(),
-            serde_json::json!([{"Url": {"url": IMAGE, "resolution": 1.0, "scale": crate::paint::INITIAL_IMAGE_SCALE}}]),
+            serde_json::json!([{"Url": {"url": IMAGE, "resolution": null, "scale": crate::paint::INITIAL_IMAGE_SCALE}}]),
             "computed image must retain the absolute source URL"
         );
         let BackgroundImage::Image { image, .. } = &materialized.backgrounds.images[0] else {

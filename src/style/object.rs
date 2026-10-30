@@ -33,6 +33,59 @@ impl ObjectFit {
     }
 }
 
+/// `[ from-image || <resolution> ] && snap?` slots.
+const SOURCE_SLOT: usize = 0;
+const FROM_IMAGE_SLOT: usize = 0;
+const RESOLUTION_SLOT: usize = 1;
+/// The initial `image-resolution`, one image pixel per CSS pixel.
+const INITIAL_DPPX: f32 = 1.0;
+
+/// Computed `image-resolution` (CSS Images 4 §6.1). `snap` rounds a resolution to map an image
+/// pixel to whole device pixels, and vector PDF output has no device pixels to snap to
+/// (`resolution: infinite`, Media Queries 4 §5.1), so it leaves every resolution unchanged.
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize)]
+pub(crate) struct ImageResolution {
+    pub from_image: bool,
+    /// Dots per CSS pixel.
+    pub dppx: Option<f32>,
+}
+impl Default for ImageResolution {
+    fn default() -> Self {
+        Self {
+            from_image: false,
+            dppx: Some(INITIAL_DPPX),
+        }
+    }
+}
+impl ImageResolution {
+    pub(crate) fn from_component(
+        value: &Component,
+        relative: &crate::style::units::Relative<'_>,
+    ) -> Result<Self, StyleError> {
+        let source = value.slot(SOURCE_SLOT).ok_or_else(|| unsupported(value))?;
+        let dppx = source
+            .slot(RESOLUTION_SLOT)
+            .map(|resolution| crate::style::values::resolution(resolution, relative))
+            .transpose()?;
+        if dppx.is_some_and(|dppx| dppx <= 0.0) {
+            return Err(StyleError::Invalid(format!(
+                "non-positive image-resolution: {value}"
+            )));
+        }
+        Ok(Self {
+            from_image: source.slot(FROM_IMAGE_SLOT).is_some(),
+            dppx,
+        })
+    }
+    /// Image pixels per CSS pixel along each axis of an image that records `recorded`.
+    pub(crate) fn density(self, recorded: Option<[f32; 2]>) -> [f32; 2] {
+        match recorded.filter(|_| self.from_image) {
+            Some(recorded) => recorded,
+            None => [self.dppx.unwrap_or(INITIAL_DPPX); 2],
+        }
+    }
+}
+
 /// `[ <angle> || flip ]` slots.
 const ANGLE_SLOT: usize = 0;
 const FLIP_SLOT: usize = 1;

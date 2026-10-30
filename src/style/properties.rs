@@ -765,6 +765,10 @@ fn handler(property: Property) -> Option<Handler> {
             image_orientation,
             Some(|v, r| crate::style::ImageOrientation::from_component(v, r).is_ok()),
         ),
+        P::ImageResolution => (
+            image_resolution,
+            Some(|v, r| crate::style::ImageResolution::from_component(v, r).is_ok()),
+        ),
         P::ObjectViewBox => (
             object_view_box,
             Some(|v, r| crate::style::shape_values::view_box(v, r).is_ok()),
@@ -2434,6 +2438,13 @@ computed!(
     [image_orientation],
     |value, style, _parent, relative| {
         crate::style::ImageOrientation::from_component(value, relative)?
+    }
+);
+computed!(
+    image_resolution,
+    [image_resolution],
+    |value, style, _parent, relative| {
+        crate::style::ImageResolution::from_component(value, relative)?
     }
 );
 computed!(

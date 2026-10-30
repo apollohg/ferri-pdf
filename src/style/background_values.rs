@@ -142,7 +142,7 @@ fn set_option_image(
 fn url_image(url: &str, function: Option<ImageFunction>) -> BackgroundImage {
     BackgroundImage::Url {
         url: url.to_owned(),
-        resolution: DEFAULT_RESOLUTION_DPPX,
+        resolution: None,
         scale: crate::paint::INITIAL_IMAGE_SCALE,
         function,
     }
@@ -234,7 +234,7 @@ fn image_set(
             ..
         } => BackgroundImage::Url {
             url,
-            resolution,
+            resolution: Some(resolution),
             scale,
             function,
         },

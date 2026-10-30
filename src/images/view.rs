@@ -18,30 +18,39 @@ const COORDINATE_SEPARATOR: char = ',';
 const COORDINATES: usize = 4;
 const PERCENT: f32 = 100.0;
 const QUARTER_TURNS: u8 = 4;
+/// One image pixel per CSS pixel.
+const UNIT_DENSITY: [f32; 2] = [1.0; 2];
 
 /// A fragment identifier `image()` cannot use (CSS Images 4 §2.5.2).
 #[derive(Debug, thiserror::Error)]
 #[error("unsupported image fragment identifier in {0}")]
 pub struct InvalidFragment(pub String);
 
-/// Part of an image, turned and flipped after the image's own orientation.
+/// Part of an image at a resolution, turned and flipped after the image's own orientation.
 #[derive(Debug)]
 pub struct ImageView {
     pub image: Arc<Image>,
     /// The selected region in the image's natural pixels.
     pub region: Option<Rect>,
     pub orientation: Orientation,
+    /// Image pixels per CSS pixel along the region's axes (CSS Images 4 §6.1).
+    pub density: [f32; 2],
 }
 impl ImageView {
     pub(crate) fn natural_size(&self) -> NaturalDimensions {
         let natural = self.image.natural_size();
+        let [x, y] = self.density;
         let size = match self.region {
             Some(region) => NaturalDimensions {
-                width: Some(region.width),
-                height: Some(region.height),
-                ratio: (region.height > 0.0).then(|| region.width / region.height),
+                width: Some(region.width / x),
+                height: Some(region.height / y),
+                ratio: (region.height > 0.0).then(|| region.width * y / (region.height * x)),
             },
-            None => natural,
+            None => NaturalDimensions {
+                width: natural.width.map(|width| width / x),
+                height: natural.height.map(|height| height / y),
+                ratio: natural.ratio.map(|ratio| ratio * y / x),
+            },
         };
         if transposes(self.orientation) {
             NaturalDimensions {
@@ -58,6 +67,7 @@ impl ImageView {
             || self.image.pixel_size(available_width),
             |region| [region.width, region.height],
         );
+        let [width, height] = [width / self.density[0], height / self.density[1]];
         if transposes(self.orientation) {
             [height, width]
         } else {
@@ -121,15 +131,47 @@ pub(crate) fn view(
         reorientation(&image, style.image_orientation, false),
         inline_flip,
     );
-    Ok(with_view(image, region, orientation))
+    let density = if request.resolved {
+        UNIT_DENSITY
+    } else {
+        preferred_density(&image, style)
+    };
+    Ok(with_view(image, region, orientation, density))
 }
 
-/// A content image of the element `style` belongs to, whose pixel density `density` divides
-/// its natural size: oriented by `image-orientation`, then showing its `object-view-box`.
-pub(crate) fn content_image(image: Arc<Image>, style: &Style, density: f32) -> Arc<Image> {
+/// A content image of the element `style` belongs to: oriented by `image-orientation`, at the
+/// resolution `image-resolution` prefers unless its source chose a pixel `density`, then
+/// showing its `object-view-box`.
+pub(crate) fn content_image(image: Arc<Image>, style: &Style, density: Option<f32>) -> Arc<Image> {
     let orientation = reorientation(&image, style.image_orientation, true);
-    let oriented = with_view(image, None, orientation);
-    view_box(oriented, style.object_view_box.as_ref(), density)
+    let preferred = match density {
+        Some(_) => UNIT_DENSITY,
+        None => preferred_density(&image, style),
+    };
+    let oriented = with_view(image, None, orientation, preferred);
+    view_box(
+        oriented,
+        style.object_view_box.as_ref(),
+        density.unwrap_or(UNIT_DENSITY[0]),
+    )
+}
+
+/// CSS Images 4 §6.1: `image-resolution` sets the natural resolution of raster images, from
+/// what the image records when it asks for `from-image`; it has no effect on vector images.
+/// A resolution set by `image-set()` or `srcset` is the image's own and wins (§6.1 issue 1).
+fn preferred_density(image: &Image, style: &Style) -> [f32; 2] {
+    let recorded = match image {
+        Image::Raster(raster) => raster.density.map(|[x, y]| {
+            if transposes(raster.orientation) {
+                [y, x]
+            } else {
+                [x, y]
+            }
+        }),
+        Image::Pixels(_) => None,
+        _ => return UNIT_DENSITY,
+    };
+    style.image_resolution.density(recorded)
 }
 
 /// CSS Images 5 §3.1: the view box resolves against the natural size, which it replaces; the
@@ -156,17 +198,23 @@ fn view_box(image: Arc<Image>, shape: Option<&BasicShape>, density: f32) -> Arc<
             width: rect.width / points,
             height: rect.height / points,
         });
-    with_view(image, region, Orientation::NoTransforms)
+    with_view(image, region, Orientation::NoTransforms, UNIT_DENSITY)
 }
 
-fn with_view(image: Arc<Image>, region: Option<Rect>, orientation: Orientation) -> Arc<Image> {
-    if region.is_none() && orientation == Orientation::NoTransforms {
+fn with_view(
+    image: Arc<Image>,
+    region: Option<Rect>,
+    orientation: Orientation,
+    density: [f32; 2],
+) -> Arc<Image> {
+    if region.is_none() && orientation == Orientation::NoTransforms && density == UNIT_DENSITY {
         return image;
     }
     Arc::new(Image::View(ImageView {
         image,
         region,
         orientation,
+        density,
     }))
 }
 

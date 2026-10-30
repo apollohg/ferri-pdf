@@ -33,6 +33,11 @@ COLOR_TOLERANCE = 4
 # EXIF orientation tag and its value for an image to turn a quarter turn clockwise.
 EXIF_ORIENTATION = 0x0112
 EXIF_ROTATE_90 = 6
+# EXIF resolution tags and the unit that makes them dots per inch.
+EXIF_X_RESOLUTION = 0x011a
+EXIF_Y_RESOLUTION = 0x011b
+EXIF_RESOLUTION_UNIT = 0x0128
+EXIF_INCHES = 2
 # Pixel width of the colour blocks in test images.
 QUADRANT = 10
 TEXT = ' '.join(['aa bb cc dd ee ff gg hh ii jj kk ll mm nn oo pp qq rr ss tt'] * 3)
@@ -307,6 +312,69 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
             corner = PAGE_MARGIN * RASTER_DPI // POINTS_PER_INCH
             self.assertEqual(pixels.getpixel((corner, corner)), RED,
                              'a rounded view box does not clip its corners')
+
+    def assertInkSize(self, root, css, body, expected, message):
+        """Everything not white on the first page spans `expected` CSS pixels. Resolutions that
+        are not exact binary fractions, and the whole pixels per metre PNG records, leave an
+        image's edge just past a raster pixel boundary, so it may cover one more pixel."""
+        pixels = self.raster(root, self.render(root, css, body))
+        ink = [(x, y) for y in range(pixels.height) for x in range(pixels.width)
+               if pixels.getpixel((x, y)) != WHITE]
+        self.assertTrue(ink, f'{message}: nothing painted')
+        actual = tuple(max(point[axis] for point in ink) - min(point[axis] for point in ink) + 1
+                       for axis in range(2))
+        self.assertTrue(all(0 <= a - e <= 1 for a, e in zip(actual, expected)),
+                        f'{message}: ink is {actual} pixels, not {expected}')
+
+    def test_image_resolution_sets_raster_natural_sizes(self):
+        """CSS Images 4 §6.1: explicit resolutions, recorded ones with from-image, and the
+        resolution image-set() or srcset chooses, which image-resolution leaves alone."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-image-resolution-') as directory:
+            root = Path(directory)
+            size = (48, 24)
+            plain = root / 'plain.png'
+            Image.new('RGB', size, RED).save(plain)
+            recorded = root / 'recorded.png'
+            Image.new('RGB', size, RED).save(recorded, dpi=(288, 288))
+            anamorphic = root / 'anamorphic.png'
+            Image.new('RGB', size, RED).save(anamorphic, dpi=(192, 96))
+            jfif = root / 'jfif.jpg'
+            Image.new('RGB', size, RED).save(jfif, quality=100, dpi=(192, 192))
+            exif_only = root / 'exif.jpg'
+            exif = Image.new('RGB', size, RED).getexif()
+            exif[EXIF_X_RESOLUTION] = 288
+            exif[EXIF_Y_RESOLUTION] = 288
+            exif[EXIF_RESOLUTION_UNIT] = EXIF_INCHES
+            Image.new('RGB', size, RED).save(exif_only, quality=100, exif=exif)
+            turned_exif = root / 'turned.jpg'
+            exif[EXIF_ORIENTATION] = EXIF_ROTATE_90
+            exif[EXIF_Y_RESOLUTION] = 96
+            Image.new('RGB', size, RED).save(turned_exif, quality=100, exif=exif)
+            svg = root / 'vector.svg'
+            svg.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="24">'
+                           '<rect width="48" height="24" fill="red"/></svg>')
+            for source, value, expected in [
+                    (plain, '1dppx', (48, 24)), (plain, '2dppx', (24, 12)), (plain, '192dpi snap', (24, 12)),
+                    (plain, 'from-image', (48, 24)), (plain, 'from-image 3dppx', (16, 8)),
+                    (recorded, '1dppx', (48, 24)), (recorded, 'from-image', (16, 8)),
+                    (recorded, '2dppx from-image', (16, 8)), (recorded, 'snap from-image', (16, 8)),
+                    (anamorphic, 'from-image', (24, 24)), (jfif, 'from-image', (24, 12)),
+                    (exif_only, 'from-image', (16, 8)), (turned_exif, 'from-image', (24, 16)),
+                    (svg, '2dppx', (48, 24))]:
+                self.assertInkSize(root, f'img{{display:block;image-resolution:{value}}}',
+                                   f'<img src="{source.as_uri()}">', expected,
+                                   f'{source.name} with image-resolution: {value}')
+            self.assertInkSize(root, 'img{display:block;image-resolution:2dppx}',
+                               f'<img srcset="{plain.as_uri()} 3x">', (16, 8),
+                               'a srcset density is the image\'s own resolution')
+            self.assertInkSize(root, 'div{image-resolution:2dppx}img{display:block}',
+                               f'<div><img src="{plain.as_uri()}"></div>', (24, 12), 'the property inherits')
+            for image, expected in [(f'url("{plain.as_uri()}")', (24, 12)),
+                                    (f'image("{plain.as_uri()}#xywh=0,0,24,24")', (12, 12)),
+                                    (f'image-set(url("{plain.as_uri()}") 3x)', (16, 8)),
+                                    (f'url("{recorded.as_uri()}")', (24, 12))]:
+                self.assertInkSize(root, f'.box{{image-resolution:2dppx;background:{image} no-repeat}}',
+                                   '<div class=box></div>', expected, f'background {image} at 2dppx')
 
 
 if __name__ == '__main__':

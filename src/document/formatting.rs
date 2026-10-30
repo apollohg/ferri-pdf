@@ -5,7 +5,7 @@ use crate::graphics::BoxDecoration;
 use crate::style::{Display, GeneratedPseudoElement, PseudoElement, Style, StyleError, Stylesheet};
 
 pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
-pub(super) const DEFAULT_DENSITY: f32 = 1.0;
+const DEFAULT_DENSITY: f32 = 1.0;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
 
 /// The background colour and images of `decoration`, without its borders, outline or shadows.
@@ -1889,16 +1889,22 @@ fn block<'a>(
                     match element.name() {
                         "img" => {
                             let image = sheet.image_source(element).and_then(|source| {
-                                block.density = source.density;
-                                resources.cache.load_optional(
-                                    &source.url,
-                                    resources.base,
-                                    resources.resolver,
-                                    frame.style.element_font_namespace(),
-                                )
-                            });
-                            let image = image.map(|image| {
-                                crate::images::content_image(image, &frame.style, block.density)
+                                block.density = source.density.unwrap_or(DEFAULT_DENSITY);
+                                resources
+                                    .cache
+                                    .load_optional(
+                                        &source.url,
+                                        resources.base,
+                                        resources.resolver,
+                                        frame.style.element_font_namespace(),
+                                    )
+                                    .map(|image| {
+                                        crate::images::content_image(
+                                            image,
+                                            &frame.style,
+                                            source.density,
+                                        )
+                                    })
                             });
                             if image.is_none()
                                 && !skips
@@ -1932,11 +1938,7 @@ fn block<'a>(
                         _ if is_replaced(element) => traversal.embedded.content(element.id()).map(
                             |embedded| match embedded {
                                 crate::document::embedded::Embedded::Image(image) => {
-                                    crate::images::content_image(
-                                        image.clone(),
-                                        &frame.style,
-                                        DEFAULT_DENSITY,
-                                    )
+                                    crate::images::content_image(image.clone(), &frame.style, None)
                                 }
                                 crate::document::embedded::Embedded::Navigable(navigable) => {
                                     std::sync::Arc::new(crate::images::Image::Frame(

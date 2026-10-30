@@ -1,5 +1,6 @@
 //! Image assets, intrinsic dimensions, and per-document resource reuse.
 mod avif;
+mod density;
 mod heif;
 mod pixels;
 mod svg;
@@ -78,6 +79,9 @@ pub struct RasterImage {
     pub width: u32,
     pub height: u32,
     pub orientation: Orientation,
+    /// Image pixels per CSS pixel along the stored rows and columns, if the image records
+    /// its resolution.
+    pub density: Option<[f32; 2]>,
 }
 impl RasterImage {
     fn image_format(&self) -> ImageFormat {
@@ -140,14 +144,17 @@ impl RasterImage {
         if width == 0 || height == 0 || decoder.total_bytes() > MAX_DECODED_BYTES {
             return Err(ImageError::Dimensions { width, height });
         }
+        let exif = decoder.exif_metadata()?;
         let orientation = decoder.orientation()?;
         drop(decoder);
+        let density = density::recorded(&bytes, raster_format, exif.as_deref());
         Ok(Self {
             bytes: Arc::new(bytes),
             format: raster_format,
             width,
             height,
             orientation,
+            density,
         })
     }
 }

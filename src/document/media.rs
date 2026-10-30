@@ -1,10 +1,7 @@
 //! Media elements' replaced content. No media data is decoded, so the ready state stays
 //! `HAVE_NOTHING`: a `video` represents its poster frame (HTML §4.8.11), and every media
 //! element exposes its user interface because scripting is disabled (HTML §4.8.11.13).
-use crate::document::{
-    DocumentError,
-    formatting::{DEFAULT_DENSITY, ImageResources},
-};
+use crate::document::{DocumentError, formatting::ImageResources};
 use crate::dom::Element;
 use crate::fonts::FontNamespace;
 use crate::images::Image;
@@ -53,7 +50,7 @@ pub(super) fn poster(
         })
         .map_or_else(
             || Arc::new(Image::Transparent),
-            |image| crate::images::content_image(image, style, DEFAULT_DENSITY),
+            |image| crate::images::content_image(image, style, None),
         )
 }
 

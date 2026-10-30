@@ -31,7 +31,7 @@ fn selected(html: &str) -> (Option<ImageSource>, Option<String>) {
     )
 }
 
-fn source(url: &str, density: f32) -> ImageSource {
+fn source(url: &str, density: Option<f32>) -> ImageSource {
     ImageSource {
         url: url.into(),
         density,
@@ -41,22 +41,29 @@ fn source(url: &str, density: f32) -> ImageSource {
 #[test]
 fn infinite_print_resolution_selects_the_densest_distinct_candidate() {
     for (html, expected) in [
-        ("<img src=a.png>", Some(source("a.png", 1.0))),
+        ("<img src=a.png>", Some(source("a.png", None))),
         (
             "<img src=a.png srcset='b.png 2x, c.png 3x'>",
-            Some(source("c.png", 3.0)),
+            Some(source("c.png", Some(3.0))),
         ),
         (
             "<img src=a.png srcset='b.png 1x, c.png 1x'>",
-            Some(source("b.png", 1.0)),
+            Some(source("b.png", Some(1.0))),
+        ),
+        (
+            "<img src=a.png srcset='b.png'>",
+            Some(source("b.png", None)),
         ),
         (
             "<img srcset='b.png 2x, c.png 2x, d.png 0.5x'>",
-            Some(source("b.png", 2.0)),
+            Some(source("b.png", Some(2.0))),
         ),
         ("<img src=''>", None),
         ("<img srcset=' , ,'>", None),
-        ("<img srcset='a.png 1e1x'>", Some(source("a.png", 10.0))),
+        (
+            "<img srcset='a.png 1e1x'>",
+            Some(source("a.png", Some(10.0))),
+        ),
     ] {
         assert_eq!(selected(html).0, expected, "{html}");
     }
@@ -78,7 +85,10 @@ fn width_descriptors_divide_by_the_first_matching_source_size() {
         ("(min-width: 10000px) 10px", 600.0),
     ] {
         let html = format!("<img srcset='w.png 1200w' sizes='{sizes}'>");
-        let density = selected(&html).0.expect("one width candidate").density;
+        let density = selected(&html)
+            .0
+            .and_then(|source| source.density)
+            .expect("one width candidate with a density");
         assert!(
             (density - 1200.0 / size).abs() < 1e-4,
             "sizes {sizes:?} must give a {size}px source size, got density {density}"
@@ -89,18 +99,18 @@ fn width_descriptors_divide_by_the_first_matching_source_size() {
 #[test]
 fn srcset_descriptor_errors_drop_only_their_candidate() {
     for (srcset, expected) in [
-        ("a.png 2x 3x, b.png 1x", Some(source("b.png", 1.0))),
-        ("a.png 100w 2x, b.png", Some(source("b.png", 1.0))),
-        ("a.png 0w, b.png 5x", Some(source("b.png", 5.0))),
-        ("a.png 10h, b.png 1x", Some(source("b.png", 1.0))),
-        ("a.png 300w 150h", Some(source("a.png", 0.5))),
+        ("a.png 2x 3x, b.png 1x", Some(source("b.png", Some(1.0)))),
+        ("a.png 100w 2x, b.png", Some(source("b.png", None))),
+        ("a.png 0w, b.png 5x", Some(source("b.png", Some(5.0)))),
+        ("a.png 10h, b.png 1x", Some(source("b.png", Some(1.0)))),
+        ("a.png 300w 150h", Some(source("a.png", Some(0.5)))),
         (
             "a.png +2x, b.png 1.x, c.png .5x",
-            Some(source("c.png", 0.5)),
+            Some(source("c.png", Some(0.5))),
         ),
         ("a.png (future) 2x", None),
-        ("a.png,b.png 2x", Some(source("a.png,b.png", 2.0))),
-        ("a.png 2x,,,b.png 3x", Some(source("b.png", 3.0))),
+        ("a.png,b.png 2x", Some(source("a.png,b.png", Some(2.0)))),
+        ("a.png 2x,,,b.png 3x", Some(source("b.png", Some(3.0)))),
     ] {
         let html = format!("<img srcset='{srcset}' sizes='600px'>");
         assert_eq!(selected(&html).0, expected, "srcset {srcset:?}");
@@ -114,22 +124,22 @@ fn picture_sources_before_the_img_select_by_media_type_and_srcset() {
     for (sources, expected, dimensions) in [
         (
             "<source media='(min-width: 10000px)' srcset=wide.png><source srcset=print.png media=print>",
-            Some(source("print.png", 1.0)),
+            Some(source("print.png", None)),
             "img",
         ),
         (
             "<source type='image/x-unknown' srcset=x.png><source type='image/webp; codecs=x' srcset=w.png id=webp width=10>",
-            Some(source("w.png", 1.0)),
+            Some(source("w.png", None)),
             "webp",
         ),
         (
             "<source src=ignored.png><source srcset=''>",
-            Some(source("fallback.png", 1.0)),
+            Some(source("fallback.png", None)),
             "img",
         ),
         (
             "<source srcset='s.png 400w' sizes=200px height=5 id=sized>",
-            Some(source("s.png", 2.0)),
+            Some(source("s.png", Some(2.0))),
             "sized",
         ),
     ] {
@@ -141,7 +151,7 @@ fn picture_sources_before_the_img_select_by_media_type_and_srcset() {
     }
     assert_eq!(
         selected("<picture><img id=img src=first.png><source srcset=after.png></picture>").0,
-        Some(source("first.png", 1.0)),
+        Some(source("first.png", None)),
         "sources after the img are not considered"
     );
 }

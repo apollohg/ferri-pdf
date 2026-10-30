@@ -11,6 +11,8 @@ use std::sync::Arc;
 /// Tolerance for `space` counting tiles that fit exactly.
 const SPACE_FIT_TOLERANCE: f32 = 1.0e-4;
 pub(crate) const INITIAL_IMAGE_SCALE: f32 = 1.0;
+/// One image pixel per CSS pixel.
+const INITIAL_RESOLUTION: f32 = 1.0;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
 #[expect(
@@ -113,11 +115,12 @@ pub(crate) type Position = [PositionComponent; 2];
 #[serde(bound(serialize = ""))]
 pub enum BackgroundImage<I = Infallible> {
     None,
-    /// Absolute reference that the document builder loads into `Image`; `resolution` is a
-    /// raster image's natural resolution in dots per CSS pixel (CSS Images 4 §2.4).
+    /// Absolute reference that the document builder loads into `Image`; `resolution` is the
+    /// natural resolution in dots per CSS pixel that `image-set()` gives a raster image (CSS
+    /// Images 4 §2.4), which `image-resolution` does not override.
     Url {
         url: String,
-        resolution: f32,
+        resolution: Option<f32>,
         /// Accumulated zoom of the image's natural dimensions, independent of density.
         scale: f32,
         /// The `image()` notation that wrote the URL, if any.
@@ -154,6 +157,8 @@ pub struct ImageRequest<'a> {
     /// Written in `image()`: the image is optional, and a fragment it does not understand
     /// makes it invalid (CSS Images 4 §2.5.2).
     pub function: Option<&'a ImageFunction>,
+    /// `image-set()` chose the image's natural resolution.
+    pub resolved: bool,
 }
 
 /// Computed background longhands; layer `i` uses item `i` of each list, cycling short lists.
@@ -259,11 +264,12 @@ impl<I> BackgroundImage<I> {
             let request = ImageRequest {
                 url,
                 function: function.as_ref(),
+                resolved: resolution.is_some(),
             };
             *self = match load(&request)? {
                 Some(image) => Self::Image {
                     image,
-                    resolution: *resolution,
+                    resolution: resolution.unwrap_or(INITIAL_RESOLUTION),
                     scale: *scale,
                 },
                 None => function

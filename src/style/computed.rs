@@ -250,6 +250,7 @@ pub(crate) struct Style {
     pub object_fit: crate::style::ObjectFit,
     pub object_position: crate::paint::Position,
     pub image_orientation: crate::style::ImageOrientation,
+    pub image_resolution: crate::style::ImageResolution,
     pub(crate) object_view_box: Option<crate::paint::BasicShape>,
     pub page: crate::style::Page,
     /// Horizontal and vertical overflow after axis pairing.
@@ -407,6 +408,7 @@ impl Default for Style {
             object_fit: crate::style::ObjectFit::default(),
             object_position: [const { crate::paint::PositionComponent::CENTER }; 2],
             image_orientation: crate::style::ImageOrientation::default(),
+            image_resolution: crate::style::ImageResolution::default(),
             object_view_box: None,
             page: crate::style::Page::default(),
             overflow: [crate::style::Overflow::Visible; 2],

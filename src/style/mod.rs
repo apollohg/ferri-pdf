@@ -59,7 +59,7 @@ mod quotes;
 mod registration;
 mod zoom;
 pub(crate) use colors::{parse_color_value, widget_palette};
-pub(crate) use object::{ImageOrientation, ObjectFit};
+pub(crate) use object::{ImageOrientation, ImageResolution, ObjectFit};
 pub(crate) use overflow::{
     BlockEllipsis, ClipEdge, Continue, LineClamp, Overflow, OverflowClipMargin, TextOverflow,
 };
