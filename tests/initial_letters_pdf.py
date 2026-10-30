@@ -76,6 +76,33 @@ class InitialLettersPdf(unittest.TestCase):
             self.assertAlmostEqual(line[0].matrix[4], MARGIN, delta=TOLERANCE,
                                    msg='lines below the letter return to the start edge')
 
+    def test_letter_too_long_for_a_line_drops_each_of_its_lines(self):
+        (_, _, _, h_top), em = outline('H')
+        cap = h_top / em
+        size = (2 * LINE_HEIGHT + cap * FONT_SIZE) / cap
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-wrapped-letter-') as directory:
+            glyphs = self.render(Path(directory),
+                                 'p{width:200pt;margin:0}span{initial-letter:3;color:red}',
+                                 f'<p><span>Once more</span> {TEXT}</p>')
+        rows = lines([glyph for glyph in glyphs if glyph.fill == RED])
+        text = lines([glyph for glyph in glyphs if glyph.fill == BLACK])
+        self.assertEqual([''.join(glyph.text for glyph in row) for row in rows], ['Once', 'more'],
+                         'the letter wraps onto two lines of its own')
+        for row in rows:
+            self.assertAlmostEqual(row[0].matrix[3], size, delta=TOLERANCE,
+                                   msg='each letter line takes the letter size')
+        self.assertLess(text[0][0].matrix[5] + FONT_SIZE, rows[0][0].matrix[5],
+                        'normal text starts below the first letter line')
+        self.assertAlmostEqual(rows[1][0].matrix[5], text[2][0].matrix[5], delta=TOLERANCE,
+                               msg='the last letter line sits on the third baseline from there')
+        end = rows[1][-1].matrix[4]
+        for line in text[:3]:
+            self.assertGreater(line[0].matrix[4], end,
+                               'the lines beside the last letter line start after it')
+        for line in text[3:]:
+            self.assertAlmostEqual(line[0].matrix[4], MARGIN, delta=TOLERANCE,
+                                   msg='lines below the letter return to the start edge')
+
     def test_first_letter_and_first_line_style_their_text(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-first-line-') as directory:
             glyphs = self.render(Path(directory),
