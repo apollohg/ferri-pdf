@@ -1379,7 +1379,58 @@ impl Stylesheet {
             style.widget.author_decorated = cascaded
                 .author_cascades(&crate::style::widget_values::NATIVE_APPEARANCE_DISABLERS)?;
         }
+        if self.becomes_base_select(element, parent, &style, &cascaded, resolver)? {
+            return self.prepare_element(element, parent, resolver);
+        }
         Ok((style, cascaded))
+    }
+
+    /// Whether `element` is a `select` that its cascaded `appearance` first gives base
+    /// appearance (CSS UI 4 §7.2), which it records so that the user-agent styles of base
+    /// appearance (HTML §15.5.16) match it and its contents.
+    fn becomes_base_select(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
+        seed: &Style,
+        cascaded: &Cascaded,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<bool, StyleError> {
+        if element.namespace() != crate::dom::HTML_NAMESPACE
+            || element.name() != "select"
+            || element.is_base_select()
+        {
+            return Ok(false);
+        }
+        let (_, winners) = crate::style::resolution::resolve_values(
+            self,
+            seed.clone(),
+            parent,
+            cascaded.clone(),
+            resolver,
+            &crate::style::resolution::ValueContext {
+                tree: Tree::Element(element),
+                viewport: self.page_area(),
+                page_font: false,
+            },
+        )?;
+        // `appearance` is a keyword that does not inherit, so only `inherit` reads another
+        // element's value.
+        let appearance = match winners.get(&Property::Appearance) {
+            Some(Specified::Value(value)) => crate::style::Appearance::from_component(value)?,
+            Some(Specified::Wide(crate::style::wide_keywords::WideKeyword::Inherit)) => {
+                parent.widget.appearance
+            }
+            _ => crate::style::Appearance::default(),
+        };
+        let base = matches!(
+            appearance,
+            crate::style::Appearance::Base | crate::style::Appearance::BaseSelect
+        );
+        if base {
+            element.set_base_select();
+        }
+        Ok(base)
     }
 
     /// The page area, which is the viewport in paged media (CSS Page 3 §3).

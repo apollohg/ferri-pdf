@@ -166,7 +166,9 @@ impl Restyle<'_> {
                         pseudo @ (PseudoElement::Before
                         | PseudoElement::After
                         | PseudoElement::FootnoteCall
-                        | PseudoElement::FootnoteMarker),
+                        | PseudoElement::FootnoteMarker
+                        | PseudoElement::Checkmark
+                        | PseudoElement::PickerIcon),
                     ) => self
                         .sheet
                         .pseudo_with_resolver(element, &parent, pseudo, self.resolver)?

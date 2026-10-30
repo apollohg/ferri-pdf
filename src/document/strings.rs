@@ -223,7 +223,10 @@ impl StringAssignments {
             GeneratedPseudoElement::After => {
                 owner.after = crate::document::content::GeneratedText::capture(text, style);
             }
-            GeneratedPseudoElement::FootnoteCall | GeneratedPseudoElement::FootnoteMarker => {}
+            GeneratedPseudoElement::FootnoteCall
+            | GeneratedPseudoElement::FootnoteMarker
+            | GeneratedPseudoElement::Checkmark
+            | GeneratedPseudoElement::PickerIcon => {}
         }
     }
     pub(crate) fn finish(

@@ -168,6 +168,125 @@ fn drop_down_boxes_fit_their_widest_label_and_show_the_selected_one() {
     );
 }
 
+/// The `disclosure-open` symbol that `select::picker-icon` shows (CSS Counter Styles 3 §6.3).
+const DISCLOSURE_OPEN: &str = "\u{25be}";
+const CHECKMARK: &str = "\u{2713}";
+/// The text an atomic inline stands for on its line.
+const OBJECT_REPLACEMENT: &str = "\u{fffc}";
+
+/// The texts of the lines inside form controls, without the lines holding the controls.
+fn control_texts(trace: &LayoutTrace) -> Vec<String> {
+    texts(trace)
+        .into_iter()
+        .filter(|text| text != OBJECT_REPLACEMENT)
+        .collect()
+}
+
+fn line<'t>(trace: &'t LayoutTrace, text: &str) -> &'t crate::layout::TextLine {
+    trace
+        .pages
+        .iter()
+        .flatten()
+        .find(|line| line.text.trim() == text)
+        .unwrap_or_else(|| panic!("no line {text:?} in {:?}", texts(trace)))
+}
+
+#[test]
+fn base_drop_down_boxes_show_their_button_and_picker_icon_but_not_their_options() {
+    // HTML §15.5.16: the select button slot shows the selected option's label, the closed
+    // select popover holds the options, and `::picker-icon` follows at the inline end.
+    let base = "<style>select{appearance:base-select;background:#123456;width:150pt}</style>";
+    let fallback = trace(&format!(
+        "{base}<select><option>One</option><option selected>Two</option></select>"
+    ));
+    assert_eq!(
+        control_texts(&fallback),
+        ["Two", DISCLOSURE_OPEN],
+        "the selected label and the picker icon only"
+    );
+    assert!(
+        widgets(&fallback).is_empty(),
+        "base appearance draws no native drop-down button"
+    );
+    let select = painted_box(&fallback, PROBE);
+    let label = line(&fallback, "Two");
+    let icon = line(&fallback, DISCLOSURE_OPEN);
+    let padding_inline = 0.5 * 12.0;
+    assert_labelled_pt(
+        "the label starts after the border and 0.5em of padding",
+        label.x,
+        select.x + PIXEL + padding_inline,
+    );
+    assert_labelled_pt(
+        "`margin-inline-start: auto` pushes the icon to the inline end",
+        icon.x + icon.width,
+        select.x + select.width - PIXEL - padding_inline,
+    );
+    let button = trace(&format!(
+        "{base}<style>selectedcontent b{{color:#654321}}</style><select><button>\
+         <selectedcontent></selectedcontent></button><option>One</option>\
+         <option selected><b>Two</b> more</option></select>"
+    ));
+    assert_eq!(
+        control_texts(&button),
+        ["Two more", DISCLOSURE_OPEN],
+        "the button shows the selectedcontent clone of the selected option"
+    );
+    let clone = line(&button, "Two more");
+    assert_eq!(
+        clone.runs[0].color.rgb, OTHER,
+        "the cloned `b` element is matched by selectors inside selectedcontent"
+    );
+    let styled = trace(&format!(
+        "{base}<style>select::picker-icon{{content:'v'}}::picker(select){{display:block}}</style>\
+         <select><option>One</option></select>"
+    ));
+    assert_eq!(
+        control_texts(&styled),
+        ["One", "v"],
+        "author `::picker-icon` content; the closed `::picker(select)` stays without a box"
+    );
+}
+
+#[test]
+fn base_list_boxes_render_their_options_with_checkmarks_and_size_rows() {
+    let row = 24.0 * PIXEL;
+    let list = trace(
+        "<style>select{appearance:base-select;background:#123456}optgroup{color:#654321}</style>\
+         <select size=2><option>Alpha</option><option selected label=Beta>ignored</option>\
+         <optgroup label=Group><option disabled>Gamma</option></optgroup></select>",
+    );
+    assert_eq!(
+        control_texts(&list),
+        ["Alpha", CHECKMARK, "Beta", "Group", "Gamma"],
+        "options in tree order, the label attribute replacing content, the optgroup label, \
+         and only the checked option's checkmark visible"
+    );
+    assert_labelled_pt(
+        "a border-box block size of `size` rows of max(24px, 1lh)",
+        painted_box(&list, PROBE).height,
+        2.0 * row,
+    );
+    let beta = line(&list, "Beta");
+    let alpha = line(&list, "Alpha");
+    let check = line(&list, CHECKMARK);
+    assert!(
+        check.x + check.width < beta.x,
+        "the checkmark precedes its option's content: {check:?} {beta:?}"
+    );
+    assert_labelled_pt(
+        "a hidden checkmark still takes its place in an unchecked option",
+        alpha.x,
+        beta.x,
+    );
+    assert_eq!(
+        line(&list, "Gamma").color.alpha,
+        0.5,
+        "a disabled option mixes its colour half with transparent"
+    );
+    assert_eq!(line(&list, "Group").color.rgb, OTHER);
+}
+
 #[test]
 fn checkboxes_and_gauges_are_replaced_by_drawings_only_in_native_appearance() {
     let checkbox = trace("<input type=checkbox checked style='margin:0;font-size:16px'>");

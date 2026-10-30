@@ -19,7 +19,7 @@ pub(super) fn tree_context(
     }
 }
 
-pub(super) const SELECTOR_TARGET_COUNT: usize = 13;
+pub(super) const SELECTOR_TARGET_COUNT: usize = 15;
 pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
     match pseudo {
         None => 0,
@@ -38,6 +38,8 @@ pub(super) fn target_index(pseudo: Option<PseudoElement>) -> usize {
         }
         Some(PseudoElement::FootnoteCall) => 11,
         Some(PseudoElement::FootnoteMarker) => 12,
+        Some(PseudoElement::Checkmark) => 13,
+        Some(PseudoElement::PickerIcon) => 14,
     }
 }
 

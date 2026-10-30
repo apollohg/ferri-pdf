@@ -11,6 +11,8 @@ use std::{
 
 mod details;
 mod instances;
+mod internal;
+mod select;
 pub(crate) mod table;
 mod xml;
 pub(crate) use xml::XmlTree;
@@ -59,6 +61,9 @@ pub(crate) struct DocumentTree {
     sibling_positions: RefCell<HashMap<(NodeId, TreeRelation), (usize, usize)>>,
     /// Each table element's columns, formed on first use.
     tables: RefCell<HashMap<NodeId, std::sync::Arc<table::TableModel>>>,
+    /// The `select` elements whose computed `appearance` gives them base appearance, which
+    /// style computation records before their user-agent styles match (HTML §15.5.16).
+    base_selects: RefCell<HashSet<NodeId>>,
     /// Nodes cloned into use-element shadow trees so far.
     instance_nodes: usize,
 }
@@ -88,6 +93,7 @@ impl DocumentTree {
             embedding_objects: HashSet::new(),
             sibling_positions: RefCell::default(),
             tables: RefCell::default(),
+            base_selects: RefCell::default(),
             instance_nodes: 0,
         };
         let connected = if tree.shadow.roots.is_empty() {

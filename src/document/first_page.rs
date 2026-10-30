@@ -382,6 +382,14 @@ impl Collector {
                     if selection.replaced(element)? || self.display == Display::TableColumn {
                         continue;
                     }
+                    if element.generates_checkmark() {
+                        self.generated(
+                            selection,
+                            element,
+                            GeneratedPseudoElement::Checkmark,
+                            depth + 1,
+                        )?;
+                    }
                     self.generated(
                         selection,
                         element,
@@ -472,6 +480,14 @@ impl Collector {
                 }
                 CollectStep::After(element, depth) => {
                     self.generated(selection, element, GeneratedPseudoElement::After, depth)?;
+                    if element.generates_picker_icon() {
+                        self.generated(
+                            selection,
+                            element,
+                            GeneratedPseudoElement::PickerIcon,
+                            depth,
+                        )?;
+                    }
                 }
                 CollectStep::CloseInline(source) => {
                     let inline = self

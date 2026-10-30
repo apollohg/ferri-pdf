@@ -330,7 +330,10 @@ impl GeneratedPass {
             GeneratedPseudoElement::Before => target.before = generated,
             GeneratedPseudoElement::After => target.after = generated,
             // `content()` names only `::before` and `::after` (CSS GCPM 3 §1.1.1).
-            GeneratedPseudoElement::FootnoteCall | GeneratedPseudoElement::FootnoteMarker => {}
+            GeneratedPseudoElement::FootnoteCall
+            | GeneratedPseudoElement::FootnoteMarker
+            | GeneratedPseudoElement::Checkmark
+            | GeneratedPseudoElement::PickerIcon => {}
         }
     }
     pub(crate) fn finish(self) -> GeneratedReferences {

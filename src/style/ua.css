@@ -142,12 +142,16 @@ button, ::file-selector-button, input:is([type=color i], [type=reset i], [type=b
 option { display: block; }
 optgroup { display: block; font-weight: bolder; }
 optgroup > option { font-weight: normal; padding-inline-start: 1em; }
-select { letter-spacing: initial; word-spacing: initial; line-height: initial;
-    display: inline-block; align-content: center; }
+select { display: inline-block; }
+select:where(:not(:-ferri-list-box)) { align-content: center; }
+/* Native and primitive appearance only. */
+select:where(:not(:-ferri-base-select)) { letter-spacing: initial; word-spacing: initial;
+    line-height: initial; }
 meter, progress { appearance: auto; display: inline-block; vertical-align: -0.2em; }
 /* The print look of text-bearing widgets, kept by their primitive appearance. */
 input:not([type=checkbox i], [type=radio i], [type=range i], [type=image i], [type=file i],
-    [type=reset i], [type=button i], [type=submit i], [type=color i]), textarea, select {
+    [type=reset i], [type=button i], [type=submit i], [type=color i]), textarea,
+    select:where(:not(:-ferri-base-select)) {
     border: 1px solid ButtonBorder; border-radius: 2px; padding: 1px 2px;
     background-color: Field; color: FieldText; }
 button, ::file-selector-button, input:is([type=reset i], [type=button i], [type=submit i],
@@ -155,11 +159,39 @@ button, ::file-selector-button, input:is([type=reset i], [type=button i], [type=
     background-color: ButtonFace; color: ButtonText; }
 input[type=color i] { padding: 2px; }
 input:is([type=checkbox i], [type=radio i]) { margin-block: 3px; margin-inline: 4px 3px; }
-select:is([multiple], [size]:not([size="0"], [size="1"])) option:checked {
+select:where(:-ferri-list-box:not(:-ferri-base-select)) option:checked {
     background-color: SelectedItem; color: SelectedItemText; }
 ::placeholder { color: GrayText; }
 :disabled:is(input, textarea, select, button), option:disabled, optgroup:disabled {
     color: GrayText; }
+/* Base appearance of select elements (HTML Standard §15.5.16; CSS Forms 1 §4). */
+select:where(:-ferri-base-select) { background-color: transparent;
+    border: 1px solid currentColor; user-select: none; box-sizing: border-box; }
+select:where(:-ferri-base-select):disabled,
+select:where(:-ferri-base-select:-ferri-list-box) option:disabled {
+    color: color-mix(currentColor 50%, transparent); }
+select:where(:-ferri-base-select:-ferri-list-box) option { min-inline-size: 24px;
+    min-block-size: max(24px, 1lh); padding-inline: 0.5em; padding-block-end: 0; display: flex;
+    align-items: center; gap: 0.5em; white-space: nowrap; }
+select option::checkmark { content: '\2713' / ''; }
+select option:not(:checked)::checkmark { visibility: hidden; }
+select:where(:-ferri-base-select:-ferri-list-box) optgroup { display: block;
+    font-weight: bolder; }
+select:where(:-ferri-base-select:-ferri-list-box) optgroup option { font-weight: normal; }
+select:where(:-ferri-base-select:-ferri-list-box) optgroup legend { padding-inline: 0.5em;
+    min-block-size: 1lh; }
+select:where(:-ferri-base-select:not(:-ferri-list-box)) { border-radius: 0.5em;
+    padding-block: 0.25em; padding-inline: 0.5em;
+    min-block-size: calc-size(auto, max(size, 24px, 1lh));
+    min-inline-size: calc-size(auto, max(size, 24px)); display: inline-flex; gap: 0.5em;
+    field-sizing: content !important; }
+select:where(:-ferri-base-select:not(:-ferri-list-box)) > button:first-child { all: unset;
+    display: contents; }
+select::picker-icon { content: counter(fake-counter-name, disclosure-open); display: block;
+    margin-inline-start: auto; }
+/* HTML's `attr(size type(<integer>), 4)` in the pinned CSS Values 5 `attr()` grammar. */
+select:where(:-ferri-base-select:-ferri-list-box) { overflow: auto; display: inline-block;
+    block-size: calc(max(24px, 1lh) * attr(size <integer>, 4)); }
 fieldset { display: block; margin-inline: 2px; border: groove 2px ThreeDFace;
     padding-block: 0.35em 0.625em; padding-inline: 0.75em; min-inline-size: min-content; }
 legend { padding-inline: 2px; }

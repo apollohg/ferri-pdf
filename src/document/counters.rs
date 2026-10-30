@@ -684,6 +684,13 @@ impl Counters {
                             } else {
                                 display
                             };
+                        if element.generates_picker_icon() {
+                            events.push(Event::Pseudo(
+                                element,
+                                GeneratedPseudoElement::PickerIcon,
+                                block_display.clone(),
+                            ));
+                        }
                         events.push(Event::Pseudo(
                             element,
                             GeneratedPseudoElement::After,
@@ -700,8 +707,15 @@ impl Counters {
                         events.push(Event::Pseudo(
                             element,
                             GeneratedPseudoElement::Before,
-                            block_display,
+                            block_display.clone(),
                         ));
+                        if element.generates_checkmark() {
+                            events.push(Event::Pseudo(
+                                element,
+                                GeneratedPseudoElement::Checkmark,
+                                block_display,
+                            ));
+                        }
                     }
                 }
                 Event::Content(element, content) => {

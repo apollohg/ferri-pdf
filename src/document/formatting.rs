@@ -3014,6 +3014,9 @@ fn block<'a>(
                 if footnote {
                     builder.generated(element, style, GeneratedPseudoElement::FootnoteMarker)?;
                 }
+                if element.generates_checkmark() {
+                    builder.generated(element, style, GeneratedPseudoElement::Checkmark)?;
+                }
                 builder.generated(element, style, GeneratedPseudoElement::Before)?;
                 if element.name() == "br" {
                     builder.line_break(style)?;
@@ -3371,6 +3374,9 @@ fn block<'a>(
             active_builder(&mut frames, block_index, sheet, traversal, resources);
         if generated {
             builder.generated(element, style, GeneratedPseudoElement::After)?;
+            if element.generates_picker_icon() {
+                builder.generated(element, style, GeneratedPseudoElement::PickerIcon)?;
+            }
         }
         if let Some(depth) = quotes {
             builder.traversal.quotes = depth;

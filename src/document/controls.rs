@@ -68,26 +68,26 @@ fn html(element: Element<'_>, name: &str) -> bool {
 }
 
 /// HTML §15.5.1 and CSS UI 4 §7.2.1: checkboxes, radio buttons and sliders never devolve.
-fn look(element: Element<'_>, style: &Style) -> Result<Look, StyleError> {
+fn look(element: Element<'_>, style: &Style) -> Look {
     let devolvable = !matches!(
         element.input_type(),
         Some(InputType::Checkbox | InputType::Radio | InputType::Range)
     );
     match style.widget.appearance {
-        Appearance::None => Ok(Look::Primitive),
-        Appearance::Base | Appearance::BaseSelect if html(element, "select") => Err(
-            StyleError::Unsupported("base appearance of select elements".into()),
-        ),
-        // Widgets without a base appearance render as for `auto`.
+        Appearance::None => Look::Primitive,
+        // Widgets without a base appearance render as for `auto`; a `select` with base
+        // appearance renders its internal shadow tree instead.
         Appearance::Auto
         | Appearance::Base
         | Appearance::BaseSelect
         | Appearance::Textfield
-        | Appearance::MenulistButton => Ok(if devolvable && style.widget.author_decorated {
-            Look::Primitive
-        } else {
-            Look::Native
-        }),
+        | Appearance::MenulistButton => {
+            if devolvable && style.widget.author_decorated {
+                Look::Primitive
+            } else {
+                Look::Native
+            }
+        }
     }
 }
 
@@ -102,6 +102,8 @@ pub(super) fn used_style(element: Element<'_>, style: &mut Style) {
     }
     let display = &mut style.display;
     match element.name() {
+        // HTML §15.5.16: base appearance takes the display of its user-agent styles.
+        "select" if element.is_base_select() => {}
         "input" | "select" | "textarea" | "meter" | "progress" => {
             *display = match display {
                 Display::None | Display::Contents => return,
@@ -247,6 +249,7 @@ pub(super) fn content<'a>(
     let content = match element.name() {
         "input" => builder.input()?,
         "textarea" => builder.textarea()?,
+        "select" if element.is_base_select() => return Ok(None),
         "select" => builder.select()?,
         "meter" => {
             let gauge = element.meter_gauge();
@@ -261,7 +264,7 @@ pub(super) fn content<'a>(
                 GaugeRegion::Suboptimal => GaugeFill::Suboptimal,
                 GaugeRegion::EvenLessGood => GaugeFill::EvenLessGood,
             };
-            let track = look(element, style)? == Look::Native;
+            let track = look(element, style) == Look::Native;
             builder.drawn(
                 METER_SIZE_EM,
                 WidgetDrawing::Meter {
@@ -272,7 +275,7 @@ pub(super) fn content<'a>(
             )
         }
         "progress" => {
-            let track = look(element, style)? == Look::Native;
+            let track = look(element, style) == Look::Native;
             builder.drawn(
                 PROGRESS_SIZE_EM,
                 WidgetDrawing::Progress {
@@ -317,7 +320,7 @@ impl<'b> Builder<'b, '_> {
         let kind = element
             .input_type()
             .expect("HTML input has an initial type");
-        let look = look(element, self.style)?;
+        let look = look(element, self.style);
         Ok(match kind {
             InputType::Hidden => Self::empty(),
             InputType::Checkbox | InputType::Radio => {
@@ -653,7 +656,6 @@ impl<'b> Builder<'b, '_> {
     /// button and is as wide as its widest label; a list box shows its display size of rows.
     fn select(&mut self) -> Result<ControlContent, DocumentError> {
         let element = self.element;
-        look(element, self.style)?;
         let selected = element.initial_selected_options();
         let list_box = element.is_list_box();
         // A drop-down box's other labels only widen it, ahead of the shown label so that its

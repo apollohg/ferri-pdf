@@ -1,17 +1,14 @@
 //! The `details` element's internal shadow tree (HTML §15.5.5): a slot for its first
 //! `summary` child, falling back to a default summary, and a slot for its other children,
 //! which the `::details-content` pseudo-element represents.
-use super::{DocumentTree, Element, TreeRelation};
-use crate::dom::{HTML_NAMESPACE, NodeData, shadow::ShadowRoot};
+use super::{DocumentTree, Element, TreeRelation, internal::InternalNode};
+use crate::dom::{HTML_NAMESPACE, NodeData};
 use ego_tree::NodeId;
-use html5ever::{Attribute, QualName};
-use scraper::{ElementRef, node};
+use scraper::ElementRef;
 
 const DETAILS_ELEMENT: &str = "details";
 const SUMMARY_ELEMENT: &str = "summary";
-const SLOT_ELEMENT: &str = "slot";
 const OPEN_ATTRIBUTE: &str = "open";
-const STYLE_ATTRIBUTE: &str = "style";
 /// The implementation-defined text of the default summary.
 const DEFAULT_SUMMARY: &str = "Details";
 /// The second slot's `style` attribute, which skips its contents while closed.
@@ -23,19 +20,6 @@ const CLOSED_SUMMARY_STYLE: &str =
     "display: list-item; counter-increment: list-item 0; list-style: disclosure-closed inside;";
 const OPEN_SUMMARY_STYLE: &str =
     "display: list-item; counter-increment: list-item 0; list-style: disclosure-open inside;";
-
-fn html_element(name: &str, style: Option<&str>) -> NodeData {
-    NodeData::Element(node::Element::new(
-        QualName::new(None, HTML_NAMESPACE.into(), name.into()),
-        style
-            .map(|style| Attribute {
-                name: QualName::new(None, "".into(), STYLE_ATTRIBUTE.into()),
-                value: style.into(),
-            })
-            .into_iter()
-            .collect(),
-    ))
-}
 
 impl DocumentTree {
     /// Gives every `details` element of the document and its shadow trees its internal
@@ -54,7 +38,7 @@ impl DocumentTree {
     }
 
     fn attach_details(&mut self, host: NodeId) {
-        let (children, summary, open, depth) = {
+        let (children, summary, open) = {
             let details = Element {
                 tree: self,
                 raw: ElementRef::wrap(self.html.tree.get(host).unwrap())
@@ -72,73 +56,36 @@ impl DocumentTree {
                     child.namespace() == HTML_NAMESPACE && child.name() == SUMMARY_ELEMENT
                 })
                 .map(|child| child.raw.id());
-            let depth = details
-                .shadow_host()
-                .map_or(1, |parent| self.shadow.roots[&parent.raw.id()].depth + 1);
-            (
-                children,
-                summary,
-                details.attr(OPEN_ATTRIBUTE).is_some(),
-                depth,
-            )
+            (children, summary, details.attr(OPEN_ATTRIBUTE).is_some())
         };
         let (content_style, summary_style) = if open {
             (OPEN_CONTENT_STYLE, OPEN_SUMMARY_STYLE)
         } else {
             (CLOSED_CONTENT_STYLE, CLOSED_SUMMARY_STYLE)
         };
-        self.sibling_positions.get_mut().clear();
-        let tree = &mut self.html.tree;
-        let fragment = tree.orphan(NodeData::Fragment).id();
-        let summary_slot = tree
-            .get_mut(fragment)
-            .unwrap()
-            .append(html_element(SLOT_ELEMENT, None))
-            .id();
-        let content_slot = tree
-            .get_mut(fragment)
-            .unwrap()
-            .append(html_element(SLOT_ELEMENT, Some(content_style)))
-            .id();
-        let default_summary = tree
-            .get_mut(summary_slot)
-            .unwrap()
-            .append(html_element(SUMMARY_ELEMENT, Some(summary_style)))
-            .id();
-        let label = tree
-            .get_mut(default_summary)
-            .unwrap()
-            .append(NodeData::Text(node::Text {
-                text: DEFAULT_SUMMARY.into(),
-            }))
-            .id();
-        let created = [summary_slot, content_slot, default_summary, label];
-        let shadow = &mut self.shadow;
-        for node in created {
-            shadow.scopes.insert(node, fragment);
-        }
         let (summary, content): (Vec<_>, Vec<_>) = children
             .into_iter()
             .partition(|child| Some(*child) == summary);
-        for (slot, assigned) in [(summary_slot, &summary), (content_slot, &content)] {
-            for child in assigned {
-                shadow.assigned.insert(*child, slot);
-            }
-            if !assigned.is_empty() {
-                shadow.populated_slots.insert(slot);
-            }
-        }
-        if summary.is_empty() {
-            shadow.fallback_slots.insert(default_summary, summary_slot);
-            shadow.populated_slots.insert(summary_slot);
-        }
-        shadow.slots.insert(summary_slot, summary);
-        shadow.slots.insert(content_slot, content);
-        shadow.details_content.insert(content_slot, host);
-        shadow.roots.insert(host, ShadowRoot { fragment, depth });
-        shadow.hosts.insert(fragment, host);
-        shadow.order_contexts([fragment]);
-        self.cache_initial_states(created);
+        let slots = self.attach_internal_shadow(
+            host,
+            vec![
+                InternalNode::Slot {
+                    style: None,
+                    assigned: summary,
+                    fallback: vec![InternalNode::Element {
+                        name: SUMMARY_ELEMENT,
+                        style: Some(summary_style),
+                        children: vec![InternalNode::Text(DEFAULT_SUMMARY.into())],
+                    }],
+                },
+                InternalNode::Slot {
+                    style: Some(content_style),
+                    assigned: content,
+                    fallback: Vec::new(),
+                },
+            ],
+        );
+        self.shadow.details_content.insert(slots[1], host);
     }
 }
 

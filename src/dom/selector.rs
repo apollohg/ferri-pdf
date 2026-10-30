@@ -515,6 +515,8 @@ impl<'i> parser::Parser<'i> for StaticParser<'_> {
             "has-slotted" => Some(StaticState::HasSlotted),
             "paused" => Some(StaticState::Paused),
             "muted" => Some(StaticState::Muted),
+            BASE_SELECT_PSEUDO_CLASS => Some(StaticState::BaseSelect),
+            LIST_BOX_PSEUDO_CLASS => Some(StaticState::ListBox),
             _ => FormState::parse(&name).map(StaticState::Form),
         };
         if let Some(state) = state {
@@ -783,6 +785,9 @@ impl FormState {
     }
 }
 
+const BASE_SELECT_PSEUDO_CLASS: &str = "-ferri-base-select";
+const LIST_BOX_PSEUDO_CLASS: &str = "-ferri-list-box";
+
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub(crate) enum StaticState {
     Defined,
@@ -802,6 +807,10 @@ pub(crate) enum StaticState {
     Paused,
     /// HTML §4.8.11.13: a media element is muted from its `muted` content attribute.
     Muted,
+    /// Vendor extensions selecting the `select` elements that HTML §15.5.16 styles by their
+    /// rendering: one with base appearance, and one rendered as a list box.
+    BaseSelect,
+    ListBox,
     /// `:state()` (Selectors 5 §5.2): custom element states, which only script adds.
     CustomState(String),
     /// `:nth-col()` and `:nth-last-col()` (Selectors 5 §8.2–§8.3): a table cell in a column
@@ -868,6 +877,8 @@ impl ToCss for StaticState {
             Self::HasSlotted => dest.write_str(":has-slotted"),
             Self::Paused => dest.write_str(":paused"),
             Self::Muted => dest.write_str(":muted"),
+            Self::BaseSelect => write!(dest, ":{BASE_SELECT_PSEUDO_CLASS}"),
+            Self::ListBox => write!(dest, ":{LIST_BOX_PSEUDO_CLASS}"),
             Self::CustomState(name) => {
                 dest.write_str(":state(")?;
                 cssparser::serialize_identifier(name, dest)?;
@@ -915,11 +926,16 @@ impl ToCss for StaticState {
     }
 }
 
-/// The `::before` and `::after` pseudo-elements, which generate content boxes.
+/// The tree-abiding pseudo-elements that generate content boxes.
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub(crate) enum GeneratedPseudoElement {
     Before,
     After,
+    /// Precedes `::before` in an option rendered with base appearance (CSS Forms 1 §4.3).
+    Checkmark,
+    /// Follows `::after` in a control with base appearance that opens a picker (CSS Forms 1
+    /// §4.1).
+    PickerIcon,
     /// Inserted where a footnote element leaves the flow (CSS GCPM 3 §2.6).
     FootnoteCall,
     /// Placed at the start of a footnote element (CSS GCPM 3 §2.7).
@@ -947,6 +963,8 @@ pub(crate) enum PseudoElement {
     DetailsContent,
     FootnoteCall,
     FootnoteMarker,
+    Checkmark,
+    PickerIcon,
     Absent(AbsentPseudoElement),
 }
 impl From<GeneratedPseudoElement> for PseudoElement {
@@ -954,6 +972,8 @@ impl From<GeneratedPseudoElement> for PseudoElement {
         match pseudo {
             GeneratedPseudoElement::Before => Self::Before,
             GeneratedPseudoElement::After => Self::After,
+            GeneratedPseudoElement::Checkmark => Self::Checkmark,
+            GeneratedPseudoElement::PickerIcon => Self::PickerIcon,
             GeneratedPseudoElement::FootnoteCall => Self::FootnoteCall,
             GeneratedPseudoElement::FootnoteMarker => Self::FootnoteMarker,
         }
@@ -967,7 +987,8 @@ impl From<GeneratedPseudoElement> for PseudoElement {
 /// 4 §3.1). `::column` takes only scroll snap properties (CSS Multi-column Layout 2 §4.6),
 /// which static media ignore. `::nth-fragment()` styles fragment boxes, which only a
 /// `continue: fragments` element generates, and the `continue` grammar has no such value
-/// (CSS Overflow 4 §5.3).
+/// (CSS Overflow 4 §5.3). `::picker(select)` is the select popover (HTML §15.5.16), which is
+/// a closed popover generating no box (HTML §15.3.1).
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub(crate) enum AbsentPseudoElement {
     Selection,
@@ -980,6 +1001,7 @@ pub(crate) enum AbsentPseudoElement {
     Backdrop,
     Column,
     NthFragment,
+    Picker,
 }
 impl AbsentPseudoElement {
     const NAMES: [(&str, Self); 7] = [
@@ -999,6 +1021,7 @@ impl AbsentPseudoElement {
             Self::GrammarError => "::grammar-error",
             Self::SearchText => "::search-text",
             Self::Highlight => "::highlight(unregistered)",
+            Self::Picker => "::picker(select)",
             Self::Backdrop => "::backdrop",
             Self::Column => "::column",
             Self::NthFragment => "::nth-fragment(n)",
@@ -1029,6 +1052,8 @@ impl PseudoElement {
             ("details-content", Self::DetailsContent),
             ("footnote-call", Self::FootnoteCall),
             ("footnote-marker", Self::FootnoteMarker),
+            ("checkmark", Self::Checkmark),
+            ("picker-icon", Self::PickerIcon),
         ]
         .into_iter()
         .chain(
@@ -1050,6 +1075,14 @@ impl PseudoElement {
         if name.eq_ignore_ascii_case("nth-fragment") {
             cssparser::parse_nth(arguments)?;
             return Ok(Self::Absent(AbsentPseudoElement::NthFragment));
+        }
+        // CSS Forms 1 §3.1: `<form-control-identifier> = select`.
+        if name.eq_ignore_ascii_case("picker") {
+            let identifier = arguments.expect_ident()?;
+            if identifier.eq_ignore_ascii_case("select") {
+                return Ok(Self::Absent(AbsentPseudoElement::Picker));
+            }
+            return Err(arguments.new_custom_error(()));
         }
         Err(arguments.new_custom_error(()))
     }
@@ -1093,6 +1126,8 @@ impl PseudoElement {
             Self::DetailsContent => "::details-content",
             Self::FootnoteCall => "::footnote-call",
             Self::FootnoteMarker => "::footnote-marker",
+            Self::Checkmark => "::checkmark",
+            Self::PickerIcon => "::picker-icon",
             Self::Absent(pseudo) => pseudo.source(),
         }
     }
@@ -1334,6 +1369,12 @@ impl SelectorElement for MatchingElement<'_> {
             }
             StaticState::Paused => element.is_media(),
             StaticState::Muted => element.is_media() && element.attr("muted").is_some(),
+            StaticState::BaseSelect => element.is_base_select(),
+            StaticState::ListBox => {
+                element.namespace() == crate::dom::HTML_NAMESPACE
+                    && element.name() == "select"
+                    && element.is_list_box()
+            }
             StaticState::Inactive(_) | StaticState::Current(_) | StaticState::CustomState(_) => {
                 false
             }
