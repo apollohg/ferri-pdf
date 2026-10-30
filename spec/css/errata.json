@@ -191,6 +191,22 @@
     }
   },
   "properties": {
+    "corner-shape": {
+      "initial": [
+        "corner-top-left-shape",
+        "corner-top-right-shape",
+        "corner-bottom-right-shape",
+        "corner-bottom-left-shape"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-shape"
+    },
+    "corner-inline-start-shape": {
+      "initial": [
+        "corner-start-start-shape",
+        "corner-end-start-shape"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-inline-start-shape"
+    },
     "zoom": {
       "syntax": "normal | <number [0,∞]> | <percentage [0,∞]>",
       "source": "https://github.com/w3c/csswg-drafts/blob/54c6c30a5501542143acc4c69980e723b8d20460/css-viewport-1/Overview.bs#L447; https://www.w3.org/2026/06/17-css-minutes.html#t03"
@@ -699,6 +715,232 @@
     }
   },
   "additions": {
+    "corner-top-left": {
+      "syntax": "<'corner-top-left-shape'> || <'border-top-left-radius'>",
+      "initial": [
+        "corner-top-left-shape",
+        "border-top-left-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-top-left"
+    },
+    "corner-top-right": {
+      "syntax": "<'corner-top-left-shape'> || <'border-top-left-radius'>",
+      "initial": [
+        "corner-top-right-shape",
+        "border-top-right-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-top-right"
+    },
+    "corner-bottom-right": {
+      "syntax": "<'corner-top-left-shape'> || <'border-top-left-radius'>",
+      "initial": [
+        "corner-bottom-right-shape",
+        "border-bottom-right-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-bottom-right"
+    },
+    "corner-bottom-left": {
+      "syntax": "<'corner-top-left-shape'> || <'border-top-left-radius'>",
+      "initial": [
+        "corner-bottom-left-shape",
+        "border-bottom-left-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-bottom-left"
+    },
+    "corner-start-start": {
+      "syntax": "<'corner-top-left-shape'> || <'border-top-left-radius'>",
+      "initial": [
+        "corner-start-start-shape",
+        "border-start-start-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-start-start"
+    },
+    "corner-start-end": {
+      "syntax": "<'corner-top-left-shape'> || <'border-top-left-radius'>",
+      "initial": [
+        "corner-start-end-shape",
+        "border-start-end-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-start-end"
+    },
+    "corner-end-start": {
+      "syntax": "<'corner-top-left-shape'> || <'border-top-left-radius'>",
+      "initial": [
+        "corner-end-start-shape",
+        "border-end-start-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-end-start"
+    },
+    "corner-end-end": {
+      "syntax": "<'corner-top-left-shape'> || <'border-top-left-radius'>",
+      "initial": [
+        "corner-end-end-shape",
+        "border-end-end-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-end-end"
+    },
+    "corner-top": {
+      "syntax": "<'corner-top-shape'> || <'border-top-radius'>",
+      "initial": [
+        "corner-top-left-shape",
+        "corner-top-right-shape",
+        "border-top-left-radius",
+        "border-top-right-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-top"
+    },
+    "corner-right": {
+      "syntax": "<'corner-top-shape'> || <'border-top-radius'>",
+      "initial": [
+        "corner-top-right-shape",
+        "corner-bottom-right-shape",
+        "border-top-right-radius",
+        "border-bottom-right-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-right"
+    },
+    "corner-bottom": {
+      "syntax": "<'corner-top-shape'> || <'border-top-radius'>",
+      "initial": [
+        "corner-bottom-left-shape",
+        "corner-bottom-right-shape",
+        "border-bottom-left-radius",
+        "border-bottom-right-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-bottom"
+    },
+    "corner-left": {
+      "syntax": "<'corner-top-shape'> || <'border-top-radius'>",
+      "initial": [
+        "corner-top-left-shape",
+        "corner-bottom-left-shape",
+        "border-top-left-radius",
+        "border-bottom-left-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-left"
+    },
+    "corner-block-start": {
+      "syntax": "<'corner-top-shape'> || <'border-top-radius'>",
+      "initial": [
+        "corner-start-start-shape",
+        "corner-start-end-shape",
+        "border-start-start-radius",
+        "border-start-end-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-block-start"
+    },
+    "corner-block-end": {
+      "syntax": "<'corner-top-shape'> || <'border-top-radius'>",
+      "initial": [
+        "corner-end-start-shape",
+        "corner-end-end-shape",
+        "border-end-start-radius",
+        "border-end-end-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-block-end"
+    },
+    "corner-inline-start": {
+      "syntax": "<'corner-top-shape'> || <'border-top-radius'>",
+      "initial": [
+        "corner-start-start-shape",
+        "corner-end-start-shape",
+        "border-start-start-radius",
+        "border-end-start-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-inline-start"
+    },
+    "corner-inline-end": {
+      "syntax": "<'corner-top-shape'> || <'border-top-radius'>",
+      "initial": [
+        "corner-start-end-shape",
+        "corner-end-end-shape",
+        "border-start-end-radius",
+        "border-end-end-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner-inline-end"
+    },
+    "corner": {
+      "syntax": "<'corner-shape'> || <'border-radius'>",
+      "initial": [
+        "corner-top-left-shape",
+        "corner-top-right-shape",
+        "corner-bottom-right-shape",
+        "corner-bottom-left-shape",
+        "border-top-left-radius",
+        "border-top-right-radius",
+        "border-bottom-right-radius",
+        "border-bottom-left-radius"
+      ],
+      "inherited": false,
+      "groups": [
+        "CSS Backgrounds and Borders"
+      ],
+      "source": "https://drafts.csswg.org/css-borders-4/#propdef-corner"
+    },
     "text-emphasis-skip": {
       "syntax": "spaces || punctuation || symbols || narrow",
       "initial": "spaces punctuation",

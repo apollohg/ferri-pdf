@@ -1228,3 +1228,131 @@ fn supports_accepts_pending_values_without_promising_computed_capability() {
         );
     }
 }
+
+#[test]
+fn combined_corner_shorthand_grammars_preserve_shape_and_radius_components() {
+    for (names, count, valid, invalid) in [
+        (
+            &[
+                "corner-top-left",
+                "corner-top-right",
+                "corner-bottom-right",
+                "corner-bottom-left",
+                "corner-start-start",
+                "corner-start-end",
+                "corner-end-start",
+                "corner-end-end",
+            ][..],
+            2,
+            &[
+                "bevel 10px 20%",
+                "10px 20% notch",
+                "superellipse(-0.5)",
+                "0",
+            ][..],
+            &[
+                "bevel notch 10px",
+                "10px 20px 30px",
+                "10px / 20px",
+                "-1px bevel",
+            ][..],
+        ),
+        (
+            &[
+                "corner-top",
+                "corner-right",
+                "corner-bottom",
+                "corner-left",
+                "corner-block-start",
+                "corner-block-end",
+                "corner-inline-start",
+                "corner-inline-end",
+            ][..],
+            4,
+            &[
+                "round notch 10px 20% / 30px 40%",
+                "10px / 20px bevel",
+                "scoop square",
+                "0",
+            ][..],
+            &[
+                "round notch bevel",
+                "1px 2px 3px",
+                "1px / 2px 3px 4px",
+                "bevel -1px",
+            ][..],
+        ),
+        (
+            &["corner"][..],
+            8,
+            &[
+                "round notch bevel square 1px 2px 3px 4px / 5% 6% 7% 8%",
+                "1px / 2px squircle",
+                "superellipse(infinity)",
+                "0",
+            ][..],
+            &[
+                "round notch bevel square scoop",
+                "1px 2px 3px 4px 5px",
+                "1px / 2px / 3px",
+                "bevel -1px",
+            ][..],
+        ),
+    ] {
+        for name in names {
+            let property = Property::from_name(name)
+                .unwrap_or_else(|| panic!("missing CSS Borders4 shorthand {name}"));
+            assert_eq!(
+                property.longhands().len(),
+                count,
+                "{name}: every shape and radius longhand must be listed"
+            );
+            assert!(
+                property
+                    .longhands()
+                    .iter()
+                    .all(|longhand| longhand.longhands().is_empty()),
+                "{name}: expansion metadata must contain terminal longhands"
+            );
+            for (values, expected) in [(valid, true), (invalid, false)] {
+                for value in values {
+                    let matched = crate::style::matcher::match_value(
+                        property.data().root,
+                        value,
+                        &mut 0,
+                        crate::style::matcher::ValueContext::Element,
+                    )
+                    .unwrap();
+                    assert_eq!(matched.is_some(), expected, "{name}: {value}");
+                }
+            }
+        }
+    }
+}
+
+#[test]
+fn corner_shape_metadata_follows_physical_and_logical_corner_order() {
+    for (name, expected) in [
+        (
+            "corner-shape",
+            &[
+                "corner-top-left-shape",
+                "corner-top-right-shape",
+                "corner-bottom-right-shape",
+                "corner-bottom-left-shape",
+            ][..],
+        ),
+        (
+            "corner-inline-start-shape",
+            &["corner-start-start-shape", "corner-end-start-shape"][..],
+        ),
+    ] {
+        let property = Property::from_name(name).unwrap();
+        let actual = property
+            .longhands()
+            .iter()
+            .map(|longhand| longhand.name())
+            .collect::<Vec<_>>();
+        assert_eq!(actual, expected, "{name}: CSS Borders4 corner order");
+    }
+}
