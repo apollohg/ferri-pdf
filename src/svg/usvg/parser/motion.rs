@@ -94,7 +94,7 @@ fn shape_path(
 /// §4).
 pub(crate) enum Placement {
     Affine(crate::svg::usvg::Transform),
-    /// A 3D matrix, column-major, from user units in x and y and points in z: the element
+    /// A 3D matrix, column-major, in user units: the element
     /// projects through a perspective, or is a plane of a 3D rendering context.
     Matrix(Matrix3d),
     /// The element lies behind the viewer or turns a hidden back face to them (§4.2, §10).
@@ -318,16 +318,15 @@ fn points(rect: crate::svg::usvg::Rect) -> crate::paint::Rect {
 /// `m`, a 3D matrix of points, as one from and to user units in x and y.
 fn user_units(m: &Matrix3d) -> Matrix3d {
     use crate::paint::POINTS_PER_PIXEL;
-    const TO_POINTS: [f32; 6] = [POINTS_PER_PIXEL, 0.0, 0.0, POINTS_PER_PIXEL, 0.0, 0.0];
-    const TO_USER: [f32; 6] = [
-        1.0 / POINTS_PER_PIXEL,
-        0.0,
-        0.0,
-        1.0 / POINTS_PER_PIXEL,
-        0.0,
-        0.0,
-    ];
-    crate::style::transform::conjugated(m, TO_USER, TO_POINTS)
+    use crate::style::transform::{multiply, scaling};
+    let to_user = 1.0 / POINTS_PER_PIXEL;
+    multiply(
+        &scaling(to_user, to_user, to_user),
+        &multiply(
+            m,
+            &scaling(POINTS_PER_PIXEL, POINTS_PER_PIXEL, POINTS_PER_PIXEL),
+        ),
+    )
 }
 
 fn transform_impl(

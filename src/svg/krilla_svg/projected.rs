@@ -146,7 +146,12 @@ fn opens(group: &Group, plane: &Plane, process_context: &mut ProcessContext) -> 
 }
 
 /// Draws `group`, whose content `plane` projects into the current space.
-fn draw(group: &Group, plane: &Plane, surface: &mut Surface, process_context: &mut ProcessContext) {
+pub(crate) fn draw(
+    group: &Group,
+    plane: &Plane,
+    surface: &mut Surface,
+    process_context: &mut ProcessContext,
+) {
     let blend = group.blend_mode();
     surface.push_blend_mode(convert_blend_mode(&blend));
     if !opens(group, plane, process_context) {

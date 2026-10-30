@@ -613,6 +613,7 @@ impl ImageCache {
         Ok(Arc::new(Image::Svg(SvgImage::parse_source(
             Arc::new(svg::SvgSource::new(xml, base.clone())),
             layer_masks,
+            true,
             resolver,
             0,
             self,
@@ -654,6 +655,7 @@ impl ImageCache {
             Image::Svg(SvgImage::parse_source(
                 source,
                 Arc::new([]),
+                false,
                 resolver,
                 depth,
                 self,

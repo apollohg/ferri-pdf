@@ -119,6 +119,34 @@ impl<'a> ProcessContext<'a> {
     }
 }
 
+/// Draws `plane`, a plane of the 3D rendering context that `tree`'s root element establishes,
+/// whose content `projection` maps into the surface's current space: through the affine map
+/// equal to it over `polygon`, the part of the plane drawn, where there is one, else from
+/// pixels of the plane, visible within `visible`, at `density` raster pixels per unit.
+pub(crate) fn draw_scene_plane(
+    tree: &Tree,
+    plane: &crate::svg::usvg::Group,
+    projection: crate::paint::Projection,
+    polygon: &[[f32; 2]],
+    visible: crate::paint::Rect,
+    density: f32,
+    svg_settings: SvgSettings,
+    surface: &mut Surface,
+) {
+    let mut context = ProcessContext::new(tree.fontdb(), svg_settings, tree.size());
+    match crate::paint::projection::affine_over(projection, polygon) {
+        Some([a, b, c, d, e, f]) => {
+            surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
+            group::render_root(plane, surface, &mut context);
+            surface.pop();
+        }
+        None => {
+            let plane_space = crate::paint::resampling::Plane::new(projection, visible, density);
+            projected::draw(plane, &plane_space, surface, &mut context);
+        }
+    }
+}
+
 pub(crate) fn render_tree(tree: &Tree, svg_settings: SvgSettings, surface: &mut Surface) {
     let mut fc = ProcessContext::new(tree.fontdb(), svg_settings, tree.size());
     group::render_root(tree.root(), surface, &mut fc);

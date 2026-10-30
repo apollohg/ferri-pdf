@@ -8,8 +8,9 @@ use crate::svg::krilla_svg::{
     ProcessContext, clip_path, filter, image, mask, path, projected, text,
 };
 
-/// Renders `group` as the root of a stacking context: of a document, a referenced image, or
-/// the content of a mask or pattern, which paint in their own streams.
+/// Renders `group` as the root of a stacking context: of a document, a referenced image, the
+/// content of a mask or pattern, which paint in their own streams, or a plane of a 3D
+/// rendering context drawn in its own space.
 pub(crate) fn render_root(
     group: &crate::svg::usvg::Group,
     surface: &mut Surface,
@@ -19,7 +20,7 @@ pub(crate) fn render_root(
         .cur_transform()
         .to_usvg()
         .pre_concat(group.transform());
-    render(group, Err(to_page), surface, process_context);
+    render_affine(group, Err(to_page), surface, process_context);
 }
 
 /// Renders `group`, whose content paints onto `backdrop`, or roots its own stacking context

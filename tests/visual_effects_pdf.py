@@ -13,6 +13,7 @@ NORMAL = 'Normal'
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 TEAL = (0, 128, 128)
+BLUE = (0, 0, 255)
 
 
 def groups(path):
@@ -191,6 +192,57 @@ class VisualEffectsPdf(unittest.TestCase):
         with self.renderer.raster(self.root, output, vector_antialias=False) as pixels:
             self.assertEqual(pixels.getpixel((60, 40)), TEAL,
                              'only the back face, facing the viewer, paints')
+
+    def test_svg_content_joins_the_3d_rendering_context_of_its_preserve_3d_svg_element(self):
+        # CSS Transforms 2 §4.1.2, §11: the svg element extends .c's 3D rendering context, so its
+        # SVG children participate in it. The svg (20..220 by 20..120, one user unit per
+        # point) turns 40° about the centre (120, 70); its rectangle sits 50pt in front of it,
+        # along its normal. The teal div turns -40° about the same centre. Under the 300pt
+        # perspective, a point du across and h in front of a plane turned by θ lies at
+        # x = 120 + cos θ·du + sin θ·h and depth z = -sin θ·du + cos θ·h, and draws at
+        # 120 + (x - 120) / (1 - z / 300); each pixel shows the plane nearest the viewer.
+        left, top, width, height, depth, lift = 20, 20, 200, 100, 300, 50
+        centre = (left + width / 2, top + height / 2)
+
+        def plane_at(offset, angle, h):
+            """The depth and across position of the point of a plane drawing at `offset`."""
+            sin, cos = math.sin(math.radians(angle)), math.cos(math.radians(angle))
+            du = (offset * (1 - cos * h / depth) - sin * h) / (cos - offset * sin / depth)
+            z = -sin * du + cos * h
+            return (z, du) if abs(du) <= width / 2 and z < depth else None
+
+        def nearest(screen_x, svg_lift):
+            offset = screen_x - centre[0]
+            found = [(hit[0], colour)
+                     for hit, colour in ((plane_at(offset, 40, svg_lift), BLUE),
+                                         (plane_at(offset, -40, 0), TEAL))
+                     if hit is not None]
+            return max(found)[1] if found else WHITE
+
+        columns = [int(centre[0] + offset) for offset in range(-90, 91, 6)]
+        self.assertTrue(any(nearest(x + 0.5, lift) != nearest(x + 0.5, 0) for x in columns),
+                        'the samples must tell the joined rectangle from one flattened into '
+                        'the svg plane')
+        css = ('.s{perspective:%dpt;width:%dpt;height:%dpt}'
+               '.c{transform-style:preserve-3d;position:relative;height:100%%}'
+               'svg{position:absolute;left:0;top:0;overflow:visible;'
+               'transform-style:preserve-3d;transform:rotateY(40deg)}'
+               '.d{position:absolute;inset:0;background:teal;transform:rotateY(-40deg)}'
+               % (depth, width, height))
+        body = (f'<div class=s><div class=c><svg width="{width}pt" height="{height}pt" '
+                f'viewBox="0 0 {width} {height}"><rect width="{width}" height="{height}" '
+                f'fill="blue" style="transform:translateZ({lift}px)"/></svg>'
+                '<div class=d></div></div></div>')
+        output = self.renderer.render(self.root, css, body)
+        with self.renderer.raster(self.root, output, vector_antialias=False) as pixels:
+            for x in columns:
+                wanted = nearest(x + 0.5, lift)
+                previous, following = nearest(x - 1, lift), nearest(x + 2, lift)
+                if previous != wanted or following != wanted:
+                    continue
+                found = pixels.getpixel((x, int(centre[1])))
+                self.assertTrue(all(abs(a - b) <= 2 for a, b in zip(found, wanted)),
+                                f'at x = {x} the nearest plane is {wanted}, got {found}')
 
     def test_additive_groups_in_a_projected_plane_composite_with_the_plane_content(self):
         # .s (20..220 by 20..120) has a 300pt perspective about its centre (120, 70); its

@@ -1739,6 +1739,26 @@ pub struct Tree {
 }
 
 impl Tree {
+    /// The 3D rendering context that the root element establishes, and the transform from
+    /// the canvas to its space; `None` unless the groups above it hold nothing else.
+    pub fn root_scene(&self) -> Option<(&Group, Transform)> {
+        let mut group = &self.root;
+        let mut transform = Transform::default();
+        loop {
+            if group.is_scene() {
+                return Some((group, transform));
+            }
+            let [Node::Group(child)] = group.children.as_slice() else {
+                return None;
+            };
+            if group.should_isolate() || group.matrix.is_some() {
+                return None;
+            }
+            transform = transform.pre_concat(group.transform);
+            group = child;
+        }
+    }
+
     /// Image size.
     ///
     /// Size of an image that should be created to fit the SVG.

@@ -8,9 +8,6 @@ use super::{converter, style};
 use crate::svg::usvg::tree::ContextElement;
 use crate::svg::usvg::{Group, IsValidLength, Node, NonZeroRect, Size, Transform, ViewBox};
 
-/// The affine identity `[a, b, c, d, e, f]`.
-const IDENTITY_MATRIX: [f32; 6] = [1.0, 0.0, 0.0, 1.0, 0.0, 0.0];
-
 pub(crate) fn convert(
     node: SvgNode,
     state: &converter::State,
@@ -287,7 +284,7 @@ fn convert_children(
             Some(matrix) => {
                 g.matrix = Some(crate::style::transform::conjugated(
                     &matrix,
-                    IDENTITY_MATRIX,
+                    crate::style::transform::IDENTITY_MATRIX,
                     [
                         transform.sx,
                         transform.ky,

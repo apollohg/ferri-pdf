@@ -19,6 +19,8 @@ pub(crate) type Matrix3d = [f32; 16];
 /// A box that projects behind the viewer or turns its hidden back face towards them is not
 /// rendered: it collapses to a point, which paints nothing.
 pub(crate) const NOT_RENDERED: Projection = [0.0; 9];
+/// The affine identity.
+pub(crate) const IDENTITY_MATRIX: Matrix = [1.0, 0.0, 0.0, 1.0, 0.0, 0.0];
 pub(crate) const IDENTITY: Matrix3d = [
     1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
 ];
@@ -180,7 +182,7 @@ fn linear(rows: [[f32; 3]; 3]) -> Matrix3d {
 fn planar([a, b, c, d]: [f32; 4]) -> Matrix3d {
     linear([[a, c, 0.0], [b, d, 0.0], [0.0, 0.0, 1.0]])
 }
-fn scaling(x: f32, y: f32, z: f32) -> Matrix3d {
+pub(crate) fn scaling(x: f32, y: f32, z: f32) -> Matrix3d {
     linear([[x, 0.0, 0.0], [0.0, y, 0.0], [0.0, 0.0, z]])
 }
 /// Rotation about `axis` (CSS Transforms 2 `rotate3d()`); a zero axis is no rotation.

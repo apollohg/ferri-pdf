@@ -169,7 +169,8 @@ pub(super) fn declarations(
             &radii_css(&style.decoration.radii, motion_length)?,
         );
     }
-    if css_transform(style) {
+    // The root's transform places its box in the document.
+    if !root && css_transform(style) {
         for (name, value) in transform_declarations(style)? {
             push(name, &value);
         }

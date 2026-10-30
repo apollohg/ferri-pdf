@@ -40,6 +40,8 @@ pub struct SvgImage {
     initial_tree: Box<Tree>,
     /// The CSS mask layers that the document attaches to SVG content it styles.
     layer_masks: LayerMaskTable,
+    /// The document styles the content: an `svg` element in it, not an image it references.
+    styled: bool,
 }
 
 /// CSS mask layers by the index their `mask` values name.
@@ -61,6 +63,7 @@ impl SvgImage {
                 base: resource.base,
             }),
             Arc::new([]),
+            false,
             resolver,
             depth,
             cache,
@@ -68,10 +71,12 @@ impl SvgImage {
         )
     }
 
-    /// `layer_masks` are the CSS mask layers of SVG content the document styles.
+    /// `layer_masks` are the CSS mask layers of SVG content the document styles, which
+    /// `styled` tells it is.
     pub(crate) fn parse_source(
         source: Arc<SvgSource>,
         layer_masks: LayerMaskTable,
+        styled: bool,
         resolver: &dyn ResourceResolver,
         depth: usize,
         cache: &mut ImageCache,
@@ -189,7 +194,14 @@ impl SvgImage {
             initial_size,
             initial_tree: Box::new(initial_tree),
             layer_masks,
+            styled,
         })
+    }
+
+    /// Whether the document styles the content: an `svg` element in it, whose content takes
+    /// part in the document's 3D rendering contexts.
+    pub(crate) fn is_styled(&self) -> bool {
+        self.styled
     }
 
     /// Whether its SVG content has CSS mask layers, which paint through the display list.
