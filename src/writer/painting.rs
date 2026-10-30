@@ -275,7 +275,16 @@ pub(super) fn push_clip(
         surface.push_clip_path(&rect_path(bounds)?, &FillRule::NonZero);
         return Ok(1);
     }
-    let outline = contour_path(&[clip.contour()])?;
+    let contours = clip.contours();
+    let outline = if contours.is_empty() {
+        rect_path(crate::graphics::Rect {
+            width: 0.0,
+            height: 0.0,
+            ..clip.rect
+        })?
+    } else {
+        contour_path(&contours)?
+    };
     let bounds = clip
         .fragment_bounds()
         .map(|bounds| rect_path(bounds.clip_rect(local_bounds(viewport, surface)?)))

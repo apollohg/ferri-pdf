@@ -125,17 +125,17 @@ pub(crate) fn page_polygon(rect: Rect, regions: &[Region], clip: bool) -> Vec<Po
 pub(crate) fn map_polygon(mut polygon: Vec<Point>, regions: &[Region], clip: bool) -> Vec<Point> {
     for region in regions.iter().rev() {
         if clip || matches!(region, Region::Transform(_)) {
-            polygon = map_region(polygon, *region);
+            polygon = map_region(polygon, region);
         }
     }
     polygon
 }
 
-pub(super) fn map_region(mut polygon: Vec<Point>, region: Region) -> Vec<Point> {
+pub(super) fn map_region(mut polygon: Vec<Point>, region: &Region) -> Vec<Point> {
     match region {
         Region::Transform(matrix) => {
             for point in &mut polygon {
-                *point = apply(matrix, *point);
+                *point = apply(*matrix, *point);
             }
             polygon
         }
@@ -327,6 +327,7 @@ mod tests {
         Region::Clip(Clip {
             rect,
             radii: Radii::default(),
+            outline: None,
             reference_box: None,
             axes: [true; 2],
         })

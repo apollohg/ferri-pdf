@@ -239,6 +239,7 @@ impl CollapsedGrid {
                     clip: Clip {
                         rect,
                         radii: Default::default(),
+                        outline: None,
                         axes: [false; 2],
                         reference_box: Some(Rect {
                             x: left,

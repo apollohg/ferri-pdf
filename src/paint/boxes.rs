@@ -399,12 +399,12 @@ impl BoxAreas<Rect> {
         }
     }
 }
-impl<T: Copy> BoxAreas<T> {
+impl<T: Clone> BoxAreas<T> {
     pub fn area(&self, area: crate::paint::BoxArea) -> T {
         match area {
-            crate::paint::BoxArea::BorderBox => self.border,
-            crate::paint::BoxArea::PaddingBox => self.padding,
-            crate::paint::BoxArea::ContentBox => self.content,
+            crate::paint::BoxArea::BorderBox => self.border.clone(),
+            crate::paint::BoxArea::PaddingBox => self.padding.clone(),
+            crate::paint::BoxArea::ContentBox => self.content.clone(),
         }
     }
 }
@@ -598,6 +598,7 @@ impl<I> BoxPaint<I> {
         self.slice_clip(Clip {
             rect,
             radii,
+            outline: None,
             reference_box: None,
             axes,
         })
@@ -719,17 +720,24 @@ impl<I> BoxPaint<I> {
             return None;
         }
         let clip = self.background_clip(self.decoration.backgrounds.color_clip());
-        if clip.rect.width <= 0.0 || clip.rect.height <= 0.0 {
+        if clip.rect.width <= 0.0
+            || clip.rect.height <= 0.0
+            || clip
+                .outline
+                .as_ref()
+                .is_some_and(|outline| outline.is_empty())
+        {
             return None;
         }
-        let mut shape = if clip
-            .radii
-            .iter()
-            .any(|corner| corner[0] > 0.0 && corner[1] > 0.0)
+        let mut shape = if clip.outline.is_some()
+            || clip
+                .radii
+                .iter()
+                .any(|corner| corner[0] > 0.0 && corner[1] > 0.0)
         {
             Shape::Path {
-                contours: vec![clip.contour()],
-                even_odd: true,
+                contours: clip.contours().into_owned(),
+                even_odd: false,
                 clip: None,
             }
         } else {
@@ -752,6 +760,7 @@ impl<I> BoxPaint<I> {
             && let Some(bounds) = (Clip {
                 rect: self.slice_bounds(whole),
                 radii: Radii::default(),
+                outline: None,
                 reference_box: Some(whole),
                 axes: [true; 2],
             })

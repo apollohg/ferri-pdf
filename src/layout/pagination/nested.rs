@@ -408,7 +408,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                 (place.page, rect)
             })
             .collect();
-        let effect = match source.effect {
+        let effect = match source.effect.clone() {
             Effect::Transform(style, placement, reference) => Effect::Transform(
                 style,
                 placement.map(|node| self.effect(nodes, sticky, node, place, effects)),

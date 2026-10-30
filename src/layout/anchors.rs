@@ -347,7 +347,7 @@ impl Measurements {
             let frame = frame(*page);
             for (_, effect) in chain {
                 match effect {
-                    Effect::Region(Region::Clip(clip), _) => *clip = frame.clip(*clip),
+                    Effect::Region(Region::Clip(clip), _) => *clip = frame.clip(clip.clone()),
                     Effect::Region(Region::Transform(matrix), _) => {
                         *matrix = frame.inverse().into_logical(*matrix);
                     }
@@ -465,7 +465,7 @@ impl Measurements {
             let regions: Vec<_> = anchor_regions[common..]
                 .iter()
                 .filter_map(|(_, effect)| match effect {
-                    Effect::Region(region, _) => Some(*region),
+                    Effect::Region(region, _) => Some(region.clone()),
                     Effect::Path(..) => None,
                 })
                 .collect();
@@ -761,7 +761,7 @@ fn clipped(
             Effect::Region(region, _) => {
                 pieces = pieces
                     .into_iter()
-                    .map(|polygon| super::navigation::map_region(polygon, *region))
+                    .map(|polygon| super::navigation::map_region(polygon, region))
                     .filter(|polygon| !polygon.is_empty())
                     .collect();
             }

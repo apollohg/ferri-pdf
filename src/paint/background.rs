@@ -443,6 +443,7 @@ impl<I> BoxPaint<I> {
             BoxArea::BorderBox => self.slice_clip(Clip {
                 rect: self.decoration_rect(),
                 radii: self.radii(),
+                outline: None,
                 reference_box: None,
                 axes: [true; 2],
             }),

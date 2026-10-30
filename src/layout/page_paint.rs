@@ -60,14 +60,15 @@ impl PagePaint {
         let clip = Clip {
             rect: bleed,
             radii: [[0.0; 2]; 4],
+            outline: None,
             reference_box: None,
             axes: [true; 2],
         };
         background.background_geometry = Some(Arc::new(BackgroundGeometry {
             origins: Some(origins),
             clips: BoxAreas {
-                border: clip,
-                padding: clip,
+                border: clip.clone(),
+                padding: clip.clone(),
                 content: clip,
             },
             viewport: Some(margin),

@@ -35,6 +35,7 @@ fn images(trace: &LayoutTrace) -> Vec<&ImagePaint> {
 fn assert_placement(paint: &ImagePaint, offset: [f32; 2], size: [f32; 2]) {
     let clip = paint
         .clip
+        .as_ref()
         .expect("replaced content always clips to its content box");
     assert_eq!([clip.rect.width, clip.rect.height], [100.0, 80.0]);
     assert_pt(paint.rect.x - clip.rect.x, offset[0]);
@@ -72,7 +73,7 @@ fn object_positions_align_concrete_objects_without_changing_reserved_flow() {
         let paints = images(&trace);
         assert_eq!(paints.len(), 1, "{fit}/{position} must paint one object");
         assert_placement(paints[0], offset, size);
-        let clip = paints[0].clip.unwrap().rect;
+        let clip = paints[0].clip.as_ref().unwrap().rect;
         assert_eq!([clip.x, clip.y], [32.0, 32.0]);
         let following = &trace.pages[0][0];
         assert_eq!(following.text, "After");
@@ -135,7 +136,7 @@ fn equivalent_positions_match_computed_style_queries() {
             );
             let paints = images(&trace);
             assert_eq!(paints.len(), 1);
-            let query_width = paints[0].clip.unwrap().rect.width;
+            let query_width = paints[0].clip.as_ref().unwrap().rect.width;
             if query_width != 100.0 {
                 failures.push(format!(
                 "{property} `{actual}` vs `{equivalent}`: query width {query_width} (expected 100)"
@@ -168,7 +169,7 @@ fn equivalent_object_positions_cycle_against_the_parent_computed_value() {
         );
         let paints = images(&trace);
         assert_eq!(paints.len(), 1);
-        let clip = paints[0].clip.unwrap().rect;
+        let clip = paints[0].clip.as_ref().unwrap().rect;
         let offset = [paints[0].rect.x - clip.x, paints[0].rect.y - clip.y];
         if offset != [0.0, 50.0] {
             failures.push(format!("parent `{actual}` vs toggle argument `{equivalent}`: offset {offset:?} (expected [0,50])"));
@@ -237,5 +238,5 @@ fn object_content_clip_keeps_rounded_content_edge_geometry() {
     let paints = images(&trace);
     assert_eq!(paints.len(), 1);
     assert_placement(paints[0], [40.0, 50.0], [60.0, 30.0]);
-    assert_eq!(paints[0].clip.unwrap().radii, [[18.0; 2]; 4]);
+    assert_eq!(paints[0].clip.as_ref().unwrap().radii, [[18.0; 2]; 4]);
 }

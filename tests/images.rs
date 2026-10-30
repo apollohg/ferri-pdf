@@ -108,7 +108,7 @@ fn block_image_margins_follow_initial_forced_and_automatic_break_rules() {
         assert_eq!(images[0].0, page, "{name}: image page");
         common::assert_pt(images[0].1.rect.y, top);
         common::assert_pt(images[0].1.rect.height, IMAGE_SIZE);
-        common::assert_pt(images[0].1.clip.unwrap().rect.y, top);
+        common::assert_pt(images[0].1.clip.as_ref().unwrap().rect.y, top);
     }
 }
 
@@ -173,7 +173,7 @@ fn object_fitting_keeps_content_geometry_and_clips_to_the_content_box() {
         );
     }
     for image in &images {
-        let clip = image.clip.unwrap().rect;
+        let clip = image.clip.as_ref().unwrap().rect;
         assert_eq!([clip.width, clip.height], [80.0, 35.0]);
     }
 }

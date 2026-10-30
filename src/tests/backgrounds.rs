@@ -414,7 +414,7 @@ fn layers_paint_bottom_first_with_their_own_clip_and_the_colour_follows_the_bott
             && matches!(layers[1].image, TileImage::Image(..)),
         "the last listed layer is painted first"
     );
-    let padding_box = layers[0].clip;
+    let padding_box = &layers[0].clip;
     assert_eq!(
         padding_box.rect,
         Rect {
@@ -430,7 +430,7 @@ fn layers_paint_bottom_first_with_their_own_clip_and_the_colour_follows_the_bott
         [16.0, 16.0],
         "padding-box curves shrink by the border width"
     );
-    let content_box = layers[1].clip;
+    let content_box = &layers[1].clip;
     assert_eq!(
         content_box.radii[0],
         [10.0, 10.0],

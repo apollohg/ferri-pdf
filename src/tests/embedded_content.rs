@@ -79,6 +79,7 @@ fn iframes_show_their_document_in_a_default_size_inset_bordered_viewport() {
     };
     let clip = paint
         .clip
+        .as_ref()
         .expect("replaced content clips to its content box")
         .rect;
     assert_labelled_pt("viewport width", paint.rect.width, 300.0 * PIXEL);
@@ -191,7 +192,7 @@ fn nested_documents_are_continuous_media_clipped_to_the_viewport() {
         "the heading follows the first paragraph in the same flow, at {}",
         second.baseline
     );
-    let clip = paint.clip.unwrap().rect;
+    let clip = paint.clip.as_ref().unwrap().rect;
     assert_eq!(
         [clip.width, clip.height],
         [200.0, 60.0],
@@ -403,7 +404,7 @@ fn videos_show_their_poster_and_audio_exposes_controls_one_line_high() {
         IMAGE_PIXELS.map(|pixels| pixels * PIXEL),
         "the playback area takes the poster's natural size"
     );
-    let clip = contained.clip.unwrap().rect;
+    let clip = contained.clip.as_ref().unwrap().rect;
     assert_eq!(
         [contained.rect.width, contained.rect.height],
         [120.0, 60.0],
@@ -495,16 +496,16 @@ fn width_and_height_attributes_map_to_aspect_ratio_hints() {
     );
     assert_eq!(
         [
-            square.clip.unwrap().rect.width,
-            square.clip.unwrap().rect.height
+            square.clip.as_ref().unwrap().rect.width,
+            square.clip.as_ref().unwrap().rect.height
         ],
         [60.0, 30.0],
         "an image's natural ratio overrides the `auto` hint ratio"
     );
     assert_eq!(
         [
-            auto.clip.unwrap().rect.width,
-            auto.clip.unwrap().rect.height
+            auto.clip.as_ref().unwrap().rect.width,
+            auto.clip.as_ref().unwrap().rect.height
         ],
         [300.0 * PIXEL, 150.0 * PIXEL],
         "sizes=auto images are size-contained at 300 by 150 pixels"

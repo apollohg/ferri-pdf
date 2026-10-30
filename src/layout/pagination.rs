@@ -285,7 +285,7 @@ struct ScopedPaint {
 }
 
 /// Paint effect of one box, resolved per page from that page's fragment.
-#[derive(Clone, Copy)]
+#[derive(Clone)]
 enum Effect<'a> {
     /// The overflow clip at one edge of the box with this style.
     Clip(&'a crate::style::Style, crate::style::ClipEdge),
@@ -410,7 +410,7 @@ struct EffectNode<'a> {
     context: Option<PaintKey>,
 }
 /// An effect resolved for one page.
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, PartialEq)]
 pub(crate) enum Region {
     Clip(Clip),
     Transform([f32; 6]),
@@ -3074,10 +3074,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             let clip = |paint: &BoxPaint| match node.effect {
                 Effect::Clip(style, edge) => Some(style.overflow_clip(paint, edge)),
                 Effect::BorderClip => Some(paint.background_clips().border),
-                Effect::PaintClip(clip) => Some(clip),
+                Effect::PaintClip(ref clip) => Some(clip.clone()),
                 Effect::RectClip(style) => style.clip_region(paint.rect).map(|rect| Clip {
                     rect,
                     radii: crate::graphics::Radii::default(),
+                    outline: None,
                     reference_box: None,
                     axes: [true; 2],
                 }),
@@ -3153,7 +3154,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
             if let Some(space) = node.native {
                 for (_, region) in &mut node_regions {
-                    *region = space.region(*region);
+                    *region = space.region(region.clone());
                 }
             }
             regions.push(node_regions);
@@ -6093,10 +6094,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             for (page, region) in &regions[index] {
                 if let Region::Clip(clip) = region
                     && clip.axes == [true; 2]
-                    && clip.radii != crate::graphics::Radii::default()
+                    && (clip.outline.is_some() || clip.radii != crate::graphics::Radii::default())
                 {
                     let shape = crate::graphics::Shape::Path {
-                        contours: vec![clip.contour()],
+                        contours: clip.contours().into_owned(),
                         even_odd: false,
                         clip: None,
                     };
@@ -6163,7 +6164,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     .iter()
                     .find(|(fragment_page, _)| *fragment_page == page)
                 {
-                    chain.push((index, super::anchors::Effect::Region(*region, owner)));
+                    chain.push((index, super::anchors::Effect::Region(region.clone(), owner)));
                 }
                 if let Some(polygons) = paths[index].get(&page) {
                     chain.push((index, super::anchors::Effect::Path(polygons.clone(), owner)));
@@ -6401,7 +6402,9 @@ fn clipped(
             regions_here.push(
                 regions[index]
                     .iter()
-                    .find_map(|(fragment_page, clip)| (*fragment_page == page).then_some(*clip))
+                    .find_map(|(fragment_page, clip)| {
+                        (*fragment_page == page).then(|| clip.clone())
+                    })
                     .ok_or(LayoutError::MissingClipFragment { page })?,
             );
         }
@@ -6551,7 +6554,7 @@ fn clipped(
                         let region = regions[index]
                             .iter()
                             .find_map(|(fragment_page, region)| {
-                                (*fragment_page == page).then_some(*region)
+                                (*fragment_page == page).then(|| region.clone())
                             })
                             .ok_or(LayoutError::MissingClipFragment { page })?;
                         let mut pushes = vec![match region {

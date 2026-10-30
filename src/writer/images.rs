@@ -41,6 +41,7 @@ impl ImageWriter {
             || paint.rect.height == 0.0
             || paint
                 .clip
+                .as_ref()
                 .is_some_and(|clip| clip.rect.width == 0.0 || clip.rect.height == 0.0)
         {
             return Ok(());

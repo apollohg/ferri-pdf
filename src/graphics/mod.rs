@@ -123,6 +123,6 @@ pub struct ImagePaint {
 }
 impl ImagePaint {
     pub fn visible_rect(&self) -> Rect {
-        self.clip.map_or(self.rect, |clip| clip.rect)
+        self.clip.as_ref().map_or(self.rect, |clip| clip.rect)
     }
 }

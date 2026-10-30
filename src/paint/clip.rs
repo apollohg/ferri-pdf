@@ -1,5 +1,6 @@
 use crate::paint::{Contour, Point, Radii, Rect, rounded};
 use serde::Serialize;
+use std::{borrow::Cow, sync::Arc};
 
 /// Lower and upper bounds on each physical axis; `None` leaves an edge open.
 #[derive(Clone, Copy, Debug, PartialEq, Serialize)]
@@ -73,13 +74,16 @@ impl ClipBounds {
     }
 }
 
-/// A rounded rectangle or an axis-aligned strip, optionally cut at fragment edges.
-#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
+/// A box outline or an axis-aligned strip, optionally cut at fragment edges.
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Clip {
     pub rect: Rect,
     pub radii: Radii,
+    /// Nonzero-winding unbroken outline; an empty collection clips everything on both axes.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub outline: Option<Arc<Vec<Contour>>>,
     pub axes: [bool; 2],
-    /// Unbroken rounded rectangle, cropped to `rect` after fragmentation.
+    /// Unbroken box bounds, cropped to `rect` after fragmentation.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub reference_box: Option<Rect>,
 }
@@ -110,12 +114,25 @@ impl Clip {
             .map_or(bounds, |fragment| bounds.intersection(fragment))
     }
 
-    /// Rounded outline before the additional rectangular fragment cut.
-    pub fn contour(&self) -> Contour {
-        rounded::rounded_rect(self.reference_box.unwrap_or(self.rect), self.radii)
+    /// Outline before the additional rectangular fragment cut.
+    pub fn contours(&self) -> Cow<'_, [Contour]> {
+        self.outline.as_ref().map_or_else(
+            || {
+                Cow::Owned(vec![rounded::rounded_rect(
+                    self.reference_box.unwrap_or(self.rect),
+                    self.radii,
+                )])
+            },
+            |outline| Cow::Borrowed(outline.as_slice()),
+        )
     }
 
     pub fn translate(&mut self, [dx, dy]: Point) {
+        if let Some(outline) = &mut self.outline {
+            for contour in Arc::make_mut(outline) {
+                *contour = contour.map(|[x, y]| [x + dx, y + dy]);
+            }
+        }
         for rect in std::iter::once(&mut self.rect).chain(self.reference_box.as_mut()) {
             rect.x += dx;
             rect.y += dy;
@@ -128,4 +145,137 @@ fn ranges(rect: Rect) -> [[f32; 2]; 2] {
         [rect.x, rect.x + rect.width],
         [rect.y, rect.y + rect.height],
     ]
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn disconnected_outline_survives_fragmentation_and_copy_on_write_translation() {
+        let islands = vec![
+            Contour::polygon(&[[40.0, 0.0], [80.0, 0.0], [80.0, 30.0], [40.0, 30.0]]),
+            Contour::polygon(&[[0.0, 30.0], [40.0, 30.0], [40.0, 60.0], [0.0, 60.0]]),
+        ];
+        let source = Clip {
+            rect: Rect {
+                x: 0.0,
+                y: 10.0,
+                width: 80.0,
+                height: 40.0,
+            },
+            radii: Radii::default(),
+            outline: Some(Arc::new(islands.clone())),
+            axes: [true; 2],
+            reference_box: Some(Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 80.0,
+                height: 60.0,
+            }),
+        };
+        assert_eq!(
+            source.contours().as_ref(),
+            islands,
+            "fragment clips retain both unbroken islands"
+        );
+        let mut translated = source.clone();
+        translated.translate([7.0, -3.0]);
+        let expected: Vec<_> = islands
+            .iter()
+            .map(|contour| contour.map(|[x, y]| [x + 7.0, y - 3.0]))
+            .collect();
+        assert_eq!(
+            translated.contours().as_ref(),
+            expected,
+            "every segment follows the translated reference box"
+        );
+        assert_eq!(
+            source.contours().as_ref(),
+            islands,
+            "translating a shared outline must not alter its other fragments"
+        );
+        let clipped = translated.bounds().clip_rect(Rect {
+            x: -100.0,
+            y: -100.0,
+            width: 300.0,
+            height: 300.0,
+        });
+        assert_eq!(
+            clipped,
+            Rect {
+                x: 7.0,
+                y: 7.0,
+                width: 80.0,
+                height: 40.0
+            }
+        );
+    }
+
+    #[test]
+    fn background_fill_uses_the_same_nonzero_outline_as_its_clip() {
+        use crate::paint::{BackgroundGeometry, BoxAreas, BoxDecoration, BoxPaint, Shape};
+        let rect = Rect {
+            x: 0.0,
+            y: 0.0,
+            width: 80.0,
+            height: 60.0,
+        };
+        let outline = vec![
+            Contour::polygon(&[[0.0, 0.0], [60.0, 0.0], [60.0, 60.0], [0.0, 60.0]]),
+            Contour::polygon(&[[20.0, 0.0], [80.0, 0.0], [80.0, 60.0], [20.0, 60.0]]),
+        ];
+        let mut paint: BoxPaint = BoxPaint::whole(rect, BoxDecoration::default());
+        paint.decoration.background.alpha = 1.0;
+        for contours in [outline, Vec::new()] {
+            let clip = Clip {
+                rect,
+                radii: Radii::default(),
+                outline: Some(Arc::new(contours.clone())),
+                reference_box: None,
+                axes: [true; 2],
+            };
+            paint.background_geometry = Some(Arc::new(BackgroundGeometry {
+                origins: None,
+                viewport: None,
+                clips: BoxAreas {
+                    border: clip.clone(),
+                    padding: clip.clone(),
+                    content: clip,
+                },
+            }));
+            if contours.is_empty() {
+                assert!(
+                    paint.background_fill().is_none(),
+                    "an empty clip must produce no background fill"
+                );
+            } else {
+                let fill = paint.background_fill().expect("visible background");
+                assert!(
+                    matches!(fill.shape, Shape::Path { contours: actual, even_odd: false, clip: None } if actual == contours),
+                    "overlapping contours must have the same nonzero union as the PDF clip"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn an_explicit_empty_outline_does_not_fall_back_to_the_box() {
+        let clip = Clip {
+            rect: Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 80.0,
+                height: 60.0,
+            },
+            radii: Radii::default(),
+            outline: Some(Arc::new(Vec::new())),
+            axes: [true; 2],
+            reference_box: None,
+        };
+        assert!(
+            clip.contours().is_empty(),
+            "consumed inner areas have no painted or clipped region"
+        );
+    }
 }

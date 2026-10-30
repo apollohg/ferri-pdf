@@ -24,6 +24,7 @@ fn pdf_errors_unwind_nested_display_list_scopes() {
                 height: 20.0,
             },
             radii: [[0.0; 2]; 4],
+            outline: None,
             axes: [true; 2],
             reference_box: None,
         }),

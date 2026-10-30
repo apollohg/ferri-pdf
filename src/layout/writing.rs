@@ -71,9 +71,9 @@ impl Frame {
     }
     fn areas(self, areas: &BoxAreas<Clip>) -> BoxAreas<Clip> {
         BoxAreas {
-            border: self.clip(areas.border),
-            padding: self.clip(areas.padding),
-            content: self.clip(areas.content),
+            border: self.clip(areas.border.clone()),
+            padding: self.clip(areas.padding.clone()),
+            content: self.clip(areas.content.clone()),
         }
     }
     pub(super) fn paint(self, paint: &mut BoxPaint) {
@@ -152,9 +152,9 @@ impl Frame {
                 DisplayItem::Box(paint) => self.paint(paint),
                 DisplayItem::Image(image) => {
                     image.rect = self.rect(image.rect);
-                    image.clip = image.clip.map(|clip| self.clip(clip));
+                    image.clip = image.clip.take().map(|clip| self.clip(clip));
                 }
-                DisplayItem::PushClip(clip) => *clip = self.clip(*clip),
+                DisplayItem::PushClip(clip) => *clip = self.clip(clip.clone()),
                 DisplayItem::PushTransform(matrix) => {
                     *matrix = compose(self.matrix, compose(*matrix, self.inverse().matrix));
                 }
@@ -166,7 +166,9 @@ impl Frame {
                         self.paint(fragment);
                     }
                 }
-                DisplayItem::Backdrop(backdrop) => backdrop.border = self.clip(backdrop.border),
+                DisplayItem::Backdrop(backdrop) => {
+                    backdrop.border = self.clip(backdrop.border.clone());
+                }
                 DisplayItem::Text { .. }
                 | DisplayItem::Decoration(_)
                 | DisplayItem::TextShadow(_) => {
@@ -210,6 +212,11 @@ pub(super) fn map_clip(matrix: [f32; 6], mut clip: Clip) -> Clip {
     let [a, _, _, d, _, _] = matrix;
     let swapped = a == 0.0 && d == 0.0;
     clip.radii = map_radii(matrix, &clip.radii);
+    if let Some(outline) = &mut clip.outline {
+        for contour in Arc::make_mut(outline) {
+            *contour = contour.map(|point| map_point(matrix, point));
+        }
+    }
     if swapped {
         clip.axes.swap(0, 1);
     }
@@ -979,6 +986,63 @@ mod tests {
     }
 
     #[test]
+    fn native_writing_maps_every_explicit_clip_segment() {
+        use crate::graphics::{Contour, Segment};
+        let outline = vec![
+            Contour {
+                start: [10.0, 20.0],
+                segments: vec![
+                    Segment::Cubic([[12.0, 20.0], [14.0, 23.0], [16.0, 25.0]]),
+                    Segment::Line([10.0, 25.0]),
+                ],
+                closed: true,
+            },
+            Contour::polygon(&[[30.0, 40.0], [35.0, 40.0], [35.0, 45.0]]),
+        ];
+        let source = Clip {
+            rect: Rect {
+                x: 10.0,
+                y: 20.0,
+                width: 40.0,
+                height: 60.0,
+            },
+            radii: Default::default(),
+            outline: Some(Arc::new(outline.clone())),
+            axes: [true; 2],
+            reference_box: None,
+        };
+        for mode in [
+            WritingMode::VerticalRl,
+            WritingMode::SidewaysRl,
+            WritingMode::VerticalLr,
+            WritingMode::SidewaysLr,
+        ] {
+            let frame = Frame::physical(
+                Flow {
+                    writing_mode: mode,
+                    rtl: false,
+                },
+                [100.0, 120.0],
+            );
+            let mapped = frame.clip(source.clone());
+            let expected: Vec<_> = outline
+                .iter()
+                .map(|contour| contour.map(|point| map_point(frame.matrix, point)))
+                .collect();
+            assert_eq!(
+                mapped.contours().as_ref(),
+                expected,
+                "{mode:?}: all islands, control points and endpoints must follow the native frame"
+            );
+            assert_eq!(
+                frame.inverse().clip(mapped),
+                source,
+                "{mode:?}: inverse projection must restore the complete outline"
+            );
+        }
+    }
+
+    #[test]
     fn native_clip_chains_preserve_each_asymmetric_corner_and_fragment_axis() {
         let source = Clip {
             rect: Rect {
@@ -994,6 +1058,7 @@ mod tests {
                 height: 70.0,
             }),
             radii: [[1.0, 2.0], [3.0, 4.0], [5.0, 6.0], [7.0, 8.0]],
+            outline: None,
             axes: [true, false],
         };
         for (mode, order) in [
@@ -1009,7 +1074,7 @@ mod tests {
                 },
                 [100.0, 120.0],
             );
-            let mapped = map_clip(frame.matrix, source);
+            let mapped = map_clip(frame.matrix, source.clone());
             assert_eq!(
                 mapped.radii,
                 order.map(|index| [source.radii[index][1], source.radii[index][0]]),

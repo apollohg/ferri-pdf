@@ -12,11 +12,11 @@ fn trace(css: &str, body: &str) -> LayoutTrace {
         .layout
         .unwrap()
 }
-fn clips(items: &[DisplayItem]) -> Vec<Clip> {
+fn clips(items: &[DisplayItem]) -> Vec<&Clip> {
     items
         .iter()
         .filter_map(|item| match item {
-            DisplayItem::PushClip(clip) => Some(*clip),
+            DisplayItem::PushClip(clip) => Some(clip),
             _ => None,
         })
         .collect()
@@ -174,7 +174,7 @@ fn rounded_images_are_trimmed_to_the_content_edge_curve() {
     let clip = trace.display_lists[0]
         .iter()
         .find_map(|item| match item {
-            DisplayItem::Image(paint) => paint.clip,
+            DisplayItem::Image(paint) => paint.clip.as_ref(),
             _ => None,
         })
         .expect("rounded replaced content must be clipped");

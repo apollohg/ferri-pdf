@@ -265,11 +265,12 @@ fn draw_fragment(
                     Clip {
                         rect: area,
                         radii: Radii::default(),
+                        outline: None,
                         reference_box: None,
                         axes: [true; 2],
                     }
                 } else {
-                    layer.clip
+                    layer.clip.clone()
                 };
                 draw_layer(
                     painter,
