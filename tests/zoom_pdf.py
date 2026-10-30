@@ -7,6 +7,45 @@ import embedded_content_pdf
 
 
 class ZoomPdf(unittest.TestCase):
+    def test_zoomed_text_stroke_and_depth_transforms_match_physical_paint(self):
+        renderer = embedded_content_pdf.EmbeddedContentPdf()
+        renderer.setUp()
+        cases = [
+            ('text stroke', '.sample{-webkit-text-stroke:1pt red;-webkit-text-fill-color:transparent}',
+             '.sample{-webkit-text-stroke:2pt red;-webkit-text-fill-color:transparent}'),
+            ('perspective function', '.sample{background:red;transform:perspective(100pt) translateZ(20pt);transform-origin:5pt 10pt}',
+             '.sample{background:red;transform:perspective(200pt) translateZ(40pt);transform-origin:10pt 20pt}'),
+            ('parent perspective', 'section{perspective:100pt;perspective-origin:10pt 20pt}.sample{background:red;transform:translateZ(20pt)}',
+             'section{perspective:200pt;perspective-origin:20pt 40pt}.sample{background:red;transform:translateZ(40pt)}'),
+            ('matrix3d', '.sample{background:red;transform:matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,10,20,0,1)}',
+             '.sample{background:red;transform:matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,20,40,0,1)}'),
+        ]
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-zoom-paint-acceptance-') as directory:
+            root = Path(directory)
+            body = '<section><div class="sample">Hi</div></section>'
+            for name, source, reference in cases:
+                with self.subTest(name=name):
+                    actual = renderer.ink(root, 'section{zoom:2;width:100pt;height:80pt}.sample{font:20pt/24pt Probe;width:40pt;height:30pt}' + source, body)
+                    expected = renderer.ink(root, 'section{width:200pt;height:160pt}.sample{font:40pt/48pt Probe;width:80pt;height:60pt}' + reference, body)
+                    self.assertTrue(any(r > g and r > b for r, g, b in zip(expected[::3], expected[1::3], expected[2::3])),
+                                    'the reference must contain red paint')
+                    self.assertTrue(actual == expected, 'zoom must scale paint lengths while preserving dimensionless transforms')
+
+    def test_zoomed_backdrop_filter_matches_physical_blur(self):
+        renderer = embedded_content_pdf.EmbeddedContentPdf()
+        renderer.setUp()
+        body = '<section><div class="back"></div><div class="panel"></div></section>'
+        common = ('section{position:relative;isolation:isolate}.back{background:linear-gradient(90deg,red 50%,blue 50%)}'
+                  '.panel{position:absolute;top:0;left:0}')
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-zoom-backdrop-') as directory:
+            root = Path(directory)
+            reference = common + 'section,.back,.panel{width:160pt;height:80pt}.panel{backdrop-filter:blur(4pt)}'
+            expected = renderer.ink(root, reference, body)
+            unfiltered = renderer.ink(root, reference + '.panel{backdrop-filter:none}', body)
+            self.assertTrue(expected != unfiltered, 'the fixture must visibly blur the backdrop')
+            actual = renderer.ink(root, common + 'section{zoom:2}section,.back,.panel{width:80pt;height:40pt}.panel{backdrop-filter:blur(2pt)}', body)
+            self.assertTrue(actual == expected, 'zoomed backdrop sampling must use physical blur lengths')
+
     def test_svg_gradient_font_units_respect_the_resource_coordinate_system(self):
         from fontTools.ttLib import TTFont
         renderer = embedded_content_pdf.EmbeddedContentPdf()

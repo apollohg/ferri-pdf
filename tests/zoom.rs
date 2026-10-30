@@ -385,6 +385,42 @@ fn zoom_scales_dimensions_edges_text_and_following_flow() {
 }
 
 #[test]
+fn containment_tabs_and_line_steps_use_projected_lengths() {
+    for (name, body, actual, expected) in [
+        (
+            "intrinsic containment",
+            "<section><div>Content</div></section><p style='clear:both'>After</p>",
+            "section{float:left;contain:size;contain-intrinsic-size:30pt 40pt;background:blue}",
+            "section{float:left;contain:size;contain-intrinsic-size:60pt 80pt;background:blue}",
+        ),
+        (
+            "length tab stops",
+            "<section>A\tB\tC<br>Long\tD</section><p>After</p>",
+            "section{white-space:pre;tab-size:25pt}",
+            "section{white-space:pre;tab-size:50pt}",
+        ),
+        (
+            "line height steps",
+            "<section>First<br>Second<br>Third</section><p>After</p>",
+            "section{line-height-step:8pt}",
+            "section{line-height-step:16pt}",
+        ),
+    ] {
+        eprintln!("zoom additional layout: {name}");
+        same_layout(
+            &render(
+                body,
+                &format!("section{{zoom:2;font-size:10pt;line-height:12pt}}{actual}"),
+            ),
+            &render(
+                body,
+                &format!("section{{font-size:20pt;line-height:24pt}}{expected}"),
+            ),
+        );
+    }
+}
+
+#[test]
 fn font_relative_lengths_keep_canonical_current_and_root_metrics() {
     for (width, physical) in [
         ("10em", "160pt"),
