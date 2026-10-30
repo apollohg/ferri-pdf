@@ -35,9 +35,19 @@ impl crate::paint::ImageInfo for Image {
             | Self::Transparent
             | Self::Frame(..)
             | Self::Viewport(_)
-            | Self::Widget(_) => false,
+            | Self::Widget(_)
+            | Self::Element(_) => false,
         }
     }
+}
+
+/// An element as an image (CSS Images 4 §2.7): its rendering over a transparent canvas the
+/// size of its decorated bounding box, which the document's final layout records.
+#[derive(Debug)]
+pub struct ElementImage {
+    pub(crate) element: crate::dom::ElementId,
+    /// The decorated bounding box's size in CSS pixels.
+    pub(crate) size: [f32; 2],
 }
 
 const MAX_DECODED_BYTES: u64 = 2 * 1024 * 1024 * 1024;
@@ -182,6 +192,7 @@ pub enum Image {
     /// an invalid image replacing an element's contents has zero natural size (CSS Content 3
     /// §1).
     Generated(Arc<crate::graphics::BackgroundImage>),
+    Element(ElementImage),
 }
 impl Image {
     pub fn natural_size(&self) -> NaturalDimensions {
@@ -208,6 +219,14 @@ impl Image {
             Self::Widget(widget) => widget.natural_size(),
             Self::View(view) => view.natural_size(),
             Self::Generated(image) => generated_natural_size(image),
+            Self::Element(element) => {
+                let [width, height] = element.size;
+                NaturalDimensions {
+                    width: Some(width),
+                    height: Some(height),
+                    ratio: (height > 0.0).then_some(width / height),
+                }
+            }
         }
     }
     /// Whether every pixel is opaque; vector images, and images that fail to decode, are not
@@ -239,7 +258,8 @@ impl Image {
             | Self::Transparent
             | Self::Frame(..)
             | Self::Viewport(_)
-            | Self::Widget(_) => false,
+            | Self::Widget(_)
+            | Self::Element(_) => false,
         }
     }
     pub fn pixel_size(&self, available_width: f32) -> [f32; 2] {
@@ -251,6 +271,7 @@ impl Image {
                 .map(|value| value / crate::style::POINTS_PER_PIXEL),
             Self::Transparent | Self::Frame(..) => DEFAULT_OBJECT_SIZE,
             Self::Widget(widget) => widget.natural,
+            Self::Element(element) => element.size,
             Self::View(view) => view.pixel_size(available_width),
             Self::Generated(image) => crate::paint::image_size(
                 &crate::paint::BackgroundSize::default(),
@@ -554,6 +575,19 @@ impl ImageCache {
             })
             .ok()
     }
+    /// Retains a diagnostic for an image that could not be made, which renders as invalid.
+    pub(crate) fn record_failure(
+        &mut self,
+        base: &crate::resources::ResourceBase,
+        reference: &str,
+        error: ImageError,
+    ) {
+        self.failures.push(ImageFailure {
+            base: base.clone(),
+            reference: reference.to_owned(),
+            error,
+        });
+    }
     pub(crate) fn take_failures(&mut self) -> Vec<ImageFailure> {
         std::mem::take(&mut self.failures)
     }
@@ -667,7 +701,8 @@ impl ImageCache {
             | Image::Viewport(_)
             | Image::Widget(_)
             | Image::View(_)
-            | Image::Generated(_) => {
+            | Image::Generated(_)
+            | Image::Element(_) => {
                 unreachable!("image resources parse to decoded images")
             }
         };

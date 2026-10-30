@@ -74,6 +74,8 @@ pub enum PdfError {
     UnplacedEffect,
     #[error("a background-clip: text layer has no text area")]
     MissingTextArea,
+    #[error("an element() image names an element the layout did not render")]
+    MissingElementRendering,
     #[error("{0}")]
     Serialization(#[from] krilla::error::KrillaError),
 }
@@ -177,6 +179,12 @@ pub(crate) fn encode_parts_with_diagnostics(
         let trace = part.trace;
         let mut text = text::TextWriter::new(part.fonts);
         let raster = raster::RasterContext::new(settings_dpi, part.definitions);
+        images.elements.extend(
+            trace
+                .element_images
+                .iter()
+                .map(|(element, rendering)| (*element, rendering.clone())),
+        );
         for (page_index, (lines, items)) in trace.pages.iter().zip(&trace.display_lists).enumerate()
         {
             let record = &trace.page_records[page_index];

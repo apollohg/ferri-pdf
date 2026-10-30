@@ -2,6 +2,7 @@
 mod content;
 mod controls;
 mod counters;
+mod element_images;
 mod embedded;
 pub(crate) mod encoding;
 mod first_letter;
@@ -30,6 +31,7 @@ use crate::resources::{ResourceError, ResourceResolver};
 use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 
 pub(crate) use counters::CounterSnapshot;
+pub(crate) use element_images::{ElementMeasurements, ElementState};
 pub(crate) use formatting::{
     BlockBox, BlockContent, InitialLetterBox, PageBox, PageFootnoteArea, PageMarginBox,
 };
@@ -109,6 +111,8 @@ pub(crate) struct StyledDocument {
     svg_definitions: svg::SvgDefinitions,
     /// The document's counters where each page starts (CSS Page 3 §6.1).
     page_counters: std::collections::HashMap<usize, CounterSnapshot>,
+    /// What the last layout measured of the `element()` images the next formatting resolves.
+    element_measurements: Box<ElementMeasurements>,
 }
 
 struct FormattingSource {
@@ -125,7 +129,11 @@ impl FormattingSource {
         &self,
         styles: &mut Stylesheet,
         values: GeneratedValues,
-        images: &std::rc::Rc<std::cell::RefCell<crate::images::ImageCache>>,
+        (images, elements, definitions): (
+            &std::rc::Rc<std::cell::RefCell<crate::images::ImageCache>>,
+            &ElementMeasurements,
+            &svg::SvgDefinitions,
+        ),
         resolver: &dyn ResourceResolver,
     ) -> Result<formatting::Formatted, DocumentError> {
         let navigation = navigation::NavigationBuilder::new(
@@ -140,6 +148,8 @@ impl FormattingSource {
                 html: &self.html,
                 embedded: &self.embedded,
                 images,
+                elements,
+                definitions,
             },
             styles,
             &self.base,
@@ -379,6 +389,8 @@ impl StyledDocument {
                 html: &html,
                 embedded: &embedded,
                 images: &images,
+                elements: &ElementMeasurements::default(),
+                definitions: &svg::SvgDefinitions::default(),
             },
             &mut styles,
             base,
@@ -430,6 +442,7 @@ impl StyledDocument {
             pages,
             svg_definitions,
             page_counters: page_counters.into_iter().collect(),
+            element_measurements: Box::default(),
             source: std::rc::Rc::new(FormattingSource {
                 html,
                 embedded,
@@ -487,7 +500,16 @@ impl StyledDocument {
             pages,
             svg_definitions,
             page_counters,
-        } = source.build(&mut styles, values, &self.pages.images(), resolver)?;
+        } = source.build(
+            &mut styles,
+            values,
+            (
+                &self.pages.images(),
+                &self.element_measurements,
+                &self.svg_definitions,
+            ),
+            resolver,
+        )?;
         Ok(Self {
             root,
             footnotes,
@@ -501,6 +523,7 @@ impl StyledDocument {
             pages,
             svg_definitions,
             page_counters: page_counters.into_iter().collect(),
+            element_measurements: self.element_measurements.clone(),
             source,
         })
     }
@@ -522,6 +545,16 @@ impl StyledDocument {
         self.styles.anchor_frames_mut().measured(frames);
     }
 
+    /// Reformatting resolves `element()` images against what a layout measured of them.
+    pub(crate) fn measured_elements(&mut self, measurements: Box<ElementMeasurements>) {
+        self.element_measurements = measurements;
+    }
+
+    /// The `element()` images of the current formatting.
+    pub(crate) fn element_images(&self) -> &element_images::ElementImages {
+        self.pages.elements()
+    }
+
     pub(crate) fn reformat(
         &mut self,
         values: GeneratedValues,
@@ -538,7 +571,16 @@ impl StyledDocument {
             pages,
             svg_definitions,
             page_counters,
-        } = source.build(&mut self.styles, values, &self.pages.images(), resolver)?;
+        } = source.build(
+            &mut self.styles,
+            values,
+            (
+                &self.pages.images(),
+                &self.element_measurements,
+                &self.svg_definitions,
+            ),
+            resolver,
+        )?;
         self.navigation = navigation.finish(&source.html, &generated)?;
         self.running_strings = strings.finish(&source.html)?;
         self.root = root;
@@ -607,6 +649,9 @@ impl StyledDocument {
 
     pub(crate) fn root(&self) -> &BlockBox {
         &self.root
+    }
+    pub(crate) fn root_element(&self) -> crate::dom::ElementId {
+        self.source.html.root_element().id()
     }
     pub(crate) fn footnotes(&self) -> &[BlockBox] {
         &self.footnotes

@@ -133,6 +133,10 @@ impl FragmentIndex {
     pub(crate) fn contains(&self, element: ElementId) -> bool {
         self.owners.contains(&element)
     }
+    /// The first element in tree order whose ID is `id`.
+    pub(crate) fn element(&self, id: &str) -> Option<ElementId> {
+        self.ids.get(id).copied()
+    }
     pub(crate) fn target(&self, reference: &str) -> Result<ElementId, crate::style::StyleError> {
         use crate::style::{StyleError, TargetReferenceError};
         let invalid = |reason| StyleError::TargetReference {

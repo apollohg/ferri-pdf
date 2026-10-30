@@ -105,17 +105,17 @@ fn eof_closes_valid_constructs_and_at_rule_names_are_case_insensitive() {
 #[test]
 fn unsupported_active_winner_is_still_an_error() {
     let error = render_html(
-        "<style>p{background-image:none;background-image:element(#missing)}</style><p>grid</p>",
+        "<style>p{scroll-marker-group:none;scroll-marker-group:before}</style><p>grid</p>",
         &local_options(),
     )
     .err()
-    .expect("active unsupported element image must fail");
+    .expect("active unsupported scroll marker group must fail");
     assert!(
         matches!(error, crate::Error::Css(StyleError::Unsupported(_))),
         "active unsupported capability must retain CSS classification: {error:?}"
     );
     let output =
-        render_css("p{background-image:element(#missing);background-image:none;font-size:18pt}");
+        render_css("p{scroll-marker-group:before;scroll-marker-group:none;font-size:18pt}");
     assert_pt(output.layout.unwrap().pages[0][0].font_size, 18.0);
 }
 
@@ -239,11 +239,11 @@ fn invalid_page_rule_and_font_face_do_not_remove_valid_siblings() {
 #[test]
 fn unsupported_generated_winner_keeps_css_error_classification() {
     let error = render_html(
-        "<style>p::before{content:'grid';background-image:element(#missing)}</style><p>body</p>",
+        "<style>p::before{content:'grid';scroll-marker-group:before}</style><p>body</p>",
         &local_options(),
     )
     .err()
-    .expect("active generated unsupported element image must fail");
+    .expect("active generated unsupported scroll marker group must fail");
     assert!(
         matches!(error, crate::Error::Css(StyleError::Unsupported(_))),
         "generated capability classification: {error:?}"

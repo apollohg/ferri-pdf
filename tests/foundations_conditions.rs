@@ -50,7 +50,8 @@ fn supports_requires_usable_behavior_not_only_known_grammar() {
         ("hyphens:auto", true),
         ("max-lines:0", false),
         ("hyphens:manual", true),
-        ("background-image:element(#missing)", false),
+        ("background-image:element(#missing)", true),
+        ("scroll-marker-group:before", false),
         ("tab-size:8", true),
         ("font-style:oblique 14deg", true),
         ("font-style:oblique 20deg", true),
@@ -62,7 +63,7 @@ fn supports_requires_usable_behavior_not_only_known_grammar() {
         ),
         (
             "background-image:linear-gradient(red,blue),element(#source)",
-            false,
+            true,
         ),
         ("color:var(--ink)", true),
         ("unknown-property:var(--ink)", false),
@@ -96,7 +97,7 @@ fn supports_requires_usable_behavior_not_only_known_grammar() {
     assert_pt(paint.rect.width, 120.0);
     assert!(matches!(
         render_html(
-            "<style>@supports (width:12pt){p{background-image:element(#missing)}}</style><p>Unsupported</p>",
+            "<style>@supports (width:12pt){p{scroll-marker-group:before}}</style><p>Unsupported</p>",
             &local_options()
         ),
         Err(ferri_pdf::Error::Css(StyleError::Unsupported(_)))
@@ -128,7 +129,7 @@ fn supports_has_no_resource_or_font_side_effects() {
     let resources = QueryResources {
         calls: Cell::new(0),
     };
-    let html = "<!doctype html><style>p{font-family:Probe}@supports-condition --probe{@font-face{font-family:Probe;src:url('probe-font.ttf')}@page{size:100pt 200pt}p{background-image:url('probe-only.png')}}@font-face{font-family:Unused;src:url('unused-font.ttf')}@supports (background-image:url('query-only.png')) and (font-family:Unused){p{font-size:19pt}}@supports (background-image:element(#missing)){p{background-image:url('inactive.png');font-family:Unused}}</style><p>Query</p>";
+    let html = "<!doctype html><style>p{font-family:Probe}@supports-condition --probe{@font-face{font-family:Probe;src:url('probe-font.ttf')}@page{size:100pt 200pt}p{background-image:url('probe-only.png')}}@font-face{font-family:Unused;src:url('unused-font.ttf')}@supports (background-image:url('query-only.png')) and (font-family:Unused){p{font-size:19pt}}@supports (scroll-marker-group:before){p{background-image:url('inactive.png');font-family:Unused}}</style><p>Query</p>";
     let output = render_with_resolver(html, &local_options(), &resources).unwrap();
     assert_eq!(
         resources.calls.get(),
@@ -157,11 +158,11 @@ fn supports_compounds_custom_properties_and_general_enclosed() {
         ("future-function()", false),
         ("not (--unrecognized)", true),
         (
-            "(width:12pt) and (background-image:element(#missing)) or (color:red)",
+            "(width:12pt) and (scroll-marker-group:before) or (color:red)",
             false,
         ),
         (
-            "((width:12pt) and (background-image:element(#missing))) or (color:red)",
+            "((width:12pt) and (scroll-marker-group:before)) or (color:red)",
             true,
         ),
         ("selector(p > .notice)", true),
@@ -191,7 +192,7 @@ fn supports_compounds_custom_properties_and_general_enclosed() {
 #[test]
 fn support_conditions_register_only_applicable_layers() {
     for (condition, expected) in [
-        ("(background-image:element(#missing))", 19.0),
+        ("(scroll-marker-group:before)", 19.0),
         ("(width:12pt)", 23.0),
     ] {
         let html = format!(
@@ -207,7 +208,7 @@ fn support_conditions_register_only_applicable_layers() {
 
 #[test]
 fn named_support_conditions_and_when_else_choose_the_first_matching_branch() {
-    let html = "<!doctype html><style>p{font-size:12pt}@supports-condition --usable{width:12pt;color:#123456;}@supports-condition --unusable{background-image:element(#missing);}@when supports(--unusable){p{font-size:31pt}}@else media(width > 1px) and supports(--usable){p{font-size:19pt;color:#123456}}@else{p{font-size:23pt}}@supports (--usable){p{margin-left:7pt}}</style><p>Branch</p>";
+    let html = "<!doctype html><style>p{font-size:12pt}@supports-condition --usable{width:12pt;color:#123456;}@supports-condition --unusable{scroll-marker-group:before;}@when supports(--unusable){p{font-size:31pt}}@else media(width > 1px) and supports(--usable){p{font-size:19pt;color:#123456}}@else{p{font-size:23pt}}@supports (--usable){p{margin-left:7pt}}</style><p>Branch</p>";
     let trace = render_html(html, &local_options()).unwrap().layout.unwrap();
     assert_pt(trace.pages[0][0].font_size, MATCHED_SIZE);
     assert_eq!(trace.pages[0][0].runs[0].color.rgb, [0x12, 0x34, 0x56]);
@@ -413,7 +414,7 @@ fn inactive_media_has_no_declaration_or_layer_registration_side_effects() {
             .unwrap();
         assert_pt(trace.pages[0][0].font_size, expected);
     }
-    let html = "<!doctype html><style>@media screen{@page:first{size:1pt}p{background-image:element(#missing);background-image:url('missing.png')}}@media print{p{font-size:19pt}}</style><p>Active</p>";
+    let html = "<!doctype html><style>@media screen{@page:first{size:1pt}p{scroll-marker-group:before;background-image:url('missing.png')}}@media print{p{font-size:19pt}}</style><p>Active</p>";
     let output = render_html(html, &local_options())
         .expect("inactive valid unsupported values do not apply");
     assert_pt(output.layout.unwrap().pages[0][0].font_size, MATCHED_SIZE);
@@ -572,38 +573,30 @@ fn alias_selection_preserves_paper_dependencies_of_skipped_candidates() {
 fn else_chains_obey_source_adjacency_and_parent_conditions() {
     for (prefix, gap, matched) in [
         (
-            "@supports (background-image:element(#missing)){}",
+            "@supports (scroll-marker-group:before){}",
             " /* retained */ \n",
             true,
         ),
         ("@media screen{}", "", true),
         ("@media print{}", "", false),
         ("@when media(future-feature){}", "", true),
+        ("@supports (scroll-marker-group:before){}", ";", false),
         (
-            "@supports (background-image:element(#missing)){}",
-            ";",
-            false,
-        ),
-        (
-            "@supports (background-image:element(#missing)){}",
+            "@supports (scroll-marker-group:before){}",
             "<!-- -->",
             false,
         ),
         (
-            "@supports (background-image:element(#missing)){}",
+            "@supports (scroll-marker-group:before){}",
             "@unknown{}",
             false,
         ),
         (
-            "@supports (background-image:element(#missing)){}",
+            "@supports (scroll-marker-group:before){}",
             "@layer intervening;",
             false,
         ),
-        (
-            "@supports (background-image:element(#missing)){}",
-            "p{}",
-            false,
-        ),
+        ("@supports (scroll-marker-group:before){}", "p{}", false),
         ("", "", false),
     ] {
         let html = format!(
@@ -623,7 +616,7 @@ fn else_chains_obey_source_adjacency_and_parent_conditions() {
             "{prefix} {gap:?}"
         );
     }
-    let html = "<!doctype html><style>p{font-size:12pt}@media screen{@supports (background-image:element(#missing)){}@else{p{font-size:31pt}}}@supports (width:12pt){@supports (background-image:element(#missing)){}@else{p{font-size:19pt}}}@else{p{font-size:23pt}}</style><p>Nested</p>";
+    let html = "<!doctype html><style>p{font-size:12pt}@media screen{@supports (scroll-marker-group:before){}@else{p{font-size:31pt}}}@supports (width:12pt){@supports (scroll-marker-group:before){}@else{p{font-size:19pt}}}@else{p{font-size:23pt}}</style><p>Nested</p>";
     let trace = render_html(html, &local_options()).unwrap().layout.unwrap();
     assert_pt(trace.pages[0][0].font_size, MATCHED_SIZE);
 }
@@ -633,10 +626,7 @@ fn named_conditions_probe_all_features_without_applying_their_contents() {
     for (probe, expected) in [
         ("color:red; width:12pt;", true),
         ("p, p::before{color:red} @media screen{p{width:12pt}}", true),
-        (
-            "@media screen{p{background-image:element(#missing)}}",
-            false,
-        ),
+        ("@media screen{p{scroll-marker-group:before}}", false),
         ("p:is(p,:unknown){width:12pt}", false),
         ("&{color:red}", true),
         ("@container scroll-state(stuck:top){}", true),
@@ -694,7 +684,7 @@ fn named_conditions_probe_all_features_without_applying_their_contents() {
 
 #[test]
 fn names_and_branches_share_dependency_resolution_and_paper_metadata() {
-    let html = "<!doctype html><style>@page{size:250pt 350pt;margin:0}p{font-size:12pt}@custom-media --usable false;@supports (--later){@custom-media --usable true;}@media (--usable){p{font-size:19pt}}@supports-condition --later{width:12pt;}@supports-condition --later{width:19pt;}@media (width:1pt){@supports-condition --later{background-image:element(#missing);}}@when media(width:1pt){}@else supports(--later){@supports-condition --paper{color:red;}}@supports (--paper){@page{size:400pt 500pt}p{color:#123456}}@supports (--cycle){@custom-media --cycle true;}@media (--cycle){@supports-condition --cycle{width:12pt;}}@supports (--cycle){p{font-size:31pt}}</style><p>Names</p>";
+    let html = "<!doctype html><style>@page{size:250pt 350pt;margin:0}p{font-size:12pt}@custom-media --usable false;@supports (--later){@custom-media --usable true;}@media (--usable){p{font-size:19pt}}@supports-condition --later{width:12pt;}@supports-condition --later{width:19pt;}@media (width:1pt){@supports-condition --later{scroll-marker-group:before;}}@when media(width:1pt){}@else supports(--later){@supports-condition --paper{color:red;}}@supports (--paper){@page{size:400pt 500pt}p{color:#123456}}@supports (--cycle){@custom-media --cycle true;}@media (--cycle){@supports-condition --cycle{width:12pt;}}@supports (--cycle){p{font-size:31pt}}</style><p>Names</p>";
     let trace = render_html(html, &local_options()).unwrap().layout.unwrap();
     assert_pt(trace.pages[0][0].font_size, MATCHED_SIZE);
     assert_eq!(trace.pages[0][0].runs[0].color.rgb, [0x12, 0x34, 0x56]);
@@ -707,7 +697,7 @@ fn names_and_branches_share_dependency_resolution_and_paper_metadata() {
 
 #[test]
 fn comment_only_else_conditions_are_unconditional() {
-    let html = "<!doctype html><style>p{font-size:12pt}@supports (background-image:element(#missing)){}@else /* no condition */ {p{font-size:19pt}}@else{p{font-size:31pt}}</style><p>Comments</p>";
+    let html = "<!doctype html><style>p{font-size:12pt}@supports (scroll-marker-group:before){}@else /* no condition */ {p{font-size:19pt}}@else{p{font-size:31pt}}</style><p>Comments</p>";
     let trace = render_html(html, &local_options()).unwrap().layout.unwrap();
     assert_pt(trace.pages[0][0].font_size, MATCHED_SIZE);
 }
@@ -716,13 +706,13 @@ fn comment_only_else_conditions_are_unconditional() {
 fn when_supports_operands_follow_the_selected_declaration_grammar() {
     for (condition, expected) in [
         ("supports(width:12pt)", true),
-        ("not supports(background-image:element(#missing))", true),
+        ("not supports(scroll-marker-group:before)", true),
         ("supports(font-format(truetype))", false),
         ("supports(selector(p))", false),
         ("not supports(selector(:unknown))", false),
         ("font-tech(features-opentype)", false),
         (
-            "media(width > 1pt) and (supports(width:12pt) or supports(background-image:element(#missing)))",
+            "media(width > 1pt) and (supports(width:12pt) or supports(scroll-marker-group:before))",
             true,
         ),
     ] {
@@ -776,7 +766,7 @@ fn named_descriptor_probes_check_usable_sources_and_pending_page_values() {
 fn named_condition_definitions_can_start_chains_and_later_definitions_win() {
     for (body, expected) in [
         ("width:12pt;", UNMATCHED_SIZE),
-        ("background-image:element(#missing);", MATCHED_SIZE),
+        ("scroll-marker-group:before;", MATCHED_SIZE),
     ] {
         let html = format!(
             "<!doctype html><style>p{{font-size:12pt}}@supports-condition --start{{{body}}}@else{{p{{font-size:19pt}}}}</style><p>Named chain</p>"
@@ -787,7 +777,7 @@ fn named_condition_definitions_can_start_chains_and_later_definitions_win() {
             .unwrap();
         assert_pt(trace.pages[0][0].font_size, expected);
     }
-    let html = "<!doctype html><style>p{font-size:12pt}@supports (--last){p{font-size:31pt}}@supports not (--last){p{font-size:19pt}}@supports-condition --last{width:12pt;}@supports-condition --last{background-image:element(#missing);}</style><p>Last definition</p>";
+    let html = "<!doctype html><style>p{font-size:12pt}@supports (--last){p{font-size:31pt}}@supports not (--last){p{font-size:19pt}}@supports-condition --last{width:12pt;}@supports-condition --last{scroll-marker-group:before;}</style><p>Last definition</p>";
     let trace = render_html(html, &local_options()).unwrap().layout.unwrap();
     assert_pt(trace.pages[0][0].font_size, MATCHED_SIZE);
 }

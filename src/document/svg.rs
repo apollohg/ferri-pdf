@@ -323,11 +323,23 @@ fn attribute(xml: &mut String, prefix: &str, name: &str, value: &str) {
     xml.push('"');
 }
 
-/// SVG elements that CSS `url()` references select: Filter Effects 1 §5 `filter`, CSS
-/// Masking 1 §6.1 `clipPath` and §7.1 `mask` elements, and motion path shapes.
-const REFERENCED_ELEMENTS: [&str; 10] = [
-    "filter", "clipPath", "mask", "path", "rect", "circle", "ellipse", "line", "polyline",
+/// SVG elements that CSS references select: Filter Effects 1 §5 `filter`, CSS Masking 1
+/// §6.1 `clipPath` and §7.1 `mask` elements, motion path shapes, and the paint servers that
+/// `element()` uses as paint sources (CSS Images 4 §2.7.1).
+const REFERENCED_ELEMENTS: [&str; 13] = [
+    "filter",
+    "clipPath",
+    "mask",
+    "path",
+    "rect",
+    "circle",
+    "ellipse",
+    "line",
+    "polyline",
     "polygon",
+    "linearGradient",
+    "radialGradient",
+    "pattern",
 ];
 
 /// The document's referenceable SVG resources by `id`, each with the standalone XML of the
@@ -409,6 +421,27 @@ impl SvgDefinitions {
             }
         }
         self.get_decoded(id)
+    }
+    /// A standalone SVG document without natural dimensions whose viewport the paint server
+    /// with ID `id` fills: its `objectBoundingBox` units span the viewport, and its user
+    /// units are CSS pixels (CSS Images 4 §2.7.1).
+    pub(crate) fn paint_server(&self, id: &str) -> Option<String> {
+        let definition = self.entries.get(id).filter(|definition| {
+            matches!(
+                definition.element,
+                "linearGradient" | "radialGradient" | "pattern"
+            )
+        })?;
+        let mut url = String::new();
+        cssparser::serialize_string(&format!("#{id}"), &mut url)
+            .expect("writing a String cannot fail");
+        let mut fill = String::new();
+        escape(&mut fill, &format!("url({url})"), true);
+        Some(format!(
+            "<svg xmlns=\"http://www.w3.org/2000/svg\"><defs>{}</defs>\
+             <rect width=\"100%\" height=\"100%\" fill=\"{fill}\"/></svg>",
+            definition.xml
+        ))
     }
     fn get_decoded(&self, id: &str) -> Option<&SvgDefinition> {
         let id = percent_encoding::percent_decode_str(id)

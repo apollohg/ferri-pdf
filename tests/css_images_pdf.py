@@ -545,6 +545,65 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                      'background:linear-gradient(red,red) content-box}', box),
                     f'one layer of several fills a rounded {border} border')
 
+    def test_element_images_render_stacked_elements_and_paint_sources(self):
+        """CSS Images 4 §2.7: element() renders an element that generates a stacking context
+        and its descendants, without its transforms, at the size of its decorated bounding
+        box, joining the page areas of a fragmented element; an element without a box shows
+        the paint source an img, canvas or SVG paint server provides; anything else, and every
+        reference in a dependency cycle, is an invalid image."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-element-images-') as directory:
+            root = Path(directory)
+            quadrants = blocks(root / 'quadrants.png', QUADRANTS)
+            source = ('#s{position:relative;z-index:0;width:60px;height:30px;background:lime;'
+                      'border:4px solid blue;font-size:10px}#s i{position:absolute;right:0;top:0}')
+            element = '<div id=s>Src <i>x</i></div>'
+            for css, body, expected, message in [
+                    (source + '#s{transform:rotate(20deg)}#d{margin-top:30px;height:40px;background:element(#s) no-repeat}',
+                     element + '<div id=d></div>',
+                     (source + '#s{transform:rotate(20deg)}#d{margin-top:30px;height:40px;position:relative}'
+                      '#d>div{position:absolute;left:0;top:0;transform:none}',
+                      element + '<div id=d><div id=s>Src <i>x</i></div></div>'),
+                     'the rendering ignores the element\'s transform and spans its border box'),
+                    (f'img{{display:none}}.box{{background:element(#q) no-repeat}}',
+                     f'<img id=q src="{quadrants}"><div class=box></div>',
+                     (f'.box{{background:url("{quadrants}") no-repeat}}', '<div class=box></div>'),
+                     'a hidden img provides its image as a paint source'),
+                    ('canvas{display:none}.box{background:element(#c) no-repeat,blue}',
+                     '<canvas id=c width=40 height=20></canvas><div class=box></div>',
+                     ('.box{background:blue}', '<div class=box></div>'),
+                     'a hidden canvas provides its transparent bitmap'),
+                    ('svg{display:block}.box{background:element(#g)}',
+                     '<svg width=0 height=0><linearGradient id=g x2=1><stop stop-color=red />'
+                     '<stop offset=1 stop-color=blue /></linearGradient></svg><div class=box></div>',
+                     ('svg{display:block}', '<svg width=0 height=0></svg><svg class=box><linearGradient id=g x2=1>'
+                          '<stop stop-color=red /><stop offset=1 stop-color=blue /></linearGradient>'
+                          '<rect width="100%" height="100%" fill="url(#g)"/></svg>'),
+                     'an SVG paint server fills the concrete object size'),
+                    ('#f{width:20px;height:10px;background:red}ul{list-style-image:element(#f)}',
+                     '<div id=f></div><ul style="padding-left:40pt"><li>Item</li></ul>',
+                     ('#f{width:20px;height:10px;background:red}', '<div id=f></div><ul style="padding-left:40pt"><li>Item</li></ul>'),
+                     'an element without a stacking context is an invalid image, so the marker falls back'),
+                    ('#o{position:relative;z-index:0;height:30px;background:yellow element(#o)}'
+                     '#i{background:red element(#o)}',
+                     '<div id=o>Out <span id=i>in</span></div>',
+                     ('#o{position:relative;z-index:0;height:30px;background:yellow}#i{background:red}',
+                      '<div id=o>Out <span id=i>in</span></div>'),
+                     'references to the element itself or an ancestor form cycles'),
+                    ('.box{background:element(#missing),green}', '<div class=box></div>',
+                     ('.box{background:green}', '<div class=box></div>'), 'an unknown ID is an invalid image')]:
+                self.assertSameInterior(root, (css, body), expected, message)
+            # The page area is 252pt tall: the gradient's element starts 100pt down page one and
+            # continues on page two, and the rendering joins its fragments flush.
+            fragmented = ('#d{height:100pt;background-repeat:no-repeat;background-position:0 -100pt}'
+                          '#s{position:relative;z-index:0;width:100px;height:400pt;'
+                          'background:linear-gradient(red,blue)}')
+            body = '<div id=d></div><div id=s></div>'
+            self.assertSameInterior(
+                root, (fragmented + '#d{background-image:element(#s)}', body),
+                (fragmented + '#d{background-image:linear-gradient(red,blue);background-size:100px 400pt}',
+                 body),
+                'a fragmented element renders as one box across the joined page areas')
+
     def test_text_clips_layers_to_the_glyphs_of_in_flow_and_floated_text(self):
         """CSS Backgrounds 4 §2.8: `background-clip: text` paints within the glyphs,
         decorations and emphasis marks of the box and its in-flow and floated descendants,

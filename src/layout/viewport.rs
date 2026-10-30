@@ -16,6 +16,8 @@ pub struct ViewportPaint {
     pub(crate) definitions: crate::document::svg::SvgDefinitions,
     /// The page area, which is the whole viewport.
     pub(crate) area: Rect,
+    /// The renderings of the elements that the document's `element()` images show.
+    pub(crate) elements: Box<crate::layout::ElementRenderings>,
 }
 impl std::fmt::Debug for ViewportPaint {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -56,6 +58,7 @@ pub(super) fn view(
                 page_area,
                 pages,
                 display_lists,
+                element_images,
                 ..
             } = trace;
             let fonts = document.styles().fonts.clone();
@@ -67,6 +70,7 @@ pub(super) fn view(
                 fonts,
                 definitions,
                 area: page_area,
+                elements: element_images,
             }
         }
         FrameDocument::Svg(image) => svg_document(image, area),
@@ -97,5 +101,6 @@ fn svg_document(image: Arc<Image>, area: Rect) -> ViewportPaint {
         fonts: FontBook::default(),
         definitions: crate::document::svg::SvgDefinitions::default(),
         area,
+        elements: Box::default(),
     }
 }

@@ -712,6 +712,7 @@ mod tests {
         let text = TextContext::new(&document.styles().fonts, &resolver);
         let mut measurer = Measurer {
             native_sizing: None,
+            element_targets: Default::default(),
             table_data: Default::default(),
             frame_measurements: Default::default(),
             raw_templates: Default::default(),

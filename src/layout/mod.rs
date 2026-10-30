@@ -61,6 +61,13 @@ pub struct TextLine {
     pub color: Color,
 }
 
+/// The elements whose renderings `element()` images show, and the document's root element.
+#[derive(Default)]
+pub(crate) struct ElementTargets {
+    pub targets: std::collections::HashSet<crate::dom::ElementId>,
+    pub root: Option<crate::dom::ElementId>,
+}
+
 impl TextLine {
     /// The line drawn with every colour opaque, so that it draws the geometry of its text.
     pub(crate) fn opaque(mut self) -> Self {
@@ -85,7 +92,15 @@ pub struct LayoutTrace {
     pub links: Vec<Vec<LinkArea>>,
     /// Where each of the document's destinations is, if its element has a box.
     pub destinations: Vec<Option<Destination>>,
+    /// The renderings of the elements that `element()` images show (CSS Images 4 §2.7).
+    #[serde(skip)]
+    pub(crate) element_images: Box<ElementRenderings>,
 }
+
+/// The renderings of the elements that `element()` images show, by element. Layouts of
+/// nested navigables stack, so their frames hold these boxed.
+pub(crate) type ElementRenderings =
+    std::collections::HashMap<crate::dom::ElementId, std::sync::Arc<ViewportPaint>>;
 
 /// Resolves layout without replacing the caller's formatting or navigation metadata.
 /// Use `layout_document` when serializing navigation with the resolved trace.
@@ -100,16 +115,22 @@ pub(crate) fn layout(
         generated,
         container_sizes,
         anchor_frames,
+        elements,
     } = layout_pass(document, resolver, budget.clone())?;
     let settled = document.styles().query_sizes().settled(&container_sizes)
-        && document.styles().anchor_frames().settled(&anchor_frames);
+        && document.styles().anchor_frames().settled(&anchor_frames)
+        && document.element_images().settled(&elements);
     if generated.is_none() && settled {
         return Ok(trace);
     }
     let values = generated.unwrap_or_else(|| document.generated_values());
     budget.spend(1)?;
-    let owned =
+    let mut owned =
         document.fork_for_layout(values.clone(), container_sizes, anchor_frames, resolver)?;
+    if !document.element_images().settled(&elements) {
+        owned.measured_elements(elements);
+        owned.reformat(values.clone(), resolver)?;
+    }
     stabilize(owned, resolver, &budget, vec![values]).map(|(_, trace)| trace)
 }
 
@@ -131,6 +152,8 @@ struct LayoutPass {
     /// The content-box size each query container measured.
     container_sizes: std::collections::HashMap<crate::dom::ElementId, [f32; 2]>,
     anchor_frames: crate::style::anchor_values::AnchorFrameMap,
+    /// What the layout measured of the elements that `element()` images show.
+    elements: Box<crate::document::ElementMeasurements>,
 }
 
 fn stabilize(
@@ -141,19 +164,24 @@ fn stabilize(
 ) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
     let mut measured_sizes = Vec::new();
     let mut measured_anchors = Vec::new();
+    let mut measured_elements = Vec::new();
     loop {
         let LayoutPass {
             trace,
             generated,
             container_sizes,
             anchor_frames,
+            elements,
         } = layout_pass(&document, resolver, budget.clone())?;
         // CSS Conditional 5 §5: each container's descendants are styled with the size of
         // the container they query, so the styles stand once a layout reproduces every size
         // they consulted.
         let containers_settled = document.styles().query_sizes().settled(&container_sizes);
         let anchors_settled = document.styles().anchor_frames().settled(&anchor_frames);
-        let settled = containers_settled && anchors_settled;
+        // CSS Images 4 §2.7: `element()` images resolve against the elements a layout
+        // rendered, so they stand once a layout reproduces every rendering they consulted.
+        let elements_settled = document.element_images().settled(&elements);
+        let settled = containers_settled && anchors_settled && elements_settled;
         let values = match generated {
             None if settled => return Ok((document, trace)),
             None => document.generated_values(),
@@ -178,6 +206,13 @@ fn stabilize(
             }
             measured_anchors.push(anchor_frames.clone());
             document.measured_anchors(anchor_frames);
+        }
+        if !elements_settled {
+            if measured_elements.contains(&elements) {
+                return Err(LayoutError::ElementImageCycle);
+            }
+            measured_elements.push(elements.clone());
+            document.measured_elements(elements);
         }
         budget.spend(1)?;
         document.reformat(values, resolver)?;
@@ -229,6 +264,7 @@ fn layout_pass(
         measurer.sources.register(block);
     }
     measurer.canvas_images = document.canvas_background().backgrounds.has_images();
+    measurer.element_targets = element_targets(document);
     measurer.unbroken = continuous;
     measurer.named_pages = !continuous;
     measurer.motion = std::rc::Rc::new(motion::Resources::new(
@@ -265,6 +301,7 @@ fn layout_pass(
         string_locations,
         line_boxes: _,
         root_text_area: _,
+        renderings,
     } = if continuous {
         paginator.unbroken()
     } else {
@@ -315,8 +352,10 @@ fn layout_pass(
         navigation::clip_links(areas, record.output.bleed);
     }
     anchors.physical(flow, &page_boxes);
+    let (elements, element_images) = element_renderings(document, &sheet.fonts, renderings);
     Ok(LayoutPass {
         generated,
+        elements,
         container_sizes: measurer.container_sizes,
         anchor_frames: anchors.frames(sheet, &document.svg_definitions(), &measurer.work)?,
         trace: LayoutTrace {
@@ -335,8 +374,78 @@ fn layout_pass(
                 .iter()
                 .map(|font| font.descriptor().clone())
                 .collect(),
+            element_images,
         },
     })
+}
+
+/// The elements whose renderings a layout of `document` records.
+fn element_targets(document: &StyledDocument) -> std::rc::Rc<ElementTargets> {
+    std::rc::Rc::new(ElementTargets {
+        targets: document.element_images().targets(),
+        root: Some(document.root_element()),
+    })
+}
+
+/// The states of the elements that `element()` images show, and the renderings of those
+/// that generate stacking contexts, drawn with the document's faces and SVG definitions.
+#[expect(
+    clippy::boxed_local,
+    reason = "layouts of nested navigables stack, so the layout frame holds the renderings boxed"
+)]
+fn element_renderings(
+    document: &StyledDocument,
+    fonts: &crate::fonts::FontBook,
+    renderings: Box<pagination::Renderings>,
+) -> (
+    Box<crate::document::ElementMeasurements>,
+    Box<ElementRenderings>,
+) {
+    use crate::document::ElementState;
+    let images = document.element_images();
+    let states = images
+        .targets()
+        .into_iter()
+        .map(|element| {
+            let state = if let Some(rendering) = renderings.stacked.get(&element) {
+                ElementState::Stacked(
+                    rendering
+                        .size
+                        .map(|extent| extent / crate::style::POINTS_PER_PIXEL),
+                )
+            } else if renderings.unstacked.contains(&element) {
+                ElementState::Unstacked
+            } else {
+                ElementState::NotRendered
+            };
+            (element, state)
+        })
+        .collect();
+    let definitions = document.svg_definitions();
+    let paints = renderings
+        .stacked
+        .into_iter()
+        .map(|(element, rendering)| {
+            let [width, height] = rendering.size;
+            (
+                element,
+                std::sync::Arc::new(ViewportPaint {
+                    items: rendering.items,
+                    lines: Vec::new(),
+                    fonts: fonts.clone(),
+                    definitions: definitions.clone(),
+                    area: Rect {
+                        x: 0.0,
+                        y: 0.0,
+                        width,
+                        height,
+                    },
+                    elements: Box::default(),
+                }),
+            )
+        })
+        .collect();
+    (Box::new(images.measured(states)), Box::new(paints))
 }
 
 /// Each page's text lines, display list and link areas.
@@ -401,6 +510,8 @@ pub(crate) enum LayoutError {
     GeneratedContentCycle,
     #[error("container query sizes repeat without reaching a fixed layout")]
     ContainerQueryCycle,
+    #[error("element() image renderings repeat without reaching a fixed layout")]
+    ElementImageCycle,
     #[error("non-finite page production geometry")]
     NonFinitePageOutputGeometry,
     #[error("non-finite page-margin geometry at {location:?}")]

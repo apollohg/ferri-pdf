@@ -59,6 +59,7 @@ pub(crate) struct PageProvider {
     images: std::rc::Rc<RefCell<crate::images::ImageCache>>,
     base: ResourceBase,
     generated: crate::document::generated::GeneratedBindings,
+    elements: std::rc::Rc<crate::document::element_images::ElementImages>,
 }
 impl PageProvider {
     pub(crate) fn new(
@@ -66,6 +67,7 @@ impl PageProvider {
         images: std::rc::Rc<RefCell<crate::images::ImageCache>>,
         base: ResourceBase,
         generated: crate::document::generated::GeneratedBindings,
+        elements: std::rc::Rc<crate::document::element_images::ElementImages>,
     ) -> Self {
         let first = Arc::new(first);
         Self {
@@ -74,10 +76,15 @@ impl PageProvider {
             images,
             base,
             generated,
+            elements,
         }
     }
     pub(crate) fn images(&self) -> std::rc::Rc<RefCell<crate::images::ImageCache>> {
         self.images.clone()
+    }
+    /// The `element()` images of the formatting that made these pages.
+    pub(crate) fn elements(&self) -> &crate::document::element_images::ElementImages {
+        &self.elements
     }
     pub(crate) fn first(&self) -> &PageBox {
         &self.first
@@ -95,6 +102,7 @@ impl PageProvider {
             base: &self.base,
             resolver,
             cache: &mut cache,
+            elements: &self.elements,
         }
         .generated_images(output, style)
     }
@@ -111,6 +119,7 @@ impl PageProvider {
             base: &self.base,
             resolver,
             cache: &mut cache,
+            elements: &self.elements,
         }
         .replacement_image(image, style)
     }
@@ -135,6 +144,7 @@ impl PageProvider {
             base: &self.base,
             resolver,
             cache: &mut cache,
+            elements: &self.elements,
         };
         let page = Arc::new(PageBox::load(resolved, &mut resources, &self.generated)?);
         self.records.borrow_mut().insert(request, page.clone());

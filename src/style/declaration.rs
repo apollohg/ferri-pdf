@@ -693,8 +693,9 @@ mod tests {
             (
                 "background-image",
                 "linear-gradient(red,blue),element(#source)",
-                false,
+                true,
             ),
+            ("background-image", "element(source)", false),
             ("text-transform", "uppercase full-width", true),
             (
                 "text-transform",

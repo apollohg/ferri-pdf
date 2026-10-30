@@ -435,6 +435,15 @@ impl<'a> Paginator<'a, '_, 'a> {
                 self.sticky.push(adopted);
                 Effect::Sticky(style, index)
             }
+            Effect::Subtree(super::Subtree::Element(
+                element,
+                super::Rendered::Stacked { group: Some(group) },
+            )) => Effect::Subtree(super::Subtree::Element(
+                element,
+                super::Rendered::Stacked {
+                    group: Some(self.effect(nodes, sticky, group, place, effects)),
+                },
+            )),
             Effect::Group(group) if group.anchored() => Effect::Group(Group {
                 anchor: match group.anchor {
                     Some(anchor) => Some(self.effect(nodes, sticky, anchor, place, effects)),

@@ -56,6 +56,7 @@ fn after_child_row_paints_keep_canonical_text_navigation_and_stacking() {
     let mut measurer = Measurer {
         table_data: Default::default(),
         native_sizing: None,
+        element_targets: Default::default(),
         frame_measurements: Default::default(),
         raw_templates: Default::default(),
         raw_pagination: false,

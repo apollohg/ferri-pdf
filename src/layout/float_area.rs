@@ -599,7 +599,7 @@ fn alpha_grid(
     }
     let samples = rendered_samples(content);
     Ok(Some(match image {
-        BackgroundImage::None | BackgroundImage::Url { .. } => {
+        BackgroundImage::None | BackgroundImage::Url { .. } | BackgroundImage::Element(_) => {
             unreachable!("floats load their shape-outside image")
         }
         // An invalid image is transparent (CSS Images 4 §2.1).
@@ -728,9 +728,9 @@ fn image_alpha(
         }
         Image::Transparent => return Ok(None),
         Image::Generated(image) => return alpha_grid(image, content, work),
-        Image::Frame(..) | Image::Viewport(_) | Image::Widget(_) => {
+        Image::Frame(..) | Image::Viewport(_) | Image::Widget(_) | Image::Element(_) => {
             return Err(crate::style::StyleError::Unsupported(
-                "shape-outside: an image of a nested document or form control".into(),
+                "shape-outside: an image of an element, a nested document or a form control".into(),
             )
             .into());
         }

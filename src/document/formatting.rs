@@ -755,16 +755,21 @@ pub(crate) struct ImageResources<'a> {
     pub base: &'a crate::resources::ResourceBase,
     pub resolver: &'a dyn crate::resources::ResourceResolver,
     pub cache: &'a mut crate::images::ImageCache,
+    pub elements: &'a crate::document::element_images::ElementImages,
 }
 impl ImageResources<'_> {
-    /// The image `request` names as the element `style` uses it (CSS Images 4 §2.5). A
-    /// `url()` that cannot be loaded aborts the document; an `image()` is then invalid, with
+    /// The image `reference` names as the element `style` uses it (CSS Images 4 §2.5, §2.7).
+    /// A `url()` that cannot be loaded aborts the document; an `image()` is then invalid, with
     /// a diagnostic.
     fn load(
         &mut self,
-        request: &crate::paint::ImageRequest<'_>,
+        reference: &crate::paint::ImageReference<'_>,
         style: &Style,
     ) -> Result<Option<std::sync::Arc<crate::images::Image>>, crate::images::ImageError> {
+        let request = match reference {
+            crate::paint::ImageReference::Url(request) => request,
+            crate::paint::ImageReference::Element(id) => return Ok(self.element(id, style)),
+        };
         let namespace = style.element_font_namespace();
         let image = if request.function.is_some() {
             self.cache
@@ -781,9 +786,13 @@ impl ImageResources<'_> {
     /// is: `None` when it cannot be loaded or decoded, with a diagnostic.
     pub(crate) fn load_decoded(
         &mut self,
-        request: &crate::paint::ImageRequest<'_>,
+        reference: &crate::paint::ImageReference<'_>,
         style: &Style,
     ) -> Option<std::sync::Arc<crate::images::Image>> {
+        let request = match reference {
+            crate::paint::ImageReference::Url(request) => request,
+            crate::paint::ImageReference::Element(id) => return self.element(id, style),
+        };
         let image = self.cache.load_decoded(
             request.url,
             self.base,
@@ -800,6 +809,49 @@ impl ImageResources<'_> {
     ) -> Option<std::sync::Arc<crate::images::Image>> {
         self.cache.view(image, request, self.base, style)
     }
+    /// What `element(#id)` represents for the element `style` belongs to (CSS Images 4
+    /// §2.7): `None` for an invalid image.
+    fn element(&mut self, id: &str, style: &Style) -> Option<std::sync::Arc<crate::images::Image>> {
+        use crate::document::element_images::Resolved;
+        let owner = style.origin.node().map(|node| node.element);
+        let namespace = crate::fonts::FontNamespace::ROOT;
+        match self.elements.resolve(id, owner) {
+            Resolved::Invalid => None,
+            Resolved::Rendering(element, size) => Some(std::sync::Arc::new(
+                crate::images::Image::Element(crate::images::ElementImage { element, size }),
+            )),
+            // A paint source shows its natural appearance, without the using element's
+            // `image-orientation`, `object-view-box` or `image-resolution`.
+            Resolved::Image(url, density) => self
+                .cache
+                .load_optional(url, self.base, self.resolver, namespace)
+                .map(|image| crate::images::content_image(image, &Style::default(), density)),
+            Resolved::Poster(poster) => Some(
+                poster
+                    .and_then(|poster| {
+                        self.cache
+                            .load_optional(poster, self.base, self.resolver, namespace)
+                    })
+                    .map_or_else(
+                        || std::sync::Arc::new(crate::images::Image::Transparent),
+                        |image| crate::images::content_image(image, &Style::default(), None),
+                    ),
+            ),
+            Resolved::Svg(xml) => {
+                match self
+                    .cache
+                    .inline_svg_in_namespace(xml, self.base, self.resolver, namespace)
+                {
+                    Ok(image) => Some(image),
+                    Err(error) => {
+                        let reference = format!("element(#{id})");
+                        self.cache.record_failure(self.base, &reference, error);
+                        None
+                    }
+                }
+            }
+        }
+    }
     /// A `content` image of the element `style` belongs to, as its replaced box shows it;
     /// `None` for an invalid image, with a diagnostic when it cannot be loaded (CSS Content 3
     /// §2.2). The images a generated image combines are decorative.
@@ -815,17 +867,22 @@ impl ImageResources<'_> {
             _ => None,
         };
         let mut loaded = image.with_image_type();
-        let Ok(()) = loaded.load(&mut |request| {
-            Ok::<_, std::convert::Infallible>(
-                self.cache
-                    .load_optional(request.url, self.base, self.resolver, namespace)
-                    .and_then(|image| match resolution {
-                        Some(resolution) => self
-                            .cache
-                            .content_view(image, request, self.base, style, resolution),
-                        None => self.view(image, request, style),
-                    }),
-            )
+        let Ok(()) = loaded.load(&mut |reference| {
+            let request = match reference {
+                crate::paint::ImageReference::Url(request) => request,
+                crate::paint::ImageReference::Element(id) => {
+                    return Ok::<_, std::convert::Infallible>(self.element(id, style));
+                }
+            };
+            Ok(self
+                .cache
+                .load_optional(request.url, self.base, self.resolver, namespace)
+                .and_then(|image| match resolution {
+                    Some(resolution) => self
+                        .cache
+                        .content_view(image, request, self.base, style, resolution),
+                    None => self.view(image, request, style),
+                }))
         });
         match loaded {
             crate::graphics::BackgroundImage::Image { image, .. } => Some(image),
@@ -3003,6 +3060,10 @@ pub(crate) struct Input<'a> {
     pub html: &'a DocumentTree,
     pub embedded: &'a crate::document::embedded::EmbeddedContent,
     pub images: &'a std::rc::Rc<std::cell::RefCell<crate::images::ImageCache>>,
+    /// What the last formatting and layout found of the document's `element()` images, and
+    /// the SVG content that formatting serialized.
+    pub elements: &'a crate::document::element_images::ElementMeasurements,
+    pub definitions: &'a crate::document::svg::SvgDefinitions,
 }
 
 pub(crate) fn build(
@@ -3017,6 +3078,8 @@ pub(crate) fn build(
         html,
         embedded,
         images,
+        elements,
+        definitions,
     } = *input;
     sheet.anchor_nodes.borrow_mut().clear();
     let mut generated =
@@ -3041,11 +3104,19 @@ pub(crate) fn build(
             error => DocumentError::Style(error),
         })?;
     let sheet = &*sheet;
+    let elements = std::rc::Rc::new(crate::document::element_images::ElementImages::new(
+        html,
+        sheet,
+        navigation.targets.clone(),
+        elements.clone(),
+        definitions,
+    ));
     let mut cache = images.borrow_mut();
     let mut resources = ImageResources {
         base,
         resolver,
         cache: &mut cache,
+        elements: &elements,
     };
     let area = sheet.page_content_box();
     let resolved = sheet.resolve_page(
@@ -3091,6 +3162,7 @@ pub(crate) fn build(
                 images.clone(),
                 base.clone(),
                 bindings,
+                elements.clone(),
             ),
             svg_definitions,
             page_counters: Vec::new(),
@@ -3191,6 +3263,7 @@ pub(crate) fn build(
             images.clone(),
             base.clone(),
             bindings,
+            elements.clone(),
         ),
         svg_definitions,
         page_counters: traversal.page_counters,

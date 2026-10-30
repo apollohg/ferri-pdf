@@ -104,6 +104,7 @@ fn math_boxes_do_not_generate_their_own_first_line_styles() {
             base: &base,
             resolver: &resolver,
             cache: &mut cache,
+            elements: document.element_images(),
         };
         assert!(
             FirstLineStyles::of(

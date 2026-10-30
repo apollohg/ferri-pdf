@@ -24,6 +24,11 @@ pub(super) struct ImageWriter {
     opaque: HashMap<usize, bool>,
     /// The density images composited in pixels resolve at.
     pub(super) pixels_per_point: f32,
+    /// The page points one unit of the current drawing space spans, which renderings drawn as
+    /// images resolve their raster effects at.
+    pub(super) scale: f32,
+    /// The renderings of the elements `element()` images show, from the layout being written.
+    pub(super) elements: HashMap<crate::dom::ElementId, Arc<crate::layout::ViewportPaint>>,
 }
 impl ImageWriter {
     pub(super) fn new(pixels_per_point: f32) -> Self {
@@ -35,6 +40,8 @@ impl ImageWriter {
             vectors: HashMap::new(),
             opaque: HashMap::new(),
             pixels_per_point,
+            scale: 1.0,
+            elements: HashMap::new(),
         }
     }
     /// Whether every pixel of `image` is opaque, decoding it once.
@@ -76,7 +83,15 @@ impl ImageWriter {
             Asset::Transparent => Ok(()),
             Asset::View(view) => self.draw_view(view, paint, viewport, surface),
             Asset::Generated(image) => self.draw_generated(image, paint, viewport, surface),
-            Asset::Viewport(_) => unreachable!("painters draw nested viewports"),
+            Asset::Viewport(view) => self.draw_rendering(paint, &view.clone(), viewport, surface),
+            Asset::Element(element) => {
+                let rendering = self
+                    .elements
+                    .get(&element.element)
+                    .cloned()
+                    .ok_or(PdfError::MissingElementRendering)?;
+                self.draw_rendering(paint, &rendering, viewport, surface)
+            }
             Asset::Frame(..) => unreachable!("layout replaces frames with their viewports"),
             Asset::Widget(_) => unreachable!("layout replaces widgets with their drawings"),
         }
@@ -115,6 +130,7 @@ impl ImageWriter {
                 | Asset::Frame(..)
                 | Asset::Viewport(_)
                 | Asset::Widget(_)
+                | Asset::Element(_)
                 | Asset::View(_)
                 | Asset::Generated(_) => None,
             };
@@ -141,6 +157,7 @@ impl ImageWriter {
             | Asset::Frame(..)
             | Asset::Viewport(_)
             | Asset::Widget(_)
+            | Asset::Element(_)
             | Asset::View(_)
             | Asset::Generated(_) => Orientation::NoTransforms,
             Asset::Svg(svg) => {
@@ -178,6 +195,7 @@ impl ImageWriter {
             | Asset::Frame(..)
             | Asset::Viewport(_)
             | Asset::Widget(_)
+            | Asset::Element(_)
             | Asset::View(_)
             | Asset::Generated(_) => {
                 unreachable!("draw dispatches only decoded images here")
@@ -203,6 +221,21 @@ impl ImageWriter {
         surface.pop();
         crate::writer::painting::pop_clips(clips, surface);
         Ok(())
+    }
+
+    /// Draws a laid-out rendering filling the paint rectangle.
+    fn draw_rendering(
+        &mut self,
+        paint: &ImagePaint,
+        view: &crate::layout::ViewportPaint,
+        viewport: crate::graphics::Rect,
+        surface: &mut Surface<'_>,
+    ) -> Result<(), PdfError> {
+        let space = crate::writer::display::Space {
+            viewport,
+            scale: self.scale,
+        };
+        crate::writer::display::draw_viewport(paint, view, self, space, surface)
     }
 
     /// Draws a generated image filling the paint rectangle, as a background tile of its size.

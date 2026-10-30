@@ -274,7 +274,8 @@ fn image_kind(image: &Image, jpeg_images: &mut HashSet<usize>) -> Result<ImageKi
         | Image::Viewport(_)
         | Image::Widget(_)
         | Image::View(_)
-        | Image::Generated(_) => {
+        | Image::Generated(_)
+        | Image::Element(_) => {
             unreachable!("SVG image references load only image resources")
         }
     })

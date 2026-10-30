@@ -323,7 +323,7 @@ impl<I> BoxDecoration<I> {
     /// Replaces the `url()` background layers and border image source with loaded images.
     pub fn resolve_images<E>(
         &mut self,
-        mut load: impl FnMut(&crate::paint::ImageRequest<'_>) -> Result<Option<I>, E>,
+        mut load: impl FnMut(&crate::paint::ImageReference<'_>) -> Result<Option<I>, E>,
     ) -> Result<(), E>
     where
         I: Clone,
@@ -375,7 +375,7 @@ impl BoxDecoration<Infallible> {
 
     pub fn load_images<I: Clone, E>(
         &self,
-        load: impl FnMut(&crate::paint::ImageRequest<'_>) -> Result<Option<I>, E>,
+        load: impl FnMut(&crate::paint::ImageReference<'_>) -> Result<Option<I>, E>,
     ) -> Result<BoxDecoration<I>, E> {
         let mut decoration = self.with_image_type();
         decoration.resolve_images(load)?;

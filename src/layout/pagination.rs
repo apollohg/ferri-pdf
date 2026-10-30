@@ -7,6 +7,7 @@ mod nested;
 mod order;
 mod overflow;
 mod paragraph;
+mod renderings;
 mod rows;
 mod text_areas;
 use order::{OrderSnapshots, PaintOrder, PaintOrders};
@@ -30,6 +31,7 @@ use crate::layout::{
 };
 use crate::style::Position;
 pub(super) use columns::measure_columns;
+pub(crate) use renderings::Renderings;
 use std::{
     collections::{BTreeMap, BTreeSet, HashMap, VecDeque},
     rc::Rc,
@@ -213,6 +215,8 @@ struct Pending<'a> {
     parent_3d: Option<usize>,
     order: PaintOrder,
     orders: PaintOrders,
+    /// The stacked elements that `element()` images show and that hold the box.
+    within: Rc<[crate::dom::ElementId]>,
 }
 
 /// Positioned descendants waiting for a containing block to close.
@@ -315,12 +319,27 @@ enum Effect<'a> {
     Subtree(Subtree),
 }
 /// What a subtree node marks.
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, PartialEq)]
 enum Subtree {
     /// The items of a box whose backgrounds clip to its text (CSS Backgrounds 4 §2.8).
     TextArea,
     /// The items of an absolutely positioned box, which are not its ancestors' in-flow text.
     OutOfFlow,
+    /// The items of the principal box of an element that `element()` images show, and of its
+    /// descendants inside it (CSS Images 4 §2.7).
+    Element(crate::dom::ElementId, Rendered),
+    /// The items of an absolutely positioned descendant of these elements' stacked boxes
+    /// whose containing block lies outside them.
+    Within(Rc<[crate::dom::ElementId]>),
+}
+/// How an element that `element()` images show renders.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum Rendered {
+    /// Its box generates no stacking context.
+    Unstacked,
+    /// Its box generates a stacking context composited by `group`; the root element's, by
+    /// every group.
+    Stacked { group: Option<usize> },
 }
 /// How a stacking context composites; every stacking context is an isolated group, which
 /// paints as its content does unless something inside it blends (Compositing 1 §3.2).
@@ -651,6 +670,8 @@ struct ActiveBox<'a> {
     clip_path_node: Option<usize>,
     parent_3d_node: Option<usize>,
     sticky_node: Option<usize>,
+    /// The node marking the box of an element that `element()` images show.
+    element_node: Option<usize>,
     /// `Paginator::sticky` entries whose containing block, and whose nearest scroll
     /// container, this box is.
     sticky_children: Vec<usize>,
@@ -839,7 +860,8 @@ pub(super) struct Paginated {
     pub page_records: Vec<crate::layout::PageRecord>,
     pub line_boxes: Vec<[f32; 2]>,
     /// The text area of a standalone flow's root, when requested.
-    pub root_text_area: Option<crate::graphics::FlowPaint>,
+    pub root_text_area: Option<Box<crate::graphics::FlowPaint>>,
+    pub renderings: Box<Renderings>,
 }
 
 /// A box laid out alone: its text lines, display list, line box extents and navigation, and
@@ -2386,6 +2408,17 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         if transform_node.is_some() {
             self.clip = transform_node;
         }
+        // CSS Images 4 §2.7: an element's rendering as an image ignores its own transforms and
+        // its ancestors', which enclose its node.
+        let element_node = owns_wrapper_properties
+            .then(|| {
+                let group = z_index.and(self.group);
+                self.element_node(block.style, block.source.is_anonymous(), self.clip, group)
+            })
+            .flatten();
+        if element_node.is_some() {
+            self.clip = element_node;
+        }
         // CSS Masking 1 §6.1: `clip` cuts the box and its descendants, in its own coordinates.
         let clip_rect_node = (owns_wrapper_properties
             && block.style.position.is_out_of_flow()
@@ -2548,6 +2581,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             clip_path_node,
             parent_3d_node,
             sticky_node,
+            element_node,
             sticky_children: Vec::new(),
             sticky_scrolled: Vec::new(),
             group_node: own_group,
@@ -2793,6 +2827,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             active.parent_3d_node,
             active.sticky_node,
             active.group_node,
+            active.element_node,
         ]
         .into_iter()
         .flatten()
@@ -3294,6 +3329,50 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         )?;
         Ok(reference)
     }
+    /// The node marking the box of the element `style` belongs to, inside `parent`, when the
+    /// box is the principal box of an element that `element()` images show; `group` composites
+    /// the stacking context the box generates, if it generates one.
+    fn element_node(
+        &mut self,
+        style: &crate::style::Style,
+        anonymous: bool,
+        parent: Option<usize>,
+        group: Option<usize>,
+    ) -> Option<usize> {
+        let origin = style
+            .origin
+            .node()
+            .filter(|origin| !anonymous && origin.pseudo.is_none())?;
+        let targets = &self.measurer.element_targets;
+        if !targets.targets.contains(&origin.element) {
+            return None;
+        }
+        // The root element generates the root stacking context (CSS 2.1 §9.9.1).
+        let rendered = if targets.root == Some(origin.element) {
+            Rendered::Stacked { group: None }
+        } else {
+            group.map_or(Rendered::Unstacked, |group| Rendered::Stacked {
+                group: Some(group),
+            })
+        };
+        Some(self.effect_node(
+            parent,
+            Effect::Subtree(Subtree::Element(origin.element, rendered)),
+        ))
+    }
+    /// The stacked elements that `element()` images show whose boxes hold content below
+    /// `clip`.
+    fn stacked_elements(&self, clip: Option<usize>) -> Rc<[crate::dom::ElementId]> {
+        std::iter::successors(clip, |&node| self.clips[node].parent)
+            .flat_map(|node| match &self.clips[node].effect {
+                Effect::Subtree(Subtree::Element(element, Rendered::Stacked { .. })) => {
+                    vec![*element]
+                }
+                Effect::Subtree(Subtree::Within(elements)) => elements.to_vec(),
+                _ => Vec::new(),
+            })
+            .collect()
+    }
     /// Whether the current content lies below a box whose backgrounds clip to its text.
     fn within_text_area(&self) -> bool {
         std::iter::successors(self.clip, |&node| self.clips[node].parent)
@@ -3550,6 +3629,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             parent_3d,
             orders: order.descendants(),
             order,
+            within: self.stacked_elements(layer.clip),
         }
     }
     /// Queues a positioned box anchored at `position` in `layer`.
@@ -3833,6 +3913,14 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     ) -> Result<(), LayoutError> {
         let orders = std::mem::replace(&mut self.orders, pending.orders.snapshot());
         let previous_space = std::mem::replace(&mut self.measurer.space, pending.space);
+        let clip = if pending.within.is_empty() {
+            clip
+        } else {
+            Some(self.effect_node(
+                clip,
+                Effect::Subtree(Subtree::Within(pending.within.clone())),
+            ))
+        };
         let result = self.unbroken_block(
             measured,
             Unbroken {
@@ -5405,6 +5493,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     active.parent_3d_node,
                     active.sticky_node,
                     active.group_node,
+                    active.element_node,
                 ]
                 .into_iter()
                 .flatten()
@@ -5570,25 +5659,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let mut current = self.current_layer();
         let mut layers = Vec::with_capacity(chain.len());
         for &style in chain {
-            if !paints_in_own_layer(style) && style.decoration.backgrounds.clips_to_text() {
-                // The box's text, and its in-flow descendants', lies below its own node.
-                let element = std::ptr::from_ref(style);
-                let clip = if let Some(layer) = self.inline_layers.get(&element) {
-                    layer.clip
-                } else {
-                    let clip =
-                        Some(self.effect_node(current.clip, Effect::Subtree(Subtree::TextArea)));
-                    self.inline_layers.insert(
-                        element,
-                        Layer {
-                            clip,
-                            ..current.clone()
-                        },
-                    );
-                    clip
-                };
-                current = Layer { clip, ..current };
-            } else if paints_in_own_layer(style) {
+            if paints_in_own_layer(style) {
                 let element = std::ptr::from_ref(style);
                 let layer = if let Some(layer) = self.inline_layers.get(&element) {
                     layer.clone()
@@ -5602,6 +5673,33 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     offset: [current.offset[0] + x, current.offset[1] + y],
                     ..layer
                 };
+            } else {
+                // The box's content, and its in-flow descendants', lies below the nodes marking
+                // it as an element that `element()` images show, then as one whose backgrounds
+                // clip to its text.
+                let element = std::ptr::from_ref(style);
+                let clip = if let Some(layer) = self.inline_layers.get(&element) {
+                    layer.clip
+                } else {
+                    let mut clip = current.clip;
+                    if let Some(node) = self.element_node(style, false, clip, None) {
+                        clip = Some(node);
+                    }
+                    if style.decoration.backgrounds.clips_to_text() {
+                        clip = Some(self.effect_node(clip, Effect::Subtree(Subtree::TextArea)));
+                    }
+                    if clip != current.clip {
+                        self.inline_layers.insert(
+                            element,
+                            Layer {
+                                clip,
+                                ..current.clone()
+                            },
+                        );
+                    }
+                    clip
+                };
+                current = Layer { clip, ..current };
             }
             layers.push(current.clone());
         }
@@ -5651,6 +5749,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         } else {
             parent.group
         };
+        let clip = self
+            .element_node(style, false, clip, z_index.and(group))
+            .or(clip);
         Layer {
             context,
             key,
@@ -6034,6 +6135,18 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 }
                 clip = self.clips[index].parent;
             }
+            // The fragments of an element's inline box bound its rendering as an image.
+            if let Some(origin) = style.origin.node().filter(|origin| origin.pseudo.is_none())
+                && let Some(node) =
+                    std::iter::successors(layer.clip, |&node| self.clips[node].parent).find(
+                        |&node| {
+                            matches!(&self.clips[node].effect,
+                            Effect::Subtree(Subtree::Element(element, _)) if *element == origin.element)
+                        },
+                    )
+            {
+                self.clips[node].paints.push((self.page, paint.clone()));
+            }
             self.page_content |= paint.has_ink() && paint.rect.intersects(self.page_rect);
             let scope = self.layer_scope(&layer);
             // The box's own filter, mask or backdrop group is bounded by its fragments, and its
@@ -6337,7 +6450,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         let mut paginated = paginator.document(Some(root), destinations, std::iter::empty())?;
         Ok(StandaloneFlow {
-            text_area: paginated.root_text_area.take(),
+            text_area: paginated.root_text_area.take().map(|area| *area),
             lines: paginated.pages.swap_remove(0),
             items: paginated.display_lists.swap_remove(0),
             line_boxes: paginated.line_boxes,
@@ -6569,12 +6682,14 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             chain
         });
         self.attach_text_areas(&regions)?;
+        // Boxed, as is every value this frame holds across the nested navigables it lays out.
         let root_text_area = self
             .root_text_area
-            .map(|node| self.text_area(0, node, &regions))
+            .map(|node| self.text_area(0, node, &regions).map(Box::new))
             .transpose()?;
         let bounds = self.group_bounds();
         self.underlay_backdrops();
+        let renderings = Box::new(self.renderings(&regions, &bounds, flow)?);
         let mut display_lists = Vec::with_capacity(self.display_lists.len());
         let mut located = Located {
             links: Vec::with_capacity(self.display_lists.len()),
@@ -6623,6 +6738,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 &regions,
                 &bounds,
                 &mut located,
+                None,
             )?);
         }
         let (page_boxes, page_records) = match self.fragmentainers {
@@ -6649,6 +6765,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             string_locations: self.string_locations,
             line_boxes: self.line_boxes.unwrap_or_default(),
             root_text_area,
+            renderings,
         })
     }
 }
@@ -6770,7 +6887,12 @@ enum Frame {
 }
 
 /// Wraps runs of items sharing an effect chain in push/pop pairs, and locates the link areas
-/// and destinations of box items through that chain.
+/// and destinations of box items through that chain; with `cut`, only the effects inside an
+/// element rendered as an image apply.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the page's effects resolve through every one of these tables"
+)]
 fn clipped(
     items: Vec<ScopedPaint>,
     page: usize,
@@ -6779,6 +6901,7 @@ fn clipped(
     regions: &[Vec<(usize, Region)>],
     bounds: &[Vec<(usize, BoxPaint)>],
     located: &mut Located,
+    cut: Option<&renderings::Cut<'_>>,
 ) -> Result<Vec<DisplayItem>, LayoutError> {
     let mut link_polygons = Vec::new();
     let mut output = Vec::with_capacity(items.len());
@@ -6792,12 +6915,19 @@ fn clipped(
             continue;
         }
         chain.clear();
-        let mut node = paint.clip;
-        while let Some(index) = node {
-            chain.push(index);
-            node = nodes[index].parent;
+        if let Some(cut) = cut {
+            let Some(inside) = cut.chain(&paint, nodes) else {
+                continue;
+            };
+            chain.extend(inside);
+        } else {
+            let mut node = paint.clip;
+            while let Some(index) = node {
+                chain.push(index);
+                node = nodes[index].parent;
+            }
+            chain.reverse();
         }
-        chain.reverse();
         let mut regions_here = Vec::with_capacity(chain.len());
         for &index in &chain {
             if matches!(
@@ -6823,7 +6953,10 @@ fn clipped(
         }) {
             continue;
         }
-        if let DisplayItem::Box(fragment) = &paint.item {
+        // A rendering shown as an image has no links or destinations of its own.
+        if let DisplayItem::Box(fragment) = &paint.item
+            && cut.is_none()
+        {
             if let Some(link) = paint.navigation.link {
                 let polygon = crate::layout::navigation::page_polygon(
                     paint
@@ -6902,6 +7035,9 @@ fn clipped(
             if !pushes.is_empty() {
                 groups.push((index, effect, pushes));
             }
+            if cut.is_some_and(|cut| cut.outermost(index)) {
+                break;
+            }
             group = nodes[index].parent;
         }
         groups.reverse();
@@ -6913,13 +7049,12 @@ fn clipped(
         for (index, effect, _) in &groups {
             if effect.anchored() {
                 let depth = match effect.anchor {
-                    Some(anchor) => {
-                        chain
-                            .iter()
-                            .position(|&node| node == anchor)
-                            .ok_or(LayoutError::MissingClipFragment { page })?
-                            + 1
-                    }
+                    Some(anchor) => match chain.iter().position(|&node| node == anchor) {
+                        Some(depth) => depth + 1,
+                        // A rendering keeps none of the effects enclosing its element's.
+                        None if cut.is_some() => 0,
+                        None => return Err(LayoutError::MissingClipFragment { page }),
+                    },
                     None => 0,
                 };
                 frames.extend(

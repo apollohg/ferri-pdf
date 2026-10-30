@@ -174,16 +174,23 @@ impl<I> BoxPaint<I> {
         })
     }
 
+    /// The border image area: the border box extended by `border-image-outset`, on the
+    /// fragment's own edges (Backgrounds 3 §6.6).
+    pub(crate) fn border_image_area(&self) -> Rect {
+        let sliced = self.sliced();
+        let outsets = self.image_outsets();
+        crate::paint::outset(
+            self.rect,
+            std::array::from_fn(|side| if sliced[side] { 0.0 } else { outsets[side] }),
+        )
+    }
+
     /// The border image's ink, with introduced fragment edges cut as in its painting.
     pub(crate) fn border_image_bounds(&self) -> Option<Rect> {
-        self.decoration.border_image.is_drawn().then(|| {
-            let sliced = self.sliced();
-            let outsets = self.image_outsets();
-            crate::paint::outset(
-                self.rect,
-                std::array::from_fn(|side| if sliced[side] { 0.0 } else { outsets[side] }),
-            )
-        })
+        self.decoration
+            .border_image
+            .is_drawn()
+            .then(|| self.border_image_area())
     }
 }
 

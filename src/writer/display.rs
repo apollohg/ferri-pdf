@@ -178,12 +178,10 @@ impl Painter<'_, '_, '_> {
         while let Some(item) = items.get(index) {
             index += 1;
             match item {
-                DisplayItem::Image(paint) => match paint.image.as_ref() {
-                    crate::images::Image::Viewport(view) => {
-                        self.draw_viewport(paint, view, space, surface)?;
-                    }
-                    _ => self.images.draw(paint, space.viewport, surface)?,
-                },
+                DisplayItem::Image(paint) => {
+                    self.images.scale = space.scale;
+                    self.images.draw(paint, space.viewport, surface)?;
+                }
                 DisplayItem::Frame(frame) => {
                     let mut context = FlowContext {
                         page: self.page,
@@ -194,6 +192,7 @@ impl Painter<'_, '_, '_> {
                     draw_flow(frame, &mut context, self.images, space, surface)?;
                 }
                 DisplayItem::Box(box_paint) => {
+                    self.images.scale = space.scale;
                     let mut context = FlowContext {
                         page: self.page,
                         text: self.text,
@@ -370,62 +369,63 @@ fn draw_flow(
     result
 }
 
-impl Painter<'_, '_, '_> {
-    /// Paints a nested document's viewport into the paint rectangle, with its own
-    /// text lines, faces and SVG definitions.
-    fn draw_viewport(
-        &mut self,
-        paint: &crate::graphics::ImagePaint,
-        view: &crate::layout::ViewportPaint,
-        space: Space,
-        surface: &mut Surface<'_>,
-    ) -> Result<(), PdfError> {
-        let clips = paint
-            .clip
-            .as_ref()
-            .map(|clip| painting::push_clip(clip, space.viewport, surface))
-            .transpose()?
-            .unwrap_or(0);
-        let scale = [
-            paint.rect.width / view.area.width,
-            paint.rect.height / view.area.height,
-        ];
-        let offset = [
-            paint.rect.x - view.area.x * scale[0],
-            paint.rect.y - view.area.y * scale[1],
-        ];
-        surface.push_transform(&Transform::from_row(
-            scale[0], 0.0, 0.0, scale[1], offset[0], offset[1],
-        ));
-        let local = Space {
-            viewport: Rect {
-                x: (space.viewport.x - offset[0]) / scale[0],
-                y: (space.viewport.y - offset[1]) / scale[1],
-                width: space.viewport.width / scale[0],
-                height: space.viewport.height / scale[1],
-            },
-            ..space
-        };
-        let raster = RasterContext {
-            pixels_per_point: self.raster.pixels_per_point,
-            definitions: &view.definitions,
-        };
-        let mut text = TextWriter::new(&view.fonts);
-        let drawn = Painter {
-            lines: &view.lines,
-            page: 0,
-            page_area: view.area,
-            text: &mut text,
-            fonts: &view.fonts,
-            images: self.images,
-            raster: &raster,
-            prepared: Prepared::default(),
-        }
-        .draw(&view.items, local, surface);
-        surface.pop();
-        painting::pop_clips(clips, surface);
-        drawn
+/// Paints a nested document's viewport or an element's rendering into the paint rectangle,
+/// with its own text lines, faces and SVG definitions.
+pub(super) fn draw_viewport(
+    paint: &crate::graphics::ImagePaint,
+    view: &crate::layout::ViewportPaint,
+    images: &mut ImageWriter,
+    space: Space,
+    surface: &mut Surface<'_>,
+) -> Result<(), PdfError> {
+    if view.area.width <= 0.0 || view.area.height <= 0.0 {
+        return Ok(());
     }
+    // Element IDs belong to their documents, so a nested document's renderings join the
+    // writer's.
+    images.elements.extend(
+        view.elements
+            .iter()
+            .map(|(element, rendering)| (*element, rendering.clone())),
+    );
+    let clips = paint
+        .clip
+        .as_ref()
+        .map(|clip| painting::push_clip(clip, space.viewport, surface))
+        .transpose()?
+        .unwrap_or(0);
+    let scale = [
+        paint.rect.width / view.area.width,
+        paint.rect.height / view.area.height,
+    ];
+    let offset = [
+        paint.rect.x - view.area.x * scale[0],
+        paint.rect.y - view.area.y * scale[1],
+    ];
+    surface.push_transform(&Transform::from_row(
+        scale[0], 0.0, 0.0, scale[1], offset[0], offset[1],
+    ));
+    let raster = RasterContext {
+        pixels_per_point: images.pixels_per_point,
+        definitions: &view.definitions,
+    };
+    let mut text = TextWriter::new(&view.fonts);
+    let drawn = Painter {
+        lines: &view.lines,
+        page: 0,
+        page_area: view.area,
+        text: &mut text,
+        fonts: &view.fonts,
+        images,
+        raster: &raster,
+        prepared: Prepared::default(),
+    }
+    // The drawing space's viewport is the visible area of the surface, which the pushed
+    // transform does not move.
+    .draw(&view.items, space, surface);
+    surface.pop();
+    painting::pop_clips(clips, surface);
+    drawn
 }
 
 /// The number of items before the `Pop` closing a group that `items` follow.

@@ -168,6 +168,9 @@ pub enum BackgroundImage<I = Infallible> {
     Invalid,
     /// `cross-fade()`: the weighted average of images and solid colours (CSS Images 4 §2.6).
     CrossFade(Vec<FadeLayer<I>>),
+    /// `element()`: the element with this ID as an image (CSS Images 4 §2.7), which the
+    /// document builder resolves into `Image`.
+    Element(Arc<str>),
 }
 
 /// One `<cf-image>` of `cross-fade()`: an image, a colour as a solid-colour image, and the
@@ -186,6 +189,13 @@ pub struct ImageFunction {
     pub rtl: Option<bool>,
     /// The solid color rendered when the URL is an invalid image (§2.5.1).
     pub fallback: Option<AbsoluteColor>,
+}
+
+/// An image a box's values reference: a URL to load, or the ID `element()` names.
+#[derive(Clone, Copy, Debug)]
+pub enum ImageReference<'a> {
+    Url(ImageRequest<'a>),
+    Element(&'a str),
 }
 
 /// An image URL to load for a box.
@@ -265,7 +275,7 @@ impl<I> Backgrounds<I> {
     /// only when one is present.
     pub(crate) fn resolve_images<E>(
         backgrounds: &mut Arc<Self>,
-        mut load: impl FnMut(&ImageRequest<'_>) -> Result<Option<I>, E>,
+        mut load: impl FnMut(&ImageReference<'_>) -> Result<Option<I>, E>,
     ) -> Result<(), E>
     where
         I: Clone,
@@ -289,10 +299,11 @@ impl<I> BackgroundImage<I> {
     pub fn is_displayable(&self) -> bool {
         !matches!(self, Self::None | Self::Invalid)
     }
-    /// Whether the image is, or combines, a `url()` that the document builder loads.
+    /// Whether the image is, or combines, a `url()` or `element()` that the document builder
+    /// loads.
     pub fn needs_loading(&self) -> bool {
         match self {
-            Self::Url { .. } => true,
+            Self::Url { .. } | Self::Element(_) => true,
             Self::CrossFade(layers) => layers.iter().any(|layer| layer.image.needs_loading()),
             Self::None
             | Self::Image { .. }
@@ -301,17 +312,28 @@ impl<I> BackgroundImage<I> {
             | Self::Invalid => false,
         }
     }
-    /// Replaces a `Url` with the image `load` returns for it, which is `None` when it could
-    /// not be loaded without aborting the document: an `image()` URL then renders its
-    /// fallback color, else the image is invalid (CSS Images 4 §2.5.1).
+    /// Replaces a `Url` or `Element` with the image `load` returns for it, which is `None`
+    /// when it could not be loaded without aborting the document: an `image()` URL then
+    /// renders its fallback color, else the image is invalid (CSS Images 4 §2.5.1, §2.7).
     pub(crate) fn load<E>(
         &mut self,
-        load: &mut impl FnMut(&ImageRequest<'_>) -> Result<Option<I>, E>,
+        load: &mut impl FnMut(&ImageReference<'_>) -> Result<Option<I>, E>,
     ) -> Result<(), E> {
         if let Self::CrossFade(layers) = self {
             for layer in layers {
                 layer.image.load(load)?;
             }
+        }
+        if let Self::Element(id) = self {
+            *self = match load(&ImageReference::Element(id))? {
+                Some(image) => Self::Image {
+                    image,
+                    resolution: INITIAL_RESOLUTION,
+                    scale: INITIAL_IMAGE_SCALE,
+                },
+                None => Self::Invalid,
+            };
+            return Ok(());
         }
         if let Self::Url {
             url,
@@ -325,7 +347,7 @@ impl<I> BackgroundImage<I> {
                 function: function.as_ref(),
                 resolved: resolution.is_some(),
             };
-            *self = match load(&request)? {
+            *self = match load(&ImageReference::Url(request))? {
                 Some(image) => Self::Image {
                     image,
                     resolution: resolution.unwrap_or(INITIAL_RESOLUTION),
@@ -386,6 +408,7 @@ impl BackgroundImage<Infallible> {
                     })
                     .collect(),
             ),
+            Self::Element(id) => BackgroundImage::Element(id.clone()),
             Self::Image { image, .. } => match *image {},
         }
     }
@@ -417,6 +440,9 @@ impl<'a, I: ImageInfo> Source<'a, I> {
         Ok(Some(match image {
             BackgroundImage::None => return Ok(None),
             BackgroundImage::Url { url, .. } => return Err(UnresolvedImage(url.clone())),
+            BackgroundImage::Element(id) => {
+                return Err(UnresolvedImage(format!("element(#{id})")));
+            }
             BackgroundImage::Image {
                 image,
                 resolution,

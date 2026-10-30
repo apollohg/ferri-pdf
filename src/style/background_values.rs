@@ -135,6 +135,10 @@ fn any_image(
         // Without script no paint worklet registers a name, so drawing the image finds no
         // document paint definition and outputs an invalid image (CSS Painting API 1 §7).
         Component::Function(Keyword::Paint, _) => BackgroundImage::Invalid,
+        Component::Function(Keyword::Element, Some(arguments)) => match arguments.unwrap() {
+            Component::Hash(id) => BackgroundImage::Element(id.as_ref().into()),
+            other => return Err(unsupported(other)),
+        },
         Component::Function(name, Some(arguments)) => {
             let repeating = matches!(
                 name,

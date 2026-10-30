@@ -677,6 +677,8 @@ pub(super) struct NativeSizing {
 #[derive(Clone)]
 pub(super) struct Measurer<'a> {
     pub(super) native_sizing: Option<std::rc::Rc<NativeSizing>>,
+    /// The elements whose renderings `element()` images show.
+    pub(super) element_targets: std::rc::Rc<crate::layout::ElementTargets>,
     pub(super) table_data: std::rc::Rc<crate::layout::tables::Inputs<'a>>,
     pub(super) frame_measurements: std::rc::Rc<std::cell::RefCell<frames::Measurements<'a>>>,
     pub(super) raw_templates:
@@ -717,6 +719,7 @@ impl<'a> Measurer<'a> {
     ) -> Self {
         Measurer {
             native_sizing: None,
+            element_targets: std::rc::Rc::default(),
             table_data: Default::default(),
             frame_measurements: Default::default(),
             raw_templates: Default::default(),
