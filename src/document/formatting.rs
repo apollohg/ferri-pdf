@@ -687,6 +687,11 @@ enum RunInFollower {
     Block,
     Other,
 }
+/// A same-document reference is a URL fragment.
+const SAME_DOCUMENT: char = '#';
+/// Any referencing presentation attribute links the documents a reference names.
+const LINKING_PROPERTY: &str = "filter";
+
 pub(crate) struct ImageResources<'a> {
     pub base: &'a crate::resources::ResourceBase,
     pub resolver: &'a dyn crate::resources::ResourceResolver,
@@ -815,9 +820,46 @@ impl ImageResources<'_> {
     /// Loads the box's `url()` background layers and border image; inline style URLs use the
     /// document base.
     pub(crate) fn backgrounds(&mut self, style: &Style) -> Result<BoxDecoration, DocumentError> {
+        self.link_documents(style)?;
         Ok(style
             .decoration
             .load_images(|request| self.load(request, style))?)
+    }
+    /// Loads the other SVG documents whose elements the box's filters, masks and clip path
+    /// reference (Filter Effects 1 §5, CSS Masking 1 §6.1, §7.1), with the documents those
+    /// reference in turn, for painting to find.
+    fn link_documents(&mut self, style: &Style) -> Result<(), DocumentError> {
+        let masks = &style.decoration.masks;
+        let references = style
+            .filter
+            .iter()
+            .chain(style.backdrop_filter.iter())
+            .filter_map(|function| match function {
+                crate::paint::FilterFunction::Url(reference) => Some(&**reference),
+                _ => None,
+            })
+            .chain(masks.sources.iter().flatten().map(|reference| &**reference))
+            .chain(masks.clip_reference.as_deref());
+        for reference in references {
+            if reference.starts_with(SAME_DOCUMENT) {
+                continue;
+            }
+            let failure = std::cell::RefCell::new(None);
+            let load = |url: &str| {
+                self.cache
+                    .linked_document(url, self.base, self.resolver)
+                    .unwrap_or_else(|error| {
+                        failure.borrow_mut().get_or_insert(error);
+                        None
+                    })
+            };
+            // Linking the reference loads its documents; the box's geometry is not known yet.
+            crate::svg::reference_tree("", LINKING_PROPERTY, reference, None, &load);
+            if let Some(error) = failure.into_inner() {
+                return Err(error.into());
+            }
+        }
+        Ok(())
     }
 }
 
@@ -2887,6 +2929,7 @@ pub(crate) fn build(
             html,
             &style,
             &crate::document::svg::Styling { sheet, resolver },
+            resources.cache.linked_documents(),
         )?;
         return Ok(Formatted {
             root: BlockBox::anonymous(style, vec![BlockContent::Events(events)], None),
@@ -2947,6 +2990,7 @@ pub(crate) fn build(
         html,
         &style,
         &crate::document::svg::Styling { sheet, resolver },
+        resources.cache.linked_documents(),
     )?;
     let mut root = block(
         element,

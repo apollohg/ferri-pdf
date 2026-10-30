@@ -362,6 +362,12 @@ pub struct ImageFailure {
     pub error: ImageError,
 }
 
+/// The SVG documents that references into other documents name, by absolute URL without
+/// fragment; `None` for one that is unavailable or not text. Formatting loads those of box
+/// references, which the SVG definitions read when painting.
+pub(crate) type LinkedDocuments =
+    Arc<std::sync::Mutex<HashMap<String, Option<crate::svg::usvg::LinkedDocument>>>>;
+
 #[derive(Default)]
 pub(crate) struct ImageCache {
     validated_markers: HashSet<usize>,
@@ -369,6 +375,7 @@ pub(crate) struct ImageCache {
     failures: Vec<ImageFailure>,
     fonts: SvgFonts,
     svg_sources: HashMap<crate::resources::ResourceBase, HashMap<String, Arc<svg::SvgSource>>>,
+    linked: LinkedDocuments,
     images: HashMap<
         FontNamespace,
         HashMap<crate::resources::ResourceBase, HashMap<String, Arc<Image>>>,
@@ -382,8 +389,57 @@ impl ImageCache {
             failed: HashSet::new(),
             failures: Vec::new(),
             svg_sources: HashMap::new(),
+            linked: LinkedDocuments::default(),
             images: HashMap::new(),
         }
+    }
+    /// The SVG documents that references into other documents name.
+    pub(crate) fn linked_documents(&self) -> LinkedDocuments {
+        self.linked.clone()
+    }
+    /// The SVG document whose elements `reference` names (SVG 2 §5.3.2), loaded once. An
+    /// unavailable resource, or one that is not UTF-8 text, names no element, so each
+    /// property's fallback for an invalid reference applies; a resource that the resolver's
+    /// policy denies or that exceeds its limits is an error.
+    pub(crate) fn linked_document(
+        &self,
+        reference: &str,
+        base: &crate::resources::ResourceBase,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Option<crate::svg::usvg::LinkedDocument>, ImageError> {
+        let mut requested = base.resolve(reference)?;
+        requested.set_fragment(None);
+        let key = requested.to_string();
+        if let Some(document) = self
+            .linked
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner)
+            .get(&key)
+        {
+            return Ok(document.clone());
+        }
+        let document = match resolver.resolve(reference, base) {
+            Ok(resource) => {
+                let mut url = match resource.base {
+                    crate::resources::ResourceBase::Url(url) => url,
+                    crate::resources::ResourceBase::Directory(_) => requested,
+                };
+                url.set_fragment(None);
+                String::from_utf8(resource.bytes).ok().map(|text| {
+                    crate::svg::usvg::LinkedDocument {
+                        url,
+                        text: text.into(),
+                    }
+                })
+            }
+            Err(error) if error.is_unavailable() => None,
+            Err(error) => return Err(error.into()),
+        };
+        self.linked
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner)
+            .insert(key, document.clone());
+        Ok(document)
     }
     #[cfg(test)]
     pub(crate) fn load(

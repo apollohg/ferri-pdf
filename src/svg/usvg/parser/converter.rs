@@ -43,7 +43,6 @@ pub(super) struct State<'a> {
     pub(crate) use_size: (Option<f32>, Option<f32>),
     pub(crate) opt: &'a Options<'a>,
     pub(crate) image_resolver: Option<&'a dyn Fn(&str, &Options) -> Option<ImageKind>>,
-    pub(crate) motion_path_resolver: Option<&'a dyn Fn(&str) -> Option<Arc<str>>>,
     pub(crate) font_provider: Option<&'a dyn FontProvider>,
 }
 
@@ -60,7 +59,6 @@ impl<'a> State<'a> {
             use_size: (None, None),
             opt,
             image_resolver: None,
-            motion_path_resolver: None,
             font_provider: None,
         }
     }
@@ -431,7 +429,6 @@ pub(crate) fn convert_doc(
     viewport: Option<Size>,
     image_resolver: Option<&dyn Fn(&str, &Options) -> Option<ImageKind>>,
     font_provider: Option<&dyn FontProvider>,
-    motion_path_resolver: Option<&dyn Fn(&str) -> Option<Arc<str>>>,
 ) -> Result<Tree, Error> {
     let svg = svg_doc.root_element();
     let (size, restore_viewbox) = match viewport {
@@ -472,7 +469,6 @@ pub(crate) fn convert_doc(
 
     let state = State {
         image_resolver,
-        motion_path_resolver,
         font_provider,
         ..State::new(opt, view_box.rect)
     };
@@ -499,8 +495,9 @@ pub(crate) fn convert_doc(
     }
 
     let root_ts = view_box.to_transform(tree.size());
+    // Documents that references link follow the root element unrendered.
     if root_ts.is_identity() && background_color.is_none() {
-        convert_children(svg_doc.root(), &state, &mut cache, &mut tree.root);
+        convert_element(svg, &state, &mut cache, &mut tree.root);
     } else {
         let mut g = Group::empty();
 
@@ -512,7 +509,7 @@ pub(crate) fn convert_doc(
 
         g.transform = root_ts;
         g.abs_transform = root_ts;
-        convert_children(svg_doc.root(), &state, &mut cache, &mut g);
+        convert_element(svg, &state, &mut cache, &mut g);
         g.calculate_bounding_boxes();
         tree.root.children.push(Node::Group(Box::new(g)));
     }

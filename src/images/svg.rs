@@ -2,7 +2,7 @@ use crate::fonts::{DEFAULT_FAMILY, FontNamespace};
 use crate::images::svg_fonts::SvgFonts;
 use crate::images::{Image, ImageCache, ImageError, RasterFormat};
 use crate::resources::{Resource, ResourceBase, ResourceResolver};
-use crate::svg::usvg::{ImageKind, ParsedSvg, Tree};
+use crate::svg::usvg::{ImageKind, LinkedDocument, ParsedSvg, Tree};
 use std::{
     cell::RefCell,
     collections::{HashMap, HashSet},
@@ -25,7 +25,8 @@ pub struct SvgImage {
     source: Arc<SvgSource>,
     fonts: SvgFonts,
     resources: HashMap<String, ImageKind>,
-    motion_resources: HashMap<String, Option<Arc<str>>>,
+    /// The documents that references into other documents name, by reference.
+    documents: HashMap<String, Option<LinkedDocument>>,
     jpeg_images: HashSet<usize>,
     width: Option<f32>,
     height: Option<f32>,
@@ -70,7 +71,7 @@ impl SvgImage {
         if !root.has_tag_name((SVG_NAMESPACE, "svg")) {
             return Err(ImageError::SvgRoot);
         }
-        let parsed = ParsedSvg::parse(&document, None).map_err(ImageError::Svg)?;
+        let mut parsed = ParsedSvg::parse(&document, None).map_err(ImageError::Svg)?;
         let mut options = options(crate::images::DEFAULT_OBJECT_SIZE)?;
         let fonts = cache.fonts.in_namespace(namespace);
         let provider = fonts.provider(Some(resolver));
@@ -103,7 +104,7 @@ impl SvgImage {
             crate::images::DEFAULT_OBJECT_SIZE[0],
         );
         let resources = RefCell::new(HashMap::<String, ImageKind>::new());
-        let motion_resources = RefCell::new(HashMap::<String, Option<Arc<str>>>::new());
+        let documents = RefCell::new(HashMap::<String, Option<LinkedDocument>>::new());
         let jpeg_images = RefCell::new(HashSet::new());
         let failure = RefCell::new(None::<ImageError>);
         let cache = RefCell::new(cache);
@@ -131,27 +132,31 @@ impl SvgImage {
         };
         options.default_size = crate::svg::usvg::Size::from_wh(initial_size[0], initial_size[1])
             .ok_or(ImageError::SvgSize)?;
-        let resolve_motion = |reference: &str| {
-            if let Some(source) = motion_resources.borrow().get(reference) {
-                return source.clone();
+        let resolve_document = |reference: &str| {
+            if failure.borrow().is_some() {
+                return None;
             }
-            let document = resolver
-                .resolve(reference, &source.base)
-                .ok()
-                .and_then(|resource| String::from_utf8(resource.bytes).ok())
-                .map(Arc::<str>::from);
-            motion_resources
+            let document = cache
+                .borrow_mut()
+                .linked_document(reference, &source.base, resolver)
+                .unwrap_or_else(|error| {
+                    *failure.borrow_mut() = Some(error);
+                    None
+                });
+            documents
                 .borrow_mut()
                 .insert(reference.to_owned(), document.clone());
             document
         };
-        let initial_tree = parsed.to_tree(
-            &options,
-            Some(options.default_size),
-            Some(&resolve),
-            Some(&provider),
-            Some(&resolve_motion),
-        );
+        let linked = parsed.link_documents(&resolve_document);
+        let initial_tree = linked.and_then(|()| {
+            parsed.to_tree(
+                &options,
+                Some(options.default_size),
+                Some(&resolve),
+                Some(&provider),
+            )
+        });
         let fonts = provider.finish()?;
         if let Some(error) = failure.into_inner() {
             return Err(error);
@@ -162,7 +167,7 @@ impl SvgImage {
             source,
             fonts,
             resources,
-            motion_resources: motion_resources.into_inner(),
+            documents: documents.into_inner(),
             jpeg_images: jpeg_images.into_inner(),
             width,
             height,
@@ -205,7 +210,7 @@ impl SvgImage {
             Some(options.default_size),
             &|href, _| self.resources.get(href).cloned(),
             &provider,
-            &|reference| self.motion_resources.get(reference).cloned().flatten(),
+            &|reference| self.documents.get(reference).cloned().flatten(),
         );
         provider.finish()?;
         result.map_err(ImageError::Svg)

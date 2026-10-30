@@ -63,6 +63,7 @@ pub(crate) use object::{ImageOrientation, ImageResolution, ObjectFit};
 pub(crate) use overflow::{
     BlockEllipsis, ClipEdge, Continue, LineClamp, Overflow, OverflowClipMargin, TextOverflow,
 };
+pub(crate) use parser::rewrite_urls;
 pub(crate) use transform::{Parent3d, Rotation, TransformBox, TransformFunction, TransformStyle};
 pub(crate) use user_agent::legacy_color;
 pub(crate) use widget_values::{Appearance, FieldSizing, WidgetStyle};

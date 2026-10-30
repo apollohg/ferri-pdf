@@ -501,7 +501,6 @@ fn svg_style_elements_are_left_to_the_document_cascade() {
 fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
     for (css, expected) in [
         ("pattern{overflow:visible}", "always clips"),
-        ("rect{clip-path:url(other.svg#clip)}", "another document"),
         ("rect{mask:url(#a),url(#b)}", "mask layers"),
         (
             "text{font-variant-caps:all-small-caps}",
@@ -513,7 +512,6 @@ fn properties_the_svg_renderer_cannot_take_from_the_cascade_are_unsupported() {
             "rect{mix-blend-mode:plus-lighter}",
             "additive mix-blend-mode",
         ),
-        ("rect{fill:url(other.svg#paint)}", "another document"),
         ("rect{cx:calc(10% + 1px)}", ""),
     ] {
         match styled(

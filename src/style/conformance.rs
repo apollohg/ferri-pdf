@@ -40,13 +40,6 @@ const WITHOUT_COMPUTED_FIELD: &[Property] = &[
     Property::Overlay,
 ];
 const EXTENSION_PROPERTIES: [&str; 2] = ["table-column-span", "table-row-span"];
-/// Properties that compute only same-document references, which generated samples are not.
-const FRAGMENT_REFERENCES: [Property; 3] = [
-    Property::MarkerStart,
-    Property::MarkerMid,
-    Property::MarkerEnd,
-];
-const FRAGMENT_SAMPLE: &str = "url(#sample)";
 /// `calc-size()` arguments are `<calc-sum>`s that must resolve to lengths, which the grammar
 /// leaves to CSS Values 5 §10; every sizing property accepts these bases.
 const CALC_SIZE_SAMPLES: [&str; 3] = [
@@ -968,16 +961,10 @@ fn initial_values_compute_to_the_engine_defaults() {
 fn effective_sample(property: Property) -> Option<String> {
     let (default, _) = styles_in_context(property, "").expect("empty stylesheet");
     let default = computed_text(&default);
-    FRAGMENT_REFERENCES
-        .contains(&property)
-        .then(|| FRAGMENT_SAMPLE.to_owned())
+    Sampler::new()
+        .samples(property.data().root)
         .into_iter()
-        .chain(
-            Sampler::new()
-                .samples(property.data().root)
-                .into_iter()
-                .map(joined),
-        )
+        .map(joined)
         .find(|sample| {
             styles_in_context(
                 property,

@@ -745,35 +745,70 @@ pub(super) fn absolute_url_text(
     if !value.contains('\\') && !value.to_ascii_lowercase().contains(URL_FUNCTION) {
         return Ok(None);
     }
-    let mut found = Vec::new();
-    {
-        let mut input = ParserInput::new(value);
-        url_references(&mut Parser::new(&mut input), &mut found)
-            .map_err(|error| format!("url() in {name}: {error:?}"))?;
+    let found = references_in(value).map_err(|error| format!("url() in {name}: {error}"))?;
+    splice(value, found, |reference| {
+        if reference.is_empty()
+            || reference.starts_with(FRAGMENT_PREFIX)
+            || crate::resources::Url::parse(reference).is_ok()
+        {
+            return Ok(None);
+        }
+        Ok(Some(base.resolve(reference)?.to_string()))
+    })
+}
+
+/// `value` with each `url()` reference that `map` rewrites replaced by the URL it returns;
+/// `None` when none changes or the value does not tokenize.
+pub(crate) fn rewrite_urls(
+    value: &str,
+    mut map: impl FnMut(&str) -> Option<String>,
+) -> Option<String> {
+    if !value.to_ascii_lowercase().contains(URL_FUNCTION) {
+        return None;
     }
-    let mut resolved = value.to_owned();
+    let found = references_in(value).ok()?;
+    splice(value, found, |reference| Ok(map(reference)))
+        .ok()
+        .flatten()
+}
+
+/// The `url()` references of `value`, in order.
+fn references_in(value: &str) -> Result<Vec<UrlReference>, String> {
+    let mut found = Vec::new();
+    let mut input = ParserInput::new(value);
+    url_references(&mut Parser::new(&mut input), &mut found)
+        .map_err(|error| format!("{error:?}"))?;
+    Ok(found)
+}
+
+/// `value` with the references `replace` maps written as CSS strings, inside `url()` where
+/// the reference was an unquoted token; `None` when none is replaced.
+fn splice(
+    value: &str,
+    found: Vec<UrlReference>,
+    mut replace: impl FnMut(&str) -> Result<Option<String>, StyleError>,
+) -> Result<Option<String>, StyleError> {
+    let mut replaced = value.to_owned();
+    let mut changed = false;
     for UrlReference {
         range,
         reference,
         part,
     } in found.into_iter().rev()
     {
-        if reference.is_empty()
-            || reference.starts_with(FRAGMENT_PREFIX)
-            || crate::resources::Url::parse(&reference).is_ok()
-        {
+        let Some(url) = replace(&reference)? else {
             continue;
-        }
-        let absolute = base.resolve(&reference)?;
+        };
         let mut serialized = String::new();
-        cssparser::serialize_string(absolute.as_str(), &mut serialized)
+        cssparser::serialize_string(&url, &mut serialized)
             .expect("writing a CSS URL string cannot fail");
         if matches!(part, UrlPart::Token) {
             serialized = format!("url({serialized})");
         }
-        resolved.replace_range(range, &serialized);
+        replaced.replace_range(range, &serialized);
+        changed = true;
     }
-    Ok(Some(resolved))
+    Ok(changed.then_some(replaced))
 }
 
 pub(super) fn raw<'i>(input: &mut Parser<'i, '_>) -> Result<String, ParseError<'i, StyleError>> {

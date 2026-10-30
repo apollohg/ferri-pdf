@@ -7,6 +7,7 @@ use std::str::FromStr;
 
 #[rustfmt::skip] mod names;
 mod css;
+mod documents;
 mod parse;
 mod text;
 

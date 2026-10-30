@@ -51,3 +51,12 @@ content's extent along the other (SVG 2 §3.11).
 references (CSS Masking 1 §6.1). The document's computed basic shapes trace the outline in the
 element's fill, stroke or view box, `stroke-box` by default, so SVG content and CSS boxes clip
 alike.
+
+`url()` and `href` references into other SVG documents (SVG 2 §5.3.2) load through a caller's
+synchronous document callback, which keeps the resource policy, caching and typed errors. Each
+referenced document, and the documents it references in turn, is parsed with its own style
+sheets and appended as a second, unrendered root element, its ids and internal references
+prefixed apart from the referencing document's, so paint servers, markers, clip paths, masks,
+filters and offset paths resolve in the merged tree. A document that does not load or parse
+leaves its references naming no element, so each property's invalid-reference fallback applies.
+Image `href`s of a referenced document resolve against that document's URL.

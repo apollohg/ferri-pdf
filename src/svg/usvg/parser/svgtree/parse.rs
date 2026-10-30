@@ -131,11 +131,7 @@ fn parse<'input>(
     }
     doc.links = links;
 
-    fix_recursive_patterns(&mut doc);
-    fix_recursive_links(EId::ClipPath, AId::ClipPath, &mut doc);
-    fix_recursive_links(EId::Mask, AId::Mask, &mut doc);
-    fix_recursive_links(EId::Filter, AId::Filter, &mut doc);
-    fix_recursive_fe_image(&mut doc);
+    fix_recursions(&mut doc);
     if let Err(error) = resolve_zoom(&mut doc) {
         doc.style_error
             .get_or_insert_with(|| std::sync::Arc::new(error));
@@ -989,6 +985,15 @@ fn resolve_css<'a>(
 
     sheet.prepare(xml);
     sheet
+}
+
+/// Breaks the reference cycles that would make conversion recurse endlessly.
+pub(super) fn fix_recursions(doc: &mut Document) {
+    fix_recursive_patterns(doc);
+    fix_recursive_links(EId::ClipPath, AId::ClipPath, doc);
+    fix_recursive_links(EId::Mask, AId::Mask, doc);
+    fix_recursive_links(EId::Filter, AId::Filter, doc);
+    fix_recursive_fe_image(doc);
 }
 
 fn fix_recursive_patterns(doc: &mut Document) {

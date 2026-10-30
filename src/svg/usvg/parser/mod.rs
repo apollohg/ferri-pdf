@@ -27,6 +27,22 @@ pub(crate) use options::Options;
 
 pub(crate) struct ParsedSvg<'input>(svgtree::Document<'input>);
 
+/// XML parsing for SVG documents, which may declare entities in a DTD.
+pub(crate) fn xml_options<'input>() -> roxmltree::ParsingOptions<'input> {
+    roxmltree::ParsingOptions {
+        allow_dtd: true,
+        ..Default::default()
+    }
+}
+
+/// An SVG document that a reference into another document names, as its caller loaded it.
+#[derive(Clone, Debug)]
+pub struct LinkedDocument {
+    /// The document's own URL, against which its relative references resolve.
+    pub url: crate::resources::Url,
+    pub text: std::sync::Arc<str>,
+}
+
 impl<'input> ParsedSvg<'input> {
     pub(crate) fn parse(
         xml: &roxmltree::Document<'input>,
@@ -84,15 +100,22 @@ impl<'input> ParsedSvg<'input> {
         })
     }
 
+    /// Appends the other documents that references name, as `load` returns them.
+    pub(crate) fn link_documents(
+        &mut self,
+        load: &dyn Fn(&str) -> Option<LinkedDocument>,
+    ) -> Result<(), Error> {
+        self.0.link_documents(load)
+    }
+
     pub(crate) fn to_tree(
         &self,
         opt: &Options,
         viewport: Option<crate::svg::usvg::Size>,
         images: Option<&dyn Fn(&str, &Options) -> Option<crate::svg::usvg::ImageKind>>,
         fonts: Option<&dyn crate::svg::usvg::FontProvider>,
-        motion: Option<&dyn Fn(&str) -> Option<std::sync::Arc<str>>>,
     ) -> Result<crate::svg::usvg::Tree, Error> {
-        converter::convert_doc(&self.0, opt, viewport, images, fonts, motion)
+        converter::convert_doc(&self.0, opt, viewport, images, fonts)
     }
 }
 
@@ -239,16 +262,32 @@ impl crate::svg::usvg::Tree {
         Self::from_str_impl(text, opt, viewport, Some(resolver), None, None)
     }
 
-    /// Parses with borrowed image and font providers without retaining either provider.
+    /// Parses with borrowed image, font and linked-document providers without retaining them.
     pub fn from_str_with_resolvers(
         text: &str,
         opt: &Options,
         viewport: Option<crate::svg::usvg::Size>,
         images: &dyn Fn(&str, &Options) -> Option<crate::svg::usvg::ImageKind>,
         fonts: &dyn crate::svg::usvg::FontProvider,
-        motion: &dyn Fn(&str) -> Option<std::sync::Arc<str>>,
+        documents: &dyn Fn(&str) -> Option<LinkedDocument>,
     ) -> Result<Self, Error> {
-        Self::from_str_impl(text, opt, viewport, Some(images), Some(fonts), Some(motion))
+        Self::from_str_impl(
+            text,
+            opt,
+            viewport,
+            Some(images),
+            Some(fonts),
+            Some(documents),
+        )
+    }
+
+    /// Parses with the documents that references into other documents name.
+    pub(crate) fn from_str_with_documents(
+        text: &str,
+        opt: &Options,
+        documents: &dyn Fn(&str) -> Option<LinkedDocument>,
+    ) -> Result<Self, Error> {
+        Self::from_str_impl(text, opt, None, None, None, Some(documents))
     }
 
     fn from_str_impl(
@@ -257,24 +296,22 @@ impl crate::svg::usvg::Tree {
         viewport: Option<crate::svg::usvg::Size>,
         resolver: Option<&dyn Fn(&str, &Options) -> Option<crate::svg::usvg::ImageKind>>,
         fonts: Option<&dyn crate::svg::usvg::FontProvider>,
-        motion: Option<&dyn Fn(&str) -> Option<std::sync::Arc<str>>>,
+        documents: Option<&dyn Fn(&str) -> Option<LinkedDocument>>,
     ) -> Result<Self, Error> {
-        let xml_opt = roxmltree::ParsingOptions {
-            allow_dtd: true,
-            ..Default::default()
-        };
+        let doc = roxmltree::Document::parse_with_options(text, xml_options())
+            .map_err(Error::ParsingFailed)?;
 
-        let doc =
-            roxmltree::Document::parse_with_options(text, xml_opt).map_err(Error::ParsingFailed)?;
-
-        let doc = ParsedSvg::parse(&doc, opt.style_sheet.as_deref())?;
-        doc.to_tree(opt, viewport, resolver, fonts, motion)
+        let mut doc = ParsedSvg::parse(&doc, opt.style_sheet.as_deref())?;
+        if let Some(documents) = documents {
+            doc.link_documents(documents)?;
+        }
+        doc.to_tree(opt, viewport, resolver, fonts)
     }
 
     /// Parses `Tree` from `roxmltree::Document`.
     pub fn from_xmltree(doc: &roxmltree::Document, opt: &Options) -> Result<Self, Error> {
         let doc = ParsedSvg::parse(doc, opt.style_sheet.as_deref())?;
-        doc.to_tree(opt, None, None, None, None)
+        doc.to_tree(opt, None, None, None)
     }
 }
 

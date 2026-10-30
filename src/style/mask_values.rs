@@ -7,7 +7,7 @@ use crate::style::{
     units::Relative,
 };
 
-/// The URL prefix of a same-document reference.
+/// A URL with a fragment names an element, here a `mask` element.
 const FRAGMENT: char = '#';
 
 /// `mask-image` layers: images, and references to `mask` elements.
@@ -23,13 +23,10 @@ pub(super) fn images(
         .items()
         .iter()
         .map(|item| match item.unwrap() {
-            Component::Url(url) if url.starts_with(FRAGMENT) => {
+            // §7.1: a reference naming no `mask` element is a transparent black layer.
+            Component::Url(url) if url.contains(FRAGMENT) => {
                 Ok((BackgroundImage::None, Some(url.clone())))
             }
-            // `mask` elements of other documents are not loaded.
-            Component::Url(url) if url.contains(FRAGMENT) => Err(StyleError::Unsupported(format!(
-                "mask reference into another document: {value}"
-            ))),
             _ => Ok((background_values::image(item, relative, color)?, None)),
         })
         .collect::<Result<Vec<_>, _>>()

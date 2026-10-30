@@ -18,11 +18,6 @@ use crate::style::{
 };
 use std::sync::Arc;
 
-/// Same-document references are fragment-only URLs.
-const FRAGMENT: char = '#';
-/// `<paint>` (§13.2) and `<marker-ref>` (§13.7.2) references to other documents' paint servers
-/// and markers, which are not loaded.
-const OTHER_DOCUMENT: &str = "reference to another document";
 /// SVG 2 §13.9 `linearRGB` interpolates gradients and composites in linear light, which the
 /// SVG renderer does not implement.
 const LINEAR_INTERPOLATION: &str = "color-interpolation: linearRGB";
@@ -203,7 +198,7 @@ impl Paint {
         let items = value.items();
         match (items.first().map(Component::unwrap), items.get(1)) {
             (Some(Component::Url(url)), fallback) => Ok(Self::Server {
-                url: same_document(url, value)?,
+                url: url.as_ref().into(),
                 fallback: fallback
                     .and_then(|fallback| fallback.items().first())
                     .map(|fallback| match fallback.keyword() {
@@ -244,17 +239,6 @@ impl Paint {
             } => color.resolve(relative, current),
             _ => Ok(()),
         }
-    }
-}
-
-/// A same-document reference; other documents are not loaded.
-pub(super) fn same_document(url: &str, value: &Component) -> Result<Box<str>, StyleError> {
-    if url.starts_with(FRAGMENT) {
-        Ok(url.into())
-    } else {
-        Err(StyleError::Unsupported(format!(
-            "{OTHER_DOCUMENT}: {value}"
-        )))
     }
 }
 
@@ -461,7 +445,7 @@ macro_rules! svg_marker {
         ) -> Result<(), StyleError> {
             let computed = match input {
                 Input::Value(value) => match value.unwrap() {
-                    Component::Url(url) => Some(same_document(url, value)?),
+                    Component::Url(url) => Some(url.as_ref().into()),
                     _ => None,
                 },
                 Input::Copy(source) => source.svg.markers[$index].clone(),

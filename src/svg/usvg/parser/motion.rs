@@ -11,14 +11,7 @@ pub(crate) fn motion_path(
     options: &Options,
     font_provider: Option<&dyn crate::svg::usvg::FontProvider>,
 ) -> Option<Vec<Contour>> {
-    let xml = roxmltree::Document::parse_with_options(
-        xml,
-        roxmltree::ParsingOptions {
-            allow_dtd: true,
-            ..Default::default()
-        },
-    )
-    .ok()?;
+    let xml = roxmltree::Document::parse_with_options(xml, super::xml_options()).ok()?;
     let document = super::ParsedSvg::parse(&xml, None).ok()?;
     let id = percent_encoding::percent_decode_str(id)
         .decode_utf8()
@@ -235,26 +228,13 @@ fn transform_impl(
         ..
     } = &*style.motion.path
     {
+        // Linking rewrote references into other documents to their appended elements.
         if let Some(id) = url.strip_prefix('#') {
             reference.path = percent_encoding::percent_decode_str(id)
                 .decode_utf8()
                 .ok()
                 .and_then(|id| node.document().element_by_id(&id))
                 .and_then(|node| shape_path(node, state))
-                .map(Arc::new);
-        } else if let Some((document, id)) = url.rsplit_once('#') {
-            reference.path = state
-                .motion_path_resolver
-                .and_then(|resolve| resolve(document))
-                .and_then(|xml| {
-                    motion_path(
-                        &xml,
-                        id,
-                        [state.view_box.width(), state.view_box.height()],
-                        state.opt,
-                        state.font_provider,
-                    )
-                })
                 .map(Arc::new);
         }
     }

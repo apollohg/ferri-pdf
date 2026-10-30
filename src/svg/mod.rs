@@ -6,25 +6,30 @@ pub(crate) mod usvg;
 /// A tree in which a white rectangle spanning `bounds` (points), or no area without them,
 /// references SVG resource `reference` of document `xml` through presentation attribute
 /// `property`, so the SVG parser resolves the resource's units against that box. Tree units
-/// are CSS pixels.
+/// are CSS pixels. `documents` supplies the other documents that references name.
 pub(crate) fn reference_tree(
     xml: &str,
     property: &str,
     reference: &str,
     bounds: Option<crate::graphics::Rect>,
+    documents: &dyn Fn(&str) -> Option<usvg::LinkedDocument>,
 ) -> Option<usvg::Tree> {
     use std::fmt::Write;
     let [x, y, width, height] = bounds.map_or([0.0; 4], |rect| {
         [rect.x, rect.y, rect.width, rect.height]
             .map(|value| value / crate::graphics::POINTS_PER_PIXEL)
     });
+    let mut url = String::new();
+    cssparser::serialize_string(reference, &mut url).expect("writing a String cannot fail");
+    let mut attribute = String::new();
+    crate::document::svg::escape(&mut attribute, &format!("url({url})"), true);
     let mut document = String::new();
     let _ = write!(
         document,
         "<svg xmlns=\"http://www.w3.org/2000/svg\"><defs>{xml}</defs>\
-         <rect x=\"{x}\" y=\"{y}\" width=\"{width}\" height=\"{height}\" fill=\"white\" {property}=\"url({reference})\"/></svg>"
+         <rect x=\"{x}\" y=\"{y}\" width=\"{width}\" height=\"{height}\" fill=\"white\" {property}=\"{attribute}\"/></svg>"
     );
-    usvg::Tree::from_str(&document, &usvg::Options::default()).ok()
+    usvg::Tree::from_str_with_documents(&document, &usvg::Options::default(), documents).ok()
 }
 
 /// The `filter` element `reference` names, resolved for an element with border box
@@ -34,13 +39,12 @@ pub(crate) fn referenced_filter(
     bounds: Option<crate::graphics::Rect>,
     definitions: &crate::document::svg::SvgDefinitions,
 ) -> Option<std::sync::Arc<usvg::filter::Filter>> {
-    let definition = definitions.get(reference)?;
-    if definition.element != "filter" {
-        return None;
-    }
-    let tree = reference_tree(&definition.xml, "filter", reference, bounds)?;
+    let tree = definitions.reference_tree(FILTER_ELEMENT, FILTER_ELEMENT, reference, bounds)?;
     first_filter(tree.root())
 }
+
+/// The `filter` element and the property naming it.
+const FILTER_ELEMENT: &str = "filter";
 
 pub(crate) fn first_filter(group: &usvg::Group) -> Option<std::sync::Arc<usvg::filter::Filter>> {
     group.filters().first().cloned().or_else(|| {

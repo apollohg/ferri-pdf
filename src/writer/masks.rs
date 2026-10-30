@@ -29,6 +29,8 @@ use std::sync::Arc;
 const LUMINANCE: [f32; 3] = [0.2125, 0.7154, 0.0721];
 const CHANNEL_MAX: f32 = 255.0;
 const CLIP_PATH_ELEMENT: &str = "clipPath";
+/// The `mask` element and the property naming it.
+const MASK_ELEMENT: &str = "mask";
 const CLIP_PATH_PROPERTY: &str = "clip-path";
 const WHITE: Color = Color {
     rgb: [u8::MAX; 3],
@@ -239,24 +241,16 @@ fn draw_clip_element(
     surface: &mut Surface<'_>,
 ) -> Result<(), PdfError> {
     let border = fragment.decoration_rect();
-    let Some(tree) = painter
-        .raster
-        .definitions
-        .get(reference)
-        .filter(|definition| definition.element == CLIP_PATH_ELEMENT)
-        .and_then(|definition| {
-            crate::svg::reference_tree(
-                &definition.xml,
-                CLIP_PATH_PROPERTY,
-                reference,
-                Some(Rect {
-                    x: 0.0,
-                    y: 0.0,
-                    ..border
-                }),
-            )
-        })
-    else {
+    let Some(tree) = painter.raster.definitions.reference_tree(
+        CLIP_PATH_ELEMENT,
+        CLIP_PATH_PROPERTY,
+        reference,
+        Some(Rect {
+            x: 0.0,
+            y: 0.0,
+            ..border
+        }),
+    ) else {
         return fill(area, WHITE, surface);
     };
     surface.push_transform(&krilla::geom::Transform::from_row(
@@ -503,11 +497,7 @@ fn draw_source(
     let Some(mask) = painter
         .raster
         .definitions
-        .get(reference)
-        .filter(|definition| definition.element == "mask")
-        .and_then(|definition| {
-            crate::svg::reference_tree(&definition.xml, "mask", reference, Some(bounds))
-        })
+        .reference_tree(MASK_ELEMENT, MASK_ELEMENT, reference, Some(bounds))
         .and_then(|tree| first_mask(tree.root()))
     else {
         return Ok(());

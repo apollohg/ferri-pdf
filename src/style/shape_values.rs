@@ -76,10 +76,7 @@ pub(super) fn clip_path(
 ) -> Result<ClipPathValue, StyleError> {
     match value.unwrap() {
         Component::Keyword(Keyword::None) => return Ok(ClipPathValue::None),
-        Component::Url(url) => {
-            return crate::style::svg_values::same_document(url, value)
-                .map(ClipPathValue::Reference);
-        }
+        Component::Url(url) => return Ok(ClipPathValue::Reference(url.as_ref().into())),
         _ => {}
     }
     Ok(ClipPathValue::Shape(ClipPath {

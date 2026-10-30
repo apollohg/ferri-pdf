@@ -151,7 +151,7 @@ fn colour_functions_match_their_svg_filter_equivalents() {
         crate::svg::resvg::filter::apply(&filter, tiny_skia::Transform::identity(), &mut ours);
         let markup = equivalent(&function);
         // The referencing rectangle is in CSS pixels; userSpaceOnUse units ignore it.
-        let tree = crate::svg::reference_tree(&markup, "filter", "#f", Some(AREA))
+        let tree = crate::svg::reference_tree(&markup, "filter", "#f", Some(AREA), &|_| None)
             .unwrap_or_else(|| panic!("{function:?}: spec markup must parse: {markup}"));
         let spec = crate::svg::first_filter(tree.root())
             .unwrap_or_else(|| panic!("{function:?}: spec markup must give a filter: {markup}"));

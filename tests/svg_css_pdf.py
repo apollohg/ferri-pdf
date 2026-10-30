@@ -274,6 +274,70 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
             self.assertPixel(pixels, half, 2 * ICON + half, RED,
                              'a reference naming no clipPath element clips nothing')
 
+    def test_references_into_other_documents_load_them_with_their_own_styles(self):
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
+            root = Path(directory)
+            (root / 'defs.svg').write_text(
+                '<svg xmlns="http://www.w3.org/2000/svg">'
+                '<style>.green stop{stop-color:rgb(0,160,0)}</style>'
+                '<linearGradient id="paint" class="green"><stop offset="0"/><stop offset="1"/>'
+                '</linearGradient>'
+                '<linearGradient id="nested" href="more.svg#blue"/>'
+                f'<marker id="dot" markerWidth="{SQUARE}" markerHeight="{SQUARE}" refX="0" refY="0" '
+                f'markerUnits="userSpaceOnUse"><rect width="{SQUARE}" height="{SQUARE}" fill="blue"/>'
+                '</marker>'
+                '<clipPath id="left" clipPathUnits="objectBoundingBox">'
+                '<rect width="0.5" height="1"/></clipPath>'
+                '<mask id="top" maskContentUnits="objectBoundingBox">'
+                '<rect width="1" height="0.5" fill="white"/></mask>'
+                '<filter id="flood" x="0" y="0" width="1" height="1">'
+                '<feFlood flood-color="rgb(0,160,0)"/></filter>'
+                '<rect width="1000" height="1000" fill="rgb(200,0,200)"/></svg>')
+            (root / 'more.svg').write_text(
+                '<svg xmlns="http://www.w3.org/2000/svg"><linearGradient id="blue">'
+                '<stop offset="0" stop-color="blue"/><stop offset="1" stop-color="blue"/>'
+                '</linearGradient></svg>')
+            pixels = self.render(
+                root, 'stop{stop-color:red} .box{width:%dpt;height:%dpt;background:red}'
+                % (ICON, ICON),
+                f'<svg width="{4 * ICON}pt" height="{ICON}pt" viewBox="0 0 {4 * ICON} {ICON}">'
+                f'<rect width="{ICON}" height="{ICON}" fill="url(defs.svg#paint)"/>'
+                f'<rect x="{ICON}" width="{ICON}" height="{ICON}" fill="url(defs.svg#nested)"/>'
+                f'<rect x="{2 * ICON}" width="{ICON}" height="{SQUARE}" '
+                'style="fill:url(missing.svg#paint) blue"/>'
+                f'<rect x="{2 * ICON}" y="{SQUARE}" width="{ICON}" height="{SQUARE}" '
+                'fill="url(defs.svg#absent)"/>'
+                f'<path d="M{3 * ICON} 0 h{SQUARE}" stroke="none" '
+                'style="marker-start:url(defs.svg#dot)"/></svg>'
+                '<div class="box" style="clip-path:url(defs.svg#left)"></div>'
+                '<div class="box" style="mask:url(defs.svg#top)"></div>'
+                '<div class="box" style="filter:url(defs.svg#flood)"></div>')
+            half = ICON // 2
+            quarter = ICON // 4
+            self.assertPixel(pixels, half, half, GREEN,
+                             'SVG 2 §5.3.2: the referenced document\'s own style sheet styles its '
+                             'gradient, and the referencing document\'s does not')
+            self.assertPixel(pixels, ICON + half, half, BLUE,
+                             'a gradient template in a third document resolves against the '
+                             'referenced document')
+            self.assertPixel(pixels, 2 * ICON + half, quarter, BLUE,
+                             'SVG 2 §13.2: a document that does not load gives the fallback colour')
+            self.assertPixel(pixels, 2 * ICON + half, SQUARE + quarter, WHITE,
+                             'a reference naming no element without a fallback paints none, and '
+                             'the content of the referenced document is not rendered')
+            self.assertPixel(pixels, 3 * ICON + quarter, quarter, BLUE,
+                             'the marker comes from the other document')
+            self.assertPixel(pixels, quarter, ICON + half, RED,
+                             'CSS Masking 1 §6.1: the box keeps the left half of the clipPath')
+            self.assertPixel(pixels, ICON - quarter, ICON + half, WHITE,
+                             'the clipPath removes the right half of the box')
+            self.assertPixel(pixels, half, 2 * ICON + quarter, RED,
+                             'CSS Masking 1 §7.1: the mask shows the top half of the box')
+            self.assertPixel(pixels, half, 3 * ICON - quarter, WHITE,
+                             'the mask hides the bottom half of the box')
+            self.assertPixel(pixels, half, 3 * ICON + half, GREEN,
+                             'Filter Effects 1 §5: the referenced filter floods the box')
+
     def test_svg_images_keep_their_own_styles(self):
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-css-') as directory:
             image = quote(f'<svg xmlns="http://www.w3.org/2000/svg" width="{ICON}" height="{ICON}">'

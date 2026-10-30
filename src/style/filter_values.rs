@@ -33,12 +33,6 @@ fn function(
     current: &AbsoluteColor,
 ) -> Result<FilterFunction, StyleError> {
     let name = match value.unwrap() {
-        // Filters in other documents are not loaded: only same-document references resolve.
-        Component::Url(url) if !url.starts_with('#') => {
-            return Err(StyleError::Unsupported(format!(
-                "filter reference to another document: {value}"
-            )));
-        }
         Component::Url(url) => return Ok(FilterFunction::Url(url.clone())),
         Component::Function(name, _) => *name,
         _ => return Err(unsupported(value)),

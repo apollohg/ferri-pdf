@@ -19,6 +19,7 @@ use std::{
 };
 
 const ID_ATTRIBUTE: &str = "id";
+
 const HREF_ATTRIBUTE: &str = "href";
 const STYLE_ATTRIBUTE: &str = "style";
 const CLASS_ATTRIBUTE: &str = "class";
@@ -322,6 +323,8 @@ const REFERENCED_ELEMENTS: [&str; 10] = [
 pub(crate) struct SvgDefinitions {
     entries: HashMap<String, SvgDefinition>,
     document: Option<crate::resources::Url>,
+    /// The other documents that references name, as formatting loaded them.
+    linked: crate::images::LinkedDocuments,
 }
 
 #[derive(Clone)]
@@ -338,6 +341,7 @@ impl SvgDefinitions {
         tree: &DocumentTree,
         root: &Style,
         styling: &Styling<'_>,
+        linked: crate::images::LinkedDocuments,
     ) -> Result<Self, DocumentError> {
         let mut roots: HashMap<ElementId, Arc<str>> = HashMap::new();
         let mut definitions = HashMap::new();
@@ -379,6 +383,7 @@ impl SvgDefinitions {
         Ok(Self {
             entries: definitions,
             document: tree.document_url.clone(),
+            linked,
         })
     }
     pub(crate) fn motion(&self, reference: &str) -> Option<&SvgDefinition> {
@@ -398,9 +403,47 @@ impl SvgDefinitions {
             .ok()?;
         self.entries.get(id.as_ref())
     }
-    /// The definition a same-document `url(#id)` reference names.
-    pub(crate) fn get(&self, reference: &str) -> Option<&SvgDefinition> {
-        self.entries.get(reference.strip_prefix('#')?)
+    /// The tree in which a white rectangle spanning `bounds` references, through `property`,
+    /// the `element` element that `reference` names, in this document or another that
+    /// formatting loaded; `None` when it names no such element.
+    pub(crate) fn reference_tree(
+        &self,
+        element: &str,
+        property: &str,
+        reference: &str,
+        bounds: Option<crate::graphics::Rect>,
+    ) -> Option<crate::svg::usvg::Tree> {
+        let documents = |url: &str| {
+            self.linked
+                .lock()
+                .unwrap_or_else(std::sync::PoisonError::into_inner)
+                .get(url)
+                .cloned()
+                .flatten()
+        };
+        let Some(id) = reference.strip_prefix('#') else {
+            let (url, id) = reference.rsplit_once('#')?;
+            let linked = documents(url)?;
+            let id = percent_encoding::percent_decode_str(id)
+                .decode_utf8()
+                .ok()?;
+            let named = roxmltree::Document::parse_with_options(
+                &linked.text,
+                crate::svg::usvg::xml_options(),
+            )
+            .ok()?
+            .descendants()
+            .find(|node| node.attribute(ID_ATTRIBUTE) == Some(&*id))
+            .is_some_and(|node| node.has_tag_name((SVG_NAMESPACE, element)));
+            return named
+                .then(|| crate::svg::reference_tree("", property, reference, bounds, &documents))
+                .flatten();
+        };
+        let definition = self
+            .entries
+            .get(id)
+            .filter(|definition| definition.element == element)?;
+        crate::svg::reference_tree(&definition.xml, property, reference, bounds, &documents)
     }
 }
 
@@ -426,7 +469,7 @@ fn computed_in_place(
     Ok(style)
 }
 
-fn escape(xml: &mut String, text: &str, attribute: bool) {
+pub(crate) fn escape(xml: &mut String, text: &str, attribute: bool) {
     for ch in text.chars() {
         match ch {
             '&' => xml.push_str("&amp;"),
