@@ -3055,6 +3055,8 @@ struct InlineFootnoteMember {
     style: Style,
     /// The footnotes the block holds before it.
     members: Vec<usize>,
+    /// How many children and how much inline content the block holds before it.
+    start: (usize, crate::document::inline::ContentMark),
 }
 
 struct Frame<'d> {
@@ -3256,6 +3258,7 @@ fn open_inline_footnote<'d>(
     block.inline_footnote = Some(Box::new(InlineFootnoteMember {
         style: style.clone(),
         members,
+        start: (block.children.len(), block.inline.content_mark()),
     }));
     frames.push(frame);
     Ok(())
@@ -3283,9 +3286,18 @@ fn end_inline_footnote<'a>(
         .expect("an inline footnote block holds its footnote");
     let index = traversal.add_footnote(element.id(), &member.style);
     let order = traversal.strings.event(element, None, false).order;
+    // Only the content after the footnote's start holds its events; content the block
+    // collected before it moves into its children when a block box interrupts the line.
+    let (children, mark) = member.start;
+    let mark = if block.children.len() == children {
+        mark
+    } else {
+        crate::document::inline::ContentMark::default()
+    };
     let mut events = Vec::new();
-    content_events(&block.children, &mut events);
-    block.inline.content_events(&mut events);
+    let visited = content_events(&block.children[children..], &mut events)
+        + block.inline.content_events_after(mark, &mut events);
+    traversal.work.spend(visited + events.len())?;
     events.retain(|event| order.contains(&event.order.start));
     events.sort_by_key(|event| event.order.start);
     let events: Vec<_> = events.into_iter().cloned().collect();

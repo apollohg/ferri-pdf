@@ -103,6 +103,34 @@ fn one_prepass_collects_the_markers_of_nested_containers() {
     );
 }
 
+/// `count` consecutive inline footnotes, which share one anonymous block (CSS GCPM 3 §2.3).
+fn inline_footnotes(count: usize) -> String {
+    document(
+        ".fn{float:footnote;footnote-display:inline}",
+        &format!(
+            "<p>{}</p>",
+            (0..count)
+                .map(|index| format!("w{index}<span class=fn>note {index}</span> "))
+                .collect::<String>()
+        ),
+    )
+}
+
+#[test]
+fn each_inline_footnote_collects_only_its_own_events() {
+    const FOOTNOTES: usize = 256;
+    let single = required_work(&inline_footnotes(FOOTNOTES));
+    let doubled = required_work(&inline_footnotes(2 * FOOTNOTES));
+    assert!(
+        doubled < 3 * single,
+        "an inline footnote joining the block of those before it collects the events of its own \
+         content, not of the whole block, so doubling the footnotes must about double the \
+         charged work, not quadruple it: {FOOTNOTES} footnotes need {single} units, {} need \
+         {doubled}",
+        2 * FOOTNOTES
+    );
+}
+
 #[test]
 fn scroll_marker_prepasses_make_no_first_line_copies() {
     let container = |group, rules| {

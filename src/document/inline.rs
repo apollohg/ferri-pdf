@@ -712,6 +712,10 @@ struct ContinuedBox {
     math: Option<crate::document::mathml::Class>,
 }
 
+/// The lengths of a collector's events, anchors, atomic inlines and annotations at one point.
+#[derive(Clone, Copy, Default)]
+pub(crate) struct ContentMark([usize; 4]);
+
 #[derive(Default)]
 pub(crate) struct InlineCollector {
     text: String,
@@ -739,20 +743,35 @@ pub(crate) struct InlineCollector {
     sunken_letter_end: Option<usize>,
 }
 impl InlineCollector {
-    /// Adds the semantic events of the collected content to `events`.
-    pub(crate) fn content_events<'a>(
+    /// How much content the collector holds, where content collected later starts.
+    pub(crate) fn content_mark(&self) -> ContentMark {
+        ContentMark([
+            self.events.len(),
+            self.anchors.len(),
+            self.atomics.len(),
+            self.annotations.len(),
+        ])
+    }
+    /// Adds the semantic events of the content collected after `mark` to `events`, returning
+    /// how many events and boxes it visited.
+    pub(crate) fn content_events_after<'a>(
         &'a self,
+        ContentMark([events_from, anchors_from, atomics_from, annotations_from]): ContentMark,
         events: &mut Vec<&'a crate::document::SemanticEvent>,
-    ) {
-        events.extend(self.events.iter().map(|event| &event.event));
-        for anchor in self
-            .anchors
+    ) -> usize {
+        let inline = &self.events[events_from..];
+        let mut visited = inline.len();
+        events.extend(inline.iter().map(|event| &event.event));
+        for anchor in self.anchors[anchors_from..]
             .iter()
-            .chain(&self.atomics)
-            .chain(&self.annotations)
+            .chain(&self.atomics[atomics_from..])
+            .chain(&self.annotations[annotations_from..])
         {
-            events.extend(anchor.block.subtree_events().0);
+            let (subtree, boxes) = anchor.block.subtree_events();
+            visited += boxes + subtree.len();
+            events.extend(subtree);
         }
+        visited
     }
     /// Opens the inline marker box of a list item (CSS Lists 3 §3.5).
     pub(crate) fn open_marker(
