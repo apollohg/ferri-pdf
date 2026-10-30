@@ -422,14 +422,10 @@ fn blurred_mask(region: Rect, shape: Option<ShadowArea>, sigma: f32, invert: boo
 /// Pixels sampling `region` for a blur of standard deviation `sigma`, and their pitch.
 fn mask_grid(region: Rect, sigma: f32) -> ([usize; 2], [f32; 2]) {
     let mut density = (MASK_SIGMA_PIXELS / sigma).min(MAX_MASK_PIXELS_PER_PT);
-    let pixels = region.width * region.height * density * density;
-    if pixels > MAX_MASK_PIXELS {
-        density = if pixels.is_finite() {
-            density * (MAX_MASK_PIXELS / pixels).sqrt()
-        } else {
-            (f64::from(MAX_MASK_PIXELS) / (f64::from(region.width) * f64::from(region.height)))
-                .sqrt() as f32
-        };
+    // The area of a large region overflows `f32` even where the pixels it holds do not.
+    let area = f64::from(region.width) * f64::from(region.height);
+    if area * f64::from(density).powi(2) > f64::from(MAX_MASK_PIXELS) {
+        density = (f64::from(MAX_MASK_PIXELS) / area).sqrt() as f32;
     }
     let limit = MAX_MASK_PIXELS as usize;
     let mut size = [region.width, region.height]
@@ -851,6 +847,28 @@ mod tests {
                 );
             }
         }
+    }
+
+    #[test]
+    fn huge_blurs_of_huge_regions_sample_each_deviation_with_a_bounded_kernel() {
+        const SIGMA: f32 = 5.0e29;
+        let (size, pitch) = mask_grid(
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: 5.0e30,
+                height: 5.0e30,
+            },
+            SIGMA,
+        );
+        assert!(
+            pitch
+                .iter()
+                .all(|pitch| SIGMA / pitch <= MASK_SIGMA_PIXELS * (1.0 + f32::EPSILON)),
+            "a region whose area overflows f32 but holds few deviations must not be sampled \
+             finer than {MASK_SIGMA_PIXELS} px per deviation, which widens the kernel: \
+             {size:?} pixels of pitch {pitch:?}"
+        );
     }
 
     #[test]
