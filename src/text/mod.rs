@@ -17,7 +17,7 @@ mod ruby;
 pub(crate) mod shaping;
 pub(crate) mod skip_ink;
 mod spacing;
-mod spacing_trim;
+pub(crate) mod spacing_trim;
 pub(crate) mod tabs;
 mod tailoring;
 #[cfg(test)]

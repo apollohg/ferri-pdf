@@ -171,3 +171,9 @@ their band, with the document's clearance.
 document's lines do (CSS Text 4 §8.4): by the value of the innermost element containing it,
 measured in that element's font, removing a single space between them where it replaces one.
 Spans keep the font and size of each element containing them for this.
+
+`text-spacing-trim` sets each chunk's fullwidth punctuation half-width as the document's lines
+do (CSS Text 4 §8.5), with the face's `halt` feature or by trimming its blank half, in the
+logical order of its characters: a chunk wrapping starts is not a first line, and closing
+punctuation ending a wrapped line that does not otherwise fit its area is trimmed where the
+value allows only that, before the line's overflow is decided.

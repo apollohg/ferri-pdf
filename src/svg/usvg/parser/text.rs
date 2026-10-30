@@ -482,6 +482,8 @@ fn collect_text_chunks_impl(
                         line_breaks: 0,
                         inline_offset: 0.0,
                         hanging: 0,
+                        soft_wrapped: false,
+                        overflowing: false,
                     });
                 }
                 iter_state.line_breaks += 1;
@@ -520,6 +522,8 @@ fn collect_text_chunks_impl(
                     line_breaks: std::mem::take(&mut iter_state.line_breaks),
                     inline_offset: 0.0,
                     hanging: 0,
+                    soft_wrapped: false,
+                    overflowing: false,
                 });
             } else if is_new_span {
                 // Add this span to the last text chunk.

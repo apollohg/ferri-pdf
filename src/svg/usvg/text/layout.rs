@@ -221,6 +221,8 @@ pub(crate) struct GlyphCluster {
     glyphs: Vec<PositionedGlyph>,
     transform: Transform,
     visible: bool,
+    /// The cluster's resolved direction is right-to-left.
+    rtl: bool,
 }
 
 impl GlyphCluster {
@@ -548,6 +550,8 @@ fn emphasis_marks(
         line_breaks: 0,
         inline_offset: 0.0,
         hanging: 0,
+        soft_wrapped: false,
+        overflowing: false,
     };
     let shaped = process_chunk(
         &mark_chunk,
@@ -654,7 +658,154 @@ pub(crate) fn spaced_clusters(
     apply_letter_spacing(chunk, &mut clusters);
     apply_word_spacing(chunk, &mut clusters);
     apply_autospace(chunk, &mut clusters, fonts_cache, resolver, fontdb);
+    apply_spacing_trim(chunk, &mut clusters, fonts_cache, fontdb);
     Some(clusters)
+}
+
+/// CSS Text 4 §8.5 `text-spacing-trim`: the fullwidth punctuation of the chunk's line set
+/// half-width as the document's lines set it, in the logical order of its characters. A line
+/// starting the text or following a forced break keeps its first opening punctuation where
+/// `space-first` does, and closing punctuation ending a line that does not otherwise fit its
+/// wrapping area is trimmed where the value allows only that.
+fn apply_spacing_trim(
+    chunk: &TextChunk,
+    clusters: &mut [GlyphCluster],
+    fonts_cache: &FontsCache,
+    fontdb: &Database,
+) {
+    use crate::text::spacing_trim::{self, Trimming};
+    // Fullwidth punctuation, middle dots and ideographic spaces are all outside ASCII.
+    if chunk.text.is_ascii()
+        || chunk
+            .spans
+            .iter()
+            .all(|span| span.style.text_spacing.trim == crate::style::TextSpacingTrim::SpaceAll)
+    {
+        return;
+    }
+    let mut order: Vec<usize> = (0..clusters.len())
+        .filter(|&index| !clusters[index].glyphs.is_empty())
+        .collect();
+    order.sort_by_key(|&index| clusters[index].byte_idx.value());
+    // Each cluster's face, as the font of its first glyph, and the span setting it.
+    let faces: Vec<Option<(Arc<ResolvedFont>, &TextSpan)>> = order
+        .iter()
+        .map(|&index| {
+            let cluster = &clusters[index];
+            let span = chunk_span_at(chunk, cluster.byte_idx)?;
+            let font = fonts_cache
+                .values()
+                .find(|font| font.id == cluster.glyphs[0].font)
+                .cloned()
+                .or_else(|| fontdb.load_font(cluster.glyphs[0].font).map(Arc::new))?;
+            Some((font, span))
+        })
+        .collect();
+    let settings = |position: usize, clusters: &[GlyphCluster], face: &rustybuzz::Face<'_>| {
+        let cluster = &clusters[order[position]];
+        let (font, span) = faces[position].as_ref()?;
+        let upem = f32::from(font.units_per_em.get());
+        let mut ink: Option<[f32; 2]> = None;
+        for glyph in &cluster.glyphs {
+            let Some(bounds) = face.glyph_bounding_box(glyph.id) else {
+                continue;
+            };
+            // The box along the cluster's inline axis, in em from its origin.
+            let to_cluster = glyph.glyph_ts.pre_scale(1.0, -1.0);
+            for (x, y) in [
+                (bounds.x_min, bounds.y_min),
+                (bounds.x_max, bounds.y_max),
+                (bounds.x_min, bounds.y_max),
+                (bounds.x_max, bounds.y_min),
+            ] {
+                let mut point = tiny_skia_path::Point::from_xy(f32::from(x), f32::from(y));
+                to_cluster.map_point(&mut point);
+                let along = point.x / upem;
+                ink = Some(ink.map_or([along; 2], |[left, right]| {
+                    [left.min(along), right.max(along)]
+                }));
+            }
+        }
+        let metrics = if cluster.vertical {
+            font.upright_metrics
+        } else {
+            font.metrics
+        };
+        Some((
+            cluster
+                .glyphs
+                .iter()
+                .map(|glyph| glyph.x_advance)
+                .sum::<f32>(),
+            ink,
+            metrics.size_metric(crate::fonts::SizeMetric::IcWidth),
+            *span,
+        ))
+    };
+    let with_face = |position: usize, act: &mut dyn FnMut(&rustybuzz::Face<'_>)| {
+        if let Some((font, _)) = &faces[position] {
+            fontdb.with_face_data(font.id, |data, index| {
+                if let Some(face) = rustybuzz::Face::from_slice(data, index) {
+                    act(&face);
+                }
+            });
+        }
+    };
+    let mut trimmings = Vec::with_capacity(order.len());
+    for (position, &index) in order.iter().enumerate() {
+        let cluster = &clusters[index];
+        let Ok(class) = spacing_trim::classify(cluster.codepoint, || {
+            let mut drawn_left = false;
+            with_face(position, &mut |face| {
+                drawn_left = settings(position, clusters, face)
+                    .is_some_and(|(advance, ink, _, _)| spacing_trim::left_half(ink, advance));
+            });
+            Ok::<_, std::convert::Infallible>(drawn_left)
+        });
+        let span = chunk_span_at(chunk, cluster.byte_idx);
+        trimmings.push(Trimming {
+            class,
+            size: span.map_or(0.0, |span| span.font_size.get()),
+            trim: span.map_or_else(Default::default, |span| span.style.text_spacing.trim),
+        });
+    }
+    let (mut trimmed, overflow) = spacing_trim::halved(&trimmings, !chunk.soft_wrapped);
+    if chunk.overflowing {
+        trimmed.extend(overflow);
+    }
+    for position in trimmed {
+        let mut kerning = None;
+        with_face(position, &mut |face| {
+            let Some((advance, ink, full, span)) = settings(position, clusters, face) else {
+                return;
+            };
+            let cluster = &clusters[order[position]];
+            let language = crate::text::shaping_language(face, &span.style);
+            kerning = spacing_trim::half_width(
+                &spacing_trim::Setting {
+                    face,
+                    text: &cluster.glyphs[0].text,
+                    rtl: cluster.rtl,
+                    language: language.as_ref(),
+                    advance,
+                    ink,
+                    full,
+                },
+                trimmings[position].class,
+            );
+        });
+        let Some(kerning) = kerning else {
+            continue;
+        };
+        let cluster = &mut clusters[order[position]];
+        let size = cluster.glyphs[0].font_size;
+        for glyph in &mut cluster.glyphs {
+            let offset = kerning.offset * f32::from(glyph.units_per_em);
+            glyph.glyph_ts = Transform::from_translate(offset, 0.0).pre_concat(glyph.glyph_ts);
+        }
+        cluster.advance += kerning.advance * size;
+        cluster.width += kerning.advance * size;
+    }
 }
 
 /// The clusters of `text` set alone in `span`'s style, horizontally, in `chunk`.
@@ -1860,6 +2011,8 @@ fn combined_glyphs(
             line_breaks: 0,
             inline_offset: 0.0,
             hanging: 0,
+            soft_wrapped: false,
+            overflowing: false,
         };
         shape_chunk(
             &composed,
@@ -2351,6 +2504,7 @@ fn form_glyph_clusters(glyphs: &[Glyph], text: &str, font_size: f32) -> GlyphClu
         transform: Transform::default(),
         glyphs: positioned_glyphs,
         visible: true,
+        rtl: glyphs[0].rtl,
     }
 }
 
@@ -2866,6 +3020,7 @@ fn shape_text_with_font(
                             paint: settings.paint.clone(),
                             compression: 1.0,
                             text_offset: 0,
+                            rtl: !ltr,
                             unpresented: sequences
                                 && !shaping::supports_variations(
                                     &rb_font,
@@ -2982,6 +3137,8 @@ pub(crate) struct Glyph {
     pub(crate) compression: f32,
     /// Where `text` starts in the glyph's cluster: within a combination, its own characters.
     pub(crate) text_offset: usize,
+    /// The glyph's resolved direction is right-to-left.
+    pub(crate) rtl: bool,
 
     /// Reference to the source font.
     ///

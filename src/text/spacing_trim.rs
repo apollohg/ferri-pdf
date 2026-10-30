@@ -36,7 +36,7 @@ const QUARTER: f32 = 0.25;
 
 /// §8.5.2 character classes, and the general categories the collapsing rules also consult.
 #[derive(Clone, Copy, PartialEq, Eq)]
-enum Class {
+pub(crate) enum Class {
     Opening,
     Closing,
     MiddleDot,
@@ -79,9 +79,18 @@ fn end_trim(trim: TextSpacingTrim) -> EndTrim {
 
 /// A glyph cluster adjustment in em: added to each glyph offset and to the last advance.
 #[derive(Clone, Copy)]
-struct Kerning {
-    offset: f32,
-    advance: f32,
+pub(crate) struct Kerning {
+    pub(crate) offset: f32,
+    pub(crate) advance: f32,
+}
+
+/// What decides whether a typographic character unit or atomic inline is set half-width: its
+/// class, font size and `text-spacing-trim`.
+#[derive(Clone, Copy)]
+pub(crate) struct Trimming {
+    pub(crate) class: Class,
+    pub(crate) size: f32,
+    pub(crate) trim: TextSpacingTrim,
 }
 
 /// A typographic character unit or atomic inline of a line.
@@ -89,9 +98,19 @@ struct Unit {
     /// The run and its glyphs; `None` for an atomic inline.
     glyphs: Option<(usize, Range<usize>)>,
     offset: usize,
-    class: Class,
-    size: f32,
-    trim: TextSpacingTrim,
+    trimming: Trimming,
+}
+
+/// A typographic character unit set in one face, in em: its text, direction and language
+/// system, its advance and ink extent from its origin, and the face's ideographic advance.
+pub(crate) struct Setting<'a, 'f> {
+    pub(crate) face: &'a Face<'f>,
+    pub(crate) text: &'a str,
+    pub(crate) rtl: bool,
+    pub(crate) language: Option<&'a Language>,
+    pub(crate) advance: f32,
+    pub(crate) ink: Option<[f32; 2]>,
+    pub(crate) full: f32,
 }
 
 /// The `[left, right]` ink extent of `glyphs` in em from their cluster origin, if any.
@@ -120,13 +139,7 @@ fn class(
     glyphs: Range<usize>,
     base: char,
 ) -> Result<Class, TextError> {
-    if base == IDEOGRAPHIC_SPACE {
-        return Ok(Class::IdeographicSpace);
-    }
-    if MIDDLE_DOTS.contains(&base) {
-        return Ok(Class::MiddleDot);
-    }
-    if COLONS_AND_DOTS.contains(&base) {
+    classify(base, || {
         let instance = context
             .face(run.font_id, &paragraph.spans()[run.source_span].style)?
             .ok_or(TextError::NoFontCandidates)?;
@@ -134,9 +147,29 @@ fn class(
             .iter()
             .map(|glyph| glyph.x_advance)
             .sum();
-        let left_half =
-            ink(&instance.face, run, glyphs).is_some_and(|[_, right]| right <= advance * HALF);
-        return Ok(if left_half {
+        Ok(left_half(ink(&instance.face, run, glyphs), advance))
+    })
+}
+
+/// Whether ink `ink` lies in the left half of an `advance`.
+pub(crate) fn left_half(ink: Option<[f32; 2]>, advance: f32) -> bool {
+    ink.is_some_and(|[_, right]| right <= advance * HALF)
+}
+
+/// The class of a unit whose base character is `base`; `drawn_left` tells whether the glyph
+/// of a colon or dot is drawn in its left half.
+pub(crate) fn classify<E>(
+    base: char,
+    drawn_left: impl FnOnce() -> Result<bool, E>,
+) -> Result<Class, E> {
+    if base == IDEOGRAPHIC_SPACE {
+        return Ok(Class::IdeographicSpace);
+    }
+    if MIDDLE_DOTS.contains(&base) {
+        return Ok(Class::MiddleDot);
+    }
+    if COLONS_AND_DOTS.contains(&base) {
+        return Ok(if drawn_left()? {
             Class::Closing
         } else {
             Class::MiddleDot
@@ -212,9 +245,7 @@ fn halt(
         .then_some(kerning)
 }
 
-/// How setting the punctuation of `glyphs` half-width kerns it: with the font's `halt`
-/// feature, else by trimming its blank half (§8.5.1). Proportional glyphs, which are both
-/// full-width and half-width, and glyphs whose ink the trim would cut, are left as they are.
+/// How setting the punctuation of `glyphs` half-width kerns it (§8.5.1).
 fn kerning(
     context: &TextContext<'_>,
     paragraph: &Paragraph,
@@ -227,38 +258,56 @@ fn kerning(
         .face(run.font_id, style)?
         .ok_or(TextError::NoFontCandidates)?;
     let face = &instance.face;
-    let advance: f32 = run.glyphs[glyphs.clone()]
-        .iter()
-        .map(|glyph| glyph.x_advance)
-        .sum();
-    if crate::fonts::has_feature(face, HALT) {
-        let cluster = &run.text[run.glyphs[glyphs.start].text_range.clone()];
-        return Ok(halt(
+    Ok(half_width(
+        &Setting {
             face,
-            cluster,
-            run.rtl,
-            shaping_language(face, style).as_ref(),
-            advance,
-        ));
+            text: &run.text[run.glyphs[glyphs.start].text_range.clone()],
+            rtl: run.rtl,
+            language: shaping_language(face, style).as_ref(),
+            advance: run.glyphs[glyphs.clone()]
+                .iter()
+                .map(|glyph| glyph.x_advance)
+                .sum(),
+            ink: ink(face, run, glyphs),
+            full: run.metrics.size_metric(SizeMetric::IcWidth),
+        },
+        class,
+    ))
+}
+
+/// How setting punctuation of `class` half-width kerns `setting`: with the face's `halt`
+/// feature, else by trimming its blank half (§8.5.1). Proportional glyphs, which are both
+/// full-width and half-width, and glyphs whose ink the trim would cut, are left as they are.
+pub(crate) fn half_width(setting: &Setting<'_, '_>, class: Class) -> Option<Kerning> {
+    let Setting {
+        face,
+        text,
+        rtl,
+        language,
+        advance,
+        ink,
+        full,
+    } = *setting;
+    if crate::fonts::has_feature(face, HALT) {
+        return halt(face, text, rtl, language, advance);
     }
-    let full = run.metrics.size_metric(SizeMetric::IcWidth);
     if (advance - full).abs() > FULL_WIDTH_TOLERANCE_EM {
-        return Ok(None);
+        return None;
     }
     // Opening punctuation is blank on its inline-start side and closing on its inline end.
-    let [left, right] = match (class, run.rtl) {
+    let [left, right] = match (class, rtl) {
         (Class::Opening, false) | (Class::Closing, true) => [HALF, 0.0],
         (Class::Opening, true) | (Class::Closing, false) => [0.0, HALF],
         (Class::MiddleDot, _) => [QUARTER, QUARTER],
-        (Class::IdeographicSpace | Class::Other { .. }, _) => return Ok(None),
+        (Class::IdeographicSpace | Class::Other { .. }, _) => return None,
     }
     .map(|part| part * full);
-    let blank = ink(face, run, glyphs)
-        .is_none_or(|[ink_left, ink_right]| ink_left >= left && ink_right <= advance - right);
-    Ok(blank.then_some(Kerning {
+    let blank =
+        ink.is_none_or(|[ink_left, ink_right]| ink_left >= left && ink_right <= advance - right);
+    blank.then_some(Kerning {
         offset: -left,
         advance: -(left + right),
-    }))
+    })
 }
 
 fn kern(arranged: &mut Arranged, run: usize, glyphs: Range<usize>, kerning: Kerning) {
@@ -305,9 +354,11 @@ fn units(
                 units.push(Unit {
                     glyphs: Some((index, start..end)),
                     offset: run.source_range.start + range.start,
-                    class: class(context, paragraph, run, start..end, base)?,
-                    size: style.size,
-                    trim: style.text_spacing.trim,
+                    trimming: Trimming {
+                        class: class(context, paragraph, run, start..end, base)?,
+                        size: style.size,
+                        trim: style.text_spacing.trim,
+                    },
                 });
             }
             start = end;
@@ -318,12 +369,14 @@ fn units(
         Unit {
             glyphs: None,
             offset: atomic.offset,
-            class: Class::Other {
-                opens: false,
-                closes: false,
+            trimming: Trimming {
+                class: Class::Other {
+                    opens: false,
+                    closes: false,
+                },
+                size: style.size,
+                trim: style.text_spacing.trim,
             },
-            size: style.size,
-            trim: style.text_spacing.trim,
         }
     }));
     units.sort_by_key(|unit| unit.offset);
@@ -331,7 +384,7 @@ fn units(
 }
 
 /// §8.5.1: opening punctuation after these is set half-width.
-fn collapses_opening(previous: &Unit, opening: &Unit) -> bool {
+fn collapses_opening(previous: Trimming, opening: Trimming) -> bool {
     match previous.class {
         Class::Opening | Class::MiddleDot | Class::IdeographicSpace => true,
         Class::Closing => previous.size >= opening.size,
@@ -340,12 +393,50 @@ fn collapses_opening(previous: &Unit, opening: &Unit) -> bool {
 }
 
 /// §8.5.1: closing punctuation before these is set half-width.
-fn collapses_closing(closing: &Unit, next: &Unit) -> bool {
+fn collapses_closing(closing: Trimming, next: Trimming) -> bool {
     match next.class {
         Class::Closing | Class::MiddleDot | Class::IdeographicSpace => true,
         Class::Opening => next.size > closing.size,
         Class::Other { closes, .. } => closes,
     }
+}
+
+/// Which of `units`, a line's in logical order, are set half-width, and the closing
+/// punctuation ending the line that is only where the line does not otherwise fit. `first` is
+/// the block container's first line or a line after a forced break.
+pub(crate) fn halved(units: &[Trimming], first: bool) -> (Vec<usize>, Option<usize>) {
+    let mut trimmed = Vec::new();
+    let mut overflow = None;
+    for (index, unit) in units.iter().enumerate() {
+        let previous = index.checked_sub(1).map(|previous| &units[previous]);
+        let next = units.get(index + 1);
+        let half = match (unit.trim, unit.class) {
+            (TextSpacingTrim::SpaceAll, _) | (_, Class::IdeographicSpace | Class::Other { .. }) => {
+                false
+            }
+            (TextSpacingTrim::TrimAll, _) => true,
+            (_, Class::MiddleDot) => false,
+            (trim, Class::Opening) => previous.map_or_else(
+                || trims_start(trim, first),
+                |previous| collapses_opening(*previous, *unit),
+            ),
+            (trim, Class::Closing) => match next {
+                Some(next) => collapses_closing(*unit, *next),
+                None => match end_trim(trim) {
+                    EndTrim::Always => true,
+                    EndTrim::Overflow => {
+                        overflow = Some(index);
+                        false
+                    }
+                    EndTrim::Never => false,
+                },
+            },
+        };
+        if half {
+            trimmed.push(index);
+        }
+    }
+    (trimmed, overflow)
 }
 
 /// Sets the fullwidth punctuation of an arranged line half-width where its
@@ -367,37 +458,10 @@ pub(super) fn trim(
         return Ok(None);
     }
     let units = units(context, paragraph, arranged)?;
-    let mut trimmed = Vec::new();
-    let mut overflow = None;
-    for (index, unit) in units.iter().enumerate() {
-        let previous = index.checked_sub(1).map(|previous| &units[previous]);
-        let next = units.get(index + 1);
-        let half = match (unit.trim, unit.class) {
-            (TextSpacingTrim::SpaceAll, _) | (_, Class::IdeographicSpace | Class::Other { .. }) => {
-                false
-            }
-            (TextSpacingTrim::TrimAll, _) => true,
-            (_, Class::MiddleDot) => false,
-            (trim, Class::Opening) => previous.map_or_else(
-                || trims_start(trim, first),
-                |previous| collapses_opening(previous, unit),
-            ),
-            (trim, Class::Closing) => match next {
-                Some(next) => collapses_closing(unit, next),
-                None => match end_trim(trim) {
-                    EndTrim::Always => true,
-                    EndTrim::Overflow => {
-                        overflow = Some(unit);
-                        false
-                    }
-                    EndTrim::Never => false,
-                },
-            },
-        };
-        if half {
-            trimmed.push(unit);
-        }
-    }
+    let trimmings: Vec<Trimming> = units.iter().map(|unit| unit.trimming).collect();
+    let (trimmed, overflow) = halved(&trimmings, first);
+    let trimmed = trimmed.into_iter().map(|index| &units[index]);
+    let overflow = overflow.map(|index| &units[index]);
     for unit in trimmed {
         let Some((run, glyphs)) = unit.glyphs.clone() else {
             continue;
@@ -407,7 +471,7 @@ pub(super) fn trim(
             paragraph,
             &arranged.runs[run],
             glyphs.clone(),
-            unit.class,
+            unit.trimming.class,
         )? {
             kern(arranged, run, glyphs, kerning);
         }

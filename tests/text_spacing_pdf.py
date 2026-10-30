@@ -116,6 +116,24 @@ class TextSpacingPdf(unittest.TestCase):
                     ("c", start + face.advance("a") + face.advance("b")),
                 ])
 
+    def test_svg_lines_trim_closing_punctuation_only_where_they_do_not_otherwise_fit(self):
+        """CSS Text 4 §8.5.1 on SVG text wrapped by `inline-size`: `normal` sets the closing
+        bracket ending a line half-width only because the line overflows its area, which it
+        then fits without the ellipsis `space-all` needs."""
+        face = Face(HALT)
+        width = face.advance(WATER) * 1.6
+        for value, fits in (("normal", True), ("space-all", False)):
+            with self.subTest(value=value):
+                line = self.line(f"inline-size:{width}px;text-overflow:ellipsis;"
+                                 f"text-spacing-trim:{value}", "水」", True)
+                texts = "".join(glyph.text for glyph in line)
+                if fits:
+                    self.assertEqual(texts, "水」", "the trimmed line fits without an ellipsis")
+                    offset, _ = face.half_width("」", "end")
+                    self.assert_origins(value, line, [("水", 0), ("」", face.advance("水") + offset)])
+                else:
+                    self.assertIn("…", texts, "the untrimmed line overflows into an ellipsis")
+
     def test_svg_text_spaces_boundaries_by_the_element_containing_them(self):
         """CSS Text 4 §8.4.2 on SVG text: the innermost element containing a boundary between
         tspans decides its spacing, and a tspan's own value spaces the boundaries inside it."""
@@ -135,11 +153,10 @@ class TextSpacingPdf(unittest.TestCase):
         # it; between, the opening parenthesis follows closing punctuation.
         text = "「水〕（水」"
         sides = {0: "start", 3: "start", 5: "end"}
-        for name, family in FAMILIES.items():
+        for (name, family), svg in ((face, svg) for face in FAMILIES.items() for svg in (False, True)):
             face = Face(name)
-            with self.subTest(face=name):
-                [line] = self.lines(f"p{{font-family:{family};text-spacing-trim:trim-both}}",
-                                    f"<p>{text}</p>")
+            with self.subTest(face=name, svg=svg):
+                line = self.line(f"font-family:{family};text-spacing-trim:trim-both", text, svg)
                 expected, pen = [], 0
                 for index, ch in enumerate(text):
                     offset, advance = face.half_width(ch, sides[index]) if index in sides \
@@ -147,8 +164,7 @@ class TextSpacingPdf(unittest.TestCase):
                     expected.append((ch, pen + offset))
                     pen += advance
                 self.assert_origins(name, line, expected)
-                [spaced] = self.lines(f"p{{font-family:{family};text-spacing-trim:space-all}}",
-                                      f"<p>{text}</p>")
+                spaced = self.line(f"font-family:{family};text-spacing-trim:space-all", text, svg)
                 pen, untrimmed = 0, []
                 for ch in text:
                     untrimmed.append((ch, pen))

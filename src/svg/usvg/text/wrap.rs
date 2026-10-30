@@ -50,7 +50,9 @@ pub(crate) fn wrap(
             chunks.push(chunk.clone());
             continue;
         }
-        for (line, overflowing) in paragraph.lines(width, wrapping, fonts, resolver, fontdb)? {
+        for (line, overflowing) in
+            paragraph.lines(text, width, wrapping, fonts, resolver, fontdb)?
+        {
             overflows |= overflowing;
             chunks.push(line);
         }
@@ -168,6 +170,7 @@ impl<'a> Paragraph<'a> {
     /// it overflows the wrapping area.
     fn lines(
         &self,
+        text_element: &Text,
         width: f32,
         wrapping: Wrapping,
         fonts: &FontsCache,
@@ -198,11 +201,24 @@ impl<'a> Paragraph<'a> {
                     .filter(|_| end < text.len());
             let visible = crate::text::whitespace::visible(paragraph, start..end);
             let hanging = hanging(paragraph, visible.clone());
-            let used = self.width(visible.start..visible.end - hanging)
+            let mut used = self.width(visible.start..visible.end - hanging)
                 + hyphen.map_or(0.0, |hyphen| {
                     self.extra_width(hyphen, visible.end, fonts, resolver, fontdb)
                 });
             let mut line = self.line(visible.clone(), hyphen, hanging, first);
+            // CSS Text 4 §8.5.1: closing punctuation ending a line that does not otherwise fit
+            // may be set half-width.
+            if used > available {
+                let advance = |line: &TextChunk, fontdb: &mut Arc<Database>| {
+                    layout::spaced_clusters(text_element, line, fonts, resolver, fontdb)
+                        .map_or(0.0, |clusters| {
+                            clusters.iter().map(|cluster| cluster.advance).sum::<f32>()
+                        })
+                };
+                let untrimmed = advance(&line, fontdb);
+                line.overflowing = true;
+                used += advance(&line, fontdb) - untrimmed;
+            }
             let overflows = used > available;
             if overflows {
                 let fitting = Fitting {
@@ -350,6 +366,7 @@ impl<'a> Paragraph<'a> {
             spans,
             text,
             hanging,
+            soft_wrapped: !first,
             ..self.chunk.clone()
         }
     }

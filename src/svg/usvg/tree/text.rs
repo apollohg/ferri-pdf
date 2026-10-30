@@ -601,6 +601,10 @@ pub struct TextChunk {
     pub(crate) inline_offset: f32,
     /// The bytes ending the chunk that hang beyond its line's end, which anchoring ignores.
     pub(crate) hanging: usize,
+    /// The chunk is a line that wrapping, not a forced break, starts.
+    pub(crate) soft_wrapped: bool,
+    /// The chunk is a wrapped line that does not otherwise fit its wrapping area.
+    pub(crate) overflowing: bool,
 }
 
 impl TextChunk {
