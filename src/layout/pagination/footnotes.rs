@@ -469,11 +469,15 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         if inline {
             let elements = &footnotes.bodies[index].members;
             members.resize(elements.len(), [0.0, height]);
+            let mut starts = HashMap::new();
+            for line in flow.event_lines.iter().rev() {
+                starts.insert(line.element, line);
+            }
             let mut end = height;
             for (position, &member) in elements.iter().enumerate().skip(1).rev() {
                 let element = footnotes.elements[member].element;
                 // A footnote that starts on no line starts where the one after it does.
-                if let Some(start) = flow.event_lines.iter().find(|line| line.element == element) {
+                if let Some(start) = starts.get(&element) {
                     members[position][0] = start.extent[0];
                     end = if start.shared {
                         start.extent[1]

@@ -1137,7 +1137,7 @@ pagination_state! {
     /// The `[top, bottom]` extent of each line box, kept where footnote bodies need their
     /// break points.
     line_boxes: Option<Vec<[f32; 2]>>,
-    /// Where the elements of a standalone flow start, kept with `line_boxes`.
+    /// Where the elements of a standalone flow start, first record first, kept with `line_boxes`.
     event_lines: Option<Vec<EventLine>>,
     /// The subtree node of the document's or a standalone flow's root, whose text area the
     /// `background-clip: text` layers of the page boxes or of the flow's box paint within.
@@ -7188,7 +7188,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         })
     }
     /// Records that `element` starts at the current position, on a line box `height` tall
-    /// after other content of the line when `shared`.
+    /// after other content of the line when `shared`; its first record is where it starts.
     pub(super) fn record_event_line(
         &mut self,
         element: crate::dom::ElementId,
@@ -7196,9 +7196,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         shared: bool,
     ) {
         let top = self.top + self.y + self.offset[1];
-        if let Some(lines) = &mut self.event_lines
-            && lines.iter().all(|line| line.element != element)
-        {
+        if let Some(lines) = &mut self.event_lines {
             lines.push(EventLine {
                 element,
                 extent: [top, top + height],
