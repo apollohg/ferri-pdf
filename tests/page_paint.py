@@ -810,6 +810,23 @@ class PagePaint(unittest.TestCase):
                 for position, color, reason in probes:
                     self.pixel(page, position, color, reason)
 
+    def test_hidden_page_box_paints_neither_itself_nor_inheriting_margin_boxes(self):
+        page = self.render(
+            "@page{visibility:hidden;background:blue;border:4pt solid red;outline:4pt solid red;"
+            "@top-left{content:'';background:red}"
+            "@top-right{content:'';background:lime;visibility:visible}}"
+            "div{height:20pt;background:yellow}",
+            "<div></div>", page_size=(200, 200),
+        )[0]
+        for position, color, reason in [
+            ((5, 5), (255, 255, 255), "the hidden page box paints no background"),
+            ((21, 50), (255, 255, 255), "the hidden page box paints no border"),
+            ((40, 10), (255, 255, 255), "margin boxes inherit the page's visibility"),
+            ((160, 10), (0, 255, 0), "a margin box can be made visible again"),
+            ((60, 40), (255, 255, 0), "document content does not inherit from the page"),
+        ]:
+            self.pixel(page, position, color, reason)
+
     def test_propagated_image_uses_actual_root_content_origin(self):
         for source in ("html", "body"):
             with self.subTest(source=source):

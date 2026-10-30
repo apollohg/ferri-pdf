@@ -27,7 +27,13 @@ impl PageBox {
         resources: &mut ImageResources<'_>,
         generated: &crate::document::generated::GeneratedBindings,
     ) -> Result<Self, DocumentError> {
-        let decoration = resources.backgrounds(&page.style)?;
+        // CSS Page 3 Appendix A: `visibility` applies to the page box, which hidden paints
+        // nothing of its own.
+        let decoration = if page.style.visibility.is_visible() {
+            resources.backgrounds(&page.style)?
+        } else {
+            crate::graphics::BoxDecoration::default()
+        };
         let margins = page
             .margins
             .into_iter()
