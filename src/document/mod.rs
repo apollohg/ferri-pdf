@@ -5,7 +5,7 @@ mod counters;
 mod element_images;
 mod embedded;
 pub(crate) mod encoding;
-mod first_letter;
+pub(crate) mod first_letter;
 mod first_line;
 mod first_page;
 mod formatting;
@@ -109,6 +109,19 @@ pub enum DocumentDiagnostic {
         #[source]
         error: ResourceError,
     },
+    #[error("optional restyling past the {limit}-unit formatting work budget was skipped")]
+    SkippedFormattingWork { limit: usize },
+}
+
+/// Records, once, that formatting skipped optional work past its budget's `limit`.
+fn record_skipped_work(diagnostics: &mut Vec<DocumentDiagnostic>, limit: Option<usize>) {
+    if let Some(limit) = limit
+        && !diagnostics
+            .iter()
+            .any(|known| matches!(known, DocumentDiagnostic::SkippedFormattingWork { .. }))
+    {
+        diagnostics.push(DocumentDiagnostic::SkippedFormattingWork { limit });
+    }
 }
 
 /// An owned document whose text and style ranges have been resolved together.
@@ -441,6 +454,7 @@ impl StyledDocument {
             svg_definitions,
             page_counters,
             scroll_markers,
+            skipped_work,
         } = formatting::build(
             &formatting::Input {
                 html: &html,
@@ -456,6 +470,7 @@ impl StyledDocument {
             links,
             Default::default(),
         )?;
+        record_skipped_work(&mut diagnostics, skipped_work);
         diagnostics.extend(
             styles
                 .take_source_diagnostics()
@@ -571,6 +586,7 @@ impl StyledDocument {
             svg_definitions,
             page_counters,
             scroll_markers,
+            skipped_work,
         } = source.build(
             &mut styles,
             values,
@@ -586,11 +602,13 @@ impl StyledDocument {
             0,
             crate::style::logical::Flow::used(root.style()),
         )?;
+        let mut diagnostics = Vec::new();
+        record_skipped_work(&mut diagnostics, skipped_work);
         Ok(Self {
             root,
             footnotes,
             styles,
-            diagnostics: Vec::new(),
+            diagnostics,
             navigation: navigation.finish(&source.html, &generated)?,
             running_strings: strings.finish(&source.html)?,
             generated,
@@ -663,6 +681,7 @@ impl StyledDocument {
             svg_definitions,
             page_counters,
             scroll_markers,
+            skipped_work,
         } = source.build(
             &mut self.styles,
             values,
@@ -673,6 +692,7 @@ impl StyledDocument {
             ),
             resolver,
         )?;
+        record_skipped_work(&mut self.diagnostics, skipped_work);
         self.navigation = navigation.finish(&source.html, &generated)?;
         self.running_strings = strings.finish(&source.html)?;
         self.root = root;

@@ -31,6 +31,11 @@ pub(crate) fn layer_mask_value(index: usize) -> String {
 /// it writes.
 pub(crate) const TEXT_STYLE_ATTRIBUTE: &str = "ferri-pdf-text-style";
 
+/// The attribute marking the `tspan` that stands for a `text` element's `::first-line`
+/// (CSS Pseudo-Elements 4 §2.1), around the contents of its first formatted line. The last
+/// such child of a written `text` element holds those contents as the first line styles them.
+pub(crate) const FIRST_LINE_ATTRIBUTE: &str = "ferri-pdf-first-line";
+
 /// What the document attaches to the SVG content it styles, by the indices its written XML
 /// names: the CSS mask layers that [`layer_mask_value`] values name, and the computed styles
 /// of text content elements that [`TEXT_STYLE_ATTRIBUTE`] values name.

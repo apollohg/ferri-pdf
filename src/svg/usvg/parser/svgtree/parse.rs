@@ -4,6 +4,7 @@
 use std::collections::HashMap;
 
 use super::css::{Declaration, StyleSheet};
+use crate::style::PseudoElement;
 use roxmltree::Error;
 use svgtypes::FontShorthand;
 
@@ -74,6 +75,7 @@ fn parse<'input>(
         nodes: Vec::new(),
         variables: HashMap::new(),
         declared: HashMap::new(),
+        first_lines: HashMap::new(),
         style_error: None,
         attrs: Vec::new(),
         links: HashMap::new(),
@@ -237,20 +239,11 @@ fn parse_xml_node<'input>(
         parent_id,
         tag_name,
         style_sheet,
-        ignore_ids,
+        Source::Element { ignore_ids },
         host_instance,
         doc,
     )?;
     if tag_name == EId::Text {
-        // SVG 2 §11.10 requires `::first-line` and `::first-letter` on `text` elements, which
-        // the renderer does not lay out.
-        if style_sheet.styles_typographic_pseudo(node, None) {
-            doc.style_error.get_or_insert(std::sync::Arc::new(
-                crate::style::StyleError::Unsupported(
-                    "::first-line or ::first-letter on an SVG text element".into(),
-                ),
-            ));
-        }
         super::text::parse_svg_text_element(node, node_id, style_sheet, doc)?;
     } else if tag_name == EId::Use {
         if let Some(link) = referenced {
@@ -282,19 +275,56 @@ fn parse_xml_node<'input>(
     Ok(())
 }
 
+/// What an element node is parsed from.
+#[derive(Clone, Copy)]
+pub(crate) enum Source {
+    /// The XML element; a `use` instance ignores its `id`.
+    Element { ignore_ids: bool },
+    /// A typographic pseudo-element of the XML element, which only its rules style.
+    Pseudo(PseudoElement),
+}
+
+/// The properties a typographic pseudo-element of an SVG `text` element ignores: `display`, as
+/// its box is inline; white space processing, which the text undergoes before layout finds
+/// its lines (SVG 2 §11.5); and those CSS Pseudo-Elements 4 §2.1.2 excludes from
+/// `::first-line`.
+fn ignored_by(pseudo: PseudoElement, property: &str) -> bool {
+    const IGNORED: [&str; 6] = [
+        "display",
+        "white-space",
+        "white-space-collapse",
+        "white-space-trim",
+        "text-wrap",
+        "text-wrap-mode",
+    ];
+    const FIRST_LINE_EXCLUDED: [&str; 5] = [
+        "writing-mode",
+        "direction",
+        "text-orientation",
+        "glyph-orientation-vertical",
+        "glyph-orientation-horizontal",
+    ];
+    IGNORED.contains(&property)
+        || (pseudo == PseudoElement::FirstLine && FIRST_LINE_EXCLUDED.contains(&property))
+}
+
 pub(crate) fn parse_svg_element<'input>(
     xml_node: roxmltree::Node<'_, 'input>,
     parent_id: NodeId,
     tag_name: EId,
     style_sheet: &StyleSheet,
-    ignore_ids: bool,
+    source: Source,
     host_instance: Option<crate::dom::TreeScopeId>,
     doc: &mut Document<'input>,
 ) -> Result<NodeId, Error> {
     let attrs_start_idx = doc.attrs.len();
+    let (ignore_ids, pseudo) = match source {
+        Source::Element { ignore_ids } => (ignore_ids, None),
+        Source::Pseudo(pseudo) => (true, Some(pseudo)),
+    };
 
-    // Copy presentational attributes first.
-    for attr in xml_node.attributes() {
+    // Copy presentational attributes first; a pseudo-element has none.
+    for attr in xml_node.attributes().filter(|_| pseudo.is_none()) {
         match attr.namespace() {
             None | Some(SVG_NS) | Some(XLINK_NS) | Some(XML_NAMESPACE_NS) => {}
             _ => continue,
@@ -342,40 +372,50 @@ pub(crate) fn parse_svg_element<'input>(
     }
 
     let presentation_end_idx = doc.attrs.len();
-    let inline_declarations = if let Some(value) = xml_node.attribute("style") {
-        let mut input = cssparser::ParserInput::new(value);
-        let input = &mut cssparser::Parser::new(&mut input);
-        match super::css::declarations(input) {
-            Ok(declarations) => declarations,
-            Err(limit) => {
-                doc.css_limit = Some(limit);
-                Vec::new()
+    let inline_declarations =
+        if let Some(value) = xml_node.attribute("style").filter(|_| pseudo.is_none()) {
+            let mut input = cssparser::ParserInput::new(value);
+            let input = &mut cssparser::Parser::new(&mut input);
+            match super::css::declarations(input) {
+                Ok(declarations) => declarations,
+                Err(limit) => {
+                    doc.css_limit = Some(limit);
+                    Vec::new()
+                }
             }
-        }
-    } else {
-        Vec::new()
-    };
+        } else {
+            Vec::new()
+        };
 
     let host = || {
         host_instance
             .into_iter()
             .flat_map(|scope| style_sheet.matching_declarations(xml_node, Some(scope)))
     };
-    let mut declarations: Vec<(&Declaration, bool, bool)> = host()
-        .filter(|decl| !decl.important)
-        .map(|decl| (decl, false, false))
-        .collect();
-    declarations.extend(
+    let declarations: Vec<(&Declaration, bool, bool)> = if let Some(pseudo) = pseudo {
         style_sheet
-            .matching_declarations(xml_node, None)
-            .map(|decl| (decl, true, false)),
-    );
-    declarations.extend(inline_declarations.iter().map(|decl| (decl, true, true)));
-    declarations.extend(
-        host()
-            .filter(|decl| decl.important)
-            .map(|decl| (decl, true, false)),
-    );
+            .pseudo_declarations(xml_node, pseudo)
+            .filter(|decl| !ignored_by(pseudo, &decl.name))
+            .map(|decl| (decl, true, false))
+            .collect()
+    } else {
+        let mut declarations: Vec<_> = host()
+            .filter(|decl| !decl.important)
+            .map(|decl| (decl, false, false))
+            .collect();
+        declarations.extend(
+            style_sheet
+                .matching_declarations(xml_node, None)
+                .map(|decl| (decl, true, false)),
+        );
+        declarations.extend(inline_declarations.iter().map(|decl| (decl, true, true)));
+        declarations.extend(
+            host()
+                .filter(|decl| decl.important)
+                .map(|decl| (decl, true, false)),
+        );
+        declarations
+    };
     let mut custom: HashMap<String, (String, bool, bool)> = HashMap::new();
     let mut custom_baseline = None;
     let mut custom_previous = HashMap::new();
@@ -449,6 +489,7 @@ pub(crate) fn parse_svg_element<'input>(
 
     let legacy_writing_default = xml_node
         .attribute("writing-mode")
+        .filter(|_| pseudo.is_none())
         .filter(|value| matches!(*value, "lr" | "lr-tb" | "rl" | "rl-tb" | "tb" | "tb-rl"))
         .and_then(|value| writing_attribute(AId::WritingMode, value).map(|(_, value)| value));
     let inline_phase = std::cell::Cell::new(false);
@@ -689,6 +730,13 @@ pub(crate) fn parse_svg_element<'input>(
         });
     if let Err(error) = styled {
         doc.style_error.get_or_insert(std::sync::Arc::new(error));
+    }
+    if pseudo == Some(PseudoElement::FirstLine) {
+        doc.append_attribute(
+            AId::FirstLine,
+            roxmltree::StringStorage::Borrowed(""),
+            false,
+        );
     }
 
     if doc.nodes.len() > MAX_SVG_NODES {

@@ -793,7 +793,8 @@ fn node_to_user_coordinates(
             // 3. The fills/strokes of the outlined text.
 
             // 1.
-            for chunk in &mut text.chunks {
+            let first_line = text.first_line.iter_mut().flat_map(|line| &mut line.chunks);
+            for chunk in text.chunks.iter_mut().chain(first_line) {
                 for span in &mut chunk.spans {
                     process_fill(
                         &mut span.fill,

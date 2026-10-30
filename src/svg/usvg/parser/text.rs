@@ -122,6 +122,27 @@ pub(crate) fn convert(
     }
 
     let chunks = collect_text_chunks(text_node, &pos_list, wrapping.is_some(), state, cache);
+    // The copy holds the text's characters, which only its spans' styles divide differently;
+    // one that does not lays out no first line.
+    let first_line = text_node.first_line().and_then(|variant| {
+        let line = variant
+            .first_element_child()
+            .filter(SvgNode::is_first_line)
+            .unwrap_or(variant);
+        if count_chars(variant) != pos_list.len() {
+            return None;
+        }
+        let line_chunks = collect_text_chunks(variant, &pos_list, wrapping.is_some(), state, cache);
+        let same = line_chunks.len() == chunks.len()
+            && line_chunks
+                .iter()
+                .zip(&chunks)
+                .all(|(a, b)| a.text == b.text);
+        same.then(|| FirstLine {
+            chunks: line_chunks,
+            strut: strut(line, state),
+        })
+    });
 
     let rendering_mode: TextRendering = text_node
         .find_attribute(AId::TextRendering)
@@ -154,11 +175,8 @@ pub(crate) fn convert(
         layouted: vec![],
         non_scaling_stroke: converter::non_scaling_stroke(text_node, state),
         linear_light: parent.linear_light,
-        strut: Strut {
-            font: convert_font(text_node, state),
-            font_size: super::units::resolve_font_size(text_node, state),
-            style: text_style(text_node, state),
-        },
+        strut: strut(text_node, state),
+        first_line,
         wrapping,
         clip: None,
     };
@@ -309,7 +327,7 @@ fn collect_text_chunks_impl(
             if is_path {
                 if parent
                     .ancestors()
-                    .find(|node| !node.is_contents())
+                    .find(|node| !node.is_contents() && !node.is_first_line())
                     .and_then(|node| node.tag_name())
                     != Some(EId::Text)
                 {
@@ -400,9 +418,10 @@ fn collect_text_chunks_impl(
             _ => FontOpticalSizing::Auto, // "auto" or missing (browser default)
         };
 
+        // The `::first-line` box takes no `textLength`: it applies to the element it wraps.
         let layout_parent = parent
             .ancestors()
-            .find(|node| !node.is_contents())
+            .find(|node| !node.is_contents() && !node.is_first_line())
             .unwrap_or(parent);
         let mut text_length = layout_parent
             .try_convert_length(AId::TextLength, Units::UserSpaceOnUse, state)
@@ -1318,11 +1337,7 @@ fn convert_baseline_shift(
                 edge = Some(LineEdge {
                     bottom: style.table.vertical_align == VerticalAlign::Bottom,
                     root: n.index(),
-                    strut: Strut {
-                        font: convert_font(n, state),
-                        font_size: super::units::resolve_font_size(n, state),
-                        style: style.clone(),
-                    },
+                    strut: strut(n, state),
                 });
                 break;
             }
@@ -1354,6 +1369,15 @@ fn convert_baseline_shift(
     }
 
     (shift, edge)
+}
+
+/// The font and computed style of `node`'s inline box.
+fn strut(node: SvgNode, state: &converter::State) -> Strut {
+    Strut {
+        font: convert_font(node, state),
+        font_size: super::units::resolve_font_size(node, state),
+        style: text_style(node, state),
+    }
 }
 
 fn count_chars(node: SvgNode) -> usize {

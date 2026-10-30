@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use crate::dom::{DomError, MAX_COMPONENT_DEPTH, NamespaceMap, Selector, TreeScopeId, XmlTree};
+use crate::style::PseudoElement;
 use cssparser::{
     AtRuleParser, CowRcStr, DeclarationParser, Delimiter, ParseError, Parser, ParserInput,
     ParserState, QualifiedRuleParser, RuleBodyItemParser, RuleBodyParser, StyleSheetParser, Token,
@@ -17,36 +18,37 @@ pub(super) struct Declaration<'i> {
 }
 
 pub(super) struct Rule<'i> {
-    /// The selector, or the originating element's of a `::first-line` or `::first-letter`
-    /// selector.
+    /// The selector, or the originating element's of a typographic pseudo-element selector.
     pub selector: Selector,
-    /// The rule styles the first line or letter of the elements its selector matches.
-    pub typographic: bool,
+    /// The typographic pseudo-element of the matched elements that the rule styles, if any.
+    pub pseudo: Option<PseudoElement>,
     pub declarations: Vec<Declaration<'i>>,
 }
 
-/// The pseudo-elements, with their CSS 2.1 single-colon spellings, that style the first line
-/// and letter of a block, which SVG 2 §11.10 requires on `text` elements.
-const TYPOGRAPHIC_PSEUDO_ELEMENTS: [&str; 4] = [
-    "::first-line",
-    "::first-letter",
-    ":first-line",
-    ":first-letter",
+/// The pseudo-elements, with the CSS 2.1 single-colon spellings, that style the first line and
+/// letter of a block, which SVG 2 §11.10 requires on `text` elements.
+const TYPOGRAPHIC_PSEUDO_ELEMENTS: [(&str, PseudoElement); 6] = [
+    ("::first-letter::prefix", PseudoElement::FirstLetterPrefix),
+    ("::first-letter::suffix", PseudoElement::FirstLetterSuffix),
+    ("::first-line", PseudoElement::FirstLine),
+    ("::first-letter", PseudoElement::FirstLetter),
+    (":first-line", PseudoElement::FirstLine),
+    (":first-letter", PseudoElement::FirstLetter),
 ];
 
 const UNIVERSAL: &str = "*";
 
-/// `selector` without the typographic pseudo-element ending it, and whether it had one.
-fn originating(selector: &str) -> (&str, bool) {
-    for pseudo in TYPOGRAPHIC_PSEUDO_ELEMENTS {
-        let split = selector.len().checked_sub(pseudo.len());
+/// `selector` without the typographic pseudo-element ending it, and that pseudo-element.
+fn originating(selector: &str) -> (&str, Option<PseudoElement>) {
+    for (name, pseudo) in TYPOGRAPHIC_PSEUDO_ELEMENTS {
+        let split = selector.len().checked_sub(name.len());
         if let Some(split) = split.filter(|&split| selector.is_char_boundary(split))
-            && selector[split..].eq_ignore_ascii_case(pseudo)
+            && selector[split..].eq_ignore_ascii_case(name)
         {
-            return (selector[..split].trim_end(), true);
+            return (selector[..split].trim_end(), Some(pseudo));
         }
     }
-    (selector, false)
+    (selector, None)
 }
 
 pub(super) struct StyleSheet<'i> {
@@ -122,20 +124,29 @@ impl<'i> StyleSheet<'i> {
     ) -> impl Iterator<Item = &'a Declaration<'i>> + 'a {
         self.rules
             .iter()
-            .filter(move |rule| !rule.typographic && self.matches_context(rule, node, context))
+            .filter(move |rule| rule.pseudo.is_none() && self.matches_context(rule, node, context))
             .flat_map(|rule| &rule.declarations)
     }
-    /// Whether a rule styles the first line or letter of `node`.
-    pub(super) fn styles_typographic_pseudo(
+    /// The declarations, in cascade order, of the rules styling `pseudo` of `node`.
+    pub(super) fn pseudo_declarations<'a, 'input>(
+        &'a self,
+        node: roxmltree::Node<'a, 'input>,
+        pseudo: PseudoElement,
+    ) -> impl Iterator<Item = &'a Declaration<'i>> + 'a {
+        self.rules
+            .iter()
+            .filter(move |rule| {
+                rule.pseudo == Some(pseudo) && self.matches_context(rule, node, None)
+            })
+            .flat_map(|rule| &rule.declarations)
+    }
+    /// Whether a rule declares a property of `pseudo` of `node`.
+    pub(super) fn styles_pseudo(
         &self,
         node: roxmltree::Node<'_, '_>,
-        context: Option<TreeScopeId>,
+        pseudo: PseudoElement,
     ) -> bool {
-        self.rules.iter().any(|rule| {
-            rule.typographic
-                && !rule.declarations.is_empty()
-                && self.matches_context(rule, node, context)
-        })
+        self.pseudo_declarations(node, pseudo).next().is_some()
     }
     pub(super) fn create_instance(
         &self,
@@ -304,7 +315,7 @@ impl<'i> AtRuleParser<'i> for Rules {
     }
 }
 impl<'i> QualifiedRuleParser<'i> for Rules {
-    type Prelude = Vec<(Selector, bool)>;
+    type Prelude = Vec<(Selector, Option<PseudoElement>)>;
     type QualifiedRule = Vec<Rule<'i>>;
     type Error = usize;
     fn parse_prelude<'t>(
@@ -314,10 +325,10 @@ impl<'i> QualifiedRuleParser<'i> for Rules {
         input.parse_comma_separated(|input| {
             let start = input.position();
             components(input)?;
-            let (source, typographic) = originating(input.slice_from(start).trim());
+            let (source, pseudo) = originating(input.slice_from(start).trim());
             let source = if source.is_empty() { UNIVERSAL } else { source };
             Selector::parse_with_namespaces(source, &self.namespaces, true)
-                .map(|selector| (selector, typographic))
+                .map(|selector| (selector, pseudo))
                 .map_err(|_| input.new_error(cssparser::BasicParseErrorKind::QualifiedRuleInvalid))
         })
     }
@@ -331,9 +342,9 @@ impl<'i> QualifiedRuleParser<'i> for Rules {
         let declarations = declarations(input).map_err(|limit| input.new_custom_error(limit))?;
         Ok(selectors
             .into_iter()
-            .map(|(selector, typographic)| Rule {
+            .map(|(selector, pseudo)| Rule {
                 selector,
-                typographic,
+                pseudo,
                 declarations: declarations.clone(),
             })
             .collect())

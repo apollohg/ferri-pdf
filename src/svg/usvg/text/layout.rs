@@ -235,6 +235,26 @@ impl GlyphCluster {
     }
 }
 
+/// Pre-formatted `text` whose chunks on its first line, those before its first preserved
+/// segment break, are the first line's `line`.
+fn with_first_line(text: &Text, line: &crate::svg::usvg::FirstLine) -> Text {
+    let count = text
+        .chunks
+        .iter()
+        .skip(1)
+        .take_while(|chunk| chunk.line_breaks == 0)
+        .count()
+        + 1;
+    let first = line.chunks.iter().take(count);
+    Text {
+        chunks: first
+            .chain(text.chunks.iter().skip(count))
+            .cloned()
+            .collect(),
+        ..text.clone()
+    }
+}
+
 /// The text's laid out spans, its bounding box, and the area `text-overflow: clip` keeps of
 /// it.
 pub(crate) fn layout_text(
@@ -244,39 +264,44 @@ pub(crate) fn layout_text(
 ) -> Option<(Vec<Span>, NonZeroRect, Option<NonZeroRect>)> {
     let mut fonts_cache: FontsCache = HashMap::new();
 
-    for chunk in &text_node.chunks {
-        for span in &chunk.spans {
-            let edge = span.line_edge.as_ref().map(|edge| &edge.strut.font);
-            let ancestors = span.ancestry.iter().map(|ancestor| &ancestor.font);
-            for font in std::iter::once(&span.font).chain(edge).chain(ancestors) {
-                if !fonts_cache.contains_key(font) {
-                    if let Some(loaded) = resolver
-                        .select_font(font, fontdb)
-                        .and_then(|id| fontdb.load_font(id, resolver.metric_overrides(id)))
-                    {
-                        fonts_cache.insert(font.clone(), Arc::new(loaded));
-                    }
-                }
+    let first_line = text_node.first_line.as_ref();
+    let line_chunks = first_line.into_iter().flat_map(|line| &line.chunks);
+    let struts = std::iter::once(&text_node.strut).chain(first_line.map(|line| &line.strut));
+    let span_fonts = text_node
+        .chunks
+        .iter()
+        .chain(line_chunks)
+        .flat_map(|chunk| {
+            chunk.spans.iter().flat_map(|span| {
+                let edge = span.line_edge.as_ref().map(|edge| &edge.strut.font);
+                let ancestors = span.ancestry.iter().map(|ancestor| &ancestor.font);
+                std::iter::once(&span.font).chain(edge).chain(ancestors)
+            })
+        });
+    for font in span_fonts.chain(struts.map(|strut| &strut.font)) {
+        if !fonts_cache.contains_key(font) {
+            if let Some(loaded) = resolver
+                .select_font(font, fontdb)
+                .and_then(|id| fontdb.load_font(id, resolver.metric_overrides(id)))
+            {
+                fonts_cache.insert(font.clone(), Arc::new(loaded));
             }
         }
     }
 
-    let strut = resolver
-        .select_font(&text_node.strut.font, fontdb)
-        .and_then(|id| fontdb.load_font(id, resolver.metric_overrides(id)));
-    let wrapped = match text_node.wrapping {
-        Some(wrapping) => Some(super::wrap::wrap(
+    let laid_out = match (text_node.wrapping, first_line) {
+        (Some(wrapping), _) => Some(super::wrap::wrap(
             text_node,
             wrapping,
             &fonts_cache,
-            strut.as_ref(),
             resolver,
             fontdb,
         )?),
-        None => None,
+        (None, Some(line)) => Some(with_first_line(text_node, line)),
+        (None, None) => None,
     };
-    let text_node = wrapped.as_ref().unwrap_or(text_node);
-    let lines = LineBoxes::new(text_node, strut.as_ref(), &fonts_cache);
+    let text_node = laid_out.as_ref().unwrap_or(text_node);
+    let lines = LineBoxes::new(text_node, &fonts_cache);
 
     let mut spans = vec![];
     let mut char_offset = 0;
@@ -322,7 +347,8 @@ pub(crate) fn layout_text(
             continue;
         }
 
-        if let (Some(strut), TextFlow::Linear) = (&strut, &chunk.text_flow) {
+        let strut = text_node.line_strut(line);
+        if let (Some(font), TextFlow::Linear) = (fonts_cache.get(&strut.font), &chunk.text_flow) {
             let (start_x, start_y) = line_origin.unwrap_or((x, y));
             let inline_start = match text_node.writing_mode {
                 WritingMode::LeftToRight => x - start_x,
@@ -330,8 +356,8 @@ pub(crate) fn layout_text(
             };
             apply_tab_stops(
                 chunk,
-                &text_node.strut,
                 strut,
+                font,
                 &fonts_cache,
                 inline_start,
                 &mut clusters,
@@ -2150,21 +2176,24 @@ struct LineBoxes {
     progression: f32,
 }
 impl LineBoxes {
-    fn new(text: &Text, strut: Option<&ResolvedFont>, fonts: &FontsCache) -> Self {
+    fn new(text: &Text, fonts: &FontsCache) -> Self {
         let vertical = text.writing_mode == WritingMode::TopToBottom;
         let extents_of = |font: Option<&ResolvedFont>, strut: &crate::svg::usvg::Strut| {
             font.map_or([0.0; 2], |font| {
                 line_extents(font, strut.font_size, &strut.style, vertical)
             })
         };
-        let strut = extents_of(strut, &text.strut);
-        let mut extents = vec![strut];
+        let strut = |line: usize| {
+            let strut = text.line_strut(line);
+            extents_of(fonts.get(&strut.font).map(Arc::as_ref), strut)
+        };
+        let mut extents = vec![strut(0)];
         // Each line's subtrees aligned with an edge: whether the bottom edge, and their
         // extents around their roots' baselines.
         let mut subtrees: Vec<HashMap<usize, (bool, [f32; 2])>> = vec![HashMap::new()];
         for chunk in &text.chunks {
             for _ in 0..chunk.line_breaks {
-                extents.push(strut);
+                extents.push(strut(extents.len()));
                 subtrees.push(HashMap::new());
             }
             let line = extents.len() - 1;

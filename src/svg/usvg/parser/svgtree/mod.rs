@@ -32,6 +32,10 @@ pub(super) struct Document<'input> {
     /// The declarations of properties without attributes that won each element's cascade,
     /// as longhands, by node.
     declared: HashMap<usize, Vec<(&'static str, String)>>,
+    /// Each `text` element's contents as its first formatted line styles them, by node: a copy
+    /// of the element outside the tree whose `::first-line` and `::first-letter` boxes wrap
+    /// them (CSS Pseudo-Elements 4 §2.1.1, §2.2.3).
+    first_lines: HashMap<usize, NodeId>,
     pub(crate) style_error: Option<std::sync::Arc<crate::style::StyleError>>,
     nodes: Vec<NodeData>,
     attrs: Vec<Attribute<'input>>,
@@ -81,6 +85,37 @@ impl<'input> Document<'input> {
             d: &self.nodes[id.get_usize()],
             doc: self,
         }
+    }
+
+    /// A childless copy of element `id`, with its attributes, declarations and custom
+    /// properties, that inherits from its parent but is not among the parent's children.
+    fn detached_copy(&mut self, id: NodeId) -> NodeId {
+        let source = &self.nodes[id.get_usize()];
+        let NodeKind::Element {
+            tag_name,
+            attributes,
+        } = source.kind
+        else {
+            unreachable!("only elements are copied")
+        };
+        let copy = NodeId::from(self.nodes.len());
+        self.nodes.push(NodeData {
+            effective_zoom: source.effective_zoom,
+            parent: source.parent,
+            next_sibling: None,
+            children: None,
+            kind: NodeKind::Element {
+                tag_name,
+                attributes,
+            },
+        });
+        if let Some(variables) = self.variables.get(&id.get_usize()).cloned() {
+            self.variables.insert(copy.get_usize(), variables);
+        }
+        if let Some(declared) = self.declared.get(&id.get_usize()).cloned() {
+            self.declared.insert(copy.get_usize(), declared);
+        }
+        copy
     }
 }
 
@@ -277,6 +312,20 @@ impl<'a, 'input: 'a> SvgNode<'a, 'input> {
             .declared
             .get(&self.id.get_usize())
             .map_or(&[], Vec::as_slice)
+    }
+
+    /// The copy of this `text` element whose contents its first formatted line styles, where
+    /// rules select its `::first-line` or `::first-letter`.
+    pub(in crate::svg::usvg::parser) fn first_line(&self) -> Option<Self> {
+        self.doc
+            .first_lines
+            .get(&self.id.get_usize())
+            .map(|&id| self.doc.get(id))
+    }
+
+    /// Whether the element stands for a `::first-line` pseudo-element.
+    pub(in crate::svg::usvg::parser) fn is_first_line(&self) -> bool {
+        self.has_attribute(AId::FirstLine)
     }
 
     /// Identifies the node among those of every document conversion reads.

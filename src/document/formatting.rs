@@ -9,7 +9,7 @@ pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
 /// again. Units count formatted text bytes and, `ELEMENT_WORK` each, formatted elements.
 pub(crate) const MAX_FORMATTING_WORK: usize = 100_000_000;
 /// The work units of formatting an element, whose styling costs far more than a text byte.
-const ELEMENT_WORK: usize = 64;
+pub(super) const ELEMENT_WORK: usize = 64;
 /// Nesting of subtree copies, each formatted on the stack of the formatting it copies, beyond
 /// which formatting fails rather than overflow a 2 MiB library thread.
 pub(super) const MAX_COPY_NESTING: usize = 4;
@@ -127,6 +127,8 @@ pub(crate) struct Formatted {
     /// The document's counters where each page starts (CSS Page 3 §6.1).
     pub page_counters: Vec<(usize, crate::document::CounterSnapshot)>,
     pub scroll_markers: crate::document::scroll_markers::ScrollMarkerGroups,
+    /// The work budget's limit, where formatting skipped optional work for want of units.
+    pub skipped_work: Option<usize>,
 }
 
 /// The footnote elements of a document (CSS GCPM 3 §2.2), in the order their elements end,
@@ -3458,7 +3460,11 @@ fn block<'a>(
                             let svg = crate::document::svg::serialize(
                                 element,
                                 &frame.style,
-                                &crate::document::svg::Styling { sheet, resolver },
+                                &crate::document::svg::Styling {
+                                    sheet,
+                                    resolver,
+                                    work: &traversal.work,
+                                },
                                 &mut |style| resources.masks(style),
                             )?;
                             Some(resources.cache.inline_svg_in_namespace(
@@ -4366,10 +4372,15 @@ fn hidden_root(
         cache: &mut cache,
         elements: resources.elements,
     };
+    let work = crate::layout::work::Budget::new(input.work_limit);
     let svg_definitions = crate::document::svg::SvgDefinitions::collect(
         html,
         style,
-        &crate::document::svg::Styling { sheet, resolver },
+        &crate::document::svg::Styling {
+            sheet,
+            resolver,
+            work: &work,
+        },
         linked,
         &mut |style| images.masks(style),
     )?;
@@ -4384,6 +4395,7 @@ fn hidden_root(
         svg_definitions,
         page_counters: Vec::new(),
         scroll_markers: crate::document::scroll_markers::ScrollMarkerGroups::default(),
+        skipped_work: work.declined(),
     })
 }
 
@@ -4471,7 +4483,11 @@ fn format_root(
     let svg_definitions = crate::document::svg::SvgDefinitions::collect(
         html,
         &style,
-        &crate::document::svg::Styling { sheet, resolver },
+        &crate::document::svg::Styling {
+            sheet,
+            resolver,
+            work: &traversal.work,
+        },
         linked,
         &mut |style| resources.masks(style),
     )?;
@@ -4529,6 +4545,7 @@ fn format_root(
         canvas,
         page_counters,
         marker_groups,
+        work,
         ..
     } = traversal;
     Ok(Formatted {
@@ -4542,6 +4559,7 @@ fn format_root(
         svg_definitions,
         page_counters,
         scroll_markers: marker_groups,
+        skipped_work: work.declined(),
     })
 }
 

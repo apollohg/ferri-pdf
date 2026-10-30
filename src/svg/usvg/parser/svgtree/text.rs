@@ -5,6 +5,7 @@
 
 use roxmltree::Error;
 
+use super::parse::{Source, parse_svg_element};
 use super::{AId, Document, EId, NodeId, NodeKind, SvgNode};
 use crate::style::WhiteSpaceCollapse;
 
@@ -24,23 +25,92 @@ pub(crate) fn parse_svg_text_element<'input>(
         .find_map(own_space)
         .unwrap_or_default();
 
-    parse_svg_text_element_impl(parent, parent_id, style_sheet, space, doc)?;
+    parse_svg_text_element_impl(parent, parent_id, style_sheet, space, &mut None, doc)?;
 
     trim_text_nodes(parent_id, space, doc);
+    parse_first_line(parent, parent_id, style_sheet, space, doc)
+}
+
+/// Where the first-letter text of a `text` element stands while its first formatted line's
+/// contents are parsed.
+enum Letter<'a, 'input> {
+    /// Not found yet: rules of the originating `text` element style it.
+    Pending(roxmltree::Node<'a, 'input>),
+    /// Found, or the line holds none.
+    Done,
+}
+
+/// Parses the copy of `text` element `text_id`, parsed from `xml`, whose contents its first
+/// formatted line styles: inside its `::first-line` box, with its first-letter text in its
+/// `::first-letter` box (CSS Pseudo-Elements 4 §2.1.3, §2.2.3). A written document gives that
+/// line as its last first-line child; a standalone one, as its rules select the pseudo-elements.
+fn parse_first_line<'input>(
+    xml: roxmltree::Node<'_, 'input>,
+    text_id: NodeId,
+    style_sheet: &super::css::StyleSheet,
+    space: WhiteSpaceCollapse,
+    doc: &mut Document<'input>,
+) -> Result<(), Error> {
+    use crate::style::PseudoElement;
+    let written = xml.children().rfind(is_written_first_line);
+    let line = style_sheet.styles_pseudo(xml, PseudoElement::FirstLine);
+    let letter = [
+        PseudoElement::FirstLetter,
+        PseudoElement::FirstLetterPrefix,
+        PseudoElement::FirstLetterSuffix,
+    ]
+    .into_iter()
+    .any(|pseudo| style_sheet.styles_pseudo(xml, pseudo));
+    if written.is_none() && !line && !letter {
+        return Ok(());
+    }
+    let root = doc.detached_copy(text_id);
+    let (source, container, mut letter) = match written {
+        Some(written) => {
+            let element = Source::Element { ignore_ids: true };
+            let id = parse_svg_element(written, root, EId::Tspan, style_sheet, element, None, doc)?;
+            (written, id, None)
+        }
+        None if line => {
+            let pseudo = Source::Pseudo(PseudoElement::FirstLine);
+            let id = parse_svg_element(xml, root, EId::Tspan, style_sheet, pseudo, None, doc)?;
+            (xml, id, letter.then_some(Letter::Pending(xml)))
+        }
+        None => (xml, root, Some(Letter::Pending(xml))),
+    };
+    parse_svg_text_element_impl(source, container, style_sheet, space, &mut letter, doc)?;
+    trim_text_nodes(root, space, doc);
+    doc.first_lines.insert(text_id.get_usize(), root);
     Ok(())
 }
 
-fn parse_svg_text_element_impl<'input>(
-    parent: roxmltree::Node<'_, 'input>,
+/// Whether `node` is the written `::first-line` box of its `text` element.
+fn is_written_first_line(node: &roxmltree::Node<'_, '_>) -> bool {
+    node.is_element() && node.has_attribute(crate::svg::FIRST_LINE_ATTRIBUTE)
+}
+
+fn parse_svg_text_element_impl<'a, 'input>(
+    parent: roxmltree::Node<'a, 'input>,
     parent_id: NodeId,
     style_sheet: &super::css::StyleSheet,
     space: WhiteSpaceCollapse,
+    letter: &mut Option<Letter<'a, 'input>>,
     doc: &mut Document<'input>,
 ) -> Result<(), Error> {
     for node in parent.children() {
         if node.is_text() {
             let text = trim_text(node.text().unwrap(), space);
-            doc.append(parent_id, NodeKind::Text(text));
+            match letter {
+                Some(Letter::Pending(origin)) => {
+                    let origin = *origin;
+                    if split_first_letter(text, parent_id, origin, style_sheet, space, doc)? {
+                        *letter = Some(Letter::Done);
+                    }
+                }
+                _ => {
+                    doc.append(parent_id, NodeKind::Text(text));
+                }
+            }
             continue;
         }
 
@@ -54,7 +124,9 @@ fn parse_svg_text_element_impl<'input>(
             tag_name = EId::Tspan;
         }
 
-        if !matches!(tag_name, EId::Tspan | EId::Tref | EId::TextPath) {
+        if !matches!(tag_name, EId::Tspan | EId::Tref | EId::TextPath)
+            || is_written_first_line(&node)
+        {
             continue;
         }
 
@@ -63,7 +135,7 @@ fn parse_svg_text_element_impl<'input>(
             && doc
                 .get(parent_id)
                 .ancestors()
-                .find(|node| !node.is_contents())
+                .find(|node| !node.is_contents() && !node.is_first_line())
                 .and_then(|node| node.tag_name())
                 != Some(EId::Text)
         {
@@ -77,18 +149,22 @@ fn parse_svg_text_element_impl<'input>(
             is_tref = true;
         }
 
-        let node_id = super::parse::parse_svg_element(
+        let node_id = parse_svg_element(
             node,
             parent_id,
             tag_name,
             style_sheet,
-            false,
+            Source::Element { ignore_ids: false },
             None,
             doc,
         )?;
         let space = get_xmlspace(doc, node_id, space);
 
         if is_tref {
+            // A first letter follows no other content (CSS Pseudo-Elements 4 §2.2.2).
+            if letter.is_some() {
+                *letter = Some(Letter::Done);
+            }
             let link_value = node
                 .attribute((XLINK_NS, "href"))
                 .or_else(|| node.attribute("href"));
@@ -99,12 +175,93 @@ fn parse_svg_text_element_impl<'input>(
                     doc.append(node_id, NodeKind::Text(text));
                 }
             }
+        } else if doc.get(node_id).attribute::<&str>(AId::Display) == Some(DISPLAY_NONE) {
+            // Content that renders nothing holds no first letter.
+            parse_svg_text_element_impl(node, node_id, style_sheet, space, &mut None, doc)?;
         } else {
-            parse_svg_text_element_impl(node, node_id, style_sheet, space, doc)?;
+            parse_svg_text_element_impl(node, node_id, style_sheet, space, letter, doc)?;
         }
     }
 
     Ok(())
+}
+
+const DISPLAY_NONE: &str = "none";
+
+/// Appends `text`, a text node's contents in element `parent_id`, wrapping the first-letter
+/// text it begins with in the `::first-letter` box of `origin`, with its punctuation in the
+/// box's `::prefix` and `::suffix` (CSS Pseudo-Elements 4 §2.2). Returns whether the search
+/// for the first letter ends: the text holds it, or other content precedes it.
+fn split_first_letter<'input>(
+    text: String,
+    parent_id: NodeId,
+    origin: roxmltree::Node<'_, 'input>,
+    style_sheet: &super::css::StyleSheet,
+    space: WhiteSpaceCollapse,
+    doc: &mut Document<'input>,
+) -> Result<bool, Error> {
+    use crate::document::first_letter::{FirstLetter, find};
+    use crate::style::PseudoElement;
+    let language = doc
+        .get(parent_id)
+        .ancestors()
+        .find_map(|node| node.attribute::<&str>(AId::Lang))
+        .unwrap_or_default()
+        .to_owned();
+    let (prefix, letter, suffix) = match find(&text, space, &language) {
+        FirstLetter::Pending => {
+            doc.append(parent_id, NodeKind::Text(text));
+            return Ok(false);
+        }
+        FirstLetter::None => {
+            doc.append(parent_id, NodeKind::Text(text));
+            return Ok(true);
+        }
+        FirstLetter::Found {
+            prefix,
+            letter,
+            suffix,
+        } => (prefix, letter, suffix),
+    };
+    let append = |parent: NodeId, part: &str, doc: &mut Document<'input>| {
+        if !part.is_empty() {
+            doc.append(parent, NodeKind::Text(part.to_owned()));
+        }
+    };
+    append(parent_id, &text[..prefix.start], doc);
+    let pseudo = |pseudo| Source::Pseudo(pseudo);
+    let boxed = parse_svg_element(
+        origin,
+        parent_id,
+        EId::Tspan,
+        style_sheet,
+        pseudo(PseudoElement::FirstLetter),
+        None,
+        doc,
+    )?;
+    for (range, part) in [
+        (prefix, Some(PseudoElement::FirstLetterPrefix)),
+        (letter, None),
+        (suffix.clone(), Some(PseudoElement::FirstLetterSuffix)),
+    ] {
+        let parent = match part
+            .filter(|&part| !range.is_empty() && style_sheet.styles_pseudo(origin, part))
+        {
+            Some(part) => parse_svg_element(
+                origin,
+                boxed,
+                EId::Tspan,
+                style_sheet,
+                pseudo(part),
+                None,
+                doc,
+            )?,
+            None => boxed,
+        };
+        append(parent, &text[range], doc);
+    }
+    append(parent_id, &text[suffix.end..], doc);
+    Ok(true)
 }
 
 fn resolve_tref_text(xml: &roxmltree::Document, href: &str) -> Option<String> {

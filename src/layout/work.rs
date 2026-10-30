@@ -6,6 +6,8 @@ use std::{cell::Cell, rc::Rc};
 pub(crate) struct Budget {
     limit: usize,
     remaining: Rc<Cell<Option<usize>>>,
+    /// Optional work was skipped for want of units.
+    declined: Rc<Cell<bool>>,
 }
 
 /// A budget of `limit` units ran out.
@@ -25,7 +27,29 @@ impl Budget {
         Self {
             limit,
             remaining: Rc::new(Cell::new(Some(limit))),
+            declined: Rc::new(Cell::new(false)),
         }
+    }
+
+    /// Charges `units` of optional work where they remain, else leaves the budget as it is
+    /// and records that the work was skipped.
+    pub(crate) fn spend_optional(&self, units: usize) -> bool {
+        if let Some(left) = self
+            .remaining
+            .get()
+            .and_then(|left| left.checked_sub(units))
+        {
+            self.remaining.set(Some(left));
+            true
+        } else {
+            self.declined.set(true);
+            false
+        }
+    }
+
+    /// The budget's limit, where optional work was skipped for want of units.
+    pub(crate) fn declined(&self) -> Option<usize> {
+        self.declined.get().then_some(self.limit)
     }
 
     pub(crate) fn spend(&self, units: usize) -> Result<(), Exhausted> {

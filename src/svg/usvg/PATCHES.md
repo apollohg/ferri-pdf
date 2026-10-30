@@ -186,3 +186,10 @@ exclude it from their anchoring, where no line overflows.
 Faces load with the `ascent-override`, `descent-override` and `line-gap-override` descriptors
 their provider gives (CSS Fonts 4 §4.11), so baselines, line boxes, wrapped lines and the
 decorations of vertical text use the overridden horizontal metrics, as the document's text does.
+
+A `text` element whose rules select `::first-line` or `::first-letter` (SVG 2 §11.10) gets a
+detached copy of its contents inside its `::first-line` box, with the first-letter text and its
+punctuation in `::first-letter` and its `::prefix` and `::suffix` (CSS Pseudo-Elements 4 §2.1,
+§2.2); a written document gives that copy as the `text` element's last first-line child. The
+first formatted line, the first wrapped line or the chunks before the first preserved break, is
+laid out from the copy, with the root inline box's strut taking the line's font.

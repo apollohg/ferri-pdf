@@ -7,10 +7,10 @@ use std::sync::Arc;
 use fontdb::Database;
 use unicode_linebreak::BreakOpportunity;
 
-use super::layout::{self, FontsCache, ResolvedFont};
+use super::layout::{self, FontsCache};
 use crate::style::TextOverflow;
 use crate::svg::usvg::{
-    FontProvider, NonZeroRect, Text, TextAnchor, TextChunk, TextFlow, WrapWidth, Wrapping,
+    FontProvider, NonZeroRect, Strut, Text, TextAnchor, TextChunk, TextFlow, WrapWidth, Wrapping,
     WritingMode,
 };
 
@@ -19,41 +19,61 @@ const ELLIPSIS: &str = "\u{2026}";
 
 /// `text` with each paragraph of its linear chunks broken into lines no wider than its wrapping
 /// area, and the area `text-overflow: clip` keeps. Chunks on a text path keep their layout.
+/// The first line takes the characters that fit it as `::first-line` and `::first-letter`
+/// style them, and the next lines continue with the rest as their own styles set it (CSS
+/// Pseudo-Elements 4 §2.1).
 pub(crate) fn wrap(
     text: &Text,
     wrapping: Wrapping,
     fonts: &FontsCache,
-    strut: Option<&ResolvedFont>,
     resolver: &dyn FontProvider,
     fontdb: &mut Arc<Database>,
 ) -> Option<Text> {
-    let mut paragraphs = Vec::new();
-    for (index, chunk) in text.chunks.iter().enumerate() {
-        paragraphs.push(match chunk.text_flow {
-            TextFlow::Linear => {
-                let edges = [index == 0, index + 1 == text.chunks.len()];
-                Paragraph::of(text, chunk, edges, fonts, strut, resolver, fontdb)?
-            }
-            TextFlow::Path(_) => Paragraph::unbroken(chunk),
-        });
-    }
+    let paragraphs_of_text = paragraphs(text, &text.chunks, &text.strut, fonts, resolver, fontdb)?;
+    // The chunks before the first preserved segment break may share the first line.
+    let first_line = match &text.first_line {
+        Some(line) => {
+            let count = text
+                .chunks
+                .iter()
+                .skip(1)
+                .take_while(|chunk| chunk.line_breaks == 0)
+                .count()
+                + 1;
+            let chunks = &line.chunks[..count.min(line.chunks.len())];
+            paragraphs(text, chunks, &line.strut, fonts, resolver, fontdb)?
+        }
+        None => Vec::new(),
+    };
     let width = match wrapping.width {
         WrapWidth::Length(width) => width,
-        WrapWidth::MinContent => paragraphs
+        // The first line holds the first segment, as the first line styles it.
+        WrapWidth::MinContent => paragraphs_of_text
             .iter()
-            .flat_map(|paragraph| paragraph.segments())
+            .enumerate()
+            .flat_map(|(index, paragraph)| {
+                let first = (index == 0).then(|| first_line.first()).flatten();
+                let skipped = usize::from(first.is_some());
+                first
+                    .into_iter()
+                    .flat_map(|line| line.segments().take(1))
+                    .chain(paragraph.segments().skip(skipped))
+            })
             .fold(0.0, f32::max),
     };
     let mut chunks = Vec::new();
     let mut overflows = false;
-    for (paragraph, chunk) in paragraphs.iter().zip(&text.chunks) {
+    let mut on_first_line = true;
+    for (index, (paragraph, chunk)) in paragraphs_of_text.iter().zip(&text.chunks).enumerate() {
+        on_first_line &= index == 0 || chunk.line_breaks == 0;
+        let first = first_line.get(index).filter(|_| on_first_line);
         if !matches!(chunk.text_flow, TextFlow::Linear) {
-            chunks.push(chunk.clone());
+            chunks.push(first.map_or(chunk, |line| line.chunk).clone());
             continue;
         }
-        for (line, overflowing) in
-            paragraph.lines(text, width, wrapping, fonts, resolver, fontdb)?
-        {
+        let lines = paragraph.lines(text, width, wrapping, first, fonts, resolver, fontdb)?;
+        on_first_line &= lines.len() == 1;
+        for (line, overflowing) in lines {
             overflows |= overflowing;
             chunks.push(line);
         }
@@ -67,6 +87,29 @@ pub(crate) fn wrap(
         clip,
         ..text.clone()
     })
+}
+
+/// The paragraphs of `chunks`, the first chunks of `text` or of its first line, whose root
+/// inline box is `strut`.
+fn paragraphs<'a>(
+    text: &Text,
+    chunks: &'a [TextChunk],
+    strut: &Strut,
+    fonts: &FontsCache,
+    resolver: &dyn FontProvider,
+    fontdb: &mut Arc<Database>,
+) -> Option<Vec<Paragraph<'a>>> {
+    chunks
+        .iter()
+        .enumerate()
+        .map(|(index, chunk)| match chunk.text_flow {
+            TextFlow::Linear => {
+                let edges = [index == 0, index + 1 == text.chunks.len()];
+                Paragraph::of(text, chunk, edges, strut, fonts, resolver, fontdb)
+            }
+            TextFlow::Path(_) => Some(Paragraph::unbroken(chunk)),
+        })
+        .collect()
 }
 
 /// The wrapping area, infinite in the block direction, around the first line's anchor point.
@@ -110,13 +153,13 @@ impl<'a> Paragraph<'a> {
         text: &Text,
         chunk: &'a TextChunk,
         [first, last]: [bool; 2],
+        strut: &Strut,
         fonts: &FontsCache,
-        strut: Option<&ResolvedFont>,
         resolver: &dyn FontProvider,
         fontdb: &mut Arc<Database>,
     ) -> Option<Self> {
         let paragraph = layout::document_paragraph(chunk);
-        let advances = measure(text, chunk, fonts, strut, resolver, fontdb)?;
+        let advances = measure(text, chunk, strut, fonts, resolver, fontdb)?;
         let indent = text.strut.style.text_indent.clone();
         let applies = first || (indent.each_line && chunk.line_breaks > 0);
         Some(Self {
@@ -223,50 +266,57 @@ impl<'a> Paragraph<'a> {
     }
 
     /// The paragraph broken into lines no wider than `width` where possible, each with whether
-    /// it overflows the wrapping area.
+    /// it overflows the wrapping area. Where the paragraph starts the text's first line,
+    /// `first_line` is the paragraph as that line styles it, which sets the line.
+    #[expect(
+        clippy::too_many_arguments,
+        reason = "line breaking reads the area, both stylings and the font machinery"
+    )]
     fn lines(
         &self,
         text_element: &Text,
         width: f32,
         wrapping: Wrapping,
+        first_line: Option<&Self>,
         fonts: &FontsCache,
         resolver: &dyn FontProvider,
         fontdb: &mut Arc<Database>,
     ) -> Option<Vec<(TextChunk, bool)>> {
-        let Some(paragraph) = &self.breaking else {
+        let Some(text) = self.breaking.as_ref().map(crate::document::Paragraph::text) else {
             return Some(Vec::new());
         };
-        let text = paragraph.text();
         let mut lines = Vec::new();
         let mut start = 0;
         let mut first = true;
         while first || start < text.len() {
-            let indent = self
+            let styled = first_line.filter(|_| first).unwrap_or(self);
+            let paragraph = styled.breaking.as_ref()?;
+            let indent = styled
                 .indent
                 .as_ref()
                 .filter(|_| first)
                 .map_or(0.0, |indent| {
                     // The document's lengths are points; user units are CSS pixels.
                     let points = crate::style::POINTS_PER_PIXEL;
-                    indent.resolve(width * points, true, self.chunk.line_breaks > 0) / points
+                    indent.resolve(width * points, true, styled.chunk.line_breaks > 0) / points
                 });
             let available = width - indent;
-            let end = self.fit(paragraph, start, available, fonts, resolver, fontdb)?;
+            let end = styled.fit(paragraph, start, available, fonts, resolver, fontdb)?;
             let hyphen =
-                crate::text::hyphenation::string(paragraph, &self.opportunities.automatic, end)
+                crate::text::hyphenation::string(paragraph, &styled.opportunities.automatic, end)
                     .filter(|_| end < text.len());
             let visible = crate::text::whitespace::visible(paragraph, start..end);
-            let hanging = self.hanging(
+            let hanging = styled.hanging(
                 paragraph,
                 visible.clone(),
                 hyphen.is_some(),
                 Some(available),
             );
-            let mut used = self.width(visible.clone()) - hanging[0] - hanging[1]
+            let mut used = styled.width(visible.clone()) - hanging[0] - hanging[1]
                 + hyphen.map_or(0.0, |hyphen| {
-                    self.extra_width(hyphen, visible.end, fonts, resolver, fontdb)
+                    styled.extra_width(hyphen, visible.end, fonts, resolver, fontdb)
                 });
-            let mut line = self.line(visible.clone(), hyphen, hanging, first);
+            let mut line = styled.line(visible.clone(), hyphen, hanging, first);
             // CSS Text 4 §8.5.1: closing punctuation ending a line that does not otherwise fit
             // may be set half-width.
             if used > available {
@@ -287,7 +337,7 @@ impl<'a> Paragraph<'a> {
                     first,
                     overflow: wrapping.overflow,
                 };
-                self.ellipsize(&mut line, visible, fitting, fonts, resolver, fontdb)?;
+                styled.ellipsize(&mut line, visible, fitting, fonts, resolver, fontdb)?;
             }
             line.inline_offset = offset(line.anchor, line.rtl, width, indent);
             lines.push((line, overflows));
@@ -569,14 +619,14 @@ fn offset(anchor: TextAnchor, rtl: bool, width: f32, indent: f32) -> f32 {
 fn measure(
     text: &Text,
     chunk: &TextChunk,
+    strut: &Strut,
     fonts: &FontsCache,
-    strut: Option<&ResolvedFont>,
     resolver: &dyn FontProvider,
     fontdb: &mut Arc<Database>,
 ) -> Option<Vec<(usize, f32)>> {
     let mut clusters = layout::spaced_clusters(text, chunk, fonts, resolver, fontdb)?;
-    if let Some(strut) = strut {
-        layout::apply_tab_stops(chunk, &text.strut, strut, fonts, 0.0, &mut clusters);
+    if let Some(font) = fonts.get(&strut.font) {
+        layout::apply_tab_stops(chunk, strut, font, fonts, 0.0, &mut clusters);
     }
     let mut advances: Vec<_> = clusters
         .iter()

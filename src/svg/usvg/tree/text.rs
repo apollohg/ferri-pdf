@@ -673,6 +673,9 @@ pub struct Text {
     pub(crate) linear_light: bool,
     /// The text element's own font, which its line boxes start from (CSS 2.1 §10.8.1).
     pub(crate) strut: Strut,
+    /// The text as its first formatted line styles it, where rules select its `::first-line`
+    /// or `::first-letter`.
+    pub(crate) first_line: Option<FirstLine>,
     /// The wrapping area `inline-size` gives the text (SVG 2 §11.4).
     pub(crate) wrapping: Option<Wrapping>,
     /// What `text-overflow: clip` keeps of wrapped text, in its user space.
@@ -709,6 +712,16 @@ pub(crate) struct LineEdge {
     pub(crate) strut: Strut,
 }
 
+/// A text element's chunks as its first formatted line styles them: their characters are the
+/// text's, inside its `::first-line` box, with the first-letter text in its `::first-letter`
+/// box (CSS Pseudo-Elements 4 §2.1, §2.2).
+#[derive(Clone, Debug)]
+pub(crate) struct FirstLine {
+    pub(crate) chunks: Vec<TextChunk>,
+    /// The root inline box on the first line, which inherits from `::first-line` (§2.1.1).
+    pub(crate) strut: Strut,
+}
+
 /// The font and computed style of a text element, whose strut every line box contains and
 /// whose space measures its tab stops.
 #[derive(Clone, Debug)]
@@ -719,6 +732,15 @@ pub(crate) struct Strut {
 }
 
 impl Text {
+    /// The root inline box of line `line`, which on the first line inherits from
+    /// `::first-line`.
+    pub(crate) fn line_strut(&self, line: usize) -> &Strut {
+        match &self.first_line {
+            Some(first) if line == 0 => &first.strut,
+            _ => &self.strut,
+        }
+    }
+
     /// Element's ID.
     ///
     /// Taken from the SVG itself.

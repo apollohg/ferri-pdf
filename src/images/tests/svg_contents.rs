@@ -1190,26 +1190,195 @@ fn svg_text_line_metrics_take_the_metric_override_descriptors() {
     );
 }
 
+const RED: [u8; 3] = [255, 0, 0];
+const GREEN: [u8; 3] = [0, 255, 0];
+const BLUE: [u8; 3] = [0, 0, 255];
+
+/// A laid out run of SVG text: its characters, font size, fill, and first glyph's origin.
+#[derive(Debug)]
+struct Run {
+    text: String,
+    size: f32,
+    fill: [u8; 3],
+    origin: [f32; 2],
+}
+
+/// The runs of the tree's text in layout order, adjacent spans of one size and fill on one
+/// baseline merged.
+fn runs(tree: &crate::svg::usvg::Tree) -> Vec<Run> {
+    let mut runs: Vec<Run> = Vec::new();
+    for group in groups(tree) {
+        for node in group.children() {
+            let crate::svg::usvg::Node::Text(text) = node else {
+                continue;
+            };
+            for span in text.layouted() {
+                let Some(first) = span.positioned_glyphs.first() else {
+                    continue;
+                };
+                let transform = first.transform();
+                let run = Run {
+                    text: span
+                        .positioned_glyphs
+                        .iter()
+                        .map(|glyph| glyph.text.as_str())
+                        .collect(),
+                    size: span.font_size.get(),
+                    fill: paint_color(span.fill.as_ref().expect("filled text").paint()),
+                    origin: [transform.tx, transform.ty],
+                };
+                match runs.last_mut() {
+                    Some(last)
+                        if last.size == run.size
+                            && last.fill == run.fill
+                            && (last.origin[1] - run.origin[1]).abs() < EPSILON =>
+                    {
+                        last.text.push_str(&run.text);
+                    }
+                    _ => runs.push(run),
+                }
+            }
+        }
+    }
+    runs
+}
+
+fn summary(runs: &[Run]) -> Vec<(&str, f32, [u8; 3])> {
+    runs.iter()
+        .map(|run| (run.text.as_str(), run.size, run.fill))
+        .collect()
+}
+
 #[test]
-fn standalone_typographic_pseudo_elements_of_svg_text_are_unsupported() {
-    let load = |css: &str| {
-        ImageCache::default().inline_svg(
-            format!("{SVG_OPEN}<style>{css}</style><text x='10' y='60'>T</text><g/></svg>"),
-            &ResourceBase::default(),
-            &FileResolver::default(),
+fn svg_text_first_letter_takes_its_punctuation_and_sub_pseudo_elements() {
+    let runs = runs(&tree(
+        "<style>text::first-letter{fill:#f00;font-size:40px}\
+         text::first-letter::suffix{fill:#0f0}</style>\
+         <text x='10' y='60' font-size='20' fill='#00f'>(A) rest</text>",
+    ));
+    assert_eq!(
+        summary(&runs),
+        [("(A", 40.0, RED), (")", 40.0, GREEN), (" rest", 20.0, BLUE)],
+        "CSS Pseudo-Elements 4 §2.2.1: the first letter takes the opening punctuation before \
+         it and its ::suffix the closing punctuation after it: {runs:#?}"
+    );
+}
+
+#[test]
+fn svg_text_first_line_restyles_its_contents_up_to_the_first_preserved_break() {
+    let body = |rule: &str| {
+        format!(
+            "<style>{rule}</style><text x='10' y='20' font-size='10' fill='#00f' \
+             style='white-space:pre'>One <tspan>two</tspan> <tspan fill='#0f0'>own</tspan>\n\
+             Three</text>"
         )
     };
-    for css in ["text::first-line{fill:red}", ":first-letter{fill:red}"] {
-        let error = load(css).expect_err("SVG 2 §11.10 requires the pseudo-element on text");
-        assert!(
-            error.to_string().contains("::first-line or ::first-letter"),
-            "`{css}` reports {error}"
-        );
-    }
-    for css in ["g::first-line{fill:red}", "text::first-line{}"] {
-        assert!(
-            load(css).is_ok(),
-            "`{css}` styles no SVG text element's first line"
-        );
+    let styled = runs(&tree(&body(
+        "text::first-line{fill:#f00;font-size:20px;writing-mode:vertical-rl}",
+    )));
+    assert_eq!(
+        summary(&styled),
+        [
+            ("One two ", 20.0, RED),
+            ("own", 20.0, GREEN),
+            ("Three", 10.0, BLUE)
+        ],
+        "the first line's contents inherit through ::first-line, which leaves the writing mode \
+         and the line after the preserved break alone: {styled:#?}"
+    );
+    let plain = runs(&tree(&body("")));
+    let gap = |runs: &[Run]| runs.last().unwrap().origin[1] - runs[0].origin[1];
+    assert!(
+        gap(&styled) > gap(&plain),
+        "the larger first line pushes the next one down: {} against {}",
+        gap(&styled),
+        gap(&plain)
+    );
+}
+
+#[test]
+fn svg_text_root_inline_box_takes_the_first_line_font_on_that_line() {
+    // Only 10px text sits on the first line, but its line box holds the strut of the root
+    // inline box, which inherits the 40px font from ::first-line (CSS Pseudo-Elements 4 §2.1.1).
+    let gap = |rule: &str| {
+        let runs = runs(&tree(&format!(
+            "<style>{rule}</style><text x='10' y='20' font-size='10' style='white-space:pre'>\
+             <tspan font-size='10'>a</tspan>\nb</text>"
+        )));
+        assert_eq!(runs.len(), 2, "two lines: {runs:#?}");
+        runs[1].origin[1] - runs[0].origin[1]
+    };
+    let (styled, plain) = (gap("text::first-line{font-size:40px}"), gap(""));
+    assert!(
+        styled > plain + 5.0,
+        "a 40px strut on the first line must lower the second line well below the 10px one: \
+         {styled} against {plain}"
+    );
+}
+
+#[test]
+fn wrapped_svg_text_breaks_its_first_line_as_the_first_line_styles_it() {
+    let words = "aa bb cc dd ee ff gg hh ii jj kk ll";
+    let runs = runs(&tree(&format!(
+        "<style>text::first-line{{font-size:20px;fill:#f00}}</style>\
+         <text x='10' y='20' font-size='10' fill='#00f' style='inline-size:70px'>{words}</text>"
+    )));
+    assert!(
+        runs.len() >= 3,
+        "the text wraps onto several lines: {runs:#?}"
+    );
+    assert_eq!(
+        (runs[0].size, runs[0].fill),
+        (20.0, RED),
+        "the first line is set as ::first-line styles it: {runs:#?}"
+    );
+    assert!(
+        runs[1..]
+            .iter()
+            .all(|run| (run.size, run.fill) == (10.0, BLUE)),
+        "the lines after the first keep the text's own style: {runs:#?}"
+    );
+    let count = |run: &Run| run.text.split_whitespace().count();
+    assert!(
+        count(&runs[0]) < count(&runs[1]),
+        "the first line breaks where its larger font fills the area, holding fewer words: \
+         {runs:#?}"
+    );
+    let shown: Vec<_> = runs
+        .iter()
+        .flat_map(|run| run.text.split_whitespace())
+        .collect();
+    assert_eq!(
+        shown,
+        words.split_whitespace().collect::<Vec<_>>(),
+        "every word shows once, in order"
+    );
+}
+
+#[test]
+fn svg_typographic_pseudo_elements_reach_only_rendered_text_of_text_elements() {
+    for (body, expected) in [
+        (
+            "<style>::first-letter{fill:#f00}</style><rect width='5' height='5'/>\
+             <text x='10' y='60' fill='#00f'><tspan display='none'>X</tspan>Yes</text>",
+            vec![("Y", RED), ("es", BLUE)],
+        ),
+        (
+            "<style>g::first-line{fill:#f00}text::first-line{}</style>\
+             <g><text x='10' y='60' fill='#00f'>Yes</text></g>",
+            vec![("Yes", BLUE)],
+        ),
+        (
+            "<style>text::first-line{fill:#f00}</style><defs><path id='p' d='M10 60 H190'/>\
+             </defs><text fill='#00f'><textPath href='#p'>On path</textPath></text>",
+            vec![("On path", RED)],
+        ),
+    ] {
+        let runs = runs(&tree(body));
+        let actual: Vec<_> = runs
+            .iter()
+            .map(|run| (run.text.as_str(), run.fill))
+            .collect();
+        assert_eq!(actual, expected, "`{body}` lays out {runs:#?}");
     }
 }

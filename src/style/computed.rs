@@ -493,10 +493,15 @@ impl Style {
         }
         let mut style = base.clone();
         properties::inherit(&mut style, line);
-        style.rtl = base.rtl;
-        style.writing_mode = base.writing_mode;
-        style.text_orientation = base.text_orientation;
+        style.keep_first_line_exclusions(base);
         style
+    }
+    /// Gives the properties that CSS Pseudo-Elements 4 §2.1.2 excludes from `::first-line` the
+    /// values of `base`, the style of the box holding the line.
+    pub(crate) fn keep_first_line_exclusions(&mut self, base: &Self) {
+        self.rtl = base.rtl;
+        self.writing_mode = base.writing_mode;
+        self.text_orientation = base.text_orientation;
     }
     /// Font-name environment owned by the element's tree scope.
     pub(crate) fn element_font_namespace(&self) -> crate::fonts::FontNamespace {

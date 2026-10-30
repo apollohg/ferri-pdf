@@ -821,6 +821,55 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
             self.assertPixel(pixels, half, ICON + half, BLUE,
                              'document rules do not reach an SVG CSS image')
 
+    def test_first_line_and_first_letter_style_svg_text_in_both_renderers(self):
+        # SVG 2 §11.10: the document's ::first-line and ::first-letter rules reach SVG text. With
+        # an inline-size the first line is the first wrapped line, broken as ::first-line sets
+        # it; the vector renderer paints glyphs, an identity filter hands the text to the raster
+        # renderer.
+        css = ('text{line-height:normal}text::first-letter{fill:rgb(255,0,0);font-size:30px}'
+               'text::first-line{fill:rgb(0,160,0);font-size:16px}')
+        text = ('<text x="10" y="40" font-size="10" fill="rgb(0,0,255)" '
+                'style="inline-size:150px">Alpha beta gamma delta epsilon zeta eta theta iota</text>')
+        svg = '<svg width="200pt" height="100pt" viewBox="0 0 200 100">{}</svg>'
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-first-line-') as directory:
+            root = Path(directory)
+            glyphs = [glyph for glyph in
+                      pdf_content.inspect(self.output(root, css, svg.format(text)))['glyphs']
+                      if glyph.text.strip()]
+            lines = {}
+            for glyph in glyphs:
+                lines.setdefault(round(glyph.origin[1], 1), []).append(glyph)
+            ordered = [lines[y] for y in sorted(lines, reverse=True)]
+            self.assertGreaterEqual(len(ordered), 2, f'the text wraps: {ordered}')
+            styles = [[(glyph.text, round(abs(glyph.matrix[3]), 1), tuple(round(c, 2) for c in glyph.fill[:3]))
+                       for glyph in line] for line in ordered]
+            self.assertEqual(styles[0][0], ('A', 30.0, (1.0, 0.0, 0.0)),
+                             f'the first letter takes ::first-letter: {styles[0]}')
+            self.assertTrue(all(style[1:] == (16.0, (0.0, 0.63, 0.0)) for style in styles[0][1:]),
+                            f'the rest of the first line takes ::first-line: {styles[0]}')
+            self.assertTrue(all(style[1:] == (10.0, (0.0, 0.0, 1.0))
+                                for line in styles[1:] for style in line),
+                            f'the later lines keep the text\'s own style: {styles[1:]}')
+            first_words = ''.join(glyph.text for glyph in ordered[0])
+            self.assertEqual(first_words, 'Alphabetagamma',
+                             'the 16px first line holds the words that fit 150 units')
+            filtered = svg.format(f'<defs>{IDENTITY_FILTER}</defs><g filter="url(#same)">{text}</g>')
+            self.assertEqual(pdf_content.inspect(self.output(root, css, filtered))['glyphs'], [],
+                             'the filtered text reaches the raster renderer')
+            pixels = self.render(root, css, filtered)
+        counts = {name: 0 for name in ('red', 'green', 'blue')}
+        for count, (red, green, blue) in pixels.getcolors(PAGE * PAGE):
+            if red > 150 and green < 80 and blue < 80:
+                counts['red'] += count
+            elif green > 100 and red < 80 and blue < 80:
+                counts['green'] += count
+            elif blue > 150 and red < 80 and green < 80:
+                counts['blue'] += count
+        self.assertTrue(all(counts.values()),
+                        f'the raster renderer paints the first letter, first line and rest: {counts}')
+        self.assertGreater(counts['green'], counts['red'],
+                           f'more of the first line than of its letter: {counts}')
+
 
 if __name__ == '__main__':
     unittest.main()

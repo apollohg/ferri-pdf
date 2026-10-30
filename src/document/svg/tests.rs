@@ -14,6 +14,19 @@ fn unloaded(style: &Style) -> Result<Arc<crate::graphics::LoadedMasks>, Document
 
 /// The document's first `<svg>` serialized, styled by `css` as the document's style sheet.
 fn serialized(css: &str, html: &str) -> Result<SerializedSvg, DocumentError> {
+    serialized_within(
+        css,
+        html,
+        &crate::layout::work::Budget::new(crate::document::MAX_FORMATTING_WORK),
+    )
+}
+
+/// `serialized` charging formatting work to `work`.
+fn serialized_within(
+    css: &str,
+    html: &str,
+    work: &crate::layout::work::Budget,
+) -> Result<SerializedSvg, DocumentError> {
     let tree = DocumentTree::parse(html).expect("parse test HTML");
     let sheet = Stylesheet::parse(&[StylesheetSource {
         text: css.into(),
@@ -23,6 +36,7 @@ fn serialized(css: &str, html: &str) -> Result<SerializedSvg, DocumentError> {
     let styling = Styling {
         sheet: &sheet,
         resolver: &resolver,
+        work,
     };
     let root = sheet.computed_with_resolver(tree.root_element(), &Style::default(), &resolver)?;
     let svg = tree
@@ -464,9 +478,11 @@ fn sprites_in_other_svg_elements_and_nested_uses_get_instances_and_cycles_render
     let second = tree.select(&selector).nth(1).unwrap();
     let sheet = Stylesheet::parse(&[]).unwrap();
     let resolver = FileResolver::default();
+    let work = crate::layout::work::Budget::new(crate::document::MAX_FORMATTING_WORK);
     let styling = Styling {
         sheet: &sheet,
         resolver: &resolver,
+        work: &work,
     };
     let root = sheet
         .computed_with_resolver(tree.root_element(), &Style::default(), &resolver)
@@ -661,27 +677,110 @@ fn paint_server_references_accept_absent_and_explicit_fallbacks() {
     }
 }
 
+/// The `style` declarations of `node`.
+fn declarations(node: roxmltree::Node<'_, '_>) -> HashMap<String, String> {
+    node.attribute(STYLE_ATTRIBUTE)
+        .unwrap_or_default()
+        .split(';')
+        .filter_map(|declaration| declaration.split_once(':'))
+        .map(|(name, value)| (name.to_owned(), value.to_owned()))
+        .collect()
+}
+
+/// The box a written `text` element's first formatted line holds its contents in.
+fn first_line_box<'a, 'i>(
+    document: &'a roxmltree::Document<'i>,
+    id: &str,
+) -> Option<roxmltree::Node<'a, 'i>> {
+    let text = document
+        .descendants()
+        .find(|node| node.attribute(ID_ATTRIBUTE) == Some(id))
+        .unwrap_or_else(|| panic!("no element #{id}"));
+    text.children()
+        .rfind(roxmltree::Node::is_element)
+        .filter(|node| node.has_attribute(crate::svg::FIRST_LINE_ATTRIBUTE))
+}
+
 #[test]
-fn typographic_pseudo_elements_of_svg_text_are_unsupported() {
-    let html = "<svg><text>T</text><g><text>U</text></g></svg><p>P</p>";
-    for (css, expected) in [
-        ("text::first-letter{fill:red}", Some("::first-letter")),
-        ("::first-line{color:red}", Some("::first-line")),
-        ("p::first-line{color:red}", None),
-        ("g::first-line{color:red}", None),
-    ] {
-        match (styled(css, html), expected) {
-            (Err(DocumentError::Style(StyleError::Unsupported(message))), Some(name)) => {
-                assert!(
-                    message.contains(name),
-                    "`{css}` reports {message:?}, expected {name:?}"
-                );
-            }
-            (Ok(_), None) => {}
-            (other, _) => panic!(
-                "`{css}` must fail only where it styles an SVG text element's first line or \
-                 letter, which SVG 2 §11.10 requires: {other:?}"
-            ),
-        }
+fn svg_text_contents_are_written_again_as_their_first_line_styles_them() {
+    let html = "<svg><text id=t fill='blue' font-size='10'>\u{201c}Hi <tspan id=s>there</tspan>\
+                </text><g id=g><text id=u>U</text></g></svg><p>P</p>";
+    let css = "text::first-line{fill:red}#t::first-letter{font-size:30px}p::first-line{fill:green}";
+    let xml = xml(css, html);
+    let document = roxmltree::Document::parse(&xml).unwrap();
+    let line = first_line_box(&document, "t")
+        .unwrap_or_else(|| panic!("#t must end with its first-line box\n{xml}"));
+    assert_eq!(
+        declarations(line).get("fill").map(String::as_str),
+        Some("rgba(255,0,0,1)"),
+        "the box takes the ::first-line fill\n{xml}"
+    );
+    let children: Vec<_> = line.children().collect();
+    let letter = children[0];
+    assert_eq!(
+        (
+            letter.tag_name().name(),
+            letter.text(),
+            declarations(letter).get("font-size").map(String::as_str)
+        ),
+        ("tspan", Some("\u{201c}H"), Some("30px")),
+        "the first letter and its opening punctuation sit in the ::first-letter box\n{xml}"
+    );
+    assert_eq!(children[1].text(), Some("i "), "{xml}");
+    let copy = children[2];
+    assert_eq!(
+        (copy.attribute(ID_ATTRIBUTE), copy.text()),
+        (None, Some("there")),
+        "the copy of the tspan omits the id its original holds\n{xml}"
+    );
+    assert_eq!(
+        declarations(copy).get("fill").map(String::as_str),
+        Some("rgba(255,0,0,1)"),
+        "the tspan inherits its fill through ::first-line\n{xml}"
+    );
+    assert!(
+        first_line_box(&document, "u").is_some(),
+        "the rule styles every text element's first line\n{xml}"
+    );
+    assert!(
+        first_line_box(&document, "g").is_none() && xml.matches("id=\"s\"").count() == 1,
+        "only text elements get first-line boxes, and ids stay unique\n{xml}"
+    );
+    let plain = self::xml("p::first-line{fill:green}::first-letter{}", html);
+    assert!(
+        !plain.contains(crate::svg::FIRST_LINE_ATTRIBUTE),
+        "rules that style no SVG text's first line or letter write nothing\n{plain}"
+    );
+}
+
+#[test]
+fn first_line_restyling_past_the_formatting_work_budget_keeps_the_text_styles() {
+    use crate::layout::work::Budget;
+    let html = "<svg><text id=t>Hello</text></svg>";
+    let css = "text::first-line{fill:red}";
+    let plain = serialized("", html).unwrap();
+    // The first budget covers no restyling; the second the box but not its text.
+    for limit in [ELEMENT_WORK - 1, ELEMENT_WORK + 1] {
+        let work = Budget::new(limit);
+        let svg = serialized_within(css, html, &work).unwrap_or_else(|error| {
+            panic!("a budget of {limit} units must not fail serialization: {error}")
+        });
+        assert_eq!(
+            (svg.xml.as_str(), svg.styling.text_styles.len()),
+            (plain.xml.as_str(), plain.styling.text_styles.len()),
+            "with {limit} units the text keeps its own styles and nothing of the line remains"
+        );
+        assert_eq!(
+            work.declined(),
+            Some(limit),
+            "the skipped restyling is recorded"
+        );
     }
+    let work = Budget::new(crate::document::MAX_FORMATTING_WORK);
+    let svg = serialized_within(css, html, &work).unwrap();
+    assert!(
+        svg.xml.contains(crate::svg::FIRST_LINE_ATTRIBUTE) && work.declined().is_none(),
+        "a sufficient budget restyles the line\n{}",
+        svg.xml
+    );
 }

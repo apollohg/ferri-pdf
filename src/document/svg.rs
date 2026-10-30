@@ -6,6 +6,7 @@ mod presentation;
 mod tests;
 
 use crate::document::DocumentError;
+use crate::document::formatting::ELEMENT_WORK;
 use crate::dom::{
     DocumentTree, Element, ElementId, Node, NodeData, SVG_NAMESPACE, TreeRelation, XLINK_NAMESPACE,
     XML_NAMESPACE,
@@ -34,15 +35,23 @@ const ROOT_GEOMETRY: [&str; 4] = ["x", "y", "width", "height"];
 /// Ids naming the styled clones that `use` elements reference in the written XML.
 const INSTANCE_ID_PREFIX: &str = "ferri-pdf-instance-";
 const TEXT_ELEMENT: &str = "text";
-const TYPOGRAPHIC_PSEUDO_ELEMENTS: [(PseudoElement, &str); 2] = [
-    (PseudoElement::FirstLine, "::first-line"),
-    (PseudoElement::FirstLetter, "::first-letter"),
+/// SVG 2 §10: `tref` takes its text from another element, which it alone renders.
+const TREF_ELEMENT: &str = "tref";
+/// The box standing for `::first-line` and the boxes of the first letter (SVG 2 §11.10).
+const TYPOGRAPHIC_BOX: &str = "tspan";
+/// `::first-letter` and its sub-pseudo-elements (CSS Pseudo-Elements 4 §2.2).
+const FIRST_LETTER_PSEUDO_ELEMENTS: [PseudoElement; 3] = [
+    PseudoElement::FirstLetter,
+    PseudoElement::FirstLetterPrefix,
+    PseudoElement::FirstLetterSuffix,
 ];
 
-/// The style sheets and fonts that style inline SVG content.
+/// The style sheets and fonts that style inline SVG content, and the document's formatting
+/// work, which restyling the first lines of its text charges.
 pub(crate) struct Styling<'a> {
     pub(crate) sheet: &'a Stylesheet,
     pub(crate) resolver: &'a dyn ResourceResolver,
+    pub(crate) work: &'a crate::layout::work::Budget,
 }
 
 /// Loads the CSS mask layers of an SVG element with the computed style, and the documents
@@ -73,6 +82,14 @@ enum Step<'d> {
     Open(Node<'d>, bool),
     /// An element's end tag, and whether its start pushed a style.
     Close(&'d str, bool),
+    /// The contents of a `text` element as its first formatted line styles them.
+    FirstLine(Element<'d>),
+}
+
+/// A step of writing a `text` element's contents as its first formatted line styles them.
+enum LineStep<'d> {
+    Open(Node<'d>),
+    Close(&'d str),
 }
 
 struct Serializer<'a, 'd> {
@@ -115,24 +132,215 @@ impl<'a, 'd> Serializer<'a, 'd> {
         }
     }
 
-    /// SVG 2 §11.10 requires `::first-line` and `::first-letter` on `text` elements, which the
-    /// SVG renderer does not lay out: a rule styling them fails the document.
-    fn typographic_pseudo(&self, element: Element<'_>, parent: &Style) -> Result<(), StyleError> {
-        if element.name() != TEXT_ELEMENT {
+    /// Whether the style sheet has rules for any typographic pseudo-element.
+    fn typographic_rules(&self) -> bool {
+        std::iter::once(PseudoElement::FirstLine)
+            .chain(FIRST_LETTER_PSEUDO_ELEMENTS)
+            .any(|pseudo| self.styling.sheet.has_pseudo_rules(pseudo))
+    }
+
+    /// Writes, as the last child of `text` styled `style`, its contents as its first formatted
+    /// line styles them, where rules select its `::first-line` or `::first-letter` (SVG 2
+    /// §11.10): in a box marked with [`crate::svg::FIRST_LINE_ATTRIBUTE`] standing for
+    /// `::first-line`, or for no box without one, whose contents inherit through it, with the
+    /// first-letter text in its `::first-letter` boxes (CSS Pseudo-Elements 4 §2.1.3, §2.2.3).
+    /// The renderer lays out the first line from these, and the rest from the contents.
+    fn first_line(&mut self, text: Element<'d>, style: &Style) -> Result<(), DocumentError> {
+        let (sheet, resolver) = (self.styling.sheet, self.styling.resolver);
+        let base = style.canonical();
+        let line = if sheet.declares_pseudo(text, base, PseudoElement::FirstLine, resolver)? {
+            let mut line = sheet.typographic_pseudo_with_resolver(
+                text,
+                base,
+                PseudoElement::FirstLine,
+                resolver,
+            )?;
+            line.keep_first_line_exclusions(base);
+            // The line keeps the white space processing done before layout (SVG 2 §11.5).
+            line.white_space = base.white_space;
+            Some(line)
+        } else {
+            None
+        };
+        let mut letter = false;
+        for pseudo in FIRST_LETTER_PSEUDO_ELEMENTS {
+            letter = letter || sheet.declares_pseudo(text, base, pseudo, resolver)?;
+        }
+        if line.is_none() && !letter {
             return Ok(());
         }
-        for (pseudo, name) in TYPOGRAPHIC_PSEUDO_ELEMENTS {
-            if self
-                .styling
-                .sheet
-                .declares_pseudo(element, parent, pseudo, self.styling.resolver)?
-            {
-                return Err(StyleError::Unsupported(format!(
-                    "{name} on an SVG text element"
-                )));
-            }
+        let (boxed, root) = if let Some(line) = line {
+            (
+                crate::document::formatting::inline_pseudo_style(line.clone()).used(),
+                Style::through_first_line(style, &line),
+            )
+        } else {
+            let mut contents = style.clone();
+            contents.display = crate::style::Display::Contents;
+            (contents, style.clone())
+        };
+        // Past the formatting work budget the text keeps its own styles on every line.
+        let written = (
+            self.xml.len(),
+            self.text_styles.len(),
+            self.layer_masks.len(),
+        );
+        if !self.line_contents(text, &boxed, root, letter)? {
+            self.xml.truncate(written.0);
+            self.text_styles.truncate(written.1);
+            self.layer_masks.truncate(written.2);
         }
         Ok(())
+    }
+
+    /// Writes the box `boxed` standing for `::first-line` with the contents of `text`, whose
+    /// root inline box is styled `root` on the line, as `first_line` describes; `letter` is
+    /// whether rules select the first letter. Returns whether the formatting work budget
+    /// covered the restyling.
+    fn line_contents(
+        &mut self,
+        text: Element<'d>,
+        boxed: &Style,
+        root: Style,
+        mut letter: bool,
+    ) -> Result<bool, DocumentError> {
+        let (sheet, resolver) = (self.styling.sheet, self.styling.resolver);
+        let work = self.styling.work;
+        if !work.spend_optional(ELEMENT_WORK) {
+            return Ok(false);
+        }
+        let _ = write!(self.xml, "<{TYPOGRAPHIC_BOX}");
+        attribute(&mut self.xml, "", crate::svg::FIRST_LINE_ATTRIBUTE, "");
+        self.presentation(TYPOGRAPHIC_BOX, boxed)?;
+        self.xml.push('>');
+        // Each open element's style, and whether its contents render.
+        let mut styles = vec![(root, true)];
+        let mut stack: Vec<LineStep<'d>> = text
+            .as_node()
+            .children(TreeRelation::Selector)
+            .rev()
+            .map(LineStep::Open)
+            .collect();
+        while let Some(step) = stack.pop() {
+            let node = match step {
+                LineStep::Close(name) => {
+                    let _ = write!(self.xml, "</{name}>");
+                    styles.pop();
+                    continue;
+                }
+                LineStep::Open(node) => node,
+            };
+            let (parent, rendered) = styles.last().expect("the line's root style");
+            let rendered = *rendered;
+            match node.value() {
+                NodeData::Text(content) => {
+                    if !work.spend_optional(content.len().max(1)) {
+                        return Ok(false);
+                    }
+                    if letter && rendered {
+                        let parent = parent.clone();
+                        letter = !self.first_letter(text, content, &parent)?;
+                    } else {
+                        escape(&mut self.xml, content, false);
+                    }
+                }
+                NodeData::Element(_) => {
+                    let element = node.element().expect("element node");
+                    let name = element.name();
+                    // Text content renders only text content elements (SVG 2 §10).
+                    if element.namespace() != SVG_NAMESPACE || !presentation::is_text_content(name)
+                    {
+                        continue;
+                    }
+                    if !work.spend_optional(ELEMENT_WORK) {
+                        return Ok(false);
+                    }
+                    let style = sheet.computed_without_box(element, parent, resolver)?;
+                    // A first letter follows no other content (CSS Pseudo-Elements 4 §2.2.2).
+                    letter &= name != TREF_ELEMENT;
+                    let rendered = rendered && style.display != crate::style::Display::None;
+                    let _ = write!(self.xml, "<{name}");
+                    self.styled_attributes(element, &style, None, true, None)?;
+                    self.xml.push('>');
+                    styles.push((style, rendered));
+                    stack.push(LineStep::Close(name));
+                    stack.extend(
+                        node.children(TreeRelation::Selector)
+                            .rev()
+                            .map(LineStep::Open),
+                    );
+                }
+                _ => {}
+            }
+        }
+        let _ = write!(self.xml, "</{TYPOGRAPHIC_BOX}>");
+        Ok(true)
+    }
+
+    /// Writes `content`, the contents of a text node whose parent is styled `parent`, with the
+    /// first-letter text it begins with in the `::first-letter` box of `text`, its punctuation
+    /// in the box's `::prefix` and `::suffix` (CSS Pseudo-Elements 4 §2.2). Returns whether the
+    /// search for the first letter ends: the text holds it, or other content precedes it.
+    fn first_letter(
+        &mut self,
+        text: Element<'d>,
+        content: &str,
+        parent: &Style,
+    ) -> Result<bool, DocumentError> {
+        use crate::document::first_letter::{FirstLetter, find};
+        let (sheet, resolver) = (self.styling.sheet, self.styling.resolver);
+        let (prefix, letter, suffix) =
+            match find(content, parent.white_space.collapse, &parent.language) {
+                FirstLetter::Found {
+                    prefix,
+                    letter,
+                    suffix,
+                } => (prefix, letter, suffix),
+                found => {
+                    escape(&mut self.xml, content, false);
+                    return Ok(found == FirstLetter::None);
+                }
+            };
+        escape(&mut self.xml, &content[..prefix.start], false);
+        let typographic = |parent: &Style, pseudo| -> Result<Style, StyleError> {
+            let mut style =
+                sheet.typographic_pseudo_with_resolver(text, parent, pseudo, resolver)?;
+            // The letter keeps the white space processing that found it (SVG 2 §11.5).
+            style.white_space = parent.white_space;
+            Ok(crate::document::formatting::inline_pseudo_style(style).used())
+        };
+        let boxed = typographic(parent, PseudoElement::FirstLetter)?;
+        let _ = write!(self.xml, "<{TYPOGRAPHIC_BOX}");
+        self.presentation(TYPOGRAPHIC_BOX, &boxed)?;
+        self.xml.push('>');
+        for (range, part) in [
+            (prefix, Some(PseudoElement::FirstLetterPrefix)),
+            (letter, None),
+            (suffix.clone(), Some(PseudoElement::FirstLetterSuffix)),
+        ] {
+            let part = match part {
+                Some(pseudo) if !range.is_empty() => {
+                    if sheet.declares_pseudo(text, &boxed, pseudo, resolver)? {
+                        Some(typographic(&boxed, pseudo)?)
+                    } else {
+                        None
+                    }
+                }
+                _ => None,
+            };
+            if let Some(style) = &part {
+                let _ = write!(self.xml, "<{TYPOGRAPHIC_BOX}");
+                self.presentation(TYPOGRAPHIC_BOX, style)?;
+                self.xml.push('>');
+            }
+            escape(&mut self.xml, &content[range], false);
+            if part.is_some() {
+                let _ = write!(self.xml, "</{TYPOGRAPHIC_BOX}>");
+            }
+        }
+        let _ = write!(self.xml, "</{TYPOGRAPHIC_BOX}>");
+        escape(&mut self.xml, &content[suffix.end..], false);
+        Ok(true)
     }
 
     fn document(
@@ -214,6 +422,10 @@ impl<'a, 'd> Serializer<'a, 'd> {
                     }
                     continue;
                 }
+                Step::FirstLine(text) => {
+                    self.first_line(text, styles.last().expect("a styled text element"))?;
+                    continue;
+                }
                 Step::Open(node, raw) => (node, raw),
             };
             let element = match node.value() {
@@ -233,11 +445,9 @@ impl<'a, 'd> Serializer<'a, 'd> {
             let style = if raw {
                 None
             } else {
-                let parent = styles.last().unwrap_or(parent);
-                self.typographic_pseudo(element, parent)?;
                 Some(self.styling.sheet.computed_without_box(
                     element,
-                    parent,
+                    styles.last().unwrap_or(parent),
                     self.styling.resolver,
                 )?)
             };
@@ -271,6 +481,9 @@ impl<'a, 'd> Serializer<'a, 'd> {
             }
             self.xml.push('>');
             stack.push(Step::Close(element.name(), style.is_some()));
+            if style.is_some() && element.name() == TEXT_ELEMENT && self.typographic_rules() {
+                stack.push(Step::FirstLine(element));
+            }
             stack.extend(
                 node.children(TreeRelation::Selector)
                     .rev()
@@ -336,6 +549,12 @@ impl<'a, 'd> Serializer<'a, 'd> {
         if let Some(id) = reference {
             attribute(&mut self.xml, "", HREF_ATTRIBUTE, &format!("#{id}"));
         }
+        self.presentation(tag, style)
+    }
+
+    /// The attributes an element `tag` styled `style` takes from its style: its computed
+    /// geometry, text style and `style` declarations.
+    fn presentation(&mut self, tag: &str, style: &Style) -> Result<(), DocumentError> {
         // Text shapes, cases and paints with the document's computed values (SVG 2 §11.10).
         if presentation::takes_text_style(tag, style) {
             self.text_styles.push(Arc::new(style.clone()));

@@ -373,6 +373,8 @@ pub(crate) enum AId {
     Lang,
     /// [`crate::svg::TEXT_STYLE_ATTRIBUTE`].
     TextStyle,
+    /// [`crate::svg::FIRST_LINE_ATTRIBUTE`].
+    FirstLine,
     TransformOrigin,
     Type,
     UnicodeBidi,
@@ -664,6 +666,9 @@ impl AId {
         if text == crate::svg::TEXT_STYLE_ATTRIBUTE {
             return Some(Self::TextStyle);
         }
+        if text == crate::svg::FIRST_LINE_ATTRIBUTE {
+            return Some(Self::FirstLine);
+        }
         match text {
             "border-radius" => Some(Self::CssBorderRadius),
             "zoom" => Some(Self::CssZoom),
@@ -701,6 +706,7 @@ impl AId {
             Self::BackfaceVisibility => "backface-visibility",
             Self::Lang => "lang",
             Self::TextStyle => crate::svg::TEXT_STYLE_ATTRIBUTE,
+            Self::FirstLine => crate::svg::FIRST_LINE_ATTRIBUTE,
             _ => ATTRIBUTES.key(&self),
         }
     }
