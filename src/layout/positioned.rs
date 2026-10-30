@@ -612,6 +612,13 @@ fn solve<'a>(
         // its inset-modified containing block, whose auto inset is zero (§3.5.1).
         let inset_aligned =
             insets.iter().any(Option::is_some) && margins.iter().all(Option::is_some);
+        // §3.5.1: with both insets auto, end and center alignment derive the inset-modified
+        // containing block from the static-position rectangle; start alignment is the static
+        // position itself. Flex and grid static positions align by their container instead.
+        let static_aligned =
+            area.is_none() && position.alignment.is_none() && insets.iter().all(Option::is_none);
+        // The physical side the axis's end edge lies on: right or bottom unless right-to-left.
+        let end_high = !(horizontal && rtl);
         let alignment = match alignment {
             Alignment::Normal | Alignment::Auto => match defaults.map(|defaults| defaults[axis]) {
                 Some(AreaAlignment::Start) => Alignment::Left,
@@ -622,6 +629,16 @@ fn solve<'a>(
             },
             Alignment::AnchorCenter => Alignment::AnchorCenter,
             other if area.is_some() || inset_aligned => other,
+            Alignment::Center if static_aligned => Alignment::Center,
+            Alignment::Right if static_aligned && end_high => Alignment::Right,
+            Alignment::Left if static_aligned && !end_high => Alignment::Left,
+            Alignment::End | Alignment::SelfEnd | Alignment::FlexEnd if static_aligned => {
+                if end_high {
+                    Alignment::Right
+                } else {
+                    Alignment::Left
+                }
+            }
             _ => continue,
         };
         let (start, length, size, before, after, inset_start, inset_end, original_edges) =
@@ -648,8 +665,21 @@ fn solve<'a>(
                     [original.y, original.y + original.height],
                 )
             };
-        let start = start + inset_start;
-        let available = length - inset_start - inset_end;
+        let (start, available) = if static_aligned {
+            let [low, high] = static_containing(
+                [start, start + length],
+                if horizontal {
+                    [position.left, position.right]
+                } else {
+                    [position.y, position.y]
+                },
+                alignment,
+                end_high,
+            );
+            (low, high - low)
+        } else {
+            (start + inset_start, length - inset_start - inset_end)
+        };
         let outer = size + before + after;
         let free = available - outer;
         let aligned = match alignment {
@@ -690,6 +720,32 @@ fn solve<'a>(
         }
     }
     Ok((measured, top))
+}
+
+/// CSS Position 3 §3.5.1: the physical edges of the inset-modified containing block, inside
+/// the containing block's `edges`, of a box with both insets auto aligned to the physical
+/// `Left`, `Right` or `Center` of its static-position rectangle `rect`; the end edge is the
+/// high one when `end_high`. A negative size grows back to zero from the end inset.
+fn static_containing(
+    edges: [f32; 2],
+    rect: [f32; 2],
+    alignment: Alignment,
+    end_high: bool,
+) -> [f32; 2] {
+    match alignment {
+        Alignment::Right => [edges[0], rect[1].max(edges[0])],
+        Alignment::Left => [rect[0].min(edges[1]), edges[1]],
+        _ => {
+            let center = f32::midpoint(rect[0], rect[1]);
+            let [low, high] = [(center - edges[0]).abs(), (edges[1] - center).abs()];
+            let from_low = if end_high { low <= high } else { low < high };
+            if from_low {
+                [edges[0], edges[0] + 2.0 * low]
+            } else {
+                [edges[1] - 2.0 * high, edges[1]]
+            }
+        }
+    }
 }
 
 /// CSS Box Alignment 3 §4.4.1.2: the default and `safe` margin-box start of an absolutely

@@ -336,6 +336,41 @@ fn absolute_boxes_taller_than_the_page_break_across_the_pages_after_their_positi
 }
 
 #[test]
+fn absolute_boxes_with_auto_insets_self_align_in_their_static_position_rectangle() {
+    // CSS Position 3 §3.5.1: end alignment ends the box where its static-position rectangle
+    // ends, and center alignment centres it there inside the containing block. The 300pt by
+    // 200pt containing block starts at the page area's 36pt origin; the static-position
+    // rectangle spans the second 200pt line box, 40pt in from the inline start, 20pt down.
+    let body = "<div class=cb><div class=st></div><div class=st><div class=a></div></div></div>";
+    let base = ".cb{position:relative;width:300pt;height:200pt}.st{width:200pt;height:20pt}.a{position:absolute;width:40pt;height:20pt;background:rgb(255,0,0)}";
+    for (css, expected) in [
+        (".st{margin-left:40pt}", [76.0, 56.0]),
+        (".st{margin-left:40pt}.a{justify-self:end}", [236.0, 56.0]),
+        (
+            ".st{margin-left:40pt}.a{justify-self:center}",
+            [156.0, 56.0],
+        ),
+        (".st{margin-left:40pt}.a{align-self:end}", [76.0, 36.0]),
+        (".st{margin-left:40pt}.a{align-self:center}", [76.0, 46.0]),
+        (
+            ".cb{direction:rtl}.st{margin-right:40pt}.a{justify-self:end}",
+            [96.0, 56.0],
+        ),
+        (
+            ".cb{direction:rtl}.st{margin-right:40pt}.a{justify-self:start}",
+            [256.0, 56.0],
+        ),
+    ] {
+        let trace = render_flow(body, &format!("{base}{css}"));
+        let rect = common::painted_box(&trace, [255, 0, 0]);
+        assert!(
+            (rect.x - expected[0]).abs() < 0.001 && (rect.y - expected[1]).abs() < 0.001,
+            "{css}: expected the box at {expected:?}, got {rect:?}"
+        );
+    }
+}
+
+#[test]
 fn stacking_contexts_paint_negative_flow_and_positive_layers_in_order() {
     let trace = render_flow(
         "<div class='c'><div class='a'>Above</div><div class='b'>Below</div><div class='n'>Negative</div><p class='flow'>Flow</p></div>",
