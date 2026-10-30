@@ -103,8 +103,8 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
         expected_pixels = self.raster(root, self.render(root, *expected))
         width, height = expected_pixels.size
         differing = [(x, y) for y in range(1, height - 1) for x in range(1, width - 1)
-                     if len({expected_pixels.getpixel(point) for point in
-                             ((x, y), (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1))}) == 1
+                     if len({expected_pixels.getpixel((x + dx, y + dy))
+                             for dx in (-1, 0, 1) for dy in (-1, 0, 1)}) == 1
                      and actual_pixels.getpixel((x, y)) != expected_pixels.getpixel((x, y))]
         if differing:
             first = differing[0]
@@ -495,6 +495,27 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                            f'h1:last-child::before{{content:url("{blue}") "|" url("{blue}") url("{green}") "|"}}',
                  headings),
                 'counter() and counters() print image symbols, without a marker\'s prefix and suffix')
+
+    def test_border_area_clips_layers_to_the_painted_border(self):
+        """CSS Backgrounds 4: `background-clip: border-area` paints only where the border styles
+        paint, whatever the border colour's transparency; the colour follows the bottom layer.
+        Viewers rasterize a mask's edges unlike a stroke's, so edges are not compared."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-border-area-') as directory:
+            root = Path(directory)
+            box = '<div class=box></div>'
+            # A groove paints its whole width, in two shades.
+            for border, painted in [('6pt dashed', '6pt dashed'), ('9pt double', '9pt double'),
+                                    ('6pt dotted', '6pt dotted'), ('8pt groove', '8pt solid')]:
+                self.assertSameInterior(
+                    root, (f'.box{{border:{border} transparent;background:blue;background-clip:border-area}}', box),
+                    (f'.box{{border:{painted} blue}}', box), f'the background colour fills a {border} border')
+                self.assertSameInterior(
+                    root, (f'.box{{border:{border} rgb(0 0 0 / 0);border-radius:12pt;padding:4pt;'
+                           'background-image:linear-gradient(red,red),linear-gradient(blue,blue);'
+                           'background-clip:content-box,border-area}', box),
+                    (f'.box{{border:{painted} blue;border-radius:12pt;padding:4pt;'
+                     'background:linear-gradient(red,red) content-box}', box),
+                    f'one layer of several fills a rounded {border} border')
 
     def assertInkSize(self, root, css, body, expected, message):
         """Everything not white on the first page spans `expected` CSS pixels. Resolutions that

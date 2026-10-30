@@ -1,8 +1,8 @@
 //! Materialized image paint values and ordered display lists.
 use crate::images::Image;
 pub(crate) use crate::paint::{
-    BackgroundGeometry, BoxArea, BoxAreas, LegendCut, POINTS_PER_PIXEL, ResolvedGradient, Shading,
-    ShadowMask, UnresolvedImage, image_size,
+    BackgroundClip, BackgroundGeometry, BoxArea, BoxAreas, LegendCut, POINTS_PER_PIXEL,
+    ResolvedGradient, Shading, ShadowMask, UnresolvedImage, image_size,
 };
 pub use crate::paint::{
     BlendMode, Border, BorderStyle, Clip, ClipBounds, Color, Contour, CornerShape, DecorationLine,

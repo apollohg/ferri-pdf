@@ -1,5 +1,7 @@
 //! CSS Masking 1 §7 `mask-*` longhands from their match trees.
-use crate::paint::{AbsoluteColor, BackgroundImage, BoxArea, MaskComposite, MaskMode, Position};
+use crate::paint::{
+    AbsoluteColor, BackgroundClip, BackgroundImage, BoxArea, MaskComposite, MaskMode, Position,
+};
 use crate::style::{
     StyleError, background_values, box_values::unsupported, component::Component, grammar::Keyword,
     units::Relative,
@@ -62,13 +64,13 @@ pub(super) fn origins(value: &Component) -> Result<Vec<BoxArea>, StyleError> {
 }
 
 /// `[ <coord-box> | no-clip ]#`: the clip boxes, and whether each layer is unclipped.
-pub(super) fn clips(value: &Component) -> Result<(Vec<BoxArea>, Vec<bool>), StyleError> {
+pub(super) fn clips(value: &Component) -> Result<(Vec<BackgroundClip>, Vec<bool>), StyleError> {
     value
         .items()
         .iter()
         .map(|item| match item.keyword() {
-            Some(Keyword::NoClip) => Ok((BoxArea::BorderBox, true)),
-            _ => Ok((coord_box(item)?, false)),
+            Some(Keyword::NoClip) => Ok((BackgroundClip::default(), true)),
+            _ => Ok((BackgroundClip::Box(coord_box(item)?), false)),
         })
         .collect::<Result<Vec<_>, StyleError>>()
         .map(|layers| layers.into_iter().unzip())

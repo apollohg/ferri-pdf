@@ -11,6 +11,7 @@ use crate::writer::{
 use krilla::{
     color::rgb,
     geom::Transform,
+    mask::{Mask, MaskType},
     num::NormalizedF32,
     paint::{
         Fill, FillRule, LinearGradient, Pattern, RadialGradient, SpreadMethod, Stop, SweepGradient,
@@ -33,13 +34,54 @@ pub(super) fn draw(
         if blended {
             surface.push_blend_mode(painting::pdf_blend_mode(layer.blend)?);
         }
+        let masked = push_painted_area(paint, layer.painted, viewport, surface)?;
         let drawn = draw_layer(layer, viewport, surface, images);
+        if masked {
+            surface.pop();
+        }
         if blended {
             surface.pop();
         }
         drawn?;
     }
     Ok(())
+}
+
+/// Masks what follows to the part of the painting area that `background-clip` paints: for
+/// `border-area`, what the border styles paint at full opacity (CSS Backgrounds 4). Returns
+/// whether it pushed a mask.
+pub(super) fn push_painted_area(
+    paint: &BoxPaint,
+    painted: crate::graphics::BackgroundClip,
+    viewport: Rect,
+    surface: &mut Surface<'_>,
+) -> Result<bool, PdfError> {
+    if painted != crate::graphics::BackgroundClip::BorderArea {
+        return Ok(false);
+    }
+    // The border styles paint the same area at any opacity of their colours.
+    const OPAQUE: f32 = 1.0;
+    let mut opaque = paint.clone();
+    for border in &mut opaque.decoration.borders {
+        border.color.alpha = OPAQUE;
+    }
+    let mut builder = surface.stream_builder();
+    let mut area = builder.surface();
+    let drawn = opaque.border_fills().into_iter().try_for_each(|fill| {
+        painting::draw_fill(
+            crate::graphics::Fill {
+                color: crate::graphics::Color::BLACK,
+                ..fill
+            },
+            viewport,
+            &mut area,
+        )
+    });
+    area.finish();
+    let stream = builder.finish();
+    drawn?;
+    surface.push_mask(Mask::new(stream, MaskType::Alpha));
+    Ok(true)
 }
 
 /// The painting area restricted to the tile's row or column on axes that do not repeat.

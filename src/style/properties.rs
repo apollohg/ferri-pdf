@@ -993,7 +993,7 @@ fn handler(property: Property) -> Option<Handler> {
         ),
         P::BackgroundClip => (
             background_clip,
-            Some(|v, _| crate::style::background_values::boxes(v).is_ok()),
+            Some(|v, _| crate::style::background_values::clips(v).is_ok()),
         ),
         P::BackgroundAttachment => (
             background_attachment,
@@ -3033,7 +3033,7 @@ background!(background_origin, origins, |value, style, _relative| {
     crate::style::background_values::boxes(value)?
 });
 background!(background_clip, clips, |value, style, _relative| {
-    crate::style::background_values::boxes(value)?
+    crate::style::background_values::clips(value)?
 });
 background!(
     background_attachment,

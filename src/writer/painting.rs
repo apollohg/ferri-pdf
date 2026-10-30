@@ -145,7 +145,18 @@ fn draw_box(
     };
     let background = (|| {
         if let Some(background) = paint.background_fill() {
-            draw_fill(background, background_viewport, surface)?;
+            // The colour is clipped like the bottom layer.
+            let masked = crate::writer::backgrounds::push_painted_area(
+                paint,
+                paint.decoration.backgrounds.color_clip(),
+                background_viewport,
+                surface,
+            )?;
+            let drawn = draw_fill(background, background_viewport, surface);
+            if masked {
+                surface.pop();
+            }
+            drawn?;
         }
         crate::writer::backgrounds::draw(paint, page_area, background_viewport, surface, images)
     })();

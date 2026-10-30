@@ -1,9 +1,9 @@
 //! CSS Backgrounds 3 longhands and CSS Images 4 images and gradients from match trees.
 use crate::paint::{
-    AbsoluteColor, Attachment, BackgroundImage, BackgroundSize, BoxArea, CircleSize, EllipseSize,
-    FadeLayer, Gradient, GradientItem, GradientShape, ImageFunction, Interpolation,
-    LengthPercentage, LineDirection, Position, PositionComponent, RadialEnding, RadialExtent,
-    Repeat, SizeComponent,
+    AbsoluteColor, Attachment, BackgroundClip, BackgroundImage, BackgroundSize, BoxArea,
+    CircleSize, EllipseSize, FadeLayer, Gradient, GradientItem, GradientShape, ImageFunction,
+    Interpolation, LengthPercentage, LineDirection, Position, PositionComponent, RadialEnding,
+    RadialExtent, Repeat, SizeComponent,
 };
 use crate::style::{
     StyleError,
@@ -80,6 +80,12 @@ pub(super) fn repeats(value: &Component) -> Result<Vec<[Repeat; 2]>, StyleError>
 }
 pub(super) fn boxes(value: &Component) -> Result<Vec<BoxArea>, StyleError> {
     list(value, box_area)
+}
+pub(super) fn clips(value: &Component) -> Result<Vec<BackgroundClip>, StyleError> {
+    list(value, |item| match item.keyword() {
+        Some(Keyword::BorderArea) => Ok(BackgroundClip::BorderArea),
+        _ => box_area(item).map(BackgroundClip::Box),
+    })
 }
 pub(super) fn attachments(value: &Component) -> Result<Vec<Attachment>, StyleError> {
     list(value, attachment)
@@ -667,7 +673,7 @@ fn repeat(value: &Component) -> Result<[Repeat; 2], StyleError> {
     Ok([x, parts.get(1).map_or(Ok(x), |y| keyword(y))?])
 }
 
-/// `<visual-box>`; `background-clip`'s `border-area` and `text` are not modelled.
+/// `<visual-box>`.
 pub(super) fn box_area(value: &Component) -> Result<BoxArea, StyleError> {
     match value.keyword() {
         Some(Keyword::BorderBox) => Ok(BoxArea::BorderBox),

@@ -763,7 +763,7 @@ impl<I> BoxPaint<I> {
         if !self.draw_background || self.decoration.background.alpha <= 0.0 {
             return None;
         }
-        let clip = self.background_clip(self.decoration.backgrounds.color_clip());
+        let clip = self.background_clip(self.decoration.backgrounds.color_clip().area());
         if clip.rect.width <= 0.0
             || clip.rect.height <= 0.0
             || clip

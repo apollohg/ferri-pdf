@@ -488,7 +488,10 @@ fn shorthand_layers_reset_omitted_longhands_and_split_position_size_and_boxes() 
         "repeat-y is no-repeat horizontally"
     );
     assert_eq!(backgrounds.origins[0], crate::graphics::BoxArea::PaddingBox);
-    assert_eq!(backgrounds.clips[0], crate::graphics::BoxArea::ContentBox);
+    assert_eq!(
+        backgrounds.clips[0],
+        crate::graphics::BackgroundClip::Box(crate::graphics::BoxArea::ContentBox)
+    );
     let layer = &paint.background_layers(PAGE_AREA).unwrap()[0];
     close(
         "right 4pt places the tile's right edge 4pt inside the padding box",

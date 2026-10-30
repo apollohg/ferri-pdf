@@ -20,7 +20,7 @@ mod shape;
 #[cfg(test)]
 pub(crate) use background::rounded_size;
 pub(crate) use background::{
-    Attachment, BackgroundImage, BackgroundSize, Backgrounds, BoxArea, FadeLayer,
+    Attachment, BackgroundClip, BackgroundImage, BackgroundSize, Backgrounds, BoxArea, FadeLayer,
     INITIAL_IMAGE_SCALE, ImageFunction, ImageRequest, LayerPaint, Position, PositionComponent,
     Repeat, SizeComponent, Source, TileImage, UnresolvedImage, image_size,
 };

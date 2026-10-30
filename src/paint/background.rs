@@ -39,6 +39,27 @@ pub enum Repeat {
     Round,
     NoRepeat,
 }
+/// A layer's `background-clip` (CSS Backgrounds 4): a box, or the area within the border box
+/// that its border paints.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+pub enum BackgroundClip {
+    Box(BoxArea),
+    BorderArea,
+}
+impl Default for BackgroundClip {
+    fn default() -> Self {
+        Self::Box(BoxArea::BorderBox)
+    }
+}
+impl BackgroundClip {
+    /// The box the painting area lies within.
+    pub fn area(self) -> BoxArea {
+        match self {
+            Self::Box(area) => area,
+            Self::BorderArea => BoxArea::BorderBox,
+        }
+    }
+}
 /// `local` behaves as `scroll` because paged boxes never scroll.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
 pub enum Attachment {
@@ -184,7 +205,7 @@ pub struct Backgrounds<I = Infallible> {
     pub sizes: Vec<BackgroundSize>,
     pub repeats: Vec<[Repeat; 2]>,
     pub origins: Vec<BoxArea>,
-    pub clips: Vec<BoxArea>,
+    pub clips: Vec<BackgroundClip>,
     pub attachments: Vec<Attachment>,
     pub blend_modes: Vec<crate::paint::BlendMode>,
 }
@@ -199,7 +220,7 @@ impl<I> Default for Backgrounds<I> {
             sizes: vec![BackgroundSize::default()],
             repeats: vec![[Repeat::Repeat; 2]],
             origins: vec![BoxArea::PaddingBox],
-            clips: vec![BoxArea::BorderBox],
+            clips: vec![BackgroundClip::default()],
             attachments: vec![Attachment::Scroll],
             blend_modes: vec![crate::paint::BlendMode::Normal],
         }
@@ -215,7 +236,7 @@ impl<I> Backgrounds<I> {
             .any(|image| !matches!(image, BackgroundImage::None))
     }
     /// The background colour is clipped like the bottom layer.
-    pub fn color_clip(&self) -> BoxArea {
+    pub fn color_clip(&self) -> BackgroundClip {
         *cycle(&self.clips, self.images.len() - 1)
     }
     /// Treats `fixed` layers as `scroll`, as in a transformed box or its descendants
@@ -484,6 +505,8 @@ pub struct LayerPaint<'a, I = Infallible> {
     pub image: TileImage<'a, I>,
     /// Background painting area.
     pub clip: Clip,
+    /// The part of the painting area the layer paints.
+    pub painted: BackgroundClip,
     /// The tile placed by `background-position`; repeated axes tile from it both ways.
     pub tile: Rect,
     /// Distance between tile origins, including `space` gaps.
@@ -748,7 +771,8 @@ impl<I: ImageInfo> BoxPaint<I> {
                 index,
                 LayerPaint {
                     image,
-                    clip: self.background_clip(*cycle(&backgrounds.clips, index)),
+                    clip: self.background_clip(cycle(&backgrounds.clips, index).area()),
+                    painted: *cycle(&backgrounds.clips, index),
                     tile: Rect {
                         x,
                         y,
