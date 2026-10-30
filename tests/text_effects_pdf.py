@@ -309,6 +309,49 @@ class TextEffectsPdf(unittest.TestCase):
                 self.assert_box(actual, [edge / PX_PER_PT for edge in expected],
                                 f"SVG {style} as the paragraph draws it")
 
+    def ink_runs(self, image, predicate):
+        """The `[left, right)` pixel columns of each horizontal run of pixels satisfying
+        `predicate`."""
+        width, height = image.size
+        pixels = image.load()
+        columns = [any(predicate(pixels[x, y]) for y in range(height)) for x in range(width)]
+        runs = []
+        for x, inked in enumerate(columns):
+            if inked and (not runs or runs[-1][1] != x):
+                runs.append([x, x + 1])
+            elif inked:
+                runs[-1][1] = x + 1
+        return runs
+
+    def test_svg_text_decorations_skip_ink_spaces_and_edges_as_the_document_does(self):
+        """CSS Text Decoration 4 §2.10 on SVG text: `text-decoration-skip-ink: all` interrupts
+        underlines where glyph ink crosses them, `text-decoration-skip` keeps lines from spacers
+        and `text-decoration-inset` starts them inside the declaring box's edges, each as the
+        paragraph draws them."""
+        red = lambda p: p[0] > 200 and p[1] < 80 and p[2] < 80
+        line = "color:black;text-decoration:underline red 2pt;white-space:pre"
+        cases = [
+            ("text-decoration-skip-ink:all", "gjpqy", 3),
+            ("text-decoration-skip-ink:all;font-weight:bold", "gy", 2),
+            ("text-decoration-skip:spaces", "H  H", 2),
+            ("text-decoration-skip:leading-spaces trailing-spaces", "  H  H  ", 1),
+            ("text-decoration-inset:6pt 3pt", "HH", 1),
+            ("text-decoration-skip:edges", "HH", 1),
+            ("text-decoration-inset:auto", "H H", 1),
+        ]
+        for style, text, pieces in cases:
+            with self.subTest(style=style, text=text):
+                expected = self.ink_runs(self.raster(self.render(f"{line};{style}", text)), red)
+                actual = self.ink_runs(self.raster(self.render_svg(f"{line};{style}", text)), red)
+                self.assertGreaterEqual(len(expected), pieces,
+                                        f"the paragraph's line breaks into pieces: {expected}")
+                self.assertEqual(len(actual), len(expected),
+                                 f"SVG pieces {actual} as the paragraph's {expected}")
+                for got, want in zip(actual, expected):
+                    for edge, (got_edge, want_edge) in enumerate(zip(got, want)):
+                        self.assertAlmostEqual(got_edge, want_edge, delta=EDGE_TOLERANCE_PX,
+                                               msg=f"piece edge {edge}: {actual} as {expected}")
+
     def test_svg_text_decorations_fill_with_the_declaring_fill_unless_coloured(self):
         """SVG 2 §11.11: the declaring element's fill paints its lines, which a
         `text-decoration-color` other than `currentcolor` replaces."""

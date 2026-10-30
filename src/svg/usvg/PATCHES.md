@@ -159,3 +159,10 @@ text, each `text-combine-upright` combination composes horizontally in its span'
 the width-specific forms every unit has, compressed to fit one em and centred upright in one
 cell of the column as a single cluster, whose glyphs keep their own characters (CSS Writing
 Modes 4 §9.1). The SVG 2 §6.6 `unicode-bidi` presentation attribute takes part in the cascade.
+
+Decoration lines skip as the document's do (CSS Text Decoration 4 §2.10): `text-decoration-skip`
+keeps them from spacers, or from those starting or ending a chunk, with the spacing before them;
+`text-decoration-inset` and `text-decoration-skip: edges` start them inside the declaring
+element's content edges, where its first and last characters lie; and
+`text-decoration-skip-ink: all` interrupts underlines and overlines where glyph outlines cross
+their band, with the document's clearance.

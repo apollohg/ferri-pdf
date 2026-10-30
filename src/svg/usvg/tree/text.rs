@@ -337,6 +337,8 @@ pub struct TextDecorationStyle {
     /// The declaring element's computed style, whose underline offset and position place the
     /// lines (CSS Text Decoration 4 §2.6–§2.7).
     pub(crate) style: Arc<crate::style::Style>,
+    /// The declaring element's node index.
+    pub(crate) element: usize,
 }
 
 impl TextDecorationStyle {

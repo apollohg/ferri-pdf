@@ -1268,6 +1268,7 @@ fn resolve_decoration(
             stroke: style::resolve_stroke(paint_node, true, state, cache),
             declared: decoration,
             style: text_style(node, state),
+            element: node.index(),
         })
     };
 

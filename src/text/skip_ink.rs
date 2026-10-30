@@ -11,8 +11,8 @@ const SCANLINE_INSET: f32 = 1.0e-4;
 
 /// Closed glyph contours in font units, y up, curves flattened.
 #[derive(Default)]
-struct Polygons {
-    contours: Vec<Vec<[f32; 2]>>,
+pub(crate) struct Polygons {
+    pub(crate) contours: Vec<Vec<[f32; 2]>>,
 }
 impl Polygons {
     fn last(&self) -> [f32; 2] {
@@ -65,7 +65,7 @@ impl OutlineBuilder for Polygons {
 /// Horizontal extents, from the line's left edge, between the leftmost and rightmost ink that
 /// each glyph of `runs` (drawn from the line's left edge and baseline) puts between `[top,
 /// bottom]` below the baseline. Glyphs without an outline count by their bounding box.
-pub(super) fn ink_extents(
+pub(crate) fn ink_extents(
     context: &TextContext<'_>,
     paragraph: &Paragraph,
     runs: &[&GlyphRun],
@@ -125,17 +125,19 @@ pub(super) fn ink_extents(
                             .collect()
                     })
                     .collect();
-                // The line stays hidden inside a glyph's enclosed areas within the band.
-                if let Some(hull) = band_extents(&contours, [top, bottom])
-                    .into_iter()
-                    .reduce(|[left, right], [l, r]| [left.min(l), right.max(r)])
-                {
-                    extents.push(hull);
-                }
+                extents.extend(glyph_extent(&contours, [top, bottom]));
             }
         }
     }
     Ok(merge(extents))
+}
+
+/// The extent the ink of one glyph's `contours` puts in `[top, bottom]`: the line stays hidden
+/// inside a glyph's enclosed areas within the band.
+pub(crate) fn glyph_extent(contours: &[Vec<[f32; 2]>], band: [f32; 2]) -> Option<[f32; 2]> {
+    band_extents(contours, band)
+        .into_iter()
+        .reduce(|[left, right], [l, r]| [left.min(l), right.max(r)])
 }
 
 /// The horizontal projection of the nonzero-filled `contours` within `[top, bottom]`: the
@@ -219,7 +221,7 @@ fn filled_spans(edges: &[[[f32; 2]; 2]], y: f32) -> Vec<[f32; 2]> {
 }
 
 /// Sorted, disjoint extents covering `extents`.
-fn merge(mut extents: Vec<[f32; 2]>) -> Vec<[f32; 2]> {
+pub(crate) fn merge(mut extents: Vec<[f32; 2]>) -> Vec<[f32; 2]> {
     extents.sort_by(|a, b| a[0].total_cmp(&b[0]));
     let mut merged: Vec<[f32; 2]> = Vec::with_capacity(extents.len());
     for [left, right] in extents {
@@ -232,7 +234,7 @@ fn merge(mut extents: Vec<[f32; 2]>) -> Vec<[f32; 2]> {
 }
 
 /// `extent` without the parts within `clearance` of `ink`, which is sorted and disjoint.
-pub(super) fn subtract([left, right]: [f32; 2], ink: &[[f32; 2]], clearance: f32) -> Vec<[f32; 2]> {
+pub(crate) fn subtract([left, right]: [f32; 2], ink: &[[f32; 2]], clearance: f32) -> Vec<[f32; 2]> {
     let mut pieces = Vec::new();
     let mut start = left;
     for &[ink_left, ink_right] in ink {

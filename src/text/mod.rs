@@ -15,7 +15,7 @@ pub(crate) mod line_boxes;
 mod paragraph;
 mod ruby;
 pub(crate) mod shaping;
-mod skip_ink;
+pub(crate) mod skip_ink;
 mod spacing;
 mod spacing_trim;
 pub(crate) mod tabs;

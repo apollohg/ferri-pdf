@@ -283,7 +283,8 @@ pub(crate) fn layout_text(
     let mut line = 0;
     let mut block_offset = 0.0;
     let mut bbox = BBox::default();
-    for chunk in &text_node.chunks {
+    let elements = ElementSpans::of(text_node);
+    for (chunk_index, chunk) in text_node.chunks.iter().enumerate() {
         char_offset += chunk.line_breaks;
         for _ in 0..chunk.line_breaks {
             block_offset += lines.advance(line);
@@ -351,13 +352,14 @@ pub(crate) fn layout_text(
             }
         }
 
-        for span in &chunk.spans {
+        let skipped = skipped_clusters(chunk, &clusters);
+        for (span_index, span) in chunk.spans.iter().enumerate() {
             let font = match fonts_cache.get(&span.font) {
                 Some(v) => v,
                 None => continue,
             };
 
-            let decoration_spans = collect_decoration_spans(span, &clusters);
+            let decoration_spans = collect_decoration_spans(span, &clusters, &skipped);
 
             let mut span_ts = text_ts;
             span_ts = span_ts.pre_translate(x, y);
@@ -376,14 +378,20 @@ pub(crate) fn layout_text(
                 (DecorationLine::LineThrough, &span.decoration.line_through),
             ]
             .map(|(line, decoration)| {
+                let decoration = decoration.as_ref()?;
                 let path = convert_decoration(
                     line,
                     span,
                     font,
-                    decoration.as_ref()?,
-                    &decoration_spans,
+                    decoration,
+                    Decorated {
+                        spans: &decoration_spans,
+                        clusters: &clusters,
+                        edges: elements.edges(decoration.element, (chunk_index, span_index)),
+                    },
                     text_node.writing_mode,
                     span_ts,
+                    (resolver, &mut *fontdb),
                 )?;
                 bbox = bbox.expand(path.data.bounds());
                 Some(path)
@@ -684,38 +692,130 @@ fn convert_span(
     Some((span_clusters, bbox))
 }
 
-fn collect_decoration_spans(span: &TextSpan, clusters: &[GlyphCluster]) -> Vec<DecorationSpan> {
+/// The pieces of the decoration lines over `span`'s clusters, which split where a relative
+/// shift moves a cluster or `skipped` keeps lines from it. A skipped piece takes the spacing
+/// after the cluster before it too, as the document's decorations skip spacers.
+fn collect_decoration_spans(
+    span: &TextSpan,
+    clusters: &[GlyphCluster],
+    skipped: &[bool],
+) -> Vec<DecorationSpan> {
     let mut spans = Vec::new();
-
-    let mut started = false;
-    let mut width = 0.0;
-    let mut transform = Transform::default();
-
-    for cluster in clusters {
-        if span_contains(span, cluster.byte_idx) {
-            if started && cluster.has_relative_shift {
-                started = false;
-                spans.push(DecorationSpan { width, transform });
+    let mut current: Option<DecorationSpan> = None;
+    for (index, cluster) in clusters.iter().enumerate() {
+        let contained = span_contains(span, cluster.byte_idx);
+        if contained && cluster.has_relative_shift {
+            spans.extend(current.take());
+        }
+        if contained && !skipped[index] {
+            match &mut current {
+                Some(piece) => {
+                    piece.width += cluster.advance;
+                    piece.clusters.end = index + 1;
+                }
+                None => {
+                    current = Some(DecorationSpan {
+                        width: cluster.advance,
+                        transform: cluster.transform,
+                        clusters: index..index + 1,
+                    });
+                }
             }
-
-            if !started {
-                width = cluster.advance;
-                started = true;
-                transform = cluster.transform;
-            } else {
-                width += cluster.advance;
+        } else if let Some(mut piece) = current.take() {
+            if contained {
+                let before = &clusters[index - 1];
+                piece.width -= before.advance - before.width;
             }
-        } else if started {
-            spans.push(DecorationSpan { width, transform });
-            started = false;
+            spans.push(piece);
         }
     }
-
-    if started {
-        spans.push(DecorationSpan { width, transform });
-    }
-
+    spans.extend(current);
     spans
+}
+
+/// Which of `clusters`, the chunk's in visual order, `text-decoration-skip` keeps decoration
+/// lines from (CSS Text Decoration 4 §2.10.4): spacers under `spaces` of their element, and
+/// those starting or ending the chunk's line under `leading-spaces` or `trailing-spaces`. SVG
+/// text has neither the atomic inlines nor the box decorations that `objects` and
+/// `box-decoration` skip (SVG 2 §11.10).
+fn skipped_clusters(chunk: &TextChunk, clusters: &[GlyphCluster]) -> Vec<bool> {
+    let skip = |cluster: &GlyphCluster| {
+        chunk_span_at(chunk, cluster.byte_idx)
+            .map(|span| span.style.text_decorations.skip)
+            .unwrap_or_default()
+    };
+    let spacer = |cluster: &GlyphCluster| crate::text::decoration::is_spacer(cluster.codepoint);
+    let mut skipped: Vec<bool> = clusters
+        .iter()
+        .map(|cluster| spacer(cluster) && skip(cluster).spaces)
+        .collect();
+    let forwards: Vec<usize> = (0..clusters.len()).collect();
+    let backwards: Vec<usize> = forwards.iter().rev().copied().collect();
+    let (start, end) = if chunk.rtl {
+        (backwards, forwards)
+    } else {
+        (forwards, backwards)
+    };
+    for (order, leading) in [(start, true), (end, false)] {
+        for index in order {
+            let cluster = &clusters[index];
+            if !spacer(cluster) {
+                break;
+            }
+            let skip = skip(cluster);
+            skipped[index] |= if leading {
+                skip.leading_spaces
+            } else {
+                skip.trailing_spaces
+            };
+        }
+    }
+    skipped
+}
+
+/// The first and last spans, by chunk and span index, holding each element's text.
+struct ElementSpans {
+    extents: HashMap<usize, [(usize, usize); 2]>,
+    /// The text's own first and last spans, which hold the text of elements outside it.
+    whole: [(usize, usize); 2],
+}
+impl ElementSpans {
+    fn of(text: &Text) -> Self {
+        let mut extents = HashMap::new();
+        let mut whole: Option<[(usize, usize); 2]> = None;
+        for (chunk_index, chunk) in text.chunks.iter().enumerate() {
+            for (span_index, span) in chunk.spans.iter().enumerate() {
+                let at = (chunk_index, span_index);
+                for (element, _) in span.ancestry.iter() {
+                    extents
+                        .entry(*element)
+                        .and_modify(|extent: &mut [(usize, usize); 2]| extent[1] = at)
+                        .or_insert([at; 2]);
+                }
+                whole.get_or_insert([at; 2])[1] = at;
+            }
+        }
+        Self {
+            extents,
+            whole: whole.unwrap_or_default(),
+        }
+    }
+    /// Whether the span at `at` holds the start and the end of `element`'s text, where the
+    /// content edges of its box lie.
+    fn edges(&self, element: usize, at: (usize, usize)) -> [bool; 2] {
+        self.extents
+            .get(&element)
+            .unwrap_or(&self.whole)
+            .map(|edge| edge == at)
+    }
+}
+
+/// The pieces of a span's decoration lines, the chunk's clusters they lie over, and whether
+/// the span holds the start and end edges of the declaring element's box.
+pub(crate) struct Decorated<'a> {
+    spans: &'a [DecorationSpan],
+    clusters: &'a [GlyphCluster],
+    edges: [bool; 2],
 }
 
 /// The `line` a span's decoration draws, as the HTML text's lines are placed and styled (CSS
@@ -728,12 +828,12 @@ pub(crate) fn convert_decoration(
     span: &TextSpan,
     font: &ResolvedFont,
     decoration: &TextDecorationStyle,
-    decoration_spans: &[DecorationSpan],
+    decorated: Decorated<'_>,
     writing_mode: WritingMode,
     transform: Transform,
+    (resolver, fontdb): (&dyn FontProvider, &mut Arc<Database>),
 ) -> Option<Path> {
     use crate::style::POINTS_PER_PIXEL;
-    debug_assert!(!decoration_spans.is_empty());
 
     // The declaring element's style measures in points.
     let size = span.font_size.get() * POINTS_PER_PIXEL;
@@ -755,27 +855,56 @@ pub(crate) fn convert_decoration(
             }
         }
     };
-    let [top, thickness] = metrics
-        .place(line, &decoration.declared, &decoration.style)
+    let placed = metrics.place(line, &decoration.declared, &decoration.style);
+    // CSS Text Decoration 4 `text-decoration-inset`, at the declaring box's content edges on
+    // its start and end sides.
+    let [start, end] = crate::text::decoration::inset_lengths(&decoration.declared, placed[1])
         .map(|length| length / POINTS_PER_PIXEL);
+    let [top, thickness] = placed.map(|length| length / POINTS_PER_PIXEL);
     let (style, color) = decoration.declared.paint();
+    let [mut left, mut right] = [(decorated.edges[0], start), (decorated.edges[1], end)]
+        .map(|(edge, inset)| if edge { inset } else { 0.0 });
+    if decoration.style.used_rtl() {
+        std::mem::swap(&mut left, &mut right);
+    }
+    let last = decorated.spans.len().saturating_sub(1);
+    let skip_ink = decoration.declared.skip_ink && line != DecorationLine::LineThrough;
 
     let mut builder = tiny_skia_path::PathBuilder::new();
-    for dec_span in decoration_spans {
+    for (index, dec_span) in decorated.spans.iter().enumerate() {
+        let x = if index == 0 { left } else { 0.0 };
+        let width = dec_span.width - x - if index == last { right } else { 0.0 };
+        if width <= 0.0 {
+            continue;
+        }
         let paint = crate::paint::DecorationPaint {
             line,
             style,
             color: crate::paint::Color::BLACK,
             rect: crate::paint::Rect {
-                x: 0.0,
+                x,
                 y: top,
-                width: dec_span.width,
+                width,
                 height: thickness,
             },
             owner: None,
             positioned: None,
         };
-        for fill in paint.fills() {
+        let pieces = if skip_ink {
+            let Ok(pieces) = crate::text::decoration::interrupted(paint, |band| {
+                Ok::<_, std::convert::Infallible>(glyph_ink(
+                    span,
+                    &decorated.clusters[dec_span.clusters.clone()],
+                    dec_span.transform,
+                    band,
+                    (resolver, &mut *fontdb),
+                ))
+            });
+            pieces
+        } else {
+            vec![paint]
+        };
+        for fill in pieces.iter().flat_map(crate::paint::DecorationPaint::fills) {
             if let Some(path) = crate::paint::shape_outline(&fill.shape)
                 .and_then(|path| path.transform(dec_span.transform))
             {
@@ -808,10 +937,75 @@ pub(crate) fn convert_decoration(
 ///
 /// Basically a horizontal line, that will be used for underline, overline and line-through.
 /// It doesn't have a height, since it depends on the Font metrics.
-#[derive(Clone, Copy)]
+#[derive(Clone)]
 pub(crate) struct DecorationSpan {
     pub(crate) width: f32,
     pub(crate) transform: Transform,
+    /// The chunk's clusters it lies over.
+    clusters: std::ops::Range<usize>,
+}
+
+/// The sorted, disjoint extents along a decoration piece, whose frame `frame` places, that the
+/// glyph ink of `clusters` of `span` puts in its band `[top, bottom]` (CSS Text Decoration 4
+/// §2.10.5).
+fn glyph_ink(
+    span: &TextSpan,
+    clusters: &[GlyphCluster],
+    frame: Transform,
+    band: [f32; 2],
+    (resolver, fontdb): (&dyn FontProvider, &mut Arc<Database>),
+) -> Vec<[f32; 2]> {
+    use crate::svg::usvg::text::flatten::DatabaseExt;
+    use rustybuzz::ttf_parser::OutlineBuilder;
+    let Some(inverse) = frame.invert() else {
+        return Vec::new();
+    };
+    let mut extents = Vec::new();
+    for cluster in clusters {
+        for glyph in cluster.glyphs.iter().flat_map(PositionedGlyph::copies) {
+            let Some(outline) = fontdb
+                .outline_with_variations(
+                    glyph.font,
+                    glyph.id,
+                    &resolver.variations(&span.font, glyph.font),
+                    glyph.font_size(),
+                    span.font_optical_sizing,
+                )
+                .and_then(|outline| {
+                    outline.transform(
+                        inverse
+                            .pre_concat(cluster.transform)
+                            .pre_concat(glyph.outline_transform()),
+                    )
+                })
+            else {
+                continue;
+            };
+            let mut polygons = crate::text::skip_ink::Polygons::default();
+            for segment in outline.segments() {
+                match segment {
+                    tiny_skia_path::PathSegment::MoveTo(point) => {
+                        polygons.move_to(point.x, point.y);
+                    }
+                    tiny_skia_path::PathSegment::LineTo(point) => {
+                        polygons.line_to(point.x, point.y);
+                    }
+                    tiny_skia_path::PathSegment::QuadTo(control, point) => {
+                        polygons.quad_to(control.x, control.y, point.x, point.y);
+                    }
+                    tiny_skia_path::PathSegment::CubicTo(first, second, point) => {
+                        polygons.curve_to(first.x, first.y, second.x, second.y, point.x, point.y)
+                    }
+                    tiny_skia_path::PathSegment::Close => polygons.close(),
+                }
+            }
+            extents.extend(crate::text::skip_ink::glyph_extent(
+                &polygons.contours,
+                band,
+            ));
+        }
+    }
+    crate::text::skip_ink::merge(extents)
 }
 
 /// Resolves clusters positions.

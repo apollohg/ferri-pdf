@@ -192,7 +192,9 @@ pub(crate) fn paint(
                 if decoration.skip_ink && kind != DecorationLine::LineThrough {
                     let runs: Vec<_> = decorated.runs.iter().map(|&run| &line.runs[run]).collect();
                     for paint in lines {
-                        paints.extend(skip_ink(context, paragraph, &runs, paint)?);
+                        paints.extend(interrupted(paint, |band| {
+                            crate::text::skip_ink::ink_extents(context, paragraph, &runs, band)
+                        })?);
                     }
                 } else {
                     paints.extend(lines);
@@ -203,14 +205,13 @@ pub(crate) fn paint(
     Ok(paints)
 }
 
-/// `paint` interrupted where the glyphs of `runs` put ink in the band it paints, with a
-/// clearance to either side (CSS Text Decoration 4 §2.10.5).
-fn skip_ink(
-    context: &TextContext<'_>,
-    paragraph: &Paragraph,
-    runs: &[&crate::text::GlyphRun],
+/// `paint` interrupted where glyph ink lies in the band `[top, bottom]` it paints, which `ink`
+/// gives as sorted, disjoint extents, with a clearance to either side (CSS Text Decoration 4
+/// §2.10.5).
+pub(crate) fn interrupted<E>(
     paint: DecorationPaint,
-) -> Result<Vec<DecorationPaint>, TextError> {
+    ink: impl FnOnce([f32; 2]) -> Result<Vec<[f32; 2]>, E>,
+) -> Result<Vec<DecorationPaint>, E> {
     let Some(band) = paint
         .fills()
         .iter()
@@ -219,12 +220,7 @@ fn skip_ink(
     else {
         return Ok(Vec::new());
     };
-    let ink = crate::text::skip_ink::ink_extents(
-        context,
-        paragraph,
-        runs,
-        [band.y, band.y + band.height],
-    )?;
+    let ink = ink([band.y, band.y + band.height])?;
     let clearance = paint.rect.height * SKIP_INK_CLEARANCE_THICKNESSES;
     Ok(crate::text::skip_ink::subtract(
         [paint.rect.x, paint.rect.x + paint.rect.width],
@@ -243,6 +239,19 @@ fn skip_ink(
     .collect())
 }
 
+/// `[start, end]` amounts by which lines `thickness` thick that `decoration` draws start inside
+/// its box's content edges (CSS Text Decoration 4 `text-decoration-inset`), in points.
+pub(crate) fn inset_lengths(decoration: &TextDecoration, thickness: f32) -> [f32; 2] {
+    let automatic = thickness * AUTO_INSET_THICKNESSES;
+    match decoration.inset {
+        DecorationInset::Auto => [automatic; 2],
+        DecorationInset::Lengths(lengths) if decoration.edges => {
+            lengths.map(|length| length + automatic)
+        }
+        DecorationInset::Lengths(lengths) => lengths,
+    }
+}
+
 /// `[left, right]` amounts by which the lines `decoration` of `decorating` start inside its
 /// content edges on this line (CSS Text Decoration 4 `text-decoration-inset`): only where an
 /// edge of the box lies on the line, which every fragment of a cloned box has.
@@ -253,14 +262,7 @@ fn inset(
     decoration: &TextDecoration,
     thickness: f32,
 ) -> [f32; 2] {
-    let automatic = thickness * AUTO_INSET_THICKNESSES;
-    let [start, end] = match decoration.inset {
-        DecorationInset::Auto => [automatic; 2],
-        DecorationInset::Lengths(lengths) if decoration.edges => {
-            lengths.map(|length| length + automatic)
-        }
-        DecorationInset::Lengths(lengths) => lengths,
-    };
+    let [start, end] = inset_lengths(decoration, thickness);
     let rtl = decorating.style.used_rtl();
     let [left_edge, right_edge] = match decorating.owner {
         None => {
@@ -435,7 +437,7 @@ fn stretches(paragraph: &Paragraph, line: &Line) -> Vec<Stretch> {
 
 /// CSS Text Decoration 4 §2.10.4: a spacer is a character with the Unicode `White_Space`
 /// property other than U+202F NARROW NO-BREAK SPACE, or a word separator.
-fn is_spacer(character: char) -> bool {
+pub(crate) fn is_spacer(character: char) -> bool {
     (character.is_whitespace() && character != NARROW_NO_BREAK_SPACE)
         || WORD_SEPARATORS.contains(&character)
 }
