@@ -2148,6 +2148,7 @@ impl<'a> FlowFrame<'a> {
                     .and_then(|columns| columns.length)
                     .or_else(|| vertical.definite()),
                 orthogonal.is_some(),
+                block.block.column_text_trim(),
             )?;
             has_forced = edges.iter().any(|edge| edge.is_forced()) || columns.forces_page;
             items.push(FlowItem::Columns(Box::new(columns)));

@@ -943,6 +943,9 @@ pagination_state! {
     margin_start: MarginStart,
     pending: Vec<MarginStrut<'a>>,
     pending_break: Option<Forced>,
+    /// Where the last line box placed ends, and how much trimming its block-end side
+    /// removes once it proves to end its fragment (CSS Inline 3 §6.2).
+    trailing_line: Option<(f32, f32)>,
     floats: Vec<crate::layout::floats::FloatContext>,
     fragmentainers: Fragmentainers<'a, 't>,
     anchors: crate::layout::anchors::Measurements,
@@ -1090,6 +1093,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             margin_start: MarginStart::Initial,
             pending: Vec::new(),
             pending_break: None,
+            trailing_line: None,
             floats: vec![crate::layout::floats::FloatContext::default()],
             fragmentainers,
             anchors: Default::default(),
@@ -1314,6 +1318,30 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             })
             .sum()
     }
+    /// The sides of the current fragment's first and last formatted lines that trim: those of
+    /// a cloned box continuing from an earlier fragment, or else of every column (CSS
+    /// Inline 3 §6.2). Trimming does not reach through flex, grid or table layout.
+    fn fragment_text_trim(&self) -> [bool; 2] {
+        for active in self.boxes.iter().rev() {
+            let Some(geometry) = &active.geometry else {
+                continue;
+            };
+            let style = geometry.source.style();
+            if style.display.is_item_container() || style.display.is_table() {
+                return [false; 2];
+            }
+            if active.clone
+                && geometry.content_top.0 < self.page
+                && style.text_box.trim.contains(&true)
+            {
+                return style.text_box.trim;
+            }
+        }
+        match &self.fragmentainers {
+            Fragmentainers::Columns(rows) => rows.text_trim(),
+            Fragmentainers::Pages(_) => [false; 2],
+        }
+    }
     /// Whether the innermost box whose decoration repeats at the fragment start trims the
     /// margins adjoining that edge (CSS Box 4 §3.3, CSS Fragmentation 3 §5.4): a cloned edge
     /// is the box's edge again, so margins kept after a forced break still adjoin it.
@@ -1334,8 +1362,13 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         if self.unbroken == 0
             && let Fragmentainers::Columns(rows) = &mut self.fragmentainers
         {
-            rows.leave(self.page, self.y);
+            let end = match self.trailing_line {
+                Some((y, trim)) if (self.y - y).abs() <= FRAGMENTATION_TOLERANCE_PT => y - trim,
+                _ => self.y,
+            };
+            rows.leave(self.page, end);
         }
+        self.trailing_line = None;
         self.page = page;
         if self.unbroken == 0 {
             self.furthest_page = self.furthest_page.max(page);

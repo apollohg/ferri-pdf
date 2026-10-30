@@ -246,29 +246,47 @@ fn deep_native_flow(label: &str, positioned: bool, stacking: bool, columns: bool
 }
 
 #[test]
-fn implicit_columns_preserve_the_existing_unsupported_fragment_combinations() {
-    for (declaration, feature) in [
-        (
-            "continue:discard",
-            "continue: discard on a multi-column container",
-        ),
-        (
-            "text-box-trim:trim-both",
-            "text-box-trim on a multi-column container",
-        ),
-    ] {
+fn implicit_columns_keep_their_content_and_trim_only_the_box_edges() {
+    let lines = |declaration: &str| {
         let html = format!(
-            "<style>section{{writing-mode:vertical-rl;width:60pt;{declaration}}}</style>\
+            "<style>section{{writing-mode:vertical-rl;width:30pt;{declaration}}}</style>\
              <section>A<br>B<br>C<br>D</section>"
         );
-        let error = crate::render_html(&html, &common::local_options())
-            .err()
-            .expect("implicit columns must retain the explicit-column restriction");
-        assert!(
-            error.to_string().contains(feature),
-            "{declaration}: expected the precise unsupported combination, got {error}"
-        );
-    }
+        crate::render_html(&html, &common::local_options())
+            .unwrap_or_else(|error| panic!("{declaration}: {error}"))
+            .layout
+            .unwrap()
+            .pages
+            .concat()
+            .into_iter()
+            .map(|line| (line.text, line.x, line.baseline))
+            .collect::<Vec<_>>()
+    };
+    let plain = lines("");
+    assert_eq!(
+        plain.len(),
+        4,
+        "two implicit columns of two lines: {plain:?}"
+    );
+    assert!(
+        plain[2].1 > plain[0].1,
+        "the third line starts a second column"
+    );
+    assert_eq!(
+        lines("continue:discard"),
+        plain,
+        "an orthogonal flow's implicit columns are not overflow columns to discard"
+    );
+    let trimmed = lines("text-box-trim:trim-start");
+    assert!(
+        trimmed[0].2 < plain[0].2,
+        "the box's first formatted line trims: {trimmed:?}"
+    );
+    assert_eq!(
+        trimmed[2..],
+        plain[2..],
+        "implicit columns are not a multi-column container's columns to trim"
+    );
 }
 
 #[test]

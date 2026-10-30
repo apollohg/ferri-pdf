@@ -191,6 +191,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         self.page_content = position.page_content || self.page_content;
         self.pending = position.pending;
         self.pending_break = position.pending_break;
+        self.trailing_line = None;
         self.floats = position.floats;
         self.offset = position.offset;
         self.context = position.context;

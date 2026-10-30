@@ -69,6 +69,9 @@ pub(super) struct ColumnRows {
     offset: [f32; 2],
     extents: Vec<f32>,
     ends: Vec<RowEnd>,
+    /// The sides of each column's first and last formatted lines that are trimmed (CSS
+    /// Inline 3 §6.2).
+    text_trim: [bool; 2],
 }
 impl ColumnRows {
     fn new(geometry: ColumnGeometry, provisional: f32) -> Self {
@@ -80,7 +83,11 @@ impl ColumnRows {
             offset: [0.0; 2],
             extents: Vec::new(),
             ends: Vec::new(),
+            text_trim: [false; 2],
         }
+    }
+    pub(super) fn text_trim(&self) -> [bool; 2] {
+        self.text_trim
     }
     fn geometry(&self, row: usize) -> ColumnGeometry {
         self.frames
@@ -254,6 +261,7 @@ pub(super) struct ColumnCursor<'a, 't> {
     remaining: Option<f32>,
     containing_height: Option<f32>,
     segments: std::vec::IntoIter<ColumnSegment<'a>>,
+    text_trim: [bool; 2],
     tail: BreakTail,
     spanner: Option<(Box<FlowCursor<'a, 't>>, f32)>,
     row: Option<ColumnRow<'a, 't>>,
@@ -280,6 +288,7 @@ impl<'a: 't, 't: 'a> ColumnCursor<'a, 't> {
             remaining: columns.definite,
             containing_height: columns.definite,
             segments: columns.segments.into_iter(),
+            text_trim: columns.text_trim,
             tail,
             spanner: None,
             row: None,
@@ -675,6 +684,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     cursor.geometry,
                     cursor.containing_height,
                     balance,
+                    cursor.text_trim,
                 )?);
             }
             if let Some(row) = cursor.row.take() {
@@ -743,6 +753,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         geometry: ColumnGeometry,
         containing_height: Option<f32>,
         balance: Balance,
+        text_trim: [bool; 2],
     ) -> Result<ColumnRow<'a, 't>, LayoutError> {
         self.flush_margin();
         let start = FlowStart {
@@ -771,6 +782,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             },
         );
         rows.containing_height = containing_height;
+        rows.text_trim = text_trim;
         Ok(ColumnRow {
             tail,
             layout: ColumnLayout::new(self.measurer, items, rows, &start)?,
@@ -1236,6 +1248,7 @@ pub(crate) fn measure_columns<'a>(
                     );
                     let mut rows = ColumnRows::new(columns.geometry, available);
                     rows.containing_height = columns.definite;
+                    rows.text_trim = columns.text_trim;
                     let mut layout = ColumnLayout::new(measurer, items, rows, &start)?;
                     loop {
                         let frame = frame_height(remaining, available, measurer.unbroken);

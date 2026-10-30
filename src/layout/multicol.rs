@@ -263,6 +263,8 @@ pub(super) struct MeasuredColumns<'a> {
     pub break_after: BreakBetween,
     /// The content holds a forced page break.
     pub forces_page: bool,
+    /// The sides of each column's first and last formatted lines that are trimmed.
+    pub text_trim: [bool; 2],
 }
 
 /// Measures a multi-column container's content flow, already measured at the column width.
@@ -273,15 +275,8 @@ pub(super) fn measure<'a>(
     content: Vec<FlowItem<'a>>,
     definite: Option<f32>,
     orthogonal: bool,
+    text_trim: [bool; 2],
 ) -> Result<MeasuredColumns<'a>, Failure> {
-    if style.text_box.trim.contains(&true) {
-        return Err(
-            super::LayoutError::Style(crate::style::StyleError::Unsupported(
-                "text-box-trim on a multi-column container's columns".into(),
-            ))
-            .into(),
-        );
-    }
     let forces_page = forces_page(&content);
     let wraps = wraps(&content);
     let edge = |item: Option<&FlowItem<'_>>, after: bool| match item {
@@ -327,6 +322,7 @@ pub(super) fn measure<'a>(
         break_before,
         break_after,
         forces_page,
+        text_trim,
     };
     let measurement = crate::layout::pagination::measure_columns(measurer, &columns)?;
     columns.height = measurement.height;

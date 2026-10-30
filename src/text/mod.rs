@@ -53,7 +53,7 @@ const SYNTHETIC_BOLD_OFFSET_EM: f32 = 0.02;
 /// Maximum conservative cluster-shaping and fallback-probe work in one text context.
 pub(crate) const MAX_GLYPH_MATCH_WORK: usize = 100_000_000;
 use line_boxes::{Piece, Slot};
-pub(crate) use paragraph::{ParagraphClamp, PreparedParagraph, TextPosition};
+pub(crate) use paragraph::{ParagraphClamp, PreparedParagraph, TextPosition, trim_line};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
 pub(crate) enum GlyphOrientation {

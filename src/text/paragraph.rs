@@ -393,18 +393,8 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             paragraph.text_box_trim[0] && line.range.start == 0,
             paragraph.text_box_trim[1] && line.range.end == paragraph.text().len(),
         ];
-        if !line.phantom && trim.contains(&true) {
-            // The trimmed side moves to the root inline box's `text-box-edge` metric.
-            let root = line_boxes::BoxMetrics::of(prepared.context, paragraph.style())?;
-            let edges = paragraph.style().text_box.edges;
-            if trim[0] {
-                let over = -root.edge(edges[0], false);
-                line.height -= line.ascent - over;
-                line.ascent = over;
-            }
-            if trim[1] {
-                line.height = line.ascent + root.edge(edges[1], true);
-            }
+        if !line.phantom {
+            trim_line(prepared.context, paragraph.style(), &mut line, trim)?;
         }
         line.hanging =
             line.hangable
@@ -693,4 +683,28 @@ pub(super) fn indent_at(
     let first = offset == 0 && (paragraph.first_formatted_line() || indent.each_line);
     let forced = indent.each_line && after_forced_break(opportunities, offset);
     indent.resolve(basis, first, forced)
+}
+
+/// Trims the sides of `line` that `trim` names, block-start then block-end, to the
+/// `text-box-edge` metrics of its root inline box (CSS Inline 3 §6.2).
+pub(crate) fn trim_line(
+    context: &TextContext<'_>,
+    style: &crate::style::Style,
+    line: &mut Line,
+    trim: [bool; 2],
+) -> Result<(), TextError> {
+    if !trim.contains(&true) {
+        return Ok(());
+    }
+    let root = line_boxes::BoxMetrics::of(context, style)?;
+    let edges = style.text_box.edges;
+    if trim[0] {
+        let over = -root.edge(edges[0], false);
+        line.height -= line.ascent - over;
+        line.ascent = over;
+    }
+    if trim[1] {
+        line.height = line.ascent + root.edge(edges[1], true);
+    }
+    Ok(())
 }

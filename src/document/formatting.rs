@@ -119,6 +119,9 @@ pub(crate) struct BlockBox {
     initial_letter: Option<InitialLetterBox>,
     /// The rendered legend of its fieldset parent (HTML §15.3.12).
     rendered_legend: bool,
+    /// The block-start and block-end sides of every column's first and last formatted lines
+    /// that a multi-column container trims (CSS Inline 3 §6.2).
+    column_text_trim: [bool; 2],
 }
 
 /// An initial letter box (CSS Inline 3 §7.5): an atomic inline of its originating line that
@@ -394,7 +397,11 @@ impl BlockBox {
             enclosing_inline: Vec::new(),
             initial_letter: None,
             rendered_legend: false,
+            column_text_trim: [false; 2],
         }
+    }
+    pub(crate) fn column_text_trim(&self) -> [bool; 2] {
+        self.column_text_trim
     }
     pub(crate) fn leading_events(&self) -> impl Iterator<Item = &crate::document::SemanticEvent> {
         self.children
@@ -500,7 +507,7 @@ impl BlockBox {
     /// ancestors in `requested` trim (CSS Inline 3 §6.2): trimming passes into the first and
     /// last in-flow child blocks without padding or borders on that side, but not into or
     /// through flex, grid or table formatting contexts.
-    pub(super) fn trim_text_boxes(&mut self, requested: [bool; 2]) -> Result<(), DocumentError> {
+    pub(super) fn trim_text_boxes(&mut self, requested: [bool; 2]) {
         let mut pending = vec![(self, requested)];
         while let Some((block, requested)) = pending.pop() {
             // An inline initial letter's line box is trimmed to its alignment points (CSS Inline 3
@@ -511,23 +518,13 @@ impl BlockBox {
                 requested
             };
             let own = block.style.text_box.trim;
-            if own.contains(&true) {
-                if block.style.multicol.is_multicol() {
-                    return Err(StyleError::Unsupported(
-                        "text-box-trim on a multi-column container's columns".into(),
-                    )
-                    .into());
-                }
-                if block.style.clone_decoration {
-                    return Err(StyleError::Unsupported(
-                        "text-box-trim on each fragment of a box-decoration-break: clone box"
-                            .into(),
-                    )
-                    .into());
-                }
-            }
             let display = &block.style.display;
             let requested = if display.is_item_container() || display.is_table() {
+                [false; 2]
+            } else if block.style.multicol.is_multicol() {
+                // Trimming a multi-column container's first and last formatted lines trims
+                // those of every column, which pagination finds.
+                block.column_text_trim = [0, 1].map(|side| own[side] || requested[side]);
                 [false; 2]
             } else {
                 [0, 1].map(|side| own[side] || requested[side])
@@ -576,7 +573,6 @@ impl BlockBox {
                 }
             }
         }
-        Ok(())
     }
     /// In-flow children in flex order or table caption/group layout order.
     pub(crate) fn in_flow_children(&self) -> Vec<&BlockContent> {
@@ -2760,13 +2756,13 @@ pub(crate) fn build(
         &mut traversal,
         &mut resources,
     )?;
-    root.trim_text_boxes([false; 2])?;
+    root.trim_text_boxes([false; 2]);
     for block in traversal
         .strings
         .running_blocks_mut()
         .chain(&mut traversal.footnotes)
     {
-        block.trim_text_boxes([false; 2])?;
+        block.trim_text_boxes([false; 2]);
     }
     // Writing Modes 4 §8: HTML's first body supplies the root's used flow after style computation.
     if let Some(body) = html.body_element() {

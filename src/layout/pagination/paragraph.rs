@@ -758,8 +758,30 @@ impl<'a> Paginator<'a, '_, 'a> {
             if take == 0 {
                 break 'fragment;
             }
+            let fragment_trim = self.fragment_text_trim();
             for mut line in lines.by_ref().take(take) {
                 self.measurer.work.spend(line.range.len().max(1))?;
+                // CSS Inline 3 §6.2: the first and last formatted lines of each column, and of
+                // each fragment of a cloned box, trim unless the paragraph already trims them.
+                let trimmed = [
+                    source.text_box_trim[0] && line.range.start == 0,
+                    source.text_box_trim[1] && line.range.end == source.text().len(),
+                ];
+                if !line.phantom
+                    && fragment_trim[0]
+                    && !trimmed[0]
+                    && !self.has_flow
+                    && self.y <= FRAGMENTATION_TOLERANCE_PT
+                {
+                    crate::text::trim_line(text, style, &mut line, [true, false])?;
+                }
+                let end_trim = if !line.phantom && fragment_trim[1] && !trimmed[1] {
+                    let mut trimmed_line = line.clone();
+                    crate::text::trim_line(text, style, &mut trimmed_line, [false, true])?;
+                    line.height - trimmed_line.height
+                } else {
+                    0.0
+                };
                 position = positions
                     .next()
                     .expect("each measured line has its source checkpoint");
@@ -826,6 +848,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                 );
                 self.y += line.height;
                 started = true;
+                self.trailing_line = (end_trim != 0.0).then_some((self.y, end_trim));
                 if !line.phantom && (line.height > 0.0 || !line.text.is_empty()) {
                     self.has_flow = true;
                     self.at_page_start = false;

@@ -357,23 +357,73 @@ fn trimmed_inline_boxes_paint_their_content_box_to_the_edge_metrics() {
     );
 }
 
+/// The profile's page area top.
+const PAGE_TOP: f32 = 36.0;
+
 #[test]
-fn trimming_each_column_or_fragment_is_reported_unsupported() {
-    for css in [
-        "div{columns:2;text-box-trim:trim-start}",
-        "div{box-decoration-break:clone;text-box-trim:trim-end}",
-    ] {
-        let result = render_html(
-            &format!("<style>{PROFILE}{css}</style><div><p>x</p></div>"),
-            &local_options(),
-        );
-        assert!(
-            matches!(
-                result,
-                Err(crate::Error::Css(crate::style::StyleError::Unsupported(_)))
+fn every_column_trims_its_first_and_last_formatted_lines() {
+    let [ascent, descent] = untrimmed();
+    let trimmed = [DEJAVU_ASCENT * PARENT_PT, DEJAVU_DESCENT * PARENT_PT];
+    let lines = "<div><p>a<br>b<br>c<br>d</p></div>";
+    for (trim, first_ascent) in [("none", ascent), ("trim-start", trimmed[0])] {
+        let trace = render(
+            &format!(
+                "p{{margin:0;line-height:{LINE_HEIGHT_PT}pt}}div{{columns:2;column-gap:0;column-fill:auto;height:{}pt;text-box-trim:{trim}}}",
+                2.0 * LINE_HEIGHT_PT
             ),
-            "{css}: {:?}",
-            result.err()
+            lines,
+        );
+        let page = &trace.pages[0];
+        assert_eq!(page.len(), 4, "{trim}: two lines in each column");
+        assert!(
+            page[2].x > page[0].x,
+            "{trim}: the third line starts the second column"
+        );
+        for (index, label) in [(0, "first"), (2, "second")] {
+            assert_pt(
+                page[index].baseline - PAGE_TOP,
+                first_ascent,
+                &format!("{trim}: the {label} column's first line"),
+            );
+        }
+        assert_pt(
+            page[1].baseline - page[0].baseline,
+            descent + ascent,
+            &format!("{trim}: lines inside a column keep their half-leading"),
+        );
+    }
+    let trace = render(
+        &format!(
+            "p{{margin:0;line-height:{LINE_HEIGHT_PT}pt}}div{{columns:2;column-gap:0;text-box-trim:trim-both;background:red}}"
+        ),
+        lines,
+    );
+    assert_pt(
+        red_box(&trace).rect.height,
+        trimmed[0] + descent + ascent + trimmed[1],
+        "balanced columns end at their trimmed last lines",
+    );
+}
+
+#[test]
+fn cloned_fragments_trim_their_first_formatted_lines() {
+    let [ascent, _] = untrimmed();
+    for (decoration, expected) in [("clone", DEJAVU_ASCENT * PARENT_PT), ("slice", ascent)] {
+        let trace = render(
+            &format!(
+                "p{{margin:0;line-height:{LINE_HEIGHT_PT}pt}}div{{box-decoration-break:{decoration};text-box-trim:trim-start}}"
+            ),
+            "<div><p>a</p><p style='break-before:page'>b</p></div>",
+        );
+        assert_pt(
+            trace.pages[0][0].baseline - PAGE_TOP,
+            DEJAVU_ASCENT * PARENT_PT,
+            &format!("{decoration}: the box's first line"),
+        );
+        assert_pt(
+            trace.pages[1][0].baseline - PAGE_TOP,
+            expected,
+            &format!("{decoration}: the first line of the second fragment"),
         );
     }
 }
