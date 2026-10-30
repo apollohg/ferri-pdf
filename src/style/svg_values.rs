@@ -548,12 +548,7 @@ pub(crate) fn image_rendering_keyword(value: Keyword) -> &'static str {
 
 /// Properties applying to SVG elements that their renderer does not take from the cascade:
 /// their presentation attributes reach it directly, so only initial values are supported.
-const UNCASCADED: [Property; 4] = [
-    Property::BaselineShift,
-    Property::AlignmentBaseline,
-    Property::TextDecorationLine,
-    Property::UnicodeBidi,
-];
+const UNCASCADED: [Property; 1] = [Property::UnicodeBidi];
 /// Inherited properties of SVG text content that its renderer does not implement.
 const UNCASCADED_TEXT: [Property; 4] = [
     Property::FontVariantEmoji,
@@ -599,7 +594,9 @@ impl InitialOnly {
 
 /// SVG 2 §6.6 presentation attributes that the cascade takes on every SVG element. The SVG
 /// renderer reads the others directly.
-const PRESENTATION_ATTRIBUTES: [Property; 51] = [
+const PRESENTATION_ATTRIBUTES: [Property; 54] = [
+    Property::AlignmentBaseline,
+    Property::BaselineShift,
     Property::ClipPath,
     Property::ClipRule,
     Property::Color,
@@ -644,6 +641,7 @@ const PRESENTATION_ATTRIBUTES: [Property; 51] = [
     Property::StrokeOpacity,
     Property::StrokeWidth,
     Property::TextAnchor,
+    Property::TextDecoration,
     Property::TextOrientation,
     Property::TextRendering,
     Property::TransformOrigin,

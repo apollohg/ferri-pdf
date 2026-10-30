@@ -262,6 +262,49 @@ class FontFeaturesPdf(unittest.TestCase):
         self.assertEqual([q[0] - p[0] for p, q in zip(p, q)], [3 * space, 2 * space],
                          "xml:space keeps both spaces unless white-space overrides it")
 
+    def test_svg_text_shifts_aligns_and_decorates_as_the_cascade_computes(self):
+        """CSS Inline 3 §4.2 and SVG 2 §11.11 from the document's cascade: percentage shifts
+        refer to the line height, presentation attributes take part, and each declared line is
+        painted in the fill of the element declaring it."""
+        pixels = PDF_POINTS_PER_INCH / CSS_PIXELS_PER_INCH
+        line_height = 40
+        texts = ('<text x="10" y="50">a<tspan style="baseline-shift:50%">b</tspan>'
+                 '<tspan baseline-shift="super">c</tspan>'
+                 '<tspan style="alignment-baseline:central;font-size:40px">e</tspan></text>'
+                 '<text x="10" y="120" style="text-decoration:underline;fill:rgb(0,0,255)">u'
+                 '<tspan style="fill:rgb(255,0,0);text-decoration-line:line-through">v</tspan>'
+                 '</text>')
+        glyphs = self.render(
+            f"svg{{display:block}}text{{font:20px 'Liberation Serif';line-height:{line_height}px}}",
+            f"<svg width=\"300pt\" height=\"150pt\" viewBox=\"0 0 400 200\">{texts}</svg>").glyphs
+        rise = {glyph.text: glyph.origin[1] / pixels for glyph in glyphs}
+        self.assertAlmostEqual(rise["b"] - rise["a"], line_height / 2, delta=POSITION_TOLERANCE_PT,
+                               msg="50% raises by half the used line height")
+        self.assertGreater(rise["c"], rise["a"], "the presentation attribute's super raises")
+        metrics = reference("FontUnit-metrics.json")["faces"]["InitialSerif"]
+        central = (metrics["ascender"] + metrics["descender"]) / 2 / metrics["units_per_em"]
+        self.assertAlmostEqual(rise["a"] - rise["e"], central * (40 - 20),
+                               delta=POSITION_TOLERANCE_PT,
+                               msg="the tspan's central baseline lies on its parent's")
+        raster = self.raster()
+        scale = RASTER_DPI / PDF_POINTS_PER_INCH
+        u, v = (next(glyph for glyph in glyphs if glyph.text == text) for text in "uv")
+
+        def dominant(x0, x1, below, above):
+            found = {}
+            for x in range(int(x0 * scale), int(x1 * scale)):
+                for y in range(int(below * scale), int(above * scale)):
+                    pixel = raster.getpixel((x, raster.height - y))
+                    if pixel != (255, 255, 255):
+                        found[pixel] = found.get(pixel, 0) + 1
+            return max(found, key=found.get) if found else None
+
+        self.assertEqual(dominant(u.origin[0], v.origin[0] + 5, u.origin[1] - 3, u.origin[1]),
+                         (0, 0, 255), "the text's underline spans both letters in its fill")
+        self.assertEqual(dominant(v.origin[0] + 1, v.origin[0] + 6, v.origin[1] + 3,
+                                  v.origin[1] + 7),
+                         (255, 0, 0), "the tspan's line-through is in its own fill")
+
     def test_optical_size_and_presentation_select_the_embedded_glyphs(self):
         optical = reference("RobotoFlex-optical.json")
         advances = {json.dumps(sample["location"], sort_keys=True): sample["advance"]

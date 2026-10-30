@@ -321,6 +321,9 @@ fn collect_text_chunks_impl(
         }
 
         let visibility: Visibility = parent.find_attribute(AId::Visibility).unwrap_or_default();
+        let alignment_baseline = parent
+            .find_layout_attribute(AId::AlignmentBaseline)
+            .unwrap_or_default();
 
         let span = TextSpan {
             start: 0,
@@ -339,10 +342,9 @@ fn collect_text_chunks_impl(
             decoration: resolve_decoration(parent, state, cache),
             visible: visibility == Visibility::Visible,
             dominant_baseline,
-            alignment_baseline: parent
-                .find_layout_attribute(AId::AlignmentBaseline)
-                .unwrap_or_default(),
-            baseline_shift: convert_baseline_shift(parent, state),
+            alignment_baseline,
+            parent_alignment: parent_alignment(parent, alignment_baseline, state, cache),
+            baseline_shift: convert_baseline_shift(parent, state, cache),
             letter_spacing: parent.resolve_length(AId::LetterSpacing, state, 0.0),
             word_spacing: parent.resolve_length(AId::WordSpacing, state, 0.0),
             text_length,
@@ -433,17 +435,97 @@ fn collect_text_chunks_impl(
     }
 }
 
+/// CSS Inline 3 §4.2.2: how far below the alignment point the parent box of `node` puts its
+/// `alignment` baseline, as its dominant baseline sits at the point, in its first available
+/// font.
+fn parent_alignment(
+    node: SvgNode,
+    alignment: AlignmentBaseline,
+    state: &converter::State,
+    cache: &mut Cache,
+) -> f32 {
+    use crate::svg::usvg::text::layout::DatabaseExt;
+    if matches!(
+        alignment,
+        AlignmentBaseline::Auto | AlignmentBaseline::Baseline
+    ) {
+        return 0.0;
+    }
+    let Some(box_parent) = node
+        .ancestors()
+        .skip(1)
+        .find(|ancestor| !ancestor.is_contents())
+    else {
+        return 0.0;
+    };
+    let provider = state.font_provider.unwrap_or(&state.opt.font_resolver);
+    let Some(font) = provider
+        .select_font(&convert_font(box_parent, state), &mut cache.fontdb)
+        .and_then(|id| cache.fontdb.load_font(id))
+    else {
+        return 0.0;
+    };
+    let size = super::units::resolve_font_size(box_parent, state);
+    let dominant = box_parent
+        .find_layout_attribute(AId::DominantBaseline)
+        .unwrap_or_default();
+    font.dominant_baseline_shift(dominant, size) - font.alignment_baseline_shift(alignment, size)
+}
+
+/// The computed style the document gives `node`, for content it styles.
+fn own_text_style(node: SvgNode, state: &converter::State) -> Option<Arc<crate::style::Style>> {
+    node.attribute::<&str>(AId::TextStyle)
+        .and_then(|index| index.parse::<usize>().ok())
+        .and_then(|index| state.opt.styling.text_styles.get(index))
+        .cloned()
+}
+
+/// CSS Inline 3 §4.2.3.1 `baseline-shift` of `node`, whose computed style is `style`:
+/// percentages refer to its used line height, which `normal` takes from its first available
+/// font.
+fn document_baseline_shift(
+    node: SvgNode,
+    style: &crate::style::Style,
+    state: &converter::State,
+    cache: &mut Cache,
+) -> BaselineShift {
+    match &style.baseline.shift {
+        crate::style::BaselineShift::Sub => BaselineShift::Subscript,
+        crate::style::BaselineShift::Super => BaselineShift::Superscript,
+        crate::style::BaselineShift::Raise(raise) => {
+            let size = super::units::resolve_font_size(node, state);
+            let points = crate::style::POINTS_PER_PIXEL;
+            let line_height = style
+                .line_height
+                .resolve(size * points)
+                .map(|height| height / points)
+                .or_else(|| {
+                    let provider = state.font_provider.unwrap_or(&state.opt.font_resolver);
+                    let id = provider.select_font(&convert_font(node, state), &mut cache.fontdb)?;
+                    cache
+                        .fontdb
+                        .with_face_data(id, |data, index| {
+                            ttf_parser::Face::parse(data, index).ok().map(|face| {
+                                crate::fonts::FaceMetrics::of(&face).normal_line_height() * size
+                            })
+                        })
+                        .flatten()
+                })
+                .unwrap_or(size);
+            BaselineShift::Number(raise.resolve(line_height * points) / points)
+        }
+    }
+}
+
 /// The computed style of the text in `node`: the document's, for content the document styles,
 /// else the initial values with those the `font-variant`, `font-kerning`, `kerning` and `lang`
 /// attributes give.
 fn text_style(node: SvgNode, state: &converter::State) -> Arc<crate::style::Style> {
     if let Some(style) = node
         .ancestors()
-        .find_map(|node| node.attribute::<&str>(AId::TextStyle))
-        .and_then(|index| index.parse::<usize>().ok())
-        .and_then(|index| state.opt.styling.text_styles.get(index))
+        .find_map(|node| own_text_style(node, state))
     {
-        return style.clone();
+        return style;
     }
     let mut style = crate::style::Style::default();
     style.font_variant_caps = node
@@ -928,14 +1010,20 @@ fn resolve_decoration(
     }
 }
 
-fn convert_baseline_shift(node: SvgNode, state: &converter::State) -> Vec<BaselineShift> {
+fn convert_baseline_shift(
+    node: SvgNode,
+    state: &converter::State,
+    cache: &mut Cache,
+) -> Vec<BaselineShift> {
     let mut shift = Vec::new();
     let nodes: Vec<_> = node
         .ancestors()
         .take_while(|n| n.tag_name() != Some(EId::Text))
         .collect();
     for n in nodes.into_iter().filter(|node| !node.is_contents()) {
-        if let Some(length) =
+        if let Some(style) = own_text_style(n, state) {
+            shift.push(document_baseline_shift(n, &style, state, cache));
+        } else if let Some(length) =
             super::units::computed_length(n, n, AId::BaselineShift, Units::UserSpaceOnUse, state)
         {
             let basis = super::units::resolve_font_size(n, state);

@@ -387,6 +387,9 @@ pub struct TextSpan {
     pub(crate) decoration: TextDecoration,
     pub(crate) dominant_baseline: DominantBaseline,
     pub(crate) alignment_baseline: AlignmentBaseline,
+    /// How far below the alignment point the parent box puts its `alignment_baseline`, with
+    /// which the span's aligns (CSS Inline 3 §4.2.2).
+    pub(crate) parent_alignment: f32,
     pub(crate) baseline_shift: Vec<BaselineShift>,
     pub(crate) visible: bool,
     pub(crate) letter_spacing: f32,

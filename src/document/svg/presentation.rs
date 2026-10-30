@@ -12,8 +12,9 @@ use crate::style::{
 };
 use std::fmt::Write;
 
-/// SVG 2 §10: text content elements, which take the font and text properties.
-const TEXT_CONTENT: &[&str] = &["text", "tspan", "textPath", "tref"];
+/// SVG 2 §10: text content elements, which take the font and text properties, with `a`, which
+/// text content lays out as a `tspan`.
+const TEXT_CONTENT: &[&str] = &["text", "tspan", "textPath", "tref", "a"];
 const PERCENT: f32 = 100.0;
 const CALC_POINT_UNIT: &str = "1pt";
 /// CSS Fonts 4 §2.3: the `font-width` keywords and their percentages.
@@ -33,6 +34,10 @@ const PRESERVE_3D: &str = "preserve-3d";
 const FLAT: &str = "flat";
 const HIDDEN: &str = "hidden";
 const VISIBLE: &str = "visible";
+const BASELINE: &str = "baseline";
+const UNDERLINE: &str = "underline";
+const OVERLINE: &str = "overline";
+const LINE_THROUGH: &str = "line-through";
 const AUTO: &str = "auto";
 const TRANSFORM_ORIGIN: &str = "transform-origin";
 const TRANSFORM_BOX: &str = "transform-box";
@@ -136,6 +141,31 @@ pub(super) fn declarations(
         image_rendering_keyword(svg.image_rendering),
     );
     push("dominant-baseline", baseline(style.baseline.dominant));
+    push(
+        "alignment-baseline",
+        style.baseline.alignment.map_or(BASELINE, baseline),
+    );
+    let lines = style.text_decorations.declared.lines;
+    if lines.error.is_some() {
+        return Err(StyleError::Unsupported(
+            "text-decoration-line: spelling-error or grammar-error on SVG content".into(),
+        ));
+    }
+    // SVG 2 §11.11: the element's fill and stroke paint the lines it declares.
+    if !lines.is_empty() {
+        push(
+            "text-decoration",
+            &[
+                (lines.underline, UNDERLINE),
+                (lines.overline, OVERLINE),
+                (lines.line_through, LINE_THROUGH),
+            ]
+            .into_iter()
+            .filter_map(|(drawn, name)| drawn.then_some(name))
+            .collect::<Vec<_>>()
+            .join(" "),
+        );
+    }
     push("writing-mode", style.writing_mode.name());
     push("text-orientation", style.text_orientation.name());
     push("visibility", visibility(style.visibility));

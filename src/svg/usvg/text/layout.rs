@@ -695,7 +695,8 @@ pub(crate) fn resolve_baseline(
         {
             shift += font.dominant_baseline_shift(span.dominant_baseline, span.font_size.get());
         } else {
-            shift += font.alignment_baseline_shift(span.alignment_baseline, span.font_size.get());
+            shift += font.alignment_baseline_shift(span.alignment_baseline, span.font_size.get())
+                + span.parent_alignment;
         }
     }
 
@@ -2266,7 +2267,11 @@ impl ResolvedFont {
         self.superscript_offset as f32 * self.scale(font_size)
     }
 
-    fn dominant_baseline_shift(&self, baseline: DominantBaseline, font_size: f32) -> f32 {
+    pub(crate) fn dominant_baseline_shift(
+        &self,
+        baseline: DominantBaseline,
+        font_size: f32,
+    ) -> f32 {
         let alignment = match baseline {
             DominantBaseline::Auto => AlignmentBaseline::Auto,
             DominantBaseline::UseScript => AlignmentBaseline::Auto, // unsupported
@@ -2314,7 +2319,11 @@ impl ResolvedFont {
     //
     // But that's not all! SVG 2 and CSS Inline Layout 3 did a baseline handling overhaul,
     // and it's far more complex now. Not sure if anyone actually supports it.
-    fn alignment_baseline_shift(&self, alignment: AlignmentBaseline, font_size: f32) -> f32 {
+    pub(crate) fn alignment_baseline_shift(
+        &self,
+        alignment: AlignmentBaseline,
+        font_size: f32,
+    ) -> f32 {
         match alignment {
             AlignmentBaseline::Auto => 0.0,
             AlignmentBaseline::Baseline => 0.0,
