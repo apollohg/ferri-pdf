@@ -214,6 +214,11 @@ const MAX_FIXED_PLACEMENTS: usize = 100_000;
 const MAX_TABLE_ALIGNMENT_GEOMETRIES: usize = 8;
 /// Rounding noise in summed `f32` geometry, so that `(H - edges) + edges` still fits `H`.
 const FRAGMENTATION_TOLERANCE_PT: f32 = 0.01;
+/// A break inside block-axis space keeps the fragmentainer it fills even without ink.
+const SPACE_BREAK: BreakRequest = BreakRequest {
+    forced: None,
+    preserve_empty: true,
+};
 const IDENTITY: [f32; 6] = [1.0, 0.0, 0.0, 1.0, 0.0, 0.0];
 
 /// Whether content reaching `extent` overflows a fragmentainer ending at `limit`.
@@ -3382,12 +3387,20 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                             BlockEdge::Start => active.start_space,
                             BlockEdge::End => active.end_space,
                         });
-                    if value != 0.0 {
+                    // Cloned edges repeat on every fragment instead of continuing.
+                    if value != 0.0 && self.boxes.last().is_some_and(|active| active.clone) {
                         self.space(value);
+                    } else if let Some(rest) = self.place_space(value)? {
+                        cursor.ready = Some((FlowItem::Space(rest), tails));
+                        return Ok(Some((cursor, SPACE_BREAK)));
                     }
                 }
-                FlowItem::Space(value) if value != 0.0 => self.space(value),
-                FlowItem::Space(_) => {}
+                FlowItem::Space(value) => {
+                    if let Some(rest) = self.place_space(value)? {
+                        cursor.ready = Some((FlowItem::Space(rest), tails));
+                        return Ok(Some((cursor, SPACE_BREAK)));
+                    }
+                }
                 FlowItem::TableBox(table) => {
                     if let Some(request) = self.place_table_box(&mut cursor, table, tails, ready)? {
                         return Ok(Some((cursor, request)));
@@ -4758,6 +4771,24 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         self.flush_margin();
         self.y += value;
         self.at_page_start = false;
+    }
+    /// Places block-axis space, returning the part that continues on the next fragmentainer.
+    /// Space crossing the end of a fragmentainer that holds no content yet leaves no break
+    /// point above that end, so the space itself breaks rather than pushing the content after
+    /// it off the fragmentainer (CSS Break 3 §4.4).
+    fn place_space(&mut self, value: f32) -> Result<Option<f32>, LayoutError> {
+        if value == 0.0 {
+            return Ok(None);
+        }
+        self.flush_margin();
+        let end = self.height - self.continuation_reserve()?;
+        let room = end - self.y;
+        if self.has_flow || self.unbroken > 0 || room <= 0.0 || !overflows(self.y + value, end) {
+            self.space(value);
+            return Ok(None);
+        }
+        self.space(room);
+        Ok(Some(value - room))
     }
     fn refresh_table(&mut self) -> Result<(), LayoutError> {
         if !self.continuation_flow() {

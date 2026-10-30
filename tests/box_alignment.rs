@@ -230,3 +230,61 @@ fn table_cells_align_content_by_align_content_over_vertical_align() {
         );
     }
 }
+
+#[test]
+fn block_content_space_crossing_page_ends_breaks_inside_instead_of_dropping_lines() {
+    // The profile's page area is 408pt tall; ten 18pt lines follow 820pt of space, which
+    // leaves 4pt of it on the third page above them (CSS Break 3 §4.4).
+    const LINES: usize = 10;
+    const LINE_PT: f32 = 18.0;
+    const SPACE_PT: f32 = 820.0;
+    const PAGE_AREA_PT: f32 = 408.0;
+    let body = format!(
+        "<section>{}</section>",
+        (0..LINES)
+            .map(|line| format!("<div>Line {line}</div>"))
+            .collect::<String>()
+    );
+    let first_baseline = render("", "<div>Line 0</div>").pages[0][0].baseline;
+    let content = LINE_PT * LINES as f32;
+    for css in [
+        format!(
+            "section{{height:{}pt;align-content:end}}",
+            SPACE_PT + content
+        ),
+        format!(
+            "section{{height:{}pt;align-content:center}}",
+            2.0 * SPACE_PT + content
+        ),
+        format!("section{{padding-top:{SPACE_PT}pt}}"),
+    ] {
+        let trace = render(&css, &body);
+        let pages: Vec<Vec<&str>> = trace
+            .pages
+            .iter()
+            .map(|page| page.iter().map(|line| line.text.as_str()).collect())
+            .collect();
+        assert!(
+            pages.len() >= 3 && pages[..2].iter().all(Vec::is_empty),
+            "{css}: the space fills the first two pages, got {pages:?}"
+        );
+        let lines = &trace.pages[2];
+        assert_eq!(
+            lines
+                .iter()
+                .map(|line| line.text.as_str())
+                .collect::<Vec<_>>(),
+            (0..LINES)
+                .map(|line| format!("Line {line}"))
+                .collect::<Vec<_>>(),
+            "{css}: every line follows the space on the third page, pages {pages:?}"
+        );
+        for (index, line) in lines.iter().enumerate() {
+            assert_labelled_pt(
+                &format!("{css}: baseline of line {index}"),
+                line.baseline,
+                first_baseline + SPACE_PT - 2.0 * PAGE_AREA_PT + LINE_PT * index as f32,
+            );
+        }
+    }
+}

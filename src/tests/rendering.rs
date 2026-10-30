@@ -1293,7 +1293,9 @@ fn break_before_avoid_and_forced_break_after_apply_between_boxes() {
 }
 
 #[test]
-fn padding_beyond_the_page_does_not_create_empty_automatic_pages() {
+fn padding_beyond_the_page_breaks_inside_instead_of_dropping_the_content_after_it() {
+    // CSS Break 3 §4.4: no break point lies above the end of the first two 160pt page areas,
+    // so the padding breaks inside them and A follows its last 30pt on the third page.
     let html = format!(
         "<style>{PROFILE}@page{{size:360pt 200pt;margin:20pt}}p{{margin:0}}</style><div style='padding-top:350pt'><p>A</p></div><p>B</p>"
     );
@@ -1301,17 +1303,15 @@ fn padding_beyond_the_page_does_not_create_empty_automatic_pages() {
         .unwrap()
         .layout
         .unwrap();
+    let pages: Vec<Vec<&str>> = trace
+        .pages
+        .iter()
+        .map(|page| page.iter().map(|line| line.text.as_str()).collect())
+        .collect();
     assert_eq!(
-        trace.pages.len(),
-        1,
-        "fully out-of-page content must not create an empty automatic page; only B's page is output"
-    );
-    assert_eq!(
-        trace.pages[0]
-            .iter()
-            .map(|l| l.text.as_str())
-            .collect::<Vec<_>>(),
-        ["B"]
+        pages,
+        [vec![], vec![], vec!["A", "B"]],
+        "the padding fills two pages and keeps A before B"
     );
 }
 
