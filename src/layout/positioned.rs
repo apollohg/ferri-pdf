@@ -4,7 +4,7 @@ use crate::graphics::Rect;
 use crate::layout::geometry::{HorizontalBox, SizeConstraints};
 use crate::layout::measure::Failure;
 use crate::layout::measure::{MeasuredBlock, Measurer};
-use crate::style::{Alignment, Style};
+use crate::style::{Alignment, OverflowPosition, Style};
 
 /// Hypothetical normal-flow position: margin-box edges `left`/`right` and top edge `y`.
 #[derive(Clone, Copy, Debug)]
@@ -25,7 +25,9 @@ pub(super) struct StaticAlignment {
     pub main_reverse: bool,
     pub cross_reverse: bool,
     pub justify: Alignment,
+    pub justify_overflow: OverflowPosition,
     pub align: Alignment,
+    pub align_overflow: OverflowPosition,
 }
 impl StaticAlignment {
     pub(super) fn mapped(mut self, [a, b, c, d, _, _]: [f32; 6]) -> Self {
@@ -57,8 +59,11 @@ impl StaticAlignment {
         }
         self
     }
-    fn offset(free: f32, alignment: Alignment, reverse: bool) -> f32 {
+    fn offset(free: f32, alignment: Alignment, overflow: OverflowPosition, reverse: bool) -> f32 {
         let (start, end) = if reverse { (free, 0.0) } else { (0.0, free) };
+        if overflow.starts(free) {
+            return start;
+        }
         match alignment {
             Alignment::Center
             | Alignment::AnchorCenter
@@ -80,8 +85,18 @@ impl StaticAlignment {
         let free = [self.content[0] - size[0], self.content[1] - size[1]];
         let (main, cross) = if self.row { (0, 1) } else { (1, 0) };
         let mut offsets = [0.0; 2];
-        offsets[main] = Self::offset(free[main], self.justify, self.main_reverse);
-        offsets[cross] = Self::offset(free[cross], self.align, self.cross_reverse);
+        offsets[main] = Self::offset(
+            free[main],
+            self.justify,
+            self.justify_overflow,
+            self.main_reverse,
+        );
+        offsets[cross] = Self::offset(
+            free[cross],
+            self.align,
+            self.align_overflow,
+            self.cross_reverse,
+        );
         offsets
     }
 }
@@ -569,10 +584,10 @@ fn solve<'a>(
     ] {
         use crate::style::anchor_values::AreaAlignment;
         let horizontal = axis == crate::style::anchor_values::HORIZONTAL;
-        let alignment = if horizontal {
-            style.grid.justify_self
+        let (alignment, overflow) = if horizontal {
+            (style.grid.justify_self, style.grid.justify_self_overflow)
         } else {
-            style.flex.align_self
+            (style.flex.align_self, style.flex.align_self_overflow)
         };
         let alignment = match alignment {
             Alignment::Normal | Alignment::Auto => match defaults.map(|defaults| defaults[axis]) {
@@ -586,50 +601,65 @@ fn solve<'a>(
             other if area.is_some() => other,
             _ => continue,
         };
-        let (start, length, size, before, after, inset_start, inset_end) = if horizontal {
-            (
-                cb.x,
-                cb.width,
-                border.width,
-                margin[3].unwrap_or_default(),
-                margin[1].unwrap_or_default(),
-                left.resolve(cb.width).unwrap_or_default(),
-                right.resolve(cb.width).unwrap_or_default(),
-            )
-        } else {
-            (
-                cb.y,
-                cb.height,
-                border.height,
-                margin[0].unwrap_or_default(),
-                margin[2].unwrap_or_default(),
-                style.inset[0].resolve(cb.height).unwrap_or_default(),
-                bottom.resolve(cb.height).unwrap_or_default(),
-            )
-        };
+        let (start, length, size, before, after, inset_start, inset_end, original_edges) =
+            if horizontal {
+                (
+                    cb.x,
+                    cb.width,
+                    border.width,
+                    margin[3].unwrap_or_default(),
+                    margin[1].unwrap_or_default(),
+                    left.resolve(cb.width).unwrap_or_default(),
+                    right.resolve(cb.width).unwrap_or_default(),
+                    [original.x, original.x + original.width],
+                )
+            } else {
+                (
+                    cb.y,
+                    cb.height,
+                    border.height,
+                    margin[0].unwrap_or_default(),
+                    margin[2].unwrap_or_default(),
+                    style.inset[0].resolve(cb.height).unwrap_or_default(),
+                    bottom.resolve(cb.height).unwrap_or_default(),
+                    [original.y, original.y + original.height],
+                )
+            };
         let start = start + inset_start;
         let available = length - inset_start - inset_end;
         let outer = size + before + after;
         let free = available - outer;
-        let target = match alignment {
+        let aligned = match alignment {
             Alignment::AnchorCenter if anchor.is_some() => {
                 let anchor = anchor.expect("anchor-center has an anchor");
                 let center = if horizontal {
-                    original.x + anchor.x + anchor.width / 2.0
+                    original_edges[0] + anchor.x + anchor.width / 2.0
                 } else {
-                    original.y + anchor.y + anchor.height / 2.0
+                    original_edges[0] + anchor.y + anchor.height / 2.0
                 };
-                (center - outer / 2.0)
-                    .max(start)
-                    .min((start + free).max(start))
-                    + before
+                center - outer / 2.0
             }
-            Alignment::Center | Alignment::AnchorCenter => start + free / 2.0 + before,
+            Alignment::Center | Alignment::AnchorCenter => start + free / 2.0,
             Alignment::Right | Alignment::End | Alignment::SelfEnd | Alignment::FlexEnd => {
-                start + free + before
+                start + free
             }
-            _ => start + before,
+            _ => start,
         };
+        let target = before
+            + if overflow == OverflowPosition::Unsafe {
+                aligned
+            } else {
+                contained_start(
+                    aligned,
+                    outer,
+                    [start, start + available],
+                    [
+                        original_edges[0].min(start),
+                        original_edges[1].max(start + available),
+                    ],
+                    horizontal && rtl,
+                )
+            };
         if horizontal {
             measured.offset[0] += target - border.x;
         } else {
@@ -637,4 +667,28 @@ fn solve<'a>(
         }
     }
     Ok((measured, top))
+}
+
+/// CSS Box Alignment 3 §4.4.1.2: the default and `safe` margin-box start of an absolutely
+/// positioned box of `outer` size aligned at `aligned`: kept inside the inset-modified
+/// containing block's edges `inset` if it fits, else covering them within the overflow
+/// limit rect's edges `limit`, else start-aligned (from the end edge when `end_start`).
+fn contained_start(
+    aligned: f32,
+    outer: f32,
+    inset: [f32; 2],
+    limit: [f32; 2],
+    end_start: bool,
+) -> f32 {
+    if outer <= inset[1] - inset[0] {
+        aligned.max(inset[0]).min(inset[1] - outer)
+    } else if outer <= limit[1] - limit[0] {
+        aligned
+            .max((inset[1] - outer).max(limit[0]))
+            .min(inset[0].min(limit[1] - outer))
+    } else if end_start {
+        limit[1] - outer
+    } else {
+        limit[0]
+    }
 }

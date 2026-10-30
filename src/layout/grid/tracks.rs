@@ -33,7 +33,7 @@ impl TrackGeometry {
         collapsed: &[bool],
         gap: f32,
         available: Option<f32>,
-        alignment: crate::style::Alignment,
+        (alignment, overflow): (crate::style::Alignment, crate::style::OverflowPosition),
         reverse: bool,
     ) -> Self {
         use crate::style::Alignment;
@@ -45,7 +45,8 @@ impl TrackGeometry {
             (Alignment::Left, false) | (Alignment::Right, true) => Alignment::Start,
             (alignment, _) => alignment,
         };
-        let (mut cursor, between) = crate::flex::spacing(alignment, available - extent, count);
+        let (mut cursor, between) =
+            crate::flex::spacing(alignment, overflow, available - extent, count);
         let mut previous = false;
         let tracks = sizes
             .iter()
@@ -425,7 +426,7 @@ mod tests {
             &[false; 2],
             50.0,
             None,
-            Alignment::Start,
+            (Alignment::Start, crate::style::OverflowPosition::Default),
             false,
         );
         let normal = parent.inherit(0..2, None, [0.0; 2], false).unwrap();
@@ -449,7 +450,7 @@ mod tests {
             &[false, true, false],
             50.0,
             None,
-            Alignment::Start,
+            (Alignment::Start, crate::style::OverflowPosition::Default),
             false,
         );
         let child = collapsed.inherit(0..3, Some(0.0), [0.0; 2], false).unwrap();
@@ -501,7 +502,10 @@ mod tests {
                 &[false; 2],
                 10.0,
                 Some(240.0),
-                crate::style::Alignment::Center,
+                (
+                    crate::style::Alignment::Center,
+                    crate::style::OverflowPosition::Default,
+                ),
                 reverse,
             );
             let expected = if reverse {
@@ -532,7 +536,10 @@ mod tests {
                 &[false; 3],
                 10.0,
                 Some(240.0),
-                crate::style::Alignment::Start,
+                (
+                    crate::style::Alignment::Start,
+                    crate::style::OverflowPosition::Default,
+                ),
                 reverse,
             );
             let area = tracks.area(1..3);
@@ -556,7 +563,7 @@ mod tests {
                 &[true, false, true, false, true],
                 10.0,
                 Some(240.0),
-                alignment,
+                (alignment, crate::style::OverflowPosition::Default),
                 false,
             );
             let expected = if alignment == crate::style::Alignment::SpaceBetween {
@@ -573,7 +580,10 @@ mod tests {
             &[true; 3],
             10.0,
             Some(240.0),
-            crate::style::Alignment::SpaceEvenly,
+            (
+                crate::style::Alignment::SpaceEvenly,
+                crate::style::OverflowPosition::Default,
+            ),
             false,
         );
         assert_eq!(empty.extent(), 0.0, "collapsed tracks retain no gutters");

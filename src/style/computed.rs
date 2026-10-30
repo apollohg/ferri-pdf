@@ -642,6 +642,15 @@ impl Style {
         }
     }
 
+    /// The used `justify-self` of a block-level box in block layout; it does not apply to
+    /// floats or absolutely positioned boxes (CSS Align 3 §6.1.1).
+    pub(crate) fn block_justify_self(
+        &self,
+    ) -> Option<(crate::style::Alignment, crate::style::OverflowPosition)> {
+        (self.floating().is_none() && !self.position.is_out_of_flow())
+            .then(|| self.grid.used_justify_self(self.grid.parent_justify_items))
+    }
+
     pub(crate) fn same_text_style(&self, other: &Self) -> bool {
         self.writing_mode == other.writing_mode
             && self.text_orientation == other.text_orientation
@@ -1206,6 +1215,7 @@ impl Stylesheet {
             *environment =
                 crate::style::variables::Variables::registered(environment, &self.registrations);
         }
+        style.grid.parent_justify_items = parent.grid.default_justify();
         style.element_font_namespace = self.font_namespace(Some(element.tree_scope()));
         style.document_root = element.is_in_document_tree()
             && element
@@ -1560,6 +1570,7 @@ impl Stylesheet {
         let (winners, _) =
             self.rule_winners(element, Some(pseudo), &parent.containers, resolver)?;
         let mut style = parent.anonymous(Display::Inline);
+        style.grid.parent_justify_items = parent.grid.default_justify();
         style.element_font_namespace = self.font_namespace(Some(element.tree_scope()));
         style.content_context = if pseudo == crate::style::PseudoElement::Marker {
             crate::style::generated::ContentContext::Marker
@@ -1993,7 +2004,10 @@ impl Stylesheet {
             style.white_space = WhiteSpace::NOWRAP;
             style.flex.justify = crate::style::Alignment::Normal;
             style.flex.align_content = crate::style::Alignment::Normal;
-            style.flex.align_content_unsafe = false;
+            style.flex.justify_overflow = crate::style::OverflowPosition::Default;
+            style.flex.align_content_overflow = crate::style::OverflowPosition::Default;
+            style.flex.align_self_overflow = crate::style::OverflowPosition::Default;
+            style.grid.justify_self_overflow = crate::style::OverflowPosition::Default;
             style.flex.align_self = crate::style::Alignment::Auto;
             style.grid.justify_self = crate::style::Alignment::Auto;
         }

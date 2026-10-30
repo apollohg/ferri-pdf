@@ -76,7 +76,9 @@ fn missing_or_wrong_axis_anchor_functions_use_their_fallback_or_initial_value() 
 fn position_areas_and_anchor_center_align_against_the_default_anchor() {
     for (area, expected) in [
         ("bottom", [80.0, 50.0, 20.0, 10.0]),
-        ("top", [80.0, 10.0, 20.0, 10.0]),
+        // The empty area above the anchor cannot hold the box, which shifts into the
+        // original containing block (CSS Box Alignment 3 §4.4.1.2).
+        ("top", [80.0, 20.0, 20.0, 10.0]),
         ("right", [120.0, 30.0, 20.0, 10.0]),
         ("center", [80.0, 30.0, 20.0, 10.0]),
         ("bottom right", [120.0, 50.0, 20.0, 10.0]),
@@ -92,6 +94,69 @@ fn position_areas_and_anchor_center_align_against_the_default_anchor() {
         "<div class=anchor></div><div class=target></div>",
     );
     assert_rect(targets(&trace)[0].1, [80.0, 50.0, 20.0, 10.0]);
+}
+
+/// CSS Box Alignment 3 §4.4.1.2: by default and with `safe`, a positioned box stays in its
+/// inset-modified containing block, else covers it inside the original containing block,
+/// else starts at the limit's start; `unsafe` honours the alignment.
+#[test]
+fn positioned_overflow_alignment_shifts_into_the_containing_block_unless_unsafe() {
+    for (css, expected) in [
+        (
+            ".target{position-area:top;align-self:end}",
+            [80.0, 20.0, 20.0, 10.0],
+        ),
+        (
+            ".target{position-area:top;align-self:safe end}",
+            [80.0, 20.0, 20.0, 10.0],
+        ),
+        (
+            ".target{position-area:top;align-self:unsafe end}",
+            [80.0, 10.0, 20.0, 10.0],
+        ),
+        // The spanned area is 220pt wide: the box covers it and shifts left.
+        (
+            ".target{position-area:bottom span-right;width:240pt}",
+            [40.0, 50.0, 240.0, 10.0],
+        ),
+        (
+            ".target{position-area:bottom span-right;width:240pt;justify-self:unsafe start}",
+            [60.0, 50.0, 240.0, 10.0],
+        ),
+        (
+            ".target{top:anchor(bottom);width:160pt;justify-self:anchor-center}",
+            [20.0, 50.0, 160.0, 10.0],
+        ),
+        (
+            ".target{position-area:center;width:160pt}",
+            [20.0, 30.0, 160.0, 10.0],
+        ),
+        (
+            ".target{position-area:center;width:160pt;justify-self:unsafe center}",
+            [10.0, 30.0, 160.0, 10.0],
+        ),
+        // Wider than the page area: start-aligned within it.
+        (
+            ".target{top:anchor(bottom);width:300pt;justify-self:anchor-center}",
+            [20.0, 50.0, 300.0, 10.0],
+        ),
+    ] {
+        let trace = render(css, "<div class=anchor></div><div class=target></div>");
+        let boxes = targets(&trace);
+        assert_eq!(
+            boxes.len(),
+            1,
+            "{css}: one target must paint, got {boxes:?}"
+        );
+        let actual = boxes[0].1;
+        assert!(
+            [actual.x, actual.y, actual.width, actual.height]
+                .into_iter()
+                .zip(expected)
+                .all(|(actual, expected)| (actual - expected).abs() < 0.001),
+            "{css}: expected {expected:?}, got {actual:?}"
+        );
+    }
 }
 
 #[test]
@@ -178,7 +243,9 @@ fn fallback_origin_preserves_important_and_discards_invalid_rule_declarations() 
         "@position-try --above{position-area:top}.anchor{margin-top:170pt}.target{position-area:bottom!important;position-try-fallbacks:--above}",
         "<div class=anchor></div><div class=target></div>",
     );
-    assert_rect(targets(&trace)[0].1, [80.0, 220.0, 20.0, 10.0]);
+    // The important area keeps the box below the anchor, shifted up to stay inside the
+    // page area (CSS Box Alignment 3 §4.4.1.2).
+    assert_rect(targets(&trace)[0].1, [80.0, 210.0, 20.0, 10.0]);
     let trace = render(
         "@position-try --above{top:0!important;color:green;position-area:top}.anchor{margin-top:170pt}.target{position-area:bottom;position-try-fallbacks:--missing,--above}",
         "<div class=anchor></div><div class=target></div>",

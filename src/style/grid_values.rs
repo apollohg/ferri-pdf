@@ -4,7 +4,7 @@ use crate::style::{
     LengthPercentage, StyleError,
     box_values::{length_percentage, unsupported},
     component::Component,
-    flex_values::Alignment,
+    flex_values::{Alignment, OverflowPosition},
     grammar::{Keyword, Label, Production, Property},
 };
 use serde::Serialize;
@@ -140,9 +140,14 @@ pub(crate) struct GridStyle {
     /// Start and end lines, indexed by [`ROWS`] and [`COLUMNS`].
     pub placement: [[GridLine; 2]; 2],
     pub justify_items: Alignment,
-    /// `justify-items: legacy …`, which descendants' `legacy` inherits (CSS Align 3 §6.1.3).
+    pub justify_items_overflow: OverflowPosition,
+    /// `justify-items: legacy …`, which descendants' `legacy` inherits (CSS Align 3 §7.1).
     pub legacy_justify: bool,
     pub justify_self: Alignment,
+    pub justify_self_overflow: OverflowPosition,
+    /// The parent box's computed `justify-items` without `legacy`, which `justify-self: auto`
+    /// behaves as (CSS Align 3 §6.1); `normal` for anonymous boxes and the root.
+    pub parent_justify_items: (Alignment, OverflowPosition),
 }
 impl Default for GridStyle {
     fn default() -> Self {
@@ -153,8 +158,11 @@ impl Default for GridStyle {
             auto_flow: AutoFlow::default(),
             placement: Default::default(),
             justify_items: Alignment::Normal,
+            justify_items_overflow: OverflowPosition::Default,
             legacy_justify: false,
             justify_self: Alignment::Auto,
+            justify_self_overflow: OverflowPosition::Default,
+            parent_justify_items: (Alignment::Normal, OverflowPosition::Default),
         }
     }
 }
@@ -167,6 +175,24 @@ impl GridStyle {
         } else {
             (Alignment::Normal, false)
         };
+        self.justify_items_overflow = OverflowPosition::Default;
+    }
+    /// The computed `justify-items` without `legacy`, which children's `justify-self: auto`
+    /// behaves as.
+    pub(crate) fn default_justify(&self) -> (Alignment, OverflowPosition) {
+        (self.justify_items, self.justify_items_overflow)
+    }
+    /// `justify-self`, with `auto` behaving as the parent box's `default_justify` (CSS Align
+    /// 3 §6.1).
+    pub(crate) fn used_justify_self(
+        &self,
+        parent: (Alignment, OverflowPosition),
+    ) -> (Alignment, OverflowPosition) {
+        if self.justify_self == Alignment::Auto {
+            parent
+        } else {
+            (self.justify_self.in_flow(), self.justify_self_overflow)
+        }
     }
 }
 
@@ -503,29 +529,40 @@ pub(crate) fn line(
     Ok(GridLine::Line(index, name(inner.slot(1))))
 }
 
-/// `justify-self`, and `justify-items` without `legacy`.
-pub(crate) fn justify(value: &Component) -> Result<Alignment, StyleError> {
-    Alignment::from_component(value)
+/// A computed `justify-items` that is not a lone `legacy`.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub(crate) struct JustifyItems {
+    pub alignment: Alignment,
+    pub overflow: OverflowPosition,
+    pub legacy: bool,
 }
 
-/// `justify-items`: the alignment and whether it is `legacy`; a lone `legacy` is `None`,
-/// computed from the parent.
-pub(crate) fn justify_items(value: &Component) -> Result<Option<(Alignment, bool)>, StyleError> {
+/// `justify-items`; a lone `legacy` is `None`, computed from the parent (CSS Align 3 §7.1).
+pub(crate) fn justify_items(value: &Component) -> Result<Option<JustifyItems>, StyleError> {
     let mut keywords = Vec::new();
     value.keywords(&mut keywords);
-    match keywords.as_slice() {
-        [Keyword::Legacy] => Ok(None),
-        [Keyword::Legacy, keyword] => Ok(Some((
-            match keyword {
-                Keyword::Left => Alignment::Left,
-                Keyword::Right => Alignment::Right,
-                Keyword::Center => Alignment::Center,
-                _ => return Err(unsupported(value)),
-            },
-            true,
-        ))),
-        _ => Ok(Some((Alignment::from_component(value)?, false))),
+    let legacy = keywords.contains(&Keyword::Legacy);
+    keywords.retain(|keyword| *keyword != Keyword::Legacy);
+    if !legacy {
+        let (alignment, overflow) = Alignment::from_component(value)?;
+        return Ok(Some(JustifyItems {
+            alignment,
+            overflow,
+            legacy,
+        }));
     }
+    let alignment = match keywords.as_slice() {
+        [] => return Ok(None),
+        [Keyword::Left] => Alignment::Left,
+        [Keyword::Right] => Alignment::Right,
+        [Keyword::Center] => Alignment::Center,
+        _ => return Err(unsupported(value)),
+    };
+    Ok(Some(JustifyItems {
+        alignment,
+        overflow: OverflowPosition::Default,
+        legacy,
+    }))
 }
 
 /// Validity the grammar cannot express (CSS Grid 1 §7.3, §8.3): a grid line's integer is

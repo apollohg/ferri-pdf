@@ -1187,7 +1187,7 @@ fn handler(property: Property) -> Option<Handler> {
         ),
         P::AlignContent => (
             align_content,
-            Some(|v, _| Alignment::content_from_component(v).is_ok()),
+            Some(|v, _| Alignment::from_component(v).is_ok()),
         ),
         P::AlignSelf => (
             align_self,
@@ -1195,8 +1195,14 @@ fn handler(property: Property) -> Option<Handler> {
         ),
         P::RowGap => (row_gap, Some(|v, r| gap(v, r).is_ok())),
         P::ColumnGap => (column_gap, Some(|v, r| gap(v, r).is_ok())),
-        P::JustifyItems => (justify_items, Some(|v, _| grid_values::justify(v).is_ok())),
-        P::JustifySelf => (justify_self, Some(|v, _| grid_values::justify(v).is_ok())),
+        P::JustifyItems => (
+            justify_items,
+            Some(|v, _| grid_values::justify_items(v).is_ok()),
+        ),
+        P::JustifySelf => (
+            justify_self,
+            Some(|v, _| Alignment::from_component(v).is_ok()),
+        ),
         P::GridTemplateRows => (
             grid_template_rows,
             Some(|v, r| grid_values::template(v, r).is_ok()),
@@ -3319,11 +3325,28 @@ computed!(
 computed!(order, [flex.order], |value, style, _parent, relative| {
     crate::style::values::integer(value, relative)?
 });
-computed!(
-    justify_content,
-    [flex.justify],
-    |value, style, _parent, _relative| { Alignment::from_component(value)? }
-);
+/// An alignment property and its `<overflow-position>`.
+macro_rules! alignment {
+    ($name:ident, $group:ident, $field:ident, $overflow:ident) => {
+        fn $name(
+            style: &mut Style,
+            _: &Style,
+            input: Input<'_>,
+            _: &Relative<'_>,
+        ) -> Result<(), StyleError> {
+            (style.$group.$field, style.$group.$overflow) = match input {
+                Input::Value(value) => Alignment::from_component(value)?,
+                Input::Copy(source) => (source.$group.$field, source.$group.$overflow),
+            };
+            Ok(())
+        }
+    };
+}
+alignment!(justify_content, flex, justify, justify_overflow);
+alignment!(align_items, flex, align_items, align_items_overflow);
+alignment!(align_content, flex, align_content, align_content_overflow);
+alignment!(align_self, flex, align_self, align_self_overflow);
+alignment!(justify_self, grid, justify_self, justify_self_overflow);
 computed!(
     appearance,
     [widget.appearance],
@@ -3333,28 +3356,6 @@ computed!(
     field_sizing,
     [widget.field_sizing],
     |value, style, _parent, _relative| { crate::style::FieldSizing::from_component(value)? }
-);
-computed!(
-    align_items,
-    [flex.align_items],
-    |value, style, _parent, _relative| { Alignment::from_component(value)? }
-);
-fn align_content(
-    style: &mut Style,
-    _: &Style,
-    input: Input<'_>,
-    _: &Relative<'_>,
-) -> Result<(), StyleError> {
-    (style.flex.align_content, style.flex.align_content_unsafe) = match input {
-        Input::Value(value) => Alignment::content_from_component(value)?,
-        Input::Copy(source) => (source.flex.align_content, source.flex.align_content_unsafe),
-    };
-    Ok(())
-}
-computed!(
-    align_self,
-    [flex.align_self],
-    |value, style, _parent, _relative| { Alignment::from_component(value)? }
 );
 computed!(row_gap, [flex.gap[0]], |value, style, _parent, relative| {
     gap(value, relative)?
@@ -3370,26 +3371,25 @@ fn justify_items(
     input: Input<'_>,
     _relative: &Relative<'_>,
 ) -> Result<(), StyleError> {
-    let source = match input {
-        Input::Copy(source) => &source.grid,
+    let computed = match input {
+        Input::Copy(source) => grid_values::JustifyItems {
+            alignment: source.grid.justify_items,
+            overflow: source.grid.justify_items_overflow,
+            legacy: source.grid.legacy_justify,
+        },
         Input::Value(value) => {
-            if let Some((alignment, legacy)) = grid_values::justify_items(value)? {
-                (style.grid.justify_items, style.grid.legacy_justify) = (alignment, legacy);
+            let Some(computed) = grid_values::justify_items(value)? else {
+                style.grid.initial_justify_items(&parent.grid);
                 return Ok(());
-            }
-            style.grid.initial_justify_items(&parent.grid);
-            return Ok(());
+            };
+            computed
         }
     };
-    (style.grid.justify_items, style.grid.legacy_justify) =
-        (source.justify_items, source.legacy_justify);
+    style.grid.justify_items = computed.alignment;
+    style.grid.justify_items_overflow = computed.overflow;
+    style.grid.legacy_justify = computed.legacy;
     Ok(())
 }
-computed!(
-    justify_self,
-    [grid.justify_self],
-    |value, style, _parent, _relative| { grid_values::justify(value)? }
-);
 computed!(
     grid_template_rows,
     [grid.templates[crate::style::ROWS]],

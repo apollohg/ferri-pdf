@@ -1,5 +1,5 @@
 //! Flexible length resolution and axis-space distribution, independent of text and pages.
-use crate::style::Alignment;
+use crate::style::{Alignment, OverflowPosition};
 use std::ops::Range;
 
 #[derive(Clone, Copy, Debug)]
@@ -98,9 +98,16 @@ fn validate_container(available: Option<f32>, gap: f32) -> Result<(), FlexError>
         Ok(())
     }
 }
-/// Returns leading space and additional space between adjacent items.
-pub(crate) fn spacing(alignment: Alignment, free: f32, count: usize) -> (f32, f32) {
-    if count == 0 {
+/// Returns leading space and additional space between adjacent items. Distributed
+/// alignment that cannot distribute `free` space falls back to `safe flex-start` or
+/// `safe center` (CSS Box Alignment 3 §4.3), which both start-align overflowing subjects.
+pub(crate) fn spacing(
+    alignment: Alignment,
+    overflow: OverflowPosition,
+    free: f32,
+    count: usize,
+) -> (f32, f32) {
+    if count == 0 || overflow.starts(free) {
         return (0.0, 0.0);
     }
     match alignment {
@@ -111,7 +118,6 @@ pub(crate) fn spacing(alignment: Alignment, free: f32, count: usize) -> (f32, f3
         Alignment::SpaceEvenly if free > 0.0 => {
             (free / (count + 1) as f32, free / (count + 1) as f32)
         }
-        Alignment::SpaceAround | Alignment::SpaceEvenly => (free / 2.0, 0.0),
         _ => (0.0, 0.0),
     }
 }
@@ -120,16 +126,17 @@ pub(crate) fn resolve_line(
     available: f32,
     gap: f32,
     alignment: Alignment,
+    overflow: OverflowPosition,
 ) -> Result<Line, FlexError> {
     if !items.iter().any(|item| item.collapsed) {
-        return resolve_visible_line(items, available, gap, alignment);
+        return resolve_visible_line(items, available, gap, alignment, overflow);
     }
     let visible: Vec<_> = items
         .iter()
         .copied()
         .filter(|item| !item.collapsed)
         .collect();
-    let line = resolve_visible_line(&visible, available, gap, alignment)?;
+    let line = resolve_visible_line(&visible, available, gap, alignment, overflow)?;
     let mut sizes = Vec::with_capacity(items.len());
     let mut starts = Vec::with_capacity(items.len());
     let mut values = line.sizes.into_iter().zip(line.starts);
@@ -157,6 +164,7 @@ fn resolve_visible_line(
     available: f32,
     gap: f32,
     alignment: Alignment,
+    overflow: OverflowPosition,
 ) -> Result<Line, FlexError> {
     validate_container(Some(available), gap)?;
     for item in items {
@@ -274,6 +282,7 @@ fn resolve_visible_line(
     };
     let (leading, between) = spacing(
         alignment,
+        overflow,
         if auto_margin > 0.0 { 0.0 } else { free as f32 },
         items.len(),
     );
@@ -403,14 +412,28 @@ mod tests {
             [0..2, 2..3],
             "the zero-size strut remains on the preceding line"
         );
-        let line = resolve_line(&items, 100.0, 10.0, Alignment::SpaceBetween).unwrap();
+        let line = resolve_line(
+            &items,
+            100.0,
+            10.0,
+            Alignment::SpaceBetween,
+            OverflowPosition::Default,
+        )
+        .unwrap();
         assert_eq!(line.sizes, [40.0, 0.0, 40.0]);
         assert_eq!(line.starts[0], 0.0);
         assert_eq!(
             line.starts[2], 60.0,
             "collapsed item must not consume an auto margin or alignment slot"
         );
-        let empty = resolve_line(&[collapsed], 100.0, 10.0, Alignment::SpaceAround).unwrap();
+        let empty = resolve_line(
+            &[collapsed],
+            100.0,
+            10.0,
+            Alignment::SpaceAround,
+            OverflowPosition::Default,
+        )
+        .unwrap();
         assert_eq!(empty.sizes, [0.0]);
         assert_eq!(empty.starts, [0.0]);
         assert_eq!(
@@ -427,13 +450,27 @@ mod tests {
             item(50.0, 1.0, 1.0, 100.0, None),
             item(50.0, 1.0, 1.0, 0.0, None),
         ];
-        let grown = resolve_line(&items, 300.0, 0.0, Alignment::FlexStart).unwrap();
+        let grown = resolve_line(
+            &items,
+            300.0,
+            0.0,
+            Alignment::FlexStart,
+            OverflowPosition::Default,
+        )
+        .unwrap();
         assert_eq!(
             grown.sizes,
             [60.0, 120.0, 120.0],
             "the capped first item must release space to unfrozen items"
         );
-        let shrunk = resolve_line(&items, 150.0, 0.0, Alignment::FlexStart).unwrap();
+        let shrunk = resolve_line(
+            &items,
+            150.0,
+            0.0,
+            Alignment::FlexStart,
+            OverflowPosition::Default,
+        )
+        .unwrap();
         assert_eq!(
             shrunk.sizes,
             [25.0, 100.0, 25.0],
@@ -451,6 +488,7 @@ mod tests {
             200.0,
             0.0,
             Alignment::SpaceBetween,
+            OverflowPosition::Default,
         )
         .unwrap();
         assert_eq!(resolved.sizes, [70.0, 70.0]);

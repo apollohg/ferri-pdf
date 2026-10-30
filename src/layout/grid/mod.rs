@@ -29,7 +29,7 @@ struct Plan<'a> {
     children: Vec<&'a BlockBox>,
     source_order: Vec<usize>,
     bounds: [SizeBounds; 2],
-    alignment: [crate::style::Alignment; 2],
+    alignment: [(crate::style::Alignment, crate::style::OverflowPosition); 2],
     rtl: bool,
 }
 
@@ -105,7 +105,10 @@ impl<'a> Plan<'a> {
             children,
             source_order,
             bounds,
-            alignment: [style.flex.align_content, style.flex.justify],
+            alignment: [
+                (style.flex.align_content, style.flex.align_content_overflow),
+                (style.flex.justify, style.flex.justify_overflow),
+            ],
             rtl: style.used_rtl(),
         })
     }
@@ -424,7 +427,7 @@ impl<'a> Geometry<'a> {
             source,
             columns.area(area[COLUMNS].clone()),
             &parent,
-            [style.flex.align_items, style.grid.justify_items],
+            style,
             Some(row.end - row.start),
             measurer,
         )?;
@@ -563,7 +566,10 @@ mod tests {
                             &[false],
                             0.0,
                             None,
-                            crate::style::Alignment::Start,
+                            (
+                                crate::style::Alignment::Start,
+                                crate::style::OverflowPosition::Default,
+                            ),
                             false,
                         ))),
                     ],

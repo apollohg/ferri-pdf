@@ -4,7 +4,7 @@ use crate::layout::{
     geometry::{Edges, HorizontalBox, SizeConstraints},
     measure::{ItemMetrics, MeasuredBlock, MeasuredCell, Measurer},
 };
-use crate::style::{Alignment, COLUMNS, ROWS, Size};
+use crate::style::{Alignment, COLUMNS, OverflowPosition, ROWS, Size, Style};
 use std::ops::Range;
 
 pub(crate) struct Item<'a> {
@@ -14,6 +14,7 @@ pub(crate) struct Item<'a> {
     pub geometry: HorizontalBox,
     pub margins: [Option<f32>; 4],
     pub align: Alignment,
+    pub align_overflow: OverflowPosition,
 }
 
 #[derive(Clone)]
@@ -130,7 +131,17 @@ pub(super) fn physical_alignment(
     }
 }
 
-fn offset(alignment: Alignment, free: f32, reverse: bool, own_reverse: bool) -> f32 {
+fn offset(
+    (alignment, overflow): (Alignment, OverflowPosition),
+    free: f32,
+    reverse: bool,
+    own_reverse: bool,
+) -> f32 {
+    let alignment = if overflow.starts(free) {
+        Alignment::Start
+    } else {
+        alignment
+    };
     match physical_alignment(alignment, reverse, own_reverse) {
         Alignment::Center => free / 2.0,
         Alignment::Right => free,
@@ -139,11 +150,13 @@ fn offset(alignment: Alignment, free: f32, reverse: bool, own_reverse: bool) -> 
 }
 
 impl<'a> Item<'a> {
+    /// The item in its grid `area`, self-aligned by default as the grid `container`'s
+    /// `align-items` and `justify-items`.
     pub(crate) fn new(
         source: &'a BlockBox,
         area: Range<f32>,
         parent: &HorizontalBox,
-        alignment: [Alignment; 2],
+        container: &Style,
         height: Option<f32>,
         measurer: &Measurer<'a>,
     ) -> Result<Self, Failure> {
@@ -169,19 +182,17 @@ impl<'a> Item<'a> {
             edges.horizontal(),
             shared[COLUMNS],
         );
-        let justify = if shared[COLUMNS] {
-            Alignment::Stretch
-        } else if style.grid.justify_self == Alignment::Auto {
-            alignment[1]
+        let (justify, justify_overflow) = if shared[COLUMNS] {
+            (Alignment::Stretch, OverflowPosition::Default)
         } else {
-            style.grid.justify_self.in_flow()
+            style
+                .grid
+                .used_justify_self(container.grid.default_justify())
         };
-        let align = if shared[ROWS] {
-            Alignment::Stretch
-        } else if style.flex.align_self == Alignment::Auto {
-            alignment[0]
+        let (align, align_overflow) = if shared[ROWS] {
+            (Alignment::Stretch, OverflowPosition::Default)
         } else {
-            style.flex.align_self.in_flow()
+            style.flex.used_align_self(&container.flex)
         };
         let auto = usize::from(margins[1].is_none()) + usize::from(margins[3].is_none());
         let space = (available
@@ -241,7 +252,12 @@ impl<'a> Item<'a> {
         } else {
             0.0
         }) + if auto == 0 {
-            offset(justify, free, parent.containing_rtl, style.used_rtl())
+            offset(
+                (justify, justify_overflow),
+                free,
+                parent.containing_rtl,
+                style.used_rtl(),
+            )
         } else {
             0.0
         };
@@ -260,6 +276,7 @@ impl<'a> Item<'a> {
             },
             margins,
             align,
+            align_overflow,
             parent: None,
         })
     }
@@ -426,7 +443,7 @@ impl<'a> Item<'a> {
         } else {
             0.0
         }) + if auto == 0 {
-            offset(self.align, free, false, false)
+            offset((self.align, self.align_overflow), free, false, false)
         } else {
             0.0
         }

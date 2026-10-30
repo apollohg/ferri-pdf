@@ -229,7 +229,6 @@ fn parallel_items_fragment_on_the_same_pages_and_stretch_to_the_same_end() {
 #[test]
 fn variables_do_not_silently_reset_valid_unsupported_flex_values() {
     for (property, value) in [
-        ("align-items", "safe center"),
         ("flex", "1 1 fit-content(10pt)"),
         ("align-self", "last baseline"),
     ] {

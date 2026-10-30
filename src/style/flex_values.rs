@@ -2,7 +2,7 @@ use crate::style::{
     LengthPercentage, Size, StyleError,
     box_values::{length_percentage, unsupported},
     component::Component,
-    grammar::{Keyword, Label, Production},
+    grammar::Keyword,
     units::Relative,
 };
 use serde::Serialize;
@@ -74,34 +74,21 @@ pub(crate) enum Alignment {
     AnchorCenter,
 }
 impl Alignment {
-    /// Each property's grammar admits only its own keywords; overflow positions and `last`
-    /// baselines are not modelled.
-    pub(crate) fn from_component(value: &Component) -> Result<Self, StyleError> {
-        if value
-            .find(Label::Production(Production::OverflowPosition))
-            .is_some()
-        {
-            return Err(unsupported(value));
-        }
+    /// An alignment and its `<overflow-position>`; each property's grammar admits only its
+    /// own keywords, and `last` baselines are not modelled.
+    pub(crate) fn from_component(
+        value: &Component,
+    ) -> Result<(Self, OverflowPosition), StyleError> {
         let mut keywords = Vec::new();
         value.keywords(&mut keywords);
-        Self::from_keywords(&keywords).ok_or_else(|| unsupported(value))
-    }
-    /// `align-content`, whose alignment may be explicitly `unsafe`: content overflows
-    /// both edges equally. `safe` alignment is not modelled.
-    pub(crate) fn content_from_component(value: &Component) -> Result<(Self, bool), StyleError> {
-        let mut keywords = Vec::new();
-        value.keywords(&mut keywords);
-        let (unsafe_overflow, keywords) = match keywords.split_first() {
-            Some((Keyword::Unsafe, rest)) => (true, rest),
-            _ => (false, keywords.as_slice()),
+        let (overflow, keywords) = match keywords.split_first() {
+            Some((Keyword::Unsafe, rest)) => (OverflowPosition::Unsafe, rest),
+            Some((Keyword::Safe, rest)) => (OverflowPosition::Safe, rest),
+            _ => (OverflowPosition::Default, keywords.as_slice()),
         };
-        match Self::from_keywords(keywords) {
-            Some(alignment) if !keywords.contains(&Keyword::Safe) => {
-                Ok((alignment, unsafe_overflow))
-            }
-            _ => Err(unsupported(value)),
-        }
+        Self::from_keywords(keywords)
+            .map(|alignment| (alignment, overflow))
+            .ok_or_else(|| unsupported(value))
     }
     /// §4.2: `anchor-center` behaves as `center` outside absolute positioning.
     pub(crate) fn in_flow(self) -> Self {
@@ -132,6 +119,23 @@ impl Alignment {
             [Keyword::AnchorCenter] => Self::AnchorCenter,
             _ => return None,
         })
+    }
+}
+/// CSS Box Alignment 3 §4.4 `<overflow-position>`.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
+pub(crate) enum OverflowPosition {
+    /// No keyword: the layout mode's automatic safety (§4.4.1), which honours the alignment
+    /// outside scroll containers and absolute positioning.
+    #[default]
+    Default,
+    Safe,
+    Unsafe,
+}
+impl OverflowPosition {
+    /// §4.4: a `safe` alignment subject that overflows its container (negative `free`
+    /// space) aligns as `flex-start` instead.
+    pub(crate) fn starts(self, free: f32) -> bool {
+        self == Self::Safe && free < 0.0
     }
 }
 #[derive(Clone, Debug, Default, PartialEq, Serialize)]
@@ -169,11 +173,13 @@ pub(crate) struct FlexStyle {
     pub direction: FlexDirection,
     pub wrap: FlexWrap,
     pub justify: Alignment,
+    pub justify_overflow: OverflowPosition,
     pub align_items: Alignment,
+    pub align_items_overflow: OverflowPosition,
     pub align_content: Alignment,
-    /// `align-content` names `unsafe` overflow alignment.
-    pub align_content_unsafe: bool,
+    pub align_content_overflow: OverflowPosition,
     pub align_self: Alignment,
+    pub align_self_overflow: OverflowPosition,
     pub gap: [Gap; 2],
     pub grow: f32,
     pub shrink: f32,
@@ -188,16 +194,28 @@ impl Default for FlexStyle {
             direction: FlexDirection::Row,
             wrap: FlexWrap::NoWrap,
             justify: Alignment::Normal,
+            justify_overflow: OverflowPosition::Default,
             align_items: Alignment::Normal,
+            align_items_overflow: OverflowPosition::Default,
             align_content: Alignment::Normal,
-            align_content_unsafe: false,
+            align_content_overflow: OverflowPosition::Default,
             align_self: Alignment::Auto,
+            align_self_overflow: OverflowPosition::Default,
             gap: [const { Gap::Normal }; 2],
             grow: 0.0,
             shrink: 1.0,
             basis: FlexBasis::Auto,
             order: 0,
             legacy_box: false,
+        }
+    }
+}
+impl FlexStyle {
+    /// The item's `align-self`, with `auto` taken from the `container`'s `align-items`.
+    pub(crate) fn used_align_self(&self, container: &Self) -> (Alignment, OverflowPosition) {
+        match self.align_self.in_flow() {
+            Alignment::Auto => (container.align_items, container.align_items_overflow),
+            align => (align, self.align_self_overflow),
         }
     }
 }

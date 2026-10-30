@@ -1807,6 +1807,23 @@ pub(super) fn block_geometry<'a>(
                 containing_height,
             )?)
         }
+        // CSS Align 3 §6.1.1: a `justify-self` other than `normal` or `stretch` sizes an
+        // automatic width as fit-content.
+        None if style.width == crate::style::Size::Auto
+            && style.block_justify_self().is_some_and(|(alignment, _)| {
+                !matches!(
+                    alignment,
+                    crate::style::Alignment::Normal | crate::style::Alignment::Stretch
+                )
+            }) =>
+        {
+            Some(crate::layout::inline::shrink_to_fit(
+                measurer,
+                block,
+                width,
+                containing_height,
+            )?)
+        }
         None => crate::layout::ratio::width_from_height(
             measurer,
             block,
@@ -2207,8 +2224,9 @@ fn place_legend(
 }
 
 /// CSS Box Alignment 3 §5.4: the block-axis offset of a block container's content within
-/// `free` space. Without an explicit `unsafe`, overflowing content stays at the start edge
-/// of a scroll container, and distributed alignment falls back to safe centring.
+/// `free` space. Overflowing `safe` content, and content of a scroll container without an
+/// overflow position, stays at the start edge; distributed alignment falls back to safe
+/// centring.
 fn content_alignment(style: &Style, free: f32, scroll_container: bool) -> f32 {
     use crate::style::Alignment;
     let (factor, safe) = match style.flex.align_content {
@@ -2217,7 +2235,10 @@ fn content_alignment(style: &Style, free: f32, scroll_container: bool) -> f32 {
         Alignment::SpaceAround | Alignment::SpaceEvenly => (0.5, true),
         _ => return 0.0,
     };
-    let safe = !style.flex.align_content_unsafe && (safe || scroll_container);
+    let safe = match style.flex.align_content_overflow {
+        crate::style::OverflowPosition::Default => safe || scroll_container,
+        overflow => overflow == crate::style::OverflowPosition::Safe,
+    };
     if free < 0.0 && safe {
         return 0.0;
     }

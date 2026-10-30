@@ -121,7 +121,7 @@ pub(crate) use decoration_values::{
     DecorationLines, TextDecoration, TextDecorations, UnderlinePosition,
 };
 pub(crate) use diagnostics::{SourceLocation, StyleDiagnostic, StyleDiagnosticKind};
-pub(crate) use flex_values::{Alignment, FlexBasis, FlexStyle, FlexWrap, Gap};
+pub(crate) use flex_values::{Alignment, FlexBasis, FlexStyle, FlexWrap, Gap, OverflowPosition};
 pub(crate) use float_values::{Clear, Float, FloatSide};
 pub(crate) use font_values::{
     FontFeatures, FontKerning, FontVariantAlternates, FontVariantCaps, FontVariantEmoji,

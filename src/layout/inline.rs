@@ -209,6 +209,7 @@ fn measure_initial_letter<'a>(
             let content = measured.height - start - end;
             crate::flex::spacing(
                 super::flex::alignment(style.flex.align_content, false),
+                style.flex.align_content_overflow,
                 content - line.height,
                 1,
             )

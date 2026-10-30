@@ -128,7 +128,7 @@ pub(crate) fn measure<'a>(
             source,
             columns.area(area[COLUMNS].clone()),
             &parent,
-            [style.flex.align_items, style.grid.justify_items],
+            style,
             fixed_heights[index],
             measurer,
         )?;
@@ -314,7 +314,7 @@ pub(crate) fn measure<'a>(
                 item.source,
                 columns.area(area[COLUMNS].clone()),
                 &parent,
-                [style.flex.align_items, style.grid.justify_items],
+                style,
                 Some(available),
                 measurer,
             )?
@@ -407,6 +407,11 @@ pub(crate) fn measure<'a>(
     );
     for child in block.children() {
         if let BlockContent::Positioned(child) = child {
+            let (justify, justify_overflow) = child
+                .style()
+                .grid
+                .used_justify_self(style.grid.default_justify());
+            let (align, align_overflow) = child.style().flex.used_align_self(&style.flex);
             items.push(FlowItem::Positioned(PositionedFlow {
                 block: child,
                 left: geometry.x,
@@ -415,26 +420,18 @@ pub(crate) fn measure<'a>(
                 alignment: Some(crate::layout::positioned::StaticAlignment {
                     content: [geometry.width, content],
                     row: true,
-                    main_reverse: false,
+                    // The inline axis runs right to left, so a `safe` fallback starts at the
+                    // right edge; the physical alignments ignore it.
+                    main_reverse: style.used_rtl(),
                     cross_reverse: false,
                     justify: super::items::physical_alignment(
-                        if child.style().grid.justify_self == Alignment::Auto {
-                            style.grid.justify_items
-                        } else {
-                            child.style().grid.justify_self.in_flow()
-                        },
+                        justify,
                         style.used_rtl(),
                         child.style().used_rtl(),
                     ),
-                    align: super::items::physical_alignment(
-                        if child.style().flex.align_self == Alignment::Auto {
-                            style.flex.align_items
-                        } else {
-                            child.style().flex.align_self.in_flow()
-                        },
-                        false,
-                        false,
-                    ),
+                    justify_overflow,
+                    align: super::items::physical_alignment(align, false, false),
+                    align_overflow,
                 }),
             }));
         }

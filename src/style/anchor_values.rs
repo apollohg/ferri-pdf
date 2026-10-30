@@ -469,6 +469,10 @@ impl Tactic {
             std::mem::swap(&mut moved.min_width, &mut moved.min_height);
             std::mem::swap(&mut moved.max_width, &mut moved.max_height);
             std::mem::swap(&mut moved.grid.justify_self, &mut moved.flex.align_self);
+            std::mem::swap(
+                &mut moved.grid.justify_self_overflow,
+                &mut moved.flex.align_self_overflow,
+            );
         }
         moved
     }

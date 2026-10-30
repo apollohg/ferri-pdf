@@ -106,9 +106,11 @@ pub(super) fn horizontal_with_edges(
         containing_rtl,
         crate::style::Overconstraint::AdjustEndMargin,
     );
-    let start = match (left, right, self_alignment(style, containing_rtl)) {
-        (Some(left), Some(right), Some(factor)) => {
-            left + factor * (containing_width - used.size - horizontal_edges - left - right)
+    let start = match (left, right, style.block_justify_self()) {
+        (Some(left), Some(right), Some(alignment)) => {
+            let free = containing_width - used.size - horizontal_edges - left - right;
+            self_alignment(alignment, free, containing_rtl)
+                .map_or(used.margins[0], |factor| left + factor * free)
         }
         _ => used.margins[0],
     };
@@ -125,12 +127,19 @@ pub(super) fn horizontal_with_edges(
 }
 
 /// CSS Box Alignment 3 §6.1: a block-level box with a positional `justify-self` and no
-/// `auto` margins sits at this fraction of its containing block's free space; other values
+/// `auto` margins sits at this fraction of its containing block's `free` space; other values
 /// leave the over-constrained end margin to absorb it.
-fn self_alignment(style: &Style, containing_rtl: bool) -> Option<f32> {
+fn self_alignment(
+    (alignment, overflow): (crate::style::Alignment, crate::style::OverflowPosition),
+    free: f32,
+    containing_rtl: bool,
+) -> Option<f32> {
     use crate::style::Alignment;
     let start = if containing_rtl { 1.0 } else { 0.0 };
-    match style.grid.justify_self.in_flow() {
+    if overflow.starts(free) {
+        return Some(start);
+    }
+    match alignment {
         Alignment::Left => Some(0.0),
         Alignment::Right => Some(1.0),
         Alignment::Center => Some(0.5),

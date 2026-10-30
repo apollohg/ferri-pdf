@@ -13,7 +13,9 @@ use crate::layout::{
     },
     positioned::StaticAlignment,
 };
-use crate::style::{Alignment, BoxSizing, BreakBetween, Display, FlexBasis, FlexWrap, Size};
+use crate::style::{
+    Alignment, BoxSizing, BreakBetween, Display, FlexBasis, FlexWrap, OverflowPosition, Size,
+};
 
 fn item_metrics<'a>(
     measurer: &mut Measurer<'a>,
@@ -56,6 +58,7 @@ struct FlexItem<'a> {
     border: [f32; 4],
     margins: [Option<f32>; 4],
     align: Alignment,
+    align_overflow: OverflowPosition,
     natural_cross: f32,
     natural_main: f32,
     inline_definite: bool,
@@ -204,10 +207,7 @@ pub(super) fn measure<'a>(
                 ),
             ]
         };
-        let align = match child.flex.align_self.in_flow() {
-            Alignment::Auto => flex.align_items,
-            v => v,
-        };
+        let (align, align_overflow) = child.flex.used_align_self(flex);
         let preliminary_width = widths.constrain(widths.specified.unwrap_or_else(|| {
             if matches!(align, Alignment::Normal | Alignment::Stretch) {
                 available_width
@@ -233,6 +233,7 @@ pub(super) fn measure<'a>(
             border,
             margins,
             align,
+            align_overflow,
             natural_cross: preliminary_width,
             natural_main: 0.0,
             inline_definite: false,
@@ -442,6 +443,7 @@ pub(super) fn measure<'a>(
                 main,
                 main_gap,
                 alignment(flex.justify, flex.direction.reverse()),
+                flex.justify_overflow,
             )?;
             let mut measured = Vec::new();
             let mut cross = 0.0f32;
@@ -543,6 +545,7 @@ pub(super) fn measure<'a>(
         + cross_gap * lines.len().saturating_sub(1) as f32;
     let (mut cross_cursor, cross_between) = spacing(
         alignment(flex.align_content, flex.wrap == FlexWrap::WrapReverse),
+        flex.align_content_overflow,
         used_cross - total_cross,
         lines.len(),
     );
@@ -618,6 +621,7 @@ pub(super) fn measure<'a>(
                 margin_start
                     + spacing(
                         alignment(item.align, flex.wrap == FlexWrap::WrapReverse),
+                        item.align_overflow,
                         free,
                         1,
                     )
@@ -741,10 +745,7 @@ pub(super) fn measure<'a>(
     );
     for child in block.children() {
         if let BlockContent::Positioned(child) = child {
-            let align = match child.style().flex.align_self.in_flow() {
-                Alignment::Auto => flex.align_items,
-                align => align,
-            };
+            let (align, align_overflow) = child.style().flex.used_align_self(flex);
             items.push(FlowItem::Positioned(PositionedFlow {
                 block: child,
                 left: geometry.x,
@@ -756,7 +757,9 @@ pub(super) fn measure<'a>(
                     main_reverse,
                     cross_reverse,
                     justify: flex.justify,
+                    justify_overflow: flex.justify_overflow,
                     align,
+                    align_overflow,
                 }),
             }));
         }
