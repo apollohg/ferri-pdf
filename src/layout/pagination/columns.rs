@@ -54,6 +54,8 @@ struct RowFrame {
     unbounded: bool,
     /// The page area in the coordinates of the row's first column.
     page_rect: Rect,
+    /// Leaving the row is a page break as well as a column break.
+    breaks_page: bool,
 }
 
 /// The rows of column boxes a row segment is laid out in, and how far its flow reached.
@@ -132,6 +134,14 @@ impl ColumnRows {
             .get(self.row(page))
             .or_else(|| self.frames.last())
             .map_or(self.offset, |frame| frame.offset)
+    }
+    /// Whether the break after column `page` is also a page break: the column ends a bounded
+    /// row whose successor is in the next enclosing fragmentainer (CSS Fragmentation 3 §4.2).
+    pub(super) fn breaks_page(&self, page: usize) -> bool {
+        let row = self.row(page);
+        self.frames.get(row).is_some_and(|frame| {
+            frame.breaks_page && !frame.unbounded && page + 1 == frame.first + frame.geometry.count
+        })
     }
     pub(super) fn has_next_row(&self, page: usize) -> bool {
         self.frames
@@ -820,6 +830,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 y: self.page_rect.y - self.top - self.y,
                 ..self.page_rect
             },
+            breaks_page: self.fragmentainers.breaks_page(self.page),
         };
         let mut checkpoint = (continuing_space > space + FRAGMENTATION_TOLERANCE_PT)
             .then(|| cursor.layout.snapshot(&self.measurer.work))
@@ -1236,6 +1247,8 @@ pub(crate) fn measure_columns<'a>(
                             reference_height: frame.0,
                             unbounded: frame.1,
                             page_rect: UNPLACED_PAGE,
+                            breaks_page: measurer.fragmentainer
+                                == crate::layout::breaks::Fragmentainer::Page,
                         });
                         let (output, end) = lay_out_row(measurer, layout, row, balance)?;
                         let pages = output.rows().pages(row, output.state.pages.len());

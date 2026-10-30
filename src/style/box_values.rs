@@ -192,6 +192,9 @@ pub(crate) enum BreakBetween {
     Auto,
     Avoid,
     AvoidColumn,
+    AvoidPage,
+    /// A break of the immediately-containing fragmentation context (CSS Fragmentation 3 §3.1).
+    Always,
     Page,
     Column,
     Left,
@@ -202,10 +205,16 @@ pub(crate) enum BreakBetween {
 impl BreakBetween {
     pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
         match value.keyword() {
-            Some(Keyword::Auto) => Ok(Self::Auto),
+            // CSS Fragmentation 4 §3.1: region values have no effect outside a multi-region
+            // flow, and paged output has no regions.
+            Some(Keyword::Auto | Keyword::Region | Keyword::AvoidRegion) => Ok(Self::Auto),
             Some(Keyword::Avoid) => Ok(Self::Avoid),
             Some(Keyword::AvoidColumn) => Ok(Self::AvoidColumn),
-            Some(Keyword::Page | Keyword::Always) => Ok(Self::Page),
+            Some(Keyword::AvoidPage) => Ok(Self::AvoidPage),
+            Some(Keyword::Always) => Ok(Self::Always),
+            // `all` breaks through every containing fragmentation context; pages contain all
+            // others, and a page break also breaks every column (§3.1, §4.2).
+            Some(Keyword::Page | Keyword::All) => Ok(Self::Page),
             Some(Keyword::Column) => Ok(Self::Column),
             Some(Keyword::Left) => Ok(Self::Left),
             Some(Keyword::Right) => Ok(Self::Right),
@@ -217,7 +226,13 @@ impl BreakBetween {
     pub(crate) fn is_forced(self) -> bool {
         matches!(
             self,
-            Self::Page | Self::Column | Self::Left | Self::Right | Self::Recto | Self::Verso
+            Self::Always
+                | Self::Page
+                | Self::Column
+                | Self::Left
+                | Self::Right
+                | Self::Recto
+                | Self::Verso
         )
     }
     pub(crate) fn forces_page(self) -> bool {
@@ -241,10 +256,17 @@ impl BreakBetween {
         } else if self.page_side(false).is_some() {
             self
         } else {
-            [Self::Page, Self::Column, Self::Avoid, Self::AvoidColumn]
-                .into_iter()
-                .find(|value| *value == self || *value == later)
-                .unwrap_or(Self::Auto)
+            [
+                Self::Page,
+                Self::Always,
+                Self::Column,
+                Self::Avoid,
+                Self::AvoidPage,
+                Self::AvoidColumn,
+            ]
+            .into_iter()
+            .find(|value| *value == self || *value == later)
+            .unwrap_or(Self::Auto)
         }
     }
 }
@@ -256,13 +278,16 @@ pub(crate) enum BreakInside {
     Auto,
     Avoid,
     AvoidColumn,
+    AvoidPage,
 }
 impl BreakInside {
     pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
         match value.keyword() {
-            Some(Keyword::Auto) => Ok(Self::Auto),
+            // CSS Fragmentation 4 §3.2: paged output has no region breaks to avoid.
+            Some(Keyword::Auto | Keyword::AvoidRegion) => Ok(Self::Auto),
             Some(Keyword::Avoid) => Ok(Self::Avoid),
             Some(Keyword::AvoidColumn) => Ok(Self::AvoidColumn),
+            Some(Keyword::AvoidPage) => Ok(Self::AvoidPage),
             _ => Err(unsupported(value)),
         }
     }

@@ -677,7 +677,7 @@ pub(super) fn select_side(
         .first(true)?
         .map_or(BreakBetween::Auto, |(_, before)| before);
     Ok(before.page_side(rtl).unwrap_or_else(|| {
-        let left = rtl != (before == BreakBetween::Page);
+        let left = rtl != matches!(before, BreakBetween::Page | BreakBetween::Always);
         if left {
             PageSide::Left
         } else {

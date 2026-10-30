@@ -148,6 +148,7 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
             reference_height: COLUMN_HEIGHT,
             unbounded: false,
             page_rect: UNPLACED_PAGE,
+            breaks_page: true,
         });
         let start = FlowStart {
             track_overflow: false,

@@ -16,7 +16,7 @@ use crate::document::{BlockBox, BoxNavigation};
 use crate::graphics::{
     Backgrounds, BoxAreas, BoxDecoration, BoxPaint, Clip, DecorationPaint, DisplayItem, Rect,
 };
-use crate::layout::breaks::{BreakTail, Forced, Fragmentainer, fragmentainer_height};
+use crate::layout::breaks::{BreakTail, BreakTails, Forced, Fragmentainer, fragmentainer_height};
 use crate::layout::margin::MarginStrut;
 use crate::layout::navigation::{Destination, LinkArea};
 use crate::layout::positioned::StaticPosition;
@@ -432,6 +432,13 @@ impl Fragmentainers<'_, '_> {
             Self::Columns(_) => Fragmentainer::Column,
         }
     }
+    /// Whether a break out of fragmentainer `page` is a page break (CSS Fragmentation 3 §4.2).
+    fn breaks_page(&self, page: usize) -> bool {
+        match self {
+            Self::Pages(_) => true,
+            Self::Columns(rows) => rows.breaks_page(page),
+        }
+    }
     fn top(&self, page: usize) -> f32 {
         match self {
             Self::Pages(pages) => pages.records[page].geometry.content_box().y,
@@ -739,11 +746,11 @@ struct SplitInline<'a> {
 
 #[derive(Clone)]
 struct FlowFrame<'a> {
-    items: std::iter::Zip<std::vec::IntoIter<FlowItem<'a>>, std::vec::IntoIter<BreakTail>>,
+    items: std::iter::Zip<std::vec::IntoIter<FlowItem<'a>>, std::vec::IntoIter<BreakTails>>,
     block: Option<BlockFrame<'a>>,
 }
 impl<'a> FlowFrame<'a> {
-    fn new(items: Vec<FlowItem<'a>>, tail: BreakTail, block: Option<BlockFrame<'a>>) -> Self {
+    fn new(items: Vec<FlowItem<'a>>, tail: BreakTails, block: Option<BlockFrame<'a>>) -> Self {
         let tails = crate::layout::breaks::tail_heights(&items, tail);
         Self {
             items: items.into_iter().zip(tails),
@@ -768,7 +775,7 @@ struct FlowCursor<'a, 't> {
     row: Option<Box<rows::RowCursor<'a, 't>>>,
     columns: Option<Box<columns::ColumnCursor<'a, 't>>>,
     row_entry: Option<RowEntry<'a>>,
-    ready: Option<(FlowItem<'a>, BreakTail)>,
+    ready: Option<(FlowItem<'a>, BreakTails)>,
 }
 
 impl<'a: 't, 't: 'a> FlowCursor<'a, 't> {
@@ -782,7 +789,7 @@ impl<'a: 't, 't: 'a> FlowCursor<'a, 't> {
     }
     fn new(items: Vec<FlowItem<'a>>, tail: BreakTail) -> Box<Self> {
         Box::new(Self {
-            frames: vec![FlowFrame::new(items, tail, None)],
+            frames: vec![FlowFrame::new(items, BreakTails::uniform(tail), None)],
             paragraph: None,
             row: None,
             columns: None,
@@ -2071,8 +2078,12 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         let reserve = self.continuation_reserve()?;
         let fits_float = block.style.floating().is_some()
             && !overflows(block.overflow_height + reserve, self.height);
-        let keep =
-            (self.fragmentainers.kind().keeps(block.style) || fits_float) && !block.has_forced;
+        let keep = (self
+            .fragmentainers
+            .kind()
+            .keeps_at(block.style, self.fragmentainers.breaks_page(self.page))
+            || fits_float)
+            && !block.has_forced;
         let required = if block.first_fragment == 0.0 && block.height == 0.0 {
             0.0
         } else if keep {
@@ -2876,8 +2887,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 }
                 continue;
             }
-            let (item, tail, ready) = if let Some((item, tail)) = cursor.ready.take() {
-                (item, tail, true)
+            let (item, tails, ready) = if let Some((item, tails)) = cursor.ready.take() {
+                (item, tails, true)
             } else {
                 let frame = cursor.frames.last_mut().unwrap();
                 let Some((item, tail)) = frame.items.next() else {
@@ -2895,6 +2906,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 self.measurer.work.spend(1)?;
                 (item, tail, false)
             };
+            let tail = tails.at(self.fragmentainers.breaks_page(self.page));
             match item {
                 FlowItem::Frame {
                     inner,
@@ -2914,14 +2926,16 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     } else {
                         let (child, request) = self.prepare_block(*child, tail)?;
                         if let Some(request) = request {
-                            cursor.ready = Some((FlowItem::Block(Box::new(child)), tail));
+                            cursor.ready = Some((FlowItem::Block(Box::new(child)), tails));
                             return Ok(Some((cursor, request)));
                         }
                         child
                     };
                     let mut block = self.start_block(child)?;
                     let items = std::mem::take(&mut block.items);
-                    cursor.frames.push(FlowFrame::new(items, tail, Some(block)));
+                    cursor
+                        .frames
+                        .push(FlowFrame::new(items, tails, Some(block)));
                 }
                 FlowItem::Columns(columns) => {
                     cursor.columns = Some(Box::new(columns::ColumnCursor::new(*columns, tail)));
@@ -2931,7 +2945,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                         && !paragraph.is_phantom()
                         && let Some(request) = self.paragraph_break()
                     {
-                        cursor.ready = Some((FlowItem::Paragraph(paragraph), tail));
+                        cursor.ready = Some((FlowItem::Paragraph(paragraph), tails));
                         return Ok(Some((cursor, request)));
                     }
                     cursor.paragraph = Some((Box::new(self.start_paragraph(paragraph)), tail));
@@ -2968,7 +2982,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 FlowItem::Space(value) if value != 0.0 => self.space(value),
                 FlowItem::Space(_) => {}
                 FlowItem::TableBox(table) => {
-                    if let Some(request) = self.place_table_box(&mut cursor, table, tail, ready)? {
+                    if let Some(request) = self.place_table_box(&mut cursor, table, tails, ready)? {
                         return Ok(Some((cursor, request)));
                     }
                 }
@@ -4710,7 +4724,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         &mut self,
         cursor: &mut FlowCursor<'a, 't>,
         item: Box<crate::layout::measure::MeasuredTableBox<'a>>,
-        tail: BreakTail,
+        tails: BreakTails,
         ready: bool,
     ) -> Result<Option<BreakRequest>, LayoutError> {
         let group = item.area.source.style().display.is_row_group();
@@ -4727,7 +4741,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 if body {
                     self.repeat_group(|flow| &flow.footer)?;
                 }
-                cursor.ready = Some((FlowItem::TableBox(item), tail));
+                cursor.ready = Some((FlowItem::TableBox(item), tails));
                 return Ok(Some(BreakRequest {
                     forced,
                     preserve_empty: false,

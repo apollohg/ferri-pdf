@@ -81,11 +81,16 @@ pub(super) enum Fragmentainer {
 }
 impl Fragmentainer {
     /// `column` and `avoid-column` apply only between columns; a page break also breaks the
-    /// column (CSS Fragmentation 3 §3.1).
+    /// column (CSS Fragmentation 3 §3.1). Between columns, `avoid-page` remains: it applies
+    /// only where the column break is also a page break (§4.2).
     pub(crate) fn between(self, value: BreakBetween) -> BreakBetween {
         match (self, value) {
             (Self::Page, BreakBetween::Column | BreakBetween::AvoidColumn) => BreakBetween::Auto,
-            (Self::Column, BreakBetween::AvoidColumn) => BreakBetween::Avoid,
+            (Self::Page, BreakBetween::AvoidPage) | (Self::Column, BreakBetween::AvoidColumn) => {
+                BreakBetween::Avoid
+            }
+            (Self::Page, BreakBetween::Always) => BreakBetween::Page,
+            (Self::Column, BreakBetween::Always) => BreakBetween::Column,
             (_, value) => value,
         }
     }
@@ -93,10 +98,14 @@ impl Fragmentainer {
     pub(crate) fn edges(self, style: &Style) -> [BreakBetween; 2] {
         [style.break_before, style.break_after].map(|value| self.between(value))
     }
-    /// Whether `break-inside` avoids breaks into this fragmentainer.
-    /// Whether the box avoids breaks inside; size containment boxes are monolithic (CSS
-    /// Containment 2 §3.1).
+    /// Whether the box avoids breaks inside into this fragmentainer; size containment boxes
+    /// are monolithic (CSS Containment 2 §3.1).
     pub(crate) fn keeps(self, style: &Style) -> bool {
+        self.keeps_at(style, self == Self::Page)
+    }
+    /// `keeps` at a break that is a page break when `page_break` is set: a column break is
+    /// also a page break where the next column box is on another page (§4.2).
+    pub(crate) fn keeps_at(self, style: &Style, page_break: bool) -> bool {
         if style.containment().size[1] {
             return true;
         }
@@ -104,6 +113,7 @@ impl Fragmentainer {
             BreakInside::Auto => false,
             BreakInside::Avoid => true,
             BreakInside::AvoidColumn => self == Self::Column,
+            BreakInside::AvoidPage => page_break,
         }
     }
 }
@@ -122,13 +132,17 @@ impl Forced {
     /// The forced break of a resolved break value.
     pub(crate) fn of(value: BreakBetween) -> Option<Self> {
         match value {
-            BreakBetween::Page => Some(Self::Page),
+            // Resolved values hold `always` only outside any fragmentainer, in the page flow.
+            BreakBetween::Page | BreakBetween::Always => Some(Self::Page),
             BreakBetween::Column => Some(Self::Column),
             BreakBetween::Left => Some(Self::Left),
             BreakBetween::Right => Some(Self::Right),
             BreakBetween::Recto => Some(Self::Recto),
             BreakBetween::Verso => Some(Self::Verso),
-            BreakBetween::Auto | BreakBetween::Avoid | BreakBetween::AvoidColumn => None,
+            BreakBetween::Auto
+            | BreakBetween::Avoid
+            | BreakBetween::AvoidColumn
+            | BreakBetween::AvoidPage => None,
         }
     }
     pub(crate) fn is_page(self) -> bool {
@@ -169,6 +183,24 @@ pub(super) struct BreakTail {
     pub height: f32,
     pub end_boxes: usize,
     pub end_space: f32,
+}
+/// The tails of an item at a break between columns only and at a page break, which
+/// `avoid-page` also keeps; they differ only in column flows (CSS Fragmentation 3 §4.2).
+#[derive(Clone, Copy, Default)]
+pub(super) struct BreakTails {
+    column: BreakTail,
+    page: BreakTail,
+}
+impl BreakTails {
+    pub(super) fn uniform(tail: BreakTail) -> Self {
+        Self {
+            column: tail,
+            page: tail,
+        }
+    }
+    pub(super) fn at(self, page_break: bool) -> BreakTail {
+        if page_break { self.page } else { self.column }
+    }
 }
 impl FlowItem<'_> {
     fn break_info(&self) -> Option<BreakInfo> {
@@ -276,7 +308,20 @@ pub(super) fn boundaries(
     )
 }
 
-pub(super) fn tail_heights(items: &[FlowItem<'_>], outer_tail: BreakTail) -> Vec<BreakTail> {
+pub(super) fn tail_heights(items: &[FlowItem<'_>], outer: BreakTails) -> Vec<BreakTails> {
+    tails_at(items, outer.column, false)
+        .into_iter()
+        .zip(tails_at(items, outer.page, true))
+        .map(|(column, page)| BreakTails { column, page })
+        .collect()
+}
+
+/// Whether a break value avoids the break, which is a page break when `page_break` is set.
+fn avoids(value: BreakBetween, page_break: bool) -> bool {
+    value == BreakBetween::Avoid || page_break && value == BreakBetween::AvoidPage
+}
+
+fn tails_at(items: &[FlowItem<'_>], outer_tail: BreakTail, page_break: bool) -> Vec<BreakTail> {
     let mut tails = vec![BreakTail::default(); items.len()];
     let mut next: Option<BreakInfo> = None;
     let mut gap = 0.0;
@@ -309,8 +354,7 @@ pub(super) fn tail_heights(items: &[FlowItem<'_>], outer_tail: BreakTail) -> Vec
             },
             Some(next)
                 if !next.before.is_forced()
-                    && (info.after == BreakBetween::Avoid
-                        || next.before == BreakBetween::Avoid) =>
+                    && (avoids(info.after, page_break) || avoids(next.before, page_break)) =>
             {
                 BreakTail {
                     height: gap + next.first_fragment,
@@ -335,8 +379,10 @@ pub(super) fn tail_heights(items: &[FlowItem<'_>], outer_tail: BreakTail) -> Vec
     tails
 }
 
+/// The height of the flow's first unbreakable piece at column-only or resolved page breaks;
+/// `avoid-page` between columns is decided during pagination.
 pub(super) fn first_fragment(items: &[FlowItem<'_>]) -> f32 {
-    let tails = tail_heights(items, BreakTail::default());
+    let tails = tails_at(items, BreakTail::default(), false);
     let mut gap = 0.0;
     for (index, item) in items.iter().enumerate() {
         let Some(info) = item.break_info() else {
