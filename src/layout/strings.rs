@@ -104,6 +104,7 @@ impl StringLocations {
         }
         let mut output = PageStrings {
             names: HashMap::new(),
+            elements: HashMap::new(),
             locations: self.locations,
         };
         for (index, location) in self.assignments {
@@ -111,6 +112,18 @@ impl StringLocations {
                 return Err(StyleError::Invalid(
                     "running string assignment is outside the page sequence".into(),
                 ));
+            }
+            if let Some(element) = &assignments[index].element {
+                output
+                    .elements
+                    .entry(element.name.clone())
+                    .or_default()
+                    .push(PageValue {
+                        page: location.page,
+                        owner: index,
+                        start: location.start,
+                        value: (),
+                    });
             }
             for assignment in &assignments[index].values {
                 let text = assignment.content.page_text(
@@ -126,24 +139,45 @@ impl StringLocations {
                         page: location.page,
                         owner: index,
                         start: location.start,
-                        text,
+                        value: text,
                     });
             }
         }
         for values in output.names.values_mut() {
             values.sort_by_key(|value| (value.page, value.owner));
         }
+        for values in output.elements.values_mut() {
+            values.sort_by_key(|value| (value.page, value.owner));
+        }
         Ok(output)
     }
 }
-struct PageValue {
+struct PageValue<T> {
     page: usize,
     owner: usize,
     start: bool,
-    text: String,
+    value: T,
+}
+impl<T> PageValue<T> {
+    /// The assignment a page uses (CSS GCPM 3 §1.1.2): `None` is the empty value.
+    fn select(values: &[Self], page: usize, mode: NamedStringMode) -> Option<&Self> {
+        let first = values.partition_point(|value| value.page < page);
+        let end = values.partition_point(|value| value.page <= page);
+        let entry = first.checked_sub(1).map(|index| &values[index]);
+        let current = &values[first..end];
+        match mode {
+            NamedStringMode::First => current.first().or(entry),
+            NamedStringMode::Start => current.first().filter(|value| value.start).or(entry),
+            NamedStringMode::Last => current.last().or(entry),
+            NamedStringMode::FirstExcept if !current.is_empty() => None,
+            NamedStringMode::FirstExcept => entry,
+        }
+    }
 }
 pub(super) struct PageStrings {
-    names: HashMap<std::sync::Arc<str>, Vec<PageValue>>,
+    names: HashMap<std::sync::Arc<str>, Vec<PageValue<String>>>,
+    /// Running elements by name, with their owners' assignment indices.
+    elements: HashMap<std::sync::Arc<str>, Vec<PageValue<()>>>,
     locations: HashMap<PageStyleTarget, usize>,
 }
 impl PageStrings {
@@ -162,25 +196,18 @@ impl PageStrings {
     }
 
     pub(crate) fn text(&self, page: usize, request: &NamedStringRequest) -> String {
-        let Some(values) = self.names.get(request.name.as_ref()) else {
-            return String::new();
-        };
-        let first = values.partition_point(|value| value.page < page);
-        let end = values.partition_point(|value| value.page <= page);
-        let entry = first
-            .checked_sub(1)
-            .map_or("", |index| values[index].text.as_str());
-        let current = &values[first..end];
-        match request.mode {
-            NamedStringMode::First => current.first().map_or(entry, |value| value.text.as_str()),
-            NamedStringMode::Start => current
-                .first()
-                .filter(|value| value.start)
-                .map_or(entry, |value| value.text.as_str()),
-            NamedStringMode::Last => current.last().map_or(entry, |value| value.text.as_str()),
-            NamedStringMode::FirstExcept if !current.is_empty() => "",
-            NamedStringMode::FirstExcept => entry,
-        }
-        .to_owned()
+        self.names
+            .get(request.name.as_ref())
+            .and_then(|values| PageValue::select(values, page, request.mode))
+            .map_or_else(String::new, |value| value.value.clone())
+    }
+
+    /// The assignment index of the running element `element()` places on a page (CSS GCPM 3
+    /// §1.2.2), which selects among assignments as `string()` does.
+    pub(crate) fn element(&self, page: usize, request: &NamedStringRequest) -> Option<usize> {
+        self.elements
+            .get(request.name.as_ref())
+            .and_then(|values| PageValue::select(values, page, request.mode))
+            .map(|value| value.owner)
     }
 }

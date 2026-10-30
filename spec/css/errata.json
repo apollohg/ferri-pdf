@@ -53,6 +53,14 @@
       "syntax": "[ <string> | <counter()> | <counters()> | <content()> | <attr()> ]+",
       "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#setting-named-strings-the-string-set-pro"
     },
+    "running()": {
+      "syntax": "running( <custom-ident> )",
+      "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#running-syntax"
+    },
+    "running-element()": {
+      "syntax": "element( <custom-ident> [ , [ first | start | last | first-except ] ]? )",
+      "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#element-syntax: the content value, distinct from the CSS Images element() <image>; the keyword's comma is omitted with it, as for string()"
+    },
     "font-format": {
       "syntax": "<string> | collection | embedded-opentype | opentype | svg | truetype | woff | woff2",
       "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#font-face-src-parsing"
@@ -199,6 +207,14 @@
     }
   },
   "properties": {
+    "position": {
+      "syntax": "static | relative | absolute | sticky | fixed | <running()>",
+      "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#running-syntax"
+    },
+    "content": {
+      "syntax": "normal | none | [ <content-replacement> | <content-list> ] [ / [ <string> | <counter> | <attr()> ]+ ]? | <running-element()>",
+      "source": "https://www.w3.org/TR/2024/WD-css-gcpm-3-20240125/#element-syntax"
+    },
     "corner-shape": {
       "initial": [
         "corner-top-left-shape",

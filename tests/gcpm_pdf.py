@@ -6,6 +6,8 @@ import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 
+from oracle import pdf_content
+
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "target/debug/ferri-pdf"
 FONT = (ROOT / "tests/oracle/assets/DejaVuSans.ttf").as_uri()
@@ -36,12 +38,68 @@ class GcpmPdf(unittest.TestCase):
 
     def render(self, css, body):
         source = self.output / "source.html"
-        pdf = self.output / "output.pdf"
+        self.pdf = self.output / "output.pdf"
         source.write_text("<!doctype html><style>" + BASE_CSS + css + "</style>" + body)
-        result = subprocess.run([str(RENDERER), str(source), str(pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
-        return pdf_pages(pdf)
+        return pdf_pages(self.pdf)
+
+    def margin_words(self, pages, region):
+        """Words per page inside a page-region predicate on their boxes."""
+        return [[word[0] for word in words if region(word)] for _, words in pages]
+
+    def test_running_elements_choose_assignments_per_page_and_keep_their_formatting(self):
+        pages = self.render(
+            "@page{size:300pt 200pt;margin:40pt 20pt;"
+            "@top-left{content:element(head)}@top-right{content:element(head,last)}"
+            "@bottom-left{content:element(foot,start)}"
+            "@bottom-right{content:element(foot,first-except)}}"
+            "h1{position:running(head);padding-left:3pt;color:rgb(0,0,255);font-weight:normal}"
+            "h1 i{color:rgb(255,0,0);font-style:normal}"
+            ".foot{position:running(foot)}p{height:60pt}",
+            "<h1>Alpha <i>Red</i></h1><div class=foot>FootA</div><p>p1</p><p>p2</p>"
+            "<p>p3</p><h1>Beta</h1><p>p4</p>"
+            "<p>p5</p><div class=foot>FootB</div><p>p6</p>"
+            "<div><div class=foot>FootC</div><p>p7</p></div>")
+        self.assertEqual(len(pages), 4)
+        top_left = self.margin_words(pages, lambda word: word[2] < 40 and word[1] < 150)
+        top_right = self.margin_words(pages, lambda word: word[2] < 40 and word[1] >= 150)
+        bottom_left = self.margin_words(pages, lambda word: word[2] > 160 and word[1] < 150)
+        bottom_right = self.margin_words(pages, lambda word: word[2] > 160 and word[1] >= 150)
+        self.assertEqual(top_left, [["Alpha", "Red"], ["Beta"], ["Beta"], ["Beta"]],
+                         "first: the page's first assignment, else the entry value")
+        self.assertEqual(top_right, [["Alpha", "Red"], ["Beta"], ["Beta"], ["Beta"]],
+                         "last: the exit value")
+        self.assertEqual(bottom_left, [[], ["FootA"], ["FootA"], ["FootC"]],
+                         "start: the first assignment only when its element starts the page")
+        self.assertEqual(bottom_right, [[], ["FootA"], [], []],
+                         "first-except: empty on pages that assign the element")
+        body = self.margin_words(pages, lambda word: 40 <= word[2] <= 160)
+        self.assertEqual(body, [["p1", "p2"], ["p3", "p4"], ["p5", "p6"], ["p7"]],
+                         "running elements leave the normal flow")
+        alpha = next(word for word in pages[0][1] if word[0] == "Alpha")
+        self.assertAlmostEqual(alpha[1], 23, delta=POSITION_TOLERANCE,
+                               msg="the element's padding offsets it inside the margin box")
+        self.assertAlmostEqual((alpha[2] + alpha[4]) / 2, 20, delta=1,
+                               msg="the element is vertically centred in the top margin")
+        fills = {(glyph.page, glyph.text): glyph.fill[:3]
+                 for glyph in pdf_content.inspect(self.pdf)["glyphs"]}
+        self.assertEqual(fills[(1, "A")], (0, 0, 1), "the element keeps its own colour")
+        self.assertEqual(fills[(1, "R")], (1, 0, 0), "descendants keep their formatting")
+
+    def test_running_elements_inside_fragmented_paragraphs_assign_where_their_line_falls(self):
+        lines = "<br>".join(f"L{index}" for index in range(1, 10))
+        pages = self.render(
+            "@page{size:200pt 100pt;margin:30pt 20pt;@top-left{content:element(mark,last)}}"
+            ".mark{position:running(mark)}p{widows:1;orphans:1}",
+            f"<p>{lines}<span class=mark>Mark</span><br>L10<br>L11</p>")
+        margin = self.margin_words(pages, lambda word: word[2] < 30)
+        body = self.margin_words(pages, lambda word: word[2] >= 30)
+        self.assertEqual(body, [["L1", "L2", "L3", "L4"], ["L5", "L6", "L7", "L8"],
+                                ["L9", "L10", "L11"]])
+        self.assertEqual(margin, [[], [], ["Mark"]],
+                         "an inline running element assigns on the page of its line")
 
     def test_nth_page_selectors_size_and_label_pages_of_documents_and_groups(self):
         pages = self.render(

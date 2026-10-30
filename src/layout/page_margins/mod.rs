@@ -1,7 +1,7 @@
 mod dimensions;
-use crate::document::{PageBox, Paragraph};
+use crate::document::{BlockBox, PageBox, Paragraph, RunningStringAssignment};
 use crate::graphics::{BoxDecoration, BoxPaint, DisplayItem, Rect};
-use crate::layout::measure::Measurer;
+use crate::layout::measure::{MeasuredBlock, Measurer};
 use crate::layout::{LayoutError, TextLine};
 use crate::style::{BoxSizing, MarginLocation, PageMargin, Size, VerticalAlign};
 use crate::text::Line;
@@ -34,10 +34,14 @@ const GROUPS: [[MarginLocation; 3]; 4] = [
         MarginLocation::RightBottom,
     ],
 ];
-struct Prepared<'a> {
+struct Prepared<'a, 't> {
     margin: &'a PageMargin,
     decoration: &'a BoxDecoration,
     paragraph: Option<Paragraph>,
+    /// The running element `element()` places (CSS GCPM 3 §1.2.2), laid out as the box's
+    /// only child.
+    element: Option<&'t BlockBox>,
+    measured: Option<MeasuredBlock<'t>>,
     padding: [f32; 4],
     borders: [f32; 4],
     margins: [Option<f32>; 4],
@@ -46,7 +50,7 @@ struct Prepared<'a> {
     content: [f32; 2],
     lines: Vec<Line>,
 }
-impl Prepared<'_> {
+impl<'t> Prepared<'_, 't> {
     fn inline_axis(&self) -> usize {
         if self.margin.style.used_writing_mode().vertical() {
             VERTICAL
@@ -109,29 +113,73 @@ impl Prepared<'_> {
         }
         Ok(())
     }
-    fn layout(&mut self, measurer: &Measurer<'_>) -> Result<(), LayoutError> {
+    fn layout(&mut self, measurer: &mut Measurer<'t>) -> Result<(), LayoutError> {
         self.validate()?;
+        let inline = self.content[self.inline_axis()];
+        if let Some(element) = self.element {
+            self.measured = Some(measurer.block(
+                element,
+                0.0,
+                inline,
+                self.margin.style.used_rtl(),
+                false,
+                None,
+            )?);
+            return Ok(());
+        }
         self.lines = self
             .paragraph
             .as_ref()
-            .map(|p| measurer.text_lines(p, self.content[self.inline_axis()], &[]))
+            .map(|p| measurer.text_lines(p, inline, &[]))
             .transpose()?
             .unwrap_or_default();
         Ok(())
     }
+    /// The content's min-content and max-content contributions in the inline axis.
+    fn intrinsic(
+        &self,
+        measurer: &mut Measurer<'t>,
+        available: f32,
+    ) -> Result<[f32; 2], LayoutError> {
+        if let Some(element) = self.element {
+            let widths = measurer
+                .run(|measurer| crate::layout::intrinsic::measure(element, measurer, available))?;
+            return Ok([widths.min, widths.max]);
+        }
+        let intrinsic = self
+            .paragraph
+            .as_ref()
+            .map(|p| measurer.intrinsic_widths(p, &[]))
+            .transpose()?
+            .unwrap_or_default();
+        Ok([intrinsic.min, intrinsic.max])
+    }
     fn block_extent(&self) -> f32 {
+        if let Some(measured) = &self.measured {
+            // The margin box is a block formatting context root, so the element's margins
+            // stay inside it.
+            return if measured.through {
+                let mut margins = measured.before.clone();
+                margins.merge(measured.after.clone());
+                margins.value()
+            } else {
+                measured.before.value() + measured.height + measured.after.value()
+            };
+        }
         self.lines.iter().map(|line| line.height).sum()
     }
+    /// The decoration, then the content laid out at its vertical alignment, then the outline.
     fn paint(
         mut self,
         origin: [f32; 2],
         index: usize,
         page: &mut Vec<TextLine>,
         display: &mut Vec<DisplayItem>,
+        measurer: &mut Measurer<'t>,
+        destinations: usize,
     ) -> Result<(), LayoutError> {
         self.validate()?;
         let block_axis = self.block_axis();
-        let vertical = self.inline_axis() == VERTICAL;
         let mut used = 0.0;
         let mut retained = 0;
         for line in &self.lines {
@@ -144,7 +192,6 @@ impl Prepared<'_> {
             retained += 1;
         }
         self.lines.truncate(retained);
-        let style = &self.margin.style;
         let rect = Rect {
             x: origin[0] + self.start[0],
             y: origin[1] + self.start[1],
@@ -174,18 +221,19 @@ impl Prepared<'_> {
         if self.decoration.is_visible() {
             display.push(DisplayItem::Box(paint));
         }
-        let inline_extent = if vertical {
-            self.lines.iter().map(|line| line.width).fold(0.0, f32::max)
+        let extent = self.block_extent();
+        if let Some(measured) = self.measured.take() {
+            self.paint_element(measured, extent, rect, display, measurer, destinations)?;
         } else {
-            self.content[HORIZONTAL]
-        };
-        let physical_height = if vertical {
-            inline_extent
-        } else {
-            self.block_extent()
-        };
+            self.paint_lines(rect, index, page, display);
+        }
+        // The outline paints over the margin box's content (CSS UI 4 §3.1).
+        display.extend(outline.map(DisplayItem::Box));
+        Ok(())
+    }
+    fn vertical_offset(&self, physical_height: f32) -> f32 {
         let extra = self.content[VERTICAL] - physical_height;
-        let offset = match style.table.vertical_align {
+        match self.margin.style.table.vertical_align {
             VerticalAlign::Middle => extra / 2.0,
             VerticalAlign::Bottom => extra,
             VerticalAlign::Top
@@ -196,11 +244,83 @@ impl Prepared<'_> {
             | VerticalAlign::TextTop
             | VerticalAlign::TextBottom
             | VerticalAlign::Length(_) => 0.0,
-        };
-        let content_origin = [
+        }
+    }
+    fn content_origin(&self, rect: Rect, physical_height: f32) -> [f32; 2] {
+        [
             rect.x + self.padding[3] + self.borders[3],
-            rect.y + self.padding[0] + self.borders[0] + offset,
-        ];
+            rect.y + self.padding[0] + self.borders[0] + self.vertical_offset(physical_height),
+        ]
+    }
+    /// A running element lays out unbroken in the content box, in the margin box's flow.
+    fn paint_element(
+        &self,
+        measured: MeasuredBlock<'t>,
+        extent: f32,
+        rect: Rect,
+        display: &mut Vec<DisplayItem>,
+        measurer: &mut Measurer<'t>,
+        destinations: usize,
+    ) -> Result<(), LayoutError> {
+        let vertical = self.inline_axis() == VERTICAL;
+        let logical = [self.content[self.inline_axis()], extent];
+        let size = if vertical {
+            [logical[1], logical[0]]
+        } else {
+            logical
+        };
+        let (lines, mut items) = crate::layout::pagination::Paginator::standalone(
+            measurer,
+            measured,
+            Rect {
+                x: 0.0,
+                y: 0.0,
+                width: logical[0],
+                height: logical[1],
+            },
+            destinations,
+        )?;
+        if vertical {
+            crate::layout::writing::Frame::physical(
+                crate::style::logical::Flow::used(&self.margin.style),
+                size,
+            )
+            .items(&mut items);
+        }
+        let origin = self.content_origin(rect, size[1]);
+        display.push(DisplayItem::Frame(Box::new(crate::graphics::FlowPaint {
+            matrix: [1.0, 0.0, 0.0, 1.0, origin[0], origin[1]],
+            area: Rect {
+                x: 0.0,
+                y: 0.0,
+                width: size[0],
+                height: size[1],
+            },
+            items,
+            lines,
+        })));
+        Ok(())
+    }
+    fn paint_lines(
+        self,
+        rect: Rect,
+        index: usize,
+        page: &mut Vec<TextLine>,
+        display: &mut Vec<DisplayItem>,
+    ) {
+        let style = &self.margin.style;
+        let vertical = self.inline_axis() == VERTICAL;
+        let inline_extent = if vertical {
+            self.lines.iter().map(|line| line.width).fold(0.0, f32::max)
+        } else {
+            self.content[HORIZONTAL]
+        };
+        let physical_height = if vertical {
+            inline_extent
+        } else {
+            self.block_extent()
+        };
+        let content_origin = self.content_origin(rect, physical_height);
         let mut frame_lines = Vec::new();
         let mut frame_items = Vec::new();
         let (text_lines, text_items) = if vertical {
@@ -249,19 +369,23 @@ impl Prepared<'_> {
                 lines: frame_lines,
             })));
         }
-        // The outline paints over the margin box's content (CSS UI 4 §3.1).
-        display.extend(outline.map(DisplayItem::Box));
-        Ok(())
     }
 }
-fn prepare<'a>(
+/// The page-margin boxes' shared inputs: the page count, the selected strings and running
+/// elements, and the document's destination count.
+pub(super) struct MarginContext<'s, 't> {
+    pub strings: &'s crate::layout::strings::PageStrings,
+    pub running: &'t [RunningStringAssignment],
+    pub destinations: usize,
+}
+fn prepare<'a, 't>(
     margin: &'a PageMargin,
     decoration: &'a BoxDecoration,
     containing: [f32; 2],
     page: usize,
     pages: usize,
-    strings: &crate::layout::strings::PageStrings,
-) -> Result<Prepared<'a>, LayoutError> {
+    context: &MarginContext<'_, 't>,
+) -> Result<Prepared<'a, 't>, LayoutError> {
     let style = &margin.style;
     let bases = [containing[1], containing[0], containing[1], containing[0]];
     let padding = std::array::from_fn(|i| style.padding[i].resolve(bases[i]));
@@ -280,19 +404,35 @@ fn prepare<'a>(
             specified[axis] = specified[axis].map(|size| (size - edges).max(0.0));
         }
     }
+    let (paragraph, element) = match margin.content.running_element() {
+        Some(request) => (
+            None,
+            context
+                .strings
+                .element(page - 1, request)
+                .and_then(|owner| context.running[owner].element.as_ref())
+                .map(|element| &element.block),
+        ),
+        None => (
+            Paragraph::generated_output(
+                &margin.content.page_output_with_strings(
+                    page,
+                    pages,
+                    crate::document::MAX_INLINE_TEXT_BYTES,
+                    &style.quotes,
+                    &mut |request| Ok(context.strings.text(page - 1, request)),
+                )?,
+                style,
+            )?,
+            None,
+        ),
+    };
     Ok(Prepared {
         margin,
         decoration,
-        paragraph: Paragraph::generated_output(
-            &margin.content.page_output_with_strings(
-                page,
-                pages,
-                crate::document::MAX_INLINE_TEXT_BYTES,
-                &style.quotes,
-                &mut |request| Ok(strings.text(page - 1, request)),
-            )?,
-            style,
-        )?,
+        paragraph,
+        element,
+        measured: None,
         padding,
         borders,
         margins,
@@ -303,10 +443,10 @@ fn prepare<'a>(
     })
 }
 
-pub(super) fn render(
+pub(super) fn render<'t>(
     page_boxes: &[std::sync::Arc<PageBox>],
-    strings: &crate::layout::strings::PageStrings,
-    measurer: &Measurer<'_>,
+    context: &MarginContext<'_, 't>,
+    measurer: &mut Measurer<'t>,
     first_index: usize,
     pages: &mut [Vec<TextLine>],
     display: &mut [Vec<DisplayItem>],
@@ -341,7 +481,7 @@ pub(super) fn render(
         ];
         let page = page_lines;
         for (locations, (origin, containing, axis)) in GROUPS.iter().zip(groups) {
-            let mut boxes: [Option<Prepared<'_>>; 3] = [None, None, None];
+            let mut boxes: [Option<Prepared<'_, '_>>; 3] = [None, None, None];
             let mut dimensions = [Variable::default(); 3];
             for (position, location) in locations.iter().enumerate() {
                 let Some((margin, decoration)) = margins
@@ -351,18 +491,12 @@ pub(super) fn render(
                     continue;
                 };
                 let mut prepared =
-                    prepare(margin, decoration, containing, number + 1, total, strings)?;
+                    prepare(margin, decoration, containing, number + 1, total, context)?;
                 prepared.validate()?;
                 let fixed_axis = 1 - axis;
                 prepared.fixed(fixed_axis, containing[fixed_axis]);
                 let bounds = if axis == prepared.inline_axis() {
-                    let intrinsic = prepared
-                        .paragraph
-                        .as_ref()
-                        .map(|p| measurer.intrinsic_widths(p, &[]))
-                        .transpose()?
-                        .unwrap_or_default();
-                    [intrinsic.min, intrinsic.max]
+                    prepared.intrinsic(measurer, containing[axis])?
                 } else {
                     prepared.layout(measurer)?;
                     [prepared.block_extent(); 2]
@@ -394,7 +528,7 @@ pub(super) fn render(
                     prepared.variable(axis, containing[axis], sizes[position], position);
                     prepared.layout(measurer)?;
                     let index = first_index + prepared.margin.location as usize;
-                    prepared.paint(origin, index, page, display)?;
+                    prepared.paint(origin, index, page, display, measurer, context.destinations)?;
                 }
             }
         }
@@ -421,13 +555,20 @@ pub(super) fn render(
                 .find(|(margin, _)| margin.location == location)
             {
                 let mut prepared =
-                    prepare(margin, decoration, containing, number + 1, total, strings)?;
+                    prepare(margin, decoration, containing, number + 1, total, context)?;
                 prepared.validate()?;
                 for axis in [HORIZONTAL, VERTICAL] {
                     prepared.fixed(axis, containing[axis]);
                 }
                 prepared.layout(measurer)?;
-                prepared.paint(origin, first_index + location as usize, page, display)?;
+                prepared.paint(
+                    origin,
+                    first_index + location as usize,
+                    page,
+                    display,
+                    measurer,
+                    context.destinations,
+                )?;
             }
         }
     }

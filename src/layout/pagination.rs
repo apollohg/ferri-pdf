@@ -3778,30 +3778,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
     }
     fn record_collapsed(&mut self, source: &'a BlockBox) -> Result<(), LayoutError> {
-        let mut blocks = vec![source];
-        let mut events = Vec::new();
-        while let Some(source) = blocks.pop() {
-            self.measurer.work.spend(1)?;
-            events.extend(source.semantic_event());
-            for child in source.children() {
-                match child {
-                    crate::document::BlockContent::Events(values) => events.extend(values),
-                    crate::document::BlockContent::Block(child)
-                    | crate::document::BlockContent::Positioned(child) => blocks.push(child),
-                    crate::document::BlockContent::Inline(paragraph) => {
-                        events.extend(paragraph.semantic_events().iter().map(|event| &event.event));
-                        blocks.extend(
-                            paragraph
-                                .anchors()
-                                .iter()
-                                .chain(paragraph.inline_blocks())
-                                .map(|anchor| &anchor.block),
-                        );
-                    }
-                }
-            }
-        }
-        events.sort_by_key(|event| event.order.start);
+        let (events, visited) = source.subtree_events();
+        self.measurer.work.spend(visited)?;
         for event in events {
             let mut event = event.clone();
             event.visible = false;
@@ -6077,6 +6055,24 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
         }
         Ok(())
+    }
+    /// Lays a box out alone and unbroken in `area`, whose origin is the coordinate origin, as
+    /// the content of a page-margin box; returns its text lines and display list.
+    pub(super) fn standalone(
+        measurer: &'m mut Measurer<'t>,
+        root: MeasuredBlock<'a>,
+        area: Rect,
+        destinations: usize,
+    ) -> Result<(Vec<TextLine>, Vec<DisplayItem>), LayoutError> {
+        let mut paginated = Self::for_frame(measurer, area).document(
+            Some(root),
+            destinations,
+            std::iter::empty(),
+        )?;
+        Ok((
+            paginated.pages.swap_remove(0),
+            paginated.display_lists.swap_remove(0),
+        ))
     }
     pub(crate) fn document(
         mut self,

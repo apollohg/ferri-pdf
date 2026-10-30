@@ -9,14 +9,20 @@ pub(super) struct SourceIds {
 }
 impl SourceIds {
     pub(crate) fn new(root: &BlockBox) -> Self {
-        enum Entry<'a> {
-            Block(&'a BlockBox),
-            Paragraph(&'a Paragraph),
-        }
         let mut ids = Self {
             blocks: HashMap::new(),
             paragraphs: HashMap::new(),
         };
+        ids.register(root);
+        ids
+    }
+    /// Adds a formatting tree outside the document root's, such as a running element's.
+    pub(crate) fn register(&mut self, root: &BlockBox) {
+        enum Entry<'a> {
+            Block(&'a BlockBox),
+            Paragraph(&'a Paragraph),
+        }
+        let ids = self;
         let mut pending = vec![Entry::Block(root)];
         while let Some(entry) = pending.pop() {
             match entry {
@@ -75,7 +81,6 @@ impl SourceIds {
                 }
             }
         }
-        ids
     }
     pub(crate) fn block(&self, block: &BlockBox) -> usize {
         self.blocks[&std::ptr::from_ref(block)]

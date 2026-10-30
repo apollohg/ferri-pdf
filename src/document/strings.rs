@@ -10,6 +10,14 @@ use std::{collections::HashMap, sync::Arc};
 /// Assignments at one element's semantic position, before their page is known.
 pub(crate) struct RunningStringAssignment {
     pub values: Vec<StringAssignment>,
+    /// The element's box when `position: running()` moves it to page-margin boxes (CSS GCPM 3
+    /// §1.2.1).
+    pub element: Option<RunningElement>,
+}
+
+pub(crate) struct RunningElement {
+    pub name: Arc<str>,
+    pub block: crate::document::BlockBox,
 }
 
 struct PendingValue {
@@ -20,6 +28,7 @@ struct PendingValue {
 struct PendingOwner {
     owner: ElementId,
     values: Vec<PendingValue>,
+    running: Option<(Arc<str>, Option<crate::document::BlockBox>)>,
     before: crate::document::content::GeneratedText,
     after: crate::document::content::GeneratedText,
     marker: Option<String>,
@@ -76,16 +85,51 @@ impl StringAssignments {
                 })
             })
             .collect::<Result<_, StyleError>>()?;
+        Ok(Some(self.push(element, values, marker)))
+    }
+    fn push(
+        &mut self,
+        element: Element<'_>,
+        values: Vec<PendingValue>,
+        marker: Option<&str>,
+    ) -> usize {
         let index = self.owners.len();
         self.indices.insert(element.id(), index);
         self.owners.push(PendingOwner {
             owner: element.id(),
             values,
+            running: None,
             before: Default::default(),
             after: Default::default(),
             marker: marker.map(str::to_owned),
         });
-        Ok(Some(index))
+        index
+    }
+    /// Records a running element at the position of its string assignments, if any.
+    pub(crate) fn record_running(
+        &mut self,
+        element: Element<'_>,
+        assignment: Option<usize>,
+        name: Arc<str>,
+    ) -> usize {
+        let index = assignment.unwrap_or_else(|| self.push(element, Vec::new(), None));
+        self.owners[index].running = Some((name, None));
+        index
+    }
+    pub(crate) fn running_blocks_mut(
+        &mut self,
+    ) -> impl Iterator<Item = &mut crate::document::BlockBox> {
+        self.owners
+            .iter_mut()
+            .filter_map(|owner| owner.running.as_mut()?.1.as_mut())
+    }
+    pub(crate) fn attach_running(&mut self, element: ElementId, block: crate::document::BlockBox) {
+        let owner = &mut self.owners[self.indices[&element]];
+        owner
+            .running
+            .as_mut()
+            .expect("running boxes belong to recorded running elements")
+            .1 = Some(block);
     }
     pub(crate) fn generated(
         &mut self,
@@ -138,7 +182,13 @@ impl StringAssignments {
                         })
                     })
                     .collect::<Result<_, DocumentError>>()?;
-                Ok(RunningStringAssignment { values })
+                Ok(RunningStringAssignment {
+                    values,
+                    element: owner.running.map(|(name, block)| RunningElement {
+                        name,
+                        block: block.expect("running element boxes complete with formatting"),
+                    }),
+                })
             })
             .collect()
     }

@@ -11,21 +11,37 @@ pub(crate) enum Position {
     Sticky,
     Absolute,
     Fixed,
+    /// `running()` (CSS GCPM 3 §1.2.1): out of the normal flow and laid out only in page-margin
+    /// boxes, where it is placed as a static box; `Style::running` holds its name.
+    Running,
 }
 impl Position {
-    pub(crate) fn from_component(value: &Component) -> Result<Self, StyleError> {
-        match value.keyword() {
-            Some(Keyword::Static) => Ok(Self::Static),
-            Some(Keyword::Relative) => Ok(Self::Relative),
-            Some(Keyword::Sticky) => Ok(Self::Sticky),
-            Some(Keyword::Absolute) => Ok(Self::Absolute),
-            Some(Keyword::Fixed) => Ok(Self::Fixed),
-            _ => Err(unsupported(value)),
+    /// The position and, for `running()`, the running element's name.
+    pub(crate) fn from_component(
+        value: &Component,
+    ) -> Result<(Self, Option<std::sync::Arc<str>>), StyleError> {
+        if let Component::Function(Keyword::Running, Some(name)) = value.unwrap()
+            && let Component::Ident(name) = name.unwrap()
+        {
+            return Ok((Self::Running, Some(std::sync::Arc::from(name.as_ref()))));
         }
+        let position = match value.keyword() {
+            Some(Keyword::Static) => Self::Static,
+            Some(Keyword::Relative) => Self::Relative,
+            Some(Keyword::Sticky) => Self::Sticky,
+            Some(Keyword::Absolute) => Self::Absolute,
+            Some(Keyword::Fixed) => Self::Fixed,
+            _ => return Err(unsupported(value)),
+        };
+        Ok((position, None))
     }
     /// Absolutely positioned boxes leave normal flow.
     pub(crate) fn is_out_of_flow(self) -> bool {
         matches!(self, Self::Absolute | Self::Fixed)
+    }
+    /// Absolutely positioned boxes and running elements leave the normal flow.
+    pub(crate) fn leaves_flow(self) -> bool {
+        self.is_out_of_flow() || self == Self::Running
     }
 }
 /// CSS Masking 1 §6.1 `rect()` offsets of the top, right, bottom and left clip edges from the

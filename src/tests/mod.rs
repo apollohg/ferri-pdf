@@ -39,6 +39,7 @@ mod painting;
 mod pdf_validation;
 mod pseudo_elements;
 mod rendering;
+mod running_elements;
 mod running_strings;
 mod svg_fonts;
 mod target_content;

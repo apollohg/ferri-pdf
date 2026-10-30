@@ -422,6 +422,37 @@ impl BlockBox {
     pub(crate) fn semantic_event(&self) -> Option<&crate::document::SemanticEvent> {
         self.event.as_ref()
     }
+    /// The semantic events of the box and its contents in document order, with the number of
+    /// boxes visited.
+    pub(crate) fn subtree_events(&self) -> (Vec<&crate::document::SemanticEvent>, usize) {
+        let mut blocks = vec![self];
+        let mut visited = 0;
+        let mut events = Vec::new();
+        while let Some(source) = blocks.pop() {
+            visited += 1;
+            events.extend(source.semantic_event());
+            for child in source.children() {
+                match child {
+                    BlockContent::Events(values) => events.extend(values),
+                    BlockContent::Block(child) | BlockContent::Positioned(child) => {
+                        blocks.push(child);
+                    }
+                    BlockContent::Inline(paragraph) => {
+                        events.extend(paragraph.semantic_events().iter().map(|event| &event.event));
+                        blocks.extend(
+                            paragraph
+                                .anchors()
+                                .iter()
+                                .chain(paragraph.inline_blocks())
+                                .map(|anchor| &anchor.block),
+                        );
+                    }
+                }
+            }
+        }
+        events.sort_by_key(|event| event.order.start);
+        (events, visited)
+    }
     pub(crate) fn image(&self) -> Option<&std::sync::Arc<crate::images::Image>> {
         self.image.as_ref()
     }
@@ -1346,6 +1377,14 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     /// Item containers and positions outside inline boxes anchor between blocks. Boxes inside
     /// ruby annotations anchor in their base level, whose containing block they share (CSS
     /// Ruby 1 §2.1.1).
+    /// A running element leaves the flow; its semantic events, and those of its contents,
+    /// stay at its position, where it assigns its value.
+    fn running(&mut self, element: Element<'_>, block: BlockBox) {
+        for event in block.subtree_events().0 {
+            self.inline.semantic_event(event.clone());
+        }
+        self.traversal.strings.attach_running(element.id(), block);
+    }
     fn out_of_flow(&mut self, block: BlockBox) {
         if let Some(base) = self.ruby.base_level() {
             base.anchor(block);
@@ -1371,6 +1410,14 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             return Ok(());
         };
         style = style.used();
+        if style.position == crate::style::Position::Running && style.display != Display::Contents {
+            return Err(StyleError::Unsupported(format!(
+                "position: running() on {}::{:?}",
+                element.name(),
+                pseudo
+            ))
+            .into());
+        }
         let element_page_scope =
             crate::document::page::used_name(&parent.page, self.element_page_scope.as_ref());
         validate_box(&style)?;
@@ -1704,6 +1751,8 @@ enum Placement {
     Root,
     Flow,
     Positioned,
+    /// Moved to page-margin boxes by `position: running()` (CSS GCPM 3 §1.2.1).
+    Running,
     Atomic,
 }
 
@@ -1963,12 +2012,19 @@ fn block<'a>(
                         resources,
                     )?
                 };
-                let assignment = traversal.strings.record(
+                let mut assignment = traversal.strings.record(
                     element,
                     &frame.style.string_set,
                     &mut traversal.counters,
                     block.marker.as_ref().map(Paragraph::text),
                 )?;
+                if let (Placement::Running, Some(name)) = (block.placement, &frame.style.running) {
+                    assignment = Some(traversal.strings.record_running(
+                        element,
+                        assignment,
+                        name.clone(),
+                    ));
+                }
                 block.event = Some(traversal.strings.event(element, assignment, true));
                 block.navigation = traversal.navigation.enter(element);
                 traversal.navigation.record(
@@ -2217,7 +2273,7 @@ fn block<'a>(
             } else {
                 builder.resolve_run_in(
                     if child_style.display == Display::Contents
-                        || child_style.position.is_out_of_flow()
+                        || child_style.position.leaves_flow()
                         || child_style.floating().is_some()
                     {
                         RunInFollower::Member
@@ -2245,6 +2301,8 @@ fn block<'a>(
             }
             let placement = if child_style.display == Display::Contents {
                 None
+            } else if child_style.position == crate::style::Position::Running {
+                Some(Placement::Running)
             } else if child_style.position.is_out_of_flow() || child_style.floating().is_some() {
                 Some(Placement::Positioned)
             } else {
@@ -2485,6 +2543,7 @@ fn block<'a>(
                 builder.children.push(BlockContent::Block(block));
             }
             Placement::Positioned => builder.out_of_flow(block),
+            Placement::Running => builder.running(element, block),
             Placement::Atomic => builder.atomic(block, parent)?,
             Placement::Root => unreachable!("root returned before attaching to a parent"),
         }
@@ -2636,12 +2695,19 @@ pub(crate) fn build(
         &mut resources,
     )?;
     root.trim_text_boxes([false; 2])?;
+    for block in traversal.strings.running_blocks_mut() {
+        block.trim_text_boxes([false; 2])?;
+    }
     // Writing Modes 4 §8: HTML's first body supplies the root's used flow after style computation.
     if let Some(body) = html.body_element() {
         let principal = sheet.computed_with_resolver(body, root.style(), resolver)?;
         root.style.principal_flow = Some(crate::style::logical::Flow::of(&principal));
     }
     root.reflow(crate::style::logical::Flow::used(root.style()));
+    // A running element lays out in page-margin boxes, which take the page's flow.
+    for block in traversal.strings.running_blocks_mut() {
+        block.reflow(crate::style::logical::Flow::used(root.style()));
+    }
     Ok(Formatted {
         root,
         navigation: traversal.navigation,

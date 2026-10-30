@@ -209,6 +209,11 @@ fn layout_pass(
         [canvas_rect.width, content_height],
         budget,
     );
+    for assignment in document.running_strings() {
+        if let Some(element) = &assignment.element {
+            measurer.sources.register(&element.block);
+        }
+    }
     measurer.canvas_images = document.canvas_background().backgrounds.has_images();
     measurer.unbroken = continuous;
     measurer.named_pages = !continuous;
@@ -279,11 +284,16 @@ fn layout_pass(
             .decorate(std::slice::from_mut(list));
     }
     let strings = string_locations.resolve(document.running_strings(), pages.len())?;
+    let first_margin_paragraph = measurer.sources.paragraph_count();
     page_margins::render(
         &page_boxes,
-        &strings,
-        &measurer,
-        measurer.sources.paragraph_count(),
+        &page_margins::MarginContext {
+            strings: &strings,
+            running: document.running_strings(),
+            destinations: document.navigation().destinations,
+        },
+        &mut measurer,
+        first_margin_paragraph,
         &mut pages,
         &mut display_lists,
     )?;

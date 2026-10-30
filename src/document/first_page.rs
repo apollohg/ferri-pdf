@@ -432,7 +432,7 @@ impl Collector {
                             pending.push(CollectStep::RestoreDisplay(previous));
                         }
                         pending.push(CollectStep::Contents(source, depth + 1));
-                    } else if selection.styles.position(source)?.is_out_of_flow() {
+                    } else if selection.styles.position(source)?.leaves_flow() {
                         selection.record_quotes(QuoteChange::Subtree {
                             target: source,
                             display,
@@ -539,7 +539,7 @@ impl Collector {
         if content.has_quote_actions() {
             selection.record_quotes(QuoteChange::Content(content));
         }
-        if display != Display::Contents && selection.styles.position(source)?.is_out_of_flow() {
+        if display != Display::Contents && selection.styles.position(source)?.leaves_flow() {
             return Ok(());
         }
         if display == Display::Contents || display.is_inline_box() {

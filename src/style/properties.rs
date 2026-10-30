@@ -2232,9 +2232,18 @@ fn display(
     }
     Ok(())
 }
-computed!(position, [position], |value, style, _parent, _relative| {
-    crate::style::Position::from_component(value)?
-});
+fn position(
+    style: &mut Style,
+    _parent: &Style,
+    input: Input<'_>,
+    _relative: &Relative<'_>,
+) -> Result<(), StyleError> {
+    (style.position, style.running) = match input {
+        Input::Copy(source) => (source.position, source.running.clone()),
+        Input::Value(value) => crate::style::Position::from_component(value)?,
+    };
+    Ok(())
+}
 computed!(
     aspect_ratio,
     [aspect_ratio],

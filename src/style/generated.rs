@@ -37,6 +37,8 @@ enum GeneratedPart {
     Leader(String),
     Counter(CounterRequest),
     NamedString(NamedStringRequest),
+    /// `element()` (CSS GCPM 3 §1.2.2), the whole content of a page-margin box.
+    RunningElement(NamedStringRequest),
     Target(TargetRequest),
     Page(CounterStyle),
     Pages(CounterStyle),
@@ -95,6 +97,26 @@ impl ComputedContent {
         context: ContentContext,
         scope: &Scope<'_>,
     ) -> Result<std::sync::Arc<Self>, StyleError> {
+        if let Some(element) = value.find(Label::Production(Production::RunningElementFn)) {
+            // CSS GCPM 3 §1.2.2: `element()` is valid only in page-margin boxes; elsewhere it
+            // is invalid at computed-value time and `content` takes its initial value.
+            if context != ContentContext::Margin {
+                return Ok(if context == ContentContext::BeforeAfter {
+                    std::sync::Arc::new(Self::None)
+                } else {
+                    INITIAL_CONTENT.clone()
+                });
+            }
+            let Component::Function(Keyword::Element, Some(arguments)) = element.unwrap() else {
+                return Err(unsupported(element));
+            };
+            return Ok(std::sync::Arc::new(Self::Items {
+                content: GeneratedContent(vec![GeneratedPart::RunningElement(page_value_request(
+                    arguments, element,
+                )?)]),
+                alternative: None,
+            }));
+        }
         let value = match value.keyword() {
             Some(Keyword::Normal) if context != ContentContext::BeforeAfter => {
                 return Ok(INITIAL_CONTENT.clone());
@@ -361,6 +383,13 @@ impl GeneratedContent {
             _ => None,
         })
     }
+    /// The running element a page-margin box's `element()` content places.
+    pub(crate) fn running_element(&self) -> Option<&NamedStringRequest> {
+        match self.0.as_slice() {
+            [GeneratedPart::RunningElement(request)] => Some(request),
+            _ => None,
+        }
+    }
     pub(crate) fn named_string_requests(&self) -> impl Iterator<Item = &NamedStringRequest> {
         self.0.iter().filter_map(|part| match part {
             GeneratedPart::NamedString(request) => Some(request),
@@ -488,6 +517,11 @@ impl GeneratedContent {
                         )
                     })?(request)?
                 .into(),
+                GeneratedPart::RunningElement(_) => {
+                    return Err(StyleError::Unsupported(
+                        "element() outside page-margin box layout".into(),
+                    ));
+                }
                 GeneratedPart::Quote(action) => depth.apply(*action, quotes).into(),
                 GeneratedPart::Page(style) | GeneratedPart::Pages(style) => {
                     let page = page.as_ref().ok_or_else(|| {
@@ -559,25 +593,9 @@ fn part(item: &Component, scope: &Scope<'_>) -> Result<GeneratedPart, StyleError
             function @ (Keyword::TargetCounter | Keyword::TargetCounters | Keyword::TargetText),
             Some(arguments),
         ) => target(*function, arguments, item, scope),
-        Component::Function(Keyword::String, Some(arguments)) => {
-            let Some(Component::Ident(name)) = arguments.items().first().map(Component::unwrap)
-            else {
-                return Err(unsupported(item));
-            };
-            let mut keywords = Vec::new();
-            arguments.keywords(&mut keywords);
-            let mode = match keywords.last().copied() {
-                None | Some(Keyword::First) => NamedStringMode::First,
-                Some(Keyword::Start) => NamedStringMode::Start,
-                Some(Keyword::Last) => NamedStringMode::Last,
-                Some(Keyword::FirstExcept) => NamedStringMode::FirstExcept,
-                _ => return Err(unsupported(item)),
-            };
-            Ok(GeneratedPart::NamedString(NamedStringRequest {
-                name: std::sync::Arc::from(name.as_ref()),
-                mode,
-            }))
-        }
+        Component::Function(Keyword::String, Some(arguments)) => Ok(GeneratedPart::NamedString(
+            page_value_request(arguments, item)?,
+        )),
         Component::Function(Keyword::Content, argument) => {
             let keyword = argument
                 .as_deref()
@@ -595,6 +613,29 @@ fn part(item: &Component, scope: &Scope<'_>) -> Result<GeneratedPart, StyleError
         }
         _ => Err(unsupported(item)),
     }
+}
+
+/// The name and selection keyword of `string()` and `element()` (CSS GCPM 3 §1.1.2, §1.2.2).
+fn page_value_request(
+    arguments: &Component,
+    item: &Component,
+) -> Result<NamedStringRequest, StyleError> {
+    let Some(Component::Ident(name)) = arguments.items().first().map(Component::unwrap) else {
+        return Err(unsupported(item));
+    };
+    let mut keywords = Vec::new();
+    arguments.keywords(&mut keywords);
+    let mode = match keywords.last().copied() {
+        None | Some(Keyword::First) => NamedStringMode::First,
+        Some(Keyword::Start) => NamedStringMode::Start,
+        Some(Keyword::Last) => NamedStringMode::Last,
+        Some(Keyword::FirstExcept) => NamedStringMode::FirstExcept,
+        _ => return Err(unsupported(item)),
+    };
+    Ok(NamedStringRequest {
+        name: std::sync::Arc::from(name.as_ref()),
+        mode,
+    })
 }
 
 fn target(

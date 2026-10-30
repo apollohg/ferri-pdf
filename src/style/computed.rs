@@ -197,6 +197,8 @@ pub(crate) struct Style {
     pub margin: [Size; 4],
     pub padding: [LengthPercentage; 4],
     pub position: crate::style::Position,
+    /// The running element name of `position: running()` (CSS GCPM 3 §1.2.1).
+    pub running: Option<Arc<str>>,
     pub float: crate::style::Float,
     pub clear: crate::style::Clear,
     /// CSS Shapes 1 §6: the float area's shape, the margin that expands it, and the alpha
@@ -371,6 +373,7 @@ impl Default for Style {
             margin: [Size::ZERO; 4],
             padding: [LengthPercentage::ZERO; 4],
             position: crate::style::Position::Static,
+            running: None,
             float: crate::style::Float::None,
             clear: crate::style::Clear::None,
             shape_outside: Arc::default(),
@@ -574,9 +577,12 @@ impl Style {
         if self.position.is_out_of_flow() {
             self.inline_level_origin = self.display.is_inline_level();
         }
+        // Running elements leave the flow as absolutely positioned boxes do (CSS GCPM 3
+        // §1.2.1) and are laid out as block boxes in page-margin boxes.
         if self.document_root
             || self.item_parent
             || self.position.is_out_of_flow()
+            || self.position == crate::style::Position::Running
             || self.floating().is_some()
         {
             self.display = self.display.blockified();
