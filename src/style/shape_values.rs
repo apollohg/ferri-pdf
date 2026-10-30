@@ -49,6 +49,18 @@ pub(super) fn shape_outside(
     })
 }
 
+/// CSS Images 5 §3.1 `object-view-box`: `none`, or a `<basic-shape-rect>` resolved against
+/// the element's natural size.
+pub(super) fn view_box(
+    value: &Component,
+    relative: &Relative<'_>,
+) -> Result<Option<BasicShape>, StyleError> {
+    if value.keyword() == Some(Keyword::None) {
+        return Ok(None);
+    }
+    basic_shape(value, relative).map(Some)
+}
+
 /// A computed `clip-path`: `none`, a reference to a same-document `clipPath` element, or a
 /// basic shape in its reference box.
 pub(super) enum ClipPathValue {

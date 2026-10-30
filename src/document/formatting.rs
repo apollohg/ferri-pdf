@@ -5,7 +5,7 @@ use crate::graphics::BoxDecoration;
 use crate::style::{Display, GeneratedPseudoElement, PseudoElement, Style, StyleError, Stylesheet};
 
 pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
-const DEFAULT_DENSITY: f32 = 1.0;
+pub(super) const DEFAULT_DENSITY: f32 = 1.0;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
 
 /// The background colour and images of `decoration`, without its borders, outline or shadows.
@@ -1897,8 +1897,9 @@ fn block<'a>(
                                     frame.style.element_font_namespace(),
                                 )
                             });
-                            let image = image
-                                .map(|image| crate::images::oriented_content(image, &frame.style));
+                            let image = image.map(|image| {
+                                crate::images::content_image(image, &frame.style, block.density)
+                            });
                             if image.is_none()
                                 && !skips
                                 && let Some(alt) = element.attr("alt")
@@ -1931,7 +1932,11 @@ fn block<'a>(
                         _ if is_replaced(element) => traversal.embedded.content(element.id()).map(
                             |embedded| match embedded {
                                 crate::document::embedded::Embedded::Image(image) => {
-                                    crate::images::oriented_content(image.clone(), &frame.style)
+                                    crate::images::content_image(
+                                        image.clone(),
+                                        &frame.style,
+                                        DEFAULT_DENSITY,
+                                    )
                                 }
                                 crate::document::embedded::Embedded::Navigable(navigable) => {
                                     std::sync::Arc::new(crate::images::Image::Frame(

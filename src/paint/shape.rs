@@ -258,6 +258,46 @@ impl AxisRadius {
 }
 
 impl BasicShape {
+    /// The rectangle an `inset()` or `rect()` shape bounds in `reference`, before its rounding;
+    /// `None` for other shapes.
+    pub(crate) fn rectangle(&self, reference: Rect) -> Option<Rect> {
+        let size = [reference.width, reference.height];
+        let [left, top, right, bottom] = match self {
+            Self::Inset { insets, .. } => {
+                let [top, bottom] = fitted(
+                    [insets[0].resolve(size[1]), insets[2].resolve(size[1])],
+                    size[1],
+                );
+                let [left, right] = fitted(
+                    [insets[3].resolve(size[0]), insets[1].resolve(size[0])],
+                    size[0],
+                );
+                [
+                    left,
+                    top,
+                    (size[0] - right).max(left),
+                    (size[1] - bottom).max(top),
+                ]
+            }
+            Self::Rect { edges, .. } => {
+                let top = edges[0].resolve(size[1]);
+                let left = edges[3].resolve(size[0]);
+                [
+                    left,
+                    top,
+                    edges[1].resolve(size[0]).max(left),
+                    edges[2].resolve(size[1]).max(top),
+                ]
+            }
+            _ => return None,
+        };
+        Some(Rect {
+            x: reference.x + left,
+            y: reference.y + top,
+            width: right - left,
+            height: bottom - top,
+        })
+    }
     /// The closed outline the shape traces in `reference` and whether it fills even-odd.
     pub(crate) fn outline(&self, reference: Rect) -> Shape {
         let (mut contours, even_odd) = self.path(reference);
@@ -275,34 +315,10 @@ impl BasicShape {
         let size = [reference.width, reference.height];
         let origin = [reference.x, reference.y];
         let (contours, even_odd) = match self {
-            Self::Inset { insets, radii } => {
-                let [top, bottom] = fitted(
-                    [insets[0].resolve(size[1]), insets[2].resolve(size[1])],
-                    size[1],
-                );
-                let [left, right] = fitted(
-                    [insets[3].resolve(size[0]), insets[1].resolve(size[0])],
-                    size[0],
-                );
-                let rect = Rect {
-                    x: origin[0] + left,
-                    y: origin[1] + top,
-                    width: (size[0] - left - right).max(0.0),
-                    height: (size[1] - top - bottom).max(0.0),
-                };
-                (vec![rounded_inset(rect, radii, size)], false)
-            }
-            Self::Rect { edges, radii } => {
-                let top = edges[0].resolve(size[1]);
-                let left = edges[3].resolve(size[0]);
-                let right = edges[1].resolve(size[0]).max(left);
-                let bottom = edges[2].resolve(size[1]).max(top);
-                let rect = Rect {
-                    x: origin[0] + left,
-                    y: origin[1] + top,
-                    width: right - left,
-                    height: bottom - top,
-                };
+            Self::Inset { radii, .. } | Self::Rect { radii, .. } => {
+                let rect = self
+                    .rectangle(reference)
+                    .expect("inset() and rect() are rectangles");
                 (vec![rounded_inset(rect, radii, size)], false)
             }
             Self::Circle { radius, center } => {

@@ -3,7 +3,7 @@
 //! (CSS UI 4 §7.2 `auto`) whose drawing is made at their used size; text-bearing widgets are
 //! inline-blocks holding anonymous boxes in the element's own font, so author CSS restyles
 //! them like any other box.
-use crate::document::formatting::{BlockBox, ImageResources};
+use crate::document::formatting::{BlockBox, DEFAULT_DENSITY, ImageResources};
 use crate::document::{BlockContent, DocumentError, Paragraph};
 use crate::dom::{Element, GaugeRegion, HTML_NAMESPACE, InputType, TreeRelation};
 use crate::images::{
@@ -798,7 +798,7 @@ impl<'b> Builder<'b, '_> {
                     self.style.element_font_namespace(),
                 )
             })
-            .map(|image| crate::images::oriented_content(image, self.style));
+            .map(|image| crate::images::content_image(image, self.style, DEFAULT_DENSITY));
         Ok(match image {
             Some(image) => ControlContent {
                 image: Some(image),

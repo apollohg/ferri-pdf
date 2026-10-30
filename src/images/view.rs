@@ -1,7 +1,7 @@
 //! Images as an `<image>` uses them: the region a media fragment selects, re-oriented for the
 //! element (CSS Images 4 §2.5).
 use crate::images::{Image, NaturalDimensions, Orientation};
-use crate::paint::{ImageRequest, Rect};
+use crate::paint::{BasicShape, ImageRequest, POINTS_PER_PIXEL, Rect};
 use crate::style::{ImageOrientation, Style};
 use std::sync::Arc;
 
@@ -39,7 +39,7 @@ impl ImageView {
             Some(region) => NaturalDimensions {
                 width: Some(region.width),
                 height: Some(region.height),
-                ratio: Some(region.width / region.height),
+                ratio: (region.height > 0.0).then(|| region.width / region.height),
             },
             None => natural,
         };
@@ -124,10 +124,39 @@ pub(crate) fn view(
     Ok(with_view(image, region, orientation))
 }
 
-/// A content image of the element `style` belongs to, oriented by `image-orientation`.
-pub(crate) fn oriented_content(image: Arc<Image>, style: &Style) -> Arc<Image> {
+/// A content image of the element `style` belongs to, whose pixel density `density` divides
+/// its natural size: oriented by `image-orientation`, then showing its `object-view-box`.
+pub(crate) fn content_image(image: Arc<Image>, style: &Style, density: f32) -> Arc<Image> {
     let orientation = reorientation(&image, style.image_orientation, true);
-    with_view(image, None, orientation)
+    let oriented = with_view(image, None, orientation);
+    view_box(oriented, style.object_view_box.as_ref(), density)
+}
+
+/// CSS Images 5 §3.1: the view box resolves against the natural size, which it replaces; the
+/// image draws scaled and translated so that its content keeps its place in the view box. It
+/// has no effect on an image without both a natural width and height. The view box is the
+/// rectangle's bounds, as an SVG `viewBox` is, so rounding its corners does not clip it.
+fn view_box(image: Arc<Image>, shape: Option<&BasicShape>, density: f32) -> Arc<Image> {
+    let natural = image.natural_size();
+    let (Some(shape), Some(width), Some(height)) = (shape, natural.width, natural.height) else {
+        return image;
+    };
+    // The shape's lengths are points; the region is in the image's natural pixels.
+    let points = POINTS_PER_PIXEL / density;
+    let region = shape
+        .rectangle(Rect {
+            x: 0.0,
+            y: 0.0,
+            width: width * points,
+            height: height * points,
+        })
+        .map(|rect| Rect {
+            x: rect.x / points,
+            y: rect.y / points,
+            width: rect.width / points,
+            height: rect.height / points,
+        });
+    with_view(image, region, Orientation::NoTransforms)
 }
 
 fn with_view(image: Arc<Image>, region: Option<Rect>, orientation: Orientation) -> Arc<Image> {

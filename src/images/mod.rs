@@ -6,7 +6,7 @@ mod svg;
 mod svg_fonts;
 mod view;
 pub(crate) use svg_fonts::SvgFonts;
-pub(crate) use view::{ImageView, InvalidFragment, oriented_content, turns_and_flip};
+pub(crate) use view::{ImageView, InvalidFragment, content_image, turns_and_flip};
 pub(crate) mod widget;
 use crate::fonts::{FontBook, FontNamespace};
 pub(crate) use crate::paint::NaturalDimensions;

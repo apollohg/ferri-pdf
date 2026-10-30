@@ -280,6 +280,34 @@ body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;paddi
                               '#xywh=0,0,30,10") 0 0 no-repeat}', '<div class=box></div>',
                               [[RED, GREEN, BLUE]], 'fragments select from the EXIF-oriented image, then flip')
 
+    def test_object_view_box_replaces_natural_size_with_its_rectangle(self):
+        """CSS Images 5 §3.1: the view box resolves against the natural size, becomes the natural
+        size, and shows the content that falls inside it, transparent where it reaches past."""
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-object-view-box-') as directory:
+            root = Path(directory)
+            grid = [[RED, BLUE], [GREEN, YELLOW], [BLUE, BLUE]]
+            stored = blocks(root / 'grid.png', grid)
+            body = f'<img src="{stored}">'
+            for value, rows in [
+                    ('none', grid),
+                    ('inset(0 10px 20px 0)', [[RED]]),
+                    ('inset(0 50% 66.67% 0 round 5px)', [[RED]]),
+                    ('xywh(10px 10px 10px 20px)', [[YELLOW], [BLUE]]),
+                    ('rect(10px auto auto 0)', [[GREEN, YELLOW], [BLUE, BLUE]]),
+                    ('inset(-10px 0 0 0)', [[WHITE, WHITE], *grid])]:
+                self.assertBlocks(root, f'img{{display:block;object-view-box:{value}}}', body, rows,
+                                  f'object-view-box: {value}')
+            self.assertBlocks(root, 'img{display:block;image-orientation:90deg;object-view-box:inset(0 0 10px 0)}',
+                              body, turned(grid)[:1], 'the view box applies to the oriented image')
+            self.assertBlocks(root, 'img{display:block;width:10px;height:10px;object-view-box:xywh(5px 0 5px 5px)}',
+                              f'<img srcset="{stored} 2x">', [[BLUE]],
+                              'lengths are CSS pixels of the density-corrected natural size')
+            pixels = self.raster(root, self.render(
+                root, 'img{display:block;object-view-box:inset(0 10px 20px 0 round 5px)}', body))
+            corner = PAGE_MARGIN * RASTER_DPI // POINTS_PER_INCH
+            self.assertEqual(pixels.getpixel((corner, corner)), RED,
+                             'a rounded view box does not clip its corners')
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
