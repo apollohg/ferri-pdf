@@ -320,15 +320,17 @@ impl<I> BoxDecoration<I> {
     pub(crate) fn has_shadows(&self) -> bool {
         self.shadows.iter().any(|shadow| shadow.color.alpha > 0.0)
     }
-    /// Replaces the `url()` background layers and border image source with loaded images.
+    /// Replaces the `url()` background layers and border image source with loaded images,
+    /// scaled by the box's `image-rendering`.
     pub fn resolve_images<E>(
         &mut self,
+        rendering: crate::paint::ImageRendering,
         mut load: impl FnMut(&crate::paint::ImageReference<'_>) -> Result<Option<I>, E>,
     ) -> Result<(), E>
     where
         I: Clone,
     {
-        Backgrounds::resolve_images(&mut self.backgrounds, &mut load)?;
+        Backgrounds::resolve_images(&mut self.backgrounds, rendering, &mut load)?;
         if self
             .masks
             .layers
@@ -336,17 +338,21 @@ impl<I> BoxDecoration<I> {
             .iter()
             .any(crate::paint::BackgroundImage::needs_loading)
         {
-            Backgrounds::resolve_images(&mut Arc::make_mut(&mut self.masks).layers, &mut load)?;
+            Backgrounds::resolve_images(
+                &mut Arc::make_mut(&mut self.masks).layers,
+                rendering,
+                &mut load,
+            )?;
         }
         if self.masks.border.source.needs_loading() {
             Arc::make_mut(&mut Arc::make_mut(&mut self.masks).border)
                 .source
-                .load(&mut load)?;
+                .load(rendering, &mut load)?;
         }
         if self.border_image.source.needs_loading() {
             Arc::make_mut(&mut self.border_image)
                 .source
-                .load(&mut load)?;
+                .load(rendering, &mut load)?;
         }
         Ok(())
     }
@@ -375,10 +381,11 @@ impl BoxDecoration<Infallible> {
 
     pub fn load_images<I: Clone, E>(
         &self,
+        rendering: crate::paint::ImageRendering,
         load: impl FnMut(&crate::paint::ImageReference<'_>) -> Result<Option<I>, E>,
     ) -> Result<BoxDecoration<I>, E> {
         let mut decoration = self.with_image_type();
-        decoration.resolve_images(load)?;
+        decoration.resolve_images(rendering, load)?;
         Ok(decoration)
     }
 }

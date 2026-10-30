@@ -237,6 +237,7 @@ pub(crate) fn rendering_alpha(
         rect: area,
         clip: None,
         source_scale: crate::paint::INITIAL_IMAGE_SCALE,
+        rendering: crate::paint::ImageRendering::AUTO,
     };
     let raster = render_surface(area, SAMPLE_DENSITY, |viewport, surface| {
         images.draw(&paint, viewport, surface)

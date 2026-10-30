@@ -17,11 +17,22 @@ struct RawSamples {
     depth: BitsPerComponent,
 }
 
+/// How resampling computes each output sample.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(super) enum Resampling {
+    /// Filtered from the input samples around it.
+    Smooth,
+    /// Copied from the input sample whose area contains the output sample's centre, which
+    /// blends no colours.
+    Nearest,
+}
+
 pub(super) fn sampled(
     source: &SampledRepr,
     color_space: ImageColorspace,
     size: (u32, u32),
     target: (u32, u32),
+    resampling: Resampling,
 ) -> Result<SampledRepr, String> {
     let (color_length, alpha_length) = working_budget(
         color_space,
@@ -40,7 +51,7 @@ pub(super) fn sampled(
             .transpose()?,
         depth: source.bits_per_component,
     };
-    let result = resample(&raw, color_space, size, target)?;
+    let result = resample(&raw, color_space, size, target, resampling)?;
     Ok(SampledRepr {
         color_channel: deflate_encode(&result.color),
         alpha_channel: result.alpha.as_ref().map(|alpha| deflate_encode(alpha)),
@@ -53,6 +64,7 @@ pub(super) fn jpeg(
     color_space: ImageColorspace,
     size: (u32, u32),
     target: (u32, u32),
+    resampling: Resampling,
 ) -> Result<Vec<u8>, String> {
     working_budget(color_space, BitsPerComponent::Eight, false, size, target)?;
     let raw = RawSamples {
@@ -60,7 +72,7 @@ pub(super) fn jpeg(
         alpha: None,
         depth: BitsPerComponent::Eight,
     };
-    Ok(resample(&raw, color_space, size, target)?.color)
+    Ok(resample(&raw, color_space, size, target, resampling)?.color)
 }
 
 pub(super) fn working_budget(
@@ -163,11 +175,49 @@ fn resample(
     color_space: ImageColorspace,
     size: (u32, u32),
     target: (u32, u32),
+    resampling: Resampling,
 ) -> Result<RawSamples, String> {
+    if resampling == Resampling::Nearest {
+        let bytes = usize::from(source.depth.as_u8() / 8);
+        return Ok(RawSamples {
+            color: nearest(
+                &source.color,
+                bytes * usize::from(color_space.num_components()),
+                size,
+                target,
+            ),
+            alpha: source
+                .alpha
+                .as_ref()
+                .map(|alpha| nearest(alpha, bytes, size, target)),
+            depth: source.depth,
+        });
+    }
     match source.depth {
         BitsPerComponent::Eight => resample_channels::<u8>(source, color_space, size, target),
         BitsPerComponent::Sixteen => resample_channels::<u16>(source, color_space, size, target),
     }
+}
+
+/// `samples`, rows of `size` pixels of `pixel_bytes` each, resampled to `target` by
+/// nearest neighbour.
+fn nearest(samples: &[u8], pixel_bytes: usize, size: (u32, u32), target: (u32, u32)) -> Vec<u8> {
+    let source = |index: u32, from: u32, to: u32| {
+        ((u64::from(index) * u64::from(from) * 2 + u64::from(from)) / (u64::from(to) * 2)) as usize
+    };
+    let columns: Vec<usize> = (0..target.0)
+        .map(|column| source(column, size.0, target.0) * pixel_bytes)
+        .collect();
+    let row_bytes = size.0 as usize * pixel_bytes;
+    let mut output = Vec::with_capacity(target.0 as usize * target.1 as usize * pixel_bytes);
+    for row in 0..target.1 {
+        let start = source(row, size.1, target.1) * row_bytes;
+        let input = &samples[start..start + row_bytes];
+        for column in &columns {
+            output.extend_from_slice(&input[*column..*column + pixel_bytes]);
+        }
+    }
+    output
 }
 
 fn resample_channels<T: Channel>(

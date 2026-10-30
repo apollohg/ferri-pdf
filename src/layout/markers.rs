@@ -144,6 +144,7 @@ pub(super) fn content_image_paints(
                 },
                 clip: None,
                 source_scale: atomic.block.style().effective_zoom,
+                rendering: atomic.block.style().image_rendering(),
             }
         })
         .collect()

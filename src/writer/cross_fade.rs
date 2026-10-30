@@ -66,7 +66,7 @@ pub(super) fn draw(
 /// Whether every pixel of `image` is opaque.
 fn is_opaque(image: &TileImage<'_>, images: &mut ImageWriter) -> bool {
     match image {
-        TileImage::Image(image, _) => images.opaque(image),
+        TileImage::Image(image, ..) => images.opaque(image),
         TileImage::Gradient(gradient) => gradient.stops.iter().all(|stop| stop.color.alpha >= 1.0),
         TileImage::Color(color) => color.alpha >= 1.0,
         TileImage::CrossFade(arguments, leftover) => {

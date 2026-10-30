@@ -7,6 +7,21 @@ pub(crate) mod usvg;
 /// content it writes; no style sheet can produce it.
 const LAYER_MASK_FUNCTION: &str = "-ferri-pdf-mask-layers";
 
+/// SVG 2 §13.10 `image-rendering` as CSS Images 3 §5.2 uses it; the parser resolves `auto`
+/// as `optimizeQuality`.
+pub(crate) fn image_rendering(rendering: usvg::ImageRendering) -> crate::paint::ImageRendering {
+    use crate::paint::ImageRendering;
+    match rendering {
+        usvg::ImageRendering::OptimizeQuality
+        | usvg::ImageRendering::Smooth
+        | usvg::ImageRendering::HighQuality => ImageRendering::Smooth,
+        usvg::ImageRendering::OptimizeSpeed | usvg::ImageRendering::CrispEdges => {
+            ImageRendering::CrispEdges
+        }
+        usvg::ImageRendering::Pixelated => ImageRendering::Pixelated,
+    }
+}
+
 /// The `mask` value naming the `index`th CSS mask layers of an SVG document.
 pub(crate) fn layer_mask_value(index: usize) -> String {
     format!("{LAYER_MASK_FUNCTION}({index})")

@@ -23,6 +23,7 @@ use crate::graphics::image_usage::DeferredImage;
 use crate::Data;
 
 mod resize;
+use resize::Resampling;
 
 use crate::chunk_container::ChunkContainer;
 use crate::configure::ValidationError;
@@ -290,7 +291,7 @@ impl Image {
 
     /// Create a new bitmap image from a `.png` file.
     pub fn from_png(data: Data, interpolate: bool) -> Result<Image, String> {
-        let hash = data.as_ref().sip_hash();
+        let hash = (data.as_ref().sip_hash(), interpolate).sip_hash();
         let metadata = png_metadata(data.as_ref())?;
 
         Ok(Self::new(ImageRepr {
@@ -303,7 +304,7 @@ impl Image {
 
     /// Create a new bitmap image from a `.jpg` file.
     pub fn from_jpeg(data: Data, interpolate: bool) -> Result<Image, String> {
-        let hash = data.as_ref().sip_hash();
+        let hash = (data.as_ref().sip_hash(), interpolate).sip_hash();
         let metadata = jpeg_metadata(data.as_ref())?;
 
         Ok(Self::new(ImageRepr {
@@ -321,7 +322,7 @@ impl Image {
         icc_profile: Option<Data>,
         interpolate: bool,
     ) -> Result<Image, String> {
-        let hash = data.as_ref().sip_hash();
+        let hash = (data.as_ref().sip_hash(), interpolate).sip_hash();
         let mut metadata = jpeg_metadata(data.as_ref())?;
         let icc_profile =
             icc_profile.and_then(|d| get_icc_profile_type(d.as_ref(), metadata.color_space));
@@ -337,7 +338,7 @@ impl Image {
 
     /// Create a new bitmap image from a `.gif` file.
     pub fn from_gif(data: Data, interpolate: bool) -> Result<Image, String> {
-        let hash = data.as_ref().sip_hash();
+        let hash = (data.as_ref().sip_hash(), interpolate).sip_hash();
         let metadata = gif_metadata(data.as_ref())?;
 
         Ok(Self::new(ImageRepr {
@@ -352,7 +353,7 @@ impl Image {
     ///
     /// Returns `None` if krilla was unable to parse the file.
     pub fn from_webp(data: Data, interpolate: bool) -> Result<Image, String> {
-        let hash = data.as_ref().sip_hash();
+        let hash = (data.as_ref().sip_hash(), interpolate).sip_hash();
         let metadata = webp_metadata(data.as_ref())?;
 
         Ok(Self::new(ImageRepr {
@@ -433,6 +434,87 @@ impl Image {
             sip: hash,
             interpolate: false,
         })
+    }
+
+    /// The image enlarged by whole `multiples` of its size along each axis, every sample
+    /// repeated over a block of that many, as nearest-neighbour scaling enlarges it. Multiples
+    /// beyond the resampling working budget are halved until the enlargement fits it.
+    pub fn with_nearest_multiples(&self, mut multiples: (u32, u32)) -> Image {
+        const NOT_ENLARGED: (u32, u32) = (1, 1);
+        let size = self.size();
+        let enlarged = |(x, y): (u32, u32)| {
+            size.0
+                .checked_mul(x)
+                .zip(size.1.checked_mul(y))
+                .filter(|target| {
+                    resize::working_budget(
+                        self.color_space(),
+                        self.inner.metadata.bits_per_component,
+                        self.inner.metadata.has_alpha,
+                        size,
+                        *target,
+                    )
+                    .is_ok()
+                })
+        };
+        let target = loop {
+            multiples = (multiples.0.max(1), multiples.1.max(1));
+            if multiples == NOT_ENLARGED {
+                return self.clone();
+            }
+            if let Some(target) = enlarged(multiples) {
+                break target;
+            }
+            multiples = (multiples.0 / 2, multiples.1 / 2);
+        };
+        let source = self.clone();
+        let metadata = ImageMetadata {
+            size: target,
+            color_space: self.color_space(),
+            has_alpha: self.inner.metadata.has_alpha,
+            bits_per_component: self.inner.metadata.bits_per_component,
+            icc: self.icc(),
+        };
+        Self {
+            inner: Arc::new(ImageRepr {
+                inner: Deferred::new(move || source.enlarged(target)),
+                metadata,
+                sip: (self.inner.sip, multiples).sip_hash(),
+                interpolate: self.inner.interpolate,
+            }),
+            allow_jpeg: self.allow_jpeg,
+        }
+    }
+
+    /// The samples resampled to `target` by nearest neighbour.
+    fn enlarged(&self, target: (u32, u32)) -> Result<Repr, String> {
+        let size = self.size();
+        let color_space = self.color_space();
+        match self.inner.inner.wait().as_ref().map_err(Clone::clone)? {
+            Repr::Sampled(sampled) => {
+                resize::sampled(sampled, color_space, size, target, Resampling::Nearest)
+                    .map(Repr::Sampled)
+            }
+            Repr::Jpeg(jpeg) => {
+                let (samples, _) = jpeg_samples(jpeg, color_space, size, false)?;
+                let color =
+                    resize::jpeg(samples, color_space, size, target, Resampling::Nearest)?;
+                Ok(Repr::Sampled(SampledRepr {
+                    color_channel: deflate_encode(&color),
+                    alpha_channel: None,
+                    bits_per_component: BitsPerComponent::Eight,
+                }))
+            }
+        }
+    }
+
+    /// The resampling that keeps the look `interpolate` asks the viewer for.
+    fn resampling(&self) -> Resampling {
+        if self.inner.interpolate {
+            Resampling::Smooth
+        } else {
+            Resampling::Nearest
+        }
     }
 
     /// Resolve deferred decoding without decoding the same image again during serialization.
@@ -568,6 +650,7 @@ impl Image {
                             self.color_space(),
                             source_size,
                             output_size,
+                            self.resampling(),
                             serialize_settings
                                 .jpeg_quality
                                 .unwrap_or(DEFAULT_JPEG_QUALITY),
@@ -581,8 +664,14 @@ impl Image {
                         }
                     }
                     Repr::Sampled(sampled) if resized => Some(Repr::Sampled(
-                        resize::sampled(sampled, self.color_space(), source_size, output_size)
-                            .map_err(|error| KrillaError::Image(self.clone(), location, error))?,
+                        resize::sampled(
+                            sampled,
+                            self.color_space(),
+                            source_size,
+                            output_size,
+                            self.resampling(),
+                        )
+                        .map_err(|error| KrillaError::Image(self.clone(), location, error))?,
                     )),
                     _ => None,
                 };
@@ -841,10 +930,32 @@ fn reencode_jpeg(
     color_space: ImageColorspace,
     size: (u32, u32),
     target: (u32, u32),
+    resampling: Resampling,
     quality: JpegQuality,
 ) -> Result<Repr, String> {
     use jpeg_encoder::ColorType;
 
+    let (mut samples, decoded_space) = jpeg_samples(jpeg, color_space, size, true)?;
+    let encoded_space = match decoded_space {
+        ColorSpace::Luma => ColorType::Luma,
+        ColorSpace::YCCK => ColorType::Ycck,
+        ColorSpace::CMYK => ColorType::Cmyk,
+        _ => ColorType::Rgb,
+    };
+    if size != target {
+        samples = resize::jpeg(samples, color_space, size, target, resampling)?;
+    }
+    encode_jpeg(&samples, encoded_space, target, quality)
+}
+
+/// The JPEG's samples in `color_space` and the space they were decoded to, with CMYK as
+/// ordinary ink values; with `keep_ycck`, YCCK data stays YCCK.
+fn jpeg_samples(
+    jpeg: &JpegRepr,
+    color_space: ImageColorspace,
+    size: (u32, u32),
+    keep_ycck: bool,
+) -> Result<(Vec<u8>, ColorSpace), String> {
     let options = jpeg_decoder_options()
         .set_strict_mode(true)
         .set_max_width(size.0 as usize)
@@ -853,13 +964,15 @@ fn reencode_jpeg(
     decoder
         .decode_headers()
         .map_err(|error| error.to_string())?;
-    let (decoded_space, encoded_space) = match color_space {
-        ImageColorspace::Rgb => (ColorSpace::RGB, ColorType::Rgb),
-        ImageColorspace::Luma => (ColorSpace::Luma, ColorType::Luma),
-        ImageColorspace::Cmyk if decoder.input_colorspace() == Some(ColorSpace::YCCK) => {
-            (ColorSpace::YCCK, ColorType::Ycck)
+    let decoded_space = match color_space {
+        ImageColorspace::Rgb => ColorSpace::RGB,
+        ImageColorspace::Luma => ColorSpace::Luma,
+        ImageColorspace::Cmyk
+            if keep_ycck && decoder.input_colorspace() == Some(ColorSpace::YCCK) =>
+        {
+            ColorSpace::YCCK
         }
-        ImageColorspace::Cmyk => (ColorSpace::CMYK, ColorType::Cmyk),
+        ImageColorspace::Cmyk => ColorSpace::CMYK,
     };
     decoder.set_options(decoder.options().jpeg_set_out_colorspace(decoded_space));
     let mut samples = decoder.decode().map_err(|error| error.to_string())?;
@@ -870,10 +983,7 @@ fn reencode_jpeg(
             .iter_mut()
             .for_each(|sample| *sample = u8::MAX - *sample);
     }
-    if size != target {
-        samples = resize::jpeg(samples, color_space, size, target)?;
-    }
-    encode_jpeg(&samples, encoded_space, target, quality)
+    Ok((samples, decoded_space))
 }
 
 fn sampled_jpeg(

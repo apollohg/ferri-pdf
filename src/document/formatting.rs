@@ -1402,7 +1402,7 @@ impl ImageResources<'_> {
             _ => None,
         };
         let mut loaded = image.with_image_type();
-        let Ok(()) = loaded.load(&mut |reference| {
+        let Ok(()) = loaded.load(style.image_rendering(), &mut |reference| {
             let request = match reference {
                 crate::paint::ImageReference::Url(request) => request,
                 crate::paint::ImageReference::Element(id) => {
@@ -1463,9 +1463,11 @@ impl ImageResources<'_> {
         if style.floating().is_none() {
             return crate::graphics::ShapeOutside::None;
         }
-        let Ok(shape) = style.shape_outside.load_image(&mut |request| {
-            Ok::<_, std::convert::Infallible>(self.load_decoded(request, style))
-        });
+        let Ok(shape) = style
+            .shape_outside
+            .load_image(style.image_rendering(), &mut |request| {
+                Ok::<_, std::convert::Infallible>(self.load_decoded(request, style))
+            });
         shape
     }
     /// Loads the box's `url()` background layers and border image; inline style URLs use the
@@ -1474,7 +1476,7 @@ impl ImageResources<'_> {
         self.link_documents(style)?;
         Ok(style
             .decoration
-            .load_images(|request| self.load(request, style))?)
+            .load_images(style.image_rendering(), |request| self.load(request, style))?)
     }
     /// Loads the CSS mask layer images of SVG content, and the other SVG documents its masks
     /// reference.
@@ -1488,7 +1490,7 @@ impl ImageResources<'_> {
             ..crate::paint::BoxDecoration::default()
         };
         Ok(masks
-            .load_images(|request| self.load(request, style))?
+            .load_images(style.image_rendering(), |request| self.load(request, style))?
             .masks)
     }
     /// Loads the other SVG documents whose elements the box's filters, masks and clip path

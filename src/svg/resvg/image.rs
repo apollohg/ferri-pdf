@@ -164,6 +164,21 @@ mod raster_images {
         }
     }
 
+    /// `raster` with every pixel repeated over a block of `multiples` pixels.
+    fn enlarged(raster: &tiny_skia::Pixmap, (x, y): (u32, u32)) -> Option<tiny_skia::Pixmap> {
+        let mut output = tiny_skia::Pixmap::new(
+            raster.width().checked_mul(x)?,
+            raster.height().checked_mul(y)?,
+        )?;
+        let [width, source_width] = [output.width(), raster.width()].map(|width| width as usize);
+        let source = raster.pixels();
+        for (index, pixel) in output.pixels_mut().iter_mut().enumerate() {
+            let [column, row] = [index % width / x as usize, index / width / y as usize];
+            *pixel = source[row * source_width + column];
+        }
+        Some(output)
+    }
+
     pub(crate) fn render_raster(
         image: &crate::svg::usvg::ImageKind,
         transform: tiny_skia::Transform,
@@ -171,6 +186,24 @@ mod raster_images {
         pixmap: &mut tiny_skia::PixmapMut,
     ) -> Option<()> {
         let raster = decode_raster(image)?;
+        let (scale_x, scale_y) = transform.get_scale();
+        // `pixelated` enlarges by nearest neighbour first, then scales as `smooth` does.
+        let (raster, transform) = match crate::svg::image_rendering(rendering_mode)
+            .nearest_multiples(
+                (raster.width(), raster.height()),
+                [
+                    raster.width() as f32 * scale_x,
+                    raster.height() as f32 * scale_y,
+                ],
+            )
+            .and_then(|multiples| Some((enlarged(&raster, multiples)?, multiples)))
+        {
+            Some((enlarged, (x, y))) => (
+                enlarged,
+                transform.pre_scale((x as f32).recip(), (y as f32).recip()),
+            ),
+            None => (raster, transform),
+        };
 
         let rect = tiny_skia::Size::from_wh(raster.width() as f32, raster.height() as f32)?
             .to_rect(0.0, 0.0)?;
@@ -181,7 +214,7 @@ mod raster_images {
             ImageRendering::Smooth => tiny_skia::FilterQuality::Bilinear,
             ImageRendering::HighQuality => tiny_skia::FilterQuality::Bicubic,
             ImageRendering::CrispEdges => tiny_skia::FilterQuality::Nearest,
-            ImageRendering::Pixelated => tiny_skia::FilterQuality::Nearest,
+            ImageRendering::Pixelated => tiny_skia::FilterQuality::Bilinear,
         };
 
         let pattern = tiny_skia::Pattern::new(

@@ -95,6 +95,7 @@ fn svg_document(image: Arc<Image>, area: Rect) -> ViewportPaint {
             rect,
             clip: None,
             source_scale: crate::paint::INITIAL_IMAGE_SCALE,
+            rendering: crate::paint::ImageRendering::AUTO,
         })],
         lines: Vec::new(),
         fonts: FontBook::default(),

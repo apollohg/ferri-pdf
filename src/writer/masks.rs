@@ -424,7 +424,7 @@ fn draw_layer(
                 })
                 .collect(),
         }),
-        TileImage::Image(image, scale) => {
+        TileImage::Image(image, scale, rendering) => {
             let tile = Rect {
                 x: 0.0,
                 y: 0.0,
@@ -435,6 +435,7 @@ fn draw_layer(
                 rect: tile,
                 clip: None,
                 source_scale: *scale,
+                rendering: *rendering,
             })];
             let Some(raster) = raster::rasterize(painter, &item, tile, density)? else {
                 return Ok(());
@@ -443,7 +444,7 @@ fn draw_layer(
                 &raster.pixmap,
                 luminance,
             ))));
-            TileImage::Image(&grey, crate::paint::INITIAL_IMAGE_SCALE)
+            TileImage::Image(&grey, crate::paint::INITIAL_IMAGE_SCALE, *rendering)
         }
         TileImage::CrossFade(..) => {
             let tile = Rect {
@@ -468,7 +469,12 @@ fn draw_layer(
                 &raster.pixmap,
                 luminance,
             ))));
-            TileImage::Image(&grey, crate::paint::INITIAL_IMAGE_SCALE)
+            // The raster has the drawing space's density, which draws it without scaling.
+            TileImage::Image(
+                &grey,
+                crate::paint::INITIAL_IMAGE_SCALE,
+                crate::paint::ImageRendering::AUTO,
+            )
         }
     };
     crate::writer::backgrounds::draw_layer(

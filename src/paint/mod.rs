@@ -59,6 +59,7 @@ pub(crate) use gradient::{
     CircleSize, EllipseSize, Gradient, GradientItem, GradientShape, LineDirection, RadialEnding,
     RadialExtent, ResolvedGradient, Shading,
 };
+pub(crate) use image::ImageRendering;
 pub(crate) use image::{ImageInfo, NaturalDimensions};
 pub use length::LengthPercentage;
 pub(crate) use mask::SvgBoxes;

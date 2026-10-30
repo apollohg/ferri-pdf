@@ -463,8 +463,7 @@ svg_keyword!(vector_effect, vector_effect);
 // which the PDF consumer makes.
 svg_keyword!(shape_rendering, shape_rendering);
 svg_keyword!(text_rendering, text_rendering);
-// CSS Images 3 §5.3: images are drawn without interpolation, as `pixelated`, `crisp-edges`
-// and `optimizeSpeed` require; smoothing for the other values is a recommendation.
+// Images scale as `Style::image_rendering` uses it.
 svg_keyword!(image_rendering, image_rendering);
 
 /// `marker-start`, `marker-mid` and `marker-end` by index.
@@ -536,7 +535,22 @@ pub(crate) fn svg_keyword(keyword: Keyword) -> &'static str {
     }
 }
 
-/// An `image-rendering` keyword in CSS Images 3 terms: §5.3 has `optimizeSpeed` behave as
+impl Style {
+    /// `image-rendering` as used for the images in the element's properties and its replaced
+    /// content (CSS Images 3 §5.2), where `optimizeSpeed` behaves as `crisp-edges` and
+    /// `optimizeQuality` as `smooth`.
+    pub(crate) fn image_rendering(&self) -> crate::paint::ImageRendering {
+        use crate::paint::ImageRendering;
+        match self.svg.image_rendering {
+            Keyword::Auto => ImageRendering::AUTO,
+            Keyword::Pixelated => ImageRendering::Pixelated,
+            Keyword::CrispEdges | Keyword::Optimizespeed => ImageRendering::CrispEdges,
+            _ => ImageRendering::Smooth,
+        }
+    }
+}
+
+/// An `image-rendering` keyword in CSS Images 3 terms: §5.2 has `optimizeSpeed` behave as
 /// `crisp-edges` and `optimizeQuality` as `smooth`.
 pub(crate) fn image_rendering_keyword(value: Keyword) -> &'static str {
     match value {

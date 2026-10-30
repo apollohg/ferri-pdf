@@ -560,6 +560,7 @@ impl<'t> Prepared<'_, 't> {
             },
             clip: Some(clip),
             source_scale: style.effective_zoom,
+            rendering: style.image_rendering(),
         }
     }
     fn vertical_offset(&self, physical_height: f32) -> f32 {

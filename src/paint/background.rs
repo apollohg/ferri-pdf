@@ -3,7 +3,7 @@ use crate::paint::gradient::{Gradient, ResolvedGradient};
 use crate::paint::{
     AbsoluteColor, Border, BoxPaint, Clip, Color, LengthPercentage, POINTS_PER_PIXEL, Rect,
 };
-use crate::paint::{ImageInfo, NaturalDimensions};
+use crate::paint::{ImageInfo, ImageRendering, NaturalDimensions};
 use serde::Serialize;
 use std::convert::Infallible;
 use std::sync::Arc;
@@ -155,6 +155,8 @@ pub enum BackgroundImage<I = Infallible> {
         image: I,
         resolution: f32,
         scale: f32,
+        /// The `image-rendering` of the element whose property loaded it.
+        rendering: ImageRendering,
     },
     Gradient(Gradient),
     /// A solid-color image with no natural dimensions (CSS Images 4 §2.5.3).
@@ -267,10 +269,11 @@ impl<I> Backgrounds<I> {
             }
         }
     }
-    /// Replaces every `Url` image with the image `load` returns for it, copying shared lists
-    /// only when one is present.
+    /// Replaces every `Url` image with the image `load` returns for it, scaled by
+    /// `rendering`, copying shared lists only when one is present.
     pub(crate) fn resolve_images<E>(
         backgrounds: &mut Arc<Self>,
+        rendering: ImageRendering,
         mut load: impl FnMut(&ImageReference<'_>) -> Result<Option<I>, E>,
     ) -> Result<(), E>
     where
@@ -284,7 +287,7 @@ impl<I> Backgrounds<I> {
             return Ok(());
         }
         for image in &mut Arc::make_mut(backgrounds).images {
-            image.load(&mut load)?;
+            image.load(rendering, &mut load)?;
         }
         Ok(())
     }
@@ -313,11 +316,12 @@ impl<I> BackgroundImage<I> {
     /// renders its fallback color, else the image is invalid (CSS Images 4 §2.5.1, §2.7).
     pub(crate) fn load<E>(
         &mut self,
+        rendering: ImageRendering,
         load: &mut impl FnMut(&ImageReference<'_>) -> Result<Option<I>, E>,
     ) -> Result<(), E> {
         if let Self::CrossFade(layers) = self {
             for layer in layers {
-                layer.image.load(load)?;
+                layer.image.load(rendering, load)?;
             }
         }
         if let Self::Element(id) = self {
@@ -326,6 +330,7 @@ impl<I> BackgroundImage<I> {
                     image,
                     resolution: INITIAL_RESOLUTION,
                     scale: INITIAL_IMAGE_SCALE,
+                    rendering,
                 },
                 None => Self::Invalid,
             };
@@ -348,6 +353,7 @@ impl<I> BackgroundImage<I> {
                     image,
                     resolution: resolution.unwrap_or(INITIAL_RESOLUTION),
                     scale: *scale,
+                    rendering,
                 },
                 None => function
                     .and_then(|function| function.fallback)
@@ -421,8 +427,9 @@ impl std::fmt::Display for UnresolvedImage {
 impl std::error::Error for UnresolvedImage {}
 
 pub(crate) enum Source<'a, I> {
-    /// A loaded image, natural resolution in dots per CSS pixel, and used size scale.
-    Image(&'a I, f32, f32),
+    /// A loaded image, natural resolution in dots per CSS pixel, used size scale, and
+    /// scaling.
+    Image(&'a I, f32, f32, ImageRendering),
     Gradient(&'a Gradient),
     Color(Color),
     /// `cross-fade()` arguments with their normalized weights, and the weight of the
@@ -443,7 +450,8 @@ impl<'a, I: ImageInfo> Source<'a, I> {
                 image,
                 resolution,
                 scale,
-            } => Self::Image(image, *resolution, *scale),
+                rendering,
+            } => Self::Image(image, *resolution, *scale, *rendering),
             BackgroundImage::Gradient(gradient) => Self::Gradient(gradient),
             BackgroundImage::Color(color) => Self::Color(color.used()),
             BackgroundImage::Invalid => Self::Color(Color::TRANSPARENT),
@@ -462,7 +470,7 @@ impl<'a, I: ImageInfo> Source<'a, I> {
     /// size of the image's context, which sizes the images a `cross-fade()` averages.
     pub(crate) fn natural(&self, area: [f32; 2]) -> NaturalDimensions {
         match self {
-            Self::Image(image, resolution, scale) => natural_points(*image, *resolution, *scale),
+            Self::Image(image, resolution, scale, _) => natural_points(*image, *resolution, *scale),
             Self::Gradient(_) | Self::Color(_) => NaturalDimensions::default(),
             Self::CrossFade(sources, leftover) => cross_fade_natural(sources, *leftover, area),
         }
@@ -470,7 +478,7 @@ impl<'a, I: ImageInfo> Source<'a, I> {
     /// The image drawn into a tile of `size`, `None` when a gradient has no area.
     pub(crate) fn tile(&self, size: [f32; 2]) -> Option<TileImage<'a, I>> {
         Some(match self {
-            Self::Image(image, _, scale) => TileImage::Image(image, *scale),
+            Self::Image(image, _, scale, rendering) => TileImage::Image(image, *scale, *rendering),
             Self::Gradient(gradient) => TileImage::Gradient(gradient.resolve(size)?),
             Self::Color(color) => TileImage::Color(*color),
             // Every argument is rescaled to the result's size (CSS Images 4 §2.6.2).
@@ -521,7 +529,8 @@ fn cross_fade_natural<I: ImageInfo>(
 /// Content of one tile.
 #[derive(Clone, Debug)]
 pub enum TileImage<'a, I = Infallible> {
-    Image(&'a I, f32),
+    /// An image, its used size scale, and its scaling.
+    Image(&'a I, f32, ImageRendering),
     Gradient(ResolvedGradient),
     /// A solid-color image.
     Color(Color),

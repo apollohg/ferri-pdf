@@ -8,7 +8,7 @@ mod svg_fonts;
 mod view;
 pub(crate) use svg_fonts::SvgFonts;
 use view::content_view;
-pub(crate) use view::{ImageView, InvalidFragment, content_image, turns_and_flip};
+pub(crate) use view::{ImageView, InvalidFragment, content_image, transposes, turns_and_flip};
 pub(crate) mod widget;
 use crate::fonts::{FontBook, FontNamespace};
 pub(crate) use crate::paint::NaturalDimensions;
@@ -136,7 +136,7 @@ impl RasterImage {
     }
 
     pub fn pixel_size(&self) -> [f32; 2] {
-        if view::transposes(self.orientation) {
+        if transposes(self.orientation) {
             [self.height as f32, self.width as f32]
         } else {
             [self.width as f32, self.height as f32]

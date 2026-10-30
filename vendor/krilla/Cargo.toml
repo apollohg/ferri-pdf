@@ -13,7 +13,7 @@
 edition = "2021"
 rust-version = "1.92"
 name = "ferri-pdf-krilla"
-version = "0.8.4"
+version = "0.8.5"
 authors = ["Laurenz Stampfl <laurenz.stampfl@gmail.com>"]
 build = false
 exclude = ["src/tests"]

@@ -83,7 +83,10 @@ pub(super) struct ImageWriter {
     failed: HashMap<usize, String>,
     reported: HashSet<usize>,
     diagnostics: Vec<String>,
-    images: HashMap<usize, Image>,
+    /// Rasters by image and whether viewers interpolate them.
+    images: HashMap<(usize, bool), Image>,
+    /// Those rasters enlarged by whole multiples, as `pixelated` draws them.
+    enlargements: HashMap<(usize, (u32, u32)), Image>,
     vectors: HashMap<(usize, u32, u32), Arc<crate::svg::usvg::Tree>>,
     opaque: HashMap<usize, bool>,
     /// The density images composited in pixels resolve at.
@@ -103,6 +106,7 @@ impl ImageWriter {
             reported: HashSet::new(),
             diagnostics: Vec::new(),
             images: HashMap::new(),
+            enlargements: HashMap::new(),
             vectors: HashMap::new(),
             opaque: HashMap::new(),
             pixels_per_point,
@@ -175,37 +179,81 @@ impl ImageWriter {
         {
             return Err(PdfError::DetachedSvgMasks);
         }
-        let Some(decoded) = self.decode(paint)? else {
+        let Some(mut decoded) = self.decode(paint)? else {
             return Ok(());
         };
+        if let Decoded::Raster(image, orientation) = &mut decoded {
+            *image = self.enlarged(paint, image, *orientation, surface);
+        }
         let errors = draw_placed(paint, &decoded, viewport, surface, None)?;
         self.report_svg_errors(paint, errors);
         Ok(())
+    }
+
+    /// `image`, the raster of `paint`, enlarged as `pixelated` enlarges it for the device
+    /// pixels the paint covers on `surface`.
+    fn enlarged(
+        &mut self,
+        paint: &ImagePaint,
+        image: &Image,
+        orientation: Orientation,
+        surface: &Surface<'_>,
+    ) -> Image {
+        let density = self.pixels_per_point
+            * self.scale
+            * crate::writer::painting::transform_scale(surface.cur_transform());
+        let painted = [paint.rect.width, paint.rect.height].map(|extent| extent * density);
+        // The stored pixels' axes, which a quarter turn swaps.
+        let target = if crate::images::transposes(orientation) {
+            [painted[1], painted[0]]
+        } else {
+            painted
+        };
+        let Some(multiples) = paint.rendering.nearest_multiples(image.size(), target) else {
+            return image.clone();
+        };
+        let key = (Arc::as_ptr(&paint.image) as usize, multiples);
+        if let Some(enlarged) = self.enlargements.get(&key) {
+            return enlarged.clone();
+        }
+        let enlarged = image.with_nearest_multiples(multiples);
+        let enlarged = match enlarged.validate() {
+            Ok(()) => enlarged,
+            Err(error) => {
+                self.diagnostics.push(error);
+                image.clone()
+            }
+        };
+        self.enlargements.insert(key, enlarged.clone());
+        enlarged
     }
 
     /// Decodes `paint`'s image once, or its SVG tree at the paint's size; `None` when it fails
     /// to decode, which is reported.
     pub(super) fn decode(&mut self, paint: &ImagePaint) -> Result<Option<Decoded>, PdfError> {
         let key = Arc::as_ptr(&paint.image) as usize;
+        let interpolate = paint.rendering.interpolates();
         let source_size = [paint.rect.width, paint.rect.height].map(|v| v / paint.source_scale);
         let vector_key = (key, source_size[0].to_bits(), source_size[1].to_bits());
         if self.failed.contains_key(&key) {
             self.report_failure(key);
             return Ok(None);
         }
-        if let std::collections::hash_map::Entry::Vacant(entry) = self.images.entry(key) {
+        if let std::collections::hash_map::Entry::Vacant(entry) =
+            self.images.entry((key, interpolate))
+        {
             let loaded = match paint.image.as_ref() {
                 Asset::Raster(raster) => {
                     let data = raster.bytes.clone().into();
                     Some(match raster.format {
-                        RasterFormat::Png => Image::from_png(data, false),
-                        RasterFormat::Jpeg => Image::from_jpeg(data, false),
-                        RasterFormat::Gif => Image::from_gif(data, false),
-                        RasterFormat::WebP => Image::from_webp(data, false),
+                        RasterFormat::Png => Image::from_png(data, interpolate),
+                        RasterFormat::Jpeg => Image::from_jpeg(data, interpolate),
+                        RasterFormat::Gif => Image::from_gif(data, interpolate),
+                        RasterFormat::WebP => Image::from_webp(data, interpolate),
                     })
                 }
                 Asset::Pixels(pixels) => Some(
-                    Image::from_custom(crate::writer::pixels::Pixels(pixels.clone()), false)
+                    Image::from_custom(crate::writer::pixels::Pixels(pixels.clone()), interpolate)
                         .map(Image::with_jpeg_compression),
                 ),
                 Asset::Svg(_)
@@ -234,10 +282,13 @@ impl ImageWriter {
             }
         }
         Ok(Some(match paint.image.as_ref() {
-            Asset::Raster(raster) => Decoded::Raster(self.images[&key].clone(), raster.orientation),
-            Asset::Pixels(_) => {
-                Decoded::Raster(self.images[&key].clone(), Orientation::NoTransforms)
+            Asset::Raster(raster) => {
+                Decoded::Raster(self.images[&(key, interpolate)].clone(), raster.orientation)
             }
+            Asset::Pixels(_) => Decoded::Raster(
+                self.images[&(key, interpolate)].clone(),
+                Orientation::NoTransforms,
+            ),
             Asset::Svg(svg) => {
                 let tree = match self.vectors.entry(vector_key) {
                     std::collections::hash_map::Entry::Occupied(entry) => entry.get().clone(),
@@ -349,6 +400,7 @@ impl ImageWriter {
                 rect: view.image_rect([width, height]),
                 clip: None,
                 source_scale: paint.source_scale,
+                rendering: paint.rendering,
             },
             viewport,
             surface,

@@ -316,6 +316,7 @@ pub(super) fn measure<'a>(
     let paint = ImagePaint {
         image,
         clip,
+        rendering: style.image_rendering(),
         source_scale: if widget {
             crate::paint::INITIAL_IMAGE_SCALE
         } else {
