@@ -336,110 +336,131 @@ impl Value {
             } else {
                 token.serialization_type()
             };
-            match token {
+            let part = match token {
                 Token::Function(name)
                     if name.eq_ignore_ascii_case(crate::style::attribute::FUNCTION) =>
                 {
-                    let value = input.parse_nested_block(|nested| {
-                        crate::style::attribute::Attribute::parse(
-                            nested,
-                            depth + 1,
-                            property_syntax,
-                        )
-                        .map_err(|error| nested.new_custom_error(ValueError::Style(error)))?
-                        .ok_or_else(|| nested.new_custom_error(ValueError::Syntax))
-                    })?;
-                    parts.push(Part::Attribute(Box::new(value)));
+                    Self::attribute_part(input, depth, property_syntax)
                 }
                 Token::Function(name)
                     if name.eq_ignore_ascii_case(crate::style::conditional::FUNCTION) =>
                 {
-                    let expression = input.parse_nested_block(|nested| {
-                        crate::style::conditional::Expression::parse(
-                            nested,
-                            depth + 1,
-                            property_syntax,
-                        )
-                        .map_err(|error| nested.new_custom_error(ValueError::Style(error)))?
-                        .ok_or_else(|| nested.new_custom_error(ValueError::Syntax))
-                    })?;
-                    parts.push(Part::Conditional(Box::new(expression)));
+                    Self::conditional_part(input, depth, property_syntax)
                 }
                 Token::Function(name) if Reference::from_name(&name).is_some() => {
                     let reference = Reference::from_name(&name).unwrap();
-                    let (name, fallback) = input.parse_nested_block(|p| {
-                        let name = p.expect_ident()?.to_string();
-                        if !name.starts_with("--") || name.len() == 2 {
-                            return Err(p.new_custom_error(ValueError::Syntax));
-                        }
-                        let fallback = if p.try_parse(Parser::expect_comma).is_ok() {
-                            let source = crate::style::parser::substitution_argument(
-                                p,
-                                reference == Reference::Local,
-                            )
-                            .map_err(ParseError::into)?;
-                            let mut fallback = ParserInput::new(source);
-                            Some(Self::tokens(
-                                &mut Parser::new(&mut fallback),
-                                depth + 1,
-                                false,
-                                property_syntax,
-                            )?)
-                        } else {
-                            None
-                        };
-                        p.expect_exhausted()?;
-                        Ok((name, fallback))
-                    })?;
-                    parts.push(Part::Reference(reference, name, fallback));
+                    Self::reference_part(input, reference, depth, property_syntax)
                 }
                 Token::Function(_)
                 | Token::ParenthesisBlock
                 | Token::SquareBracketBlock
                 | Token::CurlyBracketBlock => {
-                    let close = match token {
-                        Token::SquareBracketBlock => "]",
-                        Token::CurlyBracketBlock => "}",
-                        _ => ")",
-                    };
-                    let open = input.slice_from(start).to_owned();
-                    let guarded = property_syntax
-                        && matches!(&token,Token::Function(name) if name.eq_ignore_ascii_case(crate::style::declaration::TOGGLE));
-                    let value = input.parse_nested_block(|nested| {
-                        if guarded {
-                            let state = nested.state();
-                            let valid = crate::style::declaration::toggle_argument(nested, depth)
-                                .map_err(|error| {
-                                nested.new_custom_error(ValueError::Style(error))
-                            })?;
-                            nested.reset(&state);
-                            if !valid {
-                                crate::style::conditions::block_source(nested);
-                                return Ok(None);
-                            }
-                        }
-                        Self::tokens(nested, depth + 1, true, property_syntax).map(Some)
-                    })?;
-                    if let Some(value) = value {
-                        parts.push(Part::Block(open, kind, value, close));
-                    } else {
-                        parts.push(Part::Opaque(input.slice_from(start).to_owned(), kind));
-                    }
+                    Self::block_part(input, &token, start, kind, depth, property_syntax)
                 }
                 Token::BadString(_)
                 | Token::BadUrl(_)
                 | Token::CloseParenthesis
                 | Token::CloseSquareBracket
-                | Token::CloseCurlyBracket => {
-                    return Err(input.new_custom_error(ValueError::Syntax));
-                }
+                | Token::CloseCurlyBracket => Err(input.new_custom_error(ValueError::Syntax)),
                 Token::Semicolon | Token::Delim('!') if !in_block => {
-                    return Err(input.new_custom_error(ValueError::Syntax));
+                    Err(input.new_custom_error(ValueError::Syntax))
                 }
-                _ => parts.push(Part::Text(input.slice_from(start).to_owned(), kind)),
-            }
+                _ => Ok(Part::Text(input.slice_from(start).to_owned(), kind)),
+            };
+            parts.push(part?);
         }
         Ok(Self(parts))
+    }
+    // Nested values recurse through each part parser below; separate frames keep the
+    // other arms' locals off every nesting level of `tokens`.
+    fn attribute_part<'i>(
+        input: &mut Parser<'i, '_>,
+        depth: usize,
+        property_syntax: bool,
+    ) -> Result<Part, ParseError<'i, ValueError>> {
+        let value = input.parse_nested_block(|nested| {
+            crate::style::attribute::Attribute::parse(nested, depth + 1, property_syntax)
+                .map_err(|error| nested.new_custom_error(ValueError::Style(error)))?
+                .ok_or_else(|| nested.new_custom_error(ValueError::Syntax))
+        })?;
+        Ok(Part::Attribute(Box::new(value)))
+    }
+    fn conditional_part<'i>(
+        input: &mut Parser<'i, '_>,
+        depth: usize,
+        property_syntax: bool,
+    ) -> Result<Part, ParseError<'i, ValueError>> {
+        input.parse_nested_block(|nested| {
+            match crate::style::conditional::Expression::parse(nested, depth + 1, property_syntax) {
+                Ok(Some(expression)) => Ok(Part::Conditional(Box::new(expression))),
+                Ok(None) => Err(nested.new_custom_error(ValueError::Syntax)),
+                Err(error) => Err(nested.new_custom_error(ValueError::Style(error))),
+            }
+        })
+    }
+    fn reference_part<'i>(
+        input: &mut Parser<'i, '_>,
+        reference: Reference,
+        depth: usize,
+        property_syntax: bool,
+    ) -> Result<Part, ParseError<'i, ValueError>> {
+        let (name, fallback) = input.parse_nested_block(|p| {
+            let name = p.expect_ident()?.to_string();
+            if !name.starts_with("--") || name.len() == 2 {
+                return Err(p.new_custom_error(ValueError::Syntax));
+            }
+            let fallback = if p.try_parse(Parser::expect_comma).is_ok() {
+                let source =
+                    crate::style::parser::substitution_argument(p, reference == Reference::Local)
+                        .map_err(ParseError::into)?;
+                let mut fallback = ParserInput::new(source);
+                Some(Self::tokens(
+                    &mut Parser::new(&mut fallback),
+                    depth + 1,
+                    false,
+                    property_syntax,
+                )?)
+            } else {
+                None
+            };
+            p.expect_exhausted()?;
+            Ok((name, fallback))
+        })?;
+        Ok(Part::Reference(reference, name, fallback))
+    }
+    fn block_part<'i>(
+        input: &mut Parser<'i, '_>,
+        token: &Token<'i>,
+        start: cssparser::SourcePosition,
+        kind: TokenSerializationType,
+        depth: usize,
+        property_syntax: bool,
+    ) -> Result<Part, ParseError<'i, ValueError>> {
+        let close = match token {
+            Token::SquareBracketBlock => "]",
+            Token::CurlyBracketBlock => "}",
+            _ => ")",
+        };
+        let open = input.slice_from(start).to_owned();
+        let guarded = property_syntax
+            && matches!(token, Token::Function(name) if name.eq_ignore_ascii_case(crate::style::declaration::TOGGLE));
+        let value = input.parse_nested_block(|nested| {
+            if guarded {
+                let state = nested.state();
+                let valid = crate::style::declaration::toggle_argument(nested, depth)
+                    .map_err(|error| nested.new_custom_error(ValueError::Style(error)))?;
+                nested.reset(&state);
+                if !valid {
+                    crate::style::conditions::block_source(nested);
+                    return Ok(None);
+                }
+            }
+            Self::tokens(nested, depth + 1, true, property_syntax).map(Some)
+        })?;
+        Ok(match value {
+            Some(value) => Part::Block(open, kind, value, close),
+            None => Part::Opaque(input.slice_from(start).to_owned(), kind),
+        })
     }
     pub(super) fn has_substitutions(&self) -> bool {
         self.0.iter().any(|part| match part {

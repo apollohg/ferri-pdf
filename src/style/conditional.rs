@@ -44,64 +44,16 @@ impl Expression {
         let mut dependencies = HashSet::new();
         let parsed = input.parse_entirely(|input| {
             while !input.is_exhausted() {
-                let start = input.position();
-                let source = loop {
-                    let before = input.state();
-                    match input.next()?.clone() {
-                        Token::Colon => break input.slice(start..before.position()),
-                        Token::Function(_)
-                        | Token::ParenthesisBlock
-                        | Token::SquareBracketBlock
-                        | Token::CurlyBracketBlock => {
-                            input.parse_nested_block(|nested| {
-                                Ok::<_, cssparser::ParseError<'_, StyleError>>(block_source(nested))
-                            })?;
-                        }
-                        Token::Semicolon => {
-                            return Err(input.new_custom_error(StyleError::Invalid(
-                                "if() condition has no colon".into(),
-                            )));
-                        }
-                        _ => {}
+                let (condition, source) = Self::branch_head(input, depth, &mut dependencies)?;
+                let value = match Value::parse_context(source, depth, property_syntax) {
+                    Ok(Some(value)) => value,
+                    Ok(None) => {
+                        return Err(input
+                            .new_custom_error(StyleError::Invalid("invalid if() branch".into())));
                     }
-                };
-                let mut condition_input = ParserInput::new(source);
-                let condition_parser = &mut Parser::new(&mut condition_input);
-                let condition = if condition_parser
-                    .try_parse(|input| {
-                        input.expect_ident_matching("else")?;
-                        input.expect_exhausted()
-                    })
-                    .is_ok()
-                {
-                    Condition::constant(Truth::True)
-                } else {
-                    let Some(condition) =
-                        Condition::parse_fallible(source, true, Truth::Unknown, Test::parse)
-                            .map_err(|error| input.new_custom_error(error))?
-                    else {
-                        return Err(input.new_custom_error(StyleError::Invalid(
-                            "invalid if() condition".into(),
-                        )));
-                    };
-                    condition
-                };
-                variables::dependencies_in(source, depth, &mut dependencies)
-                    .map_err(|error| input.new_custom_error(error))?;
-                let source = input.parse_until_before(Delimiter::Semicolon, |input| {
-                    substitution_argument(input, false)
-                })?;
-                let Some(value) = Value::parse_context(source, depth, property_syntax)
-                    .map_err(|error| input.new_custom_error(error))?
-                else {
-                    return Err(
-                        input.new_custom_error(StyleError::Invalid("invalid if() branch".into()))
-                    );
+                    Err(error) => return Err(input.new_custom_error(error)),
                 };
                 branches.push((condition, value));
-                if !input.is_exhausted() {
-                    input.expect_semicolon()?;
-                }
             }
             if branches.is_empty() {
                 return Err(input.new_custom_error(StyleError::Invalid("empty if()".into())));
@@ -116,6 +68,71 @@ impl Expression {
             Err(StyleError::Invalid(_)) => Ok(None),
             Err(error) => Err(error),
         }
+    }
+
+    /// The condition of the next `<if-branch>` and the source of its value, consuming the
+    /// branch. Nested `if()` values recurse through the value, so this work stays in a frame
+    /// that has returned by then.
+    fn branch_head<'i>(
+        input: &mut Parser<'i, '_>,
+        depth: usize,
+        dependencies: &mut HashSet<String>,
+    ) -> Result<(Condition<Test>, &'i str), cssparser::ParseError<'i, StyleError>> {
+        let start = input.position();
+        loop {
+            let before = input.state();
+            match input.next()?.clone() {
+                Token::Colon => {
+                    let condition =
+                        Self::condition(input.slice(start..before.position()), depth, dependencies)
+                            .map_err(|error| input.new_custom_error(error))?;
+                    let source = input.parse_until_before(Delimiter::Semicolon, |input| {
+                        substitution_argument(input, false)
+                    })?;
+                    if !input.is_exhausted() {
+                        input.expect_semicolon()?;
+                    }
+                    return Ok((condition, source));
+                }
+                Token::Function(_)
+                | Token::ParenthesisBlock
+                | Token::SquareBracketBlock
+                | Token::CurlyBracketBlock => {
+                    input.parse_nested_block(|nested| {
+                        Ok::<_, cssparser::ParseError<'_, StyleError>>(block_source(nested))
+                    })?;
+                }
+                Token::Semicolon => {
+                    return Err(input.new_custom_error(StyleError::Invalid(
+                        "if() condition has no colon".into(),
+                    )));
+                }
+                _ => {}
+            }
+        }
+    }
+
+    fn condition(
+        source: &str,
+        depth: usize,
+        dependencies: &mut HashSet<String>,
+    ) -> Result<Condition<Test>, StyleError> {
+        let mut condition_input = ParserInput::new(source);
+        let condition_parser = &mut Parser::new(&mut condition_input);
+        let condition = if condition_parser
+            .try_parse(|input| {
+                input.expect_ident_matching("else")?;
+                input.expect_exhausted()
+            })
+            .is_ok()
+        {
+            Condition::constant(Truth::True)
+        } else {
+            Condition::parse_fallible(source, true, Truth::Unknown, Test::parse)?
+                .ok_or_else(|| StyleError::Invalid("invalid if() condition".into()))?
+        };
+        variables::dependencies_in(source, depth, dependencies)?;
+        Ok(condition)
     }
 
     pub(super) fn select(
