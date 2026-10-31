@@ -213,6 +213,20 @@ fn page_margin_boxes_layout_cannot_form_are_omitted_alone() {
 }
 
 #[test]
+fn empty_footnotes_on_pages_without_room_render() {
+    // The page area is 0pt tall, so not even the footnote's empty body fits below the line.
+    let (texts, omitted) = texts_and_omitted_boxes(
+        "<!doctype html><style>@page{size:100pt 100pt;margin:50pt 0}</style>\
+         <p>text<span style=float:footnote;font-size:0>note</span></p>",
+    );
+    assert!(omitted.is_empty(), "nothing is omitted, got {omitted:?}");
+    assert!(
+        texts.iter().any(|text| text.starts_with("text")),
+        "the paragraph calling the footnote renders, got {texts:?}"
+    );
+}
+
+#[test]
 fn footnote_areas_layout_cannot_form_are_omitted_with_their_footnotes() {
     let html = |padding: &str| {
         format!(

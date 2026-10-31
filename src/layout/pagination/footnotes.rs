@@ -927,8 +927,12 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
                 ..waiting
             };
             let breaks = &layout.breaks;
-            let candidates = &breaks[breaks.partition_point(|&offset| offset <= waiting.top)
-                ..breaks.partition_point(|&offset| offset < waiting.bottom)];
+            // The breaks within the part; none when it is empty, as an empty body's is.
+            let start = breaks.partition_point(|&offset| offset <= waiting.top);
+            let end = breaks
+                .partition_point(|&offset| offset < waiting.bottom)
+                .max(start);
+            let candidates = &breaks[start..end];
             let fitting = candidates.partition_point(|&offset| holds(self, slice(offset)));
             let forced = advance && used.is_empty() && !self.has_flow;
             let Some(bottom) = fitting
