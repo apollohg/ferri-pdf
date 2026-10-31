@@ -1599,6 +1599,92 @@ fn rejected_descendant_selectors_cost_work_linear_in_the_depth_of_a_list() {
 }
 
 #[test]
+fn rules_whose_subjects_require_absent_features_cost_no_matching_work() {
+    // Each element tries only the rules bucketed under its own ID, classes and local name,
+    // and those whose subject compounds require none of them.
+    const NOISE: usize = 1000;
+    let tree = DocumentTree::parse(
+        "<!doctype html><div id=main class=card><p class=note>Note</p><span>Plain</span><svg><foreignObject><p>Inside</p></foreignObject></svg></div>",
+    );
+    let relevant = "p{color:#000001}.note{color:#000002}#main{color:#000003}div span{color:#000004}*|foreignObject p{color:#000005}";
+    let measure = |noise: &str| {
+        let sheet = Stylesheet::parse(&[StylesheetSource {
+            text: format!("{relevant}{noise}"),
+            base: Default::default(),
+        }])
+        .expect("bucketed style sheet");
+        crate::work::measured(crate::work::Work::RuleCandidate, || {
+            colors_in_order(&sheet, tree.elements())
+        })
+    };
+    let (colors, work) = measure("");
+    let noise: String = (0..NOISE)
+        .map(|index| {
+            format!(".unused-{index}{{color:red}}#absent-{index}{{color:red}}div x-missing-{index}{{color:red}}")
+        })
+        .collect();
+    let (noisy_colors, noisy_work) = measure(&noise);
+    assert_eq!(
+        noisy_colors, colors,
+        "rules that match nothing must not change any element's color"
+    );
+    assert_eq!(
+        noisy_work,
+        work,
+        "{} rules requiring IDs, classes and local names no element has raised the rules the \
+         {} elements try from {work} to {noisy_work}",
+        3 * NOISE,
+        tree.elements().count()
+    );
+}
+
+#[test]
+fn bucketed_rules_keep_the_case_rules_of_ids_classes_and_local_names() {
+    // Buckets fold ASCII case; the selector, not the bucket, decides whether case matters.
+    for (doctype, quirks) in [("", true), ("<!doctype html>", false)] {
+        let tree = DocumentTree::parse(&format!(
+            "{doctype}<div id=Main class=Card>Text</div><section>Section</section><svg><foreignObject id=object></foreignObject><clipPath id=clip></clipPath></svg>"
+        ));
+        let sheet = Stylesheet::parse(&[StylesheetSource {
+            text: "#main,.card{color:#000001}SECTION{color:#000002}foreignobject{color:#000003}clipPath{color:#000004}".into(),
+            base: Default::default(),
+        }])
+        .expect("case style sheet");
+        let color = |selector: &str| {
+            let element = tree
+                .select(&crate::dom::Selector::parse(selector).expect("test selector"))
+                .next()
+                .unwrap_or_else(|| panic!("{selector} is in the document"));
+            sheet
+                .computed(element, &Style::default())
+                .expect("compute an element's style")
+                .color
+                .rgb
+        };
+        assert_eq!(
+            color("div"),
+            if quirks { [0, 0, 1] } else { [0, 0, 0] },
+            "#main and .card match id=Main class=Card only in quirks mode (quirks: {quirks})"
+        );
+        assert_eq!(
+            color("section"),
+            [0, 0, 2],
+            "SECTION matches an HTML section element (quirks: {quirks})"
+        );
+        assert_eq!(
+            color("#object"),
+            [0, 0, 0],
+            "foreignobject does not match the SVG foreignObject element (quirks: {quirks})"
+        );
+        assert_eq!(
+            color("#clip"),
+            [0, 0, 4],
+            "clipPath matches the SVG clipPath element (quirks: {quirks})"
+        );
+    }
+}
+
+#[test]
 fn selectors_reaching_past_the_parent_chain_match_with_the_ancestor_filter() {
     let html = format!(
         "<!doctype html><style>{}.outer details::details-content,colgroup.group col||td span,.outer .contents p,::part(label){{color:#123456}}@scope(.outer) to (.limit){{.card p{{color:#123456}}}}</style><section class=outer><details open><summary>Summary</summary><p>Details content</p></details><x-host><template shadowrootmode=open><style>.box ::slotted(p){{color:#123456}}</style><div class=box><slot></slot><p part=label>Part</p></div></template><p>Slotted</p></x-host><table><colgroup class=group><col></colgroup><tr><td><span>Column cell</span></td></tr></table><div class=contents style=display:contents><p>Contents child</p></div><div class=card><p>Scoped</p><div class=limit><div class=card><p>Past limit</p></div></div></div></section>",

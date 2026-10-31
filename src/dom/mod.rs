@@ -13,8 +13,9 @@ mod state;
 mod tree;
 pub(crate) use attributes::{integer_digits, non_negative_integer_digits};
 pub(crate) use selector::{
-    AncestorFilter, GeneratedPseudoElement, NamespaceMap, PseudoElement, ScopeRoot, Selector,
-    SelectorMode, SelectorOrigin, SelectorScope, TreeContext, parse_namespace,
+    AncestorFilter, GeneratedPseudoElement, NamespaceMap, PseudoElement, SUBJECT_FEATURES,
+    ScopeRoot, Selector, SelectorMode, SelectorOrigin, SelectorScope, SubjectFeature, TreeContext,
+    parse_namespace, subject_features,
 };
 pub(crate) use state::{
     Directionality, InitialState, ScrollMarker, ScrollMarkerStates, TargetPosition,

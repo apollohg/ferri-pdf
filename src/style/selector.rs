@@ -190,6 +190,9 @@ impl RuleSelector {
     pub(super) fn target_index(&self) -> usize {
         target_index(self.pseudo)
     }
+    pub(super) fn subject_feature(&self) -> Option<(crate::dom::SubjectFeature, Box<str>)> {
+        self.selector.subject_feature()
+    }
     pub(super) fn scope_origins<'a>(
         &self,
         element: Element<'a>,

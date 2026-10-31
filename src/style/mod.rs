@@ -75,6 +75,7 @@ pub(crate) mod motion;
 mod properties;
 mod resolution;
 mod ruby_values;
+mod rule_map;
 mod scope;
 mod selector;
 mod shadow_values;

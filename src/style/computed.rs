@@ -1513,7 +1513,20 @@ impl Stylesheet {
         // SVG 2 §5.5.3: a use-element shadow tree's style sheets are its referenced element's,
         // in the shadow tree's own context.
         let instance = element.stylesheet_scope() != element.tree_scope();
-        for &index in &self.rule_indices[crate::style::selector::target_index(pseudo)] {
+        let map = &self.rule_maps[crate::style::selector::target_index(pseudo)];
+        // Every container query of the map is evaluated, as for rules that cannot match, so
+        // that the sizes styling consults do not depend on which rules can.
+        for &container in map.containers() {
+            self.container_rule_matches(container, element, ancestors, resolver, &mut containers)?;
+        }
+        let closest = |(specificity, proximity): &(u32, Option<usize>)| {
+            (
+                *specificity,
+                std::cmp::Reverse(proximity.unwrap_or(usize::MAX)),
+            )
+        };
+        for index in map.candidates(element) {
+            crate::work::count(crate::work::Work::RuleCandidate, 1);
             let rule = &self.rules[index];
             let encapsulation_order = if instance {
                 element.encapsulation_order()
@@ -1531,31 +1544,28 @@ impl Stylesheet {
             {
                 continue;
             }
-            if let Some((specificity, scope_proximity)) = rule
-                .selectors
-                .iter()
-                .filter_map(|selector| {
-                    scopes
-                        .roots(rule.scope, &self.scopes, selector)
-                        .filter_map(|(root, proximity)| {
-                            selector
-                                .matches(&element, pseudo, root, rule.tree_context, Some(filter))
-                                .map(|specificity| (specificity, proximity))
-                        })
-                        .max_by_key(|(specificity, proximity)| {
-                            (
-                                *specificity,
-                                std::cmp::Reverse(proximity.unwrap_or(usize::MAX)),
-                            )
-                        })
-                })
-                .max_by_key(|(specificity, proximity)| {
-                    (
-                        *specificity,
-                        std::cmp::Reverse(proximity.unwrap_or(usize::MAX)),
-                    )
-                })
-            {
+            let matched = rule.selectors.iter().filter_map(|selector| {
+                if rule.scope.is_none() {
+                    return selector
+                        .matches(
+                            &element,
+                            pseudo,
+                            crate::dom::SelectorScope::default(),
+                            rule.tree_context,
+                            Some(filter),
+                        )
+                        .map(|specificity| (specificity, None));
+                }
+                scopes
+                    .roots(rule.scope, &self.scopes, selector)
+                    .filter_map(|(root, proximity)| {
+                        selector
+                            .matches(&element, pseudo, root, rule.tree_context, Some(filter))
+                            .map(|specificity| (specificity, proximity))
+                    })
+                    .max_by_key(closest)
+            });
+            if let Some((specificity, scope_proximity)) = matched.max_by_key(closest) {
                 for declaration in &rule.declarations {
                     order += 1;
                     insert(

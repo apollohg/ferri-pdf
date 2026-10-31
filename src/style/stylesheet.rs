@@ -65,7 +65,8 @@ pub(crate) struct Stylesheet {
     pub(super) document_base: ResourceBase,
     pub(super) diagnostics: RefCell<Vec<StyleDiagnostic>>,
     pub(super) degradations: std::rc::Rc<crate::style::Degradations>,
-    pub(super) rule_indices: [Vec<usize>; crate::style::selector::SELECTOR_TARGET_COUNT],
+    pub(super) rule_maps:
+        Box<[crate::style::rule_map::RuleMap; crate::style::selector::SELECTOR_TARGET_COUNT]>,
     pub page: [f32; 2],
     pub margin: [f32; 4],
     pub(super) page_extent: [f32; 2],
@@ -359,7 +360,7 @@ pub(super) fn implemented_page_descriptor(descriptor: Descriptor) -> bool {
 impl Stylesheet {
     /// Whether any rule selects `pseudo`, which otherwise inherits every value it computes.
     pub(crate) fn has_pseudo_rules(&self, pseudo: crate::style::PseudoElement) -> bool {
-        !self.rule_indices[crate::style::selector::target_index(Some(pseudo))].is_empty()
+        !self.rule_maps[crate::style::selector::target_index(Some(pseudo))].is_empty()
     }
     /// Copies prepared rules and page context; source diagnostics remain with the original owner.
     #[must_use]
@@ -380,7 +381,7 @@ impl Stylesheet {
             document_base: self.document_base.clone(),
             diagnostics: RefCell::default(),
             degradations: std::rc::Rc::default(),
-            rule_indices: self.rule_indices.clone(),
+            rule_maps: self.rule_maps.clone(),
             page: self.page,
             margin: self.margin,
             page_extent: self.page_extent,
@@ -643,7 +644,7 @@ impl Stylesheet {
             document_base: document_base.clone(),
             diagnostics,
             degradations: std::rc::Rc::default(),
-            rule_indices: std::array::from_fn(|_| Vec::new()),
+            rule_maps: Box::default(),
             page: initial_page.paper,
             margin: initial_page.margin,
             page_extent: initial_page.extent,
@@ -690,10 +691,7 @@ impl Stylesheet {
                 ContentRule::Style(selectors, declarations) => {
                     let index = sheet.rules.len();
                     for selector in &selectors {
-                        let indices = &mut sheet.rule_indices[selector.target_index()];
-                        if indices.last() != Some(&index) {
-                            indices.push(index);
-                        }
+                        sheet.rule_maps[selector.target_index()].insert(index, selector, container);
                     }
                     sheet.rules.push(StyleRule {
                         selectors,

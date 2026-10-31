@@ -389,6 +389,28 @@ impl Selector {
         (selectors.len() == 1).then(|| selectors[0].specificity())
     }
 
+    /// An ID, class or local name that the subject compound of this single selector requires
+    /// of every element it matches, ASCII-lowercased, as Servo's `SelectorMap` buckets rules;
+    /// `None` where it requires none of them.
+    pub(crate) fn subject_feature(&self) -> Option<(SubjectFeature, Box<str>)> {
+        let [selector] = self.selectors.slice() else {
+            return None;
+        };
+        let mut found = None;
+        for component in selector.iter() {
+            let feature = match component {
+                parser::Component::ID(id) => (SubjectFeature::Id, &id.0),
+                parser::Component::Class(class) => (SubjectFeature::Class, &class.0),
+                parser::Component::LocalName(name) => (SubjectFeature::LocalName, &name.name.0),
+                _ => continue,
+            };
+            if found.as_ref().is_none_or(|(kind, _)| feature.0 < *kind) {
+                found = Some(feature);
+            }
+        }
+        found.map(|(kind, name)| (kind, name.as_ref().to_ascii_lowercase().into_boxed_str()))
+    }
+
     #[cfg(test)]
     pub(crate) fn matches(
         &self,
@@ -553,6 +575,36 @@ impl Selector {
                 .then_some((origin.element, hops))
         })
     }
+}
+
+/// What a selector's subject compound can require of an element, rarest first.
+#[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
+pub(crate) enum SubjectFeature {
+    Id,
+    Class,
+    LocalName,
+}
+pub(crate) const SUBJECT_FEATURES: usize = 3;
+
+/// Calls `each` with every feature `element` has that [`Selector::subject_feature`] can
+/// require, ASCII-lowercased: IDs and classes match ASCII case-insensitively in quirks mode,
+/// and local names of HTML elements by their lowercase form.
+pub(crate) fn subject_features(element: Element<'_>, mut each: impl FnMut(SubjectFeature, &str)) {
+    let mut lowercase = |feature, name: &str| {
+        if name.bytes().any(|byte| byte.is_ascii_uppercase()) {
+            each(feature, &name.to_ascii_lowercase());
+        } else {
+            each(feature, name);
+        }
+    };
+    let value = element.value();
+    if let Some(id) = value.id() {
+        lowercase(SubjectFeature::Id, id);
+    }
+    for class in value.classes() {
+        lowercase(SubjectFeature::Class, class);
+    }
+    lowercase(SubjectFeature::LocalName, &value.name.local);
 }
 
 fn matching_quirks(element: Element<'_>) -> matching::QuirksMode {

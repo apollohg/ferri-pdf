@@ -36,10 +36,13 @@ pub(crate) enum Work {
     ShapedRun,
     /// A blurred shadow mask rasterized.
     ShadowMask,
+    /// A style rule whose selectors are tried against an element or one of its
+    /// pseudo-elements.
+    RuleCandidate,
 }
 
 #[cfg(test)]
-const KINDS: usize = 16;
+const KINDS: usize = 17;
 
 #[cfg(test)]
 thread_local! {
