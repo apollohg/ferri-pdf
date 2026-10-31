@@ -89,6 +89,20 @@ pub enum Degradation {
     #[error("inline SVG content is in error and renders nothing: {reason}")]
     SvgInError { reason: String },
 }
+impl Degradation {
+    /// Whether a limit left author content out, rather than the input being recovered as the
+    /// specifications' error handling says.
+    pub fn loses_content(&self) -> bool {
+        match self {
+            Self::GeneratedTextLimit { .. } => true,
+            Self::InvalidAtComputedValueTime { .. }
+            | Self::DependencyCycle { .. }
+            | Self::UnresolvedTarget { .. }
+            | Self::NonFinitePageGeometry
+            | Self::SvgInError { .. } => false,
+        }
+    }
+}
 
 /// Degradations, each kept once however many elements and layout passes repeat it.
 #[derive(Default)]

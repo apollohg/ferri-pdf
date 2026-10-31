@@ -39,7 +39,7 @@ fn repeated_frames_are_charged_and_excessive_frames_are_rejected() {
     let error =
         decode_item(&mut decoder, &frames(2), &mut { single_frame_pixels }, true).unwrap_err();
     assert!(
-        matches!(error, ImageError::Avif("coded images exceed pixel budget")),
+        matches!(error, ImageError::AvifBudget("coded image pixels")),
         "{error}"
     );
     let error = decode_item(&mut decoder, &frames(5), &mut { PIXEL_LIMIT }, true).unwrap_err();

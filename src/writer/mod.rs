@@ -124,6 +124,17 @@ pub enum PaintDiagnostic {
     #[error("pages larger than {limit}pt along a side are cut to it")]
     PageSize { limit: f32 },
 }
+impl PaintDiagnostic {
+    /// Whether a limit left painted author content out of the PDF or drew it wrongly.
+    pub fn loses_content(&self) -> bool {
+        match self {
+            Self::Omitted { .. } | Self::MaskElementDrawLimit { .. } | Self::PageSize { .. } => {
+                true
+            }
+            Self::ReducedResolution => false,
+        }
+    }
+}
 
 /// The largest page side a PDF describes, in points; larger pages are cut to it.
 const MAX_PAGE_SIDE_PT: f32 = 1.0e7;

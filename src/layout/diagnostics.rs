@@ -24,6 +24,21 @@ pub enum LayoutDiagnostic {
     )]
     FixedPlacementLimit { limit: usize, pages: usize },
 }
+impl LayoutDiagnostic {
+    /// Whether a limit left author content out of the laid-out pages.
+    pub fn loses_content(&self) -> bool {
+        match self {
+            Self::PageLimit { .. } | Self::OmittedBox { .. } | Self::FixedPlacementLimit { .. } => {
+                true
+            }
+            Self::WorkLimit { kept, .. } => match kept {
+                WorkFallback::Truncated => true,
+                WorkFallback::LastPass => false,
+            },
+            Self::Unsettled(_) | Self::FailedRelayout { .. } => false,
+        }
+    }
+}
 
 /// A layout that repeats until what it measured stops changing.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]

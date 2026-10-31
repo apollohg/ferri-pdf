@@ -101,17 +101,31 @@ pub(crate) struct Paragraph {
     /// Where `first_line`, whose `text-transform` may encode characters differently, places
     /// this paragraph's offsets.
     first_line_offsets: OffsetMap,
-    /// Text past the paragraph's text limit was left out, or a `text-transform` expanding it
-    /// past the limit was not applied.
-    text_limited: bool,
+    text_limits: TextLimits,
+}
+/// What a paragraph's text limit changed.
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+pub(crate) struct TextLimits {
+    /// Text past the limit was left out.
+    pub truncated: bool,
+    /// A `text-transform` expanding the text past the limit was not applied.
+    pub untransformed: bool,
+}
+impl TextLimits {
+    pub(crate) fn union(self, other: Self) -> Self {
+        Self {
+            truncated: self.truncated || other.truncated,
+            untransformed: self.untransformed || other.untransformed,
+        }
+    }
 }
 impl Paragraph {
-    pub(crate) fn text_limited(&self) -> bool {
-        self.text_limited
-            || self
-                .first_line
-                .as_ref()
-                .is_some_and(|variant| variant.text_limited)
+    pub(crate) fn text_limits(&self) -> TextLimits {
+        self.first_line
+            .as_ref()
+            .map_or(self.text_limits, |variant| {
+                self.text_limits.union(variant.text_limits)
+            })
     }
     pub(super) fn reflow(&mut self) -> Vec<&mut crate::document::BlockBox> {
         use crate::style::logical::{self, Flow};
@@ -278,7 +292,7 @@ impl Paragraph {
             events: Vec::new(),
             first_line: None,
             first_line_offsets: OffsetMap::default(),
-            text_limited: self.text_limited,
+            text_limits: self.text_limits,
         };
         let mut styles = atomics.into_iter();
         let mut restyled = |anchors: &[Anchor]| -> Vec<Anchor> {
@@ -371,7 +385,7 @@ impl Paragraph {
             events: Vec::new(),
             first_line: None,
             first_line_offsets: OffsetMap::default(),
-            text_limited: false,
+            text_limits: TextLimits::default(),
         }
     }
 
@@ -443,7 +457,7 @@ impl Paragraph {
             events: Vec::new(),
             first_line: None,
             first_line_offsets: OffsetMap::default(),
-            text_limited: false,
+            text_limits: TextLimits::default(),
         };
         transform::apply(&mut paragraph, false);
         paragraph
@@ -1568,7 +1582,10 @@ impl InlineCollector {
             events: self.events,
             first_line: None,
             first_line_offsets: OffsetMap::default(),
-            text_limited: self.text_limited,
+            text_limits: TextLimits {
+                truncated: self.text_limited,
+                untransformed: false,
+            },
         };
         let variant = first_line(&mut paragraph)?;
         for annotation in &mut paragraph.annotations {

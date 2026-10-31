@@ -114,13 +114,90 @@ pub enum DocumentDiagnostic {
     },
     #[error("optional restyling past the {limit}-unit formatting work budget was skipped")]
     SkippedFormattingWork { limit: usize },
-    /// Formatting kept within one of its limits by leaving out what exceeds it.
+    /// Formatting kept within one of its limits by changing or leaving out what exceeds it.
     #[error("{resource} exceeds {limit}: {fallback}")]
     FormattingLimit {
         resource: &'static str,
         limit: usize,
-        fallback: &'static str,
+        fallback: LimitFallback,
     },
+}
+
+impl DocumentDiagnostic {
+    /// Whether a limit left author content out of the PDF or rendered it wrongly, rather than
+    /// the input being recovered as the specifications' error handling says.
+    pub fn loses_content(&self) -> bool {
+        match self {
+            Self::TreeLimit(_) | Self::NavigableDepth { .. } => true,
+            Self::Degraded(degradation) => degradation.loses_content(),
+            Self::Layout(diagnostic) => diagnostic.loses_content(),
+            Self::Paint(diagnostic) => diagnostic.loses_content(),
+            Self::FormattingLimit { fallback, .. } => fallback.loses_content(),
+            Self::UnavailableImage(failure) => failure.error.loses_content(),
+            Self::ImageDecode { .. }
+            | Self::Css(_)
+            | Self::Decoding { .. }
+            | Self::UnavailableEmbedded { .. }
+            | Self::UnrenderedDocument { .. }
+            | Self::UnavailableFont(_)
+            | Self::UnavailableSource { .. }
+            | Self::SkippedFormattingWork { .. } => false,
+        }
+    }
+}
+
+/// What formatting does with the content past one of its limits.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum LimitFallback {
+    /// Elements nested deeper generate no boxes of their own; their content stays.
+    FlattenedNesting,
+    /// SVG elements nested deeper are placed beside their parents.
+    FlattenedSvgNesting,
+    /// The document content past the limit is left out.
+    TruncatedContent,
+    /// Paragraph text past the limit is left out.
+    TruncatedText,
+    /// A `text-transform` expanding text past the limit is not applied.
+    UntransformedText,
+    /// Counters past the limit are no longer evaluated and read as zero.
+    UnevaluatedCounters,
+    /// The SVG content after the limit is left out.
+    OmittedSvgNodes,
+    /// SVG resources referenced deeper are left out, as invalid references are.
+    OmittedSvgReferences,
+}
+impl LimitFallback {
+    /// Whether the fallback leaves author content out or renders it wrongly.
+    pub fn loses_content(self) -> bool {
+        match self {
+            Self::TruncatedContent
+            | Self::TruncatedText
+            | Self::UnevaluatedCounters
+            | Self::OmittedSvgNodes
+            | Self::OmittedSvgReferences => true,
+            Self::FlattenedNesting | Self::FlattenedSvgNesting | Self::UntransformedText => false,
+        }
+    }
+}
+impl std::fmt::Display for LimitFallback {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(match self {
+            Self::FlattenedNesting => {
+                "elements nested deeper generate no boxes of their own, their contents lying in the deepest box"
+            }
+            Self::FlattenedSvgNesting => "elements nested deeper are placed beside their parents",
+            Self::TruncatedContent => "the document content past it is left out",
+            Self::TruncatedText => "text past it is left out",
+            Self::UntransformedText => "text transforms expanding past it are not applied",
+            Self::UnevaluatedCounters => {
+                "counters past it are no longer evaluated and read as zero"
+            }
+            Self::OmittedSvgNodes => "the content after them is left out",
+            Self::OmittedSvgReferences => {
+                "resources referenced deeper are left out as invalid references are"
+            }
+        })
+    }
 }
 
 /// Records, once, that formatting skipped optional work past its budget's `limit`.
@@ -748,9 +825,15 @@ impl StyledDocument {
             matches!(
                 (known, &diagnostic),
                 (
-                    DocumentDiagnostic::FormattingLimit { resource: known, .. },
-                    DocumentDiagnostic::FormattingLimit { resource, .. },
-                ) if known == resource
+                    DocumentDiagnostic::FormattingLimit {
+                        resource: known,
+                        fallback: known_fallback,
+                        ..
+                    },
+                    DocumentDiagnostic::FormattingLimit {
+                        resource, fallback, ..
+                    },
+                ) if known == resource && known_fallback == fallback
             )
         });
         if !repeated {

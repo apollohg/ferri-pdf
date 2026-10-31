@@ -19,7 +19,7 @@ const DECODER_THREADS: usize = 1;
 const MAX_GRID_TILES: u32 = 1024;
 pub(crate) fn decode(bytes: &[u8]) -> Result<PixelImage, ImageError> {
     if bytes.len() as u64 > CONTAINER_LIMIT {
-        return Err(ImageError::Avif("container exceeds byte budget"));
+        return Err(ImageError::AvifBudget("container bytes"));
     }
     let config = DecodeConfig::default()
         .with_peak_memory_limit(CONTAINER_LIMIT)
@@ -134,7 +134,10 @@ fn decode_grid(
 }
 
 fn check_dimensions(width: u32, height: u32) -> Result<(), ImageError> {
-    if width == 0 || height == 0 || u64::from(width) * u64::from(height) > PIXEL_LIMIT {
+    if width == 0 || height == 0 {
+        return Err(ImageError::Empty { width, height });
+    }
+    if u64::from(width) * u64::from(height) > PIXEL_LIMIT {
         return Err(ImageError::Dimensions { width, height });
     }
     Ok(())

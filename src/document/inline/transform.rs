@@ -232,7 +232,7 @@ pub(super) fn apply(paragraph: &mut Paragraph, record: bool) -> Vec<Range<usize>
         .collect();
     let Some((output, units)) = transform_text(&paragraph.text, &runs) else {
         drop(runs);
-        paragraph.text_limited = true;
+        paragraph.text_limits.untransformed = true;
         return unchanged(paragraph, record);
     };
     // The source offset of each unit, ascending as the spans are.

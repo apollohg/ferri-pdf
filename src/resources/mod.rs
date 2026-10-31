@@ -97,6 +97,30 @@ pub enum ResourceError {
     #[error("invalid data URL: {0}")]
     InvalidDataUrl(#[from] DataUrlError),
 }
+impl ResourceError {
+    /// Whether the renderer's own limits left the resource out; a resolver's caps, such as
+    /// its byte and redirect limits, are the caller's policy and leave it unavailable.
+    pub fn loses_content(&self) -> bool {
+        match self {
+            #[cfg(feature = "http")]
+            Self::Http { .. }
+            | Self::HttpStatus { .. }
+            | Self::RedirectLocation { .. }
+            | Self::RedirectLimit { .. }
+            | Self::RemoteTooLarge { .. }
+            | Self::Timeout(_) => false,
+            Self::InvalidBase(_)
+            | Self::Url { .. }
+            | Self::InvalidFileUrl(_)
+            | Self::Denied(_)
+            | Self::Read { .. }
+            | Self::TooLarge { .. }
+            | Self::OutsideRoot(_)
+            | Self::UnsupportedScheme(_)
+            | Self::InvalidDataUrl(_) => false,
+        }
+    }
+}
 
 /// Resolve a reference against its containing document or resource.
 pub trait ResourceResolver {

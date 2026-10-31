@@ -18,7 +18,7 @@ pub(super) fn decode_item(
     check_dimensions(width, height)?;
     *budget = budget
         .checked_sub(u64::from(width) * u64::from(height) * u64::from(frame_count(bytes)?))
-        .ok_or(ImageError::Avif("coded images exceed pixel budget"))?;
+        .ok_or(ImageError::AvifBudget("coded image pixels"))?;
     let decoded = decoder.decode(bytes, None, false)?;
     macro_rules! convert {
         ($image:expr, $depth:expr, $pixel:expr) => {{

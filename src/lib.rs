@@ -47,6 +47,7 @@ use crate::layout::LayoutError;
 use crate::text::TextError;
 
 pub use crate::document::DocumentDiagnostic as RenderDiagnostic;
+pub use crate::document::LimitFallback;
 pub use crate::fonts::{
     FontDescriptor, FontError, FontFaceStyle, FontFamily, FontId, FontPreferences, FontRange,
     FontSelection, FontSlant, FontStyle, FontSynthesis, FontVariation, FontWeight, FontWidth,

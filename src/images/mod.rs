@@ -153,7 +153,10 @@ impl RasterImage {
         };
         let mut decoder = raster_reader(&bytes, format).into_decoder()?;
         let (width, height) = decoder.dimensions();
-        if width == 0 || height == 0 || decoder.total_bytes() > MAX_DECODED_BYTES {
+        if width == 0 || height == 0 {
+            return Err(ImageError::Empty { width, height });
+        }
+        if decoder.total_bytes() > MAX_DECODED_BYTES {
             return Err(ImageError::Dimensions { width, height });
         }
         let exif = decoder.exif_metadata()?;
@@ -338,6 +341,8 @@ pub enum ImageError {
     AvifDecode(#[from] avif_decode::Error),
     #[error("invalid AVIF image: {0}")]
     Avif(&'static str),
+    #[error("AVIF {0} exceed the decoding budget")]
+    AvifBudget(&'static str),
     #[error("invalid HEIF image: {0}")]
     Heif(#[from] heic_decoder::HeifError),
     #[error("decoded RGB image has a non-RGB ICC profile")]
@@ -368,19 +373,66 @@ pub enum ImageError {
     UnsupportedFormat(ImageFormat),
     #[error("image dimensions exceed the decoding budget: {width} by {height}")]
     Dimensions { width: u32, height: u32 },
+    #[error("image has no pixels: {width} by {height}")]
+    Empty { width: u32, height: u32 },
     #[error("{0}")]
     Fragment(#[from] InvalidFragment),
 }
+impl ImageError {
+    /// Whether the renderer's own decoding budget left the image out, rather than the image
+    /// being unavailable, denied or invalid.
+    pub fn loses_content(&self) -> bool {
+        match self {
+            Self::Dimensions { .. } | Self::AvifBudget(_) => true,
+            Self::AvifContainer(error) => match error {
+                zenavif_parse::Error::ResourceLimitExceeded(_) => true,
+                zenavif_parse::Error::InvalidData(_)
+                | zenavif_parse::Error::Unsupported(_)
+                | zenavif_parse::Error::UnexpectedEOF
+                | zenavif_parse::Error::Io(_)
+                | zenavif_parse::Error::NoMoov
+                | zenavif_parse::Error::OutOfMemory
+                | zenavif_parse::Error::Stopped(_) => false,
+            },
+            Self::Heif(error) => match error {
+                heic_decoder::HeifError::LimitExceeded(_) => true,
+                heic_decoder::HeifError::Truncated { .. }
+                | heic_decoder::HeifError::NotHeif(_)
+                | heic_decoder::HeifError::MalformedBox(_)
+                | heic_decoder::HeifError::MalformedHevc(_)
+                | heic_decoder::HeifError::Unsupported(_)
+                | heic_decoder::HeifError::CabacDesync(_) => false,
+            },
+            // The decoder's frame size limit is the pixel budget `Dimensions` checks first, so
+            // its errors report malformed frames.
+            Self::AvifDecode(_) => false,
+            // Raster decoding's only limits are those `raster_reader` sets.
+            Self::Decode(error) => matches!(error, image::ImageError::Limits(_)),
+            Self::Resource(error) => error.loses_content(),
+            Self::Font(_)
+            | Self::Avif(_)
+            | Self::NonRgbProfile
+            | Self::ColorProfile(_)
+            | Self::ColorDescription { .. }
+            | Self::PngEncoding(_)
+            | Self::ExternalSvgSymbol(_)
+            | Self::SvgEncoding(_)
+            | Self::SvgXml(_)
+            | Self::SvgRoot
+            | Self::Svg(_)
+            | Self::SvgSize
+            | Self::UnsupportedFormat(_)
+            | Self::Empty { .. }
+            | Self::Fragment(_) => false,
+        }
+    }
+}
 
 /// The limits that change SVG content, which renders limited, as `FormattingLimit`
-/// diagnostics name them and their fallbacks.
+/// diagnostics name them.
 pub(crate) const SVG_NESTING_RESOURCE: &str = "SVG element nesting";
-const FLATTENED_SVG_NESTING: &str = "elements nested deeper are placed beside their parents";
 pub(crate) const SVG_NODES_RESOURCE: &str = "SVG nodes";
-const OMITTED_SVG_NODES: &str = "the content after them is left out";
 pub(crate) const SVG_REFERENCE_RESOURCE: &str = "SVG reference nesting";
-const OMITTED_SVG_REFERENCES: &str =
-    "resources referenced deeper are left out as invalid references are";
 pub(crate) const SVG_UNSET_VALUE: &str = "the value has no SVG presentation value";
 
 #[derive(Debug, thiserror::Error)]
@@ -714,19 +766,19 @@ impl ImageCache {
                 limits.flattened,
                 SVG_NESTING_RESOURCE,
                 crate::svg::usvg::MAX_SVG_DEPTH,
-                FLATTENED_SVG_NESTING,
+                crate::document::LimitFallback::FlattenedSvgNesting,
             ),
             (
                 limits.truncated,
                 SVG_NODES_RESOURCE,
                 crate::svg::usvg::MAX_SVG_NODES,
-                OMITTED_SVG_NODES,
+                crate::document::LimitFallback::OmittedSvgNodes,
             ),
             (
                 converted,
                 SVG_REFERENCE_RESOURCE,
                 crate::svg::usvg::MAX_REFERENCE_DEPTH,
-                OMITTED_SVG_REFERENCES,
+                crate::document::LimitFallback::OmittedSvgReferences,
             ),
         ];
         self.limited

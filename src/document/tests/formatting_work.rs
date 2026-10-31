@@ -311,10 +311,10 @@ fn the_document_past_its_work_budget_is_left_out_and_reported() {
             crate::document::DocumentDiagnostic::FormattingLimit {
                 resource: "formatting work",
                 limit: reported,
-                ..
+                fallback: crate::document::LimitFallback::TruncatedContent,
             } if *reported == limit
-        )),
-        "the exhausted budget is reported: {:?}",
+        ) && diagnostic.loses_content()),
+        "the exhausted budget is reported as content lost: {:?}",
         document.diagnostics
     );
     let kept = texts(document.root());
@@ -343,13 +343,28 @@ fn a_text_transform_expanding_past_the_paragraph_limit_is_left_unapplied_and_rep
     );
     let document = parse(&html, crate::document::MAX_FORMATTING_WORK)
         .unwrap_or_else(|error| panic!("an over-expanding transform must not fail: {error}"));
+    let fallbacks: Vec<_> = document
+        .diagnostics
+        .iter()
+        .filter_map(|diagnostic| match diagnostic {
+            crate::document::DocumentDiagnostic::FormattingLimit {
+                limit, fallback, ..
+            } if *limit == crate::document::MAX_INLINE_TEXT_BYTES => Some(*fallback),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(
+        fallbacks,
+        [crate::document::LimitFallback::UntransformedText],
+        "the unapplied transform is reported, and no text as left out: {:?}",
+        document.diagnostics
+    );
     assert!(
-        document.diagnostics.iter().any(|diagnostic| matches!(
-            diagnostic,
-            crate::document::DocumentDiagnostic::FormattingLimit { limit, .. }
-                if *limit == crate::document::MAX_INLINE_TEXT_BYTES
-        )),
-        "the limited text is reported: {:?}",
+        !document
+            .diagnostics
+            .iter()
+            .any(crate::document::DocumentDiagnostic::loses_content),
+        "an unapplied transform keeps every character, so no content is lost: {:?}",
         document.diagnostics
     );
     let texts = texts(document.root());
