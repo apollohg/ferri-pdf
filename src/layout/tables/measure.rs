@@ -172,27 +172,51 @@ struct WidthContributions {
     caption_min: f32,
 }
 
+/// Everything the column widths of a table depend on besides its plan: the width
+/// contributions are measured against `width`, and `positioned` holds the used width of a
+/// table whose box geometry was given.
+#[derive(Clone, Copy, Hash, PartialEq, Eq)]
+struct ColumnsKey {
+    width: u32,
+    available: u32,
+    edges: [u32; 2],
+    positioned: Option<u32>,
+}
+
+/// Used column widths and inline starts, which each fragment of a table shares.
+struct ResolvedColumns {
+    sizes: crate::table::ColumnWidths,
+    original_sizes: Option<crate::table::ColumnWidths>,
+    starts: Vec<f32>,
+}
+
 pub(crate) struct TableGeometry {
     pub containing_height: Option<f32>,
     pub geometry: geometry::HorizontalBox,
     edges: geometry::Edges,
-    sizes: crate::table::ColumnWidths,
-    original_sizes: Option<crate::table::ColumnWidths>,
+    resolved: Rc<ResolvedColumns>,
     collapsed_columns: Rc<[bool]>,
-    starts: Vec<f32>,
     spacing: [f32; 2],
 }
 impl TableGeometry {
+    fn sizes(&self) -> &crate::table::ColumnWidths {
+        &self.resolved.sizes
+    }
     pub(crate) fn grid_lines(&self, rtl: bool) -> Vec<f32> {
-        grid_lines(self.geometry.x, &self.sizes.widths, self.sizes.table, rtl)
+        grid_lines(
+            self.geometry.x,
+            &self.sizes().widths,
+            self.sizes().table,
+            rtl,
+        )
     }
     pub(crate) fn columns(&self, rtl: bool) -> Columns<'_> {
         Columns {
             x: self.geometry.x,
-            table: self.sizes.table,
+            table: self.sizes().table,
             rtl,
-            starts: &self.starts,
-            widths: &self.sizes.widths,
+            starts: &self.resolved.starts,
+            widths: &self.sizes().widths,
             collapsed: &self.collapsed_columns,
             horizontal: self.spacing[0],
         }
@@ -290,6 +314,7 @@ pub(crate) struct TablePlan<'a> {
     layers: Layers,
     columns: Vec<crate::table::ColumnWidth>,
     widths: RefCell<HashMap<u32, Rc<WidthContributions>>>,
+    resolved_columns: RefCell<HashMap<ColumnsKey, Rc<ResolvedColumns>>>,
     place: fn(&Style, f32, f32, bool, Option<f32>, geometry::Edges) -> geometry::HorizontalBox,
 }
 
@@ -644,6 +669,7 @@ impl<'a> TablePlan<'a> {
             entry_events,
             row_keep_ends: [Vec::new(), Vec::new(), Vec::new()],
             widths: RefCell::new(HashMap::new()),
+            resolved_columns: RefCell::new(HashMap::new()),
             place,
         };
         plan.row_keep_ends = [
@@ -750,17 +776,10 @@ impl<'a> TablePlan<'a> {
         rtl: bool,
         positioned: Option<&geometry::HorizontalBox>,
     ) -> Result<TableGeometry, Failure> {
-        measurer.work.spend(
-            self.data
-                .grid
-                .rows
-                .saturating_mul(self.data.grid.columns)
-                .max(1),
-        )?;
         let style = self.style;
         let data = &self.data;
         let place = self.place;
-        let collapsed = data.collapsed.is_some();
+        measurer.work.spend(data.grid.columns.max(1))?;
         let table_edges = data.table_edges(style, width);
         let provisional = positioned
             .cloned()
@@ -774,6 +793,83 @@ impl<'a> TablePlan<'a> {
             - provisional.margin[1].unwrap_or(0.0)
             - provisional.margin[3].unwrap_or(0.0))
         .max(0.0);
+        let vertical_edges = provisional.padding[0]
+            + provisional.padding[2]
+            + provisional.border[0]
+            + provisional.border[2];
+        let key = ColumnsKey {
+            width: width.to_bits(),
+            available: available.to_bits(),
+            edges: [edges.to_bits(), vertical_edges.to_bits()],
+            positioned: positioned.map(|geometry| geometry.width.to_bits()),
+        };
+        let cached = self.resolved_columns.borrow().get(&key).cloned();
+        let resolved = if let Some(resolved) = cached {
+            resolved
+        } else {
+            let resolved = Rc::new(self.resolve_columns(
+                measurer,
+                width,
+                [edges, vertical_edges],
+                available,
+                positioned,
+            )?);
+            self.resolved_columns
+                .borrow_mut()
+                .insert(key, resolved.clone());
+            resolved
+        };
+        let table = resolved.sizes.table;
+        let geometry = positioned.map_or_else(
+            || place(style, x, width, rtl, Some(table), table_edges),
+            |geometry| geometry::HorizontalBox {
+                width: table,
+                ..geometry.clone()
+            },
+        );
+        if !geometry.x.is_finite() || !geometry.width.is_finite() {
+            return Err(LayoutError::NonFiniteBlockGeometry {
+                block: std::ptr::from_ref(self.source),
+            }
+            .into());
+        }
+        Ok(TableGeometry {
+            containing_height: self.containing_height,
+            geometry,
+            edges: table_edges,
+            resolved,
+            collapsed_columns: data.collapsed_columns.clone(),
+            spacing: self.spacing(),
+        })
+    }
+    /// The border spacing between columns and between rows; collapsed borders have none.
+    fn spacing(&self) -> [f32; 2] {
+        if self.data.collapsed.is_some() {
+            [0.0; 2]
+        } else {
+            self.style.table.spacing
+        }
+    }
+    /// The used column widths of the table in `width`, whose box has `edges` of horizontal and
+    /// vertical padding and borders and `available` width inside its margins, padding and
+    /// borders.
+    fn resolve_columns(
+        &self,
+        measurer: &Measurer<'a>,
+        width: f32,
+        [edges, vertical_edges]: [f32; 2],
+        available: f32,
+        positioned: Option<&geometry::HorizontalBox>,
+    ) -> Result<ResolvedColumns, Failure> {
+        measurer.work.spend(
+            self.data
+                .grid
+                .rows
+                .saturating_mul(self.data.grid.columns)
+                .max(1),
+        )?;
+        let style = self.style;
+        let data = &self.data;
         let mut constraints = crate::layout::intrinsic::width_constraints(
             self.source,
             measurer,
@@ -786,10 +882,6 @@ impl<'a> TablePlan<'a> {
         }
         // CSS Sizing 4 §4.2: a definite height gives an automatic width through the preferred
         // aspect ratio, which the columns still grow past.
-        let vertical_edges = provisional.padding[0]
-            + provisional.padding[2]
-            + provisional.border[0]
-            + provisional.border[2];
         if constraints.specified.is_none()
             && let Some(ratio) =
                 crate::layout::ratio::PreferredRatio::of(style, None, [edges, vertical_edges])
@@ -804,11 +896,7 @@ impl<'a> TablePlan<'a> {
             constraints.specified = Some(constraints.constrain(ratio.width(height)));
         }
         let contributions = self.contributions(measurer, width)?;
-        let [horizontal, vertical] = if collapsed {
-            [0.0; 2]
-        } else {
-            style.table.spacing
-        };
+        let [horizontal, _] = self.spacing();
         let mut sizes = data.grid.column_widths(&WidthInput {
             cells: &contributions.cells,
             columns: &self.columns,
@@ -843,19 +931,6 @@ impl<'a> TablePlan<'a> {
         } else {
             None
         };
-        let geometry = positioned.map_or_else(
-            || place(style, x, width, rtl, Some(sizes.table), table_edges),
-            |geometry| geometry::HorizontalBox {
-                width: sizes.table,
-                ..geometry.clone()
-            },
-        );
-        if !geometry.x.is_finite() || !geometry.width.is_finite() {
-            return Err(LayoutError::NonFiniteBlockGeometry {
-                block: std::ptr::from_ref(self.source),
-            }
-            .into());
-        }
         let mut starts = Vec::with_capacity(data.grid.columns);
         let mut cursor = horizontal;
         for (&column_width, &collapsed) in sizes.widths.iter().zip(data.collapsed_columns.iter()) {
@@ -864,15 +939,10 @@ impl<'a> TablePlan<'a> {
                 cursor += column_width + horizontal;
             }
         }
-        Ok(TableGeometry {
-            containing_height: self.containing_height,
-            geometry,
-            edges: table_edges,
+        Ok(ResolvedColumns {
             sizes,
             original_sizes,
-            collapsed_columns: data.collapsed_columns.clone(),
             starts,
-            spacing: [horizontal, vertical],
         })
     }
     pub(crate) fn has_collapsed_rows(&self) -> bool {
@@ -1463,7 +1533,11 @@ impl<'a> TablePlan<'a> {
         let cell = &self.data.grid.cells[index];
         let style = self.data.cells[index].style();
         let border = self.data.cell_borders(index);
-        let original = resolved.original_sizes.as_ref().unwrap_or(&resolved.sizes);
+        let original = resolved
+            .resolved
+            .original_sizes
+            .as_ref()
+            .unwrap_or(&resolved.resolved.sizes);
         let padding = style
             .padding
             .each_ref()
@@ -1672,7 +1746,7 @@ fn assemble_plan<'a>(
     let collapsed = data.collapsed.is_some();
     let geometry = resolved.geometry.clone();
     let table_edges = resolved.edges;
-    let sizes = &resolved.sizes;
+    let sizes = resolved.sizes();
     let vertical = resolved.spacing[1];
     let columns = resolved.columns(style.used_rtl());
     let PlanCells {
