@@ -265,7 +265,12 @@ class FontGeometry(unittest.TestCase):
                        '<text x="0" y="30" font-family="ChartVariable" font-size="20pt" '
                        f'font-weight="900" font-optical-sizing="none" {explicit}>H</text></svg>')
                 interpreted = self.render(css, f'<img src="data:image/svg+xml,{quote(svg)}">')
-                self.assertEqual([glyph.text for glyph in interpreted.glyphs], ["H"])
+                # CSS Fonts 4 §5.2: a family whose weights end at 500 lacks bold, so 900 is
+                # emboldened by a second copy of the same clamped instance.
+                self.assertEqual([glyph.text for glyph in interpreted.glyphs], ["H", "H"],
+                                 "synthetic bold draws the glyph twice")
+                self.assertEqual(interpreted.glyphs[0].font, interpreted.glyphs[1].font,
+                                 "both synthetic bold copies use the same variable instance")
                 with TTFont(source) as original:
                     glyphs = original.getGlyphSet(location={"wght": expected_weight})
                     expected = glyphs[original.getBestCmap()[ord("H")]]
