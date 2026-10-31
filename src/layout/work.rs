@@ -658,6 +658,36 @@ mod tests {
     }
 
     #[test]
+    fn floats_across_fragmentainers_measure_their_content_once_per_containing_block() {
+        const LINES: usize = 48;
+        let resolver = FileResolver::default();
+        let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        // A shrink-to-fit float one line per page tall resolves its width on each page; pages
+        // of one containing block reuse the width, so the content is not measured per page.
+        let work = |lines: usize| {
+            let content = (0..lines)
+                .map(|index| format!("<div>line {index}</div>"))
+                .collect::<String>();
+            let document = StyledDocument::parse(
+                &format!("<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}@page{{size:200pt 10pt;margin:0}}html,body{{margin:0;font:10pt/10pt Fixed}}</style><div style=\"float:left\">{content}</div>"),
+                &base, &[], &resolver,
+            )
+            .unwrap();
+            required_work(&document, &resolver)
+        };
+        let (single, doubled) = (work(LINES), work(2 * LINES));
+        assert!(
+            doubled < 3 * single,
+            "doubling the lines doubles the pages and the content, so measuring the content on \
+             each page would quadruple the charged work: {LINES} lines need {single} units, {} \
+             need {doubled}",
+            2 * LINES
+        );
+    }
+
+    #[test]
     fn table_rows_progress_past_repeated_edges_that_fill_their_fragmentainers() {
         const LIMIT: usize = 65_536;
         let resolver = FileResolver::default();

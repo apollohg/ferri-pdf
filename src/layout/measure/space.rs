@@ -3,7 +3,7 @@ use super::BlockSource;
 use crate::layout::geometry::{HorizontalBox, VerticalBox};
 use crate::style::{SizeConstraints, logical::Flow};
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub(in crate::layout) struct FlowSpace {
     initial: [f32; 2],
     containing: [Option<f32>; 2],

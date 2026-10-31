@@ -730,8 +730,60 @@ struct ActiveGeometry<'a> {
     spanner_fragment: Option<crate::layout::multicol::SpannerFragment>,
     /// The fragmentainer and flow position of the content box's block-start edge.
     content_top: (usize, f32),
+    /// The horizontal geometry the box last resolved, which fragmentainers with the same
+    /// inputs reuse rather than measuring the box's content again.
+    resolved: Option<Rc<ResolvedHorizontal>>,
+}
+/// What a box's horizontal geometry resolves from: its containing block's left edge, width,
+/// direction and height, and the measurer's fragmentainer height, available space, space
+/// beside floats and container-sized item.
+#[derive(PartialEq)]
+struct HorizontalInputs {
+    containing: (f32, f32, bool, Option<f32>),
+    page_height: f32,
+    space: crate::layout::measure::FlowSpace,
+    float_space: Option<(*const BlockBox, [f32; 2])>,
+    sized_item: Option<*const BlockBox>,
+}
+struct ResolvedHorizontal {
+    inputs: HorizontalInputs,
+    geometry: crate::layout::geometry::HorizontalBox,
 }
 impl ActiveGeometry<'_> {
+    /// The box's horizontal geometry in `containing`, which `resolve` measures unless the box
+    /// last resolved it from the same inputs.
+    fn resolve_horizontal<'t>(
+        &mut self,
+        measurer: &mut Measurer<'t>,
+        containing: (f32, f32, bool, Option<f32>),
+        resolve: impl FnMut(
+            &mut Measurer<'t>,
+        ) -> Result<
+            crate::layout::geometry::HorizontalBox,
+            crate::layout::measure::Failure,
+        >,
+    ) -> Result<crate::layout::geometry::HorizontalBox, LayoutError> {
+        let inputs = HorizontalInputs {
+            containing,
+            page_height: measurer.page_height,
+            space: measurer.space,
+            float_space: measurer.float_space,
+            sized_item: measurer.sized_item,
+        };
+        if let Some(resolved) = self
+            .resolved
+            .as_ref()
+            .filter(|resolved| resolved.inputs == inputs)
+        {
+            return Ok(resolved.geometry.clone());
+        }
+        let geometry = measurer.run(resolve)?;
+        self.resolved = Some(Rc::new(ResolvedHorizontal {
+            inputs,
+            geometry: geometry.clone(),
+        }));
+        Ok(geometry)
+    }
     fn definite_height(&self) -> Option<f32> {
         if self.table_wrapper {
             None
@@ -1865,30 +1917,34 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 flow.horizontal = item.geometry;
                 flow.containing_height = Some(height);
             } else if style.floating().is_some() && flow.source.image().is_none() {
-                flow.horizontal = self.measurer.run(|measurer| {
-                    crate::layout::inline::shrink_to_fit_geometry(
-                        measurer,
-                        flow.source,
-                        containing.1,
-                        containing.3,
-                        containing.2,
-                    )
-                })?;
+                let source = flow.source;
+                flow.horizontal =
+                    flow.resolve_horizontal(self.measurer, containing, |measurer| {
+                        crate::layout::inline::shrink_to_fit_geometry(
+                            measurer,
+                            source,
+                            containing.1,
+                            containing.3,
+                            containing.2,
+                        )
+                    })?;
                 flow.horizontal.containing_x = containing.0;
                 flow.containing_height = containing.3;
                 self.reflow_float_geometry(page, &mut flow)?;
             } else if flow.normal {
                 let collapsed = flow.horizontal.stretch_margins.map(|margin| margin == 0.0);
-                flow.horizontal = self.measurer.run(|measurer| {
-                    crate::layout::measure::block_geometry(
-                        measurer,
-                        flow.source,
-                        containing.0,
-                        containing.1,
-                        containing.2,
-                        containing.3,
-                    )
-                })?;
+                let source = flow.source;
+                flow.horizontal =
+                    flow.resolve_horizontal(self.measurer, containing, |measurer| {
+                        crate::layout::measure::block_geometry(
+                            measurer,
+                            source,
+                            containing.0,
+                            containing.1,
+                            containing.2,
+                            containing.3,
+                        )
+                    })?;
                 for (margin, collapsed) in flow.horizontal.stretch_margins.iter_mut().zip(collapsed)
                 {
                     if collapsed {
@@ -2909,6 +2965,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 constrained: block.constrained,
                 spanner_fragment: block.spanner_fragment,
                 content_top: (start_page, start_y + block.start_space),
+                resolved: None,
             }),
             page_scope: crate::document::PageBoundary::applies(&block.style.display)
                 .then(|| block.source.page_boundary().used.clone()),
