@@ -669,13 +669,13 @@ dependencies = [
 
 [[package]]
 name = "ferri-pdf-avif-decode"
-version = "3.0.0"
+version = "3.0.1"
 dependencies = [
  "bytemuck",
+ "ferri-pdf-rav1d",
  "imgref",
  "log",
  "quick-error",
- "rav1d",
  "rgb",
  "yuv",
 ]
@@ -727,6 +727,25 @@ dependencies = [
  "xmp-writer",
  "yoke",
  "zune-jpeg",
+]
+
+[[package]]
+name = "ferri-pdf-rav1d"
+version = "1.1.1"
+dependencies = [
+ "assert_matches",
+ "atomig",
+ "bitflags",
+ "cc",
+ "cfg-if",
+ "libc",
+ "nasm-rs",
+ "parking_lot",
+ "paste",
+ "raw-cpuid",
+ "strum",
+ "to_method",
+ "zerocopy 0.7.35",
 ]
 
 [[package]]
@@ -1847,27 +1866,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
 dependencies = [
  "getrandom 0.2.17",
-]
-
-[[package]]
-name = "rav1d"
-version = "1.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1932f060d5e7bd49dc9f8b272c1dc5e9ce0ffe141c28be900265d3989b36c9ed"
-dependencies = [
- "assert_matches",
- "atomig",
- "bitflags",
- "cc",
- "cfg-if",
- "libc",
- "nasm-rs",
- "parking_lot",
- "paste",
- "raw-cpuid",
- "strum",
- "to_method",
- "zerocopy 0.7.35",
 ]
 
 [[package]]

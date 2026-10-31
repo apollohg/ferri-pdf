@@ -13,7 +13,7 @@
 edition = "2024"
 rust-version = "1.97"
 name = "ferri-pdf-avif-decode"
-version = "3.0.0"
+version = "3.0.1"
 authors = ["Kornel <kornel@geekhood.net>"]
 build = false
 autolib = false
@@ -65,7 +65,9 @@ default-features = false
 version = "0.8.19"
 
 [dependencies.rav1d]
-version = "=1.1.0"
+version = "=1.1.1"
+path = "../rav1d"
+package = "ferri-pdf-rav1d"
 default-features = false
 features = ["bitdepth_8", "bitdepth_16"]
 
@@ -73,7 +75,7 @@ features = ["bitdepth_8", "bitdepth_16"]
 opt-level = 1
 debug = "line-tables-only"
 
-[profile.dev.package.rav1d]
+[profile.dev.package.ferri-pdf-rav1d]
 opt-level = 2
 debug-assertions = false
 

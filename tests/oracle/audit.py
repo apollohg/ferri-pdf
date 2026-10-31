@@ -18,7 +18,7 @@ RUST_LINK_GUARDS = {
 }
 # rav1d's build script, and its cc and nasm-rs build tools, are inert when only Rust bit-depth features are enabled.
 RUST_ONLY_BUILD_FEATURES = {
-    ("rav1d", "1.1.0"): ("a7b17c3c9498d98835197a9654b1fe1f41f745e62e9fc9bf2fd27f7840a68c58", {"bitdepth_8", "bitdepth_16"}),
+    ("ferri-pdf-rav1d", "1.1.1"): ("a7b17c3c9498d98835197a9654b1fe1f41f745e62e9fc9bf2fd27f7840a68c58", {"bitdepth_8", "bitdepth_16"}),
 }
 NATIVE_BUILD_MARKERS = ("cc::Build", "cmake::", "pkg_config::", "vcpkg::")
 

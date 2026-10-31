@@ -42,6 +42,9 @@ jobs:
           manifest-path: vendor/zenavif-parse/Cargo.toml
       - uses: ./.github/actions/publish-crate
         with:
+          manifest-path: vendor/rav1d/Cargo.toml
+      - uses: ./.github/actions/publish-crate
+        with:
           manifest-path: vendor/avif-decode/Cargo.toml
       - uses: ./.github/actions/publish-crate
         with:
