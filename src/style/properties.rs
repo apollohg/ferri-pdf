@@ -1280,6 +1280,7 @@ fn handler(property: Property) -> Option<Handler> {
                 crate::style::generated::ComputedContent::from_component(
                     v,
                     crate::style::generated::ContentContext::BeforeAfter,
+                    &crate::style::generated::INITIAL_CONTENT,
                     &validation_scope(r),
                     &crate::style::generated::ImageBasis {
                         relative: r,
@@ -3579,7 +3580,7 @@ border_radius!(border_bottom_left_radius, 3);
 /// their own content, which `normal` and `none` describe.
 fn content(
     style: &mut Style,
-    _: &Style,
+    parent: &Style,
     input: Input<'_>,
     relative: &Relative<'_>,
 ) -> Result<(), StyleError> {
@@ -3588,6 +3589,7 @@ fn content(
             let content = crate::style::generated::ComputedContent::from_component(
                 value,
                 style.content_context,
+                &parent.computed_content,
                 &element_scope(relative, style),
                 &crate::style::generated::ImageBasis {
                     relative,

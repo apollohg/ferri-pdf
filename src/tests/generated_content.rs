@@ -167,3 +167,41 @@ fn repeated_attribute_expansion_is_bounded_before_inline_collection() {
         "the bounded content is invalid at computed-value time, so ::before generates nothing"
     );
 }
+
+/// CSS Content 3 §2.3: an element's descendants are placed once. `content: contents` keeps
+/// an element's own; where its element placed them, a pseudo-element's `contents` is nothing
+/// and a list of only `contents` is `none`; a bookmark label's `contents` is the element's
+/// text (§2.7.1).
+#[test]
+fn contents_places_descendants_once_and_labels_bookmarks_with_their_text() {
+    let html = format!(
+        "<style>{PROFILE}p{{margin:0}}.own{{content:contents}}.none::before{{content:contents}}\
+         .list::before{{content:'[' contents ']'}}li::marker{{content:contents}}\
+         h1{{bookmark-level:1;bookmark-label:'Chapter: ' contents}}</style>\
+         <h1>Heading <em>one</em></h1><p class=own>Own</p><p class=none>None</p>\
+         <p class=list>List</p><ol><li>Item</li></ol>"
+    );
+    let output = render_html(&html, &local_options()).unwrap();
+    assert!(
+        output.diagnostics.is_empty(),
+        "every `contents` here is honoured: {:?}",
+        output.diagnostics
+    );
+    assert_eq!(
+        output.layout.unwrap().pages[0]
+            .iter()
+            .map(|line| line.text.as_str())
+            .collect::<Vec<_>>(),
+        ["Heading one", "Own", "None", "[]List", "Item"],
+        "descendants stay in their element; pseudo-elements' `contents` adds nothing"
+    );
+    let resolver = crate::resources::FileResolver::default();
+    let document =
+        crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
+            .unwrap();
+    let (document, _) = crate::layout::layout_document(document, &resolver).unwrap();
+    assert_eq!(
+        document.navigation().bookmarks[0].label,
+        "Chapter: Heading one"
+    );
+}

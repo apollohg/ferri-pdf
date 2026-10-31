@@ -134,9 +134,12 @@ impl ComputedContent {
             _ => true,
         }
     }
+    /// `content` computed in `context`; a pseudo-element's `originating` element's own
+    /// computed `content` decides whether its `contents` is still unused.
     pub(super) fn from_component(
         value: &Component,
         context: ContentContext,
+        originating: &Self,
         scope: &Scope<'_>,
         images: &ImageBasis<'_, '_>,
     ) -> Result<std::sync::Arc<Self>, StyleError> {
@@ -165,15 +168,57 @@ impl ComputedContent {
                 return Ok(INITIAL_CONTENT.clone());
             }
             Some(Keyword::Normal | Keyword::None) => Self::None,
-            _ => Self::Items {
-                content: GeneratedContent::from_component(value, scope, Some(images))?
-                    .ok_or_else(|| unsupported(value))?,
-                alternative: alternative(value)
-                    .map(|value| GeneratedContent::from_list(&value, scope, Some(images)))
-                    .transpose()?,
-            },
+            _ => {
+                if let Some(placed) = Self::contents(value, context, originating)? {
+                    return Ok(placed);
+                }
+                Self::Items {
+                    content: GeneratedContent::from_component(value, scope, Some(images))?
+                        .ok_or_else(|| unsupported(value))?,
+                    alternative: alternative(value)
+                        .map(|value| GeneratedContent::from_list(&value, scope, Some(images)))
+                        .transpose()?,
+                }
+            }
         };
         Ok(std::sync::Arc::new(value))
+    }
+    /// CSS Content 3 §2.3: an element's descendants are placed once, by the element itself
+    /// unless its content list replaces them, else by its first pseudo-element naming
+    /// `contents`. Where they are already placed, or in page-margin boxes, which have none,
+    /// `contents` is nothing, and a list of nothing else is `none`.
+    fn contents(
+        value: &Component,
+        context: ContentContext,
+        originating: &Self,
+    ) -> Result<Option<std::sync::Arc<Self>>, StyleError> {
+        let Some(list) = value.find(Label::Production(Production::ContentList)) else {
+            return Ok(None);
+        };
+        let items = list.items();
+        let named = items
+            .iter()
+            .filter(|item| item.keyword() == Some(Keyword::Contents))
+            .count();
+        if named == 0 {
+            return Ok(None);
+        }
+        let only = named == items.len();
+        let placed = !matches!(originating, Self::Items { .. });
+        match context {
+            ContentContext::Element | ContentContext::Margin if only => {
+                Ok(Some(INITIAL_CONTENT.clone()))
+            }
+            // The engine places descendants only as an element's whole contents.
+            ContentContext::Element => Err(unsupported(value)),
+            ContentContext::BeforeAfter | ContentContext::Marker if !placed => {
+                Err(unsupported(value))
+            }
+            ContentContext::BeforeAfter | ContentContext::Marker if only => {
+                Ok(Some(std::sync::Arc::new(Self::None)))
+            }
+            _ => Ok(None),
+        }
     }
     /// The content list replacing an element's or pseudo-element's contents, if any.
     pub(crate) fn items(&self) -> Option<&GeneratedContent> {
@@ -358,7 +403,15 @@ impl GeneratedContent {
         let list = value
             .find(Label::Production(Production::ContentList))
             .ok_or_else(|| unsupported(value))?;
-        Self::from_list(list, scope, images).map(Some)
+        // `content`'s `contents` places descendants as boxes, which `ComputedContent` decides.
+        Self::from_items(
+            list.items()
+                .iter()
+                .filter(|item| item.keyword() != Some(Keyword::Contents)),
+            scope,
+            images,
+        )
+        .map(Some)
     }
     /// A content list, such as `bookmark-label`'s (CSS GCPM 3 §1.1); `images` computes its
     /// `<image>` values where the grammar allows them.
@@ -367,8 +420,14 @@ impl GeneratedContent {
         scope: &Scope<'_>,
         images: Option<&ImageBasis<'_, '_>>,
     ) -> Result<Self, StyleError> {
-        list.items()
-            .iter()
+        Self::from_items(list.items().iter(), scope, images)
+    }
+    fn from_items<'c>(
+        items: impl Iterator<Item = &'c Component>,
+        scope: &Scope<'_>,
+        images: Option<&ImageBasis<'_, '_>>,
+    ) -> Result<Self, StyleError> {
+        items
             .map(|item| part(item, scope, images))
             .collect::<Result<_, _>>()
             .map(Self::new)
@@ -763,6 +822,9 @@ fn part(
         Component::Keyword(Keyword::CloseQuote) => Ok(GeneratedPart::Quote(QuoteAction::Close)),
         Component::Keyword(Keyword::NoOpenQuote) => Ok(GeneratedPart::Quote(QuoteAction::NoOpen)),
         Component::Keyword(Keyword::NoCloseQuote) => Ok(GeneratedPart::Quote(QuoteAction::NoClose)),
+        // Where content is text, such as a bookmark label, the element's descendants are its
+        // textual contents (CSS Content 3 §2.7.1).
+        Component::Keyword(Keyword::Contents) => Ok(GeneratedPart::Element(ElementContent::Text)),
         Component::String(text) => Ok(GeneratedPart::Text(text.to_string())),
         Component::Function(Keyword::Leader, Some(arguments)) => {
             let pattern = match arguments.unwrap() {
