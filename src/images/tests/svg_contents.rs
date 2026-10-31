@@ -1728,6 +1728,23 @@ fn nested_fill_box_transforms_measure_each_element_once() {
 }
 
 #[test]
+fn the_clip_paths_of_many_markers_are_collected_in_linear_time() {
+    // Each marker clips to its viewport: comparing each clip path with every one collected
+    // before takes time quadratic in the markers, minutes for this many.
+    const MARKERS: usize = 200_000;
+    const BOUND: std::time::Duration = std::time::Duration::from_secs(30);
+    let vertices: String = (0..=MARKERS).map(|x| format!(" L{x} {}", x % 2)).collect();
+    let body = format!(
+        "<defs><marker id='m' markerWidth='2' markerHeight='2'><rect width='1' height='1'/>\
+         </marker></defs><path d='M0 0{vertices}' stroke='black' marker-mid='url(#m)'/>"
+    );
+    let clip_paths = within(&format!("{MARKERS} markers"), BOUND, move || {
+        tree(&body).clip_paths().len()
+    });
+    assert_eq!(clip_paths, MARKERS, "one clip path per marker drawn");
+}
+
+#[test]
 fn a_chain_of_use_elements_in_definitions_expands_only_where_it_renders() {
     // Expanding every `use` element of the chain, with the nested instances, takes nodes
     // quadratic in its length: past the tree's node budget at this length, which would omit

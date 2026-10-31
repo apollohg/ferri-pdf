@@ -5,6 +5,7 @@ pub(crate) mod filter;
 mod geom;
 mod text;
 
+use std::collections::HashSet;
 use std::fmt::Display;
 use std::sync::Arc;
 
@@ -1948,38 +1949,36 @@ impl Tree {
     }
 
     pub(crate) fn collect_paint_servers(&mut self) {
-        loop_over_paint_servers(&self.root, &mut |paint| match paint {
-            Paint::Color(_) => {}
-            Paint::LinearGradient(lg) => {
-                if !self
-                    .linear_gradients
-                    .iter()
-                    .any(|other| Arc::ptr_eq(lg, other))
-                {
-                    self.linear_gradients.push(lg.clone());
-                }
-            }
-            Paint::RadialGradient(rg) => {
-                if !self
-                    .radial_gradients
-                    .iter()
-                    .any(|other| Arc::ptr_eq(rg, other))
-                {
-                    self.radial_gradients.push(rg.clone());
-                }
-            }
-            Paint::SweepGradient(sg) => {
-                if !self
-                    .sweep_gradients
-                    .iter()
-                    .any(|other| Arc::ptr_eq(sg, other))
-                {
-                    self.sweep_gradients.push(sg.clone());
-                }
-            }
-            Paint::Pattern(patt) => {
-                if !self.patterns.iter().any(|other| Arc::ptr_eq(patt, other)) {
-                    self.patterns.push(patt.clone());
+        let mut seen = HashSet::new();
+        for_each_node(&self.root, &mut HashSet::new(), &mut |node| {
+            let Node::Path(path) = node else {
+                return;
+            };
+            let fill = path.fill.as_ref().map(|fill| &fill.paint);
+            let stroke = path.stroke.as_ref().map(|stroke| &stroke.paint);
+            for paint in fill.into_iter().chain(stroke) {
+                match paint {
+                    Paint::Color(_) => {}
+                    Paint::LinearGradient(lg) => {
+                        if seen.insert(Arc::as_ptr(lg).cast::<()>()) {
+                            self.linear_gradients.push(lg.clone());
+                        }
+                    }
+                    Paint::RadialGradient(rg) => {
+                        if seen.insert(Arc::as_ptr(rg).cast::<()>()) {
+                            self.radial_gradients.push(rg.clone());
+                        }
+                    }
+                    Paint::SweepGradient(sg) => {
+                        if seen.insert(Arc::as_ptr(sg).cast::<()>()) {
+                            self.sweep_gradients.push(sg.clone());
+                        }
+                    }
+                    Paint::Pattern(patt) => {
+                        if seen.insert(Arc::as_ptr(patt).cast::<()>()) {
+                            self.patterns.push(patt.clone());
+                        }
+                    }
                 }
             }
         });
@@ -2028,94 +2027,69 @@ fn has_text_nodes(root: &Group) -> bool {
     false
 }
 
-fn loop_over_paint_servers(parent: &Group, f: &mut dyn FnMut(&Paint)) {
-    fn push(paint: Option<&Paint>, f: &mut dyn FnMut(&Paint)) {
-        if let Some(paint) = paint {
-            f(paint);
+/// Calls `f` with each node of `group` and of the resources its nodes reference, entering each
+/// resource once however many nodes share it.
+fn for_each_node(group: &Group, entered: &mut HashSet<*const Group>, f: &mut dyn FnMut(&Node)) {
+    for node in &group.children {
+        f(node);
+        node.subroots(|subroot| {
+            if entered.insert(std::ptr::from_ref(subroot)) {
+                for_each_node(subroot, entered, f);
+            }
+        });
+        if let Node::Group(child) = node {
+            for_each_node(child, entered, f);
         }
     }
+}
 
-    for node in &parent.children {
-        match node {
-            Node::Group(group) => loop_over_paint_servers(group, f),
-            Node::Path(path) => {
-                push(path.fill.as_ref().map(|f| &f.paint), f);
-                push(path.stroke.as_ref().map(|f| &f.paint), f);
-            }
-            Node::Image(_) => {}
-            // Flattened text would be used instead.
-            Node::Text(_) => {}
+/// Adds each of `resources` to `collected` that `seen` has not.
+fn collect_once<'r, T: 'r>(
+    resources: impl IntoIterator<Item = &'r Arc<T>>,
+    seen: &mut HashSet<*const T>,
+    collected: &mut Vec<Arc<T>>,
+) {
+    for resource in resources {
+        if seen.insert(Arc::as_ptr(resource)) {
+            collected.push(resource.clone());
         }
-
-        node.subroots(|subroot| loop_over_paint_servers(subroot, f));
     }
 }
 
 impl Group {
     pub(crate) fn collect_clip_paths(&self, clip_paths: &mut Vec<Arc<ClipPath>>) {
-        for node in self.children() {
-            if let Node::Group(g) = node {
-                if let Some(clip) = &g.clip_path {
-                    if !clip_paths.iter().any(|other| Arc::ptr_eq(clip, other)) {
-                        clip_paths.push(clip.clone());
-                    }
-
-                    if let Some(sub_clip) = &clip.clip_path {
-                        if !clip_paths.iter().any(|other| Arc::ptr_eq(sub_clip, other)) {
-                            clip_paths.push(sub_clip.clone());
-                        }
-                    }
-                }
+        let mut seen = HashSet::new();
+        for_each_node(self, &mut HashSet::new(), &mut |node| {
+            if let Node::Group(group) = node
+                && let Some(clip) = &group.clip_path
+            {
+                collect_once(
+                    std::iter::once(clip).chain(&clip.clip_path),
+                    &mut seen,
+                    clip_paths,
+                );
             }
-
-            node.subroots(|subroot| subroot.collect_clip_paths(clip_paths));
-
-            if let Node::Group(g) = node {
-                g.collect_clip_paths(clip_paths);
-            }
-        }
+        });
     }
 
     pub(crate) fn collect_masks(&self, masks: &mut Vec<Arc<Mask>>) {
-        for node in self.children() {
-            if let Node::Group(g) = node {
-                if let Some(mask) = &g.mask {
-                    if !masks.iter().any(|other| Arc::ptr_eq(mask, other)) {
-                        masks.push(mask.clone());
-                    }
-
-                    if let Some(sub_mask) = &mask.mask {
-                        if !masks.iter().any(|other| Arc::ptr_eq(sub_mask, other)) {
-                            masks.push(sub_mask.clone());
-                        }
-                    }
-                }
+        let mut seen = HashSet::new();
+        for_each_node(self, &mut HashSet::new(), &mut |node| {
+            if let Node::Group(group) = node
+                && let Some(mask) = &group.mask
+            {
+                collect_once(std::iter::once(mask).chain(&mask.mask), &mut seen, masks);
             }
-
-            node.subroots(|subroot| subroot.collect_masks(masks));
-
-            if let Node::Group(g) = node {
-                g.collect_masks(masks);
-            }
-        }
+        });
     }
 
     pub(crate) fn collect_filters(&self, filters: &mut Vec<Arc<filter::Filter>>) {
-        for node in self.children() {
-            if let Node::Group(g) = node {
-                for filter in g.filters() {
-                    if !filters.iter().any(|other| Arc::ptr_eq(filter, other)) {
-                        filters.push(filter.clone());
-                    }
-                }
+        let mut seen = HashSet::new();
+        for_each_node(self, &mut HashSet::new(), &mut |node| {
+            if let Node::Group(group) = node {
+                collect_once(group.filters(), &mut seen, filters);
             }
-
-            node.subroots(|subroot| subroot.collect_filters(filters));
-
-            if let Node::Group(g) = node {
-                g.collect_filters(filters);
-            }
-        }
+        });
     }
 
     pub(crate) fn calculate_object_bbox(&mut self) -> Option<NonZeroRect> {
