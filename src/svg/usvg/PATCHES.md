@@ -76,7 +76,8 @@ direct graphics children composite in linear light (SVG 2 §13.9): an element wh
 differs from its parent's gets its own group, and text spans carry theirs into the flattened
 outlines. Clipping path children keep neither. The outermost `svg`, `use` elements, markers and
 clipped nested viewports, which SVG 2 §3.4.1 makes stacking contexts, are isolated where content
-in them blends or composites in linear light.
+in them blends or composites in linear light. Each is decided once, innermost first, from the
+content outside the stacking contexts nested in it.
 
 Text content elements the document styles name their computed style, in the options'
 `styling`, through `ferri-pdf-text-style`. A standalone document's elements compute theirs as

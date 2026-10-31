@@ -1803,6 +1803,42 @@ fn a_chain_of_use_elements_in_definitions_expands_only_where_it_renders() {
 }
 
 #[test]
+fn nested_use_elements_isolate_their_stacking_contexts_in_one_pass() {
+    // Walking the whole instance of each `use` element for content that blends takes work
+    // quadratic in the depth of nested instances.
+    const CHAIN: usize = 50;
+    let body = |length: usize| {
+        let uses: String = (1..=length)
+            .map(|index| format!("<use id='u{index}' href='#u{}'/>", index - 1))
+            .collect();
+        format!(
+            "<defs><rect id='u0' width='10' height='10' style='mix-blend-mode:multiply'/>\
+             {uses}</defs><use href='#u{length}'/>"
+        )
+    };
+    work::assert_linear("nested use elements", CHAIN, |length| {
+        work::measured(Work::Visit, || tree(&body(length))).1
+    });
+    let tree = tree(&body(CHAIN));
+    let isolated: Vec<_> = groups(&tree)
+        .into_iter()
+        .filter(|group| group.isolate())
+        .collect();
+    let blends = |group: &crate::svg::usvg::Group| {
+        group.children().iter().any(|node| {
+            matches!(node, crate::svg::usvg::Node::Group(child)
+                if child.blend_mode() == crate::svg::usvg::BlendMode::Multiply)
+        })
+    };
+    assert!(
+        matches!(isolated.as_slice(), [group] if blends(group)),
+        "SVG 2 §3.4.1: only the instance holding the multiplied square isolates, its blending \
+         confined to that stacking context, got {} isolated groups",
+        isolated.len()
+    );
+}
+
+#[test]
 fn overflowing_pattern_tiles_past_the_budget_are_never_listed() {
     // Listing the copies along each axis before checking their product against the budget
     // takes work proportional to the overflow: about 2e10 copies of the last tile.

@@ -147,7 +147,6 @@ fn convert_instance(
             g.calculate_bounding_boxes();
             g.clip_path = converter::viewport_clip(cache, clip_rect, axes, g.layer_bounding_box);
             g.isolate_stacking_context();
-            g.isolate_stacking_context();
             parent.children.push(Node::Group(Box::new(g)));
             return;
         }

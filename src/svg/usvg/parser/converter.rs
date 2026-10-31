@@ -1271,6 +1271,7 @@ fn open_group(
         opacity,
         blend_mode,
         isolate,
+        stacking_context: false,
         linear_light,
         clip_path: None,
         mask: None,

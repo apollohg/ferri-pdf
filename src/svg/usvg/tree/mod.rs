@@ -1161,6 +1161,9 @@ pub struct Group {
     pub(crate) opacity: Opacity,
     pub(crate) blend_mode: BlendMode,
     pub(crate) isolate: bool,
+    /// The group roots a stacking context, which `isolate_stacking_context` isolated where
+    /// content in it blends.
+    pub(crate) stacking_context: bool,
     /// `color-interpolation: linearRGB` (SVG 2 §13.9): the group's layer and its direct
     /// graphics children composite into their backdrop in linear light.
     pub(crate) linear_light: bool,
@@ -1193,6 +1196,7 @@ impl Group {
             opacity: Opacity::ONE,
             blend_mode: BlendMode::Normal,
             isolate: false,
+            stacking_context: false,
             linear_light: false,
             clip_path: None,
             mask: None,
@@ -1422,14 +1426,17 @@ impl Group {
 
     /// Isolates the group, which roots a stacking context (SVG 2 §3.4.1, Compositing 1 §3.2),
     /// where isolation changes what it renders: where content in it blends or composites in
-    /// linear light with what is painted below it.
+    /// linear light with what is painted below it. The content of the stacking contexts
+    /// inside it, isolated before it where their content blends, does not reach it.
     pub(crate) fn isolate_stacking_context(&mut self) {
         fn blends(group: &Group) -> bool {
+            crate::work::count(crate::work::Work::Visit, group.children.len());
             group.children.iter().any(|node| match node {
                 Node::Group(child) => {
                     child.blend_mode != BlendMode::Normal
                         || child.linear_light
                         || (!child.isolate
+                            && !child.stacking_context
                             && child.opacity == Opacity::ONE
                             && child.mask.is_none()
                             && child.layer_mask.is_none()
@@ -1440,6 +1447,7 @@ impl Group {
             })
         }
         self.isolate |= self.linear_light || blends(self);
+        self.stacking_context = true;
     }
 
     /// Returns `true` if the group has any children.
