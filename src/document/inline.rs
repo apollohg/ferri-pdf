@@ -740,8 +740,10 @@ impl Paragraph {
     }
     /// The first span ending after `offset`.
     fn following_span(&self, offset: usize) -> Option<&TextSpan> {
-        self.spans
-            .get(self.spans.partition_point(|span| span.range.end <= offset))
+        self.spans.get(self.spans.partition_point(|span| {
+            crate::work::count(crate::work::Work::SpanProbe, 1);
+            span.range.end <= offset
+        }))
     }
 }
 

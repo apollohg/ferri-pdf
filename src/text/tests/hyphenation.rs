@@ -1,7 +1,9 @@
 //! CSS Text 4 §6.3 automatic hyphenation opportunities.
 use super::{paragraph, segments};
 use crate::style::{HyphenateLimitChars, Hyphens, Style, WordBreak};
-use crate::text::hyphenation::automatic;
+use crate::text::hyphenation::{SOFT_HYPHEN, automatic};
+use crate::work::{self, Work};
+use unicode_linebreak::BreakOpportunity;
 
 fn style(language: &str) -> Style {
     let mut style = Style::default();
@@ -96,5 +98,50 @@ fn limit_chars_bound_the_word_and_both_sides_of_each_opportunity() {
         hyphenated("paper", &short),
         "paper",
         "three characters must precede the hyphen, and \"pa\" has two"
+    );
+}
+
+#[test]
+fn conditional_hyphens_find_their_spans_by_search() {
+    // Searching the spans from the first for each conditional hyphen's span takes work
+    // quadratic in a paragraph of many short spans; binary searches stay near linear.
+    const SPANS: usize = 2048;
+    const WORD: &str = "ab";
+    let paragraph = |spans: usize| {
+        let hyphenated = format!("{WORD}{SOFT_HYPHEN}");
+        let length = hyphenated.len();
+        let styled = (0..spans).map(|index| {
+            let mut style = Style::default();
+            style.hyphens = if index % 2 == 0 {
+                Hyphens::Manual
+            } else {
+                Hyphens::None
+            };
+            (index * length..(index + 1) * length, style, None)
+        });
+        crate::document::Paragraph::styled(hyphenated.repeat(spans), &Style::default(), [], styled)
+    };
+    let breaks = |spans: usize| {
+        let paragraph = paragraph(spans);
+        work::measured(Work::SpanProbe, || {
+            crate::text::whitespace::opportunities(&paragraph, &[])
+                .into_iter()
+                .filter(|&(_, opportunity)| opportunity == BreakOpportunity::Allowed)
+                .map(|(offset, _)| offset)
+                .collect::<Vec<_>>()
+        })
+    };
+    work::assert_linear("spans with conditional hyphens", SPANS, |spans| {
+        breaks(spans).1
+    });
+    let length = WORD.len() + SOFT_HYPHEN.len_utf8();
+    let expected: Vec<_> = (0..SPANS - 1)
+        .step_by(2)
+        .map(|index| (index + 1) * length)
+        .collect();
+    assert_eq!(
+        breaks(SPANS).0,
+        expected,
+        "CSS Text 4 §6.1: only the conditional hyphens of `hyphens: manual` spans break"
     );
 }

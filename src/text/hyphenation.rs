@@ -120,9 +120,7 @@ pub(super) fn allowed(paragraph: &Paragraph, end: usize) -> bool {
     }
     let offset = end - SOFT_HYPHEN.len_utf8();
     paragraph
-        .spans()
-        .iter()
-        .find(|span| span.range.contains(&offset))
+        .span_at(offset)
         .is_none_or(|span| used(&span.style) != Hyphens::None)
 }
 

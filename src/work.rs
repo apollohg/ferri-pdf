@@ -19,10 +19,12 @@ pub(crate) enum Work {
     OverflowTile,
     /// A parent link followed while counting the inline boxes in each box's subtree.
     BoxAncestor,
+    /// A text span a search for the span at an offset of a paragraph compares.
+    SpanProbe,
 }
 
 #[cfg(test)]
-const KINDS: usize = 8;
+const KINDS: usize = 9;
 
 #[cfg(test)]
 thread_local! {
