@@ -19,20 +19,7 @@ pub(super) fn content<'a>(
         return crate::layout::tables::intrinsic_content(inner, measurer, available);
     }
     if block.flow().is_some() {
-        let mut probe = measurer.clone();
-        let geometry = crate::layout::geometry::horizontal_with_edges(
-            block.style(),
-            0.0,
-            available,
-            false,
-            None,
-            measurer.box_edges(block, available)?,
-        );
-        let measured = probe.frame(block, &geometry, None, None)?;
-        return Ok(IntrinsicWidths {
-            min: measured.geometry.width,
-            max: measured.geometry.width,
-        });
+        return orthogonal_flow(block, measurer, available);
     }
     if block.image().is_some() {
         return Ok(crate::layout::images::intrinsic(block, available));
@@ -43,26 +30,7 @@ pub(super) fn content<'a>(
             crate::style::Display::BlockMath | crate::style::Display::InlineMath
         )
     {
-        let mut probe = measurer.clone();
-        let geometry = crate::layout::geometry::horizontal(
-            block.style(),
-            0.0,
-            available,
-            block.style().used_rtl(),
-            Some(available),
-        );
-        let measured = probe.request(
-            block,
-            &geometry,
-            None,
-            None,
-            crate::layout::measure::frames::RequestKind::Math(Default::default()),
-        )?;
-        return Ok(measured
-            .math
-            .as_ref()
-            .expect("native math retains its intrinsic metrics")
-            .intrinsic);
+        return math(block, measurer, available);
     }
     let style = block.style();
     if style.display.is_table() {
@@ -100,6 +68,59 @@ pub(super) fn content<'a>(
     })
 }
 
+/// The width of a flow whose writing mode differs from its container's: its laid-out width.
+// Out of `content`, which nested content recurses through, so that its frame stays small.
+#[inline(never)]
+fn orthogonal_flow<'a>(
+    block: BlockSource<'a>,
+    measurer: &Measurer<'a>,
+    available: f32,
+) -> Result<IntrinsicWidths, Failure> {
+    let mut probe = measurer.clone();
+    let geometry = crate::layout::geometry::horizontal_with_edges(
+        block.style(),
+        0.0,
+        available,
+        false,
+        None,
+        measurer.box_edges(block, available)?,
+    );
+    let measured = probe.frame(block, &geometry, None, None)?;
+    Ok(IntrinsicWidths {
+        min: measured.geometry.width,
+        max: measured.geometry.width,
+    })
+}
+
+/// The widths of native math, from its laid-out metrics.
+#[inline(never)]
+fn math<'a>(
+    block: BlockSource<'a>,
+    measurer: &Measurer<'a>,
+    available: f32,
+) -> Result<IntrinsicWidths, Failure> {
+    let mut probe = measurer.clone();
+    let geometry = crate::layout::geometry::horizontal(
+        block.style(),
+        0.0,
+        available,
+        block.style().used_rtl(),
+        Some(available),
+    );
+    let measured = probe.request(
+        block,
+        &geometry,
+        None,
+        None,
+        crate::layout::measure::frames::RequestKind::Math(Default::default()),
+    )?;
+    Ok(measured
+        .math
+        .as_ref()
+        .expect("native math retains its intrinsic metrics")
+        .intrinsic)
+}
+
 /// The largest widths of the block's in-flow children.
 pub(super) fn flow<'a>(
     block: &'a BlockBox,
@@ -110,26 +131,35 @@ pub(super) fn flow<'a>(
     for child in block.children() {
         let child = match child {
             BlockContent::Block(child) => measure(child, measurer, available)?,
-            BlockContent::Inline(paragraph) => {
-                let blocks = paragraph.measured_blocks();
-                let atomics = blocks
-                    .iter()
-                    .map(|atomic| measure(atomic.block(), measurer, available))
-                    .collect::<Result<Vec<_>, _>>()?;
-                let mut first_line = atomics.clone();
-                for (widths, atomic) in first_line.iter_mut().zip(&blocks) {
-                    if let Some(block) = atomic.block().first_line_box() {
-                        *widths = measure(block, measurer, available)?;
-                    }
-                }
-                measurer.intrinsic_widths(paragraph, &atomics, &first_line)?
-            }
+            BlockContent::Inline(paragraph) => self::paragraph(paragraph, measurer, available)?,
             BlockContent::Positioned(_) | BlockContent::Events(_) => continue,
         };
         sizes.min = sizes.min.max(child.min);
         sizes.max = sizes.max.max(child.max);
     }
     Ok(sizes)
+}
+
+/// The widths of a paragraph with the atomic inlines in it.
+// Loops rather than iterator adapters, whose frames nested atomic inlines would stack.
+#[inline(never)]
+fn paragraph<'a>(
+    paragraph: &'a crate::document::Paragraph,
+    measurer: &Measurer<'a>,
+    available: f32,
+) -> Result<IntrinsicWidths, Failure> {
+    let blocks = paragraph.measured_blocks();
+    let mut atomics = Vec::with_capacity(blocks.len());
+    for atomic in &blocks {
+        atomics.push(measure(atomic.block(), measurer, available)?);
+    }
+    let mut first_line = atomics.clone();
+    for (widths, atomic) in first_line.iter_mut().zip(&blocks) {
+        if let Some(block) = atomic.block().first_line_box() {
+            *widths = measure(block, measurer, available)?;
+        }
+    }
+    Ok(measurer.intrinsic_widths(paragraph, &atomics, &first_line)?)
 }
 
 pub(super) fn measure<'a>(

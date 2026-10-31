@@ -8,17 +8,17 @@ const MAX_CACHED_FRAMES: usize = 4096;
 
 #[derive(Debug)]
 pub(in crate::layout) enum Failure {
-    Layout(LayoutError),
+    Layout(Box<LayoutError>),
     FrameNeeded,
 }
 impl From<LayoutError> for Failure {
     fn from(error: LayoutError) -> Self {
-        Self::Layout(error)
+        Self::Layout(Box::new(error))
     }
 }
 macro_rules! layout_failure {
     ($($error:ty),* $(,)?) => { $(impl From<$error> for Failure {
-        fn from(error: $error) -> Self { Self::Layout(error.into()) }
+        fn from(error: $error) -> Self { Self::Layout(Box::new(error.into())) }
     })* };
 }
 layout_failure!(
@@ -353,7 +353,7 @@ impl<'a> Measurer<'a> {
                 };
                 match result {
                     Err(Failure::FrameNeeded) => self.suspend(&mut jobs, current),
-                    Err(Failure::Layout(error)) => break 'drive Err(error),
+                    Err(Failure::Layout(error)) => break 'drive Err(*error),
                     Ok(Completed::Root(value)) => break 'drive Ok(value),
                     Ok(Completed::Frame(measured)) => self.complete(
                         current.expect("a frame request was measured").key,

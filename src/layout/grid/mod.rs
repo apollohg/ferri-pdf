@@ -615,7 +615,7 @@ mod tests {
                 assert!(
                     matches!(
                         measure(measurer, block, &geometry, geometry_context),
-                        Err(Failure::Layout(LayoutError::WorkLimit { .. }))
+                        Err(Failure::Layout(error)) if matches!(*error, LayoutError::WorkLimit { .. })
                     ),
                     "resolved parent geometry must also distinguish cached measurements"
                 );
@@ -623,7 +623,7 @@ mod tests {
                 assert!(
                     matches!(
                         measure(measurer, block, &geometry, second),
-                        Err(Failure::Layout(LayoutError::WorkLimit { .. }))
+                        Err(Failure::Layout(error)) if matches!(*error, LayoutError::WorkLimit { .. })
                     ),
                     "a different parent plan must not reuse cached metrics"
                 );
@@ -708,7 +708,7 @@ mod tests {
                 assert!(
                     matches!(
                         measure(measurer, block, &geometry, 200.0),
-                        Err(Failure::Layout(LayoutError::WorkLimit { .. }))
+                        Err(Failure::Layout(error)) if matches!(*error, LayoutError::WorkLimit { .. })
                     ),
                     "a different percentage basis must run measurement again"
                 );
