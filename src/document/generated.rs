@@ -424,42 +424,41 @@ impl GeneratedReferences {
         } = paginated;
         let mut values = HashMap::new();
         for (request, owner) in self.bindings.requests.borrow().iter() {
-            let target = self.elements.get(owner).ok_or_else(|| {
-                StyleError::Invalid(format!(
-                    "target {:?} has no captured element state",
-                    request.reference
-                ))
-            })?;
-            let text = match &request.value {
-                TargetValue::Counter(counter) if counter.is_page_counter() => {
-                    match element_page(*owner) {
-                        Some(page) => counter
+            // A target that generates no box has no counters, text or page to show.
+            let text = match (self.elements.get(owner), &request.value) {
+                (_, TargetValue::Counter(counter)) if counter.is_page_counter() => {
+                    element_page(*owner).map(|page| {
+                        counter
                             .page_text(numbers(page), pages)
-                            .expect("page counter"),
-                        None => {
-                            self.bindings.degradations.record(
-                                crate::style::Degradation::UnresolvedTarget {
-                                    reference: request.reference.to_string(),
-                                    reason: crate::style::TargetReferenceError::NoPage
-                                        .to_string(),
-                                },
-                            );
-                            String::new()
-                        }
-                    }
+                            .expect("page counter")
+                    })
                 }
-                TargetValue::Counter(counter) => target.counters.text(counter).into_text(),
-                TargetValue::Text(source) => ElementText::new(
-                    document
-                        .element(*owner)
-                        .expect("target belongs to this document"),
-                    None,
-                    &target.before,
-                    &target.after,
-                    None,
-                )
-                .resolve(*source),
+                (Some(target), TargetValue::Counter(counter)) => {
+                    Some(target.counters.text(counter).into_text())
+                }
+                (Some(target), TargetValue::Text(source)) => Some(
+                    ElementText::new(
+                        document
+                            .element(*owner)
+                            .expect("target belongs to this document"),
+                        None,
+                        &target.before,
+                        &target.after,
+                        None,
+                    )
+                    .resolve(*source),
+                ),
+                (None, _) => None,
             };
+            let text = text.unwrap_or_else(|| {
+                self.bindings
+                    .degradations
+                    .record(crate::style::Degradation::UnresolvedTarget {
+                        reference: request.reference.to_string(),
+                        reason: crate::style::TargetReferenceError::NoBox.to_string(),
+                    });
+                String::new()
+            });
             values.insert(request.clone(), text);
         }
         let mut named = HashMap::new();

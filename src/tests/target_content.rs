@@ -324,7 +324,7 @@ fn unresolved_target_references_render_empty_and_retain_the_reason_without_loadi
 }
 
 #[test]
-fn page_counters_of_targets_without_a_box_render_empty_and_retain_the_reason() {
+fn values_of_targets_without_a_box_render_empty_and_retain_the_reason() {
     use crate::style::{Degradation, TargetReferenceError};
     for (content, target, expected) in [
         (
@@ -342,6 +342,16 @@ fn page_counters_of_targets_without_a_box_render_empty_and_retain_the_reason() {
             "<div id=t style=display:none>Hidden</div>",
             "See[5Hidden]",
         ),
+        (
+            "target-counter('#t',c) target-text('#t')",
+            "<svg><text id=t>Inside SVG</text></svg>",
+            "See[]",
+        ),
+        (
+            "target-counters('#t',c,'.') target-text('#t')",
+            "<select><option id=t>Option</option></select>",
+            "See[]",
+        ),
     ] {
         let html = format!(
             "<style>body{{counter-reset:c 5}}p::after{{content:'[' {content} ']'}}</style><p>See</p>{target}"
@@ -355,7 +365,7 @@ fn page_counters_of_targets_without_a_box_render_empty_and_retain_the_reason() {
                 crate::RenderDiagnostic::Degraded(Degradation::UnresolvedTarget {
                     reference,
                     reason,
-                }) if reference == "#t" && *reason == TargetReferenceError::NoPage.to_string()
+                }) if reference == "#t" && *reason == TargetReferenceError::NoBox.to_string()
             )),
             "{content} to {target} must report the page it lacks: {:?}",
             output.diagnostics
@@ -363,7 +373,7 @@ fn page_counters_of_targets_without_a_box_render_empty_and_retain_the_reason() {
         assert_eq!(
             output.layout.unwrap().pages[0][0].text,
             expected,
-            "{content} to {target}: only the page counter renders as empty text"
+            "{content} to {target}: only the values the target lacks render as empty text"
         );
     }
 }
