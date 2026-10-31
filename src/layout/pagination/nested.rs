@@ -253,7 +253,7 @@ impl<'a> Paginator<'a, '_, 'a> {
 
     pub(super) fn adopt_underlays(
         &mut self,
-        underlays: &mut HashMap<(usize, usize), Vec<ScopedPaint>>,
+        underlays: &mut std::collections::BTreeMap<(usize, usize), Vec<ScopedPaint>>,
         nodes: &[EffectNode<'a>],
         sticky: &[StickyConstraints],
         place: &Placement,

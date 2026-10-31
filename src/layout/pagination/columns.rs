@@ -536,7 +536,7 @@ struct ColumnOutput<'a> {
     geometric_baselines: Vec<[Option<f32>; 2]>,
     display_lists: Vec<Vec<ScopedPaint>>,
     foreground: Vec<Vec<ScopedPaint>>,
-    underlays: HashMap<(usize, usize), Vec<ScopedPaint>>,
+    underlays: std::collections::BTreeMap<(usize, usize), Vec<ScopedPaint>>,
     flow_content: Vec<bool>,
     /// Columns holding content, between which rules are drawn (§4).
     content: Vec<bool>,
