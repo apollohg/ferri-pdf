@@ -315,6 +315,9 @@ pub(crate) struct TablePlan<'a> {
     columns: Vec<crate::table::ColumnWidth>,
     widths: RefCell<HashMap<u32, Rc<WidthContributions>>>,
     resolved_columns: RefCell<HashMap<ColumnsKey, Rc<ResolvedColumns>>>,
+    /// Alignments of every cell by the table's position, width, containing block width and
+    /// page height, where the heights of all rows depend on each other.
+    table_alignments: RefCell<HashMap<[u32; 4], Rc<CellAlignments>>>,
     place: fn(&Style, f32, f32, bool, Option<f32>, geometry::Edges) -> geometry::HorizontalBox,
 }
 
@@ -670,6 +673,7 @@ impl<'a> TablePlan<'a> {
             row_keep_ends: [Vec::new(), Vec::new(), Vec::new()],
             widths: RefCell::new(HashMap::new()),
             resolved_columns: RefCell::new(HashMap::new()),
+            table_alignments: RefCell::new(HashMap::new()),
             place,
         };
         plan.row_keep_ends = [
@@ -1260,17 +1264,42 @@ impl<'a> TablePlan<'a> {
             .filter(|area| area.rows.is_empty() || structural_geometry(area.source.style()))
             .collect())
     }
+    /// The alignments of the cells of `band` within their rows, or of every cell where the
+    /// heights of all rows depend on each other, which every band of the table then shares.
     pub(crate) fn cell_alignments(
         &self,
         measurer: &mut Measurer<'a>,
         band: Range<usize>,
         geometry: &TableGeometry,
+    ) -> Result<Rc<CellAlignments>, Failure> {
+        if !self.has_height_constraints && !self.has_collapsed_rows() {
+            return self
+                .measure_alignments(measurer, band, geometry)
+                .map(Rc::new);
+        }
+        let key = [
+            geometry.geometry.x,
+            geometry.geometry.width,
+            geometry.geometry.containing_width,
+            measurer.page_height,
+        ]
+        .map(f32::to_bits);
+        if let Some(alignments) = self.table_alignments.borrow().get(&key) {
+            return Ok(alignments.clone());
+        }
+        let alignments =
+            Rc::new(self.measure_alignments(measurer, 0..self.data.grid.rows, geometry)?);
+        self.table_alignments
+            .borrow_mut()
+            .insert(key, alignments.clone());
+        Ok(alignments)
+    }
+    fn measure_alignments(
+        &self,
+        measurer: &mut Measurer<'a>,
+        band: Range<usize>,
+        geometry: &TableGeometry,
     ) -> Result<CellAlignments, Failure> {
-        let band = if self.has_height_constraints || self.has_collapsed_rows() {
-            0..self.data.grid.rows
-        } else {
-            band
-        };
         let range = self.data.row_ranges[band.start].start..self.data.row_ranges[band.end - 1].end;
         let grid = crate::table::Grid {
             cells: self.data.grid.cells[range.clone()]

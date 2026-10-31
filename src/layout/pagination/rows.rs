@@ -48,8 +48,8 @@ pub(super) struct RowCursor<'a, 't> {
     repeating: bool,
     end: (usize, f32),
     stretches: Vec<Stretch<'a>>,
-    alignment_cache: HashMap<(u32, u32), crate::layout::tables::CellAlignments>,
     source_row_geometry: Option<(usize, Rc<crate::layout::tables::RowGeometry>)>,
+    alignment_cache: HashMap<(u32, u32), Rc<crate::layout::tables::CellAlignments>>,
     plan: Option<Rc<crate::layout::tables::TablePlan<'a>>>,
     cells: VecDeque<(MeasuredCell<'a>, PaintOrders)>,
     active_cells: VecDeque<Lane<'a, 't>>,
@@ -247,7 +247,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         let end = (start_page, start);
         let stretches = Vec::new();
         let source_row_geometry = None;
-        let alignment_cache: HashMap<_, crate::layout::tables::CellAlignments> = HashMap::new();
+        let alignment_cache: HashMap<_, Rc<crate::layout::tables::CellAlignments>> = HashMap::new();
         let plan = row
             .band
             .as_ref()
