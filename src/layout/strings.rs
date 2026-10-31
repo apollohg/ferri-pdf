@@ -124,11 +124,7 @@ impl StringLocations {
         pages: usize,
         degradations: &crate::style::Degradations,
     ) -> Result<PageStrings, StyleError> {
-        if self.assignments.len() != assignments.len() {
-            return Err(StyleError::Invalid(
-                "running string assignment has no committed page location".into(),
-            ));
-        }
+        // Assignments of boxes layout omitted have no page location and assign nothing.
         let mut output = PageStrings {
             names: HashMap::new(),
             elements: HashMap::new(),

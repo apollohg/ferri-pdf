@@ -117,3 +117,34 @@ fn font_size_adjust_past_finite_sizes_omits_only_its_text_box() {
         );
     }
 }
+
+#[test]
+fn running_elements_layout_cannot_form_are_omitted_with_their_assignments() {
+    let output = render_html(
+        "<!doctype html><style>.r{position:running(header);font-size:calc(1e30px*1e30)}\
+         @page{@top-center{content:element(header)}}</style>\
+         <div class=r>Running</div><p>Body</p>",
+        &local_options(),
+    )
+    .expect("a running element layout cannot form renders without it");
+    assert!(
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            RenderDiagnostic::Layout(LayoutDiagnostic::OmittedBox { .. })
+        )),
+        "the omitted running element is reported, got {:?}",
+        output.diagnostics
+    );
+    let texts: Vec<_> = output
+        .layout
+        .unwrap()
+        .pages
+        .into_iter()
+        .flatten()
+        .map(|line| line.text)
+        .collect();
+    assert!(
+        !texts.iter().any(|text| text == "Running"),
+        "the margin box shows no copy of the omitted running element: {texts:?}"
+    );
+}
