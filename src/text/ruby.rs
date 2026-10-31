@@ -1229,18 +1229,20 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
         container: usize,
         (present, line): (&[usize], &Range<usize>),
         container_metrics: &BoxMetrics,
-        metrics: &[super::AtomicMetrics],
-        basis: f32,
+        (metrics, basis): (&[super::AtomicMetrics], f32),
+        stacks: &mut RubyStacks,
     ) -> Result<[f32; 2], TextError> {
-        let Some(ruby) = self
+        let Some(index) = self
             .paragraph
             .rubies()
             .iter()
-            .find(|ruby| ruby.container == container)
+            .position(|ruby| ruby.container == container)
         else {
             return Ok([0.0; 2]);
         };
-        let ([above, below], heights) = self.stack(ruby, (present, line), metrics, basis)?;
+        let ruby = &self.paragraph.rubies()[index];
+        let ([above, below], heights) =
+            self.stack(index, (present, line), (metrics, basis), stacks)?;
         if ruby
             .segments
             .iter()
@@ -1263,14 +1265,20 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
     /// How far `ruby`'s base container extends `[above, below]` its baseline on a line whose
     /// present inline boxes are `present`, holding any ruby nested in its bases with their
     /// annotations, and the heights of its annotation levels over and under it.
+    /// Each ruby's stack is computed once per line in `stacks`, as a ruby nested in a base
+    /// lies within the bases of every ruby around it.
     fn stack(
         &self,
-        ruby: &Ruby,
+        index: usize,
         (present, line): (&[usize], &Range<usize>),
-        metrics: &[super::AtomicMetrics],
-        basis: f32,
-    ) -> Result<([f32; 2], [f32; 2]), TextError> {
+        (metrics, basis): (&[super::AtomicMetrics], f32),
+        stacks: &mut RubyStacks,
+    ) -> Result<RubyStack, TextError> {
+        if let Some(stack) = stacks.get(&index) {
+            return Ok(*stack);
+        }
         let paragraph = self.paragraph;
+        let ruby = &paragraph.rubies()[index];
         let mut heights = [0.0f32; 2];
         let mut content = [0.0f32; 2];
         for segment in &ruby.segments {
@@ -1283,13 +1291,11 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
                 let [above, below] =
                     margin_extent(self.context, &paragraph.boxes()[base].style, basis)?;
                 content = [content[0].max(above), content[1].max(below)];
-                for nested in paragraph
-                    .rubies()
-                    .iter()
-                    .filter(|nested| paragraph.is_within(Some(nested.container), base))
-                {
+                for nested in (0..paragraph.rubies().len()).filter(|&nested| {
+                    paragraph.is_within(Some(paragraph.rubies()[nested].container), base)
+                }) {
                     let ([above, below], [over, under]) =
-                        self.stack(nested, (present, line), metrics, basis)?;
+                        self.stack(nested, (present, line), (metrics, basis), stacks)?;
                     content = [content[0].max(above + over), content[1].max(below + under)];
                 }
             }
@@ -1345,9 +1351,16 @@ impl<'p, 'c, 'f> RubyLayout<'p, 'c, 'f> {
             }
             heights = [heights[0].max(sides[0]), heights[1].max(sides[1])];
         }
+        stacks.insert(index, (content, heights));
         Ok((content, heights))
     }
 }
+
+/// How far a ruby's base container extends `[above, below]` its baseline, with the rubies
+/// nested in its bases, and the heights of its annotation levels `[over, under]` it.
+type RubyStack = ([f32; 2], [f32; 2]);
+/// The stacks of a line's rubies by their index in the paragraph.
+pub(super) type RubyStacks = HashMap<usize, RubyStack>;
 
 /// Whether `ruby`'s base container, which shares its container's direction, runs right to
 /// left.

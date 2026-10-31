@@ -743,6 +743,7 @@ pub(crate) fn align(
             .binary_search(&owner)
             .expect("inline content belongs to boxes present on its line")
     };
+    let mut ruby_stacks = crate::text::ruby::RubyStacks::new();
     for &index in &present {
         let style = &boxes[index].style;
         let metrics = BoxMetrics::of(context, style)?;
@@ -756,8 +757,13 @@ pub(crate) fn align(
         let own = |baseline| metrics.baseline(baseline);
         let mut extent = metrics.extent();
         if let Some(ruby) = ruby {
-            let [over, under] =
-                ruby.leading(index, (&present, &line.range), &metrics, atomics, basis)?;
+            let [over, under] = ruby.leading(
+                index,
+                (&present, &line.range),
+                &metrics,
+                (atomics, basis),
+                &mut ruby_stacks,
+            )?;
             extent[0] -= over;
             extent[1] += under;
         }
