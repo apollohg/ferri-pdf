@@ -979,6 +979,22 @@ impl Stylesheet {
         without_box: bool,
     ) -> Result<Style, StyleError> {
         let parent = parent.canonical();
+        self.memoized(
+            |memo| &mut memo.elements,
+            (element.id(), without_box),
+            parent,
+            || self.compute_element(element, parent, resolver, without_box),
+            |style| self.revisited(element, None, parent, style),
+        )
+    }
+
+    fn compute_element(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
+        resolver: &dyn ResourceResolver,
+        without_box: bool,
+    ) -> Result<Style, StyleError> {
         let (seed, cascaded) = self.prepare_element(element, parent, resolver)?;
         let basis = option_basis(&seed, &cascaded);
         let (style, winners) = crate::style::resolution::resolve_values(
@@ -1042,6 +1058,20 @@ impl Stylesheet {
             self.record_anchor(element, pseudo, &style);
         }
         Ok(style)
+    }
+
+    /// The `style` an earlier computation of `element` or its `pseudo` element kept, finished
+    /// with `parent` as [`Self::position_options`] finishes this one.
+    fn revisited(
+        &self,
+        element: Element<'_>,
+        pseudo: Option<crate::style::PseudoElement>,
+        parent: &Style,
+        mut style: Style,
+    ) -> Style {
+        style.origin = StyleOrigin::of(element, pseudo, parent);
+        self.record_anchor(element, pseudo, &style);
+        style
     }
 
     /// The style of `target` with each of its `position-try-fallbacks` options (CSS Anchor
@@ -1604,6 +1634,29 @@ impl Stylesheet {
         resolver: &dyn ResourceResolver,
     ) -> Result<Option<(Style, crate::style::GeneratedContent)>, StyleError> {
         let parent = parent.canonical();
+        self.memoized(
+            |memo| &mut memo.pseudos,
+            (element.id(), pseudo),
+            parent,
+            || self.compute_pseudo(element, parent, pseudo, resolver),
+            |kept| {
+                kept.map(|(style, content)| {
+                    (
+                        self.revisited(element, Some(pseudo), parent, style),
+                        content,
+                    )
+                })
+            },
+        )
+    }
+
+    fn compute_pseudo(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
+        pseudo: crate::style::PseudoElement,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Option<(Style, crate::style::GeneratedContent)>, StyleError> {
         let (original, _) =
             self.rule_winners(element, Some(pseudo), &parent.containers, resolver)?;
         // Without a declaration, `content` is `normal`, which for these pseudo-elements
@@ -1710,6 +1763,25 @@ impl Stylesheet {
         resolver: &dyn ResourceResolver,
     ) -> Result<Style, StyleError> {
         let parent = parent.canonical();
+        self.memoized(
+            |memo| &mut memo.typographic,
+            (element.id(), pseudo),
+            parent,
+            || self.compute_typographic(element, parent, pseudo, resolver),
+            |mut style| {
+                style.origin = StyleOrigin::of(element, Some(pseudo), parent);
+                style
+            },
+        )
+    }
+
+    fn compute_typographic(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
+        pseudo: crate::style::PseudoElement,
+        resolver: &dyn ResourceResolver,
+    ) -> Result<Style, StyleError> {
         crate::work::count(crate::work::Work::PseudoStyle, 1);
         let (style, winners) = self.prepare_pseudo(element, parent, pseudo, resolver)?;
         let (mut style, mut winners) = crate::style::resolution::resolve_values(

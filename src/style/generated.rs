@@ -806,6 +806,30 @@ fn representation_text(
     representation.into_text()
 }
 
+/// Whether a specified `content` value can show a value that pagination gives: a page
+/// counter, a target's counter or text, or a named string.
+pub(super) fn shows_paged_values(value: &Component) -> bool {
+    match value {
+        Component::Function(
+            Keyword::TargetCounter
+            | Keyword::TargetCounters
+            | Keyword::TargetText
+            | Keyword::String,
+            _,
+        ) => true,
+        Component::Function(Keyword::Counter | Keyword::Counters, Some(arguments)) => matches!(
+            arguments
+                .find(Label::Production(Production::CounterName))
+                .map(Component::unwrap),
+            Some(Component::Ident(name)) if matches!(name.as_ref(), PAGE_COUNTER | PAGES_COUNTER)
+        ),
+        Component::Reference(_, inner) | Component::Block(_, inner) => shows_paged_values(inner),
+        Component::Group(items) => items.iter().any(shows_paged_values),
+        Component::Slots(slots) => slots.iter().flatten().any(shows_paged_values),
+        _ => false,
+    }
+}
+
 fn part(
     item: &Component,
     scope: &Scope<'_>,

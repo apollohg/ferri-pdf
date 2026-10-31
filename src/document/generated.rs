@@ -10,7 +10,7 @@ use crate::style::{
     PageStyleTarget, Style, StyleError, TargetRequest, TargetValue,
 };
 use std::{
-    cell::RefCell,
+    cell::{Cell, RefCell},
     collections::{HashMap, HashSet},
     rc::Rc,
 };
@@ -124,6 +124,9 @@ pub(crate) struct GeneratedBindings {
     /// The page counters content shows when it formats a copy of a running element.
     copy: Option<PageNumbers>,
     degradations: Rc<crate::style::Degradations>,
+    /// Turned on once content shows a value that pagination gives, which makes formatting the
+    /// document again likely.
+    paged: Rc<Cell<bool>>,
 }
 impl GeneratedBindings {
     pub(crate) fn bind<'a>(
@@ -138,6 +141,7 @@ impl GeneratedBindings {
             && content.has_page_counters()
         {
             self.pages.borrow_mut().insert(context);
+            self.paged.set(true);
             return Ok(Self::bind_page(
                 bound,
                 PageNumbers {
@@ -165,6 +169,7 @@ impl GeneratedBindings {
             let shown = running.entry(owner).or_default();
             shown.page |= content.shows_page();
             shown.total |= content.shows_pages();
+            self.paged.set(true);
             PageNumbers::default()
         });
         Ok(Self::bind_page(bound, numbers))
@@ -205,6 +210,7 @@ impl GeneratedBindings {
                         }
                     };
                     self.requests.borrow_mut().insert(request.clone(), owner);
+                    self.paged.set(true);
                     Ok(self
                         .values
                         .targets
@@ -222,6 +228,7 @@ impl GeneratedBindings {
                 &mut |request| {
                     let key = (context, request.clone());
                     self.strings.borrow_mut().insert(key.clone());
+                    self.paged.set(true);
                     Ok(self.values.strings.get(&key).cloned().unwrap_or_default())
                 },
             )?);
@@ -240,6 +247,7 @@ impl GeneratedPass {
         index: Rc<FragmentIndex>,
         values: GeneratedValues,
         degradations: Rc<crate::style::Degradations>,
+        paged: Rc<Cell<bool>>,
     ) -> Self {
         Self {
             bindings: GeneratedBindings {
@@ -251,6 +259,7 @@ impl GeneratedPass {
                 running: Rc::default(),
                 copy: None,
                 degradations,
+                paged,
             },
             elements: HashMap::new(),
             page_initials: Vec::new(),

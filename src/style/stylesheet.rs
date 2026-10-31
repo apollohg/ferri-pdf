@@ -93,6 +93,8 @@ pub(crate) struct Stylesheet {
     pub(super) registrations: Arc<crate::style::registration::Registrations>,
     /// The ancestors of the element whose rules matched last; taken while rules match.
     pub(super) ancestor_filter: std::cell::Cell<Option<crate::dom::AncestorFilter>>,
+    /// The styles computed since what they depend on last changed.
+    pub(super) memo: RefCell<crate::style::memo::StyleMemo>,
 }
 
 fn anchor_order(tree: &crate::dom::DocumentTree) -> HashMap<crate::dom::ElementId, [usize; 3]> {
@@ -399,6 +401,7 @@ impl Stylesheet {
             anchor_order: self.anchor_order.clone(),
             registrations: self.registrations.clone(),
             ancestor_filter: std::cell::Cell::default(),
+            memo: RefCell::default(),
         }
     }
 
@@ -662,6 +665,7 @@ impl Stylesheet {
             anchor_order: tree.map(anchor_order).unwrap_or_default(),
             registrations: Arc::default(),
             ancestor_filter: std::cell::Cell::default(),
+            memo: RefCell::default(),
         };
         let mut fonts = Vec::new();
         let mut feature_values = Vec::new();
@@ -862,6 +866,7 @@ impl Stylesheet {
                 namespace,
             })
             .collect();
+        sheet.keep_for_paged_content();
         sheet
     }
 
@@ -985,6 +990,7 @@ impl Stylesheet {
         &self.anchor_frames
     }
     pub(crate) fn anchor_frames_mut(&mut self) -> &mut crate::style::anchor_values::AnchorFrames {
+        self.memo.get_mut().forget();
         &mut self.anchor_frames
     }
 

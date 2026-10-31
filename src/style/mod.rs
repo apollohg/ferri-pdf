@@ -43,6 +43,7 @@ mod mask_values;
 mod matcher;
 mod math_values;
 mod media;
+mod memo;
 mod multicol_values;
 mod nesting;
 mod object;

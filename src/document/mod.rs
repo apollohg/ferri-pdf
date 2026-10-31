@@ -987,6 +987,7 @@ impl StyledDocument {
     }
     /// Restyling takes the scroll markers' positions a layout determined.
     pub(crate) fn measured_scroll_markers(&self, states: crate::dom::ScrollMarkerStates) {
+        self.styles.forget_computed();
         *self.source.html.scroll_markers.borrow_mut() = states;
     }
     pub(crate) fn footnotes(&self) -> &Footnotes {

@@ -74,6 +74,21 @@ impl QueryContainers {
             container.style.containers.0.as_deref()
         })
     }
+    /// Whether both hold the same containers, with equal styles.
+    pub(super) fn same(&self, other: &Self) -> bool {
+        let (mut own, mut other) = (self.0.as_ref(), other.0.as_ref());
+        loop {
+            match (own, other) {
+                (None, None) => return true,
+                (Some(left), Some(right)) if Arc::ptr_eq(left, right) => return true,
+                (Some(left), Some(right)) if **left == **right => {
+                    own = left.style.containers.0.as_ref();
+                    other = right.style.containers.0.as_ref();
+                }
+                _ => return false,
+            }
+        }
+    }
     /// Container query length units' inline and block basis: the content-box size of the
     /// nearest container answering size queries in each axis (CSS Conditional 5 §7).
     pub(super) fn unit_basis(&self, sizes: &QuerySizes, axis: Axis) -> Option<f32> {
@@ -699,6 +714,7 @@ impl Stylesheet {
         &self.query_sizes
     }
     pub(crate) fn query_sizes_mut(&mut self) -> &mut QuerySizes {
+        self.memo.get_mut().forget();
         &mut self.query_sizes
     }
 }

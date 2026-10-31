@@ -4687,8 +4687,10 @@ fn format(
         navigation.targets.clone(),
         values,
         sheet.degradations().clone(),
+        sheet.keeping_computed(),
     );
     let mut style = root_style(input.html, sheet, resolver, &generated)?;
+    sheet.start_formatting(&style);
     input.images.borrow_mut().adopt_palettes(&sheet.fonts);
     let sheet = &*sheet;
     let elements = std::rc::Rc::new(crate::document::element_images::ElementImages::new(

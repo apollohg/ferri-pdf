@@ -386,6 +386,10 @@ fn stabilize(
             });
             return Ok(kept(document, trace, diagnostics));
         }
+        // Where only generated values changed, every style computes as before, so formatting
+        // reuses the computed styles. It still builds the boxes again: generated text changes
+        // whitespace collapsing and first letters around it, page starts change counters, and
+        // targets, named strings and navigation capture the text other boxes generate.
         document.reformat(values, resolver)?;
         completed = Some((trace, diagnostics));
     }
@@ -398,6 +402,8 @@ fn kept(
     diagnostics: Vec<LayoutDiagnostic>,
 ) -> LayoutTrace {
     document.record_layout(diagnostics);
+    // Kept styles serve only the formatting for another layout pass.
+    document.styles().forget_computed();
     trace
 }
 

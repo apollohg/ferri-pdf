@@ -394,3 +394,48 @@ fn page_targets_use_multi_digit_values_and_final_page_totals() {
     assert_eq!(output.headings[0].page, TARGET_PAGE);
     assert_eq!(output.layout.unwrap().pages[0][0].text, "See 10/11");
 }
+
+#[test]
+fn layouts_for_page_numbers_reuse_every_style_the_first_formatting_computed() {
+    use crate::work::{self, Work};
+    const SECTIONS: usize = 6;
+    let contents: String = (1..=SECTIONS)
+        .map(|section| format!("<p><a href='#s{section}'>Section {section}</a></p>"))
+        .collect();
+    let sections: String = (1..=SECTIONS)
+        .map(|section| format!("<h2 id=s{section} class=next>Section {section}</h2>"))
+        .collect();
+    let html = format!(
+        "<style>{PROFILE}@page{{size:360pt 240pt;margin:24pt}}p,h2{{margin:0;font:12pt/18pt Spike}}.next{{break-before:page}}a::after{{content:' ' target-counter(attr(href),page)}}.total::after{{content:' of ' counter(pages)}}</style>{contents}<p class=total>Pages</p>{sections}"
+    );
+    let resolver = crate::resources::FileResolver::default();
+    let (document, formatting) = work::measured(Work::ComputedStyle, || {
+        crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
+            .expect("the document formats")
+    });
+    let ((_, trace), relayout) = work::measured(Work::ComputedStyle, || {
+        crate::layout::layout_document(document, &resolver).expect("the document lays out")
+    });
+    let text: Vec<_> = trace.pages[0]
+        .iter()
+        .map(|line| line.text.as_str())
+        .collect();
+    let expected: Vec<_> = (1..=SECTIONS)
+        .map(|section| format!("Section {section} {}", section + 1))
+        .chain([format!("Pages of {}", SECTIONS + 1)])
+        .collect();
+    assert_eq!(
+        text, expected,
+        "the contents must show the pages that the layout after the first one found"
+    );
+    assert!(
+        formatting > SECTIONS * 2,
+        "the first formatting must compute the styles of every element and pseudo-element, \
+         not {formatting}"
+    );
+    assert_eq!(
+        relayout, 0,
+        "only page numbers changed after the first layout, so formatting again must reuse the \
+         {formatting} styles the first formatting computed rather than compute {relayout}"
+    );
+}
