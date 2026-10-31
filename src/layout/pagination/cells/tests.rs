@@ -62,6 +62,7 @@ fn resumed_cells_keep_source_paint_order_when_a_later_lane_finishes_first() {
                 page_height: area.height,
                 sources: crate::layout::source::SourceIds::new(document.root()),
                 item_metrics: Default::default(),
+                paragraph_widths: Default::default(),
                 grid_parent: None,
                 clearance_targets: Default::default(),
                 fragmentainer: Fragmentainer::Page,

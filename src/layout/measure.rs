@@ -16,6 +16,14 @@ pub(super) use frames::{Failure, FrameKey};
 pub(super) use metrics::{ItemMetrics, MetricsKey};
 pub(super) use space::FlowSpace;
 
+/// Cached paragraph intrinsic widths at most; the cache empties when full.
+const MAX_PARAGRAPH_WIDTHS: usize = 4096;
+/// Paragraph intrinsic widths by the paragraph's address and the widths of its atomic inlines
+/// and of their `::first-line` boxes.
+pub(super) type ParagraphWidths = std::rc::Rc<
+    std::cell::RefCell<std::collections::HashMap<(usize, Vec<u32>), crate::text::IntrinsicWidths>>,
+>;
+
 #[derive(Clone, Copy)]
 pub(super) struct BlockSizing {
     pub natural_height: f32,
@@ -704,6 +712,9 @@ pub(super) struct Measurer<'a> {
     pub clearance_targets: std::collections::HashMap<*const BlockBox, usize>,
     pub grid_parent: Option<crate::layout::grid::ParentContext>,
     pub item_metrics: std::collections::HashMap<MetricsKey, ItemMetrics>,
+    /// Paragraphs' intrinsic widths, shared by every probe, as nested shrink-to-fit boxes
+    /// measure their contents again at each level.
+    pub(super) paragraph_widths: ParagraphWidths,
     /// The fragmentainer of the flow being measured.
     pub fragmentainer: Fragmentainer,
     /// The multi-column container whose formatting context the flow belongs to.
@@ -757,6 +768,7 @@ impl<'a> Measurer<'a> {
             page_height: size[1],
             sources: crate::layout::source::SourceIds::new(root),
             item_metrics: Default::default(),
+            paragraph_widths: Default::default(),
             grid_parent: None,
             clearance_targets: Default::default(),
             fragmentainer: Fragmentainer::Page,
@@ -833,10 +845,28 @@ impl<'a> Measurer<'a> {
         atomics: &[crate::text::IntrinsicWidths],
         first_line_atomics: &[crate::text::IntrinsicWidths],
     ) -> Result<crate::text::IntrinsicWidths, LayoutError> {
+        let key = (
+            std::ptr::from_ref(paragraph) as usize,
+            atomics
+                .iter()
+                .chain(first_line_atomics)
+                .flat_map(|widths| [widths.min.to_bits(), widths.max.to_bits()])
+                .collect(),
+        );
+        if let Some(widths) = self.paragraph_widths.borrow().get(&key) {
+            self.work.spend(1)?;
+            return Ok(*widths);
+        }
         self.work.spend(paragraph.text().len().max(1))?;
-        Ok(self
+        let widths = self
             .text
-            .intrinsic_widths(paragraph, atomics, first_line_atomics)?)
+            .intrinsic_widths(paragraph, atomics, first_line_atomics)?;
+        let mut cache = self.paragraph_widths.borrow_mut();
+        if cache.len() >= MAX_PARAGRAPH_WIDTHS {
+            cache.clear();
+        }
+        cache.insert(key, widths);
+        Ok(widths)
     }
 
     pub(crate) fn text_lines(

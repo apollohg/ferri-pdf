@@ -117,6 +117,7 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
             page_height: area.height,
             sources: crate::layout::source::SourceIds::new(document.root()),
             item_metrics: Default::default(),
+            paragraph_widths: Default::default(),
             grid_parent: None,
             clearance_targets: Default::default(),
             fragmentainer: crate::layout::breaks::Fragmentainer::Page,

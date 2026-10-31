@@ -74,6 +74,7 @@ fn after_child_row_paints_keep_canonical_text_navigation_and_stacking() {
         page_height: area.height,
         sources: crate::layout::source::SourceIds::new(document.root()),
         item_metrics: Default::default(),
+        paragraph_widths: Default::default(),
         grid_parent: None,
         clearance_targets: Default::default(),
         fragmentainer: Fragmentainer::Page,

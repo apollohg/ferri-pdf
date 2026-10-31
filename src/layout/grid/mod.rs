@@ -752,6 +752,7 @@ mod tests {
             sources: crate::layout::source::SourceIds::new(document.root()),
             clearance_targets: Default::default(),
             item_metrics: Default::default(),
+            paragraph_widths: Default::default(),
             grid_parent: None,
             fragmentainer: crate::layout::breaks::Fragmentainer::Page,
             column_flow: None,
