@@ -1,5 +1,5 @@
 [workspace]
-exclude = ["vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/avif-decode", "vendor/heic-decoder", "vendor/selectors"]
+exclude = ["vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/avif-decode", "vendor/rav1d", "vendor/heic-decoder", "vendor/selectors"]
 resolver = "3"
 
 [workspace.package]
