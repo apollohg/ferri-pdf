@@ -15,31 +15,20 @@ use crate::svg::usvg::{
 pub(crate) type ImageHrefDataResolverFn<'a> =
     Box<dyn Fn(&str, Arc<Vec<u8>>, &Options) -> Option<ImageKind> + Send + Sync + 'a>;
 
-/// A shorthand for [ImageHrefResolver]'s string function.
-pub(crate) type ImageHrefStringResolverFn<'a> =
-    Box<dyn Fn(&str, &Options) -> Option<ImageKind> + Send + Sync + 'a>;
-
-/// An `xlink:href` resolver for `<image>` elements.
-///
-/// This type can be useful if you want to have an alternative `xlink:href` handling
-/// to the default one. For example, you can forbid access to local files (which is allowed by default)
-/// or add support for resolving actual URLs (usvg doesn't do any network requests).
+/// An `xlink:href` resolver for `<image>` elements that conversion uses without a caller's
+/// image callback. It resolves only data URLs: the parser never reads files or the network.
 pub struct ImageHrefResolver<'a> {
     /// Resolver function that will be used when `xlink:href` contains a
     /// [Data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs).
     ///
     /// A function would be called with mime, decoded base64 data and parsing options.
     pub resolve_data: ImageHrefDataResolverFn<'a>,
-
-    /// Resolver function that will be used to handle an arbitrary string in `xlink:href`.
-    pub resolve_string: ImageHrefStringResolverFn<'a>,
 }
 
 impl Default for ImageHrefResolver<'_> {
     fn default() -> Self {
         ImageHrefResolver {
             resolve_data: ImageHrefResolver::default_data_resolver(),
-            resolve_string: ImageHrefResolver::default_string_resolver(),
         }
     }
 }
@@ -73,44 +62,6 @@ impl ImageHrefResolver<'_> {
             },
         )
     }
-
-    /// Creates a default string resolver.
-    ///
-    /// The default implementation treats an input string as a file path and tries to open.
-    /// If a string is an URL or something else it would be ignored.
-    ///
-    /// Paths have to be absolute or relative to the input SVG file or relative to
-    /// [Options::resources_dir](crate::svg::usvg::Options::resources_dir).
-    pub fn default_string_resolver() -> ImageHrefStringResolverFn<'static> {
-        Box::new(move |href: &str, opts: &Options| {
-            let path = opts.get_abs_path(std::path::Path::new(href));
-
-            if path.exists() {
-                let data = match std::fs::read(&path) {
-                    Ok(data) => data,
-                    Err(_) => {
-                        log::warn!("Failed to load '{}'. Skipped.", href);
-                        return None;
-                    }
-                };
-
-                match get_image_file_format(&path, &data) {
-                    Some(ImageFormat::JPEG) => Some(ImageKind::JPEG(Arc::new(data))),
-                    Some(ImageFormat::PNG) => Some(ImageKind::PNG(Arc::new(data))),
-                    Some(ImageFormat::GIF) => Some(ImageKind::GIF(Arc::new(data))),
-                    Some(ImageFormat::WEBP) => Some(ImageKind::WEBP(Arc::new(data))),
-                    Some(ImageFormat::SVG) => load_sub_svg(&data, opts),
-                    _ => {
-                        log::warn!("'{}' is not a PNG, JPEG, GIF, WebP or SVG(Z) image.", href);
-                        None
-                    }
-                }
-            } else {
-                log::warn!("'{}' is not a path to an image.", href);
-                None
-            }
-        })
-    }
 }
 
 impl std::fmt::Debug for ImageHrefResolver<'_> {
@@ -125,7 +76,6 @@ enum ImageFormat {
     JPEG,
     GIF,
     WEBP,
-    SVG,
 }
 
 pub(crate) fn convert(
@@ -321,19 +271,12 @@ fn resolve_href(
 
         (state.opt.image_href_resolver.resolve_data)(&mime, Arc::new(data), state.opt)
     } else {
-        (state.opt.image_href_resolver.resolve_string)(href, state.opt)
+        log::warn!(
+            "'{}' is not a data URL and no resolver loads it. Skipped.",
+            href
+        );
+        None
     }
-}
-
-/// Checks that file has a PNG, a GIF, a JPEG or a WebP magic bytes.
-/// Or an SVG(Z) extension.
-fn get_image_file_format(path: &std::path::Path, data: &[u8]) -> Option<ImageFormat> {
-    let ext = path.extension().and_then(|e| e.to_str())?.to_lowercase();
-    if ext == "svg" || ext == "svgz" {
-        return Some(ImageFormat::SVG);
-    }
-
-    get_image_data_format(data)
 }
 
 /// Checks that file has a PNG, a GIF, a JPEG or a WebP magic bytes.

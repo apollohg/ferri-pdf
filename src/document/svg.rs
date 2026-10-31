@@ -638,7 +638,44 @@ pub(crate) struct SvgDefinitions {
     document: Option<crate::resources::Url>,
     /// The other documents that references name, as formatting loaded them.
     linked: crate::images::LinkedDocuments,
+    /// The images that referenced elements draw, as formatting loaded them.
+    images: crate::images::ReferenceImages,
 }
+
+/// An SVG element that a box's `url()` reference names, through the property naming it: a
+/// filter (Filter Effects 1 §5), clipping path (CSS Masking 1 §6.1) or mask (§7.1).
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub(crate) enum ReferencedEffect {
+    Filter,
+    ClipPath,
+    Mask,
+}
+
+impl ReferencedEffect {
+    fn element(self) -> &'static str {
+        match self {
+            Self::Filter => "filter",
+            Self::ClipPath => "clipPath",
+            Self::Mask => "mask",
+        }
+    }
+    fn property(self) -> &'static str {
+        match self {
+            Self::Filter => "filter",
+            Self::ClipPath => "clip-path",
+            Self::Mask => "mask",
+        }
+    }
+}
+
+/// The border box from which formatting, before layout places boxes, references SVG elements
+/// to load the images they draw: any area converts their content.
+const LOADING_BOUNDS: crate::graphics::Rect = crate::graphics::Rect {
+    x: 0.0,
+    y: 0.0,
+    width: crate::images::DEFAULT_OBJECT_SIZE[0] * crate::graphics::POINTS_PER_PIXEL,
+    height: crate::images::DEFAULT_OBJECT_SIZE[1] * crate::graphics::POINTS_PER_PIXEL,
+};
 
 #[derive(Clone)]
 pub(crate) struct SvgDefinition {
@@ -655,7 +692,10 @@ impl SvgDefinitions {
         tree: &DocumentTree,
         root: &Style,
         styling: &Styling<'_>,
-        linked: crate::images::LinkedDocuments,
+        (linked, images): (
+            crate::images::LinkedDocuments,
+            crate::images::ReferenceImages,
+        ),
         load_masks: &mut MaskLoader<'_>,
     ) -> Result<Self, DocumentError> {
         let mut roots: HashMap<ElementId, (Arc<str>, crate::svg::DocumentStyling)> = HashMap::new();
@@ -702,6 +742,7 @@ impl SvgDefinitions {
             entries: definitions,
             document: tree.document_url.clone(),
             linked,
+            images,
         })
     }
     pub(crate) fn motion(&self, reference: &str) -> Option<&SvgDefinition> {
@@ -745,16 +786,44 @@ impl SvgDefinitions {
             .ok()?;
         self.entries.get(id.as_ref())
     }
-    /// The tree in which a white rectangle spanning `bounds` references, through `property`,
-    /// the `element` element that `reference` names, in this document or another that
-    /// formatting loaded; `None` when it names no such element.
+    /// The tree in which a white rectangle spanning `bounds` references, through its property,
+    /// the `effect` element that `reference` names, in this document or another that
+    /// formatting loaded, drawing the images formatting loaded for it; `None` when it names no
+    /// such element.
     pub(crate) fn reference_tree(
         &self,
-        element: &str,
-        property: &str,
+        effect: ReferencedEffect,
         reference: &str,
         bounds: Option<crate::graphics::Rect>,
     ) -> Option<crate::svg::usvg::Tree> {
+        let images = |href: &str, _: &crate::svg::usvg::Options<'_>, _| {
+            self.images
+                .lock()
+                .unwrap_or_else(std::sync::PoisonError::into_inner)
+                .get(href)
+                .cloned()
+                .flatten()
+        };
+        self.tree(effect, reference, bounds, &images)
+    }
+    /// Converts the `effect` element that `reference` names, as a box references it, so that
+    /// `images` loads the images it draws.
+    pub(crate) fn load_images(
+        &self,
+        effect: ReferencedEffect,
+        reference: &str,
+        images: &crate::svg::ImageProvider<'_>,
+    ) {
+        self.tree(effect, reference, Some(LOADING_BOUNDS), images);
+    }
+    fn tree(
+        &self,
+        effect: ReferencedEffect,
+        reference: &str,
+        bounds: Option<crate::graphics::Rect>,
+        images: &crate::svg::ImageProvider<'_>,
+    ) -> Option<crate::svg::usvg::Tree> {
+        let (element, property) = (effect.element(), effect.property());
         let documents = |url: &str| {
             self.linked
                 .lock()
@@ -785,6 +854,7 @@ impl SvgDefinitions {
                         property,
                         reference,
                         bounds,
+                        images,
                         &documents,
                     )
                 })
@@ -800,6 +870,7 @@ impl SvgDefinitions {
             property,
             reference,
             bounds,
+            images,
             &documents,
         )
     }

@@ -162,6 +162,7 @@ fn colour_functions_match_their_svg_filter_equivalents() {
             "filter",
             "#f",
             Some(AREA),
+            &|_, _, _| None,
             &|_| None,
         )
         .unwrap_or_else(|| panic!("{function:?}: spec markup must parse: {markup}"));

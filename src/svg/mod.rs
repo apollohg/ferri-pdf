@@ -84,17 +84,24 @@ pub(crate) trait LayerMasks {
     );
 }
 
+/// Supplies the image an `<image>` or `feImage` reference names as conversion draws it, nested
+/// as deep as the conversion around it; `None` for an image in error.
+pub(crate) type ImageProvider<'a> =
+    dyn Fn(&str, &usvg::Options<'_>, usvg::Nesting) -> Option<usvg::ImageKind> + 'a;
+
 /// A tree in which a white rectangle spanning `bounds` (points), or no area without them,
 /// references SVG resource `reference` of document `xml` through presentation attribute
 /// `property`, so the SVG parser resolves the resource's units against that box. Tree units
-/// are CSS pixels. `styling` is what the document attaches to `xml`'s content, and
-/// `documents` supplies the other documents that references name.
+/// are CSS pixels. `styling` is what the document attaches to `xml`'s content, `images`
+/// supplies the images its content draws and `documents` the other documents that
+/// references name.
 pub(crate) fn reference_tree(
     xml: &str,
     styling: DocumentStyling,
     property: &str,
     reference: &str,
     bounds: Option<crate::graphics::Rect>,
+    images: &ImageProvider<'_>,
     documents: &dyn Fn(&str) -> Option<usvg::LinkedDocument>,
 ) -> Option<usvg::Tree> {
     use std::fmt::Write;
@@ -116,7 +123,7 @@ pub(crate) fn reference_tree(
         styling,
         ..usvg::Options::default()
     };
-    usvg::Tree::from_str_with_documents(&document, &options, documents).ok()
+    usvg::Tree::from_str_with_references(&document, &options, images, documents).ok()
 }
 
 /// The `filter` element `reference` names, resolved for an element with border box
@@ -126,12 +133,13 @@ pub(crate) fn referenced_filter(
     bounds: Option<crate::graphics::Rect>,
     definitions: &crate::document::svg::SvgDefinitions,
 ) -> Option<std::sync::Arc<usvg::filter::Filter>> {
-    let tree = definitions.reference_tree(FILTER_ELEMENT, FILTER_ELEMENT, reference, bounds)?;
+    let tree = definitions.reference_tree(
+        crate::document::svg::ReferencedEffect::Filter,
+        reference,
+        bounds,
+    )?;
     first_filter(tree.root())
 }
-
-/// The `filter` element and the property naming it.
-const FILTER_ELEMENT: &str = "filter";
 
 pub(crate) fn first_filter(group: &usvg::Group) -> Option<std::sync::Arc<usvg::filter::Filter>> {
     group.filters().first().cloned().or_else(|| {

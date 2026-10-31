@@ -29,6 +29,8 @@ command-line binary, the SVG writer (`Tree::to_string` and `WriteOptions`) and t
 system-font and memory-mapping features are removed. COLR painting reports unsupported blend
 modes through `log` instead of printing to standard output.
 
+The parser never reads files itself: without a caller's image callback, `<image>` and `feImage` resolve only data URLs, so the filesystem string resolver, `Options::resources_dir` and `Options::get_abs_path` are removed, and OpenType SVG glyph documents, which may not reference external resources, draw only data URL images.
+
 `font-weight` takes any number from 1 to 1000 and the CSS Fonts 4 §2.2.1 relative weights,
 `font-stretch` any percentage (§2.3) and `font-style: oblique` an angle (§2.4), so font
 matching receives the weight, width and slant the document's cascade computed.

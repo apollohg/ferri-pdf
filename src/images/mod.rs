@@ -398,6 +398,27 @@ pub struct ImageFailure {
 pub(crate) type LinkedDocuments =
     Arc<std::sync::Mutex<HashMap<String, Option<crate::svg::usvg::LinkedDocument>>>>;
 
+/// The images that the SVG elements boxes' `url()` references name draw, by reference; `None`
+/// for one in error. Formatting loads them through the resolver, which the SVG definitions
+/// read when painting.
+pub(crate) type ReferenceImages =
+    Arc<std::sync::Mutex<HashMap<String, Option<crate::svg::usvg::ImageKind>>>>;
+
+/// The SVG elements that boxes reference, whose images formatting loads once the document's
+/// SVG definitions are collected.
+#[derive(Default)]
+struct SvgReferences {
+    definitions: Option<std::rc::Rc<crate::document::svg::SvgDefinitions>>,
+    /// The references whose images are loaded, or wait in `pending`.
+    seen: HashSet<(crate::document::svg::ReferencedEffect, String)>,
+    /// References met before the definitions were collected, with their base.
+    pending: Vec<(
+        crate::document::svg::ReferencedEffect,
+        String,
+        crate::resources::ResourceBase,
+    )>,
+}
+
 #[derive(Default)]
 pub(crate) struct ImageCache {
     validated_markers: HashSet<usize>,
@@ -408,6 +429,8 @@ pub(crate) struct ImageCache {
     fonts: SvgFonts,
     svg_sources: HashMap<crate::resources::ResourceBase, HashMap<String, Arc<svg::SvgSource>>>,
     linked: LinkedDocuments,
+    reference_images: ReferenceImages,
+    svg_references: SvgReferences,
     images: HashMap<
         FontNamespace,
         HashMap<crate::resources::ResourceBase, HashMap<String, Arc<Image>>>,
@@ -428,12 +451,81 @@ impl ImageCache {
             limited: Vec::new(),
             svg_sources: HashMap::new(),
             linked: LinkedDocuments::default(),
+            reference_images: ReferenceImages::default(),
+            svg_references: SvgReferences::default(),
             images: HashMap::new(),
         }
     }
     /// The SVG documents that references into other documents name.
     pub(crate) fn linked_documents(&self) -> LinkedDocuments {
         self.linked.clone()
+    }
+    /// The images that the SVG elements boxes reference draw.
+    pub(crate) fn reference_images(&self) -> ReferenceImages {
+        self.reference_images.clone()
+    }
+    /// Loads, through `resolver`, the images that the `effect` element `reference` names draws,
+    /// as SVG content resolving against `base` loads its images, once per reference. Until
+    /// formatting collects the document's SVG definitions, the reference waits for them.
+    pub(crate) fn load_reference_images(
+        &mut self,
+        effect: crate::document::svg::ReferencedEffect,
+        reference: &str,
+        base: &crate::resources::ResourceBase,
+        resolver: &dyn ResourceResolver,
+    ) {
+        if !self
+            .svg_references
+            .seen
+            .insert((effect, reference.to_owned()))
+        {
+            return;
+        }
+        match self.svg_references.definitions.clone() {
+            Some(definitions) => {
+                self.load_referenced(&definitions, effect, reference, base, resolver);
+            }
+            None => {
+                self.svg_references
+                    .pending
+                    .push((effect, reference.to_owned(), base.clone()));
+            }
+        }
+    }
+    /// Adopts the SVG definitions that formatting collected, loading the images of the
+    /// references that waited for them.
+    pub(crate) fn adopt_svg_definitions(
+        &mut self,
+        definitions: crate::document::svg::SvgDefinitions,
+        resolver: &dyn ResourceResolver,
+    ) {
+        let definitions = std::rc::Rc::new(definitions);
+        self.svg_references.definitions = Some(definitions.clone());
+        for (effect, reference, base) in std::mem::take(&mut self.svg_references.pending) {
+            self.load_referenced(&definitions, effect, &reference, &base, resolver);
+        }
+    }
+    fn load_referenced(
+        &mut self,
+        definitions: &crate::document::svg::SvgDefinitions,
+        effect: crate::document::svg::ReferencedEffect,
+        reference: &str,
+        base: &crate::resources::ResourceBase,
+        resolver: &dyn ResourceResolver,
+    ) {
+        let images = self.reference_images.clone();
+        let loaded = std::mem::take(
+            &mut *images
+                .lock()
+                .unwrap_or_else(std::sync::PoisonError::into_inner),
+        );
+        let loader = svg::ImageLoader::new(base, resolver, FontNamespace::ROOT, self, loaded);
+        definitions.load_images(effect, reference, &|href, _, nesting| {
+            loader.load(href, nesting)
+        });
+        *images
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner) = loader.finish().0;
     }
     /// The SVG document whose elements `reference` names (SVG 2 §5.3.2), loaded once. A
     /// resource that cannot be fetched, or that is not UTF-8 text, names no element, so each

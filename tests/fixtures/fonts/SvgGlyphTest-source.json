@@ -1,0 +1,17 @@
+{
+  "derived_from": "assets/fonts/LiberationSans-Regular.ttf",
+  "source_sha256": "76d04c18ea243f426b7de1f3ad208e927008f961dc5945e5aad352d0dfde8ee8",
+  "license": "../../../assets/fonts/LIBERATION-LICENSE.txt",
+  "generator": "make-svg-glyph-font.py",
+  "tool": "FontTools 4.63.0",
+  "changes": "Subset to F, D and space, renamed family; the SVG table draws F as an image file named relative to the package root and D as the same image in a data URL.",
+  "image": "tests/oracle/assets/image-pattern.png",
+  "image_sha256": "b8c99a17907fdc3ac4531db1e968ecaf4ddc4ab7fd1df82eb821b0ba1b0c65f4",
+  "sha256": "a3b45af5c03c2409dcfb624db589422f321dcd559f0919447cf6879ca56aab81",
+  "bytes": 5564,
+  "units_per_em": 2048,
+  "glyphs": {
+    "F": 3,
+    "D": 2
+  }
+}

@@ -30,10 +30,6 @@ use std::sync::Arc;
 /// Filter Effects 1 §9.6 `luminanceToAlpha` coefficients, which §7.10.1 applies to sRGB.
 const LUMINANCE: [f32; 3] = [0.2125, 0.7154, 0.0721];
 const CHANNEL_MAX: f32 = 255.0;
-const CLIP_PATH_ELEMENT: &str = "clipPath";
-/// The `mask` element and the property naming it.
-const MASK_ELEMENT: &str = "mask";
-const CLIP_PATH_PROPERTY: &str = "clip-path";
 const WHITE: Color = Color {
     rgb: [u8::MAX; 3],
     alpha: 1.0,
@@ -252,8 +248,7 @@ fn draw_clip_element(
 ) -> Result<(), PdfError> {
     let border = fragment.decoration_rect();
     let Some(tree) = painter.raster.definitions.reference_tree(
-        CLIP_PATH_ELEMENT,
-        CLIP_PATH_PROPERTY,
+        crate::document::svg::ReferencedEffect::ClipPath,
         reference,
         Some(Rect {
             x: 0.0,
@@ -566,7 +561,11 @@ fn draw_source(
     let Some(mask) = painter
         .raster
         .definitions
-        .reference_tree(MASK_ELEMENT, MASK_ELEMENT, reference, Some(bounds))
+        .reference_tree(
+            crate::document::svg::ReferencedEffect::Mask,
+            reference,
+            Some(bounds),
+        )
         .and_then(|tree| first_mask(tree.root()))
     else {
         return Ok(());

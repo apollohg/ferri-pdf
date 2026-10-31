@@ -123,41 +123,21 @@ impl SvgImage {
             },
             crate::images::DEFAULT_OBJECT_SIZE[0],
         );
-        // An image that cannot be loaded or decoded leaves its element in error, which is not
-        // rendered (SVG 2 §12.3), with a diagnostic.
-        let resources = RefCell::new(HashMap::<String, Option<ImageKind>>::new());
+        let images = ImageLoader::new(&source.base, resolver, namespace, cache, HashMap::new());
         let documents = RefCell::new(HashMap::<String, Option<LinkedDocument>>::new());
-        let jpeg_images = RefCell::new(HashSet::new());
-        let cache = RefCell::new(cache);
-        // An image converts where it draws, nesting in the conversion around it.
         let resolve = |href: &str, _: &crate::svg::usvg::Options<'_>, conversion| {
-            if href.starts_with('#') {
-                return None;
-            }
-            if let Some(kind) = resources.borrow().get(href) {
-                return kind.clone();
-            }
-            let loaded =
-                cache
-                    .borrow_mut()
-                    .load_nested(href, &source.base, resolver, conversion, namespace);
-            let loaded = loaded
-                .and_then(|image| image_kind(&image, &mut jpeg_images.borrow_mut()))
-                .map_err(|error| cache.borrow_mut().record_failure(&source.base, href, error))
-                .ok();
-            resources
-                .borrow_mut()
-                .insert(href.to_owned(), loaded.clone());
-            loaded
+            images.load(href, conversion)
         };
         options.default_size = crate::svg::usvg::Size::from_wh(initial_size[0], initial_size[1])
             .ok_or(ImageError::SvgSize)?;
         let resolve_document = |reference: &str| {
-            let document = cache
+            let document = images
+                .cache
                 .borrow()
                 .linked_document(reference, &source.base, resolver);
             let document = document.unwrap_or_else(|error| {
-                cache
+                images
+                    .cache
                     .borrow_mut()
                     .record_failure(&source.base, reference, error);
                 None
@@ -180,11 +160,12 @@ impl SvgImage {
         let initial_tree = initial_tree.map_err(ImageError::Svg)?;
         let mut limits = parsed.limits();
         limits.truncated |= initial_tree.truncated;
-        cache
-            .into_inner()
+        images
+            .cache
+            .borrow_mut()
             .record_limits(limits, initial_tree.limited);
+        let (resources, jpeg_images) = images.finish();
         let resources = resources
-            .into_inner()
             .into_iter()
             .filter_map(|(href, kind)| Some((href, kind?)))
             .collect();
@@ -193,7 +174,7 @@ impl SvgImage {
             fonts,
             resources,
             documents: documents.into_inner(),
-            jpeg_images: jpeg_images.into_inner(),
+            jpeg_images,
             width,
             height,
             ratio,
@@ -257,6 +238,74 @@ impl SvgImage {
     }
 }
 
+/// Loads the images that SVG content draws through the caller's resolver, each reference once.
+/// An image that cannot be loaded or decoded leaves its element in error, which is not rendered
+/// (SVG 2 §12.3), with a diagnostic.
+pub(crate) struct ImageLoader<'a> {
+    base: &'a ResourceBase,
+    resolver: &'a dyn ResourceResolver,
+    namespace: FontNamespace,
+    cache: RefCell<&'a mut ImageCache>,
+    /// The images by reference, `None` for one in error.
+    loaded: RefCell<HashMap<String, Option<ImageKind>>>,
+    jpeg_images: RefCell<HashSet<usize>>,
+}
+
+impl<'a> ImageLoader<'a> {
+    /// References resolve against `base`; `loaded` holds the images loaded already.
+    pub(crate) fn new(
+        base: &'a ResourceBase,
+        resolver: &'a dyn ResourceResolver,
+        namespace: FontNamespace,
+        cache: &'a mut ImageCache,
+        loaded: HashMap<String, Option<ImageKind>>,
+    ) -> Self {
+        Self {
+            base,
+            resolver,
+            namespace,
+            cache: RefCell::new(cache),
+            loaded: RefCell::new(loaded),
+            jpeg_images: RefCell::new(HashSet::new()),
+        }
+    }
+
+    /// The image `href` names, which converts where it draws, `nesting` deep in the conversion
+    /// around it.
+    pub(crate) fn load(&self, href: &str, nesting: Nesting) -> Option<ImageKind> {
+        if href.starts_with('#') {
+            return None;
+        }
+        if let Some(kind) = self.loaded.borrow().get(href) {
+            return kind.clone();
+        }
+        let loaded = self.cache.borrow_mut().load_nested(
+            href,
+            self.base,
+            self.resolver,
+            nesting,
+            self.namespace,
+        );
+        let loaded = loaded
+            .and_then(|image| image_kind(&image, &mut self.jpeg_images.borrow_mut()))
+            .map_err(|error| {
+                self.cache
+                    .borrow_mut()
+                    .record_failure(self.base, href, error);
+            })
+            .ok();
+        self.loaded
+            .borrow_mut()
+            .insert(href.to_owned(), loaded.clone());
+        loaded
+    }
+
+    /// The images by reference, and the identities of the PNG resources decoded from photos.
+    pub(crate) fn finish(self) -> (HashMap<String, Option<ImageKind>>, HashSet<usize>) {
+        (self.loaded.into_inner(), self.jpeg_images.into_inner())
+    }
+}
+
 fn pixel_size(dimensions: crate::images::NaturalDimensions, available_width: f32) -> [f32; 2] {
     match (dimensions.width, dimensions.height, dimensions.ratio) {
         (Some(w), Some(h), _) => [w, h],
@@ -278,7 +327,6 @@ pub(crate) fn options(size: [f32; 2]) -> Result<crate::svg::usvg::Options<'stati
         default_size: crate::svg::usvg::Size::from_wh(size[0], size[1])
             .ok_or(ImageError::SvgSize)?,
         image_href_resolver: crate::svg::usvg::ImageHrefResolver {
-            resolve_string: Box::new(|_, _| None),
             resolve_data: Box::new(|_, _, _| None),
         },
         ..Default::default()

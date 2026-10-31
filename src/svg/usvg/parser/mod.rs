@@ -219,12 +219,10 @@ impl crate::svg::usvg::Tree {
         }
     }
 
-    /// Similar to the `from_data` method, except that it ignores all `image` elements linking to
-    /// external files, as required by the SVG specification when SVG files are loaded
-    /// for `<image href="..." />` tags.
+    /// Similar to the `from_data` method, for an SVG image that `opt`'s data URL resolver
+    /// loaded; its own images likewise resolve only from data URLs.
     pub fn from_data_nested(data: &[u8], opt: &Options) -> Result<Self, Error> {
         let nested_opt = Options {
-            resources_dir: None,
             dpi: opt.dpi,
             font_size: opt.font_size,
             languages: opt.languages.clone(),
@@ -234,8 +232,6 @@ impl crate::svg::usvg::Tree {
             default_size: opt.default_size,
             image_href_resolver: ImageHrefResolver {
                 resolve_data: Box::new(|a, b, c| (opt.image_href_resolver.resolve_data)(a, b, c)),
-                // External images should be ignored.
-                resolve_string: Box::new(|_, _| None),
             },
             // In the referenced SVG, we start with the unmodified user-provided
             // fontdb, not the one from the cache.
@@ -289,13 +285,15 @@ impl crate::svg::usvg::Tree {
         )
     }
 
-    /// Parses with the documents that references into other documents name.
-    pub(crate) fn from_str_with_documents(
+    /// Parses with borrowed image and linked-document providers: the images and the documents
+    /// that references into other documents name.
+    pub(crate) fn from_str_with_references(
         text: &str,
         opt: &Options,
+        images: &dyn Fn(&str, &Options, Nesting) -> Option<crate::svg::usvg::ImageKind>,
         documents: &dyn Fn(&str) -> Option<LinkedDocument>,
     ) -> Result<Self, Error> {
-        Self::from_str_impl(text, opt, None, None, None, Some(documents))
+        Self::from_str_impl(text, opt, None, Some(images), None, Some(documents))
     }
 
     fn from_str_impl(

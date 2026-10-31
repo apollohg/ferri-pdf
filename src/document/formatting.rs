@@ -1643,45 +1643,66 @@ impl ImageResources<'_> {
     }
     /// Loads the other SVG documents whose elements the box's filters, masks and clip path
     /// reference (Filter Effects 1 §5, CSS Masking 1 §6.1, §7.1), with the documents those
-    /// reference in turn, for painting to find. One that cannot be loaded names no element,
-    /// with a diagnostic.
+    /// reference in turn, and the images those elements draw, for painting to find. One that
+    /// cannot be loaded names no element, or leaves its image in error, with a diagnostic.
     fn link_documents(&mut self, style: &Style) {
+        use crate::document::svg::ReferencedEffect;
         let masks = &style.decoration.masks;
         let references = style
             .filter
             .iter()
             .chain(style.backdrop_filter.iter())
             .filter_map(|function| match function {
-                crate::paint::FilterFunction::Url(reference) => Some(&**reference),
+                crate::paint::FilterFunction::Url(reference) => {
+                    Some((ReferencedEffect::Filter, &**reference))
+                }
                 _ => None,
             })
-            .chain(masks.sources.iter().flatten().map(|reference| &**reference))
-            .chain(masks.clip_reference.as_deref());
-        for reference in references {
-            if reference.starts_with(SAME_DOCUMENT) {
-                continue;
-            }
-            let failures = std::cell::RefCell::new(Vec::new());
-            let load = |url: &str| {
-                self.cache
-                    .linked_document(url, self.base, self.resolver)
-                    .unwrap_or_else(|error| {
-                        failures.borrow_mut().push((url.to_owned(), error));
-                        None
-                    })
-            };
-            // Linking the reference loads its documents; the box's geometry is not known yet.
-            crate::svg::reference_tree(
-                "",
-                crate::svg::DocumentStyling::default(),
-                LINKING_PROPERTY,
-                reference,
-                None,
-                &load,
+            .chain(
+                masks
+                    .sources
+                    .iter()
+                    .flatten()
+                    .map(|reference| (ReferencedEffect::Mask, &**reference)),
+            )
+            .chain(
+                masks
+                    .clip_reference
+                    .as_deref()
+                    .map(|reference| (ReferencedEffect::ClipPath, reference)),
             );
-            for (url, error) in failures.into_inner() {
-                self.cache.record_failure(self.base, &url, error);
+        for (effect, reference) in references {
+            if !reference.starts_with(SAME_DOCUMENT) {
+                self.link_document(reference);
             }
+            self.cache
+                .load_reference_images(effect, reference, self.base, self.resolver);
+        }
+    }
+    /// Loads the other SVG documents that `reference` names, as [`Self::link_documents`] does.
+    fn link_document(&mut self, reference: &str) {
+        let failures = std::cell::RefCell::new(Vec::new());
+        let load = |url: &str| {
+            self.cache
+                .linked_document(url, self.base, self.resolver)
+                .unwrap_or_else(|error| {
+                    failures.borrow_mut().push((url.to_owned(), error));
+                    None
+                })
+        };
+        // Linking the reference loads its documents; the box's geometry is not known yet, and
+        // their images load once the definitions are collected.
+        crate::svg::reference_tree(
+            "",
+            crate::svg::DocumentStyling::default(),
+            LINKING_PROPERTY,
+            reference,
+            None,
+            &|_, _, _| None,
+            &load,
+        );
+        for (url, error) in failures.into_inner() {
+            self.cache.record_failure(self.base, &url, error);
         }
     }
 }
@@ -4682,7 +4703,7 @@ fn hidden_root(
     })?;
     let canvas = canvas_surface(BoxDecoration::default(), surface_beneath(sheet, style));
     let mut cache = input.images.borrow_mut();
-    let linked = cache.linked_documents();
+    let loaded = (cache.linked_documents(), cache.reference_images());
     let mut images = ImageResources {
         base: resources.base,
         resolver,
@@ -4698,9 +4719,12 @@ fn hidden_root(
             resolver,
             work: &work,
         },
-        linked,
+        loaded,
         &mut |style| images.masks(style),
     )?;
+    images
+        .cache
+        .adopt_svg_definitions(svg_definitions.clone(), resolver);
     Ok(Formatted {
         root: BlockBox::anonymous(style.clone(), vec![BlockContent::Events(events)], None),
         footnotes: Footnotes::default(),
@@ -4803,7 +4827,10 @@ fn format_root(
         0
     };
     let surface = surface_beneath(sheet, &style);
-    let linked = resources.cache.linked_documents();
+    let loaded = (
+        resources.cache.linked_documents(),
+        resources.cache.reference_images(),
+    );
     let svg_definitions = crate::document::svg::SvgDefinitions::collect(
         html,
         &style,
@@ -4812,9 +4839,12 @@ fn format_root(
             resolver,
             work: &traversal.work,
         },
-        linked,
+        loaded,
         &mut |style| resources.masks(style),
     )?;
+    resources
+        .cache
+        .adopt_svg_definitions(svg_definitions.clone(), resolver);
     // The viewport scrolls the root element's overflow (CSS Overflow 3 §3.3).
     let marker_group = marker_group_style(element, &style, sheet, resolver)?;
     traversal.marker_groups.scroller(element.id(), None, &style);

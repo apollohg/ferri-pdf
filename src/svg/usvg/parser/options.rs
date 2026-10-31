@@ -9,14 +9,6 @@ use crate::svg::usvg::{ImageHrefResolver, ImageRendering, ShapeRendering, Size, 
 /// Processing options.
 #[derive(Debug)]
 pub struct Options<'a> {
-    /// Directory that will be used during relative paths resolving.
-    ///
-    /// Expected to be the same as the directory that contains the SVG file,
-    /// but can be set to any.
-    ///
-    /// Default: `None`
-    pub resources_dir: Option<std::path::PathBuf>,
-
     /// Target DPI.
     ///
     /// Impacts units conversion.
@@ -103,7 +95,6 @@ pub struct Options<'a> {
 impl Default for Options<'_> {
     fn default() -> Options<'static> {
         Options {
-            resources_dir: None,
             dpi: 96.0,
             // Default font is user-agent dependent so we can use whichever we like.
             font_family: "Times New Roman".to_owned(),
@@ -124,16 +115,6 @@ impl Default for Options<'_> {
 }
 
 impl Options<'_> {
-    /// Converts a relative path into absolute relative to the SVG file itself.
-    ///
-    /// If `Options::resources_dir` is not set, returns itself.
-    pub fn get_abs_path(&self, rel_path: &std::path::Path) -> std::path::PathBuf {
-        match self.resources_dir {
-            Some(ref dir) => dir.join(rel_path),
-            None => rel_path.into(),
-        }
-    }
-
     /// Mutably acquires the database.
     ///
     /// This clones the database if it is currently shared.
