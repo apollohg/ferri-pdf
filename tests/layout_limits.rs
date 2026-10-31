@@ -118,24 +118,22 @@ fn font_size_adjust_past_finite_sizes_omits_only_its_text_box() {
     }
 }
 
-#[test]
-fn running_elements_layout_cannot_form_are_omitted_with_their_assignments() {
-    let output = render_html(
-        "<!doctype html><style>.r{position:running(header);font-size:calc(1e30px*1e30)}\
-         @page{@top-center{content:element(header)}}</style>\
-         <div class=r>Running</div><p>Body</p>",
-        &local_options(),
-    )
-    .expect("a running element layout cannot form renders without it");
-    assert!(
-        output.diagnostics.iter().any(|diagnostic| matches!(
-            diagnostic,
-            RenderDiagnostic::Layout(LayoutDiagnostic::OmittedBox { .. })
-        )),
-        "the omitted running element is reported, got {:?}",
-        output.diagnostics
-    );
-    let texts: Vec<_> = output
+/// The text of every line `html` renders, sorted, and the reasons of the boxes its layout
+/// omits.
+fn texts_and_omitted_boxes(html: &str) -> (Vec<String>, Vec<String>) {
+    let output = render_html(html, &local_options())
+        .unwrap_or_else(|error| panic!("{html} must render: {error}"));
+    let omitted = output
+        .diagnostics
+        .iter()
+        .filter_map(|diagnostic| match diagnostic {
+            RenderDiagnostic::Layout(LayoutDiagnostic::OmittedBox { reason }) => {
+                Some(reason.clone())
+            }
+            _ => None,
+        })
+        .collect();
+    let mut texts: Vec<_> = output
         .layout
         .unwrap()
         .pages
@@ -143,8 +141,67 @@ fn running_elements_layout_cannot_form_are_omitted_with_their_assignments() {
         .flatten()
         .map(|line| line.text)
         .collect();
-    assert!(
-        !texts.iter().any(|text| text == "Running"),
-        "the margin box shows no copy of the omitted running element: {texts:?}"
+    texts.sort();
+    (texts, omitted)
+}
+
+#[test]
+fn running_elements_layout_cannot_form_are_omitted_with_their_margin_boxes() {
+    let html = "<!doctype html><style>.r{position:running(header);font-size:calc(1e30px*1e30)}\
+                @page{@top-center{content:element(header)}@bottom-center{content:'Foot'}}</style>\
+                <div class=r>Running</div><p>Body</p>";
+    let (texts, omitted) = texts_and_omitted_boxes(html);
+    assert_eq!(
+        omitted,
+        ["non-finite text geometry"],
+        "the margin box placing the running element is reported omitted"
     );
+    assert_eq!(
+        texts,
+        ["Body", "Foot"],
+        "only the margin box placing the running element is lost, not the body or the other \
+         margin boxes"
+    );
+}
+
+#[test]
+fn page_margin_boxes_layout_cannot_form_are_omitted_alone() {
+    const HUGE: &str = "font-size:calc(1e30px*1e30)";
+    for (rule, reason) in [
+        (
+            format!("@top-center{{content:'Head';{HUGE}}}"),
+            "non-finite text geometry",
+        ),
+        (
+            "@top-center{content:'Head';letter-spacing:3e38px}".to_owned(),
+            "non-finite text geometry",
+        ),
+        (
+            format!("@left-middle{{content:'Side text';{HUGE}}}"),
+            "non-finite text geometry",
+        ),
+        (
+            "@top-center{content:'Head';padding-left:3e38px;padding-right:3e38px}".to_owned(),
+            "non-finite page-margin geometry at TopCenter",
+        ),
+        (
+            format!("@top-left-corner{{content:'C';{HUGE}}}"),
+            "non-finite page-margin geometry at TopLeftCorner",
+        ),
+    ] {
+        let (texts, omitted) = texts_and_omitted_boxes(&format!(
+            "<!doctype html><style>@page{{{rule}@bottom-center{{content:'Foot'}}}}</style>\
+             <p>Body</p>"
+        ));
+        assert_eq!(
+            omitted,
+            [reason],
+            "{rule}: the omitted margin box is reported"
+        );
+        assert_eq!(
+            texts,
+            ["Body", "Foot"],
+            "{rule}: only the margin box is lost, not the body or the other margin boxes"
+        );
+    }
 }

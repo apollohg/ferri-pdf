@@ -221,18 +221,36 @@ fn fixed_margin_dimensions_fill_the_margin_and_middle_boxes_force_symmetric_side
 }
 
 #[test]
-fn nonfinite_page_margin_geometry_is_rejected_even_without_text() {
+fn nonfinite_page_margin_geometry_omits_the_box_even_without_text() {
     let html = format!(
         r#"<style>{PROFILE}@page{{@top-left{{content:"";background:red;padding:1e38%}}}}</style><p>Body</p>"#
     );
-    let error = render_html(&html, &local_options())
-        .err()
-        .expect("overflowing margin geometry must not reach the PDF writer");
+    let output = render_html(&html, &local_options())
+        .unwrap_or_else(|error| panic!("overflowing margin geometry must render: {error}"));
     assert!(
-        error
-            .to_string()
-            .contains("non-finite page-margin geometry"),
-        "unexpected error: {error}"
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            ferri_pdf::RenderDiagnostic::Layout(ferri_pdf::LayoutDiagnostic::OmittedBox { reason })
+                if reason.contains("non-finite page-margin geometry")
+        )),
+        "the omitted margin box is reported, got {:?}",
+        output.diagnostics
+    );
+    let trace = output.layout.unwrap();
+    let boxes: Vec<_> = trace.display_lists[0]
+        .iter()
+        .filter_map(|item| match item {
+            ferri_pdf::DisplayItem::Box(paint) => Some(paint.rect),
+            _ => None,
+        })
+        .collect();
+    assert!(
+        boxes.is_empty(),
+        "the margin box's background must not reach the PDF writer: {boxes:?}"
+    );
+    assert!(
+        trace.pages[0].iter().any(|line| line.text == "Body"),
+        "the body renders on the margin box's page"
     );
 }
 

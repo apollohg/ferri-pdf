@@ -135,8 +135,15 @@ impl<'t> Prepared<'_, 't> {
             .chain(self.margins.iter().flatten())
             .chain(self.specified.iter().flatten())
             .chain(self.start.iter())
-            .chain(self.content.iter());
+            .chain(self.content.iter())
+            .copied()
+            .chain(
+                self.lines
+                    .iter()
+                    .flat_map(|line| [line.ascent, line.height]),
+            );
         if values.into_iter().any(|value| !value.is_finite())
+            || !self.block_extent().is_finite()
             || [HORIZONTAL, VERTICAL]
                 .iter()
                 .any(|&axis| !self.outer_edges(axis).is_finite())
@@ -329,6 +336,52 @@ impl<'t> Prepared<'_, 't> {
             widths
         };
         Ok([widths.min, widths.max])
+    }
+    /// The box's outer size bounds along variable `axis` of its `containing` margin area,
+    /// once it fills the area's fixed axis.
+    fn dimension(
+        &mut self,
+        measurer: &mut Measurer<'t>,
+        axis: usize,
+        containing: [f32; 2],
+        destinations: usize,
+    ) -> Result<Variable, LayoutError> {
+        self.validate()?;
+        let fixed_axis = 1 - axis;
+        self.fixed(fixed_axis, containing[fixed_axis]);
+        let bounds = if axis == self.inline_axis() {
+            self.intrinsic(measurer, containing[axis])?
+        } else {
+            self.layout(measurer, destinations)?;
+            [self.block_extent(); 2]
+        };
+        if axis == HORIZONTAL && self.margin.style.width.intrinsic().is_some() {
+            let available = containing[axis] - self.outer_edges(axis);
+            let style = &self.margin.style;
+            let sizes = [&style.width, &Size::Auto, &Size::Auto];
+            self.specified[axis] = crate::style::SizeConstraints::new(
+                sizes,
+                Some(containing[axis]),
+                style.box_sizing,
+                self.edges(axis),
+            )
+            .with_intrinsic(
+                sizes,
+                crate::style::IntrinsicWidths {
+                    min: bounds[0],
+                    max: bounds[1],
+                },
+                Some(available.max(0.0)),
+            )
+            .specified;
+        }
+        let edges = self.outer_edges(axis);
+        Ok(Variable {
+            min: bounds[0] + edges,
+            max: bounds[1] + edges,
+            specified: self.specified[axis].map(|size| size + edges),
+            generated: true,
+        })
     }
     fn content_intrinsic(
         &self,
@@ -1059,6 +1112,30 @@ fn prepare<'a, 't>(
     })
 }
 
+/// What a margin box's layout or paint `result` yields, or nothing when its geometry or
+/// content cannot form: the box is then omitted, as layout omits such boxes of the document,
+/// and the rest of its page renders.
+fn unless_failed<T>(
+    measurer: &Measurer<'_>,
+    result: Result<T, LayoutError>,
+) -> Result<Option<T>, LayoutError> {
+    match result {
+        Ok(value) => Ok(Some(value)),
+        Err(error)
+            if error.fails_at_box()
+                || matches!(error, LayoutError::NonFinitePageMarginGeometry { .. }) =>
+        {
+            measurer
+                .diagnostics
+                .record(crate::layout::LayoutDiagnostic::OmittedBox {
+                    reason: error.to_string(),
+                });
+            Ok(None)
+        }
+        Err(error) => Err(error),
+    }
+}
+
 pub(super) fn render<'t>(
     page_boxes: &[std::sync::Arc<PageBox>],
     context: &MarginContext<'_, 't>,
@@ -1115,7 +1192,7 @@ pub(super) fn render<'t>(
                     continue;
                 };
                 measurer.work.spend(1)?;
-                let mut prepared = prepare(
+                let sized = prepare(
                     margin,
                     decoration,
                     containing,
@@ -1123,66 +1200,43 @@ pub(super) fn render<'t>(
                     total,
                     context,
                     page_text.is_some(),
-                )?;
-                prepared.validate()?;
-                let fixed_axis = 1 - axis;
-                prepared.fixed(fixed_axis, containing[fixed_axis]);
-                let bounds = if axis == prepared.inline_axis() {
-                    prepared.intrinsic(measurer, containing[axis])?
-                } else {
-                    prepared.layout(measurer, context.destinations)?;
-                    [prepared.block_extent(); 2]
-                };
-                if axis == HORIZONTAL && prepared.margin.style.width.intrinsic().is_some() {
-                    let available = containing[axis] - prepared.outer_edges(axis);
-                    let style = &prepared.margin.style;
-                    let sizes = [&style.width, &Size::Auto, &Size::Auto];
-                    prepared.specified[axis] = crate::style::SizeConstraints::new(
-                        sizes,
-                        Some(containing[axis]),
-                        style.box_sizing,
-                        prepared.edges(axis),
-                    )
-                    .with_intrinsic(
-                        sizes,
-                        crate::style::IntrinsicWidths {
-                            min: bounds[0],
-                            max: bounds[1],
-                        },
-                        Some(available.max(0.0)),
-                    )
-                    .specified;
+                )
+                .and_then(|mut prepared| {
+                    let dimension =
+                        prepared.dimension(measurer, axis, containing, context.destinations)?;
+                    Ok((prepared, dimension))
+                });
+                if let Some((prepared, dimension)) = unless_failed(measurer, sized)? {
+                    dimensions[position] = dimension;
+                    boxes[position] = Some(prepared);
                 }
-                let edges = prepared.outer_edges(axis);
-                dimensions[position] = Variable {
-                    min: bounds[0] + edges,
-                    max: bounds[1] + edges,
-                    specified: prepared.specified[axis].map(|size| size + edges),
-                    generated: true,
-                };
-                boxes[position] = Some(prepared);
             }
             let sizes = variable(dimensions, containing[axis]);
             for (position, prepared) in boxes.into_iter().enumerate() {
                 if let Some(mut prepared) = prepared {
                     prepared.variable(axis, containing[axis], sizes[position], position);
-                    prepared.layout(measurer, context.destinations)?;
                     let margin = prepared.margin;
                     let mut items = Vec::new();
-                    prepared.paint(
-                        origin,
-                        first_index + margin.location as usize,
-                        &mut MarginOutput {
-                            page: page_box,
-                            perspective,
-                            lines: page,
-                            display: &mut items,
-                            links,
-                            page_text: page_text.as_mut(),
-                        },
-                        measurer,
-                    )?;
-                    stacked.push((margin, items));
+                    let painted = prepared
+                        .layout(measurer, context.destinations)
+                        .and_then(|()| {
+                            prepared.paint(
+                                origin,
+                                first_index + margin.location as usize,
+                                &mut MarginOutput {
+                                    page: page_box,
+                                    perspective,
+                                    lines: page,
+                                    display: &mut items,
+                                    links,
+                                    page_text: page_text.as_mut(),
+                                },
+                                measurer,
+                            )
+                        });
+                    if unless_failed(measurer, painted)?.is_some() {
+                        stacked.push((margin, items));
+                    }
                 }
             }
         }
@@ -1208,7 +1262,8 @@ pub(super) fn render<'t>(
                 .iter()
                 .find(|(margin, _)| margin.location == location)
             {
-                let mut prepared = prepare(
+                let mut items = Vec::new();
+                let painted = prepare(
                     margin,
                     decoration,
                     containing,
@@ -1216,27 +1271,30 @@ pub(super) fn render<'t>(
                     total,
                     context,
                     page_text.is_some(),
-                )?;
-                prepared.validate()?;
-                for axis in [HORIZONTAL, VERTICAL] {
-                    prepared.fixed(axis, containing[axis]);
+                )
+                .and_then(|mut prepared| {
+                    prepared.validate()?;
+                    for axis in [HORIZONTAL, VERTICAL] {
+                        prepared.fixed(axis, containing[axis]);
+                    }
+                    prepared.layout(measurer, context.destinations)?;
+                    prepared.paint(
+                        origin,
+                        first_index + location as usize,
+                        &mut MarginOutput {
+                            page: page_box,
+                            perspective,
+                            lines: page,
+                            display: &mut items,
+                            links,
+                            page_text: page_text.as_mut(),
+                        },
+                        measurer,
+                    )
+                });
+                if unless_failed(measurer, painted)?.is_some() {
+                    stacked.push((*margin, items));
                 }
-                prepared.layout(measurer, context.destinations)?;
-                let mut items = Vec::new();
-                prepared.paint(
-                    origin,
-                    first_index + location as usize,
-                    &mut MarginOutput {
-                        page: page_box,
-                        perspective,
-                        lines: page,
-                        display: &mut items,
-                        links,
-                        page_text: page_text.as_mut(),
-                    },
-                    measurer,
-                )?;
-                stacked.push((*margin, items));
             }
         }
         // CSS Page 3 §3.1: margin boxes stack by `z-index`, then in their default painting
