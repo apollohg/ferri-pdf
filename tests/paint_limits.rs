@@ -1,6 +1,6 @@
 mod common;
 
-use common::{local_options, lossy_options};
+use common::{local_options, lossy_options, pdf_number_faults};
 use ferri_pdf::{PaintDiagnostic, RenderDiagnostic, RenderOutput, render_html};
 
 const RED: [u8; 3] = [255, 0, 0];
@@ -184,4 +184,85 @@ fn transforms_beyond_finite_coordinates_render_without_their_content() {
         pixels.iter().any(|pixel| pixel[..3] == [0, 0, 255]),
         "the content after the overflowing box still paints"
     );
+}
+
+#[test]
+fn items_with_numbers_pdf_cannot_write_are_omitted_with_a_diagnostic() {
+    const BLUE: [u8; 3] = [0, 0, 255];
+    for unwritable in [
+        "width:3e38px;height:10px;background:red",
+        "width:10px;height:10px;background:red;transform:scale(1e30)",
+        "width:10px;height:10px;background:red;box-shadow:0 0 0 3e38px red",
+    ] {
+        let html = format!(
+            "<!doctype html><div style='{unwritable}'></div>\
+             <div style='width:100px;height:100px;background:rgb(0,0,255)'></div>"
+        );
+        assert!(
+            matches!(
+                render_html(&html, &local_options()),
+                Err(ferri_pdf::Error::ContentLost { .. })
+            ),
+            "{unwritable}: the omitted item loses content, which fails the default render"
+        );
+        let output = render_html(&html, &lossy_options())
+            .unwrap_or_else(|error| panic!("{unwritable}: must render: {error}"));
+        let faults = pdf_number_faults(&output.pdf);
+        assert!(
+            faults.is_empty(),
+            "{unwritable}: the PDF holds only finite numbers within the PDF limit:\n{}",
+            faults.join("\n")
+        );
+        assert!(
+            output.diagnostics.iter().any(|diagnostic| matches!(
+                diagnostic,
+                RenderDiagnostic::Paint(PaintDiagnostic::Omitted { reason })
+                    if reason.starts_with("paint number")
+            )),
+            "{unwritable}: the omitted item is reported, got {:?}",
+            output.diagnostics
+        );
+        let (pixels, _) = first_page_pixels(&output);
+        assert!(
+            pixels.iter().all(|pixel| pixel[..3] != RED),
+            "{unwritable}: no part of the unwritable item paints"
+        );
+        assert!(
+            pixels.iter().any(|pixel| pixel[..3] == BLUE),
+            "{unwritable}: the content after the unwritable item still paints"
+        );
+    }
+}
+
+#[test]
+fn links_and_destinations_pdf_cannot_write_are_left_out() {
+    for (link, target) in [
+        ("", "transform:translateY(1e30px)"),
+        ("display:inline-block;transform:translateX(1e30px)", ""),
+    ] {
+        let output = render_html(
+            &format!(
+                "<!doctype html><p><a href=#target style='{link}'>link</a></p>\
+                 <h1 id=target style='{target}'>target</h1>"
+            ),
+            &lossy_options(),
+        )
+        .unwrap_or_else(|error| panic!("{link} {target}: must render: {error}"));
+        let faults = pdf_number_faults(&output.pdf);
+        assert!(
+            faults.is_empty(),
+            "{link} {target}: the link annotation, destination and bookmark write no number \
+             past the PDF limit:\n{}",
+            faults.join("\n")
+        );
+        assert!(
+            output.diagnostics.iter().any(|diagnostic| matches!(
+                diagnostic,
+                RenderDiagnostic::Paint(PaintDiagnostic::Omitted { reason })
+                    if reason.starts_with("paint number")
+            )),
+            "{link} {target}: what is left out is reported, got {:?}",
+            output.diagnostics
+        );
+    }
 }

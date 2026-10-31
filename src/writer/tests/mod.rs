@@ -2,6 +2,7 @@ mod backdrops;
 mod borders;
 mod clips;
 mod filters;
+mod numbers;
 
 fn render(size: [u16; 2], draw: impl FnOnce(&mut krilla::surface::Surface<'_>)) -> Vec<u8> {
     let mut document = krilla::Document::new();

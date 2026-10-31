@@ -8,6 +8,7 @@ mod filters;
 mod images;
 mod masks;
 mod navigation;
+mod numbers;
 mod painting;
 mod pixels;
 mod projection;
@@ -66,6 +67,12 @@ pub enum PdfError {
     UnresolvedImage(#[source] crate::graphics::UnresolvedImage),
     #[error("invalid paint geometry")]
     InvalidGeometry,
+    /// A display item's geometry, transform or effect holds a number PDF cannot write.
+    #[error(
+        "paint number {0} is not finite or not within {bound}",
+        bound = numbers::PDF_NUMBER_BOUND
+    )]
+    UnwritableNumber(f64),
     #[error("invalid paint alpha {0}")]
     InvalidAlpha(f32),
     #[error("a {width} by {height} pixel filter raster exceeds the rasterizer's limit")]
@@ -249,6 +256,16 @@ pub(crate) fn encode_parts_with_diagnostics(
     let mut outline = krilla::outline::Outline::new();
     for (part_index, part) in parts.iter().enumerate() {
         let trace = part.trace;
+        for number in trace
+            .destinations
+            .iter()
+            .flatten()
+            .filter_map(navigation::unwritable_destination)
+        {
+            images.record(PaintDiagnostic::Omitted {
+                reason: PdfError::UnwritableNumber(number).to_string(),
+            });
+        }
         let mut text = text::TextWriter::new(part.fonts);
         let raster = raster::RasterContext::new(settings_dpi, part.definitions);
         images.elements.extend(
@@ -331,7 +348,12 @@ pub(crate) fn encode_parts_with_diagnostics(
                 page.finish();
                 return Err(error);
             }
-            navigation::annotate(&mut page, &trace.links[page_index], &links[part_index])?;
+            navigation::annotate(
+                &mut page,
+                &trace.links[page_index],
+                &links[part_index],
+                &mut images,
+            )?;
             page.finish();
         }
         diagnostics.push(images.take_diagnostics());

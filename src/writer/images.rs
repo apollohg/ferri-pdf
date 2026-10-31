@@ -320,6 +320,16 @@ impl ImageWriter {
                         }
                     }
                 };
+                // Content past what PDF writes leaves the drawing unwritable as a whole.
+                let bounds = tree.root().abs_stroke_bounding_box();
+                if let Some(number) = crate::writer::numbers::unwritable_number(&[
+                    bounds.left(),
+                    bounds.top(),
+                    bounds.right(),
+                    bounds.bottom(),
+                ]) {
+                    return Err(PdfError::UnwritableNumber(number));
+                }
                 Decoded::Vector(tree, self.pixels_per_point)
             }
             Asset::Transparent

@@ -17,6 +17,12 @@ const PRODUCER: &str = concat!("ferri-pdf ", env!("CARGO_PKG_VERSION"));
 /// Destinations show the page's full width.
 const DESTINATION_LEFT: f32 = 0.0;
 
+/// The number of a located destination that PDF cannot write, which leaves the destination
+/// inert like one without a box.
+pub(super) fn unwritable_destination(destination: &Destination) -> Option<f64> {
+    crate::writer::numbers::unwritable_number(destination)
+}
+
 pub(super) fn destinations(
     located: &[Option<Destination>],
     page_offset: usize,
@@ -24,12 +30,14 @@ pub(super) fn destinations(
     located
         .iter()
         .map(|destination| {
-            destination.map(|destination| {
-                XyzDestination::new(
-                    destination.page + page_offset,
-                    Point::from_xy(DESTINATION_LEFT, destination.top),
-                )
-            })
+            destination
+                .filter(|destination| unwritable_destination(destination).is_none())
+                .map(|destination| {
+                    XyzDestination::new(
+                        destination.page + page_offset,
+                        Point::from_xy(DESTINATION_LEFT, destination.top),
+                    )
+                })
         })
         .collect()
 }
@@ -90,13 +98,21 @@ pub(super) fn resolve_links(
         .collect()
 }
 
-/// Adds a page's link annotations; links to destinations without a box are inert.
+/// Adds a page's link annotations; links to destinations without a box are inert, and areas
+/// PDF cannot write are omitted.
 pub(super) fn annotate(
     page: &mut Page<'_>,
     areas: &[LinkArea],
     links: &[Option<ResolvedLink>],
+    images: &mut crate::writer::images::ImageWriter,
 ) -> Result<(), PdfError> {
     for area in areas {
+        if let Some(number) = crate::writer::numbers::unwritable_number(&area.shape) {
+            images.record(crate::writer::PaintDiagnostic::Omitted {
+                reason: PdfError::UnwritableNumber(number).to_string(),
+            });
+            continue;
+        }
         let target = match &links[area.link] {
             Some(ResolvedLink::Uri(uri)) => Target::Action(LinkAction::new(uri.clone()).into()),
             Some(ResolvedLink::Destination(destination)) => {

@@ -6,7 +6,7 @@
 mod common;
 
 use ferri_pdf::{
-    DisplayItem, Error, FileResolver, ImageError, RenderDiagnostic, RenderOptions, RenderOutput,
+    DisplayItem, Error, FileResolver, ImageError, PaintDiagnostic, RenderDiagnostic, RenderOptions, RenderOutput,
     Resource, ResourceBase, ResourceError, ResourceResolver, render_with_resolver,
 };
 
@@ -347,14 +347,25 @@ fn broken_and_damaged_images_of_every_format_render_their_fallbacks() {
                     ),
                 }
             }
-            let output = if over_budget {
+            // A vector image's huge natural size paints it past what PDF writes, so the writer
+            // omits it.
+            let unwritable = variant == "huge" && format == "svg";
+            let output = if over_budget || unwritable {
                 render_with(&case, &html, &corpus, &common::lossy_options())
             } else {
                 render(&case, &html, &corpus)
             };
+            let omitted_unwritable = |diagnostic: &RenderDiagnostic| {
+                unwritable
+                    && matches!(
+                        diagnostic,
+                        RenderDiagnostic::Paint(PaintDiagnostic::Omitted { reason })
+                            if reason.starts_with("paint number")
+                    )
+            };
             for diagnostic in &output.diagnostics {
                 assert!(
-                    image_reported(diagnostic, &reference),
+                    image_reported(diagnostic, &reference) || omitted_unwritable(diagnostic),
                     "{case}: unexpected diagnostic {diagnostic}"
                 );
             }

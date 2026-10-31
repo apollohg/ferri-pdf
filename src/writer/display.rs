@@ -224,6 +224,16 @@ impl Painter<'_, '_, '_> {
         surface: &mut Surface<'_>,
     ) -> Result<(usize, Space), PdfError> {
         let item = &items[index];
+        let unwritable = match item {
+            DisplayItem::Text { line } => self
+                .lines
+                .get(*line)
+                .and_then(crate::writer::numbers::unwritable_number),
+            _ => crate::writer::numbers::unwritable_number(item),
+        };
+        if let Some(number) = unwritable {
+            return Err(PdfError::UnwritableNumber(number));
+        }
         match item {
             DisplayItem::Image(_)
             | DisplayItem::Frame(_)
