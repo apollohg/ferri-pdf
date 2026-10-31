@@ -179,7 +179,23 @@ fn transforms_beyond_finite_coordinates_render_without_their_content() {
         &local_options(),
     )
     .expect("a transform that overflows every coordinate does not fail the document");
+    let faults = pdf_number_faults(&output.pdf);
+    assert!(
+        faults.is_empty(),
+        "the overflowing transform writes no number:\n{}",
+        faults.join("\n")
+    );
+    assert!(
+        output.diagnostics.is_empty(),
+        "a transform mapping onto no finite area paints nothing, as one mapping onto no area \
+         does, rather than reaching the writer: {:?}",
+        output.diagnostics
+    );
     let (pixels, _) = first_page_pixels(&output);
+    assert!(
+        pixels.iter().all(|pixel| pixel[..3] != RED),
+        "no part of the transformed box paints"
+    );
     assert!(
         pixels.iter().any(|pixel| pixel[..3] == [0, 0, 255]),
         "the content after the overflowing box still paints"

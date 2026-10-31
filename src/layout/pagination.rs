@@ -543,9 +543,11 @@ impl Region {
     pub(crate) fn transforms(&self) -> bool {
         matches!(self, Self::Transform(_) | Self::Projection(_))
     }
-    /// Whether the region maps the plane onto no area, which paints nothing.
+    /// Whether the region maps the plane onto no area, which paints nothing: a matrix that
+    /// is not invertible, or one past finite coordinates, which no area holds.
     pub(crate) fn collapses(&self) -> bool {
         match self {
+            Self::Transform(matrix) if !matrix.iter().all(|entry| entry.is_finite()) => true,
             Self::Transform([a, b, c, d, _, _]) => {
                 f64::from(*a) * f64::from(*d) - f64::from(*b) * f64::from(*c) == 0.0
             }
