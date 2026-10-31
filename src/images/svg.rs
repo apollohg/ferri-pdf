@@ -178,9 +178,11 @@ impl SvgImage {
         });
         let fonts = provider.finish()?;
         let initial_tree = initial_tree.map_err(ImageError::Svg)?;
+        let mut limits = parsed.limits();
+        limits.truncated |= initial_tree.truncated;
         cache
             .into_inner()
-            .record_limits(parsed.limits(), initial_tree.limited);
+            .record_limits(limits, initial_tree.limited);
         let resources = resources
             .into_inner()
             .into_iter()

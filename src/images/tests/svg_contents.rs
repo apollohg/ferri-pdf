@@ -1745,6 +1745,47 @@ fn the_clip_paths_of_many_markers_are_collected_in_linear_time() {
 }
 
 #[test]
+fn markers_in_markers_stop_converting_at_the_node_budget() {
+    // Each level of markers draws one at every inner vertex of the path in the level before:
+    // millions of paths at this depth, past the node budget, after which the rest is left out
+    // rather than converting for minutes.
+    const VERTICES: usize = 10;
+    const DEPTH: usize = 7;
+    const BOUND: std::time::Duration = std::time::Duration::from_secs(60);
+    let path = |marker: usize| {
+        let vertices: String = (0..VERTICES).map(|x| format!(" L{x} {}", x % 2)).collect();
+        format!("<path d='M0 0{vertices}' stroke='black' marker-mid='url(#m{marker})'/>")
+    };
+    let markers: String = (0..DEPTH)
+        .map(|depth| {
+            format!(
+                "<marker id='m{depth}' overflow='visible'>{}</marker>",
+                path(depth + 1)
+            )
+        })
+        .collect();
+    let body = format!("{SVG_OPEN}<defs>{markers}</defs>{}</svg>", path(0));
+    let limits = within(&format!("{DEPTH} levels of markers"), BOUND, move || {
+        let mut cache = ImageCache::default();
+        cache
+            .inline_svg(body, &ResourceBase::default(), &FileResolver::default())
+            .expect("SVG content past the node budget renders limited");
+        cache.take_limited()
+    });
+    assert!(
+        limits.iter().any(|diagnostic| matches!(
+            diagnostic,
+            crate::document::DocumentDiagnostic::FormattingLimit {
+                resource: crate::images::SVG_NODES_RESOURCE,
+                limit: crate::svg::usvg::MAX_SVG_NODES,
+                ..
+            }
+        )),
+        "the node budget must be reported once reached, got {limits:?}"
+    );
+}
+
+#[test]
 fn a_chain_of_use_elements_in_definitions_expands_only_where_it_renders() {
     // Expanding every `use` element of the chain, with the nested instances, takes nodes
     // quadratic in its length: past the tree's node budget at this length, which would omit

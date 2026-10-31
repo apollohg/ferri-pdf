@@ -128,6 +128,10 @@ pub(crate) struct Cache {
     deepest: usize,
     /// Content nested past `MAX_CONVERSION_DEPTH` or `MAX_REFERENCE_DEPTH` was omitted.
     pub(crate) limited: bool,
+    /// The elements converted where they render, each as many times as references draw it.
+    converted: usize,
+    /// Elements past `MAX_SVG_NODES` converted were omitted.
+    truncated: bool,
 
     cache_outline: HashMap<(ID, GlyphId), Option<tiny_skia_path::Path>>,
     /// Keyed by the bits of each painting's location, palette and foreground as well.
@@ -185,6 +189,8 @@ impl Cache {
             references: 0,
             deepest: 0,
             limited: false,
+            converted: 0,
+            truncated: false,
 
             cache_outline: HashMap::new(),
             cache_colr: HashMap::new(),
@@ -578,6 +584,7 @@ pub(crate) fn convert_doc(
         filters: Vec::new(),
         fontdb: opt.fontdb.clone(),
         limited: false,
+        truncated: false,
         depth: 0,
         nesting: opt.nesting,
     };
@@ -670,6 +677,7 @@ pub(crate) fn convert_doc(
         tree.fontdb = cache.fontdb;
     }
     tree.limited = cache.limited;
+    tree.truncated = cache.truncated;
     tree.depth = cache.deepest - opt.nesting.groups;
 
     if restore_viewbox {
@@ -766,6 +774,16 @@ pub(crate) fn convert_element(node: SvgNode, state: &State, cache: &mut Cache, p
 
     if !node.is_visible_element(state.opt) {
         return;
+    }
+
+    // References, such as markers in the content of markers, can draw an element many times
+    // over: past the node budget the rest of the content is left out.
+    if cache.measuring == 0 {
+        if cache.converted >= MAX_SVG_NODES {
+            cache.truncated = true;
+            return;
+        }
+        cache.converted += 1;
     }
 
     if tag_name == EId::Use {
