@@ -1,0 +1,110 @@
+name: Python
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_TOOLCHAIN: 1.99.1
+  # The oldest CPython the abi3 wheels support.
+  PYTHON_VERSION: "3.10"
+
+jobs:
+  test:
+    if: github.event_name != 'release'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
+        with:
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: pip install "maturin>=1.16,<2" pytest
+      - run: maturin build --out dist
+      - run: pip install --no-index --find-links dist ferri-pdf
+      - run: pytest python/tests
+
+  wheels:
+    if: github.event_name == 'release'
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - { runner: ubuntu-latest, target: x86_64, manylinux: auto, test: true }
+          - { runner: ubuntu-24.04-arm, target: aarch64, manylinux: auto, test: true }
+          - { runner: ubuntu-latest, target: x86_64, manylinux: musllinux_1_2, test: false }
+          - { runner: ubuntu-24.04-arm, target: aarch64, manylinux: musllinux_1_2, test: false }
+          - { runner: macos-latest, target: aarch64, test: true }
+          - { runner: macos-latest, target: x86_64, test: false }
+          - { runner: windows-latest, target: x64, test: true }
+          - { runner: windows-11-arm, target: aarch64, test: false }
+    runs-on: ${{ matrix.platform.runner }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+      - uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1.51.0
+        with:
+          target: ${{ matrix.platform.target }}
+          manylinux: ${{ matrix.platform.manylinux }}
+          rust-toolchain: ${{ env.RUST_TOOLCHAIN }}
+          args: --release --out dist
+      - if: matrix.platform.test
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - if: matrix.platform.test
+        run: |
+          pip install pytest
+          pip install --no-index --find-links dist ferri-pdf
+          pytest python/tests
+      - uses: actions/upload-artifact@v5
+        with:
+          name: wheels-${{ matrix.platform.runner }}-${{ matrix.platform.target }}-${{ matrix.platform.manylinux || 'native' }}
+          path: dist
+
+  sdist:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+      - uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1.51.0
+        with:
+          command: sdist
+          args: --out dist
+      - uses: actions/upload-artifact@v5
+        with:
+          name: sdist
+          path: dist
+
+  publish:
+    if: github.event_name == 'release'
+    needs: [wheels, sdist]
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v6
+        with:
+          path: dist
+          merge-multiple: true
+      - uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
