@@ -21,6 +21,7 @@ use crate::style::{
     units::Relative,
     wide_keywords::{Resolved, WideKeyword},
 };
+use std::cell::OnceCell;
 
 /// Between a property name and its value in unsupported-value errors.
 pub(super) const DECLARATION_SEPARATOR: &str = ": ";
@@ -415,18 +416,34 @@ fn quotes(
 }
 
 pub(super) fn copy(property: Property, target: &mut Style, source: &Style) {
+    copy_with(property, target, source, &OnceCell::new());
+}
+
+/// `copy`, building the initial `Relative` that handlers take at most once across copies.
+fn copy_with(
+    property: Property,
+    target: &mut Style,
+    source: &Style,
+    relative: &OnceCell<Relative<'_>>,
+) {
     if inert::defined(property) {
         inert::copy(property, target, source);
     } else if let Some(handler) = handler(property) {
-        (handler.apply)(target, source, Input::Copy(source), &Relative::initial())
-            .expect("copying a computed property cannot fail");
+        (handler.apply)(
+            target,
+            source,
+            Input::Copy(source),
+            relative.get_or_init(Relative::initial),
+        )
+        .expect("copying a computed property cannot fail");
     }
 }
 
 pub(crate) fn inherit(style: &mut Style, parent: &Style) {
+    let relative = OnceCell::new();
     for property in Property::ALL {
         if property.inherited() {
-            copy(property, style, parent);
+            copy_with(property, style, parent, &relative);
         }
     }
     // Copies resolve `currentcolor` text paint before `color` arrives; every text paint
