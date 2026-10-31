@@ -646,7 +646,9 @@ pub(crate) fn parse_svg_element<'input>(
         matches!(aid, AId::Width | AId::Height)
             && crate::style::svg_values::presentation_property(tag_name.to_str(), name).is_some()
     };
-    let mut declared: HashMap<&'static str, (String, bool)> = HashMap::new();
+    // Each longhand's value, importance and cascade position: of a flow-relative longhand and
+    // its physical one, the later declared applies last.
+    let mut declared: HashMap<&'static str, (String, bool, usize)> = HashMap::new();
     // The first longhand whose value has no SVG presentation value, which computes as unset.
     let unset: std::cell::Cell<Option<&'static str>> = std::cell::Cell::new(None);
     let expanded = |name: &str, source: &str| {
@@ -657,6 +659,7 @@ pub(crate) fn parse_svg_element<'input>(
             expansion.longhands
         })
     };
+    let mut position = 0;
     let mut write_declaration = |declaration: &Declaration,
                                  override_presentation: bool|
      -> Result<(), crate::style::StyleError> {
@@ -794,9 +797,10 @@ pub(crate) fn parse_svg_element<'input>(
             for (longhand, value) in expanded(&declaration.name, val)? {
                 if declared
                     .get(longhand)
-                    .is_none_or(|(_, important)| imp || !important)
+                    .is_none_or(|(_, important, _)| imp || !important)
                 {
-                    declared.insert(longhand, (value, imp));
+                    declared.insert(longhand, (value, imp, position));
+                    position += 1;
                 }
             }
         }
@@ -836,11 +840,13 @@ pub(crate) fn parse_svg_element<'input>(
 
     doc.variables.insert(node_id.get_usize(), variables);
     if !declared.is_empty() {
+        let mut declared: Vec<_> = declared.into_iter().collect();
+        declared.sort_unstable_by_key(|(_, (_, _, position))| *position);
         doc.declared.insert(
             node_id.get_usize(),
             declared
                 .into_iter()
-                .map(|(property, (value, _))| (property, value))
+                .map(|(property, (value, _, _))| (property, value))
                 .collect(),
         );
     }
