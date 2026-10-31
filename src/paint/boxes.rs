@@ -717,9 +717,8 @@ impl<I> BoxPaint<I> {
     where
         I: Clone,
     {
-        self.shadows(false)
+        self.outer_shadow_bounds()
             .into_iter()
-            .map(|shadow| shadow.bounds)
             .chain(self.outline().map(|outline| outline.rect))
             .chain(self.border_image_bounds())
             .fold(self.rect, Rect::union)

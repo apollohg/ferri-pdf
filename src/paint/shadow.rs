@@ -191,19 +191,37 @@ impl<I> BoxPaint<I> {
             return Vec::new();
         }
         let radii = self.radii();
-        let mut paints = Vec::new();
-        for shadow in self.decoration.shadows.iter().rev() {
-            if shadow.inset != inset_shadows || shadow.color.alpha <= 0.0 {
-                continue;
-            }
-            let paint = if shadow.inset {
-                self.inset_shadow(shadow, rect, radii)
-            } else {
-                self.outer_shadow(shadow, rect, radii)
-            };
-            paints.extend(paint);
+        self.cast_shadows(inset_shadows)
+            .filter_map(|shadow| {
+                if shadow.inset {
+                    self.inset_shadow(shadow, rect, radii)
+                } else {
+                    self.outer_shadow(shadow, rect, radii)
+                }
+            })
+            .collect()
+    }
+
+    /// The bounds of the outer shadows' paints, without rasterizing their blur.
+    pub(crate) fn outer_shadow_bounds(&self) -> Vec<Rect> {
+        let rect = self.decoration_rect();
+        if is_empty(rect) {
+            return Vec::new();
         }
-        paints
+        let radii = self.radii();
+        self.cast_shadows(false)
+            .filter_map(|shadow| self.outer_shadow_area(shadow, rect, radii))
+            .map(|(_, _, bounds)| self.slice_bounds(bounds))
+            .collect()
+    }
+
+    /// The visible shadows of one kind, the last listed first.
+    fn cast_shadows(&self, inset_shadows: bool) -> impl Iterator<Item = &BoxShadow> {
+        self.decoration
+            .shadows
+            .iter()
+            .rev()
+            .filter(move |shadow| shadow.inset == inset_shadows && shadow.color.alpha > 0.0)
     }
 
     fn inset_shadow(
@@ -252,6 +270,39 @@ impl<I> BoxPaint<I> {
         })
     }
     fn outer_shadow(&self, shadow: &BoxShadow, rect: Rect, radii: Radii) -> Option<ShadowPaint> {
+        let (ink, area, bounds) = self.outer_shadow_area(shadow, rect, radii)?;
+        let shape = if shadow.blur > 0.0 {
+            ShadowShape::Blurred(Arc::new(blurred_mask(
+                ink,
+                Some(area),
+                shadow.sigma(),
+                false,
+            )))
+        } else {
+            ShadowShape::Sharp(area.contours())
+        };
+        let mut clip = vec![Contour::polygon(&corners(bounds))];
+        clip.extend(
+            self.box_area(crate::paint::BoxArea::BorderBox)
+                .contours()
+                .iter()
+                .cloned(),
+        );
+        Some(ShadowPaint {
+            bounds: self.slice_bounds(bounds),
+            clip,
+            shape,
+            color: shadow.color,
+        })
+    }
+    /// A visible outer shadow's blurred extent, its spread shape and, unsliced, the area it
+    /// paints in.
+    fn outer_shadow_area(
+        &self,
+        shadow: &BoxShadow,
+        rect: Rect,
+        radii: Radii,
+    ) -> Option<(Rect, ShadowArea, Rect)> {
         let shape = outset(rect, [shadow.spread; 4]).translated(shadow.offset);
         if is_empty(shape) {
             return None;
@@ -278,30 +329,7 @@ impl<I> BoxPaint<I> {
         if is_empty(visible) {
             return None;
         }
-        let bounds = ink.union(rect);
-        let shape = if shadow.blur > 0.0 {
-            ShadowShape::Blurred(Arc::new(blurred_mask(
-                ink,
-                Some(area),
-                shadow.sigma(),
-                false,
-            )))
-        } else {
-            ShadowShape::Sharp(area.contours())
-        };
-        let mut clip = vec![Contour::polygon(&corners(bounds))];
-        clip.extend(
-            self.box_area(crate::paint::BoxArea::BorderBox)
-                .contours()
-                .iter()
-                .cloned(),
-        );
-        Some(ShadowPaint {
-            bounds: self.slice_bounds(bounds),
-            clip,
-            shape,
-            color: shadow.color,
-        })
+        Some((ink, area, ink.union(rect)))
     }
 }
 
