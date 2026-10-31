@@ -79,8 +79,9 @@ impl PageSettings {
 
     /// Try to create new page settings with the specified width and height.
     ///
-    /// Returns `None` if either the width or the height is not > 0.
+    /// Returns `None` if either the width or the height is not > 0 and finite.
     pub fn from_wh(width: f32, height: f32) -> Option<Self> {
+        Rect::from_xywh(0.0, 0.0, width, height)?;
         Some(Self::new(Size::from_wh(width, height)?))
     }
 
