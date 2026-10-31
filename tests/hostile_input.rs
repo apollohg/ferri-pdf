@@ -4,6 +4,7 @@ mod common;
 
 use common::local_options;
 use ferri_pdf::render_html;
+use std::fmt::Write;
 
 /// Documents per run; each is small enough that the whole run stays within the normal suite.
 const CASES: u64 = 48;
@@ -372,7 +373,7 @@ impl Generator {
                 .map(|_| self.pick(VALUES))
                 .collect::<Vec<_>>()
                 .join(" ");
-            text.push_str(&format!("{}:{value}", self.pick(PROPERTIES)));
+            let _ = write!(text, "{}:{value}", self.pick(PROPERTIES));
             if self.chance(6) {
                 text.push_str(" !important");
             }
@@ -392,9 +393,9 @@ impl Generator {
                 if self.chance(5) {
                     let nested = self.pick(SELECTORS);
                     let inner = self.declarations();
-                    text.push_str(&format!("{selector}{{{declarations} {nested}{{{inner}}}}}"));
+                    let _ = write!(text, "{selector}{{{declarations} {nested}{{{inner}}}}}");
                 } else {
-                    text.push_str(&format!("{selector}{{{declarations}}}"));
+                    let _ = write!(text, "{selector}{{{declarations}}}");
                 }
             }
             text.push('\n');
@@ -411,34 +412,33 @@ impl Generator {
                 } else {
                     self.pick(TAGS)
                 };
-                html.push_str(&format!("</{tag}>"));
+                let _ = write!(html, "</{tag}>");
             }
-            1 => html.push_str(&format!(
-                "text {} &amp; &bogus; &#x0; &#99999999;",
-                self.next()
-            )),
+            1 => {
+                let _ = write!(html, "text {} &amp; &bogus; &#x0; &#99999999;", self.next());
+            }
             2 => html.push_str("<!-- unterminated comment"),
-            3 => html.push_str(&format!("<div style=\"{}\">", self.declarations())),
+            3 => {
+                let _ = write!(html, "<div style=\"{}\">", self.declarations());
+            }
             _ => {
                 let tag = self.pick(TAGS);
                 let mut start = format!("<{tag}");
                 for _ in 0..self.below(3) {
                     let attribute = self.pick(ATTRIBUTES);
                     let value = self.pick(VALUES).replace('"', "&quot;");
-                    start.push_str(&format!(" {attribute}=\"{value}\""));
+                    let _ = write!(start, " {attribute}=\"{value}\"");
                 }
                 if self.chance(3) {
-                    start.push_str(&format!(
-                        " style=\"{}\"",
-                        self.declarations().replace('"', "'")
-                    ));
+                    let declarations = self.declarations().replace('"', "'");
+                    let _ = write!(start, " style=\"{declarations}\"");
                 }
                 if self.chance(4) {
                     start.push_str(" href=\"#a\" id=\"a\" class=\"a\"");
                 }
                 html.push_str(&start);
                 html.push('>');
-                html.push_str("x");
+                html.push('x');
                 open.push(tag);
             }
         }
@@ -447,7 +447,7 @@ impl Generator {
     fn document(&mut self, deep: bool) -> String {
         let mut html = format!("<!doctype html><style>{}</style>", self.stylesheet());
         if self.chance(2) {
-            html.push_str(&format!("<style>{}", self.stylesheet()));
+            let _ = write!(html, "<style>{}", self.stylesheet());
         }
         let mut open = Vec::new();
         for _ in 0..self.below(MAX_ELEMENTS) {
