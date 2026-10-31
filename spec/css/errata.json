@@ -29,6 +29,10 @@
       "syntax": "<string> [ <integer [0,∞]> | on | off ]?",
       "source": "https://www.w3.org/TR/2026/WD-css-fonts-4-20261022/#feature-tag-value"
     },
+    "mask-layer": {
+      "syntax": "<mask-reference> || <position> [ / <bg-size> ]? || <repeat-style> || <coord-box> || [ <coord-box> | no-clip ] || <compositing-operator> || <masking-mode>",
+      "source": "https://www.w3.org/TR/2021/CRD-css-masking-1-20210805/#changes: margin-box was removed from mask-origin and mask-clip, the longhands the shorthand's boxes set"
+    },
     "content-list": {
       "syntax": "[ <string> | <image> | <attr()> | contents | <quote> | <leader()> | <target> | <string()> | <content()> | <counter> ]+",
       "source": "https://www.w3.org/TR/2025/WD-css-content-3-20251204/#content-values"

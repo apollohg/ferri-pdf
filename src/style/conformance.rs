@@ -739,6 +739,18 @@ fn matching_follows_value_definition_semantics() {
             true,
             "custom idents after keywords",
         ),
+        (
+            P::Mask,
+            "url(a.svg) content-box no-clip",
+            true,
+            "a mask layer's <coord-box> and no-clip",
+        ),
+        (
+            P::Mask,
+            "margin-box",
+            false,
+            "mask-origin and mask-clip, which the layer's boxes set, exclude margin-box",
+        ),
     ];
     let mut failures = Vec::new();
     for (property, value, valid, rule) in cases {

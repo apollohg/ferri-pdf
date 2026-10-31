@@ -46,14 +46,6 @@ pub(super) fn positions(
         .collect()
 }
 
-/// `<coord-box>`, as computed.
-fn coord_box(value: &Component) -> Result<GeometryBox, StyleError> {
-    match crate::style::shape_values::geometry_box(value)? {
-        GeometryBox::Shape(ShapeBox::Margin) => Err(unsupported(value)),
-        reference => Ok(reference),
-    }
-}
-
 /// The box of an element with a CSS layout box: the content box for `fill-box` and the
 /// border box for `stroke-box` and `view-box` (§7.5, §7.6).
 pub(super) fn layout_area(reference: GeometryBox) -> BoxArea {
@@ -64,7 +56,11 @@ pub(super) fn layout_area(reference: GeometryBox) -> BoxArea {
 }
 
 pub(super) fn origins(value: &Component) -> Result<Vec<GeometryBox>, StyleError> {
-    value.items().iter().map(coord_box).collect()
+    value
+        .items()
+        .iter()
+        .map(crate::style::shape_values::geometry_box)
+        .collect()
 }
 
 /// `[ <coord-box> | no-clip ]#`: the clip boxes, and whether each layer is unclipped.
@@ -77,7 +73,7 @@ pub(super) fn clips(value: &Component) -> Result<(Vec<GeometryBox>, Vec<bool>), 
                 GeometryBox::Shape(ShapeBox::Visual(BoxArea::BorderBox)),
                 true,
             )),
-            _ => Ok((coord_box(item)?, false)),
+            _ => Ok((crate::style::shape_values::geometry_box(item)?, false)),
         })
         .collect::<Result<Vec<_>, StyleError>>()
         .map(|layers| layers.into_iter().unzip())
