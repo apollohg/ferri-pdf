@@ -6,8 +6,10 @@ use common::{lossy_options, pdf_number_faults};
 use ferri_pdf::render_html;
 use std::fmt::Write;
 
-/// Documents per run; each is small enough that the whole run stays within the normal suite.
-const CASES: u64 = 48;
+/// Documents per run of each generator, as many as each run renders within the normal suite:
+/// extreme geometry lays out far more content per document.
+const DOCUMENT_CASES: u64 = 256;
+const GEOMETRY_CASES: u64 = 48;
 const FIRST_SEED: u64 = 0x5eed_f00d;
 /// The golden-ratio increment, which spreads consecutive cases' seeds across the state space.
 const SEED_STEP: u64 = 0x9e37_79b9_7f4a_7c15;
@@ -749,7 +751,7 @@ const MAX_COMPONENTS: usize = 4;
 const MAX_FUNCTION_ARGUMENTS: usize = 3;
 /// Extreme-value documents per run: each is small, and the run samples properties, values
 /// and contexts rather than taking their product.
-const EXTREME_VALUE_CASES: u64 = 128;
+const EXTREME_VALUE_CASES: u64 = 1024;
 
 /// How a property's grammar takes numeric values: bare, or as the arguments of a functional
 /// notation; each with the [`NUMERIC_EXTREMES`] types it accepts there.
@@ -958,14 +960,14 @@ fn assert_generated_documents_render(
 
 #[test]
 fn generated_hostile_documents_always_render() {
-    assert_generated_documents_render("documents", CASES, |generator, case| {
+    assert_generated_documents_render("documents", DOCUMENT_CASES, |generator, case| {
         generator.document(case % DEEP_CASE_PERIOD == 0)
     });
 }
 
 #[test]
 fn generated_hostile_geometry_always_renders() {
-    assert_generated_documents_render("geometries", CASES, |generator, _| {
+    assert_generated_documents_render("geometries", GEOMETRY_CASES, |generator, _| {
         generator.geometry_document()
     });
 }
