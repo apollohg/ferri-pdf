@@ -21,6 +21,12 @@ const CONSTRUCT_ENV: &str = "FERRI_DEEP_CONSTRUCT";
 const MIN_STACK_ENV: &str = "RUST_MIN_STACK";
 const HARNESS_TEST: &str = "document::tests::deep_nesting::every_nesting_construct_renders_at_and_past_its_limit_on_a_library_thread";
 const LEAF_TEXT: &str = "Deepest";
+/// The anonymous row group, row and cell that hold a table's child that is no table part
+/// (CSS 2.1 §17.2.1); the outermost level's parent is no table, so it lies that much below
+/// the limit.
+const TABLE_WRAPPERS: usize = 3 * BOX_DEPTH;
+/// The anonymous row group and row that hold a table's cell child.
+const CELL_WRAPPERS: usize = 2 * BOX_DEPTH;
 
 /// Whether a document nests its construct to its limit or one level past it.
 #[derive(Clone, Copy, Debug)]
@@ -226,9 +232,23 @@ const CONSTRUCTS: &[Construct] = &[
         FormattingNest::level(
             "<span>",
             "</span>",
-            BOX_DEPTH + ATOMIC_INLINE_DEPTH + TABLE_DEPTH
+            BOX_DEPTH + ATOMIC_INLINE_DEPTH + TABLE_DEPTH + TABLE_WRAPPERS
         )
         .styled("span{display:inline-table}")
+    ),
+    formatting_construct!(
+        "block tables",
+        FormattingNest::level("<div>", "</div>", BOX_DEPTH + TABLE_DEPTH + TABLE_WRAPPERS)
+            .styled("div{display:table}")
+    ),
+    formatting_construct!(
+        "tables in table-cell boxes",
+        FormattingNest::level(
+            "<div><p>",
+            "</p></div>",
+            2 * BOX_DEPTH + TABLE_DEPTH + CELL_WRAPPERS
+        )
+        .styled("div{display:table}p{display:table-cell;margin:0}")
     ),
     // The parser inserts the table body.
     formatting_construct!(
@@ -346,6 +366,33 @@ const CONSTRUCTS: &[Construct] = &[
         "MathML flex containers",
         FormattingNest::level("<math><mrow>", "</mrow></math>", 2 * BOX_DEPTH + FLEX_DEPTH)
             .styled("mrow{display:flex}")
+    ),
+    formatting_construct!(
+        "MathML inline tables",
+        FormattingNest::level(
+            "<math><mrow>",
+            "</mrow></math>",
+            2 * BOX_DEPTH + ATOMIC_INLINE_DEPTH + TABLE_DEPTH + TABLE_WRAPPERS
+        )
+        .styled("mrow{display:inline-table}")
+    ),
+    formatting_construct!(
+        "MathML block tables",
+        FormattingNest::level(
+            "<math><mrow>",
+            "</mrow></math>",
+            2 * BOX_DEPTH + TABLE_DEPTH + TABLE_WRAPPERS
+        )
+        .styled("mrow{display:table}")
+    ),
+    formatting_construct!(
+        "MathML tables in table-cell boxes",
+        FormattingNest::level(
+            "<math><mrow><mpadded>",
+            "</mpadded></mrow></math>",
+            3 * BOX_DEPTH + TABLE_DEPTH + CELL_WRAPPERS
+        )
+        .styled("mrow{display:table}mpadded{display:table-cell}")
     ),
     formatting_construct!(
         "multi-column containers",

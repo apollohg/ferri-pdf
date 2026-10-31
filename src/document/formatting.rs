@@ -3217,10 +3217,14 @@ fn formatting_depth(style: &Style, parent: &Style, math: Option<&str>) -> usize 
         Display::TableCell => name == "mtd",
         _ => false,
     });
-    if math_layout || style.display == Display::Contents {
+    if style.display == Display::Contents {
         return BOX_DEPTH;
     }
     let display = &style.display;
+    let wrappers = anonymous_table_wrappers(display, &parent.display);
+    if math_layout {
+        return BOX_DEPTH + wrappers;
+    }
     [
         (display.is_atomic_inline(), ATOMIC_INLINE_DEPTH),
         (display.is_table(), TABLE_DEPTH),
@@ -3248,7 +3252,35 @@ fn formatting_depth(style: &Style, parent: &Style, math: Option<&str>) -> usize 
     .into_iter()
     .filter_map(|(applies, depth)| applies.then_some(depth))
     .sum::<usize>()
+        + wrappers
         + BOX_DEPTH
+}
+
+/// The formatting depth of the anonymous row group, row and cell boxes that a box with
+/// `display` in a table, row group or row with display `parent` takes between them (CSS 2.1
+/// §17.2.1), which nest in layout as explicit ones do.
+fn anonymous_table_wrappers(display: &Display, parent: &Display) -> usize {
+    // The row group, row and cell levels below the parent, of which the box fills those from
+    // its own down.
+    let below_parent: usize = if parent.is_table() {
+        3
+    } else if parent.is_row_group() {
+        2
+    } else if *parent == Display::TableRow {
+        1
+    } else {
+        return 0;
+    };
+    let own = match display {
+        Display::TableCell => 1,
+        Display::TableRow => 2,
+        display if display.is_row_group() => 3,
+        Display::TableCaption | Display::TableColumn | Display::TableColumnGroup => {
+            return 0;
+        }
+        _ => 0,
+    };
+    below_parent.saturating_sub(own) * BOX_DEPTH
 }
 
 /// Whether an internal table box with `display` in a box with display `parent` generates an
