@@ -191,9 +191,8 @@ select:where(:-ferri-base-select:not(:-ferri-list-box)) > button:first-child { a
     display: contents; }
 select::picker-icon { content: counter(fake-counter-name, disclosure-open); display: block;
     margin-inline-start: auto; }
-/* HTML's `attr(size type(<integer>), 4)` in the pinned CSS Values 5 `attr()` grammar. */
 select:where(:-ferri-base-select:-ferri-list-box) { overflow: auto; display: inline-block;
-    block-size: calc(max(24px, 1lh) * attr(size <integer>, 4)); }
+    block-size: calc(max(24px, 1lh) * attr(size type(<integer>), 4)); }
 fieldset { display: block; margin-inline: 2px; border: groove 2px ThreeDFace;
     padding-block: 0.35em 0.625em; padding-inline: 0.75em; min-inline-size: min-content; }
 legend { padding-inline: 2px; }

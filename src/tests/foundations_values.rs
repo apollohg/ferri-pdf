@@ -350,6 +350,79 @@ fn attribute_values_separate_missing_empty_invalid_and_syntax_error_stages() {
     }
 }
 
+/// CSS Values 5 `<attr-type>`: `type(<syntax>)` parses the value, `number` reads a
+/// `<number>`, an `<attr-unit>` makes a `<number-token>` a dimension or percentage, and
+/// `raw-string` keeps the literal value.
+#[test]
+fn attribute_types_parse_values_as_their_syntax_unit_or_raw_string() {
+    for (attribute, value, expected) in [
+        (
+            "data-size='17pt'",
+            "attr(data-size type(<length>),99pt)",
+            Size::Value(LengthPercentage::Length(17.0)),
+        ),
+        (
+            "data-size='bad'",
+            "attr(data-size type(<length> | auto),99pt)",
+            Size::Value(LengthPercentage::Length(99.0)),
+        ),
+        ("data-size='auto'", "attr(data-size type(*))", Size::Auto),
+        (
+            "data-size='60'",
+            "attr(data-size pt)",
+            Size::Value(LengthPercentage::Length(60.0)),
+        ),
+        (
+            "data-size=' 6e1 '",
+            "attr(data-size PT)",
+            Size::Value(LengthPercentage::Length(60.0)),
+        ),
+        (
+            "data-size='25'",
+            "attr(data-size %)",
+            Size::Value(LengthPercentage::Percentage(0.25)),
+        ),
+        (
+            "data-size='12pt'",
+            "attr(data-size pt,7pt)",
+            Size::Value(LengthPercentage::Length(7.0)),
+        ),
+        (
+            "data-size='70'",
+            "calc(attr(data-size number) * 1pt)",
+            Size::Value(LengthPercentage::Length(70.0)),
+        ),
+        (
+            "data-size='seven'",
+            "calc(attr(data-size number,5) * 1pt)",
+            Size::Value(LengthPercentage::Length(5.0)),
+        ),
+        ("data-size='60'", "attr(data-size raw-string)", Size::Auto),
+    ] {
+        let css = format!("#target{{width:13pt;width:{value}}}");
+        let html = format!("<p id=target {attribute}>Attribute</p>");
+        let style = computed_in(
+            &css,
+            &html,
+            "#target",
+            &Default::default(),
+            &FileResolver::default(),
+        )
+        .unwrap_or_else(|error| panic!("{attribute} / {value}: {error}"));
+        assert_eq!(
+            style.width, expected,
+            "{attribute} / {value}: the attribute's value substituted as its type"
+        );
+    }
+    let trace = common::render_trace(
+        r"<style>@page{size:400pt 200pt;margin:10pt}body,p{margin:0;font:10pt/12pt serif}p::before{content:attr(data-label raw-string) '|' attr(data-missing raw-string) '|'}</style><p data-label='A\41 '>Body</p>",
+    );
+    assert_eq!(
+        trace.pages[0][0].text, r"A\41 ||Body",
+        "raw-string substitutes the literal value, and the empty string without the attribute"
+    );
+}
+
 #[test]
 fn attribute_custom_values_freeze_lookup_on_the_declaring_element() {
     let style = computed_in(

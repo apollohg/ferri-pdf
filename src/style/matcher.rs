@@ -25,7 +25,7 @@ pub(super) const MAX_MATCH_STEPS: usize = 1 << 20;
 const STEPS: &str = "matching steps";
 /// `default` is reserved and never a `<custom-ident>` (CSS Values 4 §4.2).
 const RESERVED_IDENT: &str = "default";
-const PERCENT: char = '%';
+pub(super) const PERCENT: char = '%';
 const PERCENT_RANGE_SCALE: f32 = 100.0;
 const URL_FUNCTION: &str = "url";
 const DASHED_PREFIX: &str = "--";
