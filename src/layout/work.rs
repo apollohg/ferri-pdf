@@ -78,6 +78,11 @@ impl Budget {
         self.remaining.get().is_none().then_some(self.limit)
     }
 
+    /// The units charged, all of them once the budget is exhausted.
+    pub(crate) fn spent(&self) -> usize {
+        self.limit - self.remaining.get().unwrap_or(0)
+    }
+
     /// Charges `units` of work already done; past the limit the budget is exhausted.
     pub(crate) fn charge(&self, units: usize) {
         self.remaining.set(
@@ -119,7 +124,7 @@ impl Budget {
             .get()
             .and_then(|left| left.checked_sub(units));
         self.remaining.set(remaining);
-        let spent = self.limit - remaining.unwrap_or(0);
+        let spent = self.spent();
         if spent >= self.next_mark.get() {
             let mut marks = self.marks.borrow_mut();
             while let Some(shift) = MARK_SHIFTS.get(marks.len())
@@ -141,7 +146,7 @@ impl Budget {
 mod tests {
     use super::*;
     use crate::document::StyledDocument;
-    use crate::layout::{MAX_LAYOUT_WORK, layout_with_work_limit};
+    use crate::layout::{MAX_FAILED_LAYOUT_BUDGETS, MAX_LAYOUT_WORK, layout_with_work_limit};
     use crate::resources::{FileResolver, ResourceBase};
 
     #[test]
@@ -212,8 +217,13 @@ mod tests {
             .unwrap()
         };
         let limit = required_work(&document(), &resolver) / 2;
-        let (document, trace) = crate::layout::layout_within(document(), &resolver, limit)
-            .expect("a document that exceeds its work budget keeps the content laid out within it");
+        let (document, trace) = crate::layout::layout_within(
+            document(),
+            &resolver,
+            limit,
+            &Budget::new(limit * MAX_FAILED_LAYOUT_BUDGETS),
+        )
+        .expect("a document that exceeds its work budget keeps the content laid out within it");
         let text: Vec<_> = trace
             .pages
             .iter()
@@ -242,6 +252,76 @@ mod tests {
             .to_string()],
             "the omission is reported once however many layouts it takes"
         );
+    }
+
+    #[test]
+    fn failed_layouts_share_one_bounded_budget_before_all_content_is_omitted() {
+        const ITEMS: usize = 40;
+        // Each section ends in a box whose padding leaves it no finite geometry, so each
+        // layout fails at the next of them and omits it.
+        const SECTIONS: usize = crate::layout::MAX_OMITTED_BOXES;
+        const FAILING_BOX: &str = "<div class=over></div>";
+        let resolver = FileResolver::default();
+        let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        let parse = |failing: &str| {
+            StyledDocument::parse(
+                &format!(
+                    "<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}@page{{size:200pt 200pt;margin:10pt}}html,body{{margin:0;font:10pt/10pt Fixed}}.over{{padding:3e38pt 0}}</style>{}",
+                    format!("<section>{}</section>{failing}", "<div>item</div>".repeat(ITEMS))
+                        .repeat(SECTIONS)
+                ),
+                &base,
+                &[],
+                &resolver,
+            )
+            .unwrap()
+        };
+        let omitted = |document: StyledDocument| {
+            document.into_diagnostics().into_iter().any(|diagnostic| {
+                matches!(
+                    diagnostic,
+                    crate::RenderDiagnostic::Layout(crate::LayoutDiagnostic::OmittedBox { .. })
+                )
+            })
+        };
+        let limit = required_work(&parse(""), &resolver);
+        let unbounded = Budget::new(usize::MAX);
+        let (document, trace) =
+            crate::layout::layout_within(parse(FAILING_BOX), &resolver, limit, &unbounded)
+                .expect("omitting each failing box completes the layout");
+        let unbounded_work = unbounded.spent();
+        assert!(
+            unbounded_work > limit && omitted(document),
+            "fixture: omitting the {SECTIONS} failing boxes one at a time spends {unbounded_work} \
+             units in failed layouts, more than one {limit}-unit layout budget"
+        );
+        assert!(
+            trace.pages.iter().flatten().any(|line| line.text == "item"),
+            "fixture: with work to spare for failed layouts the items stay"
+        );
+        // The failed layouts may share one layout budget here: the charge that spends it is
+        // the last, so they spend less than two.
+        let failed = Budget::new(limit);
+        let (document, trace) =
+            crate::layout::layout_within(parse(FAILING_BOX), &resolver, limit, &failed)
+                .expect("failed layouts past their shared budget omit all content, not fail");
+        assert!(
+            failed.exhausted().is_some(),
+            "the failed layouts stop once they spend the {limit} units they share"
+        );
+        let text: Vec<_> = trace
+            .pages
+            .iter()
+            .flatten()
+            .map(|line| line.text.as_str())
+            .collect();
+        assert!(
+            text.is_empty(),
+            "the layout after them omits all content: {text:?}"
+        );
+        assert!(omitted(document), "the omitted boxes are reported");
     }
 
     #[test]

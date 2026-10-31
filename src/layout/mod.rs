@@ -57,6 +57,9 @@ const MAX_FOOTNOTE_PAGINATIONS: usize = 64;
 const MAX_PAGE_SIZE_PASSES: usize = 16;
 /// Boxes omitted one at a time where layout fails at them, before all content is omitted.
 const MAX_OMITTED_BOXES: usize = 16;
+/// Layout budgets the failed layouts of one document spend together before all its content
+/// is omitted.
+const MAX_FAILED_LAYOUT_BUDGETS: usize = 4;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct TextLine {
@@ -184,18 +187,26 @@ pub(crate) fn layout_document(
     document: StyledDocument,
     resolver: &dyn ResourceResolver,
 ) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
-    layout_within(document, resolver, MAX_LAYOUT_WORK)
+    layout_within(
+        document,
+        resolver,
+        MAX_LAYOUT_WORK,
+        &work::Budget::new(MAX_LAYOUT_WORK * MAX_FAILED_LAYOUT_BUDGETS),
+    )
 }
 
-/// Lays `document` out with `work_limit` units of work for each attempt.
+/// Lays `document` out with `work_limit` units of work for each attempt, the attempts that
+/// fail spending `failed_work` together.
 fn layout_within(
     mut document: StyledDocument,
     resolver: &dyn ResourceResolver,
     work_limit: usize,
+    failed_work: &work::Budget,
 ) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
     // A first layout pass that runs out of work completes no layout to keep, so the layouts
     // after it omit the content from the box it started with half its work spent, then a
-    // quarter, and so on; one that fails at a box omits that box. The last omits all content.
+    // quarter, and so on; one that fails at a box omits that box. The last omits all content,
+    // as does the layout after the failed ones spend `failed_work`.
     let mut marks: Option<Vec<_>> = None;
     let mut omitted_boxes = 0;
     let mut content = true;
@@ -205,6 +216,7 @@ fn layout_within(
             Err(error) if content => error,
             result => return Ok((document, result?)),
         };
+        failed_work.charge(budget.spent());
         let diagnostic = if let LayoutError::WorkLimit { limit } = error {
             let marks = marks.get_or_insert_with(|| budget.marks());
             content = std::iter::from_fn(|| marks.pop())
@@ -226,7 +238,8 @@ fn layout_within(
         } else {
             return Err(error);
         };
-        if !content {
+        if !content || failed_work.exhausted().is_some() {
+            content = false;
             document.omit_content();
         }
         document.record_layout([diagnostic]);
