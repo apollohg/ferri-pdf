@@ -120,6 +120,25 @@ pub enum PaintDiagnostic {
     /// resolution is drawn at the highest resolution within them.
     #[error("a mask image too large to rasterize is drawn at a lower resolution")]
     ReducedResolution,
+    /// A page larger than a PDF describes is cut to `limit` points along each side.
+    #[error("pages larger than {limit}pt along a side are cut to it")]
+    PageSize { limit: f32 },
+}
+
+/// The largest page side a PDF describes, in points; larger pages are cut to it.
+const MAX_PAGE_SIDE_PT: f32 = 1.0e7;
+
+/// `rect` cut to the area a page within [`MAX_PAGE_SIDE_PT`] and its bleed can describe.
+fn within_page_limits(rect: crate::graphics::Rect) -> crate::graphics::Rect {
+    let [left, top] = [rect.x, rect.y].map(|edge| edge.max(-MAX_PAGE_SIDE_PT));
+    let [right, bottom] =
+        [rect.x + rect.width, rect.y + rect.height].map(|edge| edge.min(MAX_PAGE_SIDE_PT));
+    crate::graphics::Rect {
+        x: left,
+        y: top,
+        width: right - left,
+        height: bottom - top,
+    }
 }
 
 /// An independently laid-out document to append to a shared PDF.
@@ -230,11 +249,17 @@ pub(crate) fn encode_parts_with_diagnostics(
         for (page_index, (lines, items)) in trace.pages.iter().zip(&trace.display_lists).enumerate()
         {
             let record = &trace.page_records[page_index];
-            let [width, height] = record.geometry.paper;
+            let [width, height] = record.geometry.paper.map(|side| side.min(MAX_PAGE_SIDE_PT));
+            if [width, height] != record.geometry.paper {
+                images.record(PaintDiagnostic::PageSize {
+                    limit: MAX_PAGE_SIDE_PT,
+                });
+            }
             let page_area = record.geometry.content_box();
             let settings = PageSettings::from_wh(width, height)
                 .ok_or(PdfError::InvalidPageSize { width, height })?;
             let production_rect = |rect: crate::graphics::Rect| {
+                let rect = within_page_limits(rect);
                 krilla::geom::Rect::from_xywh(rect.x, rect.y, rect.width, rect.height)
                     .ok_or(PdfError::InvalidGeometry)
             };
@@ -250,7 +275,7 @@ pub(crate) fn encode_parts_with_diagnostics(
             images.mask_element_draws = 0;
             let mut page = document.start_page_with(settings);
             let mut surface = page.surface();
-            let bleed_clip = painting::rect_path(record.output.bleed)?;
+            let bleed_clip = painting::rect_path(within_page_limits(record.output.bleed))?;
             surface.push_clip_path(&bleed_clip, &krilla::paint::FillRule::NonZero);
             let painted = display::Painter {
                 lines,
