@@ -483,6 +483,7 @@ pub(super) struct TableFlow<'a> {
     pub original_row_starts: Option<std::rc::Rc<[f32]>>,
     pub plan: std::rc::Rc<crate::layout::tables::TablePlan<'a>>,
     pub geometry: crate::layout::geometry::HorizontalBox,
+    /// Changed only through `set_cell_height` and `set_cell_extent`, which keep `rows` current.
     pub heights: Vec<crate::table::CellHeight>,
     /// Header and footer bands, empty unless they repeat.
     pub header: Vec<MeasuredRow<'a>>,
@@ -494,6 +495,38 @@ pub(super) struct TableFlow<'a> {
     /// Vertical border spacing following every band.
     pub spacing: f32,
     pub collapsed: Option<crate::layout::tables::CollapsedGrid>,
+    /// The row geometry of `heights`, resolved once for every row placed until they change.
+    pub rows: std::cell::RefCell<Option<std::rc::Rc<crate::layout::tables::RowGeometry>>>,
+}
+impl TableFlow<'_> {
+    /// The geometry of the table's rows at its cells' current heights.
+    pub(crate) fn row_geometry(
+        &self,
+        measurer: &Measurer<'_>,
+    ) -> Result<std::rc::Rc<crate::layout::tables::RowGeometry>, Failure> {
+        if let Some(rows) = self.rows.borrow().as_ref() {
+            return Ok(rows.clone());
+        }
+        let rows = std::rc::Rc::new(self.plan.resolve_rows(
+            measurer,
+            &self.heights,
+            self.spacing,
+            &self.geometry,
+        )?);
+        *self.rows.borrow_mut() = Some(rows.clone());
+        Ok(rows)
+    }
+    pub(crate) fn set_cell_height(&mut self, index: usize, height: crate::table::CellHeight) {
+        self.heights[index] = height;
+        *self.rows.get_mut() = None;
+    }
+    /// Gives cell `index` the content height its fragments took.
+    pub(crate) fn set_cell_extent(&mut self, index: usize, extent: f32) {
+        if self.heights[index].height.to_bits() != extent.to_bits() {
+            self.heights[index].height = extent;
+            *self.rows.get_mut() = None;
+        }
+    }
 }
 #[derive(Clone, Copy)]
 pub(super) enum BlockEdge {

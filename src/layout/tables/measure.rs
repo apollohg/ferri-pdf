@@ -2091,6 +2091,7 @@ fn assemble_plan<'a>(
         footer_height,
         spacing: vertical,
         collapsed: collapsed_grid,
+        rows: RefCell::default(),
     }));
     let overflow_height = crate::layout::measure::overflow_height(&items).max(height);
     let edges = measurer.fragmentainer.edges(style);

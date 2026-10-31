@@ -48,8 +48,8 @@ pub(super) struct RowCursor<'a, 't> {
     repeating: bool,
     end: (usize, f32),
     stretches: Vec<Stretch<'a>>,
-    source_row_geometry: Option<(usize, crate::layout::tables::RowGeometry)>,
     alignment_cache: HashMap<(u32, u32), crate::layout::tables::CellAlignments>,
+    source_row_geometry: Option<(usize, Rc<crate::layout::tables::RowGeometry>)>,
     plan: Option<Rc<crate::layout::tables::TablePlan<'a>>>,
     cells: VecDeque<(MeasuredCell<'a>, PaintOrders)>,
     active_cells: VecDeque<Lane<'a, 't>>,
@@ -476,14 +476,8 @@ impl<'a> Paginator<'a, '_, 'a> {
                 {
                     *source_row_geometry = Some((
                         source_row,
-                        self.measurer.run(|measurer| {
-                            plan.resolve_rows(
-                                measurer,
-                                &table.flow.heights,
-                                table.flow.spacing,
-                                &table.flow.geometry,
-                            )
-                        })?,
+                        self.measurer
+                            .run(|measurer| table.flow.row_geometry(measurer))?,
                     ));
                 }
                 let geometry = &source_row_geometry.as_ref().unwrap().1;
@@ -515,14 +509,8 @@ impl<'a> Paginator<'a, '_, 'a> {
                 {
                     *source_row_geometry = Some((
                         source_row,
-                        self.measurer.run(|measurer| {
-                            plan.resolve_rows(
-                                measurer,
-                                &table.flow.heights,
-                                table.flow.spacing,
-                                &table.flow.geometry,
-                            )
-                        })?,
+                        self.measurer
+                            .run(|measurer| table.flow.row_geometry(measurer))?,
                     ));
                 }
                 let geometry = &source_row_geometry.as_ref().unwrap().1;
@@ -584,14 +572,8 @@ impl<'a> Paginator<'a, '_, 'a> {
                 {
                     *source_row_geometry = Some((
                         cell_row,
-                        self.measurer.run(|measurer| {
-                            table.flow.plan.resolve_rows(
-                                measurer,
-                                &table.flow.heights,
-                                table.flow.spacing,
-                                &table.flow.geometry,
-                            )
-                        })?,
+                        self.measurer
+                            .run(|measurer| table.flow.row_geometry(measurer))?,
                     ));
                 }
                 let (_, geometry) = source_row_geometry.as_ref().unwrap();
@@ -667,7 +649,9 @@ impl<'a> Paginator<'a, '_, 'a> {
                             .plan
                             .measure_cell(measurer, index, &geometry, None)
                     })?;
-                    table.flow.heights[index] = crate::layout::tables::cell_height(&natural);
+                    table
+                        .flow
+                        .set_cell_height(index, crate::layout::tables::cell_height(&natural));
                     let rows = self.measurer.run(|measurer| {
                         table.flow.plan.resolve_rows(
                             measurer,
@@ -936,7 +920,11 @@ impl<'a> Paginator<'a, '_, 'a> {
                         _ => unreachable!("cell fragments are box paints"),
                     })
                     .sum();
-                self.tables.last_mut().unwrap().flow.heights[index].height = height;
+                self.tables
+                    .last_mut()
+                    .unwrap()
+                    .flow
+                    .set_cell_extent(index, height);
             }
             stretches.push((
                 *active,
@@ -1001,14 +989,9 @@ impl<'a> Paginator<'a, '_, 'a> {
             if !events.is_empty() {
                 let position = self.flow_position();
                 let table = self.tables.last().unwrap();
-                let geometry = self.measurer.run(|measurer| {
-                    plan.resolve_rows(
-                        measurer,
-                        &table.flow.heights,
-                        table.flow.spacing,
-                        &table.flow.geometry,
-                    )
-                })?;
+                let geometry = self
+                    .measurer
+                    .run(|measurer| table.flow.row_geometry(measurer))?;
                 let height = geometry.starts[source_row + 1]
                     - geometry.starts[origin.0]
                     - table.flow.spacing;
@@ -1125,14 +1108,10 @@ impl<'a> Paginator<'a, '_, 'a> {
         let geometry =
             if !stretches.is_empty() && row.band.as_ref().is_some_and(|band| band.len() > 1) {
                 let table = self.tables.last().unwrap();
-                Some(self.measurer.run(|measurer| {
-                    table.flow.plan.resolve_rows(
-                        measurer,
-                        &table.flow.heights,
-                        table.flow.spacing,
-                        &table.flow.geometry,
-                    )
-                })?)
+                Some(
+                    self.measurer
+                        .run(|measurer| table.flow.row_geometry(measurer))?,
+                )
             } else {
                 None
             };
