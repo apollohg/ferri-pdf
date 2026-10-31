@@ -539,9 +539,6 @@ struct Builder<'m, 'a> {
     width_basis: f32,
     height_basis: Option<f32>,
 }
-fn unsupported(detail: impl Into<String>) -> Failure {
-    StyleError::Unsupported(format!("MathML {}", detail.into())).into()
-}
 impl<'a> Builder<'_, 'a> {
     fn element(
         &mut self,
@@ -774,16 +771,19 @@ impl<'a> Builder<'_, 'a> {
             .transpose()?;
         self.token_box(paragraph, line)
     }
-    fn shape_token(&self, paragraph: &'a Paragraph) -> Result<MathBox<'a>, Failure> {
+    /// The token `paragraph` shaped on one line, unless its content breaks into lines: such a
+    /// token lays out as a CSS block box (`MathML` Core §3.2.1.1) and has no glyph to stretch.
+    fn shape_token(&self, paragraph: &'a Paragraph) -> Result<Option<MathBox<'a>>, Failure> {
         self.measurer.work.spend(paragraph.text().len().max(1))?;
         let lines = self
             .measurer
             .text
             .layout_paragraph(paragraph, UNCONSTRAINED_LINE, &[])?;
         if lines.len() > 1 {
-            return Err(unsupported("generated token with forced line breaks"));
+            return Ok(None);
         }
         self.token_box(paragraph, lines.into_iter().next())
+            .map(Some)
     }
     fn token_box(
         &self,
@@ -1113,7 +1113,9 @@ impl<'a> Builder<'_, 'a> {
         horizontal: bool,
         variants_only: bool,
     ) -> Result<Option<MathBox<'a>>, Failure> {
-        let mut normal = self.shape_token(paragraph)?;
+        let Some(mut normal) = self.shape_token(paragraph)? else {
+            return Ok(None);
+        };
         let Some(Paint::Text(paint)) = normal.paint.first_mut() else {
             return Ok(None);
         };
@@ -1426,6 +1428,7 @@ impl<'a> Builder<'_, 'a> {
                             .and_then(|math| math.radical.as_ref())
                             .expect("radical paragraph"),
                     )
+                    .map(Option::unwrap_or_default)
                 },
                 Ok,
             )?;

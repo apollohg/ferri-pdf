@@ -83,3 +83,31 @@ fn css_fallback_keeps_generated_counters_and_running_strings() {
     );
     assert_eq!(lines.iter().filter(|text| **text == "A").count(), 1);
 }
+
+#[test]
+fn stretchy_operators_whose_content_breaks_into_lines_lay_out_unstretched_as_css_content() {
+    let lines = |stretchy: &str| -> Vec<(String, f32, f32)> {
+        trace(
+            &format!(
+                "<math><mrow><mo stretchy={stretchy}>(</mo><mfrac><mi>x</mi><mi>y</mi></mfrac></mrow></math>"
+            ),
+            "mo::before{content:'a\\A b';white-space:pre}",
+        )
+        .pages
+        .iter()
+        .flatten()
+        .map(|line| (line.text.clone(), line.x, line.baseline))
+        .collect()
+    };
+    let stretchy = lines("true");
+    let texts: Vec<_> = stretchy.iter().map(|(text, ..)| text.as_str()).collect();
+    assert!(
+        texts.contains(&"a") && texts.contains(&"b("),
+        "the forced break splits the operator's content into the lines a and b( (MathML Core §3.2.1.1): {stretchy:?}"
+    );
+    assert_eq!(
+        stretchy,
+        lines("false"),
+        "an operator laid out as CSS content has no glyph to stretch, so stretchy changes nothing"
+    );
+}
