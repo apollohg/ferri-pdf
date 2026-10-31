@@ -199,7 +199,7 @@ pub(super) fn path(
 }
 
 use crate::paint::{BoxAreas, Contour, CornerRadii, Point, Rect, Segment};
-use kurbo::{ParamCurve, ParamCurveArclen, ParamCurveDeriv};
+use kurbo::{ParamCurve, ParamCurveArclen, ParamCurveDeriv, ParamCurveExtrema};
 
 /// Actual containing element's boxes, in the same untransformed coordinates as the moving box.
 #[derive(Clone, Debug)]
@@ -439,10 +439,13 @@ fn sample(contours: &[Contour], distance: &LengthPercentage) -> (Point, f32) {
     let mut curves = Vec::new();
     for contour in contours {
         for curve in kurbo::segments(contour.path_elements()) {
-            curves.push((curve, curve.arclen(PATH_ACCURACY)));
+            let bounds = curve.bounding_box();
+            let accuracy =
+                crate::paint::bounded_tolerance(PATH_ACCURACY, bounds.width().max(bounds.height()));
+            curves.push((curve, curve.arclen(accuracy), accuracy));
         }
     }
-    let total = curves.iter().map(|(_, length)| length).sum::<f64>();
+    let total = curves.iter().map(|(_, length, _)| length).sum::<f64>();
     if total == 0.0 {
         return (contours.first().map_or([0.0; 2], |path| path.start), 0.0);
     }
@@ -468,14 +471,14 @@ fn sample(contours: &[Contour], distance: &LengthPercentage) -> (Point, f32) {
     };
     let last = curves
         .iter()
-        .rposition(|(_, length)| *length > 0.0)
+        .rposition(|(_, length, _)| *length > 0.0)
         .unwrap_or(0);
-    for (index, (curve, length)) in curves.iter().enumerate() {
+    for (index, (curve, length, accuracy)) in curves.iter().enumerate() {
         if *length == 0.0 {
             continue;
         }
         if remaining < *length || index == last {
-            let t = curve.inv_arclen(remaining.min(*length), PATH_ACCURACY);
+            let t = curve.inv_arclen(remaining.min(*length), *accuracy);
             let location = curve.eval(t);
             let tangent = match *curve {
                 kurbo::PathSeg::Line(line) => line.p1 - line.p0,

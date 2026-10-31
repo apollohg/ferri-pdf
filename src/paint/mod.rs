@@ -217,6 +217,16 @@ pub struct Contour {
     pub segments: Vec<Segment>,
     pub closed: bool,
 }
+/// The finest flattening or measuring error relative to a shape's extent: approximating a
+/// huge shape to an absolute tolerance would take points or subdivisions without bound.
+const MIN_RELATIVE_TOLERANCE: f64 = 1.0e-6;
+
+/// `tolerance`, coarsened for a shape `extent` across so that approximating it takes a bounded
+/// number of points.
+pub(crate) fn bounded_tolerance(tolerance: f64, extent: f64) -> f64 {
+    tolerance.max(extent * MIN_RELATIVE_TOLERANCE)
+}
+
 impl Contour {
     pub(crate) fn path_elements(&self) -> impl Iterator<Item = kurbo::PathEl> + Clone + '_ {
         let point = |[x, y]: Point| kurbo::Point::new(f64::from(x), f64::from(y));
@@ -232,6 +242,9 @@ impl Contour {
 
     /// Polygon vertices approximating the filled contour, without a repeated closing point.
     pub(crate) fn polygon_points(&self, tolerance: f64) -> Vec<[f64; 2]> {
+        use kurbo::Shape as _;
+        let bounds = kurbo::BezPath::from_iter(self.path_elements()).bounding_box();
+        let tolerance = bounded_tolerance(tolerance, bounds.width().max(bounds.height()));
         let mut points = Vec::new();
         kurbo::flatten(self.path_elements(), tolerance, |element| match element {
             kurbo::PathEl::MoveTo(point) | kurbo::PathEl::LineTo(point) => {

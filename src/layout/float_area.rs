@@ -397,9 +397,9 @@ fn trapezoids(
 /// The convex polygon swept by a disc of `radius` over a convex piece (§6.3): the convex hull
 /// of polygonal circles around its vertices.
 fn dilate(points: &[Point], radius: f32) -> Vec<Point> {
-    let step = (1.0 - FLATTEN_TOLERANCE_PT / radius)
-        .clamp(-1.0, 1.0)
-        .acos();
+    let tolerance =
+        crate::paint::bounded_tolerance(f64::from(FLATTEN_TOLERANCE_PT), f64::from(radius)) as f32;
+    let step = (1.0 - tolerance / radius).clamp(-1.0, 1.0).acos();
     let vertices = ((std::f32::consts::PI / step).ceil() as usize).max(MIN_MARGIN_ARC_VERTICES);
     let circle = (0..vertices)
         .map(|index| {
