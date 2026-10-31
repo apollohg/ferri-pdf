@@ -103,6 +103,24 @@ fn generated_box_kinds_locate_strings_on_their_actual_page() {
 }
 
 #[test]
+fn markers_locate_strings_on_the_page_their_list_item_starts() {
+    let output = render(
+        "li{font:12pt/18pt Spike}li::marker{content:'Marker:' string(heading) ' '}",
+        "<h2>Alpha</h2><ul class=next><h2>Beta</h2><li>Item</li></ul>",
+    );
+    let trace = output.layout.unwrap();
+    let texts: Vec<Vec<_>> = trace
+        .pages
+        .iter()
+        .map(|page| page.iter().map(|line| line.text.as_str()).collect())
+        .collect();
+    assert!(
+        texts[1].contains(&"Marker:Beta "),
+        "the marker, which records no position of its own, uses its item's page: {texts:?}"
+    );
+}
+
+#[test]
 fn absent_named_string_in_an_empty_document_is_an_empty_value() {
     let output = render("p::before{content:string(absent)}", "<p></p>");
     assert_eq!(output.page_count, 1);

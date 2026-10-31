@@ -248,13 +248,13 @@ impl PageStrings {
         context: PageStyleTarget,
         request: &NamedStringRequest,
     ) -> Result<String, StyleError> {
-        let page = self.locations.get(&context).ok_or_else(|| {
+        let page = self.page_of(context).ok_or_else(|| {
             StyleError::Invalid(format!(
                 "named string {:?} has no committed use location",
                 request.name
             ))
         })?;
-        Ok(self.text(*page, request))
+        Ok(self.text(page, request))
     }
 
     pub(crate) fn text(&self, page: usize, request: &NamedStringRequest) -> String {
