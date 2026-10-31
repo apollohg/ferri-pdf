@@ -1,7 +1,9 @@
 mod common;
 
 use common::local_options;
-use ferri_pdf::{DisplayItem, LayoutDiagnostic, RenderDiagnostic, render_html};
+use ferri_pdf::{
+    Degradation, DisplayItem, LayoutDiagnostic, PrintSettings, RenderDiagnostic, render_html,
+};
 
 /// The page limit `ferri-pdf` lays out before omitting the rest of a document.
 const PAGE_LIMIT: usize = 10_000;
@@ -50,5 +52,33 @@ fn content_past_the_page_limit_is_omitted_after_the_last_page() {
             .flatten()
             .all(|line| line.text != "after"),
         "the paragraph after the box lies past the last page"
+    );
+}
+
+#[test]
+fn page_boxes_without_finite_geometry_take_the_initial_page_geometry() {
+    // Negative margins on a page 0.01pt tall widen its page area past what layout represents.
+    let output = render_html(
+        "<!doctype html><style>@page{size:100pt 0.01pt;margin:-3e38pt}</style><p>text</p>",
+        &local_options(),
+    )
+    .expect("a page box without finite geometry renders on the initial page geometry");
+    assert!(
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            RenderDiagnostic::Degraded(Degradation::NonFinitePageGeometry)
+        )),
+        "the replaced geometry is reported, got {:?}",
+        output.diagnostics
+    );
+    let trace = output.layout.unwrap();
+    assert_eq!(
+        [trace.page_width, trace.page_height],
+        PrintSettings::default().paper,
+        "the page takes the initial sheet size"
+    );
+    assert!(
+        trace.pages.iter().flatten().any(|line| line.text == "text"),
+        "the content renders on the initial page"
     );
 }

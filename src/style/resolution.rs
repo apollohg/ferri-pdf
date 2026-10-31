@@ -102,6 +102,18 @@ fn sheet_dimension(specified: f32, extent: f32, default: f32) -> f32 {
 }
 
 impl PageGeometry {
+    /// The geometry of a page box that no `@page` rule sizes, on sheets of `paper`.
+    pub(crate) fn initial(paper: [f32; 2]) -> Self {
+        Self {
+            paper,
+            extent: paper,
+            area: paper.map(|dimension| dimension - 2.0 * crate::style::DEFAULT_PAGE_MARGIN),
+            margin: [crate::style::DEFAULT_PAGE_MARGIN; 4],
+            padding: [0.0; 4],
+            border: [0.0; 4],
+            intrinsic: [None, None],
+        }
+    }
     /// The geometry once the content of the page resolves the intrinsic size keywords of its
     /// axes: `content` holds, per physical axis, the min-content and max-content sizes of what
     /// the page area holds, or `None` where the keywords act as automatic sizes.
@@ -1501,7 +1513,11 @@ impl<'a> Geometry<'a> {
             border,
             intrinsic: [intrinsic_width, intrinsic_height],
         };
-        geometry.validate()?;
+        if geometry.validate().is_err() {
+            self.sheet
+                .degrade(crate::style::Degradation::NonFinitePageGeometry);
+            return Ok(PageGeometry::initial(self.sheet.paper));
+        }
         Ok(geometry)
     }
 }

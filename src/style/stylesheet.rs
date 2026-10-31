@@ -4,7 +4,7 @@ use crate::fonts::{
 };
 use crate::resources::{ResourceBase, ResourceResolver};
 use crate::style::{
-    DEFAULT_PAGE_MARGIN, PrintSettings, StyleDiagnostic, StyleDiagnosticKind, StyleError,
+    PrintSettings, StyleDiagnostic, StyleDiagnosticKind, StyleError,
     cascade::DeclarationContext,
     component::Component,
     conditions,
@@ -624,6 +624,7 @@ impl Stylesheet {
                 }
             }
         }
+        let initial_page = crate::style::PageGeometry::initial(settings.paper);
         let mut sheet = Self {
             environment,
             page_rules: Vec::new(),
@@ -640,14 +641,12 @@ impl Stylesheet {
             diagnostics,
             degradations: std::rc::Rc::default(),
             rule_indices: std::array::from_fn(|_| Vec::new()),
-            page: settings.paper,
-            margin: [DEFAULT_PAGE_MARGIN; 4],
-            page_extent: settings.paper,
-            page_content_size: settings
-                .paper
-                .map(|dimension| dimension - 2.0 * DEFAULT_PAGE_MARGIN),
-            page_padding: [0.0; 4],
-            page_border: [0.0; 4],
+            page: initial_page.paper,
+            margin: initial_page.margin,
+            page_extent: initial_page.extent,
+            page_content_size: initial_page.area,
+            page_padding: initial_page.padding,
+            page_border: initial_page.border,
             fonts: font_book,
             font_namespaces,
             counter_styles: crate::style::counter_style::CounterStyles::predefined(),

@@ -3517,17 +3517,26 @@ fn large_negative_page_margins_keep_the_resolved_content_size() {
 }
 
 #[test]
-fn overflowing_page_margin_extents_are_rejected_before_viewport_computation() {
+fn overflowing_page_margin_extents_take_the_initial_page_geometry() {
     let mut sheet = Stylesheet::parse(&[StylesheetSource {
         text: "@page{size:400pt 600pt;width:100pt;margin-left:-3e38pt;margin-right:-3e38pt}".into(),
         base: Default::default(),
     }])
     .unwrap();
     let tree = DocumentTree::parse("<p>Finite geometry</p>");
-    let result = sheet.resolve_document_root(tree.root_element(), &FileResolver::default());
+    sheet
+        .resolve_document_root(tree.root_element(), &FileResolver::default())
+        .unwrap_or_else(|error| panic!("a nonfinite derived extent must degrade: {error}"));
+    let degradations = sheet.take_degradations();
     assert!(
-        matches!(result, Err(StyleError::Invalid(_))),
-        "nonfinite derived extent must be a style error: {result:?}"
+        degradations.contains(&Degradation::NonFinitePageGeometry),
+        "the replaced page geometry is reported: {degradations:?}"
+    );
+    let initial = crate::style::PageGeometry::initial(crate::PrintSettings::default().paper);
+    assert_eq!(
+        sheet.page_area(),
+        initial.area,
+        "the page takes the initial geometry, not the 400pt by 600pt size"
     );
 }
 

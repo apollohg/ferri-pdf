@@ -79,6 +79,10 @@ pub enum Degradation {
     /// no element of the document: the target's value is empty.
     #[error("target reference {reference:?} is unresolved ({reason}) and renders as empty text")]
     UnresolvedTarget { reference: String, reason: String },
+    /// Page box lengths past what layout represents leave the page no finite geometry, so the
+    /// page box takes the geometry no `@page` rule sizes.
+    #[error("the page box geometry is not finite; the page takes the initial page geometry")]
+    NonFinitePageGeometry,
     /// An inline `svg` element the renderer cannot process renders nothing (SVG 2 §1.9).
     #[error("inline SVG content is in error and renders nothing: {reason}")]
     SvgInError { reason: String },
