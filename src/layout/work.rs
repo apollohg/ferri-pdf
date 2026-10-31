@@ -52,6 +52,20 @@ impl Budget {
         self.declined.get().then_some(self.limit)
     }
 
+    /// The budget's limit, once work ran it out.
+    pub(crate) fn exhausted(&self) -> Option<usize> {
+        self.remaining.get().is_none().then_some(self.limit)
+    }
+
+    /// Charges `units` of work already done; past the limit the budget is exhausted.
+    pub(crate) fn charge(&self, units: usize) {
+        self.remaining.set(
+            self.remaining
+                .get()
+                .and_then(|left| left.checked_sub(units)),
+        );
+    }
+
     pub(crate) fn spend(&self, units: usize) -> Result<(), Exhausted> {
         let remaining = self
             .remaining

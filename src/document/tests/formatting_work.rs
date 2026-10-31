@@ -23,10 +23,6 @@ fn degraded(document: &StyledDocument) -> bool {
 fn fits(html: &str, limit: usize) -> bool {
     match parse(html, limit) {
         Ok(document) => !degraded(&document),
-        Err(DocumentError::FormattingWorkLimit { limit: reported }) => {
-            assert_eq!(reported, limit, "the error must name the exhausted budget");
-            false
-        }
         Err(error) => panic!("a budget of {limit} failed with {error} instead\n{html}"),
     }
 }
@@ -280,4 +276,54 @@ fn deep_first_line_nesting_formats_in_linear_work_on_a_library_thread() {
         .expect("the library thread must start")
         .join()
         .expect("deep first-line nesting must format without overflowing the stack");
+}
+
+/// The text of the paragraphs in `block` and the blocks inside it, in tree order.
+fn texts(block: &BlockBox) -> Vec<String> {
+    block
+        .children()
+        .iter()
+        .flat_map(|content| match content {
+            BlockContent::Block(child) | BlockContent::Positioned(child) => texts(child),
+            BlockContent::Inline(paragraph) => vec![paragraph.text().to_owned()],
+            BlockContent::Events(_) => Vec::new(),
+        })
+        .collect()
+}
+
+#[test]
+fn the_document_past_its_work_budget_is_left_out_and_reported() {
+    const PARAGRAPHS: usize = 64;
+    let html = document(
+        "",
+        &(0..PARAGRAPHS)
+            .map(|index| format!("<p>paragraph {index}</p>"))
+            .collect::<String>(),
+    );
+    let limit = required_work(&html) / 2;
+    let document = parse(&html, limit)
+        .unwrap_or_else(|error| panic!("a budget of {limit} must not fail: {error}"));
+    assert!(
+        document.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            crate::document::DocumentDiagnostic::FormattingLimit {
+                resource: "formatting work",
+                limit: reported,
+                ..
+            } if *reported == limit
+        )),
+        "the exhausted budget is reported: {:?}",
+        document.diagnostics
+    );
+    let kept = texts(document.root());
+    let last = format!("paragraph {}", PARAGRAPHS - 1);
+    assert_eq!(
+        kept.first().map(String::as_str),
+        Some("paragraph 0"),
+        "what was formatted before the budget ran out stays: {kept:?}"
+    );
+    assert!(
+        kept.len() < PARAGRAPHS && !kept.contains(&last),
+        "the content past the budget is left out: {kept:?}"
+    );
 }

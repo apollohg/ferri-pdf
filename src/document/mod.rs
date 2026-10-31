@@ -61,14 +61,6 @@ pub(crate) enum DocumentError {
     Formatting(String),
     #[error("formatted inline text exceeds {limit} bytes")]
     TextExpansionLimit { limit: usize },
-    #[error("formatting exceeds {limit} work units")]
-    FormattingWorkLimit { limit: usize },
-}
-
-impl From<crate::layout::work::Exhausted> for DocumentError {
-    fn from(crate::layout::work::Exhausted { limit }: crate::layout::work::Exhausted) -> Self {
-        Self::FormattingWorkLimit { limit }
-    }
 }
 
 /// Recoverable input/source diagnostics retained with the rendering result.
@@ -475,6 +467,7 @@ impl StyledDocument {
             scroll_markers,
             skipped_work,
             diagnostics: formatting_diagnostics,
+            ..
         } = formatting::build(
             &formatting::Input {
                 html: &html,
@@ -608,6 +601,7 @@ impl StyledDocument {
             scroll_markers,
             skipped_work,
             diagnostics: formatting_diagnostics,
+            ..
         } = source.build(
             &mut styles,
             values,
@@ -704,6 +698,7 @@ impl StyledDocument {
             scroll_markers,
             skipped_work,
             diagnostics,
+            ..
         } = source.build(
             &mut self.styles,
             values,

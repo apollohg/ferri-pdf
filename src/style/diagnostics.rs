@@ -82,12 +82,6 @@ pub enum Degradation {
     /// An inline `svg` element the renderer cannot process renders nothing (SVG 2 §1.9).
     #[error("inline SVG content is in error and renders nothing: {reason}")]
     SvgInError { reason: String },
-    /// A resource limit that bounds pathological input was reached.
-    #[error("{reason}; {consequence}")]
-    Limit {
-        reason: String,
-        consequence: &'static str,
-    },
 }
 
 /// Degradations, each kept once however many elements and layout passes repeat it.
