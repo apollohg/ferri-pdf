@@ -309,6 +309,7 @@ impl Paragraph {
         let mut descendants = vec![0; boxes.len()];
         for (index, (_, _, parent)) in boxes.iter().enumerate().rev() {
             if let Some(parent) = *parent {
+                crate::work::count(crate::work::Work::BoxAncestor, 1);
                 descendants[parent] += descendants[index] + 1;
             }
         }

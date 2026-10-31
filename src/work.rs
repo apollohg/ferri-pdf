@@ -15,10 +15,14 @@ pub(crate) enum Work {
     CodePoint,
     /// A character advance summed while hiding an overflowing SVG text line's characters.
     HiddenAdvance,
+    /// The offset of a tile whose overflowing content a pattern tile shows.
+    OverflowTile,
+    /// A parent link followed while counting the inline boxes in each box's subtree.
+    BoxAncestor,
 }
 
 #[cfg(test)]
-const KINDS: usize = 6;
+const KINDS: usize = 8;
 
 #[cfg(test)]
 thread_local! {

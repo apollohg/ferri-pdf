@@ -79,7 +79,6 @@ fn shared_mask_references_past_the_page_budget_draw_as_transparent_black_layers(
         "white masks within the budget show the box: {:?}",
         shallow.diagnostics
     );
-    let started = std::time::Instant::now();
     let output = render_html(&doubling_masks(EXPONENTIAL), &local_options())
         .expect("mask references past the budget still render");
     assert!(
@@ -88,10 +87,9 @@ fn shared_mask_references_past_the_page_budget_draw_as_transparent_black_layers(
             RenderDiagnostic::Paint(PaintDiagnostic::MaskElementDrawLimit { .. })
         )),
         "{} mask element draws must stop at the per-page budget instead of rasterizing each one, \
-         got {:?} after {:?}",
+         got {:?}",
         (1usize << EXPONENTIAL) - 1,
-        output.diagnostics,
-        started.elapsed()
+        output.diagnostics
     );
     let (shown, unmasked) = (red_pixels(&output), red_pixels(&shallow));
     assert!(

@@ -549,9 +549,10 @@ impl Pattern {
         }
         let [width, height] = [self.rect.width(), self.rect.height()];
         rows.flat_map(|row| {
-            columns
-                .clone()
-                .map(move |column| (column as f32 * width, row as f32 * height))
+            columns.clone().map(move |column| {
+                crate::work::count(crate::work::Work::OverflowTile, 1);
+                (column as f32 * width, row as f32 * height)
+            })
         })
         .collect()
     }

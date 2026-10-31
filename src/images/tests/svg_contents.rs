@@ -1802,6 +1802,42 @@ fn a_chain_of_use_elements_in_definitions_expands_only_where_it_renders() {
     );
 }
 
+#[test]
+fn overflowing_pattern_tiles_past_the_budget_are_never_listed() {
+    // Listing the copies along each axis before checking their product against the budget
+    // takes work proportional to the overflow: about 2e10 copies of the last tile.
+    let pattern = |tile: f32, reach: f32| {
+        let span = tile + 2.0 * reach;
+        format!(
+            "<pattern id='p' width='{tile}' height='{tile}' patternUnits='userSpaceOnUse' \
+             overflow='visible'><rect x='-{reach}' y='-{reach}' width='{span}' height='{span}'/>\
+             </pattern><rect width='20' height='20' fill='url(#p)'/>"
+        )
+    };
+    let listed = |tile: f32, reach: f32| {
+        let tree = tree(&pattern(tile, reach));
+        let [pattern] = tree.patterns() else {
+            panic!("one pattern fills the rectangle");
+        };
+        work::measured(Work::OverflowTile, || pattern.tile_offsets())
+    };
+    let (offsets, count) = listed(10.0, 5.0);
+    assert_eq!(
+        (offsets.len(), count),
+        (9, 9),
+        "content reaching past each side of the tile shows the eight tiles around it"
+    );
+    for (tile, reach) in [(1.0, 100.0), (0.0001, 1_000_000.0)] {
+        let (offsets, count) = listed(tile, reach);
+        assert_eq!(
+            (offsets, count),
+            (vec![(0.0, 0.0)], 0),
+            "a {tile} unit tile whose content reaches {reach} units past it overflows into more \
+             tiles than the budget, so it clips to its own tile without listing any"
+        );
+    }
+}
+
 /// A laid out glyph: its characters, fill and origin.
 type LaidOutGlyph = (String, [u8; 3], [f32; 2]);
 

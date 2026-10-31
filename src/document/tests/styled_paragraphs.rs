@@ -1,7 +1,8 @@
 //! Paragraphs built from styled spans inside an explicit tree of inline boxes.
 use crate::document::Paragraph;
 use crate::style::Style;
-use std::{ops::Range, sync::Arc, time::Duration};
+use crate::work::{self, Work};
+use std::{ops::Range, sync::Arc};
 
 type BoxEntry = (Range<usize>, Arc<Style>, Option<usize>);
 
@@ -46,19 +47,18 @@ fn styled_boxes_count_the_subtrees_that_follow_them() {
 
 #[test]
 fn styled_box_subtrees_are_counted_in_linear_time() {
-    // Counting each box's subtree by walking every later box's parent chain takes cubic time
-    // in a chain this deep: minutes, against milliseconds for one reverse pass.
-    const CHAIN: usize = 4096;
-    const BOUND: Duration = Duration::from_secs(10);
-    let (sender, receiver) = std::sync::mpsc::channel();
-    std::thread::spawn(move || {
-        let parents: Vec<_> = (0..CHAIN).map(|index| index.checked_sub(1)).collect();
-        let paragraph = styled("x", &parents);
-        let _ = sender.send(descendants(&paragraph));
-    });
-    let counts = receiver
-        .recv_timeout(BOUND)
-        .unwrap_or_else(|error| panic!("{CHAIN} nested boxes not built within {BOUND:?}: {error}"));
+    // Counting each box's subtree by walking every later box's parent chain follows links
+    // cubic in the depth of a chain of boxes.
+    const CHAIN: usize = 64;
+    let chain = |length: usize| {
+        let parents: Vec<_> = (0..length).map(|index| index.checked_sub(1)).collect();
+        work::measured(Work::BoxAncestor, || descendants(&styled("x", &parents)))
+    };
+    work::assert_linear("a chain of nested boxes", CHAIN, |length| chain(length).1);
     let expected: Vec<_> = (0..CHAIN).rev().collect();
-    assert_eq!(counts, expected, "a chain's boxes contain every later box");
+    assert_eq!(
+        chain(CHAIN).0,
+        expected,
+        "a chain's boxes contain every later box"
+    );
 }
