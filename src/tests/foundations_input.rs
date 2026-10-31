@@ -423,7 +423,7 @@ fn false_import_conditions_do_not_fetch() {
 }
 
 #[test]
-fn import_cycle_and_limit_errors_preserve_policy() {
+fn import_cycles_are_cut_and_denied_imports_are_unavailable() {
     const CYCLE: &str = "https://document.test/report/cycle.css";
     let resolver = GraphResolver {
         sheets: std::collections::BTreeMap::from([(
@@ -450,18 +450,25 @@ fn import_cycle_and_limit_errors_preserve_policy() {
         "a cut cycle retains a source diagnostic"
     );
     let resolver = GraphResolver::default();
+    let output = crate::render_with_resolver(
+        "<!doctype html><style>@import 'denied.css';p{font-size:17pt}</style><p>Denied</p>",
+        &graph_options(),
+        &resolver,
+    )
+    .expect("a denied import is skipped like a missing one");
     assert!(
         matches!(
-            crate::render_with_resolver(
-                "<!doctype html><style>@import 'denied.css';</style><p>Denied</p>",
-                &graph_options(),
-                &resolver
-            ),
-            Err(crate::Error::Css(crate::StyleError::Resource(
-                ResourceError::Denied(_)
-            )))
+            output.diagnostics.as_slice(),
+            [RenderDiagnostic::UnavailableSource { reference, error: ResourceError::Denied(_), .. }]
+                if reference == "denied.css"
         ),
-        "active import denial must never become an unavailable-source warning"
+        "an import denial is reported as an unavailable source: {:?}",
+        output.diagnostics
+    );
+    common::assert_labelled_pt(
+        "the importing sheet's own rules still apply",
+        output.layout.unwrap().pages[0][0].font_size,
+        17.0,
     );
 }
 

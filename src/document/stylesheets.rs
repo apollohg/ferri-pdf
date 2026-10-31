@@ -1,4 +1,3 @@
-use crate::document::DocumentError;
 use crate::dom::{DocumentTree, HTML_NAMESPACE, SVG_NAMESPACE};
 use crate::resources::{CSS_MEDIA_TYPE, ResourceBase, ResourceMetadata};
 use crate::style::{StylesheetInput, StylesheetSources};
@@ -11,7 +10,7 @@ pub(super) fn discover(
     encoding: &str,
     author: &[String],
     user: &[String],
-) -> Result<StylesheetSources, DocumentError> {
+) -> StylesheetSources {
     let declared = tree
         .elements()
         .find(|element| {
@@ -20,8 +19,9 @@ pub(super) fn discover(
                 && element.attr("href").is_some()
         })
         .and_then(|element| element.attr("href"))
-        .map(|reference| base.resolve(reference).map(ResourceBase::Url))
-        .transpose()?;
+        // HTML §2.4.2: a `base` URL that fails to parse leaves the fallback base URL.
+        .and_then(|reference| base.resolve(reference).ok())
+        .map(ResourceBase::Url);
     let effective = declared.as_ref().unwrap_or(base);
     let mut candidates = Vec::new();
     for element in tree.shadow_including_elements() {
@@ -98,7 +98,7 @@ pub(super) fn discover(
         owner: None,
         fallback_encoding: encoding.into(),
     };
-    Ok(StylesheetSources {
+    StylesheetSources {
         base: effective.clone(),
         document_encoding: encoding.into(),
         document_url: match base {
@@ -108,5 +108,5 @@ pub(super) fn discover(
         document: candidates,
         author: author.iter().map(inline).collect(),
         user: user.iter().map(inline).collect(),
-    })
+    }
 }

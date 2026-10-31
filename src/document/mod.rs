@@ -406,7 +406,7 @@ impl StyledDocument {
             encoding: document_encoding,
             mut diagnostics,
         } = input;
-        let sources = stylesheets::discover(&html, base, &document_encoding, additional, user)?;
+        let sources = stylesheets::discover(&html, base, &document_encoding, additional, user);
         html.set_document_urls(sources.document_url.clone(), sources.base.resolve("")?);
         let base = &sources.base;
         let mut styles = Stylesheet::prepare(

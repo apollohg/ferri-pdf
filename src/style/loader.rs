@@ -222,7 +222,7 @@ struct Loader<'a> {
     tree: &'a DocumentTree,
     document_url: Option<Url>,
     resolver: &'a dyn ResourceResolver,
-    decode: Option<CssDecoder>,
+    decode: CssDecoder,
     prepared: PreparedStylesheets,
     roots: BTreeMap<(Origin, Option<TreeScopeId>), usize>,
     sets: Vec<SourceSet>,
@@ -245,7 +245,7 @@ impl<'a> Loader<'a> {
         resolver: &'a dyn ResourceResolver,
         settings: &PrintSettings,
         presentation: Presentation,
-        decode: Option<CssDecoder>,
+        decode: CssDecoder,
         limits: Limits,
     ) -> Result<Self, StyleError> {
         let mut environment = PrintEnvironment::new(settings, presentation)?;
@@ -811,25 +811,35 @@ impl<'a> Loader<'a> {
                 context: format!("stylesheet import cycle: {url}"),
             });
     }
+    /// A source that cannot be fetched, or that policy denies, is skipped as unavailable
+    /// (CSS Cascade 5 §2.1; HTML §4.2.4 "the link is an unavailable source").
     fn fetch(&mut self, fetch: Fetch) -> Result<(), StyleError> {
         if fetch.context.depth > self.budget.limits.depth {
-            return Err(StyleError::StylesheetLimit {
-                resource: DEPTH,
-                limit: self.budget.limits.depth,
-                location: Box::new(fetch.location),
-            });
+            self.prepared
+                .diagnostics
+                .borrow_mut()
+                .push(StyleDiagnostic {
+                    location: fetch.location,
+                    kind: StyleDiagnosticKind::UnavailableSource,
+                    context: format!(
+                        "stylesheet {} exceeds the {DEPTH} limit {}",
+                        fetch.reference, self.budget.limits.depth
+                    ),
+                });
+            return Ok(());
         }
-        let mut requested = fetch.context.base.resolve(&fetch.reference)?;
+        let mut requested = match fetch.context.base.resolve(&fetch.reference) {
+            Ok(requested) => requested,
+            Err(error) => {
+                self.unavailable_source(fetch, error);
+                return Ok(());
+            }
+        };
         requested.set_fragment(None);
         if fetch.context.path.contains(&requested) {
             self.cycle(&fetch, &requested);
             return Ok(());
         }
-        let decode = self.decode.ok_or_else(|| {
-            StyleError::Unsupported(
-                "stylesheet imports require Stylesheet::prepare with a CSS decoder".into(),
-            )
-        })?;
         let key = (fetch.context.base.clone(), fetch.reference.clone());
         let resource = if let Some(resource) = self.cache.get(&key) {
             resource.clone()
@@ -839,18 +849,10 @@ impl<'a> Loader<'a> {
                 .resolve_with_metadata(&fetch.reference, &fetch.context.base)
             {
                 Ok(resource) => Arc::new(resource),
-                Err(error) if error.is_unavailable() => {
-                    self.unavailable(fetch.slot);
-                    self.prepared
-                        .source_diagnostics
-                        .push(SourceDiagnostic::Unavailable {
-                            base: fetch.context.base,
-                            reference: fetch.reference,
-                            error,
-                        });
+                Err(error) => {
+                    self.unavailable_source(fetch, error);
                     return Ok(());
                 }
-                Err(error) => return Err(error.into()),
             }
         };
         let mut identity = if requested.scheme() == "data" {
@@ -884,7 +886,7 @@ impl<'a> Loader<'a> {
             return Ok(());
         }
         self.cache.entry(key).or_insert_with(|| resource.clone());
-        let decoded = decode(
+        let decoded = (self.decode)(
             &resource.resource.bytes,
             resource.metadata.charset.as_deref(),
             Some(&fetch.context.encoding),
@@ -910,6 +912,16 @@ impl<'a> Loader<'a> {
         context.path.push(requested);
         context.path.push(identity);
         self.sheet(Arc::from(decoded.text), &context)
+    }
+    fn unavailable_source(&mut self, fetch: Fetch, error: ResourceError) {
+        self.unavailable(fetch.slot);
+        self.prepared
+            .source_diagnostics
+            .push(SourceDiagnostic::Unavailable {
+                base: fetch.context.base,
+                reference: fetch.reference,
+                error,
+            });
     }
     fn css_type(&self, media_type: Option<&str>, response: &Url) -> bool {
         media_type.is_none_or(|kind| kind.eq_ignore_ascii_case(CSS_MEDIA_TYPE))
@@ -960,25 +972,6 @@ pub(super) fn prepare_with_limits(
     settings: &PrintSettings,
     presentation: Presentation,
     decode: CssDecoder,
-    limits: Limits,
-) -> Result<PreparedStylesheets, StyleError> {
-    prepare(
-        tree,
-        sources,
-        resolver,
-        settings,
-        presentation,
-        Some(decode),
-        limits,
-    )
-}
-fn prepare(
-    tree: &DocumentTree,
-    sources: &StylesheetSources,
-    resolver: &dyn ResourceResolver,
-    settings: &PrintSettings,
-    presentation: Presentation,
-    decode: Option<CssDecoder>,
     limits: Limits,
 ) -> Result<PreparedStylesheets, StyleError> {
     let mut loader = Loader::new(
@@ -1048,13 +1041,13 @@ pub(super) fn inline(
         document_url: base.resolve("").ok(),
         ..Default::default()
     };
-    prepare(
+    prepare_with_limits(
         &DocumentTree::parse("").expect("an empty document has no shadow tree"),
         &sources,
         &crate::resources::FileResolver::default(),
         settings,
         Presentation::Paged,
-        None,
+        crate::document::encoding::stylesheet,
         Limits::default(),
     )
 }
@@ -1343,7 +1336,7 @@ mod tests {
         assert_eq!(resolver.calls.get(), 0);
     }
     #[test]
-    fn loader_depth_is_checked_before_fetching_the_next_import() {
+    fn loader_skips_imports_past_the_depth_limit_before_fetching_them() {
         let base: ResourceBase = Url::parse("https://styles.test/document.html")
             .unwrap()
             .into();
@@ -1362,7 +1355,7 @@ mod tests {
             calls: Cell::new(0),
         };
         let tree = DocumentTree::parse("<p>Depth</p>").expect("parse test HTML");
-        let result = prepare_with_limits(
+        let prepared = prepare_with_limits(
             &tree,
             &sources,
             &resolver,
@@ -1373,15 +1366,23 @@ mod tests {
                 depth: 0,
                 ..Default::default()
             },
-        );
-        assert!(matches!(
-            result,
-            Err(StyleError::StylesheetLimit {
-                resource: "import depth",
-                limit: 0,
-                ..
+        )
+        .expect("an import past the depth limit is skipped, not fatal");
+        let skipped = prepared
+            .diagnostics
+            .borrow()
+            .iter()
+            .filter(|diagnostic| {
+                diagnostic.kind == StyleDiagnosticKind::UnavailableSource
+                    && diagnostic.context.contains("child.css")
             })
-        ));
+            .count();
+        assert_eq!(
+            skipped,
+            1,
+            "the skipped import is reported: {:?}",
+            prepared.diagnostics.borrow()
+        );
         assert_eq!(
             resolver.calls.get(),
             1,
