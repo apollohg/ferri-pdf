@@ -51,6 +51,57 @@ fn roots_avoid_external_floats_and_contain_child_margins() {
     assert_pt(root.height, 36.0);
 }
 
+/// The container's, the float's and the formatting context root's painted boxes, the root
+/// styled `root` beside a float styled `float` in a 300pt container.
+fn beside_float(float: &str, root: &str) -> [ferri_pdf::Rect; 3] {
+    let trace = render(
+        &format!(
+            ".c{{width:300pt;background:rgb(7,8,9)}}\
+             .f{{width:100pt;height:50pt;background:rgb(4,5,6);{float}}}\
+             .r{{height:20pt;background:rgb(1,2,3);{root}}}"
+        ),
+        "<div class=c><div class=f></div><div class=r></div></div>",
+    );
+    [[7, 8, 9], [4, 5, 6], [1, 2, 3]].map(|color| painted_box(&trace, color))
+}
+
+#[test]
+fn roots_fill_the_space_beside_floats_with_auto_and_stretch_widths() {
+    // CSS 2.1 §9.5 and CSS Sizing 3 §4.2: a formatting context root's border box does not
+    // overlap floats, and an automatic or stretch width fills the space beside them.
+    for root in [
+        "overflow:hidden",
+        "display:flow-root",
+        "display:flow-root;width:stretch",
+        "display:flex",
+    ] {
+        let [container, float, left] = beside_float("float:left", root);
+        assert_pt(left.x, float.x + float.width);
+        assert_pt(left.y, container.y);
+        assert_pt(left.width, container.width - float.width);
+        let [container, float, right] = beside_float("float:right", root);
+        assert_pt(right.x, container.x);
+        assert_pt(right.y, container.y);
+        assert_pt(right.width, float.x - container.x);
+    }
+}
+
+#[test]
+fn roots_beside_floats_keep_their_margins_and_move_below_where_they_cannot_fit() {
+    let [container, float, root] = beside_float("float:left", "display:flow-root;margin-left:10pt");
+    assert_pt(root.x, float.x + float.width + 10.0);
+    assert_pt(root.width, container.width - float.width - 10.0);
+    // A minimum wider than the space beside the float fills the containing block below it.
+    let [container, float, root] = beside_float("float:left", "display:flow-root;min-width:250pt");
+    assert_pt(root.y, float.y + float.height);
+    assert_pt(root.x, container.x);
+    assert_pt(root.width, container.width);
+    // A root taller than the float stays narrowed beside it along its whole height.
+    let [container, float, root] = beside_float("float:left", "display:flow-root;height:80pt");
+    assert_pt(root.y, container.y);
+    assert_pt(root.width, container.width - float.width);
+}
+
 #[test]
 fn flow_root_list_items_keep_counters_and_contain_their_floats() {
     for display in [

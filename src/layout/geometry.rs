@@ -15,6 +15,9 @@ pub(super) struct HorizontalBox {
     /// zero where they collapse through the containing block's edges, `auto` as zero (CSS
     /// Sizing 3 §4.2).
     pub stretch_margins: [f32; 2],
+    /// The inline space beside floats, its left edge and width, that the box avoiding them
+    /// fills in place of its containing block (CSS 2.1 §9.5).
+    pub beside_floats: Option<[f32; 2]>,
 }
 
 impl HorizontalBox {
@@ -91,6 +94,25 @@ pub(super) fn horizontal_with_edges(
     used_width: Option<f32>,
     edges: Edges,
 ) -> HorizontalBox {
+    horizontal_in_space(
+        style,
+        (containing_x, containing_width, containing_rtl),
+        [containing_x, containing_width],
+        used_width,
+        edges,
+    )
+}
+
+/// As [`horizontal_with_edges`], filling the inline `space` of the containing block, its left
+/// edge and width, which for a box avoiding floats is the part beside them (CSS 2.1 §9.5,
+/// CSS Sizing 3 §4.2). Margins and percentages still resolve against the containing block.
+pub(super) fn horizontal_in_space(
+    style: &Style,
+    (containing_x, containing_width, containing_rtl): (f32, f32, bool),
+    [space_x, space_width]: [f32; 2],
+    used_width: Option<f32>,
+    edges: Edges,
+) -> HorizontalBox {
     let Edges { padding, border } = edges;
     let margin = style.margin.each_ref().map(|m| m.resolve(containing_width));
     let left = margin[3];
@@ -103,7 +125,7 @@ pub(super) fn horizontal_with_edges(
         horizontal_edges,
     );
     let used = constraints.normal_flow(
-        containing_width,
+        space_width,
         horizontal_edges,
         [left, right],
         used_width,
@@ -112,7 +134,7 @@ pub(super) fn horizontal_with_edges(
     );
     let start = match (left, right, style.block_justify_self()) {
         (Some(left), Some(right), Some(alignment)) => {
-            let free = containing_width - used.size - horizontal_edges - left - right;
+            let free = space_width - used.size - horizontal_edges - left - right;
             self_alignment(alignment, free, containing_rtl)
                 .map_or(used.margins[0], |factor| left + factor * free)
         }
@@ -122,12 +144,14 @@ pub(super) fn horizontal_with_edges(
         containing_x,
         containing_width,
         containing_rtl,
-        x: containing_x + start + padding[3] + border[3],
+        x: space_x + start + padding[3] + border[3],
         width: used.size,
         padding,
         stretch_margins: [margin[0], margin[2]].map(|margin| margin.unwrap_or(0.0)),
         margin,
         border,
+        beside_floats: ([space_x, space_width] != [containing_x, containing_width])
+            .then_some([space_x, space_width]),
     }
 }
 
@@ -193,6 +217,7 @@ pub(super) fn inline_horizontal(
         border,
         stretch_margins: [margin[0], margin[2]].map(|margin| margin.unwrap_or(0.0)),
         margin,
+        beside_floats: None,
     }
 }
 

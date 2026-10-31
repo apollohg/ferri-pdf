@@ -2412,20 +2412,26 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     })?;
                     block.resize_fragment(geometry, height, edges);
                 } else {
-                    let root = self.boxes.is_empty()
-                        && matches!(self.fragmentainers, Fragmentainers::Pages(_));
-                    let previous = self.measurer.fragmentainer;
-                    self.measurer.fragmentainer = self.fragmentainers.kind();
-                    let measured = self
-                        .measurer
-                        .block(block.source, x, width, rtl, root, height);
-                    self.measurer.fragmentainer = previous;
-                    block = measured?;
+                    block = self.measure_in_flow(block.source, (x, width, rtl, height))?;
                 }
             }
         }
         block.clearance_before = clearance_before;
         Ok(block)
+    }
+    /// `source` measured in this flow, in a containing block at `x` of `width`, `rtl` or not,
+    /// and of definite `height`.
+    pub(super) fn measure_in_flow(
+        &mut self,
+        source: &'a BlockBox,
+        (x, width, rtl, height): (f32, f32, bool, Option<f32>),
+    ) -> Result<MeasuredBlock<'a>, LayoutError> {
+        let root = self.boxes.is_empty() && matches!(self.fragmentainers, Fragmentainers::Pages(_));
+        let previous = self.measurer.fragmentainer;
+        self.measurer.fragmentainer = self.fragmentainers.kind();
+        let measured = self.measurer.block(source, x, width, rtl, root, height);
+        self.measurer.fragmentainer = previous;
+        measured
     }
     fn prepare_block(
         &mut self,
@@ -2447,7 +2453,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             block = self.refresh_block(block)?;
             block = self.resolve_clearance_margins(block)?;
             self.clear_block(&block)?;
-            self.avoid_floats(&block)?;
+            self.avoid_floats(&mut block)?;
         }
         let reserve = self.continuation_reserve()?;
         let fits_float = block.style.floating().is_some()
@@ -2502,6 +2508,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     }
     fn start_block(&mut self, block: MeasuredBlock<'a>) -> Result<BlockFrame<'a>, LayoutError> {
         let mut block = self.refresh_block(block)?;
+        if self.at_page_start && !matches!(self.margin_start, MarginStart::Initial) {
+            block = self.resolve_clearance_margins(block)?;
+        }
+        self.clear_block(&block)?;
+        block.offset[0] += self.avoid_floats(&mut block)?;
         if !block.style.anchor.names.is_empty() {
             block.retain_fragment();
         }
@@ -2533,11 +2544,6 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         if track_overflow {
             block.retain_fragment();
         }
-        if self.at_page_start && !matches!(self.margin_start, MarginStart::Initial) {
-            block = self.resolve_clearance_margins(block)?;
-        }
-        self.clear_block(&block)?;
-        block.offset[0] += self.avoid_floats(&block)?;
         let previous_space = self.measurer.space;
         self.measurer.space = previous_space.enter(
             block.source,

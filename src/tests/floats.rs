@@ -936,7 +936,7 @@ fn float_avoidance_rechecks_placement_after_a_page_break() {
     let page_height = 2.0 * PAGE_LEFT + FLOAT_HEIGHT;
     let trace = render(
         &format!(
-            "@page{{size:360pt {page_height}pt;margin:{PAGE_LEFT}pt}}.float{{float:left}}section{{overflow:hidden;background:red}}"
+            "@page{{size:360pt {page_height}pt;margin:{PAGE_LEFT}pt}}.float{{float:left}}section{{overflow:hidden;width:100%;background:red}}"
         ),
         "<img class=float src='../assets/image-pattern.png'><section><p>Next</p></section>",
     );

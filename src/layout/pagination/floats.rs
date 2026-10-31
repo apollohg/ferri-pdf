@@ -194,7 +194,16 @@ impl<'a> Paginator<'a, '_, 'a> {
         Ok(())
     }
 
-    pub(super) fn avoid_floats(&mut self, block: &MeasuredBlock<'a>) -> Result<f32, LayoutError> {
+    /// Moves the flow down past floats until the border box of `block`, a box avoiding floats
+    /// (CSS 2.1 §9.5), fits beside them, returning how far to shift it across. A block-level
+    /// box whose inline size depends on the space it lies in, `auto`, `stretch` or another
+    /// sizing keyword, sizes it by the space beside the floats instead of its containing
+    /// block's (CSS Sizing 3 §4.2), and is measured again at each position until that space
+    /// no longer narrows as it grows.
+    pub(super) fn avoid_floats(
+        &mut self,
+        block: &mut MeasuredBlock<'a>,
+    ) -> Result<f32, LayoutError> {
         let replaced = matches!(block.items.first(), Some(FlowItem::Image { .. }));
         if (!block.independent && !replaced)
             || block.style.display.is_inline_level()
@@ -204,23 +213,62 @@ impl<'a> Paginator<'a, '_, 'a> {
         {
             return Ok(0.0);
         }
-        let context = self.floats.last().expect("flow has a float context");
-        if context.is_empty() {
-            return Ok(0.0);
-        }
-        let border = block.geometry.border_box(block.height);
+        let fills = !replaced && !block.style.display.is_table() && sized_by_space(block.style);
         let bounds = [
             block.geometry.containing_x,
             block.geometry.containing_x + block.geometry.containing_width,
         ];
+        if self
+            .floats
+            .last()
+            .expect("flow has a float context")
+            .is_empty()
+        {
+            // A box measured beside floats on another page fills its containing block again.
+            if fills && block.geometry.beside_floats.is_some() {
+                self.fill_space(block, None)?;
+            }
+            return Ok(0.0);
+        }
         let margin = self.pending_value();
         // An independent formatting context clears initial letters rather than narrowing
         // beside them (CSS Inline 3 §7.9.2).
-        let mut y = context.letter_clearance(self.page, self.y + margin, &self.measurer.work)?;
+        let mut y = self
+            .floats
+            .last()
+            .expect("flow has a float context")
+            .letter_clearance(self.page, self.y + margin, &self.measurer.work)?;
+        // The position the box was last measured at, where its space only narrows as it grows.
+        let mut measured_at = None;
         loop {
             self.measurer.work.spend(1)?;
-            let (band, next) =
-                context.band(self.page, y, border.height, bounds, &self.measurer.work)?;
+            let border = block.geometry.border_box(block.height);
+            let (band, next) = self.floats.last().expect("flow has a float context").band(
+                self.page,
+                y,
+                border.height,
+                bounds,
+                &self.measurer.work,
+            )?;
+            if let Some(below) = next.filter(|_| fills && band[1] <= band[0]) {
+                y = below;
+                continue;
+            }
+            // Below every float the box fills its containing block again.
+            let space = (next.is_some() && band != bounds).then(|| [band[0], band[1] - band[0]]);
+            let narrower = match (space, block.geometry.beside_floats) {
+                (Some(space), Some(measured)) => space[1] < measured[1],
+                (Some(_), None) => true,
+                (None, _) => false,
+            };
+            if fills
+                && space != block.geometry.beside_floats
+                && (measured_at != Some(y) || narrower)
+            {
+                self.fill_space(block, space)?;
+                measured_at = Some(y);
+                continue;
+            }
             if border.width <= band[1] - band[0] || next.is_none() {
                 let x = if next.is_none() {
                     border.x
@@ -233,6 +281,25 @@ impl<'a> Paginator<'a, '_, 'a> {
             }
             y = next.expect("an obstructing float has a bottom edge");
         }
+    }
+
+    /// Measures `block` again to fill the inline `space` beside floats, its left edge and
+    /// width, or its containing block where `None`.
+    fn fill_space(
+        &mut self,
+        block: &mut MeasuredBlock<'a>,
+        space: Option<[f32; 2]>,
+    ) -> Result<(), LayoutError> {
+        let previous = std::mem::replace(
+            &mut self.measurer.float_space,
+            space.map(|space| (std::ptr::from_ref(block.source), space)),
+        );
+        let measured = self.measure_in_flow(block.source, self.containing_geometry());
+        self.measurer.float_space = previous;
+        let earlier = std::mem::replace(block, measured?);
+        block.clearance_before = earlier.clearance_before;
+        block.offset = earlier.offset;
+        Ok(())
     }
 
     pub(super) fn resolve_clearance_margins(
@@ -612,4 +679,10 @@ impl<'a> Paginator<'a, '_, 'a> {
         *placement = updated;
         Ok(block)
     }
+}
+
+/// Whether a box styled `style` sizes its inline size by the space it lies in: an `auto`
+/// inline size or a sizing keyword, which fits the stretch-fit size (CSS Sizing 3 §4.2).
+fn sized_by_space(style: &crate::style::Style) -> bool {
+    *style.width.basis() == crate::style::Size::Auto || style.width.intrinsic().is_some()
 }

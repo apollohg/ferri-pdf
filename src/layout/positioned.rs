@@ -504,6 +504,7 @@ fn solve<'a>(
             border,
             stretch_margins: [margin[0], margin[2]].map(|margin| margin.unwrap_or(0.0)),
             margin: [margin[0], Some(margin_right), margin[2], Some(margin_left)],
+            beside_floats: None,
         }
     };
     let mut geometry = box_geometry(&solved);

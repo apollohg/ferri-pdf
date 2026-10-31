@@ -756,6 +756,7 @@ mod tests {
             column_flow: None,
             spanner: None,
             sized_item: None,
+            float_space: None,
             unbroken: false,
             named_pages: true,
             container_sizes: Default::default(),

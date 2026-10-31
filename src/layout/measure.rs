@@ -710,6 +710,9 @@ pub(super) struct Measurer<'a> {
     pub spanner: Option<*const BlockBox>,
     /// The flex or grid item being measured at the border-box width its container resolved.
     pub sized_item: Option<*const BlockBox>,
+    /// The box avoiding floats being measured in the inline space beside them: its left edge
+    /// and width (CSS 2.1 §9.5).
+    pub float_space: Option<(*const BlockBox, [f32; 2])>,
     /// The flow is laid out without page breaks: inside an atomic inline or an absolutely
     /// positioned box.
     pub unbroken: bool,
@@ -757,6 +760,7 @@ impl<'a> Measurer<'a> {
             column_flow: None,
             spanner: None,
             sized_item: None,
+            float_space: None,
             unbroken: false,
             named_pages: true,
             container_sizes: Default::default(),
@@ -804,6 +808,13 @@ impl<'a> Measurer<'a> {
         let result = compute(self);
         self.sized_item = previous;
         result
+    }
+
+    /// The inline space beside floats that `block`, avoiding them, is measured in.
+    fn float_space(&self, block: &BlockBox) -> Option<[f32; 2]> {
+        self.float_space
+            .filter(|(source, _)| std::ptr::eq(*source, block))
+            .map(|(_, space)| space)
     }
 
     /// Whether `block`'s container resolved its width: its flexed, stretched or fit-content
@@ -2048,6 +2059,9 @@ pub(super) fn block_geometry<'a>(
 ) -> Result<crate::layout::geometry::HorizontalBox, Failure> {
     let style = block.style();
     let edges = measurer.box_edges(block, width)?;
+    // A box avoiding floats fills the space beside them in place of its containing block.
+    let space = measurer.float_space(block).unwrap_or([x, width]);
+    let available_width = space[1];
     let used_width = match block.image() {
         Some(_) => {
             Some(crate::layout::images::size(block, width, width, containing_height, None, None)[0])
@@ -2062,7 +2076,7 @@ pub(super) fn block_geometry<'a>(
             Some(crate::layout::inline::shrink_to_fit(
                 measurer,
                 block,
-                width,
+                available_width,
                 containing_height,
             )?)
         }
@@ -2079,7 +2093,7 @@ pub(super) fn block_geometry<'a>(
             Some(crate::layout::inline::shrink_to_fit(
                 measurer,
                 block,
-                width,
+                available_width,
                 containing_height,
             )?)
         }
@@ -2091,8 +2105,13 @@ pub(super) fn block_geometry<'a>(
             &edges,
         )?,
     };
-    let geometry =
-        crate::layout::geometry::horizontal_with_edges(style, x, width, rtl, used_width, edges);
+    let geometry = crate::layout::geometry::horizontal_in_space(
+        style,
+        (x, width, rtl),
+        space,
+        used_width,
+        edges,
+    );
     let transfers = crate::layout::ratio::PreferredRatio::of_box(style, &edges).is_some();
     if used_width.is_some()
         || (!transfers
@@ -2103,9 +2122,11 @@ pub(super) fn block_geometry<'a>(
         return Ok(geometry);
     }
     let margins = [geometry.margin[3], geometry.margin[1]];
-    let available =
-        (width - edges.horizontal() - margins[0].unwrap_or(0.0) - margins[1].unwrap_or(0.0))
-            .max(0.0);
+    let available = (available_width
+        - edges.horizontal()
+        - margins[0].unwrap_or(0.0)
+        - margins[1].unwrap_or(0.0))
+    .max(0.0);
     let mut constraints = crate::layout::intrinsic::width_constraints(
         block,
         measurer,
@@ -2115,18 +2136,17 @@ pub(super) fn block_geometry<'a>(
     )?;
     crate::layout::ratio::transfer_to_width(style, &mut constraints, containing_height, &edges);
     let used = constraints.normal_flow(
-        width,
+        available_width,
         edges.horizontal(),
         margins,
         None,
         rtl,
         crate::style::Overconstraint::AdjustEndMargin,
     );
-    Ok(crate::layout::geometry::horizontal_with_edges(
+    Ok(crate::layout::geometry::horizontal_in_space(
         style,
-        x,
-        width,
-        rtl,
+        (x, width, rtl),
+        space,
         Some(used.size),
         edges,
     ))

@@ -327,6 +327,7 @@ impl<'a> Item<'a> {
                 border: edges.border,
                 margin: [Some(0.0); 4],
                 stretch_margins: [0, 2].map(|side| margins[side].unwrap_or(0.0)),
+                beside_floats: None,
             },
             margins,
             align,

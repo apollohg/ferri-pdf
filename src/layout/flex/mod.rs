@@ -205,6 +205,7 @@ fn item_geometry(
         border: item.border,
         margin: [Some(0.0); 4],
         stretch_margins: [0, 2].map(|side| item.margins[side].unwrap_or(0.0)),
+        beside_floats: None,
     }
 }
 fn measure_item<'a>(
