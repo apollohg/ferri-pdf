@@ -180,22 +180,36 @@ impl Painter<'_, '_, '_> {
             match self.draw_item(items, index, space, scopes, frame, surface) {
                 Ok(next) => (index, space) = next,
                 Err(error) if error.is_internal() => return Err(error),
-                Err(error) => {
-                    // The item, with the content it groups, is omitted.
-                    while surface.push_depth() > depth {
-                        surface.pop();
-                    }
-                    self.images.record(crate::writer::PaintDiagnostic::Omitted {
-                        reason: error.to_string(),
-                    });
-                    index += 1;
-                    if items[index - 1].is_push() {
-                        index += group_length(&items[index..])? + 1;
-                    }
-                }
+                Err(error) => index = self.omit_item(items, index, depth, &error, surface)?,
             }
         }
         Ok(())
+    }
+
+    /// Omits the item at `index` that failed to draw with `error`, with the content it groups,
+    /// closing what it pushed past `depth`; returns the index of the item after it.
+    // Out of `draw_scoped`, whose frame each nested group stacks.
+    #[inline(never)]
+    fn omit_item(
+        &mut self,
+        items: &[DisplayItem],
+        index: usize,
+        depth: usize,
+        error: &PdfError,
+        surface: &mut Surface<'_>,
+    ) -> Result<usize, PdfError> {
+        while surface.push_depth() > depth {
+            surface.pop();
+        }
+        self.images.record(crate::writer::PaintDiagnostic::Omitted {
+            reason: error.to_string(),
+        });
+        let next = index + 1;
+        Ok(if items[index].is_push() {
+            next + group_length(&items[next..])? + 1
+        } else {
+            next
+        })
     }
 
     /// Draws the item at `index` of `items` in `space`; returns the index of the next item to
@@ -203,14 +217,177 @@ impl Painter<'_, '_, '_> {
     fn draw_item(
         &mut self,
         items: &[DisplayItem],
-        mut index: usize,
-        mut space: Space,
+        index: usize,
+        space: Space,
         scopes: &mut Vec<Scope>,
         frame: Origin,
         surface: &mut Surface<'_>,
     ) -> Result<(usize, Space), PdfError> {
         let item = &items[index];
-        index += 1;
+        match item {
+            DisplayItem::Image(_)
+            | DisplayItem::Frame(_)
+            | DisplayItem::Box(_)
+            | DisplayItem::Text { .. }
+            | DisplayItem::TextShadow(_)
+            | DisplayItem::Decoration(_)
+            | DisplayItem::Backdrop(_)
+            | DisplayItem::Scene(_) => self
+                .draw_paint(item, space, surface)
+                .map(|()| (index + 1, space)),
+            DisplayItem::PushProjection(_)
+            | DisplayItem::PushBlend(BlendMode::PlusDarker | BlendMode::PlusLighter)
+            | DisplayItem::PushFilter(_)
+            | DisplayItem::PushMask(_) => self
+                .draw_group(items, index + 1, space, scopes, frame, surface)
+                .map(|next| (next, space)),
+            _ => self
+                .open_scope(items, index + 1, space, scopes, frame, surface)
+                .map(|space| (index + 1, space)),
+        }
+    }
+
+    // The helpers below keep their locals off `draw_item`, whose frame each nested group
+    // stacks.
+    /// Draws the group `items[index - 1]` opens, with its content; returns the index of the
+    /// item after the group.
+    #[inline(never)]
+    fn draw_group(
+        &mut self,
+        items: &[DisplayItem],
+        index: usize,
+        space: Space,
+        scopes: &mut Vec<Scope>,
+        frame: Origin,
+        surface: &mut Surface<'_>,
+    ) -> Result<usize, PdfError> {
+        let end = index + group_length(&items[index..])?;
+        let group = &items[index..end];
+        match &items[index - 1] {
+            DisplayItem::PushProjection(projection) => {
+                crate::writer::projection::draw(self, *projection, group, space, surface)
+            }
+            DisplayItem::PushBlend(mode @ (BlendMode::PlusDarker | BlendMode::PlusLighter)) => {
+                let open = Scopes {
+                    frame,
+                    open: scopes,
+                };
+                crate::writer::backdrops::additive(
+                    self,
+                    *mode,
+                    items,
+                    index - 1..end,
+                    &open,
+                    space,
+                    surface,
+                )
+            }
+            DisplayItem::PushFilter(filter) => {
+                crate::writer::filters::draw(self, filter, group, space, surface)
+            }
+            DisplayItem::PushMask(mask) => {
+                crate::writer::masks::draw(self, mask, group, space, surface)
+            }
+            _ => unreachable!("only group items are drawn as groups"),
+        }
+        .map(|()| end + 1)
+    }
+
+    /// Opens or closes the scope `items[index - 1]` opens or closes; returns the space the
+    /// items after it draw in.
+    #[inline(never)]
+    fn open_scope(
+        &mut self,
+        items: &[DisplayItem],
+        index: usize,
+        mut space: Space,
+        scopes: &mut Vec<Scope>,
+        frame: Origin,
+        surface: &mut Surface<'_>,
+    ) -> Result<Space, PdfError> {
+        match &items[index - 1] {
+            DisplayItem::PushClip(clip) => {
+                scopes.push(Scope {
+                    pops: painting::push_clip(clip, space.viewport, surface)?,
+                    space,
+                    kind: Kind::Clip,
+                });
+            }
+            DisplayItem::PushTransform(matrix) => {
+                let [a, b, c, d, e, f] = *matrix;
+                surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
+                scopes.push(Scope {
+                    pops: 1,
+                    space,
+                    kind: Kind::Transform(*matrix),
+                });
+            }
+            DisplayItem::PushOpacity(alpha) => {
+                let opacity = NormalizedF32::new(*alpha).ok_or(PdfError::InvalidAlpha(*alpha))?;
+                let nested = if opacity == NormalizedF32::ONE {
+                    space
+                } else {
+                    space.nested(surface)?
+                };
+                surface.push_opacity(opacity);
+                scopes.push(Scope {
+                    pops: 1,
+                    space,
+                    kind: Kind::Group(Origin {
+                        index,
+                        density: self.density(nested, surface),
+                    }),
+                });
+                space = nested;
+            }
+            DisplayItem::PushBlend(mode) => {
+                let nested = space.nested(surface)?;
+                let pops = painting::push_blend(*mode, surface)?;
+                scopes.push(Scope {
+                    pops,
+                    space,
+                    kind: Kind::Group(Origin {
+                        index,
+                        density: self.density(nested, surface),
+                    }),
+                });
+                space = nested;
+            }
+            DisplayItem::PushBackdropRoot => {
+                let open = Scopes {
+                    frame,
+                    open: scopes,
+                };
+                crate::writer::backdrops::prepare(self, items, index - 1, &open)?;
+                scopes.push(Scope {
+                    pops: 0,
+                    space,
+                    kind: Kind::Root(Origin {
+                        index,
+                        density: self.density(space, surface),
+                    }),
+                });
+            }
+            DisplayItem::Pop => {
+                let scope = scopes.pop().ok_or(PdfError::InvalidGeometry)?;
+                painting::pop_clips(scope.pops, surface);
+                space = scope.space;
+            }
+
+            _ => unreachable!("only scope items open or close scopes"),
+        }
+        Ok(space)
+    }
+
+    /// Draws `item`, which opens no scope, in `space`.
+    // Out of `draw_item`, whose frame each nested group stacks.
+    #[inline(never)]
+    fn draw_paint(
+        &mut self,
+        item: &DisplayItem,
+        space: Space,
+        surface: &mut Surface<'_>,
+    ) -> Result<(), PdfError> {
         match item {
             DisplayItem::Image(paint) => {
                 self.images.scale = space.scale;
@@ -274,116 +451,12 @@ impl Painter<'_, '_, '_> {
             DisplayItem::Backdrop(backdrop) => {
                 crate::writer::backdrops::draw(self, backdrop, item, space, surface)?;
             }
-            DisplayItem::PushClip(clip) => {
-                scopes.push(Scope {
-                    pops: painting::push_clip(clip, space.viewport, surface)?,
-                    space,
-                    kind: Kind::Clip,
-                });
-            }
-            DisplayItem::PushTransform(matrix) => {
-                let [a, b, c, d, e, f] = *matrix;
-                surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
-                scopes.push(Scope {
-                    pops: 1,
-                    space,
-                    kind: Kind::Transform(*matrix),
-                });
-            }
             DisplayItem::Scene(scene) => {
                 crate::writer::scene::draw(self, scene, space, surface)?;
             }
-            DisplayItem::PushProjection(projection) => {
-                let end = index + group_length(&items[index..])?;
-                crate::writer::projection::draw(
-                    self,
-                    *projection,
-                    &items[index..end],
-                    space,
-                    surface,
-                )?;
-                index = end + 1;
-            }
-            DisplayItem::PushOpacity(alpha) => {
-                let opacity = NormalizedF32::new(*alpha).ok_or(PdfError::InvalidAlpha(*alpha))?;
-                let nested = if opacity == NormalizedF32::ONE {
-                    space
-                } else {
-                    space.nested(surface)?
-                };
-                surface.push_opacity(opacity);
-                scopes.push(Scope {
-                    pops: 1,
-                    space,
-                    kind: Kind::Group(Origin {
-                        index,
-                        density: self.density(nested, surface),
-                    }),
-                });
-                space = nested;
-            }
-            DisplayItem::PushBlend(mode @ (BlendMode::PlusDarker | BlendMode::PlusLighter)) => {
-                let end = index + group_length(&items[index..])?;
-                let open = Scopes {
-                    frame,
-                    open: scopes,
-                };
-                crate::writer::backdrops::additive(
-                    self,
-                    *mode,
-                    items,
-                    index - 1..end,
-                    &open,
-                    space,
-                    surface,
-                )?;
-                index = end + 1;
-            }
-            DisplayItem::PushBlend(mode) => {
-                let nested = space.nested(surface)?;
-                let pops = painting::push_blend(*mode, surface)?;
-                scopes.push(Scope {
-                    pops,
-                    space,
-                    kind: Kind::Group(Origin {
-                        index,
-                        density: self.density(nested, surface),
-                    }),
-                });
-                space = nested;
-            }
-            DisplayItem::PushBackdropRoot => {
-                let open = Scopes {
-                    frame,
-                    open: scopes,
-                };
-                crate::writer::backdrops::prepare(self, items, index - 1, &open)?;
-                scopes.push(Scope {
-                    pops: 0,
-                    space,
-                    kind: Kind::Root(Origin {
-                        index,
-                        density: self.density(space, surface),
-                    }),
-                });
-            }
-            DisplayItem::PushFilter(filter) => {
-                let end = index + group_length(&items[index..])?;
-                crate::writer::filters::draw(self, filter, &items[index..end], space, surface)?;
-                index = end + 1;
-            }
-            DisplayItem::PushMask(mask) => {
-                let end = index + group_length(&items[index..])?;
-                crate::writer::masks::draw(self, mask, &items[index..end], space, surface)?;
-                index = end + 1;
-            }
-            DisplayItem::Pop => {
-                let scope = scopes.pop().ok_or(PdfError::InvalidGeometry)?;
-                painting::pop_clips(scope.pops, surface);
-                space = scope.space;
-            }
+            _ => unreachable!("only items opening no scope are painted alone"),
         }
-        Ok((index, space))
+        Ok(())
     }
 }
 
